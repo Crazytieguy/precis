@@ -2,6 +2,10 @@
 (function_item
   name: (identifier) @name) @symbol
 
+; Trait method signatures (no body)
+(function_signature_item
+  name: (identifier) @name) @symbol
+
 ; Structs
 (struct_item
   name: (type_identifier) @name) @symbol

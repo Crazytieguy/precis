@@ -1,6 +1,5 @@
 ---
 source: tests/snapshots.rs
-assertion_line: 105
 expression: "formatted.join(\"\\n\")"
 ---
 pub fn process
@@ -8,6 +7,7 @@ fn helper
 pub struct Token
 pub enum TokenKind
 pub trait Visitor
+fn visit_token
 fn visit_all
 impl std::fmt::Display for Token
 fn fmt

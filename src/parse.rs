@@ -91,7 +91,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         };
 
         let kind = match symbol_node.kind() {
-            "function_item" => SymbolKind::Function,
+            "function_item" | "function_signature_item" => SymbolKind::Function,
             "struct_item" => SymbolKind::Struct,
             "enum_item" => SymbolKind::Enum,
             "trait_item" => SymbolKind::Trait,

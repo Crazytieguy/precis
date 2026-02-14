@@ -20,5 +20,4 @@
 ## Technical debt
 
 - `streaming-iterator` is a direct dependency only because tree-sitter v0.25 uses `StreamingIterator` for `QueryMatches`. If tree-sitter changes this API, the dep can be removed.
-- Trait method signatures (no body, e.g. `fn visit_token(&self)`) are not captured — tree-sitter classifies these as `function_signature_item`, not `function_item`. The Rust query only matches `function_item`.
 - The `self_snapshot` test will break whenever source files in `src/` change. This is intentional (catches unintended changes) but means snapshots need updating with `cargo insta review` after any code change. Consider whether fixture-only snapshots would be less noisy.
