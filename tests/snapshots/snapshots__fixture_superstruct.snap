@@ -2,105 +2,105 @@
 source: tests/snapshots.rs
 expression: output
 ---
-error.ts:
-  export type Failure :5
-  export class StructError :25
-  constructor :35
-struct.ts:
-  export class Struct :10
-  constructor :22
-  assert :67
-  create :75
-  is :83
-  mask :93
-  validate :107
-  export function assert :123
-  export function create :139
-  export function mask :157
-  export function is :175
-  export function validate :185
-  export type Context :221
-  export type Infer :231
-  export type Describe :237
-  export type Result :243
-  export type Coercer :253
-  export type Validator :259
-  export type Refiner :266
-structs/coercions.ts:
-  export function coerce :16
-  export function defaulted :38
-  export function trimmed :79
-structs/refinements.ts:
-  export function empty :8
-  function getSize :21
-  export function max :33
-  export function min :55
-  export function nonempty :77
-  export function pattern :93
-  export function size :109
-  export function refine :146
-structs/types.ts:
-  export function any :19
-  export function array :33
-  export function bigint :60
-  export function boolean :70
-  export function date :83
-  export function enums :105
-  export function func :131
-  export function instance :144
-  export function integer :159
-  export function intersection :172
-  export function literal :204
-  export function map :230
-  export function never :258
-  export function nullable :266
-  export function number :278
-  export function object :298
-  export function optional :351
-  export function record :367
-  export function regexp :402
-  export function set :415
-  export function string :442
-  export function tuple :456
-  export function type :492
-  export function union :522
-  export function unknown :574
-structs/utilities.ts:
-  export function assign :60
-  export function define :71
-  export function deprecated :80
-  export function dynamic :106
-  export function lazy :140
-  export function omit :171
-  export function partial :197
-  export function pick :221
-  export function struct :247
-utils.ts:
-  function isIterable :8
-  export function isObject :16
-  export function isNonArrayObject :24
-  export function isPlainObject :32
-  export function print :45
-  export function shiftIterator :58
-  export function toFailure :67
-  export type UnionToIntersection :202
-  export type Assign :212
-  export type EnumSchema :218
-  export type IsMatch :227
-  export type IsExactMatch :233
-  export type IsRecord :242
-  export type IsTuple :251
-  export type IsUnion :267
-  export type ObjectSchema :277
-  export type ObjectType :283
-  export type OmitBy :291
-  export type Optionalize :300
-  export type PartialObjectSchema :307
-  export type PickBy :315
-  export type Simplify :324
-  export type If :328
-  export type StructSchema :334
-  export type TupleSchema :379
-  export type AnyStruct :385
-  export type InferStructTuple :394
-  type _InferTuple :402
+error.ts
+     5→export type Failure
+    25→export class StructError
+    35→  constructor
+struct.ts
+    10→export class Struct
+    22→  constructor
+    67→  assert
+    75→  create
+    83→  is
+    93→  mask
+   107→  validate
+   123→export function assert
+   139→export function create
+   157→export function mask
+   175→export function is
+   185→export function validate
+   221→export type Context
+   231→export type Infer
+   237→export type Describe
+   243→export type Result
+   253→export type Coercer
+   259→export type Validator
+   266→export type Refiner
+structs/coercions.ts
+    16→export function coerce
+    38→export function defaulted
+    79→export function trimmed
+structs/refinements.ts
+     8→export function empty
+    21→function getSize
+    33→export function max
+    55→export function min
+    77→export function nonempty
+    93→export function pattern
+   109→export function size
+   146→export function refine
+structs/types.ts
+    19→export function any
+    33→export function array
+    60→export function bigint
+    70→export function boolean
+    83→export function date
+   105→export function enums
+   131→export function func
+   144→export function instance
+   159→export function integer
+   172→export function intersection
+   204→export function literal
+   230→export function map
+   258→export function never
+   266→export function nullable
+   278→export function number
+   298→export function object
+   351→export function optional
+   367→export function record
+   402→export function regexp
+   415→export function set
+   442→export function string
+   456→export function tuple
+   492→export function type
+   522→export function union
+   574→export function unknown
+structs/utilities.ts
+    60→export function assign
+    71→export function define
+    80→export function deprecated
+   106→export function dynamic
+   140→export function lazy
+   171→export function omit
+   197→export function partial
+   221→export function pick
+   247→export function struct
+utils.ts
+     8→function isIterable
+    16→export function isObject
+    24→export function isNonArrayObject
+    32→export function isPlainObject
+    45→export function print
+    58→export function shiftIterator
+    67→export function toFailure
+   202→export type UnionToIntersection
+   212→export type Assign
+   218→export type EnumSchema
+   227→export type IsMatch
+   233→export type IsExactMatch
+   242→export type IsRecord
+   251→export type IsTuple
+   267→export type IsUnion
+   277→export type ObjectSchema
+   283→export type ObjectType
+   291→export type OmitBy
+   300→export type Optionalize
+   307→export type PartialObjectSchema
+   315→export type PickBy
+   324→export type Simplify
+   328→export type If
+   334→export type StructSchema
+   379→export type TupleSchema
+   385→export type AnyStruct
+   394→export type InferStructTuple
+   402→type _InferTuple

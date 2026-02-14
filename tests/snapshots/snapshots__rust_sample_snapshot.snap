@@ -2,20 +2,20 @@
 source: tests/snapshots.rs
 expression: output
 ---
-sample.rs:
-  pub fn process :2
-  fn helper :6
-  pub struct Token :8
-  pub enum TokenKind :13
-  pub trait Visitor :19
-  fn visit_token :20
-  fn visit_all :21
-  impl std::fmt::Display for Token :28
-  fn fmt :29
-  impl Token :34
-  pub fn new :35
-  pub type Span :40
-  const MAX_TOKENS :42
-  pub static VERSION :44
-  macro_rules! token :46
-  pub mod lexer :52
+sample.rs
+     2→pub fn process
+     6→fn helper
+     8→pub struct Token
+    13→pub enum TokenKind
+    19→pub trait Visitor
+    20→    fn visit_token
+    21→    fn visit_all
+    28→impl std::fmt::Display for Token
+    29→    fn fmt
+    34→impl Token
+    35→    pub fn new
+    40→pub type Span
+    42→const MAX_TOKENS
+    44→pub static VERSION
+    46→macro_rules! token
+    52→pub mod lexer

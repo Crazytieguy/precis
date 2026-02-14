@@ -2,12 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-sample.js:
-  export function processItems :2
-  function helper :6
-  export class TokenParser :8
-  constructor :9
-  parse :13
-  #advance :17
-  export const MAX_TOKENS :20
-  export default class DefaultExport :22
+sample.js
+     2→export function processItems
+     6→function helper
+     8→export class TokenParser
+     9→    constructor
+    13→    parse
+    17→    #advance
+    20→export const MAX_TOKENS
+    22→export default class DefaultExport

@@ -2,15 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-index.ts:
-  export type EventType :1
-  export type Handler :5
-  export type WildcardHandler :6
-  export type EventHandlerList :12
-  export type WildCardEventHandlerList :13
-  export type EventHandlerMap :18
-  export interface Emitter :23
-  on :27
-  off :33
-  emit :36
-  export default function mitt :46
+index.ts
+     1→export type EventType
+     5→export type Handler
+     6→export type WildcardHandler
+    12→export type EventHandlerList
+    13→export type WildCardEventHandlerList
+    18→export type EventHandlerMap
+    23→export interface Emitter
+    27→	on
+    33→	off
+    36→	emit
+    46→export default function mitt

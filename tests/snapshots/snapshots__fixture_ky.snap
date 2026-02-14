@@ -2,129 +2,129 @@
 source: tests/snapshots.rs
 expression: output
 ---
-core/Ky.ts:
-  export class Ky :33
-  static create :34
-  static #normalizeSearchParams :178
-  constructor :200
-  #calculateDelay :297
-  async #calculateRetryDelay :316
-  #decorateResponse :390
-  #cancelBody :398
-  #cancelResponseBody :407
-  async #retry :412
-  async #fetch :463
-  #getNormalizedOptions :503
-  #assignRequest :512
-  #wrapRequestWithUploadProgress :517
-core/constants.ts:
-  export const supportsRequestStreams :4
-  export const supportsAbortController :34
-  export const supportsAbortSignal :35
-  export const supportsResponseStreams :36
-  export const supportsFormData :37
-  export const requestMethods :39
-  const validate :41
-  export const responseTypes :46
-  export const maxSafeTimeout :58
-  export const usualFormBoundarySize :61
-  export const stop :63
-  export type ForceRetryOptions :68
-  export class RetryMarker :148
-  constructor :149
-  export const retry :235
-  export const kyOptionKeys :237
-  export const vendorSpecificOptions :256
-  export const requestOptionsRegistry :265
-errors/ForceRetryError.ts:
-  export class ForceRetryError :8
-  constructor :14
-errors/HTTPError.ts:
-  export class HTTPError :5
-  constructor :10
-errors/NonError.ts:
-  export class NonError :6
-  constructor :10
-errors/TimeoutError.ts:
-  export class TimeoutError :3
-  constructor :6
-index.ts:
-  const createInstance :10
-  const ky :34
-types/ResponsePromise.ts:
-  export type ResponsePromise :6
-types/common.ts:
-  export type Primitive :2
-  export type Required :4
-  export type LiteralUnion :6
-types/hooks.ts:
-  export type BeforeRequestState :5
-  export type BeforeRequestHook :14
-  export type BeforeRetryState :20
-  export type BeforeRetryHook :30
-  export type AfterResponseState :32
-  export type AfterResponseHook :41
-  export type BeforeErrorState :48
-  export type BeforeErrorHook :57
-  export type Hooks :59
-types/ky.ts:
-  export type KyInstance :5
-types/options.ts:
-  export type SearchParamsInit :6
-  export type SearchParamsOption :9
-  export type RequestHttpMethod :11
-  export type HttpMethod :12
-  export type Input :14
-  export type Progress :16
-  export type KyHeadersInit :27
-  export type KyOptions :33
-  export type KyOptionsRegistry :307
-  export interface Options :312
-  export type InternalOptions :358
-  export interface NormalizedOptions :373
-types/request.ts:
-  export type KyRequest :1
-types/response.ts:
-  export type KyResponse :1
-types/retry.ts:
-  export type ShouldRetryState :3
-  export type RetryOptions :15
-utils/body.ts:
-  export const getBodySize :5
-  const withProgress :57
-  export const streamResponse :90
-  export const streamRequest :119
-utils/delay.ts:
-  export type DelayOptions :5
-  export default async function delay :9
-utils/is.ts:
-  export const isObject :2
-utils/merge.ts:
-  export const validateAndMerge :6
-  export const mergeHeaders :16
-  function newHookValue :32
-  export const mergeHooks :38
-  const appendSearchParameters :47
-  export const deepMerge :86
-utils/normalize.ts:
-  export const normalizeRequestMethod :5
-  const retryMethods :8
-  const retryStatusCodes :10
-  const retryAfterStatusCodes :12
-  type InternalRetryOptions :14
-  const defaultRetryOptions :16
-  export const normalizeRetryOptions :28
-utils/options.ts:
-  export const findUnknownOptions :4
-  export const hasSearchParameters :30
-utils/timeout.ts:
-  export type TimeoutOptions :3
-  export default async function timeout :9
-utils/type-guards.ts:
-  export function isKyError :27
-  export function isHTTPError :49
-  export function isTimeoutError :71
-  export function isForceRetryError :98
-utils/types.ts:
-  export type Mutable :1
-  export type ObjectEntries :5
+core/Ky.ts
+    33→export class Ky
+    34→	static create
+   178→	static #normalizeSearchParams
+   200→	constructor
+   297→	#calculateDelay
+   316→	async #calculateRetryDelay
+   390→	#decorateResponse
+   398→	#cancelBody
+   407→	#cancelResponseBody
+   412→	async #retry
+   463→	async #fetch
+   503→	#getNormalizedOptions
+   512→	#assignRequest
+   517→	#wrapRequestWithUploadProgress
+core/constants.ts
+     4→export const supportsRequestStreams
+    34→export const supportsAbortController
+    35→export const supportsAbortSignal
+    36→export const supportsResponseStreams
+    37→export const supportsFormData
+    39→export const requestMethods
+    41→const validate
+    46→export const responseTypes
+    58→export const maxSafeTimeout
+    61→export const usualFormBoundarySize
+    63→export const stop
+    68→export type ForceRetryOptions
+   148→export class RetryMarker
+   149→	constructor
+   235→export const retry
+   237→export const kyOptionKeys
+   256→export const vendorSpecificOptions
+   265→export const requestOptionsRegistry
+errors/ForceRetryError.ts
+     8→export class ForceRetryError
+    14→	constructor
+errors/HTTPError.ts
+     5→export class HTTPError
+    10→	constructor
+errors/NonError.ts
+     6→export class NonError
+    10→	constructor
+errors/TimeoutError.ts
+     3→export class TimeoutError
+     6→	constructor
+index.ts
+    10→const createInstance
+    34→const ky
+types/ResponsePromise.ts
+     6→export type ResponsePromise
+types/common.ts
+     2→export type Primitive
+     4→export type Required
+     6→export type LiteralUnion
+types/hooks.ts
+     5→export type BeforeRequestState
+    14→export type BeforeRequestHook
+    20→export type BeforeRetryState
+    30→export type BeforeRetryHook
+    32→export type AfterResponseState
+    41→export type AfterResponseHook
+    48→export type BeforeErrorState
+    57→export type BeforeErrorHook
+    59→export type Hooks
+types/ky.ts
+     5→export type KyInstance
+types/options.ts
+     6→export type SearchParamsInit
+     9→export type SearchParamsOption
+    11→export type RequestHttpMethod
+    12→export type HttpMethod
+    14→export type Input
+    16→export type Progress
+    27→export type KyHeadersInit
+    33→export type KyOptions
+   307→export type KyOptionsRegistry
+   312→export interface Options
+   358→export type InternalOptions
+   373→export interface NormalizedOptions
+types/request.ts
+     1→export type KyRequest
+types/response.ts
+     1→export type KyResponse
+types/retry.ts
+     3→export type ShouldRetryState
+    15→export type RetryOptions
+utils/body.ts
+     5→export const getBodySize
+    57→const withProgress
+    90→export const streamResponse
+   119→export const streamRequest
+utils/delay.ts
+     5→export type DelayOptions
+     9→export default async function delay
+utils/is.ts
+     2→export const isObject
+utils/merge.ts
+     6→export const validateAndMerge
+    16→export const mergeHeaders
+    32→function newHookValue
+    38→export const mergeHooks
+    47→const appendSearchParameters
+    86→export const deepMerge
+utils/normalize.ts
+     5→export const normalizeRequestMethod
+     8→const retryMethods
+    10→const retryStatusCodes
+    12→const retryAfterStatusCodes
+    14→type InternalRetryOptions
+    16→const defaultRetryOptions
+    28→export const normalizeRetryOptions
+utils/options.ts
+     4→export const findUnknownOptions
+    30→export const hasSearchParameters
+utils/timeout.ts
+     3→export type TimeoutOptions
+     9→export default async function timeout
+utils/type-guards.ts
+    27→export function isKyError
+    49→export function isHTTPError
+    71→export function isTimeoutError
+    98→export function isForceRetryError
+utils/types.ts
+     1→export type Mutable
+     5→export type ObjectEntries

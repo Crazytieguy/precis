@@ -2,20 +2,20 @@
 source: tests/snapshots.rs
 expression: output
 ---
-sample.ts:
-  export function processItems :2
-  function helper :6
-  export async function fetchData :8
-  export class TokenParser :12
-  constructor :15
-  public parse :19
-  private advance :23
-  export interface Visitor :26
-  visitToken :27
-  visitAll :28
-  export enum TokenKind :31
-  export type Span :37
-  export const MAX_TOKENS :39
-  export default class DefaultExport :41
-  export namespace Utils :45
-  export function format :46
+sample.ts
+     2→export function processItems
+     6→function helper
+     8→export async function fetchData
+    12→export class TokenParser
+    15→    constructor
+    19→    public parse
+    23→    private advance
+    26→export interface Visitor
+    27→    visitToken
+    28→    visitAll
+    31→export enum TokenKind
+    37→export type Span
+    39→export const MAX_TOKENS
+    41→export default class DefaultExport
+    45→export namespace Utils
+    46→    export function format

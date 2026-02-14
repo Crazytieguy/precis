@@ -11,13 +11,12 @@
 ## Current state
 
 - Parsing works for Rust, TypeScript, JavaScript, TSX — extracts symbol names, kinds, visibility
-- Output shows symbol lines truncated at the symbol name, with a legacy format (`  pub fn new :12`) that doesn't yet match the target format (`    12→    pub fn new`)
+- Output shows symbol lines truncated at the symbol name, with right-aligned line numbers and `→` separator (e.g. `    12→    pub fn new`)
 - `--budget` flag is parsed but not wired up — no granularity/budgeting logic yet
 - `path` arg only accepts directories, not files
 
 ## Feature development
 
-- Update output format to match README (line-prefixes with right-aligned line numbers and `→` separator, preserving original indentation)
 - Implement signature-level output (extend line-prefix truncation past the symbol name)
 - Implement the granularity/budgeting system (see README for algorithm design)
 - Accept file paths in addition to directories

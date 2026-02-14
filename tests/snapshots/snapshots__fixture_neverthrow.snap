@@ -2,130 +2,130 @@
 source: tests/snapshots.rs
 expression: output
 ---
-_internals/error.ts:
-  export interface ErrorConfig :3
-  const defaultErrorConfig :7
-  interface NeverThrowError :11
-  export const createNeverThrowError :27
-_internals/utils.ts:
-  export type ExtractOkTypes :5
-  export type ExtractOkAsyncTypes :10
-  export type ExtractErrTypes :15
-  export type ExtractErrAsyncTypes :20
-  export type InferOkTypes :24
-  export type InferErrTypes :25
-  export type InferAsyncOkTypes :27
-  export type InferAsyncErrTypes :28
-  export const combineResultList :33
-  export const combineResultAsyncList :54
-  export const combineResultListWithAllErrors :64
-  export const combineResultAsyncListWithAllErrors :82
-result-async.ts:
-  export class ResultAsync :22
-  constructor :25
-  static fromSafePromise :30
-  static fromPromise :37
-  static fromThrowable :46
-  static combine :69
-  static combineWithAllErrors :81
-  map :89
-  andThrough :101
-  andTee :117
-  orTee :133
-  mapErr :149
-  andThen :169
-  orElse :190
-  match :202
-  unwrapOr :206
-  async *safeUnwrap :222
-  then :227
-  export function okAsync :249
-  export function errAsync :255
-  export const fromPromise :259
-  export const fromSafePromise :260
-  export const fromAsyncThrowable :262
-  export type CombineResultAsyncs :265
-  export type CombineResultsWithAllErrorsArrayAsync :272
-  type UnwrapAsync :279
-  type TraverseAsync :300
-  type TraverseWithAllErrorsAsync :330
-  type Writable :338
-result.ts:
-  export namespace Result :14
-  export function fromThrowable :23
-  export function combine :43
-  export function combineWithAllErrors :55
-  export type Result :62
-  export function ok :66
-  export function err :73
-  export function safeTry :122
-  interface IResult :134
-  isOk :140
-  isErr :147
-  map :157
-  mapErr :168
-  andThen :183
-  andTee :195
-  orTee :207
-  andThrough :219
-  orElse :233
-  asyncAndThen :244
-  asyncMap :253
-  unwrapOr :260
-  match :276
-  safeUnwrap :290
-  _unsafeUnwrap :299
-  _unsafeUnwrapErr :309
-  export class Ok :312
-  constructor :313
-  isOk :315
-  isErr :319
-  map :323
-  mapErr :328
-  andThen :337
-  andThrough :344
-  andTee :348
-  orTee :357
-  orElse :366
-  asyncAndThen :370
-  asyncAndThrough :379
-  asyncMap :383
-  unwrapOr :388
-  match :393
-  safeUnwrap :397
-  _unsafeUnwrap :405
-  _unsafeUnwrapErr :409
-  export class Err :419
-  constructor :420
-  isOk :422
-  isErr :426
-  map :431
-  mapErr :435
-  andThrough :439
-  andTee :443
-  orTee :447
-  andThen :461
-  orElse :470
-  asyncAndThen :475
-  asyncAndThrough :479
-  asyncMap :484
-  unwrapOr :488
-  match :492
-  safeUnwrap :496
-  _unsafeUnwrap :505
-  _unsafeUnwrapErr :509
-  export const fromThrowable :523
-  type Prev :530
-  type CollectResults :590
-  export type Transpose :614
-  export type Combine :635
-  export type Dedup :645
-  export type MemberListOf :652
-  export type EmptyArrayToNever :669
-  type UnknownMembersToNever :680
-  export type MembersToUnion :685
-  export type IsLiteralArray :688
-  type Traverse :698
-  type TraverseWithAllErrors :704
-  export type CombineResults :712
-  export type CombineResultsWithAllErrorsArray :719
+_internals/error.ts
+     3→export interface ErrorConfig
+     7→const defaultErrorConfig
+    11→interface NeverThrowError
+    27→export const createNeverThrowError
+_internals/utils.ts
+     5→export type ExtractOkTypes
+    10→export type ExtractOkAsyncTypes
+    15→export type ExtractErrTypes
+    20→export type ExtractErrAsyncTypes
+    24→export type InferOkTypes
+    25→export type InferErrTypes
+    27→export type InferAsyncOkTypes
+    28→export type InferAsyncErrTypes
+    33→export const combineResultList
+    54→export const combineResultAsyncList
+    64→export const combineResultListWithAllErrors
+    82→export const combineResultAsyncListWithAllErrors
+result-async.ts
+    22→export class ResultAsync
+    25→  constructor
+    30→  static fromSafePromise
+    37→  static fromPromise
+    46→  static fromThrowable
+    69→  static combine
+    81→  static combineWithAllErrors
+    89→  map
+   101→  andThrough
+   117→  andTee
+   133→  orTee
+   149→  mapErr
+   169→  andThen
+   190→  orElse
+   202→  match
+   206→  unwrapOr
+   222→  async *safeUnwrap
+   227→  then
+   249→export function okAsync
+   255→export function errAsync
+   259→export const fromPromise
+   260→export const fromSafePromise
+   262→export const fromAsyncThrowable
+   265→export type CombineResultAsyncs
+   272→export type CombineResultsWithAllErrorsArrayAsync
+   279→type UnwrapAsync
+   300→type TraverseAsync
+   330→type TraverseWithAllErrorsAsync
+   338→type Writable
+result.ts
+    14→export namespace Result
+    23→  export function fromThrowable
+    43→  export function combine
+    55→  export function combineWithAllErrors
+    62→export type Result
+    66→export function ok
+    73→export function err
+   122→export function safeTry
+   134→interface IResult
+   140→  isOk
+   147→  isErr
+   157→  map
+   168→  mapErr
+   183→  andThen
+   195→  andTee
+   207→  orTee
+   219→  andThrough
+   233→  orElse
+   244→  asyncAndThen
+   253→  asyncMap
+   260→  unwrapOr
+   276→  match
+   290→  safeUnwrap
+   299→  _unsafeUnwrap
+   309→  _unsafeUnwrapErr
+   312→export class Ok
+   313→  constructor
+   315→  isOk
+   319→  isErr
+   323→  map
+   328→  mapErr
+   337→  andThen
+   344→  andThrough
+   348→  andTee
+   357→  orTee
+   366→  orElse
+   370→  asyncAndThen
+   379→  asyncAndThrough
+   383→  asyncMap
+   388→  unwrapOr
+   393→  match
+   397→  safeUnwrap
+   405→  _unsafeUnwrap
+   409→  _unsafeUnwrapErr
+   419→export class Err
+   420→  constructor
+   422→  isOk
+   426→  isErr
+   431→  map
+   435→  mapErr
+   439→  andThrough
+   443→  andTee
+   447→  orTee
+   461→  andThen
+   470→  orElse
+   475→  asyncAndThen
+   479→  asyncAndThrough
+   484→  asyncMap
+   488→  unwrapOr
+   492→  match
+   496→  safeUnwrap
+   505→  _unsafeUnwrap
+   509→  _unsafeUnwrapErr
+   523→export const fromThrowable
+   530→type Prev
+   590→type CollectResults
+   614→export type Transpose
+   635→export type Combine
+   645→export type Dedup
+   652→export type MemberListOf
+   669→export type EmptyArrayToNever
+   680→type UnknownMembersToNever
+   685→export type MembersToUnion
+   688→export type IsLiteralArray
+   698→type Traverse
+   704→type TraverseWithAllErrors
+   712→export type CombineResults
+   719→export type CombineResultsWithAllErrorsArray

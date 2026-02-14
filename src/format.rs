@@ -9,11 +9,12 @@ use crate::{parse, walk};
 fn format_symbol(sym: &parse::Symbol, source: &str) -> String {
     let source_line = source.lines().nth(sym.line - 1).unwrap_or("");
     let trimmed = source_line.trim_start();
-    let prefix = match find_word(&sym.name, trimmed) {
-        Some(pos) => &trimmed[..pos + sym.name.len()],
-        None => &sym.name,
+    let indent = &source_line[..source_line.len() - trimmed.len()];
+    let name_prefix = match find_word(&sym.name, trimmed) {
+        Some(pos) => format!("{}{}", indent, &trimmed[..pos + sym.name.len()]),
+        None => sym.name.clone(),
     };
-    format!("  {} :{}", prefix, sym.line)
+    format!("{:>6}→{}", sym.line, name_prefix)
 }
 
 /// Find `needle` in `haystack` at a word boundary (not inside another identifier).
@@ -46,7 +47,7 @@ pub fn format_file_symbols(path: &Path, root: &Path, source: &str) -> String {
         return String::new();
     }
     let mut out = String::new();
-    out.push_str(&format!("{}:\n", relative.display()));
+    out.push_str(&format!("{}\n", relative.display()));
     for sym in &symbols {
         out.push_str(&format_symbol(sym, source));
         out.push('\n');

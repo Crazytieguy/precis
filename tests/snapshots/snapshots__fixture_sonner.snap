@@ -2,73 +2,73 @@
 source: tests/snapshots.rs
 expression: output
 ---
-assets.tsx:
-  export const getAsset :5
-  const bars :24
-  export const Loader :26
-  const SuccessIcon :38
-  const WarningIcon :48
-  const InfoIcon :58
-  const ErrorIcon :68
-  export const CloseIcon :78
-hooks.tsx:
-  export const useIsDocumentHidden :3
-index.tsx:
-  const VISIBLE_TOASTS_AMOUNT :22
-  const VIEWPORT_OFFSET :25
-  const MOBILE_VIEWPORT_OFFSET :28
-  const TOAST_LIFETIME :31
-  const TOAST_WIDTH :34
-  const GAP :37
-  const SWIPE_THRESHOLD :40
-  const TIME_BEFORE_UNMOUNT :43
-  function cn :45
-  function getDefaultSwipeDirections :49
-  const Toast :64
-  function getDocumentDirection :507
-  function assignOffset :520
-  function useSonner :552
-  const Toaster :593
-  const filteredToasts :617
-  const possiblePositions :623
-  const listRef :641
-  const hotkeyLabel :642
-  const lastFocusedElementRef :643
-  const isFocusWithinRef :644
-  const removeToast :646
-state.ts:
-  let toastsCounter :13
-  type titleT :15
-  class Observer :17
-  constructor :22
-  export const ToastState :254
-  const toastFunction :257
-  const isHttpResponse :268
-  const basicToast :279
-  const getHistory :281
-  const getToasts :282
-  export const toast :285
-types.ts:
-  export type ToastTypes :3
-  export type PromiseT :5
-  export interface PromiseIExtendedResult :7
-  export type PromiseTExtendedResult :11
-  export type PromiseTResult :15
-  export type PromiseExternalToast :20
-  export type PromiseData :22
-  export interface ToastClassnames :30
-  export interface ToastIcons :48
-  export interface Action :57
-  export interface ToastT :63
-  export function isAction :93
-  export type Position :97
-  export interface HeightT :98
-  interface ToastOptions :104
-  type Offset :118
-  export interface ToasterProps :128
-  export type SwipeDirection :152
-  export interface ToastProps :154
-  export enum SwipeStateTypes :184
-  export type Theme :190
-  export interface ToastToDismiss :192
-  export type ExternalToast :197
+assets.tsx
+     5→export const getAsset
+    24→const bars
+    26→export const Loader
+    38→const SuccessIcon
+    48→const WarningIcon
+    58→const InfoIcon
+    68→const ErrorIcon
+    78→export const CloseIcon
+hooks.tsx
+     3→export const useIsDocumentHidden
+index.tsx
+    22→const VISIBLE_TOASTS_AMOUNT
+    25→const VIEWPORT_OFFSET
+    28→const MOBILE_VIEWPORT_OFFSET
+    31→const TOAST_LIFETIME
+    34→const TOAST_WIDTH
+    37→const GAP
+    40→const SWIPE_THRESHOLD
+    43→const TIME_BEFORE_UNMOUNT
+    45→function cn
+    49→function getDefaultSwipeDirections
+    64→const Toast
+   507→function getDocumentDirection
+   520→function assignOffset
+   552→function useSonner
+   593→const Toaster
+   617→  const filteredToasts
+   623→  const possiblePositions
+   641→  const listRef
+   642→  const hotkeyLabel
+   643→  const lastFocusedElementRef
+   644→  const isFocusWithinRef
+   646→  const removeToast
+state.ts
+    13→let toastsCounter
+    15→type titleT
+    17→class Observer
+    22→  constructor
+   254→export const ToastState
+   257→const toastFunction
+   268→const isHttpResponse
+   279→const basicToast
+   281→const getHistory
+   282→const getToasts
+   285→export const toast
+types.ts
+     3→export type ToastTypes
+     5→export type PromiseT
+     7→export interface PromiseIExtendedResult
+    11→export type PromiseTExtendedResult
+    15→export type PromiseTResult
+    20→export type PromiseExternalToast
+    22→export type PromiseData
+    30→export interface ToastClassnames
+    48→export interface ToastIcons
+    57→export interface Action
+    63→export interface ToastT
+    93→export function isAction
+    97→export type Position
+    98→export interface HeightT
+   104→interface ToastOptions
+   118→type Offset
+   128→export interface ToasterProps
+   152→export type SwipeDirection
+   154→export interface ToastProps
+   184→export enum SwipeStateTypes
+   190→export type Theme
+   192→export interface ToastToDismiss
+   197→export type ExternalToast

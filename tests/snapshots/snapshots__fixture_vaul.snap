@@ -2,107 +2,107 @@
 source: tests/snapshots.rs
 expression: output
 ---
-browser.ts:
-  export function isMobileFirefox :1
-  export function isMac :10
-  export function isIPhone :14
-  export function isSafari :18
-  export function isIPad :22
-  export function isIOS :30
-  export function testPlatform :34
-constants.ts:
-  export const TRANSITIONS :1
-  export const VELOCITY_THRESHOLD :6
-  export const CLOSE_THRESHOLD :8
-  export const SCROLL_LOCK_TIMEOUT :10
-  export const BORDER_RADIUS :12
-  export const NESTED_DISPLACEMENT :14
-  export const WINDOW_TOP_OFFSET :16
-  export const DRAG_CLASS :18
-context.ts:
-  interface DrawerContextValue :4
-  export const DrawerContext :37
-  export const useDrawerContext :69
-helpers.ts:
-  interface Style :3
-  const cache :7
-  export function isInView :9
-  export function set :23
-  export function reset :42
-  export const isVertical :59
-  export function getTranslate :72
-  export function dampenValue :90
-  export function assignStyle :94
-  export function chain :108
-index.tsx:
-  export interface WithFadeFromProps :27
-  export interface WithoutFadeFromProps :40
-  export type DialogProps :50
-  export function Root :139
-  export const Overlay :803
-  const composedRef :806
-  const hasSnapPoints :807
-  const onMouseUp :808
-  export type ContentProps :831
-  export const Content :833
-  const composedRef :856
-  const pointerStartRef :857
-  const lastKnownPointerEventRef :858
-  const wasBeyondThePointRef :859
-  const hasSnapPoints :860
-  const isDeltaInDirection :863
-  function handleOnPointerUp :895
-  export type HandleProps :989
-  const LONG_HANDLE_PRESS_TIMEOUT :993
-  const DOUBLE_TAP_TIMEOUT :994
-  export const Handle :996
-  const closeTimeoutIdRef :1013
-  const shouldCancelInteractionRef :1014
-  function handleStartCycle :1016
-  function handleCycleSnapPoints :1027
-  function handleStartInteraction :1056
-  function handleCancelInteraction :1063
-  export function NestedRoot :1098
-  type PortalProps :1128
-  export function Portal :1130
-  export const Drawer :1137
-types.ts:
-  export type DrawerDirection :1
-  export interface SnapPoint :2
-  export type AnyFunction :7
-use-composed-refs.ts:
-  type PossibleRef :5
-  function setRef :11
-  function composeRefs :23
-  function useComposedRefs :31
-use-controllable-state.ts:
-  type UseControllableStateParams :5
-  type SetStateFn :11
-  function useCallbackRef :13
-  function useUncontrolledState :24
-  export function useControllableState :39
-use-position-fixed.ts:
-  let previousBodyPosition :4
-  export function usePositionFixed :15
-use-prevent-scroll.ts:
-  const KEYBOARD_BUFFER :6
-  export const useIsomorphicLayoutEffect :8
-  interface PreventScrollOptions :10
-  function chain :16
-  const visualViewport :27
-  export function isScrollable :29
-  export function getScrollParent :34
-  const nonTextInputTypes :47
-  let preventScrollCount :60
-  let restore :61
-  export function usePreventScroll :68
-  function preventScrollMobileSafari :118
-  function setStyle :243
-  function addEvent :257
-  function scrollIntoView :272
-  export function isInput :294
-use-scale-background.ts:
-  const noop :6
-  export function useScaleBackground :8
-use-snap-points.ts:
-  export function useSnapPoints :7
+browser.ts
+     1→export function isMobileFirefox
+    10→export function isMac
+    14→export function isIPhone
+    18→export function isSafari
+    22→export function isIPad
+    30→export function isIOS
+    34→export function testPlatform
+constants.ts
+     1→export const TRANSITIONS
+     6→export const VELOCITY_THRESHOLD
+     8→export const CLOSE_THRESHOLD
+    10→export const SCROLL_LOCK_TIMEOUT
+    12→export const BORDER_RADIUS
+    14→export const NESTED_DISPLACEMENT
+    16→export const WINDOW_TOP_OFFSET
+    18→export const DRAG_CLASS
+context.ts
+     4→interface DrawerContextValue
+    37→export const DrawerContext
+    69→export const useDrawerContext
+helpers.ts
+     3→interface Style
+     7→const cache
+     9→export function isInView
+    23→export function set
+    42→export function reset
+    59→export const isVertical
+    72→export function getTranslate
+    90→export function dampenValue
+    94→export function assignStyle
+   108→export function chain
+index.tsx
+    27→export interface WithFadeFromProps
+    40→export interface WithoutFadeFromProps
+    50→export type DialogProps
+   139→export function Root
+   803→export const Overlay
+   806→    const composedRef
+   807→    const hasSnapPoints
+   808→    const onMouseUp
+   831→export type ContentProps
+   833→export const Content
+   856→  const composedRef
+   857→  const pointerStartRef
+   858→  const lastKnownPointerEventRef
+   859→  const wasBeyondThePointRef
+   860→  const hasSnapPoints
+   863→  const isDeltaInDirection
+   895→  function handleOnPointerUp
+   989→export type HandleProps
+   993→const LONG_HANDLE_PRESS_TIMEOUT
+   994→const DOUBLE_TAP_TIMEOUT
+   996→export const Handle
+  1013→  const closeTimeoutIdRef
+  1014→  const shouldCancelInteractionRef
+  1016→  function handleStartCycle
+  1027→  function handleCycleSnapPoints
+  1056→  function handleStartInteraction
+  1063→  function handleCancelInteraction
+  1098→export function NestedRoot
+  1128→type PortalProps
+  1130→export function Portal
+  1137→export const Drawer
+types.ts
+     1→export type DrawerDirection
+     2→export interface SnapPoint
+     7→export type AnyFunction
+use-composed-refs.ts
+     5→type PossibleRef
+    11→function setRef
+    23→function composeRefs
+    31→function useComposedRefs
+use-controllable-state.ts
+     5→type UseControllableStateParams
+    11→type SetStateFn
+    13→function useCallbackRef
+    24→function useUncontrolledState
+    39→export function useControllableState
+use-position-fixed.ts
+     4→let previousBodyPosition
+    15→export function usePositionFixed
+use-prevent-scroll.ts
+     6→const KEYBOARD_BUFFER
+     8→export const useIsomorphicLayoutEffect
+    10→interface PreventScrollOptions
+    16→function chain
+    27→const visualViewport
+    29→export function isScrollable
+    34→export function getScrollParent
+    47→const nonTextInputTypes
+    60→let preventScrollCount
+    61→let restore
+    68→export function usePreventScroll
+   118→function preventScrollMobileSafari
+   243→function setStyle
+   257→function addEvent
+   272→function scrollIntoView
+   294→export function isInput
+use-scale-background.ts
+     6→const noop
+     8→export function useScaleBackground
+use-snap-points.ts
+     7→export function useSnapPoints
