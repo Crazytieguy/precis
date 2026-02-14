@@ -29,16 +29,14 @@ pub fn count_words(text: &str) -> usize {
     text.split_whitespace().count()
 }
 
-/// Find the highest granularity level whose output fits within the word budget.
+/// Find the highest level where `cost(level) <= budget`.
 /// Uses binary search over `0..=MAX_LEVEL`.
-pub fn budget_level(budget: usize, root: &Path) -> u8 {
-    let files = walk::discover_source_files(root);
+pub fn search_level(budget: usize, cost: impl Fn(u8) -> usize) -> u8 {
     let mut low: u8 = 0;
     let mut high: u8 = MAX_LEVEL;
     while low < high {
         let mid = (low + high).div_ceil(2);
-        let output = render_files(mid, root, &files);
-        if count_words(&output) <= budget {
+        if cost(mid) <= budget {
             low = mid;
         } else {
             high = mid - 1;
@@ -47,20 +45,15 @@ pub fn budget_level(budget: usize, root: &Path) -> u8 {
     low
 }
 
+/// Find the highest granularity level whose output fits within the word budget.
+pub fn budget_level(budget: usize, root: &Path) -> u8 {
+    let files = walk::discover_source_files(root);
+    search_level(budget, |level| count_words(&render_files(level, root, &files)))
+}
+
 /// Find the highest granularity level whose output for a single file fits within the word budget.
 pub fn budget_level_file(budget: usize, path: &Path, root: &Path, source: &str) -> u8 {
-    let mut low: u8 = 0;
-    let mut high: u8 = MAX_LEVEL;
-    while low < high {
-        let mid = (low + high).div_ceil(2);
-        let output = render_file(mid, path, root, source);
-        if count_words(&output) <= budget {
-            low = mid;
-        } else {
-            high = mid - 1;
-        }
-    }
-    low
+    search_level(budget, |level| count_words(&render_file(level, path, root, source)))
 }
 
 /// Render all source files in a directory at the given granularity level.

@@ -1279,70 +1279,47 @@ fn monotonicity_invariant() {
     assert!(tested_files > 0, "No fixture files available for monotonicity test");
 }
 
-/// Test the budget algorithm: budget_level_file should return the highest level
-/// whose output fits within the word budget. Tests per-file to avoid redundant
-/// directory renders, with one directory-level sanity check.
+/// Test the budget binary search with synthetic cost functions (no parsing).
 #[test]
 fn budget_algorithm() {
-    let fixtures: &[&str] = &[
-        "either/src",
-        "anyhow/src",
-        "neverthrow/src",
-        "mitt/src",
-        "ini/lib",
-    ];
+    let costs: [usize; 5] = [5, 10, 25, 60, 200];
+    let cost = |level: u8| costs[level as usize];
 
-    let mut tested_files = 0;
+    // Extremes
+    assert_eq!(format::search_level(0, &cost), 0);
+    assert_eq!(format::search_level(usize::MAX, &cost), format::MAX_LEVEL);
+
+    // Exact boundaries: budget matching level N's cost should select >= N
+    for level in 0..=format::MAX_LEVEL {
+        let selected = format::search_level(costs[level as usize], &cost);
+        assert!(selected >= level, "budget={} selected level {} (expected >= {})",
+            costs[level as usize], selected, level);
+    }
+
+    // Off-by-one: budget one below level N's cost should select < N
+    for level in 1..=format::MAX_LEVEL {
+        let selected = format::search_level(costs[level as usize] - 1, &cost);
+        assert!(selected < level, "budget={} selected level {} (expected < {})",
+            costs[level as usize] - 1, selected, level);
+    }
+
+    // Flat region: levels with equal cost should all be reachable
+    let flat_costs: [usize; 5] = [5, 10, 10, 10, 50];
+    let flat_cost = |level: u8| flat_costs[level as usize];
+    assert_eq!(format::search_level(10, &flat_cost), 3);
+    assert_eq!(format::search_level(9, &flat_cost), 0);
+}
+
+/// Sanity check: directory-level budget_level works at extremes.
+#[test]
+fn budget_level_sanity() {
+    let fixtures: &[&str] = &["either/src", "neverthrow/src"];
+    let mut tested = 0;
     for subpath in fixtures {
-        let Some(root) = fixture_path(subpath) else {
-            continue;
-        };
-        let files = precis::walk::discover_source_files(&root);
-        for file in &files {
-            let source = std::fs::read_to_string(file).unwrap();
-            tested_files += 1;
-
-            // Compute word counts at each level
-            let word_counts: Vec<usize> = (0..=format::MAX_LEVEL)
-                .map(|level| format::count_words(&format::render_file(level, file, &root, &source)))
-                .collect();
-
-            // Budget of 0 should give level 0
-            assert_eq!(format::budget_level_file(0, file, &root, &source), 0);
-
-            // Very large budget should give MAX_LEVEL
-            assert_eq!(
-                format::budget_level_file(usize::MAX, file, &root, &source),
-                format::MAX_LEVEL,
-            );
-
-            // Budget exactly matching each level's word count should select >= that level
-            for level in 0..=format::MAX_LEVEL {
-                let selected = format::budget_level_file(word_counts[level as usize], file, &root, &source);
-                assert!(
-                    selected >= level,
-                    "Budget of {} words (level {} count) selected level {} (expected >= {})",
-                    word_counts[level as usize], level, selected, level,
-                );
-            }
-
-            // Budget just below a level's word count should select a lower level
-            for level in 1..=format::MAX_LEVEL {
-                if word_counts[level as usize] > word_counts[(level - 1) as usize] {
-                    let budget = word_counts[level as usize] - 1;
-                    let selected = format::budget_level_file(budget, file, &root, &source);
-                    assert!(
-                        selected < level,
-                        "Budget of {} (one below level {} count {}) selected level {} (expected < {})",
-                        budget, level, word_counts[level as usize], selected, level,
-                    );
-                }
-            }
-        }
-
-        // Sanity check: directory-level budget_level agrees at the extremes
+        let Some(root) = fixture_path(subpath) else { continue };
+        tested += 1;
         assert_eq!(format::budget_level(0, &root), 0);
         assert_eq!(format::budget_level(usize::MAX, &root), format::MAX_LEVEL);
     }
-    assert!(tested_files > 0, "No fixture files available for budget test");
+    assert!(tested > 0, "No fixtures available for budget sanity test");
 }
