@@ -708,4 +708,77 @@ mod tests {
         assert_eq!(files[0]["content"], "");
         assert_eq!(files[1]["content"], "");
     }
+
+    #[test]
+    fn depth_penalty_values() {
+        use std::path::Path;
+        // Depth 0 (file at root): no penalty
+        assert_eq!(depth_penalty(Path::new("main.rs")), 0);
+        // Depth 1 (one directory): no penalty
+        assert_eq!(depth_penalty(Path::new("src/main.rs")), 0);
+        // Depth 2: penalty 1
+        assert_eq!(depth_penalty(Path::new("src/utils/helpers.rs")), 1);
+        // Depth 3: penalty 1
+        assert_eq!(depth_penalty(Path::new("src/utils/internal/core.rs")), 1);
+        // Depth 4: penalty 2
+        assert_eq!(depth_penalty(Path::new("a/b/c/d/file.rs")), 2);
+        // Depth 5: penalty 2
+        assert_eq!(depth_penalty(Path::new("a/b/c/d/e/file.rs")), 2);
+    }
+
+    #[test]
+    fn depth_aware_reduces_level_for_deep_files() {
+        let source = "pub fn hello() {}\n";
+        let root = Path::new("");
+
+        // Shallow file at level 2: should show full signature
+        let shallow = render_file(2, Path::new("lib.rs"), root, source);
+        assert!(shallow.contains("→"), "shallow file should have symbol lines");
+
+        // Deep file at level 2: penalty = 2/2 = 1, effective level 1
+        let deep = render_file(2, Path::new("a/b/lib.rs"), root, source);
+        assert!(deep.contains("→"), "deep file at effective level 1 should have symbol names");
+
+        // Even deeper file at level 2: penalty = 3/2 = 1, effective level 1
+        let deeper = render_file(2, Path::new("a/b/c/lib.rs"), root, source);
+        assert!(deeper.contains("→"), "deeper file at effective level 1 should have symbol names");
+
+        // Very deep file at level 2: penalty = 4/2 = 2, effective level 0
+        let very_deep = render_file(2, Path::new("a/b/c/d/lib.rs"), root, source);
+        assert!(!very_deep.contains("→"), "very deep file at effective level 0 should be path-only");
+
+        // Very deep file at higher level can still show content
+        let very_deep_l4 = render_file(4, Path::new("a/b/c/d/lib.rs"), root, source);
+        assert!(very_deep_l4.contains("→"), "very deep file at level 4 (effective 2) should have content");
+    }
+
+    #[test]
+    fn depth_aware_monotonicity() {
+        // For any given file at any depth, increasing the nominal level
+        // must never decrease the word count.
+        let source = "/// Doc comment\npub fn hello() {}\npub struct Foo { x: i32 }\n";
+        let root = Path::new("");
+
+        for path in &[
+            Path::new("lib.rs"),
+            Path::new("src/lib.rs"),
+            Path::new("a/b/lib.rs"),
+            Path::new("a/b/c/d/lib.rs"),
+        ] {
+            let mut prev_words = 0;
+            for level in 0..=MAX_LEVEL {
+                let output = render_file(level, path, root, source);
+                let words = count_words(&output);
+                assert!(
+                    words >= prev_words,
+                    "Depth-aware monotonicity violated for {:?} at level {}: {} < {}",
+                    path,
+                    level,
+                    words,
+                    prev_words,
+                );
+                prev_words = words;
+            }
+        }
+    }
 }
