@@ -71,6 +71,7 @@ generics.rs
     13→    pub fn new
     19→    pub fn intersects
     26→fn crawl
+    48→pub struct InferredBounds
     53→impl InferredBounds
     54→    pub fn new
     61→    pub fn insert
@@ -140,6 +141,7 @@ scan_expr.rs
    187→static RETURN
    192→pub(crate) fn scan_expr
 unraw.rs
+    12→pub struct IdentUnraw
     14→impl IdentUnraw
     15→    pub fn new
     19→    pub fn to_local
@@ -159,6 +161,7 @@ unraw.rs
     70→    fn parse
     75→impl ToTokens for IdentUnraw
     76→    fn to_tokens
+    82→pub enum MemberUnraw
     87→impl MemberUnraw
     88→    pub fn span
     96→impl Display for MemberUnraw

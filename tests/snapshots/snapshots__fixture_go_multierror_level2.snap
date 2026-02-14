@@ -27,6 +27,7 @@ group.go
     20→func (g *Group) Go(f func() error) {
     36→func (g *Group) Wait() *Error {
 multierror.go
+    13→type Error struct {
     18→func (e *Error) Error() string {
     31→func (e *Error) ErrorOrNil() error {
     42→func (e *Error) GoString() string {

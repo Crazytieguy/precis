@@ -4,8 +4,12 @@ expression: output
 ---
 backtrace.rs
      8→pub(crate) enum Backtrace {}
+    11→macro_rules! impl_backtrace {
     18→macro_rules! impl_backtrace {
+    25→macro_rules! backtrace {
     32→macro_rules! backtrace {
+    39→macro_rules! backtrace_if_absent {
+    53→macro_rules! backtrace_if_absent {
     64→macro_rules! backtrace_if_absent {
     71→mod capture {
     82→    pub(crate) struct Backtrace {
@@ -30,6 +34,7 @@ backtrace.rs
    252→        pub(crate) fn status(&self) -> BacktraceStatus {
    261→    impl Display for Backtrace {
    262→        fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+   311→    struct LazilyResolvedCapture {
    316→    impl LazilyResolvedCapture {
    317→        fn new(capture: Capture) -> Self {
    324→        fn force(&self) -> &Capture {
@@ -149,6 +154,7 @@ ensure.rs
     26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     29→impl<A, B> NotBothDebug for &(A, B) {
     30→    fn __dispatch_ensure(self, msg: &'static str) -> Error {
+    35→struct Buf {
     40→impl Buf {
     41→    fn new() -> Self {
     48→    fn as_str(&self) -> &str {
@@ -393,6 +399,7 @@ lib.rs
    672→    pub mod kind {
    684→    pub fn format_err(args: Arguments) -> Error {
    698→    pub fn must_use(error: Error) -> Error {
+   704→    pub fn not(cond: impl Bool) -> bool {
    708→    mod not {
    710→        pub trait Bool {
    711→            fn not(self) -> bool;

@@ -74,6 +74,9 @@ group.go
     35→// returns the multierror.
     36→func (g *Group) Wait() *Error {
 multierror.go
+    11→// Error is an error type to track multiple errors. This is used to
+    12→// accumulate errors in cases and return them as a single "error".
+    13→type Error struct {
     18→func (e *Error) Error() string {
     27→// ErrorOrNil returns an error interface if this Error represents
     28→// a list of errors, or returns nil if the list of errors is empty. This

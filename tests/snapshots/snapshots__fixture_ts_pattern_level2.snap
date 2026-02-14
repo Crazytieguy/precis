@@ -26,10 +26,15 @@ internals/helpers.ts
    134→  f: (v: a) => readonly b[]
    135→): b[] => xs.reduce<b[]>((acc, x) => acc.concat(f(x)), []);
 internals/symbols.ts
+    16→export const matcher = Symbol.for('@ts-pattern/matcher');
     17→export type matcher = typeof matcher;
+    19→export const unset = Symbol.for('@ts-pattern/unset');
     20→export type unset = typeof unset;
+    22→export const isVariadic = Symbol.for('@ts-pattern/isVariadic');
     23→export type isVariadic = typeof isVariadic;
+    26→export const anonymousSelectKey = '@ts-pattern/anonymous-select-key';
     27→export type anonymousSelectKey = typeof anonymousSelectKey;
+    29→export const override = Symbol.for('@ts-pattern/override');
     30→export type override = typeof override;
 is-matching.ts
     11→type PatternConstraint<T> = T extends readonly any[]

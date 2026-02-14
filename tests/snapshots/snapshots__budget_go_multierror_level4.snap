@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1800 → level 4 (1787 words)
+budget: 1800 → level 3 (920 words)
 
 CHANGELOG.md
      1→## Unreleased
@@ -20,12 +20,6 @@ README.md
      3→[![CircleCI](https://img.shields.io/circleci/build/github/hashicorp/go-multierror/master)](https://circleci.com/gh/hashicorp/go-multierror)
      4→[![Go Reference](https://pkg.go.dev/badge/github.com/hashicorp/go-multierror.svg)](https://pkg.go.dev/github.com/hashicorp/go-multierror)
      5→![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/hashicorp/go-multierror)
-     6→
-     7→[circleci]: https://app.circleci.com/pipelines/github/hashicorp/go-multierror
-     8→[godocs]: https://pkg.go.dev/github.com/hashicorp/go-multierror
-     9→
-    10→> **Note**: As of Go 1.20, the standard library provides [`errors.Join`](https://pkg.go.dev/errors#Join) which offers similar functionality for combining multiple errors. **For new projects, we recommend using `errors.Join` from the standard library.** This package provides additional features like custom formatting, the `Group` pattern for concurrent error collection, and utility functions (`Append`, `Flatten`, `Prefix`).
-    11→
     12→## Migrating to `errors.Join`
     13→
     14→**Basic error aggregation:**
@@ -35,217 +29,18 @@ README.md
     18→result = multierror.Append(result, err1)
     19→result = multierror.Append(result, err2)
     20→return result
-    21→
-    22→// After (stdlib)
-    23→var errs []error
-    24→if err1 != nil {
-    25→    errs = append(errs, err1)
-    26→}
-    27→if err2 != nil {
-    28→    errs = append(errs, err2)
-    29→}
-    30→if len(errs) > 0 {
-    31→    return errors.Join(errs...)
-    32→}
-    33→return nil
-    34→```
-    35→
-    36→**Custom formatting:**
-    37→```go
-    38→// go-multierror allows custom formatting
-    39→// With stdlib, wrap the joined error with a custom type if needed
-    40→type FormattedError struct {
-    41→    errs []error
-    42→}
-    43→
-    44→func (e *FormattedError) Error() string {
-    45→    // Your custom format here
-    46→    return fmt.Sprintf("multiple errors: %v", e.errs)
-    47→}
-    48→
-    49→func (e *FormattedError) Unwrap() []error {
-    50→    return e.errs
-    51→}
-    52→```
-    53→
-    54→**Concurrent error collection (Group):**
-    55→```go
-    56→// golang.org/x/sync/errgroup returns only the first error:
-    57→import "golang.org/x/sync/errgroup"
-    58→
-    59→g := new(errgroup.Group)
-    60→g.Go(func() error { return task1() })
-    61→g.Go(func() error { return task2() })
-    62→err := g.Wait() // Returns first error only
-    63→
-    64→// To collect ALL errors like multierror.Group does, use a mutex:
-    65→type ErrorCollector struct {
-    66→    mu   sync.Mutex
-    67→    errs []error
-    68→}
-    69→
-    70→func (ec *ErrorCollector) Add(err error) {
-    71→    if err != nil {
-    72→        ec.mu.Lock()
-    73→        ec.errs = append(ec.errs, err)
-    74→        ec.mu.Unlock()
-    75→    }
-    76→}
-    77→
-    78→func (ec *ErrorCollector) Err() error {
-    79→    ec.mu.Lock()
-    80→    defer ec.mu.Unlock()
-    81→    if len(ec.errs) == 0 {
-    82→        return nil
-    83→    }
-    84→    return errors.Join(ec.errs...)
-    85→}
-    86→```
-    87→
-    88→---
-    89→
-    90→`go-multierror` is a package for Go that provides a mechanism for
-    91→representing a list of `error` values as a single `error`.
-    92→
-    93→This allows a function in Go to return an `error` that might actually
-    94→be a list of errors. If the caller knows this, they can unwrap the
-    95→list and access the errors. If the caller doesn't know, the error
-    96→formats to a nice human-readable format.
-    97→
-    98→`go-multierror` is compatible with the Go standard library
-    99→[errors](https://golang.org/pkg/errors/) package, supporting the
-   100→`As`, `Is`, and `Unwrap` functions for error introspection. Note that `Unwrap` 
-   101→returns errors one at a time via chaining, unlike `errors.Join` which 
-   102→implements the newer `Unwrap() []error` signature (Go 1.20+).
-   103→
    104→## Installation and Docs
    105→
    106→Install using `go get github.com/hashicorp/go-multierror`.
-   107→
-   108→Full documentation is available at
-   109→https://pkg.go.dev/github.com/hashicorp/go-multierror
-   110→
    111→### Requires go version 1.13 or newer
    112→
    113→`go-multierror` requires go version 1.13 or newer. Go 1.13 introduced
    114→[error wrapping](https://golang.org/doc/go1.13#error_wrapping), which
    115→this library takes advantage of.
-   116→
-   117→If you need to use an earlier version of go, you can use the
-   118→[v1.0.0](https://github.com/hashicorp/go-multierror/tree/v1.0.0)
-   119→tag, which doesn't rely on features in go 1.13.
-   120→
-   121→If you see compile errors that look like the below, it's likely that
-   122→you're on an older version of go:
-   123→
-   124→```
-   125→/go/src/github.com/hashicorp/go-multierror/multierror.go:112:9: undefined: errors.As
-   126→/go/src/github.com/hashicorp/go-multierror/multierror.go:117:9: undefined: errors.Is
-   127→```
-   128→
    129→## Usage
    130→
    131→go-multierror is easy to use and purposely built to be unobtrusive in
    132→existing Go applications/libraries that may not be aware of it.
-   133→
-   134→**Building a list of errors**
-   135→
-   136→The `Append` function is used to create a list of errors. This function
-   137→behaves a lot like the Go built-in `append` function: it doesn't matter
-   138→if the first argument is nil, a `multierror.Error`, or any other `error`,
-   139→the function behaves as you would expect.
-   140→
-   141→```go
-   142→var result error
-   143→
-   144→if err := step1(); err != nil {
-   145→	result = multierror.Append(result, err)
-   146→}
-   147→if err := step2(); err != nil {
-   148→	result = multierror.Append(result, err)
-   149→}
-   150→
-   151→return result
-   152→```
-   153→
-   154→**Customizing the formatting of the errors**
-   155→
-   156→By specifying a custom `ErrorFormat`, you can customize the format
-   157→of the `Error() string` function:
-   158→
-   159→```go
-   160→var result *multierror.Error
-   161→
-   162→// ... accumulate errors here, maybe using Append
-   163→
-   164→if result != nil {
-   165→	result.ErrorFormat = func([]error) string {
-   166→		return "errors!"
-   167→	}
-   168→}
-   169→```
-   170→
-   171→**Accessing the list of errors**
-   172→
-   173→`multierror.Error` implements `error` so if the caller doesn't know about
-   174→multierror, it will work just fine. But if you're aware a multierror might
-   175→be returned, you can use type switches to access the list of errors:
-   176→
-   177→```go
-   178→if err := something(); err != nil {
-   179→	if merr, ok := err.(*multierror.Error); ok {
-   180→		// Use merr.Errors
-   181→	}
-   182→}
-   183→```
-   184→
-   185→You can also use the standard [`errors.Unwrap`](https://golang.org/pkg/errors/#Unwrap)
-   186→function. This will continue to unwrap into subsequent errors until none exist.
-   187→
-   188→**Extracting an error**
-   189→
-   190→The standard library [`errors.As`](https://golang.org/pkg/errors/#As)
-   191→function can be used directly with a multierror to extract a specific error:
-   192→
-   193→```go
-   194→// Assume err is a multierror value
-   195→err := somefunc()
-   196→
-   197→// We want to know if "err" has a "RichErrorType" in it and extract it.
-   198→var errRich RichErrorType
-   199→if errors.As(err, &errRich) {
-   200→	// It has it, and now errRich is populated.
-   201→}
-   202→```
-   203→
-   204→**Checking for an exact error value**
-   205→
-   206→Some errors are returned as exact errors such as the [`ErrNotExist`](https://golang.org/pkg/os/#pkg-variables)
-   207→error in the `os` package. You can check if this error is present by using
-   208→the standard [`errors.Is`](https://golang.org/pkg/errors/#Is) function.
-   209→
-   210→```go
-   211→// Assume err is a multierror value
-   212→err := somefunc()
-   213→if errors.Is(err, os.ErrNotExist) {
-   214→	// err contains os.ErrNotExist
-   215→}
-   216→```
-   217→
-   218→**Returning a multierror only if there are errors**
-   219→
-   220→If you build a `multierror.Error`, you can use the `ErrorOrNil` function
-   221→to return an `error` implementation only if there are errors to return:
-   222→
-   223→```go
-   224→var result *multierror.Error
-   225→
-   226→// ... accumulate errors here
-   227→
-   228→// Return the `error` only if errors were added to the multierror, otherwise
-   229→// return nil since there are no errors.
-   230→return result.ErrorOrNil()
-   231→```
 append.go
      6→// Append is a helper function that will append more errors
      7→// onto an Error in order to create a larger multi-error.
@@ -272,10 +67,6 @@ group.go
      8→// Group is a collection of goroutines which return errors that need to be
      9→// coalesced.
     10→type Group struct {
-    11→	mutex sync.Mutex
-    12→	err   *Error
-    13→	wg    sync.WaitGroup
-    14→}
     16→// Go calls the given function in a new goroutine.
     17→//
     18→// If the function returns an error it is added to the group multierror which
@@ -285,6 +76,9 @@ group.go
     35→// returns the multierror.
     36→func (g *Group) Wait() *Error {
 multierror.go
+    11→// Error is an error type to track multiple errors. This is used to
+    12→// accumulate errors in cases and return them as a single "error".
+    13→type Error struct {
     18→func (e *Error) Error() string {
     27→// ErrorOrNil returns an error interface if this Error represents
     28→// a list of errors, or returns nil if the list of errors is empty. This

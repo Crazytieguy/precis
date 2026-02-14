@@ -39,10 +39,30 @@ internals/helpers.ts
    134→  f: (v: a) => readonly b[]
    135→): b[] => xs.reduce<b[]>((acc, x) => acc.concat(f(x)), []);
 internals/symbols.ts
+     1→/**
+     2→ * Symbols used internally within ts-pattern to construct and discriminate
+     3→ * Guard, Not, and Select, and AnonymousSelect patterns
+     4→ *
+     5→ * Symbols have the advantage of not appearing in auto-complete suggestions in
+     6→ * user defined patterns, and eliminate the risk of property
+     7→ * overlap between ts-pattern internals and user defined patterns.
+     8→ *
+     9→ * These symbols have to be visible to tsc for type inference to work, but
+    10→ * users should not import them
+    11→ * @module
+    12→ * @private
+    13→ * @internal
+    14→ */
+    15→
+    16→export const matcher = Symbol.for('@ts-pattern/matcher');
     17→export type matcher = typeof matcher;
+    19→export const unset = Symbol.for('@ts-pattern/unset');
     20→export type unset = typeof unset;
+    22→export const isVariadic = Symbol.for('@ts-pattern/isVariadic');
     23→export type isVariadic = typeof isVariadic;
+    26→export const anonymousSelectKey = '@ts-pattern/anonymous-select-key';
     27→export type anonymousSelectKey = typeof anonymousSelectKey;
+    29→export const override = Symbol.for('@ts-pattern/override');
     30→export type override = typeof override;
 is-matching.ts
      6→/**

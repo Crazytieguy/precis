@@ -148,6 +148,12 @@ imp_std.rs
    283→        T: Sized,
    284→    {
 lib.rs
+   370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
+   371→#[path = "imp_cs.rs"]
+   372→mod imp;
+   374→#[cfg(all(feature = "std", feature = "parking_lot"))]
+   375→#[path = "imp_pl.rs"]
+   376→mod imp;
    378→#[cfg(all(feature = "std", not(feature = "parking_lot")))]
    379→#[path = "imp_std.rs"]
    380→mod imp;
@@ -839,6 +845,9 @@ lib.rs
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
 race.rs
+    41→/// A thread-safe cell which can be written to only once.
+    42→#[derive(Default, Debug)]
+    43→pub struct OnceNonZeroUsize {
     47→impl OnceNonZeroUsize {
     48→    /// Creates a new empty cell.
     49→    #[inline]
@@ -886,6 +895,9 @@ race.rs
    150→    fn init<E>(&self, f: impl FnOnce() -> Result<NonZeroUsize, E>) -> Result<NonZeroUsize, E> {
    159→    #[inline(always)]
    160→    fn compare_exchange(&self, val: NonZeroUsize) -> Result<usize, usize> {
+   165→/// A thread-safe cell which can be written to only once.
+   166→#[derive(Default, Debug)]
+   167→pub struct OnceBool {
    171→impl OnceBool {
    172→    /// Creates a new empty cell.
    173→    #[inline]

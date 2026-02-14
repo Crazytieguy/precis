@@ -5,10 +5,17 @@ expression: output
 backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
      8→pub(crate) enum Backtrace {}
+    10→#[cfg(std_backtrace)]
+    11→macro_rules! impl_backtrace {
     17→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     18→macro_rules! impl_backtrace {
+    24→#[cfg(any(std_backtrace, feature = "backtrace"))]
+    25→macro_rules! backtrace {
     31→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
     32→macro_rules! backtrace {
+    38→#[cfg(error_generic_member_access)]
+    39→macro_rules! backtrace_if_absent {
+    53→macro_rules! backtrace_if_absent {
     64→macro_rules! backtrace_if_absent {
     70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
@@ -35,6 +42,7 @@ backtrace.rs
    252→        pub(crate) fn status(&self) -> BacktraceStatus {
    261→    impl Display for Backtrace {
    262→        fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+   311→    struct LazilyResolvedCapture {
    316→    impl LazilyResolvedCapture {
    317→        fn new(capture: Capture) -> Self {
    324→        fn force(&self) -> &Capture {
@@ -184,6 +192,7 @@ ensure.rs
     26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     29→impl<A, B> NotBothDebug for &(A, B) {
     30→    fn __dispatch_ensure(self, msg: &'static str) -> Error {
+    35→struct Buf {
     40→impl Buf {
     41→    fn new() -> Self {
     48→    fn as_str(&self) -> &str {
@@ -1109,6 +1118,9 @@ lib.rs
    696→    #[cold]
    697→    #[must_use]
    698→    pub fn must_use(error: Error) -> Error {
+   702→    #[doc(hidden)]
+   703→    #[inline]
+   704→    pub fn not(cond: impl Bool) -> bool {
    708→    mod not {
    709→        #[doc(hidden)]
    710→        pub trait Bool {

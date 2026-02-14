@@ -70,6 +70,8 @@ imp_std.rs
    260→    pub(crate) fn with_addr
    281→    pub(crate) fn map_addr
 lib.rs
+   372→mod imp
+   376→mod imp
    380→mod imp
    383→pub mod unsync
    411→    pub struct OnceCell
@@ -167,6 +169,7 @@ lib.rs
   1408→    fn _dummy
   1412→pub mod race
 race.rs
+    43→pub struct OnceNonZeroUsize
     47→impl OnceNonZeroUsize
     50→    pub const fn new
     56→    pub fn get
@@ -176,6 +179,7 @@ race.rs
    138→    pub fn get_or_try_init
    150→    fn init
    160→    fn compare_exchange
+   167→pub struct OnceBool
    171→impl OnceBool
    174→    pub const fn new
    180→    pub fn get

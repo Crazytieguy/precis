@@ -317,6 +317,7 @@ lib.rs
    406→mod macros
    407→mod serde
    410→pub mod kv
+   421→struct AtomicUsize
    426→impl AtomicUsize
    427→    const fn new
    431→    fn load
@@ -466,10 +467,15 @@ macros.rs
    391→macro_rules! log_enabled
    415→macro_rules! __log_enabled
    429→macro_rules! __log_logger
+   445→macro_rules! __log_key
    459→macro_rules! __log_key
+   468→macro_rules! __log_value
    517→macro_rules! __log_value
+   526→macro_rules! __log_value_sval
    535→macro_rules! __log_value_sval
+   544→macro_rules! __log_value_serde
    553→macro_rules! __log_value_serde
+   564→macro_rules! __log_value_error
    573→macro_rules! __log_value_error
 serde.rs
     16→impl Serialize for Level

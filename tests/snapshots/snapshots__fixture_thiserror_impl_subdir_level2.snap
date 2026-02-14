@@ -75,6 +75,7 @@ generics.rs
     13→    pub fn new(generics: &'a Generics) -> Self {
     19→    pub fn intersects(&self, ty: &Type) -> bool {
     26→fn crawl(in_scope: &ParamsInScope, ty: &Type, found: &mut bool) {
+    48→pub struct InferredBounds {
     53→impl InferredBounds {
     54→    pub fn new() -> Self {
     61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
@@ -147,6 +148,7 @@ scan_expr.rs
    187→static RETURN: [(Input, Action); 2] = [
    192→pub(crate) fn scan_expr(input: ParseStream) -> Result<()> {
 unraw.rs
+    12→pub struct IdentUnraw(Ident);
     14→impl IdentUnraw {
     15→    pub fn new(ident: Ident) -> Self {
     19→    pub fn to_local(&self) -> Ident {
@@ -166,6 +168,7 @@ unraw.rs
     70→    fn parse(input: ParseStream) -> Result<Self> {
     75→impl ToTokens for IdentUnraw {
     76→    fn to_tokens(&self, tokens: &mut TokenStream) {
+    82→pub enum MemberUnraw {
     87→impl MemberUnraw {
     88→    pub fn span(&self) -> Span {
     96→impl Display for MemberUnraw {

@@ -298,14 +298,18 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
     dedup_overloads(symbols)
 }
 
-/// Collapse consecutive symbols with the same name, keeping only the last in each run.
+/// Collapse consecutive function symbols with the same name, keeping only the last in each run.
 /// This handles TypeScript/JavaScript method overload signatures: the overload declarations
 /// appear as `method_signature` nodes before the actual `method_definition` implementation.
+/// Only merges when both symbols are functions, so a Go struct named `Error` won't be
+/// collapsed with its `func (e *Error) Error()` method.
 fn dedup_overloads(symbols: Vec<Symbol>) -> Vec<Symbol> {
     let mut result: Vec<Symbol> = Vec::with_capacity(symbols.len());
     for sym in symbols {
         if let Some(last) = result.last()
             && last.name == sym.name
+            && last.kind == SymbolKind::Function
+            && sym.kind == SymbolKind::Function
         {
             // Replace the previous entry with this one (the later/implementation version)
             *result.last_mut().unwrap() = sym;
