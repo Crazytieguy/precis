@@ -148,3 +148,13 @@ fn fixture_either() {
     let output = format::format_directory(&root);
     insta::assert_snapshot!(output);
 }
+
+#[test]
+fn fixture_neverthrow() {
+    let Some(root) = fixture_path("neverthrow/src") else {
+        eprintln!("skipping fixture_neverthrow: clone with `git clone --depth 1 https://github.com/supermacro/neverthrow.git test/fixtures/neverthrow`");
+        return;
+    };
+    let output = format::format_directory(&root);
+    insta::assert_snapshot!(output);
+}

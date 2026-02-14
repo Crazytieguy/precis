@@ -1,0 +1,172 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+_internals/error.ts:
+  pub interface ErrorConfig :3
+  const defaultErrorConfig :7
+  interface NeverThrowError :11
+  pub const createNeverThrowError :27
+  const data :32
+  const maybeStack :36
+_internals/utils.ts:
+  pub type ExtractOkTypes :5
+  pub type ExtractOkAsyncTypes :10
+  pub type ExtractErrTypes :15
+  pub type ExtractErrAsyncTypes :20
+  pub type InferOkTypes :24
+  pub type InferErrTypes :25
+  pub type InferAsyncOkTypes :27
+  pub type InferAsyncErrTypes :28
+  pub const combineResultList :33
+  const acc :36
+  pub const combineResultAsyncList :54
+  pub const combineResultListWithAllErrors :64
+  const acc :67
+  pub const combineResultAsyncListWithAllErrors :82
+result-async.ts:
+  pub class ResultAsync :22
+  pub fn constructor :25
+  fn fromSafePromise :29
+  pub fn fromSafePromise :30
+  const newPromise :31
+  fn fromPromise :36
+  pub fn fromPromise :37
+  const newPromise :38
+  pub fn fromThrowable :46
+  fn combine :63
+  fn combine :66
+  pub fn combine :69
+  fn combineWithAllErrors :75
+  fn combineWithAllErrors :78
+  pub fn combineWithAllErrors :81
+  pub fn map :89
+  pub fn andThrough :101
+  const newRes :108
+  pub fn andTee :117
+  pub fn orTee :133
+  pub fn mapErr :149
+  fn andThen :161
+  fn andThen :164
+  fn andThen :167
+  pub fn andThen :169
+  const newValue :176
+  fn orElse :182
+  fn orElse :185
+  fn orElse :188
+  pub fn orElse :190
+  pub fn match :202
+  pub fn unwrapOr :206
+  pub fn safeUnwrap :222
+  pub fn then :227
+  const result :235
+  pub fn okAsync :249
+  pub fn errAsync :255
+  pub const fromPromise :259
+  pub const fromSafePromise :260
+  pub const fromAsyncThrowable :262
+  pub type CombineResultAsyncs :265
+  pub type CombineResultsWithAllErrorsArrayAsync :272
+  type UnwrapAsync :279
+  type TraverseAsync :300
+  type TraverseWithAllErrorsAsync :330
+  type Writable :338
+result.ts:
+  pub mod Result :14
+  pub fn fromThrowable :23
+  const result :29
+  pub fn combine :43
+  pub fn combineWithAllErrors :55
+  pub type Result :62
+  pub fn ok :66
+  pub fn err :73
+  pub fn safeTry :122
+  const n :127
+  interface IResult :134
+  fn isOk :140
+  fn isErr :147
+  fn map :157
+  fn mapErr :168
+  fn andThen :180
+  fn andThen :183
+  fn andTee :195
+  fn orTee :207
+  fn andThrough :218
+  fn andThrough :219
+  fn orElse :230
+  fn orElse :233
+  fn asyncAndThen :244
+  fn asyncMap :253
+  fn unwrapOr :260
+  fn match :276
+  fn safeUnwrap :290
+  fn _unsafeUnwrap :299
+  fn _unsafeUnwrapErr :309
+  pub class Ok :312
+  pub fn constructor :313
+  pub fn isOk :315
+  pub fn isErr :319
+  pub fn map :323
+  pub fn mapErr :328
+  fn andThen :332
+  fn andThen :335
+  pub fn andThen :337
+  fn andThrough :341
+  fn andThrough :342
+  pub fn andThrough :344
+  pub fn andTee :348
+  pub fn orTee :357
+  fn orElse :361
+  fn orElse :364
+  pub fn orElse :366
+  pub fn asyncAndThen :370
+  fn asyncAndThrough :374
+  fn asyncAndThrough :377
+  pub fn asyncAndThrough :379
+  pub fn asyncMap :383
+  pub fn unwrapOr :388
+  pub fn match :393
+  pub fn safeUnwrap :397
+  const value :398
+  pub fn _unsafeUnwrap :405
+  pub fn _unsafeUnwrapErr :409
+  pub class Err :419
+  pub fn constructor :420
+  pub fn isOk :422
+  pub fn isErr :426
+  pub fn map :431
+  pub fn mapErr :435
+  pub fn andThrough :439
+  pub fn andTee :443
+  pub fn orTee :447
+  fn andThen :456
+  fn andThen :459
+  pub fn andThen :461
+  fn orElse :465
+  fn orElse :468
+  pub fn orElse :470
+  pub fn asyncAndThen :475
+  pub fn asyncAndThrough :479
+  pub fn asyncMap :484
+  pub fn unwrapOr :488
+  pub fn match :492
+  pub fn safeUnwrap :496
+  const error :497
+  pub fn _unsafeUnwrap :505
+  pub fn _unsafeUnwrapErr :509
+  const self :515
+  pub const fromThrowable :523
+  type Prev :530
+  type CollectResults :590
+  pub type Transpose :614
+  pub type Combine :635
+  pub type Dedup :645
+  pub type MemberListOf :652
+  pub type EmptyArrayToNever :669
+  type UnknownMembersToNever :680
+  pub type MembersToUnion :685
+  pub type IsLiteralArray :688
+  type Traverse :698
+  type TraverseWithAllErrors :704
+  pub type CombineResults :712
+  pub type CombineResultsWithAllErrorsArray :719

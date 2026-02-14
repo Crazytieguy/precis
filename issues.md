@@ -5,7 +5,7 @@
 - Add more language grammars (Python, Go) — TypeScript/TSX done
 - Implement signature extraction (params, return types) — currently only symbol names
 - Implement the granularity hierarchy for token budgeting
-- Add more fixture snapshot tests (infra is set up with `either` crate; need TypeScript fixtures, more diverse Rust projects)
+- Add more fixture snapshot tests — `either` (Rust) and `neverthrow` (TypeScript) done; could use more diverse projects
 - Add `--json` output flag
 - Filter out test functions / `#[cfg(test)]` modules from default output
 
@@ -18,6 +18,8 @@
 - Should `#[test]` functions and `#[cfg(test)]` modules be excluded by default?
 - TypeScript: arrow functions assigned to `const` (e.g. `export const foo = () => ...`) show as `const` not `fn`. Should we detect and reclassify these?
 - TypeScript: `lexical_declaration` captures both `const` and `let` as `const`. Should `let` exports be shown differently?
+- TypeScript: `lexical_declaration` inside function/method bodies captures local variables (e.g. `const newPromise`, `const acc`) as symbols. These should be filtered to only capture module-level or class-level declarations.
+- TypeScript: method overload signatures (e.g. `fn andThen` appearing 3 times) are captured as separate symbols. Should overloads be deduplicated or collapsed?
 
 ## Technical debt
 
