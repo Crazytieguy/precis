@@ -4,26 +4,34 @@ expression: output
 ---
 sample.js
      1→
-     2→export function processItems(items) {
-     3→    return items.length;
-     4→}
-     5→
-     6→function helper() {}
-     7→
-     8→export class TokenParser {
-     9→    constructor(input) {
-    10→        this.tokens = [];
-    11→    }
+     2→/**
+     3→ * Process all items and return the total count.
+     4→ * @param {Array} items - The items to process.
+     5→ * @returns {number} The count of items.
+     6→ */
+     7→export function processItems(items) {
+     8→    return items.length;
+     9→}
+    10→
+    11→function helper() {}
     12→
-    13→    parse() {
-    14→        return this.tokens;
-    15→    }
-    16→
-    17→    #advance() {}
-    18→}
-    19→
-    20→export const MAX_TOKENS = 1024;
-    21→
-    22→export default class DefaultExport {
-    23→    name = "";
-    24→}
+    13→/**
+    14→ * A parser that tokenizes input strings.
+    15→ */
+    16→export class TokenParser {
+    17→    constructor(input) {
+    18→        this.tokens = [];
+    19→    }
+    20→
+    21→    parse() {
+    22→        return this.tokens;
+    23→    }
+    24→
+    25→    #advance() {}
+    26→}
+    27→
+    28→export const MAX_TOKENS = 1024;
+    29→
+    30→export default class DefaultExport {
+    31→    name = "";
+    32→}

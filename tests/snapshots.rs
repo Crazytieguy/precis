@@ -200,12 +200,20 @@ export namespace Utils {
 
 fn javascript_sample() -> &'static str {
     r#"
+/**
+ * Process all items and return the total count.
+ * @param {Array} items - The items to process.
+ * @returns {number} The count of items.
+ */
 export function processItems(items) {
     return items.length;
 }
 
 function helper() {}
 
+/**
+ * A parser that tokenizes input strings.
+ */
 export class TokenParser {
     constructor(input) {
         this.tokens = [];
@@ -230,12 +238,17 @@ fn tsx_sample() -> &'static str {
     r#"
 import React, { useState, forwardRef } from "react";
 
+/** Props for the Button component. */
 export interface ButtonProps {
     label: string;
     onClick: () => void;
     disabled?: boolean;
 }
 
+/**
+ * A clickable button component.
+ * @param props - The button props.
+ */
 export function Button({ label, onClick, disabled }: ButtonProps) {
     return <button onClick={onClick} disabled={disabled}>{label}</button>;
 }
@@ -249,6 +262,7 @@ function useToggle(initial: boolean): [boolean, () => void] {
     return [value, () => setValue(v => !v)];
 }
 
+/** A forwarded-ref input component. */
 export const Input = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
     (props, ref) => {
         return <input ref={ref} {...props} />;

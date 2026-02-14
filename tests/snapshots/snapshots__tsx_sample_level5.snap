@@ -6,42 +6,48 @@ sample.tsx
      1→
      2→import React, { useState, forwardRef } from "react";
      3→
-     4→export interface ButtonProps {
-     5→    label: string;
-     6→    onClick: () => void;
-     7→    disabled?: boolean;
-     8→}
-     9→
-    10→export function Button({ label, onClick, disabled }: ButtonProps) {
-    11→    return <button onClick={onClick} disabled={disabled}>{label}</button>;
-    12→}
-    13→
-    14→export const IconButton = ({ icon, ...rest }: { icon: string } & ButtonProps) => {
-    15→    return <Button label={icon} {...rest} />;
-    16→};
-    17→
-    18→function useToggle(initial: boolean): [boolean, () => void] {
-    19→    const [value, setValue] = useState(initial);
-    20→    return [value, () => setValue(v => !v)];
-    21→}
+     4→/** Props for the Button component. */
+     5→export interface ButtonProps {
+     6→    label: string;
+     7→    onClick: () => void;
+     8→    disabled?: boolean;
+     9→}
+    10→
+    11→/**
+    12→ * A clickable button component.
+    13→ * @param props - The button props.
+    14→ */
+    15→export function Button({ label, onClick, disabled }: ButtonProps) {
+    16→    return <button onClick={onClick} disabled={disabled}>{label}</button>;
+    17→}
+    18→
+    19→export const IconButton = ({ icon, ...rest }: { icon: string } & ButtonProps) => {
+    20→    return <Button label={icon} {...rest} />;
+    21→};
     22→
-    23→export const Input = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
-    24→    (props, ref) => {
-    25→        return <input ref={ref} {...props} />;
-    26→    }
-    27→);
-    28→
-    29→export type Theme = "light" | "dark";
-    30→
-    31→export const MemoizedList = React.memo(function MemoizedList({ items }: { items: string[] }) {
-    32→    return <ul>{items.map(i => <li key={i}>{i}</li>)}</ul>;
-    33→});
+    23→function useToggle(initial: boolean): [boolean, () => void] {
+    24→    const [value, setValue] = useState(initial);
+    25→    return [value, () => setValue(v => !v)];
+    26→}
+    27→
+    28→/** A forwarded-ref input component. */
+    29→export const Input = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
+    30→    (props, ref) => {
+    31→        return <input ref={ref} {...props} />;
+    32→    }
+    33→);
     34→
-    35→export default function App() {
-    36→    const [on, toggle] = useToggle(false);
-    37→    return (
-    38→        <div>
-    39→            <Button label={on ? "On" : "Off"} onClick={toggle} />
-    40→        </div>
-    41→    );
-    42→}
+    35→export type Theme = "light" | "dark";
+    36→
+    37→export const MemoizedList = React.memo(function MemoizedList({ items }: { items: string[] }) {
+    38→    return <ul>{items.map(i => <li key={i}>{i}</li>)}</ul>;
+    39→});
+    40→
+    41→export default function App() {
+    42→    const [on, toggle] = useToggle(false);
+    43→    return (
+    44→        <div>
+    45→            <Button label={on ? "On" : "Off"} onClick={toggle} />
+    46→        </div>
+    47→    );
+    48→}
