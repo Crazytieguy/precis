@@ -1,5 +1,5 @@
 use std::path::Path;
-use symbols::format;
+use precis::format;
 
 /// Helper to get the path to a test fixture. Returns None if the fixture isn't cloned.
 fn fixture_path(name: &str) -> Option<std::path::PathBuf> {

@@ -370,6 +370,20 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "384b8ab6d37215f3c5301a95a4accb5d64aa607f1fcb26a11b5303878451b4fe"
 
 [[package]]
+name = "precis"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "ignore",
+ "insta",
+ "streaming-iterator",
+ "tempfile",
+ "tree-sitter",
+ "tree-sitter-rust",
+ "tree-sitter-typescript",
+]
+
+[[package]]
 name = "prettyplease"
 version = "0.2.37"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -526,20 +540,6 @@ name = "strsim"
 version = "0.11.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7da8b5736845d9f2fcb837ea5d9e2628564b3b043a70948a3f0b778838c5fb4f"
-
-[[package]]
-name = "symbols"
-version = "0.1.0"
-dependencies = [
- "clap",
- "ignore",
- "insta",
- "streaming-iterator",
- "tempfile",
- "tree-sitter",
- "tree-sitter-rust",
- "tree-sitter-typescript",
-]
 
 [[package]]
 name = "syn"

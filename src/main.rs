@@ -1,11 +1,11 @@
 use clap::Parser;
 use std::path::PathBuf;
-use symbols::{format, walk};
+use precis::{format, walk};
 
 #[derive(Parser)]
-#[command(about = "Extract symbols from a codebase for LLM context")]
+#[command(about = "Extract a token-efficient summary of a codebase")]
 struct Cli {
-    /// Directory to extract symbols from
+    /// Directory or file to summarize
     path: PathBuf,
 
     /// Token budget for output

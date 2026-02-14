@@ -1,10 +1,10 @@
-# symbols
+# precis
 
-A CLI tool that extracts symbols from a directory and returns a token-efficient breakdown, designed for feeding codebase context into LLM prompts.
+A CLI tool that extracts a token-efficient summary of a codebase.
 
-## Design (Draft)
+## Design
 
-These are initial design directions, not final decisions. Expect them to evolve during implementation.
+This section describes the target design. See `issues.md` for current implementation status and remaining work.
 
 ### Parsing
 
@@ -12,32 +12,47 @@ Uses **tree-sitter** for language-agnostic symbol extraction. Each supported lan
 
 ### Token Budgeting
 
-Takes a `--budget` flag (in tokens). Uses a **granularity hierarchy** to fit output within the budget:
+Takes a `--budget` flag (in words).
 
-1. Folder names only
-2. Folder entrypoints — exported symbols only
-3. All files — names only
-4. All files — signatures (params, return types)
-5. Signatures + docstrings
-6. Full source for small files, signatures for large
+**Granularity function:** A single function `render(level, path, content) -> output` maps each file to its output at a given granularity level. The function is depth-aware (via `path`) and file-size-aware (via `content`), so a single level can behave differently for shallow vs deep files or small vs large files. A `MAX_LEVEL` constant defines the highest available level.
 
-Granularity is chosen **per-file/folder**, not globally. Small files get promoted to higher detail levels when budget allows. Folders with clear entrypoints (`index.ts`, `__init__.py`, `mod.rs`, etc.) are collapsed to just their public API when budget is tight.
+**Monotonicity invariant:** For any given file, a higher level must never produce fewer words than a lower level. This is tested against fixture files across all levels.
 
-The tool does a binary search across granularity levels to find the most detailed output that fits the budget.
+**Budget algorithm:** Binary search over `0..=MAX_LEVEL` to find the highest level where the total word count across all files fits within the budget.
+
+**Starting levels** (expected to evolve — levels differ in which lines are included and how much of each line is shown, but all file content is line-prefixes with line numbers):
+
+0. File paths only
+1. Symbol lines, truncated to symbol name (e.g. `pub fn new`)
+2. Symbol lines, full line-prefix including signature (e.g. `pub fn new(lang: Language) -> Self {`)
+3. Full source (all lines)
+
+Intermediate levels can be added over time (e.g. multi-line signatures, docstrings).
+
+Shallower files are prioritized over deeper ones when budget is tight. Users can zoom into subdirectories by running the tool on them directly with a larger budget.
 
 ### Output Format
 
-Plain text / markdown, optimized for direct use in LLM prompts.
+Plain text, optimized for readability and token efficiency.
 
-**Substring constraint:** Other than line numbers, each line in the output should be a substring of the actual original line in the source file. The tool extracts from the source rather than synthesizing new representations — no cross-language normalization of keywords.
+**Line-prefix constraint:** Each output line is a prefix of the actual line in the source file, preserving original whitespace and indentation. The tool extracts from the source rather than synthesizing new representations — no cross-language normalization of keywords. This means nesting (e.g. methods inside a Rust `impl` block) is represented naturally by the source's own indentation.
+
+Line numbers use a right-aligned format with an arrow separator. At name-only level:
 
 ```
-src/
-  parser/
-    index.ts: parseFile(path: string): Symbol[], parseDirectory(path: string): FileMap
-    types.ts: Symbol, FileMap, GranularityLevel
-  budget/
-    index.ts: fitToBudget(symbols: Map, budget: number): string
+src/parser.rs
+     1→impl Parser
+    12→    pub fn new
+    45→    pub fn parse
+```
+
+At signature level:
+
+```
+src/parser.rs
+     1→impl Parser {
+    12→    pub fn new(lang: Language) -> Self {
+    45→    pub fn parse(&self, source: &str) -> Tree {
 ```
 
 A `--json` flag may be added later for machine consumption.
@@ -48,4 +63,3 @@ Per-language support requires a tree-sitter grammar and a query file defining:
 - Which node types count as symbols
 - How to extract signatures
 - What signals "public" (e.g., `export` in JS, `pub` in Rust, capitalization in Go)
-- Entrypoint file conventions (e.g., `index.ts`, `__init__.py`, `mod.rs`)

@@ -1,6 +1,6 @@
-# Symbols
+# Precis
 
-A CLI tool that extracts symbols from a codebase and returns a token-efficient breakdown.
+A CLI tool that extracts a token-efficient summary of a codebase.
 
 ## Stack
 
