@@ -89,6 +89,9 @@ kv/key.rs
      8→    /// Perform the conversion.
      9→    fn to_key(&self) -> Key<'_>;
     12→impl<T> ToKey for &T
+    13→where
+    14→    T: ToKey + ?Sized,
+    15→{
     16→    fn to_key(&self) -> Key<'_> {
     21→impl<'k> ToKey for Key<'k> {
     22→    fn to_key(&self) -> Key<'_> {
@@ -230,22 +233,38 @@ kv/source.rs
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
    130→impl<T> Source for &T
+   131→where
+   132→    T: Source + ?Sized,
+   133→{
    134→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error> {
    138→    fn get(&self, key: Key) -> Option<Value<'_>> {
    142→    fn count(&self) -> usize {
    147→impl<K, V> Source for (K, V)
+   148→where
+   149→    K: ToKey,
+   150→    V: ToValue,
+   151→{
    152→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error> {
    156→    fn get(&self, key: Key) -> Option<Value<'_>> {
    164→    fn count(&self) -> usize {
    169→impl<S> Source for [S]
+   170→where
+   171→    S: Source,
+   172→{
    173→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error> {
    181→    fn get(&self, key: Key) -> Option<Value<'_>> {
    191→    fn count(&self) -> usize {
    196→impl<const N: usize, S> Source for [S; N]
+   197→where
+   198→    S: Source,
+   199→{
    200→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error> {
    204→    fn get(&self, key: Key) -> Option<Value<'_>> {
    208→    fn count(&self) -> usize {
    213→impl<S> Source for Option<S>
+   214→where
+   215→    S: Source,
+   216→{
    217→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error> {
    225→    fn get(&self, key: Key) -> Option<Value<'_>> {
    229→    fn count(&self) -> usize {
@@ -255,6 +274,9 @@ kv/source.rs
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
    240→#[allow(clippy::needless_lifetimes)] // Not needless.
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
+   242→where
+   243→    T: VisitSource<'kvs> + ?Sized,
+   244→{
    245→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error> {
    250→impl<'a, 'b: 'a, 'kvs> VisitSource<'kvs> for fmt::DebugMap<'a, 'b> {
    251→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error> {
@@ -267,28 +289,52 @@ kv/source.rs
    279→#[cfg(feature = "std")]
    280→mod std_support {
    288→    impl<S> Source for Box<S>
+   289→    where
+   290→        S: Source + ?Sized,
+   291→    {
    292→        fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error> {
    296→        fn get(&self, key: Key) -> Option<Value<'_>> {
    300→        fn count(&self) -> usize {
    305→    impl<S> Source for Arc<S>
+   306→    where
+   307→        S: Source + ?Sized,
+   308→    {
    309→        fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error> {
    313→        fn get(&self, key: Key) -> Option<Value<'_>> {
    317→        fn count(&self) -> usize {
    322→    impl<S> Source for Rc<S>
+   323→    where
+   324→        S: Source + ?Sized,
+   325→    {
    326→        fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error> {
    330→        fn get(&self, key: Key) -> Option<Value<'_>> {
    334→        fn count(&self) -> usize {
    339→    impl<S> Source for Vec<S>
+   340→    where
+   341→        S: Source,
+   342→    {
    343→        fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error> {
    347→        fn get(&self, key: Key) -> Option<Value<'_>> {
    351→        fn count(&self) -> usize {
    356→    impl<'kvs, V> VisitSource<'kvs> for Box<V>
+   357→    where
+   358→        V: VisitSource<'kvs> + ?Sized,
+   359→    {
    360→        fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error> {
    365→    impl<K, V, S> Source for HashMap<K, V, S>
+   366→    where
+   367→        K: ToKey + Borrow<str> + Eq + Hash,
+   368→        V: ToValue,
+   369→        S: BuildHasher,
+   370→    {
    371→        fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error> {
    378→        fn get(&self, key: Key) -> Option<Value<'_>> {
    382→        fn count(&self) -> usize {
    387→    impl<K, V> Source for BTreeMap<K, V>
+   388→    where
+   389→        K: ToKey + Borrow<str> + Ord,
+   390→        V: ToValue,
+   391→    {
    392→        fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error> {
    399→        fn get(&self, key: Key) -> Option<Value<'_>> {
    403→        fn count(&self) -> usize {
@@ -298,6 +344,9 @@ kv/value.rs
     12→    /// Perform the conversion.
     13→    fn to_value(&self) -> Value<'_>;
     16→impl<T> ToValue for &T
+    17→where
+    18→    T: ToValue + ?Sized,
+    19→{
     20→    fn to_value(&self) -> Value<'_> {
     25→impl<'v> ToValue for Value<'v> {
     26→    fn to_value(&self) -> Value<'_> {
@@ -458,6 +507,9 @@ kv/value.rs
    270→impl ToValue for () {
    271→    fn to_value(&self) -> Value<'_> {
    276→impl<T> ToValue for Option<T>
+   277→where
+   278→    T: ToValue,
+   279→{
    280→    fn to_value(&self) -> Value<'_> {
    288→macro_rules! impl_to_value_primitive {
    312→macro_rules! impl_to_value_nonzero_primitive {
@@ -471,10 +523,19 @@ kv/value.rs
    389→#[cfg(feature = "kv_std")]
    390→mod std_support {
    397→    impl<T> ToValue for Box<T>
+   398→    where
+   399→        T: ToValue + ?Sized,
+   400→    {
    401→        fn to_value(&self) -> Value<'_> {
    406→    impl<T> ToValue for Arc<T>
+   407→    where
+   408→        T: ToValue + ?Sized,
+   409→    {
    410→        fn to_value(&self) -> Value<'_> {
    415→    impl<T> ToValue for Rc<T>
+   416→    where
+   417→        T: ToValue + ?Sized,
+   418→    {
    419→        fn to_value(&self) -> Value<'_> {
    424→    impl ToValue for String {
    425→        fn to_value(&self) -> Value<'_> {
@@ -536,6 +597,9 @@ kv/value.rs
    533→    ) -> Result<(), Error> {
    538→#[allow(clippy::needless_lifetimes)] // Not needless.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
+   540→where
+   541→    T: VisitValue<'v>,
+   542→{
    543→    fn visit_any(&mut self, value: Value) -> Result<(), Error> {
    547→    fn visit_null(&mut self) -> Result<(), Error> {
    551→    fn visit_u64(&mut self, value: u64) -> Result<(), Error> {
@@ -1186,16 +1250,25 @@ lib.rs
   1290→    fn log(&self, _: &Record) {}
   1291→    fn flush(&self) {}
   1294→impl<T> Log for &'_ T
+  1295→where
+  1296→    T: ?Sized + Log,
+  1297→{
   1298→    fn enabled(&self, metadata: &Metadata) -> bool {
   1302→    fn log(&self, record: &Record) {
   1305→    fn flush(&self) {
   1310→#[cfg(feature = "std")]
   1311→impl<T> Log for std::boxed::Box<T>
+  1312→where
+  1313→    T: ?Sized + Log,
+  1314→{
   1315→    fn enabled(&self, metadata: &Metadata) -> bool {
   1319→    fn log(&self, record: &Record) {
   1322→    fn flush(&self) {
   1327→#[cfg(feature = "std")]
   1328→impl<T> Log for std::sync::Arc<T>
+  1329→where
+  1330→    T: ?Sized + Log,
+  1331→{
   1332→    fn enabled(&self, metadata: &Metadata) -> bool {
   1336→    fn log(&self, record: &Record) {
   1339→    fn flush(&self) {

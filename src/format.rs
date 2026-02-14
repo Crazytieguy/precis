@@ -324,9 +324,18 @@ fn is_type_definition(kind: parse::SymbolKind) -> bool {
     )
 }
 
-/// Whether a symbol is function-like (has a signature that may span multiple lines).
-fn is_function_like(kind: parse::SymbolKind) -> bool {
-    matches!(kind, parse::SymbolKind::Function)
+/// Whether a symbol kind can have a multi-line signature (parameters, `where` clauses, bounds).
+fn has_multiline_signature(kind: parse::SymbolKind) -> bool {
+    matches!(
+        kind,
+        parse::SymbolKind::Function
+            | parse::SymbolKind::Impl
+            | parse::SymbolKind::Trait
+            | parse::SymbolKind::Struct
+            | parse::SymbolKind::Enum
+            | parse::SymbolKind::Class
+            | parse::SymbolKind::Interface
+    )
 }
 
 /// Find the last line of a function's signature (0-indexed).
@@ -335,7 +344,7 @@ fn is_function_like(kind: parse::SymbolKind) -> bool {
 /// Returns sym.line - 1 for single-line or non-function symbols.
 fn signature_end_line(lines: &[&str], sym: &parse::Symbol, is_python: bool) -> usize {
     let sym_line_0 = sym.line - 1;
-    if !is_function_like(sym.kind) {
+    if !has_multiline_signature(sym.kind) {
         return sym_line_0;
     }
     let max_line = sym.end_line.min(lines.len());

@@ -39,6 +39,9 @@ display.rs
     11→    fn as_display(&'a self) -> Self::Target;
     12→}
     14→impl<'a, T> AsDisplay<'a> for &T
+    15→where
+    16→    T: Display + ?Sized + 'a,
+    17→{
     18→    type Target = &'a T;
     20→    fn as_display(&'a self) -> Self::Target {
     25→#[cfg(feature = "std")]
@@ -83,6 +86,9 @@ provide.rs
      5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
      6→}
      8→impl<T> ThiserrorProvide for T
+     9→where
+    10→    T: Error + ?Sized,
+    11→{
     12→    #[inline]
     13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
     18→#[doc(hidden)]

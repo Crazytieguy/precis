@@ -340,6 +340,15 @@ types/Pattern.ts
     23→export type MatcherProtocol<
     38→export type MatchResult = {
     50→export interface Matcher<
+    51→  input,
+    52→  narrowed,
+    53→  // Type of what this pattern selected from the input
+    54→  matcherType extends MatcherType = 'default',
+    55→  selections extends SelectionType = None,
+    56→  // Type to exclude from the input union because
+    57→  // it has been fully matched by this pattern
+    58→  excluded = narrowed
+    59→> {
     71→type PatternMatcher<input> = Matcher<input, unknown, any, any>;
     74→export type MatchedValue<a, invpattern> = WithDefault<
     79→export type AnyMatcher = Matcher<any, any, any, any, any>;

@@ -65,6 +65,9 @@ context.rs
     14→        where
     15→            C: Display + Send + Sync + 'static;
     19→    impl<E> StdError for E
+    20→    where
+    21→        E: crate::StdError + Send + Sync + 'static,
+    22→    {
     23→        fn ext_context<C>(self, context: C) -> Error
     24→        where
     25→            C: Display + Send + Sync + 'static,
@@ -75,6 +78,9 @@ context.rs
     35→            C: Display + Send + Sync + 'static,
     36→        {
     42→impl<T, E> Context<T, E> for Result<T, E>
+    43→where
+    44→    E: ext::StdError + Send + Sync + 'static,
+    45→{
     46→    fn context<C>(self, context: C) -> Result<T, Error>
     47→    where
     48→        C: Display + Send + Sync + 'static,
@@ -95,17 +101,34 @@ context.rs
    106→        F: FnOnce() -> C,
    107→    {
    115→impl<C, E> Debug for ContextError<C, E>
+   116→where
+   117→    C: Display,
+   118→    E: Debug,
+   119→{
    120→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
    128→impl<C, E> Display for ContextError<C, E>
+   129→where
+   130→    C: Display,
+   131→{
    132→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
    137→impl<C, E> StdError for ContextError<C, E>
+   138→where
+   139→    C: Display,
+   140→    E: StdError + 'static,
+   141→{
    142→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
    147→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
    152→impl<C> StdError for ContextError<C, Error>
+   153→where
+   154→    C: Display,
+   155→{
    156→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
    161→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
    166→struct Quoted<C>(C);
    168→impl<C> Debug for Quoted<C>
+   169→where
+   170→    C: Display,
+   171→{
    172→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
    180→impl Write for Quoted<&mut fmt::Formatter<'_>> {
    181→    fn write_str(&mut self, s: &str) -> fmt::Result {
@@ -117,6 +140,10 @@ ensure.rs
     10→pub trait BothDebug {
     11→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     14→impl<A, B> BothDebug for (A, B)
+    15→where
+    16→    A: Debug,
+    17→    B: Debug,
+    18→{
     19→    fn __dispatch_ensure(self, msg: &'static str) -> Error {
     25→pub trait NotBothDebug {
     26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
@@ -205,6 +232,9 @@ error.rs
    675→    pub(crate) fn provide<'a>(&'a self, request: &mut Request<'a>) {
    686→    pub fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
    692→impl<E> From<E> for Error
+   693→where
+   694→    E: StdError + Send + Sync + 'static,
+   695→{
    697→    fn from(error: E) -> Self {
    704→impl Deref for Error {
    705→    type Target = dyn StdError + Send + Sync + 'static;
@@ -271,11 +301,20 @@ error.rs
   1002→    unsafe fn provide<'a>(this: Ref<'a, Self>, request: &mut Request<'a>) {
   1010→    pub(crate) unsafe fn chain(this: Ref<Self>) -> Chain {
   1015→impl<E> StdError for ErrorImpl<E>
+  1016→where
+  1017→    E: StdError,
+  1018→{
   1019→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
   1024→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
   1029→impl<E> Debug for ErrorImpl<E>
+  1030→where
+  1031→    E: Debug,
+  1032→{
   1033→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
   1038→impl<E> Display for ErrorImpl<E>
+  1039→where
+  1040→    E: Display,
+  1041→{
   1042→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
   1048→impl From<Error> for Box<dyn StdError + Send + Sync + 'static> {
   1050→    fn from(error: Error) -> Self {
@@ -295,6 +334,9 @@ fmt.rs
     20→    pub(crate) unsafe fn debug(this: Ref<Self>, f: &mut fmt::Formatter) -> fmt::Result {
     69→struct Indented<'a, D> {
     75→impl<T> Write for Indented<'_, T>
+    76→where
+    77→    T: Write,
+    78→{
     79→    fn write_str(&mut self, s: &str) -> fmt::Result {
 kind.rs
     55→pub struct Adhoc;
@@ -382,22 +424,40 @@ nightly.rs
     56→pub fn provide<'a>(err: &'a (impl Error + ?Sized), request: &mut Request<'a>) {
 ptr.rs
      6→pub struct Own<T>
+     7→where
+     8→    T: ?Sized,
+     9→{
     13→unsafe impl<T> Send for Own<T> where T: ?Sized {}
     15→unsafe impl<T> Sync for Own<T> where T: ?Sized {}
     17→impl<T> Copy for Own<T> where T: ?Sized {}
     19→impl<T> Clone for Own<T>
+    20→where
+    21→    T: ?Sized,
+    22→{
     23→    fn clone(&self) -> Self {
     28→impl<T> Own<T>
+    29→where
+    30→    T: ?Sized,
+    31→{
     32→    pub fn new(ptr: Box<T>) -> Self {
     38→    pub fn cast<U: CastTo>(self) -> Own<U::Target> {
     44→    pub unsafe fn boxed(self) -> Box<T> {
     48→    pub fn by_ref(&self) -> Ref<T> {
     55→    pub fn by_mut(&mut self) -> Mut<T> {
     64→pub struct Ref<'a, T>
+    65→where
+    66→    T: ?Sized,
+    67→{
     72→impl<'a, T> Copy for Ref<'a, T> where T: ?Sized {}
     74→impl<'a, T> Clone for Ref<'a, T>
+    75→where
+    76→    T: ?Sized,
+    77→{
     78→    fn clone(&self) -> Self {
     83→impl<'a, T> Ref<'a, T>
+    84→where
+    85→    T: ?Sized,
+    86→{
     87→    pub fn new(ptr: &'a T) -> Self {
     94→    pub fn from_raw(ptr: NonNull<T>) -> Self {
    101→    pub fn cast<U: CastTo>(self) -> Ref<'a, U::Target> {
@@ -405,10 +465,19 @@ ptr.rs
    115→    pub fn as_ptr(self) -> *const T {
    119→    pub unsafe fn deref(self) -> &'a T {
    125→pub struct Mut<'a, T>
+   126→where
+   127→    T: ?Sized,
+   128→{
    133→impl<'a, T> Copy for Mut<'a, T> where T: ?Sized {}
    135→impl<'a, T> Clone for Mut<'a, T>
+   136→where
+   137→    T: ?Sized,
+   138→{
    139→    fn clone(&self) -> Self {
    144→impl<'a, T> Mut<'a, T>
+   145→where
+   146→    T: ?Sized,
+   147→{
    148→    pub fn cast<U: CastTo>(self) -> Mut<'a, U::Target> {
    155→    pub fn by_ref(self) -> Ref<'a, T> {
    162→    pub fn extend<'b>(self) -> Mut<'b, T> {
@@ -421,14 +490,26 @@ ptr.rs
 wrapper.rs
     11→pub struct MessageError<M>(pub M);
     13→impl<M> Debug for MessageError<M>
+    14→where
+    15→    M: Display + Debug,
+    16→{
     17→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     22→impl<M> Display for MessageError<M>
+    23→where
+    24→    M: Display + Debug,
+    25→{
     26→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     31→impl<M> StdError for MessageError<M> where M: Display + Debug + 'static {}
     34→pub struct DisplayError<M>(pub M);
     36→impl<M> Debug for DisplayError<M>
+    37→where
+    38→    M: Display,
+    39→{
     40→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     45→impl<M> Display for DisplayError<M>
+    46→where
+    47→    M: Display,
+    48→{
     49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     54→impl<M> StdError for DisplayError<M> where M: Display + 'static {}
     58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);

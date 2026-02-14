@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 5000 → level 2 (1953 words)
+budget: 5000 → level 2 (2151 words)
 
 into_either.rs
     14→pub trait IntoEither: Sized {
@@ -18,11 +18,19 @@ iterator.rs
     23→impl<L, R> IterEither<L, R> {
     24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
     29→impl<L, R, A> Extend<A> for Either<L, R>
+    30→where
+    31→    L: Extend<A>,
+    32→    R: Extend<A>,
+    33→{
     34→    fn extend<T>(&mut self, iter: T)
     35→    where
     36→        T: IntoIterator<Item = A>,
     37→    {
     43→impl<L, R> Iterator for Either<L, R>
+    44→where
+    45→    L: Iterator,
+    46→    R: Iterator<Item = L::Item>,
+    47→{
     48→    type Item = L::Item;
     50→    fn next(&mut self) -> Option<Self::Item> {
     54→    fn size_hint(&self) -> (usize, Option<usize>) {
@@ -67,6 +75,10 @@ iterator.rs
    129→        P: FnMut(Self::Item) -> bool,
    130→    {
    135→impl<L, R> DoubleEndedIterator for Either<L, R>
+   136→where
+   137→    L: DoubleEndedIterator,
+   138→    R: DoubleEndedIterator<Item = L::Item>,
+   139→{
    140→    fn next_back(&mut self) -> Option<Self::Item> {
    144→    fn nth_back(&mut self, n: usize) -> Option<Self::Item> {
    148→    fn rfold<Acc, G>(self, init: Acc, f: G) -> Acc
@@ -78,9 +90,21 @@ iterator.rs
    157→        P: FnMut(&Self::Item) -> bool,
    158→    {
    163→impl<L, R> ExactSizeIterator for Either<L, R>
+   164→where
+   165→    L: ExactSizeIterator,
+   166→    R: ExactSizeIterator<Item = L::Item>,
+   167→{
    168→    fn len(&self) -> usize {
    173→impl<L, R> iter::FusedIterator for Either<L, R>
+   174→where
+   175→    L: iter::FusedIterator,
+   176→    R: iter::FusedIterator<Item = L::Item>,
+   177→{
    180→impl<L, R> Iterator for IterEither<L, R>
+   181→where
+   182→    L: Iterator,
+   183→    R: Iterator,
+   184→{
    185→    type Item = Either<L::Item, R::Item>;
    187→    fn next(&mut self) -> Option<Self::Item> {
    191→    fn size_hint(&self) -> (usize, Option<usize>) {
@@ -125,6 +149,10 @@ iterator.rs
    266→        P: FnMut(Self::Item) -> bool,
    267→    {
    272→impl<L, R> DoubleEndedIterator for IterEither<L, R>
+   273→where
+   274→    L: DoubleEndedIterator,
+   275→    R: DoubleEndedIterator,
+   276→{
    277→    fn next_back(&mut self) -> Option<Self::Item> {
    281→    fn nth_back(&mut self, n: usize) -> Option<Self::Item> {
    285→    fn rfold<Acc, G>(self, init: Acc, f: G) -> Acc
@@ -136,8 +164,16 @@ iterator.rs
    294→        P: FnMut(&Self::Item) -> bool,
    295→    {
    300→impl<L, R> ExactSizeIterator for IterEither<L, R>
+   301→where
+   302→    L: ExactSizeIterator,
+   303→    R: ExactSizeIterator,
+   304→{
    305→    fn len(&self) -> usize {
    310→impl<L, R> iter::FusedIterator for IterEither<L, R>
+   311→where
+   312→    L: iter::FusedIterator,
+   313→    R: iter::FusedIterator,
+   314→{
 lib.rs
     22→pub mod serde_untagged;
     25→pub mod serde_untagged_optional;
@@ -315,49 +351,105 @@ lib.rs
   1128→impl<L, R> From<Either<L, R>> for Result<R, L> {
   1129→    fn from(val: Either<L, R>) -> Self {
   1138→impl<L, R> Future for Either<L, R>
+  1139→where
+  1140→    L: Future,
+  1141→    R: Future<Output = L::Output>,
+  1142→{
   1143→    type Output = L::Output;
   1145→    fn poll(
   1146→        self: Pin<&mut Self>,
   1147→        cx: &mut core::task::Context<'_>,
   1148→    ) -> core::task::Poll<Self::Output> {
   1157→impl<L, R> Read for Either<L, R>
+  1158→where
+  1159→    L: Read,
+  1160→    R: Read,
+  1161→{
   1162→    fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
   1166→    fn read_exact(&mut self, buf: &mut [u8]) -> io::Result<()> {
   1170→    fn read_to_end(&mut self, buf: &mut std::vec::Vec<u8>) -> io::Result<usize> {
   1174→    fn read_to_string(&mut self, buf: &mut std::string::String) -> io::Result<usize> {
   1183→impl<L, R> Seek for Either<L, R>
+  1184→where
+  1185→    L: Seek,
+  1186→    R: Seek,
+  1187→{
   1188→    fn seek(&mut self, pos: SeekFrom) -> io::Result<u64> {
   1195→impl<L, R> BufRead for Either<L, R>
+  1196→where
+  1197→    L: BufRead,
+  1198→    R: BufRead,
+  1199→{
   1200→    fn fill_buf(&mut self) -> io::Result<&[u8]> {
   1204→    fn consume(&mut self, amt: usize) {
   1208→    fn read_until(&mut self, byte: u8, buf: &mut std::vec::Vec<u8>) -> io::Result<usize> {
   1212→    fn read_line(&mut self, buf: &mut std::string::String) -> io::Result<usize> {
   1221→impl<L, R> Write for Either<L, R>
+  1222→where
+  1223→    L: Write,
+  1224→    R: Write,
+  1225→{
   1226→    fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
   1230→    fn write_all(&mut self, buf: &[u8]) -> io::Result<()> {
   1234→    fn write_fmt(&mut self, fmt: fmt::Arguments<'_>) -> io::Result<()> {
   1238→    fn flush(&mut self) -> io::Result<()> {
   1243→impl<L, R, Target> AsRef<Target> for Either<L, R>
+  1244→where
+  1245→    L: AsRef<Target>,
+  1246→    R: AsRef<Target>,
+  1247→{
   1248→    fn as_ref(&self) -> &Target {
   1253→macro_rules! impl_specific_ref_and_mut {
   1292→impl<L, R, Target> AsRef<[Target]> for Either<L, R>
+  1293→where
+  1294→    L: AsRef<[Target]>,
+  1295→    R: AsRef<[Target]>,
+  1296→{
   1297→    fn as_ref(&self) -> &[Target] {
   1302→impl<L, R, Target> AsMut<Target> for Either<L, R>
+  1303→where
+  1304→    L: AsMut<Target>,
+  1305→    R: AsMut<Target>,
+  1306→{
   1307→    fn as_mut(&mut self) -> &mut Target {
   1312→impl<L, R, Target> AsMut<[Target]> for Either<L, R>
+  1313→where
+  1314→    L: AsMut<[Target]>,
+  1315→    R: AsMut<[Target]>,
+  1316→{
   1317→    fn as_mut(&mut self) -> &mut [Target] {
   1322→impl<L, R> Deref for Either<L, R>
+  1323→where
+  1324→    L: Deref,
+  1325→    R: Deref<Target = L::Target>,
+  1326→{
   1327→    type Target = L::Target;
   1329→    fn deref(&self) -> &Self::Target {
   1334→impl<L, R> DerefMut for Either<L, R>
+  1335→where
+  1336→    L: DerefMut,
+  1337→    R: DerefMut<Target = L::Target>,
+  1338→{
   1339→    fn deref_mut(&mut self) -> &mut Self::Target {
   1348→impl<L, R> Error for Either<L, R>
+  1349→where
+  1350→    L: Error,
+  1351→    R: Error,
+  1352→{
   1353→    fn source(&self) -> Option<&(dyn Error + 'static)> {
   1358→    fn description(&self) -> &str {
   1363→    fn cause(&self) -> Option<&dyn Error> {
   1368→impl<L, R> fmt::Display for Either<L, R>
+  1369→where
+  1370→    L: fmt::Display,
+  1371→    R: fmt::Display,
+  1372→{
   1373→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
   1378→impl<L, R> fmt::Write for Either<L, R>
+  1379→where
+  1380→    L: fmt::Write,
+  1381→    R: fmt::Write,
+  1382→{
   1383→    fn write_str(&mut self, s: &str) -> fmt::Result {
   1387→    fn write_char(&mut self, c: char) -> fmt::Result {
   1391→    fn write_fmt(&mut self, args: fmt::Arguments<'_>) -> fmt::Result {
