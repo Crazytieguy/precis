@@ -20,16 +20,12 @@ parse.rs:
   fn fmt :33
   fn language_for_extension :52
   pub fn extract_symbols :71
-  fn is_public_symbol :163
-  fn is_inside_function :198
-  fn impl_name :214
-  mod tests :229
-  fn extracts_rust_symbols :234
-  fn unsupported_extension_returns_empty :300
+  fn is_public_symbol :168
+  fn is_inside_function :203
+  fn impl_name :219
+  fn has_preceding_attribute :234
+  fn is_rust_test_code :252
 walk.rs:
   const SOURCE_EXTENSIONS :5
   pub fn discover_source_files :18
   fn is_source_file :29
-  mod tests :36
-  fn discovers_files_in_own_project :41
-  fn filters_non_source_files :59

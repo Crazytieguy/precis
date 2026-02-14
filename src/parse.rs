@@ -132,6 +132,11 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             _ => continue,
         };
 
+        // Filter out Rust test code (#[test] functions, #[cfg(test)] modules)
+        if ext == "rs" && is_rust_test_code(symbol_node, source) {
+            continue;
+        }
+
         let name = if kind == SymbolKind::Impl {
             impl_name(symbol_node, source)
         } else {
@@ -225,6 +230,48 @@ fn impl_name(node: tree_sitter::Node, source: &str) -> String {
     }
 }
 
+/// Check if a node's preceding attribute siblings include a specific attribute.
+fn has_preceding_attribute(node: tree_sitter::Node, source: &str, needle: &str) -> bool {
+    let mut sibling = node.prev_sibling();
+    while let Some(sib) = sibling {
+        if sib.kind() == "attribute_item" {
+            let text = sib.utf8_text(source.as_bytes()).unwrap_or("");
+            if text == needle {
+                return true;
+            }
+        } else {
+            break;
+        }
+        sibling = sib.prev_sibling();
+    }
+    false
+}
+
+/// Check if a Rust node is test code that should be filtered from output.
+/// Returns true for `#[test]` functions, `#[cfg(test)]` modules, and anything nested inside them.
+fn is_rust_test_code(node: tree_sitter::Node, source: &str) -> bool {
+    if has_preceding_attribute(node, source, "#[test]")
+        || has_preceding_attribute(node, source, "#[cfg(test)]")
+    {
+        return true;
+    }
+    let mut current = node.parent();
+    while let Some(parent) = current {
+        if parent.kind() == "mod_item"
+            && has_preceding_attribute(parent, source, "#[cfg(test)]")
+        {
+            return true;
+        }
+        if parent.kind() == "function_item"
+            && has_preceding_attribute(parent, source, "#[test]")
+        {
+            return true;
+        }
+        current = parent.parent();
+    }
+    false
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -300,5 +347,31 @@ pub mod utils;
     fn unsupported_extension_returns_empty() {
         let symbols = extract_symbols(Path::new("test.py"), "def foo(): pass");
         assert!(symbols.is_empty());
+    }
+
+    #[test]
+    fn filters_rust_test_code() {
+        let source = r#"
+pub fn real_function() {}
+
+#[test]
+fn test_something() {}
+
+#[cfg(test)]
+mod tests {
+    fn helper() {}
+
+    #[test]
+    fn another_test() {}
+}
+"#;
+        let symbols = extract_symbols(Path::new("test.rs"), source);
+        let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
+
+        assert!(names.contains(&"real_function"));
+        assert!(!names.contains(&"test_something"));
+        assert!(!names.contains(&"tests"));
+        assert!(!names.contains(&"helper"));
+        assert!(!names.contains(&"another_test"));
     }
 }
