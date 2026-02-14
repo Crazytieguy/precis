@@ -12,15 +12,14 @@ fn format_symbol(sym: &parse::Symbol) -> String {
 pub fn format_file_symbols(path: &Path, root: &Path, source: &str) -> String {
     let relative = path.strip_prefix(root).unwrap_or(path);
     let symbols = parse::extract_symbols(path, source);
-    let mut out = String::new();
     if symbols.is_empty() {
-        out.push_str(&format!("{}\n", relative.display()));
-    } else {
-        out.push_str(&format!("{}:\n", relative.display()));
-        for sym in &symbols {
-            out.push_str(&format_symbol(sym));
-            out.push('\n');
-        }
+        return String::new();
+    }
+    let mut out = String::new();
+    out.push_str(&format!("{}:\n", relative.display()));
+    for sym in &symbols {
+        out.push_str(&format_symbol(sym));
+        out.push('\n');
     }
     out
 }
