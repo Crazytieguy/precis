@@ -1,0 +1,52 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+clean.js
+     4→const clean = (version, options) => {
+cmp.js
+    10→const cmp = (a, op, b, loose) => {
+coerce.js
+     7→const coerce = (version, options) => {
+compare-build.js
+     4→const compareBuild = (a, b, loose) => {
+compare-loose.js
+     4→const compareLoose = (a, b) => compare(a, b, true)
+compare.js
+     4→const compare = (a, b, loose) =>
+diff.js
+     5→const diff = (version1, version2) => {
+eq.js
+     4→const eq = (a, b, loose) => compare(a, b, loose) === 0
+gt.js
+     4→const gt = (a, b, loose) => compare(a, b, loose) > 0
+gte.js
+     4→const gte = (a, b, loose) => compare(a, b, loose) >= 0
+inc.js
+     5→const inc = (version, release, options, identifier, identifierBase) => {
+lt.js
+     4→const lt = (a, b, loose) => compare(a, b, loose) < 0
+lte.js
+     4→const lte = (a, b, loose) => compare(a, b, loose) <= 0
+major.js
+     4→const major = (a, loose) => new SemVer(a, loose).major
+minor.js
+     4→const minor = (a, loose) => new SemVer(a, loose).minor
+neq.js
+     4→const neq = (a, b, loose) => compare(a, b, loose) !== 0
+parse.js
+     4→const parse = (version, options, throwErrors = false) => {
+patch.js
+     4→const patch = (a, loose) => new SemVer(a, loose).patch
+prerelease.js
+     4→const prerelease = (version, options) => {
+rcompare.js
+     4→const rcompare = (a, b, loose) => compare(b, a, loose)
+rsort.js
+     4→const rsort = (list, loose) => list.sort((a, b) => compareBuild(b, a, loose))
+satisfies.js
+     4→const satisfies = (version, range, options) => {
+sort.js
+     4→const sort = (list, loose) => list.sort((a, b) => compareBuild(a, b, loose))
+valid.js
+     4→const valid = (version, options) => {

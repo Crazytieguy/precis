@@ -780,6 +780,26 @@ fn fixture_log_kv_subdir_level2() {
 }
 
 #[test]
+fn fixture_semver_functions_subdir() {
+    let Some(root) = fixture_path("semver/functions") else {
+        eprintln!("skipping fixture_semver_functions_subdir: clone with `git clone --depth 1 https://github.com/npm/node-semver.git test/fixtures/semver`");
+        return;
+    };
+    let output = format::render_directory(1, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_semver_functions_subdir_level2() {
+    let Some(root) = fixture_path("semver/functions") else {
+        eprintln!("skipping fixture_semver_functions_subdir_level2: clone with `git clone --depth 1 https://github.com/npm/node-semver.git test/fixtures/semver`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
 fn fixture_superstruct_structs_subdir_level2() {
     let Some(root) = fixture_path("superstruct/src/structs") else {
         eprintln!("skipping fixture_superstruct_structs_subdir_level2: clone with `git clone --depth 1 https://github.com/ianstormtaylor/superstruct.git test/fixtures/superstruct`");
