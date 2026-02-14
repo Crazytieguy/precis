@@ -159,6 +159,55 @@ export default class DefaultExport {
     insta::assert_snapshot!(output);
 }
 
+#[test]
+fn tsx_sample_snapshot() {
+    let source = r#"
+import React, { useState, forwardRef } from "react";
+
+export interface ButtonProps {
+    label: string;
+    onClick: () => void;
+    disabled?: boolean;
+}
+
+export function Button({ label, onClick, disabled }: ButtonProps) {
+    return <button onClick={onClick} disabled={disabled}>{label}</button>;
+}
+
+export const IconButton = ({ icon, ...rest }: { icon: string } & ButtonProps) => {
+    return <Button label={icon} {...rest} />;
+};
+
+function useToggle(initial: boolean): [boolean, () => void] {
+    const [value, setValue] = useState(initial);
+    return [value, () => setValue(v => !v)];
+}
+
+export const Input = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
+    (props, ref) => {
+        return <input ref={ref} {...props} />;
+    }
+);
+
+export type Theme = "light" | "dark";
+
+export const MemoizedList = React.memo(function MemoizedList({ items }: { items: string[] }) {
+    return <ul>{items.map(i => <li key={i}>{i}</li>)}</ul>;
+});
+
+export default function App() {
+    const [on, toggle] = useToggle(false);
+    return (
+        <div>
+            <Button label={on ? "On" : "Off"} onClick={toggle} />
+        </div>
+    );
+}
+"#;
+    let output = format::format_file_symbols(Path::new("sample.tsx"), Path::new(""), source);
+    insta::assert_snapshot!(output);
+}
+
 // Fixture-based snapshot tests.
 // Clone fixtures with: git clone --depth 1 <url> test/fixtures/<name>
 // Tests are skipped if the fixture directory is not present.

@@ -2,7 +2,7 @@
 
 ## Snapshot coverage
 
-- Add more fixture snapshot tests — `either` (Rust), `neverthrow` (TypeScript), and `semver` (JavaScript) done; could use more diverse projects (e.g. TSX/JSX React components)
+- Add more fixture snapshot tests — `either` (Rust), `neverthrow` (TypeScript), and `semver` (JavaScript) done; TSX inline sample added; could use a real-world TSX/JSX fixture project (e.g. a React component library)
 
 ## Codebase quality
 
