@@ -7,7 +7,6 @@
 ## Snapshot coverage
 
 - Add more fixture snapshot tests — `either` (Rust) and `neverthrow` (TypeScript) done; could use more diverse projects
-- Should `SOURCE_EXTENSIONS` in walk.rs be derived from which tree-sitter grammars are available, rather than hardcoded? (Currently py/go are walked but not parsed.)
 
 ## Codebase quality
 

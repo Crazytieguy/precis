@@ -1,16 +1,12 @@
 use ignore::Walk;
 use std::path::{Path, PathBuf};
 
-/// Known source file extensions, grouped by language.
+/// Known source file extensions — only languages with tree-sitter queries in queries/.
 const SOURCE_EXTENSIONS: &[&str] = &[
     // Rust
     "rs",
     // TypeScript / JavaScript
     "ts", "tsx", "js", "jsx",
-    // Python
-    "py",
-    // Go
-    "go",
 ];
 
 /// Discover source files under `root`, respecting .gitignore.
