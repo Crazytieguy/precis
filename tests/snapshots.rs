@@ -241,3 +241,13 @@ fn fixture_semver() {
     let output = format::format_directory(&root);
     insta::assert_snapshot!(output);
 }
+
+#[test]
+fn fixture_cmdk() {
+    let Some(root) = fixture_path("cmdk/cmdk/src") else {
+        eprintln!("skipping fixture_cmdk: clone with `git clone --depth 1 https://github.com/pacocoursey/cmdk.git test/fixtures/cmdk`");
+        return;
+    };
+    let output = format::format_directory(&root);
+    insta::assert_snapshot!(output);
+}

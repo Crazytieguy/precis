@@ -2,7 +2,7 @@
 
 ## Snapshot coverage
 
-- Add more fixture snapshot tests — `either` (Rust), `neverthrow` (TypeScript), and `semver` (JavaScript) done; TSX inline sample added; could use a real-world TSX/JSX fixture project (e.g. a React component library)
+- Add more fixture snapshot tests — `either` (Rust), `neverthrow` (TypeScript), `semver` (JavaScript), and `cmdk` (TSX) done; aiming for 5+ per language, currently 1 each
 
 ## Codebase quality
 
