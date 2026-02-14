@@ -1,0 +1,53 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+coercions.ts
+    16→export function coerce<T, S, C>(
+    38→export function defaulted<T, S>(
+    79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
+refinements.ts
+     8→export function empty<
+    21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
+    33→export function max<T extends number | Date, S extends any>(
+    55→export function min<T extends number | Date, S extends any>(
+    77→export function nonempty<
+    93→export function pattern<T extends string, S extends any>(
+   109→export function size<
+   146→export function refine<T, S>(
+types.ts
+    19→export function any(): Struct<any, null> {
+    33→export function array<T extends Struct<any>>(Element?: T): any {
+    60→export function bigint(): Struct<bigint, null> {
+    70→export function boolean(): Struct<boolean, null> {
+    83→export function date(): Struct<Date, null> {
+   105→export function enums<U extends string | number, T extends readonly U[]>(
+   131→export function func(): Struct<Function, null> {
+   144→export function instance<T extends { new (...args: any): any }>(
+   159→export function integer(): Struct<number, null> {
+   172→export function intersection<A extends AnyStruct, B extends AnyStruct[]>(
+   204→export function literal<T>(constant: T): any {
+   230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
+   258→export function never(): Struct<never, null> {
+   266→export function nullable<T, S>(struct: Struct<T, S>): Struct<T | null, S> {
+   278→export function number(): Struct<number, null> {
+   298→export function object<S extends ObjectSchema>(schema?: S): any {
+   351→export function optional<T, S>(struct: Struct<T, S>): Struct<T | undefined, S> {
+   367→export function record<K extends string, V>(
+   402→export function regexp(): Struct<RegExp, null> {
+   415→export function set<T>(Element?: Struct<T>): any {
+   442→export function string(): Struct<string, null> {
+   456→export function tuple<A extends AnyStruct, B extends AnyStruct[]>(
+   492→export function type<S extends ObjectSchema>(
+   522→export function union<A extends AnyStruct, B extends AnyStruct[]>(
+   574→export function unknown(): Struct<unknown, null> {
+utilities.ts
+    60→export function assign(...Structs: Struct<any>[]): any {
+    71→export function define<T>(name: string, validator: Validator): Struct<T, null> {
+    80→export function deprecated<T>(
+   106→export function dynamic<T>(
+   140→export function lazy<T>(fn: () => Struct<T, any>): Struct<T, null> {
+   171→export function omit<S extends ObjectSchema, K extends keyof S>(
+   197→export function partial<S extends ObjectSchema>(
+   221→export function pick<S extends ObjectSchema, K extends keyof S>(
+   247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {

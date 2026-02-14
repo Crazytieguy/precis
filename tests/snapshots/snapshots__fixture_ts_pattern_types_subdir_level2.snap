@@ -1,0 +1,192 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+BuildMany.ts
+     4→export type BuildMany<data, xs extends readonly any[]> = xs extends any
+    11→type BuildOne<data, xs extends readonly any[]> = xs extends [
+    19→export type SetDeep<data, value, path> = path extends readonly [
+DeepExclude.ts
+     3→export type DeepExclude<a, b> = Exclude<DistributeMatchingUnions<a, b>, b>;
+DistributeUnions.ts
+    41→export type DistributeMatchingUnions<a, p> = IsAny<a> extends true
+    46→export type FindUnionsMany<
+    80→export type FindUnions<
+   174→export type ArrayToVariadicUnion<input, excluded> = MaybeAddReadonly<
+   183→export type Distribute<unions extends readonly any[]> =
+ExtractPreciseValue.ts
+    13→export type ExtractPreciseValue<a, b> = b extends Override<infer b1>
+    81→type ExtractPreciseArrayValue<
+FindSelected.ts
+    11→type SelectionsRecord = Record<string, [unknown, unknown[]]>;
+    13→export type None = {
+    16→export type Some<key extends string> = {
+    21→export type SelectionType = None | Some<string>;
+    24→type MapOptional<selections> = {
+    31→type MapList<selections> = {
+    38→type ReduceFindSelectionUnion<
+    47→type FindSelectionUnionInArray<
+    96→export type FindSelectionUnion<
+   159→export type SeveralAnonymousSelectError<
+   165→export type MixedNamedAndAnonymousSelectError<
+   174→export type SelectionToArgs<selections extends SelectionsRecord> =
+   185→export type Selections<i, p> = FindSelectionUnion<i, p> extends infer u
+   191→export type FindSelected<i, p> =
+InvertPattern.ts
+    29→type OptionalKeys<p> = ValueOf<{
+    39→type ReduceUnion<
+    47→type ReduceIntersection<
+    55→type InvertArrayPattern<
+   106→export type InvertPattern<p, input> = Equal<Pattern<input>, p> extends true
+   110→type InvertPatternInternal<p, input> = 0 extends 1 & p
+   180→export type ReduceIntersectionForExclude<
+   192→export type ReduceUnionForExclude<
+   204→type ExcludeIfExists<a, b> =
+   231→type InvertArrayPatternForExclude<
+   303→export type InvertPatternForExclude<p, i> = Equal<Pattern<i>, p> extends true
+   307→type InvertPatternForExcludeInternal<p, i, empty = never> =
+IsMatching.ts
+    12→type IsMatchingTuple<a extends readonly any[], b extends readonly any[]> = [
+    26→type IsMatchingArray<
+    57→export type IsMatching<a, b> = true extends IsUnion<a> | IsUnion<b>
+Match.ts
+     8→export type PickReturnValue<a, b> = a extends symbols.unset ? b : a;
+    10→interface NonExhaustiveError<i> {
+    14→interface TSPatternError<i> {
+    22→export type Match<
+   132→  with<
+   159→  when<pred extends (value: i) => unknown, c, value extends GuardValue<pred>>(
+   180→  otherwise<c>(
+   205→  run(): PickReturnValue<o, inferredOutput>;
+   225→  narrow(): Match<DeepExcludeAll<i, handledCases>, o, [], inferredOutput>;
+   245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
+   251→type MakeTuples<ps extends readonly any[], value> = {
+   261→type Exhaustive<output, inferredOutput> = {
+Pattern.ts
+     7→export type MatcherType =
+    23→export type MatcherProtocol<
+    38→export type MatchResult = {
+    50→export interface Matcher<
+    71→type PatternMatcher<input> = Matcher<input, unknown, any, any>;
+    74→export type MatchedValue<a, invpattern> = WithDefault<
+    79→export type AnyMatcher = Matcher<any, any, any, any, any>;
+    81→type UnknownMatcher = PatternMatcher<unknown>;
+    83→export type CustomP<input, pattern, narrowedOrFn> = Matcher<
+    94→export type ArrayP<input, p> = Matcher<input, p, 'array'>;
+    96→export type RecordP<input, pkey, pvalue> = Matcher<
+   102→export type OptionalP<input, p> = Matcher<input, p, 'optional'>;
+   104→export type MapP<input, pkey, pvalue> = Matcher<input, [pkey, pvalue], 'map'>;
+   106→export type SetP<input, p> = Matcher<input, p, 'set'>;
+   108→export type AndP<input, ps> = Matcher<input, ps, 'and'>;
+   110→export type OrP<input, ps> = Matcher<input, ps, 'or'>;
+   112→export type NotP<input, p> = Matcher<input, p, 'not'>;
+   114→export type GuardP<input, narrowed> = Matcher<input, narrowed>;
+   116→export type GuardExcludeP<input, narrowed, excluded> = Matcher<
+   124→export type SelectP<
+   130→export type AnonymousSelectP = SelectP<symbols.anonymousSelectKey>;
+   132→export interface Override<a> {
+   136→export type UnknownProperties = { readonly [k: PropertyKey]: unknown };
+   138→export type UnknownValuePattern =
+   157→export type Pattern<a = unknown> = unknown extends a
+   161→type KnownPattern<a> = KnownPatternInternal<a>;
+   163→type KnownPatternInternal<
+   174→type ObjectPattern<a> =
+   180→type ArrayPattern<a> = a extends readonly (infer i)[]
+   190→export type UnknownPattern = Chainable<GuardP<unknown, unknown>, never>;
+   191→export type StringPattern = StringChainable<GuardP<unknown, string>, never>;
+   192→export type NumberPattern = NumberChainable<GuardP<unknown, number>, never>;
+   193→export type BooleanPattern = Chainable<GuardP<unknown, boolean>, never>;
+   194→export type BigIntPattern = BigIntChainable<GuardP<unknown, bigint>, never>;
+   195→export type SymbolPattern = Chainable<GuardP<unknown, symbol>, never>;
+   196→export type NullishPattern = Chainable<
+   201→export type NonNullablePattern = Chainable<GuardP<unknown, {}>, never>;
+   203→type MergeGuards<input, guard1, guard2> = [guard1, guard2] extends [
+   210→export type Chainable<p, omitted extends string = never> = p &
+   223→      optional<input>(): Chainable<OptionalP<input, p>, omitted | 'optional'>;
+   237→      and<input, const p2 extends Pattern<input>>(
+   253→      or<input, const p2 extends Pattern<input>>(
+   269→      select<input, k extends string>(
+   276→export type StringChainable<
+   291→      startsWith<input, const start extends string>(
+   306→      endsWith<input, const end extends string>(
+   321→      minLength<input, const min extends number>(
+   336→      length<input, const len extends number>(
+   351→      maxLength<input, const max extends number>(
+   366→      includes<input, const substr extends string>(
+   381→      regex<input, const expr extends string | RegExp>(
+   391→export type NumberChainable<p, omitted extends string = never> = Chainable<
+   407→      between<input, const min extends number, const max extends number>(
+   423→      lt<input, const max extends number>(
+   438→      gt<input, const min extends number>(
+   453→      lte<input, const max extends number>(
+   468→      gte<input, const min extends number>(
+   483→      int<input>(): NumberChainable<
+   496→      finite<input>(): NumberChainable<
+   509→      positive<input>(): NumberChainable<
+   522→      negative<input>(): NumberChainable<
+   530→export type BigIntChainable<p, omitted extends string = never> = Chainable<
+   546→      between<input, const min extends bigint, const max extends bigint>(
+   562→      lt<input, const max extends bigint>(
+   577→      gt<input, const min extends bigint>(
+   592→      lte<input, const max extends bigint>(
+   607→      gte<input, const min extends bigint>(
+   622→      positive<input>(): BigIntChainable<
+   635→      negative<input>(): BigIntChainable<
+   643→export type Variadic<pattern> = pattern & Iterable<pattern>;
+   645→export type ArrayChainable<
+   661→      optional<input>(): ArrayChainable<
+   678→      select<input, k extends string>(
+helpers.ts
+     1→export type ValueOf<a> = a extends readonly any[] ? a[number] : a[keyof a];
+     3→export type Values<a extends object> = UnionToTuple<ValueOf<a>>;
+    14→export type LeastUpperBound<a, b> = b extends a ? b : a extends b ? a : never;
+    16→export type Contains<a, b> = a extends any
+    25→export type UnionToIntersection<union> = (
+    31→export type IsUnion<a> = [a] extends [UnionToIntersection<a>] ? false : true;
+    33→export type UnionToTuple<
+    42→export type Flatten<
+    49→export type Equal<a, b> = (<T>() => T extends a ? 1 : 2) extends <
+    55→export type Expect<a extends true> = a;
+    57→export type IsAny<a> = 0 extends 1 & a ? true : false;
+    59→export type IsNever<T> = [T] extends [never] ? true : false;
+    61→export type Length<it extends readonly any[]> = it['length'];
+    63→export type Iterator<
+    68→export type Next<it extends any[]> = [any, ...it];
+    69→export type Prev<it extends any[]> = it extends readonly [any, ...infer tail]
+    73→export type Take<
+    83→export type Drop<
+    92→export type UpdateAt<
+   105→export type BuiltInObjects =
+   113→export type IsPlainObject<o, excludeUnion = BuiltInObjects> = o extends object
+   122→export type Compute<a extends any> = a extends BuiltInObjects
+   126→export type IntersectObjects<a> = (
+   138→export type WithDefault<a, def> = [a] extends [never] ? def : a;
+   140→export type IsLiteral<a> = [a] extends [null | undefined]
+   164→export type Primitives =
+   173→export type NonLiteralPrimitive = Exclude<Primitives, undefined | null>;
+   175→export type TupleKeys = '0' | '1' | '2' | '3' | '4';
+   177→export type Union<a, b> = [b] extends [a] ? a : [a] extends [b] ? b : a | b;
+   182→export type GuardValue<fn> = fn extends (value: any) => value is infer b
+   188→export type GuardFunction<input, narrowed> =
+   192→export type Some<bools extends boolean[]> = true extends bools[number]
+   196→export type All<bools extends boolean[]> = bools[number] extends true
+   200→export type Extends<a, b> = [a] extends [b] ? true : false;
+   202→export type Not<a extends boolean> = a extends true ? false : true;
+   204→type AllKeys<a> = a extends any ? keyof a : never;
+   207→export type MergeUnion<a> =
+   217→export type IsFixedSizeTuple<a extends readonly any[]> = IsLiteral<Length<a>>;
+   220→export type IsTuple<a> = a extends
+   227→export type IsStrictArray<a extends readonly any[]> = Not<IsTuple<a>>;
+   229→export type IsReadonlyArray<a> = a extends readonly any[]
+   235→export type MaybeAddReadonly<
+   240→export type MapKey<T> = T extends Map<infer K, any> ? K : never;
+   242→export type MapValue<T> = T extends Map<any, infer V> ? V : never;
+   244→export type SetValue<T> = T extends Set<infer V> ? V : never;
+   246→export type RecordKey<T> = T extends Record<infer K, any> ? K : never;
+   248→export type RecordValue<T> = T extends Record<any, infer V> ? V : never;
+   250→export type ReadonlyArrayValue<T> = T extends ReadonlyArray<infer V>
+   254→export type ExtractPlainObject<T> = T extends any
+   260→export type GetKey<O, K> = O extends any
+   266→export interface Fn {
+   271→export type Call<fn extends Fn, input> = (fn & {
+   275→export type IsOptionalKeysOf<obj, key extends keyof obj> = {} extends Pick<

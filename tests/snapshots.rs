@@ -706,6 +706,69 @@ fn fixture_input_otp_level2() {
     insta::assert_snapshot!(output);
 }
 
+// Nested subdirectory tests: running on a subdirectory within a fixture tests
+// that path display and file discovery work correctly at deeper nesting levels.
+
+#[test]
+fn fixture_ts_pattern_types_subdir() {
+    let Some(root) = fixture_path("ts-pattern/src/types") else {
+        eprintln!("skipping fixture_ts_pattern_types_subdir: clone with `git clone --depth 1 https://github.com/gvergnaud/ts-pattern.git test/fixtures/ts-pattern`");
+        return;
+    };
+    let output = format::render_directory(1, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_ts_pattern_types_subdir_level2() {
+    let Some(root) = fixture_path("ts-pattern/src/types") else {
+        eprintln!("skipping fixture_ts_pattern_types_subdir_level2: clone with `git clone --depth 1 https://github.com/gvergnaud/ts-pattern.git test/fixtures/ts-pattern`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_react_hot_toast_components_subdir() {
+    let Some(root) = fixture_path("react-hot-toast/src/components") else {
+        eprintln!("skipping fixture_react_hot_toast_components_subdir: clone with `git clone --depth 1 https://github.com/timolins/react-hot-toast.git test/fixtures/react-hot-toast`");
+        return;
+    };
+    let output = format::render_directory(1, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_react_hot_toast_components_subdir_level2() {
+    let Some(root) = fixture_path("react-hot-toast/src/components") else {
+        eprintln!("skipping fixture_react_hot_toast_components_subdir_level2: clone with `git clone --depth 1 https://github.com/timolins/react-hot-toast.git test/fixtures/react-hot-toast`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_superstruct_structs_subdir() {
+    let Some(root) = fixture_path("superstruct/src/structs") else {
+        eprintln!("skipping fixture_superstruct_structs_subdir: clone with `git clone --depth 1 https://github.com/ianstormtaylor/superstruct.git test/fixtures/superstruct`");
+        return;
+    };
+    let output = format::render_directory(1, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_superstruct_structs_subdir_level2() {
+    let Some(root) = fixture_path("superstruct/src/structs") else {
+        eprintln!("skipping fixture_superstruct_structs_subdir_level2: clone with `git clone --depth 1 https://github.com/ianstormtaylor/superstruct.git test/fixtures/superstruct`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
 /// Test the monotonicity invariant: for any file, a higher level must never
 /// produce fewer words than a lower level.
 #[test]

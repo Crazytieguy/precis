@@ -1,0 +1,42 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+checkmark.tsx
+     3→const circleAnimation = keyframes`
+    13→const checkmarkAnimation = keyframes`
+    29→export interface CheckmarkTheme {
+    34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
+error.tsx
+     3→const circleAnimation = keyframes`
+    13→const firstLineAnimation = keyframes`
+    23→const secondLineAnimation = keyframes`
+    33→export interface ErrorTheme {
+    38→export const ErrorIcon = styled('div')<ErrorTheme>`
+loader.tsx
+     3→const rotate = keyframes`
+    12→export interface LoaderTheme {
+    17→export const LoaderIcon = styled('div')<LoaderTheme>`
+toast-bar.tsx
+     8→const enterAnimation = (factor: number) => `
+    13→const exitAnimation = (factor: number) => `
+    18→const fadeInAnimation = `0%{opacity:0;} 100%{opacity:1;}`;
+    19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
+    22→const ToastBarBase = styled('div')`
+    38→const Message = styled('div')`
+    47→interface ToastBarProps {
+    57→const getAnimationStyle = (
+    75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
+toast-icon.tsx
+     9→const StatusWrapper = styled('div')`
+    13→const IndicatorWrapper = styled('div')`
+    22→const enter = keyframes`
+    32→export const AnimatedIconWrapper = styled('div')`
+    41→export type IconThemes = Partial<{
+    47→export const ToastIcon: React.FC<{
+toaster.tsx
+    15→const ToastWrapper = ({
+    47→const getPositionStyle = (
+    76→const activeClass = css`
+    83→const DEFAULT_OFFSET = 16;
+    85→export const Toaster: React.FC<ToasterProps> = ({
