@@ -1222,10 +1222,9 @@ use std::collections::HashMap;
 }
 
 /// Test the monotonicity invariant: for any file, a higher level must never
-/// produce fewer words than a lower level.
+/// produce fewer words than a lower level. Tests per-file across all fixtures.
 #[test]
 fn monotonicity_invariant() {
-    // Test against all available fixtures
     let fixtures: &[(&str, &str)] = &[
         ("either", "either/src"),
         ("anyhow", "anyhow/src"),
@@ -1249,33 +1248,40 @@ fn monotonicity_invariant() {
         ("input-otp", "input-otp/packages/input-otp/src"),
     ];
 
-    let mut tested = 0;
+    let mut tested_files = 0;
     for (name, subpath) in fixtures {
         let Some(root) = fixture_path(subpath) else {
             continue;
         };
-        tested += 1;
-        for level in 0..format::MAX_LEVEL {
-            let lower = format::render_directory(level, &root);
-            let upper = format::render_directory(level + 1, &root);
-            let lower_words: usize = lower.split_whitespace().count();
-            let upper_words: usize = upper.split_whitespace().count();
-            assert!(
-                upper_words >= lower_words,
-                "Monotonicity violation in {}: level {} ({} words) > level {} ({} words)",
-                name,
-                level,
-                lower_words,
-                level + 1,
-                upper_words,
-            );
+        let files = precis::walk::discover_source_files(&root);
+        for file in &files {
+            let source = std::fs::read_to_string(file).unwrap();
+            let relative = file.strip_prefix(&root).unwrap_or(file);
+            tested_files += 1;
+            let mut prev_words = 0;
+            for level in 0..=format::MAX_LEVEL {
+                let output = format::render_file(level, file, &root, &source);
+                let words = format::count_words(&output);
+                assert!(
+                    words >= prev_words,
+                    "Monotonicity violation in {} file {}: level {} ({} words) < level {} ({} words)",
+                    name,
+                    relative.display(),
+                    level,
+                    words,
+                    level.saturating_sub(1),
+                    prev_words,
+                );
+                prev_words = words;
+            }
         }
     }
-    assert!(tested > 0, "No fixtures available for monotonicity test");
+    assert!(tested_files > 0, "No fixture files available for monotonicity test");
 }
 
-/// Test the budget algorithm: budget_level should return the highest level
-/// whose output fits within the word budget.
+/// Test the budget algorithm: budget_level_file should return the highest level
+/// whose output fits within the word budget. Tests per-file to avoid redundant
+/// directory renders, with one directory-level sanity check.
 #[test]
 fn budget_algorithm() {
     let fixtures: &[&str] = &[
@@ -1286,62 +1292,57 @@ fn budget_algorithm() {
         "ini/lib",
     ];
 
-    let mut tested = 0;
+    let mut tested_files = 0;
     for subpath in fixtures {
         let Some(root) = fixture_path(subpath) else {
             continue;
         };
-        tested += 1;
+        let files = precis::walk::discover_source_files(&root);
+        for file in &files {
+            let source = std::fs::read_to_string(file).unwrap();
+            tested_files += 1;
 
-        // Compute word counts at each level
-        let mut word_counts = Vec::new();
-        for level in 0..=format::MAX_LEVEL {
-            let output = format::render_directory(level, &root);
-            word_counts.push(format::count_words(&output));
-        }
+            // Compute word counts at each level
+            let word_counts: Vec<usize> = (0..=format::MAX_LEVEL)
+                .map(|level| format::count_words(&format::render_file(level, file, &root, &source)))
+                .collect();
 
-        // Budget of 0 should give level 0 (file paths have at least 1 word)
-        // unless even level 0 is empty
-        let level0 = format::budget_level(0, &root);
-        assert_eq!(level0, 0, "Budget 0 should yield level 0");
+            // Budget of 0 should give level 0
+            assert_eq!(format::budget_level_file(0, file, &root, &source), 0);
 
-        // Very large budget should give MAX_LEVEL
-        let level_max = format::budget_level(usize::MAX, &root);
-        assert_eq!(
-            level_max,
-            format::MAX_LEVEL,
-            "Huge budget should yield MAX_LEVEL"
-        );
-
-        // Budget exactly matching each level's word count should select that level
-        for level in 0..=format::MAX_LEVEL {
-            let selected = format::budget_level(word_counts[level as usize], &root);
-            assert!(
-                selected >= level,
-                "Budget of {} words (level {} count) selected level {} (expected >= {})",
-                word_counts[level as usize],
-                level,
-                selected,
-                level,
+            // Very large budget should give MAX_LEVEL
+            assert_eq!(
+                format::budget_level_file(usize::MAX, file, &root, &source),
+                format::MAX_LEVEL,
             );
-        }
 
-        // Budget just below a level's word count should select the previous level
-        for level in 1..=format::MAX_LEVEL {
-            if word_counts[level as usize] > word_counts[(level - 1) as usize] {
-                let budget = word_counts[level as usize] - 1;
-                let selected = format::budget_level(budget, &root);
+            // Budget exactly matching each level's word count should select >= that level
+            for level in 0..=format::MAX_LEVEL {
+                let selected = format::budget_level_file(word_counts[level as usize], file, &root, &source);
                 assert!(
-                    selected < level,
-                    "Budget of {} (one below level {} count {}) selected level {} (expected < {})",
-                    budget,
-                    level,
-                    word_counts[level as usize],
-                    selected,
-                    level,
+                    selected >= level,
+                    "Budget of {} words (level {} count) selected level {} (expected >= {})",
+                    word_counts[level as usize], level, selected, level,
                 );
             }
+
+            // Budget just below a level's word count should select a lower level
+            for level in 1..=format::MAX_LEVEL {
+                if word_counts[level as usize] > word_counts[(level - 1) as usize] {
+                    let budget = word_counts[level as usize] - 1;
+                    let selected = format::budget_level_file(budget, file, &root, &source);
+                    assert!(
+                        selected < level,
+                        "Budget of {} (one below level {} count {}) selected level {} (expected < {})",
+                        budget, level, word_counts[level as usize], selected, level,
+                    );
+                }
+            }
         }
+
+        // Sanity check: directory-level budget_level agrees at the extremes
+        assert_eq!(format::budget_level(0, &root), 0);
+        assert_eq!(format::budget_level(usize::MAX, &root), format::MAX_LEVEL);
     }
-    assert!(tested > 0, "No fixtures available for budget test");
+    assert!(tested_files > 0, "No fixture files available for budget test");
 }

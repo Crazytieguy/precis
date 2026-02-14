@@ -16,3 +16,11 @@ tree-sitter-typescript = "0.23.2"
 [dev-dependencies]
 insta = "1"
 tempfile = "3"
+
+# Tree-sitter parsing is ~4x slower without optimizations, which dominates test runtime.
+[profile.dev.package.tree-sitter]
+opt-level = 3
+[profile.dev.package.tree-sitter-rust]
+opt-level = 3
+[profile.dev.package.tree-sitter-typescript]
+opt-level = 3
