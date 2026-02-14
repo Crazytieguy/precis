@@ -443,7 +443,7 @@ fn is_inside_function(node: tree_sitter::Node) -> bool {
             "function_declaration" | "function_expression" | "method_definition" | "arrow_function"
             | "generator_function" | "generator_function_declaration" |
             // Go
-            "method_declaration" |
+            "method_declaration" | "func_literal" |
             // Python
             "function_definition" => {
                 return true;
@@ -1242,5 +1242,31 @@ var (
         // Individual entries still captured
         assert!(info.contains(&("Debug", SymbolKind::Static)));
         assert!(info.contains(&("Verbose", SymbolKind::Static)));
+    }
+
+    #[test]
+    fn filters_go_func_literal_nested_symbols() {
+        let source = r#"
+package example
+
+var Handler = func() {
+	const bufSize = 4096
+	var temp = "x"
+}
+
+func Process() {}
+
+const MaxItems = 100
+"#;
+        let symbols = extract_symbols(Path::new("test.go"), source);
+        let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
+
+        // Package-level symbols should be captured
+        assert!(names.contains(&"Handler"));
+        assert!(names.contains(&"Process"));
+        assert!(names.contains(&"MaxItems"));
+        // Symbols inside func_literal should be filtered out
+        assert!(!names.contains(&"bufSize"));
+        assert!(!names.contains(&"temp"));
     }
 }
