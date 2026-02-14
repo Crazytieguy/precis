@@ -27,7 +27,9 @@ The tool does a binary search across granularity levels to find the most detaile
 
 ### Output Format
 
-Plain text / markdown, optimized for direct use in LLM prompts:
+Plain text / markdown, optimized for direct use in LLM prompts.
+
+**Substring constraint:** Other than line numbers, each line in the output should be a substring of the actual original line in the source file. The tool extracts from the source rather than synthesizing new representations — no cross-language normalization of keywords.
 
 ```
 src/
