@@ -1,0 +1,301 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+errors.ts:
+  export class NonExhaustiveError :5
+  constructor :6
+internals/helpers.ts:
+  export const isObject :12
+  export const isMatcher :16
+  const isOptionalPattern :24
+  export const matchPattern :32
+  export const getSelectionKeys :120
+  export const flatMap :132
+internals/symbols.ts:
+  export type matcher :17
+  export type unset :20
+  export type isVariadic :23
+  export type anonymousSelectKey :27
+  export type override :30
+is-matching.ts:
+  type PatternConstraint :11
+  export function isMatching :53
+match.ts:
+  type MatchState :7
+  const unmatched :11
+  export function match :32
+  class MatchExpression :47
+  constructor :48
+  with :50
+  when :94
+  otherwise :110
+  exhaustive :115
+  run :120
+  returnType :124
+  narrow :128
+  function defaultCatcher :133
+patterns.ts:
+  export type unstable_Matchable :81
+  export type unstable_Matcher :100
+  export type infer :116
+  export type narrow :131
+  function chainable :136
+  const variadic :148
+  function arrayChainable :165
+  export function optional :187
+  type UnwrapArray :217
+  type UnwrapSet :219
+  type UnwrapMapKey :221
+  type UnwrapMapValue :223
+  type UnwrapRecordKey :225
+  type UnwrapRecordValue :227
+  type WithDefault :229
+  export function array :246
+  export function set :299
+  const setEvery :336
+  export function map :362
+  const mapEvery :410
+  export function record :445
+  const recordEvery :505
+  export function intersection :536
+  export function union :572
+  export function not :611
+  export function when :646
+  export function select :696
+  function isUnknown :734
+  function isNumber :738
+  function isString :742
+  function isBoolean :746
+  function isBigInt :750
+  function isSymbol :754
+  function isNullish :758
+  function isNonNullable :762
+  type AnyConstructor :766
+  function isInstanceOf :768
+  export const any :782
+  export const unknown :793
+  export const _ :805
+  const startsWith :817
+  const endsWith :831
+  const minLength :845
+  const length :857
+  const maxLength :869
+  const includes :881
+  const regex :895
+  const stringChainable :900
+  export const string :928
+  const between :940
+  const lt :955
+  const gt :969
+  const lte :983
+  const gte :997
+  const int :1011
+  const finite :1023
+  const positive :1035
+  const negative :1047
+  const numberChainable :1050
+  export const number :1075
+  const betweenBigInt :1087
+  const ltBigInt :1106
+  const gtBigInt :1120
+  const lteBigInt :1134
+  const gteBigInt :1148
+  const positiveBigInt :1162
+  const negativeBigInt :1174
+  const bigintChainable :1177
+  export const bigint :1201
+  export const boolean :1211
+  export const symbol :1221
+  export const nullish :1231
+  export const nonNullable :1241
+  export function instanceOf :1251
+  export function shape :1274
+types/BuildMany.ts:
+  export type BuildMany :4
+  type BuildOne :11
+  export type SetDeep :19
+types/DeepExclude.ts:
+  export type DeepExclude :3
+types/DistributeUnions.ts:
+  export type DistributeMatchingUnions :41
+  export type FindUnionsMany :46
+  export type FindUnions :80
+  export type ArrayToVariadicUnion :174
+  export type Distribute :183
+types/ExtractPreciseValue.ts:
+  export type ExtractPreciseValue :13
+  type ExtractPreciseArrayValue :81
+types/FindSelected.ts:
+  type SelectionsRecord :11
+  export type None :13
+  export type Some :16
+  export type SelectionType :21
+  type MapOptional :24
+  type MapList :31
+  type ReduceFindSelectionUnion :38
+  type FindSelectionUnionInArray :47
+  export type FindSelectionUnion :96
+  export type SeveralAnonymousSelectError :159
+  export type MixedNamedAndAnonymousSelectError :165
+  export type SelectionToArgs :174
+  export type Selections :185
+  export type FindSelected :191
+types/InvertPattern.ts:
+  type OptionalKeys :29
+  type ReduceUnion :39
+  type ReduceIntersection :47
+  type InvertArrayPattern :55
+  export type InvertPattern :106
+  type InvertPatternInternal :110
+  export type ReduceIntersectionForExclude :180
+  export type ReduceUnionForExclude :192
+  type ExcludeIfExists :204
+  type InvertArrayPatternForExclude :231
+  export type InvertPatternForExclude :303
+  type InvertPatternForExcludeInternal :307
+types/IsMatching.ts:
+  type IsMatchingTuple :12
+  type IsMatchingArray :26
+  export type IsMatching :57
+types/Match.ts:
+  export type PickReturnValue :8
+  interface NonExhaustiveError :10
+  interface TSPatternError :14
+  export type Match :22
+  with :132
+  when :159
+  otherwise :180
+  run :205
+  narrow :225
+  type DeepExcludeAll :245
+  type MakeTuples :251
+  type Exhaustive :261
+types/Pattern.ts:
+  export type MatcherType :7
+  export type MatcherProtocol :23
+  export type MatchResult :38
+  export interface Matcher :50
+  type PatternMatcher :71
+  export type MatchedValue :74
+  export type AnyMatcher :79
+  type UnknownMatcher :81
+  export type CustomP :83
+  export type ArrayP :94
+  export type RecordP :96
+  export type OptionalP :102
+  export type MapP :104
+  export type SetP :106
+  export type AndP :108
+  export type OrP :110
+  export type NotP :112
+  export type GuardP :114
+  export type GuardExcludeP :116
+  export type SelectP :124
+  export type AnonymousSelectP :130
+  export interface Override :132
+  export type UnknownProperties :136
+  export type UnknownValuePattern :138
+  export type Pattern :157
+  type KnownPattern :161
+  type KnownPatternInternal :163
+  type ObjectPattern :174
+  type ArrayPattern :180
+  export type UnknownPattern :190
+  export type StringPattern :191
+  export type NumberPattern :192
+  export type BooleanPattern :193
+  export type BigIntPattern :194
+  export type SymbolPattern :195
+  export type NullishPattern :196
+  export type NonNullablePattern :201
+  type MergeGuards :203
+  export type Chainable :210
+  optional :223
+  and :237
+  or :253
+  select :269
+  export type StringChainable :276
+  startsWith :291
+  endsWith :306
+  minLength :321
+  length :336
+  maxLength :351
+  includes :366
+  regex :381
+  export type NumberChainable :391
+  between :407
+  lt :423
+  gt :438
+  lte :453
+  gte :468
+  int :483
+  finite :496
+  positive :509
+  negative :522
+  export type BigIntChainable :530
+  between :546
+  lt :562
+  gt :577
+  lte :592
+  gte :607
+  positive :622
+  negative :635
+  export type Variadic :643
+  export type ArrayChainable :645
+  optional :661
+  select :678
+types/helpers.ts:
+  export type ValueOf :1
+  export type Values :3
+  export type LeastUpperBound :14
+  export type Contains :16
+  export type UnionToIntersection :25
+  export type IsUnion :31
+  export type UnionToTuple :33
+  export type Flatten :42
+  export type Equal :49
+  export type Expect :55
+  export type IsAny :57
+  export type IsNever :59
+  export type Length :61
+  export type Iterator :63
+  export type Next :68
+  export type Prev :69
+  export type Take :73
+  export type Drop :83
+  export type UpdateAt :92
+  export type BuiltInObjects :105
+  export type IsPlainObject :113
+  export type Compute :122
+  export type IntersectObjects :126
+  export type WithDefault :138
+  export type IsLiteral :140
+  export type Primitives :164
+  export type NonLiteralPrimitive :173
+  export type TupleKeys :175
+  export type Union :177
+  export type GuardValue :182
+  export type GuardFunction :188
+  export type Some :192
+  export type All :196
+  export type Extends :200
+  export type Not :202
+  type AllKeys :204
+  export type MergeUnion :207
+  export type IsFixedSizeTuple :217
+  export type IsTuple :220
+  export type IsStrictArray :227
+  export type IsReadonlyArray :229
+  export type MaybeAddReadonly :235
+  export type MapKey :240
+  export type MapValue :242
+  export type SetValue :244
+  export type RecordKey :246
+  export type RecordValue :248
+  export type ReadonlyArrayValue :250
+  export type ExtractPlainObject :254
+  export type GetKey :260
+  export interface Fn :266
+  export type Call :271
+  export type IsOptionalKeysOf :275

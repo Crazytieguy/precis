@@ -253,6 +253,16 @@ fn fixture_cmdk() {
 }
 
 #[test]
+fn fixture_ts_pattern() {
+    let Some(root) = fixture_path("ts-pattern/src") else {
+        eprintln!("skipping fixture_ts_pattern: clone with `git clone --depth 1 https://github.com/gvergnaud/ts-pattern.git test/fixtures/ts-pattern`");
+        return;
+    };
+    let output = format::format_directory(&root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
 fn fixture_anyhow() {
     let Some(root) = fixture_path("anyhow/src") else {
         eprintln!("skipping fixture_anyhow: clone with `git clone --depth 1 https://github.com/dtolnay/anyhow.git test/fixtures/anyhow`");
