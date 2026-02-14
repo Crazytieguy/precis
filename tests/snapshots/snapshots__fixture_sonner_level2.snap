@@ -30,7 +30,6 @@ index.tsx
    552→function useSonner() {
    593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
 state.ts
-    13→let toastsCounter = 1;
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
     22→  constructor() {

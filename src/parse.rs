@@ -127,6 +127,13 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             "enum_declaration" => SymbolKind::Enum,
             "type_alias_declaration" => SymbolKind::TypeAlias,
             "lexical_declaration" => {
+                // Filter out `let` and `var` — only `const` declarations are symbols.
+                // `let`/`var` are mutable runtime state, not API-level definitions.
+                let keyword = symbol_node.child(0).map(|c| c.kind());
+                if keyword != Some("const") {
+                    continue;
+                }
+
                 let declarator = symbol_node
                     .named_children(&mut symbol_node.walk())
                     .find(|c| c.kind() == "variable_declarator");
@@ -134,7 +141,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
                     .and_then(|d| d.child_by_field_name("value"))
                     .map(|v| v.kind());
 
-                // Detect arrow functions / function expressions assigned to const/let
+                // Detect arrow functions / function expressions assigned to const
                 // e.g. `export const foo = () => ...` should be fn, not const
                 if matches!(value_kind, Some("arrow_function" | "function_expression" | "generator_function")) {
                     SymbolKind::Function
@@ -598,6 +605,27 @@ export const MAX_RETRIES = 3;
         // Regular const values should remain as Const
         assert!(kinds.contains(&("API_URL", SymbolKind::Const)));
         assert!(kinds.contains(&("MAX_RETRIES", SymbolKind::Const)));
+    }
+
+    #[test]
+    fn filters_let_and_var_declarations() {
+        let source = r#"
+const API_URL = "https://example.com";
+let counter = 0;
+var legacy = "old";
+const greet = (name) => `Hello, ${name}`;
+let mutableFn = () => {};
+"#;
+        let symbols = extract_symbols(Path::new("test.js"), source);
+        let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
+
+        // const declarations should be kept
+        assert!(names.contains(&"API_URL"));
+        assert!(names.contains(&"greet"));
+        // let and var declarations should be filtered out
+        assert!(!names.contains(&"counter"));
+        assert!(!names.contains(&"legacy"));
+        assert!(!names.contains(&"mutableFn"));
     }
 
     #[test]

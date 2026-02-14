@@ -66,7 +66,6 @@ use-controllable-state.ts
     24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
     39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
 use-position-fixed.ts
-     4→let previousBodyPosition: Record<string, string> | null = null;
     15→export function usePositionFixed({
 use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;
@@ -77,8 +76,6 @@ use-prevent-scroll.ts
     29→export function isScrollable(node: Element): boolean {
     34→export function getScrollParent(node: Element): Element {
     47→const nonTextInputTypes = new Set([
-    60→let preventScrollCount = 0;
-    61→let restore: () => void;
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
    118→function preventScrollMobileSafari() {
    243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {

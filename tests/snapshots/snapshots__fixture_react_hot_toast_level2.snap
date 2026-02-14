@@ -52,7 +52,6 @@ core/store.ts
     62→export const reducer = (state: ToasterState, action: Action): ToasterState => {
    136→const listeners: Array<
    140→const defaultToasterState: ToasterState = {
-   147→let memoryState: State = {};
    149→export const dispatch = (action: Action, toasterId = DEFAULT_TOASTER_ID) => {
    161→export const dispatchAll = (action: Action) =>
    164→export const getToasterIdFromToastId = (toastId: string) =>
