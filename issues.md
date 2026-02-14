@@ -2,7 +2,8 @@
 
 ## Snapshot coverage
 
-- Add more fixture snapshot tests — aiming for 5+ per language, currently 5 Rust (`either`, `anyhow`, `once_cell`, `thiserror`, `log`), 5 TypeScript (`neverthrow`, `ts-pattern`, `superstruct`, `mitt`, `ky`), 5 JavaScript (`semver`, `dotenv`, `commander`, `debug`, `ini`), 5 TSX (`cmdk`, `react-hot-toast`, `sonner`, `vaul`, `input-otp`)
+- 5-per-language target achieved: 5 Rust, 5 TypeScript, 5 JavaScript, 5 TSX — each with level 1 and level 2 snapshots
+- 8 fixtures have subdirectory snapshot tests; remaining fixtures (either, debug, mitt, etc.) have flat source trees with no meaningful subdirectories to test
 
 ## Codebase quality
 

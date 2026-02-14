@@ -7,8 +7,6 @@ use tree_sitter::{Language, Parser, Query, QueryCursor};
 pub struct Symbol {
     pub kind: SymbolKind,
     pub name: String,
-    /// Full text of the symbol node (for signature extraction later).
-    pub text: String,
     pub is_public: bool,
     pub line: usize,
 }
@@ -189,17 +187,11 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             }
         };
 
-        let text = symbol_node
-            .utf8_text(source.as_bytes())
-            .unwrap_or("")
-            .to_string();
-
         let is_public = is_public_symbol(symbol_node, source);
 
         symbols.push(Symbol {
             kind,
             name,
-            text,
             is_public,
             line: symbol_node.start_position().row + 1,
         });
