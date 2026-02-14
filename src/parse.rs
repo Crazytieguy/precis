@@ -175,12 +175,12 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
 fn dedup_overloads(symbols: Vec<Symbol>) -> Vec<Symbol> {
     let mut result: Vec<Symbol> = Vec::with_capacity(symbols.len());
     for sym in symbols {
-        if let Some(last) = result.last() {
-            if last.name == sym.name {
-                // Replace the previous entry with this one (the later/implementation version)
-                *result.last_mut().unwrap() = sym;
-                continue;
-            }
+        if let Some(last) = result.last()
+            && last.name == sym.name
+        {
+            // Replace the previous entry with this one (the later/implementation version)
+            *result.last_mut().unwrap() = sym;
+            continue;
         }
         result.push(sym);
     }
