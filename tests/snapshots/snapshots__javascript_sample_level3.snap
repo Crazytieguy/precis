@@ -1,0 +1,29 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+sample.js
+     1→
+     2→export function processItems(items) {
+     3→    return items.length;
+     4→}
+     5→
+     6→function helper() {}
+     7→
+     8→export class TokenParser {
+     9→    constructor(input) {
+    10→        this.tokens = [];
+    11→    }
+    12→
+    13→    parse() {
+    14→        return this.tokens;
+    15→    }
+    16→
+    17→    #advance() {}
+    18→}
+    19→
+    20→export const MAX_TOKENS = 1024;
+    21→
+    22→export default class DefaultExport {
+    23→    name = "";
+    24→}

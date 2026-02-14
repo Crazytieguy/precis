@@ -1,0 +1,57 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+sample.rs
+     1→
+     2→pub fn process(input: &str) -> Result<Vec<Token>, Error> {
+     3→    todo!()
+     4→}
+     5→
+     6→fn helper() {}
+     7→
+     8→pub struct Token {
+     9→    kind: TokenKind,
+    10→    span: Span,
+    11→}
+    12→
+    13→pub enum TokenKind {
+    14→    Ident,
+    15→    Number,
+    16→    Symbol,
+    17→}
+    18→
+    19→pub trait Visitor {
+    20→    fn visit_token(&mut self, token: &Token);
+    21→    fn visit_all(&mut self, tokens: &[Token]) {
+    22→        for t in tokens {
+    23→            self.visit_token(t);
+    24→        }
+    25→    }
+    26→}
+    27→
+    28→impl std::fmt::Display for Token {
+    29→    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    30→        write!(f, "{:?}", self.kind)
+    31→    }
+    32→}
+    33→
+    34→impl Token {
+    35→    pub fn new(kind: TokenKind, span: Span) -> Self {
+    36→        Self { kind, span }
+    37→    }
+    38→}
+    39→
+    40→pub type Span = (usize, usize);
+    41→
+    42→const MAX_TOKENS: usize = 1024;
+    43→
+    44→pub static VERSION: &str = "0.1.0";
+    45→
+    46→macro_rules! token {
+    47→    ($kind:expr) => {
+    48→        Token { kind: $kind, span: (0, 0) }
+    49→    };
+    50→}
+    51→
+    52→pub mod lexer;

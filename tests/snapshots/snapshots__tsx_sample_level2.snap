@@ -1,0 +1,13 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+sample.tsx
+     4→export interface ButtonProps {
+    10→export function Button({ label, onClick, disabled }: ButtonProps) {
+    14→export const IconButton = ({ icon, ...rest }: { icon: string } & ButtonProps) => {
+    18→function useToggle(initial: boolean): [boolean, () => void] {
+    23→export const Input = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
+    29→export type Theme = "light" | "dark";
+    31→export const MemoizedList = React.memo(function MemoizedList({ items }: { items: string[] }) {
+    35→export default function App() {

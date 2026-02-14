@@ -13,9 +13,8 @@ fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
     }
 }
 
-#[test]
-fn rust_sample_snapshot() {
-    let source = r#"
+fn rust_sample() -> &'static str {
+    r#"
 pub fn process(input: &str) -> Result<Vec<Token>, Error> {
     todo!()
 }
@@ -67,14 +66,11 @@ macro_rules! token {
 }
 
 pub mod lexer;
-"#;
-    let output = format::render_file(1, Path::new("sample.rs"), Path::new(""), source);
-    insta::assert_snapshot!(output);
+"#
 }
 
-#[test]
-fn typescript_sample_snapshot() {
-    let source = r#"
+fn typescript_sample() -> &'static str {
+    r#"
 export function processItems(items: string[]): number {
     return items.length;
 }
@@ -123,14 +119,11 @@ export namespace Utils {
         return s;
     }
 }
-"#;
-    let output = format::render_file(1, Path::new("sample.ts"), Path::new(""), source);
-    insta::assert_snapshot!(output);
+"#
 }
 
-#[test]
-fn javascript_sample_snapshot() {
-    let source = r#"
+fn javascript_sample() -> &'static str {
+    r#"
 export function processItems(items) {
     return items.length;
 }
@@ -154,14 +147,11 @@ export const MAX_TOKENS = 1024;
 export default class DefaultExport {
     name = "";
 }
-"#;
-    let output = format::render_file(1, Path::new("sample.js"), Path::new(""), source);
-    insta::assert_snapshot!(output);
+"#
 }
 
-#[test]
-fn tsx_sample_snapshot() {
-    let source = r#"
+fn tsx_sample() -> &'static str {
+    r#"
 import React, { useState, forwardRef } from "react";
 
 export interface ButtonProps {
@@ -203,8 +193,110 @@ export default function App() {
         </div>
     );
 }
-"#;
-    let output = format::render_file(1, Path::new("sample.tsx"), Path::new(""), source);
+"#
+}
+
+// Level 0: file paths only
+
+#[test]
+fn rust_sample_level0() {
+    let output = format::render_file(0, Path::new("sample.rs"), Path::new(""), rust_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn typescript_sample_level0() {
+    let output = format::render_file(0, Path::new("sample.ts"), Path::new(""), typescript_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn javascript_sample_level0() {
+    let output = format::render_file(0, Path::new("sample.js"), Path::new(""), javascript_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn tsx_sample_level0() {
+    let output = format::render_file(0, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+// Level 1: symbol names (truncated)
+
+#[test]
+fn rust_sample_snapshot() {
+    let output = format::render_file(1, Path::new("sample.rs"), Path::new(""), rust_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn typescript_sample_snapshot() {
+    let output = format::render_file(1, Path::new("sample.ts"), Path::new(""), typescript_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn javascript_sample_snapshot() {
+    let output = format::render_file(1, Path::new("sample.js"), Path::new(""), javascript_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn tsx_sample_snapshot() {
+    let output = format::render_file(1, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+// Level 2: full signature lines
+
+#[test]
+fn rust_sample_level2() {
+    let output = format::render_file(2, Path::new("sample.rs"), Path::new(""), rust_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn typescript_sample_level2() {
+    let output = format::render_file(2, Path::new("sample.ts"), Path::new(""), typescript_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn javascript_sample_level2() {
+    let output = format::render_file(2, Path::new("sample.js"), Path::new(""), javascript_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn tsx_sample_level2() {
+    let output = format::render_file(2, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+// Level 3: full source
+
+#[test]
+fn rust_sample_level3() {
+    let output = format::render_file(3, Path::new("sample.rs"), Path::new(""), rust_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn typescript_sample_level3() {
+    let output = format::render_file(3, Path::new("sample.ts"), Path::new(""), typescript_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn javascript_sample_level3() {
+    let output = format::render_file(3, Path::new("sample.js"), Path::new(""), javascript_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn tsx_sample_level3() {
+    let output = format::render_file(3, Path::new("sample.tsx"), Path::new(""), tsx_sample());
     insta::assert_snapshot!(output);
 }
 
