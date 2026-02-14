@@ -7,7 +7,7 @@
 - Implement the granularity hierarchy for token budgeting
 - Add more fixture snapshot tests — `either` (Rust) and `neverthrow` (TypeScript) done; could use more diverse projects
 - Add `--json` output flag
-- Filter out test functions / `#[cfg(test)]` modules from default output — done for Rust (`#[test]`, `#[cfg(test)]`); TypeScript test files (`.test.ts`, `.spec.ts`) not yet handled
+- Filter out test files from default output — done for Rust (`#[test]`, `#[cfg(test)]`) and JS/TS (`*.test.*`, `*.spec.*`, `__tests__/`)
 
 ## Design questions
 
