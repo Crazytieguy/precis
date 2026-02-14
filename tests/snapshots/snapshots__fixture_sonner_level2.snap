@@ -29,13 +29,6 @@ index.tsx
    520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
    552→function useSonner() {
    593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
-   617→  const filteredToasts = React.useMemo(() => {
-   623→  const possiblePositions = React.useMemo(() => {
-   641→  const listRef = React.useRef<HTMLOListElement>(null);
-   642→  const hotkeyLabel = hotkey.join('+').replace(/Key/g, '').replace(/Digit/g, '');
-   643→  const lastFocusedElementRef = React.useRef<HTMLElement>(null);
-   644→  const isFocusWithinRef = React.useRef(false);
-   646→  const removeToast = React.useCallback((toastToRemove: ToastT) => {
 state.ts
     13→let toastsCounter = 1;
     15→type titleT = (() => React.ReactNode) | React.ReactNode;

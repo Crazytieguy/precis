@@ -298,8 +298,8 @@ fn is_inside_function(node: tree_sitter::Node) -> bool {
             // Rust
             "function_item" |
             // TypeScript / JavaScript
-            "function_declaration" | "method_definition" | "arrow_function"
-            | "function" | "generator_function" | "generator_function_declaration" => {
+            "function_declaration" | "function_expression" | "method_definition" | "arrow_function"
+            | "generator_function" | "generator_function_declaration" => {
                 return true;
             }
             _ => {}
@@ -534,6 +534,28 @@ fn top_level() {}
         assert!(!names.contains(&"nested_helper"));
         assert!(!names.contains(&"local_fn"));
         assert!(!names.contains(&"LOCAL"));
+    }
+
+    #[test]
+    fn filters_nested_in_function_expressions() {
+        let source = r#"
+export const Outer = forwardRef(function Outer(props, ref) {
+    const localVar = useRef(null);
+    const anotherLocal = useMemo(() => 42);
+    function localHelper() {}
+});
+
+export const TopLevel = 42;
+"#;
+        let symbols = extract_symbols(Path::new("test.tsx"), source);
+        let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
+
+        assert!(names.contains(&"Outer"));
+        assert!(names.contains(&"TopLevel"));
+        // Variables inside function expressions should be filtered
+        assert!(!names.contains(&"localVar"));
+        assert!(!names.contains(&"anotherLocal"));
+        assert!(!names.contains(&"localHelper"));
     }
 
     #[test]

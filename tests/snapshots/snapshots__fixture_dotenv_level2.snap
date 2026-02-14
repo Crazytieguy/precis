@@ -4,8 +4,6 @@ expression: output
 ---
 cli-options.js
      1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
-     4→  const options = args.reduce(function (acc, cur) {
-     5→    const matches = cur.match(re)
 env-options.js
      2→const options = {}
 main.d.ts
