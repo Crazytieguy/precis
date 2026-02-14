@@ -2,6 +2,8 @@ use std::path::Path;
 use streaming_iterator::StreamingIterator;
 use tree_sitter::{Language, Parser, Query, QueryCursor};
 
+use crate::Lang;
+
 /// A symbol extracted from a source file.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Symbol {
@@ -50,44 +52,41 @@ impl std::fmt::Display for SymbolKind {
 }
 
 /// Check if a file extension is supported for symbol extraction.
-/// This is the single source of truth for which extensions are supported.
 pub fn is_supported_extension(ext: &str) -> bool {
-    language_for_extension(ext).is_some()
+    Lang::from_extension(ext).is_some()
 }
 
 /// Returns the tree-sitter language and query for a file extension, if supported.
+/// Uses [`Lang::from_extension`] as the canonical extension check, then selects
+/// the appropriate tree-sitter grammar (e.g. TSX vs TypeScript for `.tsx`).
 fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
-    match ext {
-        "rs" => Some((
+    let lang = Lang::from_extension(ext)?;
+    Some(match (lang, ext) {
+        (Lang::Rust, _) => (
             tree_sitter_rust::LANGUAGE.into(),
             include_str!("../queries/rust.scm"),
-        )),
-        "ts" | "mts" | "cts" => Some((
-            tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into(),
-            include_str!("../queries/typescript.scm"),
-        )),
-        "tsx" | "jsx" => Some((
+        ),
+        (Lang::JsTs, "tsx" | "jsx") => (
             tree_sitter_typescript::LANGUAGE_TSX.into(),
             include_str!("../queries/typescript.scm"),
-        )),
-        "js" | "mjs" | "cjs" => Some((
+        ),
+        (Lang::JsTs, _) => (
             tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into(),
             include_str!("../queries/typescript.scm"),
-        )),
-        "go" => Some((
+        ),
+        (Lang::Go, _) => (
             tree_sitter_go::LANGUAGE.into(),
             include_str!("../queries/go.scm"),
-        )),
-        "py" => Some((
+        ),
+        (Lang::Python, _) => (
             tree_sitter_python::LANGUAGE.into(),
             include_str!("../queries/python.scm"),
-        )),
-        "md" => Some((
+        ),
+        (Lang::Markdown, _) => (
             tree_sitter_md::LANGUAGE.into(),
             include_str!("../queries/markdown.scm"),
-        )),
-        _ => None,
-    }
+        ),
+    })
 }
 
 /// Extract symbols from a source file.
@@ -101,6 +100,8 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         Some(pair) => pair,
         None => return vec![],
     };
+    // Safe: language_for_extension succeeded, so Lang::from_extension will too
+    let lang = Lang::from_extension(ext).unwrap();
 
     let mut parser = Parser::new();
     parser
@@ -230,7 +231,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             "atx_heading" | "setext_heading" => SymbolKind::Section,
             // Python module-level assignments (constants, type variables, dunder attrs)
             "expression_statement" => {
-                if ext != "py" {
+                if lang != Lang::Python {
                     continue;
                 }
                 // Must be at module level (direct child of module node)
@@ -273,7 +274,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         }
 
         // Filter out Rust test code (#[test] functions, #[cfg(test)] modules)
-        if ext == "rs" && is_rust_test_code(symbol_node, source) {
+        if lang == Lang::Rust && is_rust_test_code(symbol_node, source) {
             continue;
         }
 
@@ -295,21 +296,15 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         };
 
         // Filter out Go blank identifier in const blocks (used to skip iota values)
-        if ext == "go" && name == "_" {
+        if lang == Lang::Go && name == "_" {
             continue;
         }
 
-        let is_public = if ext == "go" {
-            // Go: uppercase first letter = exported
-            name.starts_with(|c: char| c.is_ascii_uppercase())
-        } else if ext == "py" {
-            // Python: underscore prefix = private (convention)
-            !name.starts_with('_')
-        } else if ext == "md" {
-            // Markdown: all headings are public
-            true
-        } else {
-            is_public_symbol(symbol_node, source)
+        let is_public = match lang {
+            Lang::Go => name.starts_with(|c: char| c.is_ascii_uppercase()),
+            Lang::Python => !name.starts_with('_'),
+            Lang::Markdown => true,
+            _ => is_public_symbol(symbol_node, source),
         };
 
         symbols.push(Symbol {

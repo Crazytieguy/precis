@@ -1,30 +1,7 @@
 use std::path::{Path, PathBuf};
 
 use crate::parse;
-
-/// Language family for rendering heuristics (comment styles, delimiters).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum Lang {
-    Rust,
-    Python,
-    Go,
-    Markdown,
-    /// TypeScript, JavaScript, TSX, JSX
-    JsTs,
-}
-
-impl Lang {
-    fn from_path(path: &Path) -> Option<Lang> {
-        match path.extension().and_then(|e| e.to_str())? {
-            "rs" => Some(Lang::Rust),
-            "py" => Some(Lang::Python),
-            "go" => Some(Lang::Go),
-            "md" => Some(Lang::Markdown),
-            "ts" | "tsx" | "js" | "jsx" | "mts" | "cts" | "mjs" | "cjs" => Some(Lang::JsTs),
-            _ => None,
-        }
-    }
-}
+use crate::Lang;
 
 /// Maximum granularity level.
 ///
