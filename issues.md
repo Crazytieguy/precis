@@ -2,7 +2,7 @@
 
 ## Next steps
 
-- Add more language grammars (Python, Go) — TypeScript/TSX done
+- Add more language grammars (Python, Go) — TypeScript/TSX/JavaScript/JSX done
 - Implement signature extraction (params, return types) — currently only symbol names
 - Implement the granularity hierarchy for token budgeting
 - Add more fixture snapshot tests — `either` (Rust) and `neverthrow` (TypeScript) done; could use more diverse projects

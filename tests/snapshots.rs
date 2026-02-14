@@ -135,6 +135,37 @@ export namespace Utils {
     insta::assert_snapshot!(output);
 }
 
+#[test]
+fn javascript_sample_snapshot() {
+    let source = r#"
+export function processItems(items) {
+    return items.length;
+}
+
+function helper() {}
+
+export class TokenParser {
+    constructor(input) {
+        this.tokens = [];
+    }
+
+    parse() {
+        return this.tokens;
+    }
+
+    #advance() {}
+}
+
+export const MAX_TOKENS = 1024;
+
+export default class DefaultExport {
+    name = "";
+}
+"#;
+    let output = format::format_file_symbols(Path::new("sample.js"), Path::new(""), source);
+    insta::assert_snapshot!(output);
+}
+
 // Fixture-based snapshot tests.
 // Clone fixtures with: git clone --depth 1 <url> test/fixtures/<name>
 // Tests are skipped if the fixture directory is not present.

@@ -19,12 +19,12 @@ parse.rs:
   impl std::fmt::Display for SymbolKind :32
   fn fmt :33
   fn language_for_extension :52
-  pub fn extract_symbols :71
-  fn is_public_symbol :168
-  fn is_inside_function :203
-  fn impl_name :222
-  fn has_preceding_attribute :237
-  fn is_rust_test_code :255
+  pub fn extract_symbols :75
+  fn is_public_symbol :172
+  fn is_inside_function :207
+  fn impl_name :226
+  fn has_preceding_attribute :241
+  fn is_rust_test_code :259
 walk.rs:
   const SOURCE_EXTENSIONS :5
   pub fn discover_source_files :18

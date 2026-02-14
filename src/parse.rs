@@ -59,8 +59,12 @@ fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
             tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into(),
             include_str!("../queries/typescript.scm"),
         )),
-        "tsx" => Some((
+        "tsx" | "jsx" => Some((
             tree_sitter_typescript::LANGUAGE_TSX.into(),
+            include_str!("../queries/typescript.scm"),
+        )),
+        "js" => Some((
+            tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into(),
             include_str!("../queries/typescript.scm"),
         )),
         _ => None,
