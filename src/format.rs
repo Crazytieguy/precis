@@ -48,7 +48,23 @@ pub fn search_level(budget: usize, cost: impl Fn(u8) -> usize) -> u8 {
 /// Find the highest granularity level whose output fits within the word budget.
 pub fn budget_level(budget: usize, root: &Path) -> u8 {
     let files = walk::discover_source_files(root);
-    search_level(budget, |level| count_words(&render_files(level, root, &files)))
+    // Pre-read all file contents so binary search doesn't re-read from disk each iteration.
+    let sources: Vec<Option<String>> = files
+        .iter()
+        .map(|f| std::fs::read_to_string(f).ok())
+        .collect();
+    search_level(budget, |level| {
+        let mut out = String::new();
+        for (file, source) in files.iter().zip(&sources) {
+            if level == 0 {
+                let relative = file.strip_prefix(root).unwrap_or(file);
+                out.push_str(&format!("{}\n", relative.display()));
+            } else if let Some(s) = source {
+                out.push_str(&render_file(level, file, root, s));
+            }
+        }
+        count_words(&out)
+    })
 }
 
 /// Find the highest granularity level whose output for a single file fits within the word budget.
