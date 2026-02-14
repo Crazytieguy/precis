@@ -1,7 +1,6 @@
 use std::path::{Path, PathBuf};
 
 use crate::parse;
-use serde_json;
 
 /// Maximum granularity level.
 ///

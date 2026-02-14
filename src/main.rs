@@ -66,7 +66,7 @@ fn render_file(path: &std::path::Path, level: Option<u8>, budget: Option<usize>)
         let (l, symbols) = format::budget_level_file(budget, path, root, &source);
         (format::render_file_with_symbols(l, path, root, &source, &symbols), l)
     } else {
-        let l = format::MAX_LEVEL.min(1);
+        let l = 1;
         (format::render_file(l, path, root, &source), l)
     };
 
@@ -84,7 +84,7 @@ fn render_dir(path: &std::path::Path, level: Option<u8>, budget: Option<usize>) 
         let (l, all_symbols) = format::budget_level(budget, path, &files, &sources);
         (format::render_files_with_symbols(l, path, &files, &sources, &all_symbols), l)
     } else {
-        let l = format::MAX_LEVEL.min(1);
+        let l = 1;
         (format::render_files(l, path, &files, &sources), l)
     };
 
