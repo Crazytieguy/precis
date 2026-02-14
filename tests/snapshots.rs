@@ -760,6 +760,26 @@ fn fixture_superstruct_structs_subdir() {
 }
 
 #[test]
+fn fixture_log_kv_subdir() {
+    let Some(root) = fixture_path("log/src/kv") else {
+        eprintln!("skipping fixture_log_kv_subdir: clone with `git clone --depth 1 https://github.com/rust-lang/log.git test/fixtures/log`");
+        return;
+    };
+    let output = format::render_directory(1, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_log_kv_subdir_level2() {
+    let Some(root) = fixture_path("log/src/kv") else {
+        eprintln!("skipping fixture_log_kv_subdir_level2: clone with `git clone --depth 1 https://github.com/rust-lang/log.git test/fixtures/log`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
 fn fixture_superstruct_structs_subdir_level2() {
     let Some(root) = fixture_path("superstruct/src/structs") else {
         eprintln!("skipping fixture_superstruct_structs_subdir_level2: clone with `git clone --depth 1 https://github.com/ianstormtaylor/superstruct.git test/fixtures/superstruct`");
