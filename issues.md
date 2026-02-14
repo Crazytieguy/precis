@@ -15,7 +15,7 @@
 
 ## Current state
 
-- Parsing works for Rust, TypeScript, JavaScript, TSX, Python — extracts symbol names, kinds, visibility
+- Parsing works for Rust, TypeScript, JavaScript, TSX, Python, Markdown — extracts symbol names, kinds, visibility
 - Python: module-level constants extracted (type-annotated assignments, UPPER_CASE names, dunder attributes like `__all__`)
 - Output supports 6 granularity levels: 0 (file paths), 1 (symbol names), 2 (full signature lines), 3 (signatures with doc comments), 4 (type bodies expanded), 5 (full source)
 - Monotonicity invariant (higher level = more words) tested against all fixtures
@@ -27,7 +27,8 @@
 ## Feature development
 
 - Make levels depth-aware and file-size-aware (currently uniform across all files)
-- Priority languages: Markdown (Python now supported)
+- Markdown: levels 1-4 produce identical output (heading lines only); consider adding intermediate levels that show paragraph text under headings for a richer summary
+- Markdown: no real-world fixture snapshots yet (only sample-based); consider cloning a well-structured open-source project with meaningful .md documentation
 - Add `--json` output flag
 - Doc comment detection (level 3) is text-based heuristic; does not use tree-sitter comment nodes. Handles `///`, `//!`, `/** */` blocks, Python `#` comments, and Python docstrings (`"""..."""` / `'''...'''`). Skips `#[attr]` and `@decorator` lines between doc comments and symbols; decorators/attributes are always shown at level 3+.
 - Python docstrings (triple-quoted strings after `def`/`class` lines) are captured at levels 3 and 4 via text-based heuristic. Handles single-line, multi-line, and raw (`r"""`) docstrings.

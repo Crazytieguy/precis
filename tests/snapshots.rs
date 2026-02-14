@@ -329,6 +329,57 @@ VERSION: str = "0.1.0"
 "#
 }
 
+fn markdown_sample() -> &'static str {
+    r#"# precis
+
+A CLI tool that extracts a token-efficient summary of a codebase.
+
+## Installation
+
+```bash
+cargo install precis
+```
+
+## Usage
+
+### Basic Usage
+
+Run on a directory to get a summary:
+
+```
+precis ./src
+```
+
+### Options
+
+| Flag | Description |
+|------|-------------|
+| `--budget` | Word budget for output |
+| `--level` | Granularity level (0-5) |
+
+## Supported Languages
+
+- Rust
+- TypeScript / JavaScript
+- Python
+- Markdown
+
+### Adding a New Language
+
+1. Add a tree-sitter grammar dependency
+2. Create a query file in `queries/`
+3. Update `walk.rs` and `parse.rs`
+
+## Contributing
+
+Pull requests welcome! Please run tests before submitting.
+
+## License
+
+MIT
+"#
+}
+
 // Level 0: file paths only
 
 #[test]
@@ -368,6 +419,12 @@ fn tsx_sample_level0() {
 #[test]
 fn python_sample_level0() {
     let output = format::render_file(0, Path::new("sample.py"), Path::new(""), python_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn markdown_sample_level0() {
+    let output = format::render_file(0, Path::new("README.md"), Path::new(""), markdown_sample());
     insta::assert_snapshot!(output);
 }
 
@@ -413,6 +470,13 @@ fn python_sample_snapshot() {
     insta::assert_snapshot!(output);
 }
 
+#[test]
+fn markdown_sample_snapshot() {
+    let output =
+        format::render_file(1, Path::new("README.md"), Path::new(""), markdown_sample());
+    insta::assert_snapshot!(output);
+}
+
 // Level 2: full signature lines
 
 #[test]
@@ -452,6 +516,13 @@ fn tsx_sample_level2() {
 #[test]
 fn python_sample_level2() {
     let output = format::render_file(2, Path::new("sample.py"), Path::new(""), python_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn markdown_sample_level2() {
+    let output =
+        format::render_file(2, Path::new("README.md"), Path::new(""), markdown_sample());
     insta::assert_snapshot!(output);
 }
 
@@ -497,6 +568,13 @@ fn python_sample_level3() {
     insta::assert_snapshot!(output);
 }
 
+#[test]
+fn markdown_sample_level3() {
+    let output =
+        format::render_file(3, Path::new("README.md"), Path::new(""), markdown_sample());
+    insta::assert_snapshot!(output);
+}
+
 // Level 4: signatures with doc comments + type bodies (struct/enum/trait/interface)
 
 #[test]
@@ -539,6 +617,13 @@ fn python_sample_level4() {
     insta::assert_snapshot!(output);
 }
 
+#[test]
+fn markdown_sample_level4() {
+    let output =
+        format::render_file(4, Path::new("README.md"), Path::new(""), markdown_sample());
+    insta::assert_snapshot!(output);
+}
+
 // Level 5: full source
 
 #[test]
@@ -578,6 +663,13 @@ fn tsx_sample_level5() {
 #[test]
 fn python_sample_level5() {
     let output = format::render_file(5, Path::new("sample.py"), Path::new(""), python_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn markdown_sample_level5() {
+    let output =
+        format::render_file(5, Path::new("README.md"), Path::new(""), markdown_sample());
     insta::assert_snapshot!(output);
 }
 

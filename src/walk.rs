@@ -6,7 +6,8 @@ const SOURCE_EXTENSIONS: &[&str] = &[
     // Rust
     "rs", // TypeScript / JavaScript
     "ts", "tsx", "js", "jsx", // Python
-    "py",
+    "py", // Markdown
+    "md",
 ];
 
 /// Discover source files under `root`, respecting .gitignore.
@@ -77,7 +78,7 @@ mod tests {
     fn filters_non_source_files() {
         let dir = tempfile::tempdir().unwrap();
         fs::write(dir.path().join("lib.rs"), "fn main() {}").unwrap();
-        fs::write(dir.path().join("readme.md"), "# hi").unwrap();
+        fs::write(dir.path().join("readme.txt"), "hi").unwrap();
         fs::write(dir.path().join("data.json"), "{}").unwrap();
 
         let files = discover_source_files(dir.path());

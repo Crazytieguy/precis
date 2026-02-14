@@ -61,6 +61,11 @@ A `--json` flag may be added later for machine consumption.
 
 ## Supported Languages
 
+- **Rust** — functions, structs, enums, traits, impls, type aliases, consts, statics, macros, modules
+- **TypeScript / JavaScript / TSX** — functions, classes, interfaces, enums, type aliases, consts, namespaces
+- **Python** — functions, classes, module-level constants (typed, UPPER_CASE, dunder)
+- **Markdown** — ATX headings (`#`, `##`, etc.) and setext headings as section structure
+
 Per-language support requires a tree-sitter grammar and a query file defining:
 - Which node types count as symbols
 - How to extract signatures

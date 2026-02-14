@@ -26,6 +26,7 @@ pub enum SymbolKind {
     Module,
     Class,
     Interface,
+    Section,
 }
 
 impl std::fmt::Display for SymbolKind {
@@ -43,6 +44,7 @@ impl std::fmt::Display for SymbolKind {
             SymbolKind::Module => write!(f, "mod"),
             SymbolKind::Class => write!(f, "class"),
             SymbolKind::Interface => write!(f, "interface"),
+            SymbolKind::Section => write!(f, "section"),
         }
     }
 }
@@ -69,6 +71,10 @@ fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
         "py" => Some((
             tree_sitter_python::LANGUAGE.into(),
             include_str!("../queries/python.scm"),
+        )),
+        "md" => Some((
+            tree_sitter_md::LANGUAGE.into(),
+            include_str!("../queries/markdown.scm"),
         )),
         _ => None,
     }
@@ -181,6 +187,8 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             // Python
             "function_definition" => SymbolKind::Function,
             "class_definition" => SymbolKind::Class,
+            // Markdown
+            "atx_heading" | "setext_heading" => SymbolKind::Section,
             // Python module-level assignments (constants, type variables, dunder attrs)
             "expression_statement" => {
                 if ext != "py" {
@@ -246,6 +254,9 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         let is_public = if ext == "py" {
             // Python: underscore prefix = private (convention)
             !name.starts_with('_')
+        } else if ext == "md" {
+            // Markdown: all headings are public
+            true
         } else {
             is_public_symbol(symbol_node, source)
         };
@@ -946,5 +957,53 @@ class Observer {
         assert!(info.contains(&("constructor", SymbolKind::Function)));
         // Plain data fields should NOT be captured
         assert!(!info.iter().any(|(name, _)| *name == "subscribers"));
+    }
+
+    #[test]
+    fn extracts_markdown_headings() {
+        let source = r#"# Introduction
+
+Some introductory text.
+
+## Getting Started
+
+Instructions here.
+
+### Installation
+
+Steps to install.
+
+## API Reference
+
+### `parse(source)`
+
+Parse the source code.
+
+#### Parameters
+
+| Name | Type |
+|------|------|
+| source | string |
+
+## Contributing
+"#;
+        let symbols = extract_symbols(Path::new("test.md"), source);
+        let info: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.name.as_str(), s.kind, s.is_public, s.line))
+            .collect();
+
+        // All headings should be extracted as Section kind
+        assert_eq!(symbols.len(), 7);
+        assert!(info.contains(&("Introduction", SymbolKind::Section, true, 1)));
+        assert!(info.contains(&("Getting Started", SymbolKind::Section, true, 5)));
+        assert!(info.contains(&("Installation", SymbolKind::Section, true, 9)));
+        assert!(info.contains(&("API Reference", SymbolKind::Section, true, 13)));
+        assert!(info.contains(&("`parse(source)`", SymbolKind::Section, true, 15)));
+        assert!(info.contains(&("Parameters", SymbolKind::Section, true, 19)));
+        assert!(info.contains(&("Contributing", SymbolKind::Section, true, 25)));
+
+        // All headings should be public
+        assert!(symbols.iter().all(|s| s.is_public));
     }
 }
