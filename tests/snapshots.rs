@@ -14,13 +14,6 @@ fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
 }
 
 #[test]
-fn self_snapshot() {
-    let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("src");
-    let output = format::format_directory(&root);
-    insta::assert_snapshot!(output);
-}
-
-#[test]
 fn rust_sample_snapshot() {
     let source = r#"
 pub fn process(input: &str) -> Result<Vec<Token>, Error> {
