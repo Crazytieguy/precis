@@ -1,0 +1,64 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+aserror.rs:
+  pub trait AsDynError :5
+  fn as_dyn_error :6
+  impl<'a, T: Error + 'a> AsDynError<'a> for T :9
+  fn as_dyn_error :11
+  impl<'a> AsDynError<'a> for dyn Error + 'a :16
+  fn as_dyn_error :18
+  impl<'a> AsDynError<'a> for dyn Error + Send + 'a :23
+  fn as_dyn_error :25
+  impl<'a> AsDynError<'a> for dyn Error + Send + Sync + 'a :30
+  fn as_dyn_error :32
+  impl<'a> AsDynError<'a> for dyn Error + Send + Sync + UnwindSafe + 'a :37
+  fn as_dyn_error :39
+  pub trait Sealed :45
+  impl<T: Error> Sealed for T :46
+  impl Sealed for dyn Error + '_ :47
+  impl Sealed for dyn Error + Send + '_ :48
+  impl Sealed for dyn Error + Send + Sync + '_ :49
+  impl Sealed for dyn Error + Send + Sync + UnwindSafe + '_ :50
+display.rs:
+  pub trait AsDisplay :6
+  fn as_display :11
+  impl<'a, T> AsDisplay<'a> for &T :14
+  type Target :18
+  fn as_display :20
+  impl<'a> AsDisplay<'a> for Path :26
+  type Target :27
+  fn as_display :30
+  impl<'a> AsDisplay<'a> for PathBuf :36
+  type Target :37
+  fn as_display :40
+  pub trait Sealed :46
+  impl<T: Display + ?Sized> Sealed for &T :47
+  impl Sealed for Path :49
+  impl Sealed for PathBuf :51
+  mod placeholder :59
+  pub struct Placeholder :64
+  impl<'a> AsDisplay<'a> for Placeholder :66
+  type Target :67
+  fn as_display :70
+  impl Display for Placeholder :75
+  fn fmt :76
+  impl Sealed for Placeholder :81
+lib.rs:
+  mod aserror :281
+  mod display :282
+  mod provide :284
+  mod var :285
+  mod private :289
+provide.rs:
+  pub trait ThiserrorProvide :4
+  fn thiserror_provide :5
+  impl<T> ThiserrorProvide for T :8
+  fn thiserror_provide :13
+  pub trait Sealed :19
+  impl<T: Error + ?Sized> Sealed for T :20
+var.rs:
+  pub struct Var :3
+  impl<'a, T: Pointer + ?Sized> Pointer for Var<'a, T> :5
+  fn fmt :6

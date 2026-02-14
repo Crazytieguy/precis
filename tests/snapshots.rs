@@ -323,6 +323,16 @@ fn fixture_commander() {
 }
 
 #[test]
+fn fixture_thiserror() {
+    let Some(root) = fixture_path("thiserror/src") else {
+        eprintln!("skipping fixture_thiserror: clone with `git clone --depth 1 https://github.com/dtolnay/thiserror.git test/fixtures/thiserror`");
+        return;
+    };
+    let output = format::format_directory(&root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
 fn fixture_sonner() {
     let Some(root) = fixture_path("sonner/src") else {
         eprintln!("skipping fixture_sonner: clone with `git clone --depth 1 https://github.com/emilkowalski/sonner.git test/fixtures/sonner`");
