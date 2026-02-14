@@ -218,6 +218,15 @@ fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
     {
         return true;
     }
+    // Rust: trait methods (both signatures and default implementations) are always public
+    if matches!(node.kind(), "function_signature_item" | "function_item")
+        && let Some(parent) = node.parent()
+        && parent.kind() == "declaration_list"
+        && let Some(grandparent) = parent.parent()
+        && grandparent.kind() == "trait_item"
+    {
+        return true;
+    }
     // TypeScript class methods and interface methods: public if accessibility_modifier
     // is "public", or if no accessibility_modifier (public by default in TS).
     // Interface methods (method_signature) are always public by design.
@@ -389,7 +398,8 @@ pub mod utils;
         assert!(names.contains(&(SymbolKind::Module, "utils", true)));
 
         // Functions inside impl blocks should also be found
-        assert!(names.contains(&(SymbolKind::Function, "greet", false)));
+        assert!(names.contains(&(SymbolKind::Function, "greet", false))); // impl method, not pub
+        assert!(names.contains(&(SymbolKind::Function, "greet", true)));  // trait method signature, public
         assert!(names.contains(&(SymbolKind::Function, "new", true)));
     }
 

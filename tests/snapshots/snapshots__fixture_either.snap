@@ -4,8 +4,8 @@ expression: output
 ---
 into_either.rs:
   pub trait IntoEither :14
-  fn into_either :29
-  fn into_either_with :55
+  pub fn into_either :29
+  pub fn into_either_with :55
   impl IntoEither for T :64
 iterator.rs:
   macro wrap_either :4

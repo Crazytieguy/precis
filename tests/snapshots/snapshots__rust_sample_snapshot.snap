@@ -8,8 +8,8 @@ sample.rs:
   pub struct Token :8
   pub enum TokenKind :13
   pub trait Visitor :19
-  fn visit_token :20
-  fn visit_all :21
+  pub fn visit_token :20
+  pub fn visit_all :21
   impl std::fmt::Display for Token :28
   fn fmt :29
   impl Token :34
