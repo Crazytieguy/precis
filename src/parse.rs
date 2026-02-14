@@ -273,6 +273,11 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             }
         };
 
+        // Filter out Go blank identifier in const blocks (used to skip iota values)
+        if ext == "go" && name == "_" {
+            continue;
+        }
+
         let is_public = if ext == "go" {
             // Go: uppercase first letter = exported
             name.starts_with(|c: char| c.is_ascii_uppercase())
@@ -1134,5 +1139,34 @@ func (t *Token) reset() {
         assert!(info.contains(&("String", SymbolKind::Function, true)));
         // Unexported method
         assert!(info.contains(&("reset", SymbolKind::Function, false)));
+    }
+
+    #[test]
+    fn filters_go_blank_identifier() {
+        let source = r#"
+package color
+
+type Attribute int
+
+const (
+	Reset Attribute = iota
+	Bold
+	Faint
+	_
+	Underline
+)
+
+var _ error = (*MyError)(nil)
+"#;
+        let symbols = extract_symbols(Path::new("test.go"), source);
+        let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
+
+        // Named constants should be kept
+        assert!(names.contains(&"Reset"));
+        assert!(names.contains(&"Bold"));
+        assert!(names.contains(&"Faint"));
+        assert!(names.contains(&"Underline"));
+        // Blank identifier _ should be filtered out (iota skip, interface check)
+        assert!(!names.contains(&"_"));
     }
 }
