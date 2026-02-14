@@ -1,0 +1,21 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+index.ts
+     1→export type EventType = string | symbol;
+     5→export type Handler<T = unknown> = (event: T) => void;
+     6→export type WildcardHandler<T = Record<string, unknown>> = (
+    12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
+    13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
+    18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
+    23→export interface Emitter<Events extends Record<EventType, unknown>> {
+    27→	on(type: '*', handler: WildcardHandler<Events>): void;
+    33→	off(type: '*', handler: WildcardHandler<Events>): void;
+    36→	emit<Key extends keyof Events>(
+    41→/**
+    42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
+    43→ * @name mitt
+    44→ * @returns {Mitt}
+    45→ */
+    46→export default function mitt<Events extends Record<EventType, unknown>>(

@@ -1,0 +1,39 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+browser.js
+   115→function useColors() {
+   149→function formatArgs(args) {
+   194→/**
+   195→ * Save `namespaces`.
+   196→ *
+   197→ * @param {String} namespaces
+   198→ * @api private
+   199→ */
+   200→function save(namespaces) {
+   213→/**
+   214→ * Load `namespaces`.
+   215→ *
+   216→ * @return {String} returns the previously persisted debug modes
+   217→ * @api private
+   218→ */
+   219→function load() {
+   247→function localstorage() {
+common.js
+     7→function setup(env) {
+index.js
+node.js
+   155→function useColors() {
+   167→function formatArgs(args) {
+   182→function getDate() {
+   193→function log(...args) {
+   197→/**
+   198→ * Save `namespaces`.
+   199→ *
+   200→ * @param {String} namespaces
+   201→ * @api private
+   202→ */
+   203→function save(namespaces) {
+   220→function load() {
+   231→function init(debug) {

@@ -1,0 +1,109 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+browser.ts
+     1→export function isMobileFirefox(): boolean | undefined {
+    10→export function isMac(): boolean | undefined {
+    14→export function isIPhone(): boolean | undefined {
+    18→export function isSafari(): boolean | undefined {
+    22→export function isIPad(): boolean | undefined {
+    30→export function isIOS(): boolean | undefined {
+    34→export function testPlatform(re: RegExp): boolean | undefined {
+constants.ts
+     1→export const TRANSITIONS = {
+     6→export const VELOCITY_THRESHOLD = 0.4;
+     8→export const CLOSE_THRESHOLD = 0.25;
+    10→export const SCROLL_LOCK_TIMEOUT = 100;
+    12→export const BORDER_RADIUS = 8;
+    14→export const NESTED_DISPLACEMENT = 16;
+    16→export const WINDOW_TOP_OFFSET = 26;
+    18→export const DRAG_CLASS = 'vaul-dragging';
+context.ts
+     4→interface DrawerContextValue {
+    37→export const DrawerContext = React.createContext<DrawerContextValue>({
+    69→export const useDrawerContext = () => {
+helpers.ts
+     3→interface Style {
+     7→const cache = new WeakMap();
+     9→export function isInView(el: HTMLElement): boolean {
+    23→export function set(el: Element | HTMLElement | null | undefined, styles: Style, ignoreCache = false) {
+    42→export function reset(el: Element | HTMLElement | null, prop?: string) {
+    59→export const isVertical = (direction: DrawerDirection) => {
+    72→export function getTranslate(element: HTMLElement, direction: DrawerDirection): number | null {
+    90→export function dampenValue(v: number) {
+    94→export function assignStyle(element: HTMLElement | null | undefined, style: Partial<CSSStyleDeclaration>) {
+   105→/**
+   106→ * Receives functions as arguments and returns a new function that calls all.
+   107→ */
+   108→export function chain<T>(...fns: T[]) {
+index.tsx
+    27→export interface WithFadeFromProps {
+    40→export interface WithoutFadeFromProps {
+    50→export type DialogProps = {
+   139→export function Root({
+   803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
+   831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
+   833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
+   989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
+   993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
+   994→const DOUBLE_TAP_TIMEOUT = 120;
+   996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
+  1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
+  1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
+  1130→export function Portal(props: PortalProps) {
+  1137→export const Drawer = {
+types.ts
+     1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
+     2→export interface SnapPoint {
+     7→export type AnyFunction = (...args: any) => any;
+use-composed-refs.ts
+     5→type PossibleRef<T> = React.Ref<T> | undefined;
+     7→/**
+     8→ * Set a given ref to a given value
+     9→ * This utility takes care of different types of refs: callback refs and RefObject(s)
+    10→ */
+    11→function setRef<T>(ref: PossibleRef<T>, value: T) {
+    19→/**
+    20→ * A utility to compose multiple refs together
+    21→ * Accepts callback refs and RefObject(s)
+    22→ */
+    23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
+    27→/**
+    28→ * A custom hook that composes multiple refs
+    29→ * Accepts callback refs and RefObject(s)
+    30→ */
+    31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
+use-controllable-state.ts
+     5→type UseControllableStateParams<T> = {
+    11→type SetStateFn<T> = (prevState?: T) => T;
+    13→function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
+    24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
+    39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
+use-position-fixed.ts
+    15→export function usePositionFixed({
+use-prevent-scroll.ts
+     6→const KEYBOARD_BUFFER = 24;
+     8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+    10→interface PreventScrollOptions {
+    16→function chain(...callbacks: any[]): (...args: any[]) => void {
+    27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
+    29→export function isScrollable(node: Element): boolean {
+    34→export function getScrollParent(node: Element): Element {
+    47→const nonTextInputTypes = new Set([
+    63→/**
+    64→ * Prevents scrolling on the document body on mount, and
+    65→ * restores it on unmount. Also ensures that content does not
+    66→ * shift due to the scrollbars disappearing.
+    67→ */
+    68→export function usePreventScroll(options: PreventScrollOptions = {}) {
+   118→function preventScrollMobileSafari() {
+   243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {
+   257→function addEvent<K extends keyof GlobalEventHandlersEventMap>(
+   272→function scrollIntoView(target: Element) {
+   294→export function isInput(target: Element) {
+use-scale-background.ts
+     6→const noop = () => () => {};
+     8→export function useScaleBackground() {
+use-snap-points.ts
+     7→export function useSnapPoints({

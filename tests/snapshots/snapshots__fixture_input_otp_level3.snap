@@ -1,0 +1,31 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+index.ts
+input.tsx
+    10→export const OTPInputContext = React.createContext<RenderProps>(
+    14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
+   540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
+   553→const NOSCRIPT_CSS_FALLBACK = `
+regexp.ts
+     1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
+     2→export const REGEXP_ONLY_CHARS = '^[a-zA-Z]+$'
+     3→export const REGEXP_ONLY_DIGITS_AND_CHARS = '^[a-zA-Z0-9]+$'
+sync-timeouts.ts
+     1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
+types.ts
+     1→export interface SlotProps {
+     7→export interface RenderProps {
+    12→type OverrideProps<T, R> = Omit<T, keyof R> & R
+    13→type OTPInputBaseProps = OverrideProps<
+    32→type InputOTPRenderFn = (props: RenderProps) => React.ReactNode
+    33→export type OTPInputProps = OTPInputBaseProps &
+use-previous.ts
+     3→export function usePrevious<T>(value: T) {
+use-pwm-badge.tsx
+     4→const PWM_BADGE_MARGIN_RIGHT = 18
+     5→const PWM_BADGE_SPACE_WIDTH_PX = 40
+     6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
+     8→const PASSWORD_MANAGERS_SELECTORS = [
+    15→export function usePasswordManagerBadge({
