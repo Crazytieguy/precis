@@ -72,16 +72,13 @@ pub fn read_sources(files: &[PathBuf]) -> Vec<Option<String>> {
         .collect()
 }
 
-/// Find the highest granularity level whose output fits within the word budget.
-/// Accepts pre-discovered files and pre-read sources to avoid redundant I/O.
-/// Pre-extracts symbols once and reuses them across all levels tested by binary search.
-pub fn budget_level(
-    budget: usize,
-    root: &Path,
+/// Pre-extract symbols from all source files.
+/// Used to share symbol extraction between budget search and final rendering.
+pub fn extract_all_symbols(
     files: &[PathBuf],
     sources: &[Option<String>],
-) -> u8 {
-    let all_symbols: Vec<Vec<parse::Symbol>> = files
+) -> Vec<Vec<parse::Symbol>> {
+    files
         .iter()
         .zip(sources.iter())
         .map(|(f, s)| {
@@ -89,9 +86,21 @@ pub fn budget_level(
                 .map(|s| parse::extract_symbols(f, s))
                 .unwrap_or_default()
         })
-        .collect();
+        .collect()
+}
 
-    search_level(budget, |level| {
+/// Find the highest granularity level whose output fits within the word budget.
+/// Accepts pre-discovered files and pre-read sources to avoid redundant I/O.
+/// Returns both the level and the pre-extracted symbols (for reuse during rendering).
+pub fn budget_level(
+    budget: usize,
+    root: &Path,
+    files: &[PathBuf],
+    sources: &[Option<String>],
+) -> (u8, Vec<Vec<parse::Symbol>>) {
+    let all_symbols = extract_all_symbols(files, sources);
+
+    let level = search_level(budget, |level| {
         let mut out = String::new();
         for (i, (file, source)) in files.iter().zip(sources).enumerate() {
             if level == 0 {
@@ -101,16 +110,24 @@ pub fn budget_level(
             }
         }
         count_words(&out)
-    })
+    });
+
+    (level, all_symbols)
 }
 
 /// Find the highest granularity level whose output for a single file fits within the word budget.
-/// Pre-extracts symbols once and reuses them across all levels tested by binary search.
-pub fn budget_level_file(budget: usize, path: &Path, root: &Path, source: &str) -> u8 {
+/// Returns both the level and the pre-extracted symbols (for reuse during rendering).
+pub fn budget_level_file(
+    budget: usize,
+    path: &Path,
+    root: &Path,
+    source: &str,
+) -> (u8, Vec<parse::Symbol>) {
     let symbols = parse::extract_symbols(path, source);
-    search_level(budget, |level| {
+    let level = search_level(budget, |level| {
         count_words(&render_with_symbols(level, path, root, source, &symbols))
-    })
+    });
+    (level, symbols)
 }
 
 /// Render pre-discovered source files at the given granularity level.
@@ -130,6 +147,39 @@ pub fn render_files(
         }
     }
     out
+}
+
+/// Render pre-discovered source files using pre-extracted symbols.
+/// Avoids redundant symbol extraction when symbols have already been computed
+/// (e.g. from budget_level).
+pub fn render_files_with_symbols(
+    level: u8,
+    root: &Path,
+    files: &[PathBuf],
+    sources: &[Option<String>],
+    all_symbols: &[Vec<parse::Symbol>],
+) -> String {
+    let mut out = String::new();
+    for (i, (file, source)) in files.iter().zip(sources).enumerate() {
+        if level == 0 {
+            out.push_str(&render_with_symbols(0, file, root, "", &[]));
+        } else if let Some(s) = source {
+            out.push_str(&render_with_symbols(level, file, root, s, &all_symbols[i]));
+        }
+    }
+    out
+}
+
+/// Render a single file using pre-extracted symbols.
+/// Avoids redundant symbol extraction when symbols have already been computed.
+pub fn render_file_with_symbols(
+    level: u8,
+    path: &Path,
+    root: &Path,
+    source: &str,
+    symbols: &[parse::Symbol],
+) -> String {
+    render_with_symbols(level, path, root, source, symbols)
 }
 
 /// Render symbol lines for a file. If `truncate` is true (level 1), truncates

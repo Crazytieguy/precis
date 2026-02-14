@@ -930,11 +930,11 @@ fn single_file_budget() {
     let source = std::fs::read_to_string(&file).unwrap();
 
     // Very large budget should give MAX_LEVEL
-    let level = format::budget_level_file(usize::MAX, &file, &root, &source);
+    let (level, _) = format::budget_level_file(usize::MAX, &file, &root, &source);
     assert_eq!(level, format::MAX_LEVEL);
 
     // Budget of 0 should give level 0
-    let level = format::budget_level_file(0, &file, &root, &source);
+    let (level, _) = format::budget_level_file(0, &file, &root, &source);
     assert_eq!(level, 0);
 
     // Monotonicity: each level's word count <= next level's word count
@@ -1101,9 +1101,9 @@ fn budget_level_sanity() {
         tested += 1;
         let files = walk::discover_source_files(&root);
         let sources = format::read_sources(&files);
-        assert_eq!(format::budget_level(0, &root, &files, &sources), 0);
+        assert_eq!(format::budget_level(0, &root, &files, &sources).0, 0);
         assert_eq!(
-            format::budget_level(usize::MAX, &root, &files, &sources),
+            format::budget_level(usize::MAX, &root, &files, &sources).0,
             format::MAX_LEVEL
         );
     }
@@ -1118,8 +1118,9 @@ fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
     let root = fixture_path(subpath)?;
     let files = walk::discover_source_files(&root);
     let sources = format::read_sources(&files);
-    let level = format::budget_level(budget, &root, &files, &sources);
-    let output = format::render_files(level, &root, &files, &sources);
+    let (level, all_symbols) = format::budget_level(budget, &root, &files, &sources);
+    let output =
+        format::render_files_with_symbols(level, &root, &files, &sources, &all_symbols);
     let words = format::count_words(&output);
     Some(format!(
         "budget: {} → level {} ({} words)\n\n{}",
