@@ -11,8 +11,8 @@ sample.py
     22→    def visit_token(self, token: Token) -> None:
     25→    def visit_all(self, tokens: list[Token]) -> None:
     29→class TokenParser(Generic[T]):
-    32→    def __init__(self, source: str) -> None:
-    36→    def parse(self) -> list[Token]:
-    40→    def from_file(cls, path: str) -> "TokenParser[T]":
-    44→    def _advance(self) -> None:
-    47→VERSION: str = "0.1.0"
+    37→    def __init__(self, source: str) -> None:
+    42→    def parse(self) -> list[Token]:
+    47→    def from_file(cls, path: str) -> "TokenParser[T]":
+    51→    def _advance(self) -> None:
+    54→VERSION: str = "0.1.0"

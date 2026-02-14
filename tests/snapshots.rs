@@ -138,12 +138,20 @@ pub mod lexer;
 
 fn typescript_sample() -> &'static str {
     r#"
+/**
+ * Process all items and return the count.
+ */
 export function processItems(items: string[]): number {
     return items.length;
 }
 
 function helper(): void {}
 
+/**
+ * Fetch data from the given URL.
+ * @param url - The endpoint to fetch from.
+ * @returns The fetch response.
+ */
 export async function fetchData(url: string): Promise<Response> {
     return fetch(url);
 }
@@ -293,13 +301,20 @@ class Visitor:
             self.visit_token(t)
 
 class TokenParser(Generic[T]):
+    """A generic token parser.
+
+    Parses source text into a list of tokens.
+    """
+
     MAX_TOKENS: int = 1024
 
     def __init__(self, source: str) -> None:
+        """Initialize the parser with source text."""
         self._tokens: list[Token] = []
         self._source = source
 
     def parse(self) -> list[Token]:
+        """Parse and return the token list."""
         return self._tokens
 
     @classmethod

@@ -3,19 +3,27 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.ts
-     2→export function processItems(items: string[]): number {
-     6→function helper(): void {}
-     8→export async function fetchData(url: string): Promise<Response> {
-    12→export class TokenParser {
-    15→    constructor(input: string) {
-    19→    public parse(): Token[] {
-    23→    private advance(): void {}
-    26→export interface Visitor {
-    27→    visitToken(token: Token): void;
-    28→    visitAll(tokens: Token[]): void;
-    31→export enum TokenKind {
-    37→export type Span = [number, number];
-    39→export const MAX_TOKENS = 1024;
-    41→export default class DefaultExport {
-    45→export namespace Utils {
-    46→    export function format(s: string): string {
+     2→/**
+     3→ * Process all items and return the count.
+     4→ */
+     5→export function processItems(items: string[]): number {
+     9→function helper(): void {}
+    11→/**
+    12→ * Fetch data from the given URL.
+    13→ * @param url - The endpoint to fetch from.
+    14→ * @returns The fetch response.
+    15→ */
+    16→export async function fetchData(url: string): Promise<Response> {
+    20→export class TokenParser {
+    23→    constructor(input: string) {
+    27→    public parse(): Token[] {
+    31→    private advance(): void {}
+    34→export interface Visitor {
+    35→    visitToken(token: Token): void;
+    36→    visitAll(tokens: Token[]): void;
+    39→export enum TokenKind {
+    45→export type Span = [number, number];
+    47→export const MAX_TOKENS = 1024;
+    49→export default class DefaultExport {
+    53→export namespace Utils {
+    54→    export function format(s: string): string {
