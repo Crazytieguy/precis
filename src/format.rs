@@ -471,15 +471,31 @@ fn docstring_end(lines: &[&str], sym_line_0: usize) -> usize {
         return sym_line_0 + 1;
     }
     let trimmed = lines[idx].trim();
-    // Detect triple-quote opener (""" or ''', optionally with r prefix)
-    let (quote, open_len) = if trimmed.starts_with("\"\"\"") {
-        ("\"\"\"", 3)
-    } else if trimmed.starts_with("'''") {
-        ("'''", 3)
-    } else if trimmed.starts_with("r\"\"\"") {
-        ("\"\"\"", 4)
-    } else if trimmed.starts_with("r'''") {
-        ("'''", 4)
+    // Detect triple-quote opener (""" or '''), with optional Python string prefix
+    // Valid prefixes: r, u, f, b, rb, br, rf, fr (case-insensitive)
+    let prefix_len = {
+        let lower: String = trimmed.chars().take(3).flat_map(|c| c.to_lowercase()).collect();
+        if lower.starts_with("rb")
+            || lower.starts_with("br")
+            || lower.starts_with("rf")
+            || lower.starts_with("fr")
+        {
+            2
+        } else if lower.starts_with('r')
+            || lower.starts_with('u')
+            || lower.starts_with('f')
+            || lower.starts_with('b')
+        {
+            1
+        } else {
+            0
+        }
+    };
+    let after_prefix = &trimmed[prefix_len..];
+    let (quote, open_len) = if after_prefix.starts_with("\"\"\"") {
+        ("\"\"\"", prefix_len + 3)
+    } else if after_prefix.starts_with("'''") {
+        ("'''", prefix_len + 3)
     } else {
         return sym_line_0 + 1;
     };

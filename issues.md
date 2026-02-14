@@ -33,7 +33,7 @@
 ## Implementation notes
 
 - Doc comment detection (level 3) is text-based heuristic; does not use tree-sitter comment nodes. Handles `///`, `//!`, `/** */` blocks, Python `#` comments, and Python docstrings (`"""..."""` / `'''...'''`). Skips `#[attr]` and `@decorator` lines between doc comments and symbols; decorators/attributes are always shown at level 3+.
-- Python docstrings (triple-quoted strings after `def`/`class` lines) are captured at levels 3 and 4 via text-based heuristic. Handles single-line, multi-line, and raw (`r"""`) docstrings.
+- Python docstrings (triple-quoted strings after `def`/`class` lines) are captured at levels 3 and 4 via text-based heuristic. Handles single-line, multi-line, and all string prefixes (`r"""`, `u"""`, `f"""`, `b"""`, `rf"""`, `br"""`, etc.).
 - Python: module-level constants are captured if type-annotated (`VERSION: str = "0.1.0"`), UPPER_CASE (`MAX_SIZE = 100`), or dunder (`__all__ = [...]`). Lowercase untyped assignments (e.g. `logger = ...`) are excluded to reduce noise. `TypeAlias` annotations are mapped to `Const` kind (could be `TypeAlias` in the future).
 - Multi-line signature detection (level 2+) is text-based heuristic: scans forward from the symbol line for `{`/`;` (C-like) or `:` (Python). Applies to functions, impl blocks, traits, structs, enums, classes, and interfaces — any symbol kind that can have multi-line declarations (generic parameters, `where` clauses, bounds). Expression-bodied arrow functions without semicolons fall back to single-line display.
 - Markdown: levels 1 and 2 produce identical output (heading lines are the same truncated or full since heading text IS the line content). Not a significant issue — same happens for simple single-line code symbols.
