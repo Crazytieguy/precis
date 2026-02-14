@@ -198,19 +198,8 @@ pub fn render_files(
     files: &[PathBuf],
     sources: &[Option<String>],
 ) -> String {
-    let mut out = String::new();
-    for (file, source) in files.iter().zip(sources) {
-        match source {
-            Some(s) if level > 0 => {
-                out.push_str(&render_file(level, file, root, s));
-            }
-            _ => {
-                // Level 0 or unreadable file: show path only
-                out.push_str(&render_file(0, file, root, ""));
-            }
-        }
-    }
-    out
+    let all_symbols = extract_all_symbols(files, sources);
+    render_files_with_symbols(level, root, files, sources, &all_symbols)
 }
 
 /// Render pre-discovered source files using pre-extracted symbols.
