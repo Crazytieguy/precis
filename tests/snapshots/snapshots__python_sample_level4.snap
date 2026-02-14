@@ -1,0 +1,38 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+sample.py
+     7→# Process the input items and return the total count.
+     8→def process_items(items: list[str]) -> int:
+    11→def _helper() -> None:
+    14→@dataclass
+    15→class Token:
+    16→    kind: str
+    17→    span: tuple[int, int]
+    18→    value: Optional[str] = None
+    20→# A visitor that walks over tokens.
+    21→class Visitor:
+    22→    def visit_token(self, token: Token) -> None:
+    23→        pass
+    24→
+    25→    def visit_all(self, tokens: list[Token]) -> None:
+    26→        for t in tokens:
+    27→            self.visit_token(t)
+    29→class TokenParser(Generic[T]):
+    30→    MAX_TOKENS: int = 1024
+    31→
+    32→    def __init__(self, source: str) -> None:
+    33→        self._tokens: list[Token] = []
+    34→        self._source = source
+    35→
+    36→    def parse(self) -> list[Token]:
+    37→        return self._tokens
+    38→
+    39→    @classmethod
+    40→    def from_file(cls, path: str) -> "TokenParser[T]":
+    41→        with open(path) as f:
+    42→            return cls(f.read())
+    43→
+    44→    def _advance(self) -> None:
+    45→        pass

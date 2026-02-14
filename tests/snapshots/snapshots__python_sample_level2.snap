@@ -1,0 +1,16 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+sample.py
+     8→def process_items(items: list[str]) -> int:
+    11→def _helper() -> None:
+    15→class Token:
+    21→class Visitor:
+    22→    def visit_token(self, token: Token) -> None:
+    25→    def visit_all(self, tokens: list[Token]) -> None:
+    29→class TokenParser(Generic[T]):
+    32→    def __init__(self, source: str) -> None:
+    36→    def parse(self) -> list[Token]:
+    40→    def from_file(cls, path: str) -> "TokenParser[T]":
+    44→    def _advance(self) -> None:

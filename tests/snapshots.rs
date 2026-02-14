@@ -263,6 +263,57 @@ export default function App() {
 "#
 }
 
+fn python_sample() -> &'static str {
+    r#"
+from typing import Optional, Generic, TypeVar
+from dataclasses import dataclass
+
+T = TypeVar("T")
+
+# Process the input items and return the total count.
+def process_items(items: list[str]) -> int:
+    return len(items)
+
+def _helper() -> None:
+    pass
+
+@dataclass
+class Token:
+    kind: str
+    span: tuple[int, int]
+    value: Optional[str] = None
+
+# A visitor that walks over tokens.
+class Visitor:
+    def visit_token(self, token: Token) -> None:
+        pass
+
+    def visit_all(self, tokens: list[Token]) -> None:
+        for t in tokens:
+            self.visit_token(t)
+
+class TokenParser(Generic[T]):
+    MAX_TOKENS: int = 1024
+
+    def __init__(self, source: str) -> None:
+        self._tokens: list[Token] = []
+        self._source = source
+
+    def parse(self) -> list[Token]:
+        return self._tokens
+
+    @classmethod
+    def from_file(cls, path: str) -> "TokenParser[T]":
+        with open(path) as f:
+            return cls(f.read())
+
+    def _advance(self) -> None:
+        pass
+
+VERSION: str = "0.1.0"
+"#
+}
+
 // Level 0: file paths only
 
 #[test]
@@ -296,6 +347,12 @@ fn javascript_sample_level0() {
 #[test]
 fn tsx_sample_level0() {
     let output = format::render_file(0, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn python_sample_level0() {
+    let output = format::render_file(0, Path::new("sample.py"), Path::new(""), python_sample());
     insta::assert_snapshot!(output);
 }
 
@@ -335,6 +392,12 @@ fn tsx_sample_snapshot() {
     insta::assert_snapshot!(output);
 }
 
+#[test]
+fn python_sample_snapshot() {
+    let output = format::render_file(1, Path::new("sample.py"), Path::new(""), python_sample());
+    insta::assert_snapshot!(output);
+}
+
 // Level 2: full signature lines
 
 #[test]
@@ -368,6 +431,12 @@ fn javascript_sample_level2() {
 #[test]
 fn tsx_sample_level2() {
     let output = format::render_file(2, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn python_sample_level2() {
+    let output = format::render_file(2, Path::new("sample.py"), Path::new(""), python_sample());
     insta::assert_snapshot!(output);
 }
 
@@ -407,6 +476,12 @@ fn tsx_sample_level3() {
     insta::assert_snapshot!(output);
 }
 
+#[test]
+fn python_sample_level3() {
+    let output = format::render_file(3, Path::new("sample.py"), Path::new(""), python_sample());
+    insta::assert_snapshot!(output);
+}
+
 // Level 4: signatures with doc comments + type bodies (struct/enum/trait/interface)
 
 #[test]
@@ -443,6 +518,12 @@ fn tsx_sample_level4() {
     insta::assert_snapshot!(output);
 }
 
+#[test]
+fn python_sample_level4() {
+    let output = format::render_file(4, Path::new("sample.py"), Path::new(""), python_sample());
+    insta::assert_snapshot!(output);
+}
+
 // Level 5: full source
 
 #[test]
@@ -476,6 +557,12 @@ fn javascript_sample_level5() {
 #[test]
 fn tsx_sample_level5() {
     let output = format::render_file(5, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn python_sample_level5() {
+    let output = format::render_file(5, Path::new("sample.py"), Path::new(""), python_sample());
     insta::assert_snapshot!(output);
 }
 
