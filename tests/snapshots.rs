@@ -383,6 +383,16 @@ fn fixture_ky() {
 }
 
 #[test]
+fn fixture_ini() {
+    let Some(root) = fixture_path("ini/lib") else {
+        eprintln!("skipping fixture_ini: clone with `git clone --depth 1 https://github.com/npm/ini.git test/fixtures/ini`");
+        return;
+    };
+    let output = format::format_directory(&root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
 fn fixture_vaul() {
     let Some(root) = fixture_path("vaul/src") else {
         eprintln!("skipping fixture_vaul: clone with `git clone --depth 1 https://github.com/emilkowalski/vaul.git test/fixtures/vaul`");
