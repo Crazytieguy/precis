@@ -127,18 +127,22 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             "enum_declaration" => SymbolKind::Enum,
             "type_alias_declaration" => SymbolKind::TypeAlias,
             "lexical_declaration" => {
+                let declarator = symbol_node
+                    .named_children(&mut symbol_node.walk())
+                    .find(|c| c.kind() == "variable_declarator");
+                let value_kind = declarator
+                    .and_then(|d| d.child_by_field_name("value"))
+                    .map(|v| v.kind());
+
                 // Detect arrow functions / function expressions assigned to const/let
                 // e.g. `export const foo = () => ...` should be fn, not const
-                let is_function_value = symbol_node
-                    .named_children(&mut symbol_node.walk())
-                    .filter(|c| c.kind() == "variable_declarator")
-                    .any(|decl| {
-                        decl.child_by_field_name("value")
-                            .map(|v| matches!(v.kind(), "arrow_function" | "function_expression" | "generator_function"))
-                            .unwrap_or(false)
-                    });
-                if is_function_value {
+                if matches!(value_kind, Some("arrow_function" | "function_expression" | "generator_function")) {
                     SymbolKind::Function
+                }
+                // Filter out CommonJS require() calls — these are imports, not definitions
+                // e.g. `const SemVer = require('./semver')`
+                else if is_require_call(declarator, source) {
+                    continue;
                 } else {
                     SymbolKind::Const
                 }
@@ -262,6 +266,18 @@ fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
         });
     }
     false
+}
+
+/// Check if a variable_declarator's value is a `require()` call (CommonJS import).
+fn is_require_call(declarator: Option<tree_sitter::Node>, source: &str) -> bool {
+    let value = declarator.and_then(|d| d.child_by_field_name("value"));
+    match value {
+        Some(v) if v.kind() == "call_expression" => v
+            .child_by_field_name("function")
+            .and_then(|f| f.utf8_text(source.as_bytes()).ok())
+            == Some("require"),
+        _ => false,
+    }
 }
 
 /// Check if a node is inside a function body (i.e. it's a local declaration, not a module-level one).
@@ -538,6 +554,32 @@ export const MAX_RETRIES = 3;
         // Regular const values should remain as Const
         assert!(kinds.contains(&("API_URL", SymbolKind::Const)));
         assert!(kinds.contains(&("MAX_RETRIES", SymbolKind::Const)));
+    }
+
+    #[test]
+    fn filters_require_calls() {
+        let source = r#"
+const debug = require('../internal/debug')
+const SemVer = require('./semver')
+const parseOptions = require('../internal/parse-options')
+
+const ANY = Symbol('SemVer ANY')
+const MAX_RETRIES = 3;
+
+export const helper = (x) => x * 2;
+"#;
+        let symbols = extract_symbols(Path::new("test.js"), source);
+        let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
+
+        // require() calls should be filtered out
+        assert!(!names.contains(&"debug"));
+        assert!(!names.contains(&"SemVer"));
+        assert!(!names.contains(&"parseOptions"));
+        // Regular const values should be kept
+        assert!(names.contains(&"ANY"));
+        assert!(names.contains(&"MAX_RETRIES"));
+        // Arrow functions should still be kept
+        assert!(names.contains(&"helper"));
     }
 
     #[test]
