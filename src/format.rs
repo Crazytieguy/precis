@@ -3,9 +3,17 @@ use std::path::Path;
 use crate::{parse, walk};
 
 /// Format a single symbol as a line of output (without trailing newline).
-fn format_symbol(sym: &parse::Symbol) -> String {
-    let vis = if sym.is_public { "pub " } else { "" };
-    format!("  {vis}{} {} :{}", sym.kind, sym.name, sym.line)
+///
+/// Extracts a prefix from the actual source line (up to and including the symbol name)
+/// to satisfy the substring constraint: output lines are substrings of source lines.
+fn format_symbol(sym: &parse::Symbol, source: &str) -> String {
+    let source_line = source.lines().nth(sym.line - 1).unwrap_or("");
+    let trimmed = source_line.trim_start();
+    let prefix = match trimmed.find(&sym.name) {
+        Some(pos) => &trimmed[..pos + sym.name.len()],
+        None => &sym.name,
+    };
+    format!("  {} :{}", prefix, sym.line)
 }
 
 /// Format all symbols from a single file, with the file path header.
@@ -18,7 +26,7 @@ pub fn format_file_symbols(path: &Path, root: &Path, source: &str) -> String {
     let mut out = String::new();
     out.push_str(&format!("{}:\n", relative.display()));
     for sym in &symbols {
-        out.push_str(&format_symbol(sym));
+        out.push_str(&format_symbol(sym, source));
         out.push('\n');
     }
     out

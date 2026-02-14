@@ -3,11 +3,11 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.js:
-  pub fn processItems :2
-  fn helper :6
-  pub class TokenParser :8
-  pub fn constructor :9
-  pub fn parse :13
-  fn #advance :17
-  pub const MAX_TOKENS :20
-  pub class DefaultExport :22
+  export function processItems :2
+  function helper :6
+  export class TokenParser :8
+  constructor :9
+  parse :13
+  #advance :17
+  export const MAX_TOKENS :20
+  export default class DefaultExport :22

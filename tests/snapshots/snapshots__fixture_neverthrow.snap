@@ -3,129 +3,129 @@ source: tests/snapshots.rs
 expression: output
 ---
 _internals/error.ts:
-  pub interface ErrorConfig :3
+  export interface ErrorConfig :3
   const defaultErrorConfig :7
   interface NeverThrowError :11
-  pub fn createNeverThrowError :27
+  export const createNeverThrowError :27
 _internals/utils.ts:
-  pub type ExtractOkTypes :5
-  pub type ExtractOkAsyncTypes :10
-  pub type ExtractErrTypes :15
-  pub type ExtractErrAsyncTypes :20
-  pub type InferOkTypes :24
-  pub type InferErrTypes :25
-  pub type InferAsyncOkTypes :27
-  pub type InferAsyncErrTypes :28
-  pub fn combineResultList :33
-  pub fn combineResultAsyncList :54
-  pub fn combineResultListWithAllErrors :64
-  pub fn combineResultAsyncListWithAllErrors :82
+  export type ExtractOkTypes :5
+  export type ExtractOkAsyncTypes :10
+  export type ExtractErrTypes :15
+  export type ExtractErrAsyncTypes :20
+  export type InferOkTypes :24
+  export type InferErrTypes :25
+  export type InferAsyncOkTypes :27
+  export type InferAsyncErrTypes :28
+  export const combineResultList :33
+  export const combineResultAsyncList :54
+  export const combineResultListWithAllErrors :64
+  export const combineResultAsyncListWithAllErrors :82
 result-async.ts:
-  pub class ResultAsync :22
-  pub fn constructor :25
-  pub fn fromSafePromise :30
-  pub fn fromPromise :37
-  pub fn fromThrowable :46
-  pub fn combine :69
-  pub fn combineWithAllErrors :81
-  pub fn map :89
-  pub fn andThrough :101
-  pub fn andTee :117
-  pub fn orTee :133
-  pub fn mapErr :149
-  pub fn andThen :169
-  pub fn orElse :190
-  pub fn match :202
-  pub fn unwrapOr :206
-  pub fn safeUnwrap :222
-  pub fn then :227
-  pub fn okAsync :249
-  pub fn errAsync :255
-  pub const fromPromise :259
-  pub const fromSafePromise :260
-  pub const fromAsyncThrowable :262
-  pub type CombineResultAsyncs :265
-  pub type CombineResultsWithAllErrorsArrayAsync :272
+  export class ResultAsync :22
+  constructor :25
+  static fromSafePromise :30
+  static fromPromise :37
+  static fromThrowable :46
+  static combine :69
+  static combineWithAllErrors :81
+  map :89
+  andThrough :101
+  andTee :117
+  orTee :133
+  mapErr :149
+  andThen :169
+  orElse :190
+  match :202
+  unwrapOr :206
+  async *safeUnwrap :222
+  then :227
+  export function okAsync :249
+  export function errAsync :255
+  export const fromPromise :259
+  export const fromSafePromise :260
+  export const fromAsyncThrowable :262
+  export type CombineResultAsyncs :265
+  export type CombineResultsWithAllErrorsArrayAsync :272
   type UnwrapAsync :279
   type TraverseAsync :300
   type TraverseWithAllErrorsAsync :330
   type Writable :338
 result.ts:
-  pub mod Result :14
-  pub fn fromThrowable :23
-  pub fn combine :43
-  pub fn combineWithAllErrors :55
-  pub type Result :62
-  pub fn ok :66
-  pub fn err :73
-  pub fn safeTry :122
+  export namespace Result :14
+  export function fromThrowable :23
+  export function combine :43
+  export function combineWithAllErrors :55
+  export type Result :62
+  export function ok :66
+  export function err :73
+  export function safeTry :122
   interface IResult :134
-  pub fn isOk :140
-  pub fn isErr :147
-  pub fn map :157
-  pub fn mapErr :168
-  pub fn andThen :183
-  pub fn andTee :195
-  pub fn orTee :207
-  pub fn andThrough :219
-  pub fn orElse :233
-  pub fn asyncAndThen :244
-  pub fn asyncMap :253
-  pub fn unwrapOr :260
-  pub fn match :276
-  pub fn safeUnwrap :290
-  pub fn _unsafeUnwrap :299
-  pub fn _unsafeUnwrapErr :309
-  pub class Ok :312
-  pub fn constructor :313
-  pub fn isOk :315
-  pub fn isErr :319
-  pub fn map :323
-  pub fn mapErr :328
-  pub fn andThen :337
-  pub fn andThrough :344
-  pub fn andTee :348
-  pub fn orTee :357
-  pub fn orElse :366
-  pub fn asyncAndThen :370
-  pub fn asyncAndThrough :379
-  pub fn asyncMap :383
-  pub fn unwrapOr :388
-  pub fn match :393
-  pub fn safeUnwrap :397
-  pub fn _unsafeUnwrap :405
-  pub fn _unsafeUnwrapErr :409
-  pub class Err :419
-  pub fn constructor :420
-  pub fn isOk :422
-  pub fn isErr :426
-  pub fn map :431
-  pub fn mapErr :435
-  pub fn andThrough :439
-  pub fn andTee :443
-  pub fn orTee :447
-  pub fn andThen :461
-  pub fn orElse :470
-  pub fn asyncAndThen :475
-  pub fn asyncAndThrough :479
-  pub fn asyncMap :484
-  pub fn unwrapOr :488
-  pub fn match :492
-  pub fn safeUnwrap :496
-  pub fn _unsafeUnwrap :505
-  pub fn _unsafeUnwrapErr :509
-  pub const fromThrowable :523
+  isOk :140
+  isErr :147
+  map :157
+  mapErr :168
+  andThen :183
+  andTee :195
+  orTee :207
+  andThrough :219
+  orElse :233
+  asyncAndThen :244
+  asyncMap :253
+  unwrapOr :260
+  match :276
+  safeUnwrap :290
+  _unsafeUnwrap :299
+  _unsafeUnwrapErr :309
+  export class Ok :312
+  constructor :313
+  isOk :315
+  isErr :319
+  map :323
+  mapErr :328
+  andThen :337
+  andThrough :344
+  andTee :348
+  orTee :357
+  orElse :366
+  asyncAndThen :370
+  asyncAndThrough :379
+  asyncMap :383
+  unwrapOr :388
+  match :393
+  safeUnwrap :397
+  _unsafeUnwrap :405
+  _unsafeUnwrapErr :409
+  export class Err :419
+  constructor :420
+  isOk :422
+  isErr :426
+  map :431
+  mapErr :435
+  andThrough :439
+  andTee :443
+  orTee :447
+  andThen :461
+  orElse :470
+  asyncAndThen :475
+  asyncAndThrough :479
+  asyncMap :484
+  unwrapOr :488
+  match :492
+  safeUnwrap :496
+  _unsafeUnwrap :505
+  _unsafeUnwrapErr :509
+  export const fromThrowable :523
   type Prev :530
   type CollectResults :590
-  pub type Transpose :614
-  pub type Combine :635
-  pub type Dedup :645
-  pub type MemberListOf :652
-  pub type EmptyArrayToNever :669
+  export type Transpose :614
+  export type Combine :635
+  export type Dedup :645
+  export type MemberListOf :652
+  export type EmptyArrayToNever :669
   type UnknownMembersToNever :680
-  pub type MembersToUnion :685
-  pub type IsLiteralArray :688
+  export type MembersToUnion :685
+  export type IsLiteralArray :688
   type Traverse :698
   type TraverseWithAllErrors :704
-  pub type CombineResults :712
-  pub type CombineResultsWithAllErrorsArray :719
+  export type CombineResults :712
+  export type CombineResultsWithAllErrorsArray :719

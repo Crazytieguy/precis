@@ -3,19 +3,19 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.ts:
-  pub fn processItems :2
-  fn helper :6
-  pub fn fetchData :8
-  pub class TokenParser :12
-  pub fn constructor :15
-  pub fn parse :19
-  fn advance :23
-  pub interface Visitor :26
-  pub fn visitToken :27
-  pub fn visitAll :28
-  pub enum TokenKind :31
-  pub type Span :37
-  pub const MAX_TOKENS :39
-  pub class DefaultExport :41
-  pub mod Utils :45
-  pub fn format :46
+  export function processItems :2
+  function helper :6
+  export async function fetchData :8
+  export class TokenParser :12
+  constructor :15
+  public parse :19
+  private advance :23
+  export interface Visitor :26
+  visitToken :27
+  visitAll :28
+  export enum TokenKind :31
+  export type Span :37
+  export const MAX_TOKENS :39
+  export default class DefaultExport :41
+  export namespace Utils :45
+  export function format :46

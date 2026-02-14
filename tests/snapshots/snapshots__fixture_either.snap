@@ -4,78 +4,78 @@ expression: output
 ---
 into_either.rs:
   pub trait IntoEither :14
-  pub fn into_either :29
-  pub fn into_either_with :55
-  impl IntoEither for T :64
+  fn into_either :29
+  fn into_either_with :55
+  impl<T> IntoEither for T :64
 iterator.rs:
-  macro wrap_either :4
+  macro_rules! wrap_either :4
   pub struct IterEither :19
-  impl IterEither<L, R> :23
-  pub fn new :24
-  impl Extend<A> for Either<L, R> :29
-  pub fn extend :34
-  impl Iterator for Either<L, R> :43
-  pub type Item :48
-  pub fn next :50
-  pub fn size_hint :54
-  pub fn fold :58
-  pub fn for_each :65
-  pub fn count :72
-  pub fn last :76
-  pub fn nth :80
-  pub fn collect :84
-  pub fn partition :91
-  pub fn all :99
-  pub fn any :106
-  pub fn find :113
-  pub fn find_map :120
-  pub fn position :127
-  impl DoubleEndedIterator for Either<L, R> :135
-  pub fn next_back :140
-  pub fn nth_back :144
-  pub fn rfold :148
-  pub fn rfind :155
-  impl ExactSizeIterator for Either<L, R> :163
-  pub fn len :168
-  impl iter::FusedIterator for Either<L, R> :173
-  impl Iterator for IterEither<L, R> :180
-  pub type Item :185
-  pub fn next :187
-  pub fn size_hint :191
-  pub fn fold :195
-  pub fn for_each :202
-  pub fn count :209
-  pub fn last :213
-  pub fn nth :217
-  pub fn collect :221
-  pub fn partition :228
-  pub fn all :236
-  pub fn any :243
-  pub fn find :250
-  pub fn find_map :257
-  pub fn position :264
-  impl DoubleEndedIterator for IterEither<L, R> :272
-  pub fn next_back :277
-  pub fn nth_back :281
-  pub fn rfold :285
-  pub fn rfind :292
-  impl ExactSizeIterator for IterEither<L, R> :300
-  pub fn len :305
-  impl iter::FusedIterator for IterEither<L, R> :310
+  impl<L, R> IterEither<L, R> :23
+  pub(crate) fn new :24
+  impl<L, R, A> Extend<A> for Either<L, R> :29
+  fn extend :34
+  impl<L, R> Iterator for Either<L, R> :43
+  type Item :48
+  fn next :50
+  fn size_hint :54
+  fn fold :58
+  fn for_each :65
+  fn count :72
+  fn last :76
+  fn nth :80
+  fn collect :84
+  fn partition :91
+  fn all :99
+  fn any :106
+  fn find :113
+  fn find_map :120
+  fn position :127
+  impl<L, R> DoubleEndedIterator for Either<L, R> :135
+  fn next_back :140
+  fn nth_back :144
+  fn rfold :148
+  fn rfind :155
+  impl<L, R> ExactSizeIterator for Either<L, R> :163
+  fn len :168
+  impl<L, R> iter::FusedIterator for Either<L, R> :173
+  impl<L, R> Iterator for IterEither<L, R> :180
+  type Item :185
+  fn next :187
+  fn size_hint :191
+  fn fold :195
+  fn for_each :202
+  fn count :209
+  fn last :213
+  fn nth :217
+  fn collect :221
+  fn partition :228
+  fn all :236
+  fn any :243
+  fn find :250
+  fn find_map :257
+  fn position :264
+  impl<L, R> DoubleEndedIterator for IterEither<L, R> :272
+  fn next_back :277
+  fn nth_back :281
+  fn rfold :285
+  fn rfind :292
+  impl<L, R> ExactSizeIterator for IterEither<L, R> :300
+  fn len :305
+  impl<L, R> iter::FusedIterator for IterEither<L, R> :310
 lib.rs:
   pub mod serde_untagged :22
   pub mod serde_untagged_optional :25
   pub enum Either :49
-  macro for_both :81
-  macro try_left :113
-  macro try_right :124
-  macro map_either :133
+  macro_rules! for_both :81
+  macro_rules! try_left :113
+  macro_rules! try_right :124
+  macro_rules! map_either :133
   mod iterator :142
   mod into_either :145
-  impl Clone for Either<L, R> :148
-  pub fn clone :149
-  pub fn clone_from :156
-  impl Either<L, R> :165
+  impl<L: Clone, R: Clone> Clone for Either<L, R> :148
+  fn clone :149
+  fn clone_from :156
+  impl<L, R> Either<L, R> :165
   pub fn is_left :175
   pub fn is_right :191
   pub fn left :206
@@ -110,74 +110,74 @@ lib.rs:
   pub fn expect_left :871
   pub fn expect_right :901
   pub fn either_into :923
-  impl Either<Option<L>, Option<R>> :932
+  impl<L, R> Either<Option<L>, Option<R>> :932
   pub fn factor_none :944
-  impl Either<Result<L, E>, Result<R, E>> :952
+  impl<L, R, E> Either<Result<L, E>, Result<R, E>> :952
   pub fn factor_err :966
-  impl Either<Result<T, L>, Result<T, R>> :974
+  impl<T, L, R> Either<Result<T, L>, Result<T, R>> :974
   pub fn factor_ok :988
-  impl Either<(T, L), (T, R)> :996
+  impl<T, L, R> Either<(T, L), (T, R)> :996
   pub fn factor_first :1009
-  impl Either<(L, T), (R, T)> :1017
+  impl<T, L, R> Either<(L, T), (R, T)> :1017
   pub fn factor_second :1030
-  impl Either<T, T> :1038
+  impl<T> Either<T, T> :1038
   pub fn into_inner :1050
   pub fn map :1065
-  impl Either<&L, &R> :1073
+  impl<L, R> Either<&L, &R> :1073
   pub fn cloned :1076
   pub fn copied :1086
-  impl Either<&mut L, &mut R> :1095
+  impl<L, R> Either<&mut L, &mut R> :1095
   pub fn cloned :1098
   pub fn copied :1108
-  impl From<Result<R, L>> for Either<L, R> :1118
-  pub fn from :1119
-  impl From<Either<L, R>> for Result<R, L> :1128
-  pub fn from :1129
-  impl Future for Either<L, R> :1138
-  pub type Output :1143
-  pub fn poll :1145
-  impl Read for Either<L, R> :1157
-  pub fn read :1162
-  pub fn read_exact :1166
-  pub fn read_to_end :1170
-  pub fn read_to_string :1174
-  impl Seek for Either<L, R> :1183
-  pub fn seek :1188
-  impl BufRead for Either<L, R> :1195
-  pub fn fill_buf :1200
-  pub fn consume :1204
-  pub fn read_until :1208
-  pub fn read_line :1212
-  impl Write for Either<L, R> :1221
-  pub fn write :1226
-  pub fn write_all :1230
-  pub fn write_fmt :1234
-  pub fn flush :1238
-  impl AsRef<Target> for Either<L, R> :1243
-  pub fn as_ref :1248
-  macro impl_specific_ref_and_mut :1253
-  impl AsRef<[Target]> for Either<L, R> :1292
-  pub fn as_ref :1297
-  impl AsMut<Target> for Either<L, R> :1302
-  pub fn as_mut :1307
-  impl AsMut<[Target]> for Either<L, R> :1312
-  pub fn as_mut :1317
-  impl Deref for Either<L, R> :1322
-  pub type Target :1327
-  pub fn deref :1329
-  impl DerefMut for Either<L, R> :1334
-  pub fn deref_mut :1339
-  impl Error for Either<L, R> :1348
-  pub fn source :1353
-  pub fn description :1358
-  pub fn cause :1363
-  impl fmt::Display for Either<L, R> :1368
-  pub fn fmt :1373
-  impl fmt::Write for Either<L, R> :1378
-  pub fn write_str :1383
-  pub fn write_char :1387
-  pub fn write_fmt :1391
-  macro check_t :1522
+  impl<L, R> From<Result<R, L>> for Either<L, R> :1118
+  fn from :1119
+  impl<L, R> From<Either<L, R>> for Result<R, L> :1128
+  fn from :1129
+  impl<L, R> Future for Either<L, R> :1138
+  type Output :1143
+  fn poll :1145
+  impl<L, R> Read for Either<L, R> :1157
+  fn read :1162
+  fn read_exact :1166
+  fn read_to_end :1170
+  fn read_to_string :1174
+  impl<L, R> Seek for Either<L, R> :1183
+  fn seek :1188
+  impl<L, R> BufRead for Either<L, R> :1195
+  fn fill_buf :1200
+  fn consume :1204
+  fn read_until :1208
+  fn read_line :1212
+  impl<L, R> Write for Either<L, R> :1221
+  fn write :1226
+  fn write_all :1230
+  fn write_fmt :1234
+  fn flush :1238
+  impl<L, R, Target> AsRef<Target> for Either<L, R> :1243
+  fn as_ref :1248
+  macro_rules! impl_specific_ref_and_mut :1253
+  impl<L, R, Target> AsRef<[Target]> for Either<L, R> :1292
+  fn as_ref :1297
+  impl<L, R, Target> AsMut<Target> for Either<L, R> :1302
+  fn as_mut :1307
+  impl<L, R, Target> AsMut<[Target]> for Either<L, R> :1312
+  fn as_mut :1317
+  impl<L, R> Deref for Either<L, R> :1322
+  type Target :1327
+  fn deref :1329
+  impl<L, R> DerefMut for Either<L, R> :1334
+  fn deref_mut :1339
+  impl<L, R> Error for Either<L, R> :1348
+  fn source :1353
+  fn description :1358
+  fn cause :1363
+  impl<L, R> fmt::Display for Either<L, R> :1368
+  fn fmt :1373
+  impl<L, R> fmt::Write for Either<L, R> :1378
+  fn write_str :1383
+  fn write_char :1387
+  fn write_fmt :1391
+  macro_rules! check_t :1522
   fn _unsized_ref_propagation :1536
   fn _unsized_std_propagation :1553
 serde_untagged.rs:

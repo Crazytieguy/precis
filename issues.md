@@ -1,13 +1,5 @@
 # Issues
 
-## Output uses synthesized keywords instead of source substrings
-
-**Priority: do first.** The output currently normalizes keywords across languages (e.g. `export` → `pub`, `function` → `fn`, `interface` → `type` in TypeScript). This violates the substring constraint: each output line should be a substring of the original source line. Remove the normalization — this should be done by deleting code, not adding code.
-
-## Snapshot quality
-
-- TypeScript: `lexical_declaration` captures both `const` and `let` as `const`. Should `let` exports be shown differently?
-
 ## Snapshot coverage
 
 - Add more fixture snapshot tests — `either` (Rust) and `neverthrow` (TypeScript) done; could use more diverse projects

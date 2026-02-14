@@ -8,14 +8,14 @@ sample.rs:
   pub struct Token :8
   pub enum TokenKind :13
   pub trait Visitor :19
-  pub fn visit_token :20
-  pub fn visit_all :21
+  fn visit_token :20
+  fn visit_all :21
   impl std::fmt::Display for Token :28
-  pub fn fmt :29
+  fn fmt :29
   impl Token :34
   pub fn new :35
   pub type Span :40
   const MAX_TOKENS :42
   pub static VERSION :44
-  macro token :46
+  macro_rules! token :46
   pub mod lexer :52
