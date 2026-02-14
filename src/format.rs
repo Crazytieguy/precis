@@ -44,6 +44,22 @@ pub fn budget_level(budget: usize, root: &Path) -> u8 {
     low
 }
 
+/// Find the highest granularity level whose output for a single file fits within the word budget.
+pub fn budget_level_file(budget: usize, path: &Path, root: &Path, source: &str) -> u8 {
+    let mut low: u8 = 0;
+    let mut high: u8 = MAX_LEVEL;
+    while low < high {
+        let mid = (low + high).div_ceil(2);
+        let output = render_file(mid, path, root, source);
+        if count_words(&output) <= budget {
+            low = mid;
+        } else {
+            high = mid - 1;
+        }
+    }
+    low
+}
+
 /// Render all source files in a directory at the given granularity level.
 pub fn render_directory(level: u8, root: &Path) -> String {
     let files = walk::discover_source_files(root);

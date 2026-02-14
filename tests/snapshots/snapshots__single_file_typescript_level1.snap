@@ -1,0 +1,83 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+result.ts
+    14→export namespace Result
+    23→  export function fromThrowable
+    43→  export function combine
+    55→  export function combineWithAllErrors
+    62→export type Result
+    66→export function ok
+    73→export function err
+   122→export function safeTry
+   134→interface IResult
+   140→  isOk
+   147→  isErr
+   157→  map
+   168→  mapErr
+   183→  andThen
+   195→  andTee
+   207→  orTee
+   219→  andThrough
+   233→  orElse
+   244→  asyncAndThen
+   253→  asyncMap
+   260→  unwrapOr
+   276→  match
+   290→  safeUnwrap
+   299→  _unsafeUnwrap
+   309→  _unsafeUnwrapErr
+   312→export class Ok
+   313→  constructor
+   315→  isOk
+   319→  isErr
+   323→  map
+   328→  mapErr
+   337→  andThen
+   344→  andThrough
+   348→  andTee
+   357→  orTee
+   366→  orElse
+   370→  asyncAndThen
+   379→  asyncAndThrough
+   383→  asyncMap
+   388→  unwrapOr
+   393→  match
+   397→  safeUnwrap
+   405→  _unsafeUnwrap
+   409→  _unsafeUnwrapErr
+   419→export class Err
+   420→  constructor
+   422→  isOk
+   426→  isErr
+   431→  map
+   435→  mapErr
+   439→  andThrough
+   443→  andTee
+   447→  orTee
+   461→  andThen
+   470→  orElse
+   475→  asyncAndThen
+   479→  asyncAndThrough
+   484→  asyncMap
+   488→  unwrapOr
+   492→  match
+   496→  safeUnwrap
+   505→  _unsafeUnwrap
+   509→  _unsafeUnwrapErr
+   523→export const fromThrowable
+   530→type Prev
+   590→type CollectResults
+   614→export type Transpose
+   635→export type Combine
+   645→export type Dedup
+   652→export type MemberListOf
+   669→export type EmptyArrayToNever
+   680→type UnknownMembersToNever
+   685→export type MembersToUnion
+   688→export type IsLiteralArray
+   698→type Traverse
+   704→type TraverseWithAllErrors
+   712→export type CombineResults
+   719→export type CombineResultsWithAllErrorsArray

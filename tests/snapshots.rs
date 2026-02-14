@@ -829,6 +829,77 @@ fn fixture_neverthrow_internals_subdir_level2() {
     insta::assert_snapshot!(output);
 }
 
+// Single-file rendering tests (precis accepts individual files, not just directories).
+
+#[test]
+fn single_file_rust_level1() {
+    let Some(root) = fixture_path("either/src") else {
+        eprintln!("skipping single_file_rust_level1: clone either fixture");
+        return;
+    };
+    let file = root.join("lib.rs");
+    let source = std::fs::read_to_string(&file).unwrap();
+    let output = format::render_file(1, &file, &root, &source);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn single_file_rust_level2() {
+    let Some(root) = fixture_path("either/src") else {
+        eprintln!("skipping single_file_rust_level2: clone either fixture");
+        return;
+    };
+    let file = root.join("lib.rs");
+    let source = std::fs::read_to_string(&file).unwrap();
+    let output = format::render_file(2, &file, &root, &source);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn single_file_typescript_level1() {
+    let Some(root) = fixture_path("neverthrow/src") else {
+        eprintln!("skipping single_file_typescript_level1: clone neverthrow fixture");
+        return;
+    };
+    let file = root.join("result.ts");
+    let source = std::fs::read_to_string(&file).unwrap();
+    let output = format::render_file(1, &file, &root, &source);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn single_file_budget() {
+    let Some(root) = fixture_path("either/src") else {
+        eprintln!("skipping single_file_budget: clone either fixture");
+        return;
+    };
+    let file = root.join("lib.rs");
+    let source = std::fs::read_to_string(&file).unwrap();
+
+    // Very large budget should give MAX_LEVEL
+    let level = format::budget_level_file(usize::MAX, &file, &root, &source);
+    assert_eq!(level, format::MAX_LEVEL);
+
+    // Budget of 0 should give level 0
+    let level = format::budget_level_file(0, &file, &root, &source);
+    assert_eq!(level, 0);
+
+    // Monotonicity: each level's word count <= next level's word count
+    let mut prev_words = 0;
+    for l in 0..=format::MAX_LEVEL {
+        let output = format::render_file(l, &file, &root, &source);
+        let words = format::count_words(&output);
+        assert!(
+            words >= prev_words,
+            "Level {} ({} words) < previous ({} words)",
+            l,
+            words,
+            prev_words,
+        );
+        prev_words = words;
+    }
+}
+
 /// Test the monotonicity invariant: for any file, a higher level must never
 /// produce fewer words than a lower level.
 #[test]

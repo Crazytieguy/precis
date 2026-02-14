@@ -14,13 +14,12 @@
 - Output supports 4 granularity levels: 0 (file paths), 1 (symbol names), 2 (full signature lines), 3 (full source)
 - Monotonicity invariant (higher level = more words) tested against all fixtures
 - `--budget` flag works: binary search over levels selects highest level fitting within word budget
-- `path` arg only accepts directories, not files
+- `path` arg accepts both files and directories
 - Default output (no `--budget`) is level 1 (symbol names truncated)
 
 ## Feature development
 
 - Make levels depth-aware and file-size-aware (currently uniform across all files)
-- Accept file paths in addition to directories
 - Add more language grammars (Python, Go)
 - Add `--json` output flag
 

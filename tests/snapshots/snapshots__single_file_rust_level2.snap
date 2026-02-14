@@ -1,0 +1,122 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+lib.rs
+    22→pub mod serde_untagged;
+    25→pub mod serde_untagged_optional;
+    49→pub enum Either<L, R> {
+    81→macro_rules! for_both {
+   113→macro_rules! try_left {
+   124→macro_rules! try_right {
+   133→macro_rules! map_either {
+   142→mod iterator;
+   145→mod into_either;
+   148→impl<L: Clone, R: Clone> Clone for Either<L, R> {
+   149→    fn clone(&self) -> Self {
+   156→    fn clone_from(&mut self, source: &Self) {
+   165→impl<L, R> Either<L, R> {
+   175→    pub fn is_left(&self) -> bool {
+   191→    pub fn is_right(&self) -> bool {
+   206→    pub fn left(self) -> Option<L> {
+   224→    pub fn right(self) -> Option<R> {
+   242→    pub fn as_ref(&self) -> Either<&L, &R> {
+   264→    pub fn as_mut(&mut self) -> Either<&mut L, &mut R> {
+   270→    pub fn as_pin_ref(self: Pin<&Self>) -> Either<Pin<&L>, Pin<&R>> {
+   278→    pub fn as_pin_mut(self: Pin<&mut Self>) -> Either<Pin<&mut L>, Pin<&mut R>> {
+   298→    pub fn flip(self) -> Either<R, L> {
+   317→    pub fn map_left<F, M>(self, f: F) -> Either<M, R>
+   339→    pub fn map_right<F, S>(self, f: F) -> Either<L, S>
+   366→    pub fn map_either<F, G, M, S>(self, f: F, g: G) -> Either<M, S>
+   397→    pub fn map_either_with<Ctx, F, G, M, S>(self, ctx: Ctx, f: F, g: G) -> Either<M, S>
+   424→    pub fn either<F, G, T>(self, f: F, g: G) -> T
+   454→    pub fn either_with<Ctx, F, G, T>(self, ctx: Ctx, f: F, g: G) -> T
+   476→    pub fn left_and_then<F, S>(self, f: F) -> Either<S, R>
+   497→    pub fn right_and_then<F, S>(self, f: F) -> Either<L, S>
+   521→    pub fn into_iter(self) -> Either<L::IntoIter, R::IntoIter>
+   544→    pub fn iter(&self) -> Either<<&L as IntoIterator>::IntoIter, <&R as IntoIterator>::IntoIter>
+   573→    pub fn iter_mut(
+   597→    pub fn factor_into_iter(self) -> IterEither<L::IntoIter, R::IntoIter>
+   619→    pub fn factor_iter(
+   645→    pub fn factor_iter_mut(
+   671→    pub fn left_or(self, other: L) -> L {
+   690→    pub fn left_or_default(self) -> L
+   712→    pub fn left_or_else<F>(self, f: F) -> L
+   738→    pub fn right_or(self, other: R) -> R {
+   757→    pub fn right_or_default(self) -> R
+   779→    pub fn right_or_else<F>(self, f: F) -> R
+   809→    pub fn unwrap_left(self) -> L
+   841→    pub fn unwrap_right(self) -> R
+   871→    pub fn expect_left(self, msg: &str) -> L
+   901→    pub fn expect_right(self, msg: &str) -> R
+   923→    pub fn either_into<T>(self) -> T
+   932→impl<L, R> Either<Option<L>, Option<R>> {
+   944→    pub fn factor_none(self) -> Option<Either<L, R>> {
+   952→impl<L, R, E> Either<Result<L, E>, Result<R, E>> {
+   966→    pub fn factor_err(self) -> Result<Either<L, R>, E> {
+   974→impl<T, L, R> Either<Result<T, L>, Result<T, R>> {
+   988→    pub fn factor_ok(self) -> Result<T, Either<L, R>> {
+   996→impl<T, L, R> Either<(T, L), (T, R)> {
+  1009→    pub fn factor_first(self) -> (T, Either<L, R>) {
+  1017→impl<T, L, R> Either<(L, T), (R, T)> {
+  1030→    pub fn factor_second(self) -> (Either<L, R>, T) {
+  1038→impl<T> Either<T, T> {
+  1050→    pub fn into_inner(self) -> T {
+  1065→    pub fn map<F, M>(self, f: F) -> Either<M, M>
+  1073→impl<L, R> Either<&L, &R> {
+  1076→    pub fn cloned(self) -> Either<L, R>
+  1086→    pub fn copied(self) -> Either<L, R>
+  1095→impl<L, R> Either<&mut L, &mut R> {
+  1098→    pub fn cloned(self) -> Either<L, R>
+  1108→    pub fn copied(self) -> Either<L, R>
+  1118→impl<L, R> From<Result<R, L>> for Either<L, R> {
+  1119→    fn from(r: Result<R, L>) -> Self {
+  1128→impl<L, R> From<Either<L, R>> for Result<R, L> {
+  1129→    fn from(val: Either<L, R>) -> Self {
+  1138→impl<L, R> Future for Either<L, R>
+  1143→    type Output = L::Output;
+  1145→    fn poll(
+  1157→impl<L, R> Read for Either<L, R>
+  1162→    fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
+  1166→    fn read_exact(&mut self, buf: &mut [u8]) -> io::Result<()> {
+  1170→    fn read_to_end(&mut self, buf: &mut std::vec::Vec<u8>) -> io::Result<usize> {
+  1174→    fn read_to_string(&mut self, buf: &mut std::string::String) -> io::Result<usize> {
+  1183→impl<L, R> Seek for Either<L, R>
+  1188→    fn seek(&mut self, pos: SeekFrom) -> io::Result<u64> {
+  1195→impl<L, R> BufRead for Either<L, R>
+  1200→    fn fill_buf(&mut self) -> io::Result<&[u8]> {
+  1204→    fn consume(&mut self, amt: usize) {
+  1208→    fn read_until(&mut self, byte: u8, buf: &mut std::vec::Vec<u8>) -> io::Result<usize> {
+  1212→    fn read_line(&mut self, buf: &mut std::string::String) -> io::Result<usize> {
+  1221→impl<L, R> Write for Either<L, R>
+  1226→    fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
+  1230→    fn write_all(&mut self, buf: &[u8]) -> io::Result<()> {
+  1234→    fn write_fmt(&mut self, fmt: fmt::Arguments<'_>) -> io::Result<()> {
+  1238→    fn flush(&mut self) -> io::Result<()> {
+  1243→impl<L, R, Target> AsRef<Target> for Either<L, R>
+  1248→    fn as_ref(&self) -> &Target {
+  1253→macro_rules! impl_specific_ref_and_mut {
+  1292→impl<L, R, Target> AsRef<[Target]> for Either<L, R>
+  1297→    fn as_ref(&self) -> &[Target] {
+  1302→impl<L, R, Target> AsMut<Target> for Either<L, R>
+  1307→    fn as_mut(&mut self) -> &mut Target {
+  1312→impl<L, R, Target> AsMut<[Target]> for Either<L, R>
+  1317→    fn as_mut(&mut self) -> &mut [Target] {
+  1322→impl<L, R> Deref for Either<L, R>
+  1327→    type Target = L::Target;
+  1329→    fn deref(&self) -> &Self::Target {
+  1334→impl<L, R> DerefMut for Either<L, R>
+  1339→    fn deref_mut(&mut self) -> &mut Self::Target {
+  1348→impl<L, R> Error for Either<L, R>
+  1353→    fn source(&self) -> Option<&(dyn Error + 'static)> {
+  1358→    fn description(&self) -> &str {
+  1363→    fn cause(&self) -> Option<&dyn Error> {
+  1368→impl<L, R> fmt::Display for Either<L, R>
+  1373→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+  1378→impl<L, R> fmt::Write for Either<L, R>
+  1383→    fn write_str(&mut self, s: &str) -> fmt::Result {
+  1387→    fn write_char(&mut self, c: char) -> fmt::Result {
+  1391→    fn write_fmt(&mut self, args: fmt::Arguments<'_>) -> fmt::Result {
+  1522→macro_rules! check_t {
+  1536→fn _unsized_ref_propagation() {
+  1553→fn _unsized_std_propagation() {
