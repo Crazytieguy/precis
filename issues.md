@@ -5,6 +5,7 @@
 - 5-per-language target achieved: 5 Rust, 5 TypeScript, 5 JavaScript, 5 TSX — each with level 1, level 2, and level 3 snapshots
 - 8 fixtures have subdirectory snapshot tests; remaining fixtures (either, debug, mitt, etc.) have flat source trees with no meaningful subdirectories to test
 - All 20 fixtures have level 1, 2, and 3 snapshots; levels 0 and 4 tested via samples only
+- No snapshot tests for budget-based output (e.g. "given budget X, here's the output"). Budget tests only verify algorithm correctness (level selection, boundary conditions), not end-to-end output.
 
 ## Codebase quality
 
