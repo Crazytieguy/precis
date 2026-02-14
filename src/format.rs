@@ -28,9 +28,10 @@ pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String 
 /// Render a single file at the given level using pre-extracted symbols.
 /// Used by budget search to avoid redundant symbol extraction across levels.
 ///
-/// The effective level is adjusted by file depth: deeper files are rendered
-/// with less detail so that shallow, high-level files are prioritised when
-/// a budget is tight. See [`depth_penalty`] for the formula.
+/// The effective level is adjusted by file depth and file size: deeper and
+/// larger files are rendered with less detail so that shallow, focused files
+/// are prioritised when a budget is tight. See [`depth_penalty`] and
+/// [`size_penalty`] for the formulas.
 fn render_with_symbols(
     level: u8,
     path: &Path,
@@ -39,7 +40,13 @@ fn render_with_symbols(
     symbols: &[parse::Symbol],
 ) -> String {
     let relative = path.strip_prefix(root).unwrap_or(path);
-    let effective = level.saturating_sub(depth_penalty(relative));
+    // Apply depth penalty first, then size penalty only if the result is
+    // level 3+. At levels 1–2 (names/signatures), output already scales with
+    // symbol count rather than file size, so penalising large files is unhelpful.
+    let after_depth = level.saturating_sub(depth_penalty(relative));
+    let effective = after_depth.saturating_sub(
+        if after_depth >= 3 { size_penalty(source) } else { 0 },
+    );
     let mut out = format!("{}\n", relative.display());
     match effective {
         0 => {}
@@ -61,6 +68,18 @@ fn render_with_symbols(
 fn depth_penalty(relative: &Path) -> u8 {
     let depth = relative.components().count().saturating_sub(1);
     (depth as u8) / 2
+}
+
+/// Compute a size penalty for a file based on its line count.
+///
+/// Small files get full detail. Larger files have their effective level
+/// reduced so that concise files are prioritised over verbose ones.
+///
+/// Files with 1000+ lines get −1 level when the effective level is 3+.
+/// Capped at 1 to preserve the monotonicity invariant (level 3 with
+/// penalty 1 = effective 2, which equals level 2 with no penalty).
+fn size_penalty(source: &str) -> u8 {
+    if source.lines().count() >= 1000 { 1 } else { 0 }
 }
 
 /// Format a single source line with its line number.
@@ -765,6 +784,94 @@ mod tests {
                     words >= prev_words,
                     "Depth-aware monotonicity violated for {:?} at level {}: {} < {}",
                     path,
+                    level,
+                    words,
+                    prev_words,
+                );
+                prev_words = words;
+            }
+        }
+    }
+
+    #[test]
+    fn size_penalty_values() {
+        // Short file: no penalty
+        let short = "line\n".repeat(500);
+        assert_eq!(size_penalty(&short), 0);
+
+        // 999 lines: no penalty
+        let just_under = "line\n".repeat(999);
+        assert_eq!(size_penalty(&just_under), 0);
+
+        // 1000 lines: penalty 1
+        let threshold = "line\n".repeat(1000);
+        assert_eq!(size_penalty(&threshold), 1);
+
+        // 2000 lines: still penalty 1 (capped)
+        let large = "line\n".repeat(2000);
+        assert_eq!(size_penalty(&large), 1);
+    }
+
+    #[test]
+    fn size_aware_reduces_level_for_large_files() {
+        let root = Path::new("");
+        // Generate a small source (< 1000 lines) and a large source (> 1000 lines)
+        let small_source = "/// Doc comment\npub fn hello() {}\npub struct Foo { x: i32 }\n";
+        let large_source = {
+            let mut s = String::new();
+            for i in 0..200 {
+                s.push_str(&format!("/// doc {i}\npub fn func_{i}() {{}}\n"));
+            }
+            // Pad to > 1000 lines
+            for i in 0..700 {
+                s.push_str(&format!("// padding line {i}\n"));
+            }
+            s
+        };
+        assert!(large_source.lines().count() >= 1000);
+
+        // Small file at level 3: should show doc comments
+        let small_l3 = render_file(3, Path::new("small.rs"), root, small_source);
+        assert!(small_l3.contains("Doc comment"), "small file at level 3 should include docs");
+
+        // Large file at level 3: effective level 2 (signatures only, no docs)
+        let large_l3 = render_file(3, Path::new("large.rs"), root, &large_source);
+        assert!(!large_l3.contains("doc "), "large file at level 3 should not include docs");
+
+        // Large file at level 4: effective level 3 (docs, not bodies)
+        let large_l4 = render_file(4, Path::new("large.rs"), root, &large_source);
+        assert!(large_l4.contains("doc "), "large file at level 4 should include docs");
+    }
+
+    #[test]
+    fn size_aware_monotonicity() {
+        // For files of various sizes, monotonicity must hold.
+        let root = Path::new("");
+        let small_source = "/// Doc comment\npub fn hello() {}\npub struct Foo { x: i32 }\n";
+        let large_source = {
+            let mut s = String::new();
+            for i in 0..200 {
+                s.push_str(&format!("/// doc {i}\npub fn func_{i}() {{}}\n"));
+            }
+            for i in 0..700 {
+                s.push_str(&format!("// padding line {i}\n"));
+            }
+            s
+        };
+
+        for (path, source) in [
+            (Path::new("small.rs"), small_source),
+            (Path::new("large.rs"), large_source.as_str()),
+        ] {
+            let mut prev_words = 0;
+            for level in 0..=MAX_LEVEL {
+                let output = render_file(level, path, root, source);
+                let words = count_words(&output);
+                assert!(
+                    words >= prev_words,
+                    "Size-aware monotonicity violated for {:?} ({} lines) at level {}: {} < {}",
+                    path,
+                    source.lines().count(),
                     level,
                     words,
                     prev_words,

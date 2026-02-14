@@ -209,9 +209,6 @@ lib.rs
    409→    /// assert!(cell.get().is_some());
    410→    /// ```
    411→    pub struct OnceCell<T> {
-   412→        // Invariant: written to at most once.
-   413→        inner: UnsafeCell<Option<T>>,
-   414→    }
    420→    impl<T: RefUnwindSafe + UnwindSafe> RefUnwindSafe for OnceCell<T> {}
    421→    impl<T: UnwindSafe> UnwindSafe for OnceCell<T> {}
    423→    impl<T> Default for OnceCell<T> {
@@ -409,9 +406,6 @@ lib.rs
    712→    /// //   92
    713→    /// ```
    714→    pub struct Lazy<T, F = fn() -> T> {
-   715→        cell: OnceCell<T>,
-   716→        init: Cell<Option<F>>,
-   717→    }
    719→    impl<T, F: RefUnwindSafe> RefUnwindSafe for Lazy<T, F> where OnceCell<T>: RefUnwindSafe {}
    721→    impl<T: fmt::Debug, F> fmt::Debug for Lazy<T, F> {
    722→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -785,9 +779,6 @@ lib.rs
   1253→    /// }
   1254→    /// ```
   1255→    pub struct Lazy<T, F = fn() -> T> {
-  1256→        cell: OnceCell<T>,
-  1257→        init: Cell<Option<F>>,
-  1258→    }
   1260→    impl<T: fmt::Debug, F> fmt::Debug for Lazy<T, F> {
   1261→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
   1270→    unsafe impl<T, F: Send> Sync for Lazy<T, F> where OnceCell<T>: Sync {}

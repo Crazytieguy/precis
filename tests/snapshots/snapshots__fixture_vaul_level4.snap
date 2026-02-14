@@ -72,26 +72,7 @@ helpers.ts
    108→export function chain<T>(...fns: T[]) {
 index.tsx
     27→export interface WithFadeFromProps {
-    28→  /**
-    29→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
-    30→   * Should go from least visible. Example `[0.2, 0.5, 0.8]`.
-    31→   * You can also use px values, which doesn't take screen height into account.
-    32→   */
-    33→  snapPoints: (number | string)[];
-    34→  /**
-    35→   * Index of a `snapPoint` from which the overlay fade should be applied. Defaults to the last snap point.
-    36→   */
-    37→  fadeFromIndex: number;
-    38→}
     40→export interface WithoutFadeFromProps {
-    41→  /**
-    42→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
-    43→   * Should go from least visible. Example `[0.2, 0.5, 0.8]`.
-    44→   * You can also use px values, which doesn't take screen height into account.
-    45→   */
-    46→  snapPoints?: (number | string)[];
-    47→  fadeFromIndex?: never;
-    48→}
     50→export type DialogProps = {
    139→export function Root({
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(

@@ -631,20 +631,6 @@ error.rs
    731→impl Drop for Error {
    732→    fn drop(&mut self) {
    740→struct ErrorVTable {
-   741→    object_drop: unsafe fn(Own<ErrorImpl>),
-   742→    object_ref: unsafe fn(Ref<ErrorImpl>) -> Ref<dyn StdError + Send + Sync + 'static>,
-   743→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-   744→    object_boxed: unsafe fn(Own<ErrorImpl>) -> Box<dyn StdError + Send + Sync + 'static>,
-   745→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-   746→    object_reallocate_boxed: unsafe fn(Own<ErrorImpl>) -> Box<dyn StdError + Send + Sync + 'static>,
-   747→    object_downcast: unsafe fn(Ref<ErrorImpl>, TypeId) -> Option<Ref<()>>,
-   748→    object_drop_rest: unsafe fn(Own<ErrorImpl>, TypeId),
-   749→    #[cfg(all(
-   750→        not(error_generic_member_access),
-   751→        any(std_backtrace, feature = "backtrace")
-   752→    ))]
-   753→    object_backtrace: unsafe fn(Ref<ErrorImpl>) -> Option<&Backtrace>,
-   754→}
    757→unsafe fn object_drop<E>(e: Own<ErrorImpl>) {
    765→unsafe fn object_drop_front<E>(e: Own<ErrorImpl>, target: TypeId) {
    775→unsafe fn object_ref<E>(e: Ref<ErrorImpl>) -> Ref<dyn StdError + Send + Sync + 'static>
@@ -693,18 +679,9 @@ error.rs
    923→{
    933→#[repr(C)]
    934→pub(crate) struct ErrorImpl<E = ()> {
-   935→    vtable: &'static ErrorVTable,
-   936→    backtrace: Option<Backtrace>,
-   937→    // NOTE: Don't use directly. Use only through vtable. Erased type may have
-   938→    // different alignment.
-   939→    _object: E,
-   940→}
    944→unsafe fn vtable(p: NonNull<ErrorImpl>) -> &'static ErrorVTable {
    951→#[repr(C)]
    952→pub(crate) struct ContextError<C, E> {
-   953→    pub context: C,
-   954→    pub error: E,
-   955→}
    957→impl<E> ErrorImpl<E> {
    958→    fn erase(&self) -> Ref<ErrorImpl> {
    966→impl ErrorImpl {

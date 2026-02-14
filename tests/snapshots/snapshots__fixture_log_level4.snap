@@ -610,7 +610,6 @@ kv/value.rs
     11→pub trait ToValue {
     12→    /// Perform the conversion.
     13→    fn to_value(&self) -> Value<'_>;
-    14→}
     16→impl<T> ToValue for &T
     17→where
     18→    T: ToValue + ?Sized,
@@ -705,8 +704,6 @@ kv/value.rs
    117→/// through `sval`, or can be formatted using a `Debug`-compatible representation.
    118→#[derive(Clone)]
    119→pub struct Value<'v> {
-   120→    inner: inner::Inner<'v>,
-   121→}
    123→impl<'v> Value<'v> {
    124→    /// Get a value from a type implementing `ToValue`.
    125→    pub fn from_any<T>(value: &'v T) -> Self
@@ -836,73 +833,35 @@ kv/value.rs
    467→    /// The `Value` may be formatted using its `fmt::Debug` or `fmt::Display` implementation,
    468→    /// or serialized using its `sval::Value` or `serde::Serialize` implementation.
    469→    fn visit_any(&mut self, value: Value) -> Result<(), Error>;
-   470→
    471→    /// Visit an empty value.
    472→    fn visit_null(&mut self) -> Result<(), Error> {
-   473→        self.visit_any(Value::null())
-   474→    }
-   475→
    476→    /// Visit an unsigned integer.
    477→    fn visit_u64(&mut self, value: u64) -> Result<(), Error> {
-   478→        self.visit_any(value.into())
-   479→    }
-   480→
    481→    /// Visit a signed integer.
    482→    fn visit_i64(&mut self, value: i64) -> Result<(), Error> {
-   483→        self.visit_any(value.into())
-   484→    }
-   485→
    486→    /// Visit a big unsigned integer.
    487→    fn visit_u128(&mut self, value: u128) -> Result<(), Error> {
-   488→        self.visit_any((value).into())
-   489→    }
-   490→
    491→    /// Visit a big signed integer.
    492→    fn visit_i128(&mut self, value: i128) -> Result<(), Error> {
-   493→        self.visit_any((value).into())
-   494→    }
-   495→
    496→    /// Visit a floating point.
    497→    fn visit_f64(&mut self, value: f64) -> Result<(), Error> {
-   498→        self.visit_any(value.into())
-   499→    }
-   500→
    501→    /// Visit a boolean.
    502→    fn visit_bool(&mut self, value: bool) -> Result<(), Error> {
-   503→        self.visit_any(value.into())
-   504→    }
-   505→
    506→    /// Visit a string.
    507→    fn visit_str(&mut self, value: &str) -> Result<(), Error> {
-   508→        self.visit_any(value.into())
-   509→    }
-   510→
    511→    /// Visit a string.
    512→    fn visit_borrowed_str(&mut self, value: &'v str) -> Result<(), Error> {
-   513→        self.visit_str(value)
-   514→    }
-   515→
    516→    /// Visit a Unicode character.
    517→    fn visit_char(&mut self, value: char) -> Result<(), Error> {
-   518→        let mut b = [0; 4];
-   519→        self.visit_str(&*value.encode_utf8(&mut b))
-   520→    }
-   521→
    522→    /// Visit an error.
    523→    #[cfg(feature = "kv_std")]
    524→    fn visit_error(&mut self, err: &(dyn std::error::Error + 'static)) -> Result<(), Error> {
-   525→        self.visit_any(Value::from_dyn_error(err))
-   526→    }
-   527→
    528→    /// Visit an error.
    529→    #[cfg(feature = "kv_std")]
    530→    fn visit_borrowed_error(
    531→        &mut self,
    532→        err: &'v (dyn std::error::Error + 'static),
    533→    ) -> Result<(), Error> {
-   534→        self.visit_any(Value::from_dyn_error(err))
-   535→    }
-   536→}
    538→#[allow(clippy::needless_lifetimes)] // Not needless.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
@@ -936,18 +895,6 @@ kv/value.rs
    721→pub(in crate::kv) mod inner {
    737→    #[derive(Clone)]
    738→    pub enum Inner<'v> {
-   739→        None,
-   740→        Bool(bool),
-   741→        Str(&'v str),
-   742→        Char(char),
-   743→        I64(i64),
-   744→        U64(u64),
-   745→        F64(f64),
-   746→        I128(i128),
-   747→        U128(u128),
-   748→        Debug(&'v dyn fmt::Debug),
-   749→        Display(&'v dyn fmt::Display),
-   750→    }
    752→    impl<'v> From<()> for Inner<'v> {
    753→        fn from(_: ()) -> Self {
    758→    impl<'v> From<bool> for Inner<'v> {
@@ -1075,8 +1022,6 @@ lib.rs
    410→pub mod kv;
    420→#[cfg(not(target_has_atomic = "ptr"))]
    421→struct AtomicUsize {
-   422→    v: Cell<usize>,
-   423→}
    425→#[cfg(not(target_has_atomic = "ptr"))]
    426→impl AtomicUsize {
    427→    const fn new(v: usize) -> AtomicUsize {
@@ -1102,30 +1047,6 @@ lib.rs
    473→#[repr(usize)]
    474→#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
    475→pub enum Level {
-   476→    /// The "error" level.
-   477→    ///
-   478→    /// Designates very serious errors.
-   479→    // This way these line up with the discriminants for LevelFilter below
-   480→    // This works because Rust treats field-less enums the same way as C does:
-   481→    // https://doc.rust-lang.org/reference/items/enumerations.html#custom-discriminant-values-for-field-less-enumerations
-   482→    Error = 1,
-   483→    /// The "warn" level.
-   484→    ///
-   485→    /// Designates hazardous situations.
-   486→    Warn,
-   487→    /// The "info" level.
-   488→    ///
-   489→    /// Designates useful information.
-   490→    Info,
-   491→    /// The "debug" level.
-   492→    ///
-   493→    /// Designates lower priority information.
-   494→    Debug,
-   495→    /// The "trace" level.
-   496→    ///
-   497→    /// Designates very low priority, often extremely verbose, information.
-   498→    Trace,
-   499→}
    501→impl PartialEq<LevelFilter> for Level {
    502→    #[inline]
    503→    fn eq(&self, other: &LevelFilter) -> bool {
@@ -1209,19 +1130,6 @@ lib.rs
    634→#[repr(usize)]
    635→#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
    636→pub enum LevelFilter {
-   637→    /// A level lower than all log levels.
-   638→    Off,
-   639→    /// Corresponds to the `Error` log level.
-   640→    Error,
-   641→    /// Corresponds to the `Warn` log level.
-   642→    Warn,
-   643→    /// Corresponds to the `Info` log level.
-   644→    Info,
-   645→    /// Corresponds to the `Debug` log level.
-   646→    Debug,
-   647→    /// Corresponds to the `Trace` log level.
-   648→    Trace,
-   649→}
    651→impl PartialEq<Level> for LevelFilter {
    652→    #[inline]
    653→    fn eq(&self, other: &Level) -> bool {
@@ -1299,9 +1207,6 @@ lib.rs
    774→    pub fn decrement_severity(&self) -> Self {
    780→#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
    781→enum MaybeStaticStr<'a> {
-   782→    Static(&'static str),
-   783→    Borrowed(&'a str),
-   784→}
    786→impl<'a> MaybeStaticStr<'a> {
    787→    #[inline]
    788→    fn get(&self) -> &'a str {
@@ -1352,14 +1257,6 @@ lib.rs
    840→/// [`target()`]: struct.Record.html#method.target
    841→#[derive(Clone, Debug)]
    842→pub struct Record<'a> {
-   843→    metadata: Metadata<'a>,
-   844→    args: fmt::Arguments<'a>,
-   845→    module_path: Option<MaybeStaticStr<'a>>,
-   846→    file: Option<MaybeStaticStr<'a>>,
-   847→    line: Option<u32>,
-   848→    #[cfg(feature = "kv")]
-   849→    key_values: KeyValues<'a>,
-   850→}
    856→#[cfg(feature = "kv")]
    857→#[derive(Clone)]
    858→struct KeyValues<'a>(&'a dyn kv::Source);
@@ -1446,8 +1343,6 @@ lib.rs
   1001→/// ```
   1002→#[derive(Debug)]
   1003→pub struct RecordBuilder<'a> {
-  1004→    record: Record<'a>,
-  1005→}
   1007→impl<'a> RecordBuilder<'a> {
   1008→    /// Construct new `RecordBuilder`.
   1009→    ///
@@ -1539,9 +1434,6 @@ lib.rs
   1156→/// ```
   1157→#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
   1158→pub struct Metadata<'a> {
-  1159→    level: Level,
-  1160→    target: &'a str,
-  1161→}
   1163→impl<'a> Metadata<'a> {
   1164→    /// Returns a new builder.
   1165→    #[inline]
@@ -1570,8 +1462,6 @@ lib.rs
   1198→/// ```
   1199→#[derive(Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
   1200→pub struct MetadataBuilder<'a> {
-  1201→    metadata: Metadata<'a>,
-  1202→}
   1204→impl<'a> MetadataBuilder<'a> {
   1205→    /// Construct a new `MetadataBuilder`.
   1206→    ///
@@ -1607,7 +1497,6 @@ lib.rs
   1260→    /// It's up to an implementation of the `Log` trait to call `enabled` in its own
   1261→    /// `log` method implementation to guarantee that filtering is applied.
   1262→    fn enabled(&self, metadata: &Metadata) -> bool;
-  1263→
   1264→    /// Logs the `Record`.
   1265→    ///
   1266→    /// # For implementors
@@ -1616,7 +1505,6 @@ lib.rs
   1269→    /// Implementations of `log` should perform all necessary filtering
   1270→    /// internally.
   1271→    fn log(&self, record: &Record);
-  1272→
   1273→    /// Flushes any buffered records.
   1274→    ///
   1275→    /// # For implementors
@@ -1624,7 +1512,6 @@ lib.rs
   1277→    /// This method isn't called automatically by the `log!` macros.
   1278→    /// It can be called manually on shut-down to ensure any in-flight records are flushed.
   1279→    fn flush(&self);
-  1280→}
   1282→/// A dummy initial value for LOGGER.
   1283→struct NopLogger;
   1285→impl Log for NopLogger {

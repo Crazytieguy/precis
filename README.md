@@ -31,7 +31,7 @@ Takes a `--budget` flag (in words) or a `--level` flag to select a specific gran
 
 More intermediate levels can be added over time.
 
-Shallower files are prioritized over deeper ones when budget is tight. Users can zoom into subdirectories by running the tool on them directly with a larger budget.
+Shallower and smaller files are prioritized over deeper and larger ones when budget is tight. Depth penalty reduces the effective level by `depth/2` (where depth counts directory components). Size penalty reduces the effective level by 1 for files with 1000+ lines, but only when the depth-adjusted level is 3+. Users can zoom into subdirectories by running the tool on them directly with a larger budget.
 
 ### Output Format
 
