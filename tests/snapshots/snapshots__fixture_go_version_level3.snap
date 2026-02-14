@@ -69,6 +69,7 @@ README.md
     66→like, we welcome any contributions. Fork this library and submit a pull
     67→request.
 constraint.go
+    14→var (
     15→	constraintRegexp     *regexp.Regexp
     16→	constraintRegexpOnce sync.Once
     19→func getConstraintRegexp() *regexp.Regexp {
@@ -117,6 +118,7 @@ constraint.go
    230→//-------------------------------------------------------------------
    231→
    232→type operator rune
+   234→const (
    235→	equal            operator = '='
    236→	notEqual         operator = '≠'
    237→	greaterThan      operator = '>'
@@ -132,12 +134,17 @@ constraint.go
    264→func constraintLessThanEqual(v, c *Version) bool {
    268→func constraintPessimistic(v, c *Version) bool {
 version.go
+    15→// The compiled regular expression used to test the validity of a version.
+    16→var (
     17→	versionRegexp     *regexp.Regexp
     18→	versionRegexpOnce sync.Once
     19→	semverRegexp      *regexp.Regexp
     20→	semverRegexpOnce  sync.Once
     23→func getVersionRegexp() *regexp.Regexp {
     30→func getSemverRegexp() *regexp.Regexp {
+    37→// The raw regular expression string used for testing the validity
+    38→// of a version.
+    39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +

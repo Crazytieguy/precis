@@ -204,6 +204,19 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
                 }
             }
             "type_alias" => SymbolKind::TypeAlias,
+            "const_declaration" | "var_declaration" => {
+                // Only capture grouped declarations (const (...) / var (...)).
+                // Standalone declarations are captured via inner const_spec/var_spec.
+                let text = symbol_node.utf8_text(source.as_bytes()).unwrap_or("");
+                if !text.contains('(') {
+                    continue;
+                }
+                if symbol_node.kind() == "const_declaration" {
+                    SymbolKind::Const
+                } else {
+                    SymbolKind::Static
+                }
+            }
             "const_spec" => SymbolKind::Const,
             "var_spec" => SymbolKind::Static,
             // Python
@@ -262,6 +275,9 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
 
         let name = if kind == SymbolKind::Impl {
             impl_name(symbol_node, source)
+        } else if matches!(symbol_node.kind(), "const_declaration" | "var_declaration") {
+            // Grouped const/var block: use keyword as display name
+            (if symbol_node.kind() == "const_declaration" { "const" } else { "var" }).to_string()
         } else {
             match name_idx.and_then(|idx| m.captures.iter().find(|c| c.index == idx)) {
                 Some(c) => c
@@ -1161,6 +1177,8 @@ var _ error = (*MyError)(nil)
         let symbols = extract_symbols(Path::new("test.go"), source);
         let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
 
+        // Grouped const block should be captured with keyword name
+        assert!(names.contains(&"const"));
         // Named constants should be kept
         assert!(names.contains(&"Reset"));
         assert!(names.contains(&"Bold"));
@@ -1168,5 +1186,57 @@ var _ error = (*MyError)(nil)
         assert!(names.contains(&"Underline"));
         // Blank identifier _ should be filtered out (iota skip, interface check)
         assert!(!names.contains(&"_"));
+    }
+
+    #[test]
+    fn captures_go_grouped_const_var_blocks() {
+        let source = r#"
+package example
+
+const MaxItems = 100
+
+const (
+	Red   = iota
+	Green
+	Blue
+)
+
+var Version = "1.0"
+
+var (
+	Debug   bool
+	Verbose bool
+)
+"#;
+        let symbols = extract_symbols(Path::new("test.go"), source);
+        let info: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.name.as_str(), s.kind))
+            .collect();
+
+        // Standalone const: captured via const_spec only (no duplicate from const_declaration)
+        assert_eq!(
+            info.iter().filter(|(n, _)| *n == "MaxItems").count(),
+            1,
+            "standalone const should appear once"
+        );
+        // Grouped const block: const_declaration captured as "const"
+        assert!(info.contains(&("const", SymbolKind::Const)));
+        // Individual entries still captured
+        assert!(info.contains(&("Red", SymbolKind::Const)));
+        assert!(info.contains(&("Green", SymbolKind::Const)));
+        assert!(info.contains(&("Blue", SymbolKind::Const)));
+
+        // Standalone var: captured via var_spec only
+        assert_eq!(
+            info.iter().filter(|(n, _)| *n == "Version").count(),
+            1,
+            "standalone var should appear once"
+        );
+        // Grouped var block: var_declaration captured as "var"
+        assert!(info.contains(&("var", SymbolKind::Static)));
+        // Individual entries still captured
+        assert!(info.contains(&("Debug", SymbolKind::Static)));
+        assert!(info.contains(&("Verbose", SymbolKind::Static)));
     }
 }

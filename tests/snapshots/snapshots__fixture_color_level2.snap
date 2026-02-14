@@ -20,6 +20,7 @@ README.md
    182→## Credits
    187→## License
 color.go
+    15→var (
     22→	NoColor = noColorIsSet() || os.Getenv("TERM") == "dumb" ||
     27→	Output = colorable.NewColorableStdout()
     30→	Error = colorable.NewColorableStderr()
@@ -29,6 +30,7 @@ color.go
     44→type Color struct {
     50→type Attribute int
     52→const escape = "\x1b"
+    55→const (
     56→	Reset Attribute = iota
     57→	Bold
     58→	Faint
@@ -39,6 +41,7 @@ color.go
     63→	ReverseVideo
     64→	Concealed
     65→	CrossedOut
+    68→const (
     69→	ResetBold Attribute = iota + 22
     70→	ResetItalic
     71→	ResetUnderline
@@ -47,6 +50,7 @@ color.go
     75→	ResetConcealed
     76→	ResetCrossedOut
     79→var mapResetAttributes map[Attribute]Attribute = map[Attribute]Attribute{
+    92→const (
     93→	FgBlack Attribute = iota + 30
     94→	FgRed
     95→	FgGreen
@@ -56,6 +60,7 @@ color.go
     99→	FgCyan
    100→	FgWhite
    103→	foreground
+   107→const (
    108→	FgHiBlack Attribute = iota + 90
    109→	FgHiRed
    110→	FgHiGreen
@@ -64,6 +69,7 @@ color.go
    113→	FgHiMagenta
    114→	FgHiCyan
    115→	FgHiWhite
+   119→const (
    120→	BgBlack Attribute = iota + 40
    121→	BgRed
    122→	BgGreen
@@ -73,6 +79,7 @@ color.go
    126→	BgCyan
    127→	BgWhite
    130→	background
+   134→const (
    135→	BgHiBlack Attribute = iota + 100
    136→	BgHiRed
    137→	BgHiGreen

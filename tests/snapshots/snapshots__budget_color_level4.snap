@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 3250 → level 4 (3198 words)
+budget: 3250 → level 4 (3233 words)
 
 LICENSE.md
 README.md
@@ -196,6 +196,7 @@ README.md
    188→
    189→The MIT License (MIT) - see [`LICENSE.md`](https://github.com/fatih/color/blob/master/LICENSE.md) for more details
 color.go
+    15→var (
     16→	// NoColor defines if the output is colorized or not. It's dynamically set to
     17→	// false or true based on the stdout's file descriptor referring to a terminal
     18→	// or not. It's also set to true if the NO_COLOR environment variable is
@@ -222,6 +223,8 @@ color.go
     49→// Attribute defines a single SGR Code
     50→type Attribute int
     52→const escape = "\x1b"
+    54→// Base attributes
+    55→const (
     56→	Reset Attribute = iota
     57→	Bold
     58→	Faint
@@ -232,6 +235,7 @@ color.go
     63→	ReverseVideo
     64→	Concealed
     65→	CrossedOut
+    68→const (
     69→	ResetBold Attribute = iota + 22
     70→	ResetItalic
     71→	ResetUnderline
@@ -240,6 +244,8 @@ color.go
     75→	ResetConcealed
     76→	ResetCrossedOut
     79→var mapResetAttributes map[Attribute]Attribute = map[Attribute]Attribute{
+    91→// Foreground text colors
+    92→const (
     93→	FgBlack Attribute = iota + 30
     94→	FgRed
     95→	FgGreen
@@ -250,6 +256,8 @@ color.go
    100→	FgWhite
    102→	// used internally for 256 and 24-bit coloring
    103→	foreground
+   106→// Foreground Hi-Intensity text colors
+   107→const (
    108→	FgHiBlack Attribute = iota + 90
    109→	FgHiRed
    110→	FgHiGreen
@@ -258,6 +266,8 @@ color.go
    113→	FgHiMagenta
    114→	FgHiCyan
    115→	FgHiWhite
+   118→// Background text colors
+   119→const (
    120→	BgBlack Attribute = iota + 40
    121→	BgRed
    122→	BgGreen
@@ -268,6 +278,8 @@ color.go
    127→	BgWhite
    129→	// used internally for 256 and 24-bit coloring
    130→	background
+   133→// Background Hi-Intensity text colors
+   134→const (
    135→	BgHiBlack Attribute = iota + 100
    136→	BgHiRed
    137→	BgHiGreen

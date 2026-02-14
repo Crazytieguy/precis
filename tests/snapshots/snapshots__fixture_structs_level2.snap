@@ -12,6 +12,7 @@ README.md
    163→## Credits
    168→## License
 field.go
+     9→var (
     10→	errNotExported = errors.New("field is not exported")
     11→	errNotSettable = errors.New("field is not settable")
     16→type Field struct {
@@ -28,6 +29,7 @@ field.go
    108→func (f *Field) Field(name string) *Field {
    119→func (f *Field) FieldOk(name string) (*Field, bool) {
 structs.go
+    10→var (
     14→	DefaultTagName = "structs" // struct's field default tag name
     19→type Struct struct {
     27→func New(s interface{}) *Struct {

@@ -12,6 +12,7 @@ README.md
    163→## Credits
    168→## License
 field.go
+     9→var
     10→	errNotExported
     11→	errNotSettable
     16→type Field
@@ -28,6 +29,7 @@ field.go
    108→func (f *Field) Field
    119→func (f *Field) FieldOk
 structs.go
+    10→var
     14→	DefaultTagName
     19→type Struct
     27→func New

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2700 → level 4 (2638 words)
+budget: 2700 → level 4 (2642 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -176,6 +176,7 @@ README.md
    169→
    170→The MIT License (MIT) - see LICENSE.md for more details
 field.go
+     9→var (
     10→	errNotExported = errors.New("field is not exported")
     11→	errNotSettable = errors.New("field is not settable")
     14→// Field represents a single struct field that encapsulates high level
@@ -225,6 +226,7 @@ field.go
    118→// the field was found (true) or not (false).
    119→func (f *Field) FieldOk(name string) (*Field, bool) {
 structs.go
+    10→var (
     11→	// DefaultTagName is the default tag name for struct fields which provides
     12→	// a more granular to tweak certain structs. Lookup the necessary functions
     13→	// for more info.

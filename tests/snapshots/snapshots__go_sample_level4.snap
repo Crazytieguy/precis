@@ -10,6 +10,7 @@ sample.go
     10→}
     12→// TokenKind represents the kind of a lexical token.
     13→type TokenKind int
+    15→const (
     16→	Ident  TokenKind = iota
     17→	Number
     18→	Symbol

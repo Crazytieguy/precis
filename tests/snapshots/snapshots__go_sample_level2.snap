@@ -5,6 +5,7 @@ expression: output
 sample.go
      7→type Token struct {
     13→type TokenKind int
+    15→const (
     16→	Ident  TokenKind = iota
     17→	Number
     18→	Symbol

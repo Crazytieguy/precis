@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 750 → level 3 (728 words)
+budget: 750 → level 3 (734 words)
 
 README.md
      1→# xxhash
@@ -28,11 +28,13 @@ README.md
     73→- [Ristretto](https://github.com/dgraph-io/ristretto)
     74→- [Badger](https://github.com/dgraph-io/badger)
 dynamic/plugin.go
+    14→const (
     15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
     16→	want = uint64(0x02a2e85470d6fd96)
     19→func TestSum(t *testing.T) {
     26→func TestDigest(t *testing.T) {
 xxhash.go
+    11→const (
     12→	prime1 uint64 = 11400714785074694791
     13→	prime2 uint64 = 14029467366897019727
     14→	prime3 uint64 = 1609587929392839161
@@ -68,6 +70,7 @@ xxhash.go
    113→func (d *Digest) Sum(b []byte) []byte {
    128→// Sum64 returns the current hash.
    129→func (d *Digest) Sum64() uint64 {
+   170→const (
    171→	magic         = "xxh\x06"
    172→	marshaledSize = len(magic) + 8*5 + 32
    175→// MarshalBinary implements the encoding.BinaryMarshaler interface.

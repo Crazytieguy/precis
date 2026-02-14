@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 420 → level 1 (405 words)
+budget: 420 → level 1 (412 words)
 
 LICENSE.md
 README.md
@@ -22,6 +22,7 @@ README.md
    182→## Credits
    187→## License
 color.go
+    15→var
     22→	NoColor
     27→	Output
     30→	Error
@@ -31,6 +32,7 @@ color.go
     44→type Color
     50→type Attribute
     52→const escape
+    55→const
     56→	Reset
     57→	Bold
     58→	Faint
@@ -41,6 +43,7 @@ color.go
     63→	ReverseVideo
     64→	Concealed
     65→	CrossedOut
+    68→const
     69→	ResetBold
     70→	ResetItalic
     71→	ResetUnderline
@@ -49,6 +52,7 @@ color.go
     75→	ResetConcealed
     76→	ResetCrossedOut
     79→var mapResetAttributes
+    92→const
     93→	FgBlack
     94→	FgRed
     95→	FgGreen
@@ -58,6 +62,7 @@ color.go
     99→	FgCyan
    100→	FgWhite
    103→	foreground
+   107→const
    108→	FgHiBlack
    109→	FgHiRed
    110→	FgHiGreen
@@ -66,6 +71,7 @@ color.go
    113→	FgHiMagenta
    114→	FgHiCyan
    115→	FgHiWhite
+   119→const
    120→	BgBlack
    121→	BgRed
    122→	BgGreen
@@ -75,6 +81,7 @@ color.go
    126→	BgCyan
    127→	BgWhite
    130→	background
+   134→const
    135→	BgHiBlack
    136→	BgHiRed
    137→	BgHiGreen

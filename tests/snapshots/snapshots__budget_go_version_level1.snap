@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 300 → level 1 (293 words)
+budget: 300 → level 1 (297 words)
 
 CHANGELOG.md
      1→# 1.8.0 (Nov 28, 2025)
@@ -23,6 +23,7 @@ README.md
     49→#### Version Sorting
     63→## Issues and Contributing
 constraint.go
+    14→var
     15→	constraintRegexp
     16→	constraintRegexpOnce
     19→func getConstraintRegexp
@@ -45,6 +46,7 @@ constraint.go
    169→func parseSingle
    208→func prereleaseCheck
    232→type operator
+   234→const
    235→	equal
    236→	notEqual
    237→	greaterThan
@@ -60,12 +62,14 @@ constraint.go
    264→func constraintLessThanEqual
    268→func constraintPessimistic
 version.go
+    16→var
     17→	versionRegexp
     18→	versionRegexpOnce
     19→	semverRegexp
     20→	semverRegexpOnce
     23→func getVersionRegexp
     30→func getSemverRegexp
+    39→const
     40→	VersionRegexpRaw
     46→	SemverRegexpRaw
     53→type Version

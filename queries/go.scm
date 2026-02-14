@@ -14,6 +14,12 @@
 (type_alias
   name: (type_identifier) @name) @symbol
 
+; Grouped const/var blocks (const (...) / var (...))
+; Individual specs are also captured below; the grouped declaration
+; provides the opening context line (e.g. `const (`) at levels 1+.
+(const_declaration) @symbol
+(var_declaration) @symbol
+
 ; Constants
 (const_spec
   name: (identifier) @name) @symbol

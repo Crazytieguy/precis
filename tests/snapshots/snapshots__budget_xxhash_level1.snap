@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 150 → level 1 (141 words)
+budget: 150 → level 1 (144 words)
 
 README.md
      1→# xxhash
@@ -10,11 +10,13 @@ README.md
     45→## Benchmarks
     66→## Projects using this package
 dynamic/plugin.go
+    14→const
     15→	in
     16→	want
     19→func TestSum
     26→func TestDigest
 xxhash.go
+    11→const
     12→	prime1
     13→	prime2
     14→	prime3
@@ -31,6 +33,7 @@ xxhash.go
     75→func (d *Digest) Write
    113→func (d *Digest) Sum
    129→func (d *Digest) Sum64
+   170→const
    171→	magic
    172→	marshaledSize
    176→func (d *Digest) MarshalBinary

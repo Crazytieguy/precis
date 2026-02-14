@@ -21,6 +21,7 @@ README.md
     49→#### Version Sorting
     63→## Issues and Contributing
 constraint.go
+    14→var (
     15→	constraintRegexp     *regexp.Regexp
     16→	constraintRegexpOnce sync.Once
     19→func getConstraintRegexp() *regexp.Regexp {
@@ -43,6 +44,7 @@ constraint.go
    169→func parseSingle(v string) (*Constraint, error) {
    208→func prereleaseCheck(v, c *Version) bool {
    232→type operator rune
+   234→const (
    235→	equal            operator = '='
    236→	notEqual         operator = '≠'
    237→	greaterThan      operator = '>'
@@ -58,12 +60,14 @@ constraint.go
    264→func constraintLessThanEqual(v, c *Version) bool {
    268→func constraintPessimistic(v, c *Version) bool {
 version.go
+    16→var (
     17→	versionRegexp     *regexp.Regexp
     18→	versionRegexpOnce sync.Once
     19→	semverRegexp      *regexp.Regexp
     20→	semverRegexpOnce  sync.Once
     23→func getVersionRegexp() *regexp.Regexp {
     30→func getSemverRegexp() *regexp.Regexp {
+    39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     53→type Version struct {

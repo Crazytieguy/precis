@@ -33,7 +33,6 @@
 ## Feature development
 
 - Make levels file-size-aware (currently uniform across all files regardless of size). Depth-awareness is implemented; file-size-awareness is not yet.
-- Go grouped `const (...)` and `var (...)` blocks: individual entries (e.g. `Ident`, `Bold`) appear without the enclosing `const (` context line, making them hard to identify as constants at levels 1–2. Fixing requires either adding the parent block as a container symbol or showing the context line.
 
 ## Implementation notes
 
