@@ -401,3 +401,13 @@ fn fixture_vaul() {
     let output = format::format_directory(&root);
     insta::assert_snapshot!(output);
 }
+
+#[test]
+fn fixture_input_otp() {
+    let Some(root) = fixture_path("input-otp/packages/input-otp/src") else {
+        eprintln!("skipping fixture_input_otp: clone with `git clone --depth 1 https://github.com/guilhermerodz/input-otp.git test/fixtures/input-otp`");
+        return;
+    };
+    let output = format::format_directory(&root);
+    insta::assert_snapshot!(output);
+}
