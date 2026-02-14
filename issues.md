@@ -5,7 +5,7 @@
 - Add more language grammars (Python, Go) — TypeScript/TSX done
 - Implement signature extraction (params, return types) — currently only symbol names
 - Implement the granularity hierarchy for token budgeting
-- Add snapshot tests using real open-source fixture repos (infra is set up with `insta`, needs real fixtures)
+- Add more fixture snapshot tests (infra is set up with `either` crate; need TypeScript fixtures, more diverse Rust projects)
 - Add `--json` output flag
 - Filter out test functions / `#[cfg(test)]` modules from default output
 

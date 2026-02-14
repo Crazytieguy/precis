@@ -1,6 +1,18 @@
 use std::path::Path;
 use symbols::format;
 
+/// Helper to get the path to a test fixture. Returns None if the fixture isn't cloned.
+fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
+    let path = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("test/fixtures")
+        .join(name);
+    if path.exists() {
+        Some(path)
+    } else {
+        None
+    }
+}
+
 #[test]
 fn self_snapshot() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("src");
@@ -120,5 +132,19 @@ export namespace Utils {
 }
 "#;
     let output = format::format_file_symbols(Path::new("sample.ts"), Path::new(""), source);
+    insta::assert_snapshot!(output);
+}
+
+// Fixture-based snapshot tests.
+// Clone fixtures with: git clone --depth 1 <url> test/fixtures/<name>
+// Tests are skipped if the fixture directory is not present.
+
+#[test]
+fn fixture_either() {
+    let Some(root) = fixture_path("either/src") else {
+        eprintln!("skipping fixture_either: clone with `git clone --depth 1 https://github.com/rayon-rs/either.git test/fixtures/either`");
+        return;
+    };
+    let output = format::format_directory(&root);
     insta::assert_snapshot!(output);
 }
