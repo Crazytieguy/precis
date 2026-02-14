@@ -269,6 +269,7 @@ fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
 }
 
 /// Check if a variable_declarator's value is a `require()` call (CommonJS import).
+/// Handles both `const x = require('...')` and `const x = require('...').member`.
 fn is_require_call(declarator: Option<tree_sitter::Node>, source: &str) -> bool {
     let value = declarator.and_then(|d| d.child_by_field_name("value"));
     match value {
@@ -276,6 +277,15 @@ fn is_require_call(declarator: Option<tree_sitter::Node>, source: &str) -> bool 
             .child_by_field_name("function")
             .and_then(|f| f.utf8_text(source.as_bytes()).ok())
             == Some("require"),
+        Some(v) if v.kind() == "member_expression" => v
+            .child_by_field_name("object")
+            .is_some_and(|obj| {
+                obj.kind() == "call_expression"
+                    && obj
+                        .child_by_field_name("function")
+                        .and_then(|f| f.utf8_text(source.as_bytes()).ok())
+                        == Some("require")
+            }),
         _ => false,
     }
 }
@@ -562,6 +572,7 @@ export const MAX_RETRIES = 3;
 const debug = require('../internal/debug')
 const SemVer = require('./semver')
 const parseOptions = require('../internal/parse-options')
+const EventEmitter = require('node:events').EventEmitter;
 
 const ANY = Symbol('SemVer ANY')
 const MAX_RETRIES = 3;
@@ -571,10 +582,11 @@ export const helper = (x) => x * 2;
         let symbols = extract_symbols(Path::new("test.js"), source);
         let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
 
-        // require() calls should be filtered out
+        // require() calls should be filtered out (both direct and member access)
         assert!(!names.contains(&"debug"));
         assert!(!names.contains(&"SemVer"));
         assert!(!names.contains(&"parseOptions"));
+        assert!(!names.contains(&"EventEmitter"));
         // Regular const values should be kept
         assert!(names.contains(&"ANY"));
         assert!(names.contains(&"MAX_RETRIES"));

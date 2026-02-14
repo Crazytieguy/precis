@@ -14,7 +14,6 @@ argument.js
    129→  argOptional() {
    143→function humanReadableArgName(arg) {
 command.js
-     1→const EventEmitter = require('node:events').EventEmitter;
     13→class Command extends EventEmitter {
     20→  constructor(name) {
     99→  copyInheritedSettings(sourceCommand) {
