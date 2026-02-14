@@ -1,0 +1,74 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+assets.tsx:
+  export const getAsset :5
+  const bars :24
+  export const Loader :26
+  const SuccessIcon :38
+  const WarningIcon :48
+  const InfoIcon :58
+  const ErrorIcon :68
+  export const CloseIcon :78
+hooks.tsx:
+  export const useIsDocumentHidden :3
+index.tsx:
+  const VISIBLE_TOASTS_AMOUNT :22
+  const VIEWPORT_OFFSET :25
+  const MOBILE_VIEWPORT_OFFSET :28
+  const TOAST_LIFETIME :31
+  const TOAST_WIDTH :34
+  const GAP :37
+  const SWIPE_THRESHOLD :40
+  const TIME_BEFORE_UNMOUNT :43
+  function cn :45
+  function getDefaultSwipeDirections :49
+  const Toast :64
+  function getDocumentDirection :507
+  function assignOffset :520
+  function useSonner :552
+  const Toaster :593
+  const filteredToasts :617
+  const possiblePositions :623
+  const listRef :641
+  const hotkeyLabel :642
+  const lastFocusedElementRef :643
+  const isFocusWithinRef :644
+  const removeToast :646
+state.ts:
+  let toastsCounter :13
+  type titleT :15
+  class Observer :17
+  constructor :22
+  export const ToastState :254
+  const toastFunction :257
+  const isHttpResponse :268
+  const basicToast :279
+  const getHistory :281
+  const getToasts :282
+  export const toast :285
+types.ts:
+  export type ToastTypes :3
+  export type PromiseT :5
+  export interface PromiseIExtendedResult :7
+  export type PromiseTExtendedResult :11
+  export type PromiseTResult :15
+  export type PromiseExternalToast :20
+  export type PromiseData :22
+  export interface ToastClassnames :30
+  export interface ToastIcons :48
+  export interface Action :57
+  export interface ToastT :63
+  export function isAction :93
+  export type Position :97
+  export interface HeightT :98
+  interface ToastOptions :104
+  type Offset :118
+  export interface ToasterProps :128
+  export type SwipeDirection :152
+  export interface ToastProps :154
+  export enum SwipeStateTypes :184
+  export type Theme :190
+  export interface ToastToDismiss :192
+  export type ExternalToast :197
