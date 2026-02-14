@@ -4,8 +4,9 @@
 
 - 5-per-language target achieved: 5 Rust, 5 TypeScript, 5 JavaScript, 5 TSX — each with level 1, level 2, and level 3 snapshots
 - 8 fixtures have subdirectory snapshot tests; remaining fixtures (either, debug, mitt, etc.) have flat source trees with no meaningful subdirectories to test
-- All 20 fixtures have level 1, 2, and 3 snapshots; levels 0 and 4 tested via samples only
-- Budget-based snapshot tests added: mitt (5 budgets hitting all 5 levels), ini (3 budgets), neverthrow (2 budgets, multi-file). Each snapshot includes metadata header showing budget → level → word count.
+- All 20 fixtures have level 1, 2, and 3 snapshots; levels 0, 4, and 5 tested via samples only
+- Budget-based snapshot tests added: mitt (5 budgets hitting levels 0–3 and 5), ini (3 budgets), neverthrow (2 budgets, multi-file). Each snapshot includes metadata header showing budget → level → word count.
+- No fixture-level snapshot tests for level 4 (type bodies) yet — would be useful for Rust fixtures with structs/enums
 
 ## Codebase quality
 
@@ -14,7 +15,7 @@
 ## Current state
 
 - Parsing works for Rust, TypeScript, JavaScript, TSX — extracts symbol names, kinds, visibility
-- Output supports 5 granularity levels: 0 (file paths), 1 (symbol names), 2 (full signature lines), 3 (signatures with doc comments), 4 (full source)
+- Output supports 6 granularity levels: 0 (file paths), 1 (symbol names), 2 (full signature lines), 3 (signatures with doc comments), 4 (type bodies expanded), 5 (full source)
 - Monotonicity invariant (higher level = more words) tested against all fixtures
 - `--budget` flag works: binary search over levels selects highest level fitting within word budget
 - `path` arg accepts both files and directories
@@ -23,8 +24,7 @@
 ## Feature development
 
 - Make levels depth-aware and file-size-aware (currently uniform across all files)
-- Add more granularity levels before adding new languages
-- Priority languages: Markdown and Python (once we have a few more granularity levels)
+- Priority languages: Markdown and Python
 - Add `--json` output flag
 - Doc comment detection (level 3) is text-based heuristic; does not use tree-sitter comment nodes. Handles `///`, `//!`, and `/** */` blocks. Skips `#[attr]` and `@decorator` lines between doc comments and symbols.
 

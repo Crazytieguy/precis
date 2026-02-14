@@ -9,6 +9,7 @@ pub struct Symbol {
     pub name: String,
     pub is_public: bool,
     pub line: usize,
+    pub end_line: usize,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -194,6 +195,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             name,
             is_public,
             line: symbol_node.start_position().row + 1,
+            end_line: symbol_node.end_position().row + 1,
         });
     }
 

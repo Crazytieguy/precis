@@ -3,24 +3,52 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.ts
+     1→
      2→export function processItems(items: string[]): number {
+     3→    return items.length;
+     4→}
+     5→
      6→function helper(): void {}
+     7→
      8→export async function fetchData(url: string): Promise<Response> {
+     9→    return fetch(url);
+    10→}
+    11→
     12→export class TokenParser {
+    13→    private tokens: Token[];
+    14→
     15→    constructor(input: string) {
+    16→        this.tokens = [];
+    17→    }
+    18→
     19→    public parse(): Token[] {
+    20→        return this.tokens;
+    21→    }
+    22→
     23→    private advance(): void {}
+    24→}
+    25→
     26→export interface Visitor {
     27→    visitToken(token: Token): void;
     28→    visitAll(tokens: Token[]): void;
     29→}
+    30→
     31→export enum TokenKind {
     32→    Ident = "ident",
     33→    Number = "number",
     34→    Symbol = "symbol",
     35→}
+    36→
     37→export type Span = [number, number];
+    38→
     39→export const MAX_TOKENS = 1024;
+    40→
     41→export default class DefaultExport {
+    42→    name: string = "";
+    43→}
+    44→
     45→export namespace Utils {
     46→    export function format(s: string): string {
+    47→        return s;
+    48→    }
+    49→}

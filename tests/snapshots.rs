@@ -358,7 +358,7 @@ fn tsx_sample_level3() {
     insta::assert_snapshot!(output);
 }
 
-// Level 4: full source
+// Level 4: signatures with doc comments + type bodies (struct/enum/trait/interface)
 
 #[test]
 fn rust_sample_level4() {
@@ -381,6 +381,32 @@ fn javascript_sample_level4() {
 #[test]
 fn tsx_sample_level4() {
     let output = format::render_file(4, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+// Level 5: full source
+
+#[test]
+fn rust_sample_level5() {
+    let output = format::render_file(5, Path::new("sample.rs"), Path::new(""), rust_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn typescript_sample_level5() {
+    let output = format::render_file(5, Path::new("sample.ts"), Path::new(""), typescript_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn javascript_sample_level5() {
+    let output = format::render_file(5, Path::new("sample.js"), Path::new(""), javascript_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn tsx_sample_level5() {
+    let output = format::render_file(5, Path::new("sample.tsx"), Path::new(""), tsx_sample());
     insta::assert_snapshot!(output);
 }
 
@@ -635,7 +661,7 @@ fn monotonicity_invariant() {
 /// Test the budget binary search with synthetic cost functions (no parsing).
 #[test]
 fn budget_algorithm() {
-    let costs: [usize; 5] = [5, 10, 25, 60, 200];
+    let costs: [usize; 6] = [5, 10, 25, 60, 120, 200];
     let cost = |level: u8| costs[level as usize];
 
     // Extremes
@@ -657,9 +683,9 @@ fn budget_algorithm() {
     }
 
     // Flat region: levels with equal cost should all be reachable
-    let flat_costs: [usize; 5] = [5, 10, 10, 10, 50];
+    let flat_costs: [usize; 6] = [5, 10, 10, 10, 10, 50];
     let flat_cost = |level: u8| flat_costs[level as usize];
-    assert_eq!(format::search_level(10, &flat_cost), 3);
+    assert_eq!(format::search_level(10, &flat_cost), 4);
     assert_eq!(format::search_level(9, &flat_cost), 0);
 }
 
@@ -697,7 +723,7 @@ budget_test!(budget_mitt_level0, "mitt/src", 10);
 budget_test!(budget_mitt_level1, "mitt/src", 50);
 budget_test!(budget_mitt_level2, "mitt/src", 100);
 budget_test!(budget_mitt_level3, "mitt/src", 300);
-budget_test!(budget_mitt_level4, "mitt/src", 5000);
+budget_test!(budget_mitt_level5, "mitt/src", 5000);
 budget_test!(budget_ini_level0, "ini/lib", 5);
 budget_test!(budget_ini_level1, "ini/lib", 20);
 budget_test!(budget_ini_level3, "ini/lib", 50);

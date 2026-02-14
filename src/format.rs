@@ -9,8 +9,9 @@ use crate::parse;
 /// 1 - Symbol lines, truncated to symbol name
 /// 2 - Symbol lines, full source line (signature)
 /// 3 - Symbol lines with preceding doc comments
-/// 4 - Full source (all lines)
-pub const MAX_LEVEL: u8 = 4;
+/// 4 - Like level 3, but struct/enum/trait/interface bodies shown in full
+/// 5 - Full source (all lines)
+pub const MAX_LEVEL: u8 = 5;
 
 /// Render a single file at the given granularity level.
 pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String {
@@ -19,7 +20,8 @@ pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String 
         0 => format!("{}\n", relative.display()),
         1 => render_symbols(path, root, source, true),
         2 => render_symbols(path, root, source, false),
-        3 => render_symbols_with_docs(path, root, source),
+        3 => render_symbols_with_docs(path, root, source, false),
+        4 => render_symbols_with_docs(path, root, source, true),
         _ => render_full_source(path, root, source),
     }
 }
@@ -129,7 +131,7 @@ fn format_symbol_line(sym: &parse::Symbol, lines: &[&str]) -> String {
     format!("{:>6}→{}", sym.line, source_line)
 }
 
-/// Render all lines of a file with line numbers (level 4).
+/// Render all lines of a file with line numbers (level 5).
 fn render_full_source(path: &Path, root: &Path, source: &str) -> String {
     let relative = path.strip_prefix(root).unwrap_or(path);
     let mut out = String::new();
@@ -141,7 +143,8 @@ fn render_full_source(path: &Path, root: &Path, source: &str) -> String {
 }
 
 /// Render symbol lines with preceding doc comments (level 3).
-fn render_symbols_with_docs(path: &Path, root: &Path, source: &str) -> String {
+/// If `expand_types` is true (level 4), show full bodies for struct/enum/trait/interface.
+fn render_symbols_with_docs(path: &Path, root: &Path, source: &str, expand_types: bool) -> String {
     let relative = path.strip_prefix(root).unwrap_or(path);
     let symbols = parse::extract_symbols(path, source);
     let lines: Vec<&str> = source.lines().collect();
@@ -150,16 +153,44 @@ fn render_symbols_with_docs(path: &Path, root: &Path, source: &str) -> String {
     if symbols.is_empty() {
         return out;
     }
+    // Track which lines have been emitted to avoid duplication when type bodies
+    // overlap with nested symbols (e.g. trait methods inside a trait body).
+    let mut emitted_up_to: usize = 0; // 0-indexed, exclusive
     for sym in &symbols {
         let sym_line_0 = sym.line - 1;
         let doc_start = doc_comment_start(&lines, sym_line_0);
-        for (i, line) in lines.iter().enumerate().take(sym_line_0).skip(doc_start) {
-            out.push_str(&format!("{:>6}→{}\n", i + 1, line));
+        let should_expand = expand_types && is_type_definition(sym.kind);
+        if should_expand {
+            let body_end = sym.end_line; // 1-indexed, inclusive
+            // Start from doc_start or emitted_up_to, whichever is later
+            let start = doc_start.max(emitted_up_to);
+            let end = body_end; // 1-indexed inclusive → 0-indexed exclusive
+            for (i, line) in lines.iter().enumerate().take(end).skip(start) {
+                out.push_str(&format!("{:>6}→{}\n", i + 1, line));
+            }
+            emitted_up_to = emitted_up_to.max(end);
+        } else if sym_line_0 >= emitted_up_to {
+            // Non-expanded symbol: show doc comments + signature line
+            let start = doc_start.max(emitted_up_to);
+            for (i, line) in lines.iter().enumerate().take(sym_line_0).skip(start) {
+                out.push_str(&format!("{:>6}→{}\n", i + 1, line));
+            }
+            out.push_str(&format_symbol_line(sym, &lines));
+            out.push('\n');
         }
-        out.push_str(&format_symbol_line(sym, &lines));
-        out.push('\n');
     }
     out
+}
+
+/// Whether a symbol kind represents a type definition whose body should be expanded.
+fn is_type_definition(kind: parse::SymbolKind) -> bool {
+    matches!(
+        kind,
+        parse::SymbolKind::Struct
+            | parse::SymbolKind::Enum
+            | parse::SymbolKind::Trait
+            | parse::SymbolKind::Interface
+    )
 }
 
 /// Find the first line (0-indexed) of the doc comment block preceding a symbol.

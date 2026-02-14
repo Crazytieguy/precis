@@ -26,9 +26,10 @@ Takes a `--budget` flag (in words).
 1. Symbol lines, truncated to symbol name (e.g. `pub fn new`)
 2. Symbol lines, full line-prefix including signature (e.g. `pub fn new(lang: Language) -> Self {`)
 3. Symbol lines with preceding doc comments (`///` in Rust, `/** */` JSDoc in JS/TS)
-4. Full source (all lines)
+4. Like level 3, but type definition bodies (struct fields, enum variants, trait/interface members) shown in full
+5. Full source (all lines)
 
-Intermediate levels can be added over time (e.g. multi-line signatures).
+More intermediate levels can be added over time (e.g. multi-line signatures).
 
 Shallower files are prioritized over deeper ones when budget is tight. Users can zoom into subdirectories by running the tool on them directly with a larger budget.
 
