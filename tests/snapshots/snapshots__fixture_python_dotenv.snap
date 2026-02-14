@@ -5,6 +5,7 @@ expression: output
 __init__.py
      6→def load_ipython_extension
     12→def get_cli_string
+    42→__all__
 __main__.py
 cli.py
     24→def enumerate_env
@@ -65,6 +66,7 @@ parser.py
    142→def parse_binding
    179→def parse_stream
 variables.py
+     5→_posix_variable
     18→class Atom
     19→    def __ne__
     26→    def resolve
@@ -82,3 +84,4 @@ variables.py
     64→    def resolve
     70→def parse_variables
 version.py
+     1→__version__

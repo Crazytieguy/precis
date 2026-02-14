@@ -181,6 +181,42 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             // Python
             "function_definition" => SymbolKind::Function,
             "class_definition" => SymbolKind::Class,
+            // Python module-level assignments (constants, type variables, dunder attrs)
+            "expression_statement" => {
+                if ext != "py" {
+                    continue;
+                }
+                // Must be at module level (direct child of module node)
+                if symbol_node.parent().map(|p| p.kind()) != Some("module") {
+                    continue;
+                }
+                // Check if the assignment has a type annotation
+                let assignment = symbol_node
+                    .named_children(&mut symbol_node.walk())
+                    .find(|c| c.kind() == "assignment");
+                let has_type_annotation = assignment
+                    .map(|a| {
+                        let mut cursor = a.walk();
+                        a.children(&mut cursor).any(|c| c.kind() == "type")
+                    })
+                    .unwrap_or(false);
+                if !has_type_annotation {
+                    // No type annotation — only keep UPPER_CASE or dunder names
+                    let name_text = name_idx
+                        .and_then(|idx| m.captures.iter().find(|c| c.index == idx))
+                        .and_then(|c| c.node.utf8_text(source.as_bytes()).ok())
+                        .unwrap_or("");
+                    let is_upper = !name_text.is_empty()
+                        && name_text.bytes().all(|b| b.is_ascii_uppercase() || b == b'_')
+                        && name_text.bytes().any(|b| b.is_ascii_uppercase());
+                    let is_dunder =
+                        name_text.starts_with("__") && name_text.ends_with("__");
+                    if !is_upper && !is_dunder {
+                        continue;
+                    }
+                }
+                SymbolKind::Const
+            }
             _ => continue,
         };
 
@@ -816,6 +852,64 @@ def cached_compute(x: int) -> int:
         assert!(names.contains(&"create"));
         assert!(names.contains(&"from_dict"));
         assert!(names.contains(&"cached_compute"));
+    }
+
+    #[test]
+    fn extracts_python_module_constants() {
+        let source = r#"
+from typing import TypeVar
+
+T = TypeVar("T")
+
+VERSION: str = "0.1.0"
+
+MAX_SIZE: int = 100
+
+__all__ = ["foo", "bar"]
+
+__version__ = "1.0.0"
+
+UPPER_CASE = 42
+
+lower_case = "not a constant"
+
+logger = get_logger(__name__)
+
+_PRIVATE_CONST = 99
+
+def some_function():
+    LOCAL_CONST = 1
+"#;
+        let symbols = extract_symbols(Path::new("test.py"), source);
+        let info: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.name.as_str(), s.kind, s.is_public))
+            .collect();
+
+        // Type-annotated assignments are always captured
+        assert!(info.contains(&("VERSION", SymbolKind::Const, true)));
+        assert!(info.contains(&("MAX_SIZE", SymbolKind::Const, true)));
+
+        // UPPER_CASE untyped assignments are captured
+        assert!(info.contains(&("T", SymbolKind::Const, true)));
+        assert!(info.contains(&("UPPER_CASE", SymbolKind::Const, true)));
+
+        // Dunder names are captured
+        assert!(info.contains(&("__all__", SymbolKind::Const, false)));
+        assert!(info.contains(&("__version__", SymbolKind::Const, false)));
+
+        // Private UPPER_CASE is captured but marked private
+        assert!(info.contains(&("_PRIVATE_CONST", SymbolKind::Const, false)));
+
+        // lower_case without type annotation is NOT captured
+        assert!(!info.iter().any(|(name, _, _)| *name == "lower_case"));
+        assert!(!info.iter().any(|(name, _, _)| *name == "logger"));
+
+        // Constants inside functions are NOT captured (not module-level)
+        assert!(!info.iter().any(|(name, _, _)| *name == "LOCAL_CONST"));
+
+        // Functions should still be captured
+        assert!(info.contains(&("some_function", SymbolKind::Function, true)));
     }
 
     #[test]

@@ -3,9 +3,16 @@ source: tests/snapshots.rs
 expression: output
 ---
 __init__.py
+    28→__all__
 filesize.py
     36→def naturalsize
 i18n.py
+     8→TYPE_CHECKING
+    13→__all__
+    15→_TRANSLATIONS
+    18→_CURRENT
+    22→_THOUSANDS_SEPARATOR
+    31→_DECIMAL_SEPARATOR
     40→def _get_default_locale_path
     51→def get_translation
     58→def activate
@@ -18,8 +25,11 @@ i18n.py
    183→def thousands_separator
    196→def decimal_separator
 lists.py
+     5→TYPE_CHECKING
+     9→__all__
     12→def natural_list
 number.py
+    12→TYPE_CHECKING
     21→def _format_not_finite
     34→def ordinal
    110→def intcomma
@@ -30,6 +40,8 @@ number.py
    454→def clamp
    531→def metric
 time.py
+    15→TYPE_CHECKING
+    21→__all__
     31→class Unit
     41→    def __lt__
     47→def _now

@@ -3,6 +3,7 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.py
+     5→T = TypeVar("T")
      7→# Process the input items and return the total count.
      8→def process_items(items: list[str]) -> int:
     11→def _helper() -> None:
@@ -36,3 +37,4 @@ sample.py
     43→
     44→    def _advance(self) -> None:
     45→        pass
+    47→VERSION: str = "0.1.0"

@@ -3,8 +3,14 @@ source: tests/snapshots.rs
 expression: output
 ---
 __init__.py
+    34→config
     37→def __getattr__
 _checkers.py
+    81→TypeCheckerCallable
+    84→TypeCheckLookupCallback
+    88→checker_lookup_functions
+    89→generic_alias_types
+    99→BINARY_MAGIC_METHODS
    153→def check_callable
    212→def check_mapping
    247→def check_typed_dict
@@ -31,9 +37,11 @@ _checkers.py
    895→def check_self
    915→def check_paramspec
    924→def check_type_internal
+  1005→origin_type_checkers
   1061→def builtin_checker_lookup
   1099→def load_plugins
 _config.py
+    11→T
     14→class ForwardRefPolicy
     30→class CollectionCheckStrategy
     52→    def iterate_samples
@@ -55,6 +63,8 @@ _exceptions.py
     35→    def append_path_element
     38→    def __str__
 _functions.py
+    24→T
+    25→TypeCheckFailCallback
     50→def check_type
    118→def check_argument_types
    149→def check_return_type
@@ -63,6 +73,8 @@ _functions.py
    245→def check_variable_assignment
    291→def warn_on_error
 _importhook.py
+    40→P
+    41→T
     45→def _call_with_frames_removed
     51→def optimized_cache_from_source
     55→class TypeguardLoader
@@ -85,8 +97,12 @@ _pytest_plugin.py
     16→def pytest_addoption
     75→def pytest_configure
 _suppression.py
+    15→P
+    16→T
     30→def suppress_type_checks
 _transformer.py
+    67→PreliminaryNameTypePair
+    68→NameTypePair
    118→class TransformMemo
    141→    def __post_init__
    171→    def get_unused_name

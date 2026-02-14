@@ -3,8 +3,15 @@ source: tests/snapshots.rs
 expression: output
 ---
 __init__.py
+    34→config: TypeCheckConfiguration
     37→def __getattr__(name: str) -> Any:
 _checkers.py
+    81→TypeCheckerCallable: TypeAlias = Callable[
+    84→TypeCheckLookupCallback: TypeAlias = Callable[
+    88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
+    89→generic_alias_types: tuple[type, ...] = (
+    98→# Lifted from mypy.sharedparse
+    99→BINARY_MAGIC_METHODS = {
    153→def check_callable(
    212→def check_mapping(
    247→def check_typed_dict(
@@ -31,9 +38,12 @@ _checkers.py
    895→def check_self(
    915→def check_paramspec(
    924→def check_type_internal(
+  1004→# Equality checks are applied to these
+  1005→origin_type_checkers: dict[
   1061→def builtin_checker_lookup(
   1099→def load_plugins() -> None:
 _config.py
+    11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
     15→    """
     16→    Defines how unresolved forward references are handled.
@@ -160,6 +170,8 @@ _exceptions.py
     41→        else:
     42→            return str(self.args[0])
 _functions.py
+    24→T = TypeVar("T")
+    25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
     50→def check_type(
    118→def check_argument_types(
    149→def check_return_type(
@@ -168,6 +180,8 @@ _functions.py
    245→def check_variable_assignment(
    291→def warn_on_error(exc: TypeCheckError, memo: TypeCheckMemo) -> None:
 _importhook.py
+    40→P = ParamSpec("P")
+    41→T = TypeVar("T")
     44→# The name of this function is magical
     45→def _call_with_frames_removed(
     51→def optimized_cache_from_source(path: str, debug_override: bool | None = None) -> str:
@@ -340,8 +354,12 @@ _pytest_plugin.py
     16→def pytest_addoption(parser: Parser) -> None:
     75→def pytest_configure(config: Config) -> None:
 _suppression.py
+    15→P = ParamSpec("P")
+    16→T = TypeVar("T")
     30→def suppress_type_checks(
 _transformer.py
+    67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
+    68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
    117→@dataclass
    118→class TransformMemo:
    119→    node: Module | ClassDef | FunctionDef | AsyncFunctionDef | None

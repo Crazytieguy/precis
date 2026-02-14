@@ -3,7 +3,23 @@ source: tests/snapshots.rs
 expression: output
 ---
 __init__.py
+     5→__all__
+     6→__version__
 _parser.py
+    19→TYPE_CHECKING
+    35→MAX_INLINE_NESTING
+    37→ASCII_CTRL
+    41→ILLEGAL_BASIC_STR_CHARS
+    42→ILLEGAL_MULTILINE_BASIC_STR_CHARS
+    44→ILLEGAL_LITERAL_STR_CHARS
+    45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS
+    47→ILLEGAL_COMMENT_CHARS
+    49→TOML_WS
+    50→TOML_WS_AND_NEWLINE
+    51→BARE_KEY_CHARS
+    54→KEY_INITIAL_CHARS
+    55→HEXDIGIT_CHARS
+    57→BASIC_STR_ESCAPE_REPLACEMENTS
     71→class DEPRECATED_DEFAULT
     76→class TOMLDecodeError
     87→    def __init__
@@ -45,6 +61,11 @@ _parser.py
    760→def is_unicode_scalar_value
    764→def make_safe_parse_float
 _re.py
+    11→TYPE_CHECKING
+    17→_TIME_RE_STR
+    26→RE_NUMBER
+    45→RE_LOCALTIME
+    46→RE_DATETIME
     59→def match_to_datetime
     99→def cached_tz
    109→def match_to_localtime

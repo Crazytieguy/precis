@@ -3,13 +3,21 @@ source: tests/snapshots.rs
 expression: output
 ---
 __init__.py
+     1→__all__
     32→def __getattr__
 _callers.py
+    24→Teardown
     27→def run_old_style_hookwrapper
     60→def _raise_wrapfail
     70→def _warn_teardown_exception
     82→def _multicall
 _hooks.py
+    28→_T
+    29→_F
+    31→_Namespace
+    32→_Plugin
+    33→_HookExec
+    37→_HookImplFunction
     40→class HookspecOpts
     56→class HookimplOpts
     78→class HookspecMarker
@@ -19,10 +27,12 @@ _hooks.py
    175→    def __init__
    202→    def __call__
    281→def normalize_hookimpl_opts
+   290→_PYPY
    293→def varnames
    359→class HookRelay
    365→    def __init__
    370→        def __getattr__
+   377→_CallHistory
    382→class HookCaller
    393→    def __init__
    420→    def has_spec
@@ -49,6 +59,8 @@ _hooks.py
    697→class HookSpec
    709→    def __init__
 _manager.py
+    36→_BeforeTrace
+    37→_AfterTrace
     42→def _warn_for_function
     52→class PluginValidationError
     59→    def __init__
@@ -85,6 +97,7 @@ _manager.py
    512→    def subset_hook_caller
    525→def _formatdef
 _result.py
+    16→_ExcInfo
     20→class HookCallError
     25→class Result
     31→    def __init__

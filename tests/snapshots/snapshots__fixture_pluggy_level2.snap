@@ -3,13 +3,21 @@ source: tests/snapshots.rs
 expression: output
 ---
 __init__.py
+     1→__all__ = [
     32→def __getattr__(name: str) -> str:
 _callers.py
+    24→Teardown: TypeAlias = Generator[None, object, object]
     27→def run_old_style_hookwrapper(
     60→def _raise_wrapfail(
     70→def _warn_teardown_exception(
     82→def _multicall(
 _hooks.py
+    28→_T = TypeVar("_T")
+    29→_F = TypeVar("_F", bound=Callable[..., object])
+    31→_Namespace: TypeAlias = ModuleType | type
+    32→_Plugin: TypeAlias = object
+    33→_HookExec: TypeAlias = Callable[
+    37→_HookImplFunction: TypeAlias = Callable[..., _T | Generator[None, Result[_T], None]]
     40→class HookspecOpts(TypedDict):
     56→class HookimplOpts(TypedDict):
     78→class HookspecMarker:
@@ -19,10 +27,12 @@ _hooks.py
    175→    def __init__(self, project_name: str) -> None:
    202→    def __call__(  # noqa: F811
    281→def normalize_hookimpl_opts(opts: HookimplOpts) -> None:
+   290→_PYPY = hasattr(sys, "pypy_version_info")
    293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
    359→class HookRelay:
    365→    def __init__(self) -> None:
    370→        def __getattr__(self, name: str) -> HookCaller: ...
+   377→_CallHistory: TypeAlias = list[
    382→class HookCaller:
    393→    def __init__(
    420→    def has_spec(self) -> bool:
@@ -49,6 +59,8 @@ _hooks.py
    697→class HookSpec:
    709→    def __init__(self, namespace: _Namespace, name: str, opts: HookspecOpts) -> None:
 _manager.py
+    36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
+    37→_AfterTrace: TypeAlias = Callable[
     42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
     52→class PluginValidationError(Exception):
     59→    def __init__(self, plugin: _Plugin, message: str) -> None:
@@ -85,6 +97,7 @@ _manager.py
    512→    def subset_hook_caller(
    525→def _formatdef(func: Callable[..., object]) -> str:
 _result.py
+    16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
     20→class HookCallError(Exception):
     25→class Result(Generic[ResultType]):
     31→    def __init__(

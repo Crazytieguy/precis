@@ -3,9 +3,18 @@ source: tests/snapshots.rs
 expression: output
 ---
 __init__.py
+    28→__all__ = [
 filesize.py
     36→def naturalsize(
 i18n.py
+     8→TYPE_CHECKING = False
+    13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
+    15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
+    18→_CURRENT = local()
+    21→# Mapping of locale to thousands separator
+    22→_THOUSANDS_SEPARATOR = {
+    30→# Mapping of locale to decimal separator
+    31→_DECIMAL_SEPARATOR = {
     40→def _get_default_locale_path() -> pathlib.Path | None:
     51→def get_translation() -> gettext_module.NullTranslations:
     58→def activate(
@@ -18,8 +27,11 @@ i18n.py
    183→def thousands_separator() -> str:
    196→def decimal_separator() -> str:
 lists.py
+     5→TYPE_CHECKING = False
+     9→__all__ = ["natural_list"]
     12→def natural_list(items: list[Any]) -> str:
 number.py
+    12→TYPE_CHECKING = False
     21→def _format_not_finite(value: float) -> str:
     34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
    110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
@@ -30,6 +42,8 @@ number.py
    454→def clamp(
    531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
 time.py
+    15→TYPE_CHECKING = False
+    21→__all__ = [
     30→@total_ordering
     31→class Unit(Enum):
     41→    def __lt__(self, other: Any) -> Any:

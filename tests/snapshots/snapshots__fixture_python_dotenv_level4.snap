@@ -5,6 +5,7 @@ expression: output
 __init__.py
      6→def load_ipython_extension(ipython: Any) -> None:
     12→def get_cli_string(
+    42→__all__ = [
 __main__.py
 cli.py
     24→def enumerate_env() -> Optional[str]:
@@ -231,6 +232,7 @@ parser.py
    142→def parse_binding(reader: Reader) -> Binding:
    179→def parse_stream(stream: IO[str]) -> Iterator[Binding]:
 variables.py
+     5→_posix_variable: Pattern[str] = re.compile(
     18→class Atom(metaclass=ABCMeta):
     19→    def __ne__(self, other: object) -> bool:
     20→        result = self.__eq__(other)
@@ -279,3 +281,4 @@ variables.py
     67→        return result if result is not None else ""
     70→def parse_variables(value: str) -> Iterator[Atom]:
 version.py
+     1→__version__ = "1.2.1"
