@@ -1,0 +1,68 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 150 → level 1 (141 words)
+
+README.md
+     1→# xxhash
+    33→## Compatibility
+    45→## Benchmarks
+    66→## Projects using this package
+dynamic/plugin.go
+    15→	in
+    16→	want
+    19→func TestSum
+    26→func TestDigest
+xxhash.go
+    12→	prime1
+    13→	prime2
+    14→	prime3
+    15→	prime4
+    16→	prime5
+    23→var primes
+    29→type Digest
+    40→func New
+    45→func NewWithSeed
+    53→func (d *Digest) Reset
+    59→func (d *Digest) ResetWithSeed
+    69→func (d *Digest) Size
+    72→func (d *Digest) BlockSize
+    75→func (d *Digest) Write
+   113→func (d *Digest) Sum
+   129→func (d *Digest) Sum64
+   171→	magic
+   172→	marshaledSize
+   176→func (d *Digest) MarshalBinary
+   190→func (d *Digest) UnmarshalBinary
+   208→func appendUint64
+   214→func consumeUint64
+   219→func u64
+   220→func u32
+   222→func round
+   229→func mergeRound
+   236→func rol1
+   237→func rol7
+   238→func rol11
+   239→func rol12
+   240→func rol18
+   241→func rol23
+   242→func rol27
+   243→func rol31
+xxhash_asm.go
+    12→func Sum64
+    15→func writeBlocks
+xxhash_other.go
+     7→func Sum64
+    64→func writeBlocks
+xxhash_safe.go
+     9→func Sum64String
+    14→func (d *Digest) WriteString
+xxhash_unsafe.go
+    38→func Sum64String
+    45→func (d *Digest) WriteString
+    55→type sliceHeader
+xxhsum/xxhsum.go
+    11→func main
+    34→func contains
+    43→func printHash

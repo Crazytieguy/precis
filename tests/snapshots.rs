@@ -37,6 +37,7 @@ fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
 //   git clone --depth 1 https://github.com/agronholm/typeguard.git test/fixtures/typeguard
 //   git clone --depth 1 https://github.com/rust-lang/mdBook.git test/fixtures/mdbook
 //   git clone --depth 1 https://github.com/hashicorp/go-multierror.git test/fixtures/go-multierror
+//   git clone --depth 1 https://github.com/cespare/xxhash.git test/fixtures/xxhash
 
 /// Generate a snapshot test that renders a fixture directory at a given level.
 macro_rules! fixture_test {
@@ -846,6 +847,7 @@ fixture_test!(fixture_python_dotenv, "python-dotenv/src/dotenv", 1);
 fixture_test!(fixture_typeguard, "typeguard/src/typeguard", 1);
 fixture_test!(fixture_mdbook, "mdbook/guide/src", 1);
 fixture_test!(fixture_go_multierror, "go-multierror", 1);
+fixture_test!(fixture_xxhash, "xxhash", 1);
 
 // Fixture-based snapshot tests (level 2: full signature lines).
 
@@ -880,6 +882,7 @@ fixture_test!(fixture_python_dotenv_level2, "python-dotenv/src/dotenv", 2);
 fixture_test!(fixture_typeguard_level2, "typeguard/src/typeguard", 2);
 fixture_test!(fixture_mdbook_level2, "mdbook/guide/src", 2);
 fixture_test!(fixture_go_multierror_level2, "go-multierror", 2);
+fixture_test!(fixture_xxhash_level2, "xxhash", 2);
 
 // Fixture-based snapshot tests (level 3: signatures with doc comments).
 
@@ -914,6 +917,7 @@ fixture_test!(fixture_python_dotenv_level3, "python-dotenv/src/dotenv", 3);
 fixture_test!(fixture_typeguard_level3, "typeguard/src/typeguard", 3);
 fixture_test!(fixture_mdbook_level3, "mdbook/guide/src", 3);
 fixture_test!(fixture_go_multierror_level3, "go-multierror", 3);
+fixture_test!(fixture_xxhash_level3, "xxhash", 3);
 
 // Fixture-based snapshot tests (level 4: type bodies expanded).
 
@@ -948,6 +952,7 @@ fixture_test!(fixture_python_dotenv_level4, "python-dotenv/src/dotenv", 4);
 fixture_test!(fixture_typeguard_level4, "typeguard/src/typeguard", 4);
 fixture_test!(fixture_mdbook_level4, "mdbook/guide/src", 4);
 fixture_test!(fixture_go_multierror_level4, "go-multierror", 4);
+fixture_test!(fixture_xxhash_level4, "xxhash", 4);
 
 // Subdirectory tests: running on a subdirectory within a fixture tests
 // that path display and file discovery work correctly at deeper nesting levels.
@@ -1014,6 +1019,8 @@ fixture_test!(
     "mdbook/guide/src/format",
     2
 );
+fixture_test!(fixture_xxhash_xxhsum_subdir, "xxhash/xxhsum", 1);
+fixture_test!(fixture_xxhash_xxhsum_subdir_level2, "xxhash/xxhsum", 2);
 
 // Single-file rendering tests (precis accepts individual files, not just directories).
 
@@ -1178,6 +1185,7 @@ fn monotonicity_invariant() {
         ("typeguard", "typeguard/src/typeguard"),
         ("mdbook", "mdbook/guide/src"),
         ("go-multierror", "go-multierror"),
+        ("xxhash", "xxhash"),
     ];
 
     let mut tested_files = 0;
@@ -1335,3 +1343,9 @@ budget_test!(budget_go_multierror_level0, "go-multierror", 5);
 budget_test!(budget_go_multierror_level1, "go-multierror", 120);
 budget_test!(budget_go_multierror_level3, "go-multierror", 900);
 budget_test!(budget_go_multierror_level4, "go-multierror", 1800);
+
+// Go budget tests (xxhash: 0→8, 1→141, 2→353, 3→728, 4→1025, 5→2598 words)
+budget_test!(budget_xxhash_level0, "xxhash", 5);
+budget_test!(budget_xxhash_level1, "xxhash", 150);
+budget_test!(budget_xxhash_level3, "xxhash", 750);
+budget_test!(budget_xxhash_level4, "xxhash", 1100);
