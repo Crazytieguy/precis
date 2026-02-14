@@ -1349,3 +1349,9 @@ budget_test!(budget_xxhash_level0, "xxhash", 5);
 budget_test!(budget_xxhash_level1, "xxhash", 150);
 budget_test!(budget_xxhash_level3, "xxhash", 750);
 budget_test!(budget_xxhash_level4, "xxhash", 1100);
+
+// Python budget tests (typeguard: 0→12, 1→364, 2→1471, 3→3021, 4→7054, 5→14165 words)
+budget_test!(budget_typeguard_level0, "typeguard/src/typeguard", 10);
+budget_test!(budget_typeguard_level1, "typeguard/src/typeguard", 400);
+budget_test!(budget_typeguard_level3, "typeguard/src/typeguard", 3100);
+budget_test!(budget_typeguard_level4, "typeguard/src/typeguard", 7100);
