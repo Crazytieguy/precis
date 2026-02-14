@@ -3,19 +3,19 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.rs
-     2→pub fn process
-     6→fn helper
-     8→pub struct Token
-    13→pub enum TokenKind
-    19→pub trait Visitor
-    20→    fn visit_token
-    21→    fn visit_all
-    28→impl std::fmt::Display for Token
-    29→    fn fmt
-    34→impl Token
-    35→    pub fn new
-    40→pub type Span
-    42→const MAX_TOKENS
-    44→pub static VERSION
-    46→macro_rules! token
-    52→pub mod lexer
+     3→pub fn process
+     7→fn helper
+    10→pub struct Token
+    16→pub enum TokenKind
+    23→pub trait Visitor
+    24→    fn visit_token
+    25→    fn visit_all
+    32→impl std::fmt::Display for Token
+    33→    fn fmt
+    38→impl Token
+    40→    pub fn new
+    45→pub type Span
+    47→const MAX_TOKENS
+    49→pub static VERSION
+    51→macro_rules! token
+    57→pub mod lexer

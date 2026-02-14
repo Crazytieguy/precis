@@ -1,0 +1,47 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+sample.tsx
+     1→
+     2→import React, { useState, forwardRef } from "react";
+     3→
+     4→export interface ButtonProps {
+     5→    label: string;
+     6→    onClick: () => void;
+     7→    disabled?: boolean;
+     8→}
+     9→
+    10→export function Button({ label, onClick, disabled }: ButtonProps) {
+    11→    return <button onClick={onClick} disabled={disabled}>{label}</button>;
+    12→}
+    13→
+    14→export const IconButton = ({ icon, ...rest }: { icon: string } & ButtonProps) => {
+    15→    return <Button label={icon} {...rest} />;
+    16→};
+    17→
+    18→function useToggle(initial: boolean): [boolean, () => void] {
+    19→    const [value, setValue] = useState(initial);
+    20→    return [value, () => setValue(v => !v)];
+    21→}
+    22→
+    23→export const Input = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
+    24→    (props, ref) => {
+    25→        return <input ref={ref} {...props} />;
+    26→    }
+    27→);
+    28→
+    29→export type Theme = "light" | "dark";
+    30→
+    31→export const MemoizedList = React.memo(function MemoizedList({ items }: { items: string[] }) {
+    32→    return <ul>{items.map(i => <li key={i}>{i}</li>)}</ul>;
+    33→});
+    34→
+    35→export default function App() {
+    36→    const [on, toggle] = useToggle(false);
+    37→    return (
+    38→        <div>
+    39→            <Button label={on ? "On" : "Off"} onClick={toggle} />
+    40→        </div>
+    41→    );
+    42→}

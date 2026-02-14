@@ -15,23 +15,27 @@ fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
 
 fn rust_sample() -> &'static str {
     r#"
+/// Process the input and return a list of tokens.
 pub fn process(input: &str) -> Result<Vec<Token>, Error> {
     todo!()
 }
 
 fn helper() {}
 
+/// A lexical token with its kind and source span.
 pub struct Token {
     kind: TokenKind,
     span: Span,
 }
 
+/// The kind of a lexical token.
 pub enum TokenKind {
     Ident,
     Number,
     Symbol,
 }
 
+/// Trait for visiting tokens in a token stream.
 pub trait Visitor {
     fn visit_token(&mut self, token: &Token);
     fn visit_all(&mut self, tokens: &[Token]) {
@@ -48,6 +52,7 @@ impl std::fmt::Display for Token {
 }
 
 impl Token {
+    /// Create a new token with the given kind and span.
     pub fn new(kind: TokenKind, span: Span) -> Self {
         Self { kind, span }
     }
@@ -274,7 +279,7 @@ fn tsx_sample_level2() {
     insta::assert_snapshot!(output);
 }
 
-// Level 3: full source
+// Level 3: signature lines with doc comments
 
 #[test]
 fn rust_sample_level3() {
@@ -297,6 +302,32 @@ fn javascript_sample_level3() {
 #[test]
 fn tsx_sample_level3() {
     let output = format::render_file(3, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+// Level 4: full source
+
+#[test]
+fn rust_sample_level4() {
+    let output = format::render_file(4, Path::new("sample.rs"), Path::new(""), rust_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn typescript_sample_level4() {
+    let output = format::render_file(4, Path::new("sample.ts"), Path::new(""), typescript_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn javascript_sample_level4() {
+    let output = format::render_file(4, Path::new("sample.js"), Path::new(""), javascript_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn tsx_sample_level4() {
+    let output = format::render_file(4, Path::new("sample.tsx"), Path::new(""), tsx_sample());
     insta::assert_snapshot!(output);
 }
 

@@ -4,6 +4,7 @@
 
 - 5-per-language target achieved: 5 Rust, 5 TypeScript, 5 JavaScript, 5 TSX — each with level 1 and level 2 snapshots
 - 8 fixtures have subdirectory snapshot tests; remaining fixtures (either, debug, mitt, etc.) have flat source trees with no meaningful subdirectories to test
+- Level 3 (doc comments) tested via samples; no fixture-level level 3 snapshots yet
 
 ## Codebase quality
 
@@ -12,7 +13,7 @@
 ## Current state
 
 - Parsing works for Rust, TypeScript, JavaScript, TSX — extracts symbol names, kinds, visibility
-- Output supports 4 granularity levels: 0 (file paths), 1 (symbol names), 2 (full signature lines), 3 (full source)
+- Output supports 5 granularity levels: 0 (file paths), 1 (symbol names), 2 (full signature lines), 3 (signatures with doc comments), 4 (full source)
 - Monotonicity invariant (higher level = more words) tested against all fixtures
 - `--budget` flag works: binary search over levels selects highest level fitting within word budget
 - `path` arg accepts both files and directories
@@ -23,6 +24,7 @@
 - Make levels depth-aware and file-size-aware (currently uniform across all files)
 - Add more language grammars (Python, Go)
 - Add `--json` output flag
+- Doc comment detection (level 3) is text-based heuristic; does not use tree-sitter comment nodes. Handles `///`, `//!`, and `/** */` blocks. Skips `#[attr]` and `@decorator` lines between doc comments and symbols.
 
 ## Design decisions
 

@@ -3,19 +3,19 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.rs
-     2→pub fn process(input: &str) -> Result<Vec<Token>, Error> {
-     6→fn helper() {}
-     8→pub struct Token {
-    13→pub enum TokenKind {
-    19→pub trait Visitor {
-    20→    fn visit_token(&mut self, token: &Token);
-    21→    fn visit_all(&mut self, tokens: &[Token]) {
-    28→impl std::fmt::Display for Token {
-    29→    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-    34→impl Token {
-    35→    pub fn new(kind: TokenKind, span: Span) -> Self {
-    40→pub type Span = (usize, usize);
-    42→const MAX_TOKENS: usize = 1024;
-    44→pub static VERSION: &str = "0.1.0";
-    46→macro_rules! token {
-    52→pub mod lexer;
+     3→pub fn process(input: &str) -> Result<Vec<Token>, Error> {
+     7→fn helper() {}
+    10→pub struct Token {
+    16→pub enum TokenKind {
+    23→pub trait Visitor {
+    24→    fn visit_token(&mut self, token: &Token);
+    25→    fn visit_all(&mut self, tokens: &[Token]) {
+    32→impl std::fmt::Display for Token {
+    33→    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    38→impl Token {
+    40→    pub fn new(kind: TokenKind, span: Span) -> Self {
+    45→pub type Span = (usize, usize);
+    47→const MAX_TOKENS: usize = 1024;
+    49→pub static VERSION: &str = "0.1.0";
+    51→macro_rules! token {
+    57→pub mod lexer;

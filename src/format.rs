@@ -8,8 +8,9 @@ use crate::{parse, walk};
 /// 0 - File paths only
 /// 1 - Symbol lines, truncated to symbol name
 /// 2 - Symbol lines, full source line (signature)
-/// 3 - Full source (all lines)
-pub const MAX_LEVEL: u8 = 3;
+/// 3 - Symbol lines with preceding doc comments
+/// 4 - Full source (all lines)
+pub const MAX_LEVEL: u8 = 4;
 
 /// Render a single file at the given granularity level.
 pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String {
@@ -18,6 +19,7 @@ pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String 
         0 => format!("{}\n", relative.display()),
         1 => render_symbols(path, root, source, true),
         2 => render_symbols(path, root, source, false),
+        3 => render_symbols_with_docs(path, root, source),
         _ => render_full_source(path, root, source),
     }
 }
@@ -133,6 +135,88 @@ fn render_full_source(path: &Path, root: &Path, source: &str) -> String {
         out.push_str(&format!("{:>6}→{}\n", i + 1, line));
     }
     out
+}
+
+/// Render symbol lines with preceding doc comments (level 3).
+fn render_symbols_with_docs(path: &Path, root: &Path, source: &str) -> String {
+    let relative = path.strip_prefix(root).unwrap_or(path);
+    let symbols = parse::extract_symbols(path, source);
+    let lines: Vec<&str> = source.lines().collect();
+    let mut out = String::new();
+    out.push_str(&format!("{}\n", relative.display()));
+    if symbols.is_empty() {
+        return out;
+    }
+    for sym in &symbols {
+        let sym_line_0 = sym.line - 1;
+        let doc_start = doc_comment_start(&lines, sym_line_0);
+        for (i, line) in lines.iter().enumerate().take(sym_line_0).skip(doc_start) {
+            out.push_str(&format!("{:>6}→{}\n", i + 1, line));
+        }
+        out.push_str(&format_symbol_line(sym, source));
+        out.push('\n');
+    }
+    out
+}
+
+/// Find the first line (0-indexed) of the doc comment block preceding a symbol.
+/// Returns the symbol's own line index if there's no doc comment.
+fn doc_comment_start(lines: &[&str], symbol_line_0: usize) -> usize {
+    if symbol_line_0 == 0 {
+        return symbol_line_0;
+    }
+
+    // Walk backwards over Rust attributes (#[...]) and TS/JS decorators (@...)
+    let mut idx = symbol_line_0;
+    while idx > 0 {
+        let prev = lines[idx - 1].trim();
+        if prev.starts_with("#[") || prev.starts_with("@") {
+            idx -= 1;
+        } else {
+            break;
+        }
+    }
+
+    if idx == 0 {
+        return symbol_line_0;
+    }
+
+    let prev_trimmed = lines[idx - 1].trim();
+
+    // Rust-style line doc comments (/// or //!)
+    if prev_trimmed.starts_with("///") || prev_trimmed.starts_with("//!") {
+        idx -= 1;
+        while idx > 0 {
+            let above = lines[idx - 1].trim();
+            if above.starts_with("///") || above.starts_with("//!") {
+                idx -= 1;
+            } else {
+                break;
+            }
+        }
+        return idx;
+    }
+
+    // Block doc comments (/** ... */ — JSDoc or Rust)
+    if prev_trimmed.ends_with("*/") {
+        let mut scan = idx - 1;
+        loop {
+            let line = lines[scan].trim();
+            if line.starts_with("/**") {
+                return scan;
+            }
+            if line.starts_with("/*") {
+                // Regular block comment, not a doc comment
+                return symbol_line_0;
+            }
+            if scan == 0 {
+                break;
+            }
+            scan -= 1;
+        }
+    }
+
+    symbol_line_0
 }
 
 /// Find `needle` in `haystack` at a word boundary (not inside another identifier).

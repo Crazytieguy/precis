@@ -25,9 +25,10 @@ Takes a `--budget` flag (in words).
 0. File paths only
 1. Symbol lines, truncated to symbol name (e.g. `pub fn new`)
 2. Symbol lines, full line-prefix including signature (e.g. `pub fn new(lang: Language) -> Self {`)
-3. Full source (all lines)
+3. Symbol lines with preceding doc comments (`///` in Rust, `/** */` JSDoc in JS/TS)
+4. Full source (all lines)
 
-Intermediate levels can be added over time (e.g. multi-line signatures, docstrings).
+Intermediate levels can be added over time (e.g. multi-line signatures).
 
 Shallower files are prioritized over deeper ones when budget is tight. Users can zoom into subdirectories by running the tool on them directly with a larger budget.
 
