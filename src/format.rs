@@ -442,14 +442,24 @@ fn signature_end_line(lines: &[&str], sym: &parse::Symbol, is_python: bool) -> u
 }
 
 /// Strip a trailing `//` line comment, returning the code portion.
-/// This is a heuristic: `//` inside string literals may be incorrectly stripped,
-/// but in signature context (function/class/interface declarations) this is rare
-/// and the fallback (not matching the delimiter) is acceptable.
+/// Skips `://` sequences (URLs like `https://...`) to avoid false positives.
+/// This is still a heuristic: `//` inside string literals may be incorrectly
+/// stripped, but in signature context this is rare and the fallback is acceptable.
 fn strip_c_line_comment(s: &str) -> &str {
-    match s.find("//") {
-        Some(pos) => s[..pos].trim_end(),
-        None => s,
+    let bytes = s.as_bytes();
+    let mut i = 0;
+    while i + 1 < bytes.len() {
+        if bytes[i] == b'/' && bytes[i + 1] == b'/' {
+            // Skip :// (URLs like https://)
+            if i > 0 && bytes[i - 1] == b':' {
+                i += 2;
+                continue;
+            }
+            return s[..i].trim_end();
+        }
+        i += 1;
     }
+    s
 }
 
 /// Strip a trailing `#` comment from a Python line, returning the code portion.
@@ -879,5 +889,39 @@ mod tests {
                 prev_words = words;
             }
         }
+    }
+
+    #[test]
+    fn strip_c_line_comment_skips_urls() {
+        // Plain comment stripping
+        assert_eq!(strip_c_line_comment("code // comment"), "code");
+        assert_eq!(strip_c_line_comment("no comment"), "no comment");
+        // URL should NOT be stripped
+        assert_eq!(
+            strip_c_line_comment(r#"function fetch(url = "https://example.com") {"#),
+            r#"function fetch(url = "https://example.com") {"#,
+        );
+        // http:// in string literal should be preserved
+        assert_eq!(
+            strip_c_line_comment(r#"const API = "http://localhost:3000"; // dev"#),
+            r#"const API = "http://localhost:3000";"#,
+        );
+    }
+
+    #[test]
+    fn signature_end_detects_brace_after_url() {
+        let source = r#"function fetch(url: string = "https://example.com") {
+    return axios.get(url);
+}"#;
+        let lines: Vec<&str> = source.lines().collect();
+        let sym = parse::Symbol {
+            kind: parse::SymbolKind::Function,
+            name: "fetch".to_string(),
+            is_public: true,
+            line: 1,
+            end_line: 3,
+        };
+        // Should detect `{` on line 0 (first line), not scan into the body
+        assert_eq!(signature_end_line(&lines, &sym, false), 0);
     }
 }
