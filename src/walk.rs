@@ -33,14 +33,14 @@ fn is_source_file(path: &Path) -> bool {
         .is_some_and(|ext| SOURCE_EXTENSIONS.contains(&ext))
 }
 
-/// Check if a file is a test file that should be excluded from output.
-/// Matches common test patterns: test directories and test file naming conventions.
+/// Check if a file should be excluded from output (test/benchmark infrastructure).
+/// Matches test directories, benchmark directories, and test file naming conventions.
 fn is_test_file(path: &Path) -> bool {
-    // Check for test directories anywhere in the path:
-    // __tests__/ (Jest), tests/ (Rust/Python/JS), test/ (JS/TS)
+    // Check for non-source directories anywhere in the path:
+    // __tests__/ (Jest), tests/ (Rust/Python/JS), test/ (JS/TS), benches/ (Rust benchmarks)
     if path.components().any(|c| {
         let s = c.as_os_str();
-        s == "__tests__" || s == "tests" || s == "test"
+        s == "__tests__" || s == "tests" || s == "test" || s == "benches"
     }) {
         return true;
     }
@@ -121,6 +121,10 @@ mod tests {
         let test_dir = dir.path().join("test");
         fs::create_dir(&test_dir).unwrap();
         fs::write(test_dir.join("setup.ts"), "export const setup = {};").unwrap();
+        // benches/ directory (Rust benchmarks)
+        let benches_dir = dir.path().join("benches");
+        fs::create_dir(&benches_dir).unwrap();
+        fs::write(benches_dir.join("bench.rs"), "fn bench_it() {}").unwrap();
 
         let files = discover_source_files(dir.path());
         let names: Vec<_> = files
@@ -138,5 +142,6 @@ mod tests {
         assert!(!names.contains(&"helper.ts".to_string()));
         assert!(!names.contains(&"integration.rs".to_string()));
         assert!(!names.contains(&"setup.ts".to_string()));
+        assert!(!names.contains(&"bench.rs".to_string()));
     }
 }
