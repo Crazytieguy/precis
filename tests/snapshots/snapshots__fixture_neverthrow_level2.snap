@@ -20,6 +20,7 @@ _internals/utils.ts
     54→export const combineResultAsyncList = <T, E>(
     64→export const combineResultListWithAllErrors = <T, E>(
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
+index.ts
 result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     25→  constructor(res: Promise<Result<T, E>>) {

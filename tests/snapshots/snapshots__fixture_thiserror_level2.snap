@@ -51,6 +51,7 @@ lib.rs
    284→mod provide;
    285→mod var;
    289→mod private;
+private.rs
 provide.rs
      4→pub trait ThiserrorProvide: Sealed {
      5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);

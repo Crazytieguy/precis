@@ -5,6 +5,7 @@ expression: output
 errors.ts
      5→export class NonExhaustiveError extends Error {
      6→  constructor(public input: unknown) {
+index.ts
 internals/helpers.ts
     12→export const isObject = (value: unknown): value is Object =>
     16→export const isMatcher = (
@@ -299,3 +300,4 @@ types/helpers.ts
    266→export interface Fn {
    271→export type Call<fn extends Fn, input> = (fn & {
    275→export type IsOptionalKeysOf<obj, key extends keyof obj> = {} extends Pick<
+types/index.ts

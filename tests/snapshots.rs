@@ -920,6 +920,34 @@ fn single_file_budget() {
     }
 }
 
+/// Test per-file monotonicity for a file with no extractable symbols.
+/// Previously, levels 1 and 2 would return empty string for such files,
+/// violating monotonicity vs level 0 which always shows the file path.
+#[test]
+fn monotonicity_no_symbols() {
+    let source = r#"
+use std::collections::HashMap;
+// Just imports and comments, no symbols.
+"#;
+    let path = Path::new("imports_only.rs");
+    let root = Path::new("");
+
+    let mut prev_words = 0;
+    for level in 0..=format::MAX_LEVEL {
+        let output = format::render_file(level, path, root, source);
+        let words = format::count_words(&output);
+        assert!(
+            words >= prev_words,
+            "No-symbols file: level {} ({} words) < level {} ({} words)",
+            level,
+            words,
+            level.saturating_sub(1),
+            prev_words,
+        );
+        prev_words = words;
+    }
+}
+
 /// Test the monotonicity invariant: for any file, a higher level must never
 /// produce fewer words than a lower level.
 #[test]

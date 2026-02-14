@@ -6,6 +6,7 @@ error.ts
      5→export type Failure = {
     25→export class StructError extends TypeError {
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
+index.ts
 struct.ts
     10→export class Struct<T = unknown, S = unknown> {
     22→  constructor(props: {

@@ -84,11 +84,11 @@ pub fn render_directory(level: u8, root: &Path) -> String {
 fn render_symbols(path: &Path, root: &Path, source: &str, truncate: bool) -> String {
     let relative = path.strip_prefix(root).unwrap_or(path);
     let symbols = parse::extract_symbols(path, source);
-    if symbols.is_empty() {
-        return String::new();
-    }
     let mut out = String::new();
     out.push_str(&format!("{}\n", relative.display()));
+    if symbols.is_empty() {
+        return out;
+    }
     for sym in &symbols {
         if truncate {
             out.push_str(&format_symbol_name(sym, source));
