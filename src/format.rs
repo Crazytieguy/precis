@@ -262,14 +262,16 @@ fn render_symbols_with_docs(
         return;
     }
     let lines: Vec<&str> = source.lines().collect();
-    let is_python = path.extension().and_then(|e| e.to_str()) == Some("py");
-    let is_markdown = path.extension().and_then(|e| e.to_str()) == Some("md");
+    let ext = path.extension().and_then(|e| e.to_str()).unwrap_or("");
+    let is_python = ext == "py";
+    let is_markdown = ext == "md";
+    let is_go = ext == "go";
     // Track which lines have been emitted to avoid duplication when type bodies
     // overlap with nested symbols (e.g. trait methods inside a trait body).
     let mut emitted_up_to: usize = 0; // 0-indexed, exclusive
     for (sym_idx, sym) in symbols.iter().enumerate() {
         let sym_line_0 = sym.line - 1;
-        let doc_start = doc_comment_start(&lines, sym_line_0);
+        let doc_start = doc_comment_start(&lines, sym_line_0, is_go);
         let should_expand = expand_types && is_type_definition(sym.kind);
         if should_expand {
             let body_end = sym.end_line; // 1-indexed, inclusive
@@ -397,7 +399,7 @@ fn strip_python_line_comment(s: &str) -> &str {
 
 /// Find the first line (0-indexed) of the doc comment block preceding a symbol.
 /// Returns the symbol's own line index if there's no doc comment.
-fn doc_comment_start(lines: &[&str], symbol_line_0: usize) -> usize {
+fn doc_comment_start(lines: &[&str], symbol_line_0: usize, is_go: bool) -> usize {
     if symbol_line_0 == 0 {
         return symbol_line_0;
     }
@@ -436,6 +438,20 @@ fn doc_comment_start(lines: &[&str], symbol_line_0: usize) -> usize {
         while peek > 0 {
             let above = lines[peek - 1].trim();
             if above.starts_with("///") || above.starts_with("//!") {
+                peek -= 1;
+            } else {
+                break;
+            }
+        }
+        return peek;
+    }
+
+    // Go doc comments (plain // preceding a declaration)
+    if is_go && prev_trimmed.starts_with("//") {
+        peek -= 1;
+        while peek > 0 {
+            let above = lines[peek - 1].trim();
+            if above.starts_with("//") {
                 peek -= 1;
             } else {
                 break;

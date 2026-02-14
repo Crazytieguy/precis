@@ -74,6 +74,10 @@ fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
             tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into(),
             include_str!("../queries/typescript.scm"),
         )),
+        "go" => Some((
+            tree_sitter_go::LANGUAGE.into(),
+            include_str!("../queries/go.scm"),
+        )),
         "py" => Some((
             tree_sitter_python::LANGUAGE.into(),
             include_str!("../queries/python.scm"),
@@ -137,9 +141,9 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             "static_item" => SymbolKind::Static,
             "macro_definition" => SymbolKind::Macro,
             "mod_item" => SymbolKind::Module,
-            // TypeScript
+            // TypeScript / Go
             "function_declaration" | "method_definition" | "method_signature"
-            | "abstract_method_signature" => SymbolKind::Function,
+            | "abstract_method_signature" | "method_declaration" => SymbolKind::Function,
             "class_declaration" | "abstract_class_declaration" => SymbolKind::Class,
             "interface_declaration" => SymbolKind::Interface,
             "enum_declaration" => SymbolKind::Enum,
@@ -189,6 +193,19 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
                 }
             }
             "internal_module" => SymbolKind::Module,
+            // Go
+            "type_spec" => {
+                // Determine kind from the type child (struct_type, interface_type, or other)
+                let type_child = symbol_node.child_by_field_name("type").map(|t| t.kind());
+                match type_child {
+                    Some("struct_type") => SymbolKind::Struct,
+                    Some("interface_type") => SymbolKind::Interface,
+                    _ => SymbolKind::TypeAlias,
+                }
+            }
+            "type_alias" => SymbolKind::TypeAlias,
+            "const_spec" => SymbolKind::Const,
+            "var_spec" => SymbolKind::Static,
             // Python
             "function_definition" => SymbolKind::Function,
             "class_definition" => SymbolKind::Class,
@@ -256,7 +273,10 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             }
         };
 
-        let is_public = if ext == "py" {
+        let is_public = if ext == "go" {
+            // Go: uppercase first letter = exported
+            name.starts_with(|c: char| c.is_ascii_uppercase())
+        } else if ext == "py" {
             // Python: underscore prefix = private (convention)
             !name.starts_with('_')
         } else if ext == "md" {
@@ -393,6 +413,8 @@ fn is_inside_function(node: tree_sitter::Node) -> bool {
             // TypeScript / JavaScript
             "function_declaration" | "function_expression" | "method_definition" | "arrow_function"
             | "generator_function" | "generator_function_declaration" |
+            // Go
+            "method_declaration" |
             // Python
             "function_definition" => {
                 return true;
@@ -1038,5 +1060,75 @@ Parse the source code.
 
         // All headings should be public
         assert!(symbols.iter().all(|s| s.is_public));
+    }
+
+    #[test]
+    fn extracts_go_symbols() {
+        let source = r#"
+package token
+
+import "fmt"
+
+// Token represents a lexical token.
+type Token struct {
+	Kind TokenKind
+	Span Span
+}
+
+// Stringer interface for custom formatting.
+type Stringer interface {
+	String() string
+}
+
+type Span = [2]int
+
+const MaxTokens = 1024
+
+var Version = "0.1.0"
+
+var internal = "hidden"
+
+// Process processes input and returns tokens.
+func Process(input string) ([]Token, error) {
+	return nil, nil
+}
+
+func helper() {}
+
+// String implements Stringer for Token.
+func (t Token) String() string {
+	return fmt.Sprintf("%v", t.Kind)
+}
+
+func (t *Token) reset() {
+	t.Kind = 0
+}
+"#;
+        let symbols = extract_symbols(Path::new("test.go"), source);
+        let info: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.name.as_str(), s.kind, s.is_public))
+            .collect();
+
+        // Struct
+        assert!(info.contains(&("Token", SymbolKind::Struct, true)));
+        // Interface
+        assert!(info.contains(&("Stringer", SymbolKind::Interface, true)));
+        // Type alias
+        assert!(info.contains(&("Span", SymbolKind::TypeAlias, true)));
+        // Const
+        assert!(info.contains(&("MaxTokens", SymbolKind::Const, true)));
+        // Var (exported)
+        assert!(info.contains(&("Version", SymbolKind::Static, true)));
+        // Var (unexported)
+        assert!(info.contains(&("internal", SymbolKind::Static, false)));
+        // Exported function
+        assert!(info.contains(&("Process", SymbolKind::Function, true)));
+        // Unexported function
+        assert!(info.contains(&("helper", SymbolKind::Function, false)));
+        // Exported method
+        assert!(info.contains(&("String", SymbolKind::Function, true)));
+        // Unexported method
+        assert!(info.contains(&("reset", SymbolKind::Function, false)));
     }
 }

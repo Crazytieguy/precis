@@ -344,6 +344,72 @@ VERSION: str = "0.1.0"
 "#
 }
 
+fn go_sample() -> &'static str {
+    r#"
+package token
+
+import "fmt"
+
+// Token represents a lexical token with its kind and source span.
+type Token struct {
+	Kind TokenKind
+	Span Span
+}
+
+// TokenKind represents the kind of a lexical token.
+type TokenKind int
+
+const (
+	Ident  TokenKind = iota
+	Number
+	Symbol
+)
+
+// Visitor walks over tokens in a stream.
+type Visitor interface {
+	VisitToken(token *Token)
+	VisitAll(tokens []*Token)
+}
+
+// Process processes the input and returns a list of tokens.
+func Process(input string) ([]Token, error) {
+	return nil, nil
+}
+
+func helper() {}
+
+// TokenParser parses source text into tokens.
+type TokenParser[T any] struct {
+	tokens []Token
+	source string
+}
+
+// NewTokenParser creates a new parser.
+func NewTokenParser[T any](source string) *TokenParser[T] {
+	return &TokenParser[T]{source: source}
+}
+
+// Parse parses and returns the token list.
+func (p *TokenParser[T]) Parse() []Token {
+	return p.tokens
+}
+
+func (p *TokenParser[T]) advance() {}
+
+// Span represents a source location as [start, end].
+type Span = [2]int
+
+const MaxTokens = 1024
+
+var Version = "0.1.0"
+
+// String implements fmt.Stringer for Token.
+func (t Token) String() string {
+	return fmt.Sprintf("%d:%v", t.Kind, t.Span)
+}
+"#
+}
+
 fn markdown_sample() -> &'static str {
     r#"# precis
 
@@ -458,6 +524,12 @@ fn tsx_sample_level0() {
 }
 
 #[test]
+fn go_sample_level0() {
+    let output = format::render_file(0, Path::new("sample.go"), Path::new(""), go_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
 fn python_sample_level0() {
     let output = format::render_file(0, Path::new("sample.py"), Path::new(""), python_sample());
     insta::assert_snapshot!(output);
@@ -502,6 +574,12 @@ fn javascript_sample_snapshot() {
 #[test]
 fn tsx_sample_snapshot() {
     let output = format::render_file(1, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn go_sample_snapshot() {
+    let output = format::render_file(1, Path::new("sample.go"), Path::new(""), go_sample());
     insta::assert_snapshot!(output);
 }
 
@@ -555,6 +633,12 @@ fn tsx_sample_level2() {
 }
 
 #[test]
+fn go_sample_level2() {
+    let output = format::render_file(2, Path::new("sample.go"), Path::new(""), go_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
 fn python_sample_level2() {
     let output = format::render_file(2, Path::new("sample.py"), Path::new(""), python_sample());
     insta::assert_snapshot!(output);
@@ -600,6 +684,12 @@ fn javascript_sample_level3() {
 #[test]
 fn tsx_sample_level3() {
     let output = format::render_file(3, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn go_sample_level3() {
+    let output = format::render_file(3, Path::new("sample.go"), Path::new(""), go_sample());
     insta::assert_snapshot!(output);
 }
 
@@ -653,6 +743,12 @@ fn tsx_sample_level4() {
 }
 
 #[test]
+fn go_sample_level4() {
+    let output = format::render_file(4, Path::new("sample.go"), Path::new(""), go_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
 fn python_sample_level4() {
     let output = format::render_file(4, Path::new("sample.py"), Path::new(""), python_sample());
     insta::assert_snapshot!(output);
@@ -698,6 +794,12 @@ fn javascript_sample_level5() {
 #[test]
 fn tsx_sample_level5() {
     let output = format::render_file(5, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn go_sample_level5() {
+    let output = format::render_file(5, Path::new("sample.go"), Path::new(""), go_sample());
     insta::assert_snapshot!(output);
 }
 

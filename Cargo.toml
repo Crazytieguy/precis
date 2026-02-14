@@ -10,6 +10,7 @@ clap = { version = "4", features = ["derive"] }
 ignore = "0.4"
 streaming-iterator = "0.1.9"
 tree-sitter = { version = "0.25", features = ["std"] }
+tree-sitter-go = "0.25.0"
 tree-sitter-md = "0.5.2"
 tree-sitter-python = "0.25.0"
 tree-sitter-rust = "0.24.0"
@@ -27,6 +28,8 @@ opt-level = 3
 [profile.dev.package.tree-sitter-python]
 opt-level = 3
 [profile.dev.package.tree-sitter-typescript]
+opt-level = 3
+[profile.dev.package.tree-sitter-go]
 opt-level = 3
 [profile.dev.package.tree-sitter-md]
 opt-level = 3
