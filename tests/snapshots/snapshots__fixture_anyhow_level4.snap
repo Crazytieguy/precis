@@ -67,6 +67,11 @@ backtrace.rs
    343→    impl Capture {
    344→        fn resolve(&mut self) {
    370→    fn output_filename(
+   371→        fmt: &mut fmt::Formatter,
+   372→        bows: BytesOrWideString,
+   373→        print_fmt: PrintFmt,
+   374→        cwd: Option<&PathBuf>,
+   375→    ) -> fmt::Result {
    407→fn _assert_send_sync() {
 chain.rs
     10→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
@@ -108,11 +113,24 @@ context.rs
     18→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     19→    impl<E> StdError for E
     23→        fn ext_context<C>(self, context: C) -> Error
+    24→        where
+    25→            C: Display + Send + Sync + 'static,
+    26→        {
     32→    impl StdError for Error {
     33→        fn ext_context<C>(self, context: C) -> Error
+    34→        where
+    35→            C: Display + Send + Sync + 'static,
+    36→        {
     42→impl<T, E> Context<T, E> for Result<T, E>
     46→    fn context<C>(self, context: C) -> Result<T, Error>
+    47→    where
+    48→        C: Display + Send + Sync + 'static,
+    49→    {
     58→    fn with_context<C, F>(self, context: F) -> Result<T, Error>
+    59→    where
+    60→        C: Display + Send + Sync + 'static,
+    61→        F: FnOnce() -> C,
+    62→    {
     70→/// ```
     71→/// # type T = ();
     72→/// #
@@ -135,7 +153,14 @@ context.rs
     89→/// ```
     90→impl<T> Context<T, Infallible> for Option<T> {
     91→    fn context<C>(self, context: C) -> Result<T, Error>
+    92→    where
+    93→        C: Display + Send + Sync + 'static,
+    94→    {
    103→    fn with_context<C, F>(self, context: F) -> Result<T, Error>
+   104→    where
+   105→        C: Display + Send + Sync + 'static,
+   106→        F: FnOnce() -> C,
+   107→    {
    115→impl<C, E> Debug for ContextError<C, E>
    120→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
    128→impl<C, E> Display for ContextError<C, E>
@@ -198,6 +223,9 @@ error.rs
     28→    #[cold]
     29→    #[must_use]
     30→    pub fn new<E>(error: E) -> Self
+    31→    where
+    32→        E: StdError + Send + Sync + 'static,
+    33→    {
     38→    /// Create a new error object from a printable error message.
     39→    ///
     40→    /// If the argument implements std::error::Error, prefer `Error::new`
@@ -238,6 +266,9 @@ error.rs
     75→    #[cold]
     76→    #[must_use]
     77→    pub fn msg<M>(message: M) -> Self
+    78→    where
+    79→        M: Display + Debug + Send + Sync + 'static,
+    80→    {
     84→    /// Construct an error object from a type-erased standard library error.
     85→    ///
     86→    /// This is mostly useful for interop with other error libraries.
@@ -298,18 +329,45 @@ error.rs
    145→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    146→    #[cold]
    147→    pub(crate) fn construct_from_std<E>(error: E, backtrace: Option<Backtrace>) -> Self
+   148→    where
+   149→        E: StdError + Send + Sync + 'static,
+   150→    {
    169→    #[cold]
    170→    pub(crate) fn construct_from_adhoc<M>(message: M, backtrace: Option<Backtrace>) -> Self
+   171→    where
+   172→        M: Display + Debug + Send + Sync + 'static,
+   173→    {
    197→    #[cold]
    198→    pub(crate) fn construct_from_display<M>(message: M, backtrace: Option<Backtrace>) -> Self
+   199→    where
+   200→        M: Display + Send + Sync + 'static,
+   201→    {
    225→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    226→    #[cold]
    227→    pub(crate) fn construct_from_context<C, E>(
+   228→        context: C,
+   229→        error: E,
+   230→        backtrace: Option<Backtrace>,
+   231→    ) -> Self
+   232→    where
+   233→        C: Display + Send + Sync + 'static,
+   234→        E: StdError + Send + Sync + 'static,
+   235→    {
    258→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    259→    #[cold]
    260→    pub(crate) fn construct_from_boxed(
+   261→        error: Box<dyn StdError + Send + Sync>,
+   262→        backtrace: Option<Backtrace>,
+   263→    ) -> Self {
    292→    #[cold]
    293→    unsafe fn construct<E>(
+   294→        error: E,
+   295→        vtable: &'static ErrorVTable,
+   296→        backtrace: Option<Backtrace>,
+   297→    ) -> Self
+   298→    where
+   299→        E: StdError + Send + Sync + 'static,
+   300→    {
    316→    /// Wrap the error value with additional context.
    317→    ///
    318→    /// For attaching context to a `Result` as it is propagated, the
@@ -367,6 +425,9 @@ error.rs
    370→    #[cold]
    371→    #[must_use]
    372→    pub fn context<C>(self, context: C) -> Self
+   373→    where
+   374→        C: Display + Send + Sync + 'static,
+   375→    {
    404→    /// Get the backtrace for this Error.
    405→    ///
    406→    /// In order for the backtrace to be meaningful, one of the two environment
@@ -437,8 +498,14 @@ error.rs
    480→    ///
    481→    /// [see here]: crate::Context#effect-on-downcasting
    482→    pub fn is<E>(&self) -> bool
+   483→    where
+   484→        E: Display + Debug + Send + Sync + 'static,
+   485→    {
    489→    /// Attempt to downcast the error object to a concrete type.
    490→    pub fn downcast<E>(mut self) -> Result<E, Self>
+   491→    where
+   492→        E: Display + Debug + Send + Sync + 'static,
+   493→    {
    518→    /// Downcast this error object by reference.
    519→    ///
    520→    /// # Example
@@ -476,8 +543,14 @@ error.rs
    552→    /// # ;
    553→    /// ```
    554→    pub fn downcast_ref<E>(&self) -> Option<&E>
+   555→    where
+   556→        E: Display + Debug + Send + Sync + 'static,
+   557→    {
    567→    /// Downcast this error object by mutable reference.
    568→    pub fn downcast_mut<E>(&mut self) -> Option<&mut E>
+   569→    where
+   570→        E: Display + Debug + Send + Sync + 'static,
+   571→    {
    617→    /// ```
    618→    ///
    619→    /// [`anyhow::Error::from_boxed`]: Self::from_boxed
@@ -488,6 +561,8 @@ error.rs
    661→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    662→    #[must_use]
    663→    pub fn reallocate_into_boxed_dyn_error_without_backtrace(
+   664→        self,
+   665→    ) -> Box<dyn StdError + Send + Sync + 'static> {
    674→    #[cfg(error_generic_member_access)]
    675→    pub(crate) fn provide<'a>(&'a self, request: &mut Request<'a>) {
    684→    #[cfg(error_generic_member_access)]
@@ -528,20 +603,49 @@ error.rs
    757→unsafe fn object_drop<E>(e: Own<ErrorImpl>) {
    765→unsafe fn object_drop_front<E>(e: Own<ErrorImpl>, target: TypeId) {
    775→unsafe fn object_ref<E>(e: Ref<ErrorImpl>) -> Ref<dyn StdError + Send + Sync + 'static>
+   776→where
+   777→    E: StdError + Send + Sync + 'static,
+   778→{
    787→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    788→unsafe fn object_boxed<E>(e: Own<ErrorImpl>) -> Box<dyn StdError + Send + Sync + 'static>
+   789→where
+   790→    E: StdError + Send + Sync + 'static,
+   791→{
    798→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    799→unsafe fn object_reallocate_boxed<E>(e: Own<ErrorImpl>) -> Box<dyn StdError + Send + Sync + 'static>
+   800→where
+   801→    E: StdError + Send + Sync + 'static,
+   802→{
    809→unsafe fn object_downcast<E>(e: Ref<ErrorImpl>, target: TypeId) -> Option<Ref<()>>
+   810→where
+   811→    E: 'static,
+   812→{
    832→fn no_backtrace(e: Ref<ErrorImpl>) -> Option<&Backtrace> {
    838→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    839→unsafe fn context_downcast<C, E>(e: Ref<ErrorImpl>, target: TypeId) -> Option<Ref<()>>
+   840→where
+   841→    C: 'static,
+   842→    E: 'static,
+   843→{
    858→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    859→unsafe fn context_drop_rest<C, E>(e: Own<ErrorImpl>, target: TypeId)
+   860→where
+   861→    C: 'static,
+   862→    E: 'static,
+   863→{
    876→unsafe fn context_chain_downcast<C>(e: Ref<ErrorImpl>, target: TypeId) -> Option<Ref<()>>
+   877→where
+   878→    C: 'static,
+   879→{
    892→unsafe fn context_chain_drop_rest<C>(e: Own<ErrorImpl>, target: TypeId)
+   893→where
+   894→    C: 'static,
+   895→{
    919→#[allow(clippy::unnecessary_wraps)]
    920→unsafe fn context_backtrace<C>(e: Ref<ErrorImpl>) -> Option<&Backtrace>
+   921→where
+   922→    C: 'static,
+   923→{
    933→#[repr(C)]
    934→pub(crate) struct ErrorImpl<E = ()> {
    935→    vtable: &'static ErrorVTable,
@@ -620,6 +724,9 @@ kind.rs
     67→impl Adhoc {
     68→    #[cold]
     69→    pub fn new<M>(self, message: M) -> Error
+    70→    where
+    71→        M: Display + Debug + Send + Sync + 'static,
+    72→    {
     77→pub struct Trait;
     79→#[doc(hidden)]
     80→pub trait TraitKind: Sized {
@@ -632,6 +739,9 @@ kind.rs
     89→impl Trait {
     90→    #[cold]
     91→    pub fn new<E>(self, error: E) -> Error
+    92→    where
+    93→        E: Into<Error>,
+    94→    {
     99→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    100→pub struct Boxed;
    102→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
@@ -1159,6 +1269,9 @@ nightly.rs
     39→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
     41→pub fn request_ref_backtrace(err: &dyn Error) -> Option<&Backtrace> {
     45→fn request_ref<'a, T>(err: &'a (impl Error + ?Sized)) -> Option<&'a T>
+    46→where
+    47→    T: 'static + ?Sized,
+    48→{
     52→pub fn provide_ref_backtrace<'a>(request: &mut Request<'a>, backtrace: &'a Backtrace) {
     56→pub fn provide<'a>(err: &'a (impl Error + ?Sized), request: &mut Request<'a>) {
 ptr.rs

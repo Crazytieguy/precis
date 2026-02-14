@@ -55,8 +55,39 @@ Match.ts
     14→interface TSPatternError<i> {
     22→export type Match<
    132→  with<
+   133→    const pat extends Pattern<i>,
+   134→    pred extends (value: MatchedValue<i, InvertPattern<pat, i>>) => unknown,
+   135→    c,
+   136→    value extends GuardValue<pred>
+   137→  >(
+   138→    pattern: pat,
+   139→    predicate: pred,
+   140→    handler: (
+   141→      selections: FindSelected<value, pat>,
+   142→      value: value
+   143→    ) => PickReturnValue<o, c>
+   144→  ): pred extends (value: any) => value is infer narrowed
+   145→    ? Match<
+   146→        Exclude<i, narrowed>,
+   147→        o,
+   148→        [...handledCases, narrowed],
+   149→        Union<inferredOutput, c>
+   150→      >
+   151→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
    159→  when<pred extends (value: i) => unknown, c, value extends GuardValue<pred>>(
+   160→    predicate: pred,
+   161→    handler: (value: value) => PickReturnValue<o, c>
+   162→  ): pred extends (value: any) => value is infer narrowed
+   163→    ? Match<
+   164→        Exclude<i, narrowed>,
+   165→        o,
+   166→        [...handledCases, narrowed],
+   167→        Union<inferredOutput, c>
+   168→      >
+   169→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
    180→  otherwise<c>(
+   181→    handler: (value: i) => PickReturnValue<o, c>
+   182→  ): PickReturnValue<o, Union<inferredOutput, c>>;
    205→  run(): PickReturnValue<o, inferredOutput>;
    225→  narrow(): Match<DeepExcludeAll<i, handledCases>, o, [], inferredOutput>;
    245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
@@ -104,38 +135,154 @@ Pattern.ts
    210→export type Chainable<p, omitted extends string = never> = p &
    223→      optional<input>(): Chainable<OptionalP<input, p>, omitted | 'optional'>;
    237→      and<input, const p2 extends Pattern<input>>(
+   238→        pattern: p2
+   239→      ): Chainable<AndP<input, [p, p2]>, omitted>;
    253→      or<input, const p2 extends Pattern<input>>(
+   254→        pattern: p2
+   255→      ): Chainable<OrP<input, [p, p2]>, omitted>;
    269→      select<input, k extends string>(
+   270→        key: k
+   271→      ): Chainable<SelectP<k, input, p>, omitted | 'select' | 'or' | 'and'>;
    276→export type StringChainable<
    291→      startsWith<input, const start extends string>(
+   292→        start: start
+   293→      ): StringChainable<
+   294→        MergeGuards<input, p, GuardP<unknown, `${start}${string}`>>,
+   295→        omitted | 'startsWith'
+   296→      >;
    306→      endsWith<input, const end extends string>(
+   307→        end: end
+   308→      ): StringChainable<
+   309→        MergeGuards<input, p, GuardP<unknown, `${string}${end}`>>,
+   310→        omitted | 'endsWith'
+   311→      >;
    321→      minLength<input, const min extends number>(
+   322→        min: min
+   323→      ): StringChainable<
+   324→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   325→        omitted | 'minLength'
+   326→      >;
    336→      length<input, const len extends number>(
+   337→        len: len
+   338→      ): StringChainable<
+   339→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   340→        omitted | 'length' | 'minLength' | 'maxLength'
+   341→      >;
    351→      maxLength<input, const max extends number>(
+   352→        max: max
+   353→      ): StringChainable<
+   354→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   355→        omitted | 'maxLength'
+   356→      >;
    366→      includes<input, const substr extends string>(
+   367→        substr: substr
+   368→      ): StringChainable<
+   369→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   370→        omitted
+   371→      >;
    381→      regex<input, const expr extends string | RegExp>(
+   382→        expr: expr
+   383→      ): StringChainable<
+   384→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   385→        omitted
+   386→      >;
    391→export type NumberChainable<p, omitted extends string = never> = Chainable<
    407→      between<input, const min extends number, const max extends number>(
+   408→        min: min,
+   409→        max: max
+   410→      ): NumberChainable<
+   411→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   412→        omitted
+   413→      >;
    423→      lt<input, const max extends number>(
+   424→        max: max
+   425→      ): NumberChainable<
+   426→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   427→        omitted
+   428→      >;
    438→      gt<input, const min extends number>(
+   439→        min: min
+   440→      ): NumberChainable<
+   441→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   442→        omitted
+   443→      >;
    453→      lte<input, const max extends number>(
+   454→        max: max
+   455→      ): NumberChainable<
+   456→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   457→        omitted
+   458→      >;
    468→      gte<input, const min extends number>(
+   469→        min: min
+   470→      ): NumberChainable<
+   471→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   472→        omitted
+   473→      >;
    483→      int<input>(): NumberChainable<
+   484→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   485→        omitted | 'int'
+   486→      >;
    496→      finite<input>(): NumberChainable<
+   497→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   498→        omitted | 'finite'
+   499→      >;
    509→      positive<input>(): NumberChainable<
+   510→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   511→        omitted | 'positive' | 'negative'
+   512→      >;
    522→      negative<input>(): NumberChainable<
+   523→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   524→        omitted | 'positive' | 'negative' | 'negative'
+   525→      >;
    530→export type BigIntChainable<p, omitted extends string = never> = Chainable<
    546→      between<input, const min extends bigint, const max extends bigint>(
+   547→        min: min,
+   548→        max: max
+   549→      ): BigIntChainable<
+   550→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   551→        omitted
+   552→      >;
    562→      lt<input, const max extends bigint>(
+   563→        max: max
+   564→      ): BigIntChainable<
+   565→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   566→        omitted
+   567→      >;
    577→      gt<input, const min extends bigint>(
+   578→        min: min
+   579→      ): BigIntChainable<
+   580→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   581→        omitted
+   582→      >;
    592→      lte<input, const max extends bigint>(
+   593→        max: max
+   594→      ): BigIntChainable<
+   595→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   596→        omitted
+   597→      >;
    607→      gte<input, const min extends bigint>(
+   608→        min: min
+   609→      ): BigIntChainable<
+   610→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   611→        omitted
+   612→      >;
    622→      positive<input>(): BigIntChainable<
+   623→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   624→        omitted | 'positive' | 'negative'
+   625→      >;
    635→      negative<input>(): BigIntChainable<
+   636→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   637→        omitted | 'positive' | 'negative' | 'negative'
+   638→      >;
    643→export type Variadic<pattern> = pattern & Iterable<pattern>;
    645→export type ArrayChainable<
    661→      optional<input>(): ArrayChainable<
+   662→        OptionalP<input, pattern>,
+   663→        omitted | 'optional'
+   664→      >;
    678→      select<input, k extends string>(
+   679→        key: k
+   680→      ): ArrayChainable<SelectP<k, input, pattern>, omitted | 'select'>;
 helpers.ts
      1→export type ValueOf<a> = a extends readonly any[] ? a[number] : a[keyof a];
      3→export type Values<a extends object> = UnionToTuple<ValueOf<a>>;

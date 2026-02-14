@@ -6,6 +6,11 @@ __init__.py
     28→__all__ = [
 filesize.py
     36→def naturalsize(
+    37→    value: float | str,
+    38→    binary: bool = False,
+    39→    gnu: bool = False,
+    40→    format: str = "%.1f",
+    41→) -> str:
 i18n.py
      8→TYPE_CHECKING = False
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
@@ -16,6 +21,8 @@ i18n.py
     40→def _get_default_locale_path() -> pathlib.Path | None:
     51→def get_translation() -> gettext_module.NullTranslations:
     58→def activate(
+    59→    locale: str | None, path: str | os.PathLike[str] | None = None
+    60→) -> gettext_module.NullTranslations:
     96→def deactivate() -> None:
    101→def _gettext(message: str) -> str:
    113→def _pgettext(msgctxt: str, message: str) -> str:
@@ -38,6 +45,13 @@ number.py
    321→def fractional(value: NumberOrString) -> str:
    385→def scientific(value: NumberOrString, precision: int = 2) -> str:
    454→def clamp(
+   455→    value: float,
+   456→    format: str = "{:}",
+   457→    floor: float | None = None,
+   458→    ceil: float | None = None,
+   459→    floor_token: str = "<",
+   460→    ceil_token: str = ">",
+   461→) -> str:
    531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
 time.py
     15→TYPE_CHECKING = False
@@ -47,13 +61,39 @@ time.py
     47→def _now() -> dt.datetime:
     53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
     68→def _date_and_delta(
+    69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
+    70→) -> tuple[Any, Any]:
     95→def naturaldelta(
+    96→    value: dt.timedelta | float,
+    97→    months: bool = True,
+    98→    minimum_unit: str = "seconds",
+    99→) -> str:
    249→def naturaltime(
+   250→    value: dt.datetime | dt.timedelta | float,
+   251→    future: bool = False,
+   252→    months: bool = True,
+   253→    minimum_unit: str = "seconds",
+   254→    when: dt.datetime | None = None,
+   255→) -> str:
    300→def _convert_aware_datetime(
+   301→    value: dt.datetime | dt.timedelta | float | None,
+   302→) -> Any:
    311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
    343→def naturaldate(value: dt.date | dt.datetime) -> str:
    361→def _quotient_and_remainder(
+   362→    value: float,
+   363→    divisor: float,
+   364→    unit: Unit,
+   365→    minimum_unit: Unit,
+   366→    suppress: Iterable[Unit],
+   367→    format: str,
+   368→) -> tuple[float, float]:
    406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
    435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
    451→def precisedelta(
+   452→    value: dt.timedelta | float | None,
+   453→    minimum_unit: str = "seconds",
+   454→    suppress: Iterable[str] = (),
+   455→    format: str = "%0.2f",
+   456→) -> str:
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:

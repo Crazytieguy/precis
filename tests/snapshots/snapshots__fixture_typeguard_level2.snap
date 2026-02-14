@@ -12,33 +12,156 @@ _checkers.py
     89→generic_alias_types: tuple[type, ...] = (
     99→BINARY_MAGIC_METHODS = {
    153→def check_callable(
+   154→    value: Any,
+   155→    origin_type: Any,
+   156→    args: tuple[Any, ...],
+   157→    memo: TypeCheckMemo,
+   158→) -> None:
    212→def check_mapping(
+   213→    value: Any,
+   214→    origin_type: Any,
+   215→    args: tuple[Any, ...],
+   216→    memo: TypeCheckMemo,
+   217→) -> None:
    247→def check_typed_dict(
+   248→    value: Any,
+   249→    origin_type: Any,
+   250→    args: tuple[Any, ...],
+   251→    memo: TypeCheckMemo,
+   252→) -> None:
    305→def check_list(
+   306→    value: Any,
+   307→    origin_type: Any,
+   308→    args: tuple[Any, ...],
+   309→    memo: TypeCheckMemo,
+   310→) -> None:
    324→def check_sequence(
+   325→    value: Any,
+   326→    origin_type: Any,
+   327→    args: tuple[Any, ...],
+   328→    memo: TypeCheckMemo,
+   329→) -> None:
    343→def check_set(
+   344→    value: Any,
+   345→    origin_type: Any,
+   346→    args: tuple[Any, ...],
+   347→    memo: TypeCheckMemo,
+   348→) -> None:
    365→def check_tuple(
+   366→    value: Any,
+   367→    origin_type: Any,
+   368→    args: tuple[Any, ...],
+   369→    memo: TypeCheckMemo,
+   370→) -> None:
    423→def check_union(
+   424→    value: Any,
+   425→    origin_type: Any,
+   426→    args: tuple[Any, ...],
+   427→    memo: TypeCheckMemo,
+   428→) -> None:
    447→def check_uniontype(
+   448→    value: Any,
+   449→    origin_type: Any,
+   450→    args: tuple[Any, ...],
+   451→    memo: TypeCheckMemo,
+   452→) -> None:
    474→def check_class(
+   475→    value: Any,
+   476→    origin_type: Any,
+   477→    args: tuple[Any, ...],
+   478→    memo: TypeCheckMemo,
+   479→) -> None:
    536→def check_newtype(
+   537→    value: Any,
+   538→    origin_type: Any,
+   539→    args: tuple[Any, ...],
+   540→    memo: TypeCheckMemo,
+   541→) -> None:
    545→def check_instance(
+   546→    value: Any,
+   547→    origin_type: Any,
+   548→    args: tuple[Any, ...],
+   549→    memo: TypeCheckMemo,
+   550→) -> None:
    555→def check_typevar(
+   556→    value: Any,
+   557→    origin_type: TypeVar,
+   558→    args: tuple[Any, ...],
+   559→    memo: TypeCheckMemo,
+   560→    *,
+   561→    subclass_check: bool = False,
+   562→) -> None:
    586→def _is_literal_type(typ: object) -> bool:
    590→def check_literal(
+   591→    value: Any,
+   592→    origin_type: Any,
+   593→    args: tuple[Any, ...],
+   594→    memo: TypeCheckMemo,
+   595→) -> None:
    623→def check_literal_string(
+   624→    value: Any,
+   625→    origin_type: Any,
+   626→    args: tuple[Any, ...],
+   627→    memo: TypeCheckMemo,
+   628→) -> None:
    632→def check_typeguard(
+   633→    value: Any,
+   634→    origin_type: Any,
+   635→    args: tuple[Any, ...],
+   636→    memo: TypeCheckMemo,
+   637→) -> None:
    641→def check_none(
+   642→    value: Any,
+   643→    origin_type: Any,
+   644→    args: tuple[Any, ...],
+   645→    memo: TypeCheckMemo,
+   646→) -> None:
    651→def check_number(
+   652→    value: Any,
+   653→    origin_type: Any,
+   654→    args: tuple[Any, ...],
+   655→    memo: TypeCheckMemo,
+   656→) -> None:
    663→def check_io(
+   664→    value: Any,
+   665→    origin_type: Any,
+   666→    args: tuple[Any, ...],
+   667→    memo: TypeCheckMemo,
+   668→) -> None:
    679→def check_signature_compatible(subject: type, protocol: type, attrname: str) -> None:
    834→def check_protocol(
+   835→    value: Any,
+   836→    origin_type: Any,
+   837→    args: tuple[Any, ...],
+   838→    memo: TypeCheckMemo,
+   839→) -> None:
    885→def check_byteslike(
+   886→    value: Any,
+   887→    origin_type: Any,
+   888→    args: tuple[Any, ...],
+   889→    memo: TypeCheckMemo,
+   890→) -> None:
    895→def check_self(
+   896→    value: Any,
+   897→    origin_type: Any,
+   898→    args: tuple[Any, ...],
+   899→    memo: TypeCheckMemo,
+   900→) -> None:
    915→def check_paramspec(
+   916→    value: Any,
+   917→    origin_type: Any,
+   918→    args: tuple[Any, ...],
+   919→    memo: TypeCheckMemo,
+   920→) -> None:
    924→def check_type_internal(
+   925→    value: Any,
+   926→    annotation: Any,
+   927→    memo: TypeCheckMemo,
+   928→) -> None:
   1005→origin_type_checkers: dict[
   1061→def builtin_checker_lookup(
+  1062→    origin_type: Any, args: tuple[Any, ...], extras: tuple[Any, ...]
+  1063→) -> TypeCheckerCallable | None:
   1099→def load_plugins() -> None:
 _config.py
     11→T = TypeVar("T")
@@ -50,8 +173,17 @@ _decorators.py
     24→    def typeguard_ignore(arg: T_CallableOrType) -> T_CallableOrType:
     32→def make_cell(value: object) -> _Cell:
     36→def find_target_function(
+    37→    new_code: CodeType, target_path: Sequence[str], firstlineno: int
+    38→) -> CodeType | None:
     56→def instrument(f: T_CallableOrType) -> FunctionType | str:
    150→def typechecked(
+   151→    target: T_CallableOrType | None = None,
+   152→    *,
+   153→    forward_ref_policy: ForwardRefPolicy | Unset = unset,
+   154→    typecheck_fail_callback: TypeCheckFailCallback | Unset = unset,
+   155→    collection_check_strategy: CollectionCheckStrategy | Unset = unset,
+   156→    debug_instrumentation: bool | Unset = unset,
+   157→) -> Any:
 _exceptions.py
      5→class TypeHintWarning(UserWarning):
     12→class TypeCheckWarning(UserWarning):
@@ -66,33 +198,95 @@ _functions.py
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
     50→def check_type(
+    51→    value: object,
+    52→    expected_type: Any,
+    53→    *,
+    54→    forward_ref_policy: ForwardRefPolicy = TypeCheckConfiguration().forward_ref_policy,
+    55→    typecheck_fail_callback: TypeCheckFailCallback | None = (
+    56→        TypeCheckConfiguration().typecheck_fail_callback
+    57→    ),
+    58→    collection_check_strategy: CollectionCheckStrategy = (
+    59→        TypeCheckConfiguration().collection_check_strategy
+    60→    ),
+    61→) -> Any:
    118→def check_argument_types(
+   119→    func_name: str,
+   120→    arguments: dict[str, tuple[Any, Any]],
+   121→    memo: TypeCheckMemo,
+   122→) -> Literal[True]:
    149→def check_return_type(
+   150→    func_name: str,
+   151→    retval: T,
+   152→    annotation: Any,
+   153→    memo: TypeCheckMemo,
+   154→) -> T:
    185→def check_send_type(
+   186→    func_name: str,
+   187→    sendval: T,
+   188→    annotation: Any,
+   189→    memo: TypeCheckMemo,
+   190→) -> T:
    216→def check_yield_type(
+   217→    func_name: str,
+   218→    yieldval: T,
+   219→    annotation: Any,
+   220→    memo: TypeCheckMemo,
+   221→) -> T:
    245→def check_variable_assignment(
+   246→    value: Any,
+   247→    groups: Sequence[list[tuple[str, Any]] | tuple[str, Any]],
+   248→    memo: TypeCheckMemo,
+   249→) -> Any:
    291→def warn_on_error(exc: TypeCheckError, memo: TypeCheckMemo) -> None:
 _importhook.py
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
     45→def _call_with_frames_removed(
+    46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
+    47→) -> T:
     51→def optimized_cache_from_source(path: str, debug_override: bool | None = None) -> str:
     55→class TypeguardLoader(SourceFileLoader):
     57→    def source_to_code(
+    58→        data: Buffer | str | ast.Module | ast.Expression | ast.Interactive,
+    59→        path: Buffer | str | PathLike[str] = "<string>",
+    60→        *,
+    61→        _optimize: int = -1,
+    62→    ) -> CodeType:
     99→    def exec_module(self, module: ModuleType) -> None:
    109→class TypeguardFinder(MetaPathFinder):
    120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
    124→    def find_spec(
+   125→        self,
+   126→        fullname: str,
+   127→        path: Sequence[str] | None,
+   128→        target: types.ModuleType | None = None,
+   129→    ) -> ModuleSpec | None:
    138→    def should_instrument(self, module_name: str) -> bool:
    156→class ImportHookManager:
    161→    def __init__(self, hook: MetaPathFinder):
    164→    def __enter__(self) -> None:
    167→    def __exit__(
+   168→        self,
+   169→        exc_type: type[BaseException],
+   170→        exc_val: BaseException,
+   171→        exc_tb: TracebackType,
+   172→    ) -> None:
    175→    def uninstall(self) -> None:
    183→def install_import_hook(
+   184→    packages: Iterable[str] | None = None,
+   185→    *,
+   186→    cls: type[TypeguardFinder] = TypeguardFinder,
+   187→) -> ImportHookManager:
 _memo.py
      8→class TypeCheckMemo:
     37→    def __init__(
+    38→        self,
+    39→        globals: dict[str, Any],
+    40→        locals: dict[str, Any],
+    41→        *,
+    42→        self_type: type | None = None,
+    43→        config: TypeCheckConfiguration = global_config,
+    44→    ):
 _pytest_plugin.py
     16→def pytest_addoption(parser: Parser) -> None:
     75→def pytest_configure(config: Config) -> None:
@@ -100,6 +294,8 @@ _suppression.py
     15→P = ParamSpec("P")
     16→T = TypeVar("T")
     30→def suppress_type_checks(
+    31→    func: Callable[P, T] | None = None,
+    32→) -> Callable[P, T] | ContextManager[None]:
 _transformer.py
     67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
     68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
@@ -137,8 +333,12 @@ _transformer.py
    476→    def visit_Constant(self, node: Constant) -> Any:
    488→class TypeguardTransformer(NodeTransformer):
    489→    def __init__(
+   490→        self, target_path: Sequence[str] | None = None, target_lineno: int | None = None
+   491→    ) -> None:
    498→    def generic_visit(self, node: AST) -> AST:
    517→    def _use_memo(
+   518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
+   519→    ) -> Generator[None, Any, None]:
    570→    def _get_import(self, module: str, name: str) -> Name:
    580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
    596→    def visit_Name(self, node: Name) -> Name:
@@ -147,7 +347,11 @@ _transformer.py
    615→    def visit_ImportFrom(self, node: ImportFrom) -> ImportFrom:
    624→    def visit_ClassDef(self, node: ClassDef) -> ClassDef | None:
    650→    def visit_FunctionDef(
+   651→        self, node: FunctionDef | AsyncFunctionDef
+   652→    ) -> FunctionDef | AsyncFunctionDef | None:
    913→    def visit_AsyncFunctionDef(
+   914→        self, node: AsyncFunctionDef
+   915→    ) -> FunctionDef | AsyncFunctionDef | None:
    918→    def visit_Return(self, node: Return) -> Return:
    945→    def visit_Yield(self, node: Yield) -> Yield | Call:
    994→    def visit_AnnAssign(self, node: AnnAssign) -> Any:

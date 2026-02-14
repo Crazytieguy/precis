@@ -19,13 +19,22 @@ components/loader.tsx
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
 components/toast-bar.tsx
      8→const enterAnimation = (factor: number) => `
+     9→0% {transform: translate3d(0,${factor * -200}%,0) scale(.6); opacity:.5;}
+    10→100% {transform: translate3d(0,0,0) scale(1); opacity:1;}
+    11→`;
     13→const exitAnimation = (factor: number) => `
+    14→0% {transform: translate3d(0,0,-1px) scale(1); opacity:1;}
+    15→100% {transform: translate3d(0,${factor * -150}%,-1px) scale(.6); opacity:0;}
+    16→`;
     18→const fadeInAnimation = `0%{opacity:0;} 100%{opacity:1;}`;
     19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
     22→const ToastBarBase = styled('div')`
     38→const Message = styled('div')`
     47→interface ToastBarProps {
     57→const getAnimationStyle = (
+    58→  position: ToastPosition,
+    59→  visible: boolean
+    60→): React.CSSProperties => {
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 components/toast-icon.tsx
      9→const StatusWrapper = styled('div')`
@@ -37,6 +46,9 @@ components/toast-icon.tsx
 components/toaster.tsx
     15→const ToastWrapper = ({
     47→const getPositionStyle = (
+    48→  position: ToastPosition,
+    49→  offset: number
+    50→): React.CSSProperties => {
     76→const activeClass = css`
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
@@ -54,16 +66,32 @@ core/store.ts
    140→const defaultToasterState: ToasterState = {
    149→export const dispatch = (action: Action, toasterId = DEFAULT_TOASTER_ID) => {
    161→export const dispatchAll = (action: Action) =>
+   162→  Object.keys(memoryState).forEach((toasterId) => dispatch(action, toasterId));
    164→export const getToasterIdFromToastId = (toastId: string) =>
+   165→  Object.keys(memoryState).find((toasterId) =>
+   166→    memoryState[toasterId].toasts.some((t) => t.id === toastId)
+   167→  );
    169→export const createDispatch =
+   170→  (toasterId = DEFAULT_TOASTER_ID) =>
+   171→  (action: Action) => {
    175→export const defaultTimeouts: {
    185→export const useStore = (
+   186→  toastOptions: DefaultToastOptions = {},
+   187→  toasterId: string = DEFAULT_TOASTER_ID
+   188→): ToasterState => {
 core/toast.ts
     19→type Message = ValueOrFunction<Renderable, Toast>;
     21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
     23→const createToast = (
+    24→  message: Message,
+    25→  type: ToastType = 'blank',
+    26→  opts?: ToastOptions
+    27→): Toast => ({
     42→const createHandler =
+    43→  (type?: ToastType): ToastHandler =>
+    44→  (message, options) => {
     55→const toast = (message: Message, opts?: ToastOptions) =>
+    56→  createHandler('blank')(message, opts);
 core/types.ts
      3→export type ToastType = 'success' | 'error' | 'loading' | 'blank' | 'custom';
      4→export type ToastPosition =
@@ -72,7 +100,13 @@ core/types.ts
     19→export type ValueFunction<TValue, TArg> = (arg: TArg) => TValue;
     20→export type ValueOrFunction<TValue, TArg> =
     24→const isFunction = <TValue, TArg>(
+    25→  valOrFunction: ValueOrFunction<TValue, TArg>
+    26→): valOrFunction is ValueFunction<TValue, TArg> =>
+    27→  typeof valOrFunction === 'function';
     29→export const resolveValue = <TValue, TArg>(
+    30→  valOrFunction: ValueOrFunction<TValue, TArg>,
+    31→  arg: TArg
+    32→): TValue => (isFunction(valOrFunction) ? valOrFunction(arg) : valOrFunction);
     34→export interface Toast {
     60→export type ToastOptions = Partial<
     76→export type DefaultToastOptions = ToastOptions & {
@@ -81,6 +115,9 @@ core/types.ts
 core/use-toaster.ts
      6→export const REMOVE_DELAY = 1000;
      8→export const useToaster = (
+     9→  toastOptions?: DefaultToastOptions,
+    10→  toasterId: string = 'default'
+    11→) => {
 core/utils.ts
      1→export const genId = (() => {
      8→export const prefersReducedMotion = (() => {

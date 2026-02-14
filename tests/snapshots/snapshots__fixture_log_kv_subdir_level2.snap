@@ -17,6 +17,9 @@ error.rs
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     75→    impl Error {
     77→        pub fn boxed<E>(err: E) -> Self
+    78→        where
+    79→            E: Into<BoxedError>,
+    80→        {
     87→    impl error::Error for Error {}
     89→    impl From<io::Error> for Error {
     90→        fn from(err: io::Error) -> Self {
@@ -50,11 +53,17 @@ key.rs
    113→mod sval_support {
    119→    impl<'a> Value for Key<'a> {
    120→        fn stream<'sval, S: sval::Stream<'sval> + ?Sized>(
+   121→            &'sval self,
+   122→            stream: &mut S,
+   123→        ) -> sval::Result {
    128→    impl<'a> ValueRef<'a> for Key<'a> {
    129→        fn stream_ref<S: sval::Stream<'a> + ?Sized>(&self, stream: &mut S) -> sval::Result {
    136→mod serde_support {
    141→    impl<'a> Serialize for Key<'a> {
    142→        fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+   143→        where
+   144→            S: Serializer,
+   145→        {
 mod.rs
    246→mod error;
    247→mod key;
@@ -138,15 +147,33 @@ value.rs
    119→pub struct Value<'v> {
    123→impl<'v> Value<'v> {
    125→    pub fn from_any<T>(value: &'v T) -> Self
+   126→    where
+   127→        T: ToValue,
+   128→    {
    133→    pub fn from_debug<T>(value: &'v T) -> Self
+   134→    where
+   135→        T: fmt::Debug,
+   136→    {
    143→    pub fn from_display<T>(value: &'v T) -> Self
+   144→    where
+   145→        T: fmt::Display,
+   146→    {
    154→    pub fn from_serde<T>(value: &'v T) -> Self
+   155→    where
+   156→        T: serde_core::Serialize,
+   157→    {
    165→    pub fn from_sval<T>(value: &'v T) -> Self
+   166→    where
+   167→        T: sval::Value,
+   168→    {
    175→    pub fn from_dyn_debug(value: &'v dyn fmt::Debug) -> Self {
    182→    pub fn from_dyn_display(value: &'v dyn fmt::Display) -> Self {
    190→    pub fn from_dyn_error(err: &'v (dyn std::error::Error + 'static)) -> Self {
    197→    pub fn null() -> Self {
    204→    fn from_inner<T>(value: T) -> Self
+   205→    where
+   206→        T: Into<inner::Inner<'v>>,
+   207→    {
    217→    pub fn visit(&self, visitor: impl VisitValue<'v>) -> Result<(), Error> {
    222→impl<'v> fmt::Debug for Value<'v> {
    223→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -154,6 +181,9 @@ value.rs
    229→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
    235→impl<'v> serde_core::Serialize for Value<'v> {
    236→    fn serialize<S>(&self, s: S) -> Result<S::Ok, S::Error>
+   237→    where
+   238→        S: serde_core::Serializer,
+   239→    {
    245→impl<'v> sval::Value for Value<'v> {
    246→    fn stream<'sval, S: sval::Stream<'sval> + ?Sized>(&'sval self, stream: &mut S) -> sval::Result {
    252→impl<'v> sval_ref::ValueRef<'v> for Value<'v> {
@@ -201,6 +231,9 @@ value.rs
    517→    fn visit_char(&mut self, value: char) -> Result<(), Error> {
    524→    fn visit_error(&mut self, err: &(dyn std::error::Error + 'static)) -> Result<(), Error> {
    530→    fn visit_borrowed_error(
+   531→        &mut self,
+   532→        err: &'v (dyn std::error::Error + 'static),
+   533→    ) -> Result<(), Error> {
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    543→    fn visit_any(&mut self, value: Value) -> Result<(), Error> {
    547→    fn visit_null(&mut self) -> Result<(), Error> {
@@ -215,8 +248,14 @@ value.rs
    583→    fn visit_char(&mut self, value: char) -> Result<(), Error> {
    588→    fn visit_error(&mut self, err: &(dyn std::error::Error + 'static)) -> Result<(), Error> {
    593→    fn visit_borrowed_error(
+   594→        &mut self,
+   595→        err: &'v (dyn std::error::Error + 'static),
+   596→    ) -> Result<(), Error> {
    602→pub(in crate::kv) mod inner {
    619→    pub fn visit<'v>(
+   620→        inner: &Inner<'v>,
+   621→        visitor: impl VisitValue<'v>,
+   622→    ) -> Result<(), crate::kv::Error> {
    721→pub(in crate::kv) mod inner {
    738→    pub enum Inner<'v> {
    752→    impl<'v> From<()> for Inner<'v> {
@@ -274,12 +313,30 @@ value.rs
    984→        pub fn to_i128(&self) -> Option<i128> {
    994→        pub fn to_borrowed_str(&self) -> Option<&'v str> {
   1031→    pub fn visit<'v>(
+  1032→        inner: &Inner<'v>,
+  1033→        mut visitor: impl VisitValue<'v>,
+  1034→    ) -> Result<(), crate::kv::Error> {
   1051→impl<'v> Value<'v> {
   1055→    pub fn capture_debug<T>(value: &'v T) -> Self
+  1056→    where
+  1057→        T: fmt::Debug + 'static,
+  1058→    {
   1065→    pub fn capture_display<T>(value: &'v T) -> Self
+  1066→    where
+  1067→        T: fmt::Display + 'static,
+  1068→    {
   1075→    pub fn capture_error<T>(err: &'v T) -> Self
+  1076→    where
+  1077→        T: std::error::Error + 'static,
+  1078→    {
   1085→    pub fn capture_serde<T>(value: &'v T) -> Self
+  1086→    where
+  1087→        T: serde_core::Serialize + 'static,
+  1088→    {
   1095→    pub fn capture_sval<T>(value: &'v T) -> Self
+  1096→    where
+  1097→        T: sval::Value + 'static,
+  1098→    {
   1107→    pub fn is<T: 'static>(&self) -> bool {
   1116→    pub fn downcast_ref<T: 'static>(&self) -> Option<&T> {
   1129→macro_rules! as_debug {

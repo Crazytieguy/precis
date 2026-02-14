@@ -21,6 +21,10 @@ _internals/error.ts
     22→  stack: string | undefined
     23→}
     27→export const createNeverThrowError = <T, E>(
+    28→  message: string,
+    29→  result: Result<T, E>,
+    30→  config: ErrorConfig = defaultErrorConfig,
+    31→): NeverThrowError<T, E> => {
 _internals/utils.ts
      5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
     10→export type ExtractOkAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
@@ -34,11 +38,15 @@ _internals/utils.ts
     31→ * Short circuits on the FIRST Err value that we find
     32→ */
     33→export const combineResultList = <T, E>(
+    34→  resultList: readonly Result<T, E>[],
+    35→): Result<readonly T[], E> => {
     54→export const combineResultAsyncList = <T, E>(
     61→/**
     62→ * Give a list of all the errors we find
     63→ */
     64→export const combineResultListWithAllErrors = <T, E>(
+    65→  resultList: readonly Result<T, E>[],
+    66→): Result<readonly T[], E[]> => {
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
 index.ts
 result-async.ts
@@ -280,12 +288,23 @@ result-async.ts
 result.ts
     14→export namespace Result {
     23→  export function fromThrowable<Fn extends (...args: readonly any[]) => any, E>(
+    24→    fn: Fn,
+    25→    errorFn?: (e: unknown) => E,
+    26→  ): (...args: Parameters<Fn>) => Result<ReturnType<Fn>, E> {
     43→  export function combine<
+    44→    T extends readonly [Result<unknown, unknown>, ...Result<unknown, unknown>[]]
+    45→  >(resultList: T): CombineResults<T> {
     55→  export function combineWithAllErrors<T extends readonly Result<unknown, unknown>[]>(
+    56→    resultList: T,
+    57→  ): CombineResultsWithAllErrorsArray<T> {
     62→export type Result<T, E> = Ok<T, E> | Err<T, E>
     66→export function ok<T, E = never>(value: T): Ok<T, E> {
     73→export function err<T = never, E = unknown>(err: E): Err<T, E> {
    122→export function safeTry<T, E>(
+   123→  body:
+   124→    | (() => Generator<Err<never, E>, Result<T, E>>)
+   125→    | (() => AsyncGenerator<Err<never, E>, Result<T, E>>),
+   126→): Result<T, E> | ResultAsync<T, E> {
    134→interface IResult<T, E> {
    135→  /**
    136→   * Used to check if a `Result` is an `OK`

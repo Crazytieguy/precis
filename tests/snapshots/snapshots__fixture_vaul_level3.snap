@@ -100,6 +100,11 @@ use-prevent-scroll.ts
    118→function preventScrollMobileSafari() {
    243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {
    257→function addEvent<K extends keyof GlobalEventHandlersEventMap>(
+   258→  target: EventTarget,
+   259→  event: K,
+   260→  handler: (this: Document, ev: GlobalEventHandlersEventMap[K]) => any,
+   261→  options?: boolean | AddEventListenerOptions,
+   262→) {
    272→function scrollIntoView(target: Element) {
    294→export function isInput(target: Element) {
 use-scale-background.ts

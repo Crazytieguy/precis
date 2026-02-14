@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 → level 2 (650 words)
+budget: 1000 → level 2 (968 words)
 
 __init__.py
      1→__all__ = [
@@ -10,9 +10,21 @@ __init__.py
 _callers.py
     24→Teardown: TypeAlias = Generator[None, object, object]
     27→def run_old_style_hookwrapper(
+    28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
+    29→) -> Teardown:
     60→def _raise_wrapfail(
+    61→    wrap_controller: Generator[None, object, object],
+    62→    msg: str,
+    63→) -> NoReturn:
     70→def _warn_teardown_exception(
+    71→    hook_name: str, hook_impl: HookImpl, e: BaseException
+    72→) -> None:
     82→def _multicall(
+    83→    hook_name: str,
+    84→    hook_impls: Sequence[HookImpl],
+    85→    caller_kwargs: Mapping[str, object],
+    86→    firstresult: bool,
+    87→) -> object | list[object]:
 _hooks.py
     28→_T = TypeVar("_T")
     29→_F = TypeVar("_F", bound=Callable[..., object])
@@ -25,9 +37,25 @@ _hooks.py
     78→class HookspecMarker:
     88→    def __init__(self, project_name: str) -> None:
    111→    def __call__(  # noqa: F811
+   112→        self,
+   113→        function: _F | None = None,
+   114→        firstresult: bool = False,
+   115→        historic: bool = False,
+   116→        warn_on_impl: Warning | None = None,
+   117→        warn_on_impl_args: Mapping[str, Warning] | None = None,
+   118→    ) -> _F | Callable[[_F], _F]:
    165→class HookimplMarker:
    175→    def __init__(self, project_name: str) -> None:
    202→    def __call__(  # noqa: F811
+   203→        self,
+   204→        function: _F | None = None,
+   205→        hookwrapper: bool = False,
+   206→        optionalhook: bool = False,
+   207→        tryfirst: bool = False,
+   208→        trylast: bool = False,
+   209→        specname: str | None = None,
+   210→        wrapper: bool = False,
+   211→    ) -> _F | Callable[[_F], _F]:
    281→def normalize_hookimpl_opts(opts: HookimplOpts) -> None:
    290→_PYPY = hasattr(sys, "pypy_version_info")
    293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
@@ -37,8 +65,18 @@ _hooks.py
    377→_CallHistory: TypeAlias = list[
    382→class HookCaller:
    393→    def __init__(
+   394→        self,
+   395→        name: str,
+   396→        hook_execute: _HookExec,
+   397→        specmodule_or_class: _Namespace | None = None,
+   398→        spec_opts: HookspecOpts | None = None,
+   399→    ) -> None:
    420→    def has_spec(self) -> bool:
    424→    def set_specification(
+   425→        self,
+   426→        specmodule_or_class: _Namespace,
+   427→        spec_opts: HookspecOpts,
+   428→    ) -> None:
    438→    def is_historic(self) -> bool:
    442→    def _remove_plugin(self, plugin: _Plugin) -> None:
    449→    def get_hookimpls(self) -> list[HookImpl]:
@@ -47,7 +85,13 @@ _hooks.py
    480→    def _verify_all_args_are_provided(self, kwargs: Mapping[str, object]) -> None:
    499→    def __call__(self, **kwargs: object) -> Any:
    516→    def call_historic(
+   517→        self,
+   518→        result_callback: Callable[[Any], None] | None = None,
+   519→        kwargs: Mapping[str, object] | None = None,
+   520→    ) -> None:
    543→    def call_extra(
+   544→        self, methods: Sequence[Callable[..., object]], kwargs: Mapping[str, object]
+   545→    ) -> Any:
    577→    def _maybe_apply_history(self, method: HookImpl) -> None:
    593→class _SubsetHookCaller(HookCaller):
    612→    def __init__(self, orig: HookCaller, remove_plugins: Set[_Plugin]) -> None:
@@ -57,6 +101,12 @@ _hooks.py
    634→    def __repr__(self) -> str:
    639→class HookImpl:
    656→    def __init__(
+   657→        self,
+   658→        plugin: _Plugin,
+   659→        plugin_name: str,
+   660→        function: _HookImplFunction[object],
+   661→        hook_impl_opts: HookimplOpts,
+   662→    ) -> None:
    692→    def __repr__(self) -> str:
    697→class HookSpec:
    709→    def __init__(self, namespace: _Namespace, name: str, opts: HookspecOpts) -> None:
@@ -74,14 +124,24 @@ _manager.py
     83→class PluginManager:
    100→    def __init__(self, project_name: str) -> None:
    114→    def _hookexec(
+   115→        self,
+   116→        hook_name: str,
+   117→        methods: Sequence[HookImpl],
+   118→        kwargs: Mapping[str, object],
+   119→        firstresult: bool,
+   120→    ) -> object | list[object]:
    125→    def register(self, plugin: _Plugin, name: str | None = None) -> str | None:
    176→    def parse_hookimpl_opts(self, plugin: _Plugin, name: str) -> HookimplOpts | None:
    201→    def unregister(
+   202→        self, plugin: _Plugin | None = None, name: str | None = None
+   203→    ) -> Any | None:
    233→    def set_blocked(self, name: str) -> None:
    238→    def is_blocked(self, name: str) -> bool:
    242→    def unblock(self, name: str) -> bool:
    252→    def add_hookspecs(self, module_or_class: _Namespace) -> None:
    278→    def parse_hookspec_opts(
+   279→        self, module_or_class: _Namespace, name: str
+   280→    ) -> HookspecOpts | None:
    296→    def get_plugins(self) -> set[Any]:
    300→    def is_registered(self, plugin: _Plugin) -> bool:
    304→    def get_canonical_name(self, plugin: _Plugin) -> str:
@@ -95,14 +155,22 @@ _manager.py
    430→    def list_name_plugin(self) -> list[tuple[str, _Plugin]]:
    434→    def get_hookcallers(self, plugin: _Plugin) -> list[HookCaller] | None:
    450→    def add_hookcall_monitoring(
+   451→        self, before: _BeforeTrace, after: _AfterTrace
+   452→    ) -> Callable[[], None]:
    487→    def enable_tracing(self) -> Callable[[], None]:
    512→    def subset_hook_caller(
+   513→        self, name: str, remove_plugins: Iterable[_Plugin]
+   514→    ) -> HookCaller:
    525→def _formatdef(func: Callable[..., object]) -> str:
 _result.py
     16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
     20→class HookCallError(Exception):
     25→class Result(Generic[ResultType]):
     31→    def __init__(
+    32→        self,
+    33→        result: ResultType | None,
+    34→        exception: BaseException | None,
+    35→    ) -> None:
     43→    def excinfo(self) -> _ExcInfo | None:
     52→    def exception(self) -> BaseException | None:
     57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:

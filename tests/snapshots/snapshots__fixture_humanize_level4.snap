@@ -6,6 +6,49 @@ __init__.py
     28→__all__ = [
 filesize.py
     36→def naturalsize(
+    37→    value: float | str,
+    38→    binary: bool = False,
+    39→    gnu: bool = False,
+    40→    format: str = "%.1f",
+    41→) -> str:
+    42→    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
+    43→
+    44→    By default, decimal suffixes (kB, MB) are used.
+    45→
+    46→    Non-GNU modes are compatible with jinja2's `filesizeformat` filter.
+    47→
+    48→    Examples:
+    49→        ```pycon
+    50→        >>> naturalsize(3000000)
+    51→        '3.0 MB'
+    52→        >>> naturalsize(300, False, True)
+    53→        '300B'
+    54→        >>> naturalsize(3000, False, True)
+    55→        '2.9K'
+    56→        >>> naturalsize(3000, False, True, "%.3f")
+    57→        '2.930K'
+    58→        >>> naturalsize(3000, True)
+    59→        '2.9 KiB'
+    60→        >>> naturalsize(10**28)
+    61→        '10.0 RB'
+    62→        >>> naturalsize(10**34 * 3)
+    63→        '30000.0 QB'
+    64→        >>> naturalsize(-4096, True)
+    65→        '-4.0 KiB'
+    66→
+    67→        ```
+    68→
+    69→    Args:
+    70→        value (int, float, str): Integer to convert.
+    71→        binary (bool): If `True`, uses binary suffixes (KiB, MiB) with base
+    72→            2<sup>10</sup> instead of 10<sup>3</sup>.
+    73→        gnu (bool): If `True`, the binary argument is ignored and GNU-style
+    74→            (`ls -sh` style) prefixes are used (K, M) with the 2**10 definition.
+    75→        format (str): Custom formatter.
+    76→
+    77→    Returns:
+    78→        str: Human readable representation of a filesize.
+    79→    """
 i18n.py
      8→TYPE_CHECKING = False
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
@@ -18,6 +61,23 @@ i18n.py
     40→def _get_default_locale_path() -> pathlib.Path | None:
     51→def get_translation() -> gettext_module.NullTranslations:
     58→def activate(
+    59→    locale: str | None, path: str | os.PathLike[str] | None = None
+    60→) -> gettext_module.NullTranslations:
+    61→    """Activate internationalisation.
+    62→
+    63→    Set `locale` as current locale. Search for locale in directory `path`.
+    64→
+    65→    Args:
+    66→        locale (str | None): Language name, e.g. `en_GB`. If `None`, defaults to no
+    67→            transaltion. Similar to calling ``deactivate()``.
+    68→        path (str | pathlib.Path): Path to search for locales.
+    69→
+    70→    Returns:
+    71→        dict: Translations.
+    72→
+    73→    Raises:
+    74→        FileNotFoundError: If humanize cannot find the locale folder.
+    75→    """
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
    101→def _gettext(message: str) -> str:
@@ -330,6 +390,52 @@ number.py
    414→        str: Number in scientific notation z.wq x 10ⁿ.
    415→    """
    454→def clamp(
+   455→    value: float,
+   456→    format: str = "{:}",
+   457→    floor: float | None = None,
+   458→    ceil: float | None = None,
+   459→    floor_token: str = "<",
+   460→    ceil_token: str = ">",
+   461→) -> str:
+   462→    """Returns number with the specified format, clamped between floor and ceil.
+   463→
+   464→    If the number is larger than ceil or smaller than floor, then the respective limit
+   465→    will be returned, formatted and prepended with a token specifying as such.
+   466→
+   467→    Examples:
+   468→        ```pycon
+   469→        >>> clamp(123.456)
+   470→        '123.456'
+   471→        >>> clamp(0.0001, floor=0.01)
+   472→        '<0.01'
+   473→        >>> clamp(0.99, format="{:.0%}", ceil=0.99)
+   474→        '99%'
+   475→        >>> clamp(0.999, format="{:.0%}", ceil=0.99)
+   476→        '>99%'
+   477→        >>> clamp(1, format=intword, floor=1e6, floor_token="under ")
+   478→        'under 1.0 million'
+   479→        >>> clamp(None) is None
+   480→        True
+   481→
+   482→        ```
+   483→
+   484→    Args:
+   485→        value (int, float): Input number.
+   486→        format (str OR callable): Can either be a formatting string, or a callable
+   487→            function that receives value and returns a string.
+   488→        floor (int, float): Smallest value before clamping.
+   489→        ceil (int, float): Largest value before clamping.
+   490→        floor_token (str): If value is smaller than floor, token will be prepended
+   491→            to output.
+   492→        ceil_token (str): If value is larger than ceil, token will be prepended
+   493→            to output.
+   494→
+   495→    Returns:
+   496→        str: Formatted number. The output is clamped between the indicated floor and
+   497→            ceil. If the number is larger than ceil or smaller than floor, the output
+   498→            will be prepended with a token indicating as such.
+   499→
+   500→    """
    531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
    532→    """Return a value with a metric SI unit-prefix appended.
    533→
@@ -394,9 +500,86 @@ time.py
     60→        datetime.timedelta: Absolute timedelta.
     61→    """
     68→def _date_and_delta(
+    69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
+    70→) -> tuple[Any, Any]:
+    71→    """Turn a value into a date and a timedelta which represents how long ago it was.
+    72→
+    73→    If that's not possible, return `(None, value)`.
+    74→    """
     95→def naturaldelta(
+    96→    value: dt.timedelta | float,
+    97→    months: bool = True,
+    98→    minimum_unit: str = "seconds",
+    99→) -> str:
+   100→    """Return a natural representation of a timedelta or number of seconds.
+   101→
+   102→    This is similar to `naturaltime`, but does not add tense to the result.
+   103→
+   104→    The timedelta will be rounded to the nearest unit that makes sense.
+   105→
+   106→    Args:
+   107→        value (datetime.timedelta, int or float): A timedelta or a number of seconds.
+   108→        months (bool): If `True`, then a number of months (based on 30.5 days) will be
+   109→            used for fuzziness between years.
+   110→        minimum_unit (str): The lowest unit that can be used.
+   111→
+   112→    Returns:
+   113→        str (str or `value`): A natural representation of the amount of time
+   114→            elapsed unless `value` is not datetime.timedelta or cannot be
+   115→            converted to int (cannot be float due to 'inf' or 'nan').
+   116→            In that case, a `value` is returned unchanged.
+   117→
+   118→    Raises:
+   119→        OverflowError: If `value` is too large to convert to datetime.timedelta.
+   120→
+   121→    Examples:
+   122→        Compare two timestamps in a custom local timezone::
+   123→
+   124→        ```pycon
+   125→        >>> import datetime as dt
+   126→        >>> from dateutil.tz import gettz
+   127→
+   128→        >>> berlin = gettz("Europe/Berlin")
+   129→        >>> now = dt.datetime.now(tz=berlin)
+   130→        >>> later = now + dt.timedelta(minutes=30)
+   131→
+   132→        >>> assert naturaldelta(later - now) == "30 minutes"
+   133→        True
+   134→        ```
+   135→
+   136→    """
    249→def naturaltime(
+   250→    value: dt.datetime | dt.timedelta | float,
+   251→    future: bool = False,
+   252→    months: bool = True,
+   253→    minimum_unit: str = "seconds",
+   254→    when: dt.datetime | None = None,
+   255→) -> str:
+   256→    """Return a natural representation of a time in a resolution that makes sense.
+   257→
+   258→    This is more or less compatible with Django's `naturaltime` filter.
+   259→
+   260→    The time will be rounded to the nearest unit that makes sense.
+   261→
+   262→    Args:
+   263→        value (datetime.datetime, datetime.timedelta, int or float): A `datetime`, a
+   264→            `timedelta`, or a number of seconds.
+   265→        future (bool): Ignored for `datetime`s and `timedelta`s, where the tense is
+   266→            always figured out based on the current time. For integers and floats, the
+   267→            return value will be past tense by default, unless future is `True`.
+   268→        months (bool): If `True`, then a number of months (based on 30.5 days) will be
+   269→            used for fuzziness between years.
+   270→        minimum_unit (str): The lowest unit that can be used.
+   271→        when (datetime.datetime): Point in time relative to which _value_ is
+   272→            interpreted.  Defaults to the current time in the local timezone.
+   273→
+   274→    Returns:
+   275→        str: A natural representation of the input in a resolution that makes sense.
+   276→    """
    300→def _convert_aware_datetime(
+   301→    value: dt.datetime | dt.timedelta | float | None,
+   302→) -> Any:
+   303→    """Convert aware datetime to naive datetime and pass through any other type."""
    311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
    312→    """Return a natural day.
    313→
@@ -408,6 +591,37 @@ time.py
    343→def naturaldate(value: dt.date | dt.datetime) -> str:
    344→    """Like `naturalday`, but append a year for dates more than ~five months away."""
    361→def _quotient_and_remainder(
+   362→    value: float,
+   363→    divisor: float,
+   364→    unit: Unit,
+   365→    minimum_unit: Unit,
+   366→    suppress: Iterable[Unit],
+   367→    format: str,
+   368→) -> tuple[float, float]:
+   369→    """Divide `value` by `divisor`, returning the quotient and remainder.
+   370→
+   371→    If `unit` is `minimum_unit`, the quotient will be the rounding of `value / divisor`
+   372→    according to the `format` string and the remainder will be zero. The rationale is
+   373→    that if `unit` is the unit of the quotient, we cannot represent the remainder
+   374→    because it would require a unit smaller than the `minimum_unit`.
+   375→
+   376→    >>> from humanize.time import _quotient_and_remainder, Unit
+   377→    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.DAYS, [], "%0.2f")
+   378→    (1.5, 0)
+   379→
+   380→    If `unit` is in `suppress`, the quotient will be zero and the remainder will be the
+   381→    initial value. The idea is that if we cannot use `unit`, we are forced to use a
+   382→    lower unit, so we cannot do the division.
+   383→
+   384→    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.HOURS, [Unit.DAYS], "%0.2f")
+   385→    (0, 36)
+   386→
+   387→    In other cases, return the quotient and remainder as `divmod` would do it.
+   388→
+   389→    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.HOURS, [], "%0.2f")
+   390→    (1, 12)
+   391→
+   392→    """
    406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
    407→    """Return a minimum unit suitable that is not suppressed.
    408→
@@ -434,6 +648,77 @@ time.py
    440→    ['MICROSECONDS', 'MILLISECONDS', 'DAYS']
    441→    """
    451→def precisedelta(
+   452→    value: dt.timedelta | float | None,
+   453→    minimum_unit: str = "seconds",
+   454→    suppress: Iterable[str] = (),
+   455→    format: str = "%0.2f",
+   456→) -> str:
+   457→    """Return a precise representation of a timedelta or number of seconds.
+   458→
+   459→    ```pycon
+   460→    >>> import datetime as dt
+   461→    >>> from humanize.time import precisedelta
+   462→
+   463→    >>> delta = dt.timedelta(seconds=3633, days=2, microseconds=123000)
+   464→    >>> precisedelta(delta)
+   465→    '2 days, 1 hour and 33.12 seconds'
+   466→
+   467→    ```
+   468→
+   469→    A custom `format` can be specified to control how the fractional part
+   470→    is represented:
+   471→
+   472→    ```pycon
+   473→    >>> precisedelta(delta, format="%0.4f")
+   474→    '2 days, 1 hour and 33.1230 seconds'
+   475→
+   476→    ```
+   477→
+   478→    Instead, the `minimum_unit` can be changed to have a better resolution;
+   479→    the function will still readjust the unit to use the greatest of the
+   480→    units that does not lose precision.
+   481→
+   482→    For example setting microseconds but still representing the date with milliseconds:
+   483→
+   484→    ```pycon
+   485→    >>> precisedelta(delta, minimum_unit="microseconds")
+   486→    '2 days, 1 hour, 33 seconds and 123 milliseconds'
+   487→
+   488→    ```
+   489→
+   490→    If desired, some units can be suppressed: you will not see them represented and the
+   491→    time of the other units will be adjusted to keep representing the same timedelta:
+   492→
+   493→    ```pycon
+   494→    >>> precisedelta(delta, suppress=['days'])
+   495→    '49 hours and 33.12 seconds'
+   496→
+   497→    ```
+   498→
+   499→    Note that microseconds precision is lost if the seconds and all
+   500→    the units below are suppressed:
+   501→
+   502→    ```pycon
+   503→    >>> delta = dt.timedelta(seconds=90, microseconds=100)
+   504→    >>> precisedelta(delta, suppress=['seconds', 'milliseconds', 'microseconds'])
+   505→    '1.50 minutes'
+   506→
+   507→    ```
+   508→
+   509→    If the delta is too small to be represented with the minimum unit,
+   510→    a value of zero will be returned:
+   511→
+   512→    ```pycon
+   513→    >>> delta = dt.timedelta(seconds=1)
+   514→    >>> precisedelta(delta, minimum_unit="minutes")
+   515→    '0.02 minutes'
+   516→
+   517→    >>> delta = dt.timedelta(seconds=0.1)
+   518→    >>> precisedelta(delta, minimum_unit="minutes")
+   519→    '0 minutes'
+   520→
+   521→    ```
+   522→    """
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
    655→    """Round a number according to the string format provided.
    656→

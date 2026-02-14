@@ -4,6 +4,14 @@ expression: output
 ---
 command-score.ts
     54→function commandScoreInner(
+    55→  string,
+    56→  abbreviation,
+    57→  lowerString,
+    58→  lowerAbbreviation,
+    59→  stringIndex,
+    60→  abbreviationIndex,
+    61→  memoizedResults,
+    62→) {
    150→function formatInput(string) {
    155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
 index.tsx
@@ -53,7 +61,15 @@ index.tsx
    993→function useLazyRef<T>(fn: () => T) {
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1010→function useValue(
+  1011→  id: string,
+  1012→  ref: React.RefObject<HTMLElement>,
+  1013→  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
+  1014→  aliases: string[] = [],
+  1015→) {
   1046→const useScheduleLayoutEffect = () => {
   1061→function renderChildren(children: React.ReactElement) {
   1071→function SlottableWithNestedChildren(
+  1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
+  1073→  render: (child: React.ReactNode) => JSX.Element,
+  1074→) {
   1081→const srOnlyStyles = {

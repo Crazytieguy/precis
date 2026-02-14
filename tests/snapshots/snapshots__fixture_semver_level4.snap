@@ -360,6 +360,8 @@ range.js
    470→const replaceStars = (comp, options) => {
    478→const replaceGTE0 = (comp, options) => {
    491→const hyphenReplace = incPr => ($0,
+   492→  from, fM, fm, fp, fpr, fb,
+   493→  to, tM, tm, tp, tpr) => {
    523→const testSet = (set, version, options) => {
 semver.js
      9→class SemVer {

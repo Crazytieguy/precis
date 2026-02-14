@@ -7,6 +7,10 @@ _internals/error.ts
      7→const defaultErrorConfig: ErrorConfig = {
     11→interface NeverThrowError<T, E> {
     27→export const createNeverThrowError = <T, E>(
+    28→  message: string,
+    29→  result: Result<T, E>,
+    30→  config: ErrorConfig = defaultErrorConfig,
+    31→): NeverThrowError<T, E> => {
 _internals/utils.ts
      5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
     10→export type ExtractOkAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
@@ -17,8 +21,12 @@ _internals/utils.ts
     27→export type InferAsyncOkTypes<R> = R extends ResultAsync<infer T, unknown> ? T : never
     28→export type InferAsyncErrTypes<R> = R extends ResultAsync<unknown, infer E> ? E : never
     33→export const combineResultList = <T, E>(
+    34→  resultList: readonly Result<T, E>[],
+    35→): Result<readonly T[], E> => {
     54→export const combineResultAsyncList = <T, E>(
     64→export const combineResultListWithAllErrors = <T, E>(
+    65→  resultList: readonly Result<T, E>[],
+    66→): Result<readonly T[], E[]> => {
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
 index.ts
 result-async.ts
@@ -27,8 +35,15 @@ result-async.ts
     30→  static fromSafePromise<T, E = never>(promise: Promise<T>): ResultAsync<T, E> {
     37→  static fromPromise<T, E>(promise: Promise<T>, errorFn: (e: unknown) => E): ResultAsync<T, E> {
     46→  static fromThrowable<A extends readonly any[], R, E>(
+    47→    fn: (...args: A) => Promise<R>,
+    48→    errorFn?: (err: unknown) => E,
+    49→  ): (...args: A) => ResultAsync<R, E> {
     69→  static combine<T extends readonly ResultAsync<unknown, unknown>[]>(
+    70→    asyncResultList: T,
+    71→  ): CombineResultAsyncs<T> {
     81→  static combineWithAllErrors<T extends readonly ResultAsync<unknown, unknown>[]>(
+    82→    asyncResultList: T,
+    83→  ): CombineResultsWithAllErrorsArrayAsync<T> {
     89→  map<A>(f: (t: T) => A | Promise<A>): ResultAsync<A, E> {
    101→  andThrough<F>(f: (t: T) => Result<unknown, F> | ResultAsync<unknown, F>): ResultAsync<T, E | F> {
    117→  andTee(f: (t: T) => unknown): ResultAsync<T, E> {
@@ -40,6 +55,9 @@ result-async.ts
    206→  unwrapOr<A>(t: A): Promise<T | A> {
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
    227→  then<A, B>(
+   228→    successCallback?: (res: Result<T, E>) => A | PromiseLike<A>,
+   229→    failureCallback?: (reason: unknown) => B | PromiseLike<B>,
+   230→  ): PromiseLike<A | B> {
    249→export function okAsync<T, E = never>(value: T): ResultAsync<T, E> {
    255→export function errAsync<T = never, E = unknown>(err: E): ResultAsync<T, E> {
    259→export const fromPromise = ResultAsync.fromPromise
@@ -54,12 +72,23 @@ result-async.ts
 result.ts
     14→export namespace Result {
     23→  export function fromThrowable<Fn extends (...args: readonly any[]) => any, E>(
+    24→    fn: Fn,
+    25→    errorFn?: (e: unknown) => E,
+    26→  ): (...args: Parameters<Fn>) => Result<ReturnType<Fn>, E> {
     43→  export function combine<
+    44→    T extends readonly [Result<unknown, unknown>, ...Result<unknown, unknown>[]]
+    45→  >(resultList: T): CombineResults<T> {
     55→  export function combineWithAllErrors<T extends readonly Result<unknown, unknown>[]>(
+    56→    resultList: T,
+    57→  ): CombineResultsWithAllErrorsArray<T> {
     62→export type Result<T, E> = Ok<T, E> | Err<T, E>
     66→export function ok<T, E = never>(value: T): Ok<T, E> {
     73→export function err<T = never, E = unknown>(err: E): Err<T, E> {
    122→export function safeTry<T, E>(
+   123→  body:
+   124→    | (() => Generator<Err<never, E>, Result<T, E>>)
+   125→    | (() => AsyncGenerator<Err<never, E>, Result<T, E>>),
+   126→): Result<T, E> | ResultAsync<T, E> {
    134→interface IResult<T, E> {
    140→  isOk(): this is Ok<T, E>
    147→  isErr(): this is Err<T, E>

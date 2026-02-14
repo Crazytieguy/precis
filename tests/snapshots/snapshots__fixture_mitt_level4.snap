@@ -32,3 +32,5 @@ index.ts
     44→ * @returns {Mitt}
     45→ */
     46→export default function mitt<Events extends Record<EventType, unknown>>(
+    47→	all?: EventHandlerMap<Events>
+    48→): Emitter<Events> {

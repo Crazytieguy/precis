@@ -10,9 +10,29 @@ _callers.py
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
     27→def run_old_style_hookwrapper(
+    28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
+    29→) -> Teardown:
+    30→    """
+    31→    backward compatibility wrapper to run a old style hookwrapper as a wrapper
+    32→    """
     60→def _raise_wrapfail(
+    61→    wrap_controller: Generator[None, object, object],
+    62→    msg: str,
+    63→) -> NoReturn:
     70→def _warn_teardown_exception(
+    71→    hook_name: str, hook_impl: HookImpl, e: BaseException
+    72→) -> None:
     82→def _multicall(
+    83→    hook_name: str,
+    84→    hook_impls: Sequence[HookImpl],
+    85→    caller_kwargs: Mapping[str, object],
+    86→    firstresult: bool,
+    87→) -> object | list[object]:
+    88→    """Execute a call into multiple python functions/methods and return the
+    89→    result(s).
+    90→
+    91→    ``caller_kwargs`` comes from HookCaller.__call__().
+    92→    """
 _hooks.py
     28→_T = TypeVar("_T")
     29→_F = TypeVar("_F", bound=Callable[..., object])

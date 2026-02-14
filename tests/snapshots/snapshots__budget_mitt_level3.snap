@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 300 → level 4 (152 words)
+budget: 300 → level 4 (158 words)
 
 index.ts
      1→export type EventType = string | symbol;
@@ -34,3 +34,5 @@ index.ts
     44→ * @returns {Mitt}
     45→ */
     46→export default function mitt<Events extends Record<EventType, unknown>>(
+    47→	all?: EventHandlerMap<Events>
+    48→): Emitter<Events> {

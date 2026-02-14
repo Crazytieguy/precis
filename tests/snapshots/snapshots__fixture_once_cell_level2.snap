@@ -13,6 +13,9 @@ imp_cs.rs
     31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
     39→    pub(crate) fn is_initialized(&self) -> bool {
     44→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
+    45→    where
+    46→        F: FnOnce() -> Result<T, E>,
+    47→    {
     63→    pub(crate) unsafe fn get_unchecked(&self) -> &T {
     70→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
     75→    pub(crate) fn into_inner(self) -> Option<T> {
@@ -30,6 +33,9 @@ imp_pl.rs
     32→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
     38→    pub(crate) fn is_initialized(&self) -> bool {
     45→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
+    46→    where
+    47→        F: FnOnce() -> Result<T, E>,
+    48→    {
     80→    pub(crate) fn wait(&self) {
    101→    pub(crate) unsafe fn get_unchecked(&self) -> &T {
    109→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
@@ -49,6 +55,9 @@ imp_std.rs
     43→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
     49→    pub(crate) fn is_initialized(&self) -> bool {
     61→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
+    62→    where
+    63→        F: FnOnce() -> Result<T, E>,
+    64→    {
     88→    pub(crate) fn wait(&self) {
     99→    pub(crate) unsafe fn get_unchecked(&self) -> &T {
    107→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
@@ -67,8 +76,17 @@ imp_std.rs
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
    245→mod strict {
    248→    pub(crate) fn addr<T>(ptr: *mut T) -> usize
+   249→    where
+   250→        T: Sized,
+   251→    {
    260→    pub(crate) fn with_addr<T>(ptr: *mut T, addr: usize) -> *mut T
+   261→    where
+   262→        T: Sized,
+   263→    {
    281→    pub(crate) fn map_addr<T>(ptr: *mut T, f: impl FnOnce(usize) -> usize) -> *mut T
+   282→    where
+   283→        T: Sized,
+   284→    {
 lib.rs
    380→mod imp;
    383→pub mod unsync {
@@ -95,7 +113,13 @@ lib.rs
    530→        pub fn set(&self, value: T) -> Result<(), T> {
    551→        pub fn try_insert(&self, value: T) -> Result<&T, (&T, T)> {
    586→        pub fn get_or_init<F>(&self, f: F) -> &T
+   587→        where
+   588→            F: FnOnce() -> T,
+   589→        {
    622→        pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&T, E>
+   623→        where
+   624→            F: FnOnce() -> Result<T, E>,
+   625→        {
    667→        pub fn take(&mut self) -> Option<T> {
    687→        pub fn into_inner(self) -> Option<T> {
    714→    pub struct Lazy<T, F = fn() -> T> {
@@ -141,7 +165,13 @@ lib.rs
   1058→        pub fn set(&self, value: T) -> Result<(), T> {
   1080→        pub fn try_insert(&self, value: T) -> Result<&T, (&T, T)> {
   1115→        pub fn get_or_init<F>(&self, f: F) -> &T
+  1116→        where
+  1117→            F: FnOnce() -> T,
+  1118→        {
   1152→        pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&T, E>
+  1153→        where
+  1154→            F: FnOnce() -> Result<T, E>,
+  1155→        {
   1197→        pub fn take(&mut self) -> Option<T> {
   1217→        pub fn into_inner(self) -> Option<T> {
   1255→    pub struct Lazy<T, F = fn() -> T> {
@@ -173,7 +203,13 @@ race.rs
     68→    pub unsafe fn get_unchecked(&self) -> NonZeroUsize {
    107→    pub fn set(&self, value: NonZeroUsize) -> Result<(), ()> {
    120→    pub fn get_or_init<F>(&self, f: F) -> NonZeroUsize
+   121→    where
+   122→        F: FnOnce() -> NonZeroUsize,
+   123→    {
    138→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<NonZeroUsize, E>
+   139→    where
+   140→        F: FnOnce() -> Result<NonZeroUsize, E>,
+   141→    {
    150→    fn init<E>(&self, f: impl FnOnce() -> Result<NonZeroUsize, E>) -> Result<NonZeroUsize, E> {
    160→    fn compare_exchange(&self, val: NonZeroUsize) -> Result<usize, usize> {
    171→impl OnceBool {
@@ -181,7 +217,13 @@ race.rs
    180→    pub fn get(&self) -> Option<bool> {
    189→    pub fn set(&self, value: bool) -> Result<(), ()> {
    199→    pub fn get_or_init<F>(&self, f: F) -> bool
+   200→    where
+   201→        F: FnOnce() -> bool,
+   202→    {
    213→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<bool, E>
+   214→    where
+   215→        F: FnOnce() -> Result<bool, E>,
+   216→    {
    221→    fn from_usize(value: NonZeroUsize) -> bool {
    226→    fn to_usize(value: bool) -> NonZeroUsize {
    232→pub struct OnceRef<'a, T> {
@@ -195,7 +237,13 @@ race.rs
    259→    pub fn get(&self) -> Option<&'a T> {
    268→    pub fn set(&self, value: &'a T) -> Result<(), ()> {
    281→    pub fn get_or_init<F>(&self, f: F) -> &'a T
+   282→    where
+   283→        F: FnOnce() -> &'a T,
+   284→    {
    299→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&'a T, E>
+   300→    where
+   301→        F: FnOnce() -> Result<&'a T, E>,
+   302→    {
    311→    fn init<E>(&self, f: impl FnOnce() -> Result<&'a T, E>) -> Result<&'a T, E> {
    320→    fn compare_exchange(&self, value: &'a T) -> Result<(), *const T> {
    347→    fn _dummy() {}
@@ -213,7 +261,13 @@ race.rs
    399→        pub fn get(&self) -> Option<&T> {
    411→        pub fn set(&self, value: Box<T>) -> Result<(), Box<T>> {
    432→        pub fn get_or_init<F>(&self, f: F) -> &T
+   433→        where
+   434→            F: FnOnce() -> Box<T>,
+   435→        {
    450→        pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&T, E>
+   451→        where
+   452→            F: FnOnce() -> Result<Box<T>, E>,
+   453→        {
    462→        fn init<E>(&self, f: impl FnOnce() -> Result<Box<T>, E>) -> Result<&T, E> {
    479→    unsafe impl<T: Sync + Send> Sync for OnceBox<T> {}
    481→    impl<T: Clone> Clone for OnceBox<T> {

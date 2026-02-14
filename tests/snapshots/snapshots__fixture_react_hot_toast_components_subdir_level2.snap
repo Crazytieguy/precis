@@ -19,13 +19,22 @@ loader.tsx
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
 toast-bar.tsx
      8→const enterAnimation = (factor: number) => `
+     9→0% {transform: translate3d(0,${factor * -200}%,0) scale(.6); opacity:.5;}
+    10→100% {transform: translate3d(0,0,0) scale(1); opacity:1;}
+    11→`;
     13→const exitAnimation = (factor: number) => `
+    14→0% {transform: translate3d(0,0,-1px) scale(1); opacity:1;}
+    15→100% {transform: translate3d(0,${factor * -150}%,-1px) scale(.6); opacity:0;}
+    16→`;
     18→const fadeInAnimation = `0%{opacity:0;} 100%{opacity:1;}`;
     19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
     22→const ToastBarBase = styled('div')`
     38→const Message = styled('div')`
     47→interface ToastBarProps {
     57→const getAnimationStyle = (
+    58→  position: ToastPosition,
+    59→  visible: boolean
+    60→): React.CSSProperties => {
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 toast-icon.tsx
      9→const StatusWrapper = styled('div')`
@@ -37,6 +46,9 @@ toast-icon.tsx
 toaster.tsx
     15→const ToastWrapper = ({
     47→const getPositionStyle = (
+    48→  position: ToastPosition,
+    49→  offset: number
+    50→): React.CSSProperties => {
     76→const activeClass = css`
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({

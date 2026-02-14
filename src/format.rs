@@ -7,7 +7,7 @@ use crate::parse;
 /// Levels:
 /// 0 - File paths only
 /// 1 - Symbol lines, truncated to symbol name
-/// 2 - Symbol lines, full source line (signature)
+/// 2 - Symbol lines, full multi-line signatures
 /// 3 - Symbol lines with preceding doc comments
 /// 4 - Like level 3, but type definition bodies (struct/enum/trait/interface/class) shown in full
 /// 5 - Full source (all lines)
@@ -183,7 +183,7 @@ pub fn render_file_with_symbols(
 }
 
 /// Render symbol lines for a file. If `truncate` is true (level 1), truncates
-/// each line at the symbol name. If false (level 2), shows the full source line.
+/// each line at the symbol name. If false (level 2), shows full multi-line signatures.
 fn render_symbols(
     path: &Path,
     root: &Path,
@@ -192,6 +192,7 @@ fn render_symbols(
     truncate: bool,
 ) -> String {
     let relative = path.strip_prefix(root).unwrap_or(path);
+    let is_python = path.extension().and_then(|e| e.to_str()) == Some("py");
     let mut out = String::new();
     out.push_str(&format!("{}\n", relative.display()));
     if symbols.is_empty() {
@@ -201,10 +202,13 @@ fn render_symbols(
     for sym in symbols {
         if truncate {
             out.push_str(&format_symbol_name(sym, &lines));
+            out.push('\n');
         } else {
-            out.push_str(&format_symbol_line(sym, &lines));
+            let sig_end = signature_end_line(&lines, sym, is_python);
+            for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym.line - 1) {
+                out.push_str(&format!("{:>6}→{}\n", i + 1, line));
+            }
         }
-        out.push('\n');
     }
     out
 }
@@ -219,12 +223,6 @@ fn format_symbol_name(sym: &parse::Symbol, lines: &[&str]) -> String {
         None => sym.name.clone(),
     };
     format!("{:>6}→{}", sym.line, name_prefix)
-}
-
-/// Format a symbol line showing the full source line (level 2).
-fn format_symbol_line(sym: &parse::Symbol, lines: &[&str]) -> String {
-    let source_line = lines.get(sym.line - 1).copied().unwrap_or("");
-    format!("{:>6}→{}", sym.line, source_line)
 }
 
 /// Render all lines of a file with line numbers (level 5).
@@ -274,17 +272,24 @@ fn render_symbols_with_docs(
             }
             emitted_up_to = emitted_up_to.max(end);
         } else if sym_line_0 >= emitted_up_to {
-            // Non-expanded symbol: show doc comments + signature line
+            // Non-expanded symbol: show doc comments + multi-line signature
             let start = doc_start.max(emitted_up_to);
+            let sig_end = signature_end_line(&lines, sym, is_python);
+            // Doc comment lines before signature
             for (i, line) in lines.iter().enumerate().take(sym_line_0).skip(start) {
                 out.push_str(&format!("{:>6}→{}\n", i + 1, line));
             }
-            out.push_str(&format_symbol_line(sym, &lines));
-            out.push('\n');
-            // Python docstrings: include triple-quoted string after the symbol line
+            // Signature lines (may span multiple lines for functions)
+            for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
+                if i >= emitted_up_to {
+                    out.push_str(&format!("{:>6}→{}\n", i + 1, line));
+                }
+            }
+            emitted_up_to = emitted_up_to.max(sig_end + 1);
+            // Python docstrings: include triple-quoted string after the signature
             if is_python {
-                let ds_end = docstring_end(&lines, sym_line_0);
-                for (i, line) in lines.iter().enumerate().take(ds_end).skip(sym_line_0 + 1) {
+                let ds_end = docstring_end(&lines, sig_end);
+                for (i, line) in lines.iter().enumerate().take(ds_end).skip(sig_end + 1) {
                     out.push_str(&format!("{:>6}→{}\n", i + 1, line));
                 }
                 emitted_up_to = emitted_up_to.max(ds_end);
@@ -317,6 +322,34 @@ fn is_type_definition(kind: parse::SymbolKind) -> bool {
             | parse::SymbolKind::Interface
             | parse::SymbolKind::Class
     )
+}
+
+/// Whether a symbol is function-like (has a signature that may span multiple lines).
+fn is_function_like(kind: parse::SymbolKind) -> bool {
+    matches!(kind, parse::SymbolKind::Function)
+}
+
+/// Find the last line of a function's signature (0-indexed).
+/// For multi-line signatures, scans forward for the opening body delimiter
+/// (`{` or `;` for C-like languages, `:` for Python).
+/// Returns sym.line - 1 for single-line or non-function symbols.
+fn signature_end_line(lines: &[&str], sym: &parse::Symbol, is_python: bool) -> usize {
+    let sym_line_0 = sym.line - 1;
+    if !is_function_like(sym.kind) {
+        return sym_line_0;
+    }
+    let max_line = sym.end_line.min(lines.len());
+    for (i, line) in lines.iter().enumerate().take(max_line).skip(sym_line_0) {
+        let trimmed = line.trim();
+        if is_python {
+            if trimmed.ends_with(':') {
+                return i;
+            }
+        } else if trimmed.ends_with('{') || trimmed.ends_with(';') {
+            return i;
+        }
+    }
+    sym_line_0
 }
 
 /// Find the first line (0-indexed) of the doc comment block preceding a symbol.

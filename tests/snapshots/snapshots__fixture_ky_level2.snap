@@ -97,6 +97,9 @@ utils/body.ts
 utils/delay.ts
      5→export type DelayOptions = {
      9→export default async function delay(
+    10→	ms: number,
+    11→	{signal}: DelayOptions,
+    12→): Promise<void> {
 utils/is.ts
      2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
 utils/merge.ts
@@ -104,10 +107,12 @@ utils/merge.ts
     16→export const mergeHeaders = (source1: KyHeadersInit = {}, source2: KyHeadersInit = {}) => {
     32→function newHookValue<K extends keyof Hooks>(original: Hooks, incoming: Hooks, property: K): Required<Hooks>[K] {
     38→export const mergeHooks = (original: Hooks = {}, incoming: Hooks = {}): Required<Hooks> => (
+    39→	{
     47→const appendSearchParameters = (target: any, source: any): URLSearchParams => {
     86→export const deepMerge = <T>(...sources: Array<Partial<T> | undefined>): T => {
 utils/normalize.ts
      5→export const normalizeRequestMethod = (input: string): string =>
+     6→	requestMethods.includes(input as RequestHttpMethod) ? input.toUpperCase() : input;
      8→const retryMethods: HttpMethod[] = ['get', 'put', 'head', 'delete', 'options', 'trace'];
     10→const retryStatusCodes = [408, 413, 429, 500, 502, 503, 504];
     12→const retryAfterStatusCodes = [413, 429, 503];
@@ -116,10 +121,18 @@ utils/normalize.ts
     28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
 utils/options.ts
      4→export const findUnknownOptions = (
+     5→	request: Request,
+     6→	options: Record<string, unknown>,
+     7→): Record<string, unknown> => {
     30→export const hasSearchParameters = (search: SearchParamsOption): boolean => {
 utils/timeout.ts
      3→export type TimeoutOptions = {
      9→export default async function timeout(
+    10→	request: Request,
+    11→	init: RequestInit,
+    12→	abortController: AbortController | undefined,
+    13→	options: TimeoutOptions,
+    14→): Promise<Response> {
 utils/type-guards.ts
     27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
     49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {

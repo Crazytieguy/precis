@@ -6,6 +6,9 @@ into_either.rs
     14→pub trait IntoEither: Sized {
     29→    fn into_either(self, into_left: bool) -> Either<Self, Self> {
     55→    fn into_either_with<F>(self, into_left: F) -> Either<Self, Self>
+    56→    where
+    57→        F: FnOnce(&Self) -> bool,
+    58→    {
     64→impl<T> IntoEither for T {}
 iterator.rs
      4→macro_rules! wrap_either {
@@ -14,27 +17,64 @@ iterator.rs
     24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
     29→impl<L, R, A> Extend<A> for Either<L, R>
     34→    fn extend<T>(&mut self, iter: T)
+    35→    where
+    36→        T: IntoIterator<Item = A>,
+    37→    {
     43→impl<L, R> Iterator for Either<L, R>
     48→    type Item = L::Item;
     50→    fn next(&mut self) -> Option<Self::Item> {
     54→    fn size_hint(&self) -> (usize, Option<usize>) {
     58→    fn fold<Acc, G>(self, init: Acc, f: G) -> Acc
+    59→    where
+    60→        G: FnMut(Acc, Self::Item) -> Acc,
+    61→    {
     65→    fn for_each<F>(self, f: F)
+    66→    where
+    67→        F: FnMut(Self::Item),
+    68→    {
     72→    fn count(self) -> usize {
     76→    fn last(self) -> Option<Self::Item> {
     80→    fn nth(&mut self, n: usize) -> Option<Self::Item> {
     84→    fn collect<B>(self) -> B
+    85→    where
+    86→        B: iter::FromIterator<Self::Item>,
+    87→    {
     91→    fn partition<B, F>(self, f: F) -> (B, B)
+    92→    where
+    93→        B: Default + Extend<Self::Item>,
+    94→        F: FnMut(&Self::Item) -> bool,
+    95→    {
     99→    fn all<F>(&mut self, f: F) -> bool
+   100→    where
+   101→        F: FnMut(Self::Item) -> bool,
+   102→    {
    106→    fn any<F>(&mut self, f: F) -> bool
+   107→    where
+   108→        F: FnMut(Self::Item) -> bool,
+   109→    {
    113→    fn find<P>(&mut self, predicate: P) -> Option<Self::Item>
+   114→    where
+   115→        P: FnMut(&Self::Item) -> bool,
+   116→    {
    120→    fn find_map<B, F>(&mut self, f: F) -> Option<B>
+   121→    where
+   122→        F: FnMut(Self::Item) -> Option<B>,
+   123→    {
    127→    fn position<P>(&mut self, predicate: P) -> Option<usize>
+   128→    where
+   129→        P: FnMut(Self::Item) -> bool,
+   130→    {
    135→impl<L, R> DoubleEndedIterator for Either<L, R>
    140→    fn next_back(&mut self) -> Option<Self::Item> {
    144→    fn nth_back(&mut self, n: usize) -> Option<Self::Item> {
    148→    fn rfold<Acc, G>(self, init: Acc, f: G) -> Acc
+   149→    where
+   150→        G: FnMut(Acc, Self::Item) -> Acc,
+   151→    {
    155→    fn rfind<P>(&mut self, predicate: P) -> Option<Self::Item>
+   156→    where
+   157→        P: FnMut(&Self::Item) -> bool,
+   158→    {
    163→impl<L, R> ExactSizeIterator for Either<L, R>
    168→    fn len(&self) -> usize {
    173→impl<L, R> iter::FusedIterator for Either<L, R>
@@ -43,22 +83,56 @@ iterator.rs
    187→    fn next(&mut self) -> Option<Self::Item> {
    191→    fn size_hint(&self) -> (usize, Option<usize>) {
    195→    fn fold<Acc, G>(self, init: Acc, f: G) -> Acc
+   196→    where
+   197→        G: FnMut(Acc, Self::Item) -> Acc,
+   198→    {
    202→    fn for_each<F>(self, f: F)
+   203→    where
+   204→        F: FnMut(Self::Item),
+   205→    {
    209→    fn count(self) -> usize {
    213→    fn last(self) -> Option<Self::Item> {
    217→    fn nth(&mut self, n: usize) -> Option<Self::Item> {
    221→    fn collect<B>(self) -> B
+   222→    where
+   223→        B: iter::FromIterator<Self::Item>,
+   224→    {
    228→    fn partition<B, F>(self, f: F) -> (B, B)
+   229→    where
+   230→        B: Default + Extend<Self::Item>,
+   231→        F: FnMut(&Self::Item) -> bool,
+   232→    {
    236→    fn all<F>(&mut self, f: F) -> bool
+   237→    where
+   238→        F: FnMut(Self::Item) -> bool,
+   239→    {
    243→    fn any<F>(&mut self, f: F) -> bool
+   244→    where
+   245→        F: FnMut(Self::Item) -> bool,
+   246→    {
    250→    fn find<P>(&mut self, predicate: P) -> Option<Self::Item>
+   251→    where
+   252→        P: FnMut(&Self::Item) -> bool,
+   253→    {
    257→    fn find_map<B, F>(&mut self, f: F) -> Option<B>
+   258→    where
+   259→        F: FnMut(Self::Item) -> Option<B>,
+   260→    {
    264→    fn position<P>(&mut self, predicate: P) -> Option<usize>
+   265→    where
+   266→        P: FnMut(Self::Item) -> bool,
+   267→    {
    272→impl<L, R> DoubleEndedIterator for IterEither<L, R>
    277→    fn next_back(&mut self) -> Option<Self::Item> {
    281→    fn nth_back(&mut self, n: usize) -> Option<Self::Item> {
    285→    fn rfold<Acc, G>(self, init: Acc, f: G) -> Acc
+   286→    where
+   287→        G: FnMut(Acc, Self::Item) -> Acc,
+   288→    {
    292→    fn rfind<P>(&mut self, predicate: P) -> Option<Self::Item>
+   293→    where
+   294→        P: FnMut(&Self::Item) -> bool,
+   295→    {
    300→impl<L, R> ExactSizeIterator for IterEither<L, R>
    305→    fn len(&self) -> usize {
    310→impl<L, R> iter::FusedIterator for IterEither<L, R>
@@ -86,30 +160,116 @@ lib.rs
    278→    pub fn as_pin_mut(self: Pin<&mut Self>) -> Either<Pin<&mut L>, Pin<&mut R>> {
    298→    pub fn flip(self) -> Either<R, L> {
    317→    pub fn map_left<F, M>(self, f: F) -> Either<M, R>
+   318→    where
+   319→        F: FnOnce(L) -> M,
+   320→    {
    339→    pub fn map_right<F, S>(self, f: F) -> Either<L, S>
+   340→    where
+   341→        F: FnOnce(R) -> S,
+   342→    {
    366→    pub fn map_either<F, G, M, S>(self, f: F, g: G) -> Either<M, S>
+   367→    where
+   368→        F: FnOnce(L) -> M,
+   369→        G: FnOnce(R) -> S,
+   370→    {
    397→    pub fn map_either_with<Ctx, F, G, M, S>(self, ctx: Ctx, f: F, g: G) -> Either<M, S>
+   398→    where
+   399→        F: FnOnce(Ctx, L) -> M,
+   400→        G: FnOnce(Ctx, R) -> S,
+   401→    {
    424→    pub fn either<F, G, T>(self, f: F, g: G) -> T
+   425→    where
+   426→        F: FnOnce(L) -> T,
+   427→        G: FnOnce(R) -> T,
+   428→    {
    454→    pub fn either_with<Ctx, F, G, T>(self, ctx: Ctx, f: F, g: G) -> T
+   455→    where
+   456→        F: FnOnce(Ctx, L) -> T,
+   457→        G: FnOnce(Ctx, R) -> T,
+   458→    {
    476→    pub fn left_and_then<F, S>(self, f: F) -> Either<S, R>
+   477→    where
+   478→        F: FnOnce(L) -> Either<S, R>,
+   479→    {
    497→    pub fn right_and_then<F, S>(self, f: F) -> Either<L, S>
+   498→    where
+   499→        F: FnOnce(R) -> Either<L, S>,
+   500→    {
    521→    pub fn into_iter(self) -> Either<L::IntoIter, R::IntoIter>
+   522→    where
+   523→        L: IntoIterator,
+   524→        R: IntoIterator<Item = L::Item>,
+   525→    {
    544→    pub fn iter(&self) -> Either<<&L as IntoIterator>::IntoIter, <&R as IntoIterator>::IntoIter>
+   545→    where
+   546→        for<'a> &'a L: IntoIterator,
+   547→        for<'a> &'a R: IntoIterator<Item = <&'a L as IntoIterator>::Item>,
+   548→    {
    573→    pub fn iter_mut(
+   574→        &mut self,
+   575→    ) -> Either<<&mut L as IntoIterator>::IntoIter, <&mut R as IntoIterator>::IntoIter>
+   576→    where
+   577→        for<'a> &'a mut L: IntoIterator,
+   578→        for<'a> &'a mut R: IntoIterator<Item = <&'a mut L as IntoIterator>::Item>,
+   579→    {
    597→    pub fn factor_into_iter(self) -> IterEither<L::IntoIter, R::IntoIter>
+   598→    where
+   599→        L: IntoIterator,
+   600→        R: IntoIterator,
+   601→    {
    619→    pub fn factor_iter(
+   620→        &self,
+   621→    ) -> IterEither<<&L as IntoIterator>::IntoIter, <&R as IntoIterator>::IntoIter>
+   622→    where
+   623→        for<'a> &'a L: IntoIterator,
+   624→        for<'a> &'a R: IntoIterator,
+   625→    {
    645→    pub fn factor_iter_mut(
+   646→        &mut self,
+   647→    ) -> IterEither<<&mut L as IntoIterator>::IntoIter, <&mut R as IntoIterator>::IntoIter>
+   648→    where
+   649→        for<'a> &'a mut L: IntoIterator,
+   650→        for<'a> &'a mut R: IntoIterator,
+   651→    {
    671→    pub fn left_or(self, other: L) -> L {
    690→    pub fn left_or_default(self) -> L
+   691→    where
+   692→        L: Default,
+   693→    {
    712→    pub fn left_or_else<F>(self, f: F) -> L
+   713→    where
+   714→        F: FnOnce(R) -> L,
+   715→    {
    738→    pub fn right_or(self, other: R) -> R {
    757→    pub fn right_or_default(self) -> R
+   758→    where
+   759→        R: Default,
+   760→    {
    779→    pub fn right_or_else<F>(self, f: F) -> R
+   780→    where
+   781→        F: FnOnce(L) -> R,
+   782→    {
    809→    pub fn unwrap_left(self) -> L
+   810→    where
+   811→        R: core::fmt::Debug,
+   812→    {
    841→    pub fn unwrap_right(self) -> R
+   842→    where
+   843→        L: core::fmt::Debug,
+   844→    {
    871→    pub fn expect_left(self, msg: &str) -> L
+   872→    where
+   873→        R: core::fmt::Debug,
+   874→    {
    901→    pub fn expect_right(self, msg: &str) -> R
+   902→    where
+   903→        L: core::fmt::Debug,
+   904→    {
    923→    pub fn either_into<T>(self) -> T
+   924→    where
+   925→        L: Into<T>,
+   926→        R: Into<T>,
+   927→    {
    932→impl<L, R> Either<Option<L>, Option<R>> {
    944→    pub fn factor_none(self) -> Option<Either<L, R>> {
    952→impl<L, R, E> Either<Result<L, E>, Result<R, E>> {
@@ -123,12 +283,31 @@ lib.rs
   1038→impl<T> Either<T, T> {
   1050→    pub fn into_inner(self) -> T {
   1065→    pub fn map<F, M>(self, f: F) -> Either<M, M>
+  1066→    where
+  1067→        F: FnOnce(T) -> M,
+  1068→    {
   1073→impl<L, R> Either<&L, &R> {
   1076→    pub fn cloned(self) -> Either<L, R>
+  1077→    where
+  1078→        L: Clone,
+  1079→        R: Clone,
+  1080→    {
   1086→    pub fn copied(self) -> Either<L, R>
+  1087→    where
+  1088→        L: Copy,
+  1089→        R: Copy,
+  1090→    {
   1095→impl<L, R> Either<&mut L, &mut R> {
   1098→    pub fn cloned(self) -> Either<L, R>
+  1099→    where
+  1100→        L: Clone,
+  1101→        R: Clone,
+  1102→    {
   1108→    pub fn copied(self) -> Either<L, R>
+  1109→    where
+  1110→        L: Copy,
+  1111→        R: Copy,
+  1112→    {
   1118→impl<L, R> From<Result<R, L>> for Either<L, R> {
   1119→    fn from(r: Result<R, L>) -> Self {
   1128→impl<L, R> From<Either<L, R>> for Result<R, L> {
@@ -136,6 +315,9 @@ lib.rs
   1138→impl<L, R> Future for Either<L, R>
   1143→    type Output = L::Output;
   1145→    fn poll(
+  1146→        self: Pin<&mut Self>,
+  1147→        cx: &mut core::task::Context<'_>,
+  1148→    ) -> core::task::Poll<Self::Output> {
   1157→impl<L, R> Read for Either<L, R>
   1162→    fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
   1166→    fn read_exact(&mut self, buf: &mut [u8]) -> io::Result<()> {
@@ -183,8 +365,31 @@ lib.rs
 serde_untagged.rs
     40→enum Either<L, R> {
     45→pub fn serialize<L, R, S>(this: &super::Either<L, R>, serializer: S) -> Result<S::Ok, S::Error>
+    46→where
+    47→    S: Serializer,
+    48→    L: Serialize,
+    49→    R: Serialize,
+    50→{
     58→pub fn deserialize<'de, L, R, D>(deserializer: D) -> Result<super::Either<L, R>, D::Error>
+    59→where
+    60→    D: Deserializer<'de>,
+    61→    L: Deserialize<'de>,
+    62→    R: Deserialize<'de>,
+    63→{
 serde_untagged_optional.rs
     40→enum Either<L, R> {
     45→pub fn serialize<L, R, S>(
+    46→    this: &Option<super::Either<L, R>>,
+    47→    serializer: S,
+    48→) -> Result<S::Ok, S::Error>
+    49→where
+    50→    S: Serializer,
+    51→    L: Serialize,
+    52→    R: Serialize,
+    53→{
     62→pub fn deserialize<'de, L, R, D>(deserializer: D) -> Result<Option<super::Either<L, R>>, D::Error>
+    63→where
+    64→    D: Deserializer<'de>,
+    65→    L: Deserialize<'de>,
+    66→    R: Deserialize<'de>,
+    67→{

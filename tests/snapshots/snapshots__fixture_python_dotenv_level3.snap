@@ -5,6 +5,17 @@ expression: output
 __init__.py
      6→def load_ipython_extension(ipython: Any) -> None:
     12→def get_cli_string(
+    13→    path: Optional[str] = None,
+    14→    action: Optional[str] = None,
+    15→    key: Optional[str] = None,
+    16→    value: Optional[str] = None,
+    17→    quote: Optional[str] = None,
+    18→):
+    19→    """Returns a string suitable for running as a shell script.
+    20→
+    21→    Useful for converting a arguments passed to a fabric task
+    22→    to be passed to a `local` or `run` command.
+    23→    """
     42→__all__ = [
 __main__.py
 cli.py
@@ -80,6 +91,14 @@ main.py
     35→def with_warn_for_invalid_lines(mappings: Iterator[Binding]) -> Iterator[Binding]:
     45→class DotEnv:
     46→    def __init__(
+    47→        self,
+    48→        dotenv_path: Optional[StrPath],
+    49→        stream: Optional[IO[str]] = None,
+    50→        verbose: bool = False,
+    51→        encoding: Optional[str] = None,
+    52→        interpolate: bool = True,
+    53→        override: bool = True,
+    54→    ) -> None:
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     78→    def dict(self) -> Dict[str, Optional[str]]:
@@ -92,18 +111,116 @@ main.py
    115→    def get(self, key: str) -> Optional[str]:
    116→        """ """
    128→def get_key(
+   129→    dotenv_path: StrPath,
+   130→    key_to_get: str,
+   131→    encoding: Optional[str] = "utf-8",
+   132→) -> Optional[str]:
+   133→    """
+   134→    Get the value of a given key from the given .env.
+   135→
+   136→    Returns `None` if the key isn't found or doesn't have a value.
+   137→    """
    141→@contextmanager
    142→def rewrite(
+   143→    path: StrPath,
+   144→    encoding: Optional[str],
+   145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    163→def set_key(
+   164→    dotenv_path: StrPath,
+   165→    key_to_set: str,
+   166→    value_to_set: str,
+   167→    quote_mode: str = "always",
+   168→    export: bool = False,
+   169→    encoding: Optional[str] = "utf-8",
+   170→) -> Tuple[Optional[bool], str, str]:
+   171→    """
+   172→    Adds or Updates a key/value to the given .env
+   173→
+   174→    If the .env path given doesn't exist, fails instead of risking creating
+   175→    an orphan .env somewhere in the filesystem
+   176→    """
    211→def unset_key(
+   212→    dotenv_path: StrPath,
+   213→    key_to_unset: str,
+   214→    quote_mode: str = "always",
+   215→    encoding: Optional[str] = "utf-8",
+   216→) -> Tuple[Optional[bool], str]:
+   217→    """
+   218→    Removes a given key from the given `.env` file.
+   219→
+   220→    If the .env path given doesn't exist, fails.
+   221→    If the given key doesn't exist in the .env, fails.
+   222→    """
    244→def resolve_variables(
+   245→    values: Iterable[Tuple[str, Optional[str]]],
+   246→    override: bool,
+   247→) -> Mapping[str, Optional[str]]:
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """
    271→    Yield directories starting from the given directory up to the root
    272→    """
    287→def find_dotenv(
+   288→    filename: str = ".env",
+   289→    raise_error_if_not_found: bool = False,
+   290→    usecwd: bool = False,
+   291→) -> str:
+   292→    """
+   293→    Search in increasingly higher folders for the given file
+   294→
+   295→    Returns path to the file if found, or an empty string otherwise
+   296→    """
    338→def load_dotenv(
+   339→    dotenv_path: Optional[StrPath] = None,
+   340→    stream: Optional[IO[str]] = None,
+   341→    verbose: bool = False,
+   342→    override: bool = False,
+   343→    interpolate: bool = True,
+   344→    encoding: Optional[str] = "utf-8",
+   345→) -> bool:
+   346→    """Parse a .env file and then load all the variables found as environment variables.
+   347→
+   348→    Parameters:
+   349→        dotenv_path: Absolute or relative path to .env file.
+   350→        stream: Text stream (such as `io.StringIO`) with .env content, used if
+   351→            `dotenv_path` is `None`.
+   352→        verbose: Whether to output a warning the .env file is missing.
+   353→        override: Whether to override the system environment variables with the variables
+   354→            from the `.env` file.
+   355→        encoding: Encoding to be used to read the file.
+   356→    Returns:
+   357→        Bool: True if at least one environment variable is set else False
+   358→
+   359→    If both `dotenv_path` and `stream` are `None`, `find_dotenv()` is used to find the
+   360→    .env file with it's default parameters. If you need to change the default parameters
+   361→    of `find_dotenv()`, you can explicitly call `find_dotenv()` and pass the result
+   362→    to this function as `dotenv_path`.
+   363→
+   364→    If the environment variable `PYTHON_DOTENV_DISABLED` is set to a truthy value,
+   365→    .env loading is disabled.
+   366→    """
    387→def dotenv_values(
+   388→    dotenv_path: Optional[StrPath] = None,
+   389→    stream: Optional[IO[str]] = None,
+   390→    verbose: bool = False,
+   391→    interpolate: bool = True,
+   392→    encoding: Optional[str] = "utf-8",
+   393→) -> Dict[str, Optional[str]]:
+   394→    """
+   395→    Parse a .env file and return its content as a dict.
+   396→
+   397→    The returned dict will have `None` values for keys without values in the .env file.
+   398→    For example, `foo=bar` results in `{"foo": "bar"}` whereas `foo` alone results in
+   399→    `{"foo": None}`
+   400→
+   401→    Parameters:
+   402→        dotenv_path: Absolute or relative path to the .env file.
+   403→        stream: `StringIO` object with .env content, used if `dotenv_path` is `None`.
+   404→        verbose: Whether to output a warning if the .env file is missing.
+   405→        encoding: Encoding to be used to read the file.
+   406→
+   407→    If both `dotenv_path` and `stream` are `None`, `find_dotenv()` is used to find the
+   408→    .env file.
+   409→    """
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
    425→    Return True if `path` exists and is either a regular file or a FIFO.

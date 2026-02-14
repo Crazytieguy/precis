@@ -49,6 +49,10 @@ expand.rs
    511→fn fields_pat(fields: &[Field]) -> TokenStream {
    526→fn use_as_display(needs_as_display: bool) -> Option<TokenStream> {
    536→fn from_initializer(
+   537→    from_field: &Field,
+   538→    backtrace_field: Option<&Field>,
+   539→    source_var: &Ident,
+   540→) -> TokenStream {
    565→fn type_is_option(ty: &Type) -> bool {
    569→fn unoptional_type(ty: &Type) -> TokenStream {
    574→fn type_parameter_of_option(ty: &Type) -> Option<&Type> {
@@ -112,6 +116,9 @@ prop.rs
     97→fn source_field<'a, 'b>(fields: &'a [Field<'b>]) -> Option<&'a Field<'b>> {
    112→fn backtrace_field<'a, 'b>(fields: &'a [Field<'b>]) -> Option<&'a Field<'b>> {
    127→fn distinct_backtrace_field<'a, 'b>(
+   128→    backtrace_field: &'a Field<'b>,
+   129→    from_field: Option<&Field>,
+   130→) -> Option<&'a Field<'b>> {
    138→fn type_is_backtrace(ty: &Type) -> bool {
 scan_expr.rs
      6→enum Input {

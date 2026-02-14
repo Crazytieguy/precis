@@ -21,11 +21,23 @@ errors.ts
 index.ts
 internals/helpers.ts
     12→export const isObject = (value: unknown): value is Object =>
+    13→  Boolean(value && typeof value === 'object');
     16→export const isMatcher = (
+    17→  x: unknown
+    18→): x is Matcher<unknown, unknown, MatcherType, SelectionType> => {
     24→const isOptionalPattern = (
+    25→  x: unknown
+    26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
     32→export const matchPattern = (
+    33→  pattern: any,
+    34→  value: any,
+    35→  select: (key: string, value: unknown) => void
+    36→): boolean => {
    120→export const getSelectionKeys = (pattern: any): string[] => {
    132→export const flatMap = <a, b>(
+   133→  xs: readonly a[],
+   134→  f: (v: a) => readonly b[]
+   135→): b[] => xs.reduce<b[]>((acc, x) => acc.concat(f(x)), []);
 internals/symbols.ts
     17→export type matcher = typeof matcher;
     20→export type unset = typeof unset;
@@ -40,6 +52,8 @@ is-matching.ts
     10→ */
     11→type PatternConstraint<T> = T extends readonly any[]
     53→export function isMatching<const p extends Pattern<any>>(
+    54→  ...args: [pattern: p, value?: any]
+    55→): boolean | ((vale: any) => boolean) {
 match.ts
      7→type MatchState<output> =
     11→const unmatched: MatchState<never> = {
@@ -60,6 +74,8 @@ match.ts
     30→ *
     31→ */
     32→export function match<const input, output = symbols.unset>(
+    33→  value: input
+    34→): Match<input, output> {
     38→/**
     39→ * This class represents a match expression. It follows the
     40→ * builder pattern, we chain methods to add features to the expression
@@ -211,8 +227,13 @@ patterns.ts
    130→ */
    131→export type narrow<input, pattern> = ExtractPreciseValue<
    136→function chainable<pattern extends Matcher<any, any, any, any, any>>(
+   137→  pattern: pattern
+   138→): Chainable<pattern> {
    148→const variadic = <pattern extends {}>(pattern: pattern): Variadic<pattern> =>
+   149→  Object.assign(pattern, {
    165→function arrayChainable<pattern extends Matcher<any, any, any, any, any>>(
+   166→  pattern: pattern
+   167→): ArrayChainable<pattern> {
    177→/**
    178→ * `P.optional(subpattern)` takes a sub pattern and returns a pattern which matches if the
    179→ * key is undefined or if it is defined and the sub pattern matches its value.
@@ -224,6 +245,11 @@ patterns.ts
    185→ *   .with({ greeting: P.optional('Hello') }, () => 'will match { greeting?: "Hello" }')
    186→ */
    187→export function optional<
+   188→  input,
+   189→  const pattern extends unknown extends input
+   190→    ? UnknownValuePattern
+   191→    : Pattern<input>
+   192→>(pattern: pattern): Chainable<OptionalP<input, pattern>, 'optional'> {
    217→type UnwrapArray<xs> = xs extends readonly (infer x)[] ? x : never;
    219→type UnwrapSet<xs> = xs extends Set<infer x> ? x : never;
    221→type UnwrapMapKey<xs> = xs extends Map<infer k, any> ? k : never;
@@ -232,12 +258,31 @@ patterns.ts
    227→type UnwrapRecordValue<xs> = xs extends Record<any, infer v> ? v : never;
    229→type WithDefault<a, b> = [a] extends [never] ? b : a;
    246→export function array(
+   247→  ...args: [pattern?: any]
+   248→): ArrayChainable<ArrayP<any, any>> {
    299→export function set<
+   300→  input,
+   301→  const pattern extends Pattern<WithDefault<UnwrapSet<input>, unknown>>
+   302→>(...args: [pattern?: pattern]): Chainable<SetP<input, pattern>> {
    336→const setEvery = <T>(set: Set<T>, predicate: (value: T) => boolean) => {
    362→export function map<
+   363→  input,
+   364→  const pkey extends Pattern<WithDefault<UnwrapMapKey<input>, unknown>>,
+   365→  const pvalue extends Pattern<WithDefault<UnwrapMapValue<input>, unknown>>
+   366→>(
+   367→  ...args: [patternKey?: pkey, patternValue?: pvalue]
+   368→): Chainable<MapP<input, pkey, pvalue>> {
    410→const mapEvery = <K, T>(
+   411→  map: Map<K, T>,
+   412→  predicate: (value: T, key: K) => boolean
+   413→) => {
    445→export function record(
+   446→  ...args: [patternKey?: unknown, patternValue?: unknown]
+   447→): Chainable<RecordP<unknown, unknown, unknown>> {
    505→const recordEvery = <K extends PropertyKey, T>(
+   506→  record: Record<K, T>,
+   507→  predicate: (key: K, value: T) => boolean
+   508→) => {
    517→/**
    518→ * `P.intersection(...patterns)` returns a pattern which matches
    519→ * only if **every** patterns provided in parameter match the input.
@@ -258,6 +303,9 @@ patterns.ts
    534→ *   )
    535→ */
    536→export function intersection<
+   537→  input,
+   538→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
+   539→>(...patterns: patterns): Chainable<AndP<input, patterns>> {
    559→/**
    560→ * `P.union(...patterns)` returns a pattern which matches
    561→ * if **at least one** of the patterns provided in parameter match the input.
@@ -272,9 +320,22 @@ patterns.ts
    570→ *   )
    571→ */
    572→export function union<
+   573→  input,
+   574→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
+   575→>(...patterns: patterns): Chainable<OrP<input, patterns>> {
    611→export function not<
+   612→  input,
+   613→  const pattern extends Pattern<input> | UnknownValuePattern
+   614→>(pattern: pattern): Chainable<NotP<input, pattern>> {
    646→export function when<input, predicate extends (value: input) => unknown>(
+   647→  predicate: predicate
+   648→): GuardP<
+   649→  input,
+   650→  predicate extends (value: any) => value is infer narrowed ? narrowed : never
+   651→> {
    696→export function select(
+   697→  ...args: [keyOrPattern?: unknown | string, pattern?: unknown]
+   698→): Chainable<SelectP<string>, 'select' | 'or' | 'and'> {
    734→function isUnknown(x: unknown): x is unknown {
    738→function isNumber<T>(x: T | number): x is number {
    742→function isString<T>(x: T | string): x is string {
@@ -317,6 +378,9 @@ patterns.ts
    804→ */
    805→export const _ = any;
    817→const startsWith = <input, const start extends string>(
+   818→  start: start
+   819→): GuardP<input, `${start}${string}`> =>
+   820→  when((value) => isString(value) && value.startsWith(start));
    822→/**
    823→ * `P.string.endsWith(end)` is a pattern, matching **strings** ending with `end`.
    824→ *
@@ -327,6 +391,9 @@ patterns.ts
    829→ *   .with(P.string.endsWith('!'), () => 'value ends with an !')
    830→ */
    831→const endsWith = <input, const end extends string>(
+   832→  end: end
+   833→): GuardP<input, `${string}${end}`> =>
+   834→  when((value) => isString(value) && value.endsWith(end));
    836→/**
    837→ * `P.string.minLength(min)` is a pattern, matching **strings** with at least `min` characters.
    838→ *
@@ -337,6 +404,7 @@ patterns.ts
    843→ *   .with(P.string.minLength(10), () => 'string with more length >= 10')
    844→ */
    845→const minLength = <const min extends number>(min: min) =>
+   846→  when((value) => isString(value) && value.length >= min);
    848→/**
    849→ * `P.string.length(len)` is a pattern, matching **strings** with exactly `len` characters.
    850→ *
@@ -347,6 +415,7 @@ patterns.ts
    855→ *   .with(P.string.length(10), () => 'strings with length === 10')
    856→ */
    857→const length = <const len extends number>(len: len) =>
+   858→  when((value) => isString(value) && value.length === len);
    860→/**
    861→ * `P.string.maxLength(max)` is a pattern, matching **strings** with at most `max` characters.
    862→ *
@@ -357,6 +426,7 @@ patterns.ts
    867→ *   .with(P.string.maxLength(10), () => 'string with more length <= 10')
    868→ */
    869→const maxLength = <const max extends number>(max: max) =>
+   870→  when((value) => isString(value) && value.length <= max);
    872→/**
    873→ * `P.string.includes(substr)` is a pattern, matching **strings** containing `substr`.
    874→ *
@@ -367,6 +437,9 @@ patterns.ts
    879→ *   .with(P.string.includes('http'), () => 'value contains http')
    880→ */
    881→const includes = <input, const substr extends string>(
+   882→  substr: substr
+   883→): GuardExcludeP<input, string, never> =>
+   884→  when((value) => isString(value) && value.includes(substr));
    886→/**
    887→ * `P.string.regex(expr)` is a pattern, matching **strings** that `expr` regular expression.
    888→ *
@@ -377,7 +450,13 @@ patterns.ts
    893→ *   .with(P.string.regex(/^https?:\/\//), () => 'url')
    894→ */
    895→const regex = <input, const expr extends string | RegExp>(
+   896→  expr: expr
+   897→): GuardExcludeP<input, string, never> =>
+   898→  when((value) => isString(value) && Boolean(value.match(expr)));
    900→const stringChainable = <pattern extends Matcher<any, any, any, any, any>>(
+   901→  pattern: pattern
+   902→): StringChainable<pattern> =>
+   903→  Object.assign(chainable(pattern), {
    919→/**
    920→ * `P.string` is a wildcard pattern, matching any **string**.
    921→ *
@@ -399,6 +478,10 @@ patterns.ts
    938→ *   .with(P.number.between(0, 10), () => '0 <= numbers <= 10')
    939→ */
    940→const between = <input, const min extends number, const max extends number>(
+   941→  min: min,
+   942→  max: max
+   943→): GuardExcludeP<input, number, never> =>
+   944→  when((value) => isNumber(value) && min <= value && max >= value);
    946→/**
    947→ * `P.number.lt(max)` matches **numbers** smaller than `max`.
    948→ *
@@ -409,6 +492,9 @@ patterns.ts
    953→ *   .with(P.number.lt(10), () => 'numbers < 10')
    954→ */
    955→const lt = <input, const max extends number>(
+   956→  max: max
+   957→): GuardExcludeP<input, number, never> =>
+   958→  when((value) => isNumber(value) && value < max);
    960→/**
    961→ * `P.number.gt(min)` matches **numbers** greater than `min`.
    962→ *
@@ -419,6 +505,9 @@ patterns.ts
    967→ *   .with(P.number.gt(10), () => 'numbers > 10')
    968→ */
    969→const gt = <input, const min extends number>(
+   970→  min: min
+   971→): GuardExcludeP<input, number, never> =>
+   972→  when((value) => isNumber(value) && value > min);
    974→/**
    975→ * `P.number.lte(max)` matches **numbers** smaller than or equal to `max`.
    976→ *
@@ -429,6 +518,9 @@ patterns.ts
    981→ *   .with(P.number.lte(10), () => 'numbers <= 10')
    982→ */
    983→const lte = <input, const max extends number>(
+   984→  max: max
+   985→): GuardExcludeP<input, number, never> =>
+   986→  when((value) => isNumber(value) && value <= max);
    988→/**
    989→ * `P.number.gte(min)` matches **numbers** greater than or equal to `min`.
    990→ *
@@ -439,6 +531,9 @@ patterns.ts
    995→ *   .with(P.number.gte(10), () => 'numbers >= 10')
    996→ */
    997→const gte = <input, const min extends number>(
+   998→  min: min
+   999→): GuardExcludeP<input, number, never> =>
+  1000→  when((value) => isNumber(value) && value >= min);
   1002→/**
   1003→ * `P.number.int()` matches **integer** numbers.
   1004→ *
@@ -449,6 +544,7 @@ patterns.ts
   1009→ *   .with(P.number.int(), () => 'an integer')
   1010→ */
   1011→const int = <input>(): GuardExcludeP<input, number, never> =>
+  1012→  when((value) => isNumber(value) && Number.isInteger(value));
   1014→/**
   1015→ * `P.number.finite` matches **finite numbers**.
   1016→ *
@@ -459,6 +555,7 @@ patterns.ts
   1021→ *   .with(P.number.finite, () => 'not Infinity')
   1022→ */
   1023→const finite = <input>(): GuardExcludeP<input, number, never> =>
+  1024→  when((value) => isNumber(value) && Number.isFinite(value));
   1026→/**
   1027→ * `P.number.positive()` matches **positive** numbers.
   1028→ *
@@ -469,6 +566,7 @@ patterns.ts
   1033→ *   .with(P.number.positive(), () => 'number > 0')
   1034→ */
   1035→const positive = <input>(): GuardExcludeP<input, number, never> =>
+  1036→  when((value) => isNumber(value) && value > 0);
   1038→/**
   1039→ * `P.number.negative()` matches **negative** numbers.
   1040→ *
@@ -479,7 +577,11 @@ patterns.ts
   1045→ *   .with(P.number.negative(), () => 'number < 0')
   1046→ */
   1047→const negative = <input>(): GuardExcludeP<input, number, never> =>
+  1048→  when((value) => isNumber(value) && value < 0);
   1050→const numberChainable = <pattern extends Matcher<any, any, any, any, any>>(
+  1051→  pattern: pattern
+  1052→): NumberChainable<pattern> =>
+  1053→  Object.assign(chainable(pattern), {
   1066→/**
   1067→ * `P.number` is a wildcard pattern, matching any **number**.
   1068→ *
@@ -501,6 +603,14 @@ patterns.ts
   1085→ *   .with(P.bigint.between(0, 10), () => '0 <= bigints <= 10')
   1086→ */
   1087→const betweenBigInt = <
+  1088→  input,
+  1089→  const min extends bigint,
+  1090→  const max extends bigint
+  1091→>(
+  1092→  min: min,
+  1093→  max: max
+  1094→): GuardExcludeP<input, bigint, never> =>
+  1095→  when((value) => isBigInt(value) && min <= value && max >= value);
   1097→/**
   1098→ * `P.bigint.lt(max)` matches **bigint** smaller than `max`.
   1099→ *
@@ -511,6 +621,9 @@ patterns.ts
   1104→ *   .with(P.bigint.lt(10), () => 'bigints < 10')
   1105→ */
   1106→const ltBigInt = <input, const max extends bigint>(
+  1107→  max: max
+  1108→): GuardExcludeP<input, bigint, never> =>
+  1109→  when((value) => isBigInt(value) && value < max);
   1111→/**
   1112→ * `P.bigint.gt(min)` matches **bigint** greater than `min`.
   1113→ *
@@ -521,6 +634,9 @@ patterns.ts
   1118→ *   .with(P.bigint.gt(10), () => 'bigints > 10')
   1119→ */
   1120→const gtBigInt = <input, const min extends bigint>(
+  1121→  min: min
+  1122→): GuardExcludeP<input, bigint, never> =>
+  1123→  when((value) => isBigInt(value) && value > min);
   1125→/**
   1126→ * `P.bigint.lte(max)` matches **bigint** smaller than or equal to `max`.
   1127→ *
@@ -531,6 +647,9 @@ patterns.ts
   1132→ *   .with(P.bigint.lte(10), () => 'bigints <= 10')
   1133→ */
   1134→const lteBigInt = <input, const max extends bigint>(
+  1135→  max: max
+  1136→): GuardExcludeP<input, bigint, never> =>
+  1137→  when((value) => isBigInt(value) && value <= max);
   1139→/**
   1140→ * `P.bigint.gte(min)` matches **bigint** greater than or equal to `min`.
   1141→ *
@@ -541,6 +660,9 @@ patterns.ts
   1146→ *   .with(P.bigint.gte(10), () => 'bigints >= 10')
   1147→ */
   1148→const gteBigInt = <input, const min extends bigint>(
+  1149→  min: min
+  1150→): GuardExcludeP<input, bigint, never> =>
+  1151→  when((value) => isBigInt(value) && value >= min);
   1153→/**
   1154→ * `P.bigint.positive()` matches **positive** bigints.
   1155→ *
@@ -551,6 +673,7 @@ patterns.ts
   1160→ *   .with(P.bigint.positive(), () => 'bigint > 0')
   1161→ */
   1162→const positiveBigInt = <input>(): GuardExcludeP<input, bigint, never> =>
+  1163→  when((value) => isBigInt(value) && value > 0);
   1165→/**
   1166→ * `P.bigint.negative()` matches **negative** bigints.
   1167→ *
@@ -561,7 +684,11 @@ patterns.ts
   1172→ *   .with(P.bigint.negative(), () => 'bigint < 0')
   1173→ */
   1174→const negativeBigInt = <input>(): GuardExcludeP<input, bigint, never> =>
+  1175→  when((value) => isBigInt(value) && value < 0);
   1177→const bigintChainable = <pattern extends Matcher<any, any, any, any, any>>(
+  1178→  pattern: pattern
+  1179→): BigIntChainable<pattern> =>
+  1180→  Object.assign(chainable(pattern), {
   1193→/**
   1194→ * `P.bigint` is a wildcard pattern, matching any **bigint**.
   1195→ *
@@ -616,6 +743,8 @@ patterns.ts
   1249→ *   .with(P.instanceOf(SomeClass), () => 'will match on SomeClass instances')
   1250→ */
   1251→export function instanceOf<T extends AnyConstructor>(
+  1252→  classConstructor: T
+  1253→): Chainable<GuardP<unknown, InstanceType<T>>> {
   1274→export function shape(pattern: UnknownValuePattern) {
 types/BuildMany.ts
      4→export type BuildMany<data, xs extends readonly any[]> = xs extends any
@@ -728,6 +857,25 @@ types/Match.ts
     21→ */
     22→export type Match<
    132→  with<
+   133→    const pat extends Pattern<i>,
+   134→    pred extends (value: MatchedValue<i, InvertPattern<pat, i>>) => unknown,
+   135→    c,
+   136→    value extends GuardValue<pred>
+   137→  >(
+   138→    pattern: pat,
+   139→    predicate: pred,
+   140→    handler: (
+   141→      selections: FindSelected<value, pat>,
+   142→      value: value
+   143→    ) => PickReturnValue<o, c>
+   144→  ): pred extends (value: any) => value is infer narrowed
+   145→    ? Match<
+   146→        Exclude<i, narrowed>,
+   147→        o,
+   148→        [...handledCases, narrowed],
+   149→        Union<inferredOutput, c>
+   150→      >
+   151→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
    153→  /**
    154→   * `.when(predicate, handler)` Registers a predicate function and an handler function.
    155→   * If the predicate returns true, the handler function will be called.
@@ -735,6 +883,16 @@ types/Match.ts
    157→   * [Read the documentation for `.when()` on GitHub](https://github.com/gvergnaud/ts-pattern#when)
    158→   **/
    159→  when<pred extends (value: i) => unknown, c, value extends GuardValue<pred>>(
+   160→    predicate: pred,
+   161→    handler: (value: value) => PickReturnValue<o, c>
+   162→  ): pred extends (value: any) => value is infer narrowed
+   163→    ? Match<
+   164→        Exclude<i, narrowed>,
+   165→        o,
+   166→        [...handledCases, narrowed],
+   167→        Union<inferredOutput, c>
+   168→      >
+   169→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
    171→  /**
    172→   * `.otherwise()` takes a **default handler function** that will be
    173→   * called if no previous pattern matched your input.
@@ -745,6 +903,8 @@ types/Match.ts
    178→   *
    179→   **/
    180→  otherwise<c>(
+   181→    handler: (value: i) => PickReturnValue<o, c>
+   182→  ): PickReturnValue<o, Union<inferredOutput, c>>;
    200→  /**
    201→   * `.run()` return the resulting value.
    202→   *
@@ -891,6 +1051,8 @@ types/Pattern.ts
    235→       *   )
    236→       */
    237→      and<input, const p2 extends Pattern<input>>(
+   238→        pattern: p2
+   239→      ): Chainable<AndP<input, [p, p2]>, omitted>;
    240→      /**
    241→       * `pattern.or(pattern)` returns a pattern that matches
    242→       * if **either** the previous pattern or the next one match the input.
@@ -905,7 +1067,11 @@ types/Pattern.ts
    251→       *   )
    252→       */
    253→      or<input, const p2 extends Pattern<input>>(
+   254→        pattern: p2
+   255→      ): Chainable<OrP<input, [p, p2]>, omitted>;
    269→      select<input, k extends string>(
+   270→        key: k
+   271→      ): Chainable<SelectP<k, input, p>, omitted | 'select' | 'or' | 'and'>;
    276→export type StringChainable<
    282→      /**
    283→       * `P.string.startsWith(start)` is a pattern, matching **strings** starting with `start`.
@@ -917,6 +1083,11 @@ types/Pattern.ts
    289→       *   .with(P.string.startsWith('A'), () => 'value starts with an A')
    290→       */
    291→      startsWith<input, const start extends string>(
+   292→        start: start
+   293→      ): StringChainable<
+   294→        MergeGuards<input, p, GuardP<unknown, `${start}${string}`>>,
+   295→        omitted | 'startsWith'
+   296→      >;
    297→      /**
    298→       * `P.string.endsWith(end)` is a pattern, matching **strings** ending with `end`.
    299→       *
@@ -927,6 +1098,11 @@ types/Pattern.ts
    304→       *   .with(P.string.endsWith('!'), () => 'value ends with an !')
    305→       */
    306→      endsWith<input, const end extends string>(
+   307→        end: end
+   308→      ): StringChainable<
+   309→        MergeGuards<input, p, GuardP<unknown, `${string}${end}`>>,
+   310→        omitted | 'endsWith'
+   311→      >;
    312→      /**
    313→       * `P.string.minLength(min)` is a pattern, matching **strings** with at least `min` characters.
    314→       *
@@ -937,6 +1113,11 @@ types/Pattern.ts
    319→       *   .with(P.string.minLength(10), () => 'string with more length <= 10')
    320→       */
    321→      minLength<input, const min extends number>(
+   322→        min: min
+   323→      ): StringChainable<
+   324→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   325→        omitted | 'minLength'
+   326→      >;
    327→      /**
    328→       * `P.string.length(len)` is a pattern, matching **strings** with exactly `len` characters.
    329→       *
@@ -947,6 +1128,11 @@ types/Pattern.ts
    334→       *   .with(P.string.length(10), () => 'strings with length === 10')
    335→       */
    336→      length<input, const len extends number>(
+   337→        len: len
+   338→      ): StringChainable<
+   339→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   340→        omitted | 'length' | 'minLength' | 'maxLength'
+   341→      >;
    342→      /**
    343→       * `P.string.maxLength(max)` is a pattern, matching **strings** with at most `max` characters.
    344→       *
@@ -957,6 +1143,11 @@ types/Pattern.ts
    349→       *   .with(P.string.maxLength(10), () => 'string with more length >= 10')
    350→       */
    351→      maxLength<input, const max extends number>(
+   352→        max: max
+   353→      ): StringChainable<
+   354→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   355→        omitted | 'maxLength'
+   356→      >;
    357→      /**
    358→       * `P.string.includes(substr)` is a pattern, matching **strings** containing `substr`.
    359→       *
@@ -967,6 +1158,11 @@ types/Pattern.ts
    364→       *   .with(P.string.includes('http'), () => 'value contains http')
    365→       */
    366→      includes<input, const substr extends string>(
+   367→        substr: substr
+   368→      ): StringChainable<
+   369→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   370→        omitted
+   371→      >;
    372→      /**
    373→       * `P.string.regex(expr)` is a pattern, matching **strings** that `expr` regular expression.
    374→       *
@@ -977,6 +1173,11 @@ types/Pattern.ts
    379→       *   .with(P.string.regex(/^https?:\/\//), () => 'url')
    380→       */
    381→      regex<input, const expr extends string | RegExp>(
+   382→        expr: expr
+   383→      ): StringChainable<
+   384→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   385→        omitted
+   386→      >;
    391→export type NumberChainable<p, omitted extends string = never> = Chainable<
    397→      /**
    398→       * `P.number.between(min, max)` matches **number** between `min` and `max`,
@@ -989,6 +1190,12 @@ types/Pattern.ts
    405→       *   .with(P.number.between(0, 10), () => '0 <= numbers <= 10')
    406→       */
    407→      between<input, const min extends number, const max extends number>(
+   408→        min: min,
+   409→        max: max
+   410→      ): NumberChainable<
+   411→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   412→        omitted
+   413→      >;
    414→      /**
    415→       * `P.number.lt(max)` matches **number** smaller than `max`.
    416→       *
@@ -999,6 +1206,11 @@ types/Pattern.ts
    421→       *   .with(P.number.lt(10), () => 'numbers < 10')
    422→       */
    423→      lt<input, const max extends number>(
+   424→        max: max
+   425→      ): NumberChainable<
+   426→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   427→        omitted
+   428→      >;
    429→      /**
    430→       * `P.number.gt(min)` matches **number** greater than `min`.
    431→       *
@@ -1009,6 +1221,11 @@ types/Pattern.ts
    436→       *   .with(P.number.gt(10), () => 'numbers > 10')
    437→       */
    438→      gt<input, const min extends number>(
+   439→        min: min
+   440→      ): NumberChainable<
+   441→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   442→        omitted
+   443→      >;
    444→      /**
    445→       * `P.number.lte(max)` matches **number** smaller than or equal to `max`.
    446→       *
@@ -1019,6 +1236,11 @@ types/Pattern.ts
    451→       *   .with(P.number.lte(10), () => 'numbers <= 10')
    452→       */
    453→      lte<input, const max extends number>(
+   454→        max: max
+   455→      ): NumberChainable<
+   456→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   457→        omitted
+   458→      >;
    459→      /**
    460→       * `P.number.gte(min)` matches **number** greater than or equal to `min`.
    461→       *
@@ -1029,6 +1251,11 @@ types/Pattern.ts
    466→       *   .with(P.number.gte(10), () => 'numbers >= 10')
    467→       */
    468→      gte<input, const min extends number>(
+   469→        min: min
+   470→      ): NumberChainable<
+   471→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   472→        omitted
+   473→      >;
    474→      /**
    475→       * `P.number.int` matches **integer** numbers.
    476→       *
@@ -1039,6 +1266,9 @@ types/Pattern.ts
    481→       *   .with(P.number.int, () => 'an integer')
    482→       */
    483→      int<input>(): NumberChainable<
+   484→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   485→        omitted | 'int'
+   486→      >;
    487→      /**
    488→       * `P.number.finite` matches **finite numbers**.
    489→       *
@@ -1049,6 +1279,9 @@ types/Pattern.ts
    494→       *   .with(P.number.finite, () => 'not Infinity')
    495→       */
    496→      finite<input>(): NumberChainable<
+   497→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   498→        omitted | 'finite'
+   499→      >;
    500→      /**
    501→       * `P.number.positive` matches **positive** numbers.
    502→       *
@@ -1059,6 +1292,9 @@ types/Pattern.ts
    507→       *   .with(P.number.positive, () => 'number > 0')
    508→       */
    509→      positive<input>(): NumberChainable<
+   510→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   511→        omitted | 'positive' | 'negative'
+   512→      >;
    513→      /**
    514→       * `P.number.negative` matches **negative** numbers.
    515→       *
@@ -1069,6 +1305,9 @@ types/Pattern.ts
    520→       *   .with(P.number.negative, () => 'number < 0')
    521→       */
    522→      negative<input>(): NumberChainable<
+   523→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   524→        omitted | 'positive' | 'negative' | 'negative'
+   525→      >;
    530→export type BigIntChainable<p, omitted extends string = never> = Chainable<
    536→      /**
    537→       * `P.bigint.between(min, max)` matches **bigint** between `min` and `max`,
@@ -1081,6 +1320,12 @@ types/Pattern.ts
    544→       *   .with(P.bigint.between(0, 10), () => '0 <= numbers <= 10')
    545→       */
    546→      between<input, const min extends bigint, const max extends bigint>(
+   547→        min: min,
+   548→        max: max
+   549→      ): BigIntChainable<
+   550→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   551→        omitted
+   552→      >;
    553→      /**
    554→       * `P.bigint.lt(max)` matches **bigint** smaller than `max`.
    555→       *
@@ -1091,6 +1336,11 @@ types/Pattern.ts
    560→       *   .with(P.bigint.lt(10), () => 'numbers < 10')
    561→       */
    562→      lt<input, const max extends bigint>(
+   563→        max: max
+   564→      ): BigIntChainable<
+   565→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   566→        omitted
+   567→      >;
    568→      /**
    569→       * `P.bigint.gt(min)` matches **bigint** greater than `min`.
    570→       *
@@ -1101,6 +1351,11 @@ types/Pattern.ts
    575→       *   .with(P.bigint.gt(10), () => 'numbers > 10')
    576→       */
    577→      gt<input, const min extends bigint>(
+   578→        min: min
+   579→      ): BigIntChainable<
+   580→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   581→        omitted
+   582→      >;
    583→      /**
    584→       * `P.bigint.lte(max)` matches **bigint** smaller than or equal to `max`.
    585→       *
@@ -1111,6 +1366,11 @@ types/Pattern.ts
    590→       *   .with(P.bigint.lte(10), () => 'bigints <= 10')
    591→       */
    592→      lte<input, const max extends bigint>(
+   593→        max: max
+   594→      ): BigIntChainable<
+   595→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   596→        omitted
+   597→      >;
    598→      /**
    599→       * `P.bigint.gte(min)` matches **bigint** greater than or equal to `min`.
    600→       *
@@ -1121,6 +1381,11 @@ types/Pattern.ts
    605→       *   .with(P.bigint.gte(10), () => 'bigints >= 10')
    606→       */
    607→      gte<input, const min extends bigint>(
+   608→        min: min
+   609→      ): BigIntChainable<
+   610→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   611→        omitted
+   612→      >;
    613→      /**
    614→       * `P.bigint.positive` matches **positive** bigints.
    615→       *
@@ -1131,6 +1396,9 @@ types/Pattern.ts
    620→       *   .with(P.bigint.positive, () => 'bigint > 0')
    621→       */
    622→      positive<input>(): BigIntChainable<
+   623→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   624→        omitted | 'positive' | 'negative'
+   625→      >;
    626→      /**
    627→       * `P.bigint.negative` matches **negative** bigints.
    628→       *
@@ -1141,6 +1409,9 @@ types/Pattern.ts
    633→       *   .with(P.bigint.negative, () => 'bigint < 0')
    634→       */
    635→      negative<input>(): BigIntChainable<
+   636→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   637→        omitted | 'positive' | 'negative' | 'negative'
+   638→      >;
    643→export type Variadic<pattern> = pattern & Iterable<pattern>;
    645→export type ArrayChainable<
    651→      /**
@@ -1154,7 +1425,12 @@ types/Pattern.ts
    659→       *   .with({ greeting: P.string.optional() }, () => 'will match { greeting?: string}')
    660→       */
    661→      optional<input>(): ArrayChainable<
+   662→        OptionalP<input, pattern>,
+   663→        omitted | 'optional'
+   664→      >;
    678→      select<input, k extends string>(
+   679→        key: k
+   680→      ): ArrayChainable<SelectP<k, input, pattern>, omitted | 'select'>;
 types/helpers.ts
      1→export type ValueOf<a> = a extends readonly any[] ? a[number] : a[keyof a];
      3→export type Values<a extends object> = UnionToTuple<ValueOf<a>>;

@@ -140,10 +140,25 @@ struct.ts
    116→  }
    117→}
    123→export function assert<T, S>(
+   124→  value: unknown,
+   125→  struct: Struct<T, S>,
+   126→  message?: string
+   127→): asserts value is T {
    139→export function create<T, S>(
+   140→  value: unknown,
+   141→  struct: Struct<T, S>,
+   142→  message?: string
+   143→): T {
    157→export function mask<T, S>(
+   158→  value: unknown,
+   159→  struct: Struct<T, S>,
+   160→  message?: string
+   161→): T {
    175→export function is<T, S>(value: unknown, struct: Struct<T, S>): value is T {
    185→export function validate<T, S>(
+   186→  value: unknown,
+   187→  struct: Struct<T, S>,
+   188→  options: {
    221→export type Context = {
    231→export type Infer<T extends Struct<any, any>> = T['TYPE']
    237→export type Describe<T> = Struct<T, StructSchema<T>>
@@ -153,17 +168,46 @@ struct.ts
    266→export type Refiner<T> = (value: T, context: Context) => Result
 structs/coercions.ts
     16→export function coerce<T, S, C>(
+    17→  struct: Struct<T, S>,
+    18→  condition: Struct<C, any>,
+    19→  coercer: Coercer<C>
+    20→): Struct<T, S> {
     38→export function defaulted<T, S>(
+    39→  struct: Struct<T, S>,
+    40→  fallback: any,
+    41→  options: {
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
 structs/refinements.ts
      8→export function empty<
+     9→  T extends string | any[] | Map<any, any> | Set<any>,
+    10→  S extends any,
+    11→>(struct: Struct<T, S>): Struct<T, S> {
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
     33→export function max<T extends number | Date, S extends any>(
+    34→  struct: Struct<T, S>,
+    35→  threshold: T,
+    36→  options: {
     55→export function min<T extends number | Date, S extends any>(
+    56→  struct: Struct<T, S>,
+    57→  threshold: T,
+    58→  options: {
     77→export function nonempty<
+    78→  T extends string | any[] | Map<any, any> | Set<any>,
+    79→  S extends any,
+    80→>(struct: Struct<T, S>): Struct<T, S> {
     93→export function pattern<T extends string, S extends any>(
+    94→  struct: Struct<T, S>,
+    95→  regexp: RegExp
+    96→): Struct<T, S> {
    109→export function size<
+   110→  T extends string | number | Date | any[] | Map<any, any> | Set<any>,
+   111→  S extends any,
+   112→>(struct: Struct<T, S>, min: number, max: number = min): Struct<T, S> {
    146→export function refine<T, S>(
+   147→  struct: Struct<T, S>,
+   148→  name: string,
+   149→  refiner: Refiner<T>
+   150→): Struct<T, S> {
 structs/types.ts
     19→export function any(): Struct<any, null> {
     33→export function array<T extends Struct<any>>(Element?: T): any {
@@ -171,10 +215,16 @@ structs/types.ts
     70→export function boolean(): Struct<boolean, null> {
     83→export function date(): Struct<Date, null> {
    105→export function enums<U extends string | number, T extends readonly U[]>(
+   106→  values: T
+   107→): any {
    131→export function func(): Struct<Function, null> {
    144→export function instance<T extends { new (...args: any): any }>(
+   145→  Class: T
+   146→): Struct<InstanceType<T>, null> {
    159→export function integer(): Struct<number, null> {
    172→export function intersection<A extends AnyStruct, B extends AnyStruct[]>(
+   173→  Structs: [A, ...B]
+   174→): Struct<Infer<A> & UnionToIntersection<InferStructTuple<B>[number]>, null> {
    204→export function literal<T>(constant: T): any {
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    258→export function never(): Struct<never, null> {
@@ -183,22 +233,44 @@ structs/types.ts
    298→export function object<S extends ObjectSchema>(schema?: S): any {
    351→export function optional<T, S>(struct: Struct<T, S>): Struct<T | undefined, S> {
    367→export function record<K extends string, V>(
+   368→  Key: Struct<K>,
+   369→  Value: Struct<V>
+   370→): Struct<Record<K, V>, null> {
    402→export function regexp(): Struct<RegExp, null> {
    415→export function set<T>(Element?: Struct<T>): any {
    442→export function string(): Struct<string, null> {
    456→export function tuple<A extends AnyStruct, B extends AnyStruct[]>(
+   457→  Structs: [A, ...B]
+   458→): Struct<[Infer<A>, ...InferStructTuple<B>], null> {
    492→export function type<S extends ObjectSchema>(
+   493→  schema: S
+   494→): Struct<ObjectType<S>, S> {
    522→export function union<A extends AnyStruct, B extends AnyStruct[]>(
+   523→  Structs: [A, ...B]
+   524→): Struct<Infer<A> | InferStructTuple<B>[number], null> {
    574→export function unknown(): Struct<unknown, null> {
 structs/utilities.ts
     60→export function assign(...Structs: Struct<any>[]): any {
     71→export function define<T>(name: string, validator: Validator): Struct<T, null> {
     80→export function deprecated<T>(
+    81→  struct: Struct<T>,
+    82→  log: (value: unknown, ctx: Context) => void
+    83→): Struct<T> {
    106→export function dynamic<T>(
+   107→  fn: (value: unknown, ctx: Context) => Struct<T, any>
+   108→): Struct<T, null> {
    140→export function lazy<T>(fn: () => Struct<T, any>): Struct<T, null> {
    171→export function omit<S extends ObjectSchema, K extends keyof S>(
+   172→  struct: Struct<ObjectType<S>, S>,
+   173→  keys: K[]
+   174→): Struct<ObjectType<Omit<S, K>>, Omit<S, K>> {
    197→export function partial<S extends ObjectSchema>(
+   198→  struct: Struct<ObjectType<S>, S> | S
+   199→): Struct<ObjectType<PartialObjectSchema<S>>, PartialObjectSchema<S>> {
    221→export function pick<S extends ObjectSchema, K extends keyof S>(
+   222→  struct: Struct<ObjectType<S>, S>,
+   223→  keys: K[]
+   224→): Struct<ObjectType<Pick<S, K>>, Pick<S, K>> {
    247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
 utils.ts
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
@@ -208,6 +280,11 @@ utils.ts
     45→export function print(value: any): string {
     58→export function shiftIterator<T>(input: Iterator<T>): T | undefined {
     67→export function toFailure<T, S>(
+    68→  result: string | boolean | Partial<Failure>,
+    69→  context: Context,
+    70→  struct: Struct<T, S>,
+    71→  value: any
+    72→): Failure | undefined {
    202→export type UnionToIntersection<U> = (
    212→export type Assign<T, U> = Simplify<U & Omit<T, keyof U>>
    218→export type EnumSchema<T extends string | number | undefined | null> = {

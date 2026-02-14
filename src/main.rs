@@ -12,7 +12,7 @@ struct Cli {
     #[arg(long, conflicts_with = "level")]
     budget: Option<usize>,
 
-    /// Granularity level (0=paths, 1=names, 2=signatures, 3=+docs, 4=+type bodies, 5=full source)
+    /// Granularity level (0=paths, 1=names, 2=full signatures, 3=+docs, 4=+type bodies, 5=full source)
     #[arg(long, value_parser = clap::value_parser!(u8).range(0..=5))]
     level: Option<u8>,
 }

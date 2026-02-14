@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 → level 3 (495 words)
+budget: 500 → level 3 (500 words)
 
 assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
@@ -39,6 +39,7 @@ state.ts
     38→  publish = (data: ToastT) => {
     42→  addToast = (data: ToastT) => {
     47→  create = (
+    48→    data: ExternalToast & {
     88→  dismiss = (id?: number | string) => {
    101→  message = (message: titleT | React.ReactNode, data?: ExternalToast) => {
    105→  error = (message: titleT | React.ReactNode, data?: ExternalToast) => {

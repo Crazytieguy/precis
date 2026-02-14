@@ -5,6 +5,12 @@ expression: output
 __init__.py
      6→def load_ipython_extension(ipython: Any) -> None:
     12→def get_cli_string(
+    13→    path: Optional[str] = None,
+    14→    action: Optional[str] = None,
+    15→    key: Optional[str] = None,
+    16→    value: Optional[str] = None,
+    17→    quote: Optional[str] = None,
+    18→):
     42→__all__ = [
 __main__.py
 cli.py
@@ -26,20 +32,67 @@ main.py
     35→def with_warn_for_invalid_lines(mappings: Iterator[Binding]) -> Iterator[Binding]:
     45→class DotEnv:
     46→    def __init__(
+    47→        self,
+    48→        dotenv_path: Optional[StrPath],
+    49→        stream: Optional[IO[str]] = None,
+    50→        verbose: bool = False,
+    51→        encoding: Optional[str] = None,
+    52→        interpolate: bool = True,
+    53→        override: bool = True,
+    54→    ) -> None:
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     78→    def dict(self) -> Dict[str, Optional[str]]:
     94→    def parse(self) -> Iterator[Tuple[str, Optional[str]]]:
    100→    def set_as_environment_variables(self) -> bool:
    115→    def get(self, key: str) -> Optional[str]:
    128→def get_key(
+   129→    dotenv_path: StrPath,
+   130→    key_to_get: str,
+   131→    encoding: Optional[str] = "utf-8",
+   132→) -> Optional[str]:
    142→def rewrite(
+   143→    path: StrPath,
+   144→    encoding: Optional[str],
+   145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    163→def set_key(
+   164→    dotenv_path: StrPath,
+   165→    key_to_set: str,
+   166→    value_to_set: str,
+   167→    quote_mode: str = "always",
+   168→    export: bool = False,
+   169→    encoding: Optional[str] = "utf-8",
+   170→) -> Tuple[Optional[bool], str, str]:
    211→def unset_key(
+   212→    dotenv_path: StrPath,
+   213→    key_to_unset: str,
+   214→    quote_mode: str = "always",
+   215→    encoding: Optional[str] = "utf-8",
+   216→) -> Tuple[Optional[bool], str]:
    244→def resolve_variables(
+   245→    values: Iterable[Tuple[str, Optional[str]]],
+   246→    override: bool,
+   247→) -> Mapping[str, Optional[str]]:
    269→def _walk_to_root(path: str) -> Iterator[str]:
    287→def find_dotenv(
+   288→    filename: str = ".env",
+   289→    raise_error_if_not_found: bool = False,
+   290→    usecwd: bool = False,
+   291→) -> str:
    338→def load_dotenv(
+   339→    dotenv_path: Optional[StrPath] = None,
+   340→    stream: Optional[IO[str]] = None,
+   341→    verbose: bool = False,
+   342→    override: bool = False,
+   343→    interpolate: bool = True,
+   344→    encoding: Optional[str] = "utf-8",
+   345→) -> bool:
    387→def dotenv_values(
+   388→    dotenv_path: Optional[StrPath] = None,
+   389→    stream: Optional[IO[str]] = None,
+   390→    verbose: bool = False,
+   391→    interpolate: bool = True,
+   392→    encoding: Optional[str] = "utf-8",
+   393→) -> Dict[str, Optional[str]]:
    423→def _is_file_or_fifo(path: StrPath) -> bool:
 parser.py
     14→def make_regex(string: str, extra_flags: int = 0) -> Pattern[str]:

@@ -7,6 +7,10 @@ error.ts
      7→const defaultErrorConfig: ErrorConfig = {
     11→interface NeverThrowError<T, E> {
     27→export const createNeverThrowError = <T, E>(
+    28→  message: string,
+    29→  result: Result<T, E>,
+    30→  config: ErrorConfig = defaultErrorConfig,
+    31→): NeverThrowError<T, E> => {
 utils.ts
      5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
     10→export type ExtractOkAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
@@ -17,6 +21,10 @@ utils.ts
     27→export type InferAsyncOkTypes<R> = R extends ResultAsync<infer T, unknown> ? T : never
     28→export type InferAsyncErrTypes<R> = R extends ResultAsync<unknown, infer E> ? E : never
     33→export const combineResultList = <T, E>(
+    34→  resultList: readonly Result<T, E>[],
+    35→): Result<readonly T[], E> => {
     54→export const combineResultAsyncList = <T, E>(
     64→export const combineResultListWithAllErrors = <T, E>(
+    65→  resultList: readonly Result<T, E>[],
+    66→): Result<readonly T[], E[]> => {
     82→export const combineResultAsyncListWithAllErrors = <T, E>(

@@ -15,6 +15,9 @@ imp_cs.rs
     39→    pub(crate) fn is_initialized(&self) -> bool {
     43→    #[cold]
     44→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
+    45→    where
+    46→        F: FnOnce() -> Result<T, E>,
+    47→    {
     56→    /// Get the reference to the underlying value, without checking if the cell
     57→    /// is initialized.
     58→    ///
@@ -46,6 +49,9 @@ imp_pl.rs
     43→    /// lock/unlock, writes value only once because of the mutex.
     44→    #[cold]
     45→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
+    46→    where
+    47→        F: FnOnce() -> Result<T, E>,
+    48→    {
     79→    #[cold]
     80→    pub(crate) fn wait(&self) {
     94→    /// Get the reference to the underlying value, without checking if the cell
@@ -85,6 +91,9 @@ imp_std.rs
     59→    /// successful write.
     60→    #[cold]
     61→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
+    62→    where
+    63→        F: FnOnce() -> Result<T, E>,
+    64→    {
     87→    #[cold]
     88→    pub(crate) fn wait(&self) {
     92→    /// Get the reference to the underlying value, without checking if the cell
@@ -123,12 +132,21 @@ imp_std.rs
    246→    #[must_use]
    247→    #[inline]
    248→    pub(crate) fn addr<T>(ptr: *mut T) -> usize
+   249→    where
+   250→        T: Sized,
+   251→    {
    258→    #[must_use]
    259→    #[inline]
    260→    pub(crate) fn with_addr<T>(ptr: *mut T, addr: usize) -> *mut T
+   261→    where
+   262→        T: Sized,
+   263→    {
    279→    #[must_use]
    280→    #[inline]
    281→    pub(crate) fn map_addr<T>(ptr: *mut T, f: impl FnOnce(usize) -> usize) -> *mut T
+   282→    where
+   283→        T: Sized,
+   284→    {
 lib.rs
    378→#[cfg(all(feature = "std", not(feature = "parking_lot")))]
    379→#[path = "imp_std.rs"]
@@ -253,6 +271,9 @@ lib.rs
    584→        /// assert_eq!(value, &92);
    585→        /// ```
    586→        pub fn get_or_init<F>(&self, f: F) -> &T
+   587→        where
+   588→            F: FnOnce() -> T,
+   589→        {
    597→        /// Gets the contents of the cell, initializing it with `f` if
    598→        /// the cell was empty. If the cell was empty and `f` failed, an
    599→        /// error is returned.
@@ -279,6 +300,9 @@ lib.rs
    620→        /// assert_eq!(cell.get(), Some(&92))
    621→        /// ```
    622→        pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&T, E>
+   623→        where
+   624→            F: FnOnce() -> Result<T, E>,
+   625→        {
    638→        /// Takes the value out of this `OnceCell`, moving it back to an uninitialized state.
    639→        ///
    640→        /// Has no effect and returns `None` if the `OnceCell` hasn't been initialized.
@@ -606,6 +630,9 @@ lib.rs
   1113→        /// assert_eq!(value, &92);
   1114→        /// ```
   1115→        pub fn get_or_init<F>(&self, f: F) -> &T
+  1116→        where
+  1117→            F: FnOnce() -> T,
+  1118→        {
   1126→        /// Gets the contents of the cell, initializing it with `f` if
   1127→        /// the cell was empty. If the cell was empty and `f` failed, an
   1128→        /// error is returned.
@@ -633,6 +660,9 @@ lib.rs
   1150→        /// assert_eq!(cell.get(), Some(&92))
   1151→        /// ```
   1152→        pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&T, E>
+  1153→        where
+  1154→            F: FnOnce() -> Result<T, E>,
+  1155→        {
   1168→        /// Takes the value out of this `OnceCell`, moving it back to an uninitialized state.
   1169→        ///
   1170→        /// Has no effect and returns `None` if the `OnceCell` hasn't been initialized.
@@ -837,6 +867,9 @@ race.rs
    118→    /// be called. However, all threads will return the same value, produced by
    119→    /// some `f`.
    120→    pub fn get_or_init<F>(&self, f: F) -> NonZeroUsize
+   121→    where
+   122→        F: FnOnce() -> NonZeroUsize,
+   123→    {
    131→    /// Gets the contents of the cell, initializing it with `f` if
    132→    /// the cell was empty. If the cell was empty and `f` failed, an
    133→    /// error is returned.
@@ -845,6 +878,9 @@ race.rs
    136→    /// be called. However, all threads will return the same value, produced by
    137→    /// some `f`.
    138→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<NonZeroUsize, E>
+   139→    where
+   140→        F: FnOnce() -> Result<NonZeroUsize, E>,
+   141→    {
    148→    #[cold]
    149→    #[inline(never)]
    150→    fn init<E>(&self, f: impl FnOnce() -> Result<NonZeroUsize, E>) -> Result<NonZeroUsize, E> {
@@ -870,6 +906,9 @@ race.rs
    197→    /// be called. However, all threads will return the same value, produced by
    198→    /// some `f`.
    199→    pub fn get_or_init<F>(&self, f: F) -> bool
+   200→    where
+   201→        F: FnOnce() -> bool,
+   202→    {
    206→    /// Gets the contents of the cell, initializing it with `f` if
    207→    /// the cell was empty. If the cell was empty and `f` failed, an
    208→    /// error is returned.
@@ -878,6 +917,9 @@ race.rs
    211→    /// be called. However, all threads will return the same value, produced by
    212→    /// some `f`.
    213→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<bool, E>
+   214→    where
+   215→        F: FnOnce() -> Result<bool, E>,
+   216→    {
    220→    #[inline]
    221→    fn from_usize(value: NonZeroUsize) -> bool {
    225→    #[inline]
@@ -906,6 +948,9 @@ race.rs
    279→    /// be called. However, all threads will return the same value, produced by
    280→    /// some `f`.
    281→    pub fn get_or_init<F>(&self, f: F) -> &'a T
+   282→    where
+   283→        F: FnOnce() -> &'a T,
+   284→    {
    292→    /// Gets the contents of the cell, initializing it with `f` if
    293→    /// the cell was empty. If the cell was empty and `f` failed, an
    294→    /// error is returned.
@@ -914,6 +959,9 @@ race.rs
    297→    /// be called. However, all threads will return the same value, produced by
    298→    /// some `f`.
    299→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&'a T, E>
+   300→    where
+   301→        F: FnOnce() -> Result<&'a T, E>,
+   302→    {
    309→    #[cold]
    310→    #[inline(never)]
    311→    fn init<E>(&self, f: impl FnOnce() -> Result<&'a T, E>) -> Result<&'a T, E> {
@@ -964,6 +1012,9 @@ race.rs
    430→        /// be called. However, all threads will return the same value, produced by
    431→        /// some `f`.
    432→        pub fn get_or_init<F>(&self, f: F) -> &T
+   433→        where
+   434→            F: FnOnce() -> Box<T>,
+   435→        {
    443→        /// Gets the contents of the cell, initializing it with `f` if
    444→        /// the cell was empty. If the cell was empty and `f` failed, an
    445→        /// error is returned.
@@ -972,6 +1023,9 @@ race.rs
    448→        /// be called. However, all threads will return the same value, produced by
    449→        /// some `f`.
    450→        pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&T, E>
+   451→        where
+   452→            F: FnOnce() -> Result<Box<T>, E>,
+   453→        {
    460→        #[cold]
    461→        #[inline(never)]
    462→        fn init<E>(&self, f: impl FnOnce() -> Result<Box<T>, E>) -> Result<&T, E> {

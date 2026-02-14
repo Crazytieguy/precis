@@ -23,7 +23,22 @@ __private_api.rs
     46→    fn log(&self, record: &Record) {
     50→    fn flush(&self) {
     56→fn log_impl<L: Log>(
+    57→    logger: L,
+    58→    args: Arguments,
+    59→    level: Level,
+    60→    &(target, module_path, loc): &(&str, &'static str, &'static Location),
+    61→    kvs: Option<&[(&str, Value)]>,
+    62→) {
     84→pub fn log<'a, K, L>(
+    85→    logger: L,
+    86→    args: Arguments,
+    87→    level: Level,
+    88→    target_module_path_and_loc: &(&str, &'static str, &'static Location),
+    89→    kvs: K,
+    90→) where
+    91→    K: KVs<'a>,
+    92→    L: Log,
+    93→{
    103→pub fn enabled<L: Log>(logger: L, level: Level, target: &str) -> bool {
    107→#[track_caller]
    108→pub fn loc() -> &'static Location<'static> {
@@ -62,6 +77,9 @@ kv/error.rs
     75→    impl Error {
     76→        /// Create an error from a standard error type.
     77→        pub fn boxed<E>(err: E) -> Self
+    78→        where
+    79→            E: Into<BoxedError>,
+    80→        {
     87→    impl error::Error for Error {}
     89→    impl From<io::Error> for Error {
     90→        fn from(err: io::Error) -> Self {
@@ -110,12 +128,18 @@ kv/key.rs
    113→mod sval_support {
    119→    impl<'a> Value for Key<'a> {
    120→        fn stream<'sval, S: sval::Stream<'sval> + ?Sized>(
+   121→            &'sval self,
+   122→            stream: &mut S,
+   123→        ) -> sval::Result {
    128→    impl<'a> ValueRef<'a> for Key<'a> {
    129→        fn stream_ref<S: sval::Stream<'a> + ?Sized>(&self, stream: &mut S) -> sval::Result {
    135→#[cfg(feature = "kv_serde")]
    136→mod serde_support {
    141→    impl<'a> Serialize for Key<'a> {
    142→        fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+   143→        where
+   144→            S: Serializer,
+   145→        {
 kv/mod.rs
    246→mod error;
    247→mod key;
@@ -367,16 +391,31 @@ kv/value.rs
    123→impl<'v> Value<'v> {
    124→    /// Get a value from a type implementing `ToValue`.
    125→    pub fn from_any<T>(value: &'v T) -> Self
+   126→    where
+   127→        T: ToValue,
+   128→    {
    132→    /// Get a value from a type implementing `std::fmt::Debug`.
    133→    pub fn from_debug<T>(value: &'v T) -> Self
+   134→    where
+   135→        T: fmt::Debug,
+   136→    {
    142→    /// Get a value from a type implementing `std::fmt::Display`.
    143→    pub fn from_display<T>(value: &'v T) -> Self
+   144→    where
+   145→        T: fmt::Display,
+   146→    {
    152→    /// Get a value from a type implementing `serde::Serialize`.
    153→    #[cfg(feature = "kv_serde")]
    154→    pub fn from_serde<T>(value: &'v T) -> Self
+   155→    where
+   156→        T: serde_core::Serialize,
+   157→    {
    163→    /// Get a value from a type implementing `sval::Value`.
    164→    #[cfg(feature = "kv_sval")]
    165→    pub fn from_sval<T>(value: &'v T) -> Self
+   166→    where
+   167→        T: sval::Value,
+   168→    {
    174→    /// Get a value from a dynamic `std::fmt::Debug`.
    175→    pub fn from_dyn_debug(value: &'v dyn fmt::Debug) -> Self {
    181→    /// Get a value from a dynamic `std::fmt::Display`.
@@ -388,6 +427,9 @@ kv/value.rs
    197→    pub fn null() -> Self {
    203→    /// Get a value from an internal primitive.
    204→    fn from_inner<T>(value: T) -> Self
+   205→    where
+   206→        T: Into<inner::Inner<'v>>,
+   207→    {
    213→    /// Inspect this value using a simple visitor.
    214→    ///
    215→    /// When the `kv_serde` or `kv_sval` features are enabled, you can also
@@ -400,6 +442,9 @@ kv/value.rs
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
    236→    fn serialize<S>(&self, s: S) -> Result<S::Ok, S::Error>
+   237→    where
+   238→        S: serde_core::Serializer,
+   239→    {
    244→#[cfg(feature = "kv_sval")]
    245→impl<'v> sval::Value for Value<'v> {
    246→    fn stream<'sval, S: sval::Stream<'sval> + ?Sized>(&'sval self, stream: &mut S) -> sval::Result {
@@ -486,6 +531,9 @@ kv/value.rs
    528→    /// Visit an error.
    529→    #[cfg(feature = "kv_std")]
    530→    fn visit_borrowed_error(
+   531→        &mut self,
+   532→        err: &'v (dyn std::error::Error + 'static),
+   533→    ) -> Result<(), Error> {
    538→#[allow(clippy::needless_lifetimes)] // Not needless.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    543→    fn visit_any(&mut self, value: Value) -> Result<(), Error> {
@@ -503,9 +551,15 @@ kv/value.rs
    588→    fn visit_error(&mut self, err: &(dyn std::error::Error + 'static)) -> Result<(), Error> {
    592→    #[cfg(feature = "kv_std")]
    593→    fn visit_borrowed_error(
+   594→        &mut self,
+   595→        err: &'v (dyn std::error::Error + 'static),
+   596→    ) -> Result<(), Error> {
    601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {
    619→    pub fn visit<'v>(
+   620→        inner: &Inner<'v>,
+   621→        visitor: impl VisitValue<'v>,
+   622→    ) -> Result<(), crate::kv::Error> {
    720→#[cfg(not(feature = "value-bag"))]
    721→pub(in crate::kv) mod inner {
    737→    #[derive(Clone)]
@@ -565,27 +619,45 @@ kv/value.rs
    984→        pub fn to_i128(&self) -> Option<i128> {
    994→        pub fn to_borrowed_str(&self) -> Option<&'v str> {
   1031→    pub fn visit<'v>(
+  1032→        inner: &Inner<'v>,
+  1033→        mut visitor: impl VisitValue<'v>,
+  1034→    ) -> Result<(), crate::kv::Error> {
   1051→impl<'v> Value<'v> {
   1052→    /// Get a value from a type implementing `std::fmt::Debug`.
   1053→    #[cfg(feature = "kv_unstable")]
   1054→    #[deprecated(note = "use `from_debug` instead")]
   1055→    pub fn capture_debug<T>(value: &'v T) -> Self
+  1056→    where
+  1057→        T: fmt::Debug + 'static,
+  1058→    {
   1062→    /// Get a value from a type implementing `std::fmt::Display`.
   1063→    #[cfg(feature = "kv_unstable")]
   1064→    #[deprecated(note = "use `from_display` instead")]
   1065→    pub fn capture_display<T>(value: &'v T) -> Self
+  1066→    where
+  1067→        T: fmt::Display + 'static,
+  1068→    {
   1072→    /// Get a value from an error.
   1073→    #[cfg(feature = "kv_unstable_std")]
   1074→    #[deprecated(note = "use `from_dyn_error` instead")]
   1075→    pub fn capture_error<T>(err: &'v T) -> Self
+  1076→    where
+  1077→        T: std::error::Error + 'static,
+  1078→    {
   1082→    /// Get a value from a type implementing `serde::Serialize`.
   1083→    #[cfg(feature = "kv_unstable_serde")]
   1084→    #[deprecated(note = "use `from_serde` instead")]
   1085→    pub fn capture_serde<T>(value: &'v T) -> Self
+  1086→    where
+  1087→        T: serde_core::Serialize + 'static,
+  1088→    {
   1092→    /// Get a value from a type implementing `sval::Value`.
   1093→    #[cfg(feature = "kv_unstable_sval")]
   1094→    #[deprecated(note = "use `from_sval` instead")]
   1095→    pub fn capture_sval<T>(value: &'v T) -> Self
+  1096→    where
+  1097→        T: sval::Value + 'static,
+  1098→    {
   1107→    pub fn is<T: 'static>(&self) -> bool {
   1116→    pub fn downcast_ref<T: 'static>(&self) -> Option<&T> {
   1125→/// Get a value from a type implementing `std::fmt::Debug`.
@@ -1243,6 +1315,9 @@ lib.rs
   1478→pub fn set_logger(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
   1482→#[cfg(target_has_atomic = "ptr")]
   1483→fn set_logger_inner<F>(make_logger: F) -> Result<(), SetLoggerError>
+  1484→where
+  1485→    F: FnOnce() -> &'static dyn Log,
+  1486→{
   1510→/// A thread-unsafe version of [`set_logger`].
   1511→///
   1512→/// This function is available on all platforms, even those that do not have
@@ -1530,9 +1605,21 @@ macros.rs
 serde.rs
     16→impl Serialize for Level {
     17→    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    18→    where
+    19→        S: Serializer,
+    20→    {
     31→impl<'de> Deserialize<'de> for Level {
     32→    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    33→    where
+    34→        D: Deserializer<'de>,
+    35→    {
    110→impl Serialize for LevelFilter {
    111→    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+   112→    where
+   113→        S: Serializer,
+   114→    {
    126→impl<'de> Deserialize<'de> for LevelFilter {
    127→    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+   128→    where
+   129→        D: Deserializer<'de>,
+   130→    {
