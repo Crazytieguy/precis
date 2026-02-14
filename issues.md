@@ -29,8 +29,8 @@
 - Make levels depth-aware and file-size-aware (currently uniform across all files)
 - Priority languages: Markdown (Python now supported)
 - Add `--json` output flag
-- Doc comment detection (level 3) is text-based heuristic; does not use tree-sitter comment nodes. Handles `///`, `//!`, `/** */` blocks, and Python `#` comments. Skips `#[attr]` and `@decorator` lines between doc comments and symbols; decorators/attributes are always shown at level 3+.
-- Python: docstrings (triple-quoted strings inside function body) are not captured at level 3 since they come after the `def` line, not before it. Only `#` comments above functions are captured.
+- Doc comment detection (level 3) is text-based heuristic; does not use tree-sitter comment nodes. Handles `///`, `//!`, `/** */` blocks, Python `#` comments, and Python docstrings (`"""..."""` / `'''...'''`). Skips `#[attr]` and `@decorator` lines between doc comments and symbols; decorators/attributes are always shown at level 3+.
+- Python docstrings (triple-quoted strings after `def`/`class` lines) are captured at levels 3 and 4 via text-based heuristic. Handles single-line, multi-line, and raw (`r"""`) docstrings.
 - Python: module-level constants are captured if type-annotated (`VERSION: str = "0.1.0"`), UPPER_CASE (`MAX_SIZE = 100`), or dunder (`__all__ = [...]`). Lowercase untyped assignments (e.g. `logger = ...`) are excluded to reduce noise. `TypeAlias` annotations are mapped to `Const` kind (could be `TypeAlias` in the future).
 
 ## Design decisions

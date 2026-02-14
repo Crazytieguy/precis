@@ -94,7 +94,9 @@ _parser.py
    133→        self.lineno = lineno
    134→        self.colno = colno
    137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
+   138→    """Parse TOML from a binary file object."""
    149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
+   150→    """Parse TOML from a string."""
    220→class Flags:
    221→    """Flags that map to parsed keys/namespaces."""
    222→
@@ -209,13 +211,41 @@ _parser.py
    684→def parse_value(
    760→def is_unicode_scalar_value(codepoint: int) -> bool:
    764→def make_safe_parse_float(parse_float: ParseFloat) -> ParseFloat:
+   765→    """A decorator to make `parse_float` safe.
+   766→
+   767→    `parse_float` must not return dicts or lists, because these types
+   768→    would be mixed with parsed TOML tables and arrays, thus confusing
+   769→    the parser. The returned decorated callable raises `ValueError`
+   770→    instead of returning illegal types.
+   771→    """
 _re.py
     11→TYPE_CHECKING = False
     17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
+    27→    r"""
+    28→0
+    29→(?:
+    30→    x[0-9A-Fa-f](?:_?[0-9A-Fa-f])*   # hex
+    31→    |
+    32→    b[01](?:_?[01])*                 # bin
+    33→    |
+    34→    o[0-7](?:_?[0-7])*               # oct
+    35→)
+    36→|
+    37→[+-]?(?:0|[1-9](?:_?[0-9])*)         # dec, integer part
+    38→(?P<floatpart>
+    39→    (?:\.[0-9](?:_?[0-9])*)?         # optional fractional part
+    40→    (?:[eE][+-]?[0-9](?:_?[0-9])*)?  # optional exponent part
+    41→)
+    42→""",
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
+    60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
+    61→
+    62→    Raises ValueError if the match does not correspond to a valid date
+    63→    or datetime.
+    64→    """
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.

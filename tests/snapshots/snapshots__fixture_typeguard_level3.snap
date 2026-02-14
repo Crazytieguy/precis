@@ -42,26 +42,104 @@ _checkers.py
   1005→origin_type_checkers: dict[
   1061→def builtin_checker_lookup(
   1099→def load_plugins() -> None:
+  1100→    """
+  1101→    Load all type checker lookup functions from entry points.
+  1102→
+  1103→    All entry points from the ``typeguard.checker_lookup`` group are loaded, and the
+  1104→    returned lookup functions are added to :data:`typeguard.checker_lookup_functions`.
+  1105→
+  1106→    .. note:: This function is called implicitly on import, unless the
+  1107→        ``TYPEGUARD_DISABLE_PLUGIN_AUTOLOAD`` environment variable is present.
+  1108→    """
 _config.py
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
+    15→    """
+    16→    Defines how unresolved forward references are handled.
+    17→
+    18→    Members:
+    19→
+    20→    * ``ERROR``: propagate the :exc:`NameError` when the forward reference lookup fails
+    21→    * ``WARN``: emit a :class:`~.TypeHintWarning` if the forward reference lookup fails
+    22→    * ``IGNORE``: silently skip checks for unresolveable forward references
+    23→    """
     30→class CollectionCheckStrategy(Enum):
+    31→    """
+    32→    Specifies how thoroughly the contents of collections are type checked.
+    33→
+    34→    This has an effect on the following built-in checkers:
+    35→
+    36→    * ``AbstractSet``
+    37→    * ``Dict``
+    38→    * ``List``
+    39→    * ``Mapping``
+    40→    * ``Set``
+    41→    * ``Tuple[<type>, ...]`` (arbitrarily sized tuples)
+    42→
+    43→    Members:
+    44→
+    45→    * ``FIRST_ITEM``: check only the first item
+    46→    * ``ALL_ITEMS``: check all items
+    47→    """
     52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
     62→@dataclass
     63→class TypeCheckConfiguration:
+    64→    """
+    65→     You can change Typeguard's behavior with these settings.
+    66→
+    67→    .. attribute:: typecheck_fail_callback
+    68→       :type: Callable[[TypeCheckError, TypeCheckMemo], Any]
+    69→
+    70→         Callable that is called when type checking fails.
+    71→
+    72→         Default: ``None`` (the :exc:`~.TypeCheckError` is raised directly)
+    73→
+    74→    .. attribute:: forward_ref_policy
+    75→       :type: ForwardRefPolicy
+    76→
+    77→         Specifies what to do when a forward reference fails to resolve.
+    78→
+    79→         Default: ``WARN``
+    80→
+    81→    .. attribute:: collection_check_strategy
+    82→       :type: CollectionCheckStrategy
+    83→
+    84→         Specifies how thoroughly the contents of collections (list, dict, etc.) are
+    85→         type checked.
+    86→
+    87→         Default: ``FIRST_ITEM``
+    88→
+    89→    .. attribute:: debug_instrumentation
+    90→       :type: bool
+    91→
+    92→         If set to ``True``, the code of modules or functions instrumented by typeguard
+    93→         is printed to ``sys.stderr`` after the instrumentation is done
+    94→
+    95→         Default: ``False``
+    96→    """
 _decorators.py
     24→    def typeguard_ignore(arg: T_CallableOrType) -> T_CallableOrType:
+    25→        """This decorator is a noop during static type-checking."""
     32→def make_cell(value: object) -> _Cell:
     36→def find_target_function(
     56→def instrument(f: T_CallableOrType) -> FunctionType | str:
    150→def typechecked(
 _exceptions.py
      5→class TypeHintWarning(UserWarning):
+     6→    """
+     7→    A warning that is emitted when a type hint in string form could not be resolved to
+     8→    an actual type.
+     9→    """
     12→class TypeCheckWarning(UserWarning):
+    13→    """Emitted by typeguard's type checkers when a type mismatch is detected."""
     15→    def __init__(self, message: str):
     19→class InstrumentationWarning(UserWarning):
+    20→    """Emitted when there's a problem with instrumenting a function for type checks."""
     22→    def __init__(self, message: str):
     26→class TypeCheckError(Exception):
+    27→    """
+    28→    Raised by typeguard's type checkers when a type mismatch is detected.
+    29→    """
     31→    def __init__(self, message: str):
     35→    def append_path_element(self, element: str) -> None:
     38→    def __str__(self) -> str:
@@ -75,6 +153,13 @@ _functions.py
    216→def check_yield_type(
    245→def check_variable_assignment(
    291→def warn_on_error(exc: TypeCheckError, memo: TypeCheckMemo) -> None:
+   292→    """
+   293→    Emit a warning on a type mismatch.
+   294→
+   295→    This is intended to be used as an error handler in
+   296→    :attr:`TypeCheckConfiguration.typecheck_fail_callback`.
+   297→
+   298→    """
 _importhook.py
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
@@ -86,17 +171,62 @@ _importhook.py
     57→    def source_to_code(
     99→    def exec_module(self, module: ModuleType) -> None:
    109→class TypeguardFinder(MetaPathFinder):
+   110→    """
+   111→    Wraps another path finder and instruments the module with
+   112→    :func:`@typechecked <typeguard.typechecked>` if :meth:`should_instrument` returns
+   113→    ``True``.
+   114→
+   115→    Should not be used directly, but rather via :func:`~.install_import_hook`.
+   116→
+   117→    .. versionadded:: 2.6
+   118→    """
    120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
    124→    def find_spec(
    138→    def should_instrument(self, module_name: str) -> bool:
+   139→        """
+   140→        Determine whether the module with the given name should be instrumented.
+   141→
+   142→        :param module_name: full name of the module that is about to be imported (e.g.
+   143→            ``xyz.abc``)
+   144→
+   145→        """
    156→class ImportHookManager:
+   157→    """
+   158→    A handle that can be used to uninstall the Typeguard import hook.
+   159→    """
    161→    def __init__(self, hook: MetaPathFinder):
    164→    def __enter__(self) -> None:
    167→    def __exit__(
    175→    def uninstall(self) -> None:
+   176→        """Uninstall the import hook."""
    183→def install_import_hook(
 _memo.py
      8→class TypeCheckMemo:
+     9→    """
+    10→    Contains information necessary for type checkers to do their work.
+    11→
+    12→    .. attribute:: globals
+    13→       :type: dict[str, Any]
+    14→
+    15→        Dictionary of global variables to use for resolving forward references.
+    16→
+    17→    .. attribute:: locals
+    18→       :type: dict[str, Any]
+    19→
+    20→        Dictionary of local variables to use for resolving forward references.
+    21→
+    22→    .. attribute:: self_type
+    23→       :type: type | None
+    24→
+    25→        When running type checks within an instance method or class method, this is the
+    26→        class object that the first argument (usually named ``self`` or ``cls``) refers
+    27→        to.
+    28→
+    29→    .. attribute:: config
+    30→       :type: TypeCheckConfiguration
+    31→
+    32→         Contains the configuration for a particular set of type checking operations.
+    33→    """
     37→    def __init__(
 _pytest_plugin.py
     16→def pytest_addoption(parser: Parser) -> None:
@@ -116,6 +246,7 @@ _transformer.py
    206→    def get_memo_name(self) -> Name:
    212→    def get_import(self, module: str, name: str) -> Name:
    225→    def insert_imports(self, node: Module | FunctionDef | AsyncFunctionDef) -> None:
+   226→        """Insert imports needed by injected code."""
    238→    def name_matches(self, expression: expr | Expr | None, *names: str) -> bool:
    275→    def get_config_keywords(self) -> list[keyword]:
    285→class NameCollector(NodeVisitor):
@@ -127,6 +258,7 @@ _transformer.py
    306→    def visit_FunctionDef(self, node: FunctionDef) -> None:
    309→    def visit_ClassDef(self, node: ClassDef) -> None:
    313→class GeneratorDetector(NodeVisitor):
+   314→    """Detects if a function node is a generator function."""
    319→    def visit_Yield(self, node: Yield) -> Any:
    322→    def visit_YieldFrom(self, node: YieldFrom) -> Any:
    325→    def visit_ClassDef(self, node: ClassDef) -> Any:
@@ -156,17 +288,57 @@ _transformer.py
    650→    def visit_FunctionDef(
    913→    def visit_AsyncFunctionDef(
    918→    def visit_Return(self, node: Return) -> Return:
+   919→        """This injects type checks into "return" statements."""
    945→    def visit_Yield(self, node: Yield) -> Yield | Call:
+   946→        """
+   947→        This injects type checks into "yield" expressions, checking both the yielded
+   948→        value and the value sent back to the generator, when appropriate.
+   949→
+   950→        """
    994→    def visit_AnnAssign(self, node: AnnAssign) -> Any:
+   995→        """
+   996→        This injects a type check into a local variable annotation-assignment within a
+   997→        function body.
+   998→
+   999→        """
   1036→    def visit_Assign(self, node: Assign) -> Any:
+  1037→        """
+  1038→        This injects a type check into a local variable assignment within a function
+  1039→        body. The variable must have been annotated earlier in the function body.
+  1040→
+  1041→        """
   1138→    def visit_NamedExpr(self, node: NamedExpr) -> Any:
+  1139→        """This injects a type check into an assignment expression (a := foo())."""
   1181→    def visit_AugAssign(self, node: AugAssign) -> Any:
+  1182→        """
+  1183→        This injects a type check into an augmented assignment expression (a += 1).
+  1184→
+  1185→        """
   1224→    def visit_If(self, node: If) -> Any:
+  1225→        """
+  1226→        This blocks names from being collected from a module-level
+  1227→        "if typing.TYPE_CHECKING:" block, so that they won't be type checked.
+  1228→
+  1229→        """
 _utils.py
     48→    def evaluate_forwardref(forwardref: ForwardRef, memo: TypeCheckMemo) -> Any:
     66→def get_type_name(type_: Any) -> str:
    104→def qualified_name(obj: Any, *, add_class_prefix: bool = False) -> str:
+   105→    """
+   106→    Return the qualified name (e.g. package.module.Type) for the given object.
+   107→
+   108→    Builtins and types from the :mod:`typing` package get special treatment by having
+   109→    the module name stripped from the generated name.
+   110→
+   111→    """
    127→def function_name(func: Callable[..., Any]) -> str:
+   128→    """
+   129→    Return the qualified name of the given function.
+   130→
+   131→    Builtins and types from the :mod:`typing` package get special treatment by having
+   132→    the module name stripped from the generated name.
+   133→
+   134→    """
    142→def resolve_reference(reference: str) -> Any:
    154→def is_method_of(obj: object, cls: type) -> bool:
    162→def get_stacklevel() -> int:

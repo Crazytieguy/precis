@@ -256,6 +256,12 @@ _hooks.py
    281→def normalize_hookimpl_opts(opts: HookimplOpts) -> None:
    290→_PYPY = hasattr(sys, "pypy_version_info")
    293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
+   294→    """Return tuple of positional and keywrord argument names for a function,
+   295→    method, class or callable.
+   296→
+   297→    In case of a class, its ``__init__`` method is considered.
+   298→    For methods the ``self`` parameter is not included.
+   299→    """
    358→@final
    359→class HookRelay:
    360→    """Hook holder object for performing 1:N hook calls where N is the number

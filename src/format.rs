@@ -151,6 +151,7 @@ fn render_symbols_with_docs(path: &Path, root: &Path, source: &str, expand_types
     let relative = path.strip_prefix(root).unwrap_or(path);
     let symbols = parse::extract_symbols(path, source);
     let lines: Vec<&str> = source.lines().collect();
+    let is_python = path.extension().and_then(|e| e.to_str()) == Some("py");
     let mut out = String::new();
     out.push_str(&format!("{}\n", relative.display()));
     if symbols.is_empty() {
@@ -180,6 +181,14 @@ fn render_symbols_with_docs(path: &Path, root: &Path, source: &str, expand_types
             }
             out.push_str(&format_symbol_line(sym, &lines));
             out.push('\n');
+            // Python docstrings: include triple-quoted string after the symbol line
+            if is_python {
+                let ds_end = docstring_end(&lines, sym_line_0);
+                for (i, line) in lines.iter().enumerate().take(ds_end).skip(sym_line_0 + 1) {
+                    out.push_str(&format!("{:>6}→{}\n", i + 1, line));
+                }
+                emitted_up_to = emitted_up_to.max(ds_end);
+            }
         }
     }
     out
@@ -270,6 +279,47 @@ fn doc_comment_start(lines: &[&str], symbol_line_0: usize) -> usize {
 
     // Return idx (which may be < symbol_line_0 if decorators/attributes were found)
     idx
+}
+
+/// For Python files, find the end of a docstring following a symbol definition.
+/// Returns the end position (0-indexed, exclusive) of the docstring lines.
+/// Returns `sym_line_0 + 1` if no docstring is found.
+fn docstring_end(lines: &[&str], sym_line_0: usize) -> usize {
+    let mut idx = sym_line_0 + 1;
+    // Skip blank lines
+    while idx < lines.len() && lines[idx].trim().is_empty() {
+        idx += 1;
+    }
+    if idx >= lines.len() {
+        return sym_line_0 + 1;
+    }
+    let trimmed = lines[idx].trim();
+    // Detect triple-quote opener (""" or ''', optionally with r prefix)
+    let (quote, open_len) = if trimmed.starts_with("\"\"\"") {
+        ("\"\"\"", 3)
+    } else if trimmed.starts_with("'''") {
+        ("'''", 3)
+    } else if trimmed.starts_with("r\"\"\"") {
+        ("\"\"\"", 4)
+    } else if trimmed.starts_with("r'''") {
+        ("'''", 4)
+    } else {
+        return sym_line_0 + 1;
+    };
+    // Check if docstring closes on the same line (after the opening quotes)
+    let after_open = &trimmed[open_len..];
+    if after_open.contains(quote) {
+        return idx + 1;
+    }
+    // Multi-line: scan until closing triple quote
+    idx += 1;
+    while idx < lines.len() {
+        if lines[idx].contains(quote) {
+            return idx + 1;
+        }
+        idx += 1;
+    }
+    sym_line_0 + 1 // No closing quote found, skip
 }
 
 /// Find `needle` in `haystack` at a word boundary (not inside another identifier).

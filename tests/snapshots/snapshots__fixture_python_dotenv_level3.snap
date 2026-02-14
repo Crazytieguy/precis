@@ -9,45 +9,88 @@ __init__.py
 __main__.py
 cli.py
     24→def enumerate_env() -> Optional[str]:
+    25→    """
+    26→    Return a path for the ${pwd}/.env file.
+    27→
+    28→    If pwd does not exist, return None.
+    29→    """
     60→@click.version_option(version=__version__)
     61→@click.pass_context
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
+    63→    """This script is used to set, get or unset values from a .env file."""
     67→@contextmanager
     68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
+    69→    """
+    70→    Open a file and yield the corresponding (decoded) stream.
+    71→
+    72→    Exits with error code 2 if the file cannot be opened.
+    73→    """
     93→def list_values(ctx: click.Context, output_format: str) -> None:
+    94→    """Display all the stored key/value."""
    112→@cli.command(name="set")
    113→@click.pass_context
    114→@click.argument("key", required=True)
    115→@click.argument("value", required=True)
    116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
+   117→    """Store the given key/value."""
    128→@cli.command()
    129→@click.pass_context
    130→@click.argument("key", required=True)
    131→def get(ctx: click.Context, key: Any) -> None:
+   132→    """Retrieve the value for the given key."""
    145→@cli.command()
    146→@click.pass_context
    147→@click.argument("key", required=True)
    148→def unset(ctx: click.Context, key: Any) -> None:
+   149→    """Removes the given key."""
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
+   174→    """Run command with environment variables present."""
    193→def run_command(command: List[str], env: Dict[str, str]) -> None:
+   194→    """Replace the current process with the specified command.
+   195→
+   196→    Replaces the current process with the specified command and the variables from `env`
+   197→    added in the current environment variables.
+   198→
+   199→    Parameters
+   200→    ----------
+   201→    command: List[str]
+   202→        The command and it's parameters
+   203→    env: Dict
+   204→        The additional environment variables
+   205→
+   206→    Returns
+   207→    -------
+   208→    None
+   209→        This function does not return any value. It replaces the current process with the new one.
+   210→
+   211→    """
 ipython.py
     11→@magics_class
     12→class IPythonDotEnv(Magics):
     33→    @line_magic
     34→    def dotenv(self, line):
     48→def load_ipython_extension(ipython):
+    49→    """Register the %dotenv magic."""
 main.py
     25→def _load_dotenv_disabled() -> bool:
+    26→    """
+    27→    Determine if dotenv loading has been disabled.
+    28→    """
     35→def with_warn_for_invalid_lines(mappings: Iterator[Binding]) -> Iterator[Binding]:
     45→class DotEnv:
     46→    def __init__(
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     78→    def dict(self) -> Dict[str, Optional[str]]:
+    79→        """Return dotenv as dict"""
     94→    def parse(self) -> Iterator[Tuple[str, Optional[str]]]:
    100→    def set_as_environment_variables(self) -> bool:
+   101→        """
+   102→        Load the current dotenv as system environment variable.
+   103→        """
    115→    def get(self, key: str) -> Optional[str]:
+   116→        """ """
    128→def get_key(
    141→@contextmanager
    142→def rewrite(
@@ -55,10 +98,16 @@ main.py
    211→def unset_key(
    244→def resolve_variables(
    269→def _walk_to_root(path: str) -> Iterator[str]:
+   270→    """
+   271→    Yield directories starting from the given directory up to the root
+   272→    """
    287→def find_dotenv(
    338→def load_dotenv(
    387→def dotenv_values(
    423→def _is_file_or_fifo(path: StrPath) -> bool:
+   424→    """
+   425→    Return True if `path` exists and is either a regular file or a FIFO.
+   426→    """
 parser.py
     14→def make_regex(string: str, extra_flags: int = 0) -> Pattern[str]:
     35→class Original(NamedTuple):
@@ -86,6 +135,14 @@ parser.py
    179→def parse_stream(stream: IO[str]) -> Iterator[Binding]:
 variables.py
      5→_posix_variable: Pattern[str] = re.compile(
+     6→    r"""
+     7→    \$\{
+     8→        (?P<name>[^\}:]*)
+     9→        (?::-
+    10→            (?P<default>[^\}]*)
+    11→        )?
+    12→    \}
+    13→    """,
     18→class Atom(metaclass=ABCMeta):
     19→    def __ne__(self, other: object) -> bool:
     25→    @abstractmethod

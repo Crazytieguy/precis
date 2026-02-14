@@ -42,6 +42,15 @@ _checkers.py
   1005→origin_type_checkers: dict[
   1061→def builtin_checker_lookup(
   1099→def load_plugins() -> None:
+  1100→    """
+  1101→    Load all type checker lookup functions from entry points.
+  1102→
+  1103→    All entry points from the ``typeguard.checker_lookup`` group are loaded, and the
+  1104→    returned lookup functions are added to :data:`typeguard.checker_lookup_functions`.
+  1105→
+  1106→    .. note:: This function is called implicitly on import, unless the
+  1107→        ``TYPEGUARD_DISABLE_PLUGIN_AUTOLOAD`` environment variable is present.
+  1108→    """
 _config.py
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
@@ -132,6 +141,7 @@ _config.py
    103→    debug_instrumentation: bool = False
 _decorators.py
     24→    def typeguard_ignore(arg: T_CallableOrType) -> T_CallableOrType:
+    25→        """This decorator is a noop during static type-checking."""
     32→def make_cell(value: object) -> _Cell:
     36→def find_target_function(
     56→def instrument(f: T_CallableOrType) -> FunctionType | str:
@@ -179,6 +189,13 @@ _functions.py
    216→def check_yield_type(
    245→def check_variable_assignment(
    291→def warn_on_error(exc: TypeCheckError, memo: TypeCheckMemo) -> None:
+   292→    """
+   293→    Emit a warning on a type mismatch.
+   294→
+   295→    This is intended to be used as an error handler in
+   296→    :attr:`TypeCheckConfiguration.typecheck_fail_callback`.
+   297→
+   298→    """
 _importhook.py
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
@@ -1481,7 +1498,21 @@ _utils.py
     48→    def evaluate_forwardref(forwardref: ForwardRef, memo: TypeCheckMemo) -> Any:
     66→def get_type_name(type_: Any) -> str:
    104→def qualified_name(obj: Any, *, add_class_prefix: bool = False) -> str:
+   105→    """
+   106→    Return the qualified name (e.g. package.module.Type) for the given object.
+   107→
+   108→    Builtins and types from the :mod:`typing` package get special treatment by having
+   109→    the module name stripped from the generated name.
+   110→
+   111→    """
    127→def function_name(func: Callable[..., Any]) -> str:
+   128→    """
+   129→    Return the qualified name of the given function.
+   130→
+   131→    Builtins and types from the :mod:`typing` package get special treatment by having
+   132→    the module name stripped from the generated name.
+   133→
+   134→    """
    142→def resolve_reference(reference: str) -> Any:
    154→def is_method_of(obj: object, cls: type) -> bool:
    162→def get_stacklevel() -> int:
