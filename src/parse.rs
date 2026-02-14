@@ -207,8 +207,12 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             "const_declaration" | "var_declaration" => {
                 // Only capture grouped declarations (const (...) / var (...)).
                 // Standalone declarations are captured via inner const_spec/var_spec.
-                let text = symbol_node.utf8_text(source.as_bytes()).unwrap_or("");
-                if !text.contains('(') {
+                // Detect grouping via AST: grouped const blocks have a "(" child,
+                // grouped var blocks wrap entries in a "var_spec_list" child.
+                let is_grouped = (0..symbol_node.child_count())
+                    .filter_map(|i| symbol_node.child(i))
+                    .any(|c| c.kind() == "(" || c.kind() == "var_spec_list");
+                if !is_grouped {
                     continue;
                 }
                 if symbol_node.kind() == "const_declaration" {
