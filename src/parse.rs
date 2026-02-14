@@ -66,6 +66,10 @@ fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
             tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into(),
             include_str!("../queries/typescript.scm"),
         )),
+        "py" => Some((
+            tree_sitter_python::LANGUAGE.into(),
+            include_str!("../queries/python.scm"),
+        )),
         _ => None,
     }
 }
@@ -166,6 +170,9 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
                 }
             }
             "internal_module" => SymbolKind::Module,
+            // Python
+            "function_definition" => SymbolKind::Function,
+            "class_definition" => SymbolKind::Class,
             _ => continue,
         };
 
@@ -188,7 +195,12 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             }
         };
 
-        let is_public = is_public_symbol(symbol_node, source);
+        let is_public = if ext == "py" {
+            // Python: underscore prefix = private (convention)
+            !name.starts_with('_')
+        } else {
+            is_public_symbol(symbol_node, source)
+        };
 
         symbols.push(Symbol {
             kind,
@@ -312,7 +324,9 @@ fn is_inside_function(node: tree_sitter::Node) -> bool {
             "function_item" |
             // TypeScript / JavaScript
             "function_declaration" | "function_expression" | "method_definition" | "arrow_function"
-            | "generator_function" | "generator_function_declaration" => {
+            | "generator_function" | "generator_function_declaration" |
+            // Python
+            "function_definition" => {
                 return true;
             }
             _ => {}
@@ -454,7 +468,7 @@ pub mod utils;
 
     #[test]
     fn unsupported_extension_returns_empty() {
-        let symbols = extract_symbols(Path::new("test.py"), "def foo(): pass");
+        let symbols = extract_symbols(Path::new("test.rb"), "def foo(): pass");
         assert!(symbols.is_empty());
     }
 
@@ -670,6 +684,120 @@ export class Parser {
         // JS #private methods should be captured as non-public
         assert!(info.contains(&("#advance", SymbolKind::Function, false)));
         assert!(info.contains(&("#reset", SymbolKind::Function, false)));
+    }
+
+    #[test]
+    fn extracts_python_symbols() {
+        let source = r#"
+import os
+from typing import Optional
+
+def greet(name: str) -> str:
+    """Say hello."""
+    return f"Hello, {name}"
+
+def _private_helper(x):
+    return x * 2
+
+class Animal:
+    """An animal."""
+
+    def __init__(self, name: str):
+        self.name = name
+
+    def speak(self) -> str:
+        return "..."
+
+    def _internal(self):
+        pass
+
+class _PrivateClass:
+    pass
+
+MAX_SIZE: int = 100
+"#;
+        let symbols = extract_symbols(Path::new("test.py"), source);
+        let info: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.name.as_str(), s.kind, s.is_public))
+            .collect();
+
+        // Module-level functions
+        assert!(info.contains(&("greet", SymbolKind::Function, true)));
+        assert!(info.contains(&("_private_helper", SymbolKind::Function, false)));
+
+        // Classes
+        assert!(info.contains(&("Animal", SymbolKind::Class, true)));
+        assert!(info.contains(&("_PrivateClass", SymbolKind::Class, false)));
+
+        // Methods inside classes
+        assert!(info.contains(&("__init__", SymbolKind::Function, false)));
+        assert!(info.contains(&("speak", SymbolKind::Function, true)));
+        assert!(info.contains(&("_internal", SymbolKind::Function, false)));
+
+        // Nested functions inside methods should be filtered
+        // (none in this example, but the mechanism is tested)
+    }
+
+    #[test]
+    fn filters_python_nested_functions() {
+        let source = r#"
+def outer():
+    def inner_helper():
+        pass
+    return inner_helper()
+
+class Foo:
+    def method(self):
+        def local():
+            pass
+        return local()
+
+def top_level():
+    pass
+"#;
+        let symbols = extract_symbols(Path::new("test.py"), source);
+        let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
+
+        assert!(names.contains(&"outer"));
+        assert!(names.contains(&"Foo"));
+        assert!(names.contains(&"method"));
+        assert!(names.contains(&"top_level"));
+        // Nested functions inside function bodies should be filtered
+        assert!(!names.contains(&"inner_helper"));
+        assert!(!names.contains(&"local"));
+    }
+
+    #[test]
+    fn python_decorated_functions() {
+        let source = r#"
+from functools import lru_cache
+
+class MyClass:
+    @property
+    def name(self) -> str:
+        return self._name
+
+    @staticmethod
+    def create() -> "MyClass":
+        return MyClass()
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "MyClass":
+        return cls()
+
+@lru_cache(maxsize=128)
+def cached_compute(x: int) -> int:
+    return x * x
+"#;
+        let symbols = extract_symbols(Path::new("test.py"), source);
+        let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
+
+        assert!(names.contains(&"MyClass"));
+        assert!(names.contains(&"name"));
+        assert!(names.contains(&"create"));
+        assert!(names.contains(&"from_dict"));
+        assert!(names.contains(&"cached_compute"));
     }
 
     #[test]

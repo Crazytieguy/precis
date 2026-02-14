@@ -200,7 +200,7 @@ fn doc_comment_start(lines: &[&str], symbol_line_0: usize) -> usize {
     }
 
     if idx == 0 {
-        return symbol_line_0;
+        return idx;
     }
 
     let prev_trimmed = lines[idx - 1].trim();
@@ -229,7 +229,7 @@ fn doc_comment_start(lines: &[&str], symbol_line_0: usize) -> usize {
             }
             if line.starts_with("/*") {
                 // Regular block comment, not a doc comment
-                return symbol_line_0;
+                break;
             }
             if scan == 0 {
                 break;
@@ -238,7 +238,22 @@ fn doc_comment_start(lines: &[&str], symbol_line_0: usize) -> usize {
         }
     }
 
-    symbol_line_0
+    // Python-style # comments (but not Rust #[attributes], already handled above)
+    if prev_trimmed.starts_with('#') && !prev_trimmed.starts_with("#[") {
+        idx -= 1;
+        while idx > 0 {
+            let above = lines[idx - 1].trim();
+            if above.starts_with('#') && !above.starts_with("#[") {
+                idx -= 1;
+            } else {
+                break;
+            }
+        }
+        return idx;
+    }
+
+    // Return idx (which may be < symbol_line_0 if decorators/attributes were found)
+    idx
 }
 
 /// Find `needle` in `haystack` at a word boundary (not inside another identifier).

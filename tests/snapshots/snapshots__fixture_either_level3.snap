@@ -110,7 +110,9 @@ iterator.rs
    305→    fn len(&self) -> usize {
    310→impl<L, R> iter::FusedIterator for IterEither<L, R>
 lib.rs
+    21→#[cfg(feature = "serde")]
     22→pub mod serde_untagged;
+    24→#[cfg(feature = "serde")]
     25→pub mod serde_untagged_optional;
     41→/// The enum `Either` with variants `Left` and `Right` is a general purpose
     42→/// sum type with two cases.
@@ -849,7 +851,9 @@ lib.rs
   1347→/// Requires crate feature `"std"`
   1348→impl<L, R> Error for Either<L, R>
   1353→    fn source(&self) -> Option<&(dyn Error + 'static)> {
+  1357→    #[allow(deprecated)]
   1358→    fn description(&self) -> &str {
+  1362→    #[allow(deprecated)]
   1363→    fn cause(&self) -> Option<&dyn Error> {
   1368→impl<L, R> fmt::Display for Either<L, R>
   1373→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -860,12 +864,17 @@ lib.rs
   1521→/// A helper macro to check if AsRef and AsMut are implemented for a given type.
   1522→macro_rules! check_t {
   1536→fn _unsized_ref_propagation() {
+  1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {
 serde_untagged.rs
+    38→#[derive(serde::Serialize, serde::Deserialize)]
+    39→#[serde(untagged)]
     40→enum Either<L, R> {
     45→pub fn serialize<L, R, S>(this: &super::Either<L, R>, serializer: S) -> Result<S::Ok, S::Error>
     58→pub fn deserialize<'de, L, R, D>(deserializer: D) -> Result<super::Either<L, R>, D::Error>
 serde_untagged_optional.rs
+    38→#[derive(Serialize, Deserialize)]
+    39→#[serde(untagged)]
     40→enum Either<L, R> {
     45→pub fn serialize<L, R, S>(
     62→pub fn deserialize<'de, L, R, D>(deserializer: D) -> Result<Option<super::Either<L, R>>, D::Error>

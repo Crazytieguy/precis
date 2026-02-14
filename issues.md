@@ -14,7 +14,7 @@
 
 ## Current state
 
-- Parsing works for Rust, TypeScript, JavaScript, TSX — extracts symbol names, kinds, visibility
+- Parsing works for Rust, TypeScript, JavaScript, TSX, Python — extracts symbol names, kinds, visibility
 - Output supports 6 granularity levels: 0 (file paths), 1 (symbol names), 2 (full signature lines), 3 (signatures with doc comments), 4 (type bodies expanded), 5 (full source)
 - Monotonicity invariant (higher level = more words) tested against all fixtures
 - `--budget` flag works: binary search over levels selects highest level fitting within word budget
@@ -25,9 +25,12 @@
 ## Feature development
 
 - Make levels depth-aware and file-size-aware (currently uniform across all files)
-- Priority languages: Markdown and Python
+- Priority languages: Markdown (Python now supported)
 - Add `--json` output flag
-- Doc comment detection (level 3) is text-based heuristic; does not use tree-sitter comment nodes. Handles `///`, `//!`, and `/** */` blocks. Skips `#[attr]` and `@decorator` lines between doc comments and symbols.
+- Doc comment detection (level 3) is text-based heuristic; does not use tree-sitter comment nodes. Handles `///`, `//!`, `/** */` blocks, and Python `#` comments. Skips `#[attr]` and `@decorator` lines between doc comments and symbols; decorators/attributes are always shown at level 3+.
+- Python: docstrings (triple-quoted strings inside function body) are not captured at level 3 since they come after the `def` line, not before it. Only `#` comments above functions are captured.
+- Python: no fixture snapshot tests yet; needs small open-source Python projects cloned into test/fixtures/
+- Python: class bodies are not expanded at level 4 (Class not in `is_type_definition`). Consider adding — would show class attributes and nested class definitions.
 
 ## Design decisions
 

@@ -3,6 +3,7 @@ source: tests/snapshots.rs
 expression: output
 ---
 __private_api.rs
+     9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
     12→mod sealed {
     13→    /// Types for the `kv` argument.
@@ -10,8 +11,10 @@ __private_api.rs
     15→        fn into_kvs(self) -> Option<&'a [(&'a str, super::Value<'a>)]>;
     16→    }
     21→impl<'a> KVs<'a> for &'a [(&'a str, Value<'a>)] {
+    22→    #[inline]
     23→    fn into_kvs(self) -> Option<&'a [(&'a str, Value<'a>)]> {
     28→impl<'a> KVs<'a> for () {
+    29→    #[inline]
     30→    fn into_kvs(self) -> Option<&'a [(&'a str, Value<'a>)]> {
     37→/// The global logger proxy.
     38→#[derive(Debug)]
@@ -23,14 +26,19 @@ __private_api.rs
     56→fn log_impl<L: Log>(
     84→pub fn log<'a, K, L>(
    103→pub fn enabled<L: Log>(logger: L, level: Level, target: &str) -> bool {
+   107→#[track_caller]
    108→pub fn loc() -> &'static Location<'static> {
+   112→#[cfg(feature = "kv")]
    113→mod kv_support {
    116→    pub type Value<'a> = kv::Value<'a>;
    122→    pub fn capture_to_value<'a, V: kv::ToValue + ?Sized>(v: &'a &'a V) -> Value<'a> {
    126→    pub fn capture_debug<'a, V: core::fmt::Debug + ?Sized>(v: &'a &'a V) -> Value<'a> {
    130→    pub fn capture_display<'a, V: core::fmt::Display + ?Sized>(v: &'a &'a V) -> Value<'a> {
+   134→    #[cfg(feature = "kv_std")]
    135→    pub fn capture_error<'a>(v: &'a (dyn std::error::Error + 'static)) -> Value<'a> {
+   139→    #[cfg(feature = "kv_sval")]
    140→    pub fn capture_sval<'a, V: sval::Value + ?Sized>(v: &'a &'a V) -> Value<'a> {
+   144→    #[cfg(feature = "kv_serde")]
    145→    pub fn capture_serde<'a, V: serde_core::Serialize + ?Sized>(v: &'a &'a V) -> Value<'a> {
 kv/error.rs
      3→/// An error encountered while working with structured data.
@@ -38,6 +46,7 @@ kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
      7→}
+     9→#[derive(Debug)]
     10→enum Inner {
     11→    #[cfg(feature = "std")]
     12→    Boxed(std_support::BoxedError),
@@ -49,12 +58,15 @@ kv/error.rs
     19→impl Error {
     20→    /// Create an error from a message.
     21→    pub fn msg(msg: &'static str) -> Self {
+    28→    #[cfg(feature = "value-bag")]
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
+    36→    #[cfg(feature = "value-bag")]
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
     48→impl fmt::Display for Error {
     49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     62→impl From<fmt::Error> for Error {
     63→    fn from(_: fmt::Error) -> Self {
+    68→#[cfg(feature = "std")]
     69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     75→    impl Error {
@@ -75,6 +87,7 @@ kv/key.rs
     22→    fn to_key(&self) -> Key<'_> {
     27→impl ToKey for str {
     28→    fn to_key(&self) -> Key<'_> {
+    36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
@@ -101,25 +114,32 @@ kv/key.rs
     82→    fn borrow(&self) -> &str {
     87→impl<'k> From<&'k str> for Key<'k> {
     88→    fn from(s: &'k str) -> Self {
+    93→#[cfg(feature = "std")]
     94→mod std_support {
     99→    impl ToKey for String {
    100→        fn to_key(&self) -> Key<'_> {
    105→    impl<'a> ToKey for Cow<'a, str> {
    106→        fn to_key(&self) -> Key<'_> {
+   112→#[cfg(feature = "kv_sval")]
    113→mod sval_support {
    119→    impl<'a> Value for Key<'a> {
    120→        fn stream<'sval, S: sval::Stream<'sval> + ?Sized>(
    128→    impl<'a> ValueRef<'a> for Key<'a> {
    129→        fn stream_ref<S: sval::Stream<'a> + ?Sized>(&self, stream: &mut S) -> sval::Result {
+   135→#[cfg(feature = "kv_serde")]
    136→mod serde_support {
    141→    impl<'a> Serialize for Key<'a> {
    142→        fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
 kv/mod.rs
    246→mod error;
    247→mod key;
+   249→#[cfg(not(feature = "kv_unstable"))]
    250→mod source;
+   251→#[cfg(not(feature = "kv_unstable"))]
    252→mod value;
+   259→#[cfg(feature = "kv_unstable")]
    260→pub mod source;
+   261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
 kv/source.rs
      9→/// A source of key-values.
@@ -231,6 +251,7 @@ kv/source.rs
    236→    /// Visit a key-value pair.
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
    238→}
+   240→#[allow(clippy::needless_lifetimes)] // Not needless.
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    245→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error> {
    250→impl<'a, 'b: 'a, 'kvs> VisitSource<'kvs> for fmt::DebugMap<'a, 'b> {
@@ -241,6 +262,7 @@ kv/source.rs
    265→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error> {
    271→impl<'a, 'b: 'a, 'kvs> VisitSource<'kvs> for fmt::DebugTuple<'a, 'b> {
    272→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error> {
+   279→#[cfg(feature = "std")]
    280→mod std_support {
    288→    impl<S> Source for Box<S>
    292→        fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error> {
@@ -400,10 +422,13 @@ kv/value.rs
    223→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
    228→impl<'v> fmt::Display for Value<'v> {
    229→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+   234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
    236→    fn serialize<S>(&self, s: S) -> Result<S::Ok, S::Error>
+   244→#[cfg(feature = "kv_sval")]
    245→impl<'v> sval::Value for Value<'v> {
    246→    fn stream<'sval, S: sval::Stream<'sval> + ?Sized>(&'sval self, stream: &mut S) -> sval::Result {
+   251→#[cfg(feature = "kv_sval")]
    252→impl<'v> sval_ref::ValueRef<'v> for Value<'v> {
    253→    fn stream_ref<S: sval::Stream<'v> + ?Sized>(&self, stream: &mut S) -> sval::Result {
    258→impl ToValue for str {
@@ -423,6 +448,7 @@ kv/value.rs
    379→    pub fn to_borrowed_error(&self) -> Option<&(dyn std::error::Error + 'static)> {
    383→    /// Try to convert this value into a borrowed string.
    384→    pub fn to_borrowed_str(&self) -> Option<&'v str> {
+   389→#[cfg(feature = "kv_std")]
    390→mod std_support {
    397→    impl<T> ToValue for Box<T>
    401→        fn to_value(&self) -> Value<'_> {
@@ -526,6 +552,7 @@ kv/value.rs
    534→        self.visit_any(Value::from_dyn_error(err))
    535→    }
    536→}
+   538→#[allow(clippy::needless_lifetimes)] // Not needless.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    543→    fn visit_any(&mut self, value: Value) -> Result<(), Error> {
    547→    fn visit_null(&mut self) -> Result<(), Error> {
@@ -538,11 +565,16 @@ kv/value.rs
    575→    fn visit_str(&mut self, value: &str) -> Result<(), Error> {
    579→    fn visit_borrowed_str(&mut self, value: &'v str) -> Result<(), Error> {
    583→    fn visit_char(&mut self, value: char) -> Result<(), Error> {
+   587→    #[cfg(feature = "kv_std")]
    588→    fn visit_error(&mut self, err: &(dyn std::error::Error + 'static)) -> Result<(), Error> {
+   592→    #[cfg(feature = "kv_std")]
    593→    fn visit_borrowed_error(
+   601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {
    619→    pub fn visit<'v>(
+   720→#[cfg(not(feature = "value-bag"))]
    721→pub(in crate::kv) mod inner {
+   737→    #[derive(Clone)]
    738→    pub enum Inner<'v> {
    739→        None,
    740→        Bool(bool),
@@ -658,13 +690,17 @@ kv/value.rs
   1168→#[macro_export]
   1169→macro_rules! as_sval {
 lib.rs
+   405→#[macro_use]
    406→mod macros;
    407→mod serde;
+   409→#[cfg(feature = "kv")]
    410→pub mod kv;
+   425→#[cfg(not(target_has_atomic = "ptr"))]
    426→impl AtomicUsize {
    427→    const fn new(v: usize) -> AtomicUsize {
    431→    fn load(&self, _order: Ordering) -> usize {
    435→    fn store(&self, val: usize, _order: Ordering) {
+   442→#[cfg(not(target_has_atomic = "ptr"))]
    443→unsafe impl Sync for AtomicUsize {}
    447→static mut LOGGER: &dyn Log = &NopLogger;
    449→static STATE: AtomicUsize = AtomicUsize::new(0);
@@ -709,8 +745,10 @@ lib.rs
    498→    Trace,
    499→}
    501→impl PartialEq<LevelFilter> for Level {
+   502→    #[inline]
    503→    fn eq(&self, other: &LevelFilter) -> bool {
    508→impl PartialOrd<LevelFilter> for Level {
+   509→    #[inline]
    510→    fn partial_cmp(&self, other: &LevelFilter) -> Option<cmp::Ordering> {
    515→impl FromStr for Level {
    516→    type Err = ParseLevelError;
@@ -803,8 +841,10 @@ lib.rs
    648→    Trace,
    649→}
    651→impl PartialEq<Level> for LevelFilter {
+   652→    #[inline]
    653→    fn eq(&self, other: &Level) -> bool {
    658→impl PartialOrd<Level> for LevelFilter {
+   659→    #[inline]
    660→    fn partial_cmp(&self, other: &Level) -> Option<cmp::Ordering> {
    665→impl FromStr for LevelFilter {
    666→    type Err = ParseLevelError;
@@ -875,11 +915,13 @@ lib.rs
    772→    /// assert_eq!(LevelFilter::Off, level_filter.decrement_severity().decrement_severity().decrement_severity().decrement_severity()); // min level
    773→    /// ```
    774→    pub fn decrement_severity(&self) -> Self {
+   780→#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
    781→enum MaybeStaticStr<'a> {
    782→    Static(&'static str),
    783→    Borrowed(&'a str),
    784→}
    786→impl<'a> MaybeStaticStr<'a> {
+   787→    #[inline]
    788→    fn get(&self) -> &'a str {
    796→/// The "payload" of a log message.
    797→///
@@ -936,7 +978,10 @@ lib.rs
    848→    #[cfg(feature = "kv")]
    849→    key_values: KeyValues<'a>,
    850→}
+   856→#[cfg(feature = "kv")]
+   857→#[derive(Clone)]
    858→struct KeyValues<'a>(&'a dyn kv::Source);
+   860→#[cfg(feature = "kv")]
    861→impl<'a> fmt::Debug for KeyValues<'a> {
    862→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
    869→impl<'a> Record<'a> {
@@ -1208,10 +1253,12 @@ lib.rs
   1298→    fn enabled(&self, metadata: &Metadata) -> bool {
   1302→    fn log(&self, record: &Record) {
   1305→    fn flush(&self) {
+  1310→#[cfg(feature = "std")]
   1311→impl<T> Log for std::boxed::Box<T>
   1315→    fn enabled(&self, metadata: &Metadata) -> bool {
   1319→    fn log(&self, record: &Record) {
   1322→    fn flush(&self) {
+  1327→#[cfg(feature = "std")]
   1328→impl<T> Log for std::sync::Arc<T>
   1332→    fn enabled(&self, metadata: &Metadata) -> bool {
   1336→    fn log(&self, record: &Record) {
@@ -1330,6 +1377,7 @@ lib.rs
   1476→/// [`set_logger_racy`]: fn.set_logger_racy.html
   1477→#[cfg(target_has_atomic = "ptr")]
   1478→pub fn set_logger(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
+  1482→#[cfg(target_has_atomic = "ptr")]
   1483→fn set_logger_inner<F>(make_logger: F) -> Result<(), SetLoggerError>
   1510→/// A thread-unsafe version of [`set_logger`].
   1511→///
@@ -1359,6 +1407,7 @@ lib.rs
   1549→pub struct SetLoggerError(());
   1551→impl fmt::Display for SetLoggerError {
   1552→    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+  1558→#[cfg(feature = "std")]
   1559→impl error::Error for SetLoggerError {}
   1561→/// The type returned by [`from_str`] when the string doesn't match any of the log levels.
   1562→///
@@ -1368,11 +1417,13 @@ lib.rs
   1566→pub struct ParseLevelError(());
   1568→impl fmt::Display for ParseLevelError {
   1569→    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+  1575→#[cfg(feature = "std")]
   1576→impl error::Error for ParseLevelError {}
   1578→/// Returns a reference to the logger.
   1579→///
   1580→/// If a logger has not been set, a no-op implementation is returned.
   1581→pub fn logger() -> &'static dyn Log {
+  1599→#[doc(hidden)]
   1600→pub mod __private_api;
   1602→/// The statically resolved maximum log level.
   1603→///
@@ -1450,6 +1501,8 @@ macros.rs
     73→#[macro_export]
     74→#[clippy::format_args]
     75→macro_rules! log {
+   117→#[doc(hidden)]
+   118→#[macro_export]
    119→macro_rules! __log {
    149→/// Logs a message at the error level.
    150→///
@@ -1584,12 +1637,31 @@ macros.rs
    389→/// This macro accepts the same `target` and `logger` arguments as [`macro@log`].
    390→#[macro_export]
    391→macro_rules! log_enabled {
+   413→#[doc(hidden)]
+   414→#[macro_export]
    415→macro_rules! __log_enabled {
+   427→#[doc(hidden)]
+   428→#[macro_export]
    429→macro_rules! __log_logger {
+   456→#[doc(hidden)]
+   457→#[macro_export]
+   458→#[cfg(not(feature = "kv"))]
    459→macro_rules! __log_key {
+   514→#[doc(hidden)]
+   515→#[macro_export]
+   516→#[cfg(not(feature = "kv"))]
    517→macro_rules! __log_value {
+   532→#[doc(hidden)]
+   533→#[macro_export]
+   534→#[cfg(not(feature = "kv_sval"))]
    535→macro_rules! __log_value_sval {
+   550→#[doc(hidden)]
+   551→#[macro_export]
+   552→#[cfg(not(feature = "kv_serde"))]
    553→macro_rules! __log_value_serde {
+   570→#[doc(hidden)]
+   571→#[macro_export]
+   572→#[cfg(not(feature = "kv_std"))]
    573→macro_rules! __log_value_error {
 serde.rs
     16→impl Serialize for Level {

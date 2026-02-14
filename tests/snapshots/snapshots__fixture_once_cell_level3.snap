@@ -11,7 +11,9 @@ imp_cs.rs
     26→impl<T> OnceCell<T> {
     27→    pub(crate) const fn new() -> OnceCell<T> {
     31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+    38→    #[inline]
     39→    pub(crate) fn is_initialized(&self) -> bool {
+    43→    #[cold]
     44→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
     56→    /// Get the reference to the underlying value, without checking if the cell
     57→    /// is initialized.
@@ -21,7 +23,9 @@ imp_cs.rs
     61→    /// Caller must ensure that the cell is in initialized state, and that
     62→    /// the contents are acquired by (synchronized to) this thread.
     63→    pub(crate) unsafe fn get_unchecked(&self) -> &T {
+    69→    #[inline]
     70→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
+    74→    #[inline]
     75→    pub(crate) fn into_inner(self) -> Option<T> {
 imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
@@ -42,6 +46,7 @@ imp_pl.rs
     43→    /// lock/unlock, writes value only once because of the mutex.
     44→    #[cold]
     45→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
+    79→    #[cold]
     80→    pub(crate) fn wait(&self) {
     94→    /// Get the reference to the underlying value, without checking if the cell
     95→    /// is initialized.
@@ -60,8 +65,10 @@ imp_pl.rs
    122→struct Guard<'a> {
    127→impl<'a> Drop for Guard<'a> {
    128→    fn drop(&mut self) {
+   138→#[inline(never)]
    139→fn initialize_inner(state: &AtomicU8, init: &mut dyn FnMut() -> bool) {
 imp_std.rs
+    13→#[derive(Debug)]
     14→pub(crate) struct OnceCell<T> {
     32→unsafe impl<T: Sync + Send> Sync for OnceCell<T> {}
     33→unsafe impl<T: Send> Send for OnceCell<T> {}
@@ -78,6 +85,7 @@ imp_std.rs
     59→    /// successful write.
     60→    #[cold]
     61→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
+    87→    #[cold]
     88→    pub(crate) fn wait(&self) {
     92→    /// Get the reference to the underlying value, without checking if the cell
     93→    /// is initialized.
@@ -108,13 +116,22 @@ imp_std.rs
    145→struct Guard<'a> {
    150→impl Drop for Guard<'_> {
    151→    fn drop(&mut self) {
+   176→#[inline(never)]
    177→fn initialize_or_wait(queue: &AtomicPtr<Waiter>, mut init: Option<&mut dyn FnMut() -> bool>) {
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
    245→mod strict {
+   246→    #[must_use]
+   247→    #[inline]
    248→    pub(crate) fn addr<T>(ptr: *mut T) -> usize
+   258→    #[must_use]
+   259→    #[inline]
    260→    pub(crate) fn with_addr<T>(ptr: *mut T, addr: usize) -> *mut T
+   279→    #[must_use]
+   280→    #[inline]
    281→    pub(crate) fn map_addr<T>(ptr: *mut T, f: impl FnOnce(usize) -> usize) -> *mut T
 lib.rs
+   378→#[cfg(all(feature = "std", not(feature = "parking_lot")))]
+   379→#[path = "imp_std.rs"]
    380→mod imp;
    382→/// Single-threaded version of `OnceCell`.
    383→pub mod unsync {
@@ -789,6 +806,7 @@ lib.rs
   1406→    /// share(&once_cell::sync::Lazy::<S>::new(|| unimplemented!()));
   1407→    /// ```
   1408→    fn _dummy() {}
+  1411→#[cfg(feature = "race")]
   1412→pub mod race;
 race.rs
     47→impl OnceNonZeroUsize {
@@ -827,7 +845,10 @@ race.rs
    136→    /// be called. However, all threads will return the same value, produced by
    137→    /// some `f`.
    138→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<NonZeroUsize, E>
+   148→    #[cold]
+   149→    #[inline(never)]
    150→    fn init<E>(&self, f: impl FnOnce() -> Result<NonZeroUsize, E>) -> Result<NonZeroUsize, E> {
+   159→    #[inline(always)]
    160→    fn compare_exchange(&self, val: NonZeroUsize) -> Result<usize, usize> {
    171→impl OnceBool {
    172→    /// Creates a new empty cell.
@@ -857,7 +878,9 @@ race.rs
    211→    /// be called. However, all threads will return the same value, produced by
    212→    /// some `f`.
    213→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<bool, E>
+   220→    #[inline]
    221→    fn from_usize(value: NonZeroUsize) -> bool {
+   225→    #[inline]
    226→    fn to_usize(value: bool) -> NonZeroUsize {
    231→/// A thread-safe cell which can be written to only once.
    232→pub struct OnceRef<'a, T> {
@@ -891,7 +914,10 @@ race.rs
    297→    /// be called. However, all threads will return the same value, produced by
    298→    /// some `f`.
    299→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&'a T, E>
+   309→    #[cold]
+   310→    #[inline(never)]
    311→    fn init<E>(&self, f: impl FnOnce() -> Result<&'a T, E>) -> Result<&'a T, E> {
+   319→    #[inline(always)]
    320→    fn compare_exchange(&self, value: &'a T) -> Result<(), *const T> {
    332→    /// ```compile_fail
    333→    /// use once_cell::race::OnceRef;
@@ -909,6 +935,7 @@ race.rs
    345→    /// eprintln!("uaf: {}", l.get().unwrap());
    346→    /// ```
    347→    fn _dummy() {}
+   353→#[cfg(feature = "alloc")]
    354→mod once_box {
    360→    /// A thread-safe cell which can be written to only once.
    361→    pub struct OnceBox<T> {
@@ -945,6 +972,8 @@ race.rs
    448→        /// be called. However, all threads will return the same value, produced by
    449→        /// some `f`.
    450→        pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&T, E>
+   460→        #[cold]
+   461→        #[inline(never)]
    462→        fn init<E>(&self, f: impl FnOnce() -> Result<Box<T>, E>) -> Result<&T, E> {
    479→    unsafe impl<T: Sync + Send> Sync for OnceBox<T> {}
    481→    impl<T: Clone> Clone for OnceBox<T> {

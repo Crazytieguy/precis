@@ -7,6 +7,8 @@ const SOURCE_EXTENSIONS: &[&str] = &[
     "rs",
     // TypeScript / JavaScript
     "ts", "tsx", "js", "jsx",
+    // Python
+    "py",
 ];
 
 /// Discover source files under `root`, respecting .gitignore.
@@ -43,7 +45,9 @@ fn is_test_file(path: &Path) -> bool {
     };
 
     // Match *.test.* and *.spec.* (e.g. foo.test.ts, bar.spec.tsx)
+    // Match test_*.py and *_test.py (Python pytest conventions)
     stem.ends_with(".test") || stem.ends_with(".spec")
+        || stem.starts_with("test_") || stem.ends_with("_test")
 }
 
 #[cfg(test)]

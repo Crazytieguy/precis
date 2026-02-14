@@ -3,10 +3,14 @@ source: tests/snapshots.rs
 expression: output
 ---
 backtrace.rs
+     7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
      8→pub(crate) enum Backtrace {}
+    17→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     18→macro_rules! impl_backtrace {
+    31→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
     32→macro_rules! backtrace {
     64→macro_rules! backtrace_if_absent {
+    70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
     82→    pub(crate) struct Backtrace {
     83→        inner: Inner,
@@ -50,6 +54,7 @@ backtrace.rs
    178→        fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
    191→    impl Backtrace {
    192→        fn enabled() -> bool {
+   210→        #[inline(never)] // want to make sure there's a frame here to remove
    211→        pub(crate) fn capture() -> Backtrace {
    222→        fn create(ip: usize) -> Backtrace {
    252→        pub(crate) fn status(&self) -> BacktraceStatus {
@@ -64,9 +69,11 @@ backtrace.rs
    370→    fn output_filename(
    407→fn _assert_send_sync() {
 chain.rs
+    10→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
     11→pub(crate) struct Chain<'a> {
     12→    state: ChainState<'a>,
     13→}
+    15→#[derive(Clone)]
     16→pub(crate) enum ChainState<'a> {
     17→    Linked {
     18→        next: Option<&'a (dyn StdError + 'static)>,
@@ -77,15 +84,18 @@ chain.rs
     23→    },
     24→}
     26→impl<'a> Chain<'a> {
+    27→    #[cold]
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
     35→impl<'a> Iterator for Chain<'a> {
     36→    type Item = &'a (dyn StdError + 'static);
     38→    fn next(&mut self) -> Option<Self::Item> {
     50→    fn size_hint(&self) -> (usize, Option<usize>) {
+    56→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     57→impl DoubleEndedIterator for Chain<'_> {
     58→    fn next_back(&mut self) -> Option<Self::Item> {
     76→impl ExactSizeIterator for Chain<'_> {
     77→    fn len(&self) -> usize {
+    93→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     94→impl Default for Chain<'_> {
     95→    fn default() -> Self {
 context.rs
@@ -95,6 +105,7 @@ context.rs
     14→        where
     15→            C: Display + Send + Sync + 'static;
     16→    }
+    18→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     19→    impl<E> StdError for E
     23→        fn ext_context<C>(self, context: C) -> Error
     32→    impl StdError for Error {
@@ -131,9 +142,11 @@ context.rs
    132→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
    137→impl<C, E> StdError for ContextError<C, E>
    142→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+   146→    #[cfg(error_generic_member_access)]
    147→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
    152→impl<C> StdError for ContextError<C, Error>
    156→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+   160→    #[cfg(error_generic_member_access)]
    161→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
    166→struct Quoted<C>(C);
    168→impl<C> Debug for Quoted<C>
@@ -145,11 +158,13 @@ context.rs
    191→    impl<T, E> Sealed for Result<T, E> where E: ext::StdError {}
    192→    impl<T> Sealed for Option<T> {}
 ensure.rs
+     9→#[doc(hidden)]
     10→pub trait BothDebug {
     11→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     12→}
     14→impl<A, B> BothDebug for (A, B)
     19→    fn __dispatch_ensure(self, msg: &'static str) -> Error {
+    24→#[doc(hidden)]
     25→pub trait NotBothDebug {
     26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     27→}
@@ -161,8 +176,14 @@ ensure.rs
     58→impl Write for Buf {
     59→    fn write_str(&mut self, s: &str) -> fmt::Result {
     81→fn render(msg: &'static str, lhs: &dyn Debug, rhs: &dyn Debug) -> Error {
+   103→#[doc(hidden)]
+   104→#[macro_export]
    105→macro_rules! __parse_ensure {
+   884→#[doc(hidden)]
+   885→#[macro_export]
    886→macro_rules! __fancy_ensure {
+   910→#[doc(hidden)]
+   911→#[macro_export]
    912→macro_rules! __fallback_ensure {
 error.rs
     19→impl Error {
@@ -274,11 +295,20 @@ error.rs
    138→    #[cold]
    139→    #[must_use]
    140→    pub fn from_boxed(boxed_error: Box<dyn StdError + Send + Sync + 'static>) -> Self {
+   145→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+   146→    #[cold]
    147→    pub(crate) fn construct_from_std<E>(error: E, backtrace: Option<Backtrace>) -> Self
+   169→    #[cold]
    170→    pub(crate) fn construct_from_adhoc<M>(message: M, backtrace: Option<Backtrace>) -> Self
+   197→    #[cold]
    198→    pub(crate) fn construct_from_display<M>(message: M, backtrace: Option<Backtrace>) -> Self
+   225→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+   226→    #[cold]
    227→    pub(crate) fn construct_from_context<C, E>(
+   258→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+   259→    #[cold]
    260→    pub(crate) fn construct_from_boxed(
+   292→    #[cold]
    293→    unsafe fn construct<E>(
    316→    /// Wrap the error value with additional context.
    317→    ///
@@ -458,13 +488,20 @@ error.rs
    661→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    662→    #[must_use]
    663→    pub fn reallocate_into_boxed_dyn_error_without_backtrace(
+   674→    #[cfg(error_generic_member_access)]
    675→    pub(crate) fn provide<'a>(&'a self, request: &mut Request<'a>) {
+   684→    #[cfg(error_generic_member_access)]
+   685→    #[doc(hidden)]
    686→    pub fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
+   691→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    692→impl<E> From<E> for Error
+   696→    #[cold]
    697→    fn from(error: E) -> Self {
+   703→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    704→impl Deref for Error {
    705→    type Target = dyn StdError + Send + Sync + 'static;
    707→    fn deref(&self) -> &Self::Target {
+   712→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    713→impl DerefMut for Error {
    714→    fn deref_mut(&mut self) -> &mut Self::Target {
    719→impl Display for Error {
@@ -491,15 +528,21 @@ error.rs
    757→unsafe fn object_drop<E>(e: Own<ErrorImpl>) {
    765→unsafe fn object_drop_front<E>(e: Own<ErrorImpl>, target: TypeId) {
    775→unsafe fn object_ref<E>(e: Ref<ErrorImpl>) -> Ref<dyn StdError + Send + Sync + 'static>
+   787→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    788→unsafe fn object_boxed<E>(e: Own<ErrorImpl>) -> Box<dyn StdError + Send + Sync + 'static>
+   798→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    799→unsafe fn object_reallocate_boxed<E>(e: Own<ErrorImpl>) -> Box<dyn StdError + Send + Sync + 'static>
    809→unsafe fn object_downcast<E>(e: Ref<ErrorImpl>, target: TypeId) -> Option<Ref<()>>
    832→fn no_backtrace(e: Ref<ErrorImpl>) -> Option<&Backtrace> {
+   838→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    839→unsafe fn context_downcast<C, E>(e: Ref<ErrorImpl>, target: TypeId) -> Option<Ref<()>>
+   858→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    859→unsafe fn context_drop_rest<C, E>(e: Own<ErrorImpl>, target: TypeId)
    876→unsafe fn context_chain_downcast<C>(e: Ref<ErrorImpl>, target: TypeId) -> Option<Ref<()>>
    892→unsafe fn context_chain_drop_rest<C>(e: Own<ErrorImpl>, target: TypeId)
+   919→#[allow(clippy::unnecessary_wraps)]
    920→unsafe fn context_backtrace<C>(e: Ref<ErrorImpl>) -> Option<&Backtrace>
+   933→#[repr(C)]
    934→pub(crate) struct ErrorImpl<E = ()> {
    935→    vtable: &'static ErrorVTable,
    936→    backtrace: Option<Backtrace>,
@@ -508,6 +551,7 @@ error.rs
    939→    _object: E,
    940→}
    944→unsafe fn vtable(p: NonNull<ErrorImpl>) -> &'static ErrorVTable {
+   951→#[repr(C)]
    952→pub(crate) struct ContextError<C, E> {
    953→    pub context: C,
    954→    pub error: E,
@@ -516,25 +560,38 @@ error.rs
    958→    fn erase(&self) -> Ref<ErrorImpl> {
    966→impl ErrorImpl {
    967→    pub(crate) unsafe fn error(this: Ref<Self>) -> &(dyn StdError + Send + Sync + 'static) {
+   973→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    974→    pub(crate) unsafe fn error_mut(this: Mut<Self>) -> &mut (dyn StdError + Send + Sync + 'static) {
+   984→    #[cfg(any(std_backtrace, feature = "backtrace"))]
    985→    pub(crate) unsafe fn backtrace(this: Ref<Self>) -> &Backtrace {
+  1001→    #[cfg(error_generic_member_access)]
   1002→    unsafe fn provide<'a>(this: Ref<'a, Self>, request: &mut Request<'a>) {
+  1009→    #[cold]
   1010→    pub(crate) unsafe fn chain(this: Ref<Self>) -> Chain {
   1015→impl<E> StdError for ErrorImpl<E>
   1019→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+  1023→    #[cfg(error_generic_member_access)]
   1024→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
   1029→impl<E> Debug for ErrorImpl<E>
   1033→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
   1038→impl<E> Display for ErrorImpl<E>
   1042→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+  1047→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
   1048→impl From<Error> for Box<dyn StdError + Send + Sync + 'static> {
+  1049→    #[cold]
   1050→    fn from(error: Error) -> Self {
+  1055→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
   1056→impl From<Error> for Box<dyn StdError + Send + 'static> {
+  1057→    #[cold]
   1058→    fn from(error: Error) -> Self {
+  1063→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
   1064→impl From<Error> for Box<dyn StdError + 'static> {
+  1065→    #[cold]
   1066→    fn from(error: Error) -> Self {
+  1071→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
   1072→impl AsRef<dyn StdError + Send + Sync> for Error {
   1073→    fn as_ref(&self) -> &(dyn StdError + Send + Sync + 'static) {
+  1078→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
   1079→impl AsRef<dyn StdError> for Error {
   1080→    fn as_ref(&self) -> &(dyn StdError + 'static) {
   1085→impl UnwindSafe for Error {}
@@ -552,6 +609,7 @@ fmt.rs
     79→    fn write_str(&mut self, s: &str) -> fmt::Result {
 kind.rs
     55→pub struct Adhoc;
+    57→#[doc(hidden)]
     58→pub trait AdhocKind: Sized {
     59→    #[inline]
     60→    fn anyhow_kind(&self) -> Adhoc {
@@ -560,8 +618,10 @@ kind.rs
     63→}
     65→impl<T> AdhocKind for &T where T: ?Sized + Display + Debug + Send + Sync + 'static {}
     67→impl Adhoc {
+    68→    #[cold]
     69→    pub fn new<M>(self, message: M) -> Error
     77→pub struct Trait;
+    79→#[doc(hidden)]
     80→pub trait TraitKind: Sized {
     81→    #[inline]
     82→    fn anyhow_kind(&self) -> Trait {
@@ -570,18 +630,26 @@ kind.rs
     85→}
     87→impl<E> TraitKind for E where E: Into<Error> {}
     89→impl Trait {
+    90→    #[cold]
     91→    pub fn new<E>(self, error: E) -> Error
+    99→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    100→pub struct Boxed;
+   102→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+   103→#[doc(hidden)]
    104→pub trait BoxedKind: Sized {
    105→    #[inline]
    106→    fn anyhow_kind(&self) -> Boxed {
    107→        Boxed
    108→    }
    109→}
+   111→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    112→impl BoxedKind for Box<dyn StdError + Send + Sync> {}
+   114→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    115→impl Boxed {
+   116→    #[cold]
    117→    pub fn new(self, error: Box<dyn StdError + Send + Sync>) -> Error {
 lib.rs
+   251→#[macro_use]
    252→mod backtrace;
    253→mod chain;
    254→mod context;
@@ -590,9 +658,11 @@ lib.rs
    257→mod fmt;
    258→mod kind;
    259→mod macros;
+   260→#[cfg(error_generic_member_access)]
    261→mod nightly;
    262→mod ptr;
    263→mod wrapper;
+   278→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
    281→        None
@@ -957,17 +1027,29 @@ lib.rs
    648→#[allow(non_snake_case)]
    649→#[inline]
    650→pub fn Ok<T>(value: T) -> Result<T> {
+   655→#[doc(hidden)]
    656→pub mod __private {
+   671→    #[doc(hidden)]
    672→    pub mod kind {
+   681→    #[doc(hidden)]
+   682→    #[inline]
+   683→    #[cold]
    684→    pub fn format_err(args: Arguments) -> Error {
+   694→    #[doc(hidden)]
+   695→    #[inline]
+   696→    #[cold]
+   697→    #[must_use]
    698→    pub fn must_use(error: Error) -> Error {
    708→    mod not {
+   709→        #[doc(hidden)]
    710→        pub trait Bool {
    711→            fn not(self) -> bool;
    712→        }
    714→        impl Bool for bool {
+   715→            #[inline]
    716→            fn not(self) -> bool {
    721→        impl Bool for &bool {
+   722→            #[inline]
    723→            fn not(self) -> bool {
 macros.rs
      1→/// Return early with an error.
@@ -1060,8 +1142,11 @@ macros.rs
    202→#[macro_export]
    203→#[cfg_attr(not(anyhow_no_clippy_format_args), clippy::format_args)]
    204→macro_rules! anyhow {
+   228→#[doc(hidden)]
+   229→#[macro_export]
    230→macro_rules! __anyhow {
 nightly.rs
+    12→#[cfg(anyhow_build_probe)]
     13→const _: () = {
     16→    struct MyError(Backtrace);
     18→    impl Debug for MyError {
@@ -1070,12 +1155,14 @@ nightly.rs
     25→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     30→    impl Error for MyError {
     31→        fn provide<'a>(&'a self, request: &mut Request<'a>) {
+    38→#[cfg(anyhow_build_probe)]
     39→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
     41→pub fn request_ref_backtrace(err: &dyn Error) -> Option<&Backtrace> {
     45→fn request_ref<'a, T>(err: &'a (impl Error + ?Sized)) -> Option<&'a T>
     52→pub fn provide_ref_backtrace<'a>(request: &mut Request<'a>, backtrace: &'a Backtrace) {
     56→pub fn provide<'a>(err: &'a (impl Error + ?Sized), request: &mut Request<'a>) {
 ptr.rs
+     5→#[repr(transparent)]
      6→pub struct Own<T>
      7→where
      8→    T: ?Sized,
@@ -1093,6 +1180,7 @@ ptr.rs
     44→    pub unsafe fn boxed(self) -> Box<T> {
     48→    pub fn by_ref(&self) -> Ref<T> {
     55→    pub fn by_mut(&mut self) -> Mut<T> {
+    63→#[repr(transparent)]
     64→pub struct Ref<'a, T>
     65→where
     66→    T: ?Sized,
@@ -1110,6 +1198,7 @@ ptr.rs
    108→    pub fn by_mut(self) -> Mut<'a, T> {
    115→    pub fn as_ptr(self) -> *const T {
    119→    pub unsafe fn deref(self) -> &'a T {
+   124→#[repr(transparent)]
    125→pub struct Mut<'a, T>
    126→where
    127→    T: ?Sized,
@@ -1133,23 +1222,31 @@ ptr.rs
    185→impl<T> CastTo for T {
    186→    type Target = T;
 wrapper.rs
+    10→#[repr(transparent)]
     11→pub struct MessageError<M>(pub M);
     13→impl<M> Debug for MessageError<M>
     17→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     22→impl<M> Display for MessageError<M>
     26→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     31→impl<M> StdError for MessageError<M> where M: Display + Debug + 'static {}
+    33→#[repr(transparent)]
     34→pub struct DisplayError<M>(pub M);
     36→impl<M> Debug for DisplayError<M>
     40→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     45→impl<M> Display for DisplayError<M>
     49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     54→impl<M> StdError for DisplayError<M> where M: Display + 'static {}
+    56→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+    57→#[repr(transparent)]
     58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
+    60→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     61→impl Debug for BoxedError {
     62→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    67→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     68→impl Display for BoxedError {
     69→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    74→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     75→impl StdError for BoxedError {
     76→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+    80→    #[cfg(error_generic_member_access)]
     81→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
