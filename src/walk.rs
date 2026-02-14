@@ -37,10 +37,17 @@ fn is_source_file(path: &Path) -> bool {
 /// Matches test directories, benchmark directories, and test file naming conventions.
 fn is_test_file(path: &Path) -> bool {
     // Check for non-source directories anywhere in the path:
-    // __tests__/ (Jest), tests/ (Rust/Python/JS), test/ (JS/TS), benches/ (Rust benchmarks)
+    // __tests__/ (Jest), tests/ (Rust/Python/JS), test/ (JS/TS), testing/ (Python),
+    // benches/ (Rust), benchmark/ and benchmarks/ (cross-language)
     if path.components().any(|c| {
         let s = c.as_os_str();
-        s == "__tests__" || s == "tests" || s == "test" || s == "benches"
+        s == "__tests__"
+            || s == "tests"
+            || s == "test"
+            || s == "testing"
+            || s == "benches"
+            || s == "benchmark"
+            || s == "benchmarks"
     }) {
         return true;
     }
@@ -52,10 +59,12 @@ fn is_test_file(path: &Path) -> bool {
 
     // Match *.test.* and *.spec.* (e.g. foo.test.ts, bar.spec.tsx)
     // Match test_*.py and *_test.py (Python pytest conventions)
+    // Match conftest.py (pytest configuration/fixtures)
     stem.ends_with(".test")
         || stem.ends_with(".spec")
         || stem.starts_with("test_")
         || stem.ends_with("_test")
+        || stem == "conftest"
 }
 
 #[cfg(test)]
@@ -125,6 +134,16 @@ mod tests {
         let benches_dir = dir.path().join("benches");
         fs::create_dir(&benches_dir).unwrap();
         fs::write(benches_dir.join("bench.rs"), "fn bench_it() {}").unwrap();
+        // testing/ directory (Python convention)
+        let testing_dir = dir.path().join("testing");
+        fs::create_dir(&testing_dir).unwrap();
+        fs::write(testing_dir.join("helpers.py"), "def h(): pass").unwrap();
+        // benchmark/ directory
+        let benchmark_dir = dir.path().join("benchmark");
+        fs::create_dir(&benchmark_dir).unwrap();
+        fs::write(benchmark_dir.join("run.py"), "def bench(): pass").unwrap();
+        // conftest.py (pytest infrastructure)
+        fs::write(dir.path().join("conftest.py"), "import pytest").unwrap();
 
         let files = discover_source_files(dir.path());
         let names: Vec<_> = files
@@ -143,5 +162,8 @@ mod tests {
         assert!(!names.contains(&"integration.rs".to_string()));
         assert!(!names.contains(&"setup.ts".to_string()));
         assert!(!names.contains(&"bench.rs".to_string()));
+        assert!(!names.contains(&"helpers.py".to_string()));
+        assert!(!names.contains(&"run.py".to_string()));
+        assert!(!names.contains(&"conftest.py".to_string()));
     }
 }
