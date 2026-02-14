@@ -5,7 +5,7 @@ use crate::{parse, walk};
 /// Format a single symbol as a line of output (without trailing newline).
 fn format_symbol(sym: &parse::Symbol) -> String {
     let vis = if sym.is_public { "pub " } else { "" };
-    format!("  {vis}{} {}", sym.kind, sym.name)
+    format!("  {vis}{} {} :{}", sym.kind, sym.name, sym.line)
 }
 
 /// Format all symbols from a single file, with the file path header.
