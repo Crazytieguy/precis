@@ -66,3 +66,59 @@ pub mod lexer;
     let output = format::format_file_symbols(Path::new("sample.rs"), Path::new(""), source);
     insta::assert_snapshot!(output);
 }
+
+#[test]
+fn typescript_sample_snapshot() {
+    let source = r#"
+export function processItems(items: string[]): number {
+    return items.length;
+}
+
+function helper(): void {}
+
+export async function fetchData(url: string): Promise<Response> {
+    return fetch(url);
+}
+
+export class TokenParser {
+    private tokens: Token[];
+
+    constructor(input: string) {
+        this.tokens = [];
+    }
+
+    public parse(): Token[] {
+        return this.tokens;
+    }
+
+    private advance(): void {}
+}
+
+export interface Visitor {
+    visitToken(token: Token): void;
+    visitAll(tokens: Token[]): void;
+}
+
+export enum TokenKind {
+    Ident = "ident",
+    Number = "number",
+    Symbol = "symbol",
+}
+
+export type Span = [number, number];
+
+export const MAX_TOKENS = 1024;
+
+export default class DefaultExport {
+    name: string = "";
+}
+
+export namespace Utils {
+    export function format(s: string): string {
+        return s;
+    }
+}
+"#;
+    let output = format::format_file_symbols(Path::new("sample.ts"), Path::new(""), source);
+    insta::assert_snapshot!(output);
+}

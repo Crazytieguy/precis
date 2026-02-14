@@ -2,7 +2,7 @@
 
 ## Next steps
 
-- Add more language grammars (TypeScript, Python, Go)
+- Add more language grammars (Python, Go) — TypeScript/TSX done
 - Implement signature extraction (params, return types) — currently only symbol names
 - Implement the granularity hierarchy for token budgeting
 - Add snapshot tests using real open-source fixture repos (infra is set up with `insta`, needs real fixtures)
@@ -16,6 +16,8 @@
 - Should `SOURCE_EXTENSIONS` in walk.rs be derived from which tree-sitter grammars are available, rather than hardcoded?
 - Impl blocks show nested functions (e.g. `impl Foo` then `fn new`). Should these be nested in output, or is flat fine?
 - Should `#[test]` functions and `#[cfg(test)]` modules be excluded by default?
+- TypeScript: arrow functions assigned to `const` (e.g. `export const foo = () => ...`) show as `const` not `fn`. Should we detect and reclassify these?
+- TypeScript: `lexical_declaration` captures both `const` and `let` as `const`. Should `let` exports be shown differently?
 
 ## Technical debt
 

@@ -25,6 +25,8 @@ pub enum SymbolKind {
     Static,
     Macro,
     Module,
+    Class,
+    Interface,
 }
 
 impl std::fmt::Display for SymbolKind {
@@ -40,6 +42,8 @@ impl std::fmt::Display for SymbolKind {
             SymbolKind::Static => write!(f, "static"),
             SymbolKind::Macro => write!(f, "macro"),
             SymbolKind::Module => write!(f, "mod"),
+            SymbolKind::Class => write!(f, "class"),
+            SymbolKind::Interface => write!(f, "interface"),
         }
     }
 }
@@ -50,6 +54,14 @@ fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
         "rs" => Some((
             tree_sitter_rust::LANGUAGE.into(),
             include_str!("../queries/rust.scm"),
+        )),
+        "ts" => Some((
+            tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into(),
+            include_str!("../queries/typescript.scm"),
+        )),
+        "tsx" => Some((
+            tree_sitter_typescript::LANGUAGE_TSX.into(),
+            include_str!("../queries/typescript.scm"),
         )),
         _ => None,
     }
@@ -91,6 +103,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         };
 
         let kind = match symbol_node.kind() {
+            // Rust
             "function_item" | "function_signature_item" => SymbolKind::Function,
             "struct_item" => SymbolKind::Struct,
             "enum_item" => SymbolKind::Enum,
@@ -101,6 +114,16 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             "static_item" => SymbolKind::Static,
             "macro_definition" => SymbolKind::Macro,
             "mod_item" => SymbolKind::Module,
+            // TypeScript
+            "function_declaration" | "method_definition" | "method_signature" => {
+                SymbolKind::Function
+            }
+            "class_declaration" => SymbolKind::Class,
+            "interface_declaration" => SymbolKind::Interface,
+            "enum_declaration" => SymbolKind::Enum,
+            "type_alias_declaration" => SymbolKind::TypeAlias,
+            "lexical_declaration" => SymbolKind::Const,
+            "internal_module" => SymbolKind::Module,
             _ => continue,
         };
 
@@ -118,7 +141,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             .unwrap_or("")
             .to_string();
 
-        let is_public = has_visibility_modifier(symbol_node);
+        let is_public = is_public_symbol(symbol_node, source);
 
         symbols.push(Symbol {
             kind,
@@ -132,10 +155,38 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
     symbols
 }
 
-fn has_visibility_modifier(node: tree_sitter::Node) -> bool {
+fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
     let mut cursor = node.walk();
-    node.children(&mut cursor)
+    // Rust: `pub` keyword appears as a visibility_modifier child
+    if node
+        .children(&mut cursor)
         .any(|child| child.kind() == "visibility_modifier")
+    {
+        return true;
+    }
+    // TypeScript: exported symbols are children of export_statement
+    if let Some(parent) = node.parent()
+        && parent.kind() == "export_statement"
+    {
+        return true;
+    }
+    // TypeScript class methods: public if accessibility_modifier is "public",
+    // or if no accessibility_modifier (public by default in TS)
+    if node.kind() == "method_definition" {
+        let mut cursor = node.walk();
+        let has_accessor = node
+            .children(&mut cursor)
+            .any(|child| child.kind() == "accessibility_modifier");
+        if !has_accessor {
+            return true; // no modifier = public by default
+        }
+        let mut cursor = node.walk();
+        return node.children(&mut cursor).any(|child| {
+            child.kind() == "accessibility_modifier"
+                && child.utf8_text(source.as_bytes()).unwrap_or("") == "public"
+        });
+    }
+    false
 }
 
 /// Build a display name for an impl block, e.g. "Display for Foo" or "Foo".
