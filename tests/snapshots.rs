@@ -373,6 +373,16 @@ fn fixture_log() {
 }
 
 #[test]
+fn fixture_ky() {
+    let Some(root) = fixture_path("ky/source") else {
+        eprintln!("skipping fixture_ky: clone with `git clone --depth 1 https://github.com/sindresorhus/ky.git test/fixtures/ky`");
+        return;
+    };
+    let output = format::format_directory(&root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
 fn fixture_vaul() {
     let Some(root) = fixture_path("vaul/src") else {
         eprintln!("skipping fixture_vaul: clone with `git clone --depth 1 https://github.com/emilkowalski/vaul.git test/fixtures/vaul`");
