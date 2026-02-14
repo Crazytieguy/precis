@@ -49,12 +49,20 @@ pub fn search_level(budget: usize, cost: impl Fn(u8) -> usize) -> u8 {
 
 /// Pre-read source files to avoid repeated disk I/O.
 pub fn read_sources(files: &[PathBuf]) -> Vec<Option<String>> {
-    files.iter().map(|f| std::fs::read_to_string(f).ok()).collect()
+    files
+        .iter()
+        .map(|f| std::fs::read_to_string(f).ok())
+        .collect()
 }
 
 /// Find the highest granularity level whose output fits within the word budget.
 /// Accepts pre-discovered files and pre-read sources to avoid redundant I/O.
-pub fn budget_level(budget: usize, root: &Path, files: &[PathBuf], sources: &[Option<String>]) -> u8 {
+pub fn budget_level(
+    budget: usize,
+    root: &Path,
+    files: &[PathBuf],
+    sources: &[Option<String>],
+) -> u8 {
     search_level(budget, |level| {
         count_words(&render_files(level, root, files, sources))
     })
@@ -62,12 +70,19 @@ pub fn budget_level(budget: usize, root: &Path, files: &[PathBuf], sources: &[Op
 
 /// Find the highest granularity level whose output for a single file fits within the word budget.
 pub fn budget_level_file(budget: usize, path: &Path, root: &Path, source: &str) -> u8 {
-    search_level(budget, |level| count_words(&render_file(level, path, root, source)))
+    search_level(budget, |level| {
+        count_words(&render_file(level, path, root, source))
+    })
 }
 
 /// Render pre-discovered source files at the given granularity level.
 /// Uses pre-read sources to avoid redundant disk I/O.
-pub fn render_files(level: u8, root: &Path, files: &[PathBuf], sources: &[Option<String>]) -> String {
+pub fn render_files(
+    level: u8,
+    root: &Path,
+    files: &[PathBuf],
+    sources: &[Option<String>],
+) -> String {
     let mut out = String::new();
     for (file, source) in files.iter().zip(sources) {
         if level == 0 {
@@ -263,13 +278,11 @@ fn find_word(needle: &str, haystack: &str) -> Option<usize> {
     while let Some(pos) = haystack[start..].find(needle) {
         let abs = start + pos;
         let before_ok = abs == 0
-            || !haystack.as_bytes()[abs - 1]
-                .is_ascii_alphanumeric()
+            || !haystack.as_bytes()[abs - 1].is_ascii_alphanumeric()
                 && haystack.as_bytes()[abs - 1] != b'_';
         let end = abs + needle.len();
         let after_ok = end == haystack.len()
-            || !haystack.as_bytes()[end]
-                .is_ascii_alphanumeric()
+            || !haystack.as_bytes()[end].is_ascii_alphanumeric()
                 && haystack.as_bytes()[end] != b'_';
         if before_ok && after_ok {
             return Some(abs);

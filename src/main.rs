@@ -1,6 +1,6 @@
 use clap::Parser;
-use std::path::PathBuf;
 use precis::{format, walk};
+use std::path::PathBuf;
 
 #[derive(Parser)]
 #[command(about = "Extract a token-efficient summary of a codebase")]

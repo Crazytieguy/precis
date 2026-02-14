@@ -1,16 +1,12 @@
-use std::path::Path;
 use precis::{format, walk};
+use std::path::Path;
 
 /// Helper to get the path to a test fixture. Returns None if the fixture isn't cloned.
 fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
     let path = Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("test/fixtures")
         .join(name);
-    if path.exists() {
-        Some(path)
-    } else {
-        None
-    }
+    if path.exists() { Some(path) } else { None }
 }
 
 // Clone fixtures with:
@@ -46,7 +42,11 @@ macro_rules! fixture_test {
         #[test]
         fn $name() {
             let Some(root) = fixture_path($path) else {
-                eprintln!("skipping {}: fixture not present at {}", stringify!($name), $path);
+                eprintln!(
+                    "skipping {}: fixture not present at {}",
+                    stringify!($name),
+                    $path
+                );
                 return;
             };
             let files = walk::discover_source_files(&root);
@@ -63,7 +63,11 @@ macro_rules! budget_test {
         #[test]
         fn $name() {
             let Some(output) = render_with_budget($path, $budget) else {
-                eprintln!("skipping {}: fixture not present at {}", stringify!($name), $path);
+                eprintln!(
+                    "skipping {}: fixture not present at {}",
+                    stringify!($name),
+                    $path
+                );
                 return;
             };
             insta::assert_snapshot!(output);
@@ -269,13 +273,23 @@ fn rust_sample_level0() {
 
 #[test]
 fn typescript_sample_level0() {
-    let output = format::render_file(0, Path::new("sample.ts"), Path::new(""), typescript_sample());
+    let output = format::render_file(
+        0,
+        Path::new("sample.ts"),
+        Path::new(""),
+        typescript_sample(),
+    );
     insta::assert_snapshot!(output);
 }
 
 #[test]
 fn javascript_sample_level0() {
-    let output = format::render_file(0, Path::new("sample.js"), Path::new(""), javascript_sample());
+    let output = format::render_file(
+        0,
+        Path::new("sample.js"),
+        Path::new(""),
+        javascript_sample(),
+    );
     insta::assert_snapshot!(output);
 }
 
@@ -295,13 +309,23 @@ fn rust_sample_snapshot() {
 
 #[test]
 fn typescript_sample_snapshot() {
-    let output = format::render_file(1, Path::new("sample.ts"), Path::new(""), typescript_sample());
+    let output = format::render_file(
+        1,
+        Path::new("sample.ts"),
+        Path::new(""),
+        typescript_sample(),
+    );
     insta::assert_snapshot!(output);
 }
 
 #[test]
 fn javascript_sample_snapshot() {
-    let output = format::render_file(1, Path::new("sample.js"), Path::new(""), javascript_sample());
+    let output = format::render_file(
+        1,
+        Path::new("sample.js"),
+        Path::new(""),
+        javascript_sample(),
+    );
     insta::assert_snapshot!(output);
 }
 
@@ -321,13 +345,23 @@ fn rust_sample_level2() {
 
 #[test]
 fn typescript_sample_level2() {
-    let output = format::render_file(2, Path::new("sample.ts"), Path::new(""), typescript_sample());
+    let output = format::render_file(
+        2,
+        Path::new("sample.ts"),
+        Path::new(""),
+        typescript_sample(),
+    );
     insta::assert_snapshot!(output);
 }
 
 #[test]
 fn javascript_sample_level2() {
-    let output = format::render_file(2, Path::new("sample.js"), Path::new(""), javascript_sample());
+    let output = format::render_file(
+        2,
+        Path::new("sample.js"),
+        Path::new(""),
+        javascript_sample(),
+    );
     insta::assert_snapshot!(output);
 }
 
@@ -347,13 +381,23 @@ fn rust_sample_level3() {
 
 #[test]
 fn typescript_sample_level3() {
-    let output = format::render_file(3, Path::new("sample.ts"), Path::new(""), typescript_sample());
+    let output = format::render_file(
+        3,
+        Path::new("sample.ts"),
+        Path::new(""),
+        typescript_sample(),
+    );
     insta::assert_snapshot!(output);
 }
 
 #[test]
 fn javascript_sample_level3() {
-    let output = format::render_file(3, Path::new("sample.js"), Path::new(""), javascript_sample());
+    let output = format::render_file(
+        3,
+        Path::new("sample.js"),
+        Path::new(""),
+        javascript_sample(),
+    );
     insta::assert_snapshot!(output);
 }
 
@@ -373,13 +417,23 @@ fn rust_sample_level4() {
 
 #[test]
 fn typescript_sample_level4() {
-    let output = format::render_file(4, Path::new("sample.ts"), Path::new(""), typescript_sample());
+    let output = format::render_file(
+        4,
+        Path::new("sample.ts"),
+        Path::new(""),
+        typescript_sample(),
+    );
     insta::assert_snapshot!(output);
 }
 
 #[test]
 fn javascript_sample_level4() {
-    let output = format::render_file(4, Path::new("sample.js"), Path::new(""), javascript_sample());
+    let output = format::render_file(
+        4,
+        Path::new("sample.js"),
+        Path::new(""),
+        javascript_sample(),
+    );
     insta::assert_snapshot!(output);
 }
 
@@ -399,13 +453,23 @@ fn rust_sample_level5() {
 
 #[test]
 fn typescript_sample_level5() {
-    let output = format::render_file(5, Path::new("sample.ts"), Path::new(""), typescript_sample());
+    let output = format::render_file(
+        5,
+        Path::new("sample.ts"),
+        Path::new(""),
+        typescript_sample(),
+    );
     insta::assert_snapshot!(output);
 }
 
 #[test]
 fn javascript_sample_level5() {
-    let output = format::render_file(5, Path::new("sample.js"), Path::new(""), javascript_sample());
+    let output = format::render_file(
+        5,
+        Path::new("sample.js"),
+        Path::new(""),
+        javascript_sample(),
+    );
     insta::assert_snapshot!(output);
 }
 
@@ -464,7 +528,11 @@ fixture_test!(fixture_log_level2, "log/src", 2);
 fixture_test!(fixture_ky_level2, "ky/source", 2);
 fixture_test!(fixture_ini_level2, "ini/lib", 2);
 fixture_test!(fixture_vaul_level2, "vaul/src", 2);
-fixture_test!(fixture_input_otp_level2, "input-otp/packages/input-otp/src", 2);
+fixture_test!(
+    fixture_input_otp_level2,
+    "input-otp/packages/input-otp/src",
+    2
+);
 fixture_test!(fixture_pluggy_level2, "pluggy/src/pluggy", 2);
 fixture_test!(fixture_tomli_level2, "tomli/src/tomli", 2);
 fixture_test!(fixture_humanize_level2, "humanize/src/humanize", 2);
@@ -492,7 +560,11 @@ fixture_test!(fixture_log_level3, "log/src", 3);
 fixture_test!(fixture_ky_level3, "ky/source", 3);
 fixture_test!(fixture_ini_level3, "ini/lib", 3);
 fixture_test!(fixture_vaul_level3, "vaul/src", 3);
-fixture_test!(fixture_input_otp_level3, "input-otp/packages/input-otp/src", 3);
+fixture_test!(
+    fixture_input_otp_level3,
+    "input-otp/packages/input-otp/src",
+    3
+);
 fixture_test!(fixture_pluggy_level3, "pluggy/src/pluggy", 3);
 fixture_test!(fixture_tomli_level3, "tomli/src/tomli", 3);
 fixture_test!(fixture_humanize_level3, "humanize/src/humanize", 3);
@@ -520,7 +592,11 @@ fixture_test!(fixture_log_level4, "log/src", 4);
 fixture_test!(fixture_ky_level4, "ky/source", 4);
 fixture_test!(fixture_ini_level4, "ini/lib", 4);
 fixture_test!(fixture_vaul_level4, "vaul/src", 4);
-fixture_test!(fixture_input_otp_level4, "input-otp/packages/input-otp/src", 4);
+fixture_test!(
+    fixture_input_otp_level4,
+    "input-otp/packages/input-otp/src",
+    4
+);
 fixture_test!(fixture_pluggy_level4, "pluggy/src/pluggy", 4);
 fixture_test!(fixture_tomli_level4, "tomli/src/tomli", 4);
 fixture_test!(fixture_humanize_level4, "humanize/src/humanize", 4);
@@ -531,21 +607,57 @@ fixture_test!(fixture_typeguard_level4, "typeguard/src/typeguard", 4);
 // that path display and file discovery work correctly at deeper nesting levels.
 
 fixture_test!(fixture_ts_pattern_types_subdir, "ts-pattern/src/types", 1);
-fixture_test!(fixture_ts_pattern_types_subdir_level2, "ts-pattern/src/types", 2);
-fixture_test!(fixture_react_hot_toast_components_subdir, "react-hot-toast/src/components", 1);
-fixture_test!(fixture_react_hot_toast_components_subdir_level2, "react-hot-toast/src/components", 2);
-fixture_test!(fixture_superstruct_structs_subdir, "superstruct/src/structs", 1);
-fixture_test!(fixture_superstruct_structs_subdir_level2, "superstruct/src/structs", 2);
+fixture_test!(
+    fixture_ts_pattern_types_subdir_level2,
+    "ts-pattern/src/types",
+    2
+);
+fixture_test!(
+    fixture_react_hot_toast_components_subdir,
+    "react-hot-toast/src/components",
+    1
+);
+fixture_test!(
+    fixture_react_hot_toast_components_subdir_level2,
+    "react-hot-toast/src/components",
+    2
+);
+fixture_test!(
+    fixture_superstruct_structs_subdir,
+    "superstruct/src/structs",
+    1
+);
+fixture_test!(
+    fixture_superstruct_structs_subdir_level2,
+    "superstruct/src/structs",
+    2
+);
 fixture_test!(fixture_log_kv_subdir, "log/src/kv", 1);
 fixture_test!(fixture_log_kv_subdir_level2, "log/src/kv", 2);
 fixture_test!(fixture_semver_functions_subdir, "semver/functions", 1);
-fixture_test!(fixture_semver_functions_subdir_level2, "semver/functions", 2);
-fixture_test!(fixture_neverthrow_internals_subdir, "neverthrow/src/_internals", 1);
-fixture_test!(fixture_neverthrow_internals_subdir_level2, "neverthrow/src/_internals", 2);
+fixture_test!(
+    fixture_semver_functions_subdir_level2,
+    "semver/functions",
+    2
+);
+fixture_test!(
+    fixture_neverthrow_internals_subdir,
+    "neverthrow/src/_internals",
+    1
+);
+fixture_test!(
+    fixture_neverthrow_internals_subdir_level2,
+    "neverthrow/src/_internals",
+    2
+);
 fixture_test!(fixture_ky_errors_subdir, "ky/source/errors", 1);
 fixture_test!(fixture_ky_errors_subdir_level2, "ky/source/errors", 2);
 fixture_test!(fixture_thiserror_impl_subdir, "thiserror/impl/src", 1);
-fixture_test!(fixture_thiserror_impl_subdir_level2, "thiserror/impl/src", 2);
+fixture_test!(
+    fixture_thiserror_impl_subdir_level2,
+    "thiserror/impl/src",
+    2
+);
 fixture_test!(fixture_semver_internal_subdir, "semver/internal", 1);
 fixture_test!(fixture_semver_internal_subdir_level2, "semver/internal", 2);
 
@@ -708,7 +820,10 @@ fn monotonicity_invariant() {
             }
         }
     }
-    assert!(tested_files > 0, "No fixture files available for monotonicity test");
+    assert!(
+        tested_files > 0,
+        "No fixture files available for monotonicity test"
+    );
 }
 
 /// Test the budget binary search with synthetic cost functions (no parsing).
@@ -718,28 +833,38 @@ fn budget_algorithm() {
     let cost = |level: u8| costs[level as usize];
 
     // Extremes
-    assert_eq!(format::search_level(0, &cost), 0);
-    assert_eq!(format::search_level(usize::MAX, &cost), format::MAX_LEVEL);
+    assert_eq!(format::search_level(0, cost), 0);
+    assert_eq!(format::search_level(usize::MAX, cost), format::MAX_LEVEL);
 
     // Exact boundaries: budget matching level N's cost should select >= N
     for level in 0..=format::MAX_LEVEL {
-        let selected = format::search_level(costs[level as usize], &cost);
-        assert!(selected >= level, "budget={} selected level {} (expected >= {})",
-            costs[level as usize], selected, level);
+        let selected = format::search_level(costs[level as usize], cost);
+        assert!(
+            selected >= level,
+            "budget={} selected level {} (expected >= {})",
+            costs[level as usize],
+            selected,
+            level
+        );
     }
 
     // Off-by-one: budget one below level N's cost should select < N
     for level in 1..=format::MAX_LEVEL {
-        let selected = format::search_level(costs[level as usize] - 1, &cost);
-        assert!(selected < level, "budget={} selected level {} (expected < {})",
-            costs[level as usize] - 1, selected, level);
+        let selected = format::search_level(costs[level as usize] - 1, cost);
+        assert!(
+            selected < level,
+            "budget={} selected level {} (expected < {})",
+            costs[level as usize] - 1,
+            selected,
+            level
+        );
     }
 
     // Flat region: levels with equal cost should all be reachable
     let flat_costs: [usize; 6] = [5, 10, 10, 10, 10, 50];
     let flat_cost = |level: u8| flat_costs[level as usize];
-    assert_eq!(format::search_level(10, &flat_cost), 4);
-    assert_eq!(format::search_level(9, &flat_cost), 0);
+    assert_eq!(format::search_level(10, flat_cost), 4);
+    assert_eq!(format::search_level(9, flat_cost), 0);
 }
 
 /// Sanity check: directory-level budget_level works at extremes.
@@ -748,12 +873,17 @@ fn budget_level_sanity() {
     let fixtures: &[&str] = &["either/src", "neverthrow/src"];
     let mut tested = 0;
     for subpath in fixtures {
-        let Some(root) = fixture_path(subpath) else { continue };
+        let Some(root) = fixture_path(subpath) else {
+            continue;
+        };
         tested += 1;
         let files = walk::discover_source_files(&root);
         let sources = format::read_sources(&files);
         assert_eq!(format::budget_level(0, &root, &files, &sources), 0);
-        assert_eq!(format::budget_level(usize::MAX, &root, &files, &sources), format::MAX_LEVEL);
+        assert_eq!(
+            format::budget_level(usize::MAX, &root, &files, &sources),
+            format::MAX_LEVEL
+        );
     }
     assert!(tested > 0, "No fixtures available for budget sanity test");
 }
@@ -769,7 +899,10 @@ fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
     let level = format::budget_level(budget, &root, &files, &sources);
     let output = format::render_files(level, &root, &files, &sources);
     let words = format::count_words(&output);
-    Some(format!("budget: {} → level {} ({} words)\n\n{}", budget, level, words, output))
+    Some(format!(
+        "budget: {} → level {} ({} words)\n\n{}",
+        budget, level, words, output
+    ))
 }
 
 budget_test!(budget_mitt_level0, "mitt/src", 10);

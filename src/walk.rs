@@ -4,10 +4,8 @@ use std::path::{Path, PathBuf};
 /// Known source file extensions — only languages with tree-sitter queries in queries/.
 const SOURCE_EXTENSIONS: &[&str] = &[
     // Rust
-    "rs",
-    // TypeScript / JavaScript
-    "ts", "tsx", "js", "jsx",
-    // Python
+    "rs", // TypeScript / JavaScript
+    "ts", "tsx", "js", "jsx", // Python
     "py",
 ];
 
@@ -46,8 +44,10 @@ fn is_test_file(path: &Path) -> bool {
 
     // Match *.test.* and *.spec.* (e.g. foo.test.ts, bar.spec.tsx)
     // Match test_*.py and *_test.py (Python pytest conventions)
-    stem.ends_with(".test") || stem.ends_with(".spec")
-        || stem.starts_with("test_") || stem.ends_with("_test")
+    stem.ends_with(".test")
+        || stem.ends_with(".spec")
+        || stem.starts_with("test_")
+        || stem.ends_with("_test")
 }
 
 #[cfg(test)]
@@ -94,7 +94,11 @@ mod tests {
         // Test files that should be excluded
         fs::write(dir.path().join("index.test.ts"), "describe('x', () => {});").unwrap();
         fs::write(dir.path().join("utils.spec.ts"), "it('works', () => {});").unwrap();
-        fs::write(dir.path().join("app.test.tsx"), "test('renders', () => {});").unwrap();
+        fs::write(
+            dir.path().join("app.test.tsx"),
+            "test('renders', () => {});",
+        )
+        .unwrap();
         // __tests__ directory
         let tests_dir = dir.path().join("__tests__");
         fs::create_dir(&tests_dir).unwrap();

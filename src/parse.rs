@@ -87,7 +87,9 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
     };
 
     let mut parser = Parser::new();
-    parser.set_language(&language).expect("language version mismatch");
+    parser
+        .set_language(&language)
+        .expect("language version mismatch");
 
     let tree = match parser.parse(source, None) {
         Some(tree) => tree,
@@ -98,7 +100,9 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
     let mut cursor = QueryCursor::new();
     let mut matches = cursor.matches(&query, tree.root_node(), source.as_bytes());
 
-    let symbol_idx = query.capture_index_for_name("symbol").expect("missing @symbol capture");
+    let symbol_idx = query
+        .capture_index_for_name("symbol")
+        .expect("missing @symbol capture");
     let name_idx = query.capture_index_for_name("name");
 
     let mut symbols = Vec::new();
@@ -146,7 +150,10 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
 
                 // Detect arrow functions / function expressions assigned to const
                 // e.g. `export const foo = () => ...` should be fn, not const
-                if matches!(value_kind, Some("arrow_function" | "function_expression" | "generator_function")) {
+                if matches!(
+                    value_kind,
+                    Some("arrow_function" | "function_expression" | "generator_function")
+                ) {
                     SymbolKind::Function
                 }
                 // Filter out CommonJS require() calls — these are imports, not definitions
@@ -158,11 +165,12 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
                 }
             }
             "public_field_definition" => {
-                let value_kind = symbol_node
-                    .child_by_field_name("value")
-                    .map(|v| v.kind());
+                let value_kind = symbol_node.child_by_field_name("value").map(|v| v.kind());
 
-                if matches!(value_kind, Some("arrow_function" | "function_expression" | "generator_function")) {
+                if matches!(
+                    value_kind,
+                    Some("arrow_function" | "function_expression" | "generator_function")
+                ) {
                     SymbolKind::Function
                 } else {
                     // Skip plain data fields (not functions)
@@ -190,7 +198,11 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             impl_name(symbol_node, source)
         } else {
             match name_idx.and_then(|idx| m.captures.iter().find(|c| c.index == idx)) {
-                Some(c) => c.node.utf8_text(source.as_bytes()).unwrap_or("?").to_string(),
+                Some(c) => c
+                    .node
+                    .utf8_text(source.as_bytes())
+                    .unwrap_or("?")
+                    .to_string(),
                 None => continue,
             }
         };
@@ -269,7 +281,10 @@ fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
     // is "public", or if no accessibility_modifier (public by default in TS).
     // Interface methods (method_signature) are always public by design.
     // JS private methods (#method) use private_property_identifier and are always private.
-    if matches!(node.kind(), "method_definition" | "method_signature" | "public_field_definition") {
+    if matches!(
+        node.kind(),
+        "method_definition" | "method_signature" | "public_field_definition"
+    ) {
         // JS #private methods are always private
         if node
             .child_by_field_name("name")
@@ -298,19 +313,20 @@ fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
 fn is_require_call(declarator: Option<tree_sitter::Node>, source: &str) -> bool {
     let value = declarator.and_then(|d| d.child_by_field_name("value"));
     match value {
-        Some(v) if v.kind() == "call_expression" => v
-            .child_by_field_name("function")
-            .and_then(|f| f.utf8_text(source.as_bytes()).ok())
-            == Some("require"),
-        Some(v) if v.kind() == "member_expression" => v
-            .child_by_field_name("object")
-            .is_some_and(|obj| {
+        Some(v) if v.kind() == "call_expression" => {
+            v.child_by_field_name("function")
+                .and_then(|f| f.utf8_text(source.as_bytes()).ok())
+                == Some("require")
+        }
+        Some(v) if v.kind() == "member_expression" => {
+            v.child_by_field_name("object").is_some_and(|obj| {
                 obj.kind() == "call_expression"
                     && obj
                         .child_by_field_name("function")
                         .and_then(|f| f.utf8_text(source.as_bytes()).ok())
                         == Some("require")
-            }),
+            })
+        }
         _ => false,
     }
 }
@@ -378,14 +394,10 @@ fn is_rust_test_code(node: tree_sitter::Node, source: &str) -> bool {
     }
     let mut current = node.parent();
     while let Some(parent) = current {
-        if parent.kind() == "mod_item"
-            && has_preceding_attribute(parent, source, "#[cfg(test)]")
-        {
+        if parent.kind() == "mod_item" && has_preceding_attribute(parent, source, "#[cfg(test)]") {
             return true;
         }
-        if parent.kind() == "function_item"
-            && has_preceding_attribute(parent, source, "#[test]")
-        {
+        if parent.kind() == "function_item" && has_preceding_attribute(parent, source, "#[test]") {
             return true;
         }
         current = parent.parent();
@@ -445,7 +457,10 @@ macro_rules! say {
 pub mod utils;
 "#;
         let symbols = extract_symbols(Path::new("test.rs"), source);
-        let names: Vec<_> = symbols.iter().map(|s| (s.kind, s.name.as_str(), s.is_public)).collect();
+        let names: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.kind, s.name.as_str(), s.is_public))
+            .collect();
 
         assert!(names.contains(&(SymbolKind::Function, "hello", true)));
         assert!(names.contains(&(SymbolKind::Struct, "Point", false)));
@@ -461,7 +476,13 @@ pub mod utils;
 
         // Functions inside impl blocks should also be found
         // Both trait method signature and trait impl method are public
-        assert_eq!(names.iter().filter(|&&(k, n, p)| k == SymbolKind::Function && n == "greet" && p).count(), 2);
+        assert_eq!(
+            names
+                .iter()
+                .filter(|&&(k, n, p)| k == SymbolKind::Function && n == "greet" && p)
+                .count(),
+            2
+        );
         assert!(!names.contains(&(SymbolKind::Function, "greet", false)));
         assert!(names.contains(&(SymbolKind::Function, "new", true)));
     }
@@ -601,10 +622,7 @@ export const API_URL = "https://example.com";
 export const MAX_RETRIES = 3;
 "#;
         let symbols = extract_symbols(Path::new("test.ts"), source);
-        let kinds: Vec<_> = symbols
-            .iter()
-            .map(|s| (s.name.as_str(), s.kind))
-            .collect();
+        let kinds: Vec<_> = symbols.iter().map(|s| (s.name.as_str(), s.kind)).collect();
 
         // Arrow functions and function expressions should be classified as Function
         assert!(kinds.contains(&("greet", SymbolKind::Function)));
@@ -824,10 +842,7 @@ class Observer {
 }
 "#;
         let symbols = extract_symbols(Path::new("test.ts"), source);
-        let info: Vec<_> = symbols
-            .iter()
-            .map(|s| (s.name.as_str(), s.kind))
-            .collect();
+        let info: Vec<_> = symbols.iter().map(|s| (s.name.as_str(), s.kind)).collect();
 
         // Arrow function class fields should be captured as Function
         assert!(info.contains(&("subscribe", SymbolKind::Function)));
