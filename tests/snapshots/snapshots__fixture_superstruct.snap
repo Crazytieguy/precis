@@ -1,0 +1,106 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+error.ts:
+  export type Failure :5
+  export class StructError :25
+  constructor :35
+struct.ts:
+  export class Struct :10
+  constructor :22
+  assert :67
+  create :75
+  is :83
+  mask :93
+  validate :107
+  export function assert :123
+  export function create :139
+  export function mask :157
+  export function is :175
+  export function validate :185
+  export type Context :221
+  export type Infer :231
+  export type Describe :237
+  export type Result :243
+  export type Coercer :253
+  export type Validator :259
+  export type Refiner :266
+structs/coercions.ts:
+  export function coerce :16
+  export function defaulted :38
+  export function trimmed :79
+structs/refinements.ts:
+  export function empty :8
+  function getSize :21
+  export function max :33
+  export function min :55
+  export function nonempty :77
+  export function pattern :93
+  export function size :109
+  export function refine :146
+structs/types.ts:
+  export function any :19
+  export function array :33
+  export function bigint :60
+  export function boolean :70
+  export function date :83
+  export function enums :105
+  export function func :131
+  export function instance :144
+  export function integer :159
+  export function intersection :172
+  export function literal :204
+  export function map :230
+  export function never :258
+  export function nullable :266
+  export function number :278
+  export function object :298
+  export function optional :351
+  export function record :367
+  export function regexp :402
+  export function set :415
+  export function string :442
+  export function tuple :456
+  export function type :492
+  export function union :522
+  export function unknown :574
+structs/utilities.ts:
+  export function assign :60
+  export function define :71
+  export function deprecated :80
+  export function dynamic :106
+  export function lazy :140
+  export function omit :171
+  export function partial :197
+  export function pick :221
+  export function struct :247
+utils.ts:
+  function isIterable :8
+  export function isObject :16
+  export function isNonArrayObject :24
+  export function isPlainObject :32
+  export function print :45
+  export function shiftIterator :58
+  export function toFailure :67
+  export type UnionToIntersection :202
+  export type Assign :212
+  export type EnumSchema :218
+  export type IsMatch :227
+  export type IsExactMatch :233
+  export type IsRecord :242
+  export type IsTuple :251
+  export type IsUnion :267
+  export type ObjectSchema :277
+  export type ObjectType :283
+  export type OmitBy :291
+  export type Optionalize :300
+  export type PartialObjectSchema :307
+  export type PickBy :315
+  export type Simplify :324
+  export type If :328
+  export type StructSchema :334
+  export type TupleSchema :379
+  export type AnyStruct :385
+  export type InferStructTuple :394
+  type _InferTuple :402

@@ -293,6 +293,16 @@ fn fixture_react_hot_toast() {
 }
 
 #[test]
+fn fixture_superstruct() {
+    let Some(root) = fixture_path("superstruct/src") else {
+        eprintln!("skipping fixture_superstruct: clone with `git clone --depth 1 https://github.com/ianstormtaylor/superstruct.git test/fixtures/superstruct`");
+        return;
+    };
+    let output = format::format_directory(&root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
 fn fixture_dotenv() {
     let Some(root) = fixture_path("dotenv/lib") else {
         eprintln!("skipping fixture_dotenv: clone with `git clone --depth 1 https://github.com/motdotla/dotenv.git test/fixtures/dotenv`");
