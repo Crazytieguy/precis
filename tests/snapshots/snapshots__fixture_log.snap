@@ -1,0 +1,482 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+__private_api.rs:
+  pub type Value :10
+  mod sealed :12
+  pub trait KVs :14
+  fn into_kvs :15
+  impl<'a> KVs<'a> for &'a [(&'a str, Value<'a>)] :21
+  fn into_kvs :23
+  impl<'a> KVs<'a> for () :28
+  fn into_kvs :30
+  pub struct GlobalLogger :39
+  impl Log for GlobalLogger :41
+  fn enabled :42
+  fn log :46
+  fn flush :50
+  fn log_impl :56
+  pub fn log :84
+  pub fn enabled :103
+  pub fn loc :108
+  mod kv_support :113
+  pub type Value :116
+  pub fn capture_to_value :122
+  pub fn capture_debug :126
+  pub fn capture_display :130
+  pub fn capture_error :135
+  pub fn capture_sval :140
+  pub fn capture_serde :145
+kv/error.rs:
+  pub struct Error :5
+  enum Inner :10
+  impl Error :19
+  pub fn msg :21
+  pub(super) fn from_value :29
+  pub(super) fn into_value :37
+  impl fmt::Display for Error :48
+  fn fmt :49
+  impl From<fmt::Error> for Error :62
+  fn from :63
+  mod std_support :69
+  pub(super) type BoxedError :73
+  impl Error :75
+  pub fn boxed :77
+  impl error::Error for Error :87
+  impl From<io::Error> for Error :89
+  fn from :90
+kv/key.rs:
+  pub trait ToKey :7
+  fn to_key :9
+  impl<T> ToKey for &T :12
+  fn to_key :16
+  impl<'k> ToKey for Key<'k> :21
+  fn to_key :22
+  impl ToKey for str :27
+  fn to_key :28
+  pub struct Key :37
+  impl<'k> Key<'k> :42
+  pub fn from_str :45
+  pub fn as_str :53
+  pub fn to_borrowed_str :61
+  impl<'k> fmt::Display for Key<'k> :69
+  fn fmt :70
+  impl<'k> AsRef<str> for Key<'k> :75
+  fn as_ref :76
+  impl<'k> Borrow<str> for Key<'k> :81
+  fn borrow :82
+  impl<'k> From<&'k str> for Key<'k> :87
+  fn from :88
+  mod std_support :94
+  impl ToKey for String :99
+  fn to_key :100
+  impl<'a> ToKey for Cow<'a, str> :105
+  fn to_key :106
+  mod sval_support :113
+  impl<'a> Value for Key<'a> :119
+  fn stream :120
+  impl<'a> ValueRef<'a> for Key<'a> :128
+  fn stream_ref :129
+  mod serde_support :136
+  impl<'a> Serialize for Key<'a> :141
+  fn serialize :142
+kv/mod.rs:
+  mod error :246
+  mod key :247
+  mod source :250
+  mod value :252
+  pub mod source :260
+  pub mod value :262
+kv/source.rs:
+  pub trait Source :51
+  fn visit :62
+  fn get :73
+  fn count :85
+  fn get_default :91
+  fn count_default :114
+  impl<T> Source for &T :130
+  fn visit :134
+  fn get :138
+  fn count :142
+  impl<K, V> Source for (K, V) :147
+  fn visit :152
+  fn get :156
+  fn count :164
+  impl<S> Source for [S] :169
+  fn visit :173
+  fn get :181
+  fn count :191
+  impl<const N: usize, S> Source for [S; N] :196
+  fn visit :200
+  fn get :204
+  fn count :208
+  impl<S> Source for Option<S> :213
+  fn visit :217
+  fn get :225
+  fn count :229
+  pub trait VisitSource :235
+  fn visit_pair :237
+  impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T :241
+  fn visit_pair :245
+  impl<'a, 'b: 'a, 'kvs> VisitSource<'kvs> for fmt::DebugMap<'a, 'b> :250
+  fn visit_pair :251
+  impl<'a, 'b: 'a, 'kvs> VisitSource<'kvs> for fmt::DebugList<'a, 'b> :257
+  fn visit_pair :258
+  impl<'a, 'b: 'a, 'kvs> VisitSource<'kvs> for fmt::DebugSet<'a, 'b> :264
+  fn visit_pair :265
+  impl<'a, 'b: 'a, 'kvs> VisitSource<'kvs> for fmt::DebugTuple<'a, 'b> :271
+  fn visit_pair :272
+  mod std_support :280
+  impl<S> Source for Box<S> :288
+  fn visit :292
+  fn get :296
+  fn count :300
+  impl<S> Source for Arc<S> :305
+  fn visit :309
+  fn get :313
+  fn count :317
+  impl<S> Source for Rc<S> :322
+  fn visit :326
+  fn get :330
+  fn count :334
+  impl<S> Source for Vec<S> :339
+  fn visit :343
+  fn get :347
+  fn count :351
+  impl<'kvs, V> VisitSource<'kvs> for Box<V> :356
+  fn visit_pair :360
+  impl<K, V, S> Source for HashMap<K, V, S> :365
+  fn visit :371
+  fn get :378
+  fn count :382
+  impl<K, V> Source for BTreeMap<K, V> :387
+  fn visit :392
+  fn get :399
+  fn count :403
+kv/value.rs:
+  pub trait ToValue :11
+  fn to_value :13
+  impl<T> ToValue for &T :16
+  fn to_value :20
+  impl<'v> ToValue for Value<'v> :25
+  fn to_value :26
+  pub struct Value :119
+  impl<'v> Value<'v> :123
+  pub fn from_any :125
+  pub fn from_debug :133
+  pub fn from_display :143
+  pub fn from_serde :154
+  pub fn from_sval :165
+  pub fn from_dyn_debug :175
+  pub fn from_dyn_display :182
+  pub fn from_dyn_error :190
+  pub fn null :197
+  fn from_inner :204
+  pub fn visit :217
+  impl<'v> fmt::Debug for Value<'v> :222
+  fn fmt :223
+  impl<'v> fmt::Display for Value<'v> :228
+  fn fmt :229
+  impl<'v> serde_core::Serialize for Value<'v> :235
+  fn serialize :236
+  impl<'v> sval::Value for Value<'v> :245
+  fn stream :246
+  impl<'v> sval_ref::ValueRef<'v> for Value<'v> :252
+  fn stream_ref :253
+  impl ToValue for str :258
+  fn to_value :259
+  impl<'v> From<&'v str> for Value<'v> :264
+  fn from :265
+  impl ToValue for () :270
+  fn to_value :271
+  impl<T> ToValue for Option<T> :276
+  fn to_value :280
+  macro_rules! impl_to_value_primitive :288
+  macro_rules! impl_to_value_nonzero_primitive :312
+  macro_rules! impl_value_to_primitive :336
+  impl<'v> Value<'v> :376
+  pub fn to_borrowed_error :379
+  pub fn to_borrowed_str :384
+  mod std_support :390
+  impl<T> ToValue for Box<T> :397
+  fn to_value :401
+  impl<T> ToValue for Arc<T> :406
+  fn to_value :410
+  impl<T> ToValue for Rc<T> :415
+  fn to_value :419
+  impl ToValue for String :424
+  fn to_value :425
+  impl<'v> ToValue for Cow<'v, str> :430
+  fn to_value :431
+  impl<'v> Value<'v> :436
+  pub fn to_cow_str :438
+  impl<'v> From<&'v String> for Value<'v> :443
+  fn from :444
+  pub trait VisitValue :462
+  fn visit_any :469
+  fn visit_null :472
+  fn visit_u64 :477
+  fn visit_i64 :482
+  fn visit_u128 :487
+  fn visit_i128 :492
+  fn visit_f64 :497
+  fn visit_bool :502
+  fn visit_str :507
+  fn visit_borrowed_str :512
+  fn visit_char :517
+  fn visit_error :524
+  fn visit_borrowed_error :530
+  impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T :539
+  fn visit_any :543
+  fn visit_null :547
+  fn visit_u64 :551
+  fn visit_i64 :555
+  fn visit_u128 :559
+  fn visit_i128 :563
+  fn visit_f64 :567
+  fn visit_bool :571
+  fn visit_str :575
+  fn visit_borrowed_str :579
+  fn visit_char :583
+  fn visit_error :588
+  fn visit_borrowed_error :593
+  pub(in crate::kv) mod inner :602
+  pub fn visit :619
+  pub(in crate::kv) mod inner :721
+  pub enum Inner :738
+  impl<'v> From<()> for Inner<'v> :752
+  fn from :753
+  impl<'v> From<bool> for Inner<'v> :758
+  fn from :759
+  impl<'v> From<char> for Inner<'v> :764
+  fn from :765
+  impl<'v> From<f32> for Inner<'v> :770
+  fn from :771
+  impl<'v> From<f64> for Inner<'v> :776
+  fn from :777
+  impl<'v> From<i8> for Inner<'v> :782
+  fn from :783
+  impl<'v> From<i16> for Inner<'v> :788
+  fn from :789
+  impl<'v> From<i32> for Inner<'v> :794
+  fn from :795
+  impl<'v> From<i64> for Inner<'v> :800
+  fn from :801
+  impl<'v> From<isize> for Inner<'v> :806
+  fn from :807
+  impl<'v> From<u8> for Inner<'v> :812
+  fn from :813
+  impl<'v> From<u16> for Inner<'v> :818
+  fn from :819
+  impl<'v> From<u32> for Inner<'v> :824
+  fn from :825
+  impl<'v> From<u64> for Inner<'v> :830
+  fn from :831
+  impl<'v> From<usize> for Inner<'v> :836
+  fn from :837
+  impl<'v> From<i128> for Inner<'v> :842
+  fn from :843
+  impl<'v> From<u128> for Inner<'v> :848
+  fn from :849
+  impl<'v> From<&'v str> for Inner<'v> :854
+  fn from :855
+  impl<'v> fmt::Debug for Inner<'v> :860
+  fn fmt :861
+  impl<'v> fmt::Display for Inner<'v> :878
+  fn fmt :879
+  impl<'v> Inner<'v> :896
+  pub fn from_debug :897
+  pub fn from_display :901
+  pub fn from_dyn_debug :905
+  pub fn from_dyn_display :909
+  pub fn empty :913
+  pub fn to_bool :917
+  pub fn to_char :924
+  pub fn to_f64 :931
+  pub fn to_i64 :954
+  pub fn to_u64 :964
+  pub fn to_u128 :974
+  pub fn to_i128 :984
+  pub fn to_borrowed_str :994
+  pub fn visit :1031
+  impl<'v> Value<'v> :1051
+  pub fn capture_debug :1055
+  pub fn capture_display :1065
+  pub fn capture_error :1075
+  pub fn capture_serde :1085
+  pub fn capture_sval :1095
+  pub fn is :1107
+  pub fn downcast_ref :1116
+  macro_rules! as_debug :1129
+  macro_rules! as_display :1139
+  macro_rules! as_error :1149
+  macro_rules! as_serde :1159
+  macro_rules! as_sval :1169
+lib.rs:
+  mod macros :406
+  mod serde :407
+  pub mod kv :410
+  impl AtomicUsize :426
+  const fn new :427
+  fn load :431
+  fn store :435
+  unsafe impl Sync for AtomicUsize :443
+  static mut LOGGER :447
+  static STATE :449
+  const UNINITIALIZED :454
+  const INITIALIZING :455
+  const INITIALIZED :456
+  static MAX_LOG_LEVEL_FILTER :458
+  static LOG_LEVEL_NAMES :460
+  static SET_LOGGER_ERROR :462
+  static LEVEL_PARSE_ERROR :464
+  pub enum Level :475
+  impl PartialEq<LevelFilter> for Level :501
+  fn eq :503
+  impl PartialOrd<LevelFilter> for Level :508
+  fn partial_cmp :510
+  impl FromStr for Level :515
+  type Err :516
+  fn from_str :517
+  impl fmt::Display for Level :528
+  fn fmt :529
+  impl Level :534
+  fn from_usize :535
+  pub fn max :548
+  pub fn to_level_filter :554
+  pub fn as_str :561
+  pub fn iter :579
+  pub fn increment_severity :599
+  pub fn decrement_severity :620
+  pub enum LevelFilter :636
+  impl PartialEq<Level> for LevelFilter :651
+  fn eq :653
+  impl PartialOrd<Level> for LevelFilter :658
+  fn partial_cmp :660
+  impl FromStr for LevelFilter :665
+  type Err :666
+  fn from_str :667
+  impl fmt::Display for LevelFilter :678
+  fn fmt :679
+  impl LevelFilter :684
+  fn from_usize :685
+  pub fn max :699
+  pub fn to_level :707
+  pub fn as_str :714
+  pub fn iter :732
+  pub fn increment_severity :752
+  pub fn decrement_severity :774
+  enum MaybeStaticStr :781
+  impl<'a> MaybeStaticStr<'a> :786
+  fn get :788
+  pub struct Record :842
+  struct KeyValues :858
+  impl<'a> fmt::Debug for KeyValues<'a> :861
+  fn fmt :862
+  impl<'a> Record<'a> :869
+  pub fn builder :872
+  pub fn args :878
+  pub fn metadata :884
+  pub fn level :890
+  pub fn target :896
+  pub fn module_path :902
+  pub fn module_path_static :908
+  pub fn file :917
+  pub fn file_static :923
+  pub fn line :932
+  pub fn key_values :939
+  pub fn to_builder :946
+  pub struct RecordBuilder :1003
+  impl<'a> RecordBuilder<'a> :1007
+  pub fn new :1021
+  pub fn args :1037
+  pub fn metadata :1044
+  pub fn level :1051
+  pub fn target :1058
+  pub fn module_path :1065
+  pub fn module_path_static :1072
+  pub fn file :1079
+  pub fn file_static :1086
+  pub fn line :1093
+  pub fn key_values :1101
+  pub fn build :1108
+  impl Default for RecordBuilder<'_> :1113
+  fn default :1114
+  pub struct Metadata :1158
+  impl<'a> Metadata<'a> :1163
+  pub fn builder :1166
+  pub fn level :1172
+  pub fn target :1178
+  pub struct MetadataBuilder :1200
+  impl<'a> MetadataBuilder<'a> :1204
+  pub fn new :1212
+  pub fn level :1223
+  pub fn target :1230
+  pub fn build :1237
+  impl Default for MetadataBuilder<'_> :1242
+  fn default :1243
+  pub trait Log :1249
+  fn enabled :1262
+  fn log :1271
+  fn flush :1279
+  struct NopLogger :1283
+  impl Log for NopLogger :1285
+  fn enabled :1286
+  fn log :1290
+  fn flush :1291
+  impl<T> Log for &'_ T :1294
+  fn enabled :1298
+  fn log :1302
+  fn flush :1305
+  impl<T> Log for std::boxed::Box<T> :1311
+  fn enabled :1315
+  fn log :1319
+  fn flush :1322
+  impl<T> Log for std::sync::Arc<T> :1328
+  fn enabled :1332
+  fn log :1336
+  fn flush :1339
+  pub fn set_max_level :1351
+  pub unsafe fn set_max_level_racy :1375
+  pub fn max_level :1396
+  pub fn set_boxed_logger :1420
+  pub fn set_logger :1478
+  fn set_logger_inner :1483
+  pub unsafe fn set_logger_racy :1529
+  pub struct SetLoggerError :1549
+  impl fmt::Display for SetLoggerError :1551
+  fn fmt :1552
+  impl error::Error for SetLoggerError :1559
+  pub struct ParseLevelError :1566
+  impl fmt::Display for ParseLevelError :1568
+  fn fmt :1569
+  impl error::Error for ParseLevelError :1576
+  pub fn logger :1581
+  pub mod __private_api :1600
+  pub const STATIC_MAX_LEVEL :1611
+macros.rs:
+  macro_rules! log :75
+  macro_rules! __log :119
+  macro_rules! error :165
+  macro_rules! warn :204
+  macro_rules! info :252
+  macro_rules! debug :292
+  macro_rules! trace :336
+  macro_rules! log_enabled :391
+  macro_rules! __log_enabled :415
+  macro_rules! __log_logger :429
+  macro_rules! __log_key :459
+  macro_rules! __log_value :517
+  macro_rules! __log_value_sval :535
+  macro_rules! __log_value_serde :553
+  macro_rules! __log_value_error :573
+serde.rs:
+  impl Serialize for Level :16
+  fn serialize :17
+  impl<'de> Deserialize<'de> for Level :31
+  fn deserialize :32
+  impl Serialize for LevelFilter :110
+  fn serialize :111
+  impl<'de> Deserialize<'de> for LevelFilter :126
+  fn deserialize :127
