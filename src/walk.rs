@@ -30,7 +30,9 @@ fn is_source_file(path: &Path) -> bool {
 fn is_test_file(path: &Path) -> bool {
     // Check for non-source directories anywhere in the path:
     // __tests__/ (Jest), tests/ (Rust/Python/JS), test/ (JS/TS), testing/ (Python),
-    // benches/ (Rust), benchmark/ and benchmarks/ (cross-language)
+    // benches/ (Rust), benchmark/ and benchmarks/ (cross-language),
+    // testdata/ (Go convention, excluded by go build),
+    // vendor/ (vendored third-party dependencies: Go, PHP, Ruby)
     if path.components().any(|c| {
         let s = c.as_os_str();
         s == "__tests__"
@@ -40,6 +42,8 @@ fn is_test_file(path: &Path) -> bool {
             || s == "benches"
             || s == "benchmark"
             || s == "benchmarks"
+            || s == "testdata"
+            || s == "vendor"
     }) {
         return true;
     }
@@ -136,6 +140,18 @@ mod tests {
         fs::write(benchmark_dir.join("run.py"), "def bench(): pass").unwrap();
         // conftest.py (pytest infrastructure)
         fs::write(dir.path().join("conftest.py"), "import pytest").unwrap();
+        // testdata/ directory (Go convention)
+        let testdata_dir = dir.path().join("testdata");
+        fs::create_dir(&testdata_dir).unwrap();
+        fs::write(testdata_dir.join("fixture.go"), "package testdata").unwrap();
+        // vendor/ directory (vendored third-party dependencies)
+        let vendor_dir = dir.path().join("vendor");
+        fs::create_dir_all(vendor_dir.join("github.com/pkg/errors")).unwrap();
+        fs::write(
+            vendor_dir.join("github.com/pkg/errors/errors.go"),
+            "package errors",
+        )
+        .unwrap();
 
         let files = discover_source_files(dir.path());
         let names: Vec<_> = files
@@ -157,5 +173,8 @@ mod tests {
         assert!(!names.contains(&"helpers.py".to_string()));
         assert!(!names.contains(&"run.py".to_string()));
         assert!(!names.contains(&"conftest.py".to_string()));
+        // testdata/ and vendor/ should be excluded
+        assert!(!names.contains(&"fixture.go".to_string()));
+        assert!(!names.contains(&"errors.go".to_string()));
     }
 }
