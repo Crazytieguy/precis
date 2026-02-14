@@ -46,7 +46,7 @@ fn main() {
         } else {
             format::MAX_LEVEL.min(1)
         };
-        let output = format::render_directory(level, path);
+        let output = format::render_files(level, path, &files);
         let words = format::count_words(&output);
         print!("{}", output);
         if let Some(budget) = cli.budget {

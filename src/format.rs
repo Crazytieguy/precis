@@ -1,4 +1,4 @@
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use crate::{parse, walk};
 
@@ -30,11 +30,12 @@ pub fn count_words(text: &str) -> usize {
 /// Find the highest granularity level whose output fits within the word budget.
 /// Uses binary search over `0..=MAX_LEVEL`.
 pub fn budget_level(budget: usize, root: &Path) -> u8 {
+    let files = walk::discover_source_files(root);
     let mut low: u8 = 0;
     let mut high: u8 = MAX_LEVEL;
     while low < high {
         let mid = (low + high).div_ceil(2);
-        let output = render_directory(mid, root);
+        let output = render_files(mid, root, &files);
         if count_words(&output) <= budget {
             low = mid;
         } else {
@@ -63,8 +64,13 @@ pub fn budget_level_file(budget: usize, path: &Path, root: &Path, source: &str) 
 /// Render all source files in a directory at the given granularity level.
 pub fn render_directory(level: u8, root: &Path) -> String {
     let files = walk::discover_source_files(root);
+    render_files(level, root, &files)
+}
+
+/// Render pre-discovered source files at the given granularity level.
+pub fn render_files(level: u8, root: &Path, files: &[PathBuf]) -> String {
     let mut out = String::new();
-    for file in &files {
+    for file in files {
         if level == 0 {
             let relative = file.strip_prefix(root).unwrap_or(file);
             out.push_str(&format!("{}\n", relative.display()));
