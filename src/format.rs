@@ -109,19 +109,13 @@ pub fn budget_level(
     let all_symbols = extract_all_symbols(files, sources);
 
     let level = search_level(budget, |level| {
-        let mut out = String::new();
-        for (i, (file, source)) in files.iter().zip(sources).enumerate() {
-            match source {
-                Some(s) if level > 0 => {
-                    out.push_str(&render_with_symbols(level, file, root, s, &all_symbols[i]));
-                }
-                _ => {
-                    // Level 0 or unreadable file: show path only
-                    out.push_str(&render_with_symbols(0, file, root, "", &[]));
-                }
-            }
-        }
-        count_words(&out)
+        count_words(&render_files_with_symbols(
+            level,
+            root,
+            files,
+            sources,
+            &all_symbols,
+        ))
     });
 
     (level, all_symbols)
