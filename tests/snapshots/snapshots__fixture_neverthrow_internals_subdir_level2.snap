@@ -1,0 +1,22 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+error.ts
+     3→export interface ErrorConfig {
+     7→const defaultErrorConfig: ErrorConfig = {
+    11→interface NeverThrowError<T, E> {
+    27→export const createNeverThrowError = <T, E>(
+utils.ts
+     5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
+    10→export type ExtractOkAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
+    15→export type ExtractErrTypes<T extends readonly Result<unknown, unknown>[]> = {
+    20→export type ExtractErrAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
+    24→export type InferOkTypes<R> = R extends Result<infer T, unknown> ? T : never
+    25→export type InferErrTypes<R> = R extends Result<unknown, infer E> ? E : never
+    27→export type InferAsyncOkTypes<R> = R extends ResultAsync<infer T, unknown> ? T : never
+    28→export type InferAsyncErrTypes<R> = R extends ResultAsync<unknown, infer E> ? E : never
+    33→export const combineResultList = <T, E>(
+    54→export const combineResultAsyncList = <T, E>(
+    64→export const combineResultListWithAllErrors = <T, E>(
+    82→export const combineResultAsyncListWithAllErrors = <T, E>(

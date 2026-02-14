@@ -809,6 +809,26 @@ fn fixture_superstruct_structs_subdir_level2() {
     insta::assert_snapshot!(output);
 }
 
+#[test]
+fn fixture_neverthrow_internals_subdir() {
+    let Some(root) = fixture_path("neverthrow/src/_internals") else {
+        eprintln!("skipping fixture_neverthrow_internals_subdir: clone with `git clone --depth 1 https://github.com/supermacro/neverthrow.git test/fixtures/neverthrow`");
+        return;
+    };
+    let output = format::render_directory(1, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_neverthrow_internals_subdir_level2() {
+    let Some(root) = fixture_path("neverthrow/src/_internals") else {
+        eprintln!("skipping fixture_neverthrow_internals_subdir_level2: clone with `git clone --depth 1 https://github.com/supermacro/neverthrow.git test/fixtures/neverthrow`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
 /// Test the monotonicity invariant: for any file, a higher level must never
 /// produce fewer words than a lower level.
 #[test]
