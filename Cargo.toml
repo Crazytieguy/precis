@@ -4,3 +4,12 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+clap = { version = "4", features = ["derive"] }
+ignore = "0.4"
+streaming-iterator = "0.1.9"
+tree-sitter = { version = "0.25", features = ["std"] }
+tree-sitter-rust = "0.24.0"
+
+[dev-dependencies]
+insta = "1"
+tempfile = "3"

@@ -1,0 +1,34 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+format.rs:
+  fn format_symbol
+  pub fn format_file_symbols
+  pub fn format_directory
+lib.rs:
+  pub mod format
+  pub mod parse
+  pub mod walk
+main.rs:
+  struct Cli
+  fn main
+parse.rs:
+  pub struct Symbol
+  pub enum SymbolKind
+  impl std::fmt::Display for SymbolKind
+  fn fmt
+  fn language_for_extension
+  pub fn extract_symbols
+  fn has_visibility_modifier
+  fn impl_name
+  mod tests
+  fn extracts_rust_symbols
+  fn unsupported_extension_returns_empty
+walk.rs:
+  const SOURCE_EXTENSIONS
+  pub fn discover_source_files
+  fn is_source_file
+  mod tests
+  fn discovers_files_in_own_project
+  fn filters_non_source_files
