@@ -11,14 +11,16 @@
 ## Current state
 
 - Parsing works for Rust, TypeScript, JavaScript, TSX — extracts symbol names, kinds, visibility
-- Output shows symbol lines truncated at the symbol name, with right-aligned line numbers and `→` separator (e.g. `    12→    pub fn new`)
-- `--budget` flag is parsed but not wired up — no granularity/budgeting logic yet
+- Output supports 4 granularity levels: 0 (file paths), 1 (symbol names), 2 (full signature lines), 3 (full source)
+- Monotonicity invariant (higher level = more words) tested against all fixtures
+- `--budget` flag is parsed but not wired up — no budget algorithm yet (need binary search over levels)
 - `path` arg only accepts directories, not files
+- Default output is level 1 (symbol names truncated)
 
 ## Feature development
 
-- Implement signature-level output (extend line-prefix truncation past the symbol name)
-- Implement the granularity/budgeting system (see README for algorithm design)
+- Wire up `--budget` flag: implement binary search over levels to fit word budget
+- Make levels depth-aware and file-size-aware (currently uniform across all files)
 - Accept file paths in addition to directories
 - Add more language grammars (Python, Go)
 - Add `--json` output flag

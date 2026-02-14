@@ -23,7 +23,7 @@ fn main() {
     }
 
     let files = walk::discover_source_files(path);
-    print!("{}", format::format_directory(path));
+    print!("{}", format::render_directory(format::MAX_LEVEL.min(1), path));
     if let Some(budget) = cli.budget {
         eprintln!("({} files found, budget: {} tokens)", files.len(), budget);
     } else {

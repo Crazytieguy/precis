@@ -68,7 +68,7 @@ macro_rules! token {
 
 pub mod lexer;
 "#;
-    let output = format::format_file_symbols(Path::new("sample.rs"), Path::new(""), source);
+    let output = format::render_file(1, Path::new("sample.rs"), Path::new(""), source);
     insta::assert_snapshot!(output);
 }
 
@@ -124,7 +124,7 @@ export namespace Utils {
     }
 }
 "#;
-    let output = format::format_file_symbols(Path::new("sample.ts"), Path::new(""), source);
+    let output = format::render_file(1, Path::new("sample.ts"), Path::new(""), source);
     insta::assert_snapshot!(output);
 }
 
@@ -155,7 +155,7 @@ export default class DefaultExport {
     name = "";
 }
 "#;
-    let output = format::format_file_symbols(Path::new("sample.js"), Path::new(""), source);
+    let output = format::render_file(1, Path::new("sample.js"), Path::new(""), source);
     insta::assert_snapshot!(output);
 }
 
@@ -204,7 +204,7 @@ export default function App() {
     );
 }
 "#;
-    let output = format::format_file_symbols(Path::new("sample.tsx"), Path::new(""), source);
+    let output = format::render_file(1, Path::new("sample.tsx"), Path::new(""), source);
     insta::assert_snapshot!(output);
 }
 
@@ -218,7 +218,7 @@ fn fixture_either() {
         eprintln!("skipping fixture_either: clone with `git clone --depth 1 https://github.com/rayon-rs/either.git test/fixtures/either`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -228,7 +228,7 @@ fn fixture_neverthrow() {
         eprintln!("skipping fixture_neverthrow: clone with `git clone --depth 1 https://github.com/supermacro/neverthrow.git test/fixtures/neverthrow`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -238,7 +238,7 @@ fn fixture_semver() {
         eprintln!("skipping fixture_semver: clone with `git clone --depth 1 https://github.com/npm/node-semver.git test/fixtures/semver`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -248,7 +248,7 @@ fn fixture_cmdk() {
         eprintln!("skipping fixture_cmdk: clone with `git clone --depth 1 https://github.com/pacocoursey/cmdk.git test/fixtures/cmdk`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -258,7 +258,7 @@ fn fixture_ts_pattern() {
         eprintln!("skipping fixture_ts_pattern: clone with `git clone --depth 1 https://github.com/gvergnaud/ts-pattern.git test/fixtures/ts-pattern`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -268,7 +268,7 @@ fn fixture_anyhow() {
         eprintln!("skipping fixture_anyhow: clone with `git clone --depth 1 https://github.com/dtolnay/anyhow.git test/fixtures/anyhow`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -278,7 +278,7 @@ fn fixture_once_cell() {
         eprintln!("skipping fixture_once_cell: clone with `git clone --depth 1 https://github.com/matklad/once_cell.git test/fixtures/once_cell`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -288,7 +288,7 @@ fn fixture_react_hot_toast() {
         eprintln!("skipping fixture_react_hot_toast: clone with `git clone --depth 1 https://github.com/timolins/react-hot-toast.git test/fixtures/react-hot-toast`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -298,7 +298,7 @@ fn fixture_superstruct() {
         eprintln!("skipping fixture_superstruct: clone with `git clone --depth 1 https://github.com/ianstormtaylor/superstruct.git test/fixtures/superstruct`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -308,7 +308,7 @@ fn fixture_dotenv() {
         eprintln!("skipping fixture_dotenv: clone with `git clone --depth 1 https://github.com/motdotla/dotenv.git test/fixtures/dotenv`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -318,7 +318,7 @@ fn fixture_commander() {
         eprintln!("skipping fixture_commander: clone with `git clone --depth 1 https://github.com/tj/commander.js.git test/fixtures/commander`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -328,7 +328,7 @@ fn fixture_thiserror() {
         eprintln!("skipping fixture_thiserror: clone with `git clone --depth 1 https://github.com/dtolnay/thiserror.git test/fixtures/thiserror`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -338,7 +338,7 @@ fn fixture_sonner() {
         eprintln!("skipping fixture_sonner: clone with `git clone --depth 1 https://github.com/emilkowalski/sonner.git test/fixtures/sonner`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -348,7 +348,7 @@ fn fixture_mitt() {
         eprintln!("skipping fixture_mitt: clone with `git clone --depth 1 https://github.com/developit/mitt.git test/fixtures/mitt`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -358,7 +358,7 @@ fn fixture_debug() {
         eprintln!("skipping fixture_debug: clone with `git clone --depth 1 https://github.com/debug-js/debug.git test/fixtures/debug`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -368,7 +368,7 @@ fn fixture_log() {
         eprintln!("skipping fixture_log: clone with `git clone --depth 1 https://github.com/rust-lang/log.git test/fixtures/log`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -378,7 +378,7 @@ fn fixture_ky() {
         eprintln!("skipping fixture_ky: clone with `git clone --depth 1 https://github.com/sindresorhus/ky.git test/fixtures/ky`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -388,7 +388,7 @@ fn fixture_ini() {
         eprintln!("skipping fixture_ini: clone with `git clone --depth 1 https://github.com/npm/ini.git test/fixtures/ini`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -398,7 +398,7 @@ fn fixture_vaul() {
         eprintln!("skipping fixture_vaul: clone with `git clone --depth 1 https://github.com/emilkowalski/vaul.git test/fixtures/vaul`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
 }
 
@@ -408,6 +408,59 @@ fn fixture_input_otp() {
         eprintln!("skipping fixture_input_otp: clone with `git clone --depth 1 https://github.com/guilhermerodz/input-otp.git test/fixtures/input-otp`");
         return;
     };
-    let output = format::format_directory(&root);
+    let output = format::render_directory(1, &root);
     insta::assert_snapshot!(output);
+}
+
+/// Test the monotonicity invariant: for any file, a higher level must never
+/// produce fewer words than a lower level.
+#[test]
+fn monotonicity_invariant() {
+    // Test against all available fixtures
+    let fixtures: &[(&str, &str)] = &[
+        ("either", "either/src"),
+        ("anyhow", "anyhow/src"),
+        ("once_cell", "once_cell/src"),
+        ("thiserror", "thiserror/src"),
+        ("log", "log/src"),
+        ("neverthrow", "neverthrow/src"),
+        ("ts-pattern", "ts-pattern/src"),
+        ("superstruct", "superstruct/src"),
+        ("mitt", "mitt/src"),
+        ("ky", "ky/source"),
+        ("semver", "semver/classes"),
+        ("dotenv", "dotenv/lib"),
+        ("commander", "commander/lib"),
+        ("debug", "debug/src"),
+        ("ini", "ini/lib"),
+        ("cmdk", "cmdk/cmdk/src"),
+        ("react-hot-toast", "react-hot-toast/src"),
+        ("sonner", "sonner/src"),
+        ("vaul", "vaul/src"),
+        ("input-otp", "input-otp/packages/input-otp/src"),
+    ];
+
+    let mut tested = 0;
+    for (name, subpath) in fixtures {
+        let Some(root) = fixture_path(subpath) else {
+            continue;
+        };
+        tested += 1;
+        for level in 0..format::MAX_LEVEL {
+            let lower = format::render_directory(level, &root);
+            let upper = format::render_directory(level + 1, &root);
+            let lower_words: usize = lower.split_whitespace().count();
+            let upper_words: usize = upper.split_whitespace().count();
+            assert!(
+                upper_words >= lower_words,
+                "Monotonicity violation in {}: level {} ({} words) > level {} ({} words)",
+                name,
+                level,
+                lower_words,
+                level + 1,
+                upper_words,
+            );
+        }
+    }
+    assert!(tested > 0, "No fixtures available for monotonicity test");
 }
