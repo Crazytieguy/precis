@@ -1,0 +1,47 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+__init__.py
+filesize.py
+    36→def naturalsize
+i18n.py
+    40→def _get_default_locale_path
+    51→def get_translation
+    58→def activate
+    96→def deactivate
+   101→def _gettext
+   113→def _pgettext
+   129→def _ngettext
+   144→def _gettext_noop
+   163→def _ngettext_noop
+   183→def thousands_separator
+   196→def decimal_separator
+lists.py
+    12→def natural_list
+number.py
+    21→def _format_not_finite
+    34→def ordinal
+   110→def intcomma
+   195→def intword
+   269→def apnumber
+   321→def fractional
+   385→def scientific
+   454→def clamp
+   531→def metric
+time.py
+    31→class Unit
+    41→    def __lt__
+    47→def _now
+    53→def _abs_timedelta
+    68→def _date_and_delta
+    95→def naturaldelta
+   249→def naturaltime
+   300→def _convert_aware_datetime
+   311→def naturalday
+   343→def naturaldate
+   361→def _quotient_and_remainder
+   406→def _suitable_minimum_unit
+   435→def _suppress_lower_units
+   451→def precisedelta
+   654→def _rounding_by_fmt

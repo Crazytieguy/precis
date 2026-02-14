@@ -2,11 +2,12 @@
 
 ## Snapshot coverage
 
-- 5-per-language target achieved: 5 Rust, 5 TypeScript, 5 JavaScript, 5 TSX — each with level 1, level 2, and level 3 snapshots
+- 5-per-language target achieved: 5 Rust, 5 TypeScript, 5 JavaScript, 5 TSX, 5 Python — each with level 1, level 2, level 3, and level 4 snapshots
 - 8 fixtures have subdirectory snapshot tests; remaining fixtures (either, debug, mitt, etc.) have flat source trees with no meaningful subdirectories to test
-- All 20 fixtures have level 1, 2, 3, and 4 snapshots; levels 0 and 5 tested via samples only
+- All 25 fixtures have level 1, 2, 3, and 4 snapshots; levels 0 and 5 tested via samples only
 - Budget-based snapshot tests added: mitt (5 budgets hitting levels 0–3 and 5), ini (3 budgets), neverthrow (2 budgets, multi-file). Each snapshot includes metadata header showing budget → level → word count.
-- Level 4 fixture snapshots now cover all 20 fixtures; spot-check confirmed type bodies (struct fields, enum variants, trait members) expand correctly
+- Level 4 fixture snapshots now cover all 25 fixtures; spot-check confirmed type bodies (struct fields, enum variants, trait members) expand correctly
+- Python fixtures: pluggy, tomli, humanize, python-dotenv, typeguard — exercises classes, decorators, type hints, docstrings
 
 ## Codebase quality
 
@@ -29,7 +30,6 @@
 - Add `--json` output flag
 - Doc comment detection (level 3) is text-based heuristic; does not use tree-sitter comment nodes. Handles `///`, `//!`, `/** */` blocks, and Python `#` comments. Skips `#[attr]` and `@decorator` lines between doc comments and symbols; decorators/attributes are always shown at level 3+.
 - Python: docstrings (triple-quoted strings inside function body) are not captured at level 3 since they come after the `def` line, not before it. Only `#` comments above functions are captured.
-- Python: no fixture snapshot tests yet; needs small open-source Python projects cloned into test/fixtures/
 - Python: class bodies are not expanded at level 4 (Class not in `is_type_definition`). Consider adding — would show class attributes and nested class definitions.
 
 ## Design decisions

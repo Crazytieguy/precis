@@ -34,6 +34,11 @@ fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
 //   git clone --depth 1 https://github.com/npm/ini.git test/fixtures/ini
 //   git clone --depth 1 https://github.com/emilkowalski/vaul.git test/fixtures/vaul
 //   git clone --depth 1 https://github.com/guilhermerodz/input-otp.git test/fixtures/input-otp
+//   git clone --depth 1 https://github.com/pytest-dev/pluggy.git test/fixtures/pluggy
+//   git clone --depth 1 https://github.com/hukkin/tomli.git test/fixtures/tomli
+//   git clone --depth 1 https://github.com/python-humanize/humanize.git test/fixtures/humanize
+//   git clone --depth 1 https://github.com/theskumar/python-dotenv.git test/fixtures/python-dotenv
+//   git clone --depth 1 https://github.com/agronholm/typeguard.git test/fixtures/typeguard
 
 /// Generate a snapshot test that renders a fixture directory at a given level.
 macro_rules! fixture_test {
@@ -432,6 +437,11 @@ fixture_test!(fixture_ky, "ky/source", 1);
 fixture_test!(fixture_ini, "ini/lib", 1);
 fixture_test!(fixture_vaul, "vaul/src", 1);
 fixture_test!(fixture_input_otp, "input-otp/packages/input-otp/src", 1);
+fixture_test!(fixture_pluggy, "pluggy/src/pluggy", 1);
+fixture_test!(fixture_tomli, "tomli/src/tomli", 1);
+fixture_test!(fixture_humanize, "humanize/src/humanize", 1);
+fixture_test!(fixture_python_dotenv, "python-dotenv/src/dotenv", 1);
+fixture_test!(fixture_typeguard, "typeguard/src/typeguard", 1);
 
 // Fixture-based snapshot tests (level 2: full signature lines).
 
@@ -455,6 +465,11 @@ fixture_test!(fixture_ky_level2, "ky/source", 2);
 fixture_test!(fixture_ini_level2, "ini/lib", 2);
 fixture_test!(fixture_vaul_level2, "vaul/src", 2);
 fixture_test!(fixture_input_otp_level2, "input-otp/packages/input-otp/src", 2);
+fixture_test!(fixture_pluggy_level2, "pluggy/src/pluggy", 2);
+fixture_test!(fixture_tomli_level2, "tomli/src/tomli", 2);
+fixture_test!(fixture_humanize_level2, "humanize/src/humanize", 2);
+fixture_test!(fixture_python_dotenv_level2, "python-dotenv/src/dotenv", 2);
+fixture_test!(fixture_typeguard_level2, "typeguard/src/typeguard", 2);
 
 // Fixture-based snapshot tests (level 3: signatures with doc comments).
 
@@ -478,6 +493,11 @@ fixture_test!(fixture_ky_level3, "ky/source", 3);
 fixture_test!(fixture_ini_level3, "ini/lib", 3);
 fixture_test!(fixture_vaul_level3, "vaul/src", 3);
 fixture_test!(fixture_input_otp_level3, "input-otp/packages/input-otp/src", 3);
+fixture_test!(fixture_pluggy_level3, "pluggy/src/pluggy", 3);
+fixture_test!(fixture_tomli_level3, "tomli/src/tomli", 3);
+fixture_test!(fixture_humanize_level3, "humanize/src/humanize", 3);
+fixture_test!(fixture_python_dotenv_level3, "python-dotenv/src/dotenv", 3);
+fixture_test!(fixture_typeguard_level3, "typeguard/src/typeguard", 3);
 
 // Fixture-based snapshot tests (level 4: type bodies expanded).
 
@@ -501,6 +521,11 @@ fixture_test!(fixture_ky_level4, "ky/source", 4);
 fixture_test!(fixture_ini_level4, "ini/lib", 4);
 fixture_test!(fixture_vaul_level4, "vaul/src", 4);
 fixture_test!(fixture_input_otp_level4, "input-otp/packages/input-otp/src", 4);
+fixture_test!(fixture_pluggy_level4, "pluggy/src/pluggy", 4);
+fixture_test!(fixture_tomli_level4, "tomli/src/tomli", 4);
+fixture_test!(fixture_humanize_level4, "humanize/src/humanize", 4);
+fixture_test!(fixture_python_dotenv_level4, "python-dotenv/src/dotenv", 4);
+fixture_test!(fixture_typeguard_level4, "typeguard/src/typeguard", 4);
 
 // Subdirectory tests: running on a subdirectory within a fixture tests
 // that path display and file discovery work correctly at deeper nesting levels.
@@ -648,6 +673,11 @@ fn monotonicity_invariant() {
         ("sonner", "sonner/src"),
         ("vaul", "vaul/src"),
         ("input-otp", "input-otp/packages/input-otp/src"),
+        ("pluggy", "pluggy/src/pluggy"),
+        ("tomli", "tomli/src/tomli"),
+        ("humanize", "humanize/src/humanize"),
+        ("python-dotenv", "python-dotenv/src/dotenv"),
+        ("typeguard", "typeguard/src/typeguard"),
     ];
 
     let mut tested_files = 0;

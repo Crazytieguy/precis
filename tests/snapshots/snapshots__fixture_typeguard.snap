@@ -1,0 +1,151 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+__init__.py
+    37→def __getattr__
+_checkers.py
+   153→def check_callable
+   212→def check_mapping
+   247→def check_typed_dict
+   305→def check_list
+   324→def check_sequence
+   343→def check_set
+   365→def check_tuple
+   423→def check_union
+   447→def check_uniontype
+   474→def check_class
+   536→def check_newtype
+   545→def check_instance
+   555→def check_typevar
+   586→def _is_literal_type
+   590→def check_literal
+   623→def check_literal_string
+   632→def check_typeguard
+   641→def check_none
+   651→def check_number
+   663→def check_io
+   679→def check_signature_compatible
+   834→def check_protocol
+   885→def check_byteslike
+   895→def check_self
+   915→def check_paramspec
+   924→def check_type_internal
+  1061→def builtin_checker_lookup
+  1099→def load_plugins
+_config.py
+    14→class ForwardRefPolicy
+    30→class CollectionCheckStrategy
+    52→    def iterate_samples
+    63→class TypeCheckConfiguration
+_decorators.py
+    24→    def typeguard_ignore
+    32→def make_cell
+    36→def find_target_function
+    56→def instrument
+   150→def typechecked
+_exceptions.py
+     5→class TypeHintWarning
+    12→class TypeCheckWarning
+    15→    def __init__
+    19→class InstrumentationWarning
+    22→    def __init__
+    26→class TypeCheckError
+    31→    def __init__
+    35→    def append_path_element
+    38→    def __str__
+_functions.py
+    50→def check_type
+   118→def check_argument_types
+   149→def check_return_type
+   185→def check_send_type
+   216→def check_yield_type
+   245→def check_variable_assignment
+   291→def warn_on_error
+_importhook.py
+    45→def _call_with_frames_removed
+    51→def optimized_cache_from_source
+    55→class TypeguardLoader
+    57→    def source_to_code
+    99→    def exec_module
+   109→class TypeguardFinder
+   120→    def __init__
+   124→    def find_spec
+   138→    def should_instrument
+   156→class ImportHookManager
+   161→    def __init__
+   164→    def __enter__
+   167→    def __exit__
+   175→    def uninstall
+   183→def install_import_hook
+_memo.py
+     8→class TypeCheckMemo
+    37→    def __init__
+_pytest_plugin.py
+    16→def pytest_addoption
+    75→def pytest_configure
+_suppression.py
+    30→def suppress_type_checks
+_transformer.py
+   118→class TransformMemo
+   141→    def __post_init__
+   171→    def get_unused_name
+   183→    def is_ignored_name
+   206→    def get_memo_name
+   212→    def get_import
+   225→    def insert_imports
+   238→    def name_matches
+   275→    def get_config_keywords
+   285→class NameCollector
+   286→    def __init__
+   289→    def visit_Import
+   293→    def visit_ImportFrom
+   297→    def visit_Assign
+   302→    def visit_NamedExpr
+   306→    def visit_FunctionDef
+   309→    def visit_ClassDef
+   313→class GeneratorDetector
+   319→    def visit_Yield
+   322→    def visit_YieldFrom
+   325→    def visit_ClassDef
+   328→    def visit_FunctionDef
+   334→    def visit_AsyncFunctionDef
+   338→class AnnotationTransformer
+   347→    def __init__
+   352→    def visit
+   374→    def visit_BinOp
+   401→    def visit_Attribute
+   407→    def visit_Subscript
+   466→    def visit_Name
+   472→    def visit_Call
+   476→    def visit_Constant
+   488→class TypeguardTransformer
+   489→    def __init__
+   498→    def generic_visit
+   517→    def _use_memo
+   570→    def _get_import
+   580→    def _convert_annotation
+   596→    def visit_Name
+   600→    def visit_Module
+   608→    def visit_Import
+   615→    def visit_ImportFrom
+   624→    def visit_ClassDef
+   650→    def visit_FunctionDef
+   913→    def visit_AsyncFunctionDef
+   918→    def visit_Return
+   945→    def visit_Yield
+   994→    def visit_AnnAssign
+  1036→    def visit_Assign
+  1138→    def visit_NamedExpr
+  1181→    def visit_AugAssign
+  1224→    def visit_If
+_utils.py
+    48→    def evaluate_forwardref
+    66→def get_type_name
+   104→def qualified_name
+   127→def function_name
+   142→def resolve_reference
+   154→def is_method_of
+   162→def get_stacklevel
+   173→class Unset
+   176→    def __repr__

@@ -1,0 +1,84 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+__init__.py
+     6→def load_ipython_extension(ipython: Any) -> None:
+    12→def get_cli_string(
+__main__.py
+cli.py
+    24→def enumerate_env() -> Optional[str]:
+    62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
+    68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
+    93→def list_values(ctx: click.Context, output_format: str) -> None:
+   116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
+   131→def get(ctx: click.Context, key: Any) -> None:
+   148→def unset(ctx: click.Context, key: Any) -> None:
+   173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
+   193→def run_command(command: List[str], env: Dict[str, str]) -> None:
+ipython.py
+    12→class IPythonDotEnv(Magics):
+    34→    def dotenv(self, line):
+    48→def load_ipython_extension(ipython):
+main.py
+    25→def _load_dotenv_disabled() -> bool:
+    35→def with_warn_for_invalid_lines(mappings: Iterator[Binding]) -> Iterator[Binding]:
+    45→class DotEnv:
+    46→    def __init__(
+    64→    def _get_stream(self) -> Iterator[IO[str]]:
+    78→    def dict(self) -> Dict[str, Optional[str]]:
+    94→    def parse(self) -> Iterator[Tuple[str, Optional[str]]]:
+   100→    def set_as_environment_variables(self) -> bool:
+   115→    def get(self, key: str) -> Optional[str]:
+   128→def get_key(
+   142→def rewrite(
+   163→def set_key(
+   211→def unset_key(
+   244→def resolve_variables(
+   269→def _walk_to_root(path: str) -> Iterator[str]:
+   287→def find_dotenv(
+   338→def load_dotenv(
+   387→def dotenv_values(
+   423→def _is_file_or_fifo(path: StrPath) -> bool:
+parser.py
+    14→def make_regex(string: str, extra_flags: int = 0) -> Pattern[str]:
+    35→class Original(NamedTuple):
+    40→class Binding(NamedTuple):
+    47→class Position:
+    48→    def __init__(self, chars: int, line: int) -> None:
+    53→    def start(cls) -> "Position":
+    56→    def set(self, other: "Position") -> None:
+    60→    def advance(self, string: str) -> None:
+    65→class Error(Exception):
+    69→class Reader:
+    70→    def __init__(self, stream: IO[str]) -> None:
+    75→    def has_next(self) -> bool:
+    78→    def set_mark(self) -> None:
+    81→    def get_marked(self) -> Original:
+    87→    def peek(self, count: int) -> str:
+    90→    def read(self, count: int) -> str:
+    97→    def read_regex(self, regex: Pattern[str]) -> Sequence[str]:
+   105→def decode_escapes(regex: Pattern[str], string: str) -> str:
+   112→def parse_key(reader: Reader) -> Optional[str]:
+   123→def parse_unquoted_value(reader: Reader) -> str:
+   128→def parse_value(reader: Reader) -> str:
+   142→def parse_binding(reader: Reader) -> Binding:
+   179→def parse_stream(stream: IO[str]) -> Iterator[Binding]:
+variables.py
+    18→class Atom(metaclass=ABCMeta):
+    19→    def __ne__(self, other: object) -> bool:
+    26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
+    29→class Literal(Atom):
+    30→    def __init__(self, value: str) -> None:
+    33→    def __repr__(self) -> str:
+    36→    def __eq__(self, other: object) -> bool:
+    41→    def __hash__(self) -> int:
+    44→    def resolve(self, env: Mapping[str, Optional[str]]) -> str:
+    48→class Variable(Atom):
+    49→    def __init__(self, name: str, default: Optional[str]) -> None:
+    53→    def __repr__(self) -> str:
+    56→    def __eq__(self, other: object) -> bool:
+    61→    def __hash__(self) -> int:
+    64→    def resolve(self, env: Mapping[str, Optional[str]]) -> str:
+    70→def parse_variables(value: str) -> Iterator[Atom]:
+version.py

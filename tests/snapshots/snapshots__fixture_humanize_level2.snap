@@ -1,0 +1,47 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+__init__.py
+filesize.py
+    36→def naturalsize(
+i18n.py
+    40→def _get_default_locale_path() -> pathlib.Path | None:
+    51→def get_translation() -> gettext_module.NullTranslations:
+    58→def activate(
+    96→def deactivate() -> None:
+   101→def _gettext(message: str) -> str:
+   113→def _pgettext(msgctxt: str, message: str) -> str:
+   129→def _ngettext(message: str, plural: str, num: int) -> str:
+   144→def _gettext_noop(message: str) -> str:
+   163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
+   183→def thousands_separator() -> str:
+   196→def decimal_separator() -> str:
+lists.py
+    12→def natural_list(items: list[Any]) -> str:
+number.py
+    21→def _format_not_finite(value: float) -> str:
+    34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
+   110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
+   195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
+   269→def apnumber(value: NumberOrString) -> str:
+   321→def fractional(value: NumberOrString) -> str:
+   385→def scientific(value: NumberOrString, precision: int = 2) -> str:
+   454→def clamp(
+   531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
+time.py
+    31→class Unit(Enum):
+    41→    def __lt__(self, other: Any) -> Any:
+    47→def _now() -> dt.datetime:
+    53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
+    68→def _date_and_delta(
+    95→def naturaldelta(
+   249→def naturaltime(
+   300→def _convert_aware_datetime(
+   311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
+   343→def naturaldate(value: dt.date | dt.datetime) -> str:
+   361→def _quotient_and_remainder(
+   406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
+   435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
+   451→def precisedelta(
+   654→def _rounding_by_fmt(format: str, value: float) -> float | int:
