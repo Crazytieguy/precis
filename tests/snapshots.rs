@@ -1323,3 +1323,105 @@ fn budget_level_sanity() {
     }
     assert!(tested > 0, "No fixtures available for budget sanity test");
 }
+
+// Budget-based snapshot tests: given a word budget, snapshot the end-to-end output.
+// These test the full pipeline: budget → level selection → rendering → output.
+
+/// Helper: render a fixture with a word budget and return output with metadata header.
+fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
+    let root = fixture_path(subpath)?;
+    let level = format::budget_level(budget, &root);
+    let output = format::render_directory(level, &root);
+    let words = format::count_words(&output);
+    Some(format!("budget: {} → level {} ({} words)\n\n{}", budget, level, words, output))
+}
+
+#[test]
+fn budget_mitt_level0() {
+    let Some(output) = render_with_budget("mitt/src", 10) else {
+        eprintln!("skipping budget_mitt_level0: clone mitt fixture");
+        return;
+    };
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn budget_mitt_level1() {
+    let Some(output) = render_with_budget("mitt/src", 50) else {
+        eprintln!("skipping budget_mitt_level1: clone mitt fixture");
+        return;
+    };
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn budget_mitt_level2() {
+    let Some(output) = render_with_budget("mitt/src", 100) else {
+        eprintln!("skipping budget_mitt_level2: clone mitt fixture");
+        return;
+    };
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn budget_mitt_level3() {
+    let Some(output) = render_with_budget("mitt/src", 300) else {
+        eprintln!("skipping budget_mitt_level3: clone mitt fixture");
+        return;
+    };
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn budget_mitt_level4() {
+    let Some(output) = render_with_budget("mitt/src", 5000) else {
+        eprintln!("skipping budget_mitt_level4: clone mitt fixture");
+        return;
+    };
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn budget_ini_level0() {
+    let Some(output) = render_with_budget("ini/lib", 5) else {
+        eprintln!("skipping budget_ini_level0: clone ini fixture");
+        return;
+    };
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn budget_ini_level1() {
+    let Some(output) = render_with_budget("ini/lib", 20) else {
+        eprintln!("skipping budget_ini_level1: clone ini fixture");
+        return;
+    };
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn budget_ini_level3() {
+    let Some(output) = render_with_budget("ini/lib", 50) else {
+        eprintln!("skipping budget_ini_level3: clone ini fixture");
+        return;
+    };
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn budget_neverthrow_level0() {
+    let Some(output) = render_with_budget("neverthrow/src", 100) else {
+        eprintln!("skipping budget_neverthrow_level0: clone neverthrow fixture");
+        return;
+    };
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn budget_neverthrow_level1() {
+    let Some(output) = render_with_budget("neverthrow/src", 500) else {
+        eprintln!("skipping budget_neverthrow_level1: clone neverthrow fixture");
+        return;
+    };
+    insta::assert_snapshot!(output);
+}
