@@ -17,7 +17,10 @@ pub fn discover_source_files(root: &Path) -> Vec<PathBuf> {
         .filter_map(|entry| entry.ok())
         .filter(|entry| entry.file_type().is_some_and(|ft| ft.is_file()))
         .filter(|entry| is_source_file(entry.path()))
-        .filter(|entry| !is_test_file(entry.path()))
+        .filter(|entry| {
+            let relative = entry.path().strip_prefix(root).unwrap_or(entry.path());
+            !is_test_file(relative)
+        })
         .map(|entry| entry.into_path())
         .collect();
     files.sort();
@@ -31,10 +34,14 @@ fn is_source_file(path: &Path) -> bool {
 }
 
 /// Check if a file is a test file that should be excluded from output.
-/// Matches common JS/TS test patterns: *.test.ts, *.spec.tsx, __tests__/, etc.
+/// Matches common test patterns: test directories and test file naming conventions.
 fn is_test_file(path: &Path) -> bool {
-    // Check for __tests__ directory anywhere in the path
-    if path.components().any(|c| c.as_os_str() == "__tests__") {
+    // Check for test directories anywhere in the path:
+    // __tests__/ (Jest), tests/ (Rust/Python/JS), test/ (JS/TS)
+    if path.components().any(|c| {
+        let s = c.as_os_str();
+        s == "__tests__" || s == "tests" || s == "test"
+    }) {
         return true;
     }
 
@@ -72,6 +79,8 @@ mod tests {
         assert!(relative.contains(&"src/walk.rs".to_string()));
         // target/ should be excluded via .gitignore
         assert!(!relative.iter().any(|p| p.starts_with("target/")));
+        // tests/ should be excluded as a test directory
+        assert!(!relative.iter().any(|p| p.starts_with("tests/")));
     }
 
     #[test]
@@ -104,6 +113,14 @@ mod tests {
         let tests_dir = dir.path().join("__tests__");
         fs::create_dir(&tests_dir).unwrap();
         fs::write(tests_dir.join("helper.ts"), "export function h() {}").unwrap();
+        // tests/ directory (Rust integration tests, Python tests)
+        let tests_dir2 = dir.path().join("tests");
+        fs::create_dir(&tests_dir2).unwrap();
+        fs::write(tests_dir2.join("integration.rs"), "fn test_it() {}").unwrap();
+        // test/ directory (common JS/TS convention)
+        let test_dir = dir.path().join("test");
+        fs::create_dir(&test_dir).unwrap();
+        fs::write(test_dir.join("setup.ts"), "export const setup = {};").unwrap();
 
         let files = discover_source_files(dir.path());
         let names: Vec<_> = files
@@ -119,5 +136,7 @@ mod tests {
         assert!(!names.contains(&"utils.spec.ts".to_string()));
         assert!(!names.contains(&"app.test.tsx".to_string()));
         assert!(!names.contains(&"helper.ts".to_string()));
+        assert!(!names.contains(&"integration.rs".to_string()));
+        assert!(!names.contains(&"setup.ts".to_string()));
     }
 }
