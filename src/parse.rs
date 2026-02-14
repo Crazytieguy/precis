@@ -202,9 +202,10 @@ fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
     {
         return true;
     }
-    // TypeScript class methods: public if accessibility_modifier is "public",
-    // or if no accessibility_modifier (public by default in TS)
-    if node.kind() == "method_definition" {
+    // TypeScript class methods and interface methods: public if accessibility_modifier
+    // is "public", or if no accessibility_modifier (public by default in TS).
+    // Interface methods (method_signature) are always public by design.
+    if node.kind() == "method_definition" || node.kind() == "method_signature" {
         let mut cursor = node.walk();
         let has_accessor = node
             .children(&mut cursor)
