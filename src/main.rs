@@ -15,6 +15,10 @@ struct Cli {
     /// Granularity level (0=paths, 1=names, 2=full signatures, 3=+docs, 4=+type bodies, 5=full source)
     #[arg(long, value_parser = clap::value_parser!(u8).range(0..=5))]
     level: Option<u8>,
+
+    /// Output as JSON
+    #[arg(long)]
+    json: bool,
 }
 
 fn main() {
@@ -38,7 +42,12 @@ fn main() {
         level,
         words,
     );
-    print!("{}", output);
+
+    if cli.json {
+        print!("{}", format::to_json(&output, level, words));
+    } else {
+        print!("{}", output);
+    }
 }
 
 fn render_file(path: &std::path::Path, level: Option<u8>, budget: Option<usize>) -> (String, usize, u8) {

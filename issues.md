@@ -26,12 +26,12 @@
 - `--level` flag allows selecting a specific granularity level directly (mutually exclusive with `--budget`)
 - `path` arg accepts both files and directories
 - Default output (no flags) is level 1 (symbol names truncated)
+- `--json` flag outputs structured JSON with `level`, `words`, and per-file `path`/`content` fields
 - File discovery filters out non-source directories (`tests/`, `test/`, `testing/`, `__tests__/`, `benches/`, `benchmark/`, `benchmarks/`) and test file patterns (`*.test.*`, `*.spec.*`, `test_*`, `*_test`, `conftest.py`); uses relative paths so parent directories of the walk root don't trigger false positives
 
 ## Feature development
 
 - Make levels depth-aware and file-size-aware (currently uniform across all files)
-- Add `--json` output flag
 
 ## Implementation notes
 

@@ -57,7 +57,17 @@ src/parser.rs
     45→    pub fn parse(&self, source: &str) -> Tree {
 ```
 
-A `--json` flag may be added later for machine consumption.
+A `--json` flag outputs structured JSON with per-file entries:
+
+```json
+{
+  "level": 1,
+  "words": 42,
+  "files": [
+    {"path": "src/parser.rs", "content": "     1→impl Parser\n    12→    pub fn new"}
+  ]
+}
+```
 
 ## Supported Languages
 

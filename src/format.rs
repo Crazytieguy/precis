@@ -1,6 +1,7 @@
 use std::path::{Path, PathBuf};
 
 use crate::parse;
+use serde_json;
 
 /// Maximum granularity level.
 ///
@@ -54,6 +55,40 @@ fn fmt_line(line_idx_0: usize, line: &str) -> String {
 /// Count whitespace-delimited words in text.
 pub fn count_words(text: &str) -> usize {
     text.split_whitespace().count()
+}
+
+/// Convert rendered output to JSON, splitting into per-file entries.
+pub fn to_json(output: &str, level: u8, words: usize) -> String {
+    let mut files: Vec<serde_json::Value> = Vec::new();
+    let mut current_path: Option<&str> = None;
+    let mut current_content = String::new();
+
+    for line in output.lines() {
+        if !line.contains('→') {
+            if let Some(path) = current_path.take() {
+                let content = current_content.trim_end_matches('\n');
+                files.push(serde_json::json!({"path": path, "content": content}));
+                current_content.clear();
+            }
+            current_path = Some(line);
+        } else {
+            if !current_content.is_empty() {
+                current_content.push('\n');
+            }
+            current_content.push_str(line);
+        }
+    }
+    if let Some(path) = current_path {
+        let content = current_content.trim_end_matches('\n');
+        files.push(serde_json::json!({"path": path, "content": content}));
+    }
+
+    let json = serde_json::json!({
+        "level": level,
+        "words": words,
+        "files": files,
+    });
+    serde_json::to_string_pretty(&json).unwrap()
 }
 
 /// Find the highest level where `cost(level) <= budget`.
@@ -622,4 +657,37 @@ fn find_word(needle: &str, haystack: &str) -> Option<usize> {
         start = abs + 1;
     }
     first_match
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn to_json_splits_files() {
+        let output = "src/main.rs\n     1→fn main() {\nsrc/lib.rs\n     1→pub mod foo\n";
+        let json_str = to_json(output, 1, 5);
+        let json: serde_json::Value = serde_json::from_str(&json_str).unwrap();
+
+        assert_eq!(json["level"], 1);
+        assert_eq!(json["words"], 5);
+        let files = json["files"].as_array().unwrap();
+        assert_eq!(files.len(), 2);
+        assert_eq!(files[0]["path"], "src/main.rs");
+        assert_eq!(files[0]["content"], "     1→fn main() {");
+        assert_eq!(files[1]["path"], "src/lib.rs");
+        assert_eq!(files[1]["content"], "     1→pub mod foo");
+    }
+
+    #[test]
+    fn to_json_level0_empty_content() {
+        let output = "src/main.rs\nsrc/lib.rs\n";
+        let json_str = to_json(output, 0, 2);
+        let json: serde_json::Value = serde_json::from_str(&json_str).unwrap();
+
+        let files = json["files"].as_array().unwrap();
+        assert_eq!(files.len(), 2);
+        assert_eq!(files[0]["content"], "");
+        assert_eq!(files[1]["content"], "");
+    }
 }
