@@ -2,7 +2,7 @@
 
 ## Snapshot coverage
 
-- Add more fixture snapshot tests — Rust: `either`, `anyhow`, `once_cell`; TypeScript: `neverthrow`, `ts-pattern`; JavaScript: `semver`, `dotenv`; TSX: `cmdk`; aiming for 5+ per language, currently 3 Rust, 2 TypeScript, 2 JS, 1 TSX
+- Add more fixture snapshot tests — aiming for 5+ per language, currently 3 Rust (`either`, `anyhow`, `once_cell`), 2 TypeScript (`neverthrow`, `ts-pattern`), 2 JavaScript (`semver`, `dotenv`), 2 TSX (`cmdk`, `react-hot-toast`)
 
 ## Codebase quality
 

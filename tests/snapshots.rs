@@ -283,6 +283,16 @@ fn fixture_once_cell() {
 }
 
 #[test]
+fn fixture_react_hot_toast() {
+    let Some(root) = fixture_path("react-hot-toast/src") else {
+        eprintln!("skipping fixture_react_hot_toast: clone with `git clone --depth 1 https://github.com/timolins/react-hot-toast.git test/fixtures/react-hot-toast`");
+        return;
+    };
+    let output = format::format_directory(&root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
 fn fixture_dotenv() {
     let Some(root) = fixture_path("dotenv/lib") else {
         eprintln!("skipping fixture_dotenv: clone with `git clone --depth 1 https://github.com/motdotla/dotenv.git test/fixtures/dotenv`");
