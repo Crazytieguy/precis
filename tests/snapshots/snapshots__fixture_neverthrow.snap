@@ -7,8 +7,6 @@ _internals/error.ts:
   const defaultErrorConfig :7
   interface NeverThrowError :11
   pub const createNeverThrowError :27
-  const data :32
-  const maybeStack :36
 _internals/utils.ts:
   pub type ExtractOkTypes :5
   pub type ExtractOkAsyncTypes :10
@@ -19,20 +17,16 @@ _internals/utils.ts:
   pub type InferAsyncOkTypes :27
   pub type InferAsyncErrTypes :28
   pub const combineResultList :33
-  const acc :36
   pub const combineResultAsyncList :54
   pub const combineResultListWithAllErrors :64
-  const acc :67
   pub const combineResultAsyncListWithAllErrors :82
 result-async.ts:
   pub class ResultAsync :22
   pub fn constructor :25
   fn fromSafePromise :29
   pub fn fromSafePromise :30
-  const newPromise :31
   fn fromPromise :36
   pub fn fromPromise :37
-  const newPromise :38
   pub fn fromThrowable :46
   fn combine :63
   fn combine :66
@@ -42,7 +36,6 @@ result-async.ts:
   pub fn combineWithAllErrors :81
   pub fn map :89
   pub fn andThrough :101
-  const newRes :108
   pub fn andTee :117
   pub fn orTee :133
   pub fn mapErr :149
@@ -50,7 +43,6 @@ result-async.ts:
   fn andThen :164
   fn andThen :167
   pub fn andThen :169
-  const newValue :176
   fn orElse :182
   fn orElse :185
   fn orElse :188
@@ -59,7 +51,6 @@ result-async.ts:
   pub fn unwrapOr :206
   pub fn safeUnwrap :222
   pub fn then :227
-  const result :235
   pub fn okAsync :249
   pub fn errAsync :255
   pub const fromPromise :259
@@ -74,14 +65,12 @@ result-async.ts:
 result.ts:
   pub mod Result :14
   pub fn fromThrowable :23
-  const result :29
   pub fn combine :43
   pub fn combineWithAllErrors :55
   pub type Result :62
   pub fn ok :66
   pub fn err :73
   pub fn safeTry :122
-  const n :127
   interface IResult :134
   fn isOk :140
   fn isErr :147
@@ -127,7 +116,6 @@ result.ts:
   pub fn unwrapOr :388
   pub fn match :393
   pub fn safeUnwrap :397
-  const value :398
   pub fn _unsafeUnwrap :405
   pub fn _unsafeUnwrapErr :409
   pub class Err :419
@@ -151,10 +139,8 @@ result.ts:
   pub fn unwrapOr :488
   pub fn match :492
   pub fn safeUnwrap :496
-  const error :497
   pub fn _unsafeUnwrap :505
   pub fn _unsafeUnwrapErr :509
-  const self :515
   pub const fromThrowable :523
   type Prev :530
   type CollectResults :590

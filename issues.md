@@ -18,7 +18,6 @@
 - Should `#[test]` functions and `#[cfg(test)]` modules be excluded by default?
 - TypeScript: arrow functions assigned to `const` (e.g. `export const foo = () => ...`) show as `const` not `fn`. Should we detect and reclassify these?
 - TypeScript: `lexical_declaration` captures both `const` and `let` as `const`. Should `let` exports be shown differently?
-- TypeScript: `lexical_declaration` inside function/method bodies captures local variables (e.g. `const newPromise`, `const acc`) as symbols. These should be filtered to only capture module-level or class-level declarations.
 - TypeScript: method overload signatures (e.g. `fn andThen` appearing 3 times) are captured as separate symbols. Should overloads be deduplicated or collapsed?
 
 ## Technical debt

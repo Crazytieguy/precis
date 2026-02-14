@@ -122,7 +122,12 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             "interface_declaration" => SymbolKind::Interface,
             "enum_declaration" => SymbolKind::Enum,
             "type_alias_declaration" => SymbolKind::TypeAlias,
-            "lexical_declaration" => SymbolKind::Const,
+            "lexical_declaration" => {
+                if is_inside_function(symbol_node) {
+                    continue;
+                }
+                SymbolKind::Const
+            }
             "internal_module" => SymbolKind::Module,
             _ => continue,
         };
@@ -185,6 +190,22 @@ fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
             child.kind() == "accessibility_modifier"
                 && child.utf8_text(source.as_bytes()).unwrap_or("") == "public"
         });
+    }
+    false
+}
+
+/// Check if a node is inside a function body (i.e. it's a local declaration, not a module-level one).
+fn is_inside_function(node: tree_sitter::Node) -> bool {
+    let mut current = node.parent();
+    while let Some(parent) = current {
+        match parent.kind() {
+            "function_declaration" | "method_definition" | "arrow_function"
+            | "function" | "generator_function" | "generator_function_declaration" => {
+                return true;
+            }
+            _ => {}
+        }
+        current = parent.parent();
     }
     false
 }
