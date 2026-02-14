@@ -175,6 +175,10 @@ types/options.ts
     14→export type Input = string | URL | Request;
     16→export type Progress = {
     27→export type KyHeadersInit = NonNullable<RequestInit['headers']> | Record<string, string | undefined>;
+    29→/**
+    30→Custom Ky options
+    31→*/
+    32→
     33→export type KyOptions = {
    302→/**
    303→Each key from KyOptions is present and set to `true`.

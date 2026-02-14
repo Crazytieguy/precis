@@ -423,25 +423,36 @@ fn doc_comment_start(lines: &[&str], symbol_line_0: usize) -> usize {
         return idx;
     }
 
-    let prev_trimmed = lines[idx - 1].trim();
+    // Skip blank lines between doc comment and symbol/decorators.
+    // Many JS/TS codebases put a blank line after `*/` before the symbol.
+    let mut peek = idx;
+    while peek > 0 && lines[peek - 1].trim().is_empty() {
+        peek -= 1;
+    }
+
+    if peek == 0 {
+        return idx;
+    }
+
+    let prev_trimmed = lines[peek - 1].trim();
 
     // Rust-style line doc comments (/// or //!)
     if prev_trimmed.starts_with("///") || prev_trimmed.starts_with("//!") {
-        idx -= 1;
-        while idx > 0 {
-            let above = lines[idx - 1].trim();
+        peek -= 1;
+        while peek > 0 {
+            let above = lines[peek - 1].trim();
             if above.starts_with("///") || above.starts_with("//!") {
-                idx -= 1;
+                peek -= 1;
             } else {
                 break;
             }
         }
-        return idx;
+        return peek;
     }
 
     // Block doc comments (/** ... */ — JSDoc or Rust)
     if prev_trimmed.ends_with("*/") {
-        let mut scan = idx - 1;
+        let mut scan = peek - 1;
         loop {
             let line = lines[scan].trim();
             if line.starts_with("/**") {
@@ -460,19 +471,19 @@ fn doc_comment_start(lines: &[&str], symbol_line_0: usize) -> usize {
 
     // Python-style # comments (but not Rust #[attributes], already handled above)
     if prev_trimmed.starts_with('#') && !prev_trimmed.starts_with("#[") {
-        idx -= 1;
-        while idx > 0 {
-            let above = lines[idx - 1].trim();
+        peek -= 1;
+        while peek > 0 {
+            let above = lines[peek - 1].trim();
             if above.starts_with('#') && !above.starts_with("#[") {
-                idx -= 1;
+                peek -= 1;
             } else {
                 break;
             }
         }
-        return idx;
+        return peek;
     }
 
-    // Return idx (which may be < symbol_line_0 if decorators/attributes were found)
+    // No doc comment found — return idx (includes decorators but not blank lines above)
     idx
 }
 

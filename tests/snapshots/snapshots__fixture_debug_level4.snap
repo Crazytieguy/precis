@@ -4,6 +4,12 @@ expression: output
 ---
 browser.js
    115→function useColors() {
+   143→/**
+   144→ * Colorize log arguments if enabled.
+   145→ *
+   146→ * @api public
+   147→ */
+   148→
    149→function formatArgs(args) {
    194→/**
    195→ * Save `namespaces`.
@@ -19,14 +25,44 @@ browser.js
    217→ * @api private
    218→ */
    219→function load() {
+   236→/**
+   237→ * Localstorage attempts to return the localstorage.
+   238→ *
+   239→ * This is necessary because safari throws
+   240→ * when a user disables cookies/localstorage
+   241→ * and you attempt to access it.
+   242→ *
+   243→ * @return {LocalStorage}
+   244→ * @api private
+   245→ */
+   246→
    247→function localstorage() {
 common.js
+     2→/**
+     3→ * This is the common logic for both the Node.js and web browser
+     4→ * implementations of `debug()`.
+     5→ */
+     6→
      7→function setup(env) {
 index.js
 node.js
+   151→/**
+   152→ * Is stdout a TTY? Colored output is enabled when `true`.
+   153→ */
+   154→
    155→function useColors() {
+   161→/**
+   162→ * Adds ANSI color escape codes if enabled.
+   163→ *
+   164→ * @api public
+   165→ */
+   166→
    167→function formatArgs(args) {
    182→function getDate() {
+   189→/**
+   190→ * Invokes `util.formatWithOptions()` with the specified arguments and writes to stderr.
+   191→ */
+   192→
    193→function log(...args) {
    197→/**
    198→ * Save `namespaces`.
@@ -35,5 +71,19 @@ node.js
    201→ * @api private
    202→ */
    203→function save(namespaces) {
+   213→/**
+   214→ * Load `namespaces`.
+   215→ *
+   216→ * @return {String} returns the previously persisted debug modes
+   217→ * @api private
+   218→ */
+   219→
    220→function load() {
+   224→/**
+   225→ * Init logic for `debug` instances.
+   226→ *
+   227→ * Create a new `inspectOpts` object in case `useColors` is set
+   228→ * differently for a particular `debug` instance.
+   229→ */
+   230→
    231→function init(debug) {

@@ -241,6 +241,18 @@ patterns.ts
    573→  input,
    574→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
    575→>(...patterns: patterns): Chainable<OrP<input, patterns>> {
+   599→/**
+   600→ * `P.not(pattern)` returns a pattern which matches if the sub pattern
+   601→ * doesn't match.
+   602→ *
+   603→ * [Read the documentation for `P.not` on GitHub](https://github.com/gvergnaud/ts-pattern#pnot-patterns)
+   604→ *
+   605→ * @example
+   606→ *  match<{ a: string | number }>(value)
+   607→ *   .with({ a: P.not(P.string) }, (x) => 'will match { a: number }'
+   608→ *   )
+   609→ */
+   610→
    611→export function not<
    612→  input,
    613→  const pattern extends Pattern<input> | UnknownValuePattern
@@ -295,6 +307,16 @@ patterns.ts
    803→ *   .with(P._, () => 'will always match')
    804→ */
    805→export const _ = any;
+   807→/**
+   808→ * `P.string.startsWith(start)` is a pattern, matching **strings** starting with `start`.
+   809→ *
+   810→ * [Read the documentation for `P.string.startsWith` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringstartsWith)
+   811→ *
+   812→ * @example
+   813→ *  match(value)
+   814→ *   .with(P.string.startsWith('A'), () => 'value starts with an A')
+   815→ */
+   816→
    817→const startsWith = <input, const start extends string>(
    818→  start: start
    819→): GuardP<input, `${start}${string}`> =>
@@ -1336,6 +1358,15 @@ types/Pattern.ts
 types/helpers.ts
      1→export type ValueOf<a> = a extends readonly any[] ? a[number] : a[keyof a];
      3→export type Values<a extends object> = UnionToTuple<ValueOf<a>>;
+     5→/**
+     6→ * ### LeastUpperBound
+     7→ * An interesting one. A type taking two imbricated sets and returning the
+     8→ * smallest one.
+     9→ * We need that because sometimes the pattern's inferred type holds more
+    10→ * information than the value on which we are matching (if the value is any
+    11→ * or unknown for instance).
+    12→ */
+    13→
     14→export type LeastUpperBound<a, b> = b extends a ? b : a extends b ? a : never;
     16→export type Contains<a, b> = a extends any
     25→export type UnionToIntersection<union> = (

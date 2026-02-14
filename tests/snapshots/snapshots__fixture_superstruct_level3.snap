@@ -3,184 +3,593 @@ source: tests/snapshots.rs
 expression: output
 ---
 error.ts
+     1→/**
+     2→ * A `StructFailure` represents a single specific failure in validation.
+     3→ */
+     4→
      5→export type Failure = {
+    16→/**
+    17→ * `StructError` objects are thrown (or returned) when validation fails.
+    18→ *
+    19→ * Validation logic is design to exit early for maximum performance. The error
+    20→ * represents the first error encountered during validation. For more detail,
+    21→ * the `error.failures` property is a generator function that can be run to
+    22→ * continue validation and receive all the failures in the data.
+    23→ */
+    24→
     25→export class StructError extends TypeError {
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
 index.ts
 struct.ts
+     4→/**
+     5→ * `Struct` objects encapsulate the validation logic for a specific type of
+     6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
+     7→ * validate unknown input data against the struct.
+     8→ */
+     9→
     10→export class Struct<T = unknown, S = unknown> {
     22→  constructor(props: {
+    63→  /**
+    64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
+    65→   */
+    66→
     67→  assert(value: unknown, message?: string): asserts value is T {
+    71→  /**
+    72→   * Create a value with the struct's coercion logic, then validate it.
+    73→   */
+    74→
     75→  create(value: unknown, message?: string): T {
+    79→  /**
+    80→   * Check if a value passes the struct's validation.
+    81→   */
+    82→
     83→  is(value: unknown): value is T {
+    87→  /**
+    88→   * Mask a value, coercing and validating it, but returning only the subset of
+    89→   * properties defined by the struct's schema. Masking applies recursively to
+    90→   * props of `object` structs only.
+    91→   */
+    92→
     93→  mask(value: unknown, message?: string): T {
+    97→  /**
+    98→   * Validate a value with the struct's validation logic, returning a tuple
+    99→   * representing the result.
+   100→   *
+   101→   * You may optionally pass `true` for the `coerce` argument to coerce
+   102→   * the value before attempting to validate it. If you do, the result will
+   103→   * contain the coerced result when successful. Also, `mask` will turn on
+   104→   * masking of the unknown `object` props recursively if passed.
+   105→   */
+   106→
    107→  validate(
    108→    value: unknown,
    109→    options: {
+   119→/**
+   120→ * Assert that a value passes a struct, throwing if it doesn't.
+   121→ */
+   122→
    123→export function assert<T, S>(
    124→  value: unknown,
    125→  struct: Struct<T, S>,
    126→  message?: string
    127→): asserts value is T {
+   135→/**
+   136→ * Create a value with the coercion logic of struct and validate it.
+   137→ */
+   138→
    139→export function create<T, S>(
    140→  value: unknown,
    141→  struct: Struct<T, S>,
    142→  message?: string
    143→): T {
+   153→/**
+   154→ * Mask a value, returning only the subset of properties defined by a struct.
+   155→ */
+   156→
    157→export function mask<T, S>(
    158→  value: unknown,
    159→  struct: Struct<T, S>,
    160→  message?: string
    161→): T {
+   171→/**
+   172→ * Check if a value passes a struct.
+   173→ */
+   174→
    175→export function is<T, S>(value: unknown, struct: Struct<T, S>): value is T {
+   180→/**
+   181→ * Validate a value against a struct, returning an error if invalid, or the
+   182→ * value (with potential coercion) if valid.
+   183→ */
+   184→
    185→export function validate<T, S>(
    186→  value: unknown,
    187→  struct: Struct<T, S>,
    188→  options: {
+   213→/**
+   214→ * A `Context` contains information about the current location of the
+   215→ * validation inside the initial input value. It also carries `mask`
+   216→ * since it's a run-time flag determining how the validation was invoked
+   217→ * (via `mask()` or via `validate()`), plus it applies recursively
+   218→ * to all of the nested structs.
+   219→ */
+   220→
    221→export type Context = {
+   227→/**
+   228→ * A type utility to extract the type from a `Struct` class.
+   229→ */
+   230→
    231→export type Infer<T extends Struct<any, any>> = T['TYPE']
+   233→/**
+   234→ * A type utility to describe that a struct represents a TypeScript type.
+   235→ */
+   236→
    237→export type Describe<T> = Struct<T, StructSchema<T>>
+   239→/**
+   240→ * A `Result` is returned from validation functions.
+   241→ */
+   242→
    243→export type Result =
+   249→/**
+   250→ * A `Coercer` takes an unknown value and optionally coerces it.
+   251→ */
+   252→
    253→export type Coercer<T = unknown> = (value: T, context: Context) => unknown
+   255→/**
+   256→ * A `Validator` takes an unknown value and validates it.
+   257→ */
+   258→
    259→export type Validator = (value: unknown, context: Context) => Result
+   261→/**
+   262→ * A `Refiner` takes a value of a known type and validates it against a further
+   263→ * constraint.
+   264→ */
+   265→
    266→export type Refiner<T> = (value: T, context: Context) => Result
 structs/coercions.ts
+     5→/**
+     6→ * Augment a `Struct` to add an additional coercion step to its input.
+     7→ *
+     8→ * This allows you to transform input data before validating it, to increase the
+     9→ * likelihood that it passes validation—for example for default values, parsing
+    10→ * different formats, etc.
+    11→ *
+    12→ * Note: You must use `create(value, Struct)` on the value to have the coercion
+    13→ * take effect! Using simply `assert()` or `is()` will not use coercion.
+    14→ */
+    15→
     16→export function coerce<T, S, C>(
     17→  struct: Struct<T, S>,
     18→  condition: Struct<C, any>,
     19→  coercer: Coercer<C>
     20→): Struct<T, S> {
+    31→/**
+    32→ * Augment a struct to replace `undefined` values with a default.
+    33→ *
+    34→ * Note: You must use `create(value, Struct)` on the value to have the coercion
+    35→ * take effect! Using simply `assert()` or `is()` will not use coercion.
+    36→ */
+    37→
     38→export function defaulted<T, S>(
     39→  struct: Struct<T, S>,
     40→  fallback: any,
     41→  options: {
+    72→/**
+    73→ * Augment a struct to trim string inputs.
+    74→ *
+    75→ * Note: You must use `create(value, Struct)` on the value to have the coercion
+    76→ * take effect! Using simply `assert()` or `is()` will not use coercion.
+    77→ */
+    78→
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
 structs/refinements.ts
+     4→/**
+     5→ * Ensure that a string, array, map, or set is empty.
+     6→ */
+     7→
      8→export function empty<
      9→  T extends string | any[] | Map<any, any> | Set<any>,
     10→  S extends any,
     11→>(struct: Struct<T, S>): Struct<T, S> {
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
+    29→/**
+    30→ * Ensure that a number or date is below a threshold.
+    31→ */
+    32→
     33→export function max<T extends number | Date, S extends any>(
     34→  struct: Struct<T, S>,
     35→  threshold: T,
     36→  options: {
+    51→/**
+    52→ * Ensure that a number or date is above a threshold.
+    53→ */
+    54→
     55→export function min<T extends number | Date, S extends any>(
     56→  struct: Struct<T, S>,
     57→  threshold: T,
     58→  options: {
+    73→/**
+    74→ * Ensure that a string, array, map or set is not empty.
+    75→ */
+    76→
     77→export function nonempty<
     78→  T extends string | any[] | Map<any, any> | Set<any>,
     79→  S extends any,
     80→>(struct: Struct<T, S>): Struct<T, S> {
+    89→/**
+    90→ * Ensure that a string matches a regular expression.
+    91→ */
+    92→
     93→export function pattern<T extends string, S extends any>(
     94→  struct: Struct<T, S>,
     95→  regexp: RegExp
     96→): Struct<T, S> {
+   105→/**
+   106→ * Ensure that a string, array, number, date, map, or set has a size (or length, or time) between `min` and `max`.
+   107→ */
+   108→
    109→export function size<
    110→  T extends string | number | Date | any[] | Map<any, any> | Set<any>,
    111→  S extends any,
    112→>(struct: Struct<T, S>, min: number, max: number = min): Struct<T, S> {
+   138→/**
+   139→ * Augment a `Struct` to add an additional refinement to the validation.
+   140→ *
+   141→ * The refiner function is guaranteed to receive a value of the struct's type,
+   142→ * because the struct's existing validation will already have passed. This
+   143→ * allows you to layer additional validation on top of existing structs.
+   144→ */
+   145→
    146→export function refine<T, S>(
    147→  struct: Struct<T, S>,
    148→  name: string,
    149→  refiner: Refiner<T>
    150→): Struct<T, S> {
 structs/types.ts
+    15→/**
+    16→ * Ensure that any value passes validation.
+    17→ */
+    18→
     19→export function any(): Struct<any, null> {
     33→export function array<T extends Struct<any>>(Element?: T): any {
+    56→/**
+    57→ * Ensure that a value is a bigint.
+    58→ */
+    59→
     60→export function bigint(): Struct<bigint, null> {
+    66→/**
+    67→ * Ensure that a value is a boolean.
+    68→ */
+    69→
     70→export function boolean(): Struct<boolean, null> {
+    76→/**
+    77→ * Ensure that a value is a valid `Date`.
+    78→ *
+    79→ * Note: this also ensures that the value is *not* an invalid `Date` object,
+    80→ * which can occur when parsing a date fails but still returns a `Date`.
+    81→ */
+    82→
     83→export function date(): Struct<Date, null> {
    105→export function enums<U extends string | number, T extends readonly U[]>(
    106→  values: T
    107→): any {
+   127→/**
+   128→ * Ensure that a value is a function.
+   129→ */
+   130→
    131→export function func(): Struct<Function, null> {
+   140→/**
+   141→ * Ensure that a value is an instance of a specific class.
+   142→ */
+   143→
    144→export function instance<T extends { new (...args: any): any }>(
    145→  Class: T
    146→): Struct<InstanceType<T>, null> {
+   155→/**
+   156→ * Ensure that a value is an integer.
+   157→ */
+   158→
    159→export function integer(): Struct<number, null> {
+   168→/**
+   169→ * Ensure that a value matches all of a set of types.
+   170→ */
+   171→
    172→export function intersection<A extends AnyStruct, B extends AnyStruct[]>(
    173→  Structs: [A, ...B]
    174→): Struct<Infer<A> & UnionToIntersection<InferStructTuple<B>[number]>, null> {
    204→export function literal<T>(constant: T): any {
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
+   254→/**
+   255→ * Ensure that no value ever passes validation.
+   256→ */
+   257→
    258→export function never(): Struct<never, null> {
+   262→/**
+   263→ * Augment an existing struct to allow `null` values.
+   264→ */
+   265→
    266→export function nullable<T, S>(struct: Struct<T, S>): Struct<T | null, S> {
+   274→/**
+   275→ * Ensure that a value is a number.
+   276→ */
+   277→
    278→export function number(): Struct<number, null> {
    298→export function object<S extends ObjectSchema>(schema?: S): any {
+   347→/**
+   348→ * Augment a struct to allow `undefined` values.
+   349→ */
+   350→
    351→export function optional<T, S>(struct: Struct<T, S>): Struct<T | undefined, S> {
+   360→/**
+   361→ * Ensure that a value is an object with keys and values of specific types, but
+   362→ * without ensuring any specific shape of properties.
+   363→ *
+   364→ * Like TypeScript's `Record` utility.
+   365→ */
+   366→
    367→export function record<K extends string, V>(
    368→  Key: Struct<K>,
    369→  Value: Struct<V>
    370→): Struct<Record<K, V>, null> {
+   395→/**
+   396→ * Ensure that a value is a `RegExp`.
+   397→ *
+   398→ * Note: this does not test the value against the regular expression! For that
+   399→ * you need to use the `pattern()` refinement.
+   400→ */
+   401→
    402→export function regexp(): Struct<RegExp, null> {
    415→export function set<T>(Element?: Struct<T>): any {
+   438→/**
+   439→ * Ensure that a value is a string.
+   440→ */
+   441→
    442→export function string(): Struct<string, null> {
+   451→/**
+   452→ * Ensure that a value is a tuple of a specific length, and that each of its
+   453→ * elements is of a specific type.
+   454→ */
+   455→
    456→export function tuple<A extends AnyStruct, B extends AnyStruct[]>(
    457→  Structs: [A, ...B]
    458→): Struct<[Infer<A>, ...InferStructTuple<B>], null> {
+   485→/**
+   486→ * Ensure that a value has a set of known properties of specific types.
+   487→ *
+   488→ * Note: Unrecognized properties are allowed and untouched. This is similar to
+   489→ * how TypeScript's structural typing works.
+   490→ */
+   491→
    492→export function type<S extends ObjectSchema>(
    493→  schema: S
    494→): Struct<ObjectType<S>, S> {
+   518→/**
+   519→ * Ensure that a value matches one of a set of types.
+   520→ */
+   521→
    522→export function union<A extends AnyStruct, B extends AnyStruct[]>(
    523→  Structs: [A, ...B]
    524→): Struct<Infer<A> | InferStructTuple<B>[number], null> {
+   570→/**
+   571→ * Ensure that any value passes validation, without widening its type to `any`.
+   572→ */
+   573→
    574→export function unknown(): Struct<unknown, null> {
 structs/utilities.ts
     60→export function assign(...Structs: Struct<any>[]): any {
+    67→/**
+    68→ * Define a new struct type with a custom validation function.
+    69→ */
+    70→
     71→export function define<T>(name: string, validator: Validator): Struct<T, null> {
+    75→/**
+    76→ * Create a new struct based on an existing struct, but the value is allowed to
+    77→ * be `undefined`. `log` will be called if the value is not `undefined`.
+    78→ */
+    79→
     80→export function deprecated<T>(
     81→  struct: Struct<T>,
     82→  log: (value: unknown, ctx: Context) => void
     83→): Struct<T> {
+    98→/**
+    99→ * Create a struct with dynamic validation logic.
+   100→ *
+   101→ * The callback will receive the value currently being validated, and must
+   102→ * return a struct object to validate it with. This can be useful to model
+   103→ * validation logic that changes based on its input.
+   104→ */
+   105→
    106→export function dynamic<T>(
    107→  fn: (value: unknown, ctx: Context) => Struct<T, any>
    108→): Struct<T, null> {
+   131→/**
+   132→ * Create a struct with lazily evaluated validation logic.
+   133→ *
+   134→ * The first time validation is run with the struct, the callback will be called
+   135→ * and must return a struct object to use. This is useful for cases where you
+   136→ * want to have self-referential structs for nested data structures to avoid a
+   137→ * circular definition problem.
+   138→ */
+   139→
    140→export function lazy<T>(fn: () => Struct<T, any>): Struct<T, null> {
+   164→/**
+   165→ * Create a new struct based on an existing object struct, but excluding
+   166→ * specific properties.
+   167→ *
+   168→ * Like TypeScript's `Omit` utility.
+   169→ */
+   170→
    171→export function omit<S extends ObjectSchema, K extends keyof S>(
    172→  struct: Struct<ObjectType<S>, S>,
    173→  keys: K[]
    174→): Struct<ObjectType<Omit<S, K>>, Omit<S, K>> {
+   190→/**
+   191→ * Create a new struct based on an existing object struct, but with all of its
+   192→ * properties allowed to be `undefined`.
+   193→ *
+   194→ * Like TypeScript's `Partial` utility.
+   195→ */
+   196→
    197→export function partial<S extends ObjectSchema>(
    198→  struct: Struct<ObjectType<S>, S> | S
    199→): Struct<ObjectType<PartialObjectSchema<S>>, PartialObjectSchema<S>> {
+   214→/**
+   215→ * Create a new struct based on an existing object struct, but only including
+   216→ * specific properties.
+   217→ *
+   218→ * Like TypeScript's `Pick` utility.
+   219→ */
+   220→
    221→export function pick<S extends ObjectSchema, K extends keyof S>(
    222→  struct: Struct<ObjectType<S>, S>,
    223→  keys: K[]
    224→): Struct<ObjectType<Pick<S, K>>, Pick<S, K>> {
+   241→/**
+   242→ * Define a new struct type with a custom validation function.
+   243→ *
+   244→ * @deprecated This function has been renamed to `define`.
+   245→ */
+   246→
    247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
 utils.ts
+     4→/**
+     5→ * Check if a value is an iterator.
+     6→ */
+     7→
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
+    12→/**
+    13→ * Check if a value is a plain object.
+    14→ */
+    15→
     16→export function isObject(x: unknown): x is object {
+    20→/**
+    21→ * Check if a value is a non-array object.
+    22→ */
+    23→
     24→export function isNonArrayObject(x: unknown): x is object {
+    28→/**
+    29→ * Check if a value is a plain object.
+    30→ */
+    31→
     32→export function isPlainObject(x: unknown): x is { [key: string]: any } {
+    41→/**
+    42→ * Return a value as a printable string.
+    43→ */
+    44→
     45→export function print(value: any): string {
+    53→/**
+    54→ * Shifts (removes and returns) the first value from the `input` iterator.
+    55→ * Like `Array.prototype.shift()` but for an `Iterator`.
+    56→ */
+    57→
     58→export function shiftIterator<T>(input: Iterator<T>): T | undefined {
+    63→/**
+    64→ * Convert a single validation result to a failure.
+    65→ */
+    66→
     67→export function toFailure<T, S>(
     68→  result: string | boolean | Partial<Failure>,
     69→  context: Context,
     70→  struct: Struct<T, S>,
     71→  value: any
     72→): Failure | undefined {
+   198→/**
+   199→ * Convert a union of type to an intersection.
+   200→ */
+   201→
    202→export type UnionToIntersection<U> = (
+   208→/**
+   209→ * Assign properties from one type to another, overwriting existing.
+   210→ */
+   211→
    212→export type Assign<T, U> = Simplify<U & Omit<T, keyof U>>
+   214→/**
+   215→ * A schema for enum structs.
+   216→ */
+   217→
    218→export type EnumSchema<T extends string | number | undefined | null> = {
+   222→/**
+   223→ * Check if a type is a match for another whilst treating overlapping
+   224→ * unions as a match.
+   225→ */
+   226→
    227→export type IsMatch<T, G> = T extends G ? (G extends T ? T : never) : never
+   229→/**
+   230→ * Check if a type is an exact match.
+   231→ */
+   232→
    233→export type IsExactMatch<T, U> =
+   238→/**
+   239→ * Check if a type is a record type.
+   240→ */
+   241→
    242→export type IsRecord<T> = T extends object
+   247→/**
+   248→ * Check if a type is a tuple.
+   249→ */
+   250→
    251→export type IsTuple<T> = T extends [any]
+   263→/**
+   264→ * Check if a type is a union.
+   265→ */
+   266→
    267→export type IsUnion<T, U extends T = T> = (
+   273→/**
+   274→ * A schema for object structs.
+   275→ */
+   276→
    277→export type ObjectSchema = Record<string, Struct<any, any>>
+   279→/**
+   280→ * Infer a type from an object struct schema.
+   281→ */
+   282→
    283→export type ObjectType<S extends ObjectSchema> = Simplify<
+   287→/**
+   288→ * Omit properties from a type that extend from a specific type.
+   289→ */
+   290→
    291→export type OmitBy<T, V> = Omit<
+   296→/**
+   297→ * Normalize properties of a type that allow `undefined` to make them optional.
+   298→ */
+   299→
    300→export type Optionalize<S extends object> = OmitBy<S, undefined> &
+   303→/**
+   304→ * Transform an object schema type to represent a partial.
+   305→ */
+   306→
    307→export type PartialObjectSchema<S extends ObjectSchema> = {
+   311→/**
+   312→ * Pick properties from a type that extend from a specific type.
+   313→ */
+   314→
    315→export type PickBy<T, V> = Pick<
+   320→/**
+   321→ * Simplifies a type definition to its most basic representation.
+   322→ */
+   323→
    324→export type Simplify<T> = T extends any[] | Date
    328→export type If<B extends Boolean, Then, Else> = B extends true ? Then : Else
+   330→/**
+   331→ * A schema for any type of struct.
+   332→ */
+   333→
    334→export type StructSchema<T> = [T] extends [string | undefined | null]
+   375→/**
+   376→ * A schema for tuple structs.
+   377→ */
+   378→
    379→export type TupleSchema<T> = { [K in keyof T]: Struct<T[K]> }
+   381→/**
+   382→ * Shorthand type for matching any `Struct`.
+   383→ */
+   384→
    385→export type AnyStruct = Struct<any, any>
+   387→/**
+   388→ * Infer a tuple of types from a tuple of `Struct`s.
+   389→ *
+   390→ * This is used to recursively retrieve the type from `union` `intersection` and
+   391→ * `tuple` structs.
+   392→ */
+   393→
    394→export type InferStructTuple<
    402→type _InferTuple<

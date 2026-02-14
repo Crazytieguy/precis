@@ -84,6 +84,14 @@ index.tsx
    908→ */
    909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
    930→const pkg = Object.assign(Command, {
+   955→/**
+   956→ *
+   957→ *
+   958→ * Helpers
+   959→ *
+   960→ *
+   961→ */
+   962→
    963→function findNextSibling(el: Element, selector: string) {
    972→function findPreviousSibling(el: Element, selector: string) {
    981→function useAsRef<T>(data: T) {

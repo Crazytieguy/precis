@@ -134,6 +134,14 @@ argument.js
    131→    return this;
    132→  }
    133→}
+   135→/**
+   136→ * Takes an argument and returns its human readable equivalent for help usage.
+   137→ *
+   138→ * @param {Argument} arg
+   139→ * @return {string}
+   140→ * @private
+   141→ */
+   142→
    143→function humanReadableArgName(arg) {
 command.js
     13→class Command extends EventEmitter {
@@ -2819,6 +2827,14 @@ command.js
   2693→    }
   2694→  }
   2695→}
+  2697→/**
+  2698→ * Scan arguments and increment port number for inspect calls (to avoid conflicts when spawning new command).
+  2699→ *
+  2700→ * @param {string[]} args - array of arguments from node.execArgv
+  2701→ * @returns {string[]}
+  2702→ * @private
+  2703→ */
+  2704→
   2705→function incrementNodeInspectorPort(args) {
   2748→/**
   2749→ * @returns {boolean | undefined}
@@ -3581,6 +3597,14 @@ help.js
    728→    return wrappedLines.join('\n');
    729→  }
    730→}
+   732→/**
+   733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
+   734→ *
+   735→ * @param {string} str
+   736→ * @returns {string}
+   737→ * @package
+   738→ */
+   739→
    740→function stripColor(str) {
 option.js
      3→class Option {
@@ -3886,9 +3910,31 @@ option.js
    304→    return option.negate === (negativeValue === value);
    305→  }
    306→}
+   308→/**
+   309→ * Convert string from kebab-case to camelCase.
+   310→ *
+   311→ * @param {string} str
+   312→ * @return {string}
+   313→ * @private
+   314→ */
+   315→
    316→function camelcase(str) {
+   322→/**
+   323→ * Split the short and long flag out of something like '-m,--mixed <value>'
+   324→ *
+   325→ * @private
+   326→ */
+   327→
    328→function splitOptionFlags(flags) {
 suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
+    48→/**
+    49→ * Find close matches, restricted to same number of edits.
+    50→ *
+    51→ * @param {string} word
+    52→ * @param {string[]} candidates
+    53→ * @returns {string}
+    54→ */
+    55→
     56→function suggestSimilar(word, candidates) {
