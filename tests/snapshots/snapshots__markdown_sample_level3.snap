@@ -4,11 +4,38 @@ expression: output
 ---
 README.md
      1→# precis
+     2→
+     3→A CLI tool that extracts a token-efficient summary of a codebase.
      5→## Installation
+     6→
+     7→```bash
+     8→cargo install precis
+     9→```
     11→## Usage
+    12→
     13→### Basic Usage
+    14→
+    15→Run on a directory to get a summary:
     21→### Options
+    22→
+    23→| Flag | Description |
+    24→|------|-------------|
+    25→| `--budget` | Word budget for output |
+    26→| `--level` | Granularity level (0-5) |
     28→## Supported Languages
+    29→
+    30→- Rust
+    31→- TypeScript / JavaScript
+    32→- Python
+    33→- Markdown
     35→### Adding a New Language
+    36→
+    37→1. Add a tree-sitter grammar dependency
+    38→2. Create a query file in `queries/`
+    39→3. Update `walk.rs` and `parse.rs`
     41→## Contributing
+    42→
+    43→Pull requests welcome! Please run tests before submitting.
     45→## License
+    46→
+    47→MIT

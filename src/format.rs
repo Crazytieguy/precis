@@ -147,11 +147,13 @@ fn render_full_source(path: &Path, root: &Path, source: &str) -> String {
 
 /// Render symbol lines with preceding doc comments (level 3).
 /// If `expand_types` is true (level 4), show full bodies for struct/enum/trait/interface.
+/// For Markdown: level 3 shows first paragraph after each heading, level 4 shows all content.
 fn render_symbols_with_docs(path: &Path, root: &Path, source: &str, expand_types: bool) -> String {
     let relative = path.strip_prefix(root).unwrap_or(path);
     let symbols = parse::extract_symbols(path, source);
     let lines: Vec<&str> = source.lines().collect();
     let is_python = path.extension().and_then(|e| e.to_str()) == Some("py");
+    let is_markdown = path.extension().and_then(|e| e.to_str()) == Some("md");
     let mut out = String::new();
     out.push_str(&format!("{}\n", relative.display()));
     if symbols.is_empty() {
@@ -160,7 +162,7 @@ fn render_symbols_with_docs(path: &Path, root: &Path, source: &str, expand_types
     // Track which lines have been emitted to avoid duplication when type bodies
     // overlap with nested symbols (e.g. trait methods inside a trait body).
     let mut emitted_up_to: usize = 0; // 0-indexed, exclusive
-    for sym in &symbols {
+    for (sym_idx, sym) in symbols.iter().enumerate() {
         let sym_line_0 = sym.line - 1;
         let doc_start = doc_comment_start(&lines, sym_line_0);
         let should_expand = expand_types && is_type_definition(sym.kind);
@@ -188,6 +190,19 @@ fn render_symbols_with_docs(path: &Path, root: &Path, source: &str, expand_types
                     out.push_str(&format!("{:>6}→{}\n", i + 1, line));
                 }
                 emitted_up_to = emitted_up_to.max(ds_end);
+            }
+            // Markdown: include body text after headings
+            if is_markdown {
+                let content_end = markdown_content_end(&symbols, sym_idx, &lines, expand_types);
+                for (i, line) in lines
+                    .iter()
+                    .enumerate()
+                    .take(content_end)
+                    .skip(sym_line_0 + 1)
+                {
+                    out.push_str(&format!("{:>6}→{}\n", i + 1, line));
+                }
+                emitted_up_to = emitted_up_to.max(content_end);
             }
         }
     }
@@ -320,6 +335,40 @@ fn docstring_end(lines: &[&str], sym_line_0: usize) -> usize {
         idx += 1;
     }
     sym_line_0 + 1 // No closing quote found, skip
+}
+
+/// For Markdown files, determine how many content lines to include after a heading.
+/// At level 3 (expand_types=false): first paragraph (until blank line or next heading).
+/// At level 4 (expand_types=true): all content until next heading.
+/// Returns end position (0-indexed, exclusive).
+fn markdown_content_end(
+    symbols: &[parse::Symbol],
+    sym_idx: usize,
+    lines: &[&str],
+    expand_types: bool,
+) -> usize {
+    let sym_line_0 = symbols[sym_idx].line - 1;
+    let next_heading = symbols
+        .get(sym_idx + 1)
+        .map(|s| s.line - 1)
+        .unwrap_or(lines.len());
+
+    if expand_types {
+        // Level 4: all content until next heading
+        next_heading
+    } else {
+        // Level 3: first paragraph after heading
+        let mut idx = sym_line_0 + 1;
+        // Skip blank lines immediately after heading
+        while idx < next_heading && lines[idx].trim().is_empty() {
+            idx += 1;
+        }
+        // Include non-blank lines until blank line or next heading
+        while idx < next_heading && !lines[idx].trim().is_empty() {
+            idx += 1;
+        }
+        idx
+    }
 }
 
 /// Find `needle` in `haystack` at a word boundary (not inside another identifier).

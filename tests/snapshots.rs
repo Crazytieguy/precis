@@ -1136,8 +1136,9 @@ budget_test!(budget_pluggy_level1, "pluggy/src/pluggy", 300);
 budget_test!(budget_pluggy_level2, "pluggy/src/pluggy", 1000);
 budget_test!(budget_pluggy_level3, "pluggy/src/pluggy", 2000);
 
-// Markdown budget tests (mdbook: 0→37, 1→553, 2→560, 3→568, 4→577, 5→17253 words)
+// Markdown budget tests (mdbook: 0→37, 1→553, 2→560, 3→5061, 4→17096, 5→17253 words)
 budget_test!(budget_mdbook_level0, "mdbook/guide/src", 30);
 budget_test!(budget_mdbook_level1, "mdbook/guide/src", 555);
-budget_test!(budget_mdbook_level4, "mdbook/guide/src", 600);
+budget_test!(budget_mdbook_level3, "mdbook/guide/src", 6000);
+budget_test!(budget_mdbook_level4, "mdbook/guide/src", 17200);
 budget_test!(budget_mdbook_level5, "mdbook/guide/src", 20000);

@@ -5,7 +5,7 @@
 - 5-per-language target achieved: 5 Rust, 5 TypeScript, 5 JavaScript, 5 TSX, 5 Python — each with level 1, level 2, level 3, and level 4 snapshots. Markdown: 1 fixture (mdbook) with levels 1-4 + subdirectory tests + budget tests.
 - 8 fixtures have subdirectory snapshot tests; remaining fixtures (either, debug, mitt, etc.) have flat source trees with no meaningful subdirectories to test
 - All 26 fixtures have level 1, 2, 3, and 4 snapshots; levels 0 and 5 tested via samples only
-- Budget-based snapshot tests added: mitt (5 budgets hitting levels 0–3 and 5), ini (3 budgets), neverthrow (2 budgets, multi-file), either (4 budgets, Rust, hitting levels 0/1/3/4), pluggy (4 budgets, Python, hitting levels 0/1/2/3), mdbook (4 budgets, Markdown, hitting levels 0/1/4/5). Each snapshot includes metadata header showing budget → level → word count. All four supported language families (Rust, JS/TS, Python, Markdown) now have budget test coverage.
+- Budget-based snapshot tests added: mitt (5 budgets hitting levels 0–3 and 5), ini (3 budgets), neverthrow (2 budgets, multi-file), either (4 budgets, Rust, hitting levels 0/1/3/4), pluggy (4 budgets, Python, hitting levels 0/1/2/3), mdbook (5 budgets, Markdown, hitting levels 0/1/3/4/5). Each snapshot includes metadata header showing budget → level → word count. All four supported language families (Rust, JS/TS, Python, Markdown) now have budget test coverage.
 - Level 4 fixture snapshots now cover all 26 fixtures; spot-check confirmed type bodies (struct fields, enum variants, trait members, class bodies) expand correctly
 - Python fixtures: pluggy, tomli, humanize, python-dotenv, typeguard — exercises classes, decorators, type hints, docstrings
 
@@ -17,7 +17,7 @@
 
 - Parsing works for Rust, TypeScript, JavaScript, TSX, Python, Markdown — extracts symbol names, kinds, visibility
 - Python: module-level constants extracted (type-annotated assignments, UPPER_CASE names, dunder attributes like `__all__`)
-- Output supports 6 granularity levels: 0 (file paths), 1 (symbol names), 2 (full signature lines), 3 (signatures with doc comments), 4 (type bodies expanded), 5 (full source)
+- Output supports 6 granularity levels: 0 (file paths), 1 (symbol names), 2 (full signature lines), 3 (signatures with doc comments; Markdown: headings + first paragraph), 4 (type bodies expanded; Markdown: all content between headings), 5 (full source)
 - Monotonicity invariant (higher level = more words) tested against all fixtures
 - `--budget` flag works: binary search over levels selects highest level fitting within word budget
 - `--level` flag allows selecting a specific granularity level directly (mutually exclusive with `--budget`)
@@ -27,7 +27,7 @@
 ## Feature development
 
 - Make levels depth-aware and file-size-aware (currently uniform across all files)
-- Markdown: levels 1-4 produce identical output (heading lines only); consider adding intermediate levels that show paragraph text under headings for a richer summary
+- Markdown: levels 1 and 2 produce identical output (heading lines are the same truncated or full since heading text IS the line content). Not a significant issue — same happens for simple single-line code symbols.
 - Add `--json` output flag
 - Doc comment detection (level 3) is text-based heuristic; does not use tree-sitter comment nodes. Handles `///`, `//!`, `/** */` blocks, Python `#` comments, and Python docstrings (`"""..."""` / `'''...'''`). Skips `#[attr]` and `@decorator` lines between doc comments and symbols; decorators/attributes are always shown at level 3+.
 - Python docstrings (triple-quoted strings after `def`/`class` lines) are captured at levels 3 and 4 via text-based heuristic. Handles single-line, multi-line, and raw (`r"""`) docstrings.

@@ -25,8 +25,8 @@ Takes a `--budget` flag (in words) or a `--level` flag to select a specific gran
 0. File paths only
 1. Symbol lines, truncated to symbol name (e.g. `pub fn new`)
 2. Symbol lines, full line-prefix including signature (e.g. `pub fn new(lang: Language) -> Self {`)
-3. Symbol lines with preceding doc comments (`///` in Rust, `/** */` JSDoc in JS/TS)
-4. Like level 3, but type definition bodies (struct fields, enum variants, trait/interface/class members) shown in full
+3. Symbol lines with preceding doc comments (`///` in Rust, `/** */` JSDoc in JS/TS). Markdown: headings plus first paragraph under each heading.
+4. Like level 3, but type definition bodies (struct fields, enum variants, trait/interface/class members) shown in full. Markdown: all content between headings.
 5. Full source (all lines)
 
 More intermediate levels can be added over time (e.g. multi-line signatures).
