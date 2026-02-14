@@ -343,6 +343,16 @@ fn fixture_sonner() {
 }
 
 #[test]
+fn fixture_mitt() {
+    let Some(root) = fixture_path("mitt/src") else {
+        eprintln!("skipping fixture_mitt: clone with `git clone --depth 1 https://github.com/developit/mitt.git test/fixtures/mitt`");
+        return;
+    };
+    let output = format::format_directory(&root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
 fn fixture_log() {
     let Some(root) = fixture_path("log/src") else {
         eprintln!("skipping fixture_log: clone with `git clone --depth 1 https://github.com/rust-lang/log.git test/fixtures/log`");
