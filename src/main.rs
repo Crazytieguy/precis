@@ -19,61 +19,65 @@ struct Cli {
 
 fn main() {
     let cli = Cli::parse();
-
     let path = &cli.path;
-    if path.is_file() {
-        let source = match std::fs::read_to_string(path) {
-            Ok(s) => s,
-            Err(e) => {
-                eprintln!("Error reading {:?}: {}", path, e);
-                std::process::exit(1);
-            }
-        };
-        let root = path.parent().unwrap_or(path);
-        let output = if let Some(l) = cli.level {
-            let output = format::render_file(l, path, root, &source);
-            let words = format::count_words(&output);
-            eprintln!("(1 file, level {}, {} words)", l, words);
-            output
-        } else if let Some(budget) = cli.budget {
-            let (level, symbols) = format::budget_level_file(budget, path, root, &source);
-            let output = format::render_file_with_symbols(level, path, root, &source, &symbols);
-            let words = format::count_words(&output);
-            eprintln!("(1 file, level {}, {} words)", level, words);
-            output
-        } else {
-            let level = format::MAX_LEVEL.min(1);
-            let output = format::render_file(level, path, root, &source);
-            let words = format::count_words(&output);
-            eprintln!("(1 file, level {}, {} words)", level, words);
-            output
-        };
-        print!("{}", output);
+
+    let (output, n_files, level) = if path.is_file() {
+        render_file(path, cli.level, cli.budget)
     } else if path.is_dir() {
-        let files = walk::discover_source_files(path);
-        let sources = format::read_sources(&files);
-        let output = if let Some(l) = cli.level {
-            let output = format::render_files(l, path, &files, &sources);
-            let words = format::count_words(&output);
-            eprintln!("({} files, level {}, {} words)", files.len(), l, words);
-            output
-        } else if let Some(budget) = cli.budget {
-            let (level, all_symbols) = format::budget_level(budget, path, &files, &sources);
-            let output =
-                format::render_files_with_symbols(level, path, &files, &sources, &all_symbols);
-            let words = format::count_words(&output);
-            eprintln!("({} files, level {}, {} words)", files.len(), level, words);
-            output
-        } else {
-            let level = format::MAX_LEVEL.min(1);
-            let output = format::render_files(level, path, &files, &sources);
-            let words = format::count_words(&output);
-            eprintln!("({} files, level {}, {} words)", files.len(), level, words);
-            output
-        };
-        print!("{}", output);
+        render_dir(path, cli.level, cli.budget)
     } else {
         eprintln!("Error: {:?} is not a file or directory", path);
         std::process::exit(1);
-    }
+    };
+
+    let words = format::count_words(&output);
+    eprintln!(
+        "({} {}, level {}, {} words)",
+        n_files,
+        if n_files == 1 { "file" } else { "files" },
+        level,
+        words,
+    );
+    print!("{}", output);
+}
+
+fn render_file(path: &std::path::Path, level: Option<u8>, budget: Option<usize>) -> (String, usize, u8) {
+    let source = match std::fs::read_to_string(path) {
+        Ok(s) => s,
+        Err(e) => {
+            eprintln!("Error reading {:?}: {}", path, e);
+            std::process::exit(1);
+        }
+    };
+    let root = path.parent().unwrap_or(path);
+
+    let (output, level) = if let Some(l) = level {
+        (format::render_file(l, path, root, &source), l)
+    } else if let Some(budget) = budget {
+        let (l, symbols) = format::budget_level_file(budget, path, root, &source);
+        (format::render_file_with_symbols(l, path, root, &source, &symbols), l)
+    } else {
+        let l = format::MAX_LEVEL.min(1);
+        (format::render_file(l, path, root, &source), l)
+    };
+
+    (output, 1, level)
+}
+
+fn render_dir(path: &std::path::Path, level: Option<u8>, budget: Option<usize>) -> (String, usize, u8) {
+    let files = walk::discover_source_files(path);
+    let sources = format::read_sources(&files);
+    let n_files = files.len();
+
+    let (output, level) = if let Some(l) = level {
+        (format::render_files(l, path, &files, &sources), l)
+    } else if let Some(budget) = budget {
+        let (l, all_symbols) = format::budget_level(budget, path, &files, &sources);
+        (format::render_files_with_symbols(l, path, &files, &sources, &all_symbols), l)
+    } else {
+        let l = format::MAX_LEVEL.min(1);
+        (format::render_files(l, path, &files, &sources), l)
+    };
+
+    (output, n_files, level)
 }
