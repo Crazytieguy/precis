@@ -288,6 +288,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
                     .node
                     .utf8_text(source.as_bytes())
                     .unwrap_or("?")
+                    .trim()
                     .to_string(),
                 None => continue,
             }
@@ -1089,6 +1090,23 @@ Parse the source code.
 
         // All headings should be public
         assert!(symbols.iter().all(|s| s.is_public));
+
+        // ATX headings: end_line == line + 1 (node includes trailing newline)
+        assert!(symbols.iter().all(|s| s.end_line == s.line + 1));
+    }
+
+    #[test]
+    fn extracts_setext_headings() {
+        let source = "Introduction\n============\n\nSome text.\n\nGetting Started\n---------------\n\nMore text.\n";
+        let symbols = extract_symbols(Path::new("test.md"), source);
+        assert_eq!(symbols.len(), 2);
+        // Setext headings: names are trimmed, end_line extends past the underline
+        assert_eq!(symbols[0].name, "Introduction");
+        assert_eq!(symbols[0].line, 1);
+        assert_eq!(symbols[0].end_line, 3);
+        assert_eq!(symbols[1].name, "Getting Started");
+        assert_eq!(symbols[1].line, 6);
+        assert_eq!(symbols[1].end_line, 8);
     }
 
     #[test]

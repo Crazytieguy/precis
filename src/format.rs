@@ -369,14 +369,18 @@ fn render_symbols_with_docs(
                 }
                 emitted_up_to = emitted_up_to.max(ds_end);
             }
-            // Markdown: include body text after headings
+            // Markdown: include body text after headings.
+            // Use max of sym_line + 1 and end_line - 1 to handle both cases:
+            //   ATX headings (end_line may equal line if no trailing newline): sym_line + 1
+            //   Setext headings (end_line > line + 1): end_line - 1 skips the underline
             if is_markdown {
                 let content_end = markdown_content_end(symbols, sym_idx, &lines, expand_types);
+                let heading_end = (sym.end_line - 1).max(sym_line_0 + 1);
                 for (i, line) in lines
                     .iter()
                     .enumerate()
                     .take(content_end)
-                    .skip(sym_line_0 + 1)
+                    .skip(heading_end)
                 {
                     out.push_str(&fmt_line(i, line));
                 }
@@ -638,7 +642,6 @@ fn markdown_content_end(
     lines: &[&str],
     expand_types: bool,
 ) -> usize {
-    let sym_line_0 = symbols[sym_idx].line - 1;
     let next_heading = symbols
         .get(sym_idx + 1)
         .map(|s| s.line - 1)
@@ -648,8 +651,12 @@ fn markdown_content_end(
         // Level 4: all content until next heading
         next_heading
     } else {
-        // Level 3: first paragraph after heading
-        let mut idx = sym_line_0 + 1;
+        // Level 3: first paragraph after heading.
+        // Use max of sym_line + 1 and end_line - 1 to handle both cases:
+        //   ATX headings (end_line may equal line if no trailing newline): sym_line + 1
+        //   Setext headings (end_line > line + 1): end_line - 1 skips the underline
+        let sym_line_0 = symbols[sym_idx].line - 1;
+        let mut idx = (symbols[sym_idx].end_line - 1).max(sym_line_0 + 1);
         // Skip blank lines immediately after heading
         while idx < next_heading && lines[idx].trim().is_empty() {
             idx += 1;
@@ -923,5 +930,45 @@ mod tests {
         };
         // Should detect `{` on line 0 (first line), not scan into the body
         assert_eq!(signature_end_line(&lines, &sym, false), 0);
+    }
+
+    #[test]
+    fn setext_heading_rendering() {
+        let source = "Introduction\n============\n\nSome text here.\n\nGetting Started\n---------------\n\nMore content.\n";
+        let root = Path::new("");
+        let path = Path::new("test.md");
+
+        // Level 1: symbol names only — underline should not appear
+        let l1 = render_file(1, path, root, source);
+        assert!(l1.contains("Introduction"), "level 1 should show heading name");
+        assert!(!l1.contains("===="), "level 1 should not show underline");
+
+        // Level 3: heading + first paragraph — underline should not appear as content
+        let l3 = render_file(3, path, root, source);
+        assert!(l3.contains("Introduction"), "level 3 should show heading name");
+        assert!(!l3.contains("===="), "level 3 should not show underline");
+        assert!(l3.contains("Some text here"), "level 3 should show first paragraph");
+        assert!(!l3.contains("----"), "level 3 should not show underline");
+        assert!(l3.contains("More content"), "level 3 should show second heading content");
+
+        // Level 4: heading + all content — underline should not appear
+        let l4 = render_file(4, path, root, source);
+        assert!(!l4.contains("===="), "level 4 should not show underline");
+        assert!(!l4.contains("----"), "level 4 should not show underline");
+        assert!(l4.contains("Some text here"), "level 4 should show content");
+        assert!(l4.contains("More content"), "level 4 should show content");
+
+        // Monotonicity: levels should produce non-decreasing word counts
+        let mut prev_words = 0;
+        for level in 0..=MAX_LEVEL {
+            let output = render_file(level, path, root, source);
+            let words = count_words(&output);
+            assert!(
+                words >= prev_words,
+                "Setext heading monotonicity violated at level {}: {} < {}",
+                level, words, prev_words,
+            );
+            prev_words = words;
+        }
     }
 }
