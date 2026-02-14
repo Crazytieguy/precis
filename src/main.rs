@@ -8,9 +8,13 @@ struct Cli {
     /// Directory or file to summarize
     path: PathBuf,
 
-    /// Token budget for output
-    #[arg(long)]
+    /// Token budget for output (mutually exclusive with --level)
+    #[arg(long, conflicts_with = "level")]
     budget: Option<usize>,
+
+    /// Granularity level (0=paths, 1=names, 2=signatures, 3=+docs, 4=+type bodies, 5=full source)
+    #[arg(long, value_parser = clap::value_parser!(u8).range(0..=5))]
+    level: Option<u8>,
 }
 
 fn main() {
@@ -26,7 +30,9 @@ fn main() {
             }
         };
         let root = path.parent().unwrap_or(path);
-        let level = if let Some(budget) = cli.budget {
+        let level = if let Some(l) = cli.level {
+            l
+        } else if let Some(budget) = cli.budget {
             format::budget_level_file(budget, path, root, &source)
         } else {
             format::MAX_LEVEL.min(1)
@@ -34,15 +40,13 @@ fn main() {
         let output = format::render_file(level, path, root, &source);
         let words = format::count_words(&output);
         print!("{}", output);
-        if let Some(budget) = cli.budget {
-            eprintln!("(1 file, level {}, {} words, budget {})", level, words, budget);
-        } else {
-            eprintln!("(1 file)");
-        }
+        eprintln!("(1 file, level {}, {} words)", level, words);
     } else if path.is_dir() {
         let files = walk::discover_source_files(path);
         let sources = format::read_sources(&files);
-        let level = if let Some(budget) = cli.budget {
+        let level = if let Some(l) = cli.level {
+            l
+        } else if let Some(budget) = cli.budget {
             format::budget_level(budget, path, &files, &sources)
         } else {
             format::MAX_LEVEL.min(1)
@@ -50,11 +54,7 @@ fn main() {
         let output = format::render_files(level, path, &files, &sources);
         let words = format::count_words(&output);
         print!("{}", output);
-        if let Some(budget) = cli.budget {
-            eprintln!("({} files, level {}, {} words, budget {})", files.len(), level, words, budget);
-        } else {
-            eprintln!("({} files found)", files.len());
-        }
+        eprintln!("({} files, level {}, {} words)", files.len(), level, words);
     } else {
         eprintln!("Error: {:?} is not a file or directory", path);
         std::process::exit(1);

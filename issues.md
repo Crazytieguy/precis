@@ -18,8 +18,9 @@
 - Output supports 6 granularity levels: 0 (file paths), 1 (symbol names), 2 (full signature lines), 3 (signatures with doc comments), 4 (type bodies expanded), 5 (full source)
 - Monotonicity invariant (higher level = more words) tested against all fixtures
 - `--budget` flag works: binary search over levels selects highest level fitting within word budget
+- `--level` flag allows selecting a specific granularity level directly (mutually exclusive with `--budget`)
 - `path` arg accepts both files and directories
-- Default output (no `--budget`) is level 1 (symbol names truncated)
+- Default output (no flags) is level 1 (symbol names truncated)
 
 ## Feature development
 

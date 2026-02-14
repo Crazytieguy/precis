@@ -12,7 +12,7 @@ Uses **tree-sitter** for language-agnostic symbol extraction. Each supported lan
 
 ### Token Budgeting
 
-Takes a `--budget` flag (in words).
+Takes a `--budget` flag (in words) or a `--level` flag to select a specific granularity level directly. The two flags are mutually exclusive.
 
 **Granularity function:** A single function `render(level, path, content) -> output` maps each file to its output at a given granularity level. The function is depth-aware (via `path`) and file-size-aware (via `content`), so a single level can behave differently for shallow vs deep files or small vs large files. A `MAX_LEVEL` constant defines the highest available level.
 
