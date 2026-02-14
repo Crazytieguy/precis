@@ -15,6 +15,8 @@ See @README.md for design decisions.
 
 If implementation diverges from what's documented in the README, update the README to match.
 
+API docs for this crate and its dependencies are at @target/doc-md/index.md. Re-run `cargo doc-md` after adding or removing a dependency.
+
 ## Bash Operations
 
 Complex bash syntax is hard for Claude Code to permission correctly. Keep commands simple.
