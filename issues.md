@@ -21,6 +21,7 @@
 - TypeScript: abstract classes (`abstract class`) and abstract method signatures captured correctly
 - Python: module-level constants extracted (type-annotated assignments, UPPER_CASE names, dunder attributes like `__all__`)
 - Output supports 6 granularity levels: 0 (file paths), 1 (symbol names), 2 (full multi-line signatures), 3 (signatures with doc comments; Markdown: headings + first paragraph), 4 (type bodies expanded; Markdown: all content between headings), 5 (full source)
+- Levels are depth-aware: deeper files have their effective level reduced (penalty = depth/2, where depth counts directory components excluding the file itself). Files at depth 0–1 get full detail; depth 2–3 get −1 level; depth 4–5 get −2 levels; etc. This means budget mode automatically prioritises shallow files.
 - Monotonicity invariant (higher level = more words) tested against all fixtures
 - `--budget` flag works: binary search over levels selects highest level fitting within word budget
 - `--level` flag allows selecting a specific granularity level directly (mutually exclusive with `--budget`)
@@ -31,7 +32,8 @@
 
 ## Feature development
 
-- Make levels depth-aware and file-size-aware (currently uniform across all files)
+- Make levels file-size-aware (currently uniform across all files regardless of size). Depth-awareness is implemented; file-size-awareness is not yet.
+- Go grouped `const (...)` and `var (...)` blocks: individual entries (e.g. `Ident`, `Bold`) appear without the enclosing `const (` context line, making them hard to identify as constants at levels 1–2. Fixing requires either adding the parent block as a container symbol or showing the context line.
 
 ## Implementation notes
 
@@ -47,4 +49,4 @@
 - Entrypoint detection: not needed — depth in file tree is a sufficient heuristic. Users zoom into subdirectories by running the tool on them directly with a larger budget.
 - Output lines are line-prefixes of the original source, preserving original whitespace. Nesting (e.g. impl blocks) is represented naturally by the source's own indentation.
 - Line number format: right-aligned with `→` separator (e.g. `    12→    pub fn new(`).
-- Budgeting algorithm: single `render(level, path, content)` function with `MAX_LEVEL` constant. Binary search over levels to fit word budget. Monotonicity invariant (higher level = more words) tested against fixtures. Start crude, add granularity over time. Target: levels become depth- and file-size-aware.
+- Budgeting algorithm: single `render(level, path, content)` function with `MAX_LEVEL` constant. Binary search over levels to fit word budget. Monotonicity invariant (higher level = more words) tested against fixtures. Depth-aware rendering reduces effective level for deeper files (penalty = depth/2), so the budget search naturally picks higher nominal levels since the cost per level is lower. Target: add file-size-awareness.

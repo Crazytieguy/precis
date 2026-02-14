@@ -75,9 +75,6 @@ for_developers/backends.md
    219→## Output and signalling failure
    322→## Wrapping up
 for_developers/mdbook-wordcount/src/main.rs
-    12→fn main
-    40→fn count_words
-    46→pub struct WordcountConfig
 for_developers/preprocessors.md
      1→# Preprocessors
     13→## Hooking into MDBook
@@ -86,36 +83,10 @@ for_developers/preprocessors.md
 format/README.md
      1→# Format
 format/configuration/README.md
-     1→# Configuration
 format/configuration/environment-variables.md
-     1→# Environment variables
 format/configuration/general.md
-     1→# General configuration
-    31→## Supported configuration options
-    37→### General metadata
-    64→### Rust options
-    85→### Build options
 format/configuration/preprocessors.md
-     1→# Configuring Preprocessors
-    26→## Custom preprocessor configuration
-    45→## Locking a preprocessor dependency to a renderer
-    55→## Provide your own command
-    67→### Optional preprocessors
-    79→## Require a certain order
 format/configuration/renderers.md
-     1→# Configuring Renderers
-    20→## Output tables
-    59→### Custom backend commands
-    71→### Optional backends
-    84→## HTML renderer options
-   176→### `[output.html.print]`
-   191→### `[output.html.fold]`
-   206→### `[output.html.playground]`
-   230→### `[output.html.code]`
-   244→### `[output.html.search]`
-   286→#### `[output.html.search.chapter]`
-   300→### `[output.html.redirect]`
-   325→## Markdown renderer
 format/example.rs
      1→fn main
 format/markdown.md
@@ -159,22 +130,9 @@ format/summary.md
     12→### Structure
     93→### Example
 format/theme/README.md
-     1→# Theme
 format/theme/editor.md
-     1→# Editor
-    35→## Customizing the editor
 format/theme/index-hbs.md
-     1→# index.hbs
-     9→## Data
-    41→## Handlebars helpers
-    46→### toc
-    80→### resource
-    90→### fa
 format/theme/syntax-highlighting.md
-     1→# Syntax highlighting
-    17→## Supported languages
-    68→## Custom theme
-    82→## Improve default theme
 guide/README.md
      1→# User guide
 guide/creating.md

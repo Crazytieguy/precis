@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 555 → level 1 (553 words)
+budget: 555 → level 2 (554 words)
 
 404.md
      1→# Document not found (404)
@@ -119,13 +119,13 @@ format/configuration/renderers.md
    300→### `[output.html.redirect]`
    325→## Markdown renderer
 format/example.rs
-     1→fn main
+     1→fn main() {
 format/markdown.md
      1→# Markdown
      9→## Text and paragraphs
     25→## Headings
-    39→### A heading
-    43→#### A smaller heading
+    39→### A heading 
+    43→#### A smaller heading 
     47→## Lists
     69→## Links
    108→## Images

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 17200 → level 4 (17096 words)
+budget: 17200 → level 5 (17120 words)
 
 404.md
      1→# Document not found (404)
@@ -1724,6 +1724,11 @@ format/configuration/renderers.md
    343→specify which preprocessors should run before the Markdown renderer.
 format/example.rs
      1→fn main() {
+     2→    println!("Hello World!");
+     3→#
+     4→#     // You can even hide lines! :D
+     5→#     println!("I am hidden! Expand the code snippet to see me");
+     6→}
 format/markdown.md
      1→# Markdown
      2→

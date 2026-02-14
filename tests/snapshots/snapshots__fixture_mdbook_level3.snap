@@ -321,8 +321,6 @@ for_developers/backends.md
 for_developers/mdbook-wordcount/src/main.rs
     12→fn main() {
     40→fn count_words(ch: &Chapter) -> usize {
-    44→#[derive(Debug, Default, Serialize, Deserialize)]
-    45→#[serde(default, rename_all = "kebab-case")]
     46→pub struct WordcountConfig {
 for_developers/preprocessors.md
      1→# Preprocessors
@@ -351,116 +349,35 @@ format/README.md
      3→In this section you will learn how to:
 format/configuration/README.md
      1→# Configuration
-     2→
-     3→This section details the configuration options available in the ***book.toml***:
-     4→- **[General]** configuration including the `book`, `rust`, `build` sections
-     5→- **[Preprocessor]** configuration for default and custom book preprocessors
-     6→- **[Renderer]** configuration for the HTML, Markdown and custom renderers
-     7→- **[Environment Variable]** configuration for overriding configuration options in your environment
 format/configuration/environment-variables.md
      1→# Environment variables
-     2→
-     3→All configuration values can be overridden from the command line by setting the
-     4→corresponding environment variable. Because many operating systems restrict
-     5→environment variables to be alphanumeric characters or `_`, the configuration
-     6→key needs to be formatted slightly differently to the normal `foo.bar.baz` form.
 format/configuration/general.md
      1→# General configuration
-     2→
-     3→You can configure the parameters for your book in the ***book.toml*** file.
     31→## Supported configuration options
-    32→
-    33→It is important to note that **any** relative path specified in the
-    34→configuration will always be taken relative from the root of the book where the
-    35→configuration file is located.
     37→### General metadata
-    38→
-    39→This is general information about your book.
     64→### Rust options
-    65→
-    66→Options for the Rust language, relevant to running tests and playground
-    67→integration.
     85→### Build options
-    86→
-    87→This controls the build process of your book.
 format/configuration/preprocessors.md
      1→# Configuring Preprocessors
-     2→
-     3→Preprocessors are extensions that can modify the raw Markdown source before it gets sent to the renderer.
     26→## Custom preprocessor configuration
-    27→
-    28→Preprocessors can be added by including a `preprocessor` table in `book.toml` with the name of the preprocessor.
-    29→For example, if you have a preprocessor called `mdbook-example`, then you can include it with:
     45→## Locking a preprocessor dependency to a renderer
-    46→
-    47→You can explicitly specify that a preprocessor should run for a renderer by
-    48→binding the two together.
     55→## Provide your own command
-    56→
-    57→By default when you add a `[preprocessor.foo]` table to your `book.toml` file,
-    58→`mdbook` will try to invoke the `mdbook-foo` executable. If you want to use a
-    59→different program name or pass in command-line arguments, this behaviour can
-    60→be overridden by adding a `command` field.
     67→### Optional preprocessors
-    68→
-    69→If you enable a preprocessor that isn't installed, the default behavior is to throw an error.
-    70→This behavior can be changed by marking the preprocessor as optional:
     79→## Require a certain order
-    80→
-    81→The order in which preprocessors are run can be controlled with the `before` and `after` fields.
-    82→For example, suppose you want your `linenos` preprocessor to process lines that may have been `{{#include}}`d; then you want it to run after the built-in `links` preprocessor, which you can require using either the `before` or `after` field:
 format/configuration/renderers.md
      1→# Configuring Renderers
-     2→
-     3→Renderers (also called "backends") are responsible for creating the output of the book.
     20→## Output tables
-    21→
-    22→Backends can be added by including a `output` table in `book.toml` with the name of the backend.
-    23→For example, if you have a backend called `mdbook-wordcount`, then you can include it with:
     59→### Custom backend commands
-    60→
-    61→By default when you add an `[output.foo]` table to your `book.toml` file,
-    62→`mdbook` will try to invoke the `mdbook-foo` executable.
-    63→If you want to use a different program name or pass in command-line arguments,
-    64→this behaviour can be overridden by adding a `command` field.
     71→### Optional backends
-    72→
-    73→If you enable a backend that isn't installed, the default behavior is to throw an error.
-    74→This behavior can be changed by marking the backend as optional:
     84→## HTML renderer options
-    85→
-    86→The HTML renderer has a variety of options detailed below.
-    87→They should be specified in the `[output.html]` table of the `book.toml` file.
    176→### `[output.html.print]`
-   177→
-   178→The `[output.html.print]` table provides options for controlling the printable output.
-   179→By default, mdBook will include an icon on the top right of the book (which looks like <i class="fas fa-print"></i>) that will print the book as a single page.
    191→### `[output.html.fold]`
-   192→
-   193→The `[output.html.fold]` table provides options for controlling folding of the chapter listing in the navigation sidebar.
    206→### `[output.html.playground]`
-   207→
-   208→The `[output.html.playground]` table provides options for controlling Rust sample code blocks, and their integration with the [Rust Playground].
    230→### `[output.html.code]`
-   231→
-   232→The `[output.html.code]` table provides options for controlling code blocks.
    244→### `[output.html.search]`
-   245→
-   246→The `[output.html.search]` table provides options for controlling the built-in text [search].
-   247→mdBook must be compiled with the `search` feature enabled (on by default).
    286→#### `[output.html.search.chapter]`
-   287→
-   288→The [`output.html.search.chapter`] table provides the ability to modify search settings per chapter or directory. Each key is the path to the chapter source file or directory, and the value is a table of settings to apply to that path. This will merge recursively, with more specific paths taking precedence.
    300→### `[output.html.redirect]`
-   301→
-   302→The `[output.html.redirect]` table provides a way to add redirects.
-   303→This is useful when you move, rename, or remove a page to ensure that links to the old URL will go to the new location.
    325→## Markdown renderer
-   326→
-   327→The Markdown renderer will run preprocessors and then output the resulting
-   328→Markdown. This is mostly useful for debugging preprocessors, especially in
-   329→conjunction with `mdbook test` to see the Markdown that `mdbook` is passing
-   330→to `rustdoc`.
 format/example.rs
      1→fn main() {
 format/markdown.md
@@ -609,63 +526,21 @@ format/summary.md
     96→of contents as rendered to the left.
 format/theme/README.md
      1→# Theme
-     2→
-     3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
-     4→render your markdown files and comes with a default theme included in the mdBook
-     5→binary.
 format/theme/editor.md
      1→# Editor
-     2→
-     3→In addition to providing runnable code playgrounds, mdBook optionally allows them
-     4→to be editable. In order to enable editable code blocks, the following needs to
-     5→be added to the ***book.toml***:
     35→## Customizing the editor
-    36→
-    37→By default, the editor is the [Ace](https://ace.c9.io/) editor, but, if desired,
-    38→the functionality may be overridden by providing a different folder:
 format/theme/index-hbs.md
      1→# index.hbs
-     2→
-     3→`index.hbs` is the handlebars template that is used to render the book. The
-     4→markdown files are processed to html and then injected in that template.
      9→## Data
-    10→
-    11→A lot of data is exposed to the handlebars template with the "context". In the
-    12→handlebars template you can access this information by using
     41→## Handlebars helpers
-    42→
-    43→In addition to the properties you can access, there are some handlebars helpers
-    44→at your disposal.
     46→### toc
-    47→
-    48→The toc helper is used like this
     80→### resource
-    81→
-    82→The path to a static file.
-    83→It implicitly includes `path_to_root`,
-    84→and accounts for files that are renamed with a hash in their filename.
     90→### fa
-    91→
-    92→mdBook includes a copy of [Font Awesome Free's](https://fontawesome.com)
-    93→MIT-licensed SVG files. It accepts three positional arguments:
 format/theme/syntax-highlighting.md
      1→# Syntax highlighting
-     2→
-     3→mdBook uses [Highlight.js](https://highlightjs.org) with a custom theme
-     4→for syntax highlighting.
     17→## Supported languages
-    18→
-    19→These languages are supported by default, but you can add more by supplying
-    20→your own `highlight.js` file:
     68→## Custom theme
-    69→Like the rest of the theme, the files used for syntax highlighting can be
-    70→overridden with your own.
     82→## Improve default theme
-    83→
-    84→If you think the default theme doesn't look quite right for a specific language,
-    85→or could be improved, feel free to [submit a new
-    86→issue](https://github.com/rust-lang/mdBook/issues) explaining what you
-    87→have in mind and I will take a look at it.
 guide/README.md
      1→# User guide
      2→

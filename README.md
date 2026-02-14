@@ -14,7 +14,7 @@ Uses **tree-sitter** for language-agnostic symbol extraction. Each supported lan
 
 Takes a `--budget` flag (in words) or a `--level` flag to select a specific granularity level directly. The two flags are mutually exclusive.
 
-**Granularity function:** A single function `render(level, path, content) -> output` maps each file to its output at a given granularity level. The function is depth-aware (via `path`) and file-size-aware (via `content`), so a single level can behave differently for shallow vs deep files or small vs large files. A `MAX_LEVEL` constant defines the highest available level.
+**Granularity function:** A single function `render(level, path, content) -> output` maps each file to its output at a given granularity level. The function is depth-aware (via `path`), so a single level can behave differently for shallow vs deep files. The effective level for a file is `level - depth/2` (where depth counts parent directories, integer division), clamped to 0. Files at depth 0–1 get full detail; deeper files gracefully degrade. A `MAX_LEVEL` constant defines the highest available level.
 
 **Monotonicity invariant:** For any given file, a higher level must never produce fewer words than a lower level. This is tested against fixture files across all levels.
 

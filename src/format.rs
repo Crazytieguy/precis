@@ -16,7 +16,9 @@ pub const MAX_LEVEL: u8 = 5;
 
 /// Render a single file at the given granularity level.
 pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String {
-    let symbols = if matches!(level, 1..=4) {
+    // Extract symbols for any level >= 1. Even at nominal level 5 (full source),
+    // depth penalty may reduce the effective level to 1–4 which needs symbols.
+    let symbols = if level >= 1 {
         parse::extract_symbols(path, source)
     } else {
         vec![]
@@ -26,6 +28,10 @@ pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String 
 
 /// Render a single file at the given level using pre-extracted symbols.
 /// Used by budget search to avoid redundant symbol extraction across levels.
+///
+/// The effective level is adjusted by file depth: deeper files are rendered
+/// with less detail so that shallow, high-level files are prioritised when
+/// a budget is tight. See [`depth_penalty`] for the formula.
 fn render_with_symbols(
     level: u8,
     path: &Path,
@@ -34,8 +40,9 @@ fn render_with_symbols(
     symbols: &[parse::Symbol],
 ) -> String {
     let relative = path.strip_prefix(root).unwrap_or(path);
+    let effective = level.saturating_sub(depth_penalty(relative));
     let mut out = format!("{}\n", relative.display());
-    match level {
+    match effective {
         0 => {}
         1 => render_symbols(&mut out, relative, source, symbols, true),
         2 => render_symbols(&mut out, relative, source, symbols, false),
@@ -44,6 +51,17 @@ fn render_with_symbols(
         _ => render_full_source(&mut out, source),
     }
     out
+}
+
+/// Compute a depth penalty for a file path.
+///
+/// Files at the root or one directory deep get full detail. Deeper files
+/// have their effective level reduced so that shallow files are prioritised.
+///
+/// Depth 0–1: no penalty, Depth 2–3: −1 level, Depth 4–5: −2 levels, etc.
+fn depth_penalty(relative: &Path) -> u8 {
+    let depth = relative.components().count().saturating_sub(1);
+    (depth as u8) / 2
 }
 
 /// Format a single source line with its line number.
