@@ -62,7 +62,7 @@ fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
             tree_sitter_rust::LANGUAGE.into(),
             include_str!("../queries/rust.scm"),
         )),
-        "ts" => Some((
+        "ts" | "mts" | "cts" => Some((
             tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into(),
             include_str!("../queries/typescript.scm"),
         )),
@@ -70,7 +70,7 @@ fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
             tree_sitter_typescript::LANGUAGE_TSX.into(),
             include_str!("../queries/typescript.scm"),
         )),
-        "js" => Some((
+        "js" | "mjs" | "cjs" => Some((
             tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into(),
             include_str!("../queries/typescript.scm"),
         )),

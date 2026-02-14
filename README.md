@@ -72,7 +72,7 @@ A `--json` flag outputs structured JSON with per-file entries:
 ## Supported Languages
 
 - **Rust** — functions, structs, enums, traits, impls, type aliases, consts, statics, macros, modules
-- **TypeScript / JavaScript / TSX** — functions, classes, interfaces, enums, type aliases, consts, namespaces
+- **TypeScript / JavaScript / TSX** (`.ts`, `.tsx`, `.js`, `.jsx`, `.mts`, `.cts`, `.mjs`, `.cjs`) — functions, classes, interfaces, enums, type aliases, consts, namespaces
 - **Go** — functions, methods, structs, interfaces, type aliases, consts, vars (exported = uppercase)
 - **Python** — functions, classes, module-level constants (typed, UPPER_CASE, dunder)
 - **Markdown** — ATX headings (`#`, `##`, etc.) and setext headings as section structure
