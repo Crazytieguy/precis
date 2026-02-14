@@ -870,9 +870,9 @@ fn fixture_thiserror_impl_subdir_level2() {
 }
 
 #[test]
-fn fixture_commander_lib_subdir() {
-    let Some(root) = fixture_path("commander/lib") else {
-        eprintln!("skipping fixture_commander_lib_subdir: clone with `git clone --depth 1 https://github.com/tj/commander.js.git test/fixtures/commander`");
+fn fixture_semver_internal_subdir() {
+    let Some(root) = fixture_path("semver/internal") else {
+        eprintln!("skipping fixture_semver_internal_subdir: clone with `git clone --depth 1 https://github.com/npm/node-semver.git test/fixtures/semver`");
         return;
     };
     let output = format::render_directory(1, &root);
@@ -880,9 +880,9 @@ fn fixture_commander_lib_subdir() {
 }
 
 #[test]
-fn fixture_commander_lib_subdir_level2() {
-    let Some(root) = fixture_path("commander/lib") else {
-        eprintln!("skipping fixture_commander_lib_subdir_level2: clone with `git clone --depth 1 https://github.com/tj/commander.js.git test/fixtures/commander`");
+fn fixture_semver_internal_subdir_level2() {
+    let Some(root) = fixture_path("semver/internal") else {
+        eprintln!("skipping fixture_semver_internal_subdir_level2: clone with `git clone --depth 1 https://github.com/npm/node-semver.git test/fixtures/semver`");
         return;
     };
     let output = format::render_directory(2, &root);

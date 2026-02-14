@@ -1,0 +1,37 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+constants.js
+     5→const SEMVER_SPEC_VERSION
+     7→const MAX_LENGTH
+     8→const MAX_SAFE_INTEGER
+    12→const MAX_SAFE_COMPONENT_LENGTH
+    16→const MAX_SAFE_BUILD_LENGTH
+    18→const RELEASE_TYPES
+debug.js
+     3→const debug
+identifiers.js
+     3→const numeric
+     4→const compareIdentifiers
+    24→const rcompareIdentifiers
+lrucache.js
+     3→class LRUCache
+     4→  constructor
+     9→  get
+    21→  delete
+    25→  set
+parse-options.js
+     4→const looseOption
+     5→const emptyOpts
+     6→const parseOptions
+re.js
+    12→const re
+    13→const safeRe
+    14→const src
+    15→const safeSrc
+    16→const t
+    19→const LETTERDASHNUMBER
+    27→const safeRegexReplacements
+    33→const makeSafeRegex
+    42→const createToken
