@@ -5,7 +5,7 @@
 - 5-per-language target achieved: 5 Rust, 5 TypeScript, 5 JavaScript, 5 TSX, 5 Python — each with level 1, level 2, level 3, and level 4 snapshots
 - 8 fixtures have subdirectory snapshot tests; remaining fixtures (either, debug, mitt, etc.) have flat source trees with no meaningful subdirectories to test
 - All 25 fixtures have level 1, 2, 3, and 4 snapshots; levels 0 and 5 tested via samples only
-- Budget-based snapshot tests added: mitt (5 budgets hitting levels 0–3 and 5), ini (3 budgets), neverthrow (2 budgets, multi-file). Each snapshot includes metadata header showing budget → level → word count.
+- Budget-based snapshot tests added: mitt (5 budgets hitting levels 0–3 and 5), ini (3 budgets), neverthrow (2 budgets, multi-file), either (4 budgets, Rust, hitting levels 0/1/3/4), pluggy (4 budgets, Python, hitting levels 0/1/2/3). Each snapshot includes metadata header showing budget → level → word count. All three supported language families (Rust, JS/TS, Python) now have budget test coverage.
 - Level 4 fixture snapshots now cover all 25 fixtures; spot-check confirmed type bodies (struct fields, enum variants, trait members, class bodies) expand correctly
 - Python fixtures: pluggy, tomli, humanize, python-dotenv, typeguard — exercises classes, decorators, type hints, docstrings
 

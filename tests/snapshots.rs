@@ -1002,3 +1002,15 @@ budget_test!(budget_ini_level1, "ini/lib", 20);
 budget_test!(budget_ini_level3, "ini/lib", 50);
 budget_test!(budget_neverthrow_level0, "neverthrow/src", 100);
 budget_test!(budget_neverthrow_level1, "neverthrow/src", 500);
+
+// Rust budget tests (either: 0→5, 1→692, 2→1314, 3→4955, 4→5025, 5→8621 words)
+budget_test!(budget_either_level0, "either/src", 3);
+budget_test!(budget_either_level1, "either/src", 1000);
+budget_test!(budget_either_level3, "either/src", 5000);
+budget_test!(budget_either_level4, "either/src", 6000);
+
+// Python budget tests (pluggy: 0→7, 1→293, 2→650, 3→1753, 4→5957, 5→7397 words)
+budget_test!(budget_pluggy_level0, "pluggy/src/pluggy", 5);
+budget_test!(budget_pluggy_level1, "pluggy/src/pluggy", 300);
+budget_test!(budget_pluggy_level2, "pluggy/src/pluggy", 1000);
+budget_test!(budget_pluggy_level3, "pluggy/src/pluggy", 2000);

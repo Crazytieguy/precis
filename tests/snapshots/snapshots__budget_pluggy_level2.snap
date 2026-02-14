@@ -1,0 +1,126 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 → level 2 (650 words)
+
+__init__.py
+     1→__all__ = [
+    32→def __getattr__(name: str) -> str:
+_callers.py
+    24→Teardown: TypeAlias = Generator[None, object, object]
+    27→def run_old_style_hookwrapper(
+    60→def _raise_wrapfail(
+    70→def _warn_teardown_exception(
+    82→def _multicall(
+_hooks.py
+    28→_T = TypeVar("_T")
+    29→_F = TypeVar("_F", bound=Callable[..., object])
+    31→_Namespace: TypeAlias = ModuleType | type
+    32→_Plugin: TypeAlias = object
+    33→_HookExec: TypeAlias = Callable[
+    37→_HookImplFunction: TypeAlias = Callable[..., _T | Generator[None, Result[_T], None]]
+    40→class HookspecOpts(TypedDict):
+    56→class HookimplOpts(TypedDict):
+    78→class HookspecMarker:
+    88→    def __init__(self, project_name: str) -> None:
+   111→    def __call__(  # noqa: F811
+   165→class HookimplMarker:
+   175→    def __init__(self, project_name: str) -> None:
+   202→    def __call__(  # noqa: F811
+   281→def normalize_hookimpl_opts(opts: HookimplOpts) -> None:
+   290→_PYPY = hasattr(sys, "pypy_version_info")
+   293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
+   359→class HookRelay:
+   365→    def __init__(self) -> None:
+   370→        def __getattr__(self, name: str) -> HookCaller: ...
+   377→_CallHistory: TypeAlias = list[
+   382→class HookCaller:
+   393→    def __init__(
+   420→    def has_spec(self) -> bool:
+   424→    def set_specification(
+   438→    def is_historic(self) -> bool:
+   442→    def _remove_plugin(self, plugin: _Plugin) -> None:
+   449→    def get_hookimpls(self) -> list[HookImpl]:
+   453→    def _add_hookimpl(self, hookimpl: HookImpl) -> None:
+   477→    def __repr__(self) -> str:
+   480→    def _verify_all_args_are_provided(self, kwargs: Mapping[str, object]) -> None:
+   499→    def __call__(self, **kwargs: object) -> Any:
+   516→    def call_historic(
+   543→    def call_extra(
+   577→    def _maybe_apply_history(self, method: HookImpl) -> None:
+   593→class _SubsetHookCaller(HookCaller):
+   612→    def __init__(self, orig: HookCaller, remove_plugins: Set[_Plugin]) -> None:
+   619→    def _hookimpls(self) -> list[HookImpl]:
+   627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
+   631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
+   634→    def __repr__(self) -> str:
+   639→class HookImpl:
+   656→    def __init__(
+   692→    def __repr__(self) -> str:
+   697→class HookSpec:
+   709→    def __init__(self, namespace: _Namespace, name: str, opts: HookspecOpts) -> None:
+_manager.py
+    36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
+    37→_AfterTrace: TypeAlias = Callable[
+    42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
+    52→class PluginValidationError(Exception):
+    59→    def __init__(self, plugin: _Plugin, message: str) -> None:
+    65→class DistFacade:
+    68→    def __init__(self, dist: importlib.metadata.Distribution) -> None:
+    72→    def project_name(self) -> str:
+    76→    def __getattr__(self, attr: str, default: Any | None = None) -> Any:
+    79→    def __dir__(self) -> list[str]:
+    83→class PluginManager:
+   100→    def __init__(self, project_name: str) -> None:
+   114→    def _hookexec(
+   125→    def register(self, plugin: _Plugin, name: str | None = None) -> str | None:
+   176→    def parse_hookimpl_opts(self, plugin: _Plugin, name: str) -> HookimplOpts | None:
+   201→    def unregister(
+   233→    def set_blocked(self, name: str) -> None:
+   238→    def is_blocked(self, name: str) -> bool:
+   242→    def unblock(self, name: str) -> bool:
+   252→    def add_hookspecs(self, module_or_class: _Namespace) -> None:
+   278→    def parse_hookspec_opts(
+   296→    def get_plugins(self) -> set[Any]:
+   300→    def is_registered(self, plugin: _Plugin) -> bool:
+   304→    def get_canonical_name(self, plugin: _Plugin) -> str:
+   315→    def get_plugin(self, name: str) -> Any | None:
+   319→    def has_plugin(self, name: str) -> bool:
+   323→    def get_name(self, plugin: _Plugin) -> str | None:
+   331→    def _verify_hook(self, hook: HookCaller, hookimpl: HookImpl) -> None:
+   379→    def check_pending(self) -> None:
+   395→    def load_setuptools_entrypoints(self, group: str, name: str | None = None) -> int:
+   425→    def list_plugin_distinfo(self) -> list[tuple[_Plugin, DistFacade]]:
+   430→    def list_name_plugin(self) -> list[tuple[str, _Plugin]]:
+   434→    def get_hookcallers(self, plugin: _Plugin) -> list[HookCaller] | None:
+   450→    def add_hookcall_monitoring(
+   487→    def enable_tracing(self) -> Callable[[], None]:
+   512→    def subset_hook_caller(
+   525→def _formatdef(func: Callable[..., object]) -> str:
+_result.py
+    16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
+    20→class HookCallError(Exception):
+    25→class Result(Generic[ResultType]):
+    31→    def __init__(
+    43→    def excinfo(self) -> _ExcInfo | None:
+    52→    def exception(self) -> BaseException | None:
+    57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
+    67→    def force_result(self, result: ResultType) -> None:
+    80→    def force_exception(self, exception: BaseException) -> None:
+    91→    def get_result(self) -> ResultType:
+_tracing.py
+    16→class TagTracer:
+    17→    def __init__(self) -> None:
+    22→    def get(self, name: str) -> TagTracerSub:
+    25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
+    42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
+    48→    def setwriter(self, writer: _Writer | None) -> None:
+    51→    def setprocessor(self, tags: str | tuple[str, ...], processor: _Processor) -> None:
+    59→class TagTracerSub:
+    60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
+    64→    def __call__(self, *args: object) -> None:
+    67→    def get(self, name: str) -> TagTracerSub:
+_warnings.py
+     4→class PluggyWarning(UserWarning):
+    11→class PluggyTeardownRaisedWarning(PluggyWarning):
