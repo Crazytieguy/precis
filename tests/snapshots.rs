@@ -35,6 +35,7 @@ fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
 //   git clone --depth 1 https://github.com/python-humanize/humanize.git test/fixtures/humanize
 //   git clone --depth 1 https://github.com/theskumar/python-dotenv.git test/fixtures/python-dotenv
 //   git clone --depth 1 https://github.com/agronholm/typeguard.git test/fixtures/typeguard
+//   git clone --depth 1 https://github.com/rust-lang/mdBook.git test/fixtures/mdbook
 
 /// Generate a snapshot test that renders a fixture directory at a given level.
 macro_rules! fixture_test {
@@ -700,6 +701,7 @@ fixture_test!(fixture_tomli, "tomli/src/tomli", 1);
 fixture_test!(fixture_humanize, "humanize/src/humanize", 1);
 fixture_test!(fixture_python_dotenv, "python-dotenv/src/dotenv", 1);
 fixture_test!(fixture_typeguard, "typeguard/src/typeguard", 1);
+fixture_test!(fixture_mdbook, "mdbook/guide/src", 1);
 
 // Fixture-based snapshot tests (level 2: full signature lines).
 
@@ -732,6 +734,7 @@ fixture_test!(fixture_tomli_level2, "tomli/src/tomli", 2);
 fixture_test!(fixture_humanize_level2, "humanize/src/humanize", 2);
 fixture_test!(fixture_python_dotenv_level2, "python-dotenv/src/dotenv", 2);
 fixture_test!(fixture_typeguard_level2, "typeguard/src/typeguard", 2);
+fixture_test!(fixture_mdbook_level2, "mdbook/guide/src", 2);
 
 // Fixture-based snapshot tests (level 3: signatures with doc comments).
 
@@ -764,6 +767,7 @@ fixture_test!(fixture_tomli_level3, "tomli/src/tomli", 3);
 fixture_test!(fixture_humanize_level3, "humanize/src/humanize", 3);
 fixture_test!(fixture_python_dotenv_level3, "python-dotenv/src/dotenv", 3);
 fixture_test!(fixture_typeguard_level3, "typeguard/src/typeguard", 3);
+fixture_test!(fixture_mdbook_level3, "mdbook/guide/src", 3);
 
 // Fixture-based snapshot tests (level 4: type bodies expanded).
 
@@ -796,6 +800,7 @@ fixture_test!(fixture_tomli_level4, "tomli/src/tomli", 4);
 fixture_test!(fixture_humanize_level4, "humanize/src/humanize", 4);
 fixture_test!(fixture_python_dotenv_level4, "python-dotenv/src/dotenv", 4);
 fixture_test!(fixture_typeguard_level4, "typeguard/src/typeguard", 4);
+fixture_test!(fixture_mdbook_level4, "mdbook/guide/src", 4);
 
 // Subdirectory tests: running on a subdirectory within a fixture tests
 // that path display and file discovery work correctly at deeper nesting levels.
@@ -854,6 +859,14 @@ fixture_test!(
 );
 fixture_test!(fixture_semver_internal_subdir, "semver/internal", 1);
 fixture_test!(fixture_semver_internal_subdir_level2, "semver/internal", 2);
+fixture_test!(fixture_mdbook_cli_subdir, "mdbook/guide/src/cli", 1);
+fixture_test!(fixture_mdbook_cli_subdir_level2, "mdbook/guide/src/cli", 2);
+fixture_test!(fixture_mdbook_format_subdir, "mdbook/guide/src/format", 1);
+fixture_test!(
+    fixture_mdbook_format_subdir_level2,
+    "mdbook/guide/src/format",
+    2
+);
 
 // Single-file rendering tests (precis accepts individual files, not just directories).
 
@@ -984,6 +997,7 @@ fn monotonicity_invariant() {
         ("humanize", "humanize/src/humanize"),
         ("python-dotenv", "python-dotenv/src/dotenv"),
         ("typeguard", "typeguard/src/typeguard"),
+        ("mdbook", "mdbook/guide/src"),
     ];
 
     let mut tested_files = 0;
@@ -1121,3 +1135,9 @@ budget_test!(budget_pluggy_level0, "pluggy/src/pluggy", 5);
 budget_test!(budget_pluggy_level1, "pluggy/src/pluggy", 300);
 budget_test!(budget_pluggy_level2, "pluggy/src/pluggy", 1000);
 budget_test!(budget_pluggy_level3, "pluggy/src/pluggy", 2000);
+
+// Markdown budget tests (mdbook: 0→37, 1→553, 2→560, 3→568, 4→577, 5→17253 words)
+budget_test!(budget_mdbook_level0, "mdbook/guide/src", 30);
+budget_test!(budget_mdbook_level1, "mdbook/guide/src", 555);
+budget_test!(budget_mdbook_level4, "mdbook/guide/src", 600);
+budget_test!(budget_mdbook_level5, "mdbook/guide/src", 20000);

@@ -1,0 +1,201 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+404.md
+     1→# Document not found (404)
+README.md
+     1→# Introduction
+    46→## Contributing
+    55→## License
+SUMMARY.md
+     1→# Summary
+     5→# User guide
+    11→# Reference guide
+cli/README.md
+     1→# Command-line tool
+cli/arg-watcher.md
+     1→#### `--watcher`
+cli/build.md
+     1→# The build command
+    16→#### Specify a directory
+    25→#### `--open`
+    30→#### `--dest-dir`
+cli/clean.md
+     1→# The clean command
+    10→#### Specify a directory
+    19→#### `--dest-dir`
+cli/completions.md
+     1→# The completions command
+cli/init.md
+     1→# The init command
+    32→#### Tip: Generate chapters from SUMMARY.md
+    39→#### Specify a directory
+    48→#### `--theme`
+    56→#### `--title`
+    65→#### `--ignore`
+    80→#### `--force`
+cli/serve.md
+     1→# The serve command
+    18→#### Specify a directory
+    27→### Server options
+    35→#### `--open`
+    40→#### `--dest-dir`
+    49→#### Specify exclude patterns
+cli/test.md
+     1→# The test command
+    11→#### Disable tests on a code block
+    31→#### Specify a directory
+    40→#### `--library-path`
+    57→#### `--chapter`
+cli/watch.md
+     1→# The watch command
+     9→#### Specify a directory
+    18→#### `--open`
+    23→#### `--dest-dir`
+    32→#### Specify exclude patterns
+continuous-integration.md
+     1→# Running `mdbook` in continuous integration
+    12→## Installing mdBook
+    17→### Pre-compiled binaries
+    39→### Building from source
+    67→## Running tests
+    83→## Deploying
+   100→### 404 handling
+for_developers/README.md
+     1→# For developers
+    17→## The build process
+    30→## Using `mdbook` as a library
+for_developers/backends.md
+     1→# Alternative backends
+    13→## Setting up
+    53→## Inspecting the book
+    82→## Enabling the backend
+   159→## Configuration
+   219→## Output and signalling failure
+   322→## Wrapping up
+for_developers/mdbook-wordcount/src/main.rs
+    12→fn main() {
+    40→fn count_words(ch: &Chapter) -> usize {
+    46→pub struct WordcountConfig {
+for_developers/preprocessors.md
+     1→# Preprocessors
+    13→## Hooking into MDBook
+    46→## Hints for implementing a preprocessor
+    74→## Implementing a preprocessor with a different language
+format/README.md
+     1→# Format
+format/configuration/README.md
+     1→# Configuration
+format/configuration/environment-variables.md
+     1→# Environment variables
+format/configuration/general.md
+     1→# General configuration
+    31→## Supported configuration options
+    37→### General metadata
+    64→### Rust options
+    85→### Build options
+format/configuration/preprocessors.md
+     1→# Configuring Preprocessors
+    26→## Custom preprocessor configuration
+    45→## Locking a preprocessor dependency to a renderer
+    55→## Provide your own command
+    67→### Optional preprocessors
+    79→## Require a certain order
+format/configuration/renderers.md
+     1→# Configuring Renderers
+    20→## Output tables
+    59→### Custom backend commands
+    71→### Optional backends
+    84→## HTML renderer options
+   176→### `[output.html.print]`
+   191→### `[output.html.fold]`
+   206→### `[output.html.playground]`
+   230→### `[output.html.code]`
+   244→### `[output.html.search]`
+   286→#### `[output.html.search.chapter]`
+   300→### `[output.html.redirect]`
+   325→## Markdown renderer
+format/example.rs
+     1→fn main() {
+format/markdown.md
+     1→# Markdown
+     9→## Text and paragraphs
+    25→## Headings
+    39→### A heading 
+    43→#### A smaller heading 
+    47→## Lists
+    69→## Links
+   108→## Images
+   127→## Extensions
+   131→### Strikethrough
+   146→### Footnotes
+   171→### Tables
+   191→### Task lists
+   208→### Smart punctuation
+   231→### Heading attributes
+   244→### Definition lists
+   279→### Admonitions
+format/mathjax.md
+     1→# MathJax support
+    24→### Inline equations
+    32→### Block equations
+format/mdbook.md
+     1→# mdBook-specific features
+     3→## Hiding code lines
+    74→## Rust playground
+   102→## Rust code block attributes
+   133→## Including files
+   154→## Including portions of a file
+   215→## Including a file but initially hiding all except specified lines
+   279→## Inserting runnable Rust files
+   310→## Controlling page \<title\>
+   319→## HTML classes provided by mdBook
+   323→### `class="left"` and `"right"`
+   331→### `class="hidden"`
+   341→## Font-Awesome icons
+format/summary.md
+     1→# SUMMARY.md
+    12→### Structure
+    93→### Example
+format/theme/README.md
+     1→# Theme
+format/theme/editor.md
+     1→# Editor
+    35→## Customizing the editor
+format/theme/index-hbs.md
+     1→# index.hbs
+     9→## Data
+    41→## Handlebars helpers
+    46→### toc
+    80→### resource
+    90→### fa
+format/theme/syntax-highlighting.md
+     1→# Syntax highlighting
+    17→## Supported languages
+    68→## Custom theme
+    82→## Improve default theme
+guide/README.md
+     1→# User guide
+guide/creating.md
+     1→# Creating a book
+     5→## Initializing a book
+    32→## Anatomy of a book
+    36→### `book.toml`
+    50→### `SUMMARY.md`
+    73→### Source files
+    96→## Publishing a book
+guide/installation.md
+     1→# Installation
+     9→## Pre-compiled binaries
+    19→## Build from source using Rust
+    41→### Installing the latest master version
+    53→## Modifying and contributing
+guide/reading.md
+     1→# Reading books
+    12→## Navigation
+    26→## Top menu bar
+    42→## Search
+    54→## Code blocks
+misc/contributors.md
+     1→# Contributors
