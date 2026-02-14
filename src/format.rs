@@ -103,10 +103,14 @@ pub fn budget_level(
     let level = search_level(budget, |level| {
         let mut out = String::new();
         for (i, (file, source)) in files.iter().zip(sources).enumerate() {
-            if level == 0 {
-                out.push_str(&render_with_symbols(0, file, root, "", &[]));
-            } else if let Some(s) = source {
-                out.push_str(&render_with_symbols(level, file, root, s, &all_symbols[i]));
+            match source {
+                Some(s) if level > 0 => {
+                    out.push_str(&render_with_symbols(level, file, root, s, &all_symbols[i]));
+                }
+                _ => {
+                    // Level 0 or unreadable file: show path only
+                    out.push_str(&render_with_symbols(0, file, root, "", &[]));
+                }
             }
         }
         count_words(&out)
@@ -132,6 +136,8 @@ pub fn budget_level_file(
 
 /// Render pre-discovered source files at the given granularity level.
 /// Uses pre-read sources to avoid redundant disk I/O.
+/// Files with unreadable source (None) fall back to path-only output at all levels
+/// to maintain the monotonicity invariant.
 pub fn render_files(
     level: u8,
     root: &Path,
@@ -140,10 +146,14 @@ pub fn render_files(
 ) -> String {
     let mut out = String::new();
     for (file, source) in files.iter().zip(sources) {
-        if level == 0 {
-            out.push_str(&render_file(0, file, root, ""));
-        } else if let Some(s) = source {
-            out.push_str(&render_file(level, file, root, s));
+        match source {
+            Some(s) if level > 0 => {
+                out.push_str(&render_file(level, file, root, s));
+            }
+            _ => {
+                // Level 0 or unreadable file: show path only
+                out.push_str(&render_file(0, file, root, ""));
+            }
         }
     }
     out
@@ -152,6 +162,8 @@ pub fn render_files(
 /// Render pre-discovered source files using pre-extracted symbols.
 /// Avoids redundant symbol extraction when symbols have already been computed
 /// (e.g. from budget_level).
+/// Files with unreadable source (None) fall back to path-only output at all levels
+/// to maintain the monotonicity invariant.
 pub fn render_files_with_symbols(
     level: u8,
     root: &Path,
@@ -161,10 +173,14 @@ pub fn render_files_with_symbols(
 ) -> String {
     let mut out = String::new();
     for (i, (file, source)) in files.iter().zip(sources).enumerate() {
-        if level == 0 {
-            out.push_str(&render_with_symbols(0, file, root, "", &[]));
-        } else if let Some(s) = source {
-            out.push_str(&render_with_symbols(level, file, root, s, &all_symbols[i]));
+        match source {
+            Some(s) if level > 0 => {
+                out.push_str(&render_with_symbols(level, file, root, s, &all_symbols[i]));
+            }
+            _ => {
+                // Level 0 or unreadable file: show path only
+                out.push_str(&render_with_symbols(0, file, root, "", &[]));
+            }
         }
     }
     out

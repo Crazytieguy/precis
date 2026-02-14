@@ -981,6 +981,38 @@ use std::collections::HashMap;
     }
 }
 
+/// Test directory-level monotonicity when some files have unreadable source (None).
+/// Previously, unreadable files were included at level 0 but silently skipped at
+/// levels 1+, which could cause the total word count to decrease.
+#[test]
+fn monotonicity_unreadable_files() {
+    let readable = Path::new("lib.rs");
+    let unreadable = Path::new("binary.rs");
+    let root = Path::new("");
+    let files = vec![readable.to_path_buf(), unreadable.to_path_buf()];
+    // Second file has None source (simulating unreadable/non-UTF-8 file)
+    let sources: Vec<Option<String>> = vec![
+        Some("pub fn hello() {}\n".to_string()),
+        None,
+    ];
+
+    let mut prev_words = 0;
+    for level in 0..=format::MAX_LEVEL {
+        let output = format::render_files(level, root, &files, &sources);
+        let words = format::count_words(&output);
+        assert!(
+            words >= prev_words,
+            "Unreadable files: level {} ({} words) < level {} ({} words)\nOutput:\n{}",
+            level,
+            words,
+            level.saturating_sub(1),
+            prev_words,
+            output,
+        );
+        prev_words = words;
+    }
+}
+
 /// Test the monotonicity invariant: for any file, a higher level must never
 /// produce fewer words than a lower level. Tests per-file across all fixtures.
 #[test]
