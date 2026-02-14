@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1100 → level 4 (1031 words)
+budget: 1100 → level 4 (1034 words)
 
 README.md
      1→# xxhash
@@ -83,6 +83,7 @@ dynamic/plugin.go
     14→const (
     15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
     16→	want = uint64(0x02a2e85470d6fd96)
+    17→)
     19→func TestSum(t *testing.T) {
     26→func TestDigest(t *testing.T) {
 xxhash.go
@@ -92,6 +93,7 @@ xxhash.go
     14→	prime3 uint64 = 1609587929392839161
     15→	prime4 uint64 = 9650029242287828579
     16→	prime5 uint64 = 2870177450012600261
+    17→)
     19→// Store the primes in an array as well.
     20→//
     21→// The consts are used when possible in Go code to avoid MOVs but we need a
@@ -133,6 +135,7 @@ xxhash.go
    170→const (
    171→	magic         = "xxh\x06"
    172→	marshaledSize = len(magic) + 8*5 + 32
+   173→)
    175→// MarshalBinary implements the encoding.BinaryMarshaler interface.
    176→func (d *Digest) MarshalBinary() ([]byte, error) {
    189→// UnmarshalBinary implements the encoding.BinaryUnmarshaler interface.

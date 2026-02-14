@@ -177,6 +177,7 @@ field.go
      9→var (
     10→	errNotExported = errors.New("field is not exported")
     11→	errNotSettable = errors.New("field is not settable")
+    12→)
     14→// Field represents a single struct field that encapsulates high level
     15→// functions around the field.
     16→type Field struct {
@@ -229,6 +230,7 @@ structs.go
     12→	// a more granular to tweak certain structs. Lookup the necessary functions
     13→	// for more info.
     14→	DefaultTagName = "structs" // struct's field default tag name
+    15→)
     17→// Struct encapsulates a struct type to provide several high level functions
     18→// around the struct.
     19→type Struct struct {

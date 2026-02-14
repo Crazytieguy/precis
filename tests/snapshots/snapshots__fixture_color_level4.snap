@@ -202,15 +202,20 @@ color.go
     20→	// colors. For more control over each color block use the methods
     21→	// DisableColor() individually.
     22→	NoColor = noColorIsSet() || os.Getenv("TERM") == "dumb" ||
+    23→		(!isatty.IsTerminal(os.Stdout.Fd()) && !isatty.IsCygwinTerminal(os.Stdout.Fd()))
+    24→
     25→	// Output defines the standard output of the print functions. By default,
     26→	// os.Stdout is used.
     27→	Output = colorable.NewColorableStdout()
+    28→
     29→	// Error defines a color supporting writer for os.Stderr.
     30→	Error = colorable.NewColorableStderr()
+    31→
     32→	// colorsCache is used to reduce the count of created Color objects and
     33→	// allows to reuse already created objects with required Attribute.
     34→	colorsCache   = make(map[Attribute]*Color)
     35→	colorsCacheMu sync.Mutex // protects colorsCache
+    36→)
     38→// noColorIsSet returns true if the environment variable NO_COLOR is set to a non-empty string.
     39→func noColorIsSet() bool {
     43→// Color defines a custom color object which is defined by SGR parameters.
@@ -233,14 +238,17 @@ color.go
     63→	ReverseVideo
     64→	Concealed
     65→	CrossedOut
+    66→)
     68→const (
     69→	ResetBold Attribute = iota + 22
     70→	ResetItalic
     71→	ResetUnderline
     72→	ResetBlinking
+    73→	_
     74→	ResetReversed
     75→	ResetConcealed
     76→	ResetCrossedOut
+    77→)
     79→var mapResetAttributes map[Attribute]Attribute = map[Attribute]Attribute{
     91→// Foreground text colors
     92→const (
@@ -252,8 +260,10 @@ color.go
     98→	FgMagenta
     99→	FgCyan
    100→	FgWhite
+   101→
    102→	// used internally for 256 and 24-bit coloring
    103→	foreground
+   104→)
    106→// Foreground Hi-Intensity text colors
    107→const (
    108→	FgHiBlack Attribute = iota + 90
@@ -264,6 +274,7 @@ color.go
    113→	FgHiMagenta
    114→	FgHiCyan
    115→	FgHiWhite
+   116→)
    118→// Background text colors
    119→const (
    120→	BgBlack Attribute = iota + 40
@@ -274,8 +285,10 @@ color.go
    125→	BgMagenta
    126→	BgCyan
    127→	BgWhite
+   128→
    129→	// used internally for 256 and 24-bit coloring
    130→	background
+   131→)
    133→// Background Hi-Intensity text colors
    134→const (
    135→	BgHiBlack Attribute = iota + 100
@@ -286,6 +299,7 @@ color.go
    140→	BgHiMagenta
    141→	BgHiCyan
    142→	BgHiWhite
+   143→)
    145→// New returns a newly created color object.
    146→func New(value ...Attribute) *Color {
    159→// RGB returns a new foreground color in 24-bit RGB.

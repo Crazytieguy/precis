@@ -325,7 +325,11 @@ fn render_symbols_with_docs(
     for (sym_idx, sym) in symbols.iter().enumerate() {
         let sym_line_0 = sym.line - 1;
         let doc_start = doc_comment_start(&lines, sym_line_0, is_go);
-        let should_expand = expand_types && is_type_definition(sym.kind);
+        // Expand type definitions (structs, enums, etc.) and Go grouped
+        // const/var blocks (identified by their keyword name "const"/"var").
+        let is_grouped_block =
+            (sym.name == "const" || sym.name == "var") && sym.end_line > sym.line;
+        let should_expand = expand_types && (is_type_definition(sym.kind) || is_grouped_block);
         if should_expand {
             let body_end = sym.end_line; // 1-indexed, inclusive
             // Start from doc_start or emitted_up_to, whichever is later

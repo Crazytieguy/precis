@@ -162,6 +162,7 @@ constraint.go
     14→var (
     15→	constraintRegexp     *regexp.Regexp
     16→	constraintRegexpOnce sync.Once
+    17→)
     19→func getConstraintRegexp() *regexp.Regexp {
     31→// Constraint represents a single constraint for a version, such as
     32→// ">= 1.0".
@@ -224,6 +225,7 @@ constraint.go
    239→	greaterThanEqual operator = '≥'
    240→	lessThanEqual    operator = '≤'
    241→	pessimistic      operator = '~'
+   242→)
    244→func constraintEqual(v, c *Version) bool {
    248→func constraintNotEqual(v, c *Version) bool {
    252→func constraintGreaterThan(v, c *Version) bool {
@@ -238,14 +240,23 @@ version.go
     18→	versionRegexpOnce sync.Once
     19→	semverRegexp      *regexp.Regexp
     20→	semverRegexpOnce  sync.Once
+    21→)
     23→func getVersionRegexp() *regexp.Regexp {
     30→func getSemverRegexp() *regexp.Regexp {
     37→// The raw regular expression string used for testing the validity
     38→// of a version.
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
+    41→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-?([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
+    42→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
+    43→		`?`
+    44→
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
+    47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
+    48→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
+    49→		`?`
+    50→)
     52→// Version represents a single version.
     53→type Version struct {
     54→	metadata string
