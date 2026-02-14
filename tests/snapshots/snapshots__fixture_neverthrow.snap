@@ -23,29 +23,17 @@ _internals/utils.ts:
 result-async.ts:
   pub class ResultAsync :22
   pub fn constructor :25
-  fn fromSafePromise :29
   pub fn fromSafePromise :30
-  fn fromPromise :36
   pub fn fromPromise :37
   pub fn fromThrowable :46
-  fn combine :63
-  fn combine :66
   pub fn combine :69
-  fn combineWithAllErrors :75
-  fn combineWithAllErrors :78
   pub fn combineWithAllErrors :81
   pub fn map :89
   pub fn andThrough :101
   pub fn andTee :117
   pub fn orTee :133
   pub fn mapErr :149
-  fn andThen :161
-  fn andThen :164
-  fn andThen :167
   pub fn andThen :169
-  fn orElse :182
-  fn orElse :185
-  fn orElse :188
   pub fn orElse :190
   pub fn match :202
   pub fn unwrapOr :206
@@ -76,13 +64,10 @@ result.ts:
   fn isErr :147
   fn map :157
   fn mapErr :168
-  fn andThen :180
   fn andThen :183
   fn andTee :195
   fn orTee :207
-  fn andThrough :218
   fn andThrough :219
-  fn orElse :230
   fn orElse :233
   fn asyncAndThen :244
   fn asyncMap :253
@@ -97,20 +82,12 @@ result.ts:
   pub fn isErr :319
   pub fn map :323
   pub fn mapErr :328
-  fn andThen :332
-  fn andThen :335
   pub fn andThen :337
-  fn andThrough :341
-  fn andThrough :342
   pub fn andThrough :344
   pub fn andTee :348
   pub fn orTee :357
-  fn orElse :361
-  fn orElse :364
   pub fn orElse :366
   pub fn asyncAndThen :370
-  fn asyncAndThrough :374
-  fn asyncAndThrough :377
   pub fn asyncAndThrough :379
   pub fn asyncMap :383
   pub fn unwrapOr :388
@@ -127,11 +104,7 @@ result.ts:
   pub fn andThrough :439
   pub fn andTee :443
   pub fn orTee :447
-  fn andThen :456
-  fn andThen :459
   pub fn andThen :461
-  fn orElse :465
-  fn orElse :468
   pub fn orElse :470
   pub fn asyncAndThen :475
   pub fn asyncAndThrough :479

@@ -166,7 +166,25 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         });
     }
 
-    symbols
+    dedup_overloads(symbols)
+}
+
+/// Collapse consecutive symbols with the same name, keeping only the last in each run.
+/// This handles TypeScript/JavaScript method overload signatures: the overload declarations
+/// appear as `method_signature` nodes before the actual `method_definition` implementation.
+fn dedup_overloads(symbols: Vec<Symbol>) -> Vec<Symbol> {
+    let mut result: Vec<Symbol> = Vec::with_capacity(symbols.len());
+    for sym in symbols {
+        if let Some(last) = result.last() {
+            if last.name == sym.name {
+                // Replace the previous entry with this one (the later/implementation version)
+                *result.last_mut().unwrap() = sym;
+                continue;
+            }
+        }
+        result.push(sym);
+    }
+    result
 }
 
 fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
@@ -380,6 +398,43 @@ mod tests {
         assert!(!names.contains(&"tests"));
         assert!(!names.contains(&"helper"));
         assert!(!names.contains(&"another_test"));
+    }
+
+    #[test]
+    fn deduplicates_typescript_overloads() {
+        let source = r#"
+export class Example {
+    andThen(f: (val: number) => string): string;
+    andThen(f: (val: number) => number): number;
+    andThen(f: (val: number) => any): any {
+        return f(42);
+    }
+
+    simple(): void {
+        // no overloads
+    }
+
+    combine(a: number): number;
+    combine(a: string): string;
+    combine(a: any): any {
+        return a;
+    }
+}
+"#;
+        let symbols = extract_symbols(Path::new("test.ts"), source);
+        let names: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.name.as_str(), s.is_public))
+            .collect();
+
+        // Each overloaded method should appear exactly once (the implementation)
+        assert_eq!(names.iter().filter(|(n, _)| *n == "andThen").count(), 1);
+        assert_eq!(names.iter().filter(|(n, _)| *n == "combine").count(), 1);
+        // The kept version should be the implementation (public method_definition)
+        assert!(names.contains(&("andThen", true)));
+        assert!(names.contains(&("combine", true)));
+        // Non-overloaded method still present
+        assert!(names.contains(&("simple", true)));
     }
 
     #[test]

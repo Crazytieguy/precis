@@ -2,7 +2,6 @@
 
 ## Snapshot quality
 
-- TypeScript: method overload signatures (e.g. `fn andThen` appearing 3 times) are captured as separate symbols. Should overloads be deduplicated or collapsed?
 - TypeScript: arrow functions assigned to `const` (e.g. `export const foo = () => ...`) show as `const` not `fn`. Should we detect and reclassify these?
 - TypeScript: `lexical_declaration` captures both `const` and `let` as `const`. Should `let` exports be shown differently?
 
