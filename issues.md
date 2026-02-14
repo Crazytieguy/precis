@@ -2,11 +2,11 @@
 
 ## Snapshot coverage
 
-- 5-per-language target achieved: 5 Rust, 5 TypeScript, 5 JavaScript, 5 TSX, 5 Python — each with level 1, level 2, level 3, and level 4 snapshots. Markdown: 1 fixture (mdbook) with levels 1-4 + subdirectory tests + budget tests.
+- 5-per-language target achieved: 5 Rust, 5 TypeScript, 5 JavaScript, 5 TSX, 5 Python — each with level 1, level 2, level 3, and level 4 snapshots. Go: 1 fixture (go-multierror) with levels 1-4 + budget tests + sample tests (levels 0-5). Markdown: 1 fixture (mdbook) with levels 1-4 + subdirectory tests + budget tests.
 - 8 fixtures have subdirectory snapshot tests; remaining fixtures (either, debug, mitt, etc.) have flat source trees with no meaningful subdirectories to test
-- All 26 fixtures have level 1, 2, 3, and 4 snapshots; levels 0 and 5 tested via samples only
-- Budget-based snapshot tests added: mitt (5 budgets hitting levels 0–3 and 5), ini (3 budgets), neverthrow (2 budgets, multi-file), either (4 budgets, Rust, hitting levels 0/1/3/4), pluggy (4 budgets, Python, hitting levels 0/1/2/3), mdbook (5 budgets, Markdown, hitting levels 0/1/3/4/5), sonner (4 budgets, TSX, hitting levels 0/1/3/4). Each snapshot includes metadata header showing budget → level → word count. All supported language families (Rust, JS/TS, TSX, Python, Markdown) now have budget test coverage.
-- Level 4 fixture snapshots now cover all 26 fixtures; spot-check confirmed type bodies (struct fields, enum variants, trait members, class bodies) expand correctly
+- All 27 fixtures have level 1, 2, 3, and 4 snapshots; levels 0 and 5 tested via samples only
+- Budget-based snapshot tests added: mitt (5 budgets hitting levels 0–3 and 5), ini (3 budgets), neverthrow (2 budgets, multi-file), either (4 budgets, Rust, hitting levels 0/1/3/4), pluggy (4 budgets, Python, hitting levels 0/1/2/3), mdbook (5 budgets, Markdown, hitting levels 0/1/3/4/5), sonner (4 budgets, TSX, hitting levels 0/1/3/4), go-multierror (4 budgets, Go, hitting levels 0/1/3/4). Each snapshot includes metadata header showing budget → level → word count. All supported language families (Rust, JS/TS, TSX, Python, Go, Markdown) now have budget test coverage.
+- Level 4 fixture snapshots now cover all 27 fixtures; spot-check confirmed type bodies (struct fields, enum variants, trait members, class bodies) expand correctly
 - No current fixture exercises TypeScript abstract classes — covered by unit test only
 - Python fixtures: pluggy, tomli, humanize, python-dotenv, typeguard — exercises classes, decorators, type hints, docstrings
 
@@ -16,7 +16,8 @@
 
 ## Current state
 
-- Parsing works for Rust, TypeScript, JavaScript, TSX, Python, Markdown — extracts symbol names, kinds, visibility
+- Parsing works for Rust, TypeScript, JavaScript, TSX, Python, Go, Markdown — extracts symbol names, kinds, visibility
+- Go: functions, methods (with receiver), structs, interfaces, type aliases, consts, vars. Visibility via uppercase first letter (Go export convention). Doc comments use plain `//` (godoc style).
 - TypeScript: abstract classes (`abstract class`) and abstract method signatures captured correctly
 - Python: module-level constants extracted (type-annotated assignments, UPPER_CASE names, dunder attributes like `__all__`)
 - Output supports 6 granularity levels: 0 (file paths), 1 (symbol names), 2 (full multi-line signatures), 3 (signatures with doc comments; Markdown: headings + first paragraph), 4 (type bodies expanded; Markdown: all content between headings), 5 (full source)
@@ -34,7 +35,7 @@
 
 ## Implementation notes
 
-- Doc comment detection (level 3) is text-based heuristic; does not use tree-sitter comment nodes. Handles `///`, `//!`, `/** */` blocks, Python `#` comments, and Python docstrings (`"""..."""` / `'''...'''`). Skips `#[attr]` and `@decorator` lines between doc comments and symbols; also skips blank lines between doc comment `*/` and symbol (common JS/TS style). Decorators/attributes are always shown at level 3+.
+- Doc comment detection (level 3) is text-based heuristic; does not use tree-sitter comment nodes. Handles `///`, `//!`, `/** */` blocks, Go `//` comments (godoc), Python `#` comments, and Python docstrings (`"""..."""` / `'''...'''`). Skips `#[attr]` and `@decorator` lines between doc comments and symbols; also skips blank lines between doc comment `*/` and symbol (common JS/TS style). Decorators/attributes are always shown at level 3+. Go `//` doc comments are language-gated via `is_go` flag to avoid false positives in other languages where `//` is not a doc comment convention.
 - Python docstrings (triple-quoted strings after `def`/`class` lines) are captured at levels 3 and 4 via text-based heuristic. Handles single-line, multi-line, and all string prefixes (`r"""`, `u"""`, `f"""`, `b"""`, `rf"""`, `br"""`, etc.).
 - Python: module-level constants are captured if type-annotated (`VERSION: str = "0.1.0"`), UPPER_CASE (`MAX_SIZE = 100`), or dunder (`__all__ = [...]`). Lowercase untyped assignments (e.g. `logger = ...`) are excluded to reduce noise. `TypeAlias` annotations are mapped to `Const` kind (could be `TypeAlias` in the future).
 - Multi-line signature detection (level 2+) is text-based heuristic: scans forward from the symbol line for `{`/`;` (C-like) or `:` (Python). Applies to functions, impl blocks, traits, structs, enums, classes, and interfaces — any symbol kind that can have multi-line declarations (generic parameters, `where` clauses, bounds). Expression-bodied arrow functions without semicolons fall back to single-line display.
