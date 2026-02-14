@@ -43,6 +43,12 @@ fn render_with_symbols(
     }
 }
 
+/// Format a single source line with its line number.
+/// Line numbers are 1-indexed; `line_idx_0` is the 0-based index.
+fn fmt_line(line_idx_0: usize, line: &str) -> String {
+    format!("{:>6}→{}\n", line_idx_0 + 1, line)
+}
+
 /// Count whitespace-delimited words in text.
 pub fn count_words(text: &str) -> usize {
     text.split_whitespace().count()
@@ -222,7 +228,7 @@ fn render_symbols(
         } else {
             let sig_end = signature_end_line(&lines, sym, is_python);
             for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym.line - 1) {
-                out.push_str(&format!("{:>6}→{}\n", i + 1, line));
+                out.push_str(&fmt_line(i, line));
             }
         }
     }
@@ -247,7 +253,7 @@ fn render_full_source(path: &Path, root: &Path, source: &str) -> String {
     let mut out = String::new();
     out.push_str(&format!("{}\n", relative.display()));
     for (i, line) in source.lines().enumerate() {
-        out.push_str(&format!("{:>6}→{}\n", i + 1, line));
+        out.push_str(&fmt_line(i, line));
     }
     out
 }
@@ -284,7 +290,7 @@ fn render_symbols_with_docs(
             let start = doc_start.max(emitted_up_to);
             let end = body_end; // 1-indexed inclusive → 0-indexed exclusive
             for (i, line) in lines.iter().enumerate().take(end).skip(start) {
-                out.push_str(&format!("{:>6}→{}\n", i + 1, line));
+                out.push_str(&fmt_line(i, line));
             }
             emitted_up_to = emitted_up_to.max(end);
         } else if sym_line_0 >= emitted_up_to {
@@ -293,12 +299,12 @@ fn render_symbols_with_docs(
             let sig_end = signature_end_line(&lines, sym, is_python);
             // Doc comment lines before signature
             for (i, line) in lines.iter().enumerate().take(sym_line_0).skip(start) {
-                out.push_str(&format!("{:>6}→{}\n", i + 1, line));
+                out.push_str(&fmt_line(i, line));
             }
             // Signature lines (may span multiple lines for functions)
             for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
                 if i >= emitted_up_to {
-                    out.push_str(&format!("{:>6}→{}\n", i + 1, line));
+                    out.push_str(&fmt_line(i, line));
                 }
             }
             emitted_up_to = emitted_up_to.max(sig_end + 1);
@@ -306,7 +312,7 @@ fn render_symbols_with_docs(
             if is_python {
                 let ds_end = docstring_end(&lines, sig_end);
                 for (i, line) in lines.iter().enumerate().take(ds_end).skip(sig_end + 1) {
-                    out.push_str(&format!("{:>6}→{}\n", i + 1, line));
+                    out.push_str(&fmt_line(i, line));
                 }
                 emitted_up_to = emitted_up_to.max(ds_end);
             }
@@ -319,7 +325,7 @@ fn render_symbols_with_docs(
                     .take(content_end)
                     .skip(sym_line_0 + 1)
                 {
-                    out.push_str(&format!("{:>6}→{}\n", i + 1, line));
+                    out.push_str(&fmt_line(i, line));
                 }
                 emitted_up_to = emitted_up_to.max(content_end);
             }
