@@ -41,12 +41,13 @@ fn main() {
         }
     } else if path.is_dir() {
         let files = walk::discover_source_files(path);
+        let sources = format::read_sources(&files);
         let level = if let Some(budget) = cli.budget {
-            format::budget_level(budget, path)
+            format::budget_level(budget, path, &files, &sources)
         } else {
             format::MAX_LEVEL.min(1)
         };
-        let output = format::render_files(level, path, &files);
+        let output = format::render_files(level, path, &files, &sources);
         let words = format::count_words(&output);
         print!("{}", output);
         if let Some(budget) = cli.budget {

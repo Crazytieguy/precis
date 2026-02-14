@@ -1,5 +1,5 @@
 use std::path::Path;
-use precis::format;
+use precis::{format, walk};
 
 /// Helper to get the path to a test fixture. Returns None if the fixture isn't cloned.
 fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
@@ -44,7 +44,9 @@ macro_rules! fixture_test {
                 eprintln!("skipping {}: fixture not present at {}", stringify!($name), $path);
                 return;
             };
-            let output = format::render_directory($level, &root);
+            let files = walk::discover_source_files(&root);
+            let sources = format::read_sources(&files);
+            let output = format::render_files($level, &root, &files, &sources);
             insta::assert_snapshot!(output);
         }
     };
@@ -669,8 +671,10 @@ fn budget_level_sanity() {
     for subpath in fixtures {
         let Some(root) = fixture_path(subpath) else { continue };
         tested += 1;
-        assert_eq!(format::budget_level(0, &root), 0);
-        assert_eq!(format::budget_level(usize::MAX, &root), format::MAX_LEVEL);
+        let files = walk::discover_source_files(&root);
+        let sources = format::read_sources(&files);
+        assert_eq!(format::budget_level(0, &root, &files, &sources), 0);
+        assert_eq!(format::budget_level(usize::MAX, &root, &files, &sources), format::MAX_LEVEL);
     }
     assert!(tested > 0, "No fixtures available for budget sanity test");
 }
@@ -681,8 +685,10 @@ fn budget_level_sanity() {
 /// Helper: render a fixture with a word budget and return output with metadata header.
 fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
     let root = fixture_path(subpath)?;
-    let level = format::budget_level(budget, &root);
-    let output = format::render_directory(level, &root);
+    let files = walk::discover_source_files(&root);
+    let sources = format::read_sources(&files);
+    let level = format::budget_level(budget, &root, &files, &sources);
+    let output = format::render_files(level, &root, &files, &sources);
     let words = format::count_words(&output);
     Some(format!("budget: {} → level {} ({} words)\n\n{}", budget, level, words, output))
 }

@@ -1,6 +1,6 @@
 use std::path::{Path, PathBuf};
 
-use crate::{parse, walk};
+use crate::parse;
 
 /// Maximum granularity level.
 ///
@@ -45,17 +45,17 @@ pub fn search_level(budget: usize, cost: impl Fn(u8) -> usize) -> u8 {
     low
 }
 
+/// Pre-read source files to avoid repeated disk I/O.
+pub fn read_sources(files: &[PathBuf]) -> Vec<Option<String>> {
+    files.iter().map(|f| std::fs::read_to_string(f).ok()).collect()
+}
+
 /// Find the highest granularity level whose output fits within the word budget.
-pub fn budget_level(budget: usize, root: &Path) -> u8 {
-    let files = walk::discover_source_files(root);
-    // Pre-read all file contents so binary search doesn't re-read from disk each iteration.
-    let sources: Vec<Option<String>> = files
-        .iter()
-        .map(|f| std::fs::read_to_string(f).ok())
-        .collect();
+/// Accepts pre-discovered files and pre-read sources to avoid redundant I/O.
+pub fn budget_level(budget: usize, root: &Path, files: &[PathBuf], sources: &[Option<String>]) -> u8 {
     search_level(budget, |level| {
         let mut out = String::new();
-        for (file, source) in files.iter().zip(&sources) {
+        for (file, source) in files.iter().zip(sources) {
             if level == 0 {
                 let relative = file.strip_prefix(root).unwrap_or(file);
                 out.push_str(&format!("{}\n", relative.display()));
@@ -72,26 +72,19 @@ pub fn budget_level_file(budget: usize, path: &Path, root: &Path, source: &str) 
     search_level(budget, |level| count_words(&render_file(level, path, root, source)))
 }
 
-/// Render all source files in a directory at the given granularity level.
-pub fn render_directory(level: u8, root: &Path) -> String {
-    let files = walk::discover_source_files(root);
-    render_files(level, root, &files)
-}
-
 /// Render pre-discovered source files at the given granularity level.
-pub fn render_files(level: u8, root: &Path, files: &[PathBuf]) -> String {
+/// Uses pre-read sources to avoid redundant disk I/O.
+pub fn render_files(level: u8, root: &Path, files: &[PathBuf], sources: &[Option<String>]) -> String {
     let mut out = String::new();
-    for file in files {
+    for (file, source) in files.iter().zip(sources) {
         if level == 0 {
             let relative = file.strip_prefix(root).unwrap_or(file);
             out.push_str(&format!("{}\n", relative.display()));
             continue;
         }
-        let source = match std::fs::read_to_string(file) {
-            Ok(s) => s,
-            Err(_) => continue,
-        };
-        out.push_str(&render_file(level, file, root, &source));
+        if let Some(s) = source {
+            out.push_str(&render_file(level, file, root, s));
+        }
     }
     out
 }
