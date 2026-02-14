@@ -33,14 +33,16 @@ fn render_with_symbols(
     symbols: &[parse::Symbol],
 ) -> String {
     let relative = path.strip_prefix(root).unwrap_or(path);
+    let mut out = format!("{}\n", relative.display());
     match level {
-        0 => format!("{}\n", relative.display()),
-        1 => render_symbols(path, root, source, symbols, true),
-        2 => render_symbols(path, root, source, symbols, false),
-        3 => render_symbols_with_docs(path, root, source, symbols, false),
-        4 => render_symbols_with_docs(path, root, source, symbols, true),
-        _ => render_full_source(path, root, source),
+        0 => {}
+        1 => render_symbols(&mut out, relative, source, symbols, true),
+        2 => render_symbols(&mut out, relative, source, symbols, false),
+        3 => render_symbols_with_docs(&mut out, relative, source, symbols, false),
+        4 => render_symbols_with_docs(&mut out, relative, source, symbols, true),
+        _ => render_full_source(&mut out, source),
     }
+    out
 }
 
 /// Format a single source line with its line number.
@@ -206,20 +208,18 @@ pub fn render_file_with_symbols(
 
 /// Render symbol lines for a file. If `truncate` is true (level 1), truncates
 /// each line at the symbol name. If false (level 2), shows full multi-line signatures.
+/// `path` is relative to the project root (used for language detection).
 fn render_symbols(
+    out: &mut String,
     path: &Path,
-    root: &Path,
     source: &str,
     symbols: &[parse::Symbol],
     truncate: bool,
-) -> String {
-    let relative = path.strip_prefix(root).unwrap_or(path);
-    let is_python = path.extension().and_then(|e| e.to_str()) == Some("py");
-    let mut out = String::new();
-    out.push_str(&format!("{}\n", relative.display()));
+) {
     if symbols.is_empty() {
-        return out;
+        return;
     }
+    let is_python = path.extension().and_then(|e| e.to_str()) == Some("py");
     let lines: Vec<&str> = source.lines().collect();
     for sym in symbols {
         if truncate {
@@ -232,7 +232,6 @@ fn render_symbols(
             }
         }
     }
-    out
 }
 
 /// Format a symbol line truncated at the symbol name (level 1).
@@ -248,35 +247,29 @@ fn format_symbol_name(sym: &parse::Symbol, lines: &[&str]) -> String {
 }
 
 /// Render all lines of a file with line numbers (level 5).
-fn render_full_source(path: &Path, root: &Path, source: &str) -> String {
-    let relative = path.strip_prefix(root).unwrap_or(path);
-    let mut out = String::new();
-    out.push_str(&format!("{}\n", relative.display()));
+fn render_full_source(out: &mut String, source: &str) {
     for (i, line) in source.lines().enumerate() {
         out.push_str(&fmt_line(i, line));
     }
-    out
 }
 
 /// Render symbol lines with preceding doc comments (level 3).
 /// If `expand_types` is true (level 4), show full bodies for struct/enum/trait/interface.
 /// For Markdown: level 3 shows first paragraph after each heading, level 4 shows all content.
+/// `path` is relative to the project root (used for language detection).
 fn render_symbols_with_docs(
+    out: &mut String,
     path: &Path,
-    root: &Path,
     source: &str,
     symbols: &[parse::Symbol],
     expand_types: bool,
-) -> String {
-    let relative = path.strip_prefix(root).unwrap_or(path);
+) {
+    if symbols.is_empty() {
+        return;
+    }
     let lines: Vec<&str> = source.lines().collect();
     let is_python = path.extension().and_then(|e| e.to_str()) == Some("py");
     let is_markdown = path.extension().and_then(|e| e.to_str()) == Some("md");
-    let mut out = String::new();
-    out.push_str(&format!("{}\n", relative.display()));
-    if symbols.is_empty() {
-        return out;
-    }
     // Track which lines have been emitted to avoid duplication when type bodies
     // overlap with nested symbols (e.g. trait methods inside a trait body).
     let mut emitted_up_to: usize = 0; // 0-indexed, exclusive
@@ -331,7 +324,6 @@ fn render_symbols_with_docs(
             }
         }
     }
-    out
 }
 
 /// Whether a symbol kind represents a type definition whose body should be expanded.
