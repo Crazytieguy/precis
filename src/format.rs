@@ -15,13 +15,30 @@ pub const MAX_LEVEL: u8 = 5;
 
 /// Render a single file at the given granularity level.
 pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String {
+    let symbols = if matches!(level, 1..=4) {
+        parse::extract_symbols(path, source)
+    } else {
+        vec![]
+    };
+    render_with_symbols(level, path, root, source, &symbols)
+}
+
+/// Render a single file at the given level using pre-extracted symbols.
+/// Used by budget search to avoid redundant symbol extraction across levels.
+fn render_with_symbols(
+    level: u8,
+    path: &Path,
+    root: &Path,
+    source: &str,
+    symbols: &[parse::Symbol],
+) -> String {
     let relative = path.strip_prefix(root).unwrap_or(path);
     match level {
         0 => format!("{}\n", relative.display()),
-        1 => render_symbols(path, root, source, true),
-        2 => render_symbols(path, root, source, false),
-        3 => render_symbols_with_docs(path, root, source, false),
-        4 => render_symbols_with_docs(path, root, source, true),
+        1 => render_symbols(path, root, source, symbols, true),
+        2 => render_symbols(path, root, source, symbols, false),
+        3 => render_symbols_with_docs(path, root, source, symbols, false),
+        4 => render_symbols_with_docs(path, root, source, symbols, true),
         _ => render_full_source(path, root, source),
     }
 }
@@ -57,21 +74,42 @@ pub fn read_sources(files: &[PathBuf]) -> Vec<Option<String>> {
 
 /// Find the highest granularity level whose output fits within the word budget.
 /// Accepts pre-discovered files and pre-read sources to avoid redundant I/O.
+/// Pre-extracts symbols once and reuses them across all levels tested by binary search.
 pub fn budget_level(
     budget: usize,
     root: &Path,
     files: &[PathBuf],
     sources: &[Option<String>],
 ) -> u8 {
+    let all_symbols: Vec<Vec<parse::Symbol>> = files
+        .iter()
+        .zip(sources.iter())
+        .map(|(f, s)| {
+            s.as_ref()
+                .map(|s| parse::extract_symbols(f, s))
+                .unwrap_or_default()
+        })
+        .collect();
+
     search_level(budget, |level| {
-        count_words(&render_files(level, root, files, sources))
+        let mut out = String::new();
+        for (i, (file, source)) in files.iter().zip(sources).enumerate() {
+            if level == 0 {
+                out.push_str(&render_with_symbols(0, file, root, "", &[]));
+            } else if let Some(s) = source {
+                out.push_str(&render_with_symbols(level, file, root, s, &all_symbols[i]));
+            }
+        }
+        count_words(&out)
     })
 }
 
 /// Find the highest granularity level whose output for a single file fits within the word budget.
+/// Pre-extracts symbols once and reuses them across all levels tested by binary search.
 pub fn budget_level_file(budget: usize, path: &Path, root: &Path, source: &str) -> u8 {
+    let symbols = parse::extract_symbols(path, source);
     search_level(budget, |level| {
-        count_words(&render_file(level, path, root, source))
+        count_words(&render_with_symbols(level, path, root, source, &symbols))
     })
 }
 
@@ -96,16 +134,21 @@ pub fn render_files(
 
 /// Render symbol lines for a file. If `truncate` is true (level 1), truncates
 /// each line at the symbol name. If false (level 2), shows the full source line.
-fn render_symbols(path: &Path, root: &Path, source: &str, truncate: bool) -> String {
+fn render_symbols(
+    path: &Path,
+    root: &Path,
+    source: &str,
+    symbols: &[parse::Symbol],
+    truncate: bool,
+) -> String {
     let relative = path.strip_prefix(root).unwrap_or(path);
-    let symbols = parse::extract_symbols(path, source);
     let mut out = String::new();
     out.push_str(&format!("{}\n", relative.display()));
     if symbols.is_empty() {
         return out;
     }
     let lines: Vec<&str> = source.lines().collect();
-    for sym in &symbols {
+    for sym in symbols {
         if truncate {
             out.push_str(&format_symbol_name(sym, &lines));
         } else {
@@ -148,9 +191,14 @@ fn render_full_source(path: &Path, root: &Path, source: &str) -> String {
 /// Render symbol lines with preceding doc comments (level 3).
 /// If `expand_types` is true (level 4), show full bodies for struct/enum/trait/interface.
 /// For Markdown: level 3 shows first paragraph after each heading, level 4 shows all content.
-fn render_symbols_with_docs(path: &Path, root: &Path, source: &str, expand_types: bool) -> String {
+fn render_symbols_with_docs(
+    path: &Path,
+    root: &Path,
+    source: &str,
+    symbols: &[parse::Symbol],
+    expand_types: bool,
+) -> String {
     let relative = path.strip_prefix(root).unwrap_or(path);
-    let symbols = parse::extract_symbols(path, source);
     let lines: Vec<&str> = source.lines().collect();
     let is_python = path.extension().and_then(|e| e.to_str()) == Some("py");
     let is_markdown = path.extension().and_then(|e| e.to_str()) == Some("md");
@@ -193,7 +241,7 @@ fn render_symbols_with_docs(path: &Path, root: &Path, source: &str, expand_types
             }
             // Markdown: include body text after headings
             if is_markdown {
-                let content_end = markdown_content_end(&symbols, sym_idx, &lines, expand_types);
+                let content_end = markdown_content_end(symbols, sym_idx, &lines, expand_types);
                 for (i, line) in lines
                     .iter()
                     .enumerate()
