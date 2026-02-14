@@ -1,0 +1,41 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+cli-options.js:
+  const re :1
+  const options :4
+  const matches :5
+env-options.js:
+  const options :2
+main.d.ts:
+  export interface DotenvParseOutput :5
+  export interface DotenvPopulateOutput :9
+  export interface DotenvConfigOptions :25
+  export interface DotenvConfigOutput :92
+  type DotenvError :97
+  export interface DotenvPopulateOptions :106
+  export interface DotenvPopulateInput :126
+main.js:
+  const version :7
+  const TIPS :10
+  function _getRandomTip :27
+  function parseBoolean :31
+  function supportsAnsi :38
+  function dim :42
+  const LINE :46
+  function parse :49
+  function _parseVault :87
+  function _warn :130
+  function _debug :134
+  function _log :138
+  function _dotenvKey :142
+  function _instructions :157
+  function _vaultPath :200
+  function _resolveHome :224
+  function _configVault :228
+  function configDotenv :248
+  function config :328
+  function decrypt :346
+  function populate :378
+  const DotenvModule :413

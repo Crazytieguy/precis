@@ -281,3 +281,13 @@ fn fixture_once_cell() {
     let output = format::format_directory(&root);
     insta::assert_snapshot!(output);
 }
+
+#[test]
+fn fixture_dotenv() {
+    let Some(root) = fixture_path("dotenv/lib") else {
+        eprintln!("skipping fixture_dotenv: clone with `git clone --depth 1 https://github.com/motdotla/dotenv.git test/fixtures/dotenv`");
+        return;
+    };
+    let output = format::format_directory(&root);
+    insta::assert_snapshot!(output);
+}
