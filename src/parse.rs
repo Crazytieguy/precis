@@ -122,15 +122,15 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             "interface_declaration" => SymbolKind::Interface,
             "enum_declaration" => SymbolKind::Enum,
             "type_alias_declaration" => SymbolKind::TypeAlias,
-            "lexical_declaration" => {
-                if is_inside_function(symbol_node) {
-                    continue;
-                }
-                SymbolKind::Const
-            }
+            "lexical_declaration" => SymbolKind::Const,
             "internal_module" => SymbolKind::Module,
             _ => continue,
         };
+
+        // Filter out symbols nested inside function bodies (local helpers, not module-level)
+        if is_inside_function(symbol_node) {
+            continue;
+        }
 
         // Filter out Rust test code (#[test] functions, #[cfg(test)] modules)
         if ext == "rs" && is_rust_test_code(symbol_node, source) {
@@ -204,6 +204,9 @@ fn is_inside_function(node: tree_sitter::Node) -> bool {
     let mut current = node.parent();
     while let Some(parent) = current {
         match parent.kind() {
+            // Rust
+            "function_item" |
+            // TypeScript / JavaScript
             "function_declaration" | "method_definition" | "arrow_function"
             | "function" | "generator_function" | "generator_function_declaration" => {
                 return true;
@@ -373,5 +376,33 @@ mod tests {
         assert!(!names.contains(&"tests"));
         assert!(!names.contains(&"helper"));
         assert!(!names.contains(&"another_test"));
+    }
+
+    #[test]
+    fn filters_nested_functions() {
+        let source = r#"
+pub fn outer() {
+    fn nested_helper() {}
+    const LOCAL: usize = 42;
+}
+
+impl Foo {
+    pub fn method() {
+        fn local_fn() {}
+    }
+}
+
+fn top_level() {}
+"#;
+        let symbols = extract_symbols(Path::new("test.rs"), source);
+        let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
+
+        assert!(names.contains(&"outer"));
+        assert!(names.contains(&"top_level"));
+        assert!(names.contains(&"method"));
+        // Nested symbols inside function bodies should be filtered
+        assert!(!names.contains(&"nested_helper"));
+        assert!(!names.contains(&"local_fn"));
+        assert!(!names.contains(&"LOCAL"));
     }
 }
