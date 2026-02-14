@@ -2,82 +2,81 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 → level 3 (500 words)
+budget: 500 → level 1 (174 words)
 
 assets.tsx
-     5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
-    24→const bars = Array(12).fill(0);
-    26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
-    38→const SuccessIcon = (
-    48→const WarningIcon = (
-    58→const InfoIcon = (
-    68→const ErrorIcon = (
-    78→export const CloseIcon = (
+     5→export const getAsset
+    24→const bars
+    26→export const Loader
+    38→const SuccessIcon
+    48→const WarningIcon
+    58→const InfoIcon
+    68→const ErrorIcon
+    78→export const CloseIcon
 hooks.tsx
-     3→export const useIsDocumentHidden = () => {
+     3→export const useIsDocumentHidden
 index.tsx
-    22→const VISIBLE_TOASTS_AMOUNT = 3;
-    25→const VIEWPORT_OFFSET = '24px';
-    28→const MOBILE_VIEWPORT_OFFSET = '16px';
-    31→const TOAST_LIFETIME = 4000;
-    34→const TOAST_WIDTH = 356;
-    37→const GAP = 14;
-    40→const SWIPE_THRESHOLD = 45;
-    43→const TIME_BEFORE_UNMOUNT = 200;
-    45→function cn(...classes: (string | undefined)[]) {
-    49→function getDefaultSwipeDirections(position: string): Array<SwipeDirection> {
-    64→const Toast = (props: ToastProps) => {
-   507→function getDocumentDirection(): ToasterProps['dir'] {
-   520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
-   552→function useSonner() {
-   593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
+    22→const VISIBLE_TOASTS_AMOUNT
+    25→const VIEWPORT_OFFSET
+    28→const MOBILE_VIEWPORT_OFFSET
+    31→const TOAST_LIFETIME
+    34→const TOAST_WIDTH
+    37→const GAP
+    40→const SWIPE_THRESHOLD
+    43→const TIME_BEFORE_UNMOUNT
+    45→function cn
+    49→function getDefaultSwipeDirections
+    64→const Toast
+   507→function getDocumentDirection
+   520→function assignOffset
+   552→function useSonner
+   593→const Toaster
 state.ts
-    15→type titleT = (() => React.ReactNode) | React.ReactNode;
-    17→class Observer {
-    22→  constructor() {
-    29→  subscribe = (subscriber: (toast: ToastT | ToastToDismiss) => void) => {
-    38→  publish = (data: ToastT) => {
-    42→  addToast = (data: ToastT) => {
-    47→  create = (
-    48→    data: ExternalToast & {
-    88→  dismiss = (id?: number | string) => {
-   101→  message = (message: titleT | React.ReactNode, data?: ExternalToast) => {
-   105→  error = (message: titleT | React.ReactNode, data?: ExternalToast) => {
-   109→  success = (message: titleT | React.ReactNode, data?: ExternalToast) => {
-   113→  info = (message: titleT | React.ReactNode, data?: ExternalToast) => {
-   117→  warning = (message: titleT | React.ReactNode, data?: ExternalToast) => {
-   121→  loading = (message: titleT | React.ReactNode, data?: ExternalToast) => {
-   125→  promise = <ToastData>(promise: PromiseT<ToastData>, data?: PromiseData<ToastData>) => {
-   243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
-   249→  getActiveToasts = () => {
-   254→export const ToastState = new Observer();
-   257→const toastFunction = (message: titleT, data?: ExternalToast) => {
-   268→const isHttpResponse = (data: any): data is Response => {
-   279→const basicToast = toastFunction;
-   281→const getHistory = () => ToastState.toasts;
-   282→const getToasts = () => ToastState.getActiveToasts();
-   285→export const toast = Object.assign(
+    15→type titleT
+    17→class Observer
+    22→  constructor
+    29→  subscribe
+    38→  publish
+    42→  addToast
+    47→  create
+    88→  dismiss
+   101→  message
+   105→  error
+   109→  success
+   113→  info
+   117→  warning
+   121→  loading
+   125→  promise
+   243→  custom
+   249→  getActiveToasts
+   254→export const ToastState
+   257→const toastFunction
+   268→const isHttpResponse
+   279→const basicToast
+   281→const getHistory
+   282→const getToasts
+   285→export const toast
 types.ts
-     3→export type ToastTypes = 'normal' | 'action' | 'success' | 'info' | 'warning' | 'error' | 'loading' | 'default';
-     5→export type PromiseT<Data = any> = Promise<Data> | (() => Promise<Data>);
-     7→export interface PromiseIExtendedResult extends ExternalToast {
-    11→export type PromiseTExtendedResult<Data = any> =
-    15→export type PromiseTResult<Data = any> =
-    20→export type PromiseExternalToast = Omit<ExternalToast, 'description'>;
-    22→export type PromiseData<ToastData = any> = PromiseExternalToast & {
-    30→export interface ToastClassnames {
-    48→export interface ToastIcons {
-    57→export interface Action {
-    63→export interface ToastT {
-    93→export function isAction(action: Action | React.ReactNode): action is Action {
-    97→export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
-    98→export interface HeightT {
-   104→interface ToastOptions {
-   118→type Offset =
-   128→export interface ToasterProps {
-   152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
-   154→export interface ToastProps {
-   184→export enum SwipeStateTypes {
-   190→export type Theme = 'light' | 'dark';
-   192→export interface ToastToDismiss {
-   197→export type ExternalToast = Omit<ToastT, 'id' | 'type' | 'title' | 'jsx' | 'delete' | 'promise'> & {
+     3→export type ToastTypes
+     5→export type PromiseT
+     7→export interface PromiseIExtendedResult
+    11→export type PromiseTExtendedResult
+    15→export type PromiseTResult
+    20→export type PromiseExternalToast
+    22→export type PromiseData
+    30→export interface ToastClassnames
+    48→export interface ToastIcons
+    57→export interface Action
+    63→export interface ToastT
+    93→export function isAction
+    97→export type Position
+    98→export interface HeightT
+   104→interface ToastOptions
+   118→type Offset
+   128→export interface ToasterProps
+   152→export type SwipeDirection
+   154→export interface ToastProps
+   184→export enum SwipeStateTypes
+   190→export type Theme
+   192→export interface ToastToDismiss
+   197→export type ExternalToast

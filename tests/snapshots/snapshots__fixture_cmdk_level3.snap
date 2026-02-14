@@ -18,19 +18,143 @@ index.tsx
     10→type Children = { children?: React.ReactNode }
     11→type DivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>
     13→type LoadingProps = Children &
+    14→  DivProps & {
+    15→    /** Estimated progress of loading asynchronous options. */
+    16→    progress?: number
+    17→    /**
+    18→     * Accessible label for this loading progressbar. Not shown visibly.
+    19→     */
+    20→    label?: string
+    21→  }
     23→type EmptyProps = Children & DivProps & {}
     24→type SeparatorProps = DivProps & {
+    25→  /** Whether this separator should always be rendered. Useful if you disable automatic filtering. */
+    26→  alwaysRender?: boolean
+    27→}
     28→type DialogProps = RadixDialog.DialogProps &
+    29→  CommandProps & {
+    30→    /** Provide a className to the Dialog overlay. */
+    31→    overlayClassName?: string
+    32→    /** Provide a className to the Dialog content. */
+    33→    contentClassName?: string
+    34→    /** Provide a custom element the Dialog should portal into. */
+    35→    container?: HTMLElement
+    36→  }
     37→type ListProps = Children &
+    38→  DivProps & {
+    39→    /**
+    40→     * Accessible label for this List of suggestions. Not shown visibly.
+    41→     */
+    42→    label?: string
+    43→  }
     44→type ItemProps = Children &
+    45→  Omit<DivProps, 'disabled' | 'onSelect' | 'value'> & {
+    46→    /** Whether this item is currently disabled. */
+    47→    disabled?: boolean
+    48→    /** Event handler for when this item is selected, either via click or keyboard selection. */
+    49→    onSelect?: (value: string) => void
+    50→    /**
+    51→     * A unique value for this item.
+    52→     * If no value is provided, it will be inferred from `children` or the rendered `textContent`. If your `textContent` changes between renders, you _must_ provide a stable, unique `value`.
+    53→     */
+    54→    value?: string
+    55→    /** Optional keywords to match against when filtering. */
+    56→    keywords?: string[]
+    57→    /** Whether this item is forcibly rendered regardless of filtering. */
+    58→    forceMount?: boolean
+    59→  }
     60→type GroupProps = Children &
+    61→  Omit<DivProps, 'heading' | 'value'> & {
+    62→    /** Optional heading to render for this group. */
+    63→    heading?: React.ReactNode
+    64→    /** If no heading is provided, you must provide a value that is unique for this group. */
+    65→    value?: string
+    66→    /** Whether this group is forcibly rendered regardless of filtering. */
+    67→    forceMount?: boolean
+    68→  }
     69→type InputProps = Omit<React.ComponentPropsWithoutRef<typeof Primitive.input>, 'value' | 'onChange' | 'type'> & {
+    70→  /**
+    71→   * Optional controlled state for the value of the search input.
+    72→   */
+    73→  value?: string
+    74→  /**
+    75→   * Event handler called when the search value changes.
+    76→   */
+    77→  onValueChange?: (search: string) => void
+    78→}
     79→type CommandFilter = (value: string, search: string, keywords?: string[]) => number
     80→type CommandProps = Children &
+    81→  DivProps & {
+    82→    /**
+    83→     * Accessible label for this command menu. Not shown visibly.
+    84→     */
+    85→    label?: string
+    86→    /**
+    87→     * Optionally set to `false` to turn off the automatic filtering and sorting.
+    88→     * If `false`, you must conditionally render valid items based on the search query yourself.
+    89→     */
+    90→    shouldFilter?: boolean
+    91→    /**
+    92→     * Custom filter function for whether each command menu item should matches the given search query.
+    93→     * It should return a number between 0 and 1, with 1 being the best match and 0 being hidden entirely.
+    94→     * By default, uses the `command-score` library.
+    95→     */
+    96→    filter?: CommandFilter
+    97→    /**
+    98→     * Optional default item value when it is initially rendered.
+    99→     */
+   100→    defaultValue?: string
+   101→    /**
+   102→     * Optional controlled state of the selected command menu item.
+   103→     */
+   104→    value?: string
+   105→    /**
+   106→     * Event handler called when the selected item of the menu changes.
+   107→     */
+   108→    onValueChange?: (value: string) => void
+   109→    /**
+   110→     * Optionally set to `true` to turn on looping around when using the arrow keys.
+   111→     */
+   112→    loop?: boolean
+   113→    /**
+   114→     * Optionally set to `true` to disable selection via pointer events.
+   115→     */
+   116→    disablePointerSelection?: boolean
+   117→    /**
+   118→     * Set to `false` to disable ctrl+n/j/p/k shortcuts. Defaults to `true`.
+   119→     */
+   120→    vimBindings?: boolean
+   121→  }
    123→type Context = {
+   124→  value: (id: string, value: string, keywords?: string[]) => void
+   125→  item: (id: string, groupId: string) => () => void
+   126→  group: (id: string) => () => void
+   127→  filter: () => boolean
+   128→  label: string
+   129→  getDisablePointerSelection: () => boolean
+   130→  // Ids
+   131→  listId: string
+   132→  labelId: string
+   133→  inputId: string
+   134→  // Refs
+   135→  listInnerRef: React.RefObject<HTMLDivElement | null>
+   136→}
    137→type State = {
+   138→  search: string
+   139→  value: string
+   140→  selectedItemId?: string
+   141→  filtered: { count: number; items: Map<string, number>; groups: Set<string> }
+   142→}
    143→type Store = {
+   144→  subscribe: (callback: () => void) => () => void
+   145→  snapshot: () => State
+   146→  setState: <K extends keyof State>(key: K, value: State[K], opts?: any) => void
+   147→  emit: () => void
+   148→}
    149→type Group = {
+   150→  id: string
+   151→  forceMount?: boolean
+   152→}
    154→const GROUP_SELECTOR = `[cmdk-group=""]`
    155→const GROUP_ITEMS_SELECTOR = `[cmdk-group-items=""]`
    156→const GROUP_HEADING_SELECTOR = `[cmdk-group-heading=""]`

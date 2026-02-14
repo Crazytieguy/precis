@@ -2,21 +2,17 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 100 → level 2 (98 words)
+budget: 100 → level 1 (32 words)
 
 index.ts
-     1→export type EventType = string | symbol;
-     5→export type Handler<T = unknown> = (event: T) => void;
-     6→export type WildcardHandler<T = Record<string, unknown>> = (
-    12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
-    13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
-    18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
-    23→export interface Emitter<Events extends Record<EventType, unknown>> {
-    27→	on(type: '*', handler: WildcardHandler<Events>): void;
-    33→	off(type: '*', handler: WildcardHandler<Events>): void;
-    36→	emit<Key extends keyof Events>(
-    37→		type: undefined extends Events[Key] ? Key : never
-    38→	): void;
-    46→export default function mitt<Events extends Record<EventType, unknown>>(
-    47→	all?: EventHandlerMap<Events>
-    48→): Emitter<Events> {
+     1→export type EventType
+     5→export type Handler
+     6→export type WildcardHandler
+    12→export type EventHandlerList
+    13→export type WildCardEventHandlerList
+    18→export type EventHandlerMap
+    23→export interface Emitter
+    27→	on
+    33→	off
+    36→	emit
+    46→export default function mitt

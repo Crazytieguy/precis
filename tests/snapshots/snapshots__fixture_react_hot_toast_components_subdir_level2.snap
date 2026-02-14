@@ -42,6 +42,10 @@ toast-icon.tsx
     22→const enter = keyframes`
     32→export const AnimatedIconWrapper = styled('div')`
     41→export type IconThemes = Partial<{
+    42→  success: CheckmarkTheme;
+    43→  error: ErrorTheme;
+    44→  loading: LoaderTheme;
+    45→}>;
     47→export const ToastIcon: React.FC<{
 toaster.tsx
     15→const ToastWrapper = ({

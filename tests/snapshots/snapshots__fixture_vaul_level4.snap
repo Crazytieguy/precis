@@ -74,11 +74,100 @@ index.tsx
     27→export interface WithFadeFromProps {
     40→export interface WithoutFadeFromProps {
     50→export type DialogProps = {
+    51→  activeSnapPoint?: number | string | null;
+    52→  setActiveSnapPoint?: (snapPoint: number | string | null) => void;
+    53→  children?: React.ReactNode;
+    54→  open?: boolean;
+    55→  /**
+    56→   * Number between 0 and 1 that determines when the drawer should be closed.
+    57→   * Example: threshold of 0.5 would close the drawer if the user swiped for 50% of the height of the drawer or more.
+    58→   * @default 0.25
+    59→   */
+    60→  closeThreshold?: number;
+    61→  /**
+    62→   * When `true` the `body` doesn't get any styles assigned from Vaul
+    63→   */
+    64→  noBodyStyles?: boolean;
+    65→  onOpenChange?: (open: boolean) => void;
+    66→  shouldScaleBackground?: boolean;
+    67→  /**
+    68→   * When `false` we don't change body's background color when the drawer is open.
+    69→   * @default true
+    70→   */
+    71→  setBackgroundColorOnScale?: boolean;
+    72→  /**
+    73→   * Duration for which the drawer is not draggable after scrolling content inside of the drawer.
+    74→   * @default 500ms
+    75→   */
+    76→  scrollLockTimeout?: number;
+    77→  /**
+    78→   * When `true`, don't move the drawer upwards if there's space, but rather only change it's height so it's fully scrollable when the keyboard is open
+    79→   */
+    80→  fixed?: boolean;
+    81→  /**
+    82→   * When `true` only allows the drawer to be dragged by the `<Drawer.Handle />` component.
+    83→   * @default false
+    84→   */
+    85→  handleOnly?: boolean;
+    86→  /**
+    87→   * When `false` dragging, clicking outside, pressing esc, etc. will not close the drawer.
+    88→   * Use this in comination with the `open` prop, otherwise you won't be able to open/close the drawer.
+    89→   * @default true
+    90→   */
+    91→  dismissible?: boolean;
+    92→  onDrag?: (event: React.PointerEvent<HTMLDivElement>, percentageDragged: number) => void;
+    93→  onRelease?: (event: React.PointerEvent<HTMLDivElement>, open: boolean) => void;
+    94→  /**
+    95→   * When `false` it allows to interact with elements outside of the drawer without closing it.
+    96→   * @default true
+    97→   */
+    98→  modal?: boolean;
+    99→  nested?: boolean;
+   100→  onClose?: () => void;
+   101→  /**
+   102→   * Direction of the drawer. Can be `top` or `bottom`, `left`, `right`.
+   103→   * @default 'bottom'
+   104→   */
+   105→  direction?: 'top' | 'bottom' | 'left' | 'right';
+   106→  /**
+   107→   * Opened by default, skips initial enter animation. Still reacts to `open` state changes
+   108→   * @default false
+   109→   */
+   110→  defaultOpen?: boolean;
+   111→  /**
+   112→   * When set to `true` prevents scrolling on the document body on mount, and restores it on unmount.
+   113→   * @default false
+   114→   */
+   115→  disablePreventScroll?: boolean;
+   116→  /**
+   117→   * When `true` Vaul will reposition inputs rather than scroll then into view if the keyboard is in the way.
+   118→   * Setting it to `false` will fall back to the default browser behavior.
+   119→   * @default true when {@link snapPoints} is defined
+   120→   */
+   121→  repositionInputs?: boolean;
+   122→  /**
+   123→   * Disabled velocity based swiping for snap points.
+   124→   * This means that a snap point won't be skipped even if the velocity is high enough.
+   125→   * Useful if each snap point in a drawer is equally important.
+   126→   * @default false
+   127→   */
+   128→  snapToSequentialPoint?: boolean;
+   129→  container?: HTMLElement | null;
+   130→  /**
+   131→   * Gets triggered after the open or close animation ends, it receives an `open` argument with the `open` state of the drawer by the time the function was triggered.
+   132→   * Useful to revert any state changes for example.
+   133→   */
+   134→  onAnimationEnd?: (open: boolean) => void;
+   135→  preventScrollRestoration?: boolean;
+   136→  autoFocus?: boolean;
+   137→} & (WithFadeFromProps | WithoutFadeFromProps);
    139→export function Root({
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
    833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
    989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
+   990→  preventCycle?: boolean;
+   991→};
    993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
    994→const DOUBLE_TAP_TIMEOUT = 120;
    996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
@@ -112,6 +201,10 @@ use-composed-refs.ts
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 use-controllable-state.ts
      5→type UseControllableStateParams<T> = {
+     6→  prop?: T | undefined;
+     7→  defaultProp?: T | undefined;
+     8→  onChange?: (state: T) => void;
+     9→};
     11→type SetStateFn<T> = (prevState?: T) => T;
     13→function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
     24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {

@@ -6,9 +6,17 @@ index.ts
      1→export type EventType = string | symbol;
      5→export type Handler<T = unknown> = (event: T) => void;
      6→export type WildcardHandler<T = Record<string, unknown>> = (
+     7→	type: keyof T,
+     8→	event: T[keyof T]
+     9→) => void;
     12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
     13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
+    14→	WildcardHandler<T>
+    15→>;
     18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
+    19→	keyof Events | '*',
+    20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
+    21→>;
     23→export interface Emitter<Events extends Record<EventType, unknown>> {
     27→	on(type: '*', handler: WildcardHandler<Events>): void;
     33→	off(type: '*', handler: WildcardHandler<Events>): void;

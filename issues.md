@@ -13,6 +13,7 @@
 ## Codebase quality
 
 - `streaming-iterator` is a direct dependency only because tree-sitter v0.25 uses `StreamingIterator` for `QueryMatches`. If tree-sitter changes this API, the dep can be removed.
+- `Symbol.is_public` is computed for all symbols (with per-language logic) but never used in the rendering pipeline. Could be useful for a future `--public-only` flag or for budget prioritization (showing public API first at tight budgets).
 
 ## Current state
 
@@ -39,6 +40,7 @@
 - Doc comment detection (level 3) is text-based heuristic; does not use tree-sitter comment nodes. Handles `///`, `//!`, `/** */` blocks, Go `//` comments (godoc), Python `#` comments, and Python docstrings (`"""..."""` / `'''...'''`). Skips `#[attr]` and `@decorator` lines between doc comments and symbols; also skips blank lines between doc comment `*/` and symbol (common JS/TS style). Decorators/attributes are always shown at level 3+. Go `//` doc comments are language-gated via `is_go` flag to avoid false positives in other languages where `//` is not a doc comment convention.
 - Python docstrings (triple-quoted strings after `def`/`class` lines) are captured at levels 3 and 4 via text-based heuristic. Handles single-line, multi-line, and all string prefixes (`r"""`, `u"""`, `f"""`, `b"""`, `rf"""`, `br"""`, etc.).
 - Python: module-level constants are captured if type-annotated (`VERSION: str = "0.1.0"`), UPPER_CASE (`MAX_SIZE = 100`), or dunder (`__all__ = [...]`). Lowercase untyped assignments (e.g. `logger = ...`) are excluded to reduce noise. `TypeAlias` annotations are mapped to `Const` kind (could be `TypeAlias` in the future).
+- Type aliases at level 2+ show their full definition (all lines from start to end), since a type alias has no hidden body — the definition IS the signature. This handles multi-line TypeScript type aliases with complex generic parameters (e.g. `export type Transpose<A, B, C> = ...`). Level 2 uses `emitted_up_to` to avoid duplicating lines when type alias ranges encompass nested symbols (e.g. method signatures inside a TypeScript type literal like `Chainable<p> = p & Omit<{ optional(): ...; and(): ...; }, ...>`).
 - Multi-line signature detection (level 2+) is text-based heuristic: scans forward from the symbol line for `{`/`;` (C-like) or `:` (Python). Applies to functions, impl blocks, traits, structs, enums, classes, and interfaces — any symbol kind that can have multi-line declarations (generic parameters, `where` clauses, bounds). Expression-bodied arrow functions without semicolons fall back to single-line display.
 - Markdown: levels 1 and 2 produce identical output (heading lines are the same truncated or full since heading text IS the line content). Not a significant issue — same happens for simple single-line code symbols.
 - Markdown: setext headings (underlined with `===` or `---`) are supported. Symbol names are trimmed (tree-sitter's paragraph node includes trailing newlines). Content rendering at levels 3-4 uses `max(sym_line + 1, end_line - 1)` to correctly skip underlines for setext headings while preserving behavior for ATX headings.

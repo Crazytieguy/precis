@@ -4,6 +4,15 @@ expression: output
 ---
 error.ts
      5→export type Failure = {
+     6→  value: any
+     7→  key: any
+     8→  type: string
+     9→  refinement: string | undefined
+    10→  message: string
+    11→  explanation?: string
+    12→  branch: Array<any>
+    13→  path: Array<any>
+    14→}
     25→export class StructError extends TypeError {
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
 index.ts
@@ -38,9 +47,17 @@ struct.ts
    187→  struct: Struct<T, S>,
    188→  options: {
    221→export type Context = {
+   222→  branch: Array<any>
+   223→  path: Array<any>
+   224→  mask?: boolean
+   225→}
    231→export type Infer<T extends Struct<any, any>> = T['TYPE']
    237→export type Describe<T> = Struct<T, StructSchema<T>>
    243→export type Result =
+   244→  | boolean
+   245→  | string
+   246→  | Partial<Failure>
+   247→  | Iterable<boolean | string | Partial<Failure>>
    253→export type Coercer<T = unknown> = (value: T, context: Context) => unknown
    259→export type Validator = (value: unknown, context: Context) => Result
    266→export type Refiner<T> = (value: T, context: Context) => Result
@@ -164,23 +181,116 @@ utils.ts
     71→  value: any
     72→): Failure | undefined {
    202→export type UnionToIntersection<U> = (
+   203→  U extends any ? (arg: U) => any : never
+   204→) extends (arg: infer I) => void
+   205→  ? I
+   206→  : never
    212→export type Assign<T, U> = Simplify<U & Omit<T, keyof U>>
    218→export type EnumSchema<T extends string | number | undefined | null> = {
+   219→  [K in NonNullable<T>]: K
+   220→}
    227→export type IsMatch<T, G> = T extends G ? (G extends T ? T : never) : never
    233→export type IsExactMatch<T, U> =
+   234→  (<G>() => G extends T ? 1 : 2) extends <G>() => G extends U ? 1 : 2
+   235→    ? T
+   236→    : never
    242→export type IsRecord<T> = T extends object
+   243→  ? string extends keyof T
+   244→    ? T
+   245→    : never
+   246→  : never
    251→export type IsTuple<T> = T extends [any]
+   252→  ? T
+   253→  : T extends [any, any]
+   254→    ? T
+   255→    : T extends [any, any, any]
+   256→      ? T
+   257→      : T extends [any, any, any, any]
+   258→        ? T
+   259→        : T extends [any, any, any, any, any]
+   260→          ? T
+   261→          : never
    267→export type IsUnion<T, U extends T = T> = (
+   268→  T extends any ? (U extends T ? false : true) : false
+   269→) extends false
+   270→  ? never
+   271→  : T
    277→export type ObjectSchema = Record<string, Struct<any, any>>
    283→export type ObjectType<S extends ObjectSchema> = Simplify<
+   284→  Optionalize<{ [K in keyof S]: Infer<S[K]> }>
+   285→>
    291→export type OmitBy<T, V> = Omit<
+   292→  T,
+   293→  { [K in keyof T]: V extends Extract<T[K], V> ? K : never }[keyof T]
+   294→>
    300→export type Optionalize<S extends object> = OmitBy<S, undefined> &
+   301→  Partial<PickBy<S, undefined>>
    307→export type PartialObjectSchema<S extends ObjectSchema> = {
+   308→  [K in keyof S]: Struct<Infer<S[K]> | undefined>
+   309→}
    315→export type PickBy<T, V> = Pick<
+   316→  T,
+   317→  { [K in keyof T]: V extends Extract<T[K], V> ? K : never }[keyof T]
+   318→>
    324→export type Simplify<T> = T extends any[] | Date
+   325→  ? T
+   326→  : { [K in keyof T]: T[K] } & {}
    328→export type If<B extends Boolean, Then, Else> = B extends true ? Then : Else
    334→export type StructSchema<T> = [T] extends [string | undefined | null]
+   335→  ? [T] extends [IsMatch<T, string | undefined | null>]
+   336→    ? null
+   337→    : [T] extends [IsUnion<T>]
+   338→      ? EnumSchema<T>
+   339→      : T
+   340→  : [T] extends [number | undefined | null]
+   341→    ? [T] extends [IsMatch<T, number | undefined | null>]
+   342→      ? null
+   343→      : [T] extends [IsUnion<T>]
+   344→        ? EnumSchema<T>
+   345→        : T
+   346→    : [T] extends [boolean]
+   347→      ? [T] extends [IsExactMatch<T, boolean>]
+   348→        ? null
+   349→        : T
+   350→      : T extends
+   351→            | bigint
+   352→            | symbol
+   353→            | undefined
+   354→            | null
+   355→            | Function
+   356→            | Date
+   357→            | Error
+   358→            | RegExp
+   359→            | Map<any, any>
+   360→            | WeakMap<any, any>
+   361→            | Set<any>
+   362→            | WeakSet<any>
+   363→            | Promise<any>
+   364→        ? null
+   365→        : T extends Array<infer E>
+   366→          ? T extends IsTuple<T>
+   367→            ? null
+   368→            : Struct<E>
+   369→          : T extends object
+   370→            ? T extends IsRecord<T>
+   371→              ? null
+   372→              : { [K in keyof T]: Describe<T[K]> }
+   373→            : null
    379→export type TupleSchema<T> = { [K in keyof T]: Struct<T[K]> }
    385→export type AnyStruct = Struct<any, any>
    394→export type InferStructTuple<
+   395→  Tuple extends AnyStruct[],
+   396→  Length extends number = Tuple['length'],
+   397→> = Length extends Length
+   398→  ? number extends Length
+   399→    ? Tuple
+   400→    : _InferTuple<Tuple, Length, []>
+   401→  : never
    402→type _InferTuple<
+   403→  Tuple extends AnyStruct[],
+   404→  Length extends number,
+   405→  Accumulated extends unknown[],
+   406→  Index extends number = Accumulated['length'],
+   407→> = Index extends Length
+   408→  ? Accumulated
+   409→  : _InferTuple<Tuple, Length, [...Accumulated, Infer<Tuple[Index]>]>

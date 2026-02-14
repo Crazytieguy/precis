@@ -84,6 +84,13 @@ main.d.ts
     94→  parsed?: DotenvParseOutput;
     95→}
     97→type DotenvError = Error & {
+    98→  code: 
+    99→    | 'MISSING_DATA'
+   100→    | 'INVALID_DOTENV_KEY'
+   101→    | 'NOT_FOUND_DOTENV_ENVIRONMENT'
+   102→    | 'DECRYPTION_FAILED'
+   103→    | 'OBJECT_REQUIRED';
+   104→}
    106→export interface DotenvPopulateOptions {
    107→  /**
    108→   * Default: `false`

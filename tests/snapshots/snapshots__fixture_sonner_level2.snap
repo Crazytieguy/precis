@@ -60,9 +60,20 @@ types.ts
      5→export type PromiseT<Data = any> = Promise<Data> | (() => Promise<Data>);
      7→export interface PromiseIExtendedResult extends ExternalToast {
     11→export type PromiseTExtendedResult<Data = any> =
+    12→  | PromiseIExtendedResult
+    13→  | ((data: Data) => PromiseIExtendedResult | Promise<PromiseIExtendedResult>);
     15→export type PromiseTResult<Data = any> =
+    16→  | string
+    17→  | React.ReactNode
+    18→  | ((data: Data) => React.ReactNode | string | Promise<React.ReactNode | string>);
     20→export type PromiseExternalToast = Omit<ExternalToast, 'description'>;
     22→export type PromiseData<ToastData = any> = PromiseExternalToast & {
+    23→  loading?: string | React.ReactNode;
+    24→  success?: PromiseTResult<ToastData> | PromiseTExtendedResult<ToastData>;
+    25→  error?: PromiseTResult | PromiseTExtendedResult;
+    26→  description?: PromiseTResult;
+    27→  finally?: () => void | Promise<void>;
+    28→};
     30→export interface ToastClassnames {
     48→export interface ToastIcons {
     57→export interface Action {
@@ -72,6 +83,14 @@ types.ts
     98→export interface HeightT {
    104→interface ToastOptions {
    118→type Offset =
+   119→  | {
+   120→      top?: string | number;
+   121→      right?: string | number;
+   122→      bottom?: string | number;
+   123→      left?: string | number;
+   124→    }
+   125→  | string
+   126→  | number;
    128→export interface ToasterProps {
    152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
    154→export interface ToastProps {
@@ -79,3 +98,6 @@ types.ts
    190→export type Theme = 'light' | 'dark';
    192→export interface ToastToDismiss {
    197→export type ExternalToast = Omit<ToastT, 'id' | 'type' | 'title' | 'jsx' | 'delete' | 'promise'> & {
+   198→  id?: number | string;
+   199→  toasterId?: string;
+   200→};

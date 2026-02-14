@@ -275,15 +275,23 @@ fn render_symbols(
     }
     let is_python = path.extension().and_then(|e| e.to_str()) == Some("py");
     let lines: Vec<&str> = source.lines().collect();
+    // Track emitted lines to avoid duplication when type alias bodies
+    // encompass nested symbols (e.g. method signatures inside a TS type literal).
+    let mut emitted_up_to: usize = 0; // 0-indexed, exclusive
     for sym in symbols {
         if truncate {
             out.push_str(&format_symbol_name(sym, &lines));
             out.push('\n');
         } else {
+            let sym_line_0 = sym.line - 1;
+            if sym_line_0 < emitted_up_to {
+                continue;
+            }
             let sig_end = signature_end_line(&lines, sym, is_python);
-            for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym.line - 1) {
+            for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
                 out.push_str(&fmt_line(i, line));
             }
+            emitted_up_to = emitted_up_to.max(sig_end + 1);
         }
     }
 }
@@ -424,6 +432,13 @@ fn has_multiline_signature(kind: parse::SymbolKind) -> bool {
 /// Returns sym.line - 1 for single-line or non-function symbols.
 fn signature_end_line(lines: &[&str], sym: &parse::Symbol, is_python: bool) -> usize {
     let sym_line_0 = sym.line - 1;
+    // Type aliases: the entire declaration IS the signature (no hidden body),
+    // so show all lines. This handles multi-line TypeScript type aliases like
+    // `export type Transpose<A, B, C> = ...` which span multiple lines.
+    // Rust type aliases already work via `;` detection, but this is correct for both.
+    if sym.kind == parse::SymbolKind::TypeAlias {
+        return sym.end_line.min(lines.len()) - 1;
+    }
     if !has_multiline_signature(sym.kind) {
         return sym_line_0;
     }

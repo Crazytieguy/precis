@@ -42,6 +42,10 @@ components/toast-icon.tsx
     22→const enter = keyframes`
     32→export const AnimatedIconWrapper = styled('div')`
     41→export type IconThemes = Partial<{
+    42→  success: CheckmarkTheme;
+    43→  error: ErrorTheme;
+    44→  loading: LoaderTheme;
+    45→}>;
     47→export const ToastIcon: React.FC<{
 components/toaster.tsx
     15→const ToastWrapper = ({
@@ -59,6 +63,34 @@ core/store.ts
      8→interface ToasterSettings {
     12→export enum ActionType {
     22→export type Action =
+    23→  | {
+    24→      type: ActionType.ADD_TOAST;
+    25→      toast: Toast;
+    26→    }
+    27→  | {
+    28→      type: ActionType.UPSERT_TOAST;
+    29→      toast: Toast;
+    30→    }
+    31→  | {
+    32→      type: ActionType.UPDATE_TOAST;
+    33→      toast: Partial<Toast>;
+    34→    }
+    35→  | {
+    36→      type: ActionType.DISMISS_TOAST;
+    37→      toastId?: string;
+    38→    }
+    39→  | {
+    40→      type: ActionType.REMOVE_TOAST;
+    41→      toastId?: string;
+    42→    }
+    43→  | {
+    44→      type: ActionType.START_PAUSE;
+    45→      time: number;
+    46→    }
+    47→  | {
+    48→      type: ActionType.END_PAUSE;
+    49→      time: number;
+    50→    };
     52→interface ToasterState {
     58→interface State {
     62→export const reducer = (state: ToasterState, action: Action): ToasterState => {
@@ -95,10 +127,18 @@ core/toast.ts
 core/types.ts
      3→export type ToastType = 'success' | 'error' | 'loading' | 'blank' | 'custom';
      4→export type ToastPosition =
+     5→  | 'top-left'
+     6→  | 'top-center'
+     7→  | 'top-right'
+     8→  | 'bottom-left'
+     9→  | 'bottom-center'
+    10→  | 'bottom-right';
     12→export type Renderable = React.ReactElement | string | null;
     14→export interface IconTheme {
     19→export type ValueFunction<TValue, TArg> = (arg: TArg) => TValue;
     20→export type ValueOrFunction<TValue, TArg> =
+    21→  | TValue
+    22→  | ValueFunction<TValue, TArg>;
     24→const isFunction = <TValue, TArg>(
     25→  valOrFunction: ValueOrFunction<TValue, TArg>
     26→): valOrFunction is ValueFunction<TValue, TArg> =>
@@ -109,7 +149,23 @@ core/types.ts
     32→): TValue => (isFunction(valOrFunction) ? valOrFunction(arg) : valOrFunction);
     34→export interface Toast {
     60→export type ToastOptions = Partial<
+    61→  Pick<
+    62→    Toast,
+    63→    | 'id'
+    64→    | 'icon'
+    65→    | 'duration'
+    66→    | 'ariaProps'
+    67→    | 'className'
+    68→    | 'style'
+    69→    | 'position'
+    70→    | 'iconTheme'
+    71→    | 'toasterId'
+    72→    | 'removeDelay'
+    73→  >
+    74→>;
     76→export type DefaultToastOptions = ToastOptions & {
+    77→  [key in ToastType]?: ToastOptions;
+    78→};
     80→export interface ToasterProps {
     91→export interface ToastWrapperProps {
 core/use-toaster.ts
