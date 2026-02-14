@@ -271,3 +271,13 @@ fn fixture_anyhow() {
     let output = format::format_directory(&root);
     insta::assert_snapshot!(output);
 }
+
+#[test]
+fn fixture_once_cell() {
+    let Some(root) = fixture_path("once_cell/src") else {
+        eprintln!("skipping fixture_once_cell: clone with `git clone --depth 1 https://github.com/matklad/once_cell.git test/fixtures/once_cell`");
+        return;
+    };
+    let output = format::format_directory(&root);
+    insta::assert_snapshot!(output);
+}
