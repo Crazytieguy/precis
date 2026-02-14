@@ -1,0 +1,61 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+comparator.js:
+  const ANY :3
+  class Comparator :5
+  static get ANY :6
+  constructor :10
+  parse :36
+  toString :57
+  test :61
+  intersects :79
+  const parseOptions :138
+  const cmp :140
+  const debug :141
+  const SemVer :142
+  const Range :143
+range.js:
+  const SPACE_CHARACTERS :3
+  class Range :6
+  constructor :7
+  get range :73
+  format :92
+  toString :96
+  parseRange :100
+  intersects :170
+  test :193
+  const LRU :217
+  const cache :218
+  const parseOptions :220
+  const Comparator :221
+  const debug :222
+  const SemVer :223
+  const isNullSet :233
+  const isAny :234
+  const isSatisfiable :238
+  const parseComparator :257
+  const isX :271
+  const replaceTildes :280
+  const replaceTilde :288
+  const replaceCarets :324
+  const replaceCaret :332
+  const replaceXRanges :385
+  const replaceXRange :393
+  const replaceStars :470
+  const replaceGTE0 :478
+  const hyphenReplace :491
+  const testSet :523
+semver.js:
+  const debug :3
+  const parseOptions :7
+  class SemVer :9
+  constructor :10
+  format :81
+  toString :89
+  compare :93
+  compareMain :109
+  comparePre :135
+  compareBuild :168
+  inc :194

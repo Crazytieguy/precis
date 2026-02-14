@@ -182,3 +182,13 @@ fn fixture_neverthrow() {
     let output = format::format_directory(&root);
     insta::assert_snapshot!(output);
 }
+
+#[test]
+fn fixture_semver() {
+    let Some(root) = fixture_path("semver/classes") else {
+        eprintln!("skipping fixture_semver: clone with `git clone --depth 1 https://github.com/npm/node-semver.git test/fixtures/semver`");
+        return;
+    };
+    let output = format::format_directory(&root);
+    insta::assert_snapshot!(output);
+}
