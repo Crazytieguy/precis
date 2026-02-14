@@ -56,16 +56,7 @@ pub fn read_sources(files: &[PathBuf]) -> Vec<Option<String>> {
 /// Accepts pre-discovered files and pre-read sources to avoid redundant I/O.
 pub fn budget_level(budget: usize, root: &Path, files: &[PathBuf], sources: &[Option<String>]) -> u8 {
     search_level(budget, |level| {
-        let mut out = String::new();
-        for (file, source) in files.iter().zip(sources) {
-            if level == 0 {
-                let relative = file.strip_prefix(root).unwrap_or(file);
-                out.push_str(&format!("{}\n", relative.display()));
-            } else if let Some(s) = source {
-                out.push_str(&render_file(level, file, root, s));
-            }
-        }
-        count_words(&out)
+        count_words(&render_files(level, root, files, sources))
     })
 }
 
@@ -80,11 +71,8 @@ pub fn render_files(level: u8, root: &Path, files: &[PathBuf], sources: &[Option
     let mut out = String::new();
     for (file, source) in files.iter().zip(sources) {
         if level == 0 {
-            let relative = file.strip_prefix(root).unwrap_or(file);
-            out.push_str(&format!("{}\n", relative.display()));
-            continue;
-        }
-        if let Some(s) = source {
+            out.push_str(&render_file(0, file, root, ""));
+        } else if let Some(s) = source {
             out.push_str(&render_file(level, file, root, s));
         }
     }
