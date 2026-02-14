@@ -90,11 +90,12 @@ fn render_symbols(path: &Path, root: &Path, source: &str, truncate: bool) -> Str
     if symbols.is_empty() {
         return out;
     }
+    let lines: Vec<&str> = source.lines().collect();
     for sym in &symbols {
         if truncate {
-            out.push_str(&format_symbol_name(sym, source));
+            out.push_str(&format_symbol_name(sym, &lines));
         } else {
-            out.push_str(&format_symbol_line(sym, source));
+            out.push_str(&format_symbol_line(sym, &lines));
         }
         out.push('\n');
     }
@@ -102,8 +103,8 @@ fn render_symbols(path: &Path, root: &Path, source: &str, truncate: bool) -> Str
 }
 
 /// Format a symbol line truncated at the symbol name (level 1).
-fn format_symbol_name(sym: &parse::Symbol, source: &str) -> String {
-    let source_line = source.lines().nth(sym.line - 1).unwrap_or("");
+fn format_symbol_name(sym: &parse::Symbol, lines: &[&str]) -> String {
+    let source_line = lines.get(sym.line - 1).copied().unwrap_or("");
     let trimmed = source_line.trim_start();
     let indent = &source_line[..source_line.len() - trimmed.len()];
     let name_prefix = match find_word(&sym.name, trimmed) {
@@ -114,12 +115,12 @@ fn format_symbol_name(sym: &parse::Symbol, source: &str) -> String {
 }
 
 /// Format a symbol line showing the full source line (level 2).
-fn format_symbol_line(sym: &parse::Symbol, source: &str) -> String {
-    let source_line = source.lines().nth(sym.line - 1).unwrap_or("");
+fn format_symbol_line(sym: &parse::Symbol, lines: &[&str]) -> String {
+    let source_line = lines.get(sym.line - 1).copied().unwrap_or("");
     format!("{:>6}→{}", sym.line, source_line)
 }
 
-/// Render all lines of a file with line numbers (level 3).
+/// Render all lines of a file with line numbers (level 4).
 fn render_full_source(path: &Path, root: &Path, source: &str) -> String {
     let relative = path.strip_prefix(root).unwrap_or(path);
     let mut out = String::new();
@@ -146,7 +147,7 @@ fn render_symbols_with_docs(path: &Path, root: &Path, source: &str) -> String {
         for (i, line) in lines.iter().enumerate().take(sym_line_0).skip(doc_start) {
             out.push_str(&format!("{:>6}→{}\n", i + 1, line));
         }
-        out.push_str(&format_symbol_line(sym, source));
+        out.push_str(&format_symbol_line(sym, &lines));
         out.push('\n');
     }
     out
