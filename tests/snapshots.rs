@@ -1,5 +1,5 @@
 use std::path::Path;
-use symbols::{format, parse};
+use symbols::format;
 
 #[test]
 fn self_snapshot() {
@@ -63,13 +63,6 @@ macro_rules! token {
 
 pub mod lexer;
 "#;
-    let symbols = parse::extract_symbols(Path::new("sample.rs"), source);
-    let formatted: Vec<String> = symbols
-        .iter()
-        .map(|s| {
-            let vis = if s.is_public { "pub " } else { "" };
-            format!("{vis}{} {}", s.kind, s.name)
-        })
-        .collect();
-    insta::assert_snapshot!(formatted.join("\n"));
+    let output = format::format_file_symbols(Path::new("sample.rs"), Path::new(""), source);
+    insta::assert_snapshot!(output);
 }

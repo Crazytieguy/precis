@@ -1,20 +1,21 @@
 ---
 source: tests/snapshots.rs
-expression: "formatted.join(\"\\n\")"
+expression: output
 ---
-pub fn process
-fn helper
-pub struct Token
-pub enum TokenKind
-pub trait Visitor
-fn visit_token
-fn visit_all
-impl std::fmt::Display for Token
-fn fmt
-impl Token
-pub fn new
-pub type Span
-const MAX_TOKENS
-pub static VERSION
-macro token
-pub mod lexer
+sample.rs:
+  pub fn process
+  fn helper
+  pub struct Token
+  pub enum TokenKind
+  pub trait Visitor
+  fn visit_token
+  fn visit_all
+  impl std::fmt::Display for Token
+  fn fmt
+  impl Token
+  pub fn new
+  pub type Span
+  const MAX_TOKENS
+  pub static VERSION
+  macro token
+  pub mod lexer
