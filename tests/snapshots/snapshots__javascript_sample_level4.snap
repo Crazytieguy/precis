@@ -7,7 +7,16 @@ sample.js
      6→function helper() {}
      8→export class TokenParser {
      9→    constructor(input) {
+    10→        this.tokens = [];
+    11→    }
+    12→
     13→    parse() {
+    14→        return this.tokens;
+    15→    }
+    16→
     17→    #advance() {}
+    18→}
     20→export const MAX_TOKENS = 1024;
     22→export default class DefaultExport {
+    23→    name = "";
+    24→}

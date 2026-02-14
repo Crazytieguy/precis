@@ -11,117 +11,1203 @@ _callers.py
     82→def _multicall(
 _hooks.py
     40→class HookspecOpts(TypedDict):
+    41→    """Options for a hook specification."""
+    42→
+    43→    #: Whether the hook is :ref:`first result only <firstresult>`.
+    44→    firstresult: bool
+    45→    #: Whether the hook is :ref:`historic <historic>`.
+    46→    historic: bool
+    47→    #: Whether the hook :ref:`warns when implemented <warn_on_impl>`.
+    48→    warn_on_impl: Warning | None
+    49→    #: Whether the hook warns when :ref:`certain arguments are requested
+    50→    #: <warn_on_impl>`.
+    51→    #:
+    52→    #: .. versionadded:: 1.5
+    53→    warn_on_impl_args: Mapping[str, Warning] | None
     56→class HookimplOpts(TypedDict):
+    57→    """Options for a hook implementation."""
+    58→
+    59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
+    60→    wrapper: bool
+    61→    #: Whether the hook implementation is an :ref:`old-style wrapper
+    62→    #: <old_style_hookwrappers>`.
+    63→    hookwrapper: bool
+    64→    #: Whether validation against a hook specification is :ref:`optional
+    65→    #: <optionalhook>`.
+    66→    optionalhook: bool
+    67→    #: Whether to try to order this hook implementation :ref:`first
+    68→    #: <callorder>`.
+    69→    tryfirst: bool
+    70→    #: Whether to try to order this hook implementation :ref:`last
+    71→    #: <callorder>`.
+    72→    trylast: bool
+    73→    #: The name of the hook specification to match, see :ref:`specname`.
+    74→    specname: str | None
     77→@final
     78→class HookspecMarker:
+    79→    """Decorator for marking functions as hook specifications.
+    80→
+    81→    Instantiate it with a project_name to get a decorator.
+    82→    Calling :meth:`PluginManager.add_hookspecs` later will discover all marked
+    83→    functions if the :class:`PluginManager` uses the same project name.
+    84→    """
+    85→
+    86→    __slots__ = ("project_name",)
+    87→
     88→    def __init__(self, project_name: str) -> None:
+    89→        self.project_name: Final = project_name
+    90→
+    91→    @overload
+    92→    def __call__(
+    93→        self,
+    94→        function: _F,
+    95→        firstresult: bool = False,
+    96→        historic: bool = False,
+    97→        warn_on_impl: Warning | None = None,
+    98→        warn_on_impl_args: Mapping[str, Warning] | None = None,
+    99→    ) -> _F: ...
+   100→
+   101→    @overload  # noqa: F811
+   102→    def __call__(  # noqa: F811
+   103→        self,
+   104→        function: None = ...,
+   105→        firstresult: bool = ...,
+   106→        historic: bool = ...,
+   107→        warn_on_impl: Warning | None = ...,
+   108→        warn_on_impl_args: Mapping[str, Warning] | None = ...,
+   109→    ) -> Callable[[_F], _F]: ...
+   110→
    111→    def __call__(  # noqa: F811
+   112→        self,
+   113→        function: _F | None = None,
+   114→        firstresult: bool = False,
+   115→        historic: bool = False,
+   116→        warn_on_impl: Warning | None = None,
+   117→        warn_on_impl_args: Mapping[str, Warning] | None = None,
+   118→    ) -> _F | Callable[[_F], _F]:
+   119→        """If passed a function, directly sets attributes on the function
+   120→        which will make it discoverable to :meth:`PluginManager.add_hookspecs`.
+   121→
+   122→        If passed no function, returns a decorator which can be applied to a
+   123→        function later using the attributes supplied.
+   124→
+   125→        :param firstresult:
+   126→            If ``True``, the 1:N hook call (N being the number of registered
+   127→            hook implementation functions) will stop at I<=N when the I'th
+   128→            function returns a non-``None`` result. See :ref:`firstresult`.
+   129→
+   130→        :param historic:
+   131→            If ``True``, every call to the hook will be memorized and replayed
+   132→            on plugins registered after the call was made. See :ref:`historic`.
+   133→
+   134→        :param warn_on_impl:
+   135→            If given, every implementation of this hook will trigger the given
+   136→            warning. See :ref:`warn_on_impl`.
+   137→
+   138→        :param warn_on_impl_args:
+   139→            If given, every implementation of this hook which requests one of
+   140→            the arguments in the dict will trigger the corresponding warning.
+   141→            See :ref:`warn_on_impl`.
+   142→
+   143→            .. versionadded:: 1.5
+   144→        """
+   145→
+   146→        def setattr_hookspec_opts(func: _F) -> _F:
+   147→            if historic and firstresult:
+   148→                raise ValueError("cannot have a historic firstresult hook")
+   149→            opts: HookspecOpts = {
+   150→                "firstresult": firstresult,
+   151→                "historic": historic,
+   152→                "warn_on_impl": warn_on_impl,
+   153→                "warn_on_impl_args": warn_on_impl_args,
+   154→            }
+   155→            setattr(func, self.project_name + "_spec", opts)
+   156→            return func
+   157→
+   158→        if function is not None:
+   159→            return setattr_hookspec_opts(function)
+   160→        else:
+   161→            return setattr_hookspec_opts
    164→@final
    165→class HookimplMarker:
+   166→    """Decorator for marking functions as hook implementations.
+   167→
+   168→    Instantiate it with a ``project_name`` to get a decorator.
+   169→    Calling :meth:`PluginManager.register` later will discover all marked
+   170→    functions if the :class:`PluginManager` uses the same project name.
+   171→    """
+   172→
+   173→    __slots__ = ("project_name",)
+   174→
    175→    def __init__(self, project_name: str) -> None:
+   176→        self.project_name: Final = project_name
+   177→
+   178→    @overload
+   179→    def __call__(
+   180→        self,
+   181→        function: _F,
+   182→        hookwrapper: bool = ...,
+   183→        optionalhook: bool = ...,
+   184→        tryfirst: bool = ...,
+   185→        trylast: bool = ...,
+   186→        specname: str | None = ...,
+   187→        wrapper: bool = ...,
+   188→    ) -> _F: ...
+   189→
+   190→    @overload  # noqa: F811
+   191→    def __call__(  # noqa: F811
+   192→        self,
+   193→        function: None = ...,
+   194→        hookwrapper: bool = ...,
+   195→        optionalhook: bool = ...,
+   196→        tryfirst: bool = ...,
+   197→        trylast: bool = ...,
+   198→        specname: str | None = ...,
+   199→        wrapper: bool = ...,
+   200→    ) -> Callable[[_F], _F]: ...
+   201→
    202→    def __call__(  # noqa: F811
+   203→        self,
+   204→        function: _F | None = None,
+   205→        hookwrapper: bool = False,
+   206→        optionalhook: bool = False,
+   207→        tryfirst: bool = False,
+   208→        trylast: bool = False,
+   209→        specname: str | None = None,
+   210→        wrapper: bool = False,
+   211→    ) -> _F | Callable[[_F], _F]:
+   212→        """If passed a function, directly sets attributes on the function
+   213→        which will make it discoverable to :meth:`PluginManager.register`.
+   214→
+   215→        If passed no function, returns a decorator which can be applied to a
+   216→        function later using the attributes supplied.
+   217→
+   218→        :param optionalhook:
+   219→            If ``True``, a missing matching hook specification will not result
+   220→            in an error (by default it is an error if no matching spec is
+   221→            found). See :ref:`optionalhook`.
+   222→
+   223→        :param tryfirst:
+   224→            If ``True``, this hook implementation will run as early as possible
+   225→            in the chain of N hook implementations for a specification. See
+   226→            :ref:`callorder`.
+   227→
+   228→        :param trylast:
+   229→            If ``True``, this hook implementation will run as late as possible
+   230→            in the chain of N hook implementations for a specification. See
+   231→            :ref:`callorder`.
+   232→
+   233→        :param wrapper:
+   234→            If ``True`` ("new-style hook wrapper"), the hook implementation
+   235→            needs to execute exactly one ``yield``. The code before the
+   236→            ``yield`` is run early before any non-hook-wrapper function is run.
+   237→            The code after the ``yield`` is run after all non-hook-wrapper
+   238→            functions have run. The ``yield`` receives the result value of the
+   239→            inner calls, or raises the exception of inner calls (including
+   240→            earlier hook wrapper calls). The return value of the function
+   241→            becomes the return value of the hook, and a raised exception becomes
+   242→            the exception of the hook. See :ref:`hookwrapper`.
+   243→
+   244→        :param hookwrapper:
+   245→            If ``True`` ("old-style hook wrapper"), the hook implementation
+   246→            needs to execute exactly one ``yield``. The code before the
+   247→            ``yield`` is run early before any non-hook-wrapper function is run.
+   248→            The code after the ``yield`` is run after all non-hook-wrapper
+   249→            function have run  The ``yield`` receives a :class:`Result` object
+   250→            representing the exception or result outcome of the inner calls
+   251→            (including earlier hook wrapper calls). This option is mutually
+   252→            exclusive with ``wrapper``. See :ref:`old_style_hookwrapper`.
+   253→
+   254→        :param specname:
+   255→            If provided, the given name will be used instead of the function
+   256→            name when matching this hook implementation to a hook specification
+   257→            during registration. See :ref:`specname`.
+   258→
+   259→        .. versionadded:: 1.2.0
+   260→            The ``wrapper`` parameter.
+   261→        """
+   262→
+   263→        def setattr_hookimpl_opts(func: _F) -> _F:
+   264→            opts: HookimplOpts = {
+   265→                "wrapper": wrapper,
+   266→                "hookwrapper": hookwrapper,
+   267→                "optionalhook": optionalhook,
+   268→                "tryfirst": tryfirst,
+   269→                "trylast": trylast,
+   270→                "specname": specname,
+   271→            }
+   272→            setattr(func, self.project_name + "_impl", opts)
+   273→            return func
+   274→
+   275→        if function is None:
+   276→            return setattr_hookimpl_opts
+   277→        else:
+   278→            return setattr_hookimpl_opts(function)
    281→def normalize_hookimpl_opts(opts: HookimplOpts) -> None:
    293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
    358→@final
    359→class HookRelay:
+   360→    """Hook holder object for performing 1:N hook calls where N is the number
+   361→    of registered plugins."""
+   362→
+   363→    __slots__ = ("__dict__",)
+   364→
    365→    def __init__(self) -> None:
+   366→        """:meta private:"""
+   367→
+   368→    if TYPE_CHECKING:
+   369→
    370→        def __getattr__(self, name: str) -> HookCaller: ...
    382→class HookCaller:
+   383→    """A caller of all registered implementations of a hook specification."""
+   384→
+   385→    __slots__ = (
+   386→        "name",
+   387→        "spec",
+   388→        "_hookexec",
+   389→        "_hookimpls",
+   390→        "_call_history",
+   391→    )
+   392→
    393→    def __init__(
+   394→        self,
+   395→        name: str,
+   396→        hook_execute: _HookExec,
+   397→        specmodule_or_class: _Namespace | None = None,
+   398→        spec_opts: HookspecOpts | None = None,
+   399→    ) -> None:
+   400→        """:meta private:"""
+   401→        #: Name of the hook getting called.
+   402→        self.name: Final = name
+   403→        self._hookexec: Final = hook_execute
+   404→        # The hookimpls list. The caller iterates it *in reverse*. Format:
+   405→        # 1. trylast nonwrappers
+   406→        # 2. nonwrappers
+   407→        # 3. tryfirst nonwrappers
+   408→        # 4. trylast wrappers
+   409→        # 5. wrappers
+   410→        # 6. tryfirst wrappers
+   411→        self._hookimpls: Final[list[HookImpl]] = []
+   412→        self._call_history: _CallHistory | None = None
+   413→        # TODO: Document, or make private.
+   414→        self.spec: HookSpec | None = None
+   415→        if specmodule_or_class is not None:
+   416→            assert spec_opts is not None
+   417→            self.set_specification(specmodule_or_class, spec_opts)
+   418→
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
+   421→        return self.spec is not None
+   422→
    423→    # TODO: Document, or make private.
    424→    def set_specification(
+   425→        self,
+   426→        specmodule_or_class: _Namespace,
+   427→        spec_opts: HookspecOpts,
+   428→    ) -> None:
+   429→        if self.spec is not None:
+   430→            raise ValueError(
+   431→                f"Hook {self.spec.name!r} is already registered "
+   432→                f"within namespace {self.spec.namespace}"
+   433→            )
+   434→        self.spec = HookSpec(specmodule_or_class, self.name, spec_opts)
+   435→        if spec_opts.get("historic"):
+   436→            self._call_history = []
+   437→
    438→    def is_historic(self) -> bool:
+   439→        """Whether this caller is :ref:`historic <historic>`."""
+   440→        return self._call_history is not None
+   441→
    442→    def _remove_plugin(self, plugin: _Plugin) -> None:
+   443→        for i, method in enumerate(self._hookimpls):
+   444→            if method.plugin == plugin:
+   445→                del self._hookimpls[i]
+   446→                return
+   447→        raise ValueError(f"plugin {plugin!r} not found")
+   448→
    449→    def get_hookimpls(self) -> list[HookImpl]:
+   450→        """Get all registered hook implementations for this hook."""
+   451→        return self._hookimpls.copy()
+   452→
    453→    def _add_hookimpl(self, hookimpl: HookImpl) -> None:
+   454→        """Add an implementation to the callback chain."""
+   455→        for i, method in enumerate(self._hookimpls):
+   456→            if method.hookwrapper or method.wrapper:
+   457→                splitpoint = i
+   458→                break
+   459→        else:
+   460→            splitpoint = len(self._hookimpls)
+   461→        if hookimpl.hookwrapper or hookimpl.wrapper:
+   462→            start, end = splitpoint, len(self._hookimpls)
+   463→        else:
+   464→            start, end = 0, splitpoint
+   465→
+   466→        if hookimpl.trylast:
+   467→            self._hookimpls.insert(start, hookimpl)
+   468→        elif hookimpl.tryfirst:
+   469→            self._hookimpls.insert(end, hookimpl)
+   470→        else:
+   471→            # find last non-tryfirst method
+   472→            i = end - 1
+   473→            while i >= start and self._hookimpls[i].tryfirst:
+   474→                i -= 1
+   475→            self._hookimpls.insert(i + 1, hookimpl)
+   476→
    477→    def __repr__(self) -> str:
+   478→        return f"<HookCaller {self.name!r}>"
+   479→
    480→    def _verify_all_args_are_provided(self, kwargs: Mapping[str, object]) -> None:
+   481→        # This is written to avoid expensive operations when not needed.
+   482→        if self.spec:
+   483→            for argname in self.spec.argnames:
+   484→                if argname not in kwargs:
+   485→                    notincall = ", ".join(
+   486→                        repr(argname)
+   487→                        for argname in self.spec.argnames
+   488→                        # Avoid self.spec.argnames - kwargs.keys()
+   489→                        # it doesn't preserve order.
+   490→                        if argname not in kwargs.keys()
+   491→                    )
+   492→                    warnings.warn(
+   493→                        f"Argument(s) {notincall} which are declared in the hookspec "
+   494→                        "cannot be found in this hook call",
+   495→                        stacklevel=2,
+   496→                    )
+   497→                    break
+   498→
    499→    def __call__(self, **kwargs: object) -> Any:
+   500→        """Call the hook.
+   501→
+   502→        Only accepts keyword arguments, which should match the hook
+   503→        specification.
+   504→
+   505→        Returns the result(s) of calling all registered plugins, see
+   506→        :ref:`calling`.
+   507→        """
+   508→        assert not self.is_historic(), (
+   509→            "Cannot directly call a historic hook - use call_historic instead."
+   510→        )
+   511→        self._verify_all_args_are_provided(kwargs)
+   512→        firstresult = self.spec.opts.get("firstresult", False) if self.spec else False
+   513→        # Copy because plugins may register other plugins during iteration (#438).
+   514→        return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+   515→
    516→    def call_historic(
+   517→        self,
+   518→        result_callback: Callable[[Any], None] | None = None,
+   519→        kwargs: Mapping[str, object] | None = None,
+   520→    ) -> None:
+   521→        """Call the hook with given ``kwargs`` for all registered plugins and
+   522→        for all plugins which will be registered afterwards, see
+   523→        :ref:`historic`.
+   524→
+   525→        :param result_callback:
+   526→            If provided, will be called for each non-``None`` result obtained
+   527→            from a hook implementation.
+   528→        """
+   529→        assert self._call_history is not None
+   530→        kwargs = kwargs or {}
+   531→        self._verify_all_args_are_provided(kwargs)
+   532→        self._call_history.append((kwargs, result_callback))
+   533→        # Historizing hooks don't return results.
+   534→        # Remember firstresult isn't compatible with historic.
+   535→        # Copy because plugins may register other plugins during iteration (#438).
+   536→        res = self._hookexec(self.name, self._hookimpls.copy(), kwargs, False)
+   537→        if result_callback is None:
+   538→            return
+   539→        if isinstance(res, list):
+   540→            for x in res:
+   541→                result_callback(x)
+   542→
    543→    def call_extra(
+   544→        self, methods: Sequence[Callable[..., object]], kwargs: Mapping[str, object]
+   545→    ) -> Any:
+   546→        """Call the hook with some additional temporarily participating
+   547→        methods using the specified ``kwargs`` as call parameters, see
+   548→        :ref:`call_extra`."""
+   549→        assert not self.is_historic(), (
+   550→            "Cannot directly call a historic hook - use call_historic instead."
+   551→        )
+   552→        self._verify_all_args_are_provided(kwargs)
+   553→        opts: HookimplOpts = {
+   554→            "wrapper": False,
+   555→            "hookwrapper": False,
+   556→            "optionalhook": False,
+   557→            "trylast": False,
+   558→            "tryfirst": False,
+   559→            "specname": None,
+   560→        }
+   561→        hookimpls = self._hookimpls.copy()
+   562→        for method in methods:
+   563→            hookimpl = HookImpl(None, "<temp>", method, opts)
+   564→            # Find last non-tryfirst nonwrapper method.
+   565→            i = len(hookimpls) - 1
+   566→            while i >= 0 and (
+   567→                # Skip wrappers.
+   568→                (hookimpls[i].hookwrapper or hookimpls[i].wrapper)
+   569→                # Skip tryfirst nonwrappers.
+   570→                or hookimpls[i].tryfirst
+   571→            ):
+   572→                i -= 1
+   573→            hookimpls.insert(i + 1, hookimpl)
+   574→        firstresult = self.spec.opts.get("firstresult", False) if self.spec else False
+   575→        return self._hookexec(self.name, hookimpls, kwargs, firstresult)
+   576→
    577→    def _maybe_apply_history(self, method: HookImpl) -> None:
+   578→        """Apply call history to a new hookimpl if it is marked as historic."""
+   579→        if self.is_historic():
+   580→            assert self._call_history is not None
+   581→            for kwargs, result_callback in self._call_history:
+   582→                res = self._hookexec(self.name, [method], kwargs, False)
+   583→                if res and result_callback is not None:
+   584→                    # XXX: remember firstresult isn't compat with historic
+   585→                    assert isinstance(res, list)
+   586→                    result_callback(res[0])
    593→class _SubsetHookCaller(HookCaller):
+   594→    """A proxy to another HookCaller which manages calls to all registered
+   595→    plugins except the ones from remove_plugins."""
+   596→
+   597→    # This class is unusual: in inhertits from `HookCaller` so all of
+   598→    # the *code* runs in the class, but it delegates all underlying *data*
+   599→    # to the original HookCaller.
+   600→    # `subset_hook_caller` used to be implemented by creating a full-fledged
+   601→    # HookCaller, copying all hookimpls from the original. This had problems
+   602→    # with memory leaks (#346) and historic calls (#347), which make a proxy
+   603→    # approach better.
+   604→    # An alternative implementation is to use a `_getattr__`/`__getattribute__`
+   605→    # proxy, however that adds more overhead and is more tricky to implement.
+   606→
+   607→    __slots__ = (
+   608→        "_orig",
+   609→        "_remove_plugins",
+   610→    )
+   611→
    612→    def __init__(self, orig: HookCaller, remove_plugins: Set[_Plugin]) -> None:
+   613→        self._orig = orig
+   614→        self._remove_plugins = remove_plugins
+   615→        self.name = orig.name  # type: ignore[misc]
+   616→        self._hookexec = orig._hookexec  # type: ignore[misc]
+   617→
    618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
+   620→        return [
+   621→            impl
+   622→            for impl in self._orig._hookimpls
+   623→            if impl.plugin not in self._remove_plugins
+   624→        ]
+   625→
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
+   628→        return self._orig.spec
+   629→
    630→    @property
    631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
+   632→        return self._orig._call_history
+   633→
    634→    def __repr__(self) -> str:
+   635→        return f"<_SubsetHookCaller {self.name!r}>"
    638→@final
    639→class HookImpl:
+   640→    """A hook implementation in a :class:`HookCaller`."""
+   641→
+   642→    __slots__ = (
+   643→        "function",
+   644→        "argnames",
+   645→        "kwargnames",
+   646→        "plugin",
+   647→        "opts",
+   648→        "plugin_name",
+   649→        "wrapper",
+   650→        "hookwrapper",
+   651→        "optionalhook",
+   652→        "tryfirst",
+   653→        "trylast",
+   654→    )
+   655→
    656→    def __init__(
+   657→        self,
+   658→        plugin: _Plugin,
+   659→        plugin_name: str,
+   660→        function: _HookImplFunction[object],
+   661→        hook_impl_opts: HookimplOpts,
+   662→    ) -> None:
+   663→        """:meta private:"""
+   664→        #: The hook implementation function.
+   665→        self.function: Final = function
+   666→        argnames, kwargnames = varnames(self.function)
+   667→        #: The positional parameter names of ``function```.
+   668→        self.argnames: Final = argnames
+   669→        #: The keyword parameter names of ``function```.
+   670→        self.kwargnames: Final = kwargnames
+   671→        #: The plugin which defined this hook implementation.
+   672→        self.plugin: Final = plugin
+   673→        #: The :class:`HookimplOpts` used to configure this hook implementation.
+   674→        self.opts: Final = hook_impl_opts
+   675→        #: The name of the plugin which defined this hook implementation.
+   676→        self.plugin_name: Final = plugin_name
+   677→        #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
+   678→        self.wrapper: Final = hook_impl_opts["wrapper"]
+   679→        #: Whether the hook implementation is an :ref:`old-style wrapper
+   680→        #: <old_style_hookwrappers>`.
+   681→        self.hookwrapper: Final = hook_impl_opts["hookwrapper"]
+   682→        #: Whether validation against a hook specification is :ref:`optional
+   683→        #: <optionalhook>`.
+   684→        self.optionalhook: Final = hook_impl_opts["optionalhook"]
+   685→        #: Whether to try to order this hook implementation :ref:`first
+   686→        #: <callorder>`.
+   687→        self.tryfirst: Final = hook_impl_opts["tryfirst"]
+   688→        #: Whether to try to order this hook implementation :ref:`last
+   689→        #: <callorder>`.
+   690→        self.trylast: Final = hook_impl_opts["trylast"]
+   691→
    692→    def __repr__(self) -> str:
+   693→        return f"<HookImpl plugin_name={self.plugin_name!r}, plugin={self.plugin!r}>"
    696→@final
    697→class HookSpec:
+   698→    __slots__ = (
+   699→        "namespace",
+   700→        "function",
+   701→        "name",
+   702→        "argnames",
+   703→        "kwargnames",
+   704→        "opts",
+   705→        "warn_on_impl",
+   706→        "warn_on_impl_args",
+   707→    )
+   708→
    709→    def __init__(self, namespace: _Namespace, name: str, opts: HookspecOpts) -> None:
+   710→        self.namespace = namespace
+   711→        self.function: Callable[..., object] = getattr(namespace, name)
+   712→        self.name = name
+   713→        self.argnames, self.kwargnames = varnames(self.function)
+   714→        self.opts = opts
+   715→        self.warn_on_impl = opts.get("warn_on_impl")
+   716→        self.warn_on_impl_args = opts.get("warn_on_impl_args")
 _manager.py
     42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
     52→class PluginValidationError(Exception):
+    53→    """Plugin failed validation.
+    54→
+    55→    :param plugin: The plugin which failed validation.
+    56→    :param message: Error message.
+    57→    """
+    58→
     59→    def __init__(self, plugin: _Plugin, message: str) -> None:
+    60→        super().__init__(message)
+    61→        #: The plugin which failed validation.
+    62→        self.plugin = plugin
     65→class DistFacade:
+    66→    """Emulate a pkg_resources Distribution"""
+    67→
     68→    def __init__(self, dist: importlib.metadata.Distribution) -> None:
+    69→        self._dist = dist
+    70→
     71→    @property
     72→    def project_name(self) -> str:
+    73→        name: str = self.metadata["name"]
+    74→        return name
+    75→
     76→    def __getattr__(self, attr: str, default: Any | None = None) -> Any:
+    77→        return getattr(self._dist, attr, default)
+    78→
     79→    def __dir__(self) -> list[str]:
+    80→        return sorted(dir(self._dist) + ["_dist", "project_name"])
     83→class PluginManager:
+    84→    """Core class which manages registration of plugin objects and 1:N hook
+    85→    calling.
+    86→
+    87→    You can register new hooks by calling :meth:`add_hookspecs(module_or_class)
+    88→    <PluginManager.add_hookspecs>`.
+    89→
+    90→    You can register plugin objects (which contain hook implementations) by
+    91→    calling :meth:`register(plugin) <PluginManager.register>`.
+    92→
+    93→    For debugging purposes you can call :meth:`PluginManager.enable_tracing`
+    94→    which will subsequently send debug information to the trace helper.
+    95→
+    96→    :param project_name:
+    97→        The short project name. Prefer snake case. Make sure it's unique!
+    98→    """
+    99→
    100→    def __init__(self, project_name: str) -> None:
+   101→        #: The project name.
+   102→        self.project_name: Final = project_name
+   103→        self._name2plugin: Final[dict[str, _Plugin]] = {}
+   104→        self._plugin_distinfo: Final[list[tuple[_Plugin, DistFacade]]] = []
+   105→        #: The "hook relay", used to call a hook on all registered plugins.
+   106→        #: See :ref:`calling`.
+   107→        self.hook: Final = HookRelay()
+   108→        #: The tracing entry point. See :ref:`tracing`.
+   109→        self.trace: Final[_tracing.TagTracerSub] = _tracing.TagTracer().get(
+   110→            "pluginmanage"
+   111→        )
+   112→        self._inner_hookexec = _multicall
+   113→
    114→    def _hookexec(
+   115→        self,
+   116→        hook_name: str,
+   117→        methods: Sequence[HookImpl],
+   118→        kwargs: Mapping[str, object],
+   119→        firstresult: bool,
+   120→    ) -> object | list[object]:
+   121→        # called from all hookcaller instances.
+   122→        # enable_tracing will set its own wrapping function at self._inner_hookexec
+   123→        return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+   124→
    125→    def register(self, plugin: _Plugin, name: str | None = None) -> str | None:
+   126→        """Register a plugin and return its name.
+   127→
+   128→        :param name:
+   129→            The name under which to register the plugin. If not specified, a
+   130→            name is generated using :func:`get_canonical_name`.
+   131→
+   132→        :returns:
+   133→            The plugin name. If the name is blocked from registering, returns
+   134→            ``None``.
+   135→
+   136→        If the plugin is already registered, raises a :exc:`ValueError`.
+   137→        """
+   138→        plugin_name = name or self.get_canonical_name(plugin)
+   139→
+   140→        if plugin_name in self._name2plugin:
+   141→            if self._name2plugin.get(plugin_name, -1) is None:
+   142→                return None  # blocked plugin, return None to indicate no registration
+   143→            raise ValueError(
+   144→                "Plugin name already registered: "
+   145→                f"{plugin_name}={plugin}\n{self._name2plugin}"
+   146→            )
+   147→
+   148→        if plugin in self._name2plugin.values():
+   149→            raise ValueError(
+   150→                "Plugin already registered under a different name: "
+   151→                f"{plugin_name}={plugin}\n{self._name2plugin}"
+   152→            )
+   153→
+   154→        # XXX if an error happens we should make sure no state has been
+   155→        # changed at point of return
+   156→        self._name2plugin[plugin_name] = plugin
+   157→
+   158→        # register matching hook implementations of the plugin
+   159→        for name in dir(plugin):
+   160→            hookimpl_opts = self.parse_hookimpl_opts(plugin, name)
+   161→            if hookimpl_opts is not None:
+   162→                normalize_hookimpl_opts(hookimpl_opts)
+   163→                method: _HookImplFunction[object] = getattr(plugin, name)
+   164→                hookimpl = HookImpl(plugin, plugin_name, method, hookimpl_opts)
+   165→                name = hookimpl_opts.get("specname") or name
+   166→                hook: HookCaller | None = getattr(self.hook, name, None)
+   167→                if hook is None:
+   168→                    hook = HookCaller(name, self._hookexec)
+   169→                    setattr(self.hook, name, hook)
+   170→                elif hook.has_spec():
+   171→                    self._verify_hook(hook, hookimpl)
+   172→                    hook._maybe_apply_history(hookimpl)
+   173→                hook._add_hookimpl(hookimpl)
+   174→        return plugin_name
+   175→
    176→    def parse_hookimpl_opts(self, plugin: _Plugin, name: str) -> HookimplOpts | None:
+   177→        """Try to obtain a hook implementation from an item with the given name
+   178→        in the given plugin which is being searched for hook impls.
+   179→
+   180→        :returns:
+   181→            The parsed hookimpl options, or None to skip the given item.
+   182→
+   183→        This method can be overridden by ``PluginManager`` subclasses to
+   184→        customize how hook implementation are picked up. By default, returns the
+   185→        options for items decorated with :class:`HookimplMarker`.
+   186→        """
+   187→        method: object = getattr(plugin, name)
+   188→        if not inspect.isroutine(method):
+   189→            return None
+   190→        try:
+   191→            res: HookimplOpts | None = getattr(
+   192→                method, self.project_name + "_impl", None
+   193→            )
+   194→        except Exception:  # pragma: no cover
+   195→            res = {}  # type: ignore[assignment] #pragma: no cover
+   196→        if res is not None and not isinstance(res, dict):
+   197→            # false positive
+   198→            res = None  # type:ignore[unreachable] #pragma: no cover
+   199→        return res
+   200→
    201→    def unregister(
+   202→        self, plugin: _Plugin | None = None, name: str | None = None
+   203→    ) -> Any | None:
+   204→        """Unregister a plugin and all of its hook implementations.
+   205→
+   206→        The plugin can be specified either by the plugin object or the plugin
+   207→        name. If both are specified, they must agree.
+   208→
+   209→        Returns the unregistered plugin, or ``None`` if not found.
+   210→        """
+   211→        if name is None:
+   212→            assert plugin is not None, "one of name or plugin needs to be specified"
+   213→            name = self.get_name(plugin)
+   214→            assert name is not None, "plugin is not registered"
+   215→
+   216→        if plugin is None:
+   217→            plugin = self.get_plugin(name)
+   218→            if plugin is None:
+   219→                return None
+   220→
+   221→        hookcallers = self.get_hookcallers(plugin)
+   222→        if hookcallers:
+   223→            for hookcaller in hookcallers:
+   224→                hookcaller._remove_plugin(plugin)
+   225→
+   226→        # if self._name2plugin[name] == None registration was blocked: ignore
+   227→        if self._name2plugin.get(name):
+   228→            assert name is not None
+   229→            del self._name2plugin[name]
+   230→
+   231→        return plugin
+   232→
    233→    def set_blocked(self, name: str) -> None:
+   234→        """Block registrations of the given name, unregister if already registered."""
+   235→        self.unregister(name=name)
+   236→        self._name2plugin[name] = None
+   237→
    238→    def is_blocked(self, name: str) -> bool:
+   239→        """Return whether the given plugin name is blocked."""
+   240→        return name in self._name2plugin and self._name2plugin[name] is None
+   241→
    242→    def unblock(self, name: str) -> bool:
+   243→        """Unblocks a name.
+   244→
+   245→        Returns whether the name was actually blocked.
+   246→        """
+   247→        if self._name2plugin.get(name, -1) is None:
+   248→            del self._name2plugin[name]
+   249→            return True
+   250→        return False
+   251→
    252→    def add_hookspecs(self, module_or_class: _Namespace) -> None:
+   253→        """Add new hook specifications defined in the given ``module_or_class``.
+   254→
+   255→        Functions are recognized as hook specifications if they have been
+   256→        decorated with a matching :class:`HookspecMarker`.
+   257→        """
+   258→        names = []
+   259→        for name in dir(module_or_class):
+   260→            spec_opts = self.parse_hookspec_opts(module_or_class, name)
+   261→            if spec_opts is not None:
+   262→                hc: HookCaller | None = getattr(self.hook, name, None)
+   263→                if hc is None:
+   264→                    hc = HookCaller(name, self._hookexec, module_or_class, spec_opts)
+   265→                    setattr(self.hook, name, hc)
+   266→                else:
+   267→                    # Plugins registered this hook without knowing the spec.
+   268→                    hc.set_specification(module_or_class, spec_opts)
+   269→                    for hookfunction in hc.get_hookimpls():
+   270→                        self._verify_hook(hc, hookfunction)
+   271→                names.append(name)
+   272→
+   273→        if not names:
+   274→            raise ValueError(
+   275→                f"did not find any {self.project_name!r} hooks in {module_or_class!r}"
+   276→            )
+   277→
    278→    def parse_hookspec_opts(
+   279→        self, module_or_class: _Namespace, name: str
+   280→    ) -> HookspecOpts | None:
+   281→        """Try to obtain a hook specification from an item with the given name
+   282→        in the given module or class which is being searched for hook specs.
+   283→
+   284→        :returns:
+   285→            The parsed hookspec options for defining a hook, or None to skip the
+   286→            given item.
+   287→
+   288→        This method can be overridden by ``PluginManager`` subclasses to
+   289→        customize how hook specifications are picked up. By default, returns the
+   290→        options for items decorated with :class:`HookspecMarker`.
+   291→        """
+   292→        method = getattr(module_or_class, name)
+   293→        opts: HookspecOpts | None = getattr(method, self.project_name + "_spec", None)
+   294→        return opts
+   295→
    296→    def get_plugins(self) -> set[Any]:
+   297→        """Return a set of all registered plugin objects."""
+   298→        return {x for x in self._name2plugin.values() if x is not None}
+   299→
    300→    def is_registered(self, plugin: _Plugin) -> bool:
+   301→        """Return whether the plugin is already registered."""
+   302→        return any(plugin == val for val in self._name2plugin.values())
+   303→
    304→    def get_canonical_name(self, plugin: _Plugin) -> str:
+   305→        """Return a canonical name for a plugin object.
+   306→
+   307→        Note that a plugin may be registered under a different name
+   308→        specified by the caller of :meth:`register(plugin, name) <register>`.
+   309→        To obtain the name of a registered plugin use :meth:`get_name(plugin)
+   310→        <get_name>` instead.
+   311→        """
+   312→        name: str | None = getattr(plugin, "__name__", None)
+   313→        return name or str(id(plugin))
+   314→
    315→    def get_plugin(self, name: str) -> Any | None:
+   316→        """Return the plugin registered under the given name, if any."""
+   317→        return self._name2plugin.get(name)
+   318→
    319→    def has_plugin(self, name: str) -> bool:
+   320→        """Return whether a plugin with the given name is registered."""
+   321→        return self.get_plugin(name) is not None
+   322→
    323→    def get_name(self, plugin: _Plugin) -> str | None:
+   324→        """Return the name the plugin is registered under, or ``None`` if
+   325→        is isn't."""
+   326→        for name, val in self._name2plugin.items():
+   327→            if plugin == val:
+   328→                return name
+   329→        return None
+   330→
    331→    def _verify_hook(self, hook: HookCaller, hookimpl: HookImpl) -> None:
+   332→        if hook.is_historic() and (hookimpl.hookwrapper or hookimpl.wrapper):
+   333→            raise PluginValidationError(
+   334→                hookimpl.plugin,
+   335→                f"Plugin {hookimpl.plugin_name!r}\nhook {hook.name!r}\n"
+   336→                "historic incompatible with yield/wrapper/hookwrapper",
+   337→            )
+   338→
+   339→        assert hook.spec is not None
+   340→        if hook.spec.warn_on_impl:
+   341→            _warn_for_function(hook.spec.warn_on_impl, hookimpl.function)
+   342→
+   343→        # positional arg checking
+   344→        notinspec = set(hookimpl.argnames) - set(hook.spec.argnames)
+   345→        if notinspec:
+   346→            raise PluginValidationError(
+   347→                hookimpl.plugin,
+   348→                f"Plugin {hookimpl.plugin_name!r} for hook {hook.name!r}\n"
+   349→                f"hookimpl definition: {_formatdef(hookimpl.function)}\n"
+   350→                f"Argument(s) {notinspec} are declared in the hookimpl but "
+   351→                "can not be found in the hookspec",
+   352→            )
+   353→
+   354→        if hook.spec.warn_on_impl_args:
+   355→            for hookimpl_argname in hookimpl.argnames:
+   356→                argname_warning = hook.spec.warn_on_impl_args.get(hookimpl_argname)
+   357→                if argname_warning is not None:
+   358→                    _warn_for_function(argname_warning, hookimpl.function)
+   359→
+   360→        if (
+   361→            hookimpl.wrapper or hookimpl.hookwrapper
+   362→        ) and not inspect.isgeneratorfunction(hookimpl.function):
+   363→            raise PluginValidationError(
+   364→                hookimpl.plugin,
+   365→                f"Plugin {hookimpl.plugin_name!r} for hook {hook.name!r}\n"
+   366→                f"hookimpl definition: {_formatdef(hookimpl.function)}\n"
+   367→                "Declared as wrapper=True or hookwrapper=True "
+   368→                "but function is not a generator function",
+   369→            )
+   370→
+   371→        if hookimpl.wrapper and hookimpl.hookwrapper:
+   372→            raise PluginValidationError(
+   373→                hookimpl.plugin,
+   374→                f"Plugin {hookimpl.plugin_name!r} for hook {hook.name!r}\n"
+   375→                f"hookimpl definition: {_formatdef(hookimpl.function)}\n"
+   376→                "The wrapper=True and hookwrapper=True options are mutually exclusive",
+   377→            )
+   378→
    379→    def check_pending(self) -> None:
+   380→        """Verify that all hooks which have not been verified against a
+   381→        hook specification are optional, otherwise raise
+   382→        :exc:`PluginValidationError`."""
+   383→        for name in self.hook.__dict__:
+   384→            if name[0] == "_":
+   385→                continue
+   386→            hook: HookCaller = getattr(self.hook, name)
+   387→            if not hook.has_spec():
+   388→                for hookimpl in hook.get_hookimpls():
+   389→                    if not hookimpl.optionalhook:
+   390→                        raise PluginValidationError(
+   391→                            hookimpl.plugin,
+   392→                            f"unknown hook {name!r} in plugin {hookimpl.plugin!r}",
+   393→                        )
+   394→
    395→    def load_setuptools_entrypoints(self, group: str, name: str | None = None) -> int:
+   396→        """Load modules from querying the specified setuptools ``group``.
+   397→
+   398→        :param group:
+   399→            Entry point group to load plugins.
+   400→        :param name:
+   401→            If given, loads only plugins with the given ``name``.
+   402→
+   403→        :return:
+   404→            The number of plugins loaded by this call.
+   405→        """
+   406→        import importlib.metadata
+   407→
+   408→        count = 0
+   409→        for dist in list(importlib.metadata.distributions()):
+   410→            for ep in dist.entry_points:
+   411→                if (
+   412→                    ep.group != group
+   413→                    or (name is not None and ep.name != name)
+   414→                    # already registered
+   415→                    or self.get_plugin(ep.name)
+   416→                    or self.is_blocked(ep.name)
+   417→                ):
+   418→                    continue
+   419→                plugin = ep.load()
+   420→                self.register(plugin, name=ep.name)
+   421→                self._plugin_distinfo.append((plugin, DistFacade(dist)))
+   422→                count += 1
+   423→        return count
+   424→
    425→    def list_plugin_distinfo(self) -> list[tuple[_Plugin, DistFacade]]:
+   426→        """Return a list of (plugin, distinfo) pairs for all
+   427→        setuptools-registered plugins."""
+   428→        return list(self._plugin_distinfo)
+   429→
    430→    def list_name_plugin(self) -> list[tuple[str, _Plugin]]:
+   431→        """Return a list of (name, plugin) pairs for all registered plugins."""
+   432→        return list(self._name2plugin.items())
+   433→
    434→    def get_hookcallers(self, plugin: _Plugin) -> list[HookCaller] | None:
+   435→        """Get all hook callers for the specified plugin.
+   436→
+   437→        :returns:
+   438→            The hook callers, or ``None`` if ``plugin`` is not registered in
+   439→            this plugin manager.
+   440→        """
+   441→        if self.get_name(plugin) is None:
+   442→            return None
+   443→        hookcallers = []
+   444→        for hookcaller in self.hook.__dict__.values():
+   445→            for hookimpl in hookcaller.get_hookimpls():
+   446→                if hookimpl.plugin is plugin:
+   447→                    hookcallers.append(hookcaller)
+   448→        return hookcallers
+   449→
    450→    def add_hookcall_monitoring(
+   451→        self, before: _BeforeTrace, after: _AfterTrace
+   452→    ) -> Callable[[], None]:
+   453→        """Add before/after tracing functions for all hooks.
+   454→
+   455→        Returns an undo function which, when called, removes the added tracers.
+   456→
+   457→        ``before(hook_name, hook_impls, kwargs)`` will be called ahead
+   458→        of all hook calls and receive a hookcaller instance, a list
+   459→        of HookImpl instances and the keyword arguments for the hook call.
+   460→
+   461→        ``after(outcome, hook_name, hook_impls, kwargs)`` receives the
+   462→        same arguments as ``before`` but also a :class:`~pluggy.Result` object
+   463→        which represents the result of the overall hook call.
+   464→        """
+   465→        oldcall = self._inner_hookexec
+   466→
+   467→        def traced_hookexec(
+   468→            hook_name: str,
+   469→            hook_impls: Sequence[HookImpl],
+   470→            caller_kwargs: Mapping[str, object],
+   471→            firstresult: bool,
+   472→        ) -> object | list[object]:
+   473→            before(hook_name, hook_impls, caller_kwargs)
+   474→            outcome = Result.from_call(
+   475→                lambda: oldcall(hook_name, hook_impls, caller_kwargs, firstresult)
+   476→            )
+   477→            after(outcome, hook_name, hook_impls, caller_kwargs)
+   478→            return outcome.get_result()
+   479→
+   480→        self._inner_hookexec = traced_hookexec
+   481→
+   482→        def undo() -> None:
+   483→            self._inner_hookexec = oldcall
+   484→
+   485→        return undo
+   486→
    487→    def enable_tracing(self) -> Callable[[], None]:
+   488→        """Enable tracing of hook calls.
+   489→
+   490→        Returns an undo function which, when called, removes the added tracing.
+   491→        """
+   492→        hooktrace = self.trace.root.get("hook")
+   493→
+   494→        def before(
+   495→            hook_name: str, methods: Sequence[HookImpl], kwargs: Mapping[str, object]
+   496→        ) -> None:
+   497→            hooktrace.root.indent += 1
+   498→            hooktrace(hook_name, kwargs)
+   499→
+   500→        def after(
+   501→            outcome: Result[object],
+   502→            hook_name: str,
+   503→            methods: Sequence[HookImpl],
+   504→            kwargs: Mapping[str, object],
+   505→        ) -> None:
+   506→            if outcome.exception is None:
+   507→                hooktrace("finish", hook_name, "-->", outcome.get_result())
+   508→            hooktrace.root.indent -= 1
+   509→
+   510→        return self.add_hookcall_monitoring(before, after)
+   511→
    512→    def subset_hook_caller(
+   513→        self, name: str, remove_plugins: Iterable[_Plugin]
+   514→    ) -> HookCaller:
+   515→        """Return a proxy :class:`~pluggy.HookCaller` instance for the named
+   516→        method which manages calls to all registered plugins except the ones
+   517→        from remove_plugins."""
+   518→        orig: HookCaller = getattr(self.hook, name)
+   519→        plugins_to_remove = {plug for plug in remove_plugins if hasattr(plug, name)}
+   520→        if plugins_to_remove:
+   521→            return _SubsetHookCaller(orig, plugins_to_remove)
+   522→        return orig
    525→def _formatdef(func: Callable[..., object]) -> str:
 _result.py
     20→class HookCallError(Exception):
+    21→    """Hook was called incorrectly."""
     24→@final
     25→class Result(Generic[ResultType]):
+    26→    """An object used to inspect and set the result in a :ref:`hook wrapper
+    27→    <hookwrappers>`."""
+    28→
+    29→    __slots__ = ("_result", "_exception", "_traceback")
+    30→
     31→    def __init__(
+    32→        self,
+    33→        result: ResultType | None,
+    34→        exception: BaseException | None,
+    35→    ) -> None:
+    36→        """:meta private:"""
+    37→        self._result = result
+    38→        self._exception = exception
+    39→        # Exception __traceback__ is mutable, this keeps the original.
+    40→        self._traceback = exception.__traceback__ if exception is not None else None
+    41→
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
+    44→        """:meta private:"""
+    45→        exc = self._exception
+    46→        if exc is None:
+    47→            return None
+    48→        else:
+    49→            return (type(exc), exc, self._traceback)
+    50→
     51→    @property
     52→    def exception(self) -> BaseException | None:
+    53→        """:meta private:"""
+    54→        return self._exception
+    55→
     56→    @classmethod
     57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
+    58→        """:meta private:"""
+    59→        __tracebackhide__ = True
+    60→        result = exception = None
+    61→        try:
+    62→            result = func()
+    63→        except BaseException as exc:
+    64→            exception = exc
+    65→        return cls(result, exception)
+    66→
     67→    def force_result(self, result: ResultType) -> None:
+    68→        """Force the result(s) to ``result``.
+    69→
+    70→        If the hook was marked as a ``firstresult`` a single value should
+    71→        be set, otherwise set a (modified) list of results. Any exceptions
+    72→        found during invocation will be deleted.
+    73→
+    74→        This overrides any previous result or exception.
+    75→        """
+    76→        self._result = result
+    77→        self._exception = None
+    78→        self._traceback = None
+    79→
     80→    def force_exception(self, exception: BaseException) -> None:
+    81→        """Force the result to fail with ``exception``.
+    82→
+    83→        This overrides any previous result or exception.
+    84→
+    85→        .. versionadded:: 1.1.0
+    86→        """
+    87→        self._result = None
+    88→        self._exception = exception
+    89→        self._traceback = exception.__traceback__ if exception is not None else None
+    90→
     91→    def get_result(self) -> ResultType:
+    92→        """Get the result(s) for this hook call.
+    93→
+    94→        If the hook was marked as a ``firstresult`` only a single value
+    95→        will be returned, otherwise a list of results.
+    96→        """
+    97→        __tracebackhide__ = True
+    98→        exc = self._exception
+    99→        tb = self._traceback
+   100→        if exc is None:
+   101→            return cast(ResultType, self._result)
+   102→        else:
+   103→            raise exc.with_traceback(tb)
 _tracing.py
     16→class TagTracer:
     17→    def __init__(self) -> None:
+    18→        self._tags2proc: dict[tuple[str, ...], _Processor] = {}
+    19→        self._writer: _Writer | None = None
+    20→        self.indent = 0
+    21→
     22→    def get(self, name: str) -> TagTracerSub:
+    23→        return TagTracerSub(self, (name,))
+    24→
     25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
+    26→        if isinstance(args[-1], dict):
+    27→            extra = args[-1]
+    28→            args = args[:-1]
+    29→        else:
+    30→            extra = {}
+    31→
+    32→        content = " ".join(map(str, args))
+    33→        indent = "  " * self.indent
+    34→
+    35→        lines = [f"{indent}{content} [{':'.join(tags)}]\n"]
+    36→
+    37→        for name, value in extra.items():
+    38→            lines.append(f"{indent}    {name}: {value}\n")
+    39→
+    40→        return "".join(lines)
+    41→
     42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
+    43→        if self._writer is not None and args:
+    44→            self._writer(self._format_message(tags, args))
+    45→        if processor := self._tags2proc.get(tags):
+    46→            processor(tags, args)
+    47→
     48→    def setwriter(self, writer: _Writer | None) -> None:
+    49→        self._writer = writer
+    50→
     51→    def setprocessor(self, tags: str | tuple[str, ...], processor: _Processor) -> None:
+    52→        if isinstance(tags, str):
+    53→            tags = tuple(tags.split(":"))
+    54→        else:
+    55→            assert isinstance(tags, tuple)
+    56→        self._tags2proc[tags] = processor
     59→class TagTracerSub:
     60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
+    61→        self.root = root
+    62→        self.tags = tags
+    63→
     64→    def __call__(self, *args: object) -> None:
+    65→        self.root._processmessage(self.tags, args)
+    66→
     67→    def get(self, name: str) -> TagTracerSub:
+    68→        return self.__class__(self.root, self.tags + (name,))
 _warnings.py
      4→class PluggyWarning(UserWarning):
+     5→    """Base class for all warnings emitted by pluggy."""
+     6→
+     7→    __module__ = "pluggy"
     10→@final
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
+    12→    """A plugin raised an exception during an :ref:`old-style hookwrapper
+    13→    <old_style_hookwrappers>` teardown.
+    14→
+    15→    Such exceptions are not handled by pluggy, and may cause subsequent
+    16→    teardowns to be executed at unexpected times, or be skipped entirely.
+    17→
+    18→    This is an issue in the plugin implementation.
+    19→
+    20→    If the exception is unintended, fix the underlying cause.
+    21→
+    22→    If the exception is intended, switch to :ref:`new-style hook wrappers
+    23→    <hookwrappers>`, or use :func:`result.force_exception()
+    24→    <pluggy.Result.force_exception>` to set the exception instead of raising.
+    25→    """
+    26→
+    27→    __module__ = "pluggy"

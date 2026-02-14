@@ -9,6 +9,15 @@ errors.ts
      4→ */
      5→export class NonExhaustiveError extends Error {
      6→  constructor(public input: unknown) {
+     7→    let displayedValue;
+     8→    try {
+     9→      displayedValue = JSON.stringify(input);
+    10→    } catch (e) {
+    11→      displayedValue = input;
+    12→    }
+    13→    super(`Pattern matching error: no pattern matches value ${displayedValue}`);
+    14→  }
+    15→}
 index.ts
 internals/helpers.ts
     12→export const isObject = (value: unknown): value is Object =>
@@ -62,13 +71,89 @@ match.ts
     46→ */
     47→class MatchExpression<input, output> {
     48→  constructor(private input: input, private state: MatchState<output>) {}
+    49→
     50→  with(...args: any[]): MatchExpression<input, output> {
+    51→    if (this.state.matched) return this;
+    52→
+    53→    const handler: (selection: unknown, value: input) => output =
+    54→      args[args.length - 1];
+    55→
+    56→    const patterns: Pattern<input>[] = [args[0]];
+    57→    let predicate: ((value: input) => unknown) | undefined = undefined;
+    58→
+    59→    if (args.length === 3 && typeof args[1] === 'function') {
+    60→      // case with guard as second argument
+    61→      predicate = args[1];
+    62→    } else if (args.length > 2) {
+    63→      // case with several patterns
+    64→      patterns.push(...args.slice(1, args.length - 1));
+    65→    }
+    66→
+    67→    let hasSelections = false;
+    68→    let selected: Record<string, unknown> = {};
+    69→    const select = (key: string, value: unknown) => {
+    70→      hasSelections = true;
+    71→      selected[key] = value;
+    72→    };
+    73→
+    74→    const matched =
+    75→      patterns.some((pattern) => matchPattern(pattern, this.input, select)) &&
+    76→      (predicate ? Boolean(predicate(this.input)) : true);
+    77→
+    78→    const selections = hasSelections
+    79→      ? symbols.anonymousSelectKey in selected
+    80→        ? selected[symbols.anonymousSelectKey]
+    81→        : selected
+    82→      : this.input;
+    83→
+    84→    const state = matched
+    85→      ? {
+    86→          matched: true as const,
+    87→          value: handler(selections, this.input),
+    88→        }
+    89→      : unmatched;
+    90→
+    91→    return new MatchExpression(this.input, state);
+    92→  }
+    93→
     94→  when(
+    95→    predicate: (value: input) => unknown,
+    96→    handler: (selection: input, value: input) => output
+    97→  ): MatchExpression<input, output> {
+    98→    if (this.state.matched) return this;
+    99→
+   100→    const matched = Boolean(predicate(this.input));
+   101→
+   102→    return new MatchExpression<input, output>(
+   103→      this.input,
+   104→      matched
+   105→        ? { matched: true, value: handler(this.input, this.input) }
+   106→        : unmatched
+   107→    );
+   108→  }
+   109→
    110→  otherwise(handler: (value: input) => output): output {
+   111→    if (this.state.matched) return this.state.value;
+   112→    return handler(this.input);
+   113→  }
+   114→
    115→  exhaustive(unexpectedValueHandler = defaultCatcher): output {
+   116→    if (this.state.matched) return this.state.value;
+   117→    return unexpectedValueHandler(this.input);
+   118→  }
+   119→
    120→  run(): output {
+   121→    return this.exhaustive();
+   122→  }
+   123→
    124→  returnType() {
+   125→    return this;
+   126→  }
+   127→
    128→  narrow() {
+   129→    return this;
+   130→  }
+   131→}
    133→function defaultCatcher(input: unknown): never {
 patterns.ts
     67→/**

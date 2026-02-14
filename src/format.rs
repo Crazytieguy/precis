@@ -9,7 +9,7 @@ use crate::parse;
 /// 1 - Symbol lines, truncated to symbol name
 /// 2 - Symbol lines, full source line (signature)
 /// 3 - Symbol lines with preceding doc comments
-/// 4 - Like level 3, but struct/enum/trait/interface bodies shown in full
+/// 4 - Like level 3, but type definition bodies (struct/enum/trait/interface/class) shown in full
 /// 5 - Full source (all lines)
 pub const MAX_LEVEL: u8 = 5;
 
@@ -178,6 +178,7 @@ fn is_type_definition(kind: parse::SymbolKind) -> bool {
             | parse::SymbolKind::Enum
             | parse::SymbolKind::Trait
             | parse::SymbolKind::Interface
+            | parse::SymbolKind::Class
     )
 }
 

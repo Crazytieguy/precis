@@ -33,20 +33,124 @@ cli.py
 ipython.py
     11→@magics_class
     12→class IPythonDotEnv(Magics):
+    13→    @magic_arguments()
+    14→    @argument(
+    15→        "-o",
+    16→        "--override",
+    17→        action="store_true",
+    18→        help="Indicate to override existing variables",
+    19→    )
+    20→    @argument(
+    21→        "-v",
+    22→        "--verbose",
+    23→        action="store_true",
+    24→        help="Indicate function calls to be verbose",
+    25→    )
+    26→    @argument(
+    27→        "dotenv_path",
+    28→        nargs="?",
+    29→        type=str,
+    30→        default=".env",
+    31→        help="Search in increasingly higher folders for the `dotenv_path`",
+    32→    )
     33→    @line_magic
     34→    def dotenv(self, line):
+    35→        args = parse_argstring(self.dotenv, line)
+    36→        # Locate the .env file
+    37→        dotenv_path = args.dotenv_path
+    38→        try:
+    39→            dotenv_path = find_dotenv(dotenv_path, True, True)
+    40→        except IOError:
+    41→            print("cannot find .env file")
+    42→            return
+    43→
+    44→        # Load the .env file
+    45→        load_dotenv(dotenv_path, verbose=args.verbose, override=args.override)
     48→def load_ipython_extension(ipython):
 main.py
     25→def _load_dotenv_disabled() -> bool:
     35→def with_warn_for_invalid_lines(mappings: Iterator[Binding]) -> Iterator[Binding]:
     45→class DotEnv:
     46→    def __init__(
+    47→        self,
+    48→        dotenv_path: Optional[StrPath],
+    49→        stream: Optional[IO[str]] = None,
+    50→        verbose: bool = False,
+    51→        encoding: Optional[str] = None,
+    52→        interpolate: bool = True,
+    53→        override: bool = True,
+    54→    ) -> None:
+    55→        self.dotenv_path: Optional[StrPath] = dotenv_path
+    56→        self.stream: Optional[IO[str]] = stream
+    57→        self._dict: Optional[Dict[str, Optional[str]]] = None
+    58→        self.verbose: bool = verbose
+    59→        self.encoding: Optional[str] = encoding
+    60→        self.interpolate: bool = interpolate
+    61→        self.override: bool = override
+    62→
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
+    65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
+    66→            with open(self.dotenv_path, encoding=self.encoding) as stream:
+    67→                yield stream
+    68→        elif self.stream is not None:
+    69→            yield self.stream
+    70→        else:
+    71→            if self.verbose:
+    72→                logger.info(
+    73→                    "python-dotenv could not find configuration file %s.",
+    74→                    self.dotenv_path or ".env",
+    75→                )
+    76→            yield io.StringIO("")
+    77→
     78→    def dict(self) -> Dict[str, Optional[str]]:
+    79→        """Return dotenv as dict"""
+    80→        if self._dict:
+    81→            return self._dict
+    82→
+    83→        raw_values = self.parse()
+    84→
+    85→        if self.interpolate:
+    86→            self._dict = OrderedDict(
+    87→                resolve_variables(raw_values, override=self.override)
+    88→            )
+    89→        else:
+    90→            self._dict = OrderedDict(raw_values)
+    91→
+    92→        return self._dict
+    93→
     94→    def parse(self) -> Iterator[Tuple[str, Optional[str]]]:
+    95→        with self._get_stream() as stream:
+    96→            for mapping in with_warn_for_invalid_lines(parse_stream(stream)):
+    97→                if mapping.key is not None:
+    98→                    yield mapping.key, mapping.value
+    99→
    100→    def set_as_environment_variables(self) -> bool:
+   101→        """
+   102→        Load the current dotenv as system environment variable.
+   103→        """
+   104→        if not self.dict():
+   105→            return False
+   106→
+   107→        for k, v in self.dict().items():
+   108→            if k in os.environ and not self.override:
+   109→                continue
+   110→            if v is not None:
+   111→                os.environ[k] = v
+   112→
+   113→        return True
+   114→
    115→    def get(self, key: str) -> Optional[str]:
+   116→        """ """
+   117→        data = self.dict()
+   118→
+   119→        if key in data:
+   120→            return data[key]
+   121→
+   122→        if self.verbose:
+   123→            logger.warning("Key %s not found in %s.", key, self.dotenv_path)
+   124→
+   125→        return None
    128→def get_key(
    141→@contextmanager
    142→def rewrite(
@@ -61,22 +165,65 @@ main.py
 parser.py
     14→def make_regex(string: str, extra_flags: int = 0) -> Pattern[str]:
     35→class Original(NamedTuple):
+    36→    string: str
+    37→    line: int
     40→class Binding(NamedTuple):
+    41→    key: Optional[str]
+    42→    value: Optional[str]
+    43→    original: Original
+    44→    error: bool
     47→class Position:
     48→    def __init__(self, chars: int, line: int) -> None:
+    49→        self.chars = chars
+    50→        self.line = line
+    51→
     52→    @classmethod
     53→    def start(cls) -> "Position":
+    54→        return cls(chars=0, line=1)
+    55→
     56→    def set(self, other: "Position") -> None:
+    57→        self.chars = other.chars
+    58→        self.line = other.line
+    59→
     60→    def advance(self, string: str) -> None:
+    61→        self.chars += len(string)
+    62→        self.line += len(re.findall(_newline, string))
     65→class Error(Exception):
+    66→    pass
     69→class Reader:
     70→    def __init__(self, stream: IO[str]) -> None:
+    71→        self.string = stream.read()
+    72→        self.position = Position.start()
+    73→        self.mark = Position.start()
+    74→
     75→    def has_next(self) -> bool:
+    76→        return self.position.chars < len(self.string)
+    77→
     78→    def set_mark(self) -> None:
+    79→        self.mark.set(self.position)
+    80→
     81→    def get_marked(self) -> Original:
+    82→        return Original(
+    83→            string=self.string[self.mark.chars : self.position.chars],
+    84→            line=self.mark.line,
+    85→        )
+    86→
     87→    def peek(self, count: int) -> str:
+    88→        return self.string[self.position.chars : self.position.chars + count]
+    89→
     90→    def read(self, count: int) -> str:
+    91→        result = self.string[self.position.chars : self.position.chars + count]
+    92→        if len(result) < count:
+    93→            raise Error("read: End of string")
+    94→        self.position.advance(result)
+    95→        return result
+    96→
     97→    def read_regex(self, regex: Pattern[str]) -> Sequence[str]:
+    98→        match = regex.match(self.string, self.position.chars)
+    99→        if match is None:
+   100→            raise Error("read_regex: Pattern not found")
+   101→        self.position.advance(self.string[match.start() : match.end()])
+   102→        return match.groups()
    105→def decode_escapes(regex: Pattern[str], string: str) -> str:
    112→def parse_key(reader: Reader) -> Optional[str]:
    123→def parse_unquoted_value(reader: Reader) -> str:
@@ -86,19 +233,49 @@ parser.py
 variables.py
     18→class Atom(metaclass=ABCMeta):
     19→    def __ne__(self, other: object) -> bool:
+    20→        result = self.__eq__(other)
+    21→        if result is NotImplemented:
+    22→            return NotImplemented
+    23→        return not result
+    24→
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
     29→class Literal(Atom):
     30→    def __init__(self, value: str) -> None:
+    31→        self.value = value
+    32→
     33→    def __repr__(self) -> str:
+    34→        return f"Literal(value={self.value})"
+    35→
     36→    def __eq__(self, other: object) -> bool:
+    37→        if not isinstance(other, self.__class__):
+    38→            return NotImplemented
+    39→        return self.value == other.value
+    40→
     41→    def __hash__(self) -> int:
+    42→        return hash((self.__class__, self.value))
+    43→
     44→    def resolve(self, env: Mapping[str, Optional[str]]) -> str:
+    45→        return self.value
     48→class Variable(Atom):
     49→    def __init__(self, name: str, default: Optional[str]) -> None:
+    50→        self.name = name
+    51→        self.default = default
+    52→
     53→    def __repr__(self) -> str:
+    54→        return f"Variable(name={self.name}, default={self.default})"
+    55→
     56→    def __eq__(self, other: object) -> bool:
+    57→        if not isinstance(other, self.__class__):
+    58→            return NotImplemented
+    59→        return (self.name, self.default) == (other.name, other.default)
+    60→
     61→    def __hash__(self) -> int:
+    62→        return hash((self.__class__, self.name, self.default))
+    63→
     64→    def resolve(self, env: Mapping[str, Optional[str]]) -> str:
+    65→        default = self.default if self.default is not None else ""
+    66→        result = env.get(self.name, default)
+    67→        return result if result is not None else ""
     70→def parse_variables(value: str) -> Iterator[Atom]:
 version.py

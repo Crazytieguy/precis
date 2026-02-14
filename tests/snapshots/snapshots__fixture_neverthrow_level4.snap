@@ -43,21 +43,193 @@ _internals/utils.ts
 index.ts
 result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
+    23→  private _promise: Promise<Result<T, E>>
+    24→
     25→  constructor(res: Promise<Result<T, E>>) {
+    26→    this._promise = res
+    27→  }
+    28→
+    29→  static fromSafePromise<T, E = never>(promise: PromiseLike<T>): ResultAsync<T, E>
     30→  static fromSafePromise<T, E = never>(promise: Promise<T>): ResultAsync<T, E> {
+    31→    const newPromise = promise.then((value: T) => new Ok<T, E>(value))
+    32→
+    33→    return new ResultAsync(newPromise)
+    34→  }
+    35→
+    36→  static fromPromise<T, E>(promise: PromiseLike<T>, errorFn: (e: unknown) => E): ResultAsync<T, E>
     37→  static fromPromise<T, E>(promise: Promise<T>, errorFn: (e: unknown) => E): ResultAsync<T, E> {
+    38→    const newPromise = promise
+    39→      .then((value: T) => new Ok<T, E>(value))
+    40→      .catch((e) => new Err<T, E>(errorFn(e)))
+    41→
+    42→    return new ResultAsync(newPromise)
+    43→  }
+    44→
+    45→  // eslint-disable-next-line @typescript-eslint/no-explicit-any
     46→  static fromThrowable<A extends readonly any[], R, E>(
+    47→    fn: (...args: A) => Promise<R>,
+    48→    errorFn?: (err: unknown) => E,
+    49→  ): (...args: A) => ResultAsync<R, E> {
+    50→    return (...args) => {
+    51→      return new ResultAsync(
+    52→        (async () => {
+    53→          try {
+    54→            return new Ok(await fn(...args))
+    55→          } catch (error) {
+    56→            return new Err(errorFn ? errorFn(error) : error)
+    57→          }
+    58→        })(),
+    59→      )
+    60→    }
+    61→  }
+    62→
+    63→  static combine<
+    64→    T extends readonly [ResultAsync<unknown, unknown>, ...ResultAsync<unknown, unknown>[]]
+    65→  >(asyncResultList: T): CombineResultAsyncs<T>
+    66→  static combine<T extends readonly ResultAsync<unknown, unknown>[]>(
+    67→    asyncResultList: T,
+    68→  ): CombineResultAsyncs<T>
     69→  static combine<T extends readonly ResultAsync<unknown, unknown>[]>(
+    70→    asyncResultList: T,
+    71→  ): CombineResultAsyncs<T> {
+    72→    return (combineResultAsyncList(asyncResultList) as unknown) as CombineResultAsyncs<T>
+    73→  }
+    74→
+    75→  static combineWithAllErrors<
+    76→    T extends readonly [ResultAsync<unknown, unknown>, ...ResultAsync<unknown, unknown>[]]
+    77→  >(asyncResultList: T): CombineResultsWithAllErrorsArrayAsync<T>
+    78→  static combineWithAllErrors<T extends readonly ResultAsync<unknown, unknown>[]>(
+    79→    asyncResultList: T,
+    80→  ): CombineResultsWithAllErrorsArrayAsync<T>
     81→  static combineWithAllErrors<T extends readonly ResultAsync<unknown, unknown>[]>(
+    82→    asyncResultList: T,
+    83→  ): CombineResultsWithAllErrorsArrayAsync<T> {
+    84→    return combineResultAsyncListWithAllErrors(
+    85→      asyncResultList,
+    86→    ) as CombineResultsWithAllErrorsArrayAsync<T>
+    87→  }
+    88→
     89→  map<A>(f: (t: T) => A | Promise<A>): ResultAsync<A, E> {
+    90→    return new ResultAsync(
+    91→      this._promise.then(async (res: Result<T, E>) => {
+    92→        if (res.isErr()) {
+    93→          return new Err<A, E>(res.error)
+    94→        }
+    95→
+    96→        return new Ok<A, E>(await f(res.value))
+    97→      }),
+    98→    )
+    99→  }
+   100→
    101→  andThrough<F>(f: (t: T) => Result<unknown, F> | ResultAsync<unknown, F>): ResultAsync<T, E | F> {
+   102→    return new ResultAsync(
+   103→      this._promise.then(async (res: Result<T, E>) => {
+   104→        if (res.isErr()) {
+   105→          return new Err<T, E>(res.error)
+   106→        }
+   107→
+   108→        const newRes = await f(res.value)
+   109→        if (newRes.isErr()) {
+   110→          return new Err<T, F>(newRes.error)
+   111→        }
+   112→        return new Ok<T, F>(res.value)
+   113→      }),
+   114→    )
+   115→  }
+   116→
    117→  andTee(f: (t: T) => unknown): ResultAsync<T, E> {
+   118→    return new ResultAsync(
+   119→      this._promise.then(async (res: Result<T, E>) => {
+   120→        if (res.isErr()) {
+   121→          return new Err<T, E>(res.error)
+   122→        }
+   123→        try {
+   124→          await f(res.value)
+   125→        } catch (e) {
+   126→          // Tee does not care about the error
+   127→        }
+   128→        return new Ok<T, E>(res.value)
+   129→      }),
+   130→    )
+   131→  }
+   132→
    133→  orTee(f: (t: E) => unknown): ResultAsync<T, E> {
+   134→    return new ResultAsync(
+   135→      this._promise.then(async (res: Result<T, E>) => {
+   136→        if (res.isOk()) {
+   137→          return new Ok<T, E>(res.value)
+   138→        }
+   139→        try {
+   140→          await f(res.error)
+   141→        } catch (e) {
+   142→          // Tee does not care about the error
+   143→        }
+   144→        return new Err<T, E>(res.error)
+   145→      }),
+   146→    )
+   147→  }
+   148→
    149→  mapErr<U>(f: (e: E) => U | Promise<U>): ResultAsync<T, U> {
+   150→    return new ResultAsync(
+   151→      this._promise.then(async (res: Result<T, E>) => {
+   152→        if (res.isOk()) {
+   153→          return new Ok<T, U>(res.value)
+   154→        }
+   155→
+   156→        return new Err<T, U>(await f(res.error))
+   157→      }),
+   158→    )
+   159→  }
+   160→
+   161→  andThen<R extends Result<unknown, unknown>>(
+   162→    f: (t: T) => R,
+   163→  ): ResultAsync<InferOkTypes<R>, InferErrTypes<R> | E>
+   164→  andThen<R extends ResultAsync<unknown, unknown>>(
+   165→    f: (t: T) => R,
+   166→  ): ResultAsync<InferAsyncOkTypes<R>, InferAsyncErrTypes<R> | E>
+   167→  andThen<U, F>(f: (t: T) => Result<U, F> | ResultAsync<U, F>): ResultAsync<U, E | F>
+   168→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    169→  andThen(f: any): any {
+   170→    return new ResultAsync(
+   171→      this._promise.then((res) => {
+   172→        if (res.isErr()) {
+   173→          return new Err<never, E>(res.error)
+   174→        }
+   175→
+   176→        const newValue = f(res.value)
+   177→        return newValue instanceof ResultAsync ? newValue._promise : newValue
+   178→      }),
+   179→    )
+   180→  }
+   181→
+   182→  orElse<R extends Result<unknown, unknown>>(
+   183→    f: (e: E) => R,
+   184→  ): ResultAsync<InferOkTypes<R> | T, InferErrTypes<R>>
+   185→  orElse<R extends ResultAsync<unknown, unknown>>(
+   186→    f: (e: E) => R,
+   187→  ): ResultAsync<InferAsyncOkTypes<R> | T, InferAsyncErrTypes<R>>
+   188→  orElse<U, A>(f: (e: E) => Result<U, A> | ResultAsync<U, A>): ResultAsync<U | T, A>
+   189→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    190→  orElse(f: any): any {
+   191→    return new ResultAsync(
+   192→      this._promise.then(async (res: Result<T, E>) => {
+   193→        if (res.isErr()) {
+   194→          return f(res.error)
+   195→        }
+   196→
+   197→        return new Ok<T, unknown>(res.value)
+   198→      }),
+   199→    )
+   200→  }
+   201→
    202→  match<A, B = A>(ok: (t: T) => A, _err: (e: E) => B): Promise<A | B> {
+   203→    return this._promise.then((res) => res.match(ok, _err))
+   204→  }
+   205→
    206→  unwrapOr<A>(t: A): Promise<T | A> {
+   207→    return this._promise.then((res) => res.unwrapOr(t))
+   208→  }
+   209→
    210→  /**
    211→   * @deprecated will be removed in 9.0.0.
    212→   *
@@ -71,7 +243,29 @@ result-async.ts
    220→   * Emulates Rust's `?` operator in `safeTry`'s body. See also `safeTry`.
    221→   */
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
+   223→    return yield* await this._promise.then((res) => res.safeUnwrap())
+   224→  }
+   225→
+   226→  // Makes ResultAsync implement PromiseLike<Result>
    227→  then<A, B>(
+   228→    successCallback?: (res: Result<T, E>) => A | PromiseLike<A>,
+   229→    failureCallback?: (reason: unknown) => B | PromiseLike<B>,
+   230→  ): PromiseLike<A | B> {
+   231→    return this._promise.then(successCallback, failureCallback)
+   232→  }
+   233→
+   234→  async *[Symbol.asyncIterator](): AsyncGenerator<Err<never, E>, T> {
+   235→    const result = await this._promise
+   236→
+   237→    if (result.isErr()) {
+   238→      // @ts-expect-error -- This is structurally equivalent and safe
+   239→      yield errAsync(result.error)
+   240→    }
+   241→
+   242→    // @ts-expect-error -- This is structurally equivalent and safe
+   243→    return result.value
+   244→  }
+   245→}
    249→export function okAsync<T, E = never>(value: T): ResultAsync<T, E> {
    255→export function errAsync<T = never, E = unknown>(err: E): ResultAsync<T, E> {
    259→export const fromPromise = ResultAsync.fromPromise
@@ -271,42 +465,213 @@ result.ts
    310→}
    312→export class Ok<T, E> implements IResult<T, E> {
    313→  constructor(readonly value: T) {}
+   314→
    315→  isOk(): this is Ok<T, E> {
+   316→    return true
+   317→  }
+   318→
    319→  isErr(): this is Err<T, E> {
+   320→    return !this.isOk()
+   321→  }
+   322→
    323→  map<A>(f: (t: T) => A): Result<A, E> {
+   324→    return ok(f(this.value))
+   325→  }
+   326→
+   327→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
    328→  mapErr<U>(_f: (e: E) => U): Result<T, U> {
+   329→    return ok(this.value)
+   330→  }
+   331→
+   332→  andThen<R extends Result<unknown, unknown>>(
+   333→    f: (t: T) => R,
+   334→  ): Result<InferOkTypes<R>, InferErrTypes<R> | E>
+   335→  andThen<U, F>(f: (t: T) => Result<U, F>): Result<U, E | F>
+   336→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    337→  andThen(f: any): any {
+   338→    return f(this.value)
+   339→  }
+   340→
+   341→  andThrough<R extends Result<unknown, unknown>>(f: (t: T) => R): Result<T, InferErrTypes<R> | E>
+   342→  andThrough<F>(f: (t: T) => Result<unknown, F>): Result<T, E | F>
+   343→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    344→  andThrough(f: any): any {
+   345→    return f(this.value).map((_value: unknown) => this.value)
+   346→  }
+   347→
    348→  andTee(f: (t: T) => unknown): Result<T, E> {
+   349→    try {
+   350→      f(this.value)
+   351→    } catch (e) {
+   352→      // Tee doesn't care about the error
+   353→    }
+   354→    return ok<T, E>(this.value)
+   355→  }
+   356→
    357→  orTee(_f: (t: E) => unknown): Result<T, E> {
+   358→    return ok<T, E>(this.value)
+   359→  }
+   360→
+   361→  orElse<R extends Result<unknown, unknown>>(
+   362→    _f: (e: E) => R,
+   363→  ): Result<InferOkTypes<R> | T, InferErrTypes<R>>
+   364→  orElse<U, A>(_f: (e: E) => Result<U, A>): Result<U | T, A>
+   365→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    366→  orElse(_f: any): any {
+   367→    return ok(this.value)
+   368→  }
+   369→
    370→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F> {
+   371→    return f(this.value)
+   372→  }
+   373→
+   374→  asyncAndThrough<R extends ResultAsync<unknown, unknown>>(
+   375→    f: (t: T) => R,
+   376→  ): ResultAsync<T, InferAsyncErrTypes<R> | E>
+   377→  asyncAndThrough<F>(f: (t: T) => ResultAsync<unknown, F>): ResultAsync<T, E | F>
+   378→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    379→  asyncAndThrough(f: (t: T) => ResultAsync<unknown, unknown>): any {
+   380→    return f(this.value).map(() => this.value)
+   381→  }
+   382→
    383→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E> {
+   384→    return ResultAsync.fromSafePromise(f(this.value))
+   385→  }
+   386→
+   387→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
    388→  unwrapOr<A>(_v: A): T | A {
+   389→    return this.value
+   390→  }
+   391→
+   392→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
    393→  match<A, B = A>(ok: (t: T) => A, _err: (e: E) => B): A | B {
+   394→    return ok(this.value)
+   395→  }
+   396→
    397→  safeUnwrap(): Generator<Err<never, E>, T> {
+   398→    const value = this.value
+   399→    /* eslint-disable-next-line require-yield */
+   400→    return (function* () {
+   401→      return value
+   402→    })()
+   403→  }
+   404→
    405→  _unsafeUnwrap(_?: ErrorConfig): T {
+   406→    return this.value
+   407→  }
+   408→
    409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
+   410→    throw createNeverThrowError('Called `_unsafeUnwrapErr` on an Ok', this, config)
+   411→  }
+   412→
+   413→  // eslint-disable-next-line @typescript-eslint/no-this-alias, require-yield
+   414→  *[Symbol.iterator](): Generator<Err<never, E>, T> {
+   415→    return this.value
+   416→  }
+   417→}
    419→export class Err<T, E> implements IResult<T, E> {
    420→  constructor(readonly error: E) {}
+   421→
    422→  isOk(): this is Ok<T, E> {
+   423→    return false
+   424→  }
+   425→
    426→  isErr(): this is Err<T, E> {
+   427→    return !this.isOk()
+   428→  }
+   429→
+   430→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
    431→  map<A>(_f: (t: T) => A): Result<A, E> {
+   432→    return err(this.error)
+   433→  }
+   434→
    435→  mapErr<U>(f: (e: E) => U): Result<T, U> {
+   436→    return err(f(this.error))
+   437→  }
+   438→
    439→  andThrough<F>(_f: (t: T) => Result<unknown, F>): Result<T, E | F> {
+   440→    return err(this.error)
+   441→  }
+   442→
    443→  andTee(_f: (t: T) => unknown): Result<T, E> {
+   444→    return err(this.error)
+   445→  }
+   446→
    447→  orTee(f: (t: E) => unknown): Result<T, E> {
+   448→    try {
+   449→      f(this.error)
+   450→    } catch (e) {
+   451→      // Tee doesn't care about the error
+   452→    }
+   453→    return err<T, E>(this.error)
+   454→  }
+   455→
+   456→  andThen<R extends Result<unknown, unknown>>(
+   457→    _f: (t: T) => R,
+   458→  ): Result<InferOkTypes<R>, InferErrTypes<R> | E>
+   459→  andThen<U, F>(_f: (t: T) => Result<U, F>): Result<U, E | F>
+   460→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    461→  andThen(_f: any): any {
+   462→    return err(this.error)
+   463→  }
+   464→
+   465→  orElse<R extends Result<unknown, unknown>>(
+   466→    f: (e: E) => R,
+   467→  ): Result<InferOkTypes<R> | T, InferErrTypes<R>>
+   468→  orElse<U, A>(f: (e: E) => Result<U, A>): Result<U | T, A>
+   469→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    470→  orElse(f: any): any {
+   471→    return f(this.error)
+   472→  }
+   473→
+   474→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
    475→  asyncAndThen<U, F>(_f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F> {
+   476→    return errAsync<U, E>(this.error)
+   477→  }
+   478→
    479→  asyncAndThrough<F>(_f: (t: T) => ResultAsync<unknown, F>): ResultAsync<T, E | F> {
+   480→    return errAsync<T, E>(this.error)
+   481→  }
+   482→
+   483→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
    484→  asyncMap<U>(_f: (t: T) => Promise<U>): ResultAsync<U, E> {
+   485→    return errAsync<U, E>(this.error)
+   486→  }
+   487→
    488→  unwrapOr<A>(v: A): T | A {
+   489→    return v
+   490→  }
+   491→
    492→  match<A, B = A>(_ok: (t: T) => A, err: (e: E) => B): A | B {
+   493→    return err(this.error)
+   494→  }
+   495→
    496→  safeUnwrap(): Generator<Err<never, E>, T> {
+   497→    const error = this.error
+   498→    return (function* () {
+   499→      yield err(error)
+   500→
+   501→      throw new Error('Do not use this generator out of `safeTry`')
+   502→    })()
+   503→  }
+   504→
    505→  _unsafeUnwrap(config?: ErrorConfig): T {
+   506→    throw createNeverThrowError('Called `_unsafeUnwrap` on an Err', this, config)
+   507→  }
+   508→
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
+   510→    return this.error
+   511→  }
+   512→
+   513→  *[Symbol.iterator](): Generator<Err<never, E>, T> {
+   514→    // eslint-disable-next-line @typescript-eslint/no-this-alias
+   515→    const self = this
+   516→    // @ts-expect-error -- This is structurally equivalent and safe
+   517→    yield self
+   518→    // @ts-expect-error -- This is structurally equivalent and safe
+   519→    return self
+   520→  }
+   521→}
    523→export const fromThrowable = Result.fromThrowable
    530→type Prev = [
    590→type CollectResults<T, Collected extends unknown[] = [], Depth extends number = 50> = [

@@ -5,16 +5,140 @@ expression: output
 error.ts
      5→export type Failure = {
     25→export class StructError extends TypeError {
+    26→  value: any
+    27→  key!: any
+    28→  type!: string
+    29→  refinement!: string | undefined
+    30→  path!: Array<any>
+    31→  branch!: Array<any>
+    32→  failures: () => Array<Failure>;
+    33→  [x: string]: any
+    34→
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
+    36→    let cached: Array<Failure> | undefined
+    37→    const { message, explanation, ...rest } = failure
+    38→    const { path } = failure
+    39→    const msg =
+    40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
+    41→    super(explanation ?? msg)
+    42→    if (explanation != null) this.cause = msg
+    43→    Object.assign(this, rest)
+    44→    this.name = this.constructor.name
+    45→    this.failures = () => {
+    46→      return (cached ??= [failure, ...failures()])
+    47→    }
+    48→  }
+    49→}
 index.ts
 struct.ts
     10→export class Struct<T = unknown, S = unknown> {
+    11→  readonly TYPE!: T
+    12→  type: string
+    13→  schema: S
+    14→  coercer: (value: unknown, context: Context) => unknown
+    15→  validator: (value: unknown, context: Context) => Iterable<Failure>
+    16→  refiner: (value: T, context: Context) => Iterable<Failure>
+    17→  entries: (
+    18→    value: unknown,
+    19→    context: Context
+    20→  ) => Iterable<[string | number, unknown, Struct<any> | Struct<never>]>
+    21→
     22→  constructor(props: {
+    23→    type: string
+    24→    schema: S
+    25→    coercer?: Coercer
+    26→    validator?: Validator
+    27→    refiner?: Refiner<T>
+    28→    entries?: Struct<T, S>['entries']
+    29→  }) {
+    30→    const {
+    31→      type,
+    32→      schema,
+    33→      validator,
+    34→      refiner,
+    35→      coercer = (value: unknown) => value,
+    36→      entries = function* () {},
+    37→    } = props
+    38→
+    39→    this.type = type
+    40→    this.schema = schema
+    41→    this.entries = entries
+    42→    this.coercer = coercer
+    43→
+    44→    if (validator) {
+    45→      this.validator = (value, context) => {
+    46→        const result = validator(value, context)
+    47→        return toFailures(result, context, this, value)
+    48→      }
+    49→    } else {
+    50→      this.validator = () => []
+    51→    }
+    52→
+    53→    if (refiner) {
+    54→      this.refiner = (value, context) => {
+    55→        const result = refiner(value, context)
+    56→        return toFailures(result, context, this, value)
+    57→      }
+    58→    } else {
+    59→      this.refiner = () => []
+    60→    }
+    61→  }
+    62→
+    63→  /**
+    64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
+    65→   */
+    66→
     67→  assert(value: unknown, message?: string): asserts value is T {
+    68→    return assert(value, this, message)
+    69→  }
+    70→
+    71→  /**
+    72→   * Create a value with the struct's coercion logic, then validate it.
+    73→   */
+    74→
     75→  create(value: unknown, message?: string): T {
+    76→    return create(value, this, message)
+    77→  }
+    78→
+    79→  /**
+    80→   * Check if a value passes the struct's validation.
+    81→   */
+    82→
     83→  is(value: unknown): value is T {
+    84→    return is(value, this)
+    85→  }
+    86→
+    87→  /**
+    88→   * Mask a value, coercing and validating it, but returning only the subset of
+    89→   * properties defined by the struct's schema. Masking applies recursively to
+    90→   * props of `object` structs only.
+    91→   */
+    92→
     93→  mask(value: unknown, message?: string): T {
+    94→    return mask(value, this, message)
+    95→  }
+    96→
+    97→  /**
+    98→   * Validate a value with the struct's validation logic, returning a tuple
+    99→   * representing the result.
+   100→   *
+   101→   * You may optionally pass `true` for the `coerce` argument to coerce
+   102→   * the value before attempting to validate it. If you do, the result will
+   103→   * contain the coerced result when successful. Also, `mask` will turn on
+   104→   * masking of the unknown `object` props recursively if passed.
+   105→   */
+   106→
    107→  validate(
+   108→    value: unknown,
+   109→    options: {
+   110→      coerce?: boolean
+   111→      mask?: boolean
+   112→      message?: string
+   113→    } = {}
+   114→  ): [StructError, undefined] | [undefined, T] {
+   115→    return validate(value, this, options)
+   116→  }
+   117→}
    123→export function assert<T, S>(
    139→export function create<T, S>(
    157→export function mask<T, S>(
