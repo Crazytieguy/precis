@@ -2,6 +2,30 @@ use std::path::{Path, PathBuf};
 
 use crate::parse;
 
+/// Language family for rendering heuristics (comment styles, delimiters).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum Lang {
+    Rust,
+    Python,
+    Go,
+    Markdown,
+    /// TypeScript, JavaScript, TSX, JSX
+    JsTs,
+}
+
+impl Lang {
+    fn from_path(path: &Path) -> Option<Lang> {
+        match path.extension().and_then(|e| e.to_str())? {
+            "rs" => Some(Lang::Rust),
+            "py" => Some(Lang::Python),
+            "go" => Some(Lang::Go),
+            "md" => Some(Lang::Markdown),
+            "ts" | "tsx" | "js" | "jsx" | "mts" | "cts" | "mjs" | "cjs" => Some(Lang::JsTs),
+            _ => None,
+        }
+    }
+}
+
 /// Maximum granularity level.
 ///
 /// Levels:
@@ -273,7 +297,7 @@ fn render_symbols(
     if symbols.is_empty() {
         return;
     }
-    let is_python = path.extension().and_then(|e| e.to_str()) == Some("py");
+    let lang = Lang::from_path(path);
     let lines: Vec<&str> = source.lines().collect();
     // Track emitted lines to avoid duplication when type alias bodies
     // encompass nested symbols (e.g. method signatures inside a TS type literal).
@@ -287,7 +311,7 @@ fn render_symbols(
             if sym_line_0 < emitted_up_to {
                 continue;
             }
-            let sig_end = signature_end_line(&lines, sym, is_python);
+            let sig_end = signature_end_line(&lines, sym, lang);
             for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
                 out.push_str(&fmt_line(i, line));
             }
@@ -330,16 +354,13 @@ fn render_symbols_with_docs(
         return;
     }
     let lines: Vec<&str> = source.lines().collect();
-    let ext = path.extension().and_then(|e| e.to_str()).unwrap_or("");
-    let is_python = ext == "py";
-    let is_markdown = ext == "md";
-    let is_go = ext == "go";
+    let lang = Lang::from_path(path);
     // Track which lines have been emitted to avoid duplication when type bodies
     // overlap with nested symbols (e.g. trait methods inside a trait body).
     let mut emitted_up_to: usize = 0; // 0-indexed, exclusive
     for (sym_idx, sym) in symbols.iter().enumerate() {
         let sym_line_0 = sym.line - 1;
-        let doc_start = doc_comment_start(&lines, sym_line_0, is_go);
+        let doc_start = doc_comment_start(&lines, sym_line_0, lang);
         // Expand type definitions (structs, enums, etc.) and Go grouped
         // const/var blocks (identified by their keyword name "const"/"var").
         let is_grouped_block =
@@ -357,7 +378,7 @@ fn render_symbols_with_docs(
         } else if sym_line_0 >= emitted_up_to {
             // Non-expanded symbol: show doc comments + multi-line signature
             let start = doc_start.max(emitted_up_to);
-            let sig_end = signature_end_line(&lines, sym, is_python);
+            let sig_end = signature_end_line(&lines, sym, lang);
             // Doc comment lines before signature
             for (i, line) in lines.iter().enumerate().take(sym_line_0).skip(start) {
                 out.push_str(&fmt_line(i, line));
@@ -370,7 +391,7 @@ fn render_symbols_with_docs(
             }
             emitted_up_to = emitted_up_to.max(sig_end + 1);
             // Python docstrings: include triple-quoted string after the signature
-            if is_python {
+            if lang == Some(Lang::Python) {
                 let ds_end = docstring_end(&lines, sig_end);
                 for (i, line) in lines.iter().enumerate().take(ds_end).skip(sig_end + 1) {
                     out.push_str(&fmt_line(i, line));
@@ -381,7 +402,7 @@ fn render_symbols_with_docs(
             // Use max of sym_line + 1 and end_line - 1 to handle both cases:
             //   ATX headings (end_line may equal line if no trailing newline): sym_line + 1
             //   Setext headings (end_line > line + 1): end_line - 1 skips the underline
-            if is_markdown {
+            if lang == Some(Lang::Markdown) {
                 let content_end = markdown_content_end(symbols, sym_idx, &lines, expand_types);
                 let heading_end = (sym.end_line - 1).max(sym_line_0 + 1);
                 for (i, line) in lines
@@ -430,7 +451,7 @@ fn has_multiline_signature(kind: parse::SymbolKind) -> bool {
 /// Strips trailing line comments (`//` or `#`) before checking delimiters,
 /// so `interface Foo { // eslint-disable` correctly matches on `{`.
 /// Returns sym.line - 1 for single-line or non-function symbols.
-fn signature_end_line(lines: &[&str], sym: &parse::Symbol, is_python: bool) -> usize {
+fn signature_end_line(lines: &[&str], sym: &parse::Symbol, lang: Option<Lang>) -> usize {
     let sym_line_0 = sym.line - 1;
     // Type aliases: the entire declaration IS the signature (no hidden body),
     // so show all lines. This handles multi-line TypeScript type aliases like
@@ -445,7 +466,7 @@ fn signature_end_line(lines: &[&str], sym: &parse::Symbol, is_python: bool) -> u
     let max_line = sym.end_line.min(lines.len());
     for (i, line) in lines.iter().enumerate().take(max_line).skip(sym_line_0) {
         let trimmed = line.trim();
-        if is_python {
+        if lang == Some(Lang::Python) {
             let code = strip_python_line_comment(trimmed);
             if code.ends_with(':') {
                 return i;
@@ -492,7 +513,7 @@ fn strip_python_line_comment(s: &str) -> &str {
 
 /// Find the first line (0-indexed) of the doc comment block preceding a symbol.
 /// Returns the symbol's own line index if there's no doc comment.
-fn doc_comment_start(lines: &[&str], symbol_line_0: usize, is_go: bool) -> usize {
+fn doc_comment_start(lines: &[&str], symbol_line_0: usize, lang: Option<Lang>) -> usize {
     if symbol_line_0 == 0 {
         return symbol_line_0;
     }
@@ -540,7 +561,7 @@ fn doc_comment_start(lines: &[&str], symbol_line_0: usize, is_go: bool) -> usize
     }
 
     // Go doc comments (plain // preceding a declaration)
-    if is_go && prev_trimmed.starts_with("//") {
+    if lang == Some(Lang::Go) && prev_trimmed.starts_with("//") {
         peek -= 1;
         while peek > 0 {
             let above = lines[peek - 1].trim();
@@ -944,7 +965,7 @@ mod tests {
             end_line: 3,
         };
         // Should detect `{` on line 0 (first line), not scan into the body
-        assert_eq!(signature_end_line(&lines, &sym, false), 0);
+        assert_eq!(signature_end_line(&lines, &sym, Some(Lang::JsTs)), 0);
     }
 
     #[test]
