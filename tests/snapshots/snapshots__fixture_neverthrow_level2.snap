@@ -1,0 +1,131 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+_internals/error.ts
+     3→export interface ErrorConfig {
+     7→const defaultErrorConfig: ErrorConfig = {
+    11→interface NeverThrowError<T, E> {
+    27→export const createNeverThrowError = <T, E>(
+_internals/utils.ts
+     5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
+    10→export type ExtractOkAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
+    15→export type ExtractErrTypes<T extends readonly Result<unknown, unknown>[]> = {
+    20→export type ExtractErrAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
+    24→export type InferOkTypes<R> = R extends Result<infer T, unknown> ? T : never
+    25→export type InferErrTypes<R> = R extends Result<unknown, infer E> ? E : never
+    27→export type InferAsyncOkTypes<R> = R extends ResultAsync<infer T, unknown> ? T : never
+    28→export type InferAsyncErrTypes<R> = R extends ResultAsync<unknown, infer E> ? E : never
+    33→export const combineResultList = <T, E>(
+    54→export const combineResultAsyncList = <T, E>(
+    64→export const combineResultListWithAllErrors = <T, E>(
+    82→export const combineResultAsyncListWithAllErrors = <T, E>(
+result-async.ts
+    22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
+    25→  constructor(res: Promise<Result<T, E>>) {
+    30→  static fromSafePromise<T, E = never>(promise: Promise<T>): ResultAsync<T, E> {
+    37→  static fromPromise<T, E>(promise: Promise<T>, errorFn: (e: unknown) => E): ResultAsync<T, E> {
+    46→  static fromThrowable<A extends readonly any[], R, E>(
+    69→  static combine<T extends readonly ResultAsync<unknown, unknown>[]>(
+    81→  static combineWithAllErrors<T extends readonly ResultAsync<unknown, unknown>[]>(
+    89→  map<A>(f: (t: T) => A | Promise<A>): ResultAsync<A, E> {
+   101→  andThrough<F>(f: (t: T) => Result<unknown, F> | ResultAsync<unknown, F>): ResultAsync<T, E | F> {
+   117→  andTee(f: (t: T) => unknown): ResultAsync<T, E> {
+   133→  orTee(f: (t: E) => unknown): ResultAsync<T, E> {
+   149→  mapErr<U>(f: (e: E) => U | Promise<U>): ResultAsync<T, U> {
+   169→  andThen(f: any): any {
+   190→  orElse(f: any): any {
+   202→  match<A, B = A>(ok: (t: T) => A, _err: (e: E) => B): Promise<A | B> {
+   206→  unwrapOr<A>(t: A): Promise<T | A> {
+   222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
+   227→  then<A, B>(
+   249→export function okAsync<T, E = never>(value: T): ResultAsync<T, E> {
+   255→export function errAsync<T = never, E = unknown>(err: E): ResultAsync<T, E> {
+   259→export const fromPromise = ResultAsync.fromPromise
+   260→export const fromSafePromise = ResultAsync.fromSafePromise
+   262→export const fromAsyncThrowable = ResultAsync.fromThrowable
+   265→export type CombineResultAsyncs<
+   272→export type CombineResultsWithAllErrorsArrayAsync<
+   279→type UnwrapAsync<T> = IsLiteralArray<T> extends 1
+   300→type TraverseAsync<T, Depth extends number = 5> = IsLiteralArray<T> extends 1
+   330→type TraverseWithAllErrorsAsync<T, Depth extends number = 5> = TraverseAsync<
+   338→type Writable<T> = T extends ReadonlyArray<unknown> ? [...T] : T
+result.ts
+    14→export namespace Result {
+    23→  export function fromThrowable<Fn extends (...args: readonly any[]) => any, E>(
+    43→  export function combine<
+    55→  export function combineWithAllErrors<T extends readonly Result<unknown, unknown>[]>(
+    62→export type Result<T, E> = Ok<T, E> | Err<T, E>
+    66→export function ok<T, E = never>(value: T): Ok<T, E> {
+    73→export function err<T = never, E = unknown>(err: E): Err<T, E> {
+   122→export function safeTry<T, E>(
+   134→interface IResult<T, E> {
+   140→  isOk(): this is Ok<T, E>
+   147→  isErr(): this is Err<T, E>
+   157→  map<A>(f: (t: T) => A): Result<A, E>
+   168→  mapErr<U>(f: (e: E) => U): Result<T, U>
+   183→  andThen<U, F>(f: (t: T) => Result<U, F>): Result<U, E | F>
+   195→  andTee(f: (t: T) => unknown): Result<T, E>
+   207→  orTee(f: (t: E) => unknown): Result<T, E>
+   219→  andThrough<F>(f: (t: T) => Result<unknown, F>): Result<T, E | F>
+   233→  orElse<U, A>(f: (e: E) => Result<U, A>): Result<U | T, A>
+   244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
+   253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
+   260→  unwrapOr<A>(v: A): T | A
+   276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
+   290→  safeUnwrap(): Generator<Err<never, E>, T>
+   299→  _unsafeUnwrap(config?: ErrorConfig): T
+   309→  _unsafeUnwrapErr(config?: ErrorConfig): E
+   312→export class Ok<T, E> implements IResult<T, E> {
+   313→  constructor(readonly value: T) {}
+   315→  isOk(): this is Ok<T, E> {
+   319→  isErr(): this is Err<T, E> {
+   323→  map<A>(f: (t: T) => A): Result<A, E> {
+   328→  mapErr<U>(_f: (e: E) => U): Result<T, U> {
+   337→  andThen(f: any): any {
+   344→  andThrough(f: any): any {
+   348→  andTee(f: (t: T) => unknown): Result<T, E> {
+   357→  orTee(_f: (t: E) => unknown): Result<T, E> {
+   366→  orElse(_f: any): any {
+   370→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F> {
+   379→  asyncAndThrough(f: (t: T) => ResultAsync<unknown, unknown>): any {
+   383→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E> {
+   388→  unwrapOr<A>(_v: A): T | A {
+   393→  match<A, B = A>(ok: (t: T) => A, _err: (e: E) => B): A | B {
+   397→  safeUnwrap(): Generator<Err<never, E>, T> {
+   405→  _unsafeUnwrap(_?: ErrorConfig): T {
+   409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
+   419→export class Err<T, E> implements IResult<T, E> {
+   420→  constructor(readonly error: E) {}
+   422→  isOk(): this is Ok<T, E> {
+   426→  isErr(): this is Err<T, E> {
+   431→  map<A>(_f: (t: T) => A): Result<A, E> {
+   435→  mapErr<U>(f: (e: E) => U): Result<T, U> {
+   439→  andThrough<F>(_f: (t: T) => Result<unknown, F>): Result<T, E | F> {
+   443→  andTee(_f: (t: T) => unknown): Result<T, E> {
+   447→  orTee(f: (t: E) => unknown): Result<T, E> {
+   461→  andThen(_f: any): any {
+   470→  orElse(f: any): any {
+   475→  asyncAndThen<U, F>(_f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F> {
+   479→  asyncAndThrough<F>(_f: (t: T) => ResultAsync<unknown, F>): ResultAsync<T, E | F> {
+   484→  asyncMap<U>(_f: (t: T) => Promise<U>): ResultAsync<U, E> {
+   488→  unwrapOr<A>(v: A): T | A {
+   492→  match<A, B = A>(_ok: (t: T) => A, err: (e: E) => B): A | B {
+   496→  safeUnwrap(): Generator<Err<never, E>, T> {
+   505→  _unsafeUnwrap(config?: ErrorConfig): T {
+   509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
+   523→export const fromThrowable = Result.fromThrowable
+   530→type Prev = [
+   590→type CollectResults<T, Collected extends unknown[] = [], Depth extends number = 50> = [
+   614→export type Transpose<
+   635→export type Combine<T, Depth extends number = 5> = Transpose<CollectResults<T>, [], Depth> extends [
+   645→export type Dedup<T> = T extends Result<infer RL, infer RR>
+   652→export type MemberListOf<T> = (
+   669→export type EmptyArrayToNever<T, NeverArrayToNever extends number = 0> = T extends []
+   680→type UnknownMembersToNever<T> = T extends [infer H, ...infer R]
+   685→export type MembersToUnion<T> = T extends unknown[] ? T[number] : never
+   688→export type IsLiteralArray<T> = T extends { length: infer L }
+   698→type Traverse<T, Depth extends number = 5> = Combine<T, Depth> extends [infer Oks, infer Errs]
+   704→type TraverseWithAllErrors<T, Depth extends number = 5> = Traverse<T, Depth> extends Result<
+   712→export type CombineResults<
+   719→export type CombineResultsWithAllErrorsArray<

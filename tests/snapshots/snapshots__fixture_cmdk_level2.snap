@@ -1,0 +1,59 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+command-score.ts
+    54→function commandScoreInner(
+   150→function formatInput(string) {
+   155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
+index.tsx
+    10→type Children = { children?: React.ReactNode }
+    11→type DivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>
+    13→type LoadingProps = Children &
+    23→type EmptyProps = Children & DivProps & {}
+    24→type SeparatorProps = DivProps & {
+    28→type DialogProps = RadixDialog.DialogProps &
+    37→type ListProps = Children &
+    44→type ItemProps = Children &
+    60→type GroupProps = Children &
+    69→type InputProps = Omit<React.ComponentPropsWithoutRef<typeof Primitive.input>, 'value' | 'onChange' | 'type'> & {
+    79→type CommandFilter = (value: string, search: string, keywords?: string[]) => number
+    80→type CommandProps = Children &
+   123→type Context = {
+   137→type State = {
+   143→type Store = {
+   149→type Group = {
+   154→const GROUP_SELECTOR = `[cmdk-group=""]`
+   155→const GROUP_ITEMS_SELECTOR = `[cmdk-group-items=""]`
+   156→const GROUP_HEADING_SELECTOR = `[cmdk-group-heading=""]`
+   157→const ITEM_SELECTOR = `[cmdk-item=""]`
+   158→const VALID_ITEM_SELECTOR = `${ITEM_SELECTOR}:not([aria-disabled="true"])`
+   159→const SELECT_EVENT = `cmdk-item-select`
+   160→const VALUE_ATTR = `data-value`
+   161→const defaultFilter: CommandFilter = (value, search, keywords) => commandScore(value, search, keywords)
+   163→const CommandContext = React.createContext<Context>(undefined)
+   164→const useCommand = () => React.useContext(CommandContext)
+   165→const StoreContext = React.createContext<Store>(undefined)
+   166→const useStore = () => React.useContext(StoreContext)
+   167→const GroupContext = React.createContext<Group>(undefined)
+   169→const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
+   664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
+   729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
+   774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
+   787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
+   833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
+   882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
+   899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
+   909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
+   930→const pkg = Object.assign(Command, {
+   963→function findNextSibling(el: Element, selector: string) {
+   972→function findPreviousSibling(el: Element, selector: string) {
+   981→function useAsRef<T>(data: T) {
+   991→const useLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect
+   993→function useLazyRef<T>(fn: () => T) {
+  1004→function useCmdk<T = any>(selector: (state: State) => T): T {
+  1010→function useValue(
+  1046→const useScheduleLayoutEffect = () => {
+  1061→function renderChildren(children: React.ReactElement) {
+  1071→function SlottableWithNestedChildren(
+  1081→const srOnlyStyles = {

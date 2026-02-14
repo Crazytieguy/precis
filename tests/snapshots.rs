@@ -504,6 +504,208 @@ fn fixture_input_otp() {
     insta::assert_snapshot!(output);
 }
 
+// Level 2 fixture-based snapshot tests (full signature lines).
+
+#[test]
+fn fixture_either_level2() {
+    let Some(root) = fixture_path("either/src") else {
+        eprintln!("skipping fixture_either_level2: clone with `git clone --depth 1 https://github.com/rayon-rs/either.git test/fixtures/either`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_neverthrow_level2() {
+    let Some(root) = fixture_path("neverthrow/src") else {
+        eprintln!("skipping fixture_neverthrow_level2: clone with `git clone --depth 1 https://github.com/supermacro/neverthrow.git test/fixtures/neverthrow`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_semver_level2() {
+    let Some(root) = fixture_path("semver/classes") else {
+        eprintln!("skipping fixture_semver_level2: clone with `git clone --depth 1 https://github.com/npm/node-semver.git test/fixtures/semver`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_cmdk_level2() {
+    let Some(root) = fixture_path("cmdk/cmdk/src") else {
+        eprintln!("skipping fixture_cmdk_level2: clone with `git clone --depth 1 https://github.com/pacocoursey/cmdk.git test/fixtures/cmdk`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_ts_pattern_level2() {
+    let Some(root) = fixture_path("ts-pattern/src") else {
+        eprintln!("skipping fixture_ts_pattern_level2: clone with `git clone --depth 1 https://github.com/gvergnaud/ts-pattern.git test/fixtures/ts-pattern`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_anyhow_level2() {
+    let Some(root) = fixture_path("anyhow/src") else {
+        eprintln!("skipping fixture_anyhow_level2: clone with `git clone --depth 1 https://github.com/dtolnay/anyhow.git test/fixtures/anyhow`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_once_cell_level2() {
+    let Some(root) = fixture_path("once_cell/src") else {
+        eprintln!("skipping fixture_once_cell_level2: clone with `git clone --depth 1 https://github.com/matklad/once_cell.git test/fixtures/once_cell`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_react_hot_toast_level2() {
+    let Some(root) = fixture_path("react-hot-toast/src") else {
+        eprintln!("skipping fixture_react_hot_toast_level2: clone with `git clone --depth 1 https://github.com/timolins/react-hot-toast.git test/fixtures/react-hot-toast`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_superstruct_level2() {
+    let Some(root) = fixture_path("superstruct/src") else {
+        eprintln!("skipping fixture_superstruct_level2: clone with `git clone --depth 1 https://github.com/ianstormtaylor/superstruct.git test/fixtures/superstruct`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_dotenv_level2() {
+    let Some(root) = fixture_path("dotenv/lib") else {
+        eprintln!("skipping fixture_dotenv_level2: clone with `git clone --depth 1 https://github.com/motdotla/dotenv.git test/fixtures/dotenv`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_commander_level2() {
+    let Some(root) = fixture_path("commander/lib") else {
+        eprintln!("skipping fixture_commander_level2: clone with `git clone --depth 1 https://github.com/tj/commander.js.git test/fixtures/commander`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_thiserror_level2() {
+    let Some(root) = fixture_path("thiserror/src") else {
+        eprintln!("skipping fixture_thiserror_level2: clone with `git clone --depth 1 https://github.com/dtolnay/thiserror.git test/fixtures/thiserror`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_sonner_level2() {
+    let Some(root) = fixture_path("sonner/src") else {
+        eprintln!("skipping fixture_sonner_level2: clone with `git clone --depth 1 https://github.com/emilkowalski/sonner.git test/fixtures/sonner`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_mitt_level2() {
+    let Some(root) = fixture_path("mitt/src") else {
+        eprintln!("skipping fixture_mitt_level2: clone with `git clone --depth 1 https://github.com/developit/mitt.git test/fixtures/mitt`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_debug_level2() {
+    let Some(root) = fixture_path("debug/src") else {
+        eprintln!("skipping fixture_debug_level2: clone with `git clone --depth 1 https://github.com/debug-js/debug.git test/fixtures/debug`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_log_level2() {
+    let Some(root) = fixture_path("log/src") else {
+        eprintln!("skipping fixture_log_level2: clone with `git clone --depth 1 https://github.com/rust-lang/log.git test/fixtures/log`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_ky_level2() {
+    let Some(root) = fixture_path("ky/source") else {
+        eprintln!("skipping fixture_ky_level2: clone with `git clone --depth 1 https://github.com/sindresorhus/ky.git test/fixtures/ky`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_ini_level2() {
+    let Some(root) = fixture_path("ini/lib") else {
+        eprintln!("skipping fixture_ini_level2: clone with `git clone --depth 1 https://github.com/npm/ini.git test/fixtures/ini`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_vaul_level2() {
+    let Some(root) = fixture_path("vaul/src") else {
+        eprintln!("skipping fixture_vaul_level2: clone with `git clone --depth 1 https://github.com/emilkowalski/vaul.git test/fixtures/vaul`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_input_otp_level2() {
+    let Some(root) = fixture_path("input-otp/packages/input-otp/src") else {
+        eprintln!("skipping fixture_input_otp_level2: clone with `git clone --depth 1 https://github.com/guilhermerodz/input-otp.git test/fixtures/input-otp`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
 /// Test the monotonicity invariant: for any file, a higher level must never
 /// produce fewer words than a lower level.
 #[test]
