@@ -126,7 +126,23 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             "interface_declaration" => SymbolKind::Interface,
             "enum_declaration" => SymbolKind::Enum,
             "type_alias_declaration" => SymbolKind::TypeAlias,
-            "lexical_declaration" => SymbolKind::Const,
+            "lexical_declaration" => {
+                // Detect arrow functions / function expressions assigned to const/let
+                // e.g. `export const foo = () => ...` should be fn, not const
+                let is_function_value = symbol_node
+                    .named_children(&mut symbol_node.walk())
+                    .filter(|c| c.kind() == "variable_declarator")
+                    .any(|decl| {
+                        decl.child_by_field_name("value")
+                            .map(|v| matches!(v.kind(), "arrow_function" | "function_expression" | "generator_function"))
+                            .unwrap_or(false)
+                    });
+                if is_function_value {
+                    SymbolKind::Function
+                } else {
+                    SymbolKind::Const
+                }
+            }
             "internal_module" => SymbolKind::Module,
             _ => continue,
         };
@@ -464,5 +480,35 @@ fn top_level() {}
         assert!(!names.contains(&"nested_helper"));
         assert!(!names.contains(&"local_fn"));
         assert!(!names.contains(&"LOCAL"));
+    }
+
+    #[test]
+    fn reclassifies_arrow_functions_as_fn() {
+        let source = r#"
+export const greet = (name: string): string => {
+    return `Hello, ${name}`;
+};
+
+export const add = (a: number, b: number) => a + b;
+
+const helper = function(x: number) { return x * 2; };
+
+export const API_URL = "https://example.com";
+
+export const MAX_RETRIES = 3;
+"#;
+        let symbols = extract_symbols(Path::new("test.ts"), source);
+        let kinds: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.name.as_str(), s.kind))
+            .collect();
+
+        // Arrow functions and function expressions should be classified as Function
+        assert!(kinds.contains(&("greet", SymbolKind::Function)));
+        assert!(kinds.contains(&("add", SymbolKind::Function)));
+        assert!(kinds.contains(&("helper", SymbolKind::Function)));
+        // Regular const values should remain as Const
+        assert!(kinds.contains(&("API_URL", SymbolKind::Const)));
+        assert!(kinds.contains(&("MAX_RETRIES", SymbolKind::Const)));
     }
 }

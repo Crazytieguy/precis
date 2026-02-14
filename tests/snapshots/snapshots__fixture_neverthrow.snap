@@ -6,7 +6,7 @@ _internals/error.ts:
   pub interface ErrorConfig :3
   const defaultErrorConfig :7
   interface NeverThrowError :11
-  pub const createNeverThrowError :27
+  pub fn createNeverThrowError :27
 _internals/utils.ts:
   pub type ExtractOkTypes :5
   pub type ExtractOkAsyncTypes :10
@@ -16,10 +16,10 @@ _internals/utils.ts:
   pub type InferErrTypes :25
   pub type InferAsyncOkTypes :27
   pub type InferAsyncErrTypes :28
-  pub const combineResultList :33
-  pub const combineResultAsyncList :54
-  pub const combineResultListWithAllErrors :64
-  pub const combineResultAsyncListWithAllErrors :82
+  pub fn combineResultList :33
+  pub fn combineResultAsyncList :54
+  pub fn combineResultListWithAllErrors :64
+  pub fn combineResultAsyncListWithAllErrors :82
 result-async.ts:
   pub class ResultAsync :22
   pub fn constructor :25

@@ -2,7 +2,6 @@
 
 ## Snapshot quality
 
-- TypeScript: arrow functions assigned to `const` (e.g. `export const foo = () => ...`) show as `const` not `fn`. Should we detect and reclassify these?
 - TypeScript: `lexical_declaration` captures both `const` and `let` as `const`. Should `let` exports be shown differently?
 
 ## Snapshot coverage
