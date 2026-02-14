@@ -311,3 +311,13 @@ fn fixture_dotenv() {
     let output = format::format_directory(&root);
     insta::assert_snapshot!(output);
 }
+
+#[test]
+fn fixture_commander() {
+    let Some(root) = fixture_path("commander/lib") else {
+        eprintln!("skipping fixture_commander: clone with `git clone --depth 1 https://github.com/tj/commander.js.git test/fixtures/commander`");
+        return;
+    };
+    let output = format::format_directory(&root);
+    insta::assert_snapshot!(output);
+}

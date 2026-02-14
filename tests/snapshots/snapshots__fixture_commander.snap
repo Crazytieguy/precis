@@ -1,0 +1,195 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+argument.js:
+  class Argument :3
+  constructor :13
+  name :48
+  _collectValue :56
+  default :73
+  argParser :86
+  choices :98
+  argRequired :119
+  argOptional :129
+  function humanReadableArgName :143
+command.js:
+  const EventEmitter :1
+  class Command :13
+  constructor :20
+  copyInheritedSettings :99
+  _getCommandAndAncestors :121
+  command :155
+  createCommand :192
+  createHelp :203
+  configureHelp :215
+  configureOutput :245
+  showHelpAfterError :261
+  showSuggestionAfterError :273
+  addCommand :288
+  createArgument :316
+  argument :336
+  arguments :359
+  addArgument :375
+  helpCommand :409
+  addHelpCommand :443
+  _getHelpCommand :463
+  hook :487
+  exitOverride :508
+  _exit :533
+  action :556
+  createOption :585
+  _callParseArg :599
+  _registerOption :619
+  _registerCommand :644
+  addOption :670
+  _optionEx :741
+  option :788
+  requiredOption :805
+  combineFlagAndOptionalValue :826
+  allowUnknownOption :837
+  allowExcessArguments :848
+  enablePositionalOptions :861
+  passThroughOptions :875
+  _checkForBrokenPassThrough :885
+  storeOptionsAsProperties :905
+  getOptionValue :925
+  setOptionValue :940
+  setOptionValueWithSource :953
+  getOptionValueSource :971
+  getOptionValueSourceWithGlobals :983
+  _prepareUserArgs :1001
+  parse :1090
+  async parseAsync :1119
+  _prepareForParse :1127
+  saveStateBeforeParse :1141
+  restoreStateBeforeParse :1158
+  _checkForMissingExecutable :1183
+  _executeSubCommand :1202
+  _dispatchSubcommand :1352
+  _dispatchHelpCommand :1380
+  _checkNumberOfArguments :1403
+  _processArguments :1428
+  _chainOrCall :1481
+  _chainOrCallHooks :1499
+  _chainOrCallSubCommandHook :1531
+  _parseCommand :1550
+  _findCommand :1649
+  _findOption :1664
+  _checkForMissingMandatoryOptions :1675
+  _checkForConflictingLocalOptions :1694
+  _checkForConflictingOptions :1723
+  parseOptions :1748
+  opts :1902
+  optsWithGlobals :1924
+  error :1940
+  _parseOptionsEnv :1966
+  _parseOptionsImplied :1996
+  missingArgument :2034
+  optionMissingArgument :2046
+  missingMandatoryOptionValue :2058
+  _conflictingOption :2070
+  unknownOption :2114
+  _excessArguments :2146
+  unknownCommand :2162
+  version :2195
+  description :2218
+  summary :2234
+  alias :2249
+  aliases :2289
+  usage :2304
+  name :2331
+  helpGroup :2344
+  commandsGroup :2363
+  optionsGroup :2382
+  _initOptionGroup :2392
+  _initCommandGroup :2401
+  nameFromFilename :2419
+  executableDir :2437
+  helpInformation :2450
+  _getOutputContext :2475
+  outputHelp :2505
+  helpOption :2559
+  _getHelpOption :2592
+  addHelpOption :2607
+  help :2621
+  addHelpText :2656
+  _outputHelpIfRequested :2686
+  function incrementNodeInspectorPort :2705
+  function useColor :2752
+error.js:
+  class CommanderError :4
+  constructor :11
+  class InvalidArgumentError :25
+  constructor :30
+help.js:
+  class Help :12
+  constructor :13
+  prepareContext :29
+  visibleCommands :40
+  compareOptions :62
+  visibleOptions :79
+  visibleGlobalOptions :112
+  visibleArguments :139
+  subcommandTerm :162
+  optionTerm :182
+  argumentTerm :193
+  longestSubcommandTermLength :205
+  longestOptionTermLength :224
+  longestGlobalOptionTermLength :241
+  longestArgumentTermLength :258
+  commandUsage :276
+  commandDescription :300
+  subcommandDescription :313
+  optionDescription :325
+  argumentDescription :372
+  formatItemList :403
+  groupItems :417
+  formatHelp :443
+  displayWidth :535
+  styleTitle :545
+  styleUsage :549
+  styleCommandDescription :563
+  styleOptionDescription :566
+  styleSubcommandDescription :569
+  styleArgumentDescription :572
+  styleDescriptionText :575
+  styleOptionTerm :578
+  styleSubcommandTerm :581
+  styleArgumentTerm :594
+  styleOptionText :597
+  styleArgumentText :600
+  styleSubcommandText :603
+  styleCommandText :606
+  padWidth :618
+  preformatted :633
+  formatItem :650
+  boxWrap :695
+  function stripColor :740
+option.js:
+  class Option :3
+  constructor :11
+  default :47
+  preset :65
+  conflicts :82
+  implies :100
+  env :120
+  argParser :132
+  makeOptionMandatory :144
+  hideHelp :156
+  _collectValue :165
+  choices :181
+  name :203
+  attributeName :217
+  helpGroup :230
+  is :243
+  isBoolean :256
+  class DualOptions :268
+  constructor :272
+  valueFromOption :297
+  function camelcase :316
+  function splitOptionFlags :328
+suggestSimilar.js:
+  const maxDistance :1
+  function editDistance :3
+  function suggestSimilar :56
