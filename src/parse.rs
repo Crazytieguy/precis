@@ -316,15 +316,18 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         });
     }
 
-    dedup_overloads(symbols)
+    dedup_overloads(symbols, lang)
 }
 
 /// Collapse consecutive function symbols with the same name, keeping only the last in each run.
 /// This handles TypeScript/JavaScript method overload signatures: the overload declarations
 /// appear as `method_signature` nodes before the actual `method_definition` implementation.
-/// Only merges when both symbols are functions, so a Go struct named `Error` won't be
-/// collapsed with its `func (e *Error) Error()` method.
-fn dedup_overloads(symbols: Vec<Symbol>) -> Vec<Symbol> {
+/// Only applied to languages with overloads (JsTs and Python). Go is excluded because
+/// it allows multiple `init()` functions in one file which must all be preserved.
+fn dedup_overloads(symbols: Vec<Symbol>, lang: Lang) -> Vec<Symbol> {
+    if lang == Lang::Go {
+        return symbols;
+    }
     let mut result: Vec<Symbol> = Vec::with_capacity(symbols.len());
     for sym in symbols {
         if let Some(last) = result.last()
@@ -1281,5 +1284,31 @@ const MaxItems = 100
         // Symbols inside func_literal should be filtered out
         assert!(!names.contains(&"bufSize"));
         assert!(!names.contains(&"temp"));
+    }
+
+    #[test]
+    fn preserves_go_multiple_init_functions() {
+        let source = r#"
+package example
+
+func init() {
+	registerA()
+}
+
+func init() {
+	registerB()
+}
+
+func Process() {}
+"#;
+        let symbols = extract_symbols(Path::new("test.go"), source);
+        let init_count = symbols.iter().filter(|s| s.name == "init").count();
+        assert_eq!(
+            init_count, 2,
+            "Go allows multiple init() functions; both must be preserved"
+        );
+        // Other functions still captured
+        let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
+        assert!(names.contains(&"Process"));
     }
 }
