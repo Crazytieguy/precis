@@ -147,6 +147,18 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
                     SymbolKind::Const
                 }
             }
+            "public_field_definition" => {
+                let value_kind = symbol_node
+                    .child_by_field_name("value")
+                    .map(|v| v.kind());
+
+                if matches!(value_kind, Some("arrow_function" | "function_expression" | "generator_function")) {
+                    SymbolKind::Function
+                } else {
+                    // Skip plain data fields (not functions)
+                    continue;
+                }
+            }
             "internal_module" => SymbolKind::Module,
             _ => continue,
         };
@@ -244,7 +256,7 @@ fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
     // is "public", or if no accessibility_modifier (public by default in TS).
     // Interface methods (method_signature) are always public by design.
     // JS private methods (#method) use private_property_identifier and are always private.
-    if node.kind() == "method_definition" || node.kind() == "method_signature" {
+    if matches!(node.kind(), "method_definition" | "method_signature" | "public_field_definition") {
         // JS #private methods are always private
         if node
             .child_by_field_name("name")
@@ -636,5 +648,44 @@ export class Parser {
         // JS #private methods should be captured as non-public
         assert!(info.contains(&("#advance", SymbolKind::Function, false)));
         assert!(info.contains(&("#reset", SymbolKind::Function, false)));
+    }
+
+    #[test]
+    fn captures_arrow_function_class_fields() {
+        let source = r#"
+class Observer {
+    subscribers: Array<string>;
+
+    constructor() {
+        this.subscribers = [];
+    }
+
+    subscribe = (subscriber: string) => {
+        this.subscribers.push(subscriber);
+    };
+
+    publish = (data: string) => {
+        console.log(data);
+    };
+
+    normalMethod() {
+        return true;
+    }
+}
+"#;
+        let symbols = extract_symbols(Path::new("test.ts"), source);
+        let info: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.name.as_str(), s.kind))
+            .collect();
+
+        // Arrow function class fields should be captured as Function
+        assert!(info.contains(&("subscribe", SymbolKind::Function)));
+        assert!(info.contains(&("publish", SymbolKind::Function)));
+        // Regular method should also be captured
+        assert!(info.contains(&("normalMethod", SymbolKind::Function)));
+        assert!(info.contains(&("constructor", SymbolKind::Function)));
+        // Plain data fields should NOT be captured
+        assert!(!info.iter().any(|(name, _)| *name == "subscribers"));
     }
 }

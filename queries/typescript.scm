@@ -35,6 +35,10 @@
   (variable_declarator
     name: (identifier) @name)) @symbol
 
+; Class field definitions (arrow function properties like `subscribe = (x) => { ... }`)
+(public_field_definition
+  name: (property_identifier) @name) @symbol
+
 ; Namespaces
 (internal_module
   name: (identifier) @name) @symbol

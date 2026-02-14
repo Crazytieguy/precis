@@ -34,6 +34,20 @@ state.ts
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
     22→  constructor() {
+    29→  subscribe = (subscriber: (toast: ToastT | ToastToDismiss) => void) => {
+    38→  publish = (data: ToastT) => {
+    42→  addToast = (data: ToastT) => {
+    47→  create = (
+    88→  dismiss = (id?: number | string) => {
+   101→  message = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   105→  error = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   109→  success = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   113→  info = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   117→  warning = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   121→  loading = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   125→  promise = <ToastData>(promise: PromiseT<ToastData>, data?: PromiseData<ToastData>) => {
+   243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
+   249→  getActiveToasts = () => {
    254→export const ToastState = new Observer();
    257→const toastFunction = (message: titleT, data?: ExternalToast) => {
    268→const isHttpResponse = (data: any): data is Response => {
