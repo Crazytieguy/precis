@@ -1150,6 +1150,12 @@ budget_test!(budget_pluggy_level1, "pluggy/src/pluggy", 300);
 budget_test!(budget_pluggy_level2, "pluggy/src/pluggy", 1000);
 budget_test!(budget_pluggy_level3, "pluggy/src/pluggy", 2000);
 
+// TSX budget tests (sonner: 0→5, 1→174, 2→495, 3→495, 4→1837, 5→5929 words)
+budget_test!(budget_sonner_level0, "sonner/src", 3);
+budget_test!(budget_sonner_level1, "sonner/src", 180);
+budget_test!(budget_sonner_level3, "sonner/src", 500);
+budget_test!(budget_sonner_level4, "sonner/src", 1900);
+
 // Markdown budget tests (mdbook: 0→37, 1→553, 2→560, 3→5061, 4→17096, 5→17253 words)
 budget_test!(budget_mdbook_level0, "mdbook/guide/src", 30);
 budget_test!(budget_mdbook_level1, "mdbook/guide/src", 555);
