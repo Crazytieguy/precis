@@ -25,14 +25,16 @@ fn is_source_file(path: &Path) -> bool {
         .is_some_and(parse::is_supported_extension)
 }
 
-/// Check if a file should be excluded from output (test/benchmark infrastructure).
-/// Matches test directories, benchmark directories, and test file naming conventions.
+/// Check if a file should be excluded from output (test/benchmark/example infrastructure).
+/// Matches test directories, benchmark directories, example directories,
+/// and test file naming conventions.
 fn is_test_file(path: &Path) -> bool {
     // Check for non-source directories anywhere in the path:
     // __tests__/ (Jest), tests/ (Rust/Python/JS), test/ (JS/TS), testing/ (Python),
     // benches/ (Rust), benchmark/ and benchmarks/ (cross-language),
     // testdata/ (Go convention, excluded by go build),
-    // vendor/ (vendored third-party dependencies: Go, PHP, Ruby)
+    // vendor/ (vendored third-party dependencies: Go, PHP, Ruby),
+    // examples/ and example/ (usage demonstrations, not core API: Rust, Go, JS)
     if path.components().any(|c| {
         let s = c.as_os_str();
         s == "__tests__"
@@ -44,6 +46,8 @@ fn is_test_file(path: &Path) -> bool {
             || s == "benchmarks"
             || s == "testdata"
             || s == "vendor"
+            || s == "examples"
+            || s == "example"
     }) {
         return true;
     }
@@ -152,6 +156,14 @@ mod tests {
             "package errors",
         )
         .unwrap();
+        // examples/ directory (usage demonstrations)
+        let examples_dir = dir.path().join("examples");
+        fs::create_dir(&examples_dir).unwrap();
+        fs::write(examples_dir.join("basic.rs"), "fn main() {}").unwrap();
+        // example/ directory (singular variant)
+        let example_dir = dir.path().join("example");
+        fs::create_dir(&example_dir).unwrap();
+        fs::write(example_dir.join("demo.ts"), "export const x = 1;").unwrap();
 
         let files = discover_source_files(dir.path());
         let names: Vec<_> = files
@@ -173,8 +185,10 @@ mod tests {
         assert!(!names.contains(&"helpers.py".to_string()));
         assert!(!names.contains(&"run.py".to_string()));
         assert!(!names.contains(&"conftest.py".to_string()));
-        // testdata/ and vendor/ should be excluded
+        // testdata/, vendor/, examples/, example/ should be excluded
         assert!(!names.contains(&"fixture.go".to_string()));
         assert!(!names.contains(&"errors.go".to_string()));
+        assert!(!names.contains(&"basic.rs".to_string()));
+        assert!(!names.contains(&"demo.ts".to_string()));
     }
 }
