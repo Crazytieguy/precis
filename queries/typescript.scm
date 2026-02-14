@@ -10,6 +10,10 @@
 (method_definition
   name: (property_identifier) @name) @symbol
 
+; Class private methods (JS #method syntax)
+(method_definition
+  name: (private_property_identifier) @name) @symbol
+
 ; Interfaces
 (interface_declaration
   name: (type_identifier) @name) @symbol

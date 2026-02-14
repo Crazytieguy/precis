@@ -221,7 +221,15 @@ fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
     // TypeScript class methods and interface methods: public if accessibility_modifier
     // is "public", or if no accessibility_modifier (public by default in TS).
     // Interface methods (method_signature) are always public by design.
+    // JS private methods (#method) use private_property_identifier and are always private.
     if node.kind() == "method_definition" || node.kind() == "method_signature" {
+        // JS #private methods are always private
+        if node
+            .child_by_field_name("name")
+            .is_some_and(|n| n.kind() == "private_property_identifier")
+        {
+            return false;
+        }
         let mut cursor = node.walk();
         let has_accessor = node
             .children(&mut cursor)
@@ -510,5 +518,27 @@ export const MAX_RETRIES = 3;
         // Regular const values should remain as Const
         assert!(kinds.contains(&("API_URL", SymbolKind::Const)));
         assert!(kinds.contains(&("MAX_RETRIES", SymbolKind::Const)));
+    }
+
+    #[test]
+    fn captures_js_private_methods() {
+        let source = r#"
+export class Parser {
+    parse() { return []; }
+    #advance() {}
+    #reset() {}
+}
+"#;
+        let symbols = extract_symbols(Path::new("test.js"), source);
+        let info: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.name.as_str(), s.kind, s.is_public))
+            .collect();
+
+        // Public methods
+        assert!(info.contains(&("parse", SymbolKind::Function, true)));
+        // JS #private methods should be captured as non-public
+        assert!(info.contains(&("#advance", SymbolKind::Function, false)));
+        assert!(info.contains(&("#reset", SymbolKind::Function, false)));
     }
 }
