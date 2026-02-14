@@ -22,6 +22,28 @@ pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String 
     }
 }
 
+/// Count whitespace-delimited words in text.
+pub fn count_words(text: &str) -> usize {
+    text.split_whitespace().count()
+}
+
+/// Find the highest granularity level whose output fits within the word budget.
+/// Uses binary search over `0..=MAX_LEVEL`.
+pub fn budget_level(budget: usize, root: &Path) -> u8 {
+    let mut low: u8 = 0;
+    let mut high: u8 = MAX_LEVEL;
+    while low < high {
+        let mid = (low + high).div_ceil(2);
+        let output = render_directory(mid, root);
+        if count_words(&output) <= budget {
+            low = mid;
+        } else {
+            high = mid - 1;
+        }
+    }
+    low
+}
+
 /// Render all source files in a directory at the given granularity level.
 pub fn render_directory(level: u8, root: &Path) -> String {
     let files = walk::discover_source_files(root);
