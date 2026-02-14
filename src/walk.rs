@@ -1,14 +1,6 @@
+use crate::parse;
 use ignore::Walk;
 use std::path::{Path, PathBuf};
-
-/// Known source file extensions — only languages with tree-sitter queries in queries/.
-const SOURCE_EXTENSIONS: &[&str] = &[
-    // Rust
-    "rs", // TypeScript / JavaScript
-    "ts", "tsx", "js", "jsx", // Python
-    "py", // Markdown
-    "md",
-];
 
 /// Discover source files under `root`, respecting .gitignore.
 /// Returns paths sorted for deterministic output.
@@ -30,7 +22,7 @@ pub fn discover_source_files(root: &Path) -> Vec<PathBuf> {
 fn is_source_file(path: &Path) -> bool {
     path.extension()
         .and_then(|ext| ext.to_str())
-        .is_some_and(|ext| SOURCE_EXTENSIONS.contains(&ext))
+        .is_some_and(parse::is_supported_extension)
 }
 
 /// Check if a file should be excluded from output (test/benchmark infrastructure).

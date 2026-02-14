@@ -49,6 +49,12 @@ impl std::fmt::Display for SymbolKind {
     }
 }
 
+/// Check if a file extension is supported for symbol extraction.
+/// This is the single source of truth for which extensions are supported.
+pub fn is_supported_extension(ext: &str) -> bool {
+    language_for_extension(ext).is_some()
+}
+
 /// Returns the tree-sitter language and query for a file extension, if supported.
 fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
     match ext {
