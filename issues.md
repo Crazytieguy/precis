@@ -23,7 +23,8 @@
 ## Feature development
 
 - Make levels depth-aware and file-size-aware (currently uniform across all files)
-- Add more language grammars (Python, Go)
+- Add more granularity levels before adding new languages
+- Priority languages: Markdown and Python (once we have a few more granularity levels)
 - Add `--json` output flag
 - Doc comment detection (level 3) is text-based heuristic; does not use tree-sitter comment nodes. Handles `///`, `//!`, and `/** */` blocks. Skips `#[attr]` and `@decorator` lines between doc comments and symbols.
 
