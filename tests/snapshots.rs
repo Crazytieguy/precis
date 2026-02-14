@@ -479,6 +479,29 @@ fixture_test!(fixture_ini_level3, "ini/lib", 3);
 fixture_test!(fixture_vaul_level3, "vaul/src", 3);
 fixture_test!(fixture_input_otp_level3, "input-otp/packages/input-otp/src", 3);
 
+// Fixture-based snapshot tests (level 4: type bodies expanded).
+
+fixture_test!(fixture_either_level4, "either/src", 4);
+fixture_test!(fixture_neverthrow_level4, "neverthrow/src", 4);
+fixture_test!(fixture_semver_level4, "semver/classes", 4);
+fixture_test!(fixture_cmdk_level4, "cmdk/cmdk/src", 4);
+fixture_test!(fixture_ts_pattern_level4, "ts-pattern/src", 4);
+fixture_test!(fixture_anyhow_level4, "anyhow/src", 4);
+fixture_test!(fixture_once_cell_level4, "once_cell/src", 4);
+fixture_test!(fixture_react_hot_toast_level4, "react-hot-toast/src", 4);
+fixture_test!(fixture_superstruct_level4, "superstruct/src", 4);
+fixture_test!(fixture_dotenv_level4, "dotenv/lib", 4);
+fixture_test!(fixture_commander_level4, "commander/lib", 4);
+fixture_test!(fixture_thiserror_level4, "thiserror/src", 4);
+fixture_test!(fixture_sonner_level4, "sonner/src", 4);
+fixture_test!(fixture_mitt_level4, "mitt/src", 4);
+fixture_test!(fixture_debug_level4, "debug/src", 4);
+fixture_test!(fixture_log_level4, "log/src", 4);
+fixture_test!(fixture_ky_level4, "ky/source", 4);
+fixture_test!(fixture_ini_level4, "ini/lib", 4);
+fixture_test!(fixture_vaul_level4, "vaul/src", 4);
+fixture_test!(fixture_input_otp_level4, "input-otp/packages/input-otp/src", 4);
+
 // Subdirectory tests: running on a subdirectory within a fixture tests
 // that path display and file discovery work correctly at deeper nesting levels.
 

@@ -1,0 +1,1133 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+errors.ts
+     1→/**
+     2→ * Error when the given input value does not match any included pattern
+     3→ * and .exhaustive() was specified
+     4→ */
+     5→export class NonExhaustiveError extends Error {
+     6→  constructor(public input: unknown) {
+index.ts
+internals/helpers.ts
+    12→export const isObject = (value: unknown): value is Object =>
+    16→export const isMatcher = (
+    24→const isOptionalPattern = (
+    32→export const matchPattern = (
+   120→export const getSelectionKeys = (pattern: any): string[] => {
+   132→export const flatMap = <a, b>(
+internals/symbols.ts
+    17→export type matcher = typeof matcher;
+    20→export type unset = typeof unset;
+    23→export type isVariadic = typeof isVariadic;
+    27→export type anonymousSelectKey = typeof anonymousSelectKey;
+    30→export type override = typeof override;
+is-matching.ts
+     6→/**
+     7→ * This constraint allows using additional properties
+     8→ * in object patterns. See "should allow targetting unknown properties"
+     9→ * unit test in `is-matching.test.ts`.
+    10→ */
+    11→type PatternConstraint<T> = T extends readonly any[]
+    53→export function isMatching<const p extends Pattern<any>>(
+match.ts
+     7→type MatchState<output> =
+    11→const unmatched: MatchState<never> = {
+    16→/**
+    17→ * `match` creates a **pattern matching expression**.
+    18→ *  * Use `.with(pattern, handler)` to pattern match on the input.
+    19→ *  * Use `.exhaustive()` or `.otherwise(() => defaultValue)` to end the expression and get the result.
+    20→ *
+    21→ * [Read the documentation for `match` on GitHub](https://github.com/gvergnaud/ts-pattern#match)
+    22→ *
+    23→ * @example
+    24→ *  declare let input: "A" | "B";
+    25→ *
+    26→ *  return match(input)
+    27→ *    .with("A", () => "It's an A!")
+    28→ *    .with("B", () => "It's a B!")
+    29→ *    .exhaustive();
+    30→ *
+    31→ */
+    32→export function match<const input, output = symbols.unset>(
+    38→/**
+    39→ * This class represents a match expression. It follows the
+    40→ * builder pattern, we chain methods to add features to the expression
+    41→ * until we call `.exhaustive`, `.otherwise` or the unsafe `.run`
+    42→ * method to execute it.
+    43→ *
+    44→ * The types of this class aren't public, the public type definition
+    45→ * can be found in src/types/Match.ts.
+    46→ */
+    47→class MatchExpression<input, output> {
+    48→  constructor(private input: input, private state: MatchState<output>) {}
+    50→  with(...args: any[]): MatchExpression<input, output> {
+    94→  when(
+   110→  otherwise(handler: (value: input) => output): output {
+   115→  exhaustive(unexpectedValueHandler = defaultCatcher): output {
+   120→  run(): output {
+   124→  returnType() {
+   128→  narrow() {
+   133→function defaultCatcher(input: unknown): never {
+patterns.ts
+    67→/**
+    68→ * A `Matchable` is an object implementing
+    69→ * the Matcher Protocol. It must have a `[P.matcher]: P.Matcher<NarrowFn>`
+    70→ * key, which defines how this object should be matched by TS-Pattern.
+    71→ *
+    72→ * @experimental This feature is unstable.
+    73→ *
+    74→ * @example
+    75→ * ```ts
+    76→ * class Some<T> implements P.unstable_Matchable {
+    77→ *  [P.matcher](): P.unstable_Matcher<Some<T>>
+    78→ * }
+    79→ * ```
+    80→ */
+    81→export type unstable_Matchable<
+    87→/**
+    88→ * A `Matcher` is an object with `match` function, which
+    89→ * defines how this object should be matched by TS-Pattern.
+    90→ *
+    91→ * @experimental This feature is unstable.
+    92→ *
+    93→ * @example
+    94→ * ```ts
+    95→ * class Some<T> implements P.unstable_Matchable {
+    96→ *  [P.matcher](): P.unstable_Matcher<Some<T>>
+    97→ * }
+    98→ * ```
+    99→ */
+   100→export type unstable_Matcher<
+   106→/**
+   107→ * `P.infer<typeof somePattern>` will return the type of the value
+   108→ * matched by this pattern.
+   109→ *
+   110→ * [Read the documentation for `P.infer` on GitHub](https://github.com/gvergnaud/ts-pattern#pinfer)
+   111→ *
+   112→ * @example
+   113→ * const userPattern = { name: P.string }
+   114→ * type User = P.infer<typeof userPattern>
+   115→ */
+   116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
+   118→/**
+   119→ * `P.narrow<Input, Pattern>` will narrow the input type to only keep
+   120→ * the set of values that are compatible with the provided pattern type.
+   121→ *
+   122→ * [Read the documentation for `P.narrow` on GitHub](https://github.com/gvergnaud/ts-pattern#pnarrow)
+   123→ *
+   124→ * @example
+   125→ * type Input = ['a' | 'b' | 'c', 'a' | 'b' | 'c']
+   126→ * const Pattern = ['a', P.union('a', 'b')] as const
+   127→ *
+   128→ * type Narrowed = P.narrow<Input, typeof Pattern>
+   129→ * //     ^? ['a', 'a' | 'b']
+   130→ */
+   131→export type narrow<input, pattern> = ExtractPreciseValue<
+   136→function chainable<pattern extends Matcher<any, any, any, any, any>>(
+   148→const variadic = <pattern extends {}>(pattern: pattern): Variadic<pattern> =>
+   165→function arrayChainable<pattern extends Matcher<any, any, any, any, any>>(
+   177→/**
+   178→ * `P.optional(subpattern)` takes a sub pattern and returns a pattern which matches if the
+   179→ * key is undefined or if it is defined and the sub pattern matches its value.
+   180→ *
+   181→ * [Read the documentation for `P.optional` on GitHub](https://github.com/gvergnaud/ts-pattern#poptional-patterns)
+   182→ *
+   183→ * @example
+   184→ *  match(value)
+   185→ *   .with({ greeting: P.optional('Hello') }, () => 'will match { greeting?: "Hello" }')
+   186→ */
+   187→export function optional<
+   217→type UnwrapArray<xs> = xs extends readonly (infer x)[] ? x : never;
+   219→type UnwrapSet<xs> = xs extends Set<infer x> ? x : never;
+   221→type UnwrapMapKey<xs> = xs extends Map<infer k, any> ? k : never;
+   223→type UnwrapMapValue<xs> = xs extends Map<any, infer v> ? v : never;
+   225→type UnwrapRecordKey<xs> = xs extends Record<infer k, any> ? k : never;
+   227→type UnwrapRecordValue<xs> = xs extends Record<any, infer v> ? v : never;
+   229→type WithDefault<a, b> = [a] extends [never] ? b : a;
+   246→export function array(
+   299→export function set<
+   336→const setEvery = <T>(set: Set<T>, predicate: (value: T) => boolean) => {
+   362→export function map<
+   410→const mapEvery = <K, T>(
+   445→export function record(
+   505→const recordEvery = <K extends PropertyKey, T>(
+   517→/**
+   518→ * `P.intersection(...patterns)` returns a pattern which matches
+   519→ * only if **every** patterns provided in parameter match the input.
+   520→ *
+   521→ * [Read the documentation for `P.intersection` on GitHub](https://github.com/gvergnaud/ts-pattern#pintersection-patterns)
+   522→ *
+   523→ * @example
+   524→ *  match(value)
+   525→ *   .with(
+   526→ *     {
+   527→ *       user: P.intersection(
+   528→ *         { firstname: P.string },
+   529→ *         { lastname: P.string },
+   530→ *         { age: P.when(age => age > 21) }
+   531→ *       )
+   532→ *     },
+   533→ *     ({ user }) => 'will match { firstname: string, lastname: string, age: number } if age > 21'
+   534→ *   )
+   535→ */
+   536→export function intersection<
+   559→/**
+   560→ * `P.union(...patterns)` returns a pattern which matches
+   561→ * if **at least one** of the patterns provided in parameter match the input.
+   562→ *
+   563→ * [Read the documentation for `P.union` on GitHub](https://github.com/gvergnaud/ts-pattern#punion-patterns)
+   564→ *
+   565→ * @example
+   566→ *  match(value)
+   567→ *   .with(
+   568→ *     { type: P.union('a', 'b', 'c') },
+   569→ *     ({ type }) => 'will match { type: "a" | "b" | "c" }'
+   570→ *   )
+   571→ */
+   572→export function union<
+   611→export function not<
+   646→export function when<input, predicate extends (value: input) => unknown>(
+   696→export function select(
+   734→function isUnknown(x: unknown): x is unknown {
+   738→function isNumber<T>(x: T | number): x is number {
+   742→function isString<T>(x: T | string): x is string {
+   746→function isBoolean<T>(x: T | boolean): x is boolean {
+   750→function isBigInt<T>(x: T | bigint): x is bigint {
+   754→function isSymbol<T>(x: T | symbol): x is symbol {
+   758→function isNullish<T>(x: T | null | undefined): x is null | undefined {
+   762→function isNonNullable(x: unknown): x is {} {
+   766→type AnyConstructor = abstract new (...args: any[]) => any;
+   768→function isInstanceOf<T extends AnyConstructor>(classConstructor: T) {
+   773→/**
+   774→ * `P.any` is a wildcard pattern, matching **any value**.
+   775→ *
+   776→ * [Read the documentation for `P.any` on GitHub](https://github.com/gvergnaud/ts-pattern#p_-wildcard)
+   777→ *
+   778→ * @example
+   779→ *  match(value)
+   780→ *   .with(P.any, () => 'will always match')
+   781→ */
+   782→export const any: UnknownPattern = chainable(when(isUnknown));
+   784→/**
+   785→ * `P.unknown` is a wildcard pattern, matching **unknown value**.
+   786→ *
+   787→ * [Read the documentation for `P.unknown` on GitHub](https://github.com/gvergnaud/ts-pattern#p_-wildcard)
+   788→ *
+   789→ * @example
+   790→ *  match(value)
+   791→ *   .with(P.unknown, () => 'will always match')
+   792→ */
+   793→export const unknown: UnknownPattern = chainable(when(isUnknown));
+   795→/**
+   796→ * `P._` is a wildcard pattern, matching **any value**.
+   797→ * It's an alias to `P.any`.
+   798→ *
+   799→ * [Read the documentation for `P._` on GitHub](https://github.com/gvergnaud/ts-pattern#p_-wildcard)
+   800→ *
+   801→ * @example
+   802→ *  match(value)
+   803→ *   .with(P._, () => 'will always match')
+   804→ */
+   805→export const _ = any;
+   817→const startsWith = <input, const start extends string>(
+   822→/**
+   823→ * `P.string.endsWith(end)` is a pattern, matching **strings** ending with `end`.
+   824→ *
+   825→ * [Read the documentation for `P.string.endsWith` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringendsWith)
+   826→ *
+   827→ * @example
+   828→ *  match(value)
+   829→ *   .with(P.string.endsWith('!'), () => 'value ends with an !')
+   830→ */
+   831→const endsWith = <input, const end extends string>(
+   836→/**
+   837→ * `P.string.minLength(min)` is a pattern, matching **strings** with at least `min` characters.
+   838→ *
+   839→ * [Read the documentation for `P.string.minLength` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringminLength)
+   840→ *
+   841→ * @example
+   842→ *  match(value)
+   843→ *   .with(P.string.minLength(10), () => 'string with more length >= 10')
+   844→ */
+   845→const minLength = <const min extends number>(min: min) =>
+   848→/**
+   849→ * `P.string.length(len)` is a pattern, matching **strings** with exactly `len` characters.
+   850→ *
+   851→ * [Read the documentation for `P.string.length` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringlength)
+   852→ *
+   853→ * @example
+   854→ *  match(value)
+   855→ *   .with(P.string.length(10), () => 'strings with length === 10')
+   856→ */
+   857→const length = <const len extends number>(len: len) =>
+   860→/**
+   861→ * `P.string.maxLength(max)` is a pattern, matching **strings** with at most `max` characters.
+   862→ *
+   863→ * [Read the documentation for `P.string.maxLength` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringmaxLength)
+   864→ *
+   865→ * @example
+   866→ *  match(value)
+   867→ *   .with(P.string.maxLength(10), () => 'string with more length <= 10')
+   868→ */
+   869→const maxLength = <const max extends number>(max: max) =>
+   872→/**
+   873→ * `P.string.includes(substr)` is a pattern, matching **strings** containing `substr`.
+   874→ *
+   875→ * [Read the documentation for `P.string.includes` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringincludes)
+   876→ *
+   877→ * @example
+   878→ *  match(value)
+   879→ *   .with(P.string.includes('http'), () => 'value contains http')
+   880→ */
+   881→const includes = <input, const substr extends string>(
+   886→/**
+   887→ * `P.string.regex(expr)` is a pattern, matching **strings** that `expr` regular expression.
+   888→ *
+   889→ * [Read the documentation for `P.string.regex` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringregex)
+   890→ *
+   891→ * @example
+   892→ *  match(value)
+   893→ *   .with(P.string.regex(/^https?:\/\//), () => 'url')
+   894→ */
+   895→const regex = <input, const expr extends string | RegExp>(
+   900→const stringChainable = <pattern extends Matcher<any, any, any, any, any>>(
+   919→/**
+   920→ * `P.string` is a wildcard pattern, matching any **string**.
+   921→ *
+   922→ * [Read the documentation for `P.string` on GitHub](https://github.com/gvergnaud/ts-pattern#pstring-wildcard)
+   923→ *
+   924→ * @example
+   925→ *  match(value)
+   926→ *   .with(P.string, () => 'will match on strings')
+   927→ */
+   928→export const string: StringPattern = stringChainable(when(isString));
+   930→/**
+   931→ * `P.number.between(min, max)` matches **numbers** between `min` and `max`,
+   932→ * equal to min or equal to max.
+   933→ *
+   934→ * [Read the documentation for `P.number.between` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberbetween)
+   935→ *
+   936→ * @example
+   937→ *  match(value)
+   938→ *   .with(P.number.between(0, 10), () => '0 <= numbers <= 10')
+   939→ */
+   940→const between = <input, const min extends number, const max extends number>(
+   946→/**
+   947→ * `P.number.lt(max)` matches **numbers** smaller than `max`.
+   948→ *
+   949→ * [Read the documentation for `P.number.lt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlt)
+   950→ *
+   951→ * @example
+   952→ *  match(value)
+   953→ *   .with(P.number.lt(10), () => 'numbers < 10')
+   954→ */
+   955→const lt = <input, const max extends number>(
+   960→/**
+   961→ * `P.number.gt(min)` matches **numbers** greater than `min`.
+   962→ *
+   963→ * [Read the documentation for `P.number.gt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbergt)
+   964→ *
+   965→ * @example
+   966→ *  match(value)
+   967→ *   .with(P.number.gt(10), () => 'numbers > 10')
+   968→ */
+   969→const gt = <input, const min extends number>(
+   974→/**
+   975→ * `P.number.lte(max)` matches **numbers** smaller than or equal to `max`.
+   976→ *
+   977→ * [Read the documentation for `P.number.lte` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlte)
+   978→ *
+   979→ * @example
+   980→ *  match(value)
+   981→ *   .with(P.number.lte(10), () => 'numbers <= 10')
+   982→ */
+   983→const lte = <input, const max extends number>(
+   988→/**
+   989→ * `P.number.gte(min)` matches **numbers** greater than or equal to `min`.
+   990→ *
+   991→ * [Read the documentation for `P.number.gte` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbergte)
+   992→ *
+   993→ * @example
+   994→ *  match(value)
+   995→ *   .with(P.number.gte(10), () => 'numbers >= 10')
+   996→ */
+   997→const gte = <input, const min extends number>(
+  1002→/**
+  1003→ * `P.number.int()` matches **integer** numbers.
+  1004→ *
+  1005→ * [Read the documentation for `P.number.int()` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberint)
+  1006→ *
+  1007→ * @example
+  1008→ *  match(value)
+  1009→ *   .with(P.number.int(), () => 'an integer')
+  1010→ */
+  1011→const int = <input>(): GuardExcludeP<input, number, never> =>
+  1014→/**
+  1015→ * `P.number.finite` matches **finite numbers**.
+  1016→ *
+  1017→ * [Read the documentation for `P.number.finite` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberfinite)
+  1018→ *
+  1019→ * @example
+  1020→ *  match(value)
+  1021→ *   .with(P.number.finite, () => 'not Infinity')
+  1022→ */
+  1023→const finite = <input>(): GuardExcludeP<input, number, never> =>
+  1026→/**
+  1027→ * `P.number.positive()` matches **positive** numbers.
+  1028→ *
+  1029→ * [Read the documentation for `P.number.positive()` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberpositive)
+  1030→ *
+  1031→ * @example
+  1032→ *  match(value)
+  1033→ *   .with(P.number.positive(), () => 'number > 0')
+  1034→ */
+  1035→const positive = <input>(): GuardExcludeP<input, number, never> =>
+  1038→/**
+  1039→ * `P.number.negative()` matches **negative** numbers.
+  1040→ *
+  1041→ * [Read the documentation for `P.number.negative()` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbernegative)
+  1042→ *
+  1043→ * @example
+  1044→ *  match(value)
+  1045→ *   .with(P.number.negative(), () => 'number < 0')
+  1046→ */
+  1047→const negative = <input>(): GuardExcludeP<input, number, never> =>
+  1050→const numberChainable = <pattern extends Matcher<any, any, any, any, any>>(
+  1066→/**
+  1067→ * `P.number` is a wildcard pattern, matching any **number**.
+  1068→ *
+  1069→ * [Read the documentation for `P.number` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumber-wildcard)
+  1070→ *
+  1071→ * @example
+  1072→ *  match(value)
+  1073→ *   .with(P.number, () => 'will match on numbers')
+  1074→ */
+  1075→export const number: NumberPattern = numberChainable(when(isNumber));
+  1077→/**
+  1078→ * `P.bigint.between(min, max)` matches **bigint** between `min` and `max`,
+  1079→ * equal to min or equal to max.
+  1080→ *
+  1081→ * [Read the documentation for `P.bigint.between` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberbetween)
+  1082→ *
+  1083→ * @example
+  1084→ *  match(value)
+  1085→ *   .with(P.bigint.between(0, 10), () => '0 <= bigints <= 10')
+  1086→ */
+  1087→const betweenBigInt = <
+  1097→/**
+  1098→ * `P.bigint.lt(max)` matches **bigint** smaller than `max`.
+  1099→ *
+  1100→ * [Read the documentation for `P.bigint.lt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlt)
+  1101→ *
+  1102→ * @example
+  1103→ *  match(value)
+  1104→ *   .with(P.bigint.lt(10), () => 'bigints < 10')
+  1105→ */
+  1106→const ltBigInt = <input, const max extends bigint>(
+  1111→/**
+  1112→ * `P.bigint.gt(min)` matches **bigint** greater than `min`.
+  1113→ *
+  1114→ * [Read the documentation for `P.bigint.gt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbergt)
+  1115→ *
+  1116→ * @example
+  1117→ *  match(value)
+  1118→ *   .with(P.bigint.gt(10), () => 'bigints > 10')
+  1119→ */
+  1120→const gtBigInt = <input, const min extends bigint>(
+  1125→/**
+  1126→ * `P.bigint.lte(max)` matches **bigint** smaller than or equal to `max`.
+  1127→ *
+  1128→ * [Read the documentation for `P.bigint.lte` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlte)
+  1129→ *
+  1130→ * @example
+  1131→ *  match(value)
+  1132→ *   .with(P.bigint.lte(10), () => 'bigints <= 10')
+  1133→ */
+  1134→const lteBigInt = <input, const max extends bigint>(
+  1139→/**
+  1140→ * `P.bigint.gte(min)` matches **bigint** greater than or equal to `min`.
+  1141→ *
+  1142→ * [Read the documentation for `P.bigint.gte` on GitHub](https://github.com/gvergnaud/ts-pattern#pbigintgte)
+  1143→ *
+  1144→ * @example
+  1145→ *  match(value)
+  1146→ *   .with(P.bigint.gte(10), () => 'bigints >= 10')
+  1147→ */
+  1148→const gteBigInt = <input, const min extends bigint>(
+  1153→/**
+  1154→ * `P.bigint.positive()` matches **positive** bigints.
+  1155→ *
+  1156→ * [Read the documentation for `P.bigint.positive()` on GitHub](https://github.com/gvergnaud/ts-pattern#pbigintpositive)
+  1157→ *
+  1158→ * @example
+  1159→ *  match(value)
+  1160→ *   .with(P.bigint.positive(), () => 'bigint > 0')
+  1161→ */
+  1162→const positiveBigInt = <input>(): GuardExcludeP<input, bigint, never> =>
+  1165→/**
+  1166→ * `P.bigint.negative()` matches **negative** bigints.
+  1167→ *
+  1168→ * [Read the documentation for `P.bigint.negative()` on GitHub](https://github.com/gvergnaud/ts-pattern#pbigintnegative)
+  1169→ *
+  1170→ * @example
+  1171→ *  match(value)
+  1172→ *   .with(P.bigint.negative(), () => 'bigint < 0')
+  1173→ */
+  1174→const negativeBigInt = <input>(): GuardExcludeP<input, bigint, never> =>
+  1177→const bigintChainable = <pattern extends Matcher<any, any, any, any, any>>(
+  1193→/**
+  1194→ * `P.bigint` is a wildcard pattern, matching any **bigint**.
+  1195→ *
+  1196→ * [Read the documentation for `P.bigint` on GitHub](https://github.com/gvergnaud/ts-pattern#number-wildcard)
+  1197→ *
+  1198→ * @example
+  1199→ *   .with(P.bigint, () => 'will match on bigints')
+  1200→ */
+  1201→export const bigint: BigIntPattern = bigintChainable(when(isBigInt));
+  1203→/**
+  1204→ * `P.boolean` is a wildcard pattern, matching any **boolean**.
+  1205→ *
+  1206→ * [Read the documentation for `P.boolean` on GitHub](https://github.com/gvergnaud/ts-pattern#boolean-wildcard)
+  1207→ *
+  1208→ * @example
+  1209→ *   .with(P.boolean, () => 'will match on booleans')
+  1210→ */
+  1211→export const boolean: BooleanPattern = chainable(when(isBoolean));
+  1213→/**
+  1214→ * `P.symbol` is a wildcard pattern, matching any **symbol**.
+  1215→ *
+  1216→ * [Read the documentation for `P.symbol` on GitHub](https://github.com/gvergnaud/ts-pattern#symbol-wildcard)
+  1217→ *
+  1218→ * @example
+  1219→ *   .with(P.symbol, () => 'will match on symbols')
+  1220→ */
+  1221→export const symbol: SymbolPattern = chainable(when(isSymbol));
+  1223→/**
+  1224→ * `P.nullish` is a wildcard pattern, matching **null** or **undefined**.
+  1225→ *
+  1226→ * [Read the documentation for `P.nullish` on GitHub](https://github.com/gvergnaud/ts-pattern#nullish-wildcard)
+  1227→ *
+  1228→ * @example
+  1229→ *   .with(P.nullish, (x) => `${x} is null or undefined`)
+  1230→ */
+  1231→export const nullish: NullishPattern = chainable(when(isNullish));
+  1233→/**
+  1234→ * `P.nonNullable` is a wildcard pattern, matching everything except **null** or **undefined**.
+  1235→ *
+  1236→ * [Read the documentation for `P.nonNullable` on GitHub](https://github.com/gvergnaud/ts-pattern#nonNullable-wildcard)
+  1237→ *
+  1238→ * @example
+  1239→ *   .with(P.nonNullable, (x) => `${x} isn't null nor undefined`)
+  1240→ */
+  1241→export const nonNullable: NonNullablePattern = chainable(when(isNonNullable));
+  1243→/**
+  1244→ * `P.instanceOf(SomeClass)` is a pattern matching instances of a given class.
+  1245→ *
+  1246→ * [Read the documentation for `P.instanceOf` on GitHub](https://github.com/gvergnaud/ts-pattern#pinstanceof-patterns)
+  1247→ *
+  1248→ *  @example
+  1249→ *   .with(P.instanceOf(SomeClass), () => 'will match on SomeClass instances')
+  1250→ */
+  1251→export function instanceOf<T extends AnyConstructor>(
+  1274→export function shape(pattern: UnknownValuePattern) {
+types/BuildMany.ts
+     4→export type BuildMany<data, xs extends readonly any[]> = xs extends any
+    11→type BuildOne<data, xs extends readonly any[]> = xs extends [
+    19→export type SetDeep<data, value, path> = path extends readonly [
+types/DeepExclude.ts
+     3→export type DeepExclude<a, b> = Exclude<DistributeMatchingUnions<a, b>, b>;
+types/DistributeUnions.ts
+    17→/**
+    18→ * DistributeMatchingUnions takes two arguments:
+    19→ * - a data structure of type `a` containing unions
+    20→ * - a pattern `p`, matching this data structure
+    21→ * and turns it into a union of all possible
+    22→ * combination of each unions contained in `a` that matches `p`.
+    23→ *
+    24→ * It does this in 3 main steps:
+    25→ *  - 1. Find all unions contained in the data structure, that matches `p`
+    26→ *    with `FindUnions<a, p>`. It returns a tree of [union, path] pairs.
+    27→ *  - 2. this tree is passed to the `Distribute` type level function,
+    28→ *    Which turns it into a union of list of `[singleValue, path]` pairs.
+    29→ *    Each list correspond to one of the possible combination of the unions
+    30→ *    found in `a`.
+    31→ *  - 3. build a data structure with the same shape as `a` for each combination
+    32→ *    and return the union of these data structures.
+    33→ *
+    34→ * @example
+    35→ * type t1 = DistributeMatchingUnions<['a' | 'b', 1 | 2], ['a', 1]>;
+    36→ * // => ['a', 1] | ['a', 2] | ['b', 1] | ['b', 2]
+    37→ *
+    38→ * type t2 = DistributeMatchingUnions<['a' | 'b', 1 | 2], ['a', unknown]>;
+    39→ * // => ['a', 1 | 2] | ['b', 1 | 2]
+    40→ */
+    41→export type DistributeMatchingUnions<a, p> = IsAny<a> extends true
+    46→export type FindUnionsMany<
+    62→/**
+    63→ * The reason we don't look further down the tree with lists,
+    64→ * Set and Maps is that they can be heterogeneous,
+    65→ * so matching on a A[] for a in input of (A|B)[]
+    66→ * doesn't rule anything out. You can still have
+    67→ * a (A|B)[] afterward. The same logic goes for Set and Maps.
+    68→ *
+    69→ * Kinds are types of types.
+    70→ *
+    71→ * kind UnionConfig = {
+    72→ *  cases: Union<{
+    73→ *    value: b,
+    74→ *    subUnions: UnionConfig[]
+    75→ *  }>,
+    76→ *  path: string[]
+    77→ * }
+    78→ * FindUnions :: Pattern a p => a -> p -> UnionConfig[]
+    79→ */
+    80→export type FindUnions<
+   174→export type ArrayToVariadicUnion<input, excluded> = MaybeAddReadonly<
+   183→export type Distribute<unions extends readonly any[]> =
+types/ExtractPreciseValue.ts
+    13→export type ExtractPreciseValue<a, b> = b extends Override<infer b1>
+    81→type ExtractPreciseArrayValue<
+types/FindSelected.ts
+    11→type SelectionsRecord = Record<string, [unknown, unknown[]]>;
+    13→export type None = {
+    16→export type Some<key extends string> = {
+    21→export type SelectionType = None | Some<string>;
+    24→type MapOptional<selections> = {
+    31→type MapList<selections> = {
+    38→type ReduceFindSelectionUnion<
+    47→type FindSelectionUnionInArray<
+    96→export type FindSelectionUnion<
+   159→export type SeveralAnonymousSelectError<
+   165→export type MixedNamedAndAnonymousSelectError<
+   174→export type SelectionToArgs<selections extends SelectionsRecord> =
+   185→export type Selections<i, p> = FindSelectionUnion<i, p> extends infer u
+   191→export type FindSelected<i, p> =
+types/InvertPattern.ts
+    29→type OptionalKeys<p> = ValueOf<{
+    39→type ReduceUnion<
+    47→type ReduceIntersection<
+    55→type InvertArrayPattern<
+   101→/**
+   102→ * ### InvertPatternInternal
+   103→ * Since patterns have special wildcard values, we need a way
+   104→ * to transform a pattern into the type of value it represents
+   105→ */
+   106→export type InvertPattern<p, input> = Equal<Pattern<input>, p> extends true
+   110→type InvertPatternInternal<p, input> = 0 extends 1 & p
+   180→export type ReduceIntersectionForExclude<
+   192→export type ReduceUnionForExclude<
+   204→type ExcludeIfExists<a, b> =
+   231→type InvertArrayPatternForExclude<
+   300→/**
+   301→ * ### InvertPatternForExclude
+   302→ */
+   303→export type InvertPatternForExclude<p, i> = Equal<Pattern<i>, p> extends true
+   307→type InvertPatternForExcludeInternal<p, i, empty = never> =
+types/IsMatching.ts
+    12→type IsMatchingTuple<a extends readonly any[], b extends readonly any[]> = [
+    26→type IsMatchingArray<
+    57→export type IsMatching<a, b> = true extends IsUnion<a> | IsUnion<b>
+types/Match.ts
+     8→export type PickReturnValue<a, b> = a extends symbols.unset ? b : a;
+    10→interface NonExhaustiveError<i> {
+    11→  __nonExhaustive: never;
+    12→}
+    14→interface TSPatternError<i> {
+    15→  __nonExhaustive: never;
+    16→}
+    18→/**
+    19→ * #### Match
+    20→ * An interface to create a pattern matching clause.
+    21→ */
+    22→export type Match<
+   132→  with<
+   153→  /**
+   154→   * `.when(predicate, handler)` Registers a predicate function and an handler function.
+   155→   * If the predicate returns true, the handler function will be called.
+   156→   *
+   157→   * [Read the documentation for `.when()` on GitHub](https://github.com/gvergnaud/ts-pattern#when)
+   158→   **/
+   159→  when<pred extends (value: i) => unknown, c, value extends GuardValue<pred>>(
+   171→  /**
+   172→   * `.otherwise()` takes a **default handler function** that will be
+   173→   * called if no previous pattern matched your input.
+   174→   *
+   175→   * Equivalent to `.with(P._, () => x).exhaustive()`
+   176→   *
+   177→   * [Read the documentation for `.otherwise()` on GitHub](https://github.com/gvergnaud/ts-pattern#otherwise)
+   178→   *
+   179→   **/
+   180→  otherwise<c>(
+   200→  /**
+   201→   * `.run()` return the resulting value.
+   202→   *
+   203→   * ⚠️ calling this function is unsafe, and may throw if no pattern matches your input.
+   204→   */
+   205→  run(): PickReturnValue<o, inferredOutput>;
+   216→  /**
+   217→   * `.narrow()` narrows the input type to exclude all cases that have previously been handled.
+   218→   *
+   219→   * `.narrow()` is only useful if you want to excluded cases from union types or nullable
+   220→   * properties that are deeply nested. Handled cases from top level union types are excluded
+   221→   * by default.
+   222→   *
+   223→   * [Read the documentation for `.narrow() on GitHub](https://github.com/gvergnaud/ts-pattern#narrow)
+   224→   */
+   225→  narrow(): Match<DeepExcludeAll<i, handledCases>, o, [], inferredOutput>;
+   228→/**
+   229→ * Potential for optimization here:
+   230→ *
+   231→ * Since DeepExclude distributes the union of the input type, it can
+   232→ * generate very large union types on patterns touching several unions at once.
+   233→ * If we were sorting patterns from those which distribute the smallest
+   234→ * amount of union types to those which distribute the largest, we would eliminate
+   235→ * cheap cases more quickly and have less cases in the input type for patterns
+   236→ * that will be expensive to exclude.
+   237→ *
+   238→ * This pre supposes that we have a cheap way of telling if the number
+   239→ * of union types a pattern touches and a cheap way of sorting the tuple
+   240→ * of patterns.
+   241→ * - For the first part, we could reuse `FindMatchingUnions` and pick the `length`
+   242→ *   of the returned tuple.
+   243→ * - For the second part though I'm not aware a cheap way of sorting a tuple.
+   244→ */
+   245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
+   251→type MakeTuples<ps extends readonly any[], value> = {
+   255→/**
+   256→ * The type of an overloaded function for `.exhaustive`,
+   257→ * permitting calling it with or without a catch-all handler function.
+   258→ *
+   259→ * By default, TS-Pattern will throw an error if a runtime value isn't handled.
+   260→ */
+   261→type Exhaustive<output, inferredOutput> = {
+types/Pattern.ts
+     7→export type MatcherType =
+    23→export type MatcherProtocol<
+    38→export type MatchResult = {
+    43→/**
+    44→ * A `Matcher` is an object implementing the match
+    45→ * protocol. It must define a `symbols.matcher` property
+    46→ * which returns an object with a `match()` method, taking
+    47→ * the input value and returning whether the pattern matches
+    48→ * or not, along with optional selections.
+    49→ */
+    50→export interface Matcher<
+    51→  input,
+    52→  narrowed,
+    53→  // Type of what this pattern selected from the input
+    54→  matcherType extends MatcherType = 'default',
+    55→  selections extends SelectionType = None,
+    56→  // Type to exclude from the input union because
+    57→  // it has been fully matched by this pattern
+    58→  excluded = narrowed
+    59→> {
+    60→  [matcher](): MatcherProtocol<
+    61→    input,
+    62→    narrowed,
+    63→    matcherType,
+    64→    selections,
+    65→    excluded
+    66→  >;
+    67→  // only used for array matchers
+    68→  [symbols.isVariadic]?: boolean;
+    69→}
+    71→type PatternMatcher<input> = Matcher<input, unknown, any, any>;
+    74→export type MatchedValue<a, invpattern> = WithDefault<
+    79→export type AnyMatcher = Matcher<any, any, any, any, any>;
+    81→type UnknownMatcher = PatternMatcher<unknown>;
+    83→export type CustomP<input, pattern, narrowedOrFn> = Matcher<
+    94→export type ArrayP<input, p> = Matcher<input, p, 'array'>;
+    96→export type RecordP<input, pkey, pvalue> = Matcher<
+   102→export type OptionalP<input, p> = Matcher<input, p, 'optional'>;
+   104→export type MapP<input, pkey, pvalue> = Matcher<input, [pkey, pvalue], 'map'>;
+   106→export type SetP<input, p> = Matcher<input, p, 'set'>;
+   108→export type AndP<input, ps> = Matcher<input, ps, 'and'>;
+   110→export type OrP<input, ps> = Matcher<input, ps, 'or'>;
+   112→export type NotP<input, p> = Matcher<input, p, 'not'>;
+   114→export type GuardP<input, narrowed> = Matcher<input, narrowed>;
+   116→export type GuardExcludeP<input, narrowed, excluded> = Matcher<
+   124→export type SelectP<
+   130→export type AnonymousSelectP = SelectP<symbols.anonymousSelectKey>;
+   132→export interface Override<a> {
+   133→  [symbols.override]: a;
+   134→}
+   136→export type UnknownProperties = { readonly [k: PropertyKey]: unknown };
+   138→export type UnknownValuePattern =
+   146→/**
+   147→ * `Pattern<a>` is the generic type for patterns matching a value of type `a`. A pattern can be any (nested) javascript value.
+   148→ *
+   149→ * They can also be wildcards, like `P._`, `P.string`, `P.number`,
+   150→ * or other matchers, like `P.when(predicate)`, `P.not(pattern)`, etc.
+   151→ *
+   152→ * [Read the documentation for `P.Pattern` on GitHub](https://github.com/gvergnaud/ts-pattern#patterns)
+   153→ *
+   154→ * @example
+   155→ * const pattern: P.Pattern<User> = { name: P.string }
+   156→ */
+   157→export type Pattern<a = unknown> = unknown extends a
+   161→type KnownPattern<a> = KnownPatternInternal<a>;
+   163→type KnownPatternInternal<
+   174→type ObjectPattern<a> =
+   180→type ArrayPattern<a> = a extends readonly (infer i)[]
+   190→export type UnknownPattern = Chainable<GuardP<unknown, unknown>, never>;
+   191→export type StringPattern = StringChainable<GuardP<unknown, string>, never>;
+   192→export type NumberPattern = NumberChainable<GuardP<unknown, number>, never>;
+   193→export type BooleanPattern = Chainable<GuardP<unknown, boolean>, never>;
+   194→export type BigIntPattern = BigIntChainable<GuardP<unknown, bigint>, never>;
+   195→export type SymbolPattern = Chainable<GuardP<unknown, symbol>, never>;
+   196→export type NullishPattern = Chainable<
+   201→export type NonNullablePattern = Chainable<GuardP<unknown, {}>, never>;
+   203→type MergeGuards<input, guard1, guard2> = [guard1, guard2] extends [
+   210→export type Chainable<p, omitted extends string = never> = p &
+   213→      /**
+   214→       * `.optional()` returns a pattern which matches if the
+   215→       * key is undefined or if it is defined and the previous pattern matches its value.
+   216→       *
+   217→       * [Read the documentation for `P.optional` on GitHub](https://github.com/gvergnaud/ts-pattern#poptional-patterns)
+   218→       *
+   219→       * @example
+   220→       *  match(value)
+   221→       *   .with({ greeting: P.string.optional() }, () => 'will match { greeting?: string}')
+   222→       */
+   223→      optional<input>(): Chainable<OptionalP<input, p>, omitted | 'optional'>;
+   224→      /**
+   225→       * `pattern.and(pattern)` returns a pattern that matches
+   226→       * if the previous pattern and the next one match the input.
+   227→       *
+   228→       * [Read the documentation for `P.intersection` on GitHub](https://github.com/gvergnaud/ts-pattern#pintersection-patterns)
+   229→       *
+   230→       * @example
+   231→       *  match(value)
+   232→       *   .with(
+   233→       *     P.string.and(P.when(isUsername)),
+   234→       *     (username) => '...'
+   235→       *   )
+   236→       */
+   237→      and<input, const p2 extends Pattern<input>>(
+   240→      /**
+   241→       * `pattern.or(pattern)` returns a pattern that matches
+   242→       * if **either** the previous pattern or the next one match the input.
+   243→       *
+   244→       * [Read the documentation for `P.union` on GitHub](https://github.com/gvergnaud/ts-pattern#punion-patterns)
+   245→       *
+   246→       * @example
+   247→       *  match(value)
+   248→       *   .with(
+   249→       *     { value: P.string.or(P.number) },
+   250→       *     ({ value }) => 'value: number | string'
+   251→       *   )
+   252→       */
+   253→      or<input, const p2 extends Pattern<input>>(
+   269→      select<input, k extends string>(
+   276→export type StringChainable<
+   282→      /**
+   283→       * `P.string.startsWith(start)` is a pattern, matching **strings** starting with `start`.
+   284→       *
+   285→       * [Read the documentation for `P.string.startsWith` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringstartsWith)
+   286→       *
+   287→       * @example
+   288→       *  match(value)
+   289→       *   .with(P.string.startsWith('A'), () => 'value starts with an A')
+   290→       */
+   291→      startsWith<input, const start extends string>(
+   297→      /**
+   298→       * `P.string.endsWith(end)` is a pattern, matching **strings** ending with `end`.
+   299→       *
+   300→       * [Read the documentation for `P.string.endsWith` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringendsWith)
+   301→       *
+   302→       * @example
+   303→       *  match(value)
+   304→       *   .with(P.string.endsWith('!'), () => 'value ends with an !')
+   305→       */
+   306→      endsWith<input, const end extends string>(
+   312→      /**
+   313→       * `P.string.minLength(min)` is a pattern, matching **strings** with at least `min` characters.
+   314→       *
+   315→       * [Read the documentation for `P.string.minLength` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringminLength)
+   316→       *
+   317→       * @example
+   318→       *  match(value)
+   319→       *   .with(P.string.minLength(10), () => 'string with more length <= 10')
+   320→       */
+   321→      minLength<input, const min extends number>(
+   327→      /**
+   328→       * `P.string.length(len)` is a pattern, matching **strings** with exactly `len` characters.
+   329→       *
+   330→       * [Read the documentation for `P.string.length` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringlength)
+   331→       *
+   332→       * @example
+   333→       *  match(value)
+   334→       *   .with(P.string.length(10), () => 'strings with length === 10')
+   335→       */
+   336→      length<input, const len extends number>(
+   342→      /**
+   343→       * `P.string.maxLength(max)` is a pattern, matching **strings** with at most `max` characters.
+   344→       *
+   345→       * [Read the documentation for `P.string.maxLength` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringmaxLength)
+   346→       *
+   347→       * @example
+   348→       *  match(value)
+   349→       *   .with(P.string.maxLength(10), () => 'string with more length >= 10')
+   350→       */
+   351→      maxLength<input, const max extends number>(
+   357→      /**
+   358→       * `P.string.includes(substr)` is a pattern, matching **strings** containing `substr`.
+   359→       *
+   360→       * [Read the documentation for `P.string.includes` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringincludes)
+   361→       *
+   362→       * @example
+   363→       *  match(value)
+   364→       *   .with(P.string.includes('http'), () => 'value contains http')
+   365→       */
+   366→      includes<input, const substr extends string>(
+   372→      /**
+   373→       * `P.string.regex(expr)` is a pattern, matching **strings** that `expr` regular expression.
+   374→       *
+   375→       * [Read the documentation for `P.string.regex` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringregex)
+   376→       *
+   377→       * @example
+   378→       *  match(value)
+   379→       *   .with(P.string.regex(/^https?:\/\//), () => 'url')
+   380→       */
+   381→      regex<input, const expr extends string | RegExp>(
+   391→export type NumberChainable<p, omitted extends string = never> = Chainable<
+   397→      /**
+   398→       * `P.number.between(min, max)` matches **number** between `min` and `max`,
+   399→       * equal to min or equal to max.
+   400→       *
+   401→       * [Read the documentation for `P.number.between` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberbetween)
+   402→       *
+   403→       * @example
+   404→       *  match(value)
+   405→       *   .with(P.number.between(0, 10), () => '0 <= numbers <= 10')
+   406→       */
+   407→      between<input, const min extends number, const max extends number>(
+   414→      /**
+   415→       * `P.number.lt(max)` matches **number** smaller than `max`.
+   416→       *
+   417→       * [Read the documentation for `P.number.lt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlt)
+   418→       *
+   419→       * @example
+   420→       *  match(value)
+   421→       *   .with(P.number.lt(10), () => 'numbers < 10')
+   422→       */
+   423→      lt<input, const max extends number>(
+   429→      /**
+   430→       * `P.number.gt(min)` matches **number** greater than `min`.
+   431→       *
+   432→       * [Read the documentation for `P.number.gt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbergt)
+   433→       *
+   434→       * @example
+   435→       *  match(value)
+   436→       *   .with(P.number.gt(10), () => 'numbers > 10')
+   437→       */
+   438→      gt<input, const min extends number>(
+   444→      /**
+   445→       * `P.number.lte(max)` matches **number** smaller than or equal to `max`.
+   446→       *
+   447→       * [Read the documentation for `P.number.lte` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlte)
+   448→       *
+   449→       * @example
+   450→       *  match(value)
+   451→       *   .with(P.number.lte(10), () => 'numbers <= 10')
+   452→       */
+   453→      lte<input, const max extends number>(
+   459→      /**
+   460→       * `P.number.gte(min)` matches **number** greater than or equal to `min`.
+   461→       *
+   462→       * [Read the documentation for `P.number.gte` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbergte)
+   463→       *
+   464→       * @example
+   465→       *  match(value)
+   466→       *   .with(P.number.gte(10), () => 'numbers >= 10')
+   467→       */
+   468→      gte<input, const min extends number>(
+   474→      /**
+   475→       * `P.number.int` matches **integer** numbers.
+   476→       *
+   477→       * [Read the documentation for `P.number.int` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberint)
+   478→       *
+   479→       * @example
+   480→       *  match(value)
+   481→       *   .with(P.number.int, () => 'an integer')
+   482→       */
+   483→      int<input>(): NumberChainable<
+   487→      /**
+   488→       * `P.number.finite` matches **finite numbers**.
+   489→       *
+   490→       * [Read the documentation for `P.number.finite` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberfinite)
+   491→       *
+   492→       * @example
+   493→       *  match(value)
+   494→       *   .with(P.number.finite, () => 'not Infinity')
+   495→       */
+   496→      finite<input>(): NumberChainable<
+   500→      /**
+   501→       * `P.number.positive` matches **positive** numbers.
+   502→       *
+   503→       * [Read the documentation for `P.number.positive` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberpositive)
+   504→       *
+   505→       * @example
+   506→       *  match(value)
+   507→       *   .with(P.number.positive, () => 'number > 0')
+   508→       */
+   509→      positive<input>(): NumberChainable<
+   513→      /**
+   514→       * `P.number.negative` matches **negative** numbers.
+   515→       *
+   516→       * [Read the documentation for `P.number.negative` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbernegative)
+   517→       *
+   518→       * @example
+   519→       *  match(value)
+   520→       *   .with(P.number.negative, () => 'number < 0')
+   521→       */
+   522→      negative<input>(): NumberChainable<
+   530→export type BigIntChainable<p, omitted extends string = never> = Chainable<
+   536→      /**
+   537→       * `P.bigint.between(min, max)` matches **bigint** between `min` and `max`,
+   538→       * equal to min or equal to max.
+   539→       *
+   540→       * [Read the documentation for `P.bigint.between` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberbetween)
+   541→       *
+   542→       * @example
+   543→       *  match(value)
+   544→       *   .with(P.bigint.between(0, 10), () => '0 <= numbers <= 10')
+   545→       */
+   546→      between<input, const min extends bigint, const max extends bigint>(
+   553→      /**
+   554→       * `P.bigint.lt(max)` matches **bigint** smaller than `max`.
+   555→       *
+   556→       * [Read the documentation for `P.bigint.lt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlt)
+   557→       *
+   558→       * @example
+   559→       *  match(value)
+   560→       *   .with(P.bigint.lt(10), () => 'numbers < 10')
+   561→       */
+   562→      lt<input, const max extends bigint>(
+   568→      /**
+   569→       * `P.bigint.gt(min)` matches **bigint** greater than `min`.
+   570→       *
+   571→       * [Read the documentation for `P.bigint.gt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbergt)
+   572→       *
+   573→       * @example
+   574→       *  match(value)
+   575→       *   .with(P.bigint.gt(10), () => 'numbers > 10')
+   576→       */
+   577→      gt<input, const min extends bigint>(
+   583→      /**
+   584→       * `P.bigint.lte(max)` matches **bigint** smaller than or equal to `max`.
+   585→       *
+   586→       * [Read the documentation for `P.bigint.lte` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlte)
+   587→       *
+   588→       * @example
+   589→       *  match(value)
+   590→       *   .with(P.bigint.lte(10), () => 'bigints <= 10')
+   591→       */
+   592→      lte<input, const max extends bigint>(
+   598→      /**
+   599→       * `P.bigint.gte(min)` matches **bigint** greater than or equal to `min`.
+   600→       *
+   601→       * [Read the documentation for `P.bigint.gte` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbergte)
+   602→       *
+   603→       * @example
+   604→       *  match(value)
+   605→       *   .with(P.bigint.gte(10), () => 'bigints >= 10')
+   606→       */
+   607→      gte<input, const min extends bigint>(
+   613→      /**
+   614→       * `P.bigint.positive` matches **positive** bigints.
+   615→       *
+   616→       * [Read the documentation for `P.bigint.positive` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberpositive)
+   617→       *
+   618→       * @example
+   619→       *  match(value)
+   620→       *   .with(P.bigint.positive, () => 'bigint > 0')
+   621→       */
+   622→      positive<input>(): BigIntChainable<
+   626→      /**
+   627→       * `P.bigint.negative` matches **negative** bigints.
+   628→       *
+   629→       * [Read the documentation for `P.bigint.negative` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbernegative)
+   630→       *
+   631→       * @example
+   632→       *  match(value)
+   633→       *   .with(P.bigint.negative, () => 'bigint < 0')
+   634→       */
+   635→      negative<input>(): BigIntChainable<
+   643→export type Variadic<pattern> = pattern & Iterable<pattern>;
+   645→export type ArrayChainable<
+   651→      /**
+   652→       * `.optional()` returns a pattern which matches if the
+   653→       * key is undefined or if it is defined and the previous pattern matches its value.
+   654→       *
+   655→       * [Read the documentation for `P.optional` on GitHub](https://github.com/gvergnaud/ts-pattern#poptional-patterns)
+   656→       *
+   657→       * @example
+   658→       *  match(value)
+   659→       *   .with({ greeting: P.string.optional() }, () => 'will match { greeting?: string}')
+   660→       */
+   661→      optional<input>(): ArrayChainable<
+   678→      select<input, k extends string>(
+types/helpers.ts
+     1→export type ValueOf<a> = a extends readonly any[] ? a[number] : a[keyof a];
+     3→export type Values<a extends object> = UnionToTuple<ValueOf<a>>;
+    14→export type LeastUpperBound<a, b> = b extends a ? b : a extends b ? a : never;
+    16→export type Contains<a, b> = a extends any
+    25→export type UnionToIntersection<union> = (
+    31→export type IsUnion<a> = [a] extends [UnionToIntersection<a>] ? false : true;
+    33→export type UnionToTuple<
+    42→export type Flatten<
+    49→export type Equal<a, b> = (<T>() => T extends a ? 1 : 2) extends <
+    55→export type Expect<a extends true> = a;
+    57→export type IsAny<a> = 0 extends 1 & a ? true : false;
+    59→export type IsNever<T> = [T] extends [never] ? true : false;
+    61→export type Length<it extends readonly any[]> = it['length'];
+    63→export type Iterator<
+    68→export type Next<it extends any[]> = [any, ...it];
+    69→export type Prev<it extends any[]> = it extends readonly [any, ...infer tail]
+    73→export type Take<
+    83→export type Drop<
+    92→export type UpdateAt<
+   105→export type BuiltInObjects =
+   113→export type IsPlainObject<o, excludeUnion = BuiltInObjects> = o extends object
+   122→export type Compute<a extends any> = a extends BuiltInObjects
+   126→export type IntersectObjects<a> = (
+   138→export type WithDefault<a, def> = [a] extends [never] ? def : a;
+   140→export type IsLiteral<a> = [a] extends [null | undefined]
+   164→export type Primitives =
+   173→export type NonLiteralPrimitive = Exclude<Primitives, undefined | null>;
+   175→export type TupleKeys = '0' | '1' | '2' | '3' | '4';
+   177→export type Union<a, b> = [b] extends [a] ? a : [a] extends [b] ? b : a | b;
+   179→/**
+   180→ * GuardValue returns the value guarded by a type guard function.
+   181→ */
+   182→export type GuardValue<fn> = fn extends (value: any) => value is infer b
+   188→export type GuardFunction<input, narrowed> =
+   192→export type Some<bools extends boolean[]> = true extends bools[number]
+   196→export type All<bools extends boolean[]> = bools[number] extends true
+   200→export type Extends<a, b> = [a] extends [b] ? true : false;
+   202→export type Not<a extends boolean> = a extends true ? false : true;
+   204→type AllKeys<a> = a extends any ? keyof a : never;
+   207→export type MergeUnion<a> =
+   217→export type IsFixedSizeTuple<a extends readonly any[]> = IsLiteral<Length<a>>;
+   220→export type IsTuple<a> = a extends
+   227→export type IsStrictArray<a extends readonly any[]> = Not<IsTuple<a>>;
+   229→export type IsReadonlyArray<a> = a extends readonly any[]
+   235→export type MaybeAddReadonly<
+   240→export type MapKey<T> = T extends Map<infer K, any> ? K : never;
+   242→export type MapValue<T> = T extends Map<any, infer V> ? V : never;
+   244→export type SetValue<T> = T extends Set<infer V> ? V : never;
+   246→export type RecordKey<T> = T extends Record<infer K, any> ? K : never;
+   248→export type RecordValue<T> = T extends Record<any, infer V> ? V : never;
+   250→export type ReadonlyArrayValue<T> = T extends ReadonlyArray<infer V>
+   254→export type ExtractPlainObject<T> = T extends any
+   260→export type GetKey<O, K> = O extends any
+   266→export interface Fn {
+   267→  input: unknown;
+   268→  output: unknown;
+   269→}
+   271→export type Call<fn extends Fn, input> = (fn & {
+   275→export type IsOptionalKeysOf<obj, key extends keyof obj> = {} extends Pick<
+types/index.ts
