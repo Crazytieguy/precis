@@ -355,6 +355,8 @@ fn has_multiline_signature(kind: parse::SymbolKind) -> bool {
 /// Find the last line of a function's signature (0-indexed).
 /// For multi-line signatures, scans forward for the opening body delimiter
 /// (`{` or `;` for C-like languages, `:` for Python).
+/// Strips trailing line comments (`//` or `#`) before checking delimiters,
+/// so `interface Foo { // eslint-disable` correctly matches on `{`.
 /// Returns sym.line - 1 for single-line or non-function symbols.
 fn signature_end_line(lines: &[&str], sym: &parse::Symbol, is_python: bool) -> usize {
     let sym_line_0 = sym.line - 1;
@@ -365,14 +367,38 @@ fn signature_end_line(lines: &[&str], sym: &parse::Symbol, is_python: bool) -> u
     for (i, line) in lines.iter().enumerate().take(max_line).skip(sym_line_0) {
         let trimmed = line.trim();
         if is_python {
-            if trimmed.ends_with(':') {
+            let code = strip_python_line_comment(trimmed);
+            if code.ends_with(':') {
                 return i;
             }
-        } else if trimmed.ends_with('{') || trimmed.ends_with(';') {
-            return i;
+        } else {
+            let code = strip_c_line_comment(trimmed);
+            if code.ends_with('{') || code.ends_with(';') {
+                return i;
+            }
         }
     }
     sym_line_0
+}
+
+/// Strip a trailing `//` line comment, returning the code portion.
+/// This is a heuristic: `//` inside string literals may be incorrectly stripped,
+/// but in signature context (function/class/interface declarations) this is rare
+/// and the fallback (not matching the delimiter) is acceptable.
+fn strip_c_line_comment(s: &str) -> &str {
+    match s.find("//") {
+        Some(pos) => s[..pos].trim_end(),
+        None => s,
+    }
+}
+
+/// Strip a trailing `#` comment from a Python line, returning the code portion.
+/// Same heuristic caveat as `strip_c_line_comment`.
+fn strip_python_line_comment(s: &str) -> &str {
+    match s.find('#') {
+        Some(pos) => s[..pos].trim_end(),
+        None => s,
+    }
 }
 
 /// Find the first line (0-indexed) of the doc comment block preceding a symbol.

@@ -395,6 +395,32 @@ MIT
 "#
 }
 
+// Regression test: inline comments after `{` should not prevent signature detection.
+// Previously, `interface Foo { // comment` would miss the `{` because
+// `trimmed.ends_with('{')` was false, causing body content to leak into level 2/3 output.
+
+#[test]
+fn interface_with_inline_comment_level2() {
+    let source = r#"
+export interface Options extends Base { // eslint-disable-line
+    method?: string;
+    headers?: Record<string, string>;
+    body?: BodyInit;
+}
+
+export interface Config {
+    timeout: number;
+    retries: number;
+}
+
+export function fetch(url: string): Promise<Response> { // main entry
+    return globalThis.fetch(url);
+}
+"#;
+    let output = format::render_file(2, Path::new("api.ts"), Path::new(""), source);
+    insta::assert_snapshot!(output);
+}
+
 // Level 0: file paths only
 
 #[test]

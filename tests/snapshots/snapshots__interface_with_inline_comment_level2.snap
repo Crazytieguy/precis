@@ -1,0 +1,8 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+api.ts
+     2→export interface Options extends Base { // eslint-disable-line
+     8→export interface Config {
+    13→export function fetch(url: string): Promise<Response> { // main entry

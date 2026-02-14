@@ -62,9 +62,6 @@ _parser.py
    236→    def finalize_pending(self) -> None:
    241→    def unset_all(self, key: Key) -> None:
    249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
-   250→        cont = self._flags
-   251→        key_parent, key_stem = key[:-1], key[-1]
-   252→        for k in key_parent:
    260→    def is_(self, key: Key, flag: int) -> bool:
    278→class NestedDict:
    279→    def __init__(self) -> None:

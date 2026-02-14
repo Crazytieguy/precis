@@ -80,16 +80,8 @@ types/options.ts
     33→export type KyOptions = {
    307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
    312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
-   313→	/**
-   314→	HTTP method used to make the request.
-   315→
-   316→	Internally, the standard methods (`GET`, `POST`, `PUT`, `PATCH`, `HEAD` and `DELETE`) are uppercased in order to avoid server errors due to case sensitivity.
-   317→	*/
-   318→	method?: LiteralUnion<HttpMethod, string>;
    358→export type InternalOptions = Required<
    373→export interface NormalizedOptions extends RequestInit { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
-   374→	// Extended from `RequestInit`, but ensured to be set (not optional).
-   375→	method: NonNullable<RequestInit['method']>;
 types/request.ts
      1→export type KyRequest<T = unknown> = {
 types/response.ts
