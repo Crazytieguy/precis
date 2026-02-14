@@ -589,8 +589,11 @@ fn markdown_content_end(
 }
 
 /// Find `needle` in `haystack` at a word boundary (not inside another identifier).
+/// Prefers matches outside parentheses to handle Go methods where the receiver
+/// type name matches the method name (e.g. `func (f *Field) Field(...)`).
 fn find_word(needle: &str, haystack: &str) -> Option<usize> {
     let mut start = 0;
+    let mut first_match = None;
     while let Some(pos) = haystack[start..].find(needle) {
         let abs = start + pos;
         let before_ok = abs == 0
@@ -601,9 +604,22 @@ fn find_word(needle: &str, haystack: &str) -> Option<usize> {
             || !haystack.as_bytes()[end].is_ascii_alphanumeric()
                 && haystack.as_bytes()[end] != b'_';
         if before_ok && after_ok {
-            return Some(abs);
+            if first_match.is_none() {
+                first_match = Some(abs);
+            }
+            // Prefer match outside parentheses (paren depth == 0)
+            let depth: i32 = haystack[..abs]
+                .bytes()
+                .fold(0, |d, b| match b {
+                    b'(' => d + 1,
+                    b')' => d - 1,
+                    _ => d,
+                });
+            if depth == 0 {
+                return Some(abs);
+            }
         }
         start = abs + 1;
     }
-    None
+    first_match
 }

@@ -27,7 +27,7 @@ group.go
     20→func (g *Group) Go
     36→func (g *Group) Wait
 multierror.go
-    18→func (e *Error
+    18→func (e *Error) Error
     31→func (e *Error) ErrorOrNil
     42→func (e *Error) GoString
     53→func (e *Error) WrappedErrors

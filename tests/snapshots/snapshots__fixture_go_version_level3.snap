@@ -1,0 +1,233 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+CHANGELOG.md
+     1→# 1.8.0 (Nov 28, 2025)
+     2→
+     3→ENHANCEMENTS:
+    24→# 1.7.0 (May 24, 2024)
+    25→
+    26→ENHANCEMENTS:
+    43→# 1.6.0 (June 28, 2022)
+    44→
+    45→FEATURES:
+    49→# 1.5.0 (May 18, 2022)
+    50→
+    51→FEATURES:
+    56→# 1.4.0 (January 5, 2022)
+    57→
+    58→FEATURES:
+    63→# 1.3.0 (March 31, 2021)
+    64→
+    65→Please note that CHANGELOG.md does not exist in the source code prior to this release.
+    70→# 1.2.1 (June 17, 2020)
+    71→
+    72→BUG FIXES:
+    73→ - Prevent `Version.Equal` method from panicking on `nil` encounter ([#73](https://github.com/hashicorp/go-version/pull/73))
+    75→# 1.2.0 (April 23, 2019)
+    76→
+    77→FEATURES:
+    78→ - Add `GreaterThanOrEqual` and `LessThanOrEqual` helper methods ([#53](https://github.com/hashicorp/go-version/pull/53))
+    80→# 1.1.0 (Jan 07, 2019)
+    81→
+    82→FEATURES:
+    83→ - Add `NewSemver` constructor ([#45](https://github.com/hashicorp/go-version/pull/45))
+    85→# 1.0.0 (August 24, 2018)
+    86→
+    87→Initial release.
+README.md
+     1→# Versioning Library for Go
+     2→
+     3→![Build Status](https://github.com/hashicorp/go-version/actions/workflows/go-tests.yml/badge.svg)
+     4→[![Go Reference](https://pkg.go.dev/badge/github.com/hashicorp/go-version.svg)](https://pkg.go.dev/github.com/hashicorp/go-version)
+    13→## Installation and Usage
+    14→
+    15→Package documentation can be found on
+    16→[Go Reference](https://pkg.go.dev/github.com/hashicorp/go-version).
+    24→#### Version Parsing and Comparison
+    25→
+    26→```go
+    27→v1, err := version.NewVersion("1.2")
+    28→v2, err := version.NewVersion("1.5+metadata")
+    37→#### Version Constraints
+    38→
+    39→```go
+    40→v1, err := version.NewVersion("1.2")
+    49→#### Version Sorting
+    50→
+    51→```go
+    52→versionsRaw := []string{"1.1", "0.7.1", "1.4-beta", "1.4", "2"}
+    53→versions := make([]*version.Version, len(versionsRaw))
+    54→for i, raw := range versionsRaw {
+    55→    v, _ := version.NewVersion(raw)
+    56→    versions[i] = v
+    57→}
+    63→## Issues and Contributing
+    64→
+    65→If you find an issue with this library, please report an issue. If you'd
+    66→like, we welcome any contributions. Fork this library and submit a pull
+    67→request.
+constraint.go
+    15→	constraintRegexp     *regexp.Regexp
+    16→	constraintRegexpOnce sync.Once
+    19→func getConstraintRegexp() *regexp.Regexp {
+    31→// Constraint represents a single constraint for a version, such as
+    32→// ">= 1.0".
+    33→type Constraint struct {
+    40→func (c *Constraint) Equals(con *Constraint) bool {
+    44→// Constraints is a slice of constraints. We make a custom type so that
+    45→// we can add methods to it.
+    46→type Constraints []*Constraint
+    48→type constraintFunc func(v, c *Version) bool
+    50→type constraintOperation struct {
+    55→// NewConstraint will parse one or more constraints from the given
+    56→// constraint string. The string must be a comma-separated list of
+    57→// constraints.
+    58→func NewConstraint(v string) (Constraints, error) {
+    73→// MustConstraints is a helper that wraps a call to a function
+    74→// returning (Constraints, error) and panics if error is non-nil.
+    75→func MustConstraints(c Constraints, err error) Constraints {
+    83→// Check tests if a version satisfies all the constraints.
+    84→func (cs Constraints) Check(v *Version) bool {
+    94→// Equals compares Constraints with other Constraints
+    95→// for equality. This may not represent logical equivalence
+    96→// of compared constraints.
+    97→// e.g. even though '>0.1,>0.2' is logically equivalent
+    98→// to '>0.2' it is *NOT* treated as equal.
+    99→//
+   100→// Missing operator is treated as equal to '=', whitespaces
+   101→// are ignored and constraints are sorted before comparison.
+   102→func (cs Constraints) Equals(c Constraints) bool {
+   125→func (cs Constraints) Len() int {
+   129→func (cs Constraints) Less(i, j int) bool {
+   140→func (cs Constraints) Swap(i, j int) {
+   144→// Returns the string format of the constraints
+   145→func (cs Constraints) String() string {
+   154→// Check tests if a constraint is validated by the given version.
+   155→func (c *Constraint) Check(v *Version) bool {
+   159→// Prerelease returns true if the version underlying this constraint
+   160→// contains a prerelease field.
+   161→func (c *Constraint) Prerelease() bool {
+   165→func (c *Constraint) String() string {
+   169→func parseSingle(v string) (*Constraint, error) {
+   208→func prereleaseCheck(v, c *Version) bool {
+   228→//-------------------------------------------------------------------
+   229→// Constraint functions
+   230→//-------------------------------------------------------------------
+   231→
+   232→type operator rune
+   235→	equal            operator = '='
+   236→	notEqual         operator = '≠'
+   237→	greaterThan      operator = '>'
+   238→	lessThan         operator = '<'
+   239→	greaterThanEqual operator = '≥'
+   240→	lessThanEqual    operator = '≤'
+   241→	pessimistic      operator = '~'
+   244→func constraintEqual(v, c *Version) bool {
+   248→func constraintNotEqual(v, c *Version) bool {
+   252→func constraintGreaterThan(v, c *Version) bool {
+   256→func constraintLessThan(v, c *Version) bool {
+   260→func constraintGreaterThanEqual(v, c *Version) bool {
+   264→func constraintLessThanEqual(v, c *Version) bool {
+   268→func constraintPessimistic(v, c *Version) bool {
+version.go
+    17→	versionRegexp     *regexp.Regexp
+    18→	versionRegexpOnce sync.Once
+    19→	semverRegexp      *regexp.Regexp
+    20→	semverRegexpOnce  sync.Once
+    23→func getVersionRegexp() *regexp.Regexp {
+    30→func getSemverRegexp() *regexp.Regexp {
+    40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
+    45→	// SemverRegexpRaw requires a separator between version and prerelease
+    46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
+    52→// Version represents a single version.
+    53→type Version struct {
+    61→// NewVersion parses the given version and returns a new
+    62→// Version.
+    63→func NewVersion(v string) (*Version, error) {
+    67→// NewSemver parses the given version and returns a new
+    68→// Version that adheres strictly to SemVer specs
+    69→// https://semver.org/
+    70→func NewSemver(v string) (*Version, error) {
+    74→func newVersion(v string, pattern *regexp.Regexp) (*Version, error) {
+   112→// Must is a helper that wraps a call to a function returning (*Version, error)
+   113→// and panics if error is non-nil.
+   114→func Must(v *Version, err error) *Version {
+   122→// Compare compares this version to another version. This
+   123→// returns -1, 0, or 1 if this version is smaller, equal,
+   124→// or larger than the other version, respectively.
+   125→//
+   126→// If you want boolean results, use the LessThan, Equal,
+   127→// GreaterThan, GreaterThanOrEqual or LessThanOrEqual methods.
+   128→func (v *Version) Compare(other *Version) int {
+   196→func (v *Version) equalSegments(other *Version) bool {
+   211→func allZero(segs []int64) bool {
+   220→func comparePart(preSelf string, preOther string) int {
+   267→func comparePrereleases(v string, other string) int {
+   307→// Core returns a new version constructed from only the MAJOR.MINOR.PATCH
+   308→// segments of the version, without prerelease or metadata.
+   309→func (v *Version) Core() *Version {
+   315→// Equal tests if two versions are equal.
+   316→func (v *Version) Equal(o *Version) bool {
+   324→// GreaterThan tests if this version is greater than another version.
+   325→func (v *Version) GreaterThan(o *Version) bool {
+   329→// GreaterThanOrEqual tests if this version is greater than or equal to another version.
+   330→func (v *Version) GreaterThanOrEqual(o *Version) bool {
+   334→// LessThan tests if this version is less than another version.
+   335→func (v *Version) LessThan(o *Version) bool {
+   339→// LessThanOrEqual tests if this version is less than or equal to another version.
+   340→func (v *Version) LessThanOrEqual(o *Version) bool {
+   344→// Metadata returns any metadata that was part of the version
+   345→// string.
+   346→//
+   347→// Metadata is anything that comes after the "+" in the version.
+   348→// For example, with "1.2.3+beta", the metadata is "beta".
+   349→func (v *Version) Metadata() string {
+   353→// Prerelease returns any prerelease data that is part of the version,
+   354→// or blank if there is no prerelease data.
+   355→//
+   356→// Prerelease information is anything that comes after the "-" in the
+   357→// version (but before any metadata). For example, with "1.2.3-beta",
+   358→// the prerelease information is "beta".
+   359→func (v *Version) Prerelease() string {
+   363→// Segments returns the numeric segments of the version as a slice of ints.
+   364→//
+   365→// This excludes any metadata or pre-release information. For example,
+   366→// for a version "1.2.3-beta", segments will return a slice of
+   367→// 1, 2, 3.
+   368→func (v *Version) Segments() []int {
+   376→// Segments64 returns the numeric segments of the version as a slice of int64s.
+   377→//
+   378→// This excludes any metadata or pre-release information. For example,
+   379→// for a version "1.2.3-beta", segments will return a slice of
+   380→// 1, 2, 3.
+   381→func (v *Version) Segments64() []int64 {
+   387→// String returns the full version string included pre-release
+   388→// and metadata information.
+   389→//
+   390→// This value is rebuilt according to the parsed segments and other
+   391→// information. Therefore, ambiguities in the version string such as
+   392→// prefixed zeroes (1.04.0 => 1.4.0), `v` prefix (v1.0.0 => 1.0.0), and
+   393→// missing parts (1.0 => 1.0.0) will be made into a canonicalized form
+   394→// as shown in the parenthesized examples.
+   395→func (v *Version) String() string {
+   399→func (v *Version) bytes() []byte {
+   421→// Original returns the original parsed version as-is, including any
+   422→// potential whitespace, `v` prefix, etc.
+   423→func (v *Version) Original() string {
+   427→// UnmarshalText implements encoding.TextUnmarshaler interface.
+   428→func (v *Version) UnmarshalText(b []byte) error {
+   439→// MarshalText implements encoding.TextMarshaler interface.
+   440→func (v *Version) MarshalText() ([]byte, error) {
+   444→// Scan implements the sql.Scanner interface.
+   445→func (v *Version) Scan(src interface{}) error {
+   456→// Value implements the driver.Valuer interface.
+   457→func (v *Version) Value() (driver.Value, error) {
+version_collection.go
+     6→// Collection is a type that implements the sort.Interface interface
+     7→// so that versions can be sorted.
+     8→type Collection []*Version
+    10→func (v Collection) Len() int {
+    14→func (v Collection) Less(i, j int) bool {
+    18→func (v Collection) Swap(i, j int) {

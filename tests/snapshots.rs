@@ -39,6 +39,8 @@ fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
 //   git clone --depth 1 https://github.com/hashicorp/go-multierror.git test/fixtures/go-multierror
 //   git clone --depth 1 https://github.com/cespare/xxhash.git test/fixtures/xxhash
 //   git clone --depth 1 https://github.com/fatih/color.git test/fixtures/color
+//   git clone --depth 1 https://github.com/hashicorp/go-version.git test/fixtures/go-version
+//   git clone --depth 1 https://github.com/fatih/structs.git test/fixtures/structs
 
 /// Generate a snapshot test that renders a fixture directory at a given level.
 macro_rules! fixture_test {
@@ -850,6 +852,8 @@ fixture_test!(fixture_mdbook, "mdbook/guide/src", 1);
 fixture_test!(fixture_go_multierror, "go-multierror", 1);
 fixture_test!(fixture_xxhash, "xxhash", 1);
 fixture_test!(fixture_color, "color", 1);
+fixture_test!(fixture_go_version, "go-version", 1);
+fixture_test!(fixture_structs, "structs", 1);
 
 // Fixture-based snapshot tests (level 2: full signature lines).
 
@@ -886,6 +890,8 @@ fixture_test!(fixture_mdbook_level2, "mdbook/guide/src", 2);
 fixture_test!(fixture_go_multierror_level2, "go-multierror", 2);
 fixture_test!(fixture_xxhash_level2, "xxhash", 2);
 fixture_test!(fixture_color_level2, "color", 2);
+fixture_test!(fixture_go_version_level2, "go-version", 2);
+fixture_test!(fixture_structs_level2, "structs", 2);
 
 // Fixture-based snapshot tests (level 3: signatures with doc comments).
 
@@ -922,6 +928,8 @@ fixture_test!(fixture_mdbook_level3, "mdbook/guide/src", 3);
 fixture_test!(fixture_go_multierror_level3, "go-multierror", 3);
 fixture_test!(fixture_xxhash_level3, "xxhash", 3);
 fixture_test!(fixture_color_level3, "color", 3);
+fixture_test!(fixture_go_version_level3, "go-version", 3);
+fixture_test!(fixture_structs_level3, "structs", 3);
 
 // Fixture-based snapshot tests (level 4: type bodies expanded).
 
@@ -958,6 +966,8 @@ fixture_test!(fixture_mdbook_level4, "mdbook/guide/src", 4);
 fixture_test!(fixture_go_multierror_level4, "go-multierror", 4);
 fixture_test!(fixture_xxhash_level4, "xxhash", 4);
 fixture_test!(fixture_color_level4, "color", 4);
+fixture_test!(fixture_go_version_level4, "go-version", 4);
+fixture_test!(fixture_structs_level4, "structs", 4);
 
 // Subdirectory tests: running on a subdirectory within a fixture tests
 // that path display and file discovery work correctly at deeper nesting levels.
@@ -1192,6 +1202,8 @@ fn monotonicity_invariant() {
         ("go-multierror", "go-multierror"),
         ("xxhash", "xxhash"),
         ("color", "color"),
+        ("go-version", "go-version"),
+        ("structs", "structs"),
     ];
 
     let mut tested_files = 0;
@@ -1361,6 +1373,18 @@ budget_test!(budget_color_level0, "color", 3);
 budget_test!(budget_color_level1, "color", 420);
 budget_test!(budget_color_level3, "color", 2800);
 budget_test!(budget_color_level4, "color", 3250);
+
+// Go budget tests (go-version: 0→5, 1→293, 2→509, 3→1330, 4→1799, 5→4080 words)
+budget_test!(budget_go_version_level0, "go-version", 3);
+budget_test!(budget_go_version_level1, "go-version", 300);
+budget_test!(budget_go_version_level3, "go-version", 1350);
+budget_test!(budget_go_version_level4, "go-version", 1850);
+
+// Go budget tests (structs: 0→4, 1→169, 2→296, 3→2089, 4→2638, 5→4315 words)
+budget_test!(budget_structs_level0, "structs", 3);
+budget_test!(budget_structs_level1, "structs", 180);
+budget_test!(budget_structs_level3, "structs", 2100);
+budget_test!(budget_structs_level4, "structs", 2700);
 
 // Python budget tests (typeguard: 0→12, 1→364, 2→1471, 3→3021, 4→7054, 5→14165 words)
 budget_test!(budget_typeguard_level0, "typeguard/src/typeguard", 10);

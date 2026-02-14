@@ -1,0 +1,102 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 300 → level 1 (293 words)
+
+CHANGELOG.md
+     1→# 1.8.0 (Nov 28, 2025)
+    24→# 1.7.0 (May 24, 2024)
+    43→# 1.6.0 (June 28, 2022)
+    49→# 1.5.0 (May 18, 2022)
+    56→# 1.4.0 (January 5, 2022)
+    63→# 1.3.0 (March 31, 2021)
+    70→# 1.2.1 (June 17, 2020)
+    75→# 1.2.0 (April 23, 2019)
+    80→# 1.1.0 (Jan 07, 2019)
+    85→# 1.0.0 (August 24, 2018)
+README.md
+     1→# Versioning Library for Go
+    13→## Installation and Usage
+    24→#### Version Parsing and Comparison
+    37→#### Version Constraints
+    49→#### Version Sorting
+    63→## Issues and Contributing
+constraint.go
+    15→	constraintRegexp
+    16→	constraintRegexpOnce
+    19→func getConstraintRegexp
+    33→type Constraint
+    40→func (c *Constraint) Equals
+    46→type Constraints
+    48→type constraintFunc
+    50→type constraintOperation
+    58→func NewConstraint
+    75→func MustConstraints
+    84→func (cs Constraints) Check
+   102→func (cs Constraints) Equals
+   125→func (cs Constraints) Len
+   129→func (cs Constraints) Less
+   140→func (cs Constraints) Swap
+   145→func (cs Constraints) String
+   155→func (c *Constraint) Check
+   161→func (c *Constraint) Prerelease
+   165→func (c *Constraint) String
+   169→func parseSingle
+   208→func prereleaseCheck
+   232→type operator
+   235→	equal
+   236→	notEqual
+   237→	greaterThan
+   238→	lessThan
+   239→	greaterThanEqual
+   240→	lessThanEqual
+   241→	pessimistic
+   244→func constraintEqual
+   248→func constraintNotEqual
+   252→func constraintGreaterThan
+   256→func constraintLessThan
+   260→func constraintGreaterThanEqual
+   264→func constraintLessThanEqual
+   268→func constraintPessimistic
+version.go
+    17→	versionRegexp
+    18→	versionRegexpOnce
+    19→	semverRegexp
+    20→	semverRegexpOnce
+    23→func getVersionRegexp
+    30→func getSemverRegexp
+    40→	VersionRegexpRaw
+    46→	SemverRegexpRaw
+    53→type Version
+    63→func NewVersion
+    70→func NewSemver
+    74→func newVersion
+   114→func Must
+   128→func (v *Version) Compare
+   196→func (v *Version) equalSegments
+   211→func allZero
+   220→func comparePart
+   267→func comparePrereleases
+   309→func (v *Version) Core
+   316→func (v *Version) Equal
+   325→func (v *Version) GreaterThan
+   330→func (v *Version) GreaterThanOrEqual
+   335→func (v *Version) LessThan
+   340→func (v *Version) LessThanOrEqual
+   349→func (v *Version) Metadata
+   359→func (v *Version) Prerelease
+   368→func (v *Version) Segments
+   381→func (v *Version) Segments64
+   395→func (v *Version) String
+   399→func (v *Version) bytes
+   423→func (v *Version) Original
+   428→func (v *Version) UnmarshalText
+   440→func (v *Version) MarshalText
+   445→func (v *Version) Scan
+   457→func (v *Version) Value
+version_collection.go
+     8→type Collection
+    10→func (v Collection) Len
+    14→func (v Collection) Less
+    18→func (v Collection) Swap
