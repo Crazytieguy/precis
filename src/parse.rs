@@ -132,10 +132,9 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             "macro_definition" => SymbolKind::Macro,
             "mod_item" => SymbolKind::Module,
             // TypeScript
-            "function_declaration" | "method_definition" | "method_signature" => {
-                SymbolKind::Function
-            }
-            "class_declaration" => SymbolKind::Class,
+            "function_declaration" | "method_definition" | "method_signature"
+            | "abstract_method_signature" => SymbolKind::Function,
+            "class_declaration" | "abstract_class_declaration" => SymbolKind::Class,
             "interface_declaration" => SymbolKind::Interface,
             "enum_declaration" => SymbolKind::Enum,
             "type_alias_declaration" => SymbolKind::TypeAlias,
@@ -330,7 +329,7 @@ fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
     // JS private methods (#method) use private_property_identifier and are always private.
     if matches!(
         node.kind(),
-        "method_definition" | "method_signature" | "public_field_definition"
+        "method_definition" | "method_signature" | "abstract_method_signature" | "public_field_definition"
     ) {
         // JS #private methods are always private
         if node
@@ -957,6 +956,34 @@ class Observer {
         assert!(info.contains(&("constructor", SymbolKind::Function)));
         // Plain data fields should NOT be captured
         assert!(!info.iter().any(|(name, _)| *name == "subscribers"));
+    }
+
+    #[test]
+    fn extracts_abstract_classes() {
+        let source = r#"
+export abstract class Base {
+    abstract method(): void;
+    concrete(): string { return ""; }
+}
+
+export class Derived extends Base {
+    method(): void {}
+}
+"#;
+        let symbols = extract_symbols(Path::new("test.ts"), source);
+        let info: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.name.as_str(), s.kind, s.is_public))
+            .collect();
+
+        // Abstract class should be captured as Class
+        assert!(info.contains(&("Base", SymbolKind::Class, true)));
+        // Abstract method signature should be captured as Function
+        assert!(info.contains(&("method", SymbolKind::Function, true)));
+        // Concrete method inside abstract class
+        assert!(info.contains(&("concrete", SymbolKind::Function, true)));
+        // Derived class
+        assert!(info.contains(&("Derived", SymbolKind::Class, true)));
     }
 
     #[test]

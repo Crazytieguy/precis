@@ -6,6 +6,10 @@
 (class_declaration
   name: (type_identifier) @name) @symbol
 
+; Abstract classes
+(abstract_class_declaration
+  name: (type_identifier) @name) @symbol
+
 ; Class methods
 (method_definition
   name: (property_identifier) @name) @symbol
@@ -20,6 +24,10 @@
 
 ; Interface method signatures
 (method_signature
+  name: (property_identifier) @name) @symbol
+
+; Abstract method signatures
+(abstract_method_signature
   name: (property_identifier) @name) @symbol
 
 ; Enums

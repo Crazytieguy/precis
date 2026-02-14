@@ -7,6 +7,7 @@
 - All 26 fixtures have level 1, 2, 3, and 4 snapshots; levels 0 and 5 tested via samples only
 - Budget-based snapshot tests added: mitt (5 budgets hitting levels 0–3 and 5), ini (3 budgets), neverthrow (2 budgets, multi-file), either (4 budgets, Rust, hitting levels 0/1/3/4), pluggy (4 budgets, Python, hitting levels 0/1/2/3), mdbook (5 budgets, Markdown, hitting levels 0/1/3/4/5), sonner (4 budgets, TSX, hitting levels 0/1/3/4). Each snapshot includes metadata header showing budget → level → word count. All supported language families (Rust, JS/TS, TSX, Python, Markdown) now have budget test coverage.
 - Level 4 fixture snapshots now cover all 26 fixtures; spot-check confirmed type bodies (struct fields, enum variants, trait members, class bodies) expand correctly
+- No current fixture exercises TypeScript abstract classes — covered by unit test only
 - Python fixtures: pluggy, tomli, humanize, python-dotenv, typeguard — exercises classes, decorators, type hints, docstrings
 
 ## Codebase quality
@@ -16,6 +17,7 @@
 ## Current state
 
 - Parsing works for Rust, TypeScript, JavaScript, TSX, Python, Markdown — extracts symbol names, kinds, visibility
+- TypeScript: abstract classes (`abstract class`) and abstract method signatures captured correctly
 - Python: module-level constants extracted (type-annotated assignments, UPPER_CASE names, dunder attributes like `__all__`)
 - Output supports 6 granularity levels: 0 (file paths), 1 (symbol names), 2 (full multi-line signatures), 3 (signatures with doc comments; Markdown: headings + first paragraph), 4 (type bodies expanded; Markdown: all content between headings), 5 (full source)
 - Monotonicity invariant (higher level = more words) tested against all fixtures
