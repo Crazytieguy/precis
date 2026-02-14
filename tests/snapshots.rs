@@ -849,6 +849,46 @@ fn fixture_ky_errors_subdir_level2() {
     insta::assert_snapshot!(output);
 }
 
+#[test]
+fn fixture_thiserror_impl_subdir() {
+    let Some(root) = fixture_path("thiserror/impl/src") else {
+        eprintln!("skipping fixture_thiserror_impl_subdir: clone with `git clone --depth 1 https://github.com/dtolnay/thiserror.git test/fixtures/thiserror`");
+        return;
+    };
+    let output = format::render_directory(1, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_thiserror_impl_subdir_level2() {
+    let Some(root) = fixture_path("thiserror/impl/src") else {
+        eprintln!("skipping fixture_thiserror_impl_subdir_level2: clone with `git clone --depth 1 https://github.com/dtolnay/thiserror.git test/fixtures/thiserror`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_commander_lib_subdir() {
+    let Some(root) = fixture_path("commander/lib") else {
+        eprintln!("skipping fixture_commander_lib_subdir: clone with `git clone --depth 1 https://github.com/tj/commander.js.git test/fixtures/commander`");
+        return;
+    };
+    let output = format::render_directory(1, &root);
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn fixture_commander_lib_subdir_level2() {
+    let Some(root) = fixture_path("commander/lib") else {
+        eprintln!("skipping fixture_commander_lib_subdir_level2: clone with `git clone --depth 1 https://github.com/tj/commander.js.git test/fixtures/commander`");
+        return;
+    };
+    let output = format::render_directory(2, &root);
+    insta::assert_snapshot!(output);
+}
+
 // Single-file rendering tests (precis accepts individual files, not just directories).
 
 #[test]
