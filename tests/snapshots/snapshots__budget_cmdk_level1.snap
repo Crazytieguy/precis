@@ -2,12 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 120 → level 1 (109 words)
+budget: 120 → level 2 (116 words)
 
 command-score.ts
     54→function commandScoreInner
    150→function formatInput
-   155→export function commandScore
+   155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
 index.tsx
     10→type Children
     11→type DivProps

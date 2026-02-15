@@ -2,20 +2,20 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 80 → level 1 (72 words)
+budget: 80 → level 2 (78 words)
 
 cli-options.js
      1→const re
 env-options.js
      2→const options
 main.d.ts
-     5→export interface DotenvParseOutput
-     9→export interface DotenvPopulateOutput
-    25→export interface DotenvConfigOptions
-    92→export interface DotenvConfigOutput
+     5→export interface DotenvParseOutput {
+     9→export interface DotenvPopulateOutput {
+    25→export interface DotenvConfigOptions {
+    92→export interface DotenvConfigOutput {
     97→type DotenvError
-   106→export interface DotenvPopulateOptions
-   126→export interface DotenvPopulateInput
+   106→export interface DotenvPopulateOptions {
+   126→export interface DotenvPopulateInput {
 main.js
      7→const version
     10→const TIPS

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1500 → level 2 (978 words)
+budget: 1500 → level 3 (1192 words)
 
 README.md
      1→derive(Error)
@@ -27,14 +27,14 @@ build.rs
    179→fn rustc_minor_version() -> Option<u32> {
    190→fn cargo_env_var(key: &str) -> OsString {
 impl/src/ast.rs
-    10→pub enum Input
-    15→pub struct Struct
-    22→pub struct Enum
-    29→pub struct Variant
-    36→pub struct Field
-    45→pub enum ContainerKind
+    10→pub enum Input<'a> {
+    15→pub struct Struct<'a> {
+    22→pub struct Enum<'a> {
+    29→pub struct Variant<'a> {
+    36→pub struct Field<'a> {
+    45→pub enum ContainerKind {
     54→impl<'a> Input<'a>
-    55→    pub fn from_syn
+    55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
     67→impl<'a> Struct<'a>
     68→    fn from_syn
     85→impl<'a> Enum<'a>
@@ -48,28 +48,28 @@ impl/src/ast.rs
    157→    fn from_struct
    165→    fn from_variant
    174→impl Display for ContainerKind
-   175→    fn fmt
+   175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 impl/src/attr.rs
-    11→pub struct Attrs
-    21→pub struct Display
-    33→pub struct Source
-    39→pub struct From
-    45→pub struct Transparent
-    51→pub struct Fmt
-    57→pub enum Trait
-    69→pub fn get
+    11→pub struct Attrs<'a> {
+    21→pub struct Display<'a> {
+    33→pub struct Source<'a> {
+    39→pub struct From<'a> {
+    45→pub struct Transparent<'a> {
+    51→pub struct Fmt<'a> {
+    57→pub enum Trait {
+    69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
    124→fn parse_error_attribute
    196→fn parse_token_expr
    302→impl ToTokens for Display<'_>
-   303→    fn to_tokens
+   303→    fn to_tokens(&self, tokens: &mut TokenStream) {
    342→impl ToTokens for Trait
-   343→    fn to_tokens
+   343→    fn to_tokens(&self, tokens: &mut TokenStream) {
 impl/src/expand.rs
-    12→pub fn derive
+    12→pub fn derive(input: &DeriveInput) -> TokenStream {
     22→fn try_expand
     31→fn impl_struct
    221→fn impl_enum
-   505→pub(crate) fn call_site_ident
+   505→pub(crate) fn call_site_ident(ident: &Ident) -> Ident {
    511→fn fields_pat
    526→fn use_as_display
    536→fn from_initializer
@@ -77,10 +77,10 @@ impl/src/expand.rs
    569→fn unoptional_type
    574→fn type_parameter_of_option
 impl/src/fallback.rs
-     7→pub(crate) fn expand
+     7→pub(crate) fn expand(input: &DeriveInput, error: syn::Error) -> TokenStream {
 impl/src/fmt.rs
     15→impl Display<'_>
-    16→    pub fn expand_shorthand
+    16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
    166→struct FmtArguments
    172→fn explicit_named_args
    192→fn try_explicit_named_args
@@ -90,16 +90,16 @@ impl/src/fmt.rs
    286→fn take_ident
    299→fn between
 impl/src/generics.rs
-     8→pub struct ParamsInScope
+     8→pub struct ParamsInScope<'a> {
     12→impl<'a> ParamsInScope<'a>
-    13→    pub fn new
-    19→    pub fn intersects
+    13→    pub fn new(generics: &'a Generics) -> Self {
+    19→    pub fn intersects(&self, ty: &Type) -> bool {
     26→fn crawl
-    48→pub struct InferredBounds
+    48→pub struct InferredBounds {
     53→impl InferredBounds
-    54→    pub fn new
-    61→    pub fn insert
-    74→    pub fn augment_where_clause
+    54→    pub fn new() -> Self {
+    61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
+    74→    pub fn augment_where_clause(&self, generics: &Generics) -> WhereClause {
 impl/src/lib.rs
     23→mod ast
     24→mod attr
@@ -111,28 +111,28 @@ impl/src/lib.rs
     30→mod scan_expr
     31→mod unraw
     32→mod valid
-    40→pub fn derive_error
+    40→pub fn derive_error(input: TokenStream) -> TokenStream {
     46→struct private
     48→impl ToTokens for private
-    49→    fn to_tokens
+    49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
 impl/src/prop.rs
      6→impl Struct<'_>
-     7→    pub(crate) fn from_field
-    11→    pub(crate) fn source_field
-    15→    pub(crate) fn backtrace_field
-    19→    pub(crate) fn distinct_backtrace_field
+     7→    pub(crate) fn from_field(&self) -> Option<&Field> {
+    11→    pub(crate) fn source_field(&self) -> Option<&Field> {
+    15→    pub(crate) fn backtrace_field(&self) -> Option<&Field> {
+    19→    pub(crate) fn distinct_backtrace_field(&self) -> Option<&Field> {
     25→impl Enum<'_>
-    26→    pub(crate) fn has_source
-    32→    pub(crate) fn has_backtrace
-    38→    pub(crate) fn has_display
+    26→    pub(crate) fn has_source(&self) -> bool {
+    32→    pub(crate) fn has_backtrace(&self) -> bool {
+    38→    pub(crate) fn has_display(&self) -> bool {
     53→impl Variant<'_>
-    54→    pub(crate) fn from_field
-    58→    pub(crate) fn source_field
-    62→    pub(crate) fn backtrace_field
-    66→    pub(crate) fn distinct_backtrace_field
+    54→    pub(crate) fn from_field(&self) -> Option<&Field> {
+    58→    pub(crate) fn source_field(&self) -> Option<&Field> {
+    62→    pub(crate) fn backtrace_field(&self) -> Option<&Field> {
+    66→    pub(crate) fn distinct_backtrace_field(&self) -> Option<&Field> {
     72→impl Field<'_>
-    73→    pub(crate) fn is_backtrace
-    77→    pub(crate) fn source_span
+    73→    pub(crate) fn is_backtrace(&self) -> bool {
+    77→    pub(crate) fn source_span(&self) -> Span {
     88→fn from_field
     97→fn source_field
    112→fn backtrace_field
@@ -163,45 +163,45 @@ impl/src/scan_expr.rs
    175→static RAW
    181→static REFERENCE
    187→static RETURN
-   192→pub(crate) fn scan_expr
+   192→pub(crate) fn scan_expr(input: ParseStream) -> Result<()> {
 impl/src/unraw.rs
-    12→pub struct IdentUnraw
+    12→pub struct IdentUnraw(Ident);
     14→impl IdentUnraw
-    15→    pub fn new
-    19→    pub fn to_local
-    32→    pub fn set_span
+    15→    pub fn new(ident: Ident) -> Self {
+    19→    pub fn to_local(&self) -> Ident {
+    32→    pub fn set_span(&mut self, span: Span) {
     37→impl Display for IdentUnraw
-    38→    fn fmt
+    38→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
     43→impl Eq for IdentUnraw
     45→impl PartialEq for IdentUnraw
-    46→    fn eq
+    46→    fn eq(&self, other: &Self) -> bool {
     51→impl PartialEq<str> for IdentUnraw
-    52→    fn eq
+    52→    fn eq(&self, other: &str) -> bool {
     57→impl Ord for IdentUnraw
-    58→    fn cmp
+    58→    fn cmp(&self, other: &Self) -> Ordering {
     63→impl PartialOrd for IdentUnraw
-    64→    fn partial_cmp
+    64→    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
     69→impl Parse for IdentUnraw
-    70→    fn parse
+    70→    fn parse(input: ParseStream) -> Result<Self> {
     75→impl ToTokens for IdentUnraw
-    76→    fn to_tokens
-    82→pub enum MemberUnraw
+    76→    fn to_tokens(&self, tokens: &mut TokenStream) {
+    82→pub enum MemberUnraw {
     87→impl MemberUnraw
-    88→    pub fn span
+    88→    pub fn span(&self) -> Span {
     96→impl Display for MemberUnraw
-    97→    fn fmt
+    97→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
    105→impl Eq for MemberUnraw
    107→impl PartialEq for MemberUnraw
-   108→    fn eq
+   108→    fn eq(&self, other: &Self) -> bool {
    117→impl PartialEq<str> for MemberUnraw
-   118→    fn eq
+   118→    fn eq(&self, other: &str) -> bool {
    126→impl Hash for MemberUnraw
-   127→    fn hash
+   127→    fn hash<H: Hasher>(&self, hasher: &mut H) {
    135→impl ToTokens for MemberUnraw
-   136→    fn to_tokens
+   136→    fn to_tokens(&self, tokens: &mut TokenStream) {
 impl/src/valid.rs
      5→impl Input<'_>
-     6→    pub(crate) fn validate
+     6→    pub(crate) fn validate(&self) -> Result<()> {
     14→impl Struct<'_>
     15→    fn validate
     45→impl Enum<'_>

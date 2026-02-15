@@ -5,7 +5,7 @@ expression: output
 sample.py
      5→T = TypeVar("T")
      8→def process_items(items: list[str]) -> int:
-    11→def _helper() -> None:
+    11→def _helper
     15→class Token:
     21→class Visitor:
     22→    def visit_token(self, token: Token) -> None:
@@ -14,5 +14,5 @@ sample.py
     37→    def __init__(self, source: str) -> None:
     42→    def parse(self) -> list[Token]:
     47→    def from_file(cls, path: str) -> "TokenParser[T]":
-    51→    def _advance(self) -> None:
+    51→    def _advance
     54→VERSION: str = "0.1.0"

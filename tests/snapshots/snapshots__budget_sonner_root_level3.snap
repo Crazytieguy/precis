@@ -2,16 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 800 → level 3 (764 words)
+budget: 800 → level 3 (705 words)
 
 LICENSE.md
 README.md
      5→## Usage
-     6→
-     7→To start using the library, install it in your project:
     31→## Documentation
-    32→
-    33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
 playwright.config.ts
 src/assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
@@ -114,14 +110,8 @@ src/types.ts
    200→};
 website/README.md
      3→## Getting Started
-     4→
-     5→First, run the development server:
     25→## Learn More
-    26→
-    27→To learn more about Next.js, take a look at the following resources:
     34→## Deploy on Vercel
-    35→
-    36→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 website/next.config.js
      2→const nextConfig = {
      8→const withNextra = require('nextra')({

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 555 → level 2 (554 words)
+budget: 555 → level 3 (555 words)
 
 404.md
      1→# Document not found (404)
@@ -79,7 +79,7 @@ for_developers/backends.md
 for_developers/mdbook-wordcount/src/main.rs
     12→fn main
     40→fn count_words
-    46→pub struct WordcountConfig
+    46→pub struct WordcountConfig {
 for_developers/preprocessors.md
      1→# Preprocessors
     13→## Hooking into MDBook

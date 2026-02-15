@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 100 → level 1 (60 words)
+budget: 100 → level 2 (69 words)
 
 constants.js
      5→const SEMVER_SPEC_VERSION
@@ -19,10 +19,10 @@ identifiers.js
     24→const rcompareIdentifiers
 lrucache.js
      3→class LRUCache
-     4→  constructor
-     9→  get
-    21→  delete
-    25→  set
+     4→  constructor () {
+     9→  get (key) {
+    21→  delete (key) {
+    25→  set (key, value) {
 parse-options.js
      4→const looseOption
      5→const emptyOpts

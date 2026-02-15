@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 650 → level 1 (617 words)
+budget: 650 → level 2 (623 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -236,13 +236,13 @@ lib/cli-options.js
 lib/env-options.js
      2→const options
 lib/main.d.ts
-     5→export interface DotenvParseOutput
-     9→export interface DotenvPopulateOutput
-    25→export interface DotenvConfigOptions
-    92→export interface DotenvConfigOutput
+     5→export interface DotenvParseOutput {
+     9→export interface DotenvPopulateOutput {
+    25→export interface DotenvConfigOptions {
+    92→export interface DotenvConfigOutput {
     97→type DotenvError
-   106→export interface DotenvPopulateOptions
-   126→export interface DotenvPopulateInput
+   106→export interface DotenvPopulateOptions {
+   126→export interface DotenvPopulateInput {
 lib/main.js
      7→const version
     10→const TIPS

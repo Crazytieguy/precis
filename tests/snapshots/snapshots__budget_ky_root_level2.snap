@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 600 → level 2 (546 words)
+budget: 600 → level 2 (538 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -121,8 +121,8 @@ source/errors/TimeoutError.ts
      3→export class TimeoutError
      6→	constructor
 source/index.ts
-    10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
-    34→const ky = createInstance();
+    10→const createInstance
+    34→const ky
 source/types/ResponsePromise.ts
      6→export type ResponsePromise
 source/types/common.ts

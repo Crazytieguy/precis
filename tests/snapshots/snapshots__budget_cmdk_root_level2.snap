@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 → level 2 (426 words)
+budget: 1000 → level 3 (482 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -39,7 +39,7 @@ README.md
 cmdk/src/command-score.ts
     54→function commandScoreInner
    150→function formatInput
-   155→export function commandScore
+   155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
 cmdk/src/index.tsx
     10→type Children
     11→type DivProps
@@ -99,7 +99,7 @@ website/README.md
     19→## Learn More
     28→## Deploy on Vercel
 website/components/cmdk/framer.tsx
-     4→export function FramerCMDK
+     4→export function FramerCMDK() {
     57→function Button
     61→function Input
     65→function Badge
@@ -118,7 +118,7 @@ website/components/cmdk/framer.tsx
    197→function SearchIcon
    212→function SliderIcon
 website/components/cmdk/linear.tsx
-     3→export function LinearCMDK
+     3→export function LinearCMDK() {
     30→const items
     68→function AssignToIcon
     76→function AssignToMeIcon
@@ -128,7 +128,7 @@ website/components/cmdk/linear.tsx
    125→function RemoveLabelIcon
    137→function SetDueDateIcon
 website/components/cmdk/raycast.tsx
-     7→export function RaycastCMDK
+     7→export function RaycastCMDK() {
     97→function Item
    116→function SubCommand
    200→function SubItem
@@ -141,7 +141,7 @@ website/components/cmdk/raycast.tsx
    299→function ClipboardIcon
    315→function HammerIcon
 website/components/cmdk/vercel.tsx
-     4→export function VercelCMDK
+     4→export function VercelCMDK() {
     91→function Home
    137→function Projects
    150→function Item
@@ -154,19 +154,19 @@ website/components/cmdk/vercel.tsx
    292→function ContactIcon
 website/components/code/index.tsx
      7→const theme
-    41→export function Code
+    41→export function Code({ children }: { children: string }) {
 website/components/icons/index.tsx
-     3→export function FigmaIcon
-    15→export function RaycastIcon
-    28→export function YouTubeIcon
-    40→export function SlackIcon
-    79→export function VercelIcon
-    87→export function LinearIcon
-   110→export function Logo
-   127→export function CopyIcon
-   146→export function CopiedIcon
-   154→export function GitHubIcon
-   165→export function FramerIcon
+     3→export function FigmaIcon() {
+    15→export function RaycastIcon() {
+    28→export function YouTubeIcon() {
+    40→export function SlackIcon() {
+    79→export function VercelIcon() {
+    87→export function LinearIcon({ style }: { style?: Object }) {
+   110→export function Logo({ children, size = '20px' }: { children: React.ReactNode; size?: string }) {
+   127→export function CopyIcon() {
+   146→export function CopiedIcon() {
+   154→export function GitHubIcon() {
+   165→export function FramerIcon() {
 website/components/index.ts
 website/next-env.d.ts
 website/next.config.js
@@ -175,15 +175,15 @@ website/pages/_app.tsx
     13→const title
     14→const description
     15→const siteUrl
-    17→export default function App
+    17→export default function App({ Component, pageProps }: AppProps) {
 website/pages/_document.tsx
-     5→export default class Document
-     6→  render
+     5→export default class Document extends NextDocument {
+     6→  render() {
 website/pages/index.tsx
     20→type TTheme
     25→type Themes
     27→const ThemeContext
-    29→export default function Index
+    29→export default function Index() {
     84→function CMDKWrapper
    101→function InstallButton
    123→function GitHubButton

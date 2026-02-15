@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 700 → level 1 (591 words)
+budget: 700 → level 2 (649 words)
 
 .commitlintrc.js
 .eslintrc.js
@@ -137,23 +137,23 @@ bin/semver.js
 classes/comparator.js
      3→const ANY
      5→class Comparator
-     6→  static get ANY
-    10→  constructor
-    36→  parse
-    57→  toString
-    61→  test
-    79→  intersects
+     6→  static get ANY () {
+    10→  constructor (comp, options) {
+    36→  parse (comp) {
+    57→  toString () {
+    61→  test (version) {
+    79→  intersects (comp, options) {
 classes/index.js
 classes/range.js
      3→const SPACE_CHARACTERS
      6→class Range
-     7→  constructor
-    73→  get range
-    92→  format
-    96→  toString
-   100→  parseRange
-   170→  intersects
-   193→  test
+     7→  constructor (range, options) {
+    73→  get range () {
+    92→  format () {
+    96→  toString () {
+   100→  parseRange (range) {
+   170→  intersects (range, options) {
+   193→  test (version) {
    218→const cache
    233→const isNullSet
    234→const isAny
@@ -172,14 +172,14 @@ classes/range.js
    523→const testSet
 classes/semver.js
      9→class SemVer
-    10→  constructor
-    81→  format
-    89→  toString
-    93→  compare
-   109→  compareMain
-   135→  comparePre
-   168→  compareBuild
-   194→  inc
+    10→  constructor (version, options) {
+    81→  format () {
+    89→  toString () {
+    93→  compare (other) {
+   109→  compareMain (other) {
+   135→  comparePre (other) {
+   168→  compareBuild (other) {
+   194→  inc (release, identifier, identifierBase) {
 functions/clean.js
      4→const clean
 functions/cmp.js
@@ -244,10 +244,10 @@ internal/identifiers.js
     24→const rcompareIdentifiers
 internal/lrucache.js
      3→class LRUCache
-     4→  constructor
-     9→  get
-    21→  delete
-    25→  set
+     4→  constructor () {
+     9→  get (key) {
+    21→  delete (key) {
+    25→  set (key, value) {
 internal/parse-options.js
      4→const looseOption
      5→const emptyOpts

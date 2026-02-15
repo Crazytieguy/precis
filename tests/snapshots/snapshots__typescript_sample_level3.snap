@@ -3,10 +3,8 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.ts
-     3→ * Process all items and return the count.
      5→export function processItems(items: string[]): number {
      9→function helper(): void {}
-    12→ * Fetch data from the given URL.
     16→export async function fetchData(url: string): Promise<Response> {
     20→export class TokenParser {
     23→    constructor(input: string) {
