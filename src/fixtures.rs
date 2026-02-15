@@ -1,0 +1,37 @@
+/// Test fixture mappings: (display name, subpath relative to test/fixtures/).
+///
+/// Used by snapshot tests, monotonicity tests, and diagnostic tooling.
+/// Each entry maps a short name to the source root within a cloned fixture repo.
+pub const FIXTURES: &[(&str, &str)] = &[
+    ("either", "either/src"),
+    ("anyhow", "anyhow/src"),
+    ("once_cell", "once_cell/src"),
+    ("thiserror", "thiserror/src"),
+    ("log", "log/src"),
+    ("neverthrow", "neverthrow/src"),
+    ("ts-pattern", "ts-pattern/src"),
+    ("superstruct", "superstruct/src"),
+    ("mitt", "mitt/src"),
+    ("ky", "ky/source"),
+    ("semver", "semver/classes"),
+    ("dotenv", "dotenv/lib"),
+    ("commander", "commander/lib"),
+    ("debug", "debug/src"),
+    ("ini", "ini/lib"),
+    ("cmdk", "cmdk/cmdk/src"),
+    ("react-hot-toast", "react-hot-toast/src"),
+    ("sonner", "sonner/src"),
+    ("vaul", "vaul/src"),
+    ("input-otp", "input-otp/packages/input-otp/src"),
+    ("pluggy", "pluggy/src/pluggy"),
+    ("tomli", "tomli/src/tomli"),
+    ("humanize", "humanize/src/humanize"),
+    ("python-dotenv", "python-dotenv/src/dotenv"),
+    ("typeguard", "typeguard/src/typeguard"),
+    ("mdbook", "mdbook/guide/src"),
+    ("go-multierror", "go-multierror"),
+    ("xxhash", "xxhash"),
+    ("color", "color"),
+    ("go-version", "go-version"),
+    ("structs", "structs"),
+];

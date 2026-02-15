@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 description = "A CLI tool that extracts a token-efficient summary of a codebase"
 license = "MIT"
+default-run = "precis"
 
 [dependencies]
 clap = { version = "4", features = ["derive"] }

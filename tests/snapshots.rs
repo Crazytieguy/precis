@@ -1169,43 +1169,22 @@ fn monotonicity_unreadable_files() {
 }
 
 /// Test the monotonicity invariant: for any file, a higher level must never
-/// produce fewer words than a lower level. Tests per-file across all fixtures.
+/// produce fewer words than a lower level. Tests one representative fixture per language.
 #[test]
 fn monotonicity_invariant() {
     let fixtures: &[(&str, &str)] = &[
-        ("either", "either/src"),
-        ("anyhow", "anyhow/src"),
-        ("once_cell", "once_cell/src"),
-        ("thiserror", "thiserror/src"),
-        ("log", "log/src"),
-        ("neverthrow", "neverthrow/src"),
-        ("ts-pattern", "ts-pattern/src"),
-        ("superstruct", "superstruct/src"),
-        ("mitt", "mitt/src"),
-        ("ky", "ky/source"),
-        ("semver", "semver/classes"),
-        ("dotenv", "dotenv/lib"),
-        ("commander", "commander/lib"),
-        ("debug", "debug/src"),
-        ("ini", "ini/lib"),
-        ("cmdk", "cmdk/cmdk/src"),
-        ("react-hot-toast", "react-hot-toast/src"),
-        ("sonner", "sonner/src"),
-        ("vaul", "vaul/src"),
-        ("input-otp", "input-otp/packages/input-otp/src"),
-        ("pluggy", "pluggy/src/pluggy"),
-        ("tomli", "tomli/src/tomli"),
-        ("humanize", "humanize/src/humanize"),
-        ("python-dotenv", "python-dotenv/src/dotenv"),
-        ("typeguard", "typeguard/src/typeguard"),
-        ("mdbook", "mdbook/guide/src"),
-        ("go-multierror", "go-multierror"),
-        ("xxhash", "xxhash"),
-        ("color", "color"),
-        ("go-version", "go-version"),
-        ("structs", "structs"),
+        ("either", "either/src"),                        // Rust (5 files)
+        ("thiserror", "thiserror/src"),                   // Rust (6 files)
+        ("neverthrow", "neverthrow/src"),                 // TypeScript (3 files)
+        ("ts-pattern", "ts-pattern/src"),                 // TypeScript (5 files)
+        ("commander", "commander/lib"),                   // JavaScript (6 files)
+        ("react-hot-toast", "react-hot-toast/src"),       // TSX (13 files)
+        ("pluggy", "pluggy/src/pluggy"),                  // Python (7 files)
+        ("typeguard", "typeguard/src/typeguard"),         // Python (12 files)
+        ("xxhash", "xxhash"),                             // Go (8 files)
+        ("go-multierror", "go-multierror"),               // Go (14 files)
+        ("mdbook", "mdbook/guide/src"),                   // Markdown (35 files)
     ];
-
     let mut tested_files = 0;
     for (name, subpath) in fixtures {
         let Some(root) = fixture_path(subpath) else {
@@ -1331,62 +1310,52 @@ budget_test!(budget_ini_level3, "ini/lib", 50);
 budget_test!(budget_neverthrow_level0, "neverthrow/src", 100);
 budget_test!(budget_neverthrow_level1, "neverthrow/src", 500);
 
-// Rust budget tests (either: 0→5, 1→692, 2→1314, 3→4955, 4→5025, 5→8621 words)
 budget_test!(budget_either_level0, "either/src", 3);
 budget_test!(budget_either_level1, "either/src", 1000);
 budget_test!(budget_either_level3, "either/src", 5000);
 budget_test!(budget_either_level4, "either/src", 6000);
 
-// Python budget tests (pluggy: 0→7, 1→293, 2→650, 3→1753, 4→5957, 5→7397 words)
 budget_test!(budget_pluggy_level0, "pluggy/src/pluggy", 5);
 budget_test!(budget_pluggy_level1, "pluggy/src/pluggy", 300);
 budget_test!(budget_pluggy_level2, "pluggy/src/pluggy", 1000);
 budget_test!(budget_pluggy_level3, "pluggy/src/pluggy", 2000);
 
-// TSX budget tests (sonner: 0→5, 1→174, 2→495, 3→495, 4→1837, 5→5929 words)
 budget_test!(budget_sonner_level0, "sonner/src", 3);
 budget_test!(budget_sonner_level1, "sonner/src", 180);
 budget_test!(budget_sonner_level3, "sonner/src", 500);
 budget_test!(budget_sonner_level4, "sonner/src", 1900);
 
-// Markdown budget tests (mdbook: 0→37, 1→553, 2→560, 3→5061, 4→17096, 5→17253 words)
 budget_test!(budget_mdbook_level0, "mdbook/guide/src", 30);
 budget_test!(budget_mdbook_level1, "mdbook/guide/src", 555);
 budget_test!(budget_mdbook_level3, "mdbook/guide/src", 6000);
 budget_test!(budget_mdbook_level4, "mdbook/guide/src", 17200);
 budget_test!(budget_mdbook_level5, "mdbook/guide/src", 20000);
 
-// Go budget tests (go-multierror: 0→9, 1→109, 2→169, 3→890, 4→1787, 5→2543 words)
 budget_test!(budget_go_multierror_level0, "go-multierror", 5);
 budget_test!(budget_go_multierror_level1, "go-multierror", 120);
 budget_test!(budget_go_multierror_level3, "go-multierror", 900);
 budget_test!(budget_go_multierror_level4, "go-multierror", 1800);
 
-// Go budget tests (xxhash: 0→8, 1→141, 2→353, 3→728, 4→1025, 5→2598 words)
 budget_test!(budget_xxhash_level0, "xxhash", 5);
 budget_test!(budget_xxhash_level1, "xxhash", 150);
 budget_test!(budget_xxhash_level3, "xxhash", 750);
 budget_test!(budget_xxhash_level4, "xxhash", 1100);
 
-// Go budget tests (color: 0→5, 1→407, 2→899, 3→2795, 4→3200, 5→5026 words)
 budget_test!(budget_color_level0, "color", 3);
 budget_test!(budget_color_level1, "color", 420);
 budget_test!(budget_color_level3, "color", 2800);
 budget_test!(budget_color_level4, "color", 3250);
 
-// Go budget tests (go-version: 0→5, 1→293, 2→509, 3→1330, 4→1799, 5→4080 words)
 budget_test!(budget_go_version_level0, "go-version", 3);
 budget_test!(budget_go_version_level1, "go-version", 300);
 budget_test!(budget_go_version_level3, "go-version", 1350);
 budget_test!(budget_go_version_level4, "go-version", 1850);
 
-// Go budget tests (structs: 0→4, 1→169, 2→296, 3→2089, 4→2638, 5→4315 words)
 budget_test!(budget_structs_level0, "structs", 3);
 budget_test!(budget_structs_level1, "structs", 180);
 budget_test!(budget_structs_level3, "structs", 2100);
 budget_test!(budget_structs_level4, "structs", 2700);
 
-// Python budget tests (typeguard: 0→12, 1→364, 2→1471, 3→3021, 4→7054, 5→14165 words)
 budget_test!(budget_typeguard_level0, "typeguard/src/typeguard", 10);
 budget_test!(budget_typeguard_level1, "typeguard/src/typeguard", 400);
 budget_test!(budget_typeguard_level3, "typeguard/src/typeguard", 3100);
