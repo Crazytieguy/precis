@@ -31,53 +31,22 @@ fn render_with_symbols(
 ) -> String {
     let relative = path.strip_prefix(root).unwrap_or(path);
     let lang = Lang::from_path(relative);
-    // Depth and size penalties reduce the effective level for deep/large files.
-    // Size penalty only applies at level 5+ where output is content-driven
-    // rather than symbol-count-driven.
-    let after_depth = level.saturating_sub(depth_penalty(relative));
-    let effective = after_depth.saturating_sub(
-        if after_depth >= 5 { size_penalty(source) } else { 0 },
-    );
     let mut out = format!("{}\n", relative.display());
-    if effective == 0 {
-        return out;
-    }
-    if effective >= 10 {
+    let policy = match compute_policy(level, relative, source, symbols, lang) {
+        Some(p) => p,
+        None => return out, // path only
+    };
+    if policy.full_source {
         render_full_source(&mut out, source);
         return out;
     }
-    if effective <= 4 {
-        // Level 1: public symbol names only (truncated at identifier)
-        // Level 2: all symbol names (truncated at identifier)
-        // Level 3: public signatures + private names (visibility-gated)
-        // Level 4: full signatures for all symbols
-        let public_only = effective == 1;
-        let truncate = effective <= 2;
-        let public_sigs_only = effective == 3;
-        render_symbols(&mut out, relative, source, symbols, truncate, public_sigs_only, public_only);
-        return out;
-    }
-    // Levels 5–9: symbols with optional docs and type expansion.
-    // Doc comment penalty delays doc appearance for files with many doc lines,
-    // spreading transitions across nominal levels.
-    let doc_eff = effective.saturating_sub(doc_penalty(source, symbols, lang));
-    let with_docs = doc_eff >= 5;
-    let first_line_only = doc_eff < 6;
-    let public_docs_only = doc_eff < 7;
-    let expand_types = effective >= 8;
-    let public_types_only = effective < 9;
-    if !with_docs && !expand_types {
-        // No docs and no type expansion: just signatures
-        render_symbols(&mut out, relative, source, symbols, false, false, false);
+    if !policy.with_docs && !policy.expand_types {
+        render_symbols(
+            &mut out, relative, source, symbols,
+            policy.truncate, policy.public_sigs_only, policy.public_only,
+        );
     } else {
-        let opts = DocOptions {
-            with_docs,
-            first_line_only,
-            public_docs_only,
-            expand_types,
-            public_types_only,
-        };
-        render_symbols_with_docs(&mut out, relative, source, symbols, &opts);
+        render_symbols_with_docs(&mut out, relative, source, symbols, &policy);
     }
     out
 }
@@ -389,18 +358,79 @@ fn render_full_source(out: &mut String, source: &str) {
     }
 }
 
-/// Options controlling doc comment and type body rendering.
-struct DocOptions {
-    /// Whether to show any doc comments at all.
+/// All rendering decisions for a single file at a given nominal level.
+///
+/// Computed by `compute_policy` from the nominal level and file properties
+/// (depth, size, doc density). The nominal level is conceptually separate
+/// from these decisions — many nominal levels can map to the same policy,
+/// and different files may receive different policies at the same level.
+#[derive(Default)]
+struct RenderPolicy {
+    /// Show full source code (overrides all other fields).
+    full_source: bool,
+    /// Skip private symbols entirely.
+    public_only: bool,
+    /// Truncate symbol lines at the identifier name.
+    truncate: bool,
+    /// Full signatures for public symbols, names only for private.
+    public_sigs_only: bool,
+    /// Show doc comments before symbols.
     with_docs: bool,
-    /// If showing docs, emit only the first line of each comment block.
+    /// Only the first line of each doc comment block.
     first_line_only: bool,
-    /// If showing docs, restrict to public symbols.
+    /// Only doc comments for public symbols.
     public_docs_only: bool,
-    /// Show full bodies for struct/enum/trait/interface/class.
+    /// Show full bodies for type definitions (structs, enums, traits, etc.).
     expand_types: bool,
-    /// If expanding types, restrict to public types.
+    /// Only expand public type definitions.
     public_types_only: bool,
+}
+
+/// Map a nominal level and file properties to rendering decisions.
+///
+/// Returns `None` for path-only output (effective level 0 after penalties).
+/// The effective level is computed from the nominal level by subtracting
+/// depth and size penalties, then mapped to a set of boolean rendering flags.
+fn compute_policy(
+    level: u8,
+    relative: &Path,
+    source: &str,
+    symbols: &[parse::Symbol],
+    lang: Option<Lang>,
+) -> Option<RenderPolicy> {
+    // Depth and size penalties reduce the effective level for deep/large files.
+    // Size penalty only applies at level 5+ where output is content-driven
+    // rather than symbol-count-driven.
+    let after_depth = level.saturating_sub(depth_penalty(relative));
+    let effective = after_depth.saturating_sub(
+        if after_depth >= 5 { size_penalty(source) } else { 0 },
+    );
+    if effective == 0 {
+        return None;
+    }
+    if effective >= 10 {
+        return Some(RenderPolicy { full_source: true, ..Default::default() });
+    }
+    if effective <= 4 {
+        return Some(RenderPolicy {
+            public_only: effective == 1,
+            truncate: effective <= 2,
+            public_sigs_only: effective == 3,
+            ..Default::default()
+        });
+    }
+    // Levels 5–9: signatures with optional docs and type expansion.
+    // Doc comment penalty delays doc appearance for files with many doc lines,
+    // spreading transitions across nominal levels.
+    let doc_eff = effective.saturating_sub(doc_penalty(source, symbols, lang));
+    Some(RenderPolicy {
+        with_docs: doc_eff >= 5,
+        first_line_only: doc_eff < 6,
+        public_docs_only: doc_eff < 7,
+        expand_types: effective >= 8,
+        public_types_only: effective < 9,
+        ..Default::default()
+    })
 }
 
 /// Render symbol lines with optional doc comments, type body expansion, and
@@ -412,7 +442,7 @@ fn render_symbols_with_docs(
     path: &Path,
     source: &str,
     symbols: &[parse::Symbol],
-    opts: &DocOptions,
+    policy: &RenderPolicy,
 ) {
     if symbols.is_empty() {
         return;
@@ -424,7 +454,7 @@ fn render_symbols_with_docs(
     let mut emitted_up_to: usize = 0; // 0-indexed, exclusive
     for (sym_idx, sym) in symbols.iter().enumerate() {
         let sym_line_0 = sym.line - 1;
-        let show_docs = opts.with_docs && (!opts.public_docs_only || sym.is_public);
+        let show_docs = policy.with_docs && (!policy.public_docs_only || sym.is_public);
         let doc_start = if show_docs {
             doc_comment_start(&lines, sym_line_0, lang)
         } else {
@@ -434,9 +464,9 @@ fn render_symbols_with_docs(
         // const/var blocks (identified by their keyword name "const"/"var").
         let is_grouped_block =
             (sym.name == "const" || sym.name == "var") && sym.end_line > sym.line;
-        let should_expand = opts.expand_types
+        let should_expand = policy.expand_types
             && (is_type_definition(sym.kind) || is_grouped_block)
-            && (!opts.public_types_only || sym.is_public);
+            && (!policy.public_types_only || sym.is_public);
         if should_expand {
             let body_end = sym.end_line; // 1-indexed, inclusive
             // Start from doc_start or emitted_up_to, whichever is later
@@ -450,7 +480,7 @@ fn render_symbols_with_docs(
             // Non-expanded symbol: show doc comments + multi-line signature
             let sig_end = signature_end_line(&lines, sym, lang);
             // Doc comment lines before signature
-            if opts.first_line_only {
+            if policy.first_line_only {
                 // Find the first doc line with actual content, skipping
                 // block comment delimiters (/** and */) and blank * lines.
                 let mut doc_line = doc_start;
@@ -482,7 +512,7 @@ fn render_symbols_with_docs(
             if show_docs && lang == Some(Lang::Python) {
                 let ds_end = docstring_end(&lines, sig_end);
                 if ds_end > sig_end + 1 {
-                    if opts.first_line_only {
+                    if policy.first_line_only {
                         // Only the opener line of the docstring
                         let mut ds_line = sig_end + 1;
                         while ds_line < ds_end && lines[ds_line].trim().is_empty() {
@@ -507,7 +537,7 @@ fn render_symbols_with_docs(
             // Markdown: include body text after headings.
             // Headings are always public, so this is controlled by with_docs only.
             if show_docs && lang == Some(Lang::Markdown) {
-                let content_end = markdown_content_end(symbols, sym_idx, &lines, opts.expand_types);
+                let content_end = markdown_content_end(symbols, sym_idx, &lines, policy.expand_types);
                 let heading_end = (sym.end_line - 1).max(sym_line_0 + 1);
                 for (i, line) in lines
                     .iter()
