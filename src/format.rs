@@ -5,12 +5,16 @@ use crate::Lang;
 
 /// Maximum granularity level.
 ///
-/// Levels:
+/// The nominal level is a global parameter. The render function computes an
+/// effective level per file by subtracting depth and size penalties, so
+/// different files receive different rendering at the same nominal level.
+///
+/// Rendering policies (applied at the effective level for each file):
 /// 0 - File paths only
 /// 1 - Symbol lines, truncated to symbol name
 /// 2 - Symbol lines, full multi-line signatures
 /// 3 - Symbol lines with preceding doc comments
-/// 4 - Like level 3, but type definition bodies (struct/enum/trait/interface/class) shown in full
+/// 4 - Like 3, but type definition bodies (struct/enum/trait/interface/class) shown in full
 /// 5 - Full source (all lines)
 pub const MAX_LEVEL: u8 = 5;
 
