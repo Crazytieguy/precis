@@ -529,13 +529,13 @@ fn markdown_sample_level0() {
 // Level 1: public symbol names only (truncated at identifier)
 
 #[test]
-fn rust_sample_snapshot() {
+fn rust_sample_level1() {
     let output = format::render_file(1, Path::new("sample.rs"), Path::new(""), rust_sample());
     insta::assert_snapshot!(output);
 }
 
 #[test]
-fn typescript_sample_snapshot() {
+fn typescript_sample_level1() {
     let output = format::render_file(
         1,
         Path::new("sample.ts"),
@@ -546,7 +546,7 @@ fn typescript_sample_snapshot() {
 }
 
 #[test]
-fn javascript_sample_snapshot() {
+fn javascript_sample_level1() {
     let output = format::render_file(
         1,
         Path::new("sample.js"),
@@ -557,25 +557,25 @@ fn javascript_sample_snapshot() {
 }
 
 #[test]
-fn tsx_sample_snapshot() {
+fn tsx_sample_level1() {
     let output = format::render_file(1, Path::new("sample.tsx"), Path::new(""), tsx_sample());
     insta::assert_snapshot!(output);
 }
 
 #[test]
-fn go_sample_snapshot() {
+fn go_sample_level1() {
     let output = format::render_file(1, Path::new("sample.go"), Path::new(""), go_sample());
     insta::assert_snapshot!(output);
 }
 
 #[test]
-fn python_sample_snapshot() {
+fn python_sample_level1() {
     let output = format::render_file(1, Path::new("sample.py"), Path::new(""), python_sample());
     insta::assert_snapshot!(output);
 }
 
 #[test]
-fn markdown_sample_snapshot() {
+fn markdown_sample_level1() {
     let output =
         format::render_file(1, Path::new("README.md"), Path::new(""), markdown_sample());
     insta::assert_snapshot!(output);
