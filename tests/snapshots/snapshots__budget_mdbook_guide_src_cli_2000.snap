@@ -1,0 +1,367 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 2000 → level 12 (1920 words)
+
+README.md
+     1→# Command-line tool
+     2→
+     3→The `mdbook` command-line tool is used to create and build books.
+     4→After you have [installed](../guide/installation.md) `mdbook`, you can run the `mdbook help` command in your terminal to view the available commands.
+     5→
+     6→This following sections provide in-depth information on the different commands available.
+     7→
+     8→* [`mdbook init <directory>`](init.md) --- Creates a new book with minimal boilerplate to start with.
+     9→* [`mdbook build`](build.md) --- Renders the book.
+    10→* [`mdbook watch`](watch.md) --- Rebuilds the book any time a source file changes.
+    11→* [`mdbook serve`](serve.md) --- Runs a web server to view the book, and rebuilds on changes.
+    12→* [`mdbook test`](test.md) --- Tests Rust code samples.
+    13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
+    14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
+arg-watcher.md
+     1→#### `--watcher`
+     2→
+     3→There are different backends used to determine when a file has changed.
+     4→
+     5→* `poll` (default) --- Checks for file modifications by scanning the filesystem every second.
+     6→* `native` --- Uses the native operating system facilities to receive notifications when files change.
+     7→  This can have less constant overhead, but may not be as reliable as the `poll` based watcher. See these issues for more information: [#383](https://github.com/rust-lang/mdBook/issues/383) [#1441](https://github.com/rust-lang/mdBook/issues/1441) [#1707](https://github.com/rust-lang/mdBook/issues/1707) [#2035](https://github.com/rust-lang/mdBook/issues/2035) [#2102](https://github.com/rust-lang/mdBook/issues/2102)
+build.md
+     1→# The build command
+     2→
+     3→The build command is used to render your book:
+     4→
+     5→```bash
+     6→mdbook build
+     7→```
+     8→
+     9→It will try to parse your `SUMMARY.md` file to understand the structure of your
+    10→book and fetch the corresponding files. Note that this will also create files
+    11→mentioned in `SUMMARY.md` which are not yet present.
+    12→
+    13→The rendered output will maintain the same directory structure as the source for
+    14→convenience. Large books will therefore remain structured when rendered.
+    15→
+    16→#### Specify a directory
+    17→
+    18→The `build` command can take a directory as an argument to use as the book's
+    19→root instead of the current working directory.
+    20→
+    21→```bash
+    22→mdbook build path/to/book
+    23→```
+    24→
+    25→#### `--open`
+    26→
+    27→When you use the `--open` (`-o`) flag, mdbook will open the rendered book in
+    28→your default web browser after building it.
+    29→
+    30→#### `--dest-dir`
+    31→
+    32→The `--dest-dir` (`-d`) option allows you to change the output directory for the
+    33→book. Relative paths are interpreted relative to the current directory. If
+    34→not specified it will default to the value of the `build.build-dir` key in
+    35→`book.toml`, or to `./book`.
+    36→
+    37→-------------------
+    38→
+    39→***Note:*** *The build command copies all files (excluding files with `.md` extension) from the source directory
+    40→into the build directory.*
+clean.md
+     1→# The clean command
+     2→
+     3→The clean command is used to delete the generated book and any other build
+     4→artifacts.
+     5→
+     6→```bash
+     7→mdbook clean
+     8→```
+     9→
+    10→#### Specify a directory
+    11→
+    12→The `clean` command can take a directory as an argument to use as the book's
+    13→root instead of the current working directory.
+    14→
+    15→```bash
+    16→mdbook clean path/to/book
+    17→```
+    18→
+    19→#### `--dest-dir`
+    20→
+    21→The `--dest-dir` (`-d`) option allows you to override the book's output
+    22→directory, which will be deleted by this command. Relative paths are interpreted
+    23→relative to the current directory. If not specified it will default to the
+    24→value of the `build.build-dir` key in `book.toml`, or to `./book`.
+    25→
+    26→```bash
+    27→mdbook clean --dest-dir=path/to/book
+    28→```
+    29→
+    30→`path/to/book` could be absolute or relative.
+completions.md
+     1→# The completions command
+     2→
+     3→The completions command is used to generate auto-completions for some common shells.
+     4→This means when you type `mdbook` in your shell, you can then press your shell's auto-complete key (usually the Tab key) and it may display what the valid options are, or finish partial input.
+     5→
+     6→The completions first need to be installed for your shell:
+     7→
+     8→```bash
+     9→# bash
+    10→mdbook completions bash > ~/.local/share/bash-completion/completions/mdbook
+    11→# oh-my-zsh
+    12→mdbook completions zsh > ~/.oh-my-zsh/completions/_mdbook
+    13→autoload -U compinit && compinit
+    14→```
+    15→
+    16→The command prints a completion script for the given shell.
+    17→Run `mdbook completions --help` for a list of supported shells.
+    18→
+    19→Where to place the completions depend on which shell you are using and your operating system.
+    20→Consult your shell's documentation for more information one where to place the script.
+init.md
+     1→# The init command
+     2→
+     3→There is some minimal boilerplate that is the same for every new book. It's for
+     4→this purpose that mdBook includes an `init` command.
+     5→
+     6→The `init` command is used like this:
+     7→
+     8→```bash
+     9→mdbook init
+    10→```
+    11→
+    12→When using the `init` command for the first time, a couple of files will be set
+    13→up for you:
+    14→```bash
+    15→book-test/
+    16→├── book
+    17→└── src
+    18→    ├── chapter_1.md
+    19→    └── SUMMARY.md
+    20→```
+    21→
+    22→- The `src` directory is where you write your book in markdown. It contains all
+    23→  the source files, configuration files, etc.
+    24→
+    25→- The `book` directory is where your book is rendered. All the output is ready
+    26→  to be uploaded to a server to be seen by your audience.
+    27→
+    28→- The `SUMMARY.md` is the skeleton of your
+    29→  book, and is discussed in more detail [in another
+    30→  chapter](../format/summary.md).
+    31→
+    32→#### Tip: Generate chapters from SUMMARY.md
+    33→
+    34→When a `SUMMARY.md` file already exists, the `init` command will first parse it
+    35→and generate the missing files according to the paths used in the `SUMMARY.md`.
+    36→This allows you to think and create the whole structure of your book and then
+    37→let mdBook generate it for you.
+    38→
+    39→#### Specify a directory
+    40→
+    41→The `init` command can take a directory as an argument to use as the book's root
+    42→instead of the current working directory.
+    43→
+    44→```bash
+    45→mdbook init path/to/book
+    46→```
+    47→
+    48→#### `--theme`
+    49→
+    50→When you use the `--theme` flag, the default theme will be copied into a
+    51→directory called `theme` in your source directory so that you can modify it.
+    52→
+    53→The theme is selectively overwritten, this means that if you don't want to
+    54→overwrite a specific file, just delete it and the default file will be used.
+    55→
+    56→#### `--title`
+    57→
+    58→Specify a title for the book. If not supplied, an interactive prompt will ask for 
+    59→a title. 
+    60→
+    61→```bash
+    62→mdbook init --title="my amazing book"
+    63→```
+    64→
+    65→#### `--ignore`
+    66→
+    67→Create a `.gitignore` file configured to ignore the `book` directory created when [building] a book. 
+    68→If not supplied, an interactive prompt will ask whether it should be created.
+    69→
+    70→```bash
+    71→mdbook init --ignore=none
+    72→```
+    73→
+    74→```bash
+    75→mdbook init --ignore=git
+    76→```
+    77→
+    78→[building]: build.md
+    79→
+    80→#### `--force`
+    81→
+    82→Skip the prompts to create a `.gitignore` and for the title for the book.
+serve.md
+     1→# The serve command
+     2→
+     3→The serve command is used to preview a book by serving it via HTTP at
+     4→`localhost:3000` by default: 
+     5→
+     6→```bash
+     7→mdbook serve
+     8→```
+     9→
+    10→The `serve` command  watches the book's `src` directory for
+    11→changes, rebuilding the book and refreshing clients for each change; this includes
+    12→re-creating deleted files still mentioned in `SUMMARY.md`! A websocket
+    13→connection is used to trigger the client-side refresh.
+    14→
+    15→***Note:*** *The `serve` command is for testing a book's HTML output, and is not
+    16→intended to be a complete HTTP server for a website.*
+    17→
+    18→#### Specify a directory
+    19→
+    20→The `serve` command can take a directory as an argument to use as the book's
+    21→root instead of the current working directory.
+    22→
+    23→```bash
+    24→mdbook serve path/to/book
+    25→```
+    26→
+    27→### Server options
+    28→
+    29→The `serve` hostname defaults to `localhost`, and the port defaults to `3000`. Either option can be specified on the command line:
+    30→
+    31→```bash
+    32→mdbook serve path/to/book -p 8000 -n 127.0.0.1 
+    33→```
+    34→
+    35→#### `--open`
+    36→
+    37→When you use the `--open` (`-o`) flag, mdbook will open the book in your
+    38→default web browser after starting the server.
+    39→
+    40→#### `--dest-dir`
+    41→
+    42→The `--dest-dir` (`-d`) option allows you to change the output directory for the
+    43→book. Relative paths are interpreted relative to the current directory. If
+    44→not specified it will default to the value of the `build.build-dir` key in
+    45→`book.toml`, or to `./book`.
+    46→
+    47→{{#include arg-watcher.md}}
+    48→
+    49→#### Specify exclude patterns
+    50→
+    51→The `serve` command will not automatically trigger a build for files listed in
+    52→the `.gitignore` file in the book root directory. The `.gitignore` file may
+    53→contain file patterns described in the [gitignore
+    54→documentation](https://git-scm.com/docs/gitignore). This can be useful for
+    55→ignoring temporary files created by some editors.
+    56→
+    57→***Note:*** *Only the `.gitignore` from the book root directory is used. Global
+    58→`$HOME/.gitignore` or `.gitignore` files in parent directories are not used.*
+test.md
+     1→# The test command
+     2→
+     3→When writing a book, you sometimes need to automate some tests. For example,
+     4→[The Rust Programming Book](https://doc.rust-lang.org/stable/book/) uses a lot
+     5→of code examples that could get outdated. Therefore it is very important for
+     6→them to be able to automatically test these code examples.
+     7→
+     8→mdBook supports a `test` command that will run all available tests in a book. At
+     9→the moment, only Rust tests are supported.
+    10→
+    11→#### Disable tests on a code block
+    12→
+    13→rustdoc doesn't test code blocks which contain the `ignore` attribute:
+    14→
+    15→    ```rust,ignore
+    16→    fn main() {}
+    17→    ```
+    18→
+    19→rustdoc also doesn't test code blocks which specify a language other than Rust:
+    20→
+    21→    ```markdown
+    22→    **Foo**: _bar_
+    23→    ```
+    24→
+    25→rustdoc *does* test code blocks which have no language specified:
+    26→
+    27→    ```
+    28→    This is going to cause an error!
+    29→    ```
+    30→
+    31→#### Specify a directory
+    32→
+    33→The `test` command can take a directory as an argument to use as the book's root
+    34→instead of the current working directory.
+    35→
+    36→```bash
+    37→mdbook test path/to/book
+    38→```
+    39→
+    40→#### `--library-path`
+    41→
+    42→The `--library-path` (`-L`) option allows you to add directories to the library
+    43→search path used by `rustdoc` when it builds and tests the examples. Multiple
+    44→directories can be specified with multiple options (`-L foo -L bar`) or with a
+    45→comma-delimited list (`-L foo,bar`). The path should point to the Cargo
+    46→[build cache](https://doc.rust-lang.org/cargo/guide/build-cache.html) `deps` directory that
+    47→contains the build output of your project. For example, if your Rust project's book is in a directory
+    48→named `my-book`, the following command would include the crate's dependencies when running `test`:
+    49→
+    50→```shell
+    51→mdbook test my-book -L target/debug/deps/
+    52→```
+    53→
+    54→See the `rustdoc` command-line [documentation](https://doc.rust-lang.org/rustdoc/command-line-arguments.html#-l--library-path-where-to-look-for-dependencies)
+    55→for more information.
+    56→
+    57→#### `--chapter`
+    58→
+    59→The `--chapter` (`-c`) option allows you to test a specific chapter of the
+    60→book using the chapter name or the relative path to the chapter.
+watch.md
+     1→# The watch command
+     2→
+     3→The `watch` command is useful when you want your book to be rendered on every
+     4→file change. You could repeatedly issue `mdbook build` every time a file is
+     5→changed. But using `mdbook watch` once will watch your files and will trigger a
+     6→build automatically whenever you modify a file; this includes re-creating
+     7→deleted files still mentioned in `SUMMARY.md`!
+     8→
+     9→#### Specify a directory
+    10→
+    11→The `watch` command can take a directory as an argument to use as the book's
+    12→root instead of the current working directory.
+    13→
+    14→```bash
+    15→mdbook watch path/to/book
+    16→```
+    17→
+    18→#### `--open`
+    19→
+    20→When you use the `--open` (`-o`) option, mdbook will open the rendered book in
+    21→your default web browser.
+    22→
+    23→#### `--dest-dir`
+    24→
+    25→The `--dest-dir` (`-d`) option allows you to change the output directory for the
+    26→book. Relative paths are interpreted relative to the current directory. If
+    27→not specified it will default to the value of the `build.build-dir` key in
+    28→`book.toml`, or to `./book`.
+    29→
+    30→{{#include arg-watcher.md}}
+    31→
+    32→#### Specify exclude patterns
+    33→
+    34→The `watch` command will not automatically trigger a build for files listed in
+    35→the `.gitignore` file in the book root directory. The `.gitignore` file may
+    36→contain file patterns described in the [gitignore
+    37→documentation](https://git-scm.com/docs/gitignore). This can be useful for
+    38→ignoring temporary files created by some editors.
+    39→
+    40→_Note: Only `.gitignore` from book root directory is used. Global
+    41→`$HOME/.gitignore` or `.gitignore` files in parent directories are not used._

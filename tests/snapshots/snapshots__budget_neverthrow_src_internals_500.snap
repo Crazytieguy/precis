@@ -1,0 +1,60 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 → level 10 (298 words)
+
+error.ts
+     3→export interface ErrorConfig {
+     4→  withStackTrace: boolean
+     5→}
+     7→const defaultErrorConfig: ErrorConfig = {
+    11→interface NeverThrowError<T, E> {
+    12→  data:
+    13→    | {
+    14→        type: string
+    15→        value: T
+    16→      }
+    17→    | {
+    18→        type: string
+    19→        value: E
+    20→      }
+    21→  message: string
+    22→  stack: string | undefined
+    23→}
+    27→export const createNeverThrowError = <T, E>(
+    28→  message: string,
+    29→  result: Result<T, E>,
+    30→  config: ErrorConfig = defaultErrorConfig,
+    31→): NeverThrowError<T, E> => {
+utils.ts
+     5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
+     6→  [idx in keyof T]: T[idx] extends Result<infer U, unknown> ? U : never
+     7→}
+    10→export type ExtractOkAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
+    11→  [idx in keyof T]: T[idx] extends ResultAsync<infer U, unknown> ? U : never
+    12→}
+    15→export type ExtractErrTypes<T extends readonly Result<unknown, unknown>[]> = {
+    16→  [idx in keyof T]: T[idx] extends Result<unknown, infer E> ? E : never
+    17→}
+    20→export type ExtractErrAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
+    21→  [idx in keyof T]: T[idx] extends ResultAsync<unknown, infer E> ? E : never
+    22→}
+    24→export type InferOkTypes<R> = R extends Result<infer T, unknown> ? T : never
+    25→export type InferErrTypes<R> = R extends Result<unknown, infer E> ? E : never
+    27→export type InferAsyncOkTypes<R> = R extends ResultAsync<infer T, unknown> ? T : never
+    28→export type InferAsyncErrTypes<R> = R extends ResultAsync<unknown, infer E> ? E : never
+    30→/**
+    31→ * Short circuits on the FIRST Err value that we find
+    32→ */
+    33→export const combineResultList = <T, E>(
+    34→  resultList: readonly Result<T, E>[],
+    35→): Result<readonly T[], E> => {
+    54→export const combineResultAsyncList = <T, E>(
+    61→/**
+    62→ * Give a list of all the errors we find
+    63→ */
+    64→export const combineResultListWithAllErrors = <T, E>(
+    65→  resultList: readonly Result<T, E>[],
+    66→): Result<readonly T[], E[]> => {
+    82→export const combineResultAsyncListWithAllErrors = <T, E>(

@@ -1,0 +1,280 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 → level 10 (1603 words)
+
+LICENSE.md
+README.md
+playwright.config.ts
+src/browser.ts
+     1→export function isMobileFirefox(): boolean | undefined {
+    10→export function isMac(): boolean | undefined {
+    14→export function isIPhone(): boolean | undefined {
+    18→export function isSafari(): boolean | undefined {
+    22→export function isIPad(): boolean | undefined {
+    30→export function isIOS(): boolean | undefined {
+    34→export function testPlatform(re: RegExp): boolean | undefined {
+src/constants.ts
+     1→export const TRANSITIONS = {
+     6→export const VELOCITY_THRESHOLD = 0.4;
+     8→export const CLOSE_THRESHOLD = 0.25;
+    10→export const SCROLL_LOCK_TIMEOUT = 100;
+    12→export const BORDER_RADIUS = 8;
+    14→export const NESTED_DISPLACEMENT = 16;
+    16→export const WINDOW_TOP_OFFSET = 26;
+    18→export const DRAG_CLASS = 'vaul-dragging';
+src/context.ts
+     4→interface DrawerContextValue {
+     5→  drawerRef: React.RefObject<HTMLDivElement>;
+     6→  overlayRef: React.RefObject<HTMLDivElement>;
+     7→  onPress: (event: React.PointerEvent<HTMLDivElement>) => void;
+     8→  onRelease: (event: React.PointerEvent<HTMLDivElement> | null) => void;
+     9→  onDrag: (event: React.PointerEvent<HTMLDivElement>) => void;
+    10→  onNestedDrag: (event: React.PointerEvent<HTMLDivElement>, percentageDragged: number) => void;
+    11→  onNestedOpenChange: (o: boolean) => void;
+    12→  onNestedRelease: (event: React.PointerEvent<HTMLDivElement>, open: boolean) => void;
+    13→  dismissible: boolean;
+    14→  isOpen: boolean;
+    15→  isDragging: boolean;
+    16→  keyboardIsOpen: React.MutableRefObject<boolean>;
+    17→  snapPointsOffset: number[] | null;
+    18→  snapPoints?: (number | string)[] | null;
+    19→  activeSnapPointIndex?: number | null;
+    20→  modal: boolean;
+    21→  shouldFade: boolean;
+    22→  activeSnapPoint?: number | string | null;
+    23→  setActiveSnapPoint: (o: number | string | null) => void;
+    24→  closeDrawer: () => void;
+    25→  openProp?: boolean;
+    26→  onOpenChange?: (o: boolean) => void;
+    27→  direction: DrawerDirection;
+    28→  shouldScaleBackground: boolean;
+    29→  setBackgroundColorOnScale: boolean;
+    30→  noBodyStyles: boolean;
+    31→  handleOnly?: boolean;
+    32→  container?: HTMLElement | null;
+    33→  autoFocus?: boolean;
+    34→  shouldAnimate?: React.RefObject<boolean>;
+    35→}
+    37→export const DrawerContext = React.createContext<DrawerContextValue>({
+    69→export const useDrawerContext = () => {
+src/helpers.ts
+     3→interface Style {
+     4→  [key: string]: string;
+     5→}
+     7→const cache = new WeakMap();
+     9→export function isInView(el: HTMLElement): boolean {
+    23→export function set(el: Element | HTMLElement | null | undefined, styles: Style, ignoreCache = false) {
+    42→export function reset(el: Element | HTMLElement | null, prop?: string) {
+    59→export const isVertical = (direction: DrawerDirection) => {
+    72→export function getTranslate(element: HTMLElement, direction: DrawerDirection): number | null {
+    90→export function dampenValue(v: number) {
+    94→export function assignStyle(element: HTMLElement | null | undefined, style: Partial<CSSStyleDeclaration>) {
+   105→/**
+   106→ * Receives functions as arguments and returns a new function that calls all.
+   107→ */
+   108→export function chain<T>(...fns: T[]) {
+src/index.tsx
+    27→export interface WithFadeFromProps {
+    28→  /**
+    29→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
+    30→   * Should go from least visible. Example `[0.2, 0.5, 0.8]`.
+    31→   * You can also use px values, which doesn't take screen height into account.
+    32→   */
+    33→  snapPoints: (number | string)[];
+    34→  /**
+    35→   * Index of a `snapPoint` from which the overlay fade should be applied. Defaults to the last snap point.
+    36→   */
+    37→  fadeFromIndex: number;
+    38→}
+    40→export interface WithoutFadeFromProps {
+    41→  /**
+    42→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
+    43→   * Should go from least visible. Example `[0.2, 0.5, 0.8]`.
+    44→   * You can also use px values, which doesn't take screen height into account.
+    45→   */
+    46→  snapPoints?: (number | string)[];
+    47→  fadeFromIndex?: never;
+    48→}
+    50→export type DialogProps = {
+    51→  activeSnapPoint?: number | string | null;
+    52→  setActiveSnapPoint?: (snapPoint: number | string | null) => void;
+    53→  children?: React.ReactNode;
+    54→  open?: boolean;
+    55→  /**
+    56→   * Number between 0 and 1 that determines when the drawer should be closed.
+    57→   * Example: threshold of 0.5 would close the drawer if the user swiped for 50% of the height of the drawer or more.
+    58→   * @default 0.25
+    59→   */
+    60→  closeThreshold?: number;
+    61→  /**
+    62→   * When `true` the `body` doesn't get any styles assigned from Vaul
+    63→   */
+    64→  noBodyStyles?: boolean;
+    65→  onOpenChange?: (open: boolean) => void;
+    66→  shouldScaleBackground?: boolean;
+    67→  /**
+    68→   * When `false` we don't change body's background color when the drawer is open.
+    69→   * @default true
+    70→   */
+    71→  setBackgroundColorOnScale?: boolean;
+    72→  /**
+    73→   * Duration for which the drawer is not draggable after scrolling content inside of the drawer.
+    74→   * @default 500ms
+    75→   */
+    76→  scrollLockTimeout?: number;
+    77→  /**
+    78→   * When `true`, don't move the drawer upwards if there's space, but rather only change it's height so it's fully scrollable when the keyboard is open
+    79→   */
+    80→  fixed?: boolean;
+    81→  /**
+    82→   * When `true` only allows the drawer to be dragged by the `<Drawer.Handle />` component.
+    83→   * @default false
+    84→   */
+    85→  handleOnly?: boolean;
+    86→  /**
+    87→   * When `false` dragging, clicking outside, pressing esc, etc. will not close the drawer.
+    88→   * Use this in comination with the `open` prop, otherwise you won't be able to open/close the drawer.
+    89→   * @default true
+    90→   */
+    91→  dismissible?: boolean;
+    92→  onDrag?: (event: React.PointerEvent<HTMLDivElement>, percentageDragged: number) => void;
+    93→  onRelease?: (event: React.PointerEvent<HTMLDivElement>, open: boolean) => void;
+    94→  /**
+    95→   * When `false` it allows to interact with elements outside of the drawer without closing it.
+    96→   * @default true
+    97→   */
+    98→  modal?: boolean;
+    99→  nested?: boolean;
+   100→  onClose?: () => void;
+   101→  /**
+   102→   * Direction of the drawer. Can be `top` or `bottom`, `left`, `right`.
+   103→   * @default 'bottom'
+   104→   */
+   105→  direction?: 'top' | 'bottom' | 'left' | 'right';
+   106→  /**
+   107→   * Opened by default, skips initial enter animation. Still reacts to `open` state changes
+   108→   * @default false
+   109→   */
+   110→  defaultOpen?: boolean;
+   111→  /**
+   112→   * When set to `true` prevents scrolling on the document body on mount, and restores it on unmount.
+   113→   * @default false
+   114→   */
+   115→  disablePreventScroll?: boolean;
+   116→  /**
+   117→   * When `true` Vaul will reposition inputs rather than scroll then into view if the keyboard is in the way.
+   118→   * Setting it to `false` will fall back to the default browser behavior.
+   119→   * @default true when {@link snapPoints} is defined
+   120→   */
+   121→  repositionInputs?: boolean;
+   122→  /**
+   123→   * Disabled velocity based swiping for snap points.
+   124→   * This means that a snap point won't be skipped even if the velocity is high enough.
+   125→   * Useful if each snap point in a drawer is equally important.
+   126→   * @default false
+   127→   */
+   128→  snapToSequentialPoint?: boolean;
+   129→  container?: HTMLElement | null;
+   130→  /**
+   131→   * Gets triggered after the open or close animation ends, it receives an `open` argument with the `open` state of the drawer by the time the function was triggered.
+   132→   * Useful to revert any state changes for example.
+   133→   */
+   134→  onAnimationEnd?: (open: boolean) => void;
+   135→  preventScrollRestoration?: boolean;
+   136→  autoFocus?: boolean;
+   137→} & (WithFadeFromProps | WithoutFadeFromProps);
+   139→export function Root({
+   803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
+   831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
+   833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
+   989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
+   990→  preventCycle?: boolean;
+   991→};
+   993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
+   994→const DOUBLE_TAP_TIMEOUT = 120;
+   996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
+  1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
+  1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
+  1130→export function Portal(props: PortalProps) {
+  1137→export const Drawer = {
+src/types.ts
+     1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
+     2→export interface SnapPoint {
+     3→  fraction: number;
+     4→  height: number;
+     5→}
+     7→export type AnyFunction = (...args: any) => any;
+src/use-composed-refs.ts
+     5→type PossibleRef<T> = React.Ref<T> | undefined;
+     7→/**
+     8→ * Set a given ref to a given value
+     9→ * This utility takes care of different types of refs: callback refs and RefObject(s)
+    10→ */
+    11→function setRef<T>(ref: PossibleRef<T>, value: T) {
+    19→/**
+    20→ * A utility to compose multiple refs together
+    21→ * Accepts callback refs and RefObject(s)
+    22→ */
+    23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
+    27→/**
+    28→ * A custom hook that composes multiple refs
+    29→ * Accepts callback refs and RefObject(s)
+    30→ */
+    31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
+src/use-controllable-state.ts
+     5→type UseControllableStateParams<T> = {
+     6→  prop?: T | undefined;
+     7→  defaultProp?: T | undefined;
+     8→  onChange?: (state: T) => void;
+     9→};
+    11→type SetStateFn<T> = (prevState?: T) => T;
+    13→function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
+    24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
+    39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
+src/use-position-fixed.ts
+     6→/**
+     7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
+     8→ * I won't get into too much detail about what bugs it solves, but so far I've found that setting the body to `position: fixed` is the most reliable way to prevent those bugs.
+     9→ * Issues that this hook solves:
+    10→ * https://github.com/emilkowalski/vaul/issues/435
+    11→ * https://github.com/emilkowalski/vaul/issues/433
+    12→ * And more that I discovered, but were just not reported.
+    13→ */
+    14→
+    15→export function usePositionFixed({
+src/use-prevent-scroll.ts
+     6→const KEYBOARD_BUFFER = 24;
+     8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+    10→interface PreventScrollOptions {
+    11→  /** Whether the scroll lock is disabled. */
+    12→  isDisabled?: boolean;
+    13→  focusCallback?: () => void;
+    14→}
+    16→function chain(...callbacks: any[]): (...args: any[]) => void {
+    27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
+    29→export function isScrollable(node: Element): boolean {
+    34→export function getScrollParent(node: Element): Element {
+    47→const nonTextInputTypes = new Set([
+    63→/**
+    64→ * Prevents scrolling on the document body on mount, and
+    65→ * restores it on unmount. Also ensures that content does not
+    66→ * shift due to the scrollbars disappearing.
+    67→ */
+    68→export function usePreventScroll(options: PreventScrollOptions = {}) {
+   118→function preventScrollMobileSafari() {
+   243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {
+   257→function addEvent<K extends keyof GlobalEventHandlersEventMap>(
+   258→  target: EventTarget,
+   259→  event: K,
+   260→  handler: (this: Document, ev: GlobalEventHandlersEventMap[K]) => any,
+   261→  options?: boolean | AddEventListenerOptions,
+   262→) {
+   272→function scrollIntoView(target: Element) {
+   294→export function isInput(target: Element) {
+src/use-scale-background.ts
+     6→const noop = () => () => {};
+     8→export function useScaleBackground() {
+src/use-snap-points.ts
+     7→export function useSnapPoints({

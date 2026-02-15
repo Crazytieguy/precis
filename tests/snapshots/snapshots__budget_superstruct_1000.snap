@@ -1,0 +1,275 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 → level 2 (711 words)
+
+Changelog.md
+     1→# Changelog
+     5→### `2.0.0` - July 3, 2024
+    11→#### Breaking
+    16→#### New
+    20→#### Fixed
+    24→#### Deprecations
+    28→#### New Maintainers & Next Steps
+    38→### `1.0.0` — November 17, 2022
+    40→###### NEW
+    49→### BREAKING
+    53→### `0.16.0` — June 6, 2022
+    55→###### BREAKING
+    59→### `0.15.0` — March 25, 2021
+    61→###### FIXED
+    67→### `0.14.0` — January 26, 2021
+    69→###### BREAKING
+    75→### `0.13.0` — December 11, 2020
+    77→###### NEW
+    85→###### BREAKING
+    93→### `0.12.0` — November 24, 2020
+    95→###### NEW
+   111→###### BREAKING
+   127→### `0.11.0` — November 20, 2020
+   129→###### NEW
+   176→###### BREAKING
+   242→### `0.10.0` — June 6, 2020
+   248→###### BREAKING
+   392→### `0.8.0` — October 8, 2019
+   394→###### BREAKING
+   434→###### NEW
+   444→### `0.7.0` — September 21, 2019
+   446→###### BREAKING
+   452→### `0.6.0` — September 13, 2018
+   454→###### BREAKING
+   460→### `0.5.0` — December 21, 2017
+   462→###### BREAKING
+   468→###### NEW
+   474→### `0.4.0` — December 1, 2017
+   476→###### BREAKING
+   482→###### NEW
+   488→### `0.3.0` — November 30, 2017
+   490→###### BREAKING
+   498→### `0.2.0` — November 30, 2017
+   500→###### BREAKING
+   504→###### NEW
+   510→### `0.1.0` — November 29, 2017
+   512→###### BREAKING
+   518→### `0.0.0` — November 24, 2017
+License.md
+Readme.md
+    42→### Usage
+   145→### Why?
+   167→### Principles
+   181→### Demo
+   189→### Examples
+   205→### Documentation
+   231→### License
+docs/guides/01-getting-started.md
+     1→# Getting Started
+     3→## Installing Superstruct
+    41→## Defining Structs
+docs/guides/02-validating-data.md
+     1→# Validating Data
+     5→## Primitive Values
+    37→## Composed Values
+   114→## Optional Values
+   157→## Custom Values
+docs/guides/03-coercing-data.md
+     1→# Coercing Data
+     7→## Default Values
+    49→## Custom Coercions
+docs/guides/04-refining-validation.md
+     1→# Refining Validation
+     7→## Built-in Refinements
+    47→## Custom Refinements
+docs/guides/05-handling-errors.md
+     1→# Handling Errors
+    53→## Customizing Errors
+   102→## Multiple Failures
+docs/guides/06-using-typescript.md
+     1→# Using TypeScript
+     7→## Narrowing Types
+    37→## Describing Types
+    55→## Inferring Types
+docs/readme.md
+     7→### Usage
+docs/reference/coercions.md
+     1→# Coercions
+     5→### `defaulted`
+    21→### `trimmed`
+    29→### Custom Coercions
+docs/reference/core.md
+     1→# Core
+     3→### `assert`
+    15→### `create`
+    27→### `is`
+    41→### `mask`
+    56→### `validate`
+docs/reference/errors.md
+     1→# Errors
+     5→### `StructError`
+    19→### Error Properties
+    32→### Multiple Errors
+docs/reference/refinements.md
+     1→# Refinements
+     5→### `empty`
+    21→### `max`
+    35→### `min`
+    49→### `nonempty`
+    58→### `pattern`
+    70→### `size`
+    88→### Custom Refinements
+docs/reference/types.md
+     1→# Types
+     5→### `any`
+    26→### `array`
+    40→### `bigint`
+    55→### `boolean`
+    68→### `date`
+    82→### `enums`
+    95→### `func`
+   107→### `instance`
+   119→### `integer`
+   133→### `intersection`
+   145→### `literal`
+   157→### `map`
+   174→### `never`
+   186→### `number`
+   201→### `nullable`
+   214→### `object`
+   234→### `optional`
+   249→### `record`
+   264→### `regexp`
+   279→### `set`
+   293→### `string`
+   305→### `tuple`
+   317→### `type`
+   341→### `union`
+   354→### `unknown`
+   373→### Custom Types
+docs/reference/typescript.md
+     1→# TypeScript
+     5→## Utilities
+     7→### `Describe`
+    25→### `Infer`
+docs/reference/utilities.md
+     1→# Utilities
+     5→### `assign`
+    20→### `deprecated`
+    38→### `dynamic`
+    51→### `lazy`
+    64→### `omit`
+    78→### `partial`
+    97→### `pick`
+docs/resources/faq.md
+     1→# FAQ
+     5→### How can I allow unknown keys with `object` structs?
+    11→### Why not have a built-in `json` struct?
+docs/resources/links.md
+     1→# Resources
+     5→## Libraries
+docs/summary.md
+     3→## Guides
+    12→## API Reference
+    22→## Resources
+rollup.config.js
+src/error.ts
+     5→export type Failure
+    25→export class StructError
+    35→  constructor
+src/index.ts
+src/struct.ts
+    10→export class Struct
+    22→  constructor
+    67→  assert
+    75→  create
+    83→  is
+    93→  mask
+   107→  validate
+   123→export function assert
+   139→export function create
+   157→export function mask
+   175→export function is
+   185→export function validate
+   221→export type Context
+   231→export type Infer
+   237→export type Describe
+   243→export type Result
+   253→export type Coercer
+   259→export type Validator
+   266→export type Refiner
+src/structs/coercions.ts
+    16→export function coerce
+    38→export function defaulted
+    79→export function trimmed
+src/structs/refinements.ts
+     8→export function empty
+    33→export function max
+    55→export function min
+    77→export function nonempty
+    93→export function pattern
+   109→export function size
+   146→export function refine
+src/structs/types.ts
+    19→export function any
+    33→export function array
+    60→export function bigint
+    70→export function boolean
+    83→export function date
+   105→export function enums
+   131→export function func
+   144→export function instance
+   159→export function integer
+   172→export function intersection
+   204→export function literal
+   230→export function map
+   258→export function never
+   266→export function nullable
+   278→export function number
+   298→export function object
+   351→export function optional
+   367→export function record
+   402→export function regexp
+   415→export function set
+   442→export function string
+   456→export function tuple
+   492→export function type
+   522→export function union
+   574→export function unknown
+src/structs/utilities.ts
+    60→export function assign
+    71→export function define
+    80→export function deprecated
+   106→export function dynamic
+   140→export function lazy
+   171→export function omit
+   197→export function partial
+   221→export function pick
+   247→export function struct
+src/utils.ts
+     8→function isIterable
+    16→export function isObject
+    24→export function isNonArrayObject
+    32→export function isPlainObject
+    45→export function print
+    58→export function shiftIterator
+    67→export function toFailure
+   202→export type UnionToIntersection
+   212→export type Assign
+   218→export type EnumSchema
+   227→export type IsMatch
+   233→export type IsExactMatch
+   242→export type IsRecord
+   251→export type IsTuple
+   267→export type IsUnion
+   277→export type ObjectSchema
+   283→export type ObjectType
+   291→export type OmitBy
+   300→export type Optionalize
+   307→export type PartialObjectSchema
+   315→export type PickBy
+   324→export type Simplify
+   328→export type If
+   334→export type StructSchema
+   379→export type TupleSchema
+   385→export type AnyStruct
+   394→export type InferStructTuple
+   402→type _InferTuple

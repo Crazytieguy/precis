@@ -1,0 +1,330 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 2000 → level 2 (1111 words)
+
+backtrace.rs
+     8→pub(crate) enum Backtrace
+    11→macro_rules! impl_backtrace
+    18→macro_rules! impl_backtrace
+    25→macro_rules! backtrace
+    32→macro_rules! backtrace
+    39→macro_rules! backtrace_if_absent
+    53→macro_rules! backtrace_if_absent
+    64→macro_rules! backtrace_if_absent
+    71→mod capture
+    82→    pub(crate) struct Backtrace
+    86→    pub(crate) enum BacktraceStatus
+    92→    enum Inner
+    98→    struct Capture
+   104→    struct BacktraceFrame
+   109→    struct BacktraceSymbol
+   116→    enum BytesOrWide
+   121→    impl Debug for Backtrace
+   122→        fn fmt
+   147→    impl Debug for BacktraceFrame
+   148→        fn fmt
+   155→    impl Debug for BacktraceSymbol
+   156→        fn fmt
+   177→    impl Debug for BytesOrWide
+   178→        fn fmt
+   191→    impl Backtrace
+   192→        fn enabled
+   211→        pub(crate) fn capture
+   222→        fn create
+   252→        pub(crate) fn status
+   261→    impl Display for Backtrace
+   262→        fn fmt
+   311→    struct LazilyResolvedCapture
+   316→    impl LazilyResolvedCapture
+   317→        fn new
+   324→        fn force
+   341→    unsafe impl Sync for LazilyResolvedCapture
+   343→    impl Capture
+   344→        fn resolve
+   370→    fn output_filename
+   407→fn _assert_send_sync
+chain.rs
+    11→pub(crate) struct Chain
+    16→pub(crate) enum ChainState
+    26→impl<'a> Chain<'a>
+    28→    pub fn new
+    35→impl<'a> Iterator for Chain<'a>
+    36→    type Item
+    38→    fn next
+    50→    fn size_hint
+    57→impl DoubleEndedIterator for Chain<'_>
+    58→    fn next_back
+    76→impl ExactSizeIterator for Chain<'_>
+    77→    fn len
+    94→impl Default for Chain<'_>
+    95→    fn default
+context.rs
+     9→mod ext
+    12→    pub trait StdError
+    13→        fn ext_context
+    19→    impl<E> StdError for E
+    23→        fn ext_context
+    32→    impl StdError for Error
+    33→        fn ext_context
+    42→impl<T, E> Context<T, E> for Result<T, E>
+    46→    fn context
+    58→    fn with_context
+    90→impl<T> Context<T, Infallible> for Option<T>
+    91→    fn context
+   103→    fn with_context
+   115→impl<C, E> Debug for ContextError<C, E>
+   120→    fn fmt
+   128→impl<C, E> Display for ContextError<C, E>
+   132→    fn fmt
+   137→impl<C, E> StdError for ContextError<C, E>
+   142→    fn source
+   147→    fn provide
+   152→impl<C> StdError for ContextError<C, Error>
+   156→    fn source
+   161→    fn provide
+   166→struct Quoted
+   168→impl<C> Debug for Quoted<C>
+   172→    fn fmt
+   180→impl Write for Quoted<&mut fmt::Formatter<'_>>
+   181→    fn write_str
+   186→pub(crate) mod private
+   189→    pub trait Sealed
+   191→    impl<T, E> Sealed for Result<T, E>
+   192→    impl<T> Sealed for Option<T>
+ensure.rs
+    10→pub trait BothDebug
+    11→    fn __dispatch_ensure
+    14→impl<A, B> BothDebug for (A, B)
+    19→    fn __dispatch_ensure
+    25→pub trait NotBothDebug
+    26→    fn __dispatch_ensure
+    29→impl<A, B> NotBothDebug for &(A, B)
+    30→    fn __dispatch_ensure
+    35→struct Buf
+    40→impl Buf
+    41→    fn new
+    48→    fn as_str
+    58→impl Write for Buf
+    59→    fn write_str
+    81→fn render
+   105→macro_rules! __parse_ensure
+   886→macro_rules! __fancy_ensure
+   912→macro_rules! __fallback_ensure
+error.rs
+    19→impl Error
+    30→    pub fn new
+    77→    pub fn msg
+   140→    pub fn from_boxed
+   147→    pub(crate) fn construct_from_std
+   170→    pub(crate) fn construct_from_adhoc
+   198→    pub(crate) fn construct_from_display
+   227→    pub(crate) fn construct_from_context
+   260→    pub(crate) fn construct_from_boxed
+   293→    unsafe fn construct
+   372→    pub fn context
+   432→    pub fn backtrace
+   459→    pub fn chain
+   470→    pub fn root_cause
+   482→    pub fn is
+   490→    pub fn downcast
+   554→    pub fn downcast_ref
+   568→    pub fn downcast_mut
+   622→    pub fn into_boxed_dyn_error
+   663→    pub fn reallocate_into_boxed_dyn_error_without_backtrace
+   675→    pub(crate) fn provide
+   686→    pub fn thiserror_provide
+   692→impl<E> From<E> for Error
+   697→    fn from
+   704→impl Deref for Error
+   705→    type Target
+   707→    fn deref
+   713→impl DerefMut for Error
+   714→    fn deref_mut
+   719→impl Display for Error
+   720→    fn fmt
+   725→impl Debug for Error
+   726→    fn fmt
+   731→impl Drop for Error
+   732→    fn drop
+   740→struct ErrorVTable
+   757→unsafe fn object_drop
+   765→unsafe fn object_drop_front
+   775→unsafe fn object_ref
+   788→unsafe fn object_boxed
+   799→unsafe fn object_reallocate_boxed
+   809→unsafe fn object_downcast
+   832→fn no_backtrace
+   839→unsafe fn context_downcast
+   859→unsafe fn context_drop_rest
+   876→unsafe fn context_chain_downcast
+   892→unsafe fn context_chain_drop_rest
+   920→unsafe fn context_backtrace
+   934→pub(crate) struct ErrorImpl
+   944→unsafe fn vtable
+   952→pub(crate) struct ContextError
+   957→impl<E> ErrorImpl<E>
+   958→    fn erase
+   966→impl ErrorImpl
+   967→    pub(crate) unsafe fn error
+   974→    pub(crate) unsafe fn error_mut
+   985→    pub(crate) unsafe fn backtrace
+  1002→    unsafe fn provide
+  1010→    pub(crate) unsafe fn chain
+  1015→impl<E> StdError for ErrorImpl<E>
+  1019→    fn source
+  1024→    fn provide
+  1029→impl<E> Debug for ErrorImpl<E>
+  1033→    fn fmt
+  1038→impl<E> Display for ErrorImpl<E>
+  1042→    fn fmt
+  1048→impl From<Error> for Box<dyn StdError + Send + Sync + 'static>
+  1050→    fn from
+  1056→impl From<Error> for Box<dyn StdError + Send + 'static>
+  1058→    fn from
+  1064→impl From<Error> for Box<dyn StdError + 'static>
+  1066→    fn from
+  1072→impl AsRef<dyn StdError + Send + Sync> for Error
+  1073→    fn as_ref
+  1079→impl AsRef<dyn StdError> for Error
+  1080→    fn as_ref
+  1085→impl UnwindSafe for Error
+  1086→impl RefUnwindSafe for Error
+fmt.rs
+     6→impl ErrorImpl
+     7→    pub(crate) unsafe fn display
+    20→    pub(crate) unsafe fn debug
+    69→struct Indented
+    75→impl<T> Write for Indented<'_, T>
+    79→    fn write_str
+kind.rs
+    55→pub struct Adhoc
+    58→pub trait AdhocKind
+    60→    fn anyhow_kind
+    65→impl<T> AdhocKind for &T
+    67→impl Adhoc
+    69→    pub fn new
+    77→pub struct Trait
+    80→pub trait TraitKind
+    82→    fn anyhow_kind
+    87→impl<E> TraitKind for E
+    89→impl Trait
+    91→    pub fn new
+   100→pub struct Boxed
+   104→pub trait BoxedKind
+   106→    fn anyhow_kind
+   112→impl BoxedKind for Box<dyn StdError + Send + Sync>
+   115→impl Boxed
+   117→    pub fn new
+lib.rs
+   252→mod backtrace
+   253→mod chain
+   254→mod context
+   255→mod ensure
+   256→mod error
+   257→mod fmt
+   258→mod kind
+   259→mod macros
+   261→mod nightly
+   262→mod ptr
+   263→mod wrapper
+   279→trait StdError
+   280→    fn source
+   390→pub struct Error
+   415→pub struct Chain
+   468→pub type Result
+   616→pub trait Context
+   618→    fn context
+   624→    fn with_context
+   650→pub fn Ok
+   656→pub mod __private
+   672→    pub mod kind
+   684→    pub fn format_err
+   698→    pub fn must_use
+   704→    pub fn not
+   708→    mod not
+   710→        pub trait Bool
+   711→            fn not
+   714→        impl Bool for bool
+   716→            fn not
+   721→        impl Bool for &bool
+   723→            fn not
+macros.rs
+    58→macro_rules! bail
+    70→macro_rules! __ensure
+   204→macro_rules! anyhow
+   230→macro_rules! __anyhow
+nightly.rs
+    13→const _
+    16→    struct MyError
+    18→    impl Debug for MyError
+    19→        fn fmt
+    24→    impl Display for MyError
+    25→        fn fmt
+    30→    impl Error for MyError
+    31→        fn provide
+    39→const _
+    41→pub fn request_ref_backtrace
+    45→fn request_ref
+    52→pub fn provide_ref_backtrace
+    56→pub fn provide
+ptr.rs
+     6→pub struct Own
+    13→unsafe impl<T> Send for Own<T>
+    15→unsafe impl<T> Sync for Own<T>
+    17→impl<T> Copy for Own<T>
+    19→impl<T> Clone for Own<T>
+    23→    fn clone
+    28→impl<T> Own<T>
+    32→    pub fn new
+    38→    pub fn cast
+    44→    pub unsafe fn boxed
+    48→    pub fn by_ref
+    55→    pub fn by_mut
+    64→pub struct Ref
+    72→impl<'a, T> Copy for Ref<'a, T>
+    74→impl<'a, T> Clone for Ref<'a, T>
+    78→    fn clone
+    83→impl<'a, T> Ref<'a, T>
+    87→    pub fn new
+    94→    pub fn from_raw
+   101→    pub fn cast
+   108→    pub fn by_mut
+   115→    pub fn as_ptr
+   119→    pub unsafe fn deref
+   125→pub struct Mut
+   133→impl<'a, T> Copy for Mut<'a, T>
+   135→impl<'a, T> Clone for Mut<'a, T>
+   139→    fn clone
+   144→impl<'a, T> Mut<'a, T>
+   148→    pub fn cast
+   155→    pub fn by_ref
+   162→    pub fn extend
+   169→    pub unsafe fn deref_mut
+   174→impl<'a, T> Mut<'a, T>
+   175→    pub unsafe fn read
+   181→pub trait CastTo
+   185→impl<T> CastTo for T
+   186→    type Target
+wrapper.rs
+    11→pub struct MessageError
+    13→impl<M> Debug for MessageError<M>
+    17→    fn fmt
+    22→impl<M> Display for MessageError<M>
+    26→    fn fmt
+    31→impl<M> StdError for MessageError<M>
+    34→pub struct DisplayError
+    36→impl<M> Debug for DisplayError<M>
+    40→    fn fmt
+    45→impl<M> Display for DisplayError<M>
+    49→    fn fmt
+    54→impl<M> StdError for DisplayError<M>
+    58→pub struct BoxedError
+    61→impl Debug for BoxedError
+    62→    fn fmt
+    68→impl Display for BoxedError
+    69→    fn fmt
+    75→impl StdError for BoxedError
+    76→    fn source
+    81→    fn provide

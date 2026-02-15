@@ -1,0 +1,194 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 → level 1 (602 words)
+
+CHANGELOG.md
+     1→# Changelog
+     3→## 1.21.3
+     8→## 1.21.2
+    11→## 1.21.1
+    14→## 1.21.0
+    21→## 1.20.2
+    26→## 1.20.1
+    32→## 1.19.0
+    36→## 1.18.0
+    41→## 1.17.2
+    45→## 1.17.1
+    49→## 1.17.0
+    53→## 1.16.0
+    59→## 1.15.0
+    64→## 1.14.0
+    71→## 1.13.1
+    76→## 1.13.0
+    80→## 1.12.1
+    84→## 1.12.0
+    88→## 1.11.0
+    94→## 1.10.0
+    98→## 1.9.0
+   102→## 1.8.0
+   106→## 1.7.2
+   110→## 1.7.1
+   114→## 1.7.0
+   122→## 1.6.0
+   128→## 1.5.2
+   133→## 1.5.1
+   140→## 1.5.0
+   145→## 1.4.1
+   151→## 1.4.0
+   157→## 1.3.1
+   161→## 1.3.0
+   166→## 1.2.0
+   170→## 1.1.0
+   175→## 1.0.2
+   179→## 1.0.1
+   186→## 1.0.0
+   194→## 0.2.7
+   201→## 0.2.6
+   205→## 0.2.5
+   209→## 0.2.4
+   213→## 0.2.3
+   219→## 0.2.2
+   223→## 0.2.1
+   231→## 0.2.0
+   237→## 0.1.8
+   242→## 0.1.7
+   248→## 0.1.6
+   252→## 0.1.5
+README.md
+     8→# Overview
+    47→# Related crates
+src/imp_cs.rs
+     8→pub(crate) struct OnceCell
+    27→    pub(crate) const fn new
+    31→    pub(crate) const fn with_value
+    39→    pub(crate) fn is_initialized
+    44→    pub(crate) fn initialize
+    63→    pub(crate) unsafe fn get_unchecked
+    70→    pub(crate) fn get_mut
+    75→    pub(crate) fn into_inner
+src/imp_pl.rs
+     7→pub(crate) struct OnceCell
+    28→    pub(crate) const fn new
+    32→    pub(crate) const fn with_value
+    38→    pub(crate) fn is_initialized
+    45→    pub(crate) fn initialize
+    80→    pub(crate) fn wait
+   101→    pub(crate) unsafe fn get_unchecked
+   109→    pub(crate) fn get_mut
+   117→    pub(crate) fn into_inner
+   128→    fn drop
+src/imp_std.rs
+    14→pub(crate) struct OnceCell
+    39→    pub(crate) const fn new
+    43→    pub(crate) const fn with_value
+    49→    pub(crate) fn is_initialized
+    61→    pub(crate) fn initialize
+    88→    pub(crate) fn wait
+    99→    pub(crate) unsafe fn get_unchecked
+   107→    pub(crate) fn get_mut
+   115→    pub(crate) fn into_inner
+   151→    fn drop
+   248→    pub(crate) fn addr
+   260→    pub(crate) fn with_addr
+   281→    pub(crate) fn map_addr
+src/lib.rs
+   383→pub mod unsync
+   411→    pub struct OnceCell
+   424→        fn default
+   430→        fn fmt
+   439→        fn clone
+   446→        fn clone_from
+   455→        fn eq
+   463→        fn from
+   470→        pub const fn new
+   475→        pub const fn with_value
+   483→        pub fn get
+   508→        pub fn get_mut
+   530→        pub fn set
+   551→        pub fn try_insert
+   586→        pub fn get_or_init
+   622→        pub fn get_or_try_init
+   667→        pub fn take
+   687→        pub fn into_inner
+   714→    pub struct Lazy
+   722→        fn fmt
+   742→        pub const fn new
+   749→        pub fn into_value
+   773→        pub fn force
+   794→        pub fn force_mut
+   818→        pub fn get
+   835→        pub fn get_mut
+   841→        type Target
+   842→        fn deref
+   848→        fn deref_mut
+   855→        fn default
+   863→pub mod sync
+   901→    pub struct OnceCell
+   904→        fn default
+   910→        fn fmt
+   919→        fn clone
+   926→        fn clone_from
+   935→        fn from
+   941→        fn eq
+   950→        pub const fn new
+   955→        pub const fn with_value
+   963→        pub fn get
+   993→        pub fn wait
+  1019→        pub fn get_mut
+  1031→        pub unsafe fn get_unchecked
+  1058→        pub fn set
+  1080→        pub fn try_insert
+  1115→        pub fn get_or_init
+  1152→        pub fn get_or_try_init
+  1197→        pub fn take
+  1217→        pub fn into_inner
+  1255→    pub struct Lazy
+  1261→        fn fmt
+  1278→        pub const fn new
+  1285→        pub fn into_value
+  1308→        pub fn force
+  1327→        pub fn force_mut
+  1351→        pub fn get
+  1368→        pub fn get_mut
+  1374→        type Target
+  1375→        fn deref
+  1381→        fn deref_mut
+  1388→        fn default
+  1412→pub mod race
+src/race.rs
+    43→pub struct OnceNonZeroUsize
+    50→    pub const fn new
+    56→    pub fn get
+    68→    pub unsafe fn get_unchecked
+   107→    pub fn set
+   120→    pub fn get_or_init
+   138→    pub fn get_or_try_init
+   167→pub struct OnceBool
+   174→    pub const fn new
+   180→    pub fn get
+   189→    pub fn set
+   199→    pub fn get_or_init
+   213→    pub fn get_or_try_init
+   232→pub struct OnceRef
+   241→    fn fmt
+   247→    fn default
+   254→    pub const fn new
+   259→    pub fn get
+   268→    pub fn set
+   281→    pub fn get_or_init
+   299→    pub fn get_or_try_init
+   361→    pub struct OnceBox
+   367→        fn fmt
+   373→        fn default
+   379→        fn drop
+   389→        pub const fn new
+   394→        pub fn with_value
+   399→        pub fn get
+   411→        pub fn set
+   432→        pub fn get_or_init
+   450→        pub fn get_or_try_init
+   482→        fn clone
+xtask/src/main.rs
+xtask/src/tidy.rs

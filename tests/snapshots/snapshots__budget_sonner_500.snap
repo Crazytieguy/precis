@@ -1,0 +1,113 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 → level 2 (223 words)
+
+LICENSE.md
+README.md
+     5→## Usage
+    31→## Documentation
+playwright.config.ts
+src/assets.tsx
+     5→export const getAsset
+    24→const bars
+    26→export const Loader
+    38→const SuccessIcon
+    48→const WarningIcon
+    58→const InfoIcon
+    68→const ErrorIcon
+    78→export const CloseIcon
+src/hooks.tsx
+     3→export const useIsDocumentHidden
+src/index.tsx
+    22→const VISIBLE_TOASTS_AMOUNT
+    25→const VIEWPORT_OFFSET
+    28→const MOBILE_VIEWPORT_OFFSET
+    31→const TOAST_LIFETIME
+    34→const TOAST_WIDTH
+    37→const GAP
+    40→const SWIPE_THRESHOLD
+    43→const TIME_BEFORE_UNMOUNT
+    45→function cn
+    49→function getDefaultSwipeDirections
+    64→const Toast
+   507→function getDocumentDirection
+   520→function assignOffset
+   552→function useSonner
+   593→const Toaster
+src/state.ts
+    15→type titleT
+    17→class Observer
+    22→  constructor
+    29→  subscribe
+    38→  publish
+    42→  addToast
+    47→  create
+    88→  dismiss
+   101→  message
+   105→  error
+   109→  success
+   113→  info
+   117→  warning
+   121→  loading
+   125→  promise
+   243→  custom
+   249→  getActiveToasts
+   254→export const ToastState
+   257→const toastFunction
+   268→const isHttpResponse
+   279→const basicToast
+   281→const getHistory
+   282→const getToasts
+   285→export const toast
+src/types.ts
+     3→export type ToastTypes
+     5→export type PromiseT
+     7→export interface PromiseIExtendedResult
+    11→export type PromiseTExtendedResult
+    15→export type PromiseTResult
+    20→export type PromiseExternalToast
+    22→export type PromiseData
+    30→export interface ToastClassnames
+    48→export interface ToastIcons
+    57→export interface Action
+    63→export interface ToastT
+    93→export function isAction
+    97→export type Position
+    98→export interface HeightT
+   104→interface ToastOptions
+   118→type Offset
+   128→export interface ToasterProps
+   152→export type SwipeDirection
+   154→export interface ToastProps
+   184→export enum SwipeStateTypes
+   190→export type Theme
+   192→export interface ToastToDismiss
+   197→export type ExternalToast
+website/README.md
+     3→## Getting Started
+    25→## Learn More
+    34→## Deploy on Vercel
+website/next.config.js
+     2→const nextConfig
+     8→const withNextra
+website/postcss.config.js
+website/src/components/CodeBlock/index.tsx
+website/src/components/ExpandModes/index.tsx
+website/src/components/Footer/index.tsx
+website/src/components/Head/index.tsx
+website/src/components/Hero/index.tsx
+website/src/components/How/How.tsx
+website/src/components/Installation/index.tsx
+website/src/components/Other/Other.tsx
+website/src/components/Position/index.tsx
+website/src/components/Types/Types.tsx
+website/src/components/Usage/index.tsx
+website/src/pages/_app.tsx
+     7→export default function Nextra
+website/src/pages/index.tsx
+    14→export default function Home
+website/tailwind.config.js
+website/theme.config.jsx
+     7→  useNextSeoProps

@@ -1,0 +1,89 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 → level 2 (185 words)
+
+__init__.py
+     6→def load_ipython_extension
+    12→def get_cli_string
+    42→__all__
+__main__.py
+cli.py
+    24→def enumerate_env
+    62→def cli
+    68→def stream_file
+    93→def list_values
+   116→def set_value
+   131→def get
+   148→def unset
+   173→def run
+   193→def run_command
+ipython.py
+    12→class IPythonDotEnv
+    34→    def dotenv
+    48→def load_ipython_extension
+main.py
+    25→def _load_dotenv_disabled
+    35→def with_warn_for_invalid_lines
+    45→class DotEnv
+    46→    def __init__
+    64→    def _get_stream
+    78→    def dict
+    94→    def parse
+   100→    def set_as_environment_variables
+   115→    def get
+   128→def get_key
+   142→def rewrite
+   163→def set_key
+   211→def unset_key
+   244→def resolve_variables
+   269→def _walk_to_root
+   287→def find_dotenv
+   338→def load_dotenv
+   387→def dotenv_values
+   423→def _is_file_or_fifo
+parser.py
+    14→def make_regex
+    35→class Original
+    40→class Binding
+    47→class Position
+    48→    def __init__
+    53→    def start
+    56→    def set
+    60→    def advance
+    65→class Error
+    69→class Reader
+    70→    def __init__
+    75→    def has_next
+    78→    def set_mark
+    81→    def get_marked
+    87→    def peek
+    90→    def read
+    97→    def read_regex
+   105→def decode_escapes
+   112→def parse_key
+   123→def parse_unquoted_value
+   128→def parse_value
+   142→def parse_binding
+   179→def parse_stream
+variables.py
+     5→_posix_variable
+    18→class Atom
+    19→    def __ne__
+    26→    def resolve
+    29→class Literal
+    30→    def __init__
+    33→    def __repr__
+    36→    def __eq__
+    41→    def __hash__
+    44→    def resolve
+    48→class Variable
+    49→    def __init__
+    53→    def __repr__
+    56→    def __eq__
+    61→    def __hash__
+    64→    def resolve
+    70→def parse_variables
+version.py
+     1→__version__

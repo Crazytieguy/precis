@@ -1,0 +1,61 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 → level 3 (116 words)
+
+command-score.ts
+    54→function commandScoreInner
+   150→function formatInput
+   155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
+index.tsx
+    10→type Children
+    11→type DivProps
+    13→type LoadingProps
+    23→type EmptyProps
+    24→type SeparatorProps
+    28→type DialogProps
+    37→type ListProps
+    44→type ItemProps
+    60→type GroupProps
+    69→type InputProps
+    79→type CommandFilter
+    80→type CommandProps
+   123→type Context
+   137→type State
+   143→type Store
+   149→type Group
+   154→const GROUP_SELECTOR
+   155→const GROUP_ITEMS_SELECTOR
+   156→const GROUP_HEADING_SELECTOR
+   157→const ITEM_SELECTOR
+   158→const VALID_ITEM_SELECTOR
+   159→const SELECT_EVENT
+   160→const VALUE_ATTR
+   161→const defaultFilter
+   163→const CommandContext
+   164→const useCommand
+   165→const StoreContext
+   166→const useStore
+   167→const GroupContext
+   169→const Command
+   664→const Item
+   729→const Group
+   774→const Separator
+   787→const Input
+   833→const List
+   882→const Dialog
+   899→const Empty
+   909→const Loading
+   930→const pkg
+   963→function findNextSibling
+   972→function findPreviousSibling
+   981→function useAsRef
+   991→const useLayoutEffect
+   993→function useLazyRef
+  1004→function useCmdk
+  1010→function useValue
+  1046→const useScheduleLayoutEffect
+  1061→function renderChildren
+  1071→function SlottableWithNestedChildren
+  1081→const srOnlyStyles

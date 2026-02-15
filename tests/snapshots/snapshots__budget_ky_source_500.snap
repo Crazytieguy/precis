@@ -1,0 +1,132 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 → level 2 (310 words)
+
+core/Ky.ts
+    33→export class Ky
+    34→	static create
+   178→	static #normalizeSearchParams
+   200→	constructor
+   297→	#calculateDelay
+   316→	async #calculateRetryDelay
+   390→	#decorateResponse
+   398→	#cancelBody
+   407→	#cancelResponseBody
+   412→	async #retry
+   463→	async #fetch
+   503→	#getNormalizedOptions
+   512→	#assignRequest
+   517→	#wrapRequestWithUploadProgress
+core/constants.ts
+     4→export const supportsRequestStreams
+    34→export const supportsAbortController
+    35→export const supportsAbortSignal
+    36→export const supportsResponseStreams
+    37→export const supportsFormData
+    39→export const requestMethods
+    41→const validate
+    46→export const responseTypes
+    58→export const maxSafeTimeout
+    61→export const usualFormBoundarySize
+    63→export const stop
+    68→export type ForceRetryOptions
+   148→export class RetryMarker
+   149→	constructor
+   235→export const retry
+   237→export const kyOptionKeys
+   256→export const vendorSpecificOptions
+   265→export const requestOptionsRegistry
+errors/ForceRetryError.ts
+     8→export class ForceRetryError
+    14→	constructor
+errors/HTTPError.ts
+     5→export class HTTPError
+    10→	constructor
+errors/NonError.ts
+     6→export class NonError
+    10→	constructor
+errors/TimeoutError.ts
+     3→export class TimeoutError
+     6→	constructor
+index.ts
+    10→const createInstance
+    34→const ky
+types/ResponsePromise.ts
+     6→export type ResponsePromise
+types/common.ts
+     2→export type Primitive
+     4→export type Required
+     6→export type LiteralUnion
+types/hooks.ts
+     5→export type BeforeRequestState
+    14→export type BeforeRequestHook
+    20→export type BeforeRetryState
+    30→export type BeforeRetryHook
+    32→export type AfterResponseState
+    41→export type AfterResponseHook
+    48→export type BeforeErrorState
+    57→export type BeforeErrorHook
+    59→export type Hooks
+types/ky.ts
+     5→export type KyInstance
+types/options.ts
+     6→export type SearchParamsInit
+     9→export type SearchParamsOption
+    11→export type RequestHttpMethod
+    12→export type HttpMethod
+    14→export type Input
+    16→export type Progress
+    27→export type KyHeadersInit
+    33→export type KyOptions
+   307→export type KyOptionsRegistry
+   312→export interface Options
+   358→export type InternalOptions
+   373→export interface NormalizedOptions
+types/request.ts
+     1→export type KyRequest
+types/response.ts
+     1→export type KyResponse
+types/retry.ts
+     3→export type ShouldRetryState
+    15→export type RetryOptions
+utils/body.ts
+     5→export const getBodySize
+    57→const withProgress
+    90→export const streamResponse
+   119→export const streamRequest
+utils/delay.ts
+     5→export type DelayOptions
+     9→export default async function delay
+utils/is.ts
+     2→export const isObject
+utils/merge.ts
+     6→export const validateAndMerge
+    16→export const mergeHeaders
+    32→function newHookValue
+    38→export const mergeHooks
+    47→const appendSearchParameters
+    86→export const deepMerge
+utils/normalize.ts
+     5→export const normalizeRequestMethod
+     8→const retryMethods
+    10→const retryStatusCodes
+    12→const retryAfterStatusCodes
+    14→type InternalRetryOptions
+    16→const defaultRetryOptions
+    28→export const normalizeRetryOptions
+utils/options.ts
+     4→export const findUnknownOptions
+    30→export const hasSearchParameters
+utils/timeout.ts
+     3→export type TimeoutOptions
+     9→export default async function timeout
+utils/type-guards.ts
+    27→export function isKyError
+    49→export function isHTTPError
+    71→export function isTimeoutError
+    98→export function isForceRetryError
+utils/types.ts
+     1→export type Mutable
+     5→export type ObjectEntries

@@ -1,0 +1,309 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 → level 1 (990 words)
+
+__private_api.rs
+    10→pub type Value
+    14→    pub trait KVs
+    15→        fn into_kvs
+    23→    fn into_kvs
+    30→    fn into_kvs
+    39→pub struct GlobalLogger
+    42→    fn enabled
+    46→    fn log
+    50→    fn flush
+    84→pub fn log
+   103→pub fn enabled
+   108→pub fn loc
+   116→    pub type Value
+   122→    pub fn capture_to_value
+   126→    pub fn capture_debug
+   130→    pub fn capture_display
+   135→    pub fn capture_error
+   140→    pub fn capture_sval
+   145→    pub fn capture_serde
+kv/error.rs
+     5→pub struct Error
+    21→    pub fn msg
+    29→    pub(super) fn from_value
+    37→    pub(super) fn into_value
+    49→    fn fmt
+    63→    fn from
+    73→    pub(super) type BoxedError
+    77→        pub fn boxed
+    90→        fn from
+kv/key.rs
+     7→pub trait ToKey
+     9→    fn to_key
+    16→    fn to_key
+    22→    fn to_key
+    28→    fn to_key
+    37→pub struct Key
+    45→    pub fn from_str
+    53→    pub fn as_str
+    61→    pub fn to_borrowed_str
+    70→    fn fmt
+    76→    fn as_ref
+    82→    fn borrow
+    88→    fn from
+   100→        fn to_key
+   106→        fn to_key
+   120→        fn stream
+   129→        fn stream_ref
+   142→        fn serialize
+kv/mod.rs
+   260→pub mod source
+   262→pub mod value
+kv/source.rs
+    51→pub trait Source
+    62→    fn visit
+    73→    fn get
+    85→    fn count
+   134→    fn visit
+   138→    fn get
+   142→    fn count
+   152→    fn visit
+   156→    fn get
+   164→    fn count
+   173→    fn visit
+   181→    fn get
+   191→    fn count
+   200→    fn visit
+   204→    fn get
+   208→    fn count
+   217→    fn visit
+   225→    fn get
+   229→    fn count
+   235→pub trait VisitSource
+   237→    fn visit_pair
+   245→    fn visit_pair
+   251→    fn visit_pair
+   258→    fn visit_pair
+   265→    fn visit_pair
+   272→    fn visit_pair
+   292→        fn visit
+   296→        fn get
+   300→        fn count
+   309→        fn visit
+   313→        fn get
+   317→        fn count
+   326→        fn visit
+   330→        fn get
+   334→        fn count
+   343→        fn visit
+   347→        fn get
+   351→        fn count
+   360→        fn visit_pair
+   371→        fn visit
+   378→        fn get
+   382→        fn count
+   392→        fn visit
+   399→        fn get
+   403→        fn count
+kv/value.rs
+    11→pub trait ToValue
+    13→    fn to_value
+    20→    fn to_value
+    26→    fn to_value
+   119→pub struct Value
+   125→    pub fn from_any
+   133→    pub fn from_debug
+   143→    pub fn from_display
+   154→    pub fn from_serde
+   165→    pub fn from_sval
+   175→    pub fn from_dyn_debug
+   182→    pub fn from_dyn_display
+   190→    pub fn from_dyn_error
+   197→    pub fn null
+   217→    pub fn visit
+   223→    fn fmt
+   229→    fn fmt
+   236→    fn serialize
+   246→    fn stream
+   253→    fn stream_ref
+   259→    fn to_value
+   265→    fn from
+   271→    fn to_value
+   280→    fn to_value
+   379→    pub fn to_borrowed_error
+   384→    pub fn to_borrowed_str
+   401→        fn to_value
+   410→        fn to_value
+   419→        fn to_value
+   425→        fn to_value
+   431→        fn to_value
+   438→        pub fn to_cow_str
+   444→        fn from
+   462→pub trait VisitValue
+   469→    fn visit_any
+   472→    fn visit_null
+   477→    fn visit_u64
+   482→    fn visit_i64
+   487→    fn visit_u128
+   492→    fn visit_i128
+   497→    fn visit_f64
+   502→    fn visit_bool
+   507→    fn visit_str
+   512→    fn visit_borrowed_str
+   517→    fn visit_char
+   524→    fn visit_error
+   530→    fn visit_borrowed_error
+   543→    fn visit_any
+   547→    fn visit_null
+   551→    fn visit_u64
+   555→    fn visit_i64
+   559→    fn visit_u128
+   563→    fn visit_i128
+   567→    fn visit_f64
+   571→    fn visit_bool
+   575→    fn visit_str
+   579→    fn visit_borrowed_str
+   583→    fn visit_char
+   588→    fn visit_error
+   593→    fn visit_borrowed_error
+   602→pub(in crate::kv) mod inner
+   619→    pub fn visit
+   721→pub(in crate::kv) mod inner
+   738→    pub enum Inner
+   753→        fn from
+   759→        fn from
+   765→        fn from
+   771→        fn from
+   777→        fn from
+   783→        fn from
+   789→        fn from
+   795→        fn from
+   801→        fn from
+   807→        fn from
+   813→        fn from
+   819→        fn from
+   825→        fn from
+   831→        fn from
+   837→        fn from
+   843→        fn from
+   849→        fn from
+   855→        fn from
+   861→        fn fmt
+   879→        fn fmt
+   897→        pub fn from_debug
+   901→        pub fn from_display
+   905→        pub fn from_dyn_debug
+   909→        pub fn from_dyn_display
+   913→        pub fn empty
+   917→        pub fn to_bool
+   924→        pub fn to_char
+   931→        pub fn to_f64
+   954→        pub fn to_i64
+   964→        pub fn to_u64
+   974→        pub fn to_u128
+   984→        pub fn to_i128
+   994→        pub fn to_borrowed_str
+  1031→    pub fn visit
+  1055→    pub fn capture_debug
+  1065→    pub fn capture_display
+  1075→    pub fn capture_error
+  1085→    pub fn capture_serde
+  1095→    pub fn capture_sval
+  1107→    pub fn is
+  1116→    pub fn downcast_ref
+lib.rs
+   410→pub mod kv
+   475→pub enum Level
+   503→    fn eq
+   510→    fn partial_cmp
+   516→    type Err
+   517→    fn from_str
+   529→    fn fmt
+   548→    pub fn max
+   554→    pub fn to_level_filter
+   561→    pub fn as_str
+   579→    pub fn iter
+   599→    pub fn increment_severity
+   620→    pub fn decrement_severity
+   636→pub enum LevelFilter
+   653→    fn eq
+   660→    fn partial_cmp
+   666→    type Err
+   667→    fn from_str
+   679→    fn fmt
+   699→    pub fn max
+   707→    pub fn to_level
+   714→    pub fn as_str
+   732→    pub fn iter
+   752→    pub fn increment_severity
+   774→    pub fn decrement_severity
+   842→pub struct Record
+   862→    fn fmt
+   872→    pub fn builder
+   878→    pub fn args
+   884→    pub fn metadata
+   890→    pub fn level
+   896→    pub fn target
+   902→    pub fn module_path
+   908→    pub fn module_path_static
+   917→    pub fn file
+   923→    pub fn file_static
+   932→    pub fn line
+   939→    pub fn key_values
+   946→    pub fn to_builder
+  1003→pub struct RecordBuilder
+  1021→    pub fn new
+  1037→    pub fn args
+  1044→    pub fn metadata
+  1051→    pub fn level
+  1058→    pub fn target
+  1065→    pub fn module_path
+  1072→    pub fn module_path_static
+  1079→    pub fn file
+  1086→    pub fn file_static
+  1093→    pub fn line
+  1101→    pub fn key_values
+  1108→    pub fn build
+  1114→    fn default
+  1158→pub struct Metadata
+  1166→    pub fn builder
+  1172→    pub fn level
+  1178→    pub fn target
+  1200→pub struct MetadataBuilder
+  1212→    pub fn new
+  1223→    pub fn level
+  1230→    pub fn target
+  1237→    pub fn build
+  1243→    fn default
+  1249→pub trait Log
+  1262→    fn enabled
+  1271→    fn log
+  1279→    fn flush
+  1286→    fn enabled
+  1290→    fn log
+  1291→    fn flush
+  1298→    fn enabled
+  1302→    fn log
+  1305→    fn flush
+  1315→    fn enabled
+  1319→    fn log
+  1322→    fn flush
+  1332→    fn enabled
+  1336→    fn log
+  1339→    fn flush
+  1351→pub fn set_max_level
+  1375→pub unsafe fn set_max_level_racy
+  1396→pub fn max_level
+  1420→pub fn set_boxed_logger
+  1478→pub fn set_logger
+  1529→pub unsafe fn set_logger_racy
+  1549→pub struct SetLoggerError
+  1552→    fn fmt
+  1566→pub struct ParseLevelError
+  1569→    fn fmt
+  1581→pub fn logger
+  1600→pub mod __private_api
+  1611→pub const STATIC_MAX_LEVEL
+macros.rs
+serde.rs
+    17→    fn serialize
+    32→    fn deserialize
+   111→    fn serialize
+   127→    fn deserialize

@@ -1,0 +1,153 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 → level 3 (328 words)
+
+CHANGELOG.md
+     1→# Changelog
+     3→## [1.4.2]
+     7→## [1.4.1]
+    11→## [1.4.0]
+    25→## [1.2.5]
+    29→## [1.2.4]
+    33→## [1.2.3]
+    38→## [1.2.2]
+    42→## [1.2.1]
+    48→## [1.2.0]
+    52→## [1.2.0-beta.1]
+    56→## [1.2.0-beta.0]
+    61→## [1.1.0]
+    87→## [1.0.1]
+    92→## [1.0.0]
+    96→## [0.3.31-beta]
+   100→## [0.3.3-beta]
+   104→## [0.3.2-beta]
+   108→## [0.3.11-beta]
+   112→## [0.3.1-beta]
+   116→## [0.2.4]
+   120→## [0.2.1]
+   124→## [0.2]
+README.md
+     1→# The only accessible & unstyled & full featured Input OTP component in the Web.
+     3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
+    20→## Usage
+    39→## Default example
+   136→## How it works
+   141→## Features
+   198→### Auto tracks if the input has space in the right side for the badge
+   204→## API Reference
+   206→### OTPInput
+   210→#### Props
+   293→## Examples
+   377→## Caveats
+   539→#### Sponsors
+apps/storybook/README.md
+    13→## 🚅 Quick start
+    44→## 🔎 What's inside?
+    83→## Contribute
+    87→## Learning Storybook
+apps/storybook/src/components/ui/input-otp.tsx
+apps/storybook/src/lib/utils.ts
+     4→export function cn
+apps/storybook/src/stories/Button.stories.ts
+    14→export const Primary
+    21→export const Secondary
+    27→export const Large
+    34→export const Small
+apps/storybook/src/stories/Button.tsx
+     8→export const Button
+apps/storybook/src/stories/InputOTP.stories.tsx
+    29→export const Default
+apps/storybook/tailwind.config.js
+     2→const config
+apps/storybook/vite.config.js
+apps/website/README.md
+     3→## Getting Started
+    23→## Learn More
+    32→## Deploy on Vercel
+apps/website/next.config.mjs
+     4→const nextProdConfig
+     6→const nextDevConfig
+apps/website/postcss.config.js
+apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
+apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
+apps/website/src/app/(local-pages)/example-playground/code.tsx
+apps/website/src/app/(local-pages)/example-playground/component.tsx
+apps/website/src/app/(local-pages)/example-playground/page.tsx
+apps/website/src/app/(local-pages)/layout.tsx
+     7→export default function RootLayout
+apps/website/src/app/(local-pages)/raw-input/page.tsx
+apps/website/src/app/(local-pages)/shadcn/page.tsx
+apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
+apps/website/src/app/(local-pages)/shadcn/static/page.tsx
+apps/website/src/app/(pages)/(home)/_components/confetti.tsx
+apps/website/src/app/(pages)/(home)/_components/showcase.tsx
+apps/website/src/app/(pages)/(home)/page.tsx
+apps/website/src/app/(pages)/layout.tsx
+    14→export const metadata
+    68→export default function RootLayout
+apps/website/src/components/code.tsx
+     9→export async function Code
+apps/website/src/components/copy-button.tsx
+    22→export async function copyToClipboardWithMeta
+    26→export function CopyButton
+    70→export function CopyWithClassNames
+   129→export function CopyNpmCommandButton
+apps/website/src/components/icons.tsx
+     3→export const Icons
+apps/website/src/components/mode-toggle.tsx
+    15→export function ModeToggle
+apps/website/src/components/page-header.tsx
+apps/website/src/components/provider.tsx
+     5→export function AppProvider
+apps/website/src/components/site-footer.tsx
+     3→export function SiteFooter
+apps/website/src/components/site-header.tsx
+     9→export function SiteHeader
+apps/website/src/components/ui/badge.tsx
+    26→export interface BadgeProps
+apps/website/src/components/ui/button.tsx
+    36→export interface ButtonProps
+apps/website/src/components/ui/dropdown-menu.tsx
+apps/website/src/components/ui/input-otp.tsx
+apps/website/src/components/ui/scroll-area.tsx
+apps/website/src/components/ui/sonner.tsx
+apps/website/src/config/site.ts
+     1→export const siteConfig
+    13→export type SiteConfig
+apps/website/src/lib/fonts.ts
+    10→export const fontSans
+    12→export const fontMono
+apps/website/src/lib/utils.ts
+     4→export function cn
+apps/website/tailwind.config.ts
+     3→const config
+packages/input-otp/src/index.ts
+packages/input-otp/src/input.tsx
+    10→export const OTPInputContext
+    14→export const OTPInput
+   540→function safeInsertRule
+   553→const NOSCRIPT_CSS_FALLBACK
+packages/input-otp/src/regexp.ts
+     1→export const REGEXP_ONLY_DIGITS
+     2→export const REGEXP_ONLY_CHARS
+     3→export const REGEXP_ONLY_DIGITS_AND_CHARS
+packages/input-otp/src/sync-timeouts.ts
+     1→export function syncTimeouts
+packages/input-otp/src/types.ts
+     1→export interface SlotProps
+     7→export interface RenderProps
+    12→type OverrideProps
+    13→type OTPInputBaseProps
+    32→type InputOTPRenderFn
+    33→export type OTPInputProps
+packages/input-otp/src/use-previous.ts
+     3→export function usePrevious
+packages/input-otp/src/use-pwm-badge.tsx
+     4→const PWM_BADGE_MARGIN_RIGHT
+     5→const PWM_BADGE_SPACE_WIDTH_PX
+     6→const PWM_BADGE_SPACE_WIDTH
+     8→const PASSWORD_MANAGERS_SELECTORS
+    15→export function usePasswordManagerBadge
+packages/input-otp/tsup.config.ts

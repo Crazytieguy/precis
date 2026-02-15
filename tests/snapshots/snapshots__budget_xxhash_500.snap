@@ -1,0 +1,71 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 → level 4 (359 words)
+
+README.md
+     1→# xxhash
+    33→## Compatibility
+    45→## Benchmarks
+    66→## Projects using this package
+dynamic/plugin.go
+    14→const (
+    15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
+    16→	want = uint64(0x02a2e85470d6fd96)
+    19→func TestSum(t *testing.T) {
+    26→func TestDigest(t *testing.T) {
+xxhash.go
+    11→const (
+    12→	prime1 uint64 = 11400714785074694791
+    13→	prime2 uint64 = 14029467366897019727
+    14→	prime3 uint64 = 1609587929392839161
+    15→	prime4 uint64 = 9650029242287828579
+    16→	prime5 uint64 = 2870177450012600261
+    23→var primes = [...]uint64{prime1, prime2, prime3, prime4, prime5}
+    29→type Digest struct {
+    40→func New() *Digest {
+    45→func NewWithSeed(seed uint64) *Digest {
+    53→func (d *Digest) Reset() {
+    59→func (d *Digest) ResetWithSeed(seed uint64) {
+    69→func (d *Digest) Size() int { return 8 }
+    72→func (d *Digest) BlockSize() int { return 32 }
+    75→func (d *Digest) Write(b []byte) (n int, err error) {
+   113→func (d *Digest) Sum(b []byte) []byte {
+   129→func (d *Digest) Sum64() uint64 {
+   170→const (
+   171→	magic         = "xxh\x06"
+   172→	marshaledSize = len(magic) + 8*5 + 32
+   176→func (d *Digest) MarshalBinary() ([]byte, error) {
+   190→func (d *Digest) UnmarshalBinary(b []byte) error {
+   208→func appendUint64(b []byte, x uint64) []byte {
+   214→func consumeUint64(b []byte) ([]byte, uint64) {
+   219→func u64(b []byte) uint64 { return binary.LittleEndian.Uint64(b) }
+   220→func u32(b []byte) uint32 { return binary.LittleEndian.Uint32(b) }
+   222→func round(acc, input uint64) uint64 {
+   229→func mergeRound(acc, val uint64) uint64 {
+   236→func rol1(x uint64) uint64  { return bits.RotateLeft64(x, 1) }
+   237→func rol7(x uint64) uint64  { return bits.RotateLeft64(x, 7) }
+   238→func rol11(x uint64) uint64 { return bits.RotateLeft64(x, 11) }
+   239→func rol12(x uint64) uint64 { return bits.RotateLeft64(x, 12) }
+   240→func rol18(x uint64) uint64 { return bits.RotateLeft64(x, 18) }
+   241→func rol23(x uint64) uint64 { return bits.RotateLeft64(x, 23) }
+   242→func rol27(x uint64) uint64 { return bits.RotateLeft64(x, 27) }
+   243→func rol31(x uint64) uint64 { return bits.RotateLeft64(x, 31) }
+xxhash_asm.go
+    12→func Sum64(b []byte) uint64
+    15→func writeBlocks(d *Digest, b []byte) int
+xxhash_other.go
+     7→func Sum64(b []byte) uint64 {
+    64→func writeBlocks(d *Digest, b []byte) int {
+xxhash_safe.go
+     9→func Sum64String(s string) uint64 {
+    14→func (d *Digest) WriteString(s string) (n int, err error) {
+xxhash_unsafe.go
+    38→func Sum64String(s string) uint64 {
+    45→func (d *Digest) WriteString(s string) (n int, err error) {
+    55→type sliceHeader struct {
+xxhsum/xxhsum.go
+    11→func main() {
+    34→func contains(ss []string, s string) bool {
+    43→func printHash(r io.Reader, name string) {

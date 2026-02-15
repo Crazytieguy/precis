@@ -4,7 +4,7 @@ A CLI tool that extracts a token-efficient summary of a codebase.
 
 ## Design
 
-This section describes the target design. See `issues.md` for current implementation status and remaining work.
+See `issues.md` for current implementation status and remaining work.
 
 ### Parsing
 
@@ -12,37 +12,41 @@ Uses **tree-sitter** for language-agnostic symbol extraction. Each supported lan
 
 ### Token Budgeting
 
-Takes a `--budget` flag (in words) or a `--level` flag to select a specific granularity level directly. The two flags are mutually exclusive.
+Takes a `--budget` flag (in words). A `--level` flag exists for debugging but is not the primary interface.
 
-**Granularity function:** A single function `render(level, path, content) -> output` maps each file to its output at a given granularity level. The level is a single global integer parameter; the function uses file properties (depth, size, file type, name patterns) to make per-file rendering decisions. For example, a shallow small file may show full signatures at a given level while a deep large file shows only symbol names — or nothing at all. The function is free to make arbitrary per-file decisions as long as the monotonicity invariant holds. A `MAX_LEVEL` constant defines the highest available level.
+**Per-symbol progression:** Each symbol in a file has a natural content progression, where each stage strictly adds to the previous:
 
-The current implementation computes an "effective level" by subtracting depth and size penalties from the nominal level. This is a convenient shortcut but not a hard constraint — the render function could use any logic as long as output is monotonically non-decreasing per file path across levels.
+1. Hidden (file path shown, symbol omitted)
+2. Name only (truncated to identifier)
+3. Full signature (parameters, return types, `where` clauses)
+4. First-line doc comment
+5. Full doc comment
+6. Body (struct fields, enum variants, function body)
 
-**Monotonicity invariant:** For any given file path and content, a higher level must never produce fewer words than a lower level. This is tested against fixture files across all levels.
+Dependencies are implicit: showing a doc comment implies showing the signature and name.
 
-**Budget algorithm:** Binary search over `0..=MAX_LEVEL` to find the highest level where the total word count across all files fits within the budget.
+**Per-symbol scheduling:** At a given level, different symbols — even within the same file — can be at different stages of this progression. The stage assigned to each symbol depends on:
 
-**Rendering policies:** The render function combines several policies depending on the level and file properties: showing file paths only, public symbol names only (truncated to identifier, private symbols hidden), all symbol names (truncated to identifier), full multi-line signatures for public symbols only (with private symbols showing names), full multi-line signatures for all symbols (parameters, `where` clauses, return types), first-line doc comments for public symbols only (a single summary line per symbol), full doc comments for public symbols only, full doc comments for all symbols (`///`, `/** */`, docstrings), type definition bodies for public types only (struct fields, enum variants, trait/interface/class members), type definition bodies for all types, and full source. Markdown files use headings as symbols, with first-line body text at intermediate levels and full paragraph content at higher levels. At any given level, different files may receive different policies — a shallow file might show full signatures while a deep file shows only symbol names or nothing at all. Property-based decisions further differentiate files: for example, files with verbose doc comments (high average doc lines per symbol) delay showing docs relative to files with concise docs at the same nominal level.
+- **Cost** — how many words this stage adds for this specific symbol. A function with a 50-line docstring is expensive to upgrade to "full doc"; a function with a 1-line docstring is cheap.
+- **Value** — how useful this content is. Public symbols are more valuable than private ones. Depth, file type, and language conventions also factor in.
 
-Shallower and smaller files are prioritized over deeper and larger ones when budget is tight. Depth penalty reduces the effective level by `depth/2` (where depth counts directory components). Size penalty reduces the effective level by 1 for files with 1000+ lines, but only when the depth-adjusted level is 5+. Users can zoom into subdirectories by running the tool on them directly with a larger budget.
+Symbols with cheap, high-value upgrades transition to later stages at lower levels. Expensive or low-value upgrades are deferred to higher levels. This means at any given level, the tool shows the most useful content that fits in the budget.
 
-**Expanding levels:** Targeting ~64 levels for smoother budget curves. There are three sources of new levels, which complement each other:
+**Monotonicity invariant:** For any given file path and content, a higher level must never produce fewer words than a lower level. Per-symbol progression guarantees this: stages only add content, and symbols only advance (never regress) as the level increases. This is tested against fixture files across all levels.
 
-1. **New rendering policies** — adding genuinely new output types (e.g. import statements, visibility-gated symbols). Each new policy creates intermediate content between existing policies.
-2. **Finer property-based thresholds** — making different choices among existing policies based on file properties (file type, name patterns, content characteristics like symbol count or density). For example, a JSON config file might stay at "paths only" longer than a Rust file at the same depth; a file with many small functions is more expensive to show signatures for than a file with few large functions, so it transitions to signatures at a higher level.
-3. **Spreading transitions across levels** — with more levels and finer-grained penalties, different files transition between policies at different nominal levels, so fewer files upgrade simultaneously at each step. This multiplies the effect of the other two sources.
+**Budget algorithm:** Binary search over `0..=MAX_LEVEL` to find the highest level where the total word count across all files fits within the budget. A `MAX_LEVEL` of 64 provides smooth budget curves — per-symbol scheduling spreads transitions across many levels, so the total word count grows gradually rather than in large jumps.
 
-Adding levels should be incremental: add a new policy or tuning improvement, bump `MAX_LEVEL` by however many levels the change needs, measure utilization.
+**Smooth growth:** The goal is roughly geometric growth in word count per file across levels. Expensive upgrades are spaced further apart (a symbol might stay at "signature" for several levels before its costly docstring is added), while cheap upgrades are introduced early. This means most budget values land on a level with good utilization.
 
 ### Measuring Quality
 
 Two dimensions of output quality:
 
-1. **Budget utilization** — how well the tool uses the available word budget. Measurable: `actual_words / budget`. With few discrete levels, utilization can be poor (large gaps between adjacent levels). More levels improve utilization. Run `cargo run --bin budget_util` to measure utilization across all budget snapshots.
+1. **Budget utilization** — how well the tool uses the available word budget. Measurable: `actual_words / budget`. With smooth per-symbol transitions across many levels, the binary search can find a level close to any budget. Run `cargo run --bin budget_util` to measure utilization across all budget snapshots.
 
 2. **Output quality** — whether the content shown is actually useful for understanding the codebase. Not directly measurable. Showing low-value content (junk) can *improve* budget utilization while making the output worse. Both dimensions matter: high utilization with high-quality content is the goal.
 
-The improvement loop: run the budget utilization script, identify snapshots with low utilization, examine the snapshot and the next level's output, design rendering improvements that fill the gap with useful content. Improvements must not overfit to a specific fixture: each change must have reasoning for why it applies broadly to many codebases. Prefer improvements parameterized by file properties (depth, size, type, name patterns) over fixture-specific tweaks. Verify that mean utilization improves without regressions — otherwise drop the change.
+The improvement loop: run the budget utilization script, identify budget tiers with poor utilization across many fixtures, examine the output, and design scheduling improvements. Improvements must not overfit to a specific fixture: each change must have reasoning for why it applies broadly to many codebases. Verify that mean utilization improves without regressions — otherwise drop the change.
 
 Note: `budget_util` reads snapshot files, not live output. Run `cargo test` (or `cargo insta test`) to update snapshots before running `budget_util`, otherwise it reports stale data.
 
@@ -51,6 +55,12 @@ Note: `budget_util` reads snapshot files, not live output. Run `cargo test` (or 
 Plain text, optimized for readability and token efficiency. A `--json` flag outputs structured JSON with per-file entries.
 
 **Line-prefix constraint:** Each output line is a prefix of the actual line in the source file, preserving original whitespace and indentation. The tool extracts from the source rather than synthesizing new representations — no cross-language normalization of keywords. This means nesting (e.g. methods inside a Rust `impl` block) is represented naturally by the source's own indentation.
+
+**Truncation markers:** When content is truncated, the output makes this visible:
+- A line truncated to a prefix (e.g. name only instead of full signature) ends with `…`
+- Omitted lines (e.g. remaining doc comment lines, body) are shown as a standalone `…` on its own line, with no line number
+
+This lets readers instantly see whether they're looking at complete content or a summary.
 
 Line numbers use a right-aligned format with an arrow separator (e.g. `    12→    pub fn new`). Token counting uses word count (not tokenizer or character count).
 

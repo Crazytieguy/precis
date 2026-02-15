@@ -1,0 +1,504 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 → level 12 (1571 words)
+
+checkmark.tsx
+     1→import { styled, keyframes } from 'goober';
+     2→
+     3→const circleAnimation = keyframes`
+     4→from {
+     5→  transform: scale(0) rotate(45deg);
+     6→	opacity: 0;
+     7→}
+     8→to {
+     9→  transform: scale(1) rotate(45deg);
+    10→	opacity: 1;
+    11→}`;
+    12→
+    13→const checkmarkAnimation = keyframes`
+    14→0% {
+    15→	height: 0;
+    16→	width: 0;
+    17→	opacity: 0;
+    18→}
+    19→40% {
+    20→  height: 0;
+    21→	width: 6px;
+    22→	opacity: 1;
+    23→}
+    24→100% {
+    25→  opacity: 1;
+    26→  height: 10px;
+    27→}`;
+    28→
+    29→export interface CheckmarkTheme {
+    30→  primary?: string;
+    31→  secondary?: string;
+    32→}
+    33→
+    34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
+    35→  width: 20px;
+    36→  opacity: 0;
+    37→  height: 20px;
+    38→  border-radius: 10px;
+    39→  background: ${(p) => p.primary || '#61d345'};
+    40→  position: relative;
+    41→  transform: rotate(45deg);
+    42→
+    43→  animation: ${circleAnimation} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    44→    forwards;
+    45→  animation-delay: 100ms;
+    46→  &:after {
+    47→    content: '';
+    48→    box-sizing: border-box;
+    49→    animation: ${checkmarkAnimation} 0.2s ease-out forwards;
+    50→    opacity: 0;
+    51→    animation-delay: 200ms;
+    52→    position: absolute;
+    53→    border-right: 2px solid;
+    54→    border-bottom: 2px solid;
+    55→    border-color: ${(p) => p.secondary || '#fff'};
+    56→    bottom: 6px;
+    57→    left: 6px;
+    58→    height: 10px;
+    59→    width: 6px;
+    60→  }
+    61→`;
+error.tsx
+     1→import { styled, keyframes } from 'goober';
+     2→
+     3→const circleAnimation = keyframes`
+     4→from {
+     5→  transform: scale(0) rotate(45deg);
+     6→	opacity: 0;
+     7→}
+     8→to {
+     9→ transform: scale(1) rotate(45deg);
+    10→  opacity: 1;
+    11→}`;
+    12→
+    13→const firstLineAnimation = keyframes`
+    14→from {
+    15→  transform: scale(0);
+    16→  opacity: 0;
+    17→}
+    18→to {
+    19→  transform: scale(1);
+    20→  opacity: 1;
+    21→}`;
+    22→
+    23→const secondLineAnimation = keyframes`
+    24→from {
+    25→  transform: scale(0) rotate(90deg);
+    26→	opacity: 0;
+    27→}
+    28→to {
+    29→  transform: scale(1) rotate(90deg);
+    30→	opacity: 1;
+    31→}`;
+    32→
+    33→export interface ErrorTheme {
+    34→  primary?: string;
+    35→  secondary?: string;
+    36→}
+    37→
+    38→export const ErrorIcon = styled('div')<ErrorTheme>`
+    39→  width: 20px;
+    40→  opacity: 0;
+    41→  height: 20px;
+    42→  border-radius: 10px;
+    43→  background: ${(p) => p.primary || '#ff4b4b'};
+    44→  position: relative;
+    45→  transform: rotate(45deg);
+    46→
+    47→  animation: ${circleAnimation} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    48→    forwards;
+    49→  animation-delay: 100ms;
+    50→
+    51→  &:after,
+    52→  &:before {
+    53→    content: '';
+    54→    animation: ${firstLineAnimation} 0.15s ease-out forwards;
+    55→    animation-delay: 150ms;
+    56→    position: absolute;
+    57→    border-radius: 3px;
+    58→    opacity: 0;
+    59→    background: ${(p) => p.secondary || '#fff'};
+    60→    bottom: 9px;
+    61→    left: 4px;
+    62→    height: 2px;
+    63→    width: 12px;
+    64→  }
+    65→
+    66→  &:before {
+    67→    animation: ${secondLineAnimation} 0.15s ease-out forwards;
+    68→    animation-delay: 180ms;
+    69→    transform: rotate(90deg);
+    70→  }
+    71→`;
+loader.tsx
+     1→import { styled, keyframes } from 'goober';
+     2→
+     3→const rotate = keyframes`
+     4→  from {
+     5→    transform: rotate(0deg);
+     6→  }
+     7→  to {
+     8→    transform: rotate(360deg);
+     9→  }
+    10→`;
+    11→
+    12→export interface LoaderTheme {
+    13→  primary?: string;
+    14→  secondary?: string;
+    15→}
+    16→
+    17→export const LoaderIcon = styled('div')<LoaderTheme>`
+    18→  width: 12px;
+    19→  height: 12px;
+    20→  box-sizing: border-box;
+    21→  border: 2px solid;
+    22→  border-radius: 100%;
+    23→  border-color: ${(p) => p.secondary || '#e0e0e0'};
+    24→  border-right-color: ${(p) => p.primary || '#616161'};
+    25→  animation: ${rotate} 1s linear infinite;
+    26→`;
+toast-bar.tsx
+     1→import * as React from 'react';
+     2→import { styled, keyframes } from 'goober';
+     3→
+     4→import { Toast, ToastPosition, resolveValue, Renderable } from '../core/types';
+     5→import { ToastIcon } from './toast-icon';
+     6→import { prefersReducedMotion } from '../core/utils';
+     7→
+     8→const enterAnimation = (factor: number) => `
+     9→0% {transform: translate3d(0,${factor * -200}%,0) scale(.6); opacity:.5;}
+    10→100% {transform: translate3d(0,0,0) scale(1); opacity:1;}
+    11→`;
+    12→
+    13→const exitAnimation = (factor: number) => `
+    14→0% {transform: translate3d(0,0,-1px) scale(1); opacity:1;}
+    15→100% {transform: translate3d(0,${factor * -150}%,-1px) scale(.6); opacity:0;}
+    16→`;
+    17→
+    18→const fadeInAnimation = `0%{opacity:0;} 100%{opacity:1;}`;
+    19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
+    20→
+    21→// Use :where() for zero specificity - allows Tailwind to override easily
+    22→const ToastBarBase = styled('div')`
+    23→  :where(&) {
+    24→    display: flex;
+    25→    align-items: center;
+    26→    background: #fff;
+    27→    color: #363636;
+    28→    line-height: 1.3;
+    29→    will-change: transform;
+    30→    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.05);
+    31→    max-width: 350px;
+    32→    pointer-events: auto;
+    33→    padding: 8px 10px;
+    34→    border-radius: 8px;
+    35→  }
+    36→`;
+    37→
+    38→const Message = styled('div')`
+    39→  display: flex;
+    40→  justify-content: center;
+    41→  margin: 4px 10px;
+    42→  color: inherit;
+    43→  flex: 1 1 auto;
+    44→  white-space: pre-line;
+    45→`;
+    46→
+    47→interface ToastBarProps {
+    48→  toast: Toast;
+    49→  position?: ToastPosition;
+    50→  style?: React.CSSProperties;
+    51→  children?: (components: {
+    52→    icon: Renderable;
+    53→    message: Renderable;
+    54→  }) => Renderable;
+    55→}
+    56→
+    57→const getAnimationStyle = (
+    58→  position: ToastPosition,
+    59→  visible: boolean
+    60→): React.CSSProperties => {
+    61→  const top = position.includes('top');
+    62→  const factor = top ? 1 : -1;
+    63→
+    64→  const [enter, exit] = prefersReducedMotion()
+    65→    ? [fadeInAnimation, fadeOutAnimation]
+    66→    : [enterAnimation(factor), exitAnimation(factor)];
+    67→
+    68→  return {
+    69→    animation: visible
+    70→      ? `${keyframes(enter)} 0.35s cubic-bezier(.21,1.02,.73,1) forwards`
+    71→      : `${keyframes(exit)} 0.4s forwards cubic-bezier(.06,.71,.55,1)`,
+    72→  };
+    73→};
+    74→
+    75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
+    76→  ({ toast, position, style, children }) => {
+    77→    const animationStyle: React.CSSProperties = toast.height
+    78→      ? getAnimationStyle(
+    79→          toast.position || position || 'top-center',
+    80→          toast.visible
+    81→        )
+    82→      : { opacity: 0 };
+    83→
+    84→    const icon = <ToastIcon toast={toast} />;
+    85→    const message = (
+    86→      <Message {...toast.ariaProps}>
+    87→        {resolveValue(toast.message, toast)}
+    88→      </Message>
+    89→    );
+    90→
+    91→    return (
+    92→      <ToastBarBase
+    93→        className={toast.className}
+    94→        style={{
+    95→          ...animationStyle,
+    96→          ...style,
+    97→          ...toast.style,
+    98→        }}
+    99→      >
+   100→        {typeof children === 'function' ? (
+   101→          children({
+   102→            icon,
+   103→            message,
+   104→          })
+   105→        ) : (
+   106→          <>
+   107→            {icon}
+   108→            {message}
+   109→          </>
+   110→        )}
+   111→      </ToastBarBase>
+   112→    );
+   113→  }
+   114→);
+toast-icon.tsx
+     1→import * as React from 'react';
+     2→import { styled, keyframes } from 'goober';
+     3→
+     4→import { Toast } from '../core/types';
+     5→import { ErrorIcon, ErrorTheme } from './error';
+     6→import { LoaderIcon, LoaderTheme } from './loader';
+     7→import { CheckmarkIcon, CheckmarkTheme } from './checkmark';
+     8→
+     9→const StatusWrapper = styled('div')`
+    10→  position: absolute;
+    11→`;
+    12→
+    13→const IndicatorWrapper = styled('div')`
+    14→  position: relative;
+    15→  display: flex;
+    16→  justify-content: center;
+    17→  align-items: center;
+    18→  min-width: 20px;
+    19→  min-height: 20px;
+    20→`;
+    21→
+    22→const enter = keyframes`
+    23→from {
+    24→  transform: scale(0.6);
+    25→  opacity: 0.4;
+    26→}
+    27→to {
+    28→  transform: scale(1);
+    29→  opacity: 1;
+    30→}`;
+    31→
+    32→export const AnimatedIconWrapper = styled('div')`
+    33→  position: relative;
+    34→  transform: scale(0.6);
+    35→  opacity: 0.4;
+    36→  min-width: 20px;
+    37→  animation: ${enter} 0.3s 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    38→    forwards;
+    39→`;
+    40→
+    41→export type IconThemes = Partial<{
+    42→  success: CheckmarkTheme;
+    43→  error: ErrorTheme;
+    44→  loading: LoaderTheme;
+    45→}>;
+    46→
+    47→export const ToastIcon: React.FC<{
+    48→  toast: Toast;
+    49→}> = ({ toast }) => {
+    50→  const { icon, type, iconTheme } = toast;
+    51→  if (icon !== undefined) {
+    52→    if (typeof icon === 'string') {
+    53→      return <AnimatedIconWrapper>{icon}</AnimatedIconWrapper>;
+    54→    } else {
+    55→      return icon;
+    56→    }
+    57→  }
+    58→
+    59→  if (type === 'blank') {
+    60→    return null;
+    61→  }
+    62→
+    63→  return (
+    64→    <IndicatorWrapper>
+    65→      <LoaderIcon {...iconTheme} />
+    66→      {type !== 'loading' && (
+    67→        <StatusWrapper>
+    68→          {type === 'error' ? (
+    69→            <ErrorIcon {...iconTheme} />
+    70→          ) : (
+    71→            <CheckmarkIcon {...iconTheme} />
+    72→          )}
+    73→        </StatusWrapper>
+    74→      )}
+    75→    </IndicatorWrapper>
+    76→  );
+    77→};
+toaster.tsx
+     1→import { css, setup } from 'goober';
+     2→import * as React from 'react';
+     3→import {
+     4→  resolveValue,
+     5→  ToasterProps,
+     6→  ToastPosition,
+     7→  ToastWrapperProps,
+     8→} from '../core/types';
+     9→import { useToaster } from '../core/use-toaster';
+    10→import { prefersReducedMotion } from '../core/utils';
+    11→import { ToastBar } from './toast-bar';
+    12→
+    13→setup(React.createElement);
+    14→
+    15→const ToastWrapper = ({
+    16→  id,
+    17→  className,
+    18→  style,
+    19→  onHeightUpdate,
+    20→  children,
+    21→}: ToastWrapperProps) => {
+    22→  const ref = React.useCallback(
+    23→    (el: HTMLElement | null) => {
+    24→      if (el) {
+    25→        const updateHeight = () => {
+    26→          const height = el.getBoundingClientRect().height;
+    27→          onHeightUpdate(id, height);
+    28→        };
+    29→        updateHeight();
+    30→        new MutationObserver(updateHeight).observe(el, {
+    31→          subtree: true,
+    32→          childList: true,
+    33→          characterData: true,
+    34→        });
+    35→      }
+    36→    },
+    37→    [id, onHeightUpdate]
+    38→  );
+    39→
+    40→  return (
+    41→    <div ref={ref} className={className} style={style}>
+    42→      {children}
+    43→    </div>
+    44→  );
+    45→};
+    46→
+    47→const getPositionStyle = (
+    48→  position: ToastPosition,
+    49→  offset: number
+    50→): React.CSSProperties => {
+    51→  const top = position.includes('top');
+    52→  const verticalStyle: React.CSSProperties = top ? { top: 0 } : { bottom: 0 };
+    53→  const horizontalStyle: React.CSSProperties = position.includes('center')
+    54→    ? {
+    55→        justifyContent: 'center',
+    56→      }
+    57→    : position.includes('right')
+    58→    ? {
+    59→        justifyContent: 'flex-end',
+    60→      }
+    61→    : {};
+    62→  return {
+    63→    left: 0,
+    64→    right: 0,
+    65→    display: 'flex',
+    66→    position: 'absolute',
+    67→    transition: prefersReducedMotion()
+    68→      ? undefined
+    69→      : `all 230ms cubic-bezier(.21,1.02,.73,1)`,
+    70→    transform: `translateY(${offset * (top ? 1 : -1)}px)`,
+    71→    ...verticalStyle,
+    72→    ...horizontalStyle,
+    73→  };
+    74→};
+    75→
+    76→const activeClass = css`
+    77→  z-index: 9999;
+    78→  > * {
+    79→    pointer-events: auto;
+    80→  }
+    81→`;
+    82→
+    83→const DEFAULT_OFFSET = 16;
+    84→
+    85→export const Toaster: React.FC<ToasterProps> = ({
+    86→  reverseOrder,
+    87→  position = 'top-center',
+    88→  toastOptions,
+    89→  gutter,
+    90→  children,
+    91→  toasterId,
+    92→  containerStyle,
+    93→  containerClassName,
+    94→}) => {
+    95→  const { toasts, handlers } = useToaster(toastOptions, toasterId);
+    96→
+    97→  return (
+    98→    <div
+    99→      data-rht-toaster={toasterId || ''}
+   100→      style={{
+   101→        position: 'fixed',
+   102→        zIndex: 9999,
+   103→        top: DEFAULT_OFFSET,
+   104→        left: DEFAULT_OFFSET,
+   105→        right: DEFAULT_OFFSET,
+   106→        bottom: DEFAULT_OFFSET,
+   107→        pointerEvents: 'none',
+   108→        ...containerStyle,
+   109→      }}
+   110→      className={containerClassName}
+   111→      onMouseEnter={handlers.startPause}
+   112→      onMouseLeave={handlers.endPause}
+   113→    >
+   114→      {toasts.map((t) => {
+   115→        const toastPosition = t.position || position;
+   116→        const offset = handlers.calculateOffset(t, {
+   117→          reverseOrder,
+   118→          gutter,
+   119→          defaultPosition: position,
+   120→        });
+   121→        const positionStyle = getPositionStyle(toastPosition, offset);
+   122→
+   123→        return (
+   124→          <ToastWrapper
+   125→            id={t.id}
+   126→            key={t.id}
+   127→            onHeightUpdate={handlers.updateHeight}
+   128→            className={t.visible ? activeClass : ''}
+   129→            style={positionStyle}
+   130→          >
+   131→            {t.type === 'custom' ? (
+   132→              resolveValue(t.message, t)
+   133→            ) : children ? (
+   134→              children(t)
+   135→            ) : (
+   136→              <ToastBar toast={t} position={toastPosition} />
+   137→            )}
+   138→          </ToastWrapper>
+   139→        );
+   140→      })}
+   141→    </div>
+   142→  );
+   143→};

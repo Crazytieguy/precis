@@ -1,0 +1,847 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 → level 12 (3142 words)
+
+browser.js
+     1→/* eslint-env browser */
+     2→
+     3→/**
+     4→ * This is the web browser implementation of `debug()`.
+     5→ */
+     6→
+     7→exports.formatArgs = formatArgs;
+     8→exports.save = save;
+     9→exports.load = load;
+    10→exports.useColors = useColors;
+    11→exports.storage = localstorage();
+    12→exports.destroy = (() => {
+    13→	let warned = false;
+    14→
+    15→	return () => {
+    16→		if (!warned) {
+    17→			warned = true;
+    18→			console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
+    19→		}
+    20→	};
+    21→})();
+    22→
+    23→/**
+    24→ * Colors.
+    25→ */
+    26→
+    27→exports.colors = [
+    28→	'#0000CC',
+    29→	'#0000FF',
+    30→	'#0033CC',
+    31→	'#0033FF',
+    32→	'#0066CC',
+    33→	'#0066FF',
+    34→	'#0099CC',
+    35→	'#0099FF',
+    36→	'#00CC00',
+    37→	'#00CC33',
+    38→	'#00CC66',
+    39→	'#00CC99',
+    40→	'#00CCCC',
+    41→	'#00CCFF',
+    42→	'#3300CC',
+    43→	'#3300FF',
+    44→	'#3333CC',
+    45→	'#3333FF',
+    46→	'#3366CC',
+    47→	'#3366FF',
+    48→	'#3399CC',
+    49→	'#3399FF',
+    50→	'#33CC00',
+    51→	'#33CC33',
+    52→	'#33CC66',
+    53→	'#33CC99',
+    54→	'#33CCCC',
+    55→	'#33CCFF',
+    56→	'#6600CC',
+    57→	'#6600FF',
+    58→	'#6633CC',
+    59→	'#6633FF',
+    60→	'#66CC00',
+    61→	'#66CC33',
+    62→	'#9900CC',
+    63→	'#9900FF',
+    64→	'#9933CC',
+    65→	'#9933FF',
+    66→	'#99CC00',
+    67→	'#99CC33',
+    68→	'#CC0000',
+    69→	'#CC0033',
+    70→	'#CC0066',
+    71→	'#CC0099',
+    72→	'#CC00CC',
+    73→	'#CC00FF',
+    74→	'#CC3300',
+    75→	'#CC3333',
+    76→	'#CC3366',
+    77→	'#CC3399',
+    78→	'#CC33CC',
+    79→	'#CC33FF',
+    80→	'#CC6600',
+    81→	'#CC6633',
+    82→	'#CC9900',
+    83→	'#CC9933',
+    84→	'#CCCC00',
+    85→	'#CCCC33',
+    86→	'#FF0000',
+    87→	'#FF0033',
+    88→	'#FF0066',
+    89→	'#FF0099',
+    90→	'#FF00CC',
+    91→	'#FF00FF',
+    92→	'#FF3300',
+    93→	'#FF3333',
+    94→	'#FF3366',
+    95→	'#FF3399',
+    96→	'#FF33CC',
+    97→	'#FF33FF',
+    98→	'#FF6600',
+    99→	'#FF6633',
+   100→	'#FF9900',
+   101→	'#FF9933',
+   102→	'#FFCC00',
+   103→	'#FFCC33'
+   104→];
+   105→
+   106→/**
+   107→ * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+   108→ * and the Firebug extension (any Firefox version) are known
+   109→ * to support "%c" CSS customizations.
+   110→ *
+   111→ * TODO: add a `localStorage` variable to explicitly enable/disable colors
+   112→ */
+   113→
+   114→// eslint-disable-next-line complexity
+   115→function useColors() {
+   116→	// NB: In an Electron preload script, document will be defined but not fully
+   117→	// initialized. Since we know we're in Chrome, we'll just detect this case
+   118→	// explicitly
+   119→	if (typeof window !== 'undefined' && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
+   120→		return true;
+   121→	}
+   122→
+   123→	// Internet Explorer and Edge do not support colors.
+   124→	if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/)) {
+   125→		return false;
+   126→	}
+   127→
+   128→	let m;
+   129→
+   130→	// Is webkit? http://stackoverflow.com/a/16459606/376773
+   131→	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+   132→	// eslint-disable-next-line no-return-assign
+   133→	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
+   134→		// Is firebug? http://stackoverflow.com/a/398120/376773
+   135→		(typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
+   136→		// Is firefox >= v31?
+   137→		// https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+   138→		(typeof navigator !== 'undefined' && navigator.userAgent && (m = navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/)) && parseInt(m[1], 10) >= 31) ||
+   139→		// Double check webkit in userAgent just in case we are in a worker
+   140→		(typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
+   141→}
+   142→
+   143→/**
+   144→ * Colorize log arguments if enabled.
+   145→ *
+   146→ * @api public
+   147→ */
+   148→
+   149→function formatArgs(args) {
+   150→	args[0] = (this.useColors ? '%c' : '') +
+   151→		this.namespace +
+   152→		(this.useColors ? ' %c' : ' ') +
+   153→		args[0] +
+   154→		(this.useColors ? '%c ' : ' ') +
+   155→		'+' + module.exports.humanize(this.diff);
+   156→
+   157→	if (!this.useColors) {
+   158→		return;
+   159→	}
+   160→
+   161→	const c = 'color: ' + this.color;
+   162→	args.splice(1, 0, c, 'color: inherit');
+   163→
+   164→	// The final "%c" is somewhat tricky, because there could be other
+   165→	// arguments passed either before or after the %c, so we need to
+   166→	// figure out the correct index to insert the CSS into
+   167→	let index = 0;
+   168→	let lastC = 0;
+   169→	args[0].replace(/%[a-zA-Z%]/g, match => {
+   170→		if (match === '%%') {
+   171→			return;
+   172→		}
+   173→		index++;
+   174→		if (match === '%c') {
+   175→			// We only are interested in the *last* %c
+   176→			// (the user may have provided their own)
+   177→			lastC = index;
+   178→		}
+   179→	});
+   180→
+   181→	args.splice(lastC, 0, c);
+   182→}
+   183→
+   184→/**
+   185→ * Invokes `console.debug()` when available.
+   186→ * No-op when `console.debug` is not a "function".
+   187→ * If `console.debug` is not available, falls back
+   188→ * to `console.log`.
+   189→ *
+   190→ * @api public
+   191→ */
+   192→exports.log = console.debug || console.log || (() => {});
+   193→
+   194→/**
+   195→ * Save `namespaces`.
+   196→ *
+   197→ * @param {String} namespaces
+   198→ * @api private
+   199→ */
+   200→function save(namespaces) {
+   201→	try {
+   202→		if (namespaces) {
+   203→			exports.storage.setItem('debug', namespaces);
+   204→		} else {
+   205→			exports.storage.removeItem('debug');
+   206→		}
+   207→	} catch (error) {
+   208→		// Swallow
+   209→		// XXX (@Qix-) should we be logging these?
+   210→	}
+   211→}
+   212→
+   213→/**
+   214→ * Load `namespaces`.
+   215→ *
+   216→ * @return {String} returns the previously persisted debug modes
+   217→ * @api private
+   218→ */
+   219→function load() {
+   220→	let r;
+   221→	try {
+   222→		r = exports.storage.getItem('debug') || exports.storage.getItem('DEBUG') ;
+   223→	} catch (error) {
+   224→		// Swallow
+   225→		// XXX (@Qix-) should we be logging these?
+   226→	}
+   227→
+   228→	// If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+   229→	if (!r && typeof process !== 'undefined' && 'env' in process) {
+   230→		r = process.env.DEBUG;
+   231→	}
+   232→
+   233→	return r;
+   234→}
+   235→
+   236→/**
+   237→ * Localstorage attempts to return the localstorage.
+   238→ *
+   239→ * This is necessary because safari throws
+   240→ * when a user disables cookies/localstorage
+   241→ * and you attempt to access it.
+   242→ *
+   243→ * @return {LocalStorage}
+   244→ * @api private
+   245→ */
+   246→
+   247→function localstorage() {
+   248→	try {
+   249→		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
+   250→		// The Browser also has localStorage in the global context.
+   251→		return localStorage;
+   252→	} catch (error) {
+   253→		// Swallow
+   254→		// XXX (@Qix-) should we be logging these?
+   255→	}
+   256→}
+   257→
+   258→module.exports = require('./common')(exports);
+   259→
+   260→const {formatters} = module.exports;
+   261→
+   262→/**
+   263→ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+   264→ */
+   265→
+   266→formatters.j = function (v) {
+   267→	try {
+   268→		return JSON.stringify(v);
+   269→	} catch (error) {
+   270→		return '[UnexpectedJSONParseError]: ' + error.message;
+   271→	}
+   272→};
+common.js
+     1→
+     2→/**
+     3→ * This is the common logic for both the Node.js and web browser
+     4→ * implementations of `debug()`.
+     5→ */
+     6→
+     7→function setup(env) {
+     8→	createDebug.debug = createDebug;
+     9→	createDebug.default = createDebug;
+    10→	createDebug.coerce = coerce;
+    11→	createDebug.disable = disable;
+    12→	createDebug.enable = enable;
+    13→	createDebug.enabled = enabled;
+    14→	createDebug.humanize = require('ms');
+    15→	createDebug.destroy = destroy;
+    16→
+    17→	Object.keys(env).forEach(key => {
+    18→		createDebug[key] = env[key];
+    19→	});
+    20→
+    21→	/**
+    22→	* The currently active debug mode names, and names to skip.
+    23→	*/
+    24→
+    25→	createDebug.names = [];
+    26→	createDebug.skips = [];
+    27→
+    28→	/**
+    29→	* Map of special "%n" handling functions, for the debug "format" argument.
+    30→	*
+    31→	* Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+    32→	*/
+    33→	createDebug.formatters = {};
+    34→
+    35→	/**
+    36→	* Selects a color for a debug namespace
+    37→	* @param {String} namespace The namespace string for the debug instance to be colored
+    38→	* @return {Number|String} An ANSI color code for the given namespace
+    39→	* @api private
+    40→	*/
+    41→	function selectColor(namespace) {
+    42→		let hash = 0;
+    43→
+    44→		for (let i = 0; i < namespace.length; i++) {
+    45→			hash = ((hash << 5) - hash) + namespace.charCodeAt(i);
+    46→			hash |= 0; // Convert to 32bit integer
+    47→		}
+    48→
+    49→		return createDebug.colors[Math.abs(hash) % createDebug.colors.length];
+    50→	}
+    51→	createDebug.selectColor = selectColor;
+    52→
+    53→	/**
+    54→	* Create a debugger with the given `namespace`.
+    55→	*
+    56→	* @param {String} namespace
+    57→	* @return {Function}
+    58→	* @api public
+    59→	*/
+    60→	function createDebug(namespace) {
+    61→		let prevTime;
+    62→		let enableOverride = null;
+    63→		let namespacesCache;
+    64→		let enabledCache;
+    65→
+    66→		function debug(...args) {
+    67→			// Disabled?
+    68→			if (!debug.enabled) {
+    69→				return;
+    70→			}
+    71→
+    72→			const self = debug;
+    73→
+    74→			// Set `diff` timestamp
+    75→			const curr = Number(new Date());
+    76→			const ms = curr - (prevTime || curr);
+    77→			self.diff = ms;
+    78→			self.prev = prevTime;
+    79→			self.curr = curr;
+    80→			prevTime = curr;
+    81→
+    82→			args[0] = createDebug.coerce(args[0]);
+    83→
+    84→			if (typeof args[0] !== 'string') {
+    85→				// Anything else let's inspect with %O
+    86→				args.unshift('%O');
+    87→			}
+    88→
+    89→			// Apply any `formatters` transformations
+    90→			let index = 0;
+    91→			args[0] = args[0].replace(/%([a-zA-Z%])/g, (match, format) => {
+    92→				// If we encounter an escaped % then don't increase the array index
+    93→				if (match === '%%') {
+    94→					return '%';
+    95→				}
+    96→				index++;
+    97→				const formatter = createDebug.formatters[format];
+    98→				if (typeof formatter === 'function') {
+    99→					const val = args[index];
+   100→					match = formatter.call(self, val);
+   101→
+   102→					// Now we need to remove `args[index]` since it's inlined in the `format`
+   103→					args.splice(index, 1);
+   104→					index--;
+   105→				}
+   106→				return match;
+   107→			});
+   108→
+   109→			// Apply env-specific formatting (colors, etc.)
+   110→			createDebug.formatArgs.call(self, args);
+   111→
+   112→			const logFn = self.log || createDebug.log;
+   113→			logFn.apply(self, args);
+   114→		}
+   115→
+   116→		debug.namespace = namespace;
+   117→		debug.useColors = createDebug.useColors();
+   118→		debug.color = createDebug.selectColor(namespace);
+   119→		debug.extend = extend;
+   120→		debug.destroy = createDebug.destroy; // XXX Temporary. Will be removed in the next major release.
+   121→
+   122→		Object.defineProperty(debug, 'enabled', {
+   123→			enumerable: true,
+   124→			configurable: false,
+   125→			get: () => {
+   126→				if (enableOverride !== null) {
+   127→					return enableOverride;
+   128→				}
+   129→				if (namespacesCache !== createDebug.namespaces) {
+   130→					namespacesCache = createDebug.namespaces;
+   131→					enabledCache = createDebug.enabled(namespace);
+   132→				}
+   133→
+   134→				return enabledCache;
+   135→			},
+   136→			set: v => {
+   137→				enableOverride = v;
+   138→			}
+   139→		});
+   140→
+   141→		// Env-specific initialization logic for debug instances
+   142→		if (typeof createDebug.init === 'function') {
+   143→			createDebug.init(debug);
+   144→		}
+   145→
+   146→		return debug;
+   147→	}
+   148→
+   149→	function extend(namespace, delimiter) {
+   150→		const newDebug = createDebug(this.namespace + (typeof delimiter === 'undefined' ? ':' : delimiter) + namespace);
+   151→		newDebug.log = this.log;
+   152→		return newDebug;
+   153→	}
+   154→
+   155→	/**
+   156→	* Enables a debug mode by namespaces. This can include modes
+   157→	* separated by a colon and wildcards.
+   158→	*
+   159→	* @param {String} namespaces
+   160→	* @api public
+   161→	*/
+   162→	function enable(namespaces) {
+   163→		createDebug.save(namespaces);
+   164→		createDebug.namespaces = namespaces;
+   165→
+   166→		createDebug.names = [];
+   167→		createDebug.skips = [];
+   168→
+   169→		const split = (typeof namespaces === 'string' ? namespaces : '')
+   170→			.trim()
+   171→			.replace(/\s+/g, ',')
+   172→			.split(',')
+   173→			.filter(Boolean);
+   174→
+   175→		for (const ns of split) {
+   176→			if (ns[0] === '-') {
+   177→				createDebug.skips.push(ns.slice(1));
+   178→			} else {
+   179→				createDebug.names.push(ns);
+   180→			}
+   181→		}
+   182→	}
+   183→
+   184→	/**
+   185→	 * Checks if the given string matches a namespace template, honoring
+   186→	 * asterisks as wildcards.
+   187→	 *
+   188→	 * @param {String} search
+   189→	 * @param {String} template
+   190→	 * @return {Boolean}
+   191→	 */
+   192→	function matchesTemplate(search, template) {
+   193→		let searchIndex = 0;
+   194→		let templateIndex = 0;
+   195→		let starIndex = -1;
+   196→		let matchIndex = 0;
+   197→
+   198→		while (searchIndex < search.length) {
+   199→			if (templateIndex < template.length && (template[templateIndex] === search[searchIndex] || template[templateIndex] === '*')) {
+   200→				// Match character or proceed with wildcard
+   201→				if (template[templateIndex] === '*') {
+   202→					starIndex = templateIndex;
+   203→					matchIndex = searchIndex;
+   204→					templateIndex++; // Skip the '*'
+   205→				} else {
+   206→					searchIndex++;
+   207→					templateIndex++;
+   208→				}
+   209→			} else if (starIndex !== -1) { // eslint-disable-line no-negated-condition
+   210→				// Backtrack to the last '*' and try to match more characters
+   211→				templateIndex = starIndex + 1;
+   212→				matchIndex++;
+   213→				searchIndex = matchIndex;
+   214→			} else {
+   215→				return false; // No match
+   216→			}
+   217→		}
+   218→
+   219→		// Handle trailing '*' in template
+   220→		while (templateIndex < template.length && template[templateIndex] === '*') {
+   221→			templateIndex++;
+   222→		}
+   223→
+   224→		return templateIndex === template.length;
+   225→	}
+   226→
+   227→	/**
+   228→	* Disable debug output.
+   229→	*
+   230→	* @return {String} namespaces
+   231→	* @api public
+   232→	*/
+   233→	function disable() {
+   234→		const namespaces = [
+   235→			...createDebug.names,
+   236→			...createDebug.skips.map(namespace => '-' + namespace)
+   237→		].join(',');
+   238→		createDebug.enable('');
+   239→		return namespaces;
+   240→	}
+   241→
+   242→	/**
+   243→	* Returns true if the given mode name is enabled, false otherwise.
+   244→	*
+   245→	* @param {String} name
+   246→	* @return {Boolean}
+   247→	* @api public
+   248→	*/
+   249→	function enabled(name) {
+   250→		for (const skip of createDebug.skips) {
+   251→			if (matchesTemplate(name, skip)) {
+   252→				return false;
+   253→			}
+   254→		}
+   255→
+   256→		for (const ns of createDebug.names) {
+   257→			if (matchesTemplate(name, ns)) {
+   258→				return true;
+   259→			}
+   260→		}
+   261→
+   262→		return false;
+   263→	}
+   264→
+   265→	/**
+   266→	* Coerce `val`.
+   267→	*
+   268→	* @param {Mixed} val
+   269→	* @return {Mixed}
+   270→	* @api private
+   271→	*/
+   272→	function coerce(val) {
+   273→		if (val instanceof Error) {
+   274→			return val.stack || val.message;
+   275→		}
+   276→		return val;
+   277→	}
+   278→
+   279→	/**
+   280→	* XXX DO NOT USE. This is a temporary stub function.
+   281→	* XXX It WILL be removed in the next major release.
+   282→	*/
+   283→	function destroy() {
+   284→		console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
+   285→	}
+   286→
+   287→	createDebug.enable(createDebug.load());
+   288→
+   289→	return createDebug;
+   290→}
+   291→
+   292→module.exports = setup;
+index.js
+     1→/**
+     2→ * Detect Electron renderer / nwjs process, which is node, but we should
+     3→ * treat as a browser.
+     4→ */
+     5→
+     6→if (typeof process === 'undefined' || process.type === 'renderer' || process.browser === true || process.__nwjs) {
+     7→	module.exports = require('./browser.js');
+     8→} else {
+     9→	module.exports = require('./node.js');
+    10→}
+node.js
+     1→/**
+     2→ * Module dependencies.
+     3→ */
+     4→
+     5→const tty = require('tty');
+     6→const util = require('util');
+     7→
+     8→/**
+     9→ * This is the Node.js implementation of `debug()`.
+    10→ */
+    11→
+    12→exports.init = init;
+    13→exports.log = log;
+    14→exports.formatArgs = formatArgs;
+    15→exports.save = save;
+    16→exports.load = load;
+    17→exports.useColors = useColors;
+    18→exports.destroy = util.deprecate(
+    19→	() => {},
+    20→	'Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.'
+    21→);
+    22→
+    23→/**
+    24→ * Colors.
+    25→ */
+    26→
+    27→exports.colors = [6, 2, 3, 4, 5, 1];
+    28→
+    29→try {
+    30→	// Optional dependency (as in, doesn't need to be installed, NOT like optionalDependencies in package.json)
+    31→	// eslint-disable-next-line import/no-extraneous-dependencies
+    32→	const supportsColor = require('supports-color');
+    33→
+    34→	if (supportsColor && (supportsColor.stderr || supportsColor).level >= 2) {
+    35→		exports.colors = [
+    36→			20,
+    37→			21,
+    38→			26,
+    39→			27,
+    40→			32,
+    41→			33,
+    42→			38,
+    43→			39,
+    44→			40,
+    45→			41,
+    46→			42,
+    47→			43,
+    48→			44,
+    49→			45,
+    50→			56,
+    51→			57,
+    52→			62,
+    53→			63,
+    54→			68,
+    55→			69,
+    56→			74,
+    57→			75,
+    58→			76,
+    59→			77,
+    60→			78,
+    61→			79,
+    62→			80,
+    63→			81,
+    64→			92,
+    65→			93,
+    66→			98,
+    67→			99,
+    68→			112,
+    69→			113,
+    70→			128,
+    71→			129,
+    72→			134,
+    73→			135,
+    74→			148,
+    75→			149,
+    76→			160,
+    77→			161,
+    78→			162,
+    79→			163,
+    80→			164,
+    81→			165,
+    82→			166,
+    83→			167,
+    84→			168,
+    85→			169,
+    86→			170,
+    87→			171,
+    88→			172,
+    89→			173,
+    90→			178,
+    91→			179,
+    92→			184,
+    93→			185,
+    94→			196,
+    95→			197,
+    96→			198,
+    97→			199,
+    98→			200,
+    99→			201,
+   100→			202,
+   101→			203,
+   102→			204,
+   103→			205,
+   104→			206,
+   105→			207,
+   106→			208,
+   107→			209,
+   108→			214,
+   109→			215,
+   110→			220,
+   111→			221
+   112→		];
+   113→	}
+   114→} catch (error) {
+   115→	// Swallow - we only care if `supports-color` is available; it doesn't have to be.
+   116→}
+   117→
+   118→/**
+   119→ * Build up the default `inspectOpts` object from the environment variables.
+   120→ *
+   121→ *   $ DEBUG_COLORS=no DEBUG_DEPTH=10 DEBUG_SHOW_HIDDEN=enabled node script.js
+   122→ */
+   123→
+   124→exports.inspectOpts = Object.keys(process.env).filter(key => {
+   125→	return /^debug_/i.test(key);
+   126→}).reduce((obj, key) => {
+   127→	// Camel-case
+   128→	const prop = key
+   129→		.substring(6)
+   130→		.toLowerCase()
+   131→		.replace(/_([a-z])/g, (_, k) => {
+   132→			return k.toUpperCase();
+   133→		});
+   134→
+   135→	// Coerce string value into JS value
+   136→	let val = process.env[key];
+   137→	if (/^(yes|on|true|enabled)$/i.test(val)) {
+   138→		val = true;
+   139→	} else if (/^(no|off|false|disabled)$/i.test(val)) {
+   140→		val = false;
+   141→	} else if (val === 'null') {
+   142→		val = null;
+   143→	} else {
+   144→		val = Number(val);
+   145→	}
+   146→
+   147→	obj[prop] = val;
+   148→	return obj;
+   149→}, {});
+   150→
+   151→/**
+   152→ * Is stdout a TTY? Colored output is enabled when `true`.
+   153→ */
+   154→
+   155→function useColors() {
+   156→	return 'colors' in exports.inspectOpts ?
+   157→		Boolean(exports.inspectOpts.colors) :
+   158→		tty.isatty(process.stderr.fd);
+   159→}
+   160→
+   161→/**
+   162→ * Adds ANSI color escape codes if enabled.
+   163→ *
+   164→ * @api public
+   165→ */
+   166→
+   167→function formatArgs(args) {
+   168→	const {namespace: name, useColors} = this;
+   169→
+   170→	if (useColors) {
+   171→		const c = this.color;
+   172→		const colorCode = '\u001B[3' + (c < 8 ? c : '8;5;' + c);
+   173→		const prefix = `  ${colorCode};1m${name} \u001B[0m`;
+   174→
+   175→		args[0] = prefix + args[0].split('\n').join('\n' + prefix);
+   176→		args.push(colorCode + 'm+' + module.exports.humanize(this.diff) + '\u001B[0m');
+   177→	} else {
+   178→		args[0] = getDate() + name + ' ' + args[0];
+   179→	}
+   180→}
+   181→
+   182→function getDate() {
+   183→	if (exports.inspectOpts.hideDate) {
+   184→		return '';
+   185→	}
+   186→	return new Date().toISOString() + ' ';
+   187→}
+   188→
+   189→/**
+   190→ * Invokes `util.formatWithOptions()` with the specified arguments and writes to stderr.
+   191→ */
+   192→
+   193→function log(...args) {
+   194→	return process.stderr.write(util.formatWithOptions(exports.inspectOpts, ...args) + '\n');
+   195→}
+   196→
+   197→/**
+   198→ * Save `namespaces`.
+   199→ *
+   200→ * @param {String} namespaces
+   201→ * @api private
+   202→ */
+   203→function save(namespaces) {
+   204→	if (namespaces) {
+   205→		process.env.DEBUG = namespaces;
+   206→	} else {
+   207→		// If you set a process.env field to null or undefined, it gets cast to the
+   208→		// string 'null' or 'undefined'. Just delete instead.
+   209→		delete process.env.DEBUG;
+   210→	}
+   211→}
+   212→
+   213→/**
+   214→ * Load `namespaces`.
+   215→ *
+   216→ * @return {String} returns the previously persisted debug modes
+   217→ * @api private
+   218→ */
+   219→
+   220→function load() {
+   221→	return process.env.DEBUG;
+   222→}
+   223→
+   224→/**
+   225→ * Init logic for `debug` instances.
+   226→ *
+   227→ * Create a new `inspectOpts` object in case `useColors` is set
+   228→ * differently for a particular `debug` instance.
+   229→ */
+   230→
+   231→function init(debug) {
+   232→	debug.inspectOpts = {};
+   233→
+   234→	const keys = Object.keys(exports.inspectOpts);
+   235→	for (let i = 0; i < keys.length; i++) {
+   236→		debug.inspectOpts[keys[i]] = exports.inspectOpts[keys[i]];
+   237→	}
+   238→}
+   239→
+   240→module.exports = require('./common')(exports);
+   241→
+   242→const {formatters} = module.exports;
+   243→
+   244→/**
+   245→ * Map %o to `util.inspect()`, all on a single line.
+   246→ */
+   247→
+   248→formatters.o = function (v) {
+   249→	this.inspectOpts.colors = this.useColors;
+   250→	return util.inspect(v, this.inspectOpts)
+   251→		.split('\n')
+   252→		.map(str => str.trim())
+   253→		.join(' ');
+   254→};
+   255→
+   256→/**
+   257→ * Map %O to `util.inspect()`, allowing multiple lines if needed.
+   258→ */
+   259→
+   260→formatters.O = function (v) {
+   261→	this.inspectOpts.colors = this.useColors;
+   262→	return util.inspect(v, this.inspectOpts);
+   263→};

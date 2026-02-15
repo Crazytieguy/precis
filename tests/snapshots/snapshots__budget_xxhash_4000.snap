@@ -1,0 +1,593 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 → level 12 (2598 words)
+
+README.md
+     1→# xxhash
+     2→
+     3→[![Go Reference](https://pkg.go.dev/badge/github.com/cespare/xxhash/v2.svg)](https://pkg.go.dev/github.com/cespare/xxhash/v2)
+     4→[![Test](https://github.com/cespare/xxhash/actions/workflows/test.yml/badge.svg)](https://github.com/cespare/xxhash/actions/workflows/test.yml)
+     5→
+     6→xxhash is a Go implementation of the 64-bit [xxHash] algorithm, XXH64. This is a
+     7→high-quality hashing algorithm that is much faster than anything in the Go
+     8→standard library.
+     9→
+    10→This package provides a straightforward API:
+    11→
+    12→```
+    13→func Sum64(b []byte) uint64
+    14→func Sum64String(s string) uint64
+    15→type Digest struct{ ... }
+    16→    func New() *Digest
+    17→```
+    18→
+    19→The `Digest` type implements hash.Hash64. Its key methods are:
+    20→
+    21→```
+    22→func (*Digest) Write([]byte) (int, error)
+    23→func (*Digest) WriteString(string) (int, error)
+    24→func (*Digest) Sum64() uint64
+    25→```
+    26→
+    27→The package is written with optimized pure Go and also contains even faster
+    28→assembly implementations for amd64 and arm64. If desired, the `purego` build tag
+    29→opts into using the Go code even on those architectures.
+    30→
+    31→[xxHash]: https://xxhash.com/
+    32→
+    33→## Compatibility
+    34→
+    35→This package is in a module and the latest code is in version 2 of the module.
+    36→You need a version of Go with at least "minimal module compatibility" to use
+    37→github.com/cespare/xxhash/v2:
+    38→
+    39→* 1.9.7+ for Go 1.9
+    40→* 1.10.3+ for Go 1.10
+    41→* Go 1.11 or later
+    42→
+    43→I recommend using the latest release of Go.
+    44→
+    45→## Benchmarks
+    46→
+    47→Here are some quick benchmarks comparing the pure-Go and assembly
+    48→implementations of Sum64.
+    49→
+    50→| input size | purego    | asm       |
+    51→| ---------- | --------- | --------- |
+    52→| 4 B        |  1.3 GB/s |  1.2 GB/s |
+    53→| 16 B       |  2.9 GB/s |  3.5 GB/s |
+    54→| 100 B      |  6.9 GB/s |  8.1 GB/s |
+    55→| 4 KB       | 11.7 GB/s | 16.7 GB/s |
+    56→| 10 MB      | 12.0 GB/s | 17.3 GB/s |
+    57→
+    58→These numbers were generated on Ubuntu 20.04 with an Intel Xeon Platinum 8252C
+    59→CPU using the following commands under Go 1.19.2:
+    60→
+    61→```
+    62→benchstat <(go test -tags purego -benchtime 500ms -count 15 -bench 'Sum64$')
+    63→benchstat <(go test -benchtime 500ms -count 15 -bench 'Sum64$')
+    64→```
+    65→
+    66→## Projects using this package
+    67→
+    68→- [InfluxDB](https://github.com/influxdata/influxdb)
+    69→- [Prometheus](https://github.com/prometheus/prometheus)
+    70→- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
+    71→- [FreeCache](https://github.com/coocood/freecache)
+    72→- [FastCache](https://github.com/VictoriaMetrics/fastcache)
+    73→- [Ristretto](https://github.com/dgraph-io/ristretto)
+    74→- [Badger](https://github.com/dgraph-io/badger)
+dynamic/plugin.go
+     1→//go:build ignore
+     2→// +build ignore
+     3→
+     4→package main
+     5→
+     6→import (
+     7→	"fmt"
+     8→	"log"
+     9→	"testing"
+    10→
+    11→	"github.com/cespare/xxhash/v2"
+    12→)
+    13→
+    14→const (
+    15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
+    16→	want = uint64(0x02a2e85470d6fd96)
+    17→)
+    18→
+    19→func TestSum(t *testing.T) {
+    20→	got := xxhash.Sum64String(in)
+    21→	if got != want {
+    22→		t.Fatalf("Sum64String: got 0x%x; want 0x%x", got, want)
+    23→	}
+    24→}
+    25→
+    26→func TestDigest(t *testing.T) {
+    27→	for chunkSize := 1; chunkSize <= len(in); chunkSize++ {
+    28→		name := fmt.Sprintf("[chunkSize=%d]", chunkSize)
+    29→		t.Run(name, func(t *testing.T) {
+    30→			d := xxhash.New()
+    31→			for i := 0; i < len(in); i += chunkSize {
+    32→				chunk := in[i:]
+    33→				if len(chunk) > chunkSize {
+    34→					chunk = chunk[:chunkSize]
+    35→				}
+    36→				n, err := d.WriteString(chunk)
+    37→				if err != nil || n != len(chunk) {
+    38→					t.Fatalf("Digest.WriteString: got (%d, %v); want (%d, nil)",
+    39→						n, err, len(chunk))
+    40→				}
+    41→			}
+    42→			if got := d.Sum64(); got != want {
+    43→				log.Fatalf("Digest.Sum64: got 0x%x; want 0x%x", got, want)
+    44→			}
+    45→		})
+    46→	}
+    47→}
+xxhash.go
+     1→// Package xxhash implements the 64-bit variant of xxHash (XXH64) as described
+     2→// at https://xxhash.com/.
+     3→package xxhash
+     4→
+     5→import (
+     6→	"encoding/binary"
+     7→	"errors"
+     8→	"math/bits"
+     9→)
+    10→
+    11→const (
+    12→	prime1 uint64 = 11400714785074694791
+    13→	prime2 uint64 = 14029467366897019727
+    14→	prime3 uint64 = 1609587929392839161
+    15→	prime4 uint64 = 9650029242287828579
+    16→	prime5 uint64 = 2870177450012600261
+    17→)
+    18→
+    19→// Store the primes in an array as well.
+    20→//
+    21→// The consts are used when possible in Go code to avoid MOVs but we need a
+    22→// contiguous array for the assembly code.
+    23→var primes = [...]uint64{prime1, prime2, prime3, prime4, prime5}
+    24→
+    25→// Digest implements hash.Hash64.
+    26→//
+    27→// Note that a zero-valued Digest is not ready to receive writes.
+    28→// Call Reset or create a Digest using New before calling other methods.
+    29→type Digest struct {
+    30→	v1    uint64
+    31→	v2    uint64
+    32→	v3    uint64
+    33→	v4    uint64
+    34→	total uint64
+    35→	mem   [32]byte
+    36→	n     int // how much of mem is used
+    37→}
+    38→
+    39→// New creates a new Digest with a zero seed.
+    40→func New() *Digest {
+    41→	return NewWithSeed(0)
+    42→}
+    43→
+    44→// NewWithSeed creates a new Digest with the given seed.
+    45→func NewWithSeed(seed uint64) *Digest {
+    46→	var d Digest
+    47→	d.ResetWithSeed(seed)
+    48→	return &d
+    49→}
+    50→
+    51→// Reset clears the Digest's state so that it can be reused.
+    52→// It uses a seed value of zero.
+    53→func (d *Digest) Reset() {
+    54→	d.ResetWithSeed(0)
+    55→}
+    56→
+    57→// ResetWithSeed clears the Digest's state so that it can be reused.
+    58→// It uses the given seed to initialize the state.
+    59→func (d *Digest) ResetWithSeed(seed uint64) {
+    60→	d.v1 = seed + prime1 + prime2
+    61→	d.v2 = seed + prime2
+    62→	d.v3 = seed
+    63→	d.v4 = seed - prime1
+    64→	d.total = 0
+    65→	d.n = 0
+    66→}
+    67→
+    68→// Size always returns 8 bytes.
+    69→func (d *Digest) Size() int { return 8 }
+    70→
+    71→// BlockSize always returns 32 bytes.
+    72→func (d *Digest) BlockSize() int { return 32 }
+    73→
+    74→// Write adds more data to d. It always returns len(b), nil.
+    75→func (d *Digest) Write(b []byte) (n int, err error) {
+    76→	n = len(b)
+    77→	d.total += uint64(n)
+    78→
+    79→	memleft := d.mem[d.n&(len(d.mem)-1):]
+    80→
+    81→	if d.n+n < 32 {
+    82→		// This new data doesn't even fill the current block.
+    83→		copy(memleft, b)
+    84→		d.n += n
+    85→		return
+    86→	}
+    87→
+    88→	if d.n > 0 {
+    89→		// Finish off the partial block.
+    90→		c := copy(memleft, b)
+    91→		d.v1 = round(d.v1, u64(d.mem[0:8]))
+    92→		d.v2 = round(d.v2, u64(d.mem[8:16]))
+    93→		d.v3 = round(d.v3, u64(d.mem[16:24]))
+    94→		d.v4 = round(d.v4, u64(d.mem[24:32]))
+    95→		b = b[c:]
+    96→		d.n = 0
+    97→	}
+    98→
+    99→	if len(b) >= 32 {
+   100→		// One or more full blocks left.
+   101→		nw := writeBlocks(d, b)
+   102→		b = b[nw:]
+   103→	}
+   104→
+   105→	// Store any remaining partial block.
+   106→	copy(d.mem[:], b)
+   107→	d.n = len(b)
+   108→
+   109→	return
+   110→}
+   111→
+   112→// Sum appends the current hash to b and returns the resulting slice.
+   113→func (d *Digest) Sum(b []byte) []byte {
+   114→	s := d.Sum64()
+   115→	return append(
+   116→		b,
+   117→		byte(s>>56),
+   118→		byte(s>>48),
+   119→		byte(s>>40),
+   120→		byte(s>>32),
+   121→		byte(s>>24),
+   122→		byte(s>>16),
+   123→		byte(s>>8),
+   124→		byte(s),
+   125→	)
+   126→}
+   127→
+   128→// Sum64 returns the current hash.
+   129→func (d *Digest) Sum64() uint64 {
+   130→	var h uint64
+   131→
+   132→	if d.total >= 32 {
+   133→		v1, v2, v3, v4 := d.v1, d.v2, d.v3, d.v4
+   134→		h = rol1(v1) + rol7(v2) + rol12(v3) + rol18(v4)
+   135→		h = mergeRound(h, v1)
+   136→		h = mergeRound(h, v2)
+   137→		h = mergeRound(h, v3)
+   138→		h = mergeRound(h, v4)
+   139→	} else {
+   140→		h = d.v3 + prime5
+   141→	}
+   142→
+   143→	h += d.total
+   144→
+   145→	b := d.mem[:d.n&(len(d.mem)-1)]
+   146→	for ; len(b) >= 8; b = b[8:] {
+   147→		k1 := round(0, u64(b[:8]))
+   148→		h ^= k1
+   149→		h = rol27(h)*prime1 + prime4
+   150→	}
+   151→	if len(b) >= 4 {
+   152→		h ^= uint64(u32(b[:4])) * prime1
+   153→		h = rol23(h)*prime2 + prime3
+   154→		b = b[4:]
+   155→	}
+   156→	for ; len(b) > 0; b = b[1:] {
+   157→		h ^= uint64(b[0]) * prime5
+   158→		h = rol11(h) * prime1
+   159→	}
+   160→
+   161→	h ^= h >> 33
+   162→	h *= prime2
+   163→	h ^= h >> 29
+   164→	h *= prime3
+   165→	h ^= h >> 32
+   166→
+   167→	return h
+   168→}
+   169→
+   170→const (
+   171→	magic         = "xxh\x06"
+   172→	marshaledSize = len(magic) + 8*5 + 32
+   173→)
+   174→
+   175→// MarshalBinary implements the encoding.BinaryMarshaler interface.
+   176→func (d *Digest) MarshalBinary() ([]byte, error) {
+   177→	b := make([]byte, 0, marshaledSize)
+   178→	b = append(b, magic...)
+   179→	b = appendUint64(b, d.v1)
+   180→	b = appendUint64(b, d.v2)
+   181→	b = appendUint64(b, d.v3)
+   182→	b = appendUint64(b, d.v4)
+   183→	b = appendUint64(b, d.total)
+   184→	b = append(b, d.mem[:d.n]...)
+   185→	b = b[:len(b)+len(d.mem)-d.n]
+   186→	return b, nil
+   187→}
+   188→
+   189→// UnmarshalBinary implements the encoding.BinaryUnmarshaler interface.
+   190→func (d *Digest) UnmarshalBinary(b []byte) error {
+   191→	if len(b) < len(magic) || string(b[:len(magic)]) != magic {
+   192→		return errors.New("xxhash: invalid hash state identifier")
+   193→	}
+   194→	if len(b) != marshaledSize {
+   195→		return errors.New("xxhash: invalid hash state size")
+   196→	}
+   197→	b = b[len(magic):]
+   198→	b, d.v1 = consumeUint64(b)
+   199→	b, d.v2 = consumeUint64(b)
+   200→	b, d.v3 = consumeUint64(b)
+   201→	b, d.v4 = consumeUint64(b)
+   202→	b, d.total = consumeUint64(b)
+   203→	copy(d.mem[:], b)
+   204→	d.n = int(d.total % uint64(len(d.mem)))
+   205→	return nil
+   206→}
+   207→
+   208→func appendUint64(b []byte, x uint64) []byte {
+   209→	var a [8]byte
+   210→	binary.LittleEndian.PutUint64(a[:], x)
+   211→	return append(b, a[:]...)
+   212→}
+   213→
+   214→func consumeUint64(b []byte) ([]byte, uint64) {
+   215→	x := u64(b)
+   216→	return b[8:], x
+   217→}
+   218→
+   219→func u64(b []byte) uint64 { return binary.LittleEndian.Uint64(b) }
+   220→func u32(b []byte) uint32 { return binary.LittleEndian.Uint32(b) }
+   221→
+   222→func round(acc, input uint64) uint64 {
+   223→	acc += input * prime2
+   224→	acc = rol31(acc)
+   225→	acc *= prime1
+   226→	return acc
+   227→}
+   228→
+   229→func mergeRound(acc, val uint64) uint64 {
+   230→	val = round(0, val)
+   231→	acc ^= val
+   232→	acc = acc*prime1 + prime4
+   233→	return acc
+   234→}
+   235→
+   236→func rol1(x uint64) uint64  { return bits.RotateLeft64(x, 1) }
+   237→func rol7(x uint64) uint64  { return bits.RotateLeft64(x, 7) }
+   238→func rol11(x uint64) uint64 { return bits.RotateLeft64(x, 11) }
+   239→func rol12(x uint64) uint64 { return bits.RotateLeft64(x, 12) }
+   240→func rol18(x uint64) uint64 { return bits.RotateLeft64(x, 18) }
+   241→func rol23(x uint64) uint64 { return bits.RotateLeft64(x, 23) }
+   242→func rol27(x uint64) uint64 { return bits.RotateLeft64(x, 27) }
+   243→func rol31(x uint64) uint64 { return bits.RotateLeft64(x, 31) }
+xxhash_asm.go
+     1→//go:build (amd64 || arm64) && !appengine && gc && !purego
+     2→// +build amd64 arm64
+     3→// +build !appengine
+     4→// +build gc
+     5→// +build !purego
+     6→
+     7→package xxhash
+     8→
+     9→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
+    10→//
+    11→//go:noescape
+    12→func Sum64(b []byte) uint64
+    13→
+    14→//go:noescape
+    15→func writeBlocks(d *Digest, b []byte) int
+xxhash_other.go
+     1→//go:build (!amd64 && !arm64) || appengine || !gc || purego
+     2→// +build !amd64,!arm64 appengine !gc purego
+     3→
+     4→package xxhash
+     5→
+     6→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
+     7→func Sum64(b []byte) uint64 {
+     8→	// A simpler version would be
+     9→	//   d := New()
+    10→	//   d.Write(b)
+    11→	//   return d.Sum64()
+    12→	// but this is faster, particularly for small inputs.
+    13→
+    14→	n := len(b)
+    15→	var h uint64
+    16→
+    17→	if n >= 32 {
+    18→		v1 := primes[0] + prime2
+    19→		v2 := prime2
+    20→		v3 := uint64(0)
+    21→		v4 := -primes[0]
+    22→		for len(b) >= 32 {
+    23→			v1 = round(v1, u64(b[0:8:len(b)]))
+    24→			v2 = round(v2, u64(b[8:16:len(b)]))
+    25→			v3 = round(v3, u64(b[16:24:len(b)]))
+    26→			v4 = round(v4, u64(b[24:32:len(b)]))
+    27→			b = b[32:len(b):len(b)]
+    28→		}
+    29→		h = rol1(v1) + rol7(v2) + rol12(v3) + rol18(v4)
+    30→		h = mergeRound(h, v1)
+    31→		h = mergeRound(h, v2)
+    32→		h = mergeRound(h, v3)
+    33→		h = mergeRound(h, v4)
+    34→	} else {
+    35→		h = prime5
+    36→	}
+    37→
+    38→	h += uint64(n)
+    39→
+    40→	for ; len(b) >= 8; b = b[8:] {
+    41→		k1 := round(0, u64(b[:8]))
+    42→		h ^= k1
+    43→		h = rol27(h)*prime1 + prime4
+    44→	}
+    45→	if len(b) >= 4 {
+    46→		h ^= uint64(u32(b[:4])) * prime1
+    47→		h = rol23(h)*prime2 + prime3
+    48→		b = b[4:]
+    49→	}
+    50→	for ; len(b) > 0; b = b[1:] {
+    51→		h ^= uint64(b[0]) * prime5
+    52→		h = rol11(h) * prime1
+    53→	}
+    54→
+    55→	h ^= h >> 33
+    56→	h *= prime2
+    57→	h ^= h >> 29
+    58→	h *= prime3
+    59→	h ^= h >> 32
+    60→
+    61→	return h
+    62→}
+    63→
+    64→func writeBlocks(d *Digest, b []byte) int {
+    65→	v1, v2, v3, v4 := d.v1, d.v2, d.v3, d.v4
+    66→	n := len(b)
+    67→	for len(b) >= 32 {
+    68→		v1 = round(v1, u64(b[0:8:len(b)]))
+    69→		v2 = round(v2, u64(b[8:16:len(b)]))
+    70→		v3 = round(v3, u64(b[16:24:len(b)]))
+    71→		v4 = round(v4, u64(b[24:32:len(b)]))
+    72→		b = b[32:len(b):len(b)]
+    73→	}
+    74→	d.v1, d.v2, d.v3, d.v4 = v1, v2, v3, v4
+    75→	return n - len(b)
+    76→}
+xxhash_safe.go
+     1→//go:build appengine
+     2→// +build appengine
+     3→
+     4→// This file contains the safe implementations of otherwise unsafe-using code.
+     5→
+     6→package xxhash
+     7→
+     8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
+     9→func Sum64String(s string) uint64 {
+    10→	return Sum64([]byte(s))
+    11→}
+    12→
+    13→// WriteString adds more data to d. It always returns len(s), nil.
+    14→func (d *Digest) WriteString(s string) (n int, err error) {
+    15→	return d.Write([]byte(s))
+    16→}
+xxhash_unsafe.go
+     1→//go:build !appengine
+     2→// +build !appengine
+     3→
+     4→// This file encapsulates usage of unsafe.
+     5→// xxhash_safe.go contains the safe implementations.
+     6→
+     7→package xxhash
+     8→
+     9→import (
+    10→	"unsafe"
+    11→)
+    12→
+    13→// In the future it's possible that compiler optimizations will make these
+    14→// XxxString functions unnecessary by realizing that calls such as
+    15→// Sum64([]byte(s)) don't need to copy s. See https://go.dev/issue/2205.
+    16→// If that happens, even if we keep these functions they can be replaced with
+    17→// the trivial safe code.
+    18→
+    19→// NOTE: The usual way of doing an unsafe string-to-[]byte conversion is:
+    20→//
+    21→//   var b []byte
+    22→//   bh := (*reflect.SliceHeader)(unsafe.Pointer(&b))
+    23→//   bh.Data = (*reflect.StringHeader)(unsafe.Pointer(&s)).Data
+    24→//   bh.Len = len(s)
+    25→//   bh.Cap = len(s)
+    26→//
+    27→// Unfortunately, as of Go 1.15.3 the inliner's cost model assigns a high enough
+    28→// weight to this sequence of expressions that any function that uses it will
+    29→// not be inlined. Instead, the functions below use a different unsafe
+    30→// conversion designed to minimize the inliner weight and allow both to be
+    31→// inlined. There is also a test (TestInlining) which verifies that these are
+    32→// inlined.
+    33→//
+    34→// See https://github.com/golang/go/issues/42739 for discussion.
+    35→
+    36→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
+    37→// It may be faster than Sum64([]byte(s)) by avoiding a copy.
+    38→func Sum64String(s string) uint64 {
+    39→	b := *(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)}))
+    40→	return Sum64(b)
+    41→}
+    42→
+    43→// WriteString adds more data to d. It always returns len(s), nil.
+    44→// It may be faster than Write([]byte(s)) by avoiding a copy.
+    45→func (d *Digest) WriteString(s string) (n int, err error) {
+    46→	d.Write(*(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)})))
+    47→	// d.Write always returns len(s), nil.
+    48→	// Ignoring the return output and returning these fixed values buys a
+    49→	// savings of 6 in the inliner's cost model.
+    50→	return len(s), nil
+    51→}
+    52→
+    53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
+    54→// of the first two words is the same as the layout of a string.
+    55→type sliceHeader struct {
+    56→	s   string
+    57→	cap int
+    58→}
+xxhsum/xxhsum.go
+     1→package main
+     2→
+     3→import (
+     4→	"fmt"
+     5→	"io"
+     6→	"os"
+     7→
+     8→	"github.com/cespare/xxhash/v2"
+     9→)
+    10→
+    11→func main() {
+    12→	if contains(os.Args[1:], "-h") {
+    13→		fmt.Fprintf(os.Stderr, `Usage:
+    14→  %s [filenames]
+    15→If no filenames are provided or only - is given, input is read from stdin.
+    16→`, os.Args[0])
+    17→		os.Exit(1)
+    18→	}
+    19→	if len(os.Args) < 2 || len(os.Args) == 2 && os.Args[1] == "-" {
+    20→		printHash(os.Stdin, "-")
+    21→		return
+    22→	}
+    23→	for _, path := range os.Args[1:] {
+    24→		f, err := os.Open(path)
+    25→		if err != nil {
+    26→			fmt.Fprintln(os.Stderr, err)
+    27→			continue
+    28→		}
+    29→		printHash(f, path)
+    30→		f.Close()
+    31→	}
+    32→}
+    33→
+    34→func contains(ss []string, s string) bool {
+    35→	for _, s1 := range ss {
+    36→		if s1 == s {
+    37→			return true
+    38→		}
+    39→	}
+    40→	return false
+    41→}
+    42→
+    43→func printHash(r io.Reader, name string) {
+    44→	h := xxhash.New()
+    45→	if _, err := io.Copy(h, r); err != nil {
+    46→		fmt.Fprintln(os.Stderr, err)
+    47→		return
+    48→	}
+    49→	fmt.Printf("%016x  %s\n", h.Sum64(), name)
+    50→}

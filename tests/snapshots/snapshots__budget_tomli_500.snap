@@ -1,0 +1,139 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 → level 3 (321 words)
+
+CHANGELOG.md
+     1→# Changelog
+     3→## 2.4.0
+     9→## 2.3.0
+    16→## 2.2.1
+    21→## 2.2.0
+    26→## 2.1.0
+    34→## 2.0.2
+    44→## 2.0.1
+    56→## 1.2.3
+    61→## 2.0.0
+    75→## 1.2.2
+    84→## 1.2.1
+    94→## 1.2.0
+   100→## 1.1.0
+   105→## 1.0.4
+   110→## 1.0.3
+   117→## 1.0.2
+   122→## 1.0.1
+   127→## 1.0.0
+   132→## 0.2.10
+   140→## 0.2.9
+   147→## 0.2.8
+   152→## 0.2.7
+   158→## 0.2.6
+   163→## 0.2.5
+   168→## 0.2.4
+   173→## 0.2.3
+   178→## 0.2.2
+   185→## 0.2.1
+   191→## 0.2.0
+   198→## 0.1.0
+README.md
+     5→# Tomli
+    32→## Intro<a name="intro"></a>
+    50→## Installation<a name="installation"></a>
+    56→## Usage<a name="usage"></a>
+    58→### Parse a TOML string<a name="parse-a-toml-string"></a>
+    79→### Parse a TOML file<a name="parse-a-toml-file"></a>
+    92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
+   106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
+   123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
+   152→## FAQ<a name="faq"></a>
+   154→### Why this parser?<a name="why-this-parser"></a>
+   167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
+   177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
+   183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
+   201→## Performance<a name="performance"></a>
+   207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
+   230→### Pure Python<a name="pure-python"></a>
+fuzzer/fuzz.py
+    20→def test_one_input(input_bytes: bytes) -> None:
+    53→def print_err(data):
+    59→def normalize_toml_obj(toml_obj: dict) -> None:
+    71→def main():
+profiler/profiler_script.py
+scripts/use_setuptools.py
+    12→def use_setuptools() -> None:
+setup.py
+src/tomli/__init__.py
+     5→__all__
+     6→__version__
+src/tomli/_parser.py
+    19→TYPE_CHECKING
+    35→MAX_INLINE_NESTING
+    37→ASCII_CTRL
+    41→ILLEGAL_BASIC_STR_CHARS
+    42→ILLEGAL_MULTILINE_BASIC_STR_CHARS
+    44→ILLEGAL_LITERAL_STR_CHARS
+    45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS
+    47→ILLEGAL_COMMENT_CHARS
+    49→TOML_WS
+    50→TOML_WS_AND_NEWLINE
+    51→BARE_KEY_CHARS
+    54→KEY_INITIAL_CHARS
+    55→HEXDIGIT_CHARS
+    57→BASIC_STR_ESCAPE_REPLACEMENTS
+    71→class DEPRECATED_DEFAULT
+    76→class TOMLDecodeError
+    87→    def __init__
+   137→def load
+   149→def loads
+   220→class Flags
+   229→    def __init__
+   233→    def add_pending
+   236→    def finalize_pending
+   241→    def unset_all
+   249→    def set
+   260→    def is_
+   278→class NestedDict
+   279→    def __init__
+   283→    def get_or_create_nest
+   300→    def append_nest_to_list
+   312→class Output
+   313→    def __init__
+   318→def skip_chars
+   327→def skip_until
+   349→def skip_comment
+   361→def skip_comments_and_array_ws
+   370→def create_dict_rule
+   390→def create_list_rule
+   413→def key_value_rule
+   447→def parse_key_value_pair
+   463→def parse_key
+   481→def parse_key_part
+   497→def parse_one_line_basic_str
+   502→def parse_array
+   528→def parse_inline_table
+   564→def parse_basic_str_escape
+   595→def parse_basic_str_escape_multiline
+   599→def parse_hex_char
+   612→def parse_literal_str
+   621→def parse_multiline_str
+   652→def parse_basic_str
+   684→def parse_value
+   760→def is_unicode_scalar_value
+   764→def make_safe_parse_float
+src/tomli/_re.py
+    11→TYPE_CHECKING
+    17→_TIME_RE_STR
+    26→RE_NUMBER
+    45→RE_LOCALTIME
+    46→RE_DATETIME
+    59→def match_to_datetime
+    99→def cached_tz
+   109→def match_to_localtime
+   116→def match_to_number
+src/tomli/_types.py
+tomllib.md
+     1→# `tomllib` – Tomli in the standard library
+    13→## Converting Tomli to tomllib
+    15→### Sync status
+    20→### Steps to convert

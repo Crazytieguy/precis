@@ -1,0 +1,423 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 → level 10 (2644 words)
+
+README.md
+     1→# Archived project. No maintenance. 
+     2→
+     3→This project is not maintained anymore and is archived. Feel free to fork and
+     4→make your own changes if needed. For more detail read my blog post: [Taking an indefinite sabbatical from my projects](https://arslan.io/2018/10/09/taking-an-indefinite-sabbatical-from-my-projects/)
+     5→
+     6→Thanks to everyone for their valuable feedback and contributions.
+     7→
+     8→# Structs [![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/fatih/structs) [![Build Status](http://img.shields.io/travis/fatih/structs.svg?style=flat-square)](https://travis-ci.org/fatih/structs) [![Coverage Status](http://img.shields.io/coveralls/fatih/structs.svg?style=flat-square)](https://coveralls.io/r/fatih/structs)
+     9→
+    10→Structs contains various utilities to work with Go (Golang) structs. It was
+    11→initially used by me to convert a struct into a `map[string]interface{}`. With
+    12→time I've added other utilities for structs.  It's basically a high level
+    13→package based on primitives from the reflect package. Feel free to add new
+    14→functions or improve the existing code.
+    15→
+    16→## Install
+    17→
+    18→```bash
+    19→go get github.com/fatih/structs
+    20→```
+    21→
+    22→## Usage and Examples
+    23→
+    24→Just like the standard lib `strings`, `bytes` and co packages, `structs` has
+    25→many global functions to manipulate or organize your struct data. Lets define
+    26→and declare a struct:
+    27→
+    28→```go
+    29→type Server struct {
+    30→	Name        string `json:"name,omitempty"`
+    31→	ID          int
+    32→	Enabled     bool
+    33→	users       []string // not exported
+    34→	http.Server          // embedded
+    35→}
+    36→
+    37→server := &Server{
+    38→	Name:    "gopher",
+    39→	ID:      123456,
+    40→	Enabled: true,
+    41→}
+    42→```
+    43→
+    44→```go
+    45→// Convert a struct to a map[string]interface{}
+    46→// => {"Name":"gopher", "ID":123456, "Enabled":true}
+    47→m := structs.Map(server)
+    48→
+    49→// Convert the values of a struct to a []interface{}
+    50→// => ["gopher", 123456, true]
+    51→v := structs.Values(server)
+    52→
+    53→// Convert the names of a struct to a []string
+    54→// (see "Names methods" for more info about fields)
+    55→n := structs.Names(server)
+    56→
+    57→// Convert the values of a struct to a []*Field
+    58→// (see "Field methods" for more info about fields)
+    59→f := structs.Fields(server)
+    60→
+    61→// Return the struct name => "Server"
+    62→n := structs.Name(server)
+    63→
+    64→// Check if any field of a struct is initialized or not.
+    65→h := structs.HasZero(server)
+    66→
+    67→// Check if all fields of a struct is initialized or not.
+    68→z := structs.IsZero(server)
+    69→
+    70→// Check if server is a struct or a pointer to struct
+    71→i := structs.IsStruct(server)
+    72→```
+    73→
+    74→### Struct methods
+    75→
+    76→The structs functions can be also used as independent methods by creating a new
+    77→`*structs.Struct`. This is handy if you want to have more control over the
+    78→structs (such as retrieving a single Field).
+    79→
+    80→```go
+    81→// Create a new struct type:
+    82→s := structs.New(server)
+    83→
+    84→m := s.Map()              // Get a map[string]interface{}
+    85→v := s.Values()           // Get a []interface{}
+    86→f := s.Fields()           // Get a []*Field
+    87→n := s.Names()            // Get a []string
+    88→f := s.Field(name)        // Get a *Field based on the given field name
+    89→f, ok := s.FieldOk(name)  // Get a *Field based on the given field name
+    90→n := s.Name()             // Get the struct name
+    91→h := s.HasZero()          // Check if any field is uninitialized
+    92→z := s.IsZero()           // Check if all fields are uninitialized
+    93→```
+    94→
+    95→### Field methods
+    96→
+    97→We can easily examine a single Field for more detail. Below you can see how we
+    98→get and interact with various field methods:
+    99→
+   100→
+   101→```go
+   102→s := structs.New(server)
+   103→
+   104→// Get the Field struct for the "Name" field
+   105→name := s.Field("Name")
+   106→
+   107→// Get the underlying value,  value => "gopher"
+   108→value := name.Value().(string)
+   109→
+   110→// Set the field's value
+   111→name.Set("another gopher")
+   112→
+   113→// Get the field's kind, kind =>  "string"
+   114→name.Kind()
+   115→
+   116→// Check if the field is exported or not
+   117→if name.IsExported() {
+   118→	fmt.Println("Name field is exported")
+   119→}
+   120→
+   121→// Check if the value is a zero value, such as "" for string, 0 for int
+   122→if !name.IsZero() {
+   123→	fmt.Println("Name is initialized")
+   124→}
+   125→
+   126→// Check if the field is an anonymous (embedded) field
+   127→if !name.IsEmbedded() {
+   128→	fmt.Println("Name is not an embedded field")
+   129→}
+   130→
+   131→// Get the Field's tag value for tag name "json", tag value => "name,omitempty"
+   132→tagValue := name.Tag("json")
+   133→```
+   134→
+   135→Nested structs are supported too:
+   136→
+   137→```go
+   138→addrField := s.Field("Server").Field("Addr")
+   139→
+   140→// Get the value for addr
+   141→a := addrField.Value().(string)
+   142→
+   143→// Or get all fields
+   144→httpServer := s.Field("Server").Fields()
+   145→```
+   146→
+   147→We can also get a slice of Fields from the Struct type to iterate over all
+   148→fields. This is handy if you wish to examine all fields:
+   149→
+   150→```go
+   151→s := structs.New(server)
+   152→
+   153→for _, f := range s.Fields() {
+   154→	fmt.Printf("field name: %+v\n", f.Name())
+   155→
+   156→	if f.IsExported() {
+   157→		fmt.Printf("value   : %+v\n", f.Value())
+   158→		fmt.Printf("is zero : %+v\n", f.IsZero())
+   159→	}
+   160→}
+   161→```
+   162→
+   163→## Credits
+   164→
+   165→ * [Fatih Arslan](https://github.com/fatih)
+   166→ * [Cihangir Savas](https://github.com/cihangir)
+   167→
+   168→## License
+   169→
+   170→The MIT License (MIT) - see LICENSE.md for more details
+field.go
+     9→var (
+    10→	errNotExported = errors.New("field is not exported")
+    11→	errNotSettable = errors.New("field is not settable")
+    12→)
+    14→// Field represents a single struct field that encapsulates high level
+    15→// functions around the field.
+    16→type Field struct {
+    17→	value      reflect.Value
+    18→	field      reflect.StructField
+    19→	defaultTag string
+    20→}
+    22→// Tag returns the value associated with key in the tag string. If there is no
+    23→// such key in the tag, Tag returns the empty string.
+    24→func (f *Field) Tag(key string) string {
+    28→// Value returns the underlying value of the field. It panics if the field
+    29→// is not exported.
+    30→func (f *Field) Value() interface{} {
+    34→// IsEmbedded returns true if the given field is an anonymous field (embedded)
+    35→func (f *Field) IsEmbedded() bool {
+    39→// IsExported returns true if the given field is exported.
+    40→func (f *Field) IsExported() bool {
+    44→// IsZero returns true if the given field is not initialized (has a zero value).
+    45→// It panics if the field is not exported.
+    46→func (f *Field) IsZero() bool {
+    53→// Name returns the name of the given field
+    54→func (f *Field) Name() string {
+    58→// Kind returns the fields kind, such as "string", "map", "bool", etc ..
+    59→func (f *Field) Kind() reflect.Kind {
+    63→// Set sets the field to given value v. It returns an error if the field is not
+    64→// settable (not addressable or not exported) or if the given value's type
+    65→// doesn't match the fields type.
+    66→func (f *Field) Set(val interface{}) error {
+    87→// Zero sets the field to its zero value. It returns an error if the field is not
+    88→// settable (not addressable or not exported).
+    89→func (f *Field) Zero() error {
+    94→// Fields returns a slice of Fields. This is particular handy to get the fields
+    95→// of a nested struct . A struct tag with the content of "-" ignores the
+    96→// checking of that particular field. Example:
+    97→//
+    98→//   // Field is ignored by this package.
+    99→//   Field *http.Request `structs:"-"`
+   100→//
+   101→// It panics if field is not exported or if field's kind is not struct
+   102→func (f *Field) Fields() []*Field {
+   106→// Field returns the field from a nested struct. It panics if the nested struct
+   107→// is not exported or if the field was not found.
+   108→func (f *Field) Field(name string) *Field {
+   117→// FieldOk returns the field from a nested struct. The boolean returns whether
+   118→// the field was found (true) or not (false).
+   119→func (f *Field) FieldOk(name string) (*Field, bool) {
+structs.go
+    10→var (
+    11→	// DefaultTagName is the default tag name for struct fields which provides
+    12→	// a more granular to tweak certain structs. Lookup the necessary functions
+    13→	// for more info.
+    14→	DefaultTagName = "structs" // struct's field default tag name
+    15→)
+    17→// Struct encapsulates a struct type to provide several high level functions
+    18→// around the struct.
+    19→type Struct struct {
+    20→	raw     interface{}
+    21→	value   reflect.Value
+    22→	TagName string
+    23→}
+    25→// New returns a new *Struct with the struct s. It panics if the s's kind is
+    26→// not struct.
+    27→func New(s interface{}) *Struct {
+    35→// Map converts the given struct to a map[string]interface{}, where the keys
+    36→// of the map are the field names and the values of the map the associated
+    37→// values of the fields. The default key string is the struct field name but
+    38→// can be changed in the struct field's tag value. The "structs" key in the
+    39→// struct's field tag value is the key name. Example:
+    40→//
+    41→//   // Field appears in map as key "myName".
+    42→//   Name string `structs:"myName"`
+    43→//
+    44→// A tag value with the content of "-" ignores that particular field. Example:
+    45→//
+    46→//   // Field is ignored by this package.
+    47→//   Field bool `structs:"-"`
+    48→//
+    49→// A tag value with the content of "string" uses the stringer to get the value. Example:
+    50→//
+    51→//   // The value will be output of Animal's String() func.
+    52→//   // Map will panic if Animal does not implement String().
+    53→//   Field *Animal `structs:"field,string"`
+    54→//
+    55→// A tag value with the option of "flatten" used in a struct field is to flatten its fields
+    56→// in the output map. Example:
+    57→//
+    58→//   // The FieldStruct's fields will be flattened into the output map.
+    59→//   FieldStruct time.Time `structs:",flatten"`
+    60→//
+    61→// A tag value with the option of "omitnested" stops iterating further if the type
+    62→// is a struct. Example:
+    63→//
+    64→//   // Field is not processed further by this package.
+    65→//   Field time.Time     `structs:"myName,omitnested"`
+    66→//   Field *http.Request `structs:",omitnested"`
+    67→//
+    68→// A tag value with the option of "omitempty" ignores that particular field if
+    69→// the field value is empty. Example:
+    70→//
+    71→//   // Field appears in map as key "myName", but the field is
+    72→//   // skipped if empty.
+    73→//   Field string `structs:"myName,omitempty"`
+    74→//
+    75→//   // Field appears in map as key "Field" (the default), but
+    76→//   // the field is skipped if empty.
+    77→//   Field string `structs:",omitempty"`
+    78→//
+    79→// Note that only exported fields of a struct can be accessed, non exported
+    80→// fields will be neglected.
+    81→func (s *Struct) Map() map[string]interface{} {
+    87→// FillMap is the same as Map. Instead of returning the output, it fills the
+    88→// given map.
+    89→func (s *Struct) FillMap(out map[string]interface{}) {
+   152→// Values converts the given s struct's field values to a []interface{}.  A
+   153→// struct tag with the content of "-" ignores the that particular field.
+   154→// Example:
+   155→//
+   156→//   // Field is ignored by this package.
+   157→//   Field int `structs:"-"`
+   158→//
+   159→// A value with the option of "omitnested" stops iterating further if the type
+   160→// is a struct. Example:
+   161→//
+   162→//   // Fields is not processed further by this package.
+   163→//   Field time.Time     `structs:",omitnested"`
+   164→//   Field *http.Request `structs:",omitnested"`
+   165→//
+   166→// A tag value with the option of "omitempty" ignores that particular field and
+   167→// is not added to the values if the field value is empty. Example:
+   168→//
+   169→//   // Field is skipped if empty
+   170→//   Field string `structs:",omitempty"`
+   171→//
+   172→// Note that only exported fields of a struct can be accessed, non exported
+   173→// fields  will be neglected.
+   174→func (s *Struct) Values() []interface{} {
+   215→// Fields returns a slice of Fields. A struct tag with the content of "-"
+   216→// ignores the checking of that particular field. Example:
+   217→//
+   218→//   // Field is ignored by this package.
+   219→//   Field bool `structs:"-"`
+   220→//
+   221→// It panics if s's kind is not struct.
+   222→func (s *Struct) Fields() []*Field {
+   226→// Names returns a slice of field names. A struct tag with the content of "-"
+   227→// ignores the checking of that particular field. Example:
+   228→//
+   229→//   // Field is ignored by this package.
+   230→//   Field bool `structs:"-"`
+   231→//
+   232→// It panics if s's kind is not struct.
+   233→func (s *Struct) Names() []string {
+   245→func getFields(v reflect.Value, tagName string) []*Field {
+   273→// Field returns a new Field struct that provides several high level functions
+   274→// around a single struct field entity. It panics if the field is not found.
+   275→func (s *Struct) Field(name string) *Field {
+   284→// FieldOk returns a new Field struct that provides several high level functions
+   285→// around a single struct field entity. The boolean returns true if the field
+   286→// was found.
+   287→func (s *Struct) FieldOk(name string) (*Field, bool) {
+   302→// IsZero returns true if all fields in a struct is a zero value (not
+   303→// initialized) A struct tag with the content of "-" ignores the checking of
+   304→// that particular field. Example:
+   305→//
+   306→//   // Field is ignored by this package.
+   307→//   Field bool `structs:"-"`
+   308→//
+   309→// A value with the option of "omitnested" stops iterating further if the type
+   310→// is a struct. Example:
+   311→//
+   312→//   // Field is not processed further by this package.
+   313→//   Field time.Time     `structs:"myName,omitnested"`
+   314→//   Field *http.Request `structs:",omitnested"`
+   315→//
+   316→// Note that only exported fields of a struct can be accessed, non exported
+   317→// fields  will be neglected. It panics if s's kind is not struct.
+   318→func (s *Struct) IsZero() bool {
+   349→// HasZero returns true if a field in a struct is not initialized (zero value).
+   350→// A struct tag with the content of "-" ignores the checking of that particular
+   351→// field. Example:
+   352→//
+   353→//   // Field is ignored by this package.
+   354→//   Field bool `structs:"-"`
+   355→//
+   356→// A value with the option of "omitnested" stops iterating further if the type
+   357→// is a struct. Example:
+   358→//
+   359→//   // Field is not processed further by this package.
+   360→//   Field time.Time     `structs:"myName,omitnested"`
+   361→//   Field *http.Request `structs:",omitnested"`
+   362→//
+   363→// Note that only exported fields of a struct can be accessed, non exported
+   364→// fields  will be neglected. It panics if s's kind is not struct.
+   365→func (s *Struct) HasZero() bool {
+   396→// Name returns the structs's type name within its package. For more info refer
+   397→// to Name() function.
+   398→func (s *Struct) Name() string {
+   402→// structFields returns the exported struct fields for a given s struct. This
+   403→// is a convenient helper method to avoid duplicate code in some of the
+   404→// functions.
+   405→func (s *Struct) structFields() []reflect.StructField {
+   428→func strctVal(s interface{}) reflect.Value {
+   443→// Map converts the given struct to a map[string]interface{}. For more info
+   444→// refer to Struct types Map() method. It panics if s's kind is not struct.
+   445→func Map(s interface{}) map[string]interface{} {
+   449→// FillMap is the same as Map. Instead of returning the output, it fills the
+   450→// given map.
+   451→func FillMap(s interface{}, out map[string]interface{}) {
+   455→// Values converts the given struct to a []interface{}. For more info refer to
+   456→// Struct types Values() method.  It panics if s's kind is not struct.
+   457→func Values(s interface{}) []interface{} {
+   461→// Fields returns a slice of *Field. For more info refer to Struct types
+   462→// Fields() method.  It panics if s's kind is not struct.
+   463→func Fields(s interface{}) []*Field {
+   467→// Names returns a slice of field names. For more info refer to Struct types
+   468→// Names() method.  It panics if s's kind is not struct.
+   469→func Names(s interface{}) []string {
+   473→// IsZero returns true if all fields is equal to a zero value. For more info
+   474→// refer to Struct types IsZero() method.  It panics if s's kind is not struct.
+   475→func IsZero(s interface{}) bool {
+   479→// HasZero returns true if any field is equal to a zero value. For more info
+   480→// refer to Struct types HasZero() method.  It panics if s's kind is not struct.
+   481→func HasZero(s interface{}) bool {
+   485→// IsStruct returns true if the given variable is a struct or a pointer to
+   486→// struct.
+   487→func IsStruct(s interface{}) bool {
+   501→// Name returns the structs's type name within its package. It returns an
+   502→// empty string for unnamed types. It panics if s's kind is not struct.
+   503→func Name(s interface{}) string {
+   507→// nested retrieves recursively all types for the given value and returns the
+   508→// nested value.
+   509→func (s *Struct) nested(val reflect.Value) interface{} {
+tags.go
+     5→// tagOptions contains a slice of tag options
+     6→type tagOptions []string
+     8→// Has returns true if the given option is available in tagOptions
+     9→func (t tagOptions) Has(opt string) bool {
+    19→// parseTag splits a struct field's tag into its name and a list of options
+    20→// which comes after a name. A tag is in the form of: "name,option1,option2".
+    21→// The name can be neglectected.
+    22→func parseTag(tag string) (string, tagOptions) {

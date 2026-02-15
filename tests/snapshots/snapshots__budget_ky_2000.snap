@@ -1,0 +1,202 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 2000 → level 3 (538 words)
+
+readme.md
+    20→## Benefits over plain `fetch`
+    33→## Install
+    39→###### CDN
+    45→## Usage
+    85→## API
+    87→### ky(input, options?)
+   122→### ky.get(input, options?)
+   123→### ky.post(input, options?)
+   124→### ky.put(input, options?)
+   125→### ky.patch(input, options?)
+   126→### ky.head(input, options?)
+   127→### ky.delete(input, options?)
+   133→#### input
+   141→#### options
+   147→##### method
+   156→##### json
+   162→##### searchParams
+   173→##### prefixUrl
+   197→##### retry
+   327→##### timeout
+   335→##### hooks
+   342→###### hooks.beforeRequest
+   373→###### hooks.beforeRetry
+   446→###### hooks.beforeError
+   485→###### hooks.afterResponse
+   553→##### throwHttpErrors
+   566→##### onDownloadProgress
+   592→##### onUploadProgress
+   619→##### parseJson
+   639→##### stringifyJson
+   664→##### fetch
+   683→##### context
+   745→### ky.extend(defaultOptions)
+   811→### ky.create(defaultOptions)
+   829→#### defaultOptions
+   833→### ky.stop
+   864→### ky.retry(options?)
+   870→#### options
+   874→##### delay
+   882→##### code
+   895→##### cause
+   913→##### request
+   923→#### Example
+  1000→### HTTPError
+  1046→### TimeoutError
+  1050→## Tips
+  1052→### Sending form data
+  1080→#### Modifying FormData in hooks
+  1109→### Setting a custom `Content-Type`
+  1129→### Cancellation
+  1156→### Proxy support (Node.js)
+  1158→#### Native proxy support
+  1177→#### Using ProxyAgent
+  1209→### HTTP/2 support (Node.js)
+  1249→### Consuming Server-Sent Events (SSE)
+  1264→### Extending types
+  1292→## FAQ
+  1294→#### How do I use this in Node.js?
+  1298→#### How do I use this with a web app (React, Vue.js, etc.) that uses server-side rendering (SSR)?
+  1302→#### How do I test a browser library that uses this?
+  1306→#### How do I use this without a bundler like Webpack?
+  1321→#### How is it different from [`got`](https://github.com/sindresorhus/got)
+  1325→#### How is it different from [`axios`](https://github.com/axios/axios)?
+  1329→#### How is it different from [`r2`](https://github.com/mikeal/r2)?
+  1333→#### What does `ky` mean?
+  1339→## Browser support
+  1343→## Node.js support
+  1347→## Related
+  1352→## Maintainers
+source/core/Ky.ts
+    33→export class Ky
+    34→	static create
+   178→	static #normalizeSearchParams
+   200→	constructor
+   297→	#calculateDelay
+   316→	async #calculateRetryDelay
+   390→	#decorateResponse
+   398→	#cancelBody
+   407→	#cancelResponseBody
+   412→	async #retry
+   463→	async #fetch
+   503→	#getNormalizedOptions
+   512→	#assignRequest
+   517→	#wrapRequestWithUploadProgress
+source/core/constants.ts
+     4→export const supportsRequestStreams
+    34→export const supportsAbortController
+    35→export const supportsAbortSignal
+    36→export const supportsResponseStreams
+    37→export const supportsFormData
+    39→export const requestMethods
+    41→const validate
+    46→export const responseTypes
+    58→export const maxSafeTimeout
+    61→export const usualFormBoundarySize
+    63→export const stop
+    68→export type ForceRetryOptions
+   148→export class RetryMarker
+   149→	constructor
+   235→export const retry
+   237→export const kyOptionKeys
+   256→export const vendorSpecificOptions
+   265→export const requestOptionsRegistry
+source/errors/ForceRetryError.ts
+     8→export class ForceRetryError
+    14→	constructor
+source/errors/HTTPError.ts
+     5→export class HTTPError
+    10→	constructor
+source/errors/NonError.ts
+     6→export class NonError
+    10→	constructor
+source/errors/TimeoutError.ts
+     3→export class TimeoutError
+     6→	constructor
+source/index.ts
+    10→const createInstance
+    34→const ky
+source/types/ResponsePromise.ts
+     6→export type ResponsePromise
+source/types/common.ts
+     2→export type Primitive
+     4→export type Required
+     6→export type LiteralUnion
+source/types/hooks.ts
+     5→export type BeforeRequestState
+    14→export type BeforeRequestHook
+    20→export type BeforeRetryState
+    30→export type BeforeRetryHook
+    32→export type AfterResponseState
+    41→export type AfterResponseHook
+    48→export type BeforeErrorState
+    57→export type BeforeErrorHook
+    59→export type Hooks
+source/types/ky.ts
+     5→export type KyInstance
+source/types/options.ts
+     6→export type SearchParamsInit
+     9→export type SearchParamsOption
+    11→export type RequestHttpMethod
+    12→export type HttpMethod
+    14→export type Input
+    16→export type Progress
+    27→export type KyHeadersInit
+    33→export type KyOptions
+   307→export type KyOptionsRegistry
+   312→export interface Options
+   358→export type InternalOptions
+   373→export interface NormalizedOptions
+source/types/request.ts
+     1→export type KyRequest
+source/types/response.ts
+     1→export type KyResponse
+source/types/retry.ts
+     3→export type ShouldRetryState
+    15→export type RetryOptions
+source/utils/body.ts
+     5→export const getBodySize
+    57→const withProgress
+    90→export const streamResponse
+   119→export const streamRequest
+source/utils/delay.ts
+     5→export type DelayOptions
+     9→export default async function delay
+source/utils/is.ts
+     2→export const isObject
+source/utils/merge.ts
+     6→export const validateAndMerge
+    16→export const mergeHeaders
+    32→function newHookValue
+    38→export const mergeHooks
+    47→const appendSearchParameters
+    86→export const deepMerge
+source/utils/normalize.ts
+     5→export const normalizeRequestMethod
+     8→const retryMethods
+    10→const retryStatusCodes
+    12→const retryAfterStatusCodes
+    14→type InternalRetryOptions
+    16→const defaultRetryOptions
+    28→export const normalizeRetryOptions
+source/utils/options.ts
+     4→export const findUnknownOptions
+    30→export const hasSearchParameters
+source/utils/timeout.ts
+     3→export type TimeoutOptions
+     9→export default async function timeout
+source/utils/type-guards.ts
+    27→export function isKyError
+    49→export function isHTTPError
+    71→export function isTimeoutError
+    98→export function isForceRetryError
+source/utils/types.ts
+     1→export type Mutable
+     5→export type ObjectEntries

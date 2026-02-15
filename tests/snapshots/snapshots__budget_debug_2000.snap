@@ -1,0 +1,195 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 2000 → level 8 (1000 words)
+
+README.md
+     1→# debug
+     2→[![OpenCollective](https://opencollective.com/debug/backers/badge.svg)](#backers)
+     3→[![OpenCollective](https://opencollective.com/debug/sponsors/badge.svg)](#sponsors)
+    10→## Installation
+    11→
+    12→```bash
+    13→$ npm install debug
+    14→```
+    16→## Usage
+    17→
+    18→`debug` exposes a function; simply pass this function the name of your module, and it will return a decorated version of `console.error` for you to pass debug statements to. This will allow you to toggle the debug output for different parts of your module as well as the module as a whole.
+    73→#### Windows command prompt notes
+    74→
+    75→##### CMD
+    76→
+    77→On Windows the environment variable is set using the `set` command.
+    89→##### PowerShell (VS Code default)
+    90→
+    91→PowerShell uses different syntax to set environment variables.
+   110→## Namespace Colors
+   111→
+   112→Every debug instance has a color generated for it based on its namespace name.
+   113→This helps when visually parsing the debug output to identify which debug instance
+   114→a debug line belongs to.
+   116→#### Node.js
+   117→
+   118→In Node.js, colors are enabled when stderr is a TTY. You also _should_ install
+   119→the [`supports-color`](https://npmjs.org/supports-color) module alongside debug,
+   120→otherwise debug will only use a small handful of basic colors.
+   124→#### Web Browser
+   125→
+   126→Colors are also enabled on "Web Inspectors" that understand the `%c` formatting
+   127→option. These are WebKit web inspectors, Firefox ([since version
+   128→31](https://hacks.mozilla.org/2014/05/editable-box-model-multiple-selection-sublime-text-keys-much-more-firefox-developer-tools-episode-31/))
+   129→and the Firebug plugin for Firefox (any version).
+   134→## Millisecond diff
+   135→
+   136→When actively developing an application it can be useful to see when the time spent between one `debug()` call and the next. Suppose for example you invoke `debug()` before requesting a resource, and after as well, the "+NNNms" will show you how much time was spent between calls.
+   145→## Conventions
+   146→
+   147→If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. If you have more than one debuggers you _should_ prefix them with your library name and use ":" to separate features. For example "bodyParser" from Connect would then be "connect:bodyParser".  If you append a "*" to the end of your name, it will always be enabled regardless of the setting of the DEBUG environment variable.  You can then use it for normal output as well as debug output.
+   149→## Wildcards
+   150→
+   151→The `*` character may be used as a wildcard. Suppose for example your library has
+   152→debuggers named "connect:bodyParser", "connect:compress", "connect:session",
+   153→instead of listing all three with
+   154→`DEBUG=connect:bodyParser,connect:compress,connect:session`, you may simply do
+   155→`DEBUG=connect:*`, or to run everything using this module simply use `DEBUG=*`.
+   161→## Environment Variables
+   162→
+   163→When running through Node.js, you can set a few environment variables that will
+   164→change the behavior of the debug logging:
+   181→## Formatters
+   182→
+   183→Debug uses [printf-style](https://wikipedia.org/wiki/Printf_format_string) formatting.
+   184→Below are the officially supported formatters:
+   196→### Custom formatters
+   197→
+   198→You can add custom formatters by extending the `debug.formatters` object.
+   199→For example, if you wanted to add support for rendering a Buffer as hex with
+   200→`%h`, you could do something like:
+   215→## Browser Support
+   216→
+   217→You can build a browser-ready script using [browserify](https://github.com/substack/node-browserify),
+   218→or just use the [browserify-as-a-service](https://wzrd.in/) [build](https://wzrd.in/standalone/debug@latest),
+   219→if you don't want to build it yourself.
+   248→## Output streams
+   249→
+   250→  By default `debug` will log to stderr, however this can be configured per-namespace by overriding the `log` method:
+   274→## Extend
+   275→You can simply extend debugger 
+   276→```js
+   277→const log = require('debug')('auth');
+   288→## Set dynamically
+   289→
+   290→You can also enable debug dynamically by calling the `enable()` method :
+   341→## Checking whether a debug target is enabled
+   342→
+   343→After you've created a debug instance, you can determine whether or not it is
+   344→enabled by checking the `enabled` property:
+   357→## Usage in child processes
+   358→
+   359→Due to the way `debug` detects if the output is a TTY or not, colors are not shown in child processes when `stderr` is piped. A solution is to pass the `DEBUG_COLORS=1` environment variable to the child process.  
+   360→For example:
+   379→## Authors
+   380→
+   381→ - TJ Holowaychuk
+   382→ - Nathan Rajlich
+   383→ - Andrew Rhyne
+   384→ - Josh Junon
+   386→## Backers
+   387→
+   388→Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/debug#backer)]
+   422→## Sponsors
+   423→
+   424→Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/debug#sponsor)]
+   457→## License
+   458→
+   459→(The MIT License)
+karma.conf.js
+src/browser.js
+   115→function useColors() {
+   143→/**
+   144→ * Colorize log arguments if enabled.
+   145→ *
+   146→ * @api public
+   147→ */
+   148→
+   149→function formatArgs(args) {
+   194→/**
+   195→ * Save `namespaces`.
+   196→ *
+   197→ * @param {String} namespaces
+   198→ * @api private
+   199→ */
+   200→function save(namespaces) {
+   213→/**
+   214→ * Load `namespaces`.
+   215→ *
+   216→ * @return {String} returns the previously persisted debug modes
+   217→ * @api private
+   218→ */
+   219→function load() {
+   236→/**
+   237→ * Localstorage attempts to return the localstorage.
+   238→ *
+   239→ * This is necessary because safari throws
+   240→ * when a user disables cookies/localstorage
+   241→ * and you attempt to access it.
+   242→ *
+   243→ * @return {LocalStorage}
+   244→ * @api private
+   245→ */
+   246→
+   247→function localstorage() {
+src/common.js
+     2→/**
+     3→ * This is the common logic for both the Node.js and web browser
+     4→ * implementations of `debug()`.
+     5→ */
+     6→
+     7→function setup(env) {
+src/index.js
+src/node.js
+   151→/**
+   152→ * Is stdout a TTY? Colored output is enabled when `true`.
+   153→ */
+   154→
+   155→function useColors() {
+   161→/**
+   162→ * Adds ANSI color escape codes if enabled.
+   163→ *
+   164→ * @api public
+   165→ */
+   166→
+   167→function formatArgs(args) {
+   182→function getDate() {
+   189→/**
+   190→ * Invokes `util.formatWithOptions()` with the specified arguments and writes to stderr.
+   191→ */
+   192→
+   193→function log(...args) {
+   197→/**
+   198→ * Save `namespaces`.
+   199→ *
+   200→ * @param {String} namespaces
+   201→ * @api private
+   202→ */
+   203→function save(namespaces) {
+   213→/**
+   214→ * Load `namespaces`.
+   215→ *
+   216→ * @return {String} returns the previously persisted debug modes
+   217→ * @api private
+   218→ */
+   219→
+   220→function load() {
+   224→/**
+   225→ * Init logic for `debug` instances.
+   226→ *
+   227→ * Create a new `inspectOpts` object in case `useColors` is set
+   228→ * differently for a particular `debug` instance.
+   229→ */
+   230→
+   231→function init(debug) {
+test.js
+test.node.js
+     8→const formatWithOptionsSpy = sinon.spy(util, 'formatWithOptions');

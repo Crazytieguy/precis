@@ -1187,30 +1187,54 @@ fn markdown_sample_level12() {
 // Subdirectory budget tests: running on a subdirectory within a fixture tests
 // that path display and file discovery work correctly at deeper nesting levels.
 
-budget_test!(budget_ts_pattern_types_subdir1, "ts-pattern/src/types", 15);
-budget_test!(budget_ts_pattern_types_subdir2, "ts-pattern/src/types", 500);
-budget_test!(budget_react_hot_toast_components_subdir1, "react-hot-toast/src/components", 10);
-budget_test!(budget_react_hot_toast_components_subdir2, "react-hot-toast/src/components", 100);
-budget_test!(budget_superstruct_structs_subdir1, "superstruct/src/structs", 5);
-budget_test!(budget_superstruct_structs_subdir2, "superstruct/src/structs", 150);
-budget_test!(budget_log_kv_subdir1, "log/src/kv", 8);
-budget_test!(budget_log_kv_subdir2, "log/src/kv", 1500);
-budget_test!(budget_semver_functions_subdir1, "semver/functions", 30);
-budget_test!(budget_semver_functions_subdir2, "semver/functions", 100);
-budget_test!(budget_neverthrow_internals_subdir1, "neverthrow/src/_internals", 5);
-budget_test!(budget_neverthrow_internals_subdir2, "neverthrow/src/_internals", 70);
-budget_test!(budget_ky_errors_subdir1, "ky/source/errors", 5);
-budget_test!(budget_ky_errors_subdir2, "ky/source/errors", 40);
-budget_test!(budget_thiserror_impl_subdir1, "thiserror/impl/src", 5);
-budget_test!(budget_thiserror_impl_subdir2, "thiserror/impl/src", 700);
-budget_test!(budget_semver_internal_subdir1, "semver/internal", 8);
-budget_test!(budget_semver_internal_subdir2, "semver/internal", 100);
-budget_test!(budget_mdbook_cli_subdir1, "mdbook/guide/src/cli", 12);
-budget_test!(budget_mdbook_cli_subdir2, "mdbook/guide/src/cli", 130);
-budget_test!(budget_mdbook_format_subdir1, "mdbook/guide/src/format", 20);
-budget_test!(budget_mdbook_format_subdir2, "mdbook/guide/src/format", 270);
-budget_test!(budget_xxhash_xxhsum_subdir1, "xxhash/xxhsum", 10);
-budget_test!(budget_xxhash_xxhsum_subdir2, "xxhash/xxhsum", 20);
+budget_test!(budget_ts_pattern_src_types_500, "ts-pattern/src/types", 500);
+budget_test!(budget_ts_pattern_src_types_1000, "ts-pattern/src/types", 1000);
+budget_test!(budget_ts_pattern_src_types_2000, "ts-pattern/src/types", 2000);
+budget_test!(budget_ts_pattern_src_types_4000, "ts-pattern/src/types", 4000);
+budget_test!(budget_react_hot_toast_src_components_500, "react-hot-toast/src/components", 500);
+budget_test!(budget_react_hot_toast_src_components_1000, "react-hot-toast/src/components", 1000);
+budget_test!(budget_react_hot_toast_src_components_2000, "react-hot-toast/src/components", 2000);
+budget_test!(budget_react_hot_toast_src_components_4000, "react-hot-toast/src/components", 4000);
+budget_test!(budget_superstruct_src_structs_500, "superstruct/src/structs", 500);
+budget_test!(budget_superstruct_src_structs_1000, "superstruct/src/structs", 1000);
+budget_test!(budget_superstruct_src_structs_2000, "superstruct/src/structs", 2000);
+budget_test!(budget_superstruct_src_structs_4000, "superstruct/src/structs", 4000);
+budget_test!(budget_log_src_kv_500, "log/src/kv", 500);
+budget_test!(budget_log_src_kv_1000, "log/src/kv", 1000);
+budget_test!(budget_log_src_kv_2000, "log/src/kv", 2000);
+budget_test!(budget_log_src_kv_4000, "log/src/kv", 4000);
+budget_test!(budget_semver_functions_500, "semver/functions", 500);
+budget_test!(budget_semver_functions_1000, "semver/functions", 1000);
+budget_test!(budget_semver_functions_2000, "semver/functions", 2000);
+budget_test!(budget_semver_functions_4000, "semver/functions", 4000);
+budget_test!(budget_neverthrow_src_internals_500, "neverthrow/src/_internals", 500);
+budget_test!(budget_neverthrow_src_internals_1000, "neverthrow/src/_internals", 1000);
+budget_test!(budget_neverthrow_src_internals_2000, "neverthrow/src/_internals", 2000);
+budget_test!(budget_neverthrow_src_internals_4000, "neverthrow/src/_internals", 4000);
+budget_test!(budget_ky_source_errors_500, "ky/source/errors", 500);
+budget_test!(budget_ky_source_errors_1000, "ky/source/errors", 1000);
+budget_test!(budget_ky_source_errors_2000, "ky/source/errors", 2000);
+budget_test!(budget_ky_source_errors_4000, "ky/source/errors", 4000);
+budget_test!(budget_thiserror_impl_src_500, "thiserror/impl/src", 500);
+budget_test!(budget_thiserror_impl_src_1000, "thiserror/impl/src", 1000);
+budget_test!(budget_thiserror_impl_src_2000, "thiserror/impl/src", 2000);
+budget_test!(budget_thiserror_impl_src_4000, "thiserror/impl/src", 4000);
+budget_test!(budget_semver_internal_500, "semver/internal", 500);
+budget_test!(budget_semver_internal_1000, "semver/internal", 1000);
+budget_test!(budget_semver_internal_2000, "semver/internal", 2000);
+budget_test!(budget_semver_internal_4000, "semver/internal", 4000);
+budget_test!(budget_mdbook_guide_src_cli_500, "mdbook/guide/src/cli", 500);
+budget_test!(budget_mdbook_guide_src_cli_1000, "mdbook/guide/src/cli", 1000);
+budget_test!(budget_mdbook_guide_src_cli_2000, "mdbook/guide/src/cli", 2000);
+budget_test!(budget_mdbook_guide_src_cli_4000, "mdbook/guide/src/cli", 4000);
+budget_test!(budget_mdbook_guide_src_format_500, "mdbook/guide/src/format", 500);
+budget_test!(budget_mdbook_guide_src_format_1000, "mdbook/guide/src/format", 1000);
+budget_test!(budget_mdbook_guide_src_format_2000, "mdbook/guide/src/format", 2000);
+budget_test!(budget_mdbook_guide_src_format_4000, "mdbook/guide/src/format", 4000);
+budget_test!(budget_xxhash_xxhsum_500, "xxhash/xxhsum", 500);
+budget_test!(budget_xxhash_xxhsum_1000, "xxhash/xxhsum", 1000);
+budget_test!(budget_xxhash_xxhsum_2000, "xxhash/xxhsum", 2000);
+budget_test!(budget_xxhash_xxhsum_4000, "xxhash/xxhsum", 4000);
 
 // Single-file rendering tests (precis accepts individual files, not just directories).
 
@@ -1502,289 +1526,235 @@ fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
     ))
 }
 
-budget_test!(budget_mitt_level0, "mitt/src", 10);
-budget_test!(budget_mitt_level1, "mitt/src", 50);
-budget_test!(budget_mitt_level2, "mitt/src", 100);
-budget_test!(budget_mitt_level3, "mitt/src", 300);
-budget_test!(budget_mitt_level5, "mitt/src", 5000);
-budget_test!(budget_ini_level0, "ini/lib", 5);
-budget_test!(budget_ini_level1, "ini/lib", 20);
-budget_test!(budget_ini_level3, "ini/lib", 50);
-budget_test!(budget_neverthrow_level0, "neverthrow/src", 100);
-budget_test!(budget_neverthrow_level1, "neverthrow/src", 500);
-
-budget_test!(budget_either_level0, "either/src", 3);
-budget_test!(budget_either_level1, "either/src", 1000);
-budget_test!(budget_either_level3, "either/src", 5000);
-budget_test!(budget_either_level4, "either/src", 6000);
-
-budget_test!(budget_pluggy_level0, "pluggy/src/pluggy", 5);
-budget_test!(budget_pluggy_level1, "pluggy/src/pluggy", 300);
-budget_test!(budget_pluggy_level2, "pluggy/src/pluggy", 1000);
-budget_test!(budget_pluggy_level3, "pluggy/src/pluggy", 2000);
-
-budget_test!(budget_sonner_level0, "sonner/src", 3);
-budget_test!(budget_sonner_level1, "sonner/src", 180);
-budget_test!(budget_sonner_level3, "sonner/src", 500);
-budget_test!(budget_sonner_level4, "sonner/src", 1900);
-
-budget_test!(budget_mdbook_level0, "mdbook/guide/src", 30);
-budget_test!(budget_mdbook_level1, "mdbook/guide/src", 555);
-budget_test!(budget_mdbook_level3, "mdbook/guide/src", 6000);
-budget_test!(budget_mdbook_level4, "mdbook/guide/src", 17200);
-budget_test!(budget_mdbook_level5, "mdbook/guide/src", 20000);
-
-budget_test!(budget_go_multierror_level0, "go-multierror", 5);
-budget_test!(budget_go_multierror_level1, "go-multierror", 120);
-budget_test!(budget_go_multierror_level3, "go-multierror", 900);
-budget_test!(budget_go_multierror_level4, "go-multierror", 1800);
-
-budget_test!(budget_xxhash_level0, "xxhash", 5);
-budget_test!(budget_xxhash_level1, "xxhash", 150);
-budget_test!(budget_xxhash_level3, "xxhash", 750);
-budget_test!(budget_xxhash_level4, "xxhash", 1100);
-
-budget_test!(budget_color_level0, "color", 3);
-budget_test!(budget_color_level1, "color", 420);
-budget_test!(budget_color_level3, "color", 2800);
-budget_test!(budget_color_level4, "color", 3250);
-
-budget_test!(budget_go_version_level0, "go-version", 3);
-budget_test!(budget_go_version_level1, "go-version", 300);
-budget_test!(budget_go_version_level3, "go-version", 1350);
-budget_test!(budget_go_version_level4, "go-version", 1850);
-
-budget_test!(budget_structs_level0, "structs", 3);
-budget_test!(budget_structs_level1, "structs", 180);
-budget_test!(budget_structs_level3, "structs", 2100);
-budget_test!(budget_structs_level4, "structs", 2700);
-
-budget_test!(budget_typeguard_level0, "typeguard/src/typeguard", 10);
-budget_test!(budget_typeguard_level1, "typeguard/src/typeguard", 400);
-budget_test!(budget_typeguard_level3, "typeguard/src/typeguard", 3100);
-budget_test!(budget_typeguard_level4, "typeguard/src/typeguard", 7100);
-
-budget_test!(budget_anyhow_level0, "anyhow/src", 5);
-budget_test!(budget_anyhow_level1, "anyhow/src", 1200);
-budget_test!(budget_anyhow_level3, "anyhow/src", 5000);
-budget_test!(budget_anyhow_level4, "anyhow/src", 6500);
-
-budget_test!(budget_ts_pattern_level0, "ts-pattern/src", 5);
-budget_test!(budget_ts_pattern_level1, "ts-pattern/src", 800);
-budget_test!(budget_ts_pattern_level2, "ts-pattern/src", 11000);
-budget_test!(budget_ts_pattern_level4, "ts-pattern/src", 14000);
-
-budget_test!(budget_tomli_level0, "tomli/src/tomli", 3);
-budget_test!(budget_tomli_level1, "tomli/src/tomli", 200);
-budget_test!(budget_tomli_level3, "tomli/src/tomli", 920);
-budget_test!(budget_tomli_level5, "tomli/src/tomli", 1500);
-
-budget_test!(budget_log_level0, "log/src", 3);
-budget_test!(budget_log_level1, "log/src", 2000);
-budget_test!(budget_log_level3, "log/src", 5000);
-budget_test!(budget_log_level4, "log/src", 10000);
-
-budget_test!(budget_thiserror_level0, "thiserror/src", 3);
-budget_test!(budget_thiserror_level1, "thiserror/src", 280);
-budget_test!(budget_thiserror_level4, "thiserror/src", 440);
-budget_test!(budget_thiserror_level6, "thiserror/src", 1900);
-
-budget_test!(budget_once_cell_level0, "once_cell/src", 3);
-budget_test!(budget_once_cell_level1, "once_cell/src", 1000);
-budget_test!(budget_once_cell_level3, "once_cell/src", 3000);
-budget_test!(budget_once_cell_level5, "once_cell/src", 6200);
-
-budget_test!(budget_humanize_level0, "humanize/src/humanize", 3);
-budget_test!(budget_humanize_level1, "humanize/src/humanize", 100);
-budget_test!(budget_humanize_level2, "humanize/src/humanize", 500);
-budget_test!(budget_humanize_level5, "humanize/src/humanize", 3400);
-
-budget_test!(budget_python_dotenv_level0, "python-dotenv/src/dotenv", 5);
-budget_test!(budget_python_dotenv_level1, "python-dotenv/src/dotenv", 200);
-budget_test!(budget_python_dotenv_level3, "python-dotenv/src/dotenv", 1300);
-budget_test!(budget_python_dotenv_level5, "python-dotenv/src/dotenv", 2000);
-
-budget_test!(budget_semver_level0, "semver/classes", 3);
-budget_test!(budget_semver_level1, "semver/classes", 100);
-budget_test!(budget_semver_level4, "semver/classes", 260);
-budget_test!(budget_semver_level6, "semver/classes", 4600);
-
-budget_test!(budget_cmdk_level0, "cmdk/cmdk/src", 3);
-budget_test!(budget_cmdk_level1, "cmdk/cmdk/src", 120);
-budget_test!(budget_cmdk_level4, "cmdk/cmdk/src", 1100);
-budget_test!(budget_cmdk_level6, "cmdk/cmdk/src", 2200);
-
-budget_test!(budget_react_hot_toast_level0, "react-hot-toast/src", 5);
-budget_test!(budget_react_hot_toast_level1, "react-hot-toast/src", 200);
-budget_test!(budget_react_hot_toast_level4, "react-hot-toast/src", 700);
-budget_test!(budget_react_hot_toast_level5, "react-hot-toast/src", 1000);
-
-budget_test!(budget_superstruct_level0, "superstruct/src", 5);
-budget_test!(budget_superstruct_level1, "superstruct/src", 300);
-budget_test!(budget_superstruct_level4, "superstruct/src", 3600);
-budget_test!(budget_superstruct_level5, "superstruct/src", 4000);
-
-budget_test!(budget_dotenv_level0, "dotenv/lib", 3);
-budget_test!(budget_dotenv_level1, "dotenv/lib", 80);
-budget_test!(budget_dotenv_level4, "dotenv/lib", 160);
-budget_test!(budget_dotenv_level5, "dotenv/lib", 600);
-
-budget_test!(budget_commander_level0, "commander/lib", 3);
-budget_test!(budget_commander_level1, "commander/lib", 400);
-budget_test!(budget_commander_level3, "commander/lib", 2500);
-budget_test!(budget_commander_level4, "commander/lib", 7500);
-
-budget_test!(budget_ky_level0, "ky/source", 10);
-budget_test!(budget_ky_level1, "ky/source", 350);
-budget_test!(budget_ky_level4, "ky/source", 7000);
-budget_test!(budget_ky_level6, "ky/source", 12500);
-
-budget_test!(budget_vaul_level0, "vaul/src", 5);
-budget_test!(budget_vaul_level1, "vaul/src", 250);
-budget_test!(budget_vaul_level4, "vaul/src", 1300);
-budget_test!(budget_vaul_level5, "vaul/src", 1500);
-
-budget_test!(budget_debug_level0, "debug/src", 3);
-budget_test!(budget_debug_level1, "debug/src", 35);
-budget_test!(budget_debug_level3, "debug/src", 50);
-budget_test!(budget_debug_level5, "debug/src", 300);
-
-budget_test!(budget_input_otp_level0, "input-otp/packages/input-otp/src", 5);
-budget_test!(budget_input_otp_level1, "input-otp/packages/input-otp/src", 60);
-budget_test!(budget_input_otp_level4, "input-otp/packages/input-otp/src", 200);
-budget_test!(budget_input_otp_level5, "input-otp/packages/input-otp/src", 250);
+budget_test!(budget_mitt_src_500, "mitt/src", 500);
+budget_test!(budget_mitt_src_1000, "mitt/src", 1000);
+budget_test!(budget_mitt_src_2000, "mitt/src", 2000);
+budget_test!(budget_mitt_src_4000, "mitt/src", 4000);
+budget_test!(budget_ini_lib_500, "ini/lib", 500);
+budget_test!(budget_ini_lib_1000, "ini/lib", 1000);
+budget_test!(budget_ini_lib_2000, "ini/lib", 2000);
+budget_test!(budget_ini_lib_4000, "ini/lib", 4000);
+budget_test!(budget_neverthrow_src_500, "neverthrow/src", 500);
+budget_test!(budget_neverthrow_src_1000, "neverthrow/src", 1000);
+budget_test!(budget_neverthrow_src_2000, "neverthrow/src", 2000);
+budget_test!(budget_neverthrow_src_4000, "neverthrow/src", 4000);
+budget_test!(budget_either_src_500, "either/src", 500);
+budget_test!(budget_either_src_1000, "either/src", 1000);
+budget_test!(budget_either_src_2000, "either/src", 2000);
+budget_test!(budget_either_src_4000, "either/src", 4000);
+budget_test!(budget_pluggy_src_pluggy_500, "pluggy/src/pluggy", 500);
+budget_test!(budget_pluggy_src_pluggy_1000, "pluggy/src/pluggy", 1000);
+budget_test!(budget_pluggy_src_pluggy_2000, "pluggy/src/pluggy", 2000);
+budget_test!(budget_pluggy_src_pluggy_4000, "pluggy/src/pluggy", 4000);
+budget_test!(budget_sonner_src_500, "sonner/src", 500);
+budget_test!(budget_sonner_src_1000, "sonner/src", 1000);
+budget_test!(budget_sonner_src_2000, "sonner/src", 2000);
+budget_test!(budget_sonner_src_4000, "sonner/src", 4000);
+budget_test!(budget_mdbook_guide_src_500, "mdbook/guide/src", 500);
+budget_test!(budget_mdbook_guide_src_1000, "mdbook/guide/src", 1000);
+budget_test!(budget_mdbook_guide_src_2000, "mdbook/guide/src", 2000);
+budget_test!(budget_mdbook_guide_src_4000, "mdbook/guide/src", 4000);
+budget_test!(budget_go_multierror_500, "go-multierror", 500);
+budget_test!(budget_go_multierror_1000, "go-multierror", 1000);
+budget_test!(budget_go_multierror_2000, "go-multierror", 2000);
+budget_test!(budget_go_multierror_4000, "go-multierror", 4000);
+budget_test!(budget_xxhash_500, "xxhash", 500);
+budget_test!(budget_xxhash_1000, "xxhash", 1000);
+budget_test!(budget_xxhash_2000, "xxhash", 2000);
+budget_test!(budget_xxhash_4000, "xxhash", 4000);
+budget_test!(budget_color_500, "color", 500);
+budget_test!(budget_color_1000, "color", 1000);
+budget_test!(budget_color_2000, "color", 2000);
+budget_test!(budget_color_4000, "color", 4000);
+budget_test!(budget_go_version_500, "go-version", 500);
+budget_test!(budget_go_version_1000, "go-version", 1000);
+budget_test!(budget_go_version_2000, "go-version", 2000);
+budget_test!(budget_go_version_4000, "go-version", 4000);
+budget_test!(budget_structs_500, "structs", 500);
+budget_test!(budget_structs_1000, "structs", 1000);
+budget_test!(budget_structs_2000, "structs", 2000);
+budget_test!(budget_structs_4000, "structs", 4000);
+budget_test!(budget_typeguard_src_typeguard_500, "typeguard/src/typeguard", 500);
+budget_test!(budget_typeguard_src_typeguard_1000, "typeguard/src/typeguard", 1000);
+budget_test!(budget_typeguard_src_typeguard_2000, "typeguard/src/typeguard", 2000);
+budget_test!(budget_typeguard_src_typeguard_4000, "typeguard/src/typeguard", 4000);
+budget_test!(budget_anyhow_src_500, "anyhow/src", 500);
+budget_test!(budget_anyhow_src_1000, "anyhow/src", 1000);
+budget_test!(budget_anyhow_src_2000, "anyhow/src", 2000);
+budget_test!(budget_anyhow_src_4000, "anyhow/src", 4000);
+budget_test!(budget_ts_pattern_src_500, "ts-pattern/src", 500);
+budget_test!(budget_ts_pattern_src_1000, "ts-pattern/src", 1000);
+budget_test!(budget_ts_pattern_src_2000, "ts-pattern/src", 2000);
+budget_test!(budget_ts_pattern_src_4000, "ts-pattern/src", 4000);
+budget_test!(budget_tomli_src_tomli_500, "tomli/src/tomli", 500);
+budget_test!(budget_tomli_src_tomli_1000, "tomli/src/tomli", 1000);
+budget_test!(budget_tomli_src_tomli_2000, "tomli/src/tomli", 2000);
+budget_test!(budget_tomli_src_tomli_4000, "tomli/src/tomli", 4000);
+budget_test!(budget_log_src_500, "log/src", 500);
+budget_test!(budget_log_src_1000, "log/src", 1000);
+budget_test!(budget_log_src_2000, "log/src", 2000);
+budget_test!(budget_log_src_4000, "log/src", 4000);
+budget_test!(budget_thiserror_src_500, "thiserror/src", 500);
+budget_test!(budget_thiserror_src_1000, "thiserror/src", 1000);
+budget_test!(budget_thiserror_src_2000, "thiserror/src", 2000);
+budget_test!(budget_thiserror_src_4000, "thiserror/src", 4000);
+budget_test!(budget_once_cell_src_500, "once_cell/src", 500);
+budget_test!(budget_once_cell_src_1000, "once_cell/src", 1000);
+budget_test!(budget_once_cell_src_2000, "once_cell/src", 2000);
+budget_test!(budget_once_cell_src_4000, "once_cell/src", 4000);
+budget_test!(budget_humanize_src_humanize_500, "humanize/src/humanize", 500);
+budget_test!(budget_humanize_src_humanize_1000, "humanize/src/humanize", 1000);
+budget_test!(budget_humanize_src_humanize_2000, "humanize/src/humanize", 2000);
+budget_test!(budget_humanize_src_humanize_4000, "humanize/src/humanize", 4000);
+budget_test!(budget_python_dotenv_src_dotenv_500, "python-dotenv/src/dotenv", 500);
+budget_test!(budget_python_dotenv_src_dotenv_1000, "python-dotenv/src/dotenv", 1000);
+budget_test!(budget_python_dotenv_src_dotenv_2000, "python-dotenv/src/dotenv", 2000);
+budget_test!(budget_python_dotenv_src_dotenv_4000, "python-dotenv/src/dotenv", 4000);
+budget_test!(budget_semver_classes_500, "semver/classes", 500);
+budget_test!(budget_semver_classes_1000, "semver/classes", 1000);
+budget_test!(budget_semver_classes_2000, "semver/classes", 2000);
+budget_test!(budget_semver_classes_4000, "semver/classes", 4000);
+budget_test!(budget_cmdk_cmdk_src_500, "cmdk/cmdk/src", 500);
+budget_test!(budget_cmdk_cmdk_src_1000, "cmdk/cmdk/src", 1000);
+budget_test!(budget_cmdk_cmdk_src_2000, "cmdk/cmdk/src", 2000);
+budget_test!(budget_cmdk_cmdk_src_4000, "cmdk/cmdk/src", 4000);
+budget_test!(budget_react_hot_toast_src_500, "react-hot-toast/src", 500);
+budget_test!(budget_react_hot_toast_src_1000, "react-hot-toast/src", 1000);
+budget_test!(budget_react_hot_toast_src_2000, "react-hot-toast/src", 2000);
+budget_test!(budget_react_hot_toast_src_4000, "react-hot-toast/src", 4000);
+budget_test!(budget_superstruct_src_500, "superstruct/src", 500);
+budget_test!(budget_superstruct_src_1000, "superstruct/src", 1000);
+budget_test!(budget_superstruct_src_2000, "superstruct/src", 2000);
+budget_test!(budget_superstruct_src_4000, "superstruct/src", 4000);
+budget_test!(budget_dotenv_lib_500, "dotenv/lib", 500);
+budget_test!(budget_dotenv_lib_1000, "dotenv/lib", 1000);
+budget_test!(budget_dotenv_lib_2000, "dotenv/lib", 2000);
+budget_test!(budget_dotenv_lib_4000, "dotenv/lib", 4000);
+budget_test!(budget_commander_lib_500, "commander/lib", 500);
+budget_test!(budget_commander_lib_1000, "commander/lib", 1000);
+budget_test!(budget_commander_lib_2000, "commander/lib", 2000);
+budget_test!(budget_commander_lib_4000, "commander/lib", 4000);
+budget_test!(budget_ky_source_500, "ky/source", 500);
+budget_test!(budget_ky_source_1000, "ky/source", 1000);
+budget_test!(budget_ky_source_2000, "ky/source", 2000);
+budget_test!(budget_ky_source_4000, "ky/source", 4000);
+budget_test!(budget_vaul_src_500, "vaul/src", 500);
+budget_test!(budget_vaul_src_1000, "vaul/src", 1000);
+budget_test!(budget_vaul_src_2000, "vaul/src", 2000);
+budget_test!(budget_vaul_src_4000, "vaul/src", 4000);
+budget_test!(budget_debug_src_500, "debug/src", 500);
+budget_test!(budget_debug_src_1000, "debug/src", 1000);
+budget_test!(budget_debug_src_2000, "debug/src", 2000);
+budget_test!(budget_debug_src_4000, "debug/src", 4000);
+budget_test!(budget_input_otp_packages_input_otp_src_500, "input-otp/packages/input-otp/src", 500);
+budget_test!(budget_input_otp_packages_input_otp_src_1000, "input-otp/packages/input-otp/src", 1000);
+budget_test!(budget_input_otp_packages_input_otp_src_2000, "input-otp/packages/input-otp/src", 2000);
+budget_test!(budget_input_otp_packages_input_otp_src_4000, "input-otp/packages/input-otp/src", 4000);
 
 // Root-level budget tests: exercise depth penalties, multi-language discovery,
-// and file filtering at the repo root — the most common real-world use case.
+// and file filtering at the repo root.
 
-budget_test!(budget_either_root_level0, "either", 6);
-budget_test!(budget_either_root_level1, "either", 2000);
-budget_test!(budget_either_root_level3, "either", 5200);
-budget_test!(budget_either_root_level5, "either", 6200);
-
-budget_test!(budget_neverthrow_root_level0, "neverthrow", 10);
-budget_test!(budget_neverthrow_root_level1, "neverthrow", 1500);
-budget_test!(budget_neverthrow_root_level3, "neverthrow", 4000);
-budget_test!(budget_neverthrow_root_level4, "neverthrow", 6000);
-
-budget_test!(budget_pluggy_root_level0, "pluggy", 50);
-budget_test!(budget_pluggy_root_level1, "pluggy", 100);
-budget_test!(budget_pluggy_root_level3, "pluggy", 2000);
-budget_test!(budget_pluggy_root_level4, "pluggy", 3200);
-
-budget_test!(budget_sonner_root_level0, "sonner", 30);
-budget_test!(budget_sonner_root_level3, "sonner", 800);
-budget_test!(budget_sonner_root_level4, "sonner", 2000);
-budget_test!(budget_sonner_root_level5, "sonner", 5000);
-
-budget_test!(budget_commander_root_level0, "commander", 30);
-budget_test!(budget_commander_root_level1, "commander", 2500);
-budget_test!(budget_commander_root_level2, "commander", 5000);
-budget_test!(budget_commander_root_level4, "commander", 20000);
-
-budget_test!(budget_anyhow_root_level0, "anyhow", 15);
-budget_test!(budget_anyhow_root_level1, "anyhow", 1300);
-budget_test!(budget_anyhow_root_level3, "anyhow", 5500);
-budget_test!(budget_anyhow_root_level4, "anyhow", 7000);
-
-budget_test!(budget_log_root_level0, "log", 15);
-budget_test!(budget_log_root_level1, "log", 2000);
-budget_test!(budget_log_root_level3, "log", 7000);
-budget_test!(budget_log_root_level4, "log", 14000);
-
-budget_test!(budget_ts_pattern_root_level0, "ts-pattern", 25);
-budget_test!(budget_ts_pattern_root_level1, "ts-pattern", 800);
-budget_test!(budget_ts_pattern_root_level2, "ts-pattern", 3000);
-budget_test!(budget_ts_pattern_root_level4, "ts-pattern", 18000);
-
-budget_test!(budget_typeguard_root_level0, "typeguard", 15);
-budget_test!(budget_typeguard_root_level2, "typeguard", 500);
-budget_test!(budget_typeguard_root_level3, "typeguard", 2000);
-budget_test!(budget_typeguard_root_level4, "typeguard", 3000);
-
-budget_test!(budget_mdbook_root_level0, "mdbook", 130);
-budget_test!(budget_mdbook_root_level1, "mdbook", 1000);
-budget_test!(budget_mdbook_root_level3, "mdbook", 5000);
-budget_test!(budget_mdbook_root_level4, "mdbook", 22000);
-
-budget_test!(budget_once_cell_root_level0, "once_cell", 15);
-budget_test!(budget_once_cell_root_level1, "once_cell", 1500);
-budget_test!(budget_once_cell_root_level2, "once_cell", 3000);
-budget_test!(budget_once_cell_root_level3, "once_cell", 6000);
-budget_test!(budget_once_cell_root_level5, "once_cell", 10000);
-
-budget_test!(budget_thiserror_root_level0, "thiserror", 30);
-budget_test!(budget_thiserror_root_level1, "thiserror", 500);
-budget_test!(budget_thiserror_root_level2, "thiserror", 1500);
-budget_test!(budget_thiserror_root_level4, "thiserror", 2500);
-budget_test!(budget_thiserror_root_level5, "thiserror", 5000);
-
-budget_test!(budget_react_hot_toast_root_level0, "react-hot-toast", 50);
-budget_test!(budget_react_hot_toast_root_level1, "react-hot-toast", 200);
-budget_test!(budget_react_hot_toast_root_level2, "react-hot-toast", 1000);
-budget_test!(budget_react_hot_toast_root_level5, "react-hot-toast", 2000);
-
-budget_test!(budget_humanize_root_level0, "humanize", 20);
-budget_test!(budget_humanize_root_level1, "humanize", 120);
-budget_test!(budget_humanize_root_level2, "humanize", 600);
-budget_test!(budget_humanize_root_level4, "humanize", 3500);
-
-budget_test!(budget_tomli_root_level0, "tomli", 15);
-budget_test!(budget_tomli_root_level1, "tomli", 250);
-budget_test!(budget_tomli_root_level2, "tomli", 1500);
-budget_test!(budget_tomli_root_level4, "tomli", 3000);
-
-budget_test!(budget_cmdk_root_level0, "cmdk", 25);
-budget_test!(budget_cmdk_root_level1, "cmdk", 200);
-budget_test!(budget_cmdk_root_level2, "cmdk", 1000);
-budget_test!(budget_cmdk_root_level6, "cmdk", 4300);
-
-budget_test!(budget_debug_root_level0, "debug", 15);
-budget_test!(budget_debug_root_level2, "debug", 200);
-budget_test!(budget_debug_root_level5, "debug", 1500);
-budget_test!(budget_debug_root_level7, "debug", 5000);
-
-budget_test!(budget_dotenv_root_level0, "dotenv", 15);
-budget_test!(budget_dotenv_root_level1, "dotenv", 650);
-budget_test!(budget_dotenv_root_level5, "dotenv", 3000);
-budget_test!(budget_dotenv_root_level7, "dotenv", 10000);
-
-budget_test!(budget_ini_root_level0, "ini", 10);
-budget_test!(budget_ini_root_level1, "ini", 160);
-budget_test!(budget_ini_root_level5, "ini", 1000);
-budget_test!(budget_ini_root_level7, "ini", 2000);
-
-budget_test!(budget_input_otp_root_level0, "input-otp", 60);
-budget_test!(budget_input_otp_root_level1, "input-otp", 200);
-budget_test!(budget_input_otp_root_level3, "input-otp", 1200);
-budget_test!(budget_input_otp_root_level6, "input-otp", 3700);
-
-budget_test!(budget_ky_root_level0, "ky", 30);
-budget_test!(budget_ky_root_level2, "ky", 600);
-budget_test!(budget_ky_root_level4, "ky", 7400);
-budget_test!(budget_ky_root_level7, "ky", 16200);
-
-budget_test!(budget_mitt_root_level0, "mitt", 5);
-budget_test!(budget_mitt_root_level1, "mitt", 100);
-budget_test!(budget_mitt_root_level5, "mitt", 540);
-budget_test!(budget_mitt_root_level7, "mitt", 1000);
-
-budget_test!(budget_python_dotenv_root_level0, "python-dotenv", 15);
-budget_test!(budget_python_dotenv_root_level2, "python-dotenv", 500);
-budget_test!(budget_python_dotenv_root_level5, "python-dotenv", 2000);
-budget_test!(budget_python_dotenv_root_level6, "python-dotenv", 4500);
-
-budget_test!(budget_semver_root_level0, "semver", 60);
-budget_test!(budget_semver_root_level1, "semver", 700);
-budget_test!(budget_semver_root_level2, "semver", 2000);
-budget_test!(budget_semver_root_level6, "semver", 7000);
-
-budget_test!(budget_superstruct_root_level0, "superstruct", 35);
-budget_test!(budget_superstruct_root_level1, "superstruct", 500);
-budget_test!(budget_superstruct_root_level3, "superstruct", 5000);
-budget_test!(budget_superstruct_root_level5, "superstruct", 7000);
-
-budget_test!(budget_vaul_root_level0, "vaul", 20);
-budget_test!(budget_vaul_root_level1, "vaul", 250);
-budget_test!(budget_vaul_root_level2, "vaul", 1100);
-budget_test!(budget_vaul_root_level7, "vaul", 2000);
+budget_test!(budget_either_500, "either", 500);
+budget_test!(budget_either_1000, "either", 1000);
+budget_test!(budget_either_2000, "either", 2000);
+budget_test!(budget_either_4000, "either", 4000);
+budget_test!(budget_neverthrow_500, "neverthrow", 500);
+budget_test!(budget_neverthrow_1000, "neverthrow", 1000);
+budget_test!(budget_neverthrow_2000, "neverthrow", 2000);
+budget_test!(budget_neverthrow_4000, "neverthrow", 4000);
+budget_test!(budget_pluggy_500, "pluggy", 500);
+budget_test!(budget_pluggy_1000, "pluggy", 1000);
+budget_test!(budget_pluggy_2000, "pluggy", 2000);
+budget_test!(budget_pluggy_4000, "pluggy", 4000);
+budget_test!(budget_sonner_500, "sonner", 500);
+budget_test!(budget_sonner_1000, "sonner", 1000);
+budget_test!(budget_sonner_2000, "sonner", 2000);
+budget_test!(budget_sonner_4000, "sonner", 4000);
+budget_test!(budget_commander_500, "commander", 500);
+budget_test!(budget_commander_1000, "commander", 1000);
+budget_test!(budget_commander_2000, "commander", 2000);
+budget_test!(budget_commander_4000, "commander", 4000);
+budget_test!(budget_anyhow_500, "anyhow", 500);
+budget_test!(budget_anyhow_1000, "anyhow", 1000);
+budget_test!(budget_anyhow_2000, "anyhow", 2000);
+budget_test!(budget_anyhow_4000, "anyhow", 4000);
+budget_test!(budget_log_500, "log", 500);
+budget_test!(budget_log_1000, "log", 1000);
+budget_test!(budget_log_2000, "log", 2000);
+budget_test!(budget_log_4000, "log", 4000);
+budget_test!(budget_ts_pattern_500, "ts-pattern", 500);
+budget_test!(budget_ts_pattern_1000, "ts-pattern", 1000);
+budget_test!(budget_ts_pattern_2000, "ts-pattern", 2000);
+budget_test!(budget_ts_pattern_4000, "ts-pattern", 4000);
+budget_test!(budget_typeguard_500, "typeguard", 500);
+budget_test!(budget_typeguard_1000, "typeguard", 1000);
+budget_test!(budget_typeguard_2000, "typeguard", 2000);
+budget_test!(budget_typeguard_4000, "typeguard", 4000);
+budget_test!(budget_mdbook_500, "mdbook", 500);
+budget_test!(budget_mdbook_1000, "mdbook", 1000);
+budget_test!(budget_mdbook_2000, "mdbook", 2000);
+budget_test!(budget_mdbook_4000, "mdbook", 4000);
+budget_test!(budget_once_cell_500, "once_cell", 500);
+budget_test!(budget_once_cell_1000, "once_cell", 1000);
+budget_test!(budget_once_cell_2000, "once_cell", 2000);
+budget_test!(budget_once_cell_4000, "once_cell", 4000);
+budget_test!(budget_thiserror_500, "thiserror", 500);
+budget_test!(budget_thiserror_1000, "thiserror", 1000);
+budget_test!(budget_thiserror_2000, "thiserror", 2000);
+budget_test!(budget_thiserror_4000, "thiserror", 4000);
+budget_test!(budget_react_hot_toast_500, "react-hot-toast", 500);
+budget_test!(budget_react_hot_toast_1000, "react-hot-toast", 1000);
+budget_test!(budget_react_hot_toast_2000, "react-hot-toast", 2000);
+budget_test!(budget_react_hot_toast_4000, "react-hot-toast", 4000);
+budget_test!(budget_humanize_500, "humanize", 500);
+budget_test!(budget_humanize_1000, "humanize", 1000);
+budget_test!(budget_humanize_2000, "humanize", 2000);
+budget_test!(budget_humanize_4000, "humanize", 4000);
+budget_test!(budget_tomli_500, "tomli", 500);
+budget_test!(budget_tomli_1000, "tomli", 1000);
+budget_test!(budget_tomli_2000, "tomli", 2000);
+budget_test!(budget_tomli_4000, "tomli", 4000);
+budget_test!(budget_cmdk_500, "cmdk", 500);
+budget_test!(budget_cmdk_1000, "cmdk", 1000);
+budget_test!(budget_cmdk_2000, "cmdk", 2000);
+budget_test!(budget_cmdk_4000, "cmdk", 4000);
+budget_test!(budget_debug_500, "debug", 500);
+budget_test!(budget_debug_1000, "debug", 1000);
+budget_test!(budget_debug_2000, "debug", 2000);
+budget_test!(budget_debug_4000, "debug", 4000);
+budget_test!(budget_dotenv_500, "dotenv", 500);
+budget_test!(budget_dotenv_1000, "dotenv", 1000);
+budget_test!(budget_dotenv_2000, "dotenv", 2000);
+budget_test!(budget_dotenv_4000, "dotenv", 4000);
+budget_test!(budget_ini_500, "ini", 500);
+budget_test!(budget_ini_1000, "ini", 1000);
+budget_test!(budget_ini_2000, "ini", 2000);
+budget_test!(budget_ini_4000, "ini", 4000);
+budget_test!(budget_input_otp_500, "input-otp", 500);
+budget_test!(budget_input_otp_1000, "input-otp", 1000);
+budget_test!(budget_input_otp_2000, "input-otp", 2000);
+budget_test!(budget_input_otp_4000, "input-otp", 4000);
+budget_test!(budget_ky_500, "ky", 500);
+budget_test!(budget_ky_1000, "ky", 1000);
+budget_test!(budget_ky_2000, "ky", 2000);
+budget_test!(budget_ky_4000, "ky", 4000);
+budget_test!(budget_mitt_500, "mitt", 500);
+budget_test!(budget_mitt_1000, "mitt", 1000);
+budget_test!(budget_mitt_2000, "mitt", 2000);
+budget_test!(budget_mitt_4000, "mitt", 4000);
+budget_test!(budget_python_dotenv_500, "python-dotenv", 500);
+budget_test!(budget_python_dotenv_1000, "python-dotenv", 1000);
+budget_test!(budget_python_dotenv_2000, "python-dotenv", 2000);
+budget_test!(budget_python_dotenv_4000, "python-dotenv", 4000);
+budget_test!(budget_semver_500, "semver", 500);
+budget_test!(budget_semver_1000, "semver", 1000);
+budget_test!(budget_semver_2000, "semver", 2000);
+budget_test!(budget_semver_4000, "semver", 4000);
+budget_test!(budget_superstruct_500, "superstruct", 500);
+budget_test!(budget_superstruct_1000, "superstruct", 1000);
+budget_test!(budget_superstruct_2000, "superstruct", 2000);
+budget_test!(budget_superstruct_4000, "superstruct", 4000);
+budget_test!(budget_vaul_500, "vaul", 500);
+budget_test!(budget_vaul_1000, "vaul", 1000);
+budget_test!(budget_vaul_2000, "vaul", 2000);
+budget_test!(budget_vaul_4000, "vaul", 4000);

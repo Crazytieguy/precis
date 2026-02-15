@@ -1,0 +1,202 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 → level 1 (411 words)
+
+.commitlintrc.js
+.eslintrc.js
+.eslintrc.local.js
+CHANGELOG.md
+     1→# Changelog
+     3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16)
+     4→### Bug Fixes
+     6→### Documentation
+     8→### Dependencies
+    10→### Chores
+    15→## [7.7.3](https://github.com/npm/node-semver/compare/v7.7.2...v7.7.3) (2025-10-06)
+    16→### Bug Fixes
+    19→### Chores
+    22→## [7.7.2](https://github.com/npm/node-semver/compare/v7.7.1...v7.7.2) (2025-05-12)
+    23→### Bug Fixes
+    26→### Chores
+    30→## [7.7.1](https://github.com/npm/node-semver/compare/v7.7.0...v7.7.1) (2025-02-03)
+    31→### Bug Fixes
+    34→## [7.7.0](https://github.com/npm/node-semver/compare/v7.6.3...v7.7.0) (2025-01-29)
+    35→### Features
+    37→### Bug Fixes
+    40→### Documentation
+    43→### Chores
+    48→## [7.6.3](https://github.com/npm/node-semver/compare/v7.6.2...v7.6.3) (2024-07-16)
+    50→### Bug Fixes
+    54→### Documentation
+    58→## [7.6.2](https://github.com/npm/node-semver/compare/v7.6.1...v7.6.2) (2024-05-09)
+    60→### Bug Fixes
+    64→## [7.6.1](https://github.com/npm/node-semver/compare/v7.6.0...v7.6.1) (2024-05-04)
+    66→### Bug Fixes
+    72→### Dependencies
+    77→### Chores
+    86→## [7.6.0](https://github.com/npm/node-semver/compare/v7.5.4...v7.6.0) (2024-01-31)
+    88→### Features
+    92→### Chores
+   108→## [7.5.4](https://github.com/npm/node-semver/compare/v7.5.3...v7.5.4) (2023-07-07)
+   110→### Bug Fixes
+   115→## [7.5.3](https://github.com/npm/node-semver/compare/v7.5.2...v7.5.3) (2023-06-22)
+   117→### Bug Fixes
+   121→### Documentation
+   125→## [7.5.2](https://github.com/npm/node-semver/compare/v7.5.1...v7.5.2) (2023-06-15)
+   127→### Bug Fixes
+   133→## [7.5.1](https://github.com/npm/node-semver/compare/v7.5.0...v7.5.1) (2023-05-12)
+   135→### Bug Fixes
+   139→## [7.5.0](https://github.com/npm/node-semver/compare/v7.4.0...v7.5.0) (2023-04-17)
+   141→### Features
+   145→### Bug Fixes
+   151→## [7.4.0](https://github.com/npm/node-semver/compare/v7.3.8...v7.4.0) (2023-04-10)
+   153→### Features
+   158→### Bug Fixes
+   168→### Documentation
+   172→## [7.3.8](https://github.com/npm/node-semver/compare/v7.3.7...v7.3.8) (2022-10-04)
+   174→### Bug Fixes
+   178→### Documentation
+   182→### [7.3.7](https://github.com/npm/node-semver/compare/v7.3.6...v7.3.7) (2022-04-11)
+   185→### Bug Fixes
+   193→### Dependencies
+   197→### [7.3.6](https://github.com/npm/node-semver/compare/v7.3.5...v7.3.6) (2022-04-05)
+   200→### Bug Fixes
+   208→### Documentation
+   213→### Dependencies
+   218→## 7.3.0
+   223→## 7.2.3
+   228→## 7.2.2
+   233→## 7.2.0
+   239→## 7.1.2
+   244→## 7.1.0
+   249→## 7.0.0
+   255→## 6.3.0
+   259→## 6.2.0
+   264→## 6.1.3
+   268→## 6.1.2
+   272→## 6.1.1
+   277→## 6.1.0
+   282→## 6.0
+   290→## 5.7
+   294→## 5.6
+   301→## 5.5
+   305→## 5.4
+   309→## 5.3
+   313→## 5.2
+   317→## 5.1
+   322→## 5.0
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+     3→# Contributing
+     5→## Code of Conduct
+     9→## Reporting Bugs
+    17→## Pull Request Conventions
+    19→### Commits
+    30→### Test Coverage
+    36→### Linting
+    42→## What _not_ to contribute?
+    44→### Dependencies
+    48→### Tools/Automation
+README.md
+     1→semver(1) -- The semantic versioner for npm
+     4→## Install
+    10→## Usage
+   139→## Versions
+   148→## Ranges
+   184→### Prerelease Tags
+   219→#### Prerelease Identifiers
+   250→#### Prerelease Identifier Base
+   279→### Advanced Range Syntax
+   287→#### Hyphen Ranges `X.Y.Z - A.B.C`
+   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
+   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
+   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
+   384→### Range Grammar
+   408→## Functions
+   453→### Comparison
+   478→### Sorting
+   485→### Comparators
+   489→### Ranges
+   531→### Coercion
+   558→### Clean
+   576→## Constants
+   580→### `RELEASE_TYPES`
+   600→### `SEMVER_SPEC_VERSION`
+   610→## Exported Modules
+SECURITY.md
+bin/semver.js
+classes/comparator.js
+     6→  static get ANY
+    10→  constructor
+    36→  parse
+    57→  toString
+    61→  test
+    79→  intersects
+classes/index.js
+classes/range.js
+     7→  constructor
+    73→  get range
+    92→  format
+    96→  toString
+   100→  parseRange
+   170→  intersects
+   193→  test
+classes/semver.js
+    10→  constructor
+    81→  format
+    89→  toString
+    93→  compare
+   109→  compareMain
+   135→  comparePre
+   168→  compareBuild
+   194→  inc
+functions/clean.js
+functions/cmp.js
+functions/coerce.js
+functions/compare-build.js
+functions/compare-loose.js
+functions/compare.js
+functions/diff.js
+functions/eq.js
+functions/gt.js
+functions/gte.js
+functions/inc.js
+functions/lt.js
+functions/lte.js
+functions/major.js
+functions/minor.js
+functions/neq.js
+functions/parse.js
+functions/patch.js
+functions/prerelease.js
+functions/rcompare.js
+functions/rsort.js
+functions/satisfies.js
+functions/sort.js
+functions/valid.js
+index.js
+internal/constants.js
+internal/debug.js
+internal/identifiers.js
+internal/lrucache.js
+     4→  constructor
+     9→  get
+    21→  delete
+    25→  set
+internal/parse-options.js
+internal/re.js
+map.js
+preload.js
+ranges/gtr.js
+ranges/intersects.js
+ranges/ltr.js
+ranges/max-satisfying.js
+ranges/min-satisfying.js
+ranges/min-version.js
+ranges/outside.js
+ranges/simplify.js
+ranges/subset.js
+ranges/to-comparators.js
+ranges/valid.js

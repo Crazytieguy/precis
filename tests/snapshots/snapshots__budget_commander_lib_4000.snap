@@ -1,0 +1,741 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 → level 8 (3651 words)
+
+argument.js
+     3→class Argument {
+     4→  /**
+     5→   * Initialize a new command argument with the given name and description.
+     6→   * The default is that the argument is required, and you can explicitly
+     7→   * indicate this with <> around the name. Put [] around the name for an optional argument.
+     8→   *
+     9→   * @param {string} name
+    10→   * @param {string} [description]
+    11→   */
+    12→
+    13→  constructor(name, description) {
+    42→  /**
+    43→   * Return argument name.
+    44→   *
+    45→   * @return {string}
+    46→   */
+    47→
+    48→  name() {
+    52→  /**
+    53→   * @package
+    54→   */
+    55→
+    56→  _collectValue(value, previous) {
+    65→  /**
+    66→   * Set the default value, and optionally supply the description to be displayed in the help.
+    67→   *
+    68→   * @param {*} value
+    69→   * @param {string} [description]
+    70→   * @return {Argument}
+    71→   */
+    72→
+    73→  default(value, description) {
+    79→  /**
+    80→   * Set the custom handler for processing CLI command arguments into argument values.
+    81→   *
+    82→   * @param {Function} [fn]
+    83→   * @return {Argument}
+    84→   */
+    85→
+    86→  argParser(fn) {
+    91→  /**
+    92→   * Only allow argument value to be one of choices.
+    93→   *
+    94→   * @param {string[]} values
+    95→   * @return {Argument}
+    96→   */
+    97→
+    98→  choices(values) {
+   114→  /**
+   115→   * Make argument required.
+   116→   *
+   117→   * @returns {Argument}
+   118→   */
+   119→  argRequired() {
+   124→  /**
+   125→   * Make argument optional.
+   126→   *
+   127→   * @returns {Argument}
+   128→   */
+   129→  argOptional() {
+   135→/**
+   136→ * Takes an argument and returns its human readable equivalent for help usage.
+   137→ *
+   138→ * @param {Argument} arg
+   139→ * @return {string}
+   140→ * @private
+   141→ */
+   142→
+   143→function humanReadableArgName(arg) {
+command.js
+    13→class Command extends EventEmitter {
+    15→   * Initialize a new `Command`.
+    20→  constructor(name) {
+    92→   * Copy settings that are useful to have in common across root command and subcommands.
+    99→  copyInheritedSettings(sourceCommand) {
+   117→   * @returns {Command[]}
+   121→  _getCommandAndAncestors() {
+   131→   * Define a command.
+   155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
+   183→   * Factory routine to create a new unattached command.
+   192→  createCommand(name) {
+   197→   * You can customise the help with a subclass of Help by overriding createHelp,
+   203→  createHelp() {
+   208→   * You can customise the help by overriding Help properties using configureHelp(),
+   215→  configureHelp(configuration) {
+   223→   * The default output goes to stdout and stderr. You can customise this for special
+   245→  configureOutput(configuration) {
+   256→   * Display the help or a custom message after an error occurs.
+   261→  showHelpAfterError(displayHelp = true) {
+   268→   * Display suggestion of similar commands for unknown commands, or options for unknown options.
+   273→  showSuggestionAfterError(displaySuggestion = true) {
+   279→   * Add a prepared subcommand.
+   288→  addCommand(cmd, opts) {
+   306→   * Factory routine to create a new unattached argument.
+   316→  createArgument(name, description) {
+   321→   * Define argument syntax for command.
+   336→  argument(name, description, parseArg, defaultValue) {
+   348→   * Define argument syntax for command, adding multiple at once (without descriptions).
+   359→  arguments(names) {
+   370→   * Define argument syntax for command, adding a prepared argument.
+   375→  addArgument(argument) {
+   396→   * Customise or override default help command. By default a help command is automatically added if your command has subcommands.
+   409→  helpCommand(enableOrNameAndArgs, description) {
+   437→   * Add prepared custom help command.
+   443→  addHelpCommand(helpCommand, deprecatedDescription) {
+   458→   * Lazy create help command.
+   463→  _getHelpCommand() {
+   480→   * Add hook for life cycle event.
+   487→  hook(event, listener) {
+   502→   * Register callback to use as replacement for calling process.exit.
+   508→  exitOverride(fn) {
+   524→   * Call process.exit, and _exitCallback if defined.
+   533→  _exit(exitCode, code, message) {
+   542→   * Register callback `fn` for the command.
+   556→  action(fn) {
+   575→   * Factory routine to create a new unattached option.
+   585→  createOption(flags, description) {
+   590→   * Wrap parseArgs to catch 'commander.invalidArgument'.
+   599→  _callParseArg(target, value, previous, invalidArgumentMessage) {
+   612→   * Check for option flag conflicts.
+   619→  _registerOption(option) {
+   637→   * Check for command name and alias conflicts with existing commands.
+   644→  _registerCommand(command) {
+   665→   * Add an option.
+   670→  addOption(option) {
+   736→   * Internal implementation shared by .option() and .requiredOption()
+   741→  _optionEx(config, flags, description, fn, defaultValue) {
+   767→   * Define option with `flags`, `description`, and optional argument parsing function or `defaultValue` or both.
+   788→  option(flags, description, parseArg, defaultValue) {
+   793→   * Add a required option which must have a value after parsing. This usually means
+   805→  requiredOption(flags, description, parseArg, defaultValue) {
+   816→   * Alter parsing of short flags with optional values.
+   826→  combineFlagAndOptionalValue(combine = true) {
+   832→   * Allow unknown options on the command line.
+   837→  allowUnknownOption(allowUnknown = true) {
+   843→   * Allow excess command-arguments on the command line. Pass false to make excess arguments an error.
+   848→  allowExcessArguments(allowExcess = true) {
+   854→   * Enable positional options. Positional means global options are specified before subcommands which lets
+   861→  enablePositionalOptions(positional = true) {
+   867→   * Pass through options that come after command-arguments rather than treat them as command-options,
+   875→  passThroughOptions(passThrough = true) {
+   882→   * @private
+   885→  _checkForBrokenPassThrough() {
+   898→   * Whether to store option values as properties on command object,
+   905→  storeOptionsAsProperties(storeAsProperties = true) {
+   919→   * Retrieve option value.
+   925→  getOptionValue(key) {
+   933→   * Store option value.
+   940→  setOptionValue(key, value) {
+   945→   * Store option value and where the value came from.
+   953→  setOptionValueWithSource(key, value, source) {
+   964→   * Get source of option value.
+   971→  getOptionValueSource(key) {
+   976→   * Get source of option value. See also .optsWithGlobals().
+   983→  getOptionValueSourceWithGlobals(key) {
+   995→   * Get user arguments from implied or explicit arguments.
+  1001→  _prepareUserArgs(argv, parseOptions) {
+  1068→   * Parse `argv`, setting options and invoking commands when defined.
+  1090→  parse(argv, parseOptions) {
+  1099→   * Parse `argv`, setting options and invoking commands when defined.
+  1119→  async parseAsync(argv, parseOptions) {
+  1127→  _prepareForParse() {
+  1136→   * Called the first time parse is called to save state and allow a restore before subsequent calls to parse.
+  1141→  saveStateBeforeParse() {
+  1153→   * Restore state before parse for calls after the first.
+  1158→  restoreStateBeforeParse() {
+  1177→   * Throw if expected executable is missing. Add lots of help for author.
+  1183→  _checkForMissingExecutable(executableFile, executableDir, subcommandName) {
+  1197→   * Execute a sub-command executable.
+  1202→  _executeSubCommand(subcommand, args) {
+  1349→   * @private
+  1352→  _dispatchSubcommand(commandName, operands, unknown) {
+  1374→   * Invoke help directly if possible, or dispatch if necessary.
+  1380→  _dispatchHelpCommand(subcommandName) {
+  1398→   * Check this.args against expected this.registeredArguments.
+  1403→  _checkNumberOfArguments() {
+  1423→   * Process this.args using this.registeredArguments and save as this.processedArgs!
+  1428→  _processArguments() {
+  1473→   * Once we have a promise we chain, but call synchronously until then.
+  1481→  _chainOrCall(promise, fn) {
+  1493→   * @param {(Promise|undefined)} promise
+  1499→  _chainOrCallHooks(promise, event) {
+  1524→   * @param {(Promise|undefined)} promise
+  1531→  _chainOrCallSubCommandHook(promise, subCommand, event) {
+  1544→   * Process arguments in context of this command.
+  1550→  _parseCommand(operands, unknown) {
+  1644→   * Find matching command.
+  1649→  _findCommand(name) {
+  1657→   * Return an option matching `arg` if any.
+  1664→  _findOption(arg) {
+  1669→   * Display an error message if a mandatory option does not have a value.
+  1675→  _checkForMissingMandatoryOptions() {
+  1690→   * Display an error message if conflicting options are used together in this.
+  1694→  _checkForConflictingLocalOptions() {
+  1718→   * Display an error message if conflicting options are used together.
+  1723→  _checkForConflictingOptions() {
+  1731→   * Parse options from `argv` removing known options,
+  1748→  parseOptions(args) {
+  1898→   * Return an object containing local option values as key-value pairs.
+  1902→  opts() {
+  1920→   * Return an object containing merged local and global option values as key-value pairs.
+  1924→  optsWithGlobals() {
+  1933→   * Display error message and exit (or call exitOverride).
+  1940→  error(message, errorOptions) {
+  1961→   * Apply any option related environment variables, if option does
+  1966→  _parseOptionsEnv() {
+  1992→   * Apply any implied option values, if option is undefined or default value.
+  1996→  _parseOptionsImplied() {
+  2028→   * Argument `name` is missing.
+  2034→  missingArgument(name) {
+  2040→   * `Option` is missing an argument.
+  2046→  optionMissingArgument(option) {
+  2052→   * `Option` does not have a value, and is a mandatory option.
+  2058→  missingMandatoryOptionValue(option) {
+  2064→   * `Option` conflicts with another option.
+  2070→  _conflictingOption(option, conflictingOption) {
+  2108→   * Unknown option `flag`.
+  2114→  unknownOption(flag) {
+  2140→   * Excess arguments, more than expected.
+  2146→  _excessArguments(receivedArgs) {
+  2157→   * Unknown command.
+  2162→  unknownCommand() {
+  2183→   * Get or set the program version.
+  2195→  version(str, flags, description) {
+  2212→   * Set the description.
+  2218→  description(str, argsDescription) {
+  2229→   * Set the summary. Used when listed as subcommand of parent.
+  2234→  summary(str) {
+  2241→   * Set an alias for the command.
+  2249→  alias(alias) {
+  2281→   * Set aliases for the command.
+  2289→  aliases(aliases) {
+  2298→   * Set / get the command usage `str`.
+  2304→  usage(str) {
+  2325→   * Get or set the name of the command.
+  2331→  name(str) {
+  2338→   * Set/get the help group heading for this subcommand in parent command's help.
+  2344→  helpGroup(heading) {
+  2351→   * Set/get the default help group heading for subcommands added to this command.
+  2363→  commandsGroup(heading) {
+  2370→   * Set/get the default help group heading for options added to this command.
+  2382→  optionsGroup(heading) {
+  2389→   * @param {Option} option
+  2392→  _initOptionGroup(option) {
+  2398→   * @param {Command} cmd
+  2401→  _initCommandGroup(cmd) {
+  2407→   * Set the name of the command from script filename, such as process.argv[1],
+  2419→  nameFromFilename(filename) {
+  2426→   * Get or set the directory for searching for executable subcommands of this command.
+  2437→  executableDir(path) {
+  2444→   * Return program help documentation.
+  2450→  helpInformation(contextOptions) {
+  2464→   * @typedef HelpContext
+  2475→  _getOutputContext(contextOptions) {
+  2498→   * Output help information for this command.
+  2505→  outputHelp(contextOptions) {
+  2547→   * You can pass in flags and a description to customise the built-in help option.
+  2559→  helpOption(flags, description) {
+  2586→   * Lazy create help option.
+  2592→  _getHelpOption() {
+  2601→   * Supply your own option to use for the built-in help option.
+  2607→  addHelpOption(option) {
+  2614→   * Output help information and exit.
+  2621→  help(contextOptions) {
+  2646→   * Add additional text to be displayed with the built-in help.
+  2656→  addHelpText(position, text) {
+  2680→   * Output help information if help flags specified
+  2686→  _outputHelpIfRequested(args) {
+  2705→function incrementNodeInspectorPort(args) {
+  2752→function useColor() {
+error.js
+     1→/**
+     2→ * CommanderError class
+     3→ */
+     4→class CommanderError extends Error {
+     5→  /**
+     6→   * Constructs the CommanderError class
+     7→   * @param {number} exitCode suggested exit code which could be used with process.exit
+     8→   * @param {string} code an id string representing the error
+     9→   * @param {string} message human-readable description of the error
+    10→   */
+    11→  constructor(exitCode, code, message) {
+    22→/**
+    23→ * InvalidArgumentError class
+    24→ */
+    25→class InvalidArgumentError extends CommanderError {
+    26→  /**
+    27→   * Constructs the InvalidArgumentError class
+    28→   * @param {string} [message] explanation of why argument is invalid
+    29→   */
+    30→  constructor(message) {
+help.js
+    12→class Help {
+    13→  constructor() {
+    21→  /**
+    22→   * prepareContext is called by Commander after applying overrides from `Command.configureHelp()`
+    23→   * and just before calling `formatHelp()`.
+    24→   *
+    25→   * Commander just uses the helpWidth and the rest is provided for optional use by more complex subclasses.
+    26→   *
+    27→   * @param {{ error?: boolean, helpWidth?: number, outputHasColors?: boolean }} contextOptions
+    28→   */
+    29→  prepareContext(contextOptions) {
+    33→  /**
+    34→   * Get an array of the visible subcommands. Includes a placeholder for the implicit help command, if there is one.
+    35→   *
+    36→   * @param {Command} cmd
+    37→   * @returns {Command[]}
+    38→   */
+    39→
+    40→  visibleCommands(cmd) {
+    55→  /**
+    56→   * Compare options for sort.
+    57→   *
+    58→   * @param {Option} a
+    59→   * @param {Option} b
+    60→   * @returns {number}
+    61→   */
+    62→  compareOptions(a, b) {
+    72→  /**
+    73→   * Get an array of the visible options. Includes a placeholder for the implicit help option, if there is one.
+    74→   *
+    75→   * @param {Command} cmd
+    76→   * @returns {Option[]}
+    77→   */
+    78→
+    79→  visibleOptions(cmd) {
+   105→  /**
+   106→   * Get an array of the visible global options. (Not including help.)
+   107→   *
+   108→   * @param {Command} cmd
+   109→   * @returns {Option[]}
+   110→   */
+   111→
+   112→  visibleGlobalOptions(cmd) {
+   132→  /**
+   133→   * Get an array of the arguments if any have a description.
+   134→   *
+   135→   * @param {Command} cmd
+   136→   * @returns {Argument[]}
+   137→   */
+   138→
+   139→  visibleArguments(cmd) {
+   155→  /**
+   156→   * Get the command term to show in the list of subcommands.
+   157→   *
+   158→   * @param {Command} cmd
+   159→   * @returns {string}
+   160→   */
+   161→
+   162→  subcommandTerm(cmd) {
+   175→  /**
+   176→   * Get the option term to show in the list of options.
+   177→   *
+   178→   * @param {Option} option
+   179→   * @returns {string}
+   180→   */
+   181→
+   182→  optionTerm(option) {
+   186→  /**
+   187→   * Get the argument term to show in the list of arguments.
+   188→   *
+   189→   * @param {Argument} argument
+   190→   * @returns {string}
+   191→   */
+   192→
+   193→  argumentTerm(argument) {
+   197→  /**
+   198→   * Get the longest command term length.
+   199→   *
+   200→   * @param {Command} cmd
+   201→   * @param {Help} helper
+   202→   * @returns {number}
+   203→   */
+   204→
+   205→  longestSubcommandTermLength(cmd, helper) {
+   216→  /**
+   217→   * Get the longest option term length.
+   218→   *
+   219→   * @param {Command} cmd
+   220→   * @param {Help} helper
+   221→   * @returns {number}
+   222→   */
+   223→
+   224→  longestOptionTermLength(cmd, helper) {
+   233→  /**
+   234→   * Get the longest global option term length.
+   235→   *
+   236→   * @param {Command} cmd
+   237→   * @param {Help} helper
+   238→   * @returns {number}
+   239→   */
+   240→
+   241→  longestGlobalOptionTermLength(cmd, helper) {
+   250→  /**
+   251→   * Get the longest argument term length.
+   252→   *
+   253→   * @param {Command} cmd
+   254→   * @param {Help} helper
+   255→   * @returns {number}
+   256→   */
+   257→
+   258→  longestArgumentTermLength(cmd, helper) {
+   269→  /**
+   270→   * Get the command usage to be displayed at the top of the built-in help.
+   271→   *
+   272→   * @param {Command} cmd
+   273→   * @returns {string}
+   274→   */
+   275→
+   276→  commandUsage(cmd) {
+   293→  /**
+   294→   * Get the description for the command.
+   295→   *
+   296→   * @param {Command} cmd
+   297→   * @returns {string}
+   298→   */
+   299→
+   300→  commandDescription(cmd) {
+   305→  /**
+   306→   * Get the subcommand summary to show in the list of subcommands.
+   307→   * (Fallback to description for backwards compatibility.)
+   308→   *
+   309→   * @param {Command} cmd
+   310→   * @returns {string}
+   311→   */
+   312→
+   313→  subcommandDescription(cmd) {
+   318→  /**
+   319→   * Get the option description to show in the list of options.
+   320→   *
+   321→   * @param {Option} option
+   322→   * @return {string}
+   323→   */
+   324→
+   325→  optionDescription(option) {
+   365→  /**
+   366→   * Get the argument description to show in the list of arguments.
+   367→   *
+   368→   * @param {Argument} argument
+   369→   * @return {string}
+   370→   */
+   371→
+   372→  argumentDescription(argument) {
+   395→  /**
+   396→   * Format a list of items, given a heading and an array of formatted items.
+   397→   *
+   398→   * @param {string} heading
+   399→   * @param {string[]} items
+   400→   * @param {Help} helper
+   401→   * @returns string[]
+   402→   */
+   403→  formatItemList(heading, items, helper) {
+   409→  /**
+   410→   * Group items by their help group heading.
+   411→   *
+   412→   * @param {Command[] | Option[]} unsortedItems
+   413→   * @param {Command[] | Option[]} visibleItems
+   414→   * @param {Function} getGroup
+   415→   * @returns {Map<string, Command[] | Option[]>}
+   416→   */
+   417→  groupItems(unsortedItems, visibleItems, getGroup) {
+   435→  /**
+   436→   * Generate the built-in help text.
+   437→   *
+   438→   * @param {Command} cmd
+   439→   * @param {Help} helper
+   440→   * @returns {string}
+   441→   */
+   442→
+   443→  formatHelp(cmd, helper) {
+   529→  /**
+   530→   * Return display width of string, ignoring ANSI escape sequences. Used in padding and wrapping calculations.
+   531→   *
+   532→   * @param {string} str
+   533→   * @returns {number}
+   534→   */
+   535→  displayWidth(str) {
+   539→  /**
+   540→   * Style the title for displaying in the help. Called with 'Usage:', 'Options:', etc.
+   541→   *
+   542→   * @param {string} str
+   543→   * @returns {string}
+   544→   */
+   545→  styleTitle(str) {
+   549→  styleUsage(str) {
+   563→  styleCommandDescription(str) {
+   566→  styleOptionDescription(str) {
+   569→  styleSubcommandDescription(str) {
+   572→  styleArgumentDescription(str) {
+   575→  styleDescriptionText(str) {
+   578→  styleOptionTerm(str) {
+   581→  styleSubcommandTerm(str) {
+   594→  styleArgumentTerm(str) {
+   597→  styleOptionText(str) {
+   600→  styleArgumentText(str) {
+   603→  styleSubcommandText(str) {
+   606→  styleCommandText(str) {
+   610→  /**
+   611→   * Calculate the pad width from the maximum term length.
+   612→   *
+   613→   * @param {Command} cmd
+   614→   * @param {Help} helper
+   615→   * @returns {number}
+   616→   */
+   617→
+   618→  padWidth(cmd, helper) {
+   627→  /**
+   628→   * Detect manually wrapped and indented strings by checking for line break followed by whitespace.
+   629→   *
+   630→   * @param {string} str
+   631→   * @returns {boolean}
+   632→   */
+   633→  preformatted(str) {
+   637→  /**
+   638→   * Format the "item", which consists of a term and description. Pad the term and wrap the description, indenting the following lines.
+   639→   *
+   640→   * So "TTT", 5, "DDD DDDD DD DDD" might be formatted for this.helpWidth=17 like so:
+   641→   *   TTT  DDD DDDD
+   642→   *        DD DDD
+   643→   *
+   644→   * @param {string} term
+   645→   * @param {number} termWidth
+   646→   * @param {string} description
+   647→   * @param {Help} helper
+   648→   * @returns {string}
+   649→   */
+   650→  formatItem(term, termWidth, description, helper) {
+   687→  /**
+   688→   * Wrap a string at whitespace, preserving existing line breaks.
+   689→   * Wrapping is skipped if the width is less than `minWidthToWrap`.
+   690→   *
+   691→   * @param {string} str
+   692→   * @param {number} width
+   693→   * @returns {string}
+   694→   */
+   695→  boxWrap(str, width) {
+   740→function stripColor(str) {
+option.js
+     3→class Option {
+     4→  /**
+     5→   * Initialize a new `Option` with the given `flags` and `description`.
+     6→   *
+     7→   * @param {string} flags
+     8→   * @param {string} [description]
+     9→   */
+    10→
+    11→  constructor(flags, description) {
+    39→  /**
+    40→   * Set the default value, and optionally supply the description to be displayed in the help.
+    41→   *
+    42→   * @param {*} value
+    43→   * @param {string} [description]
+    44→   * @return {Option}
+    45→   */
+    46→
+    47→  default(value, description) {
+    53→  /**
+    54→   * Preset to use when option used without option-argument, especially optional but also boolean and negated.
+    55→   * The custom processing (parseArg) is called.
+    56→   *
+    57→   * @example
+    58→   * new Option('--color').default('GREYSCALE').preset('RGB');
+    59→   * new Option('--donate [amount]').preset('20').argParser(parseFloat);
+    60→   *
+    61→   * @param {*} arg
+    62→   * @return {Option}
+    63→   */
+    64→
+    65→  preset(arg) {
+    70→  /**
+    71→   * Add option name(s) that conflict with this option.
+    72→   * An error will be displayed if conflicting options are found during parsing.
+    73→   *
+    74→   * @example
+    75→   * new Option('--rgb').conflicts('cmyk');
+    76→   * new Option('--js').conflicts(['ts', 'jsx']);
+    77→   *
+    78→   * @param {(string | string[])} names
+    79→   * @return {Option}
+    80→   */
+    81→
+    82→  conflicts(names) {
+    87→  /**
+    88→   * Specify implied option values for when this option is set and the implied options are not.
+    89→   *
+    90→   * The custom processing (parseArg) is not called on the implied values.
+    91→   *
+    92→   * @example
+    93→   * program
+    94→   *   .addOption(new Option('--log', 'write logging information to file'))
+    95→   *   .addOption(new Option('--trace', 'log extra details').implies({ log: 'trace.txt' }));
+    96→   *
+    97→   * @param {object} impliedOptionValues
+    98→   * @return {Option}
+    99→   */
+   100→  implies(impliedOptionValues) {
+   110→  /**
+   111→   * Set environment variable to check for option value.
+   112→   *
+   113→   * An environment variable is only used if when processed the current option value is
+   114→   * undefined, or the source of the current value is 'default' or 'config' or 'env'.
+   115→   *
+   116→   * @param {string} name
+   117→   * @return {Option}
+   118→   */
+   119→
+   120→  env(name) {
+   125→  /**
+   126→   * Set the custom handler for processing CLI option arguments into option values.
+   127→   *
+   128→   * @param {Function} [fn]
+   129→   * @return {Option}
+   130→   */
+   131→
+   132→  argParser(fn) {
+   137→  /**
+   138→   * Whether the option is mandatory and must have a value after parsing.
+   139→   *
+   140→   * @param {boolean} [mandatory=true]
+   141→   * @return {Option}
+   142→   */
+   143→
+   144→  makeOptionMandatory(mandatory = true) {
+   149→  /**
+   150→   * Hide option in help.
+   151→   *
+   152→   * @param {boolean} [hide=true]
+   153→   * @return {Option}
+   154→   */
+   155→
+   156→  hideHelp(hide = true) {
+   161→  /**
+   162→   * @package
+   163→   */
+   164→
+   165→  _collectValue(value, previous) {
+   174→  /**
+   175→   * Only allow option value to be one of choices.
+   176→   *
+   177→   * @param {string[]} values
+   178→   * @return {Option}
+   179→   */
+   180→
+   181→  choices(values) {
+   197→  /**
+   198→   * Return option name.
+   199→   *
+   200→   * @return {string}
+   201→   */
+   202→
+   203→  name() {
+   210→  /**
+   211→   * Return option name, in a camelcase format that can be used
+   212→   * as an object attribute key.
+   213→   *
+   214→   * @return {string}
+   215→   */
+   216→
+   217→  attributeName() {
+   224→  /**
+   225→   * Set the help group heading.
+   226→   *
+   227→   * @param {string} heading
+   228→   * @return {Option}
+   229→   */
+   230→  helpGroup(heading) {
+   235→  /**
+   236→   * Check if `arg` matches the short or long flag.
+   237→   *
+   238→   * @param {string} arg
+   239→   * @return {boolean}
+   240→   * @package
+   241→   */
+   242→
+   243→  is(arg) {
+   247→  /**
+   248→   * Return whether a boolean option.
+   249→   *
+   250→   * Options are one of boolean, negated, required argument, or optional argument.
+   251→   *
+   252→   * @return {boolean}
+   253→   * @package
+   254→   */
+   255→
+   256→  isBoolean() {
+   261→/**
+   262→ * This class is to make it easier to work with dual options, without changing the existing
+   263→ * implementation. We support separate dual options for separate positive and negative options,
+   264→ * like `--build` and `--no-build`, which share a single option value. This works nicely for some
+   265→ * use cases, but is tricky for others where we want separate behaviours despite
+   266→ * the single shared option value.
+   267→ */
+   268→class DualOptions {
+   269→  /**
+   270→   * @param {Option[]} options
+   271→   */
+   272→  constructor(options) {
+   290→  /**
+   291→   * Did the value come from the option, and not from possible matching dual option?
+   292→   *
+   293→   * @param {*} value
+   294→   * @param {Option} option
+   295→   * @returns {boolean}
+   296→   */
+   297→  valueFromOption(value, option) {
+   308→/**
+   309→ * Convert string from kebab-case to camelCase.
+   310→ *
+   311→ * @param {string} str
+   312→ * @return {string}
+   313→ * @private
+   314→ */
+   315→
+   316→function camelcase(str) {
+   322→/**
+   323→ * Split the short and long flag out of something like '-m,--mixed <value>'
+   324→ *
+   325→ * @private
+   326→ */
+   327→
+   328→function splitOptionFlags(flags) {
+suggestSimilar.js
+     1→const maxDistance = 3;
+     3→function editDistance(a, b) {
+    48→/**
+    49→ * Find close matches, restricted to same number of edits.
+    50→ *
+    51→ * @param {string} word
+    52→ * @param {string[]} candidates
+    53→ * @returns {string}
+    54→ */
+    55→
+    56→function suggestSimilar(word, candidates) {

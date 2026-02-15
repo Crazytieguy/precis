@@ -1,0 +1,119 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 → level 4 (405 words)
+
+README.md
+     1→# humanize
+    49→## API reference
+    55→## Installation
+    57→### From PyPI
+    63→### From source
+    71→## Usage
+    73→### Integer humanization
+    89→### Date & time humanization
+   110→### Precise time delta
+   124→#### Smaller units
+   154→### File size humanization
+   166→### Human-readable floating point numbers
+   182→### Scientific notation
+   200→## Localization
+RELEASING.md
+     1→# Release checklist
+docs/filesize.md
+     1→# Filesize
+docs/i18n.md
+     1→# Internationalisation
+docs/index.md
+     1→# humanize
+docs/lists.md
+     1→# Lists
+docs/number.md
+     1→# Number
+docs/time.md
+     1→# Time
+src/humanize/__init__.py
+    28→__all__ = [
+src/humanize/filesize.py
+    36→def naturalsize(
+    37→    value: float | str,
+    38→    binary: bool = False,
+    39→    gnu: bool = False,
+    40→    format: str = "%.1f",
+    41→) -> str:
+src/humanize/i18n.py
+     8→TYPE_CHECKING = False
+    13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
+    15→_TRANSLATIONS
+    18→_CURRENT
+    22→_THOUSANDS_SEPARATOR
+    31→_DECIMAL_SEPARATOR
+    40→def _get_default_locale_path
+    51→def get_translation() -> gettext_module.NullTranslations:
+    58→def activate(
+    59→    locale: str | None, path: str | os.PathLike[str] | None = None
+    60→) -> gettext_module.NullTranslations:
+    96→def deactivate() -> None:
+   101→def _gettext
+   113→def _pgettext
+   129→def _ngettext
+   144→def _gettext_noop
+   163→def _ngettext_noop
+   183→def thousands_separator() -> str:
+   196→def decimal_separator() -> str:
+src/humanize/lists.py
+     5→TYPE_CHECKING = False
+     9→__all__ = ["natural_list"]
+    12→def natural_list(items: list[Any]) -> str:
+src/humanize/number.py
+    12→TYPE_CHECKING = False
+    21→def _format_not_finite
+    34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
+   110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
+   195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
+   269→def apnumber(value: NumberOrString) -> str:
+   321→def fractional(value: NumberOrString) -> str:
+   385→def scientific(value: NumberOrString, precision: int = 2) -> str:
+   454→def clamp(
+   455→    value: float,
+   456→    format: str = "{:}",
+   457→    floor: float | None = None,
+   458→    ceil: float | None = None,
+   459→    floor_token: str = "<",
+   460→    ceil_token: str = ">",
+   461→) -> str:
+   531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
+src/humanize/time.py
+    15→TYPE_CHECKING = False
+    21→__all__ = [
+    31→class Unit(Enum):
+    41→    def __lt__(self, other: Any) -> Any:
+    47→def _now
+    53→def _abs_timedelta
+    68→def _date_and_delta
+    95→def naturaldelta(
+    96→    value: dt.timedelta | float,
+    97→    months: bool = True,
+    98→    minimum_unit: str = "seconds",
+    99→) -> str:
+   249→def naturaltime(
+   250→    value: dt.datetime | dt.timedelta | float,
+   251→    future: bool = False,
+   252→    months: bool = True,
+   253→    minimum_unit: str = "seconds",
+   254→    when: dt.datetime | None = None,
+   255→) -> str:
+   300→def _convert_aware_datetime
+   311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
+   343→def naturaldate(value: dt.date | dt.datetime) -> str:
+   361→def _quotient_and_remainder
+   406→def _suitable_minimum_unit
+   435→def _suppress_lower_units
+   451→def precisedelta(
+   452→    value: dt.timedelta | float | None,
+   453→    minimum_unit: str = "seconds",
+   454→    suppress: Iterable[str] = (),
+   455→    format: str = "%0.2f",
+   456→) -> str:
+   654→def _rounding_by_fmt

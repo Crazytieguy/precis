@@ -1,0 +1,153 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 → level 3 (374 words)
+
+AGENTS.md
+     1→# AGENTS.md
+CLAUDE.md
+     1→# CLAUDE.md
+     5→## Project Overview
+    10→## Development Commands
+    14→### Testing
+    18→### Code Quality
+    22→## Development Process
+    32→## Core Architecture
+    34→### Main Components
+    42→### Package Structure
+    48→## Configuration Files
+SECURITY.md
+     1→# Security
+docs/conf.py
+   106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
+   130→def setup(app: "sphinx.application.Sphinx") -> None:
+downstream/README.md
+scripts/release.py
+    15→def create_branch(version: str) -> Repo:
+    30→def get_upstream(repo: Repo) -> Remote:
+    39→def pre_release(version: str) -> None:
+    50→def changelog(version: str, write_out: bool = False) -> None:
+    59→def main() -> int:
+scripts/towncrier-draft-to-file.py
+     5→def main() -> int:
+src/pluggy/__init__.py
+     1→__all__
+    32→def __getattr__
+src/pluggy/_callers.py
+    24→Teardown
+    27→def run_old_style_hookwrapper
+    60→def _raise_wrapfail
+    70→def _warn_teardown_exception
+    82→def _multicall
+src/pluggy/_hooks.py
+    28→_T
+    29→_F
+    31→_Namespace
+    32→_Plugin
+    33→_HookExec
+    37→_HookImplFunction
+    40→class HookspecOpts
+    56→class HookimplOpts
+    78→class HookspecMarker
+    88→    def __init__
+   111→    def __call__
+   165→class HookimplMarker
+   175→    def __init__
+   202→    def __call__
+   281→def normalize_hookimpl_opts
+   290→_PYPY
+   293→def varnames
+   359→class HookRelay
+   365→    def __init__
+   370→        def __getattr__
+   377→_CallHistory
+   382→class HookCaller
+   393→    def __init__
+   420→    def has_spec
+   424→    def set_specification
+   438→    def is_historic
+   442→    def _remove_plugin
+   449→    def get_hookimpls
+   453→    def _add_hookimpl
+   477→    def __repr__
+   480→    def _verify_all_args_are_provided
+   499→    def __call__
+   516→    def call_historic
+   543→    def call_extra
+   577→    def _maybe_apply_history
+   593→class _SubsetHookCaller
+   612→    def __init__
+   619→    def _hookimpls
+   627→    def spec
+   631→    def _call_history
+   634→    def __repr__
+   639→class HookImpl
+   656→    def __init__
+   692→    def __repr__
+   697→class HookSpec
+   709→    def __init__
+src/pluggy/_manager.py
+    36→_BeforeTrace
+    37→_AfterTrace
+    42→def _warn_for_function
+    52→class PluginValidationError
+    59→    def __init__
+    65→class DistFacade
+    68→    def __init__
+    72→    def project_name
+    76→    def __getattr__
+    79→    def __dir__
+    83→class PluginManager
+   100→    def __init__
+   114→    def _hookexec
+   125→    def register
+   176→    def parse_hookimpl_opts
+   201→    def unregister
+   233→    def set_blocked
+   238→    def is_blocked
+   242→    def unblock
+   252→    def add_hookspecs
+   278→    def parse_hookspec_opts
+   296→    def get_plugins
+   300→    def is_registered
+   304→    def get_canonical_name
+   315→    def get_plugin
+   319→    def has_plugin
+   323→    def get_name
+   331→    def _verify_hook
+   379→    def check_pending
+   395→    def load_setuptools_entrypoints
+   425→    def list_plugin_distinfo
+   430→    def list_name_plugin
+   434→    def get_hookcallers
+   450→    def add_hookcall_monitoring
+   487→    def enable_tracing
+   512→    def subset_hook_caller
+   525→def _formatdef
+src/pluggy/_result.py
+    16→_ExcInfo
+    20→class HookCallError
+    25→class Result
+    31→    def __init__
+    43→    def excinfo
+    52→    def exception
+    57→    def from_call
+    67→    def force_result
+    80→    def force_exception
+    91→    def get_result
+src/pluggy/_tracing.py
+    16→class TagTracer
+    17→    def __init__
+    22→    def get
+    25→    def _format_message
+    42→    def _processmessage
+    48→    def setwriter
+    51→    def setprocessor
+    59→class TagTracerSub
+    60→    def __init__
+    64→    def __call__
+    67→    def get
+src/pluggy/_warnings.py
+     4→class PluggyWarning
+    11→class PluggyTeardownRaisedWarning

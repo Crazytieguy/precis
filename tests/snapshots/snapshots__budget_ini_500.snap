@@ -1,0 +1,116 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 → level 5 (460 words)
+
+.commitlintrc.js
+.eslintrc.js
+     7→const localConfigs = readdir(__dirname)
+CHANGELOG.md
+     1→# Changelog
+     2→
+     3→## [6.0.0](https://github.com/npm/ini/compare/v5.0.0...v6.0.0) (2025-10-22)
+     4→### ⚠️ BREAKING CHANGES
+     5→* `ini` now supports node `^20.17.0 || >=22.9.0`
+     6→### Bug Fixes
+     7→* [`6d395a4`](https://github.com/npm/ini/commit/6d395a4aaf7d7a5e32e250809cb7bd04c6a27b66) [#291](https://github.com/npm/ini/pull/291) align to npm 11 node engine range (#291) (@owlstronaut)
+     8→### Chores
+     9→* [`23a36a9`](https://github.com/npm/ini/commit/23a36a9ca194d97486ed367f63d13a2cde1d1ce5) [#290](https://github.com/npm/ini/pull/290) bump @npmcli/template-oss from 4.26.0 to 4.27.1 (#290) (@dependabot[bot], @npm-cli-bot)
+    11→## [5.0.0](https://github.com/npm/ini/compare/v4.1.3...v5.0.0) (2024-09-03)
+    12→### ⚠️ BREAKING CHANGES
+    14→### Bug Fixes
+    15→* [`3eca645`](https://github.com/npm/ini/commit/3eca645de8586b8349acd79211b01a9199d8fd32) [#279](https://github.com/npm/ini/pull/279) align to npm 10 node engine range (@hashtagchris)
+    16→### Chores
+    17→* [`c89e209`](https://github.com/npm/ini/commit/c89e2090d7989bb91255ec46eaaf5f8cb1c34b34) [#279](https://github.com/npm/ini/pull/279) run template-oss-apply (@hashtagchris)
+    22→## [4.1.3](https://github.com/npm/ini/compare/v4.1.2...v4.1.3) (2024-05-22)
+    23→
+    24→### Bug Fixes
+    28→### Chores
+    29→
+    30→* [`2da0471`](https://github.com/npm/ini/commit/2da047162452b6c74fbec797c115530547216685) [#251](https://github.com/npm/ini/pull/251) bump @npmcli/template-oss to 4.22.0 (@lukekarrys)
+    34→## [4.1.2](https://github.com/npm/ini/compare/v4.1.1...v4.1.2) (2024-03-04)
+    35→
+    36→### Bug Fixes
+    40→### Documentation
+    41→
+    42→* [`31b3209`](https://github.com/npm/ini/commit/31b3209c45498d1e0f4e38ee5d451ea80b56aa01) [#239](https://github.com/npm/ini/pull/239) Fix typo in `bracketedArray` option name in README.md (#239) (@futpib)
+    46→### Chores
+    47→
+    48→* [`29caa7c`](https://github.com/npm/ini/commit/29caa7c7578b9ed0b3d36987dc48cec30608d05a) [#240](https://github.com/npm/ini/pull/240) postinstall for dependabot template-oss PR (@lukekarrys)
+    63→## [4.1.1](https://github.com/npm/ini/compare/v4.1.0...v4.1.1) (2023-05-16)
+    64→
+    65→### Bug Fixes
+    69→## [4.1.0](https://github.com/npm/ini/compare/v4.0.0...v4.1.0) (2023-04-13)
+    70→
+    71→### Features
+    78→### Bug Fixes
+    79→
+    80→* [`ad4b5d8`](https://github.com/npm/ini/commit/ad4b5d8423f67d67b8683ac8e809b9dd23fe82e2) [#200](https://github.com/npm/ini/pull/200) Refactored section split logic (#200) (@wraithgar, @platinumazure)
+    84→## [4.0.0](https://github.com/npm/ini/compare/v3.0.1...v4.0.0) (2023-03-08)
+    85→
+    86→### ⚠️ BREAKING CHANGES
+    90→### Features
+    91→
+    92→* [`6b70a48`](https://github.com/npm/ini/commit/6b70a480a47cac47b2da4ec40aba6b9b4bb77608) [#176](https://github.com/npm/ini/pull/176) postinstall for dependabot template-oss PR (@lukekarrys)
+    94→## [3.0.1](https://github.com/npm/ini/compare/v3.0.0...v3.0.1) (2022-08-22)
+    95→
+    96→
+    97→### Bug Fixes
+   101→## [3.0.0](https://github.com/npm/ini/compare/v2.0.1...v3.0.0) (2022-04-05)
+   102→
+   103→
+   104→### ⚠ BREAKING CHANGES
+   108→### Bug Fixes
+   109→
+   110→* replace deprecated String.prototype.substr() ([#155](https://github.com/npm/ini/issues/155)) ([e3a5d18](https://github.com/npm/ini/commit/e3a5d183269744f6b590c1a9916ef151de09bf64))
+   113→### Dependencies
+   114→
+   115→* @npmcli/template-oss@3.2.2 ([#156](https://github.com/npm/ini/issues/156)) ([837831a](https://github.com/npm/ini/commit/837831a44ba1f04f62a9d0b369525a4f8d8116e9))
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+     3→# Contributing
+     4→
+     5→## Code of Conduct
+     9→## Reporting Bugs
+    10→
+    11→Before submitting a new bug report please search for an existing or similar report.
+    17→## Pull Request Conventions
+    18→
+    19→### Commits
+    30→### Test Coverage
+    31→
+    32→Pull requests made against this repo will run `npm test` automatically.  Please make sure tests pass locally before submitting a PR.
+    36→### Linting
+    37→
+    38→Linting is also done automatically once tests pass.  `npm run lintfix` will fix most linting errors automatically.
+    42→## What _not_ to contribute?
+    43→
+    44→### Dependencies
+    48→### Tools/Automation
+    49→
+    50→Our core team is responsible for the maintenance of the tooling/automation in this project and we ask contributors to not make changes to these when contributing (e.g. `.github/*`, `.eslintrc.json`, `.licensee.json`).  Most of those files also have a header at the top to remind folks they are automatically generated.  Pull requests that alter these will not be accepted.
+README.md
+     4→## Note
+     5→
+     6→-   Sections are treated as nested objects.
+    10→## Usage
+    11→
+    12→Consider an INI file such as the following:
+    82→## API
+    83→
+    84→### Parse
+    93→### Stringify
+    94→
+    95→Encodes the given data object as an INI formatted string.
+   167→### Un / Escape
+   168→
+   169→Turn the given string into a safe to  
+SECURITY.md
+lib/ini.js
+     3→const encode = (obj, opt = {}) => {
+    80→function splitSections (str, separator) {
+   106→const decode = (str, opt = {}) => {
+   212→const isQuoted = val => {
+   217→const safe = val => {
+   230→const unsafe = val => {

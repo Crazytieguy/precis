@@ -1,0 +1,196 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 2000 → level 4 (482 words)
+
+ARCHITECTURE.md
+     1→# Architecture
+    46→## Approach
+    50→### Discarded approach
+    60→## Example
+    92→## Performance
+    96→## Groups
+LICENSE.md
+README.md
+     5→# ⌘K [![cmdk minzip package size](https://img.shields.io/bundlephobia/minzip/cmdk)](https://www.npmjs.com/package/cmdk?activeTab=code) [![cmdk package version](https://img.shields.io/npm/v/cmdk.svg?colorB=green)](https://www.npmjs.com/package/cmdk)
+     9→## Install
+    15→## Use
+    82→## Parts and styling
+    86→### Command `[cmdk-root]`
+   153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
+   180→### Input `[cmdk-input]`
+   190→### List `[cmdk-list]`
+   212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
+   242→### Group `[cmdk-group]` `[hidden?]`
+   256→### Separator `[cmdk-separator]`
+   260→### Empty `[cmdk-empty]`
+   264→### Loading `[cmdk-loading]`
+   274→### `useCommandState(state => state.selectedField)`
+   285→## Examples
+   289→### Nested items
+   338→### Show sub-items when searching
+   361→### Asynchronous results
+   397→### Use inside Popover
+   426→### Drop in stylesheets
+   430→## FAQ
+   456→## History
+   462→## Testing
+cmdk/src/command-score.ts
+    54→function commandScoreInner
+   150→function formatInput
+   155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
+cmdk/src/index.tsx
+    10→type Children
+    11→type DivProps
+    13→type LoadingProps
+    23→type EmptyProps
+    24→type SeparatorProps
+    28→type DialogProps
+    37→type ListProps
+    44→type ItemProps
+    60→type GroupProps
+    69→type InputProps
+    79→type CommandFilter
+    80→type CommandProps
+   123→type Context
+   137→type State
+   143→type Store
+   149→type Group
+   154→const GROUP_SELECTOR
+   155→const GROUP_ITEMS_SELECTOR
+   156→const GROUP_HEADING_SELECTOR
+   157→const ITEM_SELECTOR
+   158→const VALID_ITEM_SELECTOR
+   159→const SELECT_EVENT
+   160→const VALUE_ATTR
+   161→const defaultFilter
+   163→const CommandContext
+   164→const useCommand
+   165→const StoreContext
+   166→const useStore
+   167→const GroupContext
+   169→const Command
+   664→const Item
+   729→const Group
+   774→const Separator
+   787→const Input
+   833→const List
+   882→const Dialog
+   899→const Empty
+   909→const Loading
+   930→const pkg
+   963→function findNextSibling
+   972→function findPreviousSibling
+   981→function useAsRef
+   991→const useLayoutEffect
+   993→function useLazyRef
+  1004→function useCmdk
+  1010→function useValue
+  1046→const useScheduleLayoutEffect
+  1061→function renderChildren
+  1071→function SlottableWithNestedChildren
+  1081→const srOnlyStyles
+cmdk/tsup.config.ts
+playwright.config.ts
+     3→const config: PlaywrightTestConfig = {
+website/README.md
+     3→## Getting Started
+    19→## Learn More
+    28→## Deploy on Vercel
+website/components/cmdk/framer.tsx
+     4→export function FramerCMDK() {
+    57→function Button
+    61→function Input
+    65→function Badge
+    69→function Radio
+    78→function Slider
+    86→function Avatar
+    90→function Container
+    94→function Item
+   106→function ButtonIcon
+   119→function InputIcon
+   132→function RadioIcon
+   145→function BadgeIcon
+   158→function ToggleIcon
+   171→function AvatarIcon
+   184→function ContainerIcon
+   197→function SearchIcon
+   212→function SliderIcon
+website/components/cmdk/linear.tsx
+     3→export function LinearCMDK() {
+    30→const items
+    68→function AssignToIcon
+    76→function AssignToMeIcon
+    90→function ChangeStatusIcon
+   103→function ChangePriorityIcon
+   113→function ChangeLabelsIcon
+   125→function RemoveLabelIcon
+   137→function SetDueDateIcon
+website/components/cmdk/raycast.tsx
+     7→export function RaycastCMDK() {
+    97→function Item
+   116→function SubCommand
+   200→function SubItem
+   213→function TerminalIcon
+   231→function RaycastLightIcon
+   244→function RaycastDarkIcon
+   257→function WindowIcon
+   271→function FinderIcon
+   285→function StarIcon
+   299→function ClipboardIcon
+   315→function HammerIcon
+website/components/cmdk/vercel.tsx
+     4→export function VercelCMDK() {
+    91→function Home
+   137→function Projects
+   150→function Item
+   173→function ProjectsIcon
+   194→function PlusIcon
+   213→function TeamsIcon
+   234→function CopyIcon
+   252→function DocsIcon
+   274→function FeedbackIcon
+   292→function ContactIcon
+website/components/code/index.tsx
+     7→const theme
+    41→export function Code({ children }: { children: string }) {
+website/components/icons/index.tsx
+     3→export function FigmaIcon() {
+    15→export function RaycastIcon() {
+    28→export function YouTubeIcon() {
+    40→export function SlackIcon() {
+    79→export function VercelIcon() {
+    87→export function LinearIcon({ style }: { style?: Object }) {
+   110→export function Logo({ children, size = '20px' }: { children: React.ReactNode; size?: string }) {
+   127→export function CopyIcon() {
+   146→export function CopiedIcon() {
+   154→export function GitHubIcon() {
+   165→export function FramerIcon() {
+website/components/index.ts
+website/next-env.d.ts
+website/next.config.js
+     2→const nextConfig = {
+website/pages/_app.tsx
+    13→const title
+    14→const description
+    15→const siteUrl
+    17→export default function App({ Component, pageProps }: AppProps) {
+website/pages/_document.tsx
+     5→export default class Document extends NextDocument {
+     6→  render() {
+website/pages/index.tsx
+    20→type TTheme
+    25→type Themes
+    27→const ThemeContext
+    29→export default function Index() {
+    84→function CMDKWrapper
+   101→function InstallButton
+   123→function GitHubButton
+   139→const themes
+   158→function ThemeSwitcher
+   262→function Codeblock
+   296→function VersionBadge
+   300→function Footer
+   326→function RaunoSignature
+   350→function PacoSignature

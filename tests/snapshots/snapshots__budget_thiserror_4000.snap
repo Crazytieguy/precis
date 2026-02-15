@@ -1,0 +1,638 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 → level 10 (2954 words)
+
+README.md
+     1→derive(Error)
+     3→
+     4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/thiserror-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/thiserror)
+     5→[<img alt="crates.io" src="https://img.shields.io/crates/v/thiserror.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/thiserror)
+     6→[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-thiserror-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/thiserror)
+     7→[<img alt="build status" src="https://img.shields.io/github/actions/workflow/status/dtolnay/thiserror/ci.yml?branch=master&style=for-the-badge" height="20">](https://github.com/dtolnay/thiserror/actions?query=branch%3Amaster)
+     8→
+     9→This library provides a convenient derive macro for the standard library's
+    10→[`std::error::Error`] trait.
+    11→
+    12→[`std::error::Error`]: https://doc.rust-lang.org/std/error/trait.Error.html
+    13→
+    14→```toml
+    15→[dependencies]
+    16→thiserror = "2"
+    17→```
+    18→
+    19→<br>
+    20→
+    21→## Example
+    22→
+    23→```rust
+    24→use thiserror::Error;
+    25→
+    26→#[derive(Error, Debug)]
+    27→pub enum DataStoreError {
+    28→    #[error("data store disconnected")]
+    29→    Disconnect(#[from] io::Error),
+    30→    #[error("the data for key `{0}` is not available")]
+    31→    Redaction(String),
+    32→    #[error("invalid header (expected {expected:?}, found {found:?})")]
+    33→    InvalidHeader {
+    34→        expected: String,
+    35→        found: String,
+    36→    },
+    37→    #[error("unknown data store error")]
+    38→    Unknown,
+    39→}
+    40→```
+    41→
+    42→<br>
+    43→
+    44→## Details
+    45→
+    46→- Thiserror deliberately does not appear in your public API. You get the same
+    47→  thing as if you had written an implementation of `std::error::Error` by hand,
+    48→  and switching from handwritten impls to thiserror or vice versa is not a
+    49→  breaking change.
+    50→
+    51→- Errors may be enums, structs with named fields, tuple structs, or unit
+    52→  structs.
+    53→
+    54→- A `Display` impl is generated for your error if you provide `#[error("...")]`
+    55→  messages on the struct or each variant of your enum, as shown above in the
+    56→  example.
+    57→
+    58→  The messages support a shorthand for interpolating fields from the error.
+    59→
+    60→    - `#[error("{var}")]`&ensp;⟶&ensp;`write!("{}", self.var)`
+    61→    - `#[error("{0}")]`&ensp;⟶&ensp;`write!("{}", self.0)`
+    62→    - `#[error("{var:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.var)`
+    63→    - `#[error("{0:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.0)`
+    64→
+    65→  These shorthands can be used together with any additional format args, which
+    66→  may be arbitrary expressions. For example:
+    67→
+    68→  ```rust
+    69→  #[derive(Error, Debug)]
+    70→  pub enum Error {
+    71→      #[error("invalid rdo_lookahead_frames {0} (expected < {max})", max = i32::MAX)]
+    72→      InvalidLookahead(u32),
+    73→  }
+    74→  ```
+    75→
+    76→  If one of the additional expression arguments needs to refer to a field of the
+    77→  struct or enum, then refer to named fields as `.var` and tuple fields as `.0`.
+    78→
+    79→  ```rust
+    80→  #[derive(Error, Debug)]
+    81→  pub enum Error {
+    82→      #[error("first letter must be lowercase but was {:?}", first_char(.0))]
+    83→      WrongCase(String),
+    84→      #[error("invalid index {idx}, expected at least {} and at most {}", .limits.lo, .limits.hi)]
+    85→      OutOfBounds { idx: usize, limits: Limits },
+    86→  }
+    87→  ```
+    88→
+    89→- A `From` impl is generated for each variant that contains a `#[from]`
+    90→  attribute.
+    91→
+    92→  The variant using `#[from]` must not contain any other fields beyond the
+    93→  source error (and possibly a backtrace &mdash; see below). Usually `#[from]`
+    94→  fields are unnamed, but `#[from]` is allowed on a named field too.
+    95→
+    96→  ```rust
+    97→  #[derive(Error, Debug)]
+    98→  pub enum MyError {
+    99→      Io(#[from] io::Error),
+   100→      Glob(#[from] globset::Error),
+   101→  }
+   102→  ```
+   103→
+   104→- The Error trait's `source()` method is implemented to return whichever field
+   105→  has a `#[source]` attribute or is named `source`, if any. This is for
+   106→  identifying the underlying lower level error that caused your error.
+   107→
+   108→  The `#[from]` attribute always implies that the same field is `#[source]`, so
+   109→  you don't ever need to specify both attributes.
+   110→
+   111→  Any error type that implements `std::error::Error` or dereferences to `dyn
+   112→  std::error::Error` will work as a source.
+   113→
+   114→  ```rust
+   115→  #[derive(Error, Debug)]
+   116→  pub struct MyError {
+   117→      msg: String,
+   118→      #[source]  // optional if field name is `source`
+   119→      source: anyhow::Error,
+   120→  }
+   121→  ```
+   122→
+   123→- The Error trait's `provide()` method is implemented to provide whichever field
+   124→  has a type named `Backtrace`, if any, as a `std::backtrace::Backtrace`. Using
+   125→  `Backtrace` in errors requires a nightly compiler with Rust version 1.73 or
+   126→  newer.
+   127→
+   128→  ```rust
+   129→  use std::backtrace::Backtrace;
+   130→
+   131→  #[derive(Error, Debug)]
+   132→  pub struct MyError {
+   133→      msg: String,
+   134→      backtrace: Backtrace,  // automatically detected
+   135→  }
+   136→  ```
+   137→
+   138→- If a field is both a source (named `source`, or has `#[source]` or `#[from]`
+   139→  attribute) *and* is marked `#[backtrace]`, then the Error trait's `provide()`
+   140→  method is forwarded to the source's `provide` so that both layers of the error
+   141→  share the same backtrace. The `#[backtrace]` attribute requires a nightly
+   142→  compiler with Rust version 1.73 or newer.
+   143→
+   144→
+   145→  ```rust
+   146→  #[derive(Error, Debug)]
+   147→  pub enum MyError {
+   148→      Io {
+   149→          #[backtrace]
+   150→          source: io::Error,
+   151→      },
+   152→  }
+   153→  ```
+   154→
+   155→- For variants that use `#[from]` and also contain a `Backtrace` field, a
+   156→  backtrace is captured from within the `From` impl.
+   157→
+   158→  ```rust
+   159→  #[derive(Error, Debug)]
+   160→  pub enum MyError {
+   161→      Io {
+   162→          #[from]
+   163→          source: io::Error,
+   164→          backtrace: Backtrace,
+   165→      },
+   166→  }
+   167→  ```
+   168→
+   169→- Errors may use `error(transparent)` to forward the source and Display methods
+   170→  straight through to an underlying error without adding an additional message.
+   171→  This would be appropriate for enums that need an "anything else" variant.
+   172→
+   173→  ```rust
+   174→  #[derive(Error, Debug)]
+   175→  pub enum MyError {
+   176→      ...
+   177→
+   178→      #[error(transparent)]
+   179→      Other(#[from] anyhow::Error),  // source and Display delegate to anyhow::Error
+   180→  }
+   181→  ```
+   182→
+   183→  Another use case is hiding implementation details of an error representation
+   184→  behind an opaque error type, so that the representation is able to evolve
+   185→  without breaking the crate's public API.
+   186→
+   187→  ```rust
+   188→  // PublicError is public, but opaque and easy to keep compatible.
+   189→  #[derive(Error, Debug)]
+   190→  #[error(transparent)]
+   191→  pub struct PublicError(#[from] ErrorRepr);
+   192→
+   193→  impl PublicError {
+   194→      // Accessors for anything we do want to expose publicly.
+   195→  }
+   196→
+   197→  // Private and free to change across minor version of the crate.
+   198→  #[derive(Error, Debug)]
+   199→  enum ErrorRepr {
+   200→      ...
+   201→  }
+   202→  ```
+   203→
+   204→- See also the [`anyhow`] library for a convenient single error type to use in
+   205→  application code.
+   206→
+   207→  [`anyhow`]: https://github.com/dtolnay/anyhow
+   208→
+   209→<br>
+   210→
+   211→## Comparison to anyhow
+   212→
+   213→Use thiserror if you care about designing your own dedicated error type(s) so
+   214→that the caller receives exactly the information that you choose in the event of
+   215→failure. This most often applies to library-like code. Use [Anyhow] if you don't
+   216→care what error type your functions return, you just want it to be easy. This is
+   217→common in application-like code.
+   218→
+   219→[Anyhow]: https://github.com/dtolnay/anyhow
+   220→
+   221→<br>
+   222→
+   223→#### License
+   224→
+   225→<sup>
+   226→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
+   227→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
+   228→</sup>
+   229→
+   230→<br>
+   231→
+   232→<sub>
+   233→Unless you explicitly state otherwise, any contribution intentionally submitted
+   234→for inclusion in this crate by you, as defined in the Apache-2.0 license, shall
+   235→be dual licensed as above, without any additional terms or conditions.
+   236→</sub>
+build/probe.rs
+    11→struct MyError(Thing);
+    12→struct Thing;
+    14→impl Debug for MyError {
+    15→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    20→impl Display for MyError {
+    21→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    26→impl Error for MyError {
+    27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
+    33→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
+build.rs
+    10→const PRIVATE: &str = "\
+    18→fn main() {
+    91→fn compile_probe(rustc_bootstrap: bool) -> bool {
+   179→fn rustc_minor_version() -> Option<u32> {
+   190→fn cargo_env_var(key: &str) -> OsString {
+impl/src/ast.rs
+    10→pub enum Input<'a> {
+    11→    Struct(Struct<'a>),
+    12→    Enum(Enum<'a>),
+    13→}
+    15→pub struct Struct<'a> {
+    16→    pub attrs: Attrs<'a>,
+    17→    pub ident: Ident,
+    18→    pub generics: &'a Generics,
+    19→    pub fields: Vec<Field<'a>>,
+    20→}
+    22→pub struct Enum<'a> {
+    23→    pub attrs: Attrs<'a>,
+    24→    pub ident: Ident,
+    25→    pub generics: &'a Generics,
+    26→    pub variants: Vec<Variant<'a>>,
+    27→}
+    29→pub struct Variant<'a> {
+    30→    pub original: &'a syn::Variant,
+    31→    pub attrs: Attrs<'a>,
+    32→    pub ident: Ident,
+    33→    pub fields: Vec<Field<'a>>,
+    34→}
+    36→pub struct Field<'a> {
+    37→    pub original: &'a syn::Field,
+    38→    pub attrs: Attrs<'a>,
+    39→    pub member: MemberUnraw,
+    40→    pub ty: &'a Type,
+    41→    pub contains_generic: bool,
+    42→}
+    44→#[derive(Copy, Clone)]
+    45→pub enum ContainerKind {
+    46→    Struct,
+    47→    TupleStruct,
+    48→    UnitStruct,
+    49→    StructVariant,
+    50→    TupleVariant,
+    51→    UnitVariant,
+    52→}
+    54→impl<'a> Input<'a> {
+    55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
+    67→impl<'a> Struct<'a> {
+    68→    fn from_syn(node: &'a DeriveInput, data: &'a DataStruct) -> Result<Self> {
+    85→impl<'a> Enum<'a> {
+    86→    fn from_syn(node: &'a DeriveInput, data: &'a DataEnum) -> Result<Self> {
+   118→impl<'a> Variant<'a> {
+   119→    fn from_syn(node: &'a syn::Variant, scope: &ParamsInScope<'a>) -> Result<Self> {
+   130→impl<'a> Field<'a> {
+   131→    fn multiple_from_syn(fields: &'a Fields, scope: &ParamsInScope<'a>) -> Result<Vec<Self>> {
+   139→    fn from_syn(i: usize, node: &'a syn::Field, scope: &ParamsInScope<'a>) -> Result<Self> {
+   156→impl ContainerKind {
+   157→    fn from_struct(node: &DataStruct) -> Self {
+   165→    fn from_variant(node: &syn::Variant) -> Self {
+   174→impl Display for ContainerKind {
+   175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+impl/src/attr.rs
+    11→pub struct Attrs<'a> {
+    12→    pub display: Option<Display<'a>>,
+    13→    pub source: Option<Source<'a>>,
+    14→    pub backtrace: Option<&'a Attribute>,
+    15→    pub from: Option<From<'a>>,
+    16→    pub transparent: Option<Transparent<'a>>,
+    17→    pub fmt: Option<Fmt<'a>>,
+    18→}
+    20→#[derive(Clone)]
+    21→pub struct Display<'a> {
+    22→    pub original: &'a Attribute,
+    23→    pub fmt: LitStr,
+    24→    pub args: TokenStream,
+    25→    pub requires_fmt_machinery: bool,
+    26→    pub has_bonus_display: bool,
+    27→    pub infinite_recursive: bool,
+    28→    pub implied_bounds: Set<(usize, Trait)>,
+    29→    pub bindings: Vec<(Ident, TokenStream)>,
+    30→}
+    32→#[derive(Copy, Clone)]
+    33→pub struct Source<'a> {
+    34→    pub original: &'a Attribute,
+    35→    pub span: Span,
+    36→}
+    38→#[derive(Copy, Clone)]
+    39→pub struct From<'a> {
+    40→    pub original: &'a Attribute,
+    41→    pub span: Span,
+    42→}
+    44→#[derive(Copy, Clone)]
+    45→pub struct Transparent<'a> {
+    46→    pub original: &'a Attribute,
+    47→    pub span: Span,
+    48→}
+    50→#[derive(Clone)]
+    51→pub struct Fmt<'a> {
+    52→    pub original: &'a Attribute,
+    53→    pub path: ExprPath,
+    54→}
+    56→#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Debug)]
+    57→pub enum Trait {
+    58→    Debug,
+    59→    Display,
+    60→    Octal,
+    61→    LowerHex,
+    62→    UpperHex,
+    63→    Pointer,
+    64→    Binary,
+    65→    LowerExp,
+    66→    UpperExp,
+    67→}
+    69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
+   124→fn parse_error_attribute<'a>(attrs: &mut Attrs<'a>, attr: &'a Attribute) -> Result<()> {
+   196→fn parse_token_expr(input: ParseStream, mut begin_expr: bool) -> Result<TokenStream> {
+   302→impl ToTokens for Display<'_> {
+   303→    fn to_tokens(&self, tokens: &mut TokenStream) {
+   342→impl ToTokens for Trait {
+   343→    fn to_tokens(&self, tokens: &mut TokenStream) {
+impl/src/expand.rs
+    12→pub fn derive(input: &DeriveInput) -> TokenStream {
+    22→fn try_expand(input: &DeriveInput) -> Result<TokenStream> {
+    31→fn impl_struct(input: Struct) -> TokenStream {
+   221→fn impl_enum(input: Enum) -> TokenStream {
+   505→pub(crate) fn call_site_ident(ident: &Ident) -> Ident {
+   511→fn fields_pat(fields: &[Field]) -> TokenStream {
+   526→fn use_as_display(needs_as_display: bool) -> Option<TokenStream> {
+   536→fn from_initializer(
+   537→    from_field: &Field,
+   538→    backtrace_field: Option<&Field>,
+   539→    source_var: &Ident,
+   540→) -> TokenStream {
+   565→fn type_is_option(ty: &Type) -> bool {
+   569→fn unoptional_type(ty: &Type) -> TokenStream {
+   574→fn type_parameter_of_option(ty: &Type) -> Option<&Type> {
+impl/src/fallback.rs
+     7→pub(crate) fn expand(input: &DeriveInput, error: syn::Error) -> TokenStream {
+impl/src/fmt.rs
+    15→impl Display<'_> {
+    16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
+   166→struct FmtArguments {
+   171→#[allow(clippy::unnecessary_wraps)]
+   172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
+   192→fn try_explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
+   231→fn fallback_explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
+   255→fn is_syn_full() -> bool {
+   273→fn take_int<'a>(read: &mut &'a str) -> &'a str {
+   286→fn take_ident<'a>(read: &mut &'a str) -> &'a str {
+   299→fn between<'a>(begin: ParseStream<'a>, end: ParseStream<'a>) -> TokenStream {
+impl/src/generics.rs
+     8→pub struct ParamsInScope<'a> {
+     9→    names: Set<&'a Ident>,
+    10→}
+    12→impl<'a> ParamsInScope<'a> {
+    13→    pub fn new(generics: &'a Generics) -> Self {
+    19→    pub fn intersects(&self, ty: &Type) -> bool {
+    26→fn crawl(in_scope: &ParamsInScope, ty: &Type, found: &mut bool) {
+    48→pub struct InferredBounds {
+    49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
+    50→    order: Vec<TokenStream>,
+    51→}
+    53→impl InferredBounds {
+    54→    pub fn new() -> Self {
+    61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
+    74→    pub fn augment_where_clause(&self, generics: &Generics) -> WhereClause {
+impl/src/lib.rs
+    23→mod ast;
+    24→mod attr;
+    25→mod expand;
+    26→mod fallback;
+    27→mod fmt;
+    28→mod generics;
+    29→mod prop;
+    30→mod scan_expr;
+    31→mod unraw;
+    32→mod valid;
+    39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
+    40→pub fn derive_error(input: TokenStream) -> TokenStream {
+    45→#[allow(non_camel_case_types)]
+    46→struct private;
+    48→impl ToTokens for private {
+    49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+impl/src/prop.rs
+     6→impl Struct<'_> {
+     7→    pub(crate) fn from_field(&self) -> Option<&Field> {
+    11→    pub(crate) fn source_field(&self) -> Option<&Field> {
+    15→    pub(crate) fn backtrace_field(&self) -> Option<&Field> {
+    19→    pub(crate) fn distinct_backtrace_field(&self) -> Option<&Field> {
+    25→impl Enum<'_> {
+    26→    pub(crate) fn has_source(&self) -> bool {
+    32→    pub(crate) fn has_backtrace(&self) -> bool {
+    38→    pub(crate) fn has_display(&self) -> bool {
+    53→impl Variant<'_> {
+    54→    pub(crate) fn from_field(&self) -> Option<&Field> {
+    58→    pub(crate) fn source_field(&self) -> Option<&Field> {
+    62→    pub(crate) fn backtrace_field(&self) -> Option<&Field> {
+    66→    pub(crate) fn distinct_backtrace_field(&self) -> Option<&Field> {
+    72→impl Field<'_> {
+    73→    pub(crate) fn is_backtrace(&self) -> bool {
+    77→    pub(crate) fn source_span(&self) -> Span {
+    88→fn from_field<'a, 'b>(fields: &'a [Field<'b>]) -> Option<&'a Field<'b>> {
+    97→fn source_field<'a, 'b>(fields: &'a [Field<'b>]) -> Option<&'a Field<'b>> {
+   112→fn backtrace_field<'a, 'b>(fields: &'a [Field<'b>]) -> Option<&'a Field<'b>> {
+   127→fn distinct_backtrace_field<'a, 'b>(
+   128→    backtrace_field: &'a Field<'b>,
+   129→    from_field: Option<&Field>,
+   130→) -> Option<&'a Field<'b>> {
+   138→fn type_is_backtrace(ty: &Type) -> bool {
+impl/src/scan_expr.rs
+     6→enum Input {
+    25→enum Action {
+    32→static INIT: [(Input, Action); 28] = [
+    63→static POSTFIX: [(Input, Action); 10] = [
+    76→static ASYNC: [(Input, Action); 3] = [
+    82→static BLOCK: [(Input, Action); 1] = [(ConsumeBrace, SetState(&POSTFIX))];
+    84→static BREAK_LABEL: [(Input, Action); 2] = [
+    89→static BREAK_VALUE: [(Input, Action); 3] = [
+    95→static CLOSURE: [(Input, Action); 6] = [
+   104→static CLOSURE_ARGS: [(Input, Action); 2] = [
+   109→static CLOSURE_RET: [(Input, Action); 2] = [
+   114→static CONST: [(Input, Action); 2] = [
+   119→static CONTINUE: [(Input, Action); 2] = [
+   124→static DOT: [(Input, Action); 3] = [
+   130→static FOR: [(Input, Action); 2] = [
+   135→static IF_ELSE: [(Input, Action); 2] = [(Keyword("if"), SetState(&INIT)), (ConsumeBrace, DecDepth)];
+   136→static IF_THEN: [(Input, Action); 2] =
+   139→static METHOD: [(Input, Action); 1] = [(ExpectTurbofish, SetState(&POSTFIX))];
+   141→static PATH: [(Input, Action); 4] = [
+   148→static PATTERN: [(Input, Action); 15] = [
+   166→static RANGE: [(Input, Action); 6] = [
+   175→static RAW: [(Input, Action); 3] = [
+   181→static REFERENCE: [(Input, Action); 3] = [
+   187→static RETURN: [(Input, Action); 2] = [
+   192→pub(crate) fn scan_expr(input: ParseStream) -> Result<()> {
+impl/src/unraw.rs
+    10→#[derive(Clone)]
+    11→#[repr(transparent)]
+    12→pub struct IdentUnraw(Ident);
+    14→impl IdentUnraw {
+    15→    pub fn new(ident: Ident) -> Self {
+    19→    pub fn to_local(&self) -> Ident {
+    32→    pub fn set_span(&mut self, span: Span) {
+    37→impl Display for IdentUnraw {
+    38→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+    43→impl Eq for IdentUnraw {}
+    45→impl PartialEq for IdentUnraw {
+    46→    fn eq(&self, other: &Self) -> bool {
+    51→impl PartialEq<str> for IdentUnraw {
+    52→    fn eq(&self, other: &str) -> bool {
+    57→impl Ord for IdentUnraw {
+    58→    fn cmp(&self, other: &Self) -> Ordering {
+    63→impl PartialOrd for IdentUnraw {
+    64→    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+    69→impl Parse for IdentUnraw {
+    70→    fn parse(input: ParseStream) -> Result<Self> {
+    75→impl ToTokens for IdentUnraw {
+    76→    fn to_tokens(&self, tokens: &mut TokenStream) {
+    81→#[derive(Clone)]
+    82→pub enum MemberUnraw {
+    83→    Named(IdentUnraw),
+    84→    Unnamed(Index),
+    85→}
+    87→impl MemberUnraw {
+    88→    pub fn span(&self) -> Span {
+    96→impl Display for MemberUnraw {
+    97→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+   105→impl Eq for MemberUnraw {}
+   107→impl PartialEq for MemberUnraw {
+   108→    fn eq(&self, other: &Self) -> bool {
+   117→impl PartialEq<str> for MemberUnraw {
+   118→    fn eq(&self, other: &str) -> bool {
+   126→impl Hash for MemberUnraw {
+   127→    fn hash<H: Hasher>(&self, hasher: &mut H) {
+   135→impl ToTokens for MemberUnraw {
+   136→    fn to_tokens(&self, tokens: &mut TokenStream) {
+impl/src/valid.rs
+     5→impl Input<'_> {
+     6→    pub(crate) fn validate(&self) -> Result<()> {
+    14→impl Struct<'_> {
+    15→    fn validate(&self) -> Result<()> {
+    45→impl Enum<'_> {
+    46→    fn validate(&self) -> Result<()> {
+    66→impl Variant<'_> {
+    67→    fn validate(&self) -> Result<()> {
+    91→impl Field<'_> {
+    92→    fn validate(&self) -> Result<()> {
+   109→fn check_non_field_attrs(attrs: &Attrs) -> Result<()> {
+   151→fn check_field_attrs(fields: &[Field]) -> Result<()> {
+   224→fn contains_non_static_lifetime(ty: &Type) -> bool {
+src/aserror.rs
+     4→#[doc(hidden)]
+     5→pub trait AsDynError<'a>: Sealed {
+     6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
+     7→}
+     9→impl<'a, T: Error + 'a> AsDynError<'a> for T {
+    10→    #[inline]
+    11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    16→impl<'a> AsDynError<'a> for dyn Error + 'a {
+    17→    #[inline]
+    18→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    23→impl<'a> AsDynError<'a> for dyn Error + Send + 'a {
+    24→    #[inline]
+    25→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    30→impl<'a> AsDynError<'a> for dyn Error + Send + Sync + 'a {
+    31→    #[inline]
+    32→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    37→impl<'a> AsDynError<'a> for dyn Error + Send + Sync + UnwindSafe + 'a {
+    38→    #[inline]
+    39→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    44→#[doc(hidden)]
+    45→pub trait Sealed {}
+    46→impl<T: Error> Sealed for T {}
+    47→impl Sealed for dyn Error + '_ {}
+    48→impl Sealed for dyn Error + Send + '_ {}
+    49→impl Sealed for dyn Error + Send + Sync + '_ {}
+    50→impl Sealed for dyn Error + Send + Sync + UnwindSafe + '_ {}
+src/display.rs
+     5→#[doc(hidden)]
+     6→pub trait AsDisplay<'a>: Sealed {
+     7→    // TODO: convert to generic associated type.
+     8→    // https://github.com/dtolnay/thiserror/pull/253
+     9→    type Target: Display;
+    10→
+    11→    fn as_display(&'a self) -> Self::Target;
+    12→}
+    14→impl<'a, T> AsDisplay<'a> for &T
+    15→where
+    16→    T: Display + ?Sized + 'a,
+    17→{
+    18→    type Target = &'a T;
+    20→    fn as_display(&'a self) -> Self::Target {
+    25→#[cfg(feature = "std")]
+    26→impl<'a> AsDisplay<'a> for Path {
+    27→    type Target = path::Display<'a>;
+    29→    #[inline]
+    30→    fn as_display(&'a self) -> Self::Target {
+    35→#[cfg(feature = "std")]
+    36→impl<'a> AsDisplay<'a> for PathBuf {
+    37→    type Target = path::Display<'a>;
+    39→    #[inline]
+    40→    fn as_display(&'a self) -> Self::Target {
+    45→#[doc(hidden)]
+    46→pub trait Sealed {}
+    47→impl<T: Display + ?Sized> Sealed for &T {}
+    48→#[cfg(feature = "std")]
+    49→impl Sealed for Path {}
+    50→#[cfg(feature = "std")]
+    51→impl Sealed for PathBuf {}
+    58→#[cfg(not(feature = "std"))]
+    59→mod placeholder {
+    63→    #[allow(dead_code)]
+    64→    pub struct Placeholder;
+    66→    impl<'a> AsDisplay<'a> for Placeholder {
+    67→        type Target = Self;
+    69→        #[inline]
+    70→        fn as_display(&'a self) -> Self::Target {
+    75→    impl Display for Placeholder {
+    76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    81→    impl Sealed for Placeholder {}
+src/lib.rs
+   281→mod aserror;
+   282→mod display;
+   283→#[cfg(error_generic_member_access)]
+   284→mod provide;
+   285→mod var;
+   289→mod private;
+src/private.rs
+src/provide.rs
+     3→#[doc(hidden)]
+     4→pub trait ThiserrorProvide: Sealed {
+     5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
+     6→}
+     8→impl<T> ThiserrorProvide for T
+     9→where
+    10→    T: Error + ?Sized,
+    11→{
+    12→    #[inline]
+    13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
+    18→#[doc(hidden)]
+    19→pub trait Sealed {}
+    20→impl<T: Error + ?Sized> Sealed for T {}
+src/var.rs
+     3→pub struct Var<'a, T: ?Sized>(pub &'a T);
+     5→impl<'a, T: Pointer + ?Sized> Pointer for Var<'a, T> {
+     6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {

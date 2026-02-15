@@ -1,0 +1,371 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 → level 12 (1345 words)
+
+constants.js
+     1→'use strict'
+     2→
+     3→// Note: this is the semver.org version of the spec that it implements
+     4→// Not necessarily the package version of this code.
+     5→const SEMVER_SPEC_VERSION = '2.0.0'
+     6→
+     7→const MAX_LENGTH = 256
+     8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
+     9→/* istanbul ignore next */ 9007199254740991
+    10→
+    11→// Max safe segment length for coercion.
+    12→const MAX_SAFE_COMPONENT_LENGTH = 16
+    13→
+    14→// Max safe length for a build identifier. The max length minus 6 characters for
+    15→// the shortest version with a build 0.0.0+BUILD.
+    16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
+    17→
+    18→const RELEASE_TYPES = [
+    19→  'major',
+    20→  'premajor',
+    21→  'minor',
+    22→  'preminor',
+    23→  'patch',
+    24→  'prepatch',
+    25→  'prerelease',
+    26→]
+    27→
+    28→module.exports = {
+    29→  MAX_LENGTH,
+    30→  MAX_SAFE_COMPONENT_LENGTH,
+    31→  MAX_SAFE_BUILD_LENGTH,
+    32→  MAX_SAFE_INTEGER,
+    33→  RELEASE_TYPES,
+    34→  SEMVER_SPEC_VERSION,
+    35→  FLAG_INCLUDE_PRERELEASE: 0b001,
+    36→  FLAG_LOOSE: 0b010,
+    37→}
+debug.js
+     1→'use strict'
+     2→
+     3→const debug = (
+     4→  typeof process === 'object' &&
+     5→  process.env &&
+     6→  process.env.NODE_DEBUG &&
+     7→  /\bsemver\b/i.test(process.env.NODE_DEBUG)
+     8→) ? (...args) => console.error('SEMVER', ...args)
+     9→  : () => {}
+    10→
+    11→module.exports = debug
+identifiers.js
+     1→'use strict'
+     2→
+     3→const numeric = /^[0-9]+$/
+     4→const compareIdentifiers = (a, b) => {
+     5→  if (typeof a === 'number' && typeof b === 'number') {
+     6→    return a === b ? 0 : a < b ? -1 : 1
+     7→  }
+     8→
+     9→  const anum = numeric.test(a)
+    10→  const bnum = numeric.test(b)
+    11→
+    12→  if (anum && bnum) {
+    13→    a = +a
+    14→    b = +b
+    15→  }
+    16→
+    17→  return a === b ? 0
+    18→    : (anum && !bnum) ? -1
+    19→    : (bnum && !anum) ? 1
+    20→    : a < b ? -1
+    21→    : 1
+    22→}
+    23→
+    24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
+    25→
+    26→module.exports = {
+    27→  compareIdentifiers,
+    28→  rcompareIdentifiers,
+    29→}
+lrucache.js
+     1→'use strict'
+     2→
+     3→class LRUCache {
+     4→  constructor () {
+     5→    this.max = 1000
+     6→    this.map = new Map()
+     7→  }
+     8→
+     9→  get (key) {
+    10→    const value = this.map.get(key)
+    11→    if (value === undefined) {
+    12→      return undefined
+    13→    } else {
+    14→      // Remove the key from the map and add it to the end
+    15→      this.map.delete(key)
+    16→      this.map.set(key, value)
+    17→      return value
+    18→    }
+    19→  }
+    20→
+    21→  delete (key) {
+    22→    return this.map.delete(key)
+    23→  }
+    24→
+    25→  set (key, value) {
+    26→    const deleted = this.delete(key)
+    27→
+    28→    if (!deleted && value !== undefined) {
+    29→      // If cache is full, delete the least recently used item
+    30→      if (this.map.size >= this.max) {
+    31→        const firstKey = this.map.keys().next().value
+    32→        this.delete(firstKey)
+    33→      }
+    34→
+    35→      this.map.set(key, value)
+    36→    }
+    37→
+    38→    return this
+    39→  }
+    40→}
+    41→
+    42→module.exports = LRUCache
+parse-options.js
+     1→'use strict'
+     2→
+     3→// parse out just the options we care about
+     4→const looseOption = Object.freeze({ loose: true })
+     5→const emptyOpts = Object.freeze({ })
+     6→const parseOptions = options => {
+     7→  if (!options) {
+     8→    return emptyOpts
+     9→  }
+    10→
+    11→  if (typeof options !== 'object') {
+    12→    return looseOption
+    13→  }
+    14→
+    15→  return options
+    16→}
+    17→module.exports = parseOptions
+re.js
+     1→'use strict'
+     2→
+     3→const {
+     4→  MAX_SAFE_COMPONENT_LENGTH,
+     5→  MAX_SAFE_BUILD_LENGTH,
+     6→  MAX_LENGTH,
+     7→} = require('./constants')
+     8→const debug = require('./debug')
+     9→exports = module.exports = {}
+    10→
+    11→// The actual regexps go on exports.re
+    12→const re = exports.re = []
+    13→const safeRe = exports.safeRe = []
+    14→const src = exports.src = []
+    15→const safeSrc = exports.safeSrc = []
+    16→const t = exports.t = {}
+    17→let R = 0
+    18→
+    19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
+    20→
+    21→// Replace some greedy regex tokens to prevent regex dos issues. These regex are
+    22→// used internally via the safeRe object since all inputs in this library get
+    23→// normalized first to trim and collapse all extra whitespace. The original
+    24→// regexes are exported for userland consumption and lower level usage. A
+    25→// future breaking change could export the safer regex only with a note that
+    26→// all input should have extra whitespace removed.
+    27→const safeRegexReplacements = [
+    28→  ['\\s', 1],
+    29→  ['\\d', MAX_LENGTH],
+    30→  [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH],
+    31→]
+    32→
+    33→const makeSafeRegex = (value) => {
+    34→  for (const [token, max] of safeRegexReplacements) {
+    35→    value = value
+    36→      .split(`${token}*`).join(`${token}{0,${max}}`)
+    37→      .split(`${token}+`).join(`${token}{1,${max}}`)
+    38→  }
+    39→  return value
+    40→}
+    41→
+    42→const createToken = (name, value, isGlobal) => {
+    43→  const safe = makeSafeRegex(value)
+    44→  const index = R++
+    45→  debug(name, index, value)
+    46→  t[name] = index
+    47→  src[index] = value
+    48→  safeSrc[index] = safe
+    49→  re[index] = new RegExp(value, isGlobal ? 'g' : undefined)
+    50→  safeRe[index] = new RegExp(safe, isGlobal ? 'g' : undefined)
+    51→}
+    52→
+    53→// The following Regular Expressions can be used for tokenizing,
+    54→// validating, and parsing SemVer version strings.
+    55→
+    56→// ## Numeric Identifier
+    57→// A single `0`, or a non-zero digit followed by zero or more digits.
+    58→
+    59→createToken('NUMERICIDENTIFIER', '0|[1-9]\\d*')
+    60→createToken('NUMERICIDENTIFIERLOOSE', '\\d+')
+    61→
+    62→// ## Non-numeric Identifier
+    63→// Zero or more digits, followed by a letter or hyphen, and then zero or
+    64→// more letters, digits, or hyphens.
+    65→
+    66→createToken('NONNUMERICIDENTIFIER', `\\d*[a-zA-Z-]${LETTERDASHNUMBER}*`)
+    67→
+    68→// ## Main Version
+    69→// Three dot-separated numeric identifiers.
+    70→
+    71→createToken('MAINVERSION', `(${src[t.NUMERICIDENTIFIER]})\\.` +
+    72→                   `(${src[t.NUMERICIDENTIFIER]})\\.` +
+    73→                   `(${src[t.NUMERICIDENTIFIER]})`)
+    74→
+    75→createToken('MAINVERSIONLOOSE', `(${src[t.NUMERICIDENTIFIERLOOSE]})\\.` +
+    76→                        `(${src[t.NUMERICIDENTIFIERLOOSE]})\\.` +
+    77→                        `(${src[t.NUMERICIDENTIFIERLOOSE]})`)
+    78→
+    79→// ## Pre-release Version Identifier
+    80→// A numeric identifier, or a non-numeric identifier.
+    81→// Non-numeric identifiers include numeric identifiers but can be longer.
+    82→// Therefore non-numeric identifiers must go first.
+    83→
+    84→createToken('PRERELEASEIDENTIFIER', `(?:${src[t.NONNUMERICIDENTIFIER]
+    85→}|${src[t.NUMERICIDENTIFIER]})`)
+    86→
+    87→createToken('PRERELEASEIDENTIFIERLOOSE', `(?:${src[t.NONNUMERICIDENTIFIER]
+    88→}|${src[t.NUMERICIDENTIFIERLOOSE]})`)
+    89→
+    90→// ## Pre-release Version
+    91→// Hyphen, followed by one or more dot-separated pre-release version
+    92→// identifiers.
+    93→
+    94→createToken('PRERELEASE', `(?:-(${src[t.PRERELEASEIDENTIFIER]
+    95→}(?:\\.${src[t.PRERELEASEIDENTIFIER]})*))`)
+    96→
+    97→createToken('PRERELEASELOOSE', `(?:-?(${src[t.PRERELEASEIDENTIFIERLOOSE]
+    98→}(?:\\.${src[t.PRERELEASEIDENTIFIERLOOSE]})*))`)
+    99→
+   100→// ## Build Metadata Identifier
+   101→// Any combination of digits, letters, or hyphens.
+   102→
+   103→createToken('BUILDIDENTIFIER', `${LETTERDASHNUMBER}+`)
+   104→
+   105→// ## Build Metadata
+   106→// Plus sign, followed by one or more period-separated build metadata
+   107→// identifiers.
+   108→
+   109→createToken('BUILD', `(?:\\+(${src[t.BUILDIDENTIFIER]
+   110→}(?:\\.${src[t.BUILDIDENTIFIER]})*))`)
+   111→
+   112→// ## Full Version String
+   113→// A main version, followed optionally by a pre-release version and
+   114→// build metadata.
+   115→
+   116→// Note that the only major, minor, patch, and pre-release sections of
+   117→// the version string are capturing groups.  The build metadata is not a
+   118→// capturing group, because it should not ever be used in version
+   119→// comparison.
+   120→
+   121→createToken('FULLPLAIN', `v?${src[t.MAINVERSION]
+   122→}${src[t.PRERELEASE]}?${
+   123→  src[t.BUILD]}?`)
+   124→
+   125→createToken('FULL', `^${src[t.FULLPLAIN]}$`)
+   126→
+   127→// like full, but allows v1.2.3 and =1.2.3, which people do sometimes.
+   128→// also, 1.0.0alpha1 (prerelease without the hyphen) which is pretty
+   129→// common in the npm registry.
+   130→createToken('LOOSEPLAIN', `[v=\\s]*${src[t.MAINVERSIONLOOSE]
+   131→}${src[t.PRERELEASELOOSE]}?${
+   132→  src[t.BUILD]}?`)
+   133→
+   134→createToken('LOOSE', `^${src[t.LOOSEPLAIN]}$`)
+   135→
+   136→createToken('GTLT', '((?:<|>)?=?)')
+   137→
+   138→// Something like "2.*" or "1.2.x".
+   139→// Note that "x.x" is a valid xRange identifer, meaning "any version"
+   140→// Only the first item is strictly required.
+   141→createToken('XRANGEIDENTIFIERLOOSE', `${src[t.NUMERICIDENTIFIERLOOSE]}|x|X|\\*`)
+   142→createToken('XRANGEIDENTIFIER', `${src[t.NUMERICIDENTIFIER]}|x|X|\\*`)
+   143→
+   144→createToken('XRANGEPLAIN', `[v=\\s]*(${src[t.XRANGEIDENTIFIER]})` +
+   145→                   `(?:\\.(${src[t.XRANGEIDENTIFIER]})` +
+   146→                   `(?:\\.(${src[t.XRANGEIDENTIFIER]})` +
+   147→                   `(?:${src[t.PRERELEASE]})?${
+   148→                     src[t.BUILD]}?` +
+   149→                   `)?)?`)
+   150→
+   151→createToken('XRANGEPLAINLOOSE', `[v=\\s]*(${src[t.XRANGEIDENTIFIERLOOSE]})` +
+   152→                        `(?:\\.(${src[t.XRANGEIDENTIFIERLOOSE]})` +
+   153→                        `(?:\\.(${src[t.XRANGEIDENTIFIERLOOSE]})` +
+   154→                        `(?:${src[t.PRERELEASELOOSE]})?${
+   155→                          src[t.BUILD]}?` +
+   156→                        `)?)?`)
+   157→
+   158→createToken('XRANGE', `^${src[t.GTLT]}\\s*${src[t.XRANGEPLAIN]}$`)
+   159→createToken('XRANGELOOSE', `^${src[t.GTLT]}\\s*${src[t.XRANGEPLAINLOOSE]}$`)
+   160→
+   161→// Coercion.
+   162→// Extract anything that could conceivably be a part of a valid semver
+   163→createToken('COERCEPLAIN', `${'(^|[^\\d])' +
+   164→              '(\\d{1,'}${MAX_SAFE_COMPONENT_LENGTH}})` +
+   165→              `(?:\\.(\\d{1,${MAX_SAFE_COMPONENT_LENGTH}}))?` +
+   166→              `(?:\\.(\\d{1,${MAX_SAFE_COMPONENT_LENGTH}}))?`)
+   167→createToken('COERCE', `${src[t.COERCEPLAIN]}(?:$|[^\\d])`)
+   168→createToken('COERCEFULL', src[t.COERCEPLAIN] +
+   169→              `(?:${src[t.PRERELEASE]})?` +
+   170→              `(?:${src[t.BUILD]})?` +
+   171→              `(?:$|[^\\d])`)
+   172→createToken('COERCERTL', src[t.COERCE], true)
+   173→createToken('COERCERTLFULL', src[t.COERCEFULL], true)
+   174→
+   175→// Tilde ranges.
+   176→// Meaning is "reasonably at or greater than"
+   177→createToken('LONETILDE', '(?:~>?)')
+   178→
+   179→createToken('TILDETRIM', `(\\s*)${src[t.LONETILDE]}\\s+`, true)
+   180→exports.tildeTrimReplace = '$1~'
+   181→
+   182→createToken('TILDE', `^${src[t.LONETILDE]}${src[t.XRANGEPLAIN]}$`)
+   183→createToken('TILDELOOSE', `^${src[t.LONETILDE]}${src[t.XRANGEPLAINLOOSE]}$`)
+   184→
+   185→// Caret ranges.
+   186→// Meaning is "at least and backwards compatible with"
+   187→createToken('LONECARET', '(?:\\^)')
+   188→
+   189→createToken('CARETTRIM', `(\\s*)${src[t.LONECARET]}\\s+`, true)
+   190→exports.caretTrimReplace = '$1^'
+   191→
+   192→createToken('CARET', `^${src[t.LONECARET]}${src[t.XRANGEPLAIN]}$`)
+   193→createToken('CARETLOOSE', `^${src[t.LONECARET]}${src[t.XRANGEPLAINLOOSE]}$`)
+   194→
+   195→// A simple gt/lt/eq thing, or just "" to indicate "any version"
+   196→createToken('COMPARATORLOOSE', `^${src[t.GTLT]}\\s*(${src[t.LOOSEPLAIN]})$|^$`)
+   197→createToken('COMPARATOR', `^${src[t.GTLT]}\\s*(${src[t.FULLPLAIN]})$|^$`)
+   198→
+   199→// An expression to strip any whitespace between the gtlt and the thing
+   200→// it modifies, so that `> 1.2.3` ==> `>1.2.3`
+   201→createToken('COMPARATORTRIM', `(\\s*)${src[t.GTLT]
+   202→}\\s*(${src[t.LOOSEPLAIN]}|${src[t.XRANGEPLAIN]})`, true)
+   203→exports.comparatorTrimReplace = '$1$2$3'
+   204→
+   205→// Something like `1.2.3 - 1.2.4`
+   206→// Note that these all use the loose form, because they'll be
+   207→// checked against either the strict or loose comparator form
+   208→// later.
+   209→createToken('HYPHENRANGE', `^\\s*(${src[t.XRANGEPLAIN]})` +
+   210→                   `\\s+-\\s+` +
+   211→                   `(${src[t.XRANGEPLAIN]})` +
+   212→                   `\\s*$`)
+   213→
+   214→createToken('HYPHENRANGELOOSE', `^\\s*(${src[t.XRANGEPLAINLOOSE]})` +
+   215→                        `\\s+-\\s+` +
+   216→                        `(${src[t.XRANGEPLAINLOOSE]})` +
+   217→                        `\\s*$`)
+   218→
+   219→// Star ranges basically just allow anything at all.
+   220→createToken('STAR', '(<|>)?=?\\s*\\*')
+   221→// >=0.0.0 is like a star
+   222→createToken('GTE0', '^\\s*>=\\s*0\\.0\\.0\\s*$')
+   223→createToken('GTE0PRE', '^\\s*>=\\s*0\\.0\\.0-0\\s*$')
