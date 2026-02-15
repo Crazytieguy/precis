@@ -1100,6 +1100,11 @@ fixture_test!(fixture_neverthrow_root_level2, "neverthrow", 2);
 fixture_test!(fixture_pluggy_root_level2, "pluggy", 2);
 fixture_test!(fixture_sonner_root_level2, "sonner", 2);
 fixture_test!(fixture_commander_root_level2, "commander", 2);
+fixture_test!(fixture_anyhow_root_level2, "anyhow", 2);
+fixture_test!(fixture_log_root_level2, "log", 2);
+fixture_test!(fixture_ts_pattern_root_level2, "ts-pattern", 2);
+fixture_test!(fixture_typeguard_root_level2, "typeguard", 2);
+fixture_test!(fixture_mdbook_root_level2, "mdbook", 2);
 
 // Single-file rendering tests (precis accepts individual files, not just directories).
 
@@ -1254,6 +1259,11 @@ fn monotonicity_invariant() {
         ("pluggy-root", "pluggy"),                        // Python + Markdown (14 files)
         ("sonner-root", "sonner"),                        // TSX + TS + JS (26 files)
         ("commander-root", "commander"),                  // JS + Markdown (27 files)
+        ("anyhow-root", "anyhow"),                        // Rust + Markdown (8 files)
+        ("log-root", "log"),                              // Rust + Markdown (6 files)
+        ("ts-pattern-root", "ts-pattern"),                // TS + JS + Markdown (8 files)
+        ("typeguard-root", "typeguard"),                  // Python + Markdown (16 files)
+        ("mdbook-root", "mdbook"),                        // Markdown + TOML (40+ files)
     ];
     let mut tested_files = 0;
     for (name, subpath) in fixtures {
@@ -1548,3 +1558,28 @@ budget_test!(budget_commander_root_level0, "commander", 30);
 budget_test!(budget_commander_root_level1, "commander", 2500);
 budget_test!(budget_commander_root_level2, "commander", 5000);
 budget_test!(budget_commander_root_level4, "commander", 20000);
+
+budget_test!(budget_anyhow_root_level0, "anyhow", 15);
+budget_test!(budget_anyhow_root_level1, "anyhow", 1300);
+budget_test!(budget_anyhow_root_level3, "anyhow", 5500);
+budget_test!(budget_anyhow_root_level4, "anyhow", 7000);
+
+budget_test!(budget_log_root_level0, "log", 15);
+budget_test!(budget_log_root_level1, "log", 2000);
+budget_test!(budget_log_root_level3, "log", 7000);
+budget_test!(budget_log_root_level4, "log", 14000);
+
+budget_test!(budget_ts_pattern_root_level0, "ts-pattern", 25);
+budget_test!(budget_ts_pattern_root_level1, "ts-pattern", 800);
+budget_test!(budget_ts_pattern_root_level2, "ts-pattern", 3000);
+budget_test!(budget_ts_pattern_root_level4, "ts-pattern", 18000);
+
+budget_test!(budget_typeguard_root_level0, "typeguard", 15);
+budget_test!(budget_typeguard_root_level2, "typeguard", 500);
+budget_test!(budget_typeguard_root_level3, "typeguard", 2000);
+budget_test!(budget_typeguard_root_level4, "typeguard", 3000);
+
+budget_test!(budget_mdbook_root_level0, "mdbook", 130);
+budget_test!(budget_mdbook_root_level1, "mdbook", 1000);
+budget_test!(budget_mdbook_root_level3, "mdbook", 5000);
+budget_test!(budget_mdbook_root_level4, "mdbook", 22000);

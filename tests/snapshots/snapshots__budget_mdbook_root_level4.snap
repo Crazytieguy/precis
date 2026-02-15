@@ -1,0 +1,3303 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 22000 → level 4 (19092 words)
+
+CHANGELOG.md
+     1→# Changelog
+     2→
+     3→## mdBook 0.5.2
+     4→[v0.5.1...v0.5.2](https://github.com/rust-lang/mdBook/compare/v0.5.1...v0.5.2)
+     6→### Changed
+     7→
+     8→- Updated Rust crate html5ever to 0.36.0.
+     9→  [#2970](https://github.com/rust-lang/mdBook/pull/2970)
+    10→- Updated cargo dependencies.
+    11→  [#2969](https://github.com/rust-lang/mdBook/pull/2969)
+    13→### Fixed
+    14→
+    15→- Fixed repeated error message when HTML config is invalid in `mdbook serve`.
+    16→  [#2983](https://github.com/rust-lang/mdBook/pull/2983)
+    17→- Fixed sidebar scroll position when heading nav is involved.
+    18→  [#2982](https://github.com/rust-lang/mdBook/pull/2982)
+    19→- Fixed color for rustdoc error messages.
+    20→  [#2981](https://github.com/rust-lang/mdBook/pull/2981)
+    21→- Fixed usage of custom preprocessors with `MDBook::test`.
+    22→  [#2980](https://github.com/rust-lang/mdBook/pull/2980)
+    24→## mdBook 0.5.1
+    25→[v0.5.0...v0.5.1](https://github.com/rust-lang/mdBook/compare/v0.5.0...v0.5.1)
+    27→### Changed
+    28→- Changed the scrollbar background to be transparent.
+    29→  [#2932](https://github.com/rust-lang/mdBook/pull/2932)
+    30→- Ignore invalid top-level environment variable config keys. This allows setting things like `MDBOOK_VERSION` to not cause an error.
+    31→  [#2952](https://github.com/rust-lang/mdBook/pull/2952)
+    33→### Fixed
+    34→- Fixed the sidebar heading nav to have the correct nesting levels.
+    35→  [#2953](https://github.com/rust-lang/mdBook/pull/2953)
+    36→- Various Font Awesome fixes and improvements.
+    37→  [#2951](https://github.com/rust-lang/mdBook/pull/2951)
+    39→## mdBook 0.5.0
+    40→[v0.4.52...v0.5.0](https://github.com/rust-lang/mdBook/compare/v0.4.52...v0.5.0)
+    53→## 0.5 Migration Guide
+    54→
+    55→The 0.5 release contains several breaking changes from the 0.4 release. Preprocessors and renderers will need to be migrated to continue to work with this release. After updating your configuration, it is recommended to carefully compare and review how your book renders to ensure everything is working correctly.
+    63→### Major additions
+    64→
+    65→- Added sidebar heading navigation. This includes the `output.html.sidebar-header-nav` option to disable it.
+    66→  [#2822](https://github.com/rust-lang/mdBook/pull/2822)
+    67→- Added support for definition lists. These are enabled by default, with the option `output.html.definition-lists` to disable it. See [docs](https://rust-lang.github.io/mdBook/format/markdown.html#definition-lists) for more.
+    68→  [#2847](https://github.com/rust-lang/mdBook/pull/2847)
+    69→- Added support for admonitions. These are enabled by default, with the option `output.html.admonitions` to disable it. See [docs](https://rust-lang.github.io/mdBook/format/markdown.html#admonitions) for more.
+    70→  [#2851](https://github.com/rust-lang/mdBook/pull/2851)
+    71→- Links on the print page now link to elements on the print page instead of linking out to the individual chapters.
+    72→  [#2844](https://github.com/rust-lang/mdBook/pull/2844)
+    74→### Config changes
+    75→
+    76→- Unknown fields in config are now an error.
+    77→  [#2787](https://github.com/rust-lang/mdBook/pull/2787)
+    78→  [#2801](https://github.com/rust-lang/mdBook/pull/2801)
+    79→- Removed `curly-quotes`, use `output.html.smart-punctuation` instead.
+    80→  [#2788](https://github.com/rust-lang/mdBook/pull/2788)
+    81→- Removed `output.html.copy-fonts`. The default fonts are now always copied unless you override the `theme/fonts/fonts.css` file.
+    82→  [#2790](https://github.com/rust-lang/mdBook/pull/2790)
+    83→- If the `command` path for a renderer or preprocessor is relative, it is now always relative to the book root.
+    84→  [#2792](https://github.com/rust-lang/mdBook/pull/2792)
+    85→  [#2796](https://github.com/rust-lang/mdBook/pull/2796)
+    86→- Added the `optional` field for preprocessors. The default is `false`, so this also means it is an error by default if the preprocessor is missing.
+    87→  [#2797](https://github.com/rust-lang/mdBook/pull/2797)
+    88→- `output.html.smart-punctuation` is now `true` by default.
+    89→  [#2810](https://github.com/rust-lang/mdBook/pull/2810)
+    90→- `output.html.hash-files` is now `true` by default.
+    91→  [#2820](https://github.com/rust-lang/mdBook/pull/2820)
+    92→- Removed support for google-analytics. Use a theme extension (like `head.hbs`) if you need to continue to support this.
+    93→  [#2776](https://github.com/rust-lang/mdBook/pull/2776)
+    94→- Removed the `book.multilingual` field. This was never used.
+    95→  [#2775](https://github.com/rust-lang/mdBook/pull/2775)
+    96→- Removed the very old legacy config support. Warnings have been displayed in previous versions on how to migrate.
+    97→  [#2783](https://github.com/rust-lang/mdBook/pull/2783)
+    98→- Top-level config values set from the environment like `MDBOOK_BOOK` now *replace* the contents of the top-level table instead of merging into it.
+    99→  [#2942](https://github.com/rust-lang/mdBook/pull/2942)
+   100→- Invalid environment variables are now rejected. Previously unknown keys like `MDBOOK_FOO` would be ignored, or keys or invalid values inside objects like the `[book]` table would be ignored.
+   101→  [#2942](https://github.com/rust-lang/mdBook/pull/2942)
+   103→### Theme changes
+   104→
+   105→- Replaced the `{{#previous}}` and `{{#next}}` handlebars helpers with simple objects that contain the previous and next values.
+   106→  [#2794](https://github.com/rust-lang/mdBook/pull/2794)
+   107→- Removed the `{{theme_option}}` handlebars helper. It has not been used for a while.
+   108→  [#2795](https://github.com/rust-lang/mdBook/pull/2795)
+   110→### Rendering changes
+   111→
+   112→- Updated to a newer version of `pulldown-cmark`. This brings a large number of fixes to markdown processing.
+   113→  [#2401](https://github.com/rust-lang/mdBook/pull/2401)
+   114→- The font-awesome font is no longer loaded as a font. Instead, the corresponding SVG is embedded in the output for the corresponding `<i>` tags. Additionally, a handlebars helper has been added for the `hbs` files. This also updates the version from 4.7.0 to 6.2.0, which means some of the icon names and styles have changed. Most of the free icons are in the "solid" set. See the [free icon set](https://fontawesome.com/v6/search) for the available icons.
+   115→  [#1330](https://github.com/rust-lang/mdBook/pull/1330)
+   116→- Changed all internal HTML IDs to have an `mdbook-` prefix. This helps avoid namespace conflicts with header IDs.
+   117→  [#2808](https://github.com/rust-lang/mdBook/pull/2808)
+   118→- There is a new internal HTML rendering pipeline. This is primarily intended to give mdBook more flexibility in generating its HTML output. This resulted in some small changes to the HTML structure. HTML parsing may now be more strict than before.
+   119→  [#2844](https://github.com/rust-lang/mdBook/pull/2844)
+   120→- Links on the print page now link to elements on the print page instead of linking out to the individual chapters.
+   121→  [#2844](https://github.com/rust-lang/mdBook/pull/2844)
+   122→- Added support for definition lists. These are enabled by default, with the option `output.html.definition-lists` to disable it.
+   123→  [#2847](https://github.com/rust-lang/mdBook/pull/2847)
+   124→- Added support for admonitions. These are enabled by default, with the option `output.html.admonitions` to disable it.
+   125→  [#2851](https://github.com/rust-lang/mdBook/pull/2851)
+   126→- Header ID generation has some minor changes to bring the ID generation closer to other tools and sites:
+   127→  - IDs now use Unicode lowercase instead of ASCII lowercase.
+   128→    [#2922](https://github.com/rust-lang/mdBook/pull/2922)
+   129→  - Headers that start or end with HTML characters like `<`, `&`, or `>` now replace those characters in the link ID with `-` instead of being stripped.
+   130→    [#2844](https://github.com/rust-lang/mdBook/pull/2844)
+   131→- Headers are no longer modified if the tag is manually written HTML.
+   132→  [#2913](https://github.com/rust-lang/mdBook/pull/2913)
+   134→### CLI changes
+   135→
+   136→- Removed the `--dest-dir` option to `mdbook test`. It was unused since `mdbook test` does not generate output.
+   137→  [#2805](https://github.com/rust-lang/mdBook/pull/2805)
+   138→- Changed CLI `--dest-dir` to be relative to the current directory, not the book root.
+   139→  [#2806](https://github.com/rust-lang/mdBook/pull/2806)
+   141→### Rust API
+   142→
+   143→- The Rust API has been split into several crates ([#2766](https://github.com/rust-lang/mdBook/pull/2766)). In summary, the different crates are:
+   144→  - `mdbook` — The CLI binary.
+   145→  - [`mdbook-driver`](https://docs.rs/mdbook-driver/latest/mdbook_driver/) — The high-level library for running mdBook, primarily through the `MDBook` type. If you are driving mdBook programmatically, this is the crate you want.
+   146→  - [`mdbook-preprocessor`](https://docs.rs/mdbook-preprocessor/latest/mdbook_preprocessor/) — Support for implementing preprocessors. If you have a preprocessor, then this is the crate you should depend on.
+   147→  - [`mdbook-renderer`](https://docs.rs/mdbook-renderer/latest/mdbook_renderer/) — Support for implementing renderers. If you have a custom renderer, this is the crate you should depend on.
+   148→  - [`mdbook-markdown`](https://docs.rs/mdbook-markdown/latest/mdbook_markdown/) — The Markdown renderer. If you are processing markdown, this is the crate you should depend on. This is essentially a thin wrapper around `pulldown-cmark`, and re-exports that crate so that you can ensure the version stays in sync with mdBook.
+   149→  - [`mdbook-summary`](https://docs.rs/mdbook-summary/latest/mdbook_summary/) — The `SUMMARY.md` parser.
+   150→  - [`mdbook-html`](https://docs.rs/mdbook-html/latest/mdbook_html/) — The HTML renderer.
+   151→  - [`mdbook-core`](https://docs.rs/mdbook-core/latest/mdbook_core/) — An internal library that is used by the other crates for shared types. You should not depend on this crate directly since types from this crate are re-exported from the other crates as appropriate.
+   152→- Changes to `Config`:
+   153→  - [`Config::get`](https://docs.rs/mdbook-core/latest/mdbook_core/config/struct.Config.html#method.get) is now generic over the return value, using `serde` to deserialize the value. It also returns a `Result` to handle deserialization errors. [#2773](https://github.com/rust-lang/mdBook/pull/2773)
+   154→  - [`Config::set`](https://docs.rs/mdbook-core/latest/mdbook_core/config/struct.Config.html#method.set) now validates that the config keys and values are valid.
+   155→    [#2942](https://github.com/rust-lang/mdBook/pull/2942)
+   156→  - [`Config::update_from_env`](https://docs.rs/mdbook-core/latest/mdbook_core/config/struct.Config.html#method.update_from_env) now returns a `Result` to indicate any errors.
+   157→    [#2942](https://github.com/rust-lang/mdBook/pull/2942)
+   158→  - Removed `Config::get_deserialized`. Use `Config::get` instead.
+   159→  - Removed `Config::get_deserialized_opt`. Use `Config::get` instead.
+   160→  - Removed `Config::get_mut`. Use `Config::set` instead.
+   161→  - Removed deprecated `Config::get_deserialized_opt`. Use `Config::get` instead.
+   162→  - Removed `Config::get_renderer`. Use `Config::get` instead.
+   163→  - Removed `Config::get_preprocessor`. Use `Config::get` instead.
+   164→- Public types have been switch to use the `#[non_exhaustive]` attribute to help allow them to change in a backwards-compatible way.
+   165→  [#2779](https://github.com/rust-lang/mdBook/pull/2779)
+   166→  [#2823](https://github.com/rust-lang/mdBook/pull/2823)
+   167→- Changed `MDBook` `with_renderer`/`with_preprocessor` to overwrite the entry if an extension of the same name is already loaded. This allows the caller to replace an entry.
+   168→  [#2802](https://github.com/rust-lang/mdBook/pull/2802)
+   169→- Added `MarkdownOptions` struct to specify settings for markdown rendering for `mdbook_markdown::new_cmark_parser`.
+   170→  [#2809](https://github.cocm/rust-lang/mdBook/pull/2809)
+   171→- Renamed `Book::sections` to `Book::items`.
+   172→  [#2813](https://github.com/rust-lang/mdBook/pull/2813)
+   173→- `mdbook::book::load_book` is now private. Instead, use one of the `MDBook` load functions like `MDBook::load_with_config`.
+   174→- Removed `HtmlConfig::smart_punctuation` method, use the field of the same name.
+   175→- `CmdPreprocessor::parse_input` moved to `mdbook_preprocessor::parse_input`.
+   176→- `Preprocessor::supports_renderer` now returns a `Result<bool>` instead of `bool` to be able to handle errors.
+   177→- Most of the types from the `theme` module are now private. The `Theme` struct is still exposed for working with themes.
+   178→- Various functions in the `utils::fs` module have been removed, renamed, or reworked.
+   179→- Most of the functions in the `utils` module have been moved, removed, or made private.
+   181→## mdBook 0.5.0-beta.2
+   182→[v0.5.0-beta.1...v0.5.0-beta.2](https://github.com/rust-lang/mdBook/compare/v0.5.0-beta.1...v0.5.0-beta.2)
+   184→### Added
+   185→
+   186→- Added a warning when a Font Awesome icon is missing.
+   187→  [#2915](https://github.com/rust-lang/mdBook/pull/2915)
+   188→- Added some trace logging for event processing.
+   189→  [#2911](https://github.com/rust-lang/mdBook/pull/2911)
+   190→- Added `Config::contains_key`.
+   191→  [#2910](https://github.com/rust-lang/mdBook/pull/2910)
+   193→### Changed
+   194→
+   195→- Heading IDs are now lowercase.
+   196→  [#2922](https://github.com/rust-lang/mdBook/pull/2922)
+   197→- Updated cargo dependencies.
+   198→  [#2916](https://github.com/rust-lang/mdBook/pull/2916)
+   199→- Removed italics for in quotes/comments in code blocks with the `ayu` theme.
+   200→  [#2904](https://github.com/rust-lang/mdBook/pull/2904)
+   201→- Exposed "search" feature from mdbook-driver.
+   202→  [#2907](https://github.com/rust-lang/mdBook/pull/2907)
+   204→### Fixed
+   205→
+   206→- Fixed rust fenced code blocks with an indent.
+   207→  [#2905](https://github.com/rust-lang/mdBook/pull/2905)
+   208→- Headers and `dt` tags are no longer modified if the tag is manually written HTML.
+   209→  [#2913](https://github.com/rust-lang/mdBook/pull/2913)
+   210→- Fixed print page links for internal links to non-chapters.
+   211→  [#2914](https://github.com/rust-lang/mdBook/pull/2914)
+   212→- Better handling for unbalanced HTML tags.
+   213→  [#2924](https://github.com/rust-lang/mdBook/pull/2924)
+   214→- Handle unclosed HTML tags inside a markdown element.
+   215→  [#2927](https://github.com/rust-lang/mdBook/pull/2927)
+   216→- Fixed missing font-awesome icons in the guide.
+   217→  [#2926](https://github.com/rust-lang/mdBook/pull/2926)
+   218→- Hide the sidebar resize indicator when JS isn't available.
+   219→  [#2923](https://github.com/rust-lang/mdBook/pull/2923)
+   221→## mdBook 0.5.0-beta.1
+   222→[v0.5.0-alpha.1...v0.5.0-beta.1](https://github.com/rust-lang/mdBook/compare/v0.5.0-alpha.1...v0.5.0-beta.1)
+   224→### Changed
+   225→
+   226→- Reworked the look of the header navigation.
+   227→  [#2898](https://github.com/rust-lang/mdBook/pull/2898)
+   228→- Update cargo dependencies.
+   229→  [#2896](https://github.com/rust-lang/mdBook/pull/2896)
+   230→- Improved the heading nav debug.
+   231→  [#2892](https://github.com/rust-lang/mdBook/pull/2892)
+   233→### Fixed
+   234→
+   235→- Fixed error message for config.get deserialization error.
+   236→  [#2902](https://github.com/rust-lang/mdBook/pull/2902)
+   237→- Filter `<mark>` tags from sidebar heading nav.
+   238→  [#2899](https://github.com/rust-lang/mdBook/pull/2899)
+   239→- Avoid divide-by-zero in heading nav computation
+   240→  [#2891](https://github.com/rust-lang/mdBook/pull/2891)
+   241→- Fixed heading nav with folded chapters.
+   242→  [#2893](https://github.com/rust-lang/mdBook/pull/2893)
+   244→## mdBook 0.5.0-alpha.1
+   245→[v0.4.52...v0.5.0-alpha.1](https://github.com/rust-lang/mdBook/compare/v0.4.52...v0.5.0-alpha.1)
+   247→### Added
+   248→
+   249→- The location of the generated HTML book is now displayed on the console.
+   250→  [#2729](https://github.com/rust-lang/mdBook/pull/2729)
+   251→- ❗ Added the `optional` field for preprocessors. The default is `false`, so this also changes it so that it is an error if the preprocessor is missing.
+   252→  [#2797](https://github.com/rust-lang/mdBook/pull/2797)
+   253→- ❗ Added `MarkdownOptions` struct to specify settings for markdown rendering.
+   254→  [#2809](https://github.cocm/rust-lang/mdBook/pull/2809)
+   255→- Added sidebar heading navigation. This includes the `output.html.sidebar-header-nav` option to disable it.
+   256→  [#2822](https://github.com/rust-lang/mdBook/pull/2822)
+   257→- Added the mdbook version to the guide.
+   258→  [#2826](https://github.com/rust-lang/mdBook/pull/2826)
+   259→- Added `Book::chapters` and `Book::for_each_chapter_mut` to more conveniently iterate over chapters (instead of all items).
+   260→  [#2838](https://github.com/rust-lang/mdBook/pull/2838)
+   261→- ❗ Added support for definition lists. These are enabled by default, with the option `output.html.definition-lists` to disable it.
+   262→  [#2847](https://github.com/rust-lang/mdBook/pull/2847)
+   263→- ❗ Added support for admonitions. These are enabled by default, with the option `output.html.admonitions` to disable it.
+   264→  [#2851](https://github.com/rust-lang/mdBook/pull/2851)
+   266→### Changed
+   267→
+   268→- ❗ The `mdbook` crate has been split into multiple crates.
+   269→  [#2766](https://github.com/rust-lang/mdBook/pull/2766)
+   270→- The minimum Rust version has been updated to 1.88.
+   271→  [#2844](https://github.com/rust-lang/mdBook/pull/2844)
+   272→- ❗ `pulldown-cmark` has been upgraded to 0.13.0, bringing a large number of fixes to markdown processing.
+   273→  [#2401](https://github.com/rust-lang/mdBook/pull/2401)
+   274→- ❗ Switched public types to `non_exhaustive` to help allow them to change in a backwards-compatible way.
+   275→  [#2779](https://github.com/rust-lang/mdBook/pull/2779)
+   276→  [#2823](https://github.com/rust-lang/mdBook/pull/2823)
+   277→- ❗ Unknown fields in config are now an error.
+   278→  [#2787](https://github.com/rust-lang/mdBook/pull/2787)
+   279→  [#2801](https://github.com/rust-lang/mdBook/pull/2801)
+   280→- ❗ Changed `id_from_content` to be private.
+   281→  [#2791](https://github.com/rust-lang/mdBook/pull/2791)
+   282→- ❗ Changed preprocessor `command` to use paths relative to the book root.
+   283→  [#2796](https://github.com/rust-lang/mdBook/pull/2796)
+   284→- ❗ Replaced the `{{#previous}}` and `{{#next}}` handelbars navigation helpers with objects.
+   285→  [#2794](https://github.com/rust-lang/mdBook/pull/2794)
+   286→- ❗ Use embedded SVG instead of fonts for icons, font-awesome 6.2.
+   287→  [#1330](https://github.com/rust-lang/mdBook/pull/1330)
+   288→- The `book.src` field is no longer serialized if it is the default of "src".
+   289→  [#2800](https://github.com/rust-lang/mdBook/pull/2800)
+   290→- ❗ Changed `MDBook` `with_renderer`/`with_preprocessor` to overwrite the entry if an extension of the same name is already loaded.
+   291→  [#2802](https://github.com/rust-lang/mdBook/pull/2802)
+   292→- ❗ Changed CLI `--dest-dir` to be relative to the current directory, not the book root.
+   293→  [#2806](https://github.com/rust-lang/mdBook/pull/2806)
+   294→- ❗ Changed all internal HTML IDs to have an `mdbook-` prefix. This helps avoid namespace conflicts with header IDs.
+   295→  [#2808](https://github.com/rust-lang/mdBook/pull/2808)
+   296→- ❗ `output.html.smart-punctuation` is now `true` by default.
+   297→  [#2810](https://github.com/rust-lang/mdBook/pull/2810)
+   298→- ❗ Renamed `Book::sections` to `Book::items`.
+   299→  [#2813](https://github.com/rust-lang/mdBook/pull/2813)
+   300→- ❗ `output.html.hash-files` is now `true` by default.
+   301→  [#2820](https://github.com/rust-lang/mdBook/pull/2820)
+   302→- Switched from `log` to `tracing`.
+   303→  [#2829](https://github.com/rust-lang/mdBook/pull/2829)
+   304→- ❗ Rewrote the HTML rendering pipeline.
+   305→  [#2844](https://github.com/rust-lang/mdBook/pull/2844)
+   306→- ❗ Links on the print page now link to elements on the print page instead of linking out to the individual chapters.
+   307→  [#2844](https://github.com/rust-lang/mdBook/pull/2844)
+   308→- ❗ Moved theme copy to the Theme type and reduced visibility.
+   309→  [#2857](https://github.com/rust-lang/mdBook/pull/2857)
+   310→- ❗ Cleaned up some fs-related utilities.
+   311→  [#2856](https://github.com/rust-lang/mdBook/pull/2856)
+   312→- ❗ Moved `get_404_output_file` to `HtmlConfig`.
+   313→  [#2855](https://github.com/rust-lang/mdBook/pull/2855)
+   314→- ❗ Moved `take_lines` functions to `mdbook-driver` and made private.
+   315→  [#2854](https://github.com/rust-lang/mdBook/pull/2854)
+   316→- Updated dependencies.
+   317→  [#2793](https://github.com/rust-lang/mdBook/pull/2793)
+   318→  [#2869](https://github.com/rust-lang/mdBook/pull/2869)
+   320→### Removed
+   321→
+   322→- ❗ Removed `toml` as a public dependency.
+   323→  [#2773](https://github.com/rust-lang/mdBook/pull/2773)
+   324→- ❗ Removed the `book.multilingual` field. This was never used.
+   325→  [#2775](https://github.com/rust-lang/mdBook/pull/2775)
+   326→- ❗ Removed support for google-analytics.
+   327→  [#2776](https://github.com/rust-lang/mdBook/pull/2776)
+   328→- ❗ Removed the very old legacy config support.
+   329→  [#2783](https://github.com/rust-lang/mdBook/pull/2783)
+   330→- ❗ Removed `curly-quotes`, use `output.html.smart-punctuation` instead.
+   331→  [#2788](https://github.com/rust-lang/mdBook/pull/2788)
+   332→- Removed old warning about `book.json`.
+   333→  [#2789](https://github.com/rust-lang/mdBook/pull/2789)
+   334→- ❗ Removed `output.html.copy-fonts`. The default fonts are now always copied unless you override the `theme/fonts/fonts.css` file.
+   335→  [#2790](https://github.com/rust-lang/mdBook/pull/2790)
+   336→- ❗ Removed legacy relative renderer command paths. Relative renderer command paths now must always be relative to the book root.
+   337→  [#2792](https://github.com/rust-lang/mdBook/pull/2792)
+   338→- ❗ Removed the `{{theme_option}}` handlebars helper. It has not been used for a while.
+   339→  [#2795](https://github.com/rust-lang/mdBook/pull/2795)
+   340→- ❗ Removed the `--dest-dir` option to `mdbook test`.
+   341→  [#2805](https://github.com/rust-lang/mdBook/pull/2805)
+   343→### Fixed
+   344→
+   345→- Fixed handling of multiple footnotes in a row.
+   346→  [#2807](https://github.com/rust-lang/mdBook/pull/2807)
+   347→- Fixed ID collisions when the numeric suffix gets used.
+   348→  [#2846](https://github.com/rust-lang/mdBook/pull/2846)
+   349→- Fixed missing css vars for no-js dark mode.
+   350→  [#2850](https://github.com/rust-lang/mdBook/pull/2850)
+   352→## mdBook 0.4.52
+   353→[v0.4.51...v0.4.52](https://github.com/rust-lang/mdBook/compare/v0.4.51...v0.4.52)
+   357→### Added
+   358→- Added the ability to redirect `#` HTML fragments using the existing `output.html.redirect` table.
+   359→  [#2747](https://github.com/rust-lang/mdBook/pull/2747)
+   360→- Added the `rel="edit"` attribute to the edit page button.
+   361→  [#2702](https://github.com/rust-lang/mdBook/pull/2702)
+   363→### Changed
+   364→- The search index is now only loaded when the search input is opened instead of always being loaded.
+   365→  [#2553](https://github.com/rust-lang/mdBook/pull/2553)
+   366→  [#2735](https://github.com/rust-lang/mdBook/pull/2735)
+   367→- The `mdbook serve` command has switched its underlying server library from warp to axum.
+   368→  [#2748](https://github.com/rust-lang/mdBook/pull/2748)
+   369→- Updated dependencies.
+   370→  [#2752](https://github.com/rust-lang/mdBook/pull/2752)
+   372→### Fixed
+   373→- The sidebar is now set to `display:none` when it is hidden in order to prevent the browser's search from thinking the sidebar's text is visible.
+   374→  [#2725](https://github.com/rust-lang/mdBook/pull/2725)
+   375→- Fixed search index URL not updating correctly when `hash-files` is enabled.
+   376→  [#2742](https://github.com/rust-lang/mdBook/pull/2742)
+   377→  [#2746](https://github.com/rust-lang/mdBook/pull/2746)
+   378→- Fixed several sidebar animation bugs, particularly when manually resizing.
+   379→  [#2750](https://github.com/rust-lang/mdBook/pull/2750)
+   381→## mdBook 0.4.51
+   382→[v0.4.50...v0.4.51](https://github.com/rust-lang/mdBook/compare/v0.4.50...v0.4.51)
+   384→### Fixed
+   385→- Fixed regression that broke the `S` search hotkey.
+   386→  [#2713](https://github.com/rust-lang/mdBook/pull/2713)
+   388→## mdBook 0.4.50
+   389→[v0.4.49...v0.4.50](https://github.com/rust-lang/mdBook/compare/v0.4.49...v0.4.50)
+   391→### Added
+   392→
+   393→- Added a keyboard shortcut help popup when pressing `?`.
+   394→  [#2608](https://github.com/rust-lang/mdBook/pull/2608)
+   396→### Changed
+   397→
+   398→- Changed the look of the sidebar resize handle to match the new rustdoc format.
+   399→  [#2691](https://github.com/rust-lang/mdBook/pull/2691)
+   400→- `/` can now be used to open the search bar.
+   401→  [#2698](https://github.com/rust-lang/mdBook/pull/2698)
+   402→- Pressing enter from the search bar will navigate to the first entry.
+   403→  [#2698](https://github.com/rust-lang/mdBook/pull/2698)
+   404→- Updated `opener` to drop some dependencies.
+   405→  [#2709](https://github.com/rust-lang/mdBook/pull/2709)
+   406→- Updated dependencies, MSRV raised to 1.82.
+   407→  [#2711](https://github.com/rust-lang/mdBook/pull/2711)
+   409→### Fixed
+   410→
+   411→- Fixed uncaught exception when pressing down when there are no search results.
+   412→  [#2698](https://github.com/rust-lang/mdBook/pull/2698)
+   413→- Fixed syntax highlighting of Rust code in the ACE editor.
+   414→  [#2710](https://github.com/rust-lang/mdBook/pull/2710)
+   416→## mdBook 0.4.49
+   417→[v0.4.48...v0.4.49](https://github.com/rust-lang/mdBook/compare/v0.4.48...v0.4.49)
+   419→### Added
+   420→
+   421→- Added a warning on unused fields in the root of `book.toml`.
+   422→  [#2622](https://github.com/rust-lang/mdBook/pull/2622)
+   424→### Changed
+   425→
+   426→- Updated dependencies.
+   427→  [#2650](https://github.com/rust-lang/mdBook/pull/2650)
+   428→  [#2688](https://github.com/rust-lang/mdBook/pull/2688)
+   429→- Updated minimum Rust version to 1.81.
+   430→  [#2688](https://github.com/rust-lang/mdBook/pull/2688)
+   431→- The unused `book.multilingual` field is no longer serialized, or shown in `mdbook init`.
+   432→  [#2689](https://github.com/rust-lang/mdBook/pull/2689)
+   433→- Speed up search index loading by using `JSON.parse` instead of parsing JavaScript.
+   434→  [#2633](https://github.com/rust-lang/mdBook/pull/2633)
+   436→### Fixed
+   437→
+   438→- Search highlighting will not try to highlight in SVG `<text>` elements because it breaks the element.
+   439→  [#2668](https://github.com/rust-lang/mdBook/pull/2668)
+   440→- Fixed scrolling of the sidebar when a search highlight term is in the URL.
+   441→  [#2675](https://github.com/rust-lang/mdBook/pull/2675)
+   442→- Fixed issues when multiple footnote definitions use the same ID. Now, only one definition is used, and a warning is displayed.
+   443→  [#2681](https://github.com/rust-lang/mdBook/pull/2681)
+   444→- The sidebar is now restricted to 80% of the viewport width to make it possible to collapse it when the viewport is very narrow.
+   445→  [#2679](https://github.com/rust-lang/mdBook/pull/2679)
+   447→## mdBook 0.4.48
+   448→[v0.4.47...v0.4.48](https://github.com/rust-lang/mdBook/compare/v0.4.47...v0.4.48)
+   450→### Added
+   451→
+   452→- Footnotes now have back-reference links. These links bring the reader back to the original location. As part of this change, footnotes are now only rendered at the bottom of the page. This also includes some styling updates and fixes for footnote rendering.
+   453→  [#2626](https://github.com/rust-lang/mdBook/pull/2626)
+   454→- Added an "Auto" theme selection option which will default to the system-preferred mode. This will also automatically switch when the system changes the preferred mode.
+   455→  [#2576](https://github.com/rust-lang/mdBook/pull/2576)
+   457→### Changed
+   458→
+   459→- The `searchindex.json` file has been removed; only the `searchindex.js` file will be generated.
+   460→  [#2552](https://github.com/rust-lang/mdBook/pull/2552)
+   461→- Updated Javascript code to use eslint.
+   462→  [#2554](https://github.com/rust-lang/mdBook/pull/2554)
+   463→- An error is generated if there are duplicate files in `SUMMARY.md`.
+   464→  [#2613](https://github.com/rust-lang/mdBook/pull/2613)
+   466→## mdBook 0.4.47
+   467→[v0.4.46...v0.4.47](https://github.com/rust-lang/mdBook/compare/v0.4.46...v0.4.47)
+   469→### Fixed
+   470→
+   471→- Fixed search not showing up in sub-directories.
+   472→  [#2586](https://github.com/rust-lang/mdBook/pull/2586)
+   474→## mdBook 0.4.46
+   475→[v0.4.45...v0.4.46](https://github.com/rust-lang/mdBook/compare/v0.4.45...v0.4.46)
+   477→### Changed
+   478→
+   479→- The `output.html.hash-files` config option has been added to add hashes to static filenames to bust any caches when a book is updated. `{{resource}}` template tags have been added so that links can be properly generated to those files.
+   480→  [#1368](https://github.com/rust-lang/mdBook/pull/1368)
+   482→### Fixed
+   483→
+   484→- Playground links for Rust 2024 now set the edition correctly.
+   485→  [#2557](https://github.com/rust-lang/mdBook/pull/2557)
+   487→## mdBook 0.4.45
+   488→[v0.4.44...v0.4.45](https://github.com/rust-lang/mdBook/compare/v0.4.44...v0.4.45)
+   490→### Changed
+   491→
+   492→- Added context to error message when rustdoc is not found.
+   493→  [#2545](https://github.com/rust-lang/mdBook/pull/2545)
+   494→- Slightly changed the styling rules around margins of footnotes.
+   495→  [#2524](https://github.com/rust-lang/mdBook/pull/2524)
+   497→### Fixed
+   498→
+   499→- Fixed an issue where it would panic if a source_path is not set.
+   500→  [#2550](https://github.com/rust-lang/mdBook/pull/2550)
+   502→## mdBook 0.4.44
+   503→[v0.4.43...v0.4.44](https://github.com/rust-lang/mdBook/compare/v0.4.43...v0.4.44)
+   505→### Added
+   506→
+   507→- Added pre-built aarch64-apple-darwin binaries to the releases.
+   508→  [#2500](https://github.com/rust-lang/mdBook/pull/2500)
+   509→- `mdbook clean` now shows a summary of what it did.
+   510→  [#2458](https://github.com/rust-lang/mdBook/pull/2458)
+   511→- Added the `output.html.search.chapter` config setting to disable search indexing of individual chapters.
+   512→  [#2533](https://github.com/rust-lang/mdBook/pull/2533)
+   514→### Fixed
+   515→
+   516→- Fixed auto-scrolling the side-bar when loading a page with a `#` fragment URL.
+   517→  [#2517](https://github.com/rust-lang/mdBook/pull/2517)
+   518→- Fixed display of sidebar when javascript is disabled.
+   519→  [#2529](https://github.com/rust-lang/mdBook/pull/2529)
+   520→- Fixed the sidebar visibility getting out of sync with the button.
+   521→  [#2532](https://github.com/rust-lang/mdBook/pull/2532)
+   523→### Changed
+   524→
+   525→- ❗ Rust code block hidden lines now follow the same logic as rustdoc. This requires a space after the `#` symbol.
+   526→  [#2530](https://github.com/rust-lang/mdBook/pull/2530)
+   527→- ❗ Updated the Linux pre-built binaries which requires a newer version of glibc (2.34).
+   528→  [#2523](https://github.com/rust-lang/mdBook/pull/2523)
+   529→- Updated dependencies
+   530→  [#2538](https://github.com/rust-lang/mdBook/pull/2538)
+   531→  [#2539](https://github.com/rust-lang/mdBook/pull/2539)
+   533→## mdBook 0.4.43
+   534→[v0.4.42...v0.4.43](https://github.com/rust-lang/mdBook/compare/v0.4.42...v0.4.43)
+   536→### Fixed
+   537→
+   538→- Fixed setting the title in `mdbook init` when no git user is configured.
+   539→  [#2486](https://github.com/rust-lang/mdBook/pull/2486)
+   541→### Changed
+   542→
+   543→- The Rust 2024 edition no longer needs `-Zunstable-options`.
+   544→  [#2495](https://github.com/rust-lang/mdBook/pull/2495)
+   546→## mdBook 0.4.42
+   547→[v0.4.41...v0.4.42](https://github.com/rust-lang/mdBook/compare/v0.4.41...v0.4.42)
+   549→### Fixed
+   550→
+   551→- Fixed chapter list folding.
+   552→  [#2473](https://github.com/rust-lang/mdBook/pull/2473)
+   554→## mdBook 0.4.41
+   555→[v0.4.40...v0.4.41](https://github.com/rust-lang/mdBook/compare/v0.4.40...v0.4.41)
+   559→### Added
+   560→
+   561→- Added preliminary support for Rust 2024 edition.
+   562→  [#2398](https://github.com/rust-lang/mdBook/pull/2398)
+   563→- Added a full example of the remove-emphasis preprocessor.
+   564→  [#2464](https://github.com/rust-lang/mdBook/pull/2464)
+   566→### Changed
+   567→
+   568→- Adjusted styling of clipboard/play icons.
+   569→  [#2421](https://github.com/rust-lang/mdBook/pull/2421)
+   570→- Updated to handlebars v6.
+   571→  [#2416](https://github.com/rust-lang/mdBook/pull/2416)
+   572→- Attr and section rules now have specific code highlighting.
+   573→  [#2448](https://github.com/rust-lang/mdBook/pull/2448)
+   574→- The sidebar is now loaded from a common file, significantly reducing the book size when there are many chapters.
+   575→  [#2414](https://github.com/rust-lang/mdBook/pull/2414)
+   576→- Updated dependencies.
+   577→  [#2470](https://github.com/rust-lang/mdBook/pull/2470)
+   579→### Fixed
+   580→
+   581→- Improved theme support when JavaScript is disabled.
+   582→  [#2454](https://github.com/rust-lang/mdBook/pull/2454)
+   583→- Fixed broken themes when localStorage has an invalid theme id.
+   584→  [#2463](https://github.com/rust-lang/mdBook/pull/2463)
+   585→- Adjusted the line-height of superscripts (and footnotes) to avoid adding extra space between lines.
+   586→  [#2465](https://github.com/rust-lang/mdBook/pull/2465)
+   588→## mdBook 0.4.40
+   589→[v0.4.39...v0.4.40](https://github.com/rust-lang/mdBook/compare/v0.4.39...v0.4.40)
+   591→### Fixed
+   592→
+   593→- Reverted the update to pulldown-cmark which broke the semver API.
+   594→  [#2388](https://github.com/rust-lang/mdBook/pull/2388)
+   596→## mdBook 0.4.39
+   597→[v0.4.38...v0.4.39](https://github.com/rust-lang/mdBook/compare/v0.4.38...v0.4.39)
+   599→### Fixed
+   600→
+   601→- Fixed the automatic deploy broken in the previous release.
+   602→  [#2383](https://github.com/rust-lang/mdBook/pull/2383)
+   604→## mdBook 0.4.38
+   605→[v0.4.37...v0.4.38](https://github.com/rust-lang/mdBook/compare/v0.4.37...v0.4.38)
+   607→### Added
+   608→
+   609→- Added `nix` to the default set of languages supported for syntax highlighting.
+   610→  [#2262](https://github.com/rust-lang/mdBook/pull/2262)
+   612→### Changed
+   613→
+   614→- The `output.html.curly-quotes` option has been renamed to `output.html.smart-punctuation` to better reflect what it does. The old option `curly-quotes` is kept for compatibility, but may be removed in the future.
+   615→  [#2327](https://github.com/rust-lang/mdBook/pull/2327)
+   616→- The file-watcher used in `mdbook serve` and `mdbook watch` now uses a poll-based watcher instead of the native operating system notifications. This should fix issues on various systems and environments, and more accurately detect when files change. The native watcher can still be used with the `--watcher native` CLI option.
+   617→  [#2325](https://github.com/rust-lang/mdBook/pull/2325)
+   618→- `mdbook test` output now includes color, and shows relative paths to the source.
+   619→  [#2259](https://github.com/rust-lang/mdBook/pull/2259)
+   620→- Updated dependencies, MSRV raised to 1.74
+   621→  [#2350](https://github.com/rust-lang/mdBook/pull/2350)
+   622→  [#2351](https://github.com/rust-lang/mdBook/pull/2351)
+   623→  [#2378](https://github.com/rust-lang/mdBook/pull/2378)
+   624→  [#2381](https://github.com/rust-lang/mdBook/pull/2381)
+   626→### Fixed
+   627→
+   628→- Reduced memory allocation when copying files.
+   629→  [#2355](https://github.com/rust-lang/mdBook/pull/2355)
+   630→- Fixed the horizontal divider in `SUMMARY.md` from being indented into the previous nested section.
+   631→  [#2364](https://github.com/rust-lang/mdBook/pull/2364)
+   632→- Removed unnecessary `@import` in the CSS.
+   633→  [#2260](https://github.com/rust-lang/mdBook/pull/2260)
+   635→## mdBook 0.4.37
+   636→[v0.4.36...v0.4.37](https://github.com/rust-lang/mdBook/compare/v0.4.36...v0.4.37)
+   638→### Changed
+   639→- ❗️ Updated the markdown parser. This brings in many changes to more closely follow the CommonMark spec. This may cause some small rendering changes. It is recommended to compare the output of the old and new version to check for changes. See <https://github.com/raphlinus/pulldown-cmark/releases/tag/v0.10.0> for more information.
+   640→  [#2308](https://github.com/rust-lang/mdBook/pull/2308)
+   641→- The warning about the legacy `src/theme` directory has been removed.
+   642→  [#2263](https://github.com/rust-lang/mdBook/pull/2263)
+   643→- Updated dependencies. MSRV raised to 1.71.0.
+   644→  [#2283](https://github.com/rust-lang/mdBook/pull/2283)
+   645→  [#2293](https://github.com/rust-lang/mdBook/pull/2293)
+   646→  [#2297](https://github.com/rust-lang/mdBook/pull/2297)
+   647→  [#2310](https://github.com/rust-lang/mdBook/pull/2310)
+   648→  [#2309](https://github.com/rust-lang/mdBook/pull/2309)
+   649→- Some internal performance/memory improvements.
+   650→  [#2273](https://github.com/rust-lang/mdBook/pull/2273)
+   651→  [#2290](https://github.com/rust-lang/mdBook/pull/2290)
+   652→- Made the `pathdiff` dependency optional based on the `watch` feature.
+   653→  [#2291](https://github.com/rust-lang/mdBook/pull/2291)
+   655→### Fixed
+   656→- The `s` shortcut key handler should not trigger when focus is in an HTML form.
+   657→  [#2311](https://github.com/rust-lang/mdBook/pull/2311)
+   659→## mdBook 0.4.36
+   660→[v0.4.35...v0.4.36](https://github.com/rust-lang/mdBook/compare/v0.4.35...v0.4.36)
+   662→### Added
+   663→- Added Nim to the default highlighted languages.
+   664→  [#2232](https://github.com/rust-lang/mdBook/pull/2232)
+   665→- Added a small indicator for the sidebar resize handle.
+   666→  [#2209](https://github.com/rust-lang/mdBook/pull/2209)
+   668→### Changed
+   669→- Updated dependencies. MSRV raised to 1.70.0.
+   670→  [#2173](https://github.com/rust-lang/mdBook/pull/2173)
+   671→  [#2250](https://github.com/rust-lang/mdBook/pull/2250)
+   672→  [#2252](https://github.com/rust-lang/mdBook/pull/2252)
+   674→### Fixed
+   675→- Fixed blank column in print page when the sidebar was visible.
+   676→  [#2235](https://github.com/rust-lang/mdBook/pull/2235)
+   677→- Fixed indentation of code blocks when Javascript is disabled.
+   678→  [#2162](https://github.com/rust-lang/mdBook/pull/2162)
+   679→- Fixed a panic when `mdbook serve` or `mdbook watch` were given certain kinds of paths.
+   680→  [#2229](https://github.com/rust-lang/mdBook/pull/2229)
+   682→## mdBook 0.4.35
+   683→[v0.4.34...v0.4.35](https://github.com/rust-lang/mdBook/compare/v0.4.34...v0.4.35)
+   685→### Added
+   686→- Added the `book.text-direction` setting for explicit support for right-to-left languages.
+   687→  [#1641](https://github.com/rust-lang/mdBook/pull/1641)
+   688→- Added `rel=prefetch` to the "next" links to potentially improve browser performance.
+   689→  [#2168](https://github.com/rust-lang/mdBook/pull/2168)
+   690→- Added a `.warning` CSS class which is styled for displaying warning blocks.
+   691→  [#2187](https://github.com/rust-lang/mdBook/pull/2187)
+   693→### Changed
+   694→- Better support of the sidebar when JavaScript is disabled.
+   695→  [#2175](https://github.com/rust-lang/mdBook/pull/2175)
+   697→## mdBook 0.4.34
+   698→[v0.4.33...v0.4.34](https://github.com/rust-lang/mdBook/compare/v0.4.33...v0.4.34)
+   700→### Fixed
+   701→- Fixed file change watcher failing on macOS with a large number of files.
+   702→  [#2157](https://github.com/rust-lang/mdBook/pull/2157)
+   704→## mdBook 0.4.33
+   705→[v0.4.32...v0.4.33](https://github.com/rust-lang/mdBook/compare/v0.4.32...v0.4.33)
+   707→### Added
+   708→- The `color-scheme` CSS property is now set based on the light/dark theme, which applies some slight color differences in browser elements like scroll bars on some browsers.
+   709→  [#2134](https://github.com/rust-lang/mdBook/pull/2134)
+   711→### Fixed
+   712→- Fixed watching of extra-watch-dirs when not running in the book root directory.
+   713→  [#2146](https://github.com/rust-lang/mdBook/pull/2146)
+   714→- Reverted the dependency update to the `toml` crate (again!). This was an unintentional breaking change in 0.4.32.
+   715→  [#2021](https://github.com/rust-lang/mdBook/pull/2021)
+   716→- Changed macOS change notifications to use the kqueue implementation which should fix some issues with repeated rebuilds when a file changed.
+   717→  [#2152](https://github.com/rust-lang/mdBook/pull/2152)
+   718→- Don't set a background color in the print page for code blocks in a header.
+   719→  [#2150](https://github.com/rust-lang/mdBook/pull/2150)
+   721→## mdBook 0.4.32
+   722→[v0.4.31...v0.4.32](https://github.com/rust-lang/mdBook/compare/v0.4.31...v0.4.32)
+   724→### Fixed
+   725→- Fixed theme-color meta tag not syncing with the theme.
+   726→  [#2118](https://github.com/rust-lang/mdBook/pull/2118)
+   728→### Changed
+   729→- Updated all dependencies.
+   730→  [#2121](https://github.com/rust-lang/mdBook/pull/2121)
+   731→  [#2122](https://github.com/rust-lang/mdBook/pull/2122)
+   732→  [#2123](https://github.com/rust-lang/mdBook/pull/2123)
+   733→  [#2124](https://github.com/rust-lang/mdBook/pull/2124)
+   734→  [#2125](https://github.com/rust-lang/mdBook/pull/2125)
+   735→  [#2126](https://github.com/rust-lang/mdBook/pull/2126)
+   737→## mdBook 0.4.31
+   738→[v0.4.30...v0.4.31](https://github.com/rust-lang/mdBook/compare/v0.4.30...v0.4.31)
+   740→### Fixed
+   741→- Fixed menu border render flash during page navigation.
+   742→  [#2101](https://github.com/rust-lang/mdBook/pull/2101)
+   743→- Fixed flicker setting sidebar scroll position.
+   744→  [#2104](https://github.com/rust-lang/mdBook/pull/2104)
+   745→- Fixed compile error with proc-macro2 on latest Rust nightly.
+   746→  [#2109](https://github.com/rust-lang/mdBook/pull/2109)
+   748→## mdBook 0.4.30
+   749→[v0.4.29...v0.4.30](https://github.com/rust-lang/mdBook/compare/v0.4.29...v0.4.30)
+   751→### Added
+   752→- Added support for heading attributes.
+   753→  Attributes are specified in curly braces just after the heading text.
+   754→  An HTML ID can be specified with `#` and classes with `.`.
+   755→  For example: `## My heading {#custom-id .class1 .class2}`
+   756→  [#2013](https://github.com/rust-lang/mdBook/pull/2013)
+   757→- Added support for hidden code lines for languages other than Rust.
+   758→  The `output.html.code.hidelines` table allows you to define the prefix character that will be used to hide code lines based on the language.
+   759→  [#2093](https://github.com/rust-lang/mdBook/pull/2093)
+   761→### Fixed
+   762→- Fixed a few minor markdown rendering issues.
+   763→  [#2092](https://github.com/rust-lang/mdBook/pull/2092)
+   765→## mdBook 0.4.29
+   766→[v0.4.28...v0.4.29](https://github.com/rust-lang/mdBook/compare/v0.4.28...v0.4.29)
+   768→### Changed
+   769→- Built-in fonts are no longer copied when `fonts/fonts.css` is overridden in the theme directory.
+   770→  Additionally, the warning about `copy-fonts` has been removed if `fonts/fonts.css` is specified.
+   771→  [#2080](https://github.com/rust-lang/mdBook/pull/2080)
+   772→- `mdbook init --force` now skips all interactive prompts as intended.
+   773→  [#2057](https://github.com/rust-lang/mdBook/pull/2057)
+   774→- Updated dependencies
+   775→  [#2063](https://github.com/rust-lang/mdBook/pull/2063)
+   776→  [#2086](https://github.com/rust-lang/mdBook/pull/2086)
+   777→  [#2082](https://github.com/rust-lang/mdBook/pull/2082)
+   778→  [#2084](https://github.com/rust-lang/mdBook/pull/2084)
+   779→  [#2085](https://github.com/rust-lang/mdBook/pull/2085)
+   781→### Fixed
+   782→- Switched from the `gitignore` library to `ignore`. This should bring some improvements with gitignore handling.
+   783→  [#2076](https://github.com/rust-lang/mdBook/pull/2076)
+   785→## mdBook 0.4.28
+   786→[v0.4.27...v0.4.28](https://github.com/rust-lang/mdBook/compare/v0.4.27...v0.4.28)
+   788→### Changed
+   789→- The sidebar is now shown on wide screens when localstorage is disabled.
+   790→  [#2017](https://github.com/rust-lang/mdBook/pull/2017)
+   791→- Preprocessors are now run with `mdbook test`.
+   792→  [#1986](https://github.com/rust-lang/mdBook/pull/1986)
+   794→### Fixed
+   795→- Fixed regression in 0.4.26 that prevented the title bar from scrolling properly on smaller screens.
+   796→  [#2039](https://github.com/rust-lang/mdBook/pull/2039)
+   798→## mdBook 0.4.27
+   799→[v0.4.26...v0.4.27](https://github.com/rust-lang/mdBook/compare/v0.4.26...v0.4.27)
+   801→### Changed
+   802→- Reverted the dependency update to the `toml` crate. This was an unintentional breaking change in 0.4.26.
+   803→  [#2021](https://github.com/rust-lang/mdBook/pull/2021)
+   805→## mdBook 0.4.26
+   806→[v0.4.25...v0.4.26](https://github.com/rust-lang/mdBook/compare/v0.4.25...v0.4.26)
+   810→### Changed
+   811→- Removed custom scrollbars for webkit browsers
+   812→  [#1961](https://github.com/rust-lang/mdBook/pull/1961)
+   813→- Updated some dependencies
+   814→  [#1998](https://github.com/rust-lang/mdBook/pull/1998)
+   815→  [#2009](https://github.com/rust-lang/mdBook/pull/2009)
+   816→  [#2011](https://github.com/rust-lang/mdBook/pull/2011)
+   817→- Fonts are now part of the theme.
+   818→  The `output.html.copy-fonts` option has been deprecated.
+   819→  To define custom fonts, be sure to define `theme/fonts.css`.
+   820→  [#1987](https://github.com/rust-lang/mdBook/pull/1987)
+   822→### Fixed
+   823→- Fixed overflow viewport issue with mobile Safari
+   824→  [#1994](https://github.com/rust-lang/mdBook/pull/1994)
+   826→## mdBook 0.4.25
+   827→[e14d381...1ba74a3](https://github.com/rust-lang/mdBook/compare/e14d381...1ba74a3)
+   829→### Fixed
+   830→- Fixed a regression where `mdbook test -L deps path-to-book` would not work.
+   831→  [#1959](https://github.com/rust-lang/mdBook/pull/1959)
+   833→## mdBook 0.4.24
+   834→[eb77083...8767ebf](https://github.com/rust-lang/mdBook/compare/eb77083...8767ebf)
+   836→### Fixed
+   837→- The precompiled linux-gnu mdbook binary available on [GitHub Releases](https://github.com/rust-lang/mdBook/releases) inadvertently switched to a newer version of glibc. This release goes back to an older version that should be more compatible on older versions of Linux.
+   838→  [#1955](https://github.com/rust-lang/mdBook/pull/1955)
+   840→## mdBook 0.4.23
+   841→[678b469...68a75da](https://github.com/rust-lang/mdBook/compare/678b469...68a75da)
+   843→### Changed
+   844→- Updated all dependencies
+   845→  [#1951](https://github.com/rust-lang/mdBook/pull/1951)
+   846→  [#1952](https://github.com/rust-lang/mdBook/pull/1952)
+   847→  [#1844](https://github.com/rust-lang/mdBook/pull/1844)
+   848→- Updated minimum Rust version to 1.60.
+   849→  [#1951](https://github.com/rust-lang/mdBook/pull/1951)
+   851→### Fixed
+   852→- Fixed a regression where playground code was missing hidden lines, preventing it from compiling correctly.
+   853→  [#1950](https://github.com/rust-lang/mdBook/pull/1950)
+   855→## mdBook 0.4.22
+   856→[40c06f5...4844f72](https://github.com/rust-lang/mdBook/compare/40c06f5...4844f72)
+   858→### Added
+   859→- Added a `--chapter` option to `mdbook test` to specify a specific chapter to test.
+   860→  [#1741](https://github.com/rust-lang/mdBook/pull/1741)
+   861→- Added CSS styling for `<kbd>` tags.
+   862→  [#1906](https://github.com/rust-lang/mdBook/pull/1906)
+   863→- Added pre-compiled binaries for `x86_64-unknown-linux-musl` and `aarch64-unknown-linux-musl` (see [Releases](https://github.com/rust-lang/mdBook/releases)).
+   864→  [#1862](https://github.com/rust-lang/mdBook/pull/1862)
+   865→- Added `build.extra-watch-dirs` which is an array of additional directories to watch for changes when running `mdbook serve`.
+   866→  [#1884](https://github.com/rust-lang/mdBook/pull/1884)
+   868→### Changed
+   869→- Removed the `type="text/javascript"` attribute from `<script>` tags.
+   870→  [#1881](https://github.com/rust-lang/mdBook/pull/1881)
+   871→- Switched to building with Rust Edition 2021.
+   872→  This raises the minimum supported Rust version to 1.56.
+   873→  [#1887](https://github.com/rust-lang/mdBook/pull/1887)
+   874→- When hidden code is hidden, the hidden parts are no longer copied to the clipboard via the copy button.
+   875→  [#1911](https://github.com/rust-lang/mdBook/pull/1911)
+   876→- Various HTML changes and fixes to be more compliant with HTML5.
+   877→  [#1924](https://github.com/rust-lang/mdBook/pull/1924)
+   878→- The theme picker now shows which theme is currently selected.
+   879→  [#1935](https://github.com/rust-lang/mdBook/pull/1935)
+   881→### Fixed
+   882→- Avoid blank line at the end of an ACE code block
+   883→  [#1836](https://github.com/rust-lang/mdBook/pull/1836)
+   886→## mdBook 0.4.21
+   887→[92afe9b...8f01d02](https://github.com/rust-lang/mdBook/compare/92afe9b...8f01d02)
+   889→### Fixed
+   890→- Fixed an issue where mdBook would fail to compile with Rust nightly-2022-07-22.
+   891→  [#1861](https://github.com/rust-lang/mdBook/pull/1861)
+   893→## mdBook 0.4.20
+   894→[53055e0...da166e0](https://github.com/rust-lang/mdBook/compare/53055e0...da166e0)
+   896→### Fixed
+   897→- Fixed a regression in 0.4.19 where inline code would have excessive padding
+   898→  in some situations such as headings.
+   899→  [#1855](https://github.com/rust-lang/mdBook/pull/1855)
+   901→## mdBook 0.4.19
+   902→[ae275ad...53055e0](https://github.com/rust-lang/mdBook/compare/ae275ad...53055e0)
+   904→### Added
+   905→- The `serve` command now supports HEAD requests.
+   906→  [#1825](https://github.com/rust-lang/mdBook/pull/1825)
+   908→### Changed
+   909→- An error is now generated when a custom theme directory does not exist.
+   910→  [#1791](https://github.com/rust-lang/mdBook/pull/1791)
+   911→- Very wide tables now have independent horizontal scrolling so that scrolling
+   912→  to see the rest of the table will not scroll the entire page.
+   913→  [#1617](https://github.com/rust-lang/mdBook/pull/1617)
+   914→- The buttons on code blocks are now only shown when the mouse cursor hovers
+   915→  over them (or tapped on mobile). There is also some extra spacing to reduce
+   916→  the overlap with the code.
+   917→  [#1806](https://github.com/rust-lang/mdBook/pull/1806)
+   918→- The first chapter always generates an `index.html` file. Previously it would
+   919→  only generate the index file for prefix chapters.
+   920→  [#1829](https://github.com/rust-lang/mdBook/pull/1829)
+   922→### Fixed
+   923→- `mdbook serve --open` now properly handles the case if the first chapter is a draft.
+   924→  [#1714](https://github.com/rust-lang/mdBook/pull/1714)
+   925→  [#1830](https://github.com/rust-lang/mdBook/pull/1830)
+   926→- Very long words (over 80 characters) are no longer indexed to avoid a stack overflow.
+   927→  [#1833](https://github.com/rust-lang/mdBook/pull/1833)
+   929→## mdBook 0.4.18
+   930→[981b79b...ae275ad](https://github.com/rust-lang/mdBook/compare/981b79b...ae275ad)
+   932→### Fixed
+   933→- Fixed rendering of SUMMARY links that contain markdown escapes or other
+   934→  markdown elements.
+   935→  [#1785](https://github.com/rust-lang/mdBook/pull/1785)
+   937→## mdBook 0.4.17
+   938→[a5fddfa...981b79b](https://github.com/rust-lang/mdBook/compare/a5fddfa...981b79b)
+   940→### Fixed
+   941→- Fixed parsing of `output.html.print` configuration table.
+   942→  [#1775](https://github.com/rust-lang/mdBook/pull/1775)
+   944→## mdBook 0.4.16
+   945→[68a5c09...a5fddfa](https://github.com/rust-lang/mdBook/compare/68a5c09...a5fddfa)
+   947→### Added
+   948→- Added `output.html.print.page-break` config option to control whether or not
+   949→  there is a page break between chapters in the print output.
+   950→  [#1728](https://github.com/rust-lang/mdBook/pull/1728)
+   951→- Added `output.html.playground.runnable` config option to globally disable
+   952→  the run button in code blocks.
+   953→  [#1546](https://github.com/rust-lang/mdBook/pull/1546)
+   955→### Changed
+   956→- The `mdbook serve` live reload websocket now uses the protocol, host, and
+   957→  port of the current page, allowing access through a proxy.
+   958→  [#1771](https://github.com/rust-lang/mdBook/pull/1771)
+   959→- The 404 not-found page now includes the books title in the HTML title tag.
+   960→  [#1693](https://github.com/rust-lang/mdBook/pull/1693)
+   961→- Migrated to clap 3.0 which handles CLI option parsing.
+   962→  [#1731](https://github.com/rust-lang/mdBook/pull/1731)
+   964→### Fixed
+   965→- Minor fixes to the markdown parser.
+   966→  [#1729](https://github.com/rust-lang/mdBook/pull/1729)
+   967→- Fixed incorrect parsing in `SUMMARY.md` when it didn't start with a title.
+   968→  [#1744](https://github.com/rust-lang/mdBook/pull/1744)
+   969→- Fixed duplicate anchor IDs for links in search results.
+   970→  [#1749](https://github.com/rust-lang/mdBook/pull/1749)
+   972→## mdBook 0.4.15
+   973→[5eb7d46...68a5c09](https://github.com/rust-lang/mdBook/compare/5eb7d46...68a5c09)
+   975→### Changed
+   976→- Major update to expand the documentation located at <https://rust-lang.github.io/mdBook/>.
+   977→  [#1709](https://github.com/rust-lang/mdBook/pull/1709)
+   978→  [#1710](https://github.com/rust-lang/mdBook/pull/1710)
+   979→- Updated the markdown parser with various fixes for common-mark compliance.
+   980→  [#1712](https://github.com/rust-lang/mdBook/pull/1712)
+   982→## mdBook 0.4.14
+   983→[ffa8284...c9b6be8](https://github.com/rust-lang/mdBook/compare/ffa8284...c9b6be8)
+   985→### Added
+   986→- The 2021 Rust edition option has been stabilized.
+   987→  [#1642](https://github.com/rust-lang/mdBook/pull/1642)
+   989→### Changed
+   990→- Header anchors no longer include any HTML tags. Previously only a small
+   991→  subset were excluded.
+   992→  [#1683](https://github.com/rust-lang/mdBook/pull/1683)
+   993→- Deprecated the google-analytics option. Books using this option should place
+   994→  the appropriate code in the `theme/head.hbs` file instead.
+   995→  [#1675](https://github.com/rust-lang/mdBook/pull/1675)
+   997→### Fixed
+   998→- Updated the markdown parser which brings in a few small fixes and removes
+   999→  the custom smart quote handling.
+  1000→  [#1668](https://github.com/rust-lang/mdBook/pull/1668)
+  1001→- Fixed iOS Safari enlarging text when going into landscape mode.
+  1002→  [#1685](https://github.com/rust-lang/mdBook/pull/1685)
+  1004→## mdBook 0.4.13
+  1005→[e6629cd...f55028b](https://github.com/rust-lang/mdBook/compare/e6629cd...f55028b)
+  1007→### Added
+  1008→
+  1009→- Added the ability to specify the preprocessor order.
+  1010→  [#1607](https://github.com/rust-lang/mdBook/pull/1607)
+  1012→### Fixed
+  1013→
+  1014→- Include chapters with no headers in the search index
+  1015→  [#1637](https://github.com/rust-lang/mdBook/pull/1637)
+  1016→- Switched to the `opener` crate for opening a web browser, which should fix
+  1017→  some issues with blocking.
+  1018→  [#1656](https://github.com/rust-lang/mdBook/pull/1656)
+  1019→- Fixed clicking the border of the theme switcher breaking the theme selection.
+  1020→  [#1651](https://github.com/rust-lang/mdBook/pull/1651)
+  1022→## mdBook 0.4.12
+  1023→[14add9c...8b4e488](https://github.com/rust-lang/mdBook/compare/14add9c...8b4e488)
+  1025→### Changed
+  1026→- Reverted the change to update to highlight.js 11, as it broke hidden code lines.
+  1027→  [#1597](https://github.com/rust-lang/mdBook/pull/1621)
+  1029→## mdBook 0.4.11
+  1030→[e440094...2cf00d0](https://github.com/rust-lang/mdBook/compare/e440094...2cf00d0)
+  1032→### Added
+  1033→- Added support for Rust 2021 edition.
+  1034→  [#1596](https://github.com/rust-lang/mdBook/pull/1596)
+  1035→- Added `mdbook completions` subcommand which provides shell completions.
+  1036→  [#1425](https://github.com/rust-lang/mdBook/pull/1425)
+  1037→- Added `--title` and `--ignore` flags to `mdbook init` to avoid the
+  1038→  interactive input.
+  1039→  [#1559](https://github.com/rust-lang/mdBook/pull/1559)
+  1041→### Changed
+  1042→- If running a Rust example does not have any output, it now displays the text
+  1043→  "No output" instead of not showing anything.
+  1044→  [#1599](https://github.com/rust-lang/mdBook/pull/1599)
+  1045→- Code block language tags can now be separated by space or tab (along with
+  1046→  commas) to match the behavior of other sites like GitHub and rustdoc.
+  1047→  [#1469](https://github.com/rust-lang/mdBook/pull/1469)
+  1048→- Updated `warp` (the web server) to the latest version.
+  1049→  This also updates the minimum supported Rust version to 1.46.
+  1050→  [#1612](https://github.com/rust-lang/mdBook/pull/1612)
+  1051→- Updated to highlight.js 11. This has various highlighting improvements.
+  1052→  [#1597](https://github.com/rust-lang/mdBook/pull/1597)
+  1054→### Fixed
+  1055→- Inline code blocks inside a header are no longer highlighted when
+  1056→  `output.html.playground.editable` is `true`.
+  1057→  [#1613](https://github.com/rust-lang/mdBook/pull/1613)
+  1059→## mdBook 0.4.10
+  1060→[2f7293a...dc2062a](https://github.com/rust-lang/mdBook/compare/2f7293a...dc2062a)
+  1062→### Changed
+  1063→- Reverted breaking change in 0.4.9 that removed the `__non_exhaustive` marker
+  1064→  on the `Book` struct.
+  1065→  [#1572](https://github.com/rust-lang/mdBook/pull/1572)
+  1066→- Updated handlebars to 4.0.
+  1067→  [#1550](https://github.com/rust-lang/mdBook/pull/1550)
+  1068→- Removed the `chapter_begin` id on the print page's chapter separators.
+  1069→  [#1541](https://github.com/rust-lang/mdBook/pull/1541)
+  1071→## mdBook 0.4.9
+  1072→[7e01cf9...d325c60](https://github.com/rust-lang/mdBook/compare/7e01cf9...d325c60)
+  1074→### Changed
+  1075→- Updated all dependencies and raised the minimum Rust version to 1.42.
+  1076→  [#1528](https://github.com/rust-lang/mdBook/pull/1528)
+  1077→- Added more detail to error message when a preprocessor fails.
+  1078→  [#1526](https://github.com/rust-lang/mdBook/pull/1526)
+  1079→- Set max-width of HTML video tags to 100% to match img tags.
+  1080→  [#1542](https://github.com/rust-lang/mdBook/pull/1542)
+  1082→### Fixed
+  1083→- Type errors when parsing `book.toml` are no longer ignored.
+  1084→  [#1539](https://github.com/rust-lang/mdBook/pull/1539)
+  1085→- Better handling if `mdbook serve` fails to start the http server.
+  1086→  [#1555](https://github.com/rust-lang/mdBook/pull/1555)
+  1087→- Fixed the path for `edit-url-template` if the book used a source directory
+  1088→  other than `src`.
+  1089→  [#1554](https://github.com/rust-lang/mdBook/pull/1554)
+  1091→## mdBook 0.4.8
+  1092→[fcceee4...b592b10](https://github.com/rust-lang/mdBook/compare/fcceee4...b592b10)
+  1094→### Added
+  1095→- Added the option `output.html.edit-url-template` which can be a URL which is
+  1096→  linked on each page to direct the user to a site (such as GitHub) where the
+  1097→  user can directly suggest an edit for the page they are currently reading.
+  1098→  [#1506](https://github.com/rust-lang/mdBook/pull/1506)
+  1100→### Changed
+  1101→- Printed output now includes a page break between chapters.
+  1102→  [#1485](https://github.com/rust-lang/mdBook/pull/1485)
+  1104→### Fixed
+  1105→- HTML, such as HTML comments, is now ignored if it appears above the title line
+  1106→  in `SUMMARY.md`.
+  1107→  [#1437](https://github.com/rust-lang/mdBook/pull/1437)
+  1109→## mdBook 0.4.7
+  1110→[9a9eb01...c83bbd6](https://github.com/rust-lang/mdBook/compare/9a9eb01...c83bbd6)
+  1112→### Changed
+  1113→- Updated shlex parser to fix a minor parsing issue (used by the
+  1114→  preprocessor/backend custom command config).
+  1115→  [#1471](https://github.com/rust-lang/mdBook/pull/1471)
+  1116→- Enhanced text contrast of `light` theme to improve accessibility.
+  1117→  [#1470](https://github.com/rust-lang/mdBook/pull/1470)
+  1119→### Fixed
+  1120→- Fixed some issues with fragment scrolling and linking.
+  1121→  [#1463](https://github.com/rust-lang/mdBook/pull/1463)
+  1123→## mdBook 0.4.6
+  1124→[eaa6914...1a0c296](https://github.com/rust-lang/mdBook/compare/eaa6914...1a0c296)
+  1126→### Changed
+  1127→- The chapter name is now included in the search breadcrumbs.
+  1128→  [#1389](https://github.com/rust-lang/mdBook/pull/1389)
+  1129→- Pressing Escape will remove the `?highlight` argument from the URL.
+  1130→  [#1427](https://github.com/rust-lang/mdBook/pull/1427)
+  1131→- `mdbook init --theme` will now place the theme in the root of the book
+  1132→  directory instead of in the `src` directory.
+  1133→  [#1432](https://github.com/rust-lang/mdBook/pull/1432)
+  1134→- A custom renderer that sets the `command` to a relative path now interprets
+  1135→  the relative path relative to the book root. Previously it was inconsistent
+  1136→  based on the platform (either relative to the current directory, or relative
+  1137→  to the renderer output directory). Paths relative to the output directory
+  1138→  are still supported with a deprecation warning.
+  1139→  [#1418](https://github.com/rust-lang/mdBook/pull/1418)
+  1140→- The `theme` directory in the config is now interpreted as relative to the
+  1141→  book root, instead of the current directory.
+  1142→  [#1405](https://github.com/rust-lang/mdBook/pull/1405)
+  1143→- Handle UTF-8 BOM for chapter sources.
+  1144→  [#1285](https://github.com/rust-lang/mdBook/pull/1285)
+  1145→- Removed extra whitespace added to `{{#playground}}` snippets.
+  1146→  [#1375](https://github.com/rust-lang/mdBook/pull/1375)
+  1148→### Fixed
+  1149→- Clicking on a search result with multiple search words will now correctly
+  1150→  highlight all of the words.
+  1151→  [#1426](https://github.com/rust-lang/mdBook/pull/1426)
+  1152→- Properly handle `<` and `>` characters in the table of contents.
+  1153→  [#1376](https://github.com/rust-lang/mdBook/pull/1376)
+  1154→- Fixed to properly serialize the `build` table in the config, which prevented
+  1155→  setting it in the API.
+  1156→  [#1378](https://github.com/rust-lang/mdBook/pull/1378)
+  1158→## mdBook 0.4.5
+  1159→[eaa6914...f66df09](https://github.com/rust-lang/mdBook/compare/eaa6914...f66df09)
+  1161→### Fixed
+  1162→
+  1163→- Fixed XSS in the search page.
+  1164→  [CVE-2020-26297](https://groups.google.com/g/rustlang-security-announcements/c/3-sO6of29O0)
+  1165→  [648c9ae](https://github.com/rust-lang/mdBook/commit/648c9ae772bec83f0a5954d17b4287d5bb1d6606)
+  1167→## mdBook 0.4.4
+  1168→[4df9ec9...01836ba](https://github.com/rust-lang/mdBook/compare/4df9ec9...01836ba)
+  1170→### Added
+  1171→- Added the `output.html.print.enable` configuration value to disable the
+  1172→  "print" page.
+  1173→  [#1169](https://github.com/rust-lang/mdBook/pull/1169)
+  1174→- Added a list of supported languages for syntax-highlighting to the
+  1175→  documentation.
+  1176→  [#1345](https://github.com/rust-lang/mdBook/pull/1345)
+  1178→### Fixed
+  1179→- Now supports symbolic links for files in the `src` directory.
+  1180→  [#1323](https://github.com/rust-lang/mdBook/pull/1323)
+  1182→## mdBook 0.4.3
+  1183→[9278b83...4df9ec9](https://github.com/rust-lang/mdBook/compare/9278b83...4df9ec9)
+  1185→### Added
+  1186→- Added `output.html.cname` option to emit a `CNAME` file which is used by
+  1187→  GitHub Pages to know which domain is being used.
+  1188→  [#1311](https://github.com/rust-lang/mdBook/pull/1311)
+  1190→### Changed
+  1191→- `mdbook test` no longer stops on the first test failure, but instead will
+  1192→  run all the tests.
+  1193→  [#1313](https://github.com/rust-lang/mdBook/pull/1313)
+  1194→- Removed the `local` font source for Source Code Pro, as the locally
+  1195→  installed font may not render properly on FireFox on macOS.
+  1196→  [#1307](https://github.com/rust-lang/mdBook/pull/1307)
+  1198→### Fixed
+  1199→- Added newline to end of `.nojekyll` file.
+  1200→  [#1310](https://github.com/rust-lang/mdBook/pull/1310)
+  1201→- Fixed missing space before draft chapter titles.
+  1202→  [#1309](https://github.com/rust-lang/mdBook/pull/1309)
+  1204→## mdBook 0.4.2
+  1205→[649f355...9278b83](https://github.com/rust-lang/mdBook/compare/649f355...9278b83)
+  1207→### Changed
+  1208→- The "show hidden lines" icon has changed from the "expand" icon to an "eye".
+  1209→  [#1281](https://github.com/rust-lang/mdBook/pull/1281)
+  1210→- Updated highlight.js. This adds several languages: c, c-like (effectively
+  1211→  cpp), csharp (replaces cs), kotlin, less, lua, php-template, plaintext,
+  1212→  python-repl, r, scss, typescript.
+  1213→  [#1277](https://github.com/rust-lang/mdBook/pull/1277)
+  1215→### Fixed
+  1216→- Fixed SUMMARY links that contained newlines.
+  1217→  [#1291](https://github.com/rust-lang/mdBook/pull/1291)
+  1218→- Fixed SUMMARY links that contain `%20` spaces.
+  1219→  [#1293](https://github.com/rust-lang/mdBook/pull/1293)
+  1220→- Fixed favicon so that if only the png or svg is overridden, the other is not
+  1221→  automatically included in the `<link>` tag.
+  1222→  [#1272](https://github.com/rust-lang/mdBook/pull/1272)
+  1224→## mdBook 0.4.1
+  1225→[d4df7e7...649f355](https://github.com/rust-lang/mdBook/compare/d4df7e7...649f355)
+  1227→### Changed
+  1228→- Removed several outdated dev-dependencies.
+  1229→  [#1267](https://github.com/rust-lang/mdBook/pull/1267)
+  1231→### Fixed
+  1232→- Fixed sidebar scrolling if the book includes part titles.
+  1233→  [#1265](https://github.com/rust-lang/mdBook/pull/1265)
+  1234→- Don't include the default favicon if only one of the PNG or SVG is overridden.
+  1235→  [#1266](https://github.com/rust-lang/mdBook/pull/1266)
+  1237→## mdBook 0.4.0
+  1238→[99ecd4f...d4df7e7](https://github.com/rust-lang/mdBook/compare/99ecd4f...d4df7e7)
+  1240→### Breaking Changes
+  1241→- Several of the changes in the release have altered the public API of the
+  1242→  mdbook library.
+  1243→- Many dependencies have been updated or replaced.
+  1244→  This also removes the `--websocket-hostname` and `--websocket-port` from
+  1245→  the `serve` command.
+  1246→  [#1211](https://github.com/rust-lang/mdBook/pull/1211)
+  1247→- A new "404" page is now automatically rendered. This requires knowledge of
+  1248→  the base URL of your site to work properly. If you decide to use this as
+  1249→  your 404 page, you should set the `site-url` setting in the book
+  1250→  configuration so mdbook can generate the links correctly. Alternatively you
+  1251→  can disable the 404 page generation, or set up your own 404 handling in your
+  1252→  web server.
+  1253→  [#1221](https://github.com/rust-lang/mdBook/pull/1221)
+  1254→- The `debug` and `output` features have been removed as they were unused.
+  1255→  [#1211](https://github.com/rust-lang/mdBook/pull/1211)
+  1256→- If you are using customized themes, you may want to consider setting the
+  1257→  `preferred-dark-theme` config setting, as it now defaults to "navy".
+  1258→  [#1199](https://github.com/rust-lang/mdBook/pull/1199)
+  1259→- "Playpen" has been renamed to "playground". This is generally backwards
+  1260→  compatible for users, but `{{#playpen}}` will now display warnings. This may
+  1261→  impact books that have modified the "playpen" elements in the theme.
+  1262→  [#1241](https://github.com/rust-lang/mdBook/pull/1241)
+  1263→- If a renderer is not installed, it is now treated as an error. If you want
+  1264→  the old behavior of ignoring missing renderers, set the `optional` setting
+  1265→  for that renderer.
+  1266→  [#1122](https://github.com/rust-lang/mdBook/pull/1122)
+  1267→- If you have a custom favicon, you may need to look into adding an SVG
+  1268→  version, otherwise the default SVG icon will be displayed.
+  1269→  [#1230](https://github.com/rust-lang/mdBook/pull/1230)
+  1271→### Added
+  1272→- Added a new `[rust]` configuration section to `book.toml`, which allows
+  1273→  setting the default edition with `edition = "2018"`.
+  1274→  [#1163](https://github.com/rust-lang/mdBook/pull/1163)
+  1275→- Renderers can now be marked as `optional`, so that they will be ignored if
+  1276→  the renderer is not installed.
+  1277→  [#1122](https://github.com/rust-lang/mdBook/pull/1122)
+  1278→- Added `head.hbs` to allow adding content to the `<head>` section in HTML.
+  1279→  [#1206](https://github.com/rust-lang/mdBook/pull/1206)
+  1280→- Added "draft chapters". These are chapters listed without a link to indicate
+  1281→  content yet to be written.
+  1282→  [#1153](https://github.com/rust-lang/mdBook/pull/1153)
+  1283→- Added "parts" to split a book into different sections. Headers can be added
+  1284→  to `SUMMARY.md` to signify different sections.
+  1285→  [#1171](https://github.com/rust-lang/mdBook/pull/1171)
+  1286→- Added generation of a "404" page for handling missing pages and broken links.
+  1287→  [#1221](https://github.com/rust-lang/mdBook/pull/1221)
+  1288→- Added configuration section for specifying URL redirects.
+  1289→  [#1237](https://github.com/rust-lang/mdBook/pull/1237)
+  1290→- Added an SVG favicon that works with light and dark colors schemes.
+  1291→  [#1230](https://github.com/rust-lang/mdBook/pull/1230)
+  1293→### Changed
+  1294→- Changed default Rust attribute of `allow(unused_variables)` to `allow(unused)`.
+  1295→  [#1195](https://github.com/rust-lang/mdBook/pull/1195)
+  1296→- Fonts are now served locally instead of from the Google Fonts CDN. The
+  1297→  `copy-fonts` option was added to disable this if you want to supply your own
+  1298→  fonts.
+  1299→  [#1188](https://github.com/rust-lang/mdBook/pull/1188)
+  1300→- Switched the built-in webserver for the `serve` command to a new
+  1301→  implementation. This results in some internal differences in how websockets
+  1302→  are handled, which removes the separate websocket options. This should also
+  1303→  make it easier to serve multiple books at once.
+  1304→  [#1211](https://github.com/rust-lang/mdBook/pull/1211)
+  1305→- The default dark theme is now "navy".
+  1306→  [#1199](https://github.com/rust-lang/mdBook/pull/1199)
+  1307→- "Playpen" has been renamed to "playground", matching the actual name of the
+  1308→  service which was renamed many years ago.
+  1309→  [#1241](https://github.com/rust-lang/mdBook/pull/1241)
+  1311→### Fixed
+  1312→- Links with the `+` symbol should now work.
+  1313→  [#1208](https://github.com/rust-lang/mdBook/pull/1208)
+  1314→- The `MDBOOK_BOOK` environment variable now correctly allows overriding the
+  1315→  entire book configuration.
+  1316→  [#1207](https://github.com/rust-lang/mdBook/pull/1207)
+  1317→- The sidebar can no longer be dragged outside of the window.
+  1318→  [#1229](https://github.com/rust-lang/mdBook/pull/1229)
+  1319→- Hide the Rust Playground "play" button for `no_run` code samples.
+  1320→  [#1249](https://github.com/rust-lang/mdBook/pull/1249)
+  1321→- Fixed the `--dest-dir` command-line option for the `serve` and `watch`
+  1322→  commands.
+  1323→  [#1228](https://github.com/rust-lang/mdBook/pull/1228)
+  1324→- Hotkey handlers are now disabled in `text` input fields (for example, typing
+  1325→  `S` in a custom text input field).
+  1326→  [#1244](https://github.com/rust-lang/mdBook/pull/1244)
+  1328→## mdBook 0.3.7
+  1329→[88684d8...99ecd4f](https://github.com/rust-lang/mdBook/compare/88684d8...99ecd4f)
+  1331→### Changed
+  1332→- Code spans in headers are no longer highlighted as code.
+  1333→  [#1162](https://github.com/rust-lang/mdBook/pull/1162)
+  1334→- The sidebar will now scroll the activate page to the middle instead of the top.
+  1335→  [#1161](https://github.com/rust-lang/mdBook/pull/1161)
+  1336→- Reverted change to reject build output within the `src` directory, and
+  1337→  instead add a check that prevents infinite copies.
+  1338→  [#1181](https://github.com/rust-lang/mdBook/pull/1181)
+  1339→  [#1026](https://github.com/rust-lang/mdBook/pull/1026)
+  1341→### Fixed
+  1342→- Fixed sidebar line-height jumping for collapsed chapters.
+  1343→  [#1182](https://github.com/rust-lang/mdBook/pull/1182)
+  1344→- Fixed theme selector focus.
+  1345→  [#1170](https://github.com/rust-lang/mdBook/pull/1170)
+  1347→## mdBook 0.3.6
+  1348→[efdb832...88684d8](https://github.com/rust-lang/mdBook/compare/efdb832...88684d8)
+  1350→### Added
+  1351→- `MDBook::execute_build_process` is now publicly accessible in the API so
+  1352→  that plugins can more easily initiate the build process.
+  1353→  [#1099](https://github.com/rust-lang/mdBook/pull/1099)
+  1355→### Changed
+  1356→- Use a different color for Ayu theme's highlighting for Rust attributes (uses
+  1357→  a bright color instead of the comment color).
+  1358→  [#1133](https://github.com/rust-lang/mdBook/pull/1133)
+  1359→- Adjusted spacing of sidebar entries.
+  1360→  [#1137](https://github.com/rust-lang/mdBook/pull/1137)
+  1361→- Slightly adjusted line-height of `<p>`, `<ul>`, and `<ol>`.
+  1362→  [#1136](https://github.com/rust-lang/mdBook/pull/1136)
+  1363→- Handlebars updated to 3.0.
+  1364→  [#1130](https://github.com/rust-lang/mdBook/pull/1130)
+  1366→### Fixed
+  1367→- Fix an issue with sidebar scroll position on reload.
+  1368→  [#1108](https://github.com/rust-lang/mdBook/pull/1108)
+  1369→- `mdbook serve` will retain the current scroll position when the page is reloaded.
+  1370→  [#1097](https://github.com/rust-lang/mdBook/pull/1097)
+  1371→- Fixed the page name if the book didn't have a title to not be prefixed with ` - `.
+  1372→  [#1145](https://github.com/rust-lang/mdBook/pull/1145)
+  1373→- HTML attributes `rel=next` and `rel=previous` are now supported in "wide"
+  1374→  mode (previously they were only set in narrow mode).
+  1375→  [#1150](https://github.com/rust-lang/mdBook/pull/1150)
+  1376→- Prevent recursive copies when the destination directory is contained in the
+  1377→  source directory.
+  1378→  [#1135](https://github.com/rust-lang/mdBook/pull/1135)
+  1379→- Adjusted the menu bar animation to not immediately obscure the top content.
+  1380→  [#989](https://github.com/rust-lang/mdBook/pull/989)
+  1381→- Fix for comments in SUMMARY.md that appear between items.
+  1382→  [#1167](https://github.com/rust-lang/mdBook/pull/1167)
+  1384→## mdBook 0.3.5
+  1385→[6e0d0fa...efdb832](https://github.com/rust-lang/mdBook/compare/6e0d0fa...efdb832)
+  1387→### Changed
+  1388→- The `default-theme` config setting is now case-insensitive.
+  1389→  [#1079](https://github.com/rust-lang/mdBook/pull/1079)
+  1391→### Fixed
+  1392→- Fixed `#` hidden Rust code lines not rendering properly.
+  1393→  [#1088](https://github.com/rust-lang/mdBook/pull/1088)
+  1394→- Updated pulldown-cmark to 0.6.1, fixing several issues.
+  1395→  [#1021](https://github.com/rust-lang/mdBook/pull/1021)
+  1397→## mdBook 0.3.4
+  1398→[e5f77aa...6e0d0fa](https://github.com/rust-lang/mdBook/compare/e5f77aa...6e0d0fa)
+  1400→### Changed
+  1401→- Switch to relative `rem` font sizes from `px`.
+  1402→  [#894](https://github.com/rust-lang/mdBook/pull/894)
+  1403→- Migrated repository to https://github.com/rust-lang/mdBook/
+  1404→  [#1083](https://github.com/rust-lang/mdBook/pull/1083)
+  1406→## mdBook 0.3.3
+  1407→[2b649fe...e5f77aa](https://github.com/rust-lang/mdBook/compare/2b649fe...e5f77aa)
+  1409→### Changed
+  1410→- Improvements to the automatic dark theme selection.
+  1411→  [#1069](https://github.com/rust-lang/mdBook/pull/1069)
+  1412→- Fragment links now prevent scrolling the header behind the menu bar.
+  1413→  [#1077](https://github.com/rust-lang/mdBook/pull/1077)
+  1415→### Fixed
+  1416→- Fixed error when building a book that has a spacer immediately after the
+  1417→  first chapter.
+  1418→  [#1075](https://github.com/rust-lang/mdBook/pull/1075)
+  1420→## mdBook 0.3.2
+  1421→[9cd47eb...2b649fe](https://github.com/rust-lang/mdBook/compare/9cd47eb...2b649fe)
+  1423→### Added
+  1424→- Added a markdown renderer, which is off by default. This may be useful for
+  1425→  debugging preprocessors.
+  1426→  [#1018](https://github.com/rust-lang/mdBook/pull/1018)
+  1427→- Code samples may now include line numbers with the
+  1428→  `output.html.playpen.line-numbers` configuration value.
+  1429→  [#1035](https://github.com/rust-lang/mdBook/pull/1035)
+  1430→- The `watch` and `serve` commands will now ignore files listed in
+  1431→  `.gitignore`.
+  1432→  [#1044](https://github.com/rust-lang/mdBook/pull/1044)
+  1433→- Added automatic dark-theme detection based on the CSS `prefers-color-scheme`
+  1434→  feature. This may be enabled by setting `output.html.preferred-dark-theme`
+  1435→  to your preferred dark theme.
+  1436→  [#1037](https://github.com/rust-lang/mdBook/pull/1037)
+  1437→- Added `rustdoc_include` preprocessor. This makes it easier to include
+  1438→  portions of an external Rust source file. The rest of the file is hidden,
+  1439→  but the user may expand it to see the entire file, and will continue to work
+  1440→  with `mdbook test`.
+  1441→  [#1003](https://github.com/rust-lang/mdBook/pull/1003)
+  1442→- Added Ctrl-Enter shortcut to the playpen editor to automatically run the
+  1443→  sample.
+  1444→  [#1066](https://github.com/rust-lang/mdBook/pull/1066)
+  1445→- Added `output.html.playpen.copyable` configuration option to disable
+  1446→  the copy button.
+  1447→  [#1050](https://github.com/rust-lang/mdBook/pull/1050)
+  1448→- Added ability to dynamically expand and fold sections within the sidebar.
+  1449→  See the `output.html.fold` configuration to enable this feature.
+  1450→  [#1027](https://github.com/rust-lang/mdBook/pull/1027)
+  1452→### Changed
+  1453→- Use standard `scrollbar-color` CSS along with webkit extension
+  1454→  [#816](https://github.com/rust-lang/mdBook/pull/816)
+  1455→- The renderer build directory is no longer deleted before the renderer is
+  1456→  run. This allows a backend to cache results between runs.
+  1457→  [#985](https://github.com/rust-lang/mdBook/pull/985)
+  1458→- Next/prev links now highlight on hover to indicate it is clickable.
+  1459→  [#994](https://github.com/rust-lang/mdBook/pull/994)
+  1460→- Increase padding of table headers.
+  1461→  [#824](https://github.com/rust-lang/mdBook/pull/824)
+  1462→- Errors in `[output.html]` config are no longer ignored.
+  1463→  [#1033](https://github.com/rust-lang/mdBook/pull/1033)
+  1464→- Updated highlight.js for syntax highlighting updates (primarily to add
+  1465→  async/await to Rust highlighting).
+  1466→  [#1041](https://github.com/rust-lang/mdBook/pull/1041)
+  1467→- Raised minimum supported rust version to 1.35.
+  1468→  [#1003](https://github.com/rust-lang/mdBook/pull/1003)
+  1469→- Hidden code lines are no longer dynamically removed via JavaScript, but
+  1470→  instead managed with CSS.
+  1471→  [#846](https://github.com/rust-lang/mdBook/pull/846)
+  1472→  [#1065](https://github.com/rust-lang/mdBook/pull/1065)
+  1473→- Changed the default font set for the ACE editor, giving preference to
+  1474→  "Source Code Pro".
+  1475→  [#1062](https://github.com/rust-lang/mdBook/pull/1062)
+  1476→- Windows 32-bit releases are no longer published.
+  1477→  [#1071](https://github.com/rust-lang/mdBook/pull/1071)
+  1479→### Fixed
+  1480→- Fixed sidebar auto-scrolling.
+  1481→  [#1052](https://github.com/rust-lang/mdBook/pull/1052)
+  1482→- Fixed error message when running `clean` multiple times.
+  1483→  [#1055](https://github.com/rust-lang/mdBook/pull/1055)
+  1484→- Actually fix the "next" link on index.html. The previous fix didn't work.
+  1485→  [#1005](https://github.com/rust-lang/mdBook/pull/1005)
+  1486→- Stop using `inline-block` for `inline code`, fixing selection highlighting
+  1487→  and some rendering issues.
+  1488→  [#1058](https://github.com/rust-lang/mdBook/pull/1058)
+  1489→- Fix header auto-hide on browsers with momentum scrolling that allows
+  1490→  negative `scrollTop`.
+  1491→  [#1070](https://github.com/rust-lang/mdBook/pull/1070)
+  1493→## mdBook 0.3.1
+  1494→[69a08ef...9cd47eb](https://github.com/rust-lang/mdBook/compare/69a08ef...9cd47eb)
+  1496→### Added
+  1497→- 🔥 Added ability to include files using anchor points instead of line numbers.
+  1498→  [#851](https://github.com/rust-lang/mdBook/pull/851)
+  1499→- Added `language` configuration value to set the language of the book, which
+  1500→  will affect things like the `<html lang="en">` tag.
+  1501→  [#941](https://github.com/rust-lang/mdBook/pull/941)
+  1503→### Changed
+  1504→- Updated to handlebars 2.0.
+  1505→  [#977](https://github.com/rust-lang/mdBook/pull/977)
+  1507→### Fixed
+  1508→- Fixed memory leak warning.
+  1509→  [#967](https://github.com/rust-lang/mdBook/pull/967)
+  1510→- Fix more print.html links.
+  1511→  [#963](https://github.com/rust-lang/mdBook/pull/963)
+  1512→- Fixed crash on some unicode input.
+  1513→  [#978](https://github.com/rust-lang/mdBook/pull/978)
+  1515→## mdBook 0.3.0
+  1516→[6cbc41d...69a08ef](https://github.com/rust-lang/mdBook/compare/6cbc41d...69a08ef)
+  1518→### Added
+  1519→- Added ability to resize the sidebar.
+  1520→  [#849](https://github.com/rust-lang/mdBook/pull/849)
+  1521→- Added `load_with_config_and_summary` function to `MDBook` to be able to
+  1522→  build a book with a custom `Summary`.
+  1523→  [#883](https://github.com/rust-lang/mdBook/pull/883)
+  1524→- Set `noindex` on `print.html` page to prevent robots from indexing it.
+  1525→  [#844](https://github.com/rust-lang/mdBook/pull/844)
+  1526→- Added support for ~~strikethrough~~ and GitHub-style tasklists.
+  1527→  [#952](https://github.com/rust-lang/mdBook/pull/952)
+  1529→### Changed
+  1530→- Command-line help output is now colored.
+  1531→  [#861](https://github.com/rust-lang/mdBook/pull/861)
+  1532→- The build directory is now deleted before rendering starts, instead of after
+  1533→  if finishes.
+  1534→  [#878](https://github.com/rust-lang/mdBook/pull/878)
+  1535→- Removed dependency on `same-file` crate.
+  1536→  [#903](https://github.com/rust-lang/mdBook/pull/903)
+  1537→- 💥 Renamed `with_preprecessor` to `with_preprocessor`.
+  1538→  [#906](https://github.com/rust-lang/mdBook/pull/906)
+  1539→- Updated ACE editor to 1.4.4, should remove a JavaScript console warning.
+  1540→  [#935](https://github.com/rust-lang/mdBook/pull/935)
+  1541→- Dependencies have been updated.
+  1542→  [#934](https://github.com/rust-lang/mdBook/pull/934)
+  1543→  [#945](https://github.com/rust-lang/mdBook/pull/945)
+  1544→- Highlight.js has been updated. This fixes some TOML highlighting, and adds
+  1545→  Julia support.
+  1546→  [#942](https://github.com/rust-lang/mdBook/pull/942)
+  1547→- 🔥 Updated to pulldown-cmark 0.5. This may have significant changes to the
+  1548→  formatting of existing books, as the newer version has more accurate
+  1549→  interpretation of the CommonMark spec and a large number of bug fixes and
+  1550→  changes.
+  1551→  [#898](https://github.com/rust-lang/mdBook/pull/898)
+  1552→- The `diff` language should now highlight correctly.
+  1553→  [#943](https://github.com/rust-lang/mdBook/pull/943)
+  1554→- Make the blank region of a header not clickable.
+  1555→  [#948](https://github.com/rust-lang/mdBook/pull/948)
+  1556→- Rustdoc tests now use the preprocessed content instead of the raw,
+  1557→  unpreprocessed content.
+  1558→  [#891](https://github.com/rust-lang/mdBook/pull/891)
+  1560→### Fixed
+  1561→- Fixed file change detection so that `mdbook serve` only reloads once when
+  1562→  multiple files are changed at once.
+  1563→  [#870](https://github.com/rust-lang/mdBook/pull/870)
+  1564→- Fixed on-hover color highlighting for links in sidebar.
+  1565→  [#834](https://github.com/rust-lang/mdBook/pull/834)
+  1566→- Fixed loss of focus when clicking the "Copy" button in code blocks.
+  1567→  [#867](https://github.com/rust-lang/mdBook/pull/867)
+  1568→- Fixed incorrectly stripping the path for `additional-js` files.
+  1569→  [#796](https://github.com/rust-lang/mdBook/pull/796)
+  1570→- Fixed color of `code spans` that are links.
+  1571→  [#905](https://github.com/rust-lang/mdBook/pull/905)
+  1572→- Fixed "next" navigation on index.html.
+  1573→  [#916](https://github.com/rust-lang/mdBook/pull/916)
+  1574→- Fixed keyboard chapter navigation for `file` urls.
+  1575→  [#915](https://github.com/rust-lang/mdBook/pull/915)
+  1576→- Fixed bad wrapping for inline code on some browsers.
+  1577→  [#818](https://github.com/rust-lang/mdBook/pull/818)
+  1578→- Properly load an existing `SUMMARY.md` in `mdbook init`.
+  1579→  [#841](https://github.com/rust-lang/mdBook/pull/841)
+  1580→- Fixed some broken links in `print.html`.
+  1581→  [#871](https://github.com/rust-lang/mdBook/pull/871)
+  1582→- The Rust Playground link now supports the 2018 edition.
+  1583→  [#946](https://github.com/rust-lang/mdBook/pull/946)
+  1585→## mdBook 0.2.3 (2018-01-18)
+  1586→[2c20c99...6cbc41d](https://github.com/rust-lang/mdBook/compare/2c20c99...6cbc41d)
+  1588→### Added
+  1589→- Added an optional button to the top of the page which will link to a git
+  1590→  repository. Use the `git-repository-url` and `git-repository-icon` options
+  1591→  in the `[output.html]` section to enable it and set its appearance.
+  1592→  [#802](https://github.com/rust-lang/mdBook/pull/802)
+  1593→- Added a `default-theme` option to the `[output.html]` section.
+  1594→  [#804](https://github.com/rust-lang/mdBook/pull/804)
+  1596→### Changed
+  1597→- 💥 Header ID anchors no longer add an arbitrary `a` character for headers
+  1598→  that start with a non-ascii-alphabetic character.
+  1599→  [#788](https://github.com/rust-lang/mdBook/pull/788)
+  1601→### Fixed
+  1602→- Fix websocket hostname usage
+  1603→  [#865](https://github.com/rust-lang/mdBook/pull/865)
+  1604→- Fixing links in print.html
+  1605→  [#866](https://github.com/rust-lang/mdBook/pull/866)
+  1607→## mdBook 0.2.2 (2018-10-19)
+  1608→[7e2e095...2c20c99](https://github.com/rust-lang/mdBook/compare/7e2e095...2c20c99)
+  1610→### Added
+  1611→- 🎉 Process-based custom preprocessors. See [the
+  1612→  docs](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html)
+  1613→  for more.
+  1614→  [#792](https://github.com/rust-lang/mdBook/pull/792)
+  1639→### Fixed
+  1640→- Fix paths to additional CSS and JavaScript files
+  1641→  [#777](https://github.com/rust-lang/mdBook/pull/777)
+  1642→- Ensure section numbers are correctly incremented after a horizontal
+  1643→  separator
+  1644→  [#790](https://github.com/rust-lang/mdBook/pull/790)
+  1646→## mdBook 0.2.1 (2018-08-22)
+  1647→[91ffca1...7e2e095](https://github.com/rust-lang/mdBook/compare/91ffca1...7e2e095)
+  1649→### Changed
+  1650→- Update to handlebars-rs 1.0
+  1651→  [#761](https://github.com/rust-lang/mdBook/pull/761)
+  1653→### Fixed
+  1654→- Fix table colors, broken by Stylus -> CSS transition
+  1655→  [#765](https://github.com/rust-lang/mdBook/pull/765)
+  1657→## mdBook 0.2.0 (2018-08-02)
+  1658→
+  1659→### Changed
+  1660→- 💥 This release changes how links are handled in mdBook. Previously, relative
+  1661→  links were interpreted relative to the book's root. In `0.2.0`+ links are
+  1662→  relative to the page they are in, and use the `.md` extension. This has [several
+  1663→  advantages](https://github.com/rust-lang/mdBook/pull/603#issue-166701447),
+  1664→  such as making links work in other markdown viewers like GitHub. You will
+  1665→  likely have to change links in your book to accommodate this change. For
+  1666→  example, a book with this layout:
+  1697→### Fixed
+  1698→- Escaped includes (`\{{#include file.rs}}`) will now render correctly.
+  1699→  [f30ce01](https://github.com/rust-lang/mdBook/commit/f30ce0184d71e342141145472bf816419d30a2c5)
+  1700→- `index.html` will now render correctly when the book's first section is
+  1701→  inside a subdirectory.
+  1702→  [#756](https://github.com/rust-lang/mdBook/pull/756)
+CODE_OF_CONDUCT.md
+     1→# The Rust Code of Conduct
+     2→
+     3→The Code of Conduct for this repository [can be found online](https://www.rust-lang.org/conduct.html).
+CONTRIBUTING.md
+     1→# Contributing
+     2→
+     3→Welcome stranger!
+    10→## Issue assignment
+    11→
+    12→**:warning: Important :warning:**
+    19→## Issues to work on
+    20→
+    21→If you are starting out, you might be interested in the
+    22→[E-Easy issues](https://github.com/rust-lang/mdBook/issues?q=is%3Aopen+is%3Aissue+label%3AE-Easy).
+    23→Those are issues that are considered more straightforward for beginners to Rust or the codebase itself.
+    24→These issues can be a good launching pad for more involved issues.
+    25→Easy tasks for a first time contribution include documentation improvements, new tests, examples, updating dependencies, etc.
+    44→## Building mdBook
+    45→
+    46→mdBook builds on stable Rust, if you want to build mdBook from source, here are the steps to follow:
+    59→## Code quality
+    60→
+    61→We love code quality and Rust has some excellent tools to assist you with contributions.
+    63→### Formatting code with rustfmt
+    64→
+    65→Before you make your Pull Request to the project, please run it through the `rustfmt` utility.
+    66→This will ensure we have good quality source code that is better for us all to maintain.
+    87→### Finding issues with clippy
+    88→
+    89→[Clippy](https://doc.rust-lang.org/clippy/) is a code analyser/linter detecting mistakes, and therefore helps to improve your code.
+    90→Like formatting your code with `rustfmt`, running clippy regularly and before your Pull Request will help us maintain awesome code.
+   101→## Change requirements
+   102→
+   103→Please consider the following when making a change:
+   126→## Tests
+   127→
+   128→The main test harness is described in the [testsuite documentation](tests/testsuite/README.md). There are several different commands to run different kinds of tests:
+   153→## Making a pull-request
+   154→
+   155→When you feel comfortable that your changes could be integrated into mdBook, you can create a pull-request on GitHub.
+   156→One of the core maintainers will then approve the changes or request some changes before it gets merged.
+   160→## Browser compatibility and testing
+   161→
+   162→Currently we don't have a strict browser compatibility matrix due to our limited resources.
+   163→We generally strive to keep mdBook compatible with a relatively recent browser on all of the most major platforms.
+   164→That is, supporting Chrome, Safari, Firefox, Edge on Windows, macOS, Linux, iOS, and Android.
+   165→If possible, do your best to avoid breaking older browser releases.
+   190→### Checking changes in `.js` files
+   191→
+   192→The `.js` files source code is checked using [`eslint`](https://eslint.org/). This is a linter (just like `clippy` in Rust)
+   193→for the Javascript language. You can install it with `npm` by running the following command:
+   205→## Updating highlight.js
+   206→
+   207→The following are instructions for updating [highlight.js](https://highlightjs.org/).
+   218→## Publishing new releases
+   219→
+   220→Instructions for mdBook maintainers to publish a new release:
+README.md
+     1→# mdBook
+     2→
+     3→[![CI Status](https://github.com/rust-lang/mdBook/actions/workflows/main.yml/badge.svg)](https://github.com/rust-lang/mdBook/actions/workflows/main.yml)
+     4→[![crates.io](https://img.shields.io/crates/v/mdbook.svg)](https://crates.io/crates/mdbook)
+     5→[![LICENSE](https://img.shields.io/github/license/rust-lang/mdBook.svg)](LICENSE)
+    14→## License
+    15→
+    16→All the code in this repository is released under the ***Mozilla Public License v2.0***, for more information take a look at the [LICENSE] file.
+crates/mdbook-compare/README.md
+     1→# mdbook-compare
+     2→
+     3→This is a simple utility to compare the output of two different versions of mdbook.
+crates/mdbook-compare/src/main.rs
+     6→macro_rules! error {
+    14→fn main() {
+    39→fn clean(path: &Path) {
+    46→fn build(mdbook: &Path, book: &Path) {
+    61→fn process(path: &Path) {
+    78→fn process_html(path: &Path) {
+    88→fn tidy(path: &Path) {
+   105→fn diff(a: &Path, b: &Path) {
+crates/mdbook-core/README.md
+     1→# mdbook-core
+     2→
+     3→[![Documentation](https://img.shields.io/docsrs/mdbook-core)](https://docs.rs/mdbook-core)
+     4→[![crates.io](https://img.shields.io/crates/v/mdbook-core.svg)](https://crates.io/crates/mdbook-core)
+     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+    11→## License
+    12→
+    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+crates/mdbook-core/src/book/tests.rs
+crates/mdbook-core/src/book.rs
+    25→#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+    26→pub struct Book {
+    31→impl Book {
+    32→    /// Create an empty book.
+    33→    pub fn new() -> Self {
+    37→    /// Creates a new book with the given items.
+    38→    pub fn new_with_items(items: Vec<BookItem>) -> Book {
+    42→    /// Get a depth-first iterator over the items in the book.
+    43→    pub fn iter(&self) -> BookItems<'_> {
+    49→    /// A depth-first iterator over each [`Chapter`], skipping draft chapters.
+    50→    pub fn chapters(&self) -> impl Iterator<Item = &Chapter> {
+    57→    /// Recursively apply a closure to each item in the book, allowing you to
+    58→    /// mutate them.
+    59→    ///
+    60→    /// # Note
+    61→    ///
+    62→    /// Unlike the `iter()` method, this requires a closure instead of returning
+    63→    /// an iterator. This is because using iterators can possibly allow you
+    64→    /// to have iterator invalidation errors.
+    65→    pub fn for_each_mut<F>(&mut self, mut func: F)
+    66→    where
+    67→        F: FnMut(&mut BookItem),
+    68→    {
+    72→    /// Recursively apply a closure to each non-draft chapter in the book,
+    73→    /// allowing you to mutate them.
+    74→    pub fn for_each_chapter_mut<F>(&mut self, mut func: F)
+    75→    where
+    76→        F: FnMut(&mut Chapter),
+    77→    {
+    92→    /// Append a `BookItem` to the `Book`.
+    93→    pub fn push_item<I: Into<BookItem>>(&mut self, item: I) -> &mut Self {
+    99→fn for_each_mut<'a, F, I>(func: &mut F, items: I)
+   100→where
+   101→    F: FnMut(&mut BookItem),
+   102→    I: IntoIterator<Item = &'a mut BookItem>,
+   103→{
+   118→#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+   119→pub enum BookItem {
+   128→impl From<Chapter> for BookItem {
+   129→    fn from(other: Chapter) -> BookItem {
+   140→#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+   141→pub struct Chapter {
+   171→impl Chapter {
+   172→    /// Create a new chapter with the provided content.
+   173→    pub fn new<P: Into<PathBuf>>(
+   174→        name: &str,
+   175→        content: String,
+   176→        p: P,
+   177→        parent_names: Vec<String>,
+   178→    ) -> Chapter {
+   190→    /// Create a new draft chapter that is not attached to a source markdown file (and thus
+   191→    /// has no content).
+   192→    pub fn new_draft(name: &str, parent_names: Vec<String>) -> Self {
+   203→    /// Check if the chapter is a draft chapter, meaning it has no path to a source markdown file.
+   204→    pub fn is_draft_chapter(&self) -> bool {
+   209→impl Display for Chapter {
+   210→    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+   219→/// A section number like "1.2.3", basically just a newtype'd `Vec<u32>` with
+   220→/// a pretty `Display` impl.
+   221→#[derive(Debug, PartialEq, Clone, Default, Serialize, Deserialize)]
+   222→pub struct SectionNumber(Vec<u32>);
+   224→impl SectionNumber {
+   225→    /// Creates a new [`SectionNumber`].
+   226→    pub fn new(numbers: impl Into<Vec<u32>>) -> SectionNumber {
+   231→impl Display for SectionNumber {
+   232→    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+   244→impl Deref for SectionNumber {
+   245→    type Target = Vec<u32>;
+   246→    fn deref(&self) -> &Self::Target {
+   251→impl DerefMut for SectionNumber {
+   252→    fn deref_mut(&mut self) -> &mut Self::Target {
+   257→impl FromIterator<u32> for SectionNumber {
+   258→    fn from_iter<I: IntoIterator<Item = u32>>(it: I) -> Self {
+   263→/// A depth-first iterator over the items in a book.
+   264→///
+   265→/// # Note
+   266→///
+   267→/// This struct shouldn't be created directly, instead prefer the
+   268→/// [`Book::iter()`] method.
+   269→pub struct BookItems<'a> {
+   273→impl<'a> Iterator for BookItems<'a> {
+   274→    type Item = &'a BookItem;
+   276→    fn next(&mut self) -> Option<Self::Item> {
+crates/mdbook-core/src/config.rs
+    63→pub struct Config {
+    81→fn is_default<T: Default + PartialEq>(t: &T) -> bool {
+    86→fn toml_is_empty(table: &Value) -> bool {
+    90→impl FromStr for Config {
+    91→    type Err = Error;
+    94→    fn from_str(src: &str) -> Result<Self> {
+    99→impl Default for Config {
+   100→    fn default() -> Config {
+   111→impl Config {
+   113→    pub fn from_disk<P: AsRef<Path>>(config_file: P) -> Result<Config> {
+   150→    pub fn update_from_env(&mut self) -> Result<()> {
+   189→    pub fn get<'de, T: Deserialize<'de>>(&self, name: &str) -> Result<Option<T>> {
+   216→    pub fn contains_key(&self, name: &str) -> bool {
+   228→    pub fn preprocessors<'de, T: Deserialize<'de>>(&self) -> Result<BTreeMap<String, T>> {
+   236→    pub fn outputs<'de, T: Deserialize<'de>>(&self) -> Result<BTreeMap<String, T>> {
+   250→    pub fn html_config(&self) -> Option<HtmlConfig> {
+   274→    pub fn set<S: Serialize, I: AsRef<str>>(&mut self, index: I, value: S) -> Result<()> {
+   308→fn parse_env(key: &str) -> Option<String> {
+   318→pub struct BookConfig {
+   336→fn is_default_src(src: &PathBuf) -> bool {
+   340→impl Default for BookConfig {
+   341→    fn default() -> BookConfig {
+   353→impl BookConfig {
+   356→    pub fn realized_text_direction(&self) -> TextDirection {
+   368→pub enum TextDirection {
+   377→impl TextDirection {
+   379→    pub fn from_lang_code(code: &str) -> Self {
+   394→pub struct BuildConfig {
+   407→impl Default for BuildConfig {
+   408→    fn default() -> BuildConfig {
+   422→pub struct RustConfig {
+   430→pub enum RustEdition {
+   449→pub struct HtmlConfig {
+   523→impl Default for HtmlConfig {
+   524→    fn default() -> HtmlConfig {
+   555→impl HtmlConfig {
+   558→    pub fn theme_dir(&self, root: &Path) -> PathBuf {
+   566→    pub fn get_404_output_file(&self) -> String {
+   578→pub struct Print {
+   585→impl Default for Print {
+   586→    fn default() -> Self {
+   598→pub struct Fold {
+   611→pub struct Playground {
+   625→impl Default for Playground {
+   626→    fn default() -> Playground {
+   641→pub struct Code {
+   650→pub struct Search {
+   685→impl Default for Search {
+   686→    fn default() -> Search {
+   708→pub struct SearchChapterSettings {
+   718→trait Updateable<'de>: Serialize + Deserialize<'de> {
+   719→    fn update_value<S: Serialize>(&mut self, key: &str, value: S) -> Result<()> {
+   729→impl<'de, T> Updateable<'de> for T where T: Serialize + Deserialize<'de> {}
+crates/mdbook-core/src/lib.rs
+     3→/// The current version of `mdbook`.
+     4→///
+     5→/// This is provided as a way for custom preprocessors and renderers to do
+     6→/// compatibility checks.
+     7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
+     9→pub mod book;
+    10→pub mod config;
+    11→pub mod utils;
+    13→/// The error types used in mdbook.
+    14→pub mod errors {
+crates/mdbook-core/src/utils/fs.rs
+    11→pub fn read_to_string<P: AsRef<Path>>(path: P) -> Result<String> {
+    20→pub fn write<P: AsRef<Path>, C: AsRef<[u8]>>(path: P, contents: C) -> Result<()> {
+    31→pub fn create_dir_all(p: impl AsRef<Path>) -> Result<()> {
+    55→pub fn path_to_root<P: Into<PathBuf>>(path: P) -> String {
+    74→pub fn remove_dir_content(dir: &Path) -> Result<()> {
+    93→pub fn copy_files_except_ext(
+    94→    from: &Path,
+    95→    to: &Path,
+    96→    recursive: bool,
+    97→    avoid_dir: Option<&PathBuf>,
+    98→    ext_blacklist: &[&str],
+    99→) -> Result<()> {
+   155→fn copy<P: AsRef<Path>, Q: AsRef<Path>>(from: P, to: Q) -> Result<()> {
+crates/mdbook-core/src/utils/html.rs
+     6→pub fn escape_html_attribute(text: &str) -> Cow<'_, str> {
+    32→pub fn escape_html(text: &str) -> Cow<'_, str> {
+crates/mdbook-core/src/utils/mod.rs
+     7→pub mod fs;
+     8→mod html;
+     9→mod toml_ext;
+    17→macro_rules! static_regex {
+    29→pub fn log_backtrace(e: &Error) {
+crates/mdbook-core/src/utils/toml_ext.rs
+     6→pub(crate) trait TomlExt {
+     8→    fn read(&self, key: &str) -> Option<&Value>;
+    10→    fn insert(&mut self, key: &str, value: Value);
+    13→impl TomlExt for Value {
+    14→    fn read(&self, key: &str) -> Option<&Value> {
+    22→    fn insert(&mut self, key: &str, value: Value) {
+    40→fn split(key: &str) -> Option<(&str, &str)> {
+crates/mdbook-driver/README.md
+     1→# mdbook-driver
+     2→
+     3→[![Documentation](https://img.shields.io/docsrs/mdbook-driver)](https://docs.rs/mdbook-driver)
+     4→[![crates.io](https://img.shields.io/crates/v/mdbook-driver.svg)](https://crates.io/crates/mdbook-driver)
+     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+    11→## License
+    12→
+    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
+    14→pub struct CmdPreprocessor {
+    21→impl CmdPreprocessor {
+    23→    pub fn new(name: String, cmd: String, root: PathBuf, optional: bool) -> CmdPreprocessor {
+    32→    fn write_input_to_child(&self, child: &mut Child, book: &Book, ctx: &PreprocessorContext) {
+    42→    fn write_input<W: Write>(
+    43→        &self,
+    44→        writer: W,
+    45→        book: &Book,
+    46→        ctx: &PreprocessorContext,
+    47→    ) -> Result<()> {
+    52→    pub fn cmd(&self) -> &str {
+    57→impl Preprocessor for CmdPreprocessor {
+    58→    fn name(&self) -> &str {
+    62→    fn run(&self, ctx: &PreprocessorContext, book: Book) -> Result<Book> {
+   115→    fn supports_renderer(&self, renderer: &str) -> Result<bool> {
+crates/mdbook-driver/src/builtin_preprocessors/index.rs
+    12→pub struct IndexPreprocessor;
+    14→impl IndexPreprocessor {
+    16→    pub const NAME: &'static str = "index";
+    19→    pub fn new() -> Self {
+    24→impl Preprocessor for IndexPreprocessor {
+    25→    fn name(&self) -> &str {
+    29→    fn run(&self, ctx: &PreprocessorContext, mut book: Book) -> Result<Book> {
+    50→fn warn_readme_name_conflict<P: AsRef<Path>>(readme_path: P, index_path: P) {
+    70→fn is_readme_file<P: AsRef<Path>>(path: P) -> bool {
+crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
+     6→pub(super) fn take_lines<R: RangeBounds<usize>>(s: &str, range: R) -> String {
+    31→pub(super) fn take_anchored_lines(s: &str, anchor: &str) -> String {
+    63→pub(super) fn take_rustdoc_include_lines<R: RangeBounds<usize>>(s: &str, range: R) -> String {
+    81→pub(super) fn take_rustdoc_include_anchored_lines(s: &str, anchor: &str) -> String {
+crates/mdbook-driver/src/builtin_preprocessors/links.rs
+    15→mod take_lines;
+    17→const ESCAPE_CHAR: char = '\\';
+    18→const MAX_LINK_NESTED_DEPTH: usize = 10;
+    32→pub struct LinkPreprocessor;
+    34→impl LinkPreprocessor {
+    36→    pub const NAME: &'static str = "links";
+    39→    pub fn new() -> Self {
+    44→impl Preprocessor for LinkPreprocessor {
+    45→    fn name(&self) -> &str {
+    49→    fn run(&self, ctx: &PreprocessorContext, mut book: Book) -> Result<Book> {
+    77→fn replace_all<P1, P2>(
+    78→    s: &str,
+    79→    path: P1,
+    80→    source: P2,
+    81→    depth: usize,
+    82→    chapter_title: &mut String,
+    83→) -> String
+    84→where
+    85→    P1: AsRef<Path>,
+    86→    P2: AsRef<Path>,
+    87→{
+   139→enum LinkType<'a> {
+   148→enum RangeOrAnchor {
+   155→enum LineRange {
+   162→impl RangeBounds<usize> for LineRange {
+   163→    fn start_bound(&self) -> Bound<&usize> {
+   172→    fn end_bound(&self) -> Bound<&usize> {
+   182→impl From<Range<usize>> for LineRange {
+   183→    fn from(r: Range<usize>) -> LineRange {
+   188→impl From<RangeFrom<usize>> for LineRange {
+   189→    fn from(r: RangeFrom<usize>) -> LineRange {
+   194→impl From<RangeTo<usize>> for LineRange {
+   195→    fn from(r: RangeTo<usize>) -> LineRange {
+   200→impl From<RangeFull> for LineRange {
+   201→    fn from(r: RangeFull) -> LineRange {
+   206→impl<'a> LinkType<'a> {
+   207→    fn relative_path<P: AsRef<Path>>(self, base: P) -> Option<PathBuf> {
+   218→fn return_relative_path<P: AsRef<Path>>(base: P, relative: P) -> PathBuf {
+   226→fn parse_range_or_anchor(parts: Option<&str>) -> RangeOrAnchor {
+   256→fn parse_include_path(path: &str) -> LinkType<'static> {
+   265→fn parse_rustdoc_include_path(path: &str) -> LinkType<'static> {
+   275→struct Link<'a> {
+   282→impl<'a> Link<'a> {
+   283→    fn from_capture(cap: Captures<'a>) -> Option<Link<'a>> {
+   324→    fn render_with_path<P: AsRef<Path>>(
+   325→        &self,
+   326→        base: P,
+   327→        chapter_title: &mut String,
+   328→    ) -> Result<String> {
+   398→struct LinkIter<'a>(CaptureMatches<'a, 'a>);
+   400→impl<'a> Iterator for LinkIter<'a> {
+   401→    type Item = Link<'a>;
+   402→    fn next(&mut self) -> Option<Link<'a>> {
+   412→fn find_links(contents: &str) -> LinkIter<'_> {
+crates/mdbook-driver/src/builtin_preprocessors/mod.rs
+     7→mod cmd;
+     8→mod index;
+     9→mod links;
+crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
+    10→pub struct MarkdownRenderer;
+    12→impl MarkdownRenderer {
+    14→    pub fn new() -> Self {
+    19→impl Renderer for MarkdownRenderer {
+    20→    fn name(&self) -> &str {
+    24→    fn render(&self, ctx: &RenderContext) -> Result<()> {
+crates/mdbook-driver/src/builtin_renderers/mod.rs
+    13→mod markdown_renderer;
+    20→pub struct CmdRenderer {
+    25→impl CmdRenderer {
+    27→    pub fn new(name: String, cmd: String) -> CmdRenderer {
+    32→impl Renderer for CmdRenderer {
+    33→    fn name(&self) -> &str {
+    37→    fn render(&self, ctx: &RenderContext) -> Result<()> {
+crates/mdbook-driver/src/init.rs
+    11→/// A helper for setting up a new book and its directory structure.
+    12→#[derive(Debug, Clone, PartialEq)]
+    13→pub struct BookBuilder {
+    20→impl BookBuilder {
+    21→    /// Create a new `BookBuilder` which will generate a book in the provided
+    22→    /// root directory.
+    23→    pub fn new<P: Into<PathBuf>>(root: P) -> BookBuilder {
+    32→    /// Set the [`Config`] to be used.
+    33→    pub fn with_config(&mut self, cfg: Config) -> &mut BookBuilder {
+    38→    /// Get the config used by the `BookBuilder`.
+    39→    pub fn config(&self) -> &Config {
+    43→    /// Should the theme be copied into the generated book (so users can tweak
+    44→    /// it)?
+    45→    pub fn copy_theme(&mut self, copy: bool) -> &mut BookBuilder {
+    50→    /// Should we create a `.gitignore` file?
+    51→    pub fn create_gitignore(&mut self, create: bool) -> &mut BookBuilder {
+    56→    /// Generate the actual book. This will:
+    57→    ///
+    58→    /// - Create the directory structure.
+    59→    /// - Stub out some dummy chapters and the `SUMMARY.md`.
+    60→    /// - Create a `.gitignore` (if applicable)
+    61→    /// - Create a themes directory and populate it (if applicable)
+    62→    /// - Generate a `book.toml` file,
+    63→    /// - Then load the book so we can build it or run tests.
+    64→    pub fn build(&self) -> Result<MDBook> {
+    98→    fn write_book_toml(&self) -> Result<()> {
+   108→    fn copy_across_theme(&self) -> Result<()> {
+   116→    fn build_gitignore(&self) -> Result<()> {
+   124→    fn create_stub_files(&self) -> Result<()> {
+   145→    fn create_directory_structure(&self) -> Result<()> {
+crates/mdbook-driver/src/lib.rs
+     1→//! High-level library for running mdBook.
+     2→//!
+     3→//! This is the high-level library for running
+     4→//! [mdBook](https://rust-lang.github.io/mdBook/). There are several
+     5→//! reasons for using the programmatic API (over the CLI):
+     6→//!
+     7→//! - Integrate mdBook in a current project.
+     8→//! - Extend the capabilities of mdBook.
+     9→//! - Do some processing or test before building your book.
+    10→//! - Accessing the public API to help create a new Renderer.
+    11→//!
+    12→//! ## Additional crates
+    13→//!
+    14→//! In addition to `mdbook-driver`, there are several other crates available
+    15→//! for using and extending mdBook:
+    16→//!
+    17→//! - [`mdbook_preprocessor`]: Provides support for implementing preprocessors.
+    18→//! - [`mdbook_renderer`]: Provides support for implementing renderers.
+    19→//! - [`mdbook_markdown`]: The Markdown renderer.
+    20→//! - [`mdbook_summary`]: The `SUMMARY.md` parser.
+    21→//! - [`mdbook_html`]: The HTML renderer.
+    22→//! - [`mdbook_core`]: An internal library that is used by the other crates
+    23→//!   for shared types. Types from this crate are rexported from the other
+    24→//!   crates as appropriate.
+    25→//!
+    26→//! ## Cargo features
+    27→//!
+    28→//! The following cargo features are available:
+    29→//!
+    30→//! - `search`: Enables the search index in the HTML renderer.
+    31→//!
+    32→//! ## Examples
+    33→//!
+    34→//! If creating a new book from scratch, you'll want to get a [`init::BookBuilder`] via
+    35→//! the [`MDBook::init()`] method.
+    36→//!
+    37→//! ```rust,no_run
+    38→//! use mdbook_driver::MDBook;
+    39→//! use mdbook_driver::config::Config;
+    40→//!
+    41→//! let root_dir = "/path/to/book/root";
+    42→//!
+    43→//! // create a default config and change a couple things
+    44→//! let mut cfg = Config::default();
+    45→//! cfg.book.title = Some("My Book".to_string());
+    46→//! cfg.book.authors.push("Michael-F-Bryan".to_string());
+    47→//!
+    48→//! MDBook::init(root_dir)
+    49→//!     .create_gitignore(true)
+    50→//!     .with_config(cfg)
+    51→//!     .build()
+    52→//!     .expect("Book generation failed");
+    53→//! ```
+    54→//!
+    55→//! You can also load an existing book and build it.
+    56→//!
+    57→//! ```rust,no_run
+    58→//! use mdbook_driver::MDBook;
+    59→//!
+    60→//! let root_dir = "/path/to/book/root";
+    61→//!
+    62→//! let mut md = MDBook::load(root_dir)
+    63→//!     .expect("Unable to load the book");
+    64→//! md.build().expect("Building failed");
+    65→//! ```
+    66→
+    67→pub mod builtin_preprocessors;
+    68→pub mod builtin_renderers;
+    69→pub mod init;
+    70→mod load;
+    71→mod mdbook;
+    82→fn compose_command(cmd: &str, root: &Path) -> Result<Command> {
+   107→fn handle_command_error(
+   108→    error: std::io::Error,
+   109→    optional: bool,
+   110→    key: &str,
+   111→    what: &str,
+   112→    name: &str,
+   113→    cmd: &str,
+   114→) -> Result<()> {
+crates/mdbook-driver/src/load.rs
+     9→/// Load a book into memory from its `src/` directory.
+    10→pub(crate) fn load_book<P: AsRef<Path>>(src_dir: P, cfg: &BuildConfig) -> Result<Book> {
+    25→fn create_missing(src_dir: &Path, summary: &Summary) -> Result<()> {
+    56→/// Use the provided `Summary` to load a `Book` from disk.
+    57→///
+    58→/// You need to pass in the book's source directory because all the links in
+    59→/// `SUMMARY.md` give the chapter locations relative to it.
+    60→pub(crate) fn load_book_from_disk<P: AsRef<Path>>(summary: &Summary, src_dir: P) -> Result<Book> {
+    80→fn load_summary_item<P: AsRef<Path> + Clone>(
+    81→    item: &SummaryItem,
+    82→    src_dir: P,
+    83→    parent_names: Vec<String>,
+    84→) -> Result<BookItem> {
+    93→fn load_chapter<P: AsRef<Path>>(
+    94→    link: &Link,
+    95→    src_dir: P,
+    96→    parent_names: Vec<String>,
+    97→) -> Result<Chapter> {
+crates/mdbook-driver/src/mdbook/tests.rs
+   225→struct BoolPreprocessor(bool);
+   226→impl Preprocessor for BoolPreprocessor {
+   227→    fn name(&self) -> &str {
+   231→    fn run(&self, _ctx: &PreprocessorContext, _book: Book) -> Result<Book> {
+   235→    fn supports_renderer(&self, _renderer: &str) -> Result<bool> {
+crates/mdbook-driver/src/mdbook.rs
+    28→/// The object used to manage and build a book.
+    29→pub struct MDBook {
+    46→impl MDBook {
+    47→    /// Load a book from its root directory on disk.
+    48→    pub fn load<P: Into<PathBuf>>(book_root: P) -> Result<MDBook> {
+    70→    /// Load a book from its root directory using a custom `Config`.
+    71→    pub fn load_with_config<P: Into<PathBuf>>(book_root: P, config: Config) -> Result<MDBook> {
+    89→    /// Load a book from its root directory using a custom `Config` and a custom summary.
+    90→    pub fn load_with_config_and_summary<P: Into<PathBuf>>(
+    91→        book_root: P,
+    92→        config: Config,
+    93→        summary: Summary,
+    94→    ) -> Result<MDBook> {
+   112→    /// Returns a flat depth-first iterator over the [`BookItem`]s of the book.
+   113→    ///
+   114→    /// ```no_run
+   115→    /// # use mdbook_driver::MDBook;
+   116→    /// # use mdbook_driver::book::BookItem;
+   117→    /// # let book = MDBook::load("mybook").unwrap();
+   118→    /// for item in book.iter() {
+   119→    ///     match *item {
+   120→    ///         BookItem::Chapter(ref chapter) => {},
+   121→    ///         BookItem::Separator => {},
+   122→    ///         BookItem::PartTitle(ref title) => {}
+   123→    ///         _ => {}
+   124→    ///     }
+   125→    /// }
+   126→    ///
+   127→    /// // would print something like this:
+   128→    /// // 1. Chapter 1
+   129→    /// // 1.1 Sub Chapter
+   130→    /// // 1.2 Sub Chapter
+   131→    /// // 2. Chapter 2
+   132→    /// //
+   133→    /// // etc.
+   134→    /// ```
+   135→    pub fn iter(&self) -> BookItems<'_> {
+   139→    /// `init()` gives you a `BookBuilder` which you can use to setup a new book
+   140→    /// and its accompanying directory structure.
+   141→    ///
+   142→    /// The `BookBuilder` creates some boilerplate files and directories to get
+   143→    /// you started with your book.
+   144→    ///
+   145→    /// ```text
+   146→    /// book-test/
+   147→    /// ├── book
+   148→    /// └── src
+   149→    ///     ├── chapter_1.md
+   150→    ///     └── SUMMARY.md
+   151→    /// ```
+   152→    ///
+   153→    /// It uses the path provided as the root directory for your book, then adds
+   154→    /// in a `src/` directory containing a `SUMMARY.md` and `chapter_1.md` file
+   155→    /// to get you started.
+   156→    pub fn init<P: Into<PathBuf>>(book_root: P) -> BookBuilder {
+   160→    /// Tells the renderer to build our book and put it in the build directory.
+   161→    pub fn build(&self) -> Result<()> {
+   171→    /// Run preprocessors and return the final book.
+   172→    pub fn preprocess_book(&self, renderer: &dyn Renderer) -> Result<(Book, PreprocessorContext)> {
+   188→    /// Run the entire build process for a particular [`Renderer`].
+   189→    pub fn execute_build_process(&self, renderer: &dyn Renderer) -> Result<()> {
+   211→    /// You can change the default renderer to another one by using this method.
+   212→    /// The only requirement is that your renderer implement the [`Renderer`]
+   213→    /// trait.
+   214→    pub fn with_renderer<R: Renderer + 'static>(&mut self, renderer: R) -> &mut Self {
+   220→    /// Register a [`Preprocessor`] to be used when rendering the book.
+   221→    pub fn with_preprocessor<P: Preprocessor + 'static>(&mut self, preprocessor: P) -> &mut Self {
+   227→    /// Run `rustdoc` tests on the book, linking against the provided libraries.
+   228→    pub fn test(&mut self, library_paths: Vec<&str>) -> Result<()> {
+   233→    /// Run `rustdoc` tests on a specific chapter of the book, linking against the provided libraries.
+   234→    /// If `chapter` is `None`, all tests will be run.
+   235→    pub fn test_chapter(&mut self, library_paths: Vec<&str>, chapter: Option<&str>) -> Result<()> {
+   347→    /// The logic for determining where a backend should put its build
+   348→    /// artefacts.
+   349→    ///
+   350→    /// If there is only 1 renderer, put it in the directory pointed to by the
+   351→    /// `build.build_dir` key in [`Config`]. If there is more than one then the
+   352→    /// renderer gets its own directory within the main build dir.
+   353→    ///
+   354→    /// i.e. If there were only one renderer (in this case, the HTML renderer):
+   355→    ///
+   356→    /// - build/
+   357→    ///   - index.html
+   358→    ///   - ...
+   359→    ///
+   360→    /// Otherwise if there are multiple:
+   361→    ///
+   362→    /// - build/
+   363→    ///   - epub/
+   364→    ///     - my_awesome_book.epub
+   365→    ///   - html/
+   366→    ///     - index.html
+   367→    ///     - ...
+   368→    ///   - latex/
+   369→    ///     - my_awesome_book.tex
+   370→    ///
+   371→    pub fn build_dir_for(&self, backend_name: &str) -> PathBuf {
+   381→    /// Get the directory containing this book's source files.
+   382→    pub fn source_dir(&self) -> PathBuf {
+   386→    /// Get the directory containing the theme resources for the book.
+   387→    pub fn theme_dir(&self) -> PathBuf {
+   397→struct OutputConfig {
+   402→fn determine_renderers(config: &Config) -> Result<IndexMap<String, Box<dyn Renderer>>> {
+   426→const DEFAULT_PREPROCESSORS: &[&str] = &["links", "index"];
+   428→fn is_default_preprocessor(pre: &dyn Preprocessor) -> bool {
+   435→struct PreprocessorConfig {
+   446→fn determine_preprocessors(
+   447→    config: &Config,
+   448→    root: &Path,
+   449→) -> Result<IndexMap<String, Box<dyn Preprocessor>>> {
+   549→fn preprocessor_should_run(
+   550→    preprocessor: &dyn Preprocessor,
+   551→    renderer: &dyn Renderer,
+   552→    cfg: &Config,
+   553→) -> Result<bool> {
+crates/mdbook-html/README.md
+     1→# mdbook-html
+     2→
+     3→[![Documentation](https://img.shields.io/docsrs/mdbook-html)](https://docs.rs/mdbook-html)
+     4→[![crates.io](https://img.shields.io/crates/v/mdbook-html.svg)](https://crates.io/crates/mdbook-html)
+     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+    11→## License
+    12→
+    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+crates/mdbook-html/front-end/js/book.js
+     9→function playground_text(playground, hidden = true) {
+crates/mdbook-html/front-end/js/clipboard.min.js
+crates/mdbook-html/front-end/js/highlight.js
+crates/mdbook-html/front-end/playground_editor/ace.js
+crates/mdbook-html/front-end/playground_editor/editor.js
+crates/mdbook-html/front-end/playground_editor/mode-rust.js
+crates/mdbook-html/front-end/playground_editor/theme-dawn.js
+crates/mdbook-html/front-end/playground_editor/theme-tomorrow_night.js
+crates/mdbook-html/front-end/searcher/elasticlunr.min.js
+crates/mdbook-html/front-end/searcher/mark.min.js
+crates/mdbook-html/front-end/searcher/searcher.js
+crates/mdbook-html/src/html/admonitions.rs
+     4→const ICON_NOTE: &str = r#"<path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path>"#;
+     7→const ICON_TIP: &str = r#"<path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path>"#;
+    10→const ICON_IMPORTANT: &str = r#"<path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>"#;
+    13→const ICON_WARNING: &str = r#"<path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>"#;
+    16→const ICON_CAUTION: &str = r#"<path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path>"#;
+    18→pub(crate) fn select_tag(kind: BlockQuoteKind) -> (&'static str, &'static str, &'static str) {
+crates/mdbook-html/src/html/hide_lines.rs
+    10→pub(crate) fn hide_lines(
+    11→    tree: &mut Tree<Node>,
+    12→    code_id: NodeId,
+    13→    hidelines: &HashMap<String, String>,
+    14→) {
+    59→fn hide_lines_rust(text: &StrTendril) -> Tree<Node> {
+    90→fn hide_lines_with_prefix(content: &str, prefix: &str) -> Tree<Node> {
+   110→pub(crate) fn wrap_rust_main(text: &str) -> Option<String> {
+   129→fn partition_rust_source(s: &str) -> (&str, &str) {
+crates/mdbook-html/src/html/mod.rs
+    19→mod admonitions;
+    20→mod hide_lines;
+    21→mod print;
+    22→mod serialize;
+    25→mod tokenizer;
+    26→mod tree;
+    34→pub(crate) struct HtmlRenderOptions<'a> {
+    45→impl<'a> HtmlRenderOptions<'a> {
+    47→    pub(crate) fn new(
+    48→        path: &'a Path,
+    49→        config: &'a HtmlConfig,
+    50→        edition: Option<RustEdition>,
+    51→    ) -> HtmlRenderOptions<'a> {
+    66→pub(crate) fn render_markdown(text: &str, options: &HtmlRenderOptions<'_>) -> String {
+    74→fn build_tree(text: &str, options: &HtmlRenderOptions<'_>) -> Tree<Node> {
+    80→pub(crate) struct ChapterTree<'book> {
+    89→pub(crate) fn build_trees<'book>(
+    90→    book: &'book Book,
+    91→    html_config: &HtmlConfig,
+    92→    edition: Option<RustEdition>,
+    93→) -> Vec<ChapterTree<'book>> {
+crates/mdbook-html/src/html/print.rs
+    17→pub(crate) fn render_print_page(mut chapter_trees: Vec<ChapterTree<'_>>) -> String {
+    43→fn make_ids_unique(
+    44→    chapter_trees: &mut [ChapterTree<'_>],
+    45→) -> (HashMap<PathBuf, HashMap<String, String>>, HashSet<String>) {
+    74→fn make_root_id_map(
+    75→    chapter_trees: &mut [ChapterTree<'_>],
+    76→    id_counter: &mut HashSet<String>,
+    77→) -> HashMap<PathBuf, String> {
+   124→fn rewrite_links(
+   125→    chapter_trees: &mut [ChapterTree<'_>],
+   126→    id_remap: &HashMap<PathBuf, HashMap<String, String>>,
+   127→    path_to_root_id: &HashMap<PathBuf, String>,
+   128→) {
+crates/mdbook-html/src/html/serialize.rs
+    11→pub(crate) fn serialize(tree: &Tree<Node>, output: &mut String) {
+    40→fn wants_pretty_html_newline(name: &str) -> bool {
+    64→fn serialize_start(el: &Element, output: &mut String) {
+   100→fn serialize_end(el: &Element, output: &mut String) {
+crates/mdbook-html/src/html/tests.rs
+crates/mdbook-html/src/html/tokenizer.rs
+    16→struct TokenCollector {
+    21→impl TokenSink for TokenCollector {
+    22→    type Handle = ();
+    24→    fn process_token(&self, token: Token, _line_number: u64) -> TokenSinkResult<()> {
+    67→pub(crate) fn parse_html(html: &str) -> Vec<Token> {
+crates/mdbook-html/src/html/tree.rs
+    25→macro_rules! attr_qual_name {
+    33→pub(crate) enum Node {
+    51→impl Node {
+    53→    pub(crate) fn as_element(&self) -> Option<&Element> {
+    62→    fn as_element_mut(&mut self) -> Option<&mut Element> {
+    73→pub(crate) struct Element {
+    84→impl Element {
+    86→    pub(crate) fn new(tag_name: &str) -> Element {
+    97→    pub(crate) fn name(&self) -> &str {
+   103→    pub(crate) fn heading_level(&self) -> Option<u8> {
+   113→    pub(crate) fn attr(&self, name: &str) -> Option<&str> {
+   119→    pub(crate) fn insert_attr(&mut self, name: &str, value: StrTendril) {
+   126→type Attributes = IndexMap<QualName, StrTendril>;
+   129→trait ToTendril {
+   131→    fn into_tendril(self) -> StrTendril;
+   134→impl ToTendril for CowStr<'_> {
+   135→    fn into_tendril(self) -> StrTendril {
+   150→enum TableState {
+   160→pub(crate) struct MarkdownTreeBuilder<'opts, 'event, EventIter> {
+   204→impl<'opts, 'event, EventIter> MarkdownTreeBuilder<'opts, 'event, EventIter>
+   205→where
+   206→    EventIter: Iterator<Item = Event<'event>>,
+   207→{
+   210→    pub(crate) fn build(options: &'opts HtmlRenderOptions<'opts>, events: EventIter) -> Tree<Node> {
+   236→    fn append(&mut self, node: Node) -> NodeId {
+   248→    fn append_text(&mut self, text: StrTendril) {
+   262→    fn push(&mut self, node: Node) {
+   272→    fn push_no_stack(&mut self, node: Node) {
+   278→    fn pop(&mut self) {
+   290→    fn node_ids_for_tag(&self, filter: &dyn Fn(&str) -> bool) -> Vec<NodeId> {
+   304→    fn process_events(&mut self) {
+   369→    fn start_tag(&mut self, tag: Tag<'event>) {
+   585→    fn end_tag(&mut self, tag: TagEnd) {
+   627→    fn append_html(&mut self, html: &str) {
+   663→    fn start_html_tag(&mut self, tag: html5ever::tokenizer::Tag, is_raw: &mut bool) {
+   687→    fn end_html_tag(&mut self, tag: html5ever::tokenizer::Tag, is_raw: &mut bool) {
+   706→    fn is_html_tag_matching(&self, name: &str) -> bool {
+   719→    fn eat_till_end(&mut self) {
+   737→    fn text_for_img_alt(&mut self) -> String {
+   772→    fn finish_stack(&mut self) {
+   806→    fn footnote_reference(&mut self, name: CowStr<'event>) {
+   838→    fn collect_footnote_defs(&mut self) {
+   907→    fn add_header_links(&mut self) {
+   950→    fn update_code_blocks(&mut self) {
+  1016→    fn convert_fontawesome(&mut self) {
+  1077→fn text_in_node(node: NodeRef<'_, Node>, output: &mut String) {
+  1093→fn fix_link<'a>(link: CowStr<'a>) -> CowStr<'a> {
+  1120→fn fix_html_link(el: &mut Element) {
+  1137→pub(crate) fn is_void_element(name: &str) -> bool {
+crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
+    22→pub struct HtmlHandlebars;
+    24→impl HtmlHandlebars {
+    26→    pub fn new() -> Self {
+    30→    fn render_chapter(
+    31→        &self,
+    32→        chapter_tree: &ChapterTree<'_>,
+    33→        prev_ch: Option<&Chapter>,
+    34→        next_ch: Option<&Chapter>,
+    35→        mut ctx: RenderChapterContext<'_>,
+    36→    ) -> Result<()> {
+   138→    fn render_404(
+   139→        &self,
+   140→        ctx: &RenderContext,
+   141→        html_config: &HtmlConfig,
+   142→        src_dir: &Path,
+   143→        handlebars: &mut Handlebars<'_>,
+   144→        data: &mut serde_json::Map<String, serde_json::Value>,
+   145→    ) -> Result<()> {
+   198→    fn render_print_page(
+   199→        &self,
+   200→        ctx: &RenderContext,
+   201→        handlebars: &Handlebars<'_>,
+   202→        data: &mut serde_json::Map<String, serde_json::Value>,
+   203→        chapter_trees: Vec<ChapterTree<'_>>,
+   204→    ) -> Result<String> {
+   227→    fn register_hbs_helpers(&self, handlebars: &mut Handlebars<'_>, html_config: &HtmlConfig) {
+   237→    fn emit_redirects(
+   238→        &self,
+   239→        root: &Path,
+   240→        handlebars: &Handlebars<'_>,
+   241→        redirects: &HashMap<String, String>,
+   242→    ) -> Result<()> {
+   274→    fn emit_redirect(
+   275→        &self,
+   276→        handlebars: &Handlebars<'_>,
+   277→        original: &Path,
+   278→        destination: &str,
+   279→        fragment_map: &BTreeMap<String, String>,
+   280→    ) -> Result<()> {
+   303→impl Renderer for HtmlHandlebars {
+   304→    fn name(&self) -> &str {
+   308→    fn render(&self, ctx: &RenderContext) -> Result<()> {
+   455→fn make_data(
+   456→    root: &Path,
+   457→    book: &Book,
+   458→    config: &Config,
+   459→    html_config: &HtmlConfig,
+   460→    theme: &Theme,
+   461→) -> Result<serde_json::Map<String, serde_json::Value>> {
+   633→struct RenderChapterContext<'a> {
+   649→type CombinedRedirects = BTreeMap<String, (String, BTreeMap<String, String>)>;
+   650→fn combine_fragment_redirects(redirects: &HashMap<String, String>) -> CombinedRedirects {
+   674→fn collect_redirects_for_path(
+   675→    path: &Path,
+   676→    redirects: &HashMap<String, String>,
+   677→) -> Result<BTreeMap<String, String>> {
+crates/mdbook-html/src/html_handlebars/helpers/fontawesome.rs
+     8→pub(crate) fn fa_helper(
+     9→    h: &Helper<'_>,
+    10→    _r: &Handlebars<'_>,
+    11→    _ctx: &Context,
+    12→    _rc: &mut RenderContext<'_, '_>,
+    13→    out: &mut dyn Output,
+    14→) -> Result<(), RenderError> {
+crates/mdbook-html/src/html_handlebars/helpers/mod.rs
+     1→pub(crate) mod fontawesome;
+     2→pub(crate) mod resources;
+     3→pub(crate) mod toc;
+crates/mdbook-html/src/html_handlebars/helpers/resources.rs
+    11→pub(crate) struct ResourceHelper {
+    15→impl HelperDef for ResourceHelper {
+    16→    fn call<'reg: 'rc, 'rc>(
+    17→        &self,
+    18→        h: &Helper<'rc>,
+    19→        _r: &'reg Handlebars<'_>,
+    20→        ctx: &'rc Context,
+    21→        rc: &mut RenderContext<'reg, 'rc>,
+    22→        out: &mut dyn Output,
+    23→    ) -> Result<(), RenderError> {
+crates/mdbook-html/src/html_handlebars/helpers/toc.rs
+    11→pub(crate) struct RenderToc {
+    15→impl HelperDef for RenderToc {
+    16→    fn call<'reg: 'rc, 'rc>(
+    17→        &self,
+    18→        _h: &Helper<'rc>,
+    19→        _r: &'reg Handlebars<'_>,
+    20→        ctx: &'rc Context,
+    21→        rc: &mut RenderContext<'reg, 'rc>,
+    22→        out: &mut dyn Output,
+    23→    ) -> Result<(), RenderError> {
+   177→fn write_li_open_tag(out: &mut dyn Output, is_expanded: bool) -> Result<(), std::io::Error> {
+crates/mdbook-html/src/html_handlebars/mod.rs
+     1→mod hbs_renderer;
+     2→mod helpers;
+     4→mod search;
+     5→mod static_files;
+crates/mdbook-html/src/html_handlebars/search.rs
+    17→const MAX_WORD_LENGTH_TO_INDEX: usize = 80;
+    20→fn tokenize(text: &str) -> Vec<String> {
+    29→pub(super) fn create_files(
+    30→    search_config: &Search,
+    31→    static_files: &mut StaticFiles,
+    32→    chapter_trees: &[ChapterTree<'_>],
+    33→) -> Result<()> {
+    82→fn add_doc(
+    83→    index: &mut Index,
+    84→    doc_urls: &mut Vec<String>,
+    85→    anchor_base: &str,
+    86→    heading_id: &str,
+    87→    items: &[&str],
+    88→) {
+   103→fn index_chapter(
+   104→    index: &mut Index,
+   105→    search_config: &Search,
+   106→    doc_urls: &mut Vec<String>,
+   107→    chapter_tree: &ChapterTree<'_>,
+   108→) -> Result<()> {
+   211→fn write_to_json(index: Index, search_config: &Search, doc_urls: Vec<String>) -> Result<String> {
+   273→fn settings_path(ch: &Chapter) -> &Path {
+   279→fn validate_chapter_config(
+   280→    chapter_configs: &[(PathBuf, SearchChapterSettings)],
+   281→    chapter_trees: &[ChapterTree<'_>],
+   282→) -> Result<()> {
+   297→fn sort_search_config(
+   298→    map: &HashMap<String, SearchChapterSettings>,
+   299→) -> Vec<(PathBuf, SearchChapterSettings)> {
+   310→fn get_chapter_settings(
+   311→    chapter_configs: &[(PathBuf, SearchChapterSettings)],
+   312→    source_path: &Path,
+   313→) -> SearchChapterSettings {
+   324→fn collapse_whitespace(text: &str) -> Cow<'_, str> {
+crates/mdbook-html/src/html_handlebars/static_files.rs
+    22→pub(super) struct StaticFiles {
+    27→enum StaticFile {
+    38→impl StaticFiles {
+    39→    pub(super) fn new(theme: &Theme, html_config: &HtmlConfig, root: &Path) -> Result<StaticFiles> {
+   129→    pub(super) fn add_builtin(&mut self, filename: &str, data: &[u8]) {
+   138→    pub(super) fn hash_files(&mut self) -> Result<()> {
+   193→    pub(super) fn write_files(self, destination: &Path) -> Result<ResourceHelper> {
+crates/mdbook-html/src/lib.rs
+     3→mod html;
+     4→mod html_handlebars;
+     5→pub mod theme;
+     6→pub(crate) mod utils;
+crates/mdbook-html/src/theme/fonts.rs
+     1→pub(crate) static CSS: &[u8] = include_bytes!("../../front-end/fonts/fonts.css");
+     3→pub(crate) static LICENSES: [(&str, &[u8]); 2] = [
+    14→pub(crate) static OPEN_SANS: [(&str, &[u8]); 10] = [
+    58→pub(crate) static SOURCE_CODE_PRO: (&str, &[u8]) = (
+crates/mdbook-html/src/theme/mod.rs
+     9→pub(crate) mod fonts;
+    10→pub(crate) mod playground_editor;
+    12→pub(crate) mod searcher;
+    14→static INDEX: &[u8] = include_bytes!("../../front-end/templates/index.hbs");
+    15→static HEAD: &[u8] = include_bytes!("../../front-end/templates/head.hbs");
+    16→static REDIRECT: &[u8] = include_bytes!("../../front-end/templates/redirect.hbs");
+    17→static HEADER: &[u8] = include_bytes!("../../front-end/templates/header.hbs");
+    18→static TOC_JS: &[u8] = include_bytes!("../../front-end/templates/toc.js.hbs");
+    19→static TOC_HTML: &[u8] = include_bytes!("../../front-end/templates/toc.html.hbs");
+    20→static CHROME_CSS: &[u8] = include_bytes!("../../front-end/css/chrome.css");
+    21→static GENERAL_CSS: &[u8] = include_bytes!("../../front-end/css/general.css");
+    22→static PRINT_CSS: &[u8] = include_bytes!("../../front-end/css/print.css");
+    23→static VARIABLES_CSS: &[u8] = include_bytes!("../../front-end/css/variables.css");
+    24→static FAVICON_PNG: &[u8] = include_bytes!("../../front-end/images/favicon.png");
+    25→static FAVICON_SVG: &[u8] = include_bytes!("../../front-end/images/favicon.svg");
+    26→static JS: &[u8] = include_bytes!("../../front-end/js/book.js");
+    27→static HIGHLIGHT_JS: &[u8] = include_bytes!("../../front-end/js/highlight.js");
+    28→static TOMORROW_NIGHT_CSS: &[u8] = include_bytes!("../../front-end/css/tomorrow-night.css");
+    29→static HIGHLIGHT_CSS: &[u8] = include_bytes!("../../front-end/css/highlight.css");
+    30→static AYU_HIGHLIGHT_CSS: &[u8] = include_bytes!("../../front-end/css/ayu-highlight.css");
+    31→static CLIPBOARD_JS: &[u8] = include_bytes!("../../front-end/js/clipboard.min.js");
+    40→pub struct Theme {
+    63→impl Theme {
+    66→    pub fn new<P: AsRef<Path>>(theme_dir: P) -> Self {
+   166→    pub fn copy_theme(html_config: &HtmlConfig, root: &Path) -> Result<()> {
+   200→impl Default for Theme {
+   201→    fn default() -> Theme {
+   229→fn load_file_contents<P: AsRef<Path>>(filename: P, dest: &mut Vec<u8>) -> Result<()> {
+crates/mdbook-html/src/theme/playground_editor.rs
+     3→pub(crate) static JS: &[u8] = include_bytes!("../../front-end/playground_editor/editor.js");
+     4→pub(crate) static ACE_JS: &[u8] = include_bytes!("../../front-end/playground_editor/ace.js");
+     5→pub(crate) static MODE_RUST_JS: &[u8] =
+     7→pub(crate) static THEME_DAWN_JS: &[u8] =
+     9→pub(crate) static THEME_TOMORROW_NIGHT_JS: &[u8] =
+crates/mdbook-html/src/theme/searcher.rs
+     4→pub(crate) static JS: &[u8] = include_bytes!("../../front-end/searcher/searcher.js");
+     5→pub(crate) static MARK_JS: &[u8] = include_bytes!("../../front-end/searcher/mark.min.js");
+     6→pub(crate) static ELASTICLUNR_JS: &[u8] =
+crates/mdbook-html/src/utils.rs
+     6→/// Utility function to normalize path elements like `..`.
+     7→pub(crate) fn normalize_path(path: &Path) -> PathBuf {
+    41→/// Helper trait for converting a [`Path`] to a string suitable for an HTML path.
+    42→pub(crate) trait ToUrlPath {
+    43→    fn to_url_path(&self) -> String;
+    46→impl ToUrlPath for Path {
+    47→    fn to_url_path(&self) -> String {
+    54→/// Make sure an HTML id is unique.
+    55→///
+    56→/// Keeps a set of all previously returned IDs; if the requested id is already
+    57→/// used, numeric suffixes (-1, -2, ...) are tried until an unused one is found.
+    58→pub(crate) fn unique_id(id: &str, used: &mut HashSet<String>) -> String {
+    75→/// Generates an HTML id from the given text.
+    76→pub(crate) fn id_from_content(content: &str) -> String {
+crates/mdbook-markdown/README.md
+     1→# mdbook-markdown
+     2→
+     3→[![Documentation](https://img.shields.io/docsrs/mdbook-markdown)](https://docs.rs/mdbook-markdown)
+     4→[![crates.io](https://img.shields.io/crates/v/mdbook-markdown.svg)](https://crates.io/crates/mdbook-markdown)
+     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+    11→## License
+    12→
+    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+crates/mdbook-markdown/src/lib.rs
+    13→/// Options for parsing markdown.
+    14→#[non_exhaustive]
+    15→pub struct MarkdownOptions {
+    33→impl Default for MarkdownOptions {
+    34→    fn default() -> MarkdownOptions {
+    43→/// Creates a new pulldown-cmark parser of the given text.
+    44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
+crates/mdbook-preprocessor/README.md
+     1→# mdbook-preprocessor
+     2→
+     3→[![Documentation](https://img.shields.io/docsrs/mdbook-preprocessor)](https://docs.rs/mdbook-preprocessor)
+     4→[![crates.io](https://img.shields.io/crates/v/mdbook-preprocessor.svg)](https://crates.io/crates/mdbook-preprocessor)
+     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+    11→## License
+    12→
+    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+crates/mdbook-preprocessor/src/lib.rs
+    23→/// An operation which is run immediately after loading a book into memory and
+    24→/// before it gets rendered.
+    25→///
+    26→/// Types that implement the `Preprocessor` trait can be used with
+    27→/// [`MDBook::with_preprocessor`] to programmatically add preprocessors.
+    28→///
+    29→/// [`MDBook::with_preprocessor`]: https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html#method.with_preprocessor
+    30→pub trait Preprocessor {
+    31→    /// Get the `Preprocessor`'s name.
+    32→    fn name(&self) -> &str;
+    34→    /// Run this `Preprocessor`, allowing it to update the book before it is
+    35→    /// given to a renderer.
+    36→    fn run(&self, ctx: &PreprocessorContext, book: Book) -> Result<Book>;
+    38→    /// A hint to `MDBook` whether this preprocessor is compatible with a
+    39→    /// particular renderer.
+    40→    ///
+    41→    /// By default, always returns `true`.
+    42→    fn supports_renderer(&self, _renderer: &str) -> Result<bool> {
+    47→/// Extra information for a `Preprocessor` to give them more context when
+    48→/// processing a book.
+    49→#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+    50→#[non_exhaustive]
+    51→pub struct PreprocessorContext {
+    68→impl PreprocessorContext {
+    69→    /// Create a new `PreprocessorContext`.
+    70→    pub fn new(root: PathBuf, config: Config, renderer: String) -> Self {
+    81→/// Parses the input given to a preprocessor.
+    82→pub fn parse_input<R: Read>(reader: R) -> Result<(PreprocessorContext, Book)> {
+crates/mdbook-renderer/README.md
+     1→# mdbook-renderer
+     2→
+     3→[![Documentation](https://img.shields.io/docsrs/mdbook-renderer)](https://docs.rs/mdbook-renderer)
+     4→[![crates.io](https://img.shields.io/crates/v/mdbook-renderer.svg)](https://crates.io/crates/mdbook-renderer)
+     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+    11→## License
+    12→
+    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+crates/mdbook-renderer/src/lib.rs
+    22→/// An mdbook backend.
+    23→///
+    24→/// Types that implement the `Renderer` trait can be used with
+    25→/// [`MDBook::with_renderer`] to programmatically add renderers.
+    26→///
+    27→/// [`MDBook::with_renderer`]: https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html#method.with_renderer
+    28→pub trait Renderer {
+    29→    /// The `Renderer`'s name.
+    30→    fn name(&self) -> &str;
+    32→    /// Invoke the `Renderer`, passing in all the necessary information for
+    33→    /// describing a book.
+    34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
+    37→/// The context provided to all renderers.
+    38→#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+    39→#[non_exhaustive]
+    40→pub struct RenderContext {
+    63→impl RenderContext {
+    64→    /// Create a new `RenderContext`.
+    65→    pub fn new<P, Q>(root: P, book: Book, config: Config, destination: Q) -> RenderContext
+    66→    where
+    67→        P: Into<PathBuf>,
+    68→        Q: Into<PathBuf>,
+    69→    {
+    80→    /// Get the source directory's (absolute) path on disk.
+    81→    pub fn source_dir(&self) -> PathBuf {
+    85→    /// Load a `RenderContext` from its JSON representation.
+    86→    pub fn from_json<R: Read>(reader: R) -> Result<RenderContext> {
+crates/mdbook-summary/README.md
+     1→# mdbook-summary
+     2→
+     3→[![Documentation](https://img.shields.io/docsrs/mdbook-summary)](https://docs.rs/mdbook-summary)
+     4→[![crates.io](https://img.shields.io/crates/v/mdbook-summary.svg)](https://crates.io/crates/mdbook-summary)
+     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+    11→## License
+    12→
+    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+crates/mdbook-summary/src/lib.rs
+    59→pub fn parse_summary(summary: &str) -> Result<Summary> {
+    67→pub struct Summary {
+    84→pub struct Link {
+    96→impl Link {
+    98→    pub fn new<S: Into<String>, P: AsRef<Path>>(name: S, location: P) -> Link {
+   108→impl Default for Link {
+   109→    fn default() -> Self {
+   122→pub enum SummaryItem {
+   131→impl SummaryItem {
+   132→    fn maybe_link_mut(&mut self) -> Option<&mut Link> {
+   140→impl From<Link> for SummaryItem {
+   141→    fn from(other: Link) -> SummaryItem {
+   173→struct SummaryParser<'a> {
+   190→macro_rules! collect_events {
+   221→impl<'a> SummaryParser<'a> {
+   222→    fn new(text: &'a str) -> SummaryParser<'a> {
+   235→    fn current_location(&self) -> (usize, usize) {
+   245→    fn parse(mut self) -> Result<Summary> {
+   272→    fn check_for_duplicates<'b>(
+   273→        items: &'b [SummaryItem],
+   274→        files: &mut HashSet<&'b PathBuf>,
+   275→    ) -> Result<()> {
+   294→    fn parse_affix(&mut self, is_prefix: bool) -> Result<Vec<SummaryItem>> {
+   332→    fn parse_parts(&mut self) -> Result<Vec<SummaryItem>> {
+   381→    fn parse_link(&mut self, href: String) -> Link {
+   401→    fn parse_numbered(
+   402→        &mut self,
+   403→        root_items: &mut u32,
+   404→        root_number: &mut SectionNumber,
+   405→    ) -> Result<Vec<SummaryItem>> {
+   476→    fn back(&mut self, ev: Event<'a>) {
+   482→    fn next_event(&mut self) -> Option<Event<'a>> {
+   495→    fn parse_nested_numbered(&mut self, parent: &SectionNumber) -> Result<Vec<SummaryItem>> {
+   530→    fn parse_nested_item(
+   531→        &mut self,
+   532→        parent: &SectionNumber,
+   533→        num_existing_items: usize,
+   534→    ) -> Result<SummaryItem> {
+   567→    fn parse_error<D: Display>(&self, msg: D) -> Error {
+   578→    fn parse_title(&mut self) -> Option<String> {
+   604→fn update_section_numbers(items: &mut [SummaryItem], level: usize, by: u32) {
+   618→fn get_last_link(links: &mut [SummaryItem]) -> Result<(usize, &mut Link)> {
+   634→fn stringify_events(events: Vec<Event<'_>>) -> String {
+crates/xtask/README.md
+     1→# xtask
+     2→
+     3→This is a CLI utility for running development commands for mdbook.
+     4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
+crates/xtask/src/changelog.rs
+     8→const CHANGELOG_PATH: &str = "CHANGELOG.md";
+    10→pub(crate) fn changelog() -> Result<()> {
+    25→fn get_previous() -> Result<String> {
+    36→fn get_current() -> Result<String> {
+    47→fn get_prs(previous: &str) -> Result<Vec<(String, String)>> {
+    91→fn update_changelog(previous: &str, current: &str, prs: &[(String, String)]) -> Result<()> {
+crates/xtask/src/main.rs
+     9→mod changelog;
+    11→type Result<T> = std::result::Result<T, Box<dyn Error>>;
+    13→fn main() -> Result<()> {
+    59→fn test_all() -> Result<()> {
+    70→fn cargo(args: &str, cb: &dyn Fn(&mut Command)) -> Result<()> {
+    82→fn test_workspace() -> Result<()> {
+    88→fn clippy() -> Result<()> {
+    96→fn doc() -> Result<()> {
+   106→fn fmt() -> Result<()> {
+   111→fn semver_checks() -> Result<()> {
+   116→fn gui() -> Result<()> {
+   121→fn eslint() -> Result<()> {
+   133→fn bump(bump: &str) -> Result<()> {
+eslint.config.mjs
+     4→const handlebarsPreprocessor = {
+     7→            preprocess(text, filename) {
+    16→            postprocess(messages, filename) {
+guide/guide-helper/src/lib.rs
+     9→/// Preprocessing entry point.
+    10→pub fn handle_preprocessing() -> Result<()> {
+    33→struct GuideHelper;
+    35→impl Preprocessor for GuideHelper {
+    36→    fn name(&self) -> &str {
+    40→    fn run(&self, _ctx: &PreprocessorContext, mut book: Book) -> Result<Book> {
+    46→fn insert_version(book: &mut Book) {
+guide/guide-helper/src/main.rs
+     3→fn main() {
+guide/src/404.md
+     1→# Document not found (404)
+     2→
+     3→This URL is invalid, sorry. Try the search instead!
+guide/src/README.md
+     1→# Introduction
+     2→
+     3→<style>
+     4→    .mdbook-version {
+     5→        position: absolute;
+     6→        right: 20px;
+     7→        top: 60px;
+     8→        background-color: var(--theme-popup-bg);
+     9→        border-radius: 8px;
+    10→        padding: 2px 5px 2px 5px;
+    11→        border: 1px solid var(--theme-popup-border);
+    12→        font-size: 0.9em;
+    13→    }
+    14→</style>
+    46→## Contributing
+    47→
+    48→mdBook is free and open source. You can find the source code on
+    49→[GitHub](https://github.com/rust-lang/mdBook) and issues and feature requests can be posted on
+    50→the [GitHub issue tracker](https://github.com/rust-lang/mdBook/issues). mdBook relies on the community to fix bugs and
+    51→add features: if you'd like to contribute, please read
+    52→the [CONTRIBUTING](https://github.com/rust-lang/mdBook/blob/master/CONTRIBUTING.md) guide and consider opening
+    53→a [pull request](https://github.com/rust-lang/mdBook/pulls).
+    55→## License
+    56→
+    57→The mdBook source and documentation are released under
+    58→the [Mozilla Public License v2.0](https://www.mozilla.org/MPL/2.0/).
+guide/src/SUMMARY.md
+     1→# Summary
+     2→
+     3→[Introduction](README.md)
+     5→# User guide
+     6→
+     7→- [Installation](guide/installation.md)
+     8→- [Reading books](guide/reading.md)
+     9→- [Creating a book](guide/creating.md)
+    11→# Reference guide
+    12→
+    13→- [Command-line tool](cli/README.md)
+    14→    - [init](cli/init.md)
+    15→    - [build](cli/build.md)
+    16→    - [watch](cli/watch.md)
+    17→    - [serve](cli/serve.md)
+    18→    - [test](cli/test.md)
+    19→    - [clean](cli/clean.md)
+    20→    - [completions](cli/completions.md)
+    21→- [Format](format/README.md)
+    22→    - [SUMMARY.md](format/summary.md)
+    23→        - [Draft chapter]()
+    24→    - [Configuration](format/configuration/README.md)
+    25→        - [General](format/configuration/general.md)
+    26→        - [Preprocessors](format/configuration/preprocessors.md)
+    27→        - [Renderers](format/configuration/renderers.md)
+    28→        - [Environment variables](format/configuration/environment-variables.md)
+    29→    - [Theme](format/theme/README.md)
+    30→        - [index.hbs](format/theme/index-hbs.md)
+    31→        - [Syntax highlighting](format/theme/syntax-highlighting.md)
+    32→        - [Editor](format/theme/editor.md)
+    33→    - [MathJax support](format/mathjax.md)
+    34→    - [mdBook-specific features](format/mdbook.md)
+    35→    - [Markdown](format/markdown.md)
+    36→- [Continuous integration](continuous-integration.md)
+    37→- [For developers](for_developers/README.md)
+    38→    - [Preprocessors](for_developers/preprocessors.md)
+    39→    - [Alternative backends](for_developers/backends.md)
+guide/src/cli/README.md
+     1→# Command-line tool
+     2→
+     3→The `mdbook` command-line tool is used to create and build books.
+     4→After you have [installed](../guide/installation.md) `mdbook`, you can run the `mdbook help` command in your terminal to view the available commands.
+guide/src/cli/arg-watcher.md
+     1→#### `--watcher`
+     2→
+     3→There are different backends used to determine when a file has changed.
+guide/src/cli/build.md
+     1→# The build command
+     2→
+     3→The build command is used to render your book:
+    16→#### Specify a directory
+    17→
+    18→The `build` command can take a directory as an argument to use as the book's
+    19→root instead of the current working directory.
+    25→#### `--open`
+    26→
+    27→When you use the `--open` (`-o`) flag, mdbook will open the rendered book in
+    28→your default web browser after building it.
+    30→#### `--dest-dir`
+    31→
+    32→The `--dest-dir` (`-d`) option allows you to change the output directory for the
+    33→book. Relative paths are interpreted relative to the current directory. If
+    34→not specified it will default to the value of the `build.build-dir` key in
+    35→`book.toml`, or to `./book`.
+guide/src/cli/clean.md
+     1→# The clean command
+     2→
+     3→The clean command is used to delete the generated book and any other build
+     4→artifacts.
+    10→#### Specify a directory
+    11→
+    12→The `clean` command can take a directory as an argument to use as the book's
+    13→root instead of the current working directory.
+    19→#### `--dest-dir`
+    20→
+    21→The `--dest-dir` (`-d`) option allows you to override the book's output
+    22→directory, which will be deleted by this command. Relative paths are interpreted
+    23→relative to the current directory. If not specified it will default to the
+    24→value of the `build.build-dir` key in `book.toml`, or to `./book`.
+guide/src/cli/completions.md
+     1→# The completions command
+     2→
+     3→The completions command is used to generate auto-completions for some common shells.
+     4→This means when you type `mdbook` in your shell, you can then press your shell's auto-complete key (usually the Tab key) and it may display what the valid options are, or finish partial input.
+guide/src/cli/init.md
+     1→# The init command
+     2→
+     3→There is some minimal boilerplate that is the same for every new book. It's for
+     4→this purpose that mdBook includes an `init` command.
+    32→#### Tip: Generate chapters from SUMMARY.md
+    33→
+    34→When a `SUMMARY.md` file already exists, the `init` command will first parse it
+    35→and generate the missing files according to the paths used in the `SUMMARY.md`.
+    36→This allows you to think and create the whole structure of your book and then
+    37→let mdBook generate it for you.
+    39→#### Specify a directory
+    40→
+    41→The `init` command can take a directory as an argument to use as the book's root
+    42→instead of the current working directory.
+    48→#### `--theme`
+    49→
+    50→When you use the `--theme` flag, the default theme will be copied into a
+    51→directory called `theme` in your source directory so that you can modify it.
+    56→#### `--title`
+    57→
+    58→Specify a title for the book. If not supplied, an interactive prompt will ask for 
+    59→a title. 
+    65→#### `--ignore`
+    66→
+    67→Create a `.gitignore` file configured to ignore the `book` directory created when [building] a book. 
+    68→If not supplied, an interactive prompt will ask whether it should be created.
+    80→#### `--force`
+    81→
+    82→Skip the prompts to create a `.gitignore` and for the title for the book.
+guide/src/cli/serve.md
+     1→# The serve command
+     2→
+     3→The serve command is used to preview a book by serving it via HTTP at
+     4→`localhost:3000` by default: 
+    18→#### Specify a directory
+    19→
+    20→The `serve` command can take a directory as an argument to use as the book's
+    21→root instead of the current working directory.
+    27→### Server options
+    28→
+    29→The `serve` hostname defaults to `localhost`, and the port defaults to `3000`. Either option can be specified on the command line:
+    35→#### `--open`
+    36→
+    37→When you use the `--open` (`-o`) flag, mdbook will open the book in your
+    38→default web browser after starting the server.
+    40→#### `--dest-dir`
+    41→
+    42→The `--dest-dir` (`-d`) option allows you to change the output directory for the
+    43→book. Relative paths are interpreted relative to the current directory. If
+    44→not specified it will default to the value of the `build.build-dir` key in
+    45→`book.toml`, or to `./book`.
+    49→#### Specify exclude patterns
+    50→
+    51→The `serve` command will not automatically trigger a build for files listed in
+    52→the `.gitignore` file in the book root directory. The `.gitignore` file may
+    53→contain file patterns described in the [gitignore
+    54→documentation](https://git-scm.com/docs/gitignore). This can be useful for
+    55→ignoring temporary files created by some editors.
+guide/src/cli/test.md
+     1→# The test command
+     2→
+     3→When writing a book, you sometimes need to automate some tests. For example,
+     4→[The Rust Programming Book](https://doc.rust-lang.org/stable/book/) uses a lot
+     5→of code examples that could get outdated. Therefore it is very important for
+     6→them to be able to automatically test these code examples.
+    11→#### Disable tests on a code block
+    12→
+    13→rustdoc doesn't test code blocks which contain the `ignore` attribute:
+    31→#### Specify a directory
+    32→
+    33→The `test` command can take a directory as an argument to use as the book's root
+    34→instead of the current working directory.
+    40→#### `--library-path`
+    41→
+    42→The `--library-path` (`-L`) option allows you to add directories to the library
+    43→search path used by `rustdoc` when it builds and tests the examples. Multiple
+    44→directories can be specified with multiple options (`-L foo -L bar`) or with a
+    45→comma-delimited list (`-L foo,bar`). The path should point to the Cargo
+    46→[build cache](https://doc.rust-lang.org/cargo/guide/build-cache.html) `deps` directory that
+    47→contains the build output of your project. For example, if your Rust project's book is in a directory
+    48→named `my-book`, the following command would include the crate's dependencies when running `test`:
+    57→#### `--chapter`
+    58→
+    59→The `--chapter` (`-c`) option allows you to test a specific chapter of the
+    60→book using the chapter name or the relative path to the chapter.
+guide/src/cli/watch.md
+     1→# The watch command
+     2→
+     3→The `watch` command is useful when you want your book to be rendered on every
+     4→file change. You could repeatedly issue `mdbook build` every time a file is
+     5→changed. But using `mdbook watch` once will watch your files and will trigger a
+     6→build automatically whenever you modify a file; this includes re-creating
+     7→deleted files still mentioned in `SUMMARY.md`!
+     9→#### Specify a directory
+    10→
+    11→The `watch` command can take a directory as an argument to use as the book's
+    12→root instead of the current working directory.
+    18→#### `--open`
+    19→
+    20→When you use the `--open` (`-o`) option, mdbook will open the rendered book in
+    21→your default web browser.
+    23→#### `--dest-dir`
+    24→
+    25→The `--dest-dir` (`-d`) option allows you to change the output directory for the
+    26→book. Relative paths are interpreted relative to the current directory. If
+    27→not specified it will default to the value of the `build.build-dir` key in
+    28→`book.toml`, or to `./book`.
+    32→#### Specify exclude patterns
+    33→
+    34→The `watch` command will not automatically trigger a build for files listed in
+    35→the `.gitignore` file in the book root directory. The `.gitignore` file may
+    36→contain file patterns described in the [gitignore
+    37→documentation](https://git-scm.com/docs/gitignore). This can be useful for
+    38→ignoring temporary files created by some editors.
+guide/src/continuous-integration.md
+     1→# Running `mdbook` in continuous integration
+     2→
+     3→There are a variety of services such as [GitHub Actions] or [GitLab CI/CD] which can be used to test and deploy your book automatically.
+    12→## Installing mdBook
+    13→
+    14→There are several different strategies for installing mdBook.
+    15→The particular method depends on your needs and preferences.
+    17→### Pre-compiled binaries
+    18→
+    19→Perhaps the easiest method is to use the pre-compiled binaries found on the [GitHub Releases page][releases].
+    20→A simple approach would be to use the popular `curl` CLI tool to download the executable:
+    39→### Building from source
+    40→
+    41→Building from source will require having Rust installed.
+    42→Some services have Rust pre-installed, but if your service does not, you will need to add a step to install it.
+    67→## Running tests
+    68→
+    69→You may want to run tests using [`mdbook test`] every time you push a change or create a pull request.
+    70→This can be used to validate Rust code examples in the book.
+    83→## Deploying
+    84→
+    85→You may want to automatically deploy your book.
+    86→Some may want to do this every time a change is pushed, and others may want to only deploy when a specific release is tagged.
+   100→### 404 handling
+   101→
+   102→mdBook automatically generates a 404 page to be used for broken links.
+   103→The default output is a file named `404.html` at the root of the book.
+   104→Some services like [GitHub Pages] will automatically use this page for broken links.
+   105→For other services, you may want to consider configuring the web server to use this page as it will provide the reader navigation to get back to the book.
+guide/src/for_developers/README.md
+     1→# For developers
+     2→
+     3→While `mdbook` is mainly used as a command line tool, you can also import the
+     4→underlying libraries directly and use those to manage a book. It also has a fairly
+     5→flexible plugin mechanism, allowing you to create your own custom tooling and
+     6→consumers (often referred to as *backends*) if you need to do some analysis of
+     7→the book or render it in a different format.
+    17→## The build process
+    18→
+    19→The process of rendering a book project goes through several steps.
+    30→## Using `mdbook` as a library
+    31→
+    32→The `mdbook` binary is just a wrapper around the underlying mdBook crates,
+    33→exposing their functionality as a command-line program. If you want to
+    34→programmatically drive mdBook, you can use the [`mdbook-driver`] crate.
+    35→This can be used to add your own functionality or tweak the build process.
+guide/src/for_developers/backends.md
+     1→# Alternative backends
+     2→
+     3→A "backend" is simply a program which `mdbook` will invoke during the book
+     4→rendering process. This program is passed a JSON representation of the book and
+     5→configuration information via `stdin`. Once the backend receives this
+     6→information it is free to do whatever it wants.
+    13→## Setting up
+    14→
+    15→This page will step you through creating your own alternative backend in the form
+    16→of a simple word counting program. Although it will be written in Rust, there's
+    17→no reason why it couldn't be accomplished using something like Python or Ruby.
+    53→## Inspecting the book
+    54→
+    55→Now our backend has a copy of the book, lets count how many words are in each
+    56→chapter!
+    82→## Enabling the backend
+    83→
+    84→Now we've got the basics running, we want to actually use it. First, install the
+    85→program.
+   159→## Configuration
+   160→
+   161→Now imagine you don't want to count the number of words on a particular chapter
+   162→(it might be generated text/code, etc). The canonical way to do this is via the
+   163→usual `book.toml` configuration file by adding items to your `[output.foo]`
+   164→table.
+   219→## Output and signalling failure
+   220→
+   221→While it's nice to print word counts to the terminal when a book is built, it
+   222→might also be a good idea to output them to a file somewhere. `mdbook` tells a
+   223→backend where it should place any generated output via the `destination` field
+   224→in [`RenderContext`].
+   322→## Wrapping up
+   323→
+   324→Although contrived, hopefully this example was enough to show how you'd create
+   325→an alternative backend for `mdbook`. If you feel it's missing something, don't
+   326→hesitate to create an issue in the [issue tracker] so we can improve the user
+   327→guide.
+guide/src/for_developers/mdbook-wordcount/src/main.rs
+    12→fn main() {
+    40→fn count_words(ch: &Chapter) -> usize {
+    46→pub struct WordcountConfig {
+guide/src/for_developers/preprocessors.md
+     1→# Preprocessors
+     2→
+     3→A *preprocessor* is simply a bit of code which gets run immediately after the
+     4→book is loaded and before it gets rendered, allowing you to update and mutate
+     5→the book. Possible use cases are:
+    13→## Hooking into MDBook
+    14→
+    15→MDBook uses a fairly simple mechanism for discovering third party plugins.
+    16→A new table is added to `book.toml` (e.g. `[preprocessor.foo]` for the `foo`
+    17→preprocessor) and then `mdbook` will try to invoke the `mdbook-foo` program as
+    18→part of the build process.
+    46→## Hints for implementing a preprocessor
+    47→
+    48→By pulling in `mdbook-preprocessor` as a library, preprocessors can have access to the
+    49→existing infrastructure for dealing with books.
+    74→## Implementing a preprocessor with a different language
+    75→
+    76→The fact that mdBook utilizes stdin and stdout to communicate with the preprocessors makes it easy to implement them in a language other than Rust.
+    77→The following code shows how to implement a simple preprocessor in Python, which will modify the content of the first chapter.
+    78→The example below follows the configuration shown above with `preprocessor.foo.command` actually pointing to a Python script.
+guide/src/format/README.md
+     1→# Format
+     2→
+     3→In this section you will learn how to:
+guide/src/format/configuration/README.md
+     1→# Configuration
+guide/src/format/configuration/environment-variables.md
+     1→# Environment variables
+guide/src/format/configuration/general.md
+     1→# General configuration
+    31→## Supported configuration options
+    37→### General metadata
+    64→### Rust options
+    85→### Build options
+guide/src/format/configuration/preprocessors.md
+     1→# Configuring Preprocessors
+    26→## Custom preprocessor configuration
+    45→## Locking a preprocessor dependency to a renderer
+    55→## Provide your own command
+    67→### Optional preprocessors
+    79→## Require a certain order
+guide/src/format/configuration/renderers.md
+     1→# Configuring Renderers
+    20→## Output tables
+    59→### Custom backend commands
+    71→### Optional backends
+    84→## HTML renderer options
+   176→### `[output.html.print]`
+   191→### `[output.html.fold]`
+   206→### `[output.html.playground]`
+   230→### `[output.html.code]`
+   244→### `[output.html.search]`
+   286→#### `[output.html.search.chapter]`
+   300→### `[output.html.redirect]`
+   325→## Markdown renderer
+guide/src/format/example.rs
+     1→fn main() {
+guide/src/format/markdown.md
+     1→# Markdown
+     2→
+     3→mdBook's [parser](https://github.com/raphlinus/pulldown-cmark) adheres to the [CommonMark](https://commonmark.org/) specification with some extensions described below.
+     4→You can take a quick [tutorial](https://commonmark.org/help/tutorial/),
+     5→or [try out](https://spec.commonmark.org/dingus/) CommonMark in real time. A complete Markdown overview is out of scope for 
+     6→this documentation, but below is a high level overview of some of the basics. For a more in-depth experience, check out the
+     7→[Markdown Guide](https://www.markdownguide.org).
+     9→## Text and paragraphs
+    10→
+    11→Text is rendered relatively predictably: 
+    25→## Headings
+    26→
+    27→Headings use the `#` marker and should be on a line by themselves. More `#` mean smaller headings:
+    39→### A heading 
+    40→
+    41→Some text.
+    43→#### A smaller heading 
+    44→
+    45→More text.
+    47→## Lists
+    48→
+    49→Lists can be unordered or ordered. Ordered lists will order automatically:
+    69→## Links
+    70→
+    71→Linking to a URL or local file is easy:
+   108→## Images
+   109→
+   110→Including images is simply a matter of including a link to them, much like in the _Links_ section above. The following markdown
+   111→includes the Rust logo SVG image found in the `images` directory at the same level as this file:
+   127→## Extensions
+   128→
+   129→mdBook has several extensions beyond the standard CommonMark specification.
+   131→### Strikethrough
+   132→
+   133→Text may be rendered with a horizontal line through the center by wrapping the
+   134→text with one or two tilde characters on each side:
+   146→### Footnotes
+   147→
+   148→A footnote generates a small numbered link in the text which when clicked
+   149→takes the reader to the footnote text at the bottom of the item. The footnote
+   150→label is written similarly to a link reference with a caret at the front. The
+   151→footnote text is written like a link reference definition, with the text
+   152→following the label. Example:
+   171→### Tables
+   172→
+   173→Tables can be written using pipes and dashes to draw the rows and columns of
+   174→the table. These will be translated to HTML table matching the shape. Example:
+   191→### Task lists
+   192→
+   193→Task lists can be used as a checklist of items that have been completed.
+   194→Example:
+   208→### Smart punctuation
+   209→
+   210→Some ASCII punctuation sequences will be automatically turned into fancy Unicode
+   211→characters:
+   231→### Heading attributes
+   232→
+   233→Headings can have a custom HTML ID and classes. This lets you maintain the same ID even if you change the heading's text, it also lets you add multiple classes in the heading.
+   244→### Definition lists
+   245→
+   246→Definition lists can be used for things like glossary entries. The term is listed on a line by itself, followed by one or more definitions. Each definition must begin with a `:` (after 0-2 spaces).
+   279→### Admonitions
+   280→
+   281→An admonition is a special type of callout or notice block used to highlight important information. It is written as a blockquote with a special tag on the first line.
+guide/src/format/mathjax.md
+     1→# MathJax support
+     2→
+     3→mdBook has optional support for math equations through
+     4→[MathJax](https://www.mathjax.org/).
+    24→### Inline equations
+    25→Inline equations are delimited by `\\(` and `\\)`. So for example, to render the
+    26→following inline equation \\( \int x dx = \frac{x^2}{2} + C \\) you would write
+    27→the following:
+    28→```
+    29→\\( \int x dx = \frac{x^2}{2} + C \\)
+    30→```
+    32→### Block equations
+    33→Block equations are delimited by `\\[` and `\\]`. To render the following
+    34→equation
+guide/src/format/mdbook.md
+     1→# mdBook-specific features
+     2→
+     3→## Hiding code lines
+     4→
+     5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
+    74→## Rust playground
+    75→
+    76→Rust language code blocks will automatically get a play button (<i class="fas fa-play"></i>) which will execute the code and display the output just below the code block.
+    77→This works by sending the code to the [Rust Playground].
+   102→## Rust code block attributes
+   103→
+   104→Additional attributes can be included in Rust code blocks with comma, space, or tab-separated terms just after the language term. For example:
+   133→## Including files
+   134→
+   135→With the following syntax, you can include files into your book:
+   154→## Including portions of a file
+   155→Often you only need a specific part of the file, e.g. relevant lines for an
+   156→example. We support four different modes of partial includes:
+   215→## Including a file but initially hiding all except specified lines
+   216→
+   217→The `rustdoc_include` helper is for including code from external Rust files that contain complete
+   218→examples, but only initially showing particular lines specified with line numbers or anchors in the
+   219→same way as with `include`.
+   279→## Inserting runnable Rust files
+   280→
+   281→With the following syntax, you can insert runnable Rust files into your book:
+   310→## Controlling page \<title\>
+   311→
+   312→A chapter can set a \<title\> that is different from its entry in the table of
+   313→contents (sidebar) by including a `\{{#title ...}}` near the top of the page.
+   319→## HTML classes provided by mdBook
+   320→
+   321→<img class="right" src="images/rust-logo-blk.svg" alt="The Rust logo">
+   323→### `class="left"` and `"right"`
+   324→
+   325→These classes are provided by default, for inline HTML to float images.
+   331→### `class="hidden"`
+   332→
+   333→HTML tags with class `hidden` will not be shown.
+   341→## Font-Awesome icons
+   342→
+   343→mdBook includes a copy of version 6 of [Font Awesome Free's](https://fontawesome.com)
+   344→MIT-licensed SVG files. It emulates the `<i>` syntax, but converts the results
+   345→to inline SVG. Only the regular, solid, and brands icons are included; paid
+   346→features like the light icons are not.
+guide/src/format/summary.md
+     1→# SUMMARY.md
+     2→
+     3→The summary file is used by mdBook to know what chapters to include, in what
+     4→order they should appear, what their hierarchy is and where the source files
+     5→are. Without this file, there is no book.
+    12→### Structure
+    13→
+    14→1. ***Title*** - While optional, it's common practice to begin with a title, generally <code
+    15→   class="language-markdown"># Summary</code>. This is ignored by the parser however, and
+    16→   can be omitted.
+    17→   ```markdown
+    18→   # Summary
+    19→   ```
+    93→### Example
+    94→
+    95→Below is the markdown source for the `SUMMARY.md` for this guide, with the resulting table
+    96→of contents as rendered to the left.
+guide/src/format/theme/README.md
+     1→# Theme
+guide/src/format/theme/editor.md
+     1→# Editor
+    35→## Customizing the editor
+guide/src/format/theme/index-hbs.md
+     1→# index.hbs
+     9→## Data
+    41→## Handlebars helpers
+    46→### toc
+    80→### resource
+    90→### fa
+guide/src/format/theme/syntax-highlighting.md
+     1→# Syntax highlighting
+    17→## Supported languages
+    68→## Custom theme
+    82→## Improve default theme
+guide/src/guide/README.md
+     1→# User guide
+     2→
+     3→This user guide provides an introduction to basic concepts of using mdBook.
+guide/src/guide/creating.md
+     1→# Creating a book
+     2→
+     3→Once you have the `mdbook` CLI tool installed, you can use it to create and render a book.
+     5→## Initializing a book
+     6→
+     7→The `mdbook init` command will create a new directory containing an empty book for you to get started.
+     8→Give it the name of the directory that you want to create:
+    32→## Anatomy of a book
+    33→
+    34→A book is built from several files which define the settings and layout of the book.
+    36→### `book.toml`
+    37→
+    38→In the root of your book, there is a `book.toml` file which contains settings for describing how to build your book.
+    39→This is written in the [TOML markup language](https://toml.io/).
+    40→The default settings are usually good enough to get you started.
+    41→When you are interested in exploring more features and options that mdBook provides, check out the [Configuration chapter](../format/configuration/index.html) for more details.
+    50→### `SUMMARY.md`
+    51→
+    52→The next major part of a book is the summary file located at `src/SUMMARY.md`.
+    53→This file contains a list of all the chapters in the book.
+    54→Before a chapter can be viewed, it must be added to this list.
+    73→### Source files
+    74→
+    75→The content of your book is all contained in the `src` directory.
+    76→Each chapter is a separate Markdown file.
+    77→Typically, each chapter starts with a level 1 heading with the title of the chapter.
+    96→## Publishing a book
+    97→
+    98→Once you've written your book, you may want to host it somewhere for others to view.
+    99→The first step is to build the output of the book.
+   100→This can be done with the `mdbook build` command in the same directory where the `book.toml` file is located:
+guide/src/guide/installation.md
+     1→# Installation
+     2→
+     3→There are multiple ways to install the mdBook CLI tool.
+     4→Choose any one of the methods below that best suit your needs.
+     5→If you are installing mdBook for automatic deployment, check out the [continuous integration] chapter for more examples on how to install.
+     9→## Pre-compiled binaries
+    10→
+    11→Executable binaries are available for download on the [GitHub Releases page][releases].
+    12→Download the binary for your platform (Windows, macOS, or Linux) and extract the archive.
+    13→The archive contains an `mdbook` executable which you can run to build your books.
+    19→## Build from source using Rust
+    20→
+    21→To build the `mdbook` executable from source, you will first need to install Rust and Cargo.
+    22→Follow the instructions on the [Rust installation page].
+    23→mdBook currently requires at least Rust version 1.88.
+    41→### Installing the latest master version
+    42→
+    43→The version published to crates.io will ever so slightly be behind the version hosted on GitHub.
+    44→If you need the latest version you can build the git version of mdBook yourself.
+    45→Cargo makes this ***super easy***!
+    53→## Modifying and contributing
+    54→
+    55→If you are interested in making modifications to mdBook itself, check out the [Contributing Guide] for more information.
+guide/src/guide/reading.md
+     1→# Reading books
+     2→
+     3→This chapter gives an introduction on how to interact with a book produced by mdBook.
+     4→This assumes you are reading an HTML book.
+     5→The options and formatting will be different for other output formats such as PDF.
+    12→## Navigation
+    13→
+    14→There are several methods for navigating through the chapters of a book.
+    26→## Top menu bar
+    27→
+    28→The menu bar at the top of the page provides some icons for interacting with the book.
+    29→The icons displayed will depend on the settings of how the book was generated.
+    42→## Search
+    43→
+    44→Each book has a built-in search system.
+    45→Pressing the search icon <i class="fas fa-magnifying-glass"></i> in the menu bar, or pressing the <kbd>/</kbd> or <kbd>S</kbd> key on the keyboard will open an input box for entering search terms.
+    46→Typing some terms will show matching chapters and sections in real time.
+    54→## Code blocks
+    55→
+    56→mdBook books are often used for programming projects, and thus support highlighting code blocks and samples.
+    57→Code blocks may contain several different icons for interacting with them:
+guide/src/misc/contributors.md
+     1→# Contributors
+     2→
+     3→Here is a list of the contributors who have helped improving mdBook. Big
+     4→shout-out to them!
+src/cmd/build.rs
+     8→pub fn make_subcommand() -> Command {
+    17→pub fn execute(args: &ArgMatches) -> Result<()> {
+src/cmd/clean.rs
+    11→pub fn make_subcommand() -> Command {
+    19→pub fn execute(args: &ArgMatches) -> Result<()> {
+    36→/// Formats a number of bytes into a human readable SI-prefixed size.
+    37→/// Returns a tuple of `(quantity, units)`.
+    38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
+    45→#[derive(Debug)]
+    46→pub struct Clean {
+    52→impl Clean {
+    53→    fn new(dir: &PathBuf) -> Result<Clean> {
+    91→impl fmt::Display for Clean {
+    92→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+src/cmd/command_prelude.rs
+     7→pub trait CommandExt: Sized {
+     8→    fn _arg(self, arg: Arg) -> Self;
+    10→    fn arg_dest_dir(self) -> Self {
+    26→    fn arg_root_dir(self) -> Self {
+    37→    fn arg_open(self) -> Self {
+    41→    #[cfg(any(feature = "watch", feature = "serve"))]
+    42→    fn arg_watcher(self) -> Self {
+    56→impl CommandExt for Command {
+    57→    fn _arg(self, arg: Arg) -> Self {
+    62→pub fn set_dest_dir(args: &ArgMatches, book: &mut MDBook) {
+src/cmd/init.rs
+    12→pub fn make_subcommand() -> ClapCommand {
+    32→pub fn execute(args: &ArgMatches) -> Result<()> {
+    88→fn get_author_name() -> Option<String> {
+   102→fn request_book_title() -> Option<String> {
+   116→fn confirm() -> bool {
+src/cmd/mod.rs
+     1→//! Subcommand modules for the `mdbook` binary.
+     2→
+     3→pub mod build;
+     4→pub mod clean;
+     5→pub mod command_prelude;
+     6→pub mod init;
+     7→#[cfg(feature = "serve")]
+     8→pub mod serve;
+     9→pub mod test;
+    10→#[cfg(feature = "watch")]
+    11→pub mod watch;
+src/cmd/serve.rs
+    20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
+    23→pub fn make_subcommand() -> Command {
+    51→pub fn execute(args: &ArgMatches) -> Result<()> {
+   109→async fn serve(
+   110→    build_dir: PathBuf,
+   111→    address: SocketAddr,
+   112→    reload_tx: broadcast::Sender<Message>,
+   113→    file_404: &str,
+   114→) {
+   142→async fn websocket_connection(ws: WebSocket, reload_tx: broadcast::Sender<Message>) {
+src/cmd/test.rs
+     9→pub fn make_subcommand() -> Command {
+    35→pub fn execute(args: &ArgMatches) -> Result<()> {
+src/cmd/watch/native.rs
+    11→pub fn rebuild_on_change(
+    12→    book_dir: &Path,
+    13→    update_config: &dyn Fn(&mut MDBook),
+    14→    post_build: &dyn Fn(),
+    15→) {
+   107→fn remove_ignored_files(book_root: &Path, paths: &[PathBuf]) -> Vec<PathBuf> {
+   132→fn filter_ignored_files(ignore: Gitignore, paths: &[PathBuf]) -> Vec<PathBuf> {
+src/cmd/watch/poller.rs
+    17→/// Calls the closure when a book source file is changed, blocking indefinitely.
+    18→pub fn rebuild_on_change(
+    19→    book_dir: &Path,
+    20→    update_config: &dyn Fn(&mut MDBook),
+    21→    post_build: &dyn Fn(),
+    22→) {
+    78→struct PathData {
+    86→struct Watcher {
+    95→impl Watcher {
+    96→    fn new(book_root: &Path) -> Watcher {
+   124→    fn set_roots(&mut self, book: &MDBook) {
+   153→    fn scan(&mut self) -> Vec<PathBuf> {
+src/cmd/watch.rs
+     8→mod native;
+     9→mod poller;
+    12→pub fn make_subcommand() -> Command {
+    21→pub enum WatcherKind {
+    26→impl WatcherKind {
+    27→    pub fn from_str(s: &str) -> WatcherKind {
+    37→pub fn execute(args: &ArgMatches) -> Result<()> {
+    62→pub fn rebuild_on_change(
+    63→    kind: WatcherKind,
+    64→    book_dir: &Path,
+    65→    update_config: &dyn Fn(&mut MDBook),
+    66→    post_build: &dyn Fn(),
+    67→) {
+    74→fn find_gitignore(book_root: &Path) -> Option<PathBuf> {
+src/main.rs
+    14→mod cmd;
+    16→const VERSION: &str = concat!("v", clap::crate_version!());
+    18→fn main() {
+    57→/// Create a list of valid arguments and sub-commands
+    58→fn create_clap_command() -> Command {
+    93→fn init_logger() {
+   126→fn get_book_dir(args: &ArgMatches) -> PathBuf {
+   139→fn open<P: AsRef<OsStr>>(path: P) {
