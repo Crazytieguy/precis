@@ -1341,10 +1341,11 @@ fn monotonicity_invariant() {
         for file in &files {
             let source = std::fs::read_to_string(file).unwrap();
             let relative = file.strip_prefix(&root).unwrap_or(file);
+            let symbols = precis::parse::extract_symbols(file, &source);
             tested_files += 1;
             let mut prev_words = 0;
             for level in 0..=format::MAX_LEVEL {
-                let output = format::render_file(level, file, &root, &source);
+                let output = format::render_file_with_symbols(level, file, &root, &source, &symbols);
                 let words = format::count_words(&output);
                 assert!(
                     words >= prev_words,
