@@ -1,0 +1,74 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 250 → level 1 (193 words)
+
+CHANGELOG.md
+     1→# Changelog
+     3→## 2.4.0
+     9→## 2.3.0
+    16→## 2.2.1
+    21→## 2.2.0
+    26→## 2.1.0
+    34→## 2.0.2
+    44→## 2.0.1
+    56→## 1.2.3
+    61→## 2.0.0
+    75→## 1.2.2
+    84→## 1.2.1
+    94→## 1.2.0
+   100→## 1.1.0
+   105→## 1.0.4
+   110→## 1.0.3
+   117→## 1.0.2
+   122→## 1.0.1
+   127→## 1.0.0
+   132→## 0.2.10
+   140→## 0.2.9
+   147→## 0.2.8
+   152→## 0.2.7
+   158→## 0.2.6
+   163→## 0.2.5
+   168→## 0.2.4
+   173→## 0.2.3
+   178→## 0.2.2
+   185→## 0.2.1
+   191→## 0.2.0
+   198→## 0.1.0
+README.md
+     5→# Tomli
+    32→## Intro<a name="intro"></a>
+    50→## Installation<a name="installation"></a>
+    56→## Usage<a name="usage"></a>
+    58→### Parse a TOML string<a name="parse-a-toml-string"></a>
+    79→### Parse a TOML file<a name="parse-a-toml-file"></a>
+    92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
+   106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
+   123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
+   152→## FAQ<a name="faq"></a>
+   154→### Why this parser?<a name="why-this-parser"></a>
+   167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
+   177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
+   183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
+   201→## Performance<a name="performance"></a>
+   207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
+   230→### Pure Python<a name="pure-python"></a>
+fuzzer/fuzz.py
+    20→def test_one_input
+    53→def print_err
+    59→def normalize_toml_obj
+    71→def main
+profiler/profiler_script.py
+scripts/use_setuptools.py
+    12→def use_setuptools
+setup.py
+src/tomli/__init__.py
+src/tomli/_parser.py
+src/tomli/_re.py
+src/tomli/_types.py
+tomllib.md
+     1→# `tomllib` – Tomli in the standard library
+    13→## Converting Tomli to tomllib
+    15→### Sync status
+    20→### Steps to convert

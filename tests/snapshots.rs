@@ -1264,6 +1264,11 @@ fn monotonicity_invariant() {
         ("ts-pattern-root", "ts-pattern"),                // TS + JS + Markdown (8 files)
         ("typeguard-root", "typeguard"),                  // Python + Markdown (16 files)
         ("mdbook-root", "mdbook"),                        // Markdown + TOML (40+ files)
+        ("once_cell-root", "once_cell"),                  // Rust + Markdown (10 files)
+        ("thiserror-root", "thiserror"),                  // Rust + Markdown (9 files)
+        ("react-hot-toast-root", "react-hot-toast"),      // TSX + Markdown (15 files)
+        ("humanize-root", "humanize"),                    // Python + Markdown (18 files)
+        ("tomli-root", "tomli"),                          // Python + Markdown (12 files)
     ];
     let mut tested_files = 0;
     for (name, subpath) in fixtures {
@@ -1583,3 +1588,30 @@ budget_test!(budget_mdbook_root_level0, "mdbook", 130);
 budget_test!(budget_mdbook_root_level1, "mdbook", 1000);
 budget_test!(budget_mdbook_root_level3, "mdbook", 5000);
 budget_test!(budget_mdbook_root_level4, "mdbook", 22000);
+
+budget_test!(budget_once_cell_root_level0, "once_cell", 15);
+budget_test!(budget_once_cell_root_level1, "once_cell", 1500);
+budget_test!(budget_once_cell_root_level2, "once_cell", 3000);
+budget_test!(budget_once_cell_root_level3, "once_cell", 6000);
+budget_test!(budget_once_cell_root_level5, "once_cell", 10000);
+
+budget_test!(budget_thiserror_root_level0, "thiserror", 30);
+budget_test!(budget_thiserror_root_level1, "thiserror", 500);
+budget_test!(budget_thiserror_root_level2, "thiserror", 1500);
+budget_test!(budget_thiserror_root_level4, "thiserror", 2500);
+budget_test!(budget_thiserror_root_level5, "thiserror", 5000);
+
+budget_test!(budget_react_hot_toast_root_level0, "react-hot-toast", 50);
+budget_test!(budget_react_hot_toast_root_level1, "react-hot-toast", 200);
+budget_test!(budget_react_hot_toast_root_level2, "react-hot-toast", 1000);
+budget_test!(budget_react_hot_toast_root_level5, "react-hot-toast", 2000);
+
+budget_test!(budget_humanize_root_level0, "humanize", 20);
+budget_test!(budget_humanize_root_level1, "humanize", 120);
+budget_test!(budget_humanize_root_level2, "humanize", 600);
+budget_test!(budget_humanize_root_level4, "humanize", 3500);
+
+budget_test!(budget_tomli_root_level0, "tomli", 15);
+budget_test!(budget_tomli_root_level1, "tomli", 250);
+budget_test!(budget_tomli_root_level2, "tomli", 1500);
+budget_test!(budget_tomli_root_level4, "tomli", 3000);
