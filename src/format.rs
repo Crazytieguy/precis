@@ -549,9 +549,19 @@ fn render_symbols_with_docs(
             }
             // Markdown: include body text after headings.
             // Headings are always public, so this is controlled by with_docs only.
+            // When first_line_only is true, show just the first non-blank content
+            // line after each heading (parallel to first-line doc comments for code).
             if show_docs && lang == Some(Lang::Markdown) {
-                let content_end = markdown_content_end(symbols, sym_idx, &lines, policy.expand_types);
                 let heading_end = (sym.end_line - 1).max(sym_line_0 + 1);
+                let content_end = if policy.first_line_only {
+                    let mut idx = heading_end;
+                    while idx < lines.len() && lines[idx].trim().is_empty() {
+                        idx += 1;
+                    }
+                    if idx < lines.len() { idx + 1 } else { heading_end }
+                } else {
+                    markdown_content_end(symbols, sym_idx, &lines, policy.expand_types)
+                };
                 for (i, line) in lines
                     .iter()
                     .enumerate()

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 3000 → level 5 (2131 words)
+budget: 3000 → level 5 (2087 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -60,17 +60,9 @@ README.md
      8→# Overview
      9→
     10→`once_cell` provides two new cell-like types, `unsync::OnceCell` and `sync::OnceCell`. `OnceCell`
-    11→might store arbitrary non-`Copy` types, can be assigned to at most once and provide direct access
-    12→to the stored contents. In a nutshell, API looks *roughly* like this:
     47→# Related crates
     48→
     49→* [double-checked-cell](https://github.com/niklasf/double-checked-cell)
-    50→* [lazy-init](https://crates.io/crates/lazy-init)
-    51→* [lazycell](https://crates.io/crates/lazycell)
-    52→* [mitochondria](https://crates.io/crates/mitochondria)
-    53→* [lazy_static](https://crates.io/crates/lazy_static)
-    54→* [async_once_cell](https://crates.io/crates/async_once_cell)
-    55→* [generic_once_cell](https://crates.io/crates/generic_once_cell) (bring your own mutex)
 src/imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
     20→unsafe impl<T: Sync + Send> Sync for OnceCell<T> {}

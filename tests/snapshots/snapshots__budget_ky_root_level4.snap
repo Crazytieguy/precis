@@ -2,14 +2,23 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 7400 → level 6 (6464 words)
+budget: 7400 → level 7 (7167 words)
 
 readme.md
     20→## Benefits over plain `fetch`
+    21→
+    22→- Simpler API
     33→## Install
+    34→
+    35→```sh
     39→###### CDN
+    40→
+    41→- [jsdelivr](https://cdn.jsdelivr.net/npm/ky/+esm)
     45→## Usage
+    46→
+    47→```js
     85→## API
+    86→
     87→### ky(input, options?)
    122→### ky.get(input, options?)
    123→### ky.post(input, options?)
@@ -18,62 +27,167 @@ readme.md
    126→### ky.head(input, options?)
    127→### ky.delete(input, options?)
    133→#### input
+   134→
+   135→Type: `string` | `URL` | `Request`
    141→#### options
+   142→
+   143→Type: `object`
    147→##### method
+   148→
+   149→Type: `string`\
    156→##### json
+   157→
+   158→Type: `object` and any other value accepted by [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
    162→##### searchParams
+   163→
+   164→Type: `string | object<string, string | number | boolean | undefined> | Array<Array<string | number | boolean>> | URLSearchParams`\
    173→##### prefixUrl
+   174→
+   175→Type: `string | URL`
    197→##### retry
+   198→
+   199→Type: `object | number`\
    327→##### timeout
+   328→
+   329→Type: `number | false`\
    335→##### hooks
+   336→
+   337→Type: `object<string, Function[]>`\
    342→###### hooks.beforeRequest
+   343→
+   344→Type: `Function[]`\
    373→###### hooks.beforeRetry
+   374→
+   375→Type: `Function[]`\
    446→###### hooks.beforeError
+   447→
+   448→Type: `Function[]`\
    485→###### hooks.afterResponse
+   486→
+   487→Type: `Function[]`\
    553→##### throwHttpErrors
+   554→
+   555→Type: `boolean | (status: number) => boolean`\
    566→##### onDownloadProgress
+   567→
+   568→Type: `Function`
    592→##### onUploadProgress
+   593→
+   594→Type: `Function`
    619→##### parseJson
+   620→
+   621→Type: `Function`\
    639→##### stringifyJson
+   640→
+   641→Type: `Function`\
    664→##### fetch
+   665→
+   666→Type: `Function`\
    683→##### context
+   684→
+   685→Type: `object<string, unknown>`\
    745→### ky.extend(defaultOptions)
+   746→
+   747→Create a new `ky` instance with some defaults overridden with your own.
    811→### ky.create(defaultOptions)
+   812→
+   813→Create a new Ky instance with complete new defaults.
    829→#### defaultOptions
+   830→
+   831→Type: `object`
    833→### ky.stop
+   834→
+   835→A `Symbol` that can be returned by a `beforeRetry` hook to stop the retry. This will also short circuit the remaining `beforeRetry` hooks.
    864→### ky.retry(options?)
+   865→
+   866→Force a retry from an `afterResponse` hook.
    870→#### options
+   871→
+   872→Type: `object`
    874→##### delay
+   875→
+   876→Type: `number`
    882→##### code
+   883→
+   884→Type: `string`
    895→##### cause
+   896→
+   897→Type: `Error`
    913→##### request
+   914→
+   915→Type: `Request`
    923→#### Example
+   924→
+   925→```js
   1000→### HTTPError
+  1001→
+  1002→Exposed for `instanceof` checks. The error has a `response` property with the [`Response` object](https://developer.mozilla.org/en-US/docs/Web/API/Response), `request` property with the [`Request` object](https://developer.mozilla.org/en-US/docs/Web/API/Request), and `options` property with normalized options (either passed to `ky` when creating an instance with `ky.create()` or directly when performing the request).
   1046→### TimeoutError
+  1047→
+  1048→The error thrown when the request times out. It has a `request` property with the [`Request` object](https://developer.mozilla.org/en-US/docs/Web/API/Request).
   1050→## Tips
+  1051→
   1052→### Sending form data
   1080→#### Modifying FormData in hooks
+  1081→
+  1082→If you need to modify FormData in a `beforeRequest` hook (for example, to transform field names), delete the `Content-Type` header before creating a new `Request`:
   1109→### Setting a custom `Content-Type`
+  1110→
+  1111→Ky automatically sets an appropriate [`Content-Type`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) header for each request based on the data in the request body. However, some APIs require custom, non-standard content types, such as `application/x-amz-json-1.1`. Using the `headers` option, you can manually override the content type.
   1129→### Cancellation
+  1130→
+  1131→Fetch (and hence Ky) has built-in support for request cancellation through the [`AbortController` API](https://developer.mozilla.org/en-US/docs/Web/API/AbortController). [Read more.](https://developers.google.com/web/updates/2017/09/abortable-fetch)
   1156→### Proxy support (Node.js)
+  1157→
   1158→#### Native proxy support
   1177→#### Using ProxyAgent
+  1178→
+  1179→For more control, use `ProxyAgent` or `EnvHttpProxyAgent` with the `dispatcher` option.
   1209→### HTTP/2 support (Node.js)
+  1210→
+  1211→Undici supports HTTP/2, but it's not enabled by default. Create a custom dispatcher with the `allowH2` option:
   1249→### Consuming Server-Sent Events (SSE)
+  1250→
+  1251→Use [`parse-sse`](https://github.com/sindresorhus/parse-sse):
   1264→### Extending types
+  1265→
+  1266→Ky's TypeScript types are intentionally defined as type aliases rather than interfaces to prevent global module augmentation, which can lead to type conflicts and unexpected behavior across your codebase. If you need to add custom properties to Ky's types like `KyResponse` or `HTTPError`, create local wrapper types instead:
   1292→## FAQ
+  1293→
   1294→#### How do I use this in Node.js?
   1298→#### How do I use this with a web app (React, Vue.js, etc.) that uses server-side rendering (SSR)?
+  1299→
+  1300→Same as above.
   1302→#### How do I test a browser library that uses this?
+  1303→
+  1304→Either use a test runner that can run in the browser, like Mocha, or use [AVA](https://avajs.dev) with `ky-universal`. [Read more.](https://github.com/sindresorhus/ky-universal#faq)
   1306→#### How do I use this without a bundler like Webpack?
+  1307→
+  1308→Make sure your code is running as a JavaScript module (ESM), for example by using a `<script type="module">` tag in your HTML document. Then Ky can be imported directly by that module without a bundler or other tools.
   1321→#### How is it different from [`got`](https://github.com/sindresorhus/got)
+  1322→
+  1323→Got is maintained by the same people as Ky, so you probably want Ky instead. It's smaller, works in the browser too, and is more stable since it's built on Fetch.
   1325→#### How is it different from [`axios`](https://github.com/axios/axios)?
+  1326→
+  1327→See my answer [here](https://twitter.com/sindresorhus/status/1037763588826398720).
   1329→#### How is it different from [`r2`](https://github.com/mikeal/r2)?
+  1330→
+  1331→See my answer in [#10](https://github.com/sindresorhus/ky/issues/10).
   1333→#### What does `ky` mean?
+  1334→
+  1335→It's just a random short npm package name I managed to get. It does, however, have a meaning in Japanese:
   1339→## Browser support
+  1340→
+  1341→The latest version of Chrome, Firefox, and Safari.
   1343→## Node.js support
+  1344→
+  1345→Node.js 18 and later.
   1347→## Related
+  1348→
+  1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
   1352→## Maintainers
+  1353→
+  1354→- [Sindre Sorhus](https://github.com/sindresorhus)
 source/core/Ky.ts
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {
@@ -101,6 +215,7 @@ source/core/constants.ts
     58→export const maxSafeTimeout = 2_147_483_647;
     61→export const usualFormBoundarySize = new TextEncoder().encode('------WebKitFormBoundaryaxpyiPgbbPti10Rw').length;
     63→export const stop = Symbol('stop');
+    66→Options for forcing a retry via `ky.retry()`.
     68→export type ForceRetryOptions = {
     69→	/**
     70→	Custom delay in milliseconds before retrying.
@@ -177,21 +292,30 @@ source/core/constants.ts
    141→	*/
    142→	request?: Request;
    143→};
+   146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    148→export class RetryMarker {
    149→	constructor(public options?: ForceRetryOptions) {}
+   153→Force a retry from an `afterResponse` hook.
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys: KyOptionsRegistry = {
    256→export const vendorSpecificOptions = {
    265→export const requestOptionsRegistry = {
 source/errors/ForceRetryError.ts
+     4→/**
      5→Internal error used to signal a forced retry from afterResponse hooks.
+     6→This is thrown when a user returns ky.retry() from an afterResponse hook.
+     7→*/
      8→export class ForceRetryError extends Error {
     14→	constructor(options?: ForceRetryOptions) {
 source/errors/HTTPError.ts
      5→export class HTTPError<T = unknown> extends Error {
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
 source/errors/NonError.ts
+     1→/**
      2→Wrapper for non-Error values that were thrown.
+     3→
+     4→In JavaScript, any value can be thrown (not just Error instances). This class wraps such values to ensure consistent error handling.
+     5→*/
      6→export class NonError extends Error {
     10→	constructor(value: unknown) {
 source/errors/TimeoutError.ts
@@ -707,7 +831,10 @@ source/types/options.ts
     23→	totalBytes: number;
     24→};
     27→export type KyHeadersInit = NonNullable<RequestInit['headers']> | Record<string, string | undefined>;
+    29→/**
     30→Custom Ky options
+    31→*/
+    32→
     33→export type KyOptions = {
     34→	/**
     35→	Shortcut for sending JSON. Use this instead of the `body` option.
@@ -976,9 +1103,15 @@ source/types/options.ts
    298→	*/
    299→	context?: Record<string, unknown>;
    300→};
+   302→/**
    303→Each key from KyOptions is present and set to `true`.
+   304→
+   305→This type is used for identifying and working with the known keys in KyOptions.
+   306→*/
    307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
+   309→/**
    310→Options are the same as `window.fetch`, except for the KyOptions
+   311→*/
    312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
    358→export type InternalOptions = Required<
    359→Omit<Options, 'hooks' | 'retry' | 'context' | 'throwHttpErrors'>,
@@ -991,7 +1124,9 @@ source/types/options.ts
    366→	context: Record<string, unknown>;
    367→	throwHttpErrors: boolean | ((status: number) => boolean);
    368→};
+   370→/**
    371→Normalized options passed to the `fetch` call and the `beforeRequest` hooks.
+   372→*/
    373→export interface NormalizedOptions extends RequestInit { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
 source/types/request.ts
      1→export type KyRequest<T = unknown> = {
@@ -1220,9 +1355,13 @@ source/utils/timeout.ts
     13→	options: TimeoutOptions,
     14→): Promise<Response> {
 source/utils/type-guards.ts
+     6→Type guard to check if an error is a Ky error.
     27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
+    32→Type guard to check if an error is an HTTPError.
     49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
+    54→Type guard to check if an error is a TimeoutError.
     71→export function isTimeoutError(error: unknown): error is TimeoutError {
+    76→Type guard to check if an error is a ForceRetryError.
     98→export function isForceRetryError(error: unknown): error is ForceRetryError {
 source/utils/types.ts
      1→export type Mutable<T> = {

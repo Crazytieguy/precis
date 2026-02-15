@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 → level 4 (1128 words)
+budget: 2000 → level 5 (1474 words)
 
 .commitlintrc.js
 .eslintrc.js
@@ -91,41 +91,99 @@ CHANGELOG.md
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
      3→# Contributing
+     4→
      5→## Code of Conduct
      9→## Reporting Bugs
+    10→
+    11→Before submitting a new bug report please search for an existing or similar report.
     17→## Pull Request Conventions
+    18→
     19→### Commits
     30→### Test Coverage
+    31→
+    32→Pull requests made against this repo will run `npm test` automatically.  Please make sure tests pass locally before submitting a PR.
     36→### Linting
+    37→
+    38→Linting is also done automatically once tests pass.  `npm run lintfix` will fix most linting errors automatically.
     42→## What _not_ to contribute?
+    43→
     44→### Dependencies
     48→### Tools/Automation
+    49→
+    50→Our core team is responsible for the maintenance of the tooling/automation in this project and we ask contributors to not make changes to these when contributing (e.g. `.github/*`, `.eslintrc.json`, `.licensee.json`).  Most of those files also have a header at the top to remind folks they are automatically generated.  Pull requests that alter these will not be accepted.
 README.md
      1→semver(1) -- The semantic versioner for npm
+     3→
      4→## Install
     10→## Usage
+    11→
+    12→As a node module:
    139→## Versions
+   140→
+   141→A "version" is described by the `v2.0.0` specification found at
    148→## Ranges
+   149→
+   150→A `version range` is a set of `comparators` that specify versions
    184→### Prerelease Tags
+   185→
+   186→If a version has a prerelease tag (for example, `1.2.3-alpha.3`) then
    219→#### Prerelease Identifiers
+   220→
+   221→The method `.inc` takes an additional `identifier` string argument that
    250→#### Prerelease Identifier Base
+   251→
+   252→The method `.inc` takes an optional parameter 'identifierBase' string
    279→### Advanced Range Syntax
+   280→
+   281→Advanced range syntax desugars to primitive comparators in
    287→#### Hyphen Ranges `X.Y.Z - A.B.C`
+   288→
+   289→Specifies an inclusive set.
    306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
+   307→
+   308→Any of `X`, `x`, or `*` may be used to "stand in" for one of the
    324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
+   325→
+   326→Allows patch-level changes if a minor version is specified on the
    341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
+   342→
+   343→Allows changes that do not modify the left-most non-zero element in the
    384→### Range Grammar
+   385→
+   386→Putting all this together, here is a Backus-Naur grammar for ranges,
    408→## Functions
+   409→
+   410→All methods and classes take a final `options` object argument.  All
    453→### Comparison
+   454→
+   455→* `gt(v1, v2)`: `v1 > v2`
    478→### Sorting
+   479→
+   480→* `sort(versions)`: Returns a sorted array of versions based on the `compareBuild` 
    485→### Comparators
+   486→
+   487→* `intersects(comparator)`: Return true if the comparators intersect
    489→### Ranges
+   490→
+   491→* `validRange(range)`: Return the valid range or null if it's not valid.
    531→### Coercion
+   532→
+   533→* `coerce(version, options)`: Coerces a string to semver if possible
    558→### Clean
+   559→
+   560→* `clean(version)`: Clean a string to be a valid semver if possible
    576→## Constants
+   577→
+   578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
    580→### `RELEASE_TYPES`
+   581→
+   582→- major
    600→### `SEMVER_SPEC_VERSION`
+   601→
+   602→2.0.0
    610→## Exported Modules
+   611→
+   612→<!--
 SECURITY.md
 bin/semver.js
      8→const argv = process.argv.slice(2)

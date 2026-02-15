@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 5000 → level 5 (2682 words)
+budget: 5000 → level 5 (2653 words)
 
 Changelog.md
      1→# Changelog
@@ -186,24 +186,12 @@ docs/summary.md
      3→## Guides
      4→
      5→- [Getting Started](./guides/01-getting-started.md)
-     6→- [Validating Data](./guides/02-validating-data.md)
-     7→- [Coercing Data](./guides/03-coercing-data.md)
-     8→- [Refining Validation](./guides/04-refining-validation.md)
-     9→- [Handling Errors](./guides/05-handling-errors.md)
-    10→- [Using TypeScript](./guides/06-using-typescript.md)
     12→## API Reference
     13→
     14→- [Core](./reference/core.md)
-    15→- [Types](./reference/types.md)
-    16→- [Refinements](./reference/refinements.md)
-    17→- [Coercions](./reference/coercions.md)
-    18→- [Utilities](./reference/utilities.md)
-    19→- [Errors](./reference/errors.md)
-    20→- [TypeScript](./reference/typescript.md)
     22→## Resources
     23→
     24→- [FAQ](./resources/faq.md)
-    25→- [Links](./resources/links.md)
 rollup.config.js
 src/error.ts
      5→export type Failure = {

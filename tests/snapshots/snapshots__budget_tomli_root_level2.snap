@@ -2,40 +2,99 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1500 → level 5 (1199 words)
+budget: 1500 → level 6 (1290 words)
 
 CHANGELOG.md
      1→# Changelog
+     2→
      3→## 2.4.0
      9→## 2.3.0
+    10→
+    11→- Added
     16→## 2.2.1
+    17→
+    18→- Fixed
     21→## 2.2.0
+    22→
+    23→- Added
     26→## 2.1.0
+    27→
+    28→- Deprecated
     34→## 2.0.2
+    35→
+    36→- Removed
     44→## 2.0.1
+    45→
+    46→- Improved
     56→## 1.2.3
+    57→
+    58→- Fixed
     61→## 2.0.0
+    62→
+    63→- Removed
     75→## 1.2.2
+    76→
+    77→- Fixed
     84→## 1.2.1
+    85→
+    86→- Fixed
     94→## 1.2.0
+    95→
+    96→- Deprecated
    100→## 1.1.0
+   101→
+   102→- Added
    105→## 1.0.4
+   106→
+   107→- Performance
    110→## 1.0.3
+   111→
+   112→- Fixed
    117→## 1.0.2
+   118→
+   119→- Performance
    122→## 1.0.1
+   123→
+   124→- Performance
    127→## 1.0.0
+   128→
+   129→- Fixed
    132→## 0.2.10
+   133→
+   134→- Fixed
    140→## 0.2.9
+   141→
+   142→- Fixed
    147→## 0.2.8
+   148→
+   149→- Performance
    152→## 0.2.7
+   153→
+   154→- Added
    158→## 0.2.6
+   159→
+   160→- Performance
    163→## 0.2.5
+   164→
+   165→- Fixed
    168→## 0.2.4
+   169→
+   170→- Fixed
    173→## 0.2.3
+   174→
+   175→- Fixed
    178→## 0.2.2
+   179→
+   180→- Added
    185→## 0.2.1
+   186→
+   187→- Fixed
    191→## 0.2.0
+   192→
+   193→- Changed
    198→## 0.1.0
+   199→
+   200→- Added
 README.md
      5→# Tomli
      6→
@@ -163,6 +222,7 @@ scripts/use_setuptools.py
     12→def use_setuptools() -> None:
 setup.py
 src/tomli/__init__.py
+     1→# SPDX-License-Identifier: MIT
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
 src/tomli/_parser.py

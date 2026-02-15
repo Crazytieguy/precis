@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 → level 7 (3825 words)
+budget: 4000 → level 7 (3469 words)
 
 CHANGELOG.md
      1→# neverthrow
@@ -62,61 +62,9 @@ README.md
     19→## Table Of Contents
     20→
     21→* [Installation](#installation)
-    22→* [Recommended: Use `eslint-plugin-neverthrow`](#recommended-use-eslint-plugin-neverthrow)
-    23→* [Top-Level API](#top-level-api)
-    24→* [API Documentation](#api-documentation)
-    25→  + [Synchronous API (`Result`)](#synchronous-api-result)
-    26→    - [`ok`](#ok)
-    27→    - [`err`](#err)
-    28→    - [`Result.isOk` (method)](#resultisok-method)
-    29→    - [`Result.isErr` (method)](#resultiserr-method)
-    30→    - [`Result.map` (method)](#resultmap-method)
-    31→    - [`Result.mapErr` (method)](#resultmaperr-method)
-    32→    - [`Result.unwrapOr` (method)](#resultunwrapor-method)
-    33→    - [`Result.andThen` (method)](#resultandthen-method)
-    34→    - [`Result.asyncAndThen` (method)](#resultasyncandthen-method)
-    35→    - [`Result.orElse` (method)](#resultorelse-method)
-    36→    - [`Result.match` (method)](#resultmatch-method)
-    37→    - [`Result.asyncMap` (method)](#resultasyncmap-method)
-    38→    - [`Result.andTee` (method)](#resultandtee-method)
-    39→    - [`Result.orTee` (method)](#resultortee-method)
-    40→    - [`Result.andThrough` (method)](#resultandthrough-method)
-    41→    - [`Result.asyncAndThrough` (method)](#resultasyncandthrough-method)
-    42→    - [`Result.fromThrowable` (static class method)](#resultfromthrowable-static-class-method)
-    43→    - [`Result.combine` (static class method)](#resultcombine-static-class-method)
-    44→    - [`Result.combineWithAllErrors` (static class method)](#resultcombinewithallerrors-static-class-method)
-    45→    - [`Result.safeUnwrap()`](#resultsafeunwrap)
-    46→  + [Asynchronous API (`ResultAsync`)](#asynchronous-api-resultasync)
-    47→    - [`okAsync`](#okasync)
-    48→    - [`errAsync`](#errasync)
-    49→    - [`ResultAsync.fromThrowable` (static class method)](#resultasyncfromthrowable-static-class-method)
-    50→    - [`ResultAsync.fromPromise` (static class method)](#resultasyncfrompromise-static-class-method)
-    51→    - [`ResultAsync.fromSafePromise` (static class method)](#resultasyncfromsafepromise-static-class-method)
-    52→    - [`ResultAsync.map` (method)](#resultasyncmap-method)
-    53→    - [`ResultAsync.mapErr` (method)](#resultasyncmaperr-method)
-    54→    - [`ResultAsync.unwrapOr` (method)](#resultasyncunwrapor-method)
-    55→    - [`ResultAsync.andThen` (method)](#resultasyncandthen-method)
-    56→    - [`ResultAsync.orElse` (method)](#resultasyncorelse-method)
-    57→    - [`ResultAsync.match` (method)](#resultasyncmatch-method)
-    58→    - [`ResultAsync.andTee` (method)](#resultasyncandtee-method)
-    59→    - [`ResultAsync.orTee` (method)](#resultasyncortee-method)
-    60→    - [`ResultAsync.andThrough` (method)](#resultasyncandthrough-method)
-    61→    - [`ResultAsync.combine` (static class method)](#resultasynccombine-static-class-method)
-    62→    - [`ResultAsync.combineWithAllErrors` (static class method)](#resultasynccombinewithallerrors-static-class-method)
-    63→    - [`ResultAsync.safeUnwrap()`](#resultasyncsafeunwrap)
-    64→  + [Utilities](#utilities)
-    65→    - [`fromThrowable`](#fromthrowable)
-    66→    - [`fromAsyncThrowable`](#fromasyncthrowable)
-    67→    - [`fromPromise`](#frompromise)
-    68→    - [`fromSafePromise`](#fromsafepromise)
-    69→    - [`safeTry`](#safetry)
-    70→  + [Testing](#testing)
-    71→* [A note on the Package Name](#a-note-on-the-package-name)
     73→## Installation
     74→
     75→```sh
-    76→> npm install neverthrow
-    77→```
     79→## Recommended: Use `eslint-plugin-neverthrow`
     80→
     81→As part of `neverthrow`s [bounty program](https://github.com/supermacro/neverthrow/issues/314), user [mdbetancourt](https://github.com/mdbetancourt) created [`eslint-plugin-neverthrow`](https://github.com/mdbetancourt/eslint-plugin-neverthrow) to ensure that errors are not gone unhandled.
@@ -126,7 +74,6 @@ README.md
    139→## API Documentation
    140→
    141→### Synchronous API (`Result`)
-   142→
    143→#### `ok`
    144→
    145→Constructs an `Ok` variant of `Result`
@@ -166,11 +113,9 @@ README.md
    551→#### `Result.andTee` (method)
    552→
    553→Takes a `Result<T, E>` and lets the original `Result<T, E>` pass through regardless the result of the passed-in function.
-   554→This is a handy way to handle side effects whose failure or success should not affect your main logics such as logging. 
    598→#### `Result.orTee` (method)
    599→
    600→Like `andTee` for the error track. Takes a `Result<T, E>` and lets the `Err` value pass through regardless the result of the passed-in function.
-   601→This is a handy way to handle side effects whose failure or success should not affect your main logics such as logging.
    645→#### `Result.andThrough` (method)
    646→
    647→Similar to `andTee` except for:
@@ -192,8 +137,6 @@ README.md
    863→### Asynchronous API (`ResultAsync`)
    864→
    865→#### `okAsync`
-   866→
-   867→Constructs an `Ok` variant of `ResultAsync`
    892→#### `errAsync`
    893→
    894→Constructs an `Err` variant of `ResultAsync`
@@ -215,7 +158,6 @@ README.md
   1142→#### `ResultAsync.unwrapOr` (method)
   1143→
   1144→Unwrap the `Ok` value, or return the default if there is an `Err`.  
-  1145→Works just like `Result.unwrapOr` but returns a `Promise<T>` instead of `T`.
   1166→#### `ResultAsync.andThen` (method)
   1167→
   1168→Same idea as `map` above. Except the applied function must return a `Result` or `ResultAsync`.
@@ -228,13 +170,9 @@ README.md
   1283→#### `ResultAsync.andTee` (method)
   1284→
   1285→Takes a `ResultAsync<T, E>` and lets the original `ResultAsync<T, E>` pass through regardless 
-  1286→the result of the passed-in function.
-  1287→This is a handy way to handle side effects whose failure or success should not affect your main logics such as logging. 
   1330→#### `ResultAsync.orTee` (method)
   1331→
   1332→Like `andTee` for the error track. Takes a `ResultAsync<T, E>` and lets the original `Err` value pass through regardless 
-  1333→the result of the passed-in function.
-  1334→This is a handy way to handle side effects whose failure or success should not affect your main logics such as logging. 
   1377→#### `ResultAsync.andThrough` (method)
   1378→
   1379→
@@ -251,21 +189,15 @@ README.md
   1519→### Utilities
   1520→
   1521→#### `fromThrowable`
-  1522→
-  1523→Top level export of `Result.fromThrowable`.
-  1524→Please find documentation at [Result.fromThrowable](#resultfromthrowable-static-class-method)
   1528→#### `fromAsyncThrowable`
   1529→
   1530→Top level export of `ResultAsync.fromThrowable`.
-  1531→Please find documentation at [ResultAsync.fromThrowable](#resultasyncfromthrowable-static-class-method)
   1535→#### `fromPromise`
   1536→
   1537→Top level export of `ResultAsync.fromPromise`.
-  1538→Please find documentation at [ResultAsync.fromPromise](#resultasyncfrompromise-static-class-method)
   1542→#### `fromSafePromise`
   1543→
   1544→Top level export of `ResultAsync.fromSafePromise`.
-  1545→Please find documentation at [ResultAsync.fromSafePromise](#resultasyncfromsafepromise-static-class-method)
   1549→#### `safeTry`
   1550→
   1551→Used to implicitly return errors and reduce boilerplate.

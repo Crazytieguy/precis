@@ -2,37 +2,73 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 600 → level 4 (405 words)
+budget: 600 → level 5 (594 words)
 
 README.md
      1→# humanize
+     2→
+     3→[![PyPI version](https://img.shields.io/pypi/v/humanize.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/humanize/)
     49→## API reference
+    50→
+    51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
     55→## Installation
+    56→
     57→### From PyPI
     63→### From source
+    64→
+    65→```bash
     71→## Usage
+    72→
     73→### Integer humanization
     89→### Date & time humanization
+    90→
+    91→```pycon
    110→### Precise time delta
+   111→
+   112→```pycon
    124→#### Smaller units
+   125→
+   126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
    154→### File size humanization
+   155→
+   156→```pycon
    166→### Human-readable floating point numbers
+   167→
+   168→```pycon
    182→### Scientific notation
+   183→
+   184→```pycon
    200→## Localization
+   201→
+   202→How to change locale at runtime:
 RELEASING.md
      1→# Release checklist
+     2→
+     3→- [ ] Get `main` to the appropriate code release state.
 docs/filesize.md
      1→# Filesize
+     2→
+     3→::: humanize.filesize
 docs/i18n.md
      1→# Internationalisation
+     2→
+     3→::: humanize.i18n
 docs/index.md
      1→# humanize
+     2→
+     3→Welcome to the humanize API reference.
 docs/lists.md
      1→# Lists
+     2→
+     3→::: humanize.lists
 docs/number.md
      1→# Number
+     2→
+     3→::: humanize.number
 docs/time.md
      1→# Time
+     2→
+     3→::: humanize.time
 src/humanize/__init__.py
     28→__all__ = [
 src/humanize/filesize.py
@@ -45,21 +81,21 @@ src/humanize/filesize.py
 src/humanize/i18n.py
      8→TYPE_CHECKING = False
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
-    15→_TRANSLATIONS
-    18→_CURRENT
-    22→_THOUSANDS_SEPARATOR
-    31→_DECIMAL_SEPARATOR
-    40→def _get_default_locale_path
+    15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
+    18→_CURRENT = local()
+    22→_THOUSANDS_SEPARATOR = {
+    31→_DECIMAL_SEPARATOR = {
+    40→def _get_default_locale_path() -> pathlib.Path | None:
     51→def get_translation() -> gettext_module.NullTranslations:
     58→def activate(
     59→    locale: str | None, path: str | os.PathLike[str] | None = None
     60→) -> gettext_module.NullTranslations:
     96→def deactivate() -> None:
-   101→def _gettext
-   113→def _pgettext
-   129→def _ngettext
-   144→def _gettext_noop
-   163→def _ngettext_noop
+   101→def _gettext(message: str) -> str:
+   113→def _pgettext(msgctxt: str, message: str) -> str:
+   129→def _ngettext(message: str, plural: str, num: int) -> str:
+   144→def _gettext_noop(message: str) -> str:
+   163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
    183→def thousands_separator() -> str:
    196→def decimal_separator() -> str:
 src/humanize/lists.py
@@ -68,7 +104,7 @@ src/humanize/lists.py
     12→def natural_list(items: list[Any]) -> str:
 src/humanize/number.py
     12→TYPE_CHECKING = False
-    21→def _format_not_finite
+    21→def _format_not_finite(value: float) -> str:
     34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
    110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
    195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
@@ -89,9 +125,11 @@ src/humanize/time.py
     21→__all__ = [
     31→class Unit(Enum):
     41→    def __lt__(self, other: Any) -> Any:
-    47→def _now
-    53→def _abs_timedelta
-    68→def _date_and_delta
+    47→def _now() -> dt.datetime:
+    53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
+    68→def _date_and_delta(
+    69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
+    70→) -> tuple[Any, Any]:
     95→def naturaldelta(
     96→    value: dt.timedelta | float,
     97→    months: bool = True,
@@ -104,16 +142,25 @@ src/humanize/time.py
    253→    minimum_unit: str = "seconds",
    254→    when: dt.datetime | None = None,
    255→) -> str:
-   300→def _convert_aware_datetime
+   300→def _convert_aware_datetime(
+   301→    value: dt.datetime | dt.timedelta | float | None,
+   302→) -> Any:
    311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
    343→def naturaldate(value: dt.date | dt.datetime) -> str:
-   361→def _quotient_and_remainder
-   406→def _suitable_minimum_unit
-   435→def _suppress_lower_units
+   361→def _quotient_and_remainder(
+   362→    value: float,
+   363→    divisor: float,
+   364→    unit: Unit,
+   365→    minimum_unit: Unit,
+   366→    suppress: Iterable[Unit],
+   367→    format: str,
+   368→) -> tuple[float, float]:
+   406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
+   435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
    453→    minimum_unit: str = "seconds",
    454→    suppress: Iterable[str] = (),
    455→    format: str = "%0.2f",
    456→) -> str:
-   654→def _rounding_by_fmt
+   654→def _rounding_by_fmt(format: str, value: float) -> float | int:
