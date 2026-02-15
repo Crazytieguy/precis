@@ -26,7 +26,7 @@ The current implementation computes an "effective level" by subtracting depth an
 
 Shallower and smaller files are prioritized over deeper and larger ones when budget is tight. Depth penalty reduces the effective level by `depth/2` (where depth counts directory components). Size penalty reduces the effective level by 1 for files with 1000+ lines, but only when the depth-adjusted level is 5+. Users can zoom into subdirectories by running the tool on them directly with a larger budget.
 
-**Expanding levels:** Targeting ~32 levels for smoother budget curves. There are three sources of new levels, which complement each other:
+**Expanding levels:** Targeting ~64 levels for smoother budget curves. There are three sources of new levels, which complement each other:
 
 1. **New rendering policies** — adding genuinely new output types (e.g. import statements, visibility-gated symbols). Each new policy creates intermediate content between existing policies.
 2. **Finer property-based thresholds** — making different choices among existing policies based on file properties (file type, name patterns, content characteristics like symbol count or density). For example, a JSON config file might stay at "paths only" longer than a Rust file at the same depth; a file with many small functions is more expensive to show signatures for than a file with few large functions, so it transitions to signatures at a higher level.
