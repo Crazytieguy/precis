@@ -42,27 +42,6 @@ fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
 //   git clone --depth 1 https://github.com/hashicorp/go-version.git test/fixtures/go-version
 //   git clone --depth 1 https://github.com/fatih/structs.git test/fixtures/structs
 
-/// Generate a snapshot test that renders a fixture directory at a given level.
-macro_rules! fixture_test {
-    ($name:ident, $path:expr, $level:expr) => {
-        #[test]
-        fn $name() {
-            let Some(root) = fixture_path($path) else {
-                eprintln!(
-                    "skipping {}: fixture not present at {}",
-                    stringify!($name),
-                    $path
-                );
-                return;
-            };
-            let files = walk::discover_source_files(&root);
-            let sources = format::read_sources(&files);
-            let output = format::render_files($level, &root, &files, &sources);
-            insta::assert_snapshot!(output);
-        }
-    };
-}
-
 /// Generate a snapshot test that renders a fixture with a word budget.
 macro_rules! budget_test {
     ($name:ident, $path:expr, $budget:expr) => {
@@ -876,251 +855,33 @@ fn markdown_sample_level6() {
     insta::assert_snapshot!(output);
 }
 
-// Fixture-based snapshot tests (level 1).
-
-fixture_test!(fixture_either, "either/src", 1);
-fixture_test!(fixture_neverthrow, "neverthrow/src", 1);
-fixture_test!(fixture_semver, "semver/classes", 1);
-fixture_test!(fixture_cmdk, "cmdk/cmdk/src", 1);
-fixture_test!(fixture_ts_pattern, "ts-pattern/src", 1);
-fixture_test!(fixture_anyhow, "anyhow/src", 1);
-fixture_test!(fixture_once_cell, "once_cell/src", 1);
-fixture_test!(fixture_react_hot_toast, "react-hot-toast/src", 1);
-fixture_test!(fixture_superstruct, "superstruct/src", 1);
-fixture_test!(fixture_dotenv, "dotenv/lib", 1);
-fixture_test!(fixture_commander, "commander/lib", 1);
-fixture_test!(fixture_thiserror, "thiserror/src", 1);
-fixture_test!(fixture_sonner, "sonner/src", 1);
-fixture_test!(fixture_mitt, "mitt/src", 1);
-fixture_test!(fixture_debug, "debug/src", 1);
-fixture_test!(fixture_log, "log/src", 1);
-fixture_test!(fixture_ky, "ky/source", 1);
-fixture_test!(fixture_ini, "ini/lib", 1);
-fixture_test!(fixture_vaul, "vaul/src", 1);
-fixture_test!(fixture_input_otp, "input-otp/packages/input-otp/src", 1);
-fixture_test!(fixture_pluggy, "pluggy/src/pluggy", 1);
-fixture_test!(fixture_tomli, "tomli/src/tomli", 1);
-fixture_test!(fixture_humanize, "humanize/src/humanize", 1);
-fixture_test!(fixture_python_dotenv, "python-dotenv/src/dotenv", 1);
-fixture_test!(fixture_typeguard, "typeguard/src/typeguard", 1);
-fixture_test!(fixture_mdbook, "mdbook/guide/src", 1);
-fixture_test!(fixture_go_multierror, "go-multierror", 1);
-fixture_test!(fixture_xxhash, "xxhash", 1);
-fixture_test!(fixture_color, "color", 1);
-fixture_test!(fixture_go_version, "go-version", 1);
-fixture_test!(fixture_structs, "structs", 1);
-
-// Fixture-based snapshot tests (level 2).
-
-fixture_test!(fixture_either_level2, "either/src", 2);
-fixture_test!(fixture_neverthrow_level2, "neverthrow/src", 2);
-fixture_test!(fixture_semver_level2, "semver/classes", 2);
-fixture_test!(fixture_cmdk_level2, "cmdk/cmdk/src", 2);
-fixture_test!(fixture_ts_pattern_level2, "ts-pattern/src", 2);
-fixture_test!(fixture_anyhow_level2, "anyhow/src", 2);
-fixture_test!(fixture_once_cell_level2, "once_cell/src", 2);
-fixture_test!(fixture_react_hot_toast_level2, "react-hot-toast/src", 2);
-fixture_test!(fixture_superstruct_level2, "superstruct/src", 2);
-fixture_test!(fixture_dotenv_level2, "dotenv/lib", 2);
-fixture_test!(fixture_commander_level2, "commander/lib", 2);
-fixture_test!(fixture_thiserror_level2, "thiserror/src", 2);
-fixture_test!(fixture_sonner_level2, "sonner/src", 2);
-fixture_test!(fixture_mitt_level2, "mitt/src", 2);
-fixture_test!(fixture_debug_level2, "debug/src", 2);
-fixture_test!(fixture_log_level2, "log/src", 2);
-fixture_test!(fixture_ky_level2, "ky/source", 2);
-fixture_test!(fixture_ini_level2, "ini/lib", 2);
-fixture_test!(fixture_vaul_level2, "vaul/src", 2);
-fixture_test!(
-    fixture_input_otp_level2,
-    "input-otp/packages/input-otp/src",
-    2
-);
-fixture_test!(fixture_pluggy_level2, "pluggy/src/pluggy", 2);
-fixture_test!(fixture_tomli_level2, "tomli/src/tomli", 2);
-fixture_test!(fixture_humanize_level2, "humanize/src/humanize", 2);
-fixture_test!(fixture_python_dotenv_level2, "python-dotenv/src/dotenv", 2);
-fixture_test!(fixture_typeguard_level2, "typeguard/src/typeguard", 2);
-fixture_test!(fixture_mdbook_level2, "mdbook/guide/src", 2);
-fixture_test!(fixture_go_multierror_level2, "go-multierror", 2);
-fixture_test!(fixture_xxhash_level2, "xxhash", 2);
-fixture_test!(fixture_color_level2, "color", 2);
-fixture_test!(fixture_go_version_level2, "go-version", 2);
-fixture_test!(fixture_structs_level2, "structs", 2);
-
-// Fixture-based snapshot tests (level 3).
-
-fixture_test!(fixture_either_level3, "either/src", 3);
-fixture_test!(fixture_neverthrow_level3, "neverthrow/src", 3);
-fixture_test!(fixture_semver_level3, "semver/classes", 3);
-fixture_test!(fixture_cmdk_level3, "cmdk/cmdk/src", 3);
-fixture_test!(fixture_ts_pattern_level3, "ts-pattern/src", 3);
-fixture_test!(fixture_anyhow_level3, "anyhow/src", 3);
-fixture_test!(fixture_once_cell_level3, "once_cell/src", 3);
-fixture_test!(fixture_react_hot_toast_level3, "react-hot-toast/src", 3);
-fixture_test!(fixture_superstruct_level3, "superstruct/src", 3);
-fixture_test!(fixture_dotenv_level3, "dotenv/lib", 3);
-fixture_test!(fixture_commander_level3, "commander/lib", 3);
-fixture_test!(fixture_thiserror_level3, "thiserror/src", 3);
-fixture_test!(fixture_sonner_level3, "sonner/src", 3);
-fixture_test!(fixture_mitt_level3, "mitt/src", 3);
-fixture_test!(fixture_debug_level3, "debug/src", 3);
-fixture_test!(fixture_log_level3, "log/src", 3);
-fixture_test!(fixture_ky_level3, "ky/source", 3);
-fixture_test!(fixture_ini_level3, "ini/lib", 3);
-fixture_test!(fixture_vaul_level3, "vaul/src", 3);
-fixture_test!(
-    fixture_input_otp_level3,
-    "input-otp/packages/input-otp/src",
-    3
-);
-fixture_test!(fixture_pluggy_level3, "pluggy/src/pluggy", 3);
-fixture_test!(fixture_tomli_level3, "tomli/src/tomli", 3);
-fixture_test!(fixture_humanize_level3, "humanize/src/humanize", 3);
-fixture_test!(fixture_python_dotenv_level3, "python-dotenv/src/dotenv", 3);
-fixture_test!(fixture_typeguard_level3, "typeguard/src/typeguard", 3);
-fixture_test!(fixture_mdbook_level3, "mdbook/guide/src", 3);
-fixture_test!(fixture_go_multierror_level3, "go-multierror", 3);
-fixture_test!(fixture_xxhash_level3, "xxhash", 3);
-fixture_test!(fixture_color_level3, "color", 3);
-fixture_test!(fixture_go_version_level3, "go-version", 3);
-fixture_test!(fixture_structs_level3, "structs", 3);
-
-// Fixture-based snapshot tests (level 4).
-
-fixture_test!(fixture_either_level4, "either/src", 4);
-fixture_test!(fixture_neverthrow_level4, "neverthrow/src", 4);
-fixture_test!(fixture_semver_level4, "semver/classes", 4);
-fixture_test!(fixture_cmdk_level4, "cmdk/cmdk/src", 4);
-fixture_test!(fixture_ts_pattern_level4, "ts-pattern/src", 4);
-fixture_test!(fixture_anyhow_level4, "anyhow/src", 4);
-fixture_test!(fixture_once_cell_level4, "once_cell/src", 4);
-fixture_test!(fixture_react_hot_toast_level4, "react-hot-toast/src", 4);
-fixture_test!(fixture_superstruct_level4, "superstruct/src", 4);
-fixture_test!(fixture_dotenv_level4, "dotenv/lib", 4);
-fixture_test!(fixture_commander_level4, "commander/lib", 4);
-fixture_test!(fixture_thiserror_level4, "thiserror/src", 4);
-fixture_test!(fixture_sonner_level4, "sonner/src", 4);
-fixture_test!(fixture_mitt_level4, "mitt/src", 4);
-fixture_test!(fixture_debug_level4, "debug/src", 4);
-fixture_test!(fixture_log_level4, "log/src", 4);
-fixture_test!(fixture_ky_level4, "ky/source", 4);
-fixture_test!(fixture_ini_level4, "ini/lib", 4);
-fixture_test!(fixture_vaul_level4, "vaul/src", 4);
-fixture_test!(
-    fixture_input_otp_level4,
-    "input-otp/packages/input-otp/src",
-    4
-);
-fixture_test!(fixture_pluggy_level4, "pluggy/src/pluggy", 4);
-fixture_test!(fixture_tomli_level4, "tomli/src/tomli", 4);
-fixture_test!(fixture_humanize_level4, "humanize/src/humanize", 4);
-fixture_test!(fixture_python_dotenv_level4, "python-dotenv/src/dotenv", 4);
-fixture_test!(fixture_typeguard_level4, "typeguard/src/typeguard", 4);
-fixture_test!(fixture_mdbook_level4, "mdbook/guide/src", 4);
-fixture_test!(fixture_go_multierror_level4, "go-multierror", 4);
-fixture_test!(fixture_xxhash_level4, "xxhash", 4);
-fixture_test!(fixture_color_level4, "color", 4);
-fixture_test!(fixture_go_version_level4, "go-version", 4);
-fixture_test!(fixture_structs_level4, "structs", 4);
-
-// Subdirectory tests: running on a subdirectory within a fixture tests
+// Subdirectory budget tests: running on a subdirectory within a fixture tests
 // that path display and file discovery work correctly at deeper nesting levels.
 
-fixture_test!(fixture_ts_pattern_types_subdir, "ts-pattern/src/types", 1);
-fixture_test!(
-    fixture_ts_pattern_types_subdir_level2,
-    "ts-pattern/src/types",
-    2
-);
-fixture_test!(
-    fixture_react_hot_toast_components_subdir,
-    "react-hot-toast/src/components",
-    1
-);
-fixture_test!(
-    fixture_react_hot_toast_components_subdir_level2,
-    "react-hot-toast/src/components",
-    2
-);
-fixture_test!(
-    fixture_superstruct_structs_subdir,
-    "superstruct/src/structs",
-    1
-);
-fixture_test!(
-    fixture_superstruct_structs_subdir_level2,
-    "superstruct/src/structs",
-    2
-);
-fixture_test!(fixture_log_kv_subdir, "log/src/kv", 1);
-fixture_test!(fixture_log_kv_subdir_level2, "log/src/kv", 2);
-fixture_test!(fixture_semver_functions_subdir, "semver/functions", 1);
-fixture_test!(
-    fixture_semver_functions_subdir_level2,
-    "semver/functions",
-    2
-);
-fixture_test!(
-    fixture_neverthrow_internals_subdir,
-    "neverthrow/src/_internals",
-    1
-);
-fixture_test!(
-    fixture_neverthrow_internals_subdir_level2,
-    "neverthrow/src/_internals",
-    2
-);
-fixture_test!(fixture_ky_errors_subdir, "ky/source/errors", 1);
-fixture_test!(fixture_ky_errors_subdir_level2, "ky/source/errors", 2);
-fixture_test!(fixture_thiserror_impl_subdir, "thiserror/impl/src", 1);
-fixture_test!(
-    fixture_thiserror_impl_subdir_level2,
-    "thiserror/impl/src",
-    2
-);
-fixture_test!(fixture_semver_internal_subdir, "semver/internal", 1);
-fixture_test!(fixture_semver_internal_subdir_level2, "semver/internal", 2);
-fixture_test!(fixture_mdbook_cli_subdir, "mdbook/guide/src/cli", 1);
-fixture_test!(fixture_mdbook_cli_subdir_level2, "mdbook/guide/src/cli", 2);
-fixture_test!(fixture_mdbook_format_subdir, "mdbook/guide/src/format", 1);
-fixture_test!(
-    fixture_mdbook_format_subdir_level2,
-    "mdbook/guide/src/format",
-    2
-);
-fixture_test!(fixture_xxhash_xxhsum_subdir, "xxhash/xxhsum", 1);
-fixture_test!(fixture_xxhash_xxhsum_subdir_level2, "xxhash/xxhsum", 2);
-
-// Root-level fixture tests: exercise depth penalties, file discovery filtering,
-// and multi-language repos more realistically than subdirectory-only targets.
-
-fixture_test!(fixture_either_root_level2, "either", 2);
-fixture_test!(fixture_neverthrow_root_level2, "neverthrow", 2);
-fixture_test!(fixture_pluggy_root_level2, "pluggy", 2);
-fixture_test!(fixture_sonner_root_level2, "sonner", 2);
-fixture_test!(fixture_commander_root_level2, "commander", 2);
-fixture_test!(fixture_anyhow_root_level2, "anyhow", 2);
-fixture_test!(fixture_log_root_level2, "log", 2);
-fixture_test!(fixture_ts_pattern_root_level2, "ts-pattern", 2);
-fixture_test!(fixture_typeguard_root_level2, "typeguard", 2);
-fixture_test!(fixture_mdbook_root_level2, "mdbook", 2);
-fixture_test!(fixture_once_cell_root_level2, "once_cell", 2);
-fixture_test!(fixture_thiserror_root_level2, "thiserror", 2);
-fixture_test!(fixture_react_hot_toast_root_level2, "react-hot-toast", 2);
-fixture_test!(fixture_humanize_root_level2, "humanize", 2);
-fixture_test!(fixture_tomli_root_level2, "tomli", 2);
-fixture_test!(fixture_cmdk_root_level2, "cmdk", 2);
-fixture_test!(fixture_debug_root_level2, "debug", 2);
-fixture_test!(fixture_dotenv_root_level2, "dotenv", 2);
-fixture_test!(fixture_ini_root_level2, "ini", 2);
-fixture_test!(fixture_input_otp_root_level2, "input-otp", 2);
-fixture_test!(fixture_ky_root_level2, "ky", 2);
-fixture_test!(fixture_mitt_root_level2, "mitt", 2);
-fixture_test!(fixture_python_dotenv_root_level2, "python-dotenv", 2);
-fixture_test!(fixture_semver_root_level2, "semver", 2);
-fixture_test!(fixture_superstruct_root_level2, "superstruct", 2);
-fixture_test!(fixture_vaul_root_level2, "vaul", 2);
+budget_test!(budget_ts_pattern_types_subdir1, "ts-pattern/src/types", 15);
+budget_test!(budget_ts_pattern_types_subdir2, "ts-pattern/src/types", 500);
+budget_test!(budget_react_hot_toast_components_subdir1, "react-hot-toast/src/components", 10);
+budget_test!(budget_react_hot_toast_components_subdir2, "react-hot-toast/src/components", 100);
+budget_test!(budget_superstruct_structs_subdir1, "superstruct/src/structs", 5);
+budget_test!(budget_superstruct_structs_subdir2, "superstruct/src/structs", 150);
+budget_test!(budget_log_kv_subdir1, "log/src/kv", 8);
+budget_test!(budget_log_kv_subdir2, "log/src/kv", 1500);
+budget_test!(budget_semver_functions_subdir1, "semver/functions", 30);
+budget_test!(budget_semver_functions_subdir2, "semver/functions", 100);
+budget_test!(budget_neverthrow_internals_subdir1, "neverthrow/src/_internals", 5);
+budget_test!(budget_neverthrow_internals_subdir2, "neverthrow/src/_internals", 70);
+budget_test!(budget_ky_errors_subdir1, "ky/source/errors", 5);
+budget_test!(budget_ky_errors_subdir2, "ky/source/errors", 40);
+budget_test!(budget_thiserror_impl_subdir1, "thiserror/impl/src", 5);
+budget_test!(budget_thiserror_impl_subdir2, "thiserror/impl/src", 700);
+budget_test!(budget_semver_internal_subdir1, "semver/internal", 8);
+budget_test!(budget_semver_internal_subdir2, "semver/internal", 100);
+budget_test!(budget_mdbook_cli_subdir1, "mdbook/guide/src/cli", 12);
+budget_test!(budget_mdbook_cli_subdir2, "mdbook/guide/src/cli", 130);
+budget_test!(budget_mdbook_format_subdir1, "mdbook/guide/src/format", 20);
+budget_test!(budget_mdbook_format_subdir2, "mdbook/guide/src/format", 270);
+budget_test!(budget_xxhash_xxhsum_subdir1, "xxhash/xxhsum", 10);
+budget_test!(budget_xxhash_xxhsum_subdir2, "xxhash/xxhsum", 20);
 
 // Single-file rendering tests (precis accepts individual files, not just directories).
 

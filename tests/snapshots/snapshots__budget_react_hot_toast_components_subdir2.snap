@@ -1,0 +1,44 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 100 → level 1 (81 words)
+
+checkmark.tsx
+     3→const circleAnimation
+    13→const checkmarkAnimation
+    29→export interface CheckmarkTheme
+    34→export const CheckmarkIcon
+error.tsx
+     3→const circleAnimation
+    13→const firstLineAnimation
+    23→const secondLineAnimation
+    33→export interface ErrorTheme
+    38→export const ErrorIcon
+loader.tsx
+     3→const rotate
+    12→export interface LoaderTheme
+    17→export const LoaderIcon
+toast-bar.tsx
+     8→const enterAnimation
+    13→const exitAnimation
+    18→const fadeInAnimation
+    19→const fadeOutAnimation
+    22→const ToastBarBase
+    38→const Message
+    47→interface ToastBarProps
+    57→const getAnimationStyle
+    75→export const ToastBar
+toast-icon.tsx
+     9→const StatusWrapper
+    13→const IndicatorWrapper
+    22→const enter
+    32→export const AnimatedIconWrapper
+    41→export type IconThemes
+    47→export const ToastIcon
+toaster.tsx
+    15→const ToastWrapper
+    47→const getPositionStyle
+    76→const activeClass
+    83→const DEFAULT_OFFSET
+    85→export const Toaster

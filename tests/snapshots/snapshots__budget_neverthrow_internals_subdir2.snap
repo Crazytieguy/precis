@@ -1,0 +1,24 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 70 → level 1 (48 words)
+
+error.ts
+     3→export interface ErrorConfig
+     7→const defaultErrorConfig
+    11→interface NeverThrowError
+    27→export const createNeverThrowError
+utils.ts
+     5→export type ExtractOkTypes
+    10→export type ExtractOkAsyncTypes
+    15→export type ExtractErrTypes
+    20→export type ExtractErrAsyncTypes
+    24→export type InferOkTypes
+    25→export type InferErrTypes
+    27→export type InferAsyncOkTypes
+    28→export type InferAsyncErrTypes
+    33→export const combineResultList
+    54→export const combineResultAsyncList
+    64→export const combineResultListWithAllErrors
+    82→export const combineResultAsyncListWithAllErrors

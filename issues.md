@@ -2,8 +2,7 @@
 
 ## Feature development
 
-- **Budget-based testing** — snapshot tests should primarily use `--budget` rather than `--level`, since levels are an internal implementation detail that will change as we expand to ~32 levels. Existing per-level fixture snapshots should be migrated to budget-based snapshots. Budget snapshots are stable across level refactors and directly test the user-facing behavior. The `--level` flag exists for debugging and manual investigation, not as a primary test parameter.
-- **Root-level fixture testing (complete)** — all 26 non-Go fixtures have root-level fixture (level 2) and budget snapshot tests, plus monotonicity invariant entries. The 5 Go fixtures (go-multierror, xxhash, color, go-version, structs) use the repo root as their subpath, so root-level tests would be identical.
+- **Budget-based testing (complete)** — all fixture snapshot tests use `--budget`. Per-level fixture tests have been removed. Budget snapshots are stable across level refactors and directly test the user-facing behavior. The `--level` flag exists for debugging and manual investigation, not as a primary test parameter. Inline sample tests (render_file with known inputs) still use specific levels since they test the rendering function directly, not the budget pipeline.
 - **Tree-sitter reuse in tests** — the monotonicity test currently re-parses with tree-sitter at every level for every file. Symbols could be extracted once and reused across levels. Not a problem now (~5 seconds) but will matter as we expand to ~32 levels.
 - **Import statements** — show at a low level (between current levels 1 and 2). Distinguish 1st-party imports (relative paths like `./`, `../`; Rust `crate::`, `super::`; Go module path) from 3rd-party. 3rd-party imports are lower priority (repeated noise like `import React` in every file). 1st-party imports are high signal for understanding a file's role.
 - **Test/vendor/example directories** — instead of excluding entirely during file discovery, render at a lower effective level (apply a large penalty). They appear as paths at tight budgets, content at generous budgets. More honest than invisible filtering.
@@ -18,7 +17,7 @@
 
 - Parsing: Rust, TypeScript, JavaScript, TSX, Python, Go, Markdown. 9 granularity levels (0–8). Depth-aware, file-size-aware, visibility-aware, and property-based rendering. `--budget`, `--level`, `--json` flags. Defaults to current directory when no path given.
 - File discovery filters out test/benchmark/vendor/example directories and test file patterns. Uses relative paths so parent directories don't trigger false positives.
-- 31 test fixtures across all supported languages with per-level and budget-based snapshot tests. All 31 fixtures have budget tests; all 26 non-Go fixtures have root-level fixture and budget tests. Monotonicity invariant tested across all fixtures including root-level targets.
+- 31 test fixtures across all supported languages with budget-based snapshot tests (253 budget snapshots). All 31 fixtures have budget tests at multiple budget levels; all 26 non-Go fixtures have root-level budget tests; 12 subdirectory entrypoints have budget tests. Monotonicity invariant tested across all fixtures including root-level targets.
 - `cargo run --bin budget_util` measures budget utilization across all budget snapshots.
 
 ## Implementation notes
