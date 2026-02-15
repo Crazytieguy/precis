@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 3000 → level 4 (2671 words)
+budget: 3000 → level 5 (1884 words)
 
 docs/conf.py
 src/typeguard/__init__.py
@@ -13,6 +13,7 @@ src/typeguard/_checkers.py
     84→TypeCheckLookupCallback: TypeAlias = Callable[
     88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
     89→generic_alias_types: tuple[type, ...] = (
+    98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS = {
    153→def check_callable(
    154→    value: Any,
@@ -161,77 +162,24 @@ src/typeguard/_checkers.py
    926→    annotation: Any,
    927→    memo: TypeCheckMemo,
    928→) -> None:
+   929→    """
+  1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
   1061→def builtin_checker_lookup(
   1062→    origin_type: Any, args: tuple[Any, ...], extras: tuple[Any, ...]
   1063→) -> TypeCheckerCallable | None:
   1099→def load_plugins() -> None:
+  1100→    """
 src/typeguard/_config.py
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
     15→    """
-    16→    Defines how unresolved forward references are handled.
-    17→
-    18→    Members:
-    19→
-    20→    * ``ERROR``: propagate the :exc:`NameError` when the forward reference lookup fails
-    21→    * ``WARN``: emit a :class:`~.TypeHintWarning` if the forward reference lookup fails
-    22→    * ``IGNORE``: silently skip checks for unresolveable forward references
-    23→    """
     30→class CollectionCheckStrategy(Enum):
     31→    """
-    32→    Specifies how thoroughly the contents of collections are type checked.
-    33→
-    34→    This has an effect on the following built-in checkers:
-    35→
-    36→    * ``AbstractSet``
-    37→    * ``Dict``
-    38→    * ``List``
-    39→    * ``Mapping``
-    40→    * ``Set``
-    41→    * ``Tuple[<type>, ...]`` (arbitrarily sized tuples)
-    42→
-    43→    Members:
-    44→
-    45→    * ``FIRST_ITEM``: check only the first item
-    46→    * ``ALL_ITEMS``: check all items
-    47→    """
     52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
     62→@dataclass
     63→class TypeCheckConfiguration:
     64→    """
-    65→     You can change Typeguard's behavior with these settings.
-    66→
-    67→    .. attribute:: typecheck_fail_callback
-    68→       :type: Callable[[TypeCheckError, TypeCheckMemo], Any]
-    69→
-    70→         Callable that is called when type checking fails.
-    71→
-    72→         Default: ``None`` (the :exc:`~.TypeCheckError` is raised directly)
-    73→
-    74→    .. attribute:: forward_ref_policy
-    75→       :type: ForwardRefPolicy
-    76→
-    77→         Specifies what to do when a forward reference fails to resolve.
-    78→
-    79→         Default: ``WARN``
-    80→
-    81→    .. attribute:: collection_check_strategy
-    82→       :type: CollectionCheckStrategy
-    83→
-    84→         Specifies how thoroughly the contents of collections (list, dict, etc.) are
-    85→         type checked.
-    86→
-    87→         Default: ``FIRST_ITEM``
-    88→
-    89→    .. attribute:: debug_instrumentation
-    90→       :type: bool
-    91→
-    92→         If set to ``True``, the code of modules or functions instrumented by typeguard
-    93→         is printed to ``sys.stderr`` after the instrumentation is done
-    94→
-    95→         Default: ``False``
-    96→    """
 src/typeguard/_decorators.py
     24→    def typeguard_ignore(arg: T_CallableOrType) -> T_CallableOrType:
     25→        """This decorator is a noop during static type-checking."""
@@ -249,32 +197,6 @@ src/typeguard/_decorators.py
    156→    debug_instrumentation: bool | Unset = unset,
    157→) -> Any:
    158→    """
-   159→    Instrument the target function to perform run-time type checking.
-   160→
-   161→    This decorator recompiles the target function, injecting code to type check
-   162→    arguments, return values, yield values (excluding ``yield from``) and assignments to
-   163→    annotated local variables.
-   164→
-   165→    This can also be used as a class decorator. This will instrument all type annotated
-   166→    methods, including :func:`@classmethod <classmethod>`,
-   167→    :func:`@staticmethod <staticmethod>`,  and :class:`@property <property>` decorated
-   168→    methods in the class.
-   169→
-   170→    .. note:: When Python is run in optimized mode (``-O`` or ``-OO``, this decorator
-   171→        is a no-op). This is a feature meant for selectively introducing type checking
-   172→        into a code base where the checks aren't meant to be run in production.
-   173→
-   174→    :param target: the function or class to enable type checking for
-   175→    :param forward_ref_policy: override for
-   176→        :attr:`.TypeCheckConfiguration.forward_ref_policy`
-   177→    :param typecheck_fail_callback: override for
-   178→        :attr:`.TypeCheckConfiguration.typecheck_fail_callback`
-   179→    :param collection_check_strategy: override for
-   180→        :attr:`.TypeCheckConfiguration.collection_check_strategy`
-   181→    :param debug_instrumentation: override for
-   182→        :attr:`.TypeCheckConfiguration.debug_instrumentation`
-   183→
-   184→    """
 src/typeguard/_exceptions.py
      5→class TypeHintWarning(UserWarning):
      6→    """
@@ -310,35 +232,6 @@ src/typeguard/_functions.py
     60→    ),
     61→) -> Any:
     62→    """
-    63→    Ensure that ``value`` matches ``expected_type``.
-    64→
-    65→    The types from the :mod:`typing` module do not support :func:`isinstance` or
-    66→    :func:`issubclass` so a number of type specific checks are required. This function
-    67→    knows which checker to call for which type.
-    68→
-    69→    This function wraps :func:`~.check_type_internal` in the following ways:
-    70→
-    71→    * Respects type checking suppression (:func:`~.suppress_type_checks`)
-    72→    * Forms a :class:`~.TypeCheckMemo` from the current stack frame
-    73→    * Calls the configured type check fail callback if the check fails
-    74→
-    75→    Note that this function is independent of the globally shared configuration in
-    76→    :data:`typeguard.config`. This means that usage within libraries is safe from being
-    77→    affected configuration changes made by other libraries or by the integrating
-    78→    application. Instead, configuration options have the same default values as their
-    79→    corresponding fields in :class:`TypeCheckConfiguration`.
-    80→
-    81→    :param value: value to be checked against ``expected_type``
-    82→    :param expected_type: a class or generic type instance, or a tuple of such things
-    83→    :param forward_ref_policy: see :attr:`TypeCheckConfiguration.forward_ref_policy`
-    84→    :param typecheck_fail_callback:
-    85→        see :attr`TypeCheckConfiguration.typecheck_fail_callback`
-    86→    :param collection_check_strategy:
-    87→        see :attr:`TypeCheckConfiguration.collection_check_strategy`
-    88→    :return: ``value``, unmodified
-    89→    :raises TypeCheckError: if there is a type mismatch
-    90→
-    91→    """
    118→def check_argument_types(
    119→    func_name: str,
    120→    arguments: dict[str, tuple[Any, Any]],
@@ -369,12 +262,6 @@ src/typeguard/_functions.py
    249→) -> Any:
    291→def warn_on_error(exc: TypeCheckError, memo: TypeCheckMemo) -> None:
    292→    """
-   293→    Emit a warning on a type mismatch.
-   294→
-   295→    This is intended to be used as an error handler in
-   296→    :attr:`TypeCheckConfiguration.typecheck_fail_callback`.
-   297→
-   298→    """
 src/typeguard/_importhook.py
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
@@ -452,30 +339,6 @@ src/typeguard/_importhook.py
 src/typeguard/_memo.py
      8→class TypeCheckMemo:
      9→    """
-    10→    Contains information necessary for type checkers to do their work.
-    11→
-    12→    .. attribute:: globals
-    13→       :type: dict[str, Any]
-    14→
-    15→        Dictionary of global variables to use for resolving forward references.
-    16→
-    17→    .. attribute:: locals
-    18→       :type: dict[str, Any]
-    19→
-    20→        Dictionary of local variables to use for resolving forward references.
-    21→
-    22→    .. attribute:: self_type
-    23→       :type: type | None
-    24→
-    25→        When running type checks within an instance method or class method, this is the
-    26→        class object that the first argument (usually named ``self`` or ``cls``) refers
-    27→        to.
-    28→
-    29→    .. attribute:: config
-    30→       :type: TypeCheckConfiguration
-    31→
-    32→         Contains the configuration for a particular set of type checking operations.
-    33→    """
     37→    def __init__(
     38→        self,
     39→        globals: dict[str, Any],
@@ -494,29 +357,10 @@ src/typeguard/_suppression.py
     31→    func: Callable[P, T] | None = None,
     32→) -> Callable[P, T] | ContextManager[None]:
     33→    """
-    34→    Temporarily suppress all type checking.
-    35→
-    36→    This function has two operating modes, based on how it's used:
-    37→
-    38→    #. as a context manager (``with suppress_type_checks(): ...``)
-    39→    #. as a decorator (``@suppress_type_checks``)
-    40→
-    41→    When used as a context manager, :func:`check_type` and any automatically
-    42→    instrumented functions skip the actual type checking. These context managers can be
-    43→    nested.
-    44→
-    45→    When used as a decorator, all type checking is suppressed while the function is
-    46→    running.
-    47→
-    48→    Type checking will resume once no more context managers are active and no decorated
-    49→    functions are running.
-    50→
-    51→    Both operating modes are thread-safe.
-    52→
-    53→    """
 src/typeguard/_transformer.py
     67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
     68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
+   117→@dataclass
    118→class TransformMemo:
    141→    def __post_init__(self) -> None:
    171→    def get_unused_name(self, name: str) -> str:
@@ -524,6 +368,7 @@ src/typeguard/_transformer.py
    206→    def get_memo_name(self) -> Name:
    212→    def get_import(self, module: str, name: str) -> Name:
    225→    def insert_imports(self, node: Module | FunctionDef | AsyncFunctionDef) -> None:
+   226→        """Insert imports needed by injected code."""
    238→    def name_matches(self, expression: expr | Expr | None, *names: str) -> bool:
    275→    def get_config_keywords(self) -> list[keyword]:
    285→class NameCollector(NodeVisitor):
@@ -535,6 +380,7 @@ src/typeguard/_transformer.py
    306→    def visit_FunctionDef(self, node: FunctionDef) -> None:
    309→    def visit_ClassDef(self, node: ClassDef) -> None:
    313→class GeneratorDetector(NodeVisitor):
+   314→    """Detects if a function node is a generator function."""
    319→    def visit_Yield(self, node: Yield) -> Any:
    322→    def visit_YieldFrom(self, node: YieldFrom) -> Any:
    325→    def visit_ClassDef(self, node: ClassDef) -> Any:
@@ -567,16 +413,24 @@ src/typeguard/_transformer.py
    650→    def visit_FunctionDef(
    651→        self, node: FunctionDef | AsyncFunctionDef
    652→    ) -> FunctionDef | AsyncFunctionDef | None:
+   653→        """
    913→    def visit_AsyncFunctionDef(
    914→        self, node: AsyncFunctionDef
    915→    ) -> FunctionDef | AsyncFunctionDef | None:
    918→    def visit_Return(self, node: Return) -> Return:
+   919→        """This injects type checks into "return" statements."""
    945→    def visit_Yield(self, node: Yield) -> Yield | Call:
+   946→        """
    994→    def visit_AnnAssign(self, node: AnnAssign) -> Any:
+   995→        """
   1036→    def visit_Assign(self, node: Assign) -> Any:
+  1037→        """
   1138→    def visit_NamedExpr(self, node: NamedExpr) -> Any:
+  1139→        """This injects a type check into an assignment expression (a := foo())."""
   1181→    def visit_AugAssign(self, node: AugAssign) -> Any:
+  1182→        """
   1224→    def visit_If(self, node: If) -> Any:
+  1225→        """
 src/typeguard/_utils.py
     48→    def evaluate_forwardref(forwardref: ForwardRef, memo: TypeCheckMemo) -> Any:
     66→def get_type_name(type_: Any) -> str:

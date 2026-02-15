@@ -38,10 +38,6 @@ xxhash.go
     14→	prime3 uint64 = 1609587929392839161
     15→	prime4 uint64 = 9650029242287828579
     16→	prime5 uint64 = 2870177450012600261
-    19→// Store the primes in an array as well.
-    20→//
-    21→// The consts are used when possible in Go code to avoid MOVs but we need a
-    22→// contiguous array for the assembly code.
     23→var primes = [...]uint64{prime1, prime2, prime3, prime4, prime5}
     25→// Digest implements hash.Hash64.
     26→//
@@ -94,7 +90,6 @@ xxhash_asm.go
     10→//
     11→//go:noescape
     12→func Sum64(b []byte) uint64
-    14→//go:noescape
     15→func writeBlocks(d *Digest, b []byte) int
 xxhash_other.go
      6→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
@@ -112,8 +107,6 @@ xxhash_unsafe.go
     43→// WriteString adds more data to d. It always returns len(s), nil.
     44→// It may be faster than Write([]byte(s)) by avoiding a copy.
     45→func (d *Digest) WriteString(s string) (n int, err error) {
-    53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
-    54→// of the first two words is the same as the layout of a string.
     55→type sliceHeader struct {
 xxhsum/xxhsum.go
     11→func main() {

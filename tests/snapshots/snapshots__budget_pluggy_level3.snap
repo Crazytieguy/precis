@@ -2,16 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 → level 2 (968 words)
+budget: 2000 → level 3 (1278 words)
 
 __init__.py
      1→__all__ = [
     32→def __getattr__(name: str) -> str:
 _callers.py
+    22→# Need to distinguish between old- and new-style hook wrappers.
     24→Teardown: TypeAlias = Generator[None, object, object]
     27→def run_old_style_hookwrapper(
     28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
     29→) -> Teardown:
+    30→    """
     60→def _raise_wrapfail(
     61→    wrap_controller: Generator[None, object, object],
     62→    msg: str,
@@ -115,13 +117,17 @@ _manager.py
     37→_AfterTrace: TypeAlias = Callable[
     42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
     52→class PluginValidationError(Exception):
+    53→    """Plugin failed validation.
     59→    def __init__(self, plugin: _Plugin, message: str) -> None:
     65→class DistFacade:
+    66→    """Emulate a pkg_resources Distribution"""
     68→    def __init__(self, dist: importlib.metadata.Distribution) -> None:
+    71→    @property
     72→    def project_name(self) -> str:
     76→    def __getattr__(self, attr: str, default: Any | None = None) -> Any:
     79→    def __dir__(self) -> list[str]:
     83→class PluginManager:
+    84→    """Core class which manages registration of plugin objects and 1:N hook
    100→    def __init__(self, project_name: str) -> None:
    114→    def _hookexec(
    115→        self,
@@ -131,52 +137,87 @@ _manager.py
    119→        firstresult: bool,
    120→    ) -> object | list[object]:
    125→    def register(self, plugin: _Plugin, name: str | None = None) -> str | None:
+   126→        """Register a plugin and return its name.
    176→    def parse_hookimpl_opts(self, plugin: _Plugin, name: str) -> HookimplOpts | None:
+   177→        """Try to obtain a hook implementation from an item with the given name
    201→    def unregister(
    202→        self, plugin: _Plugin | None = None, name: str | None = None
    203→    ) -> Any | None:
+   204→        """Unregister a plugin and all of its hook implementations.
    233→    def set_blocked(self, name: str) -> None:
+   234→        """Block registrations of the given name, unregister if already registered."""
    238→    def is_blocked(self, name: str) -> bool:
+   239→        """Return whether the given plugin name is blocked."""
    242→    def unblock(self, name: str) -> bool:
+   243→        """Unblocks a name.
    252→    def add_hookspecs(self, module_or_class: _Namespace) -> None:
+   253→        """Add new hook specifications defined in the given ``module_or_class``.
    278→    def parse_hookspec_opts(
    279→        self, module_or_class: _Namespace, name: str
    280→    ) -> HookspecOpts | None:
+   281→        """Try to obtain a hook specification from an item with the given name
    296→    def get_plugins(self) -> set[Any]:
+   297→        """Return a set of all registered plugin objects."""
    300→    def is_registered(self, plugin: _Plugin) -> bool:
+   301→        """Return whether the plugin is already registered."""
    304→    def get_canonical_name(self, plugin: _Plugin) -> str:
+   305→        """Return a canonical name for a plugin object.
    315→    def get_plugin(self, name: str) -> Any | None:
+   316→        """Return the plugin registered under the given name, if any."""
    319→    def has_plugin(self, name: str) -> bool:
+   320→        """Return whether a plugin with the given name is registered."""
    323→    def get_name(self, plugin: _Plugin) -> str | None:
+   324→        """Return the name the plugin is registered under, or ``None`` if
    331→    def _verify_hook(self, hook: HookCaller, hookimpl: HookImpl) -> None:
    379→    def check_pending(self) -> None:
+   380→        """Verify that all hooks which have not been verified against a
    395→    def load_setuptools_entrypoints(self, group: str, name: str | None = None) -> int:
+   396→        """Load modules from querying the specified setuptools ``group``.
    425→    def list_plugin_distinfo(self) -> list[tuple[_Plugin, DistFacade]]:
+   426→        """Return a list of (plugin, distinfo) pairs for all
    430→    def list_name_plugin(self) -> list[tuple[str, _Plugin]]:
+   431→        """Return a list of (name, plugin) pairs for all registered plugins."""
    434→    def get_hookcallers(self, plugin: _Plugin) -> list[HookCaller] | None:
+   435→        """Get all hook callers for the specified plugin.
    450→    def add_hookcall_monitoring(
    451→        self, before: _BeforeTrace, after: _AfterTrace
    452→    ) -> Callable[[], None]:
+   453→        """Add before/after tracing functions for all hooks.
    487→    def enable_tracing(self) -> Callable[[], None]:
+   488→        """Enable tracing of hook calls.
    512→    def subset_hook_caller(
    513→        self, name: str, remove_plugins: Iterable[_Plugin]
    514→    ) -> HookCaller:
+   515→        """Return a proxy :class:`~pluggy.HookCaller` instance for the named
    525→def _formatdef(func: Callable[..., object]) -> str:
 _result.py
     16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
     20→class HookCallError(Exception):
+    21→    """Hook was called incorrectly."""
+    24→@final
     25→class Result(Generic[ResultType]):
+    26→    """An object used to inspect and set the result in a :ref:`hook wrapper
     31→    def __init__(
     32→        self,
     33→        result: ResultType | None,
     34→        exception: BaseException | None,
     35→    ) -> None:
+    36→        """:meta private:"""
+    42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
+    44→        """:meta private:"""
+    51→    @property
     52→    def exception(self) -> BaseException | None:
+    53→        """:meta private:"""
+    56→    @classmethod
     57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
+    58→        """:meta private:"""
     67→    def force_result(self, result: ResultType) -> None:
+    68→        """Force the result(s) to ``result``.
     80→    def force_exception(self, exception: BaseException) -> None:
+    81→        """Force the result to fail with ``exception``.
     91→    def get_result(self) -> ResultType:
+    92→        """Get the result(s) for this hook call.
 _tracing.py
     16→class TagTracer:
     17→    def __init__(self) -> None:

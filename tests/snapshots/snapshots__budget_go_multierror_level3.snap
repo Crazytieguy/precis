@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 900 → level 3 (822 words)
+budget: 900 → level 4 (719 words)
 
 CHANGELOG.md
      1→## Unreleased
@@ -43,13 +43,6 @@ README.md
    132→existing Go applications/libraries that may not be aware of it.
 append.go
      6→// Append is a helper function that will append more errors
-     7→// onto an Error in order to create a larger multi-error.
-     8→//
-     9→// If err is not a multierror.Error, then it will be turned into
-    10→// one. If any of the errs are multierr.Error, they will be flattened
-    11→// one level into err.
-    12→// Any nil errors within errs will be ignored. If err is nil, a new
-    13→// *Error will be returned.
     14→func Append(err error, errs ...error) *Error {
 flatten.go
      6→// Flatten flattens the given error, merging any *Errors together into
@@ -118,11 +111,6 @@ multierror.go
    122→func (e chain) Is(target error) bool {
 prefix.go
     10→// Prefix is a helper function that will prefix some text
-    11→// to the given error. If the error is a multierror.Error, then
-    12→// it will be prefixed to each wrapped error.
-    13→//
-    14→// This is useful to use when appending multiple multierrors
-    15→// together in order to give better scoping.
     16→func Prefix(err error, prefix string) error {
 sort.go
      6→// Len implements sort.Interface function for length

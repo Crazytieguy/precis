@@ -40,19 +40,14 @@ xxhash.go
     16→	prime5 uint64 = 2870177450012600261
     23→var primes = [...]uint64{prime1, prime2, prime3, prime4, prime5}
     25→// Digest implements hash.Hash64.
-    26→//
-    27→// Note that a zero-valued Digest is not ready to receive writes.
-    28→// Call Reset or create a Digest using New before calling other methods.
     29→type Digest struct {
     39→// New creates a new Digest with a zero seed.
     40→func New() *Digest {
     44→// NewWithSeed creates a new Digest with the given seed.
     45→func NewWithSeed(seed uint64) *Digest {
     51→// Reset clears the Digest's state so that it can be reused.
-    52→// It uses a seed value of zero.
     53→func (d *Digest) Reset() {
     57→// ResetWithSeed clears the Digest's state so that it can be reused.
-    58→// It uses the given seed to initialize the state.
     59→func (d *Digest) ResetWithSeed(seed uint64) {
     68→// Size always returns 8 bytes.
     69→func (d *Digest) Size() int { return 8 }
@@ -87,8 +82,6 @@ xxhash.go
    243→func rol31(x uint64) uint64 { return bits.RotateLeft64(x, 31) }
 xxhash_asm.go
      9→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
-    10→//
-    11→//go:noescape
     12→func Sum64(b []byte) uint64
     15→func writeBlocks(d *Digest, b []byte) int
 xxhash_other.go
@@ -102,10 +95,8 @@ xxhash_safe.go
     14→func (d *Digest) WriteString(s string) (n int, err error) {
 xxhash_unsafe.go
     36→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
-    37→// It may be faster than Sum64([]byte(s)) by avoiding a copy.
     38→func Sum64String(s string) uint64 {
     43→// WriteString adds more data to d. It always returns len(s), nil.
-    44→// It may be faster than Write([]byte(s)) by avoiding a copy.
     45→func (d *Digest) WriteString(s string) (n int, err error) {
     55→type sliceHeader struct {
 xxhsum/xxhsum.go

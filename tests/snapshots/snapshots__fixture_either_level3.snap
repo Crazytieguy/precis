@@ -3,48 +3,8 @@ source: tests/snapshots.rs
 expression: output
 ---
 into_either.rs
-     6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
-     7→/// variant of [`Either<Self, Self>`](Either).
-     8→///
-     9→/// The [`into_either`](IntoEither::into_either) method takes a [`bool`] to determine
-    10→/// whether to convert to [`Left`] or [`Right`].
-    11→///
-    12→/// The [`into_either_with`](IntoEither::into_either_with) method takes a
-    13→/// [predicate function](FnOnce) to determine whether to convert to [`Left`] or [`Right`].
     14→pub trait IntoEither: Sized {
-    15→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
-    16→    /// if `into_left` is `true`.
-    17→    /// Converts `self` into a [`Right`] variant of [`Either<Self, Self>`](Either)
-    18→    /// otherwise.
-    19→    ///
-    20→    /// # Examples
-    21→    ///
-    22→    /// ```
-    23→    /// use either::{IntoEither, Left, Right};
-    24→    ///
-    25→    /// let x = 0;
-    26→    /// assert_eq!(x.into_either(true), Left(x));
-    27→    /// assert_eq!(x.into_either(false), Right(x));
-    28→    /// ```
     29→    fn into_either(self, into_left: bool) -> Either<Self, Self> {
-    37→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
-    38→    /// if `into_left(&self)` returns `true`.
-    39→    /// Converts `self` into a [`Right`] variant of [`Either<Self, Self>`](Either)
-    40→    /// otherwise.
-    41→    ///
-    42→    /// # Examples
-    43→    ///
-    44→    /// ```
-    45→    /// use either::{IntoEither, Left, Right};
-    46→    ///
-    47→    /// fn is_even(x: &u8) -> bool {
-    48→    ///     x % 2 == 0
-    49→    /// }
-    50→    ///
-    51→    /// let x = 0;
-    52→    /// assert_eq!(x.into_either_with(is_even), Left(x));
-    53→    /// assert_eq!(x.into_either_with(|x| !is_even(x)), Right(x));
-    54→    /// ```
     55→    fn into_either_with<F>(self, into_left: F) -> Either<Self, Self>
     56→    where
     57→        F: FnOnce(&Self) -> bool,
@@ -52,12 +12,6 @@ into_either.rs
     64→impl<T> IntoEither for T {}
 iterator.rs
      4→macro_rules! wrap_either {
-    13→/// Iterator that maps left or right iterators to corresponding `Either`-wrapped items.
-    14→///
-    15→/// This struct is created by the [`Either::factor_into_iter`],
-    16→/// [`factor_iter`][Either::factor_iter],
-    17→/// and [`factor_iter_mut`][Either::factor_iter_mut] methods.
-    18→#[derive(Clone, Debug)]
     19→pub struct IterEither<L, R> {
     23→impl<L, R> IterEither<L, R> {
     24→    pub(crate) fn new(inner: Either<L, R>) -> Self {

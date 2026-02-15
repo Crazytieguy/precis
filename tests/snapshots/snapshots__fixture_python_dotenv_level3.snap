@@ -12,46 +12,26 @@ __init__.py
     17→    quote: Optional[str] = None,
     18→):
     19→    """Returns a string suitable for running as a shell script.
-    20→
-    21→    Useful for converting a arguments passed to a fabric task
-    22→    to be passed to a `local` or `run` command.
-    23→    """
     42→__all__ = [
 __main__.py
 cli.py
     24→def enumerate_env() -> Optional[str]:
     25→    """
-    26→    Return a path for the ${pwd}/.env file.
-    27→
-    28→    If pwd does not exist, return None.
-    29→    """
     60→@click.version_option(version=__version__)
-    61→@click.pass_context
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
     63→    """This script is used to set, get or unset values from a .env file."""
     67→@contextmanager
     68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
     69→    """
-    70→    Open a file and yield the corresponding (decoded) stream.
-    71→
-    72→    Exits with error code 2 if the file cannot be opened.
-    73→    """
     93→def list_values(ctx: click.Context, output_format: str) -> None:
     94→    """Display all the stored key/value."""
    112→@cli.command(name="set")
-   113→@click.pass_context
-   114→@click.argument("key", required=True)
-   115→@click.argument("value", required=True)
    116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
    117→    """Store the given key/value."""
    128→@cli.command()
-   129→@click.pass_context
-   130→@click.argument("key", required=True)
    131→def get(ctx: click.Context, key: Any) -> None:
    132→    """Retrieve the value for the given key."""
    145→@cli.command()
-   146→@click.pass_context
-   147→@click.argument("key", required=True)
    148→def unset(ctx: click.Context, key: Any) -> None:
    149→    """Removes the given key."""
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
@@ -59,23 +39,6 @@ cli.py
    174→    """Run command with environment variables present."""
    193→def run_command(command: List[str], env: Dict[str, str]) -> None:
    194→    """Replace the current process with the specified command.
-   195→
-   196→    Replaces the current process with the specified command and the variables from `env`
-   197→    added in the current environment variables.
-   198→
-   199→    Parameters
-   200→    ----------
-   201→    command: List[str]
-   202→        The command and it's parameters
-   203→    env: Dict
-   204→        The additional environment variables
-   205→
-   206→    Returns
-   207→    -------
-   208→    None
-   209→        This function does not return any value. It replaces the current process with the new one.
-   210→
-   211→    """
 ipython.py
     11→@magics_class
     12→class IPythonDotEnv(Magics):
@@ -98,25 +61,14 @@ main.py
     54→    ) -> None:
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     78→    def dict(self) -> Dict[str, Optional[str]]:
-    79→        """Return dotenv as dict"""
     94→    def parse(self) -> Iterator[Tuple[str, Optional[str]]]:
    100→    def set_as_environment_variables(self) -> bool:
-   101→        """
-   102→        Load the current dotenv as system environment variable.
-   103→        """
    115→    def get(self, key: str) -> Optional[str]:
-   116→        """ """
    128→def get_key(
    129→    dotenv_path: StrPath,
    130→    key_to_get: str,
    131→    encoding: Optional[str] = "utf-8",
    132→) -> Optional[str]:
-   133→    """
-   134→    Get the value of a given key from the given .env.
-   135→
-   136→    Returns `None` if the key isn't found or doesn't have a value.
-   137→    """
-   141→@contextmanager
    142→def rewrite(
    143→    path: StrPath,
    144→    encoding: Optional[str],
@@ -129,24 +81,12 @@ main.py
    168→    export: bool = False,
    169→    encoding: Optional[str] = "utf-8",
    170→) -> Tuple[Optional[bool], str, str]:
-   171→    """
-   172→    Adds or Updates a key/value to the given .env
-   173→
-   174→    If the .env path given doesn't exist, fails instead of risking creating
-   175→    an orphan .env somewhere in the filesystem
-   176→    """
    211→def unset_key(
    212→    dotenv_path: StrPath,
    213→    key_to_unset: str,
    214→    quote_mode: str = "always",
    215→    encoding: Optional[str] = "utf-8",
    216→) -> Tuple[Optional[bool], str]:
-   217→    """
-   218→    Removes a given key from the given `.env` file.
-   219→
-   220→    If the .env path given doesn't exist, fails.
-   221→    If the given key doesn't exist in the .env, fails.
-   222→    """
    244→def resolve_variables(
    245→    values: Iterable[Tuple[str, Optional[str]]],
    246→    override: bool,
@@ -157,11 +97,6 @@ main.py
    289→    raise_error_if_not_found: bool = False,
    290→    usecwd: bool = False,
    291→) -> str:
-   292→    """
-   293→    Search in increasingly higher folders for the given file
-   294→
-   295→    Returns path to the file if found, or an empty string otherwise
-   296→    """
    338→def load_dotenv(
    339→    dotenv_path: Optional[StrPath] = None,
    340→    stream: Optional[IO[str]] = None,
@@ -170,27 +105,6 @@ main.py
    343→    interpolate: bool = True,
    344→    encoding: Optional[str] = "utf-8",
    345→) -> bool:
-   346→    """Parse a .env file and then load all the variables found as environment variables.
-   347→
-   348→    Parameters:
-   349→        dotenv_path: Absolute or relative path to .env file.
-   350→        stream: Text stream (such as `io.StringIO`) with .env content, used if
-   351→            `dotenv_path` is `None`.
-   352→        verbose: Whether to output a warning the .env file is missing.
-   353→        override: Whether to override the system environment variables with the variables
-   354→            from the `.env` file.
-   355→        encoding: Encoding to be used to read the file.
-   356→    Returns:
-   357→        Bool: True if at least one environment variable is set else False
-   358→
-   359→    If both `dotenv_path` and `stream` are `None`, `find_dotenv()` is used to find the
-   360→    .env file with it's default parameters. If you need to change the default parameters
-   361→    of `find_dotenv()`, you can explicitly call `find_dotenv()` and pass the result
-   362→    to this function as `dotenv_path`.
-   363→
-   364→    If the environment variable `PYTHON_DOTENV_DISABLED` is set to a truthy value,
-   365→    .env loading is disabled.
-   366→    """
    387→def dotenv_values(
    388→    dotenv_path: Optional[StrPath] = None,
    389→    stream: Optional[IO[str]] = None,
@@ -198,22 +112,6 @@ main.py
    391→    interpolate: bool = True,
    392→    encoding: Optional[str] = "utf-8",
    393→) -> Dict[str, Optional[str]]:
-   394→    """
-   395→    Parse a .env file and return its content as a dict.
-   396→
-   397→    The returned dict will have `None` values for keys without values in the .env file.
-   398→    For example, `foo=bar` results in `{"foo": "bar"}` whereas `foo` alone results in
-   399→    `{"foo": None}`
-   400→
-   401→    Parameters:
-   402→        dotenv_path: Absolute or relative path to the .env file.
-   403→        stream: `StringIO` object with .env content, used if `dotenv_path` is `None`.
-   404→        verbose: Whether to output a warning if the .env file is missing.
-   405→        encoding: Encoding to be used to read the file.
-   406→
-   407→    If both `dotenv_path` and `stream` are `None`, `find_dotenv()` is used to find the
-   408→    .env file.
-   409→    """
    423→def _is_file_or_fifo(path: StrPath) -> bool:
 parser.py
     14→def make_regex(string: str, extra_flags: int = 0) -> Pattern[str]:

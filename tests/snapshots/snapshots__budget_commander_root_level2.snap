@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 5000 → level 2 (2754 words)
+budget: 5000 → level 3 (3448 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -222,8 +222,14 @@ CHANGELOG.md
   1311→## 0.0.1 / 2010-01-03
 CONTRIBUTING.md
      1→# Contributing
+     2→
      3→## Issues
+     4→
+     5→New issues are welcome, whether questions or suggestions or reporting bugs.
+     6→You are also welcome to contribute by adding helpful comments on an existing issue.
     13→## Pull Requests
+    14→
+    15→Pull Requests will be considered. Please submit pull requests against the develop branch.
 Readme.md
      1→# Commander.js
     61→## Installation
@@ -318,42 +324,116 @@ Readme_zh-CN.md
   1068→### 企业使用 Commander
 SECURITY.md
      1→# Security Policy
+     2→
+     3→To report a security vulnerability, please use the
+     4→[Tidelift security contact](https://tidelift.com/security).
+     5→Tidelift will coordinate the fix and disclosure.
 docs/deprecated.md
      1→# Deprecated
+     2→
+     3→These features are deprecated, which means they may go away in a future major version of Commander.
+     4→They are currently still available for backwards compatibility, but should not be used in new code.
     22→### RegExp .option() parameter
+    23→
+    24→The `.option()` method allowed a RegExp as the third parameter to restrict what values were accepted.
     34→### noHelp
+    35→
+    36→This was an option passed to `.command()` to hide the command from the built-in help:
     44→### Callback to .help() and .outputHelp()
+    45→
+    46→These routines allowed a callback parameter to process the built-in help before display.
     62→### .on('--help')
+    63→
+    64→This was the way to add custom help after the built-in help. From Commander v3.0.0 this used the custom long help option flags, if changed.
     87→### .on('command:*')
+    88→
+    89→This was emitted when the command argument did not match a known subcommand (as part of the implementation of `.command('*')`).
     98→### .command('*')
+    99→
+   100→This was used to add a default command to the program.
    118→### cmd.description(cmdDescription, argDescriptions)
+   119→
+   120→This was used to add command argument descriptions for the help.
    141→### InvalidOptionArgumentError
+   142→
+   143→This was used for throwing an error from custom option processing, for a nice error message.
    171→### Import from `commander/esm.mjs`
+   172→
+   173→The first support for named imports required an explicit entry file.
    187→### cmd._args
+   188→
+   189→This was always private, but was previously the only way to access the command `Argument` array.
    203→### .addHelpCommand(string|boolean|undefined)
+   204→
+   205→This was originally used with a variety of parameters, but not by passing a Command object despite the "add" name.
    227→## Removed
+   228→
    229→### Short option flag longer than a single character
+   230→
+   231→Short option flags like `-ws` were never supported, but the old README did not make this clear. The README now states that short options are a single character.
    238→### Default import of global Command object
+   239→
+   240→The default import was a global Command object.
 docs/help-in-depth.md
      1→# Help in Depth
+     2→
+     3→The built-in help is formatted using the Help class.
+     4→You can configure the Help behaviour by modifying data properties and methods using `.configureHelp()`, or by subclassing using `.createHelp()` if you prefer.
     20→## Data Properties
+    21→
+    22→The data properties are:
     34→## Stringify and Style
+    35→
+    36→The `Help` object has narrowly focused methods to allow customising the displayed help.
    118→## Layout
+   119→
+   120→Utility methods which control the layout include `padWidth`, `boxWrap`, and `formatItem`. These can be overridden to change the layout or replace with an alternative implementation.
 docs/options-in-depth.md
      2→# Options in Depth
+     3→
+     4→The README covers declaring and using options, and mostly parsing will work the way you and your users expect. This page covers some special cases
+     5→and subtle issues in depth.
     15→## Options taking varying numbers of option-arguments
+    16→
+    17→Certain options take a varying number of arguments:
     30→### Parsing ambiguity
+    31→
+    32→There is a potential downside to be aware of. If a command has both
+    33→command-arguments and options with varying option-arguments, this introduces a parsing ambiguity which may affect the user of your program.
+    34→Commander looks for option-arguments first, but the user may
+    35→intend the argument following the option as a command or command-argument.
     79→#### Alternative: Make `--` part of your syntax
+    80→
+    81→Rather than trying to teach your users what `--` does, you could just make it part of your syntax.
    104→#### Alternative: Put options last
+   105→
+   106→Commander follows the GNU convention for parsing and allows options before or after the command-arguments, or intermingled.
+   107→So by putting the options last, the command-arguments do not get confused with the option-arguments.
    126→#### Alternative: Use options instead of command-arguments
+   127→
+   128→This is a bit more radical, but completely avoids the parsing ambiguity!
    148→## Combining short options, and options taking arguments
+   149→
+   150→Multiple boolean short options can be combined after a single `-`, like `ls -al`. You can also include just
+   151→a single short option which might take a value, as any following characters will
+   152→be taken as the value.
    191→### Combining short options as if boolean
+   192→
+   193→Before Commander v5, combining a short option and the value was not supported, and combined short flags were always expanded.
+   194→So `-avl` expanded to `-a -v -l`.
 docs/parsing-and-hooks.md
      1→# Parsing life cycle and hooks
+     2→
+     3→The processing starts with an array of args. Each command processes and removes the options it understands, and passes the remaining args to the next subcommand.
+     4→The final command calls the action handler.
 docs/release-policy.md
      1→# Release Policy
+     2→
+     3→We follow [Semantic Versioning](http://semver.org/spec/v2.0.0.html), and limit breaking changes to major versions.
 docs/terminology.md
      1→# Terminology
+     2→
+     3→The command line arguments are made up of options, option-arguments, commands, and command-arguments.
 docs/zh-CN/不再推荐使用的功能.md
      1→# 不再推荐使用的功能
     18→## .option() 方法的正则表达式参数
@@ -499,8 +579,10 @@ lib/command.js
   2752→function useColor() {
 lib/error.js
      4→class CommanderError extends Error {
+     6→   * Constructs the CommanderError class
     11→  constructor(exitCode, code, message) {
     25→class InvalidArgumentError extends CommanderError {
+    27→   * Constructs the InvalidArgumentError class
     30→  constructor(message) {
 lib/help.js
     12→class Help {

@@ -41,13 +41,6 @@ README.md
    132→existing Go applications/libraries that may not be aware of it.
 append.go
      6→// Append is a helper function that will append more errors
-     7→// onto an Error in order to create a larger multi-error.
-     8→//
-     9→// If err is not a multierror.Error, then it will be turned into
-    10→// one. If any of the errs are multierr.Error, they will be flattened
-    11→// one level into err.
-    12→// Any nil errors within errs will be ignored. If err is nil, a new
-    13→// *Error will be returned.
     14→func Append(err error, errs ...error) *Error {
 flatten.go
      6→// Flatten flattens the given error, merging any *Errors together into
@@ -104,17 +97,6 @@ multierror.go
     69→// to this error after calling Unwrap will not be available until a new
     70→// Unwrap is called on the multierror.Error.
     71→func (e *Error) Unwrap() error {
-    88→// chain implements the interfaces necessary for errors.Is/As/Unwrap to
-    89→// work in a deterministic way with multierror. A chain tracks a list of
-    90→// errors while accounting for the current represented error. This lets
-    91→// Is/As be meaningful.
-    92→//
-    93→// Unwrap returns the next error. In the cleanest form, Unwrap would return
-    94→// the wrapped error here but we can't do that if we want to properly
-    95→// get access to all the errors. Instead, users are recommended to use
-    96→// Is/As to get the correct error type out.
-    97→//
-    98→// Precondition: []error is non-empty (len > 0)
     99→type chain []error
    101→// Error implements the error interface
    102→func (e chain) Error() string {
@@ -127,11 +109,6 @@ multierror.go
    122→func (e chain) Is(target error) bool {
 prefix.go
     10→// Prefix is a helper function that will prefix some text
-    11→// to the given error. If the error is a multierror.Error, then
-    12→// it will be prefixed to each wrapped error.
-    13→//
-    14→// This is useful to use when appending multiple multierrors
-    15→// together in order to give better scoping.
     16→func Prefix(err error, prefix string) error {
 sort.go
      6→// Len implements sort.Interface function for length

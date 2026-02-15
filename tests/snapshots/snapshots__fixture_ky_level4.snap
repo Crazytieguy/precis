@@ -29,9 +29,7 @@ core/constants.ts
     58→export const maxSafeTimeout = 2_147_483_647;
     61→export const usualFormBoundarySize = new TextEncoder().encode('------WebKitFormBoundaryaxpyiPgbbPti10Rw').length;
     63→export const stop = Symbol('stop');
-    65→/**
     66→Options for forcing a retry via `ky.retry()`.
-    67→*/
     68→export type ForceRetryOptions = {
     69→	/**
     70→	Custom delay in milliseconds before retrying.
@@ -108,94 +106,10 @@ core/constants.ts
    141→	*/
    142→	request?: Request;
    143→};
-   145→/**
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
-   147→*/
    148→export class RetryMarker {
    149→	constructor(public options?: ForceRetryOptions) {}
-   152→/**
    153→Force a retry from an `afterResponse` hook.
-   154→
-   155→This allows you to retry a request based on the response content, even if the response has a successful status code. The retry will respect the `retry.limit` option and skip the `shouldRetry` check. The forced retry is observable in `beforeRetry` hooks, where the error will be a `ForceRetryError`.
-   156→
-   157→@param options - Optional configuration for the retry.
-   158→
-   159→@example
-   160→```
-   161→import ky, {isForceRetryError} from 'ky';
-   162→
-   163→const api = ky.extend({
-   164→	hooks: {
-   165→		afterResponse: [
-   166→			async (request, options, response) => {
-   167→				// Retry based on response body content
-   168→				if (response.status === 200) {
-   169→					const data = await response.clone().json();
-   170→
-   171→					// Simple retry with default delay
-   172→					if (data.error?.code === 'TEMPORARY_ERROR') {
-   173→						return ky.retry();
-   174→					}
-   175→
-   176→					// Retry with custom delay from API response
-   177→					if (data.error?.code === 'RATE_LIMIT') {
-   178→						return ky.retry({
-   179→							delay: data.error.retryAfter * 1000,
-   180→							code: 'RATE_LIMIT'
-   181→						});
-   182→					}
-   183→
-   184→					// Retry with a modified request (e.g., fallback endpoint)
-   185→					if (data.error?.code === 'FALLBACK_TO_BACKUP') {
-   186→						return ky.retry({
-   187→							request: new Request('https://backup-api.com/endpoint', {
-   188→								method: request.method,
-   189→								headers: request.headers,
-   190→							}),
-   191→							code: 'BACKUP_ENDPOINT'
-   192→						});
-   193→					}
-   194→
-   195→					// Retry with refreshed authentication
-   196→					if (data.error?.code === 'TOKEN_REFRESH' && data.newToken) {
-   197→						return ky.retry({
-   198→							request: new Request(request, {
-   199→								headers: {
-   200→									...Object.fromEntries(request.headers),
-   201→									'Authorization': `Bearer ${data.newToken}`
-   202→								}
-   203→							}),
-   204→							code: 'TOKEN_REFRESHED'
-   205→						});
-   206→					}
-   207→
-   208→					// Retry with cause to preserve error chain
-   209→					try {
-   210→						validateResponse(data);
-   211→					} catch (error) {
-   212→						return ky.retry({
-   213→							code: 'VALIDATION_FAILED',
-   214→							cause: error
-   215→						});
-   216→					}
-   217→				}
-   218→			}
-   219→		],
-   220→		beforeRetry: [
-   221→			({error, retryCount}) => {
-   222→				// Observable in beforeRetry hooks
-   223→				if (isForceRetryError(error)) {
-   224→					console.log(`Forced retry #${retryCount}: ${error.message}`);
-   225→					// Example output: "Forced retry #1: Forced retry: RATE_LIMIT"
-   226→				}
-   227→			}
-   228→		]
-   229→	}
-   230→});
-   231→
-   232→const response = await api.get('https://example.com/api');
-   233→```
-   234→*/
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys: KyOptionsRegistry = {
    256→export const vendorSpecificOptions = {
@@ -1255,90 +1169,13 @@ utils/timeout.ts
     13→	options: TimeoutOptions,
     14→): Promise<Response> {
 utils/type-guards.ts
-     5→/**
      6→Type guard to check if an error is a Ky error.
-     7→
-     8→@param error - The error to check
-     9→@returns `true` if the error is a Ky error, `false` otherwise
-    10→
-    11→@example
-    12→```
-    13→import ky, {isKyError} from 'ky';
-    14→try {
-    15→	const response = await ky.get('/api/data');
-    16→} catch (error) {
-    17→	if (isKyError(error)) {
-    18→		// Handle Ky-specific errors
-    19→		console.log('Ky error occurred:', error.message);
-    20→	} else {
-    21→		// Handle other errors
-    22→		console.log('Unknown error:', error);
-    23→	}
-    24→}
-    25→```
-    26→*/
     27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
-    31→/**
     32→Type guard to check if an error is an HTTPError.
-    33→
-    34→@param error - The error to check
-    35→@returns `true` if the error is an HTTPError, `false` otherwise
-    36→
-    37→@example
-    38→```
-    39→import ky, {isHTTPError} from 'ky';
-    40→try {
-    41→	const response = await ky.get('/api/data');
-    42→} catch (error) {
-    43→	if (isHTTPError(error)) {
-    44→		console.log('HTTP error status:', error.response.status);
-    45→	}
-    46→}
-    47→```
-    48→*/
     49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
-    53→/**
     54→Type guard to check if an error is a TimeoutError.
-    55→
-    56→@param error - The error to check
-    57→@returns `true` if the error is a TimeoutError, `false` otherwise
-    58→
-    59→@example
-    60→```
-    61→import ky, {isTimeoutError} from 'ky';
-    62→try {
-    63→	const response = await ky.get('/api/data', { timeout: 1000 });
-    64→} catch (error) {
-    65→	if (isTimeoutError(error)) {
-    66→		console.log('Request timed out:', error.request.url);
-    67→	}
-    68→}
-    69→```
-    70→*/
     71→export function isTimeoutError(error: unknown): error is TimeoutError {
-    75→/**
     76→Type guard to check if an error is a ForceRetryError.
-    77→
-    78→@param error - The error to check
-    79→@returns `true` if the error is a ForceRetryError, `false` otherwise
-    80→
-    81→@example
-    82→```
-    83→import ky, {isForceRetryError} from 'ky';
-    84→
-    85→const api = ky.extend({
-    86→	hooks: {
-    87→		beforeRetry: [
-    88→			({error, retryCount}) => {
-    89→				if (isForceRetryError(error)) {
-    90→					console.log(`Forced retry #${retryCount}: ${error.code}`);
-    91→				}
-    92→			}
-    93→		]
-    94→	}
-    95→});
-    96→```
-    97→*/
     98→export function isForceRetryError(error: unknown): error is ForceRetryError {
 utils/types.ts
      1→export type Mutable<T> = {

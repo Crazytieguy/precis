@@ -3,27 +3,11 @@ use std::path::{Path, PathBuf};
 use crate::parse;
 use crate::Lang;
 
-/// Maximum granularity level.
-///
-/// The nominal level is a global parameter. The render function computes an
-/// effective level per file by subtracting depth and size penalties, so
-/// different files receive different rendering at the same nominal level.
-///
-/// Rendering policies (applied at the effective level for each file):
-/// 0 - File paths only
-/// 1 - Symbol lines, truncated to symbol name
-/// 2 - Symbol lines, full multi-line signatures
-/// 3 - Like 2, but public symbols also get preceding doc comments
-/// 4 - Symbol lines with preceding doc comments (all symbols)
-/// 5 - Like 4, but public type definition bodies shown in full
-/// 6 - Like 5, but all type definition bodies shown in full
-/// 7 - Full source (all lines)
-pub const MAX_LEVEL: u8 = 7;
+/// Maximum granularity level. See README.md for the rendering design.
+pub const MAX_LEVEL: u8 = 8;
 
 /// Render a single file at the given granularity level.
 pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String {
-    // Extract symbols for any level >= 1. Even at nominal level 5 (full source),
-    // depth penalty may reduce the effective level to 1–4 which needs symbols.
     let symbols = if level >= 1 {
         parse::extract_symbols(path, source)
     } else {
@@ -35,10 +19,9 @@ pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String 
 /// Render a single file at the given level using pre-extracted symbols.
 /// Used by budget search to avoid redundant symbol extraction across levels.
 ///
-/// The effective level is adjusted by file depth and file size: deeper and
-/// larger files are rendered with less detail so that shallow, focused files
-/// are prioritised when a budget is tight. See [`depth_penalty`] and
-/// [`size_penalty`] for the formulas.
+/// Per-file rendering decisions are based on the nominal level adjusted by
+/// file properties (depth, size, doc comment volume). Different files may
+/// receive different rendering at the same nominal level.
 fn render_with_symbols(
     level: u8,
     path: &Path,
@@ -47,23 +30,50 @@ fn render_with_symbols(
     symbols: &[parse::Symbol],
 ) -> String {
     let relative = path.strip_prefix(root).unwrap_or(path);
-    // Apply depth penalty first, then size penalty only if the result is
-    // level 3+. At levels 1–2 (names/signatures), output already scales with
-    // symbol count rather than file size, so penalising large files is unhelpful.
+    let lang = Lang::from_path(relative);
+    // Depth and size penalties reduce the effective level for deep/large files.
+    // Size penalty only applies at level 3+ where output is content-driven
+    // rather than symbol-count-driven.
     let after_depth = level.saturating_sub(depth_penalty(relative));
     let effective = after_depth.saturating_sub(
         if after_depth >= 3 { size_penalty(source) } else { 0 },
     );
     let mut out = format!("{}\n", relative.display());
-    match effective {
-        0 => {}
-        1 => render_symbols(&mut out, relative, source, symbols, true),
-        2 => render_symbols(&mut out, relative, source, symbols, false),
-        3 => render_symbols_with_docs(&mut out, relative, source, symbols, false, true, false),
-        4 => render_symbols_with_docs(&mut out, relative, source, symbols, false, false, false),
-        5 => render_symbols_with_docs(&mut out, relative, source, symbols, true, false, true),
-        6 => render_symbols_with_docs(&mut out, relative, source, symbols, true, false, false),
-        _ => render_full_source(&mut out, source),
+    if effective == 0 {
+        return out;
+    }
+    if effective >= 8 {
+        render_full_source(&mut out, source);
+        return out;
+    }
+    if effective <= 2 {
+        render_symbols(&mut out, relative, source, symbols, effective < 2);
+        return out;
+    }
+    // Levels 3–7: symbols with optional docs and type expansion.
+    // Doc comment penalty delays doc appearance for files with many doc lines,
+    // spreading transitions across nominal levels.
+    let doc_eff = effective.saturating_sub(doc_penalty(source, symbols, lang));
+    let with_docs = doc_eff >= 3;
+    let first_line_only = doc_eff < 4;
+    let public_docs_only = doc_eff < 5;
+    let expand_types = effective >= 6;
+    let public_types_only = effective < 7;
+    if !with_docs && !expand_types {
+        // No docs and no type expansion: just signatures
+        render_symbols(&mut out, relative, source, symbols, false);
+    } else {
+        render_symbols_with_docs(
+            &mut out,
+            relative,
+            source,
+            symbols,
+            with_docs,
+            first_line_only,
+            public_docs_only,
+            expand_types,
+            public_types_only,
+        );
     }
     out
 }
@@ -89,6 +99,44 @@ fn depth_penalty(relative: &Path) -> u8 {
 /// penalty 1 = effective 2, which equals level 2 with no penalty).
 fn size_penalty(source: &str) -> u8 {
     if source.lines().count() >= 1000 { 1 } else { 0 }
+}
+
+/// Compute a doc comment cost penalty for a file.
+///
+/// Files where doc comments are long on average (> 5 lines per documented
+/// public symbol) get a penalty of 1, delaying their doc appearance by one
+/// nominal level. This primarily targets languages with multi-line docstrings
+/// (Python) where showing all docs at once creates a huge word count jump,
+/// while leaving languages with shorter doc comments (Go, JS) unpenalized.
+fn doc_penalty(source: &str, symbols: &[parse::Symbol], lang: Option<Lang>) -> u8 {
+    let lines: Vec<&str> = source.lines().collect();
+    let mut total_doc_lines = 0usize;
+    let mut symbols_with_docs = 0usize;
+    for sym in symbols {
+        if !sym.is_public {
+            continue;
+        }
+        let sym_line_0 = sym.line - 1;
+        let doc_start = doc_comment_start(&lines, sym_line_0, lang);
+        let preceding = sym_line_0 - doc_start;
+        let mut ds_lines = 0;
+        if lang == Some(Lang::Python) {
+            let sig_end = signature_end_line(&lines, sym, lang);
+            let ds_end = docstring_end(&lines, sig_end);
+            if ds_end > sig_end + 1 {
+                ds_lines = ds_end - sig_end - 1;
+            }
+        }
+        if preceding + ds_lines > 0 {
+            total_doc_lines += preceding + ds_lines;
+            symbols_with_docs += 1;
+        }
+    }
+    if symbols_with_docs == 0 {
+        return 0;
+    }
+    let avg = total_doc_lines / symbols_with_docs;
+    if avg > 5 { 1 } else { 0 }
 }
 
 /// Format a single source line with its line number.
@@ -269,8 +317,8 @@ pub fn render_file_with_symbols(
     render_with_symbols(level, path, root, source, symbols)
 }
 
-/// Render symbol lines for a file. If `truncate` is true (level 1), truncates
-/// each line at the symbol name. If false (level 2), shows full multi-line signatures.
+/// Render symbol lines for a file. If `truncate` is true, truncates each line
+/// at the symbol name. If false, shows full multi-line signatures.
 /// `path` is relative to the project root (used for language detection).
 fn render_symbols(
     out: &mut String,
@@ -305,7 +353,7 @@ fn render_symbols(
     }
 }
 
-/// Format a symbol line truncated at the symbol name (level 1).
+/// Format a symbol line truncated at the symbol name.
 fn format_symbol_name(sym: &parse::Symbol, lines: &[&str]) -> String {
     let source_line = lines.get(sym.line - 1).copied().unwrap_or("");
     let trimmed = source_line.trim_start();
@@ -317,27 +365,31 @@ fn format_symbol_name(sym: &parse::Symbol, lines: &[&str]) -> String {
     format!("{:>6}→{}", sym.line, name_prefix)
 }
 
-/// Render all lines of a file with line numbers (level 6).
+/// Render all lines of a file with line numbers.
 fn render_full_source(out: &mut String, source: &str) {
     for (i, line) in source.lines().enumerate() {
         out.push_str(&fmt_line(i, line));
     }
 }
 
-/// Render symbol lines with preceding doc comments.
-/// If `expand_types` is true (level 5+), show full bodies for struct/enum/trait/interface.
-/// If `public_types_only` is true (level 5), only expand public type bodies.
-/// If `public_only` is true (level 3), only show doc comments for public symbols;
-/// private symbols still get their full signatures but no doc comments.
-/// For Markdown: level 4 shows first paragraph after each heading, level 5+ shows all content.
+/// Render symbol lines with optional doc comments, type body expansion, and
+/// language-specific content (Python docstrings, Markdown body text).
+///
+/// `with_docs` — whether to show any doc comments at all.
+/// `first_line_only` — if showing docs, emit only the first line of each comment block.
+/// `public_docs_only` — if showing docs, restrict to public symbols.
+/// `expand_types` — show full bodies for struct/enum/trait/interface/class.
+/// `public_types_only` — if expanding types, restrict to public types.
 /// `path` is relative to the project root (used for language detection).
 fn render_symbols_with_docs(
     out: &mut String,
     path: &Path,
     source: &str,
     symbols: &[parse::Symbol],
+    with_docs: bool,
+    first_line_only: bool,
+    public_docs_only: bool,
     expand_types: bool,
-    public_only: bool,
     public_types_only: bool,
 ) {
     if symbols.is_empty() {
@@ -350,7 +402,7 @@ fn render_symbols_with_docs(
     let mut emitted_up_to: usize = 0; // 0-indexed, exclusive
     for (sym_idx, sym) in symbols.iter().enumerate() {
         let sym_line_0 = sym.line - 1;
-        let show_docs = !public_only || sym.is_public;
+        let show_docs = with_docs && (!public_docs_only || sym.is_public);
         let doc_start = if show_docs {
             doc_comment_start(&lines, sym_line_0, lang)
         } else {
@@ -374,11 +426,28 @@ fn render_symbols_with_docs(
             emitted_up_to = emitted_up_to.max(end);
         } else if sym_line_0 >= emitted_up_to {
             // Non-expanded symbol: show doc comments + multi-line signature
-            let start = doc_start.max(emitted_up_to);
             let sig_end = signature_end_line(&lines, sym, lang);
             // Doc comment lines before signature
-            for (i, line) in lines.iter().enumerate().take(sym_line_0).skip(start) {
-                out.push_str(&fmt_line(i, line));
+            if first_line_only {
+                // Find the first doc line with actual content, skipping
+                // block comment delimiters (/** and */) and blank * lines.
+                let mut doc_line = doc_start;
+                while doc_line < sym_line_0 {
+                    let trimmed = lines[doc_line].trim();
+                    if trimmed == "/**" || trimmed == "*/" || trimmed == "*" {
+                        doc_line += 1;
+                        continue;
+                    }
+                    break;
+                }
+                if doc_line < sym_line_0 && doc_line >= emitted_up_to {
+                    out.push_str(&fmt_line(doc_line, lines[doc_line]));
+                }
+            } else {
+                let start = doc_start.max(emitted_up_to);
+                for (i, line) in lines.iter().enumerate().take(sym_line_0).skip(start) {
+                    out.push_str(&fmt_line(i, line));
+                }
             }
             // Signature lines (may span multiple lines for functions)
             for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
@@ -390,16 +459,31 @@ fn render_symbols_with_docs(
             // Python docstrings: include triple-quoted string after the signature
             if show_docs && lang == Some(Lang::Python) {
                 let ds_end = docstring_end(&lines, sig_end);
-                for (i, line) in lines.iter().enumerate().take(ds_end).skip(sig_end + 1) {
-                    out.push_str(&fmt_line(i, line));
+                if ds_end > sig_end + 1 {
+                    if first_line_only {
+                        // Only the opener line of the docstring
+                        let mut ds_line = sig_end + 1;
+                        while ds_line < ds_end && lines[ds_line].trim().is_empty() {
+                            ds_line += 1;
+                        }
+                        if ds_line < ds_end {
+                            out.push_str(&fmt_line(ds_line, lines[ds_line]));
+                        }
+                    } else {
+                        for (i, line) in lines
+                            .iter()
+                            .enumerate()
+                            .take(ds_end)
+                            .skip(sig_end + 1)
+                        {
+                            out.push_str(&fmt_line(i, line));
+                        }
+                    }
+                    emitted_up_to = emitted_up_to.max(ds_end);
                 }
-                emitted_up_to = emitted_up_to.max(ds_end);
             }
             // Markdown: include body text after headings.
-            // Use max of sym_line + 1 and end_line - 1 to handle both cases:
-            //   ATX headings (end_line may equal line if no trailing newline): sym_line + 1
-            //   Setext headings (end_line > line + 1): end_line - 1 skips the underline
-            // Note: Markdown headings are always public, so this is not affected by public_only.
+            // Headings are always public, so this is controlled by with_docs only.
             if show_docs && lang == Some(Lang::Markdown) {
                 let content_end = markdown_content_end(symbols, sym_idx, &lines, expand_types);
                 let heading_end = (sym.end_line - 1).max(sym_line_0 + 1);
@@ -667,8 +751,8 @@ fn docstring_end(lines: &[&str], sym_line_0: usize) -> usize {
 }
 
 /// For Markdown files, determine how many content lines to include after a heading.
-/// At level 3 (expand_types=false): first paragraph (until blank line or next heading).
-/// At level 4 (expand_types=true): all content until next heading.
+/// When `expand_types` is false: first paragraph (until blank line or next heading).
+/// When `expand_types` is true: all content until next heading.
 /// Returns end position (0-indexed, exclusive).
 fn markdown_content_end(
     symbols: &[parse::Symbol],
@@ -682,10 +766,9 @@ fn markdown_content_end(
         .unwrap_or(lines.len());
 
     if expand_types {
-        // Level 4: all content until next heading
         next_heading
     } else {
-        // Level 3: first paragraph after heading.
+        // First paragraph after heading.
         // Use max of sym_line + 1 and end_line - 1 to handle both cases:
         //   ATX headings (end_line may equal line if no trailing newline): sym_line + 1
         //   Setext headings (end_line > line + 1): end_line - 1 skips the underline
@@ -881,15 +964,16 @@ mod tests {
         };
         assert!(large_source.lines().count() >= 1000);
 
-        // Small file at level 3: should show doc comments
+        // Small file at level 3: effective 3, cheap docs → show docs
         let small_l3 = render_file(3, Path::new("small.rs"), root, small_source);
         assert!(small_l3.contains("Doc comment"), "small file at level 3 should include docs");
 
-        // Large file at level 3: effective level 2 (signatures only, no docs)
+        // Large file at level 3: effective 2 (size penalty) → signatures only
         let large_l3 = render_file(3, Path::new("large.rs"), root, &large_source);
         assert!(!large_l3.contains("doc "), "large file at level 3 should not include docs");
 
-        // Large file at level 4: effective level 3 (docs, not bodies)
+        // Large file at level 4: effective 3 (size penalty), no doc penalty (avg 1 line/sym)
+        // → first-line public docs
         let large_l4 = render_file(4, Path::new("large.rs"), root, &large_source);
         assert!(large_l4.contains("doc "), "large file at level 4 should include docs");
     }
@@ -985,12 +1069,12 @@ mod tests {
         assert!(!l3.contains("----"), "level 3 should not show underline");
         assert!(l3.contains("More content"), "level 3 should show second heading content");
 
-        // Level 4: heading + all content — underline should not appear
-        let l4 = render_file(4, path, root, source);
-        assert!(!l4.contains("===="), "level 4 should not show underline");
-        assert!(!l4.contains("----"), "level 4 should not show underline");
-        assert!(l4.contains("Some text here"), "level 4 should show content");
-        assert!(l4.contains("More content"), "level 4 should show content");
+        // Level 6: heading + all content (expand_types=true) — underline should not appear
+        let l6 = render_file(6, path, root, source);
+        assert!(!l6.contains("===="), "level 6 should not show underline");
+        assert!(!l6.contains("----"), "level 6 should not show underline");
+        assert!(l6.contains("Some text here"), "level 6 should show content");
+        assert!(l6.contains("More content"), "level 6 should show content");
 
         // Monotonicity: levels should produce non-decreasing word counts
         let mut prev_words = 0;

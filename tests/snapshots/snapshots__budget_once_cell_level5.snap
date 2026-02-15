@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 6200 → level 5 (6153 words)
+budget: 6200 → level 6 (6061 words)
 
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
@@ -169,14 +169,8 @@ imp_std.rs
    283→        T: Sized,
    284→    {
 lib.rs
-   370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
-   371→#[path = "imp_cs.rs"]
    372→mod imp;
-   374→#[cfg(all(feature = "std", feature = "parking_lot"))]
-   375→#[path = "imp_pl.rs"]
    376→mod imp;
-   378→#[cfg(all(feature = "std", not(feature = "parking_lot")))]
-   379→#[path = "imp_std.rs"]
    380→mod imp;
    382→/// Single-threaded version of `OnceCell`.
    383→pub mod unsync {
@@ -847,21 +841,6 @@ lib.rs
   1386→    impl<T: Default> Default for Lazy<T> {
   1387→        /// Creates a new lazy value using `Default` as the initializing function.
   1388→        fn default() -> Lazy<T> {
-  1393→    /// ```compile_fail
-  1394→    /// struct S(*mut ());
-  1395→    /// unsafe impl Sync for S {}
-  1396→    ///
-  1397→    /// fn share<T: Sync>(_: &T) {}
-  1398→    /// share(&once_cell::sync::OnceCell::<S>::new());
-  1399→    /// ```
-  1400→    ///
-  1401→    /// ```compile_fail
-  1402→    /// struct S(*mut ());
-  1403→    /// unsafe impl Sync for S {}
-  1404→    ///
-  1405→    /// fn share<T: Sync>(_: &T) {}
-  1406→    /// share(&once_cell::sync::Lazy::<S>::new(|| unimplemented!()));
-  1407→    /// ```
   1408→    fn _dummy() {}
   1411→#[cfg(feature = "race")]
   1412→pub mod race;

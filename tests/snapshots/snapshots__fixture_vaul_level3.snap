@@ -33,9 +33,7 @@ helpers.ts
     72→export function getTranslate(element: HTMLElement, direction: DrawerDirection): number | null {
     90→export function dampenValue(v: number) {
     94→export function assignStyle(element: HTMLElement | null | undefined, style: Partial<CSSStyleDeclaration>) {
-   105→/**
    106→ * Receives functions as arguments and returns a new function that calls all.
-   107→ */
    108→export function chain<T>(...fns: T[]) {
 index.tsx
     27→export interface WithFadeFromProps {
@@ -162,15 +160,6 @@ use-controllable-state.ts
     24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
     39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
 use-position-fixed.ts
-     6→/**
-     7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
-     8→ * I won't get into too much detail about what bugs it solves, but so far I've found that setting the body to `position: fixed` is the most reliable way to prevent those bugs.
-     9→ * Issues that this hook solves:
-    10→ * https://github.com/emilkowalski/vaul/issues/435
-    11→ * https://github.com/emilkowalski/vaul/issues/433
-    12→ * And more that I discovered, but were just not reported.
-    13→ */
-    14→
     15→export function usePositionFixed({
 use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;
@@ -181,11 +170,7 @@ use-prevent-scroll.ts
     29→export function isScrollable(node: Element): boolean {
     34→export function getScrollParent(node: Element): Element {
     47→const nonTextInputTypes = new Set([
-    63→/**
     64→ * Prevents scrolling on the document body on mount, and
-    65→ * restores it on unmount. Also ensures that content does not
-    66→ * shift due to the scrollbars disappearing.
-    67→ */
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
    118→function preventScrollMobileSafari() {
    243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {

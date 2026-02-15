@@ -19,12 +19,6 @@ imp_cs.rs
     46→        F: FnOnce() -> Result<T, E>,
     47→    {
     56→    /// Get the reference to the underlying value, without checking if the cell
-    57→    /// is initialized.
-    58→    ///
-    59→    /// # Safety
-    60→    ///
-    61→    /// Caller must ensure that the cell is in initialized state, and that
-    62→    /// the contents are acquired by (synchronized to) this thread.
     63→    pub(crate) unsafe fn get_unchecked(&self) -> &T {
     69→    #[inline]
     70→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
@@ -43,11 +37,8 @@ imp_pl.rs
     28→    pub(crate) const fn new() -> OnceCell<T> {
     32→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
     36→    /// Safety: synchronizes with store to value via Release/Acquire.
-    37→    #[inline]
     38→    pub(crate) fn is_initialized(&self) -> bool {
     42→    /// Safety: synchronizes with store to value via `is_initialized` or mutex
-    43→    /// lock/unlock, writes value only once because of the mutex.
-    44→    #[cold]
     45→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
     46→    where
     47→        F: FnOnce() -> Result<T, E>,
@@ -55,18 +46,10 @@ imp_pl.rs
     79→    #[cold]
     80→    pub(crate) fn wait(&self) {
     94→    /// Get the reference to the underlying value, without checking if the cell
-    95→    /// is initialized.
-    96→    ///
-    97→    /// # Safety
-    98→    ///
-    99→    /// Caller must ensure that the cell is in initialized state, and that
-   100→    /// the contents are acquired by (synchronized to) this thread.
    101→    pub(crate) unsafe fn get_unchecked(&self) -> &T {
    107→    /// Gets the mutable reference to the underlying value.
-   108→    /// Returns `None` if the cell is empty.
    109→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
    115→    /// Consumes this `OnceCell`, returning the wrapped value.
-   116→    /// Returns `None` if the cell was empty.
    117→    pub(crate) fn into_inner(self) -> Option<T> {
    122→struct Guard<'a> {
    127→impl<'a> Drop for Guard<'a> {
@@ -83,12 +66,8 @@ imp_std.rs
     39→    pub(crate) const fn new() -> OnceCell<T> {
     43→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
     47→    /// Safety: synchronizes with store to value via Release/(Acquire|SeqCst).
-    48→    #[inline]
     49→    pub(crate) fn is_initialized(&self) -> bool {
     57→    /// Safety: synchronizes with store to value via SeqCst read from state,
-    58→    /// writes value only once because we never get to INCOMPLETE state after a
-    59→    /// successful write.
-    60→    #[cold]
     61→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
     62→    where
     63→        F: FnOnce() -> Result<T, E>,
@@ -96,19 +75,10 @@ imp_std.rs
     87→    #[cold]
     88→    pub(crate) fn wait(&self) {
     92→    /// Get the reference to the underlying value, without checking if the cell
-    93→    /// is initialized.
-    94→    ///
-    95→    /// # Safety
-    96→    ///
-    97→    /// Caller must ensure that the cell is in initialized state, and that
-    98→    /// the contents are acquired by (synchronized to) this thread.
     99→    pub(crate) unsafe fn get_unchecked(&self) -> &T {
    105→    /// Gets the mutable reference to the underlying value.
-   106→    /// Returns `None` if the cell is empty.
    107→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
    112→    /// Consumes this `OnceCell`, returning the wrapped value.
-   113→    /// Returns `None` if the cell was empty.
-   114→    #[inline]
    115→    pub(crate) fn into_inner(self) -> Option<T> {
    125→const INCOMPLETE: usize = 0x0;
    126→const RUNNING: usize = 0x1;
@@ -124,19 +94,16 @@ imp_std.rs
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
    245→mod strict {
    246→    #[must_use]
-   247→    #[inline]
    248→    pub(crate) fn addr<T>(ptr: *mut T) -> usize
    249→    where
    250→        T: Sized,
    251→    {
    258→    #[must_use]
-   259→    #[inline]
    260→    pub(crate) fn with_addr<T>(ptr: *mut T, addr: usize) -> *mut T
    261→    where
    262→        T: Sized,
    263→    {
    279→    #[must_use]
-   280→    #[inline]
    281→    pub(crate) fn map_addr<T>(ptr: *mut T, f: impl FnOnce(usize) -> usize) -> *mut T
    282→    where
    283→        T: Sized,
@@ -254,46 +221,22 @@ lib.rs
   1412→pub mod race;
 race.rs
     41→/// A thread-safe cell which can be written to only once.
-    42→#[derive(Default, Debug)]
     43→pub struct OnceNonZeroUsize {
     47→impl OnceNonZeroUsize {
     48→    /// Creates a new empty cell.
-    49→    #[inline]
     50→    pub const fn new() -> Self {
     54→    /// Gets the underlying value.
-    55→    #[inline]
     56→    pub fn get(&self) -> Option<NonZeroUsize> {
     61→    /// Get the reference to the underlying value, without checking if the cell
-    62→    /// is initialized.
-    63→    ///
-    64→    /// # Safety
-    65→    ///
-    66→    /// Caller must ensure that the cell is in initialized state, and that
-    67→    /// the contents are acquired by (synchronized to) this thread.
     68→    pub unsafe fn get_unchecked(&self) -> NonZeroUsize {
    102→    /// Sets the contents of this cell to `value`.
-   103→    ///
-   104→    /// Returns `Ok(())` if the cell was empty and `Err(())` if it was
-   105→    /// full.
-   106→    #[inline]
    107→    pub fn set(&self, value: NonZeroUsize) -> Result<(), ()> {
    114→    /// Gets the contents of the cell, initializing it with `f` if the cell was
-   115→    /// empty.
-   116→    ///
-   117→    /// If several threads concurrently run `get_or_init`, more than one `f` can
-   118→    /// be called. However, all threads will return the same value, produced by
-   119→    /// some `f`.
    120→    pub fn get_or_init<F>(&self, f: F) -> NonZeroUsize
    121→    where
    122→        F: FnOnce() -> NonZeroUsize,
    123→    {
    131→    /// Gets the contents of the cell, initializing it with `f` if
-   132→    /// the cell was empty. If the cell was empty and `f` failed, an
-   133→    /// error is returned.
-   134→    ///
-   135→    /// If several threads concurrently run `get_or_init`, more than one `f` can
-   136→    /// be called. However, all threads will return the same value, produced by
-   137→    /// some `f`.
    138→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<NonZeroUsize, E>
    139→    where
    140→        F: FnOnce() -> Result<NonZeroUsize, E>,
@@ -301,38 +244,20 @@ race.rs
    150→    fn init<E>(&self, f: impl FnOnce() -> Result<NonZeroUsize, E>) -> Result<NonZeroUsize, E> {
    160→    fn compare_exchange(&self, val: NonZeroUsize) -> Result<usize, usize> {
    165→/// A thread-safe cell which can be written to only once.
-   166→#[derive(Default, Debug)]
    167→pub struct OnceBool {
    171→impl OnceBool {
    172→    /// Creates a new empty cell.
-   173→    #[inline]
    174→    pub const fn new() -> Self {
    178→    /// Gets the underlying value.
-   179→    #[inline]
    180→    pub fn get(&self) -> Option<bool> {
    184→    /// Sets the contents of this cell to `value`.
-   185→    ///
-   186→    /// Returns `Ok(())` if the cell was empty and `Err(())` if it was
-   187→    /// full.
-   188→    #[inline]
    189→    pub fn set(&self, value: bool) -> Result<(), ()> {
    193→    /// Gets the contents of the cell, initializing it with `f` if the cell was
-   194→    /// empty.
-   195→    ///
-   196→    /// If several threads concurrently run `get_or_init`, more than one `f` can
-   197→    /// be called. However, all threads will return the same value, produced by
-   198→    /// some `f`.
    199→    pub fn get_or_init<F>(&self, f: F) -> bool
    200→    where
    201→        F: FnOnce() -> bool,
    202→    {
    206→    /// Gets the contents of the cell, initializing it with `f` if
-   207→    /// the cell was empty. If the cell was empty and `f` failed, an
-   208→    /// error is returned.
-   209→    ///
-   210→    /// If several threads concurrently run `get_or_init`, more than one `f` can
-   211→    /// be called. However, all threads will return the same value, produced by
-   212→    /// some `f`.
    213→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<bool, E>
    214→    where
    215→        F: FnOnce() -> Result<bool, E>,
@@ -352,27 +277,13 @@ race.rs
    258→    /// Gets a reference to the underlying value.
    259→    pub fn get(&self) -> Option<&'a T> {
    264→    /// Sets the contents of this cell to `value`.
-   265→    ///
-   266→    /// Returns `Ok(())` if the cell was empty and `Err(value)` if it was
-   267→    /// full.
    268→    pub fn set(&self, value: &'a T) -> Result<(), ()> {
    275→    /// Gets the contents of the cell, initializing it with `f` if the cell was
-   276→    /// empty.
-   277→    ///
-   278→    /// If several threads concurrently run `get_or_init`, more than one `f` can
-   279→    /// be called. However, all threads will return the same value, produced by
-   280→    /// some `f`.
    281→    pub fn get_or_init<F>(&self, f: F) -> &'a T
    282→    where
    283→        F: FnOnce() -> &'a T,
    284→    {
    292→    /// Gets the contents of the cell, initializing it with `f` if
-   293→    /// the cell was empty. If the cell was empty and `f` failed, an
-   294→    /// error is returned.
-   295→    ///
-   296→    /// If several threads concurrently run `get_or_init`, more than one `f` can
-   297→    /// be called. However, all threads will return the same value, produced by
-   298→    /// some `f`.
    299→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&'a T, E>
    300→    where
    301→        F: FnOnce() -> Result<&'a T, E>,
@@ -397,27 +308,13 @@ race.rs
    398→        /// Gets a reference to the underlying value.
    399→        pub fn get(&self) -> Option<&T> {
    407→        /// Sets the contents of this cell to `value`.
-   408→        ///
-   409→        /// Returns `Ok(())` if the cell was empty and `Err(value)` if it was
-   410→        /// full.
    411→        pub fn set(&self, value: Box<T>) -> Result<(), Box<T>> {
    426→        /// Gets the contents of the cell, initializing it with `f` if the cell was
-   427→        /// empty.
-   428→        ///
-   429→        /// If several threads concurrently run `get_or_init`, more than one `f` can
-   430→        /// be called. However, all threads will return the same value, produced by
-   431→        /// some `f`.
    432→        pub fn get_or_init<F>(&self, f: F) -> &T
    433→        where
    434→            F: FnOnce() -> Box<T>,
    435→        {
    443→        /// Gets the contents of the cell, initializing it with `f` if
-   444→        /// the cell was empty. If the cell was empty and `f` failed, an
-   445→        /// error is returned.
-   446→        ///
-   447→        /// If several threads concurrently run `get_or_init`, more than one `f` can
-   448→        /// be called. However, all threads will return the same value, produced by
-   449→        /// some `f`.
    450→        pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&T, E>
    451→        where
    452→            F: FnOnce() -> Result<Box<T>, E>,

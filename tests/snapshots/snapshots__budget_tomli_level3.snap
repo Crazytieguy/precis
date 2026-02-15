@@ -2,15 +2,30 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 920 → level 2 (535 words)
+budget: 920 → level 4 (832 words)
 
 __init__.py
+     1→# SPDX-License-Identifier: MIT
+     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
+     3→# Licensed to PSF under a Contributor Agreement.
+     4→
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
 _parser.py
     19→TYPE_CHECKING = False
+    26→# Inline tables/arrays are implemented using recursion. Pathologically
+    27→# nested documents cause pure Python to raise RecursionError (which is OK),
+    28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
+    29→# mypyc docs this will be fixed in the future:
+    30→# https://mypyc.readthedocs.io/en/latest/differences_from_python.html#stack-overflows
+    31→# Before mypyc's fix is in, recursion needs to be limited by this library.
+    32→# Choosing `sys.getrecursionlimit()` as maximum inline table/array nesting
+    33→# level, as it allows more nesting than pure Python, but still seems a far
+    34→# lower number than where mypyc binaries crash.
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
     37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
+    39→# Neither of these sets include quotation mark or backslash. They are
+    40→# currently handled as separate cases in the parser functions.
     41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
     42→ILLEGAL_MULTILINE_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t\n")
     44→ILLEGAL_LITERAL_STR_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
@@ -23,7 +38,18 @@ _parser.py
     55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
     57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
     71→class DEPRECATED_DEFAULT:
+    72→    """Sentinel to be used as default arg during deprecation
+    73→    period of TOMLDecodeError's free-form arguments."""
     76→class TOMLDecodeError(ValueError):
+    77→    """An error raised if a document is not valid TOML.
+    78→
+    79→    Adds the following attributes to ValueError:
+    80→    msg: The unformatted error message
+    81→    doc: The TOML document being parsed
+    82→    pos: The index of doc where parsing failed
+    83→    lineno: The line corresponding to pos
+    84→    colno: The column corresponding to pos
+    85→    """
     87→    def __init__(
     88→        self,
     89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
@@ -32,8 +58,11 @@ _parser.py
     92→        *args: Any,
     93→    ):
    137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
+   138→    """Parse TOML from a binary file object."""
    149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
+   150→    """Parse TOML from a string."""
    220→class Flags:
+   221→    """Flags that map to parsed keys/namespaces."""
    229→    def __init__(self) -> None:
    233→    def add_pending(self, key: Key, flag: int) -> None:
    236→    def finalize_pending(self) -> None:
@@ -92,13 +121,24 @@ _parser.py
    686→) -> tuple[Pos, Any]:
    760→def is_unicode_scalar_value(codepoint: int) -> bool:
    764→def make_safe_parse_float(parse_float: ParseFloat) -> ParseFloat:
+   765→    """A decorator to make `parse_float` safe.
+   766→
+   767→    `parse_float` must not return dicts or lists, because these types
+   768→    would be mixed with parsed TOML tables and arrays, thus confusing
+   769→    the parser. The returned decorated callable raises `ValueError`
+   770→    instead of returning illegal types.
+   771→    """
 _re.py
     11→TYPE_CHECKING = False
     17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
+    27→    r"""
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
+    47→    rf"""
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
+    60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
+    95→# No need to limit cache size. This is only ever called on input
     99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:

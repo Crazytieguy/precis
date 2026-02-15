@@ -656,7 +656,7 @@ fn markdown_sample_level2() {
     insta::assert_snapshot!(output);
 }
 
-// Level 3: signatures with doc comments for public symbols only
+// Level 3 sample tests
 
 #[test]
 fn rust_sample_level3() {
@@ -711,7 +711,7 @@ fn markdown_sample_level3() {
     insta::assert_snapshot!(output);
 }
 
-// Level 4: signatures with doc comments for all symbols
+// Level 4 sample tests
 
 #[test]
 fn rust_sample_level4() {
@@ -766,7 +766,7 @@ fn markdown_sample_level4() {
     insta::assert_snapshot!(output);
 }
 
-// Level 5: signatures with doc comments + type bodies (struct/enum/trait/interface)
+// Level 5 sample tests
 
 #[test]
 fn rust_sample_level5() {
@@ -821,7 +821,7 @@ fn markdown_sample_level5() {
     insta::assert_snapshot!(output);
 }
 
-// Level 6: full source
+// Level 6 sample tests
 
 #[test]
 fn rust_sample_level6() {
@@ -876,7 +876,7 @@ fn markdown_sample_level6() {
     insta::assert_snapshot!(output);
 }
 
-// Fixture-based snapshot tests (level 1: symbol names).
+// Fixture-based snapshot tests (level 1).
 
 fixture_test!(fixture_either, "either/src", 1);
 fixture_test!(fixture_neverthrow, "neverthrow/src", 1);
@@ -910,7 +910,7 @@ fixture_test!(fixture_color, "color", 1);
 fixture_test!(fixture_go_version, "go-version", 1);
 fixture_test!(fixture_structs, "structs", 1);
 
-// Fixture-based snapshot tests (level 2: full signature lines).
+// Fixture-based snapshot tests (level 2).
 
 fixture_test!(fixture_either_level2, "either/src", 2);
 fixture_test!(fixture_neverthrow_level2, "neverthrow/src", 2);
@@ -948,7 +948,7 @@ fixture_test!(fixture_color_level2, "color", 2);
 fixture_test!(fixture_go_version_level2, "go-version", 2);
 fixture_test!(fixture_structs_level2, "structs", 2);
 
-// Fixture-based snapshot tests (level 3: signatures with doc comments).
+// Fixture-based snapshot tests (level 3).
 
 fixture_test!(fixture_either_level3, "either/src", 3);
 fixture_test!(fixture_neverthrow_level3, "neverthrow/src", 3);
@@ -986,7 +986,7 @@ fixture_test!(fixture_color_level3, "color", 3);
 fixture_test!(fixture_go_version_level3, "go-version", 3);
 fixture_test!(fixture_structs_level3, "structs", 3);
 
-// Fixture-based snapshot tests (level 4: type bodies expanded).
+// Fixture-based snapshot tests (level 4).
 
 fixture_test!(fixture_either_level4, "either/src", 4);
 fixture_test!(fixture_neverthrow_level4, "neverthrow/src", 4);
@@ -1307,7 +1307,7 @@ fn monotonicity_invariant() {
 /// Test the budget binary search with synthetic cost functions (no parsing).
 #[test]
 fn budget_algorithm() {
-    let costs: [usize; 8] = [5, 10, 25, 40, 60, 90, 120, 200];
+    let costs: [usize; 9] = [5, 10, 25, 40, 60, 90, 120, 200, 350];
     let cost = |level: u8| costs[level as usize];
 
     // Extremes
@@ -1339,9 +1339,9 @@ fn budget_algorithm() {
     }
 
     // Flat region: levels with equal cost should all be reachable
-    let flat_costs: [usize; 7] = [5, 10, 10, 10, 10, 10, 50];
+    let flat_costs: [usize; 9] = [5, 10, 10, 10, 10, 10, 10, 10, 50];
     let flat_cost = |level: u8| flat_costs[level as usize];
-    assert_eq!(format::search_level(10, flat_cost), 5);
+    assert_eq!(format::search_level(10, flat_cost), 7);
     assert_eq!(format::search_level(9, flat_cost), 0);
 }
 

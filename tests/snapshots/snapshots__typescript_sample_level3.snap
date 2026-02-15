@@ -3,16 +3,10 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.ts
-     2→/**
      3→ * Process all items and return the count.
-     4→ */
      5→export function processItems(items: string[]): number {
      9→function helper(): void {}
-    11→/**
     12→ * Fetch data from the given URL.
-    13→ * @param url - The endpoint to fetch from.
-    14→ * @returns The fetch response.
-    15→ */
     16→export async function fetchData(url: string): Promise<Response> {
     20→export class TokenParser {
     23→    constructor(input: string) {

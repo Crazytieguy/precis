@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 7000 → level 3 (6375 words)
+budget: 7000 → level 3 (6374 words)
 
 CHANGELOG.md
      1→# Change Log
@@ -416,7 +416,6 @@ src/__private_api.rs
     29→    #[inline]
     30→    fn into_kvs(self) -> Option<&'a [(&'a str, Value<'a>)]> {
     37→/// The global logger proxy.
-    38→#[derive(Debug)]
     39→pub struct GlobalLogger;
     41→impl Log for GlobalLogger {
     42→    fn enabled(&self, metadata: &Metadata) -> bool {

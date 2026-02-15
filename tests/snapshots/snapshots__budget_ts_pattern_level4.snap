@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 14000 → level 4 (13101 words)
+budget: 14000 → level 6 (13171 words)
 
 errors.ts
      1→/**
@@ -11,6 +11,15 @@ errors.ts
      4→ */
      5→export class NonExhaustiveError extends Error {
      6→  constructor(public input: unknown) {
+     7→    let displayedValue;
+     8→    try {
+     9→      displayedValue = JSON.stringify(input);
+    10→    } catch (e) {
+    11→      displayedValue = input;
+    12→    }
+    13→    super(`Pattern matching error: no pattern matches value ${displayedValue}`);
+    14→  }
+    15→}
 index.ts
 internals/helpers.ts
     12→export const isObject = (value: unknown): value is Object =>
@@ -1818,6 +1827,16 @@ types/Pattern.ts
     57→  // it has been fully matched by this pattern
     58→  excluded = narrowed
     59→> {
+    60→  [matcher](): MatcherProtocol<
+    61→    input,
+    62→    narrowed,
+    63→    matcherType,
+    64→    selections,
+    65→    excluded
+    66→  >;
+    67→  // only used for array matchers
+    68→  [symbols.isVariadic]?: boolean;
+    69→}
     71→type PatternMatcher<input> = Matcher<input, unknown, any, any>;
     74→export type MatchedValue<a, invpattern> = WithDefault<
     75→  ExtractPreciseValue<a, invpattern>,
@@ -1862,6 +1881,8 @@ types/Pattern.ts
    128→> = Matcher<input, p, 'select', Some<key>>;
    130→export type AnonymousSelectP = SelectP<symbols.anonymousSelectKey>;
    132→export interface Override<a> {
+   133→  [symbols.override]: a;
+   134→}
    136→export type UnknownProperties = { readonly [k: PropertyKey]: unknown };
    138→export type UnknownValuePattern =
    139→  | readonly []
@@ -2609,6 +2630,9 @@ types/helpers.ts
    263→    : never
    264→  : never;
    266→export interface Fn {
+   267→  input: unknown;
+   268→  output: unknown;
+   269→}
    271→export type Call<fn extends Fn, input> = (fn & {
    272→  input: input;
    273→})['output'];

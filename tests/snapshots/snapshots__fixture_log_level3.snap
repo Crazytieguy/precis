@@ -16,7 +16,6 @@ __private_api.rs
     29→    #[inline]
     30→    fn into_kvs(self) -> Option<&'a [(&'a str, Value<'a>)]> {
     37→/// The global logger proxy.
-    38→#[derive(Debug)]
     39→pub struct GlobalLogger;
     41→impl Log for GlobalLogger {
     42→    fn enabled(&self, metadata: &Metadata) -> bool {
@@ -55,7 +54,6 @@ __private_api.rs
    145→    pub fn capture_serde<'a, V: serde_core::Serialize + ?Sized>(v: &'a &'a V) -> Value<'a> {
 kv/error.rs
      3→/// An error encountered while working with structured data.
-     4→#[derive(Debug)]
      5→pub struct Error {
     10→enum Inner {
     19→impl Error {
@@ -98,17 +96,10 @@ kv/key.rs
     37→pub struct Key<'k> {
     42→impl<'k> Key<'k> {
     43→    /// Get a key from a borrowed string.
-    44→    #[allow(clippy::should_implement_trait)] // Part of the public API now.
     45→    pub fn from_str(key: &'k str) -> Self {
     49→    /// Get a borrowed string from this key.
-    50→    ///
-    51→    /// The lifetime of the returned string is bound to the borrow of `self` rather
-    52→    /// than to `'k`.
     53→    pub fn as_str(&self) -> &str {
     57→    /// Try get a borrowed string for the lifetime `'k` from this key.
-    58→    ///
-    59→    /// If the key is a borrow of a longer lived string, this method will return `Some`.
-    60→    /// If the key is internally buffered, this method will return `None`.
     61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
     69→impl<'k> fmt::Display for Key<'k> {
     70→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -147,78 +138,9 @@ kv/mod.rs
    261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
 kv/source.rs
-     9→/// A source of key-values.
-    10→///
-    11→/// The source may be a single pair, a set of pairs, or a filter over a set of pairs.
-    12→/// Use the [`VisitSource`](trait.VisitSource.html) trait to inspect the structured data
-    13→/// in a source.
-    14→///
-    15→/// A source is like an iterator over its key-values, except with a push-based API
-    16→/// instead of a pull-based one.
-    17→///
-    18→/// # Examples
-    19→///
-    20→/// Enumerating the key-values in a source:
-    21→///
-    22→/// ```
-    23→/// # fn main() -> Result<(), log::kv::Error> {
-    24→/// use log::kv::{self, Source, Key, Value, VisitSource};
-    25→///
-    26→/// // A `VisitSource` that prints all key-values
-    27→/// // VisitSources are fed the key-value pairs of each key-values
-    28→/// struct Printer;
-    29→///
-    30→/// impl<'kvs> VisitSource<'kvs> for Printer {
-    31→///     fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), kv::Error> {
-    32→///         println!("{key}: {value}");
-    33→///
-    34→///         Ok(())
-    35→///     }
-    36→/// }
-    37→///
-    38→/// // A source with 3 key-values
-    39→/// // Common collection types implement the `Source` trait
-    40→/// let source = &[
-    41→///     ("a", 1),
-    42→///     ("b", 2),
-    43→///     ("c", 3),
-    44→/// ];
-    45→///
-    46→/// // Pass an instance of the `VisitSource` to a `Source` to visit it
-    47→/// source.visit(&mut Printer)?;
-    48→/// # Ok(())
-    49→/// # }
-    50→/// ```
     51→pub trait Source {
-    52→    /// Visit key-values.
-    53→    ///
-    54→    /// A source doesn't have to guarantee any ordering or uniqueness of key-values.
-    55→    /// If the given visitor returns an error then the source may early-return with it,
-    56→    /// even if there are more key-values.
-    57→    ///
-    58→    /// # Implementation notes
-    59→    ///
-    60→    /// A source should yield the same key-values to a subsequent visitor unless
-    61→    /// that visitor itself fails.
     62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
-    64→    /// Get the value for a given key.
-    65→    ///
-    66→    /// If the key appears multiple times in the source then which key is returned
-    67→    /// is implementation specific.
-    68→    ///
-    69→    /// # Implementation notes
-    70→    ///
-    71→    /// A source that can provide a more efficient implementation of this method
-    72→    /// should override it.
     73→    fn get(&self, key: Key) -> Option<Value<'_>> {
-    77→    /// Count the number of key-values that can be visited.
-    78→    ///
-    79→    /// # Implementation notes
-    80→    ///
-    81→    /// A source that knows the number of key-values upfront may provide a more
-    82→    /// efficient implementation.
-    83→    ///
-    84→    /// A subsequent call to `visit` should yield the same number of key-values.
     85→    fn count(&self) -> usize {
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
    114→fn count_default(source: impl Source) -> usize {
@@ -258,9 +180,7 @@ kv/source.rs
    217→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error> {
    225→    fn get(&self, key: Key) -> Option<Value<'_>> {
    229→    fn count(&self) -> usize {
-   234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
-   236→    /// Visit a key-value pair.
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    242→where

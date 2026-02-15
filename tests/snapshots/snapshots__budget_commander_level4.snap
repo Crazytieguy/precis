@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 7500 → level 5 (7441 words)
+budget: 7500 → level 6 (7387 words)
 
 argument.js
      3→class Argument {
@@ -1040,19 +1040,7 @@ command.js
   2684→   */
   2685→
   2686→  _outputHelpIfRequested(args) {
-  2697→/**
-  2698→ * Scan arguments and increment port number for inspect calls (to avoid conflicts when spawning new command).
-  2699→ *
-  2700→ * @param {string[]} args - array of arguments from node.execArgv
-  2701→ * @returns {string[]}
-  2702→ * @private
-  2703→ */
-  2704→
   2705→function incrementNodeInspectorPort(args) {
-  2748→/**
-  2749→ * @returns {boolean | undefined}
-  2750→ * @package
-  2751→ */
   2752→function useColor() {
 error.js
      1→/**

@@ -322,7 +322,6 @@ for_developers/mdbook-wordcount/src/main.rs
     12→fn main() {
     40→fn count_words(ch: &Chapter) -> usize {
     44→#[derive(Debug, Default, Serialize, Deserialize)]
-    45→#[serde(default, rename_all = "kebab-case")]
     46→pub struct WordcountConfig {
 for_developers/preprocessors.md
      1→# Preprocessors
