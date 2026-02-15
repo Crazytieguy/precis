@@ -870,12 +870,12 @@ fn find_word(needle: &str, haystack: &str) -> Option<usize> {
     while let Some(pos) = haystack[start..].find(needle) {
         let abs = start + pos;
         let before_ok = abs == 0
-            || !haystack.as_bytes()[abs - 1].is_ascii_alphanumeric()
-                && haystack.as_bytes()[abs - 1] != b'_';
+            || (!haystack.as_bytes()[abs - 1].is_ascii_alphanumeric()
+                && haystack.as_bytes()[abs - 1] != b'_');
         let end = abs + needle.len();
         let after_ok = end == haystack.len()
-            || !haystack.as_bytes()[end].is_ascii_alphanumeric()
-                && haystack.as_bytes()[end] != b'_';
+            || (!haystack.as_bytes()[end].is_ascii_alphanumeric()
+                && haystack.as_bytes()[end] != b'_');
         if before_ok && after_ok {
             if first_match.is_none() {
                 first_match = Some(abs);
