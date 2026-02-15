@@ -1,0 +1,2267 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 11000 → level 2 (10969 words)
+
+errors.ts
+     5→export class NonExhaustiveError extends Error {
+     6→  constructor(public input: unknown) {
+index.ts
+internals/helpers.ts
+    12→export const isObject = (value: unknown): value is Object =>
+    13→  Boolean(value && typeof value === 'object');
+    16→export const isMatcher = (
+    17→  x: unknown
+    18→): x is Matcher<unknown, unknown, MatcherType, SelectionType> => {
+    24→const isOptionalPattern = (
+    25→  x: unknown
+    26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
+    32→export const matchPattern = (
+    33→  pattern: any,
+    34→  value: any,
+    35→  select: (key: string, value: unknown) => void
+    36→): boolean => {
+   120→export const getSelectionKeys = (pattern: any): string[] => {
+   132→export const flatMap = <a, b>(
+   133→  xs: readonly a[],
+   134→  f: (v: a) => readonly b[]
+   135→): b[] => xs.reduce<b[]>((acc, x) => acc.concat(f(x)), []);
+internals/symbols.ts
+    16→export const matcher = Symbol.for('@ts-pattern/matcher');
+    17→export type matcher = typeof matcher;
+    19→export const unset = Symbol.for('@ts-pattern/unset');
+    20→export type unset = typeof unset;
+    22→export const isVariadic = Symbol.for('@ts-pattern/isVariadic');
+    23→export type isVariadic = typeof isVariadic;
+    26→export const anonymousSelectKey = '@ts-pattern/anonymous-select-key';
+    27→export type anonymousSelectKey = typeof anonymousSelectKey;
+    29→export const override = Symbol.for('@ts-pattern/override');
+    30→export type override = typeof override;
+is-matching.ts
+    11→type PatternConstraint<T> = T extends readonly any[]
+    12→  ? P.Pattern<T>
+    13→  : T extends object
+    14→  ? P.Pattern<T> & UnknownProperties
+    15→  : P.Pattern<T>;
+    53→export function isMatching<const p extends Pattern<any>>(
+    54→  ...args: [pattern: p, value?: any]
+    55→): boolean | ((vale: any) => boolean) {
+match.ts
+     7→type MatchState<output> =
+     8→  | { matched: true; value: output }
+     9→  | { matched: false; value: undefined };
+    11→const unmatched: MatchState<never> = {
+    32→export function match<const input, output = symbols.unset>(
+    33→  value: input
+    34→): Match<input, output> {
+    47→class MatchExpression<input, output> {
+    48→  constructor(private input: input, private state: MatchState<output>) {}
+    50→  with(...args: any[]): MatchExpression<input, output> {
+    94→  when(
+    95→    predicate: (value: input) => unknown,
+    96→    handler: (selection: input, value: input) => output
+    97→  ): MatchExpression<input, output> {
+   110→  otherwise(handler: (value: input) => output): output {
+   115→  exhaustive(unexpectedValueHandler = defaultCatcher): output {
+   120→  run(): output {
+   124→  returnType() {
+   128→  narrow() {
+   133→function defaultCatcher(input: unknown): never {
+patterns.ts
+    81→export type unstable_Matchable<
+    82→  narrowedOrFn,
+    83→  input = unknown,
+    84→  pattern = never
+    85→> = CustomP<input, pattern, narrowedOrFn>;
+   100→export type unstable_Matcher<
+   101→  narrowedOrFn,
+   102→  input = unknown,
+   103→  pattern = never
+   104→> = ReturnType<CustomP<input, pattern, narrowedOrFn>[matcher]>;
+   116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
+   131→export type narrow<input, pattern> = ExtractPreciseValue<
+   132→  input,
+   133→  InvertPattern<pattern, input>
+   134→>;
+   136→function chainable<pattern extends Matcher<any, any, any, any, any>>(
+   137→  pattern: pattern
+   138→): Chainable<pattern> {
+   148→const variadic = <pattern extends {}>(pattern: pattern): Variadic<pattern> =>
+   149→  Object.assign(pattern, {
+   165→function arrayChainable<pattern extends Matcher<any, any, any, any, any>>(
+   166→  pattern: pattern
+   167→): ArrayChainable<pattern> {
+   187→export function optional<
+   188→  input,
+   189→  const pattern extends unknown extends input
+   190→    ? UnknownValuePattern
+   191→    : Pattern<input>
+   192→>(pattern: pattern): Chainable<OptionalP<input, pattern>, 'optional'> {
+   217→type UnwrapArray<xs> = xs extends readonly (infer x)[] ? x : never;
+   219→type UnwrapSet<xs> = xs extends Set<infer x> ? x : never;
+   221→type UnwrapMapKey<xs> = xs extends Map<infer k, any> ? k : never;
+   223→type UnwrapMapValue<xs> = xs extends Map<any, infer v> ? v : never;
+   225→type UnwrapRecordKey<xs> = xs extends Record<infer k, any> ? k : never;
+   227→type UnwrapRecordValue<xs> = xs extends Record<any, infer v> ? v : never;
+   229→type WithDefault<a, b> = [a] extends [never] ? b : a;
+   246→export function array(
+   247→  ...args: [pattern?: any]
+   248→): ArrayChainable<ArrayP<any, any>> {
+   299→export function set<
+   300→  input,
+   301→  const pattern extends Pattern<WithDefault<UnwrapSet<input>, unknown>>
+   302→>(...args: [pattern?: pattern]): Chainable<SetP<input, pattern>> {
+   336→const setEvery = <T>(set: Set<T>, predicate: (value: T) => boolean) => {
+   362→export function map<
+   363→  input,
+   364→  const pkey extends Pattern<WithDefault<UnwrapMapKey<input>, unknown>>,
+   365→  const pvalue extends Pattern<WithDefault<UnwrapMapValue<input>, unknown>>
+   366→>(
+   367→  ...args: [patternKey?: pkey, patternValue?: pvalue]
+   368→): Chainable<MapP<input, pkey, pvalue>> {
+   410→const mapEvery = <K, T>(
+   411→  map: Map<K, T>,
+   412→  predicate: (value: T, key: K) => boolean
+   413→) => {
+   445→export function record(
+   446→  ...args: [patternKey?: unknown, patternValue?: unknown]
+   447→): Chainable<RecordP<unknown, unknown, unknown>> {
+   505→const recordEvery = <K extends PropertyKey, T>(
+   506→  record: Record<K, T>,
+   507→  predicate: (key: K, value: T) => boolean
+   508→) => {
+   536→export function intersection<
+   537→  input,
+   538→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
+   539→>(...patterns: patterns): Chainable<AndP<input, patterns>> {
+   572→export function union<
+   573→  input,
+   574→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
+   575→>(...patterns: patterns): Chainable<OrP<input, patterns>> {
+   611→export function not<
+   612→  input,
+   613→  const pattern extends Pattern<input> | UnknownValuePattern
+   614→>(pattern: pattern): Chainable<NotP<input, pattern>> {
+   646→export function when<input, predicate extends (value: input) => unknown>(
+   647→  predicate: predicate
+   648→): GuardP<
+   649→  input,
+   650→  predicate extends (value: any) => value is infer narrowed ? narrowed : never
+   651→> {
+   696→export function select(
+   697→  ...args: [keyOrPattern?: unknown | string, pattern?: unknown]
+   698→): Chainable<SelectP<string>, 'select' | 'or' | 'and'> {
+   734→function isUnknown(x: unknown): x is unknown {
+   738→function isNumber<T>(x: T | number): x is number {
+   742→function isString<T>(x: T | string): x is string {
+   746→function isBoolean<T>(x: T | boolean): x is boolean {
+   750→function isBigInt<T>(x: T | bigint): x is bigint {
+   754→function isSymbol<T>(x: T | symbol): x is symbol {
+   758→function isNullish<T>(x: T | null | undefined): x is null | undefined {
+   762→function isNonNullable(x: unknown): x is {} {
+   766→type AnyConstructor = abstract new (...args: any[]) => any;
+   768→function isInstanceOf<T extends AnyConstructor>(classConstructor: T) {
+   782→export const any: UnknownPattern = chainable(when(isUnknown));
+   793→export const unknown: UnknownPattern = chainable(when(isUnknown));
+   805→export const _ = any;
+   817→const startsWith = <input, const start extends string>(
+   818→  start: start
+   819→): GuardP<input, `${start}${string}`> =>
+   820→  when((value) => isString(value) && value.startsWith(start));
+   831→const endsWith = <input, const end extends string>(
+   832→  end: end
+   833→): GuardP<input, `${string}${end}`> =>
+   834→  when((value) => isString(value) && value.endsWith(end));
+   845→const minLength = <const min extends number>(min: min) =>
+   846→  when((value) => isString(value) && value.length >= min);
+   857→const length = <const len extends number>(len: len) =>
+   858→  when((value) => isString(value) && value.length === len);
+   869→const maxLength = <const max extends number>(max: max) =>
+   870→  when((value) => isString(value) && value.length <= max);
+   881→const includes = <input, const substr extends string>(
+   882→  substr: substr
+   883→): GuardExcludeP<input, string, never> =>
+   884→  when((value) => isString(value) && value.includes(substr));
+   895→const regex = <input, const expr extends string | RegExp>(
+   896→  expr: expr
+   897→): GuardExcludeP<input, string, never> =>
+   898→  when((value) => isString(value) && Boolean(value.match(expr)));
+   900→const stringChainable = <pattern extends Matcher<any, any, any, any, any>>(
+   901→  pattern: pattern
+   902→): StringChainable<pattern> =>
+   903→  Object.assign(chainable(pattern), {
+   928→export const string: StringPattern = stringChainable(when(isString));
+   940→const between = <input, const min extends number, const max extends number>(
+   941→  min: min,
+   942→  max: max
+   943→): GuardExcludeP<input, number, never> =>
+   944→  when((value) => isNumber(value) && min <= value && max >= value);
+   955→const lt = <input, const max extends number>(
+   956→  max: max
+   957→): GuardExcludeP<input, number, never> =>
+   958→  when((value) => isNumber(value) && value < max);
+   969→const gt = <input, const min extends number>(
+   970→  min: min
+   971→): GuardExcludeP<input, number, never> =>
+   972→  when((value) => isNumber(value) && value > min);
+   983→const lte = <input, const max extends number>(
+   984→  max: max
+   985→): GuardExcludeP<input, number, never> =>
+   986→  when((value) => isNumber(value) && value <= max);
+   997→const gte = <input, const min extends number>(
+   998→  min: min
+   999→): GuardExcludeP<input, number, never> =>
+  1000→  when((value) => isNumber(value) && value >= min);
+  1011→const int = <input>(): GuardExcludeP<input, number, never> =>
+  1012→  when((value) => isNumber(value) && Number.isInteger(value));
+  1023→const finite = <input>(): GuardExcludeP<input, number, never> =>
+  1024→  when((value) => isNumber(value) && Number.isFinite(value));
+  1035→const positive = <input>(): GuardExcludeP<input, number, never> =>
+  1036→  when((value) => isNumber(value) && value > 0);
+  1047→const negative = <input>(): GuardExcludeP<input, number, never> =>
+  1048→  when((value) => isNumber(value) && value < 0);
+  1050→const numberChainable = <pattern extends Matcher<any, any, any, any, any>>(
+  1051→  pattern: pattern
+  1052→): NumberChainable<pattern> =>
+  1053→  Object.assign(chainable(pattern), {
+  1075→export const number: NumberPattern = numberChainable(when(isNumber));
+  1087→const betweenBigInt = <
+  1088→  input,
+  1089→  const min extends bigint,
+  1090→  const max extends bigint
+  1091→>(
+  1092→  min: min,
+  1093→  max: max
+  1094→): GuardExcludeP<input, bigint, never> =>
+  1095→  when((value) => isBigInt(value) && min <= value && max >= value);
+  1106→const ltBigInt = <input, const max extends bigint>(
+  1107→  max: max
+  1108→): GuardExcludeP<input, bigint, never> =>
+  1109→  when((value) => isBigInt(value) && value < max);
+  1120→const gtBigInt = <input, const min extends bigint>(
+  1121→  min: min
+  1122→): GuardExcludeP<input, bigint, never> =>
+  1123→  when((value) => isBigInt(value) && value > min);
+  1134→const lteBigInt = <input, const max extends bigint>(
+  1135→  max: max
+  1136→): GuardExcludeP<input, bigint, never> =>
+  1137→  when((value) => isBigInt(value) && value <= max);
+  1148→const gteBigInt = <input, const min extends bigint>(
+  1149→  min: min
+  1150→): GuardExcludeP<input, bigint, never> =>
+  1151→  when((value) => isBigInt(value) && value >= min);
+  1162→const positiveBigInt = <input>(): GuardExcludeP<input, bigint, never> =>
+  1163→  when((value) => isBigInt(value) && value > 0);
+  1174→const negativeBigInt = <input>(): GuardExcludeP<input, bigint, never> =>
+  1175→  when((value) => isBigInt(value) && value < 0);
+  1177→const bigintChainable = <pattern extends Matcher<any, any, any, any, any>>(
+  1178→  pattern: pattern
+  1179→): BigIntChainable<pattern> =>
+  1180→  Object.assign(chainable(pattern), {
+  1201→export const bigint: BigIntPattern = bigintChainable(when(isBigInt));
+  1211→export const boolean: BooleanPattern = chainable(when(isBoolean));
+  1221→export const symbol: SymbolPattern = chainable(when(isSymbol));
+  1231→export const nullish: NullishPattern = chainable(when(isNullish));
+  1241→export const nonNullable: NonNullablePattern = chainable(when(isNonNullable));
+  1251→export function instanceOf<T extends AnyConstructor>(
+  1252→  classConstructor: T
+  1253→): Chainable<GuardP<unknown, InstanceType<T>>> {
+  1274→export function shape(pattern: UnknownValuePattern) {
+types/BuildMany.ts
+     4→export type BuildMany<data, xs extends readonly any[]> = xs extends any
+     5→  ? BuildOne<data, xs>
+     6→  : never;
+    11→type BuildOne<data, xs extends readonly any[]> = xs extends [
+    12→  [infer value, infer path],
+    13→  ...infer tail
+    14→]
+    15→  ? BuildOne<SetDeep<data, value, path>, tail>
+    16→  : data;
+    19→export type SetDeep<data, value, path> = path extends readonly [
+    20→  infer head,
+    21→  ...infer tail
+    22→]
+    23→  ? data extends readonly any[]
+    24→    ? data extends readonly [any, ...any]
+    25→      ? head extends number
+    26→        ? UpdateAt<data, Iterator<head>, SetDeep<data[head], value, tail>>
+    27→        : never
+    28→      : SetDeep<ValueOf<data>, value, tail>[]
+    29→    : data extends Set<infer a>
+    30→    ? Set<SetDeep<a, value, tail>>
+    31→    : data extends Map<infer k, infer v>
+    32→    ? Map<k, SetDeep<v, value, tail>>
+    33→    : head extends keyof data
+    34→    ? // if we intentionally set undefined on an optional key, we should keep
+    35→      // the optional modifier, otherwise it will exclude the `undefined` type from
+    36→      // our `value` type.
+    37→      [IsOptionalKeysOf<data, head>, tail, undefined] extends [true, [], value]
+    38→      ? { [k in keyof data]: k extends head ? value : data[k] }
+    39→      : {
+    40→          [k in keyof data]-?: k extends head
+    41→            ? SetDeep<data[head], value, tail>
+    42→            : data[k];
+    43→        }
+    44→    : data
+    45→  : value;
+types/DeepExclude.ts
+     3→export type DeepExclude<a, b> = Exclude<DistributeMatchingUnions<a, b>, b>;
+types/DistributeUnions.ts
+    41→export type DistributeMatchingUnions<a, p> = IsAny<a> extends true
+    42→  ? any
+    43→  : BuildMany<a, Distribute<FindUnionsMany<a, p>>>;
+    46→export type FindUnionsMany<
+    47→  a,
+    48→  p,
+    49→  path extends PropertyKey[] = []
+    50→> = UnionToTuple<
+    51→  (
+    52→    p extends any
+    53→      ? IsMatching<a, p> extends true
+    54→        ? FindUnions<a, p, path>
+    55→        : []
+    56→      : never
+    57→  ) extends readonly (infer T)[]
+    58→    ? T
+    59→    : never
+    60→>;
+    80→export type FindUnions<
+    81→  a,
+    82→  p,
+    83→  path extends PropertyKey[] = []
+    84→> = unknown extends p
+    85→  ? []
+    86→  : IsAny<p> extends true
+    87→  ? [] // Don't try to find unions after 5 levels
+    88→  : Length<path> extends 5
+    89→  ? []
+    90→  : IsUnion<a> extends true
+    91→  ? [
+    92→      {
+    93→        cases: a extends any
+    94→          ? {
+    95→              value: a;
+    96→              subUnions: FindUnionsMany<a, p, path>;
+    97→            }
+    98→          : never;
+    99→        path: path;
+   100→      }
+   101→    ]
+   102→  : [a, p] extends [readonly any[], readonly any[]]
+   103→  ? [a, p] extends [
+   104→      readonly [infer a1, infer a2, infer a3, infer a4, infer a5],
+   105→      readonly [infer p1, infer p2, infer p3, infer p4, infer p5]
+   106→    ]
+   107→    ? [
+   108→        ...FindUnions<a1, p1, [...path, 0]>,
+   109→        ...FindUnions<a2, p2, [...path, 1]>,
+   110→        ...FindUnions<a3, p3, [...path, 2]>,
+   111→        ...FindUnions<a4, p4, [...path, 3]>,
+   112→        ...FindUnions<a5, p5, [...path, 4]>
+   113→      ]
+   114→    : [a, p] extends [
+   115→        readonly [infer a1, infer a2, infer a3, infer a4],
+   116→        readonly [infer p1, infer p2, infer p3, infer p4]
+   117→      ]
+   118→    ? [
+   119→        ...FindUnions<a1, p1, [...path, 0]>,
+   120→        ...FindUnions<a2, p2, [...path, 1]>,
+   121→        ...FindUnions<a3, p3, [...path, 2]>,
+   122→        ...FindUnions<a4, p4, [...path, 3]>
+   123→      ]
+   124→    : [a, p] extends [
+   125→        readonly [infer a1, infer a2, infer a3],
+   126→        readonly [infer p1, infer p2, infer p3]
+   127→      ]
+   128→    ? [
+   129→        ...FindUnions<a1, p1, [...path, 0]>,
+   130→        ...FindUnions<a2, p2, [...path, 1]>,
+   131→        ...FindUnions<a3, p3, [...path, 2]>
+   132→      ]
+   133→    : [a, p] extends [
+   134→        readonly [infer a1, infer a2],
+   135→        readonly [infer p1, infer p2]
+   136→      ]
+   137→    ? [...FindUnions<a1, p1, [...path, 0]>, ...FindUnions<a2, p2, [...path, 1]>]
+   138→    : [a, p] extends [readonly [infer a1], readonly [infer p1]]
+   139→    ? FindUnions<a1, p1, [...path, 0]>
+   140→    : /**
+   141→     * Special case when matching with a variadic tuple on a regular array.
+   142→     * in this case we turn the input array `A[]` into `[] | [A, ...A[]]`
+   143→     * to remove one of these cases during DeepExclude.
+   144→     */
+   145→    p extends readonly [] | readonly [any, ...any] | readonly [...any, any]
+   146→    ? IsStrictArray<Extract<a, readonly any[]>> extends false
+   147→      ? []
+   148→      : [
+   149→          ArrayToVariadicUnion<a, p> extends infer aUnion
+   150→            ? {
+   151→                cases: aUnion extends any
+   152→                  ? {
+   153→                      value: aUnion;
+   154→                      subUnions: [];
+   155→                    }
+   156→                  : never;
+   157→                path: path;
+   158→              }
+   159→            : never
+   160→        ]
+   161→    : []
+   162→  : a extends Set<any>
+   163→  ? []
+   164→  : a extends Map<any, any>
+   165→  ? []
+   166→  : [IsPlainObject<a>, IsPlainObject<p>] extends [true, true]
+   167→  ? Flatten<
+   168→      Values<{
+   169→        [k in keyof a & keyof p]: FindUnions<a[k], p[k], [...path, k]>;
+   170→      }>
+   171→    >
+   172→  : [];
+   174→export type ArrayToVariadicUnion<input, excluded> = MaybeAddReadonly<
+   175→  | (input extends readonly [any, ...any] | readonly [...any, any] ? never : [])
+   176→  | (excluded extends readonly [...any, any]
+   177→      ? [...Extract<input, readonly any[]>, ValueOf<input>]
+   178→      : [ValueOf<input>, ...Extract<input, readonly any[]>]),
+   179→  IsReadonlyArray<input>
+   180→>;
+   183→export type Distribute<unions extends readonly any[]> =
+   184→  unions extends readonly [
+   185→    { cases: infer cases; path: infer path },
+   186→    ...infer tail
+   187→  ]
+   188→    ? cases extends { value: infer value; subUnions: infer subUnions }
+   189→      ? [
+   190→          [value, path],
+   191→          ...Distribute<Extract<subUnions, readonly any[]>>,
+   192→          ...Distribute<tail>
+   193→        ]
+   194→      : never
+   195→    : [];
+types/ExtractPreciseValue.ts
+    13→export type ExtractPreciseValue<a, b> = b extends Override<infer b1>
+    14→  ? b1
+    15→  : unknown extends b
+    16→  ? a
+    17→  : // inlining IsAny for perf
+    18→  0 extends 1 & b
+    19→  ? a
+    20→  : // inlining IsAny for perf
+    21→  0 extends 1 & a
+    22→  ? b
+    23→  : b extends readonly any[]
+    24→  ? ExtractPreciseArrayValue<a, b, IsReadonlyArray<a>>
+    25→  : b extends Map<infer bk, infer bv>
+    26→  ? a extends Map<infer ak, infer av>
+    27→    ? Map<ExtractPreciseValue<ak, bk>, ExtractPreciseValue<av, bv>>
+    28→    : LeastUpperBound<a, b>
+    29→  : b extends Set<infer bv>
+    30→  ? a extends Set<infer av>
+    31→    ? Set<ExtractPreciseValue<av, bv>>
+    32→    : LeastUpperBound<a, b>
+    33→  : // We add `Error` to the excludeUnion because
+    34→  // We want to consider them like primitive values in this context.
+    35→  IsPlainObject<b, BuiltInObjects | Error> extends true
+    36→  ? a extends object
+    37→    ? a extends b
+    38→      ? a
+    39→      : b extends a
+    40→      ? Contains<b, never> extends true
+    41→        ? never
+    42→        : // An empty object `{}` in a pattern means
+    43→        // that this key must be non-nullable.
+    44→        // If we find a key in `b` that doesn't exist in `a`
+    45→        // and that contains `{}`, then the pattern does not match.
+    46→        Contains<Omit<b, keyof a>, {}> extends true
+    47→        ? never
+    48→        : // If values have no keys in common, return `b`
+    49→        [Exclude<keyof a, keyof b>] extends [never]
+    50→        ? b
+    51→        : // Otherwise return `b` with keys of `a`
+    52→          // that do not exist on `b`.
+    53→          // It can only be optional properties,
+    54→          // otherwise `b extends a` wouldn't
+    55→          // not have passed.
+    56→          Compute<b & Omit<a, keyof b>>
+    57→      : [keyof a & keyof b] extends [never]
+    58→      ? never
+    59→      : Compute<
+    60→          // Keep other properties of `a`
+    61→          {
+    62→            // `in keyof a as ...` preserves property modifiers,
+    63→            // unlike `in keyof Exclude<keyof a, keyof b>`.
+    64→            [k in keyof a as k extends keyof b ? never : k]: a[k];
+    65→          } & {
+    66→            // use `b` to extract precise values on `a`.
+    67→            // This has the effect of preserving the optional
+    68→            // property modifier (?:) of b in the output type.
+    69→            [k in keyof b]: k extends keyof a
+    70→              ? ExtractPreciseValue<a[k], b[k]>
+    71→              : b[k];
+    72→          }
+    73→        > extends infer result
+    74→      ? Contains<Pick<result, keyof result & keyof b>, never> extends true
+    75→        ? never
+    76→        : result
+    77→      : never
+    78→    : LeastUpperBound<a, b>
+    79→  : LeastUpperBound<a, b>;
+    81→type ExtractPreciseArrayValue<
+    82→  a,
+    83→  b,
+    84→  isReadonly extends boolean,
+    85→  startOutput extends any[] = [],
+    86→  endOutput extends any[] = []
+    87→> = a extends readonly (infer aItem)[]
+    88→  ? b extends readonly []
+    89→    ? MaybeAddReadonly<[...startOutput, ...endOutput], isReadonly>
+    90→    : b extends readonly [infer b1, ...infer bRest]
+    91→    ? a extends readonly [infer a1, ...infer aRest]
+    92→      ? ExtractPreciseValue<a1, b1> extends infer currentValue
+    93→        ? [currentValue] extends [never]
+    94→          ? never
+    95→          : ExtractPreciseArrayValue<
+    96→              aRest,
+    97→              bRest,
+    98→              isReadonly,
+    99→              [...startOutput, currentValue],
+   100→              endOutput
+   101→            >
+   102→        : never
+   103→      : ExtractPreciseValue<aItem, b1> extends infer currentValue
+   104→      ? [currentValue] extends [never]
+   105→        ? never
+   106→        : ExtractPreciseArrayValue<
+   107→            aItem[],
+   108→            bRest,
+   109→            isReadonly,
+   110→            [...startOutput, currentValue],
+   111→            endOutput
+   112→          >
+   113→      : never
+   114→    : b extends readonly [...infer bInit, infer b1]
+   115→    ? a extends readonly [...infer aInit, infer a1]
+   116→      ? ExtractPreciseValue<a1, b1> extends infer currentValue
+   117→        ? [currentValue] extends [never]
+   118→          ? never
+   119→          : ExtractPreciseArrayValue<
+   120→              aInit,
+   121→              bInit,
+   122→              isReadonly,
+   123→              startOutput,
+   124→              [...endOutput, currentValue]
+   125→            >
+   126→        : never
+   127→      : ExtractPreciseValue<aItem, b1> extends infer currentValue
+   128→      ? [currentValue] extends [never]
+   129→        ? never
+   130→        : ExtractPreciseArrayValue<
+   131→            aItem[],
+   132→            bInit,
+   133→            isReadonly,
+   134→            startOutput,
+   135→            [...endOutput, currentValue]
+   136→          >
+   137→      : never
+   138→    : ExtractPreciseValue<aItem, ValueOf<b>> extends infer currentValue
+   139→    ? [currentValue] extends [never]
+   140→      ? never
+   141→      : MaybeAddReadonly<
+   142→          [...startOutput, ...currentValue[], ...endOutput],
+   143→          isReadonly
+   144→        >
+   145→    : never
+   146→  : LeastUpperBound<a, b>;
+types/FindSelected.ts
+    11→type SelectionsRecord = Record<string, [unknown, unknown[]]>;
+    13→export type None = {
+    14→  type: 'none';
+    15→};
+    16→export type Some<key extends string> = {
+    17→  type: 'some';
+    18→  key: key;
+    19→};
+    21→export type SelectionType = None | Some<string>;
+    24→type MapOptional<selections> = {
+    25→  [k in keyof selections]: selections[k] extends [infer v, infer subpath]
+    26→    ? [v | undefined, subpath]
+    27→    : never;
+    28→};
+    31→type MapList<selections> = {
+    32→  [k in keyof selections]: selections[k] extends [infer v, infer subpath]
+    33→    ? [v[], subpath]
+    34→    : never;
+    35→};
+    38→type ReduceFindSelectionUnion<
+    39→  i,
+    40→  ps extends readonly any[],
+    41→  output = never
+    42→> = ps extends readonly [infer head, ...infer tail]
+    43→  ? ReduceFindSelectionUnion<i, tail, output | FindSelectionUnion<i, head>>
+    44→  : output;
+    47→type FindSelectionUnionInArray<
+    48→  i,
+    49→  p,
+    50→  path extends any[] = [],
+    51→  output = never
+    52→> = i extends readonly (infer iItem)[]
+    53→  ? p extends readonly []
+    54→    ? output
+    55→    : p extends readonly [infer p1, ...infer pRest]
+    56→    ? i extends readonly [infer i1, ...infer iRest]
+    57→      ? FindSelectionUnionInArray<
+    58→          iRest,
+    59→          pRest,
+    60→          [...path, p['length']],
+    61→          output | FindSelectionUnion<i1, p1, [...path, p['length']]>
+    62→        >
+    63→      : FindSelectionUnionInArray<
+    64→          iItem[],
+    65→          pRest,
+    66→          [...path, p['length']],
+    67→          output | FindSelectionUnion<iItem, p1, [...path, p['length']]>
+    68→        >
+    69→    : p extends readonly [...infer pInit, infer p1]
+    70→    ? i extends readonly [...infer iInit, infer i1]
+    71→      ? FindSelectionUnionInArray<
+    72→          iInit,
+    73→          pInit,
+    74→          [...path, p['length']],
+    75→          output | FindSelectionUnion<i1, p1, [...path, p['length']]>
+    76→        >
+    77→      : FindSelectionUnionInArray<
+    78→          iItem[],
+    79→          pInit,
+    80→          [...path, p['length']],
+    81→          output | FindSelectionUnion<iItem, p1, [...path, p['length']]>
+    82→        >
+    83→    : // If P is a matcher, in this case, it's likely an array matcher
+    84→    p extends readonly [...(readonly (infer pRest & AnyMatcher)[])]
+    85→    ? output | FindSelectionUnion<i, pRest, [...path, p['length']]>
+    86→    :
+    87→        | output
+    88→        | FindSelectionUnion<
+    89→            iItem,
+    90→            ValueOf<p>,
+    91→            [...path, Extract<p, readonly any[]>['length']]
+    92→          >
+    93→  : output;
+    96→export type FindSelectionUnion<
+    97→  i,
+    98→  p,
+    99→  // path just serves as an id, to identify different anonymous patterns which have the same type
+   100→  path extends any[] = []
+   101→  // inlining IsAny for perf
+   102→> = 0 extends 1 & i
+   103→  ? never
+   104→  : // inlining IsAny for perf
+   105→  0 extends 1 & p
+   106→  ? never
+   107→  : p extends Primitives
+   108→  ? never
+   109→  : p extends Matcher<any, infer pattern, infer matcherType, infer sel>
+   110→  ? {
+   111→      select: sel extends Some<infer k>
+   112→        ? { [kk in k]: [i, path] } | FindSelectionUnion<i, pattern, path>
+   113→        : never;
+   114→      // selection of arrays, records, maps, and sets are arrays,
+   115→      // because the selection function is being mapped on their values
+   116→      array: i extends readonly (infer iItem)[]
+   117→        ? MapList<FindSelectionUnion<iItem, pattern>>
+   118→        : never;
+   119→      record: [i, pattern] extends [
+   120→        Record<infer k, infer v>,
+   121→        [infer pkey, infer pvalue]
+   122→      ]
+   123→        ?
+   124→            | MapList<FindSelectionUnion<k, pkey, path>>
+   125→            | MapList<FindSelectionUnion<v, pvalue, path>>
+   126→        : never;
+   127→      map: [i, pattern] extends [
+   128→        Map<infer k, infer v>,
+   129→        [infer pkey, infer pvalue]
+   130→      ]
+   131→        ?
+   132→            | MapList<FindSelectionUnion<k, pkey, path>>
+   133→            | MapList<FindSelectionUnion<v, pvalue, path>>
+   134→        : never;
+   135→      set: i extends Set<infer v>
+   136→        ? MapList<FindSelectionUnion<v, pattern, path>>
+   137→        : never;
+   138→      optional: MapOptional<FindSelectionUnion<i, pattern>>;
+   139→      or: MapOptional<
+   140→        ReduceFindSelectionUnion<i, Extract<pattern, readonly any[]>>
+   141→      >;
+   142→      and: ReduceFindSelectionUnion<i, Extract<pattern, readonly any[]>>;
+   143→      not: never;
+   144→      default: sel extends Some<infer k> ? { [kk in k]: [i, path] } : never;
+   145→      custom: never;
+   146→    }[matcherType]
+   147→  : p extends readonly any[]
+   148→  ? FindSelectionUnionInArray<i, p>
+   149→  : p extends {}
+   150→  ? i extends {}
+   151→    ? {
+   152→        [k in keyof p]: k extends keyof i
+   153→          ? FindSelectionUnion<i[k], p[k], [...path, k]>
+   154→          : never;
+   155→      }[keyof p]
+   156→    : never
+   157→  : never;
+   159→export type SeveralAnonymousSelectError<
+   160→  a = 'You can only use a single anonymous selection (with `select()`) in your pattern. If you need to select multiple values, give them names with `select(<name>)` instead'
+   161→> = {
+   162→  __error: never;
+   163→} & a;
+   165→export type MixedNamedAndAnonymousSelectError<
+   166→  a = 'Mixing named selections (`select("name")`) and anonymous selections (`select()`) is forbiden. Please, only use named selections.'
+   167→> = {
+   168→  __error: never;
+   169→} & a;
+   174→export type SelectionToArgs<selections extends SelectionsRecord> =
+   175→  symbols.anonymousSelectKey extends keyof selections
+   176→    ? // if there are several different paths for anonymous selections
+   177→      // it means that P.select() has been used more than once.
+   178→      IsUnion<selections[symbols.anonymousSelectKey][1]> extends true
+   179→      ? SeveralAnonymousSelectError
+   180→      : keyof selections extends symbols.anonymousSelectKey
+   181→      ? selections[symbols.anonymousSelectKey][0]
+   182→      : MixedNamedAndAnonymousSelectError
+   183→    : { [k in keyof selections]: selections[k][0] };
+   185→export type Selections<i, p> = FindSelectionUnion<i, p> extends infer u
+   186→  ? [u] extends [never]
+   187→    ? i
+   188→    : SelectionToArgs<Extract<MergeUnion<u>, SelectionsRecord>>
+   189→  : i;
+   191→export type FindSelected<i, p> =
+   192→  // This happens if the provided pattern didn't extend Pattern<i>,
+   193→  // Because the type checker falls back on the general `Pattern<i>` type
+   194→  // in this case.
+   195→  Equal<p, Pattern<i>> extends true ? i : Selections<i, p>;
+types/InvertPattern.ts
+    29→type OptionalKeys<p> = ValueOf<{
+    30→  [k in keyof p]: 0 extends 1 & p[k] // inlining IsAny for perf
+    31→    ? never
+    32→    : p[k] extends Matcher<any, any, infer matcherType>
+    33→    ? matcherType extends 'optional'
+    34→      ? k
+    35→      : never
+    36→    : never;
+    37→}>;
+    39→type ReduceUnion<
+    40→  tuple extends readonly any[],
+    41→  i,
+    42→  output = never
+    43→> = tuple extends readonly [infer p, ...infer tail]
+    44→  ? ReduceUnion<tail, i, output | InvertPatternInternal<p, i>>
+    45→  : output;
+    47→type ReduceIntersection<
+    48→  tuple extends readonly any[],
+    49→  i,
+    50→  output = unknown
+    51→> = tuple extends readonly [infer p, ...infer tail]
+    52→  ? ReduceIntersection<tail, i, output & InvertPatternInternal<p, i>>
+    53→  : output;
+    55→type InvertArrayPattern<
+    56→  p,
+    57→  i,
+    58→  startOutput extends any[] = [],
+    59→  endOutput extends any[] = []
+    60→> = i extends readonly (infer ii)[]
+    61→  ? p extends readonly []
+    62→    ? [...startOutput, ...endOutput]
+    63→    : p extends readonly [infer p1, ...infer pRest]
+    64→    ? i extends readonly [infer i1, ...infer iRest]
+    65→      ? InvertArrayPattern<
+    66→          pRest,
+    67→          iRest,
+    68→          [...startOutput, InvertPatternInternal<p1, i1>],
+    69→          endOutput
+    70→        >
+    71→      : InvertArrayPattern<
+    72→          pRest,
+    73→          ii[],
+    74→          [...startOutput, InvertPatternInternal<p1, ii>],
+    75→          endOutput
+    76→        >
+    77→    : p extends readonly [...infer pInit, infer p1]
+    78→    ? i extends readonly [...infer iInit, infer i1]
+    79→      ? InvertArrayPattern<
+    80→          pInit,
+    81→          iInit,
+    82→          startOutput,
+    83→          [...endOutput, InvertPatternInternal<p1, i1>]
+    84→        >
+    85→      : InvertArrayPattern<
+    86→          pInit,
+    87→          ii[],
+    88→          startOutput,
+    89→          [...endOutput, InvertPatternInternal<p1, ii>]
+    90→        >
+    91→    : // If P is a matcher, in this case, it's likely an array matcher
+    92→    p extends readonly [...(readonly (infer pRest & AnyMatcher)[])]
+    93→    ? [
+    94→        ...startOutput,
+    95→        ...Extract<InvertPatternInternal<pRest, i>, readonly any[]>,
+    96→        ...endOutput
+    97→      ]
+    98→    : [...startOutput, ...InvertPatternInternal<ValueOf<p>, ii>[], ...endOutput]
+    99→  : never;
+   106→export type InvertPattern<p, input> = Equal<Pattern<input>, p> extends true
+   107→  ? never
+   108→  : InvertPatternInternal<p, input>;
+   110→type InvertPatternInternal<p, input> = 0 extends 1 & p
+   111→  ? never
+   112→  : p extends Matcher<
+   113→      infer _input,
+   114→      infer subpattern,
+   115→      infer matcherType,
+   116→      any,
+   117→      infer narrowedOrFn
+   118→    >
+   119→  ? {
+   120→      not: DeepExclude<input, InvertPatternInternal<subpattern, input>>;
+   121→      select: InvertPatternInternal<subpattern, input>;
+   122→      array: InvertPatternInternal<subpattern, ReadonlyArrayValue<input>>[];
+   123→      record: subpattern extends [infer pk, infer pv]
+   124→        ? Record<
+   125→            Extract<InvertPatternInternal<pk, RecordKey<input>>, PropertyKey>,
+   126→            InvertPatternInternal<pv, RecordValue<input>>
+   127→          >
+   128→        : never;
+   129→      map: subpattern extends [infer pk, infer pv]
+   130→        ? Map<
+   131→            InvertPatternInternal<pk, MapKey<Extract<input, Map<any, any>>>>,
+   132→            InvertPatternInternal<pv, MapValue<Extract<input, Map<any, any>>>>
+   133→          >
+   134→        : never;
+   135→      set: Set<
+   136→        InvertPatternInternal<subpattern, SetValue<Extract<input, Set<any>>>>
+   137→      >;
+   138→      optional:
+   139→        | InvertPatternInternal<subpattern, Exclude<input, undefined>>
+   140→        | undefined;
+   141→      and: ReduceIntersection<Extract<subpattern, readonly any[]>, input>;
+   142→      or: ReduceUnion<Extract<subpattern, readonly any[]>, input>;
+   143→      default: [subpattern] extends [never] ? input : subpattern;
+   144→      custom: Override<
+   145→        narrowedOrFn extends Fn ? Call<narrowedOrFn, input> : narrowedOrFn
+   146→      >;
+   147→    }[matcherType]
+   148→  : p extends Primitives
+   149→  ? p
+   150→  : p extends readonly any[]
+   151→  ? InvertArrayPattern<
+   152→      p,
+   153→      WithDefault<Extract<input, readonly any[]>, unknown[]>
+   154→    >
+   155→  : IsPlainObject<p> extends true
+   156→  ? OptionalKeys<p> extends infer optKeys
+   157→    ? [optKeys] extends [never]
+   158→      ? {
+   159→          [k in Exclude<keyof p, optKeys>]: InvertPatternInternal<
+   160→            p[k],
+   161→            WithDefault<GetKey<ExtractPlainObject<input>, k>, unknown>
+   162→          >;
+   163→        }
+   164→      : Compute<
+   165→          {
+   166→            [k in Exclude<keyof p, optKeys>]: InvertPatternInternal<
+   167→              p[k],
+   168→              WithDefault<GetKey<ExtractPlainObject<input>, k>, unknown>
+   169→            >;
+   170→          } & {
+   171→            [k in Extract<optKeys, keyof p>]?: InvertPatternInternal<
+   172→              p[k],
+   173→              WithDefault<GetKey<ExtractPlainObject<input>, k>, unknown>
+   174→            >;
+   175→          }
+   176→        >
+   177→    : never
+   178→  : p;
+   180→export type ReduceIntersectionForExclude<
+   181→  tuple extends readonly any[],
+   182→  i,
+   183→  output = unknown
+   184→> = tuple extends readonly [infer p, ...infer tail]
+   185→  ? ReduceIntersectionForExclude<
+   186→      tail,
+   187→      i,
+   188→      output & InvertPatternForExcludeInternal<p, i, unknown>
+   189→    >
+   190→  : output;
+   192→export type ReduceUnionForExclude<
+   193→  tuple extends readonly any[],
+   194→  i,
+   195→  output = never
+   196→> = tuple extends readonly [infer p, ...infer tail]
+   197→  ? ReduceUnionForExclude<
+   198→      tail,
+   199→      i,
+   200→      output | InvertPatternForExcludeInternal<p, i, never>
+   201→    >
+   202→  : output;
+   204→type ExcludeIfExists<a, b> =
+   205→  // If b is of type never, it probably means that P.not
+   206→  // was called with a `P.when` that wasn't a type guard function.
+   207→  // in this case we do not exclude
+   208→  [b] extends [never]
+   209→    ? never
+   210→    : // If a is unknown, we can't exclude
+   211→    // (Unless negative types are added in the future)
+   212→    unknown extends a
+   213→    ? never
+   214→    : All<
+   215→        [
+   216→          // if `a` is one of the non-literal primitive
+   217→          Extends<a, NonLiteralPrimitive>,
+   218→          Not<IsLiteral<a>>,
+   219→          // and b is a literal
+   220→          IsLiteral<b>
+   221→        ]
+   222→      > extends true
+   223→    ? // we shouldn't exclude because this will result in
+   224→      // excluding the whole primitive type even though only
+   225→      // one value has been handled by this pattern.
+   226→      // In other words `P.not(10)` on a `number` input shouldn't
+   227→      // exclude `number`.
+   228→      never
+   229→    : DeepExclude<a, b>;
+   231→type InvertArrayPatternForExclude<
+   232→  p,
+   233→  i,
+   234→  empty,
+   235→  isReadonly extends boolean,
+   236→  startOutput extends any[] = [],
+   237→  endOutput extends any[] = []
+   238→> = i extends readonly (infer ii)[]
+   239→  ? p extends readonly []
+   240→    ? MaybeAddReadonly<[...startOutput, ...endOutput], isReadonly>
+   241→    : p extends readonly [infer p1, ...infer pRest]
+   242→    ? i extends readonly [infer i1, ...infer iRest]
+   243→      ? InvertArrayPatternForExclude<
+   244→          pRest,
+   245→          iRest,
+   246→          empty,
+   247→          isReadonly,
+   248→          [...startOutput, InvertPatternForExcludeInternal<p1, i1, empty>],
+   249→          endOutput
+   250→        >
+   251→      : InvertArrayPatternForExclude<
+   252→          pRest,
+   253→          ii[],
+   254→          empty,
+   255→          isReadonly,
+   256→          [...startOutput, InvertPatternForExcludeInternal<p1, ii, empty>],
+   257→          endOutput
+   258→        >
+   259→    : p extends readonly [...infer pInit, infer p1]
+   260→    ? i extends readonly [...infer iInit, infer i1]
+   261→      ? InvertArrayPatternForExclude<
+   262→          pInit,
+   263→          iInit,
+   264→          empty,
+   265→          isReadonly,
+   266→          startOutput,
+   267→          [...endOutput, InvertPatternForExcludeInternal<p1, i1, empty>]
+   268→        >
+   269→      : InvertArrayPatternForExclude<
+   270→          pInit,
+   271→          ii[],
+   272→          empty,
+   273→          isReadonly,
+   274→          startOutput,
+   275→          [...endOutput, InvertPatternForExcludeInternal<p1, ii, empty>]
+   276→        >
+   277→    : // If P is a matcher, in this case, it's likely an array matcher
+   278→    p extends readonly [...(readonly (infer pRest & AnyMatcher)[])]
+   279→    ? MaybeAddReadonly<
+   280→        [
+   281→          ...startOutput,
+   282→          ...Extract<
+   283→            InvertPatternForExcludeInternal<pRest, i, empty>,
+   284→            readonly any[]
+   285→          >,
+   286→          ...endOutput
+   287→        ],
+   288→        isReadonly
+   289→      >
+   290→    : MaybeAddReadonly<
+   291→        [
+   292→          ...startOutput,
+   293→          ...InvertPatternForExcludeInternal<ValueOf<p>, ii, empty>[],
+   294→          ...endOutput
+   295→        ],
+   296→        isReadonly
+   297→      >
+   298→  : empty;
+   303→export type InvertPatternForExclude<p, i> = Equal<Pattern<i>, p> extends true
+   304→  ? never
+   305→  : InvertPatternForExcludeInternal<p, i>;
+   307→type InvertPatternForExcludeInternal<p, i, empty = never> =
+   308→  // We need to prevent distribution because the boolean
+   309→  // type is a union of literal as well as a Primitive type
+   310→  // and it will end up being a false positif if we distribute it.
+   311→  unknown extends p
+   312→    ? i
+   313→    : [p] extends [Primitives]
+   314→    ? IsLiteral<p> extends true
+   315→      ? p
+   316→      : IsLiteral<i> extends true
+   317→      ? p
+   318→      : empty
+   319→    : p extends Matcher<
+   320→        infer matchableInput,
+   321→        infer subpattern,
+   322→        infer matcherType,
+   323→        any,
+   324→        infer excluded
+   325→      >
+   326→    ? {
+   327→        select: InvertPatternForExcludeInternal<subpattern, i, empty>;
+   328→        array: i extends readonly (infer ii)[]
+   329→          ? MaybeAddReadonly<
+   330→              InvertPatternForExcludeInternal<subpattern, ii, empty>[],
+   331→              IsReadonlyArray<i>
+   332→            >
+   333→          : empty;
+   334→        record: subpattern extends [infer pk, infer pv]
+   335→          ? Record<
+   336→              Extract<
+   337→                InvertPatternForExcludeInternal<pk, RecordKey<i>, empty>,
+   338→                PropertyKey
+   339→              >,
+   340→              InvertPatternForExcludeInternal<pv, RecordValue<i>, empty>
+   341→            >
+   342→          : empty;
+   343→        map: subpattern extends [infer pk, infer pv]
+   344→          ? i extends Map<infer ik, infer iv>
+   345→            ? Map<
+   346→                InvertPatternForExcludeInternal<pk, ik, empty>,
+   347→                InvertPatternForExcludeInternal<pv, iv, empty>
+   348→              >
+   349→            : empty
+   350→          : empty;
+   351→        set: i extends Set<infer iv>
+   352→          ? Set<InvertPatternForExcludeInternal<subpattern, iv, empty>>
+   353→          : empty;
+   354→        optional:
+   355→          | InvertPatternForExcludeInternal<subpattern, i, empty>
+   356→          | undefined;
+   357→        and: ReduceIntersectionForExclude<
+   358→          Extract<subpattern, readonly any[]>,
+   359→          i
+   360→        >;
+   361→        or: ReduceUnionForExclude<Extract<subpattern, readonly any[]>, i>;
+   362→        not: ExcludeIfExists<
+   363→          // we use matchableInput if possible because it represent the
+   364→          // union of all possible value, but i is only one of these values.
+   365→          unknown extends matchableInput ? i : matchableInput,
+   366→          InvertPatternForExcludeInternal<subpattern, i>
+   367→        >;
+   368→        default: excluded;
+   369→        custom: excluded extends infer narrowedOrFn extends Fn
+   370→          ? Call<narrowedOrFn, i>
+   371→          : excluded;
+   372→      }[matcherType]
+   373→    : p extends readonly any[]
+   374→    ? Extract<i, readonly any[]> extends infer arrayInput
+   375→      ? InvertArrayPatternForExclude<
+   376→          p,
+   377→          arrayInput,
+   378→          empty,
+   379→          IsReadonlyArray<arrayInput>
+   380→        >
+   381→      : never
+   382→    : IsPlainObject<p> extends true
+   383→    ? Equal<{}, p> extends true
+   384→      ? {}
+   385→      : i extends object
+   386→      ? [keyof p & keyof i] extends [never]
+   387→        ? empty
+   388→        : OptionalKeys<p> extends infer optKeys
+   389→        ? [optKeys] extends [never]
+   390→          ? {
+   391→              readonly [k in keyof p]: k extends keyof i
+   392→                ? InvertPatternForExcludeInternal<p[k], i[k], empty>
+   393→                : InvertPatternInternal<p[k], unknown>;
+   394→            }
+   395→          : Compute<
+   396→              {
+   397→                readonly [k in Exclude<keyof p, optKeys>]: k extends keyof i
+   398→                  ? InvertPatternForExcludeInternal<p[k], i[k], empty>
+   399→                  : InvertPatternInternal<p[k], unknown>;
+   400→              } & {
+   401→                readonly [k in Extract<optKeys, keyof p>]?: k extends keyof i
+   402→                  ? InvertPatternForExcludeInternal<p[k], i[k], empty>
+   403→                  : InvertPatternInternal<p[k], unknown>;
+   404→              }
+   405→            >
+   406→        : empty
+   407→      : empty
+   408→    : empty;
+types/IsMatching.ts
+    12→type IsMatchingTuple<a extends readonly any[], b extends readonly any[]> = [
+    13→  a,
+    14→  b
+    15→] extends [readonly [], readonly []]
+    16→  ? true
+    17→  : [a, b] extends [
+    18→      readonly [infer a1, ...infer aRest],
+    19→      readonly [infer b1, ...infer bRest]
+    20→    ]
+    21→  ? IsMatching<a1, b1> extends true
+    22→    ? IsMatchingTuple<aRest, bRest>
+    23→    : false
+    24→  : false;
+    26→type IsMatchingArray<
+    27→  a extends readonly any[],
+    28→  b extends readonly any[]
+    29→> = b extends readonly []
+    30→  ? true // if b is an empty array and a is an array, the pattern matches.
+    31→  : b extends readonly [infer b1, ...infer bRest]
+    32→  ? a extends readonly [infer a1, ...infer aRest]
+    33→    ? IsMatching<a1, b1> extends true
+    34→      ? IsMatchingArray<aRest, bRest>
+    35→      : false
+    36→    : // if a is shorter than b, doesn't match
+    37→    // example: a is [], b is [any, ...any[]]
+    38→    a extends readonly []
+    39→    ? false
+    40→    : IsMatching<ValueOf<a>, b1> extends true
+    41→    ? IsMatchingArray<a, bRest>
+    42→    : false
+    43→  : b extends readonly [...infer bInit, infer b1]
+    44→  ? a extends readonly [...infer aInit, infer a1]
+    45→    ? IsMatching<a1, b1> extends true
+    46→      ? IsMatchingArray<aInit, bInit>
+    47→      : false
+    48→    : // if a is shorter than b, doesn't match
+    49→    // example: a is [], b is [any, ...any[]]
+    50→    a extends readonly []
+    51→    ? false
+    52→    : IsMatching<ValueOf<a>, b1> extends true
+    53→    ? IsMatchingArray<a, bInit>
+    54→    : false
+    55→  : IsMatching<ValueOf<a>, ValueOf<b>>;
+    57→export type IsMatching<a, b> = true extends IsUnion<a> | IsUnion<b>
+    58→  ? true extends (
+    59→      b extends any ? (a extends any ? IsMatching<a, b> : never) : never
+    60→    )
+    61→    ? true
+    62→    : false
+    63→  : // Special case for unknown, because this is the type
+    64→  // of the inverted `_` wildcard pattern, which should
+    65→  // match everything.
+    66→  unknown extends b
+    67→  ? true
+    68→  : // Special case for `{}`, because this is the type
+    69→  // of the inverted `P.nonNullable` wildcard pattern,
+    70→  // which should match all objects.
+    71→  {} extends b
+    72→  ? true
+    73→  : b extends Primitives
+    74→  ? // if the pattern is a primitive, we want to check if there is
+    75→    // an overlap between a and b!
+    76→    a extends b
+    77→    ? true
+    78→    : b extends a
+    79→    ? true
+    80→    : false
+    81→  : Equal<a, b> extends true
+    82→  ? true
+    83→  : b extends readonly any[]
+    84→  ? a extends readonly any[]
+    85→    ? // both tuples
+    86→      All<[IsLiteral<Length<a>>, IsLiteral<Length<b>>]> extends true
+    87→      ? // lengths are different
+    88→        Equal<Length<a>, Length<b>> extends false
+    89→        ? false
+    90→        : IsMatchingTuple<a, b>
+    91→      : IsMatchingArray<a, b>
+    92→    : false
+    93→  : IsPlainObject<b> extends true
+    94→  ? true extends ( // `true extends union` means "if some cases of the a union are matching"
+    95→      a extends any // loop over the `a` union
+    96→        ? [keyof b & keyof a] extends [never] // if no common keys
+    97→          ? false
+    98→          : /**
+    99→           * Intentionally not using ValueOf, to avoid reaching the
+   100→           * 'type instanciation is too deep error'.
+   101→           */
+   102→          { [k in keyof b & keyof a]: IsMatching<a[k], b[k]> }[keyof b &
+   103→              keyof a] extends true
+   104→          ? true // all values are matching
+   105→          : false
+   106→        : never
+   107→    )
+   108→    ? true
+   109→    : false
+   110→  : b extends a
+   111→  ? true
+   112→  : false;
+types/Match.ts
+     8→export type PickReturnValue<a, b> = a extends symbols.unset ? b : a;
+    10→interface NonExhaustiveError<i> {
+    14→interface TSPatternError<i> {
+    22→export type Match<
+    23→  i,
+    24→  o,
+    25→  handledCases extends any[] = [],
+    26→  inferredOutput = never
+    27→> = {
+    28→  /**
+    29→   * `.with(pattern, handler)` Registers a pattern and an handler function that
+    30→   * will be called if the pattern matches the input value.
+    31→   *
+    32→   * [Read the documentation for `.with()` on GitHub](https://github.com/gvergnaud/ts-pattern#with)
+    33→   **/
+    34→  with<
+    35→    const p extends Pattern<i>,
+    36→    c,
+    37→    value extends MatchedValue<i, InvertPattern<p, i>>
+    38→  >(
+    39→    pattern: IsNever<p> extends true
+    40→      ? /**
+    41→         * HACK: Using `IsNever<p>` here is a hack to
+    42→         * make sure the type checker forwards
+    43→         * the input type parameter to pattern
+    44→         * creator functions like `P.when`, `P.not`
+    45→         * `P.union` when they are passed to `.with`
+    46→         * directly.
+    47→         */
+    48→        Pattern<i>
+    49→      : p,
+    50→    handler: (
+    51→      selections: FindSelected<value, p>,
+    52→      value: value
+    53→    ) => PickReturnValue<o, c>
+    54→  ): InvertPatternForExclude<p, value> extends infer excluded
+    55→    ? Match<
+    56→        Exclude<i, excluded>,
+    57→        o,
+    58→        [...handledCases, excluded],
+    59→        Union<inferredOutput, c>
+    60→      >
+    61→    : never;
+    62→
+    63→  with<
+    64→    const p1 extends Pattern<i>,
+    65→    const p2 extends Pattern<i>,
+    66→    c,
+    67→    p extends p1 | p2,
+    68→    value extends p extends any ? MatchedValue<i, InvertPattern<p, i>> : never
+    69→  >(
+    70→    p1: p1,
+    71→    p2: p2,
+    72→    handler: (value: value) => PickReturnValue<o, c>
+    73→  ): [
+    74→    InvertPatternForExclude<p1, value>,
+    75→    InvertPatternForExclude<p2, value>
+    76→  ] extends [infer excluded1, infer excluded2]
+    77→    ? Match<
+    78→        Exclude<i, excluded1 | excluded2>,
+    79→        o,
+    80→        [...handledCases, excluded1, excluded2],
+    81→        Union<inferredOutput, c>
+    82→      >
+    83→    : never;
+    84→
+    85→  with<
+    86→    const p1 extends Pattern<i>,
+    87→    const p2 extends Pattern<i>,
+    88→    const p3 extends Pattern<i>,
+    89→    const ps extends readonly Pattern<i>[],
+    90→    c,
+    91→    p extends p1 | p2 | p3 | ps[number],
+    92→    value extends MatchedValue<i, InvertPattern<p, i>>
+    93→  >(
+    94→    ...args: [
+    95→      p1: p1,
+    96→      p2: p2,
+    97→      p3: p3,
+    98→      ...patterns: ps,
+    99→      handler: (value: value) => PickReturnValue<o, c>
+   100→    ]
+   101→  ): [
+   102→    InvertPatternForExclude<p1, value>,
+   103→    InvertPatternForExclude<p2, value>,
+   104→    InvertPatternForExclude<p3, value>,
+   105→    MakeTuples<ps, value>
+   106→  ] extends [
+   107→    infer excluded1,
+   108→    infer excluded2,
+   109→    infer excluded3,
+   110→    infer excludedRest
+   111→  ]
+   112→    ? Match<
+   113→        Exclude<
+   114→          i,
+   115→          | excluded1
+   116→          | excluded2
+   117→          | excluded3
+   118→          | Extract<excludedRest, any[]>[number]
+   119→        >,
+   120→        o,
+   121→        [
+   122→          ...handledCases,
+   123→          excluded1,
+   124→          excluded2,
+   125→          excluded3,
+   126→          ...Extract<excludedRest, any[]>
+   127→        ],
+   128→        Union<inferredOutput, c>
+   129→      >
+   130→    : never;
+   131→
+   132→  with<
+   133→    const pat extends Pattern<i>,
+   134→    pred extends (value: MatchedValue<i, InvertPattern<pat, i>>) => unknown,
+   135→    c,
+   136→    value extends GuardValue<pred>
+   137→  >(
+   138→    pattern: pat,
+   139→    predicate: pred,
+   140→    handler: (
+   141→      selections: FindSelected<value, pat>,
+   142→      value: value
+   143→    ) => PickReturnValue<o, c>
+   144→  ): pred extends (value: any) => value is infer narrowed
+   145→    ? Match<
+   146→        Exclude<i, narrowed>,
+   147→        o,
+   148→        [...handledCases, narrowed],
+   149→        Union<inferredOutput, c>
+   150→      >
+   151→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
+   152→
+   153→  /**
+   154→   * `.when(predicate, handler)` Registers a predicate function and an handler function.
+   155→   * If the predicate returns true, the handler function will be called.
+   156→   *
+   157→   * [Read the documentation for `.when()` on GitHub](https://github.com/gvergnaud/ts-pattern#when)
+   158→   **/
+   159→  when<pred extends (value: i) => unknown, c, value extends GuardValue<pred>>(
+   160→    predicate: pred,
+   161→    handler: (value: value) => PickReturnValue<o, c>
+   162→  ): pred extends (value: any) => value is infer narrowed
+   163→    ? Match<
+   164→        Exclude<i, narrowed>,
+   165→        o,
+   166→        [...handledCases, narrowed],
+   167→        Union<inferredOutput, c>
+   168→      >
+   169→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
+   170→
+   171→  /**
+   172→   * `.otherwise()` takes a **default handler function** that will be
+   173→   * called if no previous pattern matched your input.
+   174→   *
+   175→   * Equivalent to `.with(P._, () => x).exhaustive()`
+   176→   *
+   177→   * [Read the documentation for `.otherwise()` on GitHub](https://github.com/gvergnaud/ts-pattern#otherwise)
+   178→   *
+   179→   **/
+   180→  otherwise<c>(
+   181→    handler: (value: i) => PickReturnValue<o, c>
+   182→  ): PickReturnValue<o, Union<inferredOutput, c>>;
+   183→
+   184→  /**
+   185→   * `.exhaustive()` checks that all cases are handled, and returns the result value.
+   186→   *
+   187→   * If you get a `NonExhaustiveError`, it means that you aren't handling
+   188→   * all cases. You should probably add another `.with(...)` clause
+   189→   * to match the missing case and prevent runtime errors.
+   190→   *
+   191→   * [Read the documentation for `.exhaustive()` on GitHub](https://github.com/gvergnaud/ts-pattern#exhaustive)
+   192→   *
+   193→   */
+   194→  exhaustive: DeepExcludeAll<i, handledCases> extends infer remainingCases
+   195→    ? [remainingCases] extends [never]
+   196→      ? Exhaustive<o, inferredOutput>
+   197→      : NonExhaustiveError<remainingCases>
+   198→    : never;
+   199→
+   200→  /**
+   201→   * `.run()` return the resulting value.
+   202→   *
+   203→   * ⚠️ calling this function is unsafe, and may throw if no pattern matches your input.
+   204→   */
+   205→  run(): PickReturnValue<o, inferredOutput>;
+   206→
+   207→  /**
+   208→   * `.returnType<T>()` Lets you specify the return type for all of your branches.
+   209→   *
+   210→   * [Read the documentation for `.returnType()` on GitHub](https://github.com/gvergnaud/ts-pattern#returnType)
+   211→   */
+   212→  returnType: [inferredOutput] extends [never]
+   213→    ? <output>() => Match<i, output, handledCases>
+   214→    : TSPatternError<'calling `.returnType<T>()` is only allowed directly after `match(...)`.'>;
+   215→
+   216→  /**
+   217→   * `.narrow()` narrows the input type to exclude all cases that have previously been handled.
+   218→   *
+   219→   * `.narrow()` is only useful if you want to excluded cases from union types or nullable
+   220→   * properties that are deeply nested. Handled cases from top level union types are excluded
+   221→   * by default.
+   222→   *
+   223→   * [Read the documentation for `.narrow() on GitHub](https://github.com/gvergnaud/ts-pattern#narrow)
+   224→   */
+   225→  narrow(): Match<DeepExcludeAll<i, handledCases>, o, [], inferredOutput>;
+   226→};
+   245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
+   246→  ? never
+   247→  : tupleList extends [infer excluded, ...infer tail]
+   248→  ? DeepExcludeAll<DeepExclude<a, excluded>, tail>
+   249→  : a;
+   251→type MakeTuples<ps extends readonly any[], value> = {
+   252→  -readonly [index in keyof ps]: InvertPatternForExclude<ps[index], value>;
+   253→};
+   261→type Exhaustive<output, inferredOutput> = {
+   262→  /**
+   263→   * `.exhaustive()` checks that all cases are handled, and returns the result value.
+   264→   *
+   265→   * If you get a `NonExhaustiveError`, it means that you aren't handling
+   266→   * all cases. You should probably add another `.with(...)` clause
+   267→   * to match the missing case and prevent runtime errors.
+   268→   *
+   269→   * [Read the documentation for `.exhaustive()` on GitHub](https://github.com/gvergnaud/ts-pattern#exhaustive)
+   270→   *
+   271→   */
+   272→  (): PickReturnValue<output, inferredOutput>;
+   273→  /**
+   274→   * `.exhaustive(fallback)` checks that all cases are handled and returns the result value.
+   275→   *
+   276→   * The fallback function will be called if your input value doesn't match any pattern.
+   277→   * This can only happen if the value you passed to `match` has an incorrect type.
+   278→   *
+   279→   * If you get a `NonExhaustiveError`, it means that you aren't handling
+   280→   * all cases. You should probably add another `.with(...)` clause
+   281→   * to match the missing case.
+   282→   *
+   283→   * [Read the documentation for `.exhaustive()` on GitHub](https://github.com/gvergnaud/ts-pattern#exhaustive)
+   284→   */
+   285→  <otherOutput>(
+   286→    handler: (unexpectedValue: unknown) => PickReturnValue<output, otherOutput>
+   287→  ): PickReturnValue<output, Union<inferredOutput, otherOutput>>;
+   288→};
+types/Pattern.ts
+     7→export type MatcherType =
+     8→  | 'not'
+     9→  | 'optional'
+    10→  | 'or'
+    11→  | 'and'
+    12→  | 'array'
+    13→  | 'record'
+    14→  | 'map'
+    15→  | 'set'
+    16→  | 'select'
+    17→  | 'default'
+    18→  | 'custom';
+    23→export type MatcherProtocol<
+    24→  input,
+    25→  narrowed,
+    26→  // Type of what this pattern selected from the input
+    27→  matcherType extends MatcherType,
+    28→  selections extends SelectionType,
+    29→  // Type to exclude from the input union because
+    30→  // it has been fully matched by this pattern
+    31→  excluded
+    32→> = {
+    33→  match: <I>(value: I | input) => MatchResult;
+    34→  getSelectionKeys?: () => string[];
+    35→  matcherType?: matcherType;
+    36→};
+    38→export type MatchResult = {
+    39→  matched: boolean;
+    40→  selections?: Record<string, any>;
+    41→};
+    50→export interface Matcher<
+    51→  input,
+    52→  narrowed,
+    53→  // Type of what this pattern selected from the input
+    54→  matcherType extends MatcherType = 'default',
+    55→  selections extends SelectionType = None,
+    56→  // Type to exclude from the input union because
+    57→  // it has been fully matched by this pattern
+    58→  excluded = narrowed
+    59→> {
+    71→type PatternMatcher<input> = Matcher<input, unknown, any, any>;
+    74→export type MatchedValue<a, invpattern> = WithDefault<
+    75→  ExtractPreciseValue<a, invpattern>,
+    76→  a
+    77→>;
+    79→export type AnyMatcher = Matcher<any, any, any, any, any>;
+    81→type UnknownMatcher = PatternMatcher<unknown>;
+    83→export type CustomP<input, pattern, narrowedOrFn> = Matcher<
+    84→  input,
+    85→  pattern,
+    86→  //  👆
+    87→  // for the input type to be instantiated correctly
+    88→  // on subpatterns, it has to be passed through.
+    89→  'custom',
+    90→  None,
+    91→  narrowedOrFn
+    92→>;
+    94→export type ArrayP<input, p> = Matcher<input, p, 'array'>;
+    96→export type RecordP<input, pkey, pvalue> = Matcher<
+    97→  input,
+    98→  [pkey, pvalue],
+    99→  'record'
+   100→>;
+   102→export type OptionalP<input, p> = Matcher<input, p, 'optional'>;
+   104→export type MapP<input, pkey, pvalue> = Matcher<input, [pkey, pvalue], 'map'>;
+   106→export type SetP<input, p> = Matcher<input, p, 'set'>;
+   108→export type AndP<input, ps> = Matcher<input, ps, 'and'>;
+   110→export type OrP<input, ps> = Matcher<input, ps, 'or'>;
+   112→export type NotP<input, p> = Matcher<input, p, 'not'>;
+   114→export type GuardP<input, narrowed> = Matcher<input, narrowed>;
+   116→export type GuardExcludeP<input, narrowed, excluded> = Matcher<
+   117→  input,
+   118→  narrowed,
+   119→  'default',
+   120→  None,
+   121→  excluded
+   122→>;
+   124→export type SelectP<
+   125→  key extends string,
+   126→  input = unknown,
+   127→  p = Matcher<unknown, unknown>
+   128→> = Matcher<input, p, 'select', Some<key>>;
+   130→export type AnonymousSelectP = SelectP<symbols.anonymousSelectKey>;
+   132→export interface Override<a> {
+   136→export type UnknownProperties = { readonly [k: PropertyKey]: unknown };
+   138→export type UnknownValuePattern =
+   139→  | readonly []
+   140→  | readonly [unknown, ...unknown[]]
+   141→  | readonly [...unknown[], unknown]
+   142→  | UnknownProperties
+   143→  | Primitives
+   144→  | UnknownMatcher;
+   157→export type Pattern<a = unknown> = unknown extends a
+   158→  ? UnknownValuePattern
+   159→  : KnownPattern<a>;
+   161→type KnownPattern<a> = KnownPatternInternal<a>;
+   163→type KnownPatternInternal<
+   164→  a,
+   165→  objs = Exclude<a, Primitives | Map<any, any> | Set<any> | readonly any[]>,
+   166→  arrays = Extract<a, readonly any[]>,
+   167→  primitives = Extract<a, Primitives>
+   168→> =
+   169→  | primitives
+   170→  | PatternMatcher<a>
+   171→  | ([objs] extends [never] ? never : ObjectPattern<Readonly<MergeUnion<objs>>>)
+   172→  | ([arrays] extends [never] ? never : ArrayPattern<arrays>);
+   174→type ObjectPattern<a> =
+   175→  | {
+   176→      readonly [k in keyof a]?: Pattern<a[k]>;
+   177→    }
+   178→  | never;
+   180→type ArrayPattern<a> = a extends readonly (infer i)[]
+   181→  ? a extends readonly [any, ...any]
+   182→    ? { readonly [index in keyof a]: Pattern<a[index]> }
+   183→    :
+   184→        | readonly []
+   185→        | readonly [Pattern<i>, ...Pattern<i>[]]
+   186→        | readonly [...Pattern<i>[], Pattern<i>]
+   187→  : never;
+   190→export type UnknownPattern = Chainable<GuardP<unknown, unknown>, never>;
+   191→export type StringPattern = StringChainable<GuardP<unknown, string>, never>;
+   192→export type NumberPattern = NumberChainable<GuardP<unknown, number>, never>;
+   193→export type BooleanPattern = Chainable<GuardP<unknown, boolean>, never>;
+   194→export type BigIntPattern = BigIntChainable<GuardP<unknown, bigint>, never>;
+   195→export type SymbolPattern = Chainable<GuardP<unknown, symbol>, never>;
+   196→export type NullishPattern = Chainable<
+   197→  GuardP<unknown, null | undefined>,
+   198→  never
+   199→>;
+   201→export type NonNullablePattern = Chainable<GuardP<unknown, {}>, never>;
+   203→type MergeGuards<input, guard1, guard2> = [guard1, guard2] extends [
+   204→  GuardExcludeP<any, infer narrowed1, infer excluded1>,
+   205→  GuardExcludeP<any, infer narrowed2, infer excluded2>
+   206→]
+   207→  ? GuardExcludeP<input, narrowed1 & narrowed2, excluded1 & excluded2>
+   208→  : never;
+   210→export type Chainable<p, omitted extends string = never> = p &
+   211→  Omit<
+   212→    {
+   213→      /**
+   214→       * `.optional()` returns a pattern which matches if the
+   215→       * key is undefined or if it is defined and the previous pattern matches its value.
+   216→       *
+   217→       * [Read the documentation for `P.optional` on GitHub](https://github.com/gvergnaud/ts-pattern#poptional-patterns)
+   218→       *
+   219→       * @example
+   220→       *  match(value)
+   221→       *   .with({ greeting: P.string.optional() }, () => 'will match { greeting?: string}')
+   222→       */
+   223→      optional<input>(): Chainable<OptionalP<input, p>, omitted | 'optional'>;
+   224→      /**
+   225→       * `pattern.and(pattern)` returns a pattern that matches
+   226→       * if the previous pattern and the next one match the input.
+   227→       *
+   228→       * [Read the documentation for `P.intersection` on GitHub](https://github.com/gvergnaud/ts-pattern#pintersection-patterns)
+   229→       *
+   230→       * @example
+   231→       *  match(value)
+   232→       *   .with(
+   233→       *     P.string.and(P.when(isUsername)),
+   234→       *     (username) => '...'
+   235→       *   )
+   236→       */
+   237→      and<input, const p2 extends Pattern<input>>(
+   238→        pattern: p2
+   239→      ): Chainable<AndP<input, [p, p2]>, omitted>;
+   240→      /**
+   241→       * `pattern.or(pattern)` returns a pattern that matches
+   242→       * if **either** the previous pattern or the next one match the input.
+   243→       *
+   244→       * [Read the documentation for `P.union` on GitHub](https://github.com/gvergnaud/ts-pattern#punion-patterns)
+   245→       *
+   246→       * @example
+   247→       *  match(value)
+   248→       *   .with(
+   249→       *     { value: P.string.or(P.number) },
+   250→       *     ({ value }) => 'value: number | string'
+   251→       *   )
+   252→       */
+   253→      or<input, const p2 extends Pattern<input>>(
+   254→        pattern: p2
+   255→      ): Chainable<OrP<input, [p, p2]>, omitted>;
+   256→      /**
+   257→       * `P.select()` will inject this property into the handler function's arguments.
+   258→       *
+   259→       * [Read the documentation for `P.select` on GitHub](https://github.com/gvergnaud/ts-pattern#pselect-patterns)
+   260→       *
+   261→       * @example
+   262→       *  match<{ age: number }>(value)
+   263→       *   .with({ age: P.string.select() }, (age) => 'age: number')
+   264→       */
+   265→      select<input>(): Chainable<
+   266→        SelectP<symbols.anonymousSelectKey, input, p>,
+   267→        omitted | 'select' | 'or' | 'and'
+   268→      >;
+   269→      select<input, k extends string>(
+   270→        key: k
+   271→      ): Chainable<SelectP<k, input, p>, omitted | 'select' | 'or' | 'and'>;
+   272→    },
+   273→    omitted
+   274→  >;
+   276→export type StringChainable<
+   277→  p extends Matcher<any, any, any, any, any>,
+   278→  omitted extends string = never
+   279→> = Chainable<p, omitted> &
+   280→  Omit<
+   281→    {
+   282→      /**
+   283→       * `P.string.startsWith(start)` is a pattern, matching **strings** starting with `start`.
+   284→       *
+   285→       * [Read the documentation for `P.string.startsWith` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringstartsWith)
+   286→       *
+   287→       * @example
+   288→       *  match(value)
+   289→       *   .with(P.string.startsWith('A'), () => 'value starts with an A')
+   290→       */
+   291→      startsWith<input, const start extends string>(
+   292→        start: start
+   293→      ): StringChainable<
+   294→        MergeGuards<input, p, GuardP<unknown, `${start}${string}`>>,
+   295→        omitted | 'startsWith'
+   296→      >;
+   297→      /**
+   298→       * `P.string.endsWith(end)` is a pattern, matching **strings** ending with `end`.
+   299→       *
+   300→       * [Read the documentation for `P.string.endsWith` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringendsWith)
+   301→       *
+   302→       * @example
+   303→       *  match(value)
+   304→       *   .with(P.string.endsWith('!'), () => 'value ends with an !')
+   305→       */
+   306→      endsWith<input, const end extends string>(
+   307→        end: end
+   308→      ): StringChainable<
+   309→        MergeGuards<input, p, GuardP<unknown, `${string}${end}`>>,
+   310→        omitted | 'endsWith'
+   311→      >;
+   312→      /**
+   313→       * `P.string.minLength(min)` is a pattern, matching **strings** with at least `min` characters.
+   314→       *
+   315→       * [Read the documentation for `P.string.minLength` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringminLength)
+   316→       *
+   317→       * @example
+   318→       *  match(value)
+   319→       *   .with(P.string.minLength(10), () => 'string with more length <= 10')
+   320→       */
+   321→      minLength<input, const min extends number>(
+   322→        min: min
+   323→      ): StringChainable<
+   324→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   325→        omitted | 'minLength'
+   326→      >;
+   327→      /**
+   328→       * `P.string.length(len)` is a pattern, matching **strings** with exactly `len` characters.
+   329→       *
+   330→       * [Read the documentation for `P.string.length` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringlength)
+   331→       *
+   332→       * @example
+   333→       *  match(value)
+   334→       *   .with(P.string.length(10), () => 'strings with length === 10')
+   335→       */
+   336→      length<input, const len extends number>(
+   337→        len: len
+   338→      ): StringChainable<
+   339→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   340→        omitted | 'length' | 'minLength' | 'maxLength'
+   341→      >;
+   342→      /**
+   343→       * `P.string.maxLength(max)` is a pattern, matching **strings** with at most `max` characters.
+   344→       *
+   345→       * [Read the documentation for `P.string.maxLength` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringmaxLength)
+   346→       *
+   347→       * @example
+   348→       *  match(value)
+   349→       *   .with(P.string.maxLength(10), () => 'string with more length >= 10')
+   350→       */
+   351→      maxLength<input, const max extends number>(
+   352→        max: max
+   353→      ): StringChainable<
+   354→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   355→        omitted | 'maxLength'
+   356→      >;
+   357→      /**
+   358→       * `P.string.includes(substr)` is a pattern, matching **strings** containing `substr`.
+   359→       *
+   360→       * [Read the documentation for `P.string.includes` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringincludes)
+   361→       *
+   362→       * @example
+   363→       *  match(value)
+   364→       *   .with(P.string.includes('http'), () => 'value contains http')
+   365→       */
+   366→      includes<input, const substr extends string>(
+   367→        substr: substr
+   368→      ): StringChainable<
+   369→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   370→        omitted
+   371→      >;
+   372→      /**
+   373→       * `P.string.regex(expr)` is a pattern, matching **strings** that `expr` regular expression.
+   374→       *
+   375→       * [Read the documentation for `P.string.regex` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringregex)
+   376→       *
+   377→       * @example
+   378→       *  match(value)
+   379→       *   .with(P.string.regex(/^https?:\/\//), () => 'url')
+   380→       */
+   381→      regex<input, const expr extends string | RegExp>(
+   382→        expr: expr
+   383→      ): StringChainable<
+   384→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   385→        omitted
+   386→      >;
+   387→    },
+   388→    omitted
+   389→  >;
+   391→export type NumberChainable<p, omitted extends string = never> = Chainable<
+   392→  p,
+   393→  omitted
+   394→> &
+   395→  Omit<
+   396→    {
+   397→      /**
+   398→       * `P.number.between(min, max)` matches **number** between `min` and `max`,
+   399→       * equal to min or equal to max.
+   400→       *
+   401→       * [Read the documentation for `P.number.between` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberbetween)
+   402→       *
+   403→       * @example
+   404→       *  match(value)
+   405→       *   .with(P.number.between(0, 10), () => '0 <= numbers <= 10')
+   406→       */
+   407→      between<input, const min extends number, const max extends number>(
+   408→        min: min,
+   409→        max: max
+   410→      ): NumberChainable<
+   411→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   412→        omitted
+   413→      >;
+   414→      /**
+   415→       * `P.number.lt(max)` matches **number** smaller than `max`.
+   416→       *
+   417→       * [Read the documentation for `P.number.lt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlt)
+   418→       *
+   419→       * @example
+   420→       *  match(value)
+   421→       *   .with(P.number.lt(10), () => 'numbers < 10')
+   422→       */
+   423→      lt<input, const max extends number>(
+   424→        max: max
+   425→      ): NumberChainable<
+   426→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   427→        omitted
+   428→      >;
+   429→      /**
+   430→       * `P.number.gt(min)` matches **number** greater than `min`.
+   431→       *
+   432→       * [Read the documentation for `P.number.gt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbergt)
+   433→       *
+   434→       * @example
+   435→       *  match(value)
+   436→       *   .with(P.number.gt(10), () => 'numbers > 10')
+   437→       */
+   438→      gt<input, const min extends number>(
+   439→        min: min
+   440→      ): NumberChainable<
+   441→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   442→        omitted
+   443→      >;
+   444→      /**
+   445→       * `P.number.lte(max)` matches **number** smaller than or equal to `max`.
+   446→       *
+   447→       * [Read the documentation for `P.number.lte` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlte)
+   448→       *
+   449→       * @example
+   450→       *  match(value)
+   451→       *   .with(P.number.lte(10), () => 'numbers <= 10')
+   452→       */
+   453→      lte<input, const max extends number>(
+   454→        max: max
+   455→      ): NumberChainable<
+   456→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   457→        omitted
+   458→      >;
+   459→      /**
+   460→       * `P.number.gte(min)` matches **number** greater than or equal to `min`.
+   461→       *
+   462→       * [Read the documentation for `P.number.gte` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbergte)
+   463→       *
+   464→       * @example
+   465→       *  match(value)
+   466→       *   .with(P.number.gte(10), () => 'numbers >= 10')
+   467→       */
+   468→      gte<input, const min extends number>(
+   469→        min: min
+   470→      ): NumberChainable<
+   471→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   472→        omitted
+   473→      >;
+   474→      /**
+   475→       * `P.number.int` matches **integer** numbers.
+   476→       *
+   477→       * [Read the documentation for `P.number.int` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberint)
+   478→       *
+   479→       * @example
+   480→       *  match(value)
+   481→       *   .with(P.number.int, () => 'an integer')
+   482→       */
+   483→      int<input>(): NumberChainable<
+   484→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   485→        omitted | 'int'
+   486→      >;
+   487→      /**
+   488→       * `P.number.finite` matches **finite numbers**.
+   489→       *
+   490→       * [Read the documentation for `P.number.finite` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberfinite)
+   491→       *
+   492→       * @example
+   493→       *  match(value)
+   494→       *   .with(P.number.finite, () => 'not Infinity')
+   495→       */
+   496→      finite<input>(): NumberChainable<
+   497→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   498→        omitted | 'finite'
+   499→      >;
+   500→      /**
+   501→       * `P.number.positive` matches **positive** numbers.
+   502→       *
+   503→       * [Read the documentation for `P.number.positive` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberpositive)
+   504→       *
+   505→       * @example
+   506→       *  match(value)
+   507→       *   .with(P.number.positive, () => 'number > 0')
+   508→       */
+   509→      positive<input>(): NumberChainable<
+   510→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   511→        omitted | 'positive' | 'negative'
+   512→      >;
+   513→      /**
+   514→       * `P.number.negative` matches **negative** numbers.
+   515→       *
+   516→       * [Read the documentation for `P.number.negative` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbernegative)
+   517→       *
+   518→       * @example
+   519→       *  match(value)
+   520→       *   .with(P.number.negative, () => 'number < 0')
+   521→       */
+   522→      negative<input>(): NumberChainable<
+   523→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   524→        omitted | 'positive' | 'negative' | 'negative'
+   525→      >;
+   526→    },
+   527→    omitted
+   528→  >;
+   530→export type BigIntChainable<p, omitted extends string = never> = Chainable<
+   531→  p,
+   532→  omitted
+   533→> &
+   534→  Omit<
+   535→    {
+   536→      /**
+   537→       * `P.bigint.between(min, max)` matches **bigint** between `min` and `max`,
+   538→       * equal to min or equal to max.
+   539→       *
+   540→       * [Read the documentation for `P.bigint.between` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberbetween)
+   541→       *
+   542→       * @example
+   543→       *  match(value)
+   544→       *   .with(P.bigint.between(0, 10), () => '0 <= numbers <= 10')
+   545→       */
+   546→      between<input, const min extends bigint, const max extends bigint>(
+   547→        min: min,
+   548→        max: max
+   549→      ): BigIntChainable<
+   550→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   551→        omitted
+   552→      >;
+   553→      /**
+   554→       * `P.bigint.lt(max)` matches **bigint** smaller than `max`.
+   555→       *
+   556→       * [Read the documentation for `P.bigint.lt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlt)
+   557→       *
+   558→       * @example
+   559→       *  match(value)
+   560→       *   .with(P.bigint.lt(10), () => 'numbers < 10')
+   561→       */
+   562→      lt<input, const max extends bigint>(
+   563→        max: max
+   564→      ): BigIntChainable<
+   565→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   566→        omitted
+   567→      >;
+   568→      /**
+   569→       * `P.bigint.gt(min)` matches **bigint** greater than `min`.
+   570→       *
+   571→       * [Read the documentation for `P.bigint.gt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbergt)
+   572→       *
+   573→       * @example
+   574→       *  match(value)
+   575→       *   .with(P.bigint.gt(10), () => 'numbers > 10')
+   576→       */
+   577→      gt<input, const min extends bigint>(
+   578→        min: min
+   579→      ): BigIntChainable<
+   580→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   581→        omitted
+   582→      >;
+   583→      /**
+   584→       * `P.bigint.lte(max)` matches **bigint** smaller than or equal to `max`.
+   585→       *
+   586→       * [Read the documentation for `P.bigint.lte` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlte)
+   587→       *
+   588→       * @example
+   589→       *  match(value)
+   590→       *   .with(P.bigint.lte(10), () => 'bigints <= 10')
+   591→       */
+   592→      lte<input, const max extends bigint>(
+   593→        max: max
+   594→      ): BigIntChainable<
+   595→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   596→        omitted
+   597→      >;
+   598→      /**
+   599→       * `P.bigint.gte(min)` matches **bigint** greater than or equal to `min`.
+   600→       *
+   601→       * [Read the documentation for `P.bigint.gte` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbergte)
+   602→       *
+   603→       * @example
+   604→       *  match(value)
+   605→       *   .with(P.bigint.gte(10), () => 'bigints >= 10')
+   606→       */
+   607→      gte<input, const min extends bigint>(
+   608→        min: min
+   609→      ): BigIntChainable<
+   610→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   611→        omitted
+   612→      >;
+   613→      /**
+   614→       * `P.bigint.positive` matches **positive** bigints.
+   615→       *
+   616→       * [Read the documentation for `P.bigint.positive` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberpositive)
+   617→       *
+   618→       * @example
+   619→       *  match(value)
+   620→       *   .with(P.bigint.positive, () => 'bigint > 0')
+   621→       */
+   622→      positive<input>(): BigIntChainable<
+   623→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   624→        omitted | 'positive' | 'negative'
+   625→      >;
+   626→      /**
+   627→       * `P.bigint.negative` matches **negative** bigints.
+   628→       *
+   629→       * [Read the documentation for `P.bigint.negative` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbernegative)
+   630→       *
+   631→       * @example
+   632→       *  match(value)
+   633→       *   .with(P.bigint.negative, () => 'bigint < 0')
+   634→       */
+   635→      negative<input>(): BigIntChainable<
+   636→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   637→        omitted | 'positive' | 'negative' | 'negative'
+   638→      >;
+   639→    },
+   640→    omitted
+   641→  >;
+   643→export type Variadic<pattern> = pattern & Iterable<pattern>;
+   645→export type ArrayChainable<
+   646→  pattern,
+   647→  omitted extends string = never
+   648→> = Variadic<pattern> &
+   649→  Omit<
+   650→    {
+   651→      /**
+   652→       * `.optional()` returns a pattern which matches if the
+   653→       * key is undefined or if it is defined and the previous pattern matches its value.
+   654→       *
+   655→       * [Read the documentation for `P.optional` on GitHub](https://github.com/gvergnaud/ts-pattern#poptional-patterns)
+   656→       *
+   657→       * @example
+   658→       *  match(value)
+   659→       *   .with({ greeting: P.string.optional() }, () => 'will match { greeting?: string}')
+   660→       */
+   661→      optional<input>(): ArrayChainable<
+   662→        OptionalP<input, pattern>,
+   663→        omitted | 'optional'
+   664→      >;
+   665→      /**
+   666→       * `P.select()` will inject this property into the handler function's arguments.
+   667→       *
+   668→       * [Read the documentation for `P.select` on GitHub](https://github.com/gvergnaud/ts-pattern#pselect-patterns)
+   669→       *
+   670→       * @example
+   671→       *  match<{ age: number }>(value)
+   672→       *   .with({ age: P.string.select() }, (age) => 'age: number')
+   673→       */
+   674→      select<input>(): ArrayChainable<
+   675→        SelectP<symbols.anonymousSelectKey, input, pattern>,
+   676→        omitted | 'select'
+   677→      >;
+   678→      select<input, k extends string>(
+   679→        key: k
+   680→      ): ArrayChainable<SelectP<k, input, pattern>, omitted | 'select'>;
+   681→    },
+   682→    omitted
+   683→  >;
+types/helpers.ts
+     1→export type ValueOf<a> = a extends readonly any[] ? a[number] : a[keyof a];
+     3→export type Values<a extends object> = UnionToTuple<ValueOf<a>>;
+    14→export type LeastUpperBound<a, b> = b extends a ? b : a extends b ? a : never;
+    16→export type Contains<a, b> = a extends any
+    17→  ? 'exclude' extends {
+    18→      [k in keyof a]-?: Equal<a[k], b> extends true ? 'exclude' : 'include';
+    19→    }[keyof a]
+    20→    ? true
+    21→    : false
+    22→  : never;
+    25→export type UnionToIntersection<union> = (
+    26→  union extends any ? (k: union) => void : never
+    27→) extends (k: infer intersection) => void
+    28→  ? intersection
+    29→  : never;
+    31→export type IsUnion<a> = [a] extends [UnionToIntersection<a>] ? false : true;
+    33→export type UnionToTuple<
+    34→  union,
+    35→  output extends any[] = []
+    36→> = UnionToIntersection<
+    37→  union extends any ? (t: union) => union : never
+    38→> extends (_: any) => infer elem
+    39→  ? UnionToTuple<Exclude<union, elem>, [elem, ...output]>
+    40→  : output;
+    42→export type Flatten<
+    43→  xs extends readonly any[],
+    44→  output extends any[] = []
+    45→> = xs extends readonly [infer head, ...infer tail]
+    46→  ? Flatten<tail, [...output, ...Extract<head, readonly any[]>]>
+    47→  : output;
+    49→export type Equal<a, b> = (<T>() => T extends a ? 1 : 2) extends <
+    50→  T
+    51→>() => T extends b ? 1 : 2
+    52→  ? true
+    53→  : false;
+    55→export type Expect<a extends true> = a;
+    57→export type IsAny<a> = 0 extends 1 & a ? true : false;
+    59→export type IsNever<T> = [T] extends [never] ? true : false;
+    61→export type Length<it extends readonly any[]> = it['length'];
+    63→export type Iterator<
+    64→  n extends number,
+    65→  it extends any[] = []
+    66→> = it['length'] extends n ? it : Iterator<n, [any, ...it]>;
+    68→export type Next<it extends any[]> = [any, ...it];
+    69→export type Prev<it extends any[]> = it extends readonly [any, ...infer tail]
+    70→  ? tail
+    71→  : [];
+    73→export type Take<
+    74→  xs extends readonly any[],
+    75→  it extends any[],
+    76→  output extends any[] = []
+    77→> = Length<it> extends 0
+    78→  ? output
+    79→  : xs extends readonly [infer head, ...infer tail]
+    80→  ? Take<tail, Prev<it>, [...output, head]>
+    81→  : output;
+    83→export type Drop<
+    84→  xs extends readonly any[],
+    85→  n extends any[]
+    86→> = Length<n> extends 0
+    87→  ? xs
+    88→  : xs extends readonly [any, ...infer tail]
+    89→  ? Drop<tail, Prev<n>>
+    90→  : [];
+    92→export type UpdateAt<
+    93→  tail extends readonly any[],
+    94→  n extends any[],
+    95→  value,
+    96→  inits extends readonly any[] = []
+    97→> = Length<n> extends 0
+    98→  ? tail extends readonly [any, ...infer tail]
+    99→    ? [...inits, value, ...tail]
+   100→    : inits
+   101→  : tail extends readonly [infer head, ...infer tail]
+   102→  ? UpdateAt<tail, Prev<n>, value, [...inits, head]>
+   103→  : inits;
+   105→export type BuiltInObjects =
+   106→  | Function
+   107→  | Date
+   108→  | RegExp
+   109→  | Generator
+   110→  | { readonly [Symbol.toStringTag]: string }
+   111→  | any[];
+   113→export type IsPlainObject<o, excludeUnion = BuiltInObjects> = o extends object
+   114→  ? // to excluded branded string types,
+   115→    // like `string & { __brand: "id" }`
+   116→    // and built-in objects
+   117→    o extends string | excludeUnion
+   118→    ? false
+   119→    : true
+   120→  : false;
+   122→export type Compute<a extends any> = a extends BuiltInObjects
+   123→  ? a
+   124→  : { [k in keyof a]: a[k] };
+   126→export type IntersectObjects<a> = (
+   127→  a extends any ? keyof a : never
+   128→) extends infer allKeys
+   129→  ? {
+   130→      [k in Extract<allKeys, PropertyKey>]: a extends any
+   131→        ? k extends keyof a
+   132→          ? a[k]
+   133→          : never
+   134→        : never;
+   135→    }
+   136→  : never;
+   138→export type WithDefault<a, def> = [a] extends [never] ? def : a;
+   140→export type IsLiteral<a> = [a] extends [null | undefined]
+   141→  ? true
+   142→  : [a] extends [string]
+   143→  ? string extends a
+   144→    ? false
+   145→    : true
+   146→  : [a] extends [number]
+   147→  ? number extends a
+   148→    ? false
+   149→    : true
+   150→  : [a] extends [boolean]
+   151→  ? boolean extends a
+   152→    ? false
+   153→    : true
+   154→  : [a] extends [symbol]
+   155→  ? symbol extends a
+   156→    ? false
+   157→    : true
+   158→  : [a] extends [bigint]
+   159→  ? bigint extends a
+   160→    ? false
+   161→    : true
+   162→  : false;
+   164→export type Primitives =
+   165→  | number
+   166→  | boolean
+   167→  | string
+   168→  | undefined
+   169→  | null
+   170→  | symbol
+   171→  | bigint;
+   173→export type NonLiteralPrimitive = Exclude<Primitives, undefined | null>;
+   175→export type TupleKeys = '0' | '1' | '2' | '3' | '4';
+   177→export type Union<a, b> = [b] extends [a] ? a : [a] extends [b] ? b : a | b;
+   182→export type GuardValue<fn> = fn extends (value: any) => value is infer b
+   183→  ? b
+   184→  : fn extends (value: infer a) => unknown
+   185→  ? a
+   186→  : never;
+   188→export type GuardFunction<input, narrowed> =
+   189→  | ((value: input) => value is Extract<narrowed, input>)
+   190→  | ((value: input) => boolean);
+   192→export type Some<bools extends boolean[]> = true extends bools[number]
+   193→  ? true
+   194→  : false;
+   196→export type All<bools extends boolean[]> = bools[number] extends true
+   197→  ? true
+   198→  : false;
+   200→export type Extends<a, b> = [a] extends [b] ? true : false;
+   202→export type Not<a extends boolean> = a extends true ? false : true;
+   204→type AllKeys<a> = a extends any ? keyof a : never;
+   207→export type MergeUnion<a> =
+   208→  | {
+   209→      [k in AllKeys<a>]: a extends any
+   210→        ? k extends keyof a
+   211→          ? a[k]
+   212→          : never
+   213→        : never;
+   214→    }
+   215→  | never;
+   217→export type IsFixedSizeTuple<a extends readonly any[]> = IsLiteral<Length<a>>;
+   220→export type IsTuple<a> = a extends
+   221→  | readonly []
+   222→  | readonly [any, ...any]
+   223→  | readonly [...any, any]
+   224→  ? true
+   225→  : false;
+   227→export type IsStrictArray<a extends readonly any[]> = Not<IsTuple<a>>;
+   229→export type IsReadonlyArray<a> = a extends readonly any[]
+   230→  ? a extends any[] // mutable array
+   231→    ? false
+   232→    : true
+   233→  : false;
+   235→export type MaybeAddReadonly<
+   236→  a,
+   237→  shouldAdd extends boolean
+   238→> = shouldAdd extends true ? Readonly<a> : a;
+   240→export type MapKey<T> = T extends Map<infer K, any> ? K : never;
+   242→export type MapValue<T> = T extends Map<any, infer V> ? V : never;
+   244→export type SetValue<T> = T extends Set<infer V> ? V : never;
+   246→export type RecordKey<T> = T extends Record<infer K, any> ? K : never;
+   248→export type RecordValue<T> = T extends Record<any, infer V> ? V : never;
+   250→export type ReadonlyArrayValue<T> = T extends ReadonlyArray<infer V>
+   251→  ? V
+   252→  : never;
+   254→export type ExtractPlainObject<T> = T extends any
+   255→  ? IsPlainObject<T> extends true
+   256→    ? T
+   257→    : never
+   258→  : never;
+   260→export type GetKey<O, K> = O extends any
+   261→  ? K extends keyof O
+   262→    ? O[K]
+   263→    : never
+   264→  : never;
+   266→export interface Fn {
+   271→export type Call<fn extends Fn, input> = (fn & {
+   272→  input: input;
+   273→})['output'];
+   275→export type IsOptionalKeysOf<obj, key extends keyof obj> = {} extends Pick<
+   276→  obj,
+   277→  key
+   278→>
+   279→  ? true
+   280→  : false;
+types/index.ts

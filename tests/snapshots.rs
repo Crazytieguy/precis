@@ -1431,6 +1431,26 @@ budget_test!(budget_typeguard_level1, "typeguard/src/typeguard", 400);
 budget_test!(budget_typeguard_level3, "typeguard/src/typeguard", 3100);
 budget_test!(budget_typeguard_level4, "typeguard/src/typeguard", 7100);
 
+budget_test!(budget_anyhow_level0, "anyhow/src", 5);
+budget_test!(budget_anyhow_level1, "anyhow/src", 1200);
+budget_test!(budget_anyhow_level3, "anyhow/src", 5000);
+budget_test!(budget_anyhow_level4, "anyhow/src", 6500);
+
+budget_test!(budget_ts_pattern_level0, "ts-pattern/src", 5);
+budget_test!(budget_ts_pattern_level1, "ts-pattern/src", 800);
+budget_test!(budget_ts_pattern_level2, "ts-pattern/src", 11000);
+budget_test!(budget_ts_pattern_level4, "ts-pattern/src", 14000);
+
+budget_test!(budget_tomli_level0, "tomli/src/tomli", 3);
+budget_test!(budget_tomli_level1, "tomli/src/tomli", 200);
+budget_test!(budget_tomli_level3, "tomli/src/tomli", 920);
+budget_test!(budget_tomli_level5, "tomli/src/tomli", 1500);
+
+budget_test!(budget_log_level0, "log/src", 3);
+budget_test!(budget_log_level1, "log/src", 2000);
+budget_test!(budget_log_level3, "log/src", 5000);
+budget_test!(budget_log_level4, "log/src", 10000);
+
 // Root-level budget tests: exercise depth penalties, multi-language discovery,
 // and file filtering at the repo root — the most common real-world use case.
 

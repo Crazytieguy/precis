@@ -17,7 +17,7 @@
 
 - Parsing: Rust, TypeScript, JavaScript, TSX, Python, Go, Markdown. 7 granularity levels (0–6). Depth-aware, file-size-aware, and visibility-aware rendering. `--budget`, `--level`, `--json` flags. Defaults to current directory when no path given.
 - File discovery filters out test/benchmark/vendor/example directories and test file patterns. Uses relative paths so parent directories don't trigger false positives.
-- 31 test fixtures across all supported languages with per-level and budget-based snapshot tests. 5 fixtures have root-level tests (either, neverthrow, pluggy, sonner, commander). Monotonicity invariant tested across representative fixtures including root-level targets.
+- 31 test fixtures across all supported languages with per-level and budget-based snapshot tests. 17 fixtures have budget tests; 5 fixtures have root-level tests (either, neverthrow, pluggy, sonner, commander). Monotonicity invariant tested across representative fixtures including root-level targets.
 - `cargo run --bin budget_util` measures budget utilization across all budget snapshots.
 
 ## Implementation notes

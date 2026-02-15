@@ -1,0 +1,170 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 920 → level 3 (917 words)
+
+__init__.py
+     5→__all__ = ("loads", "load", "TOMLDecodeError")
+     6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+_parser.py
+    19→TYPE_CHECKING = False
+    26→# Inline tables/arrays are implemented using recursion. Pathologically
+    27→# nested documents cause pure Python to raise RecursionError (which is OK),
+    28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
+    29→# mypyc docs this will be fixed in the future:
+    30→# https://mypyc.readthedocs.io/en/latest/differences_from_python.html#stack-overflows
+    31→# Before mypyc's fix is in, recursion needs to be limited by this library.
+    32→# Choosing `sys.getrecursionlimit()` as maximum inline table/array nesting
+    33→# level, as it allows more nesting than pure Python, but still seems a far
+    34→# lower number than where mypyc binaries crash.
+    35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
+    37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
+    39→# Neither of these sets include quotation mark or backslash. They are
+    40→# currently handled as separate cases in the parser functions.
+    41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
+    42→ILLEGAL_MULTILINE_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t\n")
+    44→ILLEGAL_LITERAL_STR_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
+    45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS: Final = ILLEGAL_MULTILINE_BASIC_STR_CHARS
+    47→ILLEGAL_COMMENT_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
+    49→TOML_WS: Final = frozenset(" \t")
+    50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
+    51→BARE_KEY_CHARS: Final = frozenset(
+    54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
+    55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
+    57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
+    71→class DEPRECATED_DEFAULT:
+    72→    """Sentinel to be used as default arg during deprecation
+    73→    period of TOMLDecodeError's free-form arguments."""
+    76→class TOMLDecodeError(ValueError):
+    77→    """An error raised if a document is not valid TOML.
+    78→
+    79→    Adds the following attributes to ValueError:
+    80→    msg: The unformatted error message
+    81→    doc: The TOML document being parsed
+    82→    pos: The index of doc where parsing failed
+    83→    lineno: The line corresponding to pos
+    84→    colno: The column corresponding to pos
+    85→    """
+    87→    def __init__(
+    88→        self,
+    89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    92→        *args: Any,
+    93→    ):
+   137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
+   138→    """Parse TOML from a binary file object."""
+   149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
+   150→    """Parse TOML from a string."""
+   220→class Flags:
+   221→    """Flags that map to parsed keys/namespaces."""
+   229→    def __init__(self) -> None:
+   233→    def add_pending(self, key: Key, flag: int) -> None:
+   236→    def finalize_pending(self) -> None:
+   241→    def unset_all(self, key: Key) -> None:
+   249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
+   260→    def is_(self, key: Key, flag: int) -> bool:
+   278→class NestedDict:
+   279→    def __init__(self) -> None:
+   283→    def get_or_create_nest(
+   284→        self,
+   285→        key: Key,
+   286→        *,
+   287→        access_lists: bool = True,
+   288→    ) -> dict[str, Any]:
+   300→    def append_nest_to_list(self, key: Key) -> None:
+   312→class Output:
+   313→    def __init__(self) -> None:
+   318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
+   327→def skip_until(
+   328→    src: str,
+   329→    pos: Pos,
+   330→    expect: str,
+   331→    *,
+   332→    error_on: frozenset[str],
+   333→    error_on_eof: bool,
+   334→) -> Pos:
+   349→def skip_comment(src: str, pos: Pos) -> Pos:
+   361→def skip_comments_and_array_ws(src: str, pos: Pos) -> Pos:
+   370→def create_dict_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
+   390→def create_list_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
+   413→def key_value_rule(
+   414→    src: str, pos: Pos, out: Output, header: Key, parse_float: ParseFloat
+   415→) -> Pos:
+   447→def parse_key_value_pair(
+   448→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
+   449→) -> tuple[Pos, Key, Any]:
+   463→def parse_key(src: str, pos: Pos) -> tuple[Pos, Key]:
+   481→def parse_key_part(src: str, pos: Pos) -> tuple[Pos, str]:
+   497→def parse_one_line_basic_str(src: str, pos: Pos) -> tuple[Pos, str]:
+   502→def parse_array(
+   503→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
+   504→) -> tuple[Pos, list[Any]]:
+   528→def parse_inline_table(
+   529→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
+   530→) -> tuple[Pos, dict[str, Any]]:
+   564→def parse_basic_str_escape(
+   565→    src: str, pos: Pos, *, multiline: bool = False
+   566→) -> tuple[Pos, str]:
+   595→def parse_basic_str_escape_multiline(src: str, pos: Pos) -> tuple[Pos, str]:
+   599→def parse_hex_char(src: str, pos: Pos, hex_len: int) -> tuple[Pos, str]:
+   612→def parse_literal_str(src: str, pos: Pos) -> tuple[Pos, str]:
+   621→def parse_multiline_str(src: str, pos: Pos, *, literal: bool) -> tuple[Pos, str]:
+   652→def parse_basic_str(src: str, pos: Pos, *, multiline: bool) -> tuple[Pos, str]:
+   684→def parse_value(
+   685→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
+   686→) -> tuple[Pos, Any]:
+   760→def is_unicode_scalar_value(codepoint: int) -> bool:
+   764→def make_safe_parse_float(parse_float: ParseFloat) -> ParseFloat:
+   765→    """A decorator to make `parse_float` safe.
+   766→
+   767→    `parse_float` must not return dicts or lists, because these types
+   768→    would be mixed with parsed TOML tables and arrays, thus confusing
+   769→    the parser. The returned decorated callable raises `ValueError`
+   770→    instead of returning illegal types.
+   771→    """
+_re.py
+    11→TYPE_CHECKING = False
+    17→_TIME_RE_STR: Final = r"""
+    26→RE_NUMBER: Final = re.compile(
+    27→    r"""
+    28→0
+    29→(?:
+    30→    x[0-9A-Fa-f](?:_?[0-9A-Fa-f])*   # hex
+    31→    |
+    32→    b[01](?:_?[01])*                 # bin
+    33→    |
+    34→    o[0-7](?:_?[0-7])*               # oct
+    35→)
+    36→|
+    37→[+-]?(?:0|[1-9](?:_?[0-9])*)         # dec, integer part
+    38→(?P<floatpart>
+    39→    (?:\.[0-9](?:_?[0-9])*)?         # optional fractional part
+    40→    (?:[eE][+-]?[0-9](?:_?[0-9])*)?  # optional exponent part
+    41→)
+    42→""",
+    45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
+    46→RE_DATETIME: Final = re.compile(
+    47→    rf"""
+    48→([0-9]{{4}})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])  # date, e.g. 1988-10-27
+    49→(?:
+    50→    [Tt ]
+    51→    {_TIME_RE_STR}
+    52→    (?:([Zz])|([+-])([01][0-9]|2[0-3]):([0-5][0-9]))?  # optional time offset
+    53→)?
+    54→""",
+    59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
+    60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
+    61→
+    62→    Raises ValueError if the match does not correspond to a valid date
+    63→    or datetime.
+    64→    """
+    95→# No need to limit cache size. This is only ever called on input
+    96→# that matched RE_DATETIME, so there is an implicit bound of
+    97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
+    98→@lru_cache(maxsize=None)
+    99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
+   109→def match_to_localtime(match: re.Match[str]) -> time:
+   116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
+_types.py
