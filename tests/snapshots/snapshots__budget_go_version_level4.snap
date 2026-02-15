@@ -2,39 +2,93 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1850 → level 4 (1366 words)
+budget: 1850 → level 5 (1828 words)
 
 CHANGELOG.md
      1→# 1.8.0 (Nov 28, 2025)
      2→
      3→ENHANCEMENTS:
+     4→
+     5→- Add benchmark test for version.String() in https://github.com/hashicorp/go-version/pull/159
+     6→- Bytes implementation in https://github.com/hashicorp/go-version/pull/161
+     7→
+     8→INTERNAL:
+     9→
+    10→- Add CODEOWNERS file in .github/CODEOWNERS in https://github.com/hashicorp/go-version/pull/145
+    11→- Linting in https://github.com/hashicorp/go-version/pull/151
+    12→- Correct typos in comments in https://github.com/hashicorp/go-version/pull/134
+    13→- Migrate GitHub Actions updates from TSCCR to Dependabot in https://github.com/hashicorp/go-version/pull/155
+    14→- Bump the github-actions-backward-compatible group with 2 updates in https://github.com/hashicorp/go-version/pull/157
+    15→- Update doc reference in README in https://github.com/hashicorp/go-version/pull/135
+    16→- Bump the github-actions-breaking group with 3 updates in https://github.com/hashicorp/go-version/pull/156
+    17→- [Compliance] - PR Template Changes Required in https://github.com/hashicorp/go-version/pull/158
+    18→- Bump actions/cache from 4.2.3 to 4.2.4 in the github-actions-backward-compatible group in https://github.com/hashicorp/go-version/pull/167
+    19→- Bump actions/checkout from 4.2.2 to 5.0.0 in the github-actions-breaking group in https://github.com/hashicorp/go-version/pull/166
+    20→- Bump the github-actions-breaking group across 1 directory with 2 updates in https://github.com/hashicorp/go-version/pull/171
+    21→- [IND-4226] [COMPLIANCE] Update Copyright Headers in https://github.com/hashicorp/go-version/pull/172
+    22→- drop init() in https://github.com/hashicorp/go-version/pull/175
+    23→
     24→# 1.7.0 (May 24, 2024)
     25→
     26→ENHANCEMENTS:
+    27→
+    28→- Remove `reflect` dependency ([#91](https://github.com/hashicorp/go-version/pull/91))
+    29→- Implement the `database/sql.Scanner` and `database/sql/driver.Value` interfaces for `Version` ([#133](https://github.com/hashicorp/go-version/pull/133))
+    30→
+    31→INTERNAL:
+    32→
+    33→- [COMPLIANCE] Add Copyright and License Headers ([#115](https://github.com/hashicorp/go-version/pull/115))
+    34→- [COMPLIANCE] Update MPL-2.0 LICENSE ([#105](https://github.com/hashicorp/go-version/pull/105))
+    35→- Bump actions/cache from 3.0.11 to 3.2.5 ([#116](https://github.com/hashicorp/go-version/pull/116))
+    36→- Bump actions/checkout from 3.2.0 to 3.3.0 ([#111](https://github.com/hashicorp/go-version/pull/111))
+    37→- Bump actions/upload-artifact from 3.1.1 to 3.1.2 ([#112](https://github.com/hashicorp/go-version/pull/112))
+    38→- GHA Migration ([#103](https://github.com/hashicorp/go-version/pull/103))
+    39→- github: Pin external GitHub Actions to hashes ([#107](https://github.com/hashicorp/go-version/pull/107))
+    40→- SEC-090: Automated trusted workflow pinning (2023-04-05) ([#124](https://github.com/hashicorp/go-version/pull/124))
+    41→- update readme ([#104](https://github.com/hashicorp/go-version/pull/104))
+    42→
     43→# 1.6.0 (June 28, 2022)
     44→
     45→FEATURES:
+    46→
+    47→- Add `Prerelease` function to `Constraint` to return true if the version includes a prerelease field ([#100](https://github.com/hashicorp/go-version/pull/100))
+    48→
     49→# 1.5.0 (May 18, 2022)
     50→
     51→FEATURES:
+    52→
+    53→- Use `encoding` `TextMarshaler` & `TextUnmarshaler` instead of JSON equivalents ([#95](https://github.com/hashicorp/go-version/pull/95))
+    54→- Add JSON handlers to allow parsing from/to JSON ([#93](https://github.com/hashicorp/go-version/pull/93))
+    55→
     56→# 1.4.0 (January 5, 2022)
     57→
     58→FEATURES:
+    59→
+    60→ - Introduce `MustConstraints()` ([#87](https://github.com/hashicorp/go-version/pull/87))
+    61→ - `Constraints`: Introduce `Equals()` and `sort.Interface` methods ([#88](https://github.com/hashicorp/go-version/pull/88))
+    62→
     63→# 1.3.0 (March 31, 2021)
     64→
     65→Please note that CHANGELOG.md does not exist in the source code prior to this release.
+    66→
+    67→FEATURES:
+    68→ - Add `Core` function to return a version without prerelease or metadata ([#85](https://github.com/hashicorp/go-version/pull/85))
+    69→
     70→# 1.2.1 (June 17, 2020)
     71→
     72→BUG FIXES:
     73→ - Prevent `Version.Equal` method from panicking on `nil` encounter ([#73](https://github.com/hashicorp/go-version/pull/73))
+    74→
     75→# 1.2.0 (April 23, 2019)
     76→
     77→FEATURES:
     78→ - Add `GreaterThanOrEqual` and `LessThanOrEqual` helper methods ([#53](https://github.com/hashicorp/go-version/pull/53))
+    79→
     80→# 1.1.0 (Jan 07, 2019)
     81→
     82→FEATURES:
     83→ - Add `NewSemver` constructor ([#45](https://github.com/hashicorp/go-version/pull/45))
+    84→
     85→# 1.0.0 (August 24, 2018)
     86→
     87→Initial release.
@@ -43,19 +97,50 @@ README.md
      2→
      3→![Build Status](https://github.com/hashicorp/go-version/actions/workflows/go-tests.yml/badge.svg)
      4→[![Go Reference](https://pkg.go.dev/badge/github.com/hashicorp/go-version.svg)](https://pkg.go.dev/github.com/hashicorp/go-version)
+     5→
+     6→go-version is a library for parsing versions and version constraints,
+     7→and verifying versions against a set of constraints. go-version
+     8→can sort a collection of versions properly, handles prerelease/beta
+     9→versions, can increment versions, etc.
+    10→
+    11→Versions used with go-version must follow [SemVer](http://semver.org/).
+    12→
     13→## Installation and Usage
     14→
     15→Package documentation can be found on
     16→[Go Reference](https://pkg.go.dev/github.com/hashicorp/go-version).
+    17→
+    18→Installation can be done with a normal `go get`:
+    19→
+    20→```
+    21→$ go get github.com/hashicorp/go-version
+    22→```
+    23→
     24→#### Version Parsing and Comparison
     25→
     26→```go
     27→v1, err := version.NewVersion("1.2")
     28→v2, err := version.NewVersion("1.5+metadata")
+    29→
+    30→// Comparison example. There is also GreaterThan, Equal, and just
+    31→// a simple Compare that returns an int allowing easy >=, <=, etc.
+    32→if v1.LessThan(v2) {
+    33→    fmt.Printf("%s is less than %s", v1, v2)
+    34→}
+    35→```
+    36→
     37→#### Version Constraints
     38→
     39→```go
     40→v1, err := version.NewVersion("1.2")
+    41→
+    42→// Constraints example.
+    43→constraints, err := version.NewConstraint(">= 1.0, < 1.4")
+    44→if constraints.Check(v1) {
+    45→	fmt.Printf("%s satisfies constraints %s", v1, constraints)
+    46→}
+    47→```
+    48→
     49→#### Version Sorting
     50→
     51→```go
@@ -65,6 +150,11 @@ README.md
     55→    v, _ := version.NewVersion(raw)
     56→    versions[i] = v
     57→}
+    58→
+    59→// After this, the versions are properly sorted
+    60→sort.Sort(version.Collection(versions))
+    61→```
+    62→
     63→## Issues and Contributing
     64→
     65→If you find an issue with this library, please report an issue. If you'd
@@ -78,6 +168,11 @@ constraint.go
     31→// Constraint represents a single constraint for a version, such as
     32→// ">= 1.0".
     33→type Constraint struct {
+    34→	f        constraintFunc
+    35→	op       operator
+    36→	check    *Version
+    37→	original string
+    38→}
     40→func (c *Constraint) Equals(con *Constraint) bool {
     44→// Constraints is a slice of constraints. We make a custom type so that
     45→// we can add methods to it.
@@ -152,6 +247,12 @@ version.go
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     52→// Version represents a single version.
     53→type Version struct {
+    54→	metadata string
+    55→	pre      string
+    56→	segments []int64
+    57→	si       int
+    58→	original string
+    59→}
     61→// NewVersion parses the given version and returns a new
     62→// Version.
     63→func NewVersion(v string) (*Version, error) {

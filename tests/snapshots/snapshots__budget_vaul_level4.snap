@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1300 → level 4 (1281 words)
+budget: 1300 → level 5 (1288 words)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -147,6 +147,9 @@ index.tsx
 types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
      2→export interface SnapPoint {
+     3→  fraction: number;
+     4→  height: number;
+     5→}
      7→export type AnyFunction = (...args: any) => any;
 use-composed-refs.ts
      5→type PossibleRef<T> = React.Ref<T> | undefined;

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 6200 → level 5 (5835 words)
+budget: 6200 → level 6 (5854 words)
 
 README-crates.io.md
 src/into_either.rs
@@ -249,6 +249,11 @@ src/lib.rs
     47→#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     48→#[derive(Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Debug)]
     49→pub enum Either<L, R> {
+    50→    /// A value of type `L`.
+    51→    Left(L),
+    52→    /// A value of type `R`.
+    53→    Right(R),
+    54→}
     56→/// Evaluate the provided expression for both [`Either::Left`] and [`Either::Right`].
     57→///
     58→/// This macro is useful in cases where both sides of [`Either`] can be interacted with

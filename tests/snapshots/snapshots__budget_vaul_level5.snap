@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1500 → level 5 (1452 words)
+budget: 1500 → level 5 (1288 words)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -23,43 +23,10 @@ constants.ts
     18→export const DRAG_CLASS = 'vaul-dragging';
 context.ts
      4→interface DrawerContextValue {
-     5→  drawerRef: React.RefObject<HTMLDivElement>;
-     6→  overlayRef: React.RefObject<HTMLDivElement>;
-     7→  onPress: (event: React.PointerEvent<HTMLDivElement>) => void;
-     8→  onRelease: (event: React.PointerEvent<HTMLDivElement> | null) => void;
-     9→  onDrag: (event: React.PointerEvent<HTMLDivElement>) => void;
-    10→  onNestedDrag: (event: React.PointerEvent<HTMLDivElement>, percentageDragged: number) => void;
-    11→  onNestedOpenChange: (o: boolean) => void;
-    12→  onNestedRelease: (event: React.PointerEvent<HTMLDivElement>, open: boolean) => void;
-    13→  dismissible: boolean;
-    14→  isOpen: boolean;
-    15→  isDragging: boolean;
-    16→  keyboardIsOpen: React.MutableRefObject<boolean>;
-    17→  snapPointsOffset: number[] | null;
-    18→  snapPoints?: (number | string)[] | null;
-    19→  activeSnapPointIndex?: number | null;
-    20→  modal: boolean;
-    21→  shouldFade: boolean;
-    22→  activeSnapPoint?: number | string | null;
-    23→  setActiveSnapPoint: (o: number | string | null) => void;
-    24→  closeDrawer: () => void;
-    25→  openProp?: boolean;
-    26→  onOpenChange?: (o: boolean) => void;
-    27→  direction: DrawerDirection;
-    28→  shouldScaleBackground: boolean;
-    29→  setBackgroundColorOnScale: boolean;
-    30→  noBodyStyles: boolean;
-    31→  handleOnly?: boolean;
-    32→  container?: HTMLElement | null;
-    33→  autoFocus?: boolean;
-    34→  shouldAnimate?: React.RefObject<boolean>;
-    35→}
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     69→export const useDrawerContext = () => {
 helpers.ts
      3→interface Style {
-     4→  [key: string]: string;
-     5→}
      7→const cache = new WeakMap();
      9→export function isInView(el: HTMLElement): boolean {
     23→export function set(el: Element | HTMLElement | null | undefined, styles: Style, ignoreCache = false) {
@@ -226,10 +193,6 @@ use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
-    11→  /** Whether the scroll lock is disabled. */
-    12→  isDisabled?: boolean;
-    13→  focusCallback?: () => void;
-    14→}
     16→function chain(...callbacks: any[]): (...args: any[]) => void {
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {

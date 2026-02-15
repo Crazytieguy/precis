@@ -15,9 +15,10 @@ use crate::Lang;
 /// 2 - Symbol lines, full multi-line signatures
 /// 3 - Like 2, but public symbols also get preceding doc comments
 /// 4 - Symbol lines with preceding doc comments (all symbols)
-/// 5 - Like 4, but type definition bodies (struct/enum/trait/interface/class) shown in full
-/// 6 - Full source (all lines)
-pub const MAX_LEVEL: u8 = 6;
+/// 5 - Like 4, but public type definition bodies shown in full
+/// 6 - Like 5, but all type definition bodies shown in full
+/// 7 - Full source (all lines)
+pub const MAX_LEVEL: u8 = 7;
 
 /// Render a single file at the given granularity level.
 pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String {
@@ -58,9 +59,10 @@ fn render_with_symbols(
         0 => {}
         1 => render_symbols(&mut out, relative, source, symbols, true),
         2 => render_symbols(&mut out, relative, source, symbols, false),
-        3 => render_symbols_with_docs(&mut out, relative, source, symbols, false, true),
-        4 => render_symbols_with_docs(&mut out, relative, source, symbols, false, false),
-        5 => render_symbols_with_docs(&mut out, relative, source, symbols, true, false),
+        3 => render_symbols_with_docs(&mut out, relative, source, symbols, false, true, false),
+        4 => render_symbols_with_docs(&mut out, relative, source, symbols, false, false, false),
+        5 => render_symbols_with_docs(&mut out, relative, source, symbols, true, false, true),
+        6 => render_symbols_with_docs(&mut out, relative, source, symbols, true, false, false),
         _ => render_full_source(&mut out, source),
     }
     out
@@ -323,10 +325,11 @@ fn render_full_source(out: &mut String, source: &str) {
 }
 
 /// Render symbol lines with preceding doc comments.
-/// If `expand_types` is true (level 5), show full bodies for struct/enum/trait/interface.
+/// If `expand_types` is true (level 5+), show full bodies for struct/enum/trait/interface.
+/// If `public_types_only` is true (level 5), only expand public type bodies.
 /// If `public_only` is true (level 3), only show doc comments for public symbols;
 /// private symbols still get their full signatures but no doc comments.
-/// For Markdown: level 4 shows first paragraph after each heading, level 5 shows all content.
+/// For Markdown: level 4 shows first paragraph after each heading, level 5+ shows all content.
 /// `path` is relative to the project root (used for language detection).
 fn render_symbols_with_docs(
     out: &mut String,
@@ -335,6 +338,7 @@ fn render_symbols_with_docs(
     symbols: &[parse::Symbol],
     expand_types: bool,
     public_only: bool,
+    public_types_only: bool,
 ) {
     if symbols.is_empty() {
         return;
@@ -356,7 +360,9 @@ fn render_symbols_with_docs(
         // const/var blocks (identified by their keyword name "const"/"var").
         let is_grouped_block =
             (sym.name == "const" || sym.name == "var") && sym.end_line > sym.line;
-        let should_expand = expand_types && (is_type_definition(sym.kind) || is_grouped_block);
+        let should_expand = expand_types
+            && (is_type_definition(sym.kind) || is_grouped_block)
+            && (!public_types_only || sym.is_public);
         if should_expand {
             let body_end = sym.end_line; // 1-indexed, inclusive
             // Start from doc_start or emitted_up_to, whichever is later

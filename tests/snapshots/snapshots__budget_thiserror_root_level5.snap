@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 5000 → level 5 (2718 words)
+budget: 5000 → level 6 (2954 words)
 
 README.md
      1→derive(Error)
@@ -258,12 +258,43 @@ build.rs
    190→fn cargo_env_var(key: &str) -> OsString {
 impl/src/ast.rs
     10→pub enum Input<'a> {
+    11→    Struct(Struct<'a>),
+    12→    Enum(Enum<'a>),
+    13→}
     15→pub struct Struct<'a> {
+    16→    pub attrs: Attrs<'a>,
+    17→    pub ident: Ident,
+    18→    pub generics: &'a Generics,
+    19→    pub fields: Vec<Field<'a>>,
+    20→}
     22→pub struct Enum<'a> {
+    23→    pub attrs: Attrs<'a>,
+    24→    pub ident: Ident,
+    25→    pub generics: &'a Generics,
+    26→    pub variants: Vec<Variant<'a>>,
+    27→}
     29→pub struct Variant<'a> {
+    30→    pub original: &'a syn::Variant,
+    31→    pub attrs: Attrs<'a>,
+    32→    pub ident: Ident,
+    33→    pub fields: Vec<Field<'a>>,
+    34→}
     36→pub struct Field<'a> {
+    37→    pub original: &'a syn::Field,
+    38→    pub attrs: Attrs<'a>,
+    39→    pub member: MemberUnraw,
+    40→    pub ty: &'a Type,
+    41→    pub contains_generic: bool,
+    42→}
     44→#[derive(Copy, Clone)]
     45→pub enum ContainerKind {
+    46→    Struct,
+    47→    TupleStruct,
+    48→    UnitStruct,
+    49→    StructVariant,
+    50→    TupleVariant,
+    51→    UnitVariant,
+    52→}
     54→impl<'a> Input<'a> {
     55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
     67→impl<'a> Struct<'a> {
@@ -282,18 +313,56 @@ impl/src/ast.rs
    175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 impl/src/attr.rs
     11→pub struct Attrs<'a> {
+    12→    pub display: Option<Display<'a>>,
+    13→    pub source: Option<Source<'a>>,
+    14→    pub backtrace: Option<&'a Attribute>,
+    15→    pub from: Option<From<'a>>,
+    16→    pub transparent: Option<Transparent<'a>>,
+    17→    pub fmt: Option<Fmt<'a>>,
+    18→}
     20→#[derive(Clone)]
     21→pub struct Display<'a> {
+    22→    pub original: &'a Attribute,
+    23→    pub fmt: LitStr,
+    24→    pub args: TokenStream,
+    25→    pub requires_fmt_machinery: bool,
+    26→    pub has_bonus_display: bool,
+    27→    pub infinite_recursive: bool,
+    28→    pub implied_bounds: Set<(usize, Trait)>,
+    29→    pub bindings: Vec<(Ident, TokenStream)>,
+    30→}
     32→#[derive(Copy, Clone)]
     33→pub struct Source<'a> {
+    34→    pub original: &'a Attribute,
+    35→    pub span: Span,
+    36→}
     38→#[derive(Copy, Clone)]
     39→pub struct From<'a> {
+    40→    pub original: &'a Attribute,
+    41→    pub span: Span,
+    42→}
     44→#[derive(Copy, Clone)]
     45→pub struct Transparent<'a> {
+    46→    pub original: &'a Attribute,
+    47→    pub span: Span,
+    48→}
     50→#[derive(Clone)]
     51→pub struct Fmt<'a> {
+    52→    pub original: &'a Attribute,
+    53→    pub path: ExprPath,
+    54→}
     56→#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Debug)]
     57→pub enum Trait {
+    58→    Debug,
+    59→    Display,
+    60→    Octal,
+    61→    LowerHex,
+    62→    UpperHex,
+    63→    Pointer,
+    64→    Binary,
+    65→    LowerExp,
+    66→    UpperExp,
+    67→}
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
    124→fn parse_error_attribute<'a>(attrs: &mut Attrs<'a>, attr: &'a Attribute) -> Result<()> {
    196→fn parse_token_expr(input: ParseStream, mut begin_expr: bool) -> Result<TokenStream> {
@@ -333,11 +402,16 @@ impl/src/fmt.rs
    299→fn between<'a>(begin: ParseStream<'a>, end: ParseStream<'a>) -> TokenStream {
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
+     9→    names: Set<&'a Ident>,
+    10→}
     12→impl<'a> ParamsInScope<'a> {
     13→    pub fn new(generics: &'a Generics) -> Self {
     19→    pub fn intersects(&self, ty: &Type) -> bool {
     26→fn crawl(in_scope: &ParamsInScope, ty: &Type, found: &mut bool) {
     48→pub struct InferredBounds {
+    49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
+    50→    order: Vec<TokenStream>,
+    51→}
     53→impl InferredBounds {
     54→    pub fn new() -> Self {
     61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
@@ -436,6 +510,9 @@ impl/src/unraw.rs
     76→    fn to_tokens(&self, tokens: &mut TokenStream) {
     81→#[derive(Clone)]
     82→pub enum MemberUnraw {
+    83→    Named(IdentUnraw),
+    84→    Unnamed(Index),
+    85→}
     87→impl MemberUnraw {
     88→    pub fn span(&self) -> Span {
     96→impl Display for MemberUnraw {

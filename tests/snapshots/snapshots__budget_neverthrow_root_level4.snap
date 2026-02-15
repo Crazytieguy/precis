@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 6000 → level 4 (4433 words)
+budget: 6000 → level 5 (5920 words)
 
 CHANGELOG.md
      1→# neverthrow
@@ -12,46 +12,77 @@ CHANGELOG.md
      5→### Minor Changes
      6→
      7→- [#615](https://github.com/supermacro/neverthrow/pull/615) [`85ed7fd`](https://github.com/supermacro/neverthrow/commit/85ed7fd3a1247e4c0e83bba13f5e874282243d75) Thanks [@konker](https://github.com/konker)! - Add orTee, which is the equivalent of andTee but for the error track.
+     8→
+     9→- [#584](https://github.com/supermacro/neverthrow/pull/584) [`acea44a`](https://github.com/supermacro/neverthrow/commit/acea44adb98dda2ca32fe4e882879461cc7cedc2) Thanks [@macksal](https://github.com/macksal)! - Allow ok/err/okAsync/errAsync to accept zero arguments when returning void
+    10→
     11→## 8.1.1
     12→
     13→### Patch Changes
     14→
     15→- [#600](https://github.com/supermacro/neverthrow/pull/600) [`3aee20a`](https://github.com/supermacro/neverthrow/commit/3aee20a1c429062d26f440fde32a3f26ef05533a) Thanks [@m-shaka](https://github.com/m-shaka)! - docs: updated README.md about `safeTry` and added @deprecated tag to safeUnwrap
+    16→
     17→## 8.1.0
     18→
     19→### Minor Changes
     20→
     21→- [#589](https://github.com/supermacro/neverthrow/pull/589) [`609b398`](https://github.com/supermacro/neverthrow/commit/609b398aa1fd258a1fede974707d54eb4c230f3c) Thanks [@dmmulroy](https://github.com/dmmulroy)! - safeTry should not require .safeUnwrap()
+    22→
     23→## 8.0.0
     24→
     25→### Major Changes
     26→
     27→- [#484](https://github.com/supermacro/neverthrow/pull/484) [`09faf35`](https://github.com/supermacro/neverthrow/commit/09faf35a5ce701ed55b13b82074da9e50050526d) Thanks [@braxtonhall](https://github.com/braxtonhall)! - Allow orElse method to change ok types.
     28→  This makes the orElse types match the implementation.
+    29→
+    30→  This is a breaking change for the orElse type argument list,
+    31→  as the ok type must now be provided before the err type.
+    32→
+    33→  ```diff
+    34→  - result.orElse<ErrType>(foo)
+    35→  + result.orElse<OkType, ErrType>(foo)
+    36→  ```
+    37→
+    38→  This only applies if type arguments were
+    39→  explicitly provided at an orElse callsite.
+    40→  If the type arguments were inferred,
+    41→  no updates are needed during the upgrade.
+    42→
     43→## 7.2.0
     44→
     45→### Minor Changes
     46→
     47→- [#562](https://github.com/supermacro/neverthrow/pull/562) [`547352f`](https://github.com/supermacro/neverthrow/commit/547352f326206b2c5b403bde4ddc88825172f25c) Thanks [@sharno](https://github.com/sharno)! - change the return type of `safeTry` to be `ResultAsync<T, E>` instead of `Promise<Result<T, E>>` for better composability
+    48→
     49→## 7.1.0
     50→
     51→### Minor Changes
     52→
     53→- [#467](https://github.com/supermacro/neverthrow/pull/467) [`4b9d2fd`](https://github.com/supermacro/neverthrow/commit/4b9d2fdaf03223945068509f948b57194732aa03) Thanks [@untidy-hair
     54→  ](https://github.com/untidy-hair)! - feat: add `andTee` and `andThrough` to handle side-effect
+    55→
     56→### Patch Changes
     57→
     58→- [#483](https://github.com/supermacro/neverthrow/pull/483) [`96f7f66`](https://github.com/supermacro/neverthrow/commit/96f7f669ac83be705a389d47ed804e9d44a13932) Thanks [@braxtonhall](https://github.com/braxtonhall)! - Fix `combineWithAllErrors` types
+    59→
+    60→- [#563](https://github.com/supermacro/neverthrow/pull/563) [`eadf50c`](https://github.com/supermacro/neverthrow/commit/eadf50c695db896b8841c0ee301ae5eeba994b90) Thanks [@mattpocock](https://github.com/mattpocock)! - Made err() infer strings narrowly for easier error tagging.
+    61→
     62→## 7.0.1
     63→
     64→### Patch Changes
     65→
     66→- [#527](https://github.com/supermacro/neverthrow/pull/527) [`2e1f198`](https://github.com/supermacro/neverthrow/commit/2e1f19899800ce5e1164412c6a693cf2f1c40b20) Thanks [@3846masa](https://github.com/3846masa)! - fix: change type definitions to make inferring types of safeTry more strict
+    67→
+    68→- [#497](https://github.com/supermacro/neverthrow/pull/497) [`e06203e`](https://github.com/supermacro/neverthrow/commit/e06203e90b2b64edaa42707cbca8383c9f4765e8) Thanks [@braxtonhall](https://github.com/braxtonhall)! - enhance type inferrence of `match`
+    69→
     70→## 7.0.0
     71→
     72→### Major Changes
     73→
     74→- [#553](https://github.com/supermacro/neverthrow/pull/553) [`5a3af0a`](https://github.com/supermacro/neverthrow/commit/5a3af0a55d0c440dfd50bfbbe021c6e4b973184b) Thanks [@m-shaka](https://github.com/m-shaka)! - Declare the minimum supported Node.js version
+    75→
+    76→  `Neverthrow` does not depend on any Node.js version-specific features, so it should work with any version of Node.js that supports ES6 and other runtimes like Browser, Deno, etc.
+    77→
+    78→  However, for the sake of maintaining a consistent development environment, we should declare the minimum supported version of Node.js in the `engines` field of the `package.json` file.
 README.md
      1→# NeverThrow 🙅
      2→
@@ -323,28 +354,193 @@ src/_internals/utils.ts
 src/index.ts
 src/result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
+    23→  private _promise: Promise<Result<T, E>>
+    24→
     25→  constructor(res: Promise<Result<T, E>>) {
+    26→    this._promise = res
+    27→  }
+    28→
+    29→  static fromSafePromise<T, E = never>(promise: PromiseLike<T>): ResultAsync<T, E>
     30→  static fromSafePromise<T, E = never>(promise: Promise<T>): ResultAsync<T, E> {
+    31→    const newPromise = promise.then((value: T) => new Ok<T, E>(value))
+    32→
+    33→    return new ResultAsync(newPromise)
+    34→  }
+    35→
+    36→  static fromPromise<T, E>(promise: PromiseLike<T>, errorFn: (e: unknown) => E): ResultAsync<T, E>
     37→  static fromPromise<T, E>(promise: Promise<T>, errorFn: (e: unknown) => E): ResultAsync<T, E> {
+    38→    const newPromise = promise
+    39→      .then((value: T) => new Ok<T, E>(value))
+    40→      .catch((e) => new Err<T, E>(errorFn(e)))
+    41→
+    42→    return new ResultAsync(newPromise)
+    43→  }
+    44→
+    45→  // eslint-disable-next-line @typescript-eslint/no-explicit-any
     46→  static fromThrowable<A extends readonly any[], R, E>(
     47→    fn: (...args: A) => Promise<R>,
     48→    errorFn?: (err: unknown) => E,
     49→  ): (...args: A) => ResultAsync<R, E> {
+    50→    return (...args) => {
+    51→      return new ResultAsync(
+    52→        (async () => {
+    53→          try {
+    54→            return new Ok(await fn(...args))
+    55→          } catch (error) {
+    56→            return new Err(errorFn ? errorFn(error) : error)
+    57→          }
+    58→        })(),
+    59→      )
+    60→    }
+    61→  }
+    62→
+    63→  static combine<
+    64→    T extends readonly [ResultAsync<unknown, unknown>, ...ResultAsync<unknown, unknown>[]]
+    65→  >(asyncResultList: T): CombineResultAsyncs<T>
+    66→  static combine<T extends readonly ResultAsync<unknown, unknown>[]>(
+    67→    asyncResultList: T,
+    68→  ): CombineResultAsyncs<T>
     69→  static combine<T extends readonly ResultAsync<unknown, unknown>[]>(
     70→    asyncResultList: T,
     71→  ): CombineResultAsyncs<T> {
+    72→    return (combineResultAsyncList(asyncResultList) as unknown) as CombineResultAsyncs<T>
+    73→  }
+    74→
+    75→  static combineWithAllErrors<
+    76→    T extends readonly [ResultAsync<unknown, unknown>, ...ResultAsync<unknown, unknown>[]]
+    77→  >(asyncResultList: T): CombineResultsWithAllErrorsArrayAsync<T>
+    78→  static combineWithAllErrors<T extends readonly ResultAsync<unknown, unknown>[]>(
+    79→    asyncResultList: T,
+    80→  ): CombineResultsWithAllErrorsArrayAsync<T>
     81→  static combineWithAllErrors<T extends readonly ResultAsync<unknown, unknown>[]>(
     82→    asyncResultList: T,
     83→  ): CombineResultsWithAllErrorsArrayAsync<T> {
+    84→    return combineResultAsyncListWithAllErrors(
+    85→      asyncResultList,
+    86→    ) as CombineResultsWithAllErrorsArrayAsync<T>
+    87→  }
+    88→
     89→  map<A>(f: (t: T) => A | Promise<A>): ResultAsync<A, E> {
+    90→    return new ResultAsync(
+    91→      this._promise.then(async (res: Result<T, E>) => {
+    92→        if (res.isErr()) {
+    93→          return new Err<A, E>(res.error)
+    94→        }
+    95→
+    96→        return new Ok<A, E>(await f(res.value))
+    97→      }),
+    98→    )
+    99→  }
+   100→
    101→  andThrough<F>(f: (t: T) => Result<unknown, F> | ResultAsync<unknown, F>): ResultAsync<T, E | F> {
+   102→    return new ResultAsync(
+   103→      this._promise.then(async (res: Result<T, E>) => {
+   104→        if (res.isErr()) {
+   105→          return new Err<T, E>(res.error)
+   106→        }
+   107→
+   108→        const newRes = await f(res.value)
+   109→        if (newRes.isErr()) {
+   110→          return new Err<T, F>(newRes.error)
+   111→        }
+   112→        return new Ok<T, F>(res.value)
+   113→      }),
+   114→    )
+   115→  }
+   116→
    117→  andTee(f: (t: T) => unknown): ResultAsync<T, E> {
+   118→    return new ResultAsync(
+   119→      this._promise.then(async (res: Result<T, E>) => {
+   120→        if (res.isErr()) {
+   121→          return new Err<T, E>(res.error)
+   122→        }
+   123→        try {
+   124→          await f(res.value)
+   125→        } catch (e) {
+   126→          // Tee does not care about the error
+   127→        }
+   128→        return new Ok<T, E>(res.value)
+   129→      }),
+   130→    )
+   131→  }
+   132→
    133→  orTee(f: (t: E) => unknown): ResultAsync<T, E> {
+   134→    return new ResultAsync(
+   135→      this._promise.then(async (res: Result<T, E>) => {
+   136→        if (res.isOk()) {
+   137→          return new Ok<T, E>(res.value)
+   138→        }
+   139→        try {
+   140→          await f(res.error)
+   141→        } catch (e) {
+   142→          // Tee does not care about the error
+   143→        }
+   144→        return new Err<T, E>(res.error)
+   145→      }),
+   146→    )
+   147→  }
+   148→
    149→  mapErr<U>(f: (e: E) => U | Promise<U>): ResultAsync<T, U> {
+   150→    return new ResultAsync(
+   151→      this._promise.then(async (res: Result<T, E>) => {
+   152→        if (res.isOk()) {
+   153→          return new Ok<T, U>(res.value)
+   154→        }
+   155→
+   156→        return new Err<T, U>(await f(res.error))
+   157→      }),
+   158→    )
+   159→  }
+   160→
+   161→  andThen<R extends Result<unknown, unknown>>(
+   162→    f: (t: T) => R,
+   163→  ): ResultAsync<InferOkTypes<R>, InferErrTypes<R> | E>
+   164→  andThen<R extends ResultAsync<unknown, unknown>>(
+   165→    f: (t: T) => R,
+   166→  ): ResultAsync<InferAsyncOkTypes<R>, InferAsyncErrTypes<R> | E>
+   167→  andThen<U, F>(f: (t: T) => Result<U, F> | ResultAsync<U, F>): ResultAsync<U, E | F>
+   168→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    169→  andThen(f: any): any {
+   170→    return new ResultAsync(
+   171→      this._promise.then((res) => {
+   172→        if (res.isErr()) {
+   173→          return new Err<never, E>(res.error)
+   174→        }
+   175→
+   176→        const newValue = f(res.value)
+   177→        return newValue instanceof ResultAsync ? newValue._promise : newValue
+   178→      }),
+   179→    )
+   180→  }
+   181→
+   182→  orElse<R extends Result<unknown, unknown>>(
+   183→    f: (e: E) => R,
+   184→  ): ResultAsync<InferOkTypes<R> | T, InferErrTypes<R>>
+   185→  orElse<R extends ResultAsync<unknown, unknown>>(
+   186→    f: (e: E) => R,
+   187→  ): ResultAsync<InferAsyncOkTypes<R> | T, InferAsyncErrTypes<R>>
+   188→  orElse<U, A>(f: (e: E) => Result<U, A> | ResultAsync<U, A>): ResultAsync<U | T, A>
+   189→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    190→  orElse(f: any): any {
+   191→    return new ResultAsync(
+   192→      this._promise.then(async (res: Result<T, E>) => {
+   193→        if (res.isErr()) {
+   194→          return f(res.error)
+   195→        }
+   196→
+   197→        return new Ok<T, unknown>(res.value)
+   198→      }),
+   199→    )
+   200→  }
+   201→
    202→  match<A, B = A>(ok: (t: T) => A, _err: (e: E) => B): Promise<A | B> {
+   203→    return this._promise.then((res) => res.match(ok, _err))
+   204→  }
+   205→
    206→  unwrapOr<A>(t: A): Promise<T | A> {
+   207→    return this._promise.then((res) => res.unwrapOr(t))
+   208→  }
+   209→
    210→  /**
    211→   * @deprecated will be removed in 9.0.0.
    212→   *
@@ -358,10 +554,29 @@ src/result-async.ts
    220→   * Emulates Rust's `?` operator in `safeTry`'s body. See also `safeTry`.
    221→   */
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
+   223→    return yield* await this._promise.then((res) => res.safeUnwrap())
+   224→  }
+   225→
+   226→  // Makes ResultAsync implement PromiseLike<Result>
    227→  then<A, B>(
    228→    successCallback?: (res: Result<T, E>) => A | PromiseLike<A>,
    229→    failureCallback?: (reason: unknown) => B | PromiseLike<B>,
    230→  ): PromiseLike<A | B> {
+   231→    return this._promise.then(successCallback, failureCallback)
+   232→  }
+   233→
+   234→  async *[Symbol.asyncIterator](): AsyncGenerator<Err<never, E>, T> {
+   235→    const result = await this._promise
+   236→
+   237→    if (result.isErr()) {
+   238→      // @ts-expect-error -- This is structurally equivalent and safe
+   239→      yield errAsync(result.error)
+   240→    }
+   241→
+   242→    // @ts-expect-error -- This is structurally equivalent and safe
+   243→    return result.value
+   244→  }
+   245→}
    249→export function okAsync<T, E = never>(value: T): ResultAsync<T, E> {
    255→export function errAsync<T = never, E = unknown>(err: E): ResultAsync<T, E> {
    259→export const fromPromise = ResultAsync.fromPromise
@@ -576,42 +791,213 @@ src/result.ts
    309→  _unsafeUnwrapErr(config?: ErrorConfig): E
    312→export class Ok<T, E> implements IResult<T, E> {
    313→  constructor(readonly value: T) {}
+   314→
    315→  isOk(): this is Ok<T, E> {
+   316→    return true
+   317→  }
+   318→
    319→  isErr(): this is Err<T, E> {
+   320→    return !this.isOk()
+   321→  }
+   322→
    323→  map<A>(f: (t: T) => A): Result<A, E> {
+   324→    return ok(f(this.value))
+   325→  }
+   326→
+   327→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
    328→  mapErr<U>(_f: (e: E) => U): Result<T, U> {
+   329→    return ok(this.value)
+   330→  }
+   331→
+   332→  andThen<R extends Result<unknown, unknown>>(
+   333→    f: (t: T) => R,
+   334→  ): Result<InferOkTypes<R>, InferErrTypes<R> | E>
+   335→  andThen<U, F>(f: (t: T) => Result<U, F>): Result<U, E | F>
+   336→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    337→  andThen(f: any): any {
+   338→    return f(this.value)
+   339→  }
+   340→
+   341→  andThrough<R extends Result<unknown, unknown>>(f: (t: T) => R): Result<T, InferErrTypes<R> | E>
+   342→  andThrough<F>(f: (t: T) => Result<unknown, F>): Result<T, E | F>
+   343→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    344→  andThrough(f: any): any {
+   345→    return f(this.value).map((_value: unknown) => this.value)
+   346→  }
+   347→
    348→  andTee(f: (t: T) => unknown): Result<T, E> {
+   349→    try {
+   350→      f(this.value)
+   351→    } catch (e) {
+   352→      // Tee doesn't care about the error
+   353→    }
+   354→    return ok<T, E>(this.value)
+   355→  }
+   356→
    357→  orTee(_f: (t: E) => unknown): Result<T, E> {
+   358→    return ok<T, E>(this.value)
+   359→  }
+   360→
+   361→  orElse<R extends Result<unknown, unknown>>(
+   362→    _f: (e: E) => R,
+   363→  ): Result<InferOkTypes<R> | T, InferErrTypes<R>>
+   364→  orElse<U, A>(_f: (e: E) => Result<U, A>): Result<U | T, A>
+   365→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    366→  orElse(_f: any): any {
+   367→    return ok(this.value)
+   368→  }
+   369→
    370→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F> {
+   371→    return f(this.value)
+   372→  }
+   373→
+   374→  asyncAndThrough<R extends ResultAsync<unknown, unknown>>(
+   375→    f: (t: T) => R,
+   376→  ): ResultAsync<T, InferAsyncErrTypes<R> | E>
+   377→  asyncAndThrough<F>(f: (t: T) => ResultAsync<unknown, F>): ResultAsync<T, E | F>
+   378→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    379→  asyncAndThrough(f: (t: T) => ResultAsync<unknown, unknown>): any {
+   380→    return f(this.value).map(() => this.value)
+   381→  }
+   382→
    383→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E> {
+   384→    return ResultAsync.fromSafePromise(f(this.value))
+   385→  }
+   386→
+   387→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
    388→  unwrapOr<A>(_v: A): T | A {
+   389→    return this.value
+   390→  }
+   391→
+   392→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
    393→  match<A, B = A>(ok: (t: T) => A, _err: (e: E) => B): A | B {
+   394→    return ok(this.value)
+   395→  }
+   396→
    397→  safeUnwrap(): Generator<Err<never, E>, T> {
+   398→    const value = this.value
+   399→    /* eslint-disable-next-line require-yield */
+   400→    return (function* () {
+   401→      return value
+   402→    })()
+   403→  }
+   404→
    405→  _unsafeUnwrap(_?: ErrorConfig): T {
+   406→    return this.value
+   407→  }
+   408→
    409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
+   410→    throw createNeverThrowError('Called `_unsafeUnwrapErr` on an Ok', this, config)
+   411→  }
+   412→
+   413→  // eslint-disable-next-line @typescript-eslint/no-this-alias, require-yield
+   414→  *[Symbol.iterator](): Generator<Err<never, E>, T> {
+   415→    return this.value
+   416→  }
+   417→}
    419→export class Err<T, E> implements IResult<T, E> {
    420→  constructor(readonly error: E) {}
+   421→
    422→  isOk(): this is Ok<T, E> {
+   423→    return false
+   424→  }
+   425→
    426→  isErr(): this is Err<T, E> {
+   427→    return !this.isOk()
+   428→  }
+   429→
+   430→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
    431→  map<A>(_f: (t: T) => A): Result<A, E> {
+   432→    return err(this.error)
+   433→  }
+   434→
    435→  mapErr<U>(f: (e: E) => U): Result<T, U> {
+   436→    return err(f(this.error))
+   437→  }
+   438→
    439→  andThrough<F>(_f: (t: T) => Result<unknown, F>): Result<T, E | F> {
+   440→    return err(this.error)
+   441→  }
+   442→
    443→  andTee(_f: (t: T) => unknown): Result<T, E> {
+   444→    return err(this.error)
+   445→  }
+   446→
    447→  orTee(f: (t: E) => unknown): Result<T, E> {
+   448→    try {
+   449→      f(this.error)
+   450→    } catch (e) {
+   451→      // Tee doesn't care about the error
+   452→    }
+   453→    return err<T, E>(this.error)
+   454→  }
+   455→
+   456→  andThen<R extends Result<unknown, unknown>>(
+   457→    _f: (t: T) => R,
+   458→  ): Result<InferOkTypes<R>, InferErrTypes<R> | E>
+   459→  andThen<U, F>(_f: (t: T) => Result<U, F>): Result<U, E | F>
+   460→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    461→  andThen(_f: any): any {
+   462→    return err(this.error)
+   463→  }
+   464→
+   465→  orElse<R extends Result<unknown, unknown>>(
+   466→    f: (e: E) => R,
+   467→  ): Result<InferOkTypes<R> | T, InferErrTypes<R>>
+   468→  orElse<U, A>(f: (e: E) => Result<U, A>): Result<U | T, A>
+   469→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    470→  orElse(f: any): any {
+   471→    return f(this.error)
+   472→  }
+   473→
+   474→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
    475→  asyncAndThen<U, F>(_f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F> {
+   476→    return errAsync<U, E>(this.error)
+   477→  }
+   478→
    479→  asyncAndThrough<F>(_f: (t: T) => ResultAsync<unknown, F>): ResultAsync<T, E | F> {
+   480→    return errAsync<T, E>(this.error)
+   481→  }
+   482→
+   483→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
    484→  asyncMap<U>(_f: (t: T) => Promise<U>): ResultAsync<U, E> {
+   485→    return errAsync<U, E>(this.error)
+   486→  }
+   487→
    488→  unwrapOr<A>(v: A): T | A {
+   489→    return v
+   490→  }
+   491→
    492→  match<A, B = A>(_ok: (t: T) => A, err: (e: E) => B): A | B {
+   493→    return err(this.error)
+   494→  }
+   495→
    496→  safeUnwrap(): Generator<Err<never, E>, T> {
+   497→    const error = this.error
+   498→    return (function* () {
+   499→      yield err(error)
+   500→
+   501→      throw new Error('Do not use this generator out of `safeTry`')
+   502→    })()
+   503→  }
+   504→
    505→  _unsafeUnwrap(config?: ErrorConfig): T {
+   506→    throw createNeverThrowError('Called `_unsafeUnwrap` on an Err', this, config)
+   507→  }
+   508→
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
+   510→    return this.error
+   511→  }
+   512→
+   513→  *[Symbol.iterator](): Generator<Err<never, E>, T> {
+   514→    // eslint-disable-next-line @typescript-eslint/no-this-alias
+   515→    const self = this
+   516→    // @ts-expect-error -- This is structurally equivalent and safe
+   517→    yield self
+   518→    // @ts-expect-error -- This is structurally equivalent and safe
+   519→    return self
+   520→  }
+   521→}
    523→export const fromThrowable = Result.fromThrowable
    530→type Prev = [
    531→  never,

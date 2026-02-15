@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1900 → level 4 (595 words)
+budget: 1900 → level 5 (971 words)
 
 assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
@@ -61,6 +61,8 @@ types.ts
      3→export type ToastTypes = 'normal' | 'action' | 'success' | 'info' | 'warning' | 'error' | 'loading' | 'default';
      5→export type PromiseT<Data = any> = Promise<Data> | (() => Promise<Data>);
      7→export interface PromiseIExtendedResult extends ExternalToast {
+     8→  message: React.ReactNode;
+     9→}
     11→export type PromiseTExtendedResult<Data = any> =
     12→  | PromiseIExtendedResult
     13→  | ((data: Data) => PromiseIExtendedResult | Promise<PromiseIExtendedResult>);
@@ -77,12 +79,71 @@ types.ts
     27→  finally?: () => void | Promise<void>;
     28→};
     30→export interface ToastClassnames {
+    31→  toast?: string;
+    32→  title?: string;
+    33→  description?: string;
+    34→  loader?: string;
+    35→  closeButton?: string;
+    36→  cancelButton?: string;
+    37→  actionButton?: string;
+    38→  success?: string;
+    39→  error?: string;
+    40→  info?: string;
+    41→  warning?: string;
+    42→  loading?: string;
+    43→  default?: string;
+    44→  content?: string;
+    45→  icon?: string;
+    46→}
     48→export interface ToastIcons {
+    49→  success?: React.ReactNode;
+    50→  info?: React.ReactNode;
+    51→  warning?: React.ReactNode;
+    52→  error?: React.ReactNode;
+    53→  loading?: React.ReactNode;
+    54→  close?: React.ReactNode;
+    55→}
     57→export interface Action {
+    58→  label: React.ReactNode;
+    59→  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    60→  actionButtonStyle?: React.CSSProperties;
+    61→}
     63→export interface ToastT {
+    64→  id: number | string;
+    65→  toasterId?: string;
+    66→  title?: (() => React.ReactNode) | React.ReactNode;
+    67→  type?: ToastTypes;
+    68→  icon?: React.ReactNode;
+    69→  jsx?: React.ReactNode;
+    70→  richColors?: boolean;
+    71→  invert?: boolean;
+    72→  closeButton?: boolean;
+    73→  dismissible?: boolean;
+    74→  description?: (() => React.ReactNode) | React.ReactNode;
+    75→  duration?: number;
+    76→  delete?: boolean;
+    77→  action?: Action | React.ReactNode;
+    78→  cancel?: Action | React.ReactNode;
+    79→  onDismiss?: (toast: ToastT) => void;
+    80→  onAutoClose?: (toast: ToastT) => void;
+    81→  promise?: PromiseT;
+    82→  cancelButtonStyle?: React.CSSProperties;
+    83→  actionButtonStyle?: React.CSSProperties;
+    84→  style?: React.CSSProperties;
+    85→  unstyled?: boolean;
+    86→  className?: string;
+    87→  classNames?: ToastClassnames;
+    88→  descriptionClassName?: string;
+    89→  position?: Position;
+    90→  testId?: string;
+    91→}
     93→export function isAction(action: Action | React.ReactNode): action is Action {
     97→export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
     98→export interface HeightT {
+    99→  height: number;
+   100→  toastId: number | string;
+   101→  position: Position;
+   102→}
    104→interface ToastOptions {
    118→type Offset =
    119→  | {
@@ -94,11 +155,68 @@ types.ts
    125→  | string
    126→  | number;
    128→export interface ToasterProps {
+   129→  id?: string;
+   130→  invert?: boolean;
+   131→  theme?: 'light' | 'dark' | 'system';
+   132→  position?: Position;
+   133→  hotkey?: string[];
+   134→  richColors?: boolean;
+   135→  expand?: boolean;
+   136→  duration?: number;
+   137→  gap?: number;
+   138→  visibleToasts?: number;
+   139→  closeButton?: boolean;
+   140→  toastOptions?: ToastOptions;
+   141→  className?: string;
+   142→  style?: React.CSSProperties;
+   143→  offset?: Offset;
+   144→  mobileOffset?: Offset;
+   145→  dir?: 'rtl' | 'ltr' | 'auto';
+   146→  swipeDirections?: SwipeDirection[];
+   147→  icons?: ToastIcons;
+   148→  customAriaLabel?: string;
+   149→  containerAriaLabel?: string;
+   150→}
    152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
    154→export interface ToastProps {
+   155→  toast: ToastT;
+   156→  toasts: ToastT[];
+   157→  index: number;
+   158→  swipeDirections?: SwipeDirection[];
+   159→  expanded: boolean;
+   160→  invert: boolean;
+   161→  heights: HeightT[];
+   162→  setHeights: React.Dispatch<React.SetStateAction<HeightT[]>>;
+   163→  removeToast: (toast: ToastT) => void;
+   164→  gap?: number;
+   165→  position: Position;
+   166→  visibleToasts: number;
+   167→  expandByDefault: boolean;
+   168→  closeButton: boolean;
+   169→  interacting: boolean;
+   170→  style?: React.CSSProperties;
+   171→  cancelButtonStyle?: React.CSSProperties;
+   172→  actionButtonStyle?: React.CSSProperties;
+   173→  duration?: number;
+   174→  className?: string;
+   175→  unstyled?: boolean;
+   176→  descriptionClassName?: string;
+   177→  loadingIcon?: React.ReactNode;
+   178→  classNames?: ToastClassnames;
+   179→  icons?: ToastIcons;
+   180→  closeButtonAriaLabel?: string;
+   181→  defaultRichColors?: boolean;
+   182→}
    184→export enum SwipeStateTypes {
+   185→  SwipedOut = 'SwipedOut',
+   186→  SwipedBack = 'SwipedBack',
+   187→  NotSwiped = 'NotSwiped',
+   188→}
    190→export type Theme = 'light' | 'dark';
    192→export interface ToastToDismiss {
+   193→  id: number | string;
+   194→  dismiss: boolean;
+   195→}
    197→export type ExternalToast = Omit<ToastT, 'id' | 'type' | 'title' | 'jsx' | 'delete' | 'promise'> & {
    198→  id?: number | string;
    199→  toasterId?: string;

@@ -1307,7 +1307,7 @@ fn monotonicity_invariant() {
 /// Test the budget binary search with synthetic cost functions (no parsing).
 #[test]
 fn budget_algorithm() {
-    let costs: [usize; 7] = [5, 10, 25, 40, 60, 120, 200];
+    let costs: [usize; 8] = [5, 10, 25, 40, 60, 90, 120, 200];
     let cost = |level: u8| costs[level as usize];
 
     // Extremes

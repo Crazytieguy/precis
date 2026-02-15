@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 6200 → level 5 (6181 words)
+budget: 6200 → level 5 (6153 words)
 
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
@@ -79,9 +79,6 @@ imp_pl.rs
    116→    /// Returns `None` if the cell was empty.
    117→    pub(crate) fn into_inner(self) -> Option<T> {
    122→struct Guard<'a> {
-   123→    state: &'a AtomicU8,
-   124→    new_state: u8,
-   125→}
    127→impl<'a> Drop for Guard<'a> {
    128→    fn drop(&mut self) {
    138→#[inline(never)]
@@ -145,15 +142,8 @@ imp_std.rs
    136→/// A waiters is stored on the stack of the waiting threads.
    137→#[repr(align(4))] // Ensure the two lower bits are free to use as state bits.
    138→struct Waiter {
-   139→    thread: Cell<Option<Thread>>,
-   140→    signaled: AtomicBool,
-   141→    next: *mut Waiter,
-   142→}
    144→/// Drains and notifies the queue of waiters on drop.
    145→struct Guard<'a> {
-   146→    queue: &'a AtomicPtr<Waiter>,
-   147→    new_queue: *mut Waiter,
-   148→}
    150→impl Drop for Guard<'_> {
    151→    fn drop(&mut self) {
    176→#[inline(never)]
