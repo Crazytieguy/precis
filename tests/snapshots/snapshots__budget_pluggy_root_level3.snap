@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 → level 6 (1696 words)
+budget: 2000 → level 7 (1833 words)
 
 AGENTS.md
      1→# AGENTS.md
@@ -80,11 +80,14 @@ src/pluggy/__init__.py
     32→def __getattr__(name: str) -> str:
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
+    23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
     27→def run_old_style_hookwrapper(
     28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
     29→) -> Teardown:
     30→    """
+    31→    backward compatibility wrapper to run a old style hookwrapper as a wrapper
+    32→    """
     60→def _raise_wrapfail(
     61→    wrap_controller: Generator[None, object, object],
     62→    msg: str,
@@ -268,6 +271,7 @@ src/pluggy/_result.py
     24→@final
     25→class Result(Generic[ResultType]):
     26→    """An object used to inspect and set the result in a :ref:`hook wrapper
+    27→    <hookwrappers>`."""
     31→    def __init__(
     32→        self,
     33→        result: ResultType | None,
@@ -285,10 +289,26 @@ src/pluggy/_result.py
     58→        """:meta private:"""
     67→    def force_result(self, result: ResultType) -> None:
     68→        """Force the result(s) to ``result``.
+    69→
+    70→        If the hook was marked as a ``firstresult`` a single value should
+    71→        be set, otherwise set a (modified) list of results. Any exceptions
+    72→        found during invocation will be deleted.
+    73→
+    74→        This overrides any previous result or exception.
+    75→        """
     80→    def force_exception(self, exception: BaseException) -> None:
     81→        """Force the result to fail with ``exception``.
+    82→
+    83→        This overrides any previous result or exception.
+    84→
+    85→        .. versionadded:: 1.1.0
+    86→        """
     91→    def get_result(self) -> ResultType:
     92→        """Get the result(s) for this hook call.
+    93→
+    94→        If the hook was marked as a ``firstresult`` only a single value
+    95→        will be returned, otherwise a list of results.
+    96→        """
 src/pluggy/_tracing.py
     16→class TagTracer:
     17→    def __init__(self) -> None:
@@ -303,4 +323,7 @@ src/pluggy/_tracing.py
     67→    def get(self, name: str) -> TagTracerSub:
 src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):
+     5→    """Base class for all warnings emitted by pluggy."""
+    10→@final
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
+    12→    """A plugin raised an exception during an :ref:`old-style hookwrapper

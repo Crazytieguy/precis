@@ -14,7 +14,6 @@ sample.go
     16→	Ident  TokenKind = iota
     17→	Number
     18→	Symbol
-    19→)
     21→// Visitor walks over tokens in a stream.
     22→type Visitor interface {
     23→	VisitToken(token *Token)

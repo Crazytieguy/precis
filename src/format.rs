@@ -4,7 +4,7 @@ use crate::parse;
 use crate::Lang;
 
 /// Maximum granularity level. See README.md for the rendering design.
-pub const MAX_LEVEL: u8 = 10;
+pub const MAX_LEVEL: u8 = 11;
 
 /// Render a single file at the given granularity level.
 pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String {
@@ -110,6 +110,17 @@ fn doc_penalty(source: &str, symbols: &[parse::Symbol], lang: Option<Lang>) -> u
     }
     let avg = total_doc_lines / symbols_with_docs;
     if avg > 5 { 1 } else { 0 }
+}
+
+/// Compute a symbol count penalty for doc comment appearance.
+///
+/// Files with many public symbols get a 1-level delay on doc appearance,
+/// because adding a doc line per symbol creates a large word count jump.
+/// This spreads the signatures→docs transition across nominal levels:
+/// files with few public symbols show docs first, dense files follow later.
+fn symbol_count_penalty(symbols: &[parse::Symbol]) -> u8 {
+    let public_count = symbols.iter().filter(|s| s.is_public).count();
+    if public_count > 30 { 1 } else { 0 }
 }
 
 /// Format a single source line with its line number.
@@ -408,7 +419,7 @@ fn compute_policy(
     if effective == 0 {
         return None;
     }
-    if effective >= 10 {
+    if effective >= 11 {
         return Some(RenderPolicy { full_source: true, ..Default::default() });
     }
     if effective <= 4 {
@@ -422,13 +433,15 @@ fn compute_policy(
     // Levels 5–9: signatures with optional docs and type expansion.
     // Doc comment penalty delays doc appearance for files with many doc lines,
     // spreading transitions across nominal levels.
-    let doc_eff = effective.saturating_sub(doc_penalty(source, symbols, lang));
+    let doc_eff = effective
+        .saturating_sub(doc_penalty(source, symbols, lang))
+        .saturating_sub(symbol_count_penalty(symbols));
     Some(RenderPolicy {
         with_docs: doc_eff >= 5,
         first_line_only: doc_eff < 6,
         public_docs_only: doc_eff < 7,
-        expand_types: effective >= 8,
-        public_types_only: effective < 9,
+        expand_types: effective >= 9,
+        public_types_only: effective < 10,
         ..Default::default()
     })
 }
@@ -1024,10 +1037,14 @@ mod tests {
         let large_l5 = render_file(5, Path::new("large.rs"), root, &large_source);
         assert!(!large_l5.contains("doc "), "large file at level 5 should not include docs");
 
-        // Large file at level 6: effective 5 (size penalty), no doc penalty (avg 1 line/sym)
-        // → first-line public docs
+        // Large file at level 6: effective 5 (size penalty), symbol_count_penalty 1 (200 pub syms)
+        // → doc_eff 4, no docs yet
         let large_l6 = render_file(6, Path::new("large.rs"), root, &large_source);
-        assert!(large_l6.contains("doc "), "large file at level 6 should include docs");
+        assert!(!large_l6.contains("doc "), "large file at level 6 should not include docs (symbol count penalty)");
+
+        // Large file at level 7: effective 6 (size penalty), doc_eff 5 → first-line public docs
+        let large_l7 = render_file(7, Path::new("large.rs"), root, &large_source);
+        assert!(large_l7.contains("doc "), "large file at level 7 should include docs");
     }
 
     #[test]

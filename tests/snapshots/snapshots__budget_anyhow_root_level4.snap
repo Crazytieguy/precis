@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 7000 → level 7 (5229 words)
+budget: 7000 → level 8 (5235 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -498,6 +498,7 @@ src/kind.rs
    116→    #[cold]
    117→    pub fn new(self, error: Box<dyn StdError + Send + Sync>) -> Error {
 src/lib.rs
+   251→#[macro_use]
    252→mod backtrace;
    253→mod chain;
    254→mod context;
@@ -506,9 +507,11 @@ src/lib.rs
    257→mod fmt;
    258→mod kind;
    259→mod macros;
+   260→#[cfg(error_generic_member_access)]
    261→mod nightly;
    262→mod ptr;
    263→mod wrapper;
+   278→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
    288→/// The `Error` type, a wrapper around a dynamic error type.

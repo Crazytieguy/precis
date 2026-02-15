@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 14000 → level 7 (10215 words)
+budget: 14000 → level 8 (11359 words)
 
 CHANGELOG.md
      1→# Change Log
@@ -598,6 +598,7 @@ src/kv/error.rs
      3→/// An error encountered while working with structured data.
      4→#[derive(Debug)]
      5→pub struct Error {
+     9→#[derive(Debug)]
     10→enum Inner {
     19→impl Error {
     20→    /// Create an error from a message.
@@ -610,6 +611,7 @@ src/kv/error.rs
     49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     62→impl From<fmt::Error> for Error {
     63→    fn from(_: fmt::Error) -> Self {
+    68→#[cfg(feature = "std")]
     69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     75→    impl Error {
@@ -659,11 +661,13 @@ src/kv/key.rs
     82→    fn borrow(&self) -> &str {
     87→impl<'k> From<&'k str> for Key<'k> {
     88→    fn from(s: &'k str) -> Self {
+    93→#[cfg(feature = "std")]
     94→mod std_support {
     99→    impl ToKey for String {
    100→        fn to_key(&self) -> Key<'_> {
    105→    impl<'a> ToKey for Cow<'a, str> {
    106→        fn to_key(&self) -> Key<'_> {
+   112→#[cfg(feature = "kv_sval")]
    113→mod sval_support {
    119→    impl<'a> Value for Key<'a> {
    120→        fn stream<'sval, S: sval::Stream<'sval> + ?Sized>(
@@ -672,6 +676,7 @@ src/kv/key.rs
    123→        ) -> sval::Result {
    128→    impl<'a> ValueRef<'a> for Key<'a> {
    129→        fn stream_ref<S: sval::Stream<'a> + ?Sized>(&self, stream: &mut S) -> sval::Result {
+   135→#[cfg(feature = "kv_serde")]
    136→mod serde_support {
    141→    impl<'a> Serialize for Key<'a> {
    142→        fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
@@ -679,9 +684,256 @@ src/kv/key.rs
    144→            S: Serializer,
    145→        {
 src/kv/mod.rs
+     1→//! Structured logging.
+     2→//!
+     3→//! Add the `kv` feature to your `Cargo.toml` to enable
+     4→//! this module:
+     5→//!
+     6→//! ```toml
+     7→//! [dependencies.log]
+     8→//! features = ["kv"]
+     9→//! ```
+    10→//!
+    11→//! # Structured logging in `log`
+    12→//!
+    13→//! Structured logging enhances traditional text-based log records with user-defined
+    14→//! attributes. Structured logs can be analyzed using a variety of data processing
+    15→//! techniques, without needing to find and parse attributes from unstructured text first.
+    16→//!
+    17→//! In `log`, user-defined attributes are part of a [`Source`] on the log record.
+    18→//! Each attribute is a key-value; a pair of [`Key`] and [`Value`]. Keys are strings
+    19→//! and values are a datum of any type that can be formatted or serialized. Simple types
+    20→//! like strings, booleans, and numbers are supported, as well as arbitrarily complex
+    21→//! structures involving nested objects and sequences.
+    22→//!
+    23→//! ## Adding key-values to log records
+    24→//!
+    25→//! Key-values appear before the message format in the `log!` macros:
+    26→//!
+    27→//! ```
+    28→//! # use log::info;
+    29→//! info!(a = 1; "Something of interest");
+    30→//! ```
+    31→//!
+    32→//! Key-values support the same shorthand identifier syntax as `format_args`:
+    33→//!
+    34→//! ```
+    35→//! # use log::info;
+    36→//! let a = 1;
+    37→//!
+    38→//! info!(a; "Something of interest");
+    39→//! ```
+    40→//!
+    41→//! Values are capturing using the [`ToValue`] trait by default. To capture a value
+    42→//! using a different trait implementation, use a modifier after its key. Here's how
+    43→//! the same example can capture `a` using its `Debug` implementation instead:
+    44→//!
+    45→//! ```
+    46→//! # use log::info;
+    47→//! info!(a:? = 1; "Something of interest");
+    48→//! ```
+    49→//!
+    50→//! The following capturing modifiers are supported:
+    51→//!
+    52→//! - `:?` will capture the value using `Debug`.
+    53→//! - `:debug` will capture the value using `Debug`.
+    54→//! - `:%` will capture the value using `Display`.
+    55→//! - `:display` will capture the value using `Display`.
+    56→//! - `:err` will capture the value using `std::error::Error` (requires the `kv_std` feature).
+    57→//! - `:sval` will capture the value using `sval::Value` (requires the `kv_sval` feature).
+    58→//! - `:serde` will capture the value using `serde::Serialize` (requires the `kv_serde` feature).
+    59→//!
+    60→//! ## Working with key-values on log records
+    61→//!
+    62→//! Use the [`Record::key_values`](../struct.Record.html#method.key_values) method to access key-values.
+    63→//!
+    64→//! Individual values can be pulled from the source by their key:
+    65→//!
+    66→//! ```
+    67→//! # fn main() -> Result<(), log::kv::Error> {
+    68→//! use log::kv::{Source, Key, Value};
+    69→//! # let record = log::Record::builder().key_values(&[("a", 1)]).build();
+    70→//!
+    71→//! // info!(a = 1; "Something of interest");
+    72→//!
+    73→//! let a: Value = record.key_values().get(Key::from("a")).unwrap();
+    74→//! assert_eq!(1, a.to_i64().unwrap());
+    75→//! # Ok(())
+    76→//! # }
+    77→//! ```
+    78→//!
+    79→//! All key-values can also be enumerated using a [`VisitSource`]:
+    80→//!
+    81→//! ```
+    82→//! # fn main() -> Result<(), log::kv::Error> {
+    83→//! use std::collections::BTreeMap;
+    84→//!
+    85→//! use log::kv::{self, Source, Key, Value, VisitSource};
+    86→//!
+    87→//! struct Collect<'kvs>(BTreeMap<Key<'kvs>, Value<'kvs>>);
+    88→//!
+    89→//! impl<'kvs> VisitSource<'kvs> for Collect<'kvs> {
+    90→//!     fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), kv::Error> {
+    91→//!         self.0.insert(key, value);
+    92→//!
+    93→//!         Ok(())
+    94→//!     }
+    95→//! }
+    96→//!
+    97→//! let mut visitor = Collect(BTreeMap::new());
+    98→//!
+    99→//! # let record = log::Record::builder().key_values(&[("a", 1), ("b", 2), ("c", 3)]).build();
+   100→//! // info!(a = 1, b = 2, c = 3; "Something of interest");
+   101→//!
+   102→//! record.key_values().visit(&mut visitor)?;
+   103→//!
+   104→//! let collected = visitor.0;
+   105→//!
+   106→//! assert_eq!(
+   107→//!     vec!["a", "b", "c"],
+   108→//!     collected
+   109→//!         .keys()
+   110→//!         .map(|k| k.as_str())
+   111→//!         .collect::<Vec<_>>(),
+   112→//! );
+   113→//! # Ok(())
+   114→//! # }
+   115→//! ```
+   116→//!
+   117→//! [`Value`]s have methods for conversions to common types:
+   118→//!
+   119→//! ```
+   120→//! # fn main() -> Result<(), log::kv::Error> {
+   121→//! use log::kv::{Source, Key};
+   122→//! # let record = log::Record::builder().key_values(&[("a", 1)]).build();
+   123→//!
+   124→//! // info!(a = 1; "Something of interest");
+   125→//!
+   126→//! let a = record.key_values().get(Key::from("a")).unwrap();
+   127→//!
+   128→//! assert_eq!(1, a.to_i64().unwrap());
+   129→//! # Ok(())
+   130→//! # }
+   131→//! ```
+   132→//!
+   133→//! Values also have their own [`VisitValue`] type. Value visitors are a lightweight
+   134→//! API for working with primitives types:
+   135→//!
+   136→//! ```
+   137→//! # fn main() -> Result<(), log::kv::Error> {
+   138→//! use log::kv::{self, Source, Key, VisitValue};
+   139→//! # let record = log::Record::builder().key_values(&[("a", 1)]).build();
+   140→//!
+   141→//! struct IsNumeric(bool);
+   142→//!
+   143→//! impl<'kvs> VisitValue<'kvs> for IsNumeric {
+   144→//!     fn visit_any(&mut self, _value: kv::Value) -> Result<(), kv::Error> {
+   145→//!         self.0 = false;
+   146→//!         Ok(())
+   147→//!     }
+   148→//!
+   149→//!     fn visit_u64(&mut self, _value: u64) -> Result<(), kv::Error> {
+   150→//!         self.0 = true;
+   151→//!         Ok(())
+   152→//!     }
+   153→//!
+   154→//!     fn visit_i64(&mut self, _value: i64) -> Result<(), kv::Error> {
+   155→//!         self.0 = true;
+   156→//!         Ok(())
+   157→//!     }
+   158→//!
+   159→//!     fn visit_u128(&mut self, _value: u128) -> Result<(), kv::Error> {
+   160→//!         self.0 = true;
+   161→//!         Ok(())
+   162→//!     }
+   163→//!
+   164→//!     fn visit_i128(&mut self, _value: i128) -> Result<(), kv::Error> {
+   165→//!         self.0 = true;
+   166→//!         Ok(())
+   167→//!     }
+   168→//!
+   169→//!     fn visit_f64(&mut self, _value: f64) -> Result<(), kv::Error> {
+   170→//!         self.0 = true;
+   171→//!         Ok(())
+   172→//!     }
+   173→//! }
+   174→//!
+   175→//! // info!(a = 1; "Something of interest");
+   176→//!
+   177→//! let a = record.key_values().get(Key::from("a")).unwrap();
+   178→//!
+   179→//! let mut visitor = IsNumeric(false);
+   180→//!
+   181→//! a.visit(&mut visitor)?;
+   182→//!
+   183→//! let is_numeric = visitor.0;
+   184→//!
+   185→//! assert!(is_numeric);
+   186→//! # Ok(())
+   187→//! # }
+   188→//! ```
+   189→//!
+   190→//! To serialize a value to a format like JSON, you can also use either `serde` or `sval`:
+   191→//!
+   192→//! ```
+   193→//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
+   194→//! # #[cfg(feature = "kv_serde")]
+   195→//! # {
+   196→//! # use log::kv::Key;
+   197→//! #[derive(serde::Serialize)]
+   198→//! struct Data {
+   199→//!     a: i32, b: bool,
+   200→//!     c: &'static str,
+   201→//! }
+   202→//!
+   203→//! let data = Data { a: 1, b: true, c: "Some data" };
+   204→//!
+   205→//! # let source = [("a", log::kv::Value::from_serde(&data))];
+   206→//! # let record = log::Record::builder().key_values(&source).build();
+   207→//! // info!(a = data; "Something of interest");
+   208→//!
+   209→//! let a = record.key_values().get(Key::from("a")).unwrap();
+   210→//!
+   211→//! assert_eq!("{\"a\":1,\"b\":true,\"c\":\"Some data\"}", serde_json::to_string(&a)?);
+   212→//! # }
+   213→//! # Ok(())
+   214→//! # }
+   215→//! ```
+   216→//!
+   217→//! The choice of serialization framework depends on the needs of the consumer.
+   218→//! If you're in a no-std environment, you can use `sval`. In other cases, you can use `serde`.
+   219→//! Log producers and log consumers don't need to agree on the serialization framework.
+   220→//! A value can be captured using its `serde::Serialize` implementation and still be serialized
+   221→//! through `sval` without losing any structure or data.
+   222→//!
+   223→//! Values can also always be formatted using the standard `Debug` and `Display`
+   224→//! traits:
+   225→//!
+   226→//! ```
+   227→//! # use log::kv::Key;
+   228→//! #[derive(Debug)]
+   229→//! struct Data {
+   230→//!     a: i32,
+   231→//!     b: bool,
+   232→//!     c: &'static str,
+   233→//! }
+   234→//!
+   235→//! let data = Data { a: 1, b: true, c: "Some data" };
+   236→//!
+   237→//! # let source = [("a", log::kv::Value::from_debug(&data))];
+   238→//! # let record = log::Record::builder().key_values(&source).build();
+   239→//! // info!(a = data; "Something of interest");
+   240→//!
+   241→//! let a = record.key_values().get(Key::from("a")).unwrap();
+   242→//!
+   243→//! assert_eq!("Data { a: 1, b: true, c: \"Some data\" }", format!("{a:?}"));
+   244→//! ```
+   245→
    246→mod error;
    247→mod key;
+   249→#[cfg(not(feature = "kv_unstable"))]
    250→mod source;
+   251→#[cfg(not(feature = "kv_unstable"))]
    252→mod value;
    259→#[cfg(feature = "kv_unstable")]
    260→pub mod source;

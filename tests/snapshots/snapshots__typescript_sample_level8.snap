@@ -15,31 +15,15 @@ sample.ts
     15→ */
     16→export async function fetchData(url: string): Promise<Response> {
     20→export class TokenParser {
-    21→    private tokens: Token[];
-    22→
     23→    constructor(input: string) {
-    24→        this.tokens = [];
-    25→    }
-    26→
     27→    public parse(): Token[] {
-    28→        return this.tokens;
-    29→    }
-    30→
     31→    private advance(): void {}
-    32→}
     34→export interface Visitor {
     35→    visitToken(token: Token): void;
     36→    visitAll(tokens: Token[]): void;
-    37→}
     39→export enum TokenKind {
-    40→    Ident = "ident",
-    41→    Number = "number",
-    42→    Symbol = "symbol",
-    43→}
     45→export type Span = [number, number];
     47→export const MAX_TOKENS = 1024;
     49→export default class DefaultExport {
-    50→    name: string = "";
-    51→}
     53→export namespace Utils {
     54→    export function format(s: string): string {

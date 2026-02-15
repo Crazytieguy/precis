@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 3200 → level 7 (2546 words)
+budget: 3200 → level 8 (2644 words)
 
 AGENTS.md
      1→# AGENTS.md
@@ -101,6 +101,11 @@ src/pluggy/_callers.py
     85→    caller_kwargs: Mapping[str, object],
     86→    firstresult: bool,
     87→) -> object | list[object]:
+    88→    """Execute a call into multiple python functions/methods and return the
+    89→    result(s).
+    90→
+    91→    ``caller_kwargs`` comes from HookCaller.__call__().
+    92→    """
 src/pluggy/_hooks.py
     28→_T = TypeVar("_T")
     29→_F = TypeVar("_F", bound=Callable[..., object])
@@ -454,3 +459,16 @@ src/pluggy/_warnings.py
     10→@final
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     12→    """A plugin raised an exception during an :ref:`old-style hookwrapper
+    13→    <old_style_hookwrappers>` teardown.
+    14→
+    15→    Such exceptions are not handled by pluggy, and may cause subsequent
+    16→    teardowns to be executed at unexpected times, or be skipped entirely.
+    17→
+    18→    This is an issue in the plugin implementation.
+    19→
+    20→    If the exception is unintended, fix the underlying cause.
+    21→
+    22→    If the exception is intended, switch to :ref:`new-style hook wrappers
+    23→    <hookwrappers>`, or use :func:`result.force_exception()
+    24→    <pluggy.Result.force_exception>` to set the exception instead of raising.
+    25→    """

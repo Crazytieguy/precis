@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2100 → level 7 (2048 words)
+budget: 2100 → level 8 (2093 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -234,6 +234,9 @@ structs.go
    396→// Name returns the structs's type name within its package. For more info refer
    397→// to Name() function.
    398→func (s *Struct) Name() string {
+   402→// structFields returns the exported struct fields for a given s struct. This
+   403→// is a convenient helper method to avoid duplicate code in some of the
+   404→// functions.
    405→func (s *Struct) structFields() []reflect.StructField {
    428→func strctVal(s interface{}) reflect.Value {
    443→// Map converts the given struct to a map[string]interface{}. For more info
@@ -263,6 +266,8 @@ structs.go
    501→// Name returns the structs's type name within its package. It returns an
    502→// empty string for unnamed types. It panics if s's kind is not struct.
    503→func Name(s interface{}) string {
+   507→// nested retrieves recursively all types for the given value and returns the
+   508→// nested value.
    509→func (s *Struct) nested(val reflect.Value) interface{} {
 tags.go
      5→// tagOptions contains a slice of tag options

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 → level 7 (1884 words)
+budget: 2000 → level 7 (1818 words)
 
 docs/conf.py
 src/typeguard/__init__.py
@@ -13,7 +13,6 @@ src/typeguard/_checkers.py
     84→TypeCheckLookupCallback: TypeAlias = Callable[
     88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
     89→generic_alias_types: tuple[type, ...] = (
-    98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS = {
    153→def check_callable(
    154→    value: Any,
@@ -162,14 +161,11 @@ src/typeguard/_checkers.py
    926→    annotation: Any,
    927→    memo: TypeCheckMemo,
    928→) -> None:
-   929→    """
-  1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
   1061→def builtin_checker_lookup(
   1062→    origin_type: Any, args: tuple[Any, ...], extras: tuple[Any, ...]
   1063→) -> TypeCheckerCallable | None:
   1099→def load_plugins() -> None:
-  1100→    """
 src/typeguard/_config.py
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
@@ -360,7 +356,6 @@ src/typeguard/_suppression.py
 src/typeguard/_transformer.py
     67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
     68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
-   117→@dataclass
    118→class TransformMemo:
    141→    def __post_init__(self) -> None:
    171→    def get_unused_name(self, name: str) -> str:
@@ -368,7 +363,6 @@ src/typeguard/_transformer.py
    206→    def get_memo_name(self) -> Name:
    212→    def get_import(self, module: str, name: str) -> Name:
    225→    def insert_imports(self, node: Module | FunctionDef | AsyncFunctionDef) -> None:
-   226→        """Insert imports needed by injected code."""
    238→    def name_matches(self, expression: expr | Expr | None, *names: str) -> bool:
    275→    def get_config_keywords(self) -> list[keyword]:
    285→class NameCollector(NodeVisitor):
@@ -380,7 +374,6 @@ src/typeguard/_transformer.py
    306→    def visit_FunctionDef(self, node: FunctionDef) -> None:
    309→    def visit_ClassDef(self, node: ClassDef) -> None:
    313→class GeneratorDetector(NodeVisitor):
-   314→    """Detects if a function node is a generator function."""
    319→    def visit_Yield(self, node: Yield) -> Any:
    322→    def visit_YieldFrom(self, node: YieldFrom) -> Any:
    325→    def visit_ClassDef(self, node: ClassDef) -> Any:
@@ -413,24 +406,16 @@ src/typeguard/_transformer.py
    650→    def visit_FunctionDef(
    651→        self, node: FunctionDef | AsyncFunctionDef
    652→    ) -> FunctionDef | AsyncFunctionDef | None:
-   653→        """
    913→    def visit_AsyncFunctionDef(
    914→        self, node: AsyncFunctionDef
    915→    ) -> FunctionDef | AsyncFunctionDef | None:
    918→    def visit_Return(self, node: Return) -> Return:
-   919→        """This injects type checks into "return" statements."""
    945→    def visit_Yield(self, node: Yield) -> Yield | Call:
-   946→        """
    994→    def visit_AnnAssign(self, node: AnnAssign) -> Any:
-   995→        """
   1036→    def visit_Assign(self, node: Assign) -> Any:
-  1037→        """
   1138→    def visit_NamedExpr(self, node: NamedExpr) -> Any:
-  1139→        """This injects a type check into an assignment expression (a := foo())."""
   1181→    def visit_AugAssign(self, node: AugAssign) -> Any:
-  1182→        """
   1224→    def visit_If(self, node: If) -> Any:
-  1225→        """
 src/typeguard/_utils.py
     48→    def evaluate_forwardref(forwardref: ForwardRef, memo: TypeCheckMemo) -> Any:
     66→def get_type_name(type_: Any) -> str:

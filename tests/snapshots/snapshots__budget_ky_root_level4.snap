@@ -2,244 +2,78 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 7400 → level 6 (7301 words)
+budget: 7400 → level 6 (6464 words)
 
 readme.md
     20→## Benefits over plain `fetch`
-    21→
-    22→- Simpler API
-    23→- Method shortcuts (`ky.post()`)
-    24→- Treats non-2xx status codes as errors (after redirects)
-    25→- Retries failed requests
-    26→- JSON option
-    27→- Timeout support
-    28→- URL prefix option
-    29→- Instances with custom defaults
-    30→- Hooks
-    31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
     33→## Install
-    34→
-    35→```sh
-    36→npm install ky
-    37→```
     39→###### CDN
-    40→
-    41→- [jsdelivr](https://cdn.jsdelivr.net/npm/ky/+esm)
-    42→- [unpkg](https://unpkg.com/ky)
-    43→- [esm.sh](https://esm.sh/ky)
     45→## Usage
-    46→
-    47→```js
-    48→import ky from 'ky';
     85→## API
-    86→
     87→### ky(input, options?)
-    88→
-    89→The `input` and `options` are the same as [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch), with additional `options` available (see below).
    122→### ky.get(input, options?)
    123→### ky.post(input, options?)
    124→### ky.put(input, options?)
    125→### ky.patch(input, options?)
    126→### ky.head(input, options?)
    127→### ky.delete(input, options?)
-   128→
-   129→Sets `options.method` to the method name and makes a request.
    133→#### input
-   134→
-   135→Type: `string` | `URL` | `Request`
    141→#### options
-   142→
-   143→Type: `object`
    147→##### method
-   148→
-   149→Type: `string`\
-   150→Default: `'get'`
    156→##### json
-   157→
-   158→Type: `object` and any other value accepted by [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
    162→##### searchParams
-   163→
-   164→Type: `string | object<string, string | number | boolean | undefined> | Array<Array<string | number | boolean>> | URLSearchParams`\
-   165→Default: `''`
    173→##### prefixUrl
-   174→
-   175→Type: `string | URL`
    197→##### retry
-   198→
-   199→Type: `object | number`\
-   200→Default:
-   201→- `limit`: `2`
-   202→- `methods`: `get` `put` `head` `delete` `options` `trace`
-   203→- `statusCodes`: [`408`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) [`413`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413) [`429`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) [`500`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) [`502`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) [`503`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) [`504`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504)
-   204→- `afterStatusCodes`: [`413`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/413), [`429`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429), [`503`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503)
-   205→- `maxRetryAfter`: `undefined`
-   206→- `backoffLimit`: `undefined`
-   207→- `delay`: `attemptCount => 0.3 * (2 ** (attemptCount - 1)) * 1000`
-   208→- `jitter`: `undefined`
-   209→- `retryOnTimeout`: `false`
-   210→- `shouldRetry`: `undefined`
    327→##### timeout
-   328→
-   329→Type: `number | false`\
-   330→Default: `10000`
    335→##### hooks
-   336→
-   337→Type: `object<string, Function[]>`\
-   338→Default: `{beforeRequest: [], beforeRetry: [], afterResponse: []}`
    342→###### hooks.beforeRequest
-   343→
-   344→Type: `Function[]`\
-   345→Default: `[]`
    373→###### hooks.beforeRetry
-   374→
-   375→Type: `Function[]`\
-   376→Default: `[]`
    446→###### hooks.beforeError
-   447→
-   448→Type: `Function[]`\
-   449→Default: `[]`
    485→###### hooks.afterResponse
-   486→
-   487→Type: `Function[]`\
-   488→Default: `[]`
    553→##### throwHttpErrors
-   554→
-   555→Type: `boolean | (status: number) => boolean`\
-   556→Default: `true`
    566→##### onDownloadProgress
-   567→
-   568→Type: `Function`
    592→##### onUploadProgress
-   593→
-   594→Type: `Function`
    619→##### parseJson
-   620→
-   621→Type: `Function`\
-   622→Default: `JSON.parse()`
    639→##### stringifyJson
-   640→
-   641→Type: `Function`\
-   642→Default: `JSON.stringify()`
    664→##### fetch
-   665→
-   666→Type: `Function`\
-   667→Default: `fetch`
    683→##### context
-   684→
-   685→Type: `object<string, unknown>`\
-   686→Default: `{}`
    745→### ky.extend(defaultOptions)
-   746→
-   747→Create a new `ky` instance with some defaults overridden with your own.
    811→### ky.create(defaultOptions)
-   812→
-   813→Create a new Ky instance with complete new defaults.
    829→#### defaultOptions
-   830→
-   831→Type: `object`
    833→### ky.stop
-   834→
-   835→A `Symbol` that can be returned by a `beforeRetry` hook to stop the retry. This will also short circuit the remaining `beforeRetry` hooks.
    864→### ky.retry(options?)
-   865→
-   866→Force a retry from an `afterResponse` hook.
    870→#### options
-   871→
-   872→Type: `object`
    874→##### delay
-   875→
-   876→Type: `number`
    882→##### code
-   883→
-   884→Type: `string`
    895→##### cause
-   896→
-   897→Type: `Error`
    913→##### request
-   914→
-   915→Type: `Request`
    923→#### Example
-   924→
-   925→```js
-   926→import ky, {isForceRetryError} from 'ky';
   1000→### HTTPError
-  1001→
-  1002→Exposed for `instanceof` checks. The error has a `response` property with the [`Response` object](https://developer.mozilla.org/en-US/docs/Web/API/Response), `request` property with the [`Request` object](https://developer.mozilla.org/en-US/docs/Web/API/Request), and `options` property with normalized options (either passed to `ky` when creating an instance with `ky.create()` or directly when performing the request).
   1046→### TimeoutError
-  1047→
-  1048→The error thrown when the request times out. It has a `request` property with the [`Request` object](https://developer.mozilla.org/en-US/docs/Web/API/Request).
   1050→## Tips
-  1051→
   1052→### Sending form data
-  1053→
-  1054→Sending form data in Ky is identical to `fetch`. Just pass a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to the `body` option. The `Content-Type` header will be automatically set to `multipart/form-data`, overriding any existing `Content-Type` header.
   1080→#### Modifying FormData in hooks
-  1081→
-  1082→If you need to modify FormData in a `beforeRequest` hook (for example, to transform field names), delete the `Content-Type` header before creating a new `Request`:
   1109→### Setting a custom `Content-Type`
-  1110→
-  1111→Ky automatically sets an appropriate [`Content-Type`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) header for each request based on the data in the request body. However, some APIs require custom, non-standard content types, such as `application/x-amz-json-1.1`. Using the `headers` option, you can manually override the content type.
   1129→### Cancellation
-  1130→
-  1131→Fetch (and hence Ky) has built-in support for request cancellation through the [`AbortController` API](https://developer.mozilla.org/en-US/docs/Web/API/AbortController). [Read more.](https://developers.google.com/web/updates/2017/09/abortable-fetch)
   1156→### Proxy support (Node.js)
-  1157→
   1158→#### Native proxy support
-  1159→
-  1160→Node.js 24.5+ supports automatic proxy configuration via environment variables. Set `NODE_USE_ENV_PROXY=1` or use the `--use-env-proxy` CLI flag.
   1177→#### Using ProxyAgent
-  1178→
-  1179→For more control, use `ProxyAgent` or `EnvHttpProxyAgent` with the `dispatcher` option.
   1209→### HTTP/2 support (Node.js)
-  1210→
-  1211→Undici supports HTTP/2, but it's not enabled by default. Create a custom dispatcher with the `allowH2` option:
   1249→### Consuming Server-Sent Events (SSE)
-  1250→
-  1251→Use [`parse-sse`](https://github.com/sindresorhus/parse-sse):
   1264→### Extending types
-  1265→
-  1266→Ky's TypeScript types are intentionally defined as type aliases rather than interfaces to prevent global module augmentation, which can lead to type conflicts and unexpected behavior across your codebase. If you need to add custom properties to Ky's types like `KyResponse` or `HTTPError`, create local wrapper types instead:
   1292→## FAQ
-  1293→
   1294→#### How do I use this in Node.js?
-  1295→
-  1296→Node.js 18 and later supports `fetch` natively, so you can just use this package directly.
   1298→#### How do I use this with a web app (React, Vue.js, etc.) that uses server-side rendering (SSR)?
-  1299→
-  1300→Same as above.
   1302→#### How do I test a browser library that uses this?
-  1303→
-  1304→Either use a test runner that can run in the browser, like Mocha, or use [AVA](https://avajs.dev) with `ky-universal`. [Read more.](https://github.com/sindresorhus/ky-universal#faq)
   1306→#### How do I use this without a bundler like Webpack?
-  1307→
-  1308→Make sure your code is running as a JavaScript module (ESM), for example by using a `<script type="module">` tag in your HTML document. Then Ky can be imported directly by that module without a bundler or other tools.
   1321→#### How is it different from [`got`](https://github.com/sindresorhus/got)
-  1322→
-  1323→Got is maintained by the same people as Ky, so you probably want Ky instead. It's smaller, works in the browser too, and is more stable since it's built on Fetch.
   1325→#### How is it different from [`axios`](https://github.com/axios/axios)?
-  1326→
-  1327→See my answer [here](https://twitter.com/sindresorhus/status/1037763588826398720).
   1329→#### How is it different from [`r2`](https://github.com/mikeal/r2)?
-  1330→
-  1331→See my answer in [#10](https://github.com/sindresorhus/ky/issues/10).
   1333→#### What does `ky` mean?
-  1334→
-  1335→It's just a random short npm package name I managed to get. It does, however, have a meaning in Japanese:
   1339→## Browser support
-  1340→
-  1341→The latest version of Chrome, Firefox, and Safari.
   1343→## Node.js support
-  1344→
-  1345→Node.js 18 and later.
   1347→## Related
-  1348→
-  1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
-  1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
   1352→## Maintainers
-  1353→
-  1354→- [Sindre Sorhus](https://github.com/sindresorhus)
-  1355→- [Seth Holladay](https://github.com/sholladay)
-  1356→- [Szymon Marczak](https://github.com/szmarczak)
 source/core/Ky.ts
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {

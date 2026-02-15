@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 3000 → level 6 (2889 words)
+budget: 3000 → level 7 (2942 words)
 
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
@@ -73,6 +73,7 @@ imp_pl.rs
    122→struct Guard<'a> {
    127→impl<'a> Drop for Guard<'a> {
    128→    fn drop(&mut self) {
+   138→#[inline(never)]
    139→fn initialize_inner(state: &AtomicU8, init: &mut dyn FnMut() -> bool) {
 imp_std.rs
     13→#[derive(Debug)]
@@ -118,10 +119,15 @@ imp_std.rs
    128→const INCOMPLETE_PTR: *mut Waiter = INCOMPLETE as *mut Waiter;
    129→const COMPLETE_PTR: *mut Waiter = COMPLETE as *mut Waiter;
    133→const STATE_MASK: usize = 0x3;
+   135→/// Representation of a node in the linked list of waiters in the RUNNING state.
+   136→/// A waiters is stored on the stack of the waiting threads.
+   137→#[repr(align(4))] // Ensure the two lower bits are free to use as state bits.
    138→struct Waiter {
+   144→/// Drains and notifies the queue of waiters on drop.
    145→struct Guard<'a> {
    150→impl Drop for Guard<'_> {
    151→    fn drop(&mut self) {
+   176→#[inline(never)]
    177→fn initialize_or_wait(queue: &AtomicPtr<Waiter>, mut init: Option<&mut dyn FnMut() -> bool>) {
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
    245→mod strict {

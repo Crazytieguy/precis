@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 → level 6 (3767 words)
+budget: 4000 → level 7 (3825 words)
 
 CHANGELOG.md
      1→# neverthrow
@@ -306,12 +306,16 @@ src/_internals/utils.ts
     25→export type InferErrTypes<R> = R extends Result<unknown, infer E> ? E : never
     27→export type InferAsyncOkTypes<R> = R extends ResultAsync<infer T, unknown> ? T : never
     28→export type InferAsyncErrTypes<R> = R extends ResultAsync<unknown, infer E> ? E : never
+    30→/**
     31→ * Short circuits on the FIRST Err value that we find
+    32→ */
     33→export const combineResultList = <T, E>(
     34→  resultList: readonly Result<T, E>[],
     35→): Result<readonly T[], E> => {
     54→export const combineResultAsyncList = <T, E>(
+    61→/**
     62→ * Give a list of all the errors we find
+    63→ */
     64→export const combineResultListWithAllErrors = <T, E>(
     65→  resultList: readonly Result<T, E>[],
     66→): Result<readonly T[], E[]> => {
@@ -341,7 +345,18 @@ src/result-async.ts
    190→  orElse(f: any): any {
    202→  match<A, B = A>(ok: (t: T) => A, _err: (e: E) => B): Promise<A | B> {
    206→  unwrapOr<A>(t: A): Promise<T | A> {
+   210→  /**
    211→   * @deprecated will be removed in 9.0.0.
+   212→   *
+   213→   * You can use `safeTry` without this method.
+   214→   * @example
+   215→   * ```typescript
+   216→   * safeTry(async function* () {
+   217→   *   const okValue = yield* yourResult
+   218→   * })
+   219→   * ```
+   220→   * Emulates Rust's `?` operator in `safeTry`'s body. See also `safeTry`.
+   221→   */
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
    227→  then<A, B>(
    228→    successCallback?: (res: Result<T, E>) => A | PromiseLike<A>,

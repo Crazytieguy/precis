@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 18000 → level 7 (14904 words)
+budget: 18000 → level 8 (16209 words)
 
 README.md
     40→## About
@@ -688,7 +688,21 @@ src/internals/helpers.ts
    134→  f: (v: a) => readonly b[]
    135→): b[] => xs.reduce<b[]>((acc, x) => acc.concat(f(x)), []);
 src/internals/symbols.ts
+     1→/**
      2→ * Symbols used internally within ts-pattern to construct and discriminate
+     3→ * Guard, Not, and Select, and AnonymousSelect patterns
+     4→ *
+     5→ * Symbols have the advantage of not appearing in auto-complete suggestions in
+     6→ * user defined patterns, and eliminate the risk of property
+     7→ * overlap between ts-pattern internals and user defined patterns.
+     8→ *
+     9→ * These symbols have to be visible to tsc for type inference to work, but
+    10→ * users should not import them
+    11→ * @module
+    12→ * @private
+    13→ * @internal
+    14→ */
+    15→
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
     17→export type matcher = typeof matcher;
     19→export const unset = Symbol.for('@ts-pattern/unset');
@@ -737,6 +751,15 @@ src/match.ts
     32→export function match<const input, output = symbols.unset>(
     33→  value: input
     34→): Match<input, output> {
+    38→/**
+    39→ * This class represents a match expression. It follows the
+    40→ * builder pattern, we chain methods to add features to the expression
+    41→ * until we call `.exhaustive`, `.otherwise` or the unsafe `.run`
+    42→ * method to execute it.
+    43→ *
+    44→ * The types of this class aren't public, the public type definition
+    45→ * can be found in src/types/Match.ts.
+    46→ */
     47→class MatchExpression<input, output> {
     48→  constructor(private input: input, private state: MatchState<output>) {}
     50→  with(...args: any[]): MatchExpression<input, output> {
@@ -751,21 +774,67 @@ src/match.ts
    128→  narrow() {
    133→function defaultCatcher(input: unknown): never {
 src/patterns.ts
+    67→/**
     68→ * A `Matchable` is an object implementing
+    69→ * the Matcher Protocol. It must have a `[P.matcher]: P.Matcher<NarrowFn>`
+    70→ * key, which defines how this object should be matched by TS-Pattern.
+    71→ *
+    72→ * @experimental This feature is unstable.
+    73→ *
+    74→ * @example
+    75→ * ```ts
+    76→ * class Some<T> implements P.unstable_Matchable {
+    77→ *  [P.matcher](): P.unstable_Matcher<Some<T>>
+    78→ * }
+    79→ * ```
+    80→ */
     81→export type unstable_Matchable<
     82→  narrowedOrFn,
     83→  input = unknown,
     84→  pattern = never
     85→> = CustomP<input, pattern, narrowedOrFn>;
+    87→/**
     88→ * A `Matcher` is an object with `match` function, which
+    89→ * defines how this object should be matched by TS-Pattern.
+    90→ *
+    91→ * @experimental This feature is unstable.
+    92→ *
+    93→ * @example
+    94→ * ```ts
+    95→ * class Some<T> implements P.unstable_Matchable {
+    96→ *  [P.matcher](): P.unstable_Matcher<Some<T>>
+    97→ * }
+    98→ * ```
+    99→ */
    100→export type unstable_Matcher<
    101→  narrowedOrFn,
    102→  input = unknown,
    103→  pattern = never
    104→> = ReturnType<CustomP<input, pattern, narrowedOrFn>[matcher]>;
+   106→/**
    107→ * `P.infer<typeof somePattern>` will return the type of the value
+   108→ * matched by this pattern.
+   109→ *
+   110→ * [Read the documentation for `P.infer` on GitHub](https://github.com/gvergnaud/ts-pattern#pinfer)
+   111→ *
+   112→ * @example
+   113→ * const userPattern = { name: P.string }
+   114→ * type User = P.infer<typeof userPattern>
+   115→ */
    116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
+   118→/**
    119→ * `P.narrow<Input, Pattern>` will narrow the input type to only keep
+   120→ * the set of values that are compatible with the provided pattern type.
+   121→ *
+   122→ * [Read the documentation for `P.narrow` on GitHub](https://github.com/gvergnaud/ts-pattern#pnarrow)
+   123→ *
+   124→ * @example
+   125→ * type Input = ['a' | 'b' | 'c', 'a' | 'b' | 'c']
+   126→ * const Pattern = ['a', P.union('a', 'b')] as const
+   127→ *
+   128→ * type Narrowed = P.narrow<Input, typeof Pattern>
+   129→ * //     ^? ['a', 'a' | 'b']
+   130→ */
    131→export type narrow<input, pattern> = ExtractPreciseValue<
    132→  input,
    133→  InvertPattern<pattern, input>
@@ -778,7 +847,16 @@ src/patterns.ts
    165→function arrayChainable<pattern extends Matcher<any, any, any, any, any>>(
    166→  pattern: pattern
    167→): ArrayChainable<pattern> {
+   177→/**
    178→ * `P.optional(subpattern)` takes a sub pattern and returns a pattern which matches if the
+   179→ * key is undefined or if it is defined and the sub pattern matches its value.
+   180→ *
+   181→ * [Read the documentation for `P.optional` on GitHub](https://github.com/gvergnaud/ts-pattern#poptional-patterns)
+   182→ *
+   183→ * @example
+   184→ *  match(value)
+   185→ *   .with({ greeting: P.optional('Hello') }, () => 'will match { greeting?: "Hello" }')
+   186→ */
    187→export function optional<
    188→  input,
    189→  const pattern extends unknown extends input
@@ -818,17 +896,58 @@ src/patterns.ts
    506→  record: Record<K, T>,
    507→  predicate: (key: K, value: T) => boolean
    508→) => {
+   517→/**
    518→ * `P.intersection(...patterns)` returns a pattern which matches
+   519→ * only if **every** patterns provided in parameter match the input.
+   520→ *
+   521→ * [Read the documentation for `P.intersection` on GitHub](https://github.com/gvergnaud/ts-pattern#pintersection-patterns)
+   522→ *
+   523→ * @example
+   524→ *  match(value)
+   525→ *   .with(
+   526→ *     {
+   527→ *       user: P.intersection(
+   528→ *         { firstname: P.string },
+   529→ *         { lastname: P.string },
+   530→ *         { age: P.when(age => age > 21) }
+   531→ *       )
+   532→ *     },
+   533→ *     ({ user }) => 'will match { firstname: string, lastname: string, age: number } if age > 21'
+   534→ *   )
+   535→ */
    536→export function intersection<
    537→  input,
    538→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
    539→>(...patterns: patterns): Chainable<AndP<input, patterns>> {
+   559→/**
    560→ * `P.union(...patterns)` returns a pattern which matches
+   561→ * if **at least one** of the patterns provided in parameter match the input.
+   562→ *
+   563→ * [Read the documentation for `P.union` on GitHub](https://github.com/gvergnaud/ts-pattern#punion-patterns)
+   564→ *
+   565→ * @example
+   566→ *  match(value)
+   567→ *   .with(
+   568→ *     { type: P.union('a', 'b', 'c') },
+   569→ *     ({ type }) => 'will match { type: "a" | "b" | "c" }'
+   570→ *   )
+   571→ */
    572→export function union<
    573→  input,
    574→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
    575→>(...patterns: patterns): Chainable<OrP<input, patterns>> {
+   599→/**
    600→ * `P.not(pattern)` returns a pattern which matches if the sub pattern
+   601→ * doesn't match.
+   602→ *
+   603→ * [Read the documentation for `P.not` on GitHub](https://github.com/gvergnaud/ts-pattern#pnot-patterns)
+   604→ *
+   605→ * @example
+   606→ *  match<{ a: string | number }>(value)
+   607→ *   .with({ a: P.not(P.string) }, (x) => 'will match { a: number }'
+   608→ *   )
+   609→ */
+   610→
    611→export function not<
    612→  input,
    613→  const pattern extends Pattern<input> | UnknownValuePattern
@@ -852,11 +971,36 @@ src/patterns.ts
    762→function isNonNullable(x: unknown): x is {} {
    766→type AnyConstructor = abstract new (...args: any[]) => any;
    768→function isInstanceOf<T extends AnyConstructor>(classConstructor: T) {
+   773→/**
    774→ * `P.any` is a wildcard pattern, matching **any value**.
+   775→ *
+   776→ * [Read the documentation for `P.any` on GitHub](https://github.com/gvergnaud/ts-pattern#p_-wildcard)
+   777→ *
+   778→ * @example
+   779→ *  match(value)
+   780→ *   .with(P.any, () => 'will always match')
+   781→ */
    782→export const any: UnknownPattern = chainable(when(isUnknown));
+   784→/**
    785→ * `P.unknown` is a wildcard pattern, matching **unknown value**.
+   786→ *
+   787→ * [Read the documentation for `P.unknown` on GitHub](https://github.com/gvergnaud/ts-pattern#p_-wildcard)
+   788→ *
+   789→ * @example
+   790→ *  match(value)
+   791→ *   .with(P.unknown, () => 'will always match')
+   792→ */
    793→export const unknown: UnknownPattern = chainable(when(isUnknown));
+   795→/**
    796→ * `P._` is a wildcard pattern, matching **any value**.
+   797→ * It's an alias to `P.any`.
+   798→ *
+   799→ * [Read the documentation for `P._` on GitHub](https://github.com/gvergnaud/ts-pattern#p_-wildcard)
+   800→ *
+   801→ * @example
+   802→ *  match(value)
+   803→ *   .with(P._, () => 'will always match')
+   804→ */
    805→export const _ = any;
    817→const startsWith = <input, const start extends string>(
    818→  start: start
@@ -884,7 +1028,15 @@ src/patterns.ts
    901→  pattern: pattern
    902→): StringChainable<pattern> =>
    903→  Object.assign(chainable(pattern), {
+   919→/**
    920→ * `P.string` is a wildcard pattern, matching any **string**.
+   921→ *
+   922→ * [Read the documentation for `P.string` on GitHub](https://github.com/gvergnaud/ts-pattern#pstring-wildcard)
+   923→ *
+   924→ * @example
+   925→ *  match(value)
+   926→ *   .with(P.string, () => 'will match on strings')
+   927→ */
    928→export const string: StringPattern = stringChainable(when(isString));
    940→const between = <input, const min extends number, const max extends number>(
    941→  min: min,
@@ -919,7 +1071,15 @@ src/patterns.ts
   1051→  pattern: pattern
   1052→): NumberChainable<pattern> =>
   1053→  Object.assign(chainable(pattern), {
+  1066→/**
   1067→ * `P.number` is a wildcard pattern, matching any **number**.
+  1068→ *
+  1069→ * [Read the documentation for `P.number` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumber-wildcard)
+  1070→ *
+  1071→ * @example
+  1072→ *  match(value)
+  1073→ *   .with(P.number, () => 'will match on numbers')
+  1074→ */
   1075→export const number: NumberPattern = numberChainable(when(isNumber));
   1087→const betweenBigInt = <
   1088→  input,
@@ -954,17 +1114,59 @@ src/patterns.ts
   1178→  pattern: pattern
   1179→): BigIntChainable<pattern> =>
   1180→  Object.assign(chainable(pattern), {
+  1193→/**
   1194→ * `P.bigint` is a wildcard pattern, matching any **bigint**.
+  1195→ *
+  1196→ * [Read the documentation for `P.bigint` on GitHub](https://github.com/gvergnaud/ts-pattern#number-wildcard)
+  1197→ *
+  1198→ * @example
+  1199→ *   .with(P.bigint, () => 'will match on bigints')
+  1200→ */
   1201→export const bigint: BigIntPattern = bigintChainable(when(isBigInt));
+  1203→/**
   1204→ * `P.boolean` is a wildcard pattern, matching any **boolean**.
+  1205→ *
+  1206→ * [Read the documentation for `P.boolean` on GitHub](https://github.com/gvergnaud/ts-pattern#boolean-wildcard)
+  1207→ *
+  1208→ * @example
+  1209→ *   .with(P.boolean, () => 'will match on booleans')
+  1210→ */
   1211→export const boolean: BooleanPattern = chainable(when(isBoolean));
+  1213→/**
   1214→ * `P.symbol` is a wildcard pattern, matching any **symbol**.
+  1215→ *
+  1216→ * [Read the documentation for `P.symbol` on GitHub](https://github.com/gvergnaud/ts-pattern#symbol-wildcard)
+  1217→ *
+  1218→ * @example
+  1219→ *   .with(P.symbol, () => 'will match on symbols')
+  1220→ */
   1221→export const symbol: SymbolPattern = chainable(when(isSymbol));
+  1223→/**
   1224→ * `P.nullish` is a wildcard pattern, matching **null** or **undefined**.
+  1225→ *
+  1226→ * [Read the documentation for `P.nullish` on GitHub](https://github.com/gvergnaud/ts-pattern#nullish-wildcard)
+  1227→ *
+  1228→ * @example
+  1229→ *   .with(P.nullish, (x) => `${x} is null or undefined`)
+  1230→ */
   1231→export const nullish: NullishPattern = chainable(when(isNullish));
+  1233→/**
   1234→ * `P.nonNullable` is a wildcard pattern, matching everything except **null** or **undefined**.
+  1235→ *
+  1236→ * [Read the documentation for `P.nonNullable` on GitHub](https://github.com/gvergnaud/ts-pattern#nonNullable-wildcard)
+  1237→ *
+  1238→ * @example
+  1239→ *   .with(P.nonNullable, (x) => `${x} isn't null nor undefined`)
+  1240→ */
   1241→export const nonNullable: NonNullablePattern = chainable(when(isNonNullable));
+  1243→/**
   1244→ * `P.instanceOf(SomeClass)` is a pattern matching instances of a given class.
+  1245→ *
+  1246→ * [Read the documentation for `P.instanceOf` on GitHub](https://github.com/gvergnaud/ts-pattern#pinstanceof-patterns)
+  1247→ *
+  1248→ *  @example
+  1249→ *   .with(P.instanceOf(SomeClass), () => 'will match on SomeClass instances')
+  1250→ */
   1251→export function instanceOf<T extends AnyConstructor>(
   1252→  classConstructor: T
   1253→): Chainable<GuardP<unknown, InstanceType<T>>> {
@@ -1009,7 +1211,30 @@ src/types/BuildMany.ts
 src/types/DeepExclude.ts
      3→export type DeepExclude<a, b> = Exclude<DistributeMatchingUnions<a, b>, b>;
 src/types/DistributeUnions.ts
+    17→/**
     18→ * DistributeMatchingUnions takes two arguments:
+    19→ * - a data structure of type `a` containing unions
+    20→ * - a pattern `p`, matching this data structure
+    21→ * and turns it into a union of all possible
+    22→ * combination of each unions contained in `a` that matches `p`.
+    23→ *
+    24→ * It does this in 3 main steps:
+    25→ *  - 1. Find all unions contained in the data structure, that matches `p`
+    26→ *    with `FindUnions<a, p>`. It returns a tree of [union, path] pairs.
+    27→ *  - 2. this tree is passed to the `Distribute` type level function,
+    28→ *    Which turns it into a union of list of `[singleValue, path]` pairs.
+    29→ *    Each list correspond to one of the possible combination of the unions
+    30→ *    found in `a`.
+    31→ *  - 3. build a data structure with the same shape as `a` for each combination
+    32→ *    and return the union of these data structures.
+    33→ *
+    34→ * @example
+    35→ * type t1 = DistributeMatchingUnions<['a' | 'b', 1 | 2], ['a', 1]>;
+    36→ * // => ['a', 1] | ['a', 2] | ['b', 1] | ['b', 2]
+    37→ *
+    38→ * type t2 = DistributeMatchingUnions<['a' | 'b', 1 | 2], ['a', unknown]>;
+    39→ * // => ['a', 1 | 2] | ['b', 1 | 2]
+    40→ */
     41→export type DistributeMatchingUnions<a, p> = IsAny<a> extends true
     42→  ? any
     43→  : BuildMany<a, Distribute<FindUnionsMany<a, p>>>;
@@ -1028,7 +1253,24 @@ src/types/DistributeUnions.ts
     58→    ? T
     59→    : never
     60→>;
+    62→/**
     63→ * The reason we don't look further down the tree with lists,
+    64→ * Set and Maps is that they can be heterogeneous,
+    65→ * so matching on a A[] for a in input of (A|B)[]
+    66→ * doesn't rule anything out. You can still have
+    67→ * a (A|B)[] afterward. The same logic goes for Set and Maps.
+    68→ *
+    69→ * Kinds are types of types.
+    70→ *
+    71→ * kind UnionConfig = {
+    72→ *  cases: Union<{
+    73→ *    value: b,
+    74→ *    subUnions: UnionConfig[]
+    75→ *  }>,
+    76→ *  path: string[]
+    77→ * }
+    78→ * FindUnions :: Pattern a p => a -> p -> UnionConfig[]
+    79→ */
     80→export type FindUnions<
     81→  a,
     82→  p,
@@ -1916,7 +2158,10 @@ src/types/Match.ts
      8→export type PickReturnValue<a, b> = a extends symbols.unset ? b : a;
     10→interface NonExhaustiveError<i> {
     14→interface TSPatternError<i> {
+    18→/**
     19→ * #### Match
+    20→ * An interface to create a pattern matching clause.
+    21→ */
     22→export type Match<
     23→  i,
     24→  o,

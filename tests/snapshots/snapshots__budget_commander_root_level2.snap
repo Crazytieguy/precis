@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 5000 → level 5 (3448 words)
+budget: 5000 → level 6 (3841 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -436,26 +436,67 @@ docs/terminology.md
      3→The command line arguments are made up of options, option-arguments, commands, and command-arguments.
 docs/zh-CN/不再推荐使用的功能.md
      1→# 不再推荐使用的功能
+     2→
+     3→本文中列出的功能不再推荐使用。它们在 Commander 未来的主要版本（major version）中可能被移除。为保证后向兼容，这些功能目前还可以使用，但它们不应被用在新代码中。
     18→## .option() 方法的正则表达式参数
+    19→
+    20→`.option()`方法可以接受一个正则表达式作为第三个参数，以规定可以接受的选项参数值。
     30→## noHelp
+    31→
+    32→此选项曾被用作传入`.command()`方法，以在内建的帮助信息中隐藏该命令：
     40→## 默认导入的全局 Command 对象
+    41→
+    42→Commander 的默认导入曾是一个全局的`Command`对象。
     61→## .help() 与 .outputHelp() 的回调函数参数
+    62→
+    63→这两个方法曾允许传入一个回调函数，以在展示前处理帮助信息。
     79→## .on('--help')
+    80→
+    81→此功能曾被用作在内建的帮助信息后输出自定义的帮助信息。自 Commander v3.0.0 起，如果有自定义的帮助选项，则此方法使用该自定义的帮助选项。
    104→## .on('command:*')
+   105→
+   106→当命令参数与已知子命令不匹配时发出此消息（作为 `.command('')` 实现的一部分）。
    114→## .command('*')
+   115→
+   116→这用于向程序添加默认命令。
    134→## cmd.description(cmdDescription, argDescriptions)
+   135→
+   136→此功能曾用来为命令参数添加描述信息。
    157→## InvalidOptionArgumentError
+   158→
+   159→此类曾被用来在自定义选项处理中抛出错误，以显示错误信息。
    187→## 短选项标志长于单个字符
+   188→
+   189→短选项从未支持像 `-ws` 的标识，但旧的 README 并没有明确说明这一点。README 现在声明短选项是单个字符。
 docs/zh-CN/可变参数的选项.md
      1→# 可变参数的选项
+     2→
+     3→README 文档介绍了选项的声明与使用。大多数情况下，选项的解析行为，与您和您程序用户的期望相符。本文将详述一些特殊用例和细节问题。
     26→## 解析中的歧义
+    27→
+    28→解析选项时，有一些潜在的问题值得注意。当一个命令既有命令参数，又有选项的时候，在解析过程中有可能出现歧义。这可能会影响用户使用您的程序。
+    29→Commander 首先解析选项的参数，而用户有可能想将选项后面跟的参数作为命令，或是作为命令参数进行解析。
     73→### 方案一：让`--`成为语法的一部分
+    74→
+    75→与其让用户理解`--`的用法，您也可以直接把它作为程序语法的一部分。
     98→### 方案二：把选项放在最后
+    99→
+   100→Commander 遵循 GNU 解析命令的惯例，允许选项出现在命令参数之前或者之后，也可以将选项和命令参数相互穿插。
+   101→因此，通过要求把选项放在最后，命令参数就不会和选项参数相混淆。
    120→### 方案三：使用选项替代命令参数
+   121→
+   122→这个方案虽然有点激进，但是可以完美避免解析中的歧义。
    142→## 合并短选项和带有参数的选项
+   143→
+   144→多个 boolean 型的短选项可以合并起来写在同一个`-`号后面，比如`ls -al`。同时，你也可以在其中包括一个接受参数的短选项，此时，任何跟在其后的字符都将被视作这个选项的值。
    183→### 将短选项视作 boolean 类型选项合并
+   184→
+   185→在 Commander v5 之前，并不支持合并短选项和值。合并的 boolean 类型选项会被展开。
+   186→因此，`-avl`将被展开为`-a -v -l`。
 docs/zh-CN/术语表.md
      1→# 术语表
+     2→
+     3→命令行参数由选项（options）、选项参数（option-arguments）、命令（commands），以及命令参数（command-arguments）组成。
 eslint.config.js
      8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
      9→const tsconfigJsFiles = ['*.{js,mjs}', 'lib/**/*.{js,mjs}']; // match "include" in tsconfig.js.json
@@ -465,13 +506,21 @@ jest.config.js
      1→const config = {
 lib/argument.js
      3→class Argument {
+     5→   * Initialize a new command argument with the given name and description.
     13→  constructor(name, description) {
+    43→   * Return argument name.
     48→  name() {
+    53→   * @package
     56→  _collectValue(value, previous) {
+    66→   * Set the default value, and optionally supply the description to be displayed in the help.
     73→  default(value, description) {
+    80→   * Set the custom handler for processing CLI command arguments into argument values.
     86→  argParser(fn) {
+    92→   * Only allow argument value to be one of choices.
     98→  choices(values) {
+   115→   * Make argument required.
    119→  argRequired() {
+   125→   * Make argument optional.
    129→  argOptional() {
    143→function humanReadableArgName(arg) {
 lib/command.js
@@ -579,10 +628,18 @@ lib/command.js
   2752→function useColor() {
 lib/error.js
      4→class CommanderError extends Error {
+     5→  /**
      6→   * Constructs the CommanderError class
+     7→   * @param {number} exitCode suggested exit code which could be used with process.exit
+     8→   * @param {string} code an id string representing the error
+     9→   * @param {string} message human-readable description of the error
+    10→   */
     11→  constructor(exitCode, code, message) {
     25→class InvalidArgumentError extends CommanderError {
+    26→  /**
     27→   * Constructs the InvalidArgumentError class
+    28→   * @param {string} [message] explanation of why argument is invalid
+    29→   */
     30→  constructor(message) {
 lib/help.js
     12→class Help {
@@ -630,24 +687,42 @@ lib/help.js
    740→function stripColor(str) {
 lib/option.js
      3→class Option {
+     5→   * Initialize a new `Option` with the given `flags` and `description`.
     11→  constructor(flags, description) {
+    40→   * Set the default value, and optionally supply the description to be displayed in the help.
     47→  default(value, description) {
+    54→   * Preset to use when option used without option-argument, especially optional but also boolean and negated.
     65→  preset(arg) {
+    71→   * Add option name(s) that conflict with this option.
     82→  conflicts(names) {
+    88→   * Specify implied option values for when this option is set and the implied options are not.
    100→  implies(impliedOptionValues) {
+   111→   * Set environment variable to check for option value.
    120→  env(name) {
+   126→   * Set the custom handler for processing CLI option arguments into option values.
    132→  argParser(fn) {
+   138→   * Whether the option is mandatory and must have a value after parsing.
    144→  makeOptionMandatory(mandatory = true) {
+   150→   * Hide option in help.
    156→  hideHelp(hide = true) {
+   162→   * @package
    165→  _collectValue(value, previous) {
+   175→   * Only allow option value to be one of choices.
    181→  choices(values) {
+   198→   * Return option name.
    203→  name() {
+   211→   * Return option name, in a camelcase format that can be used
    217→  attributeName() {
+   225→   * Set the help group heading.
    230→  helpGroup(heading) {
+   236→   * Check if `arg` matches the short or long flag.
    243→  is(arg) {
+   248→   * Return whether a boolean option.
    256→  isBoolean() {
    268→class DualOptions {
+   270→   * @param {Option[]} options
    272→  constructor(options) {
+   291→   * Did the value come from the option, and not from possible matching dual option?
    297→  valueFromOption(value, option) {
    316→function camelcase(str) {
    328→function splitOptionFlags(flags) {

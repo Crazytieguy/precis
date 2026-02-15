@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 20000 → level 7 (15731 words)
+budget: 20000 → level 8 (15886 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -1507,6 +1507,14 @@ lib/argument.js
    127→   * @returns {Argument}
    128→   */
    129→  argOptional() {
+   135→/**
+   136→ * Takes an argument and returns its human readable equivalent for help usage.
+   137→ *
+   138→ * @param {Argument} arg
+   139→ * @return {string}
+   140→ * @private
+   141→ */
+   142→
    143→function humanReadableArgName(arg) {
 lib/command.js
     13→class Command extends EventEmitter {
@@ -2125,6 +2133,13 @@ lib/option.js
    254→   */
    255→
    256→  isBoolean() {
+   261→/**
+   262→ * This class is to make it easier to work with dual options, without changing the existing
+   263→ * implementation. We support separate dual options for separate positive and negative options,
+   264→ * like `--build` and `--no-build`, which share a single option value. This works nicely for some
+   265→ * use cases, but is tricky for others where we want separate behaviours despite
+   266→ * the single shared option value.
+   267→ */
    268→class DualOptions {
    269→  /**
    270→   * @param {Option[]} options
@@ -2138,7 +2153,21 @@ lib/option.js
    295→   * @returns {boolean}
    296→   */
    297→  valueFromOption(value, option) {
+   308→/**
+   309→ * Convert string from kebab-case to camelCase.
+   310→ *
+   311→ * @param {string} str
+   312→ * @return {string}
+   313→ * @private
+   314→ */
+   315→
    316→function camelcase(str) {
+   322→/**
+   323→ * Split the short and long flag out of something like '-m,--mixed <value>'
+   324→ *
+   325→ * @private
+   326→ */
+   327→
    328→function splitOptionFlags(flags) {
 lib/suggestSimilar.js
      1→const maxDistance = 3;

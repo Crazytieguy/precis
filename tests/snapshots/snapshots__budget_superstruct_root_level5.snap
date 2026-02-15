@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 7000 → level 7 (6591 words)
+budget: 7000 → level 8 (6919 words)
 
 Changelog.md
      1→# Changelog
@@ -736,18 +736,40 @@ src/struct.ts
    265→
    266→export type Refiner<T> = (value: T, context: Context) => Result
 src/structs/coercions.ts
+     5→/**
      6→ * Augment a `Struct` to add an additional coercion step to its input.
+     7→ *
+     8→ * This allows you to transform input data before validating it, to increase the
+     9→ * likelihood that it passes validation—for example for default values, parsing
+    10→ * different formats, etc.
+    11→ *
+    12→ * Note: You must use `create(value, Struct)` on the value to have the coercion
+    13→ * take effect! Using simply `assert()` or `is()` will not use coercion.
+    14→ */
+    15→
     16→export function coerce<T, S, C>(
     17→  struct: Struct<T, S>,
     18→  condition: Struct<C, any>,
     19→  coercer: Coercer<C>
     20→): Struct<T, S> {
+    31→/**
     32→ * Augment a struct to replace `undefined` values with a default.
+    33→ *
+    34→ * Note: You must use `create(value, Struct)` on the value to have the coercion
+    35→ * take effect! Using simply `assert()` or `is()` will not use coercion.
+    36→ */
+    37→
     38→export function defaulted<T, S>(
     39→  struct: Struct<T, S>,
     40→  fallback: any,
     41→  options: {
+    72→/**
     73→ * Augment a struct to trim string inputs.
+    74→ *
+    75→ * Note: You must use `create(value, Struct)` on the value to have the coercion
+    76→ * take effect! Using simply `assert()` or `is()` will not use coercion.
+    77→ */
+    78→
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
 src/structs/refinements.ts
      4→/**
@@ -944,34 +966,79 @@ src/structs/types.ts
    574→export function unknown(): Struct<unknown, null> {
 src/structs/utilities.ts
     60→export function assign(...Structs: Struct<any>[]): any {
+    67→/**
     68→ * Define a new struct type with a custom validation function.
+    69→ */
+    70→
     71→export function define<T>(name: string, validator: Validator): Struct<T, null> {
+    75→/**
     76→ * Create a new struct based on an existing struct, but the value is allowed to
+    77→ * be `undefined`. `log` will be called if the value is not `undefined`.
+    78→ */
+    79→
     80→export function deprecated<T>(
     81→  struct: Struct<T>,
     82→  log: (value: unknown, ctx: Context) => void
     83→): Struct<T> {
+    98→/**
     99→ * Create a struct with dynamic validation logic.
+   100→ *
+   101→ * The callback will receive the value currently being validated, and must
+   102→ * return a struct object to validate it with. This can be useful to model
+   103→ * validation logic that changes based on its input.
+   104→ */
+   105→
    106→export function dynamic<T>(
    107→  fn: (value: unknown, ctx: Context) => Struct<T, any>
    108→): Struct<T, null> {
+   131→/**
    132→ * Create a struct with lazily evaluated validation logic.
+   133→ *
+   134→ * The first time validation is run with the struct, the callback will be called
+   135→ * and must return a struct object to use. This is useful for cases where you
+   136→ * want to have self-referential structs for nested data structures to avoid a
+   137→ * circular definition problem.
+   138→ */
+   139→
    140→export function lazy<T>(fn: () => Struct<T, any>): Struct<T, null> {
+   164→/**
    165→ * Create a new struct based on an existing object struct, but excluding
+   166→ * specific properties.
+   167→ *
+   168→ * Like TypeScript's `Omit` utility.
+   169→ */
+   170→
    171→export function omit<S extends ObjectSchema, K extends keyof S>(
    172→  struct: Struct<ObjectType<S>, S>,
    173→  keys: K[]
    174→): Struct<ObjectType<Omit<S, K>>, Omit<S, K>> {
+   190→/**
    191→ * Create a new struct based on an existing object struct, but with all of its
+   192→ * properties allowed to be `undefined`.
+   193→ *
+   194→ * Like TypeScript's `Partial` utility.
+   195→ */
+   196→
    197→export function partial<S extends ObjectSchema>(
    198→  struct: Struct<ObjectType<S>, S> | S
    199→): Struct<ObjectType<PartialObjectSchema<S>>, PartialObjectSchema<S>> {
+   214→/**
    215→ * Create a new struct based on an existing object struct, but only including
+   216→ * specific properties.
+   217→ *
+   218→ * Like TypeScript's `Pick` utility.
+   219→ */
+   220→
    221→export function pick<S extends ObjectSchema, K extends keyof S>(
    222→  struct: Struct<ObjectType<S>, S>,
    223→  keys: K[]
    224→): Struct<ObjectType<Pick<S, K>>, Pick<S, K>> {
+   241→/**
    242→ * Define a new struct type with a custom validation function.
+   243→ *
+   244→ * @deprecated This function has been renamed to `define`.
+   245→ */
+   246→
    247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
 src/utils.ts
      4→/**

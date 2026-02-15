@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2500 → level 7 (1772 words)
+budget: 2500 → level 8 (1774 words)
 
 README.md
      1→derive(Error)
@@ -117,6 +117,7 @@ impl/src/fmt.rs
     15→impl Display<'_> {
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
    166→struct FmtArguments {
+   171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
    192→fn try_explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
    231→fn fallback_explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
@@ -148,6 +149,7 @@ impl/src/lib.rs
     32→mod valid;
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
+    45→#[allow(non_camel_case_types)]
     46→struct private;
     48→impl ToTokens for private {
     49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {

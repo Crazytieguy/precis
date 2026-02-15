@@ -1076,6 +1076,59 @@ fn markdown_sample_level10() {
     insta::assert_snapshot!(output);
 }
 
+#[test]
+fn rust_sample_level11() {
+    let output = format::render_file(11, Path::new("sample.rs"), Path::new(""), rust_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn typescript_sample_level11() {
+    let output = format::render_file(
+        11,
+        Path::new("sample.ts"),
+        Path::new(""),
+        typescript_sample(),
+    );
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn javascript_sample_level11() {
+    let output = format::render_file(
+        11,
+        Path::new("sample.js"),
+        Path::new(""),
+        javascript_sample(),
+    );
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn tsx_sample_level11() {
+    let output = format::render_file(11, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn go_sample_level11() {
+    let output = format::render_file(11, Path::new("sample.go"), Path::new(""), go_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn python_sample_level11() {
+    let output = format::render_file(11, Path::new("sample.py"), Path::new(""), python_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn markdown_sample_level11() {
+    let output =
+        format::render_file(11, Path::new("README.md"), Path::new(""), markdown_sample());
+    insta::assert_snapshot!(output);
+}
+
 // Subdirectory budget tests: running on a subdirectory within a fixture tests
 // that path display and file discovery work correctly at deeper nesting levels.
 
@@ -1316,7 +1369,7 @@ fn monotonicity_invariant() {
 /// Test the budget binary search with synthetic cost functions (no parsing).
 #[test]
 fn budget_algorithm() {
-    let costs: [usize; 11] = [5, 8, 10, 25, 40, 60, 90, 120, 200, 350, 500];
+    let costs: [usize; 12] = [5, 8, 10, 25, 40, 60, 90, 120, 200, 350, 500, 700];
     let cost = |level: u8| costs[level as usize];
 
     // Extremes
@@ -1348,9 +1401,9 @@ fn budget_algorithm() {
     }
 
     // Flat region: levels with equal cost should all be reachable
-    let flat_costs: [usize; 11] = [5, 10, 10, 10, 10, 10, 10, 10, 10, 10, 50];
+    let flat_costs: [usize; 12] = [5, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 50];
     let flat_cost = |level: u8| flat_costs[level as usize];
-    assert_eq!(format::search_level(10, flat_cost), 9);
+    assert_eq!(format::search_level(10, flat_cost), 10);
     assert_eq!(format::search_level(9, flat_cost), 0);
 }
 

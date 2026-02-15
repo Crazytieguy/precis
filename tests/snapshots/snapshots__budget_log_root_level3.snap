@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 7000 → level 5 (6374 words)
+budget: 7000 → level 6 (6470 words)
 
 CHANGELOG.md
      1→# Change Log
@@ -416,6 +416,7 @@ src/__private_api.rs
     29→    #[inline]
     30→    fn into_kvs(self) -> Option<&'a [(&'a str, Value<'a>)]> {
     37→/// The global logger proxy.
+    38→#[derive(Debug)]
     39→pub struct GlobalLogger;
     41→impl Log for GlobalLogger {
     42→    fn enabled(&self, metadata: &Metadata) -> bool {
@@ -453,11 +454,15 @@ src/__private_api.rs
    144→    #[cfg(feature = "kv_serde")]
    145→    pub fn capture_serde<'a, V: serde_core::Serialize + ?Sized>(v: &'a &'a V) -> Value<'a> {
 src/kv/error.rs
+     3→/// An error encountered while working with structured data.
      5→pub struct Error {
     10→enum Inner {
     19→impl Error {
+    20→    /// Create an error from a message.
     21→    pub fn msg(msg: &'static str) -> Self {
+    28→    #[cfg(feature = "value-bag")]
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
+    36→    #[cfg(feature = "value-bag")]
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
     48→impl fmt::Display for Error {
     49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -466,6 +471,7 @@ src/kv/error.rs
     69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     75→    impl Error {
+    76→        /// Create an error from a standard error type.
     77→        pub fn boxed<E>(err: E) -> Self
     78→        where
     79→            E: Into<BoxedError>,
@@ -474,7 +480,9 @@ src/kv/error.rs
     89→    impl From<io::Error> for Error {
     90→        fn from(err: io::Error) -> Self {
 src/kv/key.rs
+     6→/// A type that can be converted into a [`Key`](struct.Key.html).
      7→pub trait ToKey {
+     8→    /// Perform the conversion.
      9→    fn to_key(&self) -> Key<'_>;
     12→impl<T> ToKey for &T
     13→where
@@ -485,10 +493,14 @@ src/kv/key.rs
     22→    fn to_key(&self) -> Key<'_> {
     27→impl ToKey for str {
     28→    fn to_key(&self) -> Key<'_> {
+    36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
     37→pub struct Key<'k> {
     42→impl<'k> Key<'k> {
+    43→    /// Get a key from a borrowed string.
     45→    pub fn from_str(key: &'k str) -> Self {
+    49→    /// Get a borrowed string from this key.
     53→    pub fn as_str(&self) -> &str {
+    57→    /// Try get a borrowed string for the lifetime `'k` from this key.
     61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
     69→impl<'k> fmt::Display for Key<'k> {
     70→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -522,7 +534,9 @@ src/kv/mod.rs
    247→mod key;
    250→mod source;
    252→mod value;
+   259→#[cfg(feature = "kv_unstable")]
    260→pub mod source;
+   261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
 src/kv/source.rs
     51→pub trait Source {

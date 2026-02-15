@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1500 → level 4 (729 words)
+budget: 1500 → level 5 (1199 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -38,26 +38,125 @@ CHANGELOG.md
    198→## 0.1.0
 README.md
      5→# Tomli
+     6→
+     7→> A lil' TOML parser
     32→## Intro<a name="intro"></a>
+    33→
+    34→Tomli is a Python library for parsing [TOML](https://toml.io).
+    35→Version 2.4.0 and later are compatible with [TOML v1.1.0](https://toml.io/en/v1.1.0).
+    36→Older versions are [TOML v1.0.0](https://toml.io/en/v1.0.0) compatible.
     50→## Installation<a name="installation"></a>
+    51→
+    52→```bash
+    53→pip install tomli
+    54→```
     56→## Usage<a name="usage"></a>
+    57→
     58→### Parse a TOML string<a name="parse-a-toml-string"></a>
+    59→
+    60→```python
+    61→import tomli
     79→### Parse a TOML file<a name="parse-a-toml-file"></a>
+    80→
+    81→```python
+    82→import tomli
     92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
+    93→
+    94→```python
+    95→import tomli
    106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
+   107→
+   108→```python
+   109→from decimal import Decimal
+   110→import tomli
    123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
+   124→
+   125→Python versions 3.11+ ship with a version of Tomli:
+   126→the `tomllib` standard library module.
+   127→To build code that uses the standard library if available,
+   128→but still works seamlessly with Python 3.6+,
+   129→do the following.
    152→## FAQ<a name="faq"></a>
+   153→
    154→### Why this parser?<a name="why-this-parser"></a>
+   155→
+   156→- it's lil'
+   157→- pure Python with zero dependencies
+   158→- the fastest pure Python parser [\*](#pure-python):
+   159→  14x as fast as [tomlkit](https://pypi.org/project/tomlkit/),
+   160→  2.1x as fast as [toml](https://pypi.org/project/toml/)
+   161→- outputs [basic data types](#how-do-toml-types-map-into-python-types) only
+   162→- 100% spec compliant: passes all tests in
+   163→  [toml-lang/toml-test](https://github.com/toml-lang/toml-test)
+   164→  test suite
+   165→- thoroughly tested: 100% branch coverage
    167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
+   168→
+   169→No.
    177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
+   178→
+   179→[Tomli-W](https://github.com/hukkin/tomli-w) is the write-only counterpart of Tomli, providing `dump` and `dumps` functions.
    183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
+   184→
+   185→| TOML type        | Python type         | Details                                                      |
+   186→| ---------------- | ------------------- | ------------------------------------------------------------ |
+   187→| Document Root    | `dict`              |                                                              |
+   188→| Key              | `str`               |                                                              |
+   189→| String           | `str`               |                                                              |
+   190→| Integer          | `int`               |                                                              |
+   191→| Float            | `float`             |                                                              |
+   192→| Boolean          | `bool`              |                                                              |
+   193→| Offset Date-Time | `datetime.datetime` | `tzinfo` attribute set to an instance of `datetime.timezone` |
+   194→| Local Date-Time  | `datetime.datetime` | `tzinfo` attribute set to `None`                             |
+   195→| Local Date       | `datetime.date`     |                                                              |
+   196→| Local Time       | `datetime.time`     |                                                              |
+   197→| Array            | `list`              |                                                              |
+   198→| Table            | `dict`              |                                                              |
+   199→| Inline Table     | `dict`              |                                                              |
    201→## Performance<a name="performance"></a>
+   202→
+   203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
    207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
+   208→
+   209→```console
+   210→foo@bar:~/dev/tomli$ python --version
+   211→Python 3.14.2
+   212→foo@bar:~/dev/tomli$ pip freeze
+   213→pytomlpp==1.1.0
+   214→rtoml==0.13.0
+   215→toml==0.10.2
+   216→tomli @ file:///home/foo/dev/tomli
+   217→tomlkit==0.13.3
+   218→foo@bar:~/dev/tomli$ python benchmark/run.py
+   219→Parsing data.toml 5000 times:
+   220→------------------------------------------------------
+   221→    parser |  exec time | performance (more is better)
+   222→-----------+------------+-----------------------------
+   223→     rtoml |    0.328 s | baseline (100%)
+   224→  pytomlpp |    0.365 s | 89.75%
+   225→     tomli |    0.838 s | 39.12%
+   226→      toml |     3.01 s | 10.90%
+   227→   tomlkit |     20.7 s | 1.59%
+   228→```
    230→### Pure Python<a name="pure-python"></a>
+   231→
+   232→```console
+   233→foo@bar:~/dev/tomli$ python benchmark/run.py
+   234→Parsing data.toml 5000 times:
+   235→------------------------------------------------------
+   236→    parser |  exec time | performance (more is better)
+   237→-----------+------------+-----------------------------
+   238→     rtoml |    0.323 s | baseline (100%)
+   239→  pytomlpp |    0.365 s | 88.40%
+   240→     tomli |     1.44 s | 22.36%
+   241→      toml |     3.03 s | 10.65%
+   242→   tomlkit |     20.6 s | 1.57%
+   243→```
 fuzzer/fuzz.py
     20→def test_one_input(input_bytes: bytes) -> None:
     53→def print_err(data):
     59→def normalize_toml_obj(toml_obj: dict) -> None:
+    60→    """Make NaNs equal when compared (without using recursion)."""
     71→def main():
 profiler/profiler_script.py
 scripts/use_setuptools.py
@@ -153,7 +252,7 @@ src/tomli/_parser.py
    764→def make_safe_parse_float(parse_float: ParseFloat) -> ParseFloat:
 src/tomli/_re.py
     11→TYPE_CHECKING = False
-    17→_TIME_RE_STR
+    17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
@@ -164,6 +263,14 @@ src/tomli/_re.py
 src/tomli/_types.py
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
+     2→
+     3→Tomli was added to the Python standard library in Python 3.11.
     13→## Converting Tomli to tomllib
+    14→
     15→### Sync status
+    16→
+    17→`tomllib` in CPython commit https://github.com/python/cpython/commit/deaf509e8fc6e0363bd6f26d52ad42f976ec42f2
+    18→matches Tomli commit https://github.com/hukkin/tomli/commit/7e563eed5286b5d46b8290a9f56a86d955b23a9a
     20→### Steps to convert
+    21→
+    22→- Move everything in `tomli:src/tomli` to `cpython:Lib/tomllib`. Exclude `py.typed`.

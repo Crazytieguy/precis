@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 3000 → level 4 (1903 words)
+budget: 3000 → level 5 (2131 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -58,7 +58,19 @@ CHANGELOG.md
    252→## 0.1.5
 README.md
      8→# Overview
+     9→
+    10→`once_cell` provides two new cell-like types, `unsync::OnceCell` and `sync::OnceCell`. `OnceCell`
+    11→might store arbitrary non-`Copy` types, can be assigned to at most once and provide direct access
+    12→to the stored contents. In a nutshell, API looks *roughly* like this:
     47→# Related crates
+    48→
+    49→* [double-checked-cell](https://github.com/niklasf/double-checked-cell)
+    50→* [lazy-init](https://crates.io/crates/lazy-init)
+    51→* [lazycell](https://crates.io/crates/lazycell)
+    52→* [mitochondria](https://crates.io/crates/mitochondria)
+    53→* [lazy_static](https://crates.io/crates/lazy_static)
+    54→* [async_once_cell](https://crates.io/crates/async_once_cell)
+    55→* [generic_once_cell](https://crates.io/crates/generic_once_cell) (bring your own mutex)
 src/imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
     20→unsafe impl<T: Sync + Send> Sync for OnceCell<T> {}
@@ -68,13 +80,18 @@ src/imp_cs.rs
     26→impl<T> OnceCell<T> {
     27→    pub(crate) const fn new() -> OnceCell<T> {
     31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+    38→    #[inline]
     39→    pub(crate) fn is_initialized(&self) -> bool {
+    43→    #[cold]
     44→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
     45→    where
     46→        F: FnOnce() -> Result<T, E>,
     47→    {
+    56→    /// Get the reference to the underlying value, without checking if the cell
     63→    pub(crate) unsafe fn get_unchecked(&self) -> &T {
+    69→    #[inline]
     70→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
+    74→    #[inline]
     75→    pub(crate) fn into_inner(self) -> Option<T> {
 src/imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
@@ -88,20 +105,27 @@ src/imp_pl.rs
     27→impl<T> OnceCell<T> {
     28→    pub(crate) const fn new() -> OnceCell<T> {
     32→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+    36→    /// Safety: synchronizes with store to value via Release/Acquire.
     38→    pub(crate) fn is_initialized(&self) -> bool {
+    42→    /// Safety: synchronizes with store to value via `is_initialized` or mutex
     45→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
     46→    where
     47→        F: FnOnce() -> Result<T, E>,
     48→    {
+    79→    #[cold]
     80→    pub(crate) fn wait(&self) {
+    94→    /// Get the reference to the underlying value, without checking if the cell
    101→    pub(crate) unsafe fn get_unchecked(&self) -> &T {
+   107→    /// Gets the mutable reference to the underlying value.
    109→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
+   115→    /// Consumes this `OnceCell`, returning the wrapped value.
    117→    pub(crate) fn into_inner(self) -> Option<T> {
    122→struct Guard<'a> {
    127→impl<'a> Drop for Guard<'a> {
    128→    fn drop(&mut self) {
    139→fn initialize_inner(state: &AtomicU8, init: &mut dyn FnMut() -> bool) {
 src/imp_std.rs
+    13→#[derive(Debug)]
     14→pub(crate) struct OnceCell<T> {
     32→unsafe impl<T: Sync + Send> Sync for OnceCell<T> {}
     33→unsafe impl<T: Send> Send for OnceCell<T> {}
@@ -110,14 +134,20 @@ src/imp_std.rs
     38→impl<T> OnceCell<T> {
     39→    pub(crate) const fn new() -> OnceCell<T> {
     43→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+    47→    /// Safety: synchronizes with store to value via Release/(Acquire|SeqCst).
     49→    pub(crate) fn is_initialized(&self) -> bool {
+    57→    /// Safety: synchronizes with store to value via SeqCst read from state,
     61→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
     62→    where
     63→        F: FnOnce() -> Result<T, E>,
     64→    {
+    87→    #[cold]
     88→    pub(crate) fn wait(&self) {
+    92→    /// Get the reference to the underlying value, without checking if the cell
     99→    pub(crate) unsafe fn get_unchecked(&self) -> &T {
+   105→    /// Gets the mutable reference to the underlying value.
    107→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
+   112→    /// Consumes this `OnceCell`, returning the wrapped value.
    115→    pub(crate) fn into_inner(self) -> Option<T> {
    125→const INCOMPLETE: usize = 0x0;
    126→const RUNNING: usize = 0x1;
@@ -132,14 +162,17 @@ src/imp_std.rs
    177→fn initialize_or_wait(queue: &AtomicPtr<Waiter>, mut init: Option<&mut dyn FnMut() -> bool>) {
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
    245→mod strict {
+   246→    #[must_use]
    248→    pub(crate) fn addr<T>(ptr: *mut T) -> usize
    249→    where
    250→        T: Sized,
    251→    {
+   258→    #[must_use]
    260→    pub(crate) fn with_addr<T>(ptr: *mut T, addr: usize) -> *mut T
    261→    where
    262→        T: Sized,
    263→    {
+   279→    #[must_use]
    281→    pub(crate) fn map_addr<T>(ptr: *mut T, f: impl FnOnce(usize) -> usize) -> *mut T
    282→    where
    283→        T: Sized,
@@ -335,8 +368,11 @@ src/race.rs
    482→        fn clone(&self) -> Self {
    497→    fn _dummy() {}
 xtask/src/main.rs
-     8→fn main
-   116→fn push_toolchain
-   126→fn section
-   136→fn defer
+     8→fn main() -> xshell::Result<()> {
+   116→fn push_toolchain<'a>(
+   117→    sh: &'a xshell::Shell,
+   118→    toolchain: &str,
+   119→) -> xshell::Result<xshell::PushEnv<'a>> {
+   126→fn section(name: &'static str) -> impl Drop {
+   136→fn defer<F: FnOnce()>(f: F) -> impl Drop {
 xtask/src/tidy.rs

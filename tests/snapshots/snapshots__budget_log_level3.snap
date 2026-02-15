@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 5000 → level 6 (4188 words)
+budget: 5000 → level 6 (3856 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
@@ -149,13 +149,9 @@ kv/mod.rs
    261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
 kv/source.rs
-     9→/// A source of key-values.
     51→pub trait Source {
-    52→    /// Visit key-values.
     62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
-    64→    /// Get the value for a given key.
     73→    fn get(&self, key: Key) -> Option<Value<'_>> {
-    77→    /// Count the number of key-values that can be visited.
     85→    fn count(&self) -> usize {
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
    114→fn count_default(source: impl Source) -> usize {
@@ -195,9 +191,7 @@ kv/source.rs
    217→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error> {
    225→    fn get(&self, key: Key) -> Option<Value<'_>> {
    229→    fn count(&self) -> usize {
-   234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
-   236→    /// Visit a key-value pair.
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    242→where
@@ -264,9 +258,7 @@ kv/source.rs
    399→        fn get(&self, key: Key) -> Option<Value<'_>> {
    403→        fn count(&self) -> usize {
 kv/value.rs
-    10→/// A type that can be converted into a [`Value`](struct.Value.html).
     11→pub trait ToValue {
-    12→    /// Perform the conversion.
     13→    fn to_value(&self) -> Value<'_>;
     16→impl<T> ToValue for &T
     17→where
@@ -275,47 +267,36 @@ kv/value.rs
     20→    fn to_value(&self) -> Value<'_> {
     25→impl<'v> ToValue for Value<'v> {
     26→    fn to_value(&self) -> Value<'_> {
-    33→/// A value in a key-value.
    119→pub struct Value<'v> {
    123→impl<'v> Value<'v> {
-   124→    /// Get a value from a type implementing `ToValue`.
    125→    pub fn from_any<T>(value: &'v T) -> Self
    126→    where
    127→        T: ToValue,
    128→    {
-   132→    /// Get a value from a type implementing `std::fmt::Debug`.
    133→    pub fn from_debug<T>(value: &'v T) -> Self
    134→    where
    135→        T: fmt::Debug,
    136→    {
-   142→    /// Get a value from a type implementing `std::fmt::Display`.
    143→    pub fn from_display<T>(value: &'v T) -> Self
    144→    where
    145→        T: fmt::Display,
    146→    {
-   152→    /// Get a value from a type implementing `serde::Serialize`.
    154→    pub fn from_serde<T>(value: &'v T) -> Self
    155→    where
    156→        T: serde_core::Serialize,
    157→    {
-   163→    /// Get a value from a type implementing `sval::Value`.
    165→    pub fn from_sval<T>(value: &'v T) -> Self
    166→    where
    167→        T: sval::Value,
    168→    {
-   174→    /// Get a value from a dynamic `std::fmt::Debug`.
    175→    pub fn from_dyn_debug(value: &'v dyn fmt::Debug) -> Self {
-   181→    /// Get a value from a dynamic `std::fmt::Display`.
    182→    pub fn from_dyn_display(value: &'v dyn fmt::Display) -> Self {
-   188→    /// Get a value from a dynamic error.
    190→    pub fn from_dyn_error(err: &'v (dyn std::error::Error + 'static)) -> Self {
-   196→    /// Get a `null` value.
    197→    pub fn null() -> Self {
    204→    fn from_inner<T>(value: T) -> Self
    205→    where
    206→        T: Into<inner::Inner<'v>>,
    207→    {
-   213→    /// Inspect this value using a simple visitor.
    217→    pub fn visit(&self, visitor: impl VisitValue<'v>) -> Result<(), Error> {
    222→impl<'v> fmt::Debug for Value<'v> {
    223→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -345,9 +326,7 @@ kv/value.rs
    312→macro_rules! impl_to_value_nonzero_primitive {
    336→macro_rules! impl_value_to_primitive {
    376→impl<'v> Value<'v> {
-   377→    /// Try to convert this value into an error.
    379→    pub fn to_borrowed_error(&self) -> Option<&(dyn std::error::Error + 'static)> {
-   383→    /// Try to convert this value into a borrowed string.
    384→    pub fn to_borrowed_str(&self) -> Option<&'v str> {
    390→mod std_support {
    397→    impl<T> ToValue for Box<T>
@@ -370,37 +349,22 @@ kv/value.rs
    430→    impl<'v> ToValue for Cow<'v, str> {
    431→        fn to_value(&self) -> Value<'_> {
    436→    impl<'v> Value<'v> {
-   437→        /// Try convert this value into a string.
    438→        pub fn to_cow_str(&self) -> Option<Cow<'v, str>> {
    443→    impl<'v> From<&'v String> for Value<'v> {
    444→        fn from(v: &'v String) -> Self {
-   450→/// A visitor for a [`Value`].
    462→pub trait VisitValue<'v> {
-   463→    /// Visit a `Value`.
    469→    fn visit_any(&mut self, value: Value) -> Result<(), Error>;
-   471→    /// Visit an empty value.
    472→    fn visit_null(&mut self) -> Result<(), Error> {
-   476→    /// Visit an unsigned integer.
    477→    fn visit_u64(&mut self, value: u64) -> Result<(), Error> {
-   481→    /// Visit a signed integer.
    482→    fn visit_i64(&mut self, value: i64) -> Result<(), Error> {
-   486→    /// Visit a big unsigned integer.
    487→    fn visit_u128(&mut self, value: u128) -> Result<(), Error> {
-   491→    /// Visit a big signed integer.
    492→    fn visit_i128(&mut self, value: i128) -> Result<(), Error> {
-   496→    /// Visit a floating point.
    497→    fn visit_f64(&mut self, value: f64) -> Result<(), Error> {
-   501→    /// Visit a boolean.
    502→    fn visit_bool(&mut self, value: bool) -> Result<(), Error> {
-   506→    /// Visit a string.
    507→    fn visit_str(&mut self, value: &str) -> Result<(), Error> {
-   511→    /// Visit a string.
    512→    fn visit_borrowed_str(&mut self, value: &'v str) -> Result<(), Error> {
-   516→    /// Visit a Unicode character.
    517→    fn visit_char(&mut self, value: char) -> Result<(), Error> {
-   522→    /// Visit an error.
    524→    fn visit_error(&mut self, err: &(dyn std::error::Error + 'static)) -> Result<(), Error> {
-   528→    /// Visit an error.
    530→    fn visit_borrowed_error(
    531→        &mut self,
    532→        err: &'v (dyn std::error::Error + 'static),
@@ -420,22 +384,17 @@ kv/value.rs
    575→    fn visit_str(&mut self, value: &str) -> Result<(), Error> {
    579→    fn visit_borrowed_str(&mut self, value: &'v str) -> Result<(), Error> {
    583→    fn visit_char(&mut self, value: char) -> Result<(), Error> {
-   587→    #[cfg(feature = "kv_std")]
    588→    fn visit_error(&mut self, err: &(dyn std::error::Error + 'static)) -> Result<(), Error> {
-   592→    #[cfg(feature = "kv_std")]
    593→    fn visit_borrowed_error(
    594→        &mut self,
    595→        err: &'v (dyn std::error::Error + 'static),
    596→    ) -> Result<(), Error> {
-   601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {
    619→    pub fn visit<'v>(
    620→        inner: &Inner<'v>,
    621→        visitor: impl VisitValue<'v>,
    622→    ) -> Result<(), crate::kv::Error> {
-   720→#[cfg(not(feature = "value-bag"))]
    721→pub(in crate::kv) mod inner {
-   737→    #[derive(Clone)]
    738→    pub enum Inner<'v> {
    752→    impl<'v> From<()> for Inner<'v> {
    753→        fn from(_: ()) -> Self {
@@ -496,27 +455,22 @@ kv/value.rs
   1033→        mut visitor: impl VisitValue<'v>,
   1034→    ) -> Result<(), crate::kv::Error> {
   1051→impl<'v> Value<'v> {
-  1052→    /// Get a value from a type implementing `std::fmt::Debug`.
   1055→    pub fn capture_debug<T>(value: &'v T) -> Self
   1056→    where
   1057→        T: fmt::Debug + 'static,
   1058→    {
-  1062→    /// Get a value from a type implementing `std::fmt::Display`.
   1065→    pub fn capture_display<T>(value: &'v T) -> Self
   1066→    where
   1067→        T: fmt::Display + 'static,
   1068→    {
-  1072→    /// Get a value from an error.
   1075→    pub fn capture_error<T>(err: &'v T) -> Self
   1076→    where
   1077→        T: std::error::Error + 'static,
   1078→    {
-  1082→    /// Get a value from a type implementing `serde::Serialize`.
   1085→    pub fn capture_serde<T>(value: &'v T) -> Self
   1086→    where
   1087→        T: serde_core::Serialize + 'static,
   1088→    {
-  1092→    /// Get a value from a type implementing `sval::Value`.
   1095→    pub fn capture_sval<T>(value: &'v T) -> Self
   1096→    where
   1097→        T: sval::Value + 'static,

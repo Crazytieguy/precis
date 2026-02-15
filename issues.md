@@ -2,7 +2,7 @@
 
 Message from human: the nominal level parameter should be conceptually separate and disentangled from the rendering policies. There can be many more nominal levels than rendering policies (even as we keep increasing the amount of rendering policies). New goal is to reach 64 levels.
 
-Status: `compute_policy` extracted — maps (level, file properties) → `RenderPolicy` struct with named boolean fields. `render_with_symbols` is now decoupled from level arithmetic. Next steps: rescale thresholds in `compute_policy` to support more nominal levels (bump MAX_LEVEL), add new rendering policies between existing ones, and make thresholds depend on more file properties.
+Status: `compute_policy` extracted — maps (level, file properties) → `RenderPolicy` struct with named boolean fields. `render_with_symbols` is now decoupled from level arithmetic. MAX_LEVEL bumped to 11 with `symbol_count_penalty` spreading the sigs→docs transition. Next steps: continue adding property-based penalties and new rendering policies to reach ~64 levels.
 
 ## Feature development
 
@@ -19,9 +19,9 @@ Status: `compute_policy` extracted — maps (level, file properties) → `Render
 
 ## Current state
 
-- Parsing: Rust, TypeScript, JavaScript, TSX, Python, Go, Markdown. 11 granularity levels (0–10). Depth-aware, file-size-aware, visibility-aware, and property-based rendering. `--budget`, `--level`, `--json` flags. Defaults to current directory when no path given.
+- Parsing: Rust, TypeScript, JavaScript, TSX, Python, Go, Markdown. 12 granularity levels (0–11). Depth-aware, file-size-aware, visibility-aware, and property-based rendering. `--budget`, `--level`, `--json` flags. Defaults to current directory when no path given.
 - File discovery filters out test/benchmark/vendor/example directories and test file patterns. Uses relative paths so parent directories don't trigger false positives.
-- 31 test fixtures across all supported languages with budget-based snapshot tests (253 budget snapshots). All 31 fixtures have budget tests at multiple budget levels; all 26 non-Go fixtures have root-level budget tests; 12 subdirectory entrypoints have budget tests. Monotonicity invariant tested across all fixtures including root-level targets. Inline sample tests cover levels 0–10 across all supported languages.
+- 31 test fixtures across all supported languages with budget-based snapshot tests (253 budget snapshots). All 31 fixtures have budget tests at multiple budget levels; all 26 non-Go fixtures have root-level budget tests; 12 subdirectory entrypoints have budget tests. Monotonicity invariant tested across all fixtures including root-level targets. Inline sample tests cover levels 0–11 across all supported languages.
 - `cargo run --bin budget_util` measures budget utilization across all budget snapshots.
 
 ## Implementation notes
@@ -32,4 +32,5 @@ Status: `compute_policy` extracted — maps (level, file properties) → `Render
 - **Depth penalty interaction with level count** — depth penalty subtracts an absolute number of levels (`depth/2`). As the total number of levels grows, this penalty becomes proportionally smaller: a depth-2 file (penalty 1) at nominal level 2 now reaches effective level 1 (public names) instead of effective level 0 (paths only). This means root-level runs at intermediate levels show more content for deep files than before, which can push some budgets to a lower level. The tradeoff is intentional (finer granularity) but means some budget snapshots regress while others improve. This will self-correct as more levels are added and depth penalty scaling is revisited (see "Generalize penalty system").
 - Markdown: consecutive levels can produce identical output (heading text is already the full line content; headings are always public, so public-only doc filtering has no effect). These levels still help budget utilization because the binary search can land on them when the next level would overshoot.
 - Visibility-aware rendering: for files where all private symbols lack doc comments (common in Go, where unexported functions rarely have godoc), public-only and all-symbols doc levels produce identical output. Similarly for type expansion when all type definitions are public. These levels still help budget utilization for the same binary search reason.
-- `doc_penalty`: first property-based rendering decision. Computes average doc comment lines per documented public symbol; files with verbose docs (avg > 5 lines) get a 1-level penalty on doc-related decisions, causing them to show first-line-only docs or no docs while other files at the same nominal level show full docs. This spreads the signatures→docs transition across multiple nominal levels.
+- `doc_penalty`: property-based rendering decision. Computes average doc comment lines per documented public symbol; files with verbose docs (avg > 5 lines) get a 1-level penalty on doc-related decisions, causing them to show first-line-only docs or no docs while other files at the same nominal level show full docs. This spreads the signatures→docs transition across multiple nominal levels.
+- `symbol_count_penalty`: second property-based penalty. Files with >30 public symbols get a 1-level delay on doc appearance, because adding a doc line per symbol creates a large word count jump. Combined with `doc_penalty`, files can get 0, 1, or 2 levels of doc delay, spreading the transition across 3 nominal levels.

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 3500 → level 8 (3482 words)
+budget: 3500 → level 8 (3053 words)
 
 README.md
      1→# humanize
@@ -15,50 +15,9 @@ README.md
      8→[![codecov](https://codecov.io/gh/python-humanize/humanize/branch/main/graph/badge.svg)](https://codecov.io/gh/python-humanize/humanize)
      9→[![MIT License](https://img.shields.io/github/license/python-humanize/humanize.svg)](LICENCE)
     10→[![Tidelift](https://tidelift.com/badges/package/pypi/humanize)](https://tidelift.com/subscription/pkg/pypi-humanize?utm_source=pypi-humanize&utm_medium=badge)
-    11→
-    12→This modest package contains various common humanization utilities, like turning a
-    13→number into a fuzzy human-readable duration ("3 minutes ago") or into a human-readable
-    14→size or throughput. It is localized to:
-    15→
-    16→- Arabic
-    17→- Basque
-    18→- Bengali
-    19→- Brazilian Portuguese
-    20→- Catalan
-    21→- Danish
-    22→- Dutch
-    23→- Esperanto
-    24→- European Portuguese
-    25→- Finnish
-    26→- French
-    27→- German
-    28→- Greek
-    29→- Hebrew
-    30→- Indonesian
-    31→- Italian
-    32→- Japanese
-    33→- Klingon
-    34→- Korean
-    35→- Norwegian
-    36→- Persian
-    37→- Polish
-    38→- Russian
-    39→- Simplified Chinese
-    40→- Slovak
-    41→- Slovenian
-    42→- Spanish
-    43→- Swedish
-    44→- Turkish
-    45→- Ukrainian
-    46→- Uzbek
-    47→- Vietnamese
-    48→
     49→## API reference
     50→
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
-    52→
-    53→<!-- usage-start -->
-    54→
     55→## Installation
     56→
     57→### From PyPI
@@ -66,7 +25,6 @@ README.md
     59→```bash
     60→python3 -m pip install --upgrade humanize
     61→```
-    62→
     63→### From source
     64→
     65→```bash
@@ -74,7 +32,6 @@ README.md
     67→cd humanize
     68→python3 -m pip install -e .
     69→```
-    70→
     71→## Usage
     72→
     73→### Integer humanization
@@ -92,7 +49,6 @@ README.md
     85→>>> humanize.apnumber(41)
     86→'41'
     87→```
-    88→
     89→### Date & time humanization
     90→
     91→```pycon
@@ -113,7 +69,6 @@ README.md
    106→>>> humanize.naturaltime(dt.datetime.now() - dt.timedelta(seconds=3600))
    107→'an hour ago'
    108→```
-   109→
    110→### Precise time delta
    111→
    112→```pycon
@@ -127,37 +82,9 @@ README.md
    120→>>> humanize.precisedelta(delta, suppress=["days"], format="%0.4f")
    121→'49 hours and 33.1230 seconds'
    122→```
-   123→
    124→#### Smaller units
    125→
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
-   127→
-   128→```pycon
-   129→>>> import humanize
-   130→>>> import datetime as dt
-   131→>>> humanize.naturaldelta(dt.timedelta(seconds=2))
-   132→'2 seconds'
-   133→```
-   134→
-   135→```pycon
-   136→>>> delta = dt.timedelta(milliseconds=4)
-   137→>>> humanize.naturaldelta(delta)
-   138→'a moment'
-   139→>>> humanize.naturaldelta(delta, minimum_unit="milliseconds")
-   140→'4 milliseconds'
-   141→>>> humanize.naturaldelta(delta, minimum_unit="microseconds")
-   142→'4 milliseconds'
-   143→```
-   144→
-   145→```pycon
-   146→>>> humanize.naturaltime(delta)
-   147→'now'
-   148→>>> humanize.naturaltime(delta, minimum_unit="milliseconds")
-   149→'4 milliseconds ago'
-   150→>>> humanize.naturaltime(delta, minimum_unit="microseconds")
-   151→'4 milliseconds ago'
-   152→```
-   153→
    154→### File size humanization
    155→
    156→```pycon
@@ -169,7 +96,6 @@ README.md
    162→>>> humanize.naturalsize(1_000_000, gnu=True)
    163→'976.6K'
    164→```
-   165→
    166→### Human-readable floating point numbers
    167→
    168→```pycon
@@ -185,7 +111,6 @@ README.md
    178→>>> humanize.fractional(1)
    179→'1'
    180→```
-   181→
    182→### Scientific notation
    183→
    184→```pycon
@@ -203,55 +128,9 @@ README.md
    196→>>> humanize.scientific(1**10, precision=0)
    197→'1 x 10⁰'
    198→```
-   199→
    200→## Localization
    201→
    202→How to change locale at runtime:
-   203→
-   204→```pycon
-   205→>>> import humanize
-   206→>>> import datetime as dt
-   207→>>> humanize.naturaltime(dt.timedelta(seconds=3))
-   208→'3 seconds ago'
-   209→>>> _t = humanize.i18n.activate("ru_RU")
-   210→>>> humanize.naturaltime(dt.timedelta(seconds=3))
-   211→'3 секунды назад'
-   212→>>> humanize.i18n.deactivate()
-   213→>>> humanize.naturaltime(dt.timedelta(seconds=3))
-   214→'3 seconds ago'
-   215→```
-   216→
-   217→You can pass additional parameter `path` to `activate` to specify a path to search
-   218→locales in.
-   219→
-   220→```pycon
-   221→>>> import humanize
-   222→>>> humanize.i18n.activate("xx_XX")
-   223→<...>
-   224→FileNotFoundError: [Errno 2] No translation file found for domain: 'humanize'
-   225→>>> humanize.i18n.activate("pt_BR", path="path/to/my/own/translation/")
-   226→<gettext.GNUTranslations instance ...>
-   227→```
-   228→
-   229→<!-- usage-end -->
-   230→
-   231→How to add new phrases to existing locale files:
-   232→
-   233→```sh
-   234→xgettext --from-code=UTF-8 -o humanize.pot -k'_' -k'N_' -k'P_:1c,2' -k'NS_:1,2' -k'_ngettext:1,2' -l python src/humanize/*.py  # extract new phrases
-   235→msgmerge -U src/humanize/locale/ru_RU/LC_MESSAGES/humanize.po humanize.pot # add them to locale files
-   236→```
-   237→
-   238→How to add a new locale:
-   239→
-   240→```sh
-   241→msginit -i humanize.pot -o humanize/locale/<locale name>/LC_MESSAGES/humanize.po --locale <locale name>
-   242→```
-   243→
-   244→Where `<locale name>` is a locale abbreviation, eg. `en_GB`, `pt_BR` or just `ru`, `fr`
-   245→etc.
-   246→
-   247→List the language at the top of this README.
 RELEASING.md
      1→# Release checklist
      2→
@@ -259,23 +138,6 @@ RELEASING.md
      4→      [GitHub Actions](https://github.com/python-humanize/humanize/actions) should be
      5→      running cleanly for all merges to `main`.
      6→      [![GitHub Actions status](https://github.com/python-humanize/humanize/workflows/Test/badge.svg)](https://github.com/python-humanize/humanize/actions)
-     7→
-     8→- [ ] Edit release draft, adjust text if needed:
-     9→      https://github.com/python-humanize/humanize/releases
-    10→
-    11→- [ ] Check next tag is correct, amend if needed
-    12→
-    13→- [ ] Publish release
-    14→
-    15→- [ ] Check the tagged
-    16→      [GitHub Actions build](https://github.com/python-humanize/humanize/actions/workflows/release.yml)
-    17→      has released to [PyPI](https://pypi.org/project/humanize/#history)
-    18→
-    19→- [ ] Check installation:
-    20→
-    21→```bash
-    22→pip3 uninstall -y humanize && pip3 install -U humanize && python3 -c "import humanize; print(humanize.__version__)"
-    23→```
 docs/filesize.md
      1→# Filesize
      2→
@@ -288,19 +150,6 @@ docs/index.md
      1→# humanize
      2→
      3→Welcome to the humanize API reference.
-     4→
-     5→- [Number](number.md)
-     6→- [Time](time.md)
-     7→- [Filesize](filesize.md)
-     8→- [Lists](lists.md)
-     9→- [I18n](i18n.md)
-    10→
-    11→{%
-    12→   include-markdown "../README.md"
-    13→   start="<!-- usage-start -->"
-    14→   end="<!-- usage-end -->"
-    15→   comments=false
-    16→%}
 docs/lists.md
      1→# Lists
      2→
