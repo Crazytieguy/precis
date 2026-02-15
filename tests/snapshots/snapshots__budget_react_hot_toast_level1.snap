@@ -1,0 +1,90 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 200 → level 1 (194 words)
+
+components/checkmark.tsx
+     3→const circleAnimation
+    13→const checkmarkAnimation
+    29→export interface CheckmarkTheme
+    34→export const CheckmarkIcon
+components/error.tsx
+     3→const circleAnimation
+    13→const firstLineAnimation
+    23→const secondLineAnimation
+    33→export interface ErrorTheme
+    38→export const ErrorIcon
+components/loader.tsx
+     3→const rotate
+    12→export interface LoaderTheme
+    17→export const LoaderIcon
+components/toast-bar.tsx
+     8→const enterAnimation
+    13→const exitAnimation
+    18→const fadeInAnimation
+    19→const fadeOutAnimation
+    22→const ToastBarBase
+    38→const Message
+    47→interface ToastBarProps
+    57→const getAnimationStyle
+    75→export const ToastBar
+components/toast-icon.tsx
+     9→const StatusWrapper
+    13→const IndicatorWrapper
+    22→const enter
+    32→export const AnimatedIconWrapper
+    41→export type IconThemes
+    47→export const ToastIcon
+components/toaster.tsx
+    15→const ToastWrapper
+    47→const getPositionStyle
+    76→const activeClass
+    83→const DEFAULT_OFFSET
+    85→export const Toaster
+core/store.ts
+     4→export const TOAST_EXPIRE_DISMISS_DELAY
+     5→export const TOAST_LIMIT
+     6→export const DEFAULT_TOASTER_ID
+     8→interface ToasterSettings
+    12→export enum ActionType
+    22→export type Action
+    52→interface ToasterState
+    58→interface State
+    62→export const reducer
+   136→const listeners
+   140→const defaultToasterState
+   149→export const dispatch
+   161→export const dispatchAll
+   164→export const getToasterIdFromToastId
+   169→export const createDispatch
+   175→export const defaultTimeouts
+   185→export const useStore
+core/toast.ts
+    19→type Message
+    21→type ToastHandler
+    23→const createToast
+    42→const createHandler
+    55→const toast
+core/types.ts
+     3→export type ToastType
+     4→export type ToastPosition
+    12→export type Renderable
+    14→export interface IconTheme
+    19→export type ValueFunction
+    20→export type ValueOrFunction
+    24→const isFunction
+    29→export const resolveValue
+    34→export interface Toast
+    60→export type ToastOptions
+    76→export type DefaultToastOptions
+    80→export interface ToasterProps
+    91→export interface ToastWrapperProps
+core/use-toaster.ts
+     6→export const REMOVE_DELAY
+     8→export const useToaster
+core/utils.ts
+     1→export const genId
+     8→export const prefersReducedMotion
+headless/index.ts
+index.ts

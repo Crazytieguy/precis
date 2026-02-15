@@ -1,0 +1,1050 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4600 → level 6 (4565 words)
+
+comparator.js
+     1→'use strict'
+     2→
+     3→const ANY = Symbol('SemVer ANY')
+     4→// hoisted class for cyclic dependency
+     5→class Comparator {
+     6→  static get ANY () {
+     7→    return ANY
+     8→  }
+     9→
+    10→  constructor (comp, options) {
+    11→    options = parseOptions(options)
+    12→
+    13→    if (comp instanceof Comparator) {
+    14→      if (comp.loose === !!options.loose) {
+    15→        return comp
+    16→      } else {
+    17→        comp = comp.value
+    18→      }
+    19→    }
+    20→
+    21→    comp = comp.trim().split(/\s+/).join(' ')
+    22→    debug('comparator', comp, options)
+    23→    this.options = options
+    24→    this.loose = !!options.loose
+    25→    this.parse(comp)
+    26→
+    27→    if (this.semver === ANY) {
+    28→      this.value = ''
+    29→    } else {
+    30→      this.value = this.operator + this.semver.version
+    31→    }
+    32→
+    33→    debug('comp', this)
+    34→  }
+    35→
+    36→  parse (comp) {
+    37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
+    38→    const m = comp.match(r)
+    39→
+    40→    if (!m) {
+    41→      throw new TypeError(`Invalid comparator: ${comp}`)
+    42→    }
+    43→
+    44→    this.operator = m[1] !== undefined ? m[1] : ''
+    45→    if (this.operator === '=') {
+    46→      this.operator = ''
+    47→    }
+    48→
+    49→    // if it literally is just '>' or '' then allow anything.
+    50→    if (!m[2]) {
+    51→      this.semver = ANY
+    52→    } else {
+    53→      this.semver = new SemVer(m[2], this.options.loose)
+    54→    }
+    55→  }
+    56→
+    57→  toString () {
+    58→    return this.value
+    59→  }
+    60→
+    61→  test (version) {
+    62→    debug('Comparator.test', version, this.options.loose)
+    63→
+    64→    if (this.semver === ANY || version === ANY) {
+    65→      return true
+    66→    }
+    67→
+    68→    if (typeof version === 'string') {
+    69→      try {
+    70→        version = new SemVer(version, this.options)
+    71→      } catch (er) {
+    72→        return false
+    73→      }
+    74→    }
+    75→
+    76→    return cmp(version, this.operator, this.semver, this.options)
+    77→  }
+    78→
+    79→  intersects (comp, options) {
+    80→    if (!(comp instanceof Comparator)) {
+    81→      throw new TypeError('a Comparator is required')
+    82→    }
+    83→
+    84→    if (this.operator === '') {
+    85→      if (this.value === '') {
+    86→        return true
+    87→      }
+    88→      return new Range(comp.value, options).test(this.value)
+    89→    } else if (comp.operator === '') {
+    90→      if (comp.value === '') {
+    91→        return true
+    92→      }
+    93→      return new Range(this.value, options).test(comp.semver)
+    94→    }
+    95→
+    96→    options = parseOptions(options)
+    97→
+    98→    // Special cases where nothing can possibly be lower
+    99→    if (options.includePrerelease &&
+   100→      (this.value === '<0.0.0-0' || comp.value === '<0.0.0-0')) {
+   101→      return false
+   102→    }
+   103→    if (!options.includePrerelease &&
+   104→      (this.value.startsWith('<0.0.0') || comp.value.startsWith('<0.0.0'))) {
+   105→      return false
+   106→    }
+   107→
+   108→    // Same direction increasing (> or >=)
+   109→    if (this.operator.startsWith('>') && comp.operator.startsWith('>')) {
+   110→      return true
+   111→    }
+   112→    // Same direction decreasing (< or <=)
+   113→    if (this.operator.startsWith('<') && comp.operator.startsWith('<')) {
+   114→      return true
+   115→    }
+   116→    // same SemVer and both sides are inclusive (<= or >=)
+   117→    if (
+   118→      (this.semver.version === comp.semver.version) &&
+   119→      this.operator.includes('=') && comp.operator.includes('=')) {
+   120→      return true
+   121→    }
+   122→    // opposite directions less than
+   123→    if (cmp(this.semver, '<', comp.semver, options) &&
+   124→      this.operator.startsWith('>') && comp.operator.startsWith('<')) {
+   125→      return true
+   126→    }
+   127→    // opposite directions greater than
+   128→    if (cmp(this.semver, '>', comp.semver, options) &&
+   129→      this.operator.startsWith('<') && comp.operator.startsWith('>')) {
+   130→      return true
+   131→    }
+   132→    return false
+   133→  }
+   134→}
+   135→
+   136→module.exports = Comparator
+   137→
+   138→const parseOptions = require('../internal/parse-options')
+   139→const { safeRe: re, t } = require('../internal/re')
+   140→const cmp = require('../functions/cmp')
+   141→const debug = require('../internal/debug')
+   142→const SemVer = require('./semver')
+   143→const Range = require('./range')
+index.js
+     1→'use strict'
+     2→
+     3→module.exports = {
+     4→  SemVer: require('./semver.js'),
+     5→  Range: require('./range.js'),
+     6→  Comparator: require('./comparator.js'),
+     7→}
+range.js
+     1→'use strict'
+     2→
+     3→const SPACE_CHARACTERS = /\s+/g
+     4→
+     5→// hoisted class for cyclic dependency
+     6→class Range {
+     7→  constructor (range, options) {
+     8→    options = parseOptions(options)
+     9→
+    10→    if (range instanceof Range) {
+    11→      if (
+    12→        range.loose === !!options.loose &&
+    13→        range.includePrerelease === !!options.includePrerelease
+    14→      ) {
+    15→        return range
+    16→      } else {
+    17→        return new Range(range.raw, options)
+    18→      }
+    19→    }
+    20→
+    21→    if (range instanceof Comparator) {
+    22→      // just put it in the set and return
+    23→      this.raw = range.value
+    24→      this.set = [[range]]
+    25→      this.formatted = undefined
+    26→      return this
+    27→    }
+    28→
+    29→    this.options = options
+    30→    this.loose = !!options.loose
+    31→    this.includePrerelease = !!options.includePrerelease
+    32→
+    33→    // First reduce all whitespace as much as possible so we do not have to rely
+    34→    // on potentially slow regexes like \s*. This is then stored and used for
+    35→    // future error messages as well.
+    36→    this.raw = range.trim().replace(SPACE_CHARACTERS, ' ')
+    37→
+    38→    // First, split on ||
+    39→    this.set = this.raw
+    40→      .split('||')
+    41→      // map the range to a 2d array of comparators
+    42→      .map(r => this.parseRange(r.trim()))
+    43→      // throw out any comparator lists that are empty
+    44→      // this generally means that it was not a valid range, which is allowed
+    45→      // in loose mode, but will still throw if the WHOLE range is invalid.
+    46→      .filter(c => c.length)
+    47→
+    48→    if (!this.set.length) {
+    49→      throw new TypeError(`Invalid SemVer Range: ${this.raw}`)
+    50→    }
+    51→
+    52→    // if we have any that are not the null set, throw out null sets.
+    53→    if (this.set.length > 1) {
+    54→      // keep the first one, in case they're all null sets
+    55→      const first = this.set[0]
+    56→      this.set = this.set.filter(c => !isNullSet(c[0]))
+    57→      if (this.set.length === 0) {
+    58→        this.set = [first]
+    59→      } else if (this.set.length > 1) {
+    60→        // if we have any that are *, then the range is just *
+    61→        for (const c of this.set) {
+    62→          if (c.length === 1 && isAny(c[0])) {
+    63→            this.set = [c]
+    64→            break
+    65→          }
+    66→        }
+    67→      }
+    68→    }
+    69→
+    70→    this.formatted = undefined
+    71→  }
+    72→
+    73→  get range () {
+    74→    if (this.formatted === undefined) {
+    75→      this.formatted = ''
+    76→      for (let i = 0; i < this.set.length; i++) {
+    77→        if (i > 0) {
+    78→          this.formatted += '||'
+    79→        }
+    80→        const comps = this.set[i]
+    81→        for (let k = 0; k < comps.length; k++) {
+    82→          if (k > 0) {
+    83→            this.formatted += ' '
+    84→          }
+    85→          this.formatted += comps[k].toString().trim()
+    86→        }
+    87→      }
+    88→    }
+    89→    return this.formatted
+    90→  }
+    91→
+    92→  format () {
+    93→    return this.range
+    94→  }
+    95→
+    96→  toString () {
+    97→    return this.range
+    98→  }
+    99→
+   100→  parseRange (range) {
+   101→    // memoize range parsing for performance.
+   102→    // this is a very hot path, and fully deterministic.
+   103→    const memoOpts =
+   104→      (this.options.includePrerelease && FLAG_INCLUDE_PRERELEASE) |
+   105→      (this.options.loose && FLAG_LOOSE)
+   106→    const memoKey = memoOpts + ':' + range
+   107→    const cached = cache.get(memoKey)
+   108→    if (cached) {
+   109→      return cached
+   110→    }
+   111→
+   112→    const loose = this.options.loose
+   113→    // `1.2.3 - 1.2.4` => `>=1.2.3 <=1.2.4`
+   114→    const hr = loose ? re[t.HYPHENRANGELOOSE] : re[t.HYPHENRANGE]
+   115→    range = range.replace(hr, hyphenReplace(this.options.includePrerelease))
+   116→    debug('hyphen replace', range)
+   117→
+   118→    // `> 1.2.3 < 1.2.5` => `>1.2.3 <1.2.5`
+   119→    range = range.replace(re[t.COMPARATORTRIM], comparatorTrimReplace)
+   120→    debug('comparator trim', range)
+   121→
+   122→    // `~ 1.2.3` => `~1.2.3`
+   123→    range = range.replace(re[t.TILDETRIM], tildeTrimReplace)
+   124→    debug('tilde trim', range)
+   125→
+   126→    // `^ 1.2.3` => `^1.2.3`
+   127→    range = range.replace(re[t.CARETTRIM], caretTrimReplace)
+   128→    debug('caret trim', range)
+   129→
+   130→    // At this point, the range is completely trimmed and
+   131→    // ready to be split into comparators.
+   132→
+   133→    let rangeList = range
+   134→      .split(' ')
+   135→      .map(comp => parseComparator(comp, this.options))
+   136→      .join(' ')
+   137→      .split(/\s+/)
+   138→      // >=0.0.0 is equivalent to *
+   139→      .map(comp => replaceGTE0(comp, this.options))
+   140→
+   141→    if (loose) {
+   142→      // in loose mode, throw out any that are not valid comparators
+   143→      rangeList = rangeList.filter(comp => {
+   144→        debug('loose invalid filter', comp, this.options)
+   145→        return !!comp.match(re[t.COMPARATORLOOSE])
+   146→      })
+   147→    }
+   148→    debug('range list', rangeList)
+   149→
+   150→    // if any comparators are the null set, then replace with JUST null set
+   151→    // if more than one comparator, remove any * comparators
+   152→    // also, don't include the same comparator more than once
+   153→    const rangeMap = new Map()
+   154→    const comparators = rangeList.map(comp => new Comparator(comp, this.options))
+   155→    for (const comp of comparators) {
+   156→      if (isNullSet(comp)) {
+   157→        return [comp]
+   158→      }
+   159→      rangeMap.set(comp.value, comp)
+   160→    }
+   161→    if (rangeMap.size > 1 && rangeMap.has('')) {
+   162→      rangeMap.delete('')
+   163→    }
+   164→
+   165→    const result = [...rangeMap.values()]
+   166→    cache.set(memoKey, result)
+   167→    return result
+   168→  }
+   169→
+   170→  intersects (range, options) {
+   171→    if (!(range instanceof Range)) {
+   172→      throw new TypeError('a Range is required')
+   173→    }
+   174→
+   175→    return this.set.some((thisComparators) => {
+   176→      return (
+   177→        isSatisfiable(thisComparators, options) &&
+   178→        range.set.some((rangeComparators) => {
+   179→          return (
+   180→            isSatisfiable(rangeComparators, options) &&
+   181→            thisComparators.every((thisComparator) => {
+   182→              return rangeComparators.every((rangeComparator) => {
+   183→                return thisComparator.intersects(rangeComparator, options)
+   184→              })
+   185→            })
+   186→          )
+   187→        })
+   188→      )
+   189→    })
+   190→  }
+   191→
+   192→  // if ANY of the sets match ALL of its comparators, then pass
+   193→  test (version) {
+   194→    if (!version) {
+   195→      return false
+   196→    }
+   197→
+   198→    if (typeof version === 'string') {
+   199→      try {
+   200→        version = new SemVer(version, this.options)
+   201→      } catch (er) {
+   202→        return false
+   203→      }
+   204→    }
+   205→
+   206→    for (let i = 0; i < this.set.length; i++) {
+   207→      if (testSet(this.set[i], version, this.options)) {
+   208→        return true
+   209→      }
+   210→    }
+   211→    return false
+   212→  }
+   213→}
+   214→
+   215→module.exports = Range
+   216→
+   217→const LRU = require('../internal/lrucache')
+   218→const cache = new LRU()
+   219→
+   220→const parseOptions = require('../internal/parse-options')
+   221→const Comparator = require('./comparator')
+   222→const debug = require('../internal/debug')
+   223→const SemVer = require('./semver')
+   224→const {
+   225→  safeRe: re,
+   226→  t,
+   227→  comparatorTrimReplace,
+   228→  tildeTrimReplace,
+   229→  caretTrimReplace,
+   230→} = require('../internal/re')
+   231→const { FLAG_INCLUDE_PRERELEASE, FLAG_LOOSE } = require('../internal/constants')
+   232→
+   233→const isNullSet = c => c.value === '<0.0.0-0'
+   234→const isAny = c => c.value === ''
+   235→
+   236→// take a set of comparators and determine whether there
+   237→// exists a version which can satisfy it
+   238→const isSatisfiable = (comparators, options) => {
+   239→  let result = true
+   240→  const remainingComparators = comparators.slice()
+   241→  let testComparator = remainingComparators.pop()
+   242→
+   243→  while (result && remainingComparators.length) {
+   244→    result = remainingComparators.every((otherComparator) => {
+   245→      return testComparator.intersects(otherComparator, options)
+   246→    })
+   247→
+   248→    testComparator = remainingComparators.pop()
+   249→  }
+   250→
+   251→  return result
+   252→}
+   253→
+   254→// comprised of xranges, tildes, stars, and gtlt's at this point.
+   255→// already replaced the hyphen ranges
+   256→// turn into a set of JUST comparators.
+   257→const parseComparator = (comp, options) => {
+   258→  comp = comp.replace(re[t.BUILD], '')
+   259→  debug('comp', comp, options)
+   260→  comp = replaceCarets(comp, options)
+   261→  debug('caret', comp)
+   262→  comp = replaceTildes(comp, options)
+   263→  debug('tildes', comp)
+   264→  comp = replaceXRanges(comp, options)
+   265→  debug('xrange', comp)
+   266→  comp = replaceStars(comp, options)
+   267→  debug('stars', comp)
+   268→  return comp
+   269→}
+   270→
+   271→const isX = id => !id || id.toLowerCase() === 'x' || id === '*'
+   272→
+   273→// ~, ~> --> * (any, kinda silly)
+   274→// ~2, ~2.x, ~2.x.x, ~>2, ~>2.x ~>2.x.x --> >=2.0.0 <3.0.0-0
+   275→// ~2.0, ~2.0.x, ~>2.0, ~>2.0.x --> >=2.0.0 <2.1.0-0
+   276→// ~1.2, ~1.2.x, ~>1.2, ~>1.2.x --> >=1.2.0 <1.3.0-0
+   277→// ~1.2.3, ~>1.2.3 --> >=1.2.3 <1.3.0-0
+   278→// ~1.2.0, ~>1.2.0 --> >=1.2.0 <1.3.0-0
+   279→// ~0.0.1 --> >=0.0.1 <0.1.0-0
+   280→const replaceTildes = (comp, options) => {
+   281→  return comp
+   282→    .trim()
+   283→    .split(/\s+/)
+   284→    .map((c) => replaceTilde(c, options))
+   285→    .join(' ')
+   286→}
+   287→
+   288→const replaceTilde = (comp, options) => {
+   289→  const r = options.loose ? re[t.TILDELOOSE] : re[t.TILDE]
+   290→  return comp.replace(r, (_, M, m, p, pr) => {
+   291→    debug('tilde', comp, _, M, m, p, pr)
+   292→    let ret
+   293→
+   294→    if (isX(M)) {
+   295→      ret = ''
+   296→    } else if (isX(m)) {
+   297→      ret = `>=${M}.0.0 <${+M + 1}.0.0-0`
+   298→    } else if (isX(p)) {
+   299→      // ~1.2 == >=1.2.0 <1.3.0-0
+   300→      ret = `>=${M}.${m}.0 <${M}.${+m + 1}.0-0`
+   301→    } else if (pr) {
+   302→      debug('replaceTilde pr', pr)
+   303→      ret = `>=${M}.${m}.${p}-${pr
+   304→      } <${M}.${+m + 1}.0-0`
+   305→    } else {
+   306→      // ~1.2.3 == >=1.2.3 <1.3.0-0
+   307→      ret = `>=${M}.${m}.${p
+   308→      } <${M}.${+m + 1}.0-0`
+   309→    }
+   310→
+   311→    debug('tilde return', ret)
+   312→    return ret
+   313→  })
+   314→}
+   315→
+   316→// ^ --> * (any, kinda silly)
+   317→// ^2, ^2.x, ^2.x.x --> >=2.0.0 <3.0.0-0
+   318→// ^2.0, ^2.0.x --> >=2.0.0 <3.0.0-0
+   319→// ^1.2, ^1.2.x --> >=1.2.0 <2.0.0-0
+   320→// ^1.2.3 --> >=1.2.3 <2.0.0-0
+   321→// ^1.2.0 --> >=1.2.0 <2.0.0-0
+   322→// ^0.0.1 --> >=0.0.1 <0.0.2-0
+   323→// ^0.1.0 --> >=0.1.0 <0.2.0-0
+   324→const replaceCarets = (comp, options) => {
+   325→  return comp
+   326→    .trim()
+   327→    .split(/\s+/)
+   328→    .map((c) => replaceCaret(c, options))
+   329→    .join(' ')
+   330→}
+   331→
+   332→const replaceCaret = (comp, options) => {
+   333→  debug('caret', comp, options)
+   334→  const r = options.loose ? re[t.CARETLOOSE] : re[t.CARET]
+   335→  const z = options.includePrerelease ? '-0' : ''
+   336→  return comp.replace(r, (_, M, m, p, pr) => {
+   337→    debug('caret', comp, _, M, m, p, pr)
+   338→    let ret
+   339→
+   340→    if (isX(M)) {
+   341→      ret = ''
+   342→    } else if (isX(m)) {
+   343→      ret = `>=${M}.0.0${z} <${+M + 1}.0.0-0`
+   344→    } else if (isX(p)) {
+   345→      if (M === '0') {
+   346→        ret = `>=${M}.${m}.0${z} <${M}.${+m + 1}.0-0`
+   347→      } else {
+   348→        ret = `>=${M}.${m}.0${z} <${+M + 1}.0.0-0`
+   349→      }
+   350→    } else if (pr) {
+   351→      debug('replaceCaret pr', pr)
+   352→      if (M === '0') {
+   353→        if (m === '0') {
+   354→          ret = `>=${M}.${m}.${p}-${pr
+   355→          } <${M}.${m}.${+p + 1}-0`
+   356→        } else {
+   357→          ret = `>=${M}.${m}.${p}-${pr
+   358→          } <${M}.${+m + 1}.0-0`
+   359→        }
+   360→      } else {
+   361→        ret = `>=${M}.${m}.${p}-${pr
+   362→        } <${+M + 1}.0.0-0`
+   363→      }
+   364→    } else {
+   365→      debug('no pr')
+   366→      if (M === '0') {
+   367→        if (m === '0') {
+   368→          ret = `>=${M}.${m}.${p
+   369→          }${z} <${M}.${m}.${+p + 1}-0`
+   370→        } else {
+   371→          ret = `>=${M}.${m}.${p
+   372→          }${z} <${M}.${+m + 1}.0-0`
+   373→        }
+   374→      } else {
+   375→        ret = `>=${M}.${m}.${p
+   376→        } <${+M + 1}.0.0-0`
+   377→      }
+   378→    }
+   379→
+   380→    debug('caret return', ret)
+   381→    return ret
+   382→  })
+   383→}
+   384→
+   385→const replaceXRanges = (comp, options) => {
+   386→  debug('replaceXRanges', comp, options)
+   387→  return comp
+   388→    .split(/\s+/)
+   389→    .map((c) => replaceXRange(c, options))
+   390→    .join(' ')
+   391→}
+   392→
+   393→const replaceXRange = (comp, options) => {
+   394→  comp = comp.trim()
+   395→  const r = options.loose ? re[t.XRANGELOOSE] : re[t.XRANGE]
+   396→  return comp.replace(r, (ret, gtlt, M, m, p, pr) => {
+   397→    debug('xRange', comp, ret, gtlt, M, m, p, pr)
+   398→    const xM = isX(M)
+   399→    const xm = xM || isX(m)
+   400→    const xp = xm || isX(p)
+   401→    const anyX = xp
+   402→
+   403→    if (gtlt === '=' && anyX) {
+   404→      gtlt = ''
+   405→    }
+   406→
+   407→    // if we're including prereleases in the match, then we need
+   408→    // to fix this to -0, the lowest possible prerelease value
+   409→    pr = options.includePrerelease ? '-0' : ''
+   410→
+   411→    if (xM) {
+   412→      if (gtlt === '>' || gtlt === '<') {
+   413→        // nothing is allowed
+   414→        ret = '<0.0.0-0'
+   415→      } else {
+   416→        // nothing is forbidden
+   417→        ret = '*'
+   418→      }
+   419→    } else if (gtlt && anyX) {
+   420→      // we know patch is an x, because we have any x at all.
+   421→      // replace X with 0
+   422→      if (xm) {
+   423→        m = 0
+   424→      }
+   425→      p = 0
+   426→
+   427→      if (gtlt === '>') {
+   428→        // >1 => >=2.0.0
+   429→        // >1.2 => >=1.3.0
+   430→        gtlt = '>='
+   431→        if (xm) {
+   432→          M = +M + 1
+   433→          m = 0
+   434→          p = 0
+   435→        } else {
+   436→          m = +m + 1
+   437→          p = 0
+   438→        }
+   439→      } else if (gtlt === '<=') {
+   440→        // <=0.7.x is actually <0.8.0, since any 0.7.x should
+   441→        // pass.  Similarly, <=7.x is actually <8.0.0, etc.
+   442→        gtlt = '<'
+   443→        if (xm) {
+   444→          M = +M + 1
+   445→        } else {
+   446→          m = +m + 1
+   447→        }
+   448→      }
+   449→
+   450→      if (gtlt === '<') {
+   451→        pr = '-0'
+   452→      }
+   453→
+   454→      ret = `${gtlt + M}.${m}.${p}${pr}`
+   455→    } else if (xm) {
+   456→      ret = `>=${M}.0.0${pr} <${+M + 1}.0.0-0`
+   457→    } else if (xp) {
+   458→      ret = `>=${M}.${m}.0${pr
+   459→      } <${M}.${+m + 1}.0-0`
+   460→    }
+   461→
+   462→    debug('xRange return', ret)
+   463→
+   464→    return ret
+   465→  })
+   466→}
+   467→
+   468→// Because * is AND-ed with everything else in the comparator,
+   469→// and '' means "any version", just remove the *s entirely.
+   470→const replaceStars = (comp, options) => {
+   471→  debug('replaceStars', comp, options)
+   472→  // Looseness is ignored here.  star is always as loose as it gets!
+   473→  return comp
+   474→    .trim()
+   475→    .replace(re[t.STAR], '')
+   476→}
+   477→
+   478→const replaceGTE0 = (comp, options) => {
+   479→  debug('replaceGTE0', comp, options)
+   480→  return comp
+   481→    .trim()
+   482→    .replace(re[options.includePrerelease ? t.GTE0PRE : t.GTE0], '')
+   483→}
+   484→
+   485→// This function is passed to string.replace(re[t.HYPHENRANGE])
+   486→// M, m, patch, prerelease, build
+   487→// 1.2 - 3.4.5 => >=1.2.0 <=3.4.5
+   488→// 1.2.3 - 3.4 => >=1.2.0 <3.5.0-0 Any 3.4.x will do
+   489→// 1.2 - 3.4 => >=1.2.0 <3.5.0-0
+   490→// TODO build?
+   491→const hyphenReplace = incPr => ($0,
+   492→  from, fM, fm, fp, fpr, fb,
+   493→  to, tM, tm, tp, tpr) => {
+   494→  if (isX(fM)) {
+   495→    from = ''
+   496→  } else if (isX(fm)) {
+   497→    from = `>=${fM}.0.0${incPr ? '-0' : ''}`
+   498→  } else if (isX(fp)) {
+   499→    from = `>=${fM}.${fm}.0${incPr ? '-0' : ''}`
+   500→  } else if (fpr) {
+   501→    from = `>=${from}`
+   502→  } else {
+   503→    from = `>=${from}${incPr ? '-0' : ''}`
+   504→  }
+   505→
+   506→  if (isX(tM)) {
+   507→    to = ''
+   508→  } else if (isX(tm)) {
+   509→    to = `<${+tM + 1}.0.0-0`
+   510→  } else if (isX(tp)) {
+   511→    to = `<${tM}.${+tm + 1}.0-0`
+   512→  } else if (tpr) {
+   513→    to = `<=${tM}.${tm}.${tp}-${tpr}`
+   514→  } else if (incPr) {
+   515→    to = `<${tM}.${tm}.${+tp + 1}-0`
+   516→  } else {
+   517→    to = `<=${to}`
+   518→  }
+   519→
+   520→  return `${from} ${to}`.trim()
+   521→}
+   522→
+   523→const testSet = (set, version, options) => {
+   524→  for (let i = 0; i < set.length; i++) {
+   525→    if (!set[i].test(version)) {
+   526→      return false
+   527→    }
+   528→  }
+   529→
+   530→  if (version.prerelease.length && !options.includePrerelease) {
+   531→    // Find the set of versions that are allowed to have prereleases
+   532→    // For example, ^1.2.3-pr.1 desugars to >=1.2.3-pr.1 <2.0.0
+   533→    // That should allow `1.2.3-pr.2` to pass.
+   534→    // However, `1.2.4-alpha.notready` should NOT be allowed,
+   535→    // even though it's within the range set by the comparators.
+   536→    for (let i = 0; i < set.length; i++) {
+   537→      debug(set[i].semver)
+   538→      if (set[i].semver === Comparator.ANY) {
+   539→        continue
+   540→      }
+   541→
+   542→      if (set[i].semver.prerelease.length > 0) {
+   543→        const allowed = set[i].semver
+   544→        if (allowed.major === version.major &&
+   545→            allowed.minor === version.minor &&
+   546→            allowed.patch === version.patch) {
+   547→          return true
+   548→        }
+   549→      }
+   550→    }
+   551→
+   552→    // Version has a -pre, but it's not one of the ones we like.
+   553→    return false
+   554→  }
+   555→
+   556→  return true
+   557→}
+semver.js
+     1→'use strict'
+     2→
+     3→const debug = require('../internal/debug')
+     4→const { MAX_LENGTH, MAX_SAFE_INTEGER } = require('../internal/constants')
+     5→const { safeRe: re, t } = require('../internal/re')
+     6→
+     7→const parseOptions = require('../internal/parse-options')
+     8→const { compareIdentifiers } = require('../internal/identifiers')
+     9→class SemVer {
+    10→  constructor (version, options) {
+    11→    options = parseOptions(options)
+    12→
+    13→    if (version instanceof SemVer) {
+    14→      if (version.loose === !!options.loose &&
+    15→        version.includePrerelease === !!options.includePrerelease) {
+    16→        return version
+    17→      } else {
+    18→        version = version.version
+    19→      }
+    20→    } else if (typeof version !== 'string') {
+    21→      throw new TypeError(`Invalid version. Must be a string. Got type "${typeof version}".`)
+    22→    }
+    23→
+    24→    if (version.length > MAX_LENGTH) {
+    25→      throw new TypeError(
+    26→        `version is longer than ${MAX_LENGTH} characters`
+    27→      )
+    28→    }
+    29→
+    30→    debug('SemVer', version, options)
+    31→    this.options = options
+    32→    this.loose = !!options.loose
+    33→    // this isn't actually relevant for versions, but keep it so that we
+    34→    // don't run into trouble passing this.options around.
+    35→    this.includePrerelease = !!options.includePrerelease
+    36→
+    37→    const m = version.trim().match(options.loose ? re[t.LOOSE] : re[t.FULL])
+    38→
+    39→    if (!m) {
+    40→      throw new TypeError(`Invalid Version: ${version}`)
+    41→    }
+    42→
+    43→    this.raw = version
+    44→
+    45→    // these are actually numbers
+    46→    this.major = +m[1]
+    47→    this.minor = +m[2]
+    48→    this.patch = +m[3]
+    49→
+    50→    if (this.major > MAX_SAFE_INTEGER || this.major < 0) {
+    51→      throw new TypeError('Invalid major version')
+    52→    }
+    53→
+    54→    if (this.minor > MAX_SAFE_INTEGER || this.minor < 0) {
+    55→      throw new TypeError('Invalid minor version')
+    56→    }
+    57→
+    58→    if (this.patch > MAX_SAFE_INTEGER || this.patch < 0) {
+    59→      throw new TypeError('Invalid patch version')
+    60→    }
+    61→
+    62→    // numberify any prerelease numeric ids
+    63→    if (!m[4]) {
+    64→      this.prerelease = []
+    65→    } else {
+    66→      this.prerelease = m[4].split('.').map((id) => {
+    67→        if (/^[0-9]+$/.test(id)) {
+    68→          const num = +id
+    69→          if (num >= 0 && num < MAX_SAFE_INTEGER) {
+    70→            return num
+    71→          }
+    72→        }
+    73→        return id
+    74→      })
+    75→    }
+    76→
+    77→    this.build = m[5] ? m[5].split('.') : []
+    78→    this.format()
+    79→  }
+    80→
+    81→  format () {
+    82→    this.version = `${this.major}.${this.minor}.${this.patch}`
+    83→    if (this.prerelease.length) {
+    84→      this.version += `-${this.prerelease.join('.')}`
+    85→    }
+    86→    return this.version
+    87→  }
+    88→
+    89→  toString () {
+    90→    return this.version
+    91→  }
+    92→
+    93→  compare (other) {
+    94→    debug('SemVer.compare', this.version, this.options, other)
+    95→    if (!(other instanceof SemVer)) {
+    96→      if (typeof other === 'string' && other === this.version) {
+    97→        return 0
+    98→      }
+    99→      other = new SemVer(other, this.options)
+   100→    }
+   101→
+   102→    if (other.version === this.version) {
+   103→      return 0
+   104→    }
+   105→
+   106→    return this.compareMain(other) || this.comparePre(other)
+   107→  }
+   108→
+   109→  compareMain (other) {
+   110→    if (!(other instanceof SemVer)) {
+   111→      other = new SemVer(other, this.options)
+   112→    }
+   113→
+   114→    if (this.major < other.major) {
+   115→      return -1
+   116→    }
+   117→    if (this.major > other.major) {
+   118→      return 1
+   119→    }
+   120→    if (this.minor < other.minor) {
+   121→      return -1
+   122→    }
+   123→    if (this.minor > other.minor) {
+   124→      return 1
+   125→    }
+   126→    if (this.patch < other.patch) {
+   127→      return -1
+   128→    }
+   129→    if (this.patch > other.patch) {
+   130→      return 1
+   131→    }
+   132→    return 0
+   133→  }
+   134→
+   135→  comparePre (other) {
+   136→    if (!(other instanceof SemVer)) {
+   137→      other = new SemVer(other, this.options)
+   138→    }
+   139→
+   140→    // NOT having a prerelease is > having one
+   141→    if (this.prerelease.length && !other.prerelease.length) {
+   142→      return -1
+   143→    } else if (!this.prerelease.length && other.prerelease.length) {
+   144→      return 1
+   145→    } else if (!this.prerelease.length && !other.prerelease.length) {
+   146→      return 0
+   147→    }
+   148→
+   149→    let i = 0
+   150→    do {
+   151→      const a = this.prerelease[i]
+   152→      const b = other.prerelease[i]
+   153→      debug('prerelease compare', i, a, b)
+   154→      if (a === undefined && b === undefined) {
+   155→        return 0
+   156→      } else if (b === undefined) {
+   157→        return 1
+   158→      } else if (a === undefined) {
+   159→        return -1
+   160→      } else if (a === b) {
+   161→        continue
+   162→      } else {
+   163→        return compareIdentifiers(a, b)
+   164→      }
+   165→    } while (++i)
+   166→  }
+   167→
+   168→  compareBuild (other) {
+   169→    if (!(other instanceof SemVer)) {
+   170→      other = new SemVer(other, this.options)
+   171→    }
+   172→
+   173→    let i = 0
+   174→    do {
+   175→      const a = this.build[i]
+   176→      const b = other.build[i]
+   177→      debug('build compare', i, a, b)
+   178→      if (a === undefined && b === undefined) {
+   179→        return 0
+   180→      } else if (b === undefined) {
+   181→        return 1
+   182→      } else if (a === undefined) {
+   183→        return -1
+   184→      } else if (a === b) {
+   185→        continue
+   186→      } else {
+   187→        return compareIdentifiers(a, b)
+   188→      }
+   189→    } while (++i)
+   190→  }
+   191→
+   192→  // preminor will bump the version up to the next minor release, and immediately
+   193→  // down to pre-release. premajor and prepatch work the same way.
+   194→  inc (release, identifier, identifierBase) {
+   195→    if (release.startsWith('pre')) {
+   196→      if (!identifier && identifierBase === false) {
+   197→        throw new Error('invalid increment argument: identifier is empty')
+   198→      }
+   199→      // Avoid an invalid semver results
+   200→      if (identifier) {
+   201→        const match = `-${identifier}`.match(this.options.loose ? re[t.PRERELEASELOOSE] : re[t.PRERELEASE])
+   202→        if (!match || match[1] !== identifier) {
+   203→          throw new Error(`invalid identifier: ${identifier}`)
+   204→        }
+   205→      }
+   206→    }
+   207→
+   208→    switch (release) {
+   209→      case 'premajor':
+   210→        this.prerelease.length = 0
+   211→        this.patch = 0
+   212→        this.minor = 0
+   213→        this.major++
+   214→        this.inc('pre', identifier, identifierBase)
+   215→        break
+   216→      case 'preminor':
+   217→        this.prerelease.length = 0
+   218→        this.patch = 0
+   219→        this.minor++
+   220→        this.inc('pre', identifier, identifierBase)
+   221→        break
+   222→      case 'prepatch':
+   223→        // If this is already a prerelease, it will bump to the next version
+   224→        // drop any prereleases that might already exist, since they are not
+   225→        // relevant at this point.
+   226→        this.prerelease.length = 0
+   227→        this.inc('patch', identifier, identifierBase)
+   228→        this.inc('pre', identifier, identifierBase)
+   229→        break
+   230→      // If the input is a non-prerelease version, this acts the same as
+   231→      // prepatch.
+   232→      case 'prerelease':
+   233→        if (this.prerelease.length === 0) {
+   234→          this.inc('patch', identifier, identifierBase)
+   235→        }
+   236→        this.inc('pre', identifier, identifierBase)
+   237→        break
+   238→      case 'release':
+   239→        if (this.prerelease.length === 0) {
+   240→          throw new Error(`version ${this.raw} is not a prerelease`)
+   241→        }
+   242→        this.prerelease.length = 0
+   243→        break
+   244→
+   245→      case 'major':
+   246→        // If this is a pre-major version, bump up to the same major version.
+   247→        // Otherwise increment major.
+   248→        // 1.0.0-5 bumps to 1.0.0
+   249→        // 1.1.0 bumps to 2.0.0
+   250→        if (
+   251→          this.minor !== 0 ||
+   252→          this.patch !== 0 ||
+   253→          this.prerelease.length === 0
+   254→        ) {
+   255→          this.major++
+   256→        }
+   257→        this.minor = 0
+   258→        this.patch = 0
+   259→        this.prerelease = []
+   260→        break
+   261→      case 'minor':
+   262→        // If this is a pre-minor version, bump up to the same minor version.
+   263→        // Otherwise increment minor.
+   264→        // 1.2.0-5 bumps to 1.2.0
+   265→        // 1.2.1 bumps to 1.3.0
+   266→        if (this.patch !== 0 || this.prerelease.length === 0) {
+   267→          this.minor++
+   268→        }
+   269→        this.patch = 0
+   270→        this.prerelease = []
+   271→        break
+   272→      case 'patch':
+   273→        // If this is not a pre-release version, it will increment the patch.
+   274→        // If it is a pre-release it will bump up to the same patch version.
+   275→        // 1.2.0-5 patches to 1.2.0
+   276→        // 1.2.0 patches to 1.2.1
+   277→        if (this.prerelease.length === 0) {
+   278→          this.patch++
+   279→        }
+   280→        this.prerelease = []
+   281→        break
+   282→      // This probably shouldn't be used publicly.
+   283→      // 1.0.0 'pre' would become 1.0.0-0 which is the wrong direction.
+   284→      case 'pre': {
+   285→        const base = Number(identifierBase) ? 1 : 0
+   286→
+   287→        if (this.prerelease.length === 0) {
+   288→          this.prerelease = [base]
+   289→        } else {
+   290→          let i = this.prerelease.length
+   291→          while (--i >= 0) {
+   292→            if (typeof this.prerelease[i] === 'number') {
+   293→              this.prerelease[i]++
+   294→              i = -2
+   295→            }
+   296→          }
+   297→          if (i === -1) {
+   298→            // didn't increment anything
+   299→            if (identifier === this.prerelease.join('.') && identifierBase === false) {
+   300→              throw new Error('invalid increment argument: identifier already exists')
+   301→            }
+   302→            this.prerelease.push(base)
+   303→          }
+   304→        }
+   305→        if (identifier) {
+   306→          // 1.2.0-beta.1 bumps to 1.2.0-beta.2,
+   307→          // 1.2.0-beta.fooblz or 1.2.0-beta bumps to 1.2.0-beta.0
+   308→          let prerelease = [identifier, base]
+   309→          if (identifierBase === false) {
+   310→            prerelease = [identifier]
+   311→          }
+   312→          if (compareIdentifiers(this.prerelease[0], identifier) === 0) {
+   313→            if (isNaN(this.prerelease[1])) {
+   314→              this.prerelease = prerelease
+   315→            }
+   316→          } else {
+   317→            this.prerelease = prerelease
+   318→          }
+   319→        }
+   320→        break
+   321→      }
+   322→      default:
+   323→        throw new Error(`invalid increment argument: ${release}`)
+   324→    }
+   325→    this.raw = this.format()
+   326→    if (this.build.length) {
+   327→      this.raw += `+${this.build.join('.')}`
+   328→    }
+   329→    return this
+   330→  }
+   331→}
+   332→
+   333→module.exports = SemVer

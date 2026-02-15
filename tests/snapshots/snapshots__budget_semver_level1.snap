@@ -1,0 +1,52 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 100 → level 1 (91 words)
+
+comparator.js
+     3→const ANY
+     5→class Comparator
+     6→  static get ANY
+    10→  constructor
+    36→  parse
+    57→  toString
+    61→  test
+    79→  intersects
+index.js
+range.js
+     3→const SPACE_CHARACTERS
+     6→class Range
+     7→  constructor
+    73→  get range
+    92→  format
+    96→  toString
+   100→  parseRange
+   170→  intersects
+   193→  test
+   218→const cache
+   233→const isNullSet
+   234→const isAny
+   238→const isSatisfiable
+   257→const parseComparator
+   271→const isX
+   280→const replaceTildes
+   288→const replaceTilde
+   324→const replaceCarets
+   332→const replaceCaret
+   385→const replaceXRanges
+   393→const replaceXRange
+   470→const replaceStars
+   478→const replaceGTE0
+   491→const hyphenReplace
+   523→const testSet
+semver.js
+     9→class SemVer
+    10→  constructor
+    81→  format
+    89→  toString
+    93→  compare
+   109→  compareMain
+   135→  comparePre
+   168→  compareBuild
+   194→  inc

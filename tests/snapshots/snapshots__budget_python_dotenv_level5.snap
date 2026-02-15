@@ -1,0 +1,447 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 2000 → level 5 (1908 words)
+
+__init__.py
+     6→def load_ipython_extension(ipython: Any) -> None:
+    12→def get_cli_string(
+    13→    path: Optional[str] = None,
+    14→    action: Optional[str] = None,
+    15→    key: Optional[str] = None,
+    16→    value: Optional[str] = None,
+    17→    quote: Optional[str] = None,
+    18→):
+    19→    """Returns a string suitable for running as a shell script.
+    20→
+    21→    Useful for converting a arguments passed to a fabric task
+    22→    to be passed to a `local` or `run` command.
+    23→    """
+    42→__all__ = [
+__main__.py
+cli.py
+    24→def enumerate_env() -> Optional[str]:
+    25→    """
+    26→    Return a path for the ${pwd}/.env file.
+    27→
+    28→    If pwd does not exist, return None.
+    29→    """
+    60→@click.version_option(version=__version__)
+    61→@click.pass_context
+    62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
+    63→    """This script is used to set, get or unset values from a .env file."""
+    67→@contextmanager
+    68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
+    69→    """
+    70→    Open a file and yield the corresponding (decoded) stream.
+    71→
+    72→    Exits with error code 2 if the file cannot be opened.
+    73→    """
+    93→def list_values(ctx: click.Context, output_format: str) -> None:
+    94→    """Display all the stored key/value."""
+   112→@cli.command(name="set")
+   113→@click.pass_context
+   114→@click.argument("key", required=True)
+   115→@click.argument("value", required=True)
+   116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
+   117→    """Store the given key/value."""
+   128→@cli.command()
+   129→@click.pass_context
+   130→@click.argument("key", required=True)
+   131→def get(ctx: click.Context, key: Any) -> None:
+   132→    """Retrieve the value for the given key."""
+   145→@cli.command()
+   146→@click.pass_context
+   147→@click.argument("key", required=True)
+   148→def unset(ctx: click.Context, key: Any) -> None:
+   149→    """Removes the given key."""
+   172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
+   173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
+   174→    """Run command with environment variables present."""
+   193→def run_command(command: List[str], env: Dict[str, str]) -> None:
+   194→    """Replace the current process with the specified command.
+   195→
+   196→    Replaces the current process with the specified command and the variables from `env`
+   197→    added in the current environment variables.
+   198→
+   199→    Parameters
+   200→    ----------
+   201→    command: List[str]
+   202→        The command and it's parameters
+   203→    env: Dict
+   204→        The additional environment variables
+   205→
+   206→    Returns
+   207→    -------
+   208→    None
+   209→        This function does not return any value. It replaces the current process with the new one.
+   210→
+   211→    """
+ipython.py
+    11→@magics_class
+    12→class IPythonDotEnv(Magics):
+    13→    @magic_arguments()
+    14→    @argument(
+    15→        "-o",
+    16→        "--override",
+    17→        action="store_true",
+    18→        help="Indicate to override existing variables",
+    19→    )
+    20→    @argument(
+    21→        "-v",
+    22→        "--verbose",
+    23→        action="store_true",
+    24→        help="Indicate function calls to be verbose",
+    25→    )
+    26→    @argument(
+    27→        "dotenv_path",
+    28→        nargs="?",
+    29→        type=str,
+    30→        default=".env",
+    31→        help="Search in increasingly higher folders for the `dotenv_path`",
+    32→    )
+    33→    @line_magic
+    34→    def dotenv(self, line):
+    35→        args = parse_argstring(self.dotenv, line)
+    36→        # Locate the .env file
+    37→        dotenv_path = args.dotenv_path
+    38→        try:
+    39→            dotenv_path = find_dotenv(dotenv_path, True, True)
+    40→        except IOError:
+    41→            print("cannot find .env file")
+    42→            return
+    43→
+    44→        # Load the .env file
+    45→        load_dotenv(dotenv_path, verbose=args.verbose, override=args.override)
+    48→def load_ipython_extension(ipython):
+    49→    """Register the %dotenv magic."""
+main.py
+    25→def _load_dotenv_disabled() -> bool:
+    26→    """
+    27→    Determine if dotenv loading has been disabled.
+    28→    """
+    35→def with_warn_for_invalid_lines(mappings: Iterator[Binding]) -> Iterator[Binding]:
+    45→class DotEnv:
+    46→    def __init__(
+    47→        self,
+    48→        dotenv_path: Optional[StrPath],
+    49→        stream: Optional[IO[str]] = None,
+    50→        verbose: bool = False,
+    51→        encoding: Optional[str] = None,
+    52→        interpolate: bool = True,
+    53→        override: bool = True,
+    54→    ) -> None:
+    55→        self.dotenv_path: Optional[StrPath] = dotenv_path
+    56→        self.stream: Optional[IO[str]] = stream
+    57→        self._dict: Optional[Dict[str, Optional[str]]] = None
+    58→        self.verbose: bool = verbose
+    59→        self.encoding: Optional[str] = encoding
+    60→        self.interpolate: bool = interpolate
+    61→        self.override: bool = override
+    62→
+    63→    @contextmanager
+    64→    def _get_stream(self) -> Iterator[IO[str]]:
+    65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
+    66→            with open(self.dotenv_path, encoding=self.encoding) as stream:
+    67→                yield stream
+    68→        elif self.stream is not None:
+    69→            yield self.stream
+    70→        else:
+    71→            if self.verbose:
+    72→                logger.info(
+    73→                    "python-dotenv could not find configuration file %s.",
+    74→                    self.dotenv_path or ".env",
+    75→                )
+    76→            yield io.StringIO("")
+    77→
+    78→    def dict(self) -> Dict[str, Optional[str]]:
+    79→        """Return dotenv as dict"""
+    80→        if self._dict:
+    81→            return self._dict
+    82→
+    83→        raw_values = self.parse()
+    84→
+    85→        if self.interpolate:
+    86→            self._dict = OrderedDict(
+    87→                resolve_variables(raw_values, override=self.override)
+    88→            )
+    89→        else:
+    90→            self._dict = OrderedDict(raw_values)
+    91→
+    92→        return self._dict
+    93→
+    94→    def parse(self) -> Iterator[Tuple[str, Optional[str]]]:
+    95→        with self._get_stream() as stream:
+    96→            for mapping in with_warn_for_invalid_lines(parse_stream(stream)):
+    97→                if mapping.key is not None:
+    98→                    yield mapping.key, mapping.value
+    99→
+   100→    def set_as_environment_variables(self) -> bool:
+   101→        """
+   102→        Load the current dotenv as system environment variable.
+   103→        """
+   104→        if not self.dict():
+   105→            return False
+   106→
+   107→        for k, v in self.dict().items():
+   108→            if k in os.environ and not self.override:
+   109→                continue
+   110→            if v is not None:
+   111→                os.environ[k] = v
+   112→
+   113→        return True
+   114→
+   115→    def get(self, key: str) -> Optional[str]:
+   116→        """ """
+   117→        data = self.dict()
+   118→
+   119→        if key in data:
+   120→            return data[key]
+   121→
+   122→        if self.verbose:
+   123→            logger.warning("Key %s not found in %s.", key, self.dotenv_path)
+   124→
+   125→        return None
+   128→def get_key(
+   129→    dotenv_path: StrPath,
+   130→    key_to_get: str,
+   131→    encoding: Optional[str] = "utf-8",
+   132→) -> Optional[str]:
+   133→    """
+   134→    Get the value of a given key from the given .env.
+   135→
+   136→    Returns `None` if the key isn't found or doesn't have a value.
+   137→    """
+   141→@contextmanager
+   142→def rewrite(
+   143→    path: StrPath,
+   144→    encoding: Optional[str],
+   145→) -> Iterator[Tuple[IO[str], IO[str]]]:
+   163→def set_key(
+   164→    dotenv_path: StrPath,
+   165→    key_to_set: str,
+   166→    value_to_set: str,
+   167→    quote_mode: str = "always",
+   168→    export: bool = False,
+   169→    encoding: Optional[str] = "utf-8",
+   170→) -> Tuple[Optional[bool], str, str]:
+   171→    """
+   172→    Adds or Updates a key/value to the given .env
+   173→
+   174→    If the .env path given doesn't exist, fails instead of risking creating
+   175→    an orphan .env somewhere in the filesystem
+   176→    """
+   211→def unset_key(
+   212→    dotenv_path: StrPath,
+   213→    key_to_unset: str,
+   214→    quote_mode: str = "always",
+   215→    encoding: Optional[str] = "utf-8",
+   216→) -> Tuple[Optional[bool], str]:
+   217→    """
+   218→    Removes a given key from the given `.env` file.
+   219→
+   220→    If the .env path given doesn't exist, fails.
+   221→    If the given key doesn't exist in the .env, fails.
+   222→    """
+   244→def resolve_variables(
+   245→    values: Iterable[Tuple[str, Optional[str]]],
+   246→    override: bool,
+   247→) -> Mapping[str, Optional[str]]:
+   269→def _walk_to_root(path: str) -> Iterator[str]:
+   270→    """
+   271→    Yield directories starting from the given directory up to the root
+   272→    """
+   287→def find_dotenv(
+   288→    filename: str = ".env",
+   289→    raise_error_if_not_found: bool = False,
+   290→    usecwd: bool = False,
+   291→) -> str:
+   292→    """
+   293→    Search in increasingly higher folders for the given file
+   294→
+   295→    Returns path to the file if found, or an empty string otherwise
+   296→    """
+   338→def load_dotenv(
+   339→    dotenv_path: Optional[StrPath] = None,
+   340→    stream: Optional[IO[str]] = None,
+   341→    verbose: bool = False,
+   342→    override: bool = False,
+   343→    interpolate: bool = True,
+   344→    encoding: Optional[str] = "utf-8",
+   345→) -> bool:
+   346→    """Parse a .env file and then load all the variables found as environment variables.
+   347→
+   348→    Parameters:
+   349→        dotenv_path: Absolute or relative path to .env file.
+   350→        stream: Text stream (such as `io.StringIO`) with .env content, used if
+   351→            `dotenv_path` is `None`.
+   352→        verbose: Whether to output a warning the .env file is missing.
+   353→        override: Whether to override the system environment variables with the variables
+   354→            from the `.env` file.
+   355→        encoding: Encoding to be used to read the file.
+   356→    Returns:
+   357→        Bool: True if at least one environment variable is set else False
+   358→
+   359→    If both `dotenv_path` and `stream` are `None`, `find_dotenv()` is used to find the
+   360→    .env file with it's default parameters. If you need to change the default parameters
+   361→    of `find_dotenv()`, you can explicitly call `find_dotenv()` and pass the result
+   362→    to this function as `dotenv_path`.
+   363→
+   364→    If the environment variable `PYTHON_DOTENV_DISABLED` is set to a truthy value,
+   365→    .env loading is disabled.
+   366→    """
+   387→def dotenv_values(
+   388→    dotenv_path: Optional[StrPath] = None,
+   389→    stream: Optional[IO[str]] = None,
+   390→    verbose: bool = False,
+   391→    interpolate: bool = True,
+   392→    encoding: Optional[str] = "utf-8",
+   393→) -> Dict[str, Optional[str]]:
+   394→    """
+   395→    Parse a .env file and return its content as a dict.
+   396→
+   397→    The returned dict will have `None` values for keys without values in the .env file.
+   398→    For example, `foo=bar` results in `{"foo": "bar"}` whereas `foo` alone results in
+   399→    `{"foo": None}`
+   400→
+   401→    Parameters:
+   402→        dotenv_path: Absolute or relative path to the .env file.
+   403→        stream: `StringIO` object with .env content, used if `dotenv_path` is `None`.
+   404→        verbose: Whether to output a warning if the .env file is missing.
+   405→        encoding: Encoding to be used to read the file.
+   406→
+   407→    If both `dotenv_path` and `stream` are `None`, `find_dotenv()` is used to find the
+   408→    .env file.
+   409→    """
+   423→def _is_file_or_fifo(path: StrPath) -> bool:
+   424→    """
+   425→    Return True if `path` exists and is either a regular file or a FIFO.
+   426→    """
+parser.py
+    14→def make_regex(string: str, extra_flags: int = 0) -> Pattern[str]:
+    35→class Original(NamedTuple):
+    36→    string: str
+    37→    line: int
+    40→class Binding(NamedTuple):
+    41→    key: Optional[str]
+    42→    value: Optional[str]
+    43→    original: Original
+    44→    error: bool
+    47→class Position:
+    48→    def __init__(self, chars: int, line: int) -> None:
+    49→        self.chars = chars
+    50→        self.line = line
+    51→
+    52→    @classmethod
+    53→    def start(cls) -> "Position":
+    54→        return cls(chars=0, line=1)
+    55→
+    56→    def set(self, other: "Position") -> None:
+    57→        self.chars = other.chars
+    58→        self.line = other.line
+    59→
+    60→    def advance(self, string: str) -> None:
+    61→        self.chars += len(string)
+    62→        self.line += len(re.findall(_newline, string))
+    65→class Error(Exception):
+    66→    pass
+    69→class Reader:
+    70→    def __init__(self, stream: IO[str]) -> None:
+    71→        self.string = stream.read()
+    72→        self.position = Position.start()
+    73→        self.mark = Position.start()
+    74→
+    75→    def has_next(self) -> bool:
+    76→        return self.position.chars < len(self.string)
+    77→
+    78→    def set_mark(self) -> None:
+    79→        self.mark.set(self.position)
+    80→
+    81→    def get_marked(self) -> Original:
+    82→        return Original(
+    83→            string=self.string[self.mark.chars : self.position.chars],
+    84→            line=self.mark.line,
+    85→        )
+    86→
+    87→    def peek(self, count: int) -> str:
+    88→        return self.string[self.position.chars : self.position.chars + count]
+    89→
+    90→    def read(self, count: int) -> str:
+    91→        result = self.string[self.position.chars : self.position.chars + count]
+    92→        if len(result) < count:
+    93→            raise Error("read: End of string")
+    94→        self.position.advance(result)
+    95→        return result
+    96→
+    97→    def read_regex(self, regex: Pattern[str]) -> Sequence[str]:
+    98→        match = regex.match(self.string, self.position.chars)
+    99→        if match is None:
+   100→            raise Error("read_regex: Pattern not found")
+   101→        self.position.advance(self.string[match.start() : match.end()])
+   102→        return match.groups()
+   105→def decode_escapes(regex: Pattern[str], string: str) -> str:
+   112→def parse_key(reader: Reader) -> Optional[str]:
+   123→def parse_unquoted_value(reader: Reader) -> str:
+   128→def parse_value(reader: Reader) -> str:
+   142→def parse_binding(reader: Reader) -> Binding:
+   179→def parse_stream(stream: IO[str]) -> Iterator[Binding]:
+variables.py
+     5→_posix_variable: Pattern[str] = re.compile(
+     6→    r"""
+     7→    \$\{
+     8→        (?P<name>[^\}:]*)
+     9→        (?::-
+    10→            (?P<default>[^\}]*)
+    11→        )?
+    12→    \}
+    13→    """,
+    18→class Atom(metaclass=ABCMeta):
+    19→    def __ne__(self, other: object) -> bool:
+    20→        result = self.__eq__(other)
+    21→        if result is NotImplemented:
+    22→            return NotImplemented
+    23→        return not result
+    24→
+    25→    @abstractmethod
+    26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
+    29→class Literal(Atom):
+    30→    def __init__(self, value: str) -> None:
+    31→        self.value = value
+    32→
+    33→    def __repr__(self) -> str:
+    34→        return f"Literal(value={self.value})"
+    35→
+    36→    def __eq__(self, other: object) -> bool:
+    37→        if not isinstance(other, self.__class__):
+    38→            return NotImplemented
+    39→        return self.value == other.value
+    40→
+    41→    def __hash__(self) -> int:
+    42→        return hash((self.__class__, self.value))
+    43→
+    44→    def resolve(self, env: Mapping[str, Optional[str]]) -> str:
+    45→        return self.value
+    48→class Variable(Atom):
+    49→    def __init__(self, name: str, default: Optional[str]) -> None:
+    50→        self.name = name
+    51→        self.default = default
+    52→
+    53→    def __repr__(self) -> str:
+    54→        return f"Variable(name={self.name}, default={self.default})"
+    55→
+    56→    def __eq__(self, other: object) -> bool:
+    57→        if not isinstance(other, self.__class__):
+    58→            return NotImplemented
+    59→        return (self.name, self.default) == (other.name, other.default)
+    60→
+    61→    def __hash__(self) -> int:
+    62→        return hash((self.__class__, self.name, self.default))
+    63→
+    64→    def resolve(self, env: Mapping[str, Optional[str]]) -> str:
+    65→        default = self.default if self.default is not None else ""
+    66→        result = env.get(self.name, default)
+    67→        return result if result is not None else ""
+    70→def parse_variables(value: str) -> Iterator[Atom]:
+version.py
+     1→__version__ = "1.2.1"

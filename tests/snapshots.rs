@@ -1451,6 +1451,76 @@ budget_test!(budget_log_level1, "log/src", 2000);
 budget_test!(budget_log_level3, "log/src", 5000);
 budget_test!(budget_log_level4, "log/src", 10000);
 
+budget_test!(budget_thiserror_level0, "thiserror/src", 3);
+budget_test!(budget_thiserror_level1, "thiserror/src", 280);
+budget_test!(budget_thiserror_level4, "thiserror/src", 440);
+budget_test!(budget_thiserror_level6, "thiserror/src", 1900);
+
+budget_test!(budget_once_cell_level0, "once_cell/src", 3);
+budget_test!(budget_once_cell_level1, "once_cell/src", 1000);
+budget_test!(budget_once_cell_level3, "once_cell/src", 3000);
+budget_test!(budget_once_cell_level5, "once_cell/src", 6200);
+
+budget_test!(budget_humanize_level0, "humanize/src/humanize", 3);
+budget_test!(budget_humanize_level1, "humanize/src/humanize", 100);
+budget_test!(budget_humanize_level2, "humanize/src/humanize", 500);
+budget_test!(budget_humanize_level5, "humanize/src/humanize", 3400);
+
+budget_test!(budget_python_dotenv_level0, "python-dotenv/src/dotenv", 5);
+budget_test!(budget_python_dotenv_level1, "python-dotenv/src/dotenv", 200);
+budget_test!(budget_python_dotenv_level3, "python-dotenv/src/dotenv", 1300);
+budget_test!(budget_python_dotenv_level5, "python-dotenv/src/dotenv", 2000);
+
+budget_test!(budget_semver_level0, "semver/classes", 3);
+budget_test!(budget_semver_level1, "semver/classes", 100);
+budget_test!(budget_semver_level4, "semver/classes", 260);
+budget_test!(budget_semver_level6, "semver/classes", 4600);
+
+budget_test!(budget_cmdk_level0, "cmdk/cmdk/src", 3);
+budget_test!(budget_cmdk_level1, "cmdk/cmdk/src", 120);
+budget_test!(budget_cmdk_level4, "cmdk/cmdk/src", 1100);
+budget_test!(budget_cmdk_level6, "cmdk/cmdk/src", 2200);
+
+budget_test!(budget_react_hot_toast_level0, "react-hot-toast/src", 5);
+budget_test!(budget_react_hot_toast_level1, "react-hot-toast/src", 200);
+budget_test!(budget_react_hot_toast_level4, "react-hot-toast/src", 700);
+budget_test!(budget_react_hot_toast_level5, "react-hot-toast/src", 1000);
+
+budget_test!(budget_superstruct_level0, "superstruct/src", 5);
+budget_test!(budget_superstruct_level1, "superstruct/src", 300);
+budget_test!(budget_superstruct_level4, "superstruct/src", 3600);
+budget_test!(budget_superstruct_level5, "superstruct/src", 4000);
+
+budget_test!(budget_dotenv_level0, "dotenv/lib", 3);
+budget_test!(budget_dotenv_level1, "dotenv/lib", 80);
+budget_test!(budget_dotenv_level4, "dotenv/lib", 160);
+budget_test!(budget_dotenv_level5, "dotenv/lib", 600);
+
+budget_test!(budget_commander_level0, "commander/lib", 3);
+budget_test!(budget_commander_level1, "commander/lib", 400);
+budget_test!(budget_commander_level3, "commander/lib", 2500);
+budget_test!(budget_commander_level4, "commander/lib", 7500);
+
+budget_test!(budget_ky_level0, "ky/source", 10);
+budget_test!(budget_ky_level1, "ky/source", 350);
+budget_test!(budget_ky_level4, "ky/source", 7000);
+budget_test!(budget_ky_level6, "ky/source", 12500);
+
+budget_test!(budget_vaul_level0, "vaul/src", 5);
+budget_test!(budget_vaul_level1, "vaul/src", 250);
+budget_test!(budget_vaul_level4, "vaul/src", 1300);
+budget_test!(budget_vaul_level5, "vaul/src", 1500);
+
+budget_test!(budget_debug_level0, "debug/src", 3);
+budget_test!(budget_debug_level1, "debug/src", 35);
+budget_test!(budget_debug_level3, "debug/src", 50);
+budget_test!(budget_debug_level5, "debug/src", 300);
+
+budget_test!(budget_input_otp_level0, "input-otp/packages/input-otp/src", 5);
+budget_test!(budget_input_otp_level1, "input-otp/packages/input-otp/src", 60);
+budget_test!(budget_input_otp_level4, "input-otp/packages/input-otp/src", 200);
+budget_test!(budget_input_otp_level5, "input-otp/packages/input-otp/src", 250);
+
 // Root-level budget tests: exercise depth penalties, multi-language discovery,
 // and file filtering at the repo root — the most common real-world use case.
 

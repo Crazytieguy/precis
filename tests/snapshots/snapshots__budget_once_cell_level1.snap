@@ -1,0 +1,227 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 → level 1 (921 words)
+
+imp_cs.rs
+     8→pub(crate) struct OnceCell
+    20→unsafe impl<T: Sync + Send> Sync for OnceCell<T>
+    21→unsafe impl<T: Send> Send for OnceCell<T>
+    23→impl<T: RefUnwindSafe + UnwindSafe> RefUnwindSafe for OnceCell<T>
+    24→impl<T: UnwindSafe> UnwindSafe for OnceCell<T>
+    26→impl<T> OnceCell<T>
+    27→    pub(crate) const fn new
+    31→    pub(crate) const fn with_value
+    39→    pub(crate) fn is_initialized
+    44→    pub(crate) fn initialize
+    63→    pub(crate) unsafe fn get_unchecked
+    70→    pub(crate) fn get_mut
+    75→    pub(crate) fn into_inner
+imp_pl.rs
+     7→pub(crate) struct OnceCell
+    12→const INCOMPLETE
+    13→const RUNNING
+    14→const COMPLETE
+    21→unsafe impl<T: Sync + Send> Sync for OnceCell<T>
+    22→unsafe impl<T: Send> Send for OnceCell<T>
+    24→impl<T: RefUnwindSafe + UnwindSafe> RefUnwindSafe for OnceCell<T>
+    25→impl<T: UnwindSafe> UnwindSafe for OnceCell<T>
+    27→impl<T> OnceCell<T>
+    28→    pub(crate) const fn new
+    32→    pub(crate) const fn with_value
+    38→    pub(crate) fn is_initialized
+    45→    pub(crate) fn initialize
+    80→    pub(crate) fn wait
+   101→    pub(crate) unsafe fn get_unchecked
+   109→    pub(crate) fn get_mut
+   117→    pub(crate) fn into_inner
+   122→struct Guard
+   127→impl<'a> Drop for Guard<'a>
+   128→    fn drop
+   139→fn initialize_inner
+imp_std.rs
+    14→pub(crate) struct OnceCell
+    32→unsafe impl<T: Sync + Send> Sync for OnceCell<T>
+    33→unsafe impl<T: Send> Send for OnceCell<T>
+    35→impl<T: RefUnwindSafe + UnwindSafe> RefUnwindSafe for OnceCell<T>
+    36→impl<T: UnwindSafe> UnwindSafe for OnceCell<T>
+    38→impl<T> OnceCell<T>
+    39→    pub(crate) const fn new
+    43→    pub(crate) const fn with_value
+    49→    pub(crate) fn is_initialized
+    61→    pub(crate) fn initialize
+    88→    pub(crate) fn wait
+    99→    pub(crate) unsafe fn get_unchecked
+   107→    pub(crate) fn get_mut
+   115→    pub(crate) fn into_inner
+   125→const INCOMPLETE
+   126→const RUNNING
+   127→const COMPLETE
+   128→const INCOMPLETE_PTR
+   129→const COMPLETE_PTR
+   133→const STATE_MASK
+   138→struct Waiter
+   145→struct Guard
+   150→impl Drop for Guard<'_>
+   151→    fn drop
+   177→fn initialize_or_wait
+   210→fn wait
+   245→mod strict
+   248→    pub(crate) fn addr
+   260→    pub(crate) fn with_addr
+   281→    pub(crate) fn map_addr
+lib.rs
+   372→mod imp
+   376→mod imp
+   380→mod imp
+   383→pub mod unsync
+   411→    pub struct OnceCell
+   420→    impl<T: RefUnwindSafe + UnwindSafe> RefUnwindSafe for OnceCell<T>
+   421→    impl<T: UnwindSafe> UnwindSafe for OnceCell<T>
+   423→    impl<T> Default for OnceCell<T>
+   424→        fn default
+   429→    impl<T: fmt::Debug> fmt::Debug for OnceCell<T>
+   430→        fn fmt
+   438→    impl<T: Clone> Clone for OnceCell<T>
+   439→        fn clone
+   446→        fn clone_from
+   454→    impl<T: PartialEq> PartialEq for OnceCell<T>
+   455→        fn eq
+   460→    impl<T: Eq> Eq for OnceCell<T>
+   462→    impl<T> From<T> for OnceCell<T>
+   463→        fn from
+   468→    impl<T> OnceCell<T>
+   470→        pub const fn new
+   475→        pub const fn with_value
+   483→        pub fn get
+   508→        pub fn get_mut
+   530→        pub fn set
+   551→        pub fn try_insert
+   586→        pub fn get_or_init
+   622→        pub fn get_or_try_init
+   667→        pub fn take
+   687→        pub fn into_inner
+   714→    pub struct Lazy
+   719→    impl<T, F: RefUnwindSafe> RefUnwindSafe for Lazy<T, F>
+   721→    impl<T: fmt::Debug, F> fmt::Debug for Lazy<T, F>
+   722→        fn fmt
+   727→    impl<T, F> Lazy<T, F>
+   742→        pub const fn new
+   749→        pub fn into_value
+   758→    impl<T, F: FnOnce() -> T> Lazy<T, F>
+   773→        pub fn force
+   794→        pub fn force_mut
+   818→        pub fn get
+   835→        pub fn get_mut
+   840→    impl<T, F: FnOnce() -> T> Deref for Lazy<T, F>
+   841→        type Target
+   842→        fn deref
+   847→    impl<T, F: FnOnce() -> T> DerefMut for Lazy<T, F>
+   848→        fn deref_mut
+   853→    impl<T: Default> Default for Lazy<T>
+   855→        fn default
+   863→pub mod sync
+   901→    pub struct OnceCell
+   903→    impl<T> Default for OnceCell<T>
+   904→        fn default
+   909→    impl<T: fmt::Debug> fmt::Debug for OnceCell<T>
+   910→        fn fmt
+   918→    impl<T: Clone> Clone for OnceCell<T>
+   919→        fn clone
+   926→        fn clone_from
+   934→    impl<T> From<T> for OnceCell<T>
+   935→        fn from
+   940→    impl<T: PartialEq> PartialEq for OnceCell<T>
+   941→        fn eq
+   946→    impl<T: Eq> Eq for OnceCell<T>
+   948→    impl<T> OnceCell<T>
+   950→        pub const fn new
+   955→        pub const fn with_value
+   963→        pub fn get
+   993→        pub fn wait
+  1019→        pub fn get_mut
+  1031→        pub unsafe fn get_unchecked
+  1058→        pub fn set
+  1080→        pub fn try_insert
+  1115→        pub fn get_or_init
+  1152→        pub fn get_or_try_init
+  1197→        pub fn take
+  1217→        pub fn into_inner
+  1255→    pub struct Lazy
+  1260→    impl<T: fmt::Debug, F> fmt::Debug for Lazy<T, F>
+  1261→        fn fmt
+  1270→    unsafe impl<T, F: Send> Sync for Lazy<T, F>
+  1273→    impl<T, F: RefUnwindSafe> RefUnwindSafe for Lazy<T, F>
+  1275→    impl<T, F> Lazy<T, F>
+  1278→        pub const fn new
+  1285→        pub fn into_value
+  1294→    impl<T, F: FnOnce() -> T> Lazy<T, F>
+  1308→        pub fn force
+  1327→        pub fn force_mut
+  1351→        pub fn get
+  1368→        pub fn get_mut
+  1373→    impl<T, F: FnOnce() -> T> Deref for Lazy<T, F>
+  1374→        type Target
+  1375→        fn deref
+  1380→    impl<T, F: FnOnce() -> T> DerefMut for Lazy<T, F>
+  1381→        fn deref_mut
+  1386→    impl<T: Default> Default for Lazy<T>
+  1388→        fn default
+  1408→    fn _dummy
+  1412→pub mod race
+race.rs
+    43→pub struct OnceNonZeroUsize
+    47→impl OnceNonZeroUsize
+    50→    pub const fn new
+    56→    pub fn get
+    68→    pub unsafe fn get_unchecked
+   107→    pub fn set
+   120→    pub fn get_or_init
+   138→    pub fn get_or_try_init
+   150→    fn init
+   160→    fn compare_exchange
+   167→pub struct OnceBool
+   171→impl OnceBool
+   174→    pub const fn new
+   180→    pub fn get
+   189→    pub fn set
+   199→    pub fn get_or_init
+   213→    pub fn get_or_try_init
+   221→    fn from_usize
+   226→    fn to_usize
+   232→pub struct OnceRef
+   238→unsafe impl<'a, T: Sync> Sync for OnceRef<'a, T>
+   240→impl<'a, T> core::fmt::Debug for OnceRef<'a, T>
+   241→    fn fmt
+   246→impl<'a, T> Default for OnceRef<'a, T>
+   247→    fn default
+   252→impl<'a, T> OnceRef<'a, T>
+   254→    pub const fn new
+   259→    pub fn get
+   268→    pub fn set
+   281→    pub fn get_or_init
+   299→    pub fn get_or_try_init
+   311→    fn init
+   320→    fn compare_exchange
+   347→    fn _dummy
+   354→mod once_box
+   361→    pub struct OnceBox
+   366→    impl<T> core::fmt::Debug for OnceBox<T>
+   367→        fn fmt
+   372→    impl<T> Default for OnceBox<T>
+   373→        fn default
+   378→    impl<T> Drop for OnceBox<T>
+   379→        fn drop
+   387→    impl<T> OnceBox<T>
+   389→        pub const fn new
+   394→        pub fn with_value
+   399→        pub fn get
+   411→        pub fn set
+   432→        pub fn get_or_init
+   450→        pub fn get_or_try_init
+   462→        fn init
+   479→    unsafe impl<T: Sync + Send> Sync for OnceBox<T>
+   481→    impl<T: Clone> Clone for OnceBox<T>
+   482→        fn clone
+   497→    fn _dummy
