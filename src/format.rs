@@ -63,17 +63,14 @@ fn render_with_symbols(
         // No docs and no type expansion: just signatures
         render_symbols(&mut out, relative, source, symbols, false);
     } else {
-        render_symbols_with_docs(
-            &mut out,
-            relative,
-            source,
-            symbols,
+        let opts = DocOptions {
             with_docs,
             first_line_only,
             public_docs_only,
             expand_types,
             public_types_only,
-        );
+        };
+        render_symbols_with_docs(&mut out, relative, source, symbols, &opts);
     }
     out
 }
@@ -372,25 +369,30 @@ fn render_full_source(out: &mut String, source: &str) {
     }
 }
 
+/// Options controlling doc comment and type body rendering.
+struct DocOptions {
+    /// Whether to show any doc comments at all.
+    with_docs: bool,
+    /// If showing docs, emit only the first line of each comment block.
+    first_line_only: bool,
+    /// If showing docs, restrict to public symbols.
+    public_docs_only: bool,
+    /// Show full bodies for struct/enum/trait/interface/class.
+    expand_types: bool,
+    /// If expanding types, restrict to public types.
+    public_types_only: bool,
+}
+
 /// Render symbol lines with optional doc comments, type body expansion, and
 /// language-specific content (Python docstrings, Markdown body text).
 ///
-/// `with_docs` — whether to show any doc comments at all.
-/// `first_line_only` — if showing docs, emit only the first line of each comment block.
-/// `public_docs_only` — if showing docs, restrict to public symbols.
-/// `expand_types` — show full bodies for struct/enum/trait/interface/class.
-/// `public_types_only` — if expanding types, restrict to public types.
 /// `path` is relative to the project root (used for language detection).
 fn render_symbols_with_docs(
     out: &mut String,
     path: &Path,
     source: &str,
     symbols: &[parse::Symbol],
-    with_docs: bool,
-    first_line_only: bool,
-    public_docs_only: bool,
-    expand_types: bool,
-    public_types_only: bool,
+    opts: &DocOptions,
 ) {
     if symbols.is_empty() {
         return;
@@ -402,7 +404,7 @@ fn render_symbols_with_docs(
     let mut emitted_up_to: usize = 0; // 0-indexed, exclusive
     for (sym_idx, sym) in symbols.iter().enumerate() {
         let sym_line_0 = sym.line - 1;
-        let show_docs = with_docs && (!public_docs_only || sym.is_public);
+        let show_docs = opts.with_docs && (!opts.public_docs_only || sym.is_public);
         let doc_start = if show_docs {
             doc_comment_start(&lines, sym_line_0, lang)
         } else {
@@ -412,9 +414,9 @@ fn render_symbols_with_docs(
         // const/var blocks (identified by their keyword name "const"/"var").
         let is_grouped_block =
             (sym.name == "const" || sym.name == "var") && sym.end_line > sym.line;
-        let should_expand = expand_types
+        let should_expand = opts.expand_types
             && (is_type_definition(sym.kind) || is_grouped_block)
-            && (!public_types_only || sym.is_public);
+            && (!opts.public_types_only || sym.is_public);
         if should_expand {
             let body_end = sym.end_line; // 1-indexed, inclusive
             // Start from doc_start or emitted_up_to, whichever is later
@@ -428,7 +430,7 @@ fn render_symbols_with_docs(
             // Non-expanded symbol: show doc comments + multi-line signature
             let sig_end = signature_end_line(&lines, sym, lang);
             // Doc comment lines before signature
-            if first_line_only {
+            if opts.first_line_only {
                 // Find the first doc line with actual content, skipping
                 // block comment delimiters (/** and */) and blank * lines.
                 let mut doc_line = doc_start;
@@ -460,7 +462,7 @@ fn render_symbols_with_docs(
             if show_docs && lang == Some(Lang::Python) {
                 let ds_end = docstring_end(&lines, sig_end);
                 if ds_end > sig_end + 1 {
-                    if first_line_only {
+                    if opts.first_line_only {
                         // Only the opener line of the docstring
                         let mut ds_line = sig_end + 1;
                         while ds_line < ds_end && lines[ds_line].trim().is_empty() {
@@ -485,7 +487,7 @@ fn render_symbols_with_docs(
             // Markdown: include body text after headings.
             // Headings are always public, so this is controlled by with_docs only.
             if show_docs && lang == Some(Lang::Markdown) {
-                let content_end = markdown_content_end(symbols, sym_idx, &lines, expand_types);
+                let content_end = markdown_content_end(symbols, sym_idx, &lines, opts.expand_types);
                 let heading_end = (sym.end_line - 1).max(sym_line_0 + 1);
                 for (i, line) in lines
                     .iter()
