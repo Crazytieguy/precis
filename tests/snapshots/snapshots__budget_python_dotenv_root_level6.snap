@@ -1,0 +1,1035 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4500 → level 6 (4412 words)
+
+CHANGELOG.md
+     1→# Changelog
+     2→
+     3→All notable changes to this project will be documented in this file.
+     4→
+     5→The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
+     6→project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+     7→
+     8→## [1.2.1] - 2025-10-26
+     9→
+    10→- Move more config to `pyproject.toml`, removed `setup.cfg`
+    11→- Add support for reading `.env` from FIFOs (Unix) by [@sidharth-sudhir] in [#586]
+    12→
+    13→## [1.2.0] - 2025-10-26
+    14→
+    15→- Upgrade build system to use PEP 517 & PEP 518 to use `build` and `pyproject.toml` by [@EpicWink] in [#583]
+    16→- Add support for Python 3.14 by [@23f3001135] in [#579](https://github.com/theskumar/python-dotenv/pull/563)
+    17→- Add support for disabling of `load_dotenv()` using `PYTHON_DOTENV_DISABLED` env var. by [@matthewfranglen] in [#569]
+    18→
+    19→## [1.1.1] - 2025-06-24
+    20→
+    21→### Fixed
+    22→
+    23→* CLI: Ensure `find_dotenv` work reliably on python 3.13 by [@theskumar] in [#563](https://github.com/theskumar/python-dotenv/pull/563)
+    24→* CLI: revert the use of execvpe on Windows by [@wrongontheinternet] in [#566](https://github.com/theskumar/python-dotenv/pull/566)
+    25→
+    26→
+    27→## [1.1.0] - 2025-03-25
+    28→
+    29→**Feature**
+    30→
+    31→- Add support for python 3.13
+    32→- Enhance `dotenv run`, switch to `execvpe` for better resource management and signal handling ([#523]) by [@eekstunt]
+    33→
+    34→**Fixed**
+    35→
+    36→- `find_dotenv` and `load_dotenv` now correctly looks up at the current directory when running in debugger or pdb ([#553] by [@randomseed42])
+    37→
+    38→**Misc**
+    39→
+    40→- Drop support for Python 3.8
+    41→
+    42→## [1.0.1] - 2024-01-23
+    43→
+    44→**Fixed**
+    45→
+    46→* Gracefully handle code which has been imported from a zipfile ([#456] by [@samwyma])
+    47→* Allow modules using `load_dotenv` to be reloaded when launched in a separate thread ([#497] by [@freddyaboulton])
+    48→* Fix file not closed after deletion, handle error in the rewrite function ([#469] by [@Qwerty-133])
+    49→
+    50→**Misc**
+    51→* Use pathlib.Path in tests ([#466] by [@eumiro])
+    52→* Fix year in release date in changelog.md ([#454] by [@jankislinger])
+    53→* Use https in README links ([#474] by [@Nicals])
+    54→
+    55→## [1.0.0] - 2023-02-24
+    56→
+    57→**Fixed**
+    58→
+    59→* Drop support for python 3.7, add python 3.12-dev (#449 by [@theskumar])
+    60→* Handle situations where the cwd does not exist. (#446 by [@jctanner])
+    61→
+    62→## [0.21.1] - 2023-01-21
+    63→
+    64→**Added**
+    65→
+    66→* Use Python 3.11 non-beta in CI (#438 by [@bbc2])
+    67→* Modernize variables code (#434 by [@Nougat-Waffle])
+    68→* Modernize main.py and parser.py code (#435 by [@Nougat-Waffle])
+    69→* Improve conciseness of cli.py and __init__.py (#439 by [@Nougat-Waffle])
+    70→* Improve error message for `get` and `list` commands when env file can't be opened (#441 by [@bbc2])
+    71→* Updated License to align with BSD OSI template (#433 by [@lsmith77])
+    72→
+    73→
+    74→**Fixed**
+    75→
+    76→* Fix Out-of-scope error when "dest" variable is undefined (#413 by [@theGOTOguy])
+    77→* Fix IPython test warning about deprecated `magic` (#440 by [@bbc2])
+    78→* Fix type hint for dotenv_path var, add StrPath alias (#432 by [@eaf])
+    79→
+    80→## [0.21.0] - 2022-09-03
+    81→
+    82→**Added**
+    83→
+    84→* CLI: add support for invocations via 'python -m'. (#395 by [@theskumar])
+    85→* `load_dotenv` function now returns `False`. (#388 by [@larsks])
+    86→* CLI: add --format= option to list command. (#407 by [@sammck])
+    87→
+    88→**Fixed**
+    89→
+    90→* Drop Python 3.5 and 3.6 and upgrade GA (#393 by [@eggplants])
+    91→* Use `open` instead of `io.open`. (#389 by [@rabinadk1])
+    92→* Improve documentation for variables without a value (#390 by [@bbc2])
+    93→* Add `parse_it` to Related Projects (#410 by [@naorlivne])
+    94→* Update README.md (#415 by [@harveer07])
+    95→* Improve documentation with direct use of MkDocs (#398 by [@bbc2])
+    96→
+    97→## [0.20.0] - 2022-03-24
+    98→
+    99→**Added**
+   100→
+   101→- Add `encoding` (`Optional[str]`) parameter to `get_key`, `set_key` and `unset_key`.
+   102→  (#379 by [@bbc2])
+   103→
+   104→**Fixed**
+   105→
+   106→- Use dict to specify the `entry_points` parameter of `setuptools.setup` (#376 by
+   107→  [@mgorny]).
+   108→- Don't build universal wheels (#387 by [@bbc2]).
+   109→
+   110→## [0.19.2] - 2021-11-11
+   111→
+   112→**Fixed**
+   113→
+   114→- In `set_key`, add missing newline character before new entry if necessary. (#361 by
+   115→  [@bbc2])
+   116→
+   117→## [0.19.1] - 2021-08-09
+   118→
+   119→**Added**
+   120→
+   121→- Add support for Python 3.10. (#359 by [@theskumar])
+   122→
+   123→## [0.19.0] - 2021-07-24
+   124→
+   125→**Changed**
+   126→
+   127→- Require Python 3.5 or a later version.  Python 2 and 3.4 are no longer supported. (#341
+   128→  by [@bbc2]).
+   129→
+   130→**Added**
+   131→
+   132→- The `dotenv_path` argument of `set_key` and `unset_key` now has a type of `Union[str,
+   133→  os.PathLike]` instead of just `os.PathLike` (#347 by [@bbc2]).
+   134→- The `stream` argument of `load_dotenv` and `dotenv_values` can now be a text stream
+   135→  (`IO[str]`), which includes values like `io.StringIO("foo")` and `open("file.env",
+   136→  "r")` (#348 by [@bbc2]).
+   137→
+   138→## [0.18.0] - 2021-06-20
+   139→
+   140→**Changed**
+   141→
+   142→- Raise `ValueError` if `quote_mode` isn't one of `always`, `auto` or `never` in
+   143→  `set_key` (#330 by [@bbc2]).
+   144→- When writing a value to a .env file with `set_key` or `dotenv set <key> <value>` (#330
+   145→  by [@bbc2]):
+   146→  - Use single quotes instead of double quotes.
+   147→  - Don't strip surrounding quotes.
+   148→  - In `auto` mode, don't add quotes if the value is only made of alphanumeric characters
+   149→    (as determined by `string.isalnum`).
+   150→
+   151→## [0.17.1] - 2021-04-29
+   152→
+   153→**Fixed**
+   154→
+   155→- Fixed tests for build environments relying on `PYTHONPATH` (#318 by [@befeleme]).
+   156→
+   157→## [0.17.0] - 2021-04-02
+   158→
+   159→**Changed**
+   160→
+   161→- Make `dotenv get <key>` only show the value, not `key=value` (#313 by [@bbc2]).
+   162→
+   163→**Added**
+   164→
+   165→- Add `--override`/`--no-override` option to `dotenv run` (#312 by [@zueve] and [@bbc2]).
+   166→
+   167→## [0.16.0] - 2021-03-27
+   168→
+   169→**Changed**
+   170→
+   171→- The default value of the `encoding` parameter for `load_dotenv` and `dotenv_values` is
+   172→  now `"utf-8"` instead of `None` (#306 by [@bbc2]).
+   173→- Fix resolution order in variable expansion with `override=False` (#287 by [@bbc2]).
+   174→
+   175→## [0.15.0] - 2020-10-28
+   176→
+   177→**Added**
+   178→
+   179→- Add `--export` option to `set` to make it prepend the binding with `export` (#270 by
+   180→  [@jadutter]).
+   181→
+   182→**Changed**
+   183→
+   184→- Make `set` command create the `.env` file in the current directory if no `.env` file was
+   185→  found (#270 by [@jadutter]).
+   186→
+   187→**Fixed**
+   188→
+   189→- Fix potentially empty expanded value for duplicate key (#260 by [@bbc2]).
+   190→- Fix import error on Python 3.5.0 and 3.5.1 (#267 by [@gongqingkui]).
+   191→- Fix parsing of unquoted values containing several adjacent space or tab characters
+   192→  (#277 by [@bbc2], review by [@x-yuri]).
+   193→
+   194→## [0.14.0] - 2020-07-03
+   195→
+   196→**Changed**
+   197→
+   198→- Privilege definition in file over the environment in variable expansion (#256 by
+   199→  [@elbehery95]).
+   200→
+   201→**Fixed**
+   202→
+   203→- Improve error message for when file isn't found (#245 by [@snobu]).
+   204→- Use HTTPS URL in package meta data (#251 by [@ekohl]).
+   205→
+   206→## [0.13.0] - 2020-04-16
+   207→
+   208→**Added**
+   209→
+   210→- Add support for a Bash-like default value in variable expansion (#248 by [@bbc2]).
+   211→
+   212→## [0.12.0] - 2020-02-28
+   213→
+   214→**Changed**
+   215→
+   216→- Use current working directory to find `.env` when bundled by PyInstaller (#213 by
+   217→  [@gergelyk]).
+   218→
+   219→**Fixed**
+   220→
+   221→- Fix escaping of quoted values written by `set_key` (#236 by [@bbc2]).
+   222→- Fix `dotenv run` crashing on environment variables without values (#237 by [@yannham]).
+   223→- Remove warning when last line is empty (#238 by [@bbc2]).
+   224→
+   225→## [0.11.0] - 2020-02-07
+   226→
+   227→**Added**
+   228→
+   229→- Add `interpolate` argument to `load_dotenv` and `dotenv_values` to disable interpolation
+   230→  (#232 by [@ulyssessouza]).
+   231→
+   232→**Changed**
+   233→
+   234→- Use logging instead of warnings (#231 by [@bbc2]).
+   235→
+   236→**Fixed**
+   237→
+   238→- Fix installation in non-UTF-8 environments (#225 by [@altendky]).
+   239→- Fix PyPI classifiers (#228 by [@bbc2]).
+   240→
+   241→## [0.10.5] - 2020-01-19
+   242→
+   243→**Fixed**
+   244→
+   245→- Fix handling of malformed lines and lines without a value (#222 by [@bbc2]):
+   246→  - Don't print warning when key has no value.
+   247→  - Reject more malformed lines (e.g. "A: B", "a='b',c").
+   248→- Fix handling of lines with just a comment (#224 by [@bbc2]).
+   249→
+   250→## [0.10.4] - 2020-01-17
+   251→
+   252→**Added**
+   253→
+   254→- Make typing optional (#179 by [@techalchemy]).
+   255→- Print a warning on malformed line (#211 by [@bbc2]).
+   256→- Support keys without a value (#220 by [@ulyssessouza]).
+   257→
+   258→## 0.10.3
+   259→
+   260→- Improve interactive mode detection ([@andrewsmith])([#183]).
+   261→- Refactor parser to fix parsing inconsistencies ([@bbc2])([#170]).
+   262→  - Interpret escapes as control characters only in double-quoted strings.
+   263→  - Interpret `#` as start of comment only if preceded by whitespace.
+   264→
+   265→## 0.10.2
+   266→
+   267→- Add type hints and expose them to users ([@qnighy])([#172])
+   268→- `load_dotenv` and `dotenv_values` now accept an `encoding` parameter, defaults to `None`
+   269→  ([@theskumar])([@earlbread])([#161])
+   270→- Fix `str`/`unicode` inconsistency in Python 2: values are always `str` now. ([@bbc2])([#121])
+   271→- Fix Unicode error in Python 2, introduced in 0.10.0. ([@bbc2])([#176])
+   272→
+   273→## 0.10.1
+   274→- Fix parsing of variable without a value ([@asyncee])([@bbc2])([#158])
+   275→
+   276→## 0.10.0
+   277→
+   278→- Add support for UTF-8 in unquoted values ([@bbc2])([#148])
+   279→- Add support for trailing comments ([@bbc2])([#148])
+   280→- Add backslashes support in values ([@bbc2])([#148])
+   281→- Add support for newlines in values ([@bbc2])([#148])
+   282→- Force environment variables to str with Python2 on Windows ([@greyli])
+   283→- Drop Python 3.3 support ([@greyli])
+   284→- Fix stderr/-out/-in redirection ([@venthur])
+   285→
+   286→
+   287→## 0.9.0
+   288→
+   289→- Add `--version` parameter to cli ([@venthur])
+   290→- Enable loading from current directory ([@cjauvin])
+   291→- Add 'dotenv run' command for calling arbitrary shell script with .env ([@venthur])
+   292→
+   293→## 0.8.1
+   294→
+   295→-   Add tests for docs ([@Flimm])
+   296→-   Make 'cli' support optional. Use `pip install python-dotenv[cli]`. ([@theskumar])
+   297→
+   298→## 0.8.0
+   299→
+   300→-   `set_key` and `unset_key` only modified the affected file instead of
+   301→    parsing and re-writing file, this causes comments and other file
+   302→    entact as it is.
+   303→-   Add support for `export` prefix in the line.
+   304→-   Internal refractoring ([@theskumar])
+   305→-   Allow `load_dotenv` and `dotenv_values` to work with `StringIO())` ([@alanjds])([@theskumar])([#78])
+   306→
+   307→## 0.7.1
+   308→
+   309→-   Remove hard dependency on iPython ([@theskumar])
+   310→
+   311→## 0.7.0
+   312→
+   313→-   Add support to override system environment variable via .env.
+   314→    ([@milonimrod](https://github.com/milonimrod))
+   315→    ([\#63](https://github.com/theskumar/python-dotenv/issues/63))
+   316→-   Disable ".env not found" warning by default
+   317→    ([@maxkoryukov](https://github.com/maxkoryukov))
+   318→    ([\#57](https://github.com/theskumar/python-dotenv/issues/57))
+   319→
+   320→## 0.6.5
+   321→
+   322→-   Add support for special characters `\`.
+   323→    ([@pjona](https://github.com/pjona))
+   324→    ([\#60](https://github.com/theskumar/python-dotenv/issues/60))
+   325→
+   326→## 0.6.4
+   327→
+   328→-   Fix issue with single quotes ([@Flimm])
+   329→    ([\#52](https://github.com/theskumar/python-dotenv/issues/52))
+   330→
+   331→## 0.6.3
+   332→
+   333→-   Handle unicode exception in setup.py
+   334→    ([\#46](https://github.com/theskumar/python-dotenv/issues/46))
+   335→
+   336→## 0.6.2
+   337→
+   338→-   Fix dotenv list command ([@ticosax](https://github.com/ticosax))
+   339→-   Add iPython Support
+   340→    ([@tillahoffmann](https://github.com/tillahoffmann))
+   341→
+   342→## 0.6.0
+   343→
+   344→-   Drop support for Python 2.6
+   345→-   Handle escaped characters and newlines in quoted values. (Thanks
+   346→    [@iameugenejo](https://github.com/iameugenejo))
+   347→-   Remove any spaces around unquoted key/value. (Thanks
+   348→    [@paulochf](https://github.com/paulochf))
+   349→-   Added POSIX variable expansion. (Thanks
+   350→    [@hugochinchilla](https://github.com/hugochinchilla))
+   351→
+   352→## 0.5.1
+   353→
+   354→-   Fix `find_dotenv` - it now start search from the file where this
+   355→    function is called from.
+   356→
+   357→## 0.5.0
+   358→
+   359→-   Add `find_dotenv` method that will try to find a `.env` file.
+   360→    (Thanks [@isms](https://github.com/isms))
+   361→
+   362→## 0.4.0
+   363→
+   364→-   cli: Added `-q/--quote` option to control the behaviour of quotes
+   365→    around values in `.env`. (Thanks
+   366→    [@hugochinchilla](https://github.com/hugochinchilla)).
+   367→-   Improved test coverage.
+   368→
+   369→<!-- PR LINKS -->
+   370→[#78]: https://github.com/theskumar/python-dotenv/issues/78
+   371→[#121]: https://github.com/theskumar/python-dotenv/issues/121
+   372→[#148]: https://github.com/theskumar/python-dotenv/issues/148
+   373→[#158]: https://github.com/theskumar/python-dotenv/issues/158
+   374→[#170]: https://github.com/theskumar/python-dotenv/issues/170
+   375→[#172]: https://github.com/theskumar/python-dotenv/issues/172
+   376→[#176]: https://github.com/theskumar/python-dotenv/issues/176
+   377→[#183]: https://github.com/theskumar/python-dotenv/issues/183
+   378→[#359]: https://github.com/theskumar/python-dotenv/issues/359
+   379→[#469]: https://github.com/theskumar/python-dotenv/issues/469
+   380→[#456]: https://github.com/theskumar/python-dotenv/issues/456
+   381→[#466]: https://github.com/theskumar/python-dotenv/issues/466
+   382→[#454]: https://github.com/theskumar/python-dotenv/issues/454
+   383→[#474]: https://github.com/theskumar/python-dotenv/issues/474
+   384→[#523]: https://github.com/theskumar/python-dotenv/issues/523
+   385→[#553]: https://github.com/theskumar/python-dotenv/issues/553
+   386→[#569]: https://github.com/theskumar/python-dotenv/issues/569
+   387→[#583]: https://github.com/theskumar/python-dotenv/issues/583
+   388→[#586]: https://github.com/theskumar/python-dotenv/issues/586
+   389→
+   390→<!-- contributors -->
+   391→[@23f3001135]: https://github.com/23f3001135
+   392→[@EpicWink]: https://github.com/EpicWink
+   393→[@Flimm]: https://github.com/Flimm
+   394→[@Nicals]: https://github.com/Nicals
+   395→[@Nougat-Waffle]: https://github.com/Nougat-Waffle
+   396→[@Qwerty-133]: https://github.com/Qwerty-133
+   397→[@alanjds]: https://github.com/alanjds
+   398→[@altendky]: https://github.com/altendky
+   399→[@andrewsmith]: https://github.com/andrewsmith
+   400→[@asyncee]: https://github.com/asyncee
+   401→[@bbc2]: https://github.com/bbc2
+   402→[@befeleme]: https://github.com/befeleme
+   403→[@cjauvin]: https://github.com/cjauvin
+   404→[@eaf]: https://github.com/eaf
+   405→[@earlbread]: https://github.com/earlbread
+   406→[@eekstunt]: https://github.com/eekstunt
+   407→[@eggplants]: https://github.com/@eggplants
+   408→[@ekohl]: https://github.com/ekohl
+   409→[@elbehery95]: https://github.com/elbehery95
+   410→[@eumiro]: https://github.com/eumiro
+   411→[@freddyaboulton]: https://github.com/freddyaboulton
+   412→[@gergelyk]: https://github.com/gergelyk
+   413→[@gongqingkui]: https://github.com/gongqingkui
+   414→[@greyli]: https://github.com/greyli
+   415→[@harveer07]: https://github.com/@harveer07
+   416→[@jadutter]: https://github.com/jadutter
+   417→[@jankislinger]: https://github.com/jankislinger
+   418→[@jctanner]: https://github.com/jctanner
+   419→[@larsks]: https://github.com/@larsks
+   420→[@lsmith77]: https://github.com/lsmith77
+   421→[@matthewfranglen]: https://github.com/matthewfranglen
+   422→[@mgorny]: https://github.com/mgorny
+   423→[@naorlivne]: https://github.com/@naorlivne
+   424→[@qnighy]: https://github.com/qnighy
+   425→[@rabinadk1]: https://github.com/@rabinadk1
+   426→[@randomseed42]: https://github.com/zueve
+   427→[@sammck]: https://github.com/@sammck
+   428→[@samwyma]: https://github.com/samwyma
+   429→[@sidharth-sudhir]: https://github.com/sidharth-sudhir
+   430→[@snobu]: https://github.com/snobu
+   431→[@techalchemy]: https://github.com/techalchemy
+   432→[@theGOTOguy]: https://github.com/theGOTOguy
+   433→[@theskumar]: https://github.com/theskumar
+   434→[@ulyssessouza]: https://github.com/ulyssessouza
+   435→[@venthur]: https://github.com/venthur
+   436→[@wrongontheinternet]: https://github.com/wrongontheinternet
+   437→[@x-yuri]: https://github.com/x-yuri
+   438→[@yannham]: https://github.com/yannham
+   439→[@zueve]: https://github.com/zueve
+   440→
+   441→[Unreleased]: https://github.com/theskumar/python-dotenv/compare/v1.2.0...HEAD
+   442→[1.2.0]: https://github.com/theskumar/python-dotenv/compare/v1.1.1...v1.2.0
+   443→[1.1.1]: https://github.com/theskumar/python-dotenv/compare/v1.1.0...v1.1.1
+   444→[1.1.0]: https://github.com/theskumar/python-dotenv/compare/v1.0.1...v1.1.0
+   445→[1.0.1]: https://github.com/theskumar/python-dotenv/compare/v1.0.0...v1.0.1
+   446→[1.0.0]: https://github.com/theskumar/python-dotenv/compare/v0.21.0...v1.0.0
+   447→[0.21.1]: https://github.com/theskumar/python-dotenv/compare/v0.21.0...v0.21.1
+   448→[0.21.0]: https://github.com/theskumar/python-dotenv/compare/v0.20.0...v0.21.0
+   449→[0.20.0]: https://github.com/theskumar/python-dotenv/compare/v0.19.2...v0.20.0
+   450→[0.19.2]: https://github.com/theskumar/python-dotenv/compare/v0.19.1...v0.19.2
+   451→[0.19.1]: https://github.com/theskumar/python-dotenv/compare/v0.19.0...v0.19.1
+   452→[0.19.0]: https://github.com/theskumar/python-dotenv/compare/v0.18.0...v0.19.0
+   453→[0.18.0]: https://github.com/theskumar/python-dotenv/compare/v0.17.1...v0.18.0
+   454→[0.17.1]: https://github.com/theskumar/python-dotenv/compare/v0.17.0...v0.17.1
+   455→[0.17.0]: https://github.com/theskumar/python-dotenv/compare/v0.16.0...v0.17.0
+   456→[0.16.0]: https://github.com/theskumar/python-dotenv/compare/v0.15.0...v0.16.0
+   457→[0.15.0]: https://github.com/theskumar/python-dotenv/compare/v0.14.0...v0.15.0
+   458→[0.14.0]: https://github.com/theskumar/python-dotenv/compare/v0.13.0...v0.14.0
+   459→[0.13.0]: https://github.com/theskumar/python-dotenv/compare/v0.12.0...v0.13.0
+   460→[0.12.0]: https://github.com/theskumar/python-dotenv/compare/v0.11.0...v0.12.0
+   461→[0.11.0]: https://github.com/theskumar/python-dotenv/compare/v0.10.5...v0.11.0
+   462→[0.10.5]: https://github.com/theskumar/python-dotenv/compare/v0.10.4...v0.10.5
+   463→[0.10.4]: https://github.com/theskumar/python-dotenv/compare/v0.10.3...v0.10.4
+CONTRIBUTING.md
+     1→Contributing
+     3→
+     4→All the contributions are welcome! Please open [an
+     5→issue](https://github.com/theskumar/python-dotenv/issues/new) or send us
+     6→a pull request.
+     7→
+     8→Executing the tests:
+     9→
+    10→    $ uv venv
+    11→    $ uv pip install -r requirements.txt
+    12→    $ uv pip install -e .
+    13→    $ uv ruff check .
+    14→    $ uv format .
+    15→    $ uv run pytest
+    16→
+    17→or with [tox](https://pypi.org/project/tox/) installed:
+    18→
+    19→    $ tox
+    20→
+    21→
+    22→Use of pre-commit is recommended:
+    23→
+    24→    $ uv run precommit install
+    25→
+    26→
+    27→Documentation is published with [mkdocs]():
+    28→
+    29→```shell
+    30→$ uv pip install -r requirements-docs.txt
+    31→$ uv pip install -e .
+    32→$ uv run mkdocs serve
+    33→```
+    34→
+    35→Open http://127.0.0.1:8000/ to view the documentation locally.
+README.md
+     1→# python-dotenv
+     2→
+     3→[![Build Status][build_status_badge]][build_status_link]
+     4→[![PyPI version][pypi_badge]][pypi_link]
+     5→
+     6→python-dotenv reads key-value pairs from a `.env` file and can set them as
+     7→environment variables. It helps in the development of applications following the
+     8→[12-factor](https://12factor.net/) principles.
+     9→
+    10→- [Getting Started](#getting-started)
+    11→- [Other Use Cases](#other-use-cases)
+    12→  - [Load configuration without altering the environment](#load-configuration-without-altering-the-environment)
+    13→  - [Parse configuration as a stream](#parse-configuration-as-a-stream)
+    14→  - [Load .env files in IPython](#load-env-files-in-ipython)
+    15→- [Command-line Interface](#command-line-interface)
+    16→- [File format](#file-format)
+    17→  - [Multiline values](#multiline-values)
+    18→  - [Variable expansion](#variable-expansion)
+    19→- [Related Projects](#related-projects)
+    20→- [Acknowledgements](#acknowledgements)
+    21→
+    22→## Getting Started
+    23→
+    24→```shell
+    25→pip install python-dotenv
+    26→```
+    27→
+    28→If your application takes its configuration from environment variables, like a
+    29→12-factor application, launching it in development is not very practical because
+    30→you have to set those environment variables yourself.
+    31→
+    32→To help you with that, you can add python-dotenv to your application to make it
+    33→load the configuration from a `.env` file when it is present (e.g. in
+    34→development) while remaining configurable via the environment:
+    35→
+    36→```python
+    37→from dotenv import load_dotenv
+    38→
+    39→load_dotenv()  # reads variables from a .env file and sets them in os.environ
+    40→
+    41→# Code of your application, which uses environment variables (e.g. from `os.environ` or
+    42→# `os.getenv`) as if they came from the actual environment.
+    43→```
+    44→
+    45→By default, `load_dotenv()` will:
+    46→
+    47→- Look for a `.env` file in the same directory as the Python script (or higher up the directory tree).
+    48→- Read each key-value pair and add it to `os.environ`.
+    49→- **Not override** existing environment variables (`override=False`). Pass `override=True` to override existing variables.
+    50→
+    51→To configure the development environment, add a `.env` in the root directory of
+    52→your project:
+    53→
+    54→```
+    55→.
+    56→├── .env
+    57→└── foo.py
+    58→```
+    59→
+    60→The syntax of `.env` files supported by python-dotenv is similar to that of
+    61→Bash:
+    62→
+    63→```bash
+    64→# Development settings
+    65→DOMAIN=example.org
+    66→ADMIN_EMAIL=admin@${DOMAIN}
+    67→ROOT_URL=${DOMAIN}/app
+    68→```
+    69→
+    70→If you use variables in values, ensure they are surrounded with `{` and `}`,
+    71→like `${DOMAIN}`, as bare variables such as `$DOMAIN` are not expanded.
+    72→
+    73→You will probably want to add `.env` to your `.gitignore`, especially if it
+    74→contains secrets like a password.
+    75→
+    76→See the section "[File format](#file-format)" below for more information about what you can write in a `.env` file.
+    77→
+    78→## Other Use Cases
+    79→
+    80→### Load configuration without altering the environment
+    81→
+    82→The function `dotenv_values` works more or less the same way as `load_dotenv`,
+    83→except it doesn't touch the environment, it just returns a `dict` with the
+    84→values parsed from the `.env` file.
+    85→
+    86→```python
+    87→from dotenv import dotenv_values
+    88→
+    89→config = dotenv_values(".env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
+    90→```
+    91→
+    92→This notably enables advanced configuration management:
+    93→
+    94→```python
+    95→import os
+    96→from dotenv import dotenv_values
+    97→
+    98→config = {
+    99→    **dotenv_values(".env.shared"),  # load shared development variables
+   100→    **dotenv_values(".env.secret"),  # load sensitive variables
+   101→    **os.environ,  # override loaded values with environment variables
+   102→}
+   103→```
+   104→
+   105→### Parse configuration as a stream
+   106→
+   107→`load_dotenv` and `dotenv_values` accept [streams][python_streams] via their
+   108→`stream` argument. It is thus possible to load the variables from sources other
+   109→than the filesystem (e.g. the network).
+   110→
+   111→```python
+   112→from io import StringIO
+   113→
+   114→from dotenv import load_dotenv
+   115→
+   116→config = StringIO("USER=foo\nEMAIL=foo@example.org")
+   117→load_dotenv(stream=config)
+   118→```
+   119→
+   120→### Load .env files in IPython
+   121→
+   122→You can use dotenv in IPython. By default, it will use `find_dotenv` to search for a
+   123→`.env` file:
+   124→
+   125→```python
+   126→%load_ext dotenv
+   127→%dotenv
+   128→```
+   129→
+   130→You can also specify a path:
+   131→
+   132→```python
+   133→%dotenv relative/or/absolute/path/to/.env
+   134→```
+   135→
+   136→Optional flags:
+   137→
+   138→- `-o` to override existing variables.
+   139→- `-v` for increased verbosity.
+   140→
+   141→### Disable load_dotenv
+   142→
+   143→Set `PYTHON_DOTENV_DISABLED=1` to disable `load_dotenv()` from loading .env
+   144→files or streams. Useful when you can't modify third-party package calls or in
+   145→production.
+   146→
+   147→## Command-line Interface
+   148→
+   149→A CLI interface `dotenv` is also included, which helps you manipulate the `.env`
+   150→file without manually opening it.
+   151→
+   152→```shell
+   153→$ pip install "python-dotenv[cli]"
+   154→$ dotenv set USER foo
+   155→$ dotenv set EMAIL foo@example.org
+   156→$ dotenv list
+   157→USER=foo
+   158→EMAIL=foo@example.org
+   159→$ dotenv list --format=json
+   160→{
+   161→  "USER": "foo",
+   162→  "EMAIL": "foo@example.org"
+   163→}
+   164→$ dotenv run -- python foo.py
+   165→```
+   166→
+   167→Run `dotenv --help` for more information about the options and subcommands.
+   168→
+   169→## File format
+   170→
+   171→The format is not formally specified and still improves over time. That being
+   172→said, `.env` files should mostly look like Bash files. Reading from FIFOs (named
+   173→pipes) on Unix systems is also supported.
+   174→
+   175→Keys can be unquoted or single-quoted. Values can be unquoted, single- or
+   176→double-quoted. Spaces before and after keys, equal signs, and values are
+   177→ignored. Values can be followed by a comment. Lines can start with the `export`
+   178→directive, which does not affect their interpretation.
+   179→
+   180→Allowed escape sequences:
+   181→
+   182→- in single-quoted values: `\\`, `\'`
+   183→- in double-quoted values: `\\`, `\'`, `\"`, `\a`, `\b`, `\f`, `\n`, `\r`, `\t`, `\v`
+   184→
+   185→### Multiline values
+   186→
+   187→It is possible for single- or double-quoted values to span multiple lines. The
+   188→following examples are equivalent:
+   189→
+   190→```bash
+   191→FOO="first line
+   192→second line"
+   193→```
+   194→
+   195→```bash
+   196→FOO="first line\nsecond line"
+   197→```
+   198→
+   199→### Variable without a value
+   200→
+   201→A variable can have no value:
+   202→
+   203→```bash
+   204→FOO
+   205→```
+   206→
+   207→It results in `dotenv_values` associating that variable name with the value
+   208→`None` (e.g. `{"FOO": None}`. `load_dotenv`, on the other hand, simply ignores
+   209→such variables.
+   210→
+   211→This shouldn't be confused with `FOO=`, in which case the variable is associated
+   212→with the empty string.
+   213→
+   214→### Variable expansion
+   215→
+   216→python-dotenv can interpolate variables using POSIX variable expansion.
+   217→
+   218→With `load_dotenv(override=True)` or `dotenv_values()`, the value of a variable
+   219→is the first of the values defined in the following list:
+   220→
+   221→- Value of that variable in the `.env` file.
+   222→- Value of that variable in the environment.
+   223→- Default value, if provided.
+   224→- Empty string.
+   225→
+   226→With `load_dotenv(override=False)`, the value of a variable is the first of the
+   227→values defined in the following list:
+   228→
+   229→- Value of that variable in the environment.
+   230→- Value of that variable in the `.env` file.
+   231→- Default value, if provided.
+   232→- Empty string.
+   233→
+   234→## Related Projects
+   235→
+   236→- [environs](https://github.com/sloria/environs)
+   237→- [Honcho](https://github.com/nickstenning/honcho)
+   238→- [dump-env](https://github.com/sobolevn/dump-env)
+   239→- [dynaconf](https://github.com/dynaconf/dynaconf)
+   240→- [parse_it](https://github.com/naorlivne/parse_it)
+   241→- [django-dotenv](https://github.com/jpadilla/django-dotenv)
+   242→- [django-environ](https://github.com/joke2k/django-environ)
+   243→- [python-decouple](https://github.com/HBNetwork/python-decouple)
+   244→- [django-configuration](https://github.com/jezdez/django-configurations)
+   245→
+   246→## Acknowledgements
+   247→
+   248→This project is currently maintained by [Saurabh Kumar][saurabh-homepage] and
+   249→[Bertrand Bonnefoy-Claudet][gh-bbc2] and would not have been possible without
+   250→the support of these [awesome people][contributors].
+   251→
+   252→[gh-bbc2]: https://github.com/bbc2
+   253→[saurabh-homepage]: https://saurabh-kumar.com
+   254→[pypi_link]: https://badge.fury.io/py/python-dotenv
+   255→[pypi_badge]: https://badge.fury.io/py/python-dotenv.svg
+   256→[python_streams]: https://docs.python.org/3/library/io.html
+   257→[contributors]: https://github.com/theskumar/python-dotenv/graphs/contributors
+   258→[build_status_link]: https://github.com/theskumar/python-dotenv/actions/workflows/test.yml
+   259→[build_status_badge]: https://github.com/theskumar/python-dotenv/actions/workflows/test.yml/badge.svg
+docs/reference.md
+     1→# ::: dotenv
+     2→
+src/dotenv/__init__.py
+     6→def load_ipython_extension(ipython: Any) -> None:
+    12→def get_cli_string(
+    13→    path: Optional[str] = None,
+    14→    action: Optional[str] = None,
+    15→    key: Optional[str] = None,
+    16→    value: Optional[str] = None,
+    17→    quote: Optional[str] = None,
+    18→):
+    19→    """Returns a string suitable for running as a shell script.
+    20→
+    21→    Useful for converting a arguments passed to a fabric task
+    22→    to be passed to a `local` or `run` command.
+    23→    """
+    42→__all__ = [
+src/dotenv/__main__.py
+src/dotenv/cli.py
+    24→def enumerate_env() -> Optional[str]:
+    25→    """
+    26→    Return a path for the ${pwd}/.env file.
+    27→
+    28→    If pwd does not exist, return None.
+    29→    """
+    60→@click.version_option(version=__version__)
+    61→@click.pass_context
+    62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
+    63→    """This script is used to set, get or unset values from a .env file."""
+    67→@contextmanager
+    68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
+    69→    """
+    70→    Open a file and yield the corresponding (decoded) stream.
+    71→
+    72→    Exits with error code 2 if the file cannot be opened.
+    73→    """
+    93→def list_values(ctx: click.Context, output_format: str) -> None:
+    94→    """Display all the stored key/value."""
+   112→@cli.command(name="set")
+   113→@click.pass_context
+   114→@click.argument("key", required=True)
+   115→@click.argument("value", required=True)
+   116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
+   117→    """Store the given key/value."""
+   128→@cli.command()
+   129→@click.pass_context
+   130→@click.argument("key", required=True)
+   131→def get(ctx: click.Context, key: Any) -> None:
+   132→    """Retrieve the value for the given key."""
+   145→@cli.command()
+   146→@click.pass_context
+   147→@click.argument("key", required=True)
+   148→def unset(ctx: click.Context, key: Any) -> None:
+   149→    """Removes the given key."""
+   172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
+   173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
+   174→    """Run command with environment variables present."""
+   193→def run_command(command: List[str], env: Dict[str, str]) -> None:
+   194→    """Replace the current process with the specified command.
+   195→
+   196→    Replaces the current process with the specified command and the variables from `env`
+   197→    added in the current environment variables.
+   198→
+   199→    Parameters
+   200→    ----------
+   201→    command: List[str]
+   202→        The command and it's parameters
+   203→    env: Dict
+   204→        The additional environment variables
+   205→
+   206→    Returns
+   207→    -------
+   208→    None
+   209→        This function does not return any value. It replaces the current process with the new one.
+   210→
+   211→    """
+src/dotenv/ipython.py
+    11→@magics_class
+    12→class IPythonDotEnv(Magics):
+    33→    @line_magic
+    34→    def dotenv(self, line):
+    48→def load_ipython_extension(ipython):
+    49→    """Register the %dotenv magic."""
+src/dotenv/main.py
+    25→def _load_dotenv_disabled() -> bool:
+    35→def with_warn_for_invalid_lines(mappings: Iterator[Binding]) -> Iterator[Binding]:
+    45→class DotEnv:
+    46→    def __init__(
+    47→        self,
+    48→        dotenv_path: Optional[StrPath],
+    49→        stream: Optional[IO[str]] = None,
+    50→        verbose: bool = False,
+    51→        encoding: Optional[str] = None,
+    52→        interpolate: bool = True,
+    53→        override: bool = True,
+    54→    ) -> None:
+    64→    def _get_stream(self) -> Iterator[IO[str]]:
+    78→    def dict(self) -> Dict[str, Optional[str]]:
+    79→        """Return dotenv as dict"""
+    94→    def parse(self) -> Iterator[Tuple[str, Optional[str]]]:
+   100→    def set_as_environment_variables(self) -> bool:
+   101→        """
+   102→        Load the current dotenv as system environment variable.
+   103→        """
+   115→    def get(self, key: str) -> Optional[str]:
+   116→        """ """
+   128→def get_key(
+   129→    dotenv_path: StrPath,
+   130→    key_to_get: str,
+   131→    encoding: Optional[str] = "utf-8",
+   132→) -> Optional[str]:
+   133→    """
+   134→    Get the value of a given key from the given .env.
+   135→
+   136→    Returns `None` if the key isn't found or doesn't have a value.
+   137→    """
+   141→@contextmanager
+   142→def rewrite(
+   143→    path: StrPath,
+   144→    encoding: Optional[str],
+   145→) -> Iterator[Tuple[IO[str], IO[str]]]:
+   163→def set_key(
+   164→    dotenv_path: StrPath,
+   165→    key_to_set: str,
+   166→    value_to_set: str,
+   167→    quote_mode: str = "always",
+   168→    export: bool = False,
+   169→    encoding: Optional[str] = "utf-8",
+   170→) -> Tuple[Optional[bool], str, str]:
+   171→    """
+   172→    Adds or Updates a key/value to the given .env
+   173→
+   174→    If the .env path given doesn't exist, fails instead of risking creating
+   175→    an orphan .env somewhere in the filesystem
+   176→    """
+   211→def unset_key(
+   212→    dotenv_path: StrPath,
+   213→    key_to_unset: str,
+   214→    quote_mode: str = "always",
+   215→    encoding: Optional[str] = "utf-8",
+   216→) -> Tuple[Optional[bool], str]:
+   217→    """
+   218→    Removes a given key from the given `.env` file.
+   219→
+   220→    If the .env path given doesn't exist, fails.
+   221→    If the given key doesn't exist in the .env, fails.
+   222→    """
+   244→def resolve_variables(
+   245→    values: Iterable[Tuple[str, Optional[str]]],
+   246→    override: bool,
+   247→) -> Mapping[str, Optional[str]]:
+   269→def _walk_to_root(path: str) -> Iterator[str]:
+   287→def find_dotenv(
+   288→    filename: str = ".env",
+   289→    raise_error_if_not_found: bool = False,
+   290→    usecwd: bool = False,
+   291→) -> str:
+   292→    """
+   293→    Search in increasingly higher folders for the given file
+   294→
+   295→    Returns path to the file if found, or an empty string otherwise
+   296→    """
+   338→def load_dotenv(
+   339→    dotenv_path: Optional[StrPath] = None,
+   340→    stream: Optional[IO[str]] = None,
+   341→    verbose: bool = False,
+   342→    override: bool = False,
+   343→    interpolate: bool = True,
+   344→    encoding: Optional[str] = "utf-8",
+   345→) -> bool:
+   346→    """Parse a .env file and then load all the variables found as environment variables.
+   347→
+   348→    Parameters:
+   349→        dotenv_path: Absolute or relative path to .env file.
+   350→        stream: Text stream (such as `io.StringIO`) with .env content, used if
+   351→            `dotenv_path` is `None`.
+   352→        verbose: Whether to output a warning the .env file is missing.
+   353→        override: Whether to override the system environment variables with the variables
+   354→            from the `.env` file.
+   355→        encoding: Encoding to be used to read the file.
+   356→    Returns:
+   357→        Bool: True if at least one environment variable is set else False
+   358→
+   359→    If both `dotenv_path` and `stream` are `None`, `find_dotenv()` is used to find the
+   360→    .env file with it's default parameters. If you need to change the default parameters
+   361→    of `find_dotenv()`, you can explicitly call `find_dotenv()` and pass the result
+   362→    to this function as `dotenv_path`.
+   363→
+   364→    If the environment variable `PYTHON_DOTENV_DISABLED` is set to a truthy value,
+   365→    .env loading is disabled.
+   366→    """
+   387→def dotenv_values(
+   388→    dotenv_path: Optional[StrPath] = None,
+   389→    stream: Optional[IO[str]] = None,
+   390→    verbose: bool = False,
+   391→    interpolate: bool = True,
+   392→    encoding: Optional[str] = "utf-8",
+   393→) -> Dict[str, Optional[str]]:
+   394→    """
+   395→    Parse a .env file and return its content as a dict.
+   396→
+   397→    The returned dict will have `None` values for keys without values in the .env file.
+   398→    For example, `foo=bar` results in `{"foo": "bar"}` whereas `foo` alone results in
+   399→    `{"foo": None}`
+   400→
+   401→    Parameters:
+   402→        dotenv_path: Absolute or relative path to the .env file.
+   403→        stream: `StringIO` object with .env content, used if `dotenv_path` is `None`.
+   404→        verbose: Whether to output a warning if the .env file is missing.
+   405→        encoding: Encoding to be used to read the file.
+   406→
+   407→    If both `dotenv_path` and `stream` are `None`, `find_dotenv()` is used to find the
+   408→    .env file.
+   409→    """
+   423→def _is_file_or_fifo(path: StrPath) -> bool:
+src/dotenv/parser.py
+    14→def make_regex(string: str, extra_flags: int = 0) -> Pattern[str]:
+    35→class Original(NamedTuple):
+    40→class Binding(NamedTuple):
+    47→class Position:
+    48→    def __init__(self, chars: int, line: int) -> None:
+    52→    @classmethod
+    53→    def start(cls) -> "Position":
+    56→    def set(self, other: "Position") -> None:
+    60→    def advance(self, string: str) -> None:
+    65→class Error(Exception):
+    69→class Reader:
+    70→    def __init__(self, stream: IO[str]) -> None:
+    75→    def has_next(self) -> bool:
+    78→    def set_mark(self) -> None:
+    81→    def get_marked(self) -> Original:
+    87→    def peek(self, count: int) -> str:
+    90→    def read(self, count: int) -> str:
+    97→    def read_regex(self, regex: Pattern[str]) -> Sequence[str]:
+   105→def decode_escapes(regex: Pattern[str], string: str) -> str:
+   112→def parse_key(reader: Reader) -> Optional[str]:
+   123→def parse_unquoted_value(reader: Reader) -> str:
+   128→def parse_value(reader: Reader) -> str:
+   142→def parse_binding(reader: Reader) -> Binding:
+   179→def parse_stream(stream: IO[str]) -> Iterator[Binding]:
+src/dotenv/variables.py
+     5→_posix_variable: Pattern[str] = re.compile(
+     6→    r"""
+     7→    \$\{
+     8→        (?P<name>[^\}:]*)
+     9→        (?::-
+    10→            (?P<default>[^\}]*)
+    11→        )?
+    12→    \}
+    13→    """,
+    18→class Atom(metaclass=ABCMeta):
+    19→    def __ne__(self, other: object) -> bool:
+    25→    @abstractmethod
+    26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
+    29→class Literal(Atom):
+    30→    def __init__(self, value: str) -> None:
+    33→    def __repr__(self) -> str:
+    36→    def __eq__(self, other: object) -> bool:
+    41→    def __hash__(self) -> int:
+    44→    def resolve(self, env: Mapping[str, Optional[str]]) -> str:
+    48→class Variable(Atom):
+    49→    def __init__(self, name: str, default: Optional[str]) -> None:
+    53→    def __repr__(self) -> str:
+    56→    def __eq__(self, other: object) -> bool:
+    61→    def __hash__(self) -> int:
+    64→    def resolve(self, env: Mapping[str, Optional[str]]) -> str:
+    70→def parse_variables(value: str) -> Iterator[Atom]:
+src/dotenv/version.py
+     1→__version__ = "1.2.1"

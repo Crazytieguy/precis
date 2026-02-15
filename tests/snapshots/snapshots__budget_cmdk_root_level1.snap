@@ -1,0 +1,60 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 200 → level 1 (126 words)
+
+ARCHITECTURE.md
+     1→# Architecture
+    46→## Approach
+    50→### Discarded approach
+    60→## Example
+    92→## Performance
+    96→## Groups
+LICENSE.md
+README.md
+     5→# ⌘K [![cmdk minzip package size](https://img.shields.io/bundlephobia/minzip/cmdk)](https://www.npmjs.com/package/cmdk?activeTab=code) [![cmdk package version](https://img.shields.io/npm/v/cmdk.svg?colorB=green)](https://www.npmjs.com/package/cmdk)
+     9→## Install
+    15→## Use
+    82→## Parts and styling
+    86→### Command `[cmdk-root]`
+   153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
+   180→### Input `[cmdk-input]`
+   190→### List `[cmdk-list]`
+   212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
+   242→### Group `[cmdk-group]` `[hidden?]`
+   256→### Separator `[cmdk-separator]`
+   260→### Empty `[cmdk-empty]`
+   264→### Loading `[cmdk-loading]`
+   274→### `useCommandState(state => state.selectedField)`
+   285→## Examples
+   289→### Nested items
+   338→### Show sub-items when searching
+   361→### Asynchronous results
+   397→### Use inside Popover
+   426→### Drop in stylesheets
+   430→## FAQ
+   456→## History
+   462→## Testing
+cmdk/src/command-score.ts
+cmdk/src/index.tsx
+cmdk/tsup.config.ts
+playwright.config.ts
+     3→const config
+website/README.md
+     3→## Getting Started
+    19→## Learn More
+    28→## Deploy on Vercel
+website/components/cmdk/framer.tsx
+website/components/cmdk/linear.tsx
+website/components/cmdk/raycast.tsx
+website/components/cmdk/vercel.tsx
+website/components/code/index.tsx
+website/components/icons/index.tsx
+website/components/index.ts
+website/next-env.d.ts
+website/next.config.js
+     2→const nextConfig
+website/pages/_app.tsx
+website/pages/_document.tsx
+website/pages/index.tsx

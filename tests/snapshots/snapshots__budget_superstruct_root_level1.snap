@@ -1,0 +1,144 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 → level 1 (365 words)
+
+Changelog.md
+     1→# Changelog
+     5→### `2.0.0` - July 3, 2024
+    11→#### Breaking
+    16→#### New
+    20→#### Fixed
+    24→#### Deprecations
+    28→#### New Maintainers & Next Steps
+    38→### `1.0.0` — November 17, 2022
+    40→###### NEW
+    49→### BREAKING
+    53→### `0.16.0` — June 6, 2022
+    55→###### BREAKING
+    59→### `0.15.0` — March 25, 2021
+    61→###### FIXED
+    67→### `0.14.0` — January 26, 2021
+    69→###### BREAKING
+    75→### `0.13.0` — December 11, 2020
+    77→###### NEW
+    85→###### BREAKING
+    93→### `0.12.0` — November 24, 2020
+    95→###### NEW
+   111→###### BREAKING
+   127→### `0.11.0` — November 20, 2020
+   129→###### NEW
+   176→###### BREAKING
+   242→### `0.10.0` — June 6, 2020
+   248→###### BREAKING
+   392→### `0.8.0` — October 8, 2019
+   394→###### BREAKING
+   434→###### NEW
+   444→### `0.7.0` — September 21, 2019
+   446→###### BREAKING
+   452→### `0.6.0` — September 13, 2018
+   454→###### BREAKING
+   460→### `0.5.0` — December 21, 2017
+   462→###### BREAKING
+   468→###### NEW
+   474→### `0.4.0` — December 1, 2017
+   476→###### BREAKING
+   482→###### NEW
+   488→### `0.3.0` — November 30, 2017
+   490→###### BREAKING
+   498→### `0.2.0` — November 30, 2017
+   500→###### BREAKING
+   504→###### NEW
+   510→### `0.1.0` — November 29, 2017
+   512→###### BREAKING
+   518→### `0.0.0` — November 24, 2017
+License.md
+Readme.md
+    42→### Usage
+   145→### Why?
+   167→### Principles
+   181→### Demo
+   189→### Examples
+   205→### Documentation
+   231→### License
+docs/guides/01-getting-started.md
+docs/guides/02-validating-data.md
+docs/guides/03-coercing-data.md
+docs/guides/04-refining-validation.md
+docs/guides/05-handling-errors.md
+docs/guides/06-using-typescript.md
+docs/readme.md
+     7→### Usage
+docs/reference/coercions.md
+docs/reference/core.md
+docs/reference/errors.md
+docs/reference/refinements.md
+docs/reference/types.md
+docs/reference/typescript.md
+docs/reference/utilities.md
+docs/resources/faq.md
+docs/resources/links.md
+docs/summary.md
+     3→## Guides
+    12→## API Reference
+    22→## Resources
+rollup.config.js
+src/error.ts
+     5→export type Failure
+    25→export class StructError
+    35→  constructor
+src/index.ts
+src/struct.ts
+    10→export class Struct
+    22→  constructor
+    67→  assert
+    75→  create
+    83→  is
+    93→  mask
+   107→  validate
+   123→export function assert
+   139→export function create
+   157→export function mask
+   175→export function is
+   185→export function validate
+   221→export type Context
+   231→export type Infer
+   237→export type Describe
+   243→export type Result
+   253→export type Coercer
+   259→export type Validator
+   266→export type Refiner
+src/structs/coercions.ts
+src/structs/refinements.ts
+src/structs/types.ts
+src/structs/utilities.ts
+src/utils.ts
+     8→function isIterable
+    16→export function isObject
+    24→export function isNonArrayObject
+    32→export function isPlainObject
+    45→export function print
+    58→export function shiftIterator
+    67→export function toFailure
+   202→export type UnionToIntersection
+   212→export type Assign
+   218→export type EnumSchema
+   227→export type IsMatch
+   233→export type IsExactMatch
+   242→export type IsRecord
+   251→export type IsTuple
+   267→export type IsUnion
+   277→export type ObjectSchema
+   283→export type ObjectType
+   291→export type OmitBy
+   300→export type Optionalize
+   307→export type PartialObjectSchema
+   315→export type PickBy
+   324→export type Simplify
+   328→export type If
+   334→export type StructSchema
+   379→export type TupleSchema
+   385→export type AnyStruct
+   394→export type InferStructTuple
+   402→type _InferTuple

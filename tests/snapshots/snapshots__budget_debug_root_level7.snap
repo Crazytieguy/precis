@@ -1,0 +1,577 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 5000 → level 7 (2389 words)
+
+README.md
+     1→# debug
+     2→[![OpenCollective](https://opencollective.com/debug/backers/badge.svg)](#backers)
+     3→[![OpenCollective](https://opencollective.com/debug/sponsors/badge.svg)](#sponsors)
+     4→
+     5→<img width="647" src="https://user-images.githubusercontent.com/71256/29091486-fa38524c-7c37-11e7-895f-e7ec8e1039b6.png">
+     6→
+     7→A tiny JavaScript debugging utility modelled after Node.js core's debugging
+     8→technique. Works in Node.js and web browsers.
+     9→
+    10→## Installation
+    11→
+    12→```bash
+    13→$ npm install debug
+    14→```
+    15→
+    16→## Usage
+    17→
+    18→`debug` exposes a function; simply pass this function the name of your module, and it will return a decorated version of `console.error` for you to pass debug statements to. This will allow you to toggle the debug output for different parts of your module as well as the module as a whole.
+    19→
+    20→Example [_app.js_](./examples/node/app.js):
+    21→
+    22→```js
+    23→var debug = require('debug')('http')
+    24→  , http = require('http')
+    25→  , name = 'My App';
+    26→
+    27→// fake app
+    28→
+    29→debug('booting %o', name);
+    30→
+    31→http.createServer(function(req, res){
+    32→  debug(req.method + ' ' + req.url);
+    33→  res.end('hello\n');
+    34→}).listen(3000, function(){
+    35→  debug('listening');
+    36→});
+    37→
+    38→// fake worker of some kind
+    39→
+    40→require('./worker');
+    41→```
+    42→
+    43→Example [_worker.js_](./examples/node/worker.js):
+    44→
+    45→```js
+    46→var a = require('debug')('worker:a')
+    47→  , b = require('debug')('worker:b');
+    48→
+    49→function work() {
+    50→  a('doing lots of uninteresting work');
+    51→  setTimeout(work, Math.random() * 1000);
+    52→}
+    53→
+    54→work();
+    55→
+    56→function workb() {
+    57→  b('doing some work');
+    58→  setTimeout(workb, Math.random() * 2000);
+    59→}
+    60→
+    61→workb();
+    62→```
+    63→
+    64→The `DEBUG` environment variable is then used to enable these based on space or
+    65→comma-delimited names.
+    66→
+    67→Here are some examples:
+    68→
+    69→<img width="647" alt="screen shot 2017-08-08 at 12 53 04 pm" src="https://user-images.githubusercontent.com/71256/29091703-a6302cdc-7c38-11e7-8304-7c0b3bc600cd.png">
+    70→<img width="647" alt="screen shot 2017-08-08 at 12 53 38 pm" src="https://user-images.githubusercontent.com/71256/29091700-a62a6888-7c38-11e7-800b-db911291ca2b.png">
+    71→<img width="647" alt="screen shot 2017-08-08 at 12 53 25 pm" src="https://user-images.githubusercontent.com/71256/29091701-a62ea114-7c38-11e7-826a-2692bedca740.png">
+    72→
+    73→#### Windows command prompt notes
+    74→
+    75→##### CMD
+    76→
+    77→On Windows the environment variable is set using the `set` command.
+    78→
+    79→```cmd
+    80→set DEBUG=*,-not_this
+    81→```
+    82→
+    83→Example:
+    84→
+    85→```cmd
+    86→set DEBUG=* & node app.js
+    87→```
+    88→
+    89→##### PowerShell (VS Code default)
+    90→
+    91→PowerShell uses different syntax to set environment variables.
+    92→
+    93→```cmd
+    94→$env:DEBUG = "*,-not_this"
+    95→```
+    96→
+    97→Example:
+    98→
+    99→```cmd
+   100→$env:DEBUG='app';node app.js
+   101→```
+   102→
+   103→Then, run the program to be debugged as usual.
+   104→
+   105→npm script example:
+   106→```js
+   107→  "windowsDebug": "@powershell -Command $env:DEBUG='*';node app.js",
+   108→```
+   109→
+   110→## Namespace Colors
+   111→
+   112→Every debug instance has a color generated for it based on its namespace name.
+   113→This helps when visually parsing the debug output to identify which debug instance
+   114→a debug line belongs to.
+   115→
+   116→#### Node.js
+   117→
+   118→In Node.js, colors are enabled when stderr is a TTY. You also _should_ install
+   119→the [`supports-color`](https://npmjs.org/supports-color) module alongside debug,
+   120→otherwise debug will only use a small handful of basic colors.
+   121→
+   122→<img width="521" src="https://user-images.githubusercontent.com/71256/29092181-47f6a9e6-7c3a-11e7-9a14-1928d8a711cd.png">
+   123→
+   124→#### Web Browser
+   125→
+   126→Colors are also enabled on "Web Inspectors" that understand the `%c` formatting
+   127→option. These are WebKit web inspectors, Firefox ([since version
+   128→31](https://hacks.mozilla.org/2014/05/editable-box-model-multiple-selection-sublime-text-keys-much-more-firefox-developer-tools-episode-31/))
+   129→and the Firebug plugin for Firefox (any version).
+   130→
+   131→<img width="524" src="https://user-images.githubusercontent.com/71256/29092033-b65f9f2e-7c39-11e7-8e32-f6f0d8e865c1.png">
+   132→
+   133→
+   134→## Millisecond diff
+   135→
+   136→When actively developing an application it can be useful to see when the time spent between one `debug()` call and the next. Suppose for example you invoke `debug()` before requesting a resource, and after as well, the "+NNNms" will show you how much time was spent between calls.
+   137→
+   138→<img width="647" src="https://user-images.githubusercontent.com/71256/29091486-fa38524c-7c37-11e7-895f-e7ec8e1039b6.png">
+   139→
+   140→When stdout is not a TTY, `Date#toISOString()` is used, making it more useful for logging the debug information as shown below:
+   141→
+   142→<img width="647" src="https://user-images.githubusercontent.com/71256/29091956-6bd78372-7c39-11e7-8c55-c948396d6edd.png">
+   143→
+   144→
+   145→## Conventions
+   146→
+   147→If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. If you have more than one debuggers you _should_ prefix them with your library name and use ":" to separate features. For example "bodyParser" from Connect would then be "connect:bodyParser".  If you append a "*" to the end of your name, it will always be enabled regardless of the setting of the DEBUG environment variable.  You can then use it for normal output as well as debug output.
+   148→
+   149→## Wildcards
+   150→
+   151→The `*` character may be used as a wildcard. Suppose for example your library has
+   152→debuggers named "connect:bodyParser", "connect:compress", "connect:session",
+   153→instead of listing all three with
+   154→`DEBUG=connect:bodyParser,connect:compress,connect:session`, you may simply do
+   155→`DEBUG=connect:*`, or to run everything using this module simply use `DEBUG=*`.
+   156→
+   157→You can also exclude specific debuggers by prefixing them with a "-" character.
+   158→For example, `DEBUG=*,-connect:*` would include all debuggers except those
+   159→starting with "connect:".
+   160→
+   161→## Environment Variables
+   162→
+   163→When running through Node.js, you can set a few environment variables that will
+   164→change the behavior of the debug logging:
+   165→
+   166→| Name      | Purpose                                         |
+   167→|-----------|-------------------------------------------------|
+   168→| `DEBUG`   | Enables/disables specific debugging namespaces. |
+   169→| `DEBUG_HIDE_DATE` | Hide date from debug output (non-TTY).  |
+   170→| `DEBUG_COLORS`| Whether or not to use colors in the debug output. |
+   171→| `DEBUG_DEPTH` | Object inspection depth.                    |
+   172→| `DEBUG_SHOW_HIDDEN` | Shows hidden properties on inspected objects. |
+   173→
+   174→
+   175→__Note:__ The environment variables beginning with `DEBUG_` end up being
+   176→converted into an Options object that gets used with `%o`/`%O` formatters.
+   177→See the Node.js documentation for
+   178→[`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options)
+   179→for the complete list.
+   180→
+   181→## Formatters
+   182→
+   183→Debug uses [printf-style](https://wikipedia.org/wiki/Printf_format_string) formatting.
+   184→Below are the officially supported formatters:
+   185→
+   186→| Formatter | Representation |
+   187→|-----------|----------------|
+   188→| `%O`      | Pretty-print an Object on multiple lines. |
+   189→| `%o`      | Pretty-print an Object all on a single line. |
+   190→| `%s`      | String. |
+   191→| `%d`      | Number (both integer and float). |
+   192→| `%j`      | JSON. Replaced with the string '[Circular]' if the argument contains circular references. |
+   193→| `%%`      | Single percent sign ('%'). This does not consume an argument. |
+   194→
+   195→
+   196→### Custom formatters
+   197→
+   198→You can add custom formatters by extending the `debug.formatters` object.
+   199→For example, if you wanted to add support for rendering a Buffer as hex with
+   200→`%h`, you could do something like:
+   201→
+   202→```js
+   203→const createDebug = require('debug')
+   204→createDebug.formatters.h = (v) => {
+   205→  return v.toString('hex')
+   206→}
+   207→
+   208→// …elsewhere
+   209→const debug = createDebug('foo')
+   210→debug('this is hex: %h', new Buffer('hello world'))
+   211→//   foo this is hex: 68656c6c6f20776f726c6421 +0ms
+   212→```
+   213→
+   214→
+   215→## Browser Support
+   216→
+   217→You can build a browser-ready script using [browserify](https://github.com/substack/node-browserify),
+   218→or just use the [browserify-as-a-service](https://wzrd.in/) [build](https://wzrd.in/standalone/debug@latest),
+   219→if you don't want to build it yourself.
+   220→
+   221→Debug's enable state is currently persisted by `localStorage`.
+   222→Consider the situation shown below where you have `worker:a` and `worker:b`,
+   223→and wish to debug both. You can enable this using `localStorage.debug`:
+   224→
+   225→```js
+   226→localStorage.debug = 'worker:*'
+   227→```
+   228→
+   229→And then refresh the page.
+   230→
+   231→```js
+   232→a = debug('worker:a');
+   233→b = debug('worker:b');
+   234→
+   235→setInterval(function(){
+   236→  a('doing some work');
+   237→}, 1000);
+   238→
+   239→setInterval(function(){
+   240→  b('doing some work');
+   241→}, 1200);
+   242→```
+   243→
+   244→In Chromium-based web browsers (e.g. Brave, Chrome, and Electron), the JavaScript console will—by default—only show messages logged by `debug` if the "Verbose" log level is _enabled_.
+   245→
+   246→<img width="647" src="https://user-images.githubusercontent.com/7143133/152083257-29034707-c42c-4959-8add-3cee850e6fcf.png">
+   247→
+   248→## Output streams
+   249→
+   250→  By default `debug` will log to stderr, however this can be configured per-namespace by overriding the `log` method:
+   251→
+   252→Example [_stdout.js_](./examples/node/stdout.js):
+   253→
+   254→```js
+   255→var debug = require('debug');
+   256→var error = debug('app:error');
+   257→
+   258→// by default stderr is used
+   259→error('goes to stderr!');
+   260→
+   261→var log = debug('app:log');
+   262→// set this namespace to log via console.log
+   263→log.log = console.log.bind(console); // don't forget to bind to console!
+   264→log('goes to stdout');
+   265→error('still goes to stderr!');
+   266→
+   267→// set all output to go via console.info
+   268→// overrides all per-namespace log settings
+   269→debug.log = console.info.bind(console);
+   270→error('now goes to stdout via console.info');
+   271→log('still goes to stdout, but via console.info now');
+   272→```
+   273→
+   274→## Extend
+   275→You can simply extend debugger 
+   276→```js
+   277→const log = require('debug')('auth');
+   278→
+   279→//creates new debug instance with extended namespace
+   280→const logSign = log.extend('sign');
+   281→const logLogin = log.extend('login');
+   282→
+   283→log('hello'); // auth hello
+   284→logSign('hello'); //auth:sign hello
+   285→logLogin('hello'); //auth:login hello
+   286→```
+   287→
+   288→## Set dynamically
+   289→
+   290→You can also enable debug dynamically by calling the `enable()` method :
+   291→
+   292→```js
+   293→let debug = require('debug');
+   294→
+   295→console.log(1, debug.enabled('test'));
+   296→
+   297→debug.enable('test');
+   298→console.log(2, debug.enabled('test'));
+   299→
+   300→debug.disable();
+   301→console.log(3, debug.enabled('test'));
+   302→
+   303→```
+   304→
+   305→print :   
+   306→```
+   307→1 false
+   308→2 true
+   309→3 false
+   310→```
+   311→
+   312→Usage :  
+   313→`enable(namespaces)`  
+   314→`namespaces` can include modes separated by a colon and wildcards.
+   315→   
+   316→Note that calling `enable()` completely overrides previously set DEBUG variable : 
+   317→
+   318→```
+   319→$ DEBUG=foo node -e 'var dbg = require("debug"); dbg.enable("bar"); console.log(dbg.enabled("foo"))'
+   320→=> false
+   321→```
+   322→
+   323→`disable()`
+   324→
+   325→Will disable all namespaces. The functions returns the namespaces currently
+   326→enabled (and skipped). This can be useful if you want to disable debugging
+   327→temporarily without knowing what was enabled to begin with.
+   328→
+   329→For example:
+   330→
+   331→```js
+   332→let debug = require('debug');
+   333→debug.enable('foo:*,-foo:bar');
+   334→let namespaces = debug.disable();
+   335→debug.enable(namespaces);
+   336→```
+   337→
+   338→Note: There is no guarantee that the string will be identical to the initial
+   339→enable string, but semantically they will be identical.
+   340→
+   341→## Checking whether a debug target is enabled
+   342→
+   343→After you've created a debug instance, you can determine whether or not it is
+   344→enabled by checking the `enabled` property:
+   345→
+   346→```javascript
+   347→const debug = require('debug')('http');
+   348→
+   349→if (debug.enabled) {
+   350→  // do stuff...
+   351→}
+   352→```
+   353→
+   354→You can also manually toggle this property to force the debug instance to be
+   355→enabled or disabled.
+   356→
+   357→## Usage in child processes
+   358→
+   359→Due to the way `debug` detects if the output is a TTY or not, colors are not shown in child processes when `stderr` is piped. A solution is to pass the `DEBUG_COLORS=1` environment variable to the child process.  
+   360→For example:
+   361→
+   362→```javascript
+   363→worker = fork(WORKER_WRAP_PATH, [workerPath], {
+   364→  stdio: [
+   365→    /* stdin: */ 0,
+   366→    /* stdout: */ 'pipe',
+   367→    /* stderr: */ 'pipe',
+   368→    'ipc',
+   369→  ],
+   370→  env: Object.assign({}, process.env, {
+   371→    DEBUG_COLORS: 1 // without this settings, colors won't be shown
+   372→  }),
+   373→});
+   374→
+   375→worker.stderr.pipe(process.stderr, { end: false });
+   376→```
+   377→
+   378→
+   379→## Authors
+   380→
+   381→ - TJ Holowaychuk
+   382→ - Nathan Rajlich
+   383→ - Andrew Rhyne
+   384→ - Josh Junon
+   385→
+   386→## Backers
+   387→
+   388→Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/debug#backer)]
+   389→
+   390→<a href="https://opencollective.com/debug/backer/0/website" target="_blank"><img src="https://opencollective.com/debug/backer/0/avatar.svg"></a>
+   391→<a href="https://opencollective.com/debug/backer/1/website" target="_blank"><img src="https://opencollective.com/debug/backer/1/avatar.svg"></a>
+   392→<a href="https://opencollective.com/debug/backer/2/website" target="_blank"><img src="https://opencollective.com/debug/backer/2/avatar.svg"></a>
+   393→<a href="https://opencollective.com/debug/backer/3/website" target="_blank"><img src="https://opencollective.com/debug/backer/3/avatar.svg"></a>
+   394→<a href="https://opencollective.com/debug/backer/4/website" target="_blank"><img src="https://opencollective.com/debug/backer/4/avatar.svg"></a>
+   395→<a href="https://opencollective.com/debug/backer/5/website" target="_blank"><img src="https://opencollective.com/debug/backer/5/avatar.svg"></a>
+   396→<a href="https://opencollective.com/debug/backer/6/website" target="_blank"><img src="https://opencollective.com/debug/backer/6/avatar.svg"></a>
+   397→<a href="https://opencollective.com/debug/backer/7/website" target="_blank"><img src="https://opencollective.com/debug/backer/7/avatar.svg"></a>
+   398→<a href="https://opencollective.com/debug/backer/8/website" target="_blank"><img src="https://opencollective.com/debug/backer/8/avatar.svg"></a>
+   399→<a href="https://opencollective.com/debug/backer/9/website" target="_blank"><img src="https://opencollective.com/debug/backer/9/avatar.svg"></a>
+   400→<a href="https://opencollective.com/debug/backer/10/website" target="_blank"><img src="https://opencollective.com/debug/backer/10/avatar.svg"></a>
+   401→<a href="https://opencollective.com/debug/backer/11/website" target="_blank"><img src="https://opencollective.com/debug/backer/11/avatar.svg"></a>
+   402→<a href="https://opencollective.com/debug/backer/12/website" target="_blank"><img src="https://opencollective.com/debug/backer/12/avatar.svg"></a>
+   403→<a href="https://opencollective.com/debug/backer/13/website" target="_blank"><img src="https://opencollective.com/debug/backer/13/avatar.svg"></a>
+   404→<a href="https://opencollective.com/debug/backer/14/website" target="_blank"><img src="https://opencollective.com/debug/backer/14/avatar.svg"></a>
+   405→<a href="https://opencollective.com/debug/backer/15/website" target="_blank"><img src="https://opencollective.com/debug/backer/15/avatar.svg"></a>
+   406→<a href="https://opencollective.com/debug/backer/16/website" target="_blank"><img src="https://opencollective.com/debug/backer/16/avatar.svg"></a>
+   407→<a href="https://opencollective.com/debug/backer/17/website" target="_blank"><img src="https://opencollective.com/debug/backer/17/avatar.svg"></a>
+   408→<a href="https://opencollective.com/debug/backer/18/website" target="_blank"><img src="https://opencollective.com/debug/backer/18/avatar.svg"></a>
+   409→<a href="https://opencollective.com/debug/backer/19/website" target="_blank"><img src="https://opencollective.com/debug/backer/19/avatar.svg"></a>
+   410→<a href="https://opencollective.com/debug/backer/20/website" target="_blank"><img src="https://opencollective.com/debug/backer/20/avatar.svg"></a>
+   411→<a href="https://opencollective.com/debug/backer/21/website" target="_blank"><img src="https://opencollective.com/debug/backer/21/avatar.svg"></a>
+   412→<a href="https://opencollective.com/debug/backer/22/website" target="_blank"><img src="https://opencollective.com/debug/backer/22/avatar.svg"></a>
+   413→<a href="https://opencollective.com/debug/backer/23/website" target="_blank"><img src="https://opencollective.com/debug/backer/23/avatar.svg"></a>
+   414→<a href="https://opencollective.com/debug/backer/24/website" target="_blank"><img src="https://opencollective.com/debug/backer/24/avatar.svg"></a>
+   415→<a href="https://opencollective.com/debug/backer/25/website" target="_blank"><img src="https://opencollective.com/debug/backer/25/avatar.svg"></a>
+   416→<a href="https://opencollective.com/debug/backer/26/website" target="_blank"><img src="https://opencollective.com/debug/backer/26/avatar.svg"></a>
+   417→<a href="https://opencollective.com/debug/backer/27/website" target="_blank"><img src="https://opencollective.com/debug/backer/27/avatar.svg"></a>
+   418→<a href="https://opencollective.com/debug/backer/28/website" target="_blank"><img src="https://opencollective.com/debug/backer/28/avatar.svg"></a>
+   419→<a href="https://opencollective.com/debug/backer/29/website" target="_blank"><img src="https://opencollective.com/debug/backer/29/avatar.svg"></a>
+   420→
+   421→
+   422→## Sponsors
+   423→
+   424→Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/debug#sponsor)]
+   425→
+   426→<a href="https://opencollective.com/debug/sponsor/0/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/0/avatar.svg"></a>
+   427→<a href="https://opencollective.com/debug/sponsor/1/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/1/avatar.svg"></a>
+   428→<a href="https://opencollective.com/debug/sponsor/2/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/2/avatar.svg"></a>
+   429→<a href="https://opencollective.com/debug/sponsor/3/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/3/avatar.svg"></a>
+   430→<a href="https://opencollective.com/debug/sponsor/4/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/4/avatar.svg"></a>
+   431→<a href="https://opencollective.com/debug/sponsor/5/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/5/avatar.svg"></a>
+   432→<a href="https://opencollective.com/debug/sponsor/6/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/6/avatar.svg"></a>
+   433→<a href="https://opencollective.com/debug/sponsor/7/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/7/avatar.svg"></a>
+   434→<a href="https://opencollective.com/debug/sponsor/8/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/8/avatar.svg"></a>
+   435→<a href="https://opencollective.com/debug/sponsor/9/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/9/avatar.svg"></a>
+   436→<a href="https://opencollective.com/debug/sponsor/10/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/10/avatar.svg"></a>
+   437→<a href="https://opencollective.com/debug/sponsor/11/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/11/avatar.svg"></a>
+   438→<a href="https://opencollective.com/debug/sponsor/12/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/12/avatar.svg"></a>
+   439→<a href="https://opencollective.com/debug/sponsor/13/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/13/avatar.svg"></a>
+   440→<a href="https://opencollective.com/debug/sponsor/14/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/14/avatar.svg"></a>
+   441→<a href="https://opencollective.com/debug/sponsor/15/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/15/avatar.svg"></a>
+   442→<a href="https://opencollective.com/debug/sponsor/16/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/16/avatar.svg"></a>
+   443→<a href="https://opencollective.com/debug/sponsor/17/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/17/avatar.svg"></a>
+   444→<a href="https://opencollective.com/debug/sponsor/18/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/18/avatar.svg"></a>
+   445→<a href="https://opencollective.com/debug/sponsor/19/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/19/avatar.svg"></a>
+   446→<a href="https://opencollective.com/debug/sponsor/20/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/20/avatar.svg"></a>
+   447→<a href="https://opencollective.com/debug/sponsor/21/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/21/avatar.svg"></a>
+   448→<a href="https://opencollective.com/debug/sponsor/22/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/22/avatar.svg"></a>
+   449→<a href="https://opencollective.com/debug/sponsor/23/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/23/avatar.svg"></a>
+   450→<a href="https://opencollective.com/debug/sponsor/24/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/24/avatar.svg"></a>
+   451→<a href="https://opencollective.com/debug/sponsor/25/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/25/avatar.svg"></a>
+   452→<a href="https://opencollective.com/debug/sponsor/26/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/26/avatar.svg"></a>
+   453→<a href="https://opencollective.com/debug/sponsor/27/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/27/avatar.svg"></a>
+   454→<a href="https://opencollective.com/debug/sponsor/28/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/28/avatar.svg"></a>
+   455→<a href="https://opencollective.com/debug/sponsor/29/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/29/avatar.svg"></a>
+   456→
+   457→## License
+   458→
+   459→(The MIT License)
+   460→
+   461→Copyright (c) 2014-2017 TJ Holowaychuk &lt;tj@vision-media.ca&gt;
+   462→Copyright (c) 2018-2021 Josh Junon
+   463→
+   464→Permission is hereby granted, free of charge, to any person obtaining
+   465→a copy of this software and associated documentation files (the
+   466→'Software'), to deal in the Software without restriction, including
+   467→without limitation the rights to use, copy, modify, merge, publish,
+   468→distribute, sublicense, and/or sell copies of the Software, and to
+   469→permit persons to whom the Software is furnished to do so, subject to
+   470→the following conditions:
+   471→
+   472→The above copyright notice and this permission notice shall be
+   473→included in all copies or substantial portions of the Software.
+   474→
+   475→THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+   476→EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   477→MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   478→IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+   479→CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+   480→TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+   481→SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+karma.conf.js
+src/browser.js
+   115→function useColors() {
+   143→/**
+   144→ * Colorize log arguments if enabled.
+   145→ *
+   146→ * @api public
+   147→ */
+   148→
+   149→function formatArgs(args) {
+   194→/**
+   195→ * Save `namespaces`.
+   196→ *
+   197→ * @param {String} namespaces
+   198→ * @api private
+   199→ */
+   200→function save(namespaces) {
+   213→/**
+   214→ * Load `namespaces`.
+   215→ *
+   216→ * @return {String} returns the previously persisted debug modes
+   217→ * @api private
+   218→ */
+   219→function load() {
+   236→/**
+   237→ * Localstorage attempts to return the localstorage.
+   238→ *
+   239→ * This is necessary because safari throws
+   240→ * when a user disables cookies/localstorage
+   241→ * and you attempt to access it.
+   242→ *
+   243→ * @return {LocalStorage}
+   244→ * @api private
+   245→ */
+   246→
+   247→function localstorage() {
+src/common.js
+     2→/**
+     3→ * This is the common logic for both the Node.js and web browser
+     4→ * implementations of `debug()`.
+     5→ */
+     6→
+     7→function setup(env) {
+src/index.js
+src/node.js
+   151→/**
+   152→ * Is stdout a TTY? Colored output is enabled when `true`.
+   153→ */
+   154→
+   155→function useColors() {
+   161→/**
+   162→ * Adds ANSI color escape codes if enabled.
+   163→ *
+   164→ * @api public
+   165→ */
+   166→
+   167→function formatArgs(args) {
+   182→function getDate() {
+   189→/**
+   190→ * Invokes `util.formatWithOptions()` with the specified arguments and writes to stderr.
+   191→ */
+   192→
+   193→function log(...args) {
+   197→/**
+   198→ * Save `namespaces`.
+   199→ *
+   200→ * @param {String} namespaces
+   201→ * @api private
+   202→ */
+   203→function save(namespaces) {
+   213→/**
+   214→ * Load `namespaces`.
+   215→ *
+   216→ * @return {String} returns the previously persisted debug modes
+   217→ * @api private
+   218→ */
+   219→
+   220→function load() {
+   224→/**
+   225→ * Init logic for `debug` instances.
+   226→ *
+   227→ * Create a new `inspectOpts` object in case `useColors` is set
+   228→ * differently for a particular `debug` instance.
+   229→ */
+   230→
+   231→function init(debug) {
+test.js
+test.node.js
+     8→const formatWithOptionsSpy = sinon.spy(util, 'formatWithOptions');

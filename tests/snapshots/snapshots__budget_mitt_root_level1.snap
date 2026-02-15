@@ -1,0 +1,39 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 100 → level 1 (82 words)
+
+README.md
+     9→# Mitt
+    21→## Table of Contents
+    30→## Install
+    56→## Usage
+    81→### Typescript
+   113→## Examples & Demos
+   123→## API
+   127→#### Table of Contents
+   138→### mitt
+   144→### all
+   148→### on
+   152→#### Parameters
+   157→### off
+   162→#### Parameters
+   167→### emit
+   174→#### Parameters
+   179→## Contribute
+   184→### Reporting Issues
+   189→### Submitting pull requests
+   203→## License
+src/index.ts
+     1→export type EventType
+     5→export type Handler
+     6→export type WildcardHandler
+    12→export type EventHandlerList
+    13→export type WildCardEventHandlerList
+    18→export type EventHandlerMap
+    23→export interface Emitter
+    27→	on
+    33→	off
+    36→	emit
+    46→export default function mitt

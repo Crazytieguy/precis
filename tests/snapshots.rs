@@ -1105,6 +1105,22 @@ fixture_test!(fixture_log_root_level2, "log", 2);
 fixture_test!(fixture_ts_pattern_root_level2, "ts-pattern", 2);
 fixture_test!(fixture_typeguard_root_level2, "typeguard", 2);
 fixture_test!(fixture_mdbook_root_level2, "mdbook", 2);
+fixture_test!(fixture_once_cell_root_level2, "once_cell", 2);
+fixture_test!(fixture_thiserror_root_level2, "thiserror", 2);
+fixture_test!(fixture_react_hot_toast_root_level2, "react-hot-toast", 2);
+fixture_test!(fixture_humanize_root_level2, "humanize", 2);
+fixture_test!(fixture_tomli_root_level2, "tomli", 2);
+fixture_test!(fixture_cmdk_root_level2, "cmdk", 2);
+fixture_test!(fixture_debug_root_level2, "debug", 2);
+fixture_test!(fixture_dotenv_root_level2, "dotenv", 2);
+fixture_test!(fixture_ini_root_level2, "ini", 2);
+fixture_test!(fixture_input_otp_root_level2, "input-otp", 2);
+fixture_test!(fixture_ky_root_level2, "ky", 2);
+fixture_test!(fixture_mitt_root_level2, "mitt", 2);
+fixture_test!(fixture_python_dotenv_root_level2, "python-dotenv", 2);
+fixture_test!(fixture_semver_root_level2, "semver", 2);
+fixture_test!(fixture_superstruct_root_level2, "superstruct", 2);
+fixture_test!(fixture_vaul_root_level2, "vaul", 2);
 
 // Single-file rendering tests (precis accepts individual files, not just directories).
 
@@ -1269,6 +1285,17 @@ fn monotonicity_invariant() {
         ("react-hot-toast-root", "react-hot-toast"),      // TSX + Markdown (15 files)
         ("humanize-root", "humanize"),                    // Python + Markdown (18 files)
         ("tomli-root", "tomli"),                          // Python + Markdown (12 files)
+        ("cmdk-root", "cmdk"),                            // TSX + Markdown (6 files)
+        ("debug-root", "debug"),                          // JS + Markdown (6 files)
+        ("dotenv-root", "dotenv"),                        // JS + Markdown (5 files)
+        ("ini-root", "ini"),                              // JS + Markdown (5 files)
+        ("input-otp-root", "input-otp"),                  // TSX + TS + Markdown (16 files)
+        ("ky-root", "ky"),                                // TS + Markdown (8 files)
+        ("mitt-root", "mitt"),                            // TS + Markdown (5 files)
+        ("python-dotenv-root", "python-dotenv"),          // Python + Markdown (10 files)
+        ("semver-root", "semver"),                        // Go + Markdown (12 files)
+        ("superstruct-root", "superstruct"),              // TS + Markdown (16 files)
+        ("vaul-root", "vaul"),                            // TSX + Markdown (12 files)
     ];
     let mut tested_files = 0;
     for (name, subpath) in fixtures {
@@ -1615,3 +1642,58 @@ budget_test!(budget_tomli_root_level0, "tomli", 15);
 budget_test!(budget_tomli_root_level1, "tomli", 250);
 budget_test!(budget_tomli_root_level2, "tomli", 1500);
 budget_test!(budget_tomli_root_level4, "tomli", 3000);
+
+budget_test!(budget_cmdk_root_level0, "cmdk", 25);
+budget_test!(budget_cmdk_root_level1, "cmdk", 200);
+budget_test!(budget_cmdk_root_level2, "cmdk", 1000);
+budget_test!(budget_cmdk_root_level6, "cmdk", 4300);
+
+budget_test!(budget_debug_root_level0, "debug", 15);
+budget_test!(budget_debug_root_level2, "debug", 200);
+budget_test!(budget_debug_root_level5, "debug", 1500);
+budget_test!(budget_debug_root_level7, "debug", 5000);
+
+budget_test!(budget_dotenv_root_level0, "dotenv", 15);
+budget_test!(budget_dotenv_root_level1, "dotenv", 650);
+budget_test!(budget_dotenv_root_level5, "dotenv", 3000);
+budget_test!(budget_dotenv_root_level7, "dotenv", 10000);
+
+budget_test!(budget_ini_root_level0, "ini", 10);
+budget_test!(budget_ini_root_level1, "ini", 160);
+budget_test!(budget_ini_root_level5, "ini", 1000);
+budget_test!(budget_ini_root_level7, "ini", 2000);
+
+budget_test!(budget_input_otp_root_level0, "input-otp", 60);
+budget_test!(budget_input_otp_root_level1, "input-otp", 200);
+budget_test!(budget_input_otp_root_level3, "input-otp", 1200);
+budget_test!(budget_input_otp_root_level6, "input-otp", 3700);
+
+budget_test!(budget_ky_root_level0, "ky", 30);
+budget_test!(budget_ky_root_level2, "ky", 600);
+budget_test!(budget_ky_root_level4, "ky", 7400);
+budget_test!(budget_ky_root_level7, "ky", 16200);
+
+budget_test!(budget_mitt_root_level0, "mitt", 5);
+budget_test!(budget_mitt_root_level1, "mitt", 100);
+budget_test!(budget_mitt_root_level5, "mitt", 540);
+budget_test!(budget_mitt_root_level7, "mitt", 1000);
+
+budget_test!(budget_python_dotenv_root_level0, "python-dotenv", 15);
+budget_test!(budget_python_dotenv_root_level2, "python-dotenv", 500);
+budget_test!(budget_python_dotenv_root_level5, "python-dotenv", 2000);
+budget_test!(budget_python_dotenv_root_level6, "python-dotenv", 4500);
+
+budget_test!(budget_semver_root_level0, "semver", 60);
+budget_test!(budget_semver_root_level1, "semver", 700);
+budget_test!(budget_semver_root_level2, "semver", 2000);
+budget_test!(budget_semver_root_level6, "semver", 7000);
+
+budget_test!(budget_superstruct_root_level0, "superstruct", 35);
+budget_test!(budget_superstruct_root_level1, "superstruct", 500);
+budget_test!(budget_superstruct_root_level3, "superstruct", 5000);
+budget_test!(budget_superstruct_root_level5, "superstruct", 7000);
+
+budget_test!(budget_vaul_root_level0, "vaul", 20);
+budget_test!(budget_vaul_root_level1, "vaul", 250);
+budget_test!(budget_vaul_root_level2, "vaul", 1100);
+budget_test!(budget_vaul_root_level7, "vaul", 2000);

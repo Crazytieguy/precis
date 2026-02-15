@@ -1,0 +1,151 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 → level 2 (376 words)
+
+CHANGELOG.md
+     1→# Changelog
+     8→## [1.2.1] - 2025-10-26
+    13→## [1.2.0] - 2025-10-26
+    19→## [1.1.1] - 2025-06-24
+    21→### Fixed
+    27→## [1.1.0] - 2025-03-25
+    42→## [1.0.1] - 2024-01-23
+    55→## [1.0.0] - 2023-02-24
+    62→## [0.21.1] - 2023-01-21
+    80→## [0.21.0] - 2022-09-03
+    97→## [0.20.0] - 2022-03-24
+   110→## [0.19.2] - 2021-11-11
+   117→## [0.19.1] - 2021-08-09
+   123→## [0.19.0] - 2021-07-24
+   138→## [0.18.0] - 2021-06-20
+   151→## [0.17.1] - 2021-04-29
+   157→## [0.17.0] - 2021-04-02
+   167→## [0.16.0] - 2021-03-27
+   175→## [0.15.0] - 2020-10-28
+   194→## [0.14.0] - 2020-07-03
+   206→## [0.13.0] - 2020-04-16
+   212→## [0.12.0] - 2020-02-28
+   225→## [0.11.0] - 2020-02-07
+   241→## [0.10.5] - 2020-01-19
+   250→## [0.10.4] - 2020-01-17
+   258→## 0.10.3
+   265→## 0.10.2
+   273→## 0.10.1
+   276→## 0.10.0
+   287→## 0.9.0
+   293→## 0.8.1
+   298→## 0.8.0
+   307→## 0.7.1
+   311→## 0.7.0
+   320→## 0.6.5
+   326→## 0.6.4
+   331→## 0.6.3
+   336→## 0.6.2
+   342→## 0.6.0
+   352→## 0.5.1
+   357→## 0.5.0
+   362→## 0.4.0
+CONTRIBUTING.md
+     1→Contributing
+README.md
+     1→# python-dotenv
+    22→## Getting Started
+    78→## Other Use Cases
+    80→### Load configuration without altering the environment
+   105→### Parse configuration as a stream
+   120→### Load .env files in IPython
+   141→### Disable load_dotenv
+   147→## Command-line Interface
+   169→## File format
+   185→### Multiline values
+   199→### Variable without a value
+   214→### Variable expansion
+   234→## Related Projects
+   246→## Acknowledgements
+docs/reference.md
+     1→# ::: dotenv
+src/dotenv/__init__.py
+     6→def load_ipython_extension
+    12→def get_cli_string
+    42→__all__
+src/dotenv/__main__.py
+src/dotenv/cli.py
+    24→def enumerate_env
+    62→def cli
+    68→def stream_file
+    93→def list_values
+   116→def set_value
+   131→def get
+   148→def unset
+   173→def run
+   193→def run_command
+src/dotenv/ipython.py
+    12→class IPythonDotEnv
+    34→    def dotenv
+    48→def load_ipython_extension
+src/dotenv/main.py
+    25→def _load_dotenv_disabled
+    35→def with_warn_for_invalid_lines
+    45→class DotEnv
+    46→    def __init__
+    64→    def _get_stream
+    78→    def dict
+    94→    def parse
+   100→    def set_as_environment_variables
+   115→    def get
+   128→def get_key
+   142→def rewrite
+   163→def set_key
+   211→def unset_key
+   244→def resolve_variables
+   269→def _walk_to_root
+   287→def find_dotenv
+   338→def load_dotenv
+   387→def dotenv_values
+   423→def _is_file_or_fifo
+src/dotenv/parser.py
+    14→def make_regex
+    35→class Original
+    40→class Binding
+    47→class Position
+    48→    def __init__
+    53→    def start
+    56→    def set
+    60→    def advance
+    65→class Error
+    69→class Reader
+    70→    def __init__
+    75→    def has_next
+    78→    def set_mark
+    81→    def get_marked
+    87→    def peek
+    90→    def read
+    97→    def read_regex
+   105→def decode_escapes
+   112→def parse_key
+   123→def parse_unquoted_value
+   128→def parse_value
+   142→def parse_binding
+   179→def parse_stream
+src/dotenv/variables.py
+     5→_posix_variable
+    18→class Atom
+    19→    def __ne__
+    26→    def resolve
+    29→class Literal
+    30→    def __init__
+    33→    def __repr__
+    36→    def __eq__
+    41→    def __hash__
+    44→    def resolve
+    48→class Variable
+    49→    def __init__
+    53→    def __repr__
+    56→    def __eq__
+    61→    def __hash__
+    64→    def resolve
+    70→def parse_variables
+src/dotenv/version.py
+     1→__version__

@@ -1,0 +1,340 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1200 → level 3 (1135 words)
+
+CHANGELOG.md
+     1→# Changelog
+     2→
+     3→## [1.4.2]
+     4→
+     5→- chore(input): remove unintentional log within internal pasteListener
+     7→## [1.4.1]
+     8→
+     9→- chore(input): add peer dep for react@19-rc
+    11→## [1.4.0]
+    12→
+    13→I'm sorry to skip `1.3.0` due to an issue I've had while publishing the NPM package.
+    25→## [1.2.5]
+    26→
+    27→- chore(input): add peer dep for react@19
+    29→## [1.2.4]
+    30→
+    31→- fix(input): prevent single caret selection on deletion/cutting
+    33→## [1.2.3]
+    34→
+    35→- fix(input/css): specify `color: transparent !important` for `::selection` modifier
+    36→- fix(input/node-env): check for CSS supports api before calling fn
+    38→## [1.2.2]
+    39→
+    40→- chore(input): remove experimental flag `pushPasswordManagerStrategy`
+    42→## [1.2.1]
+    43→
+    44→- fix(input): use `color` not `text` for autofillStyles
+    45→- chore(input): keep support for prop pushPasswordManagerStrategy="experimental-no-flickering"
+    46→- fix(input): prevent layout expansion when password managers aren't there and remove "experimental-no-flickering" strategy
+    48→## [1.2.0]
+    49→
+    50→- chore(input): don't restrict inputMode typing
+    52→## [1.2.0-beta.1]
+    53→
+    54→- fix(input): renderfn typing
+    56→## [1.2.0-beta.0]
+    57→
+    58→- feat(input): add context option
+    59→- chore(input): remove unused type `SelectionType`
+    61→## [1.1.0]
+    62→
+    63→- feat(input/no-js): allow opting out of no-js fallback
+    64→- fix(input/no-js): move noscript to the top
+    65→- chore(input): optimize use-badge
+    66→- fix(input): set no extra width on default noscript css fallback
+    67→- fix(input): check window during ssr
+    68→- fix(input/ios): add right: 1px to compensate left: -1px
+    69→- chore(input/ios): revert paste listener (re-add)
+    70→- chore(input): always trigger selection menu on ios
+    71→- perf(input): prevent trackPWMBadge when strategy is none
+    72→- fix(input): do not skip left slot
+    73→- fix(input): do not skip left slot when pressing arrowleft after insert mode
+    74→- fix(input): reinforce wrapper to pointerEvents none
+    75→- feat(input): add experimental push pwm badge
+    76→- chore(input): rename prop to pushPasswordManagerStrategy
+    77→- chore(input): move focus logic to _focusListener
+    78→- fix(input): reinforce no box shadows
+    79→- perf(input): rewrite core in a single event listener
+    80→- fix(input): safe insert css rules
+    81→- fix(input): prevent layout shift caused by password managers
+    82→- feat(input): add pwm badge space detector
+    83→- feat(input): add passwordManagerBehavior prop
+    84→- fix(input): forcefully remove :autofill
+    85→- feat(input): track password managers
+    87→## [1.0.1]
+    88→
+    89→- fix(input): immediately update selection after paste
+    90→- fix(input): hide selection on iOS webkit
+    92→## [1.0.0]
+    93→
+    94→- fix(input/firefox): use setselectionrange direction:backwards
+    96→## [0.3.31-beta]
+    97→
+    98→No input scope changes for this version.
+   100→## [0.3.3-beta]
+   101→
+   102→No input scope changes for this version.
+   104→## [0.3.2-beta]
+   105→
+   106→No input scope changes for this version.
+   108→## [0.3.11-beta]
+   109→
+   110→No input scope changes for this version.
+   112→## [0.3.1-beta]
+   113→
+   114→No input scope changes for this version.
+   116→## [0.2.4]
+   117→
+   118→- chore(input): always focus onContainerClick
+   120→## [0.2.1]
+   121→
+   122→- fix(input): do not trigger `onComplete` twice
+   124→## [0.2]
+   125→
+   126→No input scope changes for this version.
+README.md
+     1→# The only accessible & unstyled & full featured Input OTP component in the Web.
+     2→
+     3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
+     4→
+     5→<h3 align="center">Hero Sponsors 🎖️</h3>
+     6→<p align="center">
+     7→<a href="https://go.clerk.com/input-otp" target="_blank">
+     8→<img alt="Clerk" src='https://input-otp.rodz.dev/sponsors/clerk-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
+     9→</a>
+    10→<a href="https://go.resend.com/input-otp" target="_blank">
+    11→<img alt="Resend" src='https://input-otp.rodz.dev/sponsors/resend-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
+    12→</a>
+    13→<a href="https://evomi.com/?utm_source=github&utm_campaign=otp" target="_blank">
+    14→<img alt="Evomi" src='https://input-otp.rodz.dev/sponsors/evomi-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
+    15→</a>
+    16→</p>
+    20→## Usage
+    21→
+    22→```bash
+    23→npm install input-otp
+    24→```
+    39→## Default example
+    40→
+    41→The example below uses `tailwindcss` `@shadcn/ui` `tailwind-merge` `clsx`:
+   136→## How it works
+   137→
+   138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
+   139→This library works by rendering an invisible input as a sibling of the slots, contained by a `relative`ly positioned parent (the container root called _OTPInput_).
+   141→## Features
+   142→
+   143→This is the most complete OTP input on the web. It's fully featured 
+   198→### Auto tracks if the input has space in the right side for the badge
+   199→
+   200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
+   204→## API Reference
+   205→
+   206→### OTPInput
+   207→
+   208→The root container. Define settings for the input via props. Then, use the `render` prop to create the slots.
+   210→#### Props
+   211→
+   212→```ts
+   213→type OTPInputProps = {
+   214→  // The number of slots
+   215→  maxLength: number
+   293→## Examples
+   294→
+   295→<details>
+   296→<summary>Automatic form submission on OTP completion</summary>
+   377→## Caveats
+   378→
+   379→<details>
+   380→<summary>[Workaround] If you want to block specific password manager/badges:</summary>
+   539→#### Sponsors
+   540→
+   541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
+apps/storybook/README.md
+    13→## 🚅 Quick start
+    44→## 🔎 What's inside?
+    83→## Contribute
+    87→## Learning Storybook
+apps/storybook/src/components/ui/input-otp.tsx
+     9→const InputOTP
+    21→const InputOTPGroup
+    29→const InputOTPSlot
+    54→const InputOTPSeparator
+apps/storybook/src/lib/utils.ts
+     4→export function cn
+apps/storybook/src/stories/Button.stories.ts
+    14→export const Primary
+    21→export const Secondary
+    27→export const Large
+    34→export const Small
+apps/storybook/src/stories/Button.tsx
+     8→export const Button
+apps/storybook/src/stories/InputOTP.stories.tsx
+     4→const meta
+    27→type Story
+    29→export const Default
+apps/storybook/tailwind.config.js
+     2→const config = {
+apps/storybook/vite.config.js
+apps/website/README.md
+     3→## Getting Started
+    23→## Learn More
+    32→## Deploy on Vercel
+apps/website/next.config.mjs
+     4→const nextProdConfig = {}
+     6→const nextDevConfig = withHydrationOverlay({
+apps/website/postcss.config.js
+apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
+apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
+apps/website/src/app/(local-pages)/example-playground/code.tsx
+apps/website/src/app/(local-pages)/example-playground/component.tsx
+apps/website/src/app/(local-pages)/example-playground/page.tsx
+apps/website/src/app/(local-pages)/layout.tsx
+     7→export default function RootLayout
+apps/website/src/app/(local-pages)/raw-input/page.tsx
+apps/website/src/app/(local-pages)/shadcn/page.tsx
+apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
+apps/website/src/app/(local-pages)/shadcn/static/page.tsx
+apps/website/src/app/(pages)/(home)/_components/confetti.tsx
+apps/website/src/app/(pages)/(home)/_components/showcase.tsx
+apps/website/src/app/(pages)/(home)/page.tsx
+apps/website/src/app/(pages)/layout.tsx
+    14→export const metadata
+    68→export default function RootLayout
+apps/website/src/components/code.tsx
+     9→export async function Code
+    36→async function highlightCode
+apps/website/src/components/copy-button.tsx
+    17→interface CopyButtonProps
+    22→export async function copyToClipboardWithMeta
+    26→export function CopyButton
+    64→interface CopyWithClassNamesProps
+    70→export function CopyWithClassNames
+   120→interface CopyNpmCommandButtonProps
+   129→export function CopyNpmCommandButton
+apps/website/src/components/icons.tsx
+     1→type IconProps
+     3→export const Icons
+apps/website/src/components/mode-toggle.tsx
+    15→export function ModeToggle
+apps/website/src/components/page-header.tsx
+     3→function PageHeader
+    21→function PageHeaderHeading
+    36→function PageHeaderDescription
+    51→function PageActions
+apps/website/src/components/provider.tsx
+     5→export function AppProvider
+apps/website/src/components/site-footer.tsx
+     3→export function SiteFooter
+apps/website/src/components/site-header.tsx
+     9→export function SiteHeader
+apps/website/src/components/ui/badge.tsx
+     6→const badgeVariants
+    26→export interface BadgeProps
+    30→function Badge
+apps/website/src/components/ui/button.tsx
+     7→const buttonVariants
+    36→export interface ButtonProps
+    42→const Button
+apps/website/src/components/ui/dropdown-menu.tsx
+     9→const DropdownMenu
+    11→const DropdownMenuTrigger
+    13→const DropdownMenuGroup
+    15→const DropdownMenuPortal
+    17→const DropdownMenuSub
+    19→const DropdownMenuRadioGroup
+    21→const DropdownMenuSubTrigger
+    43→const DropdownMenuSubContent
+    59→const DropdownMenuContent
+    77→const DropdownMenuItem
+    95→const DropdownMenuCheckboxItem
+   119→const DropdownMenuRadioItem
+   141→const DropdownMenuLabel
+   159→const DropdownMenuSeparator
+   171→const DropdownMenuShortcut
+apps/website/src/components/ui/input-otp.tsx
+     9→const InputOTP
+    25→const InputOTPGroup
+    33→type InputOTPSlotProps
+    34→const InputOTPSlot
+    63→const InputOTPRenderSlot
+    90→const InputOTPSeparator
+apps/website/src/components/ui/scroll-area.tsx
+     8→const ScrollArea
+    26→const ScrollBar
+apps/website/src/components/ui/sonner.tsx
+     6→type ToasterProps
+     8→const Toaster
+apps/website/src/config/site.ts
+     1→export const siteConfig
+    13→export type SiteConfig
+apps/website/src/lib/fonts.ts
+    10→export const fontSans
+    12→export const fontMono
+apps/website/src/lib/utils.ts
+     4→export function cn
+apps/website/tailwind.config.ts
+     3→const config = {
+packages/input-otp/src/index.ts
+packages/input-otp/src/input.tsx
+    10→export const OTPInputContext = React.createContext<RenderProps>(
+    14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
+   540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
+   553→const NOSCRIPT_CSS_FALLBACK = `
+packages/input-otp/src/regexp.ts
+     1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
+     2→export const REGEXP_ONLY_CHARS = '^[a-zA-Z]+$'
+     3→export const REGEXP_ONLY_DIGITS_AND_CHARS = '^[a-zA-Z0-9]+$'
+packages/input-otp/src/sync-timeouts.ts
+     1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
+packages/input-otp/src/types.ts
+     1→export interface SlotProps {
+     7→export interface RenderProps {
+    12→type OverrideProps<T, R> = Omit<T, keyof R> & R
+    13→type OTPInputBaseProps = OverrideProps<
+    14→  React.InputHTMLAttributes<HTMLInputElement>,
+    15→  {
+    16→    value?: string
+    17→    onChange?: (newValue: string) => unknown
+    18→
+    19→    maxLength: number
+    20→
+    21→    textAlign?: 'left' | 'center' | 'right'
+    22→
+    23→    onComplete?: (...args: any[]) => unknown
+    24→    pushPasswordManagerStrategy?: 'increase-width' | 'none'
+    25→    pasteTransformer?: (pasted: string) => string
+    26→
+    27→    containerClassName?: string
+    28→
+    29→    noScriptCSSFallback?: string | null
+    30→  }
+    31→>
+    32→type InputOTPRenderFn = (props: RenderProps) => React.ReactNode
+    33→export type OTPInputProps = OTPInputBaseProps &
+    34→  (
+    35→    | {
+    36→        render: InputOTPRenderFn
+    37→        children?: never
+    38→      }
+    39→    | {
+    40→        render?: never
+    41→        children: React.ReactNode
+    42→      }
+    43→  )
+packages/input-otp/src/use-previous.ts
+     3→export function usePrevious<T>(value: T) {
+packages/input-otp/src/use-pwm-badge.tsx
+     4→const PWM_BADGE_MARGIN_RIGHT = 18
+     5→const PWM_BADGE_SPACE_WIDTH_PX = 40
+     6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
+     8→const PASSWORD_MANAGERS_SELECTORS = [
+    15→export function usePasswordManagerBadge({
+packages/input-otp/tsup.config.ts
