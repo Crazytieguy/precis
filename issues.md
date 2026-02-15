@@ -1,5 +1,9 @@
 # Issues
 
+## Internal cleanup
+
+- **Fix framing misalignment with README** — several source comments describe levels as fixed rendering policies (e.g. "level 2 = signatures") rather than as a global parameter that the render function interprets per-file. Audit comprehensively and fix: hardcoded level-to-policy mappings in comments, `--level` help text implying it's a primary feature, monotonicity described without "and content". The README is the source of truth.
+
 ## Feature development
 
 - **Budget-based testing** — snapshot tests should primarily use `--budget` rather than `--level`, since levels are an internal implementation detail that will change as we expand to ~32 levels. Existing per-level fixture snapshots should be migrated to budget-based snapshots. Budget snapshots are stable across level refactors and directly test the user-facing behavior. The `--level` flag exists for debugging and manual investigation, not as a primary test parameter.
