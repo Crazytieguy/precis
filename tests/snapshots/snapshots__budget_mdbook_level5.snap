@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 20000 → level 11 (17120 words)
+budget: 20000 → level 12 (17253 words)
 
 404.md
      1→# Document not found (404)
@@ -982,8 +982,49 @@ for_developers/backends.md
    340→[`Config`]: https://docs.rs/mdbook-renderer/latest/mdbook_renderer/config/struct.Config.html
    341→[issue tracker]: https://github.com/rust-lang/mdBook/issues
 for_developers/mdbook-wordcount/src/main.rs
+     1→extern crate mdbook;
+     2→extern crate serde;
+     3→#[macro_use]
+     4→extern crate serde_derive;
+     5→
+     6→use std::process;
+     7→use std::fs::{self, File};
+     8→use std::io::{self, Write};
+     9→use mdbook::renderer::RenderContext;
+    10→use mdbook::book::{BookItem, Chapter};
+    11→
     12→fn main() {
+    13→    let mut stdin = io::stdin();
+    14→    let ctx = RenderContext::from_json(&mut stdin).unwrap();
+    15→    let cfg: WordcountConfig = ctx.config
+    16→        .get_deserialized("output.wordcount")
+    17→        .unwrap_or_default();
+    18→
+    19→    let _ = fs::create_dir_all(&ctx.destination);
+    20→    let mut f = File::create(ctx.destination.join("wordcounts.txt")).unwrap();
+    21→
+    22→    for item in ctx.book.iter() {
+    23→        if let BookItem::Chapter(ref ch) = *item {
+    24→            if cfg.ignores.contains(&ch.name) {
+    25→                continue;
+    26→            }
+    27→
+    28→            let num_words = count_words(ch);
+    29→            println!("{}: {}", ch.name, num_words);
+    30→            writeln!(f, "{}: {}", ch.name, num_words).unwrap();
+    31→
+    32→            if cfg.deny_odds && num_words % 2 == 1 {
+    33→                eprintln!("{} has an odd number of words!", ch.name);
+    34→                process::exit(1);
+    35→            }
+    36→        }
+    37→    }
+    38→}
+    39→
     40→fn count_words(ch: &Chapter) -> usize {
+    41→    ch.content.split_whitespace().count()
+    42→}
+    43→
     44→#[derive(Debug, Default, Serialize, Deserialize)]
     45→#[serde(default, rename_all = "kebab-case")]
     46→pub struct WordcountConfig {

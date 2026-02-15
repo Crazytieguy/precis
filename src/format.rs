@@ -4,7 +4,7 @@ use crate::parse;
 use crate::Lang;
 
 /// Maximum granularity level. See README.md for the rendering design.
-pub const MAX_LEVEL: u8 = 11;
+pub const MAX_LEVEL: u8 = 12;
 
 /// Render a single file at the given granularity level.
 pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String {

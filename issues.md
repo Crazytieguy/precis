@@ -2,7 +2,7 @@
 
 Message from human: the nominal level parameter should be conceptually separate and disentangled from the rendering policies. There can be many more nominal levels than rendering policies (even as we keep increasing the amount of rendering policies). New goal is to reach 64 levels.
 
-Status: `compute_policy` extracted — maps (level, file properties) → `RenderPolicy` struct with named boolean fields. `render_with_symbols` is now decoupled from level arithmetic. MAX_LEVEL bumped to 11 with `symbol_count_penalty` spreading the sigs→docs transition. Next steps: continue adding property-based penalties and new rendering policies to reach ~64 levels.
+Status: `compute_policy` extracted — maps (level, file properties) → `RenderPolicy` struct with named boolean fields. `render_with_symbols` is now decoupled from level arithmetic. MAX_LEVEL bumped to 12 with `symbol_count_penalty` spreading the sigs→docs transition. Next steps: continue adding property-based penalties and new rendering policies to reach ~64 levels.
 
 ## Feature development
 
@@ -19,9 +19,9 @@ Status: `compute_policy` extracted — maps (level, file properties) → `Render
 
 ## Current state
 
-- Parsing: Rust, TypeScript, JavaScript, TSX, Python, Go, Markdown. 12 granularity levels (0–11). Depth-aware, file-size-aware, visibility-aware, and property-based rendering. `--budget`, `--level`, `--json` flags. Defaults to current directory when no path given.
+- Parsing: Rust, TypeScript, JavaScript, TSX, Python, Go, Markdown. 13 granularity levels (0–12). Depth-aware, file-size-aware, visibility-aware, and property-based rendering. `--budget`, `--level`, `--json` flags. Defaults to current directory when no path given.
 - File discovery filters out test/benchmark/vendor/example directories and test file patterns. Uses relative paths so parent directories don't trigger false positives.
-- 31 test fixtures across all supported languages with budget-based snapshot tests (253 budget snapshots). All 31 fixtures have budget tests at multiple budget levels; all 26 non-Go fixtures have root-level budget tests; 12 subdirectory entrypoints have budget tests. Monotonicity invariant tested across all fixtures including root-level targets. Inline sample tests cover levels 0–11 across all supported languages.
+- 31 test fixtures across all supported languages with budget-based snapshot tests (253 budget snapshots). All 31 fixtures have budget tests at multiple budget levels; all 26 non-Go fixtures have root-level budget tests; 12 subdirectory entrypoints have budget tests. Monotonicity invariant tested across all fixtures including root-level targets. Inline sample tests cover levels 0–12 across all supported languages.
 - `cargo run --bin budget_util` measures budget utilization across all budget snapshots.
 
 ## Implementation notes
@@ -35,3 +35,4 @@ Status: `compute_policy` extracted — maps (level, file properties) → `Render
 - Visibility-aware rendering: for files where all private symbols lack doc comments (common in Go, where unexported functions rarely have godoc), public-only and all-symbols doc levels produce identical output. Similarly for type expansion when all type definitions are public. These levels still help budget utilization for the same binary search reason.
 - `doc_penalty`: property-based rendering decision. Computes average doc comment lines per documented public symbol; files with verbose docs (avg > 5 lines) get a 1-level penalty on doc-related decisions, causing them to show first-line-only docs or no docs while other files at the same nominal level show full docs. This spreads the signatures→docs transition across multiple nominal levels.
 - `symbol_count_penalty`: second property-based penalty. Files with >30 public symbols get a 1-level delay on doc appearance, because adding a doc line per symbol creates a large word count jump. Combined with `doc_penalty`, files can get 0, 1, or 2 levels of doc delay, spreading the transition across 3 nominal levels.
+- **Penalty design lesson** — subtractive penalties that reduce output at existing levels (e.g. applying `symbol_count_penalty` to ALL transitions, not just docs) tend to hurt utilization because the binary search can't always compensate: the level it picks produces less output, but the next level may overshoot. Similarly, additive changes that introduce new content at low effective levels (e.g. markdown body text at eff≥3) can push root-level totals over budget at tight budgets, causing the binary search to drop a level. Both need empirical validation. The safest level additions are ones that create new distinct output at levels that previously produced identical output for the affected files.
