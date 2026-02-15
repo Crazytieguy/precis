@@ -78,8 +78,8 @@ fn main() {
     println!("=== Budget Utilization (from snapshots) ===");
     println!();
     println!(
-        "{:>6}  {:>6}  {:>5}  {:>5}  {}",
-        "Util%", "Budget", "Level", "Words", "Snapshot"
+        "{:>6}  {:>6}  {:>5}  {:>5}  Snapshot",
+        "Util%", "Budget", "Level", "Words"
     );
     for (util, entry) in &sorted {
         println!(
