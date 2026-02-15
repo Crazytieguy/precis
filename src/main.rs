@@ -6,6 +6,7 @@ use std::path::PathBuf;
 #[command(about = "Extract a token-efficient summary of a codebase")]
 struct Cli {
     /// Directory or file to summarize
+    #[arg(default_value = ".")]
     path: PathBuf,
 
     /// Token budget for output (mutually exclusive with --level)
