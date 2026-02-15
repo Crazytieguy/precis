@@ -1,0 +1,62 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+sample.ts
+     1→
+     2→/**
+     3→ * Process all items and return the count.
+     4→ */
+     5→export function processItems(items: string[]): number {
+     6→    return items.length;
+     7→}
+     8→
+     9→function helper(): void {}
+    10→
+    11→/**
+    12→ * Fetch data from the given URL.
+    13→ * @param url - The endpoint to fetch from.
+    14→ * @returns The fetch response.
+    15→ */
+    16→export async function fetchData(url: string): Promise<Response> {
+    17→    return fetch(url);
+    18→}
+    19→
+    20→export class TokenParser {
+    21→    private tokens: Token[];
+    22→
+    23→    constructor(input: string) {
+    24→        this.tokens = [];
+    25→    }
+    26→
+    27→    public parse(): Token[] {
+    28→        return this.tokens;
+    29→    }
+    30→
+    31→    private advance(): void {}
+    32→}
+    33→
+    34→export interface Visitor {
+    35→    visitToken(token: Token): void;
+    36→    visitAll(tokens: Token[]): void;
+    37→}
+    38→
+    39→export enum TokenKind {
+    40→    Ident = "ident",
+    41→    Number = "number",
+    42→    Symbol = "symbol",
+    43→}
+    44→
+    45→export type Span = [number, number];
+    46→
+    47→export const MAX_TOKENS = 1024;
+    48→
+    49→export default class DefaultExport {
+    50→    name: string = "";
+    51→}
+    52→
+    53→export namespace Utils {
+    54→    export function format(s: string): string {
+    55→        return s;
+    56→    }
+    57→}

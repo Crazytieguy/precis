@@ -19,7 +19,7 @@ Message from human: currently the codebase has a bunch of references to "effecti
 
 - Parsing: Rust, TypeScript, JavaScript, TSX, Python, Go, Markdown. 11 granularity levels (0–10). Depth-aware, file-size-aware, visibility-aware, and property-based rendering. `--budget`, `--level`, `--json` flags. Defaults to current directory when no path given.
 - File discovery filters out test/benchmark/vendor/example directories and test file patterns. Uses relative paths so parent directories don't trigger false positives.
-- 31 test fixtures across all supported languages with budget-based snapshot tests (253 budget snapshots). All 31 fixtures have budget tests at multiple budget levels; all 26 non-Go fixtures have root-level budget tests; 12 subdirectory entrypoints have budget tests. Monotonicity invariant tested across all fixtures including root-level targets. Inline sample tests cover levels 0–7 across all supported languages.
+- 31 test fixtures across all supported languages with budget-based snapshot tests (253 budget snapshots). All 31 fixtures have budget tests at multiple budget levels; all 26 non-Go fixtures have root-level budget tests; 12 subdirectory entrypoints have budget tests. Monotonicity invariant tested across all fixtures including root-level targets. Inline sample tests cover levels 0–10 across all supported languages.
 - `cargo run --bin budget_util` measures budget utilization across all budget snapshots.
 
 ## Implementation notes

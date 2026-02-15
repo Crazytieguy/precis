@@ -911,6 +911,171 @@ fn markdown_sample_level7() {
     insta::assert_snapshot!(output);
 }
 
+// Level 8: type body expansion (public types only)
+
+#[test]
+fn rust_sample_level8() {
+    let output = format::render_file(8, Path::new("sample.rs"), Path::new(""), rust_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn typescript_sample_level8() {
+    let output = format::render_file(
+        8,
+        Path::new("sample.ts"),
+        Path::new(""),
+        typescript_sample(),
+    );
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn javascript_sample_level8() {
+    let output = format::render_file(
+        8,
+        Path::new("sample.js"),
+        Path::new(""),
+        javascript_sample(),
+    );
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn tsx_sample_level8() {
+    let output = format::render_file(8, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn go_sample_level8() {
+    let output = format::render_file(8, Path::new("sample.go"), Path::new(""), go_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn python_sample_level8() {
+    let output = format::render_file(8, Path::new("sample.py"), Path::new(""), python_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn markdown_sample_level8() {
+    let output =
+        format::render_file(8, Path::new("README.md"), Path::new(""), markdown_sample());
+    insta::assert_snapshot!(output);
+}
+
+// Level 9: type body expansion (all types)
+
+#[test]
+fn rust_sample_level9() {
+    let output = format::render_file(9, Path::new("sample.rs"), Path::new(""), rust_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn typescript_sample_level9() {
+    let output = format::render_file(
+        9,
+        Path::new("sample.ts"),
+        Path::new(""),
+        typescript_sample(),
+    );
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn javascript_sample_level9() {
+    let output = format::render_file(
+        9,
+        Path::new("sample.js"),
+        Path::new(""),
+        javascript_sample(),
+    );
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn tsx_sample_level9() {
+    let output = format::render_file(9, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn go_sample_level9() {
+    let output = format::render_file(9, Path::new("sample.go"), Path::new(""), go_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn python_sample_level9() {
+    let output = format::render_file(9, Path::new("sample.py"), Path::new(""), python_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn markdown_sample_level9() {
+    let output =
+        format::render_file(9, Path::new("README.md"), Path::new(""), markdown_sample());
+    insta::assert_snapshot!(output);
+}
+
+// Level 10: full source
+
+#[test]
+fn rust_sample_level10() {
+    let output = format::render_file(10, Path::new("sample.rs"), Path::new(""), rust_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn typescript_sample_level10() {
+    let output = format::render_file(
+        10,
+        Path::new("sample.ts"),
+        Path::new(""),
+        typescript_sample(),
+    );
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn javascript_sample_level10() {
+    let output = format::render_file(
+        10,
+        Path::new("sample.js"),
+        Path::new(""),
+        javascript_sample(),
+    );
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn tsx_sample_level10() {
+    let output = format::render_file(10, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn go_sample_level10() {
+    let output = format::render_file(10, Path::new("sample.go"), Path::new(""), go_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn python_sample_level10() {
+    let output = format::render_file(10, Path::new("sample.py"), Path::new(""), python_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn markdown_sample_level10() {
+    let output =
+        format::render_file(10, Path::new("README.md"), Path::new(""), markdown_sample());
+    insta::assert_snapshot!(output);
+}
+
 // Subdirectory budget tests: running on a subdirectory within a fixture tests
 // that path display and file discovery work correctly at deeper nesting levels.
 

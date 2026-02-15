@@ -1,0 +1,62 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+sample.rs
+     1→
+     2→/// Process the input and return a list of tokens.
+     3→pub fn process(input: &str) -> Result<Vec<Token>, Error> {
+     4→    todo!()
+     5→}
+     6→
+     7→fn helper() {}
+     8→
+     9→/// A lexical token with its kind and source span.
+    10→pub struct Token {
+    11→    kind: TokenKind,
+    12→    span: Span,
+    13→}
+    14→
+    15→/// The kind of a lexical token.
+    16→pub enum TokenKind {
+    17→    Ident,
+    18→    Number,
+    19→    Symbol,
+    20→}
+    21→
+    22→/// Trait for visiting tokens in a token stream.
+    23→pub trait Visitor {
+    24→    fn visit_token(&mut self, token: &Token);
+    25→    fn visit_all(&mut self, tokens: &[Token]) {
+    26→        for t in tokens {
+    27→            self.visit_token(t);
+    28→        }
+    29→    }
+    30→}
+    31→
+    32→impl std::fmt::Display for Token {
+    33→    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    34→        write!(f, "{:?}", self.kind)
+    35→    }
+    36→}
+    37→
+    38→impl Token {
+    39→    /// Create a new token with the given kind and span.
+    40→    pub fn new(kind: TokenKind, span: Span) -> Self {
+    41→        Self { kind, span }
+    42→    }
+    43→}
+    44→
+    45→pub type Span = (usize, usize);
+    46→
+    47→const MAX_TOKENS: usize = 1024;
+    48→
+    49→pub static VERSION: &str = "0.1.0";
+    50→
+    51→macro_rules! token {
+    52→    ($kind:expr) => {
+    53→        Token { kind: $kind, span: (0, 0) }
+    54→    };
+    55→}
+    56→
+    57→pub mod lexer;
