@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 800 → level 1 (625 words)
+budget: 800 → level 1 (517 words)
 
 README.md
     40→## About
@@ -150,13 +150,9 @@ src/index.ts
 src/internals/helpers.ts
 src/internals/symbols.ts
 src/is-matching.ts
-    11→type PatternConstraint
     53→export function isMatching
 src/match.ts
-     7→type MatchState
-    11→const unmatched
     32→export function match
-    47→class MatchExpression
     48→  constructor
     50→  with
     94→  when
@@ -165,76 +161,26 @@ src/match.ts
    120→  run
    124→  returnType
    128→  narrow
-   133→function defaultCatcher
 src/patterns.ts
     81→export type unstable_Matchable
    100→export type unstable_Matcher
    116→export type infer
    131→export type narrow
-   136→function chainable
-   148→const variadic
-   165→function arrayChainable
    187→export function optional
-   217→type UnwrapArray
-   219→type UnwrapSet
-   221→type UnwrapMapKey
-   223→type UnwrapMapValue
-   225→type UnwrapRecordKey
-   227→type UnwrapRecordValue
-   229→type WithDefault
    246→export function array
    299→export function set
-   336→const setEvery
    362→export function map
-   410→const mapEvery
    445→export function record
-   505→const recordEvery
    536→export function intersection
    572→export function union
    611→export function not
    646→export function when
    696→export function select
-   734→function isUnknown
-   738→function isNumber
-   742→function isString
-   746→function isBoolean
-   750→function isBigInt
-   754→function isSymbol
-   758→function isNullish
-   762→function isNonNullable
-   766→type AnyConstructor
-   768→function isInstanceOf
    782→export const any
    793→export const unknown
    805→export const _
-   817→const startsWith
-   831→const endsWith
-   845→const minLength
-   857→const length
-   869→const maxLength
-   881→const includes
-   895→const regex
-   900→const stringChainable
    928→export const string
-   940→const between
-   955→const lt
-   969→const gt
-   983→const lte
-   997→const gte
-  1011→const int
-  1023→const finite
-  1035→const positive
-  1047→const negative
-  1050→const numberChainable
   1075→export const number
-  1087→const betweenBigInt
-  1106→const ltBigInt
-  1120→const gtBigInt
-  1134→const lteBigInt
-  1148→const gteBigInt
-  1162→const positiveBigInt
-  1174→const negativeBigInt
-  1177→const bigintChainable
   1201→export const bigint
   1211→export const boolean
   1221→export const symbol

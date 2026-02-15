@@ -4,7 +4,7 @@ use crate::parse;
 use crate::Lang;
 
 /// Maximum granularity level. See README.md for the rendering design.
-pub const MAX_LEVEL: u8 = 9;
+pub const MAX_LEVEL: u8 = 10;
 
 /// Render a single file at the given granularity level.
 pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String {
@@ -32,41 +32,43 @@ fn render_with_symbols(
     let relative = path.strip_prefix(root).unwrap_or(path);
     let lang = Lang::from_path(relative);
     // Depth and size penalties reduce the effective level for deep/large files.
-    // Size penalty only applies at level 4+ where output is content-driven
+    // Size penalty only applies at level 5+ where output is content-driven
     // rather than symbol-count-driven.
     let after_depth = level.saturating_sub(depth_penalty(relative));
     let effective = after_depth.saturating_sub(
-        if after_depth >= 4 { size_penalty(source) } else { 0 },
+        if after_depth >= 5 { size_penalty(source) } else { 0 },
     );
     let mut out = format!("{}\n", relative.display());
     if effective == 0 {
         return out;
     }
-    if effective >= 9 {
+    if effective >= 10 {
         render_full_source(&mut out, source);
         return out;
     }
-    if effective <= 3 {
-        // Level 1: all symbol names (truncated at identifier)
-        // Level 2: public signatures + private names (visibility-gated)
-        // Level 3: full signatures for all symbols
-        let truncate = effective < 2;
-        let public_sigs_only = effective == 2;
-        render_symbols(&mut out, relative, source, symbols, truncate, public_sigs_only);
+    if effective <= 4 {
+        // Level 1: public symbol names only (truncated at identifier)
+        // Level 2: all symbol names (truncated at identifier)
+        // Level 3: public signatures + private names (visibility-gated)
+        // Level 4: full signatures for all symbols
+        let public_only = effective == 1;
+        let truncate = effective <= 2;
+        let public_sigs_only = effective == 3;
+        render_symbols(&mut out, relative, source, symbols, truncate, public_sigs_only, public_only);
         return out;
     }
-    // Levels 4–8: symbols with optional docs and type expansion.
+    // Levels 5–9: symbols with optional docs and type expansion.
     // Doc comment penalty delays doc appearance for files with many doc lines,
     // spreading transitions across nominal levels.
     let doc_eff = effective.saturating_sub(doc_penalty(source, symbols, lang));
-    let with_docs = doc_eff >= 4;
-    let first_line_only = doc_eff < 5;
-    let public_docs_only = doc_eff < 6;
-    let expand_types = effective >= 7;
-    let public_types_only = effective < 8;
+    let with_docs = doc_eff >= 5;
+    let first_line_only = doc_eff < 6;
+    let public_docs_only = doc_eff < 7;
+    let expand_types = effective >= 8;
+    let public_types_only = effective < 9;
     if !with_docs && !expand_types {
         // No docs and no type expansion: just signatures
-        render_symbols(&mut out, relative, source, symbols, false, false);
+        render_symbols(&mut out, relative, source, symbols, false, false, false);
     } else {
         let opts = DocOptions {
             with_docs,
@@ -96,9 +98,9 @@ fn depth_penalty(relative: &Path) -> u8 {
 /// Small files get full detail. Larger files have their effective level
 /// reduced so that concise files are prioritised over verbose ones.
 ///
-/// Files with 1000+ lines get −1 level when the effective level is 4+.
-/// Capped at 1 to preserve the monotonicity invariant (level 4 with
-/// penalty 1 = effective 3, which equals level 3 with no penalty).
+/// Files with 1000+ lines get −1 level when the effective level is 5+.
+/// Capped at 1 to preserve the monotonicity invariant (level 5 with
+/// penalty 1 = effective 4, which equals level 4 with no penalty).
 fn size_penalty(source: &str) -> u8 {
     if source.lines().count() >= 1000 { 1 } else { 0 }
 }
@@ -322,6 +324,7 @@ pub fn render_file_with_symbols(
 /// Render symbol lines for a file. If `truncate` is true, truncates each line
 /// at the symbol name. If `public_sigs_only` is true (and `truncate` is false),
 /// shows full signatures for public symbols and names only for private symbols.
+/// If `public_only` is true, skips non-public symbols entirely.
 /// `path` is relative to the project root (used for language detection).
 fn render_symbols(
     out: &mut String,
@@ -330,6 +333,7 @@ fn render_symbols(
     symbols: &[parse::Symbol],
     truncate: bool,
     public_sigs_only: bool,
+    public_only: bool,
 ) {
     if symbols.is_empty() {
         return;
@@ -340,6 +344,9 @@ fn render_symbols(
     // encompass nested symbols (e.g. method signatures inside a TS type literal).
     let mut emitted_up_to: usize = 0; // 0-indexed, exclusive
     for sym in symbols {
+        if public_only && !sym.is_public {
+            continue;
+        }
         let truncate_this = truncate || (public_sigs_only && !sym.is_public);
         let sym_line_0 = sym.line - 1;
         if truncate_this {
@@ -891,25 +898,25 @@ mod tests {
         let source = "pub fn hello() {}\n";
         let root = Path::new("");
 
-        // Shallow file at level 2: should show full signature
+        // Shallow file at level 2: should show all symbol names
         let shallow = render_file(2, Path::new("lib.rs"), root, source);
         assert!(shallow.contains("→"), "shallow file should have symbol lines");
 
-        // Deep file at level 2: penalty = 2/2 = 1, effective level 1
+        // Deep file at level 2: penalty = 2/2 = 1, effective level 1 (public names only)
         let deep = render_file(2, Path::new("a/b/lib.rs"), root, source);
-        assert!(deep.contains("→"), "deep file at effective level 1 should have symbol names");
+        assert!(deep.contains("→"), "deep file at effective level 1 should have public symbol names");
 
-        // Even deeper file at level 2: penalty = 3/2 = 1, effective level 1
+        // Even deeper file at level 2: penalty = 3/2 = 1, effective level 1 (public names only)
         let deeper = render_file(2, Path::new("a/b/c/lib.rs"), root, source);
-        assert!(deeper.contains("→"), "deeper file at effective level 1 should have symbol names");
+        assert!(deeper.contains("→"), "deeper file at effective level 1 should have public symbol names");
 
         // Very deep file at level 2: penalty = 4/2 = 2, effective level 0
         let very_deep = render_file(2, Path::new("a/b/c/d/lib.rs"), root, source);
         assert!(!very_deep.contains("→"), "very deep file at effective level 0 should be path-only");
 
         // Very deep file at higher level can still show content
-        let very_deep_l4 = render_file(4, Path::new("a/b/c/d/lib.rs"), root, source);
-        assert!(very_deep_l4.contains("→"), "very deep file at level 4 (effective 2) should have content");
+        let very_deep_l5 = render_file(5, Path::new("a/b/c/d/lib.rs"), root, source);
+        assert!(very_deep_l5.contains("→"), "very deep file at level 5 (effective 3) should have content");
     }
 
     #[test]
@@ -979,18 +986,18 @@ mod tests {
         };
         assert!(large_source.lines().count() >= 1000);
 
-        // Small file at level 4: effective 4, cheap docs → show docs
-        let small_l4 = render_file(4, Path::new("small.rs"), root, small_source);
-        assert!(small_l4.contains("Doc comment"), "small file at level 4 should include docs");
+        // Small file at level 5: effective 5, cheap docs → show docs
+        let small_l5 = render_file(5, Path::new("small.rs"), root, small_source);
+        assert!(small_l5.contains("Doc comment"), "small file at level 5 should include docs");
 
-        // Large file at level 4: effective 3 (size penalty) → signatures only
-        let large_l4 = render_file(4, Path::new("large.rs"), root, &large_source);
-        assert!(!large_l4.contains("doc "), "large file at level 4 should not include docs");
-
-        // Large file at level 5: effective 4 (size penalty), no doc penalty (avg 1 line/sym)
-        // → first-line public docs
+        // Large file at level 5: effective 4 (size penalty) → signatures only
         let large_l5 = render_file(5, Path::new("large.rs"), root, &large_source);
-        assert!(large_l5.contains("doc "), "large file at level 5 should include docs");
+        assert!(!large_l5.contains("doc "), "large file at level 5 should not include docs");
+
+        // Large file at level 6: effective 5 (size penalty), no doc penalty (avg 1 line/sym)
+        // → first-line public docs
+        let large_l6 = render_file(6, Path::new("large.rs"), root, &large_source);
+        assert!(large_l6.contains("doc "), "large file at level 6 should include docs");
     }
 
     #[test]
@@ -1076,20 +1083,20 @@ mod tests {
         assert!(l1.contains("Introduction"), "level 1 should show heading name");
         assert!(!l1.contains("===="), "level 1 should not show underline");
 
-        // Level 4: heading + first paragraph — underline should not appear as content
-        let l4 = render_file(4, path, root, source);
-        assert!(l4.contains("Introduction"), "level 4 should show heading name");
-        assert!(!l4.contains("===="), "level 4 should not show underline");
-        assert!(l4.contains("Some text here"), "level 4 should show first paragraph");
-        assert!(!l4.contains("----"), "level 4 should not show underline");
-        assert!(l4.contains("More content"), "level 4 should show second heading content");
+        // Level 5: heading + first paragraph — underline should not appear as content
+        let l5 = render_file(5, path, root, source);
+        assert!(l5.contains("Introduction"), "level 5 should show heading name");
+        assert!(!l5.contains("===="), "level 5 should not show underline");
+        assert!(l5.contains("Some text here"), "level 5 should show first paragraph");
+        assert!(!l5.contains("----"), "level 5 should not show underline");
+        assert!(l5.contains("More content"), "level 5 should show second heading content");
 
-        // Level 7: heading + all content (expand_types=true) — underline should not appear
-        let l7 = render_file(7, path, root, source);
-        assert!(!l7.contains("===="), "level 7 should not show underline");
-        assert!(!l7.contains("----"), "level 7 should not show underline");
-        assert!(l7.contains("Some text here"), "level 7 should show content");
-        assert!(l7.contains("More content"), "level 7 should show content");
+        // Level 8: heading + all content (expand_types=true) — underline should not appear
+        let l8 = render_file(8, path, root, source);
+        assert!(!l8.contains("===="), "level 8 should not show underline");
+        assert!(!l8.contains("----"), "level 8 should not show underline");
+        assert!(l8.contains("Some text here"), "level 8 should show content");
+        assert!(l8.contains("More content"), "level 8 should show content");
 
         // Monotonicity: levels should produce non-decreasing word counts
         let mut prev_words = 0;

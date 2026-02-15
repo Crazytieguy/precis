@@ -4,18 +4,13 @@ expression: output
 ---
 sample.rs
      3→pub fn process
-     7→fn helper
     10→pub struct Token
     16→pub enum TokenKind
     23→pub trait Visitor
     24→    fn visit_token
     25→    fn visit_all
-    32→impl std::fmt::Display for Token
     33→    fn fmt
-    38→impl Token
     40→    pub fn new
     45→pub type Span
-    47→const MAX_TOKENS
     49→pub static VERSION
-    51→macro_rules! token
     57→pub mod lexer

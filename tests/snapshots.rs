@@ -447,7 +447,8 @@ MIT
 
 // Regression test: inline comments after `{` should not prevent signature detection.
 // Previously, `interface Foo { // comment` would miss the `{` because
-// `trimmed.ends_with('{')` was false, causing body content to leak into level 2/3 output.
+// `trimmed.ends_with('{')` was false, causing body content to leak into signature output.
+// Tests at level 4 (all signatures) where the regression would be visible.
 
 #[test]
 fn interface_with_inline_comment_level2() {
@@ -467,7 +468,7 @@ export function fetch(url: string): Promise<Response> { // main entry
     return globalThis.fetch(url);
 }
 "#;
-    let output = format::render_file(2, Path::new("api.ts"), Path::new(""), source);
+    let output = format::render_file(4, Path::new("api.ts"), Path::new(""), source);
     insta::assert_snapshot!(output);
 }
 
@@ -525,7 +526,7 @@ fn markdown_sample_level0() {
     insta::assert_snapshot!(output);
 }
 
-// Level 1: symbol names (truncated)
+// Level 1: public symbol names only (truncated at identifier)
 
 #[test]
 fn rust_sample_snapshot() {
@@ -580,7 +581,7 @@ fn markdown_sample_snapshot() {
     insta::assert_snapshot!(output);
 }
 
-// Level 2: public signatures + private names (visibility-gated)
+// Level 2: all symbol names (truncated at identifier)
 
 #[test]
 fn rust_sample_level2() {
@@ -635,7 +636,7 @@ fn markdown_sample_level2() {
     insta::assert_snapshot!(output);
 }
 
-// Level 3: full signature lines
+// Level 3: public signatures + private names (visibility-gated)
 
 #[test]
 fn rust_sample_level3() {
@@ -690,7 +691,7 @@ fn markdown_sample_level3() {
     insta::assert_snapshot!(output);
 }
 
-// Level 4: first-line doc comments (public symbols only)
+// Level 4: full signatures for all symbols
 
 #[test]
 fn rust_sample_level4() {
@@ -745,7 +746,7 @@ fn markdown_sample_level4() {
     insta::assert_snapshot!(output);
 }
 
-// Level 5: full doc comments (public symbols only)
+// Level 5: first-line doc comments (public symbols only)
 
 #[test]
 fn rust_sample_level5() {
@@ -800,7 +801,7 @@ fn markdown_sample_level5() {
     insta::assert_snapshot!(output);
 }
 
-// Level 6: full doc comments (all symbols)
+// Level 6: full doc comments (public symbols only)
 
 #[test]
 fn rust_sample_level6() {
@@ -855,7 +856,7 @@ fn markdown_sample_level6() {
     insta::assert_snapshot!(output);
 }
 
-// Level 7: type body expansion (public types only)
+// Level 7: full doc comments (all symbols)
 
 #[test]
 fn rust_sample_level7() {
@@ -1150,7 +1151,7 @@ fn monotonicity_invariant() {
 /// Test the budget binary search with synthetic cost functions (no parsing).
 #[test]
 fn budget_algorithm() {
-    let costs: [usize; 10] = [5, 10, 25, 40, 60, 90, 120, 200, 350, 500];
+    let costs: [usize; 11] = [5, 8, 10, 25, 40, 60, 90, 120, 200, 350, 500];
     let cost = |level: u8| costs[level as usize];
 
     // Extremes
@@ -1182,9 +1183,9 @@ fn budget_algorithm() {
     }
 
     // Flat region: levels with equal cost should all be reachable
-    let flat_costs: [usize; 10] = [5, 10, 10, 10, 10, 10, 10, 10, 10, 50];
+    let flat_costs: [usize; 11] = [5, 10, 10, 10, 10, 10, 10, 10, 10, 10, 50];
     let flat_cost = |level: u8| flat_costs[level as usize];
-    assert_eq!(format::search_level(10, flat_cost), 8);
+    assert_eq!(format::search_level(10, flat_cost), 9);
     assert_eq!(format::search_level(9, flat_cost), 0);
 }
 

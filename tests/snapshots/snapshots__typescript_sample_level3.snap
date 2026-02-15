@@ -4,12 +4,12 @@ expression: output
 ---
 sample.ts
      5→export function processItems(items: string[]): number {
-     9→function helper(): void {}
+     9→function helper
     16→export async function fetchData(url: string): Promise<Response> {
     20→export class TokenParser {
     23→    constructor(input: string) {
     27→    public parse(): Token[] {
-    31→    private advance(): void {}
+    31→    private advance
     34→export interface Visitor {
     35→    visitToken(token: Token): void;
     36→    visitAll(tokens: Token[]): void;

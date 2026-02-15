@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 → level 1 (365 words)
+budget: 500 → level 1 (361 words)
 
 Changelog.md
      1→# Changelog
@@ -114,7 +114,6 @@ src/structs/refinements.ts
 src/structs/types.ts
 src/structs/utilities.ts
 src/utils.ts
-     8→function isIterable
     16→export function isObject
     24→export function isNonArrayObject
     32→export function isPlainObject
@@ -141,4 +140,3 @@ src/utils.ts
    379→export type TupleSchema
    385→export type AnyStruct
    394→export type InferStructTuple
-   402→type _InferTuple

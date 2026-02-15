@@ -3,20 +3,20 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.go
-     7→type Token struct {
-    13→type TokenKind int
+     7→type Token
+    13→type TokenKind
     15→const
-    16→	Ident  TokenKind = iota
+    16→	Ident
     17→	Number
     18→	Symbol
-    22→type Visitor interface {
-    28→func Process(input string) ([]Token, error) {
+    22→type Visitor
+    28→func Process
     32→func helper
-    35→type TokenParser[T any] struct {
-    41→func NewTokenParser[T any](source string) *TokenParser[T] {
-    46→func (p *TokenParser[T]) Parse() []Token {
+    35→type TokenParser
+    41→func NewTokenParser
+    46→func (p *TokenParser[T]) Parse
     50→func (p *TokenParser[T]) advance
-    53→type Span = [2]int
-    55→const MaxTokens = 1024
-    57→var Version = "0.1.0"
-    60→func (t Token) String() string {
+    53→type Span
+    55→const MaxTokens
+    57→var Version
+    60→func (t Token) String

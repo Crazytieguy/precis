@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 200 → level 1 (126 words)
+budget: 200 → level 2 (191 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -37,6 +37,7 @@ README.md
    456→## History
    462→## Testing
 cmdk/src/command-score.ts
+   155→export function commandScore
 cmdk/src/index.tsx
 cmdk/tsup.config.ts
 playwright.config.ts
@@ -46,15 +47,35 @@ website/README.md
     19→## Learn More
     28→## Deploy on Vercel
 website/components/cmdk/framer.tsx
+     4→export function FramerCMDK
 website/components/cmdk/linear.tsx
+     3→export function LinearCMDK
 website/components/cmdk/raycast.tsx
+     7→export function RaycastCMDK
 website/components/cmdk/vercel.tsx
+     4→export function VercelCMDK
 website/components/code/index.tsx
+    41→export function Code
 website/components/icons/index.tsx
+     3→export function FigmaIcon
+    15→export function RaycastIcon
+    28→export function YouTubeIcon
+    40→export function SlackIcon
+    79→export function VercelIcon
+    87→export function LinearIcon
+   110→export function Logo
+   127→export function CopyIcon
+   146→export function CopiedIcon
+   154→export function GitHubIcon
+   165→export function FramerIcon
 website/components/index.ts
 website/next-env.d.ts
 website/next.config.js
      2→const nextConfig
 website/pages/_app.tsx
+    17→export default function App
 website/pages/_document.tsx
+     5→export default class Document
+     6→  render
 website/pages/index.tsx
+    29→export default function Index

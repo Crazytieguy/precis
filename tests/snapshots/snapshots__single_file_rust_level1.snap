@@ -6,16 +6,8 @@ lib.rs
     22→pub mod serde_untagged
     25→pub mod serde_untagged_optional
     49→pub enum Either
-    81→macro_rules! for_both
-   113→macro_rules! try_left
-   124→macro_rules! try_right
-   133→macro_rules! map_either
-   142→mod iterator
-   145→mod into_either
-   148→impl<L: Clone, R: Clone> Clone for Either<L, R>
    149→    fn clone
    156→    fn clone_from
-   165→impl<L, R> Either<L, R>
    175→    pub fn is_left
    191→    pub fn is_right
    206→    pub fn left
@@ -50,73 +42,45 @@ lib.rs
    871→    pub fn expect_left
    901→    pub fn expect_right
    923→    pub fn either_into
-   932→impl<L, R> Either<Option<L>, Option<R>>
    944→    pub fn factor_none
-   952→impl<L, R, E> Either<Result<L, E>, Result<R, E>>
    966→    pub fn factor_err
-   974→impl<T, L, R> Either<Result<T, L>, Result<T, R>>
    988→    pub fn factor_ok
-   996→impl<T, L, R> Either<(T, L), (T, R)>
   1009→    pub fn factor_first
-  1017→impl<T, L, R> Either<(L, T), (R, T)>
   1030→    pub fn factor_second
-  1038→impl<T> Either<T, T>
   1050→    pub fn into_inner
   1065→    pub fn map
-  1073→impl<L, R> Either<&L, &R>
   1076→    pub fn cloned
   1086→    pub fn copied
-  1095→impl<L, R> Either<&mut L, &mut R>
   1098→    pub fn cloned
   1108→    pub fn copied
-  1118→impl<L, R> From<Result<R, L>> for Either<L, R>
   1119→    fn from
-  1128→impl<L, R> From<Either<L, R>> for Result<R, L>
   1129→    fn from
-  1138→impl<L, R> Future for Either<L, R>
   1143→    type Output
   1145→    fn poll
-  1157→impl<L, R> Read for Either<L, R>
   1162→    fn read
   1166→    fn read_exact
   1170→    fn read_to_end
   1174→    fn read_to_string
-  1183→impl<L, R> Seek for Either<L, R>
   1188→    fn seek
-  1195→impl<L, R> BufRead for Either<L, R>
   1200→    fn fill_buf
   1204→    fn consume
   1208→    fn read_until
   1212→    fn read_line
-  1221→impl<L, R> Write for Either<L, R>
   1226→    fn write
   1230→    fn write_all
   1234→    fn write_fmt
   1238→    fn flush
-  1243→impl<L, R, Target> AsRef<Target> for Either<L, R>
   1248→    fn as_ref
-  1253→macro_rules! impl_specific_ref_and_mut
-  1292→impl<L, R, Target> AsRef<[Target]> for Either<L, R>
   1297→    fn as_ref
-  1302→impl<L, R, Target> AsMut<Target> for Either<L, R>
   1307→    fn as_mut
-  1312→impl<L, R, Target> AsMut<[Target]> for Either<L, R>
   1317→    fn as_mut
-  1322→impl<L, R> Deref for Either<L, R>
   1327→    type Target
   1329→    fn deref
-  1334→impl<L, R> DerefMut for Either<L, R>
   1339→    fn deref_mut
-  1348→impl<L, R> Error for Either<L, R>
   1353→    fn source
   1358→    fn description
   1363→    fn cause
-  1368→impl<L, R> fmt::Display for Either<L, R>
   1373→    fn fmt
-  1378→impl<L, R> fmt::Write for Either<L, R>
   1383→    fn write_str
   1387→    fn write_char
   1391→    fn write_fmt
-  1522→macro_rules! check_t
-  1536→fn _unsized_ref_propagation
-  1553→fn _unsized_std_propagation

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2500 → level 1 (1784 words)
+budget: 2500 → level 2 (1831 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -355,8 +355,27 @@ docs/release-policy.md
 docs/terminology.md
      1→# Terminology
 docs/zh-CN/不再推荐使用的功能.md
+     1→# 不再推荐使用的功能
+    18→## .option() 方法的正则表达式参数
+    30→## noHelp
+    40→## 默认导入的全局 Command 对象
+    61→## .help() 与 .outputHelp() 的回调函数参数
+    79→## .on('--help')
+   104→## .on('command:*')
+   114→## .command('*')
+   134→## cmd.description(cmdDescription, argDescriptions)
+   157→## InvalidOptionArgumentError
+   187→## 短选项标志长于单个字符
 docs/zh-CN/可变参数的选项.md
+     1→# 可变参数的选项
+    26→## 解析中的歧义
+    73→### 方案一：让`--`成为语法的一部分
+    98→### 方案二：把选项放在最后
+   120→### 方案三：使用选项替代命令参数
+   142→## 合并短选项和带有参数的选项
+   183→### 将短选项视作 boolean 类型选项合并
 docs/zh-CN/术语表.md
+     1→# 术语表
 eslint.config.js
      8→const tsconfigTsFiles
      9→const tsconfigJsFiles

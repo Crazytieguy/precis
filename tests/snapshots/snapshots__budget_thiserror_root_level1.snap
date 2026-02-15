@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 → level 1 (318 words)
+budget: 500 → level 1 (122 words)
 
 README.md
      1→derive(Error)
@@ -11,21 +11,10 @@ README.md
    211→## Comparison to anyhow
    223→#### License
 build/probe.rs
-    11→struct MyError
-    12→struct Thing
-    14→impl Debug for MyError
     15→    fn fmt
-    20→impl Display for MyError
     21→    fn fmt
-    26→impl Error for MyError
     27→    fn provide
-    33→const _
 build.rs
-    10→const PRIVATE
-    18→fn main
-    91→fn compile_probe
-   179→fn rustc_minor_version
-   190→fn cargo_env_var
 impl/src/ast.rs
 impl/src/attr.rs
 impl/src/expand.rs
@@ -40,61 +29,33 @@ impl/src/valid.rs
 src/aserror.rs
      5→pub trait AsDynError
      6→    fn as_dyn_error
-     9→impl<'a, T: Error + 'a> AsDynError<'a> for T
     11→    fn as_dyn_error
-    16→impl<'a> AsDynError<'a> for dyn Error + 'a
     18→    fn as_dyn_error
-    23→impl<'a> AsDynError<'a> for dyn Error + Send + 'a
     25→    fn as_dyn_error
-    30→impl<'a> AsDynError<'a> for dyn Error + Send + Sync + 'a
     32→    fn as_dyn_error
-    37→impl<'a> AsDynError<'a> for dyn Error + Send + Sync + UnwindSafe + 'a
     39→    fn as_dyn_error
     45→pub trait Sealed
-    46→impl<T: Error> Sealed for T
-    47→impl Sealed for dyn Error + '_
-    48→impl Sealed for dyn Error + Send + '_
-    49→impl Sealed for dyn Error + Send + Sync + '_
-    50→impl Sealed for dyn Error + Send + Sync + UnwindSafe + '_
 src/display.rs
      6→pub trait AsDisplay
     11→    fn as_display
-    14→impl<'a, T> AsDisplay<'a> for &T
     18→    type Target
     20→    fn as_display
-    26→impl<'a> AsDisplay<'a> for Path
     27→    type Target
     30→    fn as_display
-    36→impl<'a> AsDisplay<'a> for PathBuf
     37→    type Target
     40→    fn as_display
     46→pub trait Sealed
-    47→impl<T: Display + ?Sized> Sealed for &T
-    49→impl Sealed for Path
-    51→impl Sealed for PathBuf
-    59→mod placeholder
     64→    pub struct Placeholder
-    66→    impl<'a> AsDisplay<'a> for Placeholder
     67→        type Target
     70→        fn as_display
-    75→    impl Display for Placeholder
     76→        fn fmt
-    81→    impl Sealed for Placeholder
 src/lib.rs
-   281→mod aserror
-   282→mod display
-   284→mod provide
-   285→mod var
-   289→mod private
 src/private.rs
 src/provide.rs
      4→pub trait ThiserrorProvide
      5→    fn thiserror_provide
-     8→impl<T> ThiserrorProvide for T
     13→    fn thiserror_provide
     19→pub trait Sealed
-    20→impl<T: Error + ?Sized> Sealed for T
 src/var.rs
      3→pub struct Var
-     5→impl<'a, T: Pointer + ?Sized> Pointer for Var<'a, T>
      6→    fn fmt

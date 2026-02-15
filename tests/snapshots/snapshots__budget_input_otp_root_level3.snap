@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1200 → level 3 (467 words)
+budget: 1200 → level 4 (516 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -77,19 +77,32 @@ apps/website/next.config.mjs
      6→const nextDevConfig
 apps/website/postcss.config.js
 apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
+     9→export default function ExampleAutoSubmit
 apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
+     3→export async function formAction
 apps/website/src/app/(local-pages)/example-playground/code.tsx
+    99→export function ExampleCode
 apps/website/src/app/(local-pages)/example-playground/component.tsx
+     8→export function ExampleComponent
 apps/website/src/app/(local-pages)/example-playground/page.tsx
+     3→export default function ExamplePlayground
 apps/website/src/app/(local-pages)/layout.tsx
      7→export default function RootLayout
 apps/website/src/app/(local-pages)/raw-input/page.tsx
+     5→export default function ShadcnPage
 apps/website/src/app/(local-pages)/shadcn/page.tsx
+    12→export default function ShadcnPage
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
+    13→export default function ShadcnPage
 apps/website/src/app/(local-pages)/shadcn/static/page.tsx
+     5→export default async function StaticPage
 apps/website/src/app/(pages)/(home)/_components/confetti.tsx
+     3→export function Confetti
 apps/website/src/app/(pages)/(home)/_components/showcase.tsx
+    14→export function Showcase
 apps/website/src/app/(pages)/(home)/page.tsx
+    34→export default async function IndexPage
+   148→export const revalidate
 apps/website/src/app/(pages)/layout.tsx
     14→export const metadata
     68→export default function RootLayout

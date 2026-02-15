@@ -11,7 +11,6 @@ result.ts
     66→export function ok
     73→export function err
    122→export function safeTry
-   134→interface IResult
    140→  isOk
    147→  isErr
    157→  map
@@ -67,17 +66,12 @@ result.ts
    505→  _unsafeUnwrap
    509→  _unsafeUnwrapErr
    523→export const fromThrowable
-   530→type Prev
-   590→type CollectResults
    614→export type Transpose
    635→export type Combine
    645→export type Dedup
    652→export type MemberListOf
    669→export type EmptyArrayToNever
-   680→type UnknownMembersToNever
    685→export type MembersToUnion
    688→export type IsLiteralArray
-   698→type Traverse
-   704→type TraverseWithAllErrors
    712→export type CombineResults
    719→export type CombineResultsWithAllErrorsArray

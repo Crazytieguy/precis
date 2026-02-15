@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 → level 1 (739 words)
+budget: 1000 → level 1 (723 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -319,7 +319,6 @@ crates/xtask/README.md
 crates/xtask/src/changelog.rs
 crates/xtask/src/main.rs
 eslint.config.mjs
-     4→const handlebarsPreprocessor
      7→            preprocess
     16→            postprocess
 guide/guide-helper/src/lib.rs
@@ -372,10 +371,3 @@ src/cmd/watch/native.rs
 src/cmd/watch/poller.rs
 src/cmd/watch.rs
 src/main.rs
-    14→mod cmd
-    16→const VERSION
-    18→fn main
-    58→fn create_clap_command
-    93→fn init_logger
-   126→fn get_book_dir
-   139→fn open
