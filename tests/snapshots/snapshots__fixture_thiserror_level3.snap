@@ -38,12 +38,10 @@ display.rs
     17→{
     18→    type Target = &'a T;
     20→    fn as_display(&'a self) -> Self::Target {
-    25→#[cfg(feature = "std")]
     26→impl<'a> AsDisplay<'a> for Path {
     27→    type Target = path::Display<'a>;
     29→    #[inline]
     30→    fn as_display(&'a self) -> Self::Target {
-    35→#[cfg(feature = "std")]
     36→impl<'a> AsDisplay<'a> for PathBuf {
     37→    type Target = path::Display<'a>;
     39→    #[inline]
@@ -51,11 +49,8 @@ display.rs
     45→#[doc(hidden)]
     46→pub trait Sealed {}
     47→impl<T: Display + ?Sized> Sealed for &T {}
-    48→#[cfg(feature = "std")]
     49→impl Sealed for Path {}
-    50→#[cfg(feature = "std")]
     51→impl Sealed for PathBuf {}
-    58→#[cfg(not(feature = "std"))]
     59→mod placeholder {
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
@@ -69,7 +64,6 @@ display.rs
 lib.rs
    281→mod aserror;
    282→mod display;
-   283→#[cfg(error_generic_member_access)]
    284→mod provide;
    285→mod var;
    289→mod private;

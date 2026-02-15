@@ -492,7 +492,7 @@ export function fetch(url: string): Promise<Response> { // main entry
     insta::assert_snapshot!(output);
 }
 
-// Level 0: file paths only
+// Level 0: file paths only (same output for all languages)
 
 #[test]
 fn rust_sample_level0() {
@@ -656,7 +656,7 @@ fn markdown_sample_level2() {
     insta::assert_snapshot!(output);
 }
 
-// Level 3: signature lines with doc comments
+// Level 3: signatures with doc comments for public symbols only
 
 #[test]
 fn rust_sample_level3() {
@@ -711,7 +711,7 @@ fn markdown_sample_level3() {
     insta::assert_snapshot!(output);
 }
 
-// Level 4: signatures with doc comments + type bodies (struct/enum/trait/interface)
+// Level 4: signatures with doc comments for all symbols
 
 #[test]
 fn rust_sample_level4() {
@@ -766,7 +766,7 @@ fn markdown_sample_level4() {
     insta::assert_snapshot!(output);
 }
 
-// Level 5: full source
+// Level 5: signatures with doc comments + type bodies (struct/enum/trait/interface)
 
 #[test]
 fn rust_sample_level5() {
@@ -818,6 +818,61 @@ fn python_sample_level5() {
 fn markdown_sample_level5() {
     let output =
         format::render_file(5, Path::new("README.md"), Path::new(""), markdown_sample());
+    insta::assert_snapshot!(output);
+}
+
+// Level 6: full source
+
+#[test]
+fn rust_sample_level6() {
+    let output = format::render_file(6, Path::new("sample.rs"), Path::new(""), rust_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn typescript_sample_level6() {
+    let output = format::render_file(
+        6,
+        Path::new("sample.ts"),
+        Path::new(""),
+        typescript_sample(),
+    );
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn javascript_sample_level6() {
+    let output = format::render_file(
+        6,
+        Path::new("sample.js"),
+        Path::new(""),
+        javascript_sample(),
+    );
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn tsx_sample_level6() {
+    let output = format::render_file(6, Path::new("sample.tsx"), Path::new(""), tsx_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn go_sample_level6() {
+    let output = format::render_file(6, Path::new("sample.go"), Path::new(""), go_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn python_sample_level6() {
+    let output = format::render_file(6, Path::new("sample.py"), Path::new(""), python_sample());
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn markdown_sample_level6() {
+    let output =
+        format::render_file(6, Path::new("README.md"), Path::new(""), markdown_sample());
     insta::assert_snapshot!(output);
 }
 
@@ -1222,7 +1277,7 @@ fn monotonicity_invariant() {
 /// Test the budget binary search with synthetic cost functions (no parsing).
 #[test]
 fn budget_algorithm() {
-    let costs: [usize; 6] = [5, 10, 25, 60, 120, 200];
+    let costs: [usize; 7] = [5, 10, 25, 40, 60, 120, 200];
     let cost = |level: u8| costs[level as usize];
 
     // Extremes
@@ -1254,9 +1309,9 @@ fn budget_algorithm() {
     }
 
     // Flat region: levels with equal cost should all be reachable
-    let flat_costs: [usize; 6] = [5, 10, 10, 10, 10, 50];
+    let flat_costs: [usize; 7] = [5, 10, 10, 10, 10, 10, 50];
     let flat_cost = |level: u8| flat_costs[level as usize];
-    assert_eq!(format::search_level(10, flat_cost), 4);
+    assert_eq!(format::search_level(10, flat_cost), 5);
     assert_eq!(format::search_level(9, flat_cost), 0);
 }
 

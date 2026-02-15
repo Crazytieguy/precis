@@ -104,17 +104,6 @@ multierror.go
     69→// to this error after calling Unwrap will not be available until a new
     70→// Unwrap is called on the multierror.Error.
     71→func (e *Error) Unwrap() error {
-    88→// chain implements the interfaces necessary for errors.Is/As/Unwrap to
-    89→// work in a deterministic way with multierror. A chain tracks a list of
-    90→// errors while accounting for the current represented error. This lets
-    91→// Is/As be meaningful.
-    92→//
-    93→// Unwrap returns the next error. In the cleanest form, Unwrap would return
-    94→// the wrapped error here but we can't do that if we want to properly
-    95→// get access to all the errors. Instead, users are recommended to use
-    96→// Is/As to get the correct error type out.
-    97→//
-    98→// Precondition: []error is non-empty (len > 0)
     99→type chain []error
    101→// Error implements the error interface
    102→func (e chain) Error() string {

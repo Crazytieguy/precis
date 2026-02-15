@@ -42,7 +42,6 @@ __private_api.rs
    103→pub fn enabled<L: Log>(logger: L, level: Level, target: &str) -> bool {
    107→#[track_caller]
    108→pub fn loc() -> &'static Location<'static> {
-   112→#[cfg(feature = "kv")]
    113→mod kv_support {
    116→    pub type Value<'a> = kv::Value<'a>;
    122→    pub fn capture_to_value<'a, V: kv::ToValue + ?Sized>(v: &'a &'a V) -> Value<'a> {
@@ -58,7 +57,6 @@ kv/error.rs
      3→/// An error encountered while working with structured data.
      4→#[derive(Debug)]
      5→pub struct Error {
-     9→#[derive(Debug)]
     10→enum Inner {
     19→impl Error {
     20→    /// Create an error from a message.
@@ -71,7 +69,6 @@ kv/error.rs
     49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     62→impl From<fmt::Error> for Error {
     63→    fn from(_: fmt::Error) -> Self {
-    68→#[cfg(feature = "std")]
     69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     75→    impl Error {
@@ -121,13 +118,11 @@ kv/key.rs
     82→    fn borrow(&self) -> &str {
     87→impl<'k> From<&'k str> for Key<'k> {
     88→    fn from(s: &'k str) -> Self {
-    93→#[cfg(feature = "std")]
     94→mod std_support {
     99→    impl ToKey for String {
    100→        fn to_key(&self) -> Key<'_> {
    105→    impl<'a> ToKey for Cow<'a, str> {
    106→        fn to_key(&self) -> Key<'_> {
-   112→#[cfg(feature = "kv_sval")]
    113→mod sval_support {
    119→    impl<'a> Value for Key<'a> {
    120→        fn stream<'sval, S: sval::Stream<'sval> + ?Sized>(
@@ -136,7 +131,6 @@ kv/key.rs
    123→        ) -> sval::Result {
    128→    impl<'a> ValueRef<'a> for Key<'a> {
    129→        fn stream_ref<S: sval::Stream<'a> + ?Sized>(&self, stream: &mut S) -> sval::Result {
-   135→#[cfg(feature = "kv_serde")]
    136→mod serde_support {
    141→    impl<'a> Serialize for Key<'a> {
    142→        fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
@@ -144,256 +138,9 @@ kv/key.rs
    144→            S: Serializer,
    145→        {
 kv/mod.rs
-     1→//! Structured logging.
-     2→//!
-     3→//! Add the `kv` feature to your `Cargo.toml` to enable
-     4→//! this module:
-     5→//!
-     6→//! ```toml
-     7→//! [dependencies.log]
-     8→//! features = ["kv"]
-     9→//! ```
-    10→//!
-    11→//! # Structured logging in `log`
-    12→//!
-    13→//! Structured logging enhances traditional text-based log records with user-defined
-    14→//! attributes. Structured logs can be analyzed using a variety of data processing
-    15→//! techniques, without needing to find and parse attributes from unstructured text first.
-    16→//!
-    17→//! In `log`, user-defined attributes are part of a [`Source`] on the log record.
-    18→//! Each attribute is a key-value; a pair of [`Key`] and [`Value`]. Keys are strings
-    19→//! and values are a datum of any type that can be formatted or serialized. Simple types
-    20→//! like strings, booleans, and numbers are supported, as well as arbitrarily complex
-    21→//! structures involving nested objects and sequences.
-    22→//!
-    23→//! ## Adding key-values to log records
-    24→//!
-    25→//! Key-values appear before the message format in the `log!` macros:
-    26→//!
-    27→//! ```
-    28→//! # use log::info;
-    29→//! info!(a = 1; "Something of interest");
-    30→//! ```
-    31→//!
-    32→//! Key-values support the same shorthand identifier syntax as `format_args`:
-    33→//!
-    34→//! ```
-    35→//! # use log::info;
-    36→//! let a = 1;
-    37→//!
-    38→//! info!(a; "Something of interest");
-    39→//! ```
-    40→//!
-    41→//! Values are capturing using the [`ToValue`] trait by default. To capture a value
-    42→//! using a different trait implementation, use a modifier after its key. Here's how
-    43→//! the same example can capture `a` using its `Debug` implementation instead:
-    44→//!
-    45→//! ```
-    46→//! # use log::info;
-    47→//! info!(a:? = 1; "Something of interest");
-    48→//! ```
-    49→//!
-    50→//! The following capturing modifiers are supported:
-    51→//!
-    52→//! - `:?` will capture the value using `Debug`.
-    53→//! - `:debug` will capture the value using `Debug`.
-    54→//! - `:%` will capture the value using `Display`.
-    55→//! - `:display` will capture the value using `Display`.
-    56→//! - `:err` will capture the value using `std::error::Error` (requires the `kv_std` feature).
-    57→//! - `:sval` will capture the value using `sval::Value` (requires the `kv_sval` feature).
-    58→//! - `:serde` will capture the value using `serde::Serialize` (requires the `kv_serde` feature).
-    59→//!
-    60→//! ## Working with key-values on log records
-    61→//!
-    62→//! Use the [`Record::key_values`](../struct.Record.html#method.key_values) method to access key-values.
-    63→//!
-    64→//! Individual values can be pulled from the source by their key:
-    65→//!
-    66→//! ```
-    67→//! # fn main() -> Result<(), log::kv::Error> {
-    68→//! use log::kv::{Source, Key, Value};
-    69→//! # let record = log::Record::builder().key_values(&[("a", 1)]).build();
-    70→//!
-    71→//! // info!(a = 1; "Something of interest");
-    72→//!
-    73→//! let a: Value = record.key_values().get(Key::from("a")).unwrap();
-    74→//! assert_eq!(1, a.to_i64().unwrap());
-    75→//! # Ok(())
-    76→//! # }
-    77→//! ```
-    78→//!
-    79→//! All key-values can also be enumerated using a [`VisitSource`]:
-    80→//!
-    81→//! ```
-    82→//! # fn main() -> Result<(), log::kv::Error> {
-    83→//! use std::collections::BTreeMap;
-    84→//!
-    85→//! use log::kv::{self, Source, Key, Value, VisitSource};
-    86→//!
-    87→//! struct Collect<'kvs>(BTreeMap<Key<'kvs>, Value<'kvs>>);
-    88→//!
-    89→//! impl<'kvs> VisitSource<'kvs> for Collect<'kvs> {
-    90→//!     fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), kv::Error> {
-    91→//!         self.0.insert(key, value);
-    92→//!
-    93→//!         Ok(())
-    94→//!     }
-    95→//! }
-    96→//!
-    97→//! let mut visitor = Collect(BTreeMap::new());
-    98→//!
-    99→//! # let record = log::Record::builder().key_values(&[("a", 1), ("b", 2), ("c", 3)]).build();
-   100→//! // info!(a = 1, b = 2, c = 3; "Something of interest");
-   101→//!
-   102→//! record.key_values().visit(&mut visitor)?;
-   103→//!
-   104→//! let collected = visitor.0;
-   105→//!
-   106→//! assert_eq!(
-   107→//!     vec!["a", "b", "c"],
-   108→//!     collected
-   109→//!         .keys()
-   110→//!         .map(|k| k.as_str())
-   111→//!         .collect::<Vec<_>>(),
-   112→//! );
-   113→//! # Ok(())
-   114→//! # }
-   115→//! ```
-   116→//!
-   117→//! [`Value`]s have methods for conversions to common types:
-   118→//!
-   119→//! ```
-   120→//! # fn main() -> Result<(), log::kv::Error> {
-   121→//! use log::kv::{Source, Key};
-   122→//! # let record = log::Record::builder().key_values(&[("a", 1)]).build();
-   123→//!
-   124→//! // info!(a = 1; "Something of interest");
-   125→//!
-   126→//! let a = record.key_values().get(Key::from("a")).unwrap();
-   127→//!
-   128→//! assert_eq!(1, a.to_i64().unwrap());
-   129→//! # Ok(())
-   130→//! # }
-   131→//! ```
-   132→//!
-   133→//! Values also have their own [`VisitValue`] type. Value visitors are a lightweight
-   134→//! API for working with primitives types:
-   135→//!
-   136→//! ```
-   137→//! # fn main() -> Result<(), log::kv::Error> {
-   138→//! use log::kv::{self, Source, Key, VisitValue};
-   139→//! # let record = log::Record::builder().key_values(&[("a", 1)]).build();
-   140→//!
-   141→//! struct IsNumeric(bool);
-   142→//!
-   143→//! impl<'kvs> VisitValue<'kvs> for IsNumeric {
-   144→//!     fn visit_any(&mut self, _value: kv::Value) -> Result<(), kv::Error> {
-   145→//!         self.0 = false;
-   146→//!         Ok(())
-   147→//!     }
-   148→//!
-   149→//!     fn visit_u64(&mut self, _value: u64) -> Result<(), kv::Error> {
-   150→//!         self.0 = true;
-   151→//!         Ok(())
-   152→//!     }
-   153→//!
-   154→//!     fn visit_i64(&mut self, _value: i64) -> Result<(), kv::Error> {
-   155→//!         self.0 = true;
-   156→//!         Ok(())
-   157→//!     }
-   158→//!
-   159→//!     fn visit_u128(&mut self, _value: u128) -> Result<(), kv::Error> {
-   160→//!         self.0 = true;
-   161→//!         Ok(())
-   162→//!     }
-   163→//!
-   164→//!     fn visit_i128(&mut self, _value: i128) -> Result<(), kv::Error> {
-   165→//!         self.0 = true;
-   166→//!         Ok(())
-   167→//!     }
-   168→//!
-   169→//!     fn visit_f64(&mut self, _value: f64) -> Result<(), kv::Error> {
-   170→//!         self.0 = true;
-   171→//!         Ok(())
-   172→//!     }
-   173→//! }
-   174→//!
-   175→//! // info!(a = 1; "Something of interest");
-   176→//!
-   177→//! let a = record.key_values().get(Key::from("a")).unwrap();
-   178→//!
-   179→//! let mut visitor = IsNumeric(false);
-   180→//!
-   181→//! a.visit(&mut visitor)?;
-   182→//!
-   183→//! let is_numeric = visitor.0;
-   184→//!
-   185→//! assert!(is_numeric);
-   186→//! # Ok(())
-   187→//! # }
-   188→//! ```
-   189→//!
-   190→//! To serialize a value to a format like JSON, you can also use either `serde` or `sval`:
-   191→//!
-   192→//! ```
-   193→//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
-   194→//! # #[cfg(feature = "kv_serde")]
-   195→//! # {
-   196→//! # use log::kv::Key;
-   197→//! #[derive(serde::Serialize)]
-   198→//! struct Data {
-   199→//!     a: i32, b: bool,
-   200→//!     c: &'static str,
-   201→//! }
-   202→//!
-   203→//! let data = Data { a: 1, b: true, c: "Some data" };
-   204→//!
-   205→//! # let source = [("a", log::kv::Value::from_serde(&data))];
-   206→//! # let record = log::Record::builder().key_values(&source).build();
-   207→//! // info!(a = data; "Something of interest");
-   208→//!
-   209→//! let a = record.key_values().get(Key::from("a")).unwrap();
-   210→//!
-   211→//! assert_eq!("{\"a\":1,\"b\":true,\"c\":\"Some data\"}", serde_json::to_string(&a)?);
-   212→//! # }
-   213→//! # Ok(())
-   214→//! # }
-   215→//! ```
-   216→//!
-   217→//! The choice of serialization framework depends on the needs of the consumer.
-   218→//! If you're in a no-std environment, you can use `sval`. In other cases, you can use `serde`.
-   219→//! Log producers and log consumers don't need to agree on the serialization framework.
-   220→//! A value can be captured using its `serde::Serialize` implementation and still be serialized
-   221→//! through `sval` without losing any structure or data.
-   222→//!
-   223→//! Values can also always be formatted using the standard `Debug` and `Display`
-   224→//! traits:
-   225→//!
-   226→//! ```
-   227→//! # use log::kv::Key;
-   228→//! #[derive(Debug)]
-   229→//! struct Data {
-   230→//!     a: i32,
-   231→//!     b: bool,
-   232→//!     c: &'static str,
-   233→//! }
-   234→//!
-   235→//! let data = Data { a: 1, b: true, c: "Some data" };
-   236→//!
-   237→//! # let source = [("a", log::kv::Value::from_debug(&data))];
-   238→//! # let record = log::Record::builder().key_values(&source).build();
-   239→//! // info!(a = data; "Something of interest");
-   240→//!
-   241→//! let a = record.key_values().get(Key::from("a")).unwrap();
-   242→//!
-   243→//! assert_eq!("Data { a: 1, b: true, c: \"Some data\" }", format!("{a:?}"));
-   244→//! ```
-   245→
    246→mod error;
    247→mod key;
-   249→#[cfg(not(feature = "kv_unstable"))]
    250→mod source;
-   251→#[cfg(not(feature = "kv_unstable"))]
    252→mod value;
    259→#[cfg(feature = "kv_unstable")]
    260→pub mod source;
@@ -473,9 +220,7 @@ kv/source.rs
     83→    ///
     84→    /// A subsequent call to `visit` should yield the same number of key-values.
     85→    fn count(&self) -> usize {
-    90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
-   113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
    130→impl<T> Source for &T
    131→where
@@ -517,7 +262,6 @@ kv/source.rs
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
-   240→#[allow(clippy::needless_lifetimes)] // Not needless.
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    242→where
    243→    T: VisitSource<'kvs> + ?Sized,
@@ -531,7 +275,6 @@ kv/source.rs
    265→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error> {
    271→impl<'a, 'b: 'a, 'kvs> VisitSource<'kvs> for fmt::DebugTuple<'a, 'b> {
    272→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error> {
-   279→#[cfg(feature = "std")]
    280→mod std_support {
    288→    impl<S> Source for Box<S>
    289→    where
@@ -964,252 +707,25 @@ lib.rs
   1600→pub mod __private_api;
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 macros.rs
-    11→/// The standard logging macro.
-    12→///
-    13→/// This macro will generically log with the specified `Level` and `format!`
-    14→/// based argument list.
-    15→///
-    16→/// ```
-    17→/// use log::{log, Level};
-    18→///
-    19→/// let data = (42, "Forty-two");
-    20→/// let private_data = "private";
-    21→///
-    22→/// log!(Level::Error, "Received errors: {}, {}", data.0, data.1);
-    23→/// ```
-    24→///
-    25→/// Optionally, you can specify a `target` argument to attach a specific target
-    26→/// to the log record. By default, the target is the module path of the caller.
-    27→///
-    28→/// ```
-    29→/// use log::{log, Level};
-    30→///
-    31→/// let data = (42, "Forty-two");
-    32→/// let private_data = "private";
-    33→///
-    34→/// log!(
-    35→///     target: "app_events",
-    36→///     Level::Error,
-    37→///     "Received errors: {}, {}",
-    38→///     data.0, data.1
-    39→/// );
-    40→/// ```
-    41→///
-    42→/// And optionally, you can specify a `logger` argument to use a specific logger
-    43→/// instead of the default global logger.
-    44→///
-    45→/// ```
-    46→/// # struct MyLogger {}
-    47→/// # impl Log for MyLogger {
-    48→/// #     fn enabled(&self, _metadata: &log::Metadata) -> bool {
-    49→/// #         false
-    50→/// #     }
-    51→/// #     fn log(&self, _record: &log::Record) {}
-    52→/// #     fn flush(&self) {}
-    53→/// # }
-    54→/// use log::{log, Level, Log};
-    55→///
-    56→/// let data = (42, "Forty-two");
-    57→/// let private_data = "private";
-    58→///
-    59→/// let my_logger = MyLogger {};
-    60→/// log!(
-    61→///     logger: my_logger,
-    62→///     Level::Error,
-    63→///     "Received errors: {}, {}",
-    64→///     data.0, data.1
-    65→/// );
-    66→/// ```
-    67→///
-    68→/// The `logger` argument accepts a value that implements the `Log` trait. The value
-    69→/// will be borrowed within the macro.
-    70→///
-    71→/// Note that the global level set via Cargo features, or through `set_max_level` will
-    72→/// still apply, even when a custom logger is supplied with the `logger` argument.
-    73→#[macro_export]
-    74→#[clippy::format_args]
     75→macro_rules! log {
-   117→#[doc(hidden)]
-   118→#[macro_export]
    119→macro_rules! __log {
-   149→/// Logs a message at the error level.
-   150→///
-   151→/// # Examples
-   152→///
-   153→/// ```
-   154→/// use log::error;
-   155→///
-   156→/// # let my_logger = log::__private_api::GlobalLogger;
-   157→/// let (err_info, port) = ("No connection", 22);
-   158→///
-   159→/// error!("Error: {err_info} on port {port}");
-   160→/// error!(target: "app_events", "App Error: {err_info}, Port: {port}");
-   161→/// error!(logger: my_logger, "App Error: {err_info}, Port: {port}");
-   162→/// ```
-   163→#[macro_export]
-   164→#[clippy::format_args]
    165→macro_rules! error {
-   188→/// Logs a message at the warn level.
-   189→///
-   190→/// # Examples
-   191→///
-   192→/// ```
-   193→/// use log::warn;
-   194→///
-   195→/// # let my_logger = log::__private_api::GlobalLogger;
-   196→/// let warn_description = "Invalid Input";
-   197→///
-   198→/// warn!("Warning! {warn_description}!");
-   199→/// warn!(target: "input_events", "App received warning: {warn_description}");
-   200→/// warn!(logger: my_logger, "App received warning: {warn_description}");
-   201→/// ```
-   202→#[macro_export]
-   203→#[clippy::format_args]
    204→macro_rules! warn {
-   227→/// Logs a message at the info level.
-   228→///
-   229→/// # Examples
-   230→///
-   231→/// ```
-   232→/// use log::info;
-   233→///
-   234→/// # let my_logger = log::__private_api::GlobalLogger;
-   235→/// # struct Connection { port: u32, speed: f32 }
-   236→/// let conn_info = Connection { port: 40, speed: 3.20 };
-   237→///
-   238→/// info!("Connected to port {} at {} Mb/s", conn_info.port, conn_info.speed);
-   239→/// info!(
-   240→///     target: "connection_events",
-   241→///     "Successful connection, port: {}, speed: {}",
-   242→///     conn_info.port, conn_info.speed
-   243→/// );
-   244→/// info!(
-   245→///     logger: my_logger,
-   246→///     "Successful connection, port: {}, speed: {}",
-   247→///     conn_info.port, conn_info.speed
-   248→/// );
-   249→/// ```
-   250→#[macro_export]
-   251→#[clippy::format_args]
    252→macro_rules! info {
-   275→/// Logs a message at the debug level.
-   276→///
-   277→/// # Examples
-   278→///
-   279→/// ```
-   280→/// use log::debug;
-   281→///
-   282→/// # let my_logger = log::__private_api::GlobalLogger;
-   283→/// # struct Position { x: f32, y: f32 }
-   284→/// let pos = Position { x: 3.234, y: -1.223 };
-   285→///
-   286→/// debug!("New position: x: {}, y: {}", pos.x, pos.y);
-   287→/// debug!(target: "app_events", "New position: x: {}, y: {}", pos.x, pos.y);
-   288→/// debug!(logger: my_logger, "New position: x: {}, y: {}", pos.x, pos.y);
-   289→/// ```
-   290→#[macro_export]
-   291→#[clippy::format_args]
    292→macro_rules! debug {
-   315→/// Logs a message at the trace level.
-   316→///
-   317→/// # Examples
-   318→///
-   319→/// ```
-   320→/// use log::trace;
-   321→///
-   322→/// # let my_logger = log::__private_api::GlobalLogger;
-   323→/// # struct Position { x: f32, y: f32 }
-   324→/// let pos = Position { x: 3.234, y: -1.223 };
-   325→///
-   326→/// trace!("Position is: x: {}, y: {}", pos.x, pos.y);
-   327→/// trace!(target: "app_events", "x is {} and y is {}",
-   328→///        if pos.x >= 0.0 { "positive" } else { "negative" },
-   329→///        if pos.y >= 0.0 { "positive" } else { "negative" });
-   330→/// trace!(logger: my_logger, "x is {} and y is {}",
-   331→///        if pos.x >= 0.0 { "positive" } else { "negative" },
-   332→///        if pos.y >= 0.0 { "positive" } else { "negative" });
-   333→/// ```
-   334→#[macro_export]
-   335→#[clippy::format_args]
    336→macro_rules! trace {
-   359→/// Determines if a message logged at the specified level in that module will
-   360→/// be logged.
-   361→///
-   362→/// This can be used to avoid expensive computation of log message arguments if
-   363→/// the message would be ignored anyway.
-   364→///
-   365→/// # Examples
-   366→///
-   367→/// ```
-   368→/// use log::{debug, log_enabled, Level};
-   369→///
-   370→/// # struct Data { x: u32, y: u32 }
-   371→/// # fn expensive_call() -> Data { Data { x: 0, y: 0 } }
-   372→/// # let my_logger = log::__private_api::GlobalLogger;
-   373→/// if log_enabled!(Level::Debug) {
-   374→///     let data = expensive_call();
-   375→///     debug!("expensive debug data: {} {}", data.x, data.y);
-   376→/// }
-   377→///
-   378→/// if log_enabled!(target: "Global", Level::Debug) {
-   379→///    let data = expensive_call();
-   380→///    debug!(target: "Global", "expensive debug data: {} {}", data.x, data.y);
-   381→/// }
-   382→///
-   383→/// if log_enabled!(logger: my_logger, Level::Debug) {
-   384→///    let data = expensive_call();
-   385→///    debug!(target: "Global", "expensive debug data: {} {}", data.x, data.y);
-   386→/// }
-   387→/// ```
-   388→///
-   389→/// This macro accepts the same `target` and `logger` arguments as [`macro@log`].
-   390→#[macro_export]
    391→macro_rules! log_enabled {
-   413→#[doc(hidden)]
-   414→#[macro_export]
    415→macro_rules! __log_enabled {
-   427→#[doc(hidden)]
-   428→#[macro_export]
    429→macro_rules! __log_logger {
-   442→#[doc(hidden)]
-   443→#[macro_export]
-   444→#[cfg(feature = "kv")]
    445→macro_rules! __log_key {
-   456→#[doc(hidden)]
-   457→#[macro_export]
-   458→#[cfg(not(feature = "kv"))]
    459→macro_rules! __log_key {
-   465→#[doc(hidden)]
-   466→#[macro_export]
-   467→#[cfg(feature = "kv")]
    468→macro_rules! __log_value {
-   514→#[doc(hidden)]
-   515→#[macro_export]
-   516→#[cfg(not(feature = "kv"))]
    517→macro_rules! __log_value {
-   523→#[doc(hidden)]
-   524→#[macro_export]
-   525→#[cfg(feature = "kv_sval")]
    526→macro_rules! __log_value_sval {
-   532→#[doc(hidden)]
-   533→#[macro_export]
-   534→#[cfg(not(feature = "kv_sval"))]
    535→macro_rules! __log_value_sval {
-   541→#[doc(hidden)]
-   542→#[macro_export]
-   543→#[cfg(feature = "kv_serde")]
    544→macro_rules! __log_value_serde {
-   550→#[doc(hidden)]
-   551→#[macro_export]
-   552→#[cfg(not(feature = "kv_serde"))]
    553→macro_rules! __log_value_serde {
-   561→#[doc(hidden)]
-   562→#[macro_export]
-   563→#[cfg(feature = "kv_std")]
    564→macro_rules! __log_value_error {
-   570→#[doc(hidden)]
-   571→#[macro_export]
-   572→#[cfg(not(feature = "kv_std"))]
    573→macro_rules! __log_value_error {
 serde.rs
     16→impl Serialize for Level {

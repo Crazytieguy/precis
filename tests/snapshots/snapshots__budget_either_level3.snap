@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 5000 → level 3 (2410 words)
+budget: 5000 → level 3 (2391 words)
 
 into_either.rs
      6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
@@ -72,7 +72,6 @@ iterator.rs
     35→    where
     36→        T: IntoIterator<Item = A>,
     37→    {
-    42→/// `Either<L, R>` is an iterator if both `L` and `R` are iterators.
     43→impl<L, R> Iterator for Either<L, R>
     44→where
     45→    L: Iterator,
@@ -504,8 +503,6 @@ lib.rs
   1536→fn _unsized_ref_propagation() {
   1553→fn _unsized_std_propagation() {
 serde_untagged.rs
-    38→#[derive(serde::Serialize, serde::Deserialize)]
-    39→#[serde(untagged)]
     40→enum Either<L, R> {
     45→pub fn serialize<L, R, S>(this: &super::Either<L, R>, serializer: S) -> Result<S::Ok, S::Error>
     46→where
@@ -520,8 +517,6 @@ serde_untagged.rs
     62→    R: Deserialize<'de>,
     63→{
 serde_untagged_optional.rs
-    38→#[derive(Serialize, Deserialize)]
-    39→#[serde(untagged)]
     40→enum Either<L, R> {
     45→pub fn serialize<L, R, S>(
     46→    this: &Option<super::Either<L, R>>,

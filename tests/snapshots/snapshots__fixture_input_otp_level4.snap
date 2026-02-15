@@ -16,16 +16,7 @@ sync-timeouts.ts
      1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
 types.ts
      1→export interface SlotProps {
-     2→  isActive: boolean
-     3→  char: string | null
-     4→  placeholderChar: string | null
-     5→  hasFakeCaret: boolean
-     6→}
      7→export interface RenderProps {
-     8→  slots: SlotProps[]
-     9→  isFocused: boolean
-    10→  isHovering: boolean
-    11→}
     12→type OverrideProps<T, R> = Omit<T, keyof R> & R
     13→type OTPInputBaseProps = OverrideProps<
     14→  React.InputHTMLAttributes<HTMLInputElement>,

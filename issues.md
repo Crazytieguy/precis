@@ -10,12 +10,12 @@
 - **README boost** — render `README.md` / `Readme.md` / `readme.md` at a higher effective level (reduce depth penalty or apply negative penalty). Other markdown files follow normal depth rules.
 - **File omission** — at low levels, the render function can return nothing for some files (e.g. deep, large, or low-priority files). This is not a special level — just the render function's per-file decision based on `(level, path, content)`. Useful for repos with many files where showing all paths at level 0 is already too much.
 - **Config file support** — support json/yaml/toml files with different rendering heuristics than code. Files with "config" in the name get higher priority. JSON file content is generally less useful than code at equivalent depth.
-- **Visibility-aware rendering** — use the already-computed `is_public` field in rendering prioritization. Public symbols shown before private ones as levels increase.
+- **Visibility-aware rendering (partial)** — level 3 now shows doc comments for public symbols only; level 4 shows doc comments for all symbols. Further visibility-gating could apply to symbol names (show public first) or signatures (public signatures before private). Also: Python dunder methods (`__init__`, `__repr__`, etc.) are currently treated as private (name starts with `_`), but they're conventionally part of the public interface — consider treating them as public.
 - **Re-evaluate tree-sitter for doc comments and multi-line signatures** — both are currently text-based heuristics (scanning for comment prefixes, scanning for `{`/`;`/`:`). Tree-sitter grammars model comments as sibling nodes (not children of declarations), making association with symbols harder via queries alone. Text heuristics work uniformly across languages. Worth re-evaluating whether tree-sitter-based approaches would be more robust, especially as more languages are added.
 
 ## Current state
 
-- Parsing: Rust, TypeScript, JavaScript, TSX, Python, Go, Markdown. 6 granularity levels (0–5). Depth-aware and file-size-aware rendering. `--budget`, `--level`, `--json` flags. Defaults to current directory when no path given.
+- Parsing: Rust, TypeScript, JavaScript, TSX, Python, Go, Markdown. 7 granularity levels (0–6). Depth-aware, file-size-aware, and visibility-aware rendering. `--budget`, `--level`, `--json` flags. Defaults to current directory when no path given.
 - File discovery filters out test/benchmark/vendor/example directories and test file patterns. Uses relative paths so parent directories don't trigger false positives.
 - 31 test fixtures across all supported languages with per-level and budget-based snapshot tests. Monotonicity invariant tested across representative fixtures.
 - `cargo run --bin budget_util` measures budget utilization across all budget snapshots.
@@ -25,4 +25,5 @@
 - Doc comment and multi-line signature detection are text-based heuristics (see feature development for re-evaluation issue). Doc comments handle `///`, `//!`, `/** */`, Go `//` (godoc, language-gated), Python `#` and docstrings. Multi-line signatures scan for `{`/`;`/`:` delimiters.
 - Overload dedup: consecutive function symbols with the same name are collapsed (keeping the last). Skipped for Go (`init()` functions).
 - Type aliases at level 2+ show their full definition (the definition IS the signature). Uses `emitted_up_to` to avoid duplicating lines when type alias ranges encompass nested symbols.
-- Markdown levels 1 and 2 produce identical output (heading text is already the full line content).
+- Markdown levels 1 and 2 produce identical output (heading text is already the full line content). Markdown levels 3 and 4 also produce identical output (headings are always public, so public-only doc filtering has no effect).
+- Visibility-aware doc comments (level 3): for files where all private symbols lack doc comments (common in Go, where unexported functions rarely have godoc), levels 3 and 4 produce identical output. The level still helps budget utilization because the binary search can land on it when level 4 would overshoot.

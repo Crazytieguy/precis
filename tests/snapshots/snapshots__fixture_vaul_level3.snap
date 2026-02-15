@@ -148,20 +148,8 @@ types.ts
      7→export type AnyFunction = (...args: any) => any;
 use-composed-refs.ts
      5→type PossibleRef<T> = React.Ref<T> | undefined;
-     7→/**
-     8→ * Set a given ref to a given value
-     9→ * This utility takes care of different types of refs: callback refs and RefObject(s)
-    10→ */
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
-    19→/**
-    20→ * A utility to compose multiple refs together
-    21→ * Accepts callback refs and RefObject(s)
-    22→ */
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
-    27→/**
-    28→ * A custom hook that composes multiple refs
-    29→ * Accepts callback refs and RefObject(s)
-    30→ */
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 use-controllable-state.ts
      5→type UseControllableStateParams<T> = {

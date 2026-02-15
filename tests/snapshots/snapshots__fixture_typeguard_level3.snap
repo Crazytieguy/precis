@@ -375,7 +375,6 @@ _functions.py
 _importhook.py
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
-    44→# The name of this function is magical
     45→def _call_with_frames_removed(
     46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
     47→) -> T:

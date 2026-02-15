@@ -197,10 +197,6 @@ _config.py
     21→    * ``WARN``: emit a :class:`~.TypeHintWarning` if the forward reference lookup fails
     22→    * ``IGNORE``: silently skip checks for unresolveable forward references
     23→    """
-    24→
-    25→    ERROR = auto()
-    26→    WARN = auto()
-    27→    IGNORE = auto()
     30→class CollectionCheckStrategy(Enum):
     31→    """
     32→    Specifies how thoroughly the contents of collections are type checked.
@@ -219,18 +215,7 @@ _config.py
     45→    * ``FIRST_ITEM``: check only the first item
     46→    * ``ALL_ITEMS``: check all items
     47→    """
-    48→
-    49→    FIRST_ITEM = auto()
-    50→    ALL_ITEMS = auto()
-    51→
     52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
-    53→        if self is CollectionCheckStrategy.FIRST_ITEM:
-    54→            try:
-    55→                return [next(iter(collection))]
-    56→            except StopIteration:
-    57→                return ()
-    58→        else:
-    59→            return collection
     62→@dataclass
     63→class TypeCheckConfiguration:
     64→    """
@@ -266,13 +251,6 @@ _config.py
     94→
     95→         Default: ``False``
     96→    """
-    97→
-    98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
-    99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
-   100→    collection_check_strategy: CollectionCheckStrategy = (
-   101→        CollectionCheckStrategy.FIRST_ITEM
-   102→    )
-   103→    debug_instrumentation: bool = False
 _decorators.py
     24→    def typeguard_ignore(arg: T_CallableOrType) -> T_CallableOrType:
     25→        """This decorator is a noop during static type-checking."""
@@ -324,31 +302,17 @@ _exceptions.py
      9→    """
     12→class TypeCheckWarning(UserWarning):
     13→    """Emitted by typeguard's type checkers when a type mismatch is detected."""
-    14→
     15→    def __init__(self, message: str):
-    16→        super().__init__(message)
     19→class InstrumentationWarning(UserWarning):
     20→    """Emitted when there's a problem with instrumenting a function for type checks."""
-    21→
     22→    def __init__(self, message: str):
-    23→        super().__init__(message)
     26→class TypeCheckError(Exception):
     27→    """
     28→    Raised by typeguard's type checkers when a type mismatch is detected.
     29→    """
-    30→
     31→    def __init__(self, message: str):
-    32→        super().__init__(message)
-    33→        self._path: Deque[str] = deque()
-    34→
     35→    def append_path_element(self, element: str) -> None:
-    36→        self._path.append(element)
-    37→
     38→    def __str__(self) -> str:
-    39→        if self._path:
-    40→            return " of ".join(self._path) + " " + str(self.args[0])
-    41→        else:
-    42→            return str(self.args[0])
 _functions.py
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
@@ -446,50 +410,7 @@ _importhook.py
     60→        *,
     61→        _optimize: int = -1,
     62→    ) -> CodeType:
-    63→        if isinstance(path, (str, PathLike)):
-    64→            filename = path
-    65→        else:
-    66→            filename = os.fsdecode(bytes(path))
-    67→
-    68→        if isinstance(data, (ast.Module, ast.Expression, ast.Interactive)):
-    69→            module = data
-    70→        else:
-    71→            if isinstance(data, str):
-    72→                source = data
-    73→            else:
-    74→                source = decode_source(data)
-    75→
-    76→            module = _call_with_frames_removed(
-    77→                ast.parse,
-    78→                source,
-    79→                filename,
-    80→                "exec",
-    81→            )
-    82→
-    83→        tree = TypeguardTransformer().visit(module)
-    84→        ast.fix_missing_locations(tree)
-    85→
-    86→        if global_config.debug_instrumentation and sys.version_info >= (3, 9):
-    87→            print(
-    88→                f"Source code of {path!r} after instrumentation:\n"
-    89→                "----------------------------------------------",
-    90→                file=sys.stderr,
-    91→            )
-    92→            print(ast.unparse(tree), file=sys.stderr)
-    93→            print("----------------------------------------------", file=sys.stderr)
-    94→
-    95→        return _call_with_frames_removed(
-    96→            compile, tree, filename, "exec", 0, dont_inherit=True
-    97→        )
-    98→
     99→    def exec_module(self, module: ModuleType) -> None:
-   100→        # Use a custom optimization marker – the import lock should make this monkey
-   101→        # patch safe
-   102→        with patch(
-   103→            "importlib._bootstrap_external.cache_from_source",
-   104→            optimized_cache_from_source,
-   105→        ):
-   106→            super().exec_module(module)
    109→class TypeguardFinder(MetaPathFinder):
    110→    """
    111→    Wraps another path finder and instruments the module with
@@ -500,25 +421,13 @@ _importhook.py
    116→
    117→    .. versionadded:: 2.6
    118→    """
-   119→
    120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
-   121→        self.packages = packages
-   122→        self._original_pathfinder = original_pathfinder
-   123→
    124→    def find_spec(
    125→        self,
    126→        fullname: str,
    127→        path: Sequence[str] | None,
    128→        target: types.ModuleType | None = None,
    129→    ) -> ModuleSpec | None:
-   130→        if self.should_instrument(fullname):
-   131→            spec = self._original_pathfinder.find_spec(fullname, path, target)
-   132→            if spec is not None and isinstance(spec.loader, SourceFileLoader):
-   133→                spec.loader = TypeguardLoader(spec.loader.name, spec.loader.path)
-   134→                return spec
-   135→
-   136→        return None
-   137→
    138→    def should_instrument(self, module_name: str) -> bool:
    139→        """
    140→        Determine whether the module with the given name should be instrumented.
@@ -527,39 +436,20 @@ _importhook.py
    143→            ``xyz.abc``)
    144→
    145→        """
-   146→        if self.packages is None:
-   147→            return True
-   148→
-   149→        for package in self.packages:
-   150→            if module_name == package or module_name.startswith(package + "."):
-   151→                return True
-   152→
-   153→        return False
    156→class ImportHookManager:
    157→    """
    158→    A handle that can be used to uninstall the Typeguard import hook.
    159→    """
-   160→
    161→    def __init__(self, hook: MetaPathFinder):
-   162→        self.hook = hook
-   163→
    164→    def __enter__(self) -> None:
-   165→        pass
-   166→
    167→    def __exit__(
    168→        self,
    169→        exc_type: type[BaseException],
    170→        exc_val: BaseException,
    171→        exc_tb: TracebackType,
    172→    ) -> None:
-   173→        self.uninstall()
-   174→
    175→    def uninstall(self) -> None:
    176→        """Uninstall the import hook."""
-   177→        try:
-   178→            sys.meta_path.remove(self.hook)
-   179→        except ValueError:
-   180→            pass  # already removed
    183→def install_import_hook(
    184→    packages: Iterable[str] | None = None,
    185→    *,
@@ -606,9 +496,6 @@ _memo.py
     31→
     32→         Contains the configuration for a particular set of type checking operations.
     33→    """
-    34→
-    35→    __slots__ = "globals", "locals", "self_type", "config"
-    36→
     37→    def __init__(
     38→        self,
     39→        globals: dict[str, Any],
@@ -617,10 +504,6 @@ _memo.py
     42→        self_type: type | None = None,
     43→        config: TypeCheckConfiguration = global_config,
     44→    ):
-    45→        self.globals = globals
-    46→        self.locals = locals
-    47→        self.self_type = self_type
-    48→        self.config = config
 _pytest_plugin.py
     16→def pytest_addoption(parser: Parser) -> None:
     75→def pytest_configure(config: Config) -> None:
@@ -694,7 +577,6 @@ _transformer.py
    490→        self, target_path: Sequence[str] | None = None, target_lineno: int | None = None
    491→    ) -> None:
    498→    def generic_visit(self, node: AST) -> AST:
-   516→    @contextmanager
    517→    def _use_memo(
    518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
    519→    ) -> Generator[None, Any, None]:
@@ -774,7 +656,4 @@ _utils.py
    162→def get_stacklevel() -> int:
    172→@final
    173→class Unset:
-   174→    __slots__ = ()
-   175→
    176→    def __repr__(self) -> str:
-   177→        return "<unset>"

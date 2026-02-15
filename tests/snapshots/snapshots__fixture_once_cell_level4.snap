@@ -4,11 +4,6 @@ expression: output
 ---
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
-     9→    initialized: AtomicBool,
-    10→    // Use `unsync::OnceCell` internally since `Mutex` does not provide
-    11→    // interior mutability and to be able to re-use `get_or_try_init`.
-    12→    value: Mutex<unsync::OnceCell<T>>,
-    13→}
     20→unsafe impl<T: Sync + Send> Sync for OnceCell<T> {}
     21→unsafe impl<T: Send> Send for OnceCell<T> {}
     23→impl<T: RefUnwindSafe + UnwindSafe> RefUnwindSafe for OnceCell<T> {}
@@ -37,9 +32,6 @@ imp_cs.rs
     75→    pub(crate) fn into_inner(self) -> Option<T> {
 imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
-     8→    state: AtomicU8,
-     9→    value: UnsafeCell<Option<T>>,
-    10→}
     12→const INCOMPLETE: u8 = 0x0;
     13→const RUNNING: u8 = 0x1;
     14→const COMPLETE: u8 = 0x2;
@@ -77,9 +69,6 @@ imp_pl.rs
    116→    /// Returns `None` if the cell was empty.
    117→    pub(crate) fn into_inner(self) -> Option<T> {
    122→struct Guard<'a> {
-   123→    state: &'a AtomicU8,
-   124→    new_state: u8,
-   125→}
    127→impl<'a> Drop for Guard<'a> {
    128→    fn drop(&mut self) {
    138→#[inline(never)]
@@ -87,17 +76,6 @@ imp_pl.rs
 imp_std.rs
     13→#[derive(Debug)]
     14→pub(crate) struct OnceCell<T> {
-    15→    // This `queue` field is the core of the implementation. It encodes two
-    16→    // pieces of information:
-    17→    //
-    18→    // * The current state of the cell (`INCOMPLETE`, `RUNNING`, `COMPLETE`)
-    19→    // * Linked list of threads waiting for the current cell.
-    20→    //
-    21→    // State is encoded in two low bits. Only `INCOMPLETE` and `RUNNING` states
-    22→    // allow waiters.
-    23→    queue: AtomicPtr<Waiter>,
-    24→    value: UnsafeCell<Option<T>>,
-    25→}
     32→unsafe impl<T: Sync + Send> Sync for OnceCell<T> {}
     33→unsafe impl<T: Send> Send for OnceCell<T> {}
     35→impl<T: RefUnwindSafe + UnwindSafe> RefUnwindSafe for OnceCell<T> {}
@@ -143,15 +121,8 @@ imp_std.rs
    136→/// A waiters is stored on the stack of the waiting threads.
    137→#[repr(align(4))] // Ensure the two lower bits are free to use as state bits.
    138→struct Waiter {
-   139→    thread: Cell<Option<Thread>>,
-   140→    signaled: AtomicBool,
-   141→    next: *mut Waiter,
-   142→}
    144→/// Drains and notifies the queue of waiters on drop.
    145→struct Guard<'a> {
-   146→    queue: &'a AtomicPtr<Waiter>,
-   147→    new_queue: *mut Waiter,
-   148→}
    150→impl Drop for Guard<'_> {
    151→    fn drop(&mut self) {
    176→#[inline(never)]
@@ -177,14 +148,8 @@ imp_std.rs
    283→        T: Sized,
    284→    {
 lib.rs
-   370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
-   371→#[path = "imp_cs.rs"]
    372→mod imp;
-   374→#[cfg(all(feature = "std", feature = "parking_lot"))]
-   375→#[path = "imp_pl.rs"]
    376→mod imp;
-   378→#[cfg(all(feature = "std", not(feature = "parking_lot")))]
-   379→#[path = "imp_std.rs"]
    380→mod imp;
    382→/// Single-threaded version of `OnceCell`.
    383→pub mod unsync {
@@ -855,21 +820,6 @@ lib.rs
   1386→    impl<T: Default> Default for Lazy<T> {
   1387→        /// Creates a new lazy value using `Default` as the initializing function.
   1388→        fn default() -> Lazy<T> {
-  1393→    /// ```compile_fail
-  1394→    /// struct S(*mut ());
-  1395→    /// unsafe impl Sync for S {}
-  1396→    ///
-  1397→    /// fn share<T: Sync>(_: &T) {}
-  1398→    /// share(&once_cell::sync::OnceCell::<S>::new());
-  1399→    /// ```
-  1400→    ///
-  1401→    /// ```compile_fail
-  1402→    /// struct S(*mut ());
-  1403→    /// unsafe impl Sync for S {}
-  1404→    ///
-  1405→    /// fn share<T: Sync>(_: &T) {}
-  1406→    /// share(&once_cell::sync::Lazy::<S>::new(|| unimplemented!()));
-  1407→    /// ```
   1408→    fn _dummy() {}
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
@@ -877,8 +827,6 @@ race.rs
     41→/// A thread-safe cell which can be written to only once.
     42→#[derive(Default, Debug)]
     43→pub struct OnceNonZeroUsize {
-    44→    inner: AtomicUsize,
-    45→}
     47→impl OnceNonZeroUsize {
     48→    /// Creates a new empty cell.
     49→    #[inline]
@@ -929,8 +877,6 @@ race.rs
    165→/// A thread-safe cell which can be written to only once.
    166→#[derive(Default, Debug)]
    167→pub struct OnceBool {
-   168→    inner: OnceNonZeroUsize,
-   169→}
    171→impl OnceBool {
    172→    /// Creates a new empty cell.
    173→    #[inline]
@@ -971,9 +917,6 @@ race.rs
    226→    fn to_usize(value: bool) -> NonZeroUsize {
    231→/// A thread-safe cell which can be written to only once.
    232→pub struct OnceRef<'a, T> {
-   233→    inner: AtomicPtr<T>,
-   234→    ghost: PhantomData<UnsafeCell<&'a T>>,
-   235→}
    238→unsafe impl<'a, T: Sync> Sync for OnceRef<'a, T> {}
    240→impl<'a, T> core::fmt::Debug for OnceRef<'a, T> {
    241→    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
@@ -1035,9 +978,6 @@ race.rs
    354→mod once_box {
    360→    /// A thread-safe cell which can be written to only once.
    361→    pub struct OnceBox<T> {
-   362→        inner: AtomicPtr<T>,
-   363→        ghost: PhantomData<Option<Box<T>>>,
-   364→    }
    366→    impl<T> core::fmt::Debug for OnceBox<T> {
    367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
    372→    impl<T> Default for OnceBox<T> {

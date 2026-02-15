@@ -7,9 +7,6 @@ README.md
      2→
      3→This project is not maintained anymore and is archived. Feel free to fork and
      4→make your own changes if needed. For more detail read my blog post: [Taking an indefinite sabbatical from my projects](https://arslan.io/2018/10/09/taking-an-indefinite-sabbatical-from-my-projects/)
-     5→
-     6→Thanks to everyone for their valuable feedback and contributions.
-     7→
      8→# Structs [![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/fatih/structs) [![Build Status](http://img.shields.io/travis/fatih/structs.svg?style=flat-square)](https://travis-ci.org/fatih/structs) [![Coverage Status](http://img.shields.io/coveralls/fatih/structs.svg?style=flat-square)](https://coveralls.io/r/fatih/structs)
      9→
     10→Structs contains various utilities to work with Go (Golang) structs. It was
@@ -17,159 +14,29 @@ README.md
     12→time I've added other utilities for structs.  It's basically a high level
     13→package based on primitives from the reflect package. Feel free to add new
     14→functions or improve the existing code.
-    15→
     16→## Install
     17→
     18→```bash
     19→go get github.com/fatih/structs
     20→```
-    21→
     22→## Usage and Examples
     23→
     24→Just like the standard lib `strings`, `bytes` and co packages, `structs` has
     25→many global functions to manipulate or organize your struct data. Lets define
     26→and declare a struct:
-    27→
-    28→```go
-    29→type Server struct {
-    30→	Name        string `json:"name,omitempty"`
-    31→	ID          int
-    32→	Enabled     bool
-    33→	users       []string // not exported
-    34→	http.Server          // embedded
-    35→}
-    36→
-    37→server := &Server{
-    38→	Name:    "gopher",
-    39→	ID:      123456,
-    40→	Enabled: true,
-    41→}
-    42→```
-    43→
-    44→```go
-    45→// Convert a struct to a map[string]interface{}
-    46→// => {"Name":"gopher", "ID":123456, "Enabled":true}
-    47→m := structs.Map(server)
-    48→
-    49→// Convert the values of a struct to a []interface{}
-    50→// => ["gopher", 123456, true]
-    51→v := structs.Values(server)
-    52→
-    53→// Convert the names of a struct to a []string
-    54→// (see "Names methods" for more info about fields)
-    55→n := structs.Names(server)
-    56→
-    57→// Convert the values of a struct to a []*Field
-    58→// (see "Field methods" for more info about fields)
-    59→f := structs.Fields(server)
-    60→
-    61→// Return the struct name => "Server"
-    62→n := structs.Name(server)
-    63→
-    64→// Check if any field of a struct is initialized or not.
-    65→h := structs.HasZero(server)
-    66→
-    67→// Check if all fields of a struct is initialized or not.
-    68→z := structs.IsZero(server)
-    69→
-    70→// Check if server is a struct or a pointer to struct
-    71→i := structs.IsStruct(server)
-    72→```
-    73→
     74→### Struct methods
     75→
     76→The structs functions can be also used as independent methods by creating a new
     77→`*structs.Struct`. This is handy if you want to have more control over the
     78→structs (such as retrieving a single Field).
-    79→
-    80→```go
-    81→// Create a new struct type:
-    82→s := structs.New(server)
-    83→
-    84→m := s.Map()              // Get a map[string]interface{}
-    85→v := s.Values()           // Get a []interface{}
-    86→f := s.Fields()           // Get a []*Field
-    87→n := s.Names()            // Get a []string
-    88→f := s.Field(name)        // Get a *Field based on the given field name
-    89→f, ok := s.FieldOk(name)  // Get a *Field based on the given field name
-    90→n := s.Name()             // Get the struct name
-    91→h := s.HasZero()          // Check if any field is uninitialized
-    92→z := s.IsZero()           // Check if all fields are uninitialized
-    93→```
-    94→
     95→### Field methods
     96→
     97→We can easily examine a single Field for more detail. Below you can see how we
     98→get and interact with various field methods:
-    99→
-   100→
-   101→```go
-   102→s := structs.New(server)
-   103→
-   104→// Get the Field struct for the "Name" field
-   105→name := s.Field("Name")
-   106→
-   107→// Get the underlying value,  value => "gopher"
-   108→value := name.Value().(string)
-   109→
-   110→// Set the field's value
-   111→name.Set("another gopher")
-   112→
-   113→// Get the field's kind, kind =>  "string"
-   114→name.Kind()
-   115→
-   116→// Check if the field is exported or not
-   117→if name.IsExported() {
-   118→	fmt.Println("Name field is exported")
-   119→}
-   120→
-   121→// Check if the value is a zero value, such as "" for string, 0 for int
-   122→if !name.IsZero() {
-   123→	fmt.Println("Name is initialized")
-   124→}
-   125→
-   126→// Check if the field is an anonymous (embedded) field
-   127→if !name.IsEmbedded() {
-   128→	fmt.Println("Name is not an embedded field")
-   129→}
-   130→
-   131→// Get the Field's tag value for tag name "json", tag value => "name,omitempty"
-   132→tagValue := name.Tag("json")
-   133→```
-   134→
-   135→Nested structs are supported too:
-   136→
-   137→```go
-   138→addrField := s.Field("Server").Field("Addr")
-   139→
-   140→// Get the value for addr
-   141→a := addrField.Value().(string)
-   142→
-   143→// Or get all fields
-   144→httpServer := s.Field("Server").Fields()
-   145→```
-   146→
-   147→We can also get a slice of Fields from the Struct type to iterate over all
-   148→fields. This is handy if you wish to examine all fields:
-   149→
-   150→```go
-   151→s := structs.New(server)
-   152→
-   153→for _, f := range s.Fields() {
-   154→	fmt.Printf("field name: %+v\n", f.Name())
-   155→
-   156→	if f.IsExported() {
-   157→		fmt.Printf("value   : %+v\n", f.Value())
-   158→		fmt.Printf("is zero : %+v\n", f.IsZero())
-   159→	}
-   160→}
-   161→```
-   162→
    163→## Credits
    164→
    165→ * [Fatih Arslan](https://github.com/fatih)
    166→ * [Cihangir Savas](https://github.com/cihangir)
-   167→
    168→## License
    169→
    170→The MIT License (MIT) - see LICENSE.md for more details
@@ -177,14 +44,9 @@ field.go
      9→var (
     10→	errNotExported = errors.New("field is not exported")
     11→	errNotSettable = errors.New("field is not settable")
-    12→)
     14→// Field represents a single struct field that encapsulates high level
     15→// functions around the field.
     16→type Field struct {
-    17→	value      reflect.Value
-    18→	field      reflect.StructField
-    19→	defaultTag string
-    20→}
     22→// Tag returns the value associated with key in the tag string. If there is no
     23→// such key in the tag, Tag returns the empty string.
     24→func (f *Field) Tag(key string) string {
@@ -230,14 +92,9 @@ structs.go
     12→	// a more granular to tweak certain structs. Lookup the necessary functions
     13→	// for more info.
     14→	DefaultTagName = "structs" // struct's field default tag name
-    15→)
     17→// Struct encapsulates a struct type to provide several high level functions
     18→// around the struct.
     19→type Struct struct {
-    20→	raw     interface{}
-    21→	value   reflect.Value
-    22→	TagName string
-    23→}
     25→// New returns a new *Struct with the struct s. It panics if the s's kind is
     26→// not struct.
     27→func New(s interface{}) *Struct {

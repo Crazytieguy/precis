@@ -468,10 +468,6 @@ structs/utilities.ts
    246→
    247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
 utils.ts
-     4→/**
-     5→ * Check if a value is an iterator.
-     6→ */
-     7→
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
     12→/**
     13→ * Check if a value is a plain object.

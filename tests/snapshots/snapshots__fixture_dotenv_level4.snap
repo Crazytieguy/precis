@@ -8,81 +8,9 @@ env-options.js
      2→const options = {}
 main.d.ts
      5→export interface DotenvParseOutput {
-     6→  [name: string]: string;
-     7→}
      9→export interface DotenvPopulateOutput {
-    10→  [name: string]: string;
-    11→}
     25→export interface DotenvConfigOptions {
-    26→  /**
-    27→   * Default: `path.resolve(process.cwd(), '.env')`
-    28→   *
-    29→   * Specify a custom path if your file containing environment variables is located elsewhere.
-    30→   * Can also be an array of strings, specifying multiple paths.
-    31→   *
-    32→   * example: `require('dotenv').config({ path: '/custom/path/to/.env' })`
-    33→   * example: `require('dotenv').config({ path: ['/path/to/first.env', '/path/to/second.env'] })`
-    34→   */
-    35→  path?: string | string[] | URL;
-    36→
-    37→  /**
-    38→   * Default: `utf8`
-    39→   *
-    40→   * Specify the encoding of your file containing environment variables.
-    41→   *
-    42→   * example: `require('dotenv').config({ encoding: 'latin1' })`
-    43→   */
-    44→  encoding?: string;
-    45→
-    46→  /**
-    47→   * Default: `false`
-    48→   *
-    49→   * Suppress all output (except errors).
-    50→   *
-    51→   * example: `require('dotenv').config({ quiet: true })`
-    52→   */
-    53→  quiet?: boolean;
-    54→
-    55→  /**
-    56→   * Default: `false`
-    57→   *
-    58→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
-    59→   *
-    60→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
-    61→   */
-    62→  debug?: boolean;
-    63→
-    64→  /**
-    65→   * Default: `false`
-    66→   *
-    67→   * Override any environment variables that have already been set on your machine with values from your .env file.
-    68→   *
-    69→   * example: `require('dotenv').config({ override: true })`
-    70→   */
-    71→  override?: boolean;
-    72→
-    73→  /**
-    74→   * Default: `process.env`
-    75→   *
-    76→   * Specify an object to write your secrets to. Defaults to process.env environment variables.
-    77→   *
-    78→   * example: `const processEnv = {}; require('dotenv').config({ processEnv: processEnv })`
-    79→   */
-    80→  processEnv?: DotenvPopulateInput;
-    81→
-    82→  /**
-    83→   * Default: `undefined`
-    84→   *
-    85→   * Pass the DOTENV_KEY directly to config options. Defaults to looking for process.env.DOTENV_KEY environment variable. Note this only applies to decrypting .env.vault files. If passed as null or undefined, or not passed at all, dotenv falls back to its traditional job of parsing a .env file.
-    86→   *
-    87→   * example: `require('dotenv').config({ DOTENV_KEY: 'dotenv://:key_1234…@dotenvx.com/vault/.env.vault?environment=production' })`
-    88→   */
-    89→  DOTENV_KEY?: string;
-    90→}
     92→export interface DotenvConfigOutput {
-    93→  error?: DotenvError;
-    94→  parsed?: DotenvParseOutput;
-    95→}
     97→type DotenvError = Error & {
     98→  code: 
     99→    | 'MISSING_DATA'
@@ -92,27 +20,7 @@ main.d.ts
    103→    | 'OBJECT_REQUIRED';
    104→}
    106→export interface DotenvPopulateOptions {
-   107→  /**
-   108→   * Default: `false`
-   109→   *
-   110→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
-   111→   *
-   112→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
-   113→   */
-   114→  debug?: boolean;
-   115→
-   116→  /**
-   117→   * Default: `false`
-   118→   *
-   119→   * Override any environment variables that have already been set on your machine with values from your .env file.
-   120→   *
-   121→   * example: `require('dotenv').config({ override: true })`
-   122→   */
-   123→  override?: boolean;
-   124→}
    126→export interface DotenvPopulateInput {
-   127→  [name: string]: string | undefined;
-   128→}
 main.js
      7→const version = packageJson.version
     10→const TIPS = [

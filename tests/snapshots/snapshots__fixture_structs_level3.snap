@@ -232,9 +232,6 @@ structs.go
    396→// Name returns the structs's type name within its package. For more info refer
    397→// to Name() function.
    398→func (s *Struct) Name() string {
-   402→// structFields returns the exported struct fields for a given s struct. This
-   403→// is a convenient helper method to avoid duplicate code in some of the
-   404→// functions.
    405→func (s *Struct) structFields() []reflect.StructField {
    428→func strctVal(s interface{}) reflect.Value {
    443→// Map converts the given struct to a map[string]interface{}. For more info
@@ -264,15 +261,9 @@ structs.go
    501→// Name returns the structs's type name within its package. It returns an
    502→// empty string for unnamed types. It panics if s's kind is not struct.
    503→func Name(s interface{}) string {
-   507→// nested retrieves recursively all types for the given value and returns the
-   508→// nested value.
    509→func (s *Struct) nested(val reflect.Value) interface{} {
 tags.go
-     5→// tagOptions contains a slice of tag options
      6→type tagOptions []string
      8→// Has returns true if the given option is available in tagOptions
      9→func (t tagOptions) Has(opt string) bool {
-    19→// parseTag splits a struct field's tag into its name and a list of options
-    20→// which comes after a name. A tag is in the form of: "name,option1,option2".
-    21→// The name can be neglectected.
     22→func parseTag(tag string) (string, tagOptions) {

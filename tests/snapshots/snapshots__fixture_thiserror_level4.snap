@@ -6,7 +6,6 @@ aserror.rs
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
      6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
-     7→}
      9→impl<'a, T: Error + 'a> AsDynError<'a> for T {
     10→    #[inline]
     11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
@@ -32,12 +31,7 @@ aserror.rs
 display.rs
      5→#[doc(hidden)]
      6→pub trait AsDisplay<'a>: Sealed {
-     7→    // TODO: convert to generic associated type.
-     8→    // https://github.com/dtolnay/thiserror/pull/253
-     9→    type Target: Display;
-    10→
     11→    fn as_display(&'a self) -> Self::Target;
-    12→}
     14→impl<'a, T> AsDisplay<'a> for &T
     15→where
     16→    T: Display + ?Sized + 'a,
@@ -84,7 +78,6 @@ provide.rs
      3→#[doc(hidden)]
      4→pub trait ThiserrorProvide: Sealed {
      5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
-     6→}
      8→impl<T> ThiserrorProvide for T
      9→where
     10→    T: Error + ?Sized,

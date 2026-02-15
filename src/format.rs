@@ -13,10 +13,11 @@ use crate::Lang;
 /// 0 - File paths only
 /// 1 - Symbol lines, truncated to symbol name
 /// 2 - Symbol lines, full multi-line signatures
-/// 3 - Symbol lines with preceding doc comments
-/// 4 - Like 3, but type definition bodies (struct/enum/trait/interface/class) shown in full
-/// 5 - Full source (all lines)
-pub const MAX_LEVEL: u8 = 5;
+/// 3 - Like 2, but public symbols also get preceding doc comments
+/// 4 - Symbol lines with preceding doc comments (all symbols)
+/// 5 - Like 4, but type definition bodies (struct/enum/trait/interface/class) shown in full
+/// 6 - Full source (all lines)
+pub const MAX_LEVEL: u8 = 6;
 
 /// Render a single file at the given granularity level.
 pub fn render_file(level: u8, path: &Path, root: &Path, source: &str) -> String {
@@ -57,8 +58,9 @@ fn render_with_symbols(
         0 => {}
         1 => render_symbols(&mut out, relative, source, symbols, true),
         2 => render_symbols(&mut out, relative, source, symbols, false),
-        3 => render_symbols_with_docs(&mut out, relative, source, symbols, false),
-        4 => render_symbols_with_docs(&mut out, relative, source, symbols, true),
+        3 => render_symbols_with_docs(&mut out, relative, source, symbols, false, true),
+        4 => render_symbols_with_docs(&mut out, relative, source, symbols, false, false),
+        5 => render_symbols_with_docs(&mut out, relative, source, symbols, true, false),
         _ => render_full_source(&mut out, source),
     }
     out
@@ -313,16 +315,18 @@ fn format_symbol_name(sym: &parse::Symbol, lines: &[&str]) -> String {
     format!("{:>6}→{}", sym.line, name_prefix)
 }
 
-/// Render all lines of a file with line numbers (level 5).
+/// Render all lines of a file with line numbers (level 6).
 fn render_full_source(out: &mut String, source: &str) {
     for (i, line) in source.lines().enumerate() {
         out.push_str(&fmt_line(i, line));
     }
 }
 
-/// Render symbol lines with preceding doc comments (level 3).
-/// If `expand_types` is true (level 4), show full bodies for struct/enum/trait/interface.
-/// For Markdown: level 3 shows first paragraph after each heading, level 4 shows all content.
+/// Render symbol lines with preceding doc comments.
+/// If `expand_types` is true (level 5), show full bodies for struct/enum/trait/interface.
+/// If `public_only` is true (level 3), only show doc comments for public symbols;
+/// private symbols still get their full signatures but no doc comments.
+/// For Markdown: level 4 shows first paragraph after each heading, level 5 shows all content.
 /// `path` is relative to the project root (used for language detection).
 fn render_symbols_with_docs(
     out: &mut String,
@@ -330,6 +334,7 @@ fn render_symbols_with_docs(
     source: &str,
     symbols: &[parse::Symbol],
     expand_types: bool,
+    public_only: bool,
 ) {
     if symbols.is_empty() {
         return;
@@ -341,7 +346,12 @@ fn render_symbols_with_docs(
     let mut emitted_up_to: usize = 0; // 0-indexed, exclusive
     for (sym_idx, sym) in symbols.iter().enumerate() {
         let sym_line_0 = sym.line - 1;
-        let doc_start = doc_comment_start(&lines, sym_line_0, lang);
+        let show_docs = !public_only || sym.is_public;
+        let doc_start = if show_docs {
+            doc_comment_start(&lines, sym_line_0, lang)
+        } else {
+            sym_line_0
+        };
         // Expand type definitions (structs, enums, etc.) and Go grouped
         // const/var blocks (identified by their keyword name "const"/"var").
         let is_grouped_block =
@@ -372,7 +382,7 @@ fn render_symbols_with_docs(
             }
             emitted_up_to = emitted_up_to.max(sig_end + 1);
             // Python docstrings: include triple-quoted string after the signature
-            if lang == Some(Lang::Python) {
+            if show_docs && lang == Some(Lang::Python) {
                 let ds_end = docstring_end(&lines, sig_end);
                 for (i, line) in lines.iter().enumerate().take(ds_end).skip(sig_end + 1) {
                     out.push_str(&fmt_line(i, line));
@@ -383,7 +393,8 @@ fn render_symbols_with_docs(
             // Use max of sym_line + 1 and end_line - 1 to handle both cases:
             //   ATX headings (end_line may equal line if no trailing newline): sym_line + 1
             //   Setext headings (end_line > line + 1): end_line - 1 skips the underline
-            if lang == Some(Lang::Markdown) {
+            // Note: Markdown headings are always public, so this is not affected by public_only.
+            if show_docs && lang == Some(Lang::Markdown) {
                 let content_end = markdown_content_end(symbols, sym_idx, &lines, expand_types);
                 let heading_end = (sym.end_line - 1).max(sym_line_0 + 1);
                 for (i, line) in lines

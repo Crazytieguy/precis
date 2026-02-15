@@ -56,11 +56,6 @@ internals/symbols.ts
     29→export const override = Symbol.for('@ts-pattern/override');
     30→export type override = typeof override;
 is-matching.ts
-     6→/**
-     7→ * This constraint allows using additional properties
-     8→ * in object patterns. See "should allow targetting unknown properties"
-     9→ * unit test in `is-matching.test.ts`.
-    10→ */
     11→type PatternConstraint<T> = T extends readonly any[]
     12→  ? P.Pattern<T>
     13→  : T extends object
@@ -93,15 +88,6 @@ match.ts
     32→export function match<const input, output = symbols.unset>(
     33→  value: input
     34→): Match<input, output> {
-    38→/**
-    39→ * This class represents a match expression. It follows the
-    40→ * builder pattern, we chain methods to add features to the expression
-    41→ * until we call `.exhaustive`, `.otherwise` or the unsafe `.run`
-    42→ * method to execute it.
-    43→ *
-    44→ * The types of this class aren't public, the public type definition
-    45→ * can be found in src/types/Match.ts.
-    46→ */
     47→class MatchExpression<input, output> {
     48→  constructor(private input: input, private state: MatchState<output>) {}
     50→  with(...args: any[]): MatchExpression<input, output> {
@@ -1511,23 +1497,6 @@ types/Match.ts
    224→   */
    225→  narrow(): Match<DeepExcludeAll<i, handledCases>, o, [], inferredOutput>;
    226→};
-   228→/**
-   229→ * Potential for optimization here:
-   230→ *
-   231→ * Since DeepExclude distributes the union of the input type, it can
-   232→ * generate very large union types on patterns touching several unions at once.
-   233→ * If we were sorting patterns from those which distribute the smallest
-   234→ * amount of union types to those which distribute the largest, we would eliminate
-   235→ * cheap cases more quickly and have less cases in the input type for patterns
-   236→ * that will be expensive to exclude.
-   237→ *
-   238→ * This pre supposes that we have a cheap way of telling if the number
-   239→ * of union types a pattern touches and a cheap way of sorting the tuple
-   240→ * of patterns.
-   241→ * - For the first part, we could reuse `FindMatchingUnions` and pick the `length`
-   242→ *   of the returned tuple.
-   243→ * - For the second part though I'm not aware a cheap way of sorting a tuple.
-   244→ */
    245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
    246→  ? never
    247→  : tupleList extends [infer excluded, ...infer tail]
@@ -1536,12 +1505,6 @@ types/Match.ts
    251→type MakeTuples<ps extends readonly any[], value> = {
    252→  -readonly [index in keyof ps]: InvertPatternForExclude<ps[index], value>;
    253→};
-   255→/**
-   256→ * The type of an overloaded function for `.exhaustive`,
-   257→ * permitting calling it with or without a catch-all handler function.
-   258→ *
-   259→ * By default, TS-Pattern will throw an error if a runtime value isn't handled.
-   260→ */
    261→type Exhaustive<output, inferredOutput> = {
    262→  /**
    263→   * `.exhaustive()` checks that all cases are handled, and returns the result value.

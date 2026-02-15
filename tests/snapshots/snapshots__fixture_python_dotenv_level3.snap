@@ -85,9 +85,6 @@ ipython.py
     49→    """Register the %dotenv magic."""
 main.py
     25→def _load_dotenv_disabled() -> bool:
-    26→    """
-    27→    Determine if dotenv loading has been disabled.
-    28→    """
     35→def with_warn_for_invalid_lines(mappings: Iterator[Binding]) -> Iterator[Binding]:
     45→class DotEnv:
     46→    def __init__(
@@ -99,7 +96,6 @@ main.py
     52→        interpolate: bool = True,
     53→        override: bool = True,
     54→    ) -> None:
-    63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     78→    def dict(self) -> Dict[str, Optional[str]]:
     79→        """Return dotenv as dict"""
@@ -156,9 +152,6 @@ main.py
    246→    override: bool,
    247→) -> Mapping[str, Optional[str]]:
    269→def _walk_to_root(path: str) -> Iterator[str]:
-   270→    """
-   271→    Yield directories starting from the given directory up to the root
-   272→    """
    287→def find_dotenv(
    288→    filename: str = ".env",
    289→    raise_error_if_not_found: bool = False,
@@ -222,9 +215,6 @@ main.py
    408→    .env file.
    409→    """
    423→def _is_file_or_fifo(path: StrPath) -> bool:
-   424→    """
-   425→    Return True if `path` exists and is either a regular file or a FIFO.
-   426→    """
 parser.py
     14→def make_regex(string: str, extra_flags: int = 0) -> Pattern[str]:
     35→class Original(NamedTuple):
@@ -252,14 +242,6 @@ parser.py
    179→def parse_stream(stream: IO[str]) -> Iterator[Binding]:
 variables.py
      5→_posix_variable: Pattern[str] = re.compile(
-     6→    r"""
-     7→    \$\{
-     8→        (?P<name>[^\}:]*)
-     9→        (?::-
-    10→            (?P<default>[^\}]*)
-    11→        )?
-    12→    \}
-    13→    """,
     18→class Atom(metaclass=ABCMeta):
     19→    def __ne__(self, other: object) -> bool:
     25→    @abstractmethod

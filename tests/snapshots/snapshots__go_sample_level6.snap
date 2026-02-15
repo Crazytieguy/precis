@@ -3,29 +3,65 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.go
+     1→
+     2→package token
+     3→
+     4→import "fmt"
+     5→
      6→// Token represents a lexical token with its kind and source span.
      7→type Token struct {
+     8→	Kind TokenKind
+     9→	Span Span
+    10→}
+    11→
     12→// TokenKind represents the kind of a lexical token.
     13→type TokenKind int
+    14→
     15→const (
     16→	Ident  TokenKind = iota
     17→	Number
     18→	Symbol
+    19→)
+    20→
     21→// Visitor walks over tokens in a stream.
     22→type Visitor interface {
+    23→	VisitToken(token *Token)
+    24→	VisitAll(tokens []*Token)
+    25→}
+    26→
     27→// Process processes the input and returns a list of tokens.
     28→func Process(input string) ([]Token, error) {
+    29→	return nil, nil
+    30→}
+    31→
     32→func helper() {}
+    33→
     34→// TokenParser parses source text into tokens.
     35→type TokenParser[T any] struct {
+    36→	tokens []Token
+    37→	source string
+    38→}
+    39→
     40→// NewTokenParser creates a new parser.
     41→func NewTokenParser[T any](source string) *TokenParser[T] {
+    42→	return &TokenParser[T]{source: source}
+    43→}
+    44→
     45→// Parse parses and returns the token list.
     46→func (p *TokenParser[T]) Parse() []Token {
+    47→	return p.tokens
+    48→}
+    49→
     50→func (p *TokenParser[T]) advance() {}
+    51→
     52→// Span represents a source location as [start, end].
     53→type Span = [2]int
+    54→
     55→const MaxTokens = 1024
+    56→
     57→var Version = "0.1.0"
+    58→
     59→// String implements fmt.Stringer for Token.
     60→func (t Token) String() string {
+    61→	return fmt.Sprintf("%d:%v", t.Kind, t.Span)
+    62→}

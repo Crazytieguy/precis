@@ -10,15 +10,11 @@ README.md
      4→Codes](http://en.wikipedia.org/wiki/ANSI_escape_code#Colors) in Go (Golang). It
      5→has support for Windows too! The API can be used in several ways, pick one that
      6→suits you.
-     7→
-     8→![Color](https://user-images.githubusercontent.com/438920/96832689-03b3e000-13f4-11eb-9803-46f4c4de3406.jpg)
-     9→
     10→## Install
     11→
     12→```
     13→go get github.com/fatih/color
     14→```
-    15→
     16→## Examples
     17→
     18→### Standard colors
@@ -26,64 +22,20 @@ README.md
     20→```go
     21→// Print with default helper functions
     22→color.Cyan("Prints text in cyan.")
-    23→
-    24→// A newline will be appended automatically
-    25→color.Blue("Prints %s in blue.", "text")
-    26→
-    27→// These are using the default foreground colors
-    28→color.Red("We have red")
-    29→color.Magenta("And many others ..")
-    30→
-    31→```
-    32→
     33→### RGB colors
     34→
     35→If your terminal supports 24-bit colors, you can use RGB color codes.
-    36→
-    37→```go
-    38→color.RGB(255, 128, 0).Println("foreground orange")
-    39→color.RGB(230, 42, 42).Println("foreground red")
-    40→
-    41→color.BgRGB(255, 128, 0).Println("background orange")
-    42→color.BgRGB(230, 42, 42).Println("background red")
-    43→```
-    44→
     45→### Mix and reuse colors
     46→
     47→```go
     48→// Create a new color object
     49→c := color.New(color.FgCyan).Add(color.Underline)
     50→c.Println("Prints cyan text with an underline.")
-    51→
-    52→// Or just add them to New()
-    53→d := color.New(color.FgCyan, color.Bold)
-    54→d.Printf("This prints bold cyan %s\n", "too!.")
-    55→
-    56→// Mix up foreground and background colors, create new mixes!
-    57→red := color.New(color.FgRed)
-    58→
-    59→boldRed := red.Add(color.Bold)
-    60→boldRed.Println("This will print text in bold red.")
-    61→
-    62→whiteBackground := red.Add(color.BgWhite)
-    63→whiteBackground.Println("Red text with white background.")
-    64→
-    65→// Mix with RGB color codes
-    66→color.RGB(255, 128, 0).AddBgRGB(0, 0, 0).Println("orange with black background")
-    67→
-    68→color.BgRGB(255, 128, 0).AddRGB(255, 255, 255).Println("orange background with white foreground")
-    69→```
-    70→
     71→### Use your own output (io.Writer)
     72→
     73→```go
     74→// Use your own io.Writer output
     75→color.New(color.FgBlue).Fprintln(myWriter, "blue color!")
-    76→
-    77→blue := color.New(color.FgBlue)
-    78→blue.Fprint(writer, "This will print text in blue.")
-    79→```
-    80→
     81→### Custom print functions (PrintFunc)
     82→
     83→```go
@@ -91,23 +43,11 @@ README.md
     85→red := color.New(color.FgRed).PrintfFunc()
     86→red("Warning")
     87→red("Error: %s", err)
-    88→
-    89→// Mix up multiple attributes
-    90→notice := color.New(color.Bold, color.FgGreen).PrintlnFunc()
-    91→notice("Don't forget this...")
-    92→```
-    93→
     94→### Custom fprint functions (FprintFunc)
     95→
     96→```go
     97→blue := color.New(color.FgBlue).FprintfFunc()
     98→blue(myWriter, "important notice: %s", stars)
-    99→
-   100→// Mix up with multiple attributes
-   101→success := color.New(color.Bold, color.FgGreen).FprintlnFunc()
-   102→success(myWriter, "Don't forget this...")
-   103→```
-   104→
    105→### Insert into noncolor strings (SprintFunc)
    106→
    107→```go
@@ -115,81 +55,23 @@ README.md
    109→yellow := color.New(color.FgYellow).SprintFunc()
    110→red := color.New(color.FgRed).SprintFunc()
    111→fmt.Printf("This is a %s and this is %s.\n", yellow("warning"), red("error"))
-   112→
-   113→info := color.New(color.FgWhite, color.BgGreen).SprintFunc()
-   114→fmt.Printf("This %s rocks!\n", info("package"))
-   115→
-   116→// Use helper functions
-   117→fmt.Println("This", color.RedString("warning"), "should be not neglected.")
-   118→fmt.Printf("%v %v\n", color.GreenString("Info:"), "an important message.")
-   119→
-   120→// Windows supported too! Just don't forget to change the output to color.Output
-   121→fmt.Fprintf(color.Output, "Windows support: %s", color.GreenString("PASS"))
-   122→```
-   123→
    124→### Plug into existing code
    125→
    126→```go
    127→// Use handy standard colors
    128→color.Set(color.FgYellow)
-   129→
-   130→fmt.Println("Existing text will now be in yellow")
-   131→fmt.Printf("This one %s\n", "too")
-   132→
-   133→color.Unset() // Don't forget to unset
-   134→
-   135→// You can mix up parameters
-   136→color.Set(color.FgMagenta, color.Bold)
-   137→defer color.Unset() // Use it in your function
-   138→
-   139→fmt.Println("All text will now be bold magenta.")
-   140→```
-   141→
    142→### Disable/Enable color
    143→
    144→There might be a case where you want to explicitly disable/enable color output. the 
    145→`go-isatty` package will automatically disable color output for non-tty output streams 
    146→(for example if the output were piped directly to `less`).
-   147→
-   148→The `color` package also disables color output if the [`NO_COLOR`](https://no-color.org) environment
-   149→variable is set to a non-empty string.
-   150→
-   151→`Color` has support to disable/enable colors programmatically both globally and
-   152→for single color definitions. For example suppose you have a CLI app and a
-   153→`-no-color` bool flag. You can easily disable the color output with:
-   154→
-   155→```go
-   156→var flagNoColor = flag.Bool("no-color", false, "Disable color output")
-   157→
-   158→if *flagNoColor {
-   159→	color.NoColor = true // disables colorized output
-   160→}
-   161→```
-   162→
-   163→It also has support for single color definitions (local). You can
-   164→disable/enable color output on the fly:
-   165→
-   166→```go
-   167→c := color.New(color.FgCyan)
-   168→c.Println("Prints cyan text")
-   169→
-   170→c.DisableColor()
-   171→c.Println("This is printed without any color")
-   172→
-   173→c.EnableColor()
-   174→c.Println("This prints again cyan...")
-   175→```
-   176→
    177→## GitHub Actions
    178→
    179→To output color in GitHub Actions (or other CI systems that support ANSI colors), make sure to set `color.NoColor = false` so that it bypasses the check for non-tty output streams. 
-   180→
-   181→
    182→## Credits
    183→
    184→* [Fatih Arslan](https://github.com/fatih)
    185→* Windows support via @mattn: [colorable](https://github.com/mattn/go-colorable)
-   186→
    187→## License
    188→
    189→The MIT License (MIT) - see [`LICENSE.md`](https://github.com/fatih/color/blob/master/LICENSE.md) for more details
@@ -202,27 +84,19 @@ color.go
     20→	// colors. For more control over each color block use the methods
     21→	// DisableColor() individually.
     22→	NoColor = noColorIsSet() || os.Getenv("TERM") == "dumb" ||
-    23→		(!isatty.IsTerminal(os.Stdout.Fd()) && !isatty.IsCygwinTerminal(os.Stdout.Fd()))
-    24→
     25→	// Output defines the standard output of the print functions. By default,
     26→	// os.Stdout is used.
     27→	Output = colorable.NewColorableStdout()
-    28→
     29→	// Error defines a color supporting writer for os.Stderr.
     30→	Error = colorable.NewColorableStderr()
-    31→
     32→	// colorsCache is used to reduce the count of created Color objects and
     33→	// allows to reuse already created objects with required Attribute.
     34→	colorsCache   = make(map[Attribute]*Color)
     35→	colorsCacheMu sync.Mutex // protects colorsCache
-    36→)
     38→// noColorIsSet returns true if the environment variable NO_COLOR is set to a non-empty string.
     39→func noColorIsSet() bool {
     43→// Color defines a custom color object which is defined by SGR parameters.
     44→type Color struct {
-    45→	params  []Attribute
-    46→	noColor *bool
-    47→}
     49→// Attribute defines a single SGR Code
     50→type Attribute int
     52→const escape = "\x1b"
@@ -238,17 +112,14 @@ color.go
     63→	ReverseVideo
     64→	Concealed
     65→	CrossedOut
-    66→)
     68→const (
     69→	ResetBold Attribute = iota + 22
     70→	ResetItalic
     71→	ResetUnderline
     72→	ResetBlinking
-    73→	_
     74→	ResetReversed
     75→	ResetConcealed
     76→	ResetCrossedOut
-    77→)
     79→var mapResetAttributes map[Attribute]Attribute = map[Attribute]Attribute{
     91→// Foreground text colors
     92→const (
@@ -260,10 +131,8 @@ color.go
     98→	FgMagenta
     99→	FgCyan
    100→	FgWhite
-   101→
    102→	// used internally for 256 and 24-bit coloring
    103→	foreground
-   104→)
    106→// Foreground Hi-Intensity text colors
    107→const (
    108→	FgHiBlack Attribute = iota + 90
@@ -274,7 +143,6 @@ color.go
    113→	FgHiMagenta
    114→	FgHiCyan
    115→	FgHiWhite
-   116→)
    118→// Background text colors
    119→const (
    120→	BgBlack Attribute = iota + 40
@@ -285,10 +153,8 @@ color.go
    125→	BgMagenta
    126→	BgCyan
    127→	BgWhite
-   128→
    129→	// used internally for 256 and 24-bit coloring
    130→	background
-   131→)
    133→// Background Hi-Intensity text colors
    134→const (
    135→	BgHiBlack Attribute = iota + 100
@@ -299,7 +165,6 @@ color.go
    140→	BgHiMagenta
    141→	BgHiCyan
    142→	BgHiWhite
-   143→)
    145→// New returns a newly created color object.
    146→func New(value ...Attribute) *Color {
    159→// RGB returns a new foreground color in 24-bit RGB.

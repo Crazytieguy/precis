@@ -54,9 +54,7 @@ i18n.py
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
     18→_CURRENT = local()
-    21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
-    30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
     40→def _get_default_locale_path() -> pathlib.Path | None:
     51→def get_translation() -> gettext_module.NullTranslations:
@@ -81,72 +79,10 @@ i18n.py
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
    101→def _gettext(message: str) -> str:
-   102→    """Get translation.
-   103→
-   104→    Args:
-   105→        message (str): Text to translate.
-   106→
-   107→    Returns:
-   108→        str: Translated text.
-   109→    """
    113→def _pgettext(msgctxt: str, message: str) -> str:
-   114→    """Fetches a particular translation.
-   115→
-   116→    It works with `msgctxt` .po modifiers and allows duplicate keys with different
-   117→    translations.
-   118→
-   119→    Args:
-   120→        msgctxt (str): Context of the translation.
-   121→        message (str): Text to translate.
-   122→
-   123→    Returns:
-   124→        str: Translated text.
-   125→    """
    129→def _ngettext(message: str, plural: str, num: int) -> str:
-   130→    """Plural version of _gettext.
-   131→
-   132→    Args:
-   133→        message (str): Singular text to translate.
-   134→        plural (str): Plural text to translate.
-   135→        num (int): The number (e.g. item count) to determine translation for the
-   136→            respective grammatical number.
-   137→
-   138→    Returns:
-   139→        str: Translated text.
-   140→    """
    144→def _gettext_noop(message: str) -> str:
-   145→    """Mark a string as a translation string without translating it.
-   146→
-   147→    Example usage:
-   148→    ```python
-   149→    CONSTANTS = [_gettext_noop('first'), _gettext_noop('second')]
-   150→    def num_name(n):
-   151→        return _gettext(CONSTANTS[n])
-   152→    ```
-   153→
-   154→    Args:
-   155→        message (str): Text to translate in the future.
-   156→
-   157→    Returns:
-   158→        str: Original text, unchanged.
-   159→    """
    163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
-   164→    """Mark two strings as pluralized translations without translating them.
-   165→
-   166→    Example usage:
-   167→    ```python
-   168→    CONSTANTS = [ngettext_noop('first', 'firsts'), ngettext_noop('second', 'seconds')]
-   169→    def num_name(n):
-   170→        return _ngettext(*CONSTANTS[n])
-   171→    ```
-   172→
-   173→    Args:
-   174→        singular (str): Singular text to translate in the future.
-   175→        plural (str): Plural text to translate in the future.
-   176→
-   177→    Returns:
-   178→        tuple: Original text, unchanged.
-   179→    """
    183→def thousands_separator() -> str:
    184→    """Return the thousands separator for a locale, default to comma.
    185→
@@ -184,7 +120,6 @@ lists.py
 number.py
     12→TYPE_CHECKING = False
     21→def _format_not_finite(value: float) -> str:
-    22→    """Utility function to handle infinite and nan cases."""
     34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
     35→    """Converts an integer to its ordinal as a string.
     36→
@@ -479,21 +414,9 @@ time.py
     41→    def __lt__(self, other: Any) -> Any:
     47→def _now() -> dt.datetime:
     53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
-    54→    """Return an "absolute" value for a timedelta, always representing a time distance.
-    55→
-    56→    Args:
-    57→        delta (datetime.timedelta): Input timedelta.
-    58→
-    59→    Returns:
-    60→        datetime.timedelta: Absolute timedelta.
-    61→    """
     68→def _date_and_delta(
     69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
     70→) -> tuple[Any, Any]:
-    71→    """Turn a value into a date and a timedelta which represents how long ago it was.
-    72→
-    73→    If that's not possible, return `(None, value)`.
-    74→    """
     95→def naturaldelta(
     96→    value: dt.timedelta | float,
     97→    months: bool = True,
@@ -567,7 +490,6 @@ time.py
    300→def _convert_aware_datetime(
    301→    value: dt.datetime | dt.timedelta | float | None,
    302→) -> Any:
-   303→    """Convert aware datetime to naive datetime and pass through any other type."""
    311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
    312→    """Return a natural day.
    313→
@@ -586,55 +508,8 @@ time.py
    366→    suppress: Iterable[Unit],
    367→    format: str,
    368→) -> tuple[float, float]:
-   369→    """Divide `value` by `divisor`, returning the quotient and remainder.
-   370→
-   371→    If `unit` is `minimum_unit`, the quotient will be the rounding of `value / divisor`
-   372→    according to the `format` string and the remainder will be zero. The rationale is
-   373→    that if `unit` is the unit of the quotient, we cannot represent the remainder
-   374→    because it would require a unit smaller than the `minimum_unit`.
-   375→
-   376→    >>> from humanize.time import _quotient_and_remainder, Unit
-   377→    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.DAYS, [], "%0.2f")
-   378→    (1.5, 0)
-   379→
-   380→    If `unit` is in `suppress`, the quotient will be zero and the remainder will be the
-   381→    initial value. The idea is that if we cannot use `unit`, we are forced to use a
-   382→    lower unit, so we cannot do the division.
-   383→
-   384→    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.HOURS, [Unit.DAYS], "%0.2f")
-   385→    (0, 36)
-   386→
-   387→    In other cases, return the quotient and remainder as `divmod` would do it.
-   388→
-   389→    >>> _quotient_and_remainder(36, 24, Unit.DAYS, Unit.HOURS, [], "%0.2f")
-   390→    (1, 12)
-   391→
-   392→    """
    406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
-   407→    """Return a minimum unit suitable that is not suppressed.
-   408→
-   409→    If not suppressed, return the same unit:
-   410→
-   411→    >>> from humanize.time import _suitable_minimum_unit, Unit
-   412→    >>> _suitable_minimum_unit(Unit.HOURS, []).name
-   413→    'HOURS'
-   414→
-   415→    But if suppressed, find a unit greater than the original one that is not
-   416→    suppressed:
-   417→
-   418→    >>> _suitable_minimum_unit(Unit.HOURS, [Unit.HOURS]).name
-   419→    'DAYS'
-   420→
-   421→    >>> _suitable_minimum_unit(Unit.HOURS, [Unit.HOURS, Unit.DAYS]).name
-   422→    'MONTHS'
-   423→    """
    435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
-   436→    """Extend suppressed units (if any) with all units lower than the minimum unit.
-   437→
-   438→    >>> from humanize.time import _suppress_lower_units, Unit
-   439→    >>> [x.name for x in sorted(_suppress_lower_units(Unit.SECONDS, [Unit.DAYS]))]
-   440→    ['MICROSECONDS', 'MILLISECONDS', 'DAYS']
-   441→    """
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
    453→    minimum_unit: str = "seconds",
@@ -708,13 +583,3 @@ time.py
    521→    ```
    522→    """
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
-   655→    """Round a number according to the string format provided.
-   656→
-   657→    The string format is the old printf-style string formatting.
-   658→
-   659→    If we are using a format which truncates the value, such as "%d" or "%i", the
-   660→    returned value will be of type `int`.
-   661→
-   662→    If we are using a format which rounds the value, such as "%.2f" or even "%.0f",
-   663→    we will return a float.
-   664→    """

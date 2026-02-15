@@ -28,11 +28,6 @@ _callers.py
     85→    caller_kwargs: Mapping[str, object],
     86→    firstresult: bool,
     87→) -> object | list[object]:
-    88→    """Execute a call into multiple python functions/methods and return the
-    89→    result(s).
-    90→
-    91→    ``caller_kwargs`` comes from HookCaller.__call__().
-    92→    """
 _hooks.py
     28→_T = TypeVar("_T")
     29→_F = TypeVar("_F", bound=Callable[..., object])
@@ -61,32 +56,6 @@ _hooks.py
    116→        warn_on_impl: Warning | None = None,
    117→        warn_on_impl_args: Mapping[str, Warning] | None = None,
    118→    ) -> _F | Callable[[_F], _F]:
-   119→        """If passed a function, directly sets attributes on the function
-   120→        which will make it discoverable to :meth:`PluginManager.add_hookspecs`.
-   121→
-   122→        If passed no function, returns a decorator which can be applied to a
-   123→        function later using the attributes supplied.
-   124→
-   125→        :param firstresult:
-   126→            If ``True``, the 1:N hook call (N being the number of registered
-   127→            hook implementation functions) will stop at I<=N when the I'th
-   128→            function returns a non-``None`` result. See :ref:`firstresult`.
-   129→
-   130→        :param historic:
-   131→            If ``True``, every call to the hook will be memorized and replayed
-   132→            on plugins registered after the call was made. See :ref:`historic`.
-   133→
-   134→        :param warn_on_impl:
-   135→            If given, every implementation of this hook will trigger the given
-   136→            warning. See :ref:`warn_on_impl`.
-   137→
-   138→        :param warn_on_impl_args:
-   139→            If given, every implementation of this hook which requests one of
-   140→            the arguments in the dict will trigger the corresponding warning.
-   141→            See :ref:`warn_on_impl`.
-   142→
-   143→            .. versionadded:: 1.5
-   144→        """
    164→@final
    165→class HookimplMarker:
    166→    """Decorator for marking functions as hook implementations.
@@ -106,56 +75,6 @@ _hooks.py
    209→        specname: str | None = None,
    210→        wrapper: bool = False,
    211→    ) -> _F | Callable[[_F], _F]:
-   212→        """If passed a function, directly sets attributes on the function
-   213→        which will make it discoverable to :meth:`PluginManager.register`.
-   214→
-   215→        If passed no function, returns a decorator which can be applied to a
-   216→        function later using the attributes supplied.
-   217→
-   218→        :param optionalhook:
-   219→            If ``True``, a missing matching hook specification will not result
-   220→            in an error (by default it is an error if no matching spec is
-   221→            found). See :ref:`optionalhook`.
-   222→
-   223→        :param tryfirst:
-   224→            If ``True``, this hook implementation will run as early as possible
-   225→            in the chain of N hook implementations for a specification. See
-   226→            :ref:`callorder`.
-   227→
-   228→        :param trylast:
-   229→            If ``True``, this hook implementation will run as late as possible
-   230→            in the chain of N hook implementations for a specification. See
-   231→            :ref:`callorder`.
-   232→
-   233→        :param wrapper:
-   234→            If ``True`` ("new-style hook wrapper"), the hook implementation
-   235→            needs to execute exactly one ``yield``. The code before the
-   236→            ``yield`` is run early before any non-hook-wrapper function is run.
-   237→            The code after the ``yield`` is run after all non-hook-wrapper
-   238→            functions have run. The ``yield`` receives the result value of the
-   239→            inner calls, or raises the exception of inner calls (including
-   240→            earlier hook wrapper calls). The return value of the function
-   241→            becomes the return value of the hook, and a raised exception becomes
-   242→            the exception of the hook. See :ref:`hookwrapper`.
-   243→
-   244→        :param hookwrapper:
-   245→            If ``True`` ("old-style hook wrapper"), the hook implementation
-   246→            needs to execute exactly one ``yield``. The code before the
-   247→            ``yield`` is run early before any non-hook-wrapper function is run.
-   248→            The code after the ``yield`` is run after all non-hook-wrapper
-   249→            function have run  The ``yield`` receives a :class:`Result` object
-   250→            representing the exception or result outcome of the inner calls
-   251→            (including earlier hook wrapper calls). This option is mutually
-   252→            exclusive with ``wrapper``. See :ref:`old_style_hookwrapper`.
-   253→
-   254→        :param specname:
-   255→            If provided, the given name will be used instead of the function
-   256→            name when matching this hook implementation to a hook specification
-   257→            during registration. See :ref:`specname`.
-   258→
-   259→        .. versionadded:: 1.2.0
-   260→            The ``wrapper`` parameter.
-   261→        """
    281→def normalize_hookimpl_opts(opts: HookimplOpts) -> None:
    290→_PYPY = hasattr(sys, "pypy_version_info")
    293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
@@ -170,7 +89,6 @@ _hooks.py
    360→    """Hook holder object for performing 1:N hook calls where N is the number
    361→    of registered plugins."""
    365→    def __init__(self) -> None:
-   366→        """:meta private:"""
    370→        def __getattr__(self, name: str) -> HookCaller: ...
    377→_CallHistory: TypeAlias = list[
    382→class HookCaller:
@@ -182,7 +100,6 @@ _hooks.py
    397→        specmodule_or_class: _Namespace | None = None,
    398→        spec_opts: HookspecOpts | None = None,
    399→    ) -> None:
-   400→        """:meta private:"""
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    423→    # TODO: Document, or make private.
@@ -197,18 +114,9 @@ _hooks.py
    449→    def get_hookimpls(self) -> list[HookImpl]:
    450→        """Get all registered hook implementations for this hook."""
    453→    def _add_hookimpl(self, hookimpl: HookImpl) -> None:
-   454→        """Add an implementation to the callback chain."""
    477→    def __repr__(self) -> str:
    480→    def _verify_all_args_are_provided(self, kwargs: Mapping[str, object]) -> None:
    499→    def __call__(self, **kwargs: object) -> Any:
-   500→        """Call the hook.
-   501→
-   502→        Only accepts keyword arguments, which should match the hook
-   503→        specification.
-   504→
-   505→        Returns the result(s) of calling all registered plugins, see
-   506→        :ref:`calling`.
-   507→        """
    516→    def call_historic(
    517→        self,
    518→        result_callback: Callable[[Any], None] | None = None,
@@ -229,16 +137,11 @@ _hooks.py
    547→        methods using the specified ``kwargs`` as call parameters, see
    548→        :ref:`call_extra`."""
    577→    def _maybe_apply_history(self, method: HookImpl) -> None:
-   578→        """Apply call history to a new hookimpl if it is marked as historic."""
    593→class _SubsetHookCaller(HookCaller):
-   594→    """A proxy to another HookCaller which manages calls to all registered
-   595→    plugins except the ones from remove_plugins."""
    612→    def __init__(self, orig: HookCaller, remove_plugins: Set[_Plugin]) -> None:
-   618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
-   630→    @property
    631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
    634→    def __repr__(self) -> str:
    638→@final
@@ -251,7 +154,6 @@ _hooks.py
    660→        function: _HookImplFunction[object],
    661→        hook_impl_opts: HookimplOpts,
    662→    ) -> None:
-   663→        """:meta private:"""
    692→    def __repr__(self) -> str:
    696→@final
    697→class HookSpec:
@@ -448,7 +350,6 @@ _result.py
     33→        result: ResultType | None,
     34→        exception: BaseException | None,
     35→    ) -> None:
-    36→        """:meta private:"""
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
     44→        """:meta private:"""

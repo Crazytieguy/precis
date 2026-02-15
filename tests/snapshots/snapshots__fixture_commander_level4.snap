@@ -14,34 +14,6 @@ argument.js
     11→   */
     12→
     13→  constructor(name, description) {
-    14→    this.description = description || '';
-    15→    this.variadic = false;
-    16→    this.parseArg = undefined;
-    17→    this.defaultValue = undefined;
-    18→    this.defaultValueDescription = undefined;
-    19→    this.argChoices = undefined;
-    20→
-    21→    switch (name[0]) {
-    22→      case '<': // e.g. <required>
-    23→        this.required = true;
-    24→        this._name = name.slice(1, -1);
-    25→        break;
-    26→      case '[': // e.g. [optional]
-    27→        this.required = false;
-    28→        this._name = name.slice(1, -1);
-    29→        break;
-    30→      default:
-    31→        this.required = true;
-    32→        this._name = name;
-    33→        break;
-    34→    }
-    35→
-    36→    if (this._name.endsWith('...')) {
-    37→      this.variadic = true;
-    38→      this._name = this._name.slice(0, -3);
-    39→    }
-    40→  }
-    41→
     42→  /**
     43→   * Return argument name.
     44→   *
@@ -49,22 +21,11 @@ argument.js
     46→   */
     47→
     48→  name() {
-    49→    return this._name;
-    50→  }
-    51→
     52→  /**
     53→   * @package
     54→   */
     55→
     56→  _collectValue(value, previous) {
-    57→    if (previous === this.defaultValue || !Array.isArray(previous)) {
-    58→      return [value];
-    59→    }
-    60→
-    61→    previous.push(value);
-    62→    return previous;
-    63→  }
-    64→
     65→  /**
     66→   * Set the default value, and optionally supply the description to be displayed in the help.
     67→   *
@@ -74,11 +35,6 @@ argument.js
     71→   */
     72→
     73→  default(value, description) {
-    74→    this.defaultValue = value;
-    75→    this.defaultValueDescription = description;
-    76→    return this;
-    77→  }
-    78→
     79→  /**
     80→   * Set the custom handler for processing CLI command arguments into argument values.
     81→   *
@@ -87,10 +43,6 @@ argument.js
     84→   */
     85→
     86→  argParser(fn) {
-    87→    this.parseArg = fn;
-    88→    return this;
-    89→  }
-    90→
     91→  /**
     92→   * Only allow argument value to be one of choices.
     93→   *
@@ -99,41 +51,18 @@ argument.js
     96→   */
     97→
     98→  choices(values) {
-    99→    this.argChoices = values.slice();
-   100→    this.parseArg = (arg, previous) => {
-   101→      if (!this.argChoices.includes(arg)) {
-   102→        throw new InvalidArgumentError(
-   103→          `Allowed choices are ${this.argChoices.join(', ')}.`,
-   104→        );
-   105→      }
-   106→      if (this.variadic) {
-   107→        return this._collectValue(arg, previous);
-   108→      }
-   109→      return arg;
-   110→    };
-   111→    return this;
-   112→  }
-   113→
    114→  /**
    115→   * Make argument required.
    116→   *
    117→   * @returns {Argument}
    118→   */
    119→  argRequired() {
-   120→    this.required = true;
-   121→    return this;
-   122→  }
-   123→
    124→  /**
    125→   * Make argument optional.
    126→   *
    127→   * @returns {Argument}
    128→   */
    129→  argOptional() {
-   130→    this.required = false;
-   131→    return this;
-   132→  }
-   133→}
    135→/**
    136→ * Takes an argument and returns its human readable equivalent for help usage.
    137→ *
@@ -1109,19 +1038,7 @@ command.js
   2684→   */
   2685→
   2686→  _outputHelpIfRequested(args) {
-  2697→/**
-  2698→ * Scan arguments and increment port number for inspect calls (to avoid conflicts when spawning new command).
-  2699→ *
-  2700→ * @param {string[]} args - array of arguments from node.execArgv
-  2701→ * @returns {string[]}
-  2702→ * @private
-  2703→ */
-  2704→
   2705→function incrementNodeInspectorPort(args) {
-  2748→/**
-  2749→ * @returns {boolean | undefined}
-  2750→ * @package
-  2751→ */
   2752→function useColor() {
 error.js
      1→/**
@@ -1135,15 +1052,6 @@ error.js
      9→   * @param {string} message human-readable description of the error
     10→   */
     11→  constructor(exitCode, code, message) {
-    12→    super(message);
-    13→    // properly capture stack trace in Node.js
-    14→    Error.captureStackTrace(this, this.constructor);
-    15→    this.name = this.constructor.name;
-    16→    this.code = code;
-    17→    this.exitCode = exitCode;
-    18→    this.nestedError = undefined;
-    19→  }
-    20→}
     22→/**
     23→ * InvalidArgumentError class
     24→ */
@@ -1153,22 +1061,9 @@ error.js
     28→   * @param {string} [message] explanation of why argument is invalid
     29→   */
     30→  constructor(message) {
-    31→    super(1, 'commander.invalidArgument', message);
-    32→    // properly capture stack trace in Node.js
-    33→    Error.captureStackTrace(this, this.constructor);
-    34→    this.name = this.constructor.name;
-    35→  }
-    36→}
 help.js
     12→class Help {
     13→  constructor() {
-    14→    this.helpWidth = undefined;
-    15→    this.minWidthToWrap = 40;
-    16→    this.sortSubcommands = false;
-    17→    this.sortOptions = false;
-    18→    this.showGlobalOptions = false;
-    19→  }
-    20→
     21→  /**
     22→   * prepareContext is called by Commander after applying overrides from `Command.configureHelp()`
     23→   * and just before calling `formatHelp()`.
@@ -1178,9 +1073,6 @@ help.js
     27→   * @param {{ error?: boolean, helpWidth?: number, outputHasColors?: boolean }} contextOptions
     28→   */
     29→  prepareContext(contextOptions) {
-    30→    this.helpWidth = this.helpWidth ?? contextOptions.helpWidth ?? 80;
-    31→  }
-    32→
     33→  /**
     34→   * Get an array of the visible subcommands. Includes a placeholder for the implicit help command, if there is one.
     35→   *
@@ -1189,20 +1081,6 @@ help.js
     38→   */
     39→
     40→  visibleCommands(cmd) {
-    41→    const visibleCommands = cmd.commands.filter((cmd) => !cmd._hidden);
-    42→    const helpCommand = cmd._getHelpCommand();
-    43→    if (helpCommand && !helpCommand._hidden) {
-    44→      visibleCommands.push(helpCommand);
-    45→    }
-    46→    if (this.sortSubcommands) {
-    47→      visibleCommands.sort((a, b) => {
-    48→        // @ts-ignore: because overloaded return type
-    49→        return a.name().localeCompare(b.name());
-    50→      });
-    51→    }
-    52→    return visibleCommands;
-    53→  }
-    54→
     55→  /**
     56→   * Compare options for sort.
     57→   *
@@ -1211,15 +1089,6 @@ help.js
     60→   * @returns {number}
     61→   */
     62→  compareOptions(a, b) {
-    63→    const getSortKey = (option) => {
-    64→      // WYSIWYG for order displayed in help. Short used for comparison if present. No special handling for negated.
-    65→      return option.short
-    66→        ? option.short.replace(/^-/, '')
-    67→        : option.long.replace(/^--/, '');
-    68→    };
-    69→    return getSortKey(a).localeCompare(getSortKey(b));
-    70→  }
-    71→
     72→  /**
     73→   * Get an array of the visible options. Includes a placeholder for the implicit help option, if there is one.
     74→   *
@@ -1228,31 +1097,6 @@ help.js
     77→   */
     78→
     79→  visibleOptions(cmd) {
-    80→    const visibleOptions = cmd.options.filter((option) => !option.hidden);
-    81→    // Built-in help option.
-    82→    const helpOption = cmd._getHelpOption();
-    83→    if (helpOption && !helpOption.hidden) {
-    84→      // Automatically hide conflicting flags. Bit dubious but a historical behaviour that is convenient for single-command programs.
-    85→      const removeShort = helpOption.short && cmd._findOption(helpOption.short);
-    86→      const removeLong = helpOption.long && cmd._findOption(helpOption.long);
-    87→      if (!removeShort && !removeLong) {
-    88→        visibleOptions.push(helpOption); // no changes needed
-    89→      } else if (helpOption.long && !removeLong) {
-    90→        visibleOptions.push(
-    91→          cmd.createOption(helpOption.long, helpOption.description),
-    92→        );
-    93→      } else if (helpOption.short && !removeShort) {
-    94→        visibleOptions.push(
-    95→          cmd.createOption(helpOption.short, helpOption.description),
-    96→        );
-    97→      }
-    98→    }
-    99→    if (this.sortOptions) {
-   100→      visibleOptions.sort(this.compareOptions);
-   101→    }
-   102→    return visibleOptions;
-   103→  }
-   104→
    105→  /**
    106→   * Get an array of the visible global options. (Not including help.)
    107→   *
@@ -1261,25 +1105,6 @@ help.js
    110→   */
    111→
    112→  visibleGlobalOptions(cmd) {
-   113→    if (!this.showGlobalOptions) return [];
-   114→
-   115→    const globalOptions = [];
-   116→    for (
-   117→      let ancestorCmd = cmd.parent;
-   118→      ancestorCmd;
-   119→      ancestorCmd = ancestorCmd.parent
-   120→    ) {
-   121→      const visibleOptions = ancestorCmd.options.filter(
-   122→        (option) => !option.hidden,
-   123→      );
-   124→      globalOptions.push(...visibleOptions);
-   125→    }
-   126→    if (this.sortOptions) {
-   127→      globalOptions.sort(this.compareOptions);
-   128→    }
-   129→    return globalOptions;
-   130→  }
-   131→
    132→  /**
    133→   * Get an array of the arguments if any have a description.
    134→   *
@@ -1288,21 +1113,6 @@ help.js
    137→   */
    138→
    139→  visibleArguments(cmd) {
-   140→    // Side effect! Apply the legacy descriptions before the arguments are displayed.
-   141→    if (cmd._argsDescription) {
-   142→      cmd.registeredArguments.forEach((argument) => {
-   143→        argument.description =
-   144→          argument.description || cmd._argsDescription[argument.name()] || '';
-   145→      });
-   146→    }
-   147→
-   148→    // If there are any arguments with a description then return all the arguments.
-   149→    if (cmd.registeredArguments.find((argument) => argument.description)) {
-   150→      return cmd.registeredArguments;
-   151→    }
-   152→    return [];
-   153→  }
-   154→
    155→  /**
    156→   * Get the command term to show in the list of subcommands.
    157→   *
@@ -1311,18 +1121,6 @@ help.js
    160→   */
    161→
    162→  subcommandTerm(cmd) {
-   163→    // Legacy. Ignores custom usage string, and nested commands.
-   164→    const args = cmd.registeredArguments
-   165→      .map((arg) => humanReadableArgName(arg))
-   166→      .join(' ');
-   167→    return (
-   168→      cmd._name +
-   169→      (cmd._aliases[0] ? '|' + cmd._aliases[0] : '') +
-   170→      (cmd.options.length ? ' [options]' : '') + // simplistic check for non-help option
-   171→      (args ? ' ' + args : '')
-   172→    );
-   173→  }
-   174→
    175→  /**
    176→   * Get the option term to show in the list of options.
    177→   *
@@ -1331,9 +1129,6 @@ help.js
    180→   */
    181→
    182→  optionTerm(option) {
-   183→    return option.flags;
-   184→  }
-   185→
    186→  /**
    187→   * Get the argument term to show in the list of arguments.
    188→   *
@@ -1342,9 +1137,6 @@ help.js
    191→   */
    192→
    193→  argumentTerm(argument) {
-   194→    return argument.name();
-   195→  }
-   196→
    197→  /**
    198→   * Get the longest command term length.
    199→   *
@@ -1354,16 +1146,6 @@ help.js
    203→   */
    204→
    205→  longestSubcommandTermLength(cmd, helper) {
-   206→    return helper.visibleCommands(cmd).reduce((max, command) => {
-   207→      return Math.max(
-   208→        max,
-   209→        this.displayWidth(
-   210→          helper.styleSubcommandTerm(helper.subcommandTerm(command)),
-   211→        ),
-   212→      );
-   213→    }, 0);
-   214→  }
-   215→
    216→  /**
    217→   * Get the longest option term length.
    218→   *
@@ -1373,14 +1155,6 @@ help.js
    222→   */
    223→
    224→  longestOptionTermLength(cmd, helper) {
-   225→    return helper.visibleOptions(cmd).reduce((max, option) => {
-   226→      return Math.max(
-   227→        max,
-   228→        this.displayWidth(helper.styleOptionTerm(helper.optionTerm(option))),
-   229→      );
-   230→    }, 0);
-   231→  }
-   232→
    233→  /**
    234→   * Get the longest global option term length.
    235→   *
@@ -1390,14 +1164,6 @@ help.js
    239→   */
    240→
    241→  longestGlobalOptionTermLength(cmd, helper) {
-   242→    return helper.visibleGlobalOptions(cmd).reduce((max, option) => {
-   243→      return Math.max(
-   244→        max,
-   245→        this.displayWidth(helper.styleOptionTerm(helper.optionTerm(option))),
-   246→      );
-   247→    }, 0);
-   248→  }
-   249→
    250→  /**
    251→   * Get the longest argument term length.
    252→   *
@@ -1407,16 +1173,6 @@ help.js
    256→   */
    257→
    258→  longestArgumentTermLength(cmd, helper) {
-   259→    return helper.visibleArguments(cmd).reduce((max, argument) => {
-   260→      return Math.max(
-   261→        max,
-   262→        this.displayWidth(
-   263→          helper.styleArgumentTerm(helper.argumentTerm(argument)),
-   264→        ),
-   265→      );
-   266→    }, 0);
-   267→  }
-   268→
    269→  /**
    270→   * Get the command usage to be displayed at the top of the built-in help.
    271→   *
@@ -1425,22 +1181,6 @@ help.js
    274→   */
    275→
    276→  commandUsage(cmd) {
-   277→    // Usage
-   278→    let cmdName = cmd._name;
-   279→    if (cmd._aliases[0]) {
-   280→      cmdName = cmdName + '|' + cmd._aliases[0];
-   281→    }
-   282→    let ancestorCmdNames = '';
-   283→    for (
-   284→      let ancestorCmd = cmd.parent;
-   285→      ancestorCmd;
-   286→      ancestorCmd = ancestorCmd.parent
-   287→    ) {
-   288→      ancestorCmdNames = ancestorCmd.name() + ' ' + ancestorCmdNames;
-   289→    }
-   290→    return ancestorCmdNames + cmdName + ' ' + cmd.usage();
-   291→  }
-   292→
    293→  /**
    294→   * Get the description for the command.
    295→   *
@@ -1449,10 +1189,6 @@ help.js
    298→   */
    299→
    300→  commandDescription(cmd) {
-   301→    // @ts-ignore: because overloaded return type
-   302→    return cmd.description();
-   303→  }
-   304→
    305→  /**
    306→   * Get the subcommand summary to show in the list of subcommands.
    307→   * (Fallback to description for backwards compatibility.)
@@ -1462,10 +1198,6 @@ help.js
    311→   */
    312→
    313→  subcommandDescription(cmd) {
-   314→    // @ts-ignore: because overloaded return type
-   315→    return cmd.summary() || cmd.description();
-   316→  }
-   317→
    318→  /**
    319→   * Get the option description to show in the list of options.
    320→   *
@@ -1474,45 +1206,6 @@ help.js
    323→   */
    324→
    325→  optionDescription(option) {
-   326→    const extraInfo = [];
-   327→
-   328→    if (option.argChoices) {
-   329→      extraInfo.push(
-   330→        // use stringify to match the display of the default value
-   331→        `choices: ${option.argChoices.map((choice) => JSON.stringify(choice)).join(', ')}`,
-   332→      );
-   333→    }
-   334→    if (option.defaultValue !== undefined) {
-   335→      // default for boolean and negated more for programmer than end user,
-   336→      // but show true/false for boolean option as may be for hand-rolled env or config processing.
-   337→      const showDefault =
-   338→        option.required ||
-   339→        option.optional ||
-   340→        (option.isBoolean() && typeof option.defaultValue === 'boolean');
-   341→      if (showDefault) {
-   342→        extraInfo.push(
-   343→          `default: ${option.defaultValueDescription || JSON.stringify(option.defaultValue)}`,
-   344→        );
-   345→      }
-   346→    }
-   347→    // preset for boolean and negated are more for programmer than end user
-   348→    if (option.presetArg !== undefined && option.optional) {
-   349→      extraInfo.push(`preset: ${JSON.stringify(option.presetArg)}`);
-   350→    }
-   351→    if (option.envVar !== undefined) {
-   352→      extraInfo.push(`env: ${option.envVar}`);
-   353→    }
-   354→    if (extraInfo.length > 0) {
-   355→      const extraDescription = `(${extraInfo.join(', ')})`;
-   356→      if (option.description) {
-   357→        return `${option.description} ${extraDescription}`;
-   358→      }
-   359→      return extraDescription;
-   360→    }
-   361→
-   362→    return option.description;
-   363→  }
-   364→
    365→  /**
    366→   * Get the argument description to show in the list of arguments.
    367→   *
@@ -1521,28 +1214,6 @@ help.js
    370→   */
    371→
    372→  argumentDescription(argument) {
-   373→    const extraInfo = [];
-   374→    if (argument.argChoices) {
-   375→      extraInfo.push(
-   376→        // use stringify to match the display of the default value
-   377→        `choices: ${argument.argChoices.map((choice) => JSON.stringify(choice)).join(', ')}`,
-   378→      );
-   379→    }
-   380→    if (argument.defaultValue !== undefined) {
-   381→      extraInfo.push(
-   382→        `default: ${argument.defaultValueDescription || JSON.stringify(argument.defaultValue)}`,
-   383→      );
-   384→    }
-   385→    if (extraInfo.length > 0) {
-   386→      const extraDescription = `(${extraInfo.join(', ')})`;
-   387→      if (argument.description) {
-   388→        return `${argument.description} ${extraDescription}`;
-   389→      }
-   390→      return extraDescription;
-   391→    }
-   392→    return argument.description;
-   393→  }
-   394→
    395→  /**
    396→   * Format a list of items, given a heading and an array of formatted items.
    397→   *
@@ -1552,11 +1223,6 @@ help.js
    401→   * @returns string[]
    402→   */
    403→  formatItemList(heading, items, helper) {
-   404→    if (items.length === 0) return [];
-   405→
-   406→    return [helper.styleTitle(heading), ...items, ''];
-   407→  }
-   408→
    409→  /**
    410→   * Group items by their help group heading.
    411→   *
@@ -1566,23 +1232,6 @@ help.js
    415→   * @returns {Map<string, Command[] | Option[]>}
    416→   */
    417→  groupItems(unsortedItems, visibleItems, getGroup) {
-   418→    const result = new Map();
-   419→    // Add groups in order of appearance in unsortedItems.
-   420→    unsortedItems.forEach((item) => {
-   421→      const group = getGroup(item);
-   422→      if (!result.has(group)) result.set(group, []);
-   423→    });
-   424→    // Add items in order of appearance in visibleItems.
-   425→    visibleItems.forEach((item) => {
-   426→      const group = getGroup(item);
-   427→      if (!result.has(group)) {
-   428→        result.set(group, []);
-   429→      }
-   430→      result.get(group).push(item);
-   431→    });
-   432→    return result;
-   433→  }
-   434→
    435→  /**
    436→   * Generate the built-in help text.
    437→   *
@@ -1592,91 +1241,6 @@ help.js
    441→   */
    442→
    443→  formatHelp(cmd, helper) {
-   444→    const termWidth = helper.padWidth(cmd, helper);
-   445→    const helpWidth = helper.helpWidth ?? 80; // in case prepareContext() was not called
-   446→
-   447→    function callFormatItem(term, description) {
-   448→      return helper.formatItem(term, termWidth, description, helper);
-   449→    }
-   450→
-   451→    // Usage
-   452→    let output = [
-   453→      `${helper.styleTitle('Usage:')} ${helper.styleUsage(helper.commandUsage(cmd))}`,
-   454→      '',
-   455→    ];
-   456→
-   457→    // Description
-   458→    const commandDescription = helper.commandDescription(cmd);
-   459→    if (commandDescription.length > 0) {
-   460→      output = output.concat([
-   461→        helper.boxWrap(
-   462→          helper.styleCommandDescription(commandDescription),
-   463→          helpWidth,
-   464→        ),
-   465→        '',
-   466→      ]);
-   467→    }
-   468→
-   469→    // Arguments
-   470→    const argumentList = helper.visibleArguments(cmd).map((argument) => {
-   471→      return callFormatItem(
-   472→        helper.styleArgumentTerm(helper.argumentTerm(argument)),
-   473→        helper.styleArgumentDescription(helper.argumentDescription(argument)),
-   474→      );
-   475→    });
-   476→    output = output.concat(
-   477→      this.formatItemList('Arguments:', argumentList, helper),
-   478→    );
-   479→
-   480→    // Options
-   481→    const optionGroups = this.groupItems(
-   482→      cmd.options,
-   483→      helper.visibleOptions(cmd),
-   484→      (option) => option.helpGroupHeading ?? 'Options:',
-   485→    );
-   486→    optionGroups.forEach((options, group) => {
-   487→      const optionList = options.map((option) => {
-   488→        return callFormatItem(
-   489→          helper.styleOptionTerm(helper.optionTerm(option)),
-   490→          helper.styleOptionDescription(helper.optionDescription(option)),
-   491→        );
-   492→      });
-   493→      output = output.concat(this.formatItemList(group, optionList, helper));
-   494→    });
-   495→
-   496→    if (helper.showGlobalOptions) {
-   497→      const globalOptionList = helper
-   498→        .visibleGlobalOptions(cmd)
-   499→        .map((option) => {
-   500→          return callFormatItem(
-   501→            helper.styleOptionTerm(helper.optionTerm(option)),
-   502→            helper.styleOptionDescription(helper.optionDescription(option)),
-   503→          );
-   504→        });
-   505→      output = output.concat(
-   506→        this.formatItemList('Global Options:', globalOptionList, helper),
-   507→      );
-   508→    }
-   509→
-   510→    // Commands
-   511→    const commandGroups = this.groupItems(
-   512→      cmd.commands,
-   513→      helper.visibleCommands(cmd),
-   514→      (sub) => sub.helpGroup() || 'Commands:',
-   515→    );
-   516→    commandGroups.forEach((commands, group) => {
-   517→      const commandList = commands.map((sub) => {
-   518→        return callFormatItem(
-   519→          helper.styleSubcommandTerm(helper.subcommandTerm(sub)),
-   520→          helper.styleSubcommandDescription(helper.subcommandDescription(sub)),
-   521→        );
-   522→      });
-   523→      output = output.concat(this.formatItemList(group, commandList, helper));
-   524→    });
-   525→
-   526→    return output.join('\n');
-   527→  }
-   528→
    529→  /**
    530→   * Return display width of string, ignoring ANSI escape sequences. Used in padding and wrapping calculations.
    531→   *
@@ -1684,9 +1248,6 @@ help.js
    533→   * @returns {number}
    534→   */
    535→  displayWidth(str) {
-   536→    return stripColor(str).length;
-   537→  }
-   538→
    539→  /**
    540→   * Style the title for displaying in the help. Called with 'Usage:', 'Options:', etc.
    541→   *
@@ -1694,70 +1255,19 @@ help.js
    543→   * @returns {string}
    544→   */
    545→  styleTitle(str) {
-   546→    return str;
-   547→  }
-   548→
    549→  styleUsage(str) {
-   550→    // Usage has lots of parts the user might like to color separately! Assume default usage string which is formed like:
-   551→    //    command subcommand [options] [command] <foo> [bar]
-   552→    return str
-   553→      .split(' ')
-   554→      .map((word) => {
-   555→        if (word === '[options]') return this.styleOptionText(word);
-   556→        if (word === '[command]') return this.styleSubcommandText(word);
-   557→        if (word[0] === '[' || word[0] === '<')
-   558→          return this.styleArgumentText(word);
-   559→        return this.styleCommandText(word); // Restrict to initial words?
-   560→      })
-   561→      .join(' ');
-   562→  }
    563→  styleCommandDescription(str) {
-   564→    return this.styleDescriptionText(str);
-   565→  }
    566→  styleOptionDescription(str) {
-   567→    return this.styleDescriptionText(str);
-   568→  }
    569→  styleSubcommandDescription(str) {
-   570→    return this.styleDescriptionText(str);
-   571→  }
    572→  styleArgumentDescription(str) {
-   573→    return this.styleDescriptionText(str);
-   574→  }
    575→  styleDescriptionText(str) {
-   576→    return str;
-   577→  }
    578→  styleOptionTerm(str) {
-   579→    return this.styleOptionText(str);
-   580→  }
    581→  styleSubcommandTerm(str) {
-   582→    // This is very like usage with lots of parts! Assume default string which is formed like:
-   583→    //    subcommand [options] <foo> [bar]
-   584→    return str
-   585→      .split(' ')
-   586→      .map((word) => {
-   587→        if (word === '[options]') return this.styleOptionText(word);
-   588→        if (word[0] === '[' || word[0] === '<')
-   589→          return this.styleArgumentText(word);
-   590→        return this.styleSubcommandText(word); // Restrict to initial words?
-   591→      })
-   592→      .join(' ');
-   593→  }
    594→  styleArgumentTerm(str) {
-   595→    return this.styleArgumentText(str);
-   596→  }
    597→  styleOptionText(str) {
-   598→    return str;
-   599→  }
    600→  styleArgumentText(str) {
-   601→    return str;
-   602→  }
    603→  styleSubcommandText(str) {
-   604→    return str;
-   605→  }
    606→  styleCommandText(str) {
-   607→    return str;
-   608→  }
-   609→
    610→  /**
    611→   * Calculate the pad width from the maximum term length.
    612→   *
@@ -1767,14 +1277,6 @@ help.js
    616→   */
    617→
    618→  padWidth(cmd, helper) {
-   619→    return Math.max(
-   620→      helper.longestOptionTermLength(cmd, helper),
-   621→      helper.longestGlobalOptionTermLength(cmd, helper),
-   622→      helper.longestSubcommandTermLength(cmd, helper),
-   623→      helper.longestArgumentTermLength(cmd, helper),
-   624→    );
-   625→  }
-   626→
    627→  /**
    628→   * Detect manually wrapped and indented strings by checking for line break followed by whitespace.
    629→   *
@@ -1782,9 +1284,6 @@ help.js
    631→   * @returns {boolean}
    632→   */
    633→  preformatted(str) {
-   634→    return /\n[^\S\r\n]/.test(str);
-   635→  }
-   636→
    637→  /**
    638→   * Format the "item", which consists of a term and description. Pad the term and wrap the description, indenting the following lines.
    639→   *
@@ -1799,42 +1298,6 @@ help.js
    648→   * @returns {string}
    649→   */
    650→  formatItem(term, termWidth, description, helper) {
-   651→    const itemIndent = 2;
-   652→    const itemIndentStr = ' '.repeat(itemIndent);
-   653→    if (!description) return itemIndentStr + term;
-   654→
-   655→    // Pad the term out to a consistent width, so descriptions are aligned.
-   656→    const paddedTerm = term.padEnd(
-   657→      termWidth + term.length - helper.displayWidth(term),
-   658→    );
-   659→
-   660→    // Format the description.
-   661→    const spacerWidth = 2; // between term and description
-   662→    const helpWidth = this.helpWidth ?? 80; // in case prepareContext() was not called
-   663→    const remainingWidth = helpWidth - termWidth - spacerWidth - itemIndent;
-   664→    let formattedDescription;
-   665→    if (
-   666→      remainingWidth < this.minWidthToWrap ||
-   667→      helper.preformatted(description)
-   668→    ) {
-   669→      formattedDescription = description;
-   670→    } else {
-   671→      const wrappedDescription = helper.boxWrap(description, remainingWidth);
-   672→      formattedDescription = wrappedDescription.replace(
-   673→        /\n/g,
-   674→        '\n' + ' '.repeat(termWidth + spacerWidth),
-   675→      );
-   676→    }
-   677→
-   678→    // Construct and overall indent.
-   679→    return (
-   680→      itemIndentStr +
-   681→      paddedTerm +
-   682→      ' '.repeat(spacerWidth) +
-   683→      formattedDescription.replace(/\n/g, `\n${itemIndentStr}`)
-   684→    );
-   685→  }
-   686→
    687→  /**
    688→   * Wrap a string at whitespace, preserving existing line breaks.
    689→   * Wrapping is skipped if the width is less than `minWidthToWrap`.
@@ -1844,41 +1307,6 @@ help.js
    693→   * @returns {string}
    694→   */
    695→  boxWrap(str, width) {
-   696→    if (width < this.minWidthToWrap) return str;
-   697→
-   698→    const rawLines = str.split(/\r\n|\n/);
-   699→    // split up text by whitespace
-   700→    const chunkPattern = /[\s]*[^\s]+/g;
-   701→    const wrappedLines = [];
-   702→    rawLines.forEach((line) => {
-   703→      const chunks = line.match(chunkPattern);
-   704→      if (chunks === null) {
-   705→        wrappedLines.push('');
-   706→        return;
-   707→      }
-   708→
-   709→      let sumChunks = [chunks.shift()];
-   710→      let sumWidth = this.displayWidth(sumChunks[0]);
-   711→      chunks.forEach((chunk) => {
-   712→        const visibleWidth = this.displayWidth(chunk);
-   713→        // Accumulate chunks while they fit into width.
-   714→        if (sumWidth + visibleWidth <= width) {
-   715→          sumChunks.push(chunk);
-   716→          sumWidth += visibleWidth;
-   717→          return;
-   718→        }
-   719→        wrappedLines.push(sumChunks.join(''));
-   720→
-   721→        const nextChunk = chunk.trimStart(); // trim space at line break
-   722→        sumChunks = [nextChunk];
-   723→        sumWidth = this.displayWidth(nextChunk);
-   724→      });
-   725→      wrappedLines.push(sumChunks.join(''));
-   726→    });
-   727→
-   728→    return wrappedLines.join('\n');
-   729→  }
-   730→}
    732→/**
    733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
    734→ *
@@ -1898,33 +1326,6 @@ option.js
      9→   */
     10→
     11→  constructor(flags, description) {
-    12→    this.flags = flags;
-    13→    this.description = description || '';
-    14→
-    15→    this.required = flags.includes('<'); // A value must be supplied when the option is specified.
-    16→    this.optional = flags.includes('['); // A value is optional when the option is specified.
-    17→    // variadic test ignores <value,...> et al which might be used to describe custom splitting of single argument
-    18→    this.variadic = /\w\.\.\.[>\]]$/.test(flags); // The option can take multiple values.
-    19→    this.mandatory = false; // The option must have a value after parsing, which usually means it must be specified on command line.
-    20→    const optionFlags = splitOptionFlags(flags);
-    21→    this.short = optionFlags.shortFlag; // May be a short flag, undefined, or even a long flag (if option has two long flags).
-    22→    this.long = optionFlags.longFlag;
-    23→    this.negate = false;
-    24→    if (this.long) {
-    25→      this.negate = this.long.startsWith('--no-');
-    26→    }
-    27→    this.defaultValue = undefined;
-    28→    this.defaultValueDescription = undefined;
-    29→    this.presetArg = undefined;
-    30→    this.envVar = undefined;
-    31→    this.parseArg = undefined;
-    32→    this.hidden = false;
-    33→    this.argChoices = undefined;
-    34→    this.conflictsWith = [];
-    35→    this.implied = undefined;
-    36→    this.helpGroupHeading = undefined; // soft initialised when option added to command
-    37→  }
-    38→
     39→  /**
     40→   * Set the default value, and optionally supply the description to be displayed in the help.
     41→   *
@@ -1934,11 +1335,6 @@ option.js
     45→   */
     46→
     47→  default(value, description) {
-    48→    this.defaultValue = value;
-    49→    this.defaultValueDescription = description;
-    50→    return this;
-    51→  }
-    52→
     53→  /**
     54→   * Preset to use when option used without option-argument, especially optional but also boolean and negated.
     55→   * The custom processing (parseArg) is called.
@@ -1952,10 +1348,6 @@ option.js
     63→   */
     64→
     65→  preset(arg) {
-    66→    this.presetArg = arg;
-    67→    return this;
-    68→  }
-    69→
     70→  /**
     71→   * Add option name(s) that conflict with this option.
     72→   * An error will be displayed if conflicting options are found during parsing.
@@ -1969,10 +1361,6 @@ option.js
     80→   */
     81→
     82→  conflicts(names) {
-    83→    this.conflictsWith = this.conflictsWith.concat(names);
-    84→    return this;
-    85→  }
-    86→
     87→  /**
     88→   * Specify implied option values for when this option is set and the implied options are not.
     89→   *
@@ -1987,15 +1375,6 @@ option.js
     98→   * @return {Option}
     99→   */
    100→  implies(impliedOptionValues) {
-   101→    let newImplied = impliedOptionValues;
-   102→    if (typeof impliedOptionValues === 'string') {
-   103→      // string is not documented, but easy mistake and we can do what user probably intended.
-   104→      newImplied = { [impliedOptionValues]: true };
-   105→    }
-   106→    this.implied = Object.assign(this.implied || {}, newImplied);
-   107→    return this;
-   108→  }
-   109→
    110→  /**
    111→   * Set environment variable to check for option value.
    112→   *
@@ -2007,10 +1386,6 @@ option.js
    118→   */
    119→
    120→  env(name) {
-   121→    this.envVar = name;
-   122→    return this;
-   123→  }
-   124→
    125→  /**
    126→   * Set the custom handler for processing CLI option arguments into option values.
    127→   *
@@ -2019,10 +1394,6 @@ option.js
    130→   */
    131→
    132→  argParser(fn) {
-   133→    this.parseArg = fn;
-   134→    return this;
-   135→  }
-   136→
    137→  /**
    138→   * Whether the option is mandatory and must have a value after parsing.
    139→   *
@@ -2031,10 +1402,6 @@ option.js
    142→   */
    143→
    144→  makeOptionMandatory(mandatory = true) {
-   145→    this.mandatory = !!mandatory;
-   146→    return this;
-   147→  }
-   148→
    149→  /**
    150→   * Hide option in help.
    151→   *
@@ -2043,23 +1410,11 @@ option.js
    154→   */
    155→
    156→  hideHelp(hide = true) {
-   157→    this.hidden = !!hide;
-   158→    return this;
-   159→  }
-   160→
    161→  /**
    162→   * @package
    163→   */
    164→
    165→  _collectValue(value, previous) {
-   166→    if (previous === this.defaultValue || !Array.isArray(previous)) {
-   167→      return [value];
-   168→    }
-   169→
-   170→    previous.push(value);
-   171→    return previous;
-   172→  }
-   173→
    174→  /**
    175→   * Only allow option value to be one of choices.
    176→   *
@@ -2068,21 +1423,6 @@ option.js
    179→   */
    180→
    181→  choices(values) {
-   182→    this.argChoices = values.slice();
-   183→    this.parseArg = (arg, previous) => {
-   184→      if (!this.argChoices.includes(arg)) {
-   185→        throw new InvalidArgumentError(
-   186→          `Allowed choices are ${this.argChoices.join(', ')}.`,
-   187→        );
-   188→      }
-   189→      if (this.variadic) {
-   190→        return this._collectValue(arg, previous);
-   191→      }
-   192→      return arg;
-   193→    };
-   194→    return this;
-   195→  }
-   196→
    197→  /**
    198→   * Return option name.
    199→   *
@@ -2090,12 +1430,6 @@ option.js
    201→   */
    202→
    203→  name() {
-   204→    if (this.long) {
-   205→      return this.long.replace(/^--/, '');
-   206→    }
-   207→    return this.short.replace(/^-/, '');
-   208→  }
-   209→
    210→  /**
    211→   * Return option name, in a camelcase format that can be used
    212→   * as an object attribute key.
@@ -2104,12 +1438,6 @@ option.js
    215→   */
    216→
    217→  attributeName() {
-   218→    if (this.negate) {
-   219→      return camelcase(this.name().replace(/^no-/, ''));
-   220→    }
-   221→    return camelcase(this.name());
-   222→  }
-   223→
    224→  /**
    225→   * Set the help group heading.
    226→   *
@@ -2117,10 +1445,6 @@ option.js
    228→   * @return {Option}
    229→   */
    230→  helpGroup(heading) {
-   231→    this.helpGroupHeading = heading;
-   232→    return this;
-   233→  }
-   234→
    235→  /**
    236→   * Check if `arg` matches the short or long flag.
    237→   *
@@ -2130,9 +1454,6 @@ option.js
    241→   */
    242→
    243→  is(arg) {
-   244→    return this.short === arg || this.long === arg;
-   245→  }
-   246→
    247→  /**
    248→   * Return whether a boolean option.
    249→   *
@@ -2143,9 +1464,6 @@ option.js
    254→   */
    255→
    256→  isBoolean() {
-   257→    return !this.required && !this.optional && !this.negate;
-   258→  }
-   259→}
    261→/**
    262→ * This class is to make it easier to work with dual options, without changing the existing
    263→ * implementation. We support separate dual options for separate positive and negative options,
@@ -2158,23 +1476,6 @@ option.js
    270→   * @param {Option[]} options
    271→   */
    272→  constructor(options) {
-   273→    this.positiveOptions = new Map();
-   274→    this.negativeOptions = new Map();
-   275→    this.dualOptions = new Set();
-   276→    options.forEach((option) => {
-   277→      if (option.negate) {
-   278→        this.negativeOptions.set(option.attributeName(), option);
-   279→      } else {
-   280→        this.positiveOptions.set(option.attributeName(), option);
-   281→      }
-   282→    });
-   283→    this.negativeOptions.forEach((value, key) => {
-   284→      if (this.positiveOptions.has(key)) {
-   285→        this.dualOptions.add(key);
-   286→      }
-   287→    });
-   288→  }
-   289→
    290→  /**
    291→   * Did the value come from the option, and not from possible matching dual option?
    292→   *
@@ -2183,15 +1484,6 @@ option.js
    295→   * @returns {boolean}
    296→   */
    297→  valueFromOption(value, option) {
-   298→    const optionKey = option.attributeName();
-   299→    if (!this.dualOptions.has(optionKey)) return true;
-   300→
-   301→    // Use the value to deduce if (probably) came from the option.
-   302→    const preset = this.negativeOptions.get(optionKey).presetArg;
-   303→    const negativeValue = preset !== undefined ? preset : false;
-   304→    return option.negate === (negativeValue === value);
-   305→  }
-   306→}
    308→/**
    309→ * Convert string from kebab-case to camelCase.
    310→ *
