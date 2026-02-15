@@ -13,8 +13,6 @@ See @README.md for design decisions.
 
 ## Documentation
 
-If implementation diverges from what's documented in the README, update the README to match.
-
 API docs for this crate and its dependencies are at @target/doc-md/index.md. Always run `cargo doc-md` after changing dependencies in Cargo.toml, or if `target/doc-md/` is missing docs for an installed crate.
 
 ## Bash Operations
