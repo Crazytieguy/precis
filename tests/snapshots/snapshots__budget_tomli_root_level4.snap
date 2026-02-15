@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 3000 → level 4 (2461 words)
+budget: 3000 → level 4 (2478 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -305,6 +305,10 @@ scripts/use_setuptools.py
     12→def use_setuptools() -> None:
 setup.py
 src/tomli/__init__.py
+     1→# SPDX-License-Identifier: MIT
+     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
+     3→# Licensed to PSF under a Contributor Agreement.
+     4→
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
 src/tomli/_parser.py

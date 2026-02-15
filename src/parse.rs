@@ -302,7 +302,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
 
         let is_public = match lang {
             Lang::Go => name.starts_with(|c: char| c.is_ascii_uppercase()),
-            Lang::Python => !name.starts_with('_'),
+            Lang::Python => !name.starts_with('_') || (name.starts_with("__") && name.ends_with("__")),
             Lang::Markdown => true,
             _ => is_public_symbol(symbol_node, source),
         };
@@ -851,7 +851,7 @@ MAX_SIZE: int = 100
         assert!(info.contains(&("_PrivateClass", SymbolKind::Class, false)));
 
         // Methods inside classes
-        assert!(info.contains(&("__init__", SymbolKind::Function, false)));
+        assert!(info.contains(&("__init__", SymbolKind::Function, true)));
         assert!(info.contains(&("speak", SymbolKind::Function, true)));
         assert!(info.contains(&("_internal", SymbolKind::Function, false)));
 
@@ -960,9 +960,9 @@ def some_function():
         assert!(info.contains(&("T", SymbolKind::Const, true)));
         assert!(info.contains(&("UPPER_CASE", SymbolKind::Const, true)));
 
-        // Dunder names are captured
-        assert!(info.contains(&("__all__", SymbolKind::Const, false)));
-        assert!(info.contains(&("__version__", SymbolKind::Const, false)));
+        // Dunder names are captured and treated as public
+        assert!(info.contains(&("__all__", SymbolKind::Const, true)));
+        assert!(info.contains(&("__version__", SymbolKind::Const, true)));
 
         // Private UPPER_CASE is captured but marked private
         assert!(info.contains(&("_PRIVATE_CONST", SymbolKind::Const, false)));

@@ -19,6 +19,7 @@ sample.py
     32→    Parses source text into a list of tokens.
     33→    """
     37→    def __init__(self, source: str) -> None:
+    38→        """Initialize the parser with source text."""
     42→    def parse(self) -> list[Token]:
     43→        """Parse and return the token list."""
     46→    @classmethod
