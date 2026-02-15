@@ -1,0 +1,193 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 2000 → level 1 (693 words)
+
+README-crates.io.md
+src/into_either.rs
+    14→pub trait IntoEither
+    29→    fn into_either
+    55→    fn into_either_with
+    64→impl<T> IntoEither for T
+src/iterator.rs
+     4→macro_rules! wrap_either
+    19→pub struct IterEither
+    23→impl<L, R> IterEither<L, R>
+    24→    pub(crate) fn new
+    29→impl<L, R, A> Extend<A> for Either<L, R>
+    34→    fn extend
+    43→impl<L, R> Iterator for Either<L, R>
+    48→    type Item
+    50→    fn next
+    54→    fn size_hint
+    58→    fn fold
+    65→    fn for_each
+    72→    fn count
+    76→    fn last
+    80→    fn nth
+    84→    fn collect
+    91→    fn partition
+    99→    fn all
+   106→    fn any
+   113→    fn find
+   120→    fn find_map
+   127→    fn position
+   135→impl<L, R> DoubleEndedIterator for Either<L, R>
+   140→    fn next_back
+   144→    fn nth_back
+   148→    fn rfold
+   155→    fn rfind
+   163→impl<L, R> ExactSizeIterator for Either<L, R>
+   168→    fn len
+   173→impl<L, R> iter::FusedIterator for Either<L, R>
+   180→impl<L, R> Iterator for IterEither<L, R>
+   185→    type Item
+   187→    fn next
+   191→    fn size_hint
+   195→    fn fold
+   202→    fn for_each
+   209→    fn count
+   213→    fn last
+   217→    fn nth
+   221→    fn collect
+   228→    fn partition
+   236→    fn all
+   243→    fn any
+   250→    fn find
+   257→    fn find_map
+   264→    fn position
+   272→impl<L, R> DoubleEndedIterator for IterEither<L, R>
+   277→    fn next_back
+   281→    fn nth_back
+   285→    fn rfold
+   292→    fn rfind
+   300→impl<L, R> ExactSizeIterator for IterEither<L, R>
+   305→    fn len
+   310→impl<L, R> iter::FusedIterator for IterEither<L, R>
+src/lib.rs
+    22→pub mod serde_untagged
+    25→pub mod serde_untagged_optional
+    49→pub enum Either
+    81→macro_rules! for_both
+   113→macro_rules! try_left
+   124→macro_rules! try_right
+   133→macro_rules! map_either
+   142→mod iterator
+   145→mod into_either
+   148→impl<L: Clone, R: Clone> Clone for Either<L, R>
+   149→    fn clone
+   156→    fn clone_from
+   165→impl<L, R> Either<L, R>
+   175→    pub fn is_left
+   191→    pub fn is_right
+   206→    pub fn left
+   224→    pub fn right
+   242→    pub fn as_ref
+   264→    pub fn as_mut
+   270→    pub fn as_pin_ref
+   278→    pub fn as_pin_mut
+   298→    pub fn flip
+   317→    pub fn map_left
+   339→    pub fn map_right
+   366→    pub fn map_either
+   397→    pub fn map_either_with
+   424→    pub fn either
+   454→    pub fn either_with
+   476→    pub fn left_and_then
+   497→    pub fn right_and_then
+   521→    pub fn into_iter
+   544→    pub fn iter
+   573→    pub fn iter_mut
+   597→    pub fn factor_into_iter
+   619→    pub fn factor_iter
+   645→    pub fn factor_iter_mut
+   671→    pub fn left_or
+   690→    pub fn left_or_default
+   712→    pub fn left_or_else
+   738→    pub fn right_or
+   757→    pub fn right_or_default
+   779→    pub fn right_or_else
+   809→    pub fn unwrap_left
+   841→    pub fn unwrap_right
+   871→    pub fn expect_left
+   901→    pub fn expect_right
+   923→    pub fn either_into
+   932→impl<L, R> Either<Option<L>, Option<R>>
+   944→    pub fn factor_none
+   952→impl<L, R, E> Either<Result<L, E>, Result<R, E>>
+   966→    pub fn factor_err
+   974→impl<T, L, R> Either<Result<T, L>, Result<T, R>>
+   988→    pub fn factor_ok
+   996→impl<T, L, R> Either<(T, L), (T, R)>
+  1009→    pub fn factor_first
+  1017→impl<T, L, R> Either<(L, T), (R, T)>
+  1030→    pub fn factor_second
+  1038→impl<T> Either<T, T>
+  1050→    pub fn into_inner
+  1065→    pub fn map
+  1073→impl<L, R> Either<&L, &R>
+  1076→    pub fn cloned
+  1086→    pub fn copied
+  1095→impl<L, R> Either<&mut L, &mut R>
+  1098→    pub fn cloned
+  1108→    pub fn copied
+  1118→impl<L, R> From<Result<R, L>> for Either<L, R>
+  1119→    fn from
+  1128→impl<L, R> From<Either<L, R>> for Result<R, L>
+  1129→    fn from
+  1138→impl<L, R> Future for Either<L, R>
+  1143→    type Output
+  1145→    fn poll
+  1157→impl<L, R> Read for Either<L, R>
+  1162→    fn read
+  1166→    fn read_exact
+  1170→    fn read_to_end
+  1174→    fn read_to_string
+  1183→impl<L, R> Seek for Either<L, R>
+  1188→    fn seek
+  1195→impl<L, R> BufRead for Either<L, R>
+  1200→    fn fill_buf
+  1204→    fn consume
+  1208→    fn read_until
+  1212→    fn read_line
+  1221→impl<L, R> Write for Either<L, R>
+  1226→    fn write
+  1230→    fn write_all
+  1234→    fn write_fmt
+  1238→    fn flush
+  1243→impl<L, R, Target> AsRef<Target> for Either<L, R>
+  1248→    fn as_ref
+  1253→macro_rules! impl_specific_ref_and_mut
+  1292→impl<L, R, Target> AsRef<[Target]> for Either<L, R>
+  1297→    fn as_ref
+  1302→impl<L, R, Target> AsMut<Target> for Either<L, R>
+  1307→    fn as_mut
+  1312→impl<L, R, Target> AsMut<[Target]> for Either<L, R>
+  1317→    fn as_mut
+  1322→impl<L, R> Deref for Either<L, R>
+  1327→    type Target
+  1329→    fn deref
+  1334→impl<L, R> DerefMut for Either<L, R>
+  1339→    fn deref_mut
+  1348→impl<L, R> Error for Either<L, R>
+  1353→    fn source
+  1358→    fn description
+  1363→    fn cause
+  1368→impl<L, R> fmt::Display for Either<L, R>
+  1373→    fn fmt
+  1378→impl<L, R> fmt::Write for Either<L, R>
+  1383→    fn write_str
+  1387→    fn write_char
+  1391→    fn write_fmt
+  1522→macro_rules! check_t
+  1536→fn _unsized_ref_propagation
+  1553→fn _unsized_std_propagation
+src/serde_untagged.rs
+    40→enum Either
+    45→pub fn serialize
+    58→pub fn deserialize
+src/serde_untagged_optional.rs
+    40→enum Either
+    45→pub fn serialize
+    62→pub fn deserialize

@@ -1,0 +1,595 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 5000 → level 5 (2524 words)
+
+LICENSE.md
+README.md
+     5→## Usage
+     6→
+     7→To start using the library, install it in your project:
+     8→
+     9→```bash
+    10→npm install sonner
+    11→```
+    12→
+    13→Add `<Toaster />` to your app, it will be the place where all your toasts will be rendered.
+    14→After that you can use `toast()` from anywhere in your app.
+    15→
+    16→```jsx
+    17→import { Toaster, toast } from 'sonner';
+    18→
+    19→// ...
+    20→
+    21→function App() {
+    22→  return (
+    23→    <div>
+    24→      <Toaster />
+    25→      <button onClick={() => toast('My first toast')}>Give me a toast</button>
+    26→    </div>
+    27→  );
+    28→}
+    29→```
+    30→
+    31→## Documentation
+    32→
+    33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
+playwright.config.ts
+src/assets.tsx
+     5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
+    24→const bars = Array(12).fill(0);
+    26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
+    38→const SuccessIcon = (
+    48→const WarningIcon = (
+    58→const InfoIcon = (
+    68→const ErrorIcon = (
+    78→export const CloseIcon = (
+src/hooks.tsx
+     3→export const useIsDocumentHidden = () => {
+src/index.tsx
+    22→const VISIBLE_TOASTS_AMOUNT = 3;
+    25→const VIEWPORT_OFFSET = '24px';
+    28→const MOBILE_VIEWPORT_OFFSET = '16px';
+    31→const TOAST_LIFETIME = 4000;
+    34→const TOAST_WIDTH = 356;
+    37→const GAP = 14;
+    40→const SWIPE_THRESHOLD = 45;
+    43→const TIME_BEFORE_UNMOUNT = 200;
+    45→function cn(...classes: (string | undefined)[]) {
+    49→function getDefaultSwipeDirections(position: string): Array<SwipeDirection> {
+    64→const Toast = (props: ToastProps) => {
+   507→function getDocumentDirection(): ToasterProps['dir'] {
+   520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
+   552→function useSonner() {
+   593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
+src/state.ts
+    15→type titleT = (() => React.ReactNode) | React.ReactNode;
+    17→class Observer {
+    18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
+    19→  toasts: Array<ToastT | ToastToDismiss>;
+    20→  dismissedToasts: Set<string | number>;
+    21→
+    22→  constructor() {
+    23→    this.subscribers = [];
+    24→    this.toasts = [];
+    25→    this.dismissedToasts = new Set();
+    26→  }
+    27→
+    28→  // We use arrow functions to maintain the correct `this` reference
+    29→  subscribe = (subscriber: (toast: ToastT | ToastToDismiss) => void) => {
+    30→    this.subscribers.push(subscriber);
+    31→
+    32→    return () => {
+    33→      const index = this.subscribers.indexOf(subscriber);
+    34→      this.subscribers.splice(index, 1);
+    35→    };
+    36→  };
+    37→
+    38→  publish = (data: ToastT) => {
+    39→    this.subscribers.forEach((subscriber) => subscriber(data));
+    40→  };
+    41→
+    42→  addToast = (data: ToastT) => {
+    43→    this.publish(data);
+    44→    this.toasts = [...this.toasts, data];
+    45→  };
+    46→
+    47→  create = (
+    48→    data: ExternalToast & {
+    49→      message?: titleT;
+    50→      type?: ToastTypes;
+    51→      promise?: PromiseT;
+    52→      jsx?: React.ReactElement;
+    53→    },
+    54→  ) => {
+    55→    const { message, ...rest } = data;
+    56→    const id = typeof data?.id === 'number' || data.id?.length > 0 ? data.id : toastsCounter++;
+    57→    const alreadyExists = this.toasts.find((toast) => {
+    58→      return toast.id === id;
+    59→    });
+    60→    const dismissible = data.dismissible === undefined ? true : data.dismissible;
+    61→
+    62→    if (this.dismissedToasts.has(id)) {
+    63→      this.dismissedToasts.delete(id);
+    64→    }
+    65→
+    66→    if (alreadyExists) {
+    67→      this.toasts = this.toasts.map((toast) => {
+    68→        if (toast.id === id) {
+    69→          this.publish({ ...toast, ...data, id, title: message });
+    70→          return {
+    71→            ...toast,
+    72→            ...data,
+    73→            id,
+    74→            dismissible,
+    75→            title: message,
+    76→          };
+    77→        }
+    78→
+    79→        return toast;
+    80→      });
+    81→    } else {
+    82→      this.addToast({ title: message, ...rest, dismissible, id });
+    83→    }
+    84→
+    85→    return id;
+    86→  };
+    87→
+    88→  dismiss = (id?: number | string) => {
+    89→    if (id) {
+    90→      this.dismissedToasts.add(id);
+    91→      requestAnimationFrame(() => this.subscribers.forEach((subscriber) => subscriber({ id, dismiss: true })));
+    92→    } else {
+    93→      this.toasts.forEach((toast) => {
+    94→        this.subscribers.forEach((subscriber) => subscriber({ id: toast.id, dismiss: true }));
+    95→      });
+    96→    }
+    97→
+    98→    return id;
+    99→  };
+   100→
+   101→  message = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   102→    return this.create({ ...data, message });
+   103→  };
+   104→
+   105→  error = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   106→    return this.create({ ...data, message, type: 'error' });
+   107→  };
+   108→
+   109→  success = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   110→    return this.create({ ...data, type: 'success', message });
+   111→  };
+   112→
+   113→  info = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   114→    return this.create({ ...data, type: 'info', message });
+   115→  };
+   116→
+   117→  warning = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   118→    return this.create({ ...data, type: 'warning', message });
+   119→  };
+   120→
+   121→  loading = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   122→    return this.create({ ...data, type: 'loading', message });
+   123→  };
+   124→
+   125→  promise = <ToastData>(promise: PromiseT<ToastData>, data?: PromiseData<ToastData>) => {
+   126→    if (!data) {
+   127→      // Nothing to show
+   128→      return;
+   129→    }
+   130→
+   131→    let id: string | number | undefined = undefined;
+   132→    if (data.loading !== undefined) {
+   133→      id = this.create({
+   134→        ...data,
+   135→        promise,
+   136→        type: 'loading',
+   137→        message: data.loading,
+   138→        description: typeof data.description !== 'function' ? data.description : undefined,
+   139→      });
+   140→    }
+   141→
+   142→    const p = Promise.resolve(promise instanceof Function ? promise() : promise);
+   143→
+   144→    let shouldDismiss = id !== undefined;
+   145→    let result: ['resolve', ToastData] | ['reject', unknown];
+   146→
+   147→    const originalPromise = p
+   148→      .then(async (response) => {
+   149→        result = ['resolve', response];
+   150→        const isReactElementResponse = React.isValidElement(response);
+   151→        if (isReactElementResponse) {
+   152→          shouldDismiss = false;
+   153→          this.create({ id, type: 'default', message: response });
+   154→        } else if (isHttpResponse(response) && !response.ok) {
+   155→          shouldDismiss = false;
+   156→
+   157→          const promiseData =
+   158→            typeof data.error === 'function' ? await data.error(`HTTP error! status: ${response.status}`) : data.error;
+   159→
+   160→          const description =
+   161→            typeof data.description === 'function'
+   162→              ? await data.description(`HTTP error! status: ${response.status}`)
+   163→              : data.description;
+   164→
+   165→          const isExtendedResult = typeof promiseData === 'object' && !React.isValidElement(promiseData);
+   166→
+   167→          const toastSettings: PromiseIExtendedResult = isExtendedResult
+   168→            ? (promiseData as PromiseIExtendedResult)
+   169→            : { message: promiseData };
+   170→
+   171→          this.create({ id, type: 'error', description, ...toastSettings });
+   172→        } else if (response instanceof Error) {
+   173→          shouldDismiss = false;
+   174→
+   175→          const promiseData = typeof data.error === 'function' ? await data.error(response) : data.error;
+   176→
+   177→          const description =
+   178→            typeof data.description === 'function' ? await data.description(response) : data.description;
+   179→
+   180→          const isExtendedResult = typeof promiseData === 'object' && !React.isValidElement(promiseData);
+   181→
+   182→          const toastSettings: PromiseIExtendedResult = isExtendedResult
+   183→            ? (promiseData as PromiseIExtendedResult)
+   184→            : { message: promiseData };
+   185→
+   186→          this.create({ id, type: 'error', description, ...toastSettings });
+   187→        } else if (data.success !== undefined) {
+   188→          shouldDismiss = false;
+   189→          const promiseData = typeof data.success === 'function' ? await data.success(response) : data.success;
+   190→
+   191→          const description =
+   192→            typeof data.description === 'function' ? await data.description(response) : data.description;
+   193→
+   194→          const isExtendedResult = typeof promiseData === 'object' && !React.isValidElement(promiseData);
+   195→
+   196→          const toastSettings: PromiseIExtendedResult = isExtendedResult
+   197→            ? (promiseData as PromiseIExtendedResult)
+   198→            : { message: promiseData };
+   199→
+   200→          this.create({ id, type: 'success', description, ...toastSettings });
+   201→        }
+   202→      })
+   203→      .catch(async (error) => {
+   204→        result = ['reject', error];
+   205→        if (data.error !== undefined) {
+   206→          shouldDismiss = false;
+   207→          const promiseData = typeof data.error === 'function' ? await data.error(error) : data.error;
+   208→
+   209→          const description = typeof data.description === 'function' ? await data.description(error) : data.description;
+   210→
+   211→          const isExtendedResult = typeof promiseData === 'object' && !React.isValidElement(promiseData);
+   212→
+   213→          const toastSettings: PromiseIExtendedResult = isExtendedResult
+   214→            ? (promiseData as PromiseIExtendedResult)
+   215→            : { message: promiseData };
+   216→
+   217→          this.create({ id, type: 'error', description, ...toastSettings });
+   218→        }
+   219→      })
+   220→      .finally(() => {
+   221→        if (shouldDismiss) {
+   222→          // Toast is still in load state (and will be indefinitely — dismiss it)
+   223→          this.dismiss(id);
+   224→          id = undefined;
+   225→        }
+   226→
+   227→        data.finally?.();
+   228→      });
+   229→
+   230→    const unwrap = () =>
+   231→      new Promise<ToastData>((resolve, reject) =>
+   232→        originalPromise.then(() => (result[0] === 'reject' ? reject(result[1]) : resolve(result[1]))).catch(reject),
+   233→      );
+   234→
+   235→    if (typeof id !== 'string' && typeof id !== 'number') {
+   236→      // cannot Object.assign on undefined
+   237→      return { unwrap };
+   238→    } else {
+   239→      return Object.assign(id, { unwrap });
+   240→    }
+   241→  };
+   242→
+   243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
+   244→    const id = data?.id || toastsCounter++;
+   245→    this.create({ jsx: jsx(id), ...data, id });
+   246→    return id;
+   247→  };
+   248→
+   249→  getActiveToasts = () => {
+   250→    return this.toasts.filter((toast) => !this.dismissedToasts.has(toast.id));
+   251→  };
+   252→}
+   254→export const ToastState = new Observer();
+   257→const toastFunction = (message: titleT, data?: ExternalToast) => {
+   268→const isHttpResponse = (data: any): data is Response => {
+   279→const basicToast = toastFunction;
+   281→const getHistory = () => ToastState.toasts;
+   282→const getToasts = () => ToastState.getActiveToasts();
+   285→export const toast = Object.assign(
+src/types.ts
+     3→export type ToastTypes = 'normal' | 'action' | 'success' | 'info' | 'warning' | 'error' | 'loading' | 'default';
+     5→export type PromiseT<Data = any> = Promise<Data> | (() => Promise<Data>);
+     7→export interface PromiseIExtendedResult extends ExternalToast {
+     8→  message: React.ReactNode;
+     9→}
+    11→export type PromiseTExtendedResult<Data = any> =
+    12→  | PromiseIExtendedResult
+    13→  | ((data: Data) => PromiseIExtendedResult | Promise<PromiseIExtendedResult>);
+    15→export type PromiseTResult<Data = any> =
+    16→  | string
+    17→  | React.ReactNode
+    18→  | ((data: Data) => React.ReactNode | string | Promise<React.ReactNode | string>);
+    20→export type PromiseExternalToast = Omit<ExternalToast, 'description'>;
+    22→export type PromiseData<ToastData = any> = PromiseExternalToast & {
+    23→  loading?: string | React.ReactNode;
+    24→  success?: PromiseTResult<ToastData> | PromiseTExtendedResult<ToastData>;
+    25→  error?: PromiseTResult | PromiseTExtendedResult;
+    26→  description?: PromiseTResult;
+    27→  finally?: () => void | Promise<void>;
+    28→};
+    30→export interface ToastClassnames {
+    31→  toast?: string;
+    32→  title?: string;
+    33→  description?: string;
+    34→  loader?: string;
+    35→  closeButton?: string;
+    36→  cancelButton?: string;
+    37→  actionButton?: string;
+    38→  success?: string;
+    39→  error?: string;
+    40→  info?: string;
+    41→  warning?: string;
+    42→  loading?: string;
+    43→  default?: string;
+    44→  content?: string;
+    45→  icon?: string;
+    46→}
+    48→export interface ToastIcons {
+    49→  success?: React.ReactNode;
+    50→  info?: React.ReactNode;
+    51→  warning?: React.ReactNode;
+    52→  error?: React.ReactNode;
+    53→  loading?: React.ReactNode;
+    54→  close?: React.ReactNode;
+    55→}
+    57→export interface Action {
+    58→  label: React.ReactNode;
+    59→  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    60→  actionButtonStyle?: React.CSSProperties;
+    61→}
+    63→export interface ToastT {
+    64→  id: number | string;
+    65→  toasterId?: string;
+    66→  title?: (() => React.ReactNode) | React.ReactNode;
+    67→  type?: ToastTypes;
+    68→  icon?: React.ReactNode;
+    69→  jsx?: React.ReactNode;
+    70→  richColors?: boolean;
+    71→  invert?: boolean;
+    72→  closeButton?: boolean;
+    73→  dismissible?: boolean;
+    74→  description?: (() => React.ReactNode) | React.ReactNode;
+    75→  duration?: number;
+    76→  delete?: boolean;
+    77→  action?: Action | React.ReactNode;
+    78→  cancel?: Action | React.ReactNode;
+    79→  onDismiss?: (toast: ToastT) => void;
+    80→  onAutoClose?: (toast: ToastT) => void;
+    81→  promise?: PromiseT;
+    82→  cancelButtonStyle?: React.CSSProperties;
+    83→  actionButtonStyle?: React.CSSProperties;
+    84→  style?: React.CSSProperties;
+    85→  unstyled?: boolean;
+    86→  className?: string;
+    87→  classNames?: ToastClassnames;
+    88→  descriptionClassName?: string;
+    89→  position?: Position;
+    90→  testId?: string;
+    91→}
+    93→export function isAction(action: Action | React.ReactNode): action is Action {
+    97→export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
+    98→export interface HeightT {
+    99→  height: number;
+   100→  toastId: number | string;
+   101→  position: Position;
+   102→}
+   104→interface ToastOptions {
+   105→  className?: string;
+   106→  closeButton?: boolean;
+   107→  descriptionClassName?: string;
+   108→  style?: React.CSSProperties;
+   109→  cancelButtonStyle?: React.CSSProperties;
+   110→  actionButtonStyle?: React.CSSProperties;
+   111→  duration?: number;
+   112→  unstyled?: boolean;
+   113→  classNames?: ToastClassnames;
+   114→  closeButtonAriaLabel?: string;
+   115→  toasterId?: string;
+   116→}
+   118→type Offset =
+   119→  | {
+   120→      top?: string | number;
+   121→      right?: string | number;
+   122→      bottom?: string | number;
+   123→      left?: string | number;
+   124→    }
+   125→  | string
+   126→  | number;
+   128→export interface ToasterProps {
+   129→  id?: string;
+   130→  invert?: boolean;
+   131→  theme?: 'light' | 'dark' | 'system';
+   132→  position?: Position;
+   133→  hotkey?: string[];
+   134→  richColors?: boolean;
+   135→  expand?: boolean;
+   136→  duration?: number;
+   137→  gap?: number;
+   138→  visibleToasts?: number;
+   139→  closeButton?: boolean;
+   140→  toastOptions?: ToastOptions;
+   141→  className?: string;
+   142→  style?: React.CSSProperties;
+   143→  offset?: Offset;
+   144→  mobileOffset?: Offset;
+   145→  dir?: 'rtl' | 'ltr' | 'auto';
+   146→  swipeDirections?: SwipeDirection[];
+   147→  icons?: ToastIcons;
+   148→  customAriaLabel?: string;
+   149→  containerAriaLabel?: string;
+   150→}
+   152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
+   154→export interface ToastProps {
+   155→  toast: ToastT;
+   156→  toasts: ToastT[];
+   157→  index: number;
+   158→  swipeDirections?: SwipeDirection[];
+   159→  expanded: boolean;
+   160→  invert: boolean;
+   161→  heights: HeightT[];
+   162→  setHeights: React.Dispatch<React.SetStateAction<HeightT[]>>;
+   163→  removeToast: (toast: ToastT) => void;
+   164→  gap?: number;
+   165→  position: Position;
+   166→  visibleToasts: number;
+   167→  expandByDefault: boolean;
+   168→  closeButton: boolean;
+   169→  interacting: boolean;
+   170→  style?: React.CSSProperties;
+   171→  cancelButtonStyle?: React.CSSProperties;
+   172→  actionButtonStyle?: React.CSSProperties;
+   173→  duration?: number;
+   174→  className?: string;
+   175→  unstyled?: boolean;
+   176→  descriptionClassName?: string;
+   177→  loadingIcon?: React.ReactNode;
+   178→  classNames?: ToastClassnames;
+   179→  icons?: ToastIcons;
+   180→  closeButtonAriaLabel?: string;
+   181→  defaultRichColors?: boolean;
+   182→}
+   184→export enum SwipeStateTypes {
+   185→  SwipedOut = 'SwipedOut',
+   186→  SwipedBack = 'SwipedBack',
+   187→  NotSwiped = 'NotSwiped',
+   188→}
+   190→export type Theme = 'light' | 'dark';
+   192→export interface ToastToDismiss {
+   193→  id: number | string;
+   194→  dismiss: boolean;
+   195→}
+   197→export type ExternalToast = Omit<ToastT, 'id' | 'type' | 'title' | 'jsx' | 'delete' | 'promise'> & {
+   198→  id?: number | string;
+   199→  toasterId?: string;
+   200→};
+website/README.md
+     3→## Getting Started
+     4→
+     5→First, run the development server:
+     6→
+     7→```bash
+     8→npm run dev
+     9→# or
+    10→yarn dev
+    11→# or
+    12→pnpm dev
+    13→```
+    14→
+    15→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    16→
+    17→You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+    18→
+    19→[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+    20→
+    21→The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+    22→
+    23→This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+    24→
+    25→## Learn More
+    26→
+    27→To learn more about Next.js, take a look at the following resources:
+    28→
+    29→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+    30→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    31→
+    32→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    33→
+    34→## Deploy on Vercel
+    35→
+    36→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    37→
+    38→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+website/next.config.js
+     1→/** @type {import('next').NextConfig} */
+     2→const nextConfig = {
+     8→const withNextra = require('nextra')({
+website/postcss.config.js
+website/src/components/CodeBlock/index.tsx
+     9→const variants = {
+    14→const theme = {
+    48→export const CodeBlock = ({ children, initialHeight = 0 }: { children: string; initialHeight?: number }) => {
+website/src/components/ExpandModes/index.tsx
+     4→export const ExpandModes = ({
+website/src/components/Footer/index.tsx
+     5→export const Footer = () => {
+website/src/components/Head/index.tsx
+     3→const ogImage = 'https://sonner.emilkowal.ski/og.png';
+     5→const Head = () => (
+     6→  <NextHead>
+     7→    {/* Title */}
+     8→    <title>Sonner</title>
+     9→    <meta name="og:title" content="Sonner" />
+    10→
+    11→    {/* Description */}
+    12→    <meta name="description" content="An opinionated toast component for React." />
+    13→    <meta name="og:description" content="An opinionated toast component for React." />
+    14→
+    15→    {/* Image */}
+    16→    <meta name="twitter:image" content={ogImage} />
+    17→    <meta name="og:image" content={ogImage} />
+    18→
+    19→    {/* URL */}
+    20→    <meta name="og:url" content="https://sonner.emilkowal.ski/" />
+    21→
+    22→    {/* General */}
+    23→    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    24→    <meta httpEquiv="Content-Language" content="en" />
+    25→    <meta name="twitter:card" content="summary_large_image" />
+    26→    <meta name="twitter:site" content="@emilkowalski_" />
+    27→    <meta name="author" content="Emil Kowalski" />
+    28→
+    29→    {/* Favicons */}
+    30→    <meta name="msapplication-TileColor" content="#ffffff" />
+    31→    <meta name="theme-color" content="#ffffff" />
+    32→    <link rel="shortcut icon" href="favicon.ico" />
+    33→    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    34→  </NextHead>
+    35→);
+website/src/components/Hero/index.tsx
+     6→export const Hero = () => {
+website/src/components/How/How.tsx
+     3→export const How = () => {
+website/src/components/Installation/index.tsx
+     9→const variants = {
+    14→export const Installation = () => {
+website/src/components/Other/Other.tsx
+     7→export const Other = ({
+website/src/components/Position/index.tsx
+     5→const positions = ['top-left', 'top-center', 'top-right', 'bottom-left', 'bottom-center', 'bottom-right'] as const;
+     7→export type Position = (typeof positions)[number];
+     9→export const Position = ({
+website/src/components/Types/Types.tsx
+     5→const promiseCode = '`${data.name} toast has been added`';
+     7→export const Types = () => {
+    34→const allTypes = [
+website/src/components/Usage/index.tsx
+     3→export const Usage = () => {
+website/src/pages/_app.tsx
+     7→export default function Nextra({ Component, pageProps }: AppProps): ReactElement {
+website/src/pages/index.tsx
+    14→export default function Home() {
+website/tailwind.config.js
+website/theme.config.jsx
+     7→  useNextSeoProps() {

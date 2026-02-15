@@ -1092,6 +1092,15 @@ fixture_test!(
 fixture_test!(fixture_xxhash_xxhsum_subdir, "xxhash/xxhsum", 1);
 fixture_test!(fixture_xxhash_xxhsum_subdir_level2, "xxhash/xxhsum", 2);
 
+// Root-level fixture tests: exercise depth penalties, file discovery filtering,
+// and multi-language repos more realistically than subdirectory-only targets.
+
+fixture_test!(fixture_either_root_level2, "either", 2);
+fixture_test!(fixture_neverthrow_root_level2, "neverthrow", 2);
+fixture_test!(fixture_pluggy_root_level2, "pluggy", 2);
+fixture_test!(fixture_sonner_root_level2, "sonner", 2);
+fixture_test!(fixture_commander_root_level2, "commander", 2);
+
 // Single-file rendering tests (precis accepts individual files, not just directories).
 
 #[test]
@@ -1239,6 +1248,12 @@ fn monotonicity_invariant() {
         ("xxhash", "xxhash"),                             // Go (8 files)
         ("go-multierror", "go-multierror"),               // Go (14 files)
         ("mdbook", "mdbook/guide/src"),                   // Markdown (35 files)
+        // Root-level targets exercise depth penalties and multi-language discovery
+        ("either-root", "either"),                        // Rust + Markdown (6 files)
+        ("neverthrow-root", "neverthrow"),                // TS + JS + Markdown (9 files)
+        ("pluggy-root", "pluggy"),                        // Python + Markdown (14 files)
+        ("sonner-root", "sonner"),                        // TSX + TS + JS (26 files)
+        ("commander-root", "commander"),                  // JS + Markdown (27 files)
     ];
     let mut tested_files = 0;
     for (name, subpath) in fixtures {
@@ -1415,3 +1430,31 @@ budget_test!(budget_typeguard_level0, "typeguard/src/typeguard", 10);
 budget_test!(budget_typeguard_level1, "typeguard/src/typeguard", 400);
 budget_test!(budget_typeguard_level3, "typeguard/src/typeguard", 3100);
 budget_test!(budget_typeguard_level4, "typeguard/src/typeguard", 7100);
+
+// Root-level budget tests: exercise depth penalties, multi-language discovery,
+// and file filtering at the repo root — the most common real-world use case.
+
+budget_test!(budget_either_root_level0, "either", 6);
+budget_test!(budget_either_root_level1, "either", 2000);
+budget_test!(budget_either_root_level3, "either", 5200);
+budget_test!(budget_either_root_level5, "either", 6200);
+
+budget_test!(budget_neverthrow_root_level0, "neverthrow", 10);
+budget_test!(budget_neverthrow_root_level1, "neverthrow", 1500);
+budget_test!(budget_neverthrow_root_level3, "neverthrow", 4000);
+budget_test!(budget_neverthrow_root_level4, "neverthrow", 6000);
+
+budget_test!(budget_pluggy_root_level0, "pluggy", 50);
+budget_test!(budget_pluggy_root_level1, "pluggy", 100);
+budget_test!(budget_pluggy_root_level3, "pluggy", 2000);
+budget_test!(budget_pluggy_root_level4, "pluggy", 3200);
+
+budget_test!(budget_sonner_root_level0, "sonner", 30);
+budget_test!(budget_sonner_root_level3, "sonner", 800);
+budget_test!(budget_sonner_root_level4, "sonner", 2000);
+budget_test!(budget_sonner_root_level5, "sonner", 5000);
+
+budget_test!(budget_commander_root_level0, "commander", 30);
+budget_test!(budget_commander_root_level1, "commander", 2500);
+budget_test!(budget_commander_root_level2, "commander", 5000);
+budget_test!(budget_commander_root_level4, "commander", 20000);

@@ -1,0 +1,419 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+CHANGELOG.md
+     1→# neverthrow
+     3→## 8.2.0
+     5→### Minor Changes
+    11→## 8.1.1
+    13→### Patch Changes
+    17→## 8.1.0
+    19→### Minor Changes
+    23→## 8.0.0
+    25→### Major Changes
+    43→## 7.2.0
+    45→### Minor Changes
+    49→## 7.1.0
+    51→### Minor Changes
+    56→### Patch Changes
+    62→## 7.0.1
+    64→### Patch Changes
+    70→## 7.0.0
+    72→### Major Changes
+README.md
+     1→# NeverThrow 🙅
+     5→## Description
+    19→## Table Of Contents
+    73→## Installation
+    79→## Recommended: Use `eslint-plugin-neverthrow`
+   100→## Top-Level API
+   139→## API Documentation
+   141→### Synchronous API (`Result`)
+   143→#### `ok`
+   168→#### `err`
+   193→#### `Result.isOk` (method)
+   207→#### `Result.isErr` (method)
+   221→#### `Result.map` (method)
+   259→#### `Result.mapErr` (method)
+   297→#### `Result.unwrapOr` (method)
+   323→#### `Result.andThen` (method)
+   384→#### `Result.asyncAndThen` (method)
+   404→#### `Result.orElse` (method)
+   445→#### `Result.match` (method)
+   514→#### `Result.asyncMap` (method)
+   551→#### `Result.andTee` (method)
+   598→#### `Result.orTee` (method)
+   645→#### `Result.andThrough` (method)
+   692→#### `Result.asyncAndThrough` (method)
+   728→#### `Result.fromThrowable` (static class method)
+   761→#### `Result.combine` (static class method)
+   814→#### `Result.combineWithAllErrors` (static class method)
+   852→#### `Result.safeUnwrap()`
+   863→### Asynchronous API (`ResultAsync`)
+   865→#### `okAsync`
+   892→#### `errAsync`
+   919→#### `ResultAsync.fromThrowable` (static class method)
+   960→#### `ResultAsync.fromPromise` (static class method)
+   996→#### `ResultAsync.fromSafePromise` (static class method)
+  1041→#### `ResultAsync.map` (method)
+  1087→#### `ResultAsync.mapErr` (method)
+  1142→#### `ResultAsync.unwrapOr` (method)
+  1166→#### `ResultAsync.andThen` (method)
+  1223→#### `ResultAsync.orElse` (method)
+  1241→#### `ResultAsync.match` (method)
+  1283→#### `ResultAsync.andTee` (method)
+  1330→#### `ResultAsync.orTee` (method)
+  1377→#### `ResultAsync.andThrough` (method)
+  1425→#### `ResultAsync.combine` (static class method)
+  1475→#### `ResultAsync.combineWithAllErrors` (static class method)
+  1509→#### `ResultAsync.safeUnwrap()`
+  1519→### Utilities
+  1521→#### `fromThrowable`
+  1528→#### `fromAsyncThrowable`
+  1535→#### `fromPromise`
+  1542→#### `fromSafePromise`
+  1549→#### `safeTry`
+  1633→### Testing
+  1673→## A note on the Package Name
+  1681→### License
+jest.config.js
+rollup.config.mjs
+src/_internals/error.ts
+     3→export interface ErrorConfig
+     7→const defaultErrorConfig
+    11→interface NeverThrowError
+    27→export const createNeverThrowError
+src/_internals/utils.ts
+     5→export type ExtractOkTypes
+    10→export type ExtractOkAsyncTypes
+    15→export type ExtractErrTypes
+    20→export type ExtractErrAsyncTypes
+    24→export type InferOkTypes
+    25→export type InferErrTypes
+    27→export type InferAsyncOkTypes
+    28→export type InferAsyncErrTypes
+    33→export const combineResultList
+    54→export const combineResultAsyncList
+    64→export const combineResultListWithAllErrors
+    82→export const combineResultAsyncListWithAllErrors
+src/index.ts
+src/result-async.ts
+    22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
+    25→  constructor(res: Promise<Result<T, E>>) {
+    30→  static fromSafePromise<T, E = never>(promise: Promise<T>): ResultAsync<T, E> {
+    37→  static fromPromise<T, E>(promise: Promise<T>, errorFn: (e: unknown) => E): ResultAsync<T, E> {
+    46→  static fromThrowable<A extends readonly any[], R, E>(
+    47→    fn: (...args: A) => Promise<R>,
+    48→    errorFn?: (err: unknown) => E,
+    49→  ): (...args: A) => ResultAsync<R, E> {
+    69→  static combine<T extends readonly ResultAsync<unknown, unknown>[]>(
+    70→    asyncResultList: T,
+    71→  ): CombineResultAsyncs<T> {
+    81→  static combineWithAllErrors<T extends readonly ResultAsync<unknown, unknown>[]>(
+    82→    asyncResultList: T,
+    83→  ): CombineResultsWithAllErrorsArrayAsync<T> {
+    89→  map<A>(f: (t: T) => A | Promise<A>): ResultAsync<A, E> {
+   101→  andThrough<F>(f: (t: T) => Result<unknown, F> | ResultAsync<unknown, F>): ResultAsync<T, E | F> {
+   117→  andTee(f: (t: T) => unknown): ResultAsync<T, E> {
+   133→  orTee(f: (t: E) => unknown): ResultAsync<T, E> {
+   149→  mapErr<U>(f: (e: E) => U | Promise<U>): ResultAsync<T, U> {
+   169→  andThen(f: any): any {
+   190→  orElse(f: any): any {
+   202→  match<A, B = A>(ok: (t: T) => A, _err: (e: E) => B): Promise<A | B> {
+   206→  unwrapOr<A>(t: A): Promise<T | A> {
+   222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
+   227→  then<A, B>(
+   228→    successCallback?: (res: Result<T, E>) => A | PromiseLike<A>,
+   229→    failureCallback?: (reason: unknown) => B | PromiseLike<B>,
+   230→  ): PromiseLike<A | B> {
+   249→export function okAsync<T, E = never>(value: T): ResultAsync<T, E> {
+   255→export function errAsync<T = never, E = unknown>(err: E): ResultAsync<T, E> {
+   259→export const fromPromise = ResultAsync.fromPromise
+   260→export const fromSafePromise = ResultAsync.fromSafePromise
+   262→export const fromAsyncThrowable = ResultAsync.fromThrowable
+   265→export type CombineResultAsyncs<
+   266→  T extends readonly ResultAsync<unknown, unknown>[]
+   267→> = IsLiteralArray<T> extends 1
+   268→  ? TraverseAsync<UnwrapAsync<T>>
+   269→  : ResultAsync<ExtractOkAsyncTypes<T>, ExtractErrAsyncTypes<T>[number]>
+   272→export type CombineResultsWithAllErrorsArrayAsync<
+   273→  T extends readonly ResultAsync<unknown, unknown>[]
+   274→> = IsLiteralArray<T> extends 1
+   275→  ? TraverseWithAllErrorsAsync<UnwrapAsync<T>>
+   276→  : ResultAsync<ExtractOkAsyncTypes<T>, ExtractErrAsyncTypes<T>[number][]>
+   279→type UnwrapAsync<T> = IsLiteralArray<T> extends 1
+   280→  ? Writable<T> extends [infer H, ...infer Rest]
+   281→    ? H extends PromiseLike<infer HI>
+   282→      ? HI extends Result<unknown, unknown>
+   283→        ? [Dedup<HI>, ...UnwrapAsync<Rest>]
+   284→        : never
+   285→      : never
+   286→    : []
+   287→  : // If we got something too general such as ResultAsync<X, Y>[] then we
+   288→  // simply need to map it to ResultAsync<X[], Y[]>. Yet `ResultAsync`
+   289→  // itself is a union therefore it would be enough to cast it to Ok.
+   290→  T extends Array<infer A>
+   291→  ? A extends PromiseLike<infer HI>
+   292→    ? HI extends Result<infer L, infer R>
+   293→      ? Ok<L, R>[]
+   294→      : never
+   295→    : never
+   296→  : never
+   300→type TraverseAsync<T, Depth extends number = 5> = IsLiteralArray<T> extends 1
+   301→  ? Combine<T, Depth> extends [infer Oks, infer Errs]
+   302→    ? ResultAsync<EmptyArrayToNever<Oks>, MembersToUnion<Errs>>
+   303→    : never
+   304→  : // The following check is important if we somehow reach to the point of
+   305→  // checking something similar to ResultAsync<X, Y>[]. In this case we don't
+   306→  // know the length of the elements, therefore we need to traverse the X and Y
+   307→  // in a way that the result should contain X[] and Y[].
+   308→  T extends Array<infer I>
+   309→  ? // The MemberListOf<I> here is to include all possible types. Therefore
+   310→    // if we face (ResultAsync<X, Y> | ResultAsync<A, B>)[] this type should
+   311→    // handle the case.
+   312→    Combine<MemberListOf<I>, Depth> extends [infer Oks, infer Errs]
+   313→    ? // The following `extends unknown[]` checks are just to satisfy the TS.
+   314→      // we already expect them to be an array.
+   315→      Oks extends unknown[]
+   316→      ? Errs extends unknown[]
+   317→        ? ResultAsync<EmptyArrayToNever<Oks[number][]>, MembersToUnion<Errs[number][]>>
+   318→        : ResultAsync<EmptyArrayToNever<Oks[number][]>, Errs>
+   319→      : // The rest of the conditions are to satisfy the TS and support
+   320→      // the edge cases which are not really expected to happen.
+   321→      Errs extends unknown[]
+   322→      ? ResultAsync<Oks, MembersToUnion<Errs[number][]>>
+   323→      : ResultAsync<Oks, Errs>
+   324→    : never
+   325→  : never
+   330→type TraverseWithAllErrorsAsync<T, Depth extends number = 5> = TraverseAsync<
+   331→  T,
+   332→  Depth
+   333→> extends ResultAsync<infer Oks, infer Errs>
+   334→  ? ResultAsync<Oks, Errs[]>
+   335→  : never
+   338→type Writable<T> = T extends ReadonlyArray<unknown> ? [...T] : T
+src/result.ts
+    14→export namespace Result {
+    23→  export function fromThrowable<Fn extends (...args: readonly any[]) => any, E>(
+    24→    fn: Fn,
+    25→    errorFn?: (e: unknown) => E,
+    26→  ): (...args: Parameters<Fn>) => Result<ReturnType<Fn>, E> {
+    43→  export function combine<
+    44→    T extends readonly [Result<unknown, unknown>, ...Result<unknown, unknown>[]]
+    45→  >(resultList: T): CombineResults<T> {
+    55→  export function combineWithAllErrors<T extends readonly Result<unknown, unknown>[]>(
+    56→    resultList: T,
+    57→  ): CombineResultsWithAllErrorsArray<T> {
+    62→export type Result<T, E> = Ok<T, E> | Err<T, E>
+    66→export function ok<T, E = never>(value: T): Ok<T, E> {
+    73→export function err<T = never, E = unknown>(err: E): Err<T, E> {
+   122→export function safeTry<T, E>(
+   123→  body:
+   124→    | (() => Generator<Err<never, E>, Result<T, E>>)
+   125→    | (() => AsyncGenerator<Err<never, E>, Result<T, E>>),
+   126→): Result<T, E> | ResultAsync<T, E> {
+   134→interface IResult<T, E> {
+   140→  isOk(): this is Ok<T, E>
+   147→  isErr(): this is Err<T, E>
+   157→  map<A>(f: (t: T) => A): Result<A, E>
+   168→  mapErr<U>(f: (e: E) => U): Result<T, U>
+   183→  andThen<U, F>(f: (t: T) => Result<U, F>): Result<U, E | F>
+   195→  andTee(f: (t: T) => unknown): Result<T, E>
+   207→  orTee(f: (t: E) => unknown): Result<T, E>
+   219→  andThrough<F>(f: (t: T) => Result<unknown, F>): Result<T, E | F>
+   233→  orElse<U, A>(f: (e: E) => Result<U, A>): Result<U | T, A>
+   244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
+   253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
+   260→  unwrapOr<A>(v: A): T | A
+   276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
+   290→  safeUnwrap(): Generator<Err<never, E>, T>
+   299→  _unsafeUnwrap(config?: ErrorConfig): T
+   309→  _unsafeUnwrapErr(config?: ErrorConfig): E
+   312→export class Ok<T, E> implements IResult<T, E> {
+   313→  constructor(readonly value: T) {}
+   315→  isOk(): this is Ok<T, E> {
+   319→  isErr(): this is Err<T, E> {
+   323→  map<A>(f: (t: T) => A): Result<A, E> {
+   328→  mapErr<U>(_f: (e: E) => U): Result<T, U> {
+   337→  andThen(f: any): any {
+   344→  andThrough(f: any): any {
+   348→  andTee(f: (t: T) => unknown): Result<T, E> {
+   357→  orTee(_f: (t: E) => unknown): Result<T, E> {
+   366→  orElse(_f: any): any {
+   370→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F> {
+   379→  asyncAndThrough(f: (t: T) => ResultAsync<unknown, unknown>): any {
+   383→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E> {
+   388→  unwrapOr<A>(_v: A): T | A {
+   393→  match<A, B = A>(ok: (t: T) => A, _err: (e: E) => B): A | B {
+   397→  safeUnwrap(): Generator<Err<never, E>, T> {
+   405→  _unsafeUnwrap(_?: ErrorConfig): T {
+   409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
+   419→export class Err<T, E> implements IResult<T, E> {
+   420→  constructor(readonly error: E) {}
+   422→  isOk(): this is Ok<T, E> {
+   426→  isErr(): this is Err<T, E> {
+   431→  map<A>(_f: (t: T) => A): Result<A, E> {
+   435→  mapErr<U>(f: (e: E) => U): Result<T, U> {
+   439→  andThrough<F>(_f: (t: T) => Result<unknown, F>): Result<T, E | F> {
+   443→  andTee(_f: (t: T) => unknown): Result<T, E> {
+   447→  orTee(f: (t: E) => unknown): Result<T, E> {
+   461→  andThen(_f: any): any {
+   470→  orElse(f: any): any {
+   475→  asyncAndThen<U, F>(_f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F> {
+   479→  asyncAndThrough<F>(_f: (t: T) => ResultAsync<unknown, F>): ResultAsync<T, E | F> {
+   484→  asyncMap<U>(_f: (t: T) => Promise<U>): ResultAsync<U, E> {
+   488→  unwrapOr<A>(v: A): T | A {
+   492→  match<A, B = A>(_ok: (t: T) => A, err: (e: E) => B): A | B {
+   496→  safeUnwrap(): Generator<Err<never, E>, T> {
+   505→  _unsafeUnwrap(config?: ErrorConfig): T {
+   509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
+   523→export const fromThrowable = Result.fromThrowable
+   530→type Prev = [
+   531→  never,
+   532→  0,
+   533→  1,
+   534→  2,
+   535→  3,
+   536→  4,
+   537→  5,
+   538→  6,
+   539→  7,
+   540→  8,
+   541→  9,
+   542→  10,
+   543→  11,
+   544→  12,
+   545→  13,
+   546→  14,
+   547→  15,
+   548→  16,
+   549→  17,
+   550→  18,
+   551→  19,
+   552→  20,
+   553→  21,
+   554→  22,
+   555→  23,
+   556→  24,
+   557→  25,
+   558→  26,
+   559→  27,
+   560→  28,
+   561→  29,
+   562→  30,
+   563→  31,
+   564→  32,
+   565→  33,
+   566→  34,
+   567→  35,
+   568→  36,
+   569→  37,
+   570→  38,
+   571→  39,
+   572→  40,
+   573→  41,
+   574→  42,
+   575→  43,
+   576→  44,
+   577→  45,
+   578→  46,
+   579→  47,
+   580→  48,
+   581→  49,
+   582→  ...0[]
+   583→]
+   590→type CollectResults<T, Collected extends unknown[] = [], Depth extends number = 50> = [
+   591→  Depth,
+   592→] extends [never]
+   593→  ? []
+   594→  : T extends [infer H, ...infer Rest]
+   595→  ? // And test whether the head of the list is a result
+   596→    H extends Result<infer L, infer R>
+   597→    ? // Continue collecting...
+   598→      CollectResults<
+   599→        // the rest of the elements
+   600→        Rest,
+   601→        // The collected
+   602→        [...Collected, [L, R]],
+   603→        // and one less of the current depth
+   604→        Prev[Depth]
+   605→      >
+   606→    : never // Impossible
+   607→  : Collected
+   614→export type Transpose<
+   615→  A,
+   616→  Transposed extends unknown[][] = [],
+   617→  Depth extends number = 10
+   618→> = A extends [infer T, ...infer Rest]
+   619→  ? T extends [infer L, infer R]
+   620→    ? Transposed extends [infer PL, infer PR]
+   621→      ? PL extends unknown[]
+   622→        ? PR extends unknown[]
+   623→          ? Transpose<Rest, [[...PL, L], [...PR, R]], Prev[Depth]>
+   624→          : never
+   625→        : never
+   626→      : Transpose<Rest, [[L], [R]], Prev[Depth]>
+   627→    : Transposed
+   628→  : Transposed
+   635→export type Combine<T, Depth extends number = 5> = Transpose<CollectResults<T>, [], Depth> extends [
+   636→  infer L,
+   637→  infer R,
+   638→]
+   639→  ? [UnknownMembersToNever<L>, UnknownMembersToNever<R>]
+   640→  : Transpose<CollectResults<T>, [], Depth> extends []
+   641→  ? [[], []]
+   642→  : never
+   645→export type Dedup<T> = T extends Result<infer RL, infer RR>
+   646→  ? [unknown] extends [RL]
+   647→    ? Err<RL, RR>
+   648→    : Ok<RL, RR>
+   649→  : T
+   652→export type MemberListOf<T> = (
+   653→  (T extends unknown ? (t: T) => T : never) extends infer U
+   654→    ? (U extends unknown ? (u: U) => unknown : never) extends (v: infer V) => unknown
+   655→      ? V
+   656→      : never
+   657→    : never
+   658→) extends (_: unknown) => infer W
+   659→  ? [...MemberListOf<Exclude<T, W>>, W]
+   660→  : []
+   669→export type EmptyArrayToNever<T, NeverArrayToNever extends number = 0> = T extends []
+   670→  ? never
+   671→  : NeverArrayToNever extends 1
+   672→  ? T extends [never, ...infer Rest]
+   673→    ? [EmptyArrayToNever<Rest>] extends [never]
+   674→      ? never
+   675→      : T
+   676→    : T
+   677→  : T
+   680→type UnknownMembersToNever<T> = T extends [infer H, ...infer R]
+   681→  ? [[unknown] extends [H] ? never : H, ...UnknownMembersToNever<R>]
+   682→  : T
+   685→export type MembersToUnion<T> = T extends unknown[] ? T[number] : never
+   688→export type IsLiteralArray<T> = T extends { length: infer L }
+   689→  ? L extends number
+   690→    ? number extends L
+   691→      ? 0
+   692→      : 1
+   693→    : 0
+   694→  : 0
+   698→type Traverse<T, Depth extends number = 5> = Combine<T, Depth> extends [infer Oks, infer Errs]
+   699→  ? Result<EmptyArrayToNever<Oks, 1>, MembersToUnion<Errs>>
+   700→  : never
+   704→type TraverseWithAllErrors<T, Depth extends number = 5> = Traverse<T, Depth> extends Result<
+   705→  infer Oks,
+   706→  infer Errs
+   707→>
+   708→  ? Result<Oks, Errs[]>
+   709→  : never
+   712→export type CombineResults<
+   713→  T extends readonly Result<unknown, unknown>[]
+   714→> = IsLiteralArray<T> extends 1
+   715→  ? Traverse<T>
+   716→  : Result<ExtractOkTypes<T>, ExtractErrTypes<T>[number]>
+   719→export type CombineResultsWithAllErrorsArray<
+   720→  T extends readonly Result<unknown, unknown>[]
+   721→> = IsLiteralArray<T> extends 1
+   722→  ? TraverseWithAllErrors<T>
+   723→  : Result<ExtractOkTypes<T>, ExtractErrTypes<T>[number][]>

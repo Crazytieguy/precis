@@ -1,0 +1,739 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 2500 → level 1 (1784 words)
+
+CHANGELOG.md
+     1→# Changelog
+    11→## [14.0.3] (2026-01-31)
+    13→### Added
+    17→### Changes
+    23→## [14.0.2] (2025-10-25)
+    25→### Changed
+    30→## [14.0.1] (2025-09-12)
+    32→### Fixed
+    36→### Changed
+    45→## [14.0.0] (2025-05-18)
+    47→### Added
+    53→### Fixed
+    58→### Changed
+    63→## [13.1.0] (2025-01-21)
+    65→### Added
+    69→## [13.0.0] (2024-12-30)
+    71→### Added
+    80→### Changed
+    88→### Deleted
+    92→### Migration Tips
+   156→## [13.0.0-0] (2024-12-07)
+   160→## [12.1.0] (2024-05-18)
+   162→### Added
+   166→### Changed
+   173→### Removed
+   177→## [12.0.0] (2024-02-03)
+   179→### Added
+   184→### Fixed
+   189→### Changed
+   200→### Deprecated
+   204→### Removed
+   208→### Migration Tips
+   226→## [12.0.0-1] (2024-01-20)
+   230→## [12.0.0-0] (2023-11-11)
+   234→## [11.1.0] (2023-10-13)
+   236→### Fixed
+   243→### Added
+   250→### Changed
+   254→### Deprecated
+   258→## [11.0.0] (2023-06-16)
+   260→### Fixed
+   264→### Changed
+   270→## [10.0.1] (2023-04-15)
+   272→### Added
+   276→### Fixed
+   280→### Changed
+   284→## [10.0.0] (2023-01-13)
+   286→### Added
+   290→### Changed
+   294→## [9.5.0] (2023-01-07)
+   296→### Added
+   301→## [9.4.1] (2022-09-30)
+   303→### Fixed
+   309→### Changed
+   313→## [9.4.0] (2022-07-15)
+   315→### Added
+   319→### Fixed
+   323→### Changed
+   327→## [9.3.0] (2022-05-28)
+   329→### Added
+   335→### Fixed
+   339→### Deprecated
+   343→## [9.2.0] (2022-04-15)
+   345→### Added
+   350→### Fixed
+   354→### Changed
+   358→## [9.1.0] (2022-03-19)
+   360→### Added
+   365→## [9.0.0] (2022-01-28)
+   367→### Added
+   376→### Changed
+   389→### Fixed
+   393→### Removed
+   397→## [9.0.0-1] (2022-01-15)
+   401→## [9.0.0-0] (2021-12-22)
+   405→## [8.3.0] (2021-10-22)
+   407→### Added
+   411→### Deprecated
+   416→## [8.2.0] (2021-09-10)
+   418→### Added
+   423→### Changed
+   427→### Removed
+   431→## [8.1.0] (2021-07-27)
+   433→### Added
+   439→## [8.0.0] (2021-06-25)
+   441→### Added
+   455→### Changed
+   468→### Deprecated
+   474→### Removed
+   479→### Migration Tips
+   510→## [8.0.0-2] (2021-06-06)
+   514→## [8.0.0-1] (2021-05-30)
+   518→## [8.0.0-0] (2021-05-23)
+   522→## [7.2.0] (2021-03-22)
+   524→### Added
+   530→### Changed
+   535→## [7.1.0] (2021-02-15)
+   537→### Added
+   543→### Fixed
+   550→### Changed
+   555→## [7.0.0] (2021-01-15)
+   557→### Added
+   575→### Changed
+   587→### Fixed
+   595→### Deleted
+   602→### Migration Tips
+   669→## [7.0.0-2] (2020-12-14)
+   673→## [7.0.0-1] (2020-11-21)
+   677→## [7.0.0-0] (2020-10-25)
+   681→## [6.2.1] (2020-12-13)
+   683→### Fixed
+   687→## [6.2.0] (2020-10-25)
+   689→### Added
+   696→### Fixed
+   701→### Changed
+   705→## [6.1.0] (2020-08-28)
+   707→### Added
+   714→### Changed
+   718→### Fixed
+   722→## [6.0.0] (2020-07-21)
+   724→### Added
+   731→### Fixed
+   735→## [6.0.0-0] (2020-06-20)
+   739→## [5.1.0] (2020-04-25)
+   741→### Added
+   746→### Fixed
+   751→### Changed
+   760→## [5.0.0] (2020-03-14)
+   762→### Added
+   781→### Fixed
+   791→### Changed
+   814→### Removed
+   820→### Migration Tips
+   831→## [5.0.0-4] (2020-03-03)
+   835→## [5.0.0-3] (2020-02-20)
+   839→## [5.0.0-2] (2020-02-10)
+   843→## [5.0.0-1] (2020-02-08)
+   847→## [5.0.0-0] (2020-02-02)
+   851→## [4.1.1] (2020-02-02)
+   853→### Fixed
+   857→## [4.1.0] (2020-01-06)
+   859→### Added
+   865→### Fixed
+   869→### Changed
+   878→## [4.0.1] (2019-11-12)
+   880→### Fixed
+   884→## [4.0.0] (2019-11-02)
+   886→### Added
+   894→### Changed
+   900→### Fixed
+   909→### Migration Tips
+   911→#### Testing for no arguments
+   925→## [4.0.0-1] Prerelease (2019-10-08)
+   929→## [4.0.0-0] Prerelease (2019-10-01)
+   933→## [3.0.2] (2019-09-27)
+   937→### Fixed
+   941→### Changed
+   945→## [3.0.1] (2019-08-30)
+   947→### Added
+   953→### Changed
+   957→### Fixed
+   961→## [3.0.0] / 2019-08-08
+   987→### Migration Tips
+  1008→## 3.0.0-0 Prerelease / 2019-07-28
+  1012→## [2.20.1] (2019-09-29)
+  1014→### Fixed
+  1018→### Changed
+  1022→## 2.20.0 / 2019-04-02
+  1033→## 2.19.0 / 2018-10-02
+  1039→## 2.18.0 / 2018-09-07
+  1045→## 2.17.1 / 2018-08-07
+  1049→## 2.17.0 / 2018-08-03
+  1055→## 2.16.0 / 2018-06-29
+  1068→## 2.15.0 / 2018-03-07
+  1073→## 2.14.1 / 2018-02-07
+  1077→## 2.14.0 / 2018-02-05
+  1087→## 2.13.0 / 2018-01-09
+  1094→## 2.12.2 / 2017-11-28
+  1098→## 2.12.1 / 2017-11-23
+  1102→## 2.12.0 / 2017-11-22
+  1119→## 2.11.0 / 2017-07-03
+  1134→## 2.10.0 / 2017-06-19
+  1154→## 2.9.0 / 2015-10-13
+  1160→## 2.8.1 / 2015-04-22
+  1164→## 2.8.0 / 2015-04-07
+  1173→## 2.7.1 / 2015-03-11
+  1177→## 2.7.0 / 2015-03-09
+  1187→## 2.6.0 / 2014-12-30
+  1192→## 2.5.1 / 2014-12-15
+  1196→## 2.5.0 / 2014-10-24
+  1200→## 2.4.0 / 2014-10-17
+  1208→## 2.3.0 / 2014-07-16
+  1214→## 2.2.0 / 2014-03-29
+  1220→## 2.1.0 / 2013-11-21
+  1224→## 2.0.0 / 2013-07-18
+  1228→## 0.6.1 / 2012-06-01
+  1233→## 0.6.0 / 2012-04-10
+  1239→## 0.5.1 / 2011-12-20
+  1243→## 0.5.0 / 2011-12-04
+  1247→## 0.4.3 / 2011-12-04
+  1251→## 0.4.2 / 2011-11-24
+  1256→## 0.4.1 / 2011-11-18
+  1260→## 0.4.0 / 2011-11-15
+  1264→## 0.3.3 / 2011-11-14
+  1268→## 0.3.2 / 2011-11-01
+  1272→## 0.3.1 / 2011-10-31
+  1277→## 0.3.0 / 2011-10-31
+  1281→## 0.2.1 / 2011-10-24
+  1285→## 0.2.0 / 2011-09-26
+  1289→## 0.1.0 / 2011-08-24
+  1293→## 0.0.5 / 2011-08-18
+  1298→## 0.0.4 / 2011-08-15
+  1302→## 0.0.3 / 2011-08-15
+  1306→## 0.0.2 / 2011-08-15
+  1311→## 0.0.1 / 2010-01-03
+CONTRIBUTING.md
+     1→# Contributing
+     3→## Issues
+    13→## Pull Requests
+Readme.md
+     1→# Commander.js
+    61→## Installation
+    67→## Quick Start
+   147→## Declaring _program_ variable
+   177→## Options
+   211→### Common option types, boolean and value
+   254→### Default option value
+   276→### Other option types, negatable boolean and boolean|value
+   342→### Required option
+   362→### Variadic option
+   396→### Version option
+   416→### More configuration
+   459→### Custom option processing
+   523→## Commands
+   567→### Command-arguments
+   613→#### More configuration
+   625→#### Custom argument processing
+   648→### Action handler
+   700→### Stand-alone executable (sub)commands
+   725→### Life cycle hooks
+   754→## Automated help
+   787→### Custom help
+   830→### Display help after errors
+   860→### Display help from code
+   868→### .name
+   884→### .usage
+   900→### .description and .summary
+   914→### .helpOption(flags, description)
+   925→### .helpCommand()
+   937→### Help Groups
+   947→### More configuration
+   956→## Custom event listeners
+   966→## Bits and pieces
+   968→### .parse() and .parseAsync()
+   988→### Parsing Configuration
+  1023→### Legacy options as properties
+  1042→### TypeScript
+  1058→### createCommand()
+  1071→### Node options such as `--harmony`
+  1078→### Debugging stand-alone executable subcommands
+  1087→### npm run-script
+  1098→### Display error
+  1110→### Override exit and output handling
+  1154→### Additional documentation
+  1164→## Support
+  1172→### Commander for enterprise
+Readme_zh-CN.md
+     1→# Commander.js
+    59→## 安装
+    65→## 快速开始
+   144→## 声明 program 变量
+   173→## 选项
+   200→### 常用选项类型，boolean 型选项和带参数选项
+   242→### 选项的默认值
+   264→### 其他的选项类型，取反选项，以及可选参数的选项
+   325→### 必填选项
+   343→### 变长参数选项
+   374→### 版本选项
+   393→### 其他选项配置
+   433→### 自定义选项处理
+   496→## 命令
+   530→### 命令参数
+   570→#### 其他参数配置
+   582→#### 自定义参数处理
+   603→### 处理函数
+   653→### 独立的可执行（子）命令
+   678→### 生命周期钩子
+   705→## 自动化帮助信息
+   734→### 自定义帮助
+   777→### 在出错后展示帮助信息
+   805→### 使用代码展示帮助信息
+   813→### .name
+   826→### .usage
+   842→### .description 和 .summary
+   855→### .helpOption(flags, description)
+   864→### .addHelpCommand()
+   874→### 其他帮助配置
+   895→## 自定义事件监听
+   905→## 零碎知识
+   907→### .parse() 和 .parseAsync()
+   925→### 解析配置
+   956→### 作为属性的遗留选项
+   972→### TypeScript
+   980→### createCommand()
+   991→### Node 选项，如 --harmony
+   998→### 调试子命令
+  1006→### 显示错误
+  1017→### 重写退出和输出
+  1054→### 其他文档
+  1061→## 支持
+  1068→### 企业使用 Commander
+SECURITY.md
+     1→# Security Policy
+docs/deprecated.md
+     1→# Deprecated
+    22→### RegExp .option() parameter
+    34→### noHelp
+    44→### Callback to .help() and .outputHelp()
+    62→### .on('--help')
+    87→### .on('command:*')
+    98→### .command('*')
+   118→### cmd.description(cmdDescription, argDescriptions)
+   141→### InvalidOptionArgumentError
+   171→### Import from `commander/esm.mjs`
+   187→### cmd._args
+   203→### .addHelpCommand(string|boolean|undefined)
+   227→## Removed
+   229→### Short option flag longer than a single character
+   238→### Default import of global Command object
+docs/help-in-depth.md
+     1→# Help in Depth
+    20→## Data Properties
+    34→## Stringify and Style
+   118→## Layout
+docs/options-in-depth.md
+     2→# Options in Depth
+    15→## Options taking varying numbers of option-arguments
+    30→### Parsing ambiguity
+    79→#### Alternative: Make `--` part of your syntax
+   104→#### Alternative: Put options last
+   126→#### Alternative: Use options instead of command-arguments
+   148→## Combining short options, and options taking arguments
+   191→### Combining short options as if boolean
+docs/parsing-and-hooks.md
+     1→# Parsing life cycle and hooks
+docs/release-policy.md
+     1→# Release Policy
+docs/terminology.md
+     1→# Terminology
+docs/zh-CN/不再推荐使用的功能.md
+docs/zh-CN/可变参数的选项.md
+docs/zh-CN/术语表.md
+eslint.config.js
+     8→const tsconfigTsFiles
+     9→const tsconfigJsFiles
+esm.mjs
+index.js
+jest.config.js
+     1→const config
+lib/argument.js
+     3→class Argument
+    13→  constructor
+    48→  name
+    56→  _collectValue
+    73→  default
+    86→  argParser
+    98→  choices
+   119→  argRequired
+   129→  argOptional
+   143→function humanReadableArgName
+lib/command.js
+    13→class Command
+    20→  constructor
+    99→  copyInheritedSettings
+   121→  _getCommandAndAncestors
+   155→  command
+   192→  createCommand
+   203→  createHelp
+   215→  configureHelp
+   245→  configureOutput
+   261→  showHelpAfterError
+   273→  showSuggestionAfterError
+   288→  addCommand
+   316→  createArgument
+   336→  argument
+   359→  arguments
+   375→  addArgument
+   409→  helpCommand
+   443→  addHelpCommand
+   463→  _getHelpCommand
+   487→  hook
+   508→  exitOverride
+   533→  _exit
+   556→  action
+   585→  createOption
+   599→  _callParseArg
+   619→  _registerOption
+   644→  _registerCommand
+   670→  addOption
+   741→  _optionEx
+   788→  option
+   805→  requiredOption
+   826→  combineFlagAndOptionalValue
+   837→  allowUnknownOption
+   848→  allowExcessArguments
+   861→  enablePositionalOptions
+   875→  passThroughOptions
+   885→  _checkForBrokenPassThrough
+   905→  storeOptionsAsProperties
+   925→  getOptionValue
+   940→  setOptionValue
+   953→  setOptionValueWithSource
+   971→  getOptionValueSource
+   983→  getOptionValueSourceWithGlobals
+  1001→  _prepareUserArgs
+  1090→  parse
+  1119→  async parseAsync
+  1127→  _prepareForParse
+  1141→  saveStateBeforeParse
+  1158→  restoreStateBeforeParse
+  1183→  _checkForMissingExecutable
+  1202→  _executeSubCommand
+  1352→  _dispatchSubcommand
+  1380→  _dispatchHelpCommand
+  1403→  _checkNumberOfArguments
+  1428→  _processArguments
+  1481→  _chainOrCall
+  1499→  _chainOrCallHooks
+  1531→  _chainOrCallSubCommandHook
+  1550→  _parseCommand
+  1649→  _findCommand
+  1664→  _findOption
+  1675→  _checkForMissingMandatoryOptions
+  1694→  _checkForConflictingLocalOptions
+  1723→  _checkForConflictingOptions
+  1748→  parseOptions
+  1902→  opts
+  1924→  optsWithGlobals
+  1940→  error
+  1966→  _parseOptionsEnv
+  1996→  _parseOptionsImplied
+  2034→  missingArgument
+  2046→  optionMissingArgument
+  2058→  missingMandatoryOptionValue
+  2070→  _conflictingOption
+  2114→  unknownOption
+  2146→  _excessArguments
+  2162→  unknownCommand
+  2195→  version
+  2218→  description
+  2234→  summary
+  2249→  alias
+  2289→  aliases
+  2304→  usage
+  2331→  name
+  2344→  helpGroup
+  2363→  commandsGroup
+  2382→  optionsGroup
+  2392→  _initOptionGroup
+  2401→  _initCommandGroup
+  2419→  nameFromFilename
+  2437→  executableDir
+  2450→  helpInformation
+  2475→  _getOutputContext
+  2505→  outputHelp
+  2559→  helpOption
+  2592→  _getHelpOption
+  2607→  addHelpOption
+  2621→  help
+  2656→  addHelpText
+  2686→  _outputHelpIfRequested
+  2705→function incrementNodeInspectorPort
+  2752→function useColor
+lib/error.js
+     4→class CommanderError
+    11→  constructor
+    25→class InvalidArgumentError
+    30→  constructor
+lib/help.js
+    12→class Help
+    13→  constructor
+    29→  prepareContext
+    40→  visibleCommands
+    62→  compareOptions
+    79→  visibleOptions
+   112→  visibleGlobalOptions
+   139→  visibleArguments
+   162→  subcommandTerm
+   182→  optionTerm
+   193→  argumentTerm
+   205→  longestSubcommandTermLength
+   224→  longestOptionTermLength
+   241→  longestGlobalOptionTermLength
+   258→  longestArgumentTermLength
+   276→  commandUsage
+   300→  commandDescription
+   313→  subcommandDescription
+   325→  optionDescription
+   372→  argumentDescription
+   403→  formatItemList
+   417→  groupItems
+   443→  formatHelp
+   535→  displayWidth
+   545→  styleTitle
+   549→  styleUsage
+   563→  styleCommandDescription
+   566→  styleOptionDescription
+   569→  styleSubcommandDescription
+   572→  styleArgumentDescription
+   575→  styleDescriptionText
+   578→  styleOptionTerm
+   581→  styleSubcommandTerm
+   594→  styleArgumentTerm
+   597→  styleOptionText
+   600→  styleArgumentText
+   603→  styleSubcommandText
+   606→  styleCommandText
+   618→  padWidth
+   633→  preformatted
+   650→  formatItem
+   695→  boxWrap
+   740→function stripColor
+lib/option.js
+     3→class Option
+    11→  constructor
+    47→  default
+    65→  preset
+    82→  conflicts
+   100→  implies
+   120→  env
+   132→  argParser
+   144→  makeOptionMandatory
+   156→  hideHelp
+   165→  _collectValue
+   181→  choices
+   203→  name
+   217→  attributeName
+   230→  helpGroup
+   243→  is
+   256→  isBoolean
+   268→class DualOptions
+   272→  constructor
+   297→  valueFromOption
+   316→function camelcase
+   328→function splitOptionFlags
+lib/suggestSimilar.js
+     1→const maxDistance
+     3→function editDistance
+    56→function suggestSimilar
+typings/esm.d.mts
+typings/index.d.ts
+    12→type LiteralUnion
+    16→export class CommanderError
+    28→  constructor
+    31→export class InvalidArgumentError
+    36→  constructor
+    40→export interface ErrorOptions
+    48→export class Argument
+    62→  constructor
+    67→  name
+    72→  default
+    77→  argParser
+    82→  choices
+    87→  argRequired
+    92→  argOptional
+    95→export class Option
+   115→  constructor
+   120→  default
+   132→  preset
+   144→  conflicts
+   156→  implies
+   164→  env
+   169→  argParser
+   174→  makeOptionMandatory
+   179→  hideHelp
+   184→  choices
+   189→  name
+   195→  attributeName
+   200→  helpGroup
+   207→  isBoolean
+   210→export class Help
+   218→  constructor
+   226→  prepareContext
+   233→  subcommandTerm
+   235→  subcommandDescription
+   237→  optionTerm
+   239→  optionDescription
+   241→  argumentTerm
+   243→  argumentDescription
+   246→  commandUsage
+   248→  commandDescription
+   251→  visibleCommands
+   253→  visibleOptions
+   255→  visibleGlobalOptions
+   257→  visibleArguments
+   260→  longestSubcommandTermLength
+   262→  longestOptionTermLength
+   264→  longestGlobalOptionTermLength
+   266→  longestArgumentTermLength
+   269→  displayWidth
+   272→  styleTitle
+   275→  styleUsage
+   277→  styleCommandText
+   279→  styleCommandDescription
+   280→  styleOptionDescription
+   281→  styleSubcommandDescription
+   282→  styleArgumentDescription
+   284→  styleDescriptionText
+   286→  styleOptionTerm
+   287→  styleSubcommandTerm
+   288→  styleArgumentTerm
+   291→  styleOptionText
+   293→  styleSubcommandText
+   295→  styleArgumentText
+   298→  padWidth
+   304→  boxWrap
+   307→  preformatted
+   316→  formatItem
+   326→  formatItemList
+   331→  groupItems
+   338→  formatHelp
+   340→export type HelpConfiguration
+   342→export interface ParseOptions
+   345→export interface HelpContext
+   349→export interface AddHelpTextContext
+   354→export interface OutputConfiguration
+   355→  writeOut
+   356→  writeErr
+   357→  outputError
+   359→  getOutHelpWidth
+   360→  getErrHelpWidth
+   362→  getOutHasColors
+   363→  getErrHasColors
+   364→  stripColor
+   367→export type AddHelpTextPosition
+   368→export type HookEvent
+   370→export type OptionValueSource
+   374→export type OptionValues
+   376→export class Command
+   384→  constructor
+   398→  version
+   442→  command
+   454→  createCommand
+   463→  addCommand
+   471→  createArgument
+   493→  argument
+   500→  addArgument
+   514→  arguments
+   528→  helpCommand
+   537→  addHelpCommand
+   542→  hook
+   553→  exitOverride
+   558→  error
+   564→  createHelp
+   572→  configureHelp
+   592→  configureOutput
+   599→  copyInheritedSettings
+   604→  showHelpAfterError
+   609→  showSuggestionAfterError
+   626→  action
+   660→  option
+   685→  requiredOption
+   699→  createOption
+   706→  addOption
+   718→  storeOptionsAsProperties
+   723→  getOptionValue
+   728→  setOptionValue
+   733→  setOptionValueWithSource
+   742→  getOptionValueSource
+   747→  getOptionValueSourceWithGlobals
+   761→  combineFlagAndOptionalValue
+   768→  allowUnknownOption
+   775→  allowExcessArguments
+   785→  enablePositionalOptions
+   796→  passThroughOptions
+   819→  parse
+   840→  parseAsync
+   851→  saveStateBeforeParse
+   859→  restoreStateBeforeParse
+   873→  parseOptions
+   878→  opts
+   883→  optsWithGlobals
+   897→  description
+   909→  summary
+   922→  alias
+   935→  aliases
+   946→  usage
+   957→  name
+   972→  nameFromFilename
+   990→  executableDir
+  1001→  helpGroup
+  1019→  commandsGroup
+  1037→  optionsGroup
+  1047→  outputHelp
+  1052→  helpInformation
+  1059→  helpOption
+  1065→  addHelpOption
+  1074→  help
+  1083→  addHelpText
+  1091→  on
+  1094→export interface CommandOptions
+  1100→export interface ExecutableCommandOptions
+  1104→export interface ParseOptionsResult
+  1113→export const program
+typings/index.test-d.ts
+     6→const program
+   168→function myParseInt
+   172→function increaseVerbosity
+   176→function collect
+   180→function commaSeparatedList
+   378→const opts
+   384→interface MyCheeseOption
+   387→const myCheeseOption
+   393→const optsWithGlobals
+   399→const myCheeseOptionWithGlobals
+   509→class MyCommand
+   510→  createCommand
+   514→  myFunction
+   518→const myProgram
+   571→const helper
+   572→const helperCommand
+   573→const helperOption
+   574→const helperArgument
+   613→  const formattedItems
+   623→  const unsortedOptions
+   624→  const sortedOptions
+   625→  const groupsItemsOptionHeading
+   633→  const unsortedCommands
+   634→  const sortedCommands
+   635→  const groupsItemsCommandHeading
+   668→const baseOption
+   747→const baseArgument

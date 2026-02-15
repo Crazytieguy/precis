@@ -1,0 +1,40 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 100 → level 1 (62 words)
+
+AGENTS.md
+     1→# AGENTS.md
+CLAUDE.md
+     1→# CLAUDE.md
+     5→## Project Overview
+    10→## Development Commands
+    14→### Testing
+    18→### Code Quality
+    22→## Development Process
+    32→## Core Architecture
+    34→### Main Components
+    42→### Package Structure
+    48→## Configuration Files
+SECURITY.md
+     1→# Security
+docs/conf.py
+   106→def configure_logging
+   130→def setup
+downstream/README.md
+scripts/release.py
+    15→def create_branch
+    30→def get_upstream
+    39→def pre_release
+    50→def changelog
+    59→def main
+scripts/towncrier-draft-to-file.py
+     5→def main
+src/pluggy/__init__.py
+src/pluggy/_callers.py
+src/pluggy/_hooks.py
+src/pluggy/_manager.py
+src/pluggy/_result.py
+src/pluggy/_tracing.py
+src/pluggy/_warnings.py
