@@ -1,0 +1,18 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+sample.go
+     7→type Token struct {
+     8→	Kind TokenKind
+    13→type TokenKind int
+    15→const (
+    22→type Visitor interface {
+    23→	VisitToken(token *Token)
+    28→func Process
+    35→type TokenParser[T any] struct {
+    36→	tokens []Token
+    41→func NewTokenParser
+    46→func (p *TokenParser[T]) Parse
+    53→type Span = [2]int
+    60→func (t Token) String

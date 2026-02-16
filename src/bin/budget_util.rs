@@ -3,7 +3,6 @@ use std::path::Path;
 struct SnapshotEntry {
     filename: String,
     budget: usize,
-    level: u8,
     words: usize,
 }
 
@@ -12,25 +11,18 @@ fn parse_snapshot(path: &Path) -> Option<SnapshotEntry> {
     let filename = path.file_name()?.to_str()?.to_string();
 
     // Find the budget line after the YAML front matter.
-    // Format: "budget: 1000 → level 1 (692 words)"
+    // Format: "budget: 1000 (692 words)"
     for line in content.lines() {
         if let Some(rest) = line.strip_prefix("budget: ") {
-            let parts: Vec<&str> = rest.splitn(2, " → level ").collect();
-            if parts.len() != 2 {
-                continue;
-            }
-            let budget: usize = parts[0].parse().ok()?;
-            // "1 (692 words)"
-            let level_rest = parts[1];
-            let (level_str, rest) = level_rest.split_once(' ')?;
-            let level: u8 = level_str.parse().ok()?;
+            // "1000 (692 words)"
+            let (budget_str, rest) = rest.split_once(' ')?;
+            let budget: usize = budget_str.parse().ok()?;
             // "(692 words)"
             let words_str = rest.trim_start_matches('(').split_once(' ')?;
             let words: usize = words_str.0.parse().ok()?;
             return Some(SnapshotEntry {
                 filename,
                 budget,
-                level,
                 words,
             });
         }
@@ -78,15 +70,14 @@ fn main() {
     println!("=== Budget Utilization (from snapshots) ===");
     println!();
     println!(
-        "{:>6}  {:>6}  {:>5}  {:>5}  Snapshot",
-        "Util%", "Budget", "Level", "Words"
+        "{:>6}  {:>6}  {:>5}  Snapshot",
+        "Util%", "Budget", "Words"
     );
     for (util, entry) in &sorted {
         println!(
-            "{:>5.1}%  {:>6}  {:>5}  {:>5}  {}",
+            "{:>5.1}%  {:>6}  {:>5}  {}",
             util * 100.0,
             entry.budget,
-            entry.level,
             entry.words,
             entry.filename,
         );

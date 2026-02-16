@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 → level 10 (183 words)
+budget: 500 (225 words)
 
 index.ts
      1→export type EventType = string | symbol;
@@ -44,3 +44,15 @@ index.ts
     46→export default function mitt<Events extends Record<EventType, unknown>>(
     47→	all?: EventHandlerMap<Events>
     48→): Emitter<Events> {
+    49→	type GenericEventHandler =
+    50→		| Handler<Events[keyof Events]>
+    51→		| WildcardHandler<Events>;
+    52→	all = all || new Map();
+    53→
+    54→	return {
+    55→		/**
+    56→		 * A Map of event names to registered handler functions.
+    57→		 */
+    58→		all,
+    59→
+    60→		/**

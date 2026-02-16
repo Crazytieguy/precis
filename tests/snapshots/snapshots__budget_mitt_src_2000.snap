@@ -2,31 +2,23 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 → level 12 (590 words)
+budget: 2000 (413 words)
 
 index.ts
      1→export type EventType = string | symbol;
-     2→
-     3→// An event handler can take an optional event argument
-     4→// and should not return a value
      5→export type Handler<T = unknown> = (event: T) => void;
      6→export type WildcardHandler<T = Record<string, unknown>> = (
      7→	type: keyof T,
      8→	event: T[keyof T]
      9→) => void;
-    10→
-    11→// An array of all currently registered event handlers for a type
     12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
     13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
     14→	WildcardHandler<T>
     15→>;
-    16→
-    17→// A map of event types and their corresponding event handlers.
     18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
     19→	keyof Events | '*',
     20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
     21→>;
-    22→
     23→export interface Emitter<Events extends Record<EventType, unknown>> {
     24→	all: EventHandlerMap<Events>;
     25→
@@ -44,7 +36,6 @@ index.ts
     37→		type: undefined extends Events[Key] ? Key : never
     38→	): void;
     39→}
-    40→
     41→/**
     42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
     43→ * @name mitt
@@ -98,33 +89,3 @@ index.ts
     91→		},
     92→
     93→		/**
-    94→		 * Invoke all handlers for the given type.
-    95→		 * If present, `'*'` handlers are invoked after type-matched handlers.
-    96→		 *
-    97→		 * Note: Manually firing '*' handlers is not supported.
-    98→		 *
-    99→		 * @param {string|symbol} type The event type to invoke
-   100→		 * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
-   101→		 * @memberOf mitt
-   102→		 */
-   103→		emit<Key extends keyof Events>(type: Key, evt?: Events[Key]) {
-   104→			let handlers = all!.get(type);
-   105→			if (handlers) {
-   106→				(handlers as EventHandlerList<Events[keyof Events]>)
-   107→					.slice()
-   108→					.map((handler) => {
-   109→						handler(evt!);
-   110→					});
-   111→			}
-   112→
-   113→			handlers = all!.get('*');
-   114→			if (handlers) {
-   115→				(handlers as WildCardEventHandlerList<Events>)
-   116→					.slice()
-   117→					.map((handler) => {
-   118→						handler(type, evt!);
-   119→					});
-   120→			}
-   121→		}
-   122→	};
-   123→}

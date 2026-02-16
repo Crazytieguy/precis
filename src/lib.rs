@@ -1,6 +1,6 @@
-pub mod fixtures;
 pub mod format;
 pub mod parse;
+pub mod schedule;
 pub mod walk;
 
 /// Language family for rendering and parsing heuristics (comment styles, delimiters).

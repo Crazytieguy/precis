@@ -9,13 +9,9 @@ struct Cli {
     #[arg(default_value = ".")]
     path: PathBuf,
 
-    /// Token budget for output (mutually exclusive with --level)
-    #[arg(long, conflicts_with = "level")]
-    budget: Option<usize>,
-
-    /// Granularity level (effective level per file depends on depth/size penalties)
-    #[arg(long, value_parser = clap::value_parser!(u8).range(0..=(format::MAX_LEVEL as i64)))]
-    level: Option<u8>,
+    /// Token budget for output (in words)
+    #[arg(long, default_value = "1000")]
+    budget: usize,
 
     /// Output as JSON
     #[arg(long)]
@@ -25,11 +21,25 @@ struct Cli {
 fn main() {
     let cli = Cli::parse();
     let path = &cli.path;
+    let budget = cli.budget;
 
-    let (output, n_files, level) = if path.is_file() {
-        render_file(path, cli.level, cli.budget)
+    let (output, n_files) = if path.is_file() {
+        let source = match std::fs::read_to_string(path) {
+            Ok(s) => s,
+            Err(e) => {
+                eprintln!("Error reading {:?}: {}", path, e);
+                std::process::exit(1);
+            }
+        };
+        let root = path.parent().unwrap_or(path);
+        let output = format::render_file_with_budget(budget, path, root, &source);
+        (output, 1)
     } else if path.is_dir() {
-        render_dir(path, cli.level, cli.budget)
+        let files = walk::discover_source_files(path);
+        let sources = format::read_sources(&files);
+        let n_files = files.len();
+        let output = format::render_with_budget(budget, path, &files, &sources);
+        (output, n_files)
     } else {
         eprintln!("Error: {:?} is not a file or directory", path);
         std::process::exit(1);
@@ -37,57 +47,21 @@ fn main() {
 
     let words = format::count_words(&output);
     eprintln!(
-        "({} {}, level {}, {} words)",
+        "({} {}, budget {}, {} words, {:.0}% utilization)",
         n_files,
         if n_files == 1 { "file" } else { "files" },
-        level,
+        budget,
         words,
+        if budget > 0 {
+            (words as f64 / budget as f64) * 100.0
+        } else {
+            0.0
+        },
     );
 
     if cli.json {
-        print!("{}", format::to_json(&output, level, words));
+        print!("{}", format::to_json(&output, budget, words));
     } else {
         print!("{}", output);
     }
-}
-
-fn render_file(path: &std::path::Path, level: Option<u8>, budget: Option<usize>) -> (String, usize, u8) {
-    let source = match std::fs::read_to_string(path) {
-        Ok(s) => s,
-        Err(e) => {
-            eprintln!("Error reading {:?}: {}", path, e);
-            std::process::exit(1);
-        }
-    };
-    let root = path.parent().unwrap_or(path);
-
-    let (output, level) = if let Some(l) = level {
-        (format::render_file(l, path, root, &source), l)
-    } else if let Some(budget) = budget {
-        let (l, symbols) = format::budget_level_file(budget, path, root, &source);
-        (format::render_file_with_symbols(l, path, root, &source, &symbols), l)
-    } else {
-        let l = 1;
-        (format::render_file(l, path, root, &source), l)
-    };
-
-    (output, 1, level)
-}
-
-fn render_dir(path: &std::path::Path, level: Option<u8>, budget: Option<usize>) -> (String, usize, u8) {
-    let files = walk::discover_source_files(path);
-    let sources = format::read_sources(&files);
-    let n_files = files.len();
-
-    let (output, level) = if let Some(l) = level {
-        (format::render_files(l, path, &files, &sources), l)
-    } else if let Some(budget) = budget {
-        let (l, all_symbols) = format::budget_level(budget, path, &files, &sources);
-        (format::render_files_with_symbols(l, path, &files, &sources, &all_symbols), l)
-    } else {
-        let l = 1;
-        (format::render_files(l, path, &files, &sources), l)
-    };
-
-    (output, n_files, level)
 }

@@ -320,10 +320,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
 }
 
 /// Collapse consecutive function symbols with the same name, keeping only the last in each run.
-/// This handles TypeScript/JavaScript method overload signatures: the overload declarations
-/// appear as `method_signature` nodes before the actual `method_definition` implementation.
-/// Only applied to languages with overloads (JsTs and Python). Go is excluded because
-/// it allows multiple `init()` functions in one file which must all be preserved.
+/// Go is excluded because it allows multiple `init()` functions in one file.
 fn dedup_overloads(symbols: Vec<Symbol>, lang: Lang) -> Vec<Symbol> {
     if lang == Lang::Go {
         return symbols;

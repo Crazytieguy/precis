@@ -1,0 +1,34 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+sample.py
+     5→T = TypeVar("T")
+     8→def process_items(items: list[str]) -> int:
+    15→class Token:
+    16→    kind: str
+    21→class Visitor:
+    22→    def visit_token(self, token: Token) -> None:
+    29→class TokenParser(Generic[T]):
+    30→    """A generic token parser.
+    31→
+    34→
+    35→    MAX_TOKENS: int = 1024
+    36→
+    37→    def __init__(self, source: str) -> None:
+    38→        """Initialize the parser with source text."""
+    39→        self._tokens: list[Token] = []
+    40→        self._source = source
+    41→
+    42→    def parse(self) -> list[Token]:
+    43→        """Parse and return the token list."""
+    44→        return self._tokens
+    45→
+    46→    @classmethod
+    47→    def from_file(cls, path: str) -> "TokenParser[T]":
+    48→        with open(path) as f:
+    49→            return cls(f.read())
+    50→
+    51→    def _advance(self) -> None:
+    52→        pass
+    54→VERSION: str = "0.1.0"

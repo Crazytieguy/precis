@@ -43,4 +43,3 @@ If a command that should be allowed is denied, or if project structure changes s
 
 - Snapshot tests using real open-source projects (cloned into `test/fixtures/`, gitignored)
 - Token budget tests reuse the same test cases
-- Fixtures organized by language and project size
