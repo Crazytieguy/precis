@@ -1,5 +1,17 @@
 # Issues
 
+## Testing infrastructure
+
+~210 of ~216 fixture snapshot tests are commented out in `tests/snapshots.rs` (lines 591–865). Only 6 fixture tests are active. Until these are re-introduced, changes to scheduling, rendering, or value heuristics have almost no regression coverage on real codebases.
+
+**Current performance:** ~45 seconds in debug mode, ~2 seconds in release. Always run tests in release mode (`cargo test --release`). Do not run tests in debug mode until all fixture tests are re-introduced and the full suite runs quickly in release.
+
+**Next steps:**
+1. Add criterion benchmarking infrastructure
+2. Benchmark each function in the hot path (`build_groups`, `schedule`, `render_scheduled`)
+3. Make performance improvements incrementally, re-introducing fixture snapshots as performance improves
+4. Once performance is much better, re-introduce all remaining snapshots
+
 ## Known bugs
 
 - **Cost accounting mismatch** — the scheduling algorithm's cost tracking diverges from actual rendered word counts. Some entries significantly exceed their budget (e.g., 390% at budget 500 for pluggy). The greedy algorithm deducts estimated costs, but the actual rendering can produce more words than estimated.
@@ -8,8 +20,6 @@
 ## Remaining work
 
 - **Fix cost accounting** — the schedule algorithm's cost estimates must match actual rendered word counts. Until this is fixed, budget utilization metrics are unreliable.
-- **Performance** — fixture tests take ~9 minutes in debug mode, ~55 seconds in release. Most fixture snapshot tests are commented out until this improves. Run tests in release mode (`cargo test --release`) until debug performance is addressed. Re-introduce fixture snapshots progressively as performance improves. This is high priority - we can't iterate if we can't run the tests quickly.
-- **Performance benchmarking** — add benchmarks (e.g., `criterion`) for the scheduling hot path (`build_groups`, `schedule`, `render_scheduled`) to measure the impact of changes and identify optimization targets. Currently relying on wall-clock test times which are noisy and coarse.
 - **Truncation markers** — `…` inline for truncated lines (e.g. name only instead of full signature), standalone `…` line for omitted content (e.g. remaining doc lines, body). Makes it visually clear what's summarized vs complete. The old rendering system had this; the new one doesn't yet.
 - **File paths as stages** — currently file paths are shown automatically when any symbol content is included. Making file paths an explicit stage would allow showing just file paths for low-value groups at tight budgets, and would create cheap items that improve budget utilization by filling gaps at the end of scheduling.
 - **Import statement rendering** — show imports as a new group kind with its own stage progression. Distinguish 1st-party imports (relative paths, `crate::`, `super::`, Go module path) from 3rd-party. 1st-party imports are high signal for understanding a file's role.
