@@ -1,0 +1,807 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 (3615 words)
+
+core/Ky.ts
+    33→export class Ky {
+    34→	static create(input: Input, options: Options): ResponsePromise {
+    35→		const ky = new Ky(input, options);
+    36→
+    37→		const function_ = async (): Promise<Response> => {
+    38→			if (typeof ky.#options.timeout === 'number' && ky.#options.timeout > maxSafeTimeout) {
+    39→				throw new RangeError(`The \`timeout\` option cannot be greater than ${maxSafeTimeout}`);
+    40→			}
+    41→
+    42→			// Delay the fetch so that body method shortcuts can set the Accept header
+    43→			await Promise.resolve();
+    44→			// Before using ky.request, _fetch clones it and saves the clone for future retries to use.
+    45→			// If retry is not needed, close the cloned request's ReadableStream for memory safety.
+    46→			let response = await ky.#fetch();
+    47→
+    48→			for (const hook of ky.#options.hooks.afterResponse) {
+    49→				// Clone the response before passing to hook so we can cancel it if needed
+    50→				const clonedResponse = ky.#decorateResponse(response.clone());
+    51→
+    52→				let modifiedResponse;
+    53→				try {
+    54→					// eslint-disable-next-line no-await-in-loop
+    55→					modifiedResponse = await hook(
+    56→						ky.request,
+    57→						ky.#getNormalizedOptions(),
+    58→						clonedResponse,
+    59→						{retryCount: ky.#retryCount},
+    60→					);
+    61→				} catch (error) {
+    62→					// Cancel both responses to prevent memory leaks when hook throws
+    63→					ky.#cancelResponseBody(clonedResponse);
+    64→					ky.#cancelResponseBody(response);
+    65→					throw error;
+    66→				}
+    67→
+    68→				if (modifiedResponse instanceof RetryMarker) {
+    69→					// Cancel both the cloned response passed to the hook and the current response to prevent resource leaks (especially important in Deno/Bun).
+    70→					// Do not await cancellation since hooks can clone the response, leaving extra tee branches that keep cancel promises pending per the Streams spec.
+    71→					ky.#cancelResponseBody(clonedResponse);
+    72→					ky.#cancelResponseBody(response);
+    73→					throw new ForceRetryError(modifiedResponse.options);
+    74→				}
+    75→
+    76→				// Determine which response to use going forward
+    77→				const nextResponse = modifiedResponse instanceof globalThis.Response ? modifiedResponse : response;
+    78→
+    79→				// Cancel any response bodies we won't use to prevent memory leaks.
+    80→				// Uses fire-and-forget since hooks may have cloned the response, creating tee branches that block cancellation.
+    81→				if (clonedResponse !== nextResponse) {
+    82→					ky.#cancelResponseBody(clonedResponse);
+    83→				}
+    84→
+    85→				if (response !== nextResponse) {
+    86→					ky.#cancelResponseBody(response);
+    87→				}
+    88→
+    89→				response = nextResponse;
+    90→			}
+    91→
+    92→			ky.#decorateResponse(response);
+    93→
+    94→			if (!response.ok && (
+    95→				typeof ky.#options.throwHttpErrors === 'function'
+    96→					? ky.#options.throwHttpErrors(response.status)
+    97→					: ky.#options.throwHttpErrors
+    98→			)) {
+    99→				let error = new HTTPError(response, ky.request, ky.#getNormalizedOptions());
+   100→
+   101→				for (const hook of ky.#options.hooks.beforeError) {
+   102→					// eslint-disable-next-line no-await-in-loop
+   103→					error = await hook(error, {retryCount: ky.#retryCount});
+   104→				}
+   105→
+   106→				throw error;
+   107→			}
+   108→
+   109→			// If `onDownloadProgress` is passed, it uses the stream API internally
+   110→			if (ky.#options.onDownloadProgress) {
+   111→				if (typeof ky.#options.onDownloadProgress !== 'function') {
+   112→					throw new TypeError('The `onDownloadProgress` option must be a function');
+   113→				}
+   114→
+   115→				if (!supportsResponseStreams) {
+   116→					throw new Error('Streams are not supported in your environment. `ReadableStream` is missing.');
+   117→				}
+   118→
+   119→				const progressResponse = response.clone();
+   120→				ky.#cancelResponseBody(response);
+   121→				return streamResponse(progressResponse, ky.#options.onDownloadProgress);
+   122→			}
+   123→
+   124→			return response;
+   125→		};
+   126→
+   178→	static #normalizeSearchParams(searchParams: SearchParamsOption): SearchParamsOption {
+   200→	constructor(input: Input, options: Options = {}) {
+   201→		this.#input = input;
+   202→
+   203→		this.#options = {
+   204→			...options,
+   205→			headers: mergeHeaders((this.#input as Request).headers, options.headers),
+   206→			hooks: mergeHooks(
+   207→				{
+   208→					beforeRequest: [],
+   209→					beforeRetry: [],
+   210→					beforeError: [],
+   211→					afterResponse: [],
+   212→				},
+   213→				options.hooks,
+   214→			),
+   297→	#calculateDelay(): number {
+   316→	async #calculateRetryDelay(error: unknown) {
+   390→	#decorateResponse(response: Response): Response {
+   398→	#cancelBody(body: ReadableStream | undefined): void {
+   407→	#cancelResponseBody(response: Response): void {
+   412→	async #retry<T extends (...arguments_: any) => Promise<any>>(function_: T): Promise<ReturnType<T> | Response | void> {
+   463→	async #fetch(): Promise<Response> {
+   503→	#getNormalizedOptions(): NormalizedOptions {
+   512→	#assignRequest(request: Request): void {
+   517→	#wrapRequestWithUploadProgress(request: Request, originalBody?: BodyInit): Request {
+core/constants.ts
+     4→export const supportsRequestStreams = (() => {
+     5→	let duplexAccessed = false;
+     6→	let hasContentType = false;
+     7→	const supportsReadableStream = typeof globalThis.ReadableStream === 'function';
+     8→	const supportsRequest = typeof globalThis.Request === 'function';
+     9→
+    10→	if (supportsReadableStream && supportsRequest) {
+    11→		try {
+    12→			hasContentType = new globalThis.Request('https://empty.invalid', {
+    13→				body: new globalThis.ReadableStream(),
+    14→				method: 'POST',
+    15→				// @ts-expect-error - Types are outdated.
+    16→				get duplex() {
+    17→					duplexAccessed = true;
+    18→					return 'half';
+    19→				},
+    20→			}).headers.has('Content-Type');
+    21→		} catch (error) {
+    22→			// QQBrowser on iOS throws "unsupported BodyInit type" error (see issue #581)
+    23→			if (error instanceof Error && error.message === 'unsupported BodyInit type') {
+    24→				return false;
+    25→			}
+    26→
+    27→			throw error;
+    28→		}
+    29→	}
+    30→
+    31→	return duplexAccessed && !hasContentType;
+    32→})();
+    34→export const supportsAbortController = typeof globalThis.AbortController === 'function';
+    35→export const supportsAbortSignal = typeof globalThis.AbortSignal === 'function' && typeof globalThis.AbortSignal.any === 'function';
+    36→export const supportsResponseStreams = typeof globalThis.ReadableStream === 'function';
+    37→export const supportsFormData = typeof globalThis.FormData === 'function';
+    39→export const requestMethods = ['get', 'post', 'put', 'patch', 'head', 'delete'] as const;
+    41→const validate = <T extends Array<true>>() => undefined as unknown as T;
+    46→export const responseTypes = {
+    47→	json: 'application/json',
+    48→	text: 'text/*',
+    49→	formData: 'multipart/form-data',
+    50→	arrayBuffer: '*/*',
+    51→	blob: '*/*',
+    52→	// Supported in modern Fetch implementations (for example, browsers and recent Node.js/undici).
+    53→	// We still feature-check at runtime before exposing the shortcut.
+    54→	bytes: '*/*',
+    55→} as const;
+    58→export const maxSafeTimeout = 2_147_483_647;
+    61→export const usualFormBoundarySize = new TextEncoder().encode('------WebKitFormBoundaryaxpyiPgbbPti10Rw').length;
+    63→export const stop = Symbol('stop');
+    65→/**
+    66→Options for forcing a retry via `ky.retry()`.
+    67→*/
+    68→export type ForceRetryOptions = {
+    69→	/**
+    70→	Custom delay in milliseconds before retrying.
+    71→
+    72→	If not provided, uses the default retry delay calculation based on `retry.delay` configuration.
+    73→
+    74→	**Note:** Custom delays bypass jitter and `backoffLimit`. This is intentional, as custom delays often come from server responses (e.g., `Retry-After` headers) and should be respected exactly as specified.
+    75→	*/
+    76→	delay?: number;
+    77→
+    78→	/**
+    79→	Error code for the retry.
+    80→
+    81→	This machine-readable identifier will be included in the error message passed to `beforeRetry` hooks, allowing you to distinguish between different types of forced retries.
+    82→
+    83→	@example
+    84→	```
+    85→	return ky.retry({code: 'RATE_LIMIT'});
+    86→	// Resulting error message: 'Forced retry: RATE_LIMIT'
+    87→	```
+    88→	*/
+    89→	code?: string;
+    90→
+    91→	/**
+    92→	Original error that caused the retry.
+    93→
+    94→	This allows you to preserve the error chain when forcing a retry based on caught exceptions. The error will be set as the `cause` of the `ForceRetryError`, enabling proper error chain traversal.
+    95→
+    96→	@example
+    97→	```
+    98→	try {
+    99→		const data = await response.clone().json();
+   100→		validateBusinessLogic(data);
+   101→	} catch (error) {
+   102→		return ky.retry({
+   103→			code: 'VALIDATION_FAILED',
+   104→			cause: error  // Preserves original error in chain
+   105→		});
+   106→	}
+   107→	```
+   108→	*/
+   109→	cause?: Error;
+   110→
+   111→	/**
+   112→	Custom request to use for the retry.
+   113→
+   114→	This allows you to modify or completely replace the request during a forced retry. The custom request becomes the starting point for the retry - `beforeRetry` hooks can still further modify it if needed.
+   115→
+   116→	**Note:** The custom request's `signal` will be replaced with Ky's managed signal to handle timeouts and user-provided abort signals correctly. If the original request body has been consumed, you must provide a new body or clone the request before consuming.
+   117→
+   118→	@example
+   119→	```
+   120→	// Fallback to a different endpoint
+   121→	return ky.retry({
+   122→		request: new Request('https://backup-api.com/endpoint', {
+   123→			method: request.method,
+   124→			headers: request.headers,
+   125→		}),
+   126→		code: 'BACKUP_ENDPOINT'
+   127→	});
+   128→
+   129→	// Retry with refreshed authentication token
+   130→	const data = await response.clone().json();
+   131→	return ky.retry({
+   132→		request: new Request(request, {
+   133→			headers: {
+   134→				...Object.fromEntries(request.headers),
+   135→				'Authorization': `Bearer ${data.newToken}`
+   136→			}
+   137→		}),
+   138→		code: 'TOKEN_REFRESHED'
+   139→	});
+   140→	```
+   141→	*/
+   142→	request?: Request;
+   143→};
+   145→/**
+   146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
+   147→*/
+   148→export class RetryMarker {
+   149→	constructor(public options?: ForceRetryOptions) {}
+   150→}
+   152→/**
+   153→Force a retry from an `afterResponse` hook.
+   154→
+   155→This allows you to retry a request based on the response content, even if the response has a successful status code. The retry will respect the `retry.limit` option and skip the `shouldRetry` check. The forced retry is observable in `beforeRetry` hooks, where the error will be a `ForceRetryError`.
+   156→
+   157→@param options - Optional configuration for the retry.
+   158→
+   159→@example
+   160→```
+   161→import ky, {isForceRetryError} from 'ky';
+   162→
+   163→const api = ky.extend({
+   164→	hooks: {
+   165→		afterResponse: [
+   166→			async (request, options, response) => {
+   167→				// Retry based on response body content
+   168→				if (response.status === 200) {
+   169→					const data = await response.clone().json();
+   170→
+   171→					// Simple retry with default delay
+   172→					if (data.error?.code === 'TEMPORARY_ERROR') {
+   173→						return ky.retry();
+   174→					}
+   175→
+   176→					// Retry with custom delay from API response
+   177→					if (data.error?.code === 'RATE_LIMIT') {
+   178→						return ky.retry({
+   179→							delay: data.error.retryAfter * 1000,
+   180→							code: 'RATE_LIMIT'
+   181→						});
+   182→					}
+   183→
+   184→					// Retry with a modified request (e.g., fallback endpoint)
+   185→					if (data.error?.code === 'FALLBACK_TO_BACKUP') {
+   186→						return ky.retry({
+   187→							request: new Request('https://backup-api.com/endpoint', {
+   188→								method: request.method,
+   189→								headers: request.headers,
+   190→							}),
+   191→							code: 'BACKUP_ENDPOINT'
+   192→						});
+   193→					}
+   194→
+   195→					// Retry with refreshed authentication
+   196→					if (data.error?.code === 'TOKEN_REFRESH' && data.newToken) {
+   197→						return ky.retry({
+   198→							request: new Request(request, {
+   199→								headers: {
+   200→									...Object.fromEntries(request.headers),
+   201→									'Authorization': `Bearer ${data.newToken}`
+   202→								}
+   203→							}),
+   204→							code: 'TOKEN_REFRESHED'
+   205→						});
+   206→					}
+   207→
+   208→					// Retry with cause to preserve error chain
+   209→					try {
+   210→						validateResponse(data);
+   211→					} catch (error) {
+   212→						return ky.retry({
+   213→							code: 'VALIDATION_FAILED',
+   214→							cause: error
+   215→						});
+   216→					}
+   217→				}
+   218→			}
+   219→		],
+   220→		beforeRetry: [
+   221→			({error, retryCount}) => {
+   222→				// Observable in beforeRetry hooks
+   223→				if (isForceRetryError(error)) {
+   224→					console.log(`Forced retry #${retryCount}: ${error.message}`);
+   225→					// Example output: "Forced retry #1: Forced retry: RATE_LIMIT"
+   226→				}
+   227→			}
+   228→		]
+   229→	}
+   230→});
+   231→
+   232→const response = await api.get('https://example.com/api');
+   233→```
+   234→*/
+   235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
+   237→export const kyOptionKeys: KyOptionsRegistry = {
+   238→	json: true,
+   239→	parseJson: true,
+   240→	stringifyJson: true,
+   241→	searchParams: true,
+   242→	prefixUrl: true,
+   243→	retry: true,
+   244→	timeout: true,
+   245→	hooks: true,
+   246→	throwHttpErrors: true,
+   247→	onDownloadProgress: true,
+   248→	onUploadProgress: true,
+   249→	fetch: true,
+   250→	context: true,
+   251→};
+   256→export const vendorSpecificOptions = {
+   257→	next: true, // Next.js cache revalidation (revalidate, tags)
+   258→} as const;
+   265→export const requestOptionsRegistry = {
+   266→	method: true,
+   267→	headers: true,
+   268→	body: true,
+   269→	mode: true,
+   270→	credentials: true,
+   271→	cache: true,
+   272→	redirect: true,
+   273→	referrer: true,
+   274→	referrerPolicy: true,
+   275→	integrity: true,
+   276→	keepalive: true,
+   277→	signal: true,
+   278→	window: true,
+   279→	duplex: true,
+   280→} as const;
+errors/ForceRetryError.ts
+     4→/**
+     5→Internal error used to signal a forced retry from afterResponse hooks.
+     6→This is thrown when a user returns ky.retry() from an afterResponse hook.
+     7→*/
+     8→export class ForceRetryError extends Error {
+     9→	override name = 'ForceRetryError' as const;
+    10→	customDelay: number | undefined;
+    11→	code: string | undefined;
+    12→	customRequest: Request | undefined;
+    13→
+    14→	constructor(options?: ForceRetryOptions) {
+    15→		// Runtime protection: wrap non-Error causes in NonError
+    16→		// TypeScript type is Error for guidance, but JS users can pass anything
+    17→		const cause = options?.cause
+    18→			? (options.cause instanceof Error ? options.cause : new NonError(options.cause))
+    19→			: undefined;
+    20→
+    21→		super(
+    22→			options?.code ? `Forced retry: ${options.code}` : 'Forced retry',
+    23→			cause ? {cause} : undefined,
+    24→		);
+    25→
+    26→		this.customDelay = options?.delay;
+    27→		this.code = options?.code;
+    28→		this.customRequest = options?.request;
+    29→	}
+    30→}
+errors/HTTPError.ts
+     5→export class HTTPError<T = unknown> extends Error {
+     6→	public response: KyResponse<T>;
+     7→	public request: KyRequest;
+     8→	public options: NormalizedOptions;
+     9→
+    10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
+    11→		const code = (response.status || response.status === 0) ? response.status : '';
+    12→		const title = response.statusText ?? '';
+    13→		const status = `${code} ${title}`.trim();
+    14→		const reason = status ? `status code ${status}` : 'an unknown error';
+    15→
+    16→		super(`Request failed with ${reason}: ${request.method} ${request.url}`);
+    17→
+    18→		this.name = 'HTTPError';
+    19→		this.response = response;
+    20→		this.request = request;
+    21→		this.options = options;
+    22→	}
+    23→}
+errors/NonError.ts
+     1→/**
+     2→Wrapper for non-Error values that were thrown.
+     3→
+     4→In JavaScript, any value can be thrown (not just Error instances). This class wraps such values to ensure consistent error handling.
+     5→*/
+     6→export class NonError extends Error {
+     7→	override name = 'NonError';
+     8→	readonly value: unknown;
+     9→
+    10→	constructor(value: unknown) {
+    11→		let message = 'Non-error value was thrown';
+    12→
+    13→		// Intentionally minimal as this error is just an edge-case.
+    14→		try {
+    15→			if (typeof value === 'string') {
+    16→				message = value;
+    17→			} else if (value && typeof value === 'object' && 'message' in value && typeof value.message === 'string') {
+    18→				message = value.message;
+    19→			}
+    20→		} catch {
+    21→			// Use default message if accessing properties throws
+    22→		}
+    23→
+    24→		super(message);
+    25→
+    26→		this.value = value;
+    27→	}
+    28→}
+errors/TimeoutError.ts
+     3→export class TimeoutError extends Error {
+     4→	public request: KyRequest;
+     5→
+     6→	constructor(request: Request) {
+     7→		super(`Request timed out: ${request.method} ${request.url}`);
+     8→		this.name = 'TimeoutError';
+     9→		this.request = request;
+    10→	}
+    11→}
+index.ts
+    10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
+    11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
+    12→	const ky: Partial<Mutable<KyInstance>> = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options));
+    13→
+    14→	for (const method of requestMethods) {
+    15→		// eslint-disable-next-line @typescript-eslint/promise-function-async
+    16→		ky[method] = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options, {method}));
+    17→	}
+    18→
+    19→	ky.create = (newDefaults?: Partial<Options>) => createInstance(validateAndMerge(newDefaults));
+    34→const ky = createInstance();
+types/ResponsePromise.ts
+     6→export type ResponsePromise
+types/common.ts
+     2→export type Primitive
+     4→export type Required
+     6→export type LiteralUnion
+types/hooks.ts
+     5→export type BeforeRequestState
+    14→export type BeforeRequestHook
+    20→export type BeforeRetryState
+    30→export type BeforeRetryHook
+    32→export type AfterResponseState
+    41→export type AfterResponseHook
+    48→export type BeforeErrorState
+    57→export type BeforeErrorHook
+    59→export type Hooks
+types/ky.ts
+     5→export type KyInstance
+types/options.ts
+     6→export type SearchParamsInit
+     9→export type SearchParamsOption
+    11→export type RequestHttpMethod
+    12→export type HttpMethod
+    14→export type Input
+    16→export type Progress
+    27→export type KyHeadersInit
+    33→export type KyOptions
+   307→export type KyOptionsRegistry
+   309→/**
+   310→Options are the same as `window.fetch`, except for the KyOptions
+   311→*/
+   312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
+   313→	/**
+   314→	HTTP method used to make the request.
+   315→
+   316→	Internally, the standard methods (`GET`, `POST`, `PUT`, `PATCH`, `HEAD` and `DELETE`) are uppercased in order to avoid server errors due to case sensitivity.
+   317→	*/
+   318→	method?: LiteralUnion<HttpMethod, string>;
+   319→
+   320→	/**
+   321→	HTTP headers used to make the request.
+   322→
+   323→	You can pass a `Headers` instance or a plain object.
+   324→
+   325→	You can remove a header with `.extend()` by passing the header with an `undefined` value.
+   326→
+   327→	@example
+   328→	```
+   329→	import ky from 'ky';
+   330→
+   331→	const url = 'https://sindresorhus.com';
+   332→
+   333→	const original = ky.create({
+   334→		headers: {
+   335→			rainbow: 'rainbow',
+   336→			unicorn: 'unicorn'
+   337→		}
+   338→	});
+   339→
+   340→	const extended = original.extend({
+   341→		headers: {
+   342→			rainbow: undefined
+   343→		}
+   344→	});
+   345→
+   346→	const response = await extended(url).json();
+   347→
+   348→	console.log('rainbow' in response);
+   349→	//=> false
+   350→
+   351→	console.log('unicorn' in response);
+   352→	//=> true
+   353→	```
+   354→	*/
+   355→	headers?: KyHeadersInit;
+   356→}
+   358→export type InternalOptions
+   370→/**
+   371→Normalized options passed to the `fetch` call and the `beforeRequest` hooks.
+   372→*/
+   373→export interface NormalizedOptions extends RequestInit { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
+   374→	// Extended from `RequestInit`, but ensured to be set (not optional).
+   375→	method: NonNullable<RequestInit['method']>;
+   376→	credentials?: NonNullable<RequestInit['credentials']>;
+   377→
+   378→	// Extended from custom `KyOptions`, but ensured to be set (not optional).
+   379→	retry: RetryOptions;
+   380→	prefixUrl: string;
+   381→	onDownloadProgress: Options['onDownloadProgress'];
+   382→	onUploadProgress: Options['onUploadProgress'];
+   383→	context: Record<string, unknown>;
+   384→}
+types/request.ts
+     1→export type KyRequest
+types/response.ts
+     1→export type KyResponse
+types/retry.ts
+     3→export type ShouldRetryState
+    15→export type RetryOptions
+utils/body.ts
+     5→export const getBodySize = (body?: BodyInit | null): number => {
+     6→	if (!body) {
+     7→		return 0;
+     8→	}
+     9→
+    57→const withProgress = (stream: ReadableStream<Uint8Array>, totalBytes: number, onProgress: Options['onDownloadProgress'] | Options['onUploadProgress']): ReadableStream<Uint8Array> => {
+    58→	let previousChunk: Uint8Array | undefined;
+    59→	let transferredBytes = 0;
+    60→
+    61→	return stream.pipeThrough(new TransformStream<Uint8Array, Uint8Array>({
+    62→		transform(currentChunk, controller) {
+    63→			controller.enqueue(currentChunk);
+    64→
+    65→			if (previousChunk) {
+    66→				transferredBytes += previousChunk.byteLength;
+    90→export const streamResponse = (response: Response, onDownloadProgress: Options['onDownloadProgress']) => {
+    91→	if (!response.body) {
+    92→		return response;
+    93→	}
+    94→
+   119→export const streamRequest = (request: Request, onUploadProgress: Options['onUploadProgress'], originalBody?: BodyInit | null) => {
+   120→	if (!request.body) {
+   121→		return request;
+   122→	}
+   123→
+utils/delay.ts
+     5→export type DelayOptions = {
+     6→	signal?: InternalOptions['signal'];
+     7→};
+     9→export default async function delay(
+    10→	ms: number,
+    11→	{signal}: DelayOptions,
+    12→): Promise<void> {
+    13→	return new Promise((resolve, reject) => {
+    14→		if (signal) {
+    15→			signal.throwIfAborted();
+    16→			signal.addEventListener('abort', abortHandler, {once: true});
+utils/is.ts
+     2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
+utils/merge.ts
+     6→export const validateAndMerge = (...sources: Array<Partial<Options> | undefined>): Partial<Options> => {
+     7→	for (const source of sources) {
+     8→		if ((!isObject(source) || Array.isArray(source)) && source !== undefined) {
+     9→			throw new TypeError('The `options` argument must be an object');
+    10→		}
+    16→export const mergeHeaders = (source1: KyHeadersInit = {}, source2: KyHeadersInit = {}) => {
+    17→	const result = new globalThis.Headers(source1 as RequestInit['headers']);
+    18→	const isHeadersInstance = source2 instanceof globalThis.Headers;
+    19→	const source = new globalThis.Headers(source2 as RequestInit['headers']);
+    20→
+    32→function newHookValue<K extends keyof Hooks>(original: Hooks, incoming: Hooks, property: K): Required<Hooks>[K] {
+    33→	return (Object.hasOwn(incoming, property) && incoming[property] === undefined)
+    34→		? []
+    35→		: deepMerge<Required<Hooks>[K]>(original[property] ?? [], incoming[property] ?? []);
+    36→}
+    38→export const mergeHooks = (original: Hooks = {}, incoming: Hooks = {}): Required<Hooks> => (
+    39→	{
+    40→		beforeRequest: newHookValue(original, incoming, 'beforeRequest'),
+    41→		beforeRetry: newHookValue(original, incoming, 'beforeRetry'),
+    42→		afterResponse: newHookValue(original, incoming, 'afterResponse'),
+    43→		beforeError: newHookValue(original, incoming, 'beforeError'),
+    47→const appendSearchParameters = (target: any, source: any): URLSearchParams => {
+    48→	const result = new URLSearchParams();
+    49→
+    50→	for (const input of [target, source]) {
+    51→		if (input === undefined) {
+    52→			continue;
+    53→		}
+    54→
+    55→		if (input instanceof URLSearchParams) {
+    56→			for (const [key, value] of input.entries()) {
+    86→export const deepMerge = <T>(...sources: Array<Partial<T> | undefined>): T => {
+    87→	let returnValue: any = {};
+    88→	let headers = {};
+    89→	let hooks = {};
+    90→	let searchParameters: any;
+utils/normalize.ts
+     5→export const normalizeRequestMethod = (input: string): string =>
+     6→	requestMethods.includes(input as RequestHttpMethod) ? input.toUpperCase() : input;
+     8→const retryMethods: HttpMethod[] = ['get', 'put', 'head', 'delete', 'options', 'trace'];
+    10→const retryStatusCodes = [408, 413, 429, 500, 502, 503, 504];
+    12→const retryAfterStatusCodes = [413, 429, 503];
+    14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
+    16→const defaultRetryOptions: InternalRetryOptions = {
+    17→	limit: 2,
+    18→	methods: retryMethods,
+    19→	statusCodes: retryStatusCodes,
+    20→	afterStatusCodes: retryAfterStatusCodes,
+    21→	maxRetryAfter: Number.POSITIVE_INFINITY,
+    22→	backoffLimit: Number.POSITIVE_INFINITY,
+    23→	delay: attemptCount => 0.3 * (2 ** (attemptCount - 1)) * 1000,
+    24→	jitter: undefined,
+    25→	retryOnTimeout: false,
+    26→};
+    28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
+    29→	if (typeof retry === 'number') {
+    30→		return {
+    31→			...defaultRetryOptions,
+    32→			limit: retry,
+utils/options.ts
+     4→export const findUnknownOptions = (
+     5→	request: Request,
+     6→	options: Record<string, unknown>,
+     7→): Record<string, unknown> => {
+     8→	const unknownOptions: Record<string, unknown> = {};
+     9→
+    10→	for (const key in options) {
+    11→		// Skip inherited properties
+    30→export const hasSearchParameters = (search: SearchParamsOption): boolean => {
+    31→	if (search === undefined) {
+    32→		return false;
+    33→	}
+    34→
+utils/timeout.ts
+     3→export type TimeoutOptions = {
+     4→	timeout: number;
+     5→	fetch: typeof fetch;
+     6→};
+     9→export default async function timeout(
+    10→	request: Request,
+    11→	init: RequestInit,
+    12→	abortController: AbortController | undefined,
+    13→	options: TimeoutOptions,
+    14→): Promise<Response> {
+    15→	return new Promise((resolve, reject) => {
+    16→		const timeoutId = setTimeout(() => {
+    17→			if (abortController) {
+    18→				abortController.abort();
+utils/type-guards.ts
+     5→/**
+     6→Type guard to check if an error is a Ky error.
+     7→
+     8→@param error - The error to check
+     9→@returns `true` if the error is a Ky error, `false` otherwise
+    10→
+    11→@example
+    12→```
+    13→import ky, {isKyError} from 'ky';
+    14→try {
+    15→	const response = await ky.get('/api/data');
+    16→} catch (error) {
+    17→	if (isKyError(error)) {
+    18→		// Handle Ky-specific errors
+    19→		console.log('Ky error occurred:', error.message);
+    20→	} else {
+    21→		// Handle other errors
+    22→		console.log('Unknown error:', error);
+    23→	}
+    24→}
+    25→```
+    26→*/
+    27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
+    28→	return isHTTPError(error) || isTimeoutError(error) || isForceRetryError(error);
+    29→}
+    31→/**
+    32→Type guard to check if an error is an HTTPError.
+    33→
+    34→@param error - The error to check
+    35→@returns `true` if the error is an HTTPError, `false` otherwise
+    36→
+    37→@example
+    38→```
+    39→import ky, {isHTTPError} from 'ky';
+    40→try {
+    41→	const response = await ky.get('/api/data');
+    42→} catch (error) {
+    43→	if (isHTTPError(error)) {
+    44→		console.log('HTTP error status:', error.response.status);
+    45→	}
+    46→}
+    47→```
+    48→*/
+    49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
+    50→	return error instanceof HTTPError || ((error as any)?.name === HTTPError.name);
+    51→}
+    53→/**
+    54→Type guard to check if an error is a TimeoutError.
+    55→
+    56→@param error - The error to check
+    57→@returns `true` if the error is a TimeoutError, `false` otherwise
+    58→
+    59→@example
+    60→```
+    61→import ky, {isTimeoutError} from 'ky';
+    62→try {
+    63→	const response = await ky.get('/api/data', { timeout: 1000 });
+    64→} catch (error) {
+    65→	if (isTimeoutError(error)) {
+    66→		console.log('Request timed out:', error.request.url);
+    67→	}
+    68→}
+    69→```
+    70→*/
+    71→export function isTimeoutError(error: unknown): error is TimeoutError {
+    72→	return error instanceof TimeoutError || ((error as any)?.name === TimeoutError.name);
+    73→}
+    75→/**
+    76→Type guard to check if an error is a ForceRetryError.
+    77→
+    78→@param error - The error to check
+    79→@returns `true` if the error is a ForceRetryError, `false` otherwise
+    80→
+    81→@example
+    82→```
+    83→import ky, {isForceRetryError} from 'ky';
+    84→
+    85→const api = ky.extend({
+    86→	hooks: {
+    87→		beforeRetry: [
+    88→			({error, retryCount}) => {
+    89→				if (isForceRetryError(error)) {
+    90→					console.log(`Forced retry #${retryCount}: ${error.code}`);
+    91→				}
+    92→			}
+    93→		]
+    94→	}
+    95→});
+    96→```
+    97→*/
+    98→export function isForceRetryError(error: unknown): error is ForceRetryError {
+    99→	return error instanceof ForceRetryError || ((error as any)?.name === ForceRetryError.name);
+   100→}
+utils/types.ts
+     1→export type Mutable<T> = {
+     2→	-readonly[P in keyof T]: T[P]
+     3→};
+     5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
+     6→	? Array<[string, U]>
+     7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;

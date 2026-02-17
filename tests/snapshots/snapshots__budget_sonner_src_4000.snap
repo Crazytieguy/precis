@@ -1,0 +1,739 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 (3020 words)
+
+assets.tsx
+     5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
+     6→  switch (type) {
+     7→    case 'success':
+     8→      return SuccessIcon;
+     9→
+    10→    case 'info':
+    11→      return InfoIcon;
+    12→
+    13→    case 'warning':
+    14→      return WarningIcon;
+    15→
+    16→    case 'error':
+    17→      return ErrorIcon;
+    18→
+    19→    default:
+    20→      return null;
+    21→  }
+    22→};
+    24→const bars = Array(12).fill(0);
+    26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
+    27→  return (
+    28→    <div className={['sonner-loading-wrapper', className].filter(Boolean).join(' ')} data-visible={visible}>
+    29→      <div className="sonner-spinner">
+    30→        {bars.map((_, i) => (
+    31→          <div className="sonner-loading-bar" key={`spinner-bar-${i}`} />
+    32→        ))}
+    33→      </div>
+    34→    </div>
+    35→  );
+    36→};
+    38→const SuccessIcon = (
+    39→  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" height="20" width="20">
+    40→    <path
+    41→      fillRule="evenodd"
+    42→      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+    43→      clipRule="evenodd"
+    44→    />
+    45→  </svg>
+    46→);
+    48→const WarningIcon = (
+    49→  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" height="20" width="20">
+    50→    <path
+    51→      fillRule="evenodd"
+    52→      d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+    53→      clipRule="evenodd"
+    54→    />
+    55→  </svg>
+    56→);
+    58→const InfoIcon = (
+    59→  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" height="20" width="20">
+    60→    <path
+    61→      fillRule="evenodd"
+    62→      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z"
+    63→      clipRule="evenodd"
+    64→    />
+    65→  </svg>
+    66→);
+    68→const ErrorIcon = (
+    69→  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" height="20" width="20">
+    70→    <path
+    71→      fillRule="evenodd"
+    72→      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
+    73→      clipRule="evenodd"
+    74→    />
+    75→  </svg>
+    76→);
+    78→export const CloseIcon = (
+    79→  <svg
+    80→    xmlns="http://www.w3.org/2000/svg"
+    81→    width="12"
+    82→    height="12"
+    83→    viewBox="0 0 24 24"
+    84→    fill="none"
+    85→    stroke="currentColor"
+    86→    strokeWidth="1.5"
+    87→    strokeLinecap="round"
+    88→    strokeLinejoin="round"
+    89→  >
+    90→    <line x1="18" y1="6" x2="6" y2="18"></line>
+    91→    <line x1="6" y1="6" x2="18" y2="18"></line>
+    92→  </svg>
+    93→);
+hooks.tsx
+     3→export const useIsDocumentHidden = () => {
+     4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
+     5→
+     6→  React.useEffect(() => {
+     7→    const callback = () => {
+     8→      setIsDocumentHidden(document.hidden);
+     9→    };
+    10→    document.addEventListener('visibilitychange', callback);
+    11→    return () => document.removeEventListener('visibilitychange', callback);
+    12→  }, []);
+    13→
+    14→  return isDocumentHidden;
+    15→};
+index.tsx
+    22→const VISIBLE_TOASTS_AMOUNT = 3;
+    25→const VIEWPORT_OFFSET = '24px';
+    28→const MOBILE_VIEWPORT_OFFSET = '16px';
+    31→const TOAST_LIFETIME = 4000;
+    34→const TOAST_WIDTH = 356;
+    37→const GAP = 14;
+    40→const SWIPE_THRESHOLD = 45;
+    43→const TIME_BEFORE_UNMOUNT = 200;
+    45→function cn(...classes: (string | undefined)[]) {
+    46→  return classes.filter(Boolean).join(' ');
+    47→}
+    49→function getDefaultSwipeDirections(position: string): Array<SwipeDirection> {
+    50→  const [y, x] = position.split('-');
+    51→  const directions: Array<SwipeDirection> = [];
+    52→
+    53→  if (y) {
+    54→    directions.push(y as SwipeDirection);
+    55→  }
+    56→
+    57→  if (x) {
+    58→    directions.push(x as SwipeDirection);
+    59→  }
+    60→
+    61→  return directions;
+    62→}
+    64→const Toast = (props: ToastProps) => {
+    65→  const {
+    66→    invert: ToasterInvert,
+    67→    toast,
+    68→    unstyled,
+    69→    interacting,
+    70→    setHeights,
+    71→    visibleToasts,
+    72→    heights,
+    73→    index,
+    74→    toasts,
+    75→    expanded,
+    76→    removeToast,
+    77→    defaultRichColors,
+    78→    closeButton: closeButtonFromToaster,
+    79→    style,
+    80→    cancelButtonStyle,
+    81→    actionButtonStyle,
+    82→    className = '',
+    83→    descriptionClassName = '',
+    84→    duration: durationFromToaster,
+    85→    position,
+    86→    gap,
+    87→    expandByDefault,
+    88→    classNames,
+    89→    icons,
+    90→    closeButtonAriaLabel = 'Close toast',
+    91→  } = props;
+    92→  const [swipeDirection, setSwipeDirection] = React.useState<'x' | 'y' | null>(null);
+   507→function getDocumentDirection(): ToasterProps['dir'] {
+   508→  if (typeof window === 'undefined') return 'ltr';
+   509→  if (typeof document === 'undefined') return 'ltr'; // For Fresh purpose
+   510→
+   511→  const dirAttribute = document.documentElement.getAttribute('dir');
+   512→
+   513→  if (dirAttribute === 'auto' || !dirAttribute) {
+   514→    return window.getComputedStyle(document.documentElement).direction as ToasterProps['dir'];
+   515→  }
+   516→
+   517→  return dirAttribute as ToasterProps['dir'];
+   518→}
+   520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
+   521→  const styles = {} as React.CSSProperties;
+   522→
+   523→  [defaultOffset, mobileOffset].forEach((offset, index) => {
+   524→    const isMobile = index === 1;
+   525→    const prefix = isMobile ? '--mobile-offset' : '--offset';
+   526→    const defaultValue = isMobile ? MOBILE_VIEWPORT_OFFSET : VIEWPORT_OFFSET;
+   527→
+   528→    function assignAll(offset: string | number) {
+   529→      ['top', 'right', 'bottom', 'left'].forEach((key) => {
+   530→        styles[`${prefix}-${key}`] = typeof offset === 'number' ? `${offset}px` : offset;
+   531→      });
+   532→    }
+   533→
+   534→    if (typeof offset === 'number' || typeof offset === 'string') {
+   535→      assignAll(offset);
+   536→    } else if (typeof offset === 'object') {
+   537→      ['top', 'right', 'bottom', 'left'].forEach((key) => {
+   538→        if (offset[key] === undefined) {
+   539→          styles[`${prefix}-${key}`] = defaultValue;
+   540→        } else {
+   541→          styles[`${prefix}-${key}`] = typeof offset[key] === 'number' ? `${offset[key]}px` : offset[key];
+   542→        }
+   543→      });
+   544→    } else {
+   545→      assignAll(defaultValue);
+   546→    }
+   547→  });
+   548→
+   552→function useSonner() {
+   553→  const [activeToasts, setActiveToasts] = React.useState<ToastT[]>([]);
+   554→
+   555→  React.useEffect(() => {
+   556→    return ToastState.subscribe((toast) => {
+   557→      if ((toast as ToastToDismiss).dismiss) {
+   558→        setTimeout(() => {
+   559→          ReactDOM.flushSync(() => {
+   560→            setActiveToasts((toasts) => toasts.filter((t) => t.id !== toast.id));
+   561→          });
+   562→        });
+   563→        return;
+   564→      }
+   565→
+   566→      // Prevent batching, temp solution.
+   567→      setTimeout(() => {
+   568→        ReactDOM.flushSync(() => {
+   569→          setActiveToasts((toasts) => {
+   570→            const indexOfExistingToast = toasts.findIndex((t) => t.id === toast.id);
+   571→
+   572→            // Update the toast if it already exists
+   573→            if (indexOfExistingToast !== -1) {
+   574→              return [
+   575→                ...toasts.slice(0, indexOfExistingToast),
+   576→                { ...toasts[indexOfExistingToast], ...toast },
+   577→                ...toasts.slice(indexOfExistingToast + 1),
+   578→              ];
+   579→            }
+   580→
+   593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
+   594→  const {
+   595→    id,
+   596→    invert,
+   597→    position = 'bottom-right',
+   598→    hotkey = ['altKey', 'KeyT'],
+   599→    expand,
+   600→    closeButton,
+   601→    className,
+   602→    offset,
+   603→    mobileOffset,
+   604→    theme = 'light',
+   605→    richColors,
+   606→    duration,
+   607→    style,
+   608→    visibleToasts = VISIBLE_TOASTS_AMOUNT,
+   609→    toastOptions,
+   610→    dir = getDocumentDirection(),
+   611→    gap = GAP,
+   612→    icons,
+   613→    customAriaLabel,
+   614→    containerAriaLabel = 'Notifications',
+   615→  } = props;
+   616→  const [toasts, setToasts] = React.useState<ToastT[]>([]);
+   617→  const filteredToasts = React.useMemo(() => {
+   618→    if (id) {
+   619→      return toasts.filter((toast) => toast.toasterId === id);
+   620→    }
+   621→    return toasts.filter((toast) => !toast.toasterId);
+   622→  }, [toasts, id]);
+   623→  const possiblePositions = React.useMemo(() => {
+   624→    return Array.from(
+   625→      new Set([position].concat(filteredToasts.filter((toast) => toast.position).map((toast) => toast.position))),
+   626→    );
+   627→  }, [filteredToasts, position]);
+   628→  const [heights, setHeights] = React.useState<HeightT[]>([]);
+   629→  const [expanded, setExpanded] = React.useState(false);
+   630→  const [interacting, setInteracting] = React.useState(false);
+   631→  const [actualTheme, setActualTheme] = React.useState(
+   632→    theme !== 'system'
+   633→      ? theme
+   634→      : typeof window !== 'undefined'
+   635→      ? window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+   636→        ? 'dark'
+   637→        : 'light'
+   638→      : 'light',
+   639→  );
+   640→
+   641→  const listRef = React.useRef<HTMLOListElement>(null);
+   642→  const hotkeyLabel = hotkey.join('+').replace(/Key/g, '').replace(/Digit/g, '');
+   643→  const lastFocusedElementRef = React.useRef<HTMLElement>(null);
+   644→  const isFocusWithinRef = React.useRef(false);
+   645→
+   646→  const removeToast = React.useCallback((toastToRemove: ToastT) => {
+   647→    setToasts((toasts) => {
+   648→      if (!toasts.find((toast) => toast.id === toastToRemove.id)?.delete) {
+   649→        ToastState.dismiss(toastToRemove.id);
+   650→      }
+   651→
+   652→      return toasts.filter(({ id }) => id !== toastToRemove.id);
+   653→    });
+   654→  }, []);
+   655→
+   656→  React.useEffect(() => {
+   657→    return ToastState.subscribe((toast) => {
+   658→      if ((toast as ToastToDismiss).dismiss) {
+state.ts
+    15→type titleT = (() => React.ReactNode) | React.ReactNode;
+    17→class Observer {
+    18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
+    19→  toasts: Array<ToastT | ToastToDismiss>;
+    20→  dismissedToasts: Set<string | number>;
+    21→
+    22→  constructor() {
+    23→    this.subscribers = [];
+    24→    this.toasts = [];
+    25→    this.dismissedToasts = new Set();
+    26→  }
+    27→
+    28→  // We use arrow functions to maintain the correct `this` reference
+    29→  subscribe = (subscriber: (toast: ToastT | ToastToDismiss) => void) => {
+    30→    this.subscribers.push(subscriber);
+    31→
+    32→    return () => {
+    33→      const index = this.subscribers.indexOf(subscriber);
+    34→      this.subscribers.splice(index, 1);
+    35→    };
+    36→  };
+    37→
+    38→  publish = (data: ToastT) => {
+    39→    this.subscribers.forEach((subscriber) => subscriber(data));
+    40→  };
+    41→
+    42→  addToast = (data: ToastT) => {
+    43→    this.publish(data);
+    44→    this.toasts = [...this.toasts, data];
+    45→  };
+    46→
+    47→  create = (
+    48→    data: ExternalToast & {
+    49→      message?: titleT;
+    50→      type?: ToastTypes;
+    51→      promise?: PromiseT;
+    52→      jsx?: React.ReactElement;
+    53→    },
+    54→  ) => {
+    55→    const { message, ...rest } = data;
+    56→    const id = typeof data?.id === 'number' || data.id?.length > 0 ? data.id : toastsCounter++;
+    57→    const alreadyExists = this.toasts.find((toast) => {
+    58→      return toast.id === id;
+    59→    });
+    60→    const dismissible = data.dismissible === undefined ? true : data.dismissible;
+    61→
+    62→    if (this.dismissedToasts.has(id)) {
+    63→      this.dismissedToasts.delete(id);
+    64→    }
+    65→
+    66→    if (alreadyExists) {
+    67→      this.toasts = this.toasts.map((toast) => {
+    68→        if (toast.id === id) {
+    69→          this.publish({ ...toast, ...data, id, title: message });
+    70→          return {
+    71→            ...toast,
+    72→            ...data,
+    73→            id,
+    74→            dismissible,
+    75→            title: message,
+    76→          };
+    77→        }
+    78→
+    79→        return toast;
+    80→      });
+    81→    } else {
+    82→      this.addToast({ title: message, ...rest, dismissible, id });
+    83→    }
+    84→
+    85→    return id;
+    86→  };
+    87→
+    88→  dismiss = (id?: number | string) => {
+    89→    if (id) {
+    90→      this.dismissedToasts.add(id);
+    91→      requestAnimationFrame(() => this.subscribers.forEach((subscriber) => subscriber({ id, dismiss: true })));
+    92→    } else {
+    93→      this.toasts.forEach((toast) => {
+    94→        this.subscribers.forEach((subscriber) => subscriber({ id: toast.id, dismiss: true }));
+    95→      });
+    96→    }
+    97→
+    98→    return id;
+    99→  };
+   100→
+   101→  message = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   102→    return this.create({ ...data, message });
+   103→  };
+   104→
+   105→  error = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   106→    return this.create({ ...data, message, type: 'error' });
+   107→  };
+   108→
+   109→  success = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   110→    return this.create({ ...data, type: 'success', message });
+   111→  };
+   112→
+   113→  info = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   114→    return this.create({ ...data, type: 'info', message });
+   115→  };
+   116→
+   117→  warning = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   118→    return this.create({ ...data, type: 'warning', message });
+   119→  };
+   120→
+   121→  loading = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   122→    return this.create({ ...data, type: 'loading', message });
+   123→  };
+   124→
+   125→  promise = <ToastData>(promise: PromiseT<ToastData>, data?: PromiseData<ToastData>) => {
+   126→    if (!data) {
+   127→      // Nothing to show
+   128→      return;
+   129→    }
+   130→
+   131→    let id: string | number | undefined = undefined;
+   132→    if (data.loading !== undefined) {
+   133→      id = this.create({
+   134→        ...data,
+   135→        promise,
+   136→        type: 'loading',
+   137→        message: data.loading,
+   138→        description: typeof data.description !== 'function' ? data.description : undefined,
+   139→      });
+   140→    }
+   141→
+   142→    const p = Promise.resolve(promise instanceof Function ? promise() : promise);
+   143→
+   144→    let shouldDismiss = id !== undefined;
+   145→    let result: ['resolve', ToastData] | ['reject', unknown];
+   146→
+   147→    const originalPromise = p
+   148→      .then(async (response) => {
+   149→        result = ['resolve', response];
+   150→        const isReactElementResponse = React.isValidElement(response);
+   151→        if (isReactElementResponse) {
+   152→          shouldDismiss = false;
+   153→          this.create({ id, type: 'default', message: response });
+   154→        } else if (isHttpResponse(response) && !response.ok) {
+   155→          shouldDismiss = false;
+   156→
+   157→          const promiseData =
+   158→            typeof data.error === 'function' ? await data.error(`HTTP error! status: ${response.status}`) : data.error;
+   159→
+   160→          const description =
+   161→            typeof data.description === 'function'
+   162→              ? await data.description(`HTTP error! status: ${response.status}`)
+   163→              : data.description;
+   164→
+   165→          const isExtendedResult = typeof promiseData === 'object' && !React.isValidElement(promiseData);
+   166→
+   167→          const toastSettings: PromiseIExtendedResult = isExtendedResult
+   168→            ? (promiseData as PromiseIExtendedResult)
+   169→            : { message: promiseData };
+   170→
+   171→          this.create({ id, type: 'error', description, ...toastSettings });
+   172→        } else if (response instanceof Error) {
+   173→          shouldDismiss = false;
+   174→
+   175→          const promiseData = typeof data.error === 'function' ? await data.error(response) : data.error;
+   176→
+   177→          const description =
+   178→            typeof data.description === 'function' ? await data.description(response) : data.description;
+   179→
+   180→          const isExtendedResult = typeof promiseData === 'object' && !React.isValidElement(promiseData);
+   181→
+   182→          const toastSettings: PromiseIExtendedResult = isExtendedResult
+   183→            ? (promiseData as PromiseIExtendedResult)
+   184→            : { message: promiseData };
+   185→
+   186→          this.create({ id, type: 'error', description, ...toastSettings });
+   187→        } else if (data.success !== undefined) {
+   188→          shouldDismiss = false;
+   189→          const promiseData = typeof data.success === 'function' ? await data.success(response) : data.success;
+   190→
+   191→          const description =
+   192→            typeof data.description === 'function' ? await data.description(response) : data.description;
+   193→
+   194→          const isExtendedResult = typeof promiseData === 'object' && !React.isValidElement(promiseData);
+   195→
+   196→          const toastSettings: PromiseIExtendedResult = isExtendedResult
+   197→            ? (promiseData as PromiseIExtendedResult)
+   198→            : { message: promiseData };
+   199→
+   200→          this.create({ id, type: 'success', description, ...toastSettings });
+   201→        }
+   202→      })
+   203→      .catch(async (error) => {
+   204→        result = ['reject', error];
+   205→        if (data.error !== undefined) {
+   206→          shouldDismiss = false;
+   207→          const promiseData = typeof data.error === 'function' ? await data.error(error) : data.error;
+   208→
+   209→          const description = typeof data.description === 'function' ? await data.description(error) : data.description;
+   210→
+   211→          const isExtendedResult = typeof promiseData === 'object' && !React.isValidElement(promiseData);
+   212→
+   213→          const toastSettings: PromiseIExtendedResult = isExtendedResult
+   214→            ? (promiseData as PromiseIExtendedResult)
+   215→            : { message: promiseData };
+   216→
+   217→          this.create({ id, type: 'error', description, ...toastSettings });
+   218→        }
+   219→      })
+   220→      .finally(() => {
+   221→        if (shouldDismiss) {
+   222→          // Toast is still in load state (and will be indefinitely — dismiss it)
+   223→          this.dismiss(id);
+   224→          id = undefined;
+   225→        }
+   226→
+   227→        data.finally?.();
+   228→      });
+   229→
+   230→    const unwrap = () =>
+   231→      new Promise<ToastData>((resolve, reject) =>
+   232→        originalPromise.then(() => (result[0] === 'reject' ? reject(result[1]) : resolve(result[1]))).catch(reject),
+   233→      );
+   234→
+   243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
+   244→    const id = data?.id || toastsCounter++;
+   245→    this.create({ jsx: jsx(id), ...data, id });
+   246→    return id;
+   247→  };
+   249→  getActiveToasts = () => {
+   250→    return this.toasts.filter((toast) => !this.dismissedToasts.has(toast.id));
+   251→  };
+   254→export const ToastState = new Observer();
+   257→const toastFunction = (message: titleT, data?: ExternalToast) => {
+   258→  const id = data?.id || toastsCounter++;
+   259→
+   260→  ToastState.addToast({
+   261→    title: message,
+   262→    ...data,
+   263→    id,
+   264→  });
+   265→  return id;
+   266→};
+   268→const isHttpResponse = (data: any): data is Response => {
+   269→  return (
+   270→    data &&
+   271→    typeof data === 'object' &&
+   272→    'ok' in data &&
+   273→    typeof data.ok === 'boolean' &&
+   274→    'status' in data &&
+   275→    typeof data.status === 'number'
+   276→  );
+   277→};
+   279→const basicToast = toastFunction;
+   281→const getHistory = () => ToastState.toasts;
+   282→const getToasts = () => ToastState.getActiveToasts();
+   285→export const toast = Object.assign(
+   286→  basicToast,
+   287→  {
+   288→    success: ToastState.success,
+   289→    info: ToastState.info,
+   290→    warning: ToastState.warning,
+   291→    error: ToastState.error,
+   292→    custom: ToastState.custom,
+   293→    message: ToastState.message,
+   294→    promise: ToastState.promise,
+   295→    dismiss: ToastState.dismiss,
+   296→    loading: ToastState.loading,
+   297→  },
+   298→  { getHistory, getToasts },
+   299→);
+types.ts
+     3→export type ToastTypes = 'normal' | 'action' | 'success' | 'info' | 'warning' | 'error' | 'loading' | 'default';
+     5→export type PromiseT<Data = any> = Promise<Data> | (() => Promise<Data>);
+     7→export interface PromiseIExtendedResult extends ExternalToast {
+     8→  message: React.ReactNode;
+     9→}
+    11→export type PromiseTExtendedResult<Data = any> =
+    12→  | PromiseIExtendedResult
+    13→  | ((data: Data) => PromiseIExtendedResult | Promise<PromiseIExtendedResult>);
+    15→export type PromiseTResult<Data = any> =
+    16→  | string
+    17→  | React.ReactNode
+    18→  | ((data: Data) => React.ReactNode | string | Promise<React.ReactNode | string>);
+    20→export type PromiseExternalToast = Omit<ExternalToast, 'description'>;
+    22→export type PromiseData<ToastData = any> = PromiseExternalToast & {
+    23→  loading?: string | React.ReactNode;
+    24→  success?: PromiseTResult<ToastData> | PromiseTExtendedResult<ToastData>;
+    25→  error?: PromiseTResult | PromiseTExtendedResult;
+    26→  description?: PromiseTResult;
+    27→  finally?: () => void | Promise<void>;
+    28→};
+    30→export interface ToastClassnames {
+    31→  toast?: string;
+    32→  title?: string;
+    33→  description?: string;
+    34→  loader?: string;
+    35→  closeButton?: string;
+    36→  cancelButton?: string;
+    37→  actionButton?: string;
+    38→  success?: string;
+    39→  error?: string;
+    40→  info?: string;
+    41→  warning?: string;
+    42→  loading?: string;
+    43→  default?: string;
+    44→  content?: string;
+    45→  icon?: string;
+    46→}
+    48→export interface ToastIcons {
+    49→  success?: React.ReactNode;
+    50→  info?: React.ReactNode;
+    51→  warning?: React.ReactNode;
+    52→  error?: React.ReactNode;
+    53→  loading?: React.ReactNode;
+    54→  close?: React.ReactNode;
+    55→}
+    57→export interface Action {
+    58→  label: React.ReactNode;
+    59→  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    60→  actionButtonStyle?: React.CSSProperties;
+    61→}
+    63→export interface ToastT {
+    64→  id: number | string;
+    65→  toasterId?: string;
+    66→  title?: (() => React.ReactNode) | React.ReactNode;
+    67→  type?: ToastTypes;
+    68→  icon?: React.ReactNode;
+    69→  jsx?: React.ReactNode;
+    70→  richColors?: boolean;
+    71→  invert?: boolean;
+    72→  closeButton?: boolean;
+    73→  dismissible?: boolean;
+    74→  description?: (() => React.ReactNode) | React.ReactNode;
+    75→  duration?: number;
+    76→  delete?: boolean;
+    77→  action?: Action | React.ReactNode;
+    78→  cancel?: Action | React.ReactNode;
+    79→  onDismiss?: (toast: ToastT) => void;
+    80→  onAutoClose?: (toast: ToastT) => void;
+    81→  promise?: PromiseT;
+    82→  cancelButtonStyle?: React.CSSProperties;
+    83→  actionButtonStyle?: React.CSSProperties;
+    84→  style?: React.CSSProperties;
+    85→  unstyled?: boolean;
+    86→  className?: string;
+    87→  classNames?: ToastClassnames;
+    88→  descriptionClassName?: string;
+    89→  position?: Position;
+    90→  testId?: string;
+    91→}
+    93→export function isAction(action: Action | React.ReactNode): action is Action {
+    94→  return (action as Action).label !== undefined;
+    95→}
+    97→export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
+    98→export interface HeightT {
+    99→  height: number;
+   100→  toastId: number | string;
+   101→  position: Position;
+   102→}
+   104→interface ToastOptions {
+   105→  className?: string;
+   106→  closeButton?: boolean;
+   107→  descriptionClassName?: string;
+   108→  style?: React.CSSProperties;
+   109→  cancelButtonStyle?: React.CSSProperties;
+   110→  actionButtonStyle?: React.CSSProperties;
+   111→  duration?: number;
+   112→  unstyled?: boolean;
+   113→  classNames?: ToastClassnames;
+   114→  closeButtonAriaLabel?: string;
+   115→  toasterId?: string;
+   116→}
+   118→type Offset =
+   119→  | {
+   120→      top?: string | number;
+   121→      right?: string | number;
+   122→      bottom?: string | number;
+   123→      left?: string | number;
+   124→    }
+   125→  | string
+   126→  | number;
+   128→export interface ToasterProps {
+   129→  id?: string;
+   130→  invert?: boolean;
+   131→  theme?: 'light' | 'dark' | 'system';
+   132→  position?: Position;
+   133→  hotkey?: string[];
+   134→  richColors?: boolean;
+   135→  expand?: boolean;
+   136→  duration?: number;
+   137→  gap?: number;
+   138→  visibleToasts?: number;
+   139→  closeButton?: boolean;
+   140→  toastOptions?: ToastOptions;
+   141→  className?: string;
+   142→  style?: React.CSSProperties;
+   143→  offset?: Offset;
+   144→  mobileOffset?: Offset;
+   145→  dir?: 'rtl' | 'ltr' | 'auto';
+   146→  swipeDirections?: SwipeDirection[];
+   147→  icons?: ToastIcons;
+   148→  customAriaLabel?: string;
+   149→  containerAriaLabel?: string;
+   150→}
+   152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
+   154→export interface ToastProps {
+   155→  toast: ToastT;
+   156→  toasts: ToastT[];
+   157→  index: number;
+   158→  swipeDirections?: SwipeDirection[];
+   159→  expanded: boolean;
+   160→  invert: boolean;
+   161→  heights: HeightT[];
+   162→  setHeights: React.Dispatch<React.SetStateAction<HeightT[]>>;
+   163→  removeToast: (toast: ToastT) => void;
+   164→  gap?: number;
+   165→  position: Position;
+   166→  visibleToasts: number;
+   167→  expandByDefault: boolean;
+   168→  closeButton: boolean;
+   169→  interacting: boolean;
+   170→  style?: React.CSSProperties;
+   171→  cancelButtonStyle?: React.CSSProperties;
+   172→  actionButtonStyle?: React.CSSProperties;
+   173→  duration?: number;
+   174→  className?: string;
+   175→  unstyled?: boolean;
+   176→  descriptionClassName?: string;
+   177→  loadingIcon?: React.ReactNode;
+   178→  classNames?: ToastClassnames;
+   179→  icons?: ToastIcons;
+   180→  closeButtonAriaLabel?: string;
+   181→  defaultRichColors?: boolean;
+   182→}
+   184→export enum SwipeStateTypes {
+   185→  SwipedOut = 'SwipedOut',
+   186→  SwipedBack = 'SwipedBack',
+   187→  NotSwiped = 'NotSwiped',
+   188→}
+   190→export type Theme = 'light' | 'dark';
+   192→export interface ToastToDismiss {
+   193→  id: number | string;
+   194→  dismiss: boolean;
+   195→}
+   197→export type ExternalToast = Omit<ToastT, 'id' | 'type' | 'title' | 'jsx' | 'delete' | 'promise'> & {
+   198→  id?: number | string;
+   199→  toasterId?: string;
+   200→};

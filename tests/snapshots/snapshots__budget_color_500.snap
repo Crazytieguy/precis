@@ -1,0 +1,148 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (492 words)
+
+README.md
+     1→# color [![](https://github.com/fatih/color/workflows/build/badge.svg)](https://github.com/fatih/color/actions) [![PkgGoDev](https://pkg.go.dev/badge/github.com/fatih/color)](https://pkg.go.dev/github.com/fatih/color)
+     2→
+    10→## Install
+    11→
+    16→## Examples
+    17→
+    18→### Standard colors
+    19→
+    20→```go
+    21→// Print with default helper functions
+    22→color.Cyan("Prints text in cyan.")
+    23→
+    24→// A newline will be appended automatically
+    25→color.Blue("Prints %s in blue.", "text")
+    26→
+    27→// These are using the default foreground colors
+    28→color.Red("We have red")
+    29→color.Magenta("And many others ..")
+    30→
+    31→```
+    32→
+    33→### RGB colors
+    34→
+    45→### Mix and reuse colors
+    46→
+    71→### Use your own output (io.Writer)
+    72→
+    81→### Custom print functions (PrintFunc)
+    82→
+    94→### Custom fprint functions (FprintFunc)
+    95→
+   105→### Insert into noncolor strings (SprintFunc)
+   106→
+   124→### Plug into existing code
+   125→
+   142→### Disable/Enable color
+   143→
+   177→## GitHub Actions
+   178→
+   182→## Credits
+   183→
+   187→## License
+   188→
+color.go
+    15→var (
+    16→	// NoColor defines if the output is colorized or not. It's dynamically set to
+    17→	// false or true based on the stdout's file descriptor referring to a terminal
+    18→	// or not. It's also set to true if the NO_COLOR environment variable is
+    19→	// set (regardless of its value). This is a global option and affects all
+    20→	// colors. For more control over each color block use the methods
+    21→	// DisableColor() individually.
+    22→	NoColor = noColorIsSet() || os.Getenv("TERM") == "dumb" ||
+    23→		(!isatty.IsTerminal(os.Stdout.Fd()) && !isatty.IsCygwinTerminal(os.Stdout.Fd()))
+    25→	// Output defines the standard output of the print functions. By default,
+    26→	// os.Stdout is used.
+    27→	Output = colorable.NewColorableStdout()
+    29→	// Error defines a color supporting writer for os.Stderr.
+    30→	Error = colorable.NewColorableStderr()
+    34→	colorsCache   = make(map[Attribute]*Color)
+    35→	colorsCacheMu sync.Mutex // protects colorsCache
+    39→func noColorIsSet() bool {
+    43→// Color defines a custom color object which is defined by SGR parameters.
+    44→type Color struct {
+    45→	params  []Attribute
+    46→	noColor *bool
+    47→}
+    49→// Attribute defines a single SGR Code
+    50→type Attribute int
+    52→const escape = "\x1b"
+    55→const (
+    56→	Reset Attribute = iota
+    57→	Bold
+    58→	Faint
+    59→	Italic
+    60→	Underline
+    61→	BlinkSlow
+    62→	BlinkRapid
+    63→	ReverseVideo
+    64→	Concealed
+    65→	CrossedOut
+    68→const (
+    69→	ResetBold Attribute = iota + 22
+    70→	ResetItalic
+    71→	ResetUnderline
+    72→	ResetBlinking
+    74→	ResetReversed
+    75→	ResetConcealed
+    76→	ResetCrossedOut
+    79→var mapResetAttributes map[Attribute]Attribute = map[Attribute]Attribute{
+    92→const (
+    93→	FgBlack Attribute = iota + 30
+    94→	FgRed
+    95→	FgGreen
+    96→	FgYellow
+    97→	FgBlue
+    98→	FgMagenta
+    99→	FgCyan
+   100→	FgWhite
+   103→	foreground
+   107→const (
+   108→	FgHiBlack Attribute = iota + 90
+   109→	FgHiRed
+   110→	FgHiGreen
+   111→	FgHiYellow
+   112→	FgHiBlue
+   113→	FgHiMagenta
+   114→	FgHiCyan
+   115→	FgHiWhite
+   119→const (
+   120→	BgBlack Attribute = iota + 40
+   121→	BgRed
+   122→	BgGreen
+   123→	BgYellow
+   124→	BgBlue
+   125→	BgMagenta
+   126→	BgCyan
+   127→	BgWhite
+   130→	background
+   134→const (
+   135→	BgHiBlack Attribute = iota + 100
+   136→	BgHiRed
+   137→	BgHiGreen
+   138→	BgHiYellow
+   139→	BgHiBlue
+   140→	BgHiMagenta
+   141→	BgHiCyan
+   142→	BgHiWhite
+   211→func (c *Color) unset
+   405→func (c *Color) sequence() string {
+   416→func (c *Color) wrap(s string) string {
+   424→func (c *Color) format
+   428→func (c *Color) unformat
+   456→func (c *Color) isNoColorSet
+   487→func (c *Color) attrExists
+   497→func boolPtr
+   501→func getCachedColor
+   514→func colorPrint
+   528→func colorString
+   679→func sprintln(a ...interface{}) string {
+color_windows.go
+     9→func init

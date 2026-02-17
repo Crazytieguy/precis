@@ -1,0 +1,118 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (367 words)
+
+aserror.rs
+     4→#[doc(hidden)]
+     5→pub trait AsDynError<'a>: Sealed {
+     6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
+     7→}
+    10→    #[inline]
+    11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    12→        self
+    13→    }
+    17→    #[inline]
+    18→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    19→        self
+    20→    }
+    24→    #[inline]
+    25→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    26→        self
+    27→    }
+    31→    #[inline]
+    32→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    33→        self
+    34→    }
+    38→    #[inline]
+    39→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    40→        self
+    41→    }
+    44→#[doc(hidden)]
+    45→pub trait Sealed {}
+display.rs
+     5→#[doc(hidden)]
+     6→pub trait AsDisplay<'a>: Sealed {
+     7→    // TODO: convert to generic associated type.
+     8→    // https://github.com/dtolnay/thiserror/pull/253
+     9→    type Target: Display;
+    10→
+    11→    fn as_display(&'a self) -> Self::Target;
+    12→}
+    18→    type Target = &'a T;
+    20→    fn as_display(&'a self) -> Self::Target {
+    21→        *self
+    22→    }
+    25→#[cfg(feature = "std")]
+    26→impl<'a> AsDisplay<'a> for Path {
+    27→    type Target = path::Display<'a>;
+    28→
+    29→    #[inline]
+    30→    fn as_display(&'a self) -> Self::Target {
+    31→        self.display()
+    32→    }
+    33→}
+    35→#[cfg(feature = "std")]
+    36→impl<'a> AsDisplay<'a> for PathBuf {
+    37→    type Target = path::Display<'a>;
+    38→
+    39→    #[inline]
+    40→    fn as_display(&'a self) -> Self::Target {
+    41→        self.display()
+    42→    }
+    43→}
+    45→#[doc(hidden)]
+    46→pub trait Sealed {}
+    48→#[cfg(feature = "std")]
+    49→impl Sealed for Path {}
+    50→#[cfg(feature = "std")]
+    51→impl Sealed for PathBuf {}
+    58→#[cfg(not(feature = "std"))]
+    59→mod placeholder {
+    60→    use super::{AsDisplay, Sealed};
+    61→    use core::fmt::{self, Display};
+    62→
+    63→    #[allow(dead_code)]
+    64→    pub struct Placeholder;
+    65→
+    66→    impl<'a> AsDisplay<'a> for Placeholder {
+    67→        type Target = Self;
+    68→
+    69→        #[inline]
+    70→        fn as_display(&'a self) -> Self::Target {
+    71→            Placeholder
+    72→        }
+    73→    }
+    74→
+    75→    impl Display for Placeholder {
+    76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    77→            unreachable!()
+    78→        }
+    79→    }
+    80→
+    81→    impl Sealed for Placeholder {}
+    82→}
+lib.rs
+   281→mod aserror;
+   282→mod display;
+   283→#[cfg(error_generic_member_access)]
+   284→mod provide;
+   285→mod var;
+   289→mod private;
+provide.rs
+     3→#[doc(hidden)]
+     4→pub trait ThiserrorProvide: Sealed {
+     5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
+     6→}
+    12→    #[inline]
+    13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
+    14→        self.provide(request);
+    15→    }
+    18→#[doc(hidden)]
+    19→pub trait Sealed {}
+var.rs
+     3→pub struct Var<'a, T: ?Sized>(pub &'a T);
+     6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+     7→        Pointer::fmt(self.0, formatter)
+     8→    }

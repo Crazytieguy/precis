@@ -1,0 +1,272 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (989 words)
+
+CHANGELOG.md
+     1→# Changelog
+     3→## 2.4.0
+     4→
+     5→- Added
+     6→  - TOML v1.1.0 compatibility
+     7→  - Binary wheels for Windows arm64
+     8→
+     9→## 2.3.0
+    16→## 2.2.1
+    21→## 2.2.0
+    26→## 2.1.0
+    34→## 2.0.2
+    44→## 2.0.1
+    56→## 1.2.3
+    61→## 2.0.0
+    75→## 1.2.2
+    84→## 1.2.1
+    94→## 1.2.0
+   100→## 1.1.0
+   105→## 1.0.4
+   110→## 1.0.3
+   117→## 1.0.2
+   122→## 1.0.1
+   127→## 1.0.0
+   132→## 0.2.10
+   140→## 0.2.9
+   147→## 0.2.8
+   152→## 0.2.7
+   158→## 0.2.6
+   163→## 0.2.5
+   168→## 0.2.4
+   173→## 0.2.3
+   178→## 0.2.2
+   185→## 0.2.1
+   191→## 0.2.0
+   198→## 0.1.0
+README.md
+     5→# Tomli
+    32→## Intro<a name="intro"></a>
+    50→## Installation<a name="installation"></a>
+    56→## Usage<a name="usage"></a>
+    58→### Parse a TOML string<a name="parse-a-toml-string"></a>
+    59→
+    60→```python
+    61→import tomli
+    62→
+    63→toml_str = """
+    64→[[players]]
+    65→name = "Lehtinen"
+    66→number = 26
+    67→
+    68→[[players]]
+    69→name = "Numminen"
+    70→number = 27
+    71→"""
+    72→
+    73→toml_dict = tomli.loads(toml_str)
+    74→assert toml_dict == {
+    75→    "players": [{"name": "Lehtinen", "number": 26}, {"name": "Numminen", "number": 27}]
+    76→}
+    77→```
+    78→
+    79→### Parse a TOML file<a name="parse-a-toml-file"></a>
+    92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
+   106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
+   123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
+   152→## FAQ<a name="faq"></a>
+   154→### Why this parser?<a name="why-this-parser"></a>
+   155→
+   156→- it's lil'
+   157→- pure Python with zero dependencies
+   158→- the fastest pure Python parser [\*](#pure-python):
+   159→  14x as fast as [tomlkit](https://pypi.org/project/tomlkit/),
+   160→  2.1x as fast as [toml](https://pypi.org/project/toml/)
+   161→- outputs [basic data types](#how-do-toml-types-map-into-python-types) only
+   162→- 100% spec compliant: passes all tests in
+   163→  [toml-lang/toml-test](https://github.com/toml-lang/toml-test)
+   164→  test suite
+   165→- thoroughly tested: 100% branch coverage
+   166→
+   167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
+   177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
+   183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
+   201→## Performance<a name="performance"></a>
+   207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
+   230→### Pure Python<a name="pure-python"></a>
+fuzzer/fuzz.py
+    20→def test_one_input(input_bytes: bytes) -> None:
+    21→    # We need a Unicode string, not bytes
+    22→    fdp = atheris.FuzzedDataProvider(input_bytes)
+    23→    data = fdp.ConsumeUnicode(sys.maxsize)
+    53→def print_err(data):
+    54→    codepoints = [hex(ord(x)) for x in data]
+    55→    sys.stderr.write(f"Input was {type(data)}:\n{data}\nCodepoints:\n{codepoints}\n")
+    56→    sys.stderr.flush()
+    59→def normalize_toml_obj(toml_obj: dict) -> None:
+    60→    """Make NaNs equal when compared (without using recursion)."""
+    61→    to_process = [toml_obj]
+    62→    while to_process:
+    63→        cont = to_process.pop()
+    71→def main():
+    72→    # For possible options, see https://llvm.org/docs/LibFuzzer.html#options
+    73→    fuzzer_options = sys.argv
+    74→    atheris.Setup(fuzzer_options, test_one_input)
+scripts/use_setuptools.py
+    12→def use_setuptools() -> None:
+    13→    pyproject_path = Path(__file__).parent.parent / "pyproject.toml"
+    14→    data = tomllib.loads(pyproject_path.read_bytes().decode())
+    15→    data["build-system"] = {
+    16→        "requires": ["setuptools>=77.0.3", "mypy[mypyc]>=1.15"],
+    17→        "build-backend": "setuptools.build_meta",
+    18→    }
+    19→    pyproject_path.write_bytes(tomli_w.dumps(data).encode())
+src/tomli/__init__.py
+     1→# SPDX-License-Identifier: MIT
+     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
+     3→# Licensed to PSF under a Contributor Agreement.
+     4→
+     5→__all__ = ("loads", "load", "TOMLDecodeError")
+     6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+src/tomli/_parser.py
+    19→TYPE_CHECKING = False
+    26→# Inline tables/arrays are implemented using recursion. Pathologically
+    27→# nested documents cause pure Python to raise RecursionError (which is OK),
+    28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
+    29→# mypyc docs this will be fixed in the future:
+    30→# https://mypyc.readthedocs.io/en/latest/differences_from_python.html#stack-overflows
+    31→# Before mypyc's fix is in, recursion needs to be limited by this library.
+    32→# Choosing `sys.getrecursionlimit()` as maximum inline table/array nesting
+    33→# level, as it allows more nesting than pure Python, but still seems a far
+    34→# lower number than where mypyc binaries crash.
+    35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
+    37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
+    39→# Neither of these sets include quotation mark or backslash. They are
+    40→# currently handled as separate cases in the parser functions.
+    41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
+    42→ILLEGAL_MULTILINE_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t\n")
+    44→ILLEGAL_LITERAL_STR_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
+    45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS: Final = ILLEGAL_MULTILINE_BASIC_STR_CHARS
+    47→ILLEGAL_COMMENT_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
+    49→TOML_WS: Final = frozenset(" \t")
+    50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
+    51→BARE_KEY_CHARS: Final = frozenset(
+    52→    "abcdefghijklmnopqrstuvwxyz" "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "0123456789" "-_"
+    53→)
+    54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
+    55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
+    57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
+    58→    {
+    59→        "\\b": "\u0008",  # backspace
+    60→        "\\t": "\u0009",  # tab
+    61→        "\\n": "\u000a",  # linefeed
+    62→        "\\f": "\u000c",  # form feed
+    63→        "\\r": "\u000d",  # carriage return
+    64→        "\\e": "\u001b",  # escape
+    71→class DEPRECATED_DEFAULT:
+    76→class TOMLDecodeError(ValueError):
+    86→
+    87→    def __init__(
+    88→        self,
+   137→def load
+   149→def loads
+   220→class Flags:
+   222→
+   223→    # Marks an immutable namespace (inline array or inline table).
+   224→    FROZEN: Final = 0
+   229→    def __init__
+   233→    def add_pending
+   236→    def finalize_pending
+   241→    def unset_all
+   249→    def set
+   260→    def is_
+   278→class NestedDict:
+   279→    def __init__(self) -> None:
+   280→        # The parsed content of the TOML document
+   281→        self.dict: dict[str, Any] = {}
+   283→    def get_or_create_nest
+   300→    def append_nest_to_list
+   312→class Output:
+   313→    def __init__(self) -> None:
+   314→        self.data = NestedDict()
+   315→        self.flags = Flags()
+   318→def skip_chars
+   327→def skip_until
+   349→def skip_comment
+   361→def skip_comments_and_array_ws
+   370→def create_dict_rule
+   390→def create_list_rule
+   413→def key_value_rule
+   447→def parse_key_value_pair
+   463→def parse_key
+   481→def parse_key_part
+   497→def parse_one_line_basic_str
+   502→def parse_array
+   528→def parse_inline_table
+   564→def parse_basic_str_escape
+   595→def parse_basic_str_escape_multiline
+   599→def parse_hex_char
+   612→def parse_literal_str
+   621→def parse_multiline_str
+   652→def parse_basic_str
+   684→def parse_value
+   760→def is_unicode_scalar_value
+   764→def make_safe_parse_float
+src/tomli/_re.py
+    11→TYPE_CHECKING = False
+    17→_TIME_RE_STR: Final = r"""
+    18→([01][0-9]|2[0-3])             # hours
+    19→:([0-5][0-9])                  # minutes
+    20→(?:
+    26→RE_NUMBER: Final = re.compile(
+    27→    r"""
+    28→0
+    29→(?:
+    30→    x[0-9A-Fa-f](?:_?[0-9A-Fa-f])*   # hex
+    31→    |
+    32→    b[01](?:_?[01])*                 # bin
+    33→    |
+    34→    o[0-7](?:_?[0-7])*               # oct
+    35→)
+    36→|
+    37→[+-]?(?:0|[1-9](?:_?[0-9])*)         # dec, integer part
+    38→(?P<floatpart>
+    39→    (?:\.[0-9](?:_?[0-9])*)?         # optional fractional part
+    40→    (?:[eE][+-]?[0-9](?:_?[0-9])*)?  # optional exponent part
+    41→)
+    42→""",
+    43→    flags=re.VERBOSE,
+    44→)
+    45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
+    46→RE_DATETIME: Final = re.compile(
+    47→    rf"""
+    48→([0-9]{{4}})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])  # date, e.g. 1988-10-27
+    49→(?:
+    50→    [Tt ]
+    51→    {_TIME_RE_STR}
+    52→    (?:([Zz])|([+-])([01][0-9]|2[0-3]):([0-5][0-9]))?  # optional time offset
+    53→)?
+    54→""",
+    55→    flags=re.VERBOSE,
+    56→)
+    59→def match_to_datetime
+    95→# No need to limit cache size. This is only ever called on input
+    96→# that matched RE_DATETIME, so there is an implicit bound of
+    97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
+    98→@lru_cache(maxsize=None)
+    99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
+   100→    sign = 1 if sign_str == "+" else -1
+   101→    return timezone(
+   102→        timedelta(
+   103→            hours=sign * int(hour_str),
+   104→            minutes=sign * int(minute_str),
+   105→        )
+   106→    )
+   109→def match_to_localtime
+   116→def match_to_number
+tomllib.md
+     1→# `tomllib` – Tomli in the standard library
+    13→## Converting Tomli to tomllib
+    15→### Sync status
+    16→
+    17→`tomllib` in CPython commit https://github.com/python/cpython/commit/deaf509e8fc6e0363bd6f26d52ad42f976ec42f2
+    18→matches Tomli commit https://github.com/hukkin/tomli/commit/7e563eed5286b5d46b8290a9f56a86d955b23a9a
+    19→
+    20→### Steps to convert

@@ -1,0 +1,554 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 2000 (1986 words)
+
+README.md
+     1→# humanize
+     2→
+     3→[![PyPI version](https://img.shields.io/pypi/v/humanize.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/humanize/)
+     4→[![Supported Python versions](https://img.shields.io/pypi/pyversions/humanize.svg?logo=python&logoColor=FFE873)](https://pypi.org/project/humanize/)
+     5→[![Documentation Status](https://readthedocs.org/projects/python-humanize/badge/?version=latest)](https://humanize.readthedocs.io/en/latest/?badge=latest)
+     6→[![PyPI downloads](https://img.shields.io/pypi/dm/humanize.svg)](https://pypistats.org/packages/humanize)
+     7→[![GitHub Actions status](https://github.com/python-humanize/humanize/workflows/Test/badge.svg)](https://github.com/python-humanize/humanize/actions)
+     8→[![codecov](https://codecov.io/gh/python-humanize/humanize/branch/main/graph/badge.svg)](https://codecov.io/gh/python-humanize/humanize)
+     9→[![MIT License](https://img.shields.io/github/license/python-humanize/humanize.svg)](LICENCE)
+    10→[![Tidelift](https://tidelift.com/badges/package/pypi/humanize)](https://tidelift.com/subscription/pkg/pypi-humanize?utm_source=pypi-humanize&utm_medium=badge)
+    11→
+    12→This modest package contains various common humanization utilities, like turning a
+    13→number into a fuzzy human-readable duration ("3 minutes ago") or into a human-readable
+    14→size or throughput. It is localized to:
+    15→
+    16→- Arabic
+    17→- Basque
+    18→- Bengali
+    19→- Brazilian Portuguese
+    20→- Catalan
+    21→- Danish
+    22→- Dutch
+    23→- Esperanto
+    24→- European Portuguese
+    25→- Finnish
+    26→- French
+    27→- German
+    28→- Greek
+    29→- Hebrew
+    30→- Indonesian
+    31→- Italian
+    32→- Japanese
+    33→- Klingon
+    34→- Korean
+    35→- Norwegian
+    36→- Persian
+    37→- Polish
+    38→- Russian
+    39→- Simplified Chinese
+    40→- Slovak
+    41→- Slovenian
+    42→- Spanish
+    43→- Swedish
+    44→- Turkish
+    45→- Ukrainian
+    46→- Uzbek
+    47→- Vietnamese
+    48→
+    49→## API reference
+    50→
+    51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
+    52→
+    53→<!-- usage-start -->
+    54→
+    55→## Installation
+    56→
+    57→### From PyPI
+    58→
+    59→```bash
+    60→python3 -m pip install --upgrade humanize
+    61→```
+    62→
+    63→### From source
+    64→
+    65→```bash
+    66→git clone https://github.com/python-humanize/humanize
+    67→cd humanize
+    68→python3 -m pip install -e .
+    69→```
+    70→
+    71→## Usage
+    72→
+    73→### Integer humanization
+    74→
+    75→```pycon
+    76→>>> import humanize
+    77→>>> humanize.intcomma(12345)
+    78→'12,345'
+    79→>>> humanize.intword(123455913)
+    80→'123.5 million'
+    81→>>> humanize.intword(12345591313)
+    82→'12.3 billion'
+    83→>>> humanize.apnumber(4)
+    84→'four'
+    85→>>> humanize.apnumber(41)
+    86→'41'
+    87→```
+    88→
+    89→### Date & time humanization
+    90→
+    91→```pycon
+    92→>>> import humanize
+    93→>>> import datetime as dt
+    94→>>> humanize.naturalday(dt.datetime.now())
+    95→'today'
+    96→>>> humanize.naturaldelta(dt.timedelta(seconds=1001))
+    97→'16 minutes'
+    98→>>> humanize.naturalday(dt.datetime.now() - dt.timedelta(days=1))
+    99→'yesterday'
+   100→>>> humanize.naturalday(dt.date(2007, 6, 5))
+   101→'Jun 05'
+   102→>>> humanize.naturaldate(dt.date(2007, 6, 5))
+   103→'Jun 05 2007'
+   104→>>> humanize.naturaltime(dt.datetime.now() - dt.timedelta(seconds=1))
+   105→'a second ago'
+   106→>>> humanize.naturaltime(dt.datetime.now() - dt.timedelta(seconds=3600))
+   107→'an hour ago'
+   108→```
+   109→
+   110→### Precise time delta
+   111→
+   112→```pycon
+   113→>>> import humanize
+   114→>>> import datetime as dt
+   115→>>> delta = dt.timedelta(seconds=3633, days=2, microseconds=123000)
+   116→>>> humanize.precisedelta(delta)
+   117→'2 days, 1 hour and 33.12 seconds'
+   118→>>> humanize.precisedelta(delta, minimum_unit="microseconds")
+   119→'2 days, 1 hour, 33 seconds and 123 milliseconds'
+   120→>>> humanize.precisedelta(delta, suppress=["days"], format="%0.4f")
+   121→'49 hours and 33.1230 seconds'
+   122→```
+   123→
+   124→#### Smaller units
+   125→
+   126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
+   127→
+   128→```pycon
+   129→>>> import humanize
+   130→>>> import datetime as dt
+   131→>>> humanize.naturaldelta(dt.timedelta(seconds=2))
+   132→'2 seconds'
+   133→```
+   134→
+   135→```pycon
+   136→>>> delta = dt.timedelta(milliseconds=4)
+   137→>>> humanize.naturaldelta(delta)
+   138→'a moment'
+   139→>>> humanize.naturaldelta(delta, minimum_unit="milliseconds")
+   140→'4 milliseconds'
+   141→>>> humanize.naturaldelta(delta, minimum_unit="microseconds")
+   142→'4 milliseconds'
+   143→```
+   144→
+   145→```pycon
+   146→>>> humanize.naturaltime(delta)
+   147→'now'
+   148→>>> humanize.naturaltime(delta, minimum_unit="milliseconds")
+   149→'4 milliseconds ago'
+   150→>>> humanize.naturaltime(delta, minimum_unit="microseconds")
+   151→'4 milliseconds ago'
+   152→```
+   153→
+   154→### File size humanization
+   155→
+   156→```pycon
+   157→>>> import humanize
+   158→>>> humanize.naturalsize(1_000_000)
+   159→'1.0 MB'
+   160→>>> humanize.naturalsize(1_000_000, binary=True)
+   161→'976.6 KiB'
+   162→>>> humanize.naturalsize(1_000_000, gnu=True)
+   163→'976.6K'
+   164→```
+   165→
+   166→### Human-readable floating point numbers
+   167→
+   168→```pycon
+   169→>>> import humanize
+   170→>>> humanize.fractional(1/3)
+   171→'1/3'
+   172→>>> humanize.fractional(1.5)
+   173→'1 1/2'
+   174→>>> humanize.fractional(0.3)
+   175→'3/10'
+   176→>>> humanize.fractional(0.333)
+   177→'333/1000'
+   178→>>> humanize.fractional(1)
+   179→'1'
+   180→```
+   181→
+   182→### Scientific notation
+   183→
+   184→```pycon
+   185→>>> import humanize
+   186→>>> humanize.scientific(0.3)
+   187→'3.00 x 10⁻¹'
+   188→>>> humanize.scientific(500)
+   189→'5.00 x 10²'
+   190→>>> humanize.scientific("20000")
+   191→'2.00 x 10⁴'
+   192→>>> humanize.scientific(1**10)
+   193→'1.00 x 10⁰'
+   194→>>> humanize.scientific(1**10, precision=1)
+   195→'1.0 x 10⁰'
+   196→>>> humanize.scientific(1**10, precision=0)
+   197→'1 x 10⁰'
+   198→```
+   199→
+   200→## Localization
+   201→
+   202→How to change locale at runtime:
+   203→
+   204→```pycon
+   205→>>> import humanize
+   206→>>> import datetime as dt
+   207→>>> humanize.naturaltime(dt.timedelta(seconds=3))
+   208→'3 seconds ago'
+   209→>>> _t = humanize.i18n.activate("ru_RU")
+   210→>>> humanize.naturaltime(dt.timedelta(seconds=3))
+   211→'3 секунды назад'
+   212→>>> humanize.i18n.deactivate()
+   213→>>> humanize.naturaltime(dt.timedelta(seconds=3))
+   214→'3 seconds ago'
+   215→```
+   216→
+   217→You can pass additional parameter `path` to `activate` to specify a path to search
+   218→locales in.
+   219→
+   220→```pycon
+   221→>>> import humanize
+   222→>>> humanize.i18n.activate("xx_XX")
+   223→<...>
+   224→FileNotFoundError: [Errno 2] No translation file found for domain: 'humanize'
+   225→>>> humanize.i18n.activate("pt_BR", path="path/to/my/own/translation/")
+   226→<gettext.GNUTranslations instance ...>
+   227→```
+   228→
+   229→<!-- usage-end -->
+   230→
+   231→How to add new phrases to existing locale files:
+   232→
+   233→```sh
+   234→xgettext --from-code=UTF-8 -o humanize.pot -k'_' -k'N_' -k'P_:1c,2' -k'NS_:1,2' -k'_ngettext:1,2' -l python src/humanize/*.py  # extract new phrases
+   235→msgmerge -U src/humanize/locale/ru_RU/LC_MESSAGES/humanize.po humanize.pot # add them to locale files
+   236→```
+   237→
+   238→How to add a new locale:
+   239→
+   240→```sh
+   241→msginit -i humanize.pot -o humanize/locale/<locale name>/LC_MESSAGES/humanize.po --locale <locale name>
+   242→```
+   243→
+   244→Where `<locale name>` is a locale abbreviation, eg. `en_GB`, `pt_BR` or just `ru`, `fr`
+   245→etc.
+   246→
+   247→List the language at the top of this README.
+RELEASING.md
+     1→# Release checklist
+     2→
+     3→- [ ] Get `main` to the appropriate code release state.
+     4→      [GitHub Actions](https://github.com/python-humanize/humanize/actions) should be
+     5→      running cleanly for all merges to `main`.
+     6→      [![GitHub Actions status](https://github.com/python-humanize/humanize/workflows/Test/badge.svg)](https://github.com/python-humanize/humanize/actions)
+     7→
+     8→- [ ] Edit release draft, adjust text if needed:
+     9→      https://github.com/python-humanize/humanize/releases
+    10→
+    11→- [ ] Check next tag is correct, amend if needed
+    12→
+    13→- [ ] Publish release
+    14→
+    15→- [ ] Check the tagged
+    16→      [GitHub Actions build](https://github.com/python-humanize/humanize/actions/workflows/release.yml)
+    17→      has released to [PyPI](https://pypi.org/project/humanize/#history)
+    18→
+    19→- [ ] Check installation:
+    20→
+    21→```bash
+    22→pip3 uninstall -y humanize && pip3 install -U humanize && python3 -c "import humanize; print(humanize.__version__)"
+    23→```
+docs/filesize.md
+     1→# Filesize
+     2→
+     3→::: humanize.filesize
+docs/i18n.md
+     1→# Internationalisation
+     2→
+     3→::: humanize.i18n
+docs/index.md
+     1→# humanize
+     2→
+     3→Welcome to the humanize API reference.
+     4→
+     5→- [Number](number.md)
+     6→- [Time](time.md)
+     7→- [Filesize](filesize.md)
+     8→- [Lists](lists.md)
+     9→- [I18n](i18n.md)
+    10→
+    11→{%
+    12→   include-markdown "../README.md"
+    13→   start="<!-- usage-start -->"
+    14→   end="<!-- usage-end -->"
+    15→   comments=false
+    16→%}
+docs/lists.md
+     1→# Lists
+     2→
+     3→::: humanize.lists
+docs/number.md
+     1→# Number
+     2→
+     3→::: humanize.number
+docs/time.md
+     1→# Time
+     2→
+     3→::: humanize.time
+src/humanize/__init__.py
+    28→__all__ = [
+    29→    "__version__",
+    30→    "activate",
+    31→    "apnumber",
+    32→    "clamp",
+    33→    "deactivate",
+    34→    "decimal_separator",
+    35→    "fractional",
+    36→    "intcomma",
+    37→    "intword",
+    38→    "metric",
+    39→    "natural_list",
+    40→    "naturaldate",
+    41→    "naturalday",
+    42→    "naturaldelta",
+    43→    "naturalsize",
+    44→    "naturaltime",
+    45→    "ordinal",
+    46→    "precisedelta",
+    47→    "scientific",
+    48→    "thousands_separator",
+    49→]
+src/humanize/filesize.py
+    36→def naturalsize(
+    37→    value: float | str,
+    38→    binary: bool = False,
+    39→    gnu: bool = False,
+    40→    format: str = "%.1f",
+    41→) -> str:
+    42→    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
+    43→
+    44→    By default, decimal suffixes (kB, MB) are used.
+src/humanize/i18n.py
+     8→TYPE_CHECKING = False
+    13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
+    15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
+    16→    None: gettext_module.NullTranslations()
+    17→}
+    18→_CURRENT = local()
+    21→# Mapping of locale to thousands separator
+    22→_THOUSANDS_SEPARATOR = {
+    23→    "de_DE": ".",
+    24→    "fr_FR": " ",
+    25→    "it_IT": ".",
+    26→    "pt_BR": ".",
+    27→    "hu_HU": " ",
+    28→}
+    30→# Mapping of locale to decimal separator
+    31→_DECIMAL_SEPARATOR = {
+    32→    "de_DE": ",",
+    33→    "fr_FR": ".",
+    34→    "it_IT": ",",
+    35→    "pt_BR": ",",
+    36→    "hu_HU": ",",
+    37→}
+    40→def _get_default_locale_path() -> pathlib.Path | None:
+    51→def get_translation() -> gettext_module.NullTranslations:
+    58→def activate(
+    59→    locale: str | None, path: str | os.PathLike[str] | None = None
+    60→) -> gettext_module.NullTranslations:
+    61→    """Activate internationalisation.
+    62→
+    63→    Set `locale` as current locale. Search for locale in directory `path`.
+    96→def deactivate() -> None:
+    97→    """Deactivate internationalisation."""
+   101→def _gettext(message: str) -> str:
+   102→    """Get translation.
+   103→
+   104→    Args:
+   113→def _pgettext(msgctxt: str, message: str) -> str:
+   114→    """Fetches a particular translation.
+   115→
+   116→    It works with `msgctxt` .po modifiers and allows duplicate keys with different
+   129→def _ngettext(message: str, plural: str, num: int) -> str:
+   130→    """Plural version of _gettext.
+   131→
+   132→    Args:
+   144→def _gettext_noop(message: str) -> str:
+   145→    """Mark a string as a translation string without translating it.
+   146→
+   147→    Example usage:
+   163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
+   164→    """Mark two strings as pluralized translations without translating them.
+   165→
+   166→    Example usage:
+   183→def thousands_separator() -> str:
+   184→    """Return the thousands separator for a locale, default to comma.
+   185→
+   186→    Returns:
+   196→def decimal_separator() -> str:
+   197→    """Return the decimal separator for a locale, default to dot.
+   198→
+   199→    Returns:
+src/humanize/lists.py
+     5→TYPE_CHECKING = False
+     9→__all__ = ["natural_list"]
+    12→def natural_list(items: list[Any]) -> str:
+    13→    """Natural list.
+    14→
+    15→    Convert a list of items into a human-readable string with commas and 'and'.
+src/humanize/number.py
+    12→TYPE_CHECKING = False
+    21→def _format_not_finite(value: float) -> str:
+    22→    """Utility function to handle infinite and nan cases."""
+    34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
+    35→    """Converts an integer to its ordinal as a string.
+    36→
+    37→    For example, 1 is "1st", 2 is "2nd", 3 is "3rd", etc. Works for any integer or
+   110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
+   111→    """Converts an integer to a string containing commas every three digits.
+   112→
+   113→    For example, 3000 becomes "3,000" and 45000 becomes "45,000". To maintain some
+   195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
+   196→    """Converts a large integer to a friendly text representation.
+   197→
+   198→    Works best for numbers over 1 million. For example, 1_000_000 becomes "1.0 million",
+   269→def apnumber(value: NumberOrString) -> str:
+   270→    """Converts an integer to Associated Press style.
+   271→
+   272→    Examples:
+   321→def fractional(value: NumberOrString) -> str:
+   322→    """Convert to fractional number.
+   323→
+   324→    There will be some cases where one might not want to show ugly decimal places for
+   385→def scientific(value: NumberOrString, precision: int = 2) -> str:
+   386→    """Return number in string scientific notation z.wq x 10ⁿ.
+   387→
+   388→    Examples:
+   454→def clamp(
+   455→    value: float,
+   456→    format: str = "{:}",
+   457→    floor: float | None = None,
+   458→    ceil: float | None = None,
+   459→    floor_token: str = "<",
+   460→    ceil_token: str = ">",
+   461→) -> str:
+   462→    """Returns number with the specified format, clamped between floor and ceil.
+   463→
+   464→    If the number is larger than ceil or smaller than floor, then the respective limit
+   531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
+   532→    """Return a value with a metric SI unit-prefix appended.
+   533→
+   534→    Examples:
+src/humanize/time.py
+    15→TYPE_CHECKING = False
+    21→__all__ = [
+    22→    "naturaldate",
+    23→    "naturalday",
+    24→    "naturaldelta",
+    25→    "naturaltime",
+    26→    "precisedelta",
+    27→]
+    30→@total_ordering
+    31→class Unit(Enum):
+    32→    MICROSECONDS = 0
+    33→    MILLISECONDS = 1
+    34→    SECONDS = 2
+    35→    MINUTES = 3
+    36→    HOURS = 4
+    37→    DAYS = 5
+    38→    MONTHS = 6
+    39→    YEARS = 7
+    40→
+    41→    def __lt__(self, other: Any) -> Any:
+    42→        if self.__class__ is other.__class__:
+    43→            return self.value < other.value
+    44→        return NotImplemented
+    47→def _now() -> dt.datetime:
+    53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
+    54→    """Return an "absolute" value for a timedelta, always representing a time distance.
+    55→
+    56→    Args:
+    68→def _date_and_delta(
+    69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
+    70→) -> tuple[Any, Any]:
+    71→    """Turn a value into a date and a timedelta which represents how long ago it was.
+    72→
+    73→    If that's not possible, return `(None, value)`.
+    95→def naturaldelta(
+    96→    value: dt.timedelta | float,
+    97→    months: bool = True,
+    98→    minimum_unit: str = "seconds",
+    99→) -> str:
+   100→    """Return a natural representation of a timedelta or number of seconds.
+   101→
+   102→    This is similar to `naturaltime`, but does not add tense to the result.
+   249→def naturaltime(
+   250→    value: dt.datetime | dt.timedelta | float,
+   251→    future: bool = False,
+   252→    months: bool = True,
+   253→    minimum_unit: str = "seconds",
+   254→    when: dt.datetime | None = None,
+   255→) -> str:
+   256→    """Return a natural representation of a time in a resolution that makes sense.
+   257→
+   258→    This is more or less compatible with Django's `naturaltime` filter.
+   300→def _convert_aware_datetime(
+   301→    value: dt.datetime | dt.timedelta | float | None,
+   302→) -> Any:
+   303→    """Convert aware datetime to naive datetime and pass through any other type."""
+   311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
+   312→    """Return a natural day.
+   313→
+   314→    For date values that are tomorrow, today or yesterday compared to
+   343→def naturaldate(value: dt.date | dt.datetime) -> str:
+   344→    """Like `naturalday`, but append a year for dates more than ~five months away."""
+   361→def _quotient_and_remainder(
+   362→    value: float,
+   363→    divisor: float,
+   364→    unit: Unit,
+   365→    minimum_unit: Unit,
+   366→    suppress: Iterable[Unit],
+   367→    format: str,
+   368→) -> tuple[float, float]:
+   369→    """Divide `value` by `divisor`, returning the quotient and remainder.
+   370→
+   371→    If `unit` is `minimum_unit`, the quotient will be the rounding of `value / divisor`
+   406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
+   407→    """Return a minimum unit suitable that is not suppressed.
+   408→
+   409→    If not suppressed, return the same unit:
+   435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
+   436→    """Extend suppressed units (if any) with all units lower than the minimum unit.
+   437→
+   438→    >>> from humanize.time import _suppress_lower_units, Unit
+   451→def precisedelta(
+   452→    value: dt.timedelta | float | None,
+   453→    minimum_unit: str = "seconds",
+   454→    suppress: Iterable[str] = (),
+   455→    format: str = "%0.2f",
+   456→) -> str:
+   457→    """Return a precise representation of a timedelta or number of seconds.
+   458→
+   459→    ```pycon
+   654→def _rounding_by_fmt(format: str, value: float) -> float | int:
+   655→    """Round a number according to the string format provided.
+   656→
+   657→    The string format is the old printf-style string formatting.

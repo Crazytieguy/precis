@@ -1,0 +1,152 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (499 words)
+
+checkmark.tsx
+     3→const circleAnimation = keyframes`
+     4→from {
+    13→const checkmarkAnimation = keyframes`
+    14→0% {
+    29→export interface CheckmarkTheme {
+    30→  primary?: string;
+    31→  secondary?: string;
+    32→}
+    34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
+    35→  width: 20px;
+    36→  opacity: 0;
+    37→  height: 20px;
+    38→  border-radius: 10px;
+error.tsx
+     3→const circleAnimation = keyframes`
+     4→from {
+    13→const firstLineAnimation = keyframes`
+    14→from {
+    23→const secondLineAnimation = keyframes`
+    24→from {
+    33→export interface ErrorTheme {
+    34→  primary?: string;
+    35→  secondary?: string;
+    36→}
+    38→export const ErrorIcon = styled('div')<ErrorTheme>`
+    39→  width: 20px;
+    40→  opacity: 0;
+    41→  height: 20px;
+    42→  border-radius: 10px;
+loader.tsx
+     3→const rotate = keyframes`
+     4→  from {
+    12→export interface LoaderTheme {
+    13→  primary?: string;
+    14→  secondary?: string;
+    15→}
+    17→export const LoaderIcon = styled('div')<LoaderTheme>`
+    18→  width: 12px;
+    19→  height: 12px;
+    20→  box-sizing: border-box;
+    21→  border: 2px solid;
+toast-bar.tsx
+     8→const enterAnimation = (factor: number) => `
+     9→0% {transform: translate3d(0,${factor * -200}%,0) scale(.6); opacity:.5;}
+    10→100% {transform: translate3d(0,0,0) scale(1); opacity:1;}
+    11→`;
+    13→const exitAnimation = (factor: number) => `
+    14→0% {transform: translate3d(0,0,-1px) scale(1); opacity:1;}
+    15→100% {transform: translate3d(0,${factor * -150}%,-1px) scale(.6); opacity:0;}
+    16→`;
+    18→const fadeInAnimation = `0%{opacity:0;} 100%{opacity:1;}`;
+    19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
+    22→const ToastBarBase = styled('div')`
+    23→  :where(&) {
+    38→const Message = styled('div')`
+    39→  display: flex;
+    47→interface ToastBarProps {
+    48→  toast: Toast;
+    49→  position?: ToastPosition;
+    50→  style?: React.CSSProperties;
+    51→  children?: (components: {
+    52→    icon: Renderable;
+    53→    message: Renderable;
+    54→  }) => Renderable;
+    55→}
+    57→const getAnimationStyle = (
+    58→  position: ToastPosition,
+    59→  visible: boolean
+    60→): React.CSSProperties => {
+    61→  const top = position.includes('top');
+    75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
+    76→  ({ toast, position, style, children }) => {
+    77→    const animationStyle: React.CSSProperties = toast.height
+    78→      ? getAnimationStyle(
+    79→          toast.position || position || 'top-center',
+toast-icon.tsx
+     9→const StatusWrapper = styled('div')`
+    10→  position: absolute;
+    13→const IndicatorWrapper = styled('div')`
+    14→  position: relative;
+    22→const enter = keyframes`
+    23→from {
+    32→export const AnimatedIconWrapper = styled('div')`
+    33→  position: relative;
+    34→  transform: scale(0.6);
+    35→  opacity: 0.4;
+    36→  min-width: 20px;
+    41→export type IconThemes = Partial<{
+    42→  success: CheckmarkTheme;
+    43→  error: ErrorTheme;
+    44→  loading: LoaderTheme;
+    45→}>;
+    47→export const ToastIcon: React.FC<{
+    48→  toast: Toast;
+    49→}> = ({ toast }) => {
+    50→  const { icon, type, iconTheme } = toast;
+    51→  if (icon !== undefined) {
+    52→    if (typeof icon === 'string') {
+    53→      return <AnimatedIconWrapper>{icon}</AnimatedIconWrapper>;
+    54→    } else {
+    55→      return icon;
+    56→    }
+    57→  }
+    58→
+    59→  if (type === 'blank') {
+    60→    return null;
+    61→  }
+    62→
+    63→  return (
+    64→    <IndicatorWrapper>
+    65→      <LoaderIcon {...iconTheme} />
+    66→      {type !== 'loading' && (
+    67→        <StatusWrapper>
+toaster.tsx
+    15→const ToastWrapper = ({
+    16→  id,
+    47→const getPositionStyle = (
+    48→  position: ToastPosition,
+    49→  offset: number
+    50→): React.CSSProperties => {
+    51→  const top = position.includes('top');
+    76→const activeClass = css`
+    77→  z-index: 9999;
+    83→const DEFAULT_OFFSET = 16;
+    85→export const Toaster: React.FC<ToasterProps> = ({
+    86→  reverseOrder,
+    87→  position = 'top-center',
+    88→  toastOptions,
+    89→  gutter,
+    90→  children,
+    91→  toasterId,
+    92→  containerStyle,
+    93→  containerClassName,
+    94→}) => {
+    95→  const { toasts, handlers } = useToaster(toastOptions, toasterId);
+    96→
+    97→  return (
+    98→    <div
+    99→      data-rht-toaster={toasterId || ''}
+   100→      style={{
+   101→        position: 'fixed',
+   102→        zIndex: 9999,
+   103→        top: DEFAULT_OFFSET,
+   104→        left: DEFAULT_OFFSET,
+   105→        right: DEFAULT_OFFSET,

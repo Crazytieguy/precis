@@ -1,0 +1,244 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (986 words)
+
+CHANGELOG.md
+     3→## 8.2.0
+     4→
+     5→### Minor Changes
+     6→
+     7→- [#615](https://github.com/supermacro/neverthrow/pull/615) [`85ed7fd`](https://github.com/supermacro/neverthrow/commit/85ed7fd3a1247e4c0e83bba13f5e874282243d75) Thanks [@konker](https://github.com/konker)! - Add orTee, which is the equivalent of andTee but for the error track.
+     8→
+     9→- [#584](https://github.com/supermacro/neverthrow/pull/584) [`acea44a`](https://github.com/supermacro/neverthrow/commit/acea44adb98dda2ca32fe4e882879461cc7cedc2) Thanks [@macksal](https://github.com/macksal)! - Allow ok/err/okAsync/errAsync to accept zero arguments when returning void
+    10→
+    13→### Patch Changes
+    14→
+    15→- [#600](https://github.com/supermacro/neverthrow/pull/600) [`3aee20a`](https://github.com/supermacro/neverthrow/commit/3aee20a1c429062d26f440fde32a3f26ef05533a) Thanks [@m-shaka](https://github.com/m-shaka)! - docs: updated README.md about `safeTry` and added @deprecated tag to safeUnwrap
+    16→
+    19→### Minor Changes
+    20→
+    21→- [#589](https://github.com/supermacro/neverthrow/pull/589) [`609b398`](https://github.com/supermacro/neverthrow/commit/609b398aa1fd258a1fede974707d54eb4c230f3c) Thanks [@dmmulroy](https://github.com/dmmulroy)! - safeTry should not require .safeUnwrap()
+    22→
+    25→### Major Changes
+    26→
+    27→- [#484](https://github.com/supermacro/neverthrow/pull/484) [`09faf35`](https://github.com/supermacro/neverthrow/commit/09faf35a5ce701ed55b13b82074da9e50050526d) Thanks [@braxtonhall](https://github.com/braxtonhall)! - Allow orElse method to change ok types.
+    28→  This makes the orElse types match the implementation.
+    29→
+    30→  This is a breaking change for the orElse type argument list,
+    31→  as the ok type must now be provided before the err type.
+    32→
+    33→  ```diff
+    34→  - result.orElse<ErrType>(foo)
+    35→  + result.orElse<OkType, ErrType>(foo)
+    36→  ```
+    37→
+    45→### Minor Changes
+    46→
+    47→- [#562](https://github.com/supermacro/neverthrow/pull/562) [`547352f`](https://github.com/supermacro/neverthrow/commit/547352f326206b2c5b403bde4ddc88825172f25c) Thanks [@sharno](https://github.com/sharno)! - change the return type of `safeTry` to be `ResultAsync<T, E>` instead of `Promise<Result<T, E>>` for better composability
+    48→
+    51→### Minor Changes
+    52→
+    53→- [#467](https://github.com/supermacro/neverthrow/pull/467) [`4b9d2fd`](https://github.com/supermacro/neverthrow/commit/4b9d2fdaf03223945068509f948b57194732aa03) Thanks [@untidy-hair
+    54→  ](https://github.com/untidy-hair)! - feat: add `andTee` and `andThrough` to handle side-effect
+    55→
+    64→### Patch Changes
+    65→
+    66→- [#527](https://github.com/supermacro/neverthrow/pull/527) [`2e1f198`](https://github.com/supermacro/neverthrow/commit/2e1f19899800ce5e1164412c6a693cf2f1c40b20) Thanks [@3846masa](https://github.com/3846masa)! - fix: change type definitions to make inferring types of safeTry more strict
+    67→
+    68→- [#497](https://github.com/supermacro/neverthrow/pull/497) [`e06203e`](https://github.com/supermacro/neverthrow/commit/e06203e90b2b64edaa42707cbca8383c9f4765e8) Thanks [@braxtonhall](https://github.com/braxtonhall)! - enhance type inferrence of `match`
+    69→
+    72→### Major Changes
+    73→
+    74→- [#553](https://github.com/supermacro/neverthrow/pull/553) [`5a3af0a`](https://github.com/supermacro/neverthrow/commit/5a3af0a55d0c440dfd50bfbbe021c6e4b973184b) Thanks [@m-shaka](https://github.com/m-shaka)! - Declare the minimum supported Node.js version
+    75→
+    76→  `Neverthrow` does not depend on any Node.js version-specific features, so it should work with any version of Node.js that supports ES6 and other runtimes like Browser, Deno, etc.
+    77→
+    78→  However, for the sake of maintaining a consistent development environment, we should declare the minimum supported version of Node.js in the `engines` field of the `package.json` file.
+README.md
+   141→### Synchronous API (`Result`)
+   142→
+   143→#### `ok`
+   144→
+   145→Constructs an `Ok` variant of `Result`
+   146→
+   147→**Signature:**
+   148→
+   149→```typescript
+   150→ok<T, E>(value: T): Ok<T, E> { ... }
+   151→```
+   152→
+   153→**Example:**
+   154→
+   155→```typescript
+   865→#### `okAsync`
+   866→
+   867→Constructs an `Ok` variant of `ResultAsync`
+   868→
+   869→**Signature:**
+   870→
+   871→```typescript
+   872→okAsync<T, E>(value: T): ResultAsync<T, E>
+   873→```
+   874→
+   875→**Example:**
+   876→
+   877→```typescript
+  1521→#### `fromThrowable`
+  1522→
+  1523→Top level export of `Result.fromThrowable`.
+  1524→Please find documentation at [Result.fromThrowable](#resultfromthrowable-static-class-method)
+  1525→
+  1526→[⬆️  Back to top](#toc)
+  1527→
+src/_internals/error.ts
+     3→export interface ErrorConfig {
+     4→  withStackTrace: boolean
+     5→}
+     7→const defaultErrorConfig: ErrorConfig = {
+     8→  withStackTrace: false,
+     9→}
+    11→interface NeverThrowError<T, E> {
+    12→  data:
+    13→    | {
+    14→        type: string
+    15→        value: T
+    16→      }
+    17→    | {
+    18→        type: string
+    19→        value: E
+    20→      }
+    21→  message: string
+    27→export const createNeverThrowError = <T, E>(
+    28→  message: string,
+    29→  result: Result<T, E>,
+    30→  config: ErrorConfig = defaultErrorConfig,
+    31→): NeverThrowError<T, E> => {
+    32→  const data = result.isOk()
+src/_internals/utils.ts
+     5→export type ExtractOkTypes
+    10→export type ExtractOkAsyncTypes
+    15→export type ExtractErrTypes
+    20→export type ExtractErrAsyncTypes
+    24→export type InferOkTypes
+    25→export type InferErrTypes
+    27→export type InferAsyncOkTypes
+    28→export type InferAsyncErrTypes
+    30→/**
+    31→ * Short circuits on the FIRST Err value that we find
+    32→ */
+    33→export const combineResultList = <T, E>(
+    34→  resultList: readonly Result<T, E>[],
+    35→): Result<readonly T[], E> => {
+    36→  let acc = ok([]) as Result<T[], E>
+    37→
+    38→  for (const result of resultList) {
+    39→    if (result.isErr()) {
+    40→      acc = err(result.error)
+    41→      break
+    42→    } else {
+    54→export const combineResultAsyncList = <T, E>(
+    55→  asyncResultList: readonly ResultAsync<T, E>[],
+    61→/**
+    62→ * Give a list of all the errors we find
+    63→ */
+    64→export const combineResultListWithAllErrors = <T, E>(
+    65→  resultList: readonly Result<T, E>[],
+    66→): Result<readonly T[], E[]> => {
+    67→  let acc = ok([]) as Result<T[], E[]>
+    68→
+    69→  for (const result of resultList) {
+    70→    if (result.isErr() && acc.isErr()) {
+    71→      acc.error.push(result.error)
+    72→    } else if (result.isErr() && acc.isOk()) {
+    73→      acc = err([result.error])
+    82→export const combineResultAsyncListWithAllErrors = <T, E>(
+    83→  asyncResultList: readonly ResultAsync<T, E>[],
+src/result-async.ts
+    22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
+    23→  private _promise: Promise<Result<T, E>>
+    24→
+    25→  constructor(res: Promise<Result<T, E>>) {
+    26→    this._promise = res
+    27→  }
+    28→
+   210→  /**
+   222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
+   259→export const fromPromise
+   260→export const fromSafePromise
+   262→export const fromAsyncThrowable
+   265→export type CombineResultAsyncs
+   272→export type CombineResultsWithAllErrorsArrayAsync
+   279→type UnwrapAsync
+   300→type TraverseAsync
+   330→type TraverseWithAllErrorsAsync
+   338→type Writable
+src/result.ts
+    14→export namespace Result {
+    15→  /**
+    16→   * Wraps a function with a try catch, creating a new function with the same
+    17→   * arguments but returning `Ok` if successful, `Err` if the function throws
+    18→   *
+    62→export type Result
+   134→interface IResult<T, E> {
+   135→  /**
+   136→   * Used to check if a `Result` is an `OK`
+   137→   *
+   138→   * @returns `true` if the result is an `OK` variant of Result
+   139→   */
+   140→  isOk(): this is Ok<T, E>
+   141→
+   142→  /**
+   147→  isErr(): this is Err<T, E>
+   149→  /**
+   157→  map<A>(f: (t: T) => A): Result<A, E>
+   159→  /**
+   168→  mapErr<U>(f: (e: E) => U): Result<T, U>
+   185→  /**
+   195→  andTee(f: (t: T) => unknown): Result<T, E>
+   197→  /**
+   207→  orTee(f: (t: E) => unknown): Result<T, E>
+   235→  /**
+   244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
+   246→  /**
+   253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
+   255→  /**
+   260→  unwrapOr<A>(v: A): T | A
+   262→  /**
+   276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
+   278→  /**
+   290→  safeUnwrap(): Generator<Err<never, E>, T>
+   292→  /**
+   299→  _unsafeUnwrap(config?: ErrorConfig): T
+   301→  /**
+   309→  _unsafeUnwrapErr(config?: ErrorConfig): E
+   312→export class Ok<T, E> implements IResult<T, E> {
+   313→  constructor(readonly value: T) {}
+   314→
+   315→  isOk(): this is Ok<T, E> {
+   316→    return true
+   317→  }
+   318→
+   419→export class Err<T, E> implements IResult<T, E> {
+   420→  constructor(readonly error: E) {}
+   421→
+   422→  isOk(): this is Ok<T, E> {
+   423→    return false
+   424→  }
+   425→
+   523→export const fromThrowable
+   530→type Prev
+   590→type CollectResults
+   614→export type Transpose
+   635→export type Combine
+   645→export type Dedup
+   652→export type MemberListOf
+   669→export type EmptyArrayToNever
+   680→type UnknownMembersToNever
+   685→export type MembersToUnion
+   688→export type IsLiteralArray
+   698→type Traverse
+   704→type TraverseWithAllErrors
+   712→export type CombineResults
+   719→export type CombineResultsWithAllErrorsArray

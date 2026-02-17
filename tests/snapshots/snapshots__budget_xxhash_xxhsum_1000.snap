@@ -1,0 +1,45 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (157 words)
+
+xxhsum.go
+    11→func main() {
+    12→	if contains(os.Args[1:], "-h") {
+    13→		fmt.Fprintf(os.Stderr, `Usage:
+    14→  %s [filenames]
+    15→If no filenames are provided or only - is given, input is read from stdin.
+    16→`, os.Args[0])
+    17→		os.Exit(1)
+    18→	}
+    19→	if len(os.Args) < 2 || len(os.Args) == 2 && os.Args[1] == "-" {
+    20→		printHash(os.Stdin, "-")
+    21→		return
+    22→	}
+    23→	for _, path := range os.Args[1:] {
+    24→		f, err := os.Open(path)
+    25→		if err != nil {
+    26→			fmt.Fprintln(os.Stderr, err)
+    27→			continue
+    28→		}
+    29→		printHash(f, path)
+    30→		f.Close()
+    31→	}
+    32→}
+    34→func contains(ss []string, s string) bool {
+    35→	for _, s1 := range ss {
+    36→		if s1 == s {
+    37→			return true
+    38→		}
+    39→	}
+    40→	return false
+    41→}
+    43→func printHash(r io.Reader, name string) {
+    44→	h := xxhash.New()
+    45→	if _, err := io.Copy(h, r); err != nil {
+    46→		fmt.Fprintln(os.Stderr, err)
+    47→		return
+    48→	}
+    49→	fmt.Printf("%016x  %s\n", h.Sum64(), name)
+    50→}

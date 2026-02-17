@@ -1,0 +1,316 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (982 words)
+
+README.md
+    28→## Features
+    29→
+    30→- 🔥 **Hot by default**
+    31→- 🔩 **Easily Customizable**
+    32→- ⏳ **Promise API** - _Automatic loader from a promise_
+    33→- 🕊 **Lightweight** - _less than 5kb including styles_
+    34→- ✅ **Accessible**
+    35→- 🤯 **Headless Hooks** - _Create your own with [`useToaster()`](https://react-hot-toast.com/docs/use-toaster)_
+    36→
+    37→## Installation
+    38→
+    39→#### With pnpm
+    40→
+    41→```sh
+    42→pnpm add react-hot-toast
+    43→```
+    44→
+    45→#### With NPM
+    46→
+    47→```sh
+    48→npm install react-hot-toast
+    49→```
+    50→
+    51→## Getting Started
+    52→
+    53→Add the Toaster to your app first. It will take care of rendering all notifications emitted. Now you can trigger `toast()` from anywhere!
+    54→
+    55→```jsx
+    56→import toast, { Toaster } from 'react-hot-toast';
+    57→
+    58→const notify = () => toast('Here is your toast.');
+    59→
+    60→const App = () => {
+    61→  return (
+    62→    <div>
+    63→      <button onClick={notify}>Make me a toast</button>
+    64→      <Toaster />
+    65→    </div>
+    66→  );
+    67→};
+    68→```
+    69→
+    70→## Documentation
+    71→
+    72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
+site/README.md
+     3→## Getting Started
+     4→
+     5→First, run the development server:
+     6→
+     7→```bash
+     8→npm run dev
+     9→# or
+    10→yarn dev
+    11→```
+    12→
+    13→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    14→
+    17→## Learn More
+    18→
+    19→To learn more about Next.js, take a look at the following resources:
+    20→
+    21→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+    22→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    23→
+    24→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    25→
+    26→## Deploy on Vercel
+    27→
+    28→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    29→
+    30→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+site/components/code.tsx
+     8→const theme: PrismTheme = {
+     9→  plain: {
+    10→    backgroundColor: '#351e11',
+   104→export const Code: React.FC<{
+   105→  snippet: string;
+site/components/docs-layout.tsx
+     8→const TableItem: React.FC<{
+     9→  href: string;
+    19→const TableHeader: React.FC<{
+    20→  children?: React.ReactNode;
+    27→export default function DocsLayout({ meta, children }) {
+    28→  return (
+site/components/emoji-button.tsx
+     1→export const EmojiButton: React.FC<{
+     2→  onClick: () => void;
+site/components/sections/footer.tsx
+     4→export function Footer({ noBadge }: { noBadge?: boolean }) {
+site/components/sections/splitbee-counter.tsx
+     4→export const useSplitbeeCount = <T extends string>(
+     5→  event: T,
+     6→  token: string
+     7→): number => {
+    36→export const SplitbeeCounter = () => {
+site/components/sections/toast-example.tsx
+     7→const examples: Array<{
+     8→  title: string;
+   270→export const ToastExample = () => {
+site/components/sections/toaster-example.tsx
+     8→export const positions: Array<ToastPosition> = [
+     9→  'top-left',
+    10→  'top-center',
+    11→  'top-right',
+    12→  'bottom-left',
+    13→  'bottom-center',
+    14→  'bottom-right',
+    15→];
+    17→export const ToasterExample: React.FC<{
+site/next.config.mjs
+     5→const withMDX = nextMdx({
+     6→  extension: /\.mdx?$/,
+     7→  options: {
+     8→    rehypePlugins: [rehypeSlug],
+    14→/** @type {import('next').NextConfig} */
+    15→const nextConfig = {
+    16→  pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
+    17→  webpack(config) {
+    18→    config.module.rules.push({
+    19→      test: /\.svg$/,
+    20→      use: ['@svgr/webpack'],
+    21→    });
+    22→    return config;
+    23→  },
+    24→  async rewrites() {
+    25→    return [
+    26→      {
+    27→        source: '/bee.js',
+    28→        destination: 'https://cdn.splitbee.io/sb.js',
+    29→      },
+    30→      {
+    31→        source: '/_hive/:slug',
+    32→        destination: 'https://hive.splitbee.io/:slug',
+    33→      },
+    34→    ];
+    35→  },
+site/pages/_app.tsx
+    12→const components = {
+    13→  a: (props) => (
+    14→    <Link href={props.href}>
+    71→function MyApp
+site/pages/index.tsx
+    22→const version = packageInfo.version;
+    24→const Feature
+    31→const Step
+    49→const Steps
+    88→const Features
+   102→export default function Home() {
+   103→  const [position, setPosition] = useState<ToastPosition>('top-center');
+   104→  const [reverse, setReverse] = useState(false);
+   105→  const { toasts: allToasts } = useToasterStore();
+   106→
+   107→  const shouldFade =
+site/types/svg.d.ts
+     1→interface SvgrComponent
+     2→  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
+     5→  const value: SvgrComponent;
+src/components/checkmark.tsx
+    29→export interface CheckmarkTheme {
+    30→  primary?: string;
+    31→  secondary?: string;
+    32→}
+    34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
+src/components/error.tsx
+    33→export interface ErrorTheme {
+    34→  primary?: string;
+    35→  secondary?: string;
+    36→}
+    38→export const ErrorIcon = styled('div')<ErrorTheme>`
+src/components/loader.tsx
+    12→export interface LoaderTheme {
+    13→  primary?: string;
+    14→  secondary?: string;
+    15→}
+    17→export const LoaderIcon = styled('div')<LoaderTheme>`
+src/components/toast-bar.tsx
+     8→const enterAnimation
+    13→const exitAnimation
+    47→interface ToastBarProps {
+    48→  toast: Toast;
+    49→  position?: ToastPosition;
+    50→  style?: React.CSSProperties;
+    51→  children?: (components: {
+    52→    icon: Renderable;
+    53→    message: Renderable;
+    54→  }) => Renderable;
+    55→}
+    57→const getAnimationStyle
+    75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
+src/components/toast-icon.tsx
+    32→export const AnimatedIconWrapper = styled('div')`
+    41→export type IconThemes = Partial<{
+    42→  success: CheckmarkTheme;
+    43→  error: ErrorTheme;
+    44→  loading: LoaderTheme;
+    45→}>;
+    47→export const ToastIcon: React.FC<{
+    48→  toast: Toast;
+src/components/toaster.tsx
+    15→const ToastWrapper
+    47→const getPositionStyle
+    85→export const Toaster: React.FC<ToasterProps> = ({
+    86→  reverseOrder,
+src/core/store.ts
+     4→export const TOAST_EXPIRE_DISMISS_DELAY
+     5→export const TOAST_LIMIT
+     6→export const DEFAULT_TOASTER_ID
+     8→interface ToasterSettings {
+     9→  toastLimit: number;
+    10→}
+    12→export enum ActionType {
+    13→  ADD_TOAST,
+    14→  UPDATE_TOAST,
+    15→  UPSERT_TOAST,
+    16→  DISMISS_TOAST,
+    17→  REMOVE_TOAST,
+    18→  START_PAUSE,
+    19→  END_PAUSE,
+    20→}
+    22→export type Action
+    52→interface ToasterState {
+    53→  toasts: Toast[];
+    54→  settings: ToasterSettings;
+    55→  pausedAt: number | undefined;
+    56→}
+    58→interface State {
+    59→  [toasterId: string]: ToasterState;
+    60→}
+    62→export const reducer
+   136→const listeners: Array<
+   140→const defaultToasterState: ToasterState = {
+   149→export const dispatch
+   161→export const dispatchAll
+   164→export const getToasterIdFromToastId
+   169→export const createDispatch
+   175→export const defaultTimeouts
+   185→export const useStore
+src/core/toast.ts
+    19→type Message = ValueOrFunction<Renderable, Toast>;
+    21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
+    23→const createToast
+    42→const createHandler
+    55→const toast
+src/core/types.ts
+     3→export type ToastType
+     4→export type ToastPosition
+    12→export type Renderable
+    14→export interface IconTheme {
+    15→  primary: string;
+    16→  secondary: string;
+    17→}
+    19→export type ValueFunction
+    20→export type ValueOrFunction
+    24→const isFunction
+    29→export const resolveValue
+    34→export interface Toast {
+    35→  type: ToastType;
+    36→  id: string;
+    37→  toasterId?: string;
+    38→  message: ValueOrFunction<Renderable, Toast>;
+    39→  icon?: Renderable;
+    40→  duration?: number;
+    41→  pauseDuration: number;
+    42→  position?: ToastPosition;
+    43→  removeDelay?: number;
+    44→
+    45→  ariaProps: {
+    46→    role: 'status' | 'alert';
+    47→    'aria-live': 'assertive' | 'off' | 'polite';
+    48→  };
+    49→
+    50→  style?: CSSProperties;
+    51→  className?: string;
+    52→  iconTheme?: IconTheme;
+    53→
+    54→  createdAt: number;
+    55→  visible: boolean;
+    56→  dismissed: boolean;
+    57→  height?: number;
+    60→export type ToastOptions
+    76→export type DefaultToastOptions
+    80→export interface ToasterProps {
+    81→  position?: ToastPosition;
+    82→  toastOptions?: DefaultToastOptions;
+    83→  reverseOrder?: boolean;
+    84→  gutter?: number;
+    85→  containerStyle?: React.CSSProperties;
+    86→  containerClassName?: string;
+    87→  toasterId?: string;
+    88→  children?: (toast: Toast) => React.ReactElement;
+    89→}
+    91→export interface ToastWrapperProps {
+    92→  id: string;
+    93→  className?: string;
+    94→  style?: React.CSSProperties;
+    95→  onHeightUpdate: (id: string, height: number) => void;
+    96→  children?: React.ReactNode;
+    97→}
+src/core/use-toaster.ts
+     6→export const REMOVE_DELAY
+     8→export const useToaster
+src/core/utils.ts
+     1→export const genId
+     8→export const prefersReducedMotion
+tsup.config.ts
+     4→const commonConfig: Options = {
+     5→  minify: true,
+     6→  dts: true,

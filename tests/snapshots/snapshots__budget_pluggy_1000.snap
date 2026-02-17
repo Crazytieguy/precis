@@ -1,0 +1,293 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (1000 words)
+
+AGENTS.md
+     1→# AGENTS.md
+     2→
+CLAUDE.md
+     1→# CLAUDE.md
+     2→
+     5→## Project Overview
+     6→
+    10→## Development Commands
+    11→
+    14→### Testing
+    15→- `uv run pytest` - Run all tests (prefer running all tests for quick feedback)
+    18→### Code Quality
+    19→- `uv run pre-commit run -a` - Run all pre-commit hooks (linting, formatting, type checking)
+    22→## Development Process
+    23→
+    32→## Core Architecture
+    33→
+    34→### Main Components
+    35→
+    36→- **PluginManager** (`src/pluggy/_manager.py`): Central registry that manages plugins and coordinates hook calls
+    37→- **HookCaller** (`src/pluggy/_hooks.py`): Executes hook implementations with proper argument binding
+    38→- **HookImpl/HookSpec** (`src/pluggy/_hooks.py`): Represent hook implementations and specifications
+    39→- **Result** (`src/pluggy/_result.py`): Handles hook call results and exception propagation
+    40→- **Multicall** (`src/pluggy/_callers.py`): Core execution engine for calling multiple hook implementations
+    41→
+    42→### Package Structure
+    43→- `src/pluggy/` - Main package source
+    48→## Configuration Files
+    49→- `pyproject.toml` - Project metadata, build system, tool configuration (ruff, mypy, setuptools-scm)
+SECURITY.md
+     1→# Security
+     2→
+docs/conf.py
+   106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
+   107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
+   108→    import logging
+   109→
+   110→    import sphinx.util.logging
+   111→
+   112→    class WarnLogFilter(logging.Filter):
+   113→        def filter(self, record: logging.LogRecord) -> bool:
+   114→            """Ignore warnings about missing include with "only" directive.
+   115→
+   116→            Ref: https://github.com/sphinx-doc/sphinx/issues/2150."""
+   117→            if (
+   118→                record.msg.startswith('Problems with "include" directive path:')
+   119→                and "_changelog_towncrier_draft.rst" in record.msg
+   120→            ):
+   121→                return False
+   122→            return True
+   123→
+   124→    logger = logging.getLogger(sphinx.util.logging.NAMESPACE)
+   130→def setup(app: "sphinx.application.Sphinx") -> None:
+   131→    configure_logging(app)
+scripts/release.py
+    15→def create_branch(version: str) -> Repo:
+    16→    """Create a fresh branch from upstream/main"""
+    17→    repo = Repo.init(".")
+    18→    if repo.is_dirty(untracked_files=True):
+    30→def get_upstream(repo: Repo) -> Remote:
+    31→    """Find upstream repository for pluggy on the remotes"""
+    32→    for remote in repo.remotes:
+    33→        for url in remote.urls:
+    39→def pre_release(version: str) -> None:
+    40→    """Generates new docs, release announcements and creates a local tag."""
+    41→    create_branch(version)
+    42→    changelog(version, write_out=True)
+    50→def changelog(version: str, write_out: bool = False) -> None:
+    51→    if write_out:
+    52→        addopts = []
+    59→def main() -> int:
+    60→    init(autoreset=True)
+    61→    parser = argparse.ArgumentParser()
+scripts/towncrier-draft-to-file.py
+     5→def main() -> int:
+     6→    """
+     7→    Platform agnostic wrapper script for towncrier.
+     8→    Fixes the issue (pytest#7251) where windows users are unable to natively
+     9→    run tox -e docs to build pytest docs.
+    10→    """
+    11→    with open("docs/_changelog_towncrier_draft.rst", "w") as draft_file:
+    12→        return call(("towncrier", "--draft"), stdout=draft_file)
+src/pluggy/__init__.py
+     1→__all__ = [
+     2→    "__version__",
+     3→    "PluginManager",
+     4→    "PluginValidationError",
+     5→    "HookCaller",
+     6→    "HookCallError",
+     7→    "HookspecOpts",
+     8→    "HookimplOpts",
+     9→    "HookImpl",
+    10→    "HookRelay",
+    11→    "HookspecMarker",
+    12→    "HookimplMarker",
+    13→    "Result",
+    14→    "PluggyWarning",
+    15→    "PluggyTeardownRaisedWarning",
+    16→]
+src/pluggy/_callers.py
+    22→# Need to distinguish between old- and new-style hook wrappers.
+    23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
+    24→Teardown: TypeAlias = Generator[None, object, object]
+    60→def _raise_wrapfail
+    70→def _warn_teardown_exception
+    82→def _multicall
+src/pluggy/_hooks.py
+    28→_T
+    29→_F
+    31→_Namespace
+    32→_Plugin
+    33→_HookExec
+    37→_HookImplFunction
+    40→class HookspecOpts(TypedDict):
+    42→
+    56→class HookimplOpts(TypedDict):
+    58→
+    78→class HookspecMarker:
+    85→
+    86→    __slots__ = ("project_name",)
+    87→
+    88→    def __init__(self, project_name: str) -> None:
+    89→        self.project_name: Final = project_name
+    90→
+    91→    @overload
+    92→    def __call__(
+    93→        self,
+    94→        function: _F,
+    95→        firstresult: bool = False,
+   165→class HookimplMarker:
+   172→
+   173→    __slots__ = ("project_name",)
+   174→
+   175→    def __init__(self, project_name: str) -> None:
+   176→        self.project_name: Final = project_name
+   177→
+   178→    @overload
+   179→    def __call__(
+   180→        self,
+   181→        function: _F,
+   182→        hookwrapper: bool = ...,
+   290→_PYPY
+   359→class HookRelay:
+   362→
+   363→    __slots__ = ("__dict__",)
+   364→
+   365→    def __init__(self) -> None:
+   366→        """:meta private:"""
+   367→
+   368→    if TYPE_CHECKING:
+   369→
+   370→        def __getattr__(self, name: str) -> HookCaller: ...
+   377→_CallHistory
+   382→class HookCaller:
+   384→
+   419→    # TODO: Document, or make private.
+   420→    def has_spec(self) -> bool:
+   421→        return self.spec is not None
+   423→    # TODO: Document, or make private.
+   424→    def set_specification(
+   425→        self,
+   426→        specmodule_or_class: _Namespace,
+   427→        spec_opts: HookspecOpts,
+   428→    ) -> None:
+   429→        if self.spec is not None:
+   430→            raise ValueError(
+   431→                f"Hook {self.spec.name!r} is already registered "
+   432→                f"within namespace {self.spec.namespace}"
+   433→            )
+   434→        self.spec = HookSpec(specmodule_or_class, self.name, spec_opts)
+   435→        if spec_opts.get("historic"):
+   436→            self._call_history = []
+   442→    def _remove_plugin
+   453→    def _add_hookimpl
+   480→    def _verify_all_args_are_provided
+   577→    def _maybe_apply_history
+   593→class _SubsetHookCaller(HookCaller):
+   596→
+   597→    # This class is unusual: in inhertits from `HookCaller` so all of
+   598→    # the *code* runs in the class, but it delegates all underlying *data*
+   599→    # to the original HookCaller.
+   600→    # `subset_hook_caller` used to be implemented by creating a full-fledged
+   618→    @property  # type: ignore[misc]
+   619→    def _hookimpls(self) -> list[HookImpl]:
+   620→        return [
+   621→            impl
+   622→            for impl in self._orig._hookimpls
+   623→            if impl.plugin not in self._remove_plugins
+   624→        ]
+   626→    @property
+   627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
+   628→        return self._orig.spec
+   630→    @property
+   631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
+   632→        return self._orig._call_history
+   639→class HookImpl:
+   641→
+   642→    __slots__ = (
+   643→        "function",
+   644→        "argnames",
+   645→        "kwargnames",
+   646→        "plugin",
+   647→        "opts",
+   648→        "plugin_name",
+   649→        "wrapper",
+   650→        "hookwrapper",
+   651→        "optionalhook",
+   697→class HookSpec:
+   698→    __slots__ = (
+   699→        "namespace",
+   700→        "function",
+   701→        "name",
+   702→        "argnames",
+   703→        "kwargnames",
+   704→        "opts",
+   705→        "warn_on_impl",
+   706→        "warn_on_impl_args",
+   707→    )
+   708→
+src/pluggy/_manager.py
+    36→_BeforeTrace
+    37→_AfterTrace
+    42→def _warn_for_function
+    52→class PluginValidationError(Exception):
+    58→
+    65→class DistFacade:
+    67→
+    71→    @property
+    72→    def project_name(self) -> str:
+    73→        name: str = self.metadata["name"]
+    74→        return name
+    83→class PluginManager:
+    99→
+   114→    def _hookexec
+   331→    def _verify_hook
+   525→def _formatdef
+src/pluggy/_result.py
+    16→_ExcInfo
+    20→class HookCallError(Exception):
+    25→class Result(Generic[ResultType]):
+    28→
+    29→    __slots__ = ("_result", "_exception", "_traceback")
+    30→
+    31→    def __init__(
+    32→        self,
+    33→        result: ResultType | None,
+    34→        exception: BaseException | None,
+    35→    ) -> None:
+    36→        """:meta private:"""
+    37→        self._result = result
+    38→        self._exception = exception
+    42→    @property
+    43→    def excinfo(self) -> _ExcInfo | None:
+    44→        """:meta private:"""
+    45→        exc = self._exception
+    46→        if exc is None:
+    47→            return None
+    48→        else:
+    49→            return (type(exc), exc, self._traceback)
+    51→    @property
+    52→    def exception(self) -> BaseException | None:
+    53→        """:meta private:"""
+    54→        return self._exception
+    56→    @classmethod
+    57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
+    58→        """:meta private:"""
+    59→        __tracebackhide__ = True
+    60→        result = exception = None
+    61→        try:
+    62→            result = func()
+    63→        except BaseException as exc:
+    64→            exception = exc
+    65→        return cls(result, exception)
+src/pluggy/_tracing.py
+    16→class TagTracer:
+    17→    def __init__(self) -> None:
+    25→    def _format_message
+    42→    def _processmessage
+    59→class TagTracerSub:
+    60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
+src/pluggy/_warnings.py
+     4→class PluggyWarning(UserWarning):
+     6→
+    11→class PluggyTeardownRaisedWarning(PluggyWarning):
+    26→
+    27→    __module__ = "pluggy"

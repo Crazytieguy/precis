@@ -1,0 +1,438 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 2000 (1991 words)
+
+.eslintrc.js
+     7→const localConfigs = readdir(__dirname)
+     8→  .filter((file) => file.startsWith('.eslintrc.local.'))
+     9→  .map((file) => `./${file}`)
+CHANGELOG.md
+     1→# Changelog
+     2→
+     3→## [6.0.0](https://github.com/npm/ini/compare/v5.0.0...v6.0.0) (2025-10-22)
+     4→### ⚠️ BREAKING CHANGES
+     5→* `ini` now supports node `^20.17.0 || >=22.9.0`
+     6→### Bug Fixes
+     7→* [`6d395a4`](https://github.com/npm/ini/commit/6d395a4aaf7d7a5e32e250809cb7bd04c6a27b66) [#291](https://github.com/npm/ini/pull/291) align to npm 11 node engine range (#291) (@owlstronaut)
+     8→### Chores
+     9→* [`23a36a9`](https://github.com/npm/ini/commit/23a36a9ca194d97486ed367f63d13a2cde1d1ce5) [#290](https://github.com/npm/ini/pull/290) bump @npmcli/template-oss from 4.26.0 to 4.27.1 (#290) (@dependabot[bot], @npm-cli-bot)
+    10→
+    11→## [5.0.0](https://github.com/npm/ini/compare/v4.1.3...v5.0.0) (2024-09-03)
+    12→### ⚠️ BREAKING CHANGES
+    13→* `ini` now supports node `^18.17.0 || >=20.5.0`
+    14→### Bug Fixes
+    15→* [`3eca645`](https://github.com/npm/ini/commit/3eca645de8586b8349acd79211b01a9199d8fd32) [#279](https://github.com/npm/ini/pull/279) align to npm 10 node engine range (@hashtagchris)
+    16→### Chores
+    17→* [`c89e209`](https://github.com/npm/ini/commit/c89e2090d7989bb91255ec46eaaf5f8cb1c34b34) [#279](https://github.com/npm/ini/pull/279) run template-oss-apply (@hashtagchris)
+    18→* [`fc44750`](https://github.com/npm/ini/commit/fc447500efe6523746fd9db9d3123485eed14b76) [#276](https://github.com/npm/ini/pull/276) bump @npmcli/eslint-config from 4.0.5 to 5.0.0 (@dependabot[bot])
+    19→* [`21c20bb`](https://github.com/npm/ini/commit/21c20bb1729005ab46e0f248cea1a881c6ab5b49) [#277](https://github.com/npm/ini/pull/277) postinstall for dependabot template-oss PR (@hashtagchris)
+    20→* [`44b3b50`](https://github.com/npm/ini/commit/44b3b503fdd923fb230b6a4d859014b9364ee466) [#277](https://github.com/npm/ini/pull/277) bump @npmcli/template-oss from 4.23.1 to 4.23.3 (@dependabot[bot])
+    21→
+    22→## [4.1.3](https://github.com/npm/ini/compare/v4.1.2...v4.1.3) (2024-05-22)
+    23→
+    24→### Bug Fixes
+    25→
+    26→* [`858cc82`](https://github.com/npm/ini/commit/858cc82dff7eac9ff9a56181132d66d0e09a803c) [#252](https://github.com/npm/ini/pull/252) decoding bracketed arrays (#252) (@Cherry)
+    27→
+    28→### Chores
+    29→
+    30→* [`2da0471`](https://github.com/npm/ini/commit/2da047162452b6c74fbec797c115530547216685) [#251](https://github.com/npm/ini/pull/251) bump @npmcli/template-oss to 4.22.0 (@lukekarrys)
+    31→* [`1eaf0fb`](https://github.com/npm/ini/commit/1eaf0fb982e6c905342e7fac3cb43574231a22f5) [#251](https://github.com/npm/ini/pull/251) postinstall for dependabot template-oss PR (@lukekarrys)
+    32→* [`faf21a1`](https://github.com/npm/ini/commit/faf21a13f35089a8ce5ebea438718c65b5b0e749) [#249](https://github.com/npm/ini/pull/249) bump @npmcli/template-oss from 4.21.3 to 4.21.4 (@dependabot[bot])
+    33→
+    34→## [4.1.2](https://github.com/npm/ini/compare/v4.1.1...v4.1.2) (2024-03-04)
+    35→
+    36→### Bug Fixes
+    37→
+    38→* [`e237377`](https://github.com/npm/ini/commit/e237377029caa6fe76b1290eb6e64247e3e11cf3) [#243](https://github.com/npm/ini/pull/243) Removed the unused doUnesc param in the unsafe function (#243) (@LoicE5)
+    39→
+    40→### Documentation
+    41→
+    42→* [`31b3209`](https://github.com/npm/ini/commit/31b3209c45498d1e0f4e38ee5d451ea80b56aa01) [#239](https://github.com/npm/ini/pull/239) Fix typo in `bracketedArray` option name in README.md (#239) (@futpib)
+    43→* [`24eb9a0`](https://github.com/npm/ini/commit/24eb9a0a8e5b3de43c993d463314d64f88ca1d50) Reworked README (#235) (@PhoneDroid)
+    44→* [`fc6ce28`](https://github.com/npm/ini/commit/fc6ce28a5963aa09d70ad70353397868e99fe804) [#212](https://github.com/npm/ini/pull/212) Fix typo in `bracketedArray` option name in README.md (#212) (@futpib)
+    45→
+    46→### Chores
+    47→
+    48→* [`29caa7c`](https://github.com/npm/ini/commit/29caa7c7578b9ed0b3d36987dc48cec30608d05a) [#240](https://github.com/npm/ini/pull/240) postinstall for dependabot template-oss PR (@lukekarrys)
+    49→* [`eafd8f7`](https://github.com/npm/ini/commit/eafd8f75194ba913a5aa23a920c84808452b0f24) [#240](https://github.com/npm/ini/pull/240) bump @npmcli/template-oss from 4.21.1 to 4.21.3 (@dependabot[bot])
+    50→* [`5cb0c9f`](https://github.com/npm/ini/commit/5cb0c9f453a190ee5a1d33c590945ca5bafd5fb5) [#238](https://github.com/npm/ini/pull/238) postinstall for dependabot template-oss PR (@lukekarrys)
+    51→* [`4ad194e`](https://github.com/npm/ini/commit/4ad194e5f01e67cc52f5a4f1a68e50d596cd51e5) [#238](https://github.com/npm/ini/pull/238) bump @npmcli/template-oss from 4.21.0 to 4.21.1 (@dependabot[bot])
+    52→* [`a138d1f`](https://github.com/npm/ini/commit/a138d1f1e210fc5d67c45465265030188b752308) [#233](https://github.com/npm/ini/pull/233) postinstall for dependabot template-oss PR (@lukekarrys)
+    53→* [`e37a22e`](https://github.com/npm/ini/commit/e37a22ed0c52ac4f9432fb99357a1d10291d56bb) [#233](https://github.com/npm/ini/pull/233) bump @npmcli/template-oss from 4.19.0 to 4.21.0 (@dependabot[bot])
+    54→* [`2f57997`](https://github.com/npm/ini/commit/2f5799792c0f06c6db8a0fcf882c6d7487c4710a) [#215](https://github.com/npm/ini/pull/215) postinstall for dependabot template-oss PR (@lukekarrys)
+    55→* [`526d5fe`](https://github.com/npm/ini/commit/526d5fec9d2be1dc4307f6ee7a2994bb9d59d4f6) [#215](https://github.com/npm/ini/pull/215) bump @npmcli/template-oss from 4.18.1 to 4.19.0 (@dependabot[bot])
+    56→* [`98de8c2`](https://github.com/npm/ini/commit/98de8c2fb6e640da26546dbcb90fa36af1f3b864) [#214](https://github.com/npm/ini/pull/214) postinstall for dependabot template-oss PR (@lukekarrys)
+    57→* [`fd33f54`](https://github.com/npm/ini/commit/fd33f541d8d54967c65b993a59af164448d0c798) [#214](https://github.com/npm/ini/pull/214) bump @npmcli/template-oss from 4.18.0 to 4.18.1 (@dependabot[bot])
+    58→* [`21abe16`](https://github.com/npm/ini/commit/21abe160c2314b6a96ce536c05a9b6ca79b394da) [#211](https://github.com/npm/ini/pull/211) postinstall for dependabot template-oss PR (@lukekarrys)
+    59→* [`f52bed5`](https://github.com/npm/ini/commit/f52bed502eb4bc1e182d027013b89d8653db9e57) [#211](https://github.com/npm/ini/pull/211) bump @npmcli/template-oss from 4.17.0 to 4.18.0 (@dependabot[bot])
+    60→* [`da3b717`](https://github.com/npm/ini/commit/da3b717f81a06ae06f03cc784d56c653839bb66a) [#210](https://github.com/npm/ini/pull/210) postinstall for dependabot template-oss PR (@lukekarrys)
+    61→* [`9e9adf4`](https://github.com/npm/ini/commit/9e9adf45e0ad196e9dd76a65ca85047cee909870) [#210](https://github.com/npm/ini/pull/210) bump @npmcli/template-oss from 4.15.1 to 4.17.0 (@dependabot[bot])
+    62→
+    63→## [4.1.1](https://github.com/npm/ini/compare/v4.1.0...v4.1.1) (2023-05-16)
+    64→
+    65→### Bug Fixes
+    66→
+    67→* [`090f64e`](https://github.com/npm/ini/commit/090f64e92a7ff722adf723dc13e7b468e591f057) [#208](https://github.com/npm/ini/pull/208) check process on browser (#208) (@Creskendoll)
+    68→
+    69→## [4.1.0](https://github.com/npm/ini/compare/v4.0.0...v4.1.0) (2023-04-13)
+    70→
+    71→### Features
+    72→
+    73→* [`622106a`](https://github.com/npm/ini/commit/622106a1a0bcd2bc32bfd2e6f9cc45a1a1cb53f7) [#205](https://github.com/npm/ini/pull/205) add "align" and "sort" options (#205) (@rquadling)
+    74→* [`dc64a1a`](https://github.com/npm/ini/commit/dc64a1a3aa322c0c258383bedcae738aaa67028d) [#204](https://github.com/npm/ini/pull/204) add bracketedArray option (#204) (@wraithgar)
+    75→* [`6a3cb38`](https://github.com/npm/ini/commit/6a3cb38b134f674dff1a7b5d3732553e8bace777) [#199](https://github.com/npm/ini/pull/199) add platform option to force line endings (#199) (@wraithgar, Francois-Xavier Kowalski)
+    76→* [`b363ae6`](https://github.com/npm/ini/commit/b363ae67ddf9b1232daafb3cc2b2b1e5cb656406) [#198](https://github.com/npm/ini/pull/198) add newline option (#198) (@wraithgar, Francois-Xavier Kowalski)
+    77→
+    78→### Bug Fixes
+    79→
+    80→* [`ad4b5d8`](https://github.com/npm/ini/commit/ad4b5d8423f67d67b8683ac8e809b9dd23fe82e2) [#200](https://github.com/npm/ini/pull/200) Refactored section split logic (#200) (@wraithgar, @platinumazure)
+    81→* [`5b5c9b7`](https://github.com/npm/ini/commit/5b5c9b777209bae480f62fb80149008350d37bc5) [#123](https://github.com/npm/ini/pull/123) residual space after section causes bad parsing (#123) (@Nautigsam)
+    82→* [`fa2c17e`](https://github.com/npm/ini/commit/fa2c17e6e5f4ebaec30e08653b9603049c8cf0c3) [#201](https://github.com/npm/ini/pull/201) ignore all whitespace lines (#201) (@wraithgar)
+    83→
+    84→## [4.0.0](https://github.com/npm/ini/compare/v3.0.1...v4.0.0) (2023-03-08)
+    85→
+    86→### ⚠️ BREAKING CHANGES
+    87→
+    88→* `ini` is now compatible with the following semver range for node: `^14.17.0 || ^16.13.0 || >=18.0.0`
+    89→
+    90→### Features
+    91→
+    92→* [`6b70a48`](https://github.com/npm/ini/commit/6b70a480a47cac47b2da4ec40aba6b9b4bb77608) [#176](https://github.com/npm/ini/pull/176) postinstall for dependabot template-oss PR (@lukekarrys)
+    93→
+    94→## [3.0.1](https://github.com/npm/ini/compare/v3.0.0...v3.0.1) (2022-08-22)
+    95→
+    96→
+    97→### Bug Fixes
+    98→
+    99→* linting ([#166](https://github.com/npm/ini/issues/166)) ([5d9ab39](https://github.com/npm/ini/commit/5d9ab392643a93358e1d7595e8efb3d6d97d1181))
+   100→
+   101→## [3.0.0](https://github.com/npm/ini/compare/v2.0.1...v3.0.0) (2022-04-05)
+   102→
+   103→
+   104→### ⚠ BREAKING CHANGES
+   105→
+   106→* this drops support for node 10 and non-LTS versions of node 12 and node 14
+   107→
+   108→### Bug Fixes
+   109→
+   110→* replace deprecated String.prototype.substr() ([#155](https://github.com/npm/ini/issues/155)) ([e3a5d18](https://github.com/npm/ini/commit/e3a5d183269744f6b590c1a9916ef151de09bf64))
+   111→
+   112→
+   113→### Dependencies
+   114→
+   115→* @npmcli/template-oss@3.2.2 ([#156](https://github.com/npm/ini/issues/156)) ([837831a](https://github.com/npm/ini/commit/837831a44ba1f04f62a9d0b369525a4f8d8116e9))
+CONTRIBUTING.md
+     3→# Contributing
+     4→
+     5→## Code of Conduct
+     6→
+     7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
+     8→
+     9→## Reporting Bugs
+    10→
+    11→Before submitting a new bug report please search for an existing or similar report.
+    12→
+    13→Use one of our existing issue templates if you believe you've come across a unique problem.
+    14→
+    15→Duplicate issues, or issues that don't use one of our templates may get closed without a response.
+    16→
+    17→## Pull Request Conventions
+    18→
+    19→### Commits
+    20→
+    21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+    22→
+    23→When opening a pull request please be sure that either the pull request title, or each commit in the pull request, has one of the following prefixes:
+    24→
+    25→ - `feat`: For when introducing a new feature.  The result will be a new semver minor version of the package when it is next published.
+    26→ - `fix`: For bug fixes. The result will be a new semver patch version of the package when it is next published.
+    27→ - `docs`: For documentation updates.  The result will be a new semver patch version of the package when it is next published.
+    28→ - `chore`: For changes that do not affect the published module.  Often these are changes to tests.  The result will be *no* change to the version of the package when it is next published (as the commit does not affect the published version).
+    29→
+    30→### Test Coverage
+    31→
+    32→Pull requests made against this repo will run `npm test` automatically.  Please make sure tests pass locally before submitting a PR.
+    33→
+    34→Every new feature or bug fix should come with a corresponding test or tests that validate the solutions. Testing also reports on code coverage and will fail if code coverage drops.
+    35→
+    36→### Linting
+    37→
+    38→Linting is also done automatically once tests pass.  `npm run lintfix` will fix most linting errors automatically.
+    39→
+    40→Please make sure linting passes before submitting a PR.
+    41→
+    42→## What _not_ to contribute?
+    43→
+    44→### Dependencies
+    45→
+    46→It should be noted that our team does not accept third-party dependency updates/PRs.  If you submit a PR trying to update our dependencies we will close it with or without a reference to these contribution guidelines.
+    47→
+    48→### Tools/Automation
+    49→
+    50→Our core team is responsible for the maintenance of the tooling/automation in this project and we ask contributors to not make changes to these when contributing (e.g. `.github/*`, `.eslintrc.json`, `.licensee.json`).  Most of those files also have a header at the top to remind folks they are automatically generated.  Pull requests that alter these will not be accepted.
+README.md
+     4→## Note
+     5→
+     6→-   Sections are treated as nested objects.
+     7→
+     8→-   Section-less items are treated as globals.
+     9→
+    10→## Usage
+    11→
+    12→Consider an INI file such as the following:
+    13→
+    14→```ini
+    15→; This comment is being ignored
+    16→scope = global
+    17→
+    18→[database]
+    19→user = dbuser
+    20→password = dbpassword
+    21→database = use_this_database
+    22→
+    23→[paths.default]
+    24→datadir = /var/lib/data
+    25→array[] = first value
+    26→array[] = second value
+    27→array[] = third value
+    28→```
+    29→
+    30→You can **read**, **modify** and **write** it like so:
+    31→
+    32→```js
+    33→import { writeFile , readFile } from 'node:fs/promises'
+    34→import { stringify , parse } from 'ini'
+    35→
+    36→//  Read INI file as text
+    37→
+    38→let text = await readFile(`./Original.ini`,{
+    39→    encoding : 'utf-8'
+    40→})
+    41→
+    42→//  Parse text data to object
+    43→
+    44→const config = parse(text)
+    45→
+    46→//  Modify data object
+    47→
+    48→config.scope = 'local'
+    49→config.database.database = 'use_another_database'
+    50→config.paths.default.tmpdir = '/tmp'
+    51→delete config.paths.default.datadir
+    52→config.paths.default.array.push('fourth value')
+    53→
+    54→//  Stringify data object
+    55→
+    56→text = stringify(config,{ 
+    57→    section : 'section' 
+    58→})
+    59→
+    60→//  Write INI file as text
+    61→
+    62→await writeFile(`./Modified.ini`,text)
+    63→```
+    64→
+    65→The written file will contain the following:
+    66→
+    67→```ini
+    68→[section]
+    69→scope=local
+    70→[section.database]
+    71→user=dbuser
+    72→password=dbpassword
+    73→database=use_another_database
+    74→[section.paths.default]
+    75→tmpdir=/tmp
+    76→array[]=first value
+    77→array[]=second value
+    78→array[]=third value
+    79→array[]=fourth value
+    80→```
+    81→
+    82→## API
+    83→
+    84→### Parse
+    85→
+    86→Attempts to turn the given INI string into a nested data object.
+    87→
+    88→```js
+    89→// You can also use `decode`
+    90→const object = parse(`<INI Text>`) 
+    91→```
+    92→
+    93→### Stringify
+    94→
+    95→Encodes the given data object as an INI formatted string.
+    96→
+    97→```js
+    98→// You can also use `encode`
+    99→stringify(object,{
+   100→
+   101→    /**
+   102→     *  Whether to insert spaces before & after `=`
+   103→     * 
+   104→     *  Disabled by default to have better 
+   105→     *  compatibility with old picky parsers.
+   106→     */
+   107→
+   108→    whitespace : false ,
+   109→
+   110→    /**
+   111→     *  Whether to align the `=` character for each section.
+   112→     *  -> Also enables the `whitespace` option
+   113→     */
+   114→
+   115→    align : false ,
+   116→
+   117→    /**
+   118→     *  Identifier to use for global items 
+   119→     *  and to prepend to all other sections.
+   120→     */
+   121→
+   122→    section ,
+   123→
+   124→    /**
+   125→     *  Whether to sort all sections & their keys alphabetically.
+   126→     */
+   127→
+   128→    sort : false ,
+   129→
+   130→    /**
+   131→     *  Whether to insert a newline after each section header.
+   132→     * 
+   133→     *  The TOSHIBA & FlashAir parser require this format. 
+   134→     */
+   135→
+   136→    newline : false ,
+   137→
+   138→    /**
+   139→     *  Which platforms line-endings should be used.
+   140→     * 
+   141→     *  win32 -> CR+LF
+   142→     *  other -> LF
+   143→     * 
+   144→     *  Default is the current platform
+   145→     */
+   146→
+   147→    platform ,
+   148→
+   149→    /**
+   150→     *  Whether to append `[]` to array keys.
+   151→     * 
+   152→     *  Some parsers treat duplicate names by themselves as arrays
+   153→     */
+   154→
+   155→    bracketedArray : true
+   156→
+   157→})
+   158→```
+   159→
+   160→*For backwards compatibility any string passed as the*  
+   161→*options parameter is treated as the `section` option.*
+   162→
+   163→```js
+   164→stringify(object,'section')
+   165→```
+   166→
+   167→### Un / Escape
+   168→
+   169→Turn the given string into a safe to  
+   170→use key or value in your INI file.
+   171→
+   172→```js
+   173→safe(`"unsafe string"`) // -> \"unsafe string\"
+   174→```
+   175→
+   176→Or reverse the process with:
+   177→
+   178→```js
+   179→unsafe(`\\"safe string\\"`) // -> "safe string"
+   180→```
+lib/ini.js
+     3→const encode = (obj, opt = {}) => {
+     4→  if (typeof opt === 'string') {
+     5→    opt = { section: opt }
+     6→  }
+     7→  opt.align = opt.align === true
+     8→  opt.newline = opt.newline === true
+     9→  opt.sort = opt.sort === true
+    10→  opt.whitespace = opt.whitespace === true || opt.align === true
+    11→  // The `typeof` check is required because accessing the `process` directly fails on browsers.
+    12→  /* istanbul ignore next */
+    13→  opt.platform = opt.platform || (typeof process !== 'undefined' && process.platform)
+    14→  opt.bracketedArray = opt.bracketedArray !== false
+    15→
+    16→  /* istanbul ignore next */
+    17→  const eol = opt.platform === 'win32' ? '\r\n' : '\n'
+    18→  const separator = opt.whitespace ? ' = ' : '='
+    19→  const children = []
+    80→function splitSections (str, separator) {
+    81→  var lastMatchIndex = 0
+    82→  var lastSeparatorIndex = 0
+    83→  var nextIndex = 0
+    84→  var sections = []
+    85→
+    86→  do {
+    87→    nextIndex = str.indexOf(separator, lastMatchIndex)
+    88→
+    89→    if (nextIndex !== -1) {
+    90→      lastMatchIndex = nextIndex + separator.length
+    91→
+    92→      if (nextIndex > 0 && str[nextIndex - 1] === '\\') {
+    93→        continue
+    94→      }
+    95→
+    96→      sections.push(str.slice(lastSeparatorIndex, nextIndex))
+   106→const decode = (str, opt = {}) => {
+   107→  opt.bracketedArray = opt.bracketedArray !== false
+   108→  const out = Object.create(null)
+   109→  let p = out
+   110→  let section = null
+   111→  //          section          |key      = value
+   112→  const re = /^\[([^\]]*)\]\s*$|^([^=]+)(=(.*))?$/i
+   113→  const lines = str.split(/[\r\n]+/g)
+   114→  const duplicates = {}
+   115→
+   116→  for (const line of lines) {
+   117→    if (!line || line.match(/^\s*[;#]/) || line.match(/^\s*$/)) {
+   118→      continue
+   119→    }
+   120→    const match = line.match(re)
+   121→    if (!match) {
+   122→      continue
+   212→const isQuoted = val => {
+   213→  return (val.startsWith('"') && val.endsWith('"')) ||
+   214→    (val.startsWith("'") && val.endsWith("'"))
+   215→}
+   217→const safe = val => {
+   218→  if (
+   219→    typeof val !== 'string' ||
+   220→    val.match(/[=\r\n]/) ||
+   221→    val.match(/^\[/) ||
+   222→    (val.length > 1 && isQuoted(val)) ||
+   223→    val !== val.trim()
+   224→  ) {
+   225→    return JSON.stringify(val)
+   226→  }
+   227→  return val.split(';').join('\\;').split('#').join('\\#')
+   228→}
+   230→const unsafe = val => {
+   231→  val = (val || '').trim()
+   232→  if (isQuoted(val)) {
+   233→    // remove the single quotes before calling JSON.parse
+   234→    if (val.charAt(0) === "'") {
+   235→      val = val.slice(1, -1)
+   236→    }
+   237→    try {
+   238→      val = JSON.parse(val)
+   239→    } catch {
+   240→      // ignore errors
+   241→    }
+   242→  } else {
+   243→    // walk the val to find the first not-escaped ; character
+   244→    let esc = false
+   245→    let unesc = ''
+   246→    for (let i = 0, l = val.length; i < l; i++) {

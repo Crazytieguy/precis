@@ -1,0 +1,153 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (491 words)
+
+backtrace.rs
+     8→pub(crate) enum Backtrace {}
+    11→macro_rules! impl_backtrace {
+    18→macro_rules! impl_backtrace {
+    25→macro_rules! backtrace {
+    32→macro_rules! backtrace {
+    39→macro_rules! backtrace_if_absent {
+    53→macro_rules! backtrace_if_absent {
+    64→macro_rules! backtrace_if_absent {
+    70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
+    71→mod capture {
+    72→    use alloc::borrow::{Cow, ToOwned as _};
+    73→    use alloc::vec::Vec;
+    82→    pub(crate) struct Backtrace {
+    83→        inner: Inner,
+    84→    }
+    86→    pub(crate) enum BacktraceStatus {
+    87→        Unsupported,
+    88→        Disabled,
+    89→        Captured,
+    90→    }
+chain.rs
+    11→pub(crate) struct Chain<'a> {
+    16→pub(crate) enum ChainState<'a> {
+    36→    type Item = &'a (dyn StdError + 'static);
+context.rs
+     9→mod ext {
+    12→    pub trait StdError {
+    13→        fn ext_context<C>(self, context: C) -> Error
+    14→        where
+    15→            C: Display + Send + Sync + 'static;
+    16→    }
+   186→pub(crate) mod private {
+   187→    use super::*;
+   188→
+   189→    pub trait Sealed {}
+   190→
+ensure.rs
+    10→pub trait BothDebug {
+    25→pub trait NotBothDebug {
+   105→macro_rules! __parse_ensure {
+   886→macro_rules! __fancy_ensure {
+   912→macro_rules! __fallback_ensure {
+error.rs
+   293→    unsafe fn construct
+   705→    type Target = dyn StdError + Send + Sync + 'static;
+   788→unsafe fn object_boxed
+   799→unsafe fn object_reallocate_boxed
+   839→unsafe fn context_downcast
+   859→unsafe fn context_drop_rest
+   920→unsafe fn context_backtrace
+   934→pub(crate) struct ErrorImpl<E = ()> {
+   952→pub(crate) struct ContextError<C, E> {
+  1002→    unsafe fn provide
+kind.rs
+    55→pub struct Adhoc;
+    58→pub trait AdhocKind: Sized {
+    77→pub struct Trait;
+    80→pub trait TraitKind: Sized {
+   100→pub struct Boxed;
+   104→pub trait BoxedKind: Sized {
+lib.rs
+   251→#[macro_use]
+   252→mod backtrace;
+   253→mod chain;
+   254→mod context;
+   255→mod ensure;
+   256→mod error;
+   257→mod fmt;
+   258→mod kind;
+   259→mod macros;
+   260→#[cfg(error_generic_member_access)]
+   261→mod nightly;
+   262→mod ptr;
+   263→mod wrapper;
+   278→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
+   279→trait StdError: Debug + Display {
+   280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+   281→        None
+   282→    }
+   283→}
+   390→pub struct Error {
+   415→pub struct Chain<'a> {
+   419→/// `Result<T, Error>`
+   420→///
+   421→/// This is a reasonable return type to use throughout your application but also
+   422→/// for `fn main`; if you do, failures will be printed along with any
+   423→/// [context][Context] and a backtrace if one was captured.
+   424→///
+   425→/// `anyhow::Result` may be used with one *or* two type parameters.
+   426→///
+   427→/// ```rust
+   428→/// use anyhow::Result;
+   429→///
+   468→pub type Result<T, E = Error> = core::result::Result<T, E>;
+   616→pub trait Context<T, E>: context::private::Sealed {
+   655→#[doc(hidden)]
+   656→pub mod __private {
+   657→    use self::not::Bool;
+   658→    use crate::Error;
+   659→    use alloc::fmt;
+   660→    use core::fmt::Arguments;
+   661→
+   671→    #[doc(hidden)]
+   672→    pub mod kind {
+   673→        #[doc(hidden)]
+   674→        pub use crate::kind::{AdhocKind, TraitKind};
+   675→
+   676→        #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+   677→        #[doc(hidden)]
+   708→    mod not {
+   710→        pub trait Bool {
+macros.rs
+    58→macro_rules! bail {
+    70→macro_rules! __ensure {
+   204→macro_rules! anyhow {
+   230→macro_rules! __anyhow {
+nightly.rs
+    12→#[cfg(anyhow_build_probe)]
+    13→const _: () = {
+    14→    use core::fmt::{self, Debug, Display};
+    15→
+    16→    struct MyError(Backtrace);
+    17→
+    38→#[cfg(anyhow_build_probe)]
+    39→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
+ptr.rs
+     6→pub struct Own<T>
+     7→where
+     8→    T: ?Sized,
+     9→{
+    64→pub struct Ref<'a, T>
+    65→where
+    66→    T: ?Sized,
+    67→{
+   125→pub struct Mut<'a, T>
+   126→where
+   127→    T: ?Sized,
+   128→{
+   181→pub trait CastTo {
+   182→    type Target;
+   183→}
+   186→    type Target = T;
+wrapper.rs
+    11→pub struct MessageError<M>(pub M);
+    34→pub struct DisplayError<M>(pub M);
+    58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);

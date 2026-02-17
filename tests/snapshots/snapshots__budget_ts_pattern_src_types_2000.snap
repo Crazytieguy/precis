@@ -1,0 +1,461 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 2000 (1798 words)
+
+BuildMany.ts
+     4→export type BuildMany
+    11→type BuildOne
+    19→export type SetDeep
+DeepExclude.ts
+     3→export type DeepExclude
+DistributeUnions.ts
+    41→export type DistributeMatchingUnions
+    46→export type FindUnionsMany
+    80→export type FindUnions
+   174→export type ArrayToVariadicUnion
+   183→export type Distribute
+ExtractPreciseValue.ts
+    13→export type ExtractPreciseValue
+    81→type ExtractPreciseArrayValue
+FindSelected.ts
+    11→type SelectionsRecord
+    13→export type None
+    16→export type Some
+    21→export type SelectionType
+    24→type MapOptional
+    31→type MapList
+    38→type ReduceFindSelectionUnion
+    47→type FindSelectionUnionInArray
+    96→export type FindSelectionUnion
+   159→export type SeveralAnonymousSelectError
+   165→export type MixedNamedAndAnonymousSelectError
+   174→export type SelectionToArgs
+   185→export type Selections
+   191→export type FindSelected
+InvertPattern.ts
+    29→type OptionalKeys
+    39→type ReduceUnion
+    47→type ReduceIntersection
+    55→type InvertArrayPattern
+   106→export type InvertPattern
+   110→type InvertPatternInternal
+   180→export type ReduceIntersectionForExclude
+   192→export type ReduceUnionForExclude
+   204→type ExcludeIfExists
+   231→type InvertArrayPatternForExclude
+   303→export type InvertPatternForExclude
+   307→type InvertPatternForExcludeInternal
+IsMatching.ts
+    12→type IsMatchingTuple
+    26→type IsMatchingArray
+    57→export type IsMatching
+Match.ts
+     8→export type PickReturnValue
+    10→interface NonExhaustiveError<i> {
+    11→  __nonExhaustive: never;
+    12→}
+    14→interface TSPatternError<i> {
+    15→  __nonExhaustive: never;
+    16→}
+    22→export type Match
+   132→  with<
+   133→    const pat extends Pattern<i>,
+   134→    pred extends (value: MatchedValue<i, InvertPattern<pat, i>>) => unknown,
+   135→    c,
+   136→    value extends GuardValue<pred>
+   137→  >(
+   138→    pattern: pat,
+   139→    predicate: pred,
+   140→    handler: (
+   141→      selections: FindSelected<value, pat>,
+   142→      value: value
+   143→    ) => PickReturnValue<o, c>
+   144→  ): pred extends (value: any) => value is infer narrowed
+   145→    ? Match<
+   146→        Exclude<i, narrowed>,
+   147→        o,
+   148→        [...handledCases, narrowed],
+   149→        Union<inferredOutput, c>
+   150→      >
+   151→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
+   153→  /**
+   159→  when<pred extends (value: i) => unknown, c, value extends GuardValue<pred>>(
+   160→    predicate: pred,
+   161→    handler: (value: value) => PickReturnValue<o, c>
+   162→  ): pred extends (value: any) => value is infer narrowed
+   163→    ? Match<
+   164→        Exclude<i, narrowed>,
+   165→        o,
+   166→        [...handledCases, narrowed],
+   167→        Union<inferredOutput, c>
+   168→      >
+   169→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
+   171→  /**
+   180→  otherwise<c>(
+   181→    handler: (value: i) => PickReturnValue<o, c>
+   182→  ): PickReturnValue<o, Union<inferredOutput, c>>;
+   200→  /**
+   205→  run(): PickReturnValue<o, inferredOutput>;
+   216→  /**
+   225→  narrow(): Match<DeepExcludeAll<i, handledCases>, o, [], inferredOutput>;
+   228→/**
+   229→ * Potential for optimization here:
+   230→ *
+   231→ * Since DeepExclude distributes the union of the input type, it can
+   232→ * generate very large union types on patterns touching several unions at once.
+   233→ * If we were sorting patterns from those which distribute the smallest
+   234→ * amount of union types to those which distribute the largest, we would eliminate
+   235→ * cheap cases more quickly and have less cases in the input type for patterns
+   236→ * that will be expensive to exclude.
+   237→ *
+   238→ * This pre supposes that we have a cheap way of telling if the number
+   239→ * of union types a pattern touches and a cheap way of sorting the tuple
+   240→ * of patterns.
+   241→ * - For the first part, we could reuse `FindMatchingUnions` and pick the `length`
+   242→ *   of the returned tuple.
+   243→ * - For the second part though I'm not aware a cheap way of sorting a tuple.
+   244→ */
+   245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
+   246→  ? never
+   247→  : tupleList extends [infer excluded, ...infer tail]
+   248→  ? DeepExcludeAll<DeepExclude<a, excluded>, tail>
+   249→  : a;
+   251→type MakeTuples
+   255→/**
+   256→ * The type of an overloaded function for `.exhaustive`,
+   257→ * permitting calling it with or without a catch-all handler function.
+   258→ *
+   259→ * By default, TS-Pattern will throw an error if a runtime value isn't handled.
+   260→ */
+   261→type Exhaustive<output, inferredOutput> = {
+   262→  /**
+   263→   * `.exhaustive()` checks that all cases are handled, and returns the result value.
+   264→   *
+   265→   * If you get a `NonExhaustiveError`, it means that you aren't handling
+   266→   * all cases. You should probably add another `.with(...)` clause
+   267→   * to match the missing case and prevent runtime errors.
+   268→   *
+   269→   * [Read the documentation for `.exhaustive()` on GitHub](https://github.com/gvergnaud/ts-pattern#exhaustive)
+   270→   *
+   271→   */
+   272→  (): PickReturnValue<output, inferredOutput>;
+   273→  /**
+   274→   * `.exhaustive(fallback)` checks that all cases are handled and returns the result value.
+   275→   *
+   276→   * The fallback function will be called if your input value doesn't match any pattern.
+   277→   * This can only happen if the value you passed to `match` has an incorrect type.
+   278→   *
+   279→   * If you get a `NonExhaustiveError`, it means that you aren't handling
+   280→   * all cases. You should probably add another `.with(...)` clause
+   281→   * to match the missing case.
+   282→   *
+   283→   * [Read the documentation for `.exhaustive()` on GitHub](https://github.com/gvergnaud/ts-pattern#exhaustive)
+   284→   */
+   285→  <otherOutput>(
+   286→    handler: (unexpectedValue: unknown) => PickReturnValue<output, otherOutput>
+   287→  ): PickReturnValue<output, Union<inferredOutput, otherOutput>>;
+   288→};
+Pattern.ts
+     7→export type MatcherType
+    23→export type MatcherProtocol
+    38→export type MatchResult
+    43→/**
+    44→ * A `Matcher` is an object implementing the match
+    45→ * protocol. It must define a `symbols.matcher` property
+    46→ * which returns an object with a `match()` method, taking
+    47→ * the input value and returning whether the pattern matches
+    48→ * or not, along with optional selections.
+    49→ */
+    50→export interface Matcher<
+    51→  input,
+    52→  narrowed,
+    53→  // Type of what this pattern selected from the input
+    54→  matcherType extends MatcherType = 'default',
+    55→  selections extends SelectionType = None,
+    56→  // Type to exclude from the input union because
+    57→  // it has been fully matched by this pattern
+    58→  excluded = narrowed
+    59→> {
+    60→  [matcher](): MatcherProtocol<
+    61→    input,
+    62→    narrowed,
+    63→    matcherType,
+    64→    selections,
+    65→    excluded
+    66→  >;
+    67→  // only used for array matchers
+    68→  [symbols.isVariadic]?: boolean;
+    69→}
+    71→type PatternMatcher
+    74→export type MatchedValue
+    79→export type AnyMatcher
+    81→type UnknownMatcher
+    83→export type CustomP
+    94→export type ArrayP
+    96→export type RecordP
+   102→export type OptionalP
+   104→export type MapP
+   106→export type SetP
+   108→export type AndP
+   110→export type OrP
+   112→export type NotP
+   114→export type GuardP
+   116→export type GuardExcludeP
+   124→export type SelectP
+   130→export type AnonymousSelectP
+   132→export interface Override<a> {
+   133→  [symbols.override]: a;
+   134→}
+   136→export type UnknownProperties
+   138→export type UnknownValuePattern
+   157→export type Pattern
+   161→type KnownPattern
+   163→type KnownPatternInternal
+   174→type ObjectPattern
+   180→type ArrayPattern
+   190→export type UnknownPattern
+   191→export type StringPattern
+   192→export type NumberPattern
+   193→export type BooleanPattern
+   194→export type BigIntPattern
+   195→export type SymbolPattern
+   196→export type NullishPattern
+   201→export type NonNullablePattern
+   203→type MergeGuards
+   210→export type Chainable
+   213→      /**
+   223→      optional<input>(): Chainable<OptionalP<input, p>, omitted | 'optional'>;
+   224→      /**
+   237→      and<input, const p2 extends Pattern<input>>(
+   238→        pattern: p2
+   239→      ): Chainable<AndP<input, [p, p2]>, omitted>;
+   240→      /**
+   253→      or<input, const p2 extends Pattern<input>>(
+   254→        pattern: p2
+   255→      ): Chainable<OrP<input, [p, p2]>, omitted>;
+   269→      select<input, k extends string>(
+   270→        key: k
+   271→      ): Chainable<SelectP<k, input, p>, omitted | 'select' | 'or' | 'and'>;
+   276→export type StringChainable
+   282→      /**
+   291→      startsWith<input, const start extends string>(
+   292→        start: start
+   293→      ): StringChainable<
+   294→        MergeGuards<input, p, GuardP<unknown, `${start}${string}`>>,
+   295→        omitted | 'startsWith'
+   296→      >;
+   297→      /**
+   306→      endsWith<input, const end extends string>(
+   307→        end: end
+   308→      ): StringChainable<
+   309→        MergeGuards<input, p, GuardP<unknown, `${string}${end}`>>,
+   310→        omitted | 'endsWith'
+   311→      >;
+   312→      /**
+   321→      minLength<input, const min extends number>(
+   322→        min: min
+   323→      ): StringChainable<
+   324→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   325→        omitted | 'minLength'
+   326→      >;
+   327→      /**
+   336→      length<input, const len extends number>(
+   337→        len: len
+   338→      ): StringChainable<
+   339→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   340→        omitted | 'length' | 'minLength' | 'maxLength'
+   341→      >;
+   342→      /**
+   351→      maxLength<input, const max extends number>(
+   352→        max: max
+   353→      ): StringChainable<
+   354→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   355→        omitted | 'maxLength'
+   356→      >;
+   357→      /**
+   366→      includes<input, const substr extends string>(
+   367→        substr: substr
+   368→      ): StringChainable<
+   369→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   370→        omitted
+   371→      >;
+   372→      /**
+   381→      regex<input, const expr extends string | RegExp>(
+   382→        expr: expr
+   383→      ): StringChainable<
+   384→        MergeGuards<input, p, GuardExcludeP<unknown, string, never>>,
+   385→        omitted
+   386→      >;
+   391→export type NumberChainable
+   397→      /**
+   407→      between<input, const min extends number, const max extends number>(
+   408→        min: min,
+   409→        max: max
+   410→      ): NumberChainable<
+   411→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   412→        omitted
+   413→      >;
+   414→      /**
+   423→      lt<input, const max extends number>(
+   424→        max: max
+   425→      ): NumberChainable<
+   426→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   427→        omitted
+   428→      >;
+   429→      /**
+   438→      gt<input, const min extends number>(
+   439→        min: min
+   440→      ): NumberChainable<
+   441→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   442→        omitted
+   443→      >;
+   444→      /**
+   453→      lte<input, const max extends number>(
+   454→        max: max
+   455→      ): NumberChainable<
+   456→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   457→        omitted
+   458→      >;
+   459→      /**
+   468→      gte<input, const min extends number>(
+   469→        min: min
+   470→      ): NumberChainable<
+   471→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   472→        omitted
+   473→      >;
+   474→      /**
+   483→      int<input>(): NumberChainable<
+   484→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   485→        omitted | 'int'
+   486→      >;
+   487→      /**
+   496→      finite<input>(): NumberChainable<
+   497→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   498→        omitted | 'finite'
+   499→      >;
+   500→      /**
+   509→      positive<input>(): NumberChainable<
+   510→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   511→        omitted | 'positive' | 'negative'
+   512→      >;
+   513→      /**
+   522→      negative<input>(): NumberChainable<
+   523→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
+   524→        omitted | 'positive' | 'negative' | 'negative'
+   525→      >;
+   530→export type BigIntChainable
+   536→      /**
+   546→      between<input, const min extends bigint, const max extends bigint>(
+   547→        min: min,
+   548→        max: max
+   549→      ): BigIntChainable<
+   550→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   551→        omitted
+   552→      >;
+   553→      /**
+   562→      lt<input, const max extends bigint>(
+   563→        max: max
+   564→      ): BigIntChainable<
+   565→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   566→        omitted
+   567→      >;
+   568→      /**
+   577→      gt<input, const min extends bigint>(
+   578→        min: min
+   579→      ): BigIntChainable<
+   580→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   581→        omitted
+   582→      >;
+   583→      /**
+   592→      lte<input, const max extends bigint>(
+   593→        max: max
+   594→      ): BigIntChainable<
+   595→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   596→        omitted
+   597→      >;
+   598→      /**
+   607→      gte<input, const min extends bigint>(
+   608→        min: min
+   609→      ): BigIntChainable<
+   610→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   611→        omitted
+   612→      >;
+   613→      /**
+   622→      positive<input>(): BigIntChainable<
+   623→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   624→        omitted | 'positive' | 'negative'
+   625→      >;
+   626→      /**
+   635→      negative<input>(): BigIntChainable<
+   636→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
+   637→        omitted | 'positive' | 'negative' | 'negative'
+   638→      >;
+   643→export type Variadic
+   645→export type ArrayChainable
+   651→      /**
+   661→      optional<input>(): ArrayChainable<
+   662→        OptionalP<input, pattern>,
+   663→        omitted | 'optional'
+   664→      >;
+   678→      select<input, k extends string>(
+   679→        key: k
+   680→      ): ArrayChainable<SelectP<k, input, pattern>, omitted | 'select'>;
+helpers.ts
+     1→export type ValueOf
+     3→export type Values
+    14→export type LeastUpperBound
+    16→export type Contains
+    25→export type UnionToIntersection
+    31→export type IsUnion
+    33→export type UnionToTuple
+    42→export type Flatten
+    49→export type Equal
+    55→export type Expect
+    57→export type IsAny
+    59→export type IsNever
+    61→export type Length
+    63→export type Iterator
+    68→export type Next
+    69→export type Prev
+    73→export type Take
+    83→export type Drop
+    92→export type UpdateAt
+   105→export type BuiltInObjects
+   113→export type IsPlainObject
+   122→export type Compute
+   126→export type IntersectObjects
+   138→export type WithDefault
+   140→export type IsLiteral
+   164→export type Primitives
+   173→export type NonLiteralPrimitive
+   175→export type TupleKeys
+   177→export type Union
+   182→export type GuardValue
+   188→export type GuardFunction
+   192→export type Some
+   196→export type All
+   200→export type Extends
+   202→export type Not
+   204→type AllKeys
+   207→export type MergeUnion
+   217→export type IsFixedSizeTuple
+   220→export type IsTuple
+   227→export type IsStrictArray
+   229→export type IsReadonlyArray
+   235→export type MaybeAddReadonly
+   240→export type MapKey
+   242→export type MapValue
+   244→export type SetValue
+   246→export type RecordKey
+   248→export type RecordValue
+   250→export type ReadonlyArrayValue
+   254→export type ExtractPlainObject
+   260→export type GetKey
+   266→export interface Fn {
+   267→  input: unknown;
+   268→  output: unknown;
+   269→}
+   271→export type Call
+   275→export type IsOptionalKeysOf

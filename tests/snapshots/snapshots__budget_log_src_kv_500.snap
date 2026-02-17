@@ -1,0 +1,135 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (496 words)
+
+error.rs
+     5→pub struct Error {
+     6→    inner: Inner,
+     7→}
+     9→#[derive(Debug)]
+    10→enum Inner {
+    11→    #[cfg(feature = "std")]
+    12→    Boxed(std_support::BoxedError),
+    13→    Msg(&'static str),
+    14→    #[cfg(feature = "value-bag")]
+    15→    Value(crate::kv::value::inner::Error),
+    16→    Fmt,
+    17→}
+    68→#[cfg(feature = "std")]
+    69→mod std_support {
+    73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
+key.rs
+     7→pub trait ToKey {
+     8→    /// Perform the conversion.
+     9→    fn to_key(&self) -> Key<'_>;
+    10→}
+    37→pub struct Key<'k> {
+    38→    // NOTE: This may become `Cow<'k, str>`
+    39→    key: &'k str,
+    40→}
+    93→#[cfg(feature = "std")]
+    94→mod std_support {
+   112→#[cfg(feature = "kv_sval")]
+   113→mod sval_support {
+   135→#[cfg(feature = "kv_serde")]
+   136→mod serde_support {
+mod.rs
+     1→//! Structured logging.
+     2→//!
+     3→//! Add the `kv` feature to your `Cargo.toml` to enable
+     4→//! this module:
+     5→//!
+     6→//! ```toml
+     7→//! [dependencies.log]
+     8→//! features = ["kv"]
+     9→//! ```
+    10→//!
+   246→mod error;
+   247→mod key;
+   249→#[cfg(not(feature = "kv_unstable"))]
+   250→mod source;
+   251→#[cfg(not(feature = "kv_unstable"))]
+   252→mod value;
+   259→#[cfg(feature = "kv_unstable")]
+   260→pub mod source;
+   261→#[cfg(feature = "kv_unstable")]
+   262→pub mod value;
+source.rs
+    51→pub trait Source {
+    52→    /// Visit key-values.
+    53→    ///
+    54→    /// A source doesn't have to guarantee any ordering or uniqueness of key-values.
+    55→    /// If the given visitor returns an error then the source may early-return with it,
+    56→    /// even if there are more key-values.
+    90→/// The default implementation of `Source::get`
+    91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
+    92→    struct Get<'k, 'v> {
+   113→/// The default implementation of `Source::count`.
+   114→fn count_default(source: impl Source) -> usize {
+   115→    struct Count(usize);
+   235→pub trait VisitSource<'kvs> {
+   236→    /// Visit a key-value pair.
+   237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
+   238→}
+   240→#[allow(clippy::needless_lifetimes)] // Not needless.
+   241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
+   242→where
+   243→    T: VisitSource<'kvs> + ?Sized,
+   244→{
+   279→#[cfg(feature = "std")]
+   280→mod std_support {
+value.rs
+    11→pub trait ToValue {
+    12→    /// Perform the conversion.
+    13→    fn to_value(&self) -> Value<'_>;
+    14→}
+   119→pub struct Value<'v> {
+   120→    inner: inner::Inner<'v>,
+   121→}
+   203→    /// Get a value from an internal primitive.
+   204→    fn from_inner<T>(value: T) -> Self
+   205→    where
+   206→        T: Into<inner::Inner<'v>>,
+   207→    {
+   208→        Value {
+   234→#[cfg(feature = "kv_serde")]
+   235→impl<'v> serde_core::Serialize for Value<'v> {
+   244→#[cfg(feature = "kv_sval")]
+   245→impl<'v> sval::Value for Value<'v> {
+   251→#[cfg(feature = "kv_sval")]
+   252→impl<'v> sval_ref::ValueRef<'v> for Value<'v> {
+   288→macro_rules! impl_to_value_primitive {
+   312→macro_rules! impl_to_value_nonzero_primitive {
+   336→macro_rules! impl_value_to_primitive {
+   389→#[cfg(feature = "kv_std")]
+   390→mod std_support {
+   462→pub trait VisitValue<'v> {
+   463→    /// Visit a `Value`.
+   464→    ///
+   465→    /// This is the only required method on `VisitValue` and acts as a fallback for any
+   466→    /// more specific methods that aren't overridden.
+   467→    /// The `Value` may be formatted using its `fmt::Debug` or `fmt::Display` implementation,
+   538→#[allow(clippy::needless_lifetimes)] // Not needless.
+   539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
+   540→where
+   541→    T: VisitValue<'v>,
+   542→{
+   601→#[cfg(feature = "value-bag")]
+   602→pub(in crate::kv) mod inner {
+   603→    /**
+   720→#[cfg(not(feature = "value-bag"))]
+   721→pub(in crate::kv) mod inner {
+   722→    /**
+   738→    pub enum Inner<'v> {
+   739→        None,
+   740→        Bool(bool),
+   741→        Str(&'v str),
+   742→        Char(char),
+   743→        I64(i64),
+  1129→macro_rules! as_debug {
+  1139→macro_rules! as_display {
+  1149→macro_rules! as_error {
+  1159→macro_rules! as_serde {
+  1169→macro_rules! as_sval {

@@ -1,0 +1,148 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (433 words)
+
+BuildMany.ts
+    11→type BuildOne
+DistributeUnions.ts
+    41→export type DistributeMatchingUnions
+    80→export type FindUnions
+ExtractPreciseValue.ts
+    81→type ExtractPreciseArrayValue
+FindSelected.ts
+    11→type SelectionsRecord
+    24→type MapOptional
+    31→type MapList
+    38→type ReduceFindSelectionUnion
+    47→type FindSelectionUnionInArray
+InvertPattern.ts
+    29→type OptionalKeys
+    39→type ReduceUnion
+    47→type ReduceIntersection
+    55→type InvertArrayPattern
+   106→export type InvertPattern
+   110→type InvertPatternInternal
+   204→type ExcludeIfExists
+   231→type InvertArrayPatternForExclude
+   303→export type InvertPatternForExclude
+   307→type InvertPatternForExcludeInternal
+IsMatching.ts
+    12→type IsMatchingTuple
+    26→type IsMatchingArray
+Match.ts
+    10→interface NonExhaustiveError<i> {
+    11→  __nonExhaustive: never;
+    12→}
+    14→interface TSPatternError<i> {
+    15→  __nonExhaustive: never;
+    16→}
+    22→export type Match
+   132→  with<
+   133→    const pat extends Pattern<i>,
+   134→    pred extends (value: MatchedValue<i, InvertPattern<pat, i>>) => unknown,
+   135→    c,
+   136→    value extends GuardValue<pred>
+   137→  >(
+   138→    pattern: pat,
+   139→    predicate: pred,
+   140→    handler: (
+   141→      selections: FindSelected<value, pat>,
+   142→      value: value
+   143→    ) => PickReturnValue<o, c>
+   144→  ): pred extends (value: any) => value is infer narrowed
+   145→    ? Match<
+   146→        Exclude<i, narrowed>,
+   147→        o,
+   148→        [...handledCases, narrowed],
+   149→        Union<inferredOutput, c>
+   150→      >
+   151→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
+   159→  when
+   180→  otherwise
+   205→  run
+   225→  narrow
+   245→type DeepExcludeAll
+   251→type MakeTuples
+   261→type Exhaustive
+Pattern.ts
+    43→/**
+    44→ * A `Matcher` is an object implementing the match
+    45→ * protocol. It must define a `symbols.matcher` property
+    46→ * which returns an object with a `match()` method, taking
+    47→ * the input value and returning whether the pattern matches
+    48→ * or not, along with optional selections.
+    49→ */
+    50→export interface Matcher<
+    51→  input,
+    52→  narrowed,
+    53→  // Type of what this pattern selected from the input
+    54→  matcherType extends MatcherType = 'default',
+    55→  selections extends SelectionType = None,
+    56→  // Type to exclude from the input union because
+    57→  // it has been fully matched by this pattern
+    58→  excluded = narrowed
+    59→> {
+    60→  [matcher](): MatcherProtocol<
+    61→    input,
+    62→    narrowed,
+    63→    matcherType,
+    64→    selections,
+    65→    excluded
+    66→  >;
+    67→  // only used for array matchers
+    68→  [symbols.isVariadic]?: boolean;
+    69→}
+    71→type PatternMatcher
+    81→type UnknownMatcher
+   132→export interface Override<a> {
+   133→  [symbols.override]: a;
+   134→}
+   157→export type Pattern
+   161→type KnownPattern
+   163→type KnownPatternInternal
+   174→type ObjectPattern
+   180→type ArrayPattern
+   203→type MergeGuards
+   223→      optional
+   237→      and
+   253→      or
+   269→      select<input, k extends string>(
+   270→        key: k
+   271→      ): Chainable<SelectP<k, input, p>, omitted | 'select' | 'or' | 'and'>;
+   291→      startsWith
+   306→      endsWith
+   321→      minLength
+   336→      length
+   351→      maxLength
+   366→      includes
+   381→      regex
+   407→      between
+   423→      lt
+   438→      gt
+   453→      lte
+   468→      gte
+   483→      int
+   496→      finite
+   509→      positive
+   522→      negative
+   546→      between
+   562→      lt
+   577→      gt
+   592→      lte
+   607→      gte
+   622→      positive
+   635→      negative
+   661→      optional
+   678→      select<input, k extends string>(
+   679→        key: k
+   680→      ): ArrayChainable<SelectP<k, input, pattern>, omitted | 'select'>;
+helpers.ts
+    14→export type LeastUpperBound
+   182→export type GuardValue
+   204→type AllKeys
+   266→export interface Fn {
+   267→  input: unknown;
+   268→  output: unknown;
+   269→}

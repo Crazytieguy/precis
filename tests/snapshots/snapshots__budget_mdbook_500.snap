@@ -1,0 +1,210 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (496 words)
+
+CHANGELOG.md
+     3→## mdBook 0.5.2
+  1659→### Changed
+crates/mdbook-compare/README.md
+     1→# mdbook-compare
+     2→
+crates/mdbook-core/README.md
+     1→# mdbook-core
+     2→
+    11→## License
+    12→
+crates/mdbook-core/src/config.rs
+   718→trait Updateable
+crates/mdbook-core/src/lib.rs
+     3→/// The current version of `mdbook`.
+     4→///
+     7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
+     9→pub mod book;
+    10→pub mod config;
+    11→pub mod utils;
+    14→pub mod errors {
+crates/mdbook-core/src/utils/mod.rs
+     7→pub mod fs;
+    17→macro_rules! static_regex {
+crates/mdbook-core/src/utils/toml_ext.rs
+     6→pub(crate) trait TomlExt {
+crates/mdbook-driver/README.md
+     1→# mdbook-driver
+     2→
+    11→## License
+    12→
+crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
+    14→pub struct CmdPreprocessor {
+    15→    name: String,
+crates/mdbook-driver/src/builtin_preprocessors/index.rs
+    12→pub struct IndexPreprocessor;
+crates/mdbook-driver/src/builtin_preprocessors/links.rs
+    32→pub struct LinkPreprocessor;
+   401→    type Item = Link<'a>;
+crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
+    10→pub struct MarkdownRenderer;
+crates/mdbook-driver/src/builtin_renderers/mod.rs
+    13→mod markdown_renderer;
+    20→pub struct CmdRenderer {
+    21→    name: String,
+crates/mdbook-driver/src/init.rs
+    13→pub struct BookBuilder {
+crates/mdbook-driver/src/lib.rs
+     1→//! High-level library for running mdBook.
+     2→//!
+    67→pub mod builtin_preprocessors;
+    68→pub mod builtin_renderers;
+    69→pub mod init;
+crates/mdbook-driver/src/mdbook.rs
+    29→pub struct MDBook {
+   397→struct OutputConfig {
+   426→const DEFAULT_PREPROCESSORS
+   435→struct PreprocessorConfig {
+crates/mdbook-html/README.md
+     1→# mdbook-html
+     2→
+    11→## License
+    12→
+crates/mdbook-html/src/html/tokenizer.rs
+    22→    type Handle = ();
+crates/mdbook-html/src/html/tree.rs
+    25→macro_rules! attr_qual_name {
+crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
+    22→pub struct HtmlHandlebars;
+   649→type CombinedRedirects
+crates/mdbook-html/src/html_handlebars/helpers/resources.rs
+    11→pub(crate) struct ResourceHelper {
+crates/mdbook-html/src/html_handlebars/helpers/toc.rs
+    11→pub(crate) struct RenderToc {
+crates/mdbook-html/src/html_handlebars/mod.rs
+     4→mod search;
+crates/mdbook-html/src/html_handlebars/static_files.rs
+    22→pub(super) struct StaticFiles {
+    23→    static_files: Vec<StaticFile>,
+crates/mdbook-html/src/lib.rs
+     3→mod html;
+     4→mod html_handlebars;
+     5→pub mod theme;
+     6→pub(crate) mod utils;
+crates/mdbook-html/src/theme/mod.rs
+     9→pub(crate) mod fonts;
+    10→pub(crate) mod playground_editor;
+    11→#[cfg(feature = "search")]
+    12→pub(crate) mod searcher;
+    40→pub struct Theme {
+    41→    pub(crate) index: Vec<u8>,
+   201→    fn default
+   229→fn load_file_contents
+crates/mdbook-html/src/utils.rs
+     7→pub(crate) fn normalize_path
+    42→pub(crate) trait ToUrlPath {
+    43→    fn to_url_path(&self) -> String;
+    44→}
+    47→    fn to_url_path
+    58→pub(crate) fn unique_id
+    76→pub(crate) fn id_from_content
+crates/mdbook-markdown/README.md
+     1→# mdbook-markdown
+     2→
+    11→## License
+    12→
+crates/mdbook-markdown/src/lib.rs
+    15→pub struct MarkdownOptions {
+    16→    /// Enables smart punctuation.
+    17→    ///
+    34→    fn default() -> MarkdownOptions {
+    44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
+crates/mdbook-preprocessor/README.md
+     1→# mdbook-preprocessor
+     2→
+    11→## License
+    12→
+crates/mdbook-preprocessor/src/lib.rs
+    30→pub trait Preprocessor {
+    51→pub struct PreprocessorContext {
+    68→impl PreprocessorContext {
+crates/mdbook-renderer/README.md
+     1→# mdbook-renderer
+     2→
+    11→## License
+    12→
+crates/mdbook-renderer/src/lib.rs
+    28→pub trait Renderer {
+    40→pub struct RenderContext {
+    63→impl RenderContext {
+crates/mdbook-summary/README.md
+     1→# mdbook-summary
+     2→
+    11→## License
+    12→
+crates/mdbook-summary/src/lib.rs
+    59→pub fn parse_summary
+    67→pub struct Summary {
+    84→pub struct Link {
+    98→    pub fn new
+   109→    fn default
+   122→pub enum SummaryItem {
+   141→    fn from
+   173→struct SummaryParser<'a> {
+   190→macro_rules! collect_events {
+crates/xtask/README.md
+     1→# xtask
+     2→
+crates/xtask/src/changelog.rs
+    10→pub(crate) fn changelog() -> Result<()> {
+crates/xtask/src/main.rs
+     9→mod changelog;
+eslint.config.mjs
+     4→const handlebarsPreprocessor = {
+     7→            preprocess(text, filename) {
+    16→            postprocess(messages, filename) {
+guide/guide-helper/src/lib.rs
+     9→/// Preprocessing entry point.
+    10→pub fn handle_preprocessing() -> Result<()> {
+    33→struct GuideHelper;
+    36→    fn name
+    40→    fn run
+    46→fn insert_version
+guide/guide-helper/src/main.rs
+     3→fn main() {
+guide/src/for_developers/mdbook-wordcount/src/main.rs
+    46→pub struct WordcountConfig {
+    47→    pub ignores: Vec<String>,
+guide/src/format/mdbook.md
+     3→## Hiding code lines
+     4→
+guide/src/misc/contributors.md
+     1→# Contributors
+     2→
+src/cmd/clean.rs
+    38→pub fn human_readable_bytes
+    45→#[derive(Debug)]
+    46→pub struct Clean {
+    47→    num_files_removed: u64,
+    48→    num_dirs_removed: u64,
+    49→    total_bytes_removed: u64,
+    50→}
+src/cmd/command_prelude.rs
+     7→pub trait CommandExt: Sized {
+    42→    fn arg_watcher
+src/cmd/mod.rs
+     3→pub mod build;
+     8→pub mod serve;
+    11→pub mod watch;
+src/cmd/serve.rs
+    20→const LIVE_RELOAD_ENDPOINT
+src/cmd/watch/native.rs
+    11→pub fn rebuild_on_change
+src/cmd/watch/poller.rs
+    18→pub fn rebuild_on_change
+    78→struct PathData {
+    86→struct Watcher {
+    95→impl Watcher {
+src/cmd/watch.rs
+    21→pub enum WatcherKind {
+src/main.rs
+    14→mod cmd;
+    16→const VERSION
+    58→fn create_clap_command() -> Command {

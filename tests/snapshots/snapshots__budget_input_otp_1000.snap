@@ -1,0 +1,359 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (1000 words)
+
+CHANGELOG.md
+     1→# Changelog
+     2→
+     3→## [1.4.2]
+     4→
+     5→- chore(input): remove unintentional log within internal pasteListener
+     6→
+     7→## [1.4.1]
+     8→
+    11→## [1.4.0]
+    12→
+    25→## [1.2.5]
+    26→
+    29→## [1.2.4]
+    30→
+    33→## [1.2.3]
+    34→
+    38→## [1.2.2]
+    39→
+    42→## [1.2.1]
+    43→
+    48→## [1.2.0]
+    49→
+    52→## [1.2.0-beta.1]
+    53→
+    56→## [1.2.0-beta.0]
+    57→
+    61→## [1.1.0]
+    62→
+    87→## [1.0.1]
+    88→
+    92→## [1.0.0]
+    93→
+    96→## [0.3.31-beta]
+    97→
+   100→## [0.3.3-beta]
+   101→
+   104→## [0.3.2-beta]
+   105→
+   108→## [0.3.11-beta]
+   109→
+   112→## [0.3.1-beta]
+   113→
+   116→## [0.2.4]
+   117→
+   120→## [0.2.1]
+   121→
+   124→## [0.2]
+   125→
+README.md
+     1→# The only accessible & unstyled & full featured Input OTP component in the Web.
+     2→
+     3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
+     4→
+     5→<h3 align="center">Hero Sponsors 🎖️</h3>
+     6→<p align="center">
+     7→<a href="https://go.clerk.com/input-otp" target="_blank">
+     8→<img alt="Clerk" src='https://input-otp.rodz.dev/sponsors/clerk-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
+     9→</a>
+    10→<a href="https://go.resend.com/input-otp" target="_blank">
+    11→<img alt="Resend" src='https://input-otp.rodz.dev/sponsors/resend-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
+    12→</a>
+    13→<a href="https://evomi.com/?utm_source=github&utm_campaign=otp" target="_blank">
+    14→<img alt="Evomi" src='https://input-otp.rodz.dev/sponsors/evomi-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
+    15→</a>
+    16→</p>
+    17→
+    18→https://github.com/guilhermerodz/input-otp/assets/10366880/753751f5-eda8-4145-a4b9-7ef51ca5e453
+    19→
+    20→## Usage
+    21→
+    39→## Default example
+    40→
+   136→## How it works
+   137→
+   141→## Features
+   142→
+   198→### Auto tracks if the input has space in the right side for the badge
+   199→
+   204→## API Reference
+   205→
+   206→### OTPInput
+   207→
+   208→The root container. Define settings for the input via props. Then, use the `render` prop to create the slots.
+   209→
+   210→#### Props
+   211→
+   293→## Examples
+   294→
+   377→## Caveats
+   378→
+   539→#### Sponsors
+   540→
+apps/storybook/README.md
+    13→## 🚅 Quick start
+    14→
+    44→## 🔎 What's inside?
+    45→
+    83→## Contribute
+    84→
+    87→## Learning Storybook
+    88→
+apps/storybook/src/components/ui/input-otp.tsx
+     9→const InputOTP = React.forwardRef<
+    21→const InputOTPGroup = React.forwardRef<
+    29→const InputOTPSlot = React.forwardRef<
+    54→const InputOTPSeparator = React.forwardRef<
+apps/storybook/src/lib/utils.ts
+     4→export function cn(...inputs: ClassValue[]) {
+     5→  return twMerge(clsx(inputs))
+     6→}
+apps/storybook/src/stories/Button.stories.ts
+    14→export const Primary = {
+    21→export const Secondary = {
+    27→export const Large = {
+    34→export const Small = {
+apps/storybook/src/stories/Button.tsx
+     5→/**
+     6→ * Primary UI component for user interaction
+     7→ */
+     8→export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
+     9→  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+    10→  return (
+    11→    <button
+    12→      type="button"
+    13→      className="bg-[red]"
+apps/storybook/src/stories/InputOTP.stories.tsx
+     4→const meta = {
+    27→type Story = StoryObj<typeof meta>
+    29→export const Default: Story = {}
+apps/storybook/tailwind.config.js
+     1→/** @type {import('tailwindcss').Config} */
+     2→const config = {
+     3→  darkMode: ['class'],
+     4→  content: [
+     5→    './index.html',
+     6→    './src/stories/**/*.{ts,tsx}',
+     7→    './src/**/*.{ts,tsx}',
+apps/website/README.md
+     3→## Getting Started
+     4→
+    23→## Learn More
+    24→
+    32→## Deploy on Vercel
+    33→
+apps/website/next.config.mjs
+     3→/** @type {import('next').NextConfig} */
+     4→const nextProdConfig = {}
+     6→const nextDevConfig = withHydrationOverlay({
+     7→  appRootSelector: 'main',
+     8→})(nextProdConfig)
+apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
+     9→export default function ExampleAutoSubmit() {
+    10→  const formRef = React.useRef<HTMLFormElement>(null)
+    11→
+apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
+     3→export async function formAction(formData: FormData) {
+     4→  const rawFormData = {
+     5→    otp: formData.get('otp'),
+     6→  }
+     7→
+apps/website/src/app/(local-pages)/example-playground/code.tsx
+     4→const tsx
+    95→const code
+    99→export function ExampleCode() {
+apps/website/src/app/(local-pages)/example-playground/component.tsx
+     8→export function ExampleComponent(
+     9→  props: Partial<Omit<React.ComponentProps<typeof OTPInput>, 'children'>>,
+    10→) {
+    38→function Slot(props: SlotProps) {
+    58→function FakeCaret() {
+    67→function FakeDash() {
+    76→const config
+apps/website/src/app/(local-pages)/example-playground/page.tsx
+     3→export default function ExamplePlayground() {
+apps/website/src/app/(local-pages)/layout.tsx
+     7→export default function RootLayout({
+     8→  children,
+     9→}: Readonly<{
+    10→  children: React.ReactNode
+    11→}>) {
+apps/website/src/app/(local-pages)/raw-input/page.tsx
+     5→export default function ShadcnPage() {
+     6→  const [value, setValue] = React.useState('')
+     7→
+     8→  return (
+     9→    <form
+    10→      method="POST"
+apps/website/src/app/(local-pages)/shadcn/page.tsx
+    12→export default function ShadcnPage() {
+    13→  const [value, setValue] = React.useState('')
+    14→
+    15→  return (
+apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
+    13→export default function ShadcnPage() {
+    14→  const [value, setValue] = React.useState('')
+    15→
+    16→  return (
+apps/website/src/app/(local-pages)/shadcn/static/page.tsx
+     5→export default async function StaticPage(pageProps: any) {
+     6→  return (
+     7→    <ShadcnPage {...pageProps} />
+     8→  )
+     9→}
+apps/website/src/app/(pages)/(home)/_components/confetti.tsx
+     3→export function Confetti({
+apps/website/src/app/(pages)/(home)/_components/showcase.tsx
+    10→const DynamicConfetti = dynamic(() =>
+    14→export function Showcase({ className, ...props }: { className?: string }) {
+   151→function Slot(props: {
+   199→function FakeCaret() {
+apps/website/src/app/(pages)/(home)/page.tsx
+    19→const fadeUpClassname =
+    22→async function getRepoStarCount() {
+    34→export default async function IndexPage() {
+    35→  const starCount = await getRepoStarCount()
+    36→
+    37→  return (
+   148→export const revalidate = 3600
+   150→const SponsorBadgeClerk = () => {
+apps/website/src/app/(pages)/layout.tsx
+    14→export const metadata: Metadata = {
+    15→  title: {
+    16→    default: siteConfig.name,
+    68→export default function RootLayout({
+    69→  children,
+    70→}: Readonly<{
+    71→  children: React.ReactNode
+    72→}>) {
+apps/website/src/components/code.tsx
+     9→export async function Code({
+    36→async function highlightCode(code: string, dark: boolean) {
+apps/website/src/components/copy-button.tsx
+    17→interface CopyButtonProps
+    22→export async function copyToClipboardWithMeta(value: string) {
+    26→export function CopyButton({
+    64→interface CopyWithClassNamesProps
+    70→export function CopyWithClassNames({
+   120→interface CopyNpmCommandButtonProps
+   129→export function CopyNpmCommandButton({
+apps/website/src/components/icons.tsx
+     1→type IconProps = React.HTMLAttributes<SVGElement>
+     3→export const Icons = {
+     4→  logo: (props: IconProps) => (
+apps/website/src/components/mode-toggle.tsx
+    15→export function ModeToggle() {
+apps/website/src/components/page-header.tsx
+     3→function PageHeader({
+    21→function PageHeaderHeading({
+    36→function PageHeaderDescription({
+    51→function PageActions({
+apps/website/src/components/provider.tsx
+     5→export function AppProvider({
+apps/website/src/components/site-footer.tsx
+     3→export function SiteFooter() {
+apps/website/src/components/site-header.tsx
+     9→export function SiteHeader() {
+apps/website/src/components/ui/badge.tsx
+    26→export interface BadgeProps
+    27→  extends React.HTMLAttributes<HTMLDivElement>,
+    28→    VariantProps<typeof badgeVariants> {}
+    30→function Badge
+apps/website/src/components/ui/button.tsx
+    36→export interface ButtonProps
+    37→  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    38→    VariantProps<typeof buttonVariants> {
+    39→  asChild?: boolean
+    40→}
+apps/website/src/components/ui/dropdown-menu.tsx
+   171→const DropdownMenuShortcut
+apps/website/src/components/ui/sonner.tsx
+     8→const Toaster
+apps/website/src/config/site.ts
+     1→export const siteConfig = {
+     2→  name: 'rodz/input-otp',
+     3→  url: 'https://input-otp.rodz.dev',
+     4→  ogImage: 'https://input-otp.rodz.dev/og.jpg',
+     5→  description:
+    13→export type SiteConfig = typeof siteConfig
+apps/website/src/lib/fonts.ts
+    10→export const fontSans = GeistSans
+    12→export const fontMono = FontMono({
+    13→  subsets: ['latin'],
+    14→  variable: '--font-mono',
+    15→})
+apps/website/src/lib/utils.ts
+     4→export function cn(...inputs: ClassValue[]) {
+     5→  return twMerge(clsx(inputs))
+     6→}
+apps/website/tailwind.config.ts
+     3→const config = {
+     4→  darkMode: ['class'],
+packages/input-otp/src/input.tsx
+    10→export const OTPInputContext = React.createContext<RenderProps>(
+    11→  {} as RenderProps,
+    12→)
+    14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
+    15→  (
+    16→    {
+    17→      value: uncheckedValue,
+    18→      onChange: uncheckedOnChange,
+    19→      maxLength,
+   540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
+   541→  try {
+   542→    sheet.insertRule(rule)
+   553→const NOSCRIPT_CSS_FALLBACK = `
+packages/input-otp/src/regexp.ts
+     1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
+     2→export const REGEXP_ONLY_CHARS = '^[a-zA-Z]+$'
+     3→export const REGEXP_ONLY_DIGITS_AND_CHARS = '^[a-zA-Z0-9]+$'
+packages/input-otp/src/sync-timeouts.ts
+     1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
+     2→  const t1 = setTimeout(cb, 0) // For faster machines
+packages/input-otp/src/types.ts
+     1→export interface SlotProps {
+     2→  isActive: boolean
+     3→  char: string | null
+     4→  placeholderChar: string | null
+     5→  hasFakeCaret: boolean
+     6→}
+     7→export interface RenderProps {
+     8→  slots: SlotProps[]
+     9→  isFocused: boolean
+    10→  isHovering: boolean
+    11→}
+    12→type OverrideProps
+    13→type OTPInputBaseProps
+    32→type InputOTPRenderFn
+    33→export type OTPInputProps = OTPInputBaseProps &
+    34→  (
+    35→    | {
+    36→        render: InputOTPRenderFn
+    37→        children?: never
+    38→      }
+    39→    | {
+    40→        render?: never
+    41→        children: React.ReactNode
+    42→      }
+    43→  )
+packages/input-otp/src/use-previous.ts
+     3→export function usePrevious<T>(value: T) {
+     4→  const ref = React.useRef<T>()
+packages/input-otp/src/use-pwm-badge.tsx
+     4→const PWM_BADGE_MARGIN_RIGHT = 18
+     5→const PWM_BADGE_SPACE_WIDTH_PX = 40
+     6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
+     8→const PASSWORD_MANAGERS_SELECTORS = [
+    15→export function usePasswordManagerBadge({
+    16→  containerRef,
+    17→  inputRef,
+    18→  pushPasswordManagerStrategy,
+    19→  isFocused,
+    20→}: {

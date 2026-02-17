@@ -1,0 +1,141 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (499 words)
+
+imp_cs.rs
+     8→pub(crate) struct OnceCell<T> {
+     9→    initialized: AtomicBool,
+    10→    // Use `unsync::OnceCell` internally since `Mutex` does not provide
+    11→    // interior mutability and to be able to re-use `get_or_try_init`.
+    12→    value: Mutex<unsync::OnceCell<T>>,
+    13→}
+imp_pl.rs
+     7→pub(crate) struct OnceCell<T> {
+     8→    state: AtomicU8,
+     9→    value: UnsafeCell<Option<T>>,
+    10→}
+    12→const INCOMPLETE
+    13→const RUNNING
+    14→const COMPLETE
+   122→struct Guard<'a> {
+   123→    state: &'a AtomicU8,
+   124→    new_state: u8,
+   125→}
+   139→fn initialize_inner
+imp_std.rs
+    14→pub(crate) struct OnceCell<T> {
+    15→    // This `queue` field is the core of the implementation. It encodes two
+    16→    // pieces of information:
+    17→    //
+    18→    // * The current state of the cell (`INCOMPLETE`, `RUNNING`, `COMPLETE`)
+    19→    // * Linked list of threads waiting for the current cell.
+    20→    //
+    21→    // State is encoded in two low bits. Only `INCOMPLETE` and `RUNNING` states
+    22→    // allow waiters.
+    23→    queue: AtomicPtr<Waiter>,
+    24→    value: UnsafeCell<Option<T>>,
+    25→}
+   125→const INCOMPLETE
+   126→const RUNNING
+   127→const COMPLETE
+   128→const INCOMPLETE_PTR
+   129→const COMPLETE_PTR
+   133→const STATE_MASK
+   135→/// Representation of a node in the linked list of waiters in the RUNNING state.
+   136→/// A waiters is stored on the stack of the waiting threads.
+   138→struct Waiter {
+   139→    thread: Cell<Option<Thread>>,
+   140→    signaled: AtomicBool,
+   141→    next: *mut Waiter,
+   142→}
+   144→/// Drains and notifies the queue of waiters on drop.
+   145→struct Guard<'a> {
+   146→    queue: &'a AtomicPtr<Waiter>,
+   147→    new_queue: *mut Waiter,
+   148→}
+   177→fn initialize_or_wait
+   210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
+   211→    let curr_state = strict::addr(curr_queue) & STATE_MASK;
+   245→mod strict {
+   246→    #[must_use]
+   247→    #[inline]
+lib.rs
+   370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
+   371→#[path = "imp_cs.rs"]
+   372→mod imp;
+   374→#[cfg(all(feature = "std", feature = "parking_lot"))]
+   375→#[path = "imp_pl.rs"]
+   376→mod imp;
+   378→#[cfg(all(feature = "std", not(feature = "parking_lot")))]
+   379→#[path = "imp_std.rs"]
+   380→mod imp;
+   382→/// Single-threaded version of `OnceCell`.
+   383→pub mod unsync {
+   384→    use core::{
+   385→        cell::{Cell, UnsafeCell},
+   386→        fmt, mem,
+   387→        ops::{Deref, DerefMut},
+   388→        panic::{RefUnwindSafe, UnwindSafe},
+   389→    };
+   390→
+   411→    pub struct OnceCell<T> {
+   412→        // Invariant: written to at most once.
+   413→        inner: UnsafeCell<Option<T>>,
+   414→    }
+   714→    pub struct Lazy<T, F = fn() -> T> {
+   715→        cell: OnceCell<T>,
+   716→        init: Cell<Option<F>>,
+   717→    }
+   841→        type Target = T;
+   861→/// Thread-safe, blocking version of `OnceCell`.
+   862→#[cfg(any(feature = "std", feature = "critical-section"))]
+   863→pub mod sync {
+   864→    use core::{
+   865→        cell::Cell,
+   866→        fmt, mem,
+   867→        ops::{Deref, DerefMut},
+   868→        panic::RefUnwindSafe,
+   869→    };
+   870→
+   901→    pub struct OnceCell<T>(Imp<T>);
+  1255→    pub struct Lazy<T, F = fn() -> T> {
+  1256→        cell: OnceCell<T>,
+  1257→        init: Cell<Option<F>>,
+  1258→    }
+  1374→        type Target = T;
+  1408→    fn _dummy
+  1411→#[cfg(feature = "race")]
+  1412→pub mod race;
+race.rs
+    43→pub struct OnceNonZeroUsize {
+    44→    inner: AtomicUsize,
+    45→}
+   150→    fn init
+   160→    fn compare_exchange
+   167→pub struct OnceBool {
+   168→    inner: OnceNonZeroUsize,
+   169→}
+   221→    fn from_usize
+   226→    fn to_usize
+   232→pub struct OnceRef<'a, T> {
+   233→    inner: AtomicPtr<T>,
+   234→    ghost: PhantomData<UnsafeCell<&'a T>>,
+   235→}
+   311→    fn init
+   320→    fn compare_exchange
+   347→    fn _dummy
+   353→#[cfg(feature = "alloc")]
+   354→mod once_box {
+   355→    use super::atomic::{AtomicPtr, Ordering};
+   356→    use core::{marker::PhantomData, ptr};
+   357→
+   358→    use alloc::boxed::Box;
+   359→
+   361→    pub struct OnceBox<T> {
+   362→        inner: AtomicPtr<T>,
+   363→        ghost: PhantomData<Option<Box<T>>>,
+   364→    }
+   462→        fn init
+   497→    fn _dummy

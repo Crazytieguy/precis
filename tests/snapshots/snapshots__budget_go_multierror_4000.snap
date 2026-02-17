@@ -1,0 +1,518 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 (2411 words)
+
+CHANGELOG.md
+     1→## Unreleased
+     2→
+     3→### Improvements
+     4→
+     5→### Changes
+     6→
+     7→### Fixed
+     8→
+     9→### Security
+README.md
+     1→# go-multierror
+     2→
+     3→[![CircleCI](https://img.shields.io/circleci/build/github/hashicorp/go-multierror/master)](https://circleci.com/gh/hashicorp/go-multierror)
+     4→[![Go Reference](https://pkg.go.dev/badge/github.com/hashicorp/go-multierror.svg)](https://pkg.go.dev/github.com/hashicorp/go-multierror)
+     5→![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/hashicorp/go-multierror)
+     6→
+     7→[circleci]: https://app.circleci.com/pipelines/github/hashicorp/go-multierror
+     8→[godocs]: https://pkg.go.dev/github.com/hashicorp/go-multierror
+     9→
+    10→> **Note**: As of Go 1.20, the standard library provides [`errors.Join`](https://pkg.go.dev/errors#Join) which offers similar functionality for combining multiple errors. **For new projects, we recommend using `errors.Join` from the standard library.** This package provides additional features like custom formatting, the `Group` pattern for concurrent error collection, and utility functions (`Append`, `Flatten`, `Prefix`).
+    11→
+    12→## Migrating to `errors.Join`
+    13→
+    14→**Basic error aggregation:**
+    15→```go
+    16→// Before (go-multierror)
+    17→var result error
+    18→result = multierror.Append(result, err1)
+    19→result = multierror.Append(result, err2)
+    20→return result
+    21→
+    22→// After (stdlib)
+    23→var errs []error
+    24→if err1 != nil {
+    25→    errs = append(errs, err1)
+    26→}
+    27→if err2 != nil {
+    28→    errs = append(errs, err2)
+    29→}
+    30→if len(errs) > 0 {
+    31→    return errors.Join(errs...)
+    32→}
+    33→return nil
+    34→```
+    35→
+    36→**Custom formatting:**
+    37→```go
+    38→// go-multierror allows custom formatting
+    39→// With stdlib, wrap the joined error with a custom type if needed
+    40→type FormattedError struct {
+    41→    errs []error
+    42→}
+    43→
+    44→func (e *FormattedError) Error() string {
+    45→    // Your custom format here
+    46→    return fmt.Sprintf("multiple errors: %v", e.errs)
+    47→}
+    48→
+    49→func (e *FormattedError) Unwrap() []error {
+    50→    return e.errs
+    51→}
+    52→```
+    53→
+    54→**Concurrent error collection (Group):**
+    55→```go
+    56→// golang.org/x/sync/errgroup returns only the first error:
+    57→import "golang.org/x/sync/errgroup"
+    58→
+    59→g := new(errgroup.Group)
+    60→g.Go(func() error { return task1() })
+    61→g.Go(func() error { return task2() })
+    62→err := g.Wait() // Returns first error only
+    63→
+    64→// To collect ALL errors like multierror.Group does, use a mutex:
+    65→type ErrorCollector struct {
+    66→    mu   sync.Mutex
+    67→    errs []error
+    68→}
+    69→
+    70→func (ec *ErrorCollector) Add(err error) {
+    71→    if err != nil {
+    72→        ec.mu.Lock()
+    73→        ec.errs = append(ec.errs, err)
+    74→        ec.mu.Unlock()
+    75→    }
+    76→}
+    77→
+    78→func (ec *ErrorCollector) Err() error {
+    79→    ec.mu.Lock()
+    80→    defer ec.mu.Unlock()
+    81→    if len(ec.errs) == 0 {
+    82→        return nil
+    83→    }
+    84→    return errors.Join(ec.errs...)
+    85→}
+    86→```
+    87→
+    88→---
+    89→
+    90→`go-multierror` is a package for Go that provides a mechanism for
+    91→representing a list of `error` values as a single `error`.
+    92→
+    93→This allows a function in Go to return an `error` that might actually
+    94→be a list of errors. If the caller knows this, they can unwrap the
+    95→list and access the errors. If the caller doesn't know, the error
+    96→formats to a nice human-readable format.
+    97→
+    98→`go-multierror` is compatible with the Go standard library
+    99→[errors](https://golang.org/pkg/errors/) package, supporting the
+   100→`As`, `Is`, and `Unwrap` functions for error introspection. Note that `Unwrap` 
+   101→returns errors one at a time via chaining, unlike `errors.Join` which 
+   102→implements the newer `Unwrap() []error` signature (Go 1.20+).
+   103→
+   104→## Installation and Docs
+   105→
+   106→Install using `go get github.com/hashicorp/go-multierror`.
+   107→
+   108→Full documentation is available at
+   109→https://pkg.go.dev/github.com/hashicorp/go-multierror
+   110→
+   111→### Requires go version 1.13 or newer
+   112→
+   113→`go-multierror` requires go version 1.13 or newer. Go 1.13 introduced
+   114→[error wrapping](https://golang.org/doc/go1.13#error_wrapping), which
+   115→this library takes advantage of.
+   116→
+   117→If you need to use an earlier version of go, you can use the
+   118→[v1.0.0](https://github.com/hashicorp/go-multierror/tree/v1.0.0)
+   119→tag, which doesn't rely on features in go 1.13.
+   120→
+   121→If you see compile errors that look like the below, it's likely that
+   122→you're on an older version of go:
+   123→
+   124→```
+   125→/go/src/github.com/hashicorp/go-multierror/multierror.go:112:9: undefined: errors.As
+   126→/go/src/github.com/hashicorp/go-multierror/multierror.go:117:9: undefined: errors.Is
+   127→```
+   128→
+   129→## Usage
+   130→
+   131→go-multierror is easy to use and purposely built to be unobtrusive in
+   132→existing Go applications/libraries that may not be aware of it.
+   133→
+   134→**Building a list of errors**
+   135→
+   136→The `Append` function is used to create a list of errors. This function
+   137→behaves a lot like the Go built-in `append` function: it doesn't matter
+   138→if the first argument is nil, a `multierror.Error`, or any other `error`,
+   139→the function behaves as you would expect.
+   140→
+   141→```go
+   142→var result error
+   143→
+   144→if err := step1(); err != nil {
+   145→	result = multierror.Append(result, err)
+   146→}
+   147→if err := step2(); err != nil {
+   148→	result = multierror.Append(result, err)
+   149→}
+   150→
+   151→return result
+   152→```
+   153→
+   154→**Customizing the formatting of the errors**
+   155→
+   156→By specifying a custom `ErrorFormat`, you can customize the format
+   157→of the `Error() string` function:
+   158→
+   159→```go
+   160→var result *multierror.Error
+   161→
+   162→// ... accumulate errors here, maybe using Append
+   163→
+   164→if result != nil {
+   165→	result.ErrorFormat = func([]error) string {
+   166→		return "errors!"
+   167→	}
+   168→}
+   169→```
+   170→
+   171→**Accessing the list of errors**
+   172→
+   173→`multierror.Error` implements `error` so if the caller doesn't know about
+   174→multierror, it will work just fine. But if you're aware a multierror might
+   175→be returned, you can use type switches to access the list of errors:
+   176→
+   177→```go
+   178→if err := something(); err != nil {
+   179→	if merr, ok := err.(*multierror.Error); ok {
+   180→		// Use merr.Errors
+   181→	}
+   182→}
+   183→```
+   184→
+   185→You can also use the standard [`errors.Unwrap`](https://golang.org/pkg/errors/#Unwrap)
+   186→function. This will continue to unwrap into subsequent errors until none exist.
+   187→
+   188→**Extracting an error**
+   189→
+   190→The standard library [`errors.As`](https://golang.org/pkg/errors/#As)
+   191→function can be used directly with a multierror to extract a specific error:
+   192→
+   193→```go
+   194→// Assume err is a multierror value
+   195→err := somefunc()
+   196→
+   197→// We want to know if "err" has a "RichErrorType" in it and extract it.
+   198→var errRich RichErrorType
+   199→if errors.As(err, &errRich) {
+   200→	// It has it, and now errRich is populated.
+   201→}
+   202→```
+   203→
+   204→**Checking for an exact error value**
+   205→
+   206→Some errors are returned as exact errors such as the [`ErrNotExist`](https://golang.org/pkg/os/#pkg-variables)
+   207→error in the `os` package. You can check if this error is present by using
+   208→the standard [`errors.Is`](https://golang.org/pkg/errors/#Is) function.
+   209→
+   210→```go
+   211→// Assume err is a multierror value
+   212→err := somefunc()
+   213→if errors.Is(err, os.ErrNotExist) {
+   214→	// err contains os.ErrNotExist
+   215→}
+   216→```
+   217→
+   218→**Returning a multierror only if there are errors**
+   219→
+   220→If you build a `multierror.Error`, you can use the `ErrorOrNil` function
+   221→to return an `error` implementation only if there are errors to return:
+   222→
+   223→```go
+   224→var result *multierror.Error
+   225→
+   226→// ... accumulate errors here
+   227→
+   228→// Return the `error` only if errors were added to the multierror, otherwise
+   229→// return nil since there are no errors.
+   230→return result.ErrorOrNil()
+   231→```
+append.go
+     6→// Append is a helper function that will append more errors
+     7→// onto an Error in order to create a larger multi-error.
+     8→//
+     9→// If err is not a multierror.Error, then it will be turned into
+    10→// one. If any of the errs are multierr.Error, they will be flattened
+    11→// one level into err.
+    12→// Any nil errors within errs will be ignored. If err is nil, a new
+    13→// *Error will be returned.
+    14→func Append(err error, errs ...error) *Error {
+    15→	switch err := err.(type) {
+    16→	case *Error:
+    17→		// Typed nils can reach here, so initialize if we are nil
+    18→		if err == nil {
+    19→			err = new(Error)
+    20→		}
+    21→
+    22→		// Go through each error and flatten
+    23→		for _, e := range errs {
+    24→			switch e := e.(type) {
+    25→			case *Error:
+    26→				if e != nil {
+    27→					err.Errors = append(err.Errors, e.Errors...)
+    28→				}
+    29→			default:
+    30→				if e != nil {
+    31→					err.Errors = append(err.Errors, e)
+    32→				}
+    33→			}
+    34→		}
+    35→
+    36→		return err
+    37→	default:
+    38→		newErrs := make([]error, 0, len(errs)+1)
+    39→		if err != nil {
+    40→			newErrs = append(newErrs, err)
+    41→		}
+    42→		newErrs = append(newErrs, errs...)
+    43→
+    44→		return Append(&Error{}, newErrs...)
+    45→	}
+    46→}
+flatten.go
+     6→// Flatten flattens the given error, merging any *Errors together into
+     7→// a single *Error.
+     8→func Flatten(err error) error {
+     9→	// If it isn't an *Error, just return the error as-is
+    10→	if _, ok := err.(*Error); !ok {
+    11→		return err
+    12→	}
+    13→
+    14→	// Otherwise, make the result and flatten away!
+    15→	flatErr := new(Error)
+    16→	flatten(err, flatErr)
+    17→	return flatErr
+    18→}
+    20→func flatten(err error, flatErr *Error) {
+    21→	switch err := err.(type) {
+    22→	case *Error:
+    23→		for _, e := range err.Errors {
+    24→			flatten(e, flatErr)
+    25→		}
+    26→	default:
+    27→		flatErr.Errors = append(flatErr.Errors, err)
+    28→	}
+    29→}
+format.go
+    11→// ErrorFormatFunc is a function callback that is called by Error to
+    12→// turn the list of errors into a string.
+    13→type ErrorFormatFunc func([]error) string
+    15→// ListFormatFunc is a basic formatter that outputs the number of errors
+    16→// that occurred along with a bullet point list of the errors.
+    17→func ListFormatFunc(es []error) string {
+    18→	if len(es) == 1 {
+    19→		return fmt.Sprintf("1 error occurred:\n\t* %s\n\n", es[0])
+    20→	}
+    21→
+    22→	points := make([]string, len(es))
+    23→	for i, err := range es {
+    24→		points[i] = fmt.Sprintf("* %s", err)
+    25→	}
+    26→
+    27→	return fmt.Sprintf(
+    28→		"%d errors occurred:\n\t%s\n\n",
+    29→		len(es), strings.Join(points, "\n\t"))
+    30→}
+group.go
+     8→// Group is a collection of goroutines which return errors that need to be
+     9→// coalesced.
+    10→type Group struct {
+    11→	mutex sync.Mutex
+    12→	err   *Error
+    13→	wg    sync.WaitGroup
+    14→}
+    16→// Go calls the given function in a new goroutine.
+    17→//
+    18→// If the function returns an error it is added to the group multierror which
+    19→// is returned by Wait.
+    20→func (g *Group) Go(f func() error) {
+    21→	g.wg.Add(1)
+    22→
+    23→	go func() {
+    24→		defer g.wg.Done()
+    25→
+    26→		if err := f(); err != nil {
+    27→			g.mutex.Lock()
+    28→			g.err = Append(g.err, err)
+    29→			g.mutex.Unlock()
+    30→		}
+    31→	}()
+    32→}
+    34→// Wait blocks until all function calls from the Go method have returned, then
+    35→// returns the multierror.
+    36→func (g *Group) Wait() *Error {
+    37→	g.wg.Wait()
+    38→	g.mutex.Lock()
+    39→	defer g.mutex.Unlock()
+    40→	return g.err
+    41→}
+multierror.go
+    11→// Error is an error type to track multiple errors. This is used to
+    12→// accumulate errors in cases and return them as a single "error".
+    13→type Error struct {
+    14→	Errors      []error
+    15→	ErrorFormat ErrorFormatFunc
+    16→}
+    18→func (e *Error) Error() string {
+    19→	fn := e.ErrorFormat
+    20→	if fn == nil {
+    21→		fn = ListFormatFunc
+    22→	}
+    23→
+    24→	return fn(e.Errors)
+    25→}
+    27→// ErrorOrNil returns an error interface if this Error represents
+    28→// a list of errors, or returns nil if the list of errors is empty. This
+    29→// function is useful at the end of accumulation to make sure that the value
+    30→// returned represents the existence of errors.
+    31→func (e *Error) ErrorOrNil() error {
+    32→	if e == nil {
+    33→		return nil
+    34→	}
+    35→	if len(e.Errors) == 0 {
+    36→		return nil
+    37→	}
+    38→
+    39→	return e
+    40→}
+    42→func (e *Error) GoString() string {
+    43→	return fmt.Sprintf("*%#v", *e)
+    44→}
+    46→// WrappedErrors returns the list of errors that this Error is wrapping. It is
+    47→// an implementation of the errwrap.Wrapper interface so that multierror.Error
+    48→// can be used with that library.
+    49→//
+    50→// This method is not safe to be called concurrently. Unlike accessing the
+    51→// Errors field directly, this function also checks if the multierror is nil to
+    52→// prevent a null-pointer panic. It satisfies the errwrap.Wrapper interface.
+    53→func (e *Error) WrappedErrors() []error {
+    54→	if e == nil {
+    55→		return nil
+    56→	}
+    57→	return e.Errors
+    58→}
+    60→// Unwrap returns an error from Error (or nil if there are no errors).
+    61→// This error returned will further support Unwrap to get the next error,
+    62→// etc. The order will match the order of Errors in the multierror.Error
+    63→// at the time of calling.
+    64→//
+    65→// The resulting error supports errors.As/Is/Unwrap so you can continue
+    66→// to use the stdlib errors package to introspect further.
+    67→//
+    68→// This will perform a shallow copy of the errors slice. Any errors appended
+    69→// to this error after calling Unwrap will not be available until a new
+    70→// Unwrap is called on the multierror.Error.
+    71→func (e *Error) Unwrap() error {
+    72→	// If we have no errors then we do nothing
+    73→	if e == nil || len(e.Errors) == 0 {
+    74→		return nil
+    75→	}
+    76→
+    77→	// If we have exactly one error, we can just return that directly.
+    78→	if len(e.Errors) == 1 {
+    79→		return e.Errors[0]
+    80→	}
+    81→
+    82→	// Shallow copy the slice
+    83→	errs := make([]error, len(e.Errors))
+    84→	copy(errs, e.Errors)
+    85→	return chain(errs)
+    86→}
+    88→// chain implements the interfaces necessary for errors.Is/As/Unwrap to
+    89→// work in a deterministic way with multierror. A chain tracks a list of
+    90→// errors while accounting for the current represented error. This lets
+    91→// Is/As be meaningful.
+    92→//
+    93→// Unwrap returns the next error. In the cleanest form, Unwrap would return
+    94→// the wrapped error here but we can't do that if we want to properly
+    95→// get access to all the errors. Instead, users are recommended to use
+    96→// Is/As to get the correct error type out.
+    97→//
+    98→// Precondition: []error is non-empty (len > 0)
+    99→type chain []error
+   101→// Error implements the error interface
+   102→func (e chain) Error() string {
+   103→	return e[0].Error()
+   104→}
+   106→// Unwrap implements errors.Unwrap by returning the next error in the
+   107→// chain or nil if there are no more errors.
+   108→func (e chain) Unwrap() error {
+   109→	if len(e) == 1 {
+   110→		return nil
+   111→	}
+   112→
+   113→	return e[1:]
+   114→}
+   116→// As implements errors.As by attempting to map to the current value.
+   117→func (e chain) As(target interface{}) bool {
+   118→	return errors.As(e[0], target)
+   119→}
+   121→// Is implements errors.Is by comparing the current value directly.
+   122→func (e chain) Is(target error) bool {
+   123→	return errors.Is(e[0], target)
+   124→}
+prefix.go
+    10→// Prefix is a helper function that will prefix some text
+    11→// to the given error. If the error is a multierror.Error, then
+    12→// it will be prefixed to each wrapped error.
+    13→//
+    14→// This is useful to use when appending multiple multierrors
+    15→// together in order to give better scoping.
+    16→func Prefix(err error, prefix string) error {
+    17→	if err == nil {
+    18→		return nil
+    19→	}
+    20→
+    21→	switch err := err.(type) {
+    22→	case *Error:
+    23→		// Typed nils can reach here, so initialize if we are nil
+    24→		if err == nil {
+    25→			err = new(Error)
+    26→		}
+    27→
+    28→		// Wrap each of the errors
+    29→		for i, e := range err.Errors {
+    30→			err.Errors[i] = fmt.Errorf("%s %s", prefix, e)
+    31→		}
+    32→
+    33→		return err
+    34→	default:
+    35→		return fmt.Errorf("%s %s", prefix, err)
+    36→	}
+    37→}
+sort.go
+     6→// Len implements sort.Interface function for length
+     7→func (err *Error) Len() int {
+     8→	if err == nil {
+     9→		return 0
+    10→	}
+    11→
+    12→	return len(err.Errors)
+    13→}
+    15→// Swap implements sort.Interface function for swapping elements
+    16→func (err Error) Swap(i, j int) {
+    17→	err.Errors[i], err.Errors[j] = err.Errors[j], err.Errors[i]
+    18→}
+    20→// Less implements sort.Interface function for determining order
+    21→func (err Error) Less(i, j int) bool {
+    22→	return err.Errors[i].Error() < err.Errors[j].Error()
+    23→}

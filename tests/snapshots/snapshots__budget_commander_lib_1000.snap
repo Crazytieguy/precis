@@ -1,0 +1,307 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (983 words)
+
+argument.js
+     3→class Argument {
+     4→  /**
+     5→   * Initialize a new command argument with the given name and description.
+     6→   * The default is that the argument is required, and you can explicitly
+    13→  constructor
+    48→  name
+    56→  _collectValue
+    73→  default
+    86→  argParser
+    98→  choices
+   119→  argRequired
+   129→  argOptional
+   135→/**
+   136→ * Takes an argument and returns its human readable equivalent for help usage.
+   137→ *
+   143→function humanReadableArgName(arg) {
+command.js
+    13→class Command extends EventEmitter {
+    14→  /**
+    15→   * Initialize a new `Command`.
+    16→   *
+    20→  constructor
+    99→  copyInheritedSettings
+   121→  _getCommandAndAncestors
+   155→  command
+   192→  createCommand
+   203→  createHelp
+   215→  configureHelp
+   245→  configureOutput
+   261→  showHelpAfterError
+   273→  showSuggestionAfterError
+   288→  addCommand
+   316→  createArgument
+   336→  argument
+   359→  arguments
+   375→  addArgument
+   409→  helpCommand
+   443→  addHelpCommand
+   463→  _getHelpCommand
+   487→  hook
+   508→  exitOverride
+   533→  _exit
+   556→  action
+   585→  createOption
+   599→  _callParseArg
+   619→  _registerOption
+   644→  _registerCommand
+   670→  addOption
+   741→  _optionEx
+   788→  option
+   805→  requiredOption
+   826→  combineFlagAndOptionalValue
+   837→  allowUnknownOption
+   848→  allowExcessArguments
+   861→  enablePositionalOptions
+   875→  passThroughOptions
+   885→  _checkForBrokenPassThrough
+   905→  storeOptionsAsProperties
+   925→  getOptionValue
+   940→  setOptionValue
+   953→  setOptionValueWithSource
+   971→  getOptionValueSource
+   983→  getOptionValueSourceWithGlobals
+  1001→  _prepareUserArgs
+  1090→  parse
+  1119→  async parseAsync
+  1127→  _prepareForParse() {
+  1141→  saveStateBeforeParse
+  1158→  restoreStateBeforeParse
+  1183→  _checkForMissingExecutable
+  1202→  _executeSubCommand
+  1352→  _dispatchSubcommand
+  1380→  _dispatchHelpCommand
+  1403→  _checkNumberOfArguments
+  1428→  _processArguments
+  1481→  _chainOrCall
+  1499→  _chainOrCallHooks
+  1531→  _chainOrCallSubCommandHook
+  1550→  _parseCommand
+  1649→  _findCommand
+  1664→  _findOption
+  1675→  _checkForMissingMandatoryOptions
+  1694→  _checkForConflictingLocalOptions
+  1723→  _checkForConflictingOptions
+  1748→  parseOptions
+  1902→  opts
+  1924→  optsWithGlobals
+  1940→  error
+  1966→  _parseOptionsEnv
+  1996→  _parseOptionsImplied
+  2034→  missingArgument
+  2046→  optionMissingArgument
+  2058→  missingMandatoryOptionValue
+  2070→  _conflictingOption
+  2114→  unknownOption
+  2146→  _excessArguments
+  2162→  unknownCommand
+  2195→  version
+  2218→  description
+  2234→  summary
+  2249→  alias
+  2289→  aliases
+  2304→  usage
+  2331→  name
+  2344→  helpGroup
+  2363→  commandsGroup
+  2382→  optionsGroup
+  2392→  _initOptionGroup
+  2401→  _initCommandGroup
+  2419→  nameFromFilename
+  2437→  executableDir
+  2450→  helpInformation
+  2475→  _getOutputContext
+  2505→  outputHelp
+  2559→  helpOption
+  2592→  _getHelpOption
+  2607→  addHelpOption
+  2621→  help
+  2656→  addHelpText
+  2686→  _outputHelpIfRequested
+  2697→/**
+  2698→ * Scan arguments and increment port number for inspect calls (to avoid conflicts when spawning new command).
+  2699→ *
+  2705→function incrementNodeInspectorPort(args) {
+  2748→/**
+  2749→ * @returns {boolean | undefined}
+  2750→ * @package
+  2752→function useColor() {
+error.js
+     1→/**
+     2→ * CommanderError class
+     3→ */
+     4→class CommanderError extends Error {
+     5→  /**
+     6→   * Constructs the CommanderError class
+     7→   * @param {number} exitCode suggested exit code which could be used with process.exit
+     8→   * @param {string} code an id string representing the error
+     9→   * @param {string} message human-readable description of the error
+    10→   */
+    11→  constructor(exitCode, code, message) {
+    12→    super(message);
+    13→    // properly capture stack trace in Node.js
+    14→    Error.captureStackTrace(this, this.constructor);
+    15→    this.name = this.constructor.name;
+    16→    this.code = code;
+    17→    this.exitCode = exitCode;
+    18→    this.nestedError = undefined;
+    19→  }
+    20→}
+    22→/**
+    23→ * InvalidArgumentError class
+    24→ */
+    25→class InvalidArgumentError extends CommanderError {
+    26→  /**
+    27→   * Constructs the InvalidArgumentError class
+    28→   * @param {string} [message] explanation of why argument is invalid
+    29→   */
+    30→  constructor(message) {
+    31→    super(1, 'commander.invalidArgument', message);
+    32→    // properly capture stack trace in Node.js
+    33→    Error.captureStackTrace(this, this.constructor);
+    34→    this.name = this.constructor.name;
+    35→  }
+    36→}
+help.js
+    12→class Help {
+    13→  constructor() {
+    14→    this.helpWidth = undefined;
+    15→    this.minWidthToWrap = 40;
+    29→  prepareContext
+    40→  visibleCommands
+    62→  compareOptions
+    79→  visibleOptions
+   112→  visibleGlobalOptions
+   139→  visibleArguments
+   162→  subcommandTerm
+   182→  optionTerm
+   193→  argumentTerm
+   205→  longestSubcommandTermLength
+   224→  longestOptionTermLength
+   241→  longestGlobalOptionTermLength
+   258→  longestArgumentTermLength
+   276→  commandUsage
+   300→  commandDescription
+   313→  subcommandDescription
+   325→  optionDescription
+   372→  argumentDescription
+   403→  formatItemList
+   417→  groupItems
+   443→  formatHelp
+   535→  displayWidth
+   545→  styleTitle
+   549→  styleUsage(str) {
+   563→  styleCommandDescription(str) {
+   566→  styleOptionDescription(str) {
+   569→  styleSubcommandDescription(str) {
+   572→  styleArgumentDescription(str) {
+   575→  styleDescriptionText(str) {
+   578→  styleOptionTerm(str) {
+   581→  styleSubcommandTerm(str) {
+   594→  styleArgumentTerm(str) {
+   597→  styleOptionText(str) {
+   600→  styleArgumentText(str) {
+   603→  styleSubcommandText(str) {
+   606→  styleCommandText(str) {
+   618→  padWidth
+   633→  preformatted
+   650→  formatItem
+   695→  boxWrap
+   732→/**
+   733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
+   734→ *
+   740→function stripColor(str) {
+option.js
+     3→class Option {
+     4→  /**
+     5→   * Initialize a new `Option` with the given `flags` and `description`.
+     6→   *
+    11→  constructor
+    47→  default
+    65→  preset
+    82→  conflicts
+   100→  implies
+   120→  env
+   132→  argParser
+   144→  makeOptionMandatory
+   156→  hideHelp
+   165→  _collectValue
+   181→  choices
+   203→  name
+   217→  attributeName
+   230→  helpGroup
+   243→  is
+   256→  isBoolean
+   261→/**
+   262→ * This class is to make it easier to work with dual options, without changing the existing
+   263→ * implementation. We support separate dual options for separate positive and negative options,
+   264→ * like `--build` and `--no-build`, which share a single option value. This works nicely for some
+   265→ * use cases, but is tricky for others where we want separate behaviours despite
+   266→ * the single shared option value.
+   267→ */
+   268→class DualOptions {
+   269→  /**
+   270→   * @param {Option[]} options
+   271→   */
+   272→  constructor(options) {
+   273→    this.positiveOptions = new Map();
+   274→    this.negativeOptions = new Map();
+   275→    this.dualOptions = new Set();
+   276→    options.forEach((option) => {
+   277→      if (option.negate) {
+   278→        this.negativeOptions.set(option.attributeName(), option);
+   279→      } else {
+   280→        this.positiveOptions.set(option.attributeName(), option);
+   281→      }
+   282→    });
+   283→    this.negativeOptions.forEach((value, key) => {
+   284→      if (this.positiveOptions.has(key)) {
+   285→        this.dualOptions.add(key);
+   286→      }
+   287→    });
+   288→  }
+   289→
+   290→  /**
+   291→   * Did the value come from the option, and not from possible matching dual option?
+   292→   *
+   293→   * @param {*} value
+   294→   * @param {Option} option
+   295→   * @returns {boolean}
+   296→   */
+   297→  valueFromOption(value, option) {
+   298→    const optionKey = option.attributeName();
+   299→    if (!this.dualOptions.has(optionKey)) return true;
+   300→
+   301→    // Use the value to deduce if (probably) came from the option.
+   302→    const preset = this.negativeOptions.get(optionKey).presetArg;
+   303→    const negativeValue = preset !== undefined ? preset : false;
+   304→    return option.negate === (negativeValue === value);
+   305→  }
+   306→}
+   308→/**
+   309→ * Convert string from kebab-case to camelCase.
+   310→ *
+   316→function camelcase(str) {
+   322→/**
+   323→ * Split the short and long flag out of something like '-m,--mixed <value>'
+   324→ *
+   328→function splitOptionFlags(flags) {
+suggestSimilar.js
+     1→const maxDistance = 3;
+     3→function editDistance(a, b) {
+     4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
+     5→  // Calculating optimal string alignment distance, no substring is edited more than once.
+     6→  // (Simple implementation.)
+     7→
+     8→  // Quick early exit, return worst case.
+    48→/**
+    49→ * Find close matches, restricted to same number of edits.
+    50→ *
+    56→function suggestSimilar(word, candidates) {

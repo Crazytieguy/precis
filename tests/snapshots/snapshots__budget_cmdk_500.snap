@@ -1,0 +1,155 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (489 words)
+
+cmdk/src/command-score.ts
+    54→function commandScoreInner
+   150→function formatInput
+   155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
+   156→  /* NOTE:
+cmdk/src/index.tsx
+   161→const defaultFilter
+   164→const useCommand
+   166→const useStore
+   664→const Item
+   729→const Group
+   774→const Separator
+   787→const Input
+   833→const List
+   882→const Dialog
+   899→const Empty
+   909→const Loading
+   955→/**
+   956→ *
+   957→ *
+   958→ * Helpers
+   959→ *
+   960→ *
+   961→ */
+   962→
+   963→function findNextSibling(el: Element, selector: string) {
+   972→function findPreviousSibling
+   981→function useAsRef
+   993→function useLazyRef
+  1003→/** Run a selector against the store state. */
+  1004→function useCmdk<T = any>(selector: (state: State) => T): T {
+  1010→function useValue
+  1045→/** Imperatively run a function on the next layout effect cycle. */
+  1046→const useScheduleLayoutEffect = () => {
+  1061→function renderChildren
+  1071→function SlottableWithNestedChildren
+playwright.config.ts
+     3→const config: PlaywrightTestConfig = {
+     4→  forbidOnly: !!process.env.CI,
+website/README.md
+     3→## Getting Started
+     4→
+     5→First, run the development server:
+     6→
+     7→```bash
+     8→pnpm run dev
+     9→```
+    19→## Learn More
+    20→
+    21→To learn more about Next.js, take a look at the following resources:
+    22→
+    23→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+    24→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    25→
+    28→## Deploy on Vercel
+    29→
+    30→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    31→
+    32→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+website/components/cmdk/framer.tsx
+     4→export function FramerCMDK() {
+website/components/cmdk/linear.tsx
+     3→export function LinearCMDK() {
+    30→const items = [
+    31→  {
+website/components/cmdk/raycast.tsx
+     7→export function RaycastCMDK() {
+website/components/cmdk/vercel.tsx
+     4→export function VercelCMDK() {
+website/components/code/index.tsx
+     7→const theme = {
+     8→  plain: {
+     9→    color: 'var(--gray12)',
+    41→export function Code({ children }: { children: string }) {
+    42→  return (
+    43→    <Highlight {...defaultProps} theme={theme} code={children} language="jsx">
+website/components/icons/index.tsx
+     3→export function FigmaIcon() {
+    15→export function RaycastIcon() {
+    28→export function YouTubeIcon() {
+    40→export function SlackIcon() {
+    79→export function VercelIcon() {
+    87→export function LinearIcon({ style }: { style?: Object }) {
+   110→export function Logo({ children, size = '20px' }: { children: React.ReactNode; size?: string }) {
+   127→export function CopyIcon() {
+   146→export function CopiedIcon() {
+   154→export function GitHubIcon() {
+   165→export function FramerIcon() {
+website/next.config.js
+     1→/** @type {import('next').NextConfig} */
+     2→const nextConfig = {
+     3→  reactStrictMode: true,
+     4→  swcMinify: true,
+     5→}
+website/pages/_app.tsx
+    13→const title
+    14→const description
+    15→const siteUrl
+    17→export default function App({ Component, pageProps }: AppProps) {
+    18→  return (
+    19→    <>
+    20→      <Head>
+website/pages/_document.tsx
+     5→export default class Document extends NextDocument {
+     6→  render() {
+     7→    return (
+     8→      <Html lang="en">
+     9→        <Head>
+    10→          <link rel="preload" href="/inter-var-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+    11→        </Head>
+    12→        <body>
+    13→          <Main />
+    14→          <NextScript />
+    15→        </body>
+    16→      </Html>
+    17→    )
+    18→  }
+    19→}
+website/pages/index.tsx
+    20→type TTheme
+    25→type Themes
+    27→const ThemeContext
+    29→export default function Index() {
+    30→  const [theme, setTheme] = React.useState<Themes>('raycast')
+    31→
+    32→  return (
+    84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
+    99→//////////////////////////////////////////////////////////////////
+   100→
+   101→function InstallButton() {
+   123→function GitHubButton() {
+   137→//////////////////////////////////////////////////////////////////
+   138→
+   139→const themes = [
+   140→  {
+   141→    icon: <RaycastIcon />,
+   142→    key: 'raycast',
+   143→  },
+   144→  {
+   158→function ThemeSwitcher() {
+   260→//////////////////////////////////////////////////////////////////
+   261→
+   262→function Codeblock() {
+   294→//////////////////////////////////////////////////////////////////
+   295→
+   296→function VersionBadge() {
+   300→function Footer() {
+   326→function RaunoSignature() {
+   350→function PacoSignature() {

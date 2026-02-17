@@ -1,0 +1,246 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (993 words)
+
+src/into_either.rs
+     6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
+     7→/// variant of [`Either<Self, Self>`](Either).
+     8→///
+     9→/// The [`into_either`](IntoEither::into_either) method takes a [`bool`] to determine
+    10→/// whether to convert to [`Left`] or [`Right`].
+    11→///
+    12→/// The [`into_either_with`](IntoEither::into_either_with) method takes a
+    13→/// [predicate function](FnOnce) to determine whether to convert to [`Left`] or [`Right`].
+    14→pub trait IntoEither: Sized {
+    15→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
+    16→    /// if `into_left` is `true`.
+    17→    /// Converts `self` into a [`Right`] variant of [`Either<Self, Self>`](Either)
+    18→    /// otherwise.
+    19→    ///
+    20→    /// # Examples
+    21→    ///
+    22→    /// ```
+    23→    /// use either::{IntoEither, Left, Right};
+    24→    ///
+    25→    /// let x = 0;
+    26→    /// assert_eq!(x.into_either(true), Left(x));
+    27→    /// assert_eq!(x.into_either(false), Right(x));
+    28→    /// ```
+    29→    fn into_either(self, into_left: bool) -> Either<Self, Self> {
+    30→        if into_left {
+    31→            Left(self)
+    32→        } else {
+    33→            Right(self)
+    34→        }
+    35→    }
+    36→
+    37→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
+    38→    /// if `into_left(&self)` returns `true`.
+    39→    /// Converts `self` into a [`Right`] variant of [`Either<Self, Self>`](Either)
+    40→    /// otherwise.
+    41→    ///
+    42→    /// # Examples
+    43→    ///
+    44→    /// ```
+    45→    /// use either::{IntoEither, Left, Right};
+    46→    ///
+    47→    /// fn is_even(x: &u8) -> bool {
+    48→    ///     x % 2 == 0
+    49→    /// }
+    50→    ///
+    51→    /// let x = 0;
+    52→    /// assert_eq!(x.into_either_with(is_even), Left(x));
+    53→    /// assert_eq!(x.into_either_with(|x| !is_even(x)), Right(x));
+    54→    /// ```
+    55→    fn into_either_with<F>(self, into_left: F) -> Either<Self, Self>
+    56→    where
+    57→        F: FnOnce(&Self) -> bool,
+    58→    {
+    59→        let into_left = into_left(&self);
+    60→        self.into_either(into_left)
+    61→    }
+    62→}
+src/iterator.rs
+     4→macro_rules! wrap_either {
+     5→    ($value:expr => $( $tail:tt )*) => {
+    13→/// Iterator that maps left or right iterators to corresponding `Either`-wrapped items.
+    14→///
+    15→/// This struct is created by the [`Either::factor_into_iter`],
+    16→/// [`factor_iter`][Either::factor_iter],
+    17→/// and [`factor_iter_mut`][Either::factor_iter_mut] methods.
+    18→#[derive(Clone, Debug)]
+    19→pub struct IterEither<L, R> {
+    20→    inner: Either<L, R>,
+    21→}
+    43→impl<L, R> Iterator for Either<L, R>
+    44→where
+    45→    L: Iterator,
+    46→    R: Iterator<Item = L::Item>,
+    47→{
+    48→    type Item = L::Item;
+   185→    type Item = Either<L::Item, R::Item>;
+src/lib.rs
+    21→#[cfg(feature = "serde")]
+    22→pub mod serde_untagged;
+    24→#[cfg(feature = "serde")]
+    25→pub mod serde_untagged_optional;
+    41→/// The enum `Either` with variants `Left` and `Right` is a general purpose
+    42→/// sum type with two cases.
+    43→///
+    44→/// The `Either` type is symmetric and treats its variants the same way, without
+    45→/// preference.
+    46→/// (For representing success or error, use the regular `Result` enum instead.)
+    47→#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+    48→#[derive(Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Debug)]
+    49→pub enum Either<L, R> {
+    50→    /// A value of type `L`.
+    51→    Left(L),
+    52→    /// A value of type `R`.
+    53→    Right(R),
+    54→}
+    56→/// Evaluate the provided expression for both [`Either::Left`] and [`Either::Right`].
+    57→///
+    58→/// This macro is useful in cases where both sides of [`Either`] can be interacted with
+    59→/// in the same way even though the don't share the same type.
+    60→///
+    61→/// Syntax: `either::for_both!(` *expression* `,` *pattern* `=>` *expression* `)`
+    62→///
+    63→/// # Example
+    64→///
+    65→/// ```
+    66→/// use either::Either;
+    67→///
+    81→macro_rules! for_both {
+    90→/// Macro for unwrapping the left side of an [`Either`], which fails early
+    91→/// with the opposite side. Can only be used in functions that return
+    92→/// `Either` because of the early return of `Right` that it provides.
+    93→///
+    94→/// See also [`try_right!`] for its dual, which applies the same just to the
+    95→/// right side.
+    96→///
+    97→/// # Example
+    98→///
+    99→/// ```
+   100→/// use either::{Either, Left, Right};
+   101→///
+   113→macro_rules! try_left {
+   122→/// Dual to [`try_left!`], see its documentation for more information.
+   123→#[macro_export]
+   124→macro_rules! try_right {
+   133→macro_rules! map_either {
+   134→    ($value:expr, $pattern:pat => $result:expr) => {
+   142→mod iterator;
+   145→mod into_either;
+   175→    pub fn is_left
+   191→    pub fn is_right
+   206→    pub fn left
+   224→    pub fn right
+   242→    pub fn as_ref
+   264→    pub fn as_mut
+   270→    pub fn as_pin_ref
+   278→    pub fn as_pin_mut
+   298→    pub fn flip
+   317→    pub fn map_left
+   339→    pub fn map_right
+   366→    pub fn map_either
+   397→    pub fn map_either_with
+   424→    pub fn either
+   454→    pub fn either_with
+   476→    pub fn left_and_then
+   497→    pub fn right_and_then
+   521→    pub fn into_iter
+   544→    pub fn iter
+   573→    pub fn iter_mut
+   597→    pub fn factor_into_iter
+   619→    pub fn factor_iter
+   645→    pub fn factor_iter_mut
+   671→    pub fn left_or
+   690→    pub fn left_or_default
+   712→    pub fn left_or_else
+   738→    pub fn right_or
+   757→    pub fn right_or_default
+   779→    pub fn right_or_else
+   809→    pub fn unwrap_left
+   841→    pub fn unwrap_right
+   871→    pub fn expect_left
+   901→    pub fn expect_right
+   923→    pub fn either_into
+   944→    pub fn factor_none
+   966→    pub fn factor_err
+   988→    pub fn factor_ok
+  1009→    pub fn factor_first
+  1030→    pub fn factor_second
+  1050→    pub fn into_inner
+  1065→    pub fn map
+  1076→    pub fn cloned
+  1086→    pub fn copied
+  1098→    pub fn cloned
+  1108→    pub fn copied
+  1118→impl<L, R> From<Result<R, L>> for Either<L, R> {
+  1128→impl<L, R> From<Either<L, R>> for Result<R, L> {
+  1138→impl<L, R> Future for Either<L, R>
+  1139→where
+  1140→    L: Future,
+  1141→    R: Future<Output = L::Output>,
+  1142→{
+  1143→    type Output = L::Output;
+  1157→impl<L, R> Read for Either<L, R>
+  1158→where
+  1159→    L: Read,
+  1160→    R: Read,
+  1161→{
+  1183→impl<L, R> Seek for Either<L, R>
+  1184→where
+  1185→    L: Seek,
+  1186→    R: Seek,
+  1187→{
+  1195→impl<L, R> BufRead for Either<L, R>
+  1196→where
+  1197→    L: BufRead,
+  1198→    R: BufRead,
+  1199→{
+  1221→impl<L, R> Write for Either<L, R>
+  1222→where
+  1223→    L: Write,
+  1224→    R: Write,
+  1225→{
+  1253→macro_rules! impl_specific_ref_and_mut {
+  1254→    ($t:ty, $($attr:meta),* ) => {
+  1327→    type Target = L::Target;
+  1348→impl<L, R> Error for Either<L, R>
+  1349→where
+  1350→    L: Error,
+  1351→    R: Error,
+  1352→{
+  1358→    fn description
+  1363→    fn cause
+  1521→/// A helper macro to check if AsRef and AsMut are implemented for a given type.
+  1522→macro_rules! check_t {
+  1536→fn _unsized_ref_propagation() {
+  1537→    check_t!(str);
+  1538→
+  1539→    fn check_array_ref<T: AsRef<[Item]>, Item>() {}
+  1540→    fn check_array_mut<T: AsMut<[Item]>, Item>() {}
+  1541→
+  1552→#[cfg(feature = "std")]
+  1553→fn _unsized_std_propagation() {
+  1554→    check_t!(::std::path::Path);
+  1555→    check_t!(::std::ffi::OsStr);
+  1556→    check_t!(::std::ffi::CStr);
+  1557→}
+src/serde_untagged.rs
+    38→#[derive(serde::Serialize, serde::Deserialize)]
+    39→#[serde(untagged)]
+    40→enum Either<L, R> {
+    41→    Left(L),
+    42→    Right(R),
+    43→}
+src/serde_untagged_optional.rs
+    38→#[derive(Serialize, Deserialize)]
+    39→#[serde(untagged)]
+    40→enum Either<L, R> {
+    41→    Left(L),
+    42→    Right(R),
+    43→}

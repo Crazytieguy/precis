@@ -1,0 +1,358 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (972 words)
+
+CHANGELOG.md
+    13→### Added
+    14→
+    25→### Changed
+    26→
+    32→### Fixed
+    33→
+    47→### Added
+    48→
+    65→### Added
+    66→
+    71→### Added
+    72→
+   162→### Added
+   163→
+   179→### Added
+   180→
+   236→### Fixed
+   237→
+   260→### Fixed
+   261→
+   272→### Added
+   273→
+   286→### Added
+   287→
+   296→### Added
+   297→
+   303→### Fixed
+   304→
+   315→### Added
+   316→
+   329→### Added
+   330→
+   345→### Added
+   346→
+   360→### Added
+   361→
+   367→### Added
+   368→
+   407→### Added
+   408→
+   418→### Added
+   419→
+   433→### Added
+   434→
+   441→### Added
+   442→
+   524→### Added
+   525→
+   537→### Added
+   538→
+   557→### Added
+   558→
+   683→### Fixed
+   684→
+   689→### Added
+   690→
+   707→### Added
+   708→
+   724→### Added
+   725→
+   741→### Added
+   742→
+   762→### Added
+   763→
+   853→### Fixed
+   854→
+   859→### Added
+   860→
+   880→### Fixed
+   881→
+   886→### Added
+   887→
+   911→#### Testing for no arguments
+   912→
+   947→### Added
+   948→
+  1014→### Fixed
+  1015→
+CONTRIBUTING.md
+     3→## Issues
+     4→
+Readme.md
+   968→### .parse() and .parseAsync()
+   969→
+Readme_zh-CN.md
+   907→### .parse() 和 .parseAsync()
+   908→
+docs/deprecated.md
+     1→# Deprecated
+     2→
+    22→### RegExp .option() parameter
+    23→
+    34→### noHelp
+    35→
+    44→### Callback to .help() and .outputHelp()
+    45→
+    62→### .on('--help')
+    63→
+    87→### .on('command:*')
+    88→
+    98→### .command('*')
+    99→
+   118→### cmd.description(cmdDescription, argDescriptions)
+   119→
+   141→### InvalidOptionArgumentError
+   142→
+   171→### Import from `commander/esm.mjs`
+   172→
+   187→### cmd._args
+   188→
+   203→### .addHelpCommand(string|boolean|undefined)
+   204→
+   227→## Removed
+   228→
+   229→### Short option flag longer than a single character
+   230→
+   231→Short option flags like `-ws` were never supported, but the old README did not make this clear. The README now states that short options are a single character.
+   232→
+   233→- README updated in Commander v3.
+   234→- Deprecated from Commander v9.
+   235→- Throws an exception in Commander v13. Deprecated and gone!
+   236→- Replacement added in Commander v13.1 with support for dual long options, like `--ws, --workspace`.
+   237→
+   238→### Default import of global Command object
+   239→
+docs/help-in-depth.md
+     1→# Help in Depth
+     2→
+    20→## Data Properties
+    21→
+    34→## Stringify and Style
+    35→
+   118→## Layout
+   119→
+docs/options-in-depth.md
+     2→# Options in Depth
+     3→
+    15→## Options taking varying numbers of option-arguments
+    16→
+    30→### Parsing ambiguity
+    31→
+    79→#### Alternative: Make `--` part of your syntax
+    80→
+   104→#### Alternative: Put options last
+   105→
+   126→#### Alternative: Use options instead of command-arguments
+   127→
+   148→## Combining short options, and options taking arguments
+   149→
+   191→### Combining short options as if boolean
+   192→
+docs/parsing-and-hooks.md
+     1→# Parsing life cycle and hooks
+     2→
+docs/release-policy.md
+     1→# Release Policy
+     2→
+docs/terminology.md
+     1→# Terminology
+     2→
+docs/zh-CN/不再推荐使用的功能.md
+     1→# 不再推荐使用的功能
+     2→
+    18→## .option() 方法的正则表达式参数
+    19→
+    30→## noHelp
+    31→
+    40→## 默认导入的全局 Command 对象
+    41→
+    61→## .help() 与 .outputHelp() 的回调函数参数
+    62→
+    79→## .on('--help')
+    80→
+   104→## .on('command:*')
+   105→
+   114→## .command('*')
+   115→
+   134→## cmd.description(cmdDescription, argDescriptions)
+   135→
+   157→## InvalidOptionArgumentError
+   158→
+   187→## 短选项标志长于单个字符
+   188→
+docs/zh-CN/可变参数的选项.md
+     1→# 可变参数的选项
+     2→
+    26→## 解析中的歧义
+    27→
+    73→### 方案一：让`--`成为语法的一部分
+    74→
+    98→### 方案二：把选项放在最后
+    99→
+   120→### 方案三：使用选项替代命令参数
+   121→
+   142→## 合并短选项和带有参数的选项
+   143→
+   183→### 将短选项视作 boolean 类型选项合并
+   184→
+docs/zh-CN/术语表.md
+     1→# 术语表
+     2→
+eslint.config.js
+     8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
+     9→const tsconfigJsFiles = ['*.{js,mjs}', 'lib/**/*.{js,mjs}']; // match "include" in tsconfig.js.json
+jest.config.js
+     1→const config = {
+     2→  testEnvironment: 'node',
+     3→  collectCoverage: true,
+     4→  transform: {
+     5→    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.ts.json' }],
+     6→  },
+     7→  testPathIgnorePatterns: ['/node_modules/'],
+lib/argument.js
+     3→class Argument {
+     4→  /**
+   135→/**
+   143→function humanReadableArgName(arg) {
+lib/command.js
+    13→class Command extends EventEmitter {
+    14→  /**
+  1127→  _prepareForParse() {
+  2697→/**
+  2705→function incrementNodeInspectorPort(args) {
+  2748→/**
+  2752→function useColor() {
+lib/error.js
+     4→class CommanderError extends Error {
+     5→  /**
+     6→   * Constructs the CommanderError class
+    25→class InvalidArgumentError extends CommanderError {
+    26→  /**
+    27→   * Constructs the InvalidArgumentError class
+lib/help.js
+    12→class Help {
+    13→  constructor() {
+   549→  styleUsage(str) {
+   563→  styleCommandDescription(str) {
+   566→  styleOptionDescription(str) {
+   569→  styleSubcommandDescription(str) {
+   572→  styleArgumentDescription(str) {
+   575→  styleDescriptionText(str) {
+   578→  styleOptionTerm(str) {
+   581→  styleSubcommandTerm(str) {
+   594→  styleArgumentTerm(str) {
+   597→  styleOptionText(str) {
+   600→  styleArgumentText(str) {
+   603→  styleSubcommandText(str) {
+   606→  styleCommandText(str) {
+   732→/**
+   740→function stripColor(str) {
+lib/option.js
+     3→class Option {
+     4→  /**
+   268→class DualOptions {
+   269→  /**
+   270→   * @param {Option[]} options
+   308→/**
+   316→function camelcase(str) {
+   322→/**
+   328→function splitOptionFlags(flags) {
+lib/suggestSimilar.js
+     1→const maxDistance = 3;
+     3→function editDistance(a, b) {
+     4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
+    48→/**
+    56→function suggestSimilar(word, candidates) {
+typings/index.d.ts
+    16→export class CommanderError extends Error {
+    17→  code: string;
+    31→export class InvalidArgumentError extends CommanderError {
+    32→  /**
+    40→export interface ErrorOptions {
+    41→  // optional parameter for error()
+    48→export class Argument {
+    49→  description: string;
+    95→export class Option {
+    96→  flags: string;
+   115→  constructor(flags: string, description?: string);
+   210→export class Help {
+   211→  /** output helpWidth, long lines are wrapped to fit */
+   218→  constructor();
+   226→  prepareContext(contextOptions: {
+   227→    error?: boolean;
+   228→    helpWidth?: number;
+   229→    outputHasColors?: boolean;
+   230→  }): void;
+   279→  styleCommandDescription(str: string): string;
+   280→  styleOptionDescription(str: string): string;
+   281→  styleSubcommandDescription(str: string): string;
+   282→  styleArgumentDescription(str: string): string;
+   286→  styleOptionTerm(str: string): string;
+   287→  styleSubcommandTerm(str: string): string;
+   288→  styleArgumentTerm(str: string): string;
+   340→export type HelpConfiguration = Partial<Help>;
+   342→export interface ParseOptions {
+   343→  from: 'node' | 'electron' | 'user';
+   345→export interface HelpContext {
+   346→  // optional parameter for .help() and .outputHelp()
+   349→export interface AddHelpTextContext {
+   350→  // passed to text function used with .addHelpText()
+   354→export interface OutputConfiguration {
+   355→  writeOut?(str: string): void;
+   356→  writeErr?(str: string): void;
+   357→  outputError?(str: string, write: (str: string) => void): void;
+   359→  getOutHelpWidth?(): number;
+   360→  getErrHelpWidth?(): number;
+   362→  getOutHasColors?(): boolean;
+   363→  getErrHasColors?(): boolean;
+   364→  stripColor?(str: string): string;
+   367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
+   368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
+   370→export type OptionValueSource =
+   371→  | LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string>
+   372→  | undefined;
+   374→export type OptionValues = Record<string, any>;
+   376→export class Command {
+   377→  args: string[];
+   384→  constructor(name?: string);
+   493→  argument(name: string, description?: string, defaultValue?: unknown): this;
+   528→  helpCommand(enable: boolean): this;
+   718→  storeOptionsAsProperties(storeAsProperties?: boolean): this;
+  1083→  addHelpText(
+  1084→    position: AddHelpTextPosition,
+  1085→    text: (context: AddHelpTextContext) => string,
+  1086→  ): this;
+  1094→export interface CommandOptions {
+  1095→  hidden?: boolean;
+  1100→export interface ExecutableCommandOptions extends CommandOptions {
+  1101→  executableFile?: string;
+  1104→export interface ParseOptionsResult {
+  1105→  operands: string[];
+  1113→export const program: Command;
+typings/index.test-d.ts
+   168→function myParseInt
+   172→function increaseVerbosity
+   176→function collect
+   180→function commaSeparatedList
+   384→interface MyCheeseOption {
+   385→  cheese: string;
+   386→}
+   509→class MyCommand extends commander.Command {
+   510→  createCommand(name?: string): MyCommand {
+   511→    return new MyCommand(name);
+   512→  }
+   513→
+   514→  myFunction(): void {
+   515→    // do nothing.
+   516→  }
+   517→}
+   625→  const groupsItemsOptionHeading
+   635→  const groupsItemsCommandHeading

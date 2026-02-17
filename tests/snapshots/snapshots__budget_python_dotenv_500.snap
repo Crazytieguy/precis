@@ -1,0 +1,158 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (492 words)
+
+CHANGELOG.md
+    21→### Fixed
+    22→
+    23→* CLI: Ensure `find_dotenv` work reliably on python 3.13 by [@theskumar] in [#563](https://github.com/theskumar/python-dotenv/pull/563)
+    24→* CLI: revert the use of execvpe on Windows by [@wrongontheinternet] in [#566](https://github.com/theskumar/python-dotenv/pull/566)
+    25→
+    26→
+README.md
+    80→### Load configuration without altering the environment
+    81→
+    82→The function `dotenv_values` works more or less the same way as `load_dotenv`,
+    83→except it doesn't touch the environment, it just returns a `dict` with the
+    84→values parsed from the `.env` file.
+    85→
+    86→```python
+    87→from dotenv import dotenv_values
+    88→
+    89→config = dotenv_values(".env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
+    90→```
+    91→
+    92→This notably enables advanced configuration management:
+    93→
+    94→```python
+    95→import os
+    96→from dotenv import dotenv_values
+    97→
+    98→config = {
+    99→    **dotenv_values(".env.shared"),  # load shared development variables
+   100→    **dotenv_values(".env.secret"),  # load sensitive variables
+   101→    **os.environ,  # override loaded values with environment variables
+   102→}
+   103→```
+   104→
+docs/reference.md
+     1→# ::: dotenv
+     2→
+src/dotenv/__init__.py
+    42→__all__ = [
+    43→    "get_cli_string",
+    44→    "load_dotenv",
+    45→    "dotenv_values",
+    46→    "get_key",
+    47→    "set_key",
+    48→    "unset_key",
+    49→    "find_dotenv",
+    50→    "load_ipython_extension",
+    51→]
+src/dotenv/cli.py
+    60→@click.version_option(version=__version__)
+    61→@click.pass_context
+    62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
+    63→    """This script is used to set, get or unset values from a .env file."""
+    67→@contextmanager
+    68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
+    69→    """
+    70→    Open a file and yield the corresponding (decoded) stream.
+   112→@cli.command(name="set")
+   113→@click.pass_context
+   114→@click.argument("key", required=True)
+   116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
+   128→@cli.command()
+   129→@click.pass_context
+   130→@click.argument("key", required=True)
+   131→def get(ctx: click.Context, key: Any) -> None:
+   145→@cli.command()
+   146→@click.pass_context
+   147→@click.argument("key", required=True)
+   148→def unset(ctx: click.Context, key: Any) -> None:
+   172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
+   173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
+   174→    """Run command with environment variables present."""
+src/dotenv/ipython.py
+    11→@magics_class
+    12→class IPythonDotEnv(Magics):
+    13→    @magic_arguments()
+    14→    @argument(
+    15→        "-o",
+    16→        "--override",
+    17→        action="store_true",
+    18→        help="Indicate to override existing variables",
+    19→    )
+    20→    @argument(
+    21→        "-v",
+    22→        "--verbose",
+    23→        action="store_true",
+    24→        help="Indicate function calls to be verbose",
+    25→    )
+    26→    @argument(
+    27→        "dotenv_path",
+    28→        nargs="?",
+    29→        type=str,
+    30→        default=".env",
+    31→        help="Search in increasingly higher folders for the `dotenv_path`",
+    32→    )
+    33→    @line_magic
+    34→    def dotenv(self, line):
+    35→        args = parse_argstring(self.dotenv, line)
+    36→        # Locate the .env file
+    37→        dotenv_path = args.dotenv_path
+    38→        try:
+    39→            dotenv_path = find_dotenv(dotenv_path, True, True)
+    40→        except IOError:
+    41→            print("cannot find .env file")
+    42→            return
+    43→
+    44→        # Load the .env file
+    45→        load_dotenv(dotenv_path, verbose=args.verbose, override=args.override)
+src/dotenv/main.py
+    25→def _load_dotenv_disabled() -> bool:
+    26→    """
+    45→class DotEnv:
+    63→    @contextmanager
+    64→    def _get_stream(self) -> Iterator[IO[str]]:
+    65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
+    66→            with open(self.dotenv_path, encoding=self.encoding) as stream:
+    67→                yield stream
+   141→@contextmanager
+   142→def rewrite(
+   143→    path: StrPath,
+   144→    encoding: Optional[str],
+   145→) -> Iterator[Tuple[IO[str], IO[str]]]:
+   269→def _walk_to_root(path: str) -> Iterator[str]:
+   270→    """
+   423→def _is_file_or_fifo(path: StrPath) -> bool:
+   424→    """
+src/dotenv/parser.py
+    35→class Original(NamedTuple):
+    40→class Binding(NamedTuple):
+    47→class Position:
+    52→    @classmethod
+    53→    def start(cls) -> "Position":
+    65→class Error(Exception):
+    69→class Reader:
+src/dotenv/variables.py
+     5→_posix_variable: Pattern[str] = re.compile(
+     6→    r"""
+     7→    \$\{
+     8→        (?P<name>[^\}:]*)
+     9→        (?::-
+    10→            (?P<default>[^\}]*)
+    11→        )?
+    12→    \}
+    13→    """,
+    14→    re.VERBOSE,
+    15→)
+    18→class Atom(metaclass=ABCMeta):
+    25→    @abstractmethod
+    26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
+    29→class Literal(Atom):
+    48→class Variable(Atom):
+src/dotenv/version.py
+     1→__version__ = "1.2.1"

@@ -1,0 +1,135 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 (505 words)
+
+constants.js
+     5→const SEMVER_SPEC_VERSION = '2.0.0'
+     7→const MAX_LENGTH = 256
+     8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
+     9→/* istanbul ignore next */ 9007199254740991
+    12→const MAX_SAFE_COMPONENT_LENGTH = 16
+    16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
+    18→const RELEASE_TYPES = [
+    19→  'major',
+    20→  'premajor',
+    21→  'minor',
+    22→  'preminor',
+    23→  'patch',
+    24→  'prepatch',
+    25→  'prerelease',
+    26→]
+debug.js
+     3→const debug = (
+     4→  typeof process === 'object' &&
+     5→  process.env &&
+     6→  process.env.NODE_DEBUG &&
+     7→  /\bsemver\b/i.test(process.env.NODE_DEBUG)
+     8→) ? (...args) => console.error('SEMVER', ...args)
+     9→  : () => {}
+identifiers.js
+     3→const numeric = /^[0-9]+$/
+     4→const compareIdentifiers = (a, b) => {
+     5→  if (typeof a === 'number' && typeof b === 'number') {
+     6→    return a === b ? 0 : a < b ? -1 : 1
+     7→  }
+     8→
+     9→  const anum = numeric.test(a)
+    10→  const bnum = numeric.test(b)
+    11→
+    12→  if (anum && bnum) {
+    13→    a = +a
+    14→    b = +b
+    15→  }
+    16→
+    17→  return a === b ? 0
+    18→    : (anum && !bnum) ? -1
+    19→    : (bnum && !anum) ? 1
+    20→    : a < b ? -1
+    21→    : 1
+    22→}
+    24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
+lrucache.js
+     3→class LRUCache {
+     4→  constructor () {
+     5→    this.max = 1000
+     6→    this.map = new Map()
+     7→  }
+     8→
+     9→  get (key) {
+    10→    const value = this.map.get(key)
+    11→    if (value === undefined) {
+    12→      return undefined
+    13→    } else {
+    14→      // Remove the key from the map and add it to the end
+    15→      this.map.delete(key)
+    16→      this.map.set(key, value)
+    17→      return value
+    18→    }
+    19→  }
+    20→
+    21→  delete (key) {
+    22→    return this.map.delete(key)
+    23→  }
+    24→
+    25→  set (key, value) {
+    26→    const deleted = this.delete(key)
+    27→
+    28→    if (!deleted && value !== undefined) {
+    29→      // If cache is full, delete the least recently used item
+    30→      if (this.map.size >= this.max) {
+    31→        const firstKey = this.map.keys().next().value
+    32→        this.delete(firstKey)
+    33→      }
+    34→
+    35→      this.map.set(key, value)
+    36→    }
+    37→
+    38→    return this
+    39→  }
+    40→}
+parse-options.js
+     4→const looseOption = Object.freeze({ loose: true })
+     5→const emptyOpts = Object.freeze({ })
+     6→const parseOptions = options => {
+     7→  if (!options) {
+     8→    return emptyOpts
+     9→  }
+    10→
+    11→  if (typeof options !== 'object') {
+    12→    return looseOption
+    13→  }
+    14→
+    15→  return options
+    16→}
+re.js
+    12→const re = exports.re = []
+    13→const safeRe = exports.safeRe = []
+    14→const src = exports.src = []
+    15→const safeSrc = exports.safeSrc = []
+    16→const t = exports.t = {}
+    19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
+    27→const safeRegexReplacements = [
+    28→  ['\\s', 1],
+    29→  ['\\d', MAX_LENGTH],
+    30→  [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH],
+    31→]
+    33→const makeSafeRegex = (value) => {
+    34→  for (const [token, max] of safeRegexReplacements) {
+    35→    value = value
+    36→      .split(`${token}*`).join(`${token}{0,${max}}`)
+    37→      .split(`${token}+`).join(`${token}{1,${max}}`)
+    38→  }
+    39→  return value
+    40→}
+    42→const createToken = (name, value, isGlobal) => {
+    43→  const safe = makeSafeRegex(value)
+    44→  const index = R++
+    45→  debug(name, index, value)
+    46→  t[name] = index
+    47→  src[index] = value
+    48→  safeSrc[index] = safe
+    49→  re[index] = new RegExp(value, isGlobal ? 'g' : undefined)
+    50→  safeRe[index] = new RegExp(safe, isGlobal ? 'g' : undefined)
+    51→}

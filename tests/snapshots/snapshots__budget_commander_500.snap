@@ -1,0 +1,161 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (497 words)
+
+CHANGELOG.md
+    13→### Added
+    25→### Changed
+    32→### Fixed
+    47→### Added
+    65→### Added
+    71→### Added
+   162→### Added
+   179→### Added
+   236→### Fixed
+   260→### Fixed
+   272→### Added
+   286→### Added
+   296→### Added
+   303→### Fixed
+   315→### Added
+   329→### Added
+   345→### Added
+   360→### Added
+   367→### Added
+   407→### Added
+   418→### Added
+   433→### Added
+   441→### Added
+   524→### Added
+   537→### Added
+   557→### Added
+   683→### Fixed
+   689→### Added
+   707→### Added
+   724→### Added
+   741→### Added
+   762→### Added
+   853→### Fixed
+   859→### Added
+   880→### Fixed
+   886→### Added
+   911→#### Testing for no arguments
+   947→### Added
+  1014→### Fixed
+CONTRIBUTING.md
+     3→## Issues
+Readme.md
+   968→### .parse() and .parseAsync()
+Readme_zh-CN.md
+   907→### .parse() 和 .parseAsync()
+docs/deprecated.md
+   229→### Short option flag longer than a single character
+   230→
+   231→Short option flags like `-ws` were never supported, but the old README did not make this clear. The README now states that short options are a single character.
+   232→
+   233→- README updated in Commander v3.
+   234→- Deprecated from Commander v9.
+   235→- Throws an exception in Commander v13. Deprecated and gone!
+   236→- Replacement added in Commander v13.1 with support for dual long options, like `--ws, --workspace`.
+   237→
+eslint.config.js
+     8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
+     9→const tsconfigJsFiles = ['*.{js,mjs}', 'lib/**/*.{js,mjs}']; // match "include" in tsconfig.js.json
+jest.config.js
+     1→const config = {
+     2→  testEnvironment: 'node',
+lib/argument.js
+     3→class Argument {
+     4→  /**
+   135→/**
+   143→function humanReadableArgName(arg) {
+lib/command.js
+    13→class Command extends EventEmitter {
+    14→  /**
+  1127→  _prepareForParse() {
+  2697→/**
+  2705→function incrementNodeInspectorPort(args) {
+  2748→/**
+  2752→function useColor() {
+lib/error.js
+     4→class CommanderError extends Error {
+     5→  /**
+    25→class InvalidArgumentError extends CommanderError {
+    26→  /**
+lib/help.js
+    12→class Help {
+    13→  constructor() {
+   549→  styleUsage(str) {
+   563→  styleCommandDescription(str) {
+   566→  styleOptionDescription(str) {
+   569→  styleSubcommandDescription(str) {
+   572→  styleArgumentDescription(str) {
+   575→  styleDescriptionText(str) {
+   578→  styleOptionTerm(str) {
+   581→  styleSubcommandTerm(str) {
+   594→  styleArgumentTerm(str) {
+   597→  styleOptionText(str) {
+   600→  styleArgumentText(str) {
+   603→  styleSubcommandText(str) {
+   606→  styleCommandText(str) {
+   732→/**
+   740→function stripColor(str) {
+lib/option.js
+     3→class Option {
+     4→  /**
+   268→class DualOptions {
+   269→  /**
+   308→/**
+   316→function camelcase(str) {
+   322→/**
+   328→function splitOptionFlags(flags) {
+lib/suggestSimilar.js
+     1→const maxDistance = 3;
+     3→function editDistance(a, b) {
+     4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
+    48→/**
+    56→function suggestSimilar(word, candidates) {
+typings/index.d.ts
+    16→export class CommanderError extends Error {
+    31→export class InvalidArgumentError extends CommanderError {
+    40→export interface ErrorOptions {
+    48→export class Argument {
+    95→export class Option {
+   210→export class Help {
+   340→export type HelpConfiguration = Partial<Help>;
+   342→export interface ParseOptions {
+   345→export interface HelpContext {
+   349→export interface AddHelpTextContext {
+   354→export interface OutputConfiguration {
+   367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
+   368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
+   370→export type OptionValueSource =
+   371→  | LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string>
+   372→  | undefined;
+   374→export type OptionValues = Record<string, any>;
+   376→export class Command {
+  1094→export interface CommandOptions {
+  1100→export interface ExecutableCommandOptions extends CommandOptions {
+  1104→export interface ParseOptionsResult {
+  1113→export const program: Command;
+typings/index.test-d.ts
+   168→function myParseInt
+   172→function increaseVerbosity
+   176→function collect
+   180→function commaSeparatedList
+   384→interface MyCheeseOption {
+   385→  cheese: string;
+   386→}
+   509→class MyCommand extends commander.Command {
+   510→  createCommand(name?: string): MyCommand {
+   511→    return new MyCommand(name);
+   512→  }
+   513→
+   514→  myFunction(): void {
+   515→    // do nothing.
+   516→  }
+   517→}
+   625→  const groupsItemsOptionHeading
+   635→  const groupsItemsCommandHeading

@@ -1,0 +1,562 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 2000 (1962 words)
+
+ARCHITECTURE.md
+     1→# Architecture
+     2→
+    46→## Approach
+    47→
+    50→### Discarded approach
+    51→
+    60→## Example
+    61→
+    92→## Performance
+    93→
+    96→## Groups
+    97→
+README.md
+     5→# ⌘K [![cmdk minzip package size](https://img.shields.io/bundlephobia/minzip/cmdk)](https://www.npmjs.com/package/cmdk?activeTab=code) [![cmdk package version](https://img.shields.io/npm/v/cmdk.svg?colorB=green)](https://www.npmjs.com/package/cmdk)
+     6→
+     9→## Install
+    10→
+    15→## Use
+    16→
+    82→## Parts and styling
+    83→
+    86→### Command `[cmdk-root]`
+    87→
+   153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
+   154→
+   180→### Input `[cmdk-input]`
+   181→
+   190→### List `[cmdk-list]`
+   191→
+   212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
+   213→
+   242→### Group `[cmdk-group]` `[hidden?]`
+   243→
+   256→### Separator `[cmdk-separator]`
+   257→
+   260→### Empty `[cmdk-empty]`
+   261→
+   264→### Loading `[cmdk-loading]`
+   265→
+   274→### `useCommandState(state => state.selectedField)`
+   275→
+   285→## Examples
+   286→
+   289→### Nested items
+   290→
+   338→### Show sub-items when searching
+   339→
+   361→### Asynchronous results
+   362→
+   397→### Use inside Popover
+   398→
+   426→### Drop in stylesheets
+   427→
+   430→## FAQ
+   431→
+   456→## History
+   457→
+   462→## Testing
+   463→
+cmdk/src/command-score.ts
+    54→function commandScoreInner(
+    55→  string,
+    56→  abbreviation,
+    57→  lowerString,
+    58→  lowerAbbreviation,
+    59→  stringIndex,
+    60→  abbreviationIndex,
+    61→  memoizedResults,
+    62→) {
+    63→  if (abbreviationIndex === abbreviation.length) {
+    64→    if (stringIndex === string.length) {
+    65→      return SCORE_CONTINUE_MATCH
+    66→    }
+    67→    return PENALTY_NOT_COMPLETE
+    68→  }
+    69→
+    70→  var memoizeKey = `${stringIndex},${abbreviationIndex}`
+    71→  if (memoizedResults[memoizeKey] !== undefined) {
+    72→    return memoizedResults[memoizeKey]
+    73→  }
+    74→
+   150→function formatInput(string) {
+   151→  // convert all valid space characters to space so they match each other
+   152→  return string.toLowerCase().replace(COUNT_SPACE_REGEXP, ' ')
+   153→}
+   155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
+   156→  /* NOTE:
+   157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
+   158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
+   159→   */
+   160→  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
+   161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
+   162→}
+cmdk/src/index.tsx
+    10→type Children
+    11→type DivProps
+    13→type LoadingProps
+    23→type EmptyProps
+    24→type SeparatorProps
+    28→type DialogProps
+    37→type ListProps
+    44→type ItemProps
+    60→type GroupProps
+    69→type InputProps
+    79→type CommandFilter
+    80→type CommandProps
+   123→type Context
+   137→type State
+   143→type Store
+   149→type Group
+   154→const GROUP_SELECTOR
+   155→const GROUP_ITEMS_SELECTOR
+   156→const GROUP_HEADING_SELECTOR
+   157→const ITEM_SELECTOR
+   158→const VALID_ITEM_SELECTOR
+   159→const SELECT_EVENT
+   160→const VALUE_ATTR
+   161→const defaultFilter: CommandFilter = (value, search, keywords) => commandScore(value, search, keywords)
+   163→const CommandContext
+   164→const useCommand = () => React.useContext(CommandContext)
+   165→const StoreContext
+   166→const useStore = () => React.useContext(StoreContext)
+   167→const GroupContext
+   169→const Command
+   659→/**
+   664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
+   725→/**
+   729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
+   770→/**
+   774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
+   783→/**
+   787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
+   829→/**
+   833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
+   879→/**
+   882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
+   896→/**
+   899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
+   906→/**
+   909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
+   930→const pkg
+   955→/**
+   956→ *
+   957→ *
+   958→ * Helpers
+   959→ *
+   960→ *
+   961→ */
+   962→
+   963→function findNextSibling(el: Element, selector: string) {
+   964→  let sibling = el.nextElementSibling
+   965→
+   966→  while (sibling) {
+   967→    if (sibling.matches(selector)) return sibling
+   968→    sibling = sibling.nextElementSibling
+   969→  }
+   970→}
+   972→function findPreviousSibling(el: Element, selector: string) {
+   973→  let sibling = el.previousElementSibling
+   981→function useAsRef<T>(data: T) {
+   982→  const ref = React.useRef<T>(data)
+   991→const useLayoutEffect
+   993→function useLazyRef<T>(fn: () => T) {
+   994→  const ref = React.useRef<T>()
+  1003→/** Run a selector against the store state. */
+  1004→function useCmdk<T = any>(selector: (state: State) => T): T {
+  1005→  const store = useStore()
+  1006→  const cb = () => selector(store.snapshot())
+  1007→  return React.useSyncExternalStore(store.subscribe, cb, cb)
+  1008→}
+  1010→function useValue(
+  1011→  id: string,
+  1012→  ref: React.RefObject<HTMLElement>,
+  1013→  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
+  1014→  aliases: string[] = [],
+  1015→) {
+  1016→  const valueRef = React.useRef<string>()
+  1045→/** Imperatively run a function on the next layout effect cycle. */
+  1046→const useScheduleLayoutEffect = () => {
+  1047→  const [s, ss] = React.useState<object>()
+  1048→  const fns = useLazyRef(() => new Map<string | number, () => void>())
+  1049→
+  1050→  useLayoutEffect(() => {
+  1051→    fns.current.forEach((f) => f())
+  1052→    fns.current = new Map()
+  1053→  }, [s])
+  1054→
+  1055→  return (id: string | number, cb: () => void) => {
+  1056→    fns.current.set(id, cb)
+  1057→    ss({})
+  1058→  }
+  1059→}
+  1061→function renderChildren(children: React.ReactElement) {
+  1062→  const childrenType = children.type as any
+  1071→function SlottableWithNestedChildren(
+  1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
+  1073→  render: (child: React.ReactNode) => JSX.Element,
+  1074→) {
+  1075→  if (asChild && React.isValidElement(children)) {
+  1081→const srOnlyStyles
+playwright.config.ts
+     3→const config: PlaywrightTestConfig = {
+     4→  forbidOnly: !!process.env.CI,
+     5→  retries: process.env.CI ? 2 : 0,
+     6→  reporter: process.env.CI ? [['github'], ['json', { outputFile: 'playwright-report.json' }]] : 'list',
+     7→  testDir: './test',
+     8→  use: {
+     9→    trace: 'on-first-retry',
+    10→    baseURL: 'http://localhost:3000',
+    11→  },
+    12→  timeout: 5000,
+    13→  webServer: {
+    14→    command: 'npm run dev',
+    15→    url: 'http://localhost:3000',
+    16→    cwd: './test',
+    17→    reuseExistingServer: !process.env.CI,
+    18→  },
+    19→  projects: [
+    20→    {
+    21→      name: 'webkit',
+website/README.md
+     3→## Getting Started
+     4→
+     5→First, run the development server:
+     6→
+     7→```bash
+     8→pnpm run dev
+     9→```
+    10→
+    11→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    12→
+    13→You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+    14→
+    15→[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+    16→
+    17→The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+    18→
+    19→## Learn More
+    20→
+    21→To learn more about Next.js, take a look at the following resources:
+    22→
+    23→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+    24→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    25→
+    26→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    27→
+    28→## Deploy on Vercel
+    29→
+    30→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    31→
+    32→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+website/components/cmdk/framer.tsx
+     4→export function FramerCMDK() {
+     5→  const [value, setValue] = React.useState('Button')
+     6→  return (
+     7→    <div className="framer">
+     8→      <Command value={value} onValueChange={(v) => setValue(v)}>
+     9→        <div cmdk-framer-header="">
+    10→          <SearchIcon />
+    11→          <Command.Input autoFocus placeholder="Find components, packages, and interactions..." />
+    57→function Button() {
+    61→function Input() {
+    65→function Badge() {
+    69→function Radio() {
+    78→function Slider() {
+    86→function Avatar() {
+    90→function Container() {
+    94→function Item({ children, value, subtitle }: { children: React.ReactNode; value: string; subtitle: string }) {
+   106→function ButtonIcon() {
+   119→function InputIcon() {
+   132→function RadioIcon() {
+   145→function BadgeIcon() {
+   158→function ToggleIcon() {
+   171→function AvatarIcon() {
+   184→function ContainerIcon() {
+   197→function SearchIcon() {
+   212→function SliderIcon() {
+website/components/cmdk/linear.tsx
+     3→export function LinearCMDK() {
+     4→  return (
+     5→    <div className="linear">
+     6→      <Command>
+     7→        <div cmdk-linear-badge="">Issue - FUN-343</div>
+     8→        <Command.Input autoFocus placeholder="Type a command or search..." />
+     9→        <Command.List>
+    10→          <Command.Empty>No results found.</Command.Empty>
+    30→const items = [
+    31→  {
+    32→    icon: <AssignToIcon />,
+    33→    label: 'Assign to...',
+    34→    shortcut: ['A'],
+    35→  },
+    36→  {
+    37→    icon: <AssignToMeIcon />,
+    38→    label: 'Assign to me',
+    39→    shortcut: ['I'],
+    40→  },
+    41→  {
+    42→    icon: <ChangeStatusIcon />,
+    68→function AssignToIcon() {
+    76→function AssignToMeIcon() {
+    90→function ChangeStatusIcon() {
+   103→function ChangePriorityIcon() {
+   113→function ChangeLabelsIcon() {
+   125→function RemoveLabelIcon() {
+   137→function SetDueDateIcon() {
+website/components/cmdk/raycast.tsx
+     7→export function RaycastCMDK() {
+     8→  const { resolvedTheme: theme } = useTheme()
+     9→  const [value, setValue] = React.useState('linear')
+    10→  const inputRef = React.useRef<HTMLInputElement | null>(null)
+    11→  const listRef = React.useRef(null)
+    12→
+    13→  React.useEffect(() => {
+    14→    inputRef?.current?.focus()
+    97→function Item({
+   116→function SubCommand({
+   200→function SubItem({ children, shortcut }: { children: React.ReactNode; shortcut: string }) {
+   213→function TerminalIcon() {
+   231→function RaycastLightIcon() {
+   244→function RaycastDarkIcon() {
+   257→function WindowIcon() {
+   271→function FinderIcon() {
+   285→function StarIcon() {
+   299→function ClipboardIcon() {
+   315→function HammerIcon() {
+website/components/cmdk/vercel.tsx
+     4→export function VercelCMDK() {
+     5→  const ref = React.useRef<HTMLDivElement | null>(null)
+     6→  const [inputValue, setInputValue] = React.useState('')
+     7→
+     8→  const [pages, setPages] = React.useState<string[]>(['home'])
+     9→  const activePage = pages[pages.length - 1]
+    10→  const isHome = activePage === 'home'
+    11→
+    91→function Home({ searchProjects }: { searchProjects: Function }) {
+   137→function Projects() {
+   150→function Item({
+   173→function ProjectsIcon() {
+   194→function PlusIcon() {
+   213→function TeamsIcon() {
+   234→function CopyIcon() {
+   252→function DocsIcon() {
+   274→function FeedbackIcon() {
+   292→function ContactIcon() {
+website/components/code/index.tsx
+     7→const theme = {
+     8→  plain: {
+     9→    color: 'var(--gray12)',
+    10→    fontSize: 12,
+    11→    fontFamily: 'Menlo, monospace',
+    12→  },
+    13→  styles: [
+    14→    {
+    15→      types: ['comment'],
+    16→      style: {
+    17→        color: 'var(--gray9)',
+    18→      },
+    19→    },
+    20→    {
+    41→export function Code({ children }: { children: string }) {
+    42→  return (
+    43→    <Highlight {...defaultProps} theme={theme} code={children} language="jsx">
+    44→      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+    45→        <pre className={`${className} ${styles.root}`} style={style}>
+    46→          <button
+    47→            aria-label="Copy Code"
+    48→            onClick={() => {
+    49→              copy(children)
+    50→            }}
+    51→          >
+    52→            <CopyIcon />
+    53→          </button>
+    54→          <div className={styles.shine} />
+    55→          {tokens.map((line, i) => (
+    56→            <div key={i} {...getLineProps({ line, key: i })}>
+    57→              {line.map((token, key) => (
+    58→                <span key={i} {...getTokenProps({ token, key })} />
+    59→              ))}
+    60→            </div>
+    61→          ))}
+    62→        </pre>
+    63→      )}
+    64→    </Highlight>
+    65→  )
+    66→}
+website/components/icons/index.tsx
+     3→export function FigmaIcon() {
+     4→  return (
+    15→export function RaycastIcon() {
+    16→  return (
+    28→export function YouTubeIcon() {
+    29→  return (
+    40→export function SlackIcon() {
+    41→  return (
+    79→export function VercelIcon() {
+    80→  return (
+    87→export function LinearIcon({ style }: { style?: Object }) {
+    88→  return (
+   110→export function Logo({ children, size = '20px' }: { children: React.ReactNode; size?: string }) {
+   111→  return (
+   127→export function CopyIcon() {
+   128→  return (
+   146→export function CopiedIcon() {
+   147→  return (
+   154→export function GitHubIcon() {
+   155→  return (
+   165→export function FramerIcon() {
+   166→  return (
+website/next.config.js
+     1→/** @type {import('next').NextConfig} */
+     2→const nextConfig = {
+     3→  reactStrictMode: true,
+     4→  swcMinify: true,
+     5→}
+website/pages/_app.tsx
+    13→const title = '⌘K'
+    14→const description = 'Fast, composable, unstyled command menu for React'
+    15→const siteUrl = 'https://cmdk.paco.me'
+    17→export default function App({ Component, pageProps }: AppProps) {
+    18→  return (
+    19→    <>
+    20→      <Head>
+    21→        <link rel="shortcut icon" href="/favicon.svg" />
+    22→        <meta name="twitter:card" content="summary_large_image" />
+    23→      </Head>
+    24→      <NextSeo
+    25→        title={`${description} — ${title}`}
+    26→        description={description}
+    27→        openGraph={{
+    28→          type: 'website',
+    29→          url: siteUrl,
+    30→          title,
+    31→          description: description + '.',
+    32→          images: [
+    33→            {
+    34→              url: `${siteUrl}/og.png`,
+    35→              alt: title,
+    36→            },
+website/pages/_document.tsx
+     5→export default class Document extends NextDocument {
+     6→  render() {
+     7→    return (
+     8→      <Html lang="en">
+     9→        <Head>
+    10→          <link rel="preload" href="/inter-var-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+    11→        </Head>
+    12→        <body>
+    13→          <Main />
+    14→          <NextScript />
+    15→        </body>
+    16→      </Html>
+    17→    )
+    18→  }
+    19→}
+website/pages/index.tsx
+    20→type TTheme = {
+    21→  theme: Themes
+    22→  setTheme: Function
+    23→}
+    25→type Themes = 'linear' | 'raycast' | 'vercel' | 'framer'
+    27→const ThemeContext = React.createContext<TTheme>({} as TTheme)
+    29→export default function Index() {
+    30→  const [theme, setTheme] = React.useState<Themes>('raycast')
+    31→
+    32→  return (
+    33→    <main className={styles.main}>
+    34→      <div className={styles.content}>
+    35→        <div className={styles.meta}>
+    36→          <div className={styles.info}>
+    37→            <VersionBadge />
+    38→            <h1>⌘K</h1>
+    39→            <p>Fast, composable, unstyled command menu for React.</p>
+    40→          </div>
+    41→
+    42→          <div className={styles.buttons}>
+    43→            <InstallButton />
+    44→            <GitHubButton />
+    45→          </div>
+    46→        </div>
+    47→
+    48→        <AnimatePresence exitBeforeEnter initial={false}>
+    84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
+    85→  return (
+    99→//////////////////////////////////////////////////////////////////
+   100→
+   101→function InstallButton() {
+   102→  const [copied, setCopied] = React.useState(false)
+   103→
+   104→  return (
+   105→    <button
+   106→      className={styles.installButton}
+   107→      onClick={async () => {
+   108→        try {
+   109→          await navigator.clipboard.writeText(`npm install cmdk`)
+   110→          setCopied(true)
+   111→          setTimeout(() => {
+   112→            setCopied(false)
+   113→          }, 2000)
+   114→        } catch (e) {}
+   115→      }}
+   116→    >
+   123→function GitHubButton() {
+   124→  return (
+   137→//////////////////////////////////////////////////////////////////
+   138→
+   139→const themes = [
+   140→  {
+   141→    icon: <RaycastIcon />,
+   142→    key: 'raycast',
+   143→  },
+   144→  {
+   145→    icon: <LinearIcon />,
+   146→    key: 'linear',
+   147→  },
+   148→  {
+   149→    icon: <VercelIcon />,
+   150→    key: 'vercel',
+   151→  },
+   152→  {
+   153→    icon: <FramerIcon />,
+   154→    key: 'framer',
+   155→  },
+   156→]
+   158→function ThemeSwitcher() {
+   159→  const { theme, setTheme } = React.useContext(ThemeContext)
+   260→//////////////////////////////////////////////////////////////////
+   261→
+   262→function Codeblock() {
+   263→  const code = `import { Command } from 'cmdk';
+   264→
+   265→<Command.Dialog open={open} onOpenChange={setOpen}>
+   266→  <Command.Input />
+   267→
+   268→  <Command.List>
+   269→    {loading && <Command.Loading>Hang on…</Command.Loading>}
+   270→
+   271→    <Command.Empty>No results found.</Command.Empty>
+   272→
+   273→    <Command.Group heading="Fruits">
+   274→      <Command.Item>Apple</Command.Item>
+   275→      <Command.Item>Orange</Command.Item>
+   276→      <Command.Separator />
+   277→      <Command.Item>Pear</Command.Item>
+   294→//////////////////////////////////////////////////////////////////
+   295→
+   296→function VersionBadge() {
+   297→  return <span className={styles.versionBadge}>v{packageJSON.version}</span>
+   298→}
+   300→function Footer() {
+   301→  const ref = React.useRef<HTMLElement | null>(null)
+   326→function RaunoSignature() {
+   327→  return (
+   350→function PacoSignature() {
+   351→  return (

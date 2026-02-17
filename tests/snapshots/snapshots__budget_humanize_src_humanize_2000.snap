@@ -1,0 +1,432 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 2000 (1978 words)
+
+__init__.py
+    28→__all__ = [
+    29→    "__version__",
+    30→    "activate",
+    31→    "apnumber",
+    32→    "clamp",
+    33→    "deactivate",
+    34→    "decimal_separator",
+    35→    "fractional",
+    36→    "intcomma",
+    37→    "intword",
+    38→    "metric",
+    39→    "natural_list",
+    40→    "naturaldate",
+    41→    "naturalday",
+    42→    "naturaldelta",
+    43→    "naturalsize",
+    44→    "naturaltime",
+    45→    "ordinal",
+    46→    "precisedelta",
+    47→    "scientific",
+    48→    "thousands_separator",
+    49→]
+filesize.py
+    36→def naturalsize(
+    37→    value: float | str,
+    38→    binary: bool = False,
+    39→    gnu: bool = False,
+    40→    format: str = "%.1f",
+    41→) -> str:
+    42→    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
+    43→
+    44→    By default, decimal suffixes (kB, MB) are used.
+    45→
+    46→    Non-GNU modes are compatible with jinja2's `filesizeformat` filter.
+    47→
+    48→    Examples:
+    49→        ```pycon
+    50→        >>> naturalsize(3000000)
+    51→        '3.0 MB'
+    52→        >>> naturalsize(300, False, True)
+    53→        '300B'
+    54→        >>> naturalsize(3000, False, True)
+    55→        '2.9K'
+    56→        >>> naturalsize(3000, False, True, "%.3f")
+i18n.py
+     8→TYPE_CHECKING = False
+    13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
+    15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
+    16→    None: gettext_module.NullTranslations()
+    17→}
+    18→_CURRENT = local()
+    21→# Mapping of locale to thousands separator
+    22→_THOUSANDS_SEPARATOR = {
+    23→    "de_DE": ".",
+    24→    "fr_FR": " ",
+    25→    "it_IT": ".",
+    26→    "pt_BR": ".",
+    27→    "hu_HU": " ",
+    28→}
+    30→# Mapping of locale to decimal separator
+    31→_DECIMAL_SEPARATOR = {
+    32→    "de_DE": ",",
+    33→    "fr_FR": ".",
+    34→    "it_IT": ",",
+    35→    "pt_BR": ",",
+    36→    "hu_HU": ",",
+    37→}
+    40→def _get_default_locale_path() -> pathlib.Path | None:
+    51→def get_translation() -> gettext_module.NullTranslations:
+    58→def activate(
+    59→    locale: str | None, path: str | os.PathLike[str] | None = None
+    60→) -> gettext_module.NullTranslations:
+    61→    """Activate internationalisation.
+    62→
+    63→    Set `locale` as current locale. Search for locale in directory `path`.
+    64→
+    65→    Args:
+    66→        locale (str | None): Language name, e.g. `en_GB`. If `None`, defaults to no
+    67→            transaltion. Similar to calling ``deactivate()``.
+    68→        path (str | pathlib.Path): Path to search for locales.
+    69→
+    70→    Returns:
+    71→        dict: Translations.
+    72→
+    73→    Raises:
+    74→        FileNotFoundError: If humanize cannot find the locale folder.
+    75→    """
+    96→def deactivate() -> None:
+    97→    """Deactivate internationalisation."""
+   101→def _gettext(message: str) -> str:
+   102→    """Get translation.
+   103→
+   104→    Args:
+   105→        message (str): Text to translate.
+   113→def _pgettext(msgctxt: str, message: str) -> str:
+   114→    """Fetches a particular translation.
+   115→
+   116→    It works with `msgctxt` .po modifiers and allows duplicate keys with different
+   117→    translations.
+   129→def _ngettext(message: str, plural: str, num: int) -> str:
+   130→    """Plural version of _gettext.
+   131→
+   132→    Args:
+   133→        message (str): Singular text to translate.
+   144→def _gettext_noop(message: str) -> str:
+   145→    """Mark a string as a translation string without translating it.
+   146→
+   147→    Example usage:
+   148→    ```python
+   163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
+   164→    """Mark two strings as pluralized translations without translating them.
+   165→
+   166→    Example usage:
+   167→    ```python
+   183→def thousands_separator() -> str:
+   184→    """Return the thousands separator for a locale, default to comma.
+   185→
+   186→    Returns:
+   187→         str: Thousands separator.
+   188→    """
+   196→def decimal_separator() -> str:
+   197→    """Return the decimal separator for a locale, default to dot.
+   198→
+   199→    Returns:
+   200→         str: Decimal separator.
+   201→    """
+lists.py
+     5→TYPE_CHECKING = False
+     9→__all__ = ["natural_list"]
+    12→def natural_list(items: list[Any]) -> str:
+    13→    """Natural list.
+    14→
+    15→    Convert a list of items into a human-readable string with commas and 'and'.
+    16→
+    17→    Examples:
+    18→        >>> natural_list(["one", "two", "three"])
+    19→        'one, two and three'
+    20→        >>> natural_list(["one", "two"])
+    21→        'one and two'
+    22→        >>> natural_list(["one"])
+    23→        'one'
+    24→
+    25→    Args:
+    26→        items (list): An iterable of items.
+    27→
+number.py
+    12→TYPE_CHECKING = False
+    21→def _format_not_finite(value: float) -> str:
+    22→    """Utility function to handle infinite and nan cases."""
+    34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
+    35→    """Converts an integer to its ordinal as a string.
+    36→
+    37→    For example, 1 is "1st", 2 is "2nd", 3 is "3rd", etc. Works for any integer or
+    38→    anything `int()` will turn into an integer. Anything else will return the output
+    39→    of str(value).
+    40→
+    41→    Examples:
+    42→        ```pycon
+    43→        >>> ordinal(1)
+    44→        '1st'
+    45→        >>> ordinal(1002)
+    46→        '1002nd'
+    47→        >>> ordinal(103)
+    48→        '103rd'
+    49→        >>> ordinal(4)
+   110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
+   111→    """Converts an integer to a string containing commas every three digits.
+   112→
+   113→    For example, 3000 becomes "3,000" and 45000 becomes "45,000". To maintain some
+   114→    compatibility with Django's `intcomma`, this function also accepts floats.
+   115→
+   116→    Examples:
+   117→        ```pycon
+   118→        >>> intcomma(100)
+   119→        '100'
+   120→        >>> intcomma("1000")
+   121→        '1,000'
+   122→        >>> intcomma(1_000_000)
+   123→        '1,000,000'
+   124→        >>> intcomma(1_234_567.25)
+   125→        '1,234,567.25'
+   195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
+   196→    """Converts a large integer to a friendly text representation.
+   197→
+   198→    Works best for numbers over 1 million. For example, 1_000_000 becomes "1.0 million",
+   199→    1_200_000 becomes "1.2 million" and "1_200_000_000" becomes "1.2 billion". Supports
+   200→    up to decillion (33 digits) and googol (100 digits).
+   201→
+   202→    Examples:
+   203→        ```pycon
+   204→        >>> intword("100")
+   205→        '100'
+   206→        >>> intword("12400")
+   207→        '12.4 thousand'
+   208→        >>> intword("1000000")
+   209→        '1.0 million'
+   210→        >>> intword(1_200_000_000)
+   269→def apnumber(value: NumberOrString) -> str:
+   270→    """Converts an integer to Associated Press style.
+   271→
+   272→    Examples:
+   273→      ```pycon
+   274→      >>> apnumber(0)
+   275→      'zero'
+   276→      >>> apnumber(5)
+   277→      'five'
+   278→      >>> apnumber(10)
+   279→      '10'
+   280→      >>> apnumber("7")
+   281→      'seven'
+   282→      >>> apnumber("foo")
+   283→      'foo'
+   284→      >>> apnumber(None)
+   321→def fractional(value: NumberOrString) -> str:
+   322→    """Convert to fractional number.
+   323→
+   324→    There will be some cases where one might not want to show ugly decimal places for
+   325→    floats and decimals.
+   326→
+   327→    This function returns a human-readable fractional number in form of fractions and
+   328→    mixed fractions.
+   329→
+   330→    Pass in a string, or a number or a float, and this function returns:
+   331→
+   332→    * a string representation of a fraction
+   333→    * or a whole number
+   334→    * or a mixed fraction
+   335→    * or the str output of the value, if it could not be converted
+   336→
+   385→def scientific(value: NumberOrString, precision: int = 2) -> str:
+   386→    """Return number in string scientific notation z.wq x 10ⁿ.
+   387→
+   388→    Examples:
+   389→        ```pycon
+   390→        >>> scientific(float(0.3))
+   391→        '3.00 x 10⁻¹'
+   392→        >>> scientific(int(500))
+   393→        '5.00 x 10²'
+   394→        >>> scientific(-1000)
+   395→        '-1.00 x 10³'
+   396→        >>> scientific(1000, 1)
+   397→        '1.0 x 10³'
+   398→        >>> scientific(1000, 3)
+   399→        '1.000 x 10³'
+   400→        >>> scientific("99")
+   454→def clamp(
+   455→    value: float,
+   456→    format: str = "{:}",
+   457→    floor: float | None = None,
+   458→    ceil: float | None = None,
+   459→    floor_token: str = "<",
+   460→    ceil_token: str = ">",
+   461→) -> str:
+   462→    """Returns number with the specified format, clamped between floor and ceil.
+   463→
+   464→    If the number is larger than ceil or smaller than floor, then the respective limit
+   465→    will be returned, formatted and prepended with a token specifying as such.
+   466→
+   467→    Examples:
+   468→        ```pycon
+   469→        >>> clamp(123.456)
+   470→        '123.456'
+   471→        >>> clamp(0.0001, floor=0.01)
+   472→        '<0.01'
+   473→        >>> clamp(0.99, format="{:.0%}", ceil=0.99)
+   474→        '99%'
+   475→        >>> clamp(0.999, format="{:.0%}", ceil=0.99)
+   476→        '>99%'
+   531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
+   532→    """Return a value with a metric SI unit-prefix appended.
+   533→
+   534→    Examples:
+   535→        ```pycon
+   536→        >>> metric(1500, "V")
+   537→        '1.50 kV'
+   538→        >>> metric(2e8, "W")
+   539→        '200 MW'
+   540→        >>> metric(220e-6, "F")
+   541→        '220 μF'
+   542→        >>> metric(1e-14, precision=4)
+   543→        '10.00 f'
+   544→
+   545→        ```
+   546→
+time.py
+    15→TYPE_CHECKING = False
+    21→__all__ = [
+    22→    "naturaldate",
+    23→    "naturalday",
+    24→    "naturaldelta",
+    25→    "naturaltime",
+    26→    "precisedelta",
+    27→]
+    30→@total_ordering
+    31→class Unit(Enum):
+    32→    MICROSECONDS = 0
+    33→    MILLISECONDS = 1
+    34→    SECONDS = 2
+    35→    MINUTES = 3
+    36→    HOURS = 4
+    37→    DAYS = 5
+    38→    MONTHS = 6
+    39→    YEARS = 7
+    40→
+    41→    def __lt__(self, other: Any) -> Any:
+    42→        if self.__class__ is other.__class__:
+    43→            return self.value < other.value
+    44→        return NotImplemented
+    47→def _now() -> dt.datetime:
+    53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
+    54→    """Return an "absolute" value for a timedelta, always representing a time distance.
+    55→
+    56→    Args:
+    57→        delta (datetime.timedelta): Input timedelta.
+    68→def _date_and_delta(
+    69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
+    70→) -> tuple[Any, Any]:
+    71→    """Turn a value into a date and a timedelta which represents how long ago it was.
+    72→
+    73→    If that's not possible, return `(None, value)`.
+    74→    """
+    95→def naturaldelta(
+    96→    value: dt.timedelta | float,
+    97→    months: bool = True,
+    98→    minimum_unit: str = "seconds",
+    99→) -> str:
+   100→    """Return a natural representation of a timedelta or number of seconds.
+   101→
+   102→    This is similar to `naturaltime`, but does not add tense to the result.
+   103→
+   104→    The timedelta will be rounded to the nearest unit that makes sense.
+   105→
+   106→    Args:
+   107→        value (datetime.timedelta, int or float): A timedelta or a number of seconds.
+   108→        months (bool): If `True`, then a number of months (based on 30.5 days) will be
+   109→            used for fuzziness between years.
+   110→        minimum_unit (str): The lowest unit that can be used.
+   111→
+   112→    Returns:
+   113→        str (str or `value`): A natural representation of the amount of time
+   114→            elapsed unless `value` is not datetime.timedelta or cannot be
+   249→def naturaltime(
+   250→    value: dt.datetime | dt.timedelta | float,
+   251→    future: bool = False,
+   252→    months: bool = True,
+   253→    minimum_unit: str = "seconds",
+   254→    when: dt.datetime | None = None,
+   255→) -> str:
+   256→    """Return a natural representation of a time in a resolution that makes sense.
+   257→
+   258→    This is more or less compatible with Django's `naturaltime` filter.
+   259→
+   260→    The time will be rounded to the nearest unit that makes sense.
+   261→
+   262→    Args:
+   263→        value (datetime.datetime, datetime.timedelta, int or float): A `datetime`, a
+   264→            `timedelta`, or a number of seconds.
+   265→        future (bool): Ignored for `datetime`s and `timedelta`s, where the tense is
+   266→            always figured out based on the current time. For integers and floats, the
+   267→            return value will be past tense by default, unless future is `True`.
+   268→        months (bool): If `True`, then a number of months (based on 30.5 days) will be
+   269→            used for fuzziness between years.
+   270→        minimum_unit (str): The lowest unit that can be used.
+   300→def _convert_aware_datetime(
+   301→    value: dt.datetime | dt.timedelta | float | None,
+   302→) -> Any:
+   303→    """Convert aware datetime to naive datetime and pass through any other type."""
+   311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
+   312→    """Return a natural day.
+   313→
+   314→    For date values that are tomorrow, today or yesterday compared to
+   315→    present day return representing string. Otherwise, return a string
+   316→    formatted according to `format`.
+   317→
+   318→    """
+   343→def naturaldate(value: dt.date | dt.datetime) -> str:
+   344→    """Like `naturalday`, but append a year for dates more than ~five months away."""
+   361→def _quotient_and_remainder(
+   362→    value: float,
+   363→    divisor: float,
+   364→    unit: Unit,
+   365→    minimum_unit: Unit,
+   366→    suppress: Iterable[Unit],
+   367→    format: str,
+   368→) -> tuple[float, float]:
+   369→    """Divide `value` by `divisor`, returning the quotient and remainder.
+   370→
+   371→    If `unit` is `minimum_unit`, the quotient will be the rounding of `value / divisor`
+   372→    according to the `format` string and the remainder will be zero. The rationale is
+   406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
+   407→    """Return a minimum unit suitable that is not suppressed.
+   408→
+   409→    If not suppressed, return the same unit:
+   410→
+   435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
+   436→    """Extend suppressed units (if any) with all units lower than the minimum unit.
+   437→
+   438→    >>> from humanize.time import _suppress_lower_units, Unit
+   439→    >>> [x.name for x in sorted(_suppress_lower_units(Unit.SECONDS, [Unit.DAYS]))]
+   451→def precisedelta(
+   452→    value: dt.timedelta | float | None,
+   453→    minimum_unit: str = "seconds",
+   454→    suppress: Iterable[str] = (),
+   455→    format: str = "%0.2f",
+   456→) -> str:
+   457→    """Return a precise representation of a timedelta or number of seconds.
+   458→
+   459→    ```pycon
+   460→    >>> import datetime as dt
+   461→    >>> from humanize.time import precisedelta
+   462→
+   463→    >>> delta = dt.timedelta(seconds=3633, days=2, microseconds=123000)
+   464→    >>> precisedelta(delta)
+   465→    '2 days, 1 hour and 33.12 seconds'
+   466→
+   467→    ```
+   468→
+   469→    A custom `format` can be specified to control how the fractional part
+   470→    is represented:
+   471→
+   654→def _rounding_by_fmt(format: str, value: float) -> float | int:
+   655→    """Round a number according to the string format provided.
+   656→
+   657→    The string format is the old printf-style string formatting.
+   658→

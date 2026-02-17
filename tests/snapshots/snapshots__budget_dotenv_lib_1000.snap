@@ -1,0 +1,220 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (992 words)
+
+cli-options.js
+     1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
+env-options.js
+     2→const options = {}
+main.d.ts
+     5→export interface DotenvParseOutput {
+     6→  [name: string]: string;
+     7→}
+     9→export interface DotenvPopulateOutput {
+    10→  [name: string]: string;
+    11→}
+    25→export interface DotenvConfigOptions {
+    26→  /**
+    27→   * Default: `path.resolve(process.cwd(), '.env')`
+    28→   *
+    29→   * Specify a custom path if your file containing environment variables is located elsewhere.
+    30→   * Can also be an array of strings, specifying multiple paths.
+    31→   *
+    32→   * example: `require('dotenv').config({ path: '/custom/path/to/.env' })`
+    33→   * example: `require('dotenv').config({ path: ['/path/to/first.env', '/path/to/second.env'] })`
+    34→   */
+    35→  path?: string | string[] | URL;
+    36→
+    37→  /**
+    38→   * Default: `utf8`
+    39→   *
+    40→   * Specify the encoding of your file containing environment variables.
+    41→   *
+    42→   * example: `require('dotenv').config({ encoding: 'latin1' })`
+    43→   */
+    44→  encoding?: string;
+    45→
+    46→  /**
+    47→   * Default: `false`
+    48→   *
+    49→   * Suppress all output (except errors).
+    50→   *
+    51→   * example: `require('dotenv').config({ quiet: true })`
+    52→   */
+    53→  quiet?: boolean;
+    54→
+    55→  /**
+    56→   * Default: `false`
+    57→   *
+    58→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
+    59→   *
+    60→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
+    61→   */
+    62→  debug?: boolean;
+    63→
+    64→  /**
+    65→   * Default: `false`
+    66→   *
+    67→   * Override any environment variables that have already been set on your machine with values from your .env file.
+    68→   *
+    69→   * example: `require('dotenv').config({ override: true })`
+    70→   */
+    71→  override?: boolean;
+    72→
+    73→  /**
+    74→   * Default: `process.env`
+    75→   *
+    76→   * Specify an object to write your secrets to. Defaults to process.env environment variables.
+    77→   *
+    78→   * example: `const processEnv = {}; require('dotenv').config({ processEnv: processEnv })`
+    79→   */
+    80→  processEnv?: DotenvPopulateInput;
+    81→
+    82→  /**
+    83→   * Default: `undefined`
+    84→   *
+    85→   * Pass the DOTENV_KEY directly to config options. Defaults to looking for process.env.DOTENV_KEY environment variable. Note this only applies to decrypting .env.vault files. If passed as null or undefined, or not passed at all, dotenv falls back to its traditional job of parsing a .env file.
+    86→   *
+    87→   * example: `require('dotenv').config({ DOTENV_KEY: 'dotenv://:key_1234…@dotenvx.com/vault/.env.vault?environment=production' })`
+    88→   */
+    89→  DOTENV_KEY?: string;
+    90→}
+    92→export interface DotenvConfigOutput {
+    93→  error?: DotenvError;
+    94→  parsed?: DotenvParseOutput;
+    95→}
+    97→type DotenvError = Error & {
+    98→  code: 
+    99→    | 'MISSING_DATA'
+   100→    | 'INVALID_DOTENV_KEY'
+   101→    | 'NOT_FOUND_DOTENV_ENVIRONMENT'
+   102→    | 'DECRYPTION_FAILED'
+   103→    | 'OBJECT_REQUIRED';
+   104→}
+   106→export interface DotenvPopulateOptions {
+   107→  /**
+   108→   * Default: `false`
+   109→   *
+   110→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
+   111→   *
+   112→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
+   113→   */
+   114→  debug?: boolean;
+   115→
+   116→  /**
+   117→   * Default: `false`
+   118→   *
+   119→   * Override any environment variables that have already been set on your machine with values from your .env file.
+   120→   *
+   121→   * example: `require('dotenv').config({ override: true })`
+   122→   */
+   123→  override?: boolean;
+   124→}
+   126→export interface DotenvPopulateInput {
+   127→  [name: string]: string | undefined;
+   128→}
+main.js
+     7→const version = packageJson.version
+    10→const TIPS = [
+    11→  '🔐 encrypt with Dotenvx: https://dotenvx.com',
+    12→  '🔐 prevent committing .env to code: https://dotenvx.com/precommit',
+    13→  '🔐 prevent building .env in docker: https://dotenvx.com/prebuild',
+    14→  '🤖 agentic secret storage: https://dotenvx.com/as2',
+    15→  '⚡️ secrets for agents: https://dotenvx.com/as2',
+    16→  '🛡️ auth for agents: https://vestauth.com',
+    17→  '🛠️  run anywhere with `dotenvx run -- yourcommand`',
+    18→  '⚙️  specify custom .env file path with { path: \'/custom/path/.env\' }',
+    19→  '⚙️  enable debug logging with { debug: true }',
+    20→  '⚙️  override existing env vars with { override: true }',
+    21→  '⚙️  suppress all logs with { quiet: true }',
+    22→  '⚙️  write to custom object with { processEnv: myObject }',
+    23→  '⚙️  load multiple .env files with { path: [\'.env.local\', \'.env\'] }'
+    24→]
+    27→function _getRandomTip () {
+    28→  return TIPS[Math.floor(Math.random() * TIPS.length)]
+    29→}
+    31→function parseBoolean (value) {
+    32→  if (typeof value === 'string') {
+    33→    return !['false', '0', 'no', 'off', ''].includes(value.toLowerCase())
+    34→  }
+    35→  return Boolean(value)
+    38→function supportsAnsi () {
+    39→  return process.stdout.isTTY // && process.env.TERM !== 'dumb'
+    40→}
+    42→function dim (text) {
+    43→  return supportsAnsi() ? `\x1b[2m${text}\x1b[0m` : text
+    44→}
+    46→const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
+    49→function parse (src) {
+    50→  const obj = {}
+    51→
+    52→  // Convert buffer to string
+    53→  let lines = src.toString()
+    87→function _parseVault (options) {
+    88→  options = options || {}
+    89→
+    90→  const vaultPath = _vaultPath(options)
+    91→  options.path = vaultPath // parse .env.vault
+   130→function _warn (message) {
+   131→  console.error(`[dotenv@${version}][WARN] ${message}`)
+   132→}
+   134→function _debug (message) {
+   135→  console.log(`[dotenv@${version}][DEBUG] ${message}`)
+   136→}
+   138→function _log (message) {
+   139→  console.log(`[dotenv@${version}] ${message}`)
+   140→}
+   142→function _dotenvKey (options) {
+   143→  // prioritize developer directly setting options.DOTENV_KEY
+   144→  if (options && options.DOTENV_KEY && options.DOTENV_KEY.length > 0) {
+   145→    return options.DOTENV_KEY
+   146→  }
+   157→function _instructions (result, dotenvKey) {
+   158→  // Parse DOTENV_KEY. Format is a URI
+   159→  let uri
+   160→  try {
+   161→    uri = new URL(dotenvKey)
+   200→function _vaultPath (options) {
+   201→  let possibleVaultPath = null
+   202→
+   203→  if (options && options.path && options.path.length > 0) {
+   204→    if (Array.isArray(options.path)) {
+   224→function _resolveHome (envPath) {
+   225→  return envPath[0] === '~' ? path.join(os.homedir(), envPath.slice(1)) : envPath
+   226→}
+   228→function _configVault (options) {
+   229→  const debug = parseBoolean(process.env.DOTENV_CONFIG_DEBUG || (options && options.debug))
+   230→  const quiet = parseBoolean(process.env.DOTENV_CONFIG_QUIET || (options && options.quiet))
+   231→
+   232→  if (debug || !quiet) {
+   248→function configDotenv (options) {
+   249→  const dotenvPath = path.resolve(process.cwd(), '.env')
+   250→  let encoding = 'utf8'
+   251→  let processEnv = process.env
+   252→  if (options && options.processEnv != null) {
+   328→function config (options) {
+   329→  // fallback to original dotenv if DOTENV_KEY is not set
+   330→  if (_dotenvKey(options).length === 0) {
+   331→    return DotenvModule.configDotenv(options)
+   332→  }
+   346→function decrypt (encrypted, keyStr) {
+   347→  const key = Buffer.from(keyStr.slice(-64), 'hex')
+   348→  let ciphertext = Buffer.from(encrypted, 'base64')
+   349→
+   350→  const nonce = ciphertext.subarray(0, 12)
+   378→function populate (processEnv, parsed, options = {}) {
+   379→  const debug = Boolean(options && options.debug)
+   380→  const override = Boolean(options && options.override)
+   381→  const populated = {}
+   382→
+   413→const DotenvModule = {
+   414→  configDotenv,
+   415→  _configVault,
+   416→  _parseVault,
+   417→  config,
+   418→  decrypt,
+   419→  parse,
+   420→  populate
+   421→}

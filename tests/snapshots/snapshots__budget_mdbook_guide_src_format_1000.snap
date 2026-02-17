@@ -1,0 +1,287 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (954 words)
+
+README.md
+     1→# Format
+     2→
+configuration/README.md
+     1→# Configuration
+     2→
+configuration/environment-variables.md
+     1→# Environment variables
+     2→
+configuration/general.md
+     1→# General configuration
+     2→
+    31→## Supported configuration options
+    32→
+    37→### General metadata
+    38→
+    64→### Rust options
+    65→
+    85→### Build options
+    86→
+configuration/preprocessors.md
+     1→# Configuring Preprocessors
+     2→
+    26→## Custom preprocessor configuration
+    27→
+    45→## Locking a preprocessor dependency to a renderer
+    46→
+    55→## Provide your own command
+    56→
+    67→### Optional preprocessors
+    68→
+    79→## Require a certain order
+    80→
+configuration/renderers.md
+     1→# Configuring Renderers
+     2→
+    20→## Output tables
+    21→
+    59→### Custom backend commands
+    60→
+    71→### Optional backends
+    72→
+    84→## HTML renderer options
+    85→
+   176→### `[output.html.print]`
+   177→
+   191→### `[output.html.fold]`
+   192→
+   206→### `[output.html.playground]`
+   207→
+   230→### `[output.html.code]`
+   231→
+   244→### `[output.html.search]`
+   245→
+   286→#### `[output.html.search.chapter]`
+   287→
+   300→### `[output.html.redirect]`
+   301→
+   325→## Markdown renderer
+   326→
+example.rs
+     1→fn main() {
+     2→    println!("Hello World!");
+     3→#
+     4→#     // You can even hide lines! :D
+     5→#     println!("I am hidden! Expand the code snippet to see me");
+     6→}
+markdown.md
+     1→# Markdown
+     2→
+     9→## Text and paragraphs
+    10→
+    25→## Headings
+    26→
+    39→### A heading 
+    40→
+    43→#### A smaller heading 
+    44→
+    47→## Lists
+    48→
+    69→## Links
+    70→
+   108→## Images
+   109→
+   127→## Extensions
+   128→
+   131→### Strikethrough
+   132→
+   146→### Footnotes
+   147→
+   171→### Tables
+   172→
+   191→### Task lists
+   192→
+   208→### Smart punctuation
+   209→
+   231→### Heading attributes
+   232→
+   244→### Definition lists
+   245→
+   279→### Admonitions
+   280→
+mathjax.md
+     1→# MathJax support
+     2→
+    24→### Inline equations
+    25→Inline equations are delimited by `\\(` and `\\)`. So for example, to render the
+    32→### Block equations
+    33→Block equations are delimited by `\\[` and `\\]`. To render the following
+mdbook.md
+     1→# mdBook-specific features
+     2→
+     3→## Hiding code lines
+     4→
+     5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
+     6→
+     7→For the Rust language, you can prefix lines with `# ` (`#` followed by a space) to hide them [like you would with Rustdoc][rustdoc-hide].
+     8→This prefix can be escaped with `##` to prevent the hiding of a line that should begin with the literal string `# ` (see [Rustdoc's docs][rustdoc-hide] for more details)
+     9→
+    10→[rustdoc-hide]: https://doc.rust-lang.org/stable/rustdoc/write-documentation/documentation-tests.html#hiding-portions-of-the-example
+    11→
+    12→```bash
+    13→# fn main() {
+    14→    let x = 5;
+    15→    let y = 6;
+    16→
+    17→    println!("{}", x + y);
+    18→# }
+    19→```
+    20→
+    21→Will render as
+    22→
+    23→```rust
+    24→# fn main() {
+    25→    let x = 5;
+    26→    let y = 6;
+    27→
+    28→    println!("{}", x + y);
+    29→# }
+    30→```
+    31→
+    32→When you tap or hover the mouse over the code block, there will be an eyeball icon (<i class="fa fa-eye"></i>) which will toggle the visibility of the hidden lines.
+    33→
+    34→By default, this only works for code examples that are annotated with `rust`.
+    35→However, you can define custom prefixes for other languages by adding a new line-hiding prefix in your `book.toml` with the language name and prefix character(s):
+    36→
+    37→```toml
+    38→[output.html.code.hidelines]
+    39→python = "~"
+    40→```
+    41→
+    42→The prefix will hide any lines that begin with the given prefix. With the python prefix shown above, this:
+    43→
+    44→```bash
+    45→~hidden()
+    46→nothidden():
+    47→~    hidden()
+    48→    ~hidden()
+    49→    nothidden()
+    50→```
+    51→
+    52→will render as
+    53→
+    54→```python
+    55→~hidden()
+    56→nothidden():
+    57→~    hidden()
+    58→    ~hidden()
+    59→    nothidden()
+    60→```
+    61→
+    62→This behavior can be overridden locally with a different prefix. This has the same effect as above:
+    63→
+    64→~~~markdown
+    65→```python,hidelines=!!!
+    66→!!!hidden()
+    67→nothidden():
+    68→!!!    hidden()
+    69→    !!!hidden()
+    70→    nothidden()
+    71→```
+    72→~~~
+    73→
+    74→## Rust playground
+    75→
+   102→## Rust code block attributes
+   103→
+   133→## Including files
+   134→
+   154→## Including portions of a file
+   155→Often you only need a specific part of the file, e.g. relevant lines for an
+   215→## Including a file but initially hiding all except specified lines
+   216→
+   279→## Inserting runnable Rust files
+   280→
+   310→## Controlling page \<title\>
+   311→
+   319→## HTML classes provided by mdBook
+   320→
+   323→### `class="left"` and `"right"`
+   324→
+   331→### `class="hidden"`
+   332→
+   341→## Font-Awesome icons
+   342→
+summary.md
+     1→# SUMMARY.md
+     2→
+    12→### Structure
+    13→
+    93→### Example
+    94→
+theme/README.md
+     1→# Theme
+     2→
+     3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
+     4→render your markdown files and comes with a default theme included in the mdBook
+     5→binary.
+theme/editor.md
+     1→# Editor
+     2→
+     3→In addition to providing runnable code playgrounds, mdBook optionally allows them
+     4→to be editable. In order to enable editable code blocks, the following needs to
+     5→be added to the ***book.toml***:
+    35→## Customizing the editor
+    36→
+    37→By default, the editor is the [Ace](https://ace.c9.io/) editor, but, if desired,
+    38→the functionality may be overridden by providing a different folder:
+    39→
+theme/index-hbs.md
+     1→# index.hbs
+     2→
+     3→`index.hbs` is the handlebars template that is used to render the book. The
+     4→markdown files are processed to html and then injected in that template.
+     5→
+     9→## Data
+    10→
+    11→A lot of data is exposed to the handlebars template with the "context". In the
+    12→handlebars template you can access this information by using
+    13→
+    41→## Handlebars helpers
+    42→
+    43→In addition to the properties you can access, there are some handlebars helpers
+    44→at your disposal.
+    45→
+    46→### toc
+    47→
+    48→The toc helper is used like this
+    49→
+    50→```handlebars
+    80→### resource
+    81→
+    82→The path to a static file.
+    83→It implicitly includes `path_to_root`,
+    84→and accounts for files that are renamed with a hash in their filename.
+    90→### fa
+    91→
+    92→mdBook includes a copy of [Font Awesome Free's](https://fontawesome.com)
+    93→MIT-licensed SVG files. It accepts three positional arguments:
+    94→
+theme/syntax-highlighting.md
+     1→# Syntax highlighting
+     2→
+     3→mdBook uses [Highlight.js](https://highlightjs.org) with a custom theme
+     4→for syntax highlighting.
+     5→
+    17→## Supported languages
+    18→
+    19→These languages are supported by default, but you can add more by supplying
+    20→your own `highlight.js` file:
+    21→
+    68→## Custom theme
+    69→Like the rest of the theme, the files used for syntax highlighting can be
+    70→overridden with your own.
+    71→
+    72→- ***highlight.js*** normally you shouldn't have to overwrite this file, unless
+    82→## Improve default theme
+    83→
+    84→If you think the default theme doesn't look quite right for a specific language,
+    85→or could be improved, feel free to [submit a new
+    86→issue](https://github.com/rust-lang/mdBook/issues) explaining what you

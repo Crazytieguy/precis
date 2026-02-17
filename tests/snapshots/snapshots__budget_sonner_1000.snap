@@ -1,0 +1,294 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (996 words)
+
+README.md
+     5→## Usage
+     6→
+     7→To start using the library, install it in your project:
+     8→
+     9→```bash
+    10→npm install sonner
+    11→```
+    12→
+    13→Add `<Toaster />` to your app, it will be the place where all your toasts will be rendered.
+    14→After that you can use `toast()` from anywhere in your app.
+    15→
+    16→```jsx
+    17→import { Toaster, toast } from 'sonner';
+    18→
+    19→// ...
+    20→
+    21→function App() {
+    22→  return (
+    23→    <div>
+    24→      <Toaster />
+    25→      <button onClick={() => toast('My first toast')}>Give me a toast</button>
+    26→    </div>
+    27→  );
+    28→}
+    29→```
+    30→
+    31→## Documentation
+    32→
+    33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
+src/assets.tsx
+     5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
+     6→  switch (type) {
+     7→    case 'success':
+     8→      return SuccessIcon;
+    24→const bars
+    26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
+    27→  return (
+    28→    <div className={['sonner-loading-wrapper', className].filter(Boolean).join(' ')} data-visible={visible}>
+    29→      <div className="sonner-spinner">
+    38→const SuccessIcon
+    48→const WarningIcon
+    58→const InfoIcon
+    68→const ErrorIcon
+    78→export const CloseIcon = (
+    79→  <svg
+    80→    xmlns="http://www.w3.org/2000/svg"
+    81→    width="12"
+    82→    height="12"
+    83→    viewBox="0 0 24 24"
+    84→    fill="none"
+    85→    stroke="currentColor"
+    86→    strokeWidth="1.5"
+    87→    strokeLinecap="round"
+    88→    strokeLinejoin="round"
+    89→  >
+src/hooks.tsx
+     3→export const useIsDocumentHidden = () => {
+     4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
+     5→
+     6→  React.useEffect(() => {
+src/index.tsx
+    22→const VISIBLE_TOASTS_AMOUNT
+    25→const VIEWPORT_OFFSET
+    28→const MOBILE_VIEWPORT_OFFSET
+    31→const TOAST_LIFETIME
+    34→const TOAST_WIDTH
+    37→const GAP
+    40→const SWIPE_THRESHOLD
+    43→const TIME_BEFORE_UNMOUNT
+    45→function cn(...classes: (string | undefined)[]) {
+    49→function getDefaultSwipeDirections(position: string): Array<SwipeDirection> {
+    64→const Toast = (props: ToastProps) => {
+   507→function getDocumentDirection(): ToasterProps['dir'] {
+   520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
+   552→function useSonner() {
+   593→const Toaster
+src/state.ts
+    15→type titleT
+    17→class Observer {
+    18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
+    19→  toasts: Array<ToastT | ToastToDismiss>;
+    20→  dismissedToasts: Set<string | number>;
+    21→
+    22→  constructor() {
+    29→  subscribe
+    38→  publish
+    42→  addToast
+    47→  create
+    88→  dismiss
+   101→  message
+   105→  error
+   109→  success
+   113→  info
+   117→  warning
+   121→  loading
+   125→  promise
+   243→  custom
+   249→  getActiveToasts
+   254→export const ToastState
+   257→const toastFunction = (message: titleT, data?: ExternalToast) => {
+   258→  const id = data?.id || toastsCounter++;
+   259→
+   268→const isHttpResponse = (data: any): data is Response => {
+   269→  return (
+   270→    data &&
+   279→const basicToast
+   281→const getHistory = () => ToastState.toasts;
+   282→const getToasts = () => ToastState.getActiveToasts();
+   285→export const toast
+src/types.ts
+     3→export type ToastTypes
+     5→export type PromiseT
+     7→export interface PromiseIExtendedResult extends ExternalToast {
+     8→  message: React.ReactNode;
+     9→}
+    11→export type PromiseTExtendedResult
+    15→export type PromiseTResult
+    20→export type PromiseExternalToast
+    22→export type PromiseData
+    30→export interface ToastClassnames {
+    31→  toast?: string;
+    32→  title?: string;
+    48→export interface ToastIcons {
+    49→  success?: React.ReactNode;
+    50→  info?: React.ReactNode;
+    57→export interface Action {
+    58→  label: React.ReactNode;
+    59→  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    63→export interface ToastT {
+    64→  id: number | string;
+    65→  toasterId?: string;
+    93→export function isAction
+    97→export type Position
+    98→export interface HeightT {
+    99→  height: number;
+   100→  toastId: number | string;
+   104→interface ToastOptions {
+   105→  className?: string;
+   106→  closeButton?: boolean;
+   107→  descriptionClassName?: string;
+   108→  style?: React.CSSProperties;
+   109→  cancelButtonStyle?: React.CSSProperties;
+   118→type Offset
+   128→export interface ToasterProps {
+   129→  id?: string;
+   130→  invert?: boolean;
+   152→export type SwipeDirection
+   154→export interface ToastProps {
+   155→  toast: ToastT;
+   156→  toasts: ToastT[];
+   184→export enum SwipeStateTypes {
+   185→  SwipedOut = 'SwipedOut',
+   186→  SwipedBack = 'SwipedBack',
+   190→export type Theme
+   192→export interface ToastToDismiss {
+   193→  id: number | string;
+   194→  dismiss: boolean;
+   197→export type ExternalToast
+website/README.md
+     3→## Getting Started
+     4→
+     5→First, run the development server:
+     6→
+     7→```bash
+     8→npm run dev
+     9→# or
+    10→yarn dev
+    11→# or
+    12→pnpm dev
+    13→```
+    14→
+    15→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    16→
+    25→## Learn More
+    26→
+    27→To learn more about Next.js, take a look at the following resources:
+    28→
+    29→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+    30→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    31→
+    32→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    33→
+    34→## Deploy on Vercel
+    35→
+    36→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    37→
+    38→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+website/next.config.js
+     1→/** @type {import('next').NextConfig} */
+     2→const nextConfig = {
+     3→  experimental: {
+     4→    appDir: true,
+     5→  },
+     6→};
+     8→const withNextra = require('nextra')({
+     9→  title: 'Sonner',
+    10→  theme: 'nextra-theme-docs',
+    11→  themeConfig: './theme.config.jsx',
+    12→  defaultShowCopyCode: true,
+    13→});
+website/src/components/CodeBlock/index.tsx
+     9→const variants = {
+    14→const theme = {
+    48→export const CodeBlock = ({ children, initialHeight = 0 }: { children: string; initialHeight?: number }) => {
+    49→  const [ref, bounds] = useMeasure();
+    50→  const [copying, setCopying] = React.useState<number>(0);
+    51→
+website/src/components/ExpandModes/index.tsx
+     4→export const ExpandModes = ({
+     5→  expand,
+     6→  setExpand,
+     7→}: {
+     8→  expand: boolean;
+     9→  setExpand: React.Dispatch<React.SetStateAction<boolean>>;
+    10→}) => {
+website/src/components/Footer/index.tsx
+     5→export const Footer = () => {
+     6→  return (
+     7→    <footer className={styles.wrapper}>
+     8→      <div className="container">
+     9→        <p className={styles.p}>
+website/src/components/Head/index.tsx
+     3→const ogImage = 'https://sonner.emilkowal.ski/og.png';
+     5→const Head
+website/src/components/Hero/index.tsx
+     6→export const Hero = () => {
+     7→  return (
+     8→    <div className={styles.wrapper}>
+     9→      <div className={styles.toastWrapper}>
+    10→        <div className={styles.toast} />
+website/src/components/How/How.tsx
+     3→export const How = () => {
+     4→  return (
+     5→    <>
+     6→      <div>
+website/src/components/Installation/index.tsx
+     9→const variants = {
+    14→export const Installation = () => {
+    15→  const [copying, setCopying] = React.useState(0);
+    16→
+website/src/components/Other/Other.tsx
+     7→export const Other = ({
+     8→  setRichColors,
+     9→  setCloseButton,
+    10→}: {
+    11→  setRichColors: React.Dispatch<React.SetStateAction<boolean>>;
+    12→  setCloseButton: React.Dispatch<React.SetStateAction<boolean>>;
+    13→}) => {
+website/src/components/Position/index.tsx
+     5→const positions = ['top-left', 'top-center', 'top-right', 'bottom-left', 'bottom-center', 'bottom-right'] as const;
+     7→export type Position = (typeof positions)[number];
+     9→export const Position = ({
+    10→  position: activePosition,
+    11→  setPosition,
+    12→}: {
+    13→  position: Position;
+    14→  setPosition: React.Dispatch<React.SetStateAction<Position>>;
+    15→}) => {
+website/src/components/Types/Types.tsx
+     5→const promiseCode = '`${data.name} toast has been added`';
+     7→export const Types = () => {
+     8→  const [activeType, setActiveType] = React.useState(allTypes[0]);
+     9→
+    10→  return (
+    11→    <div>
+    12→      <h2>Types</h2>
+    34→const allTypes = [
+    35→  {
+website/src/components/Usage/index.tsx
+     3→export const Usage = () => {
+     4→  return (
+     5→    <div>
+     6→      <h2>Usage</h2>
+website/src/pages/_app.tsx
+     7→export default function Nextra({ Component, pageProps }: AppProps): ReactElement {
+     8→  return (
+     9→    <>
+website/src/pages/index.tsx
+    14→export default function Home() {
+    15→  const [expand, setExpand] = React.useState(false);
+    16→  const [position, setPosition] = React.useState<Position>('bottom-right');
+website/theme.config.jsx
+     7→  useNextSeoProps() {
+     8→    return {
+     9→      titleTemplate: '%s – Sonner',
+    10→    };
+    11→  },

@@ -1,0 +1,222 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (996 words)
+
+command-score.ts
+    54→function commandScoreInner(
+    55→  string,
+    56→  abbreviation,
+    57→  lowerString,
+    58→  lowerAbbreviation,
+    59→  stringIndex,
+    60→  abbreviationIndex,
+    61→  memoizedResults,
+    62→) {
+    63→  if (abbreviationIndex === abbreviation.length) {
+    64→    if (stringIndex === string.length) {
+    65→      return SCORE_CONTINUE_MATCH
+    66→    }
+    67→    return PENALTY_NOT_COMPLETE
+    68→  }
+    69→
+    70→  var memoizeKey = `${stringIndex},${abbreviationIndex}`
+    71→  if (memoizedResults[memoizeKey] !== undefined) {
+    72→    return memoizedResults[memoizeKey]
+    73→  }
+    74→
+    75→  var abbreviationChar = lowerAbbreviation.charAt(abbreviationIndex)
+    76→  var index = lowerString.indexOf(abbreviationChar, stringIndex)
+    77→  var highScore = 0
+    78→
+    79→  var score, transposedScore, wordBreaks, spaceBreaks
+    80→
+    81→  while (index >= 0) {
+    82→    score = commandScoreInner(
+    83→      string,
+    84→      abbreviation,
+    85→      lowerString,
+    86→      lowerAbbreviation,
+    87→      index + 1,
+    88→      abbreviationIndex + 1,
+    89→      memoizedResults,
+    90→    )
+    91→    if (score > highScore) {
+   150→function formatInput(string) {
+   151→  // convert all valid space characters to space so they match each other
+   152→  return string.toLowerCase().replace(COUNT_SPACE_REGEXP, ' ')
+   153→}
+   155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
+   156→  /* NOTE:
+   157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
+   158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
+   159→   */
+   160→  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
+   161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
+   162→}
+index.tsx
+    10→type Children
+    11→type DivProps
+    13→type LoadingProps
+    23→type EmptyProps
+    24→type SeparatorProps
+    28→type DialogProps
+    37→type ListProps
+    44→type ItemProps
+    60→type GroupProps
+    69→type InputProps
+    79→type CommandFilter
+    80→type CommandProps
+   123→type Context
+   137→type State
+   143→type Store
+   149→type Group
+   154→const GROUP_SELECTOR
+   155→const GROUP_ITEMS_SELECTOR
+   156→const GROUP_HEADING_SELECTOR
+   157→const ITEM_SELECTOR
+   158→const VALID_ITEM_SELECTOR
+   159→const SELECT_EVENT
+   160→const VALUE_ATTR
+   161→const defaultFilter: CommandFilter = (value, search, keywords) => commandScore(value, search, keywords)
+   163→const CommandContext
+   164→const useCommand = () => React.useContext(CommandContext)
+   165→const StoreContext
+   166→const useStore = () => React.useContext(StoreContext)
+   167→const GroupContext
+   169→const Command
+   659→/**
+   660→ * Command menu item. Becomes active on pointer enter or through keyboard navigation.
+   661→ * Preferably pass a `value`, otherwise the value will be inferred from `children` or
+   662→ * the rendered item's `textContent`.
+   663→ */
+   664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
+   665→  const id = useId()
+   666→  const ref = React.useRef<HTMLDivElement>(null)
+   667→  const groupContext = React.useContext(GroupContext)
+   725→/**
+   726→ * Group command menu items together with a heading.
+   727→ * Grouped items are always shown together.
+   728→ */
+   729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
+   730→  const { heading, children, forceMount, ...etc } = props
+   731→  const id = useId()
+   732→  const ref = React.useRef<HTMLDivElement>(null)
+   770→/**
+   771→ * A visual and semantic separator between items or groups.
+   772→ * Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
+   773→ */
+   774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
+   775→  const { alwaysRender, ...etc } = props
+   776→  const ref = React.useRef<HTMLDivElement>(null)
+   777→  const render = useCmdk((state) => !state.search)
+   783→/**
+   784→ * Command menu input.
+   785→ * All props are forwarded to the underyling `input` element.
+   786→ */
+   787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
+   788→  const { onValueChange, ...etc } = props
+   789→  const isControlled = props.value != null
+   790→  const store = useStore()
+   829→/**
+   830→ * Contains `Item`, `Group`, and `Separator`.
+   831→ * Use the `--cmdk-list-height` CSS variable to animate height based on the number of results.
+   832→ */
+   833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
+   834→  const { children, label = 'Suggestions', ...etc } = props
+   835→  const ref = React.useRef<HTMLDivElement>(null)
+   836→  const height = React.useRef<HTMLDivElement>(null)
+   879→/**
+   880→ * Renders the command menu in a Radix Dialog.
+   881→ */
+   882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
+   883→  const { open, onOpenChange, overlayClassName, contentClassName, container, ...etc } = props
+   884→  return (
+   885→    <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
+   896→/**
+   897→ * Automatically renders when there are no results for the search query.
+   898→ */
+   899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
+   900→  const render = useCmdk((state) => state.filtered.count === 0)
+   901→
+   902→  if (!render) return null
+   906→/**
+   907→ * You should conditionally render this with `progress` while loading asynchronous items.
+   908→ */
+   909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
+   910→  const { progress, children, label = 'Loading...', ...etc } = props
+   911→
+   912→  return (
+   930→const pkg
+   955→/**
+   956→ *
+   957→ *
+   958→ * Helpers
+   959→ *
+   960→ *
+   961→ */
+   962→
+   963→function findNextSibling(el: Element, selector: string) {
+   964→  let sibling = el.nextElementSibling
+   965→
+   966→  while (sibling) {
+   967→    if (sibling.matches(selector)) return sibling
+   968→    sibling = sibling.nextElementSibling
+   969→  }
+   970→}
+   972→function findPreviousSibling(el: Element, selector: string) {
+   973→  let sibling = el.previousElementSibling
+   974→
+   975→  while (sibling) {
+   981→function useAsRef<T>(data: T) {
+   982→  const ref = React.useRef<T>(data)
+   983→
+   984→  useLayoutEffect(() => {
+   991→const useLayoutEffect
+   993→function useLazyRef<T>(fn: () => T) {
+   994→  const ref = React.useRef<T>()
+   995→
+   996→  if (ref.current === undefined) {
+  1003→/** Run a selector against the store state. */
+  1004→function useCmdk<T = any>(selector: (state: State) => T): T {
+  1005→  const store = useStore()
+  1006→  const cb = () => selector(store.snapshot())
+  1007→  return React.useSyncExternalStore(store.subscribe, cb, cb)
+  1008→}
+  1010→function useValue(
+  1011→  id: string,
+  1012→  ref: React.RefObject<HTMLElement>,
+  1013→  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
+  1014→  aliases: string[] = [],
+  1015→) {
+  1016→  const valueRef = React.useRef<string>()
+  1017→  const context = useCommand()
+  1018→
+  1045→/** Imperatively run a function on the next layout effect cycle. */
+  1046→const useScheduleLayoutEffect = () => {
+  1047→  const [s, ss] = React.useState<object>()
+  1048→  const fns = useLazyRef(() => new Map<string | number, () => void>())
+  1049→
+  1050→  useLayoutEffect(() => {
+  1051→    fns.current.forEach((f) => f())
+  1052→    fns.current = new Map()
+  1053→  }, [s])
+  1054→
+  1055→  return (id: string | number, cb: () => void) => {
+  1056→    fns.current.set(id, cb)
+  1057→    ss({})
+  1058→  }
+  1059→}
+  1061→function renderChildren(children: React.ReactElement) {
+  1062→  const childrenType = children.type as any
+  1063→  // The children is a component
+  1064→  if (typeof childrenType === 'function') return childrenType(children.props)
+  1071→function SlottableWithNestedChildren(
+  1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
+  1073→  render: (child: React.ReactNode) => JSX.Element,
+  1074→) {
+  1075→  if (asChild && React.isValidElement(children)) {
+  1076→    return React.cloneElement(renderChildren(children), { ref: (children as any).ref }, render(children.props.children))
+  1077→  }
+  1081→const srOnlyStyles

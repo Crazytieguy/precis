@@ -1,0 +1,104 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (454 words)
+
+constraint.go
+    14→var
+    15→	constraintRegexp
+    16→	constraintRegexpOnce
+    31→// Constraint represents a single constraint for a version, such as
+    32→// ">= 1.0".
+    33→type Constraint struct {
+    34→	f        constraintFunc
+    35→	op       operator
+    36→	check    *Version
+    37→	original string
+    38→}
+    40→func (c *Constraint) Equals(con *Constraint) bool {
+    44→// Constraints is a slice of constraints. We make a custom type so that
+    45→// we can add methods to it.
+    46→type Constraints []*Constraint
+    48→type constraintFunc
+    50→type constraintOperation struct {
+    51→	op operator
+    52→	f  constraintFunc
+    53→}
+    58→func NewConstraint(v string) (Constraints, error) {
+    75→func MustConstraints(c Constraints, err error) Constraints {
+    84→func (cs Constraints) Check(v *Version) bool {
+   102→func (cs Constraints) Equals(c Constraints) bool {
+   125→func (cs Constraints) Len() int {
+   129→func (cs Constraints) Less(i, j int) bool {
+   140→func (cs Constraints) Swap(i, j int) {
+   145→func (cs Constraints) String() string {
+   155→func (c *Constraint) Check(v *Version) bool {
+   161→func (c *Constraint) Prerelease() bool {
+   165→func (c *Constraint) String() string {
+   228→//-------------------------------------------------------------------
+   229→// Constraint functions
+   230→//-------------------------------------------------------------------
+   231→
+   232→type operator rune
+   234→const
+   235→	equal
+   236→	notEqual
+   237→	greaterThan
+   238→	lessThan
+   239→	greaterThanEqual
+   240→	lessThanEqual
+   241→	pessimistic
+version.go
+    15→// The compiled regular expression used to test the validity of a version.
+    16→var (
+    17→	versionRegexp     *regexp.Regexp
+    18→	versionRegexpOnce sync.Once
+    19→	semverRegexp      *regexp.Regexp
+    20→	semverRegexpOnce  sync.Once
+    21→)
+    37→// The raw regular expression string used for testing the validity
+    38→// of a version.
+    39→const (
+    40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
+    41→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-?([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
+    42→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
+    43→		`?`
+    44→
+    45→	// SemverRegexpRaw requires a separator between version and prerelease
+    46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
+    52→// Version represents a single version.
+    53→type Version struct {
+    54→	metadata string
+    55→	pre      string
+    56→	segments []int64
+    57→	si       int
+    58→	original string
+    59→}
+    63→func NewVersion(v string) (*Version, error) {
+    70→func NewSemver(v string) (*Version, error) {
+   114→func Must(v *Version, err error) *Version {
+   128→func (v *Version) Compare(other *Version) int {
+   309→func (v *Version) Core() *Version {
+   316→func (v *Version) Equal(o *Version) bool {
+   325→func (v *Version) GreaterThan(o *Version) bool {
+   330→func (v *Version) GreaterThanOrEqual(o *Version) bool {
+   335→func (v *Version) LessThan(o *Version) bool {
+   340→func (v *Version) LessThanOrEqual(o *Version) bool {
+   349→func (v *Version) Metadata() string {
+   359→func (v *Version) Prerelease() string {
+   368→func (v *Version) Segments() []int {
+   381→func (v *Version) Segments64() []int64 {
+   395→func (v *Version) String() string {
+   423→func (v *Version) Original() string {
+   428→func (v *Version) UnmarshalText(b []byte) error {
+   440→func (v *Version) MarshalText() ([]byte, error) {
+   445→func (v *Version) Scan(src interface{}) error {
+   457→func (v *Version) Value() (driver.Value, error) {
+version_collection.go
+     6→// Collection is a type that implements the sort.Interface interface
+     7→// so that versions can be sorted.
+     8→type Collection []*Version
+    10→func (v Collection) Len() int {
+    14→func (v Collection) Less(i, j int) bool {
+    18→func (v Collection) Swap(i, j int) {

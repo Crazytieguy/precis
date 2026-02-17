@@ -1,0 +1,930 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 (3402 words)
+
+src/typeguard/__init__.py
+    34→config: TypeCheckConfiguration
+    37→def __getattr__
+src/typeguard/_checkers.py
+    81→TypeCheckerCallable: TypeAlias = Callable[
+    82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
+    83→]
+    84→TypeCheckLookupCallback: TypeAlias = Callable[
+    85→    [Any, Tuple[Any, ...], Tuple[Any, ...]], Optional[TypeCheckerCallable]
+    86→]
+    88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
+    89→generic_alias_types: tuple[type, ...] = (
+    90→    type(List),
+    91→    type(List[Any]),
+    92→    types.GenericAlias,
+    93→)
+    98→# Lifted from mypy.sharedparse
+    99→BINARY_MAGIC_METHODS = {
+   100→    "__add__",
+   101→    "__and__",
+   102→    "__cmp__",
+   103→    "__divmod__",
+   104→    "__div__",
+   105→    "__eq__",
+   106→    "__floordiv__",
+   107→    "__ge__",
+   108→    "__gt__",
+   109→    "__iadd__",
+   110→    "__iand__",
+   111→    "__idiv__",
+   112→    "__ifloordiv__",
+   113→    "__ilshift__",
+   114→    "__imatmul__",
+   115→    "__imod__",
+   116→    "__imul__",
+   117→    "__ior__",
+   118→    "__ipow__",
+   119→    "__irshift__",
+   120→    "__isub__",
+   121→    "__itruediv__",
+   122→    "__ixor__",
+   123→    "__le__",
+   124→    "__lshift__",
+   125→    "__lt__",
+   126→    "__matmul__",
+   127→    "__mod__",
+   128→    "__mul__",
+   129→    "__ne__",
+   130→    "__or__",
+   131→    "__pow__",
+   132→    "__radd__",
+   133→    "__rand__",
+   134→    "__rdiv__",
+   135→    "__rfloordiv__",
+   136→    "__rlshift__",
+   137→    "__rmatmul__",
+   138→    "__rmod__",
+   139→    "__rmul__",
+   140→    "__ror__",
+   141→    "__rpow__",
+   142→    "__rrshift__",
+   143→    "__rshift__",
+   144→    "__rsub__",
+   145→    "__rtruediv__",
+   146→    "__rxor__",
+   147→    "__sub__",
+   148→    "__truediv__",
+   149→    "__xor__",
+   150→}
+   153→def check_callable
+   212→def check_mapping
+   247→def check_typed_dict
+   305→def check_list
+   324→def check_sequence
+   343→def check_set
+   365→def check_tuple
+   423→def check_union
+   447→def check_uniontype
+   474→def check_class
+   536→def check_newtype
+   545→def check_instance
+   555→def check_typevar
+   586→def _is_literal_type(typ: object) -> bool:
+   587→    return typ is typing.Literal or typ is typing_extensions.Literal
+   590→def check_literal
+   623→def check_literal_string
+   632→def check_typeguard
+   641→def check_none
+   651→def check_number
+   663→def check_io
+   679→def check_signature_compatible
+   834→def check_protocol
+   885→def check_byteslike
+   895→def check_self
+   915→def check_paramspec
+   924→def check_type_internal
+  1004→# Equality checks are applied to these
+  1005→origin_type_checkers: dict[
+  1006→    Any, Callable[[Any, Any, tuple[Any, ...], TypeCheckMemo], None]
+  1007→] = {
+  1008→    bytes: check_byteslike,
+  1009→    AbstractSet: check_set,
+  1010→    BinaryIO: check_io,
+  1011→    Callable: check_callable,
+  1012→    collections.abc.Callable: check_callable,
+  1013→    complex: check_number,
+  1014→    dict: check_mapping,
+  1015→    Dict: check_mapping,
+  1016→    float: check_number,
+  1017→    frozenset: check_set,
+  1018→    IO: check_io,
+  1019→    list: check_list,
+  1020→    List: check_list,
+  1021→    typing.Literal: check_literal,
+  1022→    Mapping: check_mapping,
+  1023→    MutableMapping: check_mapping,
+  1024→    None: check_none,
+  1025→    collections.abc.Mapping: check_mapping,
+  1026→    collections.abc.MutableMapping: check_mapping,
+  1027→    Sequence: check_sequence,
+  1028→    collections.abc.Sequence: check_sequence,
+  1029→    collections.abc.Set: check_set,
+  1030→    set: check_set,
+  1031→    Set: check_set,
+  1032→    TextIO: check_io,
+  1033→    tuple: check_tuple,
+  1034→    Tuple: check_tuple,
+  1035→    type: check_class,
+  1036→    Type: check_class,
+  1037→    Union: check_union,
+  1038→    # On some versions of Python, these may simply be re-exports from "typing",
+  1039→    # but exactly which Python versions is subject to change.
+  1040→    # It's best to err on the safe side and just always specify these.
+  1041→    typing_extensions.Literal: check_literal,
+  1042→    typing_extensions.LiteralString: check_literal_string,
+  1043→    typing_extensions.Self: check_self,
+  1044→    typing_extensions.TypeGuard: check_typeguard,
+  1045→}
+  1061→def builtin_checker_lookup
+  1099→def load_plugins
+src/typeguard/_config.py
+    11→T = TypeVar("T")
+    14→class ForwardRefPolicy(Enum):
+    24→
+    25→    ERROR = auto()
+    26→    WARN = auto()
+    27→    IGNORE = auto()
+    30→class CollectionCheckStrategy(Enum):
+    48→
+    49→    FIRST_ITEM = auto()
+    50→    ALL_ITEMS = auto()
+    51→
+    52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
+    53→        if self is CollectionCheckStrategy.FIRST_ITEM:
+    54→            try:
+    55→                return [next(iter(collection))]
+    56→            except StopIteration:
+    57→                return ()
+    58→        else:
+    59→            return collection
+    62→@dataclass
+    63→class TypeCheckConfiguration:
+    64→    """
+    65→     You can change Typeguard's behavior with these settings.
+    66→
+    67→    .. attribute:: typecheck_fail_callback
+    68→       :type: Callable[[TypeCheckError, TypeCheckMemo], Any]
+    69→
+    70→         Callable that is called when type checking fails.
+    71→
+    72→         Default: ``None`` (the :exc:`~.TypeCheckError` is raised directly)
+    73→
+    74→    .. attribute:: forward_ref_policy
+    75→       :type: ForwardRefPolicy
+    76→
+    77→         Specifies what to do when a forward reference fails to resolve.
+    78→
+    79→         Default: ``WARN``
+    80→
+    81→    .. attribute:: collection_check_strategy
+    82→       :type: CollectionCheckStrategy
+    83→
+    84→         Specifies how thoroughly the contents of collections (list, dict, etc.) are
+    85→         type checked.
+    86→
+    87→         Default: ``FIRST_ITEM``
+    88→
+    89→    .. attribute:: debug_instrumentation
+    90→       :type: bool
+    91→
+    92→         If set to ``True``, the code of modules or functions instrumented by typeguard
+    93→         is printed to ``sys.stderr`` after the instrumentation is done
+    94→
+    95→         Default: ``False``
+    96→    """
+    97→
+    98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
+    99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
+   100→    collection_check_strategy: CollectionCheckStrategy = (
+   101→        CollectionCheckStrategy.FIRST_ITEM
+   102→    )
+   103→    debug_instrumentation: bool = False
+src/typeguard/_decorators.py
+    24→    def typeguard_ignore
+    32→def make_cell
+    36→def find_target_function
+    56→def instrument
+   150→def typechecked
+src/typeguard/_exceptions.py
+     5→class TypeHintWarning(UserWarning):
+    12→class TypeCheckWarning(UserWarning):
+    14→
+    15→    def __init__(self, message: str):
+    16→        super().__init__(message)
+    19→class InstrumentationWarning(UserWarning):
+    21→
+    22→    def __init__(self, message: str):
+    23→        super().__init__(message)
+    26→class TypeCheckError(Exception):
+    30→
+    31→    def __init__(self, message: str):
+    32→        super().__init__(message)
+    33→        self._path: Deque[str] = deque()
+    34→
+    35→    def append_path_element(self, element: str) -> None:
+    36→        self._path.append(element)
+    37→
+    38→    def __str__(self) -> str:
+    39→        if self._path:
+    40→            return " of ".join(self._path) + " " + str(self.args[0])
+    41→        else:
+    42→            return str(self.args[0])
+src/typeguard/_functions.py
+    24→T = TypeVar("T")
+    25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
+    50→def check_type
+   118→def check_argument_types
+   149→def check_return_type
+   185→def check_send_type
+   216→def check_yield_type
+   245→def check_variable_assignment
+   291→def warn_on_error
+src/typeguard/_importhook.py
+    40→P = ParamSpec("P")
+    41→T = TypeVar("T")
+    44→# The name of this function is magical
+    45→def _call_with_frames_removed(
+    46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
+    47→) -> T:
+    48→    return f(*args, **kwargs)
+    51→def optimized_cache_from_source
+    55→class TypeguardLoader(SourceFileLoader):
+    56→    @staticmethod
+    57→    def source_to_code(
+    58→        data: Buffer | str | ast.Module | ast.Expression | ast.Interactive,
+    59→        path: Buffer | str | PathLike[str] = "<string>",
+    60→        *,
+    61→        _optimize: int = -1,
+    62→    ) -> CodeType:
+    63→        if isinstance(path, (str, PathLike)):
+    64→            filename = path
+    65→        else:
+    66→            filename = os.fsdecode(bytes(path))
+    67→
+    68→        if isinstance(data, (ast.Module, ast.Expression, ast.Interactive)):
+    69→            module = data
+    70→        else:
+    71→            if isinstance(data, str):
+    72→                source = data
+    73→            else:
+    74→                source = decode_source(data)
+    75→
+    76→            module = _call_with_frames_removed(
+    77→                ast.parse,
+    78→                source,
+    79→                filename,
+    80→                "exec",
+    81→            )
+    82→
+    83→        tree = TypeguardTransformer().visit(module)
+    84→        ast.fix_missing_locations(tree)
+    85→
+    86→        if global_config.debug_instrumentation and sys.version_info >= (3, 9):
+    87→            print(
+    88→                f"Source code of {path!r} after instrumentation:\n"
+    89→                "----------------------------------------------",
+    90→                file=sys.stderr,
+    91→            )
+    92→            print(ast.unparse(tree), file=sys.stderr)
+    93→            print("----------------------------------------------", file=sys.stderr)
+    94→
+    95→        return _call_with_frames_removed(
+    96→            compile, tree, filename, "exec", 0, dont_inherit=True
+    97→        )
+    98→
+    99→    def exec_module(self, module: ModuleType) -> None:
+   100→        # Use a custom optimization marker – the import lock should make this monkey
+   101→        # patch safe
+   102→        with patch(
+   103→            "importlib._bootstrap_external.cache_from_source",
+   104→            optimized_cache_from_source,
+   105→        ):
+   106→            super().exec_module(module)
+   109→class TypeguardFinder(MetaPathFinder):
+   119→
+   120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
+   121→        self.packages = packages
+   122→        self._original_pathfinder = original_pathfinder
+   123→
+   124→    def find_spec(
+   125→        self,
+   126→        fullname: str,
+   127→        path: Sequence[str] | None,
+   128→        target: types.ModuleType | None = None,
+   129→    ) -> ModuleSpec | None:
+   130→        if self.should_instrument(fullname):
+   131→            spec = self._original_pathfinder.find_spec(fullname, path, target)
+   132→            if spec is not None and isinstance(spec.loader, SourceFileLoader):
+   133→                spec.loader = TypeguardLoader(spec.loader.name, spec.loader.path)
+   134→                return spec
+   135→
+   136→        return None
+   137→
+   138→    def should_instrument(self, module_name: str) -> bool:
+   139→        """
+   140→        Determine whether the module with the given name should be instrumented.
+   141→
+   142→        :param module_name: full name of the module that is about to be imported (e.g.
+   143→            ``xyz.abc``)
+   144→
+   145→        """
+   146→        if self.packages is None:
+   147→            return True
+   148→
+   149→        for package in self.packages:
+   150→            if module_name == package or module_name.startswith(package + "."):
+   151→                return True
+   152→
+   153→        return False
+   156→class ImportHookManager:
+   160→
+   161→    def __init__(self, hook: MetaPathFinder):
+   162→        self.hook = hook
+   163→
+   164→    def __enter__(self) -> None:
+   165→        pass
+   166→
+   167→    def __exit__(
+   168→        self,
+   169→        exc_type: type[BaseException],
+   170→        exc_val: BaseException,
+   171→        exc_tb: TracebackType,
+   172→    ) -> None:
+   173→        self.uninstall()
+   174→
+   175→    def uninstall(self) -> None:
+   176→        """Uninstall the import hook."""
+   177→        try:
+   178→            sys.meta_path.remove(self.hook)
+   179→        except ValueError:
+   180→            pass  # already removed
+   183→def install_import_hook
+src/typeguard/_memo.py
+     8→class TypeCheckMemo:
+    34→
+    35→    __slots__ = "globals", "locals", "self_type", "config"
+    36→
+    37→    def __init__(
+    38→        self,
+    39→        globals: dict[str, Any],
+    40→        locals: dict[str, Any],
+    41→        *,
+    42→        self_type: type | None = None,
+    43→        config: TypeCheckConfiguration = global_config,
+    44→    ):
+    45→        self.globals = globals
+    46→        self.locals = locals
+    47→        self.self_type = self_type
+    48→        self.config = config
+src/typeguard/_pytest_plugin.py
+    16→def pytest_addoption
+    75→def pytest_configure
+src/typeguard/_suppression.py
+    15→P = ParamSpec("P")
+    16→T = TypeVar("T")
+    30→def suppress_type_checks
+src/typeguard/_transformer.py
+    67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
+    68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
+   117→@dataclass
+   118→class TransformMemo:
+   119→    node: Module | ClassDef | FunctionDef | AsyncFunctionDef | None
+   120→    parent: TransformMemo | None
+   121→    path: tuple[str, ...]
+   122→    joined_path: Constant = field(init=False)
+   123→    return_annotation: expr | None = None
+   124→    yield_annotation: expr | None = None
+   125→    send_annotation: expr | None = None
+   126→    is_async: bool = False
+   127→    local_names: set[str] = field(init=False, default_factory=set)
+   128→    imported_names: dict[str, str] = field(init=False, default_factory=dict)
+   129→    ignored_names: set[str] = field(init=False, default_factory=set)
+   130→    load_names: defaultdict[str, dict[str, Name]] = field(
+   131→        init=False, default_factory=lambda: defaultdict(dict)
+   132→    )
+   133→    has_yield_expressions: bool = field(init=False, default=False)
+   134→    has_return_expressions: bool = field(init=False, default=False)
+   135→    memo_var_name: Name | None = field(init=False, default=None)
+   136→    should_instrument: bool = field(init=False, default=True)
+   137→    variable_annotations: dict[str, expr] = field(init=False, default_factory=dict)
+   138→    configuration_overrides: dict[str, Any] = field(init=False, default_factory=dict)
+   139→    code_inject_index: int = field(init=False, default=0)
+   140→
+   141→    def __post_init__(self) -> None:
+   142→        elements: list[str] = []
+   143→        memo = self
+   144→        while isinstance(memo.node, (ClassDef, FunctionDef, AsyncFunctionDef)):
+   145→            elements.insert(0, memo.node.name)
+   146→            if not memo.parent:
+   147→                break
+   148→
+   149→            memo = memo.parent
+   150→            if isinstance(memo.node, (FunctionDef, AsyncFunctionDef)):
+   151→                elements.insert(0, "<locals>")
+   152→
+   153→        self.joined_path = Constant(".".join(elements))
+   154→
+   155→        # Figure out where to insert instrumentation code
+   156→        if self.node:
+   157→            for index, child in enumerate(self.node.body):
+   158→                if isinstance(child, ImportFrom) and child.module == "__future__":
+   159→                    # (module only) __future__ imports must come first
+   160→                    continue
+   161→                elif (
+   162→                    isinstance(child, Expr)
+   163→                    and isinstance(child.value, Constant)
+   164→                    and isinstance(child.value.value, str)
+   165→                ):
+   166→                    continue  # docstring
+   167→
+   168→                self.code_inject_index = index
+   169→                break
+   170→
+   171→    def get_unused_name(self, name: str) -> str:
+   172→        memo: TransformMemo | None = self
+   173→        while memo is not None:
+   174→            if name in memo.local_names:
+   175→                memo = self
+   176→                name += "_"
+   177→            else:
+   178→                memo = memo.parent
+   179→
+   180→        self.local_names.add(name)
+   181→        return name
+   182→
+   183→    def is_ignored_name(self, expression: expr | Expr | None) -> bool:
+   184→        top_expression = (
+   185→            expression.value if isinstance(expression, Expr) else expression
+   186→        )
+   187→
+   188→        if isinstance(top_expression, Attribute) and isinstance(
+   189→            top_expression.value, Name
+   190→        ):
+   191→            name = top_expression.value.id
+   192→        elif isinstance(top_expression, Name):
+   193→            name = top_expression.id
+   194→        else:
+   195→            return False
+   196→
+   197→        memo: TransformMemo | None = self
+   198→        while memo is not None:
+   199→            if name in memo.ignored_names:
+   200→                return True
+   201→
+   202→            memo = memo.parent
+   203→
+   204→        return False
+   205→
+   206→    def get_memo_name(self) -> Name:
+   207→        if not self.memo_var_name:
+   208→            self.memo_var_name = Name(id="memo", ctx=Load())
+   209→
+   210→        return self.memo_var_name
+   211→
+   212→    def get_import(self, module: str, name: str) -> Name:
+   213→        if module in self.load_names and name in self.load_names[module]:
+   214→            return self.load_names[module][name]
+   215→
+   216→        qualified_name = f"{module}.{name}"
+   217→        if name in self.imported_names and self.imported_names[name] == qualified_name:
+   218→            return Name(id=name, ctx=Load())
+   219→
+   220→        alias = self.get_unused_name(name)
+   221→        node = self.load_names[module][name] = Name(id=alias, ctx=Load())
+   222→        self.imported_names[name] = qualified_name
+   223→        return node
+   224→
+   225→    def insert_imports(self, node: Module | FunctionDef | AsyncFunctionDef) -> None:
+   226→        """Insert imports needed by injected code."""
+   227→        if not self.load_names:
+   228→            return
+   229→
+   230→        # Insert imports after any "from __future__ ..." imports and any docstring
+   231→        for modulename, names in self.load_names.items():
+   232→            aliases = [
+   233→                alias(orig_name, new_name.id if orig_name != new_name.id else None)
+   234→                for orig_name, new_name in sorted(names.items())
+   235→            ]
+   236→            node.body.insert(self.code_inject_index, ImportFrom(modulename, aliases, 0))
+   237→
+   238→    def name_matches(self, expression: expr | Expr | None, *names: str) -> bool:
+   239→        if expression is None:
+   240→            return False
+   241→
+   242→        path: list[str] = []
+   243→        top_expression = (
+   244→            expression.value if isinstance(expression, Expr) else expression
+   245→        )
+   246→
+   247→        if isinstance(top_expression, Subscript):
+   248→            top_expression = top_expression.value
+   249→        elif isinstance(top_expression, Call):
+   250→            top_expression = top_expression.func
+   251→
+   252→        while isinstance(top_expression, Attribute):
+   253→            path.insert(0, top_expression.attr)
+   254→            top_expression = top_expression.value
+   255→
+   256→        if not isinstance(top_expression, Name):
+   257→            return False
+   258→
+   259→        if top_expression.id in self.imported_names:
+   260→            translated = self.imported_names[top_expression.id]
+   261→        elif hasattr(builtins, top_expression.id):
+   262→            translated = "builtins." + top_expression.id
+   263→        else:
+   264→            translated = top_expression.id
+   265→
+   266→        path.insert(0, translated)
+   267→        joined_path = ".".join(path)
+   268→        if joined_path in names:
+   269→            return True
+   270→        elif self.parent:
+   271→            return self.parent.name_matches(expression, *names)
+   272→        else:
+   273→            return False
+   274→
+   275→    def get_config_keywords(self) -> list[keyword]:
+   276→        if self.parent and isinstance(self.parent.node, ClassDef):
+   277→            overrides = self.parent.configuration_overrides.copy()
+   278→        else:
+   279→            overrides = {}
+   280→
+   281→        overrides.update(self.configuration_overrides)
+   282→        return [keyword(key, value) for key, value in overrides.items()]
+   285→class NameCollector(NodeVisitor):
+   286→    def __init__(self) -> None:
+   287→        self.names: set[str] = set()
+   288→
+   289→    def visit_Import(self, node: Import) -> None:
+   290→        for name in node.names:
+   291→            self.names.add(name.asname or name.name)
+   292→
+   293→    def visit_ImportFrom(self, node: ImportFrom) -> None:
+   294→        for name in node.names:
+   295→            self.names.add(name.asname or name.name)
+   296→
+   297→    def visit_Assign(self, node: Assign) -> None:
+   298→        for target in node.targets:
+   299→            if isinstance(target, Name):
+   300→                self.names.add(target.id)
+   301→
+   302→    def visit_NamedExpr(self, node: NamedExpr) -> Any:
+   303→        if isinstance(node.target, Name):
+   304→            self.names.add(node.target.id)
+   305→
+   306→    def visit_FunctionDef(self, node: FunctionDef) -> None:
+   307→        pass
+   308→
+   309→    def visit_ClassDef(self, node: ClassDef) -> None:
+   310→        pass
+   313→class GeneratorDetector(NodeVisitor):
+   315→
+   316→    contains_yields: bool = False
+   317→    in_root_function: bool = False
+   318→
+   319→    def visit_Yield(self, node: Yield) -> Any:
+   320→        self.contains_yields = True
+   321→
+   322→    def visit_YieldFrom(self, node: YieldFrom) -> Any:
+   323→        self.contains_yields = True
+   324→
+   325→    def visit_ClassDef(self, node: ClassDef) -> Any:
+   326→        pass
+   327→
+   328→    def visit_FunctionDef(self, node: FunctionDef | AsyncFunctionDef) -> Any:
+   329→        if not self.in_root_function:
+   330→            self.in_root_function = True
+   331→            self.generic_visit(node)
+   332→            self.in_root_function = False
+   333→
+   334→    def visit_AsyncFunctionDef(self, node: AsyncFunctionDef) -> Any:
+   335→        self.visit_FunctionDef(node)
+   338→class AnnotationTransformer(NodeTransformer):
+   339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
+   340→        "builtins.dict": ("typing", "Dict"),
+   341→        "builtins.list": ("typing", "List"),
+   342→        "builtins.tuple": ("typing", "Tuple"),
+   343→        "builtins.set": ("typing", "Set"),
+   344→        "builtins.frozenset": ("typing", "FrozenSet"),
+   345→    }
+   346→
+   347→    def __init__(self, transformer: TypeguardTransformer):
+   348→        self.transformer = transformer
+   349→        self._memo = transformer._memo
+   350→        self._level = 0
+   351→
+   352→    def visit(self, node: AST) -> Any:
+   353→        # Don't process Literals
+   354→        if isinstance(node, expr) and self._memo.name_matches(node, *literal_names):
+   355→            return node
+   356→
+   357→        self._level += 1
+   358→        new_node = super().visit(node)
+   359→        self._level -= 1
+   360→
+   361→        if isinstance(new_node, Expression) and not hasattr(new_node, "body"):
+   362→            return None
+   363→
+   364→        # Return None if this new node matches a variation of typing.Any
+   365→        if (
+   366→            self._level == 0
+   367→            and isinstance(new_node, expr)
+   368→            and self._memo.name_matches(new_node, *anytype_names)
+   369→        ):
+   370→            return None
+   371→
+   372→        return new_node
+   373→
+   374→    def visit_BinOp(self, node: BinOp) -> Any:
+   375→        self.generic_visit(node)
+   376→
+   377→        if isinstance(node.op, BitOr):
+   378→            # If either branch of the BinOp has been transformed to `None`, it means
+   379→            # that a type in the union was ignored, so the entire annotation should be
+   380→            # ignored
+   381→            if not hasattr(node, "left") or not hasattr(node, "right"):
+   382→                return None
+   383→
+   384→            # Return Any if either side is Any
+   385→            if self._memo.name_matches(node.left, *anytype_names):
+   386→                return node.left
+   387→            elif self._memo.name_matches(node.right, *anytype_names):
+   388→                return node.right
+   389→
+   390→            # Turn union types to typing.Union constructs on Python 3.9
+   391→            if sys.version_info < (3, 10):
+   392→                union_name = self.transformer._get_import("typing", "Union")
+   393→                return Subscript(
+   394→                    value=union_name,
+   395→                    slice=Tuple(elts=[node.left, node.right], ctx=Load()),
+   396→                    ctx=Load(),
+   397→                )
+   398→
+   399→        return node
+   400→
+   401→    def visit_Attribute(self, node: Attribute) -> Any:
+   402→        if self._memo.is_ignored_name(node):
+   403→            return None
+   404→
+   405→        return node
+   406→
+   407→    def visit_Subscript(self, node: Subscript) -> Any:
+   408→        if self._memo.is_ignored_name(node.value):
+   409→            return None
+   410→
+   411→        # The subscript of typing(_extensions).Literal can be any arbitrary string, so
+   412→        # don't try to evaluate it as code
+   413→        if node.slice:
+   414→            if isinstance(node.slice, Tuple):
+   415→                if self._memo.name_matches(node.value, *annotated_names):
+   416→                    # Only treat the first argument to typing.Annotated as a potential
+   417→                    # forward reference
+   418→                    items = cast(
+   419→                        typing.List[expr],
+   420→                        [self.visit(node.slice.elts[0])] + node.slice.elts[1:],
+   421→                    )
+   422→                else:
+   423→                    items = cast(
+   424→                        typing.List[expr],
+   425→                        [self.visit(item) for item in node.slice.elts],
+   426→                    )
+   427→
+   428→                # If this is a Union and any of the items is Any, erase the entire
+   429→                # annotation
+   430→                if self._memo.name_matches(node.value, "typing.Union") and any(
+   431→                    item is None
+   432→                    or (
+   433→                        isinstance(item, expr)
+   434→                        and self._memo.name_matches(item, *anytype_names)
+   435→                    )
+   436→                    for item in items
+   437→                ):
+   438→                    return None
+   439→
+   440→                # If all items in the subscript were Any, erase the subscript entirely
+   441→                if all(item is None for item in items):
+   442→                    return node.value
+   443→
+   444→                for index, item in enumerate(items):
+   445→                    if item is None:
+   446→                        items[index] = self.transformer._get_import("typing", "Any")
+   447→
+   448→                node.slice.elts = items
+   449→            else:
+   450→                self.generic_visit(node)
+   451→
+   452→                # If the transformer erased the slice entirely, just return the node
+   453→                # value without the subscript (unless it's Optional, in which case erase
+   454→                # the node entirely
+   455→                if self._memo.name_matches(
+   456→                    node.value, "typing.Optional"
+   457→                ) and not hasattr(node, "slice"):
+   458→                    return None
+   459→                if sys.version_info >= (3, 9) and not hasattr(node, "slice"):
+   460→                    return node.value
+   461→                elif sys.version_info < (3, 9) and not hasattr(node.slice, "value"):
+   462→                    return node.value
+   463→
+   464→        return node
+   465→
+   466→    def visit_Name(self, node: Name) -> Any:
+   467→        if self._memo.is_ignored_name(node):
+   468→            return None
+   469→
+   470→        return node
+   471→
+   472→    def visit_Call(self, node: Call) -> Any:
+   473→        # Don't recurse into calls
+   474→        return node
+   475→
+   476→    def visit_Constant(self, node: Constant) -> Any:
+   477→        if isinstance(node.value, str):
+   478→            expression = ast.parse(node.value, mode="eval")
+   479→            new_node = self.visit(expression)
+   480→            if new_node:
+   481→                return copy_location(new_node.body, node)
+   482→            else:
+   483→                return None
+   484→
+   485→        return node
+   488→class TypeguardTransformer(NodeTransformer):
+   489→    def __init__(
+   490→        self, target_path: Sequence[str] | None = None, target_lineno: int | None = None
+   491→    ) -> None:
+   492→        self._target_path = tuple(target_path) if target_path else None
+   493→        self._memo = self._module_memo = TransformMemo(None, None, ())
+   494→        self.names_used_in_annotations: set[str] = set()
+   495→        self.target_node: FunctionDef | AsyncFunctionDef | None = None
+   496→        self.target_lineno = target_lineno
+   497→
+   498→    def generic_visit(self, node: AST) -> AST:
+   499→        has_non_empty_body_initially = bool(getattr(node, "body", None))
+   500→        initial_type = type(node)
+   501→
+   502→        node = super().generic_visit(node)
+   503→
+   504→        if (
+   505→            type(node) is initial_type
+   506→            and has_non_empty_body_initially
+   507→            and hasattr(node, "body")
+   508→            and not node.body
+   509→        ):
+   510→            # If we have still the same node type after transformation
+   511→            # but we've optimised it's body away, we add a `pass` statement.
+   512→            node.body = [Pass()]
+   513→
+   514→        return node
+   515→
+   516→    @contextmanager
+   517→    def _use_memo(
+   518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
+   519→    ) -> Generator[None, Any, None]:
+   520→        new_memo = TransformMemo(node, self._memo, self._memo.path + (node.name,))
+   521→        old_memo = self._memo
+   522→        self._memo = new_memo
+   523→
+   524→        if isinstance(node, (FunctionDef, AsyncFunctionDef)):
+   525→            new_memo.should_instrument = (
+   526→                self._target_path is None or new_memo.path == self._target_path
+   527→            )
+   528→            if new_memo.should_instrument:
+   529→                # Check if the function is a generator function
+   530→                detector = GeneratorDetector()
+   531→                detector.visit(node)
+   532→
+   533→                # Extract yield, send and return types where possible from a subscripted
+   534→                # annotation like Generator[int, str, bool]
+   535→                return_annotation = deepcopy(node.returns)
+   536→                if detector.contains_yields and new_memo.name_matches(
+   537→                    return_annotation, *generator_names
+   538→                ):
+   539→                    if isinstance(return_annotation, Subscript):
+   540→                        if isinstance(return_annotation.slice, Tuple):
+   541→                            items = return_annotation.slice.elts
+   542→                        else:
+   543→                            items = [return_annotation.slice]
+   544→
+   545→                        if len(items) > 0:
+   546→                            new_memo.yield_annotation = self._convert_annotation(
+   547→                                items[0]
+   548→                            )
+   549→
+   550→                        if len(items) > 1:
+   551→                            new_memo.send_annotation = self._convert_annotation(
+   552→                                items[1]
+   553→                            )
+   554→
+   555→                        if len(items) > 2:
+   556→                            new_memo.return_annotation = self._convert_annotation(
+   557→                                items[2]
+   558→                            )
+   559→                else:
+   560→                    new_memo.return_annotation = self._convert_annotation(
+   561→                        return_annotation
+   562→                    )
+   563→
+   564→        if isinstance(node, AsyncFunctionDef):
+   565→            new_memo.is_async = True
+   566→
+   567→        yield
+   568→        self._memo = old_memo
+   569→
+   570→    def _get_import(self, module: str, name: str) -> Name:
+   571→        memo = self._memo if self._target_path else self._module_memo
+   572→        return memo.get_import(module, name)
+   573→
+   574→    @overload
+   575→    def _convert_annotation(self, annotation: None) -> None: ...
+   576→
+   577→    @overload
+   578→    def _convert_annotation(self, annotation: expr) -> expr: ...
+   579→
+   580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
+   581→        if annotation is None:
+   582→            return None
+   583→
+   584→        # Convert PEP 604 unions (x | y) and generic built-in collections where
+   585→        # necessary, and undo forward references
+   586→        new_annotation = cast(expr, AnnotationTransformer(self).visit(annotation))
+   587→        if isinstance(new_annotation, expr):
+   588→            new_annotation = ast.copy_location(new_annotation, annotation)
+   589→
+   590→            # Store names used in the annotation
+   591→            names = {node.id for node in walk(new_annotation) if isinstance(node, Name)}
+   592→            self.names_used_in_annotations.update(names)
+   593→
+   594→        return new_annotation
+   595→
+   596→    def visit_Name(self, node: Name) -> Name:
+   597→        self._memo.local_names.add(node.id)
+   598→        return node
+   599→
+   600→    def visit_Module(self, node: Module) -> Module:
+   601→        self._module_memo = self._memo = TransformMemo(node, None, ())
+   602→        self.generic_visit(node)
+   603→        self._module_memo.insert_imports(node)
+   604→
+   605→        fix_missing_locations(node)
+   606→        return node
+   607→
+   608→    def visit_Import(self, node: Import) -> Import:
+   609→        for name in node.names:
+   610→            self._memo.local_names.add(name.asname or name.name)
+   611→            self._memo.imported_names[name.asname or name.name] = name.name
+   612→
+   613→        return node
+   614→
+   615→    def visit_ImportFrom(self, node: ImportFrom) -> ImportFrom:
+   616→        for name in node.names:
+   617→            if name.name != "*":
+   618→                alias = name.asname or name.name
+   619→                self._memo.local_names.add(alias)
+   620→                self._memo.imported_names[alias] = f"{node.module}.{name.name}"
+   621→
+   622→        return node
+   623→
+   624→    def visit_ClassDef(self, node: ClassDef) -> ClassDef | None:
+   625→        self._memo.local_names.add(node.name)
+   626→
+   627→        # Eliminate top level classes not belonging to the target path
+   628→        if (
+   629→            self._target_path is not None
+   630→            and not self._memo.path
+   631→            and node.name != self._target_path[0]
+   632→        ):
+   633→            return None
+   634→
+   635→        with self._use_memo(node):
+   636→            for decorator in node.decorator_list.copy():
+   637→                if self._memo.name_matches(decorator, "typeguard.typechecked"):
+   650→    def visit_FunctionDef
+   913→    def visit_AsyncFunctionDef
+   918→    def visit_Return
+   945→    def visit_Yield
+   994→    def visit_AnnAssign
+  1036→    def visit_Assign
+  1138→    def visit_NamedExpr
+  1181→    def visit_AugAssign
+  1224→    def visit_If
+src/typeguard/_utils.py
+    48→    def evaluate_forwardref
+    66→def get_type_name
+   104→def qualified_name
+   127→def function_name
+   142→def resolve_reference
+   154→def is_method_of
+   162→def get_stacklevel
+   172→@final
+   173→class Unset:
+   174→    __slots__ = ()
+   175→
+   176→    def __repr__(self) -> str:
+   177→        return "<unset>"

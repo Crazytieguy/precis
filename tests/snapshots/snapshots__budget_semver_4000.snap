@@ -1,0 +1,897 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 (3724 words)
+
+.eslintrc.js
+     7→const localConfigs = readdir(__dirname)
+     8→  .filter((file) => file.startsWith('.eslintrc.local.'))
+     9→  .map((file) => `./${file}`)
+CHANGELOG.md
+     1→# Changelog
+     2→
+     3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16)
+     4→### Bug Fixes
+     5→* [`a29faa5`](https://github.com/npm/node-semver/commit/a29faa5f3309a01c8e5aeb965fb5c02c4c4e80e2) [#835](https://github.com/npm/node-semver/pull/835) cli: pass options to semver.valid() for loose version validation (#835) (@mldangelo)
+     6→### Documentation
+     7→* [`1d28d5e`](https://github.com/npm/node-semver/commit/1d28d5e82de16163daf721a7c76fff93e0d333ab) [#836](https://github.com/npm/node-semver/pull/836) fix typos and update -n CLI option documentation (#836) (@mldangelo)
+     8→### Dependencies
+     9→* [`120968b`](https://github.com/npm/node-semver/commit/120968b76760cb0db85a72bde2adedd0e9628793) [#840](https://github.com/npm/node-semver/pull/840) `@npmcli/template-oss@4.29.0` (#840)
+    10→### Chores
+    11→* [`44d7130`](https://github.com/npm/node-semver/commit/44d7130c60cedd3703048aa671bb1d659b79ab07) [#824](https://github.com/npm/node-semver/pull/824) bump @npmcli/eslint-config from 5.1.0 to 6.0.0 (#824) (@dependabot[bot])
+    15→## [7.7.3](https://github.com/npm/node-semver/compare/v7.7.2...v7.7.3) (2025-10-06)
+    16→### Bug Fixes
+    17→* [`e37e0ca`](https://github.com/npm/node-semver/commit/e37e0ca0b5fc910d2b1948d25dbc83cc3a0921ea) [#813](https://github.com/npm/node-semver/pull/813) faster paths for compare (#813) (@H4ad)
+    18→* [`2471d75`](https://github.com/npm/node-semver/commit/2471d7543e2e63d9d95358e2405e7e1cde926c36) [#811](https://github.com/npm/node-semver/pull/811) x-range build metadata support (i529015)
+    19→### Chores
+    20→* [`8f05c87`](https://github.com/npm/node-semver/commit/8f05c87f56a4123259b8c6d9324f53eadb02e48f) [#807](https://github.com/npm/node-semver/pull/807) bump @npmcli/template-oss from 4.25.0 to 4.25.1 (#807) (@dependabot[bot], @owlstronaut)
+    22→## [7.7.2](https://github.com/npm/node-semver/compare/v7.7.1...v7.7.2) (2025-05-12)
+    23→### Bug Fixes
+    24→* [`fcafb61`](https://github.com/npm/node-semver/commit/fcafb61ed566ff8ccf24818dd94b76738f037aa4) [#780](https://github.com/npm/node-semver/pull/780) add missing `'use strict'` directives (#780) (@Fdawgs)
+    25→* [`c99f336`](https://github.com/npm/node-semver/commit/c99f336fa3bdff465652f9041eab2127d2f52eb2) [#781](https://github.com/npm/node-semver/pull/781) prerelease identifier starting with digits (#781) (@mbtools)
+    26→### Chores
+    27→* [`c760403`](https://github.com/npm/node-semver/commit/c760403b935d3ad35f83e9bbe5ebe1badef2fc71) [#784](https://github.com/npm/node-semver/pull/784) template-oss-apply for workflow permissions (#784) (@wraithgar)
+    30→## [7.7.1](https://github.com/npm/node-semver/compare/v7.7.0...v7.7.1) (2025-02-03)
+    31→### Bug Fixes
+    32→* [`af761c0`](https://github.com/npm/node-semver/commit/af761c05bd53eef83b5e20f8b09360b0e70557dc) [#764](https://github.com/npm/node-semver/pull/764) inc: fully capture prerelease identifier (#764) (@wraithgar)
+    33→
+    34→## [7.7.0](https://github.com/npm/node-semver/compare/v7.6.3...v7.7.0) (2025-01-29)
+    35→### Features
+    36→* [`0864b3c`](https://github.com/npm/node-semver/commit/0864b3ce7932667013e0c7c5ec764777d4682883) [#753](https://github.com/npm/node-semver/pull/753) add "release" inc type (#753) (@mbtools)
+    37→### Bug Fixes
+    38→* [`d588e37`](https://github.com/npm/node-semver/commit/d588e3782864b1cab2fe9f2452b848e8c7f609d1) [#755](https://github.com/npm/node-semver/pull/755) diff: fix prerelease to stable version diff logic (#755) (@eminberkayd, berkay.daglar)
+    40→### Documentation
+    41→* [`67e5478`](https://github.com/npm/node-semver/commit/67e54785a0f871361230f84323cbb631b9b6d834) [#756](https://github.com/npm/node-semver/pull/756) readme: added missing period for consistency (#756) (@shaymolcho)
+    43→### Chores
+    44→* [`145c554`](https://github.com/npm/node-semver/commit/145c554b8c7b7ecfcb451153ad18bdb2f24ad10d) [#741](https://github.com/npm/node-semver/pull/741) bump @npmcli/eslint-config from 4.0.5 to 5.0.0 (@dependabot[bot])
+    48→## [7.6.3](https://github.com/npm/node-semver/compare/v7.6.2...v7.6.3) (2024-07-16)
+    49→
+    50→### Bug Fixes
+    51→
+    52→* [`73a3d79`](https://github.com/npm/node-semver/commit/73a3d79c4ec32d5dd62c9d5f64e5af7fbdad9ec0) [#726](https://github.com/npm/node-semver/pull/726) optimize Range parsing and formatting (#726) (@jviide)
+    53→
+    54→### Documentation
+    55→
+    58→## [7.6.2](https://github.com/npm/node-semver/compare/v7.6.1...v7.6.2) (2024-05-09)
+    59→
+    60→### Bug Fixes
+    61→
+    62→* [`6466ba9`](https://github.com/npm/node-semver/commit/6466ba9b540252db405fdd2a289dd4651495beea) [#713](https://github.com/npm/node-semver/pull/713) lru: use map.delete() directly (#713) (@negezor, @lukekarrys)
+    63→
+    64→## [7.6.1](https://github.com/npm/node-semver/compare/v7.6.0...v7.6.1) (2024-05-04)
+    65→
+    66→### Bug Fixes
+    67→
+    68→* [`c570a34`](https://github.com/npm/node-semver/commit/c570a348ffc6612af07fe94fa46b9affa5e4eff0) [#704](https://github.com/npm/node-semver/pull/704) linting: no-unused-vars (@wraithgar)
+    69→* [`ad8ff11`](https://github.com/npm/node-semver/commit/ad8ff11dd200dac3a05097d9a82d1977ccfa1535) [#704](https://github.com/npm/node-semver/pull/704) use internal cache implementation (@mbtools)
+    70→* [`ac9b357`](https://github.com/npm/node-semver/commit/ac9b35769ab0ddfefd5a3af4a3ecaf3da2012352) [#682](https://github.com/npm/node-semver/pull/682) typo in compareBuild debug message (#682) (@mbtools)
+    71→
+    72→### Dependencies
+    73→
+    77→### Chores
+    78→
+    86→## [7.6.0](https://github.com/npm/node-semver/compare/v7.5.4...v7.6.0) (2024-01-31)
+    87→
+    88→### Features
+    89→
+    90→* [`a7ab13a`](https://github.com/npm/node-semver/commit/a7ab13a46201e342d34e84a989632b380f755baf) [#671](https://github.com/npm/node-semver/pull/671) preserve pre-release and build parts of a version on coerce (#671) (@madtisa, madtisa, @wraithgar)
+    91→
+    92→### Chores
+    93→
+   108→## [7.5.4](https://github.com/npm/node-semver/compare/v7.5.3...v7.5.4) (2023-07-07)
+   109→
+   110→### Bug Fixes
+   111→
+   112→* [`cc6fde2`](https://github.com/npm/node-semver/commit/cc6fde2d34b95cb600d126649d926901bd2a9703) [#588](https://github.com/npm/node-semver/pull/588) trim each range set before parsing (@lukekarrys)
+   113→* [`99d8287`](https://github.com/npm/node-semver/commit/99d8287516a1d2abf0286033e2e26eca6b69c09f) [#583](https://github.com/npm/node-semver/pull/583) correctly parse long build ids as valid (#583) (@lukekarrys)
+   114→
+   115→## [7.5.3](https://github.com/npm/node-semver/compare/v7.5.2...v7.5.3) (2023-06-22)
+   116→
+   117→### Bug Fixes
+   118→
+   119→* [`abdd93d`](https://github.com/npm/node-semver/commit/abdd93d55496d22e3c15a454a5cf13f101e48bce) [#571](https://github.com/npm/node-semver/pull/571) set max lengths in regex for numeric and build identifiers (#571) (@lukekarrys)
+   120→
+   121→### Documentation
+   122→
+   125→## [7.5.2](https://github.com/npm/node-semver/compare/v7.5.1...v7.5.2) (2023-06-15)
+   126→
+   127→### Bug Fixes
+   128→
+   129→* [`58c791f`](https://github.com/npm/node-semver/commit/58c791f40ba8cf4be35a5ca6644353ecd6249edc) [#566](https://github.com/npm/node-semver/pull/566) diff when detecting major change from prerelease (#566) (@lukekarrys)
+   130→* [`5c8efbc`](https://github.com/npm/node-semver/commit/5c8efbcb3c6c125af10746d054faff13e8c33fbd) [#565](https://github.com/npm/node-semver/pull/565) preserve build in raw after inc (#565) (@lukekarrys)
+   131→* [`717534e`](https://github.com/npm/node-semver/commit/717534ee353682f3bcf33e60a8af4292626d4441) [#564](https://github.com/npm/node-semver/pull/564) better handling of whitespace (#564) (@lukekarrys)
+   132→
+   133→## [7.5.1](https://github.com/npm/node-semver/compare/v7.5.0...v7.5.1) (2023-05-12)
+   134→
+   135→### Bug Fixes
+   136→
+   137→* [`d30d25a`](https://github.com/npm/node-semver/commit/d30d25a5c1fb963c3cc9178cb1769fe45e4a3cab) [#559](https://github.com/npm/node-semver/pull/559) show type on invalid semver error (#559) (@tjenkinson)
+   138→
+   139→## [7.5.0](https://github.com/npm/node-semver/compare/v7.4.0...v7.5.0) (2023-04-17)
+   140→
+   141→### Features
+   142→
+   143→* [`503a4e5`](https://github.com/npm/node-semver/commit/503a4e52fe2b1c6ed1400d33149f7733c8361eed) [#548](https://github.com/npm/node-semver/pull/548) allow identifierBase to be false (#548) (@lsvalina)
+   144→
+   145→### Bug Fixes
+   146→
+   151→## [7.4.0](https://github.com/npm/node-semver/compare/v7.3.8...v7.4.0) (2023-04-10)
+   152→
+   153→### Features
+   154→
+   155→* [`113f513`](https://github.com/npm/node-semver/commit/113f51312a1a6b6aa50d4f9486b4fde21782c1f5) [#532](https://github.com/npm/node-semver/pull/532) identifierBase parameter for .inc (#532) (@wraithgar, @b-bly)
+   156→* [`48d8f8f`](https://github.com/npm/node-semver/commit/48d8f8fa63bf6e35db70ff840b6da1a51596a5a8) [#530](https://github.com/npm/node-semver/pull/530) export new RELEASE_TYPES constant (@hcharley)
+   157→
+   158→### Bug Fixes
+   159→
+   168→### Documentation
+   169→
+   172→## [7.3.8](https://github.com/npm/node-semver/compare/v7.3.7...v7.3.8) (2022-10-04)
+   173→
+   174→### Bug Fixes
+   175→
+   176→* [`d8ef32c`](https://github.com/npm/node-semver/commit/d8ef32cee7a7e34310838f32451c9bcf52956b64) [#383](https://github.com/npm/node-semver/pull/383) add support for node.js esm auto exports (#383) (@MylesBorins)
+   177→
+   178→### Documentation
+   179→
+   182→### [7.3.7](https://github.com/npm/node-semver/compare/v7.3.6...v7.3.7) (2022-04-11)
+   183→
+   185→### Bug Fixes
+   186→
+   187→* allow node >=10 ([85b269a](https://github.com/npm/node-semver/commit/85b269a90806713d2a41e8e990b0ea6bc274b171))
+   188→* **bin:** get correct value from arg separated by equals ([#449](https://github.com/npm/node-semver/issues/449)) ([4ceca76](https://github.com/npm/node-semver/commit/4ceca76729c577166395f19172854cbbcce3cec1)), closes [#431](https://github.com/npm/node-semver/issues/431)
+   189→* ensure SemVer instance passed to inc are not modified ([#427](https://github.com/npm/node-semver/issues/427)) ([f070dde](https://github.com/npm/node-semver/commit/f070dde0cc22894ac254e281cb36a79ab790272d))
+   190→* inc prerelease with numeric preid ([#380](https://github.com/npm/node-semver/issues/380)) ([802e161](https://github.com/npm/node-semver/commit/802e16174fe2a704dba16e97891ce36dc4f2ad76))
+   191→
+   192→
+   193→### Dependencies
+   194→
+   197→### [7.3.6](https://github.com/npm/node-semver/compare/v7.3.5...v7.3.6) (2022-04-05)
+   198→
+   200→### Bug Fixes
+   201→
+   202→* https://github.com/npm/node-semver/issues/329 ([cb1ca1d](https://github.com/npm/node-semver/commit/cb1ca1d5480a6c07c12ac31ba5f2071ed530c4ed))
+   203→* properly escape dots in `GTE0` regexes ([#432](https://github.com/npm/node-semver/issues/432)) ([11494f1](https://github.com/npm/node-semver/commit/11494f1446a907c8fa5d9cfbc9fab04d553311f5))
+   204→* replace deprecated String.prototype.substr() ([#445](https://github.com/npm/node-semver/issues/445)) ([e2d55e7](https://github.com/npm/node-semver/commit/e2d55e79f0d288ea88c0e0ba6620fe5636a4a552))
+   205→* replace regex used to split ranges ([#434](https://github.com/npm/node-semver/issues/434)) ([9ab7b71](https://github.com/npm/node-semver/commit/9ab7b717dd7848c639b8ce3366d2241d430cdad2))
+   206→
+   207→
+   208→### Documentation
+   209→
+   213→### Dependencies
+   214→
+   218→## 7.3.0
+   219→
+   223→## 7.2.3
+   224→
+   228→## 7.2.2
+   229→
+   233→## 7.2.0
+   234→
+   239→## 7.1.2
+   240→
+   244→## 7.1.0
+   245→
+   249→## 7.0.0
+   250→
+   255→## 6.3.0
+   256→
+   259→## 6.2.0
+   260→
+   264→## 6.1.3
+   265→
+   268→## 6.1.2
+   269→
+   272→## 6.1.1
+   273→
+   277→## 6.1.0
+   278→
+   282→## 6.0
+   283→
+   290→## 5.7
+   291→
+   294→## 5.6
+   295→
+   301→## 5.5
+   302→
+   305→## 5.4
+   306→
+   309→## 5.3
+   310→
+   313→## 5.2
+   314→
+   317→## 5.1
+   318→
+   322→## 5.0
+   323→
+CONTRIBUTING.md
+     3→# Contributing
+     4→
+     5→## Code of Conduct
+     6→
+     7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
+     8→
+     9→## Reporting Bugs
+    10→
+    17→## Pull Request Conventions
+    18→
+    19→### Commits
+    20→
+    21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+    22→
+    23→When opening a pull request please be sure that either the pull request title, or each commit in the pull request, has one of the following prefixes:
+    24→
+    25→ - `feat`: For when introducing a new feature.  The result will be a new semver minor version of the package when it is next published.
+    26→ - `fix`: For bug fixes. The result will be a new semver patch version of the package when it is next published.
+    27→ - `docs`: For documentation updates.  The result will be a new semver patch version of the package when it is next published.
+    28→ - `chore`: For changes that do not affect the published module.  Often these are changes to tests.  The result will be *no* change to the version of the package when it is next published (as the commit does not affect the published version).
+    29→
+    30→### Test Coverage
+    31→
+    36→### Linting
+    37→
+    42→## What _not_ to contribute?
+    43→
+    44→### Dependencies
+    45→
+    46→It should be noted that our team does not accept third-party dependency updates/PRs.  If you submit a PR trying to update our dependencies we will close it with or without a reference to these contribution guidelines.
+    47→
+    48→### Tools/Automation
+    49→
+README.md
+     1→semver(1) -- The semantic versioner for npm
+     3→
+     4→## Install
+     5→
+    10→## Usage
+    11→
+   139→## Versions
+   140→
+   148→## Ranges
+   149→
+   184→### Prerelease Tags
+   185→
+   219→#### Prerelease Identifiers
+   220→
+   250→#### Prerelease Identifier Base
+   251→
+   279→### Advanced Range Syntax
+   280→
+   287→#### Hyphen Ranges `X.Y.Z - A.B.C`
+   288→
+   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
+   307→
+   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
+   325→
+   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
+   342→
+   384→### Range Grammar
+   385→
+   408→## Functions
+   409→
+   453→### Comparison
+   454→
+   478→### Sorting
+   479→
+   485→### Comparators
+   486→
+   489→### Ranges
+   490→
+   531→### Coercion
+   532→
+   558→### Clean
+   559→
+   576→## Constants
+   577→
+   580→### `RELEASE_TYPES`
+   581→
+   600→### `SEMVER_SPEC_VERSION`
+   601→
+   610→## Exported Modules
+   611→
+bin/semver.js
+     8→const argv = process.argv.slice(2)
+    12→const range = []
+    37→const main = () => {
+    38→  if (!argv.length) {
+    39→    return help()
+    40→  }
+    41→  while (argv.length) {
+    42→    let a = argv.shift()
+    43→    const indexOfEqualSign = a.indexOf('=')
+    44→    if (indexOfEqualSign !== -1) {
+    45→      const value = a.slice(indexOfEqualSign + 1)
+    46→      a = a.slice(0, indexOfEqualSign)
+    47→      argv.unshift(value)
+    48→    }
+    49→    switch (a) {
+    50→      case '-rv': case '-rev': case '--rev': case '--reverse':
+    51→        reverse = true
+    52→        break
+    53→      case '-l': case '--loose':
+    54→        loose = true
+    55→        break
+    56→      case '-p': case '--include-prerelease':
+   132→const failInc = () => {
+   133→  console.error('--inc can only be used on a single version with no range')
+   134→  fail()
+   135→}
+   137→const fail = () => process.exit(1)
+   139→const help = () => console.log(
+   140→`SemVer ${version}
+   141→
+   142→A JavaScript implementation of the https://semver.org/ specification
+   143→Copyright Isaac Z. Schlueter
+   144→
+   145→Usage: semver [options] <version> [<version> [...]]
+   146→Prints valid versions sorted by SemVer precedence
+   147→
+   148→Options:
+   149→-r --range <range>
+   150→        Print versions that match the specified range.
+   151→
+   152→-i --increment [<level>]
+   153→        Increment a version by the specified level.  Level can
+   154→        be one of: major, minor, patch, premajor, preminor,
+   155→        prepatch, prerelease, or release.  Default level is 'patch'.
+   156→        Only one version may be specified.
+   157→
+   158→--preid <identifier>
+classes/comparator.js
+     3→const ANY = Symbol('SemVer ANY')
+     5→class Comparator {
+     6→  static get ANY () {
+     7→    return ANY
+     8→  }
+     9→
+    10→  constructor (comp, options) {
+    11→    options = parseOptions(options)
+    12→
+    13→    if (comp instanceof Comparator) {
+    14→      if (comp.loose === !!options.loose) {
+    15→        return comp
+    16→      } else {
+    17→        comp = comp.value
+    18→      }
+    19→    }
+    20→
+    21→    comp = comp.trim().split(/\s+/).join(' ')
+    22→    debug('comparator', comp, options)
+    23→    this.options = options
+    24→    this.loose = !!options.loose
+    25→    this.parse(comp)
+    26→
+    27→    if (this.semver === ANY) {
+    28→      this.value = ''
+    29→    } else {
+    30→      this.value = this.operator + this.semver.version
+    31→    }
+    32→
+    33→    debug('comp', this)
+    34→  }
+    35→
+    36→  parse (comp) {
+    37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
+    38→    const m = comp.match(r)
+    39→
+    40→    if (!m) {
+    57→  toString () {
+    58→    return this.value
+    59→  }
+    61→  test (version) {
+    62→    debug('Comparator.test', version, this.options.loose)
+    63→
+    64→    if (this.semver === ANY || version === ANY) {
+    65→      return true
+    66→    }
+    67→
+    68→    if (typeof version === 'string') {
+    79→  intersects (comp, options) {
+    80→    if (!(comp instanceof Comparator)) {
+    81→      throw new TypeError('a Comparator is required')
+    82→    }
+    83→
+    84→    if (this.operator === '') {
+    85→      if (this.value === '') {
+    86→        return true
+classes/range.js
+     3→const SPACE_CHARACTERS = /\s+/g
+     6→class Range {
+     7→  constructor (range, options) {
+     8→    options = parseOptions(options)
+     9→
+    10→    if (range instanceof Range) {
+    11→      if (
+    12→        range.loose === !!options.loose &&
+    13→        range.includePrerelease === !!options.includePrerelease
+    14→      ) {
+    15→        return range
+    16→      } else {
+    17→        return new Range(range.raw, options)
+    18→      }
+    19→    }
+    20→
+    21→    if (range instanceof Comparator) {
+    22→      // just put it in the set and return
+    23→      this.raw = range.value
+    24→      this.set = [[range]]
+    25→      this.formatted = undefined
+    26→      return this
+    27→    }
+    28→
+    29→    this.options = options
+    30→    this.loose = !!options.loose
+    31→    this.includePrerelease = !!options.includePrerelease
+    32→
+    33→    // First reduce all whitespace as much as possible so we do not have to rely
+    34→    // on potentially slow regexes like \s*. This is then stored and used for
+    35→    // future error messages as well.
+    36→    this.raw = range.trim().replace(SPACE_CHARACTERS, ' ')
+    37→
+    38→    // First, split on ||
+    39→    this.set = this.raw
+    40→      .split('||')
+    41→      // map the range to a 2d array of comparators
+    73→  get range () {
+    74→    if (this.formatted === undefined) {
+    75→      this.formatted = ''
+    76→      for (let i = 0; i < this.set.length; i++) {
+    77→        if (i > 0) {
+    78→          this.formatted += '||'
+    79→        }
+    80→        const comps = this.set[i]
+    92→  format () {
+    93→    return this.range
+    94→  }
+    96→  toString () {
+    97→    return this.range
+    98→  }
+   100→  parseRange (range) {
+   101→    // memoize range parsing for performance.
+   102→    // this is a very hot path, and fully deterministic.
+   103→    const memoOpts =
+   104→      (this.options.includePrerelease && FLAG_INCLUDE_PRERELEASE) |
+   105→      (this.options.loose && FLAG_LOOSE)
+   106→    const memoKey = memoOpts + ':' + range
+   107→    const cached = cache.get(memoKey)
+   170→  intersects (range, options) {
+   171→    if (!(range instanceof Range)) {
+   172→      throw new TypeError('a Range is required')
+   173→    }
+   174→
+   175→    return this.set.some((thisComparators) => {
+   176→      return (
+   177→        isSatisfiable(thisComparators, options) &&
+   193→  test (version) {
+   194→    if (!version) {
+   195→      return false
+   196→    }
+   197→
+   198→    if (typeof version === 'string') {
+   199→      try {
+   200→        version = new SemVer(version, this.options)
+   218→const cache = new LRU()
+   233→const isNullSet = c => c.value === '<0.0.0-0'
+   234→const isAny = c => c.value === ''
+   238→const isSatisfiable = (comparators, options) => {
+   239→  let result = true
+   240→  const remainingComparators = comparators.slice()
+   257→const parseComparator = (comp, options) => {
+   258→  comp = comp.replace(re[t.BUILD], '')
+   259→  debug('comp', comp, options)
+   271→const isX = id => !id || id.toLowerCase() === 'x' || id === '*'
+   280→const replaceTildes = (comp, options) => {
+   281→  return comp
+   282→    .trim()
+   288→const replaceTilde = (comp, options) => {
+   289→  const r = options.loose ? re[t.TILDELOOSE] : re[t.TILDE]
+   290→  return comp.replace(r, (_, M, m, p, pr) => {
+   324→const replaceCarets = (comp, options) => {
+   325→  return comp
+   326→    .trim()
+   332→const replaceCaret = (comp, options) => {
+   333→  debug('caret', comp, options)
+   334→  const r = options.loose ? re[t.CARETLOOSE] : re[t.CARET]
+   385→const replaceXRanges = (comp, options) => {
+   386→  debug('replaceXRanges', comp, options)
+   387→  return comp
+   393→const replaceXRange = (comp, options) => {
+   394→  comp = comp.trim()
+   395→  const r = options.loose ? re[t.XRANGELOOSE] : re[t.XRANGE]
+   470→const replaceStars = (comp, options) => {
+   471→  debug('replaceStars', comp, options)
+   472→  // Looseness is ignored here.  star is always as loose as it gets!
+   478→const replaceGTE0 = (comp, options) => {
+   479→  debug('replaceGTE0', comp, options)
+   480→  return comp
+   491→const hyphenReplace = incPr => ($0,
+   492→  from, fM, fm, fp, fpr, fb,
+   493→  to, tM, tm, tp, tpr) => {
+   494→  if (isX(fM)) {
+   495→    from = ''
+   523→const testSet = (set, version, options) => {
+   524→  for (let i = 0; i < set.length; i++) {
+   525→    if (!set[i].test(version)) {
+classes/semver.js
+     9→class SemVer {
+    10→  constructor (version, options) {
+    11→    options = parseOptions(options)
+    12→
+    13→    if (version instanceof SemVer) {
+    14→      if (version.loose === !!options.loose &&
+    15→        version.includePrerelease === !!options.includePrerelease) {
+    16→        return version
+    17→      } else {
+    18→        version = version.version
+    19→      }
+    20→    } else if (typeof version !== 'string') {
+    21→      throw new TypeError(`Invalid version. Must be a string. Got type "${typeof version}".`)
+    22→    }
+    23→
+    24→    if (version.length > MAX_LENGTH) {
+    25→      throw new TypeError(
+    26→        `version is longer than ${MAX_LENGTH} characters`
+    27→      )
+    28→    }
+    29→
+    30→    debug('SemVer', version, options)
+    31→    this.options = options
+    32→    this.loose = !!options.loose
+    33→    // this isn't actually relevant for versions, but keep it so that we
+    34→    // don't run into trouble passing this.options around.
+    35→    this.includePrerelease = !!options.includePrerelease
+    36→
+    37→    const m = version.trim().match(options.loose ? re[t.LOOSE] : re[t.FULL])
+    38→
+    39→    if (!m) {
+    40→      throw new TypeError(`Invalid Version: ${version}`)
+    41→    }
+    42→
+    43→    this.raw = version
+    44→
+    81→  format () {
+    82→    this.version = `${this.major}.${this.minor}.${this.patch}`
+    83→    if (this.prerelease.length) {
+    84→      this.version += `-${this.prerelease.join('.')}`
+    85→    }
+    86→    return this.version
+    87→  }
+    89→  toString () {
+    90→    return this.version
+    91→  }
+    93→  compare (other) {
+    94→    debug('SemVer.compare', this.version, this.options, other)
+    95→    if (!(other instanceof SemVer)) {
+    96→      if (typeof other === 'string' && other === this.version) {
+    97→        return 0
+    98→      }
+    99→      other = new SemVer(other, this.options)
+   100→    }
+   109→  compareMain (other) {
+   110→    if (!(other instanceof SemVer)) {
+   111→      other = new SemVer(other, this.options)
+   112→    }
+   113→
+   114→    if (this.major < other.major) {
+   115→      return -1
+   116→    }
+   135→  comparePre (other) {
+   136→    if (!(other instanceof SemVer)) {
+   137→      other = new SemVer(other, this.options)
+   138→    }
+   139→
+   140→    // NOT having a prerelease is > having one
+   141→    if (this.prerelease.length && !other.prerelease.length) {
+   142→      return -1
+   168→  compareBuild (other) {
+   169→    if (!(other instanceof SemVer)) {
+   170→      other = new SemVer(other, this.options)
+   171→    }
+   172→
+   173→    let i = 0
+   174→    do {
+   175→      const a = this.build[i]
+   194→  inc (release, identifier, identifierBase) {
+   195→    if (release.startsWith('pre')) {
+   196→      if (!identifier && identifierBase === false) {
+   197→        throw new Error('invalid increment argument: identifier is empty')
+   198→      }
+   199→      // Avoid an invalid semver results
+   200→      if (identifier) {
+   201→        const match = `-${identifier}`.match(this.options.loose ? re[t.PRERELEASELOOSE] : re[t.PRERELEASE])
+functions/clean.js
+     4→const clean = (version, options) => {
+     5→  const s = parse(version.trim().replace(/^[=v]+/, ''), options)
+     6→  return s ? s.version : null
+     7→}
+functions/cmp.js
+    10→const cmp = (a, op, b, loose) => {
+    11→  switch (op) {
+    12→    case '===':
+    13→      if (typeof a === 'object') {
+    14→        a = a.version
+    15→      }
+    16→      if (typeof b === 'object') {
+    17→        b = b.version
+    18→      }
+functions/coerce.js
+     7→const coerce = (version, options) => {
+     8→  if (version instanceof SemVer) {
+     9→    return version
+    10→  }
+    11→
+    12→  if (typeof version === 'number') {
+    13→    version = String(version)
+    14→  }
+    15→
+functions/compare-build.js
+     4→const compareBuild = (a, b, loose) => {
+     5→  const versionA = new SemVer(a, loose)
+     6→  const versionB = new SemVer(b, loose)
+     7→  return versionA.compare(versionB) || versionA.compareBuild(versionB)
+     8→}
+functions/compare-loose.js
+     4→const compareLoose = (a, b) => compare(a, b, true)
+functions/compare.js
+     4→const compare = (a, b, loose) =>
+     5→  new SemVer(a, loose).compare(new SemVer(b, loose))
+functions/diff.js
+     5→const diff = (version1, version2) => {
+     6→  const v1 = parse(version1, null, true)
+     7→  const v2 = parse(version2, null, true)
+     8→  const comparison = v1.compare(v2)
+     9→
+    10→  if (comparison === 0) {
+    11→    return null
+    12→  }
+    13→
+functions/eq.js
+     4→const eq = (a, b, loose) => compare(a, b, loose) === 0
+functions/gt.js
+     4→const gt = (a, b, loose) => compare(a, b, loose) > 0
+functions/gte.js
+     4→const gte = (a, b, loose) => compare(a, b, loose) >= 0
+functions/inc.js
+     5→const inc = (version, release, options, identifier, identifierBase) => {
+     6→  if (typeof (options) === 'string') {
+     7→    identifierBase = identifier
+     8→    identifier = options
+     9→    options = undefined
+    10→  }
+    11→
+    12→  try {
+    13→    return new SemVer(
+functions/lt.js
+     4→const lt = (a, b, loose) => compare(a, b, loose) < 0
+functions/lte.js
+     4→const lte = (a, b, loose) => compare(a, b, loose) <= 0
+functions/major.js
+     4→const major = (a, loose) => new SemVer(a, loose).major
+functions/minor.js
+     4→const minor = (a, loose) => new SemVer(a, loose).minor
+functions/neq.js
+     4→const neq = (a, b, loose) => compare(a, b, loose) !== 0
+functions/parse.js
+     4→const parse = (version, options, throwErrors = false) => {
+     5→  if (version instanceof SemVer) {
+     6→    return version
+     7→  }
+     8→  try {
+     9→    return new SemVer(version, options)
+    10→  } catch (er) {
+    11→    if (!throwErrors) {
+    12→      return null
+functions/patch.js
+     4→const patch = (a, loose) => new SemVer(a, loose).patch
+functions/prerelease.js
+     4→const prerelease = (version, options) => {
+     5→  const parsed = parse(version, options)
+     6→  return (parsed && parsed.prerelease.length) ? parsed.prerelease : null
+     7→}
+functions/rcompare.js
+     4→const rcompare = (a, b, loose) => compare(b, a, loose)
+functions/rsort.js
+     4→const rsort = (list, loose) => list.sort((a, b) => compareBuild(b, a, loose))
+functions/satisfies.js
+     4→const satisfies = (version, range, options) => {
+     5→  try {
+     6→    range = new Range(range, options)
+     7→  } catch (er) {
+     8→    return false
+     9→  }
+    10→  return range.test(version)
+    11→}
+functions/sort.js
+     4→const sort = (list, loose) => list.sort((a, b) => compareBuild(a, b, loose))
+functions/valid.js
+     4→const valid = (version, options) => {
+     5→  const v = parse(version, options)
+     6→  return v ? v.version : null
+     7→}
+internal/constants.js
+     5→const SEMVER_SPEC_VERSION = '2.0.0'
+     7→const MAX_LENGTH = 256
+     8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
+     9→/* istanbul ignore next */ 9007199254740991
+    12→const MAX_SAFE_COMPONENT_LENGTH = 16
+    16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
+    18→const RELEASE_TYPES = [
+    19→  'major',
+    20→  'premajor',
+    21→  'minor',
+    22→  'preminor',
+    23→  'patch',
+    24→  'prepatch',
+    25→  'prerelease',
+    26→]
+internal/debug.js
+     3→const debug = (
+     4→  typeof process === 'object' &&
+     5→  process.env &&
+     6→  process.env.NODE_DEBUG &&
+     7→  /\bsemver\b/i.test(process.env.NODE_DEBUG)
+     8→) ? (...args) => console.error('SEMVER', ...args)
+     9→  : () => {}
+internal/identifiers.js
+     3→const numeric = /^[0-9]+$/
+     4→const compareIdentifiers = (a, b) => {
+     5→  if (typeof a === 'number' && typeof b === 'number') {
+     6→    return a === b ? 0 : a < b ? -1 : 1
+     7→  }
+     8→
+     9→  const anum = numeric.test(a)
+    10→  const bnum = numeric.test(b)
+    11→
+    12→  if (anum && bnum) {
+    13→    a = +a
+    14→    b = +b
+    15→  }
+    16→
+    17→  return a === b ? 0
+    18→    : (anum && !bnum) ? -1
+    19→    : (bnum && !anum) ? 1
+    20→    : a < b ? -1
+    21→    : 1
+    22→}
+    24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
+internal/lrucache.js
+     3→class LRUCache {
+     4→  constructor () {
+     5→    this.max = 1000
+     6→    this.map = new Map()
+     7→  }
+     8→
+     9→  get (key) {
+    10→    const value = this.map.get(key)
+    11→    if (value === undefined) {
+    12→      return undefined
+    13→    } else {
+    14→      // Remove the key from the map and add it to the end
+    15→      this.map.delete(key)
+    16→      this.map.set(key, value)
+    17→      return value
+    18→    }
+    19→  }
+    20→
+    21→  delete (key) {
+    22→    return this.map.delete(key)
+    23→  }
+    24→
+    25→  set (key, value) {
+    26→    const deleted = this.delete(key)
+    27→
+    28→    if (!deleted && value !== undefined) {
+    29→      // If cache is full, delete the least recently used item
+    30→      if (this.map.size >= this.max) {
+    31→        const firstKey = this.map.keys().next().value
+    32→        this.delete(firstKey)
+    33→      }
+    34→
+    35→      this.map.set(key, value)
+    36→    }
+    37→
+    38→    return this
+    39→  }
+    40→}
+internal/parse-options.js
+     4→const looseOption = Object.freeze({ loose: true })
+     5→const emptyOpts = Object.freeze({ })
+     6→const parseOptions = options => {
+     7→  if (!options) {
+     8→    return emptyOpts
+     9→  }
+    10→
+    11→  if (typeof options !== 'object') {
+    12→    return looseOption
+    13→  }
+    14→
+    15→  return options
+    16→}
+internal/re.js
+    12→const re = exports.re = []
+    13→const safeRe = exports.safeRe = []
+    14→const src = exports.src = []
+    15→const safeSrc = exports.safeSrc = []
+    16→const t = exports.t = {}
+    19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
+    27→const safeRegexReplacements = [
+    28→  ['\\s', 1],
+    29→  ['\\d', MAX_LENGTH],
+    30→  [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH],
+    31→]
+    33→const makeSafeRegex = (value) => {
+    34→  for (const [token, max] of safeRegexReplacements) {
+    35→    value = value
+    36→      .split(`${token}*`).join(`${token}{0,${max}}`)
+    37→      .split(`${token}+`).join(`${token}{1,${max}}`)
+    38→  }
+    39→  return value
+    40→}
+    42→const createToken = (name, value, isGlobal) => {
+    43→  const safe = makeSafeRegex(value)
+    44→  const index = R++
+    45→  debug(name, index, value)
+    46→  t[name] = index
+    47→  src[index] = value
+    48→  safeSrc[index] = safe
+    49→  re[index] = new RegExp(value, isGlobal ? 'g' : undefined)
+    50→  safeRe[index] = new RegExp(safe, isGlobal ? 'g' : undefined)
+    51→}
+ranges/gtr.js
+     5→const gtr = (version, range, options) => outside(version, range, '>', options)
+ranges/intersects.js
+     4→const intersects = (r1, r2, options) => {
+     5→  r1 = new Range(r1, options)
+     6→  r2 = new Range(r2, options)
+     7→  return r1.intersects(r2, options)
+ranges/ltr.js
+     5→const ltr = (version, range, options) => outside(version, range, '<', options)
+ranges/max-satisfying.js
+     6→const maxSatisfying = (versions, range, options) => {
+     7→  let max = null
+     8→  let maxSV = null
+     9→  let rangeObj = null
+ranges/min-satisfying.js
+     5→const minSatisfying = (versions, range, options) => {
+     6→  let min = null
+     7→  let minSV = null
+     8→  let rangeObj = null
+ranges/min-version.js
+     7→const minVersion = (range, loose) => {
+     8→  range = new Range(range, loose)
+     9→
+    10→  let minver = new SemVer('0.0.0')
+ranges/outside.js
+    13→const outside = (version, range, hilo, options) => {
+    14→  version = new SemVer(version, options)
+    15→  range = new Range(range, options)
+    16→
+ranges/subset.js
+    45→const subset = (sub, dom, options = {}) => {
+    46→  if (sub === dom) {
+    47→    return true
+    48→  }
+    73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
+    74→const minimumVersion = [new Comparator('>=0.0.0')]
+    76→const simpleSubset = (sub, dom, options) => {
+    77→  if (sub === dom) {
+    78→    return true
+    79→  }
+   226→const higherGT = (a, b, options) => {
+   227→  if (!a) {
+   228→    return b
+   229→  }
+   238→const lowerLT = (a, b, options) => {
+   239→  if (!a) {
+   240→    return b
+   241→  }
+ranges/to-comparators.js
+     6→const toComparators = (range, options) =>
+     7→  new Range(range, options).set
+     8→    .map(comp => comp.map(c => c.value).join(' ').trim().split(' '))
+ranges/valid.js
+     4→const validRange = (range, options) => {
+     5→  try {
+     6→    // Return '*' instead of '' so that truthiness works.
+     7→    // This will throw if it's invalid anyway

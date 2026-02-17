@@ -1,0 +1,151 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (499 words)
+
+input.tsx
+    10→export const OTPInputContext = React.createContext<RenderProps>(
+    11→  {} as RenderProps,
+    12→)
+    14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
+    15→  (
+    16→    {
+    17→      value: uncheckedValue,
+    18→      onChange: uncheckedOnChange,
+    19→      maxLength,
+    20→      textAlign = 'left',
+    21→      pattern,
+    22→      placeholder,
+    23→      inputMode = 'numeric',
+    24→      onComplete,
+    25→      pushPasswordManagerStrategy = 'increase-width',
+    26→      pasteTransformer,
+    27→      containerClassName,
+    28→      noScriptCSSFallback = NOSCRIPT_CSS_FALLBACK,
+    29→
+    30→      render,
+    31→      children,
+    32→
+    33→      ...props
+    34→    },
+    35→    ref,
+    36→  ) => {
+   540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
+   541→  try {
+   542→    sheet.insertRule(rule)
+   543→  } catch {
+   544→    console.error('input-otp could not insert CSS rule:', rule)
+   545→  }
+   546→}
+   553→const NOSCRIPT_CSS_FALLBACK = `
+   554→[data-input-otp] {
+   555→  --nojs-bg: white !important;
+   556→  --nojs-fg: black !important;
+   557→
+   558→  background-color: var(--nojs-bg) !important;
+   559→  color: var(--nojs-fg) !important;
+regexp.ts
+     1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
+     2→export const REGEXP_ONLY_CHARS = '^[a-zA-Z]+$'
+     3→export const REGEXP_ONLY_DIGITS_AND_CHARS = '^[a-zA-Z0-9]+$'
+sync-timeouts.ts
+     1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
+     2→  const t1 = setTimeout(cb, 0) // For faster machines
+     3→  const t2 = setTimeout(cb, 1_0)
+     4→  const t3 = setTimeout(cb, 5_0)
+     5→  return [t1, t2, t3]
+     6→}
+types.ts
+     1→export interface SlotProps {
+     2→  isActive: boolean
+     3→  char: string | null
+     4→  placeholderChar: string | null
+     5→  hasFakeCaret: boolean
+     6→}
+     7→export interface RenderProps {
+     8→  slots: SlotProps[]
+     9→  isFocused: boolean
+    10→  isHovering: boolean
+    11→}
+    12→type OverrideProps<T, R> = Omit<T, keyof R> & R
+    13→type OTPInputBaseProps = OverrideProps<
+    14→  React.InputHTMLAttributes<HTMLInputElement>,
+    15→  {
+    16→    value?: string
+    17→    onChange?: (newValue: string) => unknown
+    18→
+    19→    maxLength: number
+    20→
+    21→    textAlign?: 'left' | 'center' | 'right'
+    22→
+    23→    onComplete?: (...args: any[]) => unknown
+    24→    pushPasswordManagerStrategy?: 'increase-width' | 'none'
+    25→    pasteTransformer?: (pasted: string) => string
+    26→
+    27→    containerClassName?: string
+    28→
+    29→    noScriptCSSFallback?: string | null
+    30→  }
+    31→>
+    32→type InputOTPRenderFn = (props: RenderProps) => React.ReactNode
+    33→export type OTPInputProps = OTPInputBaseProps &
+    34→  (
+    35→    | {
+    36→        render: InputOTPRenderFn
+    37→        children?: never
+    38→      }
+    39→    | {
+    40→        render?: never
+    41→        children: React.ReactNode
+    42→      }
+    43→  )
+use-previous.ts
+     3→export function usePrevious<T>(value: T) {
+     4→  const ref = React.useRef<T>()
+     5→  React.useEffect(() => {
+     6→    ref.current = value
+     7→  })
+     8→  return ref.current
+     9→}
+use-pwm-badge.tsx
+     4→const PWM_BADGE_MARGIN_RIGHT = 18
+     5→const PWM_BADGE_SPACE_WIDTH_PX = 40
+     6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
+     8→const PASSWORD_MANAGERS_SELECTORS = [
+     9→  '[data-lastpass-icon-root]', // LastPass
+    10→  'com-1password-button', // 1Password
+    11→  '[data-dashlanecreated]', // Dashlane
+    12→  '[style$="2147483647 !important;"]', // Bitwarden
+    13→].join(',')
+    15→export function usePasswordManagerBadge({
+    16→  containerRef,
+    17→  inputRef,
+    18→  pushPasswordManagerStrategy,
+    19→  isFocused,
+    20→}: {
+    21→  containerRef: React.RefObject<HTMLDivElement>
+    22→  inputRef: React.RefObject<HTMLInputElement>
+    23→  pushPasswordManagerStrategy: OTPInputProps['pushPasswordManagerStrategy']
+    24→  isFocused: boolean
+    25→}) {
+    26→  /** Password managers have a badge
+    27→   *  and I'll use this state to push them
+    28→   *  outside the input */
+    29→  const [hasPWMBadge, setHasPWMBadge] = React.useState(false)
+    30→  const [hasPWMBadgeSpace, setHasPWMBadgeSpace] = React.useState(false)
+    31→  const [done, setDone] = React.useState(false)
+    32→
+    33→  const willPushPWMBadge = React.useMemo(() => {
+    34→    if (pushPasswordManagerStrategy === 'none') {
+    35→      return false
+    36→    }
+    37→
+    38→    const increaseWidthCase =
+    39→      (pushPasswordManagerStrategy === 'increase-width' ||
+    40→        // TODO: remove 'experimental-no-flickering' support in 2.0.0
+    41→        pushPasswordManagerStrategy === 'experimental-no-flickering') &&
+    42→      hasPWMBadge &&
+    43→      hasPWMBadgeSpace
+    44→
+    45→    return increaseWidthCase

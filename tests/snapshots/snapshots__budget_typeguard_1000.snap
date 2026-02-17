@@ -1,0 +1,292 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (997 words)
+
+src/typeguard/__init__.py
+    34→config: TypeCheckConfiguration
+src/typeguard/_checkers.py
+    81→TypeCheckerCallable: TypeAlias = Callable[
+    82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
+    83→]
+    84→TypeCheckLookupCallback: TypeAlias = Callable[
+    85→    [Any, Tuple[Any, ...], Tuple[Any, ...]], Optional[TypeCheckerCallable]
+    86→]
+    88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
+    89→generic_alias_types: tuple[type, ...] = (
+    90→    type(List),
+    91→    type(List[Any]),
+    92→    types.GenericAlias,
+    93→)
+    98→# Lifted from mypy.sharedparse
+    99→BINARY_MAGIC_METHODS = {
+   100→    "__add__",
+   101→    "__and__",
+   102→    "__cmp__",
+   103→    "__divmod__",
+   104→    "__div__",
+   105→    "__eq__",
+   106→    "__floordiv__",
+   107→    "__ge__",
+   108→    "__gt__",
+   109→    "__iadd__",
+   110→    "__iand__",
+   111→    "__idiv__",
+   112→    "__ifloordiv__",
+   113→    "__ilshift__",
+   114→    "__imatmul__",
+   115→    "__imod__",
+   116→    "__imul__",
+   117→    "__ior__",
+   118→    "__ipow__",
+   119→    "__irshift__",
+   120→    "__isub__",
+   121→    "__itruediv__",
+   122→    "__ixor__",
+   123→    "__le__",
+   124→    "__lshift__",
+   586→def _is_literal_type(typ: object) -> bool:
+   587→    return typ is typing.Literal or typ is typing_extensions.Literal
+  1004→# Equality checks are applied to these
+  1005→origin_type_checkers: dict[
+  1006→    Any, Callable[[Any, Any, tuple[Any, ...], TypeCheckMemo], None]
+  1007→] = {
+  1008→    bytes: check_byteslike,
+  1009→    AbstractSet: check_set,
+  1010→    BinaryIO: check_io,
+  1011→    Callable: check_callable,
+  1012→    collections.abc.Callable: check_callable,
+  1013→    complex: check_number,
+  1014→    dict: check_mapping,
+  1015→    Dict: check_mapping,
+  1016→    float: check_number,
+  1017→    frozenset: check_set,
+  1018→    IO: check_io,
+  1019→    list: check_list,
+  1020→    List: check_list,
+  1021→    typing.Literal: check_literal,
+  1022→    Mapping: check_mapping,
+  1023→    MutableMapping: check_mapping,
+  1024→    None: check_none,
+  1025→    collections.abc.Mapping: check_mapping,
+  1026→    collections.abc.MutableMapping: check_mapping,
+  1027→    Sequence: check_sequence,
+  1028→    collections.abc.Sequence: check_sequence,
+  1029→    collections.abc.Set: check_set,
+  1030→    set: check_set,
+src/typeguard/_config.py
+    11→T = TypeVar("T")
+    14→class ForwardRefPolicy(Enum):
+    24→
+    30→class CollectionCheckStrategy(Enum):
+    48→
+    63→class TypeCheckConfiguration:
+    97→
+    98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
+    99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
+   100→    collection_check_strategy: CollectionCheckStrategy = (
+   101→        CollectionCheckStrategy.FIRST_ITEM
+   102→    )
+   103→    debug_instrumentation: bool = False
+src/typeguard/_exceptions.py
+     5→class TypeHintWarning(UserWarning):
+    12→class TypeCheckWarning(UserWarning):
+    14→
+    19→class InstrumentationWarning(UserWarning):
+    21→
+    26→class TypeCheckError(Exception):
+    30→
+src/typeguard/_functions.py
+    24→T = TypeVar("T")
+    25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
+src/typeguard/_importhook.py
+    40→P = ParamSpec("P")
+    41→T = TypeVar("T")
+    44→# The name of this function is magical
+    45→def _call_with_frames_removed(
+    46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
+    47→) -> T:
+    48→    return f(*args, **kwargs)
+    55→class TypeguardLoader(SourceFileLoader):
+    56→    @staticmethod
+    57→    def source_to_code(
+    58→        data: Buffer | str | ast.Module | ast.Expression | ast.Interactive,
+    59→        path: Buffer | str | PathLike[str] = "<string>",
+    60→        *,
+    61→        _optimize: int = -1,
+    62→    ) -> CodeType:
+    63→        if isinstance(path, (str, PathLike)):
+    64→            filename = path
+    65→        else:
+    66→            filename = os.fsdecode(bytes(path))
+    67→
+    68→        if isinstance(data, (ast.Module, ast.Expression, ast.Interactive)):
+    69→            module = data
+    70→        else:
+    71→            if isinstance(data, str):
+    72→                source = data
+    73→            else:
+    74→                source = decode_source(data)
+    75→
+    76→            module = _call_with_frames_removed(
+    77→                ast.parse,
+    78→                source,
+    79→                filename,
+    80→                "exec",
+    81→            )
+    82→
+    83→        tree = TypeguardTransformer().visit(module)
+    84→        ast.fix_missing_locations(tree)
+    85→
+    86→        if global_config.debug_instrumentation and sys.version_info >= (3, 9):
+    87→            print(
+    88→                f"Source code of {path!r} after instrumentation:\n"
+    89→                "----------------------------------------------",
+    90→                file=sys.stderr,
+    91→            )
+    92→            print(ast.unparse(tree), file=sys.stderr)
+    93→            print("----------------------------------------------", file=sys.stderr)
+    94→
+    95→        return _call_with_frames_removed(
+   109→class TypeguardFinder(MetaPathFinder):
+   119→
+   156→class ImportHookManager:
+   160→
+src/typeguard/_memo.py
+     8→class TypeCheckMemo:
+    34→
+src/typeguard/_suppression.py
+    15→P = ParamSpec("P")
+    16→T = TypeVar("T")
+src/typeguard/_transformer.py
+    67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
+    68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
+   118→class TransformMemo:
+   119→    node: Module | ClassDef | FunctionDef | AsyncFunctionDef | None
+   120→    parent: TransformMemo | None
+   121→    path: tuple[str, ...]
+   122→    joined_path: Constant = field(init=False)
+   123→    return_annotation: expr | None = None
+   124→    yield_annotation: expr | None = None
+   125→    send_annotation: expr | None = None
+   126→    is_async: bool = False
+   127→    local_names: set[str] = field(init=False, default_factory=set)
+   128→    imported_names: dict[str, str] = field(init=False, default_factory=dict)
+   129→    ignored_names: set[str] = field(init=False, default_factory=set)
+   130→    load_names: defaultdict[str, dict[str, Name]] = field(
+   131→        init=False, default_factory=lambda: defaultdict(dict)
+   132→    )
+   133→    has_yield_expressions: bool = field(init=False, default=False)
+   134→    has_return_expressions: bool = field(init=False, default=False)
+   135→    memo_var_name: Name | None = field(init=False, default=None)
+   136→    should_instrument: bool = field(init=False, default=True)
+   137→    variable_annotations: dict[str, expr] = field(init=False, default_factory=dict)
+   138→    configuration_overrides: dict[str, Any] = field(init=False, default_factory=dict)
+   139→    code_inject_index: int = field(init=False, default=0)
+   140→
+   141→    def __post_init__(self) -> None:
+   142→        elements: list[str] = []
+   143→        memo = self
+   144→        while isinstance(memo.node, (ClassDef, FunctionDef, AsyncFunctionDef)):
+   145→            elements.insert(0, memo.node.name)
+   146→            if not memo.parent:
+   147→                break
+   148→
+   149→            memo = memo.parent
+   150→            if isinstance(memo.node, (FunctionDef, AsyncFunctionDef)):
+   151→                elements.insert(0, "<locals>")
+   152→
+   153→        self.joined_path = Constant(".".join(elements))
+   154→
+   155→        # Figure out where to insert instrumentation code
+   156→        if self.node:
+   157→            for index, child in enumerate(self.node.body):
+   158→                if isinstance(child, ImportFrom) and child.module == "__future__":
+   159→                    # (module only) __future__ imports must come first
+   160→                    continue
+   161→                elif (
+   162→                    isinstance(child, Expr)
+   163→                    and isinstance(child.value, Constant)
+   164→                    and isinstance(child.value.value, str)
+   165→                ):
+   166→                    continue  # docstring
+   167→
+   168→                self.code_inject_index = index
+   169→                break
+   170→
+   171→    def get_unused_name(self, name: str) -> str:
+   172→        memo: TransformMemo | None = self
+   173→        while memo is not None:
+   174→            if name in memo.local_names:
+   175→                memo = self
+   176→                name += "_"
+   177→            else:
+   178→                memo = memo.parent
+   179→
+   180→        self.local_names.add(name)
+   181→        return name
+   182→
+   183→    def is_ignored_name(self, expression: expr | Expr | None) -> bool:
+   184→        top_expression = (
+   185→            expression.value if isinstance(expression, Expr) else expression
+   186→        )
+   187→
+   188→        if isinstance(top_expression, Attribute) and isinstance(
+   189→            top_expression.value, Name
+   190→        ):
+   191→            name = top_expression.value.id
+   192→        elif isinstance(top_expression, Name):
+   193→            name = top_expression.id
+   194→        else:
+   195→            return False
+   196→
+   197→        memo: TransformMemo | None = self
+   198→        while memo is not None:
+   199→            if name in memo.ignored_names:
+   200→                return True
+   201→
+   202→            memo = memo.parent
+   203→
+   204→        return False
+   205→
+   206→    def get_memo_name(self) -> Name:
+   207→        if not self.memo_var_name:
+   208→            self.memo_var_name = Name(id="memo", ctx=Load())
+   209→
+   210→        return self.memo_var_name
+   211→
+   285→class NameCollector(NodeVisitor):
+   286→    def __init__(self) -> None:
+   313→class GeneratorDetector(NodeVisitor):
+   315→
+   338→class AnnotationTransformer(NodeTransformer):
+   339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
+   488→class TypeguardTransformer(NodeTransformer):
+   489→    def __init__(
+   516→    @contextmanager
+   517→    def _use_memo(
+   518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
+   519→    ) -> Generator[None, Any, None]:
+   520→        new_memo = TransformMemo(node, self._memo, self._memo.path + (node.name,))
+   521→        old_memo = self._memo
+   522→        self._memo = new_memo
+   523→
+   524→        if isinstance(node, (FunctionDef, AsyncFunctionDef)):
+   525→            new_memo.should_instrument = (
+   526→                self._target_path is None or new_memo.path == self._target_path
+   527→            )
+   528→            if new_memo.should_instrument:
+   570→    def _get_import(self, module: str, name: str) -> Name:
+   571→        memo = self._memo if self._target_path else self._module_memo
+   572→        return memo.get_import(module, name)
+   580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
+   581→        if annotation is None:
+   582→            return None
+   583→
+src/typeguard/_utils.py
+   173→class Unset:
+   174→    __slots__ = ()
+   175→
+   176→    def __repr__(self) -> str:
+   177→        return "<unset>"

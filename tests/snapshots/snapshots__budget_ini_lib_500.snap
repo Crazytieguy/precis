@@ -1,0 +1,107 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (500 words)
+
+ini.js
+     3→const encode = (obj, opt = {}) => {
+     4→  if (typeof opt === 'string') {
+     5→    opt = { section: opt }
+     6→  }
+     7→  opt.align = opt.align === true
+     8→  opt.newline = opt.newline === true
+     9→  opt.sort = opt.sort === true
+    10→  opt.whitespace = opt.whitespace === true || opt.align === true
+    11→  // The `typeof` check is required because accessing the `process` directly fails on browsers.
+    12→  /* istanbul ignore next */
+    13→  opt.platform = opt.platform || (typeof process !== 'undefined' && process.platform)
+    14→  opt.bracketedArray = opt.bracketedArray !== false
+    15→
+    16→  /* istanbul ignore next */
+    17→  const eol = opt.platform === 'win32' ? '\r\n' : '\n'
+    18→  const separator = opt.whitespace ? ' = ' : '='
+    19→  const children = []
+    20→
+    21→  const keys = opt.sort ? Object.keys(obj).sort() : Object.keys(obj)
+    22→
+    23→  let padToChars = 0
+    80→function splitSections (str, separator) {
+    81→  var lastMatchIndex = 0
+    82→  var lastSeparatorIndex = 0
+    83→  var nextIndex = 0
+    84→  var sections = []
+    85→
+    86→  do {
+    87→    nextIndex = str.indexOf(separator, lastMatchIndex)
+    88→
+    89→    if (nextIndex !== -1) {
+    90→      lastMatchIndex = nextIndex + separator.length
+    91→
+    92→      if (nextIndex > 0 && str[nextIndex - 1] === '\\') {
+    93→        continue
+    94→      }
+    95→
+    96→      sections.push(str.slice(lastSeparatorIndex, nextIndex))
+    97→      lastSeparatorIndex = nextIndex + separator.length
+    98→    }
+    99→  } while (nextIndex !== -1)
+   100→
+   106→const decode = (str, opt = {}) => {
+   107→  opt.bracketedArray = opt.bracketedArray !== false
+   108→  const out = Object.create(null)
+   109→  let p = out
+   110→  let section = null
+   111→  //          section          |key      = value
+   112→  const re = /^\[([^\]]*)\]\s*$|^([^=]+)(=(.*))?$/i
+   113→  const lines = str.split(/[\r\n]+/g)
+   114→  const duplicates = {}
+   115→
+   116→  for (const line of lines) {
+   117→    if (!line || line.match(/^\s*[;#]/) || line.match(/^\s*$/)) {
+   118→      continue
+   119→    }
+   120→    const match = line.match(re)
+   121→    if (!match) {
+   122→      continue
+   123→    }
+   124→    if (match[1] !== undefined) {
+   125→      section = unsafe(match[1])
+   126→      if (section === '__proto__') {
+   212→const isQuoted = val => {
+   213→  return (val.startsWith('"') && val.endsWith('"')) ||
+   214→    (val.startsWith("'") && val.endsWith("'"))
+   215→}
+   217→const safe = val => {
+   218→  if (
+   219→    typeof val !== 'string' ||
+   220→    val.match(/[=\r\n]/) ||
+   221→    val.match(/^\[/) ||
+   222→    (val.length > 1 && isQuoted(val)) ||
+   223→    val !== val.trim()
+   224→  ) {
+   225→    return JSON.stringify(val)
+   226→  }
+   227→  return val.split(';').join('\\;').split('#').join('\\#')
+   228→}
+   230→const unsafe = val => {
+   231→  val = (val || '').trim()
+   232→  if (isQuoted(val)) {
+   233→    // remove the single quotes before calling JSON.parse
+   234→    if (val.charAt(0) === "'") {
+   235→      val = val.slice(1, -1)
+   236→    }
+   237→    try {
+   238→      val = JSON.parse(val)
+   239→    } catch {
+   240→      // ignore errors
+   241→    }
+   242→  } else {
+   243→    // walk the val to find the first not-escaped ; character
+   244→    let esc = false
+   245→    let unesc = ''
+   246→    for (let i = 0, l = val.length; i < l; i++) {
+   247→      const c = val.charAt(i)
+   248→      if (esc) {
+   249→        if ('\\;#'.indexOf(c) !== -1) {
+   250→          unesc += c

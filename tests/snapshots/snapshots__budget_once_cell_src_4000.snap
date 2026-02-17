@@ -1,0 +1,755 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 (3454 words)
+
+imp_cs.rs
+     8→pub(crate) struct OnceCell<T> {
+     9→    initialized: AtomicBool,
+    10→    // Use `unsync::OnceCell` internally since `Mutex` does not provide
+    11→    // interior mutability and to be able to re-use `get_or_try_init`.
+    12→    value: Mutex<unsync::OnceCell<T>>,
+    13→}
+    27→    pub(crate) const fn new() -> OnceCell<T> {
+    28→        OnceCell { initialized: AtomicBool::new(false), value: Mutex::new(unsync::OnceCell::new()) }
+    29→    }
+    31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+    32→        OnceCell {
+    33→            initialized: AtomicBool::new(true),
+    34→            value: Mutex::new(unsync::OnceCell::with_value(value)),
+    35→        }
+    36→    }
+    39→    pub(crate) fn is_initialized(&self) -> bool {
+    44→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
+    45→    where
+    46→        F: FnOnce() -> Result<T, E>,
+    47→    {
+    63→    pub(crate) unsafe fn get_unchecked(&self) -> &T {
+    70→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
+    75→    pub(crate) fn into_inner(self) -> Option<T> {
+imp_pl.rs
+     7→pub(crate) struct OnceCell<T> {
+     8→    state: AtomicU8,
+     9→    value: UnsafeCell<Option<T>>,
+    10→}
+    12→const INCOMPLETE: u8 = 0x0;
+    13→const RUNNING: u8 = 0x1;
+    14→const COMPLETE: u8 = 0x2;
+    28→    pub(crate) const fn new() -> OnceCell<T> {
+    29→        OnceCell { state: AtomicU8::new(INCOMPLETE), value: UnsafeCell::new(None) }
+    30→    }
+    32→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+    33→        OnceCell { state: AtomicU8::new(COMPLETE), value: UnsafeCell::new(Some(value)) }
+    34→    }
+    38→    pub(crate) fn is_initialized(&self) -> bool {
+    45→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
+    46→    where
+    47→        F: FnOnce() -> Result<T, E>,
+    48→    {
+    80→    pub(crate) fn wait(&self) {
+   101→    pub(crate) unsafe fn get_unchecked(&self) -> &T {
+   109→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
+   117→    pub(crate) fn into_inner(self) -> Option<T> {
+   122→struct Guard<'a> {
+   123→    state: &'a AtomicU8,
+   124→    new_state: u8,
+   125→}
+   128→    fn drop(&mut self) {
+   129→        self.state.store(self.new_state, Ordering::Release);
+   130→        unsafe {
+   131→            let key = self.state as *const AtomicU8 as usize;
+   132→            parking_lot_core::unpark_all(key, parking_lot_core::DEFAULT_UNPARK_TOKEN);
+   133→        }
+   134→    }
+   138→#[inline(never)]
+   139→fn initialize_inner(state: &AtomicU8, init: &mut dyn FnMut() -> bool) {
+   140→    loop {
+   141→        let exchange =
+   142→            state.compare_exchange_weak(INCOMPLETE, RUNNING, Ordering::Acquire, Ordering::Acquire);
+   143→        match exchange {
+   144→            Ok(_) => {
+   145→                let mut guard = Guard { state, new_state: INCOMPLETE };
+   146→                if init() {
+   147→                    guard.new_state = COMPLETE;
+   148→                }
+   149→                return;
+   150→            }
+   151→            Err(COMPLETE) => return,
+   152→            Err(RUNNING) => unsafe {
+   153→                let key = state as *const AtomicU8 as usize;
+   154→                parking_lot_core::park(
+   155→                    key,
+   156→                    || state.load(Ordering::Relaxed) == RUNNING,
+   157→                    || (),
+   158→                    |_, _| (),
+   159→                    parking_lot_core::DEFAULT_PARK_TOKEN,
+   160→                    None,
+   161→                );
+   162→            },
+   163→            Err(INCOMPLETE) => (),
+   164→            Err(_) => debug_assert!(false),
+   165→        }
+   166→    }
+   167→}
+imp_std.rs
+    13→#[derive(Debug)]
+    14→pub(crate) struct OnceCell<T> {
+    15→    // This `queue` field is the core of the implementation. It encodes two
+    16→    // pieces of information:
+    17→    //
+    18→    // * The current state of the cell (`INCOMPLETE`, `RUNNING`, `COMPLETE`)
+    19→    // * Linked list of threads waiting for the current cell.
+    20→    //
+    21→    // State is encoded in two low bits. Only `INCOMPLETE` and `RUNNING` states
+    22→    // allow waiters.
+    23→    queue: AtomicPtr<Waiter>,
+    24→    value: UnsafeCell<Option<T>>,
+    25→}
+    39→    pub(crate) const fn new() -> OnceCell<T> {
+    40→        OnceCell { queue: AtomicPtr::new(INCOMPLETE_PTR), value: UnsafeCell::new(None) }
+    41→    }
+    43→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+    44→        OnceCell { queue: AtomicPtr::new(COMPLETE_PTR), value: UnsafeCell::new(Some(value)) }
+    45→    }
+    49→    pub(crate) fn is_initialized(&self) -> bool {
+    61→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
+    62→    where
+    63→        F: FnOnce() -> Result<T, E>,
+    64→    {
+    88→    pub(crate) fn wait(&self) {
+    99→    pub(crate) unsafe fn get_unchecked(&self) -> &T {
+   107→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
+   115→    pub(crate) fn into_inner(self) -> Option<T> {
+   125→const INCOMPLETE: usize = 0x0;
+   126→const RUNNING: usize = 0x1;
+   127→const COMPLETE: usize = 0x2;
+   128→const INCOMPLETE_PTR: *mut Waiter = INCOMPLETE as *mut Waiter;
+   129→const COMPLETE_PTR: *mut Waiter = COMPLETE as *mut Waiter;
+   133→const STATE_MASK: usize = 0x3;
+   135→/// Representation of a node in the linked list of waiters in the RUNNING state.
+   136→/// A waiters is stored on the stack of the waiting threads.
+   137→#[repr(align(4))] // Ensure the two lower bits are free to use as state bits.
+   138→struct Waiter {
+   139→    thread: Cell<Option<Thread>>,
+   140→    signaled: AtomicBool,
+   141→    next: *mut Waiter,
+   142→}
+   144→/// Drains and notifies the queue of waiters on drop.
+   145→struct Guard<'a> {
+   146→    queue: &'a AtomicPtr<Waiter>,
+   147→    new_queue: *mut Waiter,
+   148→}
+   151→    fn drop(&mut self) {
+   152→        let queue = self.queue.swap(self.new_queue, Ordering::AcqRel);
+   153→
+   154→        let state = strict::addr(queue) & STATE_MASK;
+   155→        assert_eq!(state, RUNNING);
+   156→
+   157→        unsafe {
+   158→            let mut waiter = strict::map_addr(queue, |q| q & !STATE_MASK);
+   159→            while !waiter.is_null() {
+   160→                let next = (*waiter).next;
+   161→                let thread = (*waiter).thread.take().unwrap();
+   162→                (*waiter).signaled.store(true, Ordering::Release);
+   163→                waiter = next;
+   164→                thread.unpark();
+   165→            }
+   166→        }
+   167→    }
+   176→#[inline(never)]
+   177→fn initialize_or_wait(queue: &AtomicPtr<Waiter>, mut init: Option<&mut dyn FnMut() -> bool>) {
+   178→    let mut curr_queue = queue.load(Ordering::Acquire);
+   179→
+   180→    loop {
+   181→        let curr_state = strict::addr(curr_queue) & STATE_MASK;
+   182→        match (curr_state, &mut init) {
+   183→            (COMPLETE, _) => return,
+   184→            (INCOMPLETE, Some(init)) => {
+   185→                let exchange = queue.compare_exchange(
+   186→                    curr_queue,
+   187→                    strict::map_addr(curr_queue, |q| (q & !STATE_MASK) | RUNNING),
+   188→                    Ordering::Acquire,
+   189→                    Ordering::Acquire,
+   190→                );
+   191→                if let Err(new_queue) = exchange {
+   192→                    curr_queue = new_queue;
+   193→                    continue;
+   194→                }
+   195→                let mut guard = Guard { queue, new_queue: INCOMPLETE_PTR };
+   196→                if init() {
+   197→                    guard.new_queue = COMPLETE_PTR;
+   198→                }
+   199→                return;
+   200→            }
+   201→            (INCOMPLETE, None) | (RUNNING, _) => {
+   202→                wait(queue, curr_queue);
+   203→                curr_queue = queue.load(Ordering::Acquire);
+   204→            }
+   205→            _ => debug_assert!(false),
+   206→        }
+   207→    }
+   208→}
+   210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
+   211→    let curr_state = strict::addr(curr_queue) & STATE_MASK;
+   212→    loop {
+   213→        let node = Waiter {
+   214→            thread: Cell::new(Some(thread::current())),
+   215→            signaled: AtomicBool::new(false),
+   216→            next: strict::map_addr(curr_queue, |q| q & !STATE_MASK),
+   217→        };
+   218→        let me = &node as *const Waiter as *mut Waiter;
+   219→
+   220→        let exchange = queue.compare_exchange(
+   221→            curr_queue,
+   222→            strict::map_addr(me, |q| q | curr_state),
+   223→            Ordering::Release,
+   224→            Ordering::Relaxed,
+   225→        );
+   226→        if let Err(new_queue) = exchange {
+   227→            if strict::addr(new_queue) & STATE_MASK != curr_state {
+   228→                return;
+   229→            }
+   230→            curr_queue = new_queue;
+   231→            continue;
+   232→        }
+   233→
+   234→        while !node.signaled.load(Ordering::Acquire) {
+   235→            thread::park();
+   236→        }
+   237→        break;
+   238→    }
+   239→}
+   245→mod strict {
+   246→    #[must_use]
+   247→    #[inline]
+   248→    pub(crate) fn addr<T>(ptr: *mut T) -> usize
+   249→    where
+   250→        T: Sized,
+   251→    {
+   252→        // FIXME(strict_provenance_magic): I am magic and should be a compiler intrinsic.
+   253→        // SAFETY: Pointer-to-integer transmutes are valid (if you are okay with losing the
+   254→        // provenance).
+   255→        unsafe { core::mem::transmute(ptr) }
+   256→    }
+   257→
+   258→    #[must_use]
+   259→    #[inline]
+   260→    pub(crate) fn with_addr<T>(ptr: *mut T, addr: usize) -> *mut T
+   261→    where
+   262→        T: Sized,
+   263→    {
+   264→        // FIXME(strict_provenance_magic): I am magic and should be a compiler intrinsic.
+   265→        //
+   281→    pub(crate) fn map_addr<T>(ptr: *mut T, f: impl FnOnce(usize) -> usize) -> *mut T
+   282→    where
+   283→        T: Sized,
+   284→    {
+lib.rs
+   370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
+   371→#[path = "imp_cs.rs"]
+   372→mod imp;
+   374→#[cfg(all(feature = "std", feature = "parking_lot"))]
+   375→#[path = "imp_pl.rs"]
+   376→mod imp;
+   378→#[cfg(all(feature = "std", not(feature = "parking_lot")))]
+   379→#[path = "imp_std.rs"]
+   380→mod imp;
+   382→/// Single-threaded version of `OnceCell`.
+   383→pub mod unsync {
+   384→    use core::{
+   385→        cell::{Cell, UnsafeCell},
+   386→        fmt, mem,
+   387→        ops::{Deref, DerefMut},
+   388→        panic::{RefUnwindSafe, UnwindSafe},
+   389→    };
+   390→
+   391→    /// A cell which can be written to only once. It is not thread safe.
+   392→    ///
+   393→    /// Unlike [`std::cell::RefCell`], a `OnceCell` provides simple `&`
+   394→    /// references to the contents.
+   395→    ///
+   396→    /// [`std::cell::RefCell`]: https://doc.rust-lang.org/std/cell/struct.RefCell.html
+   397→    ///
+   398→    /// # Example
+   399→    /// ```
+   400→    /// use once_cell::unsync::OnceCell;
+   401→    ///
+   402→    /// let cell = OnceCell::new();
+   403→    /// assert!(cell.get().is_none());
+   404→    ///
+   405→    /// let value: &String = cell.get_or_init(|| {
+   406→    ///     "Hello, World!".to_string()
+   407→    /// });
+   408→    /// assert_eq!(value, "Hello, World!");
+   409→    /// assert!(cell.get().is_some());
+   410→    /// ```
+   411→    pub struct OnceCell<T> {
+   412→        // Invariant: written to at most once.
+   413→        inner: UnsafeCell<Option<T>>,
+   414→    }
+   415→
+   416→    // Similarly to a `Sync` bound on `sync::OnceCell`, we can use
+   417→    // `&unsync::OnceCell` to sneak a `T` through `catch_unwind`,
+   418→    // by initializing the cell in closure and extracting the value in the
+   419→    // `Drop`.
+   420→    impl<T: RefUnwindSafe + UnwindSafe> RefUnwindSafe for OnceCell<T> {}
+   421→    impl<T: UnwindSafe> UnwindSafe for OnceCell<T> {}
+   422→
+   423→    impl<T> Default for OnceCell<T> {
+   424→        fn default() -> Self {
+   425→            Self::new()
+   426→        }
+   427→    }
+   428→
+   429→    impl<T: fmt::Debug> fmt::Debug for OnceCell<T> {
+   430→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+   431→            match self.get() {
+   432→                Some(v) => f.debug_tuple("OnceCell").field(v).finish(),
+   433→                None => f.write_str("OnceCell(Uninit)"),
+   434→            }
+   435→        }
+   436→    }
+   437→
+   438→    impl<T: Clone> Clone for OnceCell<T> {
+   439→        fn clone(&self) -> OnceCell<T> {
+   440→            match self.get() {
+   441→                Some(value) => OnceCell::with_value(value.clone()),
+   442→                None => OnceCell::new(),
+   443→            }
+   444→        }
+   445→
+   446→        fn clone_from(&mut self, source: &Self) {
+   447→            match (self.get_mut(), source.get()) {
+   448→                (Some(this), Some(source)) => this.clone_from(source),
+   449→                _ => *self = source.clone(),
+   450→            }
+   451→        }
+   452→    }
+   453→
+   455→        fn eq(&self, other: &Self) -> bool {
+   456→            self.get() == other.get()
+   457→        }
+   463→        fn from(value: T) -> Self {
+   464→            OnceCell::with_value(value)
+   465→        }
+   470→        pub const fn new() -> OnceCell<T> {
+   475→        pub const fn with_value(value: T) -> OnceCell<T> {
+   483→        pub fn get(&self) -> Option<&T> {
+   508→        pub fn get_mut(&mut self) -> Option<&mut T> {
+   530→        pub fn set(&self, value: T) -> Result<(), T> {
+   551→        pub fn try_insert(&self, value: T) -> Result<&T, (&T, T)> {
+   586→        pub fn get_or_init<F>(&self, f: F) -> &T
+   587→        where
+   588→            F: FnOnce() -> T,
+   589→        {
+   622→        pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&T, E>
+   623→        where
+   624→            F: FnOnce() -> Result<T, E>,
+   625→        {
+   667→        pub fn take(&mut self) -> Option<T> {
+   687→        pub fn into_inner(self) -> Option<T> {
+   694→    /// A value which is initialized on the first access.
+   695→    ///
+   696→    /// # Example
+   697→    /// ```
+   698→    /// use once_cell::unsync::Lazy;
+   699→    ///
+   700→    /// let lazy: Lazy<i32> = Lazy::new(|| {
+   701→    ///     println!("initializing");
+   702→    ///     92
+   703→    /// });
+   704→    /// println!("ready");
+   705→    /// println!("{}", *lazy);
+   706→    /// println!("{}", *lazy);
+   707→    ///
+   708→    /// // Prints:
+   709→    /// //   ready
+   710→    /// //   initializing
+   711→    /// //   92
+   712→    /// //   92
+   713→    /// ```
+   714→    pub struct Lazy<T, F = fn() -> T> {
+   715→        cell: OnceCell<T>,
+   716→        init: Cell<Option<F>>,
+   717→    }
+   722→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+   723→            f.debug_struct("Lazy").field("cell", &self.cell).field("init", &"..").finish()
+   724→        }
+   742→        pub const fn new(init: F) -> Lazy<T, F> {
+   749→        pub fn into_value(this: Lazy<T, F>) -> Result<T, F> {
+   773→        pub fn force(this: &Lazy<T, F>) -> &T {
+   794→        pub fn force_mut(this: &mut Lazy<T, F>) -> &mut T {
+   818→        pub fn get(this: &Lazy<T, F>) -> Option<&T> {
+   835→        pub fn get_mut(this: &mut Lazy<T, F>) -> Option<&mut T> {
+   841→        type Target = T;
+   842→        fn deref(&self) -> &T {
+   843→            Lazy::force(self)
+   844→        }
+   848→        fn deref_mut(&mut self) -> &mut T {
+   849→            Lazy::force_mut(self)
+   850→        }
+   855→        fn default() -> Lazy<T> {
+   861→/// Thread-safe, blocking version of `OnceCell`.
+   862→#[cfg(any(feature = "std", feature = "critical-section"))]
+   863→pub mod sync {
+   864→    use core::{
+   865→        cell::Cell,
+   866→        fmt, mem,
+   867→        ops::{Deref, DerefMut},
+   868→        panic::RefUnwindSafe,
+   869→    };
+   870→
+   871→    use super::imp::OnceCell as Imp;
+   872→
+   873→    /// A thread-safe cell which can be written to only once.
+   874→    ///
+   875→    /// `OnceCell` provides `&` references to the contents without RAII guards.
+   876→    ///
+   877→    /// Reading a non-`None` value out of `OnceCell` establishes a
+   878→    /// happens-before relationship with a corresponding write. For example, if
+   879→    /// thread A initializes the cell with `get_or_init(f)`, and thread B
+   880→    /// subsequently reads the result of this call, B also observes all the side
+   881→    /// effects of `f`.
+   882→    ///
+   883→    /// # Example
+   884→    /// ```
+   885→    /// use once_cell::sync::OnceCell;
+   886→    ///
+   887→    /// static CELL: OnceCell<String> = OnceCell::new();
+   888→    /// assert!(CELL.get().is_none());
+   889→    ///
+   890→    /// std::thread::spawn(|| {
+   891→    ///     let value: &String = CELL.get_or_init(|| {
+   892→    ///         "Hello, World!".to_string()
+   893→    ///     });
+   894→    ///     assert_eq!(value, "Hello, World!");
+   895→    /// }).join().unwrap();
+   896→    ///
+   897→    /// let value: Option<&String> = CELL.get();
+   898→    /// assert!(value.is_some());
+   899→    /// assert_eq!(value.unwrap().as_str(), "Hello, World!");
+   900→    /// ```
+   901→    pub struct OnceCell<T>(Imp<T>);
+   902→
+   903→    impl<T> Default for OnceCell<T> {
+   904→        fn default() -> OnceCell<T> {
+   905→            OnceCell::new()
+   906→        }
+   907→    }
+   908→
+   909→    impl<T: fmt::Debug> fmt::Debug for OnceCell<T> {
+   910→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+   911→            match self.get() {
+   912→                Some(v) => f.debug_tuple("OnceCell").field(v).finish(),
+   913→                None => f.write_str("OnceCell(Uninit)"),
+   914→            }
+   915→        }
+   916→    }
+   917→
+   918→    impl<T: Clone> Clone for OnceCell<T> {
+   919→        fn clone(&self) -> OnceCell<T> {
+   920→            match self.get() {
+   921→                Some(value) => Self::with_value(value.clone()),
+   922→                None => Self::new(),
+   923→            }
+   924→        }
+   925→
+   926→        fn clone_from(&mut self, source: &Self) {
+   927→            match (self.get_mut(), source.get()) {
+   928→                (Some(this), Some(source)) => this.clone_from(source),
+   929→                _ => *self = source.clone(),
+   930→            }
+   931→        }
+   932→    }
+   933→
+   935→        fn from(value: T) -> Self {
+   936→            Self::with_value(value)
+   937→        }
+   941→        fn eq(&self, other: &OnceCell<T>) -> bool {
+   942→            self.get() == other.get()
+   943→        }
+   950→        pub const fn new() -> OnceCell<T> {
+   955→        pub const fn with_value(value: T) -> OnceCell<T> {
+   963→        pub fn get(&self) -> Option<&T> {
+   993→        pub fn wait(&self) -> &T {
+  1019→        pub fn get_mut(&mut self) -> Option<&mut T> {
+  1031→        pub unsafe fn get_unchecked(&self) -> &T {
+  1058→        pub fn set(&self, value: T) -> Result<(), T> {
+  1080→        pub fn try_insert(&self, value: T) -> Result<&T, (&T, T)> {
+  1115→        pub fn get_or_init<F>(&self, f: F) -> &T
+  1116→        where
+  1117→            F: FnOnce() -> T,
+  1118→        {
+  1152→        pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&T, E>
+  1153→        where
+  1154→            F: FnOnce() -> Result<T, E>,
+  1155→        {
+  1197→        pub fn take(&mut self) -> Option<T> {
+  1217→        pub fn into_inner(self) -> Option<T> {
+  1222→    /// A value which is initialized on the first access.
+  1223→    ///
+  1224→    /// This type is thread-safe and can be used in statics.
+  1225→    ///
+  1226→    /// # Example
+  1227→    ///
+  1228→    /// ```
+  1229→    /// use std::collections::HashMap;
+  1230→    ///
+  1231→    /// use once_cell::sync::Lazy;
+  1232→    ///
+  1233→    /// static HASHMAP: Lazy<HashMap<i32, String>> = Lazy::new(|| {
+  1234→    ///     println!("initializing");
+  1235→    ///     let mut m = HashMap::new();
+  1236→    ///     m.insert(13, "Spica".to_string());
+  1237→    ///     m.insert(74, "Hoyten".to_string());
+  1238→    ///     m
+  1239→    /// });
+  1240→    ///
+  1241→    /// fn main() {
+  1242→    ///     println!("ready");
+  1243→    ///     std::thread::spawn(|| {
+  1244→    ///         println!("{:?}", HASHMAP.get(&13));
+  1245→    ///     }).join().unwrap();
+  1246→    ///     println!("{:?}", HASHMAP.get(&74));
+  1247→    ///
+  1248→    ///     // Prints:
+  1249→    ///     //   ready
+  1250→    ///     //   initializing
+  1251→    ///     //   Some("Spica")
+  1252→    ///     //   Some("Hoyten")
+  1253→    /// }
+  1254→    /// ```
+  1255→    pub struct Lazy<T, F = fn() -> T> {
+  1256→        cell: OnceCell<T>,
+  1257→        init: Cell<Option<F>>,
+  1258→    }
+  1261→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+  1262→            f.debug_struct("Lazy").field("cell", &self.cell).field("init", &"..").finish()
+  1263→        }
+  1278→        pub const fn new(f: F) -> Lazy<T, F> {
+  1285→        pub fn into_value(this: Lazy<T, F>) -> Result<T, F> {
+  1308→        pub fn force(this: &Lazy<T, F>) -> &T {
+  1327→        pub fn force_mut(this: &mut Lazy<T, F>) -> &mut T {
+  1351→        pub fn get(this: &Lazy<T, F>) -> Option<&T> {
+  1368→        pub fn get_mut(this: &mut Lazy<T, F>) -> Option<&mut T> {
+  1374→        type Target = T;
+  1375→        fn deref(&self) -> &T {
+  1376→            Lazy::force(self)
+  1377→        }
+  1381→        fn deref_mut(&mut self) -> &mut T {
+  1382→            Lazy::force_mut(self)
+  1383→        }
+  1388→        fn default() -> Lazy<T> {
+  1393→    /// ```compile_fail
+  1394→    /// struct S(*mut ());
+  1395→    /// unsafe impl Sync for S {}
+  1396→    ///
+  1397→    /// fn share<T: Sync>(_: &T) {}
+  1398→    /// share(&once_cell::sync::OnceCell::<S>::new());
+  1399→    /// ```
+  1400→    ///
+  1401→    /// ```compile_fail
+  1402→    /// struct S(*mut ());
+  1403→    /// unsafe impl Sync for S {}
+  1404→    ///
+  1405→    /// fn share<T: Sync>(_: &T) {}
+  1406→    /// share(&once_cell::sync::Lazy::<S>::new(|| unimplemented!()));
+  1407→    /// ```
+  1408→    fn _dummy() {}
+  1411→#[cfg(feature = "race")]
+  1412→pub mod race;
+race.rs
+    41→/// A thread-safe cell which can be written to only once.
+    42→#[derive(Default, Debug)]
+    43→pub struct OnceNonZeroUsize {
+    44→    inner: AtomicUsize,
+    45→}
+    50→    pub const fn new() -> Self {
+    56→    pub fn get(&self) -> Option<NonZeroUsize> {
+    68→    pub unsafe fn get_unchecked(&self) -> NonZeroUsize {
+   107→    pub fn set(&self, value: NonZeroUsize) -> Result<(), ()> {
+   120→    pub fn get_or_init<F>(&self, f: F) -> NonZeroUsize
+   121→    where
+   122→        F: FnOnce() -> NonZeroUsize,
+   123→    {
+   138→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<NonZeroUsize, E>
+   139→    where
+   140→        F: FnOnce() -> Result<NonZeroUsize, E>,
+   141→    {
+   148→    #[cold]
+   149→    #[inline(never)]
+   150→    fn init<E>(&self, f: impl FnOnce() -> Result<NonZeroUsize, E>) -> Result<NonZeroUsize, E> {
+   151→        let nz = f()?;
+   152→        let mut val = nz.get();
+   153→        if let Err(old) = self.compare_exchange(nz) {
+   154→            val = old;
+   155→        }
+   156→        Ok(unsafe { NonZeroUsize::new_unchecked(val) })
+   157→    }
+   159→    #[inline(always)]
+   160→    fn compare_exchange(&self, val: NonZeroUsize) -> Result<usize, usize> {
+   161→        self.inner.compare_exchange(0, val.get(), Ordering::Release, Ordering::Acquire)
+   162→    }
+   165→/// A thread-safe cell which can be written to only once.
+   166→#[derive(Default, Debug)]
+   167→pub struct OnceBool {
+   168→    inner: OnceNonZeroUsize,
+   169→}
+   174→    pub const fn new() -> Self {
+   180→    pub fn get(&self) -> Option<bool> {
+   189→    pub fn set(&self, value: bool) -> Result<(), ()> {
+   199→    pub fn get_or_init<F>(&self, f: F) -> bool
+   200→    where
+   201→        F: FnOnce() -> bool,
+   202→    {
+   213→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<bool, E>
+   214→    where
+   215→        F: FnOnce() -> Result<bool, E>,
+   216→    {
+   220→    #[inline]
+   221→    fn from_usize(value: NonZeroUsize) -> bool {
+   222→        value.get() == 1
+   223→    }
+   225→    #[inline]
+   226→    fn to_usize(value: bool) -> NonZeroUsize {
+   227→        unsafe { NonZeroUsize::new_unchecked(if value { 1 } else { 2 }) }
+   228→    }
+   231→/// A thread-safe cell which can be written to only once.
+   232→pub struct OnceRef<'a, T> {
+   233→    inner: AtomicPtr<T>,
+   234→    ghost: PhantomData<UnsafeCell<&'a T>>,
+   235→}
+   241→    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+   242→        write!(f, "OnceRef({:?})", self.inner)
+   243→    }
+   247→    fn default() -> Self {
+   248→        Self::new()
+   249→    }
+   254→    pub const fn new() -> Self {
+   259→    pub fn get(&self) -> Option<&'a T> {
+   268→    pub fn set(&self, value: &'a T) -> Result<(), ()> {
+   281→    pub fn get_or_init<F>(&self, f: F) -> &'a T
+   282→    where
+   283→        F: FnOnce() -> &'a T,
+   284→    {
+   299→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&'a T, E>
+   300→    where
+   301→        F: FnOnce() -> Result<&'a T, E>,
+   302→    {
+   309→    #[cold]
+   310→    #[inline(never)]
+   311→    fn init<E>(&self, f: impl FnOnce() -> Result<&'a T, E>) -> Result<&'a T, E> {
+   312→        let mut value: &'a T = f()?;
+   313→        if let Err(old) = self.compare_exchange(value) {
+   314→            value = unsafe { &*old };
+   315→        }
+   316→        Ok(value)
+   317→    }
+   319→    #[inline(always)]
+   320→    fn compare_exchange(&self, value: &'a T) -> Result<(), *const T> {
+   321→        self.inner
+   322→            .compare_exchange(
+   323→                ptr::null_mut(),
+   324→                <*const T>::cast_mut(value),
+   325→                Ordering::Release,
+   326→                Ordering::Acquire,
+   327→            )
+   328→            .map(|_: *mut T| ())
+   329→            .map_err(<*mut T>::cast_const)
+   330→    }
+   332→    /// ```compile_fail
+   333→    /// use once_cell::race::OnceRef;
+   334→    ///
+   335→    /// let mut l = OnceRef::new();
+   336→    ///
+   337→    /// {
+   338→    ///     let y = 2;
+   339→    ///     let mut r = OnceRef::new();
+   340→    ///     r.set(&y).unwrap();
+   341→    ///     core::mem::swap(&mut l, &mut r);
+   342→    /// }
+   343→    ///
+   344→    /// // l now contains a dangling reference to y
+   345→    /// eprintln!("uaf: {}", l.get().unwrap());
+   346→    /// ```
+   347→    fn _dummy() {}
+   353→#[cfg(feature = "alloc")]
+   354→mod once_box {
+   355→    use super::atomic::{AtomicPtr, Ordering};
+   356→    use core::{marker::PhantomData, ptr};
+   357→
+   358→    use alloc::boxed::Box;
+   359→
+   360→    /// A thread-safe cell which can be written to only once.
+   361→    pub struct OnceBox<T> {
+   362→        inner: AtomicPtr<T>,
+   363→        ghost: PhantomData<Option<Box<T>>>,
+   364→    }
+   365→
+   366→    impl<T> core::fmt::Debug for OnceBox<T> {
+   367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+   368→            write!(f, "OnceBox({:?})", self.inner.load(Ordering::Relaxed))
+   369→        }
+   370→    }
+   371→
+   372→    impl<T> Default for OnceBox<T> {
+   373→        fn default() -> Self {
+   374→            Self::new()
+   375→        }
+   376→    }
+   377→
+   378→    impl<T> Drop for OnceBox<T> {
+   379→        fn drop(&mut self) {
+   380→            let ptr = *self.inner.get_mut();
+   381→            if !ptr.is_null() {
+   382→                drop(unsafe { Box::from_raw(ptr) })
+   383→            }
+   384→        }
+   385→    }
+   386→
+   387→    impl<T> OnceBox<T> {
+   388→        /// Creates a new empty cell.
+   389→        pub const fn new() -> Self {
+   394→        pub fn with_value(value: Box<T>) -> Self {
+   399→        pub fn get(&self) -> Option<&T> {
+   411→        pub fn set(&self, value: Box<T>) -> Result<(), Box<T>> {
+   432→        pub fn get_or_init<F>(&self, f: F) -> &T
+   433→        where
+   434→            F: FnOnce() -> Box<T>,
+   435→        {
+   450→        pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&T, E>
+   451→        where
+   452→            F: FnOnce() -> Result<Box<T>, E>,
+   453→        {
+   460→        #[cold]
+   461→        #[inline(never)]
+   462→        fn init<E>(&self, f: impl FnOnce() -> Result<Box<T>, E>) -> Result<&T, E> {
+   463→            let val = f()?;
+   464→            let mut ptr = Box::into_raw(val);
+   465→            let exchange = self.inner.compare_exchange(
+   466→                ptr::null_mut(),
+   467→                ptr,
+   468→                Ordering::Release,
+   469→                Ordering::Acquire,
+   470→            );
+   471→            if let Err(old) = exchange {
+   472→                drop(unsafe { Box::from_raw(ptr) });
+   473→                ptr = old;
+   474→            }
+   475→            Ok(unsafe { &*ptr })
+   476→        }
+   482→        fn clone(&self) -> Self {
+   483→            match self.get() {
+   484→                Some(value) => OnceBox::with_value(Box::new(value.clone())),
+   485→                None => OnceBox::new(),
+   486→            }
+   487→        }
+   490→    /// ```compile_fail
+   491→    /// struct S(*mut ());
+   492→    /// unsafe impl Sync for S {}
+   493→    ///
+   494→    /// fn share<T: Sync>(_: &T) {}
+   495→    /// share(&once_cell::race::OnceBox::<S>::new());
+   496→    /// ```
+   497→    fn _dummy() {}

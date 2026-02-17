@@ -1,0 +1,556 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 2000 (1934 words)
+
+argument.js
+     3→class Argument {
+     4→  /**
+     5→   * Initialize a new command argument with the given name and description.
+     6→   * The default is that the argument is required, and you can explicitly
+     7→   * indicate this with <> around the name. Put [] around the name for an optional argument.
+     8→   *
+     9→   * @param {string} name
+    10→   * @param {string} [description]
+    11→   */
+    13→  constructor(name, description) {
+    42→  /**
+    48→  name() {
+    52→  /**
+    56→  _collectValue(value, previous) {
+    65→  /**
+    73→  default(value, description) {
+    79→  /**
+    86→  argParser(fn) {
+    91→  /**
+    98→  choices(values) {
+   114→  /**
+   119→  argRequired() {
+   124→  /**
+   129→  argOptional() {
+   135→/**
+   136→ * Takes an argument and returns its human readable equivalent for help usage.
+   137→ *
+   138→ * @param {Argument} arg
+   139→ * @return {string}
+   140→ * @private
+   141→ */
+   142→
+   143→function humanReadableArgName(arg) {
+   144→  const nameOutput = arg.name() + (arg.variadic === true ? '...' : '');
+command.js
+    13→class Command extends EventEmitter {
+    14→  /**
+    15→   * Initialize a new `Command`.
+    16→   *
+    17→   * @param {string} [name]
+    18→   */
+    19→
+    20→  constructor(name) {
+    21→    super();
+    91→  /**
+    99→  copyInheritedSettings(sourceCommand) {
+   116→  /**
+   121→  _getCommandAndAncestors() {
+   130→  /**
+   155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
+   182→  /**
+   192→  createCommand(name) {
+   196→  /**
+   203→  createHelp() {
+   207→  /**
+   215→  configureHelp(configuration) {
+   222→  /**
+   245→  configureOutput(configuration) {
+   255→  /**
+   261→  showHelpAfterError(displayHelp = true) {
+   267→  /**
+   273→  showSuggestionAfterError(displaySuggestion = true) {
+   278→  /**
+   288→  addCommand(cmd, opts) {
+   305→  /**
+   316→  createArgument(name, description) {
+   320→  /**
+   336→  argument(name, description, parseArg, defaultValue) {
+   347→  /**
+   359→  arguments(names) {
+   369→  /**
+   375→  addArgument(argument) {
+   395→  /**
+   409→  helpCommand(enableOrNameAndArgs, description) {
+   436→  /**
+   443→  addHelpCommand(helpCommand, deprecatedDescription) {
+   457→  /**
+   463→  _getHelpCommand() {
+   479→  /**
+   487→  hook(event, listener) {
+   501→  /**
+   508→  exitOverride(fn) {
+   523→  /**
+   533→  _exit(exitCode, code, message) {
+   541→  /**
+   556→  action(fn) {
+   574→  /**
+   585→  createOption(flags, description) {
+   589→  /**
+   599→  _callParseArg(target, value, previous, invalidArgumentMessage) {
+   611→  /**
+   619→  _registerOption(option) {
+   636→  /**
+   644→  _registerCommand(command) {
+   664→  /**
+   670→  addOption(option) {
+   735→  /**
+   741→  _optionEx(config, flags, description, fn, defaultValue) {
+   766→  /**
+   788→  option(flags, description, parseArg, defaultValue) {
+   792→  /**
+   805→  requiredOption(flags, description, parseArg, defaultValue) {
+   815→  /**
+   826→  combineFlagAndOptionalValue(combine = true) {
+   831→  /**
+   837→  allowUnknownOption(allowUnknown = true) {
+   842→  /**
+   848→  allowExcessArguments(allowExcess = true) {
+   853→  /**
+   861→  enablePositionalOptions(positional = true) {
+   866→  /**
+   875→  passThroughOptions(passThrough = true) {
+   881→  /**
+   885→  _checkForBrokenPassThrough() {
+   897→  /**
+   905→  storeOptionsAsProperties(storeAsProperties = true) {
+   918→  /**
+   925→  getOptionValue(key) {
+   932→  /**
+   940→  setOptionValue(key, value) {
+   944→  /**
+   953→  setOptionValueWithSource(key, value, source) {
+   963→  /**
+   971→  getOptionValueSource(key) {
+   975→  /**
+   983→  getOptionValueSourceWithGlobals(key) {
+   994→  /**
+  1001→  _prepareUserArgs(argv, parseOptions) {
+  1067→  /**
+  1090→  parse(argv, parseOptions) {
+  1098→  /**
+  1119→  async parseAsync(argv, parseOptions) {
+  1127→  _prepareForParse() {
+  1128→    if (this._savedState === null) {
+  1129→      this.saveStateBeforeParse();
+  1130→    } else {
+  1131→      this.restoreStateBeforeParse();
+  1132→    }
+  1133→  }
+  1135→  /**
+  1141→  saveStateBeforeParse() {
+  1152→  /**
+  1158→  restoreStateBeforeParse() {
+  1176→  /**
+  1183→  _checkForMissingExecutable(executableFile, executableDir, subcommandName) {
+  1196→  /**
+  1202→  _executeSubCommand(subcommand, args) {
+  1348→  /**
+  1352→  _dispatchSubcommand(commandName, operands, unknown) {
+  1373→  /**
+  1380→  _dispatchHelpCommand(subcommandName) {
+  1397→  /**
+  1403→  _checkNumberOfArguments() {
+  1422→  /**
+  1428→  _processArguments() {
+  1472→  /**
+  1481→  _chainOrCall(promise, fn) {
+  1491→  /**
+  1499→  _chainOrCallHooks(promise, event) {
+  1522→  /**
+  1531→  _chainOrCallSubCommandHook(promise, subCommand, event) {
+  1543→  /**
+  1550→  _parseCommand(operands, unknown) {
+  1643→  /**
+  1649→  _findCommand(name) {
+  1656→  /**
+  1664→  _findOption(arg) {
+  1668→  /**
+  1675→  _checkForMissingMandatoryOptions() {
+  1689→  /**
+  1694→  _checkForConflictingLocalOptions() {
+  1717→  /**
+  1723→  _checkForConflictingOptions() {
+  1730→  /**
+  1748→  parseOptions(args) {
+  1897→  /**
+  1902→  opts() {
+  1919→  /**
+  1924→  optsWithGlobals() {
+  1932→  /**
+  1940→  error(message, errorOptions) {
+  1960→  /**
+  1966→  _parseOptionsEnv() {
+  1991→  /**
+  1996→  _parseOptionsImplied() {
+  2027→  /**
+  2034→  missingArgument(name) {
+  2039→  /**
+  2046→  optionMissingArgument(option) {
+  2051→  /**
+  2058→  missingMandatoryOptionValue(option) {
+  2063→  /**
+  2070→  _conflictingOption(option, conflictingOption) {
+  2107→  /**
+  2114→  unknownOption(flag) {
+  2139→  /**
+  2146→  _excessArguments(receivedArgs) {
+  2156→  /**
+  2162→  unknownCommand() {
+  2182→  /**
+  2195→  version(str, flags, description) {
+  2211→  /**
+  2218→  description(str, argsDescription) {
+  2228→  /**
+  2234→  summary(str) {
+  2240→  /**
+  2249→  alias(alias) {
+  2280→  /**
+  2289→  aliases(aliases) {
+  2297→  /**
+  2304→  usage(str) {
+  2324→  /**
+  2331→  name(str) {
+  2337→  /**
+  2344→  helpGroup(heading) {
+  2350→  /**
+  2363→  commandsGroup(heading) {
+  2369→  /**
+  2382→  optionsGroup(heading) {
+  2388→  /**
+  2392→  _initOptionGroup(option) {
+  2397→  /**
+  2401→  _initCommandGroup(cmd) {
+  2406→  /**
+  2419→  nameFromFilename(filename) {
+  2425→  /**
+  2437→  executableDir(path) {
+  2443→  /**
+  2450→  helpInformation(contextOptions) {
+  2463→  /**
+  2475→  _getOutputContext(contextOptions) {
+  2497→  /**
+  2505→  outputHelp(contextOptions) {
+  2546→  /**
+  2559→  helpOption(flags, description) {
+  2585→  /**
+  2592→  _getHelpOption() {
+  2600→  /**
+  2607→  addHelpOption(option) {
+  2613→  /**
+  2621→  help(contextOptions) {
+  2645→  /**
+  2656→  addHelpText(position, text) {
+  2679→  /**
+  2686→  _outputHelpIfRequested(args) {
+  2697→/**
+  2698→ * Scan arguments and increment port number for inspect calls (to avoid conflicts when spawning new command).
+  2699→ *
+  2700→ * @param {string[]} args - array of arguments from node.execArgv
+  2701→ * @returns {string[]}
+  2702→ * @private
+  2703→ */
+  2704→
+  2705→function incrementNodeInspectorPort(args) {
+  2706→  // Testing for these options:
+  2748→/**
+  2749→ * @returns {boolean | undefined}
+  2750→ * @package
+  2751→ */
+  2752→function useColor() {
+  2753→  // Test for common conventions.
+error.js
+     1→/**
+     2→ * CommanderError class
+     3→ */
+     4→class CommanderError extends Error {
+     5→  /**
+     6→   * Constructs the CommanderError class
+     7→   * @param {number} exitCode suggested exit code which could be used with process.exit
+     8→   * @param {string} code an id string representing the error
+     9→   * @param {string} message human-readable description of the error
+    10→   */
+    11→  constructor(exitCode, code, message) {
+    12→    super(message);
+    13→    // properly capture stack trace in Node.js
+    14→    Error.captureStackTrace(this, this.constructor);
+    15→    this.name = this.constructor.name;
+    16→    this.code = code;
+    17→    this.exitCode = exitCode;
+    18→    this.nestedError = undefined;
+    19→  }
+    20→}
+    22→/**
+    23→ * InvalidArgumentError class
+    24→ */
+    25→class InvalidArgumentError extends CommanderError {
+    26→  /**
+    27→   * Constructs the InvalidArgumentError class
+    28→   * @param {string} [message] explanation of why argument is invalid
+    29→   */
+    30→  constructor(message) {
+    31→    super(1, 'commander.invalidArgument', message);
+    32→    // properly capture stack trace in Node.js
+    33→    Error.captureStackTrace(this, this.constructor);
+    34→    this.name = this.constructor.name;
+    35→  }
+    36→}
+help.js
+    12→class Help {
+    13→  constructor() {
+    14→    this.helpWidth = undefined;
+    15→    this.minWidthToWrap = 40;
+    16→    this.sortSubcommands = false;
+    17→    this.sortOptions = false;
+    18→    this.showGlobalOptions = false;
+    19→  }
+    20→
+    21→  /**
+    29→  prepareContext(contextOptions) {
+    33→  /**
+    40→  visibleCommands(cmd) {
+    55→  /**
+    62→  compareOptions(a, b) {
+    72→  /**
+    79→  visibleOptions(cmd) {
+   105→  /**
+   112→  visibleGlobalOptions(cmd) {
+   132→  /**
+   139→  visibleArguments(cmd) {
+   155→  /**
+   162→  subcommandTerm(cmd) {
+   175→  /**
+   182→  optionTerm(option) {
+   186→  /**
+   193→  argumentTerm(argument) {
+   197→  /**
+   205→  longestSubcommandTermLength(cmd, helper) {
+   216→  /**
+   224→  longestOptionTermLength(cmd, helper) {
+   233→  /**
+   241→  longestGlobalOptionTermLength(cmd, helper) {
+   250→  /**
+   258→  longestArgumentTermLength(cmd, helper) {
+   269→  /**
+   276→  commandUsage(cmd) {
+   293→  /**
+   300→  commandDescription(cmd) {
+   305→  /**
+   313→  subcommandDescription(cmd) {
+   318→  /**
+   325→  optionDescription(option) {
+   365→  /**
+   372→  argumentDescription(argument) {
+   395→  /**
+   403→  formatItemList(heading, items, helper) {
+   409→  /**
+   417→  groupItems(unsortedItems, visibleItems, getGroup) {
+   435→  /**
+   443→  formatHelp(cmd, helper) {
+   529→  /**
+   535→  displayWidth(str) {
+   539→  /**
+   545→  styleTitle(str) {
+   549→  styleUsage(str) {
+   550→    // Usage has lots of parts the user might like to color separately! Assume default usage string which is formed like:
+   551→    //    command subcommand [options] [command] <foo> [bar]
+   552→    return str
+   553→      .split(' ')
+   554→      .map((word) => {
+   555→        if (word === '[options]') return this.styleOptionText(word);
+   556→        if (word === '[command]') return this.styleSubcommandText(word);
+   557→        if (word[0] === '[' || word[0] === '<')
+   558→          return this.styleArgumentText(word);
+   563→  styleCommandDescription(str) {
+   564→    return this.styleDescriptionText(str);
+   565→  }
+   566→  styleOptionDescription(str) {
+   567→    return this.styleDescriptionText(str);
+   568→  }
+   569→  styleSubcommandDescription(str) {
+   570→    return this.styleDescriptionText(str);
+   571→  }
+   572→  styleArgumentDescription(str) {
+   573→    return this.styleDescriptionText(str);
+   574→  }
+   575→  styleDescriptionText(str) {
+   576→    return str;
+   577→  }
+   578→  styleOptionTerm(str) {
+   579→    return this.styleOptionText(str);
+   580→  }
+   581→  styleSubcommandTerm(str) {
+   582→    // This is very like usage with lots of parts! Assume default string which is formed like:
+   583→    //    subcommand [options] <foo> [bar]
+   584→    return str
+   585→      .split(' ')
+   586→      .map((word) => {
+   587→        if (word === '[options]') return this.styleOptionText(word);
+   588→        if (word[0] === '[' || word[0] === '<')
+   589→          return this.styleArgumentText(word);
+   590→        return this.styleSubcommandText(word); // Restrict to initial words?
+   594→  styleArgumentTerm(str) {
+   595→    return this.styleArgumentText(str);
+   596→  }
+   597→  styleOptionText(str) {
+   598→    return str;
+   599→  }
+   600→  styleArgumentText(str) {
+   601→    return str;
+   602→  }
+   603→  styleSubcommandText(str) {
+   604→    return str;
+   605→  }
+   606→  styleCommandText(str) {
+   607→    return str;
+   608→  }
+   610→  /**
+   618→  padWidth(cmd, helper) {
+   627→  /**
+   633→  preformatted(str) {
+   637→  /**
+   650→  formatItem(term, termWidth, description, helper) {
+   687→  /**
+   695→  boxWrap(str, width) {
+   732→/**
+   733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
+   734→ *
+   735→ * @param {string} str
+   736→ * @returns {string}
+   737→ * @package
+   738→ */
+   739→
+   740→function stripColor(str) {
+   741→  // eslint-disable-next-line no-control-regex
+option.js
+     3→class Option {
+     4→  /**
+     5→   * Initialize a new `Option` with the given `flags` and `description`.
+     6→   *
+     7→   * @param {string} flags
+     8→   * @param {string} [description]
+     9→   */
+    10→
+    11→  constructor(flags, description) {
+    39→  /**
+    47→  default(value, description) {
+    53→  /**
+    65→  preset(arg) {
+    70→  /**
+    82→  conflicts(names) {
+    87→  /**
+   100→  implies(impliedOptionValues) {
+   110→  /**
+   120→  env(name) {
+   125→  /**
+   132→  argParser(fn) {
+   137→  /**
+   144→  makeOptionMandatory(mandatory = true) {
+   149→  /**
+   156→  hideHelp(hide = true) {
+   161→  /**
+   165→  _collectValue(value, previous) {
+   174→  /**
+   181→  choices(values) {
+   197→  /**
+   203→  name() {
+   210→  /**
+   217→  attributeName() {
+   224→  /**
+   230→  helpGroup(heading) {
+   235→  /**
+   243→  is(arg) {
+   247→  /**
+   256→  isBoolean() {
+   261→/**
+   262→ * This class is to make it easier to work with dual options, without changing the existing
+   263→ * implementation. We support separate dual options for separate positive and negative options,
+   264→ * like `--build` and `--no-build`, which share a single option value. This works nicely for some
+   265→ * use cases, but is tricky for others where we want separate behaviours despite
+   266→ * the single shared option value.
+   267→ */
+   268→class DualOptions {
+   269→  /**
+   270→   * @param {Option[]} options
+   271→   */
+   272→  constructor(options) {
+   273→    this.positiveOptions = new Map();
+   274→    this.negativeOptions = new Map();
+   275→    this.dualOptions = new Set();
+   276→    options.forEach((option) => {
+   277→      if (option.negate) {
+   278→        this.negativeOptions.set(option.attributeName(), option);
+   279→      } else {
+   280→        this.positiveOptions.set(option.attributeName(), option);
+   281→      }
+   282→    });
+   283→    this.negativeOptions.forEach((value, key) => {
+   284→      if (this.positiveOptions.has(key)) {
+   285→        this.dualOptions.add(key);
+   286→      }
+   287→    });
+   288→  }
+   289→
+   290→  /**
+   291→   * Did the value come from the option, and not from possible matching dual option?
+   292→   *
+   293→   * @param {*} value
+   294→   * @param {Option} option
+   295→   * @returns {boolean}
+   296→   */
+   297→  valueFromOption(value, option) {
+   298→    const optionKey = option.attributeName();
+   299→    if (!this.dualOptions.has(optionKey)) return true;
+   300→
+   301→    // Use the value to deduce if (probably) came from the option.
+   302→    const preset = this.negativeOptions.get(optionKey).presetArg;
+   303→    const negativeValue = preset !== undefined ? preset : false;
+   304→    return option.negate === (negativeValue === value);
+   305→  }
+   306→}
+   308→/**
+   309→ * Convert string from kebab-case to camelCase.
+   310→ *
+   311→ * @param {string} str
+   312→ * @return {string}
+   313→ * @private
+   314→ */
+   315→
+   316→function camelcase(str) {
+   317→  return str.split('-').reduce((str, word) => {
+   322→/**
+   323→ * Split the short and long flag out of something like '-m,--mixed <value>'
+   324→ *
+   325→ * @private
+   326→ */
+   327→
+   328→function splitOptionFlags(flags) {
+   329→  let shortFlag;
+suggestSimilar.js
+     1→const maxDistance = 3;
+     3→function editDistance(a, b) {
+     4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
+     5→  // Calculating optimal string alignment distance, no substring is edited more than once.
+     6→  // (Simple implementation.)
+     7→
+     8→  // Quick early exit, return worst case.
+     9→  if (Math.abs(a.length - b.length) > maxDistance)
+    10→    return Math.max(a.length, b.length);
+    11→
+    48→/**
+    49→ * Find close matches, restricted to same number of edits.
+    50→ *
+    51→ * @param {string} word
+    52→ * @param {string[]} candidates
+    53→ * @returns {string}
+    54→ */
+    55→
+    56→function suggestSimilar(word, candidates) {
+    57→  if (!candidates || candidates.length === 0) return '';

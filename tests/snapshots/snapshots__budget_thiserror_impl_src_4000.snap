@@ -1,0 +1,981 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 (3806 words)
+
+ast.rs
+    10→pub enum Input<'a> {
+    11→    Struct(Struct<'a>),
+    12→    Enum(Enum<'a>),
+    13→}
+    15→pub struct Struct<'a> {
+    16→    pub attrs: Attrs<'a>,
+    17→    pub ident: Ident,
+    18→    pub generics: &'a Generics,
+    19→    pub fields: Vec<Field<'a>>,
+    20→}
+    22→pub struct Enum<'a> {
+    23→    pub attrs: Attrs<'a>,
+    24→    pub ident: Ident,
+    25→    pub generics: &'a Generics,
+    26→    pub variants: Vec<Variant<'a>>,
+    27→}
+    29→pub struct Variant<'a> {
+    30→    pub original: &'a syn::Variant,
+    31→    pub attrs: Attrs<'a>,
+    32→    pub ident: Ident,
+    33→    pub fields: Vec<Field<'a>>,
+    34→}
+    36→pub struct Field<'a> {
+    37→    pub original: &'a syn::Field,
+    38→    pub attrs: Attrs<'a>,
+    39→    pub member: MemberUnraw,
+    40→    pub ty: &'a Type,
+    41→    pub contains_generic: bool,
+    42→}
+    44→#[derive(Copy, Clone)]
+    45→pub enum ContainerKind {
+    46→    Struct,
+    47→    TupleStruct,
+    48→    UnitStruct,
+    49→    StructVariant,
+    50→    TupleVariant,
+    51→    UnitVariant,
+    52→}
+    54→impl<'a> Input<'a> {
+    55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
+    56→        match &node.data {
+    57→            Data::Struct(data) => Struct::from_syn(node, data).map(Input::Struct),
+    58→            Data::Enum(data) => Enum::from_syn(node, data).map(Input::Enum),
+    59→            Data::Union(_) => Err(Error::new_spanned(
+    60→                node,
+    61→                "union as errors are not supported",
+    62→            )),
+    63→        }
+    64→    }
+    67→impl<'a> Struct<'a> {
+    68→    fn from_syn(node: &'a DeriveInput, data: &'a DataStruct) -> Result<Self> {
+    85→impl<'a> Enum<'a> {
+    86→    fn from_syn(node: &'a DeriveInput, data: &'a DataEnum) -> Result<Self> {
+   118→impl<'a> Variant<'a> {
+   119→    fn from_syn(node: &'a syn::Variant, scope: &ParamsInScope<'a>) -> Result<Self> {
+   130→impl<'a> Field<'a> {
+   131→    fn multiple_from_syn(fields: &'a Fields, scope: &ParamsInScope<'a>) -> Result<Vec<Self>> {
+   139→    fn from_syn(i: usize, node: &'a syn::Field, scope: &ParamsInScope<'a>) -> Result<Self> {
+   156→impl ContainerKind {
+   157→    fn from_struct(node: &DataStruct) -> Self {
+   165→    fn from_variant(node: &syn::Variant) -> Self {
+   174→impl Display for ContainerKind {
+   175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+   176→        formatter.write_str(match self {
+   177→            ContainerKind::Struct => "struct",
+   178→            ContainerKind::TupleStruct => "tuple struct",
+   179→            ContainerKind::UnitStruct => "unit struct",
+   180→            ContainerKind::StructVariant => "struct variant",
+   181→            ContainerKind::TupleVariant => "tuple variant",
+   182→            ContainerKind::UnitVariant => "unit variant",
+   183→        })
+   184→    }
+attr.rs
+    11→pub struct Attrs<'a> {
+    12→    pub display: Option<Display<'a>>,
+    13→    pub source: Option<Source<'a>>,
+    14→    pub backtrace: Option<&'a Attribute>,
+    15→    pub from: Option<From<'a>>,
+    16→    pub transparent: Option<Transparent<'a>>,
+    17→    pub fmt: Option<Fmt<'a>>,
+    18→}
+    20→#[derive(Clone)]
+    21→pub struct Display<'a> {
+    22→    pub original: &'a Attribute,
+    23→    pub fmt: LitStr,
+    24→    pub args: TokenStream,
+    25→    pub requires_fmt_machinery: bool,
+    26→    pub has_bonus_display: bool,
+    27→    pub infinite_recursive: bool,
+    28→    pub implied_bounds: Set<(usize, Trait)>,
+    29→    pub bindings: Vec<(Ident, TokenStream)>,
+    30→}
+    32→#[derive(Copy, Clone)]
+    33→pub struct Source<'a> {
+    34→    pub original: &'a Attribute,
+    35→    pub span: Span,
+    36→}
+    38→#[derive(Copy, Clone)]
+    39→pub struct From<'a> {
+    40→    pub original: &'a Attribute,
+    41→    pub span: Span,
+    42→}
+    44→#[derive(Copy, Clone)]
+    45→pub struct Transparent<'a> {
+    46→    pub original: &'a Attribute,
+    47→    pub span: Span,
+    48→}
+    50→#[derive(Clone)]
+    51→pub struct Fmt<'a> {
+    52→    pub original: &'a Attribute,
+    53→    pub path: ExprPath,
+    54→}
+    56→#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Debug)]
+    57→pub enum Trait {
+    58→    Debug,
+    59→    Display,
+    60→    Octal,
+    61→    LowerHex,
+    62→    UpperHex,
+    63→    Pointer,
+    64→    Binary,
+    65→    LowerExp,
+    66→    UpperExp,
+    67→}
+    69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
+    70→    let mut attrs = Attrs {
+    71→        display: None,
+    72→        source: None,
+    73→        backtrace: None,
+    74→        from: None,
+    75→        transparent: None,
+    76→        fmt: None,
+    77→    };
+    78→
+    79→    for attr in input {
+    80→        if attr.path().is_ident("error") {
+    81→            parse_error_attribute(&mut attrs, attr)?;
+    82→        } else if attr.path().is_ident("source") {
+    83→            attr.meta.require_path_only()?;
+    84→            if attrs.source.is_some() {
+    85→                return Err(Error::new_spanned(attr, "duplicate #[source] attribute"));
+    86→            }
+    87→            let span = (attr.pound_token.span)
+    88→                .join(attr.bracket_token.span.join())
+    89→                .unwrap_or(attr.path().get_ident().unwrap().span());
+    90→            attrs.source = Some(Source {
+    91→                original: attr,
+    92→                span,
+    93→            });
+    94→        } else if attr.path().is_ident("backtrace") {
+    95→            attr.meta.require_path_only()?;
+    96→            if attrs.backtrace.is_some() {
+    97→                return Err(Error::new_spanned(attr, "duplicate #[backtrace] attribute"));
+    98→            }
+    99→            attrs.backtrace = Some(attr);
+   100→        } else if attr.path().is_ident("from") {
+   101→            match attr.meta {
+   102→                Meta::Path(_) => {}
+   103→                Meta::List(_) | Meta::NameValue(_) => {
+   104→                    // Assume this is meant for derive_more crate or something.
+   105→                    continue;
+   106→                }
+   107→            }
+   108→            if attrs.from.is_some() {
+   109→                return Err(Error::new_spanned(attr, "duplicate #[from] attribute"));
+   110→            }
+   111→            let span = (attr.pound_token.span)
+   112→                .join(attr.bracket_token.span.join())
+   113→                .unwrap_or(attr.path().get_ident().unwrap().span());
+   114→            attrs.from = Some(From {
+   115→                original: attr,
+   116→                span,
+   117→            });
+   118→        }
+   119→    }
+   120→
+   121→    Ok(attrs)
+   122→}
+   124→fn parse_error_attribute<'a>(attrs: &mut Attrs<'a>, attr: &'a Attribute) -> Result<()> {
+   196→fn parse_token_expr(input: ParseStream, mut begin_expr: bool) -> Result<TokenStream> {
+   302→impl ToTokens for Display<'_> {
+   303→    fn to_tokens(&self, tokens: &mut TokenStream) {
+   304→        if self.infinite_recursive {
+   305→            let span = self.fmt.span();
+   306→            tokens.extend(quote_spanned! {span=>
+   307→                #[warn(unconditional_recursion)]
+   308→                fn _fmt() { _fmt() }
+   309→            });
+   310→        }
+   311→
+   312→        let fmt = &self.fmt;
+   313→        let args = &self.args;
+   314→
+   315→        // Currently `write!(f, "text")` produces less efficient code than
+   316→        // `f.write_str("text")`. We recognize the case when the format string
+   317→        // has no braces and no interpolated values, and generate simpler code.
+   318→        let write = if self.requires_fmt_machinery {
+   319→            quote! {
+   320→                ::core::write!(__formatter, #fmt #args)
+   321→            }
+   322→        } else {
+   323→            quote! {
+   324→                __formatter.write_str(#fmt)
+   325→            }
+   326→        };
+   327→
+   328→        tokens.extend(if self.bindings.is_empty() {
+   329→            write
+   330→        } else {
+   331→            let locals = self.bindings.iter().map(|(local, _value)| local);
+   332→            let values = self.bindings.iter().map(|(_local, value)| value);
+   333→            quote! {
+   334→                match (#(#values,)*) {
+   335→                    (#(#locals,)*) => #write
+   336→                }
+   337→            }
+   338→        });
+   339→    }
+   342→impl ToTokens for Trait {
+   343→    fn to_tokens(&self, tokens: &mut TokenStream) {
+   344→        let trait_name = match self {
+   345→            Trait::Debug => "Debug",
+   346→            Trait::Display => "Display",
+   347→            Trait::Octal => "Octal",
+   348→            Trait::LowerHex => "LowerHex",
+   349→            Trait::UpperHex => "UpperHex",
+   350→            Trait::Pointer => "Pointer",
+   351→            Trait::Binary => "Binary",
+   352→            Trait::LowerExp => "LowerExp",
+   353→            Trait::UpperExp => "UpperExp",
+   354→        };
+   355→        let ident = Ident::new(trait_name, Span::call_site());
+   356→        tokens.extend(quote!(::core::fmt::#ident));
+   357→    }
+expand.rs
+    12→pub fn derive(input: &DeriveInput) -> TokenStream {
+    13→    match try_expand(input) {
+    14→        Ok(expanded) => expanded,
+    15→        // If there are invalid attributes in the input, expand to an Error impl
+    16→        // anyway to minimize spurious secondary errors in other code that uses
+    17→        // this type as an Error.
+    18→        Err(error) => fallback::expand(input, error),
+    19→    }
+    20→}
+    22→fn try_expand(input: &DeriveInput) -> Result<TokenStream> {
+    31→fn impl_struct(input: Struct) -> TokenStream {
+   221→fn impl_enum(input: Enum) -> TokenStream {
+   505→pub(crate) fn call_site_ident(ident: &Ident) -> Ident {
+   506→    let mut ident = ident.clone();
+   507→    ident.set_span(ident.span().resolved_at(Span::call_site()));
+   508→    ident
+   509→}
+   511→fn fields_pat(fields: &[Field]) -> TokenStream {
+   526→fn use_as_display(needs_as_display: bool) -> Option<TokenStream> {
+   536→fn from_initializer(
+   537→    from_field: &Field,
+   538→    backtrace_field: Option<&Field>,
+   539→    source_var: &Ident,
+   540→) -> TokenStream {
+   565→fn type_is_option(ty: &Type) -> bool {
+   569→fn unoptional_type(ty: &Type) -> TokenStream {
+   574→fn type_parameter_of_option(ty: &Type) -> Option<&Type> {
+fallback.rs
+     7→pub(crate) fn expand(input: &DeriveInput, error: syn::Error) -> TokenStream {
+     8→    let ty = call_site_ident(&input.ident);
+     9→    let (impl_generics, ty_generics, where_clause) = input.generics.split_for_impl();
+    10→
+    11→    let error = error.to_compile_error();
+    12→
+    13→    quote! {
+    14→        #error
+    15→
+    16→        #[allow(unused_qualifications)]
+    17→        #[automatically_derived]
+    18→        impl #impl_generics ::thiserror::#private::Error for #ty #ty_generics #where_clause
+    19→        where
+    20→            // Work around trivial bounds being unstable.
+    21→            // https://github.com/rust-lang/rust/issues/48214
+    22→            for<'workaround> #ty #ty_generics: ::core::fmt::Debug,
+    23→        {}
+    24→
+    25→        #[allow(unused_qualifications)]
+    26→        #[automatically_derived]
+    27→        impl #impl_generics ::core::fmt::Display for #ty #ty_generics #where_clause {
+    28→            fn fmt(&self, __formatter: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+    29→                ::core::unreachable!()
+    30→            }
+    31→        }
+    32→    }
+    33→}
+fmt.rs
+    15→impl Display<'_> {
+    16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
+    17→        let raw_args = self.args.clone();
+    18→        let FmtArguments {
+    19→            named: user_named_args,
+    20→            first_unnamed,
+    21→        } = explicit_named_args.parse2(raw_args).unwrap();
+    22→
+    23→        let mut member_index = HashMap::new();
+    24→        let mut extra_positional_arguments_allowed = true;
+    25→        for (i, field) in fields.iter().enumerate() {
+    26→            member_index.insert(&field.member, i);
+    27→            extra_positional_arguments_allowed &= matches!(&field.member, MemberUnraw::Named(_));
+    28→        }
+    29→
+    30→        let span = self.fmt.span();
+    31→        let fmt = self.fmt.value();
+    32→        let mut read = fmt.as_str();
+    33→        let mut out = String::new();
+    34→        let mut has_bonus_display = false;
+    35→        let mut infinite_recursive = false;
+    36→        let mut implied_bounds = BTreeSet::new();
+    37→        let mut bindings = Vec::new();
+    38→        let mut macro_named_args = BTreeSet::new();
+    39→
+    40→        self.requires_fmt_machinery = self.requires_fmt_machinery || fmt.contains('}');
+    41→
+    42→        while let Some(brace) = read.find('{') {
+    43→            self.requires_fmt_machinery = true;
+    44→            out += &read[..brace + 1];
+    45→            read = &read[brace + 1..];
+    46→            if read.starts_with('{') {
+    47→                out.push('{');
+    48→                read = &read[1..];
+    49→                continue;
+    50→            }
+    51→            let next = match read.chars().next() {
+    52→                Some(next) => next,
+    53→                None => return Ok(()),
+    54→            };
+    55→            let member = match next {
+    56→                '0'..='9' => {
+    57→                    let int = take_int(&mut read);
+    58→                    if !extra_positional_arguments_allowed {
+    59→                        if let Some(first_unnamed) = &first_unnamed {
+    60→                            let msg = format!("ambiguous reference to positional arguments by number in a {container}; change this to a named argument");
+    61→                            return Err(Error::new_spanned(first_unnamed, msg));
+    62→                        }
+    63→                    }
+    64→                    match int.parse::<u32>() {
+    65→                        Ok(index) => MemberUnraw::Unnamed(Index { index, span }),
+    66→                        Err(_) => return Ok(()),
+    67→                    }
+    68→                }
+    69→                'a'..='z' | 'A'..='Z' | '_' => {
+    70→                    if read.starts_with("r#") {
+    71→                        continue;
+    72→                    }
+    73→                    let repr = take_ident(&mut read);
+    74→                    if repr == "_" {
+    75→                        // Invalid. Let rustc produce the diagnostic.
+    76→                        out += repr;
+    77→                        continue;
+    78→                    }
+    79→                    let ident = IdentUnraw::new(Ident::new(repr, span));
+    80→                    if user_named_args.contains(&ident) {
+    81→                        // Refers to a named argument written by the user, not to field.
+    82→                        out += repr;
+    83→                        continue;
+    84→                    }
+    85→                    MemberUnraw::Named(ident)
+    86→                }
+    87→                _ => continue,
+    88→            };
+    89→            let end_spec = match read.find('}') {
+    90→                Some(end_spec) => end_spec,
+    91→                None => return Ok(()),
+    92→            };
+    93→            let mut bonus_display = false;
+    94→            let bound = match read[..end_spec].chars().next_back() {
+    95→                Some('?') => Trait::Debug,
+    96→                Some('o') => Trait::Octal,
+    97→                Some('x') => Trait::LowerHex,
+    98→                Some('X') => Trait::UpperHex,
+    99→                Some('p') => Trait::Pointer,
+   100→                Some('b') => Trait::Binary,
+   101→                Some('e') => Trait::LowerExp,
+   102→                Some('E') => Trait::UpperExp,
+   103→                Some(_) => Trait::Display,
+   104→                None => {
+   105→                    bonus_display = true;
+   106→                    has_bonus_display = true;
+   107→                    Trait::Display
+   108→                }
+   109→            };
+   110→            infinite_recursive |= member == *"self" && bound == Trait::Display;
+   111→            let field = match member_index.get(&member) {
+   112→                Some(&field) => field,
+   113→                None => {
+   114→                    out += &member.to_string();
+   115→                    continue;
+   116→                }
+   117→            };
+   118→            implied_bounds.insert((field, bound));
+   119→            let formatvar_prefix = if bonus_display {
+   120→                "__display"
+   121→            } else if bound == Trait::Pointer {
+   122→                "__pointer"
+   123→            } else {
+   124→                "__field"
+   125→            };
+   126→            let mut formatvar = IdentUnraw::new(match &member {
+   127→                MemberUnraw::Unnamed(index) => format_ident!("{}{}", formatvar_prefix, index),
+   128→                MemberUnraw::Named(ident) => {
+   129→                    format_ident!("{}_{}", formatvar_prefix, ident.to_string())
+   130→                }
+   131→            });
+   132→            while user_named_args.contains(&formatvar) {
+   133→                formatvar = IdentUnraw::new(format_ident!("_{}", formatvar.to_string()));
+   134→            }
+   135→            formatvar.set_span(span);
+   136→            out += &formatvar.to_string();
+   137→            if !macro_named_args.insert(formatvar.clone()) {
+   138→                // Already added to bindings by a previous use.
+   139→                continue;
+   140→            }
+   141→            let mut binding_value = match &member {
+   142→                MemberUnraw::Unnamed(index) => format_ident!("_{}", index),
+   143→                MemberUnraw::Named(ident) => ident.to_local(),
+   144→            };
+   145→            binding_value.set_span(span.resolved_at(fields[field].member.span()));
+   146→            let wrapped_binding_value = if bonus_display {
+   147→                quote_spanned!(span=> #binding_value.as_display())
+   148→            } else if bound == Trait::Pointer {
+   149→                quote!(::thiserror::#private::Var(#binding_value))
+   150→            } else {
+   151→                binding_value.into_token_stream()
+   152→            };
+   153→            bindings.push((formatvar.to_local(), wrapped_binding_value));
+   154→        }
+   155→
+   156→        out += read;
+   157→        self.fmt = LitStr::new(&out, self.fmt.span());
+   158→        self.has_bonus_display = has_bonus_display;
+   159→        self.infinite_recursive = infinite_recursive;
+   160→        self.implied_bounds = implied_bounds;
+   161→        self.bindings = bindings;
+   162→        Ok(())
+   163→    }
+   166→struct FmtArguments {
+   167→    named: BTreeSet<IdentUnraw>,
+   168→    first_unnamed: Option<TokenStream>,
+   169→}
+   171→#[allow(clippy::unnecessary_wraps)]
+   172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
+   173→    let ahead = input.fork();
+   174→    if let Ok(set) = try_explicit_named_args(&ahead) {
+   175→        input.advance_to(&ahead);
+   176→        return Ok(set);
+   177→    }
+   178→
+   179→    let ahead = input.fork();
+   180→    if let Ok(set) = fallback_explicit_named_args(&ahead) {
+   181→        input.advance_to(&ahead);
+   182→        return Ok(set);
+   183→    }
+   184→
+   185→    input.parse::<TokenStream>().unwrap();
+   186→    Ok(FmtArguments {
+   187→        named: BTreeSet::new(),
+   188→        first_unnamed: None,
+   189→    })
+   190→}
+   192→fn try_explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
+   231→fn fallback_explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
+   255→fn is_syn_full() -> bool {
+   273→fn take_int<'a>(read: &mut &'a str) -> &'a str {
+   286→fn take_ident<'a>(read: &mut &'a str) -> &'a str {
+   299→fn between<'a>(begin: ParseStream<'a>, end: ParseStream<'a>) -> TokenStream {
+generics.rs
+     8→pub struct ParamsInScope<'a> {
+     9→    names: Set<&'a Ident>,
+    10→}
+    12→impl<'a> ParamsInScope<'a> {
+    13→    pub fn new(generics: &'a Generics) -> Self {
+    14→        ParamsInScope {
+    15→            names: generics.type_params().map(|param| &param.ident).collect(),
+    16→        }
+    17→    }
+    19→    pub fn intersects(&self, ty: &Type) -> bool {
+    20→        let mut found = false;
+    21→        crawl(self, ty, &mut found);
+    22→        found
+    23→    }
+    26→fn crawl(in_scope: &ParamsInScope, ty: &Type, found: &mut bool) {
+    48→pub struct InferredBounds {
+    49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
+    50→    order: Vec<TokenStream>,
+    51→}
+    53→impl InferredBounds {
+    54→    pub fn new() -> Self {
+    55→        InferredBounds {
+    56→            bounds: Map::new(),
+    57→            order: Vec::new(),
+    58→        }
+    59→    }
+    61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
+    62→        let ty = ty.to_token_stream();
+    63→        let bound = bound.to_token_stream();
+    64→        let entry = self.bounds.entry(ty.to_string());
+    65→        if let Entry::Vacant(_) = entry {
+    66→            self.order.push(ty);
+    67→        }
+    68→        let (set, tokens) = entry.or_default();
+    69→        if set.insert(bound.to_string()) {
+    70→            tokens.push(bound);
+    71→        }
+    72→    }
+    74→    pub fn augment_where_clause(&self, generics: &Generics) -> WhereClause {
+    75→        let mut generics = generics.clone();
+    76→        let where_clause = generics.make_where_clause();
+    77→        for ty in &self.order {
+    78→            let (_set, bounds) = &self.bounds[&ty.to_string()];
+    79→            where_clause.predicates.push(parse_quote!(#ty: #bounds));
+    80→        }
+    81→        generics.where_clause.unwrap()
+    82→    }
+lib.rs
+    23→mod ast;
+    24→mod attr;
+    25→mod expand;
+    26→mod fallback;
+    27→mod fmt;
+    28→mod generics;
+    29→mod prop;
+    30→mod scan_expr;
+    31→mod unraw;
+    32→mod valid;
+    39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
+    40→pub fn derive_error(input: TokenStream) -> TokenStream {
+    41→    let input = parse_macro_input!(input as DeriveInput);
+    42→    expand::derive(&input).into()
+    43→}
+    45→#[allow(non_camel_case_types)]
+    46→struct private;
+    48→impl ToTokens for private {
+    49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    50→        tokens.append(Ident::new(
+    51→            concat!("__private", env!("CARGO_PKG_VERSION_PATCH")),
+    52→            Span::call_site(),
+    53→        ));
+    54→    }
+prop.rs
+     6→impl Struct<'_> {
+     7→    pub(crate) fn from_field(&self) -> Option<&Field> {
+     8→        from_field(&self.fields)
+     9→    }
+    11→    pub(crate) fn source_field(&self) -> Option<&Field> {
+    12→        source_field(&self.fields)
+    13→    }
+    15→    pub(crate) fn backtrace_field(&self) -> Option<&Field> {
+    16→        backtrace_field(&self.fields)
+    17→    }
+    19→    pub(crate) fn distinct_backtrace_field(&self) -> Option<&Field> {
+    20→        let backtrace_field = self.backtrace_field()?;
+    21→        distinct_backtrace_field(backtrace_field, self.from_field())
+    22→    }
+    25→impl Enum<'_> {
+    26→    pub(crate) fn has_source(&self) -> bool {
+    27→        self.variants
+    28→            .iter()
+    29→            .any(|variant| variant.source_field().is_some() || variant.attrs.transparent.is_some())
+    30→    }
+    32→    pub(crate) fn has_backtrace(&self) -> bool {
+    33→        self.variants
+    34→            .iter()
+    35→            .any(|variant| variant.backtrace_field().is_some())
+    36→    }
+    38→    pub(crate) fn has_display(&self) -> bool {
+    39→        self.attrs.display.is_some()
+    40→            || self.attrs.transparent.is_some()
+    41→            || self.attrs.fmt.is_some()
+    42→            || self
+    43→                .variants
+    44→                .iter()
+    45→                .any(|variant| variant.attrs.display.is_some() || variant.attrs.fmt.is_some())
+    46→            || self
+    47→                .variants
+    48→                .iter()
+    49→                .all(|variant| variant.attrs.transparent.is_some())
+    50→    }
+    53→impl Variant<'_> {
+    54→    pub(crate) fn from_field(&self) -> Option<&Field> {
+    55→        from_field(&self.fields)
+    56→    }
+    58→    pub(crate) fn source_field(&self) -> Option<&Field> {
+    59→        source_field(&self.fields)
+    60→    }
+    62→    pub(crate) fn backtrace_field(&self) -> Option<&Field> {
+    63→        backtrace_field(&self.fields)
+    64→    }
+    66→    pub(crate) fn distinct_backtrace_field(&self) -> Option<&Field> {
+    67→        let backtrace_field = self.backtrace_field()?;
+    68→        distinct_backtrace_field(backtrace_field, self.from_field())
+    69→    }
+    72→impl Field<'_> {
+    73→    pub(crate) fn is_backtrace(&self) -> bool {
+    74→        type_is_backtrace(self.ty)
+    75→    }
+    77→    pub(crate) fn source_span(&self) -> Span {
+    78→        if let Some(source_attr) = &self.attrs.source {
+    79→            source_attr.span
+    80→        } else if let Some(from_attr) = &self.attrs.from {
+    81→            from_attr.span
+    82→        } else {
+    83→            self.member.span()
+    84→        }
+    85→    }
+    88→fn from_field<'a, 'b>(fields: &'a [Field<'b>]) -> Option<&'a Field<'b>> {
+    97→fn source_field<'a, 'b>(fields: &'a [Field<'b>]) -> Option<&'a Field<'b>> {
+   112→fn backtrace_field<'a, 'b>(fields: &'a [Field<'b>]) -> Option<&'a Field<'b>> {
+   127→fn distinct_backtrace_field<'a, 'b>(
+   128→    backtrace_field: &'a Field<'b>,
+   129→    from_field: Option<&Field>,
+   130→) -> Option<&'a Field<'b>> {
+   138→fn type_is_backtrace(ty: &Type) -> bool {
+scan_expr.rs
+     6→enum Input {
+     7→    Keyword(&'static str),
+     8→    Punct(&'static str),
+     9→    ConsumeAny,
+    10→    ConsumeBinOp,
+    11→    ConsumeBrace,
+    12→    ConsumeDelimiter,
+    13→    ConsumeIdent,
+    14→    ConsumeLifetime,
+    15→    ConsumeLiteral,
+    16→    ConsumeNestedBrace,
+    17→    ExpectPath,
+    18→    ExpectTurbofish,
+    19→    ExpectType,
+    20→    CanBeginExpr,
+    21→    Otherwise,
+    22→    Empty,
+    23→}
+    25→enum Action {
+    26→    SetState(&'static [(Input, Action)]),
+    27→    IncDepth,
+    28→    DecDepth,
+    29→    Finish,
+    30→}
+    32→static INIT: [(Input, Action); 28] = [
+    33→    (ConsumeDelimiter, SetState(&POSTFIX)),
+    34→    (Keyword("async"), SetState(&ASYNC)),
+    35→    (Keyword("break"), SetState(&BREAK_LABEL)),
+    36→    (Keyword("const"), SetState(&CONST)),
+    37→    (Keyword("continue"), SetState(&CONTINUE)),
+    38→    (Keyword("for"), SetState(&FOR)),
+    39→    (Keyword("if"), IncDepth),
+    40→    (Keyword("let"), SetState(&PATTERN)),
+    41→    (Keyword("loop"), SetState(&BLOCK)),
+    42→    (Keyword("match"), IncDepth),
+    43→    (Keyword("move"), SetState(&CLOSURE)),
+    44→    (Keyword("return"), SetState(&RETURN)),
+    45→    (Keyword("static"), SetState(&CLOSURE)),
+    46→    (Keyword("unsafe"), SetState(&BLOCK)),
+    47→    (Keyword("while"), IncDepth),
+    48→    (Keyword("yield"), SetState(&RETURN)),
+    49→    (Keyword("_"), SetState(&POSTFIX)),
+    50→    (Punct("!"), SetState(&INIT)),
+    51→    (Punct("#"), SetState(&[(ConsumeDelimiter, SetState(&INIT))])),
+    52→    (Punct("&"), SetState(&REFERENCE)),
+    53→    (Punct("*"), SetState(&INIT)),
+    54→    (Punct("-"), SetState(&INIT)),
+    55→    (Punct("..="), SetState(&INIT)),
+    56→    (Punct(".."), SetState(&RANGE)),
+    57→    (Punct("|"), SetState(&CLOSURE_ARGS)),
+    58→    (ConsumeLifetime, SetState(&[(Punct(":"), SetState(&INIT))])),
+    59→    (ConsumeLiteral, SetState(&POSTFIX)),
+    60→    (ExpectPath, SetState(&PATH)),
+    61→];
+    63→static POSTFIX: [(Input, Action); 10] = [
+    64→    (Keyword("as"), SetState(&[(ExpectType, SetState(&POSTFIX))])),
+    65→    (Punct("..="), SetState(&INIT)),
+    66→    (Punct(".."), SetState(&RANGE)),
+    67→    (Punct("."), SetState(&DOT)),
+    68→    (Punct("?"), SetState(&POSTFIX)),
+    69→    (ConsumeBinOp, SetState(&INIT)),
+    70→    (Punct("="), SetState(&INIT)),
+    71→    (ConsumeNestedBrace, SetState(&IF_THEN)),
+    72→    (ConsumeDelimiter, SetState(&POSTFIX)),
+    73→    (Empty, Finish),
+    74→];
+    76→static ASYNC: [(Input, Action); 3] = [
+    77→    (Keyword("move"), SetState(&ASYNC)),
+    78→    (Punct("|"), SetState(&CLOSURE_ARGS)),
+    79→    (ConsumeBrace, SetState(&POSTFIX)),
+    80→];
+    82→static BLOCK: [(Input, Action); 1] = [(ConsumeBrace, SetState(&POSTFIX))];
+    84→static BREAK_LABEL: [(Input, Action); 2] = [
+    85→    (ConsumeLifetime, SetState(&BREAK_VALUE)),
+    86→    (Otherwise, SetState(&BREAK_VALUE)),
+    87→];
+    89→static BREAK_VALUE: [(Input, Action); 3] = [
+    90→    (ConsumeNestedBrace, SetState(&IF_THEN)),
+    91→    (CanBeginExpr, SetState(&INIT)),
+    92→    (Otherwise, SetState(&POSTFIX)),
+    93→];
+    95→static CLOSURE: [(Input, Action); 6] = [
+    96→    (Keyword("async"), SetState(&CLOSURE)),
+    97→    (Keyword("move"), SetState(&CLOSURE)),
+    98→    (Punct(","), SetState(&CLOSURE)),
+    99→    (Punct(">"), SetState(&CLOSURE)),
+   100→    (Punct("|"), SetState(&CLOSURE_ARGS)),
+   101→    (ConsumeLifetime, SetState(&CLOSURE)),
+   102→];
+   104→static CLOSURE_ARGS: [(Input, Action); 2] = [
+   105→    (Punct("|"), SetState(&CLOSURE_RET)),
+   106→    (ConsumeAny, SetState(&CLOSURE_ARGS)),
+   107→];
+   109→static CLOSURE_RET: [(Input, Action); 2] = [
+   110→    (Punct("->"), SetState(&[(ExpectType, SetState(&BLOCK))])),
+   111→    (Otherwise, SetState(&INIT)),
+   112→];
+   114→static CONST: [(Input, Action); 2] = [
+   115→    (Punct("|"), SetState(&CLOSURE_ARGS)),
+   116→    (ConsumeBrace, SetState(&POSTFIX)),
+   117→];
+   119→static CONTINUE: [(Input, Action); 2] = [
+   120→    (ConsumeLifetime, SetState(&POSTFIX)),
+   121→    (Otherwise, SetState(&POSTFIX)),
+   122→];
+   124→static DOT: [(Input, Action); 3] = [
+   125→    (Keyword("await"), SetState(&POSTFIX)),
+   126→    (ConsumeIdent, SetState(&METHOD)),
+   127→    (ConsumeLiteral, SetState(&POSTFIX)),
+   128→];
+   130→static FOR: [(Input, Action); 2] = [
+   131→    (Punct("<"), SetState(&CLOSURE)),
+   132→    (Otherwise, SetState(&PATTERN)),
+   133→];
+   135→static IF_ELSE: [(Input, Action); 2] = [(Keyword("if"), SetState(&INIT)), (ConsumeBrace, DecDepth)];
+   136→static IF_THEN: [(Input, Action); 2] =
+   137→    [(Keyword("else"), SetState(&IF_ELSE)), (Otherwise, DecDepth)];
+   139→static METHOD: [(Input, Action); 1] = [(ExpectTurbofish, SetState(&POSTFIX))];
+   141→static PATH: [(Input, Action); 4] = [
+   142→    (Punct("!="), SetState(&INIT)),
+   143→    (Punct("!"), SetState(&INIT)),
+   144→    (ConsumeNestedBrace, SetState(&IF_THEN)),
+   145→    (Otherwise, SetState(&POSTFIX)),
+   146→];
+   148→static PATTERN: [(Input, Action); 15] = [
+   149→    (ConsumeDelimiter, SetState(&PATTERN)),
+   150→    (Keyword("box"), SetState(&PATTERN)),
+   151→    (Keyword("in"), IncDepth),
+   152→    (Keyword("mut"), SetState(&PATTERN)),
+   153→    (Keyword("ref"), SetState(&PATTERN)),
+   154→    (Keyword("_"), SetState(&PATTERN)),
+   155→    (Punct("!"), SetState(&PATTERN)),
+   156→    (Punct("&"), SetState(&PATTERN)),
+   157→    (Punct("..="), SetState(&PATTERN)),
+   158→    (Punct(".."), SetState(&PATTERN)),
+   159→    (Punct("="), SetState(&INIT)),
+   160→    (Punct("@"), SetState(&PATTERN)),
+   161→    (Punct("|"), SetState(&PATTERN)),
+   162→    (ConsumeLiteral, SetState(&PATTERN)),
+   163→    (ExpectPath, SetState(&PATTERN)),
+   164→];
+   166→static RANGE: [(Input, Action); 6] = [
+   167→    (Punct("..="), SetState(&INIT)),
+   168→    (Punct(".."), SetState(&RANGE)),
+   169→    (Punct("."), SetState(&DOT)),
+   170→    (ConsumeNestedBrace, SetState(&IF_THEN)),
+   171→    (Empty, Finish),
+   172→    (Otherwise, SetState(&INIT)),
+   173→];
+   175→static RAW: [(Input, Action); 3] = [
+   176→    (Keyword("const"), SetState(&INIT)),
+   177→    (Keyword("mut"), SetState(&INIT)),
+   178→    (Otherwise, SetState(&POSTFIX)),
+   179→];
+   181→static REFERENCE: [(Input, Action); 3] = [
+   182→    (Keyword("mut"), SetState(&INIT)),
+   183→    (Keyword("raw"), SetState(&RAW)),
+   184→    (Otherwise, SetState(&INIT)),
+   185→];
+   187→static RETURN: [(Input, Action); 2] = [
+   188→    (CanBeginExpr, SetState(&INIT)),
+   189→    (Otherwise, SetState(&POSTFIX)),
+   190→];
+   192→pub(crate) fn scan_expr(input: ParseStream) -> Result<()> {
+   193→    let mut state = INIT.as_slice();
+   194→    let mut depth = 0usize;
+   195→    'table: loop {
+   196→        for rule in state {
+   197→            if match rule.0 {
+   198→                Input::Keyword(expected) => input.step(|cursor| match cursor.ident() {
+   199→                    Some((ident, rest)) if ident == expected => Ok((true, rest)),
+   200→                    _ => Ok((false, *cursor)),
+   201→                })?,
+   202→                Input::Punct(expected) => input.step(|cursor| {
+   203→                    let begin = *cursor;
+   204→                    let mut cursor = begin;
+   205→                    for (i, ch) in expected.chars().enumerate() {
+   206→                        match cursor.punct() {
+   207→                            Some((punct, _)) if punct.as_char() != ch => break,
+   208→                            Some((_, rest)) if i == expected.len() - 1 => {
+   209→                                return Ok((true, rest));
+   210→                            }
+   211→                            Some((punct, rest)) if punct.spacing() == Spacing::Joint => {
+   212→                                cursor = rest;
+   213→                            }
+   214→                            _ => break,
+   215→                        }
+   216→                    }
+   217→                    Ok((false, begin))
+   218→                })?,
+   219→                Input::ConsumeAny => input.parse::<Option<TokenTree>>()?.is_some(),
+   220→                Input::ConsumeBinOp => input.parse::<BinOp>().is_ok(),
+   221→                Input::ConsumeBrace | Input::ConsumeNestedBrace => {
+   222→                    (matches!(rule.0, Input::ConsumeBrace) || depth > 0)
+   223→                        && input.step(|cursor| match cursor.group(Delimiter::Brace) {
+   224→                            Some((_inside, _span, rest)) => Ok((true, rest)),
+   225→                            None => Ok((false, *cursor)),
+   226→                        })?
+   227→                }
+   228→                Input::ConsumeDelimiter => input.step(|cursor| match cursor.any_group() {
+   229→                    Some((_inside, _delimiter, _span, rest)) => Ok((true, rest)),
+   230→                    None => Ok((false, *cursor)),
+   231→                })?,
+   232→                Input::ConsumeIdent => input.parse::<Option<Ident>>()?.is_some(),
+   233→                Input::ConsumeLifetime => input.parse::<Option<Lifetime>>()?.is_some(),
+   234→                Input::ConsumeLiteral => input.parse::<Option<Lit>>()?.is_some(),
+   235→                Input::ExpectPath => {
+   236→                    input.parse::<ExprPath>()?;
+   237→                    true
+   238→                }
+   239→                Input::ExpectTurbofish => {
+   240→                    if input.peek(Token![::]) {
+   241→                        input.parse::<AngleBracketedGenericArguments>()?;
+   242→                    }
+   243→                    true
+   244→                }
+   245→                Input::ExpectType => {
+   246→                    Type::without_plus(input)?;
+   247→                    true
+   248→                }
+   249→                Input::CanBeginExpr => Expr::peek(input),
+   250→                Input::Otherwise => true,
+   251→                Input::Empty => input.is_empty() || input.peek(Token![,]),
+   252→            } {
+   253→                state = match rule.1 {
+   254→                    Action::SetState(next) => next,
+   255→                    Action::IncDepth => (depth += 1, &INIT).1,
+   256→                    Action::DecDepth => (depth -= 1, &POSTFIX).1,
+   257→                    Action::Finish => return if depth == 0 { Ok(()) } else { break },
+   258→                };
+   259→                continue 'table;
+   260→            }
+   261→        }
+   262→        return Err(input.error("unsupported expression"));
+   263→    }
+   264→}
+unraw.rs
+    10→#[derive(Clone)]
+    11→#[repr(transparent)]
+    12→pub struct IdentUnraw(Ident);
+    14→impl IdentUnraw {
+    15→    pub fn new(ident: Ident) -> Self {
+    16→        IdentUnraw(ident)
+    17→    }
+    19→    pub fn to_local(&self) -> Ident {
+    20→        let unraw = self.0.unraw();
+    21→        let repr = unraw.to_string();
+    22→        if syn::parse_str::<Ident>(&repr).is_err() {
+    23→            if let "_" | "super" | "self" | "Self" | "crate" = repr.as_str() {
+    24→                // Some identifiers are never allowed to appear as raw, like r#self and r#_.
+    25→            } else {
+    26→                return Ident::new_raw(&repr, Span::call_site());
+    27→            }
+    28→        }
+    29→        unraw
+    30→    }
+    32→    pub fn set_span(&mut self, span: Span) {
+    33→        self.0.set_span(span);
+    34→    }
+    37→impl Display for IdentUnraw {
+    38→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+    39→        Display::fmt(&self.0.unraw(), formatter)
+    40→    }
+    43→impl Eq for IdentUnraw {}
+    45→impl PartialEq for IdentUnraw {
+    46→    fn eq(&self, other: &Self) -> bool {
+    47→        PartialEq::eq(&self.0.unraw(), &other.0.unraw())
+    48→    }
+    51→impl PartialEq<str> for IdentUnraw {
+    52→    fn eq(&self, other: &str) -> bool {
+    53→        self.0 == other
+    54→    }
+    57→impl Ord for IdentUnraw {
+    58→    fn cmp(&self, other: &Self) -> Ordering {
+    59→        Ord::cmp(&self.0.unraw(), &other.0.unraw())
+    60→    }
+    63→impl PartialOrd for IdentUnraw {
+    64→    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+    65→        Some(Self::cmp(self, other))
+    66→    }
+    69→impl Parse for IdentUnraw {
+    70→    fn parse(input: ParseStream) -> Result<Self> {
+    71→        input.call(Ident::parse_any).map(IdentUnraw::new)
+    72→    }
+    75→impl ToTokens for IdentUnraw {
+    76→    fn to_tokens(&self, tokens: &mut TokenStream) {
+    77→        self.0.unraw().to_tokens(tokens);
+    78→    }
+    81→#[derive(Clone)]
+    82→pub enum MemberUnraw {
+    83→    Named(IdentUnraw),
+    84→    Unnamed(Index),
+    85→}
+    87→impl MemberUnraw {
+    88→    pub fn span(&self) -> Span {
+    89→        match self {
+    90→            MemberUnraw::Named(ident) => ident.0.span(),
+    91→            MemberUnraw::Unnamed(index) => index.span,
+    92→        }
+    93→    }
+    96→impl Display for MemberUnraw {
+    97→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+    98→        match self {
+    99→            MemberUnraw::Named(this) => Display::fmt(this, formatter),
+   100→            MemberUnraw::Unnamed(this) => Display::fmt(&this.index, formatter),
+   101→        }
+   102→    }
+   105→impl Eq for MemberUnraw {}
+   107→impl PartialEq for MemberUnraw {
+   108→    fn eq(&self, other: &Self) -> bool {
+   109→        match (self, other) {
+   110→            (MemberUnraw::Named(this), MemberUnraw::Named(other)) => this == other,
+   111→            (MemberUnraw::Unnamed(this), MemberUnraw::Unnamed(other)) => this == other,
+   112→            _ => false,
+   113→        }
+   114→    }
+   117→impl PartialEq<str> for MemberUnraw {
+   118→    fn eq(&self, other: &str) -> bool {
+   119→        match self {
+   120→            MemberUnraw::Named(this) => this == other,
+   121→            MemberUnraw::Unnamed(_) => false,
+   122→        }
+   123→    }
+   126→impl Hash for MemberUnraw {
+   127→    fn hash<H: Hasher>(&self, hasher: &mut H) {
+   128→        match self {
+   129→            MemberUnraw::Named(ident) => ident.0.unraw().hash(hasher),
+   130→            MemberUnraw::Unnamed(index) => index.hash(hasher),
+   131→        }
+   132→    }
+   135→impl ToTokens for MemberUnraw {
+   136→    fn to_tokens(&self, tokens: &mut TokenStream) {
+   137→        match self {
+   138→            MemberUnraw::Named(ident) => ident.to_local().to_tokens(tokens),
+   139→            MemberUnraw::Unnamed(index) => index.to_tokens(tokens),
+   140→        }
+   141→    }
+valid.rs
+     5→impl Input<'_> {
+     6→    pub(crate) fn validate(&self) -> Result<()> {
+     7→        match self {
+     8→            Input::Struct(input) => input.validate(),
+     9→            Input::Enum(input) => input.validate(),
+    10→        }
+    11→    }
+    14→impl Struct<'_> {
+    15→    fn validate(&self) -> Result<()> {
+    45→impl Enum<'_> {
+    46→    fn validate(&self) -> Result<()> {
+    66→impl Variant<'_> {
+    67→    fn validate(&self) -> Result<()> {
+    91→impl Field<'_> {
+    92→    fn validate(&self) -> Result<()> {
+   109→fn check_non_field_attrs(attrs: &Attrs) -> Result<()> {
+   151→fn check_field_attrs(fields: &[Field]) -> Result<()> {
+   224→fn contains_non_static_lifetime(ty: &Type) -> bool {

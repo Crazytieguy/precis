@@ -1,0 +1,125 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (463 words)
+
+readme.md
+    87→### ky(input, options?)
+    88→
+   123→### ky.post(input, options?)
+   124→### ky.put(input, options?)
+   125→### ky.patch(input, options?)
+   126→### ky.head(input, options?)
+   127→### ky.delete(input, options?)
+   128→
+  1052→### Sending form data
+  1053→
+  1158→#### Native proxy support
+  1159→
+  1294→#### How do I use this in Node.js?
+  1295→
+source/core/Ky.ts
+    33→export class Ky {
+    34→	static create(input: Input, options: Options): ResponsePromise {
+    35→		const ky = new Ky(input, options);
+    36→
+   200→	constructor(input: Input, options: Options = {}) {
+   201→		this.#input = input;
+   202→
+source/core/constants.ts
+     4→export const supportsRequestStreams
+    34→export const supportsAbortController
+    35→export const supportsAbortSignal
+    36→export const supportsResponseStreams
+    37→export const supportsFormData
+    39→export const requestMethods
+    46→export const responseTypes
+    58→export const maxSafeTimeout
+    61→export const usualFormBoundarySize
+    63→export const stop
+    68→export type ForceRetryOptions
+   145→/**
+   146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
+   147→*/
+   148→export class RetryMarker {
+   149→	constructor(public options?: ForceRetryOptions) {}
+   150→}
+   152→/**
+   153→Force a retry from an `afterResponse` hook.
+   154→
+   235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
+   237→export const kyOptionKeys
+   256→export const vendorSpecificOptions
+   265→export const requestOptionsRegistry
+source/errors/ForceRetryError.ts
+     8→export class ForceRetryError extends Error {
+     9→	override name = 'ForceRetryError' as const;
+    10→	customDelay: number | undefined;
+    11→	code: string | undefined;
+    12→	customRequest: Request | undefined;
+    13→
+    14→	constructor(options?: ForceRetryOptions) {
+source/errors/HTTPError.ts
+     5→export class HTTPError<T = unknown> extends Error {
+     6→	public response: KyResponse<T>;
+     7→	public request: KyRequest;
+     8→	public options: NormalizedOptions;
+     9→
+    10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
+source/errors/NonError.ts
+     6→export class NonError extends Error {
+     7→	override name = 'NonError';
+     8→	readonly value: unknown;
+     9→
+    10→	constructor(value: unknown) {
+    11→		let message = 'Non-error value was thrown';
+    12→
+source/errors/TimeoutError.ts
+     3→export class TimeoutError extends Error {
+     4→	public request: KyRequest;
+     5→
+     6→	constructor(request: Request) {
+     7→		super(`Request timed out: ${request.method} ${request.url}`);
+source/index.ts
+    10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
+    11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
+    34→const ky = createInstance();
+source/types/options.ts
+    33→export type KyOptions
+   307→export type KyOptionsRegistry
+   312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
+   313→	/**
+   314→	HTTP method used to make the request.
+   315→
+   373→export interface NormalizedOptions extends RequestInit { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
+   374→	// Extended from `RequestInit`, but ensured to be set (not optional).
+   375→	method: NonNullable<RequestInit['method']>;
+   376→	credentials?: NonNullable<RequestInit['credentials']>;
+source/utils/body.ts
+    57→const withProgress
+source/utils/delay.ts
+     5→export type DelayOptions
+source/utils/merge.ts
+    32→function newHookValue
+    47→const appendSearchParameters
+source/utils/normalize.ts
+     8→const retryMethods
+    10→const retryStatusCodes
+    12→const retryAfterStatusCodes
+    14→type InternalRetryOptions
+    16→const defaultRetryOptions
+source/utils/timeout.ts
+     3→export type TimeoutOptions
+source/utils/type-guards.ts
+     5→/**
+    27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
+    31→/**
+    49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
+    53→/**
+    71→export function isTimeoutError(error: unknown): error is TimeoutError {
+    75→/**
+    98→export function isForceRetryError(error: unknown): error is ForceRetryError {
+source/utils/types.ts
+     1→export type Mutable
+     5→export type ObjectEntries

@@ -1,0 +1,126 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (471 words)
+
+README.md
+     9→# Mitt
+    10→
+    21→## Table of Contents
+    22→
+    30→## Install
+    31→
+    56→## Usage
+    57→
+    81→### Typescript
+    82→
+   113→## Examples & Demos
+   114→
+   123→## API
+   124→
+   127→#### Table of Contents
+   128→
+   138→### mitt
+   139→
+   144→### all
+   145→
+   148→### on
+   149→
+   152→#### Parameters
+   153→
+   157→### off
+   158→
+   162→#### Parameters
+   163→
+   167→### emit
+   168→
+   174→#### Parameters
+   175→
+   179→## Contribute
+   180→
+   184→### Reporting Issues
+   185→
+   189→### Submitting pull requests
+   190→
+   203→## License
+   204→
+src/index.ts
+     1→export type EventType = string | symbol;
+     5→export type Handler<T = unknown> = (event: T) => void;
+     6→export type WildcardHandler<T = Record<string, unknown>> = (
+     7→	type: keyof T,
+     8→	event: T[keyof T]
+     9→) => void;
+    12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
+    13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
+    14→	WildcardHandler<T>
+    15→>;
+    18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
+    19→	keyof Events | '*',
+    20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
+    21→>;
+    23→export interface Emitter<Events extends Record<EventType, unknown>> {
+    24→	all: EventHandlerMap<Events>;
+    25→
+    26→	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
+    27→	on(type: '*', handler: WildcardHandler<Events>): void;
+    28→
+    29→	off<Key extends keyof Events>(
+    30→		type: Key,
+    31→		handler?: Handler<Events[Key]>
+    32→	): void;
+    33→	off(type: '*', handler: WildcardHandler<Events>): void;
+    34→
+    35→	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
+    36→	emit<Key extends keyof Events>(
+    37→		type: undefined extends Events[Key] ? Key : never
+    38→	): void;
+    39→}
+    41→/**
+    42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
+    43→ * @name mitt
+    44→ * @returns {Mitt}
+    45→ */
+    46→export default function mitt<Events extends Record<EventType, unknown>>(
+    47→	all?: EventHandlerMap<Events>
+    48→): Emitter<Events> {
+    49→	type GenericEventHandler =
+    50→		| Handler<Events[keyof Events]>
+    51→		| WildcardHandler<Events>;
+    52→	all = all || new Map();
+    53→
+    54→	return {
+    55→		/**
+    56→		 * A Map of event names to registered handler functions.
+    57→		 */
+    58→		all,
+    59→
+    60→		/**
+    61→		 * Register an event handler for the given type.
+    62→		 * @param {string|symbol} type Type of event to listen for, or `'*'` for all events
+    63→		 * @param {Function} handler Function to call in response to given event
+    64→		 * @memberOf mitt
+    65→		 */
+    66→		on<Key extends keyof Events>(type: Key, handler: GenericEventHandler) {
+    67→			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
+    68→			if (handlers) {
+    69→				handlers.push(handler);
+    70→			} else {
+    71→				all!.set(type, [handler] as EventHandlerList<Events[keyof Events]>);
+    72→			}
+    73→		},
+    74→
+    75→		/**
+    76→		 * Remove an event handler for the given type.
+    77→		 * If `handler` is omitted, all handlers of the given type are removed.
+    78→		 * @param {string|symbol} type Type of event to unregister `handler` from (`'*'` to remove a wildcard handler)
+    79→		 * @param {Function} [handler] Handler function to remove
+    80→		 * @memberOf mitt
+    81→		 */
+    82→		off<Key extends keyof Events>(type: Key, handler?: GenericEventHandler) {
+    83→			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
+    84→			if (handlers) {
+    85→				if (handler) {
+    86→					handlers.splice(handlers.indexOf(handler) >>> 0, 1);
+    87→				} else {

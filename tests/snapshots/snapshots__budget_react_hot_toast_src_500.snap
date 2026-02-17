@@ -1,0 +1,178 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (500 words)
+
+components/checkmark.tsx
+     3→const circleAnimation
+    13→const checkmarkAnimation
+    29→export interface CheckmarkTheme {
+    30→  primary?: string;
+    31→  secondary?: string;
+    32→}
+    34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
+    35→  width: 20px;
+components/error.tsx
+     3→const circleAnimation
+    13→const firstLineAnimation
+    23→const secondLineAnimation
+    33→export interface ErrorTheme {
+    34→  primary?: string;
+    35→  secondary?: string;
+    36→}
+    38→export const ErrorIcon = styled('div')<ErrorTheme>`
+    39→  width: 20px;
+components/loader.tsx
+     3→const rotate
+    12→export interface LoaderTheme {
+    13→  primary?: string;
+    14→  secondary?: string;
+    15→}
+    17→export const LoaderIcon = styled('div')<LoaderTheme>`
+    18→  width: 12px;
+components/toast-bar.tsx
+     8→const enterAnimation
+    13→const exitAnimation
+    18→const fadeInAnimation
+    19→const fadeOutAnimation
+    22→const ToastBarBase
+    38→const Message
+    47→interface ToastBarProps {
+    48→  toast: Toast;
+    49→  position?: ToastPosition;
+    50→  style?: React.CSSProperties;
+    51→  children?: (components: {
+    52→    icon: Renderable;
+    53→    message: Renderable;
+    54→  }) => Renderable;
+    55→}
+    57→const getAnimationStyle
+    75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
+    76→  ({ toast, position, style, children }) => {
+components/toast-icon.tsx
+     9→const StatusWrapper
+    13→const IndicatorWrapper
+    22→const enter
+    32→export const AnimatedIconWrapper = styled('div')`
+    33→  position: relative;
+    41→export type IconThemes = Partial<{
+    42→  success: CheckmarkTheme;
+    43→  error: ErrorTheme;
+    44→  loading: LoaderTheme;
+    45→}>;
+    47→export const ToastIcon: React.FC<{
+    48→  toast: Toast;
+    49→}> = ({ toast }) => {
+    50→  const { icon, type, iconTheme } = toast;
+components/toaster.tsx
+    15→const ToastWrapper
+    47→const getPositionStyle
+    76→const activeClass
+    83→const DEFAULT_OFFSET
+    85→export const Toaster: React.FC<ToasterProps> = ({
+    86→  reverseOrder,
+    87→  position = 'top-center',
+    88→  toastOptions,
+core/store.ts
+     4→export const TOAST_EXPIRE_DISMISS_DELAY
+     5→export const TOAST_LIMIT
+     6→export const DEFAULT_TOASTER_ID
+     8→interface ToasterSettings {
+     9→  toastLimit: number;
+    10→}
+    12→export enum ActionType {
+    13→  ADD_TOAST,
+    14→  UPDATE_TOAST,
+    15→  UPSERT_TOAST,
+    16→  DISMISS_TOAST,
+    17→  REMOVE_TOAST,
+    18→  START_PAUSE,
+    19→  END_PAUSE,
+    20→}
+    22→export type Action
+    52→interface ToasterState {
+    53→  toasts: Toast[];
+    54→  settings: ToasterSettings;
+    55→  pausedAt: number | undefined;
+    56→}
+    58→interface State {
+    59→  [toasterId: string]: ToasterState;
+    60→}
+    62→export const reducer
+   136→const listeners: Array<
+   140→const defaultToasterState: ToasterState = {
+   149→export const dispatch
+   161→export const dispatchAll
+   164→export const getToasterIdFromToastId
+   169→export const createDispatch
+   175→export const defaultTimeouts
+   185→export const useStore
+core/toast.ts
+    19→type Message = ValueOrFunction<Renderable, Toast>;
+    21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
+    23→const createToast
+    42→const createHandler
+    55→const toast
+core/types.ts
+     3→export type ToastType
+     4→export type ToastPosition
+    12→export type Renderable
+    14→export interface IconTheme {
+    15→  primary: string;
+    16→  secondary: string;
+    17→}
+    19→export type ValueFunction
+    20→export type ValueOrFunction
+    24→const isFunction
+    29→export const resolveValue
+    34→export interface Toast {
+    35→  type: ToastType;
+    36→  id: string;
+    37→  toasterId?: string;
+    38→  message: ValueOrFunction<Renderable, Toast>;
+    39→  icon?: Renderable;
+    40→  duration?: number;
+    41→  pauseDuration: number;
+    42→  position?: ToastPosition;
+    43→  removeDelay?: number;
+    44→
+    45→  ariaProps: {
+    46→    role: 'status' | 'alert';
+    47→    'aria-live': 'assertive' | 'off' | 'polite';
+    48→  };
+    49→
+    50→  style?: CSSProperties;
+    51→  className?: string;
+    52→  iconTheme?: IconTheme;
+    53→
+    54→  createdAt: number;
+    55→  visible: boolean;
+    56→  dismissed: boolean;
+    57→  height?: number;
+    58→}
+    60→export type ToastOptions
+    76→export type DefaultToastOptions
+    80→export interface ToasterProps {
+    81→  position?: ToastPosition;
+    82→  toastOptions?: DefaultToastOptions;
+    83→  reverseOrder?: boolean;
+    84→  gutter?: number;
+    85→  containerStyle?: React.CSSProperties;
+    86→  containerClassName?: string;
+    87→  toasterId?: string;
+    88→  children?: (toast: Toast) => React.ReactElement;
+    89→}
+    91→export interface ToastWrapperProps {
+    92→  id: string;
+    93→  className?: string;
+    94→  style?: React.CSSProperties;
+    95→  onHeightUpdate: (id: string, height: number) => void;
+    96→  children?: React.ReactNode;
+    97→}
+core/use-toaster.ts
+     6→export const REMOVE_DELAY
+     8→export const useToaster
+core/utils.ts
+     1→export const genId
+     8→export const prefersReducedMotion

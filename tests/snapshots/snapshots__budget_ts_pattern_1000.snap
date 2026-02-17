@@ -1,0 +1,300 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (993 words)
+
+README.md
+   417→### `match`
+   418→
+   419→```ts
+   420→match(value);
+   421→```
+   422→
+   423→Create a `Match` object on which you can later call `.with`, `.when`, `.otherwise` and `.run`.
+   424→
+   857→#### `P._` wildcard
+   858→
+   859→The `P._` pattern will match any value. You can also use `P.any`, which is an alias to `P._`.
+   860→
+   861→```ts
+   862→import { match, P } from 'ts-pattern';
+   863→
+   864→const input = 'hello';
+   865→
+   866→const output = match(input)
+  1623→### `P.infer`
+  1624→
+  1625→`P.infer<typeof somePattern>` lets you infer a type of value from a type of pattern.
+  1626→
+  1627→It's particularly useful when validating an API response.
+  1628→
+  1629→```ts
+  1630→const postPattern = {
+  1631→  title: P.string,
+  1632→  content: P.string,
+docs/v3-to-v4-migration-guide.md
+     3→## Breaking changes
+     4→
+     5→### Imports
+     6→
+   128→#### `P.array(pattern)`
+   129→
+   159→#### `P.optional(pattern)`
+   160→
+   298→#### `P.infer<typeof pattern>`
+   299→
+   336→#### `P.symbol`
+   337→
+docs/v4-to-v5-migration-guide.md
+     7→## TypeScript v5
+     8→
+    65→## chainable methods
+    66→
+src/errors.ts
+     1→/**
+     2→ * Error when the given input value does not match any included pattern
+     3→ * and .exhaustive() was specified
+     4→ */
+     5→export class NonExhaustiveError extends Error {
+     6→  constructor(public input: unknown) {
+     7→    let displayedValue;
+     8→    try {
+     9→      displayedValue = JSON.stringify(input);
+    10→    } catch (e) {
+    11→      displayedValue = input;
+    12→    }
+    13→    super(`Pattern matching error: no pattern matches value ${displayedValue}`);
+    14→  }
+    15→}
+src/internals/helpers.ts
+    12→export const isObject
+    16→export const isMatcher
+    24→const isOptionalPattern = (
+    25→  x: unknown
+    26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
+    27→  return isMatcher(x) && x[symbols.matcher]().matcherType === 'optional';
+    28→};
+    32→export const matchPattern
+   120→export const getSelectionKeys
+   132→export const flatMap
+src/internals/symbols.ts
+     1→/**
+     2→ * Symbols used internally within ts-pattern to construct and discriminate
+     3→ * Guard, Not, and Select, and AnonymousSelect patterns
+     4→ *
+     5→ * Symbols have the advantage of not appearing in auto-complete suggestions in
+     6→ * user defined patterns, and eliminate the risk of property
+     7→ * overlap between ts-pattern internals and user defined patterns.
+     8→ *
+    16→export const matcher = Symbol.for('@ts-pattern/matcher');
+    17→export type matcher = typeof matcher;
+    19→export const unset = Symbol.for('@ts-pattern/unset');
+    20→export type unset = typeof unset;
+    22→export const isVariadic = Symbol.for('@ts-pattern/isVariadic');
+    23→export type isVariadic = typeof isVariadic;
+    26→export const anonymousSelectKey = '@ts-pattern/anonymous-select-key';
+    27→export type anonymousSelectKey = typeof anonymousSelectKey;
+    29→export const override = Symbol.for('@ts-pattern/override');
+    30→export type override = typeof override;
+src/is-matching.ts
+     6→/**
+     7→ * This constraint allows using additional properties
+     8→ * in object patterns. See "should allow targetting unknown properties"
+     9→ * unit test in `is-matching.test.ts`.
+    10→ */
+    11→type PatternConstraint<T> = T extends readonly any[]
+    12→  ? P.Pattern<T>
+    13→  : T extends object
+    14→  ? P.Pattern<T> & UnknownProperties
+    15→  : P.Pattern<T>;
+    53→export function isMatching
+src/match.ts
+     7→type MatchState
+    11→const unmatched
+    16→/**
+    32→export function match<const input, output = symbols.unset>(
+    33→  value: input
+    34→): Match<input, output> {
+    47→class MatchExpression<input, output> {
+    48→  constructor(private input: input, private state: MatchState<output>) {}
+    49→
+    50→  with(...args: any[]): MatchExpression<input, output> {
+    51→    if (this.state.matched) return this;
+    52→
+    94→  when
+   110→  otherwise
+   115→  exhaustive
+   120→  run
+   124→  returnType
+   128→  narrow
+src/patterns.ts
+    67→/**
+    81→export type unstable_Matchable<
+    82→  narrowedOrFn,
+    83→  input = unknown,
+    84→  pattern = never
+    85→> = CustomP<input, pattern, narrowedOrFn>;
+    87→/**
+   100→export type unstable_Matcher<
+   101→  narrowedOrFn,
+   102→  input = unknown,
+   103→  pattern = never
+   104→> = ReturnType<CustomP<input, pattern, narrowedOrFn>[matcher]>;
+   106→/**
+   116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
+   118→/**
+   131→export type narrow<input, pattern> = ExtractPreciseValue<
+   132→  input,
+   133→  InvertPattern<pattern, input>
+   134→>;
+   177→/**
+   187→export function optional<
+   188→  input,
+   189→  const pattern extends unknown extends input
+   190→    ? UnknownValuePattern
+   191→    : Pattern<input>
+   192→>(pattern: pattern): Chainable<OptionalP<input, pattern>, 'optional'> {
+   217→type UnwrapArray
+   219→type UnwrapSet
+   221→type UnwrapMapKey
+   223→type UnwrapMapValue
+   225→type UnwrapRecordKey
+   227→type UnwrapRecordValue
+   229→type WithDefault
+   246→export function array
+   299→export function set
+   362→export function map
+   445→export function record
+   517→/**
+   536→export function intersection<
+   537→  input,
+   538→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
+   539→>(...patterns: patterns): Chainable<AndP<input, patterns>> {
+   559→/**
+   572→export function union<
+   573→  input,
+   574→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
+   575→>(...patterns: patterns): Chainable<OrP<input, patterns>> {
+   599→/**
+   611→export function not<
+   612→  input,
+   613→  const pattern extends Pattern<input> | UnknownValuePattern
+   614→>(pattern: pattern): Chainable<NotP<input, pattern>> {
+   646→export function when
+   696→export function select
+   766→type AnyConstructor
+   773→/**
+   782→export const any: UnknownPattern = chainable(when(isUnknown));
+   784→/**
+   793→export const unknown: UnknownPattern = chainable(when(isUnknown));
+   795→/**
+   805→export const _ = any;
+   919→/**
+   928→export const string: StringPattern = stringChainable(when(isString));
+  1066→/**
+  1075→export const number: NumberPattern = numberChainable(when(isNumber));
+  1193→/**
+  1201→export const bigint: BigIntPattern = bigintChainable(when(isBigInt));
+  1203→/**
+  1211→export const boolean: BooleanPattern = chainable(when(isBoolean));
+  1213→/**
+  1221→export const symbol: SymbolPattern = chainable(when(isSymbol));
+  1223→/**
+  1231→export const nullish: NullishPattern = chainable(when(isNullish));
+  1233→/**
+  1241→export const nonNullable: NonNullablePattern = chainable(when(isNonNullable));
+  1243→/**
+  1251→export function instanceOf<T extends AnyConstructor>(
+  1252→  classConstructor: T
+  1253→): Chainable<GuardP<unknown, InstanceType<T>>> {
+  1274→export function shape
+src/types/DistributeUnions.ts
+    41→export type DistributeMatchingUnions
+    80→export type FindUnions
+src/types/InvertPattern.ts
+   106→export type InvertPattern
+   303→export type InvertPatternForExclude
+src/types/Match.ts
+    10→interface NonExhaustiveError<i> {
+    11→  __nonExhaustive: never;
+    12→}
+    14→interface TSPatternError<i> {
+    15→  __nonExhaustive: never;
+    16→}
+    22→export type Match
+   132→  with
+   159→  when
+   180→  otherwise
+   205→  run
+   225→  narrow
+   245→type DeepExcludeAll
+   261→type Exhaustive
+src/types/Pattern.ts
+    43→/**
+    44→ * A `Matcher` is an object implementing the match
+    45→ * protocol. It must define a `symbols.matcher` property
+    46→ * which returns an object with a `match()` method, taking
+    47→ * the input value and returning whether the pattern matches
+    48→ * or not, along with optional selections.
+    49→ */
+    50→export interface Matcher<
+    51→  input,
+    52→  narrowed,
+    53→  // Type of what this pattern selected from the input
+    54→  matcherType extends MatcherType = 'default',
+    55→  selections extends SelectionType = None,
+    56→  // Type to exclude from the input union because
+    57→  // it has been fully matched by this pattern
+    58→  excluded = narrowed
+    59→> {
+    60→  [matcher](): MatcherProtocol<
+    61→    input,
+    62→    narrowed,
+    63→    matcherType,
+    64→    selections,
+    65→    excluded
+    66→  >;
+    67→  // only used for array matchers
+    68→  [symbols.isVariadic]?: boolean;
+    69→}
+   132→export interface Override<a> {
+   133→  [symbols.override]: a;
+   134→}
+   157→export type Pattern
+   223→      optional
+   237→      and
+   253→      or
+   269→      select
+   291→      startsWith
+   306→      endsWith
+   321→      minLength
+   336→      length
+   351→      maxLength
+   366→      includes
+   381→      regex
+   407→      between
+   423→      lt
+   438→      gt
+   453→      lte
+   468→      gte
+   483→      int
+   496→      finite
+   509→      positive
+   522→      negative
+   546→      between
+   562→      lt
+   577→      gt
+   592→      lte
+   607→      gte
+   622→      positive
+   635→      negative
+   661→      optional
+   678→      select
+src/types/helpers.ts
+    14→export type LeastUpperBound
+   182→export type GuardValue
+   266→export interface Fn {
+   267→  input: unknown;
+   268→  output: unknown;
+   269→}

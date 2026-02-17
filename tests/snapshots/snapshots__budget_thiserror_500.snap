@@ -1,0 +1,149 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (489 words)
+
+README.md
+     1→derive(Error)
+     3→
+    21→## Example
+    22→
+    44→## Details
+    45→
+   211→## Comparison to anyhow
+   212→
+   223→#### License
+   224→
+build/probe.rs
+    11→struct MyError(Thing);
+    12→struct Thing;
+    14→impl Debug for MyError {
+    15→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    16→        unimplemented!()
+    20→impl Display for MyError {
+    21→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    22→        unimplemented!()
+    26→impl Error for MyError {
+    27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
+    28→        request.provide_ref(&self.0);
+    33→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
+build.rs
+    10→const PRIVATE: &str = "\
+    11→#[doc(hidden)]
+    18→fn main
+    91→fn compile_probe
+   179→fn rustc_minor_version
+   190→fn cargo_env_var
+impl/src/ast.rs
+    10→pub enum Input<'a> {
+    15→pub struct Struct<'a> {
+    22→pub struct Enum<'a> {
+    29→pub struct Variant<'a> {
+    36→pub struct Field<'a> {
+    45→pub enum ContainerKind {
+    46→    Struct,
+impl/src/attr.rs
+    11→pub struct Attrs<'a> {
+    21→pub struct Display<'a> {
+    22→    pub original: &'a Attribute,
+    33→pub struct Source<'a> {
+    34→    pub original: &'a Attribute,
+    39→pub struct From<'a> {
+    40→    pub original: &'a Attribute,
+    45→pub struct Transparent<'a> {
+    46→    pub original: &'a Attribute,
+    51→pub struct Fmt<'a> {
+    52→    pub original: &'a Attribute,
+    57→pub enum Trait {
+    58→    Debug,
+impl/src/fmt.rs
+   166→struct FmtArguments {
+   171→#[allow(clippy::unnecessary_wraps)]
+   172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
+impl/src/generics.rs
+     8→pub struct ParamsInScope<'a> {
+    48→pub struct InferredBounds {
+impl/src/lib.rs
+    39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
+    40→pub fn derive_error(input: TokenStream) -> TokenStream {
+    41→    let input = parse_macro_input!(input as DeriveInput);
+    42→    expand::derive(&input).into()
+    43→}
+    45→#[allow(non_camel_case_types)]
+    46→struct private;
+impl/src/scan_expr.rs
+     6→enum Input {
+    25→enum Action {
+impl/src/unraw.rs
+    12→pub struct IdentUnraw(Ident);
+    82→pub enum MemberUnraw {
+    83→    Named(IdentUnraw),
+src/aserror.rs
+     4→#[doc(hidden)]
+     5→pub trait AsDynError<'a>: Sealed {
+     6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
+     7→}
+    10→    #[inline]
+    11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    17→    #[inline]
+    18→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    24→    #[inline]
+    25→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    31→    #[inline]
+    32→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    38→    #[inline]
+    39→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    44→#[doc(hidden)]
+    45→pub trait Sealed {}
+src/display.rs
+     5→#[doc(hidden)]
+     6→pub trait AsDisplay<'a>: Sealed {
+     7→    // TODO: convert to generic associated type.
+     8→    // https://github.com/dtolnay/thiserror/pull/253
+     9→    type Target: Display;
+    10→
+    11→    fn as_display(&'a self) -> Self::Target;
+    12→}
+    18→    type Target = &'a T;
+    20→    fn as_display
+    26→impl<'a> AsDisplay<'a> for Path {
+    27→    type Target = path::Display<'a>;
+    29→    #[inline]
+    30→    fn as_display(&'a self) -> Self::Target {
+    36→impl<'a> AsDisplay<'a> for PathBuf {
+    37→    type Target = path::Display<'a>;
+    39→    #[inline]
+    40→    fn as_display(&'a self) -> Self::Target {
+    45→#[doc(hidden)]
+    46→pub trait Sealed {}
+    49→impl Sealed for Path {}
+    51→impl Sealed for PathBuf {}
+    58→#[cfg(not(feature = "std"))]
+    59→mod placeholder {
+    60→    use super::{AsDisplay, Sealed};
+    63→    #[allow(dead_code)]
+    64→    pub struct Placeholder;
+    67→        type Target = Self;
+    69→        #[inline]
+    70→        fn as_display(&'a self) -> Self::Target {
+    76→        fn fmt
+src/lib.rs
+   281→mod aserror;
+   282→mod display;
+   283→#[cfg(error_generic_member_access)]
+   284→mod provide;
+   285→mod var;
+   289→mod private;
+src/provide.rs
+     3→#[doc(hidden)]
+     4→pub trait ThiserrorProvide: Sealed {
+     5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
+     6→}
+    12→    #[inline]
+    13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
+    18→#[doc(hidden)]
+    19→pub trait Sealed {}
+src/var.rs
+     3→pub struct Var<'a, T: ?Sized>(pub &'a T);
+     6→    fn fmt

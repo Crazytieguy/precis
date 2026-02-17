@@ -1,0 +1,181 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (497 words)
+
+Changelog.md
+    40→###### NEW
+    41→
+    55→###### BREAKING
+    56→
+    61→###### FIXED
+    62→
+    69→###### BREAKING
+    70→
+    77→###### NEW
+    78→
+    95→###### NEW
+    96→
+   129→###### NEW
+   130→
+   394→###### BREAKING
+   395→
+   446→###### BREAKING
+   447→
+   454→###### BREAKING
+   455→
+   462→###### BREAKING
+   463→
+   476→###### BREAKING
+   477→
+   490→###### BREAKING
+   491→
+   500→###### BREAKING
+   501→
+   512→###### BREAKING
+   513→
+docs/guides/01-getting-started.md
+     3→## Installing Superstruct
+     4→
+     5→To install Superstruct run:
+     6→
+     7→```bash
+     8→npm install --save superstruct
+     9→```
+    10→
+    11→And then you can import it:
+    12→
+    13→```ts
+    14→import { object, string, number } from 'superstruct'
+    15→
+    16→const User = object({
+    17→  id: number(),
+    18→  name: string(),
+    19→})
+    20→```
+    21→
+docs/readme.md
+     7→### Usage
+     8→
+docs/reference/core.md
+     3→### `assert`
+     4→
+     5→`assert<T>(value: unknown, struct: Struct<T>, message?: string) => asserts value is T`
+     6→
+     7→```ts
+docs/reference/typescript.md
+     7→### `Describe`
+     8→
+     9→The `Describe` utility returns a type representing a struct for a given valid value type. This allows you to ensure you're writing your struct definitions properly, for example:
+    10→
+    11→```ts
+docs/resources/faq.md
+     1→# FAQ
+     2→
+     5→### How can I allow unknown keys with `object` structs?
+     6→
+    11→### Why not have a built-in `json` struct?
+    12→
+docs/resources/links.md
+     1→# Resources
+     2→
+     5→## Libraries
+     6→
+docs/summary.md
+     3→## Guides
+     4→
+    12→## API Reference
+    13→
+    22→## Resources
+    23→
+src/error.ts
+     5→export type Failure
+    25→export class StructError extends TypeError {
+    26→  value: any
+    27→  key!: any
+    28→  type!: string
+    29→  refinement!: string | undefined
+    30→  path!: Array<any>
+    31→  branch!: Array<any>
+    32→  failures: () => Array<Failure>;
+    33→  [x: string]: any
+    34→
+    35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
+    36→    let cached: Array<Failure> | undefined
+src/struct.ts
+    10→export class Struct<T = unknown, S = unknown> {
+    11→  readonly TYPE!: T
+    12→  type: string
+    13→  schema: S
+    14→  coercer: (value: unknown, context: Context) => unknown
+    15→  validator: (value: unknown, context: Context) => Iterable<Failure>
+    16→  refiner: (value: T, context: Context) => Iterable<Failure>
+    17→  entries: (
+    18→    value: unknown,
+    19→    context: Context
+    22→  constructor(props: {
+    23→    type: string
+    67→  assert
+    75→  create
+    83→  is
+    93→  mask
+   107→  validate
+   123→export function assert
+   139→export function create
+   157→export function mask
+   175→export function is
+   185→export function validate
+   221→export type Context
+   231→export type Infer
+   237→export type Describe
+   243→export type Result
+   253→export type Coercer
+   259→export type Validator
+   266→export type Refiner
+src/structs/refinements.ts
+    21→function getSize
+src/structs/types.ts
+    33→export function array
+   105→export function enums
+   204→export function literal
+   230→export function map
+   298→export function object
+   415→export function set
+src/structs/utilities.ts
+    60→export function assign
+src/utils.ts
+     4→/**
+     5→ * Check if a value is an iterator.
+     6→ */
+     7→
+     8→function isIterable<T>(x: unknown): x is Iterable<T> {
+     9→  return isObject(x) && typeof x[Symbol.iterator] === 'function'
+    10→}
+    16→export function isObject
+    24→export function isNonArrayObject
+    32→export function isPlainObject
+    45→export function print
+    58→export function shiftIterator
+    67→export function toFailure
+   202→export type UnionToIntersection
+   212→export type Assign
+   218→export type EnumSchema
+   227→export type IsMatch
+   233→export type IsExactMatch
+   242→export type IsRecord
+   251→export type IsTuple
+   267→export type IsUnion
+   277→export type ObjectSchema
+   283→export type ObjectType
+   291→export type OmitBy
+   300→export type Optionalize
+   307→export type PartialObjectSchema
+   315→export type PickBy
+   324→export type Simplify
+   328→export type If<B extends Boolean, Then, Else> = B extends true ? Then : Else
+   334→export type StructSchema
+   379→export type TupleSchema
+   385→export type AnyStruct
+   394→export type InferStructTuple
+   402→type _InferTuple

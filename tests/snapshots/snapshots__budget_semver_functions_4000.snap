@@ -1,0 +1,252 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 (1130 words)
+
+clean.js
+     4→const clean = (version, options) => {
+     5→  const s = parse(version.trim().replace(/^[=v]+/, ''), options)
+     6→  return s ? s.version : null
+     7→}
+cmp.js
+    10→const cmp = (a, op, b, loose) => {
+    11→  switch (op) {
+    12→    case '===':
+    13→      if (typeof a === 'object') {
+    14→        a = a.version
+    15→      }
+    16→      if (typeof b === 'object') {
+    17→        b = b.version
+    18→      }
+    19→      return a === b
+    20→
+    21→    case '!==':
+    22→      if (typeof a === 'object') {
+    23→        a = a.version
+    24→      }
+    25→      if (typeof b === 'object') {
+    26→        b = b.version
+    27→      }
+    28→      return a !== b
+    29→
+    30→    case '':
+    31→    case '=':
+    32→    case '==':
+    33→      return eq(a, b, loose)
+    34→
+    35→    case '!=':
+    36→      return neq(a, b, loose)
+    37→
+    38→    case '>':
+    39→      return gt(a, b, loose)
+    40→
+    41→    case '>=':
+    42→      return gte(a, b, loose)
+    43→
+    44→    case '<':
+    45→      return lt(a, b, loose)
+    46→
+    47→    case '<=':
+    48→      return lte(a, b, loose)
+    49→
+    50→    default:
+    51→      throw new TypeError(`Invalid operator: ${op}`)
+    52→  }
+    53→}
+coerce.js
+     7→const coerce = (version, options) => {
+     8→  if (version instanceof SemVer) {
+     9→    return version
+    10→  }
+    11→
+    12→  if (typeof version === 'number') {
+    13→    version = String(version)
+    14→  }
+    15→
+    16→  if (typeof version !== 'string') {
+    17→    return null
+    18→  }
+    19→
+    20→  options = options || {}
+    21→
+    22→  let match = null
+    23→  if (!options.rtl) {
+    24→    match = version.match(options.includePrerelease ? re[t.COERCEFULL] : re[t.COERCE])
+    25→  } else {
+    26→    // Find the right-most coercible string that does not share
+    27→    // a terminus with a more left-ward coercible string.
+    28→    // Eg, '1.2.3.4' wants to coerce '2.3.4', not '3.4' or '4'
+    29→    // With includePrerelease option set, '1.2.3.4-rc' wants to coerce '2.3.4-rc', not '2.3.4'
+    30→    //
+    31→    // Walk through the string checking with a /g regexp
+    32→    // Manually set the index so as to pick up overlapping matches.
+    33→    // Stop when we get a match that ends at the string end, since no
+    34→    // coercible string can be more right-ward without the same terminus.
+    35→    const coerceRtlRegex = options.includePrerelease ? re[t.COERCERTLFULL] : re[t.COERCERTL]
+    36→    let next
+    37→    while ((next = coerceRtlRegex.exec(version)) &&
+    38→        (!match || match.index + match[0].length !== version.length)
+    39→    ) {
+    40→      if (!match ||
+    41→            next.index + next[0].length !== match.index + match[0].length) {
+    42→        match = next
+    43→      }
+    44→      coerceRtlRegex.lastIndex = next.index + next[1].length + next[2].length
+    45→    }
+    46→    // leave it in a clean state
+    47→    coerceRtlRegex.lastIndex = -1
+    48→  }
+    49→
+    50→  if (match === null) {
+    51→    return null
+    52→  }
+    53→
+    54→  const major = match[2]
+    55→  const minor = match[3] || '0'
+    56→  const patch = match[4] || '0'
+    57→  const prerelease = options.includePrerelease && match[5] ? `-${match[5]}` : ''
+    58→  const build = options.includePrerelease && match[6] ? `+${match[6]}` : ''
+    59→
+    60→  return parse(`${major}.${minor}.${patch}${prerelease}${build}`, options)
+    61→}
+compare-build.js
+     4→const compareBuild = (a, b, loose) => {
+     5→  const versionA = new SemVer(a, loose)
+     6→  const versionB = new SemVer(b, loose)
+     7→  return versionA.compare(versionB) || versionA.compareBuild(versionB)
+     8→}
+compare-loose.js
+     4→const compareLoose = (a, b) => compare(a, b, true)
+compare.js
+     4→const compare = (a, b, loose) =>
+     5→  new SemVer(a, loose).compare(new SemVer(b, loose))
+diff.js
+     5→const diff = (version1, version2) => {
+     6→  const v1 = parse(version1, null, true)
+     7→  const v2 = parse(version2, null, true)
+     8→  const comparison = v1.compare(v2)
+     9→
+    10→  if (comparison === 0) {
+    11→    return null
+    12→  }
+    13→
+    14→  const v1Higher = comparison > 0
+    15→  const highVersion = v1Higher ? v1 : v2
+    16→  const lowVersion = v1Higher ? v2 : v1
+    17→  const highHasPre = !!highVersion.prerelease.length
+    18→  const lowHasPre = !!lowVersion.prerelease.length
+    19→
+    20→  if (lowHasPre && !highHasPre) {
+    21→    // Going from prerelease -> no prerelease requires some special casing
+    22→
+    23→    // If the low version has only a major, then it will always be a major
+    24→    // Some examples:
+    25→    // 1.0.0-1 -> 1.0.0
+    26→    // 1.0.0-1 -> 1.1.1
+    27→    // 1.0.0-1 -> 2.0.0
+    28→    if (!lowVersion.patch && !lowVersion.minor) {
+    29→      return 'major'
+    30→    }
+    31→
+    32→    // If the main part has no difference
+    33→    if (lowVersion.compareMain(highVersion) === 0) {
+    34→      if (lowVersion.minor && !lowVersion.patch) {
+    35→        return 'minor'
+    36→      }
+    37→      return 'patch'
+    38→    }
+    39→  }
+    40→
+    41→  // add the `pre` prefix if we are going to a prerelease version
+    42→  const prefix = highHasPre ? 'pre' : ''
+    43→
+    44→  if (v1.major !== v2.major) {
+    45→    return prefix + 'major'
+    46→  }
+    47→
+    48→  if (v1.minor !== v2.minor) {
+    49→    return prefix + 'minor'
+    50→  }
+    51→
+    52→  if (v1.patch !== v2.patch) {
+    53→    return prefix + 'patch'
+    54→  }
+    55→
+    56→  // high and low are prereleases
+    57→  return 'prerelease'
+    58→}
+eq.js
+     4→const eq = (a, b, loose) => compare(a, b, loose) === 0
+gt.js
+     4→const gt = (a, b, loose) => compare(a, b, loose) > 0
+gte.js
+     4→const gte = (a, b, loose) => compare(a, b, loose) >= 0
+inc.js
+     5→const inc = (version, release, options, identifier, identifierBase) => {
+     6→  if (typeof (options) === 'string') {
+     7→    identifierBase = identifier
+     8→    identifier = options
+     9→    options = undefined
+    10→  }
+    11→
+    12→  try {
+    13→    return new SemVer(
+    14→      version instanceof SemVer ? version.version : version,
+    15→      options
+    16→    ).inc(release, identifier, identifierBase).version
+    17→  } catch (er) {
+    18→    return null
+    19→  }
+    20→}
+lt.js
+     4→const lt = (a, b, loose) => compare(a, b, loose) < 0
+lte.js
+     4→const lte = (a, b, loose) => compare(a, b, loose) <= 0
+major.js
+     4→const major = (a, loose) => new SemVer(a, loose).major
+minor.js
+     4→const minor = (a, loose) => new SemVer(a, loose).minor
+neq.js
+     4→const neq = (a, b, loose) => compare(a, b, loose) !== 0
+parse.js
+     4→const parse = (version, options, throwErrors = false) => {
+     5→  if (version instanceof SemVer) {
+     6→    return version
+     7→  }
+     8→  try {
+     9→    return new SemVer(version, options)
+    10→  } catch (er) {
+    11→    if (!throwErrors) {
+    12→      return null
+    13→    }
+    14→    throw er
+    15→  }
+    16→}
+patch.js
+     4→const patch = (a, loose) => new SemVer(a, loose).patch
+prerelease.js
+     4→const prerelease = (version, options) => {
+     5→  const parsed = parse(version, options)
+     6→  return (parsed && parsed.prerelease.length) ? parsed.prerelease : null
+     7→}
+rcompare.js
+     4→const rcompare = (a, b, loose) => compare(b, a, loose)
+rsort.js
+     4→const rsort = (list, loose) => list.sort((a, b) => compareBuild(b, a, loose))
+satisfies.js
+     4→const satisfies = (version, range, options) => {
+     5→  try {
+     6→    range = new Range(range, options)
+     7→  } catch (er) {
+     8→    return false
+     9→  }
+    10→  return range.test(version)
+    11→}
+sort.js
+     4→const sort = (list, loose) => list.sort((a, b) => compareBuild(a, b, loose))
+valid.js
+     4→const valid = (version, options) => {
+     5→  const v = parse(version, options)
+     6→  return v ? v.version : null
+     7→}

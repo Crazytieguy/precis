@@ -1,0 +1,323 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 1000 (961 words)
+
+CHANGELOG.md
+     7→## [17.3.1](https://github.com/motdotla/dotenv/compare/v17.3.0...v17.3.1) (2026-02-12)
+     8→
+     9→### Changed
+    10→
+    15→### Added
+    16→
+    25→### Changed
+    26→
+    32→### Changed
+    33→
+    38→### Added
+    39→
+    44→### Changed
+    45→
+    50→### Added
+    51→
+    76→### Added
+    77→
+    98→### Changed
+    99→
+   104→### Changed
+   105→
+   110→### Changed
+   111→
+   118→### Added
+   119→
+   126→### Added
+   127→
+   142→### Changed
+   143→
+   148→### Changed
+   149→
+   155→### Changed
+   156→
+   161→### Changed
+   162→
+   167→### Changed
+   168→
+   173→### Changed
+   174→
+   188→### Added
+   189→
+   199→### Added
+   200→
+   205→### Added
+   206→
+   211→### Added
+   212→
+   218→### Added
+   219→
+   224→### Removed
+   225→
+   230→### Changed
+   231→
+   236→### Added
+   237→
+   246→### Added
+   247→
+   262→### Changed
+   263→
+   268→### Added
+   269→
+   274→### Changed
+   275→
+   281→### Added
+   282→
+   289→### Changed
+   290→
+   313→### Changed
+   314→
+   319→### Changed
+   320→
+   325→### Added
+   326→
+   331→### Added
+   332→
+   338→### Added
+   339→
+   344→### Added
+   345→
+   350→### Added
+   351→
+   356→### Added
+   357→
+   362→### Changed
+   363→
+   368→### Added
+   369→
+   374→### Changed
+   375→
+   381→### Changed
+   382→
+   387→### Changed
+   388→
+   393→### Changed
+   394→
+   399→### Removed
+   400→
+   411→### Changed
+   412→
+   418→### Added
+   419→
+   426→### Changed
+   427→
+   432→### Changed
+   433→
+   438→### Changed
+   439→
+   444→### Added
+   445→
+   450→### Changed
+   451→
+   456→### Added
+   457→
+   462→### Changed
+   463→
+   468→### Changed
+   469→
+   474→### Added
+   475→
+   480→### Changed
+   481→
+   486→### Changed
+   487→
+   492→### Fixed
+   493→
+   502→### Added
+   503→
+   508→### Added
+   509→
+   514→### Changed
+   515→
+   520→### Added
+   521→
+   538→### Changed
+   539→
+   548→### Added
+   549→
+   569→### Added
+   570→
+   587→### Added
+   588→
+   601→### Added
+   602→
+   607→### Removed
+   608→
+README-es.md
+   607→##### path
+   608→
+   707→##### debug
+   708→
+   750→##### Debug
+   751→
+README.md
+   607→##### path
+   608→
+   707→##### debug
+   708→
+   750→##### Debug
+   751→
+lib/cli-options.js
+     1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
+lib/env-options.js
+     2→const options = {}
+lib/main.d.ts
+     5→export interface DotenvParseOutput {
+     6→  [name: string]: string;
+     7→}
+     9→export interface DotenvPopulateOutput {
+    10→  [name: string]: string;
+    11→}
+    25→export interface DotenvConfigOptions {
+    26→  /**
+    27→   * Default: `path.resolve(process.cwd(), '.env')`
+    28→   *
+    29→   * Specify a custom path if your file containing environment variables is located elsewhere.
+    30→   * Can also be an array of strings, specifying multiple paths.
+    31→   *
+    32→   * example: `require('dotenv').config({ path: '/custom/path/to/.env' })`
+    33→   * example: `require('dotenv').config({ path: ['/path/to/first.env', '/path/to/second.env'] })`
+    34→   */
+    35→  path?: string | string[] | URL;
+    36→
+    37→  /**
+    38→   * Default: `utf8`
+    39→   *
+    40→   * Specify the encoding of your file containing environment variables.
+    41→   *
+    42→   * example: `require('dotenv').config({ encoding: 'latin1' })`
+    43→   */
+    44→  encoding?: string;
+    45→
+    46→  /**
+    47→   * Default: `false`
+    48→   *
+    49→   * Suppress all output (except errors).
+    50→   *
+    51→   * example: `require('dotenv').config({ quiet: true })`
+    52→   */
+    53→  quiet?: boolean;
+    54→
+    55→  /**
+    56→   * Default: `false`
+    57→   *
+    58→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
+    59→   *
+    60→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
+    61→   */
+    62→  debug?: boolean;
+    63→
+    64→  /**
+    65→   * Default: `false`
+    66→   *
+    67→   * Override any environment variables that have already been set on your machine with values from your .env file.
+    68→   *
+    69→   * example: `require('dotenv').config({ override: true })`
+    70→   */
+    71→  override?: boolean;
+    72→
+    73→  /**
+    74→   * Default: `process.env`
+    75→   *
+    76→   * Specify an object to write your secrets to. Defaults to process.env environment variables.
+    77→   *
+    78→   * example: `const processEnv = {}; require('dotenv').config({ processEnv: processEnv })`
+    79→   */
+    80→  processEnv?: DotenvPopulateInput;
+    81→
+    82→  /**
+    83→   * Default: `undefined`
+    84→   *
+    85→   * Pass the DOTENV_KEY directly to config options. Defaults to looking for process.env.DOTENV_KEY environment variable. Note this only applies to decrypting .env.vault files. If passed as null or undefined, or not passed at all, dotenv falls back to its traditional job of parsing a .env file.
+    86→   *
+    87→   * example: `require('dotenv').config({ DOTENV_KEY: 'dotenv://:key_1234…@dotenvx.com/vault/.env.vault?environment=production' })`
+    88→   */
+    89→  DOTENV_KEY?: string;
+    90→}
+    92→export interface DotenvConfigOutput {
+    93→  error?: DotenvError;
+    94→  parsed?: DotenvParseOutput;
+    95→}
+    97→type DotenvError = Error & {
+    98→  code: 
+    99→    | 'MISSING_DATA'
+   100→    | 'INVALID_DOTENV_KEY'
+   101→    | 'NOT_FOUND_DOTENV_ENVIRONMENT'
+   102→    | 'DECRYPTION_FAILED'
+   103→    | 'OBJECT_REQUIRED';
+   104→}
+   106→export interface DotenvPopulateOptions {
+   107→  /**
+   108→   * Default: `false`
+   109→   *
+   110→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
+   111→   *
+   112→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
+   113→   */
+   114→  debug?: boolean;
+   115→
+   116→  /**
+   117→   * Default: `false`
+   118→   *
+   119→   * Override any environment variables that have already been set on your machine with values from your .env file.
+   120→   *
+   121→   * example: `require('dotenv').config({ override: true })`
+   122→   */
+   123→  override?: boolean;
+   124→}
+   126→export interface DotenvPopulateInput {
+   127→  [name: string]: string | undefined;
+   128→}
+lib/main.js
+     7→const version = packageJson.version
+    10→const TIPS = [
+    11→  '🔐 encrypt with Dotenvx: https://dotenvx.com',
+    12→  '🔐 prevent committing .env to code: https://dotenvx.com/precommit',
+    13→  '🔐 prevent building .env in docker: https://dotenvx.com/prebuild',
+    14→  '🤖 agentic secret storage: https://dotenvx.com/as2',
+    15→  '⚡️ secrets for agents: https://dotenvx.com/as2',
+    16→  '🛡️ auth for agents: https://vestauth.com',
+    17→  '🛠️  run anywhere with `dotenvx run -- yourcommand`',
+    18→  '⚙️  specify custom .env file path with { path: \'/custom/path/.env\' }',
+    19→  '⚙️  enable debug logging with { debug: true }',
+    20→  '⚙️  override existing env vars with { override: true }',
+    21→  '⚙️  suppress all logs with { quiet: true }',
+    22→  '⚙️  write to custom object with { processEnv: myObject }',
+    23→  '⚙️  load multiple .env files with { path: [\'.env.local\', \'.env\'] }'
+    24→]
+    27→function _getRandomTip () {
+    31→function parseBoolean (value) {
+    38→function supportsAnsi () {
+    42→function dim (text) {
+    46→const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
+    49→function parse (src) {
+    87→function _parseVault (options) {
+   130→function _warn (message) {
+   134→function _debug (message) {
+   138→function _log (message) {
+   142→function _dotenvKey (options) {
+   157→function _instructions (result, dotenvKey) {
+   200→function _vaultPath (options) {
+   224→function _resolveHome (envPath) {
+   228→function _configVault (options) {
+   248→function configDotenv (options) {
+   328→function config (options) {
+   346→function decrypt (encrypted, keyStr) {
+   378→function populate (processEnv, parsed, options = {}) {
+   413→const DotenvModule = {
+   414→  configDotenv,
+   415→  _configVault,
+   416→  _parseVault,
+   417→  config,
+   418→  decrypt,
+   419→  parse,
+   420→  populate
+   421→}

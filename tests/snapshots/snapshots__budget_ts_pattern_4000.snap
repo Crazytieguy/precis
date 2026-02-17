@@ -1,0 +1,1091 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 (3936 words)
+
+README.md
+    40→## About
+    41→
+    48→## Features
+    49→
+    59→## What is Pattern Matching?
+    60→
+    67→## Installation
+    68→
+    87→## Want to become a TypeScript Expert?
+    88→
+    91→# Documentation
+    92→
+   128→## Sandbox examples
+   129→
+   139→## Getting Started
+   140→
+   143→### Example: a state reducer with ts-pattern
+   144→
+   209→### match(value)
+   210→
+   220→### .returnType\<OutputType\>()
+   221→
+   230→### .with(pattern, handler)
+   231→
+   252→### P.select(name?)
+   253→
+   299→### P.not(pattern)
+   300→
+   310→### `P.when()` and guard functions
+   311→
+   319→#### using P.when(predicate)
+   320→
+   334→#### Passing a guard function to `.with(...)`
+   335→
+   349→### the `P._` wildcard
+   350→
+   364→### .exhaustive(), .otherwise() and .run()
+   365→
+   380→### Matching several patterns
+   381→
+   415→## API Reference
+   416→
+   417→### `match`
+   418→
+   419→```ts
+   420→match(value);
+   421→```
+   422→
+   423→Create a `Match` object on which you can later call `.with`, `.when`, `.otherwise` and `.run`.
+   424→
+   425→#### Signature
+   426→
+   431→#### Arguments
+   432→
+   437→### `.with`
+   438→
+   444→#### Signature
+   445→
+   471→#### Arguments
+   472→
+   490→### `.when`
+   491→
+   497→#### Signature
+   498→
+   506→#### Arguments
+   507→
+   516→### `.returnType`
+   517→
+   528→#### Signature
+   529→
+   534→#### Type arguments
+   535→
+   539→### `.exhaustive`
+   540→
+   572→#### Signature
+   573→
+   579→#### Example
+   580→
+   603→### `.otherwise`
+   604→
+   613→#### Signature
+   614→
+   619→#### Arguments
+   620→
+   627→### `.run`
+   628→
+   637→#### Signature
+   638→
+   643→### `.narrow`
+   644→
+   656→#### Signature
+   657→
+   662→#### Example
+   663→
+   680→### `isMatching`
+   681→
+   720→#### Signature
+   721→
+   732→#### Arguments
+   733→
+   742→## Patterns
+   743→
+   777→### Literals
+   778→
+   800→### Objects
+   801→
+   826→### Tuples (arrays)
+   827→
+   855→### Wildcards
+   856→
+   857→#### `P._` wildcard
+   858→
+   859→The `P._` pattern will match any value. You can also use `P.any`, which is an alias to `P._`.
+   860→
+   861→```ts
+   862→import { match, P } from 'ts-pattern';
+   863→
+   864→const input = 'hello';
+   865→
+   866→const output = match(input)
+   867→  .with(P._, () => 'It will always match')
+   868→  // OR
+   869→  .with(P.any, () => 'It will always match')
+   870→  .otherwise(() => 'This string will never be used');
+   871→
+   872→console.log(output);
+   873→// => 'It will always match'
+   874→```
+   875→
+   876→#### `P.string` wildcard
+   877→
+   894→#### `P.number` wildcard
+   895→
+   912→#### `P.boolean` wildcard
+   913→
+   931→#### `P.nullish` wildcard
+   932→
+   952→#### `P.nonNullable` wildcard
+   953→
+   969→#### `P.bigint` wildcard
+   970→
+   986→#### `P.symbol` wildcard
+   987→
+  1003→### `P.array` patterns
+  1004→
+  1030→### Matching variadic tuples with `P.array`
+  1031→
+  1051→### `P.record` patterns
+  1052→
+  1113→### `P.set` patterns
+  1114→
+  1136→### `P.map` patterns
+  1137→
+  1166→### `P.when` patterns
+  1167→
+  1194→### `P.not` patterns
+  1195→
+  1217→### `P.select` patterns
+  1218→
+  1298→### `P.optional` patterns
+  1299→
+  1318→### `P.instanceOf` patterns
+  1319→
+  1350→### `P.union` patterns
+  1351→
+  1375→### `P.intersection` patterns
+  1376→
+  1405→## `P.string` predicates
+  1406→
+  1409→### `P.string.startsWith`
+  1410→
+  1422→### `P.string.endsWith`
+  1423→
+  1435→### `P.string.minLength`
+  1436→
+  1448→### `P.string.length`
+  1449→
+  1461→### `P.string.maxLength`
+  1462→
+  1474→### `P.string.includes`
+  1475→
+  1487→### `P.string.regex`
+  1488→
+  1500→## `P.number` and `P.bigint` predicates
+  1501→
+  1504→### `P.number.between`
+  1505→
+  1517→### `P.number.lt`
+  1518→
+  1530→### `P.number.gt`
+  1531→
+  1543→### `P.number.lte`
+  1544→
+  1556→### `P.number.gte`
+  1557→
+  1569→### `P.number.int`
+  1570→
+  1582→### `P.number.finite`
+  1583→
+  1595→### `P.number.positive`
+  1596→
+  1608→### `P.number.negative`
+  1609→
+  1621→## Types
+  1622→
+  1623→### `P.infer`
+  1624→
+  1625→`P.infer<typeof somePattern>` lets you infer a type of value from a type of pattern.
+  1626→
+  1627→It's particularly useful when validating an API response.
+  1628→
+  1629→```ts
+  1630→const postPattern = {
+  1631→  title: P.string,
+  1632→  content: P.string,
+  1633→  stars: P.number.between(1, 5).optional(),
+  1634→  author: {
+  1635→    firstName: P.string,
+  1636→    lastName: P.string.optional(),
+  1637→    followerCount: P.number,
+  1638→  },
+  1639→} as const;
+  1640→
+  1641→type Post = P.infer<typeof postPattern>;
+  1642→
+  1643→// posts: Post[]
+  1644→const posts = await fetch(someUrl)
+  1645→  .then((res) => res.json())
+  1646→  .then((res: unknown): Post[] =>
+  1647→    isMatching({ data: P.array(postPattern) }, res) ? res.data : []
+  1648→  );
+  1649→```
+  1650→
+  1651→Although not strictly necessary, using `as const` after the pattern definition ensures that TS-Pattern infers the most precise types possible.
+  1652→
+  1653→### `P.narrow`
+  1654→
+  1667→### `P.Pattern`
+  1668→
+  1679→### Type inference
+  1680→
+  1685→#### Type narrowing
+  1686→
+  1732→#### Type guard function
+  1733→
+  1748→#### Exhaustiveness checking
+  1749→
+  1766→## Inspirations
+  1767→
+docs/roadmap.md
+     1→### Roadmap
+     2→
+docs/v3-to-v4-migration-guide.md
+     1→# TS-Pattern v3 to v4 Migration Guide
+     2→
+     3→## Breaking changes
+     4→
+     5→### Imports
+     6→
+     7→type-specific wildcard patterns have moved from `__.<pattern>` to a new `Pattern` qualified module, also exported as `P` by ts-pattern.
+     8→
+     9→```diff
+    10→- import { match, __ } from 'ts-pattern';
+    11→+ import { match, Pattern } from 'ts-pattern';
+    12→
+    13→
+    14→const toString = (value: string | number) =>
+    15→  match(value)
+    16→-   .with(__.string, (v) => v)
+    17→-   .with(__.number, (v) => `${v}`)
+    18→+   .with(Pattern.string, (v) => v)
+    19→+   .with(Pattern.number, (v) => `${v}`)
+    20→    .exhaustive();
+    21→```
+    22→
+    23→or
+    24→
+    25→```diff
+    26→- import { match, __ } from 'ts-pattern';
+    27→+ import { match, P } from 'ts-pattern';
+    28→
+    29→
+    30→const toString = (value: string | number) =>
+    31→  match(value)
+    32→-   .with(__.string, (v) => v)
+    33→-   .with(__.number, (v) => `${v}`)
+    34→+   .with(P.string, (v) => v)
+    35→+   .with(P.number, (v) => `${v}`)
+    36→    .exhaustive();
+    37→```
+    38→
+    39→#### `__`
+    40→
+    57→#### `select()`, `not()`, `when()`
+    58→
+    79→#### `Pattern` type
+    80→
+    91→### list patterns
+    92→
+   111→### NaN
+   112→
+   122→## New features
+   123→
+   126→### Arrays and unary tuples
+   127→
+   128→#### `P.array(pattern)`
+   129→
+   130→To match an array of elements, you can now use `P.array`:
+   131→
+   132→```ts
+   133→import { match, P } from 'ts-pattern';
+   134→
+   135→const responsePattern = {
+   136→  data: P.array({
+   137→    id: P.string,
+   138→    post: P.array({
+   139→      title: P.string,
+   140→      content: P.string,
+   141→    }),
+   142→  }),
+   143→};
+   144→
+   145→fetchSomething().then((value: unknown) =>
+   146→  match(value)
+   147→    .with(responsePattern, (value) => {
+   148→      // value: { data: { id: string, post: { title: string, content: string }[] }[] }
+   149→      return value;
+   150→    })
+   151→    .otherwise(() => {
+   152→      throw new Error('unexpected response');
+   153→    })
+   154→);
+   155→```
+   156→
+   157→### Optional object properties
+   158→
+   159→#### `P.optional(pattern)`
+   160→
+   161→If you want one of the keys of your pattern to be optional, you can now use `P.optional(subpattern)`.
+   162→
+   163→If you `P.select()` something in an optional pattern, it's type will be infered as `T | undefined`.
+   164→
+   165→```ts
+   166→import { match, P } from 'ts-pattern';
+   167→
+   168→const doSomethingWithUser = (user: User | Org) =>
+   169→  match(user)
+   170→    .with(
+   171→      {
+   172→        type: 'user',
+   173→        detail: {
+   174→          bio: P.optional(P.string),
+   175→          socialLinks: P.optional({
+   176→            twitter: P.select(),
+   177→          }),
+   178→        },
+   179→      },
+   180→      (twitterLink, value) => {
+   181→        // twitterLink: string | undefined
+   182→        /**
+   183→         *  value.detail: {
+   184→         *      bio?: string,
+   185→         *      socialLinks?: {
+   186→         *          twitter: string
+   187→         *      }
+   188→         *  }
+   189→         **/
+   190→      }
+   191→    )
+   192→    .otherwise(() => {
+   193→      throw new Error('unexpected response');
+   194→    });
+   195→```
+   196→
+   197→### Union & intersection patterns
+   198→
+   201→#### `P.union(...patterns)`
+   202→
+   234→#### `P.intersection(...patterns)`
+   235→
+   265→### Select with sub pattern
+   266→
+   296→### Infer the matching types from a pattern
+   297→
+   298→#### `P.infer<typeof pattern>`
+   299→
+   300→TS-Pattern is pretty handy for parsing unknown payloads like HTTP responses. You can write a pattern for the shape you are expecting, and then use `isMatching(pattern, response)` to make sure the response has the correct shape.
+   301→
+   302→One limitation TS-Pattern had in its previous version was that it did not provide a way to get the TypeScript type of the value a given pattern matches. This is what `P.infer<typeof pattern>` does :)
+   303→
+   304→```ts
+   305→const postPattern = {
+   306→  title: P.string,
+   307→  description: P.optional(P.string),
+   308→  content: P.string,
+   309→  likeCount: P.number,
+   310→};
+   311→
+   312→type Post = P.infer<typeof postPattern>;
+   313→// Post: { title: string, description?: string, content: string, likeCount: number }
+   314→
+   315→const userPattern = {
+   316→  name: P.string,
+   317→  postCount: P.number,
+   318→  bio: P.optional(P.string),
+   319→  posts: P.optional(P.array(postPattern)),
+   320→};
+   321→
+   322→type User = P.infer<typeof userPattern>;
+   323→// User: { name: string, postCount: number, bio?: string, posts?: Post[]  }
+   324→
+   325→const isUserList = isMatching(P.array(userPattern));
+   326→
+   327→const res = await fetchUsers();
+   328→
+   329→if (isUserList(res)) {
+   330→  // res: User
+   331→}
+   332→```
+   333→
+   334→### New type specific wildcards
+   335→
+   336→#### `P.symbol`
+   337→
+   338→`P.symbol` is a wildcard pattern matching any **symbol**.
+   339→
+   340→```ts
+   341→match(Symbol('Hello'))
+   342→  .with(P.symbol, () => 'this is a symbol!')
+   343→  .exhaustive();
+   344→```
+   345→
+   346→#### `P.bigint`
+   347→
+docs/v4-to-v5-migration-guide.md
+     1→# TS-Pattern v4 to v5 Migration Guide
+     2→
+     5→# Breaking changes
+     6→
+     7→## TypeScript v5
+     8→
+     9→Because it relies on [const type parameters](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#const-type-parameters), TS-Pattern v5 requires TypeScript v5+!
+    10→
+    11→## `.with` is now evaluated eagerly
+    12→
+    42→## Matching on Map and Sets
+    43→
+    63→# New features
+    64→
+    65→## chainable methods
+    66→
+    67→TS-Pattern v5's major addition is the ability to chain methods to narrow down the values matched by primitive patterns, like `P.string` or `P.number`.
+    68→
+    69→Since a few examples is worth a thousand words, here are a few ways you can use chainable methods:
+    70→
+    71→### P.number methods
+    72→
+   100→### P.string methods
+   101→
+   122→### Global methods
+   123→
+   156→## Variadic tuple patterns
+   157→
+   214→## `.returnType`
+   215→
+src/errors.ts
+     1→/**
+     2→ * Error when the given input value does not match any included pattern
+     3→ * and .exhaustive() was specified
+     4→ */
+     5→export class NonExhaustiveError extends Error {
+     6→  constructor(public input: unknown) {
+     7→    let displayedValue;
+     8→    try {
+     9→      displayedValue = JSON.stringify(input);
+    10→    } catch (e) {
+    11→      displayedValue = input;
+    12→    }
+    13→    super(`Pattern matching error: no pattern matches value ${displayedValue}`);
+    14→  }
+    15→}
+src/internals/helpers.ts
+    12→export const isObject = (value: unknown): value is Object =>
+    13→  Boolean(value && typeof value === 'object');
+    16→export const isMatcher = (
+    17→  x: unknown
+    18→): x is Matcher<unknown, unknown, MatcherType, SelectionType> => {
+    19→  const pattern = x as Matcher<unknown, unknown, MatcherType, SelectionType>;
+    20→  return pattern && !!pattern[symbols.matcher];
+    21→};
+    24→const isOptionalPattern = (
+    25→  x: unknown
+    26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
+    27→  return isMatcher(x) && x[symbols.matcher]().matcherType === 'optional';
+    28→};
+    32→export const matchPattern = (
+    33→  pattern: any,
+    34→  value: any,
+    35→  select: (key: string, value: unknown) => void
+    36→): boolean => {
+    37→  if (isMatcher(pattern)) {
+    38→    const matcher = pattern[symbols.matcher]();
+    39→    const { matched, selections } = matcher.match(value);
+    40→    if (matched && selections) {
+    41→      Object.keys(selections).forEach((key) => select(key, selections[key]));
+    42→    }
+    43→    return matched;
+    44→  }
+    45→
+    46→  if (isObject(pattern)) {
+    47→    if (!isObject(value)) return false;
+    48→
+   120→export const getSelectionKeys = (pattern: any): string[] => {
+   121→  if (isObject(pattern)) {
+   122→    if (isMatcher(pattern)) {
+   123→      return pattern[symbols.matcher]().getSelectionKeys?.() ?? [];
+   124→    }
+   125→    if (Array.isArray(pattern)) return flatMap(pattern, getSelectionKeys);
+   126→    return flatMap(Object.values(pattern), getSelectionKeys);
+   127→  }
+   128→  return [];
+   129→};
+   132→export const flatMap = <a, b>(
+   133→  xs: readonly a[],
+   134→  f: (v: a) => readonly b[]
+   135→): b[] => xs.reduce<b[]>((acc, x) => acc.concat(f(x)), []);
+src/internals/symbols.ts
+     1→/**
+     2→ * Symbols used internally within ts-pattern to construct and discriminate
+     3→ * Guard, Not, and Select, and AnonymousSelect patterns
+     4→ *
+     5→ * Symbols have the advantage of not appearing in auto-complete suggestions in
+     6→ * user defined patterns, and eliminate the risk of property
+     7→ * overlap between ts-pattern internals and user defined patterns.
+     8→ *
+     9→ * These symbols have to be visible to tsc for type inference to work, but
+    10→ * users should not import them
+    11→ * @module
+    12→ * @private
+    13→ * @internal
+    14→ */
+    15→
+    16→export const matcher = Symbol.for('@ts-pattern/matcher');
+    17→export type matcher = typeof matcher;
+    19→export const unset = Symbol.for('@ts-pattern/unset');
+    20→export type unset = typeof unset;
+    22→export const isVariadic = Symbol.for('@ts-pattern/isVariadic');
+    23→export type isVariadic = typeof isVariadic;
+    26→export const anonymousSelectKey = '@ts-pattern/anonymous-select-key';
+    27→export type anonymousSelectKey = typeof anonymousSelectKey;
+    29→export const override = Symbol.for('@ts-pattern/override');
+    30→export type override = typeof override;
+src/is-matching.ts
+     6→/**
+     7→ * This constraint allows using additional properties
+     8→ * in object patterns. See "should allow targetting unknown properties"
+     9→ * unit test in `is-matching.test.ts`.
+    10→ */
+    11→type PatternConstraint<T> = T extends readonly any[]
+    12→  ? P.Pattern<T>
+    13→  : T extends object
+    14→  ? P.Pattern<T> & UnknownProperties
+    15→  : P.Pattern<T>;
+    53→export function isMatching<const p extends Pattern<any>>(
+    54→  ...args: [pattern: p, value?: any]
+    55→): boolean | ((vale: any) => boolean) {
+src/match.ts
+     7→type MatchState
+    11→const unmatched
+    16→/**
+    17→ * `match` creates a **pattern matching expression**.
+    18→ *  * Use `.with(pattern, handler)` to pattern match on the input.
+    19→ *  * Use `.exhaustive()` or `.otherwise(() => defaultValue)` to end the expression and get the result.
+    20→ *
+    21→ * [Read the documentation for `match` on GitHub](https://github.com/gvergnaud/ts-pattern#match)
+    22→ *
+    23→ * @example
+    24→ *  declare let input: "A" | "B";
+    25→ *
+    26→ *  return match(input)
+    27→ *    .with("A", () => "It's an A!")
+    28→ *    .with("B", () => "It's a B!")
+    29→ *    .exhaustive();
+    30→ *
+    31→ */
+    32→export function match<const input, output = symbols.unset>(
+    33→  value: input
+    34→): Match<input, output> {
+    35→  return new MatchExpression(value, unmatched) as any;
+    36→}
+    38→/**
+    39→ * This class represents a match expression. It follows the
+    40→ * builder pattern, we chain methods to add features to the expression
+    41→ * until we call `.exhaustive`, `.otherwise` or the unsafe `.run`
+    42→ * method to execute it.
+    43→ *
+    44→ * The types of this class aren't public, the public type definition
+    45→ * can be found in src/types/Match.ts.
+    46→ */
+    47→class MatchExpression<input, output> {
+    48→  constructor(private input: input, private state: MatchState<output>) {}
+    49→
+    50→  with(...args: any[]): MatchExpression<input, output> {
+    51→    if (this.state.matched) return this;
+    52→
+    53→    const handler: (selection: unknown, value: input) => output =
+    54→      args[args.length - 1];
+    55→
+    56→    const patterns: Pattern<input>[] = [args[0]];
+    57→    let predicate: ((value: input) => unknown) | undefined = undefined;
+    58→
+    59→    if (args.length === 3 && typeof args[1] === 'function') {
+    60→      // case with guard as second argument
+    61→      predicate = args[1];
+    62→    } else if (args.length > 2) {
+    63→      // case with several patterns
+    64→      patterns.push(...args.slice(1, args.length - 1));
+    65→    }
+    66→
+    67→    let hasSelections = false;
+    68→    let selected: Record<string, unknown> = {};
+    69→    const select = (key: string, value: unknown) => {
+    70→      hasSelections = true;
+    71→      selected[key] = value;
+    72→    };
+    73→
+    74→    const matched =
+    75→      patterns.some((pattern) => matchPattern(pattern, this.input, select)) &&
+    76→      (predicate ? Boolean(predicate(this.input)) : true);
+    77→
+    78→    const selections = hasSelections
+    79→      ? symbols.anonymousSelectKey in selected
+    80→        ? selected[symbols.anonymousSelectKey]
+    81→        : selected
+    82→      : this.input;
+    83→
+    84→    const state = matched
+    85→      ? {
+    86→          matched: true as const,
+    87→          value: handler(selections, this.input),
+    88→        }
+    89→      : unmatched;
+    90→
+    91→    return new MatchExpression(this.input, state);
+    92→  }
+    93→
+    94→  when(
+    95→    predicate: (value: input) => unknown,
+    96→    handler: (selection: input, value: input) => output
+    97→  ): MatchExpression<input, output> {
+    98→    if (this.state.matched) return this;
+    99→
+   100→    const matched = Boolean(predicate(this.input));
+   101→
+   102→    return new MatchExpression<input, output>(
+   103→      this.input,
+   104→      matched
+   105→        ? { matched: true, value: handler(this.input, this.input) }
+   106→        : unmatched
+   107→    );
+   108→  }
+   109→
+   110→  otherwise(handler: (value: input) => output): output {
+   111→    if (this.state.matched) return this.state.value;
+   112→    return handler(this.input);
+   113→  }
+   114→
+   115→  exhaustive(unexpectedValueHandler = defaultCatcher): output {
+   116→    if (this.state.matched) return this.state.value;
+   117→    return unexpectedValueHandler(this.input);
+   118→  }
+   119→
+   120→  run(): output {
+   121→    return this.exhaustive();
+   122→  }
+   123→
+   124→  returnType() {
+   125→    return this;
+   126→  }
+   127→
+   128→  narrow() {
+   129→    return this;
+   130→  }
+   131→}
+   133→function defaultCatcher
+src/patterns.ts
+    67→/**
+    68→ * A `Matchable` is an object implementing
+    69→ * the Matcher Protocol. It must have a `[P.matcher]: P.Matcher<NarrowFn>`
+    81→export type unstable_Matchable<
+    82→  narrowedOrFn,
+    83→  input = unknown,
+    84→  pattern = never
+    85→> = CustomP<input, pattern, narrowedOrFn>;
+    87→/**
+    88→ * A `Matcher` is an object with `match` function, which
+    89→ * defines how this object should be matched by TS-Pattern.
+   100→export type unstable_Matcher<
+   101→  narrowedOrFn,
+   102→  input = unknown,
+   103→  pattern = never
+   104→> = ReturnType<CustomP<input, pattern, narrowedOrFn>[matcher]>;
+   106→/**
+   107→ * `P.infer<typeof somePattern>` will return the type of the value
+   108→ * matched by this pattern.
+   116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
+   118→/**
+   119→ * `P.narrow<Input, Pattern>` will narrow the input type to only keep
+   120→ * the set of values that are compatible with the provided pattern type.
+   131→export type narrow<input, pattern> = ExtractPreciseValue<
+   132→  input,
+   133→  InvertPattern<pattern, input>
+   134→>;
+   136→function chainable
+   148→const variadic
+   165→function arrayChainable
+   177→/**
+   178→ * `P.optional(subpattern)` takes a sub pattern and returns a pattern which matches if the
+   179→ * key is undefined or if it is defined and the sub pattern matches its value.
+   180→ *
+   181→ * [Read the documentation for `P.optional` on GitHub](https://github.com/gvergnaud/ts-pattern#poptional-patterns)
+   182→ *
+   183→ * @example
+   184→ *  match(value)
+   185→ *   .with({ greeting: P.optional('Hello') }, () => 'will match { greeting?: "Hello" }')
+   186→ */
+   187→export function optional<
+   188→  input,
+   189→  const pattern extends unknown extends input
+   190→    ? UnknownValuePattern
+   191→    : Pattern<input>
+   192→>(pattern: pattern): Chainable<OptionalP<input, pattern>, 'optional'> {
+   193→  return chainable({
+   194→    [matcher]() {
+   195→      return {
+   196→        match: <UnknownInput>(value: UnknownInput | input) => {
+   197→          let selections: Record<string, unknown[]> = {};
+   198→          const selector = (key: string, value: any) => {
+   199→            selections[key] = value;
+   217→type UnwrapArray
+   219→type UnwrapSet
+   221→type UnwrapMapKey
+   223→type UnwrapMapValue
+   225→type UnwrapRecordKey
+   227→type UnwrapRecordValue
+   229→type WithDefault
+   246→export function array(
+   247→  ...args: [pattern?: any]
+   248→): ArrayChainable<ArrayP<any, any>> {
+   299→export function set<
+   300→  input,
+   301→  const pattern extends Pattern<WithDefault<UnwrapSet<input>, unknown>>
+   302→>(...args: [pattern?: pattern]): Chainable<SetP<input, pattern>> {
+   336→const setEvery
+   362→export function map<
+   363→  input,
+   364→  const pkey extends Pattern<WithDefault<UnwrapMapKey<input>, unknown>>,
+   365→  const pvalue extends Pattern<WithDefault<UnwrapMapValue<input>, unknown>>
+   366→>(
+   367→  ...args: [patternKey?: pkey, patternValue?: pvalue]
+   368→): Chainable<MapP<input, pkey, pvalue>> {
+   410→const mapEvery
+   445→export function record(
+   446→  ...args: [patternKey?: unknown, patternValue?: unknown]
+   447→): Chainable<RecordP<unknown, unknown, unknown>> {
+   505→const recordEvery
+   517→/**
+   518→ * `P.intersection(...patterns)` returns a pattern which matches
+   519→ * only if **every** patterns provided in parameter match the input.
+   520→ *
+   521→ * [Read the documentation for `P.intersection` on GitHub](https://github.com/gvergnaud/ts-pattern#pintersection-patterns)
+   522→ *
+   523→ * @example
+   524→ *  match(value)
+   525→ *   .with(
+   526→ *     {
+   527→ *       user: P.intersection(
+   528→ *         { firstname: P.string },
+   529→ *         { lastname: P.string },
+   530→ *         { age: P.when(age => age > 21) }
+   531→ *       )
+   532→ *     },
+   533→ *     ({ user }) => 'will match { firstname: string, lastname: string, age: number } if age > 21'
+   534→ *   )
+   535→ */
+   536→export function intersection<
+   537→  input,
+   538→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
+   539→>(...patterns: patterns): Chainable<AndP<input, patterns>> {
+   540→  return chainable({
+   541→    [matcher]: () => ({
+   542→      match: (value) => {
+   543→        let selections: Record<string, unknown[]> = {};
+   544→        const selector = (key: string, value: any) => {
+   545→          selections[key] = value;
+   546→        };
+   559→/**
+   560→ * `P.union(...patterns)` returns a pattern which matches
+   561→ * if **at least one** of the patterns provided in parameter match the input.
+   562→ *
+   563→ * [Read the documentation for `P.union` on GitHub](https://github.com/gvergnaud/ts-pattern#punion-patterns)
+   564→ *
+   565→ * @example
+   566→ *  match(value)
+   567→ *   .with(
+   568→ *     { type: P.union('a', 'b', 'c') },
+   569→ *     ({ type }) => 'will match { type: "a" | "b" | "c" }'
+   570→ *   )
+   571→ */
+   572→export function union<
+   573→  input,
+   574→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
+   575→>(...patterns: patterns): Chainable<OrP<input, patterns>> {
+   576→  return chainable({
+   577→    [matcher]: () => ({
+   578→      match: <UnknownInput>(value: UnknownInput | input) => {
+   579→        let selections: Record<string, unknown[]> = {};
+   580→        const selector = (key: string, value: any) => {
+   581→          selections[key] = value;
+   582→        };
+   599→/**
+   600→ * `P.not(pattern)` returns a pattern which matches if the sub pattern
+   601→ * doesn't match.
+   602→ *
+   603→ * [Read the documentation for `P.not` on GitHub](https://github.com/gvergnaud/ts-pattern#pnot-patterns)
+   604→ *
+   605→ * @example
+   606→ *  match<{ a: string | number }>(value)
+   607→ *   .with({ a: P.not(P.string) }, (x) => 'will match { a: number }'
+   608→ *   )
+   609→ */
+   610→
+   611→export function not<
+   612→  input,
+   613→  const pattern extends Pattern<input> | UnknownValuePattern
+   614→>(pattern: pattern): Chainable<NotP<input, pattern>> {
+   615→  return chainable({
+   616→    [matcher]: () => ({
+   617→      match: <UnknownInput>(value: UnknownInput | input) => ({
+   618→        matched: !matchPattern(pattern, value, () => {}),
+   619→      }),
+   620→      getSelectionKeys: () => [],
+   621→      matcherType: 'not',
+   646→export function when<input, predicate extends (value: input) => unknown>(
+   647→  predicate: predicate
+   648→): GuardP<
+   649→  input,
+   650→  predicate extends (value: any) => value is infer narrowed ? narrowed : never
+   651→> {
+   696→export function select(
+   697→  ...args: [keyOrPattern?: unknown | string, pattern?: unknown]
+   698→): Chainable<SelectP<string>, 'select' | 'or' | 'and'> {
+   734→function isUnknown
+   738→function isNumber
+   742→function isString
+   746→function isBoolean
+   750→function isBigInt
+   754→function isSymbol
+   758→function isNullish
+   762→function isNonNullable
+   766→type AnyConstructor
+   768→function isInstanceOf
+   773→/**
+   774→ * `P.any` is a wildcard pattern, matching **any value**.
+   775→ *
+   782→export const any: UnknownPattern = chainable(when(isUnknown));
+   784→/**
+   785→ * `P.unknown` is a wildcard pattern, matching **unknown value**.
+   786→ *
+   793→export const unknown: UnknownPattern = chainable(when(isUnknown));
+   795→/**
+   796→ * `P._` is a wildcard pattern, matching **any value**.
+   797→ * It's an alias to `P.any`.
+   805→export const _ = any;
+   817→const startsWith
+   831→const endsWith
+   845→const minLength
+   857→const length
+   869→const maxLength
+   881→const includes
+   895→const regex
+   900→const stringChainable
+   919→/**
+   920→ * `P.string` is a wildcard pattern, matching any **string**.
+   921→ *
+   928→export const string: StringPattern = stringChainable(when(isString));
+   940→const between
+   955→const lt
+   969→const gt
+   983→const lte
+   997→const gte
+  1011→const int
+  1023→const finite
+  1035→const positive
+  1047→const negative
+  1050→const numberChainable
+  1066→/**
+  1067→ * `P.number` is a wildcard pattern, matching any **number**.
+  1068→ *
+  1075→export const number: NumberPattern = numberChainable(when(isNumber));
+  1087→const betweenBigInt
+  1106→const ltBigInt
+  1120→const gtBigInt
+  1134→const lteBigInt
+  1148→const gteBigInt
+  1162→const positiveBigInt
+  1174→const negativeBigInt
+  1177→const bigintChainable
+  1193→/**
+  1194→ * `P.bigint` is a wildcard pattern, matching any **bigint**.
+  1195→ *
+  1201→export const bigint: BigIntPattern = bigintChainable(when(isBigInt));
+  1203→/**
+  1204→ * `P.boolean` is a wildcard pattern, matching any **boolean**.
+  1205→ *
+  1211→export const boolean: BooleanPattern = chainable(when(isBoolean));
+  1213→/**
+  1214→ * `P.symbol` is a wildcard pattern, matching any **symbol**.
+  1215→ *
+  1221→export const symbol: SymbolPattern = chainable(when(isSymbol));
+  1223→/**
+  1224→ * `P.nullish` is a wildcard pattern, matching **null** or **undefined**.
+  1225→ *
+  1231→export const nullish: NullishPattern = chainable(when(isNullish));
+  1233→/**
+  1234→ * `P.nonNullable` is a wildcard pattern, matching everything except **null** or **undefined**.
+  1235→ *
+  1241→export const nonNullable: NonNullablePattern = chainable(when(isNonNullable));
+  1243→/**
+  1244→ * `P.instanceOf(SomeClass)` is a pattern matching instances of a given class.
+  1245→ *
+  1246→ * [Read the documentation for `P.instanceOf` on GitHub](https://github.com/gvergnaud/ts-pattern#pinstanceof-patterns)
+  1247→ *
+  1248→ *  @example
+  1249→ *   .with(P.instanceOf(SomeClass), () => 'will match on SomeClass instances')
+  1250→ */
+  1251→export function instanceOf<T extends AnyConstructor>(
+  1252→  classConstructor: T
+  1253→): Chainable<GuardP<unknown, InstanceType<T>>> {
+  1254→  return chainable(when(isInstanceOf(classConstructor)));
+  1255→}
+  1274→export function shape(pattern: UnknownValuePattern) {
+src/types/BuildMany.ts
+    11→type BuildOne
+src/types/DistributeUnions.ts
+    41→export type DistributeMatchingUnions
+    80→export type FindUnions
+src/types/ExtractPreciseValue.ts
+    81→type ExtractPreciseArrayValue
+src/types/FindSelected.ts
+    11→type SelectionsRecord
+    24→type MapOptional
+    31→type MapList
+    38→type ReduceFindSelectionUnion
+    47→type FindSelectionUnionInArray
+src/types/InvertPattern.ts
+    29→type OptionalKeys
+    39→type ReduceUnion
+    47→type ReduceIntersection
+    55→type InvertArrayPattern
+   106→export type InvertPattern
+   110→type InvertPatternInternal
+   204→type ExcludeIfExists
+   231→type InvertArrayPatternForExclude
+   303→export type InvertPatternForExclude
+   307→type InvertPatternForExcludeInternal
+src/types/IsMatching.ts
+    12→type IsMatchingTuple
+    26→type IsMatchingArray
+src/types/Match.ts
+    10→interface NonExhaustiveError<i> {
+    11→  __nonExhaustive: never;
+    12→}
+    14→interface TSPatternError<i> {
+    15→  __nonExhaustive: never;
+    16→}
+    22→export type Match
+   132→  with<
+   133→    const pat extends Pattern<i>,
+   134→    pred extends (value: MatchedValue<i, InvertPattern<pat, i>>) => unknown,
+   135→    c,
+   136→    value extends GuardValue<pred>
+   137→  >(
+   138→    pattern: pat,
+   139→    predicate: pred,
+   140→    handler: (
+   141→      selections: FindSelected<value, pat>,
+   142→      value: value
+   143→    ) => PickReturnValue<o, c>
+   144→  ): pred extends (value: any) => value is infer narrowed
+   145→    ? Match<
+   146→        Exclude<i, narrowed>,
+   147→        o,
+   148→        [...handledCases, narrowed],
+   149→        Union<inferredOutput, c>
+   150→      >
+   151→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
+   159→  when
+   180→  otherwise
+   205→  run
+   225→  narrow
+   245→type DeepExcludeAll
+   251→type MakeTuples
+   261→type Exhaustive
+src/types/Pattern.ts
+    43→/**
+    44→ * A `Matcher` is an object implementing the match
+    45→ * protocol. It must define a `symbols.matcher` property
+    46→ * which returns an object with a `match()` method, taking
+    47→ * the input value and returning whether the pattern matches
+    48→ * or not, along with optional selections.
+    49→ */
+    50→export interface Matcher<
+    51→  input,
+    52→  narrowed,
+    53→  // Type of what this pattern selected from the input
+    54→  matcherType extends MatcherType = 'default',
+    55→  selections extends SelectionType = None,
+    56→  // Type to exclude from the input union because
+    57→  // it has been fully matched by this pattern
+    58→  excluded = narrowed
+    59→> {
+    60→  [matcher](): MatcherProtocol<
+    61→    input,
+    62→    narrowed,
+    63→    matcherType,
+    64→    selections,
+    65→    excluded
+    66→  >;
+    67→  // only used for array matchers
+    68→  [symbols.isVariadic]?: boolean;
+    69→}
+    71→type PatternMatcher
+    81→type UnknownMatcher
+   132→export interface Override<a> {
+   133→  [symbols.override]: a;
+   134→}
+   157→export type Pattern
+   161→type KnownPattern
+   163→type KnownPatternInternal
+   174→type ObjectPattern
+   180→type ArrayPattern
+   203→type MergeGuards
+   223→      optional
+   237→      and
+   253→      or
+   269→      select<input, k extends string>(
+   270→        key: k
+   271→      ): Chainable<SelectP<k, input, p>, omitted | 'select' | 'or' | 'and'>;
+   291→      startsWith
+   306→      endsWith
+   321→      minLength
+   336→      length
+   351→      maxLength
+   366→      includes
+   381→      regex
+   407→      between
+   423→      lt
+   438→      gt
+   453→      lte
+   468→      gte
+   483→      int
+   496→      finite
+   509→      positive
+   522→      negative
+   546→      between
+   562→      lt
+   577→      gt
+   592→      lte
+   607→      gte
+   622→      positive
+   635→      negative
+   661→      optional
+   678→      select<input, k extends string>(
+   679→        key: k
+   680→      ): ArrayChainable<SelectP<k, input, pattern>, omitted | 'select'>;
+src/types/helpers.ts
+    14→export type LeastUpperBound
+   182→export type GuardValue
+   204→type AllKeys
+   266→export interface Fn {
+   267→  input: unknown;
+   268→  output: unknown;
+   269→}

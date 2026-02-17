@@ -1,0 +1,391 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 2000 (1885 words)
+
+README.md
+     1→# color [![](https://github.com/fatih/color/workflows/build/badge.svg)](https://github.com/fatih/color/actions) [![PkgGoDev](https://pkg.go.dev/badge/github.com/fatih/color)](https://pkg.go.dev/github.com/fatih/color)
+     2→
+     3→Color lets you use colorized outputs in terms of [ANSI Escape
+     4→Codes](http://en.wikipedia.org/wiki/ANSI_escape_code#Colors) in Go (Golang). It
+     5→has support for Windows too! The API can be used in several ways, pick one that
+     6→suits you.
+     7→
+     8→![Color](https://user-images.githubusercontent.com/438920/96832689-03b3e000-13f4-11eb-9803-46f4c4de3406.jpg)
+     9→
+    10→## Install
+    11→
+    12→```
+    13→go get github.com/fatih/color
+    14→```
+    15→
+    16→## Examples
+    17→
+    18→### Standard colors
+    19→
+    20→```go
+    21→// Print with default helper functions
+    22→color.Cyan("Prints text in cyan.")
+    23→
+    24→// A newline will be appended automatically
+    25→color.Blue("Prints %s in blue.", "text")
+    26→
+    27→// These are using the default foreground colors
+    28→color.Red("We have red")
+    29→color.Magenta("And many others ..")
+    30→
+    31→```
+    32→
+    33→### RGB colors
+    34→
+    35→If your terminal supports 24-bit colors, you can use RGB color codes.
+    36→
+    37→```go
+    38→color.RGB(255, 128, 0).Println("foreground orange")
+    39→color.RGB(230, 42, 42).Println("foreground red")
+    40→
+    41→color.BgRGB(255, 128, 0).Println("background orange")
+    42→color.BgRGB(230, 42, 42).Println("background red")
+    43→```
+    44→
+    45→### Mix and reuse colors
+    46→
+    47→```go
+    48→// Create a new color object
+    49→c := color.New(color.FgCyan).Add(color.Underline)
+    50→c.Println("Prints cyan text with an underline.")
+    51→
+    52→// Or just add them to New()
+    53→d := color.New(color.FgCyan, color.Bold)
+    54→d.Printf("This prints bold cyan %s\n", "too!.")
+    55→
+    56→// Mix up foreground and background colors, create new mixes!
+    57→red := color.New(color.FgRed)
+    58→
+    59→boldRed := red.Add(color.Bold)
+    60→boldRed.Println("This will print text in bold red.")
+    61→
+    62→whiteBackground := red.Add(color.BgWhite)
+    63→whiteBackground.Println("Red text with white background.")
+    64→
+    65→// Mix with RGB color codes
+    66→color.RGB(255, 128, 0).AddBgRGB(0, 0, 0).Println("orange with black background")
+    67→
+    68→color.BgRGB(255, 128, 0).AddRGB(255, 255, 255).Println("orange background with white foreground")
+    69→```
+    70→
+    71→### Use your own output (io.Writer)
+    72→
+    73→```go
+    74→// Use your own io.Writer output
+    75→color.New(color.FgBlue).Fprintln(myWriter, "blue color!")
+    76→
+    77→blue := color.New(color.FgBlue)
+    78→blue.Fprint(writer, "This will print text in blue.")
+    79→```
+    80→
+    81→### Custom print functions (PrintFunc)
+    82→
+    83→```go
+    84→// Create a custom print function for convenience
+    85→red := color.New(color.FgRed).PrintfFunc()
+    86→red("Warning")
+    87→red("Error: %s", err)
+    88→
+    89→// Mix up multiple attributes
+    90→notice := color.New(color.Bold, color.FgGreen).PrintlnFunc()
+    91→notice("Don't forget this...")
+    92→```
+    93→
+    94→### Custom fprint functions (FprintFunc)
+    95→
+    96→```go
+    97→blue := color.New(color.FgBlue).FprintfFunc()
+    98→blue(myWriter, "important notice: %s", stars)
+    99→
+   100→// Mix up with multiple attributes
+   101→success := color.New(color.Bold, color.FgGreen).FprintlnFunc()
+   102→success(myWriter, "Don't forget this...")
+   103→```
+   104→
+   105→### Insert into noncolor strings (SprintFunc)
+   106→
+   107→```go
+   108→// Create SprintXxx functions to mix strings with other non-colorized strings:
+   109→yellow := color.New(color.FgYellow).SprintFunc()
+   110→red := color.New(color.FgRed).SprintFunc()
+   111→fmt.Printf("This is a %s and this is %s.\n", yellow("warning"), red("error"))
+   112→
+   113→info := color.New(color.FgWhite, color.BgGreen).SprintFunc()
+   114→fmt.Printf("This %s rocks!\n", info("package"))
+   115→
+   116→// Use helper functions
+   117→fmt.Println("This", color.RedString("warning"), "should be not neglected.")
+   118→fmt.Printf("%v %v\n", color.GreenString("Info:"), "an important message.")
+   119→
+   120→// Windows supported too! Just don't forget to change the output to color.Output
+   121→fmt.Fprintf(color.Output, "Windows support: %s", color.GreenString("PASS"))
+   122→```
+   123→
+   124→### Plug into existing code
+   125→
+   126→```go
+   127→// Use handy standard colors
+   128→color.Set(color.FgYellow)
+   129→
+   130→fmt.Println("Existing text will now be in yellow")
+   131→fmt.Printf("This one %s\n", "too")
+   132→
+   133→color.Unset() // Don't forget to unset
+   134→
+   135→// You can mix up parameters
+   136→color.Set(color.FgMagenta, color.Bold)
+   137→defer color.Unset() // Use it in your function
+   138→
+   139→fmt.Println("All text will now be bold magenta.")
+   140→```
+   141→
+   142→### Disable/Enable color
+   143→
+   144→There might be a case where you want to explicitly disable/enable color output. the 
+   145→`go-isatty` package will automatically disable color output for non-tty output streams 
+   146→(for example if the output were piped directly to `less`).
+   147→
+   148→The `color` package also disables color output if the [`NO_COLOR`](https://no-color.org) environment
+   149→variable is set to a non-empty string.
+   150→
+   151→`Color` has support to disable/enable colors programmatically both globally and
+   152→for single color definitions. For example suppose you have a CLI app and a
+   153→`-no-color` bool flag. You can easily disable the color output with:
+   154→
+   155→```go
+   156→var flagNoColor = flag.Bool("no-color", false, "Disable color output")
+   157→
+   158→if *flagNoColor {
+   159→	color.NoColor = true // disables colorized output
+   160→}
+   161→```
+   162→
+   163→It also has support for single color definitions (local). You can
+   164→disable/enable color output on the fly:
+   165→
+   166→```go
+   167→c := color.New(color.FgCyan)
+   168→c.Println("Prints cyan text")
+   169→
+   170→c.DisableColor()
+   171→c.Println("This is printed without any color")
+   172→
+   173→c.EnableColor()
+   174→c.Println("This prints again cyan...")
+   175→```
+   176→
+   177→## GitHub Actions
+   178→
+   179→To output color in GitHub Actions (or other CI systems that support ANSI colors), make sure to set `color.NoColor = false` so that it bypasses the check for non-tty output streams. 
+   180→
+   181→
+   182→## Credits
+   183→
+   184→* [Fatih Arslan](https://github.com/fatih)
+   185→* Windows support via @mattn: [colorable](https://github.com/mattn/go-colorable)
+   186→
+   187→## License
+   188→
+   189→The MIT License (MIT) - see [`LICENSE.md`](https://github.com/fatih/color/blob/master/LICENSE.md) for more details
+color.go
+    15→var (
+    16→	// NoColor defines if the output is colorized or not. It's dynamically set to
+    17→	// false or true based on the stdout's file descriptor referring to a terminal
+    18→	// or not. It's also set to true if the NO_COLOR environment variable is
+    19→	// set (regardless of its value). This is a global option and affects all
+    20→	// colors. For more control over each color block use the methods
+    21→	// DisableColor() individually.
+    22→	NoColor = noColorIsSet() || os.Getenv("TERM") == "dumb" ||
+    23→		(!isatty.IsTerminal(os.Stdout.Fd()) && !isatty.IsCygwinTerminal(os.Stdout.Fd()))
+    25→	// Output defines the standard output of the print functions. By default,
+    26→	// os.Stdout is used.
+    27→	Output = colorable.NewColorableStdout()
+    29→	// Error defines a color supporting writer for os.Stderr.
+    30→	Error = colorable.NewColorableStderr()
+    32→	// colorsCache is used to reduce the count of created Color objects and
+    33→	// allows to reuse already created objects with required Attribute.
+    34→	colorsCache   = make(map[Attribute]*Color)
+    35→	colorsCacheMu sync.Mutex // protects colorsCache
+    38→// noColorIsSet returns true if the environment variable NO_COLOR is set to a non-empty string.
+    39→func noColorIsSet() bool {
+    40→	return os.Getenv("NO_COLOR") != ""
+    41→}
+    43→// Color defines a custom color object which is defined by SGR parameters.
+    44→type Color struct {
+    45→	params  []Attribute
+    46→	noColor *bool
+    47→}
+    49→// Attribute defines a single SGR Code
+    50→type Attribute int
+    52→const escape = "\x1b"
+    54→// Base attributes
+    55→const (
+    56→	Reset Attribute = iota
+    57→	Bold
+    58→	Faint
+    59→	Italic
+    60→	Underline
+    61→	BlinkSlow
+    62→	BlinkRapid
+    63→	ReverseVideo
+    64→	Concealed
+    65→	CrossedOut
+    68→const (
+    69→	ResetBold Attribute = iota + 22
+    70→	ResetItalic
+    71→	ResetUnderline
+    72→	ResetBlinking
+    74→	ResetReversed
+    75→	ResetConcealed
+    76→	ResetCrossedOut
+    79→var mapResetAttributes map[Attribute]Attribute = map[Attribute]Attribute{
+    80→	Bold:         ResetBold,
+    91→// Foreground text colors
+    92→const (
+    93→	FgBlack Attribute = iota + 30
+    94→	FgRed
+    95→	FgGreen
+    96→	FgYellow
+    97→	FgBlue
+    98→	FgMagenta
+    99→	FgCyan
+   100→	FgWhite
+   102→	// used internally for 256 and 24-bit coloring
+   103→	foreground
+   106→// Foreground Hi-Intensity text colors
+   107→const (
+   108→	FgHiBlack Attribute = iota + 90
+   109→	FgHiRed
+   110→	FgHiGreen
+   111→	FgHiYellow
+   112→	FgHiBlue
+   113→	FgHiMagenta
+   114→	FgHiCyan
+   115→	FgHiWhite
+   118→// Background text colors
+   119→const (
+   120→	BgBlack Attribute = iota + 40
+   121→	BgRed
+   122→	BgGreen
+   123→	BgYellow
+   124→	BgBlue
+   125→	BgMagenta
+   126→	BgCyan
+   127→	BgWhite
+   129→	// used internally for 256 and 24-bit coloring
+   130→	background
+   133→// Background Hi-Intensity text colors
+   134→const (
+   135→	BgHiBlack Attribute = iota + 100
+   136→	BgHiRed
+   137→	BgHiGreen
+   138→	BgHiYellow
+   139→	BgHiBlue
+   140→	BgHiMagenta
+   141→	BgHiCyan
+   142→	BgHiWhite
+   146→func New(value ...Attribute) *Color {
+   160→func RGB(r, g, b int) *Color {
+   165→func BgRGB(r, g, b int) *Color {
+   171→func (c *Color) AddRGB(r, g, b int) *Color {
+   178→func (c *Color) AddBgRGB(r, g, b int) *Color {
+   185→func Set(p ...Attribute) *Color {
+   193→func Unset() {
+   202→func (c *Color) Set() *Color {
+   211→func (c *Color) unset() {
+   222→func (c *Color) SetWriter(w io.Writer) *Color {
+   233→func (c *Color) UnsetWriter(w io.Writer) {
+   243→func (c *Color) Add(value ...Attribute) *Color {
+   253→func (c *Color) Fprint(w io.Writer, a ...interface{}) (n int, err error) {
+   265→func (c *Color) Print(a ...interface{}) (n int, err error) {
+   276→func (c *Color) Fprintf(w io.Writer, format string, a ...interface{}) (n int, err error) {
+   286→func (c *Color) Printf(format string, a ...interface{}) (n int, err error) {
+   297→func (c *Color) Fprintln(w io.Writer, a ...interface{}) (n int, err error) {
+   306→func (c *Color) Println(a ...interface{}) (n int, err error) {
+   311→func (c *Color) Sprint(a ...interface{}) string {
+   316→func (c *Color) Sprintln(a ...interface{}) string {
+   321→func (c *Color) Sprintf(format string, a ...interface{}) string {
+   327→func (c *Color) FprintFunc() func(w io.Writer, a ...interface{}) {
+   335→func (c *Color) PrintFunc() func(a ...interface{}) {
+   343→func (c *Color) FprintfFunc() func(w io.Writer, format string, a ...interface{}) {
+   351→func (c *Color) PrintfFunc() func(format string, a ...interface{}) {
+   359→func (c *Color) FprintlnFunc() func(w io.Writer, a ...interface{}) {
+   367→func (c *Color) PrintlnFunc() func(a ...interface{}) {
+   379→func (c *Color) SprintFunc() func(a ...interface{}) string {
+   388→func (c *Color) SprintfFunc() func(format string, a ...interface{}) string {
+   397→func (c *Color) SprintlnFunc() func(a ...interface{}) string {
+   403→// sequence returns a formatted SGR sequence to be plugged into a "\x1b[...m"
+   404→// an example output might be: "1;36" -> bold cyan
+   405→func (c *Color) sequence() string {
+   406→	format := make([]string, len(c.params))
+   407→	for i, v := range c.params {
+   408→		format[i] = strconv.Itoa(int(v))
+   409→	}
+   410→
+   411→	return strings.Join(format, ";")
+   412→}
+   414→// wrap wraps the s string with the colors attributes. The string is ready to
+   415→// be printed.
+   416→func (c *Color) wrap(s string) string {
+   417→	if c.isNoColorSet() {
+   418→		return s
+   419→	}
+   420→
+   421→	return c.format() + s + c.unformat()
+   422→}
+   424→func (c *Color) format() string {
+   428→func (c *Color) unformat() string {
+   446→func (c *Color) DisableColor() {
+   452→func (c *Color) EnableColor() {
+   456→func (c *Color) isNoColorSet() bool {
+   467→func (c *Color) Equals(c2 *Color) bool {
+   487→func (c *Color) attrExists(a Attribute) bool {
+   497→func boolPtr(v bool) *bool {
+   501→func getCachedColor(p Attribute) *Color {
+   514→func colorPrint(format string, p Attribute, a ...interface{}) {
+   528→func colorString(format string, p Attribute, a ...interface{}) string {
+   540→func Black(format string, a ...interface{}) { colorPrint(format, FgBlack, a...) }
+   544→func Red(format string, a ...interface{}) { colorPrint(format, FgRed, a...) }
+   548→func Green(format string, a ...interface{}) { colorPrint(format, FgGreen, a...) }
+   552→func Yellow(format string, a ...interface{}) { colorPrint(format, FgYellow, a...) }
+   556→func Blue(format string, a ...interface{}) { colorPrint(format, FgBlue, a...) }
+   560→func Magenta(format string, a ...interface{}) { colorPrint(format, FgMagenta, a...) }
+   564→func Cyan(format string, a ...interface{}) { colorPrint(format, FgCyan, a...) }
+   568→func White(format string, a ...interface{}) { colorPrint(format, FgWhite, a...) }
+   572→func BlackString(format string, a ...interface{}) string { return colorString(format, FgBlack, a...) }
+   576→func RedString(format string, a ...interface{}) string { return colorString(format, FgRed, a...) }
+   580→func GreenString(format string, a ...interface{}) string { return colorString(format, FgGreen, a...) }
+   584→func YellowString(format string, a ...interface{}) string { return colorString(format, FgYellow, a...) }
+   588→func BlueString(format string, a ...interface{}) string { return colorString(format, FgBlue, a...) }
+   592→func MagentaString(format string, a ...interface{}) string {
+   598→func CyanString(format string, a ...interface{}) string { return colorString(format, FgCyan, a...) }
+   602→func WhiteString(format string, a ...interface{}) string { return colorString(format, FgWhite, a...) }
+   606→func HiBlack(format string, a ...interface{}) { colorPrint(format, FgHiBlack, a...) }
+   610→func HiRed(format string, a ...interface{}) { colorPrint(format, FgHiRed, a...) }
+   614→func HiGreen(format string, a ...interface{}) { colorPrint(format, FgHiGreen, a...) }
+   618→func HiYellow(format string, a ...interface{}) { colorPrint(format, FgHiYellow, a...) }
+   622→func HiBlue(format string, a ...interface{}) { colorPrint(format, FgHiBlue, a...) }
+   626→func HiMagenta(format string, a ...interface{}) { colorPrint(format, FgHiMagenta, a...) }
+   630→func HiCyan(format string, a ...interface{}) { colorPrint(format, FgHiCyan, a...) }
+   634→func HiWhite(format string, a ...interface{}) { colorPrint(format, FgHiWhite, a...) }
+   638→func HiBlackString(format string, a ...interface{}) string {
+   644→func HiRedString(format string, a ...interface{}) string { return colorString(format, FgHiRed, a...) }
+   648→func HiGreenString(format string, a ...interface{}) string {
+   654→func HiYellowString(format string, a ...interface{}) string {
+   660→func HiBlueString(format string, a ...interface{}) string { return colorString(format, FgHiBlue, a...) }
+   664→func HiMagentaString(format string, a ...interface{}) string {
+   670→func HiCyanString(format string, a ...interface{}) string { return colorString(format, FgHiCyan, a...) }
+   674→func HiWhiteString(format string, a ...interface{}) string {
+   678→// sprintln is a helper function to format a string with fmt.Sprintln and trim the trailing newline.
+   679→func sprintln(a ...interface{}) string {
+   680→	return strings.TrimSuffix(fmt.Sprintln(a...), "\n")
+   681→}
+color_windows.go
+     9→func init() {

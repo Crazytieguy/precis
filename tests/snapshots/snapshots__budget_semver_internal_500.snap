@@ -1,0 +1,95 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 500 (348 words)
+
+constants.js
+     5→const SEMVER_SPEC_VERSION = '2.0.0'
+     7→const MAX_LENGTH = 256
+     8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
+     9→/* istanbul ignore next */ 9007199254740991
+    12→const MAX_SAFE_COMPONENT_LENGTH = 16
+    16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
+    18→const RELEASE_TYPES = [
+    19→  'major',
+    20→  'premajor',
+    21→  'minor',
+    22→  'preminor',
+    23→  'patch',
+    24→  'prepatch',
+    25→  'prerelease',
+    26→]
+debug.js
+     3→const debug = (
+     4→  typeof process === 'object' &&
+     5→  process.env &&
+     6→  process.env.NODE_DEBUG &&
+     7→  /\bsemver\b/i.test(process.env.NODE_DEBUG)
+     8→) ? (...args) => console.error('SEMVER', ...args)
+     9→  : () => {}
+identifiers.js
+     3→const numeric = /^[0-9]+$/
+     4→const compareIdentifiers = (a, b) => {
+     5→  if (typeof a === 'number' && typeof b === 'number') {
+    24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
+lrucache.js
+     3→class LRUCache {
+     4→  constructor () {
+     5→    this.max = 1000
+     6→    this.map = new Map()
+     7→  }
+     8→
+     9→  get (key) {
+    10→    const value = this.map.get(key)
+    11→    if (value === undefined) {
+    12→      return undefined
+    13→    } else {
+    14→      // Remove the key from the map and add it to the end
+    15→      this.map.delete(key)
+    16→      this.map.set(key, value)
+    17→      return value
+    18→    }
+    19→  }
+    20→
+    21→  delete (key) {
+    22→    return this.map.delete(key)
+    23→  }
+    24→
+    25→  set (key, value) {
+    26→    const deleted = this.delete(key)
+    27→
+    28→    if (!deleted && value !== undefined) {
+    29→      // If cache is full, delete the least recently used item
+    30→      if (this.map.size >= this.max) {
+    31→        const firstKey = this.map.keys().next().value
+    32→        this.delete(firstKey)
+    33→      }
+    34→
+    35→      this.map.set(key, value)
+    36→    }
+    37→
+    38→    return this
+    39→  }
+    40→}
+parse-options.js
+     4→const looseOption = Object.freeze({ loose: true })
+     5→const emptyOpts = Object.freeze({ })
+     6→const parseOptions = options => {
+     7→  if (!options) {
+re.js
+    12→const re = exports.re = []
+    13→const safeRe = exports.safeRe = []
+    14→const src = exports.src = []
+    15→const safeSrc = exports.safeSrc = []
+    16→const t = exports.t = {}
+    19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
+    27→const safeRegexReplacements = [
+    28→  ['\\s', 1],
+    29→  ['\\d', MAX_LENGTH],
+    30→  [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH],
+    31→]
+    33→const makeSafeRegex = (value) => {
+    34→  for (const [token, max] of safeRegexReplacements) {
+    42→const createToken = (name, value, isGlobal) => {
+    43→  const safe = makeSafeRegex(value)

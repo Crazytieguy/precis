@@ -1,0 +1,93 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+budget: 4000 (404 words)
+
+ForceRetryError.ts
+     4→/**
+     5→Internal error used to signal a forced retry from afterResponse hooks.
+     6→This is thrown when a user returns ky.retry() from an afterResponse hook.
+     7→*/
+     8→export class ForceRetryError extends Error {
+     9→	override name = 'ForceRetryError' as const;
+    10→	customDelay: number | undefined;
+    11→	code: string | undefined;
+    12→	customRequest: Request | undefined;
+    13→
+    14→	constructor(options?: ForceRetryOptions) {
+    15→		// Runtime protection: wrap non-Error causes in NonError
+    16→		// TypeScript type is Error for guidance, but JS users can pass anything
+    17→		const cause = options?.cause
+    18→			? (options.cause instanceof Error ? options.cause : new NonError(options.cause))
+    19→			: undefined;
+    20→
+    21→		super(
+    22→			options?.code ? `Forced retry: ${options.code}` : 'Forced retry',
+    23→			cause ? {cause} : undefined,
+    24→		);
+    25→
+    26→		this.customDelay = options?.delay;
+    27→		this.code = options?.code;
+    28→		this.customRequest = options?.request;
+    29→	}
+    30→}
+HTTPError.ts
+     5→export class HTTPError<T = unknown> extends Error {
+     6→	public response: KyResponse<T>;
+     7→	public request: KyRequest;
+     8→	public options: NormalizedOptions;
+     9→
+    10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
+    11→		const code = (response.status || response.status === 0) ? response.status : '';
+    12→		const title = response.statusText ?? '';
+    13→		const status = `${code} ${title}`.trim();
+    14→		const reason = status ? `status code ${status}` : 'an unknown error';
+    15→
+    16→		super(`Request failed with ${reason}: ${request.method} ${request.url}`);
+    17→
+    18→		this.name = 'HTTPError';
+    19→		this.response = response;
+    20→		this.request = request;
+    21→		this.options = options;
+    22→	}
+    23→}
+NonError.ts
+     1→/**
+     2→Wrapper for non-Error values that were thrown.
+     3→
+     4→In JavaScript, any value can be thrown (not just Error instances). This class wraps such values to ensure consistent error handling.
+     5→*/
+     6→export class NonError extends Error {
+     7→	override name = 'NonError';
+     8→	readonly value: unknown;
+     9→
+    10→	constructor(value: unknown) {
+    11→		let message = 'Non-error value was thrown';
+    12→
+    13→		// Intentionally minimal as this error is just an edge-case.
+    14→		try {
+    15→			if (typeof value === 'string') {
+    16→				message = value;
+    17→			} else if (value && typeof value === 'object' && 'message' in value && typeof value.message === 'string') {
+    18→				message = value.message;
+    19→			}
+    20→		} catch {
+    21→			// Use default message if accessing properties throws
+    22→		}
+    23→
+    24→		super(message);
+    25→
+    26→		this.value = value;
+    27→	}
+    28→}
+TimeoutError.ts
+     3→export class TimeoutError extends Error {
+     4→	public request: KyRequest;
+     5→
+     6→	constructor(request: Request) {
+     7→		super(`Request timed out: ${request.method} ${request.url}`);
+     8→		this.name = 'TimeoutError';
+     9→		this.request = request;
+    10→	}
+    11→}
