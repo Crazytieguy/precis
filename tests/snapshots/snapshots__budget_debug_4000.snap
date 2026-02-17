@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4001 words)
+budget: 4000 (3976 words)
 
 README.md
      1→# debug
@@ -831,13 +831,6 @@ src/common.js
    214→			} else {
    215→				return false; // No match
    216→			}
-   217→		}
-   218→
-   219→		// Handle trailing '*' in template
-   220→		while (templateIndex < template.length && template[templateIndex] === '*') {
-   221→			templateIndex++;
-   222→		}
-   223→
       →…
 src/node.js
    151→/**

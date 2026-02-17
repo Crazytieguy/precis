@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (513 words)
+budget: 500 (491 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -24,10 +24,10 @@ README.md
    167→
       →…
 build.rs
-    17→fn main …
-    99→fn compile_probe …
-   188→fn rustc_minor_version …
-   199→fn cargo_env_var …
+    17→fn main() {
+    99→fn compile_probe(rustc_bootstrap: bool) -> bool {
+   188→fn rustc_minor_version() -> Option<u32> {
+   199→fn cargo_env_var(key: &str) -> OsString {
 src/backtrace.rs
      8→pub(crate) enum Backtrace {}
     11→macro_rules! impl_backtrace {
@@ -54,8 +54,6 @@ src/chain.rs
     16→pub(crate) enum ChainState<'a> {
     36→    type Item = &'a (dyn StdError + 'static);
 src/context.rs
-     9→mod ext {
-    10→    use super::*;
     12→    pub trait StdError {
     13→        fn ext_context<C>(self, context: C) -> Error
     14→        where
@@ -93,17 +91,8 @@ src/kind.rs
 src/lib.rs
    251→#[macro_use]
    252→mod backtrace;
-   253→mod chain;
-   254→mod context;
-   255→mod ensure;
-   256→mod error;
-   257→mod fmt;
-   258→mod kind;
-   259→mod macros;
    260→#[cfg(error_generic_member_access)]
    261→mod nightly;
-   262→mod ptr;
-   263→mod wrapper;
    278→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
@@ -137,8 +126,6 @@ src/lib.rs
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    675→
       →…
-   708→    mod not {
-   709→        #[doc(hidden)]
    710→        pub trait Bool {
 src/macros.rs
     58→macro_rules! bail {

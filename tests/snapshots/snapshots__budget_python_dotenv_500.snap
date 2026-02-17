@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (518 words)
+budget: 500 (492 words)
 
 CHANGELOG.md
     21→### Fixed
@@ -47,12 +47,7 @@ README.md
     96→from dotenv import dotenv_values
     97→
     98→config = {
-    99→    **dotenv_values(".env.shared"),  # load shared development variables
-   100→    **dotenv_values(".env.secret"),  # load sensitive variables
-   101→    **os.environ,  # override loaded values with environment variables
-   102→}
-   103→```
-   104→
+      →…
    105→### Parse configuration as a stream
    106→
       →…
@@ -93,7 +88,6 @@ src/dotenv/__init__.py
     45→    "dotenv_values",
     46→    "get_key",
     47→    "set_key",
-    48→    "unset_key",
       →…
 src/dotenv/cli.py
     60→@click.version_option(version=__version__)

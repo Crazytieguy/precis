@@ -2,28 +2,33 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (962 words)
+budget: 1000 (947 words)
 
 README.md
      1→derive(Error)
      3→
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/thiserror-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/thiserror)
+     5→[<img alt="crates.io" src="https://img.shields.io/crates/v/thiserror.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/thiserror)
       →…
     21→## Example
     22→
     23→```rust
+    24→use thiserror::Error;
       →…
     44→## Details
     45→
     46→- Thiserror deliberately does not appear in your public API. You get the same
+    47→  thing as if you had written an implementation of `std::error::Error` by hand,
       →…
    211→## Comparison to anyhow
    212→
    213→Use thiserror if you care about designing your own dedicated error type(s) so
+   214→that the caller receives exactly the information that you choose in the event of
       →…
    223→#### License
    224→
    225→<sup>
+   226→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
       →…
 build/probe.rs
     11→struct MyError(Thing);
@@ -56,32 +61,23 @@ impl/src/ast.rs
     10→pub enum Input<'a> {
     11→    Struct(Struct<'a>),
     12→    Enum(Enum<'a>),
-    13→}
+      →…
     15→pub struct Struct<'a> {
     16→    pub attrs: Attrs<'a>,
     17→    pub ident: Ident,
-    18→    pub generics: &'a Generics,
-    19→    pub fields: Vec<Field<'a>>,
-    20→}
+      →…
     22→pub struct Enum<'a> {
     23→    pub attrs: Attrs<'a>,
     24→    pub ident: Ident,
-    25→    pub generics: &'a Generics,
-    26→    pub variants: Vec<Variant<'a>>,
-    27→}
+      →…
     29→pub struct Variant<'a> {
     30→    pub original: &'a syn::Variant,
     31→    pub attrs: Attrs<'a>,
-    32→    pub ident: Ident,
-    33→    pub fields: Vec<Field<'a>>,
-    34→}
+      →…
     36→pub struct Field<'a> {
     37→    pub original: &'a syn::Field,
     38→    pub attrs: Attrs<'a>,
-    39→    pub member: MemberUnraw,
-    40→    pub ty: &'a Type,
-    41→    pub contains_generic: bool,
-    42→}
+      →…
     44→#[derive(Copy, Clone)]
     45→pub enum ContainerKind {
     46→    Struct,
@@ -95,11 +91,7 @@ impl/src/attr.rs
     11→pub struct Attrs<'a> {
     12→    pub display: Option<Display<'a>>,
     13→    pub source: Option<Source<'a>>,
-    14→    pub backtrace: Option<&'a Attribute>,
-    15→    pub from: Option<From<'a>>,
-    16→    pub transparent: Option<Transparent<'a>>,
-    17→    pub fmt: Option<Fmt<'a>>,
-    18→}
+      →…
     20→#[derive(Clone)]
     21→pub struct Display<'a> {
     22→    pub original: &'a Attribute,
@@ -164,7 +156,7 @@ impl/src/generics.rs
     48→pub struct InferredBounds {
     49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
     50→    order: Vec<TokenStream>,
-    51→}
+      →…
 impl/src/lib.rs
     23→mod ast;
     24→mod attr;

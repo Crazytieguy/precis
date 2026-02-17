@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (503 words)
+budget: 500 (485 words)
 
 __init__.py
     34→config: TypeCheckConfiguration
@@ -27,8 +27,9 @@ _checkers.py
    103→    "__divmod__",
    104→    "__div__",
    105→    "__eq__",
+   106→    "__floordiv__",
       →…
-   586→def _is_literal_type …
+   586→def _is_literal_type(typ: object) -> bool:
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
   1006→    Any, Callable[[Any, Any, tuple[Any, ...], TypeCheckMemo], None]
@@ -37,6 +38,7 @@ _checkers.py
   1009→    AbstractSet: check_set,
   1010→    BinaryIO: check_io,
   1011→    Callable: check_callable,
+  1012→    collections.abc.Callable: check_callable,
       →…
 _config.py
     11→T = TypeVar("T")
@@ -71,7 +73,6 @@ _importhook.py
     45→def _call_with_frames_removed(
     46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
     47→) -> T:
-    48→    return f(*args, **kwargs)
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
     57→    def source_to_code(
@@ -93,13 +94,6 @@ _importhook.py
     73→            else:
     74→                source = decode_source(data)
     75→
-    76→            module = _call_with_frames_removed(
-    77→                ast.parse,
-    78→                source,
-    79→                filename,
-    80→                "exec",
-    81→            )
-    82→
       →…
    109→class TypeguardFinder(MetaPathFinder):
    119→
@@ -143,13 +137,8 @@ _transformer.py
    517→    def _use_memo(
    518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
    519→    ) -> Generator[None, Any, None]:
-   520→        new_memo = TransformMemo(node, self._memo, self._memo.path + (node.name,))
-   521→        old_memo = self._memo
-   522→        self._memo = new_memo
-   523→
-      →…
-   570→    def _get_import …
-   580→    def _convert_annotation …
+   570→    def _get_import(self, module: str, name: str) -> Name:
+   580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
 _utils.py
    173→class Unset:
    174→    __slots__ = ()

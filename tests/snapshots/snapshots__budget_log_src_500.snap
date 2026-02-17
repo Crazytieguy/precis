@@ -2,15 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (512 words)
+budget: 500 (488 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
     12→mod sealed {
     14→    pub trait KVs<'a> {
-    15→        fn into_kvs(self) -> Option<&'a [(&'a str, super::Value<'a>)]>;
-      →…
     39→pub struct GlobalLogger;
    112→#[cfg(feature = "kv")]
    113→mod kv_support {
@@ -53,8 +51,8 @@ kv/mod.rs
 kv/source.rs
     51→pub trait Source {
     52→    /// Visit key-values.
-    91→fn get_default …
-   114→fn count_default …
+    91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
+   114→fn count_default(source: impl Source) -> usize {
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
    280→mod std_support {
@@ -64,7 +62,10 @@ kv/value.rs
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
       →…
-   204→    fn from_inner …
+   204→    fn from_inner<T>(value: T) -> Self
+   205→    where
+   206→        T: Into<inner::Inner<'v>>,
+   207→    {
    288→macro_rules! impl_to_value_primitive {
    312→macro_rules! impl_to_value_nonzero_primitive {
    336→macro_rules! impl_value_to_primitive {
@@ -95,12 +96,8 @@ lib.rs
    422→    v: Cell<usize>,
    423→}
    475→pub enum Level {
-   476→    /// The "error" level.
-      →…
    516→    type Err = ParseLevelError;
    636→pub enum LevelFilter {
-   637→    /// A level lower than all log levels.
-      →…
    666→    type Err = ParseLevelError;
    781→enum MaybeStaticStr<'a> {
    782→    Static(&'static str),
@@ -111,20 +108,11 @@ lib.rs
    789→        match *self {
       →…
    842→pub struct Record<'a> {
-   843→    metadata: Metadata<'a>,
-      →…
    858→struct KeyValues<'a>(&'a dyn kv::Source);
   1003→pub struct RecordBuilder<'a> {
-  1004→    record: Record<'a>,
-      →…
   1158→pub struct Metadata<'a> {
-  1159→    level: Level,
-      →…
   1200→pub struct MetadataBuilder<'a> {
-  1201→    metadata: Metadata<'a>,
-      →…
   1249→pub trait Log: Sync + Send {
-  1250→    /// Determines if a log message with the specified metadata would be
   1283→struct NopLogger;
   1482→#[cfg(target_has_atomic = "ptr")]
   1483→fn set_logger_inner<F>(make_logger: F) -> Result<(), SetLoggerError>
@@ -149,4 +137,5 @@ lib.rs
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
   1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
+  1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
       →…

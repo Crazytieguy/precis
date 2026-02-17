@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (501 words)
+budget: 500 (492 words)
 
 error.rs
      5→pub struct Error {
@@ -46,6 +46,8 @@ mod.rs
      8→//! features = ["kv"]
      9→//! ```
     10→//!
+    11→//! # Structured logging in `log`
+    12→//!
       →…
    246→mod error;
    247→mod key;
@@ -63,14 +65,15 @@ source.rs
     53→    ///
     54→    /// A source doesn't have to guarantee any ordering or uniqueness of key-values.
     55→    /// If the given visitor returns an error then the source may early-return with it,
-    56→    /// even if there are more key-values.
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
     92→    struct Get<'k, 'v> {
+    93→        key: Key<'k>,
       →…
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
    115→    struct Count(usize);
+   116→
       →…
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
@@ -97,6 +100,7 @@ value.rs
    206→        T: Into<inner::Inner<'v>>,
    207→    {
    208→        Value {
+   209→            inner: value.into(),
       →…
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
@@ -114,7 +118,6 @@ value.rs
    464→    ///
    465→    /// This is the only required method on `VisitValue` and acts as a fallback for any
    466→    /// more specific methods that aren't overridden.
-   467→    /// The `Value` may be formatted using its `fmt::Debug` or `fmt::Display` implementation,
    538→#[allow(clippy::needless_lifetimes)] // Not needless.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
@@ -131,7 +134,6 @@ value.rs
    740→        Bool(bool),
    741→        Str(&'v str),
    742→        Char(char),
-   743→        I64(i64),
       →…
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {

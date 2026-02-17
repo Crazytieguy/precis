@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3944 words)
+budget: 4000 (3934 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -691,7 +691,6 @@ structs.go
    415→		}
    416→
    417→		// don't check if it's omitted
-   418→		if tag := field.Tag.Get(s.TagName); tag == "-" {
       →…
    428→func strctVal(s interface{}) reflect.Value {
    429→	v := reflect.ValueOf(s)
@@ -777,7 +776,6 @@ structs.go
    519→		n := New(val.Interface())
    520→		n.TagName = s.TagName
    521→		m := n.Map()
-   522→
       →…
 tags.go
      5→// tagOptions contains a slice of tag options

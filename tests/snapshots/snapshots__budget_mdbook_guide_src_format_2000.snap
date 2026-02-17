@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2011 words)
+budget: 2000 (1979 words)
 
 README.md
      1→# Format
@@ -362,8 +362,6 @@ theme/editor.md
     15→~~~markdown
     16→```rust,editable
     17→fn main() {
-    18→    let number = 5;
-    19→    print!("{}", number);
       →…
     35→## Customizing the editor
     36→
@@ -405,8 +403,6 @@ theme/index-hbs.md
     23→- ***book_title*** Title of the book, as specified in `book.toml`
     24→- ***chapter_title*** Title of the current chapter, as listed in `SUMMARY.md`
     25→
-    26→- ***path*** Relative path to the original markdown file from the source
-    27→  directory
       →…
     41→## Handlebars helpers
     42→
@@ -430,8 +426,6 @@ theme/index-hbs.md
     60→    <li>
     61→        <ul class="section">
     62→            <li><a href="link/to/other_file.html">Some other Chapter</a></li>
-    63→        </ul>
-    64→    </li>
       →…
     80→### resource
     81→
@@ -460,8 +454,6 @@ theme/index-hbs.md
    104→```handlebars
    105→{{fa "solid" "print" "print-button"}}
    106→```
-   107→
-   108→```html
       →…
 theme/syntax-highlighting.md
      1→# Syntax highlighting
@@ -497,8 +489,6 @@ theme/syntax-highlighting.md
     31→- diff
     32→- go
     33→- handlebars
-    34→- haskell
-    35→- http
       →…
     68→## Custom theme
     69→Like the rest of the theme, the files used for syntax highlighting can be

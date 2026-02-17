@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2072 words)
+budget: 2000 (1952 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
@@ -10,26 +10,16 @@ __private_api.rs
     12→mod sealed {
     13→    /// Types for the `kv` argument.
     14→    pub trait KVs<'a> {
-    15→        fn into_kvs(self) -> Option<&'a [(&'a str, super::Value<'a>)]>;
-    16→    }
     37→/// The global logger proxy.
     38→#[derive(Debug)]
     39→pub struct GlobalLogger;
-    42→    fn enabled …
-    46→    fn log …
-    50→    fn flush …
     56→fn log_impl …
-    84→pub fn log …
-   103→pub fn enabled …
    112→#[cfg(feature = "kv")]
    113→mod kv_support {
    114→    use crate::kv;
    115→
    116→    pub type Value<'a> = kv::Value<'a>;
    117→
-   122→    pub fn capture_to_value …
-   126→    pub fn capture_debug …
-   130→    pub fn capture_display …
 kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
@@ -304,8 +294,6 @@ lib.rs
    498→    Trace,
    499→}
    516→    type Err = ParseLevelError;
-   517→    fn from_str …
-   529→    fn fmt …
    535→    fn from_usize …
    626→/// An enum representing the available verbosity level filters of the logger.
    627→///
@@ -325,8 +313,6 @@ lib.rs
    648→    Trace,
    649→}
    666→    type Err = ParseLevelError;
-   667→    fn from_str …
-   679→    fn fmt …
    685→    fn from_usize …
    780→#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
    781→enum MaybeStaticStr<'a> {
@@ -357,14 +343,12 @@ lib.rs
    858→struct KeyValues<'a>(&'a dyn kv::Source);
    860→#[cfg(feature = "kv")]
    861→impl<'a> fmt::Debug for KeyValues<'a> {
-   862→    fn fmt …
    963→/// Builder for [`Record`](struct.Record.html).
    964→///
       →…
   1003→pub struct RecordBuilder<'a> {
   1004→    record: Record<'a>,
   1005→}
-  1114→    fn default …
   1119→/// Metadata about a log message.
   1120→///
       →…
@@ -378,7 +362,6 @@ lib.rs
   1200→pub struct MetadataBuilder<'a> {
   1201→    metadata: Metadata<'a>,
   1202→}
-  1243→    fn default …
   1248→/// A trait encapsulating the operations required of a logger.
   1249→pub trait Log: Sync + Send {
   1250→    /// Determines if a log message with the specified metadata would be
@@ -414,28 +397,16 @@ lib.rs
   1280→}
   1282→/// A dummy initial value for LOGGER.
   1283→struct NopLogger;
-  1286→    fn enabled …
-  1290→    fn log …
-  1291→    fn flush …
-  1298→    fn enabled …
-  1302→    fn log …
-  1305→    fn flush …
   1310→#[cfg(feature = "std")]
   1311→impl<T> Log for std::boxed::Box<T>
   1312→where
   1313→    T: ?Sized + Log,
   1314→{
-  1315→    fn enabled …
-  1319→    fn log …
-  1322→    fn flush …
   1327→#[cfg(feature = "std")]
   1328→impl<T> Log for std::sync::Arc<T>
   1329→where
   1330→    T: ?Sized + Log,
   1331→{
-  1332→    fn enabled …
-  1336→    fn log …
-  1339→    fn flush …
   1482→#[cfg(target_has_atomic = "ptr")]
   1483→fn set_logger_inner<F>(make_logger: F) -> Result<(), SetLoggerError>
   1484→where
@@ -446,19 +417,20 @@ lib.rs
   1489→        INITIALIZING,
   1490→        Ordering::Acquire,
   1491→        Ordering::Relaxed,
+  1492→    ) {
+  1493→        Ok(UNINITIALIZED) => {
+  1494→            unsafe {
       →…
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///
       →…
   1549→pub struct SetLoggerError(());
-  1552→    fn fmt …
   1558→#[cfg(feature = "std")]
   1559→impl error::Error for SetLoggerError {}
   1561→/// The type returned by [`from_str`] when the string doesn't match any of the log levels.
   1562→///
       →…
   1566→pub struct ParseLevelError(());
-  1569→    fn fmt …
   1575→#[cfg(feature = "std")]
   1576→impl error::Error for ParseLevelError {}
   1599→#[doc(hidden)]
@@ -480,6 +452,8 @@ lib.rs
   1616→    false if cfg!(feature = "release_max_level_debug") => LevelFilter::Debug,
   1617→    false if cfg!(feature = "release_max_level_trace") => LevelFilter::Trace,
   1618→    _ if cfg!(feature = "max_level_off") => LevelFilter::Off,
+  1619→    _ if cfg!(feature = "max_level_error") => LevelFilter::Error,
+  1620→    _ if cfg!(feature = "max_level_warn") => LevelFilter::Warn,
       →…
 macros.rs
     75→macro_rules! log {
@@ -502,8 +476,3 @@ macros.rs
    553→macro_rules! __log_value_serde {
    564→macro_rules! __log_value_error {
    573→macro_rules! __log_value_error {
-serde.rs
-    17→    fn serialize …
-    32→    fn deserialize …
-   111→    fn serialize …
-   127→    fn deserialize …

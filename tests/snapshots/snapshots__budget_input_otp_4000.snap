@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4069 words)
+budget: 4000 (4011 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -470,7 +470,6 @@ apps/storybook/tailwind.config.js
     33→        secondary: {
     34→          DEFAULT: 'hsl(var(--secondary))',
     35→          foreground: 'hsl(var(--secondary-foreground))',
-    36→        },
       →…
 apps/website/README.md
      3→## Getting Started
@@ -783,16 +782,6 @@ apps/website/src/app/(pages)/(home)/page.tsx
     56→            'lg:motion-safe:[animation-delay:3000ms]',
     57→          )}
     58→        >
-    59→          One-time password input component for React. Accessible. Unstyled.
-    60→          Customizable. Open Source.
-    61→        </PageHeaderDescription>
-    62→
-    63→        <PageActions
-    64→          className={cn(
-    65→            fadeUpClassname,
-    66→            'lg:motion-safe:[animation-delay:3000ms]',
-    67→          )}
-    68→        >
       →…
    148→export const revalidate = 3600
    150→const SponsorBadgeClerk = () => {
@@ -832,12 +821,6 @@ apps/website/src/app/(pages)/layout.tsx
     43→    siteName: siteConfig.name,
     44→    images: [
     45→      {
-    46→        url: siteConfig.ogImage,
-    47→        width: 1200,
-    48→        height: 630,
-    49→        alt: siteConfig.name,
-    50→      },
-    51→    ],
       →…
     68→export default function RootLayout({
     69→  children,
@@ -941,10 +924,6 @@ apps/website/src/components/icons.tsx
     28→      />
     29→    </svg>
     30→  ),
-    31→  twitter: (props: IconProps) => (
-    32→    <svg
-    33→      {...props}
-    34→      height="23"
       →…
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {

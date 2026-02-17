@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1009 words)
+budget: 1000 (981 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -139,10 +139,6 @@ README.md
     55→
     56→text = stringify(config,{ 
     57→    section : 'section' 
-    58→})
-    59→
-    60→//  Write INI file as text
-    61→
       →…
     82→## API
     83→
@@ -203,10 +199,6 @@ README.md
    138→    /**
    139→     *  Which platforms line-endings should be used.
    140→     * 
-   141→     *  win32 -> CR+LF
-   142→     *  other -> LF
-   143→     * 
-   144→     *  Default is the current platform
       →…
    167→### Un / Escape
    168→

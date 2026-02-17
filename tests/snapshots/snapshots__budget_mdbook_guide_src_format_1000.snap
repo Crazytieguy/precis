@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1068 words)
+budget: 1000 (996 words)
 
 README.md
      1→# Format
@@ -109,6 +109,7 @@ example.rs
      1→fn main() {
      2→    println!("Hello World!");
      3→#
+     4→#     // You can even hide lines! :D
       →…
 markdown.md
      1→# Markdown
@@ -311,14 +312,6 @@ theme/README.md
     19→    - **_css/general.css_** is the base styles.
     20→    - **_css/print.css_** is the style for printer output.
     21→    - **_css/variables.css_** contains variables used in other CSS files.
-    22→- **_book.js_** is mostly used to add client side functionality, like hiding /
-    23→  un-hiding the sidebar, changing the theme, ...
-    24→- **_highlight.js_** is the JavaScript that is used to highlight code snippets,
-    25→  you should not need to modify this.
-    26→- **_highlight.css_** is the theme used for the code highlighting.
-    27→- **_favicon.svg_** and **_favicon.png_** the favicon that will be used. The SVG
-    28→  version is used by [newer browsers].
-    29→- **fonts/fonts.css** contains the definition of which fonts to load.
       →…
 theme/editor.md
      1→# Editor

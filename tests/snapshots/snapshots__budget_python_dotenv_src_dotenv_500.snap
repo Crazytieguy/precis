@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (498 words)
+budget: 500 (491 words)
 
 __init__.py
     42→__all__ = [
@@ -106,9 +106,6 @@ main.py
     67→                yield stream
     68→        elif self.stream is not None:
     69→            yield self.stream
-    70→        else:
-    71→            if self.verbose:
-    72→                logger.info(
       →…
    141→@contextmanager
    142→def rewrite(

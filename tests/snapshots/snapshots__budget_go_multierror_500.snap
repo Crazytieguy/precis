@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (504 words)
+budget: 500 (496 words)
 
 CHANGELOG.md
      1→## Unreleased
@@ -69,6 +69,8 @@ flatten.go
     24→			flatten(e, flatErr)
     25→		}
     26→	default:
+    27→		flatErr.Errors = append(flatErr.Errors, err)
+    28→	}
       →…
 format.go
     11→// ErrorFormatFunc is a function callback that is called by Error to
@@ -112,7 +114,6 @@ multierror.go
     91→// Is/As be meaningful.
     92→//
     93→// Unwrap returns the next error. In the cleanest form, Unwrap would return
-    94→// the wrapped error here but we can't do that if we want to properly
       →…
     99→type chain []error
    102→func (e chain) Error() string {

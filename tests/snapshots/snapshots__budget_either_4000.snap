@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3972 words)
+budget: 4000 (3870 words)
 
 src/into_either.rs
      6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
@@ -99,6 +99,7 @@ src/iterator.rs
     49→
     50→    fn next(&mut self) -> Option<Self::Item> {
     51→        for_both!(self, inner => inner.next())
+    52→    }
     54→    fn size_hint …
     58→    fn fold …
     65→    fn for_each …
@@ -283,42 +284,36 @@ src/lib.rs
    167→    ///
    168→    /// ```
    169→    /// use either::*;
-   170→    ///
       →…
    175→    pub fn is_left(&self) -> bool {
    182→    /// Return true if the value is the `Right` variant.
    183→    ///
    184→    /// ```
    185→    /// use either::*;
-   186→    ///
       →…
    191→    pub fn is_right(&self) -> bool {
    195→    /// Convert the left side of `Either<L, R>` to an `Option<L>`.
    196→    ///
    197→    /// ```
    198→    /// use either::*;
-   199→    ///
       →…
    206→    pub fn left(self) -> Option<L> {
    213→    /// Convert the right side of `Either<L, R>` to an `Option<R>`.
    214→    ///
    215→    /// ```
    216→    /// use either::*;
-   217→    ///
       →…
    224→    pub fn right(self) -> Option<R> {
    231→    /// Convert `&Either<L, R>` to `Either<&L, &R>`.
    232→    ///
    233→    /// ```
    234→    /// use either::*;
-   235→    ///
       →…
    242→    pub fn as_ref(&self) -> Either<&L, &R> {
    246→    /// Convert `&mut Either<L, R>` to `Either<&mut L, &mut R>`.
    247→    ///
    248→    /// ```
    249→    /// use either::*;
-   250→    ///
       →…
    264→    pub fn as_mut(&mut self) -> Either<&mut L, &mut R> {
    268→    /// Convert `Pin<&Either<L, R>>` to `Either<Pin<&L>, Pin<&R>>`,
@@ -331,14 +326,12 @@ src/lib.rs
    288→    ///
    289→    /// ```
    290→    /// use either::*;
-   291→    ///
       →…
    298→    pub fn flip(self) -> Either<R, L> {
    305→    /// Apply the function `f` on the value in the `Left` variant if it is present rewrapping the
    306→    /// result in `Left`.
    307→    ///
    308→    /// ```
-   309→    /// use either::*;
       →…
    317→    pub fn map_left<F, M>(self, f: F) -> Either<M, R>
    318→    where
@@ -348,7 +341,6 @@ src/lib.rs
    328→    /// result in `Right`.
    329→    ///
    330→    /// ```
-   331→    /// use either::*;
       →…
    339→    pub fn map_right<F, S>(self, f: F) -> Either<L, S>
    340→    where
@@ -358,7 +350,6 @@ src/lib.rs
    350→    /// respectively. This is equivalent to
    351→    /// [bimap](https://hackage.haskell.org/package/bifunctors-5/docs/Data-Bifunctor.html)
    352→    /// in functional programming.
-   353→    ///
       →…
    366→    pub fn map_either<F, G, M, S>(self, f: F, g: G) -> Either<M, S>
    367→    where
@@ -369,7 +360,6 @@ src/lib.rs
    378→    /// both functions.
    379→    ///
    380→    /// ```
-   381→    /// use either::*;
       →…
    397→    pub fn map_either_with<Ctx, F, G, M, S>(self, ctx: Ctx, f: F, g: G) -> Either<M, S>
    398→    where
@@ -380,7 +370,6 @@ src/lib.rs
    409→    /// `Left(L)` then the first function `f` is applied; if it is `Right(R)` then the second
    410→    /// function `g` is applied.
    411→    ///
-   412→    /// ```
       →…
    424→    pub fn either<F, G, T>(self, f: F, g: G) -> T
    425→    where
@@ -391,7 +380,6 @@ src/lib.rs
    436→    /// functions ends up being called.
    437→    ///
    438→    /// ```
-   439→    /// // In this example, the context is a mutable reference
       →…
    454→    pub fn either_with<Ctx, F, G, T>(self, ctx: Ctx, f: F, g: G) -> T
    455→    where
@@ -402,7 +390,6 @@ src/lib.rs
    466→    ///
    467→    /// ```
    468→    /// use either::*;
-   469→    ///
       →…
    476→    pub fn left_and_then<F, S>(self, f: F) -> Either<S, R>
    477→    where
@@ -412,7 +399,6 @@ src/lib.rs
    487→    ///
    488→    /// ```
    489→    /// use either::*;
-   490→    ///
       →…
    497→    pub fn right_and_then<F, S>(self, f: F) -> Either<L, S>
    498→    where
@@ -422,7 +408,6 @@ src/lib.rs
    508→    ///
    509→    /// This requires the `Left` and `Right` iterators to have the same item type.
    510→    /// See [`factor_into_iter`][Either::factor_into_iter] to iterate different types.
-   511→    ///
       →…
    521→    pub fn into_iter(self) -> Either<L::IntoIter, R::IntoIter>
    522→    where
@@ -433,7 +418,6 @@ src/lib.rs
    530→    ///
    531→    /// This requires the `Left` and `Right` iterators to have the same item type.
    532→    /// See [`factor_iter`][Either::factor_iter] to iterate different types.
-   533→    ///
       →…
    544→    pub fn iter(&self) -> Either<<&L as IntoIterator>::IntoIter, <&R as IntoIterator>::IntoIter>
    545→    where
@@ -444,7 +428,6 @@ src/lib.rs
    553→    ///
    554→    /// This requires the `Left` and `Right` iterators to have the same item type.
    555→    /// See [`factor_iter_mut`][Either::factor_iter_mut] to iterate different types.
-   556→    ///
       →…
    573→    pub fn iter_mut(
    574→        &mut self,
@@ -457,7 +440,6 @@ src/lib.rs
    584→    ///
    585→    /// Unlike [`into_iter`][Either::into_iter], this does not require the
    586→    /// `Left` and `Right` iterators to have the same item type.
-   587→    ///
       →…
    597→    pub fn factor_into_iter(self) -> IterEither<L::IntoIter, R::IntoIter>
    598→    where
@@ -468,7 +450,6 @@ src/lib.rs
    606→    ///
    607→    /// Unlike [`iter`][Either::iter], this does not require the
    608→    /// `Left` and `Right` iterators to have the same item type.
-   609→    ///
       →…
    619→    pub fn factor_iter(
    620→        &self,
@@ -481,7 +462,6 @@ src/lib.rs
    630→    ///
    631→    /// Unlike [`iter_mut`][Either::iter_mut], this does not require the
    632→    /// `Left` and `Right` iterators to have the same item type.
-   633→    ///
       →…
    645→    pub fn factor_iter_mut(
    646→        &mut self,
@@ -494,14 +474,12 @@ src/lib.rs
    656→    ///
    657→    /// Arguments passed to `left_or` are eagerly evaluated; if you are passing
    658→    /// the result of a function call, it is recommended to use
-   659→    /// [`left_or_else`][Self::left_or_else], which is lazily evaluated.
       →…
    671→    pub fn left_or(self, other: L) -> L {
    678→    /// Return left or a default
    679→    ///
    680→    /// # Examples
    681→    ///
-   682→    /// ```
       →…
    690→    pub fn left_or_default(self) -> L
    691→    where
@@ -511,7 +489,6 @@ src/lib.rs
    701→    ///
    702→    /// # Examples
    703→    ///
-   704→    /// ```
       →…
    712→    pub fn left_or_else<F>(self, f: F) -> L
    713→    where
@@ -521,14 +498,12 @@ src/lib.rs
    723→    ///
    724→    /// Arguments passed to `right_or` are eagerly evaluated; if you are passing
    725→    /// the result of a function call, it is recommended to use
-   726→    /// [`right_or_else`][Self::right_or_else], which is lazily evaluated.
       →…
    738→    pub fn right_or(self, other: R) -> R {
    745→    /// Return right or a default
    746→    ///
    747→    /// # Examples
    748→    ///
-   749→    /// ```
       →…
    757→    pub fn right_or_default(self) -> R
    758→    where
@@ -538,7 +513,6 @@ src/lib.rs
    768→    ///
    769→    /// # Examples
    770→    ///
-   771→    /// ```
       →…
    779→    pub fn right_or_else<F>(self, f: F) -> R
    780→    where
@@ -548,7 +522,6 @@ src/lib.rs
    790→    ///
    791→    /// # Examples
    792→    ///
-   793→    /// ```
       →…
    809→    pub fn unwrap_left(self) -> L
    810→    where
@@ -558,7 +531,6 @@ src/lib.rs
    822→    ///
    823→    /// # Examples
    824→    ///
-   825→    /// ```
       →…
    841→    pub fn unwrap_right(self) -> R
    842→    where
@@ -568,7 +540,6 @@ src/lib.rs
    852→    ///
    853→    /// # Examples
    854→    ///
-   855→    /// ```
       →…
    871→    pub fn expect_left(self, msg: &str) -> L
    872→    where
@@ -578,7 +549,6 @@ src/lib.rs
    882→    ///
    883→    /// # Examples
    884→    ///
-   885→    /// ```
       →…
    901→    pub fn expect_right(self, msg: &str) -> R
    902→    where
@@ -588,7 +558,6 @@ src/lib.rs
    912→    ///
    913→    /// # Examples
    914→    ///
-   915→    /// ```
       →…
    923→    pub fn either_into<T>(self) -> T
    924→    where
@@ -600,7 +569,6 @@ src/lib.rs
    934→    ///
    935→    /// ```
    936→    /// use either::*;
-   937→    /// let left: Either<_, Option<String>> = Left(Some(vec![0]));
       →…
    944→    pub fn factor_none(self) -> Option<Either<L, R>> {
    952→impl<L, R, E> Either<Result<L, E>, Result<R, E>> {
@@ -608,7 +576,6 @@ src/lib.rs
    954→    ///
    955→    /// Here, the homogeneous type is the `Err` type of the [`Result`].
    956→    ///
-   957→    /// ```
       →…
    966→    pub fn factor_err(self) -> Result<Either<L, R>, E> {
    974→impl<T, L, R> Either<Result<T, L>, Result<T, R>> {
@@ -616,7 +583,6 @@ src/lib.rs
    976→    ///
    977→    /// Here, the homogeneous type is the `Ok` type of the [`Result`].
    978→    ///
-   979→    /// ```
       →…
    988→    pub fn factor_ok(self) -> Result<T, Either<L, R>> {
    996→impl<T, L, R> Either<(T, L), (T, R)> {
@@ -624,7 +590,6 @@ src/lib.rs
    998→    ///
    999→    /// Here, the homogeneous type is the first element of the pairs.
   1000→    ///
-  1001→    /// ```
       →…
   1009→    pub fn factor_first(self) -> (T, Either<L, R>) {
   1017→impl<T, L, R> Either<(L, T), (R, T)> {
@@ -632,7 +597,6 @@ src/lib.rs
   1019→    ///
   1020→    /// Here, the homogeneous type is the second element of the pairs.
   1021→    ///
-  1022→    /// ```
       →…
   1030→    pub fn factor_second(self) -> (Either<L, R>, T) {
   1038→impl<T> Either<T, T> {
@@ -640,14 +604,12 @@ src/lib.rs
   1040→    ///
   1041→    /// ```
   1042→    /// use either::*;
-  1043→    ///
       →…
   1050→    pub fn into_inner(self) -> T {
   1054→    /// Map `f` over the contained value and return the result in the
   1055→    /// corresponding variant.
   1056→    ///
   1057→    /// ```
-  1058→    /// use either::*;
       →…
   1065→    pub fn map<F, M>(self, f: F) -> Either<M, M>
   1066→    where
@@ -689,6 +651,7 @@ src/lib.rs
   1120→        match r {
   1121→            Err(e) => Left(e),
   1122→            Ok(o) => Right(o),
+  1123→        }
       →…
   1127→/// Convert from `Either` to `Result` with `Right => Ok` and `Left => Err`.
   1128→impl<L, R> From<Either<L, R>> for Result<R, L> {
@@ -696,6 +659,7 @@ src/lib.rs
   1130→        match val {
   1131→            Left(l) => Err(l),
   1132→            Right(r) => Ok(r),
+  1133→        }
       →…
   1137→/// `Either<L, R>` is a future if both `L` and `R` are futures.
   1138→impl<L, R> Future for Either<L, R>
@@ -707,6 +671,7 @@ src/lib.rs
   1144→
   1145→    fn poll(
   1146→        self: Pin<&mut Self>,
+  1147→        cx: &mut core::task::Context<'_>,
       →…
   1154→/// `Either<L, R>` implements `Read` if both `L` and `R` do.
   1155→///
@@ -720,7 +685,7 @@ src/lib.rs
   1163→        for_both!(self, inner => inner.read(buf))
   1164→    }
   1165→
-  1166→    fn read_exact …
+  1166→    fn read_exact(&mut self, buf: &mut [u8]) -> io::Result<()> {
   1170→    fn read_to_end …
   1174→    fn read_to_string …
   1180→/// `Either<L, R>` implements `Seek` if both `L` and `R` do.
@@ -745,7 +710,7 @@ src/lib.rs
   1201→        for_both!(self, inner => inner.fill_buf())
   1202→    }
   1203→
-  1204→    fn consume …
+  1204→    fn consume(&mut self, amt: usize) {
   1208→    fn read_until …
   1212→    fn read_line …
   1218→/// `Either<L, R>` implements `Write` if both `L` and `R` do.
@@ -760,7 +725,7 @@ src/lib.rs
   1227→        for_both!(self, inner => inner.write(buf))
   1228→    }
   1229→
-  1230→    fn write_all …
+  1230→    fn write_all(&mut self, buf: &[u8]) -> io::Result<()> {
   1234→    fn write_fmt …
   1238→    fn flush …
   1243→impl<L, R, Target> AsRef<Target> for Either<L, R>

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4187 words)
+budget: 4000 (3935 words)
 
 README.md
     40→## About
@@ -376,20 +376,7 @@ docs/v3-to-v4-migration-guide.md
     22→
     23→or
     24→
-    25→```diff
-    26→- import { match, __ } from 'ts-pattern';
-    27→+ import { match, P } from 'ts-pattern';
-    28→
-    29→
-    30→const toString = (value: string | number) =>
-    31→  match(value)
-    32→-   .with(__.string, (v) => v)
-    33→-   .with(__.number, (v) => `${v}`)
-    34→+   .with(P.string, (v) => v)
-    35→+   .with(P.number, (v) => `${v}`)
-    36→    .exhaustive();
-    37→```
-    38→
+      →…
     39→#### `__`
     40→
       →…
@@ -430,15 +417,7 @@ docs/v3-to-v4-migration-guide.md
    145→fetchSomething().then((value: unknown) =>
    146→  match(value)
    147→    .with(responsePattern, (value) => {
-   148→      // value: { data: { id: string, post: { title: string, content: string }[] }[] }
-   149→      return value;
-   150→    })
-   151→    .otherwise(() => {
-   152→      throw new Error('unexpected response');
-   153→    })
-   154→);
-   155→```
-   156→
+      →…
    157→### Optional object properties
    158→
    159→#### `P.optional(pattern)`
@@ -461,24 +440,7 @@ docs/v3-to-v4-migration-guide.md
    176→            twitter: P.select(),
    177→          }),
    178→        },
-   179→      },
-   180→      (twitterLink, value) => {
-   181→        // twitterLink: string | undefined
-   182→        /**
-   183→         *  value.detail: {
-   184→         *      bio?: string,
-   185→         *      socialLinks?: {
-   186→         *          twitter: string
-   187→         *      }
-   188→         *  }
-   189→         **/
-   190→      }
-   191→    )
-   192→    .otherwise(() => {
-   193→      throw new Error('unexpected response');
-   194→    });
-   195→```
-   196→
+      →…
    197→### Union & intersection patterns
    198→
       →…
@@ -513,22 +475,7 @@ docs/v3-to-v4-migration-guide.md
    315→const userPattern = {
    316→  name: P.string,
    317→  postCount: P.number,
-   318→  bio: P.optional(P.string),
-   319→  posts: P.optional(P.array(postPattern)),
-   320→};
-   321→
-   322→type User = P.infer<typeof userPattern>;
-   323→// User: { name: string, postCount: number, bio?: string, posts?: Post[]  }
-   324→
-   325→const isUserList = isMatching(P.array(userPattern));
-   326→
-   327→const res = await fetchUsers();
-   328→
-   329→if (isUserList(res)) {
-   330→  // res: User
-   331→}
-   332→```
-   333→
+      →…
    334→### New type specific wildcards
    335→
    336→#### `P.symbol`
@@ -630,6 +577,7 @@ src/internals/helpers.ts
     46→  if (isObject(pattern)) {
     47→    if (!isObject(value)) return false;
     48→
+    49→    // Tuple pattern
       →…
    120→export const getSelectionKeys = (pattern: any): string[] => {
    121→  if (isObject(pattern)) {
@@ -862,6 +810,7 @@ src/patterns.ts
    197→          let selections: Record<string, unknown[]> = {};
    198→          const selector = (key: string, value: any) => {
    199→            selections[key] = value;
+   200→          };
       →…
    217→type UnwrapArray …
    219→type UnwrapSet …
@@ -920,6 +869,7 @@ src/patterns.ts
    544→        const selector = (key: string, value: any) => {
    545→          selections[key] = value;
    546→        };
+   547→        const matched = (patterns as readonly UnknownValuePattern[]).every(
       →…
    559→/**
    560→ * `P.union(...patterns)` returns a pattern which matches
@@ -945,6 +895,7 @@ src/patterns.ts
    580→        const selector = (key: string, value: any) => {
    581→          selections[key] = value;
    582→        };
+   583→        flatMap(
       →…
    599→/**
    600→ * `P.not(pattern)` returns a pattern which matches if the sub pattern
@@ -969,6 +920,7 @@ src/patterns.ts
    619→      }),
    620→      getSelectionKeys: () => [],
    621→      matcherType: 'not',
+   622→    }),
       →…
    646→export function when<input, predicate extends (value: input) => unknown>(
    647→  predicate: predicate
@@ -1079,33 +1031,12 @@ src/patterns.ts
   1254→  return chainable(when(isInstanceOf(classConstructor)));
   1255→}
   1274→export function shape(pattern: UnknownValuePattern) {
-src/types/BuildMany.ts
-    11→type BuildOne …
 src/types/DistributeUnions.ts
     41→export type DistributeMatchingUnions …
     80→export type FindUnions …
-src/types/ExtractPreciseValue.ts
-    81→type ExtractPreciseArrayValue …
-src/types/FindSelected.ts
-    11→type SelectionsRecord …
-    24→type MapOptional …
-    31→type MapList …
-    38→type ReduceFindSelectionUnion …
-    47→type FindSelectionUnionInArray …
 src/types/InvertPattern.ts
-    29→type OptionalKeys …
-    39→type ReduceUnion …
-    47→type ReduceIntersection …
-    55→type InvertArrayPattern …
    106→export type InvertPattern …
-   110→type InvertPatternInternal …
-   204→type ExcludeIfExists …
-   231→type InvertArrayPatternForExclude …
    303→export type InvertPatternForExclude …
-   307→type InvertPatternForExcludeInternal …
-src/types/IsMatching.ts
-    12→type IsMatchingTuple …
-    26→type IsMatchingArray …
 src/types/Match.ts
     10→interface NonExhaustiveError<i> {
     11→  __nonExhaustive: never;
@@ -1139,7 +1070,6 @@ src/types/Match.ts
    205→  run …
    225→  narrow …
    245→type DeepExcludeAll …
-   251→type MakeTuples …
    261→type Exhaustive …
 src/types/Pattern.ts
     43→/**
@@ -1169,17 +1099,10 @@ src/types/Pattern.ts
     67→  // only used for array matchers
     68→  [symbols.isVariadic]?: boolean;
     69→}
-    71→type PatternMatcher …
-    81→type UnknownMatcher …
    132→export interface Override<a> {
    133→  [symbols.override]: a;
    134→}
    157→export type Pattern …
-   161→type KnownPattern …
-   163→type KnownPatternInternal …
-   174→type ObjectPattern …
-   180→type ArrayPattern …
-   203→type MergeGuards …
    223→      optional …
    237→      and …
    253→      or …
@@ -1216,7 +1139,6 @@ src/types/Pattern.ts
 src/types/helpers.ts
     14→export type LeastUpperBound …
    182→export type GuardValue …
-   204→type AllKeys …
    266→export interface Fn {
    267→  input: unknown;
    268→  output: unknown;

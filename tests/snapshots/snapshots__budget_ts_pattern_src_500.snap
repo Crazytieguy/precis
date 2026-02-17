@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (532 words)
+budget: 500 (501 words)
 
 errors.ts
      1→/**
@@ -101,10 +101,7 @@ types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
     45→ * protocol. It must define a `symbols.matcher` property
-    46→ * which returns an object with a `match()` method, taking
-    47→ * the input value and returning whether the pattern matches
-    48→ * or not, along with optional selections.
-    49→ */
+      →…
     50→export interface Matcher<
     51→  input,
     52→  narrowed,

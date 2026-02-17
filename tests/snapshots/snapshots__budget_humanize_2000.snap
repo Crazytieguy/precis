@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2014 words)
+budget: 2000 (1941 words)
 
 README.md
      1→# humanize
@@ -384,27 +384,22 @@ src/humanize/i18n.py
    101→def _gettext(message: str) -> str:
    102→    """Get translation.
    103→
-   104→    Args:
       →…
    113→def _pgettext(msgctxt: str, message: str) -> str:
    114→    """Fetches a particular translation.
    115→
-   116→    It works with `msgctxt` .po modifiers and allows duplicate keys with different
       →…
    129→def _ngettext(message: str, plural: str, num: int) -> str:
    130→    """Plural version of _gettext.
    131→
-   132→    Args:
       →…
    144→def _gettext_noop(message: str) -> str:
    145→    """Mark a string as a translation string without translating it.
    146→
-   147→    Example usage:
       →…
    163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
    164→    """Mark two strings as pluralized translations without translating them.
    165→
-   166→    Example usage:
       →…
    183→def thousands_separator() -> str:
    184→    """Return the thousands separator for a locale, default to comma.
@@ -503,14 +498,12 @@ src/humanize/time.py
     53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
     54→    """Return an "absolute" value for a timedelta, always representing a time distance.
     55→
-    56→    Args:
       →…
     68→def _date_and_delta(
     69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
     70→) -> tuple[Any, Any]:
     71→    """Turn a value into a date and a timedelta which represents how long ago it was.
     72→
-    73→    If that's not possible, return `(None, value)`.
       →…
     95→def naturaldelta(
     96→    value: dt.timedelta | float,
@@ -553,17 +546,14 @@ src/humanize/time.py
    368→) -> tuple[float, float]:
    369→    """Divide `value` by `divisor`, returning the quotient and remainder.
    370→
-   371→    If `unit` is `minimum_unit`, the quotient will be the rounding of `value / divisor`
       →…
    406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
    407→    """Return a minimum unit suitable that is not suppressed.
    408→
-   409→    If not suppressed, return the same unit:
       →…
    435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
    436→    """Extend suppressed units (if any) with all units lower than the minimum unit.
    437→
-   438→    >>> from humanize.time import _suppress_lower_units, Unit
       →…
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
@@ -578,5 +568,4 @@ src/humanize/time.py
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
    655→    """Round a number according to the string format provided.
    656→
-   657→    The string format is the old printf-style string formatting.
       →…

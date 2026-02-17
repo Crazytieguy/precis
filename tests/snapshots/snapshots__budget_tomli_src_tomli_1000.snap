@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (996 words)
+budget: 1000 (941 words)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -79,10 +79,6 @@ _parser.py
    110→            if doc is not DEPRECATED_DEFAULT:
    111→                args = doc, *args
    112→            if msg is not DEPRECATED_DEFAULT:
-   113→                args = msg, *args
-   114→            ValueError.__init__(self, *args)
-   115→            return
-   116→
       →…
    137→def load …
    149→def loads …
@@ -114,10 +110,7 @@ _parser.py
    246→            cont = cont[k]["nested"]
    247→        cont.pop(key[-1], None)
    248→
-   249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
-   250→        cont = self._flags
-   251→        key_parent, key_stem = key[:-1], key[-1]
-   252→        for k in key_parent:
+   249→    def set …
    260→    def is_ …
    278→class NestedDict:
    279→    def __init__(self) -> None:
@@ -147,10 +140,7 @@ _parser.py
    303→        if last_key in cont:
    304→            list_ = cont[last_key]
    305→            if not isinstance(list_, list):
-   306→                raise KeyError("An object other than list found behind this key")
-   307→            list_.append({})
-   308→        else:
-   309→            cont[last_key] = [{}]
+      →…
    312→class Output:
    313→    def __init__(self) -> None:
    314→        self.data = NestedDict()

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1025 words)
+budget: 1000 (974 words)
 
 README.md
      1→# humanize
@@ -30,15 +30,6 @@ README.md
     23→- Esperanto
     24→- European Portuguese
     25→- Finnish
-    26→- French
-    27→- German
-    28→- Greek
-    29→- Hebrew
-    30→- Indonesian
-    31→- Italian
-    32→- Japanese
-    33→- Klingon
-    34→- Korean
       →…
     49→## API reference
     50→
@@ -140,11 +131,7 @@ README.md
    146→>>> humanize.naturaltime(delta)
    147→'now'
    148→>>> humanize.naturaltime(delta, minimum_unit="milliseconds")
-   149→'4 milliseconds ago'
-   150→>>> humanize.naturaltime(delta, minimum_unit="microseconds")
-   151→'4 milliseconds ago'
-   152→```
-   153→
+      →…
    154→### File size humanization
    155→
    156→```pycon
@@ -216,15 +203,6 @@ README.md
    222→>>> humanize.i18n.activate("xx_XX")
    223→<...>
    224→FileNotFoundError: [Errno 2] No translation file found for domain: 'humanize'
-   225→>>> humanize.i18n.activate("pt_BR", path="path/to/my/own/translation/")
-   226→<gettext.GNUTranslations instance ...>
-   227→```
-   228→
-   229→<!-- usage-end -->
-   230→
-   231→How to add new phrases to existing locale files:
-   232→
-   233→```sh
       →…
 RELEASING.md
      1→# Release checklist

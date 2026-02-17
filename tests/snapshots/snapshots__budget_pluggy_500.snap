@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (528 words)
+budget: 500 (487 words)
 
 AGENTS.md
      1→# AGENTS.md …
@@ -33,6 +33,7 @@ docs/conf.py
    109→
    110→    import sphinx.util.logging
    111→
+   112→    class WarnLogFilter(logging.Filter):
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
@@ -49,9 +50,7 @@ scripts/towncrier-draft-to-file.py
      5→def main() -> int:
      6→    """
      7→    Platform agnostic wrapper script for towncrier.
-     8→    Fixes the issue (pytest#7251) where windows users are unable to natively
-     9→    run tox -e docs to build pytest docs.
-    10→    """
+      →…
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
@@ -66,12 +65,6 @@ src/pluggy/_callers.py
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
 src/pluggy/_hooks.py
-    28→_T …
-    29→_F …
-    31→_Namespace …
-    32→_Plugin …
-    33→_HookExec …
-    37→_HookImplFunction …
     40→class HookspecOpts(TypedDict):
     42→
       →…
@@ -86,12 +79,10 @@ src/pluggy/_hooks.py
    172→
    173→    __slots__ = ("project_name",)
    174→
-   290→_PYPY …
    359→class HookRelay:
    362→
    363→    __slots__ = ("__dict__",)
    364→
-   377→_CallHistory …
    382→class HookCaller:
    384→
    419→    # TODO: Document, or make private.
@@ -123,8 +114,6 @@ src/pluggy/_hooks.py
    699→        "namespace",
    700→        "function",
 src/pluggy/_manager.py
-    36→_BeforeTrace …
-    37→_AfterTrace …
     52→class PluginValidationError(Exception):
     58→
     65→class DistFacade:
@@ -134,7 +123,6 @@ src/pluggy/_manager.py
     83→class PluginManager:
     99→
 src/pluggy/_result.py
-    16→_ExcInfo …
     20→class HookCallError(Exception):
     25→class Result(Generic[ResultType]):
     28→

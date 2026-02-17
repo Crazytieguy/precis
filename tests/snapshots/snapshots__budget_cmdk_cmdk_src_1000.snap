@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1041 words)
+budget: 1000 (1010 words)
 
 command-score.ts
     54→function commandScoreInner(
@@ -42,7 +42,6 @@ command-score.ts
     88→      abbreviationIndex + 1,
     89→      memoizedResults,
     90→    )
-    91→    if (score > highScore) {
       →…
    150→function formatInput(string) {
    151→  // convert all valid space characters to space so they match each other
@@ -177,18 +176,15 @@ index.tsx
    972→function findPreviousSibling(el: Element, selector: string) {
    973→  let sibling = el.previousElementSibling
    974→
-   975→  while (sibling) {
       →…
    981→function useAsRef<T>(data: T) {
    982→  const ref = React.useRef<T>(data)
    983→
-   984→  useLayoutEffect(() => {
       →…
    991→const useLayoutEffect …
    993→function useLazyRef<T>(fn: () => T) {
    994→  const ref = React.useRef<T>()
    995→
-   996→  if (ref.current === undefined) {
       →…
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
@@ -204,7 +200,6 @@ index.tsx
   1015→) {
   1016→  const valueRef = React.useRef<string>()
   1017→  const context = useCommand()
-  1018→
       →…
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
@@ -224,7 +219,6 @@ index.tsx
   1061→function renderChildren(children: React.ReactElement) {
   1062→  const childrenType = children.type as any
   1063→  // The children is a component
-  1064→  if (typeof childrenType === 'function') return childrenType(children.props)
       →…
   1071→function SlottableWithNestedChildren(
   1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
@@ -232,6 +226,5 @@ index.tsx
   1074→) {
   1075→  if (asChild && React.isValidElement(children)) {
   1076→    return React.cloneElement(renderChildren(children), { ref: (children as any).ref }, render(children.props.children))
-  1077→  }
       →…
   1081→const srOnlyStyles …

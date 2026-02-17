@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2001 words)
+budget: 2000 (1980 words)
 
 CHANGELOG.md
      1→## Unreleased
@@ -76,8 +76,6 @@ README.md
     59→g := new(errgroup.Group)
     60→g.Go(func() error { return task1() })
     61→g.Go(func() error { return task2() })
-    62→err := g.Wait() // Returns first error only
-    63→
       →…
    104→## Installation and Docs
    105→
@@ -154,8 +152,6 @@ README.md
    176→
    177→```go
    178→if err := something(); err != nil {
-   179→	if merr, ok := err.(*multierror.Error); ok {
-   180→		// Use merr.Errors
       →…
 append.go
      6→// Append is a helper function that will append more errors

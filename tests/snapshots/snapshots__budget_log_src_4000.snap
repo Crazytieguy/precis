@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3989 words)
+budget: 4000 (3873 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
@@ -136,9 +136,6 @@ kv/source.rs
     32→///         println!("{key}: {value}");
     33→///
     34→///         Ok(())
-    35→///     }
-    36→/// }
-    37→///
       →…
     51→pub trait Source {
     52→    /// Visit key-values.
@@ -234,9 +231,6 @@ kv/value.rs
     56→///
     57→/// ## Using the `ToValue` trait
     58→///
-    59→/// The `ToValue` trait can be used to capture values generically.
-    60→/// It's the bound used by `Source`.
-    61→///
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
@@ -468,6 +462,9 @@ lib.rs
    425→#[cfg(not(target_has_atomic = "ptr"))]
    426→impl AtomicUsize {
    427→    const fn new(v: usize) -> AtomicUsize {
+   428→        AtomicUsize { v: Cell::new(v) }
+   429→    }
+   430→
    431→    fn load(&self, _order: Ordering) -> usize {
    435→    fn store(&self, val: usize, _order: Ordering) {
    442→#[cfg(not(target_has_atomic = "ptr"))]
@@ -484,10 +481,6 @@ lib.rs
    467→/// An enum representing the available verbosity levels of the logger.
    468→///
    469→/// Typical usage includes: checking if a certain `Level` is enabled with
-   470→/// [`log_enabled!`](macro.log_enabled.html), specifying the `Level` of
-   471→/// [`log!`](macro.log.html), and comparing a `Level` directly to a
-   472→/// [`LevelFilter`](enum.LevelFilter.html).
-   473→#[repr(usize)]
       →…
    475→pub enum Level {
    476→    /// The "error" level.
@@ -529,10 +522,6 @@ lib.rs
    626→/// An enum representing the available verbosity level filters of the logger.
    627→///
    628→/// A `LevelFilter` may be compared directly to a [`Level`]. Use this type
-   629→/// to get and set the maximum log level with [`max_level()`] and [`set_max_level`].
-   630→///
-   631→/// [`Level`]: enum.Level.html
-   632→/// [`max_level()`]: fn.max_level.html
       →…
    636→pub enum LevelFilter {
    637→    /// A level lower than all log levels.
@@ -575,10 +564,6 @@ lib.rs
    796→/// The "payload" of a log message.
    797→///
    798→/// # Use
-   799→///
-   800→/// `Record` structures are passed as parameters to the [`log`][method.log]
-   801→/// method of the [`Log`] trait. Logger implementors manipulate these
-   802→/// structures in order to display log messages. `Record`s are automatically
       →…
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
@@ -594,7 +579,11 @@ lib.rs
    858→struct KeyValues<'a>(&'a dyn kv::Source);
    860→#[cfg(feature = "kv")]
    861→impl<'a> fmt::Debug for KeyValues<'a> {
-   862→    fn fmt …
+   862→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+   863→        let mut visitor = f.debug_map();
+   864→        self.0.visit(&mut visitor).map_err(|_| fmt::Error)?;
+   865→        visitor.finish()
+      →…
    872→    pub fn builder() -> RecordBuilder<'a> {
    878→    pub fn args(&self) -> &fmt::Arguments<'a> {
    884→    pub fn metadata(&self) -> &Metadata<'a> {
@@ -610,10 +599,6 @@ lib.rs
    963→/// Builder for [`Record`](struct.Record.html).
    964→///
    965→/// Typically should only be used by log library creators or for testing and "shim loggers".
-   966→/// The `RecordBuilder` can set the different parameters of `Record` object, and returns
-   967→/// the created object when `build` is called.
-   968→///
-   969→/// # Examples
       →…
   1003→pub struct RecordBuilder<'a> {
   1004→    record: Record<'a>,
@@ -634,10 +619,6 @@ lib.rs
   1119→/// Metadata about a log message.
   1120→///
   1121→/// # Use
-  1122→///
-  1123→/// `Metadata` structs are created when users of the library use
-  1124→/// logging macros.
-  1125→///
       →…
   1158→pub struct Metadata<'a> {
   1159→    level: Level,
@@ -649,10 +630,6 @@ lib.rs
   1183→/// Builder for [`Metadata`](struct.Metadata.html).
   1184→///
   1185→/// Typically should only be used by log library creators or for testing and "shim loggers".
-  1186→/// The `MetadataBuilder` can set the different parameters of a `Metadata` object, and returns
-  1187→/// the created object when `build` is called.
-  1188→///
-  1189→/// # Example
       →…
   1200→pub struct MetadataBuilder<'a> {
   1201→    metadata: Metadata<'a>,
@@ -708,7 +685,10 @@ lib.rs
   1312→where
   1313→    T: ?Sized + Log,
   1314→{
-  1315→    fn enabled …
+  1315→    fn enabled(&self, metadata: &Metadata) -> bool {
+  1316→        self.as_ref().enabled(metadata)
+  1317→    }
+  1318→
   1319→    fn log …
   1322→    fn flush …
   1327→#[cfg(feature = "std")]
@@ -716,7 +696,10 @@ lib.rs
   1329→where
   1330→    T: ?Sized + Log,
   1331→{
-  1332→    fn enabled …
+  1332→    fn enabled(&self, metadata: &Metadata) -> bool {
+  1333→        self.as_ref().enabled(metadata)
+  1334→    }
+  1335→
   1336→    fn log …
   1339→    fn flush …
   1351→pub fn set_max_level(level: LevelFilter) {
@@ -742,13 +725,13 @@ lib.rs
   1497→            STATE.store(INITIALIZED, Ordering::Release);
   1498→            Ok(())
   1499→        }
+  1500→        Err(INITIALIZING) => {
       →…
   1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///
   1546→/// [`set_logger`]: fn.set_logger.html
-  1547→#[allow(missing_copy_implementations)]
-  1548→#[derive(Debug)]
+      →…
   1549→pub struct SetLoggerError(());
   1552→    fn fmt …
   1558→#[cfg(feature = "std")]
@@ -756,8 +739,7 @@ lib.rs
   1561→/// The type returned by [`from_str`] when the string doesn't match any of the log levels.
   1562→///
   1563→/// [`from_str`]: https://doc.rust-lang.org/std/str/trait.FromStr.html#tymethod.from_str
-  1564→#[allow(missing_copy_implementations)]
-  1565→#[derive(Debug, PartialEq, Eq)]
+      →…
   1566→pub struct ParseLevelError(());
   1569→    fn fmt …
   1575→#[cfg(feature = "std")]

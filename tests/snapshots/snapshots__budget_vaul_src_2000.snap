@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2014 words)
+budget: 2000 (2005 words)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -187,10 +187,6 @@ index.tsx
    186→          window.requestAnimationFrame(() => {
    187→            document.body.style.pointerEvents = 'auto';
    188→          });
-   189→        }
-   190→      }
-   191→
-   192→      if (!o) {
       →…
    803→export const Overlay …
    831→export type ContentProps …

@@ -2,15 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1016 words)
+budget: 1000 (992 words)
 
 CHANGELOG.md
      3→## 2.4.0
      4→
      5→- Added
      6→  - TOML v1.1.0 compatibility
-     7→  - Binary wheels for Windows arm64
-     8→
+      →…
 README.md
      5→# Tomli
      6→
@@ -93,22 +92,19 @@ fuzzer/fuzz.py
     20→def test_one_input(input_bytes: bytes) -> None:
     21→    # We need a Unicode string, not bytes
     22→    fdp = atheris.FuzzedDataProvider(input_bytes)
-    23→    data = fdp.ConsumeUnicode(sys.maxsize)
       →…
     53→def print_err(data):
     54→    codepoints = [hex(ord(x)) for x in data]
     55→    sys.stderr.write(f"Input was {type(data)}:\n{data}\nCodepoints:\n{codepoints}\n")
-    56→    sys.stderr.flush()
+      →…
     59→def normalize_toml_obj(toml_obj: dict) -> None:
     60→    """Make NaNs equal when compared (without using recursion)."""
     61→    to_process = [toml_obj]
     62→    while to_process:
-    63→        cont = to_process.pop()
       →…
     71→def main():
     72→    # For possible options, see https://llvm.org/docs/LibFuzzer.html#options
     73→    fuzzer_options = sys.argv
-    74→    atheris.Setup(fuzzer_options, test_one_input)
       →…
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
@@ -157,7 +153,6 @@ src/tomli/_parser.py
     58→    {
     59→        "\\b": "\u0008",  # backspace
     60→        "\\t": "\u0009",  # tab
-    61→        "\\n": "\u000a",  # linefeed
       →…
     71→class DEPRECATED_DEFAULT:
     76→class TOMLDecodeError(ValueError):

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (973 words)
+budget: 1000 (953 words)
 
 README.md
      9→# Mitt
@@ -38,8 +38,6 @@ README.md
     39→
     40→```javascript
     41→// using ES6 modules
-    42→import mitt from 'mitt'
-    43→
       →…
     56→## Usage
     57→
@@ -53,8 +51,6 @@ README.md
     65→
     66→// listen to all events
     67→emitter.on('*', (type, e) => console.log(type, e) )
-    68→
-    69→// fire an event
       →…
     81→### Typescript
     82→
@@ -68,8 +64,6 @@ README.md
     90→  bar?: number;
     91→};
     92→
-    93→const emitter = mitt<Events>(); // inferred as Emitter<Events>
-    94→
       →…
    113→## Examples & Demos
    114→
@@ -159,8 +153,7 @@ README.md
    198→-   Make your changes.
    199→-   Commit your changes: `git commit -am 'Add some feature'`
    200→-   Push to the branch: `git push origin my-new-feature`
-   201→-   Submit a pull request with full remarks documenting your changes.
-   202→
+      →…
    203→## License
    204→
    205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
@@ -231,4 +224,5 @@ src/index.ts
     73→		},
     74→
     75→		/**
+    76→		 * Remove an event handler for the given type.
       →…

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1020 words)
+budget: 1000 (992 words)
 
 README.md
      1→# debug
@@ -128,9 +128,6 @@ src/browser.js
    158→		return;
    159→	}
    160→
-   161→	const c = 'color: ' + this.color;
-   162→	args.splice(1, 0, c, 'color: inherit');
-   163→
       →…
    194→/**
    195→ * Save `namespaces`.
@@ -168,9 +165,6 @@ src/browser.js
    228→	// If debug isn't set in LS, and we're in Electron, try to load $DEBUG
    229→	if (!r && typeof process !== 'undefined' && 'env' in process) {
    230→		r = process.env.DEBUG;
-   231→	}
-   232→
-   233→	return r;
       →…
    236→/**
    237→ * Localstorage attempts to return the localstorage.
@@ -211,9 +205,6 @@ src/common.js
     16→
     17→	Object.keys(env).forEach(key => {
     18→		createDebug[key] = env[key];
-    19→	});
-    20→
-    21→	/**
       →…
 src/node.js
    151→/**
@@ -243,8 +234,7 @@ src/node.js
    176→		args.push(colorCode + 'm+' + module.exports.humanize(this.diff) + '\u001B[0m');
    177→	} else {
    178→		args[0] = getDate() + name + ' ' + args[0];
-   179→	}
-   180→}
+      →…
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
    184→		return '';

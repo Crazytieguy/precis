@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4044 words)
+budget: 4000 (3971 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -396,62 +396,38 @@ cmdk/src/index.tsx
    662→ * the rendered item's `textContent`.
    663→ */
    664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
-   665→  const id = useId()
-   666→  const ref = React.useRef<HTMLDivElement>(null)
-      →…
    725→/**
    726→ * Group command menu items together with a heading.
    727→ * Grouped items are always shown together.
    728→ */
    729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
-   730→  const { heading, children, forceMount, ...etc } = props
-   731→  const id = useId()
-      →…
    770→/**
    771→ * A visual and semantic separator between items or groups.
    772→ * Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
    773→ */
    774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
-   775→  const { alwaysRender, ...etc } = props
-   776→  const ref = React.useRef<HTMLDivElement>(null)
-      →…
    783→/**
    784→ * Command menu input.
    785→ * All props are forwarded to the underyling `input` element.
    786→ */
    787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
-   788→  const { onValueChange, ...etc } = props
-   789→  const isControlled = props.value != null
-      →…
    829→/**
    830→ * Contains `Item`, `Group`, and `Separator`.
    831→ * Use the `--cmdk-list-height` CSS variable to animate height based on the number of results.
    832→ */
    833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
-   834→  const { children, label = 'Suggestions', ...etc } = props
-   835→  const ref = React.useRef<HTMLDivElement>(null)
-      →…
    879→/**
    880→ * Renders the command menu in a Radix Dialog.
    881→ */
    882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
-   883→  const { open, onOpenChange, overlayClassName, contentClassName, container, ...etc } = props
-   884→  return (
-      →…
    896→/**
    897→ * Automatically renders when there are no results for the search query.
    898→ */
    899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
-   900→  const render = useCmdk((state) => state.filtered.count === 0)
-   901→
-      →…
    906→/**
    907→ * You should conditionally render this with `progress` while loading asynchronous items.
    908→ */
    909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
-   910→  const { progress, children, label = 'Loading...', ...etc } = props
-   911→
-      →…
    930→const pkg …
    955→/**
    956→ *
@@ -584,6 +560,8 @@ website/components/cmdk/framer.tsx
     11→          <Command.Input autoFocus placeholder="Find components, packages, and interactions..." />
     12→        </div>
     13→        <Command.List>
+    14→          <div cmdk-framer-items="">
+    15→            <div cmdk-framer-left="">
       →…
     57→function Button() {
     61→function Input() {
@@ -613,6 +591,8 @@ website/components/cmdk/linear.tsx
     10→          <Command.Empty>No results found.</Command.Empty>
     11→          {items.map(({ icon, label, shortcut }) => {
     12→            return (
+    13→              <Command.Item key={label} value={label}>
+    14→                {icon}
       →…
     30→const items = [
     31→  {
@@ -650,6 +630,8 @@ website/components/cmdk/raycast.tsx
     14→    inputRef?.current?.focus()
     15→  }, [])
     16→
+    17→  return (
+    18→    <div className="raycast">
       →…
     97→function Item({
    116→function SubCommand({
@@ -673,6 +655,8 @@ website/components/cmdk/vercel.tsx
     11→
     12→  const popPage = React.useCallback(() => {
     13→    setPages((pages) => {
+    14→      const x = [...pages]
+    15→      x.splice(-1, 1)
       →…
     91→function Home({ searchProjects }: { searchProjects: Function }) {
    137→function Projects() {
@@ -703,6 +687,12 @@ website/components/code/index.tsx
     22→      style: {
     23→        color: 'var(--gray10)',
     24→      },
+    25→    },
+    26→    {
+    27→      types: ['punctuation', 'operator'],
+    28→      style: {
+    29→        color: 'var(--gray9)',
+    30→      },
       →…
     41→export function Code({ children }: { children: string }) {
     42→  return (

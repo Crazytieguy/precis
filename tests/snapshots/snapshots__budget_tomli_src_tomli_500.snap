@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (502 words)
+budget: 500 (497 words)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -45,7 +45,6 @@ _parser.py
     61→        "\\n": "\u000a",  # linefeed
     62→        "\\f": "\u000c",  # form feed
     63→        "\\r": "\u000d",  # carriage return
-    64→        "\\e": "\u001b",  # escape
       →…
     71→class DEPRECATED_DEFAULT:
     76→class TOMLDecodeError(ValueError):

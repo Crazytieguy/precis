@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (529 words)
+budget: 500 (490 words)
 
 coercions.ts
     16→export function coerce …
@@ -33,8 +33,6 @@ types.ts
     38→      if (Element && Array.isArray(value)) {
     39→        for (const [i, v] of value.entries()) {
     40→          yield [i, v, Element]
-    41→        }
-    42→      }
       →…
     60→export function bigint …
     70→export function boolean …
@@ -49,8 +47,6 @@ types.ts
    112→    schema[key] = key
    113→  }
    114→
-   115→  return new Struct({
-   116→    type: 'enums',
       →…
    131→export function func …
    144→export function instance …
@@ -64,8 +60,6 @@ types.ts
    209→    schema:
    210→      t === 'string' || t === 'number' || t === 'boolean' ? constant : null,
    211→    validator(value) {
-   212→      return (
-   213→        value === constant ||
       →…
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    231→  return new Struct({
@@ -75,8 +69,6 @@ types.ts
    235→      if (Key && Value && value instanceof Map) {
    236→        for (const [k, v] of value.entries()) {
    237→          yield [k as string, k, Key]
-   238→          yield [k as string, v, Value]
-   239→        }
       →…
    258→export function never …
    266→export function nullable …
@@ -89,8 +81,6 @@ types.ts
    303→    schema: schema ? schema : null,
    304→    *entries(value) {
    305→      if (schema && isObject(value)) {
-   306→        const unknowns = new Set(Object.keys(value))
-   307→
       →…
    351→export function optional …
    367→export function record …
@@ -103,8 +93,6 @@ types.ts
    420→      if (Element && value instanceof Set) {
    421→        for (const v of value) {
    422→          yield [v as string, v, Element]
-   423→        }
-   424→      }
       →…
    442→export function string …
    456→export function tuple …

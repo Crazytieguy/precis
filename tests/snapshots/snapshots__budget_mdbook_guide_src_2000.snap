@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2147 words)
+budget: 2000 (1993 words)
 
 404.md
      1→# Document not found (404)
@@ -208,14 +208,7 @@ for_developers/README.md
      6→consumers (often referred to as *backends*) if you need to do some analysis of
      7→the book or render it in a different format.
      8→
-     9→The *For Developers* chapters are here to show you the more advanced usage of
-    10→`mdbook`.
-    11→
-    12→The two main ways a developer can hook into the book's build process is via,
-    13→
-    14→- [Preprocessors](preprocessors.md)
-    15→- [Alternative Backends](backends.md)
-    16→
+      →…
     17→## The build process
     18→
     19→The process of rendering a book project goes through several steps.
@@ -224,11 +217,7 @@ for_developers/README.md
     22→    - Parse the `book.toml`, falling back to the default `Config` if it doesn't
     23→       exist
     24→    - Load the book chapters into memory
-    25→    - Discover which preprocessors/backends should be used
-    26→2. For each backend:
-    27→   1. Run all the preprocessors.
-    28→   2. Call the backend to render the processed result.
-    29→
+      →…
     30→## Using `mdbook` as a library
     31→
     32→The `mdbook` binary is just a wrapper around the underlying mdBook crates,
@@ -237,13 +226,7 @@ for_developers/README.md
     35→This can be used to add your own functionality or tweak the build process.
     36→
     37→The easiest way to find out how to use the `mdbook-driver` crate is by looking at the
-    38→[API Docs]. The top level documentation explains how one would use the
-    39→[`MDBook`] type to load and build a book, while the [config] module gives a good
-    40→explanation on the configuration system.
-    41→
-    42→[`MDBook`]: https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html
-    43→[API Docs]: https://docs.rs/mdbook-driver/latest/mdbook_driver/
-    44→[config]: https://docs.rs/mdbook-driver/latest/mdbook_driver/config/index.html
+      →…
 for_developers/backends.md
      1→# Alternative backends
      2→
@@ -269,15 +252,10 @@ for_developers/backends.md
 for_developers/mdbook-wordcount/src/main.rs
     12→fn main() {
     13→    let mut stdin = io::stdin();
-    14→    let ctx = RenderContext::from_json(&mut stdin).unwrap();
-    15→    let cfg: WordcountConfig = ctx.config
-    16→        .get_deserialized("output.wordcount")
-    17→        .unwrap_or_default();
-    18→
       →…
     40→fn count_words(ch: &Chapter) -> usize {
     41→    ch.content.split_whitespace().count()
-    42→}
+      →…
     44→#[derive(Debug, Default, Serialize, Deserialize)]
     45→#[serde(default, rename_all = "kebab-case")]
     46→pub struct WordcountConfig {
@@ -600,10 +578,6 @@ format/theme/README.md
     15→- **_head.hbs_** is appended to the HTML `<head>` section.
     16→- **_header.hbs_** content is appended on top of every book page.
     17→- **_css/_** contains the CSS files for styling the book.
-    18→    - **_css/chrome.css_** is for UI elements.
-    19→    - **_css/general.css_** is the base styles.
-    20→    - **_css/print.css_** is the style for printer output.
-    21→    - **_css/variables.css_** contains variables used in other CSS files.
       →…
 format/theme/editor.md
      1→# Editor

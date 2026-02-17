@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (534 words)
+budget: 500 (498 words)
 
 404.md
      1→# Document not found (404)
@@ -69,28 +69,6 @@ for_developers/README.md
     30→## Using `mdbook` as a library
     31→
       →…
-for_developers/backends.md
-     1→# Alternative backends
-     2→
-      →…
-    13→## Setting up
-    14→
-      →…
-    53→## Inspecting the book
-    54→
-      →…
-    82→## Enabling the backend
-    83→
-      →…
-   159→## Configuration
-   160→
-      →…
-   219→## Output and signalling failure
-   220→
-      →…
-   322→## Wrapping up
-   323→
-      →…
 for_developers/mdbook-wordcount/src/main.rs
     12→fn main() {
     40→fn count_words(ch: &Chapter) -> usize {
@@ -100,19 +78,6 @@ for_developers/mdbook-wordcount/src/main.rs
     47→    pub ignores: Vec<String>,
     48→    pub deny_odds: bool,
     49→}
-for_developers/preprocessors.md
-     1→# Preprocessors
-     2→
-      →…
-    13→## Hooking into MDBook
-    14→
-      →…
-    46→## Hints for implementing a preprocessor
-    47→
-      →…
-    74→## Implementing a preprocessor with a different language
-    75→
-      →…
 format/README.md
      1→# Format
      2→
@@ -128,7 +93,13 @@ format/configuration/README.md
      3→This section details the configuration options available in the ***book.toml***:
      4→- **[General]** configuration including the `book`, `rust`, `build` sections
      5→- **[Preprocessor]** configuration for default and custom book preprocessors
-      →…
+     6→- **[Renderer]** configuration for the HTML, Markdown and custom renderers
+     7→- **[Environment Variable]** configuration for overriding configuration options in your environment
+     8→
+     9→[General]: general.md
+    10→[Preprocessor]: preprocessors.md
+    11→[Renderer]: renderers.md
+    12→[Environment Variable]: environment-variables.md
 format/example.rs
      1→fn main() {
      2→    println!("Hello World!");
@@ -156,7 +127,6 @@ format/mdbook.md
     21→Will render as
     22→
     23→```rust
-    24→# fn main() {
       →…
 format/theme/README.md
      1→# Theme
@@ -186,4 +156,6 @@ misc/contributors.md
      9→- Adam Solove ([asolove](https://github.com/asolove))
     10→- Wayne Nilsen ([waynenilsen](https://github.com/waynenilsen))
     11→- [funnkill](https://github.com/funkill)
+    12→- Fu Gangqiang ([FuGangqiang](https://github.com/FuGangqiang))
+    13→- [Michael-F-Bryan](https://github.com/Michael-F-Bryan)
       →…

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1060 words)
+budget: 1000 (964 words)
 
 Readme.md
     42→### Usage
@@ -27,8 +27,6 @@ Readme.md
    232→
       →…
 docs/guides/01-getting-started.md
-     1→# Getting Started
-     2→
      3→## Installing Superstruct
      4→
      5→To install Superstruct run:
@@ -59,68 +57,12 @@ docs/guides/01-getting-started.md
     30→})
     31→```
     32→
-      →…
-    41→## Defining Structs
-    42→
-      →…
-docs/guides/02-validating-data.md
-     1→# Validating Data
-     2→
-      →…
-     5→## Primitive Values
-     6→
-      →…
-    37→## Composed Values
+    33→If you'd rather use a `<script>` tag, you can use the UMD build:
+    34→
+    35→```html
+    36→<script src="https://unpkg.com/superstruct/lib/index.cjs"></script>
+    37→```
     38→
-      →…
-   114→## Optional Values
-   115→
-      →…
-   157→## Custom Values
-   158→
-      →…
-docs/guides/03-coercing-data.md
-     1→# Coercing Data
-     2→
-      →…
-     7→## Default Values
-     8→
-      →…
-    49→## Custom Coercions
-    50→
-      →…
-docs/guides/04-refining-validation.md
-     1→# Refining Validation
-     2→
-      →…
-     7→## Built-in Refinements
-     8→
-      →…
-    47→## Custom Refinements
-    48→
-      →…
-docs/guides/05-handling-errors.md
-     1→# Handling Errors
-     2→
-      →…
-    53→## Customizing Errors
-    54→
-      →…
-   102→## Multiple Failures
-   103→
-      →…
-docs/guides/06-using-typescript.md
-     1→# Using TypeScript
-     2→
-      →…
-     7→## Narrowing Types
-     8→
-      →…
-    37→## Describing Types
-    38→
-      →…
-    55→## Inferring Types
-    56→
       →…
 docs/readme.md
      7→### Usage
@@ -301,8 +243,6 @@ src/struct.ts
    266→export type Refiner …
 src/structs/refinements.ts
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
-    22→  if (value instanceof Map || value instanceof Set) {
-      →…
 src/structs/types.ts
     33→export function array<T extends Struct<any>>(Element?: T): any {
    105→export function enums<U extends string | number, T extends readonly U[]>(

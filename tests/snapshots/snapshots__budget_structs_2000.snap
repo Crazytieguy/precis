@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1987 words)
+budget: 2000 (1980 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -226,7 +226,6 @@ structs.go
    246→	if v.Kind() == reflect.Ptr {
    247→		v = v.Elem()
    248→	}
-   249→
       →…
    273→// Field returns a new Field struct that provides several high level functions
    274→// around a single struct field entity. It panics if the field is not found.
@@ -269,7 +268,6 @@ structs.go
    429→	v := reflect.ValueOf(s)
    430→
    431→	// if pointer get the underlying element≤
-   432→	for v.Kind() == reflect.Ptr {
       →…
    443→// Map converts the given struct to a map[string]interface{}. For more info
    444→// refer to Struct types Map() method. It panics if s's kind is not struct.

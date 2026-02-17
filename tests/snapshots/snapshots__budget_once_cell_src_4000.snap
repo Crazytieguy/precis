@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3454 words)
+budget: 4000 (3440 words)
 
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
@@ -239,8 +239,6 @@ imp_std.rs
    261→    where
    262→        T: Sized,
    263→    {
-   264→        // FIXME(strict_provenance_magic): I am magic and should be a compiler intrinsic.
-   265→        //
    281→    pub(crate) fn map_addr<T>(ptr: *mut T, f: impl FnOnce(usize) -> usize) -> *mut T
    282→    where
    283→        T: Sized,

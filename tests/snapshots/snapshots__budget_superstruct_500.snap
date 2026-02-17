@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (569 words)
+budget: 500 (499 words)
 
 Readme.md
     42→### Usage
@@ -38,6 +38,14 @@ docs/guides/01-getting-started.md
     11→And then you can import it:
     12→
     13→```ts
+    14→import { object, string, number } from 'superstruct'
+    15→
+    16→const User = object({
+    17→  id: number(),
+    18→  name: string(),
+    19→})
+    20→```
+    21→
       →…
 docs/readme.md
      7→### Usage
@@ -57,6 +65,8 @@ docs/readme.md
     21→})
     22→
     23→const data = {
+    24→  id: 34,
+    25→  title: 'Hello World',
       →…
 docs/reference/core.md
      3→### `assert`
@@ -108,7 +118,6 @@ docs/summary.md
     24→- [FAQ](./resources/faq.md)
     25→- [Links](./resources/links.md)
 src/error.ts
-     5→export type Failure …
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
@@ -146,15 +155,8 @@ src/struct.ts
    157→export function mask …
    175→export function is …
    185→export function validate …
-   221→export type Context …
-   231→export type Infer …
-   237→export type Describe …
-   243→export type Result …
-   253→export type Coercer …
-   259→export type Validator …
-   266→export type Refiner …
 src/structs/refinements.ts
-    21→function getSize …
+    21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
 src/structs/types.ts
     33→export function array …
    105→export function enums …
@@ -178,24 +180,5 @@ src/utils.ts
     45→export function print …
     58→export function shiftIterator …
     67→export function toFailure …
-   202→export type UnionToIntersection …
-   212→export type Assign …
-   218→export type EnumSchema …
-   227→export type IsMatch …
-   233→export type IsExactMatch …
-   242→export type IsRecord …
-   251→export type IsTuple …
-   267→export type IsUnion …
-   277→export type ObjectSchema …
-   283→export type ObjectType …
-   291→export type OmitBy …
-   300→export type Optionalize …
-   307→export type PartialObjectSchema …
-   315→export type PickBy …
-   324→export type Simplify …
    328→export type If<B extends Boolean, Then, Else> = B extends true ? Then : Else
-   334→export type StructSchema …
-   379→export type TupleSchema …
-   385→export type AnyStruct …
-   394→export type InferStructTuple …
    402→type _InferTuple …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1886 words)
+budget: 2000 (1882 words)
 
 README.md
      1→# color [![](https://github.com/fatih/color/workflows/build/badge.svg)](https://github.com/fatih/color/actions) [![PkgGoDev](https://pkg.go.dev/badge/github.com/fatih/color)](https://pkg.go.dev/github.com/fatih/color)
@@ -246,8 +246,6 @@ color.go
     75→	ResetConcealed
     76→	ResetCrossedOut
     79→var mapResetAttributes map[Attribute]Attribute = map[Attribute]Attribute{
-    80→	Bold:         ResetBold,
-      →…
     91→// Foreground text colors
     92→const (
     93→	FgBlack Attribute = iota + 30

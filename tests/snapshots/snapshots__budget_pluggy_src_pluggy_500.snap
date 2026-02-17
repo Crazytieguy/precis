@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (507 words)
+budget: 500 (487 words)
 
 __init__.py
      1→__all__ = [
@@ -85,14 +85,12 @@ _hooks.py
       →…
    593→class _SubsetHookCaller(HookCaller):
    596→
-   597→    # This class is unusual: in inhertits from `HookCaller` so all of
    618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [
    621→            impl
    622→            for impl in self._orig._hookimpls
-   623→            if impl.plugin not in self._remove_plugins
-   624→        ]
+      →…
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    628→        return self._orig.spec

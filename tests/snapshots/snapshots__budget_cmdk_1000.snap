@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1050 words)
+budget: 1000 (1010 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -106,9 +106,6 @@ cmdk/src/command-score.ts
    150→function formatInput(string) {
    155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
    156→  /* NOTE:
-   157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
-   158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
-   159→   */
       →…
 cmdk/src/index.tsx
    161→const defaultFilter …

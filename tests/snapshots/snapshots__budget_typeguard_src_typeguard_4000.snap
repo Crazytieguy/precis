@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3463 words)
+budget: 4000 (3350 words)
 
 __init__.py
     34→config: TypeCheckConfiguration
@@ -739,22 +739,8 @@ _transformer.py
    467→        if self._memo.is_ignored_name(node):
    468→            return None
    469→
-   470→        return node
-   471→
-   472→    def visit_Call(self, node: Call) -> Any:
-   473→        # Don't recurse into calls
-   474→        return node
-   475→
-   476→    def visit_Constant(self, node: Constant) -> Any:
-   477→        if isinstance(node.value, str):
-   478→            expression = ast.parse(node.value, mode="eval")
-   479→            new_node = self.visit(expression)
-   480→            if new_node:
-   481→                return copy_location(new_node.body, node)
-   482→            else:
-   483→                return None
-   484→
-   485→        return node
+   472→    def visit_Call …
+   476→    def visit_Constant …
    488→class TypeguardTransformer(NodeTransformer):
    489→    def __init__(
    490→        self, target_path: Sequence[str] | None = None, target_lineno: int | None = None
@@ -887,24 +873,7 @@ _transformer.py
    617→            if name.name != "*":
    618→                alias = name.asname or name.name
    619→                self._memo.local_names.add(alias)
-   620→                self._memo.imported_names[alias] = f"{node.module}.{name.name}"
-   621→
-   622→        return node
-   623→
-   624→    def visit_ClassDef(self, node: ClassDef) -> ClassDef | None:
-   625→        self._memo.local_names.add(node.name)
-   626→
-   627→        # Eliminate top level classes not belonging to the target path
-   628→        if (
-   629→            self._target_path is not None
-   630→            and not self._memo.path
-   631→            and node.name != self._target_path[0]
-   632→        ):
-   633→            return None
-   634→
-   635→        with self._use_memo(node):
-   636→            for decorator in node.decorator_list.copy():
-   637→                if self._memo.name_matches(decorator, "typeguard.typechecked"):
+   624→    def visit_ClassDef …
    650→    def visit_FunctionDef …
    913→    def visit_AsyncFunctionDef …
    918→    def visit_Return …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3868 words)
+budget: 4000 (3811 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -365,6 +365,7 @@ bin/semver.js
     47→      argv.unshift(value)
     48→    }
     49→    switch (a) {
+    50→      case '-rv': case '-rev': case '--rev': case '--reverse':
       →…
    132→const failInc = () => {
    133→  console.error('--inc can only be used on a single version with no range')
@@ -384,6 +385,7 @@ bin/semver.js
    149→-r --range <range>
    150→        Print versions that match the specified range.
    151→
+   152→-i --increment [<level>]
       →…
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -411,6 +413,7 @@ classes/comparator.js
     26→
     27→    if (this.semver === ANY) {
     28→      this.value = ''
+    29→    } else {
     36→  parse (comp) {
     37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
     38→    const m = comp.match(r)
@@ -458,6 +461,7 @@ classes/range.js
     27→    }
     28→
     29→    this.options = options
+    30→    this.loose = !!options.loose
     73→  get range () {
     74→    if (this.formatted === undefined) {
     75→      this.formatted = ''
@@ -555,6 +559,7 @@ classes/semver.js
     30→    debug('SemVer', version, options)
     31→    this.options = options
     32→    this.loose = !!options.loose
+    33→    // this isn't actually relevant for versions, but keep it so that we
     81→  format () {
     82→    this.version = `${this.major}.${this.minor}.${this.patch}`
     83→    if (this.prerelease.length) {
@@ -797,65 +802,45 @@ ranges/gtr.js
 ranges/intersects.js
      4→const intersects = (r1, r2, options) => {
      5→  r1 = new Range(r1, options)
-     6→  r2 = new Range(r2, options)
-     7→  return r1.intersects(r2, options)
       →…
 ranges/ltr.js
      5→const ltr = (version, range, options) => outside(version, range, '<', options)
 ranges/max-satisfying.js
      6→const maxSatisfying = (versions, range, options) => {
      7→  let max = null
-     8→  let maxSV = null
-     9→  let rangeObj = null
       →…
 ranges/min-satisfying.js
      5→const minSatisfying = (versions, range, options) => {
      6→  let min = null
-     7→  let minSV = null
-     8→  let rangeObj = null
       →…
 ranges/min-version.js
      7→const minVersion = (range, loose) => {
      8→  range = new Range(range, loose)
-     9→
-    10→  let minver = new SemVer('0.0.0')
       →…
 ranges/outside.js
     13→const outside = (version, range, hilo, options) => {
     14→  version = new SemVer(version, options)
-    15→  range = new Range(range, options)
-    16→
       →…
 ranges/subset.js
     45→const subset = (sub, dom, options = {}) => {
     46→  if (sub === dom) {
-    47→    return true
-    48→  }
       →…
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
     76→const simpleSubset = (sub, dom, options) => {
     77→  if (sub === dom) {
-    78→    return true
-    79→  }
       →…
    226→const higherGT = (a, b, options) => {
    227→  if (!a) {
-   228→    return b
-   229→  }
       →…
    238→const lowerLT = (a, b, options) => {
    239→  if (!a) {
-   240→    return b
-   241→  }
       →…
 ranges/to-comparators.js
      6→const toComparators = (range, options) =>
      7→  new Range(range, options).set
-     8→    .map(comp => comp.map(c => c.value).join(' ').trim().split(' '))
+      →…
 ranges/valid.js
      4→const validRange = (range, options) => {
      5→  try {
-     6→    // Return '*' instead of '' so that truthiness works.
-     7→    // This will throw if it's invalid anyway
       →…

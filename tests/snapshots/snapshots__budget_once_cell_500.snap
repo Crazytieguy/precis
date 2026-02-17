@@ -2,11 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (513 words)
+budget: 500 (495 words)
 
 CHANGELOG.md
      3→## 1.21.3
      4→
+     5→- Outline more initialization in `race`: [#284](https://github.com/matklad/once_cell/pull/284),
+     6→  [#285](https://github.com/matklad/once_cell/pull/285).
       →…
 README.md
      8→# Overview
@@ -39,9 +41,6 @@ src/imp_pl.rs
      8→    state: AtomicU8,
      9→    value: UnsafeCell<Option<T>>,
     10→}
-    12→const INCOMPLETE …
-    13→const RUNNING …
-    14→const COMPLETE …
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
    124→    new_state: u8,
@@ -59,12 +58,6 @@ src/imp_std.rs
     23→    queue: AtomicPtr<Waiter>,
     24→    value: UnsafeCell<Option<T>>,
     25→}
-   125→const INCOMPLETE …
-   126→const RUNNING …
-   127→const COMPLETE …
-   128→const INCOMPLETE_PTR …
-   129→const COMPLETE_PTR …
-   133→const STATE_MASK …
    138→struct Waiter {
    139→    thread: Cell<Option<Thread>>,
    140→    signaled: AtomicBool,

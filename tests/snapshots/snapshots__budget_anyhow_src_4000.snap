@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3823 words)
+budget: 4000 (3725 words)
 
 backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
@@ -21,12 +21,12 @@ backtrace.rs
     54→    ($err:expr) => {
     55→        backtrace!()
     56→    };
-    57→}
+      →…
     64→macro_rules! backtrace_if_absent {
     65→    ($err:expr) => {
     66→        None
     67→    };
-    68→}
+      →…
     70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
     72→    use alloc::borrow::{Cow, ToOwned as _};
@@ -210,7 +210,6 @@ error.rs
     22→    /// The error type must be threadsafe and `'static`, so that the `Error`
     23→    /// will be as well.
     24→    ///
-    25→    /// If the error type does not provide a backtrace, a backtrace will be
       →…
     30→    pub fn new<E>(error: E) -> Self
     31→    where
@@ -221,7 +220,6 @@ error.rs
     40→    /// If the argument implements std::error::Error, prefer `Error::new`
     41→    /// instead which preserves the underlying error's cause chain and
     42→    /// backtrace. If the argument may or may not implement std::error::Error
-    43→    /// now or in the future, use `anyhow!(err)` which handles either way
       →…
     77→    pub fn msg<M>(message: M) -> Self
     78→    where
@@ -232,7 +230,6 @@ error.rs
     86→    /// This is mostly useful for interop with other error libraries.
     87→    ///
     88→    /// # Example
-    89→    ///
       →…
    140→    pub fn from_boxed(boxed_error: Box<dyn StdError + Send + Sync + 'static>) -> Self {
    145→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
@@ -282,7 +279,6 @@ error.rs
    318→    /// For attaching context to a `Result` as it is propagated, the
    319→    /// [`Context`][crate::Context] extension trait may be more convenient than
    320→    /// this function.
-   321→    ///
       →…
    372→    pub fn context<C>(self, context: C) -> Self
    373→    where
@@ -293,7 +289,6 @@ error.rs
    406→    /// In order for the backtrace to be meaningful, one of the two environment
    407→    /// variables `RUST_LIB_BACKTRACE=1` or `RUST_BACKTRACE=1` must be defined
    408→    /// and `RUST_LIB_BACKTRACE` must not be `0`. Backtraces are somewhat
-   409→    /// expensive to capture in Rust, so we don't necessarily want to be
       →…
    432→    pub fn backtrace(&self) -> &impl_backtrace!() {
    436→    /// An iterator of the chain of source errors contained by this Error.
@@ -301,7 +296,6 @@ error.rs
    438→    /// This iterator will visit every error in the cause chain of this error
    439→    /// object, beginning with the error that this error object was created
    440→    /// from.
-   441→    ///
       →…
    459→    pub fn chain(&self) -> Chain {
    463→    /// The lowest level cause of this error &mdash; this error's cause's
@@ -309,7 +303,6 @@ error.rs
    465→    ///
    466→    /// The root cause is the last error in the iterator produced by
    467→    /// [`chain()`][Error::chain].
-   468→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
       →…
    470→    pub fn root_cause(&self) -> &(dyn StdError + 'static) {
    474→    /// Returns true if `E` is the type held by this error object.
@@ -317,7 +310,6 @@ error.rs
    476→    /// For errors with context, this method returns true if `E` matches the
    477→    /// type of the context `C` **or** the type of the error on which the
    478→    /// context has been attached. For details about the interaction between
-   479→    /// context and downcasting, [see here].
       →…
    482→    pub fn is<E>(&self) -> bool
    483→    where
@@ -333,7 +325,6 @@ error.rs
    520→    /// # Example
    521→    ///
    522→    /// ```
-   523→    /// # use anyhow::anyhow;
       →…
    554→    pub fn downcast_ref<E>(&self) -> Option<&E>
    555→    where
@@ -705,7 +696,6 @@ lib.rs
    632→/// This simplifies creation of an `anyhow::Result` in places where type
    633→/// inference cannot deduce the `E` type of the result &mdash; without needing
    634→/// to write `Ok::<_, anyhow::Error>(value)`.
-   635→///
       →…
    650→pub fn Ok<T>(value: T) -> Result<T> {
    655→#[doc(hidden)]
@@ -774,14 +764,8 @@ lib.rs
    718→            }
    719→        }
    720→
-   721→        impl Bool for &bool {
    722→            #[inline]
    723→            fn not(self) -> bool {
-   724→                !*self
-   725→            }
-   726→        }
-   727→    }
-   728→}
 macros.rs
      1→/// Return early with an error.
      2→///
@@ -804,9 +788,6 @@ macros.rs
     71→    ($ensure:item) => {
     72→        /// Return early with an error if a condition is not satisfied.
     73→        ///
-    74→        /// This macro is equivalent to
-    75→        /// <code>if !$cond { return Err([anyhow!($args\...)][anyhow!]); }</code>.
-    76→        ///
       →…
    174→/// Construct an ad-hoc error from a string or existing non-`anyhow` error
    175→/// value.

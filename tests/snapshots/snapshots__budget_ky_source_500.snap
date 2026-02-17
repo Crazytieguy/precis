@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (497 words)
+budget: 500 (475 words)
 
 core/Ky.ts
     33→export class Ky {
@@ -10,25 +10,11 @@ core/Ky.ts
     35→		const ky = new Ky(input, options);
     36→
     37→		const function_ = async (): Promise<Response> => {
-    38→			if (typeof ky.#options.timeout === 'number' && ky.#options.timeout > maxSafeTimeout) {
-    39→				throw new RangeError(`The \`timeout\` option cannot be greater than ${maxSafeTimeout}`);
-    40→			}
-    41→
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
       →…
 core/constants.ts
-     4→export const supportsRequestStreams …
-    34→export const supportsAbortController …
-    35→export const supportsAbortSignal …
-    36→export const supportsResponseStreams …
-    37→export const supportsFormData …
-    39→export const requestMethods …
-    46→export const responseTypes …
-    58→export const maxSafeTimeout …
-    61→export const usualFormBoundarySize …
-    63→export const stop …
     68→export type ForceRetryOptions …
    145→/**
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
@@ -39,11 +25,19 @@ core/constants.ts
    152→/**
    153→Force a retry from an `afterResponse` hook.
    154→
+   155→This allows you to retry a request based on the response content, even if the response has a successful status code. The retry will respect the `retry.limit` option and skip the `shouldRetry` check. The forced retry is observable in `beforeRetry` hooks, where the error will be a `ForceRetryError`.
+   156→
+   157→@param options - Optional configuration for the retry.
+   158→
+   159→@example
+   160→```
+   161→import ky, {isForceRetryError} from 'ky';
+   162→
+   163→const api = ky.extend({
+   164→	hooks: {
+   165→		afterResponse: [
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
-   237→export const kyOptionKeys …
-   256→export const vendorSpecificOptions …
-   265→export const requestOptionsRegistry …
 errors/ForceRetryError.ts
      8→export class ForceRetryError extends Error {
      9→	override name = 'ForceRetryError' as const;
@@ -78,8 +72,6 @@ errors/TimeoutError.ts
       →…
 index.ts
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
-    11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
-      →…
     34→const ky = createInstance();
 types/options.ts
     33→export type KyOptions …
@@ -101,12 +93,6 @@ utils/delay.ts
 utils/merge.ts
     32→function newHookValue …
     47→const appendSearchParameters …
-utils/normalize.ts
-     8→const retryMethods …
-    10→const retryStatusCodes …
-    12→const retryAfterStatusCodes …
-    14→type InternalRetryOptions …
-    16→const defaultRetryOptions …
 utils/timeout.ts
      3→export type TimeoutOptions …
 utils/type-guards.ts

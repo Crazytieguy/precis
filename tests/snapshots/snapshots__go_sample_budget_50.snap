@@ -4,20 +4,12 @@ expression: output
 ---
 sample.go
      7→type Token struct {
-     8→	Kind TokenKind
-      →…
     13→type TokenKind int
     15→const (
     22→type Visitor interface {
-    23→	VisitToken(token *Token)
-      →…
-    28→func Process …
-    32→func helper …
+    28→func Process(input string) ([]Token, error) {
     35→type TokenParser[T any] struct {
-    36→	tokens []Token
-      →…
-    41→func NewTokenParser …
-    46→func (p *TokenParser[T]) Parse …
-    50→func (p *TokenParser[T]) advance …
+    41→func NewTokenParser[T any](source string) *TokenParser[T] {
+    46→func (p *TokenParser[T]) Parse() []Token {
     53→type Span = [2]int
-    60→func (t Token) String …
+    60→func (t Token) String() string {

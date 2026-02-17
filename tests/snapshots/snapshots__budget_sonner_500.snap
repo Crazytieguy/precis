@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (566 words)
+budget: 500 (511 words)
 
 README.md
      5→## Usage
@@ -19,11 +19,7 @@ README.md
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
 src/assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
-     6→  switch (type) {
-      →…
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
-    27→  return (
-      →…
     78→export const CloseIcon = (
     79→  <svg
     80→    xmlns="http://www.w3.org/2000/svg"
@@ -32,15 +28,6 @@ src/assets.tsx
       →…
 src/hooks.tsx
      3→export const useIsDocumentHidden = () => {
-     4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
-      →…
-src/index.tsx
-    45→function cn …
-    49→function getDefaultSwipeDirections …
-    64→const Toast …
-   507→function getDocumentDirection …
-   520→function assignOffset …
-   552→function useSonner …
 src/state.ts
     15→type titleT …
     17→class Observer {
@@ -117,13 +104,10 @@ website/src/components/CodeBlock/index.tsx
      9→const variants = {
     14→const theme = {
     48→export const CodeBlock = ({ children, initialHeight = 0 }: { children: string; initialHeight?: number }) => {
-    49→  const [ref, bounds] = useMeasure();
-      →…
 website/src/components/ExpandModes/index.tsx
      4→export const ExpandModes = ({
      5→  expand,
      6→  setExpand,
-     7→}: {
       →…
 website/src/components/Footer/index.tsx
      5→export const Footer = () => {
@@ -173,12 +157,8 @@ website/src/components/Usage/index.tsx
       →…
 website/src/pages/_app.tsx
      7→export default function Nextra({ Component, pageProps }: AppProps): ReactElement {
-     8→  return (
-      →…
 website/src/pages/index.tsx
     14→export default function Home() {
-    15→  const [expand, setExpand] = React.useState(false);
-      →…
 website/theme.config.jsx
      7→  useNextSeoProps() {
      8→    return {

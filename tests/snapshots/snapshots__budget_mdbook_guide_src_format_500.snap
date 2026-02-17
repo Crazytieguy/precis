@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (536 words)
+budget: 500 (499 words)
 
 README.md
      1→# Format
@@ -26,85 +26,6 @@ configuration/README.md
     10→[Preprocessor]: preprocessors.md
     11→[Renderer]: renderers.md
     12→[Environment Variable]: environment-variables.md
-configuration/environment-variables.md
-     1→# Environment variables
-     2→
-      →…
-configuration/general.md
-     1→# General configuration
-     2→
-      →…
-    31→## Supported configuration options
-    32→
-      →…
-    37→### General metadata
-    38→
-      →…
-    64→### Rust options
-    65→
-      →…
-    85→### Build options
-    86→
-      →…
-configuration/preprocessors.md
-     1→# Configuring Preprocessors
-     2→
-      →…
-    26→## Custom preprocessor configuration
-    27→
-      →…
-    45→## Locking a preprocessor dependency to a renderer
-    46→
-      →…
-    55→## Provide your own command
-    56→
-      →…
-    67→### Optional preprocessors
-    68→
-      →…
-    79→## Require a certain order
-    80→
-      →…
-configuration/renderers.md
-     1→# Configuring Renderers
-     2→
-      →…
-    20→## Output tables
-    21→
-      →…
-    59→### Custom backend commands
-    60→
-      →…
-    71→### Optional backends
-    72→
-      →…
-    84→## HTML renderer options
-    85→
-      →…
-   176→### `[output.html.print]`
-   177→
-      →…
-   191→### `[output.html.fold]`
-   192→
-      →…
-   206→### `[output.html.playground]`
-   207→
-      →…
-   230→### `[output.html.code]`
-   231→
-      →…
-   244→### `[output.html.search]`
-   245→
-      →…
-   286→#### `[output.html.search.chapter]`
-   287→
-      →…
-   300→### `[output.html.redirect]`
-   301→
-      →…
-   325→## Markdown renderer
-   326→
-      →…
 example.rs
      1→fn main() {
      2→    println!("Hello World!");
@@ -153,6 +74,18 @@ theme/README.md
      9→project root. Create a new file with the name of the file you want to override
     10→and now that file will be used instead of the default file.
     11→
+    12→Here are the files you can override:
+    13→
+    14→- **_index.hbs_** is the handlebars template.
+    15→- **_head.hbs_** is appended to the HTML `<head>` section.
+    16→- **_header.hbs_** content is appended on top of every book page.
+    17→- **_css/_** contains the CSS files for styling the book.
+    18→    - **_css/chrome.css_** is for UI elements.
+    19→    - **_css/general.css_** is the base styles.
+    20→    - **_css/print.css_** is the style for printer output.
+    21→    - **_css/variables.css_** contains variables used in other CSS files.
+    22→- **_book.js_** is mostly used to add client side functionality, like hiding /
+    23→  un-hiding the sidebar, changing the theme, ...
       →…
 theme/editor.md
      1→# Editor

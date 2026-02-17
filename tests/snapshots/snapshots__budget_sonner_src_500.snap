@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (554 words)
+budget: 500 (512 words)
 
 assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
@@ -10,16 +10,16 @@ assets.tsx
      7→    case 'success':
      8→      return SuccessIcon;
       →…
-    24→const bars …
+    24→const bars = Array(12).fill(0);
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     27→  return (
     28→    <div className={['sonner-loading-wrapper', className].filter(Boolean).join(' ')} data-visible={visible}>
     29→      <div className="sonner-spinner">
       →…
-    38→const SuccessIcon …
-    48→const WarningIcon …
-    58→const InfoIcon …
-    68→const ErrorIcon …
+    38→const SuccessIcon = (
+    48→const WarningIcon = (
+    58→const InfoIcon = (
+    68→const ErrorIcon = (
     78→export const CloseIcon = (
     79→  <svg
     80→    xmlns="http://www.w3.org/2000/svg"
@@ -40,21 +40,21 @@ hooks.tsx
      6→  React.useEffect(() => {
       →…
 index.tsx
-    22→const VISIBLE_TOASTS_AMOUNT …
-    25→const VIEWPORT_OFFSET …
-    28→const MOBILE_VIEWPORT_OFFSET …
-    31→const TOAST_LIFETIME …
-    34→const TOAST_WIDTH …
-    37→const GAP …
-    40→const SWIPE_THRESHOLD …
-    43→const TIME_BEFORE_UNMOUNT …
+    22→const VISIBLE_TOASTS_AMOUNT = 3;
+    25→const VIEWPORT_OFFSET = '24px';
+    28→const MOBILE_VIEWPORT_OFFSET = '16px';
+    31→const TOAST_LIFETIME = 4000;
+    34→const TOAST_WIDTH = 356;
+    37→const GAP = 14;
+    40→const SWIPE_THRESHOLD = 45;
+    43→const TIME_BEFORE_UNMOUNT = 200;
     45→function cn(...classes: (string | undefined)[]) {
     49→function getDefaultSwipeDirections(position: string): Array<SwipeDirection> {
     64→const Toast = (props: ToastProps) => {
    507→function getDocumentDirection(): ToasterProps['dir'] {
    520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
    552→function useSonner() {
-   593→const Toaster …
+   593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
 state.ts
     15→type titleT …
     17→class Observer {
@@ -62,7 +62,7 @@ state.ts
     19→  toasts: Array<ToastT | ToastToDismiss>;
     20→  dismissedToasts: Set<string | number>;
     21→
-    22→  constructor …
+    22→  constructor() {
     29→  subscribe …
     38→  publish …
     42→  addToast …
@@ -103,66 +103,49 @@ types.ts
     30→export interface ToastClassnames {
     31→  toast?: string;
     32→  title?: string;
-    33→  description?: string;
-    34→  loader?: string;
-    35→  closeButton?: string;
       →…
     48→export interface ToastIcons {
     49→  success?: React.ReactNode;
     50→  info?: React.ReactNode;
-    51→  warning?: React.ReactNode;
-    52→  error?: React.ReactNode;
-    53→  loading?: React.ReactNode;
       →…
     57→export interface Action {
     58→  label: React.ReactNode;
     59→  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-    60→  actionButtonStyle?: React.CSSProperties;
-    61→}
+      →…
     63→export interface ToastT {
     64→  id: number | string;
     65→  toasterId?: string;
-    66→  title?: (() => React.ReactNode) | React.ReactNode;
-    67→  type?: ToastTypes;
-    68→  icon?: React.ReactNode;
       →…
     93→export function isAction …
     97→export type Position …
     98→export interface HeightT {
     99→  height: number;
    100→  toastId: number | string;
-   101→  position: Position;
-   102→}
+      →…
    104→interface ToastOptions {
    105→  className?: string;
    106→  closeButton?: boolean;
    107→  descriptionClassName?: string;
    108→  style?: React.CSSProperties;
+   109→  cancelButtonStyle?: React.CSSProperties;
       →…
    118→type Offset …
    128→export interface ToasterProps {
    129→  id?: string;
    130→  invert?: boolean;
-   131→  theme?: 'light' | 'dark' | 'system';
-   132→  position?: Position;
-   133→  hotkey?: string[];
       →…
    152→export type SwipeDirection …
    154→export interface ToastProps {
    155→  toast: ToastT;
    156→  toasts: ToastT[];
-   157→  index: number;
-   158→  swipeDirections?: SwipeDirection[];
-   159→  expanded: boolean;
       →…
    184→export enum SwipeStateTypes {
    185→  SwipedOut = 'SwipedOut',
    186→  SwipedBack = 'SwipedBack',
-   187→  NotSwiped = 'NotSwiped',
-   188→}
+      →…
    190→export type Theme …
    192→export interface ToastToDismiss {
    193→  id: number | string;
    194→  dismiss: boolean;
-   195→}
+      →…
    197→export type ExternalToast …

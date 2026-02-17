@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1994 words)
+budget: 2000 (1948 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -68,7 +68,6 @@ src/backtrace.rs
     82→    pub(crate) struct Backtrace {
     83→        inner: Inner,
     84→    }
-    85→
     86→    pub(crate) enum BacktraceStatus {
     87→        Unsupported,
     88→        Disabled,
@@ -117,7 +116,6 @@ src/chain.rs
 src/context.rs
      9→mod ext {
     10→    use super::*;
-    11→
     12→    pub trait StdError {
     13→        fn ext_context<C>(self, context: C) -> Error
     14→        where
@@ -345,11 +343,6 @@ src/lib.rs
    295→///   error type does not provide one.
    296→/// - `Error` is represented as a narrow pointer &mdash; exactly one word in
    297→///   size instead of two.
-   298→///
-   299→/// <br>
-   300→///
-   301→/// # Display representations
-   302→///
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -364,11 +357,6 @@ src/lib.rs
    401→/// use anyhow::Error;
    402→/// use std::io;
    403→///
-   404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
-   405→///     for cause in error.chain() {
-   406→///         if let Some(io_error) = cause.downcast_ref::<io::Error>() {
-   407→///             return Some(io_error.kind());
-   408→///         }
       →…
    415→pub struct Chain<'a> {
    416→    state: crate::chain::ChainState<'a>,
@@ -433,11 +421,6 @@ src/lib.rs
    477→/// # Example
    478→///
    479→/// ```
-   480→/// use anyhow::{Context, Result};
-   481→/// use std::fs;
-   482→/// use std::path::PathBuf;
-   483→///
-   484→/// pub struct ImportantThing {
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.
@@ -488,6 +471,8 @@ src/lib.rs
    708→    mod not {
    709→        #[doc(hidden)]
    710→        pub trait Bool {
+   711→            fn not(self) -> bool;
+   712→        }
    716→            fn not …
    723→            fn not …
 src/macros.rs

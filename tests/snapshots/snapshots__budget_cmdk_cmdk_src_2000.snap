@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2030 words)
+budget: 2000 (1996 words)
 
 command-score.ts
     54→function commandScoreInner(
@@ -73,18 +73,6 @@ command-score.ts
    119→      (score < SCORE_TRANSPOSITION &&
    120→        lowerString.charAt(index - 1) === lowerAbbreviation.charAt(abbreviationIndex + 1)) ||
    121→      (lowerAbbreviation.charAt(abbreviationIndex + 1) === lowerAbbreviation.charAt(abbreviationIndex) && // allow duplicate letters. Ref #7428
-   122→        lowerString.charAt(index - 1) !== lowerAbbreviation.charAt(abbreviationIndex))
-   123→    ) {
-   124→      transposedScore = commandScoreInner(
-   125→        string,
-   126→        abbreviation,
-   127→        lowerString,
-   128→        lowerAbbreviation,
-   129→        index + 1,
-   130→        abbreviationIndex + 2,
-   131→        memoizedResults,
-   132→      )
-   133→
       →…
    150→function formatInput(string) {
    151→  // convert all valid space characters to space so they match each other

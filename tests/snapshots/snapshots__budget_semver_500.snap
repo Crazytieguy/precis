@@ -2,12 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (502 words)
+budget: 500 (489 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
-     9→  .map((file) => `./${file}`)
+      →…
 CONTRIBUTING.md
      3→# Contributing
      4→
@@ -166,11 +166,7 @@ internal/lrucache.js
      8→
      9→  get (key) {
     21→  delete (key) {
-    22→    return this.map.delete(key)
-      →…
     25→  set (key, value) {
-    26→    const deleted = this.delete(key)
-      →…
 internal/parse-options.js
      6→const parseOptions …
 internal/re.js

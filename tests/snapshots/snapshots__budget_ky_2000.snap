@@ -2,23 +2,9 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2043 words)
+budget: 2000 (1957 words)
 
 readme.md
-    20→## Benefits over plain `fetch`
-    21→
-      →…
-    33→## Install
-    34→
-      →…
-    39→###### CDN
-    40→
-      →…
-    45→## Usage
-    46→
-      →…
-    85→## API
-    86→
     87→### ky(input, options?)
     88→
     89→The `input` and `options` are the same as [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch), with additional `options` available (see below).
@@ -34,8 +20,26 @@ readme.md
     99→
    100→console.log(user);
    101→```
-      →…
-   122→### ky.get(input, options?)
+   102→
+   103→⌨️ **TypeScript:** Accepts an optional [type parameter](https://www.typescriptlang.org/docs/handbook/2/generics.html), which defaults to [`unknown`](https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown), and is passed through to the return type of `.json()`.
+   104→
+   105→```ts
+   106→import ky from 'ky';
+   107→
+   108→// user1 is unknown
+   109→const user1 = await ky('/api/users/1').json();
+   110→// user2 is a User
+   111→const user2 = await ky<User>('/api/users/2').json();
+   112→// user3 is a User
+   113→const user3 = await ky('/api/users/3').json<User>();
+   114→
+   115→console.log([user1, user2, user3]);
+   116→
+   117→// Get raw bytes (when supported by the runtime)
+   118→const bytes = await ky('/api/file').bytes();
+   119→console.log(bytes instanceof Uint8Array);
+   120→```
+   121→
    123→### ky.post(input, options?)
    124→### ky.put(input, options?)
    125→### ky.patch(input, options?)
@@ -46,107 +50,6 @@ readme.md
    130→
    131→⌨️ **TypeScript:** Accepts an optional type parameter for use with JSON responses (see [`ky()`](#kyinput-options)).
    132→
-   133→#### input
-   134→
-      →…
-   141→#### options
-   142→
-      →…
-   147→##### method
-   148→
-      →…
-   156→##### json
-   157→
-      →…
-   162→##### searchParams
-   163→
-      →…
-   173→##### prefixUrl
-   174→
-      →…
-   197→##### retry
-   198→
-      →…
-   327→##### timeout
-   328→
-      →…
-   335→##### hooks
-   336→
-      →…
-   342→###### hooks.beforeRequest
-   343→
-      →…
-   373→###### hooks.beforeRetry
-   374→
-      →…
-   446→###### hooks.beforeError
-   447→
-      →…
-   485→###### hooks.afterResponse
-   486→
-      →…
-   553→##### throwHttpErrors
-   554→
-      →…
-   566→##### onDownloadProgress
-   567→
-      →…
-   592→##### onUploadProgress
-   593→
-      →…
-   619→##### parseJson
-   620→
-      →…
-   639→##### stringifyJson
-   640→
-      →…
-   664→##### fetch
-   665→
-      →…
-   683→##### context
-   684→
-      →…
-   745→### ky.extend(defaultOptions)
-   746→
-      →…
-   811→### ky.create(defaultOptions)
-   812→
-      →…
-   829→#### defaultOptions
-   830→
-      →…
-   833→### ky.stop
-   834→
-      →…
-   864→### ky.retry(options?)
-   865→
-      →…
-   870→#### options
-   871→
-      →…
-   874→##### delay
-   875→
-      →…
-   882→##### code
-   883→
-      →…
-   895→##### cause
-   896→
-      →…
-   913→##### request
-   914→
-      →…
-   923→#### Example
-   924→
-      →…
-  1000→### HTTPError
-  1001→
-      →…
-  1046→### TimeoutError
-  1047→
-      →…
-  1050→## Tips
-  1051→
   1052→### Sending form data
   1053→
   1054→Sending form data in Ky is identical to `fetch`. Just pass a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to the `body` option. The `Content-Type` header will be automatically set to `multipart/form-data`, overriding any existing `Content-Type` header.
@@ -162,18 +65,19 @@ readme.md
   1064→const response = await ky.post(url, {body: formData});
   1065→```
   1066→
-      →…
-  1080→#### Modifying FormData in hooks
-  1081→
-      →…
-  1109→### Setting a custom `Content-Type`
-  1110→
-      →…
-  1129→### Cancellation
-  1130→
-      →…
-  1156→### Proxy support (Node.js)
-  1157→
+  1067→If you want to send the data in `application/x-www-form-urlencoded` format, you will need to encode the data with [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams). Like `FormData`, this will override any existing `Content-Type` headers.
+  1068→
+  1069→```js
+  1070→import ky from 'ky';
+  1071→
+  1072→// `application/x-www-form-urlencoded`
+  1073→const searchParams = new URLSearchParams();
+  1074→searchParams.set('food', 'fries');
+  1075→searchParams.set('drink', 'icetea');
+  1076→
+  1077→const response = await ky.post(url, {body: searchParams});
+  1078→```
+  1079→
   1158→#### Native proxy support
   1159→
   1160→Node.js 24.5+ supports automatic proxy configuration via environment variables. Set `NODE_USE_ENV_PROXY=1` or use the `--use-env-proxy` CLI flag.
@@ -189,58 +93,14 @@ readme.md
   1170→```
   1171→
   1172→Supported environment variables:
-      →…
-  1177→#### Using ProxyAgent
-  1178→
-      →…
-  1209→### HTTP/2 support (Node.js)
-  1210→
-      →…
-  1249→### Consuming Server-Sent Events (SSE)
-  1250→
-      →…
-  1264→### Extending types
-  1265→
-      →…
-  1292→## FAQ
-  1293→
+  1173→- `HTTP_PROXY` / `http_proxy`: Proxy URL for HTTP requests
+  1174→- `HTTPS_PROXY` / `https_proxy`: Proxy URL for HTTPS requests
+  1175→- `NO_PROXY` / `no_proxy`: Comma-separated list of hosts to bypass the proxy
+  1176→
   1294→#### How do I use this in Node.js?
   1295→
   1296→Node.js 18 and later supports `fetch` natively, so you can just use this package directly.
   1297→
-  1298→#### How do I use this with a web app (React, Vue.js, etc.) that uses server-side rendering (SSR)?
-  1299→
-      →…
-  1302→#### How do I test a browser library that uses this?
-  1303→
-      →…
-  1306→#### How do I use this without a bundler like Webpack?
-  1307→
-      →…
-  1321→#### How is it different from [`got`](https://github.com/sindresorhus/got)
-  1322→
-      →…
-  1325→#### How is it different from [`axios`](https://github.com/axios/axios)?
-  1326→
-      →…
-  1329→#### How is it different from [`r2`](https://github.com/mikeal/r2)?
-  1330→
-      →…
-  1333→#### What does `ky` mean?
-  1334→
-      →…
-  1339→## Browser support
-  1340→
-      →…
-  1343→## Node.js support
-  1344→
-      →…
-  1347→## Related
-  1348→
-      →…
-  1352→## Maintainers
-  1353→
-      →…
 source/core/Ky.ts
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {
@@ -251,6 +111,8 @@ source/core/Ky.ts
     39→				throw new RangeError(`The \`timeout\` option cannot be greater than ${maxSafeTimeout}`);
     40→			}
     41→
+    42→			// Delay the fetch so that body method shortcuts can set the Accept header
+    43→			await Promise.resolve();
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
@@ -489,11 +351,16 @@ source/utils/merge.ts
     86→export const deepMerge …
 source/utils/normalize.ts
      5→export const normalizeRequestMethod …
-     8→const retryMethods …
-    10→const retryStatusCodes …
-    12→const retryAfterStatusCodes …
-    14→type InternalRetryOptions …
-    16→const defaultRetryOptions …
+     8→const retryMethods: HttpMethod[] = ['get', 'put', 'head', 'delete', 'options', 'trace'];
+    10→const retryStatusCodes = [408, 413, 429, 500, 502, 503, 504];
+    12→const retryAfterStatusCodes = [413, 429, 503];
+    14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
+    16→const defaultRetryOptions: InternalRetryOptions = {
+    17→	limit: 2,
+    18→	methods: retryMethods,
+    19→	statusCodes: retryStatusCodes,
+    20→	afterStatusCodes: retryAfterStatusCodes,
+      →…
     28→export const normalizeRetryOptions …
 source/utils/options.ts
      4→export const findUnknownOptions …

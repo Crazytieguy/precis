@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1924 words)
+budget: 2000 (1903 words)
 
 CHANGELOG.md
      3→## 2.4.0
@@ -146,7 +146,7 @@ fuzzer/fuzz.py
     47→        )
     48→        sys.stderr.flush()
     49→        print_err(data)
-    50→        raise Exception("Dicts not equal after roundtrip")
+      →…
     53→def print_err(data):
     54→    codepoints = [hex(ord(x)) for x in data]
     55→    sys.stderr.write(f"Input was {type(data)}:\n{data}\nCodepoints:\n{codepoints}\n")
@@ -242,8 +242,6 @@ src/tomli/_parser.py
    102→            warnings.warn(
    103→                "Free-form arguments for TOMLDecodeError are deprecated. "
    104→                "Please set 'msg' (str), 'doc' (str) and 'pos' (int) arguments only.",
-   105→                DeprecationWarning,
-   106→                stacklevel=2,
       →…
    137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
    138→    """Parse TOML from a binary file object."""
@@ -270,7 +268,6 @@ src/tomli/_parser.py
    239→        self._pending_flags.clear()
    240→
    241→    def unset_all(self, key: Key) -> None:
-   242→        cont = self._flags
    249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
    260→    def is_(self, key: Key, flag: int) -> bool:
    278→class NestedDict:
@@ -293,8 +290,6 @@ src/tomli/_parser.py
    295→                cont = cont[-1]
    296→            if not isinstance(cont, dict):
    297→                raise KeyError("There is no nest behind this key")
-   298→        return cont  # type: ignore[no-any-return]
-   299→
    300→    def append_nest_to_list(self, key: Key) -> None:
    312→class Output:
    313→    def __init__(self) -> None:

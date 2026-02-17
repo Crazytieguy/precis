@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2068 words)
+budget: 2000 (1996 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -201,36 +201,9 @@ cmdk/src/command-score.ts
    161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
    162→}
 cmdk/src/index.tsx
-    10→type Children …
-    11→type DivProps …
-    13→type LoadingProps …
-    23→type EmptyProps …
-    24→type SeparatorProps …
-    28→type DialogProps …
-    37→type ListProps …
-    44→type ItemProps …
-    60→type GroupProps …
-    69→type InputProps …
-    79→type CommandFilter …
-    80→type CommandProps …
-   123→type Context …
-   137→type State …
-   143→type Store …
-   149→type Group …
-   154→const GROUP_SELECTOR …
-   155→const GROUP_ITEMS_SELECTOR …
-   156→const GROUP_HEADING_SELECTOR …
-   157→const ITEM_SELECTOR …
-   158→const VALID_ITEM_SELECTOR …
-   159→const SELECT_EVENT …
-   160→const VALUE_ATTR …
    161→const defaultFilter …
-   163→const CommandContext …
    164→const useCommand …
-   165→const StoreContext …
    166→const useStore …
-   167→const GroupContext …
-   169→const Command …
    659→/**
       →…
    664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
@@ -255,7 +228,6 @@ cmdk/src/index.tsx
    906→/**
       →…
    909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
-   930→const pkg …
    955→/**
    956→ *
    957→ *
@@ -270,10 +242,10 @@ cmdk/src/index.tsx
    966→  while (sibling) {
    967→    if (sibling.matches(selector)) return sibling
    968→    sibling = sibling.nextElementSibling
-      →…
+   969→  }
+   970→}
    972→function findPreviousSibling …
    981→function useAsRef …
-   991→const useLayoutEffect …
    993→function useLazyRef …
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
@@ -289,10 +261,12 @@ cmdk/src/index.tsx
   1049→
   1050→  useLayoutEffect(() => {
   1051→    fns.current.forEach((f) => f())
+  1052→    fns.current = new Map()
+  1053→  }, [s])
+  1054→
       →…
   1061→function renderChildren …
   1071→function SlottableWithNestedChildren …
-  1081→const srOnlyStyles …
 playwright.config.ts
      3→const config: PlaywrightTestConfig = {
      4→  forbidOnly: !!process.env.CI,
@@ -500,6 +474,7 @@ website/pages/index.tsx
    104→  return (
    105→    <button
    106→      className={styles.installButton}
+   107→      onClick={async () => {
       →…
    123→function GitHubButton() {
    137→//////////////////////////////////////////////////////////////////
@@ -531,6 +506,7 @@ website/pages/index.tsx
    265→<Command.Dialog open={open} onOpenChange={setOpen}>
    266→  <Command.Input />
    267→
+   268→  <Command.List>
       →…
    294→//////////////////////////////////////////////////////////////////
    295→

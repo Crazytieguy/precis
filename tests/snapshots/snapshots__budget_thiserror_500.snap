@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (513 words)
+budget: 500 (470 words)
 
 README.md
      1→derive(Error)
@@ -39,10 +39,6 @@ build.rs
     10→const PRIVATE: &str = "\
     11→#[doc(hidden)]
       →…
-    18→fn main …
-    91→fn compile_probe …
-   179→fn rustc_minor_version …
-   190→fn cargo_env_var …
 impl/src/ast.rs
     10→pub enum Input<'a> {
     15→pub struct Struct<'a> {
@@ -50,28 +46,14 @@ impl/src/ast.rs
     29→pub struct Variant<'a> {
     36→pub struct Field<'a> {
     45→pub enum ContainerKind {
-    46→    Struct,
-      →…
 impl/src/attr.rs
     11→pub struct Attrs<'a> {
     21→pub struct Display<'a> {
-    22→    pub original: &'a Attribute,
-      →…
     33→pub struct Source<'a> {
-    34→    pub original: &'a Attribute,
-      →…
     39→pub struct From<'a> {
-    40→    pub original: &'a Attribute,
-      →…
     45→pub struct Transparent<'a> {
-    46→    pub original: &'a Attribute,
-      →…
     51→pub struct Fmt<'a> {
-    52→    pub original: &'a Attribute,
-      →…
     57→pub enum Trait {
-    58→    Debug,
-      →…
 impl/src/fmt.rs
    166→struct FmtArguments {
    171→#[allow(clippy::unnecessary_wraps)]
@@ -93,8 +75,6 @@ impl/src/scan_expr.rs
 impl/src/unraw.rs
     12→pub struct IdentUnraw(Ident);
     82→pub enum MemberUnraw {
-    83→    Named(IdentUnraw),
-      →…
 src/aserror.rs
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
@@ -122,7 +102,7 @@ src/display.rs
     11→    fn as_display(&'a self) -> Self::Target;
     12→}
     18→    type Target = &'a T;
-    20→    fn as_display …
+    20→    fn as_display(&'a self) -> Self::Target {
     26→impl<'a> AsDisplay<'a> for Path {
     27→    type Target = path::Display<'a>;
     29→    #[inline]
@@ -138,14 +118,12 @@ src/display.rs
     58→#[cfg(not(feature = "std"))]
     59→mod placeholder {
     60→    use super::{AsDisplay, Sealed};
-    61→    use core::fmt::{self, Display};
-    62→
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
     67→        type Target = Self;
     69→        #[inline]
     70→        fn as_display(&'a self) -> Self::Target {
-    76→        fn fmt …
+    76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
 src/lib.rs
    281→mod aserror;
    282→mod display;
@@ -164,4 +142,4 @@ src/provide.rs
     19→pub trait Sealed {}
 src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
-     6→    fn fmt …
+     6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {

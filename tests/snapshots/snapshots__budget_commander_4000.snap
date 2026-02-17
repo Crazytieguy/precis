@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4039 words)
+budget: 4000 (3911 words)
 
 CONTRIBUTING.md
      1→# Contributing
@@ -628,12 +628,6 @@ lib/command.js
   1090→  parse(argv, parseOptions) {
   1119→  async parseAsync(argv, parseOptions) {
   1127→  _prepareForParse() {
-  1128→    if (this._savedState === null) {
-  1129→      this.saveStateBeforeParse();
-  1130→    } else {
-  1131→      this.restoreStateBeforeParse();
-  1132→    }
-      →…
   1141→  saveStateBeforeParse() {
   1158→  restoreStateBeforeParse() {
   1183→  _checkForMissingExecutable(executableFile, executableDir, subcommandName) {
@@ -766,52 +760,18 @@ lib/help.js
    535→  displayWidth(str) {
    545→  styleTitle(str) {
    549→  styleUsage(str) {
-   550→    // Usage has lots of parts the user might like to color separately! Assume default usage string which is formed like:
-   551→    //    command subcommand [options] [command] <foo> [bar]
-   552→    return str
-   553→      .split(' ')
-   554→      .map((word) => {
-      →…
    563→  styleCommandDescription(str) {
-   564→    return this.styleDescriptionText(str);
-   565→  }
    566→  styleOptionDescription(str) {
-   567→    return this.styleDescriptionText(str);
-   568→  }
    569→  styleSubcommandDescription(str) {
-   570→    return this.styleDescriptionText(str);
-   571→  }
    572→  styleArgumentDescription(str) {
-   573→    return this.styleDescriptionText(str);
-   574→  }
    575→  styleDescriptionText(str) {
-   576→    return str;
-   577→  }
    578→  styleOptionTerm(str) {
-   579→    return this.styleOptionText(str);
-   580→  }
    581→  styleSubcommandTerm(str) {
-   582→    // This is very like usage with lots of parts! Assume default string which is formed like:
-   583→    //    subcommand [options] <foo> [bar]
-   584→    return str
-   585→      .split(' ')
-   586→      .map((word) => {
-      →…
    594→  styleArgumentTerm(str) {
-   595→    return this.styleArgumentText(str);
-   596→  }
    597→  styleOptionText(str) {
-   598→    return str;
-   599→  }
    600→  styleArgumentText(str) {
-   601→    return str;
-   602→  }
    603→  styleSubcommandText(str) {
-   604→    return str;
-   605→  }
    606→  styleCommandText(str) {
-   607→    return str;
-   608→  }
    618→  padWidth(cmd, helper) {
    633→  preformatted(str) {
    650→  formatItem(term, termWidth, description, helper) {
@@ -915,6 +875,10 @@ lib/suggestSimilar.js
      5→  // Calculating optimal string alignment distance, no substring is edited more than once.
      6→  // (Simple implementation.)
      7→
+     8→  // Quick early exit, return worst case.
+     9→  if (Math.abs(a.length - b.length) > maxDistance)
+    10→    return Math.max(a.length, b.length);
+    11→
       →…
     48→/**
     49→ * Find close matches, restricted to same number of edits.

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1026 words)
+budget: 1000 (1007 words)
 
 src/browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -39,6 +39,9 @@ src/context.ts
     41→  onRelease: () => {},
     42→  onDrag: () => {},
     43→  onNestedDrag: () => {},
+    44→  onNestedOpenChange: () => {},
+    45→  onNestedRelease: () => {},
+    46→  openProp: undefined,
       →…
     69→export const useDrawerContext = () => {
 src/helpers.ts
@@ -123,15 +126,12 @@ src/types.ts
 src/use-composed-refs.ts
      5→type PossibleRef<T> = React.Ref<T> | undefined;
      7→/**
-     8→ * Set a given ref to a given value
       →…
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
     19→/**
-    20→ * A utility to compose multiple refs together
       →…
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
     27→/**
-    28→ * A custom hook that composes multiple refs
       →…
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 src/use-controllable-state.ts
@@ -188,8 +188,6 @@ src/use-prevent-scroll.ts
     50→  'range',
     51→  'color',
     52→  'file',
-    53→  'image',
-    54→  'button',
       →…
     63→/**
     64→ * Prevents scrolling on the document body on mount, and

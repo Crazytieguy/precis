@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3659 words)
+budget: 4000 (3630 words)
 
 core/Ky.ts
     33→export class Ky {
@@ -475,7 +475,6 @@ index.ts
     16→		ky[method] = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options, {method}));
     17→	}
     18→
-    19→	ky.create = (newDefaults?: Partial<Options>) => createInstance(validateAndMerge(newDefaults));
       →…
     34→const ky = createInstance();
 types/ResponsePromise.ts
@@ -592,8 +591,6 @@ utils/body.ts
     62→		transform(currentChunk, controller) {
     63→			controller.enqueue(currentChunk);
     64→
-    65→			if (previousChunk) {
-    66→				transferredBytes += previousChunk.byteLength;
       →…
     90→export const streamResponse = (response: Response, onDownloadProgress: Options['onDownloadProgress']) => {
     91→	if (!response.body) {
@@ -655,8 +652,6 @@ utils/merge.ts
     52→			continue;
     53→		}
     54→
-    55→		if (input instanceof URLSearchParams) {
-    56→			for (const [key, value] of input.entries()) {
       →…
     86→export const deepMerge = <T>(...sources: Array<Partial<T> | undefined>): T => {
     87→	let returnValue: any = {};

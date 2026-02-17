@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1060 words)
+budget: 1000 (989 words)
 
 404.md
      1→# Document not found (404)
@@ -28,7 +28,6 @@ README.md
     17→Version: {{ mdbook-version }}
     18→</div>
     19→
-    20→**mdBook** is a command line tool to create books with Markdown.
       →…
     46→## Contributing
     47→
@@ -63,7 +62,6 @@ cli/README.md
      7→
      8→* [`mdbook init <directory>`](init.md) --- Creates a new book with minimal boilerplate to start with.
      9→* [`mdbook build`](build.md) --- Renders the book.
-    10→* [`mdbook watch`](watch.md) --- Rebuilds the book any time a source file changes.
       →…
 continuous-integration.md
      1→# Running `mdbook` in continuous integration
@@ -92,19 +90,16 @@ for_developers/README.md
      2→
      3→While `mdbook` is mainly used as a command line tool, you can also import the
      4→underlying libraries directly and use those to manage a book. It also has a fairly
-     5→flexible plugin mechanism, allowing you to create your own custom tooling and
       →…
     17→## The build process
     18→
     19→The process of rendering a book project goes through several steps.
     20→
-    21→1. Load the book
       →…
     30→## Using `mdbook` as a library
     31→
     32→The `mdbook` binary is just a wrapper around the underlying mdBook crates,
     33→exposing their functionality as a command-line program. If you want to
-    34→programmatically drive mdBook, you can use the [`mdbook-driver`] crate.
       →…
 for_developers/backends.md
      1→# Alternative backends
@@ -130,11 +125,7 @@ for_developers/backends.md
       →…
 for_developers/mdbook-wordcount/src/main.rs
     12→fn main() {
-    13→    let mut stdin = io::stdin();
-      →…
     40→fn count_words(ch: &Chapter) -> usize {
-    41→    ch.content.split_whitespace().count()
-      →…
     44→#[derive(Debug, Default, Serialize, Deserialize)]
     45→#[serde(default, rename_all = "kebab-case")]
     46→pub struct WordcountConfig {
@@ -219,7 +210,6 @@ format/theme/README.md
      4→render your markdown files and comes with a default theme included in the mdBook
      5→binary.
      6→
-     7→The theme is totally customizable, you can selectively replace every file from
       →…
 format/theme/editor.md
      1→# Editor

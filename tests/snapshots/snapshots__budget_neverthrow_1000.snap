@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1098 words)
+budget: 1000 (999 words)
 
 CHANGELOG.md
      3→## 8.2.0
@@ -32,26 +32,6 @@ CHANGELOG.md
     73→
       →…
 README.md
-     1→# NeverThrow 🙅
-     2→
-      →…
-     5→## Description
-     6→
-      →…
-    19→## Table Of Contents
-    20→
-      →…
-    73→## Installation
-    74→
-      →…
-    79→## Recommended: Use `eslint-plugin-neverthrow`
-    80→
-      →…
-   100→## Top-Level API
-   101→
-      →…
-   139→## API Documentation
-   140→
    141→### Synchronous API (`Result`)
    142→
    143→#### `ok`
@@ -79,65 +59,6 @@ README.md
    165→
    166→---
    167→
-   168→#### `err`
-   169→
-      →…
-   193→#### `Result.isOk` (method)
-   194→
-      →…
-   207→#### `Result.isErr` (method)
-   208→
-      →…
-   221→#### `Result.map` (method)
-   222→
-      →…
-   259→#### `Result.mapErr` (method)
-   260→
-      →…
-   297→#### `Result.unwrapOr` (method)
-   298→
-      →…
-   323→#### `Result.andThen` (method)
-   324→
-      →…
-   384→#### `Result.asyncAndThen` (method)
-   385→
-      →…
-   404→#### `Result.orElse` (method)
-   405→
-      →…
-   445→#### `Result.match` (method)
-   446→
-      →…
-   514→#### `Result.asyncMap` (method)
-   515→
-      →…
-   551→#### `Result.andTee` (method)
-   552→
-      →…
-   598→#### `Result.orTee` (method)
-   599→
-      →…
-   645→#### `Result.andThrough` (method)
-   646→
-      →…
-   692→#### `Result.asyncAndThrough` (method)
-   693→
-      →…
-   728→#### `Result.fromThrowable` (static class method)
-   729→
-      →…
-   761→#### `Result.combine` (static class method)
-   762→
-      →…
-   814→#### `Result.combineWithAllErrors` (static class method)
-   815→
-      →…
-   852→#### `Result.safeUnwrap()`
-   853→
-      →…
-   863→### Asynchronous API (`ResultAsync`)
-   864→
    865→#### `okAsync`
    866→
    867→Constructs an `Ok` variant of `ResultAsync`
@@ -165,56 +86,6 @@ README.md
    889→
    890→---
    891→
-   892→#### `errAsync`
-   893→
-      →…
-   919→#### `ResultAsync.fromThrowable` (static class method)
-   920→
-      →…
-   960→#### `ResultAsync.fromPromise` (static class method)
-   961→
-      →…
-   996→#### `ResultAsync.fromSafePromise` (static class method)
-   997→
-      →…
-  1041→#### `ResultAsync.map` (method)
-  1042→
-      →…
-  1087→#### `ResultAsync.mapErr` (method)
-  1088→
-      →…
-  1142→#### `ResultAsync.unwrapOr` (method)
-  1143→
-      →…
-  1166→#### `ResultAsync.andThen` (method)
-  1167→
-      →…
-  1223→#### `ResultAsync.orElse` (method)
-  1224→
-      →…
-  1241→#### `ResultAsync.match` (method)
-  1242→
-      →…
-  1283→#### `ResultAsync.andTee` (method)
-  1284→
-      →…
-  1330→#### `ResultAsync.orTee` (method)
-  1331→
-      →…
-  1377→#### `ResultAsync.andThrough` (method)
-  1378→
-      →…
-  1425→#### `ResultAsync.combine` (static class method)
-  1426→
-      →…
-  1475→#### `ResultAsync.combineWithAllErrors` (static class method)
-  1476→
-      →…
-  1509→#### `ResultAsync.safeUnwrap()`
-  1510→
-      →…
-  1519→### Utilities
-  1520→
   1521→#### `fromThrowable`
   1522→
   1523→Top level export of `Result.fromThrowable`.
@@ -222,27 +93,6 @@ README.md
   1525→
   1526→[⬆️  Back to top](#toc)
   1527→
-  1528→#### `fromAsyncThrowable`
-  1529→
-      →…
-  1535→#### `fromPromise`
-  1536→
-      →…
-  1542→#### `fromSafePromise`
-  1543→
-      →…
-  1549→#### `safeTry`
-  1550→
-      →…
-  1633→### Testing
-  1634→
-      →…
-  1673→## A note on the Package Name
-  1674→
-      →…
-  1681→### License
-  1682→
-      →…
 src/_internals/error.ts
      3→export interface ErrorConfig {
      4→  withStackTrace: boolean
@@ -261,13 +111,17 @@ src/_internals/error.ts
     19→        value: E
     20→      }
     21→  message: string
-      →…
+    22→  stack: string | undefined
+    23→}
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
     29→  result: Result<T, E>,
     30→  config: ErrorConfig = defaultErrorConfig,
     31→): NeverThrowError<T, E> => {
     32→  const data = result.isOk()
+    33→    ? { type: 'Ok', value: result.value }
+    34→    : { type: 'Err', value: result.error }
+    35→
       →…
 src/_internals/utils.ts
      5→export type ExtractOkTypes …
@@ -289,9 +143,18 @@ src/_internals/utils.ts
     38→  for (const result of resultList) {
     39→    if (result.isErr()) {
     40→      acc = err(result.error)
-      →…
+    41→      break
+    42→    } else {
+    43→      acc.map((list) => list.push(result.value))
+    44→    }
+    45→  }
+    46→  return acc
+    47→}
     54→export const combineResultAsyncList = <T, E>(
     55→  asyncResultList: readonly ResultAsync<T, E>[],
+    56→): ResultAsync<readonly T[], E> =>
+    57→  ResultAsync.fromSafePromise(Promise.all(asyncResultList)).andThen(
+    58→    combineResultList,
       →…
     61→/**
     62→ * Give a list of all the errors we find
@@ -304,9 +167,20 @@ src/_internals/utils.ts
     69→  for (const result of resultList) {
     70→    if (result.isErr() && acc.isErr()) {
     71→      acc.error.push(result.error)
-      →…
+    72→    } else if (result.isErr() && acc.isOk()) {
+    73→      acc = err([result.error])
+    74→    } else if (result.isOk() && acc.isOk()) {
+    75→      acc.value.push(result.value)
+    76→    }
+    77→    // do nothing when result.isOk() && acc.isErr()
+    78→  }
+    79→  return acc
+    80→}
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
     83→  asyncResultList: readonly ResultAsync<T, E>[],
+    84→): ResultAsync<readonly T[], E[]> =>
+    85→  ResultAsync.fromSafePromise(Promise.all(asyncResultList)).andThen(
+    86→    combineResultListWithAllErrors,
       →…
 src/result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
@@ -316,6 +190,10 @@ src/result-async.ts
     26→    this._promise = res
     27→  }
     28→
+    29→  static fromSafePromise<T, E = never>(promise: PromiseLike<T>): ResultAsync<T, E>
+    30→  static fromSafePromise<T, E = never>(promise: Promise<T>): ResultAsync<T, E> {
+    31→    const newPromise = promise.then((value: T) => new Ok<T, E>(value))
+    32→
    210→  /**
       →…
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
@@ -344,6 +222,8 @@ src/result.ts
    140→  isOk(): this is Ok<T, E>
    141→
    142→  /**
+   143→   * Used to check if a `Result` is an `Err`
+   144→   *
       →…
    147→  isErr(): this is Err<T, E>
    149→  /**
@@ -386,6 +266,10 @@ src/result.ts
    316→    return true
    317→  }
    318→
+   319→  isErr(): this is Err<T, E> {
+   320→    return !this.isOk()
+   321→  }
+   322→
    419→export class Err<T, E> implements IResult<T, E> {
    420→  constructor(readonly error: E) {}
    421→
@@ -393,6 +277,10 @@ src/result.ts
    423→    return false
    424→  }
    425→
+   426→  isErr(): this is Err<T, E> {
+   427→    return !this.isOk()
+   428→  }
+   429→
    523→export const fromThrowable …
    530→type Prev …
    590→type CollectResults …

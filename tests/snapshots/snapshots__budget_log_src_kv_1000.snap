@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1020 words)
+budget: 1000 (967 words)
 
 error.rs
      5→pub struct Error {
@@ -192,17 +192,11 @@ value.rs
    603→    /**
    604→    An implementation of `Value` based on a library called `value_bag`.
    605→
-   606→    `value_bag` was written specifically for use in `log`'s value, but was split out when it outgrew
-   607→    the codebase here. It's a general-purpose type-erasure library that handles mapping between
-   608→    more fully-featured serialization frameworks.
    720→#[cfg(not(feature = "value-bag"))]
    721→pub(in crate::kv) mod inner {
    722→    /**
    723→    This is a dependency-free implementation of `Value` when there's no serialization frameworks involved.
    724→    In these simple cases a more fully featured solution like `value_bag` isn't needed, so we avoid pulling it in.
-   725→
-   726→    There are a few things here that need to remain consistent with the `value_bag`-based implementation:
-   727→
    738→    pub enum Inner<'v> {
    739→        None,
    740→        Bool(bool),

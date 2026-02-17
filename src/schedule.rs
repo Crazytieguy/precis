@@ -264,9 +264,14 @@ fn compute_symbol_costs(
 ) -> SymbolCosts {
     let sym_line_0 = sym.line - 1;
 
-    // Name: word count of the formatted name line
+    // Name: word count of the formatted name line, plus 1 for the " …" suffix
+    // that the renderer appends to names-only entries. Including the ellipsis
+    // cost here keeps Names-only rendering in sync with the scheduler's budget.
+    // When Signatures are also included (no ellipsis rendered), the +1 is offset
+    // by a corresponding -1 in signature_words (since signature_words = sig_total
+    // - name_words), so the total Names+Signatures cost remains exact.
     let name_line = format::format_symbol_name(sym, lines);
-    let name_words = format::count_words(&name_line);
+    let name_words = format::count_words(&name_line) + 1;
 
     // Signature: additional words from showing full signature lines (with line numbers)
     // beyond what the name-only line shows.

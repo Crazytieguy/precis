@@ -2,18 +2,20 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (530 words)
+budget: 500 (492 words)
 
 README.md
      1→# humanize
      2→
      3→[![PyPI version](https://img.shields.io/pypi/v/humanize.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/humanize/)
      4→[![Supported Python versions](https://img.shields.io/pypi/pyversions/humanize.svg?logo=python&logoColor=FFE873)](https://pypi.org/project/humanize/)
+     5→[![Documentation Status](https://readthedocs.org/projects/python-humanize/badge/?version=latest)](https://humanize.readthedocs.io/en/latest/?badge=latest)
       →…
     49→## API reference
     50→
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
     52→
+    53→<!-- usage-start -->
       →…
     55→## Installation
     56→
@@ -27,6 +29,7 @@ README.md
     64→
     65→```bash
     66→git clone https://github.com/python-humanize/humanize
+    67→cd humanize
       →…
     71→## Usage
     72→
@@ -50,36 +53,43 @@ README.md
     90→
     91→```pycon
     92→>>> import humanize
+    93→>>> import datetime as dt
       →…
    110→### Precise time delta
    111→
    112→```pycon
    113→>>> import humanize
+   114→>>> import datetime as dt
       →…
    124→#### Smaller units
    125→
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
    127→
+   128→```pycon
       →…
    154→### File size humanization
    155→
    156→```pycon
    157→>>> import humanize
+   158→>>> humanize.naturalsize(1_000_000)
       →…
    166→### Human-readable floating point numbers
    167→
    168→```pycon
    169→>>> import humanize
+   170→>>> humanize.fractional(1/3)
       →…
    182→### Scientific notation
    183→
    184→```pycon
    185→>>> import humanize
+   186→>>> humanize.scientific(0.3)
       →…
    200→## Localization
    201→
    202→How to change locale at runtime:
    203→
+   204→```pycon
       →…
 RELEASING.md
      1→# Release checklist
@@ -152,10 +162,7 @@ src/humanize/__init__.py
     35→    "fractional",
     36→    "intcomma",
     37→    "intword",
-    38→    "metric",
       →…
-src/humanize/filesize.py
-    36→def naturalsize …
 src/humanize/i18n.py
      8→TYPE_CHECKING = False
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
@@ -171,25 +178,11 @@ src/humanize/i18n.py
     31→_DECIMAL_SEPARATOR = {
     32→    "de_DE": ",",
       →…
-    51→def get_translation …
-    58→def activate …
-    96→def deactivate …
-   183→def thousands_separator …
-   196→def decimal_separator …
 src/humanize/lists.py
      5→TYPE_CHECKING = False
      9→__all__ = ["natural_list"]
-    12→def natural_list …
 src/humanize/number.py
     12→TYPE_CHECKING = False
-    34→def ordinal …
-   110→def intcomma …
-   195→def intword …
-   269→def apnumber …
-   321→def fractional …
-   385→def scientific …
-   454→def clamp …
-   531→def metric …
 src/humanize/time.py
     15→TYPE_CHECKING = False
     21→__all__ = [
@@ -214,8 +207,3 @@ src/humanize/time.py
     42→        if self.__class__ is other.__class__:
     43→            return self.value < other.value
     44→        return NotImplemented
-    95→def naturaldelta …
-   249→def naturaltime …
-   311→def naturalday …
-   343→def naturaldate …
-   451→def precisedelta …

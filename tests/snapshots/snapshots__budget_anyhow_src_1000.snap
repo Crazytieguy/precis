@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 words)
+budget: 1000 (976 words)
 
 backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
@@ -194,12 +194,6 @@ lib.rs
    445→/// #     use super::Deserialize;
    446→/// #     use std::io;
    447→/// #
-   448→/// #     pub fn from_str<T: Deserialize>(json: &str) -> io::Result<T> {
-   449→/// #         unimplemented!()
-   450→/// #     }
-   451→/// # }
-   452→/// #
-   453→/// # #[derive(Debug)]
       →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    470→/// Provides the `context` method for `Result`.

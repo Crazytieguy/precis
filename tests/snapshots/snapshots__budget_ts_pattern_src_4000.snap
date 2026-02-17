@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4033 words)
+budget: 4000 (3962 words)
 
 errors.ts
      1→/**
@@ -304,16 +304,7 @@ patterns.ts
    203→              selector(key, undefined)
    204→            );
    205→            return { matched: true, selections };
-   206→          }
-   207→          const matched = matchPattern(pattern, value, selector);
-   208→          return { matched, selections };
-   209→        },
-   210→        getSelectionKeys: () => getSelectionKeys(pattern),
-   211→        matcherType: 'optional',
-   212→      };
-   213→    },
-   214→  });
-   215→}
+      →…
    217→type UnwrapArray<xs> = xs extends readonly (infer x)[] ? x : never;
    219→type UnwrapSet<xs> = xs extends Set<infer x> ? x : never;
    221→type UnwrapMapKey<xs> = xs extends Map<infer k, any> ? k : never;
@@ -385,11 +376,7 @@ patterns.ts
    550→        return { matched, selections };
    551→      },
    552→      getSelectionKeys: () =>
-   553→        flatMap(patterns as readonly UnknownValuePattern[], getSelectionKeys),
-   554→      matcherType: 'and',
-   555→    }),
-   556→  });
-   557→}
+      →…
    559→/**
    560→ * `P.union(...patterns)` returns a pattern which matches
    561→ * if **at least one** of the patterns provided in parameter match the input.
@@ -420,15 +407,7 @@ patterns.ts
    586→        ).forEach((key) => selector(key, undefined));
    587→        const matched = (patterns as readonly UnknownValuePattern[]).some((p) =>
    588→          matchPattern(p, value, selector)
-   589→        );
-   590→        return { matched, selections };
-   591→      },
-   592→      getSelectionKeys: () =>
-   593→        flatMap(patterns as readonly UnknownValuePattern[], getSelectionKeys),
-   594→      matcherType: 'or',
-   595→    }),
-   596→  });
-   597→}
+      →…
    599→/**
    600→ * `P.not(pattern)` returns a pattern which matches if the sub pattern
    601→ * doesn't match.

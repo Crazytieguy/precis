@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2015 words)
+budget: 2000 (1922 words)
 
 backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
@@ -38,6 +38,7 @@ backtrace.rs
     82→    pub(crate) struct Backtrace {
     83→        inner: Inner,
     84→    }
+    85→
     86→    pub(crate) enum BacktraceStatus {
     87→        Unsupported,
     88→        Disabled,
@@ -58,17 +59,10 @@ backtrace.rs
    116→    enum BytesOrWide {
    117→        Bytes(Vec<u8>),
       →…
-   192→        fn enabled …
    211→        pub(crate) fn capture …
-   222→        fn create …
    311→    struct LazilyResolvedCapture {
    312→        sync: Once,
       →…
-   317→        fn new …
-   324→        fn force …
-   344→        fn resolve …
-   370→    fn output_filename …
-   407→fn _assert_send_sync …
 chain.rs
     10→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
     11→pub(crate) struct Chain<'a> {
@@ -116,14 +110,7 @@ context.rs
     79→///     # unimplemented!()
     80→/// }
     81→///
-    82→/// fn demo() -> Result<()> {
-    83→///     let t = maybe_get().context("there is no T")?;
-    84→///     # const IGNORE: &str = stringify! {
-    85→///     ...
-    86→///     # };
-    87→///     # unimplemented!()
-    88→/// }
-    89→/// ```
+      →…
     90→impl<T> Context<T, Infallible> for Option<T> {
    147→    fn provide …
    161→    fn provide …
@@ -148,9 +135,6 @@ ensure.rs
     35→struct Buf {
     36→    bytes: [MaybeUninit<u8>; 40],
       →…
-    41→    fn new …
-    48→    fn as_str …
-    81→fn render …
    103→#[doc(hidden)]
    104→#[macro_export]
    105→macro_rules! __parse_ensure {
@@ -204,9 +188,6 @@ error.rs
    740→struct ErrorVTable {
    741→    object_drop: unsafe fn(Own<ErrorImpl>),
       →…
-   757→unsafe fn object_drop …
-   765→unsafe fn object_drop_front …
-   775→unsafe fn object_ref …
    787→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    788→unsafe fn object_boxed<E>(e: Own<ErrorImpl>) -> Box<dyn StdError + Send + Sync + 'static>
    789→where
@@ -217,8 +198,6 @@ error.rs
    800→where
    801→    E: StdError + Send + Sync + 'static,
    802→{
-   809→unsafe fn object_downcast …
-   832→fn no_backtrace …
    838→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    839→unsafe fn context_downcast<C, E>(e: Ref<ErrorImpl>, target: TypeId) -> Option<Ref<()>>
    840→where
@@ -231,8 +210,6 @@ error.rs
    861→    C: 'static,
    862→    E: 'static,
    863→{
-   876→unsafe fn context_chain_downcast …
-   892→unsafe fn context_chain_drop_rest …
    919→#[allow(clippy::unnecessary_wraps)]
    920→unsafe fn context_backtrace<C>(e: Ref<ErrorImpl>) -> Option<&Backtrace>
    921→where
@@ -246,13 +223,11 @@ error.rs
    938→    // different alignment.
    939→    _object: E,
    940→}
-   944→unsafe fn vtable …
    951→#[repr(C)]
    952→pub(crate) struct ContextError<C, E> {
    953→    pub context: C,
    954→    pub error: E,
    955→}
-   958→    fn erase …
    974→    pub(crate) unsafe fn error_mut …
    985→    pub(crate) unsafe fn backtrace …
   1001→    #[cfg(error_generic_member_access)]
@@ -490,6 +465,7 @@ macros.rs
      2→///
      3→/// This macro is equivalent to
      4→/// <code>return Err([anyhow!($args\...)][anyhow!])</code>.
+     5→///
       →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
@@ -499,13 +475,12 @@ macros.rs
    175→/// value.
    176→///
    177→/// This evaluates to an [`Error`][crate::Error]. It can take either just a
+   178→/// string, or a format string with arguments. It also can take any custom type
       →…
    204→macro_rules! anyhow {
    228→#[doc(hidden)]
    229→#[macro_export]
    230→macro_rules! __anyhow {
-nightly.rs
-    45→fn request_ref …
 ptr.rs
      5→#[repr(transparent)]
      6→pub struct Own<T>

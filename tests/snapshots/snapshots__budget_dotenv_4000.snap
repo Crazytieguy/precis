@@ -2,227 +2,8 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4078 words)
+budget: 4000 (3955 words)
 
-CHANGELOG.md
-     7→## [17.3.1](https://github.com/motdotla/dotenv/compare/v17.3.0...v17.3.1) (2026-02-12)
-     8→
-     9→### Changed
-    10→
-      →…
-    15→### Added
-    16→
-      →…
-    25→### Changed
-    26→
-      →…
-    32→### Changed
-    33→
-      →…
-    38→### Added
-    39→
-      →…
-    44→### Changed
-    45→
-      →…
-    50→### Added
-    51→
-      →…
-    76→### Added
-    77→
-      →…
-    98→### Changed
-    99→
-      →…
-   104→### Changed
-   105→
-      →…
-   110→### Changed
-   111→
-      →…
-   118→### Added
-   119→
-      →…
-   126→### Added
-   127→
-      →…
-   142→### Changed
-   143→
-      →…
-   148→### Changed
-   149→
-      →…
-   155→### Changed
-   156→
-      →…
-   161→### Changed
-   162→
-      →…
-   167→### Changed
-   168→
-      →…
-   173→### Changed
-   174→
-      →…
-   188→### Added
-   189→
-      →…
-   199→### Added
-   200→
-      →…
-   205→### Added
-   206→
-      →…
-   211→### Added
-   212→
-      →…
-   218→### Added
-   219→
-      →…
-   224→### Removed
-   225→
-      →…
-   230→### Changed
-   231→
-      →…
-   236→### Added
-   237→
-      →…
-   246→### Added
-   247→
-      →…
-   262→### Changed
-   263→
-      →…
-   268→### Added
-   269→
-      →…
-   274→### Changed
-   275→
-      →…
-   281→### Added
-   282→
-      →…
-   289→### Changed
-   290→
-      →…
-   313→### Changed
-   314→
-      →…
-   319→### Changed
-   320→
-      →…
-   325→### Added
-   326→
-      →…
-   331→### Added
-   332→
-      →…
-   338→### Added
-   339→
-      →…
-   344→### Added
-   345→
-      →…
-   350→### Added
-   351→
-      →…
-   356→### Added
-   357→
-      →…
-   362→### Changed
-   363→
-      →…
-   368→### Added
-   369→
-      →…
-   374→### Changed
-   375→
-      →…
-   381→### Changed
-   382→
-      →…
-   387→### Changed
-   388→
-      →…
-   393→### Changed
-   394→
-      →…
-   399→### Removed
-   400→
-      →…
-   411→### Changed
-   412→
-      →…
-   418→### Added
-   419→
-      →…
-   426→### Changed
-   427→
-      →…
-   432→### Changed
-   433→
-      →…
-   438→### Changed
-   439→
-      →…
-   444→### Added
-   445→
-      →…
-   450→### Changed
-   451→
-      →…
-   456→### Added
-   457→
-      →…
-   462→### Changed
-   463→
-      →…
-   468→### Changed
-   469→
-      →…
-   474→### Added
-   475→
-      →…
-   480→### Changed
-   481→
-      →…
-   486→### Changed
-   487→
-      →…
-   492→### Fixed
-   493→
-      →…
-   502→### Added
-   503→
-      →…
-   508→### Added
-   509→
-      →…
-   514→### Changed
-   515→
-      →…
-   520→### Added
-   521→
-      →…
-   538→### Changed
-   539→
-      →…
-   548→### Added
-   549→
-      →…
-   569→### Added
-   570→
-      →…
-   587→### Added
-   588→
-      →…
-   601→### Added
-   602→
-      →…
-   607→### Removed
-   608→
-      →…
 CONTRIBUTING.md
      1→# Contributing
      2→
@@ -340,6 +121,29 @@ README-es.md
     88→</details>
     89→<details><summary>Multiline Values</summary><br>
     90→
+    91→If you need multiline variables, for example private keys, those are now supported (`>= v15.0.0`) with line breaks:
+    92→
+    93→```ini
+    94→PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----
+    95→...
+    96→Kh9NV...
+    97→...
+    98→-----END RSA PRIVATE KEY-----"
+    99→```
+   100→
+   101→Alternatively, you can double quote strings and use the `\n` character:
+   102→
+   103→```ini
+   104→PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----\nKh9NV...\n-----END RSA PRIVATE KEY-----\n"
+   105→```
+   106→
+   107→</details>
+   108→<details><summary>Comments</summary><br>
+   109→
+   110→Comments may be added to your file on their own line or inline:
+   111→
+   112→```ini
+   113→# This is a comment
       →…
    319→## Agentes
    320→
@@ -431,6 +235,29 @@ README-es.md
    406→
    407→    this.apiKey = apiKey
    408→  }
+   409→}
+   410→
+   411→export default new Client(process.env.API_KEY)
+   412→```
+   413→`index.mjs`:
+   414→```js
+   415→// Note: this is INCORRECT and will not work
+   416→import * as dotenv from 'dotenv'
+   417→dotenv.config()
+   418→
+   419→import errorReporter from './errorReporter.mjs' // process.env.API_KEY will be blank!
+   420→```
+   421→
+   422→`process.env.API_KEY` will be blank.
+   423→
+   424→Instead, `index.mjs` should be written as..
+   425→
+   426→```js
+   427→import 'dotenv/config'
+   428→
+   429→import errorReporter from './errorReporter.mjs'
+   430→```
+   431→
       →…
    579→## Docs
    580→
@@ -1168,6 +995,9 @@ lib/main.js
     14→  '🤖 agentic secret storage: https://dotenvx.com/as2',
     15→  '⚡️ secrets for agents: https://dotenvx.com/as2',
     16→  '🛡️ auth for agents: https://vestauth.com',
+    17→  '🛠️  run anywhere with `dotenvx run -- yourcommand`',
+    18→  '⚙️  specify custom .env file path with { path: \'/custom/path/.env\' }',
+    19→  '⚙️  enable debug logging with { debug: true }',
       →…
     27→function _getRandomTip () {
     31→function parseBoolean (value) {
@@ -1195,4 +1025,5 @@ lib/main.js
    417→  config,
    418→  decrypt,
    419→  parse,
-      →…
+   420→  populate
+   421→}

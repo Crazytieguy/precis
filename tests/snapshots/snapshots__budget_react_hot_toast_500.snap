@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (535 words)
+budget: 500 (502 words)
 
 README.md
     28→## Features
@@ -87,17 +87,11 @@ site/next.config.mjs
     24→  async rewrites() {
     25→    return [
     26→      {
-    27→        source: '/bee.js',
       →…
 site/pages/_app.tsx
     12→const components = {
-    71→function MyApp …
 site/pages/index.tsx
     22→const version = packageInfo.version;
-    24→const Feature …
-    31→const Step …
-    49→const Steps …
-    88→const Features …
    102→export default function Home() {
    103→  const [position, setPosition] = useState<ToastPosition>('top-center');
    104→  const [reverse, setReverse] = useState(false);
@@ -125,14 +119,11 @@ src/components/loader.tsx
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
 src/components/toast-bar.tsx
-     8→const enterAnimation …
-    13→const exitAnimation …
     47→interface ToastBarProps {
     48→  toast: Toast;
     49→  position?: ToastPosition;
     50→  style?: React.CSSProperties;
       →…
-    57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 src/components/toast-icon.tsx
     32→export const AnimatedIconWrapper = styled('div')`
@@ -145,8 +136,6 @@ src/components/toast-icon.tsx
     48→  toast: Toast;
       →…
 src/components/toaster.tsx
-    15→const ToastWrapper …
-    47→const getPositionStyle …
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
       →…

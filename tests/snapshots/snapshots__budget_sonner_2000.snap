@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2017 words)
+budget: 2000 (2010 words)
 
 README.md
      5→## Usage
@@ -366,8 +366,6 @@ website/src/components/CodeBlock/index.tsx
     51→
     52→  const onCopy = React.useCallback(() => {
     53→    copy(children);
-    54→    setCopying((c) => c + 1);
-    55→    setTimeout(() => {
       →…
 website/src/components/ExpandModes/index.tsx
      4→export const ExpandModes = ({
@@ -526,6 +524,7 @@ website/src/pages/index.tsx
     29→        duration={Infinity}
     30→      />
     31→      <main className="container">
+    32→        <Hero />
       →…
 website/theme.config.jsx
      7→  useNextSeoProps() {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1964 words)
+budget: 2000 (1880 words)
 
 _internals/error.ts
      3→export interface ErrorConfig {
@@ -150,7 +150,6 @@ result-async.ts
    212→   *
    213→   * You can use `safeTry` without this method.
    214→   * @example
-   215→   * ```typescript
       →…
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
    227→  then …
@@ -227,7 +226,6 @@ result.ts
    151→   * by applying a function to a contained `Ok` value, leaving an `Err` value
    152→   * untouched.
    153→   *
-   154→   * @param f The function to apply an `OK` value
       →…
    157→  map<A>(f: (t: T) => A): Result<A, E>
    159→  /**
@@ -235,7 +233,6 @@ result.ts
    161→   * contained `Err` value, leaving an `Ok` value untouched.
    162→   *
    163→   * This function can be used to pass through a successful result while
-   164→   * handling an error.
       →…
    168→  mapErr<U>(f: (e: E) => U): Result<T, U>
    183→  andThen …
@@ -244,7 +241,6 @@ result.ts
    187→   * effect functions but still returns the same current value as the result.
    188→   *
    189→   * This is useful when you want to pass the current result to your side-track
-   190→   * work such as logging but want to continue main-track work after that.
       →…
    195→  andTee(f: (t: T) => unknown): Result<T, E>
    197→  /**
@@ -252,7 +248,6 @@ result.ts
    199→   * effect functions but still returns the same `Err` value as the result.
    200→   *
    201→   * This is useful when you want to pass the current `Err` value to your side-track
-   202→   * work such as logging but want to continue error-track work after that.
       →…
    207→  orTee(f: (t: E) => unknown): Result<T, E>
    219→  andThrough …
@@ -262,7 +257,6 @@ result.ts
    237→   *
    238→   * This is useful for when you need to do a subsequent async computation using
    239→   * the inner `T` value, but that computation might fail. Must return a ResultAsync
-   240→   *
       →…
    244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
    246→  /**
@@ -270,7 +264,6 @@ result.ts
    248→   * by applying an async function to a contained `Ok` value, leaving an `Err`
    249→   * value untouched.
    250→   *
-   251→   * @param f An async function to apply an `OK` value
       →…
    253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
    255→  /**
@@ -284,7 +277,6 @@ result.ts
    264→   * Given 2 functions (one for the `Ok` variant and one for the `Err` variant)
    265→   * execute the function that matches the `Result` variant.
    266→   *
-   267→   * Match callbacks do not necessitate to return a `Result`, however you can
       →…
    276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
    278→  /**
@@ -292,7 +284,6 @@ result.ts
    280→   *
    281→   * You can use `safeTry` without this method.
    282→   * @example
-   283→   * ```typescript
       →…
    290→  safeUnwrap(): Generator<Err<never, E>, T>
    292→  /**
@@ -300,7 +291,6 @@ result.ts
    294→   *
    295→   * Takes a `Result<T, E>` and returns a `T` when the result is an `Ok`, otherwise it throws a custom object.
    296→   *
-   297→   * @param config
       →…
    299→  _unsafeUnwrap(config?: ErrorConfig): T
    301→  /**
@@ -308,7 +298,6 @@ result.ts
    303→   *
    304→   * takes a `Result<T, E>` and returns a `E` when the result is an `Err`,
    305→   * otherwise it throws a custom object.
-   306→   *
       →…
    309→  _unsafeUnwrapErr(config?: ErrorConfig): E
    312→export class Ok<T, E> implements IResult<T, E> {

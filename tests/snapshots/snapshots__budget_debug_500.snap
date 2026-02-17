@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (523 words)
+budget: 500 (498 words)
 
 README.md
      1→# debug
@@ -95,8 +95,6 @@ src/browser.js
    116→	// NB: In an Electron preload script, document will be defined but not fully
    117→	// initialized. Since we know we're in Chrome, we'll just detect this case
    118→	// explicitly
-   119→	if (typeof window !== 'undefined' && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
-   120→		return true;
       →…
    143→/**
    144→ * Colorize log arguments if enabled.
@@ -155,8 +153,7 @@ src/node.js
    183→	if (exports.inspectOpts.hideDate) {
    184→		return '';
    185→	}
-   186→	return new Date().toISOString() + ' ';
-   187→}
+      →…
    189→/**
    190→ * Invokes `util.formatWithOptions()` with the specified arguments and writes to stderr.
    191→ */

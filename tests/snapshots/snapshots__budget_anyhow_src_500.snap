@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (504 words)
+budget: 500 (488 words)
 
 backtrace.rs
      8→pub(crate) enum Backtrace {}
@@ -30,8 +30,6 @@ chain.rs
     16→pub(crate) enum ChainState<'a> {
     36→    type Item = &'a (dyn StdError + 'static);
 context.rs
-     9→mod ext {
-    10→    use super::*;
     12→    pub trait StdError {
     13→        fn ext_context<C>(self, context: C) -> Error
     14→        where
@@ -69,17 +67,8 @@ kind.rs
 lib.rs
    251→#[macro_use]
    252→mod backtrace;
-   253→mod chain;
-   254→mod context;
-   255→mod ensure;
-   256→mod error;
-   257→mod fmt;
-   258→mod kind;
-   259→mod macros;
    260→#[cfg(error_generic_member_access)]
    261→mod nightly;
-   262→mod ptr;
-   263→mod wrapper;
    278→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
@@ -113,6 +102,9 @@ lib.rs
    659→    use alloc::fmt;
    660→    use core::fmt::Arguments;
    661→
+   662→    #[doc(hidden)]
+   663→    pub use crate::ensure::{BothDebug, NotBothDebug};
+   664→    #[doc(hidden)]
    671→    #[doc(hidden)]
    672→    pub mod kind {
    673→        #[doc(hidden)]
@@ -120,9 +112,8 @@ lib.rs
    675→
    676→        #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    677→        #[doc(hidden)]
-      →…
-   708→    mod not {
-   709→        #[doc(hidden)]
+   678→        pub use crate::kind::BoxedKind;
+   679→    }
    710→        pub trait Bool {
 macros.rs
     58→macro_rules! bail {

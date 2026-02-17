@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2015 words)
+budget: 2000 (1993 words)
 
 README.md
      1→# debug
@@ -344,9 +344,6 @@ src/browser.js
    129→
    130→	// Is webkit? http://stackoverflow.com/a/16459606/376773
    131→	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-   132→	// eslint-disable-next-line no-return-assign
-   133→	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
-   134→		// Is firebug? http://stackoverflow.com/a/398120/376773
       →…
    143→/**
    144→ * Colorize log arguments if enabled.

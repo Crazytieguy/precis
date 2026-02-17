@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1971 words)
+budget: 2000 (1950 words)
 
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
@@ -314,8 +314,6 @@ lib.rs
   1400→    ///
   1401→    /// ```compile_fail
   1402→    /// struct S(*mut ());
-  1403→    /// unsafe impl Sync for S {}
-  1404→    ///
       →…
   1408→    fn _dummy() {}
   1411→#[cfg(feature = "race")]
@@ -378,8 +376,6 @@ race.rs
    339→    ///     let mut r = OnceRef::new();
    340→    ///     r.set(&y).unwrap();
    341→    ///     core::mem::swap(&mut l, &mut r);
-   342→    /// }
-   343→    ///
       →…
    347→    fn _dummy() {}
    353→#[cfg(feature = "alloc")]
@@ -395,7 +391,6 @@ race.rs
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
    365→
-   366→    impl<T> core::fmt::Debug for OnceBox<T> {
    367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
    373→        fn default() -> Self {
    379→        fn drop(&mut self) {

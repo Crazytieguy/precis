@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2031 words)
+budget: 2000 (1976 words)
 
 CONTRIBUTING.md
      1→# Contributing
@@ -176,9 +176,6 @@ README.md
     18→
     19→Create a `.env` file in the root of your project:
     20→
-    21→```ini
-    22→# .env
-    23→S3_BUCKET="YOURS3BUCKET"
       →…
     39→## Advanced
     40→
@@ -190,9 +187,6 @@ README.md
     46→import 'dotenv/config'
     47→```
     48→
-    49→ES6 import if you need to set config options:
-    50→
-    51→```javascript
       →…
    319→## Agents
    320→
@@ -204,8 +198,7 @@ README.md
    326→>
    327→> It is backed by [Vestauth](https://github.com/vestauth/vestauth), the trusted, pioneering auth layer for agents—giving each agent a cryptographic identity so requests are signed with private keys and verified with public keys. No shared secrets to leak.
    328→>
-   329→> It's what I'm using now. - [motdotla](https://mot.la)
-   330→
+      →…
    331→### Quickstart
    332→
    333→Install vestauth and initialize your agent.
@@ -216,9 +209,6 @@ README.md
    338→vestauth agent init
    339→```
    340→
-   341→Your agent `set`s secrets with a simple `curl` endpoint:
-   342→
-   343→```bash
       →…
    357→## FAQ
    358→
@@ -230,9 +220,6 @@ README.md
    364→
    365→</details>
    366→<details><summary>What about variable expansion?</summary><br/>
-   367→
-   368→Use [dotenvx](https://github.com/dotenvx/dotenvx).
-   369→
       →…
    579→## Docs
    580→
@@ -252,9 +239,6 @@ README.md
    594→const result = dotenv.config()
    595→
    596→if (result.error) {
-   597→  throw result.error
-   598→}
-   599→
       →…
    605→#### Options
    606→
@@ -286,9 +270,6 @@ README.md
    632→// index.js
    633→require('dotenv').config({ quiet: false }) // change to true to suppress
    634→console.log(`Hello ${process.env.HELLO}`)
-   635→```
-   636→
-   637→```ini
       →…
    648→##### encoding
    649→
@@ -330,9 +311,6 @@ README.md
    685→const myObject = {}
    686→require('dotenv').config({ processEnv: myObject })
    687→
-   688→console.log(myObject) // values from .env
-   689→console.log(process.env) // this was not changed or written to
-   690→```
       →…
    692→### Parse
    693→
@@ -344,9 +322,7 @@ README.md
    699→const dotenv = require('dotenv')
    700→const buf = Buffer.from('BASIC=basic')
    701→const config = dotenv.parse(buf) // will return an object
-   702→console.log(typeof config, config) // object { BASIC : 'basic' }
-   703→```
-   704→
+      →…
    705→#### Options
    706→
    707→##### debug
@@ -373,9 +349,6 @@ README.md
    728→const dotenv = require('dotenv')
    729→const parsed = { HELLO: 'world' }
    730→
-   731→dotenv.populate(process.env, parsed)
-   732→
-   733→console.log(process.env.HELLO) // world
       →…
    748→#### options
    749→
@@ -519,6 +492,8 @@ lib/main.js
     14→  '🤖 agentic secret storage: https://dotenvx.com/as2',
     15→  '⚡️ secrets for agents: https://dotenvx.com/as2',
     16→  '🛡️ auth for agents: https://vestauth.com',
+    17→  '🛠️  run anywhere with `dotenvx run -- yourcommand`',
+    18→  '⚙️  specify custom .env file path with { path: \'/custom/path/.env\' }',
       →…
     27→function _getRandomTip () {
     31→function parseBoolean (value) {
@@ -546,4 +521,5 @@ lib/main.js
    417→  config,
    418→  decrypt,
    419→  parse,
-      →…
+   420→  populate
+   421→}

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4134 words)
+budget: 4000 (3981 words)
 
 404.md
      1→# Document not found (404)
@@ -92,7 +92,6 @@ SUMMARY.md
     22→    - [SUMMARY.md](format/summary.md)
     23→        - [Draft chapter]()
     24→    - [Configuration](format/configuration/README.md)
-    25→        - [General](format/configuration/general.md)
       →…
 cli/README.md
      1→# Command-line tool
@@ -244,7 +243,6 @@ continuous-integration.md
     28→Some considerations for this approach:
     29→
     30→* This is relatively fast, and does not necessarily require dealing with caching.
-    31→* This does not require installing Rust.
       →…
     39→### Building from source
     40→
@@ -260,7 +258,6 @@ continuous-integration.md
     50→```
     51→
     52→This includes several recommended options:
-    53→
       →…
     67→## Running tests
     68→
@@ -276,7 +273,6 @@ continuous-integration.md
     78→Or if you have your own style checks, spell checker, or any other tests it might be good to run them in CI.
     79→
     80→[`mdbook test`]: cli/test.md
-    81→[mdbook-linkcheck]: https://github.com/Michael-F-Bryan/mdbook-linkcheck#continuous-integration
       →…
     83→## Deploying
     84→
@@ -292,7 +288,6 @@ continuous-integration.md
     94→You may then want to consider if you need to invalidate any caches on your web service.
     95→
     96→See the [Automated Deployment] wiki page for examples of various different services.
-    97→
       →…
    100→### 404 handling
    101→
@@ -308,7 +303,6 @@ continuous-integration.md
    111→```toml
    112→# book.toml
    113→[output.html]
-   114→site-url = "/mdBook/"
       →…
 for_developers/README.md
      1→# For developers
@@ -423,12 +417,6 @@ for_developers/mdbook-wordcount/src/main.rs
     19→    let _ = fs::create_dir_all(&ctx.destination);
     20→    let mut f = File::create(ctx.destination.join("wordcounts.txt")).unwrap();
     21→
-    22→    for item in ctx.book.iter() {
-    23→        if let BookItem::Chapter(ref ch) = *item {
-    24→            if cfg.ignores.contains(&ch.name) {
-    25→                continue;
-    26→            }
-    27→
       →…
     40→fn count_words(ch: &Chapter) -> usize {
     41→    ch.content.split_whitespace().count()
@@ -818,16 +806,12 @@ format/theme/editor.md
      3→In addition to providing runnable code playgrounds, mdBook optionally allows them
      4→to be editable. In order to enable editable code blocks, the following needs to
      5→be added to the ***book.toml***:
-     6→
-     7→```toml
       →…
     35→## Customizing the editor
     36→
     37→By default, the editor is the [Ace](https://ace.c9.io/) editor, but, if desired,
     38→the functionality may be overridden by providing a different folder:
     39→
-    40→```toml
-    41→[output.html.playground]
       →…
 format/theme/index-hbs.md
      1→# index.hbs
@@ -835,16 +819,12 @@ format/theme/index-hbs.md
      3→`index.hbs` is the handlebars template that is used to render the book. The
      4→markdown files are processed to html and then injected in that template.
      5→
-     6→If you want to change the layout or style of your book, chances are that you
-     7→will have to modify this template a little bit. Here is what you need to know.
       →…
      9→## Data
     10→
     11→A lot of data is exposed to the handlebars template with the "context". In the
     12→handlebars template you can access this information by using
     13→
-    14→```handlebars
-    15→{{name_of_property}}
       →…
     41→## Handlebars helpers
     42→
@@ -856,24 +836,18 @@ format/theme/index-hbs.md
     48→The toc helper is used like this
     49→
     50→```handlebars
-    51→{{#toc}}{{/toc}}
-    52→```
       →…
     80→### resource
     81→
     82→The path to a static file.
     83→It implicitly includes `path_to_root`,
     84→and accounts for files that are renamed with a hash in their filename.
-    85→
-    86→```handlebars
       →…
     90→### fa
     91→
     92→mdBook includes a copy of [Font Awesome Free's](https://fontawesome.com)
     93→MIT-licensed SVG files. It accepts three positional arguments:
     94→
-    95→1. Type: one of "solid", "regular", and "brands" (light and duotone are not
-    96→   currently supported)
       →…
 format/theme/syntax-highlighting.md
      1→# Syntax highlighting
@@ -881,32 +855,24 @@ format/theme/syntax-highlighting.md
      3→mdBook uses [Highlight.js](https://highlightjs.org) with a custom theme
      4→for syntax highlighting.
      5→
-     6→Automatic language detection has been turned off, so you will probably want to
-     7→specify the programming language you use like this:
       →…
     17→## Supported languages
     18→
     19→These languages are supported by default, but you can add more by supplying
     20→your own `highlight.js` file:
     21→
-    22→- apache
-    23→- armasm
       →…
     68→## Custom theme
     69→Like the rest of the theme, the files used for syntax highlighting can be
     70→overridden with your own.
     71→
     72→- ***highlight.js*** normally you shouldn't have to overwrite this file, unless
-    73→  you want to use a more recent version.
-    74→- ***highlight.css*** theme used by highlight.js for syntax highlighting.
       →…
     82→## Improve default theme
     83→
     84→If you think the default theme doesn't look quite right for a specific language,
     85→or could be improved, feel free to [submit a new
     86→issue](https://github.com/rust-lang/mdBook/issues) explaining what you
-    87→have in mind and I will take a look at it.
-    88→
       →…
 guide/README.md
      1→# User guide

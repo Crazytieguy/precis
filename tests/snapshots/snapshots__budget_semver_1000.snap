@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (968 words)
+budget: 1000 (912 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -125,18 +125,9 @@ bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
     37→const main = () => {
-    38→  if (!argv.length) {
-    39→    return help()
-      →…
    132→const failInc = () => {
-   133→  console.error('--inc can only be used on a single version with no range')
-   134→  fail()
-      →…
    137→const fail = () => process.exit(1)
    139→const help = () => console.log(
-   140→`SemVer ${version}
-   141→
-      →…
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
@@ -216,17 +207,9 @@ internal/lrucache.js
     11→    if (value === undefined) {
     12→      return undefined
     13→    } else {
-    14→      // Remove the key from the map and add it to the end
-    15→      this.map.delete(key)
-    16→      this.map.set(key, value)
-    17→      return value
-    18→    }
-    19→  }
-    20→
     21→  delete (key) {
     22→    return this.map.delete(key)
     23→  }
-    24→
     25→  set (key, value) {
     26→    const deleted = this.delete(key)
     27→

@@ -2,66 +2,32 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1911 words)
+budget: 2000 (1845 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
      9→  .map((file) => `./${file}`)
 CHANGELOG.md
-     3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16)
-     4→### Bug Fixes
-     5→* [`a29faa5`](https://github.com/npm/node-semver/commit/a29faa5f3309a01c8e5aeb965fb5c02c4c4e80e2) [#835](https://github.com/npm/node-semver/pull/835) cli: pass options to semver.valid() for loose version validation (#835) (@mldangelo)
-    16→### Bug Fixes
-    17→* [`e37e0ca`](https://github.com/npm/node-semver/commit/e37e0ca0b5fc910d2b1948d25dbc83cc3a0921ea) [#813](https://github.com/npm/node-semver/pull/813) faster paths for compare (#813) (@H4ad)
-      →…
-    23→### Bug Fixes
-    24→* [`fcafb61`](https://github.com/npm/node-semver/commit/fcafb61ed566ff8ccf24818dd94b76738f037aa4) [#780](https://github.com/npm/node-semver/pull/780) add missing `'use strict'` directives (#780) (@Fdawgs)
-      →…
-    31→### Bug Fixes
-    32→* [`af761c0`](https://github.com/npm/node-semver/commit/af761c05bd53eef83b5e20f8b09360b0e70557dc) [#764](https://github.com/npm/node-semver/pull/764) inc: fully capture prerelease identifier (#764) (@wraithgar)
-      →…
-    35→### Features
-    36→* [`0864b3c`](https://github.com/npm/node-semver/commit/0864b3ce7932667013e0c7c5ec764777d4682883) [#753](https://github.com/npm/node-semver/pull/753) add "release" inc type (#753) (@mbtools)
-    50→### Bug Fixes
-    51→
-      →…
-    60→### Bug Fixes
-    61→
-      →…
-    66→### Bug Fixes
-    67→
-      →…
-    88→### Features
-    89→
-      →…
-   110→### Bug Fixes
-   111→
-      →…
-   117→### Bug Fixes
-   118→
-      →…
-   127→### Bug Fixes
-   128→
-      →…
-   135→### Bug Fixes
-   136→
-      →…
-   141→### Features
-   142→
-      →…
-   153→### Features
-   154→
-      →…
-   174→### Bug Fixes
-   175→
-      →…
-   185→### Bug Fixes
-   186→
-      →…
-   200→### Bug Fixes
-   201→
-      →…
+     3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16) …
+     4→### Bug Fixes …
+    16→### Bug Fixes …
+    23→### Bug Fixes …
+    31→### Bug Fixes …
+    35→### Features …
+    50→### Bug Fixes …
+    60→### Bug Fixes …
+    66→### Bug Fixes …
+    88→### Features …
+   110→### Bug Fixes …
+   117→### Bug Fixes …
+   127→### Bug Fixes …
+   135→### Bug Fixes …
+   141→### Features …
+   153→### Features …
+   174→### Bug Fixes …
+   185→### Bug Fixes …
+   200→### Bug Fixes …
 CONTRIBUTING.md
      3→# Contributing
      4→
@@ -224,7 +190,6 @@ classes/comparator.js
     16→      } else {
     17→        comp = comp.value
     18→      }
-    19→    }
     36→  parse (comp) {
     37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
       →…
@@ -253,7 +218,6 @@ classes/range.js
     17→        return new Range(range.raw, options)
     18→      }
     19→    }
-    20→
     73→  get range () {
     74→    if (this.formatted === undefined) {
       →…
@@ -305,7 +269,6 @@ classes/semver.js
     20→    } else if (typeof version !== 'string') {
     21→      throw new TypeError(`Invalid version. Must be a string. Got type "${typeof version}".`)
     22→    }
-    23→
     81→  format () {
     82→    this.version = `${this.major}.${this.minor}.${this.patch}`
       →…

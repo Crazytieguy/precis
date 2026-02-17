@@ -2,54 +2,8 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2024 words)
+budget: 2000 (1896 words)
 
-Changelog.md
-    40→###### NEW
-    41→
-      →…
-    55→###### BREAKING
-    56→
-      →…
-    61→###### FIXED
-    62→
-      →…
-    69→###### BREAKING
-    70→
-      →…
-    77→###### NEW
-    78→
-      →…
-    95→###### NEW
-    96→
-      →…
-   129→###### NEW
-   130→
-      →…
-   394→###### BREAKING
-   395→
-      →…
-   446→###### BREAKING
-   447→
-      →…
-   454→###### BREAKING
-   455→
-      →…
-   462→###### BREAKING
-   463→
-      →…
-   476→###### BREAKING
-   477→
-      →…
-   490→###### BREAKING
-   491→
-      →…
-   500→###### BREAKING
-   501→
-      →…
-   512→###### BREAKING
-   513→
-      →…
 Readme.md
     42→### Usage
     43→
@@ -206,28 +160,6 @@ docs/readme.md
     34→// If you'd rather not throw, you can use `is()` or `validate()`.
     35→```
     36→
-    37→Superstruct ships with validators for all the common JavaScript data types, and you can define custom ones too:
-    38→
-    39→```js
-    40→import { is, define, object, string } from 'superstruct'
-    41→import isUuid from 'is-uuid'
-    42→import isEmail from 'is-email'
-    43→
-    44→const Email = define('Email', isEmail)
-    45→const Uuid = define('Uuid', isUuid.v4)
-    46→
-    47→const User = object({
-    48→  id: Uuid,
-    49→  email: Email,
-    50→  name: string(),
-    51→})
-    52→
-    53→const data = {
-    54→  id: 'c8d63140-a1f7-45e0-bfc6-df72973fea86',
-    55→  email: 'jane@example.com',
-    56→  name: 'Jane',
-    57→}
-    58→
       →…
 docs/reference/core.md
      3→### `assert`
@@ -497,7 +429,11 @@ src/structs/refinements.ts
      8→export function empty …
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
     22→  if (value instanceof Map || value instanceof Set) {
-      →…
+    23→    return value.size
+    24→  } else {
+    25→    return value.length
+    26→  }
+    27→}
     33→export function max …
     55→export function min …
     77→export function nonempty …

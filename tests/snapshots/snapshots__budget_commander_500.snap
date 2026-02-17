@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (521 words)
+budget: 500 (505 words)
 
 CONTRIBUTING.md
      3→## Issues
@@ -27,7 +27,6 @@ Readme.md
    978→For example:
    979→
    980→```js
-   981→program.parse(); // parse process.argv and auto-detect electron and special node flags
       →…
 Readme_zh-CN.md
    907→### .parse() 和 .parseAsync()
@@ -46,8 +45,7 @@ docs/deprecated.md
    233→- README updated in Commander v3.
    234→- Deprecated from Commander v9.
    235→- Throws an exception in Commander v13. Deprecated and gone!
-   236→- Replacement added in Commander v13.1 with support for dual long options, like `--ws, --workspace`.
-   237→
+      →…
 eslint.config.js
      8→const tsconfigTsFiles …
      9→const tsconfigJsFiles …
@@ -119,25 +117,23 @@ typings/index.d.ts
     48→export class Argument {
     95→export class Option {
    210→export class Help {
-   340→export type HelpConfiguration …
+   340→export type HelpConfiguration = Partial<Help>;
    342→export interface ParseOptions {
    345→export interface HelpContext {
    349→export interface AddHelpTextContext {
    354→export interface OutputConfiguration {
-   367→export type AddHelpTextPosition …
-   368→export type HookEvent …
-   370→export type OptionValueSource …
-   374→export type OptionValues …
+   367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
+   368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
+   370→export type OptionValueSource =
+   371→  | LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string>
+   372→  | undefined;
+   374→export type OptionValues = Record<string, any>;
    376→export class Command {
   1094→export interface CommandOptions {
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1104→export interface ParseOptionsResult {
-  1113→export const program …
+  1113→export const program: Command;
 typings/index.test-d.ts
-   168→function myParseInt …
-   172→function increaseVerbosity …
-   176→function collect …
-   180→function commaSeparatedList …
    384→interface MyCheeseOption {
    385→  cheese: string;
    386→}
@@ -146,5 +142,3 @@ typings/index.test-d.ts
    511→    return new MyCommand(name);
    512→  }
    513→
-   625→  const groupsItemsOptionHeading …
-   635→  const groupsItemsCommandHeading …

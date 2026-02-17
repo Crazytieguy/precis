@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (991 words)
+budget: 1000 (965 words)
 
 README.md
      1→# xxhash
@@ -84,16 +84,12 @@ dynamic/plugin.go
     21→	if got != want {
     22→		t.Fatalf("Sum64String: got 0x%x; want 0x%x", got, want)
     23→	}
-    24→}
+      →…
     26→func TestDigest(t *testing.T) {
     27→	for chunkSize := 1; chunkSize <= len(in); chunkSize++ {
     28→		name := fmt.Sprintf("[chunkSize=%d]", chunkSize)
     29→		t.Run(name, func(t *testing.T) {
     30→			d := xxhash.New()
-    31→			for i := 0; i < len(in); i += chunkSize {
-    32→				chunk := in[i:]
-    33→				if len(chunk) > chunkSize {
-    34→					chunk = chunk[:chunkSize]
       →…
 xxhash.go
     11→const (

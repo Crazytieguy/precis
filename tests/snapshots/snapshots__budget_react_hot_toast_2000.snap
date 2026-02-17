@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1988 words)
+budget: 2000 (1968 words)
 
 README.md
     28→## Features
@@ -139,8 +139,6 @@ site/components/sections/toast-example.tsx
     12→}> = [
     13→  {
     14→    title: 'Success',
-    15→    emoji: '✅',
-    16→    snippet: "toast.success('Successfully toasted!')",
       →…
    270→export const ToastExample = () => {
    271→  const [snippet, setSnippet] = useState(examples[0].snippet);
@@ -313,8 +311,6 @@ src/components/toast-icon.tsx
     54→    } else {
     55→      return icon;
     56→    }
-    57→  }
-    58→
       →…
 src/components/toaster.tsx
     15→const ToastWrapper …
@@ -331,8 +327,6 @@ src/components/toaster.tsx
     92→  containerStyle,
     93→  containerClassName,
     94→}) => {
-    95→  const { toasts, handlers } = useToaster(toastOptions, toasterId);
-    96→
       →…
 src/core/store.ts
      4→export const TOAST_EXPIRE_DISMISS_DELAY = 1000;

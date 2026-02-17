@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (467 words)
 
 README.md
      9→# Mitt
@@ -139,9 +139,4 @@ src/index.ts
     80→		 * @memberOf mitt
     81→		 */
     82→		off<Key extends keyof Events>(type: Key, handler?: GenericEventHandler) {
-    83→			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
-    84→			if (handlers) {
-    85→				if (handler) {
-    86→					handlers.splice(handlers.indexOf(handler) >>> 0, 1);
-    87→				} else {
       →…

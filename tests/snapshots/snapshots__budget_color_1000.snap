@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (976 words)
+budget: 1000 (951 words)
 
 README.md
      1→# color [![](https://github.com/fatih/color/workflows/build/badge.svg)](https://github.com/fatih/color/actions) [![PkgGoDev](https://pkg.go.dev/badge/github.com/fatih/color)](https://pkg.go.dev/github.com/fatih/color)
@@ -113,8 +113,6 @@ color.go
     75→	ResetConcealed
     76→	ResetCrossedOut
     79→var mapResetAttributes map[Attribute]Attribute = map[Attribute]Attribute{
-    80→	Bold:         ResetBold,
-      →…
     91→// Foreground text colors
     92→const (
     93→	FgBlack Attribute = iota + 30
@@ -194,20 +192,13 @@ color.go
    405→func (c *Color) sequence() string {
    406→	format := make([]string, len(c.params))
    407→	for i, v := range c.params {
-   408→		format[i] = strconv.Itoa(int(v))
-   409→	}
-   410→
-   411→	return strings.Join(format, ";")
-   412→}
+      →…
    414→// wrap wraps the s string with the colors attributes. The string is ready to
    415→// be printed.
    416→func (c *Color) wrap(s string) string {
    417→	if c.isNoColorSet() {
    418→		return s
-   419→	}
-   420→
-   421→	return c.format() + s + c.unformat()
-   422→}
+      →…
    424→func (c *Color) format() string {
    428→func (c *Color) unformat() string {
    446→func (c *Color) DisableColor …

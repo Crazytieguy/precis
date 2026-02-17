@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (546 words)
+budget: 500 (491 words)
 
 CONTRIBUTING.md
      1→# Contributing
@@ -140,8 +140,6 @@ README.md
    614→require('dotenv').config({ path: '/custom/path/to/.env' })
    615→```
    616→
-   617→By default, `config` will look for a file called .env in the current working directory.
-   618→
       →…
    625→##### quiet
    626→
@@ -173,8 +171,6 @@ README.md
    714→const dotenv = require('dotenv')
    715→const buf = Buffer.from('hello world')
    716→const opt = { debug: true }
-   717→const config = dotenv.parse(buf, opt)
-   718→// expect a debug message because the buffer is not in KEY=VAL form
       →…
    721→### Populate
    722→
@@ -216,14 +212,7 @@ lib/main.d.ts
     93→  error?: DotenvError;
     94→  parsed?: DotenvParseOutput;
     95→}
-    97→type DotenvError = Error & {
-    98→  code: 
-    99→    | 'MISSING_DATA'
-   100→    | 'INVALID_DOTENV_KEY'
-   101→    | 'NOT_FOUND_DOTENV_ENVIRONMENT'
-   102→    | 'DECRYPTION_FAILED'
-   103→    | 'OBJECT_REQUIRED';
-   104→}
+    97→type DotenvError …
    106→export interface DotenvPopulateOptions {
    107→  /**
    108→   * Default: `false`

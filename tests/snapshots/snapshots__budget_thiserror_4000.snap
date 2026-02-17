@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3737 words)
+budget: 4000 (3719 words)
 
 README.md
      1→derive(Error)
@@ -626,19 +626,17 @@ impl/src/scan_expr.rs
     33→    (ConsumeDelimiter, SetState(&POSTFIX)),
     34→    (Keyword("async"), SetState(&ASYNC)),
     35→    (Keyword("break"), SetState(&BREAK_LABEL)),
-    36→    (Keyword("const"), SetState(&CONST)),
       →…
     63→static POSTFIX: [(Input, Action); 10] = [
     64→    (Keyword("as"), SetState(&[(ExpectType, SetState(&POSTFIX))])),
     65→    (Punct("..="), SetState(&INIT)),
     66→    (Punct(".."), SetState(&RANGE)),
-    67→    (Punct("."), SetState(&DOT)),
       →…
     76→static ASYNC: [(Input, Action); 3] = [
     77→    (Keyword("move"), SetState(&ASYNC)),
     78→    (Punct("|"), SetState(&CLOSURE_ARGS)),
     79→    (ConsumeBrace, SetState(&POSTFIX)),
-    80→];
+      →…
     82→static BLOCK: [(Input, Action); 1] = [(ConsumeBrace, SetState(&POSTFIX))];
     84→static BREAK_LABEL: [(Input, Action); 2] = [
     85→    (ConsumeLifetime, SetState(&BREAK_VALUE)),
@@ -648,12 +646,11 @@ impl/src/scan_expr.rs
     90→    (ConsumeNestedBrace, SetState(&IF_THEN)),
     91→    (CanBeginExpr, SetState(&INIT)),
     92→    (Otherwise, SetState(&POSTFIX)),
-    93→];
+      →…
     95→static CLOSURE: [(Input, Action); 6] = [
     96→    (Keyword("async"), SetState(&CLOSURE)),
     97→    (Keyword("move"), SetState(&CLOSURE)),
     98→    (Punct(","), SetState(&CLOSURE)),
-    99→    (Punct(">"), SetState(&CLOSURE)),
       →…
    104→static CLOSURE_ARGS: [(Input, Action); 2] = [
    105→    (Punct("|"), SetState(&CLOSURE_RET)),
@@ -675,7 +672,7 @@ impl/src/scan_expr.rs
    125→    (Keyword("await"), SetState(&POSTFIX)),
    126→    (ConsumeIdent, SetState(&METHOD)),
    127→    (ConsumeLiteral, SetState(&POSTFIX)),
-   128→];
+      →…
    130→static FOR: [(Input, Action); 2] = [
    131→    (Punct("<"), SetState(&CLOSURE)),
    132→    (Otherwise, SetState(&PATTERN)),
@@ -688,30 +685,27 @@ impl/src/scan_expr.rs
    142→    (Punct("!="), SetState(&INIT)),
    143→    (Punct("!"), SetState(&INIT)),
    144→    (ConsumeNestedBrace, SetState(&IF_THEN)),
-   145→    (Otherwise, SetState(&POSTFIX)),
       →…
    148→static PATTERN: [(Input, Action); 15] = [
    149→    (ConsumeDelimiter, SetState(&PATTERN)),
    150→    (Keyword("box"), SetState(&PATTERN)),
    151→    (Keyword("in"), IncDepth),
-   152→    (Keyword("mut"), SetState(&PATTERN)),
       →…
    166→static RANGE: [(Input, Action); 6] = [
    167→    (Punct("..="), SetState(&INIT)),
    168→    (Punct(".."), SetState(&RANGE)),
    169→    (Punct("."), SetState(&DOT)),
-   170→    (ConsumeNestedBrace, SetState(&IF_THEN)),
       →…
    175→static RAW: [(Input, Action); 3] = [
    176→    (Keyword("const"), SetState(&INIT)),
    177→    (Keyword("mut"), SetState(&INIT)),
    178→    (Otherwise, SetState(&POSTFIX)),
-   179→];
+      →…
    181→static REFERENCE: [(Input, Action); 3] = [
    182→    (Keyword("mut"), SetState(&INIT)),
    183→    (Keyword("raw"), SetState(&RAW)),
    184→    (Otherwise, SetState(&INIT)),
-   185→];
+      →…
    187→static RETURN: [(Input, Action); 2] = [
    188→    (CanBeginExpr, SetState(&INIT)),
    189→    (Otherwise, SetState(&POSTFIX)),

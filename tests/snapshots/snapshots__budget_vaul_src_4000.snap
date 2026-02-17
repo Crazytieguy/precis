@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4011 words)
+budget: 4000 (4005 words)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -883,7 +883,6 @@ use-scale-background.ts
     43→          : {
     44→              transform: `scale(${getScale()}) translate3d(calc(env(safe-area-inset-top) + 14px), 0, 0)`,
     45→            }),
-    46→      });
       →…
 use-snap-points.ts
      7→export function useSnapPoints({
@@ -924,5 +923,4 @@ use-snap-points.ts
     42→      : undefined,
     43→  );
     44→
-    45→  React.useEffect(() => {
       →…

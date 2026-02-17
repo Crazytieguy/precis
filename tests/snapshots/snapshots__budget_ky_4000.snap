@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3888 words)
+budget: 4000 (3854 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -344,14 +344,6 @@ source/core/Ky.ts
     98→			)) {
     99→				let error = new HTTPError(response, ky.request, ky.#getNormalizedOptions());
    100→
-   101→				for (const hook of ky.#options.hooks.beforeError) {
-   102→					// eslint-disable-next-line no-await-in-loop
-   103→					error = await hook(error, {retryCount: ky.#retryCount});
-   104→				}
-   105→
-   106→				throw error;
-   107→			}
-   108→
    178→	static #normalizeSearchParams(searchParams: SearchParamsOption): SearchParamsOption {
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
@@ -679,7 +671,6 @@ source/index.ts
     16→		ky[method] = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options, {method}));
     17→	}
     18→
-    19→	ky.create = (newDefaults?: Partial<Options>) => createInstance(validateAndMerge(newDefaults));
       →…
     34→const ky = createInstance();
 source/types/ResponsePromise.ts

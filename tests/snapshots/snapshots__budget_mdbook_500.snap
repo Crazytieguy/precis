@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (552 words)
+budget: 500 (491 words)
 
 README.md
      1→# mdBook
@@ -22,16 +22,11 @@ crates/mdbook-core/README.md
     11→## License
     12→
       →…
-crates/mdbook-core/src/config.rs
-   718→trait Updateable …
 crates/mdbook-core/src/lib.rs
      3→/// The current version of `mdbook`.
      4→///
       →…
      7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
-     9→pub mod book;
-    10→pub mod config;
-    11→pub mod utils;
     14→pub mod errors {
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
@@ -45,14 +40,7 @@ crates/mdbook-driver/README.md
     11→## License
     12→
       →…
-crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
-    14→pub struct CmdPreprocessor {
-    15→    name: String,
-      →…
-crates/mdbook-driver/src/builtin_preprocessors/index.rs
-    12→pub struct IndexPreprocessor;
 crates/mdbook-driver/src/builtin_preprocessors/links.rs
-    32→pub struct LinkPreprocessor;
    401→    type Item = Link<'a>;
 crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
     10→pub struct MarkdownRenderer;
@@ -84,13 +72,10 @@ crates/mdbook-html/src/html/tokenizer.rs
     22→    type Handle = ();
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     22→pub struct HtmlHandlebars;
-   649→type CombinedRedirects …
 crates/mdbook-html/src/html_handlebars/helpers/resources.rs
     11→pub(crate) struct ResourceHelper {
 crates/mdbook-html/src/html_handlebars/helpers/toc.rs
     11→pub(crate) struct RenderToc {
-crates/mdbook-html/src/html_handlebars/mod.rs
-     4→mod search;
 crates/mdbook-html/src/html_handlebars/static_files.rs
     22→pub(super) struct StaticFiles {
     23→    static_files: Vec<StaticFile>,
@@ -106,15 +91,11 @@ crates/mdbook-html/src/theme/mod.rs
     40→pub struct Theme {
     41→    pub(crate) index: Vec<u8>,
       →…
-   201→    fn default …
-   229→fn load_file_contents …
+   201→    fn default() -> Theme {
 crates/mdbook-html/src/utils.rs
-     7→pub(crate) fn normalize_path …
     42→pub(crate) trait ToUrlPath {
     43→    fn to_url_path(&self) -> String;
     44→}
-    58→pub(crate) fn unique_id …
-    76→pub(crate) fn id_from_content …
 crates/mdbook-markdown/README.md
      1→# mdbook-markdown
      2→
@@ -172,8 +153,6 @@ crates/xtask/README.md
       →…
 crates/xtask/src/changelog.rs
     10→pub(crate) fn changelog() -> Result<()> {
-crates/xtask/src/main.rs
-     9→mod changelog;
 eslint.config.mjs
      4→const handlebarsPreprocessor = {
      7→            preprocess(text, filename) {
@@ -182,19 +161,8 @@ guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
     33→struct GuideHelper;
-    46→fn insert_version …
 guide/guide-helper/src/main.rs
      3→fn main() {
-guide/src/README.md
-     1→# Introduction
-     2→
-      →…
-    46→## Contributing
-    47→
-      →…
-    55→## License
-    56→
-      →…
 guide/src/cli/README.md
      1→# Command-line tool
      2→
@@ -228,7 +196,7 @@ guide/src/misc/contributors.md
      2→
       →…
 src/cmd/clean.rs
-    38→pub fn human_readable_bytes …
+    38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     45→#[derive(Debug)]
     46→pub struct Clean {
     47→    num_files_removed: u64,
@@ -237,13 +205,13 @@ src/cmd/clean.rs
     50→}
 src/cmd/command_prelude.rs
      7→pub trait CommandExt: Sized {
-    42→    fn arg_watcher …
+    42→    fn arg_watcher(self) -> Self {
 src/cmd/mod.rs
      3→pub mod build;
      8→pub mod serve;
     11→pub mod watch;
 src/cmd/serve.rs
-    20→const LIVE_RELOAD_ENDPOINT …
+    20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
 src/cmd/watch/native.rs
     11→pub fn rebuild_on_change …
 src/cmd/watch/poller.rs
@@ -255,5 +223,4 @@ src/cmd/watch.rs
     21→pub enum WatcherKind {
 src/main.rs
     14→mod cmd;
-    16→const VERSION …
     58→fn create_clap_command() -> Command {

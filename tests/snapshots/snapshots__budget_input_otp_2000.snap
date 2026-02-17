@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2034 words)
+budget: 2000 (2002 words)
 
 CHANGELOG.md
      3→## [1.4.2]
@@ -170,26 +170,19 @@ apps/storybook/src/stories/Button.stories.ts
     14→export const Primary = {
     15→  args: {
     16→    primary: true,
-    17→    label: 'Button',
-    18→  },
-    19→};
+      →…
     21→export const Secondary = {
     22→  args: {
     23→    label: 'Button',
-    24→  },
-    25→};
+      →…
     27→export const Large = {
     28→  args: {
     29→    size: 'large',
-    30→    label: 'Button',
-    31→  },
-    32→};
+      →…
     34→export const Small = {
     35→  args: {
     36→    size: 'small',
-    37→    label: 'Button',
-    38→  },
-    39→};
+      →…
 apps/storybook/src/stories/Button.tsx
      5→/**
      6→ * Primary UI component for user interaction
@@ -227,6 +220,7 @@ apps/storybook/tailwind.config.js
     10→  prefix: '',
     11→  theme: {
     12→    container: {
+    13→      center: true,
       →…
 apps/website/README.md
      3→## Getting Started
@@ -333,12 +327,7 @@ apps/website/src/app/(local-pages)/raw-input/page.tsx
      8→  return (
      9→    <form
     10→      method="POST"
-    11→      className="container relative flex-1 flex flex-col justify-center items-center"
-    12→    >
-    13→      <input autoFocus type="password" autoComplete="username" />
-    14→    </form>
-    15→  )
-    16→}
+      →…
 apps/website/src/app/(local-pages)/shadcn/page.tsx
     12→export default function ShadcnPage() {
     13→  const [value, setValue] = React.useState('')
@@ -478,6 +467,7 @@ apps/website/src/components/icons.tsx
     16→        strokeWidth="16"
     17→      />
     18→      <line
+    19→        x1="192"
       →…
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {

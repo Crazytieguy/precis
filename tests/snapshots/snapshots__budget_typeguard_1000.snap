@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1003 words)
+budget: 1000 (985 words)
 
 src/typeguard/__init__.py
     34→config: TypeCheckConfiguration
@@ -45,7 +45,6 @@ src/typeguard/_checkers.py
    121→    "__itruediv__",
    122→    "__ixor__",
    123→    "__le__",
-   124→    "__lshift__",
       →…
    586→def _is_literal_type(typ: object) -> bool:
    587→    return typ is typing.Literal or typ is typing_extensions.Literal
@@ -75,7 +74,6 @@ src/typeguard/_checkers.py
   1027→    Sequence: check_sequence,
   1028→    collections.abc.Sequence: check_sequence,
   1029→    collections.abc.Set: check_set,
-  1030→    set: check_set,
       →…
 src/typeguard/_config.py
     11→T = TypeVar("T")
@@ -278,9 +276,6 @@ src/typeguard/_transformer.py
    523→
    524→        if isinstance(node, (FunctionDef, AsyncFunctionDef)):
    525→            new_memo.should_instrument = (
-   526→                self._target_path is None or new_memo.path == self._target_path
-   527→            )
-   528→            if new_memo.should_instrument:
       →…
    570→    def _get_import(self, module: str, name: str) -> Name:
    571→        memo = self._memo if self._target_path else self._module_memo

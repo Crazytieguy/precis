@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (550 words)
+budget: 500 (516 words)
 
 _internals/error.ts
      3→export interface ErrorConfig {
@@ -17,6 +17,8 @@ _internals/error.ts
     14→        type: string
     15→        value: T
     16→      }
+    17→    | {
+    18→        type: string
       →…
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
@@ -74,18 +76,12 @@ result-async.ts
    262→export const fromAsyncThrowable …
    265→export type CombineResultAsyncs …
    272→export type CombineResultsWithAllErrorsArrayAsync …
-   279→type UnwrapAsync …
-   300→type TraverseAsync …
-   330→type TraverseWithAllErrorsAsync …
-   338→type Writable …
 result.ts
     14→export namespace Result {
     15→  /**
     62→export type Result …
    134→interface IResult<T, E> {
    135→  /**
-   136→   * Used to check if a `Result` is an `OK`
-   137→   *
       →…
    140→  isOk(): this is Ok<T, E>
    142→  /**
@@ -139,17 +135,12 @@ result.ts
    424→  }
    425→
    523→export const fromThrowable …
-   530→type Prev …
-   590→type CollectResults …
    614→export type Transpose …
    635→export type Combine …
    645→export type Dedup …
    652→export type MemberListOf …
    669→export type EmptyArrayToNever …
-   680→type UnknownMembersToNever …
    685→export type MembersToUnion …
    688→export type IsLiteralArray …
-   698→type Traverse …
-   704→type TraverseWithAllErrors …
    712→export type CombineResults …
    719→export type CombineResultsWithAllErrorsArray …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1046 words)
+budget: 1000 (987 words)
 
 src/into_either.rs
      6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
@@ -64,8 +64,6 @@ src/into_either.rs
     62→}
 src/iterator.rs
      4→macro_rules! wrap_either {
-     5→    ($value:expr => $( $tail:tt )*) => {
-      →…
     13→/// Iterator that maps left or right iterators to corresponding `Either`-wrapped items.
     14→///
     15→/// This struct is created by the [`Either::factor_into_iter`],
@@ -108,11 +106,6 @@ src/lib.rs
     60→///
     61→/// Syntax: `either::for_both!(` *expression* `,` *pattern* `=>` *expression* `)`
     62→///
-    63→/// # Example
-    64→///
-    65→/// ```
-    66→/// use either::Either;
-    67→///
       →…
     81→macro_rules! for_both {
     90→/// Macro for unwrapping the left side of an [`Either`], which fails early
@@ -122,19 +115,12 @@ src/lib.rs
     94→/// See also [`try_right!`] for its dual, which applies the same just to the
     95→/// right side.
     96→///
-    97→/// # Example
-    98→///
-    99→/// ```
-   100→/// use either::{Either, Left, Right};
-   101→///
       →…
    113→macro_rules! try_left {
    122→/// Dual to [`try_left!`], see its documentation for more information.
    123→#[macro_export]
    124→macro_rules! try_right {
    133→macro_rules! map_either {
-   134→    ($value:expr, $pattern:pat => $result:expr) => {
-      →…
    142→mod iterator;
    145→mod into_either;
    175→    pub fn is_left …
@@ -211,8 +197,6 @@ src/lib.rs
   1224→    R: Write,
   1225→{
   1253→macro_rules! impl_specific_ref_and_mut {
-  1254→    ($t:ty, $($attr:meta),* ) => {
-      →…
   1327→    type Target = L::Target;
   1348→impl<L, R> Error for Either<L, R>
   1349→where
@@ -226,9 +210,6 @@ src/lib.rs
   1536→fn _unsized_ref_propagation() {
   1537→    check_t!(str);
   1538→
-  1539→    fn check_array_ref<T: AsRef<[Item]>, Item>() {}
-  1540→    fn check_array_mut<T: AsMut<[Item]>, Item>() {}
-  1541→
       →…
   1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {

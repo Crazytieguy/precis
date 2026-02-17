@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1031 words)
+budget: 1000 (1013 words)
 
 components/checkmark.tsx
      3→const circleAnimation = keyframes`
@@ -15,6 +15,7 @@ components/checkmark.tsx
     35→  width: 20px;
     36→  opacity: 0;
     37→  height: 20px;
+    38→  border-radius: 10px;
       →…
 components/error.tsx
      3→const circleAnimation = keyframes`
@@ -28,6 +29,7 @@ components/error.tsx
     39→  width: 20px;
     40→  opacity: 0;
     41→  height: 20px;
+    42→  border-radius: 10px;
       →…
 components/loader.tsx
      3→const rotate = keyframes`
@@ -39,6 +41,7 @@ components/loader.tsx
     18→  width: 12px;
     19→  height: 12px;
     20→  box-sizing: border-box;
+    21→  border: 2px solid;
       →…
 components/toast-bar.tsx
      8→const enterAnimation = (factor: number) => `
@@ -72,6 +75,7 @@ components/toast-bar.tsx
     76→  ({ toast, position, style, children }) => {
     77→    const animationStyle: React.CSSProperties = toast.height
     78→      ? getAnimationStyle(
+    79→          toast.position || position || 'top-center',
       →…
 components/toast-icon.tsx
      9→const StatusWrapper = styled('div')`
@@ -81,6 +85,7 @@ components/toast-icon.tsx
     33→  position: relative;
     34→  transform: scale(0.6);
     35→  opacity: 0.4;
+    36→  min-width: 20px;
       →…
     41→export type IconThemes = Partial<{
     42→  success: CheckmarkTheme;
@@ -99,10 +104,6 @@ components/toast-icon.tsx
     56→    }
     57→  }
     58→
-    59→  if (type === 'blank') {
-    60→    return null;
-    61→  }
-    62→
       →…
 components/toaster.tsx
     15→const ToastWrapper = ({
@@ -128,10 +129,6 @@ components/toaster.tsx
     94→}) => {
     95→  const { toasts, handlers } = useToaster(toastOptions, toasterId);
     96→
-    97→  return (
-    98→    <div
-    99→      data-rht-toaster={toasterId || ''}
-   100→      style={{
       →…
 core/store.ts
      4→export const TOAST_EXPIRE_DISMISS_DELAY …
@@ -214,16 +211,12 @@ core/toast.ts
     27→): Toast => ({
     28→  createdAt: Date.now(),
     29→  visible: true,
-    30→  dismissed: false,
-    31→  type,
       →…
     42→const createHandler =
     43→  (type?: ToastType): ToastHandler =>
     44→  (message, options) => {
     45→    const toast = createToast(message, type, options);
     46→
-    47→    const dispatch = createDispatch(
-    48→      toast.toasterId || getToasterIdFromToastId(toast.id)
       →…
     55→const toast = (message: Message, opts?: ToastOptions) =>
     56→  createHandler('blank')(message, opts);

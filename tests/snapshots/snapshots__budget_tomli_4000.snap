@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3765 words)
+budget: 4000 (3686 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -542,14 +542,12 @@ src/tomli/_parser.py
    139→    b = __fp.read()
    140→    try:
    141→        s = b.decode()
-   142→    except AttributeError:
       →…
    149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
    150→    """Parse TOML from a string."""
    151→
    152→    # The spec allows converting "\r\n" to "\n", even in string
    153→    # literals. Let's do so to simplify parsing.
-   154→    try:
       →…
    220→class Flags:
    221→    """Flags that map to parsed keys/namespaces."""
@@ -647,7 +645,6 @@ src/tomli/_parser.py
    319→    try:
    320→        while src[pos] in chars:
    321→            pos += 1
-   322→    except IndexError:
       →…
    327→def skip_until(
    328→    src: str,
@@ -660,31 +657,26 @@ src/tomli/_parser.py
    335→    try:
    336→        new_pos = src.index(expect, pos)
    337→    except ValueError:
-   338→        new_pos = len(src)
       →…
    349→def skip_comment(src: str, pos: Pos) -> Pos:
    350→    try:
    351→        char: str | None = src[pos]
    352→    except IndexError:
-   353→        char = None
       →…
    361→def skip_comments_and_array_ws(src: str, pos: Pos) -> Pos:
    362→    while True:
    363→        pos_before_skip = pos
    364→        pos = skip_chars(src, pos, TOML_WS_AND_NEWLINE)
-   365→        pos = skip_comment(src, pos)
       →…
    370→def create_dict_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
    371→    pos += 1  # Skip "["
    372→    pos = skip_chars(src, pos, TOML_WS)
    373→    pos, key = parse_key(src, pos)
-   374→
       →…
    390→def create_list_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
    391→    pos += 2  # Skip "[["
    392→    pos = skip_chars(src, pos, TOML_WS)
    393→    pos, key = parse_key(src, pos)
-   394→
       →…
    413→def key_value_rule(
    414→    src: str, pos: Pos, out: Output, header: Key, parse_float: ParseFloat
@@ -692,7 +684,6 @@ src/tomli/_parser.py
    416→    pos, key, value = parse_key_value_pair(src, pos, parse_float, nest_lvl=0)
    417→    key_parent, key_stem = key[:-1], key[-1]
    418→    abs_key_parent = header + key_parent
-   419→
       →…
    447→def parse_key_value_pair(
    448→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
@@ -700,19 +691,16 @@ src/tomli/_parser.py
    450→    pos, key = parse_key(src, pos)
    451→    try:
    452→        char: str | None = src[pos]
-   453→    except IndexError:
       →…
    463→def parse_key(src: str, pos: Pos) -> tuple[Pos, Key]:
    464→    pos, key_part = parse_key_part(src, pos)
    465→    key: Key = (key_part,)
    466→    pos = skip_chars(src, pos, TOML_WS)
-   467→    while True:
       →…
    481→def parse_key_part(src: str, pos: Pos) -> tuple[Pos, str]:
    482→    try:
    483→        char: str | None = src[pos]
    484→    except IndexError:
-   485→        char = None
       →…
    497→def parse_one_line_basic_str(src: str, pos: Pos) -> tuple[Pos, str]:
    498→    pos += 1
@@ -723,7 +711,6 @@ src/tomli/_parser.py
    505→    pos += 1
    506→    array: list[Any] = []
    507→
-   508→    pos = skip_comments_and_array_ws(src, pos)
       →…
    528→def parse_inline_table(
    529→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
@@ -731,7 +718,6 @@ src/tomli/_parser.py
    531→    pos += 1
    532→    nested_dict = NestedDict()
    533→    flags = Flags()
-   534→
       →…
    564→def parse_basic_str_escape(
    565→    src: str, pos: Pos, *, multiline: bool = False
@@ -739,7 +725,6 @@ src/tomli/_parser.py
    567→    escape_id = src[pos : pos + 2]
    568→    pos += 2
    569→    if multiline and escape_id in {"\\ ", "\\\t", "\\\n"}:
-   570→        # Skip whitespace until next non-whitespace character or end of
       →…
    595→def parse_basic_str_escape_multiline(src: str, pos: Pos) -> tuple[Pos, str]:
    596→    return parse_basic_str_escape(src, pos, multiline=True)
@@ -747,25 +732,21 @@ src/tomli/_parser.py
    600→    hex_str = src[pos : pos + hex_len]
    601→    if len(hex_str) != hex_len or not HEXDIGIT_CHARS.issuperset(hex_str):
    602→        raise TOMLDecodeError("Invalid hex value", src, pos)
-   603→    pos += hex_len
       →…
    612→def parse_literal_str(src: str, pos: Pos) -> tuple[Pos, str]:
    613→    pos += 1  # Skip starting apostrophe
    614→    start_pos = pos
    615→    pos = skip_until(
-   616→        src, pos, "'", error_on=ILLEGAL_LITERAL_STR_CHARS, error_on_eof=True
       →…
    621→def parse_multiline_str(src: str, pos: Pos, *, literal: bool) -> tuple[Pos, str]:
    622→    pos += 3
    623→    if src.startswith("\n", pos):
    624→        pos += 1
-   625→
       →…
    652→def parse_basic_str(src: str, pos: Pos, *, multiline: bool) -> tuple[Pos, str]:
    653→    if multiline:
    654→        error_on = ILLEGAL_MULTILINE_BASIC_STR_CHARS
    655→        parse_escapes = parse_basic_str_escape_multiline
-   656→    else:
       →…
    684→def parse_value(
    685→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
@@ -773,7 +754,6 @@ src/tomli/_parser.py
    687→    if nest_lvl > MAX_INLINE_NESTING:
    688→        # Pure Python should have raised RecursionError already.
    689→        # This ensures mypyc binaries eventually do the same.
-   690→        raise RecursionError(  # pragma: no cover
       →…
    760→def is_unicode_scalar_value(codepoint: int) -> bool:
    761→    return (0 <= codepoint <= 55295) or (57344 <= codepoint <= 1114111)
@@ -788,7 +768,6 @@ src/tomli/_parser.py
    772→    # The default `float` callable never returns illegal types. Optimize it.
    773→    if parse_float is float:
    774→        return float
-   775→
       →…
 src/tomli/_re.py
     11→TYPE_CHECKING = False
@@ -840,7 +819,6 @@ src/tomli/_re.py
     65→    (
     66→        year_str,
     67→        month_str,
-    68→        day_str,
       →…
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
@@ -858,7 +836,7 @@ src/tomli/_re.py
    110→    hour_str, minute_str, sec_str, micros_str = match.groups()
    111→    sec = int(sec_str) if sec_str else 0
    112→    micros = int(micros_str.ljust(6, "0")) if micros_str else 0
-   113→    return time(int(hour_str), int(minute_str), sec, micros)
+      →…
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
    117→    if match.group("floatpart"):
    118→        return parse_float(match.group())

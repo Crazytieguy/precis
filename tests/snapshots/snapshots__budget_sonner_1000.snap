@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1071 words)
+budget: 1000 (1023 words)
 
 README.md
      5→## Usage
@@ -38,18 +38,16 @@ src/assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
      6→  switch (type) {
      7→    case 'success':
-     8→      return SuccessIcon;
       →…
-    24→const bars …
+    24→const bars = Array(12).fill(0);
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     27→  return (
     28→    <div className={['sonner-loading-wrapper', className].filter(Boolean).join(' ')} data-visible={visible}>
-    29→      <div className="sonner-spinner">
       →…
-    38→const SuccessIcon …
-    48→const WarningIcon …
-    58→const InfoIcon …
-    68→const ErrorIcon …
+    38→const SuccessIcon = (
+    48→const WarningIcon = (
+    58→const InfoIcon = (
+    68→const ErrorIcon = (
     78→export const CloseIcon = (
     79→  <svg
     80→    xmlns="http://www.w3.org/2000/svg"
@@ -67,24 +65,23 @@ src/hooks.tsx
      3→export const useIsDocumentHidden = () => {
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
      5→
-     6→  React.useEffect(() => {
       →…
 src/index.tsx
-    22→const VISIBLE_TOASTS_AMOUNT …
-    25→const VIEWPORT_OFFSET …
-    28→const MOBILE_VIEWPORT_OFFSET …
-    31→const TOAST_LIFETIME …
-    34→const TOAST_WIDTH …
-    37→const GAP …
-    40→const SWIPE_THRESHOLD …
-    43→const TIME_BEFORE_UNMOUNT …
+    22→const VISIBLE_TOASTS_AMOUNT = 3;
+    25→const VIEWPORT_OFFSET = '24px';
+    28→const MOBILE_VIEWPORT_OFFSET = '16px';
+    31→const TOAST_LIFETIME = 4000;
+    34→const TOAST_WIDTH = 356;
+    37→const GAP = 14;
+    40→const SWIPE_THRESHOLD = 45;
+    43→const TIME_BEFORE_UNMOUNT = 200;
     45→function cn(...classes: (string | undefined)[]) {
     49→function getDefaultSwipeDirections(position: string): Array<SwipeDirection> {
     64→const Toast = (props: ToastProps) => {
    507→function getDocumentDirection(): ToasterProps['dir'] {
    520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
    552→function useSonner() {
-   593→const Toaster …
+   593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
 src/state.ts
     15→type titleT …
     17→class Observer {
@@ -92,7 +89,7 @@ src/state.ts
     19→  toasts: Array<ToastT | ToastToDismiss>;
     20→  dismissedToasts: Set<string | number>;
     21→
-    22→  constructor() {
+    22→  constructor …
     29→  subscribe …
     38→  publish …
     42→  addToast …
@@ -109,13 +106,7 @@ src/state.ts
    249→  getActiveToasts …
    254→export const ToastState …
    257→const toastFunction = (message: titleT, data?: ExternalToast) => {
-   258→  const id = data?.id || toastsCounter++;
-   259→
-      →…
    268→const isHttpResponse = (data: any): data is Response => {
-   269→  return (
-   270→    data &&
-      →…
    279→const basicToast …
    281→const getHistory = () => ToastState.toasts;
    282→const getToasts = () => ToastState.getActiveToasts();
@@ -157,7 +148,6 @@ src/types.ts
    106→  closeButton?: boolean;
    107→  descriptionClassName?: string;
    108→  style?: React.CSSProperties;
-   109→  cancelButtonStyle?: React.CSSProperties;
       →…
    118→type Offset …
    128→export interface ToasterProps {
@@ -219,9 +209,7 @@ website/next.config.js
      8→const withNextra = require('nextra')({
      9→  title: 'Sonner',
     10→  theme: 'nextra-theme-docs',
-    11→  themeConfig: './theme.config.jsx',
-    12→  defaultShowCopyCode: true,
-    13→});
+      →…
 website/src/components/CodeBlock/index.tsx
      9→const variants = {
     14→const theme = {
@@ -236,15 +224,12 @@ website/src/components/ExpandModes/index.tsx
      6→  setExpand,
      7→}: {
      8→  expand: boolean;
-     9→  setExpand: React.Dispatch<React.SetStateAction<boolean>>;
-    10→}) => {
       →…
 website/src/components/Footer/index.tsx
      5→export const Footer = () => {
      6→  return (
      7→    <footer className={styles.wrapper}>
      8→      <div className="container">
-     9→        <p className={styles.p}>
       →…
 website/src/components/Head/index.tsx
      3→const ogImage = 'https://sonner.emilkowal.ski/og.png';
@@ -254,7 +239,6 @@ website/src/components/Hero/index.tsx
      7→  return (
      8→    <div className={styles.wrapper}>
      9→      <div className={styles.toastWrapper}>
-    10→        <div className={styles.toast} />
       →…
 website/src/components/How/How.tsx
      3→export const How = () => {
@@ -273,9 +257,6 @@ website/src/components/Other/Other.tsx
      8→  setRichColors,
      9→  setCloseButton,
     10→}: {
-    11→  setRichColors: React.Dispatch<React.SetStateAction<boolean>>;
-    12→  setCloseButton: React.Dispatch<React.SetStateAction<boolean>>;
-    13→}) => {
       →…
 website/src/components/Position/index.tsx
      5→const positions = ['top-left', 'top-center', 'top-right', 'bottom-left', 'bottom-center', 'bottom-right'] as const;
@@ -284,9 +265,6 @@ website/src/components/Position/index.tsx
     10→  position: activePosition,
     11→  setPosition,
     12→}: {
-    13→  position: Position;
-    14→  setPosition: React.Dispatch<React.SetStateAction<Position>>;
-    15→}) => {
       →…
 website/src/components/Types/Types.tsx
      5→const promiseCode = '`${data.name} toast has been added`';

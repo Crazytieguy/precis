@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3981 words)
+budget: 4000 (3969 words)
 
 README.md
     28→## Features
@@ -105,12 +105,6 @@ site/components/code.tsx
     30→      },
     31→    },
     32→    {
-    33→      types: ['property', 'function'],
-    34→      style: {
-    35→        color: '#9a86fd',
-    36→      },
-    37→    },
-    38→    {
       →…
    104→export const Code: React.FC<{
    105→  snippet: string;
@@ -449,7 +443,6 @@ site/pages/_app.tsx
     29→      </h1>
     30→    );
     31→  },
-    32→  h2: (props) => {
       →…
     71→function MyApp({ Component, pageProps }) {
     72→  return (
@@ -699,6 +692,7 @@ src/components/toast-bar.tsx
     64→  const [enter, exit] = prefersReducedMotion()
     65→    ? [fadeInAnimation, fadeOutAnimation]
     66→    : [enterAnimation(factor), exitAnimation(factor)];
+    67→
       →…
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
@@ -802,6 +796,7 @@ src/components/toaster.tsx
     19→  onHeightUpdate,
     20→  children,
     21→}: ToastWrapperProps) => {
+    22→  const ref = React.useCallback(
       →…
     47→const getPositionStyle = (
     48→  position: ToastPosition,
@@ -813,6 +808,7 @@ src/components/toaster.tsx
     54→    ? {
     55→        justifyContent: 'center',
     56→      }
+    57→    : position.includes('right')
       →…
     76→const activeClass = css`
     77→  z-index: 9999;

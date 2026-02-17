@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1681 words)
+budget: 2000 (1687 words)
 
 __init__.py
      6→def load_ipython_extension(ipython: Any) -> None:
@@ -14,6 +14,8 @@ __init__.py
     17→    quote: Optional[str] = None,
     18→):
     19→    """Returns a string suitable for running as a shell script.
+    20→
+    21→    Useful for converting a arguments passed to a fabric task
       →…
     42→__all__ = [
     43→    "get_cli_string",
@@ -28,6 +30,8 @@ __init__.py
 cli.py
     24→def enumerate_env() -> Optional[str]:
     25→    """
+    26→    Return a path for the ${pwd}/.env file.
+    27→
       →…
     60→@click.version_option(version=__version__)
     61→@click.pass_context
@@ -112,6 +116,8 @@ cli.py
    190→    run_command([*commandline, *ctx.args], dotenv_as_dict)
    193→def run_command(command: List[str], env: Dict[str, str]) -> None:
    194→    """Replace the current process with the specified command.
+   195→
+   196→    Replaces the current process with the specified command and the variables from `env`
       →…
 ipython.py
     11→@magics_class
@@ -197,40 +203,11 @@ main.py
     78→    def dict(self) -> Dict[str, Optional[str]]:
     79→        """Return dotenv as dict"""
     80→        if self._dict:
-    81→            return self._dict
-    82→
-    83→        raw_values = self.parse()
-    84→
-    85→        if self.interpolate:
-    86→            self._dict = OrderedDict(
-    87→                resolve_variables(raw_values, override=self.override)
-    88→            )
-    89→        else:
-    90→            self._dict = OrderedDict(raw_values)
-    91→
-    92→        return self._dict
-    93→
     94→    def parse(self) -> Iterator[Tuple[str, Optional[str]]]:
-    95→        with self._get_stream() as stream:
-    96→            for mapping in with_warn_for_invalid_lines(parse_stream(stream)):
-    97→                if mapping.key is not None:
-    98→                    yield mapping.key, mapping.value
-    99→
    100→    def set_as_environment_variables(self) -> bool:
    101→        """
    102→        Load the current dotenv as system environment variable.
    103→        """
-   104→        if not self.dict():
-   105→            return False
-   106→
-   107→        for k, v in self.dict().items():
-   108→            if k in os.environ and not self.override:
-   109→                continue
-   110→            if v is not None:
-   111→                os.environ[k] = v
-   112→
-   113→        return True
-   114→
    115→    def get(self, key: str) -> Optional[str]:
    116→        """ """
    128→def get_key(
@@ -239,6 +216,8 @@ main.py
    131→    encoding: Optional[str] = "utf-8",
    132→) -> Optional[str]:
    133→    """
+   134→    Get the value of a given key from the given .env.
+   135→
       →…
    141→@contextmanager
    142→def rewrite(
@@ -269,6 +248,8 @@ main.py
    169→    encoding: Optional[str] = "utf-8",
    170→) -> Tuple[Optional[bool], str, str]:
    171→    """
+   172→    Adds or Updates a key/value to the given .env
+   173→
       →…
    211→def unset_key(
    212→    dotenv_path: StrPath,
@@ -277,6 +258,8 @@ main.py
    215→    encoding: Optional[str] = "utf-8",
    216→) -> Tuple[Optional[bool], str]:
    217→    """
+   218→    Removes a given key from the given `.env` file.
+   219→
       →…
    244→def resolve_variables(
    245→    values: Iterable[Tuple[str, Optional[str]]],
@@ -296,6 +279,8 @@ main.py
    290→    usecwd: bool = False,
    291→) -> str:
    292→    """
+   293→    Search in increasingly higher folders for the given file
+   294→
       →…
    338→def load_dotenv(
    339→    dotenv_path: Optional[StrPath] = None,
@@ -306,6 +291,8 @@ main.py
    344→    encoding: Optional[str] = "utf-8",
    345→) -> bool:
    346→    """Parse a .env file and then load all the variables found as environment variables.
+   347→
+   348→    Parameters:
       →…
    387→def dotenv_values(
    388→    dotenv_path: Optional[StrPath] = None,
@@ -315,6 +302,8 @@ main.py
    392→    encoding: Optional[str] = "utf-8",
    393→) -> Dict[str, Optional[str]]:
    394→    """
+   395→    Parse a .env file and return its content as a dict.
+   396→
       →…
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """

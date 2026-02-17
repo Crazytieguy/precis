@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4096 words)
+budget: 4000 (3925 words)
 
 CHANGELOG.md
      3→## mdBook 0.5.2 …
@@ -82,13 +82,6 @@ crates/mdbook-compare/README.md
       →…
 crates/mdbook-compare/src/main.rs
      6→macro_rules! error {
-    14→fn main …
-    39→fn clean …
-    46→fn build …
-    61→fn process …
-    78→fn process_html …
-    88→fn tidy …
-   105→fn diff …
 crates/mdbook-core/README.md
      1→# mdbook-core
      2→
@@ -215,7 +208,6 @@ crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     26→            cmd,
     27→            root,
     28→            optional,
-    29→        }
       →…
     51→    /// The command this `Preprocessor` will invoke.
     52→    pub fn cmd(&self) -> &str {
@@ -308,8 +300,6 @@ crates/mdbook-driver/src/lib.rs
      4→//! [mdBook](https://rust-lang.github.io/mdBook/). There are several
      5→//! reasons for using the programmatic API (over the CLI):
      6→//!
-     7→//! - Integrate mdBook in a current project.
-     8→//! - Extend the capabilities of mdBook.
       →…
     67→pub mod builtin_preprocessors;
     68→pub mod builtin_renderers;
@@ -322,14 +312,8 @@ crates/mdbook-driver/src/mdbook/tests.rs
    225→struct BoolPreprocessor(bool);
    226→impl Preprocessor for BoolPreprocessor {
    227→    fn name(&self) -> &str {
-   228→        "bool-preprocessor"
-      →…
    231→    fn run(&self, _ctx: &PreprocessorContext, _book: Book) -> Result<Book> {
-   232→        unimplemented!()
-      →…
    235→    fn supports_renderer(&self, _renderer: &str) -> Result<bool> {
-   236→        Ok(self.0)
-      →…
 crates/mdbook-driver/src/mdbook.rs
     28→/// The object used to manage and build a book.
     29→pub struct MDBook {
@@ -385,12 +369,6 @@ crates/mdbook-html/front-end/js/book.js
 crates/mdbook-html/src/html/admonitions.rs
     18→pub(crate) fn select_tag(kind: BlockQuoteKind) -> (&'static str, &'static str, &'static str) {
 crates/mdbook-html/src/html/mod.rs
-    19→mod admonitions;
-    20→mod hide_lines;
-    21→mod print;
-    22→mod serialize;
-    25→mod tokenizer;
-    26→mod tree;
     34→pub(crate) struct HtmlRenderOptions<'a> {
     35→    /// Options for parsing markdown.
       →…
@@ -418,8 +396,8 @@ crates/mdbook-html/src/html/tree.rs
    160→pub(crate) struct MarkdownTreeBuilder<'opts, 'event, EventIter> {
    161→    /// [`pulldown_cmark`] iterator of [`pulldown_cmark::Event`] elements.
       →…
-   369→    fn start_tag …
-   585→    fn end_tag …
+   369→    fn start_tag(&mut self, tag: Tag<'event>) {
+   585→    fn end_tag(&mut self, tag: TagEnd) {
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     19→/// The HTML renderer for mdBook.
     20→#[derive(Default)]
@@ -517,14 +495,10 @@ crates/mdbook-html/src/theme/mod.rs
       →…
     63→impl Theme {
     64→    /// Creates a `Theme` from the given `theme_dir`.
-    65→    /// If a file is found in the theme dir, it will override the default version.
-    66→    pub fn new<P: AsRef<Path>>(theme_dir: P) -> Self {
-    67→        let theme_dir = theme_dir.as_ref();
       →…
+    66→    pub fn new<P: AsRef<Path>>(theme_dir: P) -> Self {
    165→    /// Copies the default theme files to the theme directory.
    166→    pub fn copy_theme(html_config: &HtmlConfig, root: &Path) -> Result<()> {
-   167→        let themedir = html_config.theme_dir(root);
-      →…
    200→impl Default for Theme {
    201→    fn default() -> Theme {
    202→        Theme {
@@ -592,8 +566,6 @@ crates/mdbook-markdown/src/lib.rs
     35→        MarkdownOptions {
     36→            smart_punctuation: true,
     37→            definition_lists: true,
-    38→            admonitions: true,
-    39→        }
       →…
     43→/// Creates a new pulldown-cmark parser of the given text.
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
@@ -817,8 +789,6 @@ guide/guide-helper/src/lib.rs
     14→    let book_version = Version::parse(&ctx.mdbook_version)?;
     15→    let version_req = VersionReq::parse(mdbook_preprocessor::MDBOOK_VERSION)?;
     16→
-    17→    if !version_req.matches(&book_version) {
-    18→        eprintln!(
       →…
     33→struct GuideHelper;
     35→impl Preprocessor for GuideHelper {
@@ -901,28 +871,6 @@ guide/src/for_developers/README.md
     30→## Using `mdbook` as a library
     31→
       →…
-guide/src/for_developers/backends.md
-     1→# Alternative backends
-     2→
-      →…
-    13→## Setting up
-    14→
-      →…
-    53→## Inspecting the book
-    54→
-      →…
-    82→## Enabling the backend
-    83→
-      →…
-   159→## Configuration
-   160→
-      →…
-   219→## Output and signalling failure
-   220→
-      →…
-   322→## Wrapping up
-   323→
-      →…
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     12→fn main() {
     40→fn count_words(ch: &Chapter) -> usize {
@@ -932,19 +880,6 @@ guide/src/for_developers/mdbook-wordcount/src/main.rs
     47→    pub ignores: Vec<String>,
     48→    pub deny_odds: bool,
     49→}
-guide/src/for_developers/preprocessors.md
-     1→# Preprocessors
-     2→
-      →…
-    13→## Hooking into MDBook
-    14→
-      →…
-    46→## Hints for implementing a preprocessor
-    47→
-      →…
-    74→## Implementing a preprocessor with a different language
-    75→
-      →…
 guide/src/format/README.md
      1→# Format
      2→
@@ -1011,7 +946,6 @@ guide/src/misc/contributors.md
      5→
      6→- [mdinger](https://github.com/mdinger)
      7→- Kevin ([kbknapp](https://github.com/kbknapp))
-     8→- Steve Klabnik ([steveklabnik](https://github.com/steveklabnik))
       →…
 src/cmd/clean.rs
     36→/// Formats a number of bytes into a human readable SI-prefixed size.
@@ -1096,8 +1030,6 @@ src/cmd/watch/poller.rs
     25→        std::process::exit(1);
     26→    });
     27→
-    28→    let mut watcher = Watcher::new(book_dir);
-    29→
       →…
     78→struct PathData {
     79→    file_type: FileType,
