@@ -81,6 +81,8 @@ pub enum FileRole {
     Readme,
     /// CHANGELOG.md, CHANGES.md, HISTORY.md, NEWS.md, etc.
     Changelog,
+    /// Translated/localized files (e.g., README_zh-CN.md, README-es.md).
+    Translated,
     /// Everything else.
     Normal,
 }
@@ -88,17 +90,45 @@ pub enum FileRole {
 impl FileRole {
     pub fn from_filename(name: &str) -> Self {
         let lower = name.to_ascii_lowercase();
-        // Strip extension for matching
-        let stem = lower.strip_suffix(".md")
-            .or_else(|| lower.strip_suffix(".markdown"))
-            .or_else(|| lower.strip_suffix(".txt"))
-            .unwrap_or(&lower);
+        // Strip document extension for matching
+        let (stem, is_doc) = lower.strip_suffix(".md").map(|s| (s, true))
+            .or_else(|| lower.strip_suffix(".markdown").map(|s| (s, true)))
+            .or_else(|| lower.strip_suffix(".txt").map(|s| (s, true)))
+            .unwrap_or((&lower, false));
         match stem {
             "readme" => FileRole::Readme,
             "changelog" | "changes" | "history" | "news" | "releases" => FileRole::Changelog,
+            _ if is_doc && has_locale_suffix(stem) => FileRole::Translated,
             _ => FileRole::Normal,
         }
     }
+}
+
+/// Detect locale suffixes like `_zh-CN`, `-es`, `.ja`, `_pt-BR`.
+/// Matches `[_.-]xx` or `[_.-]xx[-_]yy` at end of stem, where xx/yy are
+/// 2-letter ASCII alpha codes (ISO 639-1 language / ISO 3166-1 region).
+fn has_locale_suffix(stem: &str) -> bool {
+    let bytes = stem.as_bytes();
+    let len = bytes.len();
+    // Minimum: separator + 2-letter code = 3 chars, plus at least 1 char before
+    if len < 4 {
+        return false;
+    }
+    let is_sep = |b: u8| b == b'_' || b == b'-' || b == b'.';
+    let is_alpha = |b: u8| b.is_ascii_lowercase();
+
+    // Try `[sep]xx[-_]yy` at end (6 chars)
+    if len >= 7 && is_sep(bytes[len - 6]) && is_alpha(bytes[len - 5])
+        && is_alpha(bytes[len - 4]) && (bytes[len - 3] == b'-' || bytes[len - 3] == b'_')
+        && is_alpha(bytes[len - 2]) && is_alpha(bytes[len - 1])
+    {
+        return true;
+    }
+    // Try `[sep]xx` at end (3 chars)
+    if is_sep(bytes[len - 3]) && is_alpha(bytes[len - 2]) && is_alpha(bytes[len - 1]) {
+        return true;
+    }
+    false
 }
 
 /// Grouping dimensions. All symbols sharing a GroupKey are treated identically.
@@ -370,10 +400,11 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     let sibling_count = group.symbols.len().max(1) as f64;
     let sibling_factor = 1.0 / (1.0 + sibling_count.ln() * 0.1);
 
-    // File role: README files are high-signal, changelogs are low-signal.
+    // File role: README files are high-signal, changelogs and translations are low-signal.
     let file_role_factor = match key.file_role {
         FileRole::Readme => 1.5,
         FileRole::Normal => 1.0,
+        FileRole::Translated => 0.1,
         FileRole::Changelog => 0.1,
     };
 

@@ -2,69 +2,44 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (990 words)
+budget: 1000 (989 words)
 
 CONTRIBUTING.md
-     1→# Contributing …
-    11→## Testing …
-    19→## Code Style …
+     1→# Contributing
+     3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
+     4→2. Install dependencies (`npm install`)
+     5→3. Create your feature branch (`git checkout -b my-new-feature`)
+     6→4. Commit your changes (`git commit -am 'Added some feature'`)
+     7→5. Test your changes (`npm test`)
+     8→6. Push to the branch (`git push origin my-new-feature`)
+     9→7. [Create new Pull Request](https://help.github.com/articles/creating-a-pull-request/)
+    10→
+    11→## Testing
+    13→We use [TAP](https://github.com/tapjs/node-tap) to write tests. Run our test suite with this command:
+    14→
+    15→```
+    16→npm test
+    17→```
+    18→
+    19→## Code Style
+    21→We use [standard](https://www.npmjs.com/package/standard) and [editorconfig](http://editorconfig.org) to maintain code style and best practices. Please make sure your PR adheres to the guides by running:
+    22→
+    23→```
+    24→npm run lint
+    25→```
 README-es.md
-     1→# dotenv [![NPM version](https://img.shields.io/npm/v/dotenv.svg?style=flat-square)](https://www.npmjs.com/package/dotenv) [![downloads](https://img.shields.io/npm/dw/dotenv)](https://www.npmjs.com/package/dotenv) …
-    11→## Usage …
-    39→## Advanced …
-   319→## Agentes …
-   331→### Inicio rápido …
-   357→## FAQ …
-   579→## Docs …
-   587→### Config …
-   605→#### Options …
    607→##### path
    609→Default: `path.resolve(process.cwd(), '.env')`
    610→
-   611→Specify a custom path if your file containing environment variables is located elsewhere.
-   612→
-   613→```js
-   614→require('dotenv').config({ path: '/custom/path/to/.env' })
-   615→```
-   616→
-   617→By default, `config` will look for a file called .env in the current working directory.
-   618→
-   619→Pass in multiple files as an array, and they will be parsed in order and combined with `process.env` (or `option.processEnv`, if set). The first value set for a variable will win, unless the `options.override` flag is set, in which case the last value set will win.  If a value already exists in `process.env` and the `options.override` flag is NOT set, no changes will be made to that value. 
-   620→
-   621→```js  
-   622→require('dotenv').config({ path: ['.env.local', '.env'] })
-   623→```
-   624→
-   625→##### quiet …
-   648→##### encoding …
-   658→##### debug …
-   668→##### override …
-   678→##### processEnv …
-   692→### Parse …
-   705→#### Options …
+      →…
    707→##### debug
    709→Default: `false`
    710→
-   711→Turn on logging to help debug why certain keys or values are not being set as you expect.
-   712→
-   713→```js
-   714→const dotenv = require('dotenv')
-   715→const buf = Buffer.from('hello world')
-   716→const opt = { debug: true }
-   717→const config = dotenv.parse(buf, opt)
-   718→// expect a debug message because the buffer is not in KEY=VAL form
-   719→```
-   720→
-   721→### Populate …
-   748→#### options …
+      →…
    750→##### Debug
    752→Default: `false`
    753→
-   754→Turn on logging to help debug why certain keys or values are not being populated as you expect.
-   755→
-   756→##### override …
-   764→## CHANGELOG …
-   770→## Who's using dotenv? …
+      →…
 README.md
      1→# dotenv [![NPM version](https://img.shields.io/npm/v/dotenv.svg?style=flat-square)](https://www.npmjs.com/package/dotenv) [![downloads](https://img.shields.io/npm/dw/dotenv)](https://www.npmjs.com/package/dotenv)
      3→<img src="https://raw.githubusercontent.com/motdotla/dotenv/master/dotenv.svg" alt="dotenv" align="right" width="200" />
@@ -200,6 +175,35 @@ lib/main.d.ts
     35→  path?: string | string[] | URL;
     36→
     37→  /**
+    38→   * Default: `utf8`
+    39→   *
+    40→   * Specify the encoding of your file containing environment variables.
+    41→   *
+    42→   * example: `require('dotenv').config({ encoding: 'latin1' })`
+    43→   */
+    44→  encoding?: string;
+    45→
+    46→  /**
+    47→   * Default: `false`
+    48→   *
+    49→   * Suppress all output (except errors).
+    50→   *
+    51→   * example: `require('dotenv').config({ quiet: true })`
+    52→   */
+    53→  quiet?: boolean;
+    54→
+    55→  /**
+    56→   * Default: `false`
+    57→   *
+    58→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
+    59→   *
+    60→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
+    61→   */
+    62→  debug?: boolean;
+    63→
+    64→  /**
+    65→   * Default: `false`
+    66→   *
       →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
@@ -226,7 +230,12 @@ lib/main.d.ts
    116→  /**
    117→   * Default: `false`
    118→   *
-      →…
+   119→   * Override any environment variables that have already been set on your machine with values from your .env file.
+   120→   *
+   121→   * example: `require('dotenv').config({ override: true })`
+   122→   */
+   123→  override?: boolean;
+   124→}
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;
    128→}
@@ -234,28 +243,26 @@ lib/main.js
      7→const version = packageJson.version
     10→const TIPS = [
     11→  '🔐 encrypt with Dotenvx: https://dotenvx.com',
-    12→  '🔐 prevent committing .env to code: https://dotenvx.com/precommit',
       →…
-    27→function _getRandomTip …
-    31→function parseBoolean …
-    38→function supportsAnsi …
-    42→function dim …
+    27→function _getRandomTip () {
+    31→function parseBoolean (value) {
+    38→function supportsAnsi () {
+    42→function dim (text) {
     46→const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
-    49→function parse …
-    87→function _parseVault …
-   130→function _warn …
-   134→function _debug …
-   138→function _log …
-   142→function _dotenvKey …
-   157→function _instructions …
-   200→function _vaultPath …
-   224→function _resolveHome …
-   228→function _configVault …
-   248→function configDotenv …
-   328→function config …
-   346→function decrypt …
-   378→function populate …
+    49→function parse (src) {
+    87→function _parseVault (options) {
+   130→function _warn (message) {
+   134→function _debug (message) {
+   138→function _log (message) {
+   142→function _dotenvKey (options) {
+   157→function _instructions (result, dotenvKey) {
+   200→function _vaultPath (options) {
+   224→function _resolveHome (envPath) {
+   228→function _configVault (options) {
+   248→function configDotenv (options) {
+   328→function config (options) {
+   346→function decrypt (encrypted, keyStr) {
+   378→function populate (processEnv, parsed, options = {}) {
    413→const DotenvModule = {
    414→  configDotenv,
-   415→  _configVault,
       →…

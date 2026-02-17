@@ -2,15 +2,20 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (506 words)
+budget: 500 (504 words)
 
 CONTRIBUTING.md
+     1→# Contributing
      3→## Issues
      5→New issues are welcome, whether questions or suggestions or reporting bugs.
      6→You are also welcome to contribute by adding helpful comments on an existing issue.
      7→
      8→We love reproducible code examples in questions and answers.
      9→
+      →…
+    13→## Pull Requests
+    15→Pull Requests will be considered. Please submit pull requests against the develop branch.
+    16→
       →…
 Readme.md
    968→### .parse() and .parseAsync()
@@ -31,8 +36,11 @@ Readme_zh-CN.md
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
    911→如果参数遵循与 node 不同的约定，可以在第二个参数中传递`from`选项：
-   912→
-   913→- `node`：默认值，`argv[0]`是应用，`argv[1]`是要跑的脚本，后续为用户参数；
+      →…
+SECURITY.md
+     1→# Security Policy
+     3→To report a security vulnerability, please use the
+     4→[Tidelift security contact](https://tidelift.com/security).
       →…
 docs/deprecated.md
    229→### Short option flag longer than a single character
@@ -113,22 +121,20 @@ typings/index.d.ts
     48→export class Argument {
     95→export class Option {
    210→export class Help {
-   340→export type HelpConfiguration = Partial<Help>;
+   340→export type HelpConfiguration …
    342→export interface ParseOptions {
    345→export interface HelpContext {
    349→export interface AddHelpTextContext {
    354→export interface OutputConfiguration {
-   367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
-   368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
-   370→export type OptionValueSource =
-   371→  | LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string>
-   372→  | undefined;
-   374→export type OptionValues = Record<string, any>;
+   367→export type AddHelpTextPosition …
+   368→export type HookEvent …
+   370→export type OptionValueSource …
+   374→export type OptionValues …
    376→export class Command {
   1094→export interface CommandOptions {
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1104→export interface ParseOptionsResult {
-  1113→export const program: Command;
+  1113→export const program …
 typings/index.test-d.ts
    384→interface MyCheeseOption {
    385→  cheese: string;
@@ -138,5 +144,3 @@ typings/index.test-d.ts
    511→    return new MyCommand(name);
    512→  }
    513→
-   514→  myFunction(): void {
-      →…

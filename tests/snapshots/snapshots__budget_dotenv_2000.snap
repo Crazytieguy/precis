@@ -2,55 +2,41 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1979 words)
+budget: 2000 (1973 words)
 
 CONTRIBUTING.md
      1→# Contributing
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
      4→2. Install dependencies (`npm install`)
-      →…
+     5→3. Create your feature branch (`git checkout -b my-new-feature`)
+     6→4. Commit your changes (`git commit -am 'Added some feature'`)
+     7→5. Test your changes (`npm test`)
+     8→6. Push to the branch (`git push origin my-new-feature`)
+     9→7. [Create new Pull Request](https://help.github.com/articles/creating-a-pull-request/)
+    10→
     11→## Testing
     13→We use [TAP](https://github.com/tapjs/node-tap) to write tests. Run our test suite with this command:
     14→
-      →…
+    15→```
+    16→npm test
+    17→```
+    18→
     19→## Code Style
     21→We use [standard](https://www.npmjs.com/package/standard) and [editorconfig](http://editorconfig.org) to maintain code style and best practices. Please make sure your PR adheres to the guides by running:
     22→
-      →…
+    23→```
+    24→npm run lint
+    25→```
 README-es.md
-     1→# dotenv [![NPM version](https://img.shields.io/npm/v/dotenv.svg?style=flat-square)](https://www.npmjs.com/package/dotenv) [![downloads](https://img.shields.io/npm/dw/dotenv)](https://www.npmjs.com/package/dotenv)
-     3→<img src="https://raw.githubusercontent.com/motdotla/dotenv/master/dotenv.svg" alt="dotenv" align="right" width="200" />
-     4→
-      →…
-    11→## Usage
-    13→Install it.
-    14→
-      →…
-    39→## Advanced
-    41→<details><summary>ES6</summary><br>
-    42→
-      →…
-   319→## Agentes
-   321→<img src="https://dotenvx.com/assets/img/as2/9.jpg" height="400" alt="dotenvx-as2" align="right"/>
-   322→
-      →…
-   331→### Inicio rápido
-   333→Instala vestauth e inicializa tu agente.
-   334→
-      →…
-   357→## FAQ
-   359→<details><summary>Should I commit my `.env` file?</summary><br/>
-   360→
-      →…
-   579→## Docs
-   581→Dotenv exposes four functions:
-   582→
-      →…
-   587→### Config
-   589→`config` will read your `.env` file, parse the contents, assign it to
-   590→[`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env),
-      →…
-   605→#### Options
+     1→# dotenv [![NPM version](https://img.shields.io/npm/v/dotenv.svg?style=flat-square)](https://www.npmjs.com/package/dotenv) [![downloads](https://img.shields.io/npm/dw/dotenv)](https://www.npmjs.com/package/dotenv) …
+    11→## Usage …
+    39→## Advanced …
+   319→## Agentes …
+   331→### Inicio rápido …
+   357→## FAQ …
+   579→## Docs …
+   587→### Config …
+   605→#### Options …
    607→##### path
    609→Default: `path.resolve(process.cwd(), '.env')`
    610→
@@ -62,37 +48,14 @@ README-es.md
    616→
    617→By default, `config` will look for a file called .env in the current working directory.
    618→
-   619→Pass in multiple files as an array, and they will be parsed in order and combined with `process.env` (or `option.processEnv`, if set). The first value set for a variable will win, unless the `options.override` flag is set, in which case the last value set will win.  If a value already exists in `process.env` and the `options.override` flag is NOT set, no changes will be made to that value. 
-   620→
-   621→```js  
-   622→require('dotenv').config({ path: ['.env.local', '.env'] })
-   623→```
-   624→
-   625→##### quiet
-   627→Default: `false`
-   628→
       →…
-   648→##### encoding
-   650→Default: `utf8`
-   651→
-      →…
-   658→##### debug
-   660→Default: `false`
-   661→
-      →…
-   668→##### override
-   670→Default: `false`
-   671→
-      →…
-   678→##### processEnv
-   680→Default: `process.env`
-   681→
-      →…
-   692→### Parse
-   694→The engine which parses the contents of your file containing environment
-   695→variables is available to use. It accepts a String or Buffer and will return
-      →…
-   705→#### Options
+   625→##### quiet …
+   648→##### encoding …
+   658→##### debug …
+   668→##### override …
+   678→##### processEnv …
+   692→### Parse …
+   705→#### Options …
    707→##### debug
    709→Default: `false`
    710→
@@ -104,30 +67,17 @@ README-es.md
    716→const opt = { debug: true }
    717→const config = dotenv.parse(buf, opt)
    718→// expect a debug message because the buffer is not in KEY=VAL form
-   719→```
-   720→
-   721→### Populate
-   723→The engine which populates the contents of your .env file to `process.env` is available for use. It accepts a target, a source, and options. This is useful for power users who want to supply their own objects.
-   724→
       →…
-   748→#### options
+   721→### Populate …
+   748→#### options …
    750→##### Debug
    752→Default: `false`
    753→
    754→Turn on logging to help debug why certain keys or values are not being populated as you expect.
    755→
-   756→##### override
-   758→Default: `false`
-   759→
-      →…
-   764→## CHANGELOG
-   766→See [CHANGELOG.md](CHANGELOG.md)
-   767→
-      →…
-   770→## Who's using dotenv?
-   772→[These npm modules depend on it.](https://www.npmjs.com/browse/depended/dotenv)
-   773→
-      →…
+   756→##### override …
+   764→## CHANGELOG …
+   770→## Who's using dotenv? …
 README.md
      1→# dotenv [![NPM version](https://img.shields.io/npm/v/dotenv.svg?style=flat-square)](https://www.npmjs.com/package/dotenv) [![downloads](https://img.shields.io/npm/dw/dotenv)](https://www.npmjs.com/package/dotenv)
      3→<img src="https://raw.githubusercontent.com/motdotla/dotenv/master/dotenv.svg" alt="dotenv" align="right" width="200" />
@@ -152,6 +102,7 @@ README.md
     23→S3_BUCKET="YOURS3BUCKET"
     24→SECRET_KEY="YOURSECRETKEYGOESHERE"
     25→```
+    26→
       →…
     39→## Advanced
     41→<details><summary>ES6</summary><br>
@@ -167,6 +118,7 @@ README.md
     51→```javascript
     52→import dotenv from 'dotenv'
     53→dotenv.config({ path: '/custom/path/to/.env' })
+    54→```
       →…
    319→## Agents
    321→<img src="https://dotenvx.com/assets/img/as2/9.jpg" height="400" alt="dotenvx-as2" align="right"/>
@@ -193,6 +145,7 @@ README.md
    343→```bash
    344→vestauth agent curl -X POST https://as2.dotenvx.com/set -d '{"KEY":"value"}'
    345→```
+   346→
       →…
    357→## FAQ
    359→<details><summary>Should I commit my `.env` file?</summary><br/>
@@ -208,6 +161,7 @@ README.md
    369→
    370→</details>
    371→<details><summary>Should I have multiple `.env` files?</summary><br/>
+   372→
       →…
    579→## Docs
    581→Dotenv exposes four functions:
@@ -230,6 +184,7 @@ README.md
    599→
    600→console.log(result.parsed)
    601→```
+   602→
       →…
    605→#### Options
    607→##### path
@@ -263,6 +218,7 @@ README.md
    637→```ini
    638→# .env
    639→HELLO=World
+   640→```
       →…
    648→##### encoding
    650→Default: `utf8`
@@ -344,6 +300,7 @@ README.md
    733→console.log(process.env.HELLO) // world
    734→```
    735→
+   736→For example, customizing the source AND target:
       →…
    748→#### options
    750→##### Debug
@@ -438,7 +395,12 @@ lib/main.d.ts
     82→  /**
     83→   * Default: `undefined`
     84→   *
-      →…
+    85→   * Pass the DOTENV_KEY directly to config options. Defaults to looking for process.env.DOTENV_KEY environment variable. Note this only applies to decrypting .env.vault files. If passed as null or undefined, or not passed at all, dotenv falls back to its traditional job of parsing a .env file.
+    86→   *
+    87→   * example: `require('dotenv').config({ DOTENV_KEY: 'dotenv://:key_1234…@dotenvx.com/vault/.env.vault?environment=production' })`
+    88→   */
+    89→  DOTENV_KEY?: string;
+    90→}
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
     94→  parsed?: DotenvParseOutput;
@@ -478,6 +440,15 @@ lib/main.js
     10→const TIPS = [
     11→  '🔐 encrypt with Dotenvx: https://dotenvx.com',
     12→  '🔐 prevent committing .env to code: https://dotenvx.com/precommit',
+    13→  '🔐 prevent building .env in docker: https://dotenvx.com/prebuild',
+    14→  '🤖 agentic secret storage: https://dotenvx.com/as2',
+    15→  '⚡️ secrets for agents: https://dotenvx.com/as2',
+    16→  '🛡️ auth for agents: https://vestauth.com',
+    17→  '🛠️  run anywhere with `dotenvx run -- yourcommand`',
+    18→  '⚙️  specify custom .env file path with { path: \'/custom/path/.env\' }',
+    19→  '⚙️  enable debug logging with { debug: true }',
+    20→  '⚙️  override existing env vars with { override: true }',
+    21→  '⚙️  suppress all logs with { quiet: true }',
       →…
     27→function _getRandomTip () {
     31→function parseBoolean (value) {
@@ -501,4 +472,9 @@ lib/main.js
    413→const DotenvModule = {
    414→  configDotenv,
    415→  _configVault,
-      →…
+   416→  _parseVault,
+   417→  config,
+   418→  decrypt,
+   419→  parse,
+   420→  populate
+   421→}

@@ -2,10 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1968 words)
+budget: 2000 (1976 words)
 
 CONTRIBUTING.md
-     1→# Contributing …
+     1→# Contributing
      3→## Issues
      5→New issues are welcome, whether questions or suggestions or reporting bugs.
      6→You are also welcome to contribute by adding helpful comments on an existing issue.
@@ -15,7 +15,23 @@ CONTRIBUTING.md
     10→If you get a satisfactory reply to a question then please close your issue, but it is ok to leave an issue open for more replies or interest. Inactive issues may get closed after one month if they have an answer,
     11→or after six months otherwise.
     12→
-    13→## Pull Requests …
+    13→## Pull Requests
+    15→Pull Requests will be considered. Please submit pull requests against the develop branch.
+    16→
+    17→Follow the existing code style. Check the tests succeed, including format and lint.
+    18→
+    19→- `npm run test`
+    20→- `npm run check`
+    21→
+    22→Don't update the CHANGELOG or command version number. That gets done by maintainers when preparing the release.
+    23→
+    24→Useful things to include in your request description are:
+    25→
+    26→- what problem are you solving?
+    27→- what Issues does this relate to?
+    28→- suggested summary for CHANGELOG
+    29→
+      →…
 Readme.md
      1→# Commander.js …
     61→## Installation …
@@ -82,38 +98,6 @@ Readme.md
   1164→## Support …
   1172→### Commander for enterprise …
 Readme_zh-CN.md
-     1→# Commander.js …
-    59→## 安装 …
-    65→## 快速开始 …
-   144→## 声明 program 变量 …
-   173→## 选项 …
-   200→### 常用选项类型，boolean 型选项和带参数选项 …
-   242→### 选项的默认值 …
-   264→### 其他的选项类型，取反选项，以及可选参数的选项 …
-   325→### 必填选项 …
-   343→### 变长参数选项 …
-   374→### 版本选项 …
-   393→### 其他选项配置 …
-   433→### 自定义选项处理 …
-   496→## 命令 …
-   530→### 命令参数 …
-   570→#### 其他参数配置 …
-   582→#### 自定义参数处理 …
-   603→### 处理函数 …
-   653→### 独立的可执行（子）命令 …
-   678→### 生命周期钩子 …
-   705→## 自动化帮助信息 …
-   734→### 自定义帮助 …
-   777→### 在出错后展示帮助信息 …
-   805→### 使用代码展示帮助信息 …
-   813→### .name …
-   826→### .usage …
-   842→### .description 和 .summary …
-   855→### .helpOption(flags, description) …
-   864→### .addHelpCommand() …
-   874→### 其他帮助配置 …
-   895→## 自定义事件监听 …
-   905→## 零碎知识 …
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
@@ -126,24 +110,14 @@ Readme_zh-CN.md
    917→例如：
    918→
    919→```js
-   920→program.parse(process.argv); // 指明，按 node 约定
-   921→program.parse(); // 默认，自动识别 electron
-   922→program.parse(['-f', 'filename'], { from: 'user' });
-   923→```
-   924→
-   925→### 解析配置 …
-   956→### 作为属性的遗留选项 …
-   972→### TypeScript …
-   980→### createCommand() …
-   991→### Node 选项，如 --harmony …
-   998→### 调试子命令 …
-  1006→### 显示错误 …
-  1017→### 重写退出和输出 …
-  1054→### 其他文档 …
-  1061→## 支持 …
-  1068→### 企业使用 Commander …
+      →…
 SECURITY.md
-     1→# Security Policy …
+     1→# Security Policy
+     3→To report a security vulnerability, please use the
+     4→[Tidelift security contact](https://tidelift.com/security).
+     5→Tidelift will coordinate the fix and disclosure.
+     6→
+     7→Please do not report security vulnerabilities through public GitHub issues or pull requests.
 docs/deprecated.md
      1→# Deprecated …
     22→### RegExp .option() parameter …
@@ -191,98 +165,80 @@ docs/zh-CN/不再推荐使用的功能.md
      1→# 不再推荐使用的功能
      3→本文中列出的功能不再推荐使用。它们在 Commander 未来的主要版本（major version）中可能被移除。为保证后向兼容，这些功能目前还可以使用，但它们不应被用在新代码中。
      4→
-     5→- [不再推荐使用的功能](#%E4%B8%8D%E5%86%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8%E7%9A%84%E5%8A%9F%E8%83%BD)
       →…
     18→## .option() 方法的正则表达式参数
     20→`.option()`方法可以接受一个正则表达式作为第三个参数，以规定可以接受的选项参数值。
     21→
-    22→```js
       →…
     30→## noHelp
     32→此选项曾被用作传入`.command()`方法，以在内建的帮助信息中隐藏该命令：
     33→
-    34→```js
       →…
     40→## 默认导入的全局 Command 对象
     42→Commander 的默认导入曾是一个全局的`Command`对象。
     43→
-    44→```js
       →…
     61→## .help() 与 .outputHelp() 的回调函数参数
     63→这两个方法曾允许传入一个回调函数，以在展示前处理帮助信息。
     64→
-    65→```js
       →…
     79→## .on('--help')
     81→此功能曾被用作在内建的帮助信息后输出自定义的帮助信息。自 Commander v3.0.0 起，如果有自定义的帮助选项，则此方法使用该自定义的帮助选项。
     82→
-    83→```js
       →…
    104→## .on('command:*')
    106→当命令参数与已知子命令不匹配时发出此消息（作为 `.command('')` 实现的一部分）。
    107→
-   108→一种用途是为未知子命令添加错误。错误现在是默认的内置行为。
       →…
    114→## .command('*')
    116→这用于向程序添加默认命令。
    117→
-   118→```js
       →…
    134→## cmd.description(cmdDescription, argDescriptions)
    136→此功能曾用来为命令参数添加描述信息。
    137→
-   138→```js
       →…
    157→## InvalidOptionArgumentError
    159→此类曾被用来在自定义选项处理中抛出错误，以显示错误信息。
    160→
-   161→```js
       →…
    187→## 短选项标志长于单个字符
    189→短选项从未支持像 `-ws` 的标识，但旧的 README 并没有明确说明这一点。README 现在声明短选项是单个字符。
    190→
-   191→README 在 Commander v3 更新。自 Commander v9 起不再推荐使用。
+      →…
 docs/zh-CN/可变参数的选项.md
      1→# 可变参数的选项
      3→README 文档介绍了选项的声明与使用。大多数情况下，选项的解析行为，与您和您程序用户的期望相符。本文将详述一些特殊用例和细节问题。
      4→
-     5→- [可变参数的选项](#%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E7%9A%84%E9%80%89%E9%A1%B9)
       →…
     26→## 解析中的歧义
     28→解析选项时，有一些潜在的问题值得注意。当一个命令既有命令参数，又有选项的时候，在解析过程中有可能出现歧义。这可能会影响用户使用您的程序。
     29→Commander 首先解析选项的参数，而用户有可能想将选项后面跟的参数作为命令，或是作为命令参数进行解析。
-    30→
       →…
     73→### 方案一：让`--`成为语法的一部分
     75→与其让用户理解`--`的用法，您也可以直接把它作为程序语法的一部分。
     76→
-    77→```js
       →…
     98→### 方案二：把选项放在最后
    100→Commander 遵循 GNU 解析命令的惯例，允许选项出现在命令参数之前或者之后，也可以将选项和命令参数相互穿插。
    101→因此，通过要求把选项放在最后，命令参数就不会和选项参数相混淆。
-   102→
       →…
    120→### 方案三：使用选项替代命令参数
    122→这个方案虽然有点激进，但是可以完美避免解析中的歧义。
    123→
-   124→```js
       →…
    142→## 合并短选项和带有参数的选项
    144→多个 boolean 型的短选项可以合并起来写在同一个`-`号后面，比如`ls -al`。同时，你也可以在其中包括一个接受参数的短选项，此时，任何跟在其后的字符都将被视作这个选项的值。
    145→
-   146→这就是说，默认情况下并不可以把多个带参数的选项合并起来。
       →…
    183→### 将短选项视作 boolean 类型选项合并
    185→在 Commander v5 之前，并不支持合并短选项和值。合并的 boolean 类型选项会被展开。
    186→因此，`-avl`将被展开为`-a -v -l`。
-   187→
       →…
 docs/zh-CN/术语表.md
      1→# 术语表
      3→命令行参数由选项（options）、选项参数（option-arguments）、命令（commands），以及命令参数（command-arguments）组成。
      4→
-     5→|术语|解释|
       →…
 eslint.config.js
      8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
@@ -313,6 +269,8 @@ lib/command.js
       →…
   2752→function useColor() {
 lib/error.js
+     1→/**
+      →…
      4→class CommanderError extends Error {
      5→  /**
      6→   * Constructs the CommanderError class
@@ -330,6 +288,8 @@ lib/error.js
     18→    this.nestedError = undefined;
     19→  }
     20→}
+    22→/**
+      →…
     25→class InvalidArgumentError extends CommanderError {
     26→  /**
     27→   * Constructs the InvalidArgumentError class
@@ -364,6 +324,8 @@ lib/help.js
 lib/option.js
      3→class Option {
      4→  /**
+   261→/**
+      →…
    268→class DualOptions {
    269→  /**
    270→   * @param {Option[]} options
@@ -387,6 +349,22 @@ lib/option.js
    288→  }
    289→
    290→  /**
+   291→   * Did the value come from the option, and not from possible matching dual option?
+   292→   *
+   293→   * @param {*} value
+   294→   * @param {Option} option
+   295→   * @returns {boolean}
+   296→   */
+   297→  valueFromOption(value, option) {
+   298→    const optionKey = option.attributeName();
+   299→    if (!this.dualOptions.has(optionKey)) return true;
+   300→
+   301→    // Use the value to deduce if (probably) came from the option.
+   302→    const preset = this.negativeOptions.get(optionKey).presetArg;
+   303→    const negativeValue = preset !== undefined ? preset : false;
+   304→    return option.negate === (negativeValue === value);
+   305→  }
+   306→}
    308→/**
       →…
    316→function camelcase(str) {
@@ -397,9 +375,6 @@ lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
      4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
-     5→  // Calculating optimal string alignment distance, no substring is edited more than once.
-     6→  // (Simple implementation.)
-     7→
       →…
     48→/**
       →…

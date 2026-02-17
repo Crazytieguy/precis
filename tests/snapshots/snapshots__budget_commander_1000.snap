@@ -2,9 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (979 words)
+budget: 1000 (977 words)
 
 CONTRIBUTING.md
+     1→# Contributing
      3→## Issues
      5→New issues are welcome, whether questions or suggestions or reporting bugs.
      6→You are also welcome to contribute by adding helpful comments on an existing issue.
@@ -14,6 +15,17 @@ CONTRIBUTING.md
     10→If you get a satisfactory reply to a question then please close your issue, but it is ok to leave an issue open for more replies or interest. Inactive issues may get closed after one month if they have an answer,
     11→or after six months otherwise.
     12→
+    13→## Pull Requests
+    15→Pull Requests will be considered. Please submit pull requests against the develop branch.
+    16→
+    17→Follow the existing code style. Check the tests succeed, including format and lint.
+    18→
+    19→- `npm run test`
+    20→- `npm run check`
+    21→
+    22→Don't update the CHANGELOG or command version number. That gets done by maintainers when preparing the release.
+    23→
+      →…
 Readme.md
    968→### .parse() and .parseAsync()
    970→Call with no parameters to parse `process.argv`. Detects Electron and special node options like `node --eval`. Easy mode!
@@ -47,11 +59,14 @@ Readme_zh-CN.md
    917→例如：
    918→
    919→```js
-   920→program.parse(process.argv); // 指明，按 node 约定
-   921→program.parse(); // 默认，自动识别 electron
-   922→program.parse(['-f', 'filename'], { from: 'user' });
-   923→```
-   924→
+      →…
+SECURITY.md
+     1→# Security Policy
+     3→To report a security vulnerability, please use the
+     4→[Tidelift security contact](https://tidelift.com/security).
+     5→Tidelift will coordinate the fix and disclosure.
+     6→
+     7→Please do not report security vulnerabilities through public GitHub issues or pull requests.
 docs/deprecated.md
    229→### Short option flag longer than a single character
    231→Short option flags like `-ws` were never supported, but the old README did not make this clear. The README now states that short options are a single character.
@@ -91,10 +106,7 @@ jest.config.js
      2→  testEnvironment: 'node',
      3→  collectCoverage: true,
      4→  transform: {
-     5→    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.ts.json' }],
-     6→  },
-     7→  testPathIgnorePatterns: ['/node_modules/'],
-     8→};
+      →…
 lib/argument.js
      3→class Argument {
      4→  /**
@@ -159,19 +171,12 @@ lib/suggestSimilar.js
     56→function suggestSimilar(word, candidates) {
 typings/index.d.ts
     16→export class CommanderError extends Error {
-    17→  code: string;
     31→export class InvalidArgumentError extends CommanderError {
-    32→  /**
     40→export interface ErrorOptions {
-    41→  // optional parameter for error()
-      →…
     48→export class Argument {
-    49→  description: string;
     95→export class Option {
-    96→  flags: string;
    115→  constructor(flags: string, description?: string);
    210→export class Help {
-   211→  /** output helpWidth, long lines are wrapped to fit */
    218→  constructor();
    226→  prepareContext(contextOptions: {
    227→    error?: boolean;
@@ -187,14 +192,8 @@ typings/index.d.ts
    288→  styleArgumentTerm(str: string): string;
    340→export type HelpConfiguration = Partial<Help>;
    342→export interface ParseOptions {
-   343→  from: 'node' | 'electron' | 'user';
-      →…
    345→export interface HelpContext {
-   346→  // optional parameter for .help() and .outputHelp()
-      →…
    349→export interface AddHelpTextContext {
-   350→  // passed to text function used with .addHelpText()
-      →…
    354→export interface OutputConfiguration {
    355→  writeOut?(str: string): void;
    356→  writeErr?(str: string): void;
@@ -211,7 +210,6 @@ typings/index.d.ts
    372→  | undefined;
    374→export type OptionValues = Record<string, any>;
    376→export class Command {
-   377→  args: string[];
    384→  constructor(name?: string);
    493→  argument(name: string, description?: string, defaultValue?: unknown): this;
    528→  helpCommand(enable: boolean): this;
@@ -221,14 +219,8 @@ typings/index.d.ts
   1085→    text: (context: AddHelpTextContext) => string,
   1086→  ): this;
   1094→export interface CommandOptions {
-  1095→  hidden?: boolean;
-      →…
   1100→export interface ExecutableCommandOptions extends CommandOptions {
-  1101→  executableFile?: string;
-      →…
   1104→export interface ParseOptionsResult {
-  1105→  operands: string[];
-      →…
   1113→export const program: Command;
 typings/index.test-d.ts
    168→function myParseInt …
