@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3920 words)
+budget: 4000 (3917 words)
 
 CONTRIBUTING.md
      1→# Contributing
@@ -291,6 +291,10 @@ lib/argument.js
      6→   * The default is that the argument is required, and you can explicitly
      7→   * indicate this with <> around the name. Put [] around the name for an optional argument.
      8→   *
+     9→   * @param {string} name
+    10→   * @param {string} [description]
+    11→   */
+    12→
     13→  constructor(name, description) {
     48→  name() {
     56→  _collectValue(value, previous) {
@@ -317,7 +321,10 @@ lib/command.js
     16→   *
     17→   * @param {string} [name]
     18→   */
+    19→
     20→  constructor(name) {
+    21→    super();
+    22→    /** @type {Command[]} */
     99→  copyInheritedSettings(sourceCommand) {
    121→  _getCommandAndAncestors() {
    155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
@@ -363,6 +370,12 @@ lib/command.js
   1090→  parse(argv, parseOptions) {
   1119→  async parseAsync(argv, parseOptions) {
   1127→  _prepareForParse() {
+  1128→    if (this._savedState === null) {
+  1129→      this.saveStateBeforeParse();
+  1130→    } else {
+  1131→      this.restoreStateBeforeParse();
+  1132→    }
+      →…
   1141→  saveStateBeforeParse() {
   1158→  restoreStateBeforeParse() {
   1183→  _checkForMissingExecutable(executableFile, executableDir, subcommandName) {
@@ -477,6 +490,10 @@ lib/help.js
     15→    this.minWidthToWrap = 40;
     16→    this.sortSubcommands = false;
     17→    this.sortOptions = false;
+    18→    this.showGlobalOptions = false;
+    19→  }
+    20→
+    21→  /**
     29→  prepareContext(contextOptions) {
     40→  visibleCommands(cmd) {
     62→  compareOptions(a, b) {
@@ -501,18 +518,52 @@ lib/help.js
    535→  displayWidth(str) {
    545→  styleTitle(str) {
    549→  styleUsage(str) {
+   550→    // Usage has lots of parts the user might like to color separately! Assume default usage string which is formed like:
+   551→    //    command subcommand [options] [command] <foo> [bar]
+   552→    return str
+   553→      .split(' ')
+   554→      .map((word) => {
+      →…
    563→  styleCommandDescription(str) {
+   564→    return this.styleDescriptionText(str);
+   565→  }
    566→  styleOptionDescription(str) {
+   567→    return this.styleDescriptionText(str);
+   568→  }
    569→  styleSubcommandDescription(str) {
+   570→    return this.styleDescriptionText(str);
+   571→  }
    572→  styleArgumentDescription(str) {
+   573→    return this.styleDescriptionText(str);
+   574→  }
    575→  styleDescriptionText(str) {
+   576→    return str;
+   577→  }
    578→  styleOptionTerm(str) {
+   579→    return this.styleOptionText(str);
+   580→  }
    581→  styleSubcommandTerm(str) {
+   582→    // This is very like usage with lots of parts! Assume default string which is formed like:
+   583→    //    subcommand [options] <foo> [bar]
+   584→    return str
+   585→      .split(' ')
+   586→      .map((word) => {
+      →…
    594→  styleArgumentTerm(str) {
+   595→    return this.styleArgumentText(str);
+   596→  }
    597→  styleOptionText(str) {
+   598→    return str;
+   599→  }
    600→  styleArgumentText(str) {
+   601→    return str;
+   602→  }
    603→  styleSubcommandText(str) {
+   604→    return str;
+   605→  }
    606→  styleCommandText(str) {
+   607→    return str;
+   608→  }
    618→  padWidth(cmd, helper) {
    633→  preformatted(str) {
    650→  formatItem(term, termWidth, description, helper) {
@@ -535,7 +586,10 @@ lib/option.js
      6→   *
      7→   * @param {string} flags
      8→   * @param {string} [description]
+     9→   */
+    10→
     11→  constructor(flags, description) {
+    12→    this.flags = flags;
     47→  default(value, description) {
     65→  preset(arg) {
     82→  conflicts(names) {
@@ -628,6 +682,7 @@ lib/suggestSimilar.js
      9→  if (Math.abs(a.length - b.length) > maxDistance)
     10→    return Math.max(a.length, b.length);
     11→
+    12→  // distance between prefix substrings of a and b
       →…
     48→/**
     49→ * Find close matches, restricted to same number of edits.
@@ -916,52 +971,3 @@ typings/index.d.ts
   1106→  unknown: string[];
   1107→}
   1113→export const program: Command;
-typings/index.test-d.ts
-     6→const program: commander.Command = new commander.Command();
-   168→function myParseInt(value: string): number {
-   169→  return parseInt(value);
-   170→}
-   172→function increaseVerbosity(dummyValue: string, previous: number): number {
-   173→  return previous + 1;
-   174→}
-   176→function collect(value: string, previous: string[]): string[] {
-   177→  return previous.concat([value]);
-   178→}
-   180→function commaSeparatedList(value: string): string[] {
-   181→  return value.split(',');
-   182→}
-   378→const opts = program.opts();
-   384→interface MyCheeseOption {
-   385→  cheese: string;
-   386→}
-   387→const myCheeseOption = program.opts<MyCheeseOption>();
-   393→const optsWithGlobals = program.optsWithGlobals();
-   399→const myCheeseOptionWithGlobals = program.optsWithGlobals<MyCheeseOption>();
-   509→class MyCommand extends commander.Command {
-   510→  createCommand(name?: string): MyCommand {
-   511→    return new MyCommand(name);
-   512→  }
-   513→
-   514→  myFunction(): void {
-   515→    // do nothing.
-   516→  }
-   517→}
-   518→const myProgram = new MyCommand();
-   571→const helper = new commander.Help();
-   572→const helperCommand = new commander.Command();
-   573→const helperOption = new commander.Option('-a, --all');
-   574→const helperArgument = new commander.Argument('<file>');
-   613→  const formattedItems = [
-   614→    '--example  example description',
-   615→    '--example2 example2 description',
-   616→  ];
-   623→  const unsortedOptions = [new commander.Option('-a, --all')];
-   624→  const sortedOptions = unsortedOptions;
-   625→  const groupsItemsOptionHeading = (option: commander.Option) =>
-   626→    option.helpGroupHeading ?? 'Options:';
-   633→  const unsortedCommands = [new commander.Command('foo')];
-   634→  const sortedCommands = unsortedCommands;
-   635→  const groupsItemsCommandHeading = (cmd: commander.Command) =>
-   636→    cmd.helpGroup() ?? 'Commands:';
-   668→const baseOption = new commander.Option('-f,--foo', 'foo description');
-   747→const baseArgument = new commander.Argument('<foo');

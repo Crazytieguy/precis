@@ -58,9 +58,11 @@ fn is_test_file(path: &Path) -> bool {
     };
 
     // Match *.test.* and *.spec.* (e.g. foo.test.ts, bar.spec.tsx)
+    // Match *.test-d.ts (TypeScript type test definitions, used by tsd)
     // Match test_*.py and *_test.py (Python pytest conventions)
     // Match conftest.py (pytest configuration/fixtures)
     stem.ends_with(".test")
+        || stem.ends_with(".test-d")
         || stem.ends_with(".spec")
         || stem.starts_with("test_")
         || stem.ends_with("_test")
@@ -144,6 +146,12 @@ mod tests {
         fs::write(benchmark_dir.join("run.py"), "def bench(): pass").unwrap();
         // conftest.py (pytest infrastructure)
         fs::write(dir.path().join("conftest.py"), "import pytest").unwrap();
+        // TypeScript type test definitions (tsd)
+        fs::write(
+            dir.path().join("index.test-d.ts"),
+            "expectType<string>(fn());",
+        )
+        .unwrap();
         // testdata/ directory (Go convention)
         let testdata_dir = dir.path().join("testdata");
         fs::create_dir(&testdata_dir).unwrap();
@@ -190,5 +198,6 @@ mod tests {
         assert!(!names.contains(&"errors.go".to_string()));
         assert!(!names.contains(&"basic.rs".to_string()));
         assert!(!names.contains(&"demo.ts".to_string()));
+        assert!(!names.contains(&"index.test-d.ts".to_string()));
     }
 }

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (504 words)
+budget: 500 (507 words)
 
 CONTRIBUTING.md
      1→# Contributing
@@ -36,6 +36,7 @@ Readme_zh-CN.md
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
    911→如果参数遵循与 node 不同的约定，可以在第二个参数中传递`from`选项：
+   912→
       →…
 SECURITY.md
      1→# Security Policy
@@ -57,13 +58,11 @@ jest.config.js
      1→const config …
 lib/argument.js
      3→class Argument {
-     4→  /**
    135→/**
       →…
    143→function humanReadableArgName(arg) {
 lib/command.js
     13→class Command extends EventEmitter {
-    14→  /**
   1127→  _prepareForParse() {
   2697→/**
       →…
@@ -97,7 +96,6 @@ lib/help.js
    740→function stripColor(str) {
 lib/option.js
      3→class Option {
-     4→  /**
    268→class DualOptions {
    269→  /**
    308→/**
@@ -115,32 +113,26 @@ lib/suggestSimilar.js
       →…
     56→function suggestSimilar(word, candidates) {
 typings/index.d.ts
+    12→type LiteralUnion …
     16→export class CommanderError extends Error {
     31→export class InvalidArgumentError extends CommanderError {
     40→export interface ErrorOptions {
     48→export class Argument {
     95→export class Option {
    210→export class Help {
-   340→export type HelpConfiguration …
+   340→export type HelpConfiguration = Partial<Help>;
    342→export interface ParseOptions {
    345→export interface HelpContext {
    349→export interface AddHelpTextContext {
    354→export interface OutputConfiguration {
-   367→export type AddHelpTextPosition …
-   368→export type HookEvent …
-   370→export type OptionValueSource …
-   374→export type OptionValues …
+   367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
+   368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
+   370→export type OptionValueSource =
+   371→  | LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string>
+   372→  | undefined;
+   374→export type OptionValues = Record<string, any>;
    376→export class Command {
   1094→export interface CommandOptions {
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1104→export interface ParseOptionsResult {
-  1113→export const program …
-typings/index.test-d.ts
-   384→interface MyCheeseOption {
-   385→  cheese: string;
-   386→}
-   509→class MyCommand extends commander.Command {
-   510→  createCommand(name?: string): MyCommand {
-   511→    return new MyCommand(name);
-   512→  }
-   513→
+  1113→export const program: Command;
