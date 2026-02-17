@@ -3,6 +3,8 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.py
+     2→from typing import Optional, Generic, TypeVar
+     3→from dataclasses import dataclass
      5→T = TypeVar("T")
      7→# Process the input items and return the total count.
      8→def process_items(items: list[str]) -> int:
@@ -32,9 +34,6 @@ sample.py
     40→        self._source = source
     41→
     42→    def parse(self) -> list[Token]:
-    43→        """Parse and return the token list."""
-    44→        return self._tokens
-    45→
     46→    @classmethod
     47→    def from_file(cls, path: str) -> "TokenParser[T]":
     48→        with open(path) as f:

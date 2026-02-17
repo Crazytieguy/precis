@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (477 words)
+budget: 500 (475 words)
 
 CHANGELOG.md
 README.md
@@ -47,6 +47,7 @@ README.md
     66→like, we welcome any contributions. Fork this library and submit a pull
     67→request.
 constraint.go
+     6→import …
     31→// Constraint represents a single constraint for a version, such as
     32→// ">= 1.0".
     33→type Constraint struct {
@@ -90,15 +91,14 @@ constraint.go
    231→
    232→type operator rune
 version.go
+     6→import …
     15→// The compiled regular expression used to test the validity of a version.
     16→var (
     17→	versionRegexp     *regexp.Regexp
-    18→	versionRegexpOnce sync.Once
     37→// The raw regular expression string used for testing the validity
     38→// of a version.
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
-    41→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-?([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +

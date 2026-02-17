@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1907 words)
+budget: 2000 (1900 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -51,10 +51,7 @@ README.md
     43→and that have not yet reached their end-of-life.
     44→
     45→Tomli uses [mypyc](https://github.com/mypyc/mypyc)
-    46→to generate binary wheels for most of the widely used platforms,
-    47→so Python 3.11+ users may prefer it over `tomllib` for improved performance.
-    48→Pure Python wheels are available on any platform and should perform the same as `tomllib`.
-    49→
+      →…
     50→## Installation<a name="installation"></a>
     52→```bash
     53→pip install tomli
@@ -136,6 +133,12 @@ README.md
    233→foo@bar:~/dev/tomli$ python benchmark/run.py
       →…
 fuzzer/fuzz.py
+     1→import atheris
+     4→    from math import isnan
+     5→    import sys
+     6→    import warnings
+     8→    import tomli_w
+    10→    import tomli
     20→def test_one_input(input_bytes: bytes) -> None:
     21→    # We need a Unicode string, not bytes
     22→    fdp = atheris.FuzzedDataProvider(input_bytes)
@@ -157,9 +160,6 @@ fuzzer/fuzz.py
     38→        print_err(data)
     39→        raise
     40→
-    41→    roundtripped_obj = tomli.loads(recovered_data)
-    42→    normalize_toml_obj(roundtripped_obj)
-    43→    normalize_toml_obj(toml_obj)
       →…
     53→def print_err(data):
     54→    codepoints = [hex(ord(x)) for x in data]
@@ -180,15 +180,18 @@ fuzzer/fuzz.py
     73→    fuzzer_options = sys.argv
     74→    atheris.Setup(fuzzer_options, test_one_input)
     75→    atheris.Fuzz()
+profiler/profiler_script.py
+     8→from pathlib import Path
+    10→import tomli
 scripts/use_setuptools.py
+     6→from pathlib import Path
+     7→import tomllib
+     9→import tomli_w  # type: ignore[import-not-found]
     12→def use_setuptools() -> None:
     13→    pyproject_path = Path(__file__).parent.parent / "pyproject.toml"
     14→    data = tomllib.loads(pyproject_path.read_bytes().decode())
-    15→    data["build-system"] = {
-    16→        "requires": ["setuptools>=77.0.3", "mypy[mypyc]>=1.15"],
-    17→        "build-backend": "setuptools.build_meta",
-    18→    }
-    19→    pyproject_path.write_bytes(tomli_w.dumps(data).encode())
+      →…
+setup.py
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
@@ -196,8 +199,15 @@ src/tomli/__init__.py
      4→
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+     8→from ._parser …
 src/tomli/_parser.py
+     7→import sys …
+     8→from types …
+    10→from ._re …
     19→TYPE_CHECKING = False
+    21→    from collections.abc …
+    22→    from typing …
+    24→    from ._types …
     26→# Inline tables/arrays are implemented using recursion. Pathologically
     27→# nested documents cause pure Python to raise RecursionError (which is OK),
     28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
@@ -219,13 +229,9 @@ src/tomli/_parser.py
     49→TOML_WS: Final = frozenset(" \t")
     50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
     51→BARE_KEY_CHARS: Final = frozenset(
-    52→    "abcdefghijklmnopqrstuvwxyz" "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "0123456789" "-_"
-      →…
     54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
     55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
     57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
-    58→    {
-      →…
     71→class DEPRECATED_DEFAULT:
     76→class TOMLDecodeError(ValueError):
     86→
@@ -327,12 +333,13 @@ src/tomli/_parser.py
    770→    instead of returning illegal types.
    771→    """
 src/tomli/_re.py
+     7→from datetime …
+     8→from functools …
+     9→import re …
     11→TYPE_CHECKING = False
+    13→    from typing …
+    15→    from ._types …
     17→_TIME_RE_STR: Final = r"""
-    18→([01][0-9]|2[0-3])             # hours
-    19→:([0-5][0-9])                  # minutes
-    20→(?:
-      →…
     26→RE_NUMBER: Final = re.compile(
     27→    r"""
     28→0
@@ -350,8 +357,6 @@ src/tomli/_re.py
     40→    (?:[eE][+-]?[0-9](?:_?[0-9])*)?  # optional exponent part
     41→)
     42→""",
-    43→    flags=re.VERBOSE,
-      →…
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
     47→    rf"""
@@ -362,8 +367,6 @@ src/tomli/_re.py
     52→    (?:([Zz])|([+-])([01][0-9]|2[0-3]):([0-5][0-9]))?  # optional time offset
     53→)?
     54→""",
-    55→    flags=re.VERBOSE,
-      →…
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
     60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
     61→
@@ -384,6 +387,8 @@ src/tomli/_re.py
    106→    )
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
+src/tomli/_types.py
+     5→from typing import Any, Callable, Tuple
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
      3→Tomli was added to the Python standard library in Python 3.11.
@@ -429,8 +434,4 @@ tomllib.md
     46→  from test.support import load_package_tests
     47→
     48→
-    49→  def load_tests(*args):
-    50→      return load_package_tests(os.path.dirname(__file__), *args)
-    51→  ```
-    52→
       →…

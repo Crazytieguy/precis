@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (476 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯ …
@@ -20,6 +20,7 @@ README.md
    175→<sub>
       →…
 build.rs
+     3→use std::env;
 src/backtrace.rs
      8→pub(crate) enum Backtrace {}
     11→macro_rules! impl_backtrace {
@@ -46,11 +47,7 @@ src/context.rs
    189→    pub trait Sealed {}
 src/ensure.rs
     10→pub trait BothDebug {
-    11→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
-      →…
     25→pub trait NotBothDebug {
-    26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
-      →…
    105→macro_rules! __parse_ensure {
    886→macro_rules! __fancy_ensure {
    912→macro_rules! __fallback_ensure {
@@ -62,25 +59,19 @@ src/fmt.rs
 src/kind.rs
     55→pub struct Adhoc;
     58→pub trait AdhocKind: Sized {
-    59→    #[inline]
     77→pub struct Trait;
     80→pub trait TraitKind: Sized {
-    81→    #[inline]
    100→pub struct Boxed;
    104→pub trait BoxedKind: Sized {
-   105→    #[inline]
 src/lib.rs
    251→#[macro_use]
    252→mod backtrace;
    260→#[cfg(error_generic_member_access)]
    261→mod nightly;
    279→trait StdError: Debug + Display {
+   286→pub use anyhow as format_err;
    390→pub struct Error {
-   391→    inner: Own<ErrorImpl>,
-      →…
    415→pub struct Chain<'a> {
-   416→    state: crate::chain::ChainState<'a>,
-      →…
    419→/// `Result<T, Error>`
    420→///
    421→/// This is a reasonable return type to use throughout your application but also
@@ -92,10 +83,13 @@ src/lib.rs
    427→/// ```rust
    428→/// use anyhow::Result;
    429→///
+   430→/// # const IGNORE: &str = stringify! {
+   431→/// fn demo1() -> Result<T> {...}
+   432→///            // ^ equivalent to std::result::Result<T, anyhow::Error>
+   433→///
       →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    616→pub trait Context<T, E>: context::private::Sealed {
-   617→    /// Wrap the error value with additional context.
    655→#[doc(hidden)]
    656→pub mod __private {
    657→    use self::not::Bool;
@@ -105,7 +99,9 @@ src/lib.rs
    661→
    662→    #[doc(hidden)]
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
-   664→    #[doc(hidden)]
+   665→    pub use alloc::format;
+   667→    pub use core::result::Result::Err;
+   669→    pub use core::{concat, format_args, stringify};
    671→    #[doc(hidden)]
    672→    pub mod kind {
    673→        #[doc(hidden)]
@@ -114,35 +110,28 @@ src/lib.rs
    676→        #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    677→        #[doc(hidden)]
    678→        pub use crate::kind::BoxedKind;
-   679→    }
-   710→        pub trait Bool {
-   711→            fn not(self) -> bool;
       →…
+   710→        pub trait Bool {
 src/macros.rs
     58→macro_rules! bail {
     70→macro_rules! __ensure {
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
 src/nightly.rs
+    10→pub use core::error::Request;
 src/ptr.rs
      6→pub struct Own<T>
      7→where
      8→    T: ?Sized,
      9→{
-    10→    pub ptr: NonNull<T>,
-      →…
     64→pub struct Ref<'a, T>
     65→where
     66→    T: ?Sized,
     67→{
-    68→    pub ptr: NonNull<T>,
-      →…
    125→pub struct Mut<'a, T>
    126→where
    127→    T: ?Sized,
    128→{
-   129→    pub ptr: NonNull<T>,
-      →…
    181→pub trait CastTo {
    182→    type Target;
    183→}

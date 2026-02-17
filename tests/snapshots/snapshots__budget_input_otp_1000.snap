@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (976 words)
+budget: 1000 (975 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -48,10 +48,13 @@ apps/storybook/src/components/ui/input-otp.tsx
     29→const InputOTPSlot = React.forwardRef<
     54→const InputOTPSeparator = React.forwardRef<
 apps/storybook/src/lib/utils.ts
+     1→import { type ClassValue, clsx } from "clsx"
+     2→import { twMerge } from "tailwind-merge"
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
      6→}
 apps/storybook/src/stories/Button.stories.ts
+     1→import { Button } from './Button';
     14→export const Primary = {
     21→export const Secondary = {
     27→export const Large = {
@@ -74,6 +77,7 @@ apps/storybook/src/stories/InputOTP.stories.tsx
 apps/storybook/tailwind.config.js
      1→/** @type {import('tailwindcss').Config} */
      2→const config = {
+apps/storybook/vite.config.js
 apps/website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -116,8 +120,7 @@ apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
      5→    otp: formData.get('otp'),
      6→  }
      7→
-     8→  console.log({ rawFormData })
-     9→}
+      →…
 apps/website/src/app/(local-pages)/example-playground/code.tsx
      4→const tsx …
     95→const code …
@@ -137,29 +140,27 @@ apps/website/src/app/(local-pages)/layout.tsx
      8→  children,
      9→}: Readonly<{
     10→  children: React.ReactNode
-    11→}>) {
       →…
 apps/website/src/app/(local-pages)/raw-input/page.tsx
+     3→import React from 'react'
      5→export default function ShadcnPage() {
      6→  const [value, setValue] = React.useState('')
      7→
-     8→  return (
-     9→    <form
-    10→      method="POST"
       →…
 apps/website/src/app/(local-pages)/shadcn/page.tsx
+     3→@/components/ui/input-otp …
+    10→import React from 'react …
     12→export default function ShadcnPage() {
     13→  const [value, setValue] = React.useState('')
     14→
-    15→  return (
       →…
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     13→export default function ShadcnPage() {
     14→  const [value, setValue] = React.useState('')
     15→
-    16→  return (
       →…
 apps/website/src/app/(local-pages)/shadcn/static/page.tsx
+     3→import { default as ShadcnPage } from '../page'
      5→export default async function StaticPage(pageProps: any) {
      6→  return (
      7→    <ShadcnPage {...pageProps} />
@@ -178,7 +179,6 @@ apps/website/src/app/(pages)/(home)/page.tsx
     34→export default async function IndexPage() {
     35→  const starCount = await getRepoStarCount()
     36→
-    37→  return (
       →…
    148→export const revalidate = 3600
    150→const SponsorBadgeClerk = () => {
@@ -187,12 +187,9 @@ apps/website/src/app/(pages)/layout.tsx
     68→export default function RootLayout({
     69→  children,
     70→}: Readonly<{
-    71→  children: React.ReactNode
-    72→}>) {
       →…
 apps/website/src/components/code.tsx
      9→export async function Code({
-    36→async function highlightCode(code: string, dark: boolean) {
 apps/website/src/components/copy-button.tsx
     17→interface CopyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     22→export async function copyToClipboardWithMeta(value: string) {
@@ -207,10 +204,6 @@ apps/website/src/components/icons.tsx
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {
 apps/website/src/components/page-header.tsx
-     3→function PageHeader({
-    21→function PageHeaderHeading({
-    36→function PageHeaderDescription({
-    51→function PageActions({
 apps/website/src/components/provider.tsx
      5→export function AppProvider({
 apps/website/src/components/site-footer.tsx
@@ -287,6 +280,7 @@ packages/input-otp/src/types.ts
     42→      }
     43→  )
 packages/input-otp/src/use-previous.ts
+     1→import * as React from 'react'
      3→export function usePrevious<T>(value: T) {
 packages/input-otp/src/use-pwm-badge.tsx
      4→const PWM_BADGE_MARGIN_RIGHT = 18
@@ -299,6 +293,5 @@ packages/input-otp/src/use-pwm-badge.tsx
     18→  pushPasswordManagerStrategy,
     19→  isFocused,
     20→}: {
-    21→  containerRef: React.RefObject<HTMLDivElement>
-    22→  inputRef: React.RefObject<HTMLInputElement>
       →…
+packages/input-otp/tsup.config.ts

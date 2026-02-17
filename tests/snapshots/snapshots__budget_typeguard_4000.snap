@@ -2,12 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3350 words)
+budget: 4000 (3345 words)
 
+docs/conf.py
+     2→from importlib.metadata import version as get_version
+     4→from packaging.version import parse
 src/typeguard/__init__.py
     34→config: TypeCheckConfiguration
     37→def __getattr__ …
 src/typeguard/_checkers.py
+    42→from typing_extensions import is_typeddict
     81→TypeCheckerCallable: TypeAlias = Callable[
     82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
     83→]
@@ -736,9 +740,6 @@ src/typeguard/_transformer.py
    464→        return node
    465→
    466→    def visit_Name(self, node: Name) -> Any:
-   467→        if self._memo.is_ignored_name(node):
-   468→            return None
-   469→
    472→    def visit_Call …
    476→    def visit_Constant …
    488→class TypeguardTransformer(NodeTransformer):
@@ -870,9 +871,6 @@ src/typeguard/_transformer.py
    614→
    615→    def visit_ImportFrom(self, node: ImportFrom) -> ImportFrom:
    616→        for name in node.names:
-   617→            if name.name != "*":
-   618→                alias = name.asname or name.name
-   619→                self._memo.local_names.add(alias)
    624→    def visit_ClassDef …
    650→    def visit_FunctionDef …
    913→    def visit_AsyncFunctionDef …

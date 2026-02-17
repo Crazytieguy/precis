@@ -6,11 +6,7 @@ budget: 1000 (987 words)
 
 CHANGELOG.md
      1→# Changelog …
-   911→#### Testing for no arguments
-   913→If you were previously using code like:
-   914→
-   915→```js
-      →…
+   911→#### Testing for no arguments …
 CONTRIBUTING.md
      1→# Contributing …
      3→## Issues
@@ -92,12 +88,14 @@ Readme_zh-CN.md
      9→
     10→使用其他语言阅读：[English](./Readme.md) | 简体中文
     11→
+    12→- [Commander.js](#commanderjs)
       →…
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
    911→如果参数遵循与 node 不同的约定，可以在第二个参数中传递`from`选项：
    912→
+   913→- `node`：默认值，`argv[0]`是应用，`argv[1]`是要跑的脚本，后续为用户参数；
       →…
 SECURITY.md
      1→# Security Policy …
@@ -139,6 +137,8 @@ docs/zh-CN/术语表.md
 eslint.config.js
      8→const tsconfigTsFiles …
      9→const tsconfigJsFiles …
+esm.mjs
+     1→import commander from './index.js';
 jest.config.js
      1→const config …
 lib/argument.js

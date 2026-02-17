@@ -168,6 +168,11 @@ README.md
    168→## License
    170→The MIT License (MIT) - see LICENSE.md for more details
 field.go
+     3→import (
+     4→	"errors"
+     5→	"fmt"
+     6→	"reflect"
+     7→)
      9→var (
     10→	errNotExported = errors.New("field is not exported")
     11→	errNotSettable = errors.New("field is not settable")
@@ -288,6 +293,11 @@ field.go
    140→	}, true
    141→}
 structs.go
+     4→import (
+     5→	"fmt"
+     6→
+     7→	"reflect"
+     8→)
     10→var (
     11→	// DefaultTagName is the default tag name for struct fields which provides
     12→	// a more granular to tweak certain structs. Lookup the necessary functions
@@ -686,10 +696,7 @@ structs.go
    420→		}
    421→
    422→		f = append(f, field)
-   423→	}
-   424→
-   425→	return f
-   426→}
+      →…
    428→func strctVal(s interface{}) reflect.Value {
    429→	v := reflect.ValueOf(s)
    430→
@@ -779,12 +786,9 @@ structs.go
    524→		// time.Time
    525→		if len(m) == 0 {
    526→			finalVal = val.Interface()
-   527→		} else {
-   528→			finalVal = m
-   529→		}
-   530→	case reflect.Map:
       →…
 tags.go
+     3→import "strings"
      5→// tagOptions contains a slice of tag options
      6→type tagOptions []string
      8→// Has returns true if the given option is available in tagOptions

@@ -2,9 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1909 words)
+budget: 2000 (1928 words)
 
 into_either.rs
+     4→use super::{Either, Left, Right};
      6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
      7→/// variant of [`Either<Self, Self>`](Either).
      8→///
@@ -63,6 +64,8 @@ into_either.rs
     61→    }
     62→}
 iterator.rs
+     1→use super::{for_both, Either, Left, Right};
+     2→use core::iter;
      4→macro_rules! wrap_either {
      5→    ($value:expr => $( $tail:tt )*) => {
      6→        match $value {
@@ -137,6 +140,15 @@ lib.rs
     22→pub mod serde_untagged;
     24→#[cfg(feature = "serde")]
     25→pub mod serde_untagged_optional;
+    27→use core::convert::{AsMut, AsRef};
+    28→use core::fmt;
+    29→use core::future::Future;
+    30→use core::ops::Deref;
+    31→use core::ops::DerefMut;
+    32→use core::pin::Pin;
+    35→use std::error::Error;
+    37→use std::io::{self, BufRead, Read, Seek, SeekFrom, Write};
+    39→pub use crate::Either::{Left, Right};
     41→/// The enum `Either` with variants `Left` and `Right` is a general purpose
     42→/// sum type with two cases.
     43→///
@@ -234,7 +246,9 @@ lib.rs
    139→    };
    140→}
    142→mod iterator;
+   143→pub use self::iterator::IterEither;
    145→mod into_either;
+   146→pub use self::into_either::IntoEither;
    149→    fn clone …
    156→    fn clone_from …
    175→    pub fn is_left …
@@ -375,15 +389,7 @@ lib.rs
   1262→        }
   1263→
   1264→        $(#[$attr])*
-  1265→        impl<L, R> AsMut<$t> for Either<L, R>
-  1266→            where L: AsMut<$t>, R: AsMut<$t>
-  1267→        {
-  1268→            fn as_mut(&mut self) -> &mut $t {
-  1269→                for_both!(self, inner => inner.as_mut())
-  1270→            }
-  1271→        }
-  1272→    };
-  1273→}
+      →…
   1297→    fn as_ref …
   1307→    fn as_mut …
   1317→    fn as_mut …
@@ -442,6 +448,7 @@ lib.rs
   1556→    check_t!(::std::ffi::CStr);
   1557→}
 serde_untagged.rs
+    36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     38→#[derive(serde::Serialize, serde::Deserialize)]
     39→#[serde(untagged)]
     40→enum Either<L, R> {
@@ -451,6 +458,7 @@ serde_untagged.rs
     45→pub fn serialize …
     58→pub fn deserialize …
 serde_untagged_optional.rs
+    36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     38→#[derive(Serialize, Deserialize)]
     39→#[serde(untagged)]
     40→enum Either<L, R> {

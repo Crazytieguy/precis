@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (989 words)
+budget: 1000 (994 words)
 
 README.md
      1→# xxhash
@@ -68,6 +68,13 @@ README.md
     73→- [Ristretto](https://github.com/dgraph-io/ristretto)
     74→- [Badger](https://github.com/dgraph-io/badger)
 dynamic/plugin.go
+     6→import (
+     7→	"fmt"
+     8→	"log"
+     9→	"testing"
+    10→
+    11→	"github.com/cespare/xxhash/v2"
+    12→)
     14→const (
     15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
     16→	want = uint64(0x02a2e85470d6fd96)
@@ -76,20 +83,19 @@ dynamic/plugin.go
     21→	if got != want {
     22→		t.Fatalf("Sum64String: got 0x%x; want 0x%x", got, want)
     23→	}
-    24→}
+      →…
     26→func TestDigest(t *testing.T) {
     27→	for chunkSize := 1; chunkSize <= len(in); chunkSize++ {
     28→		name := fmt.Sprintf("[chunkSize=%d]", chunkSize)
     29→		t.Run(name, func(t *testing.T) {
     30→			d := xxhash.New()
-    31→			for i := 0; i < len(in); i += chunkSize {
-    32→				chunk := in[i:]
-    33→				if len(chunk) > chunkSize {
-    34→					chunk = chunk[:chunkSize]
-    35→				}
-    36→				n, err := d.WriteString(chunk)
       →…
 xxhash.go
+     5→import (
+     6→	"encoding/binary"
+     7→	"errors"
+     8→	"math/bits"
+     9→)
     11→const (
     12→	prime1 uint64 = 11400714785074694791
     13→	prime2 uint64 = 14029467366897019727
@@ -172,6 +178,9 @@ xxhash_safe.go
     13→// WriteString adds more data to d. It always returns len(s), nil.
     14→func (d *Digest) WriteString(s string) (n int, err error) {
 xxhash_unsafe.go
+     9→import (
+    10→	"unsafe"
+    11→)
     36→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
     37→// It may be faster than Sum64([]byte(s)) by avoiding a copy.
     38→func Sum64String(s string) uint64 {
@@ -185,6 +194,13 @@ xxhash_unsafe.go
     57→	cap int
     58→}
 xxhsum/xxhsum.go
+     3→import (
+     4→	"fmt"
+     5→	"io"
+     6→	"os"
+     7→
+     8→	"github.com/cespare/xxhash/v2"
+     9→)
     11→func main() {
     34→func contains(ss []string, s string) bool {
     43→func printHash(r io.Reader, name string) {

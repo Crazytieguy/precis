@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3561 words)
+budget: 4000 (3566 words)
 
 Changelog.md
      1→# Changelog
@@ -126,13 +126,6 @@ docs/guides/05-handling-errors.md
     25→// StructError: At path: email -- Expected a string, but received: false
     26→```
     27→
-    28→You can also specify your own message for more clarity. In this case the original message will be preserved in [Error.cause](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause).
-    29→
-    30→```ts
-    31→assert(data, User, "The user is invalid!");
-    32→// StructError: The user is invalid!
-    33→```
-    34→
       →…
     53→## Customizing Errors …
    102→## Multiple Failures …
@@ -197,11 +190,6 @@ docs/readme.md
     56→  name: 'Jane',
     57→}
     58→
-    59→if (is(data, User)) {
-    60→  // Your data is guaranteed to be valid in this block.
-    61→}
-    62→```
-    63→
       →…
 docs/reference/coercions.md
      1→# Coercions …
@@ -285,6 +273,9 @@ docs/summary.md
     22→## Resources
     24→- [FAQ](./resources/faq.md)
     25→- [Links](./resources/links.md)
+rollup.config.js
+     1→import { defineConfig } from 'rollup'
+     2→import typescript from '@rollup/plugin-typescript'
 src/error.ts
      5→export type Failure …
     16→/**
@@ -322,6 +313,8 @@ src/error.ts
     48→  }
     49→}
 src/struct.ts
+     1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
+     2→import { StructError, Failure } from './error.js'
      4→/**
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
      6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
@@ -508,6 +501,9 @@ src/struct.ts
    259→export type Validator …
    266→export type Refiner …
 src/structs/coercions.ts
+     1→import { Struct, is, Coercer } from '../struct.js …
+     2→import { isPlainObject } from '../utils.js …
+     3→import { string, unknown } from './types.js …
      5→/**
       →…
     16→export function coerce<T, S, C>(
@@ -525,6 +521,8 @@ src/structs/coercions.ts
       →…
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
 src/structs/refinements.ts
+     1→import { Struct, Refiner } from '../struct.js …
+     2→import { toFailures } from '../utils.js …
      4→/**
       →…
      8→export function empty<
@@ -576,13 +574,14 @@ src/structs/refinements.ts
    149→  refiner: Refiner<T>
    150→): Struct<T, S> {
 src/structs/types.ts
+     1→import { Infer, Struct } from '../struct.js …
+     2→import { define } from './utilities.js …
+     3→../utils.js …
     15→/**
       →…
     19→export function any(): Struct<any, null> {
     33→export function array<T extends Struct<any>>(Element?: T): any {
     34→  return new Struct({
-    35→    type: 'array',
-    36→    schema: Element,
       →…
     56→/**
       →…
@@ -597,8 +596,6 @@ src/structs/types.ts
    106→  values: T
    107→): any {
    108→  const schema: any = {}
-   109→  const description = values.map((v) => print(v)).join()
-   110→
       →…
    127→/**
       →…
@@ -618,13 +615,9 @@ src/structs/types.ts
    174→): Struct<Infer<A> & UnionToIntersection<InferStructTuple<B>[number]>, null> {
    204→export function literal<T>(constant: T): any {
    205→  const description = print(constant)
-   206→  const t = typeof constant
-   207→  return new Struct({
       →…
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    231→  return new Struct({
-   232→    type: 'map',
-   233→    schema: null,
       →…
    254→/**
       →…
@@ -637,8 +630,6 @@ src/structs/types.ts
    278→export function number(): Struct<number, null> {
    298→export function object<S extends ObjectSchema>(schema?: S): any {
    299→  const knowns = schema ? Object.keys(schema) : []
-   300→  const Never = never()
-   301→  return new Struct({
       →…
    347→/**
       →…
@@ -654,8 +645,6 @@ src/structs/types.ts
    402→export function regexp(): Struct<RegExp, null> {
    415→export function set<T>(Element?: Struct<T>): any {
    416→  return new Struct({
-   417→    type: 'set',
-   418→    schema: null,
       →…
    438→/**
       →…
@@ -679,10 +668,11 @@ src/structs/types.ts
       →…
    574→export function unknown(): Struct<unknown, null> {
 src/structs/utilities.ts
+     1→import { Context, Struct, Validator } from '../struct.js …
+     2→../utils.js …
+     8→import { object, optional, type } from './types.js …
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
-    62→  const schemas = Structs.map((s) => s.schema)
-    63→  const schema = Object.assign({}, ...schemas)
       →…
     67→/**
       →…
@@ -722,6 +712,8 @@ src/structs/utilities.ts
       →…
    247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
 src/utils.ts
+     1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
+     2→import { Failure } from './error.js'
      4→/**
      5→ * Check if a value is an iterator.
      6→ */

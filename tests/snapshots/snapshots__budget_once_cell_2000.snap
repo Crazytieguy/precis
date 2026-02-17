@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1877 words)
+budget: 2000 (1880 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -331,6 +331,8 @@ src/lib.rs
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
 src/race.rs
+    31→use core::sync::atomic;
+    33→use portable_atomic as atomic;
     41→/// A thread-safe cell which can be written to only once.
     42→#[derive(Default, Debug)]
     43→pub struct OnceNonZeroUsize {
@@ -364,6 +366,7 @@ src/race.rs
    268→    pub fn set …
    281→    pub fn get_or_init …
    299→    pub fn get_or_try_init …
+   351→pub use self::once_box::OnceBox;
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
@@ -377,12 +380,7 @@ src/race.rs
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
    365→
-   366→    impl<T> core::fmt::Debug for OnceBox<T> {
    367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-   368→            write!(f, "OnceBox({:?})", self.inner.load(Ordering::Relaxed))
-   369→        }
-   370→    }
-   371→
    373→        fn default() -> Self {
    379→        fn drop(&mut self) {
    389→        pub const fn new …
@@ -393,6 +391,8 @@ src/race.rs
    450→        pub fn get_or_try_init …
    482→        fn clone(&self) -> Self {
 xtask/src/main.rs
+     4→use std::time::Instant;
+     6→use xshell::{cmd, Shell};
      8→fn main() -> xshell::Result<()> {
      9→    let sh = Shell::new()?;
       →…
@@ -408,3 +408,5 @@ xtask/src/main.rs
    136→fn defer<F: FnOnce()>(f: F) -> impl Drop {
    137→    struct D<F: FnOnce()>(Option<F>);
       →…
+xtask/src/tidy.rs
+     1→use xshell::{cmd, Shell};

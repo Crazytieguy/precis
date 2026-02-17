@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3454 words)
+budget: 4000 (3444 words)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -11,8 +11,22 @@ __init__.py
      4→
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+     8→from ._parser import TOMLDecodeError, load, loads
 _parser.py
+     7→import sys
+     8→from types import MappingProxyType
+    10→from ._re import (
+    11→    RE_DATETIME,
+    12→    RE_LOCALTIME,
+    13→    RE_NUMBER,
+    14→    match_to_datetime,
+    15→    match_to_localtime,
+    16→    match_to_number,
+    17→)
     19→TYPE_CHECKING = False
+    21→    from collections.abc import Iterable
+    22→    from typing import IO, Any, Final
+    24→    from ._types import Key, ParseFloat, Pos
     26→# Inline tables/arrays are implemented using recursion. Pathologically
     27→# nested documents cause pure Python to raise RecursionError (which is OK),
     28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
@@ -148,8 +162,6 @@ _parser.py
    172→        #    - end of file
    173→        #    - end of line
    174→        #    - comment
-   175→        #    - key/value pair
-   176→        #    - append dict to list (and move to its namespace)
       →…
    220→class Flags:
    221→    """Flags that map to parsed keys/namespaces."""
@@ -353,8 +365,6 @@ _parser.py
    437→        raise TOMLDecodeError("Cannot overwrite a value", src, pos) from None
    438→    if key_stem in nest:
    439→        raise TOMLDecodeError("Cannot overwrite a value", src, pos)
-   440→    # Mark inline table and array namespaces recursively immutable
-   441→    if isinstance(value, (dict, list)):
       →…
    447→def parse_key_value_pair(
    448→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
@@ -454,8 +464,6 @@ _parser.py
    552→        if c == "}":
    553→            return pos + 1, nested_dict.dict
    554→        if c != ",":
-   555→            raise TOMLDecodeError("Unclosed inline table", src, pos)
-   556→        pos += 1
       →…
    564→def parse_basic_str_escape(
    565→    src: str, pos: Pos, *, multiline: bool = False
@@ -484,8 +492,7 @@ _parser.py
    588→        return parse_hex_char(src, pos, 8)
    589→    try:
    590→        return pos, BASIC_STR_ESCAPE_REPLACEMENTS[escape_id]
-   591→    except KeyError:
-   592→        raise TOMLDecodeError("Unescaped '\\' in a string", src, pos) from None
+      →…
    595→def parse_basic_str_escape_multiline(src: str, pos: Pos) -> tuple[Pos, str]:
    596→    return parse_basic_str_escape(src, pos, multiline=True)
    599→def parse_hex_char(src: str, pos: Pos, hex_len: int) -> tuple[Pos, str]:
@@ -531,8 +538,6 @@ _parser.py
    643→    if not src.startswith(delim, pos):
    644→        return pos, result
    645→    pos += 1
-   646→    if not src.startswith(delim, pos):
-   647→        return pos, result + delim
       →…
    652→def parse_basic_str(src: str, pos: Pos, *, multiline: bool) -> tuple[Pos, str]:
    653→    if multiline:
@@ -559,8 +564,6 @@ _parser.py
    674→            result += src[start_pos:pos]
    675→            pos, parsed_escape = parse_escapes(src, pos)
    676→            result += parsed_escape
-   677→            start_pos = pos
-   678→            continue
       →…
    684→def parse_value(
    685→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
@@ -589,8 +592,6 @@ _parser.py
    708→    # Literal strings
    709→    if char == "'":
    710→        if src.startswith("'''", pos):
-   711→            return parse_multiline_str(src, pos, literal=True)
-   712→        return parse_literal_str(src, pos)
       →…
    760→def is_unicode_scalar_value(codepoint: int) -> bool:
    761→    return (0 <= codepoint <= 55295) or (57344 <= codepoint <= 1114111)
@@ -614,7 +615,12 @@ _parser.py
    781→
    782→    return safe_parse_float
 _re.py
+     7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
+     8→from functools import lru_cache
+     9→import re
     11→TYPE_CHECKING = False
+    13→    from typing import Any, Final
+    15→    from ._types import ParseFloat
     17→_TIME_RE_STR: Final = r"""
     18→([01][0-9]|2[0-3])             # hours
     19→:([0-5][0-9])                  # minutes
@@ -684,8 +690,6 @@ _re.py
     86→            offset_hour_str, offset_minute_str, offset_sign_str
     87→        )
     88→    elif zulu_time:
-    89→        tz = timezone.utc
-    90→    else:  # local date-time
       →…
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
@@ -708,3 +712,5 @@ _re.py
    117→    if match.group("floatpart"):
    118→        return parse_float(match.group())
    119→    return int(match.group(), 0)
+_types.py
+     5→from typing import Any, Callable, Tuple

@@ -2,13 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (496 words)
+budget: 500 (493 words)
 
 cli-options.js
      1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
 env-options.js
      2→const options = {}
 main.d.ts
+     3→import type { URL } from 'url';
      5→export interface DotenvParseOutput {
      6→  [name: string]: string;
      7→}
@@ -104,8 +105,6 @@ main.d.ts
 main.js
      7→const version = packageJson.version
     10→const TIPS = [
-    11→  '🔐 encrypt with Dotenvx: https://dotenvx.com',
-      →…
     27→function _getRandomTip () {
     31→function parseBoolean (value) {
     38→function supportsAnsi () {
@@ -126,5 +125,3 @@ main.js
    346→function decrypt (encrypted, keyStr) {
    378→function populate (processEnv, parsed, options = {}) {
    413→const DotenvModule = {
-   414→  configDotenv,
-      →…

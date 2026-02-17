@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1934 words)
+budget: 2000 (1917 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -141,7 +141,6 @@ readme.md
   1170→```
   1171→
   1172→Supported environment variables:
-  1173→- `HTTP_PROXY` / `http_proxy`: Proxy URL for HTTP requests
       →…
   1209→### HTTP/2 support (Node.js) …
   1249→### Consuming Server-Sent Events (SSE) …
@@ -234,6 +233,8 @@ source/core/constants.ts
    256→export const vendorSpecificOptions = {
    265→export const requestOptionsRegistry = {
 source/errors/ForceRetryError.ts
+     1→import type {ForceRetryOptions} from '../core/constants.js';
+     2→import {NonError} from './NonError.js';
      4→/**
      5→Internal error used to signal a forced retry from afterResponse hooks.
      6→This is thrown when a user returns ky.retry() from an afterResponse hook.
@@ -262,25 +263,16 @@ source/errors/ForceRetryError.ts
     29→	}
     30→}
 source/errors/HTTPError.ts
+     1→import type {NormalizedOptions} from '../types/options.js';
+     2→import type {KyRequest} from '../types/request.js';
+     3→import type {KyResponse} from '../types/response.js';
      5→export class HTTPError<T = unknown> extends Error {
      6→	public response: KyResponse<T>;
      7→	public request: KyRequest;
      8→	public options: NormalizedOptions;
      9→
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
-    11→		const code = (response.status || response.status === 0) ? response.status : '';
-    12→		const title = response.statusText ?? '';
-    13→		const status = `${code} ${title}`.trim();
-    14→		const reason = status ? `status code ${status}` : 'an unknown error';
-    15→
-    16→		super(`Request failed with ${reason}: ${request.method} ${request.url}`);
-    17→
-    18→		this.name = 'HTTPError';
-    19→		this.response = response;
-    20→		this.request = request;
-    21→		this.options = options;
-    22→	}
-    23→}
+      →…
 source/errors/NonError.ts
      1→/**
      2→Wrapper for non-Error values that were thrown.
@@ -311,21 +303,27 @@ source/errors/NonError.ts
     27→	}
     28→}
 source/errors/TimeoutError.ts
+     1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {
      4→	public request: KyRequest;
      5→
      6→	constructor(request: Request) {
      7→		super(`Request timed out: ${request.method} ${request.url}`);
      8→		this.name = 'TimeoutError';
-     9→		this.request = request;
-    10→	}
-    11→}
+      →…
 source/index.ts
+     3→import {Ky} from './core/Ky.js';
+     4→import {requestMethods, stop, retry} from './core/constants.js';
+     5→import type {KyInstance} from './types/ky.js';
+     6→import type {Input, Options} from './types/options.js';
+     7→import {validateAndMerge} from './utils/merge.js';
+     8→import {type Mutable} from './utils/types.js';
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
     11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
       →…
     34→const ky = createInstance();
 source/types/ResponsePromise.ts
+     4→import {type KyResponse} from './response.js';
 source/types/common.ts
 source/types/hooks.ts
 source/types/ky.ts

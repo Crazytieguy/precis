@@ -2,9 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (988 words)
+budget: 1000 (986 words)
 
 _internals/error.ts
+     1→import { Result } from '../result'
      3→export interface ErrorConfig {
      4→  withStackTrace: boolean
      5→}
@@ -42,6 +43,8 @@ _internals/error.ts
     42→  }
     43→}
 _internals/utils.ts
+     1→import { Result, ok, err } from '../result'
+     2→import { ResultAsync } from '../result-async'
      5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
      6→  [idx in keyof T]: T[idx] extends Result<infer U, unknown> ? U : never
      7→}
@@ -109,6 +112,9 @@ _internals/utils.ts
     86→    combineResultListWithAllErrors,
     87→  ) as ResultAsync<T[], E[]>
 result-async.ts
+     1→./result …
+    10→import { Err, Ok, Result } from './ …
+    11→./_internals/utils …
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
@@ -117,11 +123,6 @@ result-async.ts
     27→  }
     28→
     29→  static fromSafePromise<T, E = never>(promise: PromiseLike<T>): ResultAsync<T, E>
-    30→  static fromSafePromise<T, E = never>(promise: Promise<T>): ResultAsync<T, E> {
-    31→    const newPromise = promise.then((value: T) => new Ok<T, E>(value))
-    32→
-    33→    return new ResultAsync(newPromise)
-    34→  }
    210→  /**
       →…
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
@@ -135,6 +136,9 @@ result-async.ts
    330→type TraverseWithAllErrorsAsync …
    338→type Writable …
 result.ts
+     1→import { errAsync, ResultAsync } from './ …
+     2→import { createNeverThrowError, ErrorConfig } from './_internals/error …
+     3→./_internals/utils …
     14→export namespace Result {
     15→  /**
     16→   * Wraps a function with a try catch, creating a new function with the same
@@ -150,6 +154,7 @@ result.ts
    140→  isOk(): this is Ok<T, E>
    141→
    142→  /**
+   143→   * Used to check if a `Result` is an `Err`
       →…
    147→  isErr(): this is Err<T, E>
    149→  /**
@@ -193,11 +198,6 @@ result.ts
    317→  }
    318→
    319→  isErr(): this is Err<T, E> {
-   320→    return !this.isOk()
-   321→  }
-   322→
-   323→  map<A>(f: (t: T) => A): Result<A, E> {
-   324→    return ok(f(this.value))
    405→  _unsafeUnwrap(_?: ErrorConfig): T {
    409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
    419→export class Err<T, E> implements IResult<T, E> {
@@ -208,11 +208,6 @@ result.ts
    424→  }
    425→
    426→  isErr(): this is Err<T, E> {
-   427→    return !this.isOk()
-   428→  }
-   429→
-   430→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-   431→  map<A>(_f: (t: T) => A): Result<A, E> {
    505→  _unsafeUnwrap(config?: ErrorConfig): T {
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
    523→export const fromThrowable …

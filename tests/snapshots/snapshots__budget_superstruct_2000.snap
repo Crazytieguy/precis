@@ -2,12 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1849 words)
+budget: 2000 (1878 words)
 
 Changelog.md
-     1→# Changelog
-     3→This document maintains a list of major changes to Superstruct with each new release.
-     4→
+     1→# Changelog …
 Readme.md
     42→### Usage …
    145→### Why? …
@@ -171,6 +169,9 @@ docs/summary.md
     22→## Resources
     24→- [FAQ](./resources/faq.md)
     25→- [Links](./resources/links.md)
+rollup.config.js
+     1→import { defineConfig } from 'rollup'
+     2→import typescript from '@rollup/plugin-typescript'
 src/error.ts
      5→export type Failure …
     16→/**
@@ -208,6 +209,8 @@ src/error.ts
     48→  }
     49→}
 src/struct.ts
+     1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
+     2→import { StructError, Failure } from './error.js'
      4→/**
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
      6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
@@ -417,6 +420,8 @@ src/structs/utilities.ts
    221→export function pick …
    247→export function struct …
 src/utils.ts
+     1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
+     2→import { Failure } from './error.js'
      4→/**
      5→ * Check if a value is an iterator.
      6→ */

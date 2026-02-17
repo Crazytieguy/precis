@@ -2,62 +2,29 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1929 words)
+budget: 2000 (1876 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/anyhow-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/anyhow)
      5→[<img alt="crates.io" src="https://img.shields.io/crates/v/anyhow.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/anyhow)
-     6→[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-anyhow-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/anyhow)
-     7→[<img alt="build status" src="https://img.shields.io/github/actions/workflow/status/dtolnay/anyhow/ci.yml?branch=master&style=for-the-badge" height="20">](https://github.com/dtolnay/anyhow/actions?query=branch%3Amaster)
-     8→
-     9→This library provides [`anyhow::Error`][Error], a trait object based error type
-    10→for easy idiomatic error handling in Rust applications.
-    11→
-    12→[Error]: https://docs.rs/anyhow/1.0/anyhow/struct.Error.html
       →…
     21→## Details
     23→- Use `Result<T, anyhow::Error>`, or equivalently `anyhow::Result<T>`, as the
     24→  return type of any fallible function.
-    25→
-    26→  Within the function, use `?` to easily propagate any error that implements the
-    27→  [`std::error::Error`] trait.
-    28→
-    29→  ```rust
-    30→  use anyhow::Result;
-    31→
       →…
    126→## No-std support
    128→In no_std mode, almost all of the same API is available and works the same way.
    129→To depend on Anyhow in no_std mode, disable our default enabled "std" feature in
-   130→Cargo.toml. A global allocator is required.
-   131→
-   132→```toml
-   133→[dependencies]
-   134→anyhow = { version = "1.0", default-features = false }
-   135→```
-   136→
       →…
    144→## Comparison to failure
    146→The `anyhow::Error` type works something like `failure::Error`, but unlike
    147→failure ours is built around the standard library's `std::error::Error` trait
-   148→rather than a separate trait `failure::Fail`. The standard library has adopted
-   149→the necessary improvements for this to be possible as part of [RFC 2504].
-   150→
-   151→[RFC 2504]: https://github.com/rust-lang/rfcs/blob/master/text/2504-fix-error.md
-   152→
-   153→<br>
-   154→
+      →…
    155→## Comparison to thiserror
    157→Use Anyhow if you don't care what error type your functions return, you just
    158→want it to be easy. This is common in application code. Use [thiserror] if you
-   159→are a library that wants to design your own dedicated error type(s) so that on
-   160→failures the caller gets exactly the information that you choose.
-   161→
-   162→[thiserror]: https://github.com/dtolnay/thiserror
-   163→
-   164→<br>
-   165→
+      →…
    166→#### License
    169→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
    170→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
@@ -68,11 +35,10 @@ README.md
    175→<sub>
       →…
 build.rs
-    17→fn main …
-    99→fn compile_probe …
-   188→fn rustc_minor_version …
-   199→fn cargo_env_var …
+     3→use std::env;
 src/backtrace.rs
+     2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
+     5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
      8→pub(crate) enum Backtrace {}
     10→#[cfg(std_backtrace)]
@@ -94,9 +60,6 @@ src/backtrace.rs
     74→    use backtrace::{BacktraceFmt, BytesOrWideString, Frame, PrintFmt, SymbolName};
     75→    use core::cell::UnsafeCell;
     76→    use core::fmt::{self, Debug, Display};
-    77→    use core::sync::atomic::{AtomicUsize, Ordering};
-    78→    use std::env;
-    79→    use std::path::{self, Path, PathBuf};
     82→    pub(crate) struct Backtrace {
     86→    pub(crate) enum BacktraceStatus {
     92→    enum Inner {
@@ -107,6 +70,8 @@ src/backtrace.rs
    211→        pub(crate) fn capture …
    311→    struct LazilyResolvedCapture {
 src/chain.rs
+     5→use alloc::vec::{self, Vec};
+     8→pub(crate) use crate::Chain;
     10→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
     11→pub(crate) struct Chain<'a> {
     12→    state: ChainState<'a>,
@@ -128,6 +93,7 @@ src/chain.rs
     93→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     94→impl Default for Chain<'_> {
 src/context.rs
+     7→use crate::nightly::{self, Request};
      9→mod ext {
     10→    use super::*;
     12→    pub trait StdError {
@@ -180,6 +146,9 @@ src/ensure.rs
    911→#[macro_export]
    912→macro_rules! __fallback_ensure {
 src/error.rs
+     4→use crate::nightly::{self, Request};
+     6→use crate::ptr::Mut;
+    14→use core::ops::{Deref, DerefMut};
     30→    pub fn new …
     77→    pub fn msg …
    140→    pub fn from_boxed …
@@ -252,6 +221,8 @@ src/error.rs
 src/fmt.rs
     69→struct Indented<'a, D> {
 src/kind.rs
+    51→use crate::StdError;
+    53→use alloc::boxed::Box;
     55→pub struct Adhoc;
     57→#[doc(hidden)]
     58→pub trait AdhocKind: Sized {
@@ -299,12 +270,16 @@ src/lib.rs
    261→mod nightly;
    262→mod ptr;
    263→mod wrapper;
+   270→use core::fmt::Debug;
+   273→use std::error::Error as StdError;
+   276→use core::error::Error as StdError;
    278→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
    281→        None
    282→    }
    283→}
+   286→pub use anyhow as format_err;
    288→/// The `Error` type, a wrapper around a dynamic error type.
    289→///
    290→/// `Error` works a lot like `Box<dyn std::error::Error>`, but with these
@@ -315,6 +290,11 @@ src/lib.rs
    295→///   error type does not provide one.
    296→/// - `Error` is represented as a narrow pointer &mdash; exactly one word in
    297→///   size instead of two.
+   298→///
+   299→/// <br>
+   300→///
+   301→/// # Display representations
+   302→///
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -329,6 +309,11 @@ src/lib.rs
    401→/// use anyhow::Error;
    402→/// use std::io;
    403→///
+   404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
+   405→///     for cause in error.chain() {
+   406→///         if let Some(io_error) = cause.downcast_ref::<io::Error>() {
+   407→///             return Some(io_error.kind());
+   408→///         }
       →…
    415→pub struct Chain<'a> {
    416→    state: crate::chain::ChainState<'a>,
@@ -393,6 +378,11 @@ src/lib.rs
    477→/// # Example
    478→///
    479→/// ```
+   480→/// use anyhow::{Context, Result};
+   481→/// use std::fs;
+   482→/// use std::path::PathBuf;
+   483→///
+   484→/// pub struct ImportantThing {
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.
@@ -463,6 +453,8 @@ src/macros.rs
    229→#[macro_export]
    230→macro_rules! __anyhow {
 src/nightly.rs
+     7→use core::error::{self, Error};
+    10→pub use core::error::Request;
 src/ptr.rs
      5→#[repr(transparent)]
      6→pub struct Own<T>
@@ -492,6 +484,8 @@ src/ptr.rs
    183→}
    186→    type Target = T;
 src/wrapper.rs
+     5→use alloc::boxed::Box;
+     8→use crate::nightly::{self, Request};
     10→#[repr(transparent)]
     11→pub struct MessageError<M>(pub M);
     33→#[repr(transparent)]

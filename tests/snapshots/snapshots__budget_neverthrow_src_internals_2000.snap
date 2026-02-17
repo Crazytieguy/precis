@@ -2,9 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (490 words)
+budget: 2000 (510 words)
 
 error.ts
+     1→import { Result } from '../result'
      3→export interface ErrorConfig {
      4→  withStackTrace: boolean
      5→}
@@ -42,6 +43,8 @@ error.ts
     42→  }
     43→}
 utils.ts
+     1→import { Result, ok, err } from '../result'
+     2→import { ResultAsync } from '../result-async'
      5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
      6→  [idx in keyof T]: T[idx] extends Result<infer U, unknown> ? U : never
      7→}

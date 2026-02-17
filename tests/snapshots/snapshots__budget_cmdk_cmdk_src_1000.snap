@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (999 words)
+budget: 1000 (993 words)
 
 command-score.ts
     54→function commandScoreInner(
@@ -42,6 +42,7 @@ command-score.ts
     88→      abbreviationIndex + 1,
     89→      memoizedResults,
     90→    )
+    91→    if (score > highScore) {
       →…
    150→function formatInput(string) {
    151→  // convert all valid space characters to space so they match each other
@@ -56,6 +57,12 @@ command-score.ts
    161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
    162→}
 index.tsx
+     3→import * as RadixDialog from '@radix-ui/react-dialog'
+     4→import * as React from 'react'
+     5→import { commandScore } from './command-score'
+     6→import { Primitive } from '@radix-ui/react-primitive'
+     7→import { useId } from '@radix-ui/react-id'
+     8→import { composeRefs } from '@radix-ui/react-compose-refs'
     10→type Children …
     11→type DivProps …
     13→type LoadingProps …
@@ -148,7 +155,7 @@ index.tsx
    976→    if (sibling.matches(selector)) return sibling
    977→    sibling = sibling.previousElementSibling
    978→  }
-   979→}
+      →…
    981→function useAsRef<T>(data: T) {
    982→  const ref = React.useRef<T>(data)
    983→
@@ -156,8 +163,7 @@ index.tsx
    985→    ref.current = data
    986→  })
    987→
-   988→  return ref
-   989→}
+      →…
    991→const useLayoutEffect …
    993→function useLazyRef<T>(fn: () => T) {
    994→  const ref = React.useRef<T>()
@@ -166,8 +172,7 @@ index.tsx
    997→    ref.current = fn()
    998→  }
    999→
-  1000→  return ref as React.MutableRefObject<T>
-  1001→}
+      →…
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1005→  const store = useStore()
@@ -186,15 +191,6 @@ index.tsx
   1019→  useLayoutEffect(() => {
   1020→    const value = (() => {
   1021→      for (const part of deps) {
-  1022→        if (typeof part === 'string') {
-  1023→          return part.trim()
-  1024→        }
-  1025→
-  1026→        if (typeof part === 'object' && 'current' in part) {
-  1027→          if (part.current) {
-  1028→            return part.current.textContent?.trim()
-  1029→          }
-  1030→          return valueRef.current
       →…
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
@@ -218,8 +214,7 @@ index.tsx
   1065→  // The children is a component with `forwardRef`
   1066→  else if ('render' in childrenType) return childrenType.render(children.props)
   1067→  // It's a string, boolean, etc.
-  1068→  else return children
-  1069→}
+      →…
   1071→function SlottableWithNestedChildren(
   1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
   1073→  render: (child: React.ReactNode) => JSX.Element,

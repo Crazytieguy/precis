@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3998 words)
+budget: 4000 (3994 words)
 
 command-score.ts
     54→function commandScoreInner(
@@ -113,6 +113,12 @@ command-score.ts
    161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
    162→}
 index.tsx
+     3→import * as RadixDialog from '@radix-ui/react-dialog'
+     4→import * as React from 'react'
+     5→import { commandScore } from './command-score'
+     6→import { Primitive } from '@radix-ui/react-primitive'
+     7→import { useId } from '@radix-ui/react-id'
+     8→import { composeRefs } from '@radix-ui/react-compose-refs'
     10→type Children = { children?: React.ReactNode }
     11→type DivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>
     13→type LoadingProps = Children &
@@ -516,17 +522,6 @@ index.tsx
    416→      })
    417→
    418→    groups
-   419→      .sort((a, b) => b[1] - a[1])
-   420→      .forEach((group) => {
-   421→        const element = listInnerRef.current?.querySelector(
-   422→          `${GROUP_SELECTOR}[${VALUE_ATTR}="${encodeURIComponent(group[0])}"]`,
-   423→        )
-   424→        element?.parentElement.appendChild(element)
-   425→      })
-   426→  }
-   427→
-   428→  function selectFirstItem() {
-   429→    const item = getValidItems().find((item) => item.getAttribute('aria-disabled') !== 'true')
       →…
    659→/**
    660→ * Command menu item. Becomes active on pointer enter or through keyboard navigation.

@@ -9,14 +9,10 @@ README.md
     21→## Example …
     44→## Details …
    211→## Comparison to anyhow …
-   223→#### License
-   226→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
-   227→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
-   228→</sup>
-   229→
-   230→<br>
-      →…
+   223→#### License …
 build/probe.rs
+     8→use core::error::{Error, Request};
+     9→use core::fmt::{self, Debug, Display};
     11→struct MyError(Thing);
     12→struct Thing;
     14→impl Debug for MyError {
@@ -41,6 +37,7 @@ impl/src/attr.rs
     51→pub struct Fmt<'a> {
     57→pub enum Trait {
 impl/src/expand.rs
+impl/src/fallback.rs
 impl/src/fmt.rs
    166→struct FmtArguments {
    171→#[allow(clippy::unnecessary_wraps)]
@@ -56,12 +53,14 @@ impl/src/lib.rs
     43→}
     45→#[allow(non_camel_case_types)]
     46→struct private;
+impl/src/prop.rs
 impl/src/scan_expr.rs
      6→enum Input {
     25→enum Action {
 impl/src/unraw.rs
     12→pub struct IdentUnraw(Ident);
     82→pub enum MemberUnraw {
+impl/src/valid.rs
 src/aserror.rs
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
@@ -80,6 +79,7 @@ src/aserror.rs
     44→#[doc(hidden)]
     45→pub trait Sealed {}
 src/display.rs
+     3→use std::path::{self, Path, PathBuf};
      5→#[doc(hidden)]
      6→pub trait AsDisplay<'a>: Sealed {
      7→    // TODO: convert to generic associated type.
@@ -89,7 +89,7 @@ src/display.rs
     11→    fn as_display(&'a self) -> Self::Target;
     12→}
     18→    type Target = &'a T;
-    20→    fn as_display(&'a self) -> Self::Target {
+    20→    fn as_display …
     26→impl<'a> AsDisplay<'a> for Path {
     27→    type Target = path::Display<'a>;
     29→    #[inline]
@@ -104,20 +104,27 @@ src/display.rs
     51→impl Sealed for PathBuf {}
     58→#[cfg(not(feature = "std"))]
     59→mod placeholder {
-    60→    use super::{AsDisplay, Sealed};
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
     67→        type Target = Self;
     69→        #[inline]
     70→        fn as_display(&'a self) -> Self::Target {
-    76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    76→        fn fmt …
 src/lib.rs
    281→mod aserror;
    282→mod display;
    283→#[cfg(error_generic_member_access)]
    284→mod provide;
    285→mod var;
+   287→pub use thiserror_impl::*;
    289→mod private;
+src/private.rs
+     2→pub use crate::aserror::AsDynError;
+     4→pub use crate::display::AsDisplay;
+     7→pub use crate::provide::ThiserrorProvide;
+     9→pub use crate::var::Var;
+    11→pub use core::error::Error;
+    14→pub use std::backtrace::Backtrace;
 src/provide.rs
      3→#[doc(hidden)]
      4→pub trait ThiserrorProvide: Sealed {
@@ -129,4 +136,4 @@ src/provide.rs
     19→pub trait Sealed {}
 src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
-     6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+     6→    fn fmt …

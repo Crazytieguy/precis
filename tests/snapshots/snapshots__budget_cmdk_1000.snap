@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (980 words)
+budget: 1000 (973 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -141,7 +141,10 @@ cmdk/src/index.tsx
   1046→const useScheduleLayoutEffect = () => {
   1061→function renderChildren …
   1071→function SlottableWithNestedChildren …
+cmdk/tsup.config.ts
+     1→import { defineConfig } from 'tsup'
 playwright.config.ts
+     1→import { PlaywrightTestConfig, devices } from '@playwright/test'
      3→const config: PlaywrightTestConfig = {
 website/README.md
      3→## Getting Started
@@ -153,12 +156,7 @@ website/README.md
     10→
     11→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
     12→
-    13→You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-    14→
-    15→[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-    16→
-    17→The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-    18→
+      →…
     19→## Learn More
     21→To learn more about Next.js, take a look at the following resources:
     22→
@@ -176,11 +174,18 @@ website/components/cmdk/framer.tsx
 website/components/cmdk/linear.tsx
      3→export function LinearCMDK() {
     30→const items = [
+    31→  {
+      →…
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
 website/components/cmdk/vercel.tsx
      4→export function VercelCMDK() {
 website/components/code/index.tsx
+     1→import React from 'react'
+     2→import copy from 'copy-to-clipboard'
+     3→import Highlight, { defaultProps } from 'prism-react-renderer'
+     4→import styles from './code.module.scss'
+     5→import { CopyIcon } from 'components/icons'
      7→const theme = {
     41→export function Code({ children }: { children: string }) {
     42→  return (
@@ -197,6 +202,7 @@ website/components/code/index.tsx
     53→          </button>
       →…
 website/components/icons/index.tsx
+     1→import styles from './icons.module.scss'
      3→export function FigmaIcon() {
     15→export function RaycastIcon() {
     28→export function YouTubeIcon() {

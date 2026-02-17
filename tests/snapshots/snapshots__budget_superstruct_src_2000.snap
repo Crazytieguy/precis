@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1690 words)
+budget: 2000 (1632 words)
 
 error.ts
      5→export type Failure …
@@ -41,6 +41,8 @@ error.ts
     48→  }
     49→}
 struct.ts
+     1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
+     2→import { StructError, Failure } from './error.js'
      4→/**
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
      6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
@@ -164,11 +166,6 @@ struct.ts
    125→  struct: Struct<T, S>,
    126→  message?: string
    127→): asserts value is T {
-   128→  const result = validate(value, struct, { message })
-   129→
-   130→  if (result[0]) {
-   131→    throw result[0]
-      →…
    135→/**
    136→ * Create a value with the coercion logic of struct and validate it.
    137→ */
@@ -178,11 +175,6 @@ struct.ts
    141→  struct: Struct<T, S>,
    142→  message?: string
    143→): T {
-   144→  const result = validate(value, struct, { coerce: true, message })
-   145→
-   146→  if (result[0]) {
-   147→    throw result[0]
-      →…
    153→/**
    154→ * Mask a value, returning only the subset of properties defined by a struct.
    155→ */
@@ -192,19 +184,11 @@ struct.ts
    159→  struct: Struct<T, S>,
    160→  message?: string
    161→): T {
-   162→  const result = validate(value, struct, { coerce: true, mask: true, message })
-   163→
-   164→  if (result[0]) {
-   165→    throw result[0]
-      →…
    171→/**
    172→ * Check if a value passes a struct.
    173→ */
    174→
    175→export function is<T, S>(value: unknown, struct: Struct<T, S>): value is T {
-   176→  const result = validate(value, struct)
-   177→  return !result[0]
-   178→}
    180→/**
    181→ * Validate a value against a struct, returning an error if invalid, or the
    182→ * value (with potential coercion) if valid.
@@ -214,11 +198,6 @@ struct.ts
    186→  value: unknown,
    187→  struct: Struct<T, S>,
    188→  options: {
-   189→    coerce?: boolean
-   190→    mask?: boolean
-   191→    message?: string
-   192→  } = {}
-      →…
    221→export type Context …
    231→export type Infer …
    237→export type Describe …
@@ -227,10 +206,15 @@ struct.ts
    259→export type Validator …
    266→export type Refiner …
 structs/coercions.ts
+     1→import { Struct, is, Coercer } from '../struct.js …
+     2→import { isPlainObject } from '../utils.js …
+     3→import { string, unknown } from './types.js …
     16→export function coerce …
     38→export function defaulted …
     79→export function trimmed …
 structs/refinements.ts
+     1→import { Struct, Refiner } from '../struct.js …
+     2→import { toFailures } from '../utils.js …
      8→export function empty …
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
     22→  if (value instanceof Map || value instanceof Set) {
@@ -246,6 +230,9 @@ structs/refinements.ts
    109→export function size …
    146→export function refine …
 structs/types.ts
+     1→import { Infer, Struct } from '../struct.js …
+     2→import { define } from './utilities.js …
+     3→../utils.js …
     19→export function any …
     33→export function array<T extends Struct<any>>(Element?: T): any {
     34→  return new Struct({
@@ -286,6 +273,9 @@ structs/types.ts
    522→export function union …
    574→export function unknown …
 structs/utilities.ts
+     1→import { Context, Struct, Validator } from '../struct.js …
+     2→../utils.js …
+     8→import { object, optional, type } from './types.js …
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
       →…
@@ -298,6 +288,8 @@ structs/utilities.ts
    221→export function pick …
    247→export function struct …
 utils.ts
+     1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
+     2→import { Failure } from './error.js'
      4→/**
      5→ * Check if a value is an iterator.
      6→ */
@@ -310,44 +302,27 @@ utils.ts
     14→ */
     15→
     16→export function isObject(x: unknown): x is object {
-    17→  return typeof x === 'object' && x != null
-    18→}
     20→/**
     21→ * Check if a value is a non-array object.
     22→ */
     23→
     24→export function isNonArrayObject(x: unknown): x is object {
-    25→  return isObject(x) && !Array.isArray(x)
-    26→}
     28→/**
     29→ * Check if a value is a plain object.
     30→ */
     31→
     32→export function isPlainObject(x: unknown): x is { [key: string]: any } {
-    33→  if (Object.prototype.toString.call(x) !== '[object Object]') {
-    34→    return false
-    35→  }
-    36→
-      →…
     41→/**
     42→ * Return a value as a printable string.
     43→ */
     44→
     45→export function print(value: any): string {
-    46→  if (typeof value === 'symbol') {
-    47→    return value.toString()
-    48→  }
-    49→
-      →…
     53→/**
     54→ * Shifts (removes and returns) the first value from the `input` iterator.
     55→ * Like `Array.prototype.shift()` but for an `Iterator`.
     56→ */
     57→
     58→export function shiftIterator<T>(input: Iterator<T>): T | undefined {
-    59→  const { done, value } = input.next()
-    60→  return done ? undefined : value
-    61→}
     63→/**
     64→ * Convert a single validation result to a failure.
     65→ */
@@ -358,11 +333,6 @@ utils.ts
     70→  struct: Struct<T, S>,
     71→  value: any
     72→): Failure | undefined {
-    73→  if (result === true) {
-    74→    return
-    75→  } else if (result === false) {
-    76→    result = {}
-      →…
    202→export type UnionToIntersection …
    212→export type Assign …
    218→export type EnumSchema …

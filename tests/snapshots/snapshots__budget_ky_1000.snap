@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (945 words)
+budget: 1000 (944 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -60,6 +60,7 @@ readme.md
   1169→node --use-env-proxy app.js
   1170→```
   1171→
+  1172→Supported environment variables:
       →…
   1292→## FAQ
   1294→#### How do I use this in Node.js?
@@ -82,7 +83,6 @@ source/core/Ky.ts
     34→	static create(input: Input, options: Options): ResponsePromise {
     35→		const ky = new Ky(input, options);
     36→
-    37→		const function_ = async (): Promise<Response> => {
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
@@ -149,6 +149,7 @@ source/index.ts
       →…
     34→const ky = createInstance();
 source/types/ResponsePromise.ts
+     4→import {type KyResponse} from './response.js';
 source/types/common.ts
 source/types/hooks.ts
 source/types/ky.ts

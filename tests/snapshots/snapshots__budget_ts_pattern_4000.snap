@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3914 words)
+budget: 4000 (3902 words)
 
 README.md
     40→## About …
@@ -131,7 +131,8 @@ README.md
   1648→  );
   1649→```
   1650→
-      →…
+  1651→Although not strictly necessary, using `as const` after the pattern definition ensures that TS-Pattern infers the most precise types possible.
+  1652→
   1685→#### Type narrowing …
   1732→#### Type guard function …
   1748→#### Exhaustiveness checking …
@@ -174,9 +175,18 @@ docs/v3-to-v4-migration-guide.md
     36→    .exhaustive();
     37→```
     38→
-    39→#### `__` …
-    57→#### `select()`, `not()`, `when()` …
-    79→#### `Pattern` type …
+    39→#### `__`
+    41→The top level `__` export was moved to `P._` and `P.any`:
+    42→
+      →…
+    57→#### `select()`, `not()`, `when()`
+    59→Function to create patterns have been moved to the `P` module.
+    60→
+      →…
+    79→#### `Pattern` type
+    81→the `Pattern` type which used to be exported at the toplevel is now accessible at `P.Pattern`.
+    82→
+      →…
     91→### list patterns …
    111→### NaN …
    122→## New features
@@ -193,8 +203,14 @@ docs/v3-to-v4-migration-guide.md
    162→
       →…
    197→### Union & intersection patterns …
-   201→#### `P.union(...patterns)` …
-   234→#### `P.intersection(...patterns)` …
+   201→#### `P.union(...patterns)`
+   203→```ts
+   204→type Input =
+      →…
+   234→#### `P.intersection(...patterns)`
+   236→```ts
+   237→class A {
+      →…
    265→### Select with sub pattern …
    296→### Infer the matching types from a pattern …
    298→#### `P.infer<typeof pattern>`
@@ -206,7 +222,10 @@ docs/v3-to-v4-migration-guide.md
    338→`P.symbol` is a wildcard pattern matching any **symbol**.
    339→
       →…
-   346→#### `P.bigint` …
+   346→#### `P.bigint`
+   348→`P.bigint` is a wildcard pattern matching any **bigint**.
+   349→
+      →…
 docs/v4-to-v5-migration-guide.md
      1→# TS-Pattern v4 to v5 Migration Guide
      3→This file contains all breaking changes and new features between the version 4 and 5 of TS-Pattern.
@@ -220,12 +239,18 @@ docs/v4-to-v5-migration-guide.md
     14→
     15→```ts
     16→// TS-Pattern v4
+    17→type Input = { type: 'ok'; value: number } | { type: 'error'; error: Error };
+    18→
+    19→// We don't call `.exhaustive`, so handlers don't run.
       →…
     42→## Matching on Map and Sets
     44→Matching `Set` and `Map` instances using `.with(new Set(...))` and `.with(new Map(...))` is no longer supported. If you want to match specific sets and maps, you should now use the `P.map(keyPattern, valuePattern)` and `P.set(valuePattern)` patterns:
     45→
     46→```diff
     47→- import { match } from 'ts-pattern';
+    48→+ import { match, P } from 'ts-pattern';
+    49→
+    50→
       →…
     63→# New features
     65→## chainable methods
@@ -241,12 +266,18 @@ docs/v4-to-v5-migration-guide.md
    159→
    160→```ts
    161→const example = (value: unknown) =>
+   162→  match(value)
+   163→    .with(
+   164→      // non-empty list of strings
       →…
    214→## `.returnType`
    216→In TS-Pattern v4, the only way to explicitly set the return type of your `match` expression is to set the two `<Input, Output>` type parameters of `match`:
    217→
    218→```ts
    219→// TS-Pattern v4
+   220→match<
+   221→  { isAdmin: boolean; plan: 'free' | 'paid' }, // input type
+   222→  number // return type
       →…
 src/errors.ts
      1→/**
@@ -264,7 +295,11 @@ src/errors.ts
     13→    super(`Pattern matching error: no pattern matches value ${displayedValue}`);
     14→  }
     15→}
+src/index.ts
 src/internals/helpers.ts
+     7→import * as symbols from './symbols';
+     8→import { SelectionType } from '../types/FindSelected';
+     9→import { Pattern, Matcher, MatcherType, AnyMatcher } from '../types/Pattern';
     12→export const isObject = (value: unknown): value is Object =>
     13→  Boolean(value && typeof value === 'object');
     16→export const isMatcher = (
@@ -475,9 +510,8 @@ src/match.ts
    131→}
    133→function defaultCatcher …
 src/patterns.ts
+     8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
     67→/**
-    68→ * A `Matchable` is an object implementing
-    69→ * the Matcher Protocol. It must have a `[P.matcher]: P.Matcher<NarrowFn>`
       →…
     81→export type unstable_Matchable<
     82→  narrowedOrFn,
@@ -485,8 +519,6 @@ src/patterns.ts
     84→  pattern = never
     85→> = CustomP<input, pattern, narrowedOrFn>;
     87→/**
-    88→ * A `Matcher` is an object with `match` function, which
-    89→ * defines how this object should be matched by TS-Pattern.
       →…
    100→export type unstable_Matcher<
    101→  narrowedOrFn,
@@ -494,13 +526,9 @@ src/patterns.ts
    103→  pattern = never
    104→> = ReturnType<CustomP<input, pattern, narrowedOrFn>[matcher]>;
    106→/**
-   107→ * `P.infer<typeof somePattern>` will return the type of the value
-   108→ * matched by this pattern.
       →…
    116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
    118→/**
-   119→ * `P.narrow<Input, Pattern>` will narrow the input type to only keep
-   120→ * the set of values that are compatible with the provided pattern type.
       →…
    131→export type narrow<input, pattern> = ExtractPreciseValue<
    132→  input,
@@ -528,6 +556,7 @@ src/patterns.ts
    193→  return chainable({
    194→    [matcher]() {
    195→      return {
+   196→        match: <UnknownInput>(value: UnknownInput | input) => {
       →…
    217→type UnwrapArray …
    219→type UnwrapSet …
@@ -582,6 +611,7 @@ src/patterns.ts
    540→  return chainable({
    541→    [matcher]: () => ({
    542→      match: (value) => {
+   543→        let selections: Record<string, unknown[]> = {};
       →…
    559→/**
    560→ * `P.union(...patterns)` returns a pattern which matches
@@ -603,6 +633,7 @@ src/patterns.ts
    576→  return chainable({
    577→    [matcher]: () => ({
    578→      match: <UnknownInput>(value: UnknownInput | input) => {
+   579→        let selections: Record<string, unknown[]> = {};
       →…
    599→/**
    600→ * `P.not(pattern)` returns a pattern which matches if the sub pattern
@@ -623,6 +654,7 @@ src/patterns.ts
    615→  return chainable({
    616→    [matcher]: () => ({
    617→      match: <UnknownInput>(value: UnknownInput | input) => ({
+   618→        matched: !matchPattern(pattern, value, () => {}),
       →…
    646→export function when<input, predicate extends (value: input) => unknown>(
    647→  predicate: predicate
@@ -644,18 +676,12 @@ src/patterns.ts
    766→type AnyConstructor …
    768→function isInstanceOf …
    773→/**
-   774→ * `P.any` is a wildcard pattern, matching **any value**.
-   775→ *
       →…
    782→export const any: UnknownPattern = chainable(when(isUnknown));
    784→/**
-   785→ * `P.unknown` is a wildcard pattern, matching **unknown value**.
-   786→ *
       →…
    793→export const unknown: UnknownPattern = chainable(when(isUnknown));
    795→/**
-   796→ * `P._` is a wildcard pattern, matching **any value**.
-   797→ * It's an alias to `P.any`.
       →…
    805→export const _ = any;
    817→const startsWith …
@@ -667,8 +693,6 @@ src/patterns.ts
    895→const regex …
    900→const stringChainable …
    919→/**
-   920→ * `P.string` is a wildcard pattern, matching any **string**.
-   921→ *
       →…
    928→export const string: StringPattern = stringChainable(when(isString));
    940→const between …
@@ -682,8 +706,6 @@ src/patterns.ts
   1047→const negative …
   1050→const numberChainable …
   1066→/**
-  1067→ * `P.number` is a wildcard pattern, matching any **number**.
-  1068→ *
       →…
   1075→export const number: NumberPattern = numberChainable(when(isNumber));
   1087→const betweenBigInt …
@@ -695,28 +717,18 @@ src/patterns.ts
   1174→const negativeBigInt …
   1177→const bigintChainable …
   1193→/**
-  1194→ * `P.bigint` is a wildcard pattern, matching any **bigint**.
-  1195→ *
       →…
   1201→export const bigint: BigIntPattern = bigintChainable(when(isBigInt));
   1203→/**
-  1204→ * `P.boolean` is a wildcard pattern, matching any **boolean**.
-  1205→ *
       →…
   1211→export const boolean: BooleanPattern = chainable(when(isBoolean));
   1213→/**
-  1214→ * `P.symbol` is a wildcard pattern, matching any **symbol**.
-  1215→ *
       →…
   1221→export const symbol: SymbolPattern = chainable(when(isSymbol));
   1223→/**
-  1224→ * `P.nullish` is a wildcard pattern, matching **null** or **undefined**.
-  1225→ *
       →…
   1231→export const nullish: NullishPattern = chainable(when(isNullish));
   1233→/**
-  1234→ * `P.nonNullable` is a wildcard pattern, matching everything except **null** or **undefined**.
-  1235→ *
       →…
   1241→export const nonNullable: NonNullablePattern = chainable(when(isNonNullable));
   1243→/**

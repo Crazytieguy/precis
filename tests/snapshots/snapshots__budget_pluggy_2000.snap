@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1809 words)
+budget: 2000 (1825 words)
 
 AGENTS.md
      1→# AGENTS.md
@@ -28,6 +28,9 @@ SECURITY.md
      1→# Security
      3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
 docs/conf.py
+     1→from importlib import metadata
+     2→from typing import TYPE_CHECKING
+     6→    import sphinx.application
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
    107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
    108→    import logging
@@ -47,7 +50,9 @@ docs/conf.py
    122→            return True
    123→
    124→    logger = logging.getLogger(sphinx.util.logging.NAMESPACE)
-      →…
+   125→    warn_handler = [x for x in logger.handlers if x.level == logging.WARNING]
+   126→    assert len(warn_handler) == 1, warn_handler
+   127→    warn_handler[0].filters.insert(0, WarnLogFilter())
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
 scripts/release.py
@@ -120,7 +125,6 @@ src/pluggy/_hooks.py
     44→    firstresult: bool
     45→    #: Whether the hook is :ref:`historic <historic>`.
     46→    historic: bool
-    47→    #: Whether the hook :ref:`warns when implemented <warn_on_impl>`.
       →…
     56→class HookimplOpts(TypedDict):
     58→
@@ -128,7 +132,6 @@ src/pluggy/_hooks.py
     60→    wrapper: bool
     61→    #: Whether the hook implementation is an :ref:`old-style wrapper
     62→    #: <old_style_hookwrappers>`.
-    63→    hookwrapper: bool
       →…
     78→class HookspecMarker:
     85→
@@ -200,7 +203,6 @@ src/pluggy/_hooks.py
    386→        "name",
    387→        "spec",
    388→        "_hookexec",
-   389→        "_hookimpls",
    393→    def __init__ …
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
@@ -320,6 +322,7 @@ src/pluggy/_hooks.py
    715→        self.warn_on_impl = opts.get("warn_on_impl")
    716→        self.warn_on_impl_args = opts.get("warn_on_impl_args")
 src/pluggy/_manager.py
+    33→    import importlib.metadata
     36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
     37→_AfterTrace: TypeAlias = Callable[
     42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
@@ -336,6 +339,8 @@ src/pluggy/_manager.py
     70→
     71→    @property
     72→    def project_name(self) -> str:
+    73→        name: str = self.metadata["name"]
+    74→        return name
     76→    def __getattr__ …
     79→    def __dir__ …
     83→class PluginManager:
@@ -344,7 +349,6 @@ src/pluggy/_manager.py
    101→        #: The project name.
    102→        self.project_name: Final = project_name
    103→        self._name2plugin: Final[dict[str, _Plugin]] = {}
-   104→        self._plugin_distinfo: Final[list[tuple[_Plugin, DistFacade]]] = []
    114→    def _hookexec(
    115→        self,
    116→        hook_name: str,
@@ -427,7 +431,7 @@ src/pluggy/_tracing.py
     19→        self._writer: _Writer | None = None
     20→        self.indent = 0
     21→
-    22→    def get(self, name: str) -> TagTracerSub:
+    22→    def get …
     25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
     42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
     48→    def setwriter …
@@ -438,7 +442,6 @@ src/pluggy/_tracing.py
     62→        self.tags = tags
     63→
     64→    def __call__(self, *args: object) -> None:
-    65→        self.root._processmessage(self.tags, args)
     67→    def get …
 src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):

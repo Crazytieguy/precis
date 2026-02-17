@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3759 words)
+budget: 4000 (3730 words)
 
 README.md
      5→## Usage
@@ -32,7 +32,11 @@ README.md
     30→
     31→## Documentation
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
+playwright.config.ts
+     1→import { defineConfig, devices } from '@playwright/test';
 src/assets.tsx
+     2→import React from 'react';
+     3→import type { ToastTypes } from './types';
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
      6→  switch (type) {
      7→    case 'success':
@@ -84,6 +88,7 @@ src/assets.tsx
     92→  </svg>
     93→);
 src/hooks.tsx
+     1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
      5→
@@ -98,6 +103,22 @@ src/hooks.tsx
     14→  return isDocumentHidden;
     15→};
 src/index.tsx
+     3→import React from 'react';
+     4→import ReactDOM from 'react-dom';
+     6→import { CloseIcon, getAsset, Loader } from './assets';
+     7→import { useIsDocumentHidden } from './hooks';
+     8→import { toast, ToastState } from './state';
+     9→import './styles.css';
+    10→import {
+    11→  isAction,
+    12→  SwipeDirection,
+    13→  type ExternalToast,
+    14→  type HeightT,
+    15→  type ToasterProps,
+    16→  type ToastProps,
+    17→  type ToastT,
+    18→  type ToastToDismiss,
+    19→} from './types';
     22→const VISIBLE_TOASTS_AMOUNT = 3;
     25→const VIEWPORT_OFFSET = '24px';
     28→const MOBILE_VIEWPORT_OFFSET = '16px';
@@ -113,34 +134,39 @@ src/index.tsx
     50→  const [y, x] = position.split('-');
     51→  const directions: Array<SwipeDirection> = [];
     52→
-    53→  if (y) {
       →…
     64→const Toast = (props: ToastProps) => {
     65→  const {
     66→    invert: ToasterInvert,
     67→    toast,
-    68→    unstyled,
       →…
    507→function getDocumentDirection(): ToasterProps['dir'] {
    508→  if (typeof window === 'undefined') return 'ltr';
    509→  if (typeof document === 'undefined') return 'ltr'; // For Fresh purpose
    510→
-   511→  const dirAttribute = document.documentElement.getAttribute('dir');
       →…
    520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
    521→  const styles = {} as React.CSSProperties;
    522→
    523→  [defaultOffset, mobileOffset].forEach((offset, index) => {
-   524→    const isMobile = index === 1;
       →…
    552→function useSonner() {
    553→  const [activeToasts, setActiveToasts] = React.useState<ToastT[]>([]);
    554→
    555→  React.useEffect(() => {
-   556→    return ToastState.subscribe((toast) => {
       →…
    593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
 src/state.ts
+     1→import type {
+     2→  ExternalToast,
+     3→  PromiseData,
+     4→  PromiseIExtendedResult,
+     5→  PromiseT,
+     6→  ToastT,
+     7→  ToastToDismiss,
+     8→  ToastTypes,
+     9→} from './types';
+    11→import React from 'react';
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
     18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
@@ -271,39 +297,6 @@ src/state.ts
    150→        const isReactElementResponse = React.isValidElement(response);
    151→        if (isReactElementResponse) {
    152→          shouldDismiss = false;
-   153→          this.create({ id, type: 'default', message: response });
-   154→        } else if (isHttpResponse(response) && !response.ok) {
-   155→          shouldDismiss = false;
-   156→
-   157→          const promiseData =
-   158→            typeof data.error === 'function' ? await data.error(`HTTP error! status: ${response.status}`) : data.error;
-   159→
-   160→          const description =
-   161→            typeof data.description === 'function'
-   162→              ? await data.description(`HTTP error! status: ${response.status}`)
-   163→              : data.description;
-   164→
-   165→          const isExtendedResult = typeof promiseData === 'object' && !React.isValidElement(promiseData);
-   166→
-   167→          const toastSettings: PromiseIExtendedResult = isExtendedResult
-   168→            ? (promiseData as PromiseIExtendedResult)
-   169→            : { message: promiseData };
-   170→
-   171→          this.create({ id, type: 'error', description, ...toastSettings });
-   172→        } else if (response instanceof Error) {
-   173→          shouldDismiss = false;
-   174→
-   175→          const promiseData = typeof data.error === 'function' ? await data.error(response) : data.error;
-   176→
-   177→          const description =
-   178→            typeof data.description === 'function' ? await data.description(response) : data.description;
-   179→
-   180→          const isExtendedResult = typeof promiseData === 'object' && !React.isValidElement(promiseData);
-   181→
-   182→          const toastSettings: PromiseIExtendedResult = isExtendedResult
-   183→            ? (promiseData as PromiseIExtendedResult)
-   184→            : { message: promiseData };
-   185→
       →…
    243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
    244→    const id = data?.id || toastsCounter++;
@@ -353,6 +346,7 @@ src/state.ts
    298→  { getHistory, getToasts },
    299→);
 src/types.ts
+     1→import React from 'react';
      3→export type ToastTypes = 'normal' | 'action' | 'success' | 'info' | 'warning' | 'error' | 'loading' | 'default';
      5→export type PromiseT<Data = any> = Promise<Data> | (() => Promise<Data>);
      7→export interface PromiseIExtendedResult extends ExternalToast {
@@ -573,11 +567,14 @@ website/next.config.js
      6→};
      8→const withNextra = require('nextra')({
      9→  title: 'Sonner',
-    10→  theme: 'nextra-theme-docs',
-    11→  themeConfig: './theme.config.jsx',
-    12→  defaultShowCopyCode: true,
-    13→});
+      →…
 website/src/components/CodeBlock/index.tsx
+     1→import React from 'react';
+     2→import Highlight, { defaultProps } from 'prism-react-renderer';
+     3→import useMeasure from 'react-use-measure';
+     4→import copy from 'copy-to-clipboard';
+     5→import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
+     7→import styles from './code-block.module.css';
      9→const variants = {
     14→const theme = {
     48→export const CodeBlock = ({ children, initialHeight = 0 }: { children: string; initialHeight?: number }) => {
@@ -621,13 +618,10 @@ website/src/components/CodeBlock/index.tsx
     86→                  height="14"
     87→                  stroke="currentColor"
     88→                  strokeWidth="1.5"
-    89→                  strokeLinecap="round"
-    90→                  strokeLinejoin="round"
-    91→                  fill="none"
-    92→                  shapeRendering="geometricPrecision"
-    93→                >
       →…
 website/src/components/ExpandModes/index.tsx
+     1→import { toast } from 'sonner';
+     2→import { CodeBlock } from '../CodeBlock';
      4→export const ExpandModes = ({
      5→  expand,
      6→  setExpand,
@@ -672,6 +666,9 @@ website/src/components/ExpandModes/index.tsx
     45→  );
     46→};
 website/src/components/Footer/index.tsx
+     1→import Image from 'next/image';
+     2→import emil from 'public/emil.jpeg';
+     3→import styles from './footer.module.css';
      5→export const Footer = () => {
      6→  return (
      7→    <footer className={styles.wrapper}>
@@ -690,39 +687,13 @@ website/src/components/Footer/index.tsx
     20→  );
     21→};
 website/src/components/Head/index.tsx
+     1→import NextHead from 'next/head';
      3→const ogImage = 'https://sonner.emilkowal.ski/og.png';
-     5→const Head = () => (
-     6→  <NextHead>
-     7→    {/* Title */}
-     8→    <title>Sonner</title>
-     9→    <meta name="og:title" content="Sonner" />
-    10→
-    11→    {/* Description */}
-    12→    <meta name="description" content="An opinionated toast component for React." />
-    13→    <meta name="og:description" content="An opinionated toast component for React." />
-    14→
-    15→    {/* Image */}
-    16→    <meta name="twitter:image" content={ogImage} />
-    17→    <meta name="og:image" content={ogImage} />
-    18→
-    19→    {/* URL */}
-    20→    <meta name="og:url" content="https://sonner.emilkowal.ski/" />
-    21→
-    22→    {/* General */}
-    23→    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    24→    <meta httpEquiv="Content-Language" content="en" />
-    25→    <meta name="twitter:card" content="summary_large_image" />
-    26→    <meta name="twitter:site" content="@emilkowalski_" />
-    27→    <meta name="author" content="Emil Kowalski" />
-    28→
-    29→    {/* Favicons */}
-    30→    <meta name="msapplication-TileColor" content="#ffffff" />
-    31→    <meta name="theme-color" content="#ffffff" />
-    32→    <link rel="shortcut icon" href="favicon.ico" />
-    33→    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-    34→  </NextHead>
-    35→);
+     5→const Head …
 website/src/components/Hero/index.tsx
+     1→import { toast } from 'sonner';
+     3→import styles from './hero.module.css';
+     4→import Link from 'next/link';
      6→export const Hero = () => {
      7→  return (
      8→    <div className={styles.wrapper}>
@@ -756,6 +727,7 @@ website/src/components/Hero/index.tsx
     36→  );
     37→};
 website/src/components/How/How.tsx
+     1→import React from 'react';
      3→export const How = () => {
      4→  return (
      5→    <>
@@ -774,10 +746,11 @@ website/src/components/How/How.tsx
     18→  );
     19→};
 website/src/components/Installation/index.tsx
+     3→import React from 'react';
+     4→import copy from 'copy-to-clipboard';
+     5→import { motion, AnimatePresence, MotionConfig } from 'framer-motion';
+     7→import styles from './installation.module.css';
      9→const variants = {
-    10→  visible: { opacity: 1, scale: 1 },
-    11→  hidden: { opacity: 0, scale: 0.5 },
-    12→};
     14→export const Installation = () => {
     15→  const [copying, setCopying] = React.useState(0);
     16→
@@ -813,21 +786,13 @@ website/src/components/Installation/index.tsx
     46→                    <path d="M20 6L9 17l-5-5"></path>
     47→                  </svg>
     48→                </motion.div>
-    49→              ) : (
-    50→                <motion.div animate="visible" exit="hidden" initial="hidden" key="copy" variants={variants}>
-    51→                  <svg
-    52→                    viewBox="0 0 24 24"
-    53→                    width="14"
-    54→                    height="14"
-    55→                    stroke="currentColor"
-    56→                    strokeWidth="1.5"
-    57→                    strokeLinecap="round"
-    58→                    strokeLinejoin="round"
-    59→                    fill="none"
-    60→                    shapeRendering="geometricPrecision"
-    61→                  >
       →…
 website/src/components/Other/Other.tsx
+     1→import React from 'react';
+     2→import { useMemo } from 'react';
+     3→import { toast } from 'sonner';
+     4→import { CodeBlock } from '../CodeBlock';
+     5→import styles from './other.module.css';
      7→export const Other = ({
      8→  setRichColors,
      9→  setCloseButton,
@@ -854,9 +819,11 @@ website/src/components/Other/Other.tsx
     30→        },
     31→      },
     32→      {
-    33→        name: 'Rich Colors Info',
       →…
 website/src/components/Position/index.tsx
+     1→import { toast, useSonner } from 'sonner';
+     2→import { CodeBlock } from '../CodeBlock';
+     3→import React from 'react';
      5→const positions = ['top-left', 'top-center', 'top-right', 'bottom-left', 'bottom-center', 'bottom-right'] as const;
      7→export type Position = (typeof positions)[number];
      9→export const Position = ({
@@ -902,6 +869,9 @@ website/src/components/Position/index.tsx
     49→  );
     50→};
 website/src/components/Types/Types.tsx
+     1→import React from 'react';
+     2→import { toast } from 'sonner';
+     3→import { CodeBlock } from '../CodeBlock';
      5→const promiseCode = '`${data.name} toast has been added`';
      7→export const Types = () => {
      8→  const [activeType, setActiveType] = React.useState(allTypes[0]);
@@ -934,6 +904,7 @@ website/src/components/Types/Types.tsx
     36→    name: 'Default',
       →…
 website/src/components/Usage/index.tsx
+     1→import { CodeBlock } from '../CodeBlock';
      3→export const Usage = () => {
      4→  return (
      5→    <div>
@@ -957,6 +928,11 @@ website/src/components/Usage/index.tsx
     23→  );
     24→};
 website/src/pages/_app.tsx
+     1→import type { ReactElement } from 'react';
+     2→import type { AppProps } from 'next/app';
+     3→import { Analytics } from '@vercel/analytics/react';
+     4→import '../style.css';
+     5→import '../globals.css';
      7→export default function Nextra({ Component, pageProps }: AppProps): ReactElement {
      8→  return (
      9→    <>
@@ -967,6 +943,18 @@ website/src/pages/_app.tsx
     14→  );
     15→}
 website/src/pages/index.tsx
+     1→import React, { StrictMode } from 'react';
+     2→import { Toaster } from 'sonner';
+     3→import { Installation } from '@/src/components/Installation';
+     4→import { Hero } from '@/src/components/Hero';
+     5→import { Types } from '@/src/components/Types/Types';
+     6→import { ExpandModes } from '@/src/components/ExpandModes';
+     7→import { Position } from '@/src/components/Position';
+     8→import { Usage } from '@/src/components/Usage';
+     9→import { Other } from '@/src/components/Other/Other';
+    10→import Head from '../components/Head';
+    11→import { How } from '../components/How/How';
+    12→import { Footer } from '../components/Footer';
     14→export default function Home() {
     15→  const [expand, setExpand] = React.useState(false);
     16→  const [position, setPosition] = React.useState<Position>('bottom-right');

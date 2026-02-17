@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1946 words)
+budget: 2000 (1944 words)
 
 core/Ky.ts
     33→export class Ky {
@@ -14,12 +14,9 @@ core/Ky.ts
     39→				throw new RangeError(`The \`timeout\` option cannot be greater than ${maxSafeTimeout}`);
     40→			}
     41→
-    42→			// Delay the fetch so that body method shortcuts can set the Accept header
-    43→			await Promise.resolve();
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
-   203→		this.#options = {
       →…
 core/constants.ts
      4→export const supportsRequestStreams = (() => {
@@ -160,12 +157,15 @@ core/constants.ts
    192→						});
    193→					}
    194→
+   195→					// Retry with refreshed authentication
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys: KyOptionsRegistry = {
    256→export const vendorSpecificOptions = {
    265→export const requestOptionsRegistry = {
 errors/ForceRetryError.ts
+     1→import type {ForceRetryOptions} from '../core/constants.js';
+     2→import {NonError} from './NonError.js';
      4→/**
      5→Internal error used to signal a forced retry from afterResponse hooks.
      6→This is thrown when a user returns ky.retry() from an afterResponse hook.
@@ -194,6 +194,9 @@ errors/ForceRetryError.ts
     29→	}
     30→}
 errors/HTTPError.ts
+     1→import type {NormalizedOptions} from '../types/options.js';
+     2→import type {KyRequest} from '../types/request.js';
+     3→import type {KyResponse} from '../types/response.js';
      5→export class HTTPError<T = unknown> extends Error {
      6→	public response: KyResponse<T>;
      7→	public request: KyRequest;
@@ -243,6 +246,7 @@ errors/NonError.ts
     27→	}
     28→}
 errors/TimeoutError.ts
+     1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {
      4→	public request: KyRequest;
      5→
@@ -253,11 +257,18 @@ errors/TimeoutError.ts
     10→	}
     11→}
 index.ts
+     3→import {Ky} from './core/Ky.js';
+     4→import {requestMethods, stop, retry} from './core/constants.js';
+     5→import type {KyInstance} from './types/ky.js';
+     6→import type {Input, Options} from './types/options.js';
+     7→import {validateAndMerge} from './utils/merge.js';
+     8→import {type Mutable} from './utils/types.js';
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
     11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
       →…
     34→const ky = createInstance();
 types/ResponsePromise.ts
+     4→import {type KyResponse} from './response.js';
 types/common.ts
 types/hooks.ts
 types/ky.ts
@@ -332,7 +343,7 @@ types/response.ts
 types/retry.ts
 utils/body.ts
      5→export const getBodySize …
-    57→const withProgress = (stream: ReadableStream<Uint8Array>, totalBytes: number, onProgress: Options['onDownloadProgress'] | Options['onUploadProgress']): ReadableStream<Uint8Array> => {
+    57→const withProgress …
     90→export const streamResponse …
    119→export const streamRequest …
 utils/delay.ts
@@ -345,9 +356,9 @@ utils/is.ts
 utils/merge.ts
      6→export const validateAndMerge …
     16→export const mergeHeaders …
-    32→function newHookValue<K extends keyof Hooks>(original: Hooks, incoming: Hooks, property: K): Required<Hooks>[K] {
+    32→function newHookValue …
     38→export const mergeHooks …
-    47→const appendSearchParameters = (target: any, source: any): URLSearchParams => {
+    47→const appendSearchParameters …
     86→export const deepMerge …
 utils/normalize.ts
      5→export const normalizeRequestMethod …
@@ -356,6 +367,8 @@ utils/normalize.ts
     12→const retryAfterStatusCodes = [413, 429, 503];
     14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
     16→const defaultRetryOptions: InternalRetryOptions = {
+    17→	limit: 2,
+      →…
     28→export const normalizeRetryOptions …
 utils/options.ts
      4→export const findUnknownOptions …
@@ -375,8 +388,6 @@ utils/type-guards.ts
     10→
     11→@example
     12→```
-    13→import ky, {isKyError} from 'ky';
-    14→try {
       →…
     27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
     31→/**
@@ -387,8 +398,6 @@ utils/type-guards.ts
     36→
     37→@example
     38→```
-    39→import ky, {isHTTPError} from 'ky';
-    40→try {
       →…
     49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
     53→/**
@@ -399,8 +408,6 @@ utils/type-guards.ts
     58→
     59→@example
     60→```
-    61→import ky, {isTimeoutError} from 'ky';
-    62→try {
       →…
     71→export function isTimeoutError(error: unknown): error is TimeoutError {
     75→/**
@@ -411,8 +418,6 @@ utils/type-guards.ts
     80→
     81→@example
     82→```
-    83→import ky, {isForceRetryError} from 'ky';
-    84→
       →…
     98→export function isForceRetryError(error: unknown): error is ForceRetryError {
 utils/types.ts

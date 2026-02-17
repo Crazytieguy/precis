@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3486 words)
+budget: 4000 (3607 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -36,20 +36,7 @@ CONTRIBUTING.md
     19→    $ tox
     20→
     21→
-    22→Use of pre-commit is recommended:
-    23→
-    24→    $ uv run precommit install
-    25→
-    26→
-    27→Documentation is published with [mkdocs]():
-    28→
-    29→```shell
-    30→$ uv pip install -r requirements-docs.txt
-    31→$ uv pip install -e .
-    32→$ uv run mkdocs serve
-    33→```
-    34→
-    35→Open http://127.0.0.1:8000/ to view the documentation locally.
+      →…
 README.md
      1→# python-dotenv
      3→[![Build Status][build_status_badge]][build_status_link]
@@ -299,6 +286,8 @@ README.md
 docs/reference.md
      1→# ::: dotenv …
 src/dotenv/__init__.py
+     1→from typing import Any, Optional
+     3→from .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key
      6→def load_ipython_extension(ipython: Any) -> None:
     12→def get_cli_string(
     13→    path: Optional[str] = None,
@@ -322,7 +311,19 @@ src/dotenv/__init__.py
     49→    "find_dotenv",
     50→    "load_ipython_extension",
     51→]
+src/dotenv/__main__.py
+     3→from .cli import cli
 src/dotenv/cli.py
+     1→import json
+     2→import os
+     3→import shlex
+     4→import sys
+     5→from contextlib import contextmanager
+     6→from typing import IO, Any, Dict, Iterator, List, Optional
+     9→    from subprocess import Popen
+    12→    import click
+    20→from .main import dotenv_values, set_key, unset_key
+    21→from .version import __version__
     24→def enumerate_env() -> Optional[str]:
     25→    """
     26→    Return a path for the ${pwd}/.env file.
@@ -430,6 +431,13 @@ src/dotenv/cli.py
    210→
    211→    """
 src/dotenv/ipython.py
+     1→from IPython.core.magic import Magics, line_magic, magics_class  # type: ignore
+     2→from IPython.core.magic_arguments import (
+     3→    argument,
+     4→    magic_arguments,
+     5→    parse_argstring,
+     6→)  # type: ignore
+     8→from .main import find_dotenv, load_dotenv
     11→@magics_class
     12→class IPythonDotEnv(Magics):
     13→    @magic_arguments()
@@ -468,6 +476,19 @@ src/dotenv/ipython.py
     48→def load_ipython_extension(ipython):
     49→    """Register the %dotenv magic."""
 src/dotenv/main.py
+     1→import io
+     2→import logging
+     3→import os
+     4→import pathlib
+     5→import shutil
+     6→import stat
+     7→import sys
+     8→import tempfile
+     9→from collections import OrderedDict
+    10→from contextlib import contextmanager
+    11→from typing import IO, Dict, Iterable, Iterator, Mapping, Optional, Tuple, Union
+    13→from .parser import Binding, parse_stream
+    14→from .variables import parse_variables
     25→def _load_dotenv_disabled() -> bool:
     26→    """
     27→    Determine if dotenv loading has been disabled.
@@ -710,6 +731,17 @@ src/dotenv/main.py
    434→
    435→    return stat.S_ISFIFO(st.st_mode)
 src/dotenv/parser.py
+     1→import codecs
+     2→import re
+     3→from typing import (
+     4→    IO,
+     5→    Iterator,
+     6→    Match,
+     7→    NamedTuple,
+     8→    Optional,
+     9→    Pattern,
+    10→    Sequence,
+    11→)
     14→def make_regex(string: str, extra_flags: int = 0) -> Pattern[str]:
     35→class Original(NamedTuple):
     36→    string: str
@@ -778,6 +810,9 @@ src/dotenv/parser.py
    142→def parse_binding(reader: Reader) -> Binding:
    179→def parse_stream(stream: IO[str]) -> Iterator[Binding]:
 src/dotenv/variables.py
+     1→import re
+     2→from abc import ABCMeta, abstractmethod
+     3→from typing import Iterator, Mapping, Optional, Pattern
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
      7→    \$\{

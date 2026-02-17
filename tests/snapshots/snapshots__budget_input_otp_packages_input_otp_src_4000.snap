@@ -2,9 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2766 words)
+budget: 4000 (2815 words)
 
 input.tsx
+     3→import * as React from 'react'
+     5→import { syncTimeouts } from './sync-timeouts'
+     6→import { OTPInputProps, RenderProps } from './types'
+     7→import { usePrevious } from './use-previous'
+     8→import { usePasswordManagerBadge } from './use-pwm-badge'
     10→export const OTPInputContext = React.createContext<RenderProps>(
     11→  {} as RenderProps,
     12→)
@@ -615,6 +620,7 @@ types.ts
     42→      }
     43→  )
 use-previous.ts
+     1→import * as React from 'react'
      3→export function usePrevious<T>(value: T) {
      4→  const ref = React.useRef<T>()
      5→  React.useEffect(() => {
@@ -623,6 +629,8 @@ use-previous.ts
      8→  return ref.current
      9→}
 use-pwm-badge.tsx
+     1→import * as React from 'react'
+     2→import { OTPInputProps } from './types'
      4→const PWM_BADGE_MARGIN_RIGHT = 18
      5→const PWM_BADGE_SPACE_WIDTH_PX = 40
      6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const

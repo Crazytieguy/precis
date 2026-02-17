@@ -19,6 +19,7 @@ pub enum KindCategory {
     Section,  // Markdown headings
     Macro,
     Impl,
+    Import, // use/import statements
 }
 
 impl KindCategory {
@@ -37,6 +38,7 @@ impl KindCategory {
             parse::SymbolKind::Section => KindCategory::Section,
             parse::SymbolKind::Macro => KindCategory::Macro,
             parse::SymbolKind::Impl => KindCategory::Impl,
+            parse::SymbolKind::Import => KindCategory::Import,
         }
     }
 
@@ -53,6 +55,8 @@ impl KindCategory {
             ],
             // Markdown: just names (headings) and body text
             KindCategory::Section => &[StageKind::FilePath, StageKind::Names, StageKind::Body],
+            // Imports: names (truncated) → full signature line(s)
+            KindCategory::Import => &[StageKind::FilePath, StageKind::Names, StageKind::Signatures],
             // Everything else: names → signatures → doc → body
             _ => &[
                 StageKind::FilePath,
@@ -648,6 +652,14 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
             StageKind::FilePath => 0.3,
             StageKind::Names => 1.0,
             StageKind::Body => 0.5,
+            _ => 0.1,
+        },
+        // Imports: supplementary context for understanding file dependencies.
+        // Lower base value since they're not API surface, but still useful.
+        KindCategory::Import => match stage {
+            StageKind::FilePath => 0.3,
+            StageKind::Names => 1.0,
+            StageKind::Signatures => 0.3,
             _ => 0.1,
         },
         // Constants: signature captures the value for short constants;

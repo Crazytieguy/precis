@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3774 words)
+budget: 4000 (3766 words)
 
 CHANGELOG.md
      1→# neverthrow …
@@ -304,7 +304,11 @@ README.md
   1680→
   1681→### License
   1683→The neverthrow project is available as open source under the terms of the [MIT license](https://github.com/supermacro/neverthrow/blob/master/LICENSE).
+rollup.config.mjs
+     1→import typescript from "rollup-plugin-typescript2";
+     2→import dts from "rollup-plugin-dts";
 src/_internals/error.ts
+     1→import { Result } from '../result'
      3→export interface ErrorConfig {
      4→  withStackTrace: boolean
      5→}
@@ -342,6 +346,8 @@ src/_internals/error.ts
     42→  }
     43→}
 src/_internals/utils.ts
+     1→import { Result, ok, err } from '../result'
+     2→import { ResultAsync } from '../result-async'
      5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
      6→  [idx in keyof T]: T[idx] extends Result<infer U, unknown> ? U : never
      7→}
@@ -409,6 +415,25 @@ src/_internals/utils.ts
     86→    combineResultListWithAllErrors,
     87→  ) as ResultAsync<T[], E[]>
 src/result-async.ts
+     1→import type {
+     2→  Combine,
+     3→  Dedup,
+     4→  EmptyArrayToNever,
+     5→  IsLiteralArray,
+     6→  MemberListOf,
+     7→  MembersToUnion,
+     8→} from './result'
+    10→import { Err, Ok, Result } from './'
+    11→import {
+    12→  combineResultAsyncList,
+    13→  combineResultAsyncListWithAllErrors,
+    14→  ExtractErrAsyncTypes,
+    15→  ExtractOkAsyncTypes,
+    16→  InferAsyncErrTypes,
+    17→  InferAsyncOkTypes,
+    18→  InferErrTypes,
+    19→  InferOkTypes,
+    20→} from './_internals/utils'
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
@@ -438,15 +463,6 @@ src/result-async.ts
     48→    errorFn?: (err: unknown) => E,
     49→  ): (...args: A) => ResultAsync<R, E> {
     50→    return (...args) => {
-    51→      return new ResultAsync(
-    52→        (async () => {
-    53→          try {
-    54→            return new Ok(await fn(...args))
-    55→          } catch (error) {
-    56→            return new Err(errorFn ? errorFn(error) : error)
-    57→          }
-    58→        })(),
-    59→      )
     69→  static combine …
     81→  static combineWithAllErrors …
     89→  map …
@@ -486,6 +502,17 @@ src/result-async.ts
    330→type TraverseWithAllErrorsAsync …
    338→type Writable …
 src/result.ts
+     1→import { errAsync, ResultAsync } from './'
+     2→import { createNeverThrowError, ErrorConfig } from './_internals/error'
+     3→import {
+     4→  combineResultList,
+     5→  combineResultListWithAllErrors,
+     6→  ExtractErrTypes,
+     7→  ExtractOkTypes,
+     8→  InferAsyncErrTypes,
+     9→  InferErrTypes,
+    10→  InferOkTypes,
+    11→} from './_internals/utils'
     14→export namespace Result {
     15→  /**
     16→   * Wraps a function with a try catch, creating a new function with the same
@@ -685,15 +712,8 @@ src/result.ts
    338→    return f(this.value)
    339→  }
    340→
-   341→  andThrough<R extends Result<unknown, unknown>>(f: (t: T) => R): Result<T, InferErrTypes<R> | E>
-   342→  andThrough<F>(f: (t: T) => Result<unknown, F>): Result<T, E | F>
-   343→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-   344→  andThrough(f: any): any {
-   345→    return f(this.value).map((_value: unknown) => this.value)
-   346→  }
-   347→
-   348→  andTee(f: (t: T) => unknown): Result<T, E> {
-   349→    try {
+   344→  andThrough …
+   348→  andTee …
    357→  orTee …
    366→  orElse …
    370→  asyncAndThen …
@@ -737,15 +757,6 @@ src/result.ts
    445→  }
    446→
    447→  orTee(f: (t: E) => unknown): Result<T, E> {
-   448→    try {
-   449→      f(this.error)
-   450→    } catch (e) {
-   451→      // Tee doesn't care about the error
-   452→    }
-   453→    return err<T, E>(this.error)
-   454→  }
-   455→
-   456→  andThen<R extends Result<unknown, unknown>>(
    461→  andThen …
    470→  orElse …
    475→  asyncAndThen …

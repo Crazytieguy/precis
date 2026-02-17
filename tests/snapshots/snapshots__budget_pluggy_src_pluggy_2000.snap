@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1733 words)
+budget: 2000 (1736 words)
 
 __init__.py
      1→__all__ = [
@@ -294,6 +294,7 @@ _hooks.py
    715→        self.warn_on_impl = opts.get("warn_on_impl")
    716→        self.warn_on_impl_args = opts.get("warn_on_impl_args")
 _manager.py
+    33→    import importlib.metadata
     36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
     37→_AfterTrace: TypeAlias = Callable[
     42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:

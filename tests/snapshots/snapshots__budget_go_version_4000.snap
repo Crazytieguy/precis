@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3876 words)
+budget: 4000 (3891 words)
 
 CHANGELOG.md
      1→# 1.8.0 (Nov 28, 2025)
@@ -142,6 +142,13 @@ README.md
     66→like, we welcome any contributions. Fork this library and submit a pull
     67→request.
 constraint.go
+     6→import (
+     7→	"fmt"
+     8→	"regexp"
+     9→	"sort"
+    10→	"strings"
+    11→	"sync"
+    12→)
     14→var (
     15→	constraintRegexp     *regexp.Regexp
     16→	constraintRegexpOnce sync.Once
@@ -315,7 +322,6 @@ constraint.go
    202→		op:       cop.op,
    203→		check:    check,
    204→		original: v,
-   205→	}, nil
       →…
    208→func prereleaseCheck(v, c *Version) bool {
    209→	switch vPre, cPre := v.Prerelease() != "", c.Prerelease() != ""; {
@@ -404,9 +410,16 @@ constraint.go
    301→	if c.segments[cs-1] > v.segments[cs-1] {
    302→		return false
    303→	}
-   304→
       →…
 version.go
+     6→import (
+     7→	"database/sql/driver"
+     8→	"fmt"
+     9→	"regexp"
+    10→	"strconv"
+    11→	"strings"
+    12→	"sync"
+    13→)
     15→// The compiled regular expression used to test the validity of a version.
     16→var (
     17→	versionRegexp     *regexp.Regexp
@@ -495,7 +508,7 @@ version.go
    107→		si:       len(segmentsStr),
    108→		original: v,
    109→	}, nil
-   110→}
+      →…
    112→// Must is a helper that wraps a call to a function returning (*Version, error)
    113→// and panics if error is non-nil.
    114→func Must(v *Version, err error) *Version {
@@ -636,7 +649,6 @@ version.go
    253→
    254→	if selfNumeric && !otherNumeric {
    255→		return -1
-   256→	} else if !selfNumeric && otherNumeric {
       →…
    267→func comparePrereleases(v string, other string) int {
    268→	// the same pre release!
@@ -674,7 +686,6 @@ version.go
    300→			return compare
    301→		}
    302→	}
-   303→
       →…
    307→// Core returns a new version constructed from only the MAJOR.MINOR.PATCH
    308→// segments of the version, without prerelease or metadata.

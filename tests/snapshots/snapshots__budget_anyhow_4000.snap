@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3711 words)
+budget: 4000 (3675 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -67,18 +67,6 @@ README.md
     63→      No such file or directory (os error 2)
     64→  ```
     65→
-    66→- Downcasting is supported and can be by value, by shared reference, or by
-    67→  mutable reference as needed.
-    68→
-    69→  ```rust
-    70→  // If the error was caused by redaction, then return a
-    71→  // tombstone instead of the content.
-    72→  match root_cause.downcast_ref::<DataStoreError>() {
-    73→      Some(DataStoreError::Censored(_)) => Ok(Poll::Ready(REDACTED_CONTENT)),
-    74→      None => Err(error),
-    75→  }
-    76→  ```
-    77→
       →…
    126→## No-std support
    128→In no_std mode, almost all of the same API is available and works the same way.
@@ -130,11 +118,21 @@ README.md
    178→be dual licensed as above, without any additional terms or conditions.
    179→</sub>
 build.rs
+     3→use std::env;
+     4→use std::ffi::OsString;
+     5→use std::fs;
+     6→use std::io::ErrorKind;
+     7→use std::iter;
+     8→use std::path::Path;
+     9→use std::process::{self, Command, Stdio};
+    10→use std::str;
     17→fn main() {
     99→fn compile_probe(rustc_bootstrap: bool) -> bool {
    188→fn rustc_minor_version() -> Option<u32> {
    199→fn cargo_env_var(key: &str) -> OsString {
 src/backtrace.rs
+     2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
+     5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
      8→pub(crate) enum Backtrace {}
     10→#[cfg(std_backtrace)]
@@ -183,6 +181,9 @@ src/backtrace.rs
     97→
     98→    struct Capture {
     99→        actual_start: usize,
+   100→        resolved: bool,
+   101→        frames: Vec<BacktraceFrame>,
+   102→    }
    104→    struct BacktraceFrame {
    105→        frame: Frame,
    106→        symbols: Vec<BacktraceSymbol>,
@@ -216,6 +217,8 @@ src/backtrace.rs
    370→    fn output_filename …
    407→fn _assert_send_sync …
 src/chain.rs
+     5→use alloc::vec::{self, Vec};
+     8→pub(crate) use crate::Chain;
     10→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
     11→pub(crate) struct Chain<'a> {
     12→    state: ChainState<'a>,
@@ -243,6 +246,7 @@ src/chain.rs
     94→impl Default for Chain<'_> {
     95→    fn default …
 src/context.rs
+     7→use crate::nightly::{self, Request};
      9→mod ext {
     10→    use super::*;
     11→
@@ -327,6 +331,9 @@ src/ensure.rs
    911→#[macro_export]
    912→macro_rules! __fallback_ensure {
 src/error.rs
+     4→use crate::nightly::{self, Request};
+     6→use crate::ptr::Mut;
+    14→use core::ops::{Deref, DerefMut};
     20→    /// Create a new error object from any error type.
     21→    ///
       →…
@@ -505,6 +512,8 @@ src/fmt.rs
     73→}
     79→    fn write_str …
 src/kind.rs
+    51→use crate::StdError;
+    53→use alloc::boxed::Box;
     55→pub struct Adhoc;
     57→#[doc(hidden)]
     58→pub trait AdhocKind: Sized {
@@ -561,12 +570,16 @@ src/lib.rs
    261→mod nightly;
    262→mod ptr;
    263→mod wrapper;
+   270→use core::fmt::Debug;
+   273→use std::error::Error as StdError;
+   276→use core::error::Error as StdError;
    278→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
    281→        None
    282→    }
    283→}
+   286→pub use anyhow as format_err;
    288→/// The `Error` type, a wrapper around a dynamic error type.
    289→///
    290→/// `Error` works a lot like `Box<dyn std::error::Error>`, but with these
@@ -594,10 +607,6 @@ src/lib.rs
    312→/// To print causes as well using anyhow's default formatting of causes, use the
    313→/// alternate selector "{:#}".
    314→///
-   315→/// ```console
-   316→/// Failed to read instrs from ./path/to/instrs.json: No such file or directory (os error 2)
-   317→/// ```
-   318→///
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -703,10 +712,6 @@ src/lib.rs
    494→///     # }
    495→/// }
    496→///
-   497→/// pub fn do_it(mut it: ImportantThing) -> Result<Vec<u8>> {
-   498→///     it.detach().context("Failed to detach the important thing")?;
-   499→///
-   500→///     let path = &it.path;
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.
@@ -781,16 +786,9 @@ src/lib.rs
    708→    mod not {
    709→        #[doc(hidden)]
    710→        pub trait Bool {
-   711→            fn not(self) -> bool;
-   712→        }
-   713→
-   714→        impl Bool for bool {
+   711→            fn not …
    715→            #[inline]
    716→            fn not(self) -> bool {
-   717→                !self
-   718→            }
-   719→        }
-   720→
    722→            #[inline]
    723→            fn not(self) -> bool {
 src/macros.rs
@@ -835,6 +833,8 @@ src/macros.rs
    229→#[macro_export]
    230→macro_rules! __anyhow {
 src/nightly.rs
+     7→use core::error::{self, Error};
+    10→pub use core::error::Request;
     41→pub fn request_ref_backtrace …
     45→fn request_ref …
     52→pub fn provide_ref_backtrace …
@@ -887,6 +887,8 @@ src/ptr.rs
    183→}
    186→    type Target = T;
 src/wrapper.rs
+     5→use alloc::boxed::Box;
+     8→use crate::nightly::{self, Request};
     10→#[repr(transparent)]
     11→pub struct MessageError<M>(pub M);
     17→    fn fmt …

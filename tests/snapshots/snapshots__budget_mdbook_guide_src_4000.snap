@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3937 words)
+budget: 4000 (3931 words)
 
 404.md
      1→# Document not found (404)
@@ -294,6 +294,11 @@ for_developers/backends.md
    219→## Output and signalling failure …
    322→## Wrapping up …
 for_developers/mdbook-wordcount/src/main.rs
+     6→use std::process;
+     7→use std::fs::{self, File};
+     8→use std::io::{self, Write};
+     9→use mdbook::renderer::RenderContext;
+    10→use mdbook::book::{BookItem, Chapter};
     12→fn main() {
     13→    let mut stdin = io::stdin();
     14→    let ctx = RenderContext::from_json(&mut stdin).unwrap();
@@ -575,8 +580,6 @@ format/theme/README.md
     19→    - **_css/general.css_** is the base styles.
     20→    - **_css/print.css_** is the style for printer output.
     21→    - **_css/variables.css_** contains variables used in other CSS files.
-    22→- **_book.js_** is mostly used to add client side functionality, like hiding /
-    23→  un-hiding the sidebar, changing the theme, ...
       →…
 format/theme/editor.md
      1→# Editor
@@ -610,7 +613,8 @@ format/theme/editor.md
     30→}
     31→```
     32→
-      →…
+    33→Note the new `Undo Changes` button in the editable playgrounds.
+    34→
     35→## Customizing the editor
     37→By default, the editor is the [Ace](https://ace.c9.io/) editor, but, if desired,
     38→the functionality may be overridden by providing a different folder:
@@ -759,6 +763,4 @@ misc/contributors.md
      6→- [mdinger](https://github.com/mdinger)
      7→- Kevin ([kbknapp](https://github.com/kbknapp))
      8→- Steve Klabnik ([steveklabnik](https://github.com/steveklabnik))
-     9→- Adam Solove ([asolove](https://github.com/asolove))
-    10→- Wayne Nilsen ([waynenilsen](https://github.com/waynenilsen))
       →…

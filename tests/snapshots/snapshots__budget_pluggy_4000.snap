@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3654 words)
+budget: 4000 (3659 words)
 
 AGENTS.md
      1→# AGENTS.md
@@ -30,6 +30,9 @@ SECURITY.md
      1→# Security
      3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
 docs/conf.py
+     1→from importlib import metadata
+     2→from typing import TYPE_CHECKING
+     6→    import sphinx.application
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
    107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
    108→    import logging
@@ -55,6 +58,13 @@ docs/conf.py
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
 scripts/release.py
+     5→import argparse
+     6→from subprocess import check_call
+     7→import sys
+     9→from colorama import Fore
+    10→from colorama import init
+    11→from git import Remote
+    12→from git import Repo
     15→def create_branch(version: str) -> Repo:
     16→    """Create a fresh branch from upstream/main"""
     17→    repo = Repo.init(".")
@@ -74,6 +84,8 @@ scripts/release.py
     60→    init(autoreset=True)
       →…
 scripts/towncrier-draft-to-file.py
+     1→from subprocess import call
+     2→import sys
      5→def main() -> int:
      6→    """
      7→    Platform agnostic wrapper script for towncrier.
@@ -129,6 +141,9 @@ src/pluggy/_hooks.py
     31→_Namespace: TypeAlias = ModuleType | type
     32→_Plugin: TypeAlias = object
     33→_HookExec: TypeAlias = Callable[
+    34→    [str, Sequence["HookImpl"], Mapping[str, object], bool],
+    35→    object | list[object],
+    36→]
     37→_HookImplFunction: TypeAlias = Callable[..., _T | Generator[None, Result[_T], None]]
     40→class HookspecOpts(TypedDict):
     42→
@@ -378,6 +393,8 @@ src/pluggy/_hooks.py
    369→
    370→        def __getattr__(self, name: str) -> HookCaller: ...
    377→_CallHistory: TypeAlias = list[
+   378→    tuple[Mapping[str, object], Callable[[Any], None] | None]
+   379→]
    382→class HookCaller:
    384→
    385→    __slots__ = (
@@ -405,10 +422,6 @@ src/pluggy/_hooks.py
    407→        # 3. tryfirst nonwrappers
    408→        # 4. trylast wrappers
    409→        # 5. wrappers
-   410→        # 6. tryfirst wrappers
-   411→        self._hookimpls: Final[list[HookImpl]] = []
-   412→        self._call_history: _CallHistory | None = None
-   413→        # TODO: Document, or make private.
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None
@@ -559,8 +572,11 @@ src/pluggy/_hooks.py
    715→        self.warn_on_impl = opts.get("warn_on_impl")
    716→        self.warn_on_impl_args = opts.get("warn_on_impl_args")
 src/pluggy/_manager.py
+    33→    import importlib.metadata
     36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
     37→_AfterTrace: TypeAlias = Callable[
+    38→    [Result[Any], str, Sequence[HookImpl], Mapping[str, Any]], None
+    39→]
     42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
     52→class PluginValidationError(Exception):
     58→
@@ -610,10 +626,7 @@ src/pluggy/_manager.py
    122→        # enable_tracing will set its own wrapping function at self._inner_hookexec
    123→        return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
    124→
-   125→    def register(self, plugin: _Plugin, name: str | None = None) -> str | None:
-   126→        """Register a plugin and return its name.
-   127→
-   128→        :param name:
+   125→    def register …
    176→    def parse_hookimpl_opts …
    201→    def unregister …
    233→    def set_blocked …
@@ -748,10 +761,6 @@ src/pluggy/_tracing.py
     40→        return "".join(lines)
     41→
     42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
-    43→        if self._writer is not None and args:
-    44→            self._writer(self._format_message(tags, args))
-    45→        if processor := self._tags2proc.get(tags):
-    46→            processor(tags, args)
     48→    def setwriter …
     51→    def setprocessor …
     59→class TagTracerSub:

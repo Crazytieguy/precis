@@ -4,9 +4,13 @@ expression: output
 ---
 budget: 2000 (1842 words)
 
+docs/conf.py
+     2→from importlib.metadata import version as get_version
+     4→from packaging.version import parse
 src/typeguard/__init__.py
     34→config: TypeCheckConfiguration
 src/typeguard/_checkers.py
+    42→from typing_extensions import is_typeddict
     81→TypeCheckerCallable: TypeAlias = Callable[
     82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
     83→]
@@ -39,9 +43,6 @@ src/typeguard/_checkers.py
    115→    "__imod__",
    116→    "__imul__",
    117→    "__ior__",
-   118→    "__ipow__",
-   119→    "__irshift__",
-   120→    "__isub__",
       →…
    586→def _is_literal_type(typ: object) -> bool:
    587→    return typ is typing.Literal or typ is typing_extensions.Literal
@@ -65,9 +66,6 @@ src/typeguard/_checkers.py
   1021→    typing.Literal: check_literal,
   1022→    Mapping: check_mapping,
   1023→    MutableMapping: check_mapping,
-  1024→    None: check_none,
-  1025→    collections.abc.Mapping: check_mapping,
-  1026→    collections.abc.MutableMapping: check_mapping,
       →…
 src/typeguard/_config.py
     11→T = TypeVar("T")

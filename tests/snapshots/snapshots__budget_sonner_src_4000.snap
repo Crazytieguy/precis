@@ -2,9 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2973 words)
+budget: 4000 (3010 words)
 
 assets.tsx
+     2→import React from 'react';
+     3→import type { ToastTypes } from './types';
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
      6→  switch (type) {
      7→    case 'success':
@@ -72,6 +74,7 @@ assets.tsx
     92→  </svg>
     93→);
 hooks.tsx
+     1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
      5→
@@ -86,6 +89,22 @@ hooks.tsx
     14→  return isDocumentHidden;
     15→};
 index.tsx
+     3→import React from 'react';
+     4→import ReactDOM from 'react-dom';
+     6→import { CloseIcon, getAsset, Loader } from './assets';
+     7→import { useIsDocumentHidden } from './hooks';
+     8→import { toast, ToastState } from './state';
+     9→import './styles.css';
+    10→import {
+    11→  isAction,
+    12→  SwipeDirection,
+    13→  type ExternalToast,
+    14→  type HeightT,
+    15→  type ToasterProps,
+    16→  type ToastProps,
+    17→  type ToastT,
+    18→  type ToastToDismiss,
+    19→} from './types';
     22→const VISIBLE_TOASTS_AMOUNT = 3;
     25→const VIEWPORT_OFFSET = '24px';
     28→const MOBILE_VIEWPORT_OFFSET = '16px';
@@ -171,17 +190,6 @@ index.tsx
    121→    [toast.duration, durationFromToaster],
    122→  );
    123→  const closeTimerStartTimeRef = React.useRef(0);
-   124→  const offset = React.useRef(0);
-   125→  const lastCloseTimerStartTimeRef = React.useRef(0);
-   126→  const pointerStartRef = React.useRef<{ x: number; y: number } | null>(null);
-   127→  const [y, x] = position.split('-');
-   128→  const toastsHeightBefore = React.useMemo(() => {
-   129→    return heights.reduce((prev, curr, reducerIndex) => {
-   130→      // Calculate offset up until current toast
-   131→      if (reducerIndex >= heightIndex) {
-   132→        return prev;
-   133→      }
-   134→
       →…
    507→function getDocumentDirection(): ToasterProps['dir'] {
    508→  if (typeof window === 'undefined') return 'ltr';
@@ -272,6 +280,16 @@ index.tsx
    596→    invert,
       →…
 state.ts
+     1→import type {
+     2→  ExternalToast,
+     3→  PromiseData,
+     4→  PromiseIExtendedResult,
+     5→  PromiseT,
+     6→  ToastT,
+     7→  ToastToDismiss,
+     8→  ToastTypes,
+     9→} from './types';
+    11→import React from 'react';
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
     18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
@@ -504,11 +522,9 @@ state.ts
    245→    this.create({ jsx: jsx(id), ...data, id });
    246→    return id;
    247→  };
-   248→
    249→  getActiveToasts = () => {
    250→    return this.toasts.filter((toast) => !this.dismissedToasts.has(toast.id));
    251→  };
-   252→}
    254→export const ToastState = new Observer();
    257→const toastFunction = (message: titleT, data?: ExternalToast) => {
    258→  const id = data?.id || toastsCounter++;
@@ -549,6 +565,7 @@ state.ts
    298→  { getHistory, getToasts },
    299→);
 types.ts
+     1→import React from 'react';
      3→export type ToastTypes = 'normal' | 'action' | 'success' | 'info' | 'warning' | 'error' | 'loading' | 'default';
      5→export type PromiseT<Data = any> = Promise<Data> | (() => Promise<Data>);
      7→export interface PromiseIExtendedResult extends ExternalToast {

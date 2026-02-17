@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3925 words)
+budget: 4000 (3888 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -180,9 +180,6 @@ README.md
     93→
     94→```tsx
     95→const [value, setValue] = React.useState('apple')
-    96→
-    97→return (
-    98→  <Command value={value} onValueChange={setValue}>
       →…
    153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
    155→Props are forwarded to [Command](#command-cmdk-root). Composes Radix UI's Dialog component. The overlay is always rendered. See the [Radix Documentation](https://www.radix-ui.com/docs/primitives/components/dialog) for more information. Can be controlled with the `open` and `onOpenChange` props.
@@ -193,9 +190,6 @@ README.md
    160→return (
    161→  <Command.Dialog open={open} onOpenChange={setOpen}>
    162→    ...
-   163→  </Command.Dialog>
-   164→)
-   165→```
       →…
    180→### Input `[cmdk-input]`
    182→All props are forwarded to the underlying `input` element. Can be controlled with the `value` and `onValueChange` props.
@@ -215,9 +209,6 @@ README.md
    197→  height: var(--cmdk-list-height);
    198→  max-height: 500px;
    199→  transition: height 100ms ease;
-   200→}
-   201→```
-   202→
       →…
    212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
    214→Item that becomes active on pointer enter. You should provide a unique `value` for each item, but it will be automatically inferred from the `.textContent`.
@@ -228,9 +219,6 @@ README.md
    219→  // Value is implicity "apple" because of the provided text content
    220→>
    221→  Apple
-   222→</Command.Item>
-   223→```
-   224→
       →…
    242→### Group `[cmdk-group]` `[hidden?]`
    244→Groups items together with the given `heading` (`[cmdk-group-heading]`).
@@ -241,9 +229,6 @@ README.md
    249→</Command.Group>
    250→```
    251→
-   252→Groups will not unmount from the DOM, rather the `hidden` attribute is applied to hide it from view. This may be relevant in your styling.
-   253→
-   254→You can force a group to always render, regardless of filtering, by passing the `forceMount` prop.
       →…
    256→### Separator `[cmdk-separator]`
    258→Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
@@ -269,7 +254,7 @@ README.md
    281→const search = useCommandState((state) => state.search)
    282→return <Command.Empty>No results found for "{search}".</Command.Empty>
    283→```
-   284→
+      →…
    285→## Examples
    287→Code snippets for common use cases.
    288→
@@ -282,9 +267,6 @@ README.md
    296→const [search, setSearch] = React.useState('')
    297→const [pages, setPages] = React.useState([])
    298→const page = pages[pages.length - 1]
-   299→
-   300→return (
-   301→  <Command
       →…
    338→### Show sub-items when searching
    340→If your items have nested sub-items that you only want to reveal when searching, render based on the search state:
@@ -295,9 +277,6 @@ README.md
    345→  if (!search) return null
    346→  return <Command.Item {...props} />
    347→}
-   348→
-   349→return (
-   350→  <Command>
       →…
    361→### Asynchronous results
    363→Render the items as they become available. Filtering and sorting will happen automatically.
@@ -308,9 +287,6 @@ README.md
    368→
    369→React.useEffect(() => {
    370→  async function getItems() {
-   371→    setLoading(true)
-   372→    const res = await api.get('/dictionary')
-   373→    setItems(res)
       →…
    397→### Use inside Popover
    399→We recommend using the [Radix UI popover](https://www.radix-ui.com/docs/primitives/components/popover) component. ⌘K relies on the Radix UI Dialog component, so this will reduce your bundle size a bit due to shared dependencies.
@@ -321,9 +297,6 @@ README.md
    404→
    405→Render `Command` inside of the popover content:
    406→
-   407→```tsx
-   408→import * as Popover from '@radix-ui/react-popover'
-   409→
       →…
    426→### Drop in stylesheets
    428→You can find global stylesheets to drop in as a starting point for styling. See [website/styles/cmdk](website/styles/cmdk) for examples.
@@ -413,6 +386,12 @@ cmdk/src/command-score.ts
    161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
    162→}
 cmdk/src/index.tsx
+     3→import * as RadixDialog from '@radix-ui/react-dialog'
+     4→import * as React from 'react'
+     5→import { commandScore } from './command-score'
+     6→import { Primitive } from '@radix-ui/react-primitive'
+     7→import { useId } from '@radix-ui/react-id'
+     8→import { composeRefs } from '@radix-ui/react-compose-refs'
     10→type Children …
     11→type DivProps …
     13→type LoadingProps …
@@ -535,7 +514,10 @@ cmdk/src/index.tsx
   1073→  render: (child: React.ReactNode) => JSX.Element,
   1074→) {
   1081→const srOnlyStyles …
+cmdk/tsup.config.ts
+     1→import { defineConfig } from 'tsup'
 playwright.config.ts
+     1→import { PlaywrightTestConfig, devices } from '@playwright/test'
      3→const config: PlaywrightTestConfig = {
 website/README.md
      3→## Getting Started
@@ -566,6 +548,8 @@ website/README.md
     31→
     32→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 website/components/cmdk/framer.tsx
+     1→import { Command } from 'cmdk'
+     2→import React from 'react'
      4→export function FramerCMDK() {
      5→  const [value, setValue] = React.useState('Button')
      6→  return (
@@ -574,10 +558,6 @@ website/components/cmdk/framer.tsx
      9→        <div cmdk-framer-header="">
     10→          <SearchIcon />
     11→          <Command.Input autoFocus placeholder="Find components, packages, and interactions..." />
-    12→        </div>
-    13→        <Command.List>
-    14→          <div cmdk-framer-items="">
-    15→            <div cmdk-framer-left="">
       →…
     57→function Button() {
     61→function Input() {
@@ -597,6 +577,7 @@ website/components/cmdk/framer.tsx
    197→function SearchIcon() {
    212→function SliderIcon() {
 website/components/cmdk/linear.tsx
+     1→import { Command } from 'cmdk'
      3→export function LinearCMDK() {
      4→  return (
      5→    <div className="linear">
@@ -605,10 +586,6 @@ website/components/cmdk/linear.tsx
      8→        <Command.Input autoFocus placeholder="Type a command or search..." />
      9→        <Command.List>
     10→          <Command.Empty>No results found.</Command.Empty>
-    11→          {items.map(({ icon, label, shortcut }) => {
-    12→            return (
-    13→              <Command.Item key={label} value={label}>
-    14→                {icon}
       →…
     30→const items = [
     31→  {
@@ -616,7 +593,6 @@ website/components/cmdk/linear.tsx
     33→    label: 'Assign to...',
     34→    shortcut: ['A'],
     35→  },
-    36→  {
       →…
     68→function AssignToIcon() {
     76→function AssignToMeIcon() {
@@ -626,6 +602,11 @@ website/components/cmdk/linear.tsx
    125→function RemoveLabelIcon() {
    137→function SetDueDateIcon() {
 website/components/cmdk/raycast.tsx
+     1→import React from 'react'
+     2→import { useTheme } from 'next-themes'
+     3→import * as Popover from '@radix-ui/react-popover'
+     4→import { Command } from 'cmdk'
+     5→import { Logo, LinearIcon, FigmaIcon, SlackIcon, YouTubeIcon, RaycastIcon } from 'components'
      7→export function RaycastCMDK() {
      8→  const { resolvedTheme: theme } = useTheme()
      9→  const [value, setValue] = React.useState('linear')
@@ -634,10 +615,6 @@ website/components/cmdk/raycast.tsx
     12→
     13→  React.useEffect(() => {
     14→    inputRef?.current?.focus()
-    15→  }, [])
-    16→
-    17→  return (
-    18→    <div className="raycast">
       →…
     97→function Item({
    116→function SubCommand({
@@ -651,6 +628,8 @@ website/components/cmdk/raycast.tsx
    299→function ClipboardIcon() {
    315→function HammerIcon() {
 website/components/cmdk/vercel.tsx
+     1→import React from 'react'
+     2→import { Command } from 'cmdk'
      4→export function VercelCMDK() {
      5→  const ref = React.useRef<HTMLDivElement | null>(null)
      6→  const [inputValue, setInputValue] = React.useState('')
@@ -659,10 +638,6 @@ website/components/cmdk/vercel.tsx
      9→  const activePage = pages[pages.length - 1]
     10→  const isHome = activePage === 'home'
     11→
-    12→  const popPage = React.useCallback(() => {
-    13→    setPages((pages) => {
-    14→      const x = [...pages]
-    15→      x.splice(-1, 1)
       →…
     91→function Home({ searchProjects }: { searchProjects: Function }) {
    137→function Projects() {
@@ -675,6 +650,11 @@ website/components/cmdk/vercel.tsx
    274→function FeedbackIcon() {
    292→function ContactIcon() {
 website/components/code/index.tsx
+     1→import React from 'react'
+     2→import copy from 'copy-to-clipboard'
+     3→import Highlight, { defaultProps } from 'prism-react-renderer'
+     4→import styles from './code.module.scss'
+     5→import { CopyIcon } from 'components/icons'
      7→const theme = {
      8→  plain: {
      9→    color: 'var(--gray12)',
@@ -707,6 +687,7 @@ website/components/code/index.tsx
     65→  )
     66→}
 website/components/icons/index.tsx
+     1→import styles from './icons.module.scss'
      3→export function FigmaIcon() {
      4→  return (
       →…
@@ -747,6 +728,15 @@ website/next.config.js
      4→  swcMinify: true,
      5→}
 website/pages/_app.tsx
+     1→import 'styles/globals.scss'
+     3→import 'styles/cmdk/vercel.scss'
+     4→import 'styles/cmdk/linear.scss'
+     5→import 'styles/cmdk/raycast.scss'
+     6→import 'styles/cmdk/framer.scss'
+     8→import type { AppProps } from 'next/app'
+     9→import { ThemeProvider } from 'next-themes'
+    10→import { NextSeo } from 'next-seo'
+    11→import Head from 'next/head'
     13→const title = '⌘K'
     14→const description = 'Fast, composable, unstyled command menu for React'
     15→const siteUrl = 'https://cmdk.paco.me'
@@ -780,6 +770,8 @@ website/pages/_app.tsx
     44→  )
     45→}
 website/pages/_document.tsx
+     2→import React from 'react'
+     3→import NextDocument, { Html, Head, Main, NextScript } from 'next/document'
      5→export default class Document extends NextDocument {
      6→  render() {
      7→    return (
@@ -796,6 +788,24 @@ website/pages/_document.tsx
     18→  }
     19→}
 website/pages/index.tsx
+     1→import styles from 'styles/index.module.scss'
+     2→import React from 'react'
+     3→import { AnimatePresence, AnimateSharedLayout, motion, MotionProps, useInView } from 'framer-motion'
+     4→import {
+     5→  FramerCMDK,
+     6→  LinearCMDK,
+     7→  LinearIcon,
+     8→  VercelCMDK,
+     9→  VercelIcon,
+    10→  RaycastCMDK,
+    11→  RaycastIcon,
+    12→  CopyIcon,
+    13→  FramerIcon,
+    14→  GitHubIcon,
+    15→  Code,
+    16→  CopiedIcon,
+    17→} from 'components'
+    18→import packageJSON from '../../cmdk/package.json'
     20→type TTheme = {
     21→  theme: Themes
     22→  setTheme: Function
@@ -844,21 +854,8 @@ website/pages/index.tsx
     68→          )}
     69→        </AnimatePresence>
     70→
-    71→        <ThemeContext.Provider value={{ theme, setTheme }}>
-    72→          <ThemeSwitcher />
-    73→        </ThemeContext.Provider>
-    74→
-    75→        <div aria-hidden className={styles.line} />
-    76→
-    77→        <Codeblock />
-    78→      </div>
-    79→      <Footer />
-    80→    </main>
-    81→  )
-    82→}
-    84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
-    85→  return (
       →…
+    84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     99→//////////////////////////////////////////////////////////////////
    100→
    101→function InstallButton() {
@@ -874,17 +871,8 @@ website/pages/index.tsx
    111→          setTimeout(() => {
    112→            setCopied(false)
    113→          }, 2000)
-   114→        } catch (e) {}
-   115→      }}
-   116→    >
-   117→      npm install cmdk
-   118→      <span>{copied ? <CopiedIcon /> : <CopyIcon />}</span>
-   119→    </button>
-   120→  )
-   121→}
-   123→function GitHubButton() {
-   124→  return (
       →…
+   123→function GitHubButton() {
    137→//////////////////////////////////////////////////////////////////
    138→
    139→const themes = [
@@ -899,8 +887,6 @@ website/pages/index.tsx
    148→  {
       →…
    158→function ThemeSwitcher() {
-   159→  const { theme, setTheme } = React.useContext(ThemeContext)
-      →…
    260→//////////////////////////////////////////////////////////////////
    261→
    262→function Codeblock() {
@@ -916,35 +902,12 @@ website/pages/index.tsx
    272→
    273→    <Command.Group heading="Fruits">
    274→      <Command.Item>Apple</Command.Item>
-   275→      <Command.Item>Orange</Command.Item>
-   276→      <Command.Separator />
-   277→      <Command.Item>Pear</Command.Item>
-   278→      <Command.Item>Blueberry</Command.Item>
-   279→    </Command.Group>
-   280→
-   281→    <Command.Item>Fish</Command.Item>
-   282→  </Command.List>
-   283→</Command.Dialog>`
-   284→
-   285→  return (
-   286→    <div className={styles.codeBlock}>
-   287→      <div className={styles.line2} aria-hidden />
-   288→      <div className={styles.line3} aria-hidden />
-   289→      <Code>{code}</Code>
-   290→    </div>
-   291→  )
-   292→}
+      →…
    294→//////////////////////////////////////////////////////////////////
    295→
    296→function VersionBadge() {
    297→  return <span className={styles.versionBadge}>v{packageJSON.version}</span>
    298→}
    300→function Footer() {
-   301→  const ref = React.useRef<HTMLElement | null>(null)
-      →…
    326→function RaunoSignature() {
-   327→  return (
-      →…
    350→function PacoSignature() {
-   351→  return (
-      →…

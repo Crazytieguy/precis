@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3603 words)
+budget: 4000 (3578 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -60,6 +60,10 @@ README.md
     56→
     57→Parts of `once_cell` API are included into `std` [as of Rust 1.70.0](https://github.com/rust-lang/rust/pull/105587).
 src/imp_cs.rs
+     1→use core::panic::{RefUnwindSafe, UnwindSafe};
+     3→use critical_section::{CriticalSection, Mutex};
+     4→use portable_atomic::{AtomicBool, Ordering};
+     6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
     10→    // Use `unsync::OnceCell` internally since `Mutex` does not provide
@@ -95,6 +99,11 @@ src/imp_cs.rs
     74→    #[inline]
     75→    pub(crate) fn into_inner(self) -> Option<T> {
 src/imp_pl.rs
+     1→use std::{
+     2→    cell::UnsafeCell,
+     3→    panic::{RefUnwindSafe, UnwindSafe},
+     4→    sync::atomic::{AtomicU8, Ordering},
+     5→};
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
      9→    value: UnsafeCell<Option<T>>,
@@ -148,6 +157,12 @@ src/imp_pl.rs
    138→#[inline(never)]
    139→fn initialize_inner(state: &AtomicU8, init: &mut dyn FnMut() -> bool) {
 src/imp_std.rs
+     6→use std::{
+     7→    cell::{Cell, UnsafeCell},
+     8→    panic::{RefUnwindSafe, UnwindSafe},
+     9→    sync::atomic::{AtomicBool, AtomicPtr, Ordering},
+    10→    thread::{self, Thread},
+    11→};
     13→#[derive(Debug)]
     14→pub(crate) struct OnceCell<T> {
     15→    // This `queue` field is the core of the implementation. It encodes two
@@ -319,19 +334,9 @@ src/lib.rs
    413→        inner: UnsafeCell<Option<T>>,
    414→    }
    415→
-   416→    // Similarly to a `Sync` bound on `sync::OnceCell`, we can use
-   417→    // `&unsync::OnceCell` to sneak a `T` through `catch_unwind`,
-   418→    // by initializing the cell in closure and extracting the value in the
-   419→    // `Drop`.
-   420→    impl<T: RefUnwindSafe + UnwindSafe> RefUnwindSafe for OnceCell<T> {}
-   421→    impl<T: UnwindSafe> UnwindSafe for OnceCell<T> {}
-   422→
-   423→    impl<T> Default for OnceCell<T> {
    424→        fn default() -> Self {
    425→            Self::new()
    426→        }
-   427→    }
-   428→
    430→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
    431→            match self.get() {
    432→                Some(v) => f.debug_tuple("OnceCell").field(v).finish(),
@@ -454,13 +459,9 @@ src/lib.rs
    899→    /// assert_eq!(value.unwrap().as_str(), "Hello, World!");
    900→    /// ```
    901→    pub struct OnceCell<T>(Imp<T>);
-   902→
-   903→    impl<T> Default for OnceCell<T> {
    904→        fn default() -> OnceCell<T> {
    905→            OnceCell::new()
    906→        }
-   907→    }
-   908→
    910→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
    911→            match self.get() {
    912→                Some(v) => f.debug_tuple("OnceCell").field(v).finish(),
@@ -576,6 +577,13 @@ src/lib.rs
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
 src/race.rs
+    31→use core::sync::atomic;
+    33→use portable_atomic as atomic;
+    35→use atomic::{AtomicPtr, AtomicUsize, Ordering};
+    36→use core::cell::UnsafeCell;
+    37→use core::marker::PhantomData;
+    38→use core::num::NonZeroUsize;
+    39→use core::ptr;
     41→/// A thread-safe cell which can be written to only once.
     42→#[derive(Default, Debug)]
     43→pub struct OnceNonZeroUsize {
@@ -661,6 +669,7 @@ src/race.rs
    345→    /// eprintln!("uaf: {}", l.get().unwrap());
    346→    /// ```
    347→    fn _dummy() {}
+   351→pub use self::once_box::OnceBox;
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
@@ -726,22 +735,22 @@ src/race.rs
    496→    /// ```
    497→    fn _dummy() {}
 xtask/src/main.rs
+     4→use std::time::Instant;
+     6→use xshell::{cmd, Shell};
      8→fn main() -> xshell::Result<()> {
      9→    let sh = Shell::new()?;
-    10→
       →…
    116→fn push_toolchain<'a>(
    117→    sh: &'a xshell::Shell,
    118→    toolchain: &str,
    119→) -> xshell::Result<xshell::PushEnv<'a>> {
    120→    cmd!(sh, "rustup toolchain install {toolchain} --no-self-update").run()?;
-   121→    let res = sh.push_env("RUSTUP_TOOLCHAIN", toolchain);
       →…
    126→fn section(name: &'static str) -> impl Drop {
    127→    println!("::group::{name}");
-   128→    let start = Instant::now();
       →…
    136→fn defer<F: FnOnce()>(f: F) -> impl Drop {
    137→    struct D<F: FnOnce()>(Option<F>);
-   138→    impl<F: FnOnce()> Drop for D<F> {
       →…
+xtask/src/tidy.rs
+     1→use xshell::{cmd, Shell};

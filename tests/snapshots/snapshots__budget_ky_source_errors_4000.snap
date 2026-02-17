@@ -2,9 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (404 words)
+budget: 4000 (433 words)
 
 ForceRetryError.ts
+     1→import type {ForceRetryOptions} from '../core/constants.js';
+     2→import {NonError} from './NonError.js';
      4→/**
      5→Internal error used to signal a forced retry from afterResponse hooks.
      6→This is thrown when a user returns ky.retry() from an afterResponse hook.
@@ -33,6 +35,9 @@ ForceRetryError.ts
     29→	}
     30→}
 HTTPError.ts
+     1→import type {NormalizedOptions} from '../types/options.js';
+     2→import type {KyRequest} from '../types/request.js';
+     3→import type {KyResponse} from '../types/response.js';
      5→export class HTTPError<T = unknown> extends Error {
      6→	public response: KyResponse<T>;
      7→	public request: KyRequest;
@@ -82,6 +87,7 @@ NonError.ts
     27→	}
     28→}
 TimeoutError.ts
+     1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {
      4→	public request: KyRequest;
      5→

@@ -2,9 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (499 words)
+budget: 500 (491 words)
 
 input.tsx
+     3→import * as React from 'react'
+     5→import { syncTimeouts } from './sync-timeouts'
+     6→import { OTPInputProps, RenderProps } from './types'
+     7→import { usePrevious } from './use-previous'
+     8→import { usePasswordManagerBadge } from './use-pwm-badge'
     10→export const OTPInputContext = React.createContext<RenderProps>(
     11→  {} as RenderProps,
     12→)
@@ -19,9 +24,6 @@ input.tsx
     22→      placeholder,
     23→      inputMode = 'numeric',
     24→      onComplete,
-    25→      pushPasswordManagerStrategy = 'increase-width',
-    26→      pasteTransformer,
-    27→      containerClassName,
       →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
@@ -31,8 +33,6 @@ input.tsx
    545→  }
    546→}
    553→const NOSCRIPT_CSS_FALLBACK = `
-   554→[data-input-otp] {
-      →…
 regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
      2→export const REGEXP_ONLY_CHARS = '^[a-zA-Z]+$'
@@ -89,6 +89,7 @@ types.ts
     42→      }
     43→  )
 use-previous.ts
+     1→import * as React from 'react'
      3→export function usePrevious<T>(value: T) {
      4→  const ref = React.useRef<T>()
      5→  React.useEffect(() => {
@@ -97,12 +98,12 @@ use-previous.ts
      8→  return ref.current
      9→}
 use-pwm-badge.tsx
+     1→import * as React from 'react'
+     2→import { OTPInputProps } from './types'
      4→const PWM_BADGE_MARGIN_RIGHT = 18
      5→const PWM_BADGE_SPACE_WIDTH_PX = 40
      6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
      8→const PASSWORD_MANAGERS_SELECTORS = [
-     9→  '[data-lastpass-icon-root]', // LastPass
-      →…
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,
@@ -136,16 +137,4 @@ use-pwm-badge.tsx
     45→    return increaseWidthCase
     46→  }, [hasPWMBadge, hasPWMBadgeSpace, pushPasswordManagerStrategy])
     47→
-    48→  const trackPWMBadge = React.useCallback(() => {
-    49→    const container = containerRef.current
-    50→    const input = inputRef.current
-    51→    if (
-    52→      !container ||
-    53→      !input ||
-    54→      done ||
-    55→      pushPasswordManagerStrategy === 'none'
-    56→    ) {
-    57→      return
-    58→    }
-    59→
       →…

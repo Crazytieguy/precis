@@ -2,9 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (987 words)
+budget: 1000 (951 words)
 
 coercions.ts
+     1→import { Struct, is, Coercer } from '../struct.js'
+     2→import { isPlainObject } from '../utils.js'
+     3→import { string, unknown } from './types.js'
      5→/**
       →…
     16→export function coerce<T, S, C>(
@@ -22,6 +25,8 @@ coercions.ts
       →…
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
 refinements.ts
+     1→import { Struct, Refiner } from '../struct.js'
+     2→import { toFailures } from '../utils.js'
      4→/**
       →…
      8→export function empty<
@@ -73,6 +78,19 @@ refinements.ts
    149→  refiner: Refiner<T>
    150→): Struct<T, S> {
 types.ts
+     1→import { Infer, Struct } from '../struct.js'
+     2→import { define } from './utilities.js'
+     3→import {
+     4→  ObjectSchema,
+     5→  ObjectType,
+     6→  print,
+     7→  run,
+     8→  isObject,
+     9→  isNonArrayObject,
+    10→  AnyStruct,
+    11→  InferStructTuple,
+    12→  UnionToIntersection,
+    13→} from '../utils.js'
     15→/**
       →…
     19→export function any(): Struct<any, null> {
@@ -82,11 +100,6 @@ types.ts
     36→    schema: Element,
     37→    *entries(value) {
     38→      if (Element && Array.isArray(value)) {
-    39→        for (const [i, v] of value.entries()) {
-    40→          yield [i, v, Element]
-    41→        }
-    42→      }
-    43→    },
       →…
     56→/**
       →…
@@ -105,11 +118,6 @@ types.ts
    110→
    111→  for (const key of values) {
    112→    schema[key] = key
-   113→  }
-   114→
-   115→  return new Struct({
-   116→    type: 'enums',
-   117→    schema,
       →…
    127→/**
       →…
@@ -133,11 +141,6 @@ types.ts
    207→  return new Struct({
    208→    type: 'literal',
    209→    schema:
-   210→      t === 'string' || t === 'number' || t === 'boolean' ? constant : null,
-   211→    validator(value) {
-   212→      return (
-   213→        value === constant ||
-   214→        `Expected the literal \`${description}\`, but received: ${print(value)}`
       →…
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    231→  return new Struct({
@@ -145,11 +148,6 @@ types.ts
    233→    schema: null,
    234→    *entries(value) {
    235→      if (Key && Value && value instanceof Map) {
-   236→        for (const [k, v] of value.entries()) {
-   237→          yield [k as string, k, Key]
-   238→          yield [k as string, v, Value]
-   239→        }
-   240→      }
       →…
    254→/**
       →…
@@ -166,11 +164,6 @@ types.ts
    301→  return new Struct({
    302→    type: 'object',
    303→    schema: schema ? schema : null,
-   304→    *entries(value) {
-   305→      if (schema && isObject(value)) {
-   306→        const unknowns = new Set(Object.keys(value))
-   307→
-   308→        for (const key of knowns) {
       →…
    347→/**
       →…
@@ -190,11 +183,6 @@ types.ts
    418→    schema: null,
    419→    *entries(value) {
    420→      if (Element && value instanceof Set) {
-   421→        for (const v of value) {
-   422→          yield [v as string, v, Element]
-   423→        }
-   424→      }
-   425→    },
       →…
    438→/**
       →…
@@ -218,6 +206,14 @@ types.ts
       →…
    574→export function unknown(): Struct<unknown, null> {
 utilities.ts
+     1→import { Context, Struct, Validator } from '../struct.js'
+     2→import {
+     3→  Assign,
+     4→  ObjectSchema,
+     5→  ObjectType,
+     6→  PartialObjectSchema,
+     7→} from '../utils.js'
+     8→import { object, optional, type } from './types.js'
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
     62→  const schemas = Structs.map((s) => s.schema)

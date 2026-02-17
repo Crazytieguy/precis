@@ -2,9 +2,30 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (970 words)
+budget: 1000 (964 words)
 
 __init__.py
+     5→from humanize.filesize import naturalsize
+     6→from humanize.i18n import activate, deactivate, decimal_separator, thousands_separator
+     7→from humanize.lists import natural_list
+     8→from humanize.number import (
+     9→    apnumber,
+    10→    clamp,
+    11→    fractional,
+    12→    intcomma,
+    13→    intword,
+    14→    metric,
+    15→    ordinal,
+    16→    scientific,
+    17→)
+    18→from humanize.time import (
+    19→    naturaldate,
+    20→    naturalday,
+    21→    naturaldelta,
+    22→    naturaltime,
+    23→    precisedelta,
+    24→)
+    26→from ._version import __version__
     28→__all__ = [
     29→    "__version__",
     30→    "activate",
@@ -28,6 +49,7 @@ __init__.py
     48→    "thousands_separator",
     49→]
 filesize.py
+     5→from math import log
     36→def naturalsize(
     37→    value: float | str,
     38→    binary: bool = False,
@@ -38,7 +60,11 @@ filesize.py
     43→
       →…
 i18n.py
+     5→import gettext as gettext_module
+     6→from threading import local
      8→TYPE_CHECKING = False
+    10→    import os
+    11→    import pathlib
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
     16→    None: gettext_module.NullTranslations()
@@ -71,25 +97,10 @@ i18n.py
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
    101→def _gettext(message: str) -> str:
-   102→    """Get translation.
-   103→
-      →…
    113→def _pgettext(msgctxt: str, message: str) -> str:
-   114→    """Fetches a particular translation.
-   115→
-      →…
    129→def _ngettext(message: str, plural: str, num: int) -> str:
-   130→    """Plural version of _gettext.
-   131→
-      →…
    144→def _gettext_noop(message: str) -> str:
-   145→    """Mark a string as a translation string without translating it.
-   146→
-      →…
    163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
-   164→    """Mark two strings as pluralized translations without translating them.
-   165→
-      →…
    183→def thousands_separator() -> str:
    184→    """Return the thousands separator for a locale, default to comma.
    185→
@@ -100,15 +111,21 @@ i18n.py
       →…
 lists.py
      5→TYPE_CHECKING = False
+     7→    from typing import Any
      9→__all__ = ["natural_list"]
     12→def natural_list(items: list[Any]) -> str:
     13→    """Natural list.
     14→
       →…
 number.py
+     5→import bisect
+     7→from .i18n import _gettext as _
+     8→from .i18n import _ngettext, decimal_separator, thousands_separator
+     9→from .i18n import _ngettext_noop as NS_
+    10→from .i18n import _pgettext as P_
     12→TYPE_CHECKING = False
+    14→    from typing import TypeAlias
     21→def _format_not_finite(value: float) -> str:
-    22→    """Utility function to handle infinite and nan cases."""
     34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
     35→    """Converts an integer to its ordinal as a string.
     36→
@@ -149,7 +166,15 @@ number.py
    533→
       →…
 time.py
+     8→from enum import Enum
+     9→from functools import total_ordering
+    11→from .i18n import _gettext as _
+    12→from .i18n import _ngettext
+    13→from .number import intcomma
     15→TYPE_CHECKING = False
+    17→    import datetime as dt
+    18→    from collections.abc import Iterable
+    19→    from typing import Any
     21→__all__ = [
     22→    "naturaldate",
     23→    "naturalday",
@@ -174,15 +199,9 @@ time.py
     44→        return NotImplemented
     47→def _now() -> dt.datetime:
     53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
-    54→    """Return an "absolute" value for a timedelta, always representing a time distance.
-    55→
-      →…
     68→def _date_and_delta(
     69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
     70→) -> tuple[Any, Any]:
-    71→    """Turn a value into a date and a timedelta which represents how long ago it was.
-    72→
-      →…
     95→def naturaldelta(
     96→    value: dt.timedelta | float,
     97→    months: bool = True,
@@ -204,7 +223,6 @@ time.py
    300→def _convert_aware_datetime(
    301→    value: dt.datetime | dt.timedelta | float | None,
    302→) -> Any:
-   303→    """Convert aware datetime to naive datetime and pass through any other type."""
    311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
    312→    """Return a natural day.
    313→
@@ -219,17 +237,8 @@ time.py
    366→    suppress: Iterable[Unit],
    367→    format: str,
    368→) -> tuple[float, float]:
-   369→    """Divide `value` by `divisor`, returning the quotient and remainder.
-   370→
-      →…
    406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
-   407→    """Return a minimum unit suitable that is not suppressed.
-   408→
-      →…
    435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
-   436→    """Extend suppressed units (if any) with all units lower than the minimum unit.
-   437→
-      →…
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
    453→    minimum_unit: str = "seconds",
@@ -240,6 +249,3 @@ time.py
    458→
       →…
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
-   655→    """Round a number according to the string format provided.
-   656→
-      →…

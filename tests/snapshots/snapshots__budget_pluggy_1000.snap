@@ -2,15 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (979 words)
+budget: 1000 (978 words)
 
 AGENTS.md
-     1→# AGENTS.md
-     3→See @CLAUDE.md for AI coding agent instructions.
+     1→# AGENTS.md …
 CLAUDE.md
-     1→# CLAUDE.md
-     3→This file provides guidance to AI coding agents when working with code in this repository.
-     4→
+     1→# CLAUDE.md …
      5→## Project Overview …
     10→## Development Commands …
     14→### Testing …
@@ -26,6 +23,9 @@ SECURITY.md
      1→# Security
      3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
 docs/conf.py
+     1→from importlib import metadata
+     2→from typing import TYPE_CHECKING
+     6→    import sphinx.application
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
    107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
    108→    import logging
@@ -44,6 +44,7 @@ docs/conf.py
    121→                return False
    122→            return True
    123→
+   124→    logger = logging.getLogger(sphinx.util.logging.NAMESPACE)
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
@@ -65,6 +66,7 @@ src/pluggy/__init__.py
      7→    "HookspecOpts",
      8→    "HookimplOpts",
      9→    "HookImpl",
+    10→    "HookRelay",
       →…
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
@@ -195,6 +197,7 @@ src/pluggy/_hooks.py
    707→    )
    708→
 src/pluggy/_manager.py
+    33→    import importlib.metadata
     36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
     37→_AfterTrace: TypeAlias = Callable[
     42→def _warn_for_function …

@@ -2,24 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (977 words)
+budget: 1000 (925 words)
 
 README.md
-     1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
-     4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/anyhow-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/anyhow)
-      →…
-    21→## Details
-    23→- Use `Result<T, anyhow::Error>`, or equivalently `anyhow::Result<T>`, as the
-      →…
-   126→## No-std support
-   128→In no_std mode, almost all of the same API is available and works the same way.
-      →…
-   144→## Comparison to failure
-   146→The `anyhow::Error` type works something like `failure::Error`, but unlike
-      →…
-   155→## Comparison to thiserror
-   157→Use Anyhow if you don't care what error type your functions return, you just
-      →…
+     1→Anyhow&ensp;¯\\\_(°ペ)\_/¯ …
+    21→## Details …
+   126→## No-std support …
+   144→## Comparison to failure …
+   155→## Comparison to thiserror …
    166→#### License
    169→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
    170→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
@@ -30,6 +20,7 @@ README.md
    175→<sub>
       →…
 build.rs
+     3→use std::env;
 src/backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
      8→pub(crate) enum Backtrace {}
@@ -144,6 +135,7 @@ src/lib.rs
    281→        None
    282→    }
    283→}
+   286→pub use anyhow as format_err;
    288→/// The `Error` type, a wrapper around a dynamic error type.
    289→///
    290→/// `Error` works a lot like `Box<dyn std::error::Error>`, but with these
@@ -232,11 +224,7 @@ src/lib.rs
    672→    pub mod kind {
    673→        #[doc(hidden)]
    674→        pub use crate::kind::{AdhocKind, TraitKind};
-   675→
-   676→        #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-   677→        #[doc(hidden)]
    678→        pub use crate::kind::BoxedKind;
-   679→    }
    708→    mod not {
    709→        #[doc(hidden)]
    710→        pub trait Bool {
@@ -248,6 +236,7 @@ src/macros.rs
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
 src/nightly.rs
+    10→pub use core::error::Request;
 src/ptr.rs
      5→#[repr(transparent)]
      6→pub struct Own<T>

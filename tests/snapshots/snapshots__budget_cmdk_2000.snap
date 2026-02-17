@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1970 words)
+budget: 2000 (1947 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -130,40 +130,7 @@ README.md
     45→
     46→const CommandMenu = () => {
     47→  const [open, setOpen] = React.useState(false)
-    48→
-    49→  // Toggle the menu when ⌘K is pressed
-    50→  React.useEffect(() => {
-    51→    const down = (e) => {
-    52→      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-    53→        e.preventDefault()
-    54→        setOpen((open) => !open)
-    55→      }
-    56→    }
-    57→
-    58→    document.addEventListener('keydown', down)
-    59→    return () => document.removeEventListener('keydown', down)
-    60→  }, [])
-    61→
-    62→  return (
-    63→    <Command.Dialog open={open} onOpenChange={setOpen} label="Global Command Menu">
-    64→      <Command.Input />
-    65→      <Command.List>
-    66→        <Command.Empty>No results found.</Command.Empty>
-    67→
-    68→        <Command.Group heading="Letters">
-    69→          <Command.Item>a</Command.Item>
-    70→          <Command.Item>b</Command.Item>
-    71→          <Command.Separator />
-    72→          <Command.Item>c</Command.Item>
-    73→        </Command.Group>
-    74→
-    75→        <Command.Item>Apple</Command.Item>
-    76→      </Command.List>
-    77→    </Command.Dialog>
-    78→  )
-    79→}
-    80→```
-    81→
+      →…
     82→## Parts and styling
     84→All parts forward props, including `ref`, to an appropriate element. Each part has a specific data-attribute (starting with `cmdk-`) that can be used for styling.
     85→
@@ -250,10 +217,14 @@ cmdk/src/command-score.ts
    157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
    158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
    159→   */
-   160→  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
-   161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
-   162→}
+      →…
 cmdk/src/index.tsx
+     3→import * as RadixDialog from '@radix-ui/react-dialog'
+     4→import * as React from 'react'
+     5→import { commandScore } from './command-score'
+     6→import { Primitive } from '@radix-ui/react-primitive'
+     7→import { useId } from '@radix-ui/react-id'
+     8→import { composeRefs } from '@radix-ui/react-compose-refs'
    161→const defaultFilter …
    164→const useCommand …
    166→const useStore …
@@ -306,7 +277,10 @@ cmdk/src/index.tsx
       →…
   1061→function renderChildren …
   1071→function SlottableWithNestedChildren …
+cmdk/tsup.config.ts
+     1→import { defineConfig } from 'tsup'
 playwright.config.ts
+     1→import { PlaywrightTestConfig, devices } from '@playwright/test'
      3→const config: PlaywrightTestConfig = {
 website/README.md
      3→## Getting Started
@@ -337,12 +311,15 @@ website/README.md
     31→
     32→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 website/components/cmdk/framer.tsx
+     1→import { Command } from 'cmdk'
+     2→import React from 'react'
      4→export function FramerCMDK() {
      5→  const [value, setValue] = React.useState('Button')
      6→  return (
      7→    <div className="framer">
       →…
 website/components/cmdk/linear.tsx
+     1→import { Command } from 'cmdk'
      3→export function LinearCMDK() {
      4→  return (
      5→    <div className="linear">
@@ -352,22 +329,31 @@ website/components/cmdk/linear.tsx
     31→  {
       →…
 website/components/cmdk/raycast.tsx
+     1→import React from 'react'
+     2→import { useTheme } from 'next-themes'
+     3→import * as Popover from '@radix-ui/react-popover'
+     4→import { Command } from 'cmdk'
+     5→import { Logo, LinearIcon, FigmaIcon, SlackIcon, YouTubeIcon, RaycastIcon } from 'components'
      7→export function RaycastCMDK() {
      8→  const { resolvedTheme: theme } = useTheme()
      9→  const [value, setValue] = React.useState('linear')
     10→  const inputRef = React.useRef<HTMLInputElement | null>(null)
       →…
 website/components/cmdk/vercel.tsx
+     1→import React from 'react'
+     2→import { Command } from 'cmdk'
      4→export function VercelCMDK() {
      5→  const ref = React.useRef<HTMLDivElement | null>(null)
      6→  const [inputValue, setInputValue] = React.useState('')
      7→
       →…
 website/components/code/index.tsx
+     1→import React from 'react'
+     2→import copy from 'copy-to-clipboard'
+     3→import Highlight, { defaultProps } from 'prism-react-renderer'
+     4→import styles from './code.module.scss'
+     5→import { CopyIcon } from 'components/icons'
      7→const theme = {
-     8→  plain: {
-     9→    color: 'var(--gray12)',
-      →…
     41→export function Code({ children }: { children: string }) {
     42→  return (
     43→    <Highlight {...defaultProps} theme={theme} code={children} language="jsx">
@@ -381,10 +367,9 @@ website/components/code/index.tsx
     51→          >
     52→            <CopyIcon />
     53→          </button>
-    54→          <div className={styles.shine} />
-    55→          {tokens.map((line, i) => (
       →…
 website/components/icons/index.tsx
+     1→import styles from './icons.module.scss'
      3→export function FigmaIcon() {
     15→export function RaycastIcon() {
     28→export function YouTubeIcon() {
@@ -445,17 +430,12 @@ website/pages/index.tsx
    104→  return (
    105→    <button
    106→      className={styles.installButton}
-   107→      onClick={async () => {
       →…
    123→function GitHubButton() {
    137→//////////////////////////////////////////////////////////////////
    138→
    139→const themes = [
    140→  {
-   141→    icon: <RaycastIcon />,
-   142→    key: 'raycast',
-   143→  },
-   144→  {
       →…
    158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////
@@ -466,7 +446,6 @@ website/pages/index.tsx
    265→<Command.Dialog open={open} onOpenChange={setOpen}>
    266→  <Command.Input />
    267→
-   268→  <Command.List>
       →…
    294→//////////////////////////////////////////////////////////////////
    295→

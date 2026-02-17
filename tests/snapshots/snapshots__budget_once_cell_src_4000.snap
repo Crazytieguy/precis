@@ -2,9 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3417 words)
+budget: 4000 (3430 words)
 
 imp_cs.rs
+     1→use core::panic::{RefUnwindSafe, UnwindSafe};
+     3→use critical_section::{CriticalSection, Mutex};
+     4→use portable_atomic::{AtomicBool, Ordering};
+     6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
     10→    // Use `unsync::OnceCell` internally since `Mutex` does not provide
@@ -40,6 +44,11 @@ imp_cs.rs
     74→    #[inline]
     75→    pub(crate) fn into_inner(self) -> Option<T> {
 imp_pl.rs
+     1→use std::{
+     2→    cell::UnsafeCell,
+     3→    panic::{RefUnwindSafe, UnwindSafe},
+     4→    sync::atomic::{AtomicU8, Ordering},
+     5→};
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
      9→    value: UnsafeCell<Option<T>>,
@@ -93,6 +102,12 @@ imp_pl.rs
    138→#[inline(never)]
    139→fn initialize_inner(state: &AtomicU8, init: &mut dyn FnMut() -> bool) {
 imp_std.rs
+     6→use std::{
+     7→    cell::{Cell, UnsafeCell},
+     8→    panic::{RefUnwindSafe, UnwindSafe},
+     9→    sync::atomic::{AtomicBool, AtomicPtr, Ordering},
+    10→    thread::{self, Thread},
+    11→};
     13→#[derive(Debug)]
     14→pub(crate) struct OnceCell<T> {
     15→    // This `queue` field is the core of the implementation. It encodes two
@@ -227,8 +242,6 @@ imp_std.rs
    261→    where
    262→        T: Sized,
    263→    {
-   264→        // FIXME(strict_provenance_magic): I am magic and should be a compiler intrinsic.
-   265→        //
    279→    #[must_use]
    280→    #[inline]
    281→    pub(crate) fn map_addr<T>(ptr: *mut T, f: impl FnOnce(usize) -> usize) -> *mut T
@@ -315,14 +328,9 @@ lib.rs
    449→                _ => *self = source.clone(),
    450→            }
    451→        }
-   452→    }
-   453→
-   454→    impl<T: PartialEq> PartialEq for OnceCell<T> {
    455→        fn eq(&self, other: &Self) -> bool {
    456→            self.get() == other.get()
    457→        }
-   458→    }
-   459→
    463→        fn from(value: T) -> Self {
    464→            OnceCell::with_value(value)
    465→        }
@@ -454,14 +462,9 @@ lib.rs
    929→                _ => *self = source.clone(),
    930→            }
    931→        }
-   932→    }
-   933→
-   934→    impl<T> From<T> for OnceCell<T> {
    935→        fn from(value: T) -> Self {
    936→            Self::with_value(value)
    937→        }
-   938→    }
-   939→
    941→        fn eq(&self, other: &OnceCell<T>) -> bool {
    942→            self.get() == other.get()
    943→        }
@@ -556,6 +559,13 @@ lib.rs
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
 race.rs
+    31→use core::sync::atomic;
+    33→use portable_atomic as atomic;
+    35→use atomic::{AtomicPtr, AtomicUsize, Ordering};
+    36→use core::cell::UnsafeCell;
+    37→use core::marker::PhantomData;
+    38→use core::num::NonZeroUsize;
+    39→use core::ptr;
     41→/// A thread-safe cell which can be written to only once.
     42→#[derive(Default, Debug)]
     43→pub struct OnceNonZeroUsize {
@@ -641,6 +651,7 @@ race.rs
    345→    /// eprintln!("uaf: {}", l.get().unwrap());
    346→    /// ```
    347→    fn _dummy() {}
+   351→pub use self::once_box::OnceBox;
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
@@ -676,7 +687,6 @@ race.rs
    385→    }
    386→
    387→    impl<T> OnceBox<T> {
-   388→        /// Creates a new empty cell.
    389→        pub const fn new() -> Self {
    394→        pub fn with_value(value: Box<T>) -> Self {
    399→        pub fn get(&self) -> Option<&T> {

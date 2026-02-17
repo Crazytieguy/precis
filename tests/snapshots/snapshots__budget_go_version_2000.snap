@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1973 words)
+budget: 2000 (1967 words)
 
 CHANGELOG.md
 README.md
@@ -65,6 +65,13 @@ README.md
     66→like, we welcome any contributions. Fork this library and submit a pull
     67→request.
 constraint.go
+     6→import (
+     7→	"fmt"
+     8→	"regexp"
+     9→	"sort"
+    10→	"strings"
+    11→	"sync"
+    12→)
     14→var (
     15→	constraintRegexp     *regexp.Regexp
     16→	constraintRegexpOnce sync.Once
@@ -146,12 +153,6 @@ constraint.go
    113→	sort.Stable(right)
    114→
    115→	// compare sorted slices
-   116→	for i, con := range left {
-   117→		if !con.Equals(right[i]) {
-   118→			return false
-   119→		}
-   120→	}
-   121→
       →…
    125→func (cs Constraints) Len() int {
    126→	return len(cs)
@@ -213,6 +214,14 @@ constraint.go
    264→func constraintLessThanEqual(v, c *Version) bool {
    268→func constraintPessimistic(v, c *Version) bool {
 version.go
+     6→import (
+     7→	"database/sql/driver"
+     8→	"fmt"
+     9→	"regexp"
+    10→	"strconv"
+    11→	"strings"
+    12→	"sync"
+    13→)
     15→// The compiled regular expression used to test the validity of a version.
     16→var (
     17→	versionRegexp     *regexp.Regexp
@@ -226,6 +235,7 @@ version.go
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     41→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-?([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
+    42→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
@@ -280,12 +290,6 @@ version.go
    139→			return 0
    140→		}
    141→		if preSelf == "" {
-   142→			return 1
-   143→		}
-   144→		if preOther == "" {
-   145→			return -1
-   146→		}
-   147→
       →…
    196→func (v *Version) equalSegments(other *Version) bool {
    211→func allZero(segs []int64) bool {

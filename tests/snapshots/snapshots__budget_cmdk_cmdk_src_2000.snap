@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1989 words)
+budget: 2000 (1987 words)
 
 command-score.ts
     54→function commandScoreInner(
@@ -113,6 +113,12 @@ command-score.ts
    161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
    162→}
 index.tsx
+     3→import * as RadixDialog from '@radix-ui/react-dialog'
+     4→import * as React from 'react'
+     5→import { commandScore } from './command-score'
+     6→import { Primitive } from '@radix-ui/react-primitive'
+     7→import { useId } from '@radix-ui/react-id'
+     8→import { composeRefs } from '@radix-ui/react-compose-refs'
     10→type Children …
     11→type DivProps …
     13→type LoadingProps …
@@ -182,10 +188,6 @@ index.tsx
    695→    propsRef.current.onSelect?.(value.current)
    696→  }
    697→
-   698→  function select() {
-   699→    store.setState('value', value.current, true)
-   700→  }
-   701→
       →…
    725→/**
    726→ * Group command menu items together with a heading.
@@ -225,10 +227,6 @@ index.tsx
    760→      )}
    761→      {SlottableWithNestedChildren(props, (child) => (
    762→        <div cmdk-group-items="" role="group" aria-labelledby={heading ? headingId : undefined}>
-   763→          <GroupContext.Provider value={contextValue}>{child}</GroupContext.Provider>
-   764→        </div>
-   765→      ))}
-   766→    </Primitive.div>
       →…
    770→/**
    771→ * A visual and semantic separator between items or groups.
@@ -280,10 +278,6 @@ index.tsx
    818→      onChange={(e) => {
    819→        if (!isControlled) {
    820→          store.setState('search', e.target.value)
-   821→        }
-   822→
-   823→        onValueChange?.(e.target.value)
-   824→      }}
       →…
    829→/**
    830→ * Contains `Item`, `Group`, and `Separator`.
@@ -323,10 +317,6 @@ index.tsx
    864→      role="listbox"
    865→      tabIndex={-1}
    866→      aria-activedescendant={selectedItemId}
-   867→      aria-label={label}
-   868→      id={context.listId}
-   869→    >
-   870→      {SlottableWithNestedChildren(props, (child) => (
       →…
    879→/**
    880→ * Renders the command menu in a Radix Dialog.

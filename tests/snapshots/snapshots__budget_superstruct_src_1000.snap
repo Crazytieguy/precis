@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (949 words)
+budget: 1000 (959 words)
 
 error.ts
      5→export type Failure …
@@ -32,6 +32,8 @@ error.ts
     48→  }
     49→}
 struct.ts
+     1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
+     2→import { StructError, Failure } from './error.js'
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
@@ -75,7 +77,6 @@ struct.ts
     50→      this.validator = () => []
     51→    }
     52→
-    53→    if (refiner) {
     63→  /**
       →…
     67→  assert(value: unknown, message?: string): asserts value is T {
@@ -137,10 +138,6 @@ structs/coercions.ts
 structs/refinements.ts
      8→export function empty …
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
-    22→  if (value instanceof Map || value instanceof Set) {
-    23→    return value.size
-    24→  } else {
-      →…
     33→export function max …
     55→export function min …
     77→export function nonempty …
@@ -186,6 +183,8 @@ structs/utilities.ts
    221→export function pick …
    247→export function struct …
 utils.ts
+     1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
+     2→import { Failure } from './error.js'
      4→/**
      5→ * Check if a value is an iterator.
      6→ */

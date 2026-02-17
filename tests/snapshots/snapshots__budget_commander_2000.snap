@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1968 words)
+budget: 2000 (1969 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -13,6 +13,9 @@ CHANGELOG.md
    913→If you were previously using code like:
    914→
    915→```js
+   916→if (!program.args.length) ...
+   917→```
+   918→
       →…
 CONTRIBUTING.md
      1→# Contributing
@@ -63,9 +66,6 @@ Readme.md
     44→  - [Bits and pieces](#bits-and-pieces)
     45→    - [.parse() and .parseAsync()](#parse-and-parseasync)
     46→    - [Parsing Configuration](#parsing-configuration)
-    47→    - [Legacy options as properties](#legacy-options-as-properties)
-    48→    - [TypeScript](#typescript)
-    49→    - [createCommand()](#createcommand)
       →…
     61→## Installation …
     67→## Quick Start …
@@ -118,6 +118,7 @@ Readme_zh-CN.md
     10→使用其他语言阅读：[English](./Readme.md) | 简体中文
     11→
     12→- [Commander.js](#commanderjs)
+    13→  - [安装](#%e5%ae%89%e8%a3%85)
       →…
    570→#### 其他参数配置 …
    582→#### 自定义参数处理 …
@@ -200,6 +201,8 @@ docs/zh-CN/术语表.md
 eslint.config.js
      8→const tsconfigTsFiles …
      9→const tsconfigJsFiles …
+esm.mjs
+     1→import commander from './index.js';
 jest.config.js
      1→const config …
 lib/argument.js

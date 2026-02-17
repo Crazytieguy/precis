@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (489 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -19,10 +19,6 @@ ARCHITECTURE.md
     13→</>
     14→```
     15→
-    16→We didn't want to provide a render prop:
-    17→
-    18→```tsx
-    19→// No
       →…
     46→## Approach …
     50→### Discarded approach …
@@ -58,6 +54,8 @@ cmdk/src/index.tsx
    963→function findNextSibling(el: Element, selector: string) {
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1046→const useScheduleLayoutEffect = () => {
+cmdk/tsup.config.ts
+     1→import { defineConfig } from 'tsup'
 playwright.config.ts
      3→const config: PlaywrightTestConfig = {
 website/README.md
@@ -89,6 +87,7 @@ website/components/code/index.tsx
     43→    <Highlight {...defaultProps} theme={theme} code={children} language="jsx">
       →…
 website/components/icons/index.tsx
+     1→import styles from './icons.module.scss'
      3→export function FigmaIcon() {
     15→export function RaycastIcon() {
     28→export function YouTubeIcon() {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1991 words)
+budget: 2000 (1988 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -168,6 +168,11 @@ README.md
    168→## License
    170→The MIT License (MIT) - see LICENSE.md for more details
 field.go
+     3→import (
+     4→	"errors"
+     5→	"fmt"
+     6→	"reflect"
+     7→)
      9→var (
     10→	errNotExported = errors.New("field is not exported")
     11→	errNotSettable = errors.New("field is not settable")
@@ -211,6 +216,11 @@ field.go
       →…
    119→func (f *Field) FieldOk(name string) (*Field, bool) {
 structs.go
+     4→import (
+     5→	"fmt"
+     6→
+     7→	"reflect"
+     8→)
     10→var (
     11→	// DefaultTagName is the default tag name for struct fields which provides
     12→	// a more granular to tweak certain structs. Lookup the necessary functions
@@ -302,9 +312,6 @@ structs.go
    418→		if tag := field.Tag.Get(s.TagName); tag == "-" {
    419→			continue
    420→		}
-   421→
-   422→		f = append(f, field)
-   423→	}
       →…
    428→func strctVal(s interface{}) reflect.Value {
    429→	v := reflect.ValueOf(s)
@@ -365,11 +372,9 @@ structs.go
    522→
    523→		// do not add the converted value if there are no exported fields, ie:
    524→		// time.Time
-   525→		if len(m) == 0 {
-   526→			finalVal = val.Interface()
-   527→		} else {
       →…
 tags.go
+     3→import "strings"
      5→// tagOptions contains a slice of tag options
      6→type tagOptions []string
      8→// Has returns true if the given option is available in tagOptions

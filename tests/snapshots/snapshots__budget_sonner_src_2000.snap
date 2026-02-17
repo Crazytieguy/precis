@@ -2,9 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1799 words)
+budget: 2000 (1785 words)
 
 assets.tsx
+     2→import React from 'react';
+     3→import type { ToastTypes } from './types';
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
      6→  switch (type) {
      7→    case 'success':
@@ -56,6 +58,7 @@ assets.tsx
     92→  </svg>
     93→);
 hooks.tsx
+     1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
      5→
@@ -70,6 +73,22 @@ hooks.tsx
     14→  return isDocumentHidden;
     15→};
 index.tsx
+     3→import React from 'react';
+     4→import ReactDOM from 'react-dom';
+     6→import { CloseIcon, getAsset, Loader } from './assets';
+     7→import { useIsDocumentHidden } from './hooks';
+     8→import { toast, ToastState } from './state';
+     9→import './styles.css';
+    10→import {
+    11→  isAction,
+    12→  SwipeDirection,
+    13→  type ExternalToast,
+    14→  type HeightT,
+    15→  type ToasterProps,
+    16→  type ToastProps,
+    17→  type ToastT,
+    18→  type ToastToDismiss,
+    19→} from './types';
     22→const VISIBLE_TOASTS_AMOUNT = 3;
     25→const VIEWPORT_OFFSET = '24px';
     28→const MOBILE_VIEWPORT_OFFSET = '16px';
@@ -108,6 +127,16 @@ index.tsx
       →…
    593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
 state.ts
+     1→import type {
+     2→  ExternalToast,
+     3→  PromiseData,
+     4→  PromiseIExtendedResult,
+     5→  PromiseT,
+     6→  ToastT,
+     7→  ToastToDismiss,
+     8→  ToastTypes,
+     9→} from './types';
+    11→import React from 'react';
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
     18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
@@ -147,39 +176,6 @@ state.ts
     52→      jsx?: React.ReactElement;
     53→    },
     54→  ) => {
-    55→    const { message, ...rest } = data;
-    56→    const id = typeof data?.id === 'number' || data.id?.length > 0 ? data.id : toastsCounter++;
-    57→    const alreadyExists = this.toasts.find((toast) => {
-    58→      return toast.id === id;
-    59→    });
-    60→    const dismissible = data.dismissible === undefined ? true : data.dismissible;
-    61→
-    62→    if (this.dismissedToasts.has(id)) {
-    63→      this.dismissedToasts.delete(id);
-    64→    }
-    65→
-    66→    if (alreadyExists) {
-    67→      this.toasts = this.toasts.map((toast) => {
-    68→        if (toast.id === id) {
-    69→          this.publish({ ...toast, ...data, id, title: message });
-    70→          return {
-    71→            ...toast,
-    72→            ...data,
-    73→            id,
-    74→            dismissible,
-    75→            title: message,
-    76→          };
-    77→        }
-    78→
-    79→        return toast;
-    80→      });
-    81→    } else {
-    82→      this.addToast({ title: message, ...rest, dismissible, id });
-    83→    }
-    84→
-    85→    return id;
-    86→  };
-    87→
     88→  dismiss = (id?: number | string) => {
     89→    if (id) {
     90→      this.dismissedToasts.add(id);
@@ -235,6 +231,9 @@ state.ts
    147→    const originalPromise = p
    148→      .then(async (response) => {
    149→        result = ['resolve', response];
+   150→        const isReactElementResponse = React.isValidElement(response);
+   151→        if (isReactElementResponse) {
+   152→          shouldDismiss = false;
       →…
    243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
    244→    const id = data?.id || toastsCounter++;
@@ -284,6 +283,7 @@ state.ts
    298→  { getHistory, getToasts },
    299→);
 types.ts
+     1→import React from 'react';
      3→export type ToastTypes = 'normal' | 'action' | 'success' | 'info' | 'warning' | 'error' | 'loading' | 'default';
      5→export type PromiseT<Data = any> = Promise<Data> | (() => Promise<Data>);
      7→export interface PromiseIExtendedResult extends ExternalToast {

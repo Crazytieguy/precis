@@ -3,6 +3,7 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.go
+     4→import "fmt"
      6→// Token represents a lexical token with its kind and source span.
      7→type Token struct {
      8→	Kind TokenKind
@@ -14,7 +15,6 @@ sample.go
     16→	Ident  TokenKind = iota
     17→	Number
     18→	Symbol
-      →…
     21→// Visitor walks over tokens in a stream.
     22→type Visitor interface {
     23→	VisitToken(token *Token)

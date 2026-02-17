@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3953 words)
+budget: 4000 (3946 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -87,7 +87,6 @@ README-es.md
    337→
    338→vestauth agent init
    339→```
-   340→
       →…
    357→## FAQ
    361→No.
@@ -109,7 +108,6 @@ README-es.md
    593→```js
    594→const result = dotenv.config()
    595→
-   596→if (result.error) {
       →…
    605→#### Options …
    607→##### path
@@ -150,7 +148,6 @@ README-es.md
    698→```js
    699→const dotenv = require('dotenv')
    700→const buf = Buffer.from('BASIC=basic')
-   701→const config = dotenv.parse(buf) // will return an object
       →…
    705→#### Options …
    707→##### debug
@@ -171,7 +168,6 @@ README-es.md
    727→```js
    728→const dotenv = require('dotenv')
    729→const parsed = { HELLO: 'world' }
-   730→
       →…
    748→#### options …
    750→##### Debug
@@ -760,6 +756,7 @@ lib/cli-options.js
 lib/env-options.js
      2→const options = {}
 lib/main.d.ts
+     3→import type { URL } from 'url';
      5→export interface DotenvParseOutput {
      6→  [name: string]: string;
      7→}

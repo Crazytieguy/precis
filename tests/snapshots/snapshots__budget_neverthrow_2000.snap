@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1911 words)
+budget: 2000 (1915 words)
 
 CHANGELOG.md
      1→# neverthrow …
@@ -138,7 +138,11 @@ README.md
       →…
   1681→### License
   1683→The neverthrow project is available as open source under the terms of the [MIT license](https://github.com/supermacro/neverthrow/blob/master/LICENSE).
+rollup.config.mjs
+     1→import typescript from "rollup-plugin-typescript2";
+     2→import dts from "rollup-plugin-dts";
 src/_internals/error.ts
+     1→import { Result } from '../result'
      3→export interface ErrorConfig {
      4→  withStackTrace: boolean
      5→}
@@ -176,6 +180,8 @@ src/_internals/error.ts
     42→  }
     43→}
 src/_internals/utils.ts
+     1→import { Result, ok, err } from '../result'
+     2→import { ResultAsync } from '../result-async'
      5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
      6→  [idx in keyof T]: T[idx] extends Result<infer U, unknown> ? U : never
      7→}
@@ -243,6 +249,9 @@ src/_internals/utils.ts
     86→    combineResultListWithAllErrors,
     87→  ) as ResultAsync<T[], E[]>
 src/result-async.ts
+     1→./result …
+    10→import { Err, Ok, Result } from './ …
+    11→./_internals/utils …
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
@@ -259,13 +268,6 @@ src/result-async.ts
     35→
     36→  static fromPromise<T, E>(promise: PromiseLike<T>, errorFn: (e: unknown) => E): ResultAsync<T, E>
     37→  static fromPromise<T, E>(promise: Promise<T>, errorFn: (e: unknown) => E): ResultAsync<T, E> {
-    38→    const newPromise = promise
-    39→      .then((value: T) => new Ok<T, E>(value))
-    40→      .catch((e) => new Err<T, E>(errorFn(e)))
-    41→
-    42→    return new ResultAsync(newPromise)
-    43→  }
-    44→
     46→  static fromThrowable …
     69→  static combine …
     81→  static combineWithAllErrors …
@@ -294,6 +296,9 @@ src/result-async.ts
    330→type TraverseWithAllErrorsAsync …
    338→type Writable …
 src/result.ts
+     1→import { errAsync, ResultAsync } from './ …
+     2→import { createNeverThrowError, ErrorConfig } from './_internals/error …
+     3→./_internals/utils …
     14→export namespace Result {
     15→  /**
     16→   * Wraps a function with a try catch, creating a new function with the same
@@ -318,7 +323,12 @@ src/result.ts
     35→  }
     36→
     37→  export function combine<
-    43→  export function combine …
+    38→    T extends readonly [Result<unknown, unknown>, ...Result<unknown, unknown>[]]
+    39→  >(resultList: T): CombineResults<T>
+    40→  export function combine<T extends readonly Result<unknown, unknown>[]>(
+    41→    resultList: T,
+    42→  ): CombineResults<T>
+    43→  export function combine<
     55→  export function combineWithAllErrors …
     62→export type Result …
     66→export function ok …
@@ -391,13 +401,7 @@ src/result.ts
    325→  }
    326→
    327→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-   328→  mapErr<U>(_f: (e: E) => U): Result<T, U> {
-   329→    return ok(this.value)
-   330→  }
-   331→
-   332→  andThen<R extends Result<unknown, unknown>>(
-   333→    f: (t: T) => R,
-   334→  ): Result<InferOkTypes<R>, InferErrTypes<R> | E>
+   328→  mapErr …
    337→  andThen …
    344→  andThrough …
    348→  andTee …
@@ -431,13 +435,8 @@ src/result.ts
    432→    return err(this.error)
    433→  }
    434→
-   435→  mapErr<U>(f: (e: E) => U): Result<T, U> {
-   436→    return err(f(this.error))
-   437→  }
-   438→
-   439→  andThrough<F>(_f: (t: T) => Result<unknown, F>): Result<T, E | F> {
-   440→    return err(this.error)
-   441→  }
+   435→  mapErr …
+   439→  andThrough …
    443→  andTee …
    447→  orTee …
    461→  andThen …

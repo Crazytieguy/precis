@@ -2,8 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (988 words)
+budget: 1000 (996 words)
 
+playwright.config.ts
+     1→import { defineConfig, devices } from '@playwright/test';
 src/browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
     10→export function isMac(): boolean | undefined {

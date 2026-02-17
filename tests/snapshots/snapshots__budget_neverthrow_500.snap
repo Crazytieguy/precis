@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (496 words)
+budget: 500 (494 words)
 
 CHANGELOG.md
      1→# neverthrow …
@@ -22,12 +22,6 @@ README.md
    147→**Signature:**
    148→
    149→```typescript
-   150→ok<T, E>(value: T): Ok<T, E> { ... }
-   151→```
-   152→
-   153→**Example:**
-   154→
-   155→```typescript
       →…
    863→### Asynchronous API (`ResultAsync`) …
    865→#### `okAsync`
@@ -36,12 +30,6 @@ README.md
    869→**Signature:**
    870→
    871→```typescript
-   872→okAsync<T, E>(value: T): ResultAsync<T, E>
-   873→```
-   874→
-   875→**Example:**
-   876→
-   877→```typescript
       →…
   1519→### Utilities …
   1521→#### `fromThrowable`
@@ -53,7 +41,9 @@ README.md
   1633→### Testing …
   1673→## A note on the Package Name …
   1681→### License …
+rollup.config.mjs
 src/_internals/error.ts
+     1→import { Result } from '../result'
      3→export interface ErrorConfig {
      4→  withStackTrace: boolean
      5→}
@@ -71,6 +61,8 @@ src/_internals/error.ts
     30→  config: ErrorConfig = defaultErrorConfig,
     31→): NeverThrowError<T, E> => {
 src/_internals/utils.ts
+     1→import { Result, ok, err } from '../result'
+     2→import { ResultAsync } from '../result-async'
      5→export type ExtractOkTypes …
     10→export type ExtractOkAsyncTypes …
     15→export type ExtractErrTypes …

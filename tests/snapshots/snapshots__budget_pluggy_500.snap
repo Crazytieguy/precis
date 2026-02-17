@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (482 words)
+budget: 500 (480 words)
 
 AGENTS.md
      1→# AGENTS.md …
@@ -12,6 +12,9 @@ CLAUDE.md
 SECURITY.md
      1→# Security …
 docs/conf.py
+     1→from importlib import metadata
+     2→from typing import TYPE_CHECKING
+     6→    import sphinx.application
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
    107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
    108→    import logging
@@ -23,18 +26,13 @@ docs/conf.py
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
 scripts/release.py
-    15→def create_branch …
-    30→def get_upstream …
-    39→def pre_release …
-    50→def changelog …
-    59→def main …
 scripts/towncrier-draft-to-file.py
-     5→def main …
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
      3→    "PluginManager",
      4→    "PluginValidationError",
+     5→    "HookCaller",
       →…
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
@@ -119,6 +117,7 @@ src/pluggy/_hooks.py
    702→        "argnames",
    703→        "kwargnames",
 src/pluggy/_manager.py
+    33→    import importlib.metadata
     36→_BeforeTrace …
     37→_AfterTrace …
     52→class PluginValidationError(Exception):

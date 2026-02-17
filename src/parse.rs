@@ -29,6 +29,7 @@ pub enum SymbolKind {
     Class,
     Interface,
     Section,
+    Import,
 }
 
 impl std::fmt::Display for SymbolKind {
@@ -47,7 +48,87 @@ impl std::fmt::Display for SymbolKind {
             SymbolKind::Class => write!(f, "class"),
             SymbolKind::Interface => write!(f, "interface"),
             SymbolKind::Section => write!(f, "section"),
+            SymbolKind::Import => write!(f, "import"),
         }
+    }
+}
+
+/// Build a display name for an import statement.
+/// Extracts the module/crate path from language-specific import syntax.
+fn import_name(node: tree_sitter::Node, source: &str, lang: Lang) -> String {
+    let text = node.utf8_text(source.as_bytes()).unwrap_or("?").trim();
+    match lang {
+        Lang::Rust => {
+            // `use path;` or `pub use path;`
+            let rest = text
+                .strip_prefix("pub")
+                .map(|s| s.trim_start())
+                .unwrap_or(text);
+            let rest = rest
+                .strip_prefix("use")
+                .map(|s| s.trim_start())
+                .unwrap_or(rest);
+            rest.trim_end_matches(';').trim().to_string()
+        }
+        Lang::JsTs => {
+            // `import { foo } from 'bar';` → `bar`
+            // `import './styles.css';` → `./styles.css`
+            if let Some(from_pos) = text.rfind(" from ") {
+                let after = &text[from_pos + 6..];
+                after
+                    .trim()
+                    .trim_matches(|c: char| c == '\'' || c == '"' || c == ';')
+                    .to_string()
+            } else {
+                let rest = text
+                    .strip_prefix("import")
+                    .map(|s| s.trim_start())
+                    .unwrap_or(text);
+                rest.trim_matches(|c: char| c == '\'' || c == '"' || c == ';' || c.is_whitespace())
+                    .to_string()
+            }
+        }
+        Lang::Go => {
+            // Single: `import "fmt"` → `fmt`
+            // Grouped: `import (\n"fmt"\n"os"\n)` → `import`
+            if text.contains('(') {
+                "import".to_string()
+            } else if let Some(start) = text.find('"') {
+                let rest = &text[start + 1..];
+                rest.find('"')
+                    .map(|end| rest[..end].to_string())
+                    .unwrap_or_else(|| "import".to_string())
+            } else {
+                "import".to_string()
+            }
+        }
+        Lang::Python => {
+            // `from os.path import join` → `os.path`
+            // `from . import foo` → `.`
+            // `import os` → `os`
+            if let Some(rest) = text.strip_prefix("from") {
+                let rest = rest.trim_start();
+                if let Some(import_pos) = rest.find(" import") {
+                    rest[..import_pos].trim().to_string()
+                } else {
+                    rest.split_whitespace()
+                        .next()
+                        .unwrap_or("?")
+                        .to_string()
+                }
+            } else {
+                let rest = text
+                    .strip_prefix("import")
+                    .map(|s| s.trim_start())
+                    .unwrap_or(text);
+                rest.split(&[',', ' ', '\n'][..])
+                    .next()
+                    .unwrap_or("?")
+                    .trim()
+                    .to_string()
+            }
+        }
+        Lang::Markdown => "?".to_string(),
     }
 }
 
@@ -229,6 +310,18 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             "class_definition" => SymbolKind::Class,
             // Markdown
             "atx_heading" | "setext_heading" => SymbolKind::Section,
+            // Imports
+            "use_declaration" => SymbolKind::Import,              // Rust
+            "import_statement" => {
+                // Python import_statement or TypeScript import_statement
+                if lang == Lang::Python || lang == Lang::JsTs {
+                    SymbolKind::Import
+                } else {
+                    continue;
+                }
+            }
+            "import_from_statement" => SymbolKind::Import,        // Python
+            "import_declaration" => SymbolKind::Import,            // Go
             // Python module-level assignments (constants, type variables, dunder attrs)
             "expression_statement" => {
                 if lang != Lang::Python {
@@ -286,6 +379,8 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
 
         let name = if kind == SymbolKind::Impl {
             impl_name(symbol_node, source)
+        } else if kind == SymbolKind::Import {
+            import_name(symbol_node, source, lang)
         } else if matches!(symbol_node.kind(), "const_declaration" | "var_declaration") {
             // Grouped const/var block: use keyword as display name
             (if symbol_node.kind() == "const_declaration" { "const" } else { "var" }).to_string()
@@ -317,11 +412,16 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             continue;
         }
 
-        let is_public = match lang {
-            Lang::Go => name.starts_with(|c: char| c.is_ascii_uppercase()),
-            Lang::Python => !name.starts_with('_') || (name.starts_with("__") && name.ends_with("__")),
-            Lang::Markdown => true,
-            _ => is_public_symbol(symbol_node, source),
+        let is_public = if kind == SymbolKind::Import {
+            // Only Rust `pub use` re-exports are public; all other imports are private
+            lang == Lang::Rust && is_public_symbol(symbol_node, source)
+        } else {
+            match lang {
+                Lang::Go => name.starts_with(|c: char| c.is_ascii_uppercase()),
+                Lang::Python => !name.starts_with('_') || (name.starts_with("__") && name.ends_with("__")),
+                Lang::Markdown => true,
+                _ => is_public_symbol(symbol_node, source),
+            }
         };
 
         symbols.push(Symbol {

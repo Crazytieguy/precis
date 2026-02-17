@@ -2,8 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1994 words)
+budget: 2000 (1962 words)
 
+playwright.config.ts
+     1→import { defineConfig, devices } from '@playwright/test';
 src/browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
     10→export function isMac(): boolean | undefined {
@@ -25,6 +27,8 @@ src/constants.ts
     16→export const WINDOW_TOP_OFFSET = 26;
     18→export const DRAG_CLASS = 'vaul-dragging';
 src/context.ts
+     1→import React from 'react';
+     2→import { DrawerDirection } from './types';
      4→interface DrawerContextValue {
      5→  drawerRef: React.RefObject<HTMLDivElement>;
      6→  overlayRef: React.RefObject<HTMLDivElement>;
@@ -73,6 +77,7 @@ src/context.ts
       →…
     69→export const useDrawerContext = () => {
 src/helpers.ts
+     1→import { AnyFunction, DrawerDirection } from './types';
      3→interface Style {
      4→  [key: string]: string;
      5→}
@@ -98,6 +103,29 @@ src/helpers.ts
    116→  };
    117→}
 src/index.tsx
+     3→import * as DialogPrimitive from '@radix-ui/react-dialog';
+     4→import React from 'react';
+     5→import { DrawerContext, useDrawerContext } from './context';
+     6→import './style.css';
+     7→import { usePreventScroll, isInput } from './use-prevent-scroll';
+     8→import { useComposedRefs } from './use-composed-refs';
+     9→import { useSnapPoints } from './use-snap-points';
+    10→import { set, getTranslate, dampenValue, isVertical, reset } from './helpers';
+    11→import {
+    12→  TRANSITIONS,
+    13→  VELOCITY_THRESHOLD,
+    14→  CLOSE_THRESHOLD,
+    15→  SCROLL_LOCK_TIMEOUT,
+    16→  BORDER_RADIUS,
+    17→  NESTED_DISPLACEMENT,
+    18→  WINDOW_TOP_OFFSET,
+    19→  DRAG_CLASS,
+    20→} from './constants';
+    21→import { DrawerDirection } from './types';
+    22→import { useControllableState } from './use-controllable-state';
+    23→import { useScaleBackground } from './use-scale-background';
+    24→import { usePositionFixed } from './use-position-fixed';
+    25→import { isIOS, isMobileFirefox } from './browser';
     27→export interface WithFadeFromProps {
     28→  /**
     29→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
@@ -165,15 +193,6 @@ src/index.tsx
    181→        onAnimationEnd?.(o);
    182→      }, TRANSITIONS.DURATION * 1000);
    183→
-   184→      if (o && !modal) {
-   185→        if (typeof window !== 'undefined') {
-   186→          window.requestAnimationFrame(() => {
-   187→            document.body.style.pointerEvents = 'auto';
-   188→          });
-   189→        }
-   190→      }
-   191→
-   192→      if (!o) {
       →…
    803→export const Overlay …
    831→export type ContentProps …
@@ -227,6 +246,7 @@ src/types.ts
      5→}
      7→export type AnyFunction = (...args: any) => any;
 src/use-composed-refs.ts
+     3→import * as React from 'react';
      5→type PossibleRef<T> = React.Ref<T> | undefined;
      7→/**
      8→ * Set a given ref to a given value
@@ -255,6 +275,7 @@ src/use-composed-refs.ts
     33→  return React.useCallback(composeRefs(...refs), refs);
     34→}
 src/use-controllable-state.ts
+     3→import React from 'react';
      5→type UseControllableStateParams<T> = {
      6→  prop?: T | undefined;
      7→  defaultProp?: T | undefined;
@@ -262,13 +283,11 @@ src/use-controllable-state.ts
      9→};
     11→type SetStateFn<T> = (prevState?: T) => T;
     13→function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
-    14→  const callbackRef = React.useRef(callback);
-      →…
     24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
-    25→  const uncontrolledState = React.useState<T | undefined>(defaultProp);
-      →…
     39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
 src/use-position-fixed.ts
+     1→import React from 'react';
+     2→import { isSafari } from './browser';
      6→/**
      7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
      8→ * I won't get into too much detail about what bugs it solves, but so far I've found that setting the body to `position: fixed` is the most reliable way to prevent those bugs.
@@ -337,60 +356,10 @@ src/use-position-fixed.ts
     71→  }, [isOpen]);
     72→
     73→  const restorePositionSetting = React.useCallback(() => {
-    74→    // All browsers on iOS will return true here.
-    75→    if (!isSafari()) return;
-    76→
-    77→    if (previousBodyPosition !== null && !noBodyStyles) {
-    78→      // Convert the position from "px" to Int
-    79→      const y = -parseInt(document.body.style.top, 10);
-    80→      const x = -parseInt(document.body.style.left, 10);
-    81→
-    82→      // Restore styles
-    83→      Object.assign(document.body.style, previousBodyPosition);
-    84→
-    85→      window.requestAnimationFrame(() => {
-    86→        if (preventScrollRestoration && activeUrl !== window.location.href) {
-    87→          setActiveUrl(window.location.href);
-    88→          return;
-    89→        }
-    90→
-    91→        window.scrollTo(x, y);
-    92→      });
-    93→
-    94→      previousBodyPosition = null;
-    95→    }
-    96→  }, [activeUrl]);
-    97→
-    98→  React.useEffect(() => {
-    99→    function onScroll() {
-   100→      scrollPos.current = window.scrollY;
-   101→    }
-   102→
-   103→    onScroll();
-   104→
-   105→    window.addEventListener('scroll', onScroll);
-   106→
-   107→    return () => {
-   108→      window.removeEventListener('scroll', onScroll);
-   109→    };
-   110→  }, []);
-   111→
-   112→  React.useEffect(() => {
-   113→    if (!modal) return;
-   114→
-   115→    return () => {
-   116→      if (typeof document === 'undefined') return;
-   117→
-   118→      // Another drawer is opened, safe to ignore the execution
-   119→      const hasDrawerOpened = !!document.querySelector('[data-vaul-drawer]');
-   120→      if (hasDrawerOpened) return;
-   121→
-   122→      restorePositionSetting();
-   123→    };
-   124→  }, [modal, restorePositionSetting]);
-   125→
       →…
 src/use-prevent-scroll.ts
+     3→import { useEffect, useLayoutEffect } from 'react';
+     4→import { isIOS } from './browser';
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
@@ -399,8 +368,6 @@ src/use-prevent-scroll.ts
     13→  focusCallback?: () => void;
     14→}
     16→function chain(...callbacks: any[]): (...args: any[]) => void {
-    17→  return (...args: any[]) => {
-      →…
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {
     34→export function getScrollParent(node: Element): Element {
@@ -444,25 +411,26 @@ src/use-prevent-scroll.ts
     89→  }, [isDisabled]);
     90→}
    118→function preventScrollMobileSafari() {
-   119→  let scrollable: Element;
-      →…
    243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {
-   244→  // https://github.com/microsoft/TypeScript/issues/17827#issuecomment-391663310
-      →…
    257→function addEvent<K extends keyof GlobalEventHandlersEventMap>(
    258→  target: EventTarget,
    259→  event: K,
    260→  handler: (this: Document, ev: GlobalEventHandlersEventMap[K]) => any,
    261→  options?: boolean | AddEventListenerOptions,
    262→) {
-   263→  // @ts-ignore
-      →…
    272→function scrollIntoView(target: Element) {
-   273→  let root = document.scrollingElement || document.documentElement;
-      →…
    294→export function isInput(target: Element) {
 src/use-scale-background.ts
+     1→import React, { useMemo } from 'react';
+     2→import { useDrawerContext } from './context';
+     3→import { assignStyle, chain, isVertical, reset } from './helpers';
+     4→import { BORDER_RADIUS, TRANSITIONS, WINDOW_TOP_OFFSET } from './constants';
      6→const noop = () => () => {};
      8→export function useScaleBackground() {
 src/use-snap-points.ts
+     1→import React from 'react';
+     2→import { set, isVertical } from './helpers';
+     3→import { TRANSITIONS, VELOCITY_THRESHOLD } from './constants';
+     4→import { useControllableState } from './use-controllable-state';
+     5→import { DrawerDirection } from './types';
      7→export function useSnapPoints({

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (496 words)
 
 assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
@@ -25,6 +25,7 @@ assets.tsx
     80→    xmlns="http://www.w3.org/2000/svg"
     81→    width="12"
     82→    height="12"
+    83→    viewBox="0 0 24 24"
       →…
 hooks.tsx
      3→export const useIsDocumentHidden = () => {
@@ -49,6 +50,8 @@ index.tsx
    552→function useSonner() {
    593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
 state.ts
+     1→./types …
+    11→import React from 'react …
     15→type titleT …
     17→class Observer {
     18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
@@ -72,18 +75,13 @@ state.ts
    249→  getActiveToasts …
    254→export const ToastState …
    257→const toastFunction = (message: titleT, data?: ExternalToast) => {
-   258→  const id = data?.id || toastsCounter++;
-   259→
-      →…
    268→const isHttpResponse = (data: any): data is Response => {
-   269→  return (
-   270→    data &&
-      →…
    279→const basicToast …
    281→const getHistory = () => ToastState.toasts;
    282→const getToasts = () => ToastState.getActiveToasts();
    285→export const toast …
 types.ts
+     1→import React from 'react …
      3→export type ToastTypes …
      5→export type PromiseT …
      7→export interface PromiseIExtendedResult extends ExternalToast {

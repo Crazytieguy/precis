@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3816 words)
+budget: 4000 (3811 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -113,34 +113,13 @@ readme.md
    132→
    133→#### input …
    141→#### options …
-   147→##### method
-   149→Type: `string`\
-   150→Default: `'get'`
-      →…
-   156→##### json
-   158→Type: `object` and any other value accepted by [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
-   159→
-      →…
-   162→##### searchParams
-   164→Type: `string | object<string, string | number | boolean | undefined> | Array<Array<string | number | boolean>> | URLSearchParams`\
-   165→Default: `''`
-      →…
-   173→##### prefixUrl
-   175→Type: `string | URL`
-   176→
-      →…
-   197→##### retry
-   199→Type: `object | number`\
-   200→Default:
-      →…
-   327→##### timeout
-   329→Type: `number | false`\
-   330→Default: `10000`
-      →…
-   335→##### hooks
-   337→Type: `object<string, Function[]>`\
-   338→Default: `{beforeRequest: [], beforeRetry: [], afterResponse: []}`
-      →…
+   147→##### method …
+   156→##### json …
+   162→##### searchParams …
+   173→##### prefixUrl …
+   197→##### retry …
+   327→##### timeout …
+   335→##### hooks …
    342→###### hooks.beforeRequest
    344→Type: `Function[]`\
    345→Default: `[]`
@@ -161,56 +140,23 @@ readme.md
    488→Default: `[]`
    489→
       →…
-   553→##### throwHttpErrors
-   555→Type: `boolean | (status: number) => boolean`\
-   556→Default: `true`
-      →…
-   566→##### onDownloadProgress
-   568→Type: `Function`
-   569→
-      →…
-   592→##### onUploadProgress
-   594→Type: `Function`
-   595→
-      →…
-   619→##### parseJson
-   621→Type: `Function`\
-   622→Default: `JSON.parse()`
-      →…
-   639→##### stringifyJson
-   641→Type: `Function`\
-   642→Default: `JSON.stringify()`
-      →…
-   664→##### fetch
-   666→Type: `Function`\
-   667→Default: `fetch`
-      →…
-   683→##### context
-   685→Type: `object<string, unknown>`\
-   686→Default: `{}`
-      →…
+   553→##### throwHttpErrors …
+   566→##### onDownloadProgress …
+   592→##### onUploadProgress …
+   619→##### parseJson …
+   639→##### stringifyJson …
+   664→##### fetch …
+   683→##### context …
    745→### ky.extend(defaultOptions) …
    811→### ky.create(defaultOptions) …
    829→#### defaultOptions …
    833→### ky.stop …
    864→### ky.retry(options?) …
    870→#### options …
-   874→##### delay
-   876→Type: `number`
-   877→
-      →…
-   882→##### code
-   884→Type: `string`
-   885→
-      →…
-   895→##### cause
-   897→Type: `Error`
-   898→
-      →…
-   913→##### request
-   915→Type: `Request`
-   916→
-      →…
+   874→##### delay …
+   882→##### code …
+   895→##### cause …
+   913→##### request …
    923→#### Example …
   1000→### HTTPError …
   1046→### TimeoutError …
@@ -329,7 +275,6 @@ source/core/Ky.ts
     65→					throw error;
     66→				}
     67→
-    68→				if (modifiedResponse instanceof RetryMarker) {
    178→	static #normalizeSearchParams(searchParams: SearchParamsOption): SearchParamsOption {
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
@@ -535,6 +480,8 @@ source/core/constants.ts
    256→export const vendorSpecificOptions = {
    265→export const requestOptionsRegistry = {
 source/errors/ForceRetryError.ts
+     1→import type {ForceRetryOptions} from '../core/constants.js';
+     2→import {NonError} from './NonError.js';
      4→/**
      5→Internal error used to signal a forced retry from afterResponse hooks.
      6→This is thrown when a user returns ky.retry() from an afterResponse hook.
@@ -563,6 +510,9 @@ source/errors/ForceRetryError.ts
     29→	}
     30→}
 source/errors/HTTPError.ts
+     1→import type {NormalizedOptions} from '../types/options.js';
+     2→import type {KyRequest} from '../types/request.js';
+     3→import type {KyResponse} from '../types/response.js';
      5→export class HTTPError<T = unknown> extends Error {
      6→	public response: KyResponse<T>;
      7→	public request: KyRequest;
@@ -612,6 +562,7 @@ source/errors/NonError.ts
     27→	}
     28→}
 source/errors/TimeoutError.ts
+     1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {
      4→	public request: KyRequest;
      5→
@@ -622,6 +573,12 @@ source/errors/TimeoutError.ts
     10→	}
     11→}
 source/index.ts
+     3→import {Ky} from './core/Ky.js';
+     4→import {requestMethods, stop, retry} from './core/constants.js';
+     5→import type {KyInstance} from './types/ky.js';
+     6→import type {Input, Options} from './types/options.js';
+     7→import {validateAndMerge} from './utils/merge.js';
+     8→import {type Mutable} from './utils/types.js';
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
     11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
     12→	const ky: Partial<Mutable<KyInstance>> = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options));
@@ -631,12 +588,16 @@ source/index.ts
       →…
     34→const ky = createInstance();
 source/types/ResponsePromise.ts
+     4→import {type KyResponse} from './response.js';
      6→export type ResponsePromise …
 source/types/common.ts
      2→export type Primitive …
      4→export type Required …
      6→export type LiteralUnion …
 source/types/hooks.ts
+     1→import {type stop, type RetryMarker} from '../core/constants.js';
+     2→import type {KyRequest, KyResponse, HTTPError} from '../index.js';
+     3→import type {NormalizedOptions} from './options.js';
      5→export type BeforeRequestState …
     14→export type BeforeRequestHook …
     20→export type BeforeRetryState …
@@ -647,8 +608,14 @@ source/types/hooks.ts
     57→export type BeforeErrorHook …
     59→export type Hooks …
 source/types/ky.ts
+     1→import {type stop, type retry} from '../core/constants.js';
+     2→import type {Input, Options} from './options.js';
+     3→import type {ResponsePromise} from './ResponsePromise.js';
      5→export type KyInstance …
 source/types/options.ts
+     1→import type {LiteralUnion, Required} from './common.js';
+     2→import type {Hooks} from './hooks.js';
+     3→import type {RetryOptions} from './retry.js';
      6→export type SearchParamsInit …
      9→export type SearchParamsOption …
     11→export type RequestHttpMethod …
@@ -727,6 +694,7 @@ source/types/request.ts
 source/types/response.ts
      1→export type KyResponse …
 source/types/retry.ts
+     1→import type {HttpMethod} from './options.js';
      3→export type ShouldRetryState …
     15→export type RetryOptions …
 source/utils/body.ts
@@ -760,12 +728,6 @@ source/utils/normalize.ts
     12→const retryAfterStatusCodes = [413, 429, 503];
     14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
     16→const defaultRetryOptions: InternalRetryOptions = {
-    17→	limit: 2,
-    18→	methods: retryMethods,
-    19→	statusCodes: retryStatusCodes,
-    20→	afterStatusCodes: retryAfterStatusCodes,
-    21→	maxRetryAfter: Number.POSITIVE_INFINITY,
-      →…
     28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
 source/utils/options.ts
      4→export const findUnknownOptions = (

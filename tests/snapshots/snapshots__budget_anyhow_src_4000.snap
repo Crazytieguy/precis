@@ -2,9 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3713 words)
+budget: 4000 (3653 words)
 
 backtrace.rs
+     2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
+     5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
      8→pub(crate) enum Backtrace {}
     10→#[cfg(std_backtrace)]
@@ -90,6 +92,8 @@ backtrace.rs
    370→    fn output_filename …
    407→fn _assert_send_sync …
 chain.rs
+     5→use alloc::vec::{self, Vec};
+     8→pub(crate) use crate::Chain;
     10→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
     11→pub(crate) struct Chain<'a> {
     12→    state: ChainState<'a>,
@@ -117,6 +121,7 @@ chain.rs
     94→impl Default for Chain<'_> {
     95→    fn default …
 context.rs
+     7→use crate::nightly::{self, Request};
      9→mod ext {
     10→    use super::*;
     11→
@@ -201,11 +206,12 @@ ensure.rs
    911→#[macro_export]
    912→macro_rules! __fallback_ensure {
 error.rs
+     4→use crate::nightly::{self, Request};
+     6→use crate::ptr::Mut;
+    14→use core::ops::{Deref, DerefMut};
     20→    /// Create a new error object from any error type.
     21→    ///
     22→    /// The error type must be threadsafe and `'static`, so that the `Error`
-    23→    /// will be as well.
-    24→    ///
       →…
     30→    pub fn new<E>(error: E) -> Self
     31→    where
@@ -214,8 +220,6 @@ error.rs
     38→    /// Create a new error object from a printable error message.
     39→    ///
     40→    /// If the argument implements std::error::Error, prefer `Error::new`
-    41→    /// instead which preserves the underlying error's cause chain and
-    42→    /// backtrace. If the argument may or may not implement std::error::Error
       →…
     77→    pub fn msg<M>(message: M) -> Self
     78→    where
@@ -224,8 +228,6 @@ error.rs
     84→    /// Construct an error object from a type-erased standard library error.
     85→    ///
     86→    /// This is mostly useful for interop with other error libraries.
-    87→    ///
-    88→    /// # Example
       →…
    140→    pub fn from_boxed(boxed_error: Box<dyn StdError + Send + Sync + 'static>) -> Self {
    145→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
@@ -273,8 +275,6 @@ error.rs
    316→    /// Wrap the error value with additional context.
    317→    ///
    318→    /// For attaching context to a `Result` as it is propagated, the
-   319→    /// [`Context`][crate::Context] extension trait may be more convenient than
-   320→    /// this function.
       →…
    372→    pub fn context<C>(self, context: C) -> Self
    373→    where
@@ -283,29 +283,21 @@ error.rs
    404→    /// Get the backtrace for this Error.
    405→    ///
    406→    /// In order for the backtrace to be meaningful, one of the two environment
-   407→    /// variables `RUST_LIB_BACKTRACE=1` or `RUST_BACKTRACE=1` must be defined
-   408→    /// and `RUST_LIB_BACKTRACE` must not be `0`. Backtraces are somewhat
       →…
    432→    pub fn backtrace(&self) -> &impl_backtrace!() {
    436→    /// An iterator of the chain of source errors contained by this Error.
    437→    ///
    438→    /// This iterator will visit every error in the cause chain of this error
-   439→    /// object, beginning with the error that this error object was created
-   440→    /// from.
       →…
    459→    pub fn chain(&self) -> Chain {
    463→    /// The lowest level cause of this error &mdash; this error's cause's
    464→    /// cause's cause etc.
    465→    ///
-   466→    /// The root cause is the last error in the iterator produced by
-   467→    /// [`chain()`][Error::chain].
       →…
    470→    pub fn root_cause(&self) -> &(dyn StdError + 'static) {
    474→    /// Returns true if `E` is the type held by this error object.
    475→    ///
    476→    /// For errors with context, this method returns true if `E` matches the
-   477→    /// type of the context `C` **or** the type of the error on which the
-   478→    /// context has been attached. For details about the interaction between
       →…
    482→    pub fn is<E>(&self) -> bool
    483→    where
@@ -319,8 +311,6 @@ error.rs
    518→    /// Downcast this error object by reference.
    519→    ///
    520→    /// # Example
-   521→    ///
-   522→    /// ```
       →…
    554→    pub fn downcast_ref<E>(&self) -> Option<&E>
    555→    where
@@ -334,8 +324,7 @@ error.rs
    617→    /// ```
    618→    ///
    619→    /// [`anyhow::Error::from_boxed`]: Self::from_boxed
-   620→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-   621→    #[must_use]
+      →…
    622→    pub fn into_boxed_dyn_error(self) -> Box<dyn StdError + Send + Sync + 'static> {
    660→    /// ```
    661→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
@@ -471,6 +460,8 @@ fmt.rs
     73→}
     79→    fn write_str …
 kind.rs
+    51→use crate::StdError;
+    53→use alloc::boxed::Box;
     55→pub struct Adhoc;
     57→#[doc(hidden)]
     58→pub trait AdhocKind: Sized {
@@ -527,12 +518,16 @@ lib.rs
    261→mod nightly;
    262→mod ptr;
    263→mod wrapper;
+   270→use core::fmt::Debug;
+   273→use std::error::Error as StdError;
+   276→use core::error::Error as StdError;
    278→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
    281→        None
    282→    }
    283→}
+   286→pub use anyhow as format_err;
    288→/// The `Error` type, a wrapper around a dynamic error type.
    289→///
    290→/// `Error` works a lot like `Box<dyn std::error::Error>`, but with these
@@ -690,8 +685,6 @@ lib.rs
    630→/// Equivalent to `Ok::<_, anyhow::Error>(value)`.
    631→///
    632→/// This simplifies creation of an `anyhow::Result` in places where type
-   633→/// inference cannot deduce the `E` type of the result &mdash; without needing
-   634→/// to write `Ok::<_, anyhow::Error>(value)`.
       →…
    650→pub fn Ok<T>(value: T) -> Result<T> {
    655→#[doc(hidden)]
@@ -760,8 +753,14 @@ lib.rs
    718→            }
    719→        }
    720→
+   721→        impl Bool for &bool {
    722→            #[inline]
    723→            fn not(self) -> bool {
+   724→                !*self
+   725→            }
+   726→        }
+   727→    }
+   728→}
 macros.rs
      1→/// Return early with an error.
      2→///
@@ -778,6 +777,8 @@ macros.rs
     13→/// ```
     14→/// # use anyhow::{bail, Result};
     15→/// #
+    16→/// # fn has_permission(user: usize, resource: usize) -> bool {
+    17→/// #     true
       →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
@@ -785,6 +786,8 @@ macros.rs
     72→        /// Return early with an error if a condition is not satisfied.
     73→        ///
     74→        /// This macro is equivalent to
+    75→        /// <code>if !$cond { return Err([anyhow!($args\...)][anyhow!]); }</code>.
+    76→        ///
       →…
    174→/// Construct an ad-hoc error from a string or existing non-`anyhow` error
    175→/// value.
@@ -801,12 +804,16 @@ macros.rs
    186→/// # Example
    187→///
    188→/// ```
+   189→/// # type V = ();
+   190→/// #
       →…
    204→macro_rules! anyhow {
    228→#[doc(hidden)]
    229→#[macro_export]
    230→macro_rules! __anyhow {
 nightly.rs
+     7→use core::error::{self, Error};
+    10→pub use core::error::Request;
     41→pub fn request_ref_backtrace …
     45→fn request_ref …
     52→pub fn provide_ref_backtrace …
@@ -859,6 +866,8 @@ ptr.rs
    183→}
    186→    type Target = T;
 wrapper.rs
+     5→use alloc::boxed::Box;
+     8→use crate::nightly::{self, Request};
     10→#[repr(transparent)]
     11→pub struct MessageError<M>(pub M);
     17→    fn fmt …

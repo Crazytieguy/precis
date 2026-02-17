@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (992 words)
+budget: 1000 (988 words)
 
 CHANGELOG.md
      1→## Unreleased …
@@ -38,6 +38,8 @@ README.md
     34→```
     35→
     36→**Custom formatting:**
+    37→```go
+    38→// go-multierror allows custom formatting
       →…
    104→## Installation and Docs
    106→Install using `go get github.com/hashicorp/go-multierror`.
@@ -86,11 +88,12 @@ README.md
    151→return result
    152→```
    153→
+   154→**Customizing the formatting of the errors**
+   155→
       →…
 append.go
      6→// Append is a helper function that will append more errors
      7→// onto an Error in order to create a larger multi-error.
-     8→//
       →…
     14→func Append(err error, errs ...error) *Error {
 flatten.go
@@ -100,8 +103,18 @@ flatten.go
     20→func flatten(err error, flatErr *Error) {
     21→	switch err := err.(type) {
     22→	case *Error:
-      →…
+    23→		for _, e := range err.Errors {
+    24→			flatten(e, flatErr)
+    25→		}
+    26→	default:
+    27→		flatErr.Errors = append(flatErr.Errors, err)
+    28→	}
+    29→}
 format.go
+     6→import (
+     7→	"fmt"
+     8→	"strings"
+     9→)
     11→// ErrorFormatFunc is a function callback that is called by Error to
     12→// turn the list of errors into a string.
     13→type ErrorFormatFunc func([]error) string
@@ -109,6 +122,7 @@ format.go
     16→// that occurred along with a bullet point list of the errors.
     17→func ListFormatFunc(es []error) string {
 group.go
+     6→import "sync"
      8→// Group is a collection of goroutines which return errors that need to be
      9→// coalesced.
     10→type Group struct {
@@ -118,13 +132,16 @@ group.go
     14→}
     16→// Go calls the given function in a new goroutine.
     17→//
-    18→// If the function returns an error it is added to the group multierror which
       →…
     20→func (g *Group) Go(f func() error) {
     34→// Wait blocks until all function calls from the Go method have returned, then
     35→// returns the multierror.
     36→func (g *Group) Wait() *Error {
 multierror.go
+     6→import (
+     7→	"errors"
+     8→	"fmt"
+     9→)
     11→// Error is an error type to track multiple errors. This is used to
     12→// accumulate errors in cases and return them as a single "error".
     13→type Error struct {
@@ -141,7 +158,6 @@ multierror.go
     25→}
     27→// ErrorOrNil returns an error interface if this Error represents
     28→// a list of errors, or returns nil if the list of errors is empty. This
-    29→// function is useful at the end of accumulation to make sure that the value
       →…
     31→func (e *Error) ErrorOrNil() error {
     42→func (e *Error) GoString() string {
@@ -149,12 +165,10 @@ multierror.go
     44→}
     46→// WrappedErrors returns the list of errors that this Error is wrapping. It is
     47→// an implementation of the errwrap.Wrapper interface so that multierror.Error
-    48→// can be used with that library.
       →…
     53→func (e *Error) WrappedErrors() []error {
     60→// Unwrap returns an error from Error (or nil if there are no errors).
     61→// This error returned will further support Unwrap to get the next error,
-    62→// etc. The order will match the order of Errors in the multierror.Error
       →…
     71→func (e *Error) Unwrap() error {
     88→// chain implements the interfaces necessary for errors.Is/As/Unwrap to
@@ -175,9 +189,11 @@ multierror.go
    121→// Is implements errors.Is by comparing the current value directly.
    122→func (e chain) Is(target error) bool {
 prefix.go
+     6→import (
+     7→	"fmt"
+     8→)
     10→// Prefix is a helper function that will prefix some text
     11→// to the given error. If the error is a multierror.Error, then
-    12→// it will be prefixed to each wrapped error.
       →…
     16→func Prefix(err error, prefix string) error {
 sort.go

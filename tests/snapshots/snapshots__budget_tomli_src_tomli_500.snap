@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (494 words)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -64,10 +64,6 @@ _parser.py
 _re.py
     11→TYPE_CHECKING = False
     17→_TIME_RE_STR: Final = r"""
-    18→([01][0-9]|2[0-3])             # hours
-    19→:([0-5][0-9])                  # minutes
-    20→(?:
-      →…
     26→RE_NUMBER: Final = re.compile(
     27→    r"""
     28→0
@@ -107,3 +103,5 @@ _re.py
    104→            minutes=sign * int(minute_str),
    105→        )
    106→    )
+_types.py
+     5→from typing import Any, Callable, Tuple

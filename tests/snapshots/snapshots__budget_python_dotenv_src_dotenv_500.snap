@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (483 words)
+budget: 500 (484 words)
 
 __init__.py
     42→__all__ = [
@@ -13,6 +13,7 @@ __init__.py
     47→    "set_key",
     48→    "unset_key",
       →…
+__main__.py
 cli.py
     60→@click.version_option(version=__version__)
     61→@click.pass_context

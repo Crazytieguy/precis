@@ -2,9 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (498 words)
+budget: 500 (495 words)
 
 _internals/error.ts
+     1→import { Result } from '../result'
      3→export interface ErrorConfig {
      4→  withStackTrace: boolean
      5→}
@@ -15,9 +16,6 @@ _internals/error.ts
     14→        type: string
     15→        value: T
     16→      }
-    17→    | {
-    18→        type: string
-    19→        value: E
       →…
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
@@ -27,6 +25,8 @@ _internals/error.ts
     32→  const data = result.isOk()
       →…
 _internals/utils.ts
+     1→import { Result, ok, err } from '../result'
+     2→import { ResultAsync } from '../result-async'
      5→export type ExtractOkTypes …
     10→export type ExtractOkAsyncTypes …
     15→export type ExtractErrTypes …
@@ -43,7 +43,6 @@ _internals/utils.ts
     35→): Result<readonly T[], E> => {
     36→  let acc = ok([]) as Result<T[], E>
     37→
-    38→  for (const result of resultList) {
       →…
     54→export const combineResultAsyncList = <T, E>(
     55→  asyncResultList: readonly ResultAsync<T, E>[],
@@ -56,7 +55,6 @@ _internals/utils.ts
     66→): Result<readonly T[], E[]> => {
     67→  let acc = ok([]) as Result<T[], E[]>
     68→
-    69→  for (const result of resultList) {
       →…
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
     83→  asyncResultList: readonly ResultAsync<T, E>[],

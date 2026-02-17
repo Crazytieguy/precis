@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1965 words)
+budget: 2000 (1970 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -15,6 +15,8 @@ CONTRIBUTING.md
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
      4→2. Install dependencies (`npm install`)
      5→3. Create your feature branch (`git checkout -b my-new-feature`)
+     6→4. Commit your changes (`git commit -am 'Added some feature'`)
+     7→5. Test your changes (`npm test`)
       →…
     11→## Testing …
     19→## Code Style …
@@ -38,11 +40,6 @@ README-es.md
    609→Default: `path.resolve(process.cwd(), '.env')`
    610→
       →…
-   625→##### quiet …
-   648→##### encoding …
-   658→##### debug …
-   668→##### override …
-   678→##### processEnv …
    692→### Parse …
    705→#### Options …
    707→##### debug
@@ -55,7 +52,6 @@ README-es.md
    752→Default: `false`
    753→
       →…
-   756→##### override …
    764→## CHANGELOG …
    770→## Who's using dotenv? …
 README.md
@@ -375,6 +371,7 @@ lib/cli-options.js
 lib/env-options.js
      2→const options = {}
 lib/main.d.ts
+     3→import type { URL } from 'url';
      5→export interface DotenvParseOutput {
      6→  [name: string]: string;
      7→}

@@ -2,11 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (480 words)
+budget: 500 (481 words)
 
 __init__.py
     34→config: TypeCheckConfiguration
 _checkers.py
+    42→from typing_extensions import is_typeddict
     81→TypeCheckerCallable: TypeAlias = Callable[
     84→TypeCheckLookupCallback: TypeAlias = Callable[
     88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
@@ -79,6 +80,7 @@ _importhook.py
     80→                "exec",
     81→            )
     82→
+    83→        tree = TypeguardTransformer().visit(module)
       →…
    109→class TypeguardFinder(MetaPathFinder):
    119→
@@ -113,7 +115,6 @@ _transformer.py
    134→    has_return_expressions: bool = field(init=False, default=False)
    135→    memo_var_name: Name | None = field(init=False, default=None)
    136→    should_instrument: bool = field(init=False, default=True)
-   137→    variable_annotations: dict[str, expr] = field(init=False, default_factory=dict)
    285→class NameCollector(NodeVisitor):
    286→    def __init__(self) -> None:
    313→class GeneratorDetector(NodeVisitor):

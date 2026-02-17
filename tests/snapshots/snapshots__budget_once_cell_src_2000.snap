@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1902 words)
+budget: 2000 (1917 words)
 
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
@@ -288,6 +288,8 @@ lib.rs
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
 race.rs
+    31→use core::sync::atomic;
+    33→use portable_atomic as atomic;
     41→/// A thread-safe cell which can be written to only once.
     42→#[derive(Default, Debug)]
     43→pub struct OnceNonZeroUsize {
@@ -339,6 +341,7 @@ race.rs
    300→    where
    301→        F: FnOnce() -> Result<&'a T, E>,
    302→    {
+   351→pub use self::once_box::OnceBox;
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
@@ -352,6 +355,7 @@ race.rs
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
    365→
+   366→    impl<T> core::fmt::Debug for OnceBox<T> {
    367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
    373→        fn default() -> Self {
    379→        fn drop(&mut self) {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (975 words)
+budget: 1000 (977 words)
 
 CHANGELOG.md
      1→# neverthrow …
@@ -86,13 +86,15 @@ README.md
       →…
   1681→### License
   1683→The neverthrow project is available as open source under the terms of the [MIT license](https://github.com/supermacro/neverthrow/blob/master/LICENSE).
+rollup.config.mjs
+     1→import typescript from "rollup-plugin-typescript2";
+     2→import dts from "rollup-plugin-dts";
 src/_internals/error.ts
+     1→import { Result } from '../result'
      3→export interface ErrorConfig {
      4→  withStackTrace: boolean
      5→}
      7→const defaultErrorConfig: ErrorConfig = {
-     8→  withStackTrace: false,
-     9→}
     11→interface NeverThrowError<T, E> {
     12→  data:
     13→    | {
@@ -113,6 +115,8 @@ src/_internals/error.ts
     32→  const data = result.isOk()
       →…
 src/_internals/utils.ts
+     1→import { Result, ok, err } from '../result'
+     2→import { ResultAsync } from '../result-async'
      5→export type ExtractOkTypes …
     10→export type ExtractOkAsyncTypes …
     15→export type ExtractErrTypes …
@@ -133,7 +137,6 @@ src/_internals/utils.ts
     39→    if (result.isErr()) {
     40→      acc = err(result.error)
     41→      break
-    42→    } else {
       →…
     54→export const combineResultAsyncList = <T, E>(
     55→  asyncResultList: readonly ResultAsync<T, E>[],
@@ -150,12 +153,14 @@ src/_internals/utils.ts
     70→    if (result.isErr() && acc.isErr()) {
     71→      acc.error.push(result.error)
     72→    } else if (result.isErr() && acc.isOk()) {
-    73→      acc = err([result.error])
       →…
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
     83→  asyncResultList: readonly ResultAsync<T, E>[],
       →…
 src/result-async.ts
+     1→./result …
+    10→import { Err, Ok, Result } from './ …
+    11→./_internals/utils …
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
@@ -176,20 +181,18 @@ src/result-async.ts
    330→type TraverseWithAllErrorsAsync …
    338→type Writable …
 src/result.ts
+     1→import { errAsync, ResultAsync } from './ …
+     2→import { createNeverThrowError, ErrorConfig } from './_internals/error …
+     3→./_internals/utils …
     14→export namespace Result {
     15→  /**
-    16→   * Wraps a function with a try catch, creating a new function with the same
-    17→   * arguments but returning `Ok` if successful, `Err` if the function throws
-    18→   *
     62→export type Result …
    134→interface IResult<T, E> {
    135→  /**
    136→   * Used to check if a `Result` is an `OK`
    137→   *
-   138→   * @returns `true` if the result is an `OK` variant of Result
-   139→   */
+      →…
    140→  isOk(): this is Ok<T, E>
-   141→
    142→  /**
       →…
    147→  isErr(): this is Err<T, E>

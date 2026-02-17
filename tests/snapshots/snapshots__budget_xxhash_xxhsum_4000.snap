@@ -2,9 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (157 words)
+budget: 4000 (169 words)
 
 xxhsum.go
+     3→import (
+     4→	"fmt"
+     5→	"io"
+     6→	"os"
+     7→
+     8→	"github.com/cespare/xxhash/v2"
+     9→)
     11→func main() {
     12→	if contains(os.Args[1:], "-h") {
     13→		fmt.Fprintf(os.Stderr, `Usage:

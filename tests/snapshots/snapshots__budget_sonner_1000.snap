@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (993 words)
+budget: 1000 (980 words)
 
 README.md
      5→## Usage
@@ -32,22 +32,17 @@ README.md
     30→
     31→## Documentation
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
+playwright.config.ts
+     1→import { defineConfig, devices } from '@playwright/test';
 src/assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
      6→  switch (type) {
      7→    case 'success':
-     8→      return SuccessIcon;
       →…
-    24→const bars = Array(12).fill(0);
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     27→  return (
     28→    <div className={['sonner-loading-wrapper', className].filter(Boolean).join(' ')} data-visible={visible}>
-    29→      <div className="sonner-spinner">
       →…
-    38→const SuccessIcon = (
-    48→const WarningIcon = (
-    58→const InfoIcon = (
-    68→const ErrorIcon = (
     78→export const CloseIcon = (
     79→  <svg
     80→    xmlns="http://www.w3.org/2000/svg"
@@ -58,25 +53,17 @@ src/hooks.tsx
      3→export const useIsDocumentHidden = () => {
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
      5→
-     6→  React.useEffect(() => {
       →…
 src/index.tsx
-    22→const VISIBLE_TOASTS_AMOUNT = 3;
-    25→const VIEWPORT_OFFSET = '24px';
-    28→const MOBILE_VIEWPORT_OFFSET = '16px';
-    31→const TOAST_LIFETIME = 4000;
-    34→const TOAST_WIDTH = 356;
-    37→const GAP = 14;
-    40→const SWIPE_THRESHOLD = 45;
-    43→const TIME_BEFORE_UNMOUNT = 200;
     45→function cn(...classes: (string | undefined)[]) {
     49→function getDefaultSwipeDirections(position: string): Array<SwipeDirection> {
     64→const Toast = (props: ToastProps) => {
    507→function getDocumentDirection(): ToasterProps['dir'] {
    520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
    552→function useSonner() {
-   593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
 src/state.ts
+     1→./types …
+    11→import React from 'react …
     15→type titleT …
     17→class Observer {
     18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
@@ -106,36 +93,32 @@ src/state.ts
    282→const getToasts = () => ToastState.getActiveToasts();
    285→export const toast …
 src/types.ts
+     1→import React from 'react …
      3→export type ToastTypes …
      5→export type PromiseT …
      7→export interface PromiseIExtendedResult extends ExternalToast {
      8→  message: React.ReactNode;
-     9→}
+      →…
     11→export type PromiseTExtendedResult …
     15→export type PromiseTResult …
     20→export type PromiseExternalToast …
     22→export type PromiseData …
     30→export interface ToastClassnames {
     31→  toast?: string;
-    32→  title?: string;
       →…
     48→export interface ToastIcons {
     49→  success?: React.ReactNode;
-    50→  info?: React.ReactNode;
       →…
     57→export interface Action {
     58→  label: React.ReactNode;
-    59→  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
       →…
     63→export interface ToastT {
     64→  id: number | string;
-    65→  toasterId?: string;
       →…
     93→export function isAction …
     97→export type Position …
     98→export interface HeightT {
     99→  height: number;
-   100→  toastId: number | string;
       →…
    104→interface ToastOptions {
    105→  className?: string;
@@ -146,21 +129,17 @@ src/types.ts
    118→type Offset …
    128→export interface ToasterProps {
    129→  id?: string;
-   130→  invert?: boolean;
       →…
    152→export type SwipeDirection …
    154→export interface ToastProps {
    155→  toast: ToastT;
-   156→  toasts: ToastT[];
       →…
    184→export enum SwipeStateTypes {
    185→  SwipedOut = 'SwipedOut',
-   186→  SwipedBack = 'SwipedBack',
       →…
    190→export type Theme …
    192→export interface ToastToDismiss {
    193→  id: number | string;
-   194→  dismiss: boolean;
       →…
    197→export type ExternalToast …
 website/README.md
@@ -203,13 +182,19 @@ website/src/components/CodeBlock/index.tsx
     51→
       →…
 website/src/components/ExpandModes/index.tsx
+     1→import { toast } from 'sonner';
+     2→import { CodeBlock } from '../CodeBlock';
      4→export const ExpandModes = ({
      5→  expand,
      6→  setExpand,
      7→}: {
      8→  expand: boolean;
+     9→  setExpand: React.Dispatch<React.SetStateAction<boolean>>;
       →…
 website/src/components/Footer/index.tsx
+     1→import Image from 'next/image';
+     2→import emil from 'public/emil.jpeg';
+     3→import styles from './footer.module.css';
      5→export const Footer = () => {
      6→  return (
      7→    <footer className={styles.wrapper}>
@@ -217,15 +202,20 @@ website/src/components/Footer/index.tsx
      9→        <p className={styles.p}>
       →…
 website/src/components/Head/index.tsx
+     1→import NextHead from 'next/head';
      3→const ogImage = 'https://sonner.emilkowal.ski/og.png';
      5→const Head …
 website/src/components/Hero/index.tsx
+     1→import { toast } from 'sonner';
+     3→import styles from './hero.module.css';
+     4→import Link from 'next/link';
      6→export const Hero = () => {
      7→  return (
      8→    <div className={styles.wrapper}>
      9→      <div className={styles.toastWrapper}>
       →…
 website/src/components/How/How.tsx
+     1→import React from 'react';
      3→export const How = () => {
      4→  return (
      5→    <>
@@ -254,6 +244,9 @@ website/src/components/Position/index.tsx
     13→  position: Position;
       →…
 website/src/components/Types/Types.tsx
+     1→import React from 'react';
+     2→import { toast } from 'sonner';
+     3→import { CodeBlock } from '../CodeBlock';
      5→const promiseCode = '`${data.name} toast has been added`';
      7→export const Types = () => {
      8→  const [activeType, setActiveType] = React.useState(allTypes[0]);
@@ -264,6 +257,7 @@ website/src/components/Types/Types.tsx
       →…
     34→const allTypes = [
 website/src/components/Usage/index.tsx
+     1→import { CodeBlock } from '../CodeBlock';
      3→export const Usage = () => {
      4→  return (
      5→    <div>

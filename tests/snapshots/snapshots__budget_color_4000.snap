@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3859 words)
+budget: 4000 (3858 words)
 
 README.md
      1→# color
@@ -180,6 +180,17 @@ README.md
    187→## License
    189→The MIT License (MIT) - see [`LICENSE.md`](https://github.com/fatih/color/blob/master/LICENSE.md) for more details
 color.go
+     3→import (
+     4→	"fmt"
+     5→	"io"
+     6→	"os"
+     7→	"strconv"
+     8→	"strings"
+     9→	"sync"
+    10→
+    11→	"github.com/mattn/go-colorable"
+    12→	"github.com/mattn/go-isatty"
+    13→)
     15→var (
     16→	// NoColor defines if the output is colorized or not. It's dynamically set to
     17→	// false or true based on the stdout's file descriptor referring to a terminal
@@ -336,7 +347,6 @@ color.go
    211→func (c *Color) unset() {
    212→	if c.isNoColorSet() {
    213→		return
-   214→	}
       →…
    219→// SetWriter is used to set the SGR sequence with the given io.Writer. This is
    220→// a low-level function, and users should use the higher-level functions, such
@@ -526,7 +536,6 @@ color.go
    428→func (c *Color) unformat() string {
    429→	//return fmt.Sprintf("%s[%dm", escape, Reset)
    430→	//for each element in sequence let's use the specific reset escape, or the generic one if not found
-   431→	format := make([]string, len(c.params))
       →…
    443→// DisableColor disables the color output. Useful to not change any existing
    444→// code and still being able to output. Can be used for flags like
@@ -542,7 +551,6 @@ color.go
    456→func (c *Color) isNoColorSet() bool {
    457→	// check first if we have user set action
    458→	if c.noColor != nil {
-   459→		return *c.noColor
       →…
    466→// Equals returns a boolean value indicating whether two colors are equal.
    467→func (c *Color) Equals(c2 *Color) bool {
@@ -567,7 +575,6 @@ color.go
    487→func (c *Color) attrExists(a Attribute) bool {
    488→	for _, attr := range c.params {
    489→		if attr == a {
-   490→			return true
       →…
    497→func boolPtr(v bool) *bool {
    498→	return &v
@@ -575,17 +582,14 @@ color.go
    501→func getCachedColor(p Attribute) *Color {
    502→	colorsCacheMu.Lock()
    503→	defer colorsCacheMu.Unlock()
-   504→
       →…
    514→func colorPrint(format string, p Attribute, a ...interface{}) {
    515→	c := getCachedColor(p)
    516→
-   517→	if !strings.HasSuffix(format, "\n") {
       →…
    528→func colorString(format string, p Attribute, a ...interface{}) string {
    529→	c := getCachedColor(p)
    530→
-   531→	if len(a) == 0 {
       →…
    538→// Black is a convenient helper function to print with black foreground. A
    539→// newline is appended to format by default.
@@ -700,8 +704,12 @@ color.go
    680→	return strings.TrimSuffix(fmt.Sprintln(a...), "\n")
    681→}
 color_windows.go
+     3→import (
+     4→	"os"
+     5→
+     6→	"golang.org/x/sys/windows"
+     7→)
      9→func init() {
     10→	// Opt-in for ansi color support for current process.
     11→	// https://learn.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences#output-sequences
-    12→	var outMode uint32
       →…

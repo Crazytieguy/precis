@@ -2,9 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1896 words)
+budget: 2000 (1856 words)
 
 backtrace.rs
+     2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
+     5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
      8→pub(crate) enum Backtrace {}
     10→#[cfg(std_backtrace)]
@@ -47,24 +49,15 @@ backtrace.rs
     91→
     92→    enum Inner {
     93→        Unsupported,
-      →…
     98→    struct Capture {
-    99→        actual_start: usize,
-      →…
    104→    struct BacktraceFrame {
-   105→        frame: Frame,
-      →…
    109→    struct BacktraceSymbol {
-   110→        name: Option<Vec<u8>>,
-      →…
    116→    enum BytesOrWide {
-   117→        Bytes(Vec<u8>),
-      →…
    211→        pub(crate) fn capture …
    311→    struct LazilyResolvedCapture {
-   312→        sync: Once,
-      →…
 chain.rs
+     5→use alloc::vec::{self, Vec};
+     8→pub(crate) use crate::Chain;
     10→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
     11→pub(crate) struct Chain<'a> {
     12→    state: ChainState<'a>,
@@ -86,6 +79,7 @@ chain.rs
     93→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     94→impl Default for Chain<'_> {
 context.rs
+     7→use crate::nightly::{self, Request};
      9→mod ext {
     10→    use super::*;
     11→
@@ -137,8 +131,6 @@ ensure.rs
     26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     27→}
     35→struct Buf {
-    36→    bytes: [MaybeUninit<u8>; 40],
-      →…
    103→#[doc(hidden)]
    104→#[macro_export]
    105→macro_rules! __parse_ensure {
@@ -149,6 +141,9 @@ ensure.rs
    911→#[macro_export]
    912→macro_rules! __fallback_ensure {
 error.rs
+     4→use crate::nightly::{self, Request};
+     6→use crate::ptr::Mut;
+    14→use core::ops::{Deref, DerefMut};
     30→    pub fn new …
     77→    pub fn msg …
    140→    pub fn from_boxed …
@@ -182,8 +177,6 @@ error.rs
    712→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    713→impl DerefMut for Error {
    740→struct ErrorVTable {
-   741→    object_drop: unsafe fn(Own<ErrorImpl>),
-      →…
    788→unsafe fn object_boxed …
    799→unsafe fn object_reallocate_boxed …
    839→unsafe fn context_downcast …
@@ -222,9 +215,9 @@ error.rs
   1079→impl AsRef<dyn StdError> for Error {
 fmt.rs
     69→struct Indented<'a, D> {
-    70→    inner: &'a mut D,
-      →…
 kind.rs
+    51→use crate::StdError;
+    53→use alloc::boxed::Box;
     55→pub struct Adhoc;
     57→#[doc(hidden)]
     58→pub trait AdhocKind: Sized {
@@ -272,12 +265,16 @@ lib.rs
    261→mod nightly;
    262→mod ptr;
    263→mod wrapper;
+   270→use core::fmt::Debug;
+   273→use std::error::Error as StdError;
+   276→use core::error::Error as StdError;
    278→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
    281→        None
    282→    }
    283→}
+   286→pub use anyhow as format_err;
    288→/// The `Error` type, a wrapper around a dynamic error type.
    289→///
    290→/// `Error` works a lot like `Box<dyn std::error::Error>`, but with these
@@ -425,26 +422,8 @@ lib.rs
    681→    #[doc(hidden)]
    682→    #[inline]
    683→    #[cold]
-   684→    pub fn format_err(args: Arguments) -> Error {
-   685→        if let Some(message) = args.as_str() {
-   686→            // anyhow!("literal"), can downcast to &'static str
-   687→            Error::msg(message)
-   688→        } else {
-   689→            // anyhow!("interpolate {var}"), can downcast to String
-   690→            Error::msg(fmt::format(args))
-   691→        }
-   692→    }
-   693→
-   694→    #[doc(hidden)]
-   695→    #[inline]
-   696→    #[cold]
-   697→    #[must_use]
-   698→    pub fn must_use(error: Error) -> Error {
-   699→        error
-   700→    }
-   701→
-   702→    #[doc(hidden)]
-   703→    #[inline]
+   684→    pub fn format_err …
+   698→    pub fn must_use …
    704→    pub fn not …
    708→    mod not {
    709→        #[doc(hidden)]
@@ -477,6 +456,8 @@ macros.rs
    229→#[macro_export]
    230→macro_rules! __anyhow {
 nightly.rs
+     7→use core::error::{self, Error};
+    10→pub use core::error::Request;
 ptr.rs
      5→#[repr(transparent)]
      6→pub struct Own<T>
@@ -506,6 +487,8 @@ ptr.rs
    183→}
    186→    type Target = T;
 wrapper.rs
+     5→use alloc::boxed::Box;
+     8→use crate::nightly::{self, Request};
     10→#[repr(transparent)]
     11→pub struct MessageError<M>(pub M);
     33→#[repr(transparent)]

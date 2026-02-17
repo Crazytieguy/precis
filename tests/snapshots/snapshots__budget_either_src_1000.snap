@@ -2,9 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (987 words)
+budget: 1000 (968 words)
 
 into_either.rs
+     4→use super::{Either, Left, Right};
      6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
      7→/// variant of [`Either<Self, Self>`](Either).
      8→///
@@ -12,7 +13,7 @@ into_either.rs
     10→/// whether to convert to [`Left`] or [`Right`].
     11→///
     12→/// The [`into_either_with`](IntoEither::into_either_with) method takes a
-    13→/// [predicate function](FnOnce) to determine whether to convert to [`Left`] or [`Right`].
+      →…
     14→pub trait IntoEither: Sized {
     15→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
     16→    /// if `into_left` is `true`.
@@ -63,6 +64,8 @@ into_either.rs
     61→    }
     62→}
 iterator.rs
+     1→use super::{for_both, Either, Left, Right};
+     2→use core::iter;
      4→macro_rules! wrap_either {
     13→/// Iterator that maps left or right iterators to corresponding `Either`-wrapped items.
     14→///
@@ -88,6 +91,15 @@ lib.rs
     22→pub mod serde_untagged;
     24→#[cfg(feature = "serde")]
     25→pub mod serde_untagged_optional;
+    27→use core::convert::{AsMut, AsRef};
+    28→use core::fmt;
+    29→use core::future::Future;
+    30→use core::ops::Deref;
+    31→use core::ops::DerefMut;
+    32→use core::pin::Pin;
+    35→use std::error::Error;
+    37→use std::io::{self, BufRead, Read, Seek, SeekFrom, Write};
+    39→pub use crate::Either::{Left, Right};
     41→/// The enum `Either` with variants `Left` and `Right` is a general purpose
     42→/// sum type with two cases.
     43→///
@@ -95,7 +107,7 @@ lib.rs
     45→/// preference.
     46→/// (For representing success or error, use the regular `Result` enum instead.)
     47→#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-    48→#[derive(Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Debug)]
+      →…
     49→pub enum Either<L, R> {
     50→    /// A value of type `L`.
     51→    Left(L),
@@ -104,14 +116,10 @@ lib.rs
     54→}
     56→/// Evaluate the provided expression for both [`Either::Left`] and [`Either::Right`].
     57→///
-    58→/// This macro is useful in cases where both sides of [`Either`] can be interacted with
-    59→/// in the same way even though the don't share the same type.
       →…
     81→macro_rules! for_both {
     90→/// Macro for unwrapping the left side of an [`Either`], which fails early
     91→/// with the opposite side. Can only be used in functions that return
-    92→/// `Either` because of the early return of `Right` that it provides.
-    93→///
       →…
    113→macro_rules! try_left {
    122→/// Dual to [`try_left!`], see its documentation for more information.
@@ -119,7 +127,9 @@ lib.rs
    124→macro_rules! try_right {
    133→macro_rules! map_either {
    142→mod iterator;
+   143→pub use self::iterator::IterEither;
    145→mod into_either;
+   146→pub use self::into_either::IntoEither;
    175→    pub fn is_left …
    191→    pub fn is_right …
    206→    pub fn left …
@@ -207,9 +217,6 @@ lib.rs
   1536→fn _unsized_ref_propagation() {
   1537→    check_t!(str);
   1538→
-  1539→    fn check_array_ref<T: AsRef<[Item]>, Item>() {}
-  1540→    fn check_array_mut<T: AsMut<[Item]>, Item>() {}
-  1541→
       →…
   1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {
@@ -218,6 +225,7 @@ lib.rs
   1556→    check_t!(::std::ffi::CStr);
   1557→}
 serde_untagged.rs
+    36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     38→#[derive(serde::Serialize, serde::Deserialize)]
     39→#[serde(untagged)]
     40→enum Either<L, R> {
@@ -225,6 +233,7 @@ serde_untagged.rs
     42→    Right(R),
     43→}
 serde_untagged_optional.rs
+    36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     38→#[derive(Serialize, Deserialize)]
     39→#[serde(untagged)]
     40→enum Either<L, R> {

@@ -3,6 +3,8 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.py
+     2→from typing import Optional, Generic, TypeVar
+     3→from dataclasses import dataclass
      5→T = TypeVar("T")
      7→# Process the input items and return the total count.
      8→def process_items(items: list[str]) -> int:

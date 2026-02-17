@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2394 words)
+budget: 4000 (2415 words)
 
 CHANGELOG.md
      1→## Unreleased …
@@ -297,6 +297,10 @@ flatten.go
     28→	}
     29→}
 format.go
+     6→import (
+     7→	"fmt"
+     8→	"strings"
+     9→)
     11→// ErrorFormatFunc is a function callback that is called by Error to
     12→// turn the list of errors into a string.
     13→type ErrorFormatFunc func([]error) string
@@ -317,6 +321,7 @@ format.go
     29→		len(es), strings.Join(points, "\n\t"))
     30→}
 group.go
+     6→import "sync"
      8→// Group is a collection of goroutines which return errors that need to be
      9→// coalesced.
     10→type Group struct {
@@ -350,6 +355,10 @@ group.go
     40→	return g.err
     41→}
 multierror.go
+     6→import (
+     7→	"errors"
+     8→	"fmt"
+     9→)
     11→// Error is an error type to track multiple errors. This is used to
     12→// accumulate errors in cases and return them as a single "error".
     13→type Error struct {
@@ -455,6 +464,9 @@ multierror.go
    123→	return errors.Is(e[0], target)
    124→}
 prefix.go
+     6→import (
+     7→	"fmt"
+     8→)
     10→// Prefix is a helper function that will prefix some text
     11→// to the given error. If the error is a multierror.Error, then
     12→// it will be prefixed to each wrapped error.

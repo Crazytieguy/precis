@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3922 words)
+budget: 4000 (3920 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -231,12 +231,10 @@ Readme_zh-CN.md
    570→#### 其他参数配置
    572→有少数附加功能可以直接构造`Argument`对象，对参数进行更详尽的配置。
    573→
-   574→示例代码：[arguments-extra.js](./examples/arguments-extra.js)
       →…
    582→#### 自定义参数处理
    584→选项的参数可以通过自定义函数来处理（与处理选项参数时类似），该函数接收两个参数：用户新输入的参数值和当前已有的参数值（即上一次调用自定义处理函数后的返回值），返回新的命令参数值。
    585→
-   586→处理后的参数值会传递给命令处理函数，同时可通过`.processedArgs`获取。
       →…
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
@@ -381,23 +379,22 @@ docs/zh-CN/不再推荐使用的功能.md
      1→# 不再推荐使用的功能
      3→本文中列出的功能不再推荐使用。它们在 Commander 未来的主要版本（major version）中可能被移除。为保证后向兼容，这些功能目前还可以使用，但它们不应被用在新代码中。
      4→
-     5→- [不再推荐使用的功能](#%E4%B8%8D%E5%86%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8%E7%9A%84%E5%8A%9F%E8%83%BD)
       →…
 docs/zh-CN/可变参数的选项.md
      1→# 可变参数的选项
      3→README 文档介绍了选项的声明与使用。大多数情况下，选项的解析行为，与您和您程序用户的期望相符。本文将详述一些特殊用例和细节问题。
      4→
-     5→- [可变参数的选项](#%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E7%9A%84%E9%80%89%E9%A1%B9)
       →…
 docs/zh-CN/术语表.md
      1→# 术语表
      3→命令行参数由选项（options）、选项参数（option-arguments）、命令（commands），以及命令参数（command-arguments）组成。
      4→
-     5→|术语|解释|
       →…
 eslint.config.js
      8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
      9→const tsconfigJsFiles = ['*.{js,mjs}', 'lib/**/*.{js,mjs}']; // match "include" in tsconfig.js.json
+esm.mjs
+     1→import commander from './index.js';
 jest.config.js
      1→const config = {
 lib/argument.js

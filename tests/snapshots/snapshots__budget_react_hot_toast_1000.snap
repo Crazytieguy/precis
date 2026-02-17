@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (989 words)
+budget: 1000 (987 words)
 
 README.md
     28→## Features
@@ -101,7 +101,6 @@ site/components/sections/toaster-example.tsx
      9→  'top-left',
     10→  'top-center',
     11→  'top-right',
-    12→  'bottom-left',
       →…
     17→export const ToasterExample: React.FC<{
 site/next.config.mjs
@@ -125,10 +124,6 @@ site/pages/index.tsx
    105→  const { toasts: allToasts } = useToasterStore();
    106→
    107→  const shouldFade =
-   108→    allToasts.filter((t) => t.visible).length && position.includes('top');
-   109→  return (
-   110→    <div className="overflow-x-hidden">
-   111→      <NextSeo
       →…
 site/types/svg.d.ts
      1→interface SvgrComponent
@@ -290,5 +285,9 @@ src/core/use-toaster.ts
 src/core/utils.ts
      1→export const genId …
      8→export const prefersReducedMotion …
+src/headless/index.ts
+     1→import { toast } from '../core/toast';
+src/index.ts
+     1→import { toast } from './core/toast';
 tsup.config.ts
      4→const commonConfig: Options = {

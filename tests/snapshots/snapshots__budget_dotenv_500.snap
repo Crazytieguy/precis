@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (474 words)
+budget: 500 (471 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -21,20 +21,11 @@ README-es.md
      1→# dotenv …
    331→### Inicio rápido …
    587→### Config …
-   607→##### path
-   609→Default: `path.resolve(process.cwd(), '.env')`
-   610→
-      →…
+   607→##### path …
    692→### Parse …
-   707→##### debug
-   709→Default: `false`
-   710→
-      →…
+   707→##### debug …
    721→### Populate …
-   750→##### Debug
-   752→Default: `false`
-   753→
-      →…
+   750→##### Debug …
 README.md
      1→# dotenv
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
@@ -132,6 +123,7 @@ lib/cli-options.js
 lib/env-options.js
      2→const options = {}
 lib/main.d.ts
+     3→import type { URL } from 'url';
      5→export interface DotenvParseOutput {
      6→  [name: string]: string;
      7→}

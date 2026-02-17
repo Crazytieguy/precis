@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (497 words)
+budget: 500 (491 words)
 
 command-score.ts
     54→function commandScoreInner(
@@ -22,12 +22,6 @@ command-score.ts
     68→  }
     69→
     70→  var memoizeKey = `${stringIndex},${abbreviationIndex}`
-    71→  if (memoizedResults[memoizeKey] !== undefined) {
-    72→    return memoizedResults[memoizeKey]
-    73→  }
-    74→
-    75→  var abbreviationChar = lowerAbbreviation.charAt(abbreviationIndex)
-    76→  var index = lowerString.indexOf(abbreviationChar, stringIndex)
       →…
    150→function formatInput(string) {
    151→  // convert all valid space characters to space so they match each other
@@ -42,6 +36,12 @@ command-score.ts
    161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
    162→}
 index.tsx
+     3→import * as RadixDialog from '@radix-ui/react-dialog'
+     4→import * as React from 'react'
+     5→import { commandScore } from './command-score'
+     6→import { Primitive } from '@radix-ui/react-primitive'
+     7→import { useId } from '@radix-ui/react-id'
+     8→import { composeRefs } from '@radix-ui/react-compose-refs'
    161→const defaultFilter: CommandFilter = (value, search, keywords) => commandScore(value, search, keywords)
    164→const useCommand = () => React.useContext(CommandContext)
    166→const useStore = () => React.useContext(StoreContext)
@@ -110,11 +110,7 @@ index.tsx
   1052→    fns.current = new Map()
   1053→  }, [s])
   1054→
-  1055→  return (id: string | number, cb: () => void) => {
-  1056→    fns.current.set(id, cb)
-  1057→    ss({})
-  1058→  }
-  1059→}
+      →…
   1061→function renderChildren(children: React.ReactElement) {
   1071→function SlottableWithNestedChildren(
   1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },

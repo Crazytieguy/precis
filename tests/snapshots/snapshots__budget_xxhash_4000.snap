@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2237 words)
+budget: 4000 (2275 words)
 
 README.md
      1→# xxhash
@@ -73,6 +73,13 @@ README.md
     73→- [Ristretto](https://github.com/dgraph-io/ristretto)
     74→- [Badger](https://github.com/dgraph-io/badger)
 dynamic/plugin.go
+     6→import (
+     7→	"fmt"
+     8→	"log"
+     9→	"testing"
+    10→
+    11→	"github.com/cespare/xxhash/v2"
+    12→)
     14→const (
     15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
     16→	want = uint64(0x02a2e85470d6fd96)
@@ -106,6 +113,11 @@ dynamic/plugin.go
     46→	}
     47→}
 xxhash.go
+     5→import (
+     6→	"encoding/binary"
+     7→	"errors"
+     8→	"math/bits"
+     9→)
     11→const (
     12→	prime1 uint64 = 11400714785074694791
     13→	prime2 uint64 = 14029467366897019727
@@ -407,6 +419,9 @@ xxhash_safe.go
     15→	return d.Write([]byte(s))
     16→}
 xxhash_unsafe.go
+     9→import (
+    10→	"unsafe"
+    11→)
     36→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
     37→// It may be faster than Sum64([]byte(s)) by avoiding a copy.
     38→func Sum64String(s string) uint64 {
@@ -429,6 +444,13 @@ xxhash_unsafe.go
     57→	cap int
     58→}
 xxhsum/xxhsum.go
+     3→import (
+     4→	"fmt"
+     5→	"io"
+     6→	"os"
+     7→
+     8→	"github.com/cespare/xxhash/v2"
+     9→)
     11→func main() {
     12→	if contains(os.Args[1:], "-h") {
     13→		fmt.Fprintf(os.Stderr, `Usage:

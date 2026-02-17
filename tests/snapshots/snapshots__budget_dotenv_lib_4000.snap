@@ -2,13 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2211 words)
+budget: 4000 (2218 words)
 
 cli-options.js
      1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
 env-options.js
      2→const options = {}
 main.d.ts
+     3→import type { URL } from 'url';
      5→export interface DotenvParseOutput {
      6→  [name: string]: string;
      7→}

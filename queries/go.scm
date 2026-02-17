@@ -27,3 +27,6 @@
 ; Package-level variables
 (var_spec
   name: (identifier) @name) @symbol
+
+; Import declarations
+(import_declaration) @symbol

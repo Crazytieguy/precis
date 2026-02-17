@@ -2,11 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1842 words)
+budget: 2000 (1841 words)
 
 __init__.py
     34→config: TypeCheckConfiguration
 _checkers.py
+    42→from typing_extensions import is_typeddict
     81→TypeCheckerCallable: TypeAlias = Callable[
     82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
     83→]
@@ -41,7 +42,6 @@ _checkers.py
    117→    "__ior__",
    118→    "__ipow__",
    119→    "__irshift__",
-   120→    "__isub__",
       →…
    586→def _is_literal_type(typ: object) -> bool:
    587→    return typ is typing.Literal or typ is typing_extensions.Literal
@@ -67,7 +67,6 @@ _checkers.py
   1023→    MutableMapping: check_mapping,
   1024→    None: check_none,
   1025→    collections.abc.Mapping: check_mapping,
-  1026→    collections.abc.MutableMapping: check_mapping,
       →…
 _config.py
     11→T = TypeVar("T")

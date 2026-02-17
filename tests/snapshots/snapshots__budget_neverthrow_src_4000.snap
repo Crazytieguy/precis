@@ -2,9 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3422 words)
+budget: 4000 (3450 words)
 
 _internals/error.ts
+     1→import { Result } from '../result'
      3→export interface ErrorConfig {
      4→  withStackTrace: boolean
      5→}
@@ -42,6 +43,8 @@ _internals/error.ts
     42→  }
     43→}
 _internals/utils.ts
+     1→import { Result, ok, err } from '../result'
+     2→import { ResultAsync } from '../result-async'
      5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
      6→  [idx in keyof T]: T[idx] extends Result<infer U, unknown> ? U : never
      7→}
@@ -109,6 +112,25 @@ _internals/utils.ts
     86→    combineResultListWithAllErrors,
     87→  ) as ResultAsync<T[], E[]>
 result-async.ts
+     1→import type {
+     2→  Combine,
+     3→  Dedup,
+     4→  EmptyArrayToNever,
+     5→  IsLiteralArray,
+     6→  MemberListOf,
+     7→  MembersToUnion,
+     8→} from './result'
+    10→import { Err, Ok, Result } from './'
+    11→import {
+    12→  combineResultAsyncList,
+    13→  combineResultAsyncListWithAllErrors,
+    14→  ExtractErrAsyncTypes,
+    15→  ExtractOkAsyncTypes,
+    16→  InferAsyncErrTypes,
+    17→  InferAsyncOkTypes,
+    18→  InferErrTypes,
+    19→  InferOkTypes,
+    20→} from './_internals/utils'
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
@@ -173,12 +195,7 @@ result-async.ts
     83→  ): CombineResultsWithAllErrorsArrayAsync<T> {
     84→    return combineResultAsyncListWithAllErrors(
     85→      asyncResultList,
-    86→    ) as CombineResultsWithAllErrorsArrayAsync<T>
-    87→  }
-    88→
     89→  map<A>(f: (t: T) => A | Promise<A>): ResultAsync<A, E> {
-    90→    return new ResultAsync(
-    91→      this._promise.then(async (res: Result<T, E>) => {
    101→  andThrough<F>(f: (t: T) => Result<unknown, F> | ResultAsync<unknown, F>): ResultAsync<T, E | F> {
    117→  andTee(f: (t: T) => unknown): ResultAsync<T, E> {
    133→  orTee(f: (t: E) => unknown): ResultAsync<T, E> {
@@ -226,6 +243,17 @@ result-async.ts
    330→type TraverseWithAllErrorsAsync …
    338→type Writable …
 result.ts
+     1→import { errAsync, ResultAsync } from './'
+     2→import { createNeverThrowError, ErrorConfig } from './_internals/error'
+     3→import {
+     4→  combineResultList,
+     5→  combineResultListWithAllErrors,
+     6→  ExtractErrTypes,
+     7→  ExtractOkTypes,
+     8→  InferAsyncErrTypes,
+     9→  InferErrTypes,
+    10→  InferOkTypes,
+    11→} from './_internals/utils'
     14→export namespace Result {
     15→  /**
     16→   * Wraps a function with a try catch, creating a new function with the same
@@ -318,8 +346,6 @@ result.ts
    168→  mapErr<U>(f: (e: E) => U): Result<T, U>
    169→
    170→  /**
-   171→   * Similar to `map` Except you must return a new `Result`.
-   172→   *
    183→  andThen<U, F>(f: (t: T) => Result<U, F>): Result<U, E | F>
    185→  /**
    186→   * This "tee"s the current value to an passed-in computation such as side
@@ -478,12 +504,7 @@ result.ts
    373→
    374→  asyncAndThrough<R extends ResultAsync<unknown, unknown>>(
    375→    f: (t: T) => R,
-   376→  ): ResultAsync<T, InferAsyncErrTypes<R> | E>
-   377→  asyncAndThrough<F>(f: (t: T) => ResultAsync<unknown, F>): ResultAsync<T, E | F>
-   378→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    379→  asyncAndThrough(f: (t: T) => ResultAsync<unknown, unknown>): any {
-   380→    return f(this.value).map(() => this.value)
-   381→  }
    383→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E> {
    388→  unwrapOr<A>(_v: A): T | A {
    393→  match<A, B = A>(ok: (t: T) => A, _err: (e: E) => B): A | B {
@@ -558,11 +579,7 @@ result.ts
    480→    return errAsync<T, E>(this.error)
    481→  }
    482→
-   483→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
    484→  asyncMap<U>(_f: (t: T) => Promise<U>): ResultAsync<U, E> {
-   485→    return errAsync<U, E>(this.error)
-   486→  }
-   487→
    488→  unwrapOr<A>(v: A): T | A {
    492→  match<A, B = A>(_ok: (t: T) => A, err: (e: E) => B): A | B {
    496→  safeUnwrap(): Generator<Err<never, E>, T> {

@@ -2,9 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1930 words)
+budget: 2000 (1898 words)
 
 __private_api.rs
+     3→use self::sealed::KVs;
+     4→use crate::{logger, Level, Log, Metadata, Record};
+     5→use std::fmt::Arguments;
+     6→use std::panic::Location;
+     7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
     12→mod sealed {
@@ -20,6 +25,7 @@ __private_api.rs
    115→
    116→    pub type Value<'a> = kv::Value<'a>;
    117→
+   151→pub use self::kv_support::*;
 kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
@@ -36,17 +42,14 @@ kv/error.rs
     21→    pub fn msg …
     28→    #[cfg(feature = "value-bag")]
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
-    30→        Error {
-      →…
     36→    #[cfg(feature = "value-bag")]
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
-    38→        match self.inner {
-      →…
     68→#[cfg(feature = "std")]
     69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     77→        pub fn boxed …
 kv/key.rs
+     3→use std::borrow::Borrow;
      7→pub trait ToKey {
      8→    /// Perform the conversion.
      9→    fn to_key(&self) -> Key<'_>;
@@ -75,8 +78,6 @@ kv/mod.rs
      8→//! features = ["kv"]
      9→//! ```
     10→//!
-    11→//! # Structured logging in `log`
-    12→//!
       →…
    246→mod error;
    247→mod key;
@@ -84,11 +85,17 @@ kv/mod.rs
    250→mod source;
    251→#[cfg(not(feature = "kv_unstable"))]
    252→mod value;
+   254→pub use self::error::Error;
+   255→pub use self::key::{Key, ToKey};
+   256→pub use self::source::{Source, VisitSource};
+   257→pub use self::value::{ToValue, Value, VisitValue};
    259→#[cfg(feature = "kv_unstable")]
    260→pub mod source;
    261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
+   265→pub use self::source::Visitor;
 kv/source.rs
+     6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
     51→pub trait Source {
     52→    /// Visit key-values.
     53→    ///
@@ -104,21 +111,12 @@ kv/source.rs
     63→
     64→    /// Get the value for a given key.
     65→    ///
-    66→    /// If the key appears multiple times in the source then which key is returned
-    67→    /// is implementation specific.
-    68→    ///
-    69→    /// # Implementation notes
-    70→    ///
     73→    fn get …
     85→    fn count …
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
-    92→    struct Get<'k, 'v> {
-      →…
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
-   115→    struct Count(usize);
-      →…
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
@@ -130,7 +128,10 @@ kv/source.rs
    244→{
    279→#[cfg(feature = "std")]
    280→mod std_support {
+   462→pub use VisitSource as Visitor;
 kv/value.rs
+     6→use std::fmt;
+     8→pub use crate::kv::Error;
     11→pub trait ToValue {
     12→    /// Perform the conversion.
     13→    fn to_value(&self) -> Value<'_>;
@@ -152,8 +153,6 @@ kv/value.rs
    205→    where
    206→        T: Into<inner::Inner<'v>>,
    207→    {
-   208→        Value {
-      →…
    217→    pub fn visit …
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
@@ -184,11 +183,7 @@ kv/value.rs
    474→    }
    475→
    476→    /// Visit an unsigned integer.
-   477→    fn visit_u64(&mut self, value: u64) -> Result<(), Error> {
-   478→        self.visit_any(value.into())
-   479→    }
-   480→
-   481→    /// Visit a signed integer.
+   477→    fn visit_u64 …
    482→    fn visit_i64 …
    487→    fn visit_u128 …
    492→    fn visit_i128 …
@@ -208,8 +203,12 @@ kv/value.rs
    593→    fn visit_borrowed_error …
    601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {
+   610→    use super::*;
+   612→    pub use value_bag::ValueBag as Inner;
+   614→    pub use value_bag::Error;
    720→#[cfg(not(feature = "value-bag"))]
    721→pub(in crate::kv) mod inner {
+   735→    use super::*;
    738→    pub enum Inner<'v> {
    739→        None,
    740→        Bool(bool),
@@ -228,31 +227,25 @@ kv/value.rs
   1075→    pub fn capture_error …
   1085→    pub fn capture_serde …
   1095→    pub fn capture_sval …
-  1125→/// Get a value from a type implementing `std::fmt::Debug`.
-  1126→#[cfg(feature = "kv_unstable")]
-      →…
+  1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
-  1135→/// Get a value from a type implementing `std::fmt::Display`.
-  1136→#[cfg(feature = "kv_unstable")]
-      →…
   1139→macro_rules! as_display {
-  1145→/// Get a value from an error.
-  1146→#[cfg(feature = "kv_unstable_std")]
-      →…
   1149→macro_rules! as_error {
-  1157→/// Get a value from a type implementing `serde::Serialize`.
-  1158→#[macro_export]
   1159→macro_rules! as_serde {
-  1165→/// Get a value from a type implementing `sval::Value`.
-  1166→#[cfg(feature = "kv_unstable_sval")]
-      →…
   1169→macro_rules! as_sval {
 lib.rs
+   399→use std::cfg;
+   401→use std::error;
+   402→use std::str::FromStr;
+   403→use std::{cmp, fmt, mem};
    405→#[macro_use]
    406→mod macros;
    407→mod serde;
    409→#[cfg(feature = "kv")]
    410→pub mod kv;
+   413→use std::sync::atomic::{AtomicUsize, Ordering};
+   416→use std::cell::Cell;
+   418→use std::sync::atomic::Ordering;
    420→#[cfg(not(target_has_atomic = "ptr"))]
    421→struct AtomicUsize {
    422→    v: Cell<usize>,
@@ -426,8 +419,6 @@ lib.rs
   1490→        Ordering::Acquire,
   1491→        Ordering::Relaxed,
   1492→    ) {
-  1493→        Ok(UNINITIALIZED) => {
-  1494→            unsafe {
       →…
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///
@@ -454,7 +445,6 @@ lib.rs
   1610→/// [`logger`]: fn.logger.html
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
-  1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
       →…
 macros.rs
     75→macro_rules! log {
@@ -478,3 +468,11 @@ macros.rs
    564→macro_rules! __log_value_error {
    573→macro_rules! __log_value_error {
 serde.rs
+     3→use serde_core::de::{
+     4→    Deserialize, DeserializeSeed, Deserializer, EnumAccess, Error, Unexpected, VariantAccess,
+     5→    Visitor,
+     6→};
+     7→use serde_core::ser::{Serialize, Serializer};
+     9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
+    11→use std::fmt;
+    12→use std::str::{self, FromStr};

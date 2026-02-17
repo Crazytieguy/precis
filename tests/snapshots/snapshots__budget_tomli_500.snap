@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (481 words)
+budget: 500 (478 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -23,11 +23,9 @@ README.md
       →…
     32→## Intro<a name="intro"></a>
     34→Tomli is a Python library for parsing [TOML](https://toml.io).
-    35→Version 2.4.0 and later are compatible with [TOML v1.1.0](https://toml.io/en/v1.1.0).
       →…
     50→## Installation<a name="installation"></a>
     52→```bash
-    53→pip install tomli
       →…
     56→## Usage<a name="usage"></a>
     58→### Parse a TOML string<a name="parse-a-toml-string"></a>
@@ -47,7 +45,6 @@ README.md
       →…
    201→## Performance<a name="performance"></a>
    203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
-   204→
       →…
 fuzzer/fuzz.py
     20→def test_one_input(input_bytes: bytes) -> None:
@@ -55,8 +52,12 @@ fuzzer/fuzz.py
     59→def normalize_toml_obj(toml_obj: dict) -> None:
     60→    """Make NaNs equal when compared (without using recursion)."""
     71→def main():
+profiler/profiler_script.py
+     8→from pathlib import Path
+    10→import tomli
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
+setup.py
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
@@ -115,6 +116,8 @@ src/tomli/_re.py
    104→            minutes=sign * int(minute_str),
    105→        )
    106→    )
+src/tomli/_types.py
+     5→from typing import Any, Callable, Tuple
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
      3→Tomli was added to the Python standard library in Python 3.11.
@@ -122,7 +125,6 @@ tomllib.md
      5→Relevant links:
      6→
      7→- Python Issue Tracker: https://bugs.python.org/issue40059
-     8→- Tomli issue tracker: https://github.com/hukkin/tomli/issues/141
       →…
     13→## Converting Tomli to tomllib …
     15→### Sync status

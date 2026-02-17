@@ -10,3 +10,7 @@
 (expression_statement
   (assignment
     left: (identifier) @name)) @symbol
+
+; Import statements
+(import_statement) @symbol
+(import_from_statement) @symbol

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (467 words)
+budget: 500 (468 words)
 
 error.ts
      5→export type Failure …
@@ -23,6 +23,8 @@ error.ts
     39→    const msg =
       →…
 struct.ts
+     1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
+     2→import { StructError, Failure } from './error.js'
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
@@ -70,6 +72,8 @@ structs/types.ts
 structs/utilities.ts
     60→export function assign(...Structs: Struct<any>[]): any {
 utils.ts
+     1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
+     2→import { Failure } from './error.js'
      4→/**
      5→ * Check if a value is an iterator.
      6→ */
@@ -103,11 +107,4 @@ utils.ts
    379→export type TupleSchema …
    385→export type AnyStruct …
    394→export type InferStructTuple …
-   402→type _InferTuple<
-   403→  Tuple extends AnyStruct[],
-   404→  Length extends number,
-   405→  Accumulated extends unknown[],
-   406→  Index extends number = Accumulated['length'],
-   407→> = Index extends Length
-   408→  ? Accumulated
-   409→  : _InferTuple<Tuple, Length, [...Accumulated, Infer<Tuple[Index]>]>
+   402→type _InferTuple …

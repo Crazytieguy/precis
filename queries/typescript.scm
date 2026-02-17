@@ -50,3 +50,6 @@
 ; Namespaces
 (internal_module
   name: (identifier) @name) @symbol
+
+; Import statements
+(import_statement) @symbol

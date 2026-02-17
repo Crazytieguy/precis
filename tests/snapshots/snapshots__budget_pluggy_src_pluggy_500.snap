@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (482 words)
+budget: 500 (481 words)
 
 __init__.py
      1→__all__ = [
@@ -12,8 +12,6 @@ __init__.py
      5→    "HookCaller",
      6→    "HookCallError",
      7→    "HookspecOpts",
-     8→    "HookimplOpts",
-     9→    "HookImpl",
       →…
 _callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
@@ -111,6 +109,7 @@ _hooks.py
    704→        "opts",
    705→        "warn_on_impl",
 _manager.py
+    33→    import importlib.metadata
     36→_BeforeTrace …
     37→_AfterTrace …
     52→class PluginValidationError(Exception):

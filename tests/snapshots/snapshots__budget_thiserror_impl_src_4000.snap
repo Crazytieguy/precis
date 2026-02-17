@@ -2,9 +2,17 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2570 words)
+budget: 4000 (2589 words)
 
 ast.rs
+     1→use crate::attr::{self, Attrs};
+     2→use crate::generics::ParamsInScope;
+     3→use crate::unraw::{IdentUnraw, MemberUnraw};
+     4→use proc_macro2::Span;
+     5→use std::fmt::{self, Display};
+     6→use syn::{
+     7→    Data, DataEnum, DataStruct, DeriveInput, Error, Fields, Generics, Ident, Index, Result, Type,
+     8→};
     10→pub enum Input<'a> {
     11→    Struct(Struct<'a>),
     12→    Enum(Enum<'a>),
@@ -63,19 +71,24 @@ ast.rs
    131→    fn multiple_from_syn(fields: &'a Fields, scope: &ParamsInScope<'a>) -> Result<Vec<Self>> {
    132→        fields
    139→    fn from_syn(i: usize, node: &'a syn::Field, scope: &ParamsInScope<'a>) -> Result<Self> {
-   140→        Ok(Field {
-      →…
    156→impl ContainerKind {
    157→    fn from_struct(node: &DataStruct) -> Self {
    158→        match node.fields {
    165→    fn from_variant(node: &syn::Variant) -> Self {
-   166→        match node.fields {
-      →…
    174→impl Display for ContainerKind {
    175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
    176→        formatter.write_str(match self {
       →…
 attr.rs
+     1→use proc_macro2::{Delimiter, Group, Literal, Punct, Spacing, Span, TokenStream, TokenTree};
+     2→use quote::{format_ident, quote, quote_spanned, ToTokens};
+     3→use std::collections::BTreeSet as Set;
+     4→use syn::parse::discouraged::Speculative;
+     5→use syn::parse::{End, ParseStream};
+     6→use syn::{
+     7→    braced, bracketed, parenthesized, token, Attribute, Error, ExprPath, Ident, Index, LitFloat,
+     8→    LitInt, LitStr, Meta, Result, Token,
+     9→};
     11→pub struct Attrs<'a> {
     12→    pub display: Option<Display<'a>>,
     13→    pub source: Option<Source<'a>>,
@@ -182,11 +195,7 @@ attr.rs
    121→    Ok(attrs)
    122→}
    124→fn parse_error_attribute<'a>(attrs: &mut Attrs<'a>, attr: &'a Attribute) -> Result<()> {
-   125→    mod kw {
-      →…
    196→fn parse_token_expr(input: ParseStream, mut begin_expr: bool) -> Result<TokenStream> {
-   197→    let mut tokens = Vec::new();
-      →…
    302→impl ToTokens for Display<'_> {
    303→    fn to_tokens(&self, tokens: &mut TokenStream) {
    304→        if self.infinite_recursive {
@@ -196,6 +205,16 @@ attr.rs
    344→        let trait_name = match self {
       →…
 expand.rs
+     1→use crate::ast::{Enum, Field, Input, Struct};
+     2→use crate::attr::Trait;
+     3→use crate::fallback;
+     4→use crate::generics::InferredBounds;
+     5→use crate::private;
+     6→use crate::unraw::MemberUnraw;
+     7→use proc_macro2::{Ident, Span, TokenStream};
+     8→use quote::{format_ident, quote, quote_spanned, ToTokens};
+     9→use std::collections::BTreeSet as Set;
+    10→use syn::{DeriveInput, GenericArgument, PathArguments, Result, Token, Type};
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
     13→    match try_expand(input) {
     14→        Ok(expanded) => expanded,
@@ -206,44 +225,40 @@ expand.rs
     19→    }
     20→}
     22→fn try_expand(input: &DeriveInput) -> Result<TokenStream> {
-    23→    let input = Input::from_syn(input)?;
-      →…
     31→fn impl_struct(input: Struct) -> TokenStream {
-    32→    let ty = call_site_ident(&input.ident);
-      →…
    221→fn impl_enum(input: Enum) -> TokenStream {
-   222→    let ty = call_site_ident(&input.ident);
-      →…
    505→pub(crate) fn call_site_ident(ident: &Ident) -> Ident {
-   506→    let mut ident = ident.clone();
-      →…
    511→fn fields_pat(fields: &[Field]) -> TokenStream {
-   512→    let mut members = fields.iter().map(|field| &field.member).peekable();
-      →…
    526→fn use_as_display(needs_as_display: bool) -> Option<TokenStream> {
-   527→    if needs_as_display {
-      →…
    536→fn from_initializer(
    537→    from_field: &Field,
    538→    backtrace_field: Option<&Field>,
    539→    source_var: &Ident,
    540→) -> TokenStream {
-   541→    let from_member = &from_field.member;
-      →…
    565→fn type_is_option(ty: &Type) -> bool {
-   566→    type_parameter_of_option(ty).is_some()
-      →…
    569→fn unoptional_type(ty: &Type) -> TokenStream {
-   570→    let unoptional = type_parameter_of_option(ty).unwrap_or(ty);
-      →…
    574→fn type_parameter_of_option(ty: &Type) -> Option<&Type> {
-   575→    let path = match ty {
-      →…
 fallback.rs
+     1→use crate::expand::call_site_ident;
+     2→use crate::private;
+     3→use proc_macro2::TokenStream;
+     4→use quote::quote;
+     5→use syn::DeriveInput;
      7→pub(crate) fn expand(input: &DeriveInput, error: syn::Error) -> TokenStream {
-     8→    let ty = call_site_ident(&input.ident);
-      →…
 fmt.rs
+     1→use crate::ast::{ContainerKind, Field};
+     2→use crate::attr::{Display, Trait};
+     3→use crate::private;
+     4→use crate::scan_expr::scan_expr;
+     5→use crate::unraw::{IdentUnraw, MemberUnraw};
+     6→use proc_macro2::{Delimiter, TokenStream, TokenTree};
+     7→use quote::{format_ident, quote, quote_spanned, ToTokens as _};
+     8→use std::collections::{BTreeSet, HashMap};
+     9→use std::iter;
+    10→use syn::ext::IdentExt;
+    11→use syn::parse::discouraged::Speculative;
+    12→use syn::parse::{Error, ParseStream, Parser, Result};
+    13→use syn::{Expr, Ident, Index, LitStr, Token};
     15→impl Display<'_> {
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
     17→        let raw_args = self.args.clone();
@@ -273,24 +288,18 @@ fmt.rs
    189→    })
    190→}
    192→fn try_explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
-   193→    let mut syn_full = None;
-      →…
    231→fn fallback_explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
-   232→    let mut args = FmtArguments {
-      →…
    255→fn is_syn_full() -> bool {
-   256→    // Expr::Block contains syn::Block which contains Vec<syn::Stmt>. In the
-      →…
    273→fn take_int<'a>(read: &mut &'a str) -> &'a str {
-   274→    let mut int_len = 0;
-      →…
    286→fn take_ident<'a>(read: &mut &'a str) -> &'a str {
-   287→    let mut ident_len = 0;
-      →…
    299→fn between<'a>(begin: ParseStream<'a>, end: ParseStream<'a>) -> TokenStream {
-   300→    let end = end.cursor();
-      →…
 generics.rs
+     1→use proc_macro2::TokenStream;
+     2→use quote::ToTokens;
+     3→use std::collections::btree_map::Entry;
+     4→use std::collections::{BTreeMap as Map, BTreeSet as Set};
+     5→use syn::punctuated::Punctuated;
+     6→use syn::{parse_quote, GenericArgument, Generics, Ident, PathArguments, Token, Type, WhereClause};
      8→pub struct ParamsInScope<'a> {
      9→    names: Set<&'a Ident>,
     10→}
@@ -303,8 +312,6 @@ generics.rs
     22→        found
     23→    }
     26→fn crawl(in_scope: &ParamsInScope, ty: &Type, found: &mut bool) {
-    27→    if let Type::Path(ty) = ty {
-      →…
     48→pub struct InferredBounds {
     49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
     50→    order: Vec<TokenStream>,
@@ -344,6 +351,10 @@ lib.rs
     30→mod scan_expr;
     31→mod unraw;
     32→mod valid;
+    34→use proc_macro::TokenStream;
+    35→use proc_macro2::{Ident, Span};
+    36→use quote::{ToTokens, TokenStreamExt as _};
+    37→use syn::{parse_macro_input, DeriveInput};
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
     41→    let input = parse_macro_input!(input as DeriveInput);
@@ -356,64 +367,44 @@ lib.rs
     50→        tokens.append(Ident::new(
       →…
 prop.rs
+     1→use crate::ast::{Enum, Field, Struct, Variant};
+     2→use crate::unraw::MemberUnraw;
+     3→use proc_macro2::Span;
+     4→use syn::Type;
      6→impl Struct<'_> {
      7→    pub(crate) fn from_field(&self) -> Option<&Field> {
      8→        from_field(&self.fields)
     11→    pub(crate) fn source_field(&self) -> Option<&Field> {
-    12→        source_field(&self.fields)
-      →…
     15→    pub(crate) fn backtrace_field(&self) -> Option<&Field> {
-    16→        backtrace_field(&self.fields)
-      →…
     19→    pub(crate) fn distinct_backtrace_field(&self) -> Option<&Field> {
-    20→        let backtrace_field = self.backtrace_field()?;
-      →…
     25→impl Enum<'_> {
     26→    pub(crate) fn has_source(&self) -> bool {
     27→        self.variants
     32→    pub(crate) fn has_backtrace(&self) -> bool {
-    33→        self.variants
-      →…
     38→    pub(crate) fn has_display(&self) -> bool {
-    39→        self.attrs.display.is_some()
-      →…
     53→impl Variant<'_> {
     54→    pub(crate) fn from_field(&self) -> Option<&Field> {
     55→        from_field(&self.fields)
     58→    pub(crate) fn source_field(&self) -> Option<&Field> {
-    59→        source_field(&self.fields)
-      →…
     62→    pub(crate) fn backtrace_field(&self) -> Option<&Field> {
-    63→        backtrace_field(&self.fields)
-      →…
     66→    pub(crate) fn distinct_backtrace_field(&self) -> Option<&Field> {
-    67→        let backtrace_field = self.backtrace_field()?;
-      →…
     72→impl Field<'_> {
     73→    pub(crate) fn is_backtrace(&self) -> bool {
     74→        type_is_backtrace(self.ty)
     77→    pub(crate) fn source_span(&self) -> Span {
-    78→        if let Some(source_attr) = &self.attrs.source {
-      →…
     88→fn from_field<'a, 'b>(fields: &'a [Field<'b>]) -> Option<&'a Field<'b>> {
-    89→    for field in fields {
-      →…
     97→fn source_field<'a, 'b>(fields: &'a [Field<'b>]) -> Option<&'a Field<'b>> {
-    98→    for field in fields {
-      →…
    112→fn backtrace_field<'a, 'b>(fields: &'a [Field<'b>]) -> Option<&'a Field<'b>> {
-   113→    for field in fields {
-      →…
    127→fn distinct_backtrace_field<'a, 'b>(
    128→    backtrace_field: &'a Field<'b>,
    129→    from_field: Option<&Field>,
    130→) -> Option<&'a Field<'b>> {
-   131→    if from_field.is_some_and(|from_field| from_field.member == backtrace_field.member) {
-      →…
    138→fn type_is_backtrace(ty: &Type) -> bool {
-   139→    let path = match ty {
-      →…
 scan_expr.rs
+     1→use self::{Action::*, Input::*};
+     2→use proc_macro2::{Delimiter, Ident, Spacing, TokenTree};
+     3→use syn::parse::{ParseStream, Result};
+     4→use syn::{AngleBracketedGenericArguments, BinOp, Expr, ExprPath, Lifetime, Lit, Token, Type};
      6→enum Input {
      7→    Keyword(&'static str),
      8→    Punct(&'static str),
@@ -466,8 +457,7 @@ scan_expr.rs
     57→    (Punct("|"), SetState(&CLOSURE_ARGS)),
     58→    (ConsumeLifetime, SetState(&[(Punct(":"), SetState(&INIT))])),
     59→    (ConsumeLiteral, SetState(&POSTFIX)),
-    60→    (ExpectPath, SetState(&PATH)),
-    61→];
+      →…
     63→static POSTFIX: [(Input, Action); 10] = [
     64→    (Keyword("as"), SetState(&[(ExpectType, SetState(&POSTFIX))])),
     65→    (Punct("..="), SetState(&INIT)),
@@ -578,9 +568,15 @@ scan_expr.rs
    189→    (Otherwise, SetState(&POSTFIX)),
    190→];
    192→pub(crate) fn scan_expr(input: ParseStream) -> Result<()> {
-   193→    let mut state = INIT.as_slice();
-      →…
 unraw.rs
+     1→use proc_macro2::{Ident, Span, TokenStream};
+     2→use quote::ToTokens;
+     3→use std::cmp::Ordering;
+     4→use std::fmt::{self, Display};
+     5→use std::hash::{Hash, Hasher};
+     6→use syn::ext::IdentExt as _;
+     7→use syn::parse::{Parse, ParseStream, Result};
+     8→use syn::Index;
     10→#[derive(Clone)]
     11→#[repr(transparent)]
     12→pub struct IdentUnraw(Ident);
@@ -662,6 +658,9 @@ unraw.rs
    137→        match self {
       →…
 valid.rs
+     1→use crate::ast::{Enum, Field, Input, Struct, Variant};
+     2→use crate::attr::Attrs;
+     3→use syn::{Error, GenericArgument, PathArguments, Result, Type};
      5→impl Input<'_> {
      6→    pub(crate) fn validate(&self) -> Result<()> {
      7→        match self {
@@ -683,11 +682,5 @@ valid.rs
     93→        if let Some(unexpected_display_attr) = if let Some(display) = &self.attrs.display {
       →…
    109→fn check_non_field_attrs(attrs: &Attrs) -> Result<()> {
-   110→    if let Some(from) = &attrs.from {
-      →…
    151→fn check_field_attrs(fields: &[Field]) -> Result<()> {
-   152→    let mut from_field = None;
-      →…
    224→fn contains_non_static_lifetime(ty: &Type) -> bool {
-   225→    match ty {
-      →…

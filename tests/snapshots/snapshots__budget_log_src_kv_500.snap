@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (491 words)
+budget: 500 (481 words)
 
 error.rs
      5→pub struct Error {
@@ -17,20 +17,23 @@ error.rs
     15→    Value(crate::kv::value::inner::Error),
     16→    Fmt,
     17→}
+    28→    #[cfg(feature = "value-bag")]
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
+    36→    #[cfg(feature = "value-bag")]
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
     68→#[cfg(feature = "std")]
     69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
 key.rs
+     3→use std::borrow::Borrow;
      7→pub trait ToKey {
      8→    /// Perform the conversion.
      9→    fn to_key(&self) -> Key<'_>;
-    10→}
+      →…
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
-    40→}
+      →…
     93→#[cfg(feature = "std")]
     94→mod std_support {
    112→#[cfg(feature = "kv_sval")]
@@ -55,24 +58,28 @@ mod.rs
    250→mod source;
    251→#[cfg(not(feature = "kv_unstable"))]
    252→mod value;
+   254→pub use self::error::Error;
+   255→pub use self::key::{Key, ToKey};
+   256→pub use self::source::{Source, VisitSource};
+   257→pub use self::value::{ToValue, Value, VisitValue};
    259→#[cfg(feature = "kv_unstable")]
    260→pub mod source;
    261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
+   265→pub use self::source::Visitor;
 source.rs
+     6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
     51→pub trait Source {
     52→    /// Visit key-values.
     53→    ///
-    54→    /// A source doesn't have to guarantee any ordering or uniqueness of key-values.
-    55→    /// If the given visitor returns an error then the source may early-return with it,
-    56→    /// even if there are more key-values.
-    57→    ///
+    90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
+   113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
-   238→}
+      →…
    240→#[allow(clippy::needless_lifetimes)] // Not needless.
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    242→where
@@ -80,14 +87,18 @@ source.rs
    244→{
    279→#[cfg(feature = "std")]
    280→mod std_support {
+   462→pub use VisitSource as Visitor;
 value.rs
+     6→use std::fmt;
+     8→pub use crate::kv::Error;
     11→pub trait ToValue {
     12→    /// Perform the conversion.
     13→    fn to_value(&self) -> Value<'_>;
-    14→}
+      →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
+   203→    /// Get a value from an internal primitive.
    204→    fn from_inner<T>(value: T) -> Self
    205→    where
    206→        T: Into<inner::Inner<'v>>,
@@ -106,10 +117,6 @@ value.rs
    462→pub trait VisitValue<'v> {
    463→    /// Visit a `Value`.
    464→    ///
-   465→    /// This is the only required method on `VisitValue` and acts as a fallback for any
-   466→    /// more specific methods that aren't overridden.
-   467→    /// The `Value` may be formatted using its `fmt::Debug` or `fmt::Display` implementation,
-   468→    /// or serialized using its `sval::Value` or `serde::Serialize` implementation.
    538→#[allow(clippy::needless_lifetimes)] // Not needless.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
@@ -117,16 +124,17 @@ value.rs
    542→{
    601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {
+   610→    use super::*;
+   612→    pub use value_bag::ValueBag as Inner;
+   614→    pub use value_bag::Error;
    720→#[cfg(not(feature = "value-bag"))]
    721→pub(in crate::kv) mod inner {
+   735→    use super::*;
    738→    pub enum Inner<'v> {
    739→        None,
    740→        Bool(bool),
-   741→        Str(&'v str),
-   742→        Char(char),
-   743→        I64(i64),
-   744→        U64(u64),
       →…
+  1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
   1149→macro_rules! as_error {

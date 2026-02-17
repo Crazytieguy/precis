@@ -68,10 +68,9 @@ errors/TimeoutError.ts
       →…
 index.ts
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
-    11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
-      →…
     34→const ky = createInstance();
 types/ResponsePromise.ts
+     4→import {type KyResponse} from './response.js';
 types/common.ts
 types/hooks.ts
 types/ky.ts

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3453 words)
+budget: 4000 (3433 words)
 
 __init__.py
      1→__all__ = [
@@ -53,8 +53,6 @@ _hooks.py
     31→_Namespace: TypeAlias = ModuleType | type
     32→_Plugin: TypeAlias = object
     33→_HookExec: TypeAlias = Callable[
-    34→    [str, Sequence["HookImpl"], Mapping[str, object], bool],
-      →…
     37→_HookImplFunction: TypeAlias = Callable[..., _T | Generator[None, Result[_T], None]]
     40→class HookspecOpts(TypedDict):
     42→
@@ -304,8 +302,6 @@ _hooks.py
    369→
    370→        def __getattr__(self, name: str) -> HookCaller: ...
    377→_CallHistory: TypeAlias = list[
-   378→    tuple[Mapping[str, object], Callable[[Any], None] | None]
-      →…
    382→class HookCaller:
    384→
    385→    __slots__ = (
@@ -489,10 +485,9 @@ _hooks.py
    715→        self.warn_on_impl = opts.get("warn_on_impl")
    716→        self.warn_on_impl_args = opts.get("warn_on_impl_args")
 _manager.py
+    33→    import importlib.metadata
     36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
     37→_AfterTrace: TypeAlias = Callable[
-    38→    [Result[Any], str, Sequence[HookImpl], Mapping[str, Any]], None
-      →…
     42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
     52→class PluginValidationError(Exception):
     58→

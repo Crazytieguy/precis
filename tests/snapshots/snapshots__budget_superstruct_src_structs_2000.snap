@@ -2,9 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1985 words)
+budget: 2000 (1977 words)
 
 coercions.ts
+     1→import { Struct, is, Coercer } from '../struct.js'
+     2→import { isPlainObject } from '../utils.js'
+     3→import { string, unknown } from './types.js'
      5→/**
      6→ * Augment a `Struct` to add an additional coercion step to its input.
      7→ *
@@ -41,6 +44,8 @@ coercions.ts
     78→
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
 refinements.ts
+     1→import { Struct, Refiner } from '../struct.js'
+     2→import { toFailures } from '../utils.js'
      4→/**
      5→ * Ensure that a string, array, map, or set is empty.
      6→ */
@@ -110,6 +115,19 @@ refinements.ts
    149→  refiner: Refiner<T>
    150→): Struct<T, S> {
 types.ts
+     1→import { Infer, Struct } from '../struct.js'
+     2→import { define } from './utilities.js'
+     3→import {
+     4→  ObjectSchema,
+     5→  ObjectType,
+     6→  print,
+     7→  run,
+     8→  isObject,
+     9→  isNonArrayObject,
+    10→  AnyStruct,
+    11→  InferStructTuple,
+    12→  UnionToIntersection,
+    13→} from '../utils.js'
     15→/**
     16→ * Ensure that any value passes validation.
     17→ */
@@ -123,11 +141,6 @@ types.ts
     38→      if (Element && Array.isArray(value)) {
     39→        for (const [i, v] of value.entries()) {
     40→          yield [i, v, Element]
-    41→        }
-    42→      }
-    43→    },
-    44→    coercer(value) {
-    45→      return Array.isArray(value) ? value.slice() : value
       →…
     56→/**
     57→ * Ensure that a value is a bigint.
@@ -157,11 +170,6 @@ types.ts
    112→    schema[key] = key
    113→  }
    114→
-   115→  return new Struct({
-   116→    type: 'enums',
-   117→    schema,
-   118→    validator(value) {
-   119→      return (
       →…
    127→/**
    128→ * Ensure that a value is a function.
@@ -195,11 +203,6 @@ types.ts
    209→    schema:
    210→      t === 'string' || t === 'number' || t === 'boolean' ? constant : null,
    211→    validator(value) {
-   212→      return (
-   213→        value === constant ||
-   214→        `Expected the literal \`${description}\`, but received: ${print(value)}`
-   215→      )
-   216→    },
       →…
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    231→  return new Struct({
@@ -209,11 +212,6 @@ types.ts
    235→      if (Key && Value && value instanceof Map) {
    236→        for (const [k, v] of value.entries()) {
    237→          yield [k as string, k, Key]
-   238→          yield [k as string, v, Value]
-   239→        }
-   240→      }
-   241→    },
-   242→    coercer(value) {
       →…
    254→/**
    255→ * Ensure that no value ever passes validation.
@@ -238,11 +236,6 @@ types.ts
    303→    schema: schema ? schema : null,
    304→    *entries(value) {
    305→      if (schema && isObject(value)) {
-   306→        const unknowns = new Set(Object.keys(value))
-   307→
-   308→        for (const key of knowns) {
-   309→          unknowns.delete(key)
-   310→          yield [key, value[key], schema[key]]
       →…
    347→/**
    348→ * Augment a struct to allow `undefined` values.
@@ -276,11 +269,6 @@ types.ts
    420→      if (Element && value instanceof Set) {
    421→        for (const v of value) {
    422→          yield [v as string, v, Element]
-   423→        }
-   424→      }
-   425→    },
-   426→    coercer(value) {
-   427→      return value instanceof Set ? new Set(value) : value
       →…
    438→/**
    439→ * Ensure that a value is a string.
@@ -318,6 +306,14 @@ types.ts
    573→
    574→export function unknown(): Struct<unknown, null> {
 utilities.ts
+     1→import { Context, Struct, Validator } from '../struct.js'
+     2→import {
+     3→  Assign,
+     4→  ObjectSchema,
+     5→  ObjectType,
+     6→  PartialObjectSchema,
+     7→} from '../utils.js'
+     8→import { object, optional, type } from './types.js'
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
     62→  const schemas = Structs.map((s) => s.schema)

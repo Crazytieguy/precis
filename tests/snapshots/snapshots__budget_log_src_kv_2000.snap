@@ -2,9 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1918 words)
+budget: 2000 (1877 words)
 
 error.rs
+     1→use std::fmt;
      3→/// An error encountered while working with structured data.
      4→#[derive(Debug)]
      5→pub struct Error {
@@ -24,19 +25,21 @@ error.rs
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
     30→        Error {
     31→            inner: Inner::Value(err),
-    32→        }
       →…
     36→    #[cfg(feature = "value-bag")]
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
     38→        match self.inner {
     39→            Inner::Value(err) => err,
-    40→            #[cfg(feature = "kv_std")]
       →…
     68→#[cfg(feature = "std")]
     69→mod std_support {
+    70→    use super::*;
+    71→    use std::{error, io};
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     77→        pub fn boxed …
 key.rs
+     3→use std::borrow::Borrow;
+     4→use std::fmt;
      6→/// A type that can be converted into a [`Key`](struct.Key.html).
      7→pub trait ToKey {
      8→    /// Perform the conversion.
@@ -52,10 +55,17 @@ key.rs
     61→    pub fn to_borrowed_str …
     93→#[cfg(feature = "std")]
     94→mod std_support {
+    95→    use super::*;
+    97→    use std::borrow::Cow;
    112→#[cfg(feature = "kv_sval")]
    113→mod sval_support {
+   114→    use super::*;
+   116→    use sval::Value;
+   117→    use sval_ref::ValueRef;
    135→#[cfg(feature = "kv_serde")]
    136→mod serde_support {
+   137→    use super::*;
+   139→    use serde_core::{Serialize, Serializer};
 mod.rs
      1→//! Structured logging.
      2→//!
@@ -69,7 +79,6 @@ mod.rs
     10→//!
     11→//! # Structured logging in `log`
     12→//!
-    13→//! Structured logging enhances traditional text-based log records with user-defined
       →…
    246→mod error;
    247→mod key;
@@ -77,11 +86,18 @@ mod.rs
    250→mod source;
    251→#[cfg(not(feature = "kv_unstable"))]
    252→mod value;
+   254→pub use self::error::Error;
+   255→pub use self::key::{Key, ToKey};
+   256→pub use self::source::{Source, VisitSource};
+   257→pub use self::value::{ToValue, Value, VisitValue};
    259→#[cfg(feature = "kv_unstable")]
    260→pub mod source;
    261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
+   265→pub use self::source::Visitor;
 source.rs
+     6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
+     7→use std::fmt;
      9→/// A source of key-values.
     10→///
     11→/// The source may be a single pair, a set of pairs, or a filter over a set of pairs.
@@ -111,19 +127,7 @@ source.rs
     35→///     }
     36→/// }
     37→///
-    38→/// // A source with 3 key-values
-    39→/// // Common collection types implement the `Source` trait
-    40→/// let source = &[
-    41→///     ("a", 1),
-    42→///     ("b", 2),
-    43→///     ("c", 3),
-    44→/// ];
-    45→///
-    46→/// // Pass an instance of the `VisitSource` to a `Source` to visit it
-    47→/// source.visit(&mut Printer)?;
-    48→/// # Ok(())
-    49→/// # }
-    50→/// ```
+      →…
     51→pub trait Source {
     52→    /// Visit key-values.
     53→    ///
@@ -166,13 +170,11 @@ source.rs
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
     92→    struct Get<'k, 'v> {
     93→        key: Key<'k>,
-    94→        found: Option<Value<'v>>,
       →…
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
    115→    struct Count(usize);
    116→
-   117→    impl<'kvs> VisitSource<'kvs> for Count {
       →…
    234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
@@ -186,7 +188,16 @@ source.rs
    244→{
    279→#[cfg(feature = "std")]
    280→mod std_support {
+   281→    use super::*;
+   282→    use std::borrow::Borrow;
+   283→    use std::collections::{BTreeMap, HashMap};
+   284→    use std::hash::{BuildHasher, Hash};
+   285→    use std::rc::Rc;
+   286→    use std::sync::Arc;
+   462→pub use VisitSource as Visitor;
 value.rs
+     6→use std::fmt;
+     8→pub use crate::kv::Error;
     10→/// A type that can be converted into a [`Value`](struct.Value.html).
     11→pub trait ToValue {
     12→    /// Perform the conversion.
@@ -221,30 +232,6 @@ value.rs
     59→/// The `ToValue` trait can be used to capture values generically.
     60→/// It's the bound used by `Source`.
     61→///
-    62→/// ```
-    63→/// # use log::kv::ToValue;
-    64→/// let value = 42i32.to_value();
-    65→///
-    66→/// assert_eq!(Some(42), value.to_i64());
-    67→/// ```
-    68→///
-    69→/// ## Using the standard `From` trait
-    70→///
-    71→/// Standard types that implement `ToValue` also implement `From`.
-    72→///
-    73→/// ```
-    74→/// use log::kv::Value;
-    75→///
-    76→/// let value = Value::from(42i32);
-    77→///
-    78→/// assert_eq!(Some(42), value.to_i64());
-    79→/// ```
-    80→///
-    81→/// # Data model
-    82→///
-    83→/// Values can hold one of a number of types:
-    84→///
-    85→/// - **Null:** The absence of any other meaningful value. Note that
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
@@ -265,7 +252,6 @@ value.rs
    207→    {
    208→        Value {
    209→            inner: value.into(),
-   210→        }
       →…
    217→    pub fn visit …
    234→#[cfg(feature = "kv_serde")]
@@ -290,6 +276,10 @@ value.rs
    384→    pub fn to_borrowed_str …
    389→#[cfg(feature = "kv_std")]
    390→mod std_support {
+   391→    use std::borrow::Cow;
+   392→    use std::rc::Rc;
+   393→    use std::sync::Arc;
+   395→    use super::*;
    438→        pub fn to_cow_str …
    450→/// A visitor for a [`Value`].
    451→///
@@ -387,8 +377,12 @@ value.rs
    593→    fn visit_borrowed_error …
    601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {
+   610→    use super::*;
+   612→    pub use value_bag::ValueBag as Inner;
+   614→    pub use value_bag::Error;
    720→#[cfg(not(feature = "value-bag"))]
    721→pub(in crate::kv) mod inner {
+   735→    use super::*;
    737→    #[derive(Clone)]
    738→    pub enum Inner<'v> {
    739→        None,
@@ -408,6 +402,7 @@ value.rs
   1075→    pub fn capture_error …
   1085→    pub fn capture_serde …
   1095→    pub fn capture_sval …
+  1123→pub use VisitValue as Visit;
   1125→/// Get a value from a type implementing `std::fmt::Debug`.
   1126→#[cfg(feature = "kv_unstable")]
   1127→#[deprecated(note = "use the `key:? = value` macro syntax instead")]

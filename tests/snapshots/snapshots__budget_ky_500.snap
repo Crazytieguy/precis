@@ -27,9 +27,6 @@ readme.md
   1166→Or:
   1167→
   1168→```sh
-  1169→node --use-env-proxy app.js
-  1170→```
-  1171→
       →…
   1292→## FAQ …
   1294→#### How do I use this in Node.js?
@@ -84,6 +81,7 @@ source/index.ts
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
     34→const ky = createInstance();
 source/types/ResponsePromise.ts
+     4→import {type KyResponse} from './response.js';
 source/types/common.ts
 source/types/hooks.ts
 source/types/ky.ts

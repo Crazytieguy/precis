@@ -2,9 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (530 words)
+budget: 2000 (568 words)
 
 aserror.rs
+     1→use core::error::Error;
+     2→use core::panic::UnwindSafe;
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
      6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
@@ -47,6 +49,8 @@ aserror.rs
     49→impl Sealed for dyn Error + Send + Sync + '_ {}
     50→impl Sealed for dyn Error + Send + Sync + UnwindSafe + '_ {}
 display.rs
+     1→use core::fmt::Display;
+     3→use std::path::{self, Path, PathBuf};
      5→#[doc(hidden)]
      6→pub trait AsDisplay<'a>: Sealed {
      7→    // TODO: convert to generic associated type.
@@ -121,8 +125,17 @@ lib.rs
    283→#[cfg(error_generic_member_access)]
    284→mod provide;
    285→mod var;
+   287→pub use thiserror_impl::*;
    289→mod private;
+private.rs
+     2→pub use crate::aserror::AsDynError;
+     4→pub use crate::display::AsDisplay;
+     7→pub use crate::provide::ThiserrorProvide;
+     9→pub use crate::var::Var;
+    11→pub use core::error::Error;
+    14→pub use std::backtrace::Backtrace;
 provide.rs
+     1→use core::error::{Error, Request};
      3→#[doc(hidden)]
      4→pub trait ThiserrorProvide: Sealed {
      5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
@@ -140,6 +153,7 @@ provide.rs
     19→pub trait Sealed {}
     20→impl<T: Error + ?Sized> Sealed for T {}
 var.rs
+     1→use core::fmt::{self, Pointer};
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
      5→impl<'a, T: Pointer + ?Sized> Pointer for Var<'a, T> {
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {

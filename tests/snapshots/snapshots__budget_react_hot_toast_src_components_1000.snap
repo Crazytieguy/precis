@@ -2,9 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (999 words)
+budget: 1000 (972 words)
 
 checkmark.tsx
+     1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
     13→const checkmarkAnimation = keyframes`
     29→export interface CheckmarkTheme {
@@ -16,21 +17,9 @@ checkmark.tsx
     36→  opacity: 0;
     37→  height: 20px;
     38→  border-radius: 10px;
-    39→  background: ${(p) => p.primary || '#61d345'};
-    40→  position: relative;
-    41→  transform: rotate(45deg);
-    42→
-    43→  animation: ${circleAnimation} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)
-    44→    forwards;
-    45→  animation-delay: 100ms;
-    46→  &:after {
-    47→    content: '';
-    48→    box-sizing: border-box;
-    49→    animation: ${checkmarkAnimation} 0.2s ease-out forwards;
-    50→    opacity: 0;
-    51→    animation-delay: 200ms;
       →…
 error.tsx
+     1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
     13→const firstLineAnimation = keyframes`
     23→const secondLineAnimation = keyframes`
@@ -43,21 +32,9 @@ error.tsx
     40→  opacity: 0;
     41→  height: 20px;
     42→  border-radius: 10px;
-    43→  background: ${(p) => p.primary || '#ff4b4b'};
-    44→  position: relative;
-    45→  transform: rotate(45deg);
-    46→
-    47→  animation: ${circleAnimation} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)
-    48→    forwards;
-    49→  animation-delay: 100ms;
-    50→
-    51→  &:after,
-    52→  &:before {
-    53→    content: '';
-    54→    animation: ${firstLineAnimation} 0.15s ease-out forwards;
-    55→    animation-delay: 150ms;
       →…
 loader.tsx
+     1→import { styled, keyframes } from 'goober';
      3→const rotate = keyframes`
     12→export interface LoaderTheme {
     13→  primary?: string;
@@ -68,12 +45,13 @@ loader.tsx
     19→  height: 12px;
     20→  box-sizing: border-box;
     21→  border: 2px solid;
-    22→  border-radius: 100%;
-    23→  border-color: ${(p) => p.secondary || '#e0e0e0'};
-    24→  border-right-color: ${(p) => p.primary || '#616161'};
-    25→  animation: ${rotate} 1s linear infinite;
-    26→`;
+      →…
 toast-bar.tsx
+     1→import * as React from 'react';
+     2→import { styled, keyframes } from 'goober';
+     4→import { Toast, ToastPosition, resolveValue, Renderable } from '../core/types';
+     5→import { ToastIcon } from './toast-icon';
+     6→import { prefersReducedMotion } from '../core/utils';
      8→const enterAnimation = (factor: number) => `
      9→0% {transform: translate3d(0,${factor * -200}%,0) scale(.6); opacity:.5;}
     10→100% {transform: translate3d(0,0,0) scale(1); opacity:1;}
@@ -117,21 +95,14 @@ toast-bar.tsx
     77→    const animationStyle: React.CSSProperties = toast.height
     78→      ? getAnimationStyle(
     79→          toast.position || position || 'top-center',
-    80→          toast.visible
-    81→        )
-    82→      : { opacity: 0 };
-    83→
-    84→    const icon = <ToastIcon toast={toast} />;
-    85→    const message = (
-    86→      <Message {...toast.ariaProps}>
-    87→        {resolveValue(toast.message, toast)}
-    88→      </Message>
-    89→    );
-    90→
-    91→    return (
-    92→      <ToastBarBase
       →…
 toast-icon.tsx
+     1→import * as React from 'react';
+     2→import { styled, keyframes } from 'goober';
+     4→import { Toast } from '../core/types';
+     5→import { ErrorIcon, ErrorTheme } from './error';
+     6→import { LoaderIcon, LoaderTheme } from './loader';
+     7→import { CheckmarkIcon, CheckmarkTheme } from './checkmark';
      9→const StatusWrapper = styled('div')`
     13→const IndicatorWrapper = styled('div')`
     22→const enter = keyframes`
@@ -140,9 +111,7 @@ toast-icon.tsx
     34→  transform: scale(0.6);
     35→  opacity: 0.4;
     36→  min-width: 20px;
-    37→  animation: ${enter} 0.3s 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275)
-    38→    forwards;
-    39→`;
+      →…
     41→export type IconThemes = Partial<{
     42→  success: CheckmarkTheme;
     43→  error: ErrorTheme;
@@ -180,6 +149,17 @@ toast-icon.tsx
     76→  );
     77→};
 toaster.tsx
+     1→import { css, setup } from 'goober';
+     2→import * as React from 'react';
+     3→import {
+     4→  resolveValue,
+     5→  ToasterProps,
+     6→  ToastPosition,
+     7→  ToastWrapperProps,
+     8→} from '../core/types';
+     9→import { useToaster } from '../core/use-toaster';
+    10→import { prefersReducedMotion } from '../core/utils';
+    11→import { ToastBar } from './toast-bar';
     15→const ToastWrapper = ({
     16→  id,
     17→  className,

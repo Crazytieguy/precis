@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1822 words)
+budget: 2000 (1820 words)
 
 README.md
      1→derive(Error)
@@ -76,6 +76,22 @@ README.md
     73→  }
     74→  ```
     75→
+    76→  If one of the additional expression arguments needs to refer to a field of the
+    77→  struct or enum, then refer to named fields as `.var` and tuple fields as `.0`.
+    78→
+    79→  ```rust
+    80→  #[derive(Error, Debug)]
+    81→  pub enum Error {
+    82→      #[error("first letter must be lowercase but was {:?}", first_char(.0))]
+    83→      WrongCase(String),
+    84→      #[error("invalid index {idx}, expected at least {} and at most {}", .limits.lo, .limits.hi)]
+    85→      OutOfBounds { idx: usize, limits: Limits },
+    86→  }
+    87→  ```
+    88→
+    89→- A `From` impl is generated for each variant that contains a `#[from]`
+    90→  attribute.
+    91→
       →…
    211→## Comparison to anyhow
    213→Use thiserror if you care about designing your own dedicated error type(s) so
@@ -101,6 +117,8 @@ README.md
    235→be dual licensed as above, without any additional terms or conditions.
    236→</sub>
 build/probe.rs
+     8→use core::error::{Error, Request};
+     9→use core::fmt::{self, Debug, Display};
     11→struct MyError(Thing);
     12→struct Thing;
     14→impl Debug for MyError {
@@ -119,6 +137,14 @@ build/probe.rs
     29→    }
     30→}
 build.rs
+     1→use std::env;
+     2→use std::ffi::OsString;
+     3→use std::fs;
+     4→use std::io::ErrorKind;
+     5→use std::iter;
+     6→use std::path::{Path, PathBuf};
+     7→use std::process::{self, Command, Stdio};
+     8→use std::str;
     10→const PRIVATE: &str = "\
     11→#[doc(hidden)]
       →…
@@ -358,43 +384,37 @@ impl/src/unraw.rs
    136→    fn to_tokens(&self, tokens: &mut TokenStream) {
 impl/src/valid.rs
 src/aserror.rs
+     1→use core::error::Error;
+     2→use core::panic::UnwindSafe;
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
      6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
      7→}
-     9→impl<'a, T: Error + 'a> AsDynError<'a> for T {
     10→    #[inline]
     11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     12→        self
     13→    }
-    16→impl<'a> AsDynError<'a> for dyn Error + 'a {
     17→    #[inline]
     18→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     19→        self
     20→    }
-    23→impl<'a> AsDynError<'a> for dyn Error + Send + 'a {
     24→    #[inline]
     25→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     26→        self
     27→    }
-    30→impl<'a> AsDynError<'a> for dyn Error + Send + Sync + 'a {
     31→    #[inline]
     32→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     33→        self
     34→    }
-    37→impl<'a> AsDynError<'a> for dyn Error + Send + Sync + UnwindSafe + 'a {
     38→    #[inline]
     39→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     40→        self
     41→    }
     44→#[doc(hidden)]
     45→pub trait Sealed {}
-    46→impl<T: Error> Sealed for T {}
-    47→impl Sealed for dyn Error + '_ {}
-    48→impl Sealed for dyn Error + Send + '_ {}
-    49→impl Sealed for dyn Error + Send + Sync + '_ {}
-    50→impl Sealed for dyn Error + Send + Sync + UnwindSafe + '_ {}
 src/display.rs
+     1→use core::fmt::Display;
+     3→use std::path::{self, Path, PathBuf};
      5→#[doc(hidden)]
      6→pub trait AsDisplay<'a>: Sealed {
      7→    // TODO: convert to generic associated type.
@@ -403,10 +423,6 @@ src/display.rs
     10→
     11→    fn as_display(&'a self) -> Self::Target;
     12→}
-    14→impl<'a, T> AsDisplay<'a> for &T
-    15→where
-    16→    T: Display + ?Sized + 'a,
-    17→{
     18→    type Target = &'a T;
     20→    fn as_display(&'a self) -> Self::Target {
     21→        *self
@@ -431,7 +447,6 @@ src/display.rs
     43→}
     45→#[doc(hidden)]
     46→pub trait Sealed {}
-    47→impl<T: Display + ?Sized> Sealed for &T {}
     48→#[cfg(feature = "std")]
     49→impl Sealed for Path {}
     50→#[cfg(feature = "std")]
@@ -457,36 +472,36 @@ src/display.rs
     76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     77→            unreachable!()
     78→        }
-    79→    }
-    80→
-    81→    impl Sealed for Placeholder {}
-    82→}
 src/lib.rs
    281→mod aserror;
    282→mod display;
    283→#[cfg(error_generic_member_access)]
    284→mod provide;
    285→mod var;
+   287→pub use thiserror_impl::*;
    289→mod private;
+src/private.rs
+     2→pub use crate::aserror::AsDynError;
+     4→pub use crate::display::AsDisplay;
+     7→pub use crate::provide::ThiserrorProvide;
+     9→pub use crate::var::Var;
+    11→pub use core::error::Error;
+    14→pub use std::backtrace::Backtrace;
 src/provide.rs
+     1→use core::error::{Error, Request};
      3→#[doc(hidden)]
      4→pub trait ThiserrorProvide: Sealed {
      5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
      6→}
-     8→impl<T> ThiserrorProvide for T
-     9→where
-    10→    T: Error + ?Sized,
-    11→{
     12→    #[inline]
     13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
     14→        self.provide(request);
     15→    }
     18→#[doc(hidden)]
     19→pub trait Sealed {}
-    20→impl<T: Error + ?Sized> Sealed for T {}
 src/var.rs
+     1→use core::fmt::{self, Pointer};
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
-     5→impl<'a, T: Pointer + ?Sized> Pointer for Var<'a, T> {
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
      7→        Pointer::fmt(self.0, formatter)
      8→    }

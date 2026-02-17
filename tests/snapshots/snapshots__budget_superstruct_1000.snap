@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (990 words)
+budget: 1000 (985 words)
 
 Changelog.md
      1→# Changelog …
@@ -34,17 +34,6 @@ docs/guides/01-getting-started.md
     19→})
     20→```
     21→
-    22→If you'd like, you can use a wildcard import:
-    23→
-    24→```ts
-    25→import * as s from 'superstruct'
-    26→
-    27→const User = s.object({
-    28→  id: s.number(),
-    29→  name: s.string(),
-    30→})
-    31→```
-    32→
       →…
 docs/guides/02-validating-data.md
      1→# Validating Data …
@@ -72,8 +61,6 @@ docs/readme.md
     20→  }),
     21→})
     22→
-    23→const data = {
-    24→  id: 34,
       →…
 docs/reference/coercions.md
      1→# Coercions …
@@ -140,6 +127,7 @@ docs/summary.md
     22→## Resources
     24→- [FAQ](./resources/faq.md)
     25→- [Links](./resources/links.md)
+rollup.config.js
 src/error.ts
      5→export type Failure …
     25→export class StructError extends TypeError {
@@ -156,6 +144,8 @@ src/error.ts
     36→    let cached: Array<Failure> | undefined
       →…
 src/struct.ts
+     1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
+     2→import { StructError, Failure } from './error.js'
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
@@ -238,6 +228,8 @@ src/structs/types.ts
 src/structs/utilities.ts
     60→export function assign(...Structs: Struct<any>[]): any {
 src/utils.ts
+     1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
+     2→import { Failure } from './error.js'
      4→/**
      5→ * Check if a value is an iterator.
      6→ */

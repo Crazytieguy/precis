@@ -40,3 +40,6 @@
 ; Module declarations
 (mod_item
   name: (identifier) @name) @symbol
+
+; Use/import declarations
+(use_declaration) @symbol

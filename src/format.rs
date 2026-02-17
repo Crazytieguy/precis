@@ -489,11 +489,11 @@ fn has_multiline_signature(kind: parse::SymbolKind) -> bool {
 /// Returns sym.line - 1 for single-line or non-function symbols.
 pub(crate) fn signature_end_line(lines: &[&str], sym: &parse::Symbol, lang: Option<Lang>) -> usize {
     let sym_line_0 = sym.line - 1;
-    // Type aliases: the entire declaration IS the signature (no hidden body),
-    // so show all lines. This handles multi-line TypeScript type aliases like
-    // `export type Transpose<A, B, C> = ...` which span multiple lines.
-    // Rust type aliases already work via `;` detection, but this is correct for both.
-    if sym.kind == parse::SymbolKind::TypeAlias {
+    // Type aliases and imports: the entire declaration IS the signature,
+    // so show all lines. For type aliases, this handles multi-line TypeScript
+    // types. For imports, this shows the full import statement including
+    // multi-line Rust `use foo::{A, B, C};` or Go grouped imports.
+    if matches!(sym.kind, parse::SymbolKind::TypeAlias | parse::SymbolKind::Import) {
         return sym.end_line.min(lines.len()) - 1;
     }
     if !has_multiline_signature(sym.kind) {

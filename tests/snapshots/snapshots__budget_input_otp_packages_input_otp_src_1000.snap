@@ -2,9 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (995 words)
+budget: 1000 (989 words)
 
 input.tsx
+     3→import * as React from 'react'
+     5→import { syncTimeouts } from './sync-timeouts'
+     6→import { OTPInputProps, RenderProps } from './types'
+     7→import { usePrevious } from './use-previous'
+     8→import { usePasswordManagerBadge } from './use-pwm-badge'
     10→export const OTPInputContext = React.createContext<RenderProps>(
     11→  {} as RenderProps,
     12→)
@@ -39,24 +44,6 @@ input.tsx
     42→    // Definitions
     43→    const value = uncheckedValue ?? internalValue
     44→    const previousValue = usePrevious(value)
-    45→    const onChange = React.useCallback(
-    46→      (newValue: string) => {
-    47→        uncheckedOnChange?.(newValue)
-    48→        setInternalValue(newValue)
-    49→      },
-    50→      [uncheckedOnChange],
-    51→    )
-    52→    const regexp = React.useMemo(
-    53→      () =>
-    54→        pattern
-    55→          ? typeof pattern === 'string'
-    56→            ? new RegExp(pattern)
-    57→            : pattern
-    58→          : null,
-    59→      [pattern],
-    60→    )
-    61→
-    62→    /** useRef */
       →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
@@ -132,6 +119,7 @@ types.ts
     42→      }
     43→  )
 use-previous.ts
+     1→import * as React from 'react'
      3→export function usePrevious<T>(value: T) {
      4→  const ref = React.useRef<T>()
      5→  React.useEffect(() => {
@@ -140,6 +128,8 @@ use-previous.ts
      8→  return ref.current
      9→}
 use-pwm-badge.tsx
+     1→import * as React from 'react'
+     2→import { OTPInputProps } from './types'
      4→const PWM_BADGE_MARGIN_RIGHT = 18
      5→const PWM_BADGE_SPACE_WIDTH_PX = 40
      6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const

@@ -2,9 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1385 words)
+budget: 2000 (1524 words)
 
 checkmark.tsx
+     1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
      4→from {
      5→  transform: scale(0) rotate(45deg);
@@ -62,6 +63,7 @@ checkmark.tsx
     60→  }
     61→`;
 error.tsx
+     1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
      4→from {
      5→  transform: scale(0) rotate(45deg);
@@ -128,6 +130,7 @@ error.tsx
     70→  }
     71→`;
 loader.tsx
+     1→import { styled, keyframes } from 'goober';
      3→const rotate = keyframes`
      4→  from {
      5→    transform: rotate(0deg);
@@ -151,6 +154,11 @@ loader.tsx
     25→  animation: ${rotate} 1s linear infinite;
     26→`;
 toast-bar.tsx
+     1→import * as React from 'react';
+     2→import { styled, keyframes } from 'goober';
+     4→import { Toast, ToastPosition, resolveValue, Renderable } from '../core/types';
+     5→import { ToastIcon } from './toast-icon';
+     6→import { prefersReducedMotion } from '../core/utils';
      8→const enterAnimation = (factor: number) => `
      9→0% {transform: translate3d(0,${factor * -200}%,0) scale(.6); opacity:.5;}
     10→100% {transform: translate3d(0,0,0) scale(1); opacity:1;}
@@ -251,6 +259,12 @@ toast-bar.tsx
    113→  }
    114→);
 toast-icon.tsx
+     1→import * as React from 'react';
+     2→import { styled, keyframes } from 'goober';
+     4→import { Toast } from '../core/types';
+     5→import { ErrorIcon, ErrorTheme } from './error';
+     6→import { LoaderIcon, LoaderTheme } from './loader';
+     7→import { CheckmarkIcon, CheckmarkTheme } from './checkmark';
      9→const StatusWrapper = styled('div')`
     10→  position: absolute;
     11→`;
@@ -316,6 +330,17 @@ toast-icon.tsx
     76→  );
     77→};
 toaster.tsx
+     1→import { css, setup } from 'goober';
+     2→import * as React from 'react';
+     3→import {
+     4→  resolveValue,
+     5→  ToasterProps,
+     6→  ToastPosition,
+     7→  ToastWrapperProps,
+     8→} from '../core/types';
+     9→import { useToaster } from '../core/use-toaster';
+    10→import { prefersReducedMotion } from '../core/utils';
+    11→import { ToastBar } from './toast-bar';
     15→const ToastWrapper = ({
     16→  id,
     17→  className,

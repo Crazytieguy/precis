@@ -2,11 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (849 words)
+budget: 1000 (980 words)
 
 __init__.py
     34→config: TypeCheckConfiguration
 _checkers.py
+    42→from typing_extensions import is_typeddict
     81→TypeCheckerCallable: TypeAlias = Callable[
     82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
     83→]
@@ -26,6 +27,10 @@ _checkers.py
    102→    "__cmp__",
    103→    "__divmod__",
    104→    "__div__",
+   105→    "__eq__",
+   106→    "__floordiv__",
+   107→    "__ge__",
+   108→    "__gt__",
       →…
    586→def _is_literal_type(typ: object) -> bool:
    587→    return typ is typing.Literal or typ is typing_extensions.Literal
@@ -36,16 +41,18 @@ _checkers.py
   1008→    bytes: check_byteslike,
   1009→    AbstractSet: check_set,
   1010→    BinaryIO: check_io,
+  1011→    Callable: check_callable,
+  1012→    collections.abc.Callable: check_callable,
+  1013→    complex: check_number,
+  1014→    dict: check_mapping,
       →…
 _config.py
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
     24→
-    25→    ERROR = auto()
       →…
     30→class CollectionCheckStrategy(Enum):
     48→
-    49→    FIRST_ITEM = auto()
     63→class TypeCheckConfiguration:
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
@@ -59,15 +66,10 @@ _exceptions.py
      5→class TypeHintWarning(UserWarning):
     12→class TypeCheckWarning(UserWarning):
     14→
-    15→    def __init__(self, message: str):
-      →…
     19→class InstrumentationWarning(UserWarning):
     21→
-    22→    def __init__(self, message: str):
-      →…
     26→class TypeCheckError(Exception):
     30→
-    31→    def __init__(self, message: str):
 _functions.py
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
@@ -82,16 +84,53 @@ _importhook.py
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
     57→    def source_to_code(
+    58→        data: Buffer | str | ast.Module | ast.Expression | ast.Interactive,
+    59→        path: Buffer | str | PathLike[str] = "<string>",
+    60→        *,
+    61→        _optimize: int = -1,
+    62→    ) -> CodeType:
+    63→        if isinstance(path, (str, PathLike)):
+    64→            filename = path
+    65→        else:
+    66→            filename = os.fsdecode(bytes(path))
+    67→
+    68→        if isinstance(data, (ast.Module, ast.Expression, ast.Interactive)):
+    69→            module = data
+    70→        else:
+    71→            if isinstance(data, str):
+    72→                source = data
+    73→            else:
+    74→                source = decode_source(data)
+    75→
+    76→            module = _call_with_frames_removed(
+    77→                ast.parse,
+    78→                source,
+    79→                filename,
+    80→                "exec",
+    81→            )
+    82→
+    83→        tree = TypeguardTransformer().visit(module)
+    84→        ast.fix_missing_locations(tree)
+    85→
+    86→        if global_config.debug_instrumentation and sys.version_info >= (3, 9):
+    87→            print(
+    88→                f"Source code of {path!r} after instrumentation:\n"
+    89→                "----------------------------------------------",
+    90→                file=sys.stderr,
+    91→            )
+    92→            print(ast.unparse(tree), file=sys.stderr)
+    93→            print("----------------------------------------------", file=sys.stderr)
+    94→
+    95→        return _call_with_frames_removed(
+    96→            compile, tree, filename, "exec", 0, dont_inherit=True
+    97→        )
    109→class TypeguardFinder(MetaPathFinder):
    119→
-   120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
    156→class ImportHookManager:
    160→
-   161→    def __init__(self, hook: MetaPathFinder):
 _memo.py
      8→class TypeCheckMemo:
     34→
-    35→    __slots__ = "globals", "locals", "self_type", "config"
 _pytest_plugin.py
 _suppression.py
     15→P = ParamSpec("P")
@@ -193,18 +232,19 @@ _transformer.py
    209→
    210→        return self.memo_var_name
    211→
+   212→    def get_import(self, module: str, name: str) -> Name:
+   213→        if module in self.load_names and name in self.load_names[module]:
+   214→            return self.load_names[module][name]
+   215→
+   216→        qualified_name = f"{module}.{name}"
    285→class NameCollector(NodeVisitor):
    286→    def __init__(self) -> None:
-   287→        self.names: set[str] = set()
    313→class GeneratorDetector(NodeVisitor):
    315→
-   316→    contains_yields: bool = False
    338→class AnnotationTransformer(NodeTransformer):
    339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
-   340→        "builtins.dict": ("typing", "Dict"),
    488→class TypeguardTransformer(NodeTransformer):
    489→    def __init__(
-   490→        self, target_path: Sequence[str] | None = None, target_lineno: int | None = None
    516→    @contextmanager
    517→    def _use_memo(
    518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
@@ -218,6 +258,10 @@ _transformer.py
    526→                self._target_path is None or new_memo.path == self._target_path
    527→            )
    528→            if new_memo.should_instrument:
+   529→                # Check if the function is a generator function
+   530→                detector = GeneratorDetector()
+   531→                detector.visit(node)
+   532→
       →…
    570→    def _get_import(self, module: str, name: str) -> Name:
    571→        memo = self._memo if self._target_path else self._module_memo
