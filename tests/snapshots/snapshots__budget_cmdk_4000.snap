@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3928 words)
+budget: 4000 (3927 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -95,7 +95,7 @@ ARCHITECTURE.md
     96→## Groups
     98→Item mount informs both the root and the parent group, which keeps track of items within it. Each group informs the root.
 README.md
-     5→# ⌘K [![cmdk minzip package size](https://img.shields.io/bundlephobia/minzip/cmdk)](https://www.npmjs.com/package/cmdk?activeTab=code) [![cmdk package version](https://img.shields.io/npm/v/cmdk.svg?colorB=green)](https://www.npmjs.com/package/cmdk)
+     5→# ⌘K
      7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
      8→
      9→## Install
@@ -649,6 +649,9 @@ website/components/code/index.tsx
     21→      types: ['atrule', 'keyword', 'attr-name', 'selector'],
     22→      style: {
     23→        color: 'var(--gray10)',
+    24→      },
+    25→    },
+    26→    {
       →…
     41→export function Code({ children }: { children: string }) {
     42→  return (

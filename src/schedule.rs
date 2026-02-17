@@ -314,8 +314,15 @@ fn compute_symbol_costs(
     // Signature: additional words from showing full signature lines (with line numbers)
     // beyond what the name-only line shows.
     let sig_end = format::signature_end_line(lines, sym, lang);
+    let is_section = sym.kind == parse::SymbolKind::Section;
     let mut sig_formatted_words = 0;
     for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
+        // Strip trailing badges from markdown heading lines (matches renderer)
+        let line = if is_section && i == sym_line_0 {
+            format::strip_heading_badges(line)
+        } else {
+            line
+        };
         sig_formatted_words += format::count_words(&format::fmt_line(i, line));
     }
     let signature_words = sig_formatted_words.saturating_sub(name_words);

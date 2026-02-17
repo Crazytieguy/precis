@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1964 words)
+budget: 2000 (1958 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -95,7 +95,7 @@ ARCHITECTURE.md
     96→## Groups
     98→Item mount informs both the root and the parent group, which keeps track of items within it. Each group informs the root.
 README.md
-     5→# ⌘K [![cmdk minzip package size](https://img.shields.io/bundlephobia/minzip/cmdk)](https://www.npmjs.com/package/cmdk?activeTab=code) [![cmdk package version](https://img.shields.io/npm/v/cmdk.svg?colorB=green)](https://www.npmjs.com/package/cmdk) …
+     5→# ⌘K …
      9→## Install …
     15→## Use …
     82→## Parts and styling …
@@ -297,7 +297,6 @@ website/components/code/index.tsx
     12→  },
     13→  styles: [
     14→    {
-    15→      types: ['comment'],
       →…
     41→export function Code({ children }: { children: string }) {
     42→  return (
@@ -377,6 +376,8 @@ website/pages/_app.tsx
     22→        <meta name="twitter:card" content="summary_large_image" />
     23→      </Head>
     24→      <NextSeo
+    25→        title={`${description} — ${title}`}
+    26→        description={description}
       →…
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
@@ -409,6 +410,8 @@ website/pages/index.tsx
     34→      <div className={styles.content}>
     35→        <div className={styles.meta}>
     36→          <div className={styles.info}>
+    37→            <VersionBadge />
+    38→            <h1>⌘K</h1>
       →…
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     99→//////////////////////////////////////////////////////////////////
@@ -419,7 +422,6 @@ website/pages/index.tsx
    104→  return (
    105→    <button
    106→      className={styles.installButton}
-   107→      onClick={async () => {
       →…
    123→function GitHubButton() {
    137→//////////////////////////////////////////////////////////////////
@@ -451,7 +453,6 @@ website/pages/index.tsx
    265→<Command.Dialog open={open} onOpenChange={setOpen}>
    266→  <Command.Input />
    267→
-   268→  <Command.List>
       →…
    294→//////////////////////////////////////////////////////////////////
    295→

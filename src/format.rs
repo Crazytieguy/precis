@@ -201,10 +201,15 @@ fn render_symbol(
         }
     }
 
-    // Signature lines
+    // Signature lines (strip trailing badges from markdown heading lines)
+    let is_section = sym.kind == parse::SymbolKind::Section;
     for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
         if i >= *emitted_up_to {
-            out.push_str(&fmt_line(i, line));
+            if is_section && i == sym_line_0 {
+                out.push_str(&fmt_line(i, strip_heading_badges(line)));
+            } else {
+                out.push_str(&fmt_line(i, line));
+            }
         }
     }
     *emitted_up_to = (*emitted_up_to).max(sig_end + 1);
@@ -381,6 +386,30 @@ fn is_horizontal_rule(trimmed: &str) -> bool {
         }
     }
     count >= 3
+}
+
+/// Strip trailing badge/image markdown from a markdown heading line.
+///
+/// Many README files include CI/coverage/version badges inline in the top-level
+/// heading: `# project [![build](url)](url) [![version](url)](url)`.
+/// These badge URLs waste word budget while adding no useful information for
+/// codebase understanding.
+///
+/// Returns the prefix of the line before the first trailing ` [![` pattern.
+/// Only matches the linked-image pattern (`[![`) which is specifically used
+/// for badges; plain `![` images in headings are left intact.
+pub(crate) fn strip_heading_badges(line: &str) -> &str {
+    // Look for ` [![` — linked image (badge) preceded by a space.
+    // Only strip if there's meaningful heading text before the badge.
+    if let Some(pos) = line.find(" [![") {
+        // Ensure there's at least one non-whitespace char of heading text
+        // before the badge (skip the `# ` prefix).
+        let before = line[..pos].trim();
+        if !before.is_empty() && before != "#" {
+            return line[..pos].trim_end();
+        }
+    }
+    line
 }
 
 /// Convert rendered output to JSON, splitting into per-file entries.
@@ -763,6 +792,37 @@ mod tests {
             end_line: 3,
         };
         assert_eq!(signature_end_line(&lines, &sym, Some(Lang::JsTs)), 0);
+    }
+
+    #[test]
+    fn strip_heading_badges_removes_trailing_badges() {
+        // Linked images (badges) after heading text
+        assert_eq!(
+            strip_heading_badges("# color [![build](url)](link)"),
+            "# color",
+        );
+        assert_eq!(
+            strip_heading_badges("# Structs [![GoDoc](url)](link) [![Build](url)](link)"),
+            "# Structs",
+        );
+        // Name-only text (without # prefix)
+        assert_eq!(
+            strip_heading_badges("color [![build](url)](link)"),
+            "color",
+        );
+        // No badges — unchanged
+        assert_eq!(strip_heading_badges("# Introduction"), "# Introduction");
+        assert_eq!(strip_heading_badges("## API Reference"), "## API Reference");
+        // Badge without preceding text — unchanged (just `#` prefix)
+        assert_eq!(
+            strip_heading_badges("# [![badge](url)](link)"),
+            "# [![badge](url)](link)",
+        );
+        // Plain image (not linked) — not stripped (only [![ is targeted)
+        assert_eq!(
+            strip_heading_badges("# Project ![icon](url)"),
+            "# Project ![icon](url)",
+        );
     }
 
     #[test]

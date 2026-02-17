@@ -102,7 +102,7 @@ CONTRIBUTING.md
     24→npm run lint
     25→```
 README-es.md
-     1→# dotenv [![NPM version](https://img.shields.io/npm/v/dotenv.svg?style=flat-square)](https://www.npmjs.com/package/dotenv) [![downloads](https://img.shields.io/npm/dw/dotenv)](https://www.npmjs.com/package/dotenv) …
+     1→# dotenv …
     11→## Usage …
     39→## Advanced …
    319→## Agentes …
@@ -159,7 +159,7 @@ README-es.md
    764→## CHANGELOG …
    770→## Who's using dotenv? …
 README.md
-     1→# dotenv [![NPM version](https://img.shields.io/npm/v/dotenv.svg?style=flat-square)](https://www.npmjs.com/package/dotenv) [![downloads](https://img.shields.io/npm/dw/dotenv)](https://www.npmjs.com/package/dotenv)
+     1→# dotenv
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
      6→
      7→[Watch the tutorial](https://www.youtube.com/watch?v=YtkZR0NFd1g)
@@ -350,8 +350,6 @@ README.md
    196→console.log('DATABASE_URL', process.env.DATABASE_URL)
    197→```
    198→```sh
-   199→$ dotenvx run --debug -- node index.js
-   200→[dotenvx@0.14.1] injecting env (1) from .env
       →…
    319→## Agents
    323→> Software is changing, and dotenv must change with it—that is why I built [agentic secret storage (AS2)](https://dotenvx.com/as2). Agents run code without humans at terminals, so plaintext `.env` files are the wrong primitive.
@@ -544,8 +542,6 @@ README.md
    514→</details>
    515→<details><summary>How come my environment variables are not showing up for React?</summary><br/>
    516→
-   517→Your React code is run in Webpack, where the `fs` module or even the `process` global itself are not accessible out-of-the-box. `process.env` can only be injected through Webpack configuration.
-   518→
       →…
    579→## Docs
    581→Dotenv exposes four functions:
@@ -860,6 +856,7 @@ lib/main.js
     32→  if (typeof value === 'string') {
     33→    return !['false', '0', 'no', 'off', ''].includes(value.toLowerCase())
     34→  }
+    35→  return Boolean(value)
       →…
     38→function supportsAnsi () {
     39→  return process.stdout.isTTY // && process.env.TERM !== 'dumb'
@@ -872,11 +869,13 @@ lib/main.js
     50→  const obj = {}
     51→
     52→  // Convert buffer to string
+    53→  let lines = src.toString()
       →…
     87→function _parseVault (options) {
     88→  options = options || {}
     89→
     90→  const vaultPath = _vaultPath(options)
+    91→  options.path = vaultPath // parse .env.vault
       →…
    130→function _warn (message) {
    131→  console.error(`[dotenv@${version}][WARN] ${message}`)
@@ -891,16 +890,19 @@ lib/main.js
    143→  // prioritize developer directly setting options.DOTENV_KEY
    144→  if (options && options.DOTENV_KEY && options.DOTENV_KEY.length > 0) {
    145→    return options.DOTENV_KEY
+   146→  }
       →…
    157→function _instructions (result, dotenvKey) {
    158→  // Parse DOTENV_KEY. Format is a URI
    159→  let uri
    160→  try {
+   161→    uri = new URL(dotenvKey)
       →…
    200→function _vaultPath (options) {
    201→  let possibleVaultPath = null
    202→
    203→  if (options && options.path && options.path.length > 0) {
+   204→    if (Array.isArray(options.path)) {
       →…
    224→function _resolveHome (envPath) {
    225→  return envPath[0] === '~' ? path.join(os.homedir(), envPath.slice(1)) : envPath
@@ -909,26 +911,31 @@ lib/main.js
    229→  const debug = parseBoolean(process.env.DOTENV_CONFIG_DEBUG || (options && options.debug))
    230→  const quiet = parseBoolean(process.env.DOTENV_CONFIG_QUIET || (options && options.quiet))
    231→
+   232→  if (debug || !quiet) {
       →…
    248→function configDotenv (options) {
    249→  const dotenvPath = path.resolve(process.cwd(), '.env')
    250→  let encoding = 'utf8'
    251→  let processEnv = process.env
+   252→  if (options && options.processEnv != null) {
       →…
    328→function config (options) {
    329→  // fallback to original dotenv if DOTENV_KEY is not set
    330→  if (_dotenvKey(options).length === 0) {
    331→    return DotenvModule.configDotenv(options)
+   332→  }
       →…
    346→function decrypt (encrypted, keyStr) {
    347→  const key = Buffer.from(keyStr.slice(-64), 'hex')
    348→  let ciphertext = Buffer.from(encrypted, 'base64')
    349→
+   350→  const nonce = ciphertext.subarray(0, 12)
       →…
    378→function populate (processEnv, parsed, options = {}) {
    379→  const debug = Boolean(options && options.debug)
    380→  const override = Boolean(options && options.override)
    381→  const populated = {}
+   382→
       →…
    413→const DotenvModule = {
    414→  configDotenv,

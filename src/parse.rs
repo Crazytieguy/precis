@@ -301,6 +301,15 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             }
         };
 
+        // Strip trailing badge markdown from section heading names.
+        // Many READMEs have `# Project [![badge](url)](link)` — the badge URLs
+        // waste word budget and provide no useful information.
+        let name = if kind == SymbolKind::Section {
+            crate::format::strip_heading_badges(&name).to_string()
+        } else {
+            name
+        };
+
         // Filter out blank identifier `_` in Go and Rust.
         // Go: `_ = iota` in const blocks (skips iota values), `var _ error = ...` (interface checks).
         // Rust: `const _: () = { ... }` (build probes, type assertions, compile-time checks).
