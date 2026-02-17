@@ -2,19 +2,17 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (951 words)
+budget: 1000 (917 words)
 
 README.md
      1→# color [![](https://github.com/fatih/color/workflows/build/badge.svg)](https://github.com/fatih/color/actions) [![PkgGoDev](https://pkg.go.dev/badge/github.com/fatih/color)](https://pkg.go.dev/github.com/fatih/color)
-     2→
+     3→Color lets you use colorized outputs in terms of [ANSI Escape
       →…
     10→## Install
-    11→
+    12→```
       →…
     16→## Examples
-    17→
     18→### Standard colors
-    19→
     20→```go
     21→// Print with default helper functions
     22→color.Cyan("Prints text in cyan.")
@@ -29,38 +27,37 @@ README.md
     31→```
     32→
     33→### RGB colors
-    34→
+    35→If your terminal supports 24-bit colors, you can use RGB color codes.
       →…
     45→### Mix and reuse colors
-    46→
+    47→```go
       →…
     71→### Use your own output (io.Writer)
-    72→
+    73→```go
       →…
     81→### Custom print functions (PrintFunc)
-    82→
+    83→```go
       →…
     94→### Custom fprint functions (FprintFunc)
-    95→
+    96→```go
       →…
    105→### Insert into noncolor strings (SprintFunc)
-   106→
+   107→```go
       →…
    124→### Plug into existing code
-   125→
+   126→```go
       →…
    142→### Disable/Enable color
-   143→
+   144→There might be a case where you want to explicitly disable/enable color output. the 
       →…
    177→## GitHub Actions
-   178→
+   179→To output color in GitHub Actions (or other CI systems that support ANSI colors), make sure to set `color.NoColor = false` so that it bypasses the check for non-tty output streams. 
       →…
    182→## Credits
-   183→
+   184→* [Fatih Arslan](https://github.com/fatih)
       →…
    187→## License
-   188→
-      →…
+   189→The MIT License (MIT) - see [`LICENSE.md`](https://github.com/fatih/color/blob/master/LICENSE.md) for more details
 color.go
     15→var (
     16→	// NoColor defines if the output is colorized or not. It's dynamically set to
@@ -80,10 +77,7 @@ color.go
     33→	// allows to reuse already created objects with required Attribute.
     34→	colorsCache   = make(map[Attribute]*Color)
     35→	colorsCacheMu sync.Mutex // protects colorsCache
-    38→// noColorIsSet returns true if the environment variable NO_COLOR is set to a non-empty string.
     39→func noColorIsSet() bool {
-    40→	return os.Getenv("NO_COLOR") != ""
-    41→}
     43→// Color defines a custom color object which is defined by SGR parameters.
     44→type Color struct {
     45→	params  []Attribute
@@ -187,18 +181,8 @@ color.go
    379→func (c *Color) SprintFunc …
    388→func (c *Color) SprintfFunc …
    397→func (c *Color) SprintlnFunc …
-   403→// sequence returns a formatted SGR sequence to be plugged into a "\x1b[...m"
-   404→// an example output might be: "1;36" -> bold cyan
    405→func (c *Color) sequence() string {
-   406→	format := make([]string, len(c.params))
-   407→	for i, v := range c.params {
-      →…
-   414→// wrap wraps the s string with the colors attributes. The string is ready to
-   415→// be printed.
    416→func (c *Color) wrap(s string) string {
-   417→	if c.isNoColorSet() {
-   418→		return s
-      →…
    424→func (c *Color) format() string {
    428→func (c *Color) unformat() string {
    446→func (c *Color) DisableColor …
@@ -242,9 +226,6 @@ color.go
    664→func HiMagentaString …
    670→func HiCyanString …
    674→func HiWhiteString …
-   678→// sprintln is a helper function to format a string with fmt.Sprintln and trim the trailing newline.
    679→func sprintln(a ...interface{}) string {
-   680→	return strings.TrimSuffix(fmt.Sprintln(a...), "\n")
-   681→}
 color_windows.go
      9→func init() {

@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (961 words)
+budget: 1000 (971 words)
 
 readme.md
     87→### ky(input, options?)
-    88→
     89→The `input` and `options` are the same as [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch), with additional `options` available (see below).
     90→
       →…
@@ -15,22 +14,18 @@ readme.md
    125→### ky.patch(input, options?)
    126→### ky.head(input, options?)
    127→### ky.delete(input, options?)
-   128→
    129→Sets `options.method` to the method name and makes a request.
    130→
       →…
   1052→### Sending form data
-  1053→
   1054→Sending form data in Ky is identical to `fetch`. Just pass a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to the `body` option. The `Content-Type` header will be automatically set to `multipart/form-data`, overriding any existing `Content-Type` header.
   1055→
       →…
   1158→#### Native proxy support
-  1159→
   1160→Node.js 24.5+ supports automatic proxy configuration via environment variables. Set `NODE_USE_ENV_PROXY=1` or use the `--use-env-proxy` CLI flag.
   1161→
       →…
   1294→#### How do I use this in Node.js?
-  1295→
   1296→Node.js 18 and later supports `fetch` natively, so you can just use this package directly.
   1297→
 source/core/Ky.ts
@@ -39,15 +34,21 @@ source/core/Ky.ts
     35→		const ky = new Ky(input, options);
     36→
     37→		const function_ = async (): Promise<Response> => {
-    38→			if (typeof ky.#options.timeout === 'number' && ky.#options.timeout > maxSafeTimeout) {
-    39→				throw new RangeError(`The \`timeout\` option cannot be greater than ${maxSafeTimeout}`);
-    40→			}
-    41→
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
       →…
 source/core/constants.ts
+     4→export const supportsRequestStreams …
+    34→export const supportsAbortController …
+    35→export const supportsAbortSignal …
+    36→export const supportsResponseStreams …
+    37→export const supportsFormData …
+    39→export const requestMethods …
+    46→export const responseTypes …
+    58→export const maxSafeTimeout …
+    61→export const usualFormBoundarySize …
+    63→export const stop …
     68→export type ForceRetryOptions …
    145→/**
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
@@ -69,9 +70,11 @@ source/core/constants.ts
    163→const api = ky.extend({
    164→	hooks: {
    165→		afterResponse: [
-   166→			async (request, options, response) => {
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
+   237→export const kyOptionKeys …
+   256→export const vendorSpecificOptions …
+   265→export const requestOptionsRegistry …
 source/errors/ForceRetryError.ts
      8→export class ForceRetryError extends Error {
      9→	override name = 'ForceRetryError' as const;
@@ -88,7 +91,6 @@ source/errors/HTTPError.ts
      8→	public options: NormalizedOptions;
      9→
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
-      →…
 source/errors/NonError.ts
      6→export class NonError extends Error {
      7→	override name = 'NonError';
@@ -104,7 +106,6 @@ source/errors/TimeoutError.ts
      5→
      6→	constructor(request: Request) {
      7→		super(`Request timed out: ${request.method} ${request.url}`);
-     8→		this.name = 'TimeoutError';
       →…
 source/index.ts
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {

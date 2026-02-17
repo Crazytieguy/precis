@@ -5,15 +5,10 @@ expression: output
 budget: 2000 (1966 words)
 
 README.md
-     1→# mdBook
-     2→
-      →…
-    14→## License
-    15→
-      →…
+     1→# mdBook …
+    14→## License …
 crates/mdbook-compare/README.md
      1→# mdbook-compare
-     2→
      3→This is a simple utility to compare the output of two different versions of mdbook.
      4→
      5→To use this:
@@ -23,16 +18,8 @@ crates/mdbook-compare/README.md
 crates/mdbook-compare/src/main.rs
      6→macro_rules! error {
 crates/mdbook-core/README.md
-     1→# mdbook-core
-     2→
-     3→[![Documentation](https://img.shields.io/docsrs/mdbook-core)](https://docs.rs/mdbook-core)
-     4→[![crates.io](https://img.shields.io/crates/v/mdbook-core.svg)](https://crates.io/crates/mdbook-core)
-     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
-     6→
-      →…
-    11→## License
-    12→
-    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+     1→# mdbook-core …
+    11→## License …
 crates/mdbook-core/src/book.rs
     99→fn for_each_mut …
    245→    type Target = Vec<u32>;
@@ -76,16 +63,8 @@ crates/mdbook-core/src/utils/toml_ext.rs
     22→    fn insert(&mut self, key: &str, value: Value) {
     40→fn split …
 crates/mdbook-driver/README.md
-     1→# mdbook-driver
-     2→
-     3→[![Documentation](https://img.shields.io/docsrs/mdbook-driver)](https://docs.rs/mdbook-driver)
-     4→[![crates.io](https://img.shields.io/crates/v/mdbook-driver.svg)](https://crates.io/crates/mdbook-driver)
-     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
-     6→
-      →…
-    11→## License
-    12→
-    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+     1→# mdbook-driver …
+    11→## License …
 crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     14→pub struct CmdPreprocessor {
     15→    name: String,
@@ -168,16 +147,8 @@ crates/mdbook-driver/src/mdbook.rs
    439→    #[serde(default)]
       →…
 crates/mdbook-html/README.md
-     1→# mdbook-html
-     2→
-     3→[![Documentation](https://img.shields.io/docsrs/mdbook-html)](https://docs.rs/mdbook-html)
-     4→[![crates.io](https://img.shields.io/crates/v/mdbook-html.svg)](https://crates.io/crates/mdbook-html)
-     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
-     6→
-      →…
-    11→## License
-    12→
-    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+     1→# mdbook-html …
+    11→## License …
 crates/mdbook-html/front-end/js/book.js
      9→function playground_text(playground, hidden = true) {
 crates/mdbook-html/src/html/admonitions.rs
@@ -206,8 +177,6 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
    643→///
       →…
    649→type CombinedRedirects = BTreeMap<String, (String, BTreeMap<String, String>)>;
-crates/mdbook-html/src/html_handlebars/helpers/fontawesome.rs
-     8→pub(crate) fn fa_helper …
 crates/mdbook-html/src/html_handlebars/helpers/mod.rs
      1→pub(crate) mod fontawesome;
      2→pub(crate) mod resources;
@@ -217,13 +186,11 @@ crates/mdbook-html/src/html_handlebars/helpers/resources.rs
     11→pub(crate) struct ResourceHelper {
     12→    pub hash_map: HashMap<String, String>,
     13→}
-    16→    fn call …
 crates/mdbook-html/src/html_handlebars/helpers/toc.rs
     10→#[derive(Clone, Copy)]
     11→pub(crate) struct RenderToc {
     12→    pub no_section_label: bool,
     13→}
-    16→    fn call …
    177→fn write_li_open_tag …
 crates/mdbook-html/src/html_handlebars/mod.rs
      3→#[cfg(feature = "search")]
@@ -263,8 +230,6 @@ crates/mdbook-html/src/theme/mod.rs
     66→    pub fn new<P: AsRef<Path>>(theme_dir: P) -> Self {
    166→    pub fn copy_theme(html_config: &HtmlConfig, root: &Path) -> Result<()> {
    201→    fn default() -> Theme {
-   202→        Theme {
-      →…
    229→fn load_file_contents …
 crates/mdbook-html/src/theme/playground_editor.rs
      3→pub(crate) static JS: &[u8] = include_bytes!("../../front-end/playground_editor/editor.js");
@@ -286,16 +251,8 @@ crates/mdbook-html/src/utils.rs
     75→/// Generates an HTML id from the given text.
     76→pub(crate) fn id_from_content(content: &str) -> String {
 crates/mdbook-markdown/README.md
-     1→# mdbook-markdown
-     2→
-     3→[![Documentation](https://img.shields.io/docsrs/mdbook-markdown)](https://docs.rs/mdbook-markdown)
-     4→[![crates.io](https://img.shields.io/crates/v/mdbook-markdown.svg)](https://crates.io/crates/mdbook-markdown)
-     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
-     6→
-      →…
-    11→## License
-    12→
-    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+     1→# mdbook-markdown …
+    11→## License …
 crates/mdbook-markdown/src/lib.rs
     13→/// Options for parsing markdown.
     14→#[non_exhaustive]
@@ -330,14 +287,10 @@ crates/mdbook-markdown/src/lib.rs
       →…
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
-     2→
-     3→[![Documentation](https://img.shields.io/docsrs/mdbook-preprocessor)](https://docs.rs/mdbook-preprocessor)
-     4→[![crates.io](https://img.shields.io/crates/v/mdbook-preprocessor.svg)](https://crates.io/crates/mdbook-preprocessor)
-     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
-     6→
+     7→This is the Rust library to implement a [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html) for [mdBook](https://rust-lang.github.io/mdBook/).
+     8→
       →…
     11→## License
-    12→
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-preprocessor/src/lib.rs
     30→pub trait Preprocessor {
@@ -356,14 +309,10 @@ crates/mdbook-preprocessor/src/lib.rs
     82→pub fn parse_input<R: Read>(reader: R) -> Result<(PreprocessorContext, Book)> {
 crates/mdbook-renderer/README.md
      1→# mdbook-renderer
-     2→
-     3→[![Documentation](https://img.shields.io/docsrs/mdbook-renderer)](https://docs.rs/mdbook-renderer)
-     4→[![crates.io](https://img.shields.io/crates/v/mdbook-renderer.svg)](https://crates.io/crates/mdbook-renderer)
-     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
-     6→
+     7→This is the Rust library to implement a [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html) for [mdBook](https://rust-lang.github.io/mdBook/).
+     8→
       →…
     11→## License
-    12→
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-renderer/src/lib.rs
     28→pub trait Renderer {
@@ -383,14 +332,10 @@ crates/mdbook-renderer/src/lib.rs
     86→    pub fn from_json<R: Read>(reader: R) -> Result<RenderContext> {
 crates/mdbook-summary/README.md
      1→# mdbook-summary
-     2→
-     3→[![Documentation](https://img.shields.io/docsrs/mdbook-summary)](https://docs.rs/mdbook-summary)
-     4→[![crates.io](https://img.shields.io/crates/v/mdbook-summary.svg)](https://crates.io/crates/mdbook-summary)
-     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
-     6→
+     7→This is the Rust library used to parse the [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html) file structure for [mdBook](https://rust-lang.github.io/mdBook/).
+     8→
       →…
     11→## License
-    12→
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-summary/src/lib.rs
     17→/// Parse the text from a `SUMMARY.md` file into a sort of "recipe" to be
@@ -411,15 +356,11 @@ crates/mdbook-summary/src/lib.rs
     97→    /// Create a new link with no nested items.
     98→    pub fn new<S: Into<String>, P: AsRef<Path>>(name: S, location: P) -> Link {
    109→    fn default() -> Self {
-   110→        Link {
-      →…
    122→pub enum SummaryItem {
    123→    /// A link to a chapter.
    124→    Link(Link),
       →…
    141→    fn from(other: Link) -> SummaryItem {
-   142→        SummaryItem::Link(other)
-      →…
    173→struct SummaryParser<'a> {
    174→    src: &'a str,
    175→    stream: pulldown_cmark::OffsetIter<'a, DefaultBrokenLinkCallback>,
@@ -429,16 +370,16 @@ crates/mdbook-summary/src/lib.rs
    190→macro_rules! collect_events {
 crates/xtask/README.md
      1→# xtask
-     2→
-      →…
+     3→This is a CLI utility for running development commands for mdbook.
+     4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
 crates/xtask/src/changelog.rs
-     8→const CHANGELOG_PATH: &str = "CHANGELOG.md";
+     8→const CHANGELOG_PATH …
     10→pub(crate) fn changelog() -> Result<()> {
     11→    let previous = get_previous()?;
       →…
 crates/xtask/src/main.rs
      9→mod changelog;
-    11→type Result<T> = std::result::Result<T, Box<dyn Error>>;
+    11→type Result …
 eslint.config.mjs
      4→const handlebarsPreprocessor = {
      7→            preprocess(text, filename) {
@@ -460,29 +401,17 @@ guide/guide-helper/src/main.rs
      2→
      3→fn main() {
 guide/src/README.md
-     1→# Introduction
-     2→
-      →…
-    46→## Contributing
-    47→
-      →…
-    55→## License
-    56→
-      →…
+     1→# Introduction …
+    46→## Contributing …
+    55→## License …
 guide/src/cli/README.md
      1→# Command-line tool
-     2→
+     3→The `mdbook` command-line tool is used to create and build books.
       →…
 guide/src/for_developers/README.md
-     1→# For developers
-     2→
-      →…
-    17→## The build process
-    18→
-      →…
-    30→## Using `mdbook` as a library
-    31→
-      →…
+     1→# For developers …
+    17→## The build process …
+    30→## Using `mdbook` as a library …
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     44→#[derive(Debug, Default, Serialize, Deserialize)]
     45→#[serde(default, rename_all = "kebab-case")]
@@ -492,30 +421,27 @@ guide/src/for_developers/mdbook-wordcount/src/main.rs
     49→}
 guide/src/format/README.md
      1→# Format
-     2→
      3→In this section you will learn how to:
      4→
      5→- Structure your book correctly
       →…
 guide/src/format/configuration/README.md
      1→# Configuration
-     2→
+     3→This section details the configuration options available in the ***book.toml***:
       →…
 guide/src/format/example.rs
      1→fn main() {
 guide/src/format/mdbook.md
      3→## Hiding code lines
-     4→
      5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
      6→
       →…
 guide/src/format/theme/README.md
      1→# Theme
-     2→
+     3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
       →…
 guide/src/guide/README.md
      1→# User guide
-     2→
      3→This user guide provides an introduction to basic concepts of using mdBook.
      4→
      5→- [Installation](installation.md)
@@ -523,7 +449,10 @@ guide/src/guide/README.md
       →…
 guide/src/misc/contributors.md
      1→# Contributors
-     2→
+     3→Here is a list of the contributors who have helped improving mdBook. Big
+     4→shout-out to them!
+     5→
+     6→- [mdinger](https://github.com/mdinger)
       →…
 src/cmd/clean.rs
     36→/// Formats a number of bytes into a human readable SI-prefixed size.

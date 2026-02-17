@@ -240,10 +240,17 @@ fn render_symbol(
                 .find(|s| s.kind == parse::SymbolKind::Section)
                 .map(|s| s.line - 1)
                 .unwrap_or(lines.len());
-            let body_lines_available = next_heading_line.saturating_sub(heading_end);
+            // Skip leading noise (badges, link refs, blank lines)
+            let mut content_start = heading_end;
+            while content_start < next_heading_line
+                && is_markdown_leading_noise(lines[content_start])
+            {
+                content_start += 1;
+            }
+            let body_lines_available = next_heading_line.saturating_sub(content_start);
             let body_lines_to_show = body_lines_available.min(body_n);
-            let start = heading_end.max(*emitted_up_to);
-            let end = heading_end + body_lines_to_show;
+            let start = content_start.max(*emitted_up_to);
+            let end = content_start + body_lines_to_show;
             for (i, line) in lines.iter().enumerate().take(end).skip(start) {
                 out.push_str(&fmt_line(i, line));
             }
@@ -300,6 +307,36 @@ const TRUNCATION_MARKER: &str = "      →…\n";
 /// Count whitespace-delimited words in text.
 pub fn count_words(text: &str) -> usize {
     text.split_whitespace().count()
+}
+
+/// Check if a markdown line is leading "noise" that should be skipped at
+/// the start of section bodies. Matches:
+/// - Blank or whitespace-only lines
+/// - Markdown images: `![alt](url)` (badges/shields)
+/// - Linked images: `[![alt](url)](url)` (clickable badges)
+/// - Link reference definitions: `[label]: http...`
+///
+/// Only used to skip contiguous noise at the start of a section body,
+/// so mid-section images and links are still rendered normally.
+pub(crate) fn is_markdown_leading_noise(line: &str) -> bool {
+    let trimmed = line.trim();
+    if trimmed.is_empty() {
+        return true;
+    }
+    // Markdown images (badges): ![alt](url) or [![alt](url)](url)
+    if (trimmed.starts_with("![") || trimmed.starts_with("[![")) && trimmed.ends_with(')') {
+        return true;
+    }
+    // Link reference definitions: [label]: URL
+    if trimmed.starts_with('[') {
+        if let Some(pos) = trimmed.find("]: ") {
+            let after = trimmed[pos + 3..].trim();
+            if after.starts_with("http") || after.starts_with('/') || after.starts_with('#') {
+                return true;
+            }
+        }
+    }
+    false
 }
 
 /// Convert rendered output to JSON, splitting into per-file entries.

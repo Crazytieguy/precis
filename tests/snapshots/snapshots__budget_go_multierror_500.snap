@@ -5,27 +5,16 @@ expression: output
 budget: 500 (496 words)
 
 CHANGELOG.md
-     1→## Unreleased
-     2→
-     3→### Improvements
-     4→
-     5→### Changes
-     6→
-     7→### Fixed
-     8→
-     9→### Security
+     1→## Unreleased …
+     3→### Improvements …
+     5→### Changes …
+     7→### Fixed …
+     9→### Security …
 README.md
      1→# go-multierror
-     2→
-     3→[![CircleCI](https://img.shields.io/circleci/build/github/hashicorp/go-multierror/master)](https://circleci.com/gh/hashicorp/go-multierror)
-     4→[![Go Reference](https://pkg.go.dev/badge/github.com/hashicorp/go-multierror.svg)](https://pkg.go.dev/github.com/hashicorp/go-multierror)
-     5→![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/hashicorp/go-multierror)
-     6→
-     7→[circleci]: https://app.circleci.com/pipelines/github/hashicorp/go-multierror
-     8→[godocs]: https://pkg.go.dev/github.com/hashicorp/go-multierror
-      →…
+    10→> **Note**: As of Go 1.20, the standard library provides [`errors.Join`](https://pkg.go.dev/errors#Join) which offers similar functionality for combining multiple errors. **For new projects, we recommend using `errors.Join` from the standard library.** This package provides additional features like custom formatting, the `Group` pattern for concurrent error collection, and utility functions (`Append`, `Flatten`, `Prefix`).
+    11→
     12→## Migrating to `errors.Join`
-    13→
     14→**Basic error aggregation:**
     15→```go
     16→// Before (go-multierror)
@@ -34,14 +23,12 @@ README.md
     19→result = multierror.Append(result, err2)
       →…
    104→## Installation and Docs
-   105→
    106→Install using `go get github.com/hashicorp/go-multierror`.
    107→
    108→Full documentation is available at
    109→https://pkg.go.dev/github.com/hashicorp/go-multierror
    110→
    111→### Requires go version 1.13 or newer
-   112→
    113→`go-multierror` requires go version 1.13 or newer. Go 1.13 introduced
    114→[error wrapping](https://golang.org/doc/go1.13#error_wrapping), which
    115→this library takes advantage of.
@@ -50,7 +37,6 @@ README.md
    118→[v1.0.0](https://github.com/hashicorp/go-multierror/tree/v1.0.0)
       →…
    129→## Usage
-   130→
    131→go-multierror is easy to use and purposely built to be unobtrusive in
    132→existing Go applications/libraries that may not be aware of it.
    133→
@@ -65,12 +51,6 @@ flatten.go
     20→func flatten(err error, flatErr *Error) {
     21→	switch err := err.(type) {
     22→	case *Error:
-    23→		for _, e := range err.Errors {
-    24→			flatten(e, flatErr)
-    25→		}
-    26→	default:
-    27→		flatErr.Errors = append(flatErr.Errors, err)
-    28→	}
       →…
 format.go
     11→// ErrorFormatFunc is a function callback that is called by Error to
@@ -113,7 +93,6 @@ multierror.go
     90→// errors while accounting for the current represented error. This lets
     91→// Is/As be meaningful.
     92→//
-    93→// Unwrap returns the next error. In the cleanest form, Unwrap would return
       →…
     99→type chain []error
    102→func (e chain) Error() string {

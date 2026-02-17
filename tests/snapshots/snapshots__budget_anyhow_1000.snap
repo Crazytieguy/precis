@@ -2,26 +2,26 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (982 words)
+budget: 1000 (983 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
-     3→
+     4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/anyhow-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/anyhow)
       →…
     21→## Details
-    22→
+    23→- Use `Result<T, anyhow::Error>`, or equivalently `anyhow::Result<T>`, as the
       →…
    126→## No-std support
-   127→
+   128→In no_std mode, almost all of the same API is available and works the same way.
       →…
    144→## Comparison to failure
-   145→
+   146→The `anyhow::Error` type works something like `failure::Error`, but unlike
       →…
    155→## Comparison to thiserror
-   156→
+   157→Use Anyhow if you don't care what error type your functions return, you just
       →…
    166→#### License
-   167→
+   168→<sup>
       →…
 build.rs
     17→fn main() {
@@ -68,7 +68,6 @@ src/chain.rs
     36→    type Item = &'a (dyn StdError + 'static);
 src/context.rs
      9→mod ext {
-    10→    use super::*;
     12→    pub trait StdError {
     13→        fn ext_context<C>(self, context: C) -> Error
     14→        where
@@ -162,18 +161,12 @@ src/lib.rs
    283→}
    288→/// The `Error` type, a wrapper around a dynamic error type.
    289→///
-   290→/// `Error` works a lot like `Box<dyn std::error::Error>`, but with these
-   291→/// differences:
-   292→///
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
    392→}
    394→/// Iterator of a chain of source errors.
    395→///
-   396→/// This type is the iterator returned by [`Error::chain`].
-   397→///
-   398→/// # Example
       →…
    415→pub struct Chain<'a> {
    416→    state: crate::chain::ChainState<'a>,
@@ -211,9 +204,6 @@ src/lib.rs
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    470→/// Provides the `context` method for `Result`.
    471→///
-   472→/// This trait is sealed and cannot be implemented for types outside of
-   473→/// `anyhow`.
-   474→///
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.

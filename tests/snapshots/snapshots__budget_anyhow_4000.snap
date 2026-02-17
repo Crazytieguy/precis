@@ -6,7 +6,6 @@ budget: 4000 (3765 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
-     3→
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/anyhow-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/anyhow)
      5→[<img alt="crates.io" src="https://img.shields.io/crates/v/anyhow.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/anyhow)
      6→[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-anyhow-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/anyhow)
@@ -25,7 +24,6 @@ README.md
     19→<br>
     20→
     21→## Details
-    22→
     23→- Use `Result<T, anyhow::Error>`, or equivalently `anyhow::Result<T>`, as the
     24→  return type of any fallible function.
     25→
@@ -83,7 +81,6 @@ README.md
     77→
       →…
    126→## No-std support
-   127→
    128→In no_std mode, almost all of the same API is available and works the same way.
    129→To depend on Anyhow in no_std mode, disable our default enabled "std" feature in
    130→Cargo.toml. A global allocator is required.
@@ -101,7 +98,6 @@ README.md
    142→<br>
    143→
    144→## Comparison to failure
-   145→
    146→The `anyhow::Error` type works something like `failure::Error`, but unlike
    147→failure ours is built around the standard library's `std::error::Error` trait
    148→rather than a separate trait `failure::Fail`. The standard library has adopted
@@ -112,7 +108,6 @@ README.md
    153→<br>
    154→
    155→## Comparison to thiserror
-   156→
    157→Use Anyhow if you don't care what error type your functions return, you just
    158→want it to be easy. This is common in application code. Use [thiserror] if you
    159→are a library that wants to design your own dedicated error type(s) so that on
@@ -123,7 +118,6 @@ README.md
    164→<br>
    165→
    166→#### License
-   167→
    168→<sup>
    169→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
    170→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
@@ -837,6 +831,7 @@ src/lib.rs
    718→            }
    719→        }
    720→
+   721→        impl Bool for &bool {
    722→            #[inline]
    723→            fn not(self) -> bool {
 src/macros.rs

@@ -2,49 +2,44 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (478 words)
+budget: 500 (490 words)
 
 README.md
      1→# xxhash
-     2→
-     3→[![Go Reference](https://pkg.go.dev/badge/github.com/cespare/xxhash/v2.svg)](https://pkg.go.dev/github.com/cespare/xxhash/v2)
-     4→[![Test](https://github.com/cespare/xxhash/actions/workflows/test.yml/badge.svg)](https://github.com/cespare/xxhash/actions/workflows/test.yml)
-     5→
+     6→xxhash is a Go implementation of the 64-bit [xxHash] algorithm, XXH64. This is a
+     7→high-quality hashing algorithm that is much faster than anything in the Go
+     8→standard library.
+     9→
       →…
     33→## Compatibility
-    34→
     35→This package is in a module and the latest code is in version 2 of the module.
     36→You need a version of Go with at least "minimal module compatibility" to use
     37→github.com/cespare/xxhash/v2:
+    38→
       →…
     45→## Benchmarks
-    46→
     47→Here are some quick benchmarks comparing the pure-Go and assembly
     48→implementations of Sum64.
     49→
+    50→| input size | purego    | asm       |
       →…
     66→## Projects using this package
-    67→
     68→- [InfluxDB](https://github.com/influxdata/influxdb)
     69→- [Prometheus](https://github.com/prometheus/prometheus)
     70→- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
+    71→- [FreeCache](https://github.com/coocood/freecache)
       →…
 dynamic/plugin.go
     14→const (
     15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
     16→	want = uint64(0x02a2e85470d6fd96)
-    17→)
     19→func TestSum(t *testing.T) {
     20→	got := xxhash.Sum64String(in)
     21→	if got != want {
-    22→		t.Fatalf("Sum64String: got 0x%x; want 0x%x", got, want)
-    23→	}
       →…
     26→func TestDigest(t *testing.T) {
     27→	for chunkSize := 1; chunkSize <= len(in); chunkSize++ {
     28→		name := fmt.Sprintf("[chunkSize=%d]", chunkSize)
-    29→		t.Run(name, func(t *testing.T) {
-    30→			d := xxhash.New()
       →…
 xxhash.go
     11→const (

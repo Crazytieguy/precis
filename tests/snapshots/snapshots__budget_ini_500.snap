@@ -2,26 +2,20 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (487 words)
+budget: 500 (494 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
      9→  .map((file) => `./${file}`)
 CONTRIBUTING.md
-     3→# Contributing
-     4→
+     3→# Contributing …
      5→## Code of Conduct
-     6→
      7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
      8→
-     9→## Reporting Bugs
-    10→
-      →…
-    17→## Pull Request Conventions
-    18→
+     9→## Reporting Bugs …
+    17→## Pull Request Conventions …
     19→### Commits
-    20→
     21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
     22→
     23→When opening a pull request please be sure that either the pull request title, or each commit in the pull request, has one of the following prefixes:
@@ -30,30 +24,20 @@ CONTRIBUTING.md
     26→ - `fix`: For bug fixes. The result will be a new semver patch version of the package when it is next published.
     27→ - `docs`: For documentation updates.  The result will be a new semver patch version of the package when it is next published.
       →…
-    30→### Test Coverage
-    31→
-      →…
-    36→### Linting
-    37→
-      →…
-    42→## What _not_ to contribute?
-    43→
+    30→### Test Coverage …
+    36→### Linting …
+    42→## What _not_ to contribute? …
     44→### Dependencies
-    45→
     46→It should be noted that our team does not accept third-party dependency updates/PRs.  If you submit a PR trying to update our dependencies we will close it with or without a reference to these contribution guidelines.
     47→
-    48→### Tools/Automation
-    49→
-      →…
+    48→### Tools/Automation …
 README.md
      4→## Note
-     5→
      6→-   Sections are treated as nested objects.
      7→
      8→-   Section-less items are treated as globals.
      9→
     10→## Usage
-    11→
     12→Consider an INI file such as the following:
     13→
     14→```ini
@@ -71,11 +55,11 @@ README.md
     26→array[] = second value
     27→array[] = third value
     28→```
+    29→
+    30→You can **read**, **modify** and **write** it like so:
       →…
     82→## API
-    83→
     84→### Parse
-    85→
     86→Attempts to turn the given INI string into a nested data object.
     87→
     88→```js
@@ -84,7 +68,6 @@ README.md
     91→```
     92→
     93→### Stringify
-    94→
     95→Encodes the given data object as an INI formatted string.
     96→
     97→```js
@@ -102,9 +85,10 @@ README.md
    109→
    110→    /**
    111→     *  Whether to align the `=` character for each section.
+   112→     *  -> Also enables the `whitespace` option
+   113→     */
       →…
    167→### Un / Escape
-   168→
    169→Turn the given string into a safe to  
    170→use key or value in your INI file.
    171→

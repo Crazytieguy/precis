@@ -2,18 +2,57 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3471 words)
+budget: 4000 (3624 words)
 
 CHANGELOG.md
+     1→# Changelog …
+     8→## [1.2.1] - 2025-10-26 …
+    13→## [1.2.0] - 2025-10-26 …
+    19→## [1.1.1] - 2025-06-24 …
     21→### Fixed
-    22→
     23→* CLI: Ensure `find_dotenv` work reliably on python 3.13 by [@theskumar] in [#563](https://github.com/theskumar/python-dotenv/pull/563)
     24→* CLI: revert the use of execvpe on Windows by [@wrongontheinternet] in [#566](https://github.com/theskumar/python-dotenv/pull/566)
     25→
     26→
+    27→## [1.1.0] - 2025-03-25 …
+    42→## [1.0.1] - 2024-01-23 …
+    55→## [1.0.0] - 2023-02-24 …
+    62→## [0.21.1] - 2023-01-21 …
+    80→## [0.21.0] - 2022-09-03 …
+    97→## [0.20.0] - 2022-03-24 …
+   110→## [0.19.2] - 2021-11-11 …
+   117→## [0.19.1] - 2021-08-09 …
+   123→## [0.19.0] - 2021-07-24 …
+   138→## [0.18.0] - 2021-06-20 …
+   151→## [0.17.1] - 2021-04-29 …
+   157→## [0.17.0] - 2021-04-02 …
+   167→## [0.16.0] - 2021-03-27 …
+   175→## [0.15.0] - 2020-10-28 …
+   194→## [0.14.0] - 2020-07-03 …
+   206→## [0.13.0] - 2020-04-16 …
+   212→## [0.12.0] - 2020-02-28 …
+   225→## [0.11.0] - 2020-02-07 …
+   241→## [0.10.5] - 2020-01-19 …
+   250→## [0.10.4] - 2020-01-17 …
+   258→## 0.10.3 …
+   265→## 0.10.2 …
+   273→## 0.10.1 …
+   276→## 0.10.0 …
+   287→## 0.9.0 …
+   293→## 0.8.1 …
+   298→## 0.8.0 …
+   307→## 0.7.1 …
+   311→## 0.7.0 …
+   320→## 0.6.5 …
+   326→## 0.6.4 …
+   331→## 0.6.3 …
+   336→## 0.6.2 …
+   342→## 0.6.0 …
+   352→## 0.5.1 …
+   357→## 0.5.0 …
+   362→## 0.4.0 …
 CONTRIBUTING.md
      1→Contributing
-     3→
      4→All the contributions are welcome! Please open [an
      5→issue](https://github.com/theskumar/python-dotenv/issues/new) or send us
      6→a pull request.
@@ -48,7 +87,6 @@ CONTRIBUTING.md
     35→Open http://127.0.0.1:8000/ to view the documentation locally.
 README.md
      1→# python-dotenv
-     2→
      3→[![Build Status][build_status_badge]][build_status_link]
      4→[![PyPI version][pypi_badge]][pypi_link]
      5→
@@ -69,7 +107,6 @@ README.md
     20→- [Acknowledgements](#acknowledgements)
     21→
     22→## Getting Started
-    23→
     24→```shell
     25→pip install python-dotenv
     26→```
@@ -125,9 +162,7 @@ README.md
     76→See the section "[File format](#file-format)" below for more information about what you can write in a `.env` file.
     77→
     78→## Other Use Cases
-    79→
     80→### Load configuration without altering the environment
-    81→
     82→The function `dotenv_values` works more or less the same way as `load_dotenv`,
     83→except it doesn't touch the environment, it just returns a `dict` with the
     84→values parsed from the `.env` file.
@@ -152,7 +187,6 @@ README.md
    103→```
    104→
    105→### Parse configuration as a stream
-   106→
    107→`load_dotenv` and `dotenv_values` accept [streams][python_streams] via their
    108→`stream` argument. It is thus possible to load the variables from sources other
    109→than the filesystem (e.g. the network).
@@ -167,7 +201,6 @@ README.md
    118→```
    119→
    120→### Load .env files in IPython
-   121→
    122→You can use dotenv in IPython. By default, it will use `find_dotenv` to search for a
    123→`.env` file:
    124→
@@ -188,13 +221,11 @@ README.md
    139→- `-v` for increased verbosity.
    140→
    141→### Disable load_dotenv
-   142→
    143→Set `PYTHON_DOTENV_DISABLED=1` to disable `load_dotenv()` from loading .env
    144→files or streams. Useful when you can't modify third-party package calls or in
    145→production.
    146→
    147→## Command-line Interface
-   148→
    149→A CLI interface `dotenv` is also included, which helps you manipulate the `.env`
    150→file without manually opening it.
    151→
@@ -216,7 +247,6 @@ README.md
    167→Run `dotenv --help` for more information about the options and subcommands.
    168→
    169→## File format
-   170→
    171→The format is not formally specified and still improves over time. That being
    172→said, `.env` files should mostly look like Bash files. Reading from FIFOs (named
    173→pipes) on Unix systems is also supported.
@@ -232,7 +262,6 @@ README.md
    183→- in double-quoted values: `\\`, `\'`, `\"`, `\a`, `\b`, `\f`, `\n`, `\r`, `\t`, `\v`
    184→
    185→### Multiline values
-   186→
    187→It is possible for single- or double-quoted values to span multiple lines. The
    188→following examples are equivalent:
    189→
@@ -246,7 +275,6 @@ README.md
    197→```
    198→
    199→### Variable without a value
-   200→
    201→A variable can have no value:
    202→
    203→```bash
@@ -261,7 +289,6 @@ README.md
    212→with the empty string.
    213→
    214→### Variable expansion
-   215→
    216→python-dotenv can interpolate variables using POSIX variable expansion.
    217→
    218→With `load_dotenv(override=True)` or `dotenv_values()`, the value of a variable
@@ -281,7 +308,6 @@ README.md
    232→- Empty string.
    233→
    234→## Related Projects
-   235→
    236→- [environs](https://github.com/sloria/environs)
    237→- [Honcho](https://github.com/nickstenning/honcho)
    238→- [dump-env](https://github.com/sobolevn/dump-env)
@@ -293,7 +319,6 @@ README.md
    244→- [django-configuration](https://github.com/jezdez/django-configurations)
    245→
    246→## Acknowledgements
-   247→
    248→This project is currently maintained by [Saurabh Kumar][saurabh-homepage] and
    249→[Bertrand Bonnefoy-Claudet][gh-bbc2] and would not have been possible without
    250→the support of these [awesome people][contributors].
@@ -307,8 +332,7 @@ README.md
    258→[build_status_link]: https://github.com/theskumar/python-dotenv/actions/workflows/test.yml
    259→[build_status_badge]: https://github.com/theskumar/python-dotenv/actions/workflows/test.yml/badge.svg
 docs/reference.md
-     1→# ::: dotenv
-     2→
+     1→# ::: dotenv …
 src/dotenv/__init__.py
      6→def load_ipython_extension(ipython: Any) -> None:
     12→def get_cli_string(

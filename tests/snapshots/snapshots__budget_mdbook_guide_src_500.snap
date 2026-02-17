@@ -2,72 +2,37 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (498 words)
+budget: 500 (494 words)
 
-404.md
-     1→# Document not found (404)
-     2→
-      →…
 README.md
      1→# Introduction
-     2→
+     3→<style>
+     4→    .mdbook-version {
       →…
     46→## Contributing
-    47→
+    48→mdBook is free and open source. You can find the source code on
+    49→[GitHub](https://github.com/rust-lang/mdBook) and issues and feature requests can be posted on
       →…
     55→## License
-    56→
-      →…
-SUMMARY.md
-     1→# Summary
-     2→
-      →…
-     5→# User guide
-     6→
-      →…
-    11→# Reference guide
-    12→
-      →…
+    57→The mdBook source and documentation are released under
+    58→the [Mozilla Public License v2.0](https://www.mozilla.org/MPL/2.0/).
 cli/README.md
      1→# Command-line tool
-     2→
      3→The `mdbook` command-line tool is used to create and build books.
      4→After you have [installed](../guide/installation.md) `mdbook`, you can run the `mdbook help` command in your terminal to view the available commands.
      5→
      6→This following sections provide in-depth information on the different commands available.
      7→
       →…
-continuous-integration.md
-     1→# Running `mdbook` in continuous integration
-     2→
-      →…
-    12→## Installing mdBook
-    13→
-      →…
-    17→### Pre-compiled binaries
-    18→
-      →…
-    39→### Building from source
-    40→
-      →…
-    67→## Running tests
-    68→
-      →…
-    83→## Deploying
-    84→
-      →…
-   100→### 404 handling
-   101→
-      →…
 for_developers/README.md
      1→# For developers
-     2→
+     3→While `mdbook` is mainly used as a command line tool, you can also import the
       →…
     17→## The build process
-    18→
+    19→The process of rendering a book project goes through several steps.
       →…
     30→## Using `mdbook` as a library
-    31→
+    32→The `mdbook` binary is just a wrapper around the underlying mdBook crates,
       →…
 for_developers/mdbook-wordcount/src/main.rs
     12→fn main() {
@@ -80,7 +45,6 @@ for_developers/mdbook-wordcount/src/main.rs
     49→}
 format/README.md
      1→# Format
-     2→
      3→In this section you will learn how to:
      4→
      5→- Structure your book correctly
@@ -89,7 +53,6 @@ format/README.md
      8→- Customize your theme
 format/configuration/README.md
      1→# Configuration
-     2→
      3→This section details the configuration options available in the ***book.toml***:
      4→- **[General]** configuration including the `book`, `rust`, `build` sections
      5→- **[Preprocessor]** configuration for default and custom book preprocessors
@@ -107,7 +70,6 @@ format/example.rs
       →…
 format/mdbook.md
      3→## Hiding code lines
-     4→
      5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
      6→
      7→For the Rust language, you can prefix lines with `# ` (`#` followed by a space) to hide them [like you would with Rustdoc][rustdoc-hide].
@@ -130,7 +92,6 @@ format/mdbook.md
       →…
 format/theme/README.md
      1→# Theme
-     2→
      3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
      4→render your markdown files and comes with a default theme included in the mdBook
      5→binary.
@@ -138,7 +99,6 @@ format/theme/README.md
       →…
 guide/README.md
      1→# User guide
-     2→
      3→This user guide provides an introduction to basic concepts of using mdBook.
      4→
      5→- [Installation](installation.md)
@@ -146,7 +106,6 @@ guide/README.md
      7→- [Creating a Book](creating.md)
 misc/contributors.md
      1→# Contributors
-     2→
      3→Here is a list of the contributors who have helped improving mdBook. Big
      4→shout-out to them!
      5→
@@ -156,6 +115,4 @@ misc/contributors.md
      9→- Adam Solove ([asolove](https://github.com/asolove))
     10→- Wayne Nilsen ([waynenilsen](https://github.com/waynenilsen))
     11→- [funnkill](https://github.com/funkill)
-    12→- Fu Gangqiang ([FuGangqiang](https://github.com/FuGangqiang))
-    13→- [Michael-F-Bryan](https://github.com/Michael-F-Bryan)
       →…

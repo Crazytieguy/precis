@@ -2,33 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (964 words)
+budget: 1000 (982 words)
 
 Readme.md
-    42→### Usage
-    43→
-      →…
-   145→### Why?
-   146→
-      →…
-   167→### Principles
-   168→
-      →…
-   181→### Demo
-   182→
-      →…
-   189→### Examples
-   190→
-      →…
-   205→### Documentation
-   206→
-      →…
-   231→### License
-   232→
-      →…
+    42→### Usage …
+   145→### Why? …
+   167→### Principles …
+   181→### Demo …
+   189→### Examples …
+   205→### Documentation …
+   231→### License …
 docs/guides/01-getting-started.md
      3→## Installing Superstruct
-     4→
      5→To install Superstruct run:
      6→
      7→```bash
@@ -57,16 +42,9 @@ docs/guides/01-getting-started.md
     30→})
     31→```
     32→
-    33→If you'd rather use a `<script>` tag, you can use the UMD build:
-    34→
-    35→```html
-    36→<script src="https://unpkg.com/superstruct/lib/index.cjs"></script>
-    37→```
-    38→
       →…
 docs/readme.md
      7→### Usage
-     8→
      9→Superstruct allows you to define the shape of data you want to validate:
     10→
     11→```js
@@ -94,7 +72,6 @@ docs/readme.md
       →…
 docs/reference/core.md
      3→### `assert`
-     4→
      5→`assert<T>(value: unknown, struct: Struct<T>, message?: string) => asserts value is T`
      6→
      7→```ts
@@ -104,7 +81,6 @@ docs/reference/core.md
       →…
 docs/reference/typescript.md
      7→### `Describe`
-     8→
      9→The `Describe` utility returns a type representing a struct for a given valid value type. This allows you to ensure you're writing your struct definitions properly, for example:
     10→
     11→```ts
@@ -113,25 +89,14 @@ docs/reference/typescript.md
     14→  name: string
       →…
 docs/resources/faq.md
-     1→# FAQ
-     2→
-      →…
-     5→### How can I allow unknown keys with `object` structs?
-     6→
-      →…
-    11→### Why not have a built-in `json` struct?
-    12→
-      →…
+     1→# FAQ …
+     5→### How can I allow unknown keys with `object` structs? …
+    11→### Why not have a built-in `json` struct? …
 docs/resources/links.md
-     1→# Resources
-     2→
-      →…
-     5→## Libraries
-     6→
-      →…
+     1→# Resources …
+     5→## Libraries …
 docs/summary.md
      3→## Guides
-     4→
      5→- [Getting Started](./guides/01-getting-started.md)
      6→- [Validating Data](./guides/02-validating-data.md)
      7→- [Coercing Data](./guides/03-coercing-data.md)
@@ -140,7 +105,6 @@ docs/summary.md
     10→- [Using TypeScript](./guides/06-using-typescript.md)
     11→
     12→## API Reference
-    13→
     14→- [Core](./reference/core.md)
     15→- [Types](./reference/types.md)
     16→- [Refinements](./reference/refinements.md)
@@ -150,7 +114,6 @@ docs/summary.md
     20→- [TypeScript](./reference/typescript.md)
     21→
     22→## Resources
-    23→
     24→- [FAQ](./resources/faq.md)
     25→- [Links](./resources/links.md)
 src/error.ts
@@ -170,6 +133,12 @@ src/error.ts
     37→    const { message, explanation, ...rest } = failure
     38→    const { path } = failure
     39→    const msg =
+    40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
+    41→    super(explanation ?? msg)
+    42→    if (explanation != null) this.cause = msg
+    43→    Object.assign(this, rest)
+    44→    this.name = this.constructor.name
+    45→    this.failures = () => {
       →…
 src/struct.ts
     10→export class Struct<T = unknown, S = unknown> {
@@ -187,6 +156,12 @@ src/struct.ts
     22→  constructor(props: {
     23→    type: string
     24→    schema: S
+    25→    coercer?: Coercer
+    26→    validator?: Validator
+    27→    refiner?: Refiner<T>
+    28→    entries?: Struct<T, S>['entries']
+    29→  }) {
+    30→    const {
     63→  /**
       →…
     67→  assert(value: unknown, message?: string): asserts value is T {

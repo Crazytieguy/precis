@@ -2,31 +2,25 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (483 words)
+budget: 500 (485 words)
 
 README.md
      1→# Versioning Library for Go
-     2→
-     3→![Build Status](https://github.com/hashicorp/go-version/actions/workflows/go-tests.yml/badge.svg)
+     6→go-version is a library for parsing versions and version constraints,
       →…
     13→## Installation and Usage
-    14→
     15→Package documentation can be found on
       →…
     24→#### Version Parsing and Comparison
-    25→
     26→```go
       →…
     37→#### Version Constraints
-    38→
     39→```go
       →…
     49→#### Version Sorting
-    50→
     51→```go
       →…
     63→## Issues and Contributing
-    64→
     65→If you find an issue with this library, please report an issue. If you'd
       →…
 constraint.go

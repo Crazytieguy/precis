@@ -2,15 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (505 words)
+budget: 500 (502 words)
 
 CHANGELOG.md
-     3→## [1.4.2]
-     4→
-      →…
+     3→## [1.4.2] …
 README.md
      3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
-     4→
      5→<h3 align="center">Hero Sponsors 🎖️</h3>
      6→<p align="center">
      7→<a href="https://go.clerk.com/input-otp" target="_blank">
@@ -27,22 +24,13 @@ README.md
     18→https://github.com/guilhermerodz/input-otp/assets/10366880/753751f5-eda8-4145-a4b9-7ef51ca5e453
     19→
    206→### OTPInput
-   207→
    208→The root container. Define settings for the input via props. Then, use the `render` prop to create the slots.
    209→
 apps/storybook/README.md
-    13→## 🚅 Quick start
-    14→
-      →…
-    44→## 🔎 What's inside?
-    45→
-      →…
-    83→## Contribute
-    84→
-      →…
-    87→## Learning Storybook
-    88→
-      →…
+    13→## 🚅 Quick start …
+    44→## 🔎 What's inside? …
+    83→## Contribute …
+    87→## Learning Storybook …
 apps/storybook/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
@@ -65,15 +53,9 @@ apps/storybook/tailwind.config.js
      3→  darkMode: ['class'],
       →…
 apps/website/README.md
-     3→## Getting Started
-     4→
-      →…
-    23→## Learn More
-    24→
-      →…
-    32→## Deploy on Vercel
-    33→
-      →…
+     3→## Getting Started …
+    23→## Learn More …
+    32→## Deploy on Vercel …
 apps/website/next.config.mjs
      3→/** @type {import('next').NextConfig} */
      4→const nextProdConfig = {}
@@ -93,6 +75,7 @@ apps/website/src/app/(local-pages)/example-playground/page.tsx
 apps/website/src/app/(local-pages)/layout.tsx
      7→export default function RootLayout({
      8→  children,
+     9→}: Readonly<{
       →…
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      5→export default function ShadcnPage() {
@@ -121,6 +104,7 @@ apps/website/src/app/(pages)/layout.tsx
       →…
     68→export default function RootLayout({
     69→  children,
+    70→}: Readonly<{
       →…
 apps/website/src/components/icons.tsx
      1→type IconProps = React.HTMLAttributes<SVGElement>
@@ -128,13 +112,13 @@ apps/website/src/components/icons.tsx
 apps/website/src/components/ui/badge.tsx
     26→export interface BadgeProps
     27→  extends React.HTMLAttributes<HTMLDivElement>,
-      →…
+    28→    VariantProps<typeof badgeVariants> {}
 apps/website/src/components/ui/button.tsx
     36→export interface ButtonProps
     37→  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     38→    VariantProps<typeof buttonVariants> {
     39→  asChild?: boolean
-      →…
+    40→}
 apps/website/src/config/site.ts
      1→export const siteConfig = {
      2→  name: 'rodz/input-otp',

@@ -2,23 +2,26 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1957 words)
+budget: 2000 (1953 words)
 
 README.md
      1→log
-     3→
      4→A Rust library providing a lightweight logging *facade*.
      5→
+     6→[![Build status](https://img.shields.io/github/actions/workflow/status/rust-lang/log/main.yml?branch=master)](https://github.com/rust-lang/log/actions)
+     7→[![Latest version](https://img.shields.io/crates/v/log.svg)](https://crates.io/crates/log)
+     8→[![Documentation](https://docs.rs/log/badge.svg)](https://docs.rs/log)
+     9→![License](https://img.shields.io/crates/l/log.svg)
+    10→
+    11→* [`log` documentation](https://docs.rs/log)
       →…
     19→## Minimum supported `rustc`
-    20→
     21→`1.68.0+`
     22→
-      →…
+    23→This version is explicitly tested in CI and may be bumped in any release as needed. Maintaining compatibility with older compilers is a priority though, so the bar for bumping the minimum supported version is set very high. Any changes to the supported minimum version will be called out in the release notes.
+    24→
     25→## Usage
-    26→
     27→### In libraries
-    28→
     29→Libraries should link only to the `log` crate, and use the provided macros to
     30→log whatever information will be useful to downstream consumers:
     31→
@@ -49,22 +52,30 @@ README.md
     56→```
     57→
     58→### In executables
-    59→
     60→In order to produce log output, executables have to use a logger implementation compatible with the facade.
     61→There are many available implementations to choose from, here are some options:
+    62→
+    63→* Simple minimal loggers:
+    64→    * [`env_logger`](https://docs.rs/env_logger/*/env_logger/)
+    65→    * [`colog`](https://docs.rs/colog/*/colog/)
+    66→    * [`simple_logger`](https://docs.rs/simple_logger/*/simple_logger/)
+    67→    * [`simplelog`](https://docs.rs/simplelog/*/simplelog/)
       →…
    106→## Structured logging
-   107→
    108→If you enable the `kv` feature, you can associate structured data with your log records:
    109→
+   110→```rust
+   111→use log::{info, trace, warn};
+   112→
+   113→pub fn shave_the_yak(yak: &mut Yak) {
+   114→    // `yak:serde` will capture `yak` using its `serde::Serialize` impl
+   115→    //
       →…
 rfcs/0296-structured-logging.md
    502→### Don't break anything
-   503→
    504→Allow structured logging to be added in the current `0.4.x` series of `log`. This gives us the option of including structured logging in an `0.4.x` release, or bumping the minor crate version without introducing any actual breaking changes.
    505→
   1598→#### Build a serialization contract in `log`
-  1599→
   1600→Instead of internalizing a few serialization frameworks, `log` could provide a public common contract for them to conform to:
   1601→
   1602→```rust
@@ -89,8 +100,6 @@ src/__private_api.rs
     12→mod sealed {
     13→    /// Types for the `kv` argument.
     14→    pub trait KVs<'a> {
-    37→/// The global logger proxy.
-    38→#[derive(Debug)]
     39→pub struct GlobalLogger;
     56→fn log_impl …
    112→#[cfg(feature = "kv")]
@@ -271,9 +280,6 @@ src/lib.rs
    460→static LOG_LEVEL_NAMES …
    462→static SET_LOGGER_ERROR …
    464→static LEVEL_PARSE_ERROR …
-   467→/// An enum representing the available verbosity levels of the logger.
-   468→///
-      →…
    475→pub enum Level {
    476→    /// The "error" level.
    477→    ///
@@ -301,9 +307,6 @@ src/lib.rs
    499→}
    516→    type Err = ParseLevelError;
    535→    fn from_usize …
-   626→/// An enum representing the available verbosity level filters of the logger.
-   627→///
-      →…
    636→pub enum LevelFilter {
    637→    /// A level lower than all log levels.
    638→    Off,
@@ -332,9 +335,6 @@ src/lib.rs
    791→            MaybeStaticStr::Borrowed(s) => s,
    792→        }
    793→    }
-   796→/// The "payload" of a log message.
-   797→///
-      →…
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
    844→    args: fmt::Arguments<'a>,
@@ -349,26 +349,16 @@ src/lib.rs
    858→struct KeyValues<'a>(&'a dyn kv::Source);
    860→#[cfg(feature = "kv")]
    861→impl<'a> fmt::Debug for KeyValues<'a> {
-   963→/// Builder for [`Record`](struct.Record.html).
-   964→///
-      →…
   1003→pub struct RecordBuilder<'a> {
   1004→    record: Record<'a>,
   1005→}
-  1119→/// Metadata about a log message.
-  1120→///
-      →…
   1158→pub struct Metadata<'a> {
   1159→    level: Level,
   1160→    target: &'a str,
   1161→}
-  1183→/// Builder for [`Metadata`](struct.Metadata.html).
-  1184→///
-      →…
   1200→pub struct MetadataBuilder<'a> {
   1201→    metadata: Metadata<'a>,
   1202→}
-  1248→/// A trait encapsulating the operations required of a logger.
   1249→pub trait Log: Sync + Send {
   1250→    /// Determines if a log message with the specified metadata would be
   1251→    /// logged.
@@ -397,10 +387,6 @@ src/lib.rs
   1274→    ///
   1275→    /// # For implementors
   1276→    ///
-  1277→    /// This method isn't called automatically by the `log!` macros.
-  1278→    /// It can be called manually on shut-down to ensure any in-flight records are flushed.
-  1279→    fn flush(&self);
-  1280→}
   1282→/// A dummy initial value for LOGGER.
   1283→struct NopLogger;
   1310→#[cfg(feature = "std")]
@@ -425,16 +411,12 @@ src/lib.rs
   1491→        Ordering::Relaxed,
   1492→    ) {
   1493→        Ok(UNINITIALIZED) => {
-      →…
-  1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
-  1545→///
+  1494→            unsafe {
+  1495→                LOGGER = make_logger();
       →…
   1549→pub struct SetLoggerError(());
   1558→#[cfg(feature = "std")]
   1559→impl error::Error for SetLoggerError {}
-  1561→/// The type returned by [`from_str`] when the string doesn't match any of the log levels.
-  1562→///
-      →…
   1566→pub struct ParseLevelError(());
   1575→#[cfg(feature = "std")]
   1576→impl error::Error for ParseLevelError {}
@@ -458,7 +440,11 @@ src/lib.rs
   1617→    false if cfg!(feature = "release_max_level_trace") => LevelFilter::Trace,
   1618→    _ if cfg!(feature = "max_level_off") => LevelFilter::Off,
   1619→    _ if cfg!(feature = "max_level_error") => LevelFilter::Error,
-      →…
+  1620→    _ if cfg!(feature = "max_level_warn") => LevelFilter::Warn,
+  1621→    _ if cfg!(feature = "max_level_info") => LevelFilter::Info,
+  1622→    _ if cfg!(feature = "max_level_debug") => LevelFilter::Debug,
+  1623→    _ => LevelFilter::Trace,
+  1624→};
 src/macros.rs
     75→macro_rules! log {
    119→macro_rules! __log {

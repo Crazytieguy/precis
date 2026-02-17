@@ -2,97 +2,39 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1010 words)
+budget: 1000 (1011 words)
 
 ARCHITECTURE.md
-     1→# Architecture
-     2→
-      →…
-    46→## Approach
-    47→
-      →…
-    50→### Discarded approach
-    51→
-      →…
-    60→## Example
-    61→
-      →…
-    92→## Performance
-    93→
-      →…
-    96→## Groups
-    97→
-      →…
+     1→# Architecture …
+    46→## Approach …
+    50→### Discarded approach …
+    60→## Example …
+    92→## Performance …
+    96→## Groups …
 README.md
-     5→# ⌘K [![cmdk minzip package size](https://img.shields.io/bundlephobia/minzip/cmdk)](https://www.npmjs.com/package/cmdk?activeTab=code) [![cmdk package version](https://img.shields.io/npm/v/cmdk.svg?colorB=green)](https://www.npmjs.com/package/cmdk)
-     6→
-      →…
-     9→## Install
-    10→
-      →…
-    15→## Use
-    16→
-      →…
-    82→## Parts and styling
-    83→
-      →…
-    86→### Command `[cmdk-root]`
-    87→
-      →…
-   153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
-   154→
-      →…
-   180→### Input `[cmdk-input]`
-   181→
-      →…
-   190→### List `[cmdk-list]`
-   191→
-      →…
-   212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
-   213→
-      →…
-   242→### Group `[cmdk-group]` `[hidden?]`
-   243→
-      →…
-   256→### Separator `[cmdk-separator]`
-   257→
-      →…
-   260→### Empty `[cmdk-empty]`
-   261→
-      →…
-   264→### Loading `[cmdk-loading]`
-   265→
-      →…
-   274→### `useCommandState(state => state.selectedField)`
-   275→
-      →…
-   285→## Examples
-   286→
-      →…
-   289→### Nested items
-   290→
-      →…
-   338→### Show sub-items when searching
-   339→
-      →…
-   361→### Asynchronous results
-   362→
-      →…
-   397→### Use inside Popover
-   398→
-      →…
-   426→### Drop in stylesheets
-   427→
-      →…
-   430→## FAQ
-   431→
-      →…
-   456→## History
-   457→
-      →…
-   462→## Testing
-   463→
-      →…
+     5→# ⌘K [![cmdk minzip package size](https://img.shields.io/bundlephobia/minzip/cmdk)](https://www.npmjs.com/package/cmdk?activeTab=code) [![cmdk package version](https://img.shields.io/npm/v/cmdk.svg?colorB=green)](https://www.npmjs.com/package/cmdk) …
+     9→## Install …
+    15→## Use …
+    82→## Parts and styling …
+    86→### Command `[cmdk-root]` …
+   153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]` …
+   180→### Input `[cmdk-input]` …
+   190→### List `[cmdk-list]` …
+   212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]` …
+   242→### Group `[cmdk-group]` `[hidden?]` …
+   256→### Separator `[cmdk-separator]` …
+   260→### Empty `[cmdk-empty]` …
+   264→### Loading `[cmdk-loading]` …
+   274→### `useCommandState(state => state.selectedField)` …
+   285→## Examples …
+   289→### Nested items …
+   338→### Show sub-items when searching …
+   361→### Asynchronous results …
+   397→### Use inside Popover …
+   426→### Drop in stylesheets …
+   430→## FAQ …
+   456→## History …
+   462→## Testing …
 cmdk/src/command-score.ts
     54→function commandScoreInner(
     55→  string,
@@ -106,6 +48,9 @@ cmdk/src/command-score.ts
    150→function formatInput(string) {
    155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
    156→  /* NOTE:
+   157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
+   158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
+   159→   */
       →…
 cmdk/src/index.tsx
    161→const defaultFilter …
@@ -167,7 +112,6 @@ playwright.config.ts
       →…
 website/README.md
      3→## Getting Started
-     4→
      5→First, run the development server:
      6→
      7→```bash
@@ -183,7 +127,6 @@ website/README.md
     17→The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
     18→
     19→## Learn More
-    20→
     21→To learn more about Next.js, take a look at the following resources:
     22→
     23→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
@@ -192,7 +135,6 @@ website/README.md
     26→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
     27→
     28→## Deploy on Vercel
-    29→
     30→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     31→
     32→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
@@ -208,9 +150,6 @@ website/components/cmdk/linear.tsx
     31→  {
     32→    icon: <AssignToIcon />,
     33→    label: 'Assign to...',
-    34→    shortcut: ['A'],
-    35→  },
-    36→  {
       →…
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {

@@ -6,14 +6,11 @@ budget: 2000 (2002 words)
 
 CHANGELOG.md
      3→## [1.4.2]
-     4→
      5→- chore(input): remove unintentional log within internal pasteListener
      6→
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web.
-     2→
      3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
-     4→
      5→<h3 align="center">Hero Sponsors 🎖️</h3>
      6→<p align="center">
      7→<a href="https://go.clerk.com/input-otp" target="_blank">
@@ -30,78 +27,79 @@ README.md
     18→https://github.com/guilhermerodz/input-otp/assets/10366880/753751f5-eda8-4145-a4b9-7ef51ca5e453
     19→
     20→## Usage
-    21→
     22→```bash
     23→npm install input-otp
     24→```
     25→
     26→Then import the component.
     27→
+    28→```diff
+    29→+'use client'
       →…
     39→## Default example
-    40→
     41→The example below uses `tailwindcss` `@shadcn/ui` `tailwind-merge` `clsx`:
     42→
     43→```tsx
     44→'use client'
     45→import { OTPInput, SlotProps } from 'input-otp'
     46→<OTPInput
+    47→  maxLength={6}
+    48→  containerClassName="group flex items-center has-[:disabled]:opacity-30"
       →…
    136→## How it works
-   137→
    138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
    139→This library works by rendering an invisible input as a sibling of the slots, contained by a `relative`ly positioned parent (the container root called _OTPInput_).
    140→
    141→## Features
-   142→
    143→This is the most complete OTP input on the web. It's fully featured 
    144→
    145→<details>
    146→<summary>Supports iOS + Android copy-paste-cut</summary>
    147→
    148→https://github.com/guilhermerodz/input-otp/assets/10366880/bdbdc96a-23da-4e89-bff8-990e6a1c4c23
+   149→
+   150→</details>
       →…
    198→### Auto tracks if the input has space in the right side for the badge
-   199→
    200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
    201→
    202→</details>
    203→
    204→## API Reference
-   205→
    206→### OTPInput
-   207→
    208→The root container. Define settings for the input via props. Then, use the `render` prop to create the slots.
    209→
    210→#### Props
-   211→
    212→```ts
    213→type OTPInputProps = {
    214→  // The number of slots
    215→  maxLength: number
    216→
    217→  // Render function creating the slots
+   218→  render: (props: RenderProps) => React.ReactElement
+   219→  // PS: Render prop is mandatory, except in cases
       →…
    293→## Examples
-   294→
    295→<details>
    296→<summary>Automatic form submission on OTP completion</summary>
    297→
    298→```tsx
    299→export default function Page() {
    300→  const formRef = useRef<HTMLFormElement>(null)
+   301→  const buttonRef = useRef<HTMLButtonElement>(null)
+   302→
       →…
    377→## Caveats
-   378→
    379→<details>
    380→<summary>[Workaround] If you want to block specific password manager/badges:</summary>
    381→
    382→By default, `input-otp` handles password managers for you.
    383→The password manager badges should be automatically shifted to the right side.
    384→
+   385→However, if you still want to block password managers, please disable the `pushPasswordManagerStrategy` and then manually block each PWM.
+   386→
       →…
    539→#### Sponsors
-   540→
    541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
    542→
    543→> [Resend](https://go.resend.com/input-otp) is email for developers.
@@ -109,7 +107,6 @@ README.md
    545→> [Evomi](https://evomi.com/?utm_source=github&utm_campaign=otp) offers Residential Proxies starting from $0.49.
 apps/storybook/README.md
     13→## 🚅 Quick start
-    14→
     15→1.  **Create the application.**
     16→
     17→    Use [degit](https://github.com/Rich-Harris/degit) to get this template.
@@ -129,7 +126,6 @@ apps/storybook/README.md
     31→
       →…
     44→## 🔎 What's inside?
-    45→
     46→A quick look at the top-level files and directories included with this template.
     47→
     48→    .
@@ -149,11 +145,9 @@ apps/storybook/README.md
     62→
       →…
     83→## Contribute
-    84→
     85→If you encounter an issue with the template, we encourage you to open an issue in this template's repository.
     86→
     87→## Learning Storybook
-    88→
     89→1. Read our introductory tutorial at [Learn Storybook](https://storybook.js.org/tutorials/intro-to-storybook/react/en/get-started/).
     90→2. Learn how to transform your component libraries into design systems in our [Design Systems for Developers](https://storybook.js.org/tutorials/design-systems-for-developers/) tutorial.
     91→3. See our official documentation at [Storybook](https://storybook.js.org/).
@@ -220,11 +214,9 @@ apps/storybook/tailwind.config.js
     10→  prefix: '',
     11→  theme: {
     12→    container: {
-    13→      center: true,
       →…
 apps/website/README.md
      3→## Getting Started
-     4→
      5→First, run the development server:
      6→
      7→```bash
@@ -244,7 +236,6 @@ apps/website/README.md
     21→This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
     22→
     23→## Learn More
-    24→
     25→To learn more about Next.js, take a look at the following resources:
     26→
     27→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
@@ -253,7 +244,6 @@ apps/website/README.md
     30→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
     31→
     32→## Deploy on Vercel
-    33→
     34→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     35→
     36→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
@@ -314,11 +304,6 @@ apps/website/src/app/(local-pages)/layout.tsx
     13→    <html lang="en">
     14→      <body
     15→        className={cn(
-    16→          'min-h-[100dvh] bg-background font-sans antialiased',
-    17→          fontSans.className,
-    18→        )}
-    19→      >
-    20→        <AppProvider>
       →…
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      5→export default function ShadcnPage() {
@@ -418,11 +403,6 @@ apps/website/src/app/(pages)/layout.tsx
     74→    <html lang="en">
     75→      <body
     76→        className={cn(
-    77→          'min-h-[100dvh] bg-background font-sans antialiased',
-    78→          fontSans.className,
-    79→        )}
-    80→      >
-    81→        <AppProvider>
       →…
 apps/website/src/components/code.tsx
      9→export async function Code({
@@ -466,8 +446,6 @@ apps/website/src/components/icons.tsx
     15→        strokeLinejoin="round"
     16→        strokeWidth="16"
     17→      />
-    18→      <line
-    19→        x1="192"
       →…
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {

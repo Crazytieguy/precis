@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3955 words)
+budget: 4000 (3943 words)
 
 CONTRIBUTING.md
      1→# Contributing
-     2→
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
      4→2. Install dependencies (`npm install`)
      5→3. Create your feature branch (`git checkout -b my-new-feature`)
@@ -16,7 +15,6 @@ CONTRIBUTING.md
      9→7. [Create new Pull Request](https://help.github.com/articles/creating-a-pull-request/)
     10→
     11→## Testing
-    12→
     13→We use [TAP](https://github.com/tapjs/node-tap) to write tests. Run our test suite with this command:
     14→
     15→```
@@ -24,7 +22,6 @@ CONTRIBUTING.md
     17→```
     18→
     19→## Code Style
-    20→
     21→We use [standard](https://www.npmjs.com/package/standard) and [editorconfig](http://editorconfig.org) to maintain code style and best practices. Please make sure your PR adheres to the guides by running:
     22→
     23→```
@@ -32,7 +29,6 @@ CONTRIBUTING.md
     25→```
 README-es.md
      1→# dotenv [![NPM version](https://img.shields.io/npm/v/dotenv.svg?style=flat-square)](https://www.npmjs.com/package/dotenv) [![downloads](https://img.shields.io/npm/dw/dotenv)](https://www.npmjs.com/package/dotenv)
-     2→
      3→<img src="https://raw.githubusercontent.com/motdotla/dotenv/master/dotenv.svg" alt="dotenv" align="right" width="200" />
      4→
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
@@ -42,7 +38,6 @@ README-es.md
      9→&nbsp;
     10→
     11→## Usage
-    12→
     13→Install it.
     14→
     15→```sh
@@ -70,7 +65,6 @@ README-es.md
     37→&nbsp;
     38→
     39→## Advanced
-    40→
     41→<details><summary>ES6</summary><br>
     42→
     43→Import with [ES6](#how-do-i-use-dotenv-with-import):
@@ -146,7 +140,6 @@ README-es.md
    113→# This is a comment
       →…
    319→## Agentes
-   320→
    321→<img src="https://dotenvx.com/assets/img/as2/9.jpg" height="400" alt="dotenvx-as2" align="right"/>
    322→
    323→> El software está cambiando, y dotenv debe cambiar con él—por eso construí [agentic secret storage (AS2)](https://dotenvx.com/as2). Los agentes ejecutan código sin humanos en la terminal, por lo que los archivos `.env` en texto plano son el primitivo equivocado.
@@ -158,7 +151,6 @@ README-es.md
    329→> Es lo que uso ahora. - [motdotla](https://mot.la)
    330→
    331→### Inicio rápido
-   332→
    333→Instala vestauth e inicializa tu agente.
    334→
    335→```bash
@@ -184,7 +176,6 @@ README-es.md
    355→&nbsp;
    356→
    357→## FAQ
-   358→
    359→<details><summary>Should I commit my `.env` file?</summary><br/>
    360→
    361→No.
@@ -260,7 +251,6 @@ README-es.md
    431→
       →…
    579→## Docs
-   580→
    581→Dotenv exposes four functions:
    582→
    583→* `config`
@@ -268,7 +258,6 @@ README-es.md
    585→* `populate`
    586→
    587→### Config
-   588→
    589→`config` will read your `.env` file, parse the contents, assign it to
    590→[`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env),
    591→and return an Object with a `parsed` key containing the loaded content or an `error` key if it failed.
@@ -286,9 +275,7 @@ README-es.md
    603→You can additionally, pass options to `config`.
    604→
    605→#### Options
-   606→
    607→##### path
-   608→
    609→Default: `path.resolve(process.cwd(), '.env')`
    610→
    611→Specify a custom path if your file containing environment variables is located elsewhere.
@@ -306,7 +293,6 @@ README-es.md
    623→```
    624→
    625→##### quiet
-   626→
    627→Default: `false`
    628→
    629→Suppress runtime logging message.
@@ -329,7 +315,6 @@ README-es.md
    646→```
    647→
    648→##### encoding
-   649→
    650→Default: `utf8`
    651→
    652→Specify the encoding of your file containing environment variables.
@@ -339,7 +324,6 @@ README-es.md
    656→```
    657→
    658→##### debug
-   659→
    660→Default: `false`
    661→
    662→Turn on logging to help debug why certain keys or values are not being set as you expect.
@@ -349,7 +333,6 @@ README-es.md
    666→```
    667→
    668→##### override
-   669→
    670→Default: `false`
    671→
    672→Override any environment variables that have already been set on your machine with values from your .env file(s). If multiple files have been provided in `option.path` the override will also be used as each file is combined with the next. Without `override` being set, the first value wins. With `override` set the last value wins. 
@@ -359,7 +342,6 @@ README-es.md
    676→```
    677→
    678→##### processEnv
-   679→
    680→Default: `process.env`
    681→
    682→Specify an object to write your environment variables to. Defaults to `process.env` environment variables.
@@ -373,7 +355,6 @@ README-es.md
    690→```
    691→
    692→### Parse
-   693→
    694→The engine which parses the contents of your file containing environment
    695→variables is available to use. It accepts a String or Buffer and will return
    696→an Object with the parsed keys and values.
@@ -386,9 +367,7 @@ README-es.md
    703→```
    704→
    705→#### Options
-   706→
    707→##### debug
-   708→
    709→Default: `false`
    710→
    711→Turn on logging to help debug why certain keys or values are not being set as you expect.
@@ -402,7 +381,6 @@ README-es.md
    719→```
    720→
    721→### Populate
-   722→
    723→The engine which populates the contents of your .env file to `process.env` is available for use. It accepts a target, a source, and options. This is useful for power users who want to supply their own objects.
    724→
    725→For example, customizing the source:
@@ -429,15 +407,12 @@ README-es.md
    746→```
    747→
    748→#### options
-   749→
    750→##### Debug
-   751→
    752→Default: `false`
    753→
    754→Turn on logging to help debug why certain keys or values are not being populated as you expect.
    755→
    756→##### override
-   757→
    758→Default: `false`
    759→
    760→Override any environment variables that have already been set.
@@ -445,19 +420,16 @@ README-es.md
    762→&nbsp;
    763→
    764→## CHANGELOG
-   765→
    766→See [CHANGELOG.md](CHANGELOG.md)
    767→
    768→&nbsp;
    769→
    770→## Who's using dotenv?
-   771→
    772→[These npm modules depend on it.](https://www.npmjs.com/browse/depended/dotenv)
    773→
    774→Projects that expand it often use the [keyword "dotenv" on npm](https://www.npmjs.com/search?q=keywords:dotenv).
 README.md
      1→# dotenv [![NPM version](https://img.shields.io/npm/v/dotenv.svg?style=flat-square)](https://www.npmjs.com/package/dotenv) [![downloads](https://img.shields.io/npm/dw/dotenv)](https://www.npmjs.com/package/dotenv)
-     2→
      3→<img src="https://raw.githubusercontent.com/motdotla/dotenv/master/dotenv.svg" alt="dotenv" align="right" width="200" />
      4→
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
@@ -467,7 +439,6 @@ README.md
      9→&nbsp;
     10→
     11→## Usage
-    12→
     13→Install it.
     14→
     15→```sh
@@ -495,7 +466,6 @@ README.md
     37→&nbsp;
     38→
     39→## Advanced
-    40→
     41→<details><summary>ES6</summary><br>
     42→
     43→Import with [ES6](#how-do-i-use-dotenv-with-import):
@@ -571,7 +541,6 @@ README.md
    113→# This is a comment
       →…
    319→## Agents
-   320→
    321→<img src="https://dotenvx.com/assets/img/as2/9.jpg" height="400" alt="dotenvx-as2" align="right"/>
    322→
    323→> Software is changing, and dotenv must change with it—that is why I built [agentic secret storage (AS2)](https://dotenvx.com/as2). Agents run code without humans at terminals, so plaintext `.env` files are the wrong primitive.
@@ -583,7 +552,6 @@ README.md
    329→> It's what I'm using now. - [motdotla](https://mot.la)
    330→
    331→### Quickstart
-   332→
    333→Install vestauth and initialize your agent.
    334→
    335→```bash
@@ -609,7 +577,6 @@ README.md
    355→&nbsp;
    356→
    357→## FAQ
-   358→
    359→<details><summary>Should I commit my `.env` file?</summary><br/>
    360→
    361→No.
@@ -685,7 +652,6 @@ README.md
    431→
       →…
    579→## Docs
-   580→
    581→Dotenv exposes four functions:
    582→
    583→* `config`
@@ -693,7 +659,6 @@ README.md
    585→* `populate`
    586→
    587→### Config
-   588→
    589→`config` will read your `.env` file, parse the contents, assign it to
    590→[`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env),
    591→and return an Object with a `parsed` key containing the loaded content or an `error` key if it failed.
@@ -711,9 +676,7 @@ README.md
    603→You can additionally, pass options to `config`.
    604→
    605→#### Options
-   606→
    607→##### path
-   608→
    609→Default: `path.resolve(process.cwd(), '.env')`
    610→
    611→Specify a custom path if your file containing environment variables is located elsewhere.
@@ -731,7 +694,6 @@ README.md
    623→```
    624→
    625→##### quiet
-   626→
    627→Default: `false`
    628→
    629→Suppress runtime logging message.
@@ -754,7 +716,6 @@ README.md
    646→```
    647→
    648→##### encoding
-   649→
    650→Default: `utf8`
    651→
    652→Specify the encoding of your file containing environment variables.
@@ -764,7 +725,6 @@ README.md
    656→```
    657→
    658→##### debug
-   659→
    660→Default: `false`
    661→
    662→Turn on logging to help debug why certain keys or values are not being set as you expect.
@@ -774,7 +734,6 @@ README.md
    666→```
    667→
    668→##### override
-   669→
    670→Default: `false`
    671→
    672→Override any environment variables that have already been set on your machine with values from your .env file(s). If multiple files have been provided in `option.path` the override will also be used as each file is combined with the next. Without `override` being set, the first value wins. With `override` set the last value wins. 
@@ -784,7 +743,6 @@ README.md
    676→```
    677→
    678→##### processEnv
-   679→
    680→Default: `process.env`
    681→
    682→Specify an object to write your environment variables to. Defaults to `process.env` environment variables.
@@ -798,7 +756,6 @@ README.md
    690→```
    691→
    692→### Parse
-   693→
    694→The engine which parses the contents of your file containing environment
    695→variables is available to use. It accepts a String or Buffer and will return
    696→an Object with the parsed keys and values.
@@ -811,9 +768,7 @@ README.md
    703→```
    704→
    705→#### Options
-   706→
    707→##### debug
-   708→
    709→Default: `false`
    710→
    711→Turn on logging to help debug why certain keys or values are not being set as you expect.
@@ -827,7 +782,6 @@ README.md
    719→```
    720→
    721→### Populate
-   722→
    723→The engine which populates the contents of your .env file to `process.env` is available for use. It accepts a target, a source, and options. This is useful for power users who want to supply their own objects.
    724→
    725→For example, customizing the source:
@@ -854,15 +808,12 @@ README.md
    746→```
    747→
    748→#### options
-   749→
    750→##### Debug
-   751→
    752→Default: `false`
    753→
    754→Turn on logging to help debug why certain keys or values are not being populated as you expect.
    755→
    756→##### override
-   757→
    758→Default: `false`
    759→
    760→Override any environment variables that have already been set.
@@ -870,13 +821,11 @@ README.md
    762→&nbsp;
    763→
    764→## CHANGELOG
-   765→
    766→See [CHANGELOG.md](CHANGELOG.md)
    767→
    768→&nbsp;
    769→
    770→## Who's using dotenv?
-   771→
    772→[These npm modules depend on it.](https://www.npmjs.com/browse/depended/dotenv)
    773→
    774→Projects that expand it often use the [keyword "dotenv" on npm](https://www.npmjs.com/search?q=keywords:dotenv).
@@ -951,7 +900,12 @@ lib/main.d.ts
     82→  /**
     83→   * Default: `undefined`
     84→   *
-      →…
+    85→   * Pass the DOTENV_KEY directly to config options. Defaults to looking for process.env.DOTENV_KEY environment variable. Note this only applies to decrypting .env.vault files. If passed as null or undefined, or not passed at all, dotenv falls back to its traditional job of parsing a .env file.
+    86→   *
+    87→   * example: `require('dotenv').config({ DOTENV_KEY: 'dotenv://:key_1234…@dotenvx.com/vault/.env.vault?environment=production' })`
+    88→   */
+    89→  DOTENV_KEY?: string;
+    90→}
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
     94→  parsed?: DotenvParseOutput;
@@ -996,8 +950,6 @@ lib/main.js
     15→  '⚡️ secrets for agents: https://dotenvx.com/as2',
     16→  '🛡️ auth for agents: https://vestauth.com',
     17→  '🛠️  run anywhere with `dotenvx run -- yourcommand`',
-    18→  '⚙️  specify custom .env file path with { path: \'/custom/path/.env\' }',
-    19→  '⚙️  enable debug logging with { debug: true }',
       →…
     27→function _getRandomTip () {
     31→function parseBoolean (value) {
@@ -1026,4 +978,4 @@ lib/main.js
    418→  decrypt,
    419→  parse,
    420→  populate
-   421→}
+      →…

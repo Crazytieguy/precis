@@ -2,32 +2,19 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1980 words)
+budget: 2000 (1997 words)
 
 CHANGELOG.md
-     1→## Unreleased
-     2→
-     3→### Improvements
-     4→
-     5→### Changes
-     6→
-     7→### Fixed
-     8→
-     9→### Security
+     1→## Unreleased …
+     3→### Improvements …
+     5→### Changes …
+     7→### Fixed …
+     9→### Security …
 README.md
      1→# go-multierror
-     2→
-     3→[![CircleCI](https://img.shields.io/circleci/build/github/hashicorp/go-multierror/master)](https://circleci.com/gh/hashicorp/go-multierror)
-     4→[![Go Reference](https://pkg.go.dev/badge/github.com/hashicorp/go-multierror.svg)](https://pkg.go.dev/github.com/hashicorp/go-multierror)
-     5→![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/hashicorp/go-multierror)
-     6→
-     7→[circleci]: https://app.circleci.com/pipelines/github/hashicorp/go-multierror
-     8→[godocs]: https://pkg.go.dev/github.com/hashicorp/go-multierror
-     9→
     10→> **Note**: As of Go 1.20, the standard library provides [`errors.Join`](https://pkg.go.dev/errors#Join) which offers similar functionality for combining multiple errors. **For new projects, we recommend using `errors.Join` from the standard library.** This package provides additional features like custom formatting, the `Group` pattern for concurrent error collection, and utility functions (`Append`, `Flatten`, `Prefix`).
     11→
     12→## Migrating to `errors.Join`
-    13→
     14→**Basic error aggregation:**
     15→```go
     16→// Before (go-multierror)
@@ -76,16 +63,17 @@ README.md
     59→g := new(errgroup.Group)
     60→g.Go(func() error { return task1() })
     61→g.Go(func() error { return task2() })
+    62→err := g.Wait() // Returns first error only
+    63→
+    64→// To collect ALL errors like multierror.Group does, use a mutex:
       →…
    104→## Installation and Docs
-   105→
    106→Install using `go get github.com/hashicorp/go-multierror`.
    107→
    108→Full documentation is available at
    109→https://pkg.go.dev/github.com/hashicorp/go-multierror
    110→
    111→### Requires go version 1.13 or newer
-   112→
    113→`go-multierror` requires go version 1.13 or newer. Go 1.13 introduced
    114→[error wrapping](https://golang.org/doc/go1.13#error_wrapping), which
    115→this library takes advantage of.
@@ -103,7 +91,6 @@ README.md
    127→```
    128→
    129→## Usage
-   130→
    131→go-multierror is easy to use and purposely built to be unobtrusive in
    132→existing Go applications/libraries that may not be aware of it.
    133→
@@ -152,6 +139,9 @@ README.md
    176→
    177→```go
    178→if err := something(); err != nil {
+   179→	if merr, ok := err.(*multierror.Error); ok {
+   180→		// Use merr.Errors
+   181→	}
       →…
 append.go
      6→// Append is a helper function that will append more errors

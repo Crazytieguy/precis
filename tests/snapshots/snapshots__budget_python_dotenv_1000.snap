@@ -2,18 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (963 words)
+budget: 1000 (980 words)
 
 CHANGELOG.md
     21→### Fixed
-    22→
     23→* CLI: Ensure `find_dotenv` work reliably on python 3.13 by [@theskumar] in [#563](https://github.com/theskumar/python-dotenv/pull/563)
     24→* CLI: revert the use of execvpe on Windows by [@wrongontheinternet] in [#566](https://github.com/theskumar/python-dotenv/pull/566)
     25→
     26→
 CONTRIBUTING.md
      1→Contributing
-     3→
      4→All the contributions are welcome! Please open [an
      5→issue](https://github.com/theskumar/python-dotenv/issues/new) or send us
      6→a pull request.
@@ -48,15 +46,13 @@ CONTRIBUTING.md
     35→Open http://127.0.0.1:8000/ to view the documentation locally.
 README.md
      1→# python-dotenv
-     2→
+     3→[![Build Status][build_status_badge]][build_status_link]
       →…
     22→## Getting Started
-    23→
+    24→```shell
       →…
     78→## Other Use Cases
-    79→
     80→### Load configuration without altering the environment
-    81→
     82→The function `dotenv_values` works more or less the same way as `load_dotenv`,
     83→except it doesn't touch the environment, it just returns a `dict` with the
     84→values parsed from the `.env` file.
@@ -81,38 +77,37 @@ README.md
    103→```
    104→
    105→### Parse configuration as a stream
-   106→
+   107→`load_dotenv` and `dotenv_values` accept [streams][python_streams] via their
       →…
    120→### Load .env files in IPython
-   121→
+   122→You can use dotenv in IPython. By default, it will use `find_dotenv` to search for a
       →…
    141→### Disable load_dotenv
-   142→
+   143→Set `PYTHON_DOTENV_DISABLED=1` to disable `load_dotenv()` from loading .env
       →…
    147→## Command-line Interface
-   148→
+   149→A CLI interface `dotenv` is also included, which helps you manipulate the `.env`
       →…
    169→## File format
-   170→
+   171→The format is not formally specified and still improves over time. That being
       →…
    185→### Multiline values
-   186→
+   187→It is possible for single- or double-quoted values to span multiple lines. The
       →…
    199→### Variable without a value
-   200→
+   201→A variable can have no value:
       →…
    214→### Variable expansion
-   215→
+   216→python-dotenv can interpolate variables using POSIX variable expansion.
       →…
    234→## Related Projects
-   235→
+   236→- [environs](https://github.com/sloria/environs)
       →…
    246→## Acknowledgements
-   247→
+   248→This project is currently maintained by [Saurabh Kumar][saurabh-homepage] and
       →…
 docs/reference.md
-     1→# ::: dotenv
-     2→
+     1→# ::: dotenv …
 src/dotenv/__init__.py
     42→__all__ = [
     43→    "get_cli_string",
@@ -215,10 +210,6 @@ src/dotenv/main.py
     46→    def __init__(
     47→        self,
     48→        dotenv_path: Optional[StrPath],
-    49→        stream: Optional[IO[str]] = None,
-    50→        verbose: bool = False,
-    51→        encoding: Optional[str] = None,
-    52→        interpolate: bool = True,
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
@@ -229,6 +220,7 @@ src/dotenv/main.py
     70→        else:
     71→            if self.verbose:
     72→                logger.info(
+    73→                    "python-dotenv could not find configuration file %s.",
       →…
    141→@contextmanager
    142→def rewrite(
@@ -252,12 +244,11 @@ src/dotenv/parser.py
     41→    key: Optional[str]
     42→    value: Optional[str]
     43→    original: Original
-    44→    error: bool
+      →…
     47→class Position:
     48→    def __init__(self, chars: int, line: int) -> None:
     49→        self.chars = chars
     50→        self.line = line
-    51→
     52→    @classmethod
     53→    def start(cls) -> "Position":
     54→        return cls(chars=0, line=1)
@@ -267,10 +258,6 @@ src/dotenv/parser.py
     70→    def __init__(self, stream: IO[str]) -> None:
     71→        self.string = stream.read()
     72→        self.position = Position.start()
-    73→        self.mark = Position.start()
-    74→
-    75→    def has_next(self) -> bool:
-    76→        return self.position.chars < len(self.string)
 src/dotenv/variables.py
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
@@ -287,26 +274,15 @@ src/dotenv/variables.py
     19→    def __ne__(self, other: object) -> bool:
     20→        result = self.__eq__(other)
     21→        if result is NotImplemented:
-    22→            return NotImplemented
-    23→        return not result
-    24→
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
     29→class Literal(Atom):
     30→    def __init__(self, value: str) -> None:
     31→        self.value = value
     32→
-    33→    def __repr__(self) -> str:
-    34→        return f"Literal(value={self.value})"
-    35→
-    36→    def __eq__(self, other: object) -> bool:
     48→class Variable(Atom):
     49→    def __init__(self, name: str, default: Optional[str]) -> None:
     50→        self.name = name
     51→        self.default = default
-    52→
-    53→    def __repr__(self) -> str:
-    54→        return f"Variable(name={self.name}, default={self.default})"
-    55→
 src/dotenv/version.py
      1→__version__ = "1.2.1"

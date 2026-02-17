@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (912 words)
+budget: 1000 (938 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -10,18 +10,18 @@ budget: 1000 (912 words)
      9→  .map((file) => `./${file}`)
 CONTRIBUTING.md
      3→# Contributing
-     4→
      5→## Code of Conduct
-     6→
      7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
      8→
      9→## Reporting Bugs
-    10→
-      →…
+    11→Before submitting a new bug report please search for an existing or similar report.
+    12→
+    13→Use one of our existing issue templates if you believe you've come across a unique problem.
+    14→
+    15→Duplicate issues, or issues that don't use one of our templates may get closed without a response.
+    16→
     17→## Pull Request Conventions
-    18→
     19→### Commits
-    20→
     21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
     22→
     23→When opening a pull request please be sure that either the pull request title, or each commit in the pull request, has one of the following prefixes:
@@ -32,95 +32,47 @@ CONTRIBUTING.md
     28→ - `chore`: For changes that do not affect the published module.  Often these are changes to tests.  The result will be *no* change to the version of the package when it is next published (as the commit does not affect the published version).
     29→
     30→### Test Coverage
-    31→
-      →…
+    32→Pull requests made against this repo will run `npm test` automatically.  Please make sure tests pass locally before submitting a PR.
+    33→
+    34→Every new feature or bug fix should come with a corresponding test or tests that validate the solutions. Testing also reports on code coverage and will fail if code coverage drops.
+    35→
     36→### Linting
-    37→
-      →…
+    38→Linting is also done automatically once tests pass.  `npm run lintfix` will fix most linting errors automatically.
+    39→
+    40→Please make sure linting passes before submitting a PR.
+    41→
     42→## What _not_ to contribute?
-    43→
     44→### Dependencies
-    45→
     46→It should be noted that our team does not accept third-party dependency updates/PRs.  If you submit a PR trying to update our dependencies we will close it with or without a reference to these contribution guidelines.
     47→
     48→### Tools/Automation
-    49→
-      →…
+    50→Our core team is responsible for the maintenance of the tooling/automation in this project and we ask contributors to not make changes to these when contributing (e.g. `.github/*`, `.eslintrc.json`, `.licensee.json`).  Most of those files also have a header at the top to remind folks they are automatically generated.  Pull requests that alter these will not be accepted.
 README.md
-     1→semver(1) -- The semantic versioner for npm
-     3→
-     4→## Install
-     5→
-      →…
-    10→## Usage
-    11→
-      →…
-   139→## Versions
-   140→
-      →…
-   148→## Ranges
-   149→
-      →…
-   184→### Prerelease Tags
-   185→
-      →…
-   219→#### Prerelease Identifiers
-   220→
-      →…
-   250→#### Prerelease Identifier Base
-   251→
-      →…
-   279→### Advanced Range Syntax
-   280→
-      →…
-   287→#### Hyphen Ranges `X.Y.Z - A.B.C`
-   288→
-      →…
-   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
-   307→
-      →…
-   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
-   325→
-      →…
-   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
-   342→
-      →…
-   384→### Range Grammar
-   385→
-      →…
-   408→## Functions
-   409→
-      →…
-   453→### Comparison
-   454→
-      →…
-   478→### Sorting
-   479→
-      →…
-   485→### Comparators
-   486→
-      →…
-   489→### Ranges
-   490→
-      →…
-   531→### Coercion
-   532→
-      →…
-   558→### Clean
-   559→
-      →…
-   576→## Constants
-   577→
-      →…
-   580→### `RELEASE_TYPES`
-   581→
-      →…
-   600→### `SEMVER_SPEC_VERSION`
-   601→
-      →…
-   610→## Exported Modules
-   611→
-      →…
+     1→semver(1) -- The semantic versioner for npm …
+     4→## Install …
+    10→## Usage …
+   139→## Versions …
+   148→## Ranges …
+   184→### Prerelease Tags …
+   219→#### Prerelease Identifiers …
+   250→#### Prerelease Identifier Base …
+   279→### Advanced Range Syntax …
+   287→#### Hyphen Ranges `X.Y.Z - A.B.C` …
+   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*` …
+   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1` …
+   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4` …
+   384→### Range Grammar …
+   408→## Functions …
+   453→### Comparison …
+   478→### Sorting …
+   485→### Comparators …
+   489→### Ranges …
+   531→### Coercion …
+   558→### Clean …
+   576→## Constants …
+   580→### `RELEASE_TYPES` …
+   600→### `SEMVER_SPEC_VERSION` …
+   610→## Exported Modules …
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
@@ -182,17 +134,7 @@ classes/semver.js
    135→  comparePre (other) {
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
-internal/constants.js
-     5→const SEMVER_SPEC_VERSION = '2.0.0'
-     7→const MAX_LENGTH = 256
-     8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
-    12→const MAX_SAFE_COMPONENT_LENGTH = 16
-    16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
-    18→const RELEASE_TYPES = [
-internal/debug.js
-     3→const debug = (
 internal/identifiers.js
-     3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 internal/lrucache.js
@@ -214,29 +156,10 @@ internal/lrucache.js
     26→    const deleted = this.delete(key)
     27→
     28→    if (!deleted && value !== undefined) {
-    29→      // If cache is full, delete the least recently used item
-    30→      if (this.map.size >= this.max) {
-    31→        const firstKey = this.map.keys().next().value
-    32→        this.delete(firstKey)
-    33→      }
-    34→
-    35→      this.map.set(key, value)
-    36→    }
-    37→
-    38→    return this
-    39→  }
+      →…
 internal/parse-options.js
-     4→const looseOption = Object.freeze({ loose: true })
-     5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
 internal/re.js
-    12→const re = exports.re = []
-    13→const safeRe = exports.safeRe = []
-    14→const src = exports.src = []
-    15→const safeSrc = exports.safeSrc = []
-    16→const t = exports.t = {}
-    19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
-    27→const safeRegexReplacements = [
     33→const makeSafeRegex = (value) => {
     42→const createToken = (name, value, isGlobal) => {
 ranges/gtr.js

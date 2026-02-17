@@ -2,24 +2,20 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1922 words)
+budget: 2000 (1926 words)
 
 AGENTS.md
      1→# AGENTS.md
-     2→
      3→See @CLAUDE.md for AI coding agent instructions.
 CLAUDE.md
      1→# CLAUDE.md
-     2→
      3→This file provides guidance to AI coding agents when working with code in this repository.
      4→
      5→## Project Overview
-     6→
      7→Pluggy is a minimalist production-ready plugin system that serves as the core framework for pytest, datasette and devpi.
      8→It provides hook specification and implementation mechanisms through a plugin manager system.
      9→
     10→## Development Commands
-    11→
     12→All commands use `uv run` for consistent environments.
     13→
     14→### Testing
@@ -31,7 +27,6 @@ CLAUDE.md
     20→- Always reread files modified by pre-commit
     21→
     22→## Development Process
-    23→
     24→- Always read `src/pluggy/*.py` to get a full picture
     25→- Consider backward compatibility
     26→- Always run all tests: `uv run pytest`
@@ -41,9 +36,7 @@ CLAUDE.md
     30→
     31→
     32→## Core Architecture
-    33→
     34→### Main Components
-    35→
     36→- **PluginManager** (`src/pluggy/_manager.py`): Central registry that manages plugins and coordinates hook calls
     37→- **HookCaller** (`src/pluggy/_hooks.py`): Executes hook implementations with proper argument binding
     38→- **HookImpl/HookSpec** (`src/pluggy/_hooks.py`): Represent hook implementations and specifications
@@ -62,7 +55,6 @@ CLAUDE.md
     51→- `.pre-commit-config.yaml` - Code quality automation (ruff, mypy, flake8, etc.)
 SECURITY.md
      1→# Security
-     2→
      3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
@@ -96,7 +88,11 @@ scripts/release.py
     20→
     21→    branch_name = f"release-{version}"
     22→    print(f"{Fore.CYAN}Create {branch_name} branch from upstream main")
-      →…
+    23→    upstream = get_upstream(repo)
+    24→    upstream.fetch()
+    25→    release_branch = repo.create_head(branch_name, upstream.refs.main, force=True)
+    26→    release_branch.checkout()
+    27→    return repo
     30→def get_upstream(repo: Repo) -> Remote:
     31→    """Find upstream repository for pluggy on the remotes"""
     32→    for remote in repo.remotes:
@@ -112,7 +108,7 @@ scripts/release.py
     44→    check_call(["git", "commit", "-a", "-m", f"Preparing release {version}"])
     45→
     46→    print()
-      →…
+    47→    print(f"{Fore.GREEN}Please push your branch to your fork and open a PR.")
     50→def changelog(version: str, write_out: bool = False) -> None:
     51→    if write_out:
     52→        addopts = []
@@ -127,7 +123,11 @@ scripts/release.py
     63→    options = parser.parse_args()
     64→    try:
     65→        pre_release(options.version)
-      →…
+    66→    except RuntimeError as e:
+    67→        print(f"{Fore.RED}ERROR: {e}")
+    68→        return 1
+    69→    else:
+    70→        return 0
 scripts/towncrier-draft-to-file.py
      5→def main() -> int:
      6→    """
@@ -214,7 +214,6 @@ src/pluggy/_hooks.py
     93→        self,
     94→        function: _F,
     95→        firstresult: bool = False,
-    96→        historic: bool = False,
    111→    def __call__ …
    165→class HookimplMarker:
    172→
@@ -228,7 +227,6 @@ src/pluggy/_hooks.py
    180→        self,
    181→        function: _F,
    182→        hookwrapper: bool = ...,
-   183→        optionalhook: bool = ...,
    202→    def __call__ …
    281→def normalize_hookimpl_opts …
    290→_PYPY = hasattr(sys, "pypy_version_info")
@@ -326,7 +324,6 @@ src/pluggy/_hooks.py
    649→        "wrapper",
    650→        "hookwrapper",
    651→        "optionalhook",
-   652→        "tryfirst",
    656→    def __init__ …
    692→    def __repr__ …
    697→class HookSpec:
@@ -341,8 +338,7 @@ src/pluggy/_hooks.py
    706→        "warn_on_impl_args",
    707→    )
    708→
-   709→    def __init__(self, namespace: _Namespace, name: str, opts: HookspecOpts) -> None:
-      →…
+   709→    def __init__ …
 src/pluggy/_manager.py
     36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
     37→_AfterTrace: TypeAlias = Callable[
@@ -418,7 +414,6 @@ src/pluggy/_result.py
     36→        """:meta private:"""
     37→        self._result = result
     38→        self._exception = exception
-    39→        # Exception __traceback__ is mutable, this keeps the original.
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
     44→        """:meta private:"""

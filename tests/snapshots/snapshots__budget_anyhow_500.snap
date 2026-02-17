@@ -2,27 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (491 words)
+budget: 500 (492 words)
 
 README.md
-     1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
-     3→
-      →…
-    21→## Details
-    22→
-      →…
-   126→## No-std support
-   127→
-      →…
-   144→## Comparison to failure
-   145→
-      →…
-   155→## Comparison to thiserror
-   156→
-      →…
-   166→#### License
-   167→
-      →…
+     1→Anyhow&ensp;¯\\\_(°ペ)\_/¯ …
+    21→## Details …
+   126→## No-std support …
+   144→## Comparison to failure …
+   155→## Comparison to thiserror …
+   166→#### License …
 build.rs
     17→fn main() {
     99→fn compile_probe(rustc_bootstrap: bool) -> bool {
@@ -41,6 +29,7 @@ src/backtrace.rs
     71→mod capture {
     72→    use alloc::borrow::{Cow, ToOwned as _};
     73→    use alloc::vec::Vec;
+    74→    use backtrace::{BacktraceFmt, BytesOrWideString, Frame, PrintFmt, SymbolName};
     82→    pub(crate) struct Backtrace {
     83→        inner: Inner,
     84→    }

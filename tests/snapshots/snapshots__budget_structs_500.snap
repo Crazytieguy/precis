@@ -2,33 +2,32 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (499 words)
+budget: 500 (498 words)
 
 README.md
      1→# Archived project. No maintenance. 
-     2→
+     3→This project is not maintained anymore and is archived. Feel free to fork and
       →…
      8→# Structs [![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/fatih/structs) [![Build Status](http://img.shields.io/travis/fatih/structs.svg?style=flat-square)](https://travis-ci.org/fatih/structs) [![Coverage Status](http://img.shields.io/coveralls/fatih/structs.svg?style=flat-square)](https://coveralls.io/r/fatih/structs)
-     9→
+    10→Structs contains various utilities to work with Go (Golang) structs. It was
       →…
     16→## Install
-    17→
+    18→```bash
       →…
     22→## Usage and Examples
-    23→
+    24→Just like the standard lib `strings`, `bytes` and co packages, `structs` has
       →…
     74→### Struct methods
-    75→
+    76→The structs functions can be also used as independent methods by creating a new
       →…
     95→### Field methods
-    96→
+    97→We can easily examine a single Field for more detail. Below you can see how we
       →…
    163→## Credits
-   164→
+   165→ * [Fatih Arslan](https://github.com/fatih)
       →…
    168→## License
-   169→
-      →…
+   170→The MIT License (MIT) - see LICENSE.md for more details
 field.go
      9→var (
     10→	errNotExported = errors.New("field is not exported")
@@ -73,18 +72,17 @@ structs.go
    233→func (s *Struct) Names() []string {
    245→func getFields(v reflect.Value, tagName string) []*Field {
    246→	if v.Kind() == reflect.Ptr {
+   247→		v = v.Elem()
       →…
    275→func (s *Struct) Field(name string) *Field {
    287→func (s *Struct) FieldOk(name string) (*Field, bool) {
    318→func (s *Struct) IsZero() bool {
    365→func (s *Struct) HasZero() bool {
    398→func (s *Struct) Name() string {
-   402→// structFields returns the exported struct fields for a given s struct. This
-   403→// is a convenient helper method to avoid duplicate code in some of the
-   404→// functions.
    405→func (s *Struct) structFields() []reflect.StructField {
    428→func strctVal(s interface{}) reflect.Value {
    429→	v := reflect.ValueOf(s)
+   430→
       →…
    445→func Map(s interface{}) map[string]interface{} {
    451→func FillMap(s interface{}, out map[string]interface{}) {
@@ -95,14 +93,9 @@ structs.go
    481→func HasZero(s interface{}) bool {
    487→func IsStruct(s interface{}) bool {
    503→func Name(s interface{}) string {
-   507→// nested retrieves recursively all types for the given value and returns the
-   508→// nested value.
    509→func (s *Struct) nested(val reflect.Value) interface{} {
 tags.go
      5→// tagOptions contains a slice of tag options
      6→type tagOptions []string
      9→func (t tagOptions) Has(opt string) bool {
-    19→// parseTag splits a struct field's tag into its name and a list of options
-    20→// which comes after a name. A tag is in the form of: "name,option1,option2".
-    21→// The name can be neglectected.
     22→func parseTag(tag string) (string, tagOptions) {

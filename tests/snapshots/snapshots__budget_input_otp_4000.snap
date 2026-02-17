@@ -2,83 +2,37 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4011 words)
+budget: 4000 (4012 words)
 
 CHANGELOG.md
-     1→# Changelog
-     2→
+     1→# Changelog …
      3→## [1.4.2]
-     4→
      5→- chore(input): remove unintentional log within internal pasteListener
      6→
-     7→## [1.4.1]
-     8→
-      →…
-    11→## [1.4.0]
-    12→
-      →…
-    25→## [1.2.5]
-    26→
-      →…
-    29→## [1.2.4]
-    30→
-      →…
-    33→## [1.2.3]
-    34→
-      →…
-    38→## [1.2.2]
-    39→
-      →…
-    42→## [1.2.1]
-    43→
-      →…
-    48→## [1.2.0]
-    49→
-      →…
-    52→## [1.2.0-beta.1]
-    53→
-      →…
-    56→## [1.2.0-beta.0]
-    57→
-      →…
-    61→## [1.1.0]
-    62→
-      →…
-    87→## [1.0.1]
-    88→
-      →…
-    92→## [1.0.0]
-    93→
-      →…
-    96→## [0.3.31-beta]
-    97→
-      →…
-   100→## [0.3.3-beta]
-   101→
-      →…
-   104→## [0.3.2-beta]
-   105→
-      →…
-   108→## [0.3.11-beta]
-   109→
-      →…
-   112→## [0.3.1-beta]
-   113→
-      →…
-   116→## [0.2.4]
-   117→
-      →…
-   120→## [0.2.1]
-   121→
-      →…
-   124→## [0.2]
-   125→
-      →…
+     7→## [1.4.1] …
+    11→## [1.4.0] …
+    25→## [1.2.5] …
+    29→## [1.2.4] …
+    33→## [1.2.3] …
+    38→## [1.2.2] …
+    42→## [1.2.1] …
+    48→## [1.2.0] …
+    52→## [1.2.0-beta.1] …
+    56→## [1.2.0-beta.0] …
+    61→## [1.1.0] …
+    87→## [1.0.1] …
+    92→## [1.0.0] …
+    96→## [0.3.31-beta] …
+   100→## [0.3.3-beta] …
+   104→## [0.3.2-beta] …
+   108→## [0.3.11-beta] …
+   112→## [0.3.1-beta] …
+   116→## [0.2.4] …
+   120→## [0.2.1] …
+   124→## [0.2] …
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web.
-     2→
      3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
-     4→
      5→<h3 align="center">Hero Sponsors 🎖️</h3>
      6→<p align="center">
      7→<a href="https://go.clerk.com/input-otp" target="_blank">
@@ -95,7 +49,6 @@ README.md
     18→https://github.com/guilhermerodz/input-otp/assets/10366880/753751f5-eda8-4145-a4b9-7ef51ca5e453
     19→
     20→## Usage
-    21→
     22→```bash
     23→npm install input-otp
     24→```
@@ -114,7 +67,6 @@ README.md
     37→```
     38→
     39→## Default example
-    40→
     41→The example below uses `tailwindcss` `@shadcn/ui` `tailwind-merge` `clsx`:
     42→
     43→```tsx
@@ -144,12 +96,10 @@ README.md
     67→
       →…
    136→## How it works
-   137→
    138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
    139→This library works by rendering an invisible input as a sibling of the slots, contained by a `relative`ly positioned parent (the container root called _OTPInput_).
    140→
    141→## Features
-   142→
    143→This is the most complete OTP input on the web. It's fully featured 
    144→
    145→<details>
@@ -179,19 +129,15 @@ README.md
    169→https://github.com/guilhermerodz/input-otp/assets/10366880/3d127aef-147c-4f28-9f6c-57a357a802d0
       →…
    198→### Auto tracks if the input has space in the right side for the badge
-   199→
    200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
    201→
    202→</details>
    203→
    204→## API Reference
-   205→
    206→### OTPInput
-   207→
    208→The root container. Define settings for the input via props. Then, use the `render` prop to create the slots.
    209→
    210→#### Props
-   211→
    212→```ts
    213→type OTPInputProps = {
    214→  // The number of slots
@@ -221,7 +167,6 @@ README.md
    238→
       →…
    293→## Examples
-   294→
    295→<details>
    296→<summary>Automatic form submission on OTP completion</summary>
    297→
@@ -251,7 +196,6 @@ README.md
    321→
       →…
    377→## Caveats
-   378→
    379→<details>
    380→<summary>[Workaround] If you want to block specific password manager/badges:</summary>
    381→
@@ -281,7 +225,6 @@ README.md
    405→
       →…
    539→#### Sponsors
-   540→
    541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
    542→
    543→> [Resend](https://go.resend.com/input-otp) is email for developers.
@@ -289,7 +232,6 @@ README.md
    545→> [Evomi](https://evomi.com/?utm_source=github&utm_campaign=otp) offers Residential Proxies starting from $0.49.
 apps/storybook/README.md
     13→## 🚅 Quick start
-    14→
     15→1.  **Create the application.**
     16→
     17→    Use [degit](https://github.com/Rich-Harris/degit) to get this template.
@@ -320,7 +262,6 @@ apps/storybook/README.md
     42→    Run `yarn storybook` to see your component's stories at `http://localhost:6006`
     43→
     44→## 🔎 What's inside?
-    45→
     46→A quick look at the top-level files and directories included with this template.
     47→
     48→    .
@@ -350,32 +291,33 @@ apps/storybook/README.md
     72→
     73→7.  **`LICENSE`**: The template is licensed under the MIT licence.
     74→
-      →…
+    75→8.  **`package.json`**: Standard manifest file for Node.js projects, which typically includes project specific metadata (such as the project's name, the author among other information). It's based on this file that npm will know which packages are necessary to the project.
+    76→
+    77→9.  **`yarn.lock`**: This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(Do not change it manually).**
+    78→
+    79→10. **`vite.config.js`**: This is the configuration file for [Vite](https://vitejs.dev/), a build tool that aims to provide a faster and leaner development experience for modern web projects.
+    80→
+    81→11. **`README.md`**: A text file containing useful reference information about the project.
+    82→
     83→## Contribute
-    84→
     85→If you encounter an issue with the template, we encourage you to open an issue in this template's repository.
     86→
     87→## Learning Storybook
-    88→
     89→1. Read our introductory tutorial at [Learn Storybook](https://storybook.js.org/tutorials/intro-to-storybook/react/en/get-started/).
     90→2. Learn how to transform your component libraries into design systems in our [Design Systems for Developers](https://storybook.js.org/tutorials/design-systems-for-developers/) tutorial.
     91→3. See our official documentation at [Storybook](https://storybook.js.org/).
 apps/storybook/src/components/ui/input-otp.tsx
      9→const InputOTP = React.forwardRef<
     10→  React.ElementRef<typeof OTPInput>,
-    11→  React.ComponentPropsWithoutRef<typeof OTPInput>
       →…
     21→const InputOTPGroup = React.forwardRef<
     22→  React.ElementRef<"div">,
-    23→  React.ComponentPropsWithoutRef<"div">
       →…
     29→const InputOTPSlot = React.forwardRef<
     30→  React.ElementRef<"div">,
-    31→  SlotProps & React.ComponentPropsWithoutRef<"div">
       →…
     54→const InputOTPSeparator = React.forwardRef<
     55→  React.ElementRef<"div">,
-    56→  React.ComponentPropsWithoutRef<"div">
       →…
 apps/storybook/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
@@ -467,13 +409,9 @@ apps/storybook/tailwind.config.js
     30→          DEFAULT: 'hsl(var(--primary))',
     31→          foreground: 'hsl(var(--primary-foreground))',
     32→        },
-    33→        secondary: {
-    34→          DEFAULT: 'hsl(var(--secondary))',
-    35→          foreground: 'hsl(var(--secondary-foreground))',
       →…
 apps/website/README.md
      3→## Getting Started
-     4→
      5→First, run the development server:
      6→
      7→```bash
@@ -493,7 +431,6 @@ apps/website/README.md
     21→This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
     22→
     23→## Learn More
-    24→
     25→To learn more about Next.js, take a look at the following resources:
     26→
     27→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
@@ -502,7 +439,6 @@ apps/website/README.md
     30→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
     31→
     32→## Deploy on Vercel
-    33→
     34→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     35→
     36→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
@@ -816,11 +752,6 @@ apps/website/src/app/(pages)/layout.tsx
     38→    type: 'website',
     39→    locale: 'en_US',
     40→    url: siteConfig.url,
-    41→    title: siteConfig.name,
-    42→    description: siteConfig.description,
-    43→    siteName: siteConfig.name,
-    44→    images: [
-    45→      {
       →…
     68→export default function RootLayout({
     69→  children,
@@ -969,7 +900,6 @@ apps/website/src/components/ui/badge.tsx
     28→    VariantProps<typeof badgeVariants> {}
     30→function Badge({ className, variant, ...props }: BadgeProps) {
     31→  return (
-    32→    <div className={cn(badgeVariants({ variant }), className)} {...props} />
       →…
 apps/website/src/components/ui/button.tsx
      7→const buttonVariants = cva(
@@ -996,7 +926,6 @@ apps/website/src/components/ui/dropdown-menu.tsx
    159→const DropdownMenuSeparator = React.forwardRef<
    171→const DropdownMenuShortcut = ({
    172→  className,
-   173→  ...props
       →…
 apps/website/src/components/ui/input-otp.tsx
      9→const InputOTP = React.forwardRef<
@@ -1012,7 +941,6 @@ apps/website/src/components/ui/sonner.tsx
      6→type ToasterProps = React.ComponentProps<typeof Sonner>
      8→const Toaster = ({ ...props }: ToasterProps) => {
      9→  const { theme = 'system' } = useTheme()
-    10→
       →…
 apps/website/src/config/site.ts
      1→export const siteConfig = {
@@ -1101,13 +1029,6 @@ packages/input-otp/src/input.tsx
     52→    const regexp = React.useMemo(
     53→      () =>
     54→        pattern
-    55→          ? typeof pattern === 'string'
-    56→            ? new RegExp(pattern)
-    57→            : pattern
-    58→          : null,
-    59→      [pattern],
-    60→    )
-    61→
       →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {

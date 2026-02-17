@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3883 words)
+budget: 4000 (3863 words)
 
 README.md
      1→log
-     3→
      4→A Rust library providing a lightweight logging *facade*.
      5→
      6→[![Build status](https://img.shields.io/github/actions/workflow/status/rust-lang/log/main.yml?branch=master)](https://github.com/rust-lang/log/actions)
@@ -15,17 +14,20 @@ README.md
      9→![License](https://img.shields.io/crates/l/log.svg)
     10→
     11→* [`log` documentation](https://docs.rs/log)
-      →…
+    12→
+    13→A logging facade provides a single logging API that abstracts over the actual
+    14→logging implementation. Libraries can use the logging API provided by this
+    15→crate, and the consumer of those libraries can choose the logging
+    16→implementation that is most suitable for its use case.
+    17→
+    18→
     19→## Minimum supported `rustc`
-    20→
     21→`1.68.0+`
     22→
     23→This version is explicitly tested in CI and may be bumped in any release as needed. Maintaining compatibility with older compilers is a priority though, so the bar for bumping the minimum supported version is set very high. Any changes to the supported minimum version will be called out in the release notes.
     24→
     25→## Usage
-    26→
     27→### In libraries
-    28→
     29→Libraries should link only to the `log` crate, and use the provided macros to
     30→log whatever information will be useful to downstream consumers:
     31→
@@ -56,7 +58,6 @@ README.md
     56→```
     57→
     58→### In executables
-    59→
     60→In order to produce log output, executables have to use a logger implementation compatible with the facade.
     61→There are many available implementations to choose from, here are some options:
     62→
@@ -65,9 +66,33 @@ README.md
     65→    * [`colog`](https://docs.rs/colog/*/colog/)
     66→    * [`simple_logger`](https://docs.rs/simple_logger/*/simple_logger/)
     67→    * [`simplelog`](https://docs.rs/simplelog/*/simplelog/)
+    68→    * [`pretty_env_logger`](https://docs.rs/pretty_env_logger/*/pretty_env_logger/)
+    69→    * [`stderrlog`](https://docs.rs/stderrlog/*/stderrlog/)
+    70→    * [`flexi_logger`](https://docs.rs/flexi_logger/*/flexi_logger/)
+    71→    * [`call_logger`](https://docs.rs/call_logger/*/call_logger/)
+    72→    * [`std-logger`](https://docs.rs/std-logger/*/std_logger/)
+    73→    * [`structured-logger`](https://docs.rs/structured-logger/latest/structured_logger/)
+    74→    * [`clang_log`](https://docs.rs/clang_log/latest/clang_log)
+    75→    * [`ftail`](https://docs.rs/ftail/latest/ftail/)
+    76→* Complex configurable frameworks:
+    77→    * [`log4rs`](https://docs.rs/log4rs/*/log4rs/)
+    78→    * [`logforth`](https://docs.rs/logforth/*/logforth/)
+    79→    * [`fern`](https://docs.rs/fern/*/fern/)
+    80→    * [`spdlog-rs`](https://docs.rs/spdlog-rs/*/spdlog/)
+    81→* Adaptors for other facilities:
+    82→    * [`syslog`](https://docs.rs/syslog/*/syslog/)
+    83→    * [`systemd-journal-logger`](https://docs.rs/systemd-journal-logger/*/systemd_journal_logger/)
+    84→    * [`slog-stdlog`](https://docs.rs/slog-stdlog/*/slog_stdlog/)
+    85→    * [`android_log`](https://docs.rs/android_log/*/android_log/)
+    86→    * [`win_dbg_logger`](https://docs.rs/win_dbg_logger/*/win_dbg_logger/)
+    87→    * [`db_logger`](https://docs.rs/db_logger/*/db_logger/)
+    88→    * [`log-to-defmt`](https://docs.rs/log-to-defmt/*/log_to_defmt/)
+    89→    * [`logcontrol-log`](https://docs.rs/logcontrol-log/*/logcontrol_log/)
+    90→* For WebAssembly binaries:
+    91→    * [`console_log`](https://docs.rs/console_log/*/console_log/)
+    92→* For dynamic libraries:
       →…
    106→## Structured logging
-   107→
    108→If you enable the `kv` feature, you can associate structured data with your log records:
    109→
    110→```rust
@@ -76,14 +101,30 @@ README.md
    113→pub fn shave_the_yak(yak: &mut Yak) {
    114→    // `yak:serde` will capture `yak` using its `serde::Serialize` impl
    115→    //
-      →…
+   116→    // You could also use `:?` for `Debug`, or `:%` for `Display`. For a
+   117→    // full list, see the `log` crate documentation
+   118→    trace!(target = "yak_events", yak:serde; "Commencing yak shaving");
+   119→
+   120→    loop {
+   121→        match find_a_razor() {
+   122→            Ok(razor) => {
+   123→                info!(razor; "Razor located");
+   124→                yak.shave(razor);
+   125→                break;
+   126→            }
+   127→            Err(e) => {
+   128→                // `e:err` will capture `e` using its `std::error::Error` impl
+   129→                warn!(e:err; "Unable to locate a razor, retrying");
+   130→            }
+   131→        }
+   132→    }
+   133→}
+   134→```
 rfcs/0296-structured-logging.md
    502→### Don't break anything
-   503→
    504→Allow structured logging to be added in the current `0.4.x` series of `log`. This gives us the option of including structured logging in an `0.4.x` release, or bumping the minor crate version without introducing any actual breaking changes.
    505→
   1598→#### Build a serialization contract in `log`
-  1599→
   1600→Instead of internalizing a few serialization frameworks, `log` could provide a public common contract for them to conform to:
   1601→
   1602→```rust
@@ -210,10 +251,6 @@ src/kv/mod.rs
 src/kv/source.rs
      9→/// A source of key-values.
     10→///
-    11→/// The source may be a single pair, a set of pairs, or a filter over a set of pairs.
-    12→/// Use the [`VisitSource`](trait.VisitSource.html) trait to inspect the structured data
-    13→/// in a source.
-    14→///
       →…
     51→pub trait Source {
     52→    /// Visit key-values.
@@ -283,10 +320,6 @@ src/kv/value.rs
     14→}
     33→/// A value in a key-value.
     34→///
-    35→/// Values are an anonymous bag containing some structured datum.
-    36→///
-    37→/// # Capturing values
-    38→///
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
@@ -325,10 +358,6 @@ src/kv/value.rs
    438→        pub fn to_cow_str …
    450→/// A visitor for a [`Value`].
    451→///
-   452→/// Also see [`Value`'s documentation on serialization]. Value visitors are a simple alternative
-   453→/// to a more fully-featured serialization framework like `serde` or `sval`. A value visitor
-   454→/// can differentiate primitive types through methods like [`VisitValue::visit_bool`] and
-   455→/// [`VisitValue::visit_str`], but more complex types like maps and sequences
       →…
    462→pub trait VisitValue<'v> {
    463→    /// Visit a `Value`.
@@ -719,7 +748,6 @@ src/lib.rs
   1497→            STATE.store(INITIALIZED, Ordering::Release);
   1498→            Ok(())
   1499→        }
-  1500→        Err(INITIALIZING) => {
       →…
   1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
@@ -763,82 +791,25 @@ src/lib.rs
   1623→    _ => LevelFilter::Trace,
   1624→};
 src/macros.rs
-    11→/// The standard logging macro.
-    12→///
-      →…
     75→macro_rules! log {
-   117→#[doc(hidden)]
-   118→#[macro_export]
    119→macro_rules! __log {
-   149→/// Logs a message at the error level.
-   150→///
-      →…
    165→macro_rules! error {
-   188→/// Logs a message at the warn level.
-   189→///
-      →…
    204→macro_rules! warn {
-   227→/// Logs a message at the info level.
-   228→///
-      →…
    252→macro_rules! info {
-   275→/// Logs a message at the debug level.
-   276→///
-      →…
    292→macro_rules! debug {
-   315→/// Logs a message at the trace level.
-   316→///
-      →…
    336→macro_rules! trace {
-   359→/// Determines if a message logged at the specified level in that module will
-   360→/// be logged.
-      →…
    391→macro_rules! log_enabled {
-   413→#[doc(hidden)]
-   414→#[macro_export]
    415→macro_rules! __log_enabled {
-   427→#[doc(hidden)]
-   428→#[macro_export]
    429→macro_rules! __log_logger {
-   442→#[doc(hidden)]
-   443→#[macro_export]
-      →…
    445→macro_rules! __log_key {
-   456→#[doc(hidden)]
-   457→#[macro_export]
-      →…
    459→macro_rules! __log_key {
-   465→#[doc(hidden)]
-   466→#[macro_export]
-      →…
    468→macro_rules! __log_value {
-   514→#[doc(hidden)]
-   515→#[macro_export]
-      →…
    517→macro_rules! __log_value {
-   523→#[doc(hidden)]
-   524→#[macro_export]
-      →…
    526→macro_rules! __log_value_sval {
-   532→#[doc(hidden)]
-   533→#[macro_export]
-      →…
    535→macro_rules! __log_value_sval {
-   541→#[doc(hidden)]
-   542→#[macro_export]
-      →…
    544→macro_rules! __log_value_serde {
-   550→#[doc(hidden)]
-   551→#[macro_export]
-      →…
    553→macro_rules! __log_value_serde {
-   561→#[doc(hidden)]
-   562→#[macro_export]
-      →…
    564→macro_rules! __log_value_error {
-   570→#[doc(hidden)]
-   571→#[macro_export]
-      →…
    573→macro_rules! __log_value_error {
 src/serde.rs
     17→    fn serialize …
@@ -865,13 +836,10 @@ test_max_level_features/main.rs
     26→    fn flush(&self) {}
     29→fn main() {
     30→    let me = Arc::new(State {
-    31→        last_log: Mutex::new(None),
       →…
     44→fn test(a: &State, filter: LevelFilter) {
     45→    log::set_max_level(filter);
-    46→    error!("");
       →…
     72→fn last(state: &State, expected: Option<Level>) {
     73→    let mut lvl = state.last_log.lock().unwrap();
-    74→    assert_eq!(*lvl, expected);
       →…

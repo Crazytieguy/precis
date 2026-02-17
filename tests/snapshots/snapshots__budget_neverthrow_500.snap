@@ -2,13 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (513 words)
+budget: 500 (512 words)
 
 README.md
    141→### Synchronous API (`Result`)
-   142→
    143→#### `ok`
-   144→
    145→Constructs an `Ok` variant of `Result`
    146→
    147→**Signature:**
@@ -24,7 +22,6 @@ README.md
    157→
       →…
    865→#### `okAsync`
-   866→
    867→Constructs an `Ok` variant of `ResultAsync`
    868→
    869→**Signature:**
@@ -40,7 +37,6 @@ README.md
    879→
       →…
   1521→#### `fromThrowable`
-  1522→
   1523→Top level export of `Result.fromThrowable`.
   1524→Please find documentation at [Result.fromThrowable](#resultfromthrowable-static-class-method)
   1525→
@@ -57,6 +53,7 @@ src/_internals/error.ts
     12→  data:
     13→    | {
     14→        type: string
+    15→        value: T
       →…
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,

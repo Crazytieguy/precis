@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (984 words)
+budget: 1000 (986 words)
 
 README.md
     28→## Features
-    29→
     30→- 🔥 **Hot by default**
     31→- 🔩 **Easily Customizable**
     32→- ⏳ **Promise API** - _Automatic loader from a promise_
@@ -15,21 +14,17 @@ README.md
     35→- 🤯 **Headless Hooks** - _Create your own with [`useToaster()`](https://react-hot-toast.com/docs/use-toaster)_
     36→
     37→## Installation
-    38→
     39→#### With pnpm
-    40→
     41→```sh
     42→pnpm add react-hot-toast
     43→```
     44→
     45→#### With NPM
-    46→
     47→```sh
     48→npm install react-hot-toast
     49→```
     50→
     51→## Getting Started
-    52→
     53→Add the Toaster to your app first. It will take care of rendering all notifications emitted. Now you can trigger `toast()` from anywhere!
     54→
     55→```jsx
@@ -48,11 +43,9 @@ README.md
     68→```
     69→
     70→## Documentation
-    71→
     72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
 site/README.md
      3→## Getting Started
-     4→
      5→First, run the development server:
      6→
      7→```bash
@@ -65,7 +58,6 @@ site/README.md
     14→
       →…
     17→## Learn More
-    18→
     19→To learn more about Next.js, take a look at the following resources:
     20→
     21→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
@@ -74,7 +66,6 @@ site/README.md
     24→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
     25→
     26→## Deploy on Vercel
-    27→
     28→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     29→
     30→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
@@ -123,7 +114,6 @@ site/next.config.mjs
      5→const withMDX = nextMdx({
      6→  extension: /\.mdx?$/,
      7→  options: {
-     8→    rehypePlugins: [rehypeSlug],
       →…
     14→/** @type {import('next').NextConfig} */
     15→const nextConfig = {
@@ -148,7 +138,6 @@ site/next.config.mjs
 site/pages/_app.tsx
     12→const components = {
     13→  a: (props) => (
-    14→    <Link href={props.href}>
       →…
     71→function MyApp …
 site/pages/index.tsx
@@ -162,7 +151,6 @@ site/pages/index.tsx
    104→  const [reverse, setReverse] = useState(false);
    105→  const { toasts: allToasts } = useToasterStore();
    106→
-   107→  const shouldFade =
       →…
 site/types/svg.d.ts
      1→interface SvgrComponent
@@ -196,8 +184,7 @@ src/components/toast-bar.tsx
     51→  children?: (components: {
     52→    icon: Renderable;
     53→    message: Renderable;
-    54→  }) => Renderable;
-    55→}
+      →…
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 src/components/toast-icon.tsx
@@ -280,6 +267,14 @@ src/core/types.ts
     43→  removeDelay?: number;
     44→
     45→  ariaProps: {
+    46→    role: 'status' | 'alert';
+    47→    'aria-live': 'assertive' | 'off' | 'polite';
+    48→  };
+    49→
+    50→  style?: CSSProperties;
+    51→  className?: string;
+    52→  iconTheme?: IconTheme;
+    53→
       →…
     60→export type ToastOptions …
     76→export type DefaultToastOptions …

@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1882 words)
+budget: 2000 (1867 words)
 
 README.md
      1→# color [![](https://github.com/fatih/color/workflows/build/badge.svg)](https://github.com/fatih/color/actions) [![PkgGoDev](https://pkg.go.dev/badge/github.com/fatih/color)](https://pkg.go.dev/github.com/fatih/color)
-     2→
      3→Color lets you use colorized outputs in terms of [ANSI Escape
      4→Codes](http://en.wikipedia.org/wiki/ANSI_escape_code#Colors) in Go (Golang). It
      5→has support for Windows too! The API can be used in several ways, pick one that
@@ -15,15 +14,12 @@ README.md
      8→![Color](https://user-images.githubusercontent.com/438920/96832689-03b3e000-13f4-11eb-9803-46f4c4de3406.jpg)
      9→
     10→## Install
-    11→
     12→```
     13→go get github.com/fatih/color
     14→```
     15→
     16→## Examples
-    17→
     18→### Standard colors
-    19→
     20→```go
     21→// Print with default helper functions
     22→color.Cyan("Prints text in cyan.")
@@ -38,7 +34,6 @@ README.md
     31→```
     32→
     33→### RGB colors
-    34→
     35→If your terminal supports 24-bit colors, you can use RGB color codes.
     36→
     37→```go
@@ -50,7 +45,6 @@ README.md
     43→```
     44→
     45→### Mix and reuse colors
-    46→
     47→```go
     48→// Create a new color object
     49→c := color.New(color.FgCyan).Add(color.Underline)
@@ -76,7 +70,6 @@ README.md
     69→```
     70→
     71→### Use your own output (io.Writer)
-    72→
     73→```go
     74→// Use your own io.Writer output
     75→color.New(color.FgBlue).Fprintln(myWriter, "blue color!")
@@ -86,7 +79,6 @@ README.md
     79→```
     80→
     81→### Custom print functions (PrintFunc)
-    82→
     83→```go
     84→// Create a custom print function for convenience
     85→red := color.New(color.FgRed).PrintfFunc()
@@ -99,7 +91,6 @@ README.md
     92→```
     93→
     94→### Custom fprint functions (FprintFunc)
-    95→
     96→```go
     97→blue := color.New(color.FgBlue).FprintfFunc()
     98→blue(myWriter, "important notice: %s", stars)
@@ -110,7 +101,6 @@ README.md
    103→```
    104→
    105→### Insert into noncolor strings (SprintFunc)
-   106→
    107→```go
    108→// Create SprintXxx functions to mix strings with other non-colorized strings:
    109→yellow := color.New(color.FgYellow).SprintFunc()
@@ -129,7 +119,6 @@ README.md
    122→```
    123→
    124→### Plug into existing code
-   125→
    126→```go
    127→// Use handy standard colors
    128→color.Set(color.FgYellow)
@@ -147,7 +136,6 @@ README.md
    140→```
    141→
    142→### Disable/Enable color
-   143→
    144→There might be a case where you want to explicitly disable/enable color output. the 
    145→`go-isatty` package will automatically disable color output for non-tty output streams 
    146→(for example if the output were piped directly to `less`).
@@ -182,17 +170,14 @@ README.md
    175→```
    176→
    177→## GitHub Actions
-   178→
    179→To output color in GitHub Actions (or other CI systems that support ANSI colors), make sure to set `color.NoColor = false` so that it bypasses the check for non-tty output streams. 
    180→
    181→
    182→## Credits
-   183→
    184→* [Fatih Arslan](https://github.com/fatih)
    185→* Windows support via @mattn: [colorable](https://github.com/mattn/go-colorable)
    186→
    187→## License
-   188→
    189→The MIT License (MIT) - see [`LICENSE.md`](https://github.com/fatih/color/blob/master/LICENSE.md) for more details
 color.go
     15→var (

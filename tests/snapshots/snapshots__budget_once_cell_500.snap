@@ -2,17 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (492 words)
 
 CHANGELOG.md
      3→## 1.21.3
-     4→
      5→- Outline more initialization in `race`: [#284](https://github.com/matklad/once_cell/pull/284),
      6→  [#285](https://github.com/matklad/once_cell/pull/285).
-      →…
+     7→
 README.md
      8→# Overview
-     9→
     10→`once_cell` provides two new cell-like types, `unsync::OnceCell` and `sync::OnceCell`. `OnceCell`
     11→might store arbitrary non-`Copy` types, can be assigned to at most once and provide direct access
     12→to the stored contents. In a nutshell, API looks *roughly* like this:
@@ -21,7 +19,6 @@ README.md
     15→impl OnceCell<T> {
       →…
     47→# Related crates
-    48→
     49→* [double-checked-cell](https://github.com/niklasf/double-checked-cell)
     50→* [lazy-init](https://crates.io/crates/lazy-init)
     51→* [lazycell](https://crates.io/crates/lazycell)

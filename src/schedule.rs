@@ -312,9 +312,15 @@ fn compute_symbol_costs(
             .find(|s| s.kind == parse::SymbolKind::Section)
             .map(|s| s.line - 1)
             .unwrap_or(lines.len());
-        // Skip blank lines after heading, then include content
+        // Skip leading noise (badges, link refs, blank lines) after heading
         let heading_end = (sym.end_line - 1).max(sym_line_0 + 1);
-        for (i, line) in lines.iter().enumerate().take(next_heading_line).skip(heading_end) {
+        let mut content_start = heading_end;
+        while content_start < next_heading_line
+            && format::is_markdown_leading_noise(lines[content_start])
+        {
+            content_start += 1;
+        }
+        for (i, line) in lines.iter().enumerate().take(next_heading_line).skip(content_start) {
             body_line_words.push(format::count_words(&format::fmt_line(i, line)));
         }
     } else {

@@ -7,65 +7,15 @@ budget: 4000 (3925 words)
 CHANGELOG.md
      3→## mdBook 0.5.2 …
   1659→### Changed …
-CODE_OF_CONDUCT.md
-     1→# The Rust Code of Conduct
-     2→
-      →…
-CONTRIBUTING.md
-     1→# Contributing
-     2→
-      →…
-    10→## Issue assignment
-    11→
-      →…
-    19→## Issues to work on
-    20→
-      →…
-    44→## Building mdBook
-    45→
-      →…
-    59→## Code quality
-    60→
-      →…
-    63→### Formatting code with rustfmt
-    64→
-      →…
-    87→### Finding issues with clippy
-    88→
-      →…
-   101→## Change requirements
-   102→
-      →…
-   126→## Tests
-   127→
-      →…
-   153→## Making a pull-request
-   154→
-      →…
-   160→## Browser compatibility and testing
-   161→
-      →…
-   190→### Checking changes in `.js` files
-   191→
-      →…
-   205→## Updating highlight.js
-   206→
-      →…
-   218→## Publishing new releases
-   219→
-      →…
 README.md
      1→# mdBook
-     2→
-     3→[![CI Status](https://github.com/rust-lang/mdBook/actions/workflows/main.yml/badge.svg)](https://github.com/rust-lang/mdBook/actions/workflows/main.yml)
-     4→[![crates.io](https://img.shields.io/crates/v/mdbook.svg)](https://crates.io/crates/mdbook)
-     5→[![LICENSE](https://img.shields.io/github/license/rust-lang/mdBook.svg)](LICENSE)
-     6→
      7→mdBook is a utility to create modern online books from Markdown files.
      8→
+     9→Check out the **[User Guide]** for a list of features and installation and usage information.
+    10→The User Guide also serves as a demonstration to showcase what a book looks like.
+    11→
       →…
     14→## License
-    15→
     16→All the code in this repository is released under the ***Mozilla Public License v2.0***, for more information take a look at the [LICENSE] file.
     17→
     18→[User Guide]: https://rust-lang.github.io/mdBook/
@@ -73,7 +23,6 @@ README.md
     20→[LICENSE]: https://github.com/rust-lang/mdBook/blob/master/LICENSE
 crates/mdbook-compare/README.md
      1→# mdbook-compare
-     2→
      3→This is a simple utility to compare the output of two different versions of mdbook.
      4→
      5→To use this:
@@ -84,14 +33,10 @@ crates/mdbook-compare/src/main.rs
      6→macro_rules! error {
 crates/mdbook-core/README.md
      1→# mdbook-core
-     2→
-     3→[![Documentation](https://img.shields.io/docsrs/mdbook-core)](https://docs.rs/mdbook-core)
-     4→[![crates.io](https://img.shields.io/crates/v/mdbook-core.svg)](https://crates.io/crates/mdbook-core)
-     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
-     6→
+     7→This is the base support library for [mdBook](https://rust-lang.github.io/mdBook/). It is intended for internal use only. Other mdBook crates depend on this for any types that are shared across the crates.
+     8→
       →…
     11→## License
-    12→
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-core/src/book.rs
     26→pub struct Book {
@@ -104,14 +49,11 @@ crates/mdbook-core/src/book.rs
    274→    type Item = &'a BookItem;
 crates/mdbook-core/src/config.rs
     63→pub struct Config {
-    80→/// Helper for serde serialization.
     81→fn is_default<T: Default + PartialEq>(t: &T) -> bool {
-    85→/// Helper for serde serialization.
     86→fn toml_is_empty(table: &Value) -> bool {
     91→    type Err = Error;
    308→fn parse_env …
    318→pub struct BookConfig {
-   335→/// Helper for serde serialization.
    336→fn is_default_src(src: &PathBuf) -> bool {
    368→pub enum TextDirection {
    394→pub struct BuildConfig {
@@ -185,14 +127,10 @@ crates/mdbook-core/src/utils/toml_ext.rs
     40→fn split(key: &str) -> Option<(&str, &str)> {
 crates/mdbook-driver/README.md
      1→# mdbook-driver
-     2→
-     3→[![Documentation](https://img.shields.io/docsrs/mdbook-driver)](https://docs.rs/mdbook-driver)
-     4→[![crates.io](https://img.shields.io/crates/v/mdbook-driver.svg)](https://crates.io/crates/mdbook-driver)
-     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
-     6→
+     7→This is the high-level Rust library for running [mdBook](https://rust-lang.github.io/mdBook/). New books can be created using [`BookBuilder`](https://docs.rs/mdbook-driver/latest/mdbook_driver/init/struct.BookBuilder.html). The primary type [`MDBook`](https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html) can be used to manage and render books.
+     8→
       →…
     11→## License
-    12→
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     14→pub struct CmdPreprocessor {
@@ -355,14 +293,10 @@ crates/mdbook-driver/src/mdbook.rs
    549→fn preprocessor_should_run …
 crates/mdbook-html/README.md
      1→# mdbook-html
-     2→
-     3→[![Documentation](https://img.shields.io/docsrs/mdbook-html)](https://docs.rs/mdbook-html)
-     4→[![crates.io](https://img.shields.io/crates/v/mdbook-html.svg)](https://crates.io/crates/mdbook-html)
-     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
-     6→
+     7→This is the HTML renderer for [mdBook](https://rust-lang.github.io/mdBook/). This is intended for internal use only. It is automatically included by [`mdbook-driver`](https://crates.io/crates/mdbook-driver) to render books to HTML.
+     8→
       →…
     11→## License
-    12→
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-html/front-end/js/book.js
      9→function playground_text(playground, hidden = true) {
@@ -532,14 +466,10 @@ crates/mdbook-html/src/utils.rs
     76→pub(crate) fn id_from_content(content: &str) -> String {
 crates/mdbook-markdown/README.md
      1→# mdbook-markdown
-     2→
-     3→[![Documentation](https://img.shields.io/docsrs/mdbook-markdown)](https://docs.rs/mdbook-markdown)
-     4→[![crates.io](https://img.shields.io/crates/v/mdbook-markdown.svg)](https://crates.io/crates/mdbook-markdown)
-     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
-     6→
+     7→This is the Markdown support library for [mdBook](https://rust-lang.github.io/mdBook/). Rust crates (such as preprocessors) can use this library to process Markdown in the same way as mdBook.
+     8→
       →…
     11→## License
-    12→
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-markdown/src/lib.rs
     13→/// Options for parsing markdown.
@@ -566,6 +496,8 @@ crates/mdbook-markdown/src/lib.rs
     35→        MarkdownOptions {
     36→            smart_punctuation: true,
     37→            definition_lists: true,
+    38→            admonitions: true,
+    39→        }
       →…
     43→/// Creates a new pulldown-cmark parser of the given text.
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
@@ -581,16 +513,10 @@ crates/mdbook-markdown/src/lib.rs
       →…
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
-     2→
-     3→[![Documentation](https://img.shields.io/docsrs/mdbook-preprocessor)](https://docs.rs/mdbook-preprocessor)
-     4→[![crates.io](https://img.shields.io/crates/v/mdbook-preprocessor.svg)](https://crates.io/crates/mdbook-preprocessor)
-     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
-     6→
      7→This is the Rust library to implement a [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html) for [mdBook](https://rust-lang.github.io/mdBook/).
      8→
       →…
     11→## License
-    12→
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-preprocessor/src/lib.rs
     30→pub trait Preprocessor {
@@ -629,16 +555,10 @@ crates/mdbook-preprocessor/src/lib.rs
     84→}
 crates/mdbook-renderer/README.md
      1→# mdbook-renderer
-     2→
-     3→[![Documentation](https://img.shields.io/docsrs/mdbook-renderer)](https://docs.rs/mdbook-renderer)
-     4→[![crates.io](https://img.shields.io/crates/v/mdbook-renderer.svg)](https://crates.io/crates/mdbook-renderer)
-     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
-     6→
      7→This is the Rust library to implement a [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html) for [mdBook](https://rust-lang.github.io/mdBook/).
      8→
       →…
     11→## License
-    12→
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-renderer/src/lib.rs
     22→/// An mdbook backend.
@@ -706,14 +626,10 @@ crates/mdbook-renderer/src/lib.rs
     88→    }
 crates/mdbook-summary/README.md
      1→# mdbook-summary
-     2→
-     3→[![Documentation](https://img.shields.io/docsrs/mdbook-summary)](https://docs.rs/mdbook-summary)
-     4→[![crates.io](https://img.shields.io/crates/v/mdbook-summary.svg)](https://crates.io/crates/mdbook-summary)
-     5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
-     6→
+     7→This is the Rust library used to parse the [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html) file structure for [mdBook](https://rust-lang.github.io/mdBook/).
+     8→
       →…
     11→## License
-    12→
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-summary/src/lib.rs
     17→/// Parse the text from a `SUMMARY.md` file into a sort of "recipe" to be
@@ -763,7 +679,6 @@ crates/mdbook-summary/src/lib.rs
    221→impl<'a> SummaryParser<'a> {
 crates/xtask/README.md
      1→# xtask
-     2→
      3→This is a CLI utility for running development commands for mdbook.
      4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
 crates/xtask/src/changelog.rs
@@ -789,6 +704,8 @@ guide/guide-helper/src/lib.rs
     14→    let book_version = Version::parse(&ctx.mdbook_version)?;
     15→    let version_req = VersionReq::parse(mdbook_preprocessor::MDBOOK_VERSION)?;
     16→
+    17→    if !version_req.matches(&book_version) {
+    18→        eprintln!(
       →…
     33→struct GuideHelper;
     35→impl Preprocessor for GuideHelper {
@@ -806,71 +723,30 @@ guide/guide-helper/src/main.rs
      3→fn main() {
      4→    let mut args = std::env::args().skip(1);
       →…
-guide/src/404.md
-     1→# Document not found (404)
-     2→
-      →…
 guide/src/README.md
      1→# Introduction
-     2→
+     3→<style>
+     4→    .mdbook-version {
       →…
     46→## Contributing
-    47→
+    48→mdBook is free and open source. You can find the source code on
+    49→[GitHub](https://github.com/rust-lang/mdBook) and issues and feature requests can be posted on
       →…
     55→## License
-    56→
-      →…
-guide/src/SUMMARY.md
-     1→# Summary
-     2→
-      →…
-     5→# User guide
-     6→
-      →…
-    11→# Reference guide
-    12→
-      →…
+    57→The mdBook source and documentation are released under
+    58→the [Mozilla Public License v2.0](https://www.mozilla.org/MPL/2.0/).
 guide/src/cli/README.md
      1→# Command-line tool
-     2→
      3→The `mdbook` command-line tool is used to create and build books.
      4→After you have [installed](../guide/installation.md) `mdbook`, you can run the `mdbook help` command in your terminal to view the available commands.
      5→
      6→This following sections provide in-depth information on the different commands available.
      7→
       →…
-guide/src/continuous-integration.md
-     1→# Running `mdbook` in continuous integration
-     2→
-      →…
-    12→## Installing mdBook
-    13→
-      →…
-    17→### Pre-compiled binaries
-    18→
-      →…
-    39→### Building from source
-    40→
-      →…
-    67→## Running tests
-    68→
-      →…
-    83→## Deploying
-    84→
-      →…
-   100→### 404 handling
-   101→
-      →…
 guide/src/for_developers/README.md
-     1→# For developers
-     2→
-      →…
-    17→## The build process
-    18→
-      →…
-    30→## Using `mdbook` as a library
-    31→
-      →…
+     1→# For developers …
+    17→## The build process …
+    30→## Using `mdbook` as a library …
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     12→fn main() {
     40→fn count_words(ch: &Chapter) -> usize {
@@ -882,7 +758,6 @@ guide/src/for_developers/mdbook-wordcount/src/main.rs
     49→}
 guide/src/format/README.md
      1→# Format
-     2→
      3→In this section you will learn how to:
      4→
      5→- Structure your book correctly
@@ -891,8 +766,8 @@ guide/src/format/README.md
      8→- Customize your theme
 guide/src/format/configuration/README.md
      1→# Configuration
-     2→
      3→This section details the configuration options available in the ***book.toml***:
+     4→- **[General]** configuration including the `book`, `rust`, `build` sections
       →…
 guide/src/format/example.rs
      1→fn main() {
@@ -901,7 +776,6 @@ guide/src/format/example.rs
       →…
 guide/src/format/mdbook.md
      3→## Hiding code lines
-     4→
      5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
      6→
      7→For the Rust language, you can prefix lines with `# ` (`#` followed by a space) to hide them [like you would with Rustdoc][rustdoc-hide].
@@ -924,7 +798,6 @@ guide/src/format/mdbook.md
       →…
 guide/src/format/theme/README.md
      1→# Theme
-     2→
      3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
      4→render your markdown files and comes with a default theme included in the mdBook
      5→binary.
@@ -932,7 +805,6 @@ guide/src/format/theme/README.md
       →…
 guide/src/guide/README.md
      1→# User guide
-     2→
      3→This user guide provides an introduction to basic concepts of using mdBook.
      4→
      5→- [Installation](installation.md)
@@ -940,12 +812,15 @@ guide/src/guide/README.md
      7→- [Creating a Book](creating.md)
 guide/src/misc/contributors.md
      1→# Contributors
-     2→
      3→Here is a list of the contributors who have helped improving mdBook. Big
      4→shout-out to them!
      5→
      6→- [mdinger](https://github.com/mdinger)
      7→- Kevin ([kbknapp](https://github.com/kbknapp))
+     8→- Steve Klabnik ([steveklabnik](https://github.com/steveklabnik))
+     9→- Adam Solove ([asolove](https://github.com/asolove))
+    10→- Wayne Nilsen ([waynenilsen](https://github.com/waynenilsen))
+    11→- [funnkill](https://github.com/funkill)
       →…
 src/cmd/clean.rs
     36→/// Formats a number of bytes into a human readable SI-prefixed size.

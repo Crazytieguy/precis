@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1957 words)
+budget: 2000 (1958 words)
 
 readme.md
     87→### ky(input, options?)
-    88→
     89→The `input` and `options` are the same as [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch), with additional `options` available (see below).
     90→
     91→Returns a [`Response` object](https://developer.mozilla.org/en-US/docs/Web/API/Response) with [`Body` methods](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#body) added for convenience. So you can, for example, call `ky.get(input).json()` directly without having to await the `Response` first. When called like that, an appropriate `Accept` header will be set depending on the body method used. Unlike the `Body` methods of `window.Fetch`, these will throw an `HTTPError` if the response status is not in the range of `200...299`. Also, `.json()` will return an empty string if body is empty or the response status is `204` instead of throwing a parse error due to an empty body.
@@ -45,13 +44,11 @@ readme.md
    125→### ky.patch(input, options?)
    126→### ky.head(input, options?)
    127→### ky.delete(input, options?)
-   128→
    129→Sets `options.method` to the method name and makes a request.
    130→
    131→⌨️ **TypeScript:** Accepts an optional type parameter for use with JSON responses (see [`ky()`](#kyinput-options)).
    132→
   1052→### Sending form data
-  1053→
   1054→Sending form data in Ky is identical to `fetch`. Just pass a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to the `body` option. The `Content-Type` header will be automatically set to `multipart/form-data`, overriding any existing `Content-Type` header.
   1055→
   1056→```js
@@ -79,7 +76,6 @@ readme.md
   1078→```
   1079→
   1158→#### Native proxy support
-  1159→
   1160→Node.js 24.5+ supports automatic proxy configuration via environment variables. Set `NODE_USE_ENV_PROXY=1` or use the `--use-env-proxy` CLI flag.
   1161→
   1162→```sh
@@ -98,7 +94,6 @@ readme.md
   1175→- `NO_PROXY` / `no_proxy`: Comma-separated list of hosts to bypass the proxy
   1176→
   1294→#### How do I use this in Node.js?
-  1295→
   1296→Node.js 18 and later supports `fetch` natively, so you can just use this package directly.
   1297→
 source/core/Ky.ts
@@ -360,6 +355,8 @@ source/utils/normalize.ts
     18→	methods: retryMethods,
     19→	statusCodes: retryStatusCodes,
     20→	afterStatusCodes: retryAfterStatusCodes,
+    21→	maxRetryAfter: Number.POSITIVE_INFINITY,
+    22→	backoffLimit: Number.POSITIVE_INFINITY,
       →…
     28→export const normalizeRetryOptions …
 source/utils/options.ts

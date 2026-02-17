@@ -2,13 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3911 words)
+budget: 4000 (3916 words)
 
 CONTRIBUTING.md
      1→# Contributing
-     2→
      3→## Issues
-     4→
      5→New issues are welcome, whether questions or suggestions or reporting bugs.
      6→You are also welcome to contribute by adding helpful comments on an existing issue.
      7→
@@ -18,109 +16,44 @@ CONTRIBUTING.md
     11→or after six months otherwise.
     12→
     13→## Pull Requests
-    14→
+    15→Pull Requests will be considered. Please submit pull requests against the develop branch.
+    16→
       →…
 Readme.md
-     1→# Commander.js
-     2→
-      →…
-    61→## Installation
-    62→
-      →…
-    67→## Quick Start
-    68→
-      →…
-   147→## Declaring _program_ variable
-   148→
-      →…
-   177→## Options
-   178→
-      →…
-   211→### Common option types, boolean and value
-   212→
-      →…
-   254→### Default option value
-   255→
-      →…
-   276→### Other option types, negatable boolean and boolean|value
-   277→
-      →…
-   342→### Required option
-   343→
-      →…
-   362→### Variadic option
-   363→
-      →…
-   396→### Version option
-   397→
-      →…
-   416→### More configuration
-   417→
-      →…
-   459→### Custom option processing
-   460→
-      →…
-   523→## Commands
-   524→
-      →…
-   567→### Command-arguments
-   568→
-      →…
-   613→#### More configuration
-   614→
-      →…
-   625→#### Custom argument processing
-   626→
-      →…
-   648→### Action handler
-   649→
-      →…
-   700→### Stand-alone executable (sub)commands
-   701→
-      →…
-   725→### Life cycle hooks
-   726→
-      →…
-   754→## Automated help
-   755→
-      →…
-   787→### Custom help
-   788→
-      →…
-   830→### Display help after errors
-   831→
-      →…
-   860→### Display help from code
-   861→
-      →…
-   868→### .name
-   869→
-      →…
-   884→### .usage
-   885→
-      →…
-   900→### .description and .summary
-   901→
-      →…
-   914→### .helpOption(flags, description)
-   915→
-      →…
-   925→### .helpCommand()
-   926→
-      →…
-   937→### Help Groups
-   938→
-      →…
-   947→### More configuration
-   948→
-      →…
-   956→## Custom event listeners
-   957→
-      →…
-   966→## Bits and pieces
-   967→
+     1→# Commander.js …
+    61→## Installation …
+    67→## Quick Start …
+   147→## Declaring _program_ variable …
+   177→## Options …
+   211→### Common option types, boolean and value …
+   254→### Default option value …
+   276→### Other option types, negatable boolean and boolean|value …
+   342→### Required option …
+   362→### Variadic option …
+   396→### Version option …
+   416→### More configuration …
+   459→### Custom option processing …
+   523→## Commands …
+   567→### Command-arguments …
+   613→#### More configuration …
+   625→#### Custom argument processing …
+   648→### Action handler …
+   700→### Stand-alone executable (sub)commands …
+   725→### Life cycle hooks …
+   754→## Automated help …
+   787→### Custom help …
+   830→### Display help after errors …
+   860→### Display help from code …
+   868→### .name …
+   884→### .usage …
+   900→### .description and .summary …
+   914→### .helpOption(flags, description) …
+   925→### .helpCommand() …
+   937→### Help Groups …
+   947→### More configuration …
+   956→## Custom event listeners …
+   966→## Bits and pieces …
    968→### .parse() and .parseAsync()
-   969→
    970→Call with no parameters to parse `process.argv`. Detects Electron and special node options like `node --eval`. Easy mode!
    971→
    972→Or, call with an array of strings to parse, and optionally where the user arguments start by specifying where the arguments are `from`:
@@ -139,140 +72,145 @@ Readme.md
    985→
    986→Use `.parseAsync()` instead of `.parse()` if any of your action handlers are async.
    987→
-   988→### Parsing Configuration
-   989→
-      →…
-  1023→### Legacy options as properties
-  1024→
-      →…
-  1042→### TypeScript
-  1043→
-      →…
-  1058→### createCommand()
-  1059→
-      →…
-  1071→### Node options such as `--harmony`
-  1072→
-      →…
-  1078→### Debugging stand-alone executable subcommands
-  1079→
-      →…
-  1087→### npm run-script
-  1088→
-      →…
-  1098→### Display error
-  1099→
-      →…
-  1110→### Override exit and output handling
-  1111→
-      →…
-  1154→### Additional documentation
-  1155→
-      →…
-  1164→## Support
-  1165→
-      →…
-  1172→### Commander for enterprise
-  1173→
-      →…
+   988→### Parsing Configuration …
+  1023→### Legacy options as properties …
+  1042→### TypeScript …
+  1058→### createCommand() …
+  1071→### Node options such as `--harmony` …
+  1078→### Debugging stand-alone executable subcommands …
+  1087→### npm run-script …
+  1098→### Display error …
+  1110→### Override exit and output handling …
+  1154→### Additional documentation …
+  1164→## Support …
+  1172→### Commander for enterprise …
 Readme_zh-CN.md
      1→# Commander.js
-     2→
+     8→完整的 [node.js](http://nodejs.org) 命令行解决方案。
+     9→
       →…
     59→## 安装
-    60→
+    61→```sh
+    62→npm install commander
       →…
     65→## 快速开始
-    66→
+    67→编写代码来描述你的命令行界面。
+    68→Commander 负责将参数解析为选项和命令参数，为问题显示使用错误，并实现一个有帮助的系统。
       →…
    144→## 声明 program 变量
-   145→
+   146→为简化使用，Commander 提供了一个全局对象。本文档的示例代码均按此方法使用：
+   147→
       →…
    173→## 选项
-   174→
+   175→Commander 使用`.option()`方法来定义选项，同时可以附加选项的简介。每个选项可以定义一个短选项名称（-后面接单个字符）和一个长选项名称（--后面接一个或多个单词），使用逗号、空格或`|`分隔。
+   176→
       →…
    200→### 常用选项类型，boolean 型选项和带参数选项
-   201→
+   202→有两种最常用的选项，一类是 boolean 型选项，选项无需配置参数，另一类选项则可以设置参数（使用尖括号声明在该选项后，如`--expect <value>`）。如果在命令行中不指定具体的选项及参数，则会被定义为`undefined`。
+   203→
       →…
    242→### 选项的默认值
-   243→
+   244→选项可以设置一个默认值。
+   245→
       →…
    264→### 其他的选项类型，取反选项，以及可选参数的选项
-   265→
+   266→可以定义一个以`no-`开头的 boolean 型长选项。在命令行中使用该选项时，会将对应选项的值置为`false`。当只定义了带`no-`的选项，未定义对应不带`no-`的选项时，该选项的默认值会被置为`true`。
+   267→
       →…
    325→### 必填选项
-   326→
+   327→通过`.requiredOption()`方法可以设置选项为必填。必填选项要么设有默认值，要么必须在命令行中输入，对应的属性字段在解析时必定会有赋值。该方法其余参数与`.option()`一致。
+   328→
       →…
    343→### 变长参数选项
-   344→
+   345→定义选项时，可以通过使用`...`来设置参数为可变长参数。在命令行中，用户可以输入多个参数，解析后会以数组形式存储在对应属性字段中。在输入下一个选项前（`-`或`--`开头），用户输入的指令均会被视作变长参数。与普通参数一样的是，可以通过`--`标记当前命令的结束。
+   346→
       →…
    374→### 版本选项
-   375→
+   376→`.version()`方法可以设置版本，其默认选项为`-V`和`--version`，设置了版本后，命令行会输出当前的版本号。
+   377→
       →…
    393→### 其他选项配置
-   394→
+   395→大多数情况下，选项均可通过`.option()`方法添加。但对某些不常见的用例，也可以直接构造`Option`对象，对选项进行更详尽的配置。
+   396→
       →…
    433→### 自定义选项处理
-   434→
+   435→选项的参数可以通过自定义函数来处理，该函数接收两个参数，即用户新输入的参数值和当前已有的参数值（即上一次调用自定义处理函数后的返回值），返回新的选项参数值。
+   436→
       →…
    496→## 命令
-   497→
+   498→通过`.command()`或`.addCommand()`可以配置命令，有两种实现方式：为命令绑定处理函数，或者将命令单独写成一个可执行文件（详述见后文）。子命令支持嵌套（[示例代码](./examples/nestedCommands.js)）。
+   499→
       →…
    530→### 命令参数
-   531→
+   532→如上所述，子命令的参数可以通过`.command()`指定。对于有独立可执行文件的子命令来说，参数只能以这种方法指定。而对其他子命令，参数也可用以下方法。
+   533→
       →…
    570→#### 其他参数配置
-   571→
+   572→有少数附加功能可以直接构造`Argument`对象，对参数进行更详尽的配置。
+   573→
       →…
    582→#### 自定义参数处理
-   583→
+   584→选项的参数可以通过自定义函数来处理（与处理选项参数时类似），该函数接收两个参数：用户新输入的参数值和当前已有的参数值（即上一次调用自定义处理函数后的返回值），返回新的命令参数值。
+   585→
       →…
    603→### 处理函数
-   604→
+   605→命令处理函数的参数，为该命令声明的所有参数，除此之外还会附加两个额外参数：一个是解析出的选项，另一个则是该命令对象自身。
+   606→
       →…
    653→### 独立的可执行（子）命令
-   654→
+   655→当`.command()`带有描述参数时，就意味着使用独立的可执行文件作为子命令。
+   656→Commander 会尝试在入口脚本的目录中搜索名称组合为 `command-subcommand` 的文件，如以下示例中的 `pm-install` 或 `pm-search`。搜索包括尝试常见的文件扩展名，如`.js`。
       →…
    678→### 生命周期钩子
-   679→
+   680→可以在命令的生命周期事件上设置回调函数。
+   681→
       →…
    705→## 自动化帮助信息
-   706→
+   707→帮助信息是 Commander 基于你的程序自动生成的，默认的帮助选项是`-h,--help`。
+   708→
       →…
    734→### 自定义帮助
-   735→
+   736→可以添加额外的帮助信息，与内建的帮助一同展示。
+   737→
       →…
    777→### 在出错后展示帮助信息
-   778→
+   779→默认情况下，出现命令用法错误时只会显示错误信息。可以选择在出错后展示完整的帮助或自定义的帮助信息。
+   780→
       →…
    805→### 使用代码展示帮助信息
-   806→
+   807→`.help()`：展示帮助信息并退出。可以通过传入`{ error: true }`来让帮助信息从 stderr 输出，并以代表错误的状态码退出程序。
+   808→
       →…
    813→### .name
-   814→
+   815→命令名称出现在帮助中，也用于定位独立的可执行子命令。
+   816→
       →…
    826→### .usage
-   827→
+   828→通过这个选项可以修改帮助信息的首行提示，例如：
+   829→
       →…
    842→### .description 和 .summary
-   843→
+   844→description 出现在命令的帮助中。当列为程序的子命令时，你可以选择提供更短的 summary 以供使用。
+   845→
       →…
    855→### .helpOption(flags, description)
-   856→
+   857→每一个命令都带有一个默认的帮助选项。你可以改变 `flags` 和 `description` 参数。传入 `false` 则会禁用内建的帮助信息。
+   858→
       →…
    864→### .addHelpCommand()
-   865→
+   866→如果一个命令拥有子命令，它也将有一个默认的帮助子命令。使用`.addHelpCommand()`和`.addHelpCommand(false)`可以打开或关闭默认的帮助子命令。
+   867→
       →…
    874→### 其他帮助配置
-   875→
+   876→内建帮助信息通过`Help`类进行格式化。如有需要，可以使用`.configureHelp()`来更改其数据属性和方法，或使用`.createHelp()`来创建子类，从而配置`Help`类的行为。
+   877→
       →…
    895→## 自定义事件监听
-   896→
+   897→监听命令和选项可以执行自定义函数。
+   898→
       →…
    905→## 零碎知识
-   906→
    907→### .parse() 和 .parseAsync()
-   908→
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
    911→如果参数遵循与 node 不同的约定，可以在第二个参数中传递`from`选项：
@@ -290,83 +228,69 @@ Readme_zh-CN.md
    923→```
    924→
    925→### 解析配置
-   926→
+   927→当默认的解析方式无法满足需要，Commander 也提供了其他的解析行为。
+   928→
       →…
    956→### 作为属性的遗留选项
-   957→
+   958→在 Commander 7 以前，选项的值是作为属性存储在命令对象上的。
+   959→这种处理方式便于实现，但缺点在于，选项可能会与`Command`的已有属性相冲突。通过使用`.storeOptionsAsProperties()`，可以恢复到这种旧的处理方式，并可以不加改动地继续运行遗留代码。
       →…
    972→### TypeScript
-   973→
+   974→如果你使用 ts-node，并有`.ts`文件作为独立可执行文件，那么需要用 node 运行你的程序以使子命令能正确调用，例如：
+   975→
       →…
    980→### createCommand()
-   981→
+   982→使用这个工厂方法可以创建新命令，此时不需要使用`new`，如
+   983→
       →…
    991→### Node 选项，如 --harmony
-   992→
+   993→要使用`--harmony`等选项有以下两种方式：
+   994→
       →…
    998→### 调试子命令
-   999→
+  1000→一个可执行的子命令会作为单独的子进程执行。
+  1001→
       →…
   1006→### 显示错误
-  1007→
+  1008→你可用于针对自己的错误情况调用 Commander 错误处理。（另请参阅下一节有关退出处理的内容）
+  1009→
       →…
   1017→### 重写退出和输出
-  1018→
+  1019→默认情况下，在检测到错误、打印帮助信息或版本信息时 Commander 会调用`process.exit`方法。其默认实现会抛出一个`CommanderError`，可以重写该方法并提供一个回调函数（可选）。
+  1020→
       →…
   1054→### 其他文档
-  1055→
+  1056→请参考关于如下话题的其他文档：
+  1057→
       →…
   1061→## 支持
-  1062→
+  1063→当前版本的 Commander 在 LTS 版本的 Node.js 上完全支持。并且至少需要 v18。
+  1064→（使用更低版本 Node.js 的用户建议安装更低版本的 Commander）
       →…
   1068→### 企业使用 Commander
-  1069→
+  1070→作为 Tidelift 订阅的一部分。
+  1071→
       →…
 SECURITY.md
      1→# Security Policy
-     2→
+     3→To report a security vulnerability, please use the
+     4→[Tidelift security contact](https://tidelift.com/security).
       →…
 docs/deprecated.md
-     1→# Deprecated
-     2→
-      →…
-    22→### RegExp .option() parameter
-    23→
-      →…
-    34→### noHelp
-    35→
-      →…
-    44→### Callback to .help() and .outputHelp()
-    45→
-      →…
-    62→### .on('--help')
-    63→
-      →…
-    87→### .on('command:*')
-    88→
-      →…
-    98→### .command('*')
-    99→
-      →…
-   118→### cmd.description(cmdDescription, argDescriptions)
-   119→
-      →…
-   141→### InvalidOptionArgumentError
-   142→
-      →…
-   171→### Import from `commander/esm.mjs`
-   172→
-      →…
-   187→### cmd._args
-   188→
-      →…
-   203→### .addHelpCommand(string|boolean|undefined)
-   204→
-      →…
-   227→## Removed
-   228→
+     1→# Deprecated …
+    22→### RegExp .option() parameter …
+    34→### noHelp …
+    44→### Callback to .help() and .outputHelp() …
+    62→### .on('--help') …
+    87→### .on('command:*') …
+    98→### .command('*') …
+   118→### cmd.description(cmdDescription, argDescriptions) …
+   141→### InvalidOptionArgumentError …
+   171→### Import from `commander/esm.mjs` …
+   187→### cmd._args …
+   203→### .addHelpCommand(string|boolean|undefined) …
+   227→## Removed …
    229→### Short option flag longer than a single character
-   230→
    231→Short option flags like `-ws` were never supported, but the old README did not make this clear. The README now states that short options are a single character.
    232→
    233→- README updated in Commander v3.
@@ -374,171 +298,120 @@ docs/deprecated.md
    235→- Throws an exception in Commander v13. Deprecated and gone!
    236→- Replacement added in Commander v13.1 with support for dual long options, like `--ws, --workspace`.
    237→
-   238→### Default import of global Command object
-   239→
-      →…
+   238→### Default import of global Command object …
 docs/help-in-depth.md
-     1→# Help in Depth
-     2→
-      →…
-    20→## Data Properties
-    21→
-      →…
-    34→## Stringify and Style
-    35→
-      →…
-   118→## Layout
-   119→
-      →…
+     1→# Help in Depth …
+    20→## Data Properties …
+    34→## Stringify and Style …
+   118→## Layout …
 docs/options-in-depth.md
-     2→# Options in Depth
-     3→
-      →…
-    15→## Options taking varying numbers of option-arguments
-    16→
-      →…
-    30→### Parsing ambiguity
-    31→
-      →…
-    79→#### Alternative: Make `--` part of your syntax
-    80→
-      →…
-   104→#### Alternative: Put options last
-   105→
-      →…
-   126→#### Alternative: Use options instead of command-arguments
-   127→
-      →…
-   148→## Combining short options, and options taking arguments
-   149→
-      →…
-   191→### Combining short options as if boolean
-   192→
-      →…
+     2→# Options in Depth …
+    15→## Options taking varying numbers of option-arguments …
+    30→### Parsing ambiguity …
+    79→#### Alternative: Make `--` part of your syntax …
+   104→#### Alternative: Put options last …
+   126→#### Alternative: Use options instead of command-arguments …
+   148→## Combining short options, and options taking arguments …
+   191→### Combining short options as if boolean …
 docs/parsing-and-hooks.md
-     1→# Parsing life cycle and hooks
-     2→
-      →…
+     1→# Parsing life cycle and hooks …
 docs/release-policy.md
-     1→# Release Policy
-     2→
-      →…
+     1→# Release Policy …
 docs/terminology.md
-     1→# Terminology
-     2→
-      →…
+     1→# Terminology …
 docs/zh-CN/不再推荐使用的功能.md
      1→# 不再推荐使用的功能
-     2→
      3→本文中列出的功能不再推荐使用。它们在 Commander 未来的主要版本（major version）中可能被移除。为保证后向兼容，这些功能目前还可以使用，但它们不应被用在新代码中。
      4→
      5→- [不再推荐使用的功能](#%E4%B8%8D%E5%86%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8%E7%9A%84%E5%8A%9F%E8%83%BD)
       →…
     18→## .option() 方法的正则表达式参数
-    19→
     20→`.option()`方法可以接受一个正则表达式作为第三个参数，以规定可以接受的选项参数值。
     21→
     22→```js
       →…
     30→## noHelp
-    31→
     32→此选项曾被用作传入`.command()`方法，以在内建的帮助信息中隐藏该命令：
     33→
     34→```js
       →…
     40→## 默认导入的全局 Command 对象
-    41→
     42→Commander 的默认导入曾是一个全局的`Command`对象。
     43→
     44→```js
       →…
     61→## .help() 与 .outputHelp() 的回调函数参数
-    62→
     63→这两个方法曾允许传入一个回调函数，以在展示前处理帮助信息。
     64→
     65→```js
       →…
     79→## .on('--help')
-    80→
     81→此功能曾被用作在内建的帮助信息后输出自定义的帮助信息。自 Commander v3.0.0 起，如果有自定义的帮助选项，则此方法使用该自定义的帮助选项。
     82→
     83→```js
       →…
    104→## .on('command:*')
-   105→
    106→当命令参数与已知子命令不匹配时发出此消息（作为 `.command('')` 实现的一部分）。
    107→
    108→一种用途是为未知子命令添加错误。错误现在是默认的内置行为。
       →…
    114→## .command('*')
-   115→
    116→这用于向程序添加默认命令。
    117→
    118→```js
       →…
    134→## cmd.description(cmdDescription, argDescriptions)
-   135→
    136→此功能曾用来为命令参数添加描述信息。
    137→
    138→```js
       →…
    157→## InvalidOptionArgumentError
-   158→
    159→此类曾被用来在自定义选项处理中抛出错误，以显示错误信息。
    160→
    161→```js
       →…
    187→## 短选项标志长于单个字符
-   188→
    189→短选项从未支持像 `-ws` 的标识，但旧的 README 并没有明确说明这一点。README 现在声明短选项是单个字符。
    190→
    191→README 在 Commander v3 更新。自 Commander v9 起不再推荐使用。
 docs/zh-CN/可变参数的选项.md
      1→# 可变参数的选项
-     2→
      3→README 文档介绍了选项的声明与使用。大多数情况下，选项的解析行为，与您和您程序用户的期望相符。本文将详述一些特殊用例和细节问题。
      4→
      5→- [可变参数的选项](#%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E7%9A%84%E9%80%89%E9%A1%B9)
       →…
     26→## 解析中的歧义
-    27→
     28→解析选项时，有一些潜在的问题值得注意。当一个命令既有命令参数，又有选项的时候，在解析过程中有可能出现歧义。这可能会影响用户使用您的程序。
     29→Commander 首先解析选项的参数，而用户有可能想将选项后面跟的参数作为命令，或是作为命令参数进行解析。
     30→
       →…
     73→### 方案一：让`--`成为语法的一部分
-    74→
     75→与其让用户理解`--`的用法，您也可以直接把它作为程序语法的一部分。
     76→
     77→```js
       →…
     98→### 方案二：把选项放在最后
-    99→
    100→Commander 遵循 GNU 解析命令的惯例，允许选项出现在命令参数之前或者之后，也可以将选项和命令参数相互穿插。
    101→因此，通过要求把选项放在最后，命令参数就不会和选项参数相混淆。
    102→
       →…
    120→### 方案三：使用选项替代命令参数
-   121→
    122→这个方案虽然有点激进，但是可以完美避免解析中的歧义。
    123→
    124→```js
       →…
    142→## 合并短选项和带有参数的选项
-   143→
    144→多个 boolean 型的短选项可以合并起来写在同一个`-`号后面，比如`ls -al`。同时，你也可以在其中包括一个接受参数的短选项，此时，任何跟在其后的字符都将被视作这个选项的值。
    145→
    146→这就是说，默认情况下并不可以把多个带参数的选项合并起来。
       →…
    183→### 将短选项视作 boolean 类型选项合并
-   184→
    185→在 Commander v5 之前，并不支持合并短选项和值。合并的 boolean 类型选项会被展开。
    186→因此，`-avl`将被展开为`-a -v -l`。
    187→
       →…
 docs/zh-CN/术语表.md
      1→# 术语表
-     2→
      3→命令行参数由选项（options）、选项参数（option-arguments）、命令（commands），以及命令参数（command-arguments）组成。
      4→
      5→|术语|解释|
@@ -875,10 +748,6 @@ lib/suggestSimilar.js
      5→  // Calculating optimal string alignment distance, no substring is edited more than once.
      6→  // (Simple implementation.)
      7→
-     8→  // Quick early exit, return worst case.
-     9→  if (Math.abs(a.length - b.length) > maxDistance)
-    10→    return Math.max(a.length, b.length);
-    11→
       →…
     48→/**
     49→ * Find close matches, restricted to same number of edits.

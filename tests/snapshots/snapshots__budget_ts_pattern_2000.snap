@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1993 words)
+budget: 2000 (2000 words)
 
 README.md
    417→### `match`
-   418→
    419→```ts
    420→match(value);
    421→```
@@ -14,7 +13,6 @@ README.md
    423→Create a `Match` object on which you can later call `.with`, `.when`, `.otherwise` and `.run`.
    424→
    857→#### `P._` wildcard
-   858→
    859→The `P._` pattern will match any value. You can also use `P.any`, which is an alias to `P._`.
    860→
    861→```ts
@@ -33,7 +31,6 @@ README.md
    874→```
    875→
   1623→### `P.infer`
-  1624→
   1625→`P.infer<typeof somePattern>` lets you infer a type of value from a type of pattern.
   1626→
   1627→It's particularly useful when validating an API response.
@@ -60,19 +57,13 @@ README.md
   1648→  );
   1649→```
   1650→
-  1651→Although not strictly necessary, using `as const` after the pattern definition ensures that TS-Pattern infers the most precise types possible.
-  1652→
-docs/roadmap.md
-     1→### Roadmap
-     2→
       →…
+docs/roadmap.md
+     1→### Roadmap …
 docs/v3-to-v4-migration-guide.md
-     1→# TS-Pattern v3 to v4 Migration Guide
-     2→
+     1→# TS-Pattern v3 to v4 Migration Guide …
      3→## Breaking changes
-     4→
      5→### Imports
-     6→
      7→type-specific wildcard patterns have moved from `__.<pattern>` to a new `Pattern` qualified module, also exported as `P` by ts-pattern.
      8→
      9→```diff
@@ -85,29 +76,20 @@ docs/v3-to-v4-migration-guide.md
     16→-   .with(__.string, (v) => v)
     17→-   .with(__.number, (v) => `${v}`)
     18→+   .with(Pattern.string, (v) => v)
+    19→+   .with(Pattern.number, (v) => `${v}`)
+    20→    .exhaustive();
+    21→```
+    22→
+    23→or
       →…
-    39→#### `__`
-    40→
-      →…
-    57→#### `select()`, `not()`, `when()`
-    58→
-      →…
-    79→#### `Pattern` type
-    80→
-      →…
-    91→### list patterns
-    92→
-      →…
-   111→### NaN
-   112→
-      →…
-   122→## New features
-   123→
-      →…
-   126→### Arrays and unary tuples
-   127→
+    39→#### `__` …
+    57→#### `select()`, `not()`, `when()` …
+    79→#### `Pattern` type …
+    91→### list patterns …
+   111→### NaN …
+   122→## New features …
+   126→### Arrays and unary tuples …
    128→#### `P.array(pattern)`
-   129→
    130→To match an array of elements, you can now use `P.array`:
    131→
    132→```ts
@@ -120,11 +102,14 @@ docs/v3-to-v4-migration-guide.md
    139→      title: P.string,
    140→      content: P.string,
    141→    }),
+   142→  }),
+   143→};
+   144→
+   145→fetchSomething().then((value: unknown) =>
+   146→  match(value)
       →…
-   157→### Optional object properties
-   158→
+   157→### Optional object properties …
    159→#### `P.optional(pattern)`
-   160→
    161→If you want one of the keys of your pattern to be optional, you can now use `P.optional(subpattern)`.
    162→
    163→If you `P.select()` something in an optional pattern, it's type will be infered as `T | undefined`.
@@ -137,23 +122,18 @@ docs/v3-to-v4-migration-guide.md
    170→    .with(
    171→      {
    172→        type: 'user',
+   173→        detail: {
+   174→          bio: P.optional(P.string),
+   175→          socialLinks: P.optional({
+   176→            twitter: P.select(),
+   177→          }),
       →…
-   197→### Union & intersection patterns
-   198→
-      →…
-   201→#### `P.union(...patterns)`
-   202→
-      →…
-   234→#### `P.intersection(...patterns)`
-   235→
-      →…
-   265→### Select with sub pattern
-   266→
-      →…
-   296→### Infer the matching types from a pattern
-   297→
+   197→### Union & intersection patterns …
+   201→#### `P.union(...patterns)` …
+   234→#### `P.intersection(...patterns)` …
+   265→### Select with sub pattern …
+   296→### Infer the matching types from a pattern …
    298→#### `P.infer<typeof pattern>`
-   299→
    300→TS-Pattern is pretty handy for parsing unknown payloads like HTTP responses. You can write a pattern for the shape you are expecting, and then use `isMatching(pattern, response)` to make sure the response has the correct shape.
    301→
    302→One limitation TS-Pattern had in its previous version was that it did not provide a way to get the TypeScript type of the value a given pattern matches. This is what `P.infer<typeof pattern>` does :)
@@ -166,11 +146,14 @@ docs/v3-to-v4-migration-guide.md
    309→  likeCount: P.number,
    310→};
    311→
+   312→type Post = P.infer<typeof postPattern>;
+   313→// Post: { title: string, description?: string, content: string, likeCount: number }
+   314→
+   315→const userPattern = {
+   316→  name: P.string,
       →…
-   334→### New type specific wildcards
-   335→
+   334→### New type specific wildcards …
    336→#### `P.symbol`
-   337→
    338→`P.symbol` is a wildcard pattern matching any **symbol**.
    339→
    340→```ts
@@ -179,48 +162,26 @@ docs/v3-to-v4-migration-guide.md
    343→  .exhaustive();
    344→```
    345→
-   346→#### `P.bigint`
-   347→
-      →…
+   346→#### `P.bigint` …
 docs/v4-to-v5-migration-guide.md
-     1→# TS-Pattern v4 to v5 Migration Guide
-     2→
-      →…
-     5→# Breaking changes
-     6→
+     1→# TS-Pattern v4 to v5 Migration Guide …
+     5→# Breaking changes …
      7→## TypeScript v5
-     8→
      9→Because it relies on [const type parameters](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#const-type-parameters), TS-Pattern v5 requires TypeScript v5+!
     10→
-    11→## `.with` is now evaluated eagerly
-    12→
-      →…
-    42→## Matching on Map and Sets
-    43→
-      →…
-    63→# New features
-    64→
+    11→## `.with` is now evaluated eagerly …
+    42→## Matching on Map and Sets …
+    63→# New features …
     65→## chainable methods
-    66→
     67→TS-Pattern v5's major addition is the ability to chain methods to narrow down the values matched by primitive patterns, like `P.string` or `P.number`.
     68→
     69→Since a few examples is worth a thousand words, here are a few ways you can use chainable methods:
     70→
-    71→### P.number methods
-    72→
-      →…
-   100→### P.string methods
-   101→
-      →…
-   122→### Global methods
-   123→
-      →…
-   156→## Variadic tuple patterns
-   157→
-      →…
-   214→## `.returnType`
-   215→
-      →…
+    71→### P.number methods …
+   100→### P.string methods …
+   122→### Global methods …
+   156→## Variadic tuple patterns …
+   214→## `.returnType` …
 src/errors.ts
      1→/**
      2→ * Error when the given input value does not match any included pattern

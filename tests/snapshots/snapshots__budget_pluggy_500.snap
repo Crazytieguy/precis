@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (487 words)
+budget: 500 (488 words)
 
 AGENTS.md
      1→# AGENTS.md …
@@ -15,7 +15,6 @@ CLAUDE.md
     22→## Development Process …
     32→## Core Architecture …
     34→### Main Components
-    35→
     36→- **PluginManager** (`src/pluggy/_manager.py`): Central registry that manages plugins and coordinates hook calls
     37→- **HookCaller** (`src/pluggy/_hooks.py`): Executes hook implementations with proper argument binding
     38→- **HookImpl/HookSpec** (`src/pluggy/_hooks.py`): Represent hook implementations and specifications
@@ -59,6 +58,7 @@ src/pluggy/__init__.py
      5→    "HookCaller",
      6→    "HookCallError",
      7→    "HookspecOpts",
+     8→    "HookimplOpts",
       →…
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.

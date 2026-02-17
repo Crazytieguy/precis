@@ -2,24 +2,20 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3677 words)
+budget: 4000 (3702 words)
 
 AGENTS.md
      1→# AGENTS.md
-     2→
      3→See @CLAUDE.md for AI coding agent instructions.
 CLAUDE.md
      1→# CLAUDE.md
-     2→
      3→This file provides guidance to AI coding agents when working with code in this repository.
      4→
      5→## Project Overview
-     6→
      7→Pluggy is a minimalist production-ready plugin system that serves as the core framework for pytest, datasette and devpi.
      8→It provides hook specification and implementation mechanisms through a plugin manager system.
      9→
     10→## Development Commands
-    11→
     12→All commands use `uv run` for consistent environments.
     13→
     14→### Testing
@@ -31,7 +27,6 @@ CLAUDE.md
     20→- Always reread files modified by pre-commit
     21→
     22→## Development Process
-    23→
     24→- Always read `src/pluggy/*.py` to get a full picture
     25→- Consider backward compatibility
     26→- Always run all tests: `uv run pytest`
@@ -41,9 +36,7 @@ CLAUDE.md
     30→
     31→
     32→## Core Architecture
-    33→
     34→### Main Components
-    35→
     36→- **PluginManager** (`src/pluggy/_manager.py`): Central registry that manages plugins and coordinates hook calls
     37→- **HookCaller** (`src/pluggy/_hooks.py`): Executes hook implementations with proper argument binding
     38→- **HookImpl/HookSpec** (`src/pluggy/_hooks.py`): Represent hook implementations and specifications
@@ -62,7 +55,6 @@ CLAUDE.md
     51→- `.pre-commit-config.yaml` - Code quality automation (ruff, mypy, flake8, etc.)
 SECURITY.md
      1→# Security
-     2→
      3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
@@ -208,6 +200,7 @@ src/pluggy/_hooks.py
     48→    warn_on_impl: Warning | None
     49→    #: Whether the hook warns when :ref:`certain arguments are requested
     50→    #: <warn_on_impl>`.
+    51→    #:
       →…
     56→class HookimplOpts(TypedDict):
     58→
@@ -219,6 +212,7 @@ src/pluggy/_hooks.py
     64→    #: Whether validation against a hook specification is :ref:`optional
     65→    #: <optionalhook>`.
     66→    optionalhook: bool
+    67→    #: Whether to try to order this hook implementation :ref:`first
       →…
     77→@final
     78→class HookspecMarker:
@@ -449,7 +443,7 @@ src/pluggy/_hooks.py
    390→        "_call_history",
    391→    )
    392→
-   393→    def __init__ …
+   393→    def __init__(
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None
@@ -621,7 +615,7 @@ src/pluggy/_manager.py
     73→        name: str = self.metadata["name"]
     74→        return name
     75→
-    76→    def __getattr__ …
+    76→    def __getattr__(self, attr: str, default: Any | None = None) -> Any:
     79→    def __dir__ …
     83→class PluginManager:
     99→
@@ -633,6 +627,7 @@ src/pluggy/_manager.py
    105→        #: The "hook relay", used to call a hook on all registered plugins.
    106→        #: See :ref:`calling`.
    107→        self.hook: Final = HookRelay()
+   108→        #: The tracing entry point. See :ref:`tracing`.
    114→    def _hookexec(
    115→        self,
    116→        hook_name: str,
@@ -758,6 +753,7 @@ src/pluggy/_tracing.py
     23→        return TagTracerSub(self, (name,))
     24→
     25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
+    26→        if isinstance(args[-1], dict):
     42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
     48→    def setwriter …
     51→    def setprocessor …

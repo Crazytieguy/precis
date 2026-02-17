@@ -2,25 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3854 words)
+budget: 4000 (3829 words)
 
 readme.md
-    20→## Benefits over plain `fetch`
-    21→
-      →…
-    33→## Install
-    34→
-      →…
-    39→###### CDN
-    40→
-      →…
-    45→## Usage
-    46→
-      →…
-    85→## API
-    86→
+    20→## Benefits over plain `fetch` …
+    33→## Install …
+    39→###### CDN …
+    45→## Usage …
+    85→## API …
     87→### ky(input, options?)
-    88→
     89→The `input` and `options` are the same as [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch), with additional `options` available (see below).
     90→
     91→Returns a [`Response` object](https://developer.mozilla.org/en-US/docs/Web/API/Response) with [`Body` methods](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#body) added for convenience. So you can, for example, call `ky.get(input).json()` directly without having to await the `Response` first. When called like that, an appropriate `Accept` header will be set depending on the body method used. Unlike the `Body` methods of `window.Fetch`, these will throw an `HTTPError` if the response status is not in the range of `200...299`. Also, `.json()` will return an empty string if body is empty or the response status is `204` instead of throwing a parse error due to an empty body.
@@ -54,120 +44,51 @@ readme.md
    119→console.log(bytes instanceof Uint8Array);
    120→```
    121→
-   122→### ky.get(input, options?)
+   122→### ky.get(input, options?) …
    123→### ky.post(input, options?)
    124→### ky.put(input, options?)
    125→### ky.patch(input, options?)
    126→### ky.head(input, options?)
    127→### ky.delete(input, options?)
-   128→
    129→Sets `options.method` to the method name and makes a request.
    130→
    131→⌨️ **TypeScript:** Accepts an optional type parameter for use with JSON responses (see [`ky()`](#kyinput-options)).
    132→
-   133→#### input
-   134→
-      →…
-   141→#### options
-   142→
-      →…
-   147→##### method
-   148→
-      →…
-   156→##### json
-   157→
-      →…
-   162→##### searchParams
-   163→
-      →…
-   173→##### prefixUrl
-   174→
-      →…
-   197→##### retry
-   198→
-      →…
-   327→##### timeout
-   328→
-      →…
-   335→##### hooks
-   336→
-      →…
-   342→###### hooks.beforeRequest
-   343→
-      →…
-   373→###### hooks.beforeRetry
-   374→
-      →…
-   446→###### hooks.beforeError
-   447→
-      →…
-   485→###### hooks.afterResponse
-   486→
-      →…
-   553→##### throwHttpErrors
-   554→
-      →…
-   566→##### onDownloadProgress
-   567→
-      →…
-   592→##### onUploadProgress
-   593→
-      →…
-   619→##### parseJson
-   620→
-      →…
-   639→##### stringifyJson
-   640→
-      →…
-   664→##### fetch
-   665→
-      →…
-   683→##### context
-   684→
-      →…
-   745→### ky.extend(defaultOptions)
-   746→
-      →…
-   811→### ky.create(defaultOptions)
-   812→
-      →…
-   829→#### defaultOptions
-   830→
-      →…
-   833→### ky.stop
-   834→
-      →…
-   864→### ky.retry(options?)
-   865→
-      →…
-   870→#### options
-   871→
-      →…
-   874→##### delay
-   875→
-      →…
-   882→##### code
-   883→
-      →…
-   895→##### cause
-   896→
-      →…
-   913→##### request
-   914→
-      →…
-   923→#### Example
-   924→
-      →…
-  1000→### HTTPError
-  1001→
-      →…
-  1046→### TimeoutError
-  1047→
-      →…
-  1050→## Tips
-  1051→
+   133→#### input …
+   141→#### options …
+   147→##### method …
+   156→##### json …
+   162→##### searchParams …
+   173→##### prefixUrl …
+   197→##### retry …
+   327→##### timeout …
+   335→##### hooks …
+   342→###### hooks.beforeRequest …
+   373→###### hooks.beforeRetry …
+   446→###### hooks.beforeError …
+   485→###### hooks.afterResponse …
+   553→##### throwHttpErrors …
+   566→##### onDownloadProgress …
+   592→##### onUploadProgress …
+   619→##### parseJson …
+   639→##### stringifyJson …
+   664→##### fetch …
+   683→##### context …
+   745→### ky.extend(defaultOptions) …
+   811→### ky.create(defaultOptions) …
+   829→#### defaultOptions …
+   833→### ky.stop …
+   864→### ky.retry(options?) …
+   870→#### options …
+   874→##### delay …
+   882→##### code …
+   895→##### cause …
+   913→##### request …
+   923→#### Example …
+  1000→### HTTPError …
+  1046→### TimeoutError …
+  1050→## Tips …
   1052→### Sending form data
-  1053→
   1054→Sending form data in Ky is identical to `fetch`. Just pass a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to the `body` option. The `Content-Type` header will be automatically set to `multipart/form-data`, overriding any existing `Content-Type` header.
   1055→
   1056→```js
@@ -194,19 +115,11 @@ readme.md
   1077→const response = await ky.post(url, {body: searchParams});
   1078→```
   1079→
-  1080→#### Modifying FormData in hooks
-  1081→
-      →…
-  1109→### Setting a custom `Content-Type`
-  1110→
-      →…
-  1129→### Cancellation
-  1130→
-      →…
-  1156→### Proxy support (Node.js)
-  1157→
+  1080→#### Modifying FormData in hooks …
+  1109→### Setting a custom `Content-Type` …
+  1129→### Cancellation …
+  1156→### Proxy support (Node.js) …
   1158→#### Native proxy support
-  1159→
   1160→Node.js 24.5+ supports automatic proxy configuration via environment variables. Set `NODE_USE_ENV_PROXY=1` or use the `--use-env-proxy` CLI flag.
   1161→
   1162→```sh
@@ -224,57 +137,25 @@ readme.md
   1174→- `HTTPS_PROXY` / `https_proxy`: Proxy URL for HTTPS requests
   1175→- `NO_PROXY` / `no_proxy`: Comma-separated list of hosts to bypass the proxy
   1176→
-  1177→#### Using ProxyAgent
-  1178→
-      →…
-  1209→### HTTP/2 support (Node.js)
-  1210→
-      →…
-  1249→### Consuming Server-Sent Events (SSE)
-  1250→
-      →…
-  1264→### Extending types
-  1265→
-      →…
-  1292→## FAQ
-  1293→
+  1177→#### Using ProxyAgent …
+  1209→### HTTP/2 support (Node.js) …
+  1249→### Consuming Server-Sent Events (SSE) …
+  1264→### Extending types …
+  1292→## FAQ …
   1294→#### How do I use this in Node.js?
-  1295→
   1296→Node.js 18 and later supports `fetch` natively, so you can just use this package directly.
   1297→
-  1298→#### How do I use this with a web app (React, Vue.js, etc.) that uses server-side rendering (SSR)?
-  1299→
-      →…
-  1302→#### How do I test a browser library that uses this?
-  1303→
-      →…
-  1306→#### How do I use this without a bundler like Webpack?
-  1307→
-      →…
-  1321→#### How is it different from [`got`](https://github.com/sindresorhus/got)
-  1322→
-      →…
-  1325→#### How is it different from [`axios`](https://github.com/axios/axios)?
-  1326→
-      →…
-  1329→#### How is it different from [`r2`](https://github.com/mikeal/r2)?
-  1330→
-      →…
-  1333→#### What does `ky` mean?
-  1334→
-      →…
-  1339→## Browser support
-  1340→
-      →…
-  1343→## Node.js support
-  1344→
-      →…
-  1347→## Related
-  1348→
-      →…
-  1352→## Maintainers
-  1353→
-      →…
+  1298→#### How do I use this with a web app (React, Vue.js, etc.) that uses server-side rendering (SSR)? …
+  1302→#### How do I test a browser library that uses this? …
+  1306→#### How do I use this without a bundler like Webpack? …
+  1321→#### How is it different from [`got`](https://github.com/sindresorhus/got) …
+  1325→#### How is it different from [`axios`](https://github.com/axios/axios)? …
+  1329→#### How is it different from [`r2`](https://github.com/mikeal/r2)? …
+  1333→#### What does `ky` mean? …
+  1339→## Browser support …
+  1343→## Node.js support …
+  1347→## Related …
+  1352→## Maintainers …
 source/core/Ky.ts
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {
@@ -344,6 +225,14 @@ source/core/Ky.ts
     98→			)) {
     99→				let error = new HTTPError(response, ky.request, ky.#getNormalizedOptions());
    100→
+   101→				for (const hook of ky.#options.hooks.beforeError) {
+   102→					// eslint-disable-next-line no-await-in-loop
+   103→					error = await hook(error, {retryCount: ky.#retryCount});
+   104→				}
+   105→
+   106→				throw error;
+   107→			}
+   108→
    178→	static #normalizeSearchParams(searchParams: SearchParamsOption): SearchParamsOption {
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
@@ -671,6 +560,7 @@ source/index.ts
     16→		ky[method] = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options, {method}));
     17→	}
     18→
+    19→	ky.create = (newDefaults?: Partial<Options>) => createInstance(validateAndMerge(newDefaults));
       →…
     34→const ky = createInstance();
 source/types/ResponsePromise.ts

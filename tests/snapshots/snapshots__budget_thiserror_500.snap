@@ -2,24 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (470 words)
+budget: 500 (475 words)
 
 README.md
-     1→derive(Error)
-     3→
-      →…
-    21→## Example
-    22→
-      →…
-    44→## Details
-    45→
-      →…
-   211→## Comparison to anyhow
-   212→
-      →…
-   223→#### License
-   224→
-      →…
+     1→derive(Error) …
+    21→## Example …
+    44→## Details …
+   211→## Comparison to anyhow …
+   223→#### License …
 build/probe.rs
     11→struct MyError(Thing);
     12→struct Thing;
@@ -103,6 +93,8 @@ src/display.rs
     12→}
     18→    type Target = &'a T;
     20→    fn as_display(&'a self) -> Self::Target {
+    21→        *self
+      →…
     26→impl<'a> AsDisplay<'a> for Path {
     27→    type Target = path::Display<'a>;
     29→    #[inline]
@@ -124,6 +116,8 @@ src/display.rs
     69→        #[inline]
     70→        fn as_display(&'a self) -> Self::Target {
     76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    77→            unreachable!()
+      →…
 src/lib.rs
    281→mod aserror;
    282→mod display;
@@ -143,3 +137,5 @@ src/provide.rs
 src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+     7→        Pointer::fmt(self.0, formatter)
+      →…

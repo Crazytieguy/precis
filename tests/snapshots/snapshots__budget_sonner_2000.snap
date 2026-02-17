@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2010 words)
+budget: 2000 (2009 words)
 
 README.md
      5→## Usage
-     6→
      7→To start using the library, install it in your project:
      8→
      9→```bash
@@ -32,7 +31,6 @@ README.md
     29→```
     30→
     31→## Documentation
-    32→
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
 src/assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
@@ -309,7 +307,6 @@ src/types.ts
    200→};
 website/README.md
      3→## Getting Started
-     4→
      5→First, run the development server:
      6→
      7→```bash
@@ -331,7 +328,6 @@ website/README.md
     23→This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
     24→
     25→## Learn More
-    26→
     27→To learn more about Next.js, take a look at the following resources:
     28→
     29→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
@@ -340,7 +336,6 @@ website/README.md
     32→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
     33→
     34→## Deploy on Vercel
-    35→
     36→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     37→
     38→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
@@ -467,6 +462,9 @@ website/src/components/Position/index.tsx
     19→    toasts.forEach((t) => toast.dismiss(t.id));
     20→  }
     21→
+    22→  return (
+    23→    <div>
+    24→      <h2>Position</h2>
       →…
 website/src/components/Types/Types.tsx
      5→const promiseCode = '`${data.name} toast has been added`';
@@ -524,7 +522,6 @@ website/src/pages/index.tsx
     29→        duration={Infinity}
     30→      />
     31→      <main className="container">
-    32→        <Hero />
       →…
 website/theme.config.jsx
      7→  useNextSeoProps() {

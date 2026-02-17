@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (975 words)
+budget: 1000 (979 words)
 
 CONTRIBUTING.md
      3→## Issues
-     4→
      5→New issues are welcome, whether questions or suggestions or reporting bugs.
      6→You are also welcome to contribute by adding helpful comments on an existing issue.
      7→
@@ -17,7 +16,6 @@ CONTRIBUTING.md
     12→
 Readme.md
    968→### .parse() and .parseAsync()
-   969→
    970→Call with no parameters to parse `process.argv`. Detects Electron and special node options like `node --eval`. Easy mode!
    971→
    972→Or, call with an array of strings to parse, and optionally where the user arguments start by specifying where the arguments are `from`:
@@ -38,7 +36,6 @@ Readme.md
    987→
 Readme_zh-CN.md
    907→### .parse() 和 .parseAsync()
-   908→
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
    911→如果参数遵循与 node 不同的约定，可以在第二个参数中传递`from`选项：
@@ -57,7 +54,6 @@ Readme_zh-CN.md
    924→
 docs/deprecated.md
    229→### Short option flag longer than a single character
-   230→
    231→Short option flags like `-ws` were never supported, but the old README did not make this clear. The README now states that short options are a single character.
    232→
    233→- README updated in Commander v3.
@@ -66,65 +62,27 @@ docs/deprecated.md
    236→- Replacement added in Commander v13.1 with support for dual long options, like `--ws, --workspace`.
    237→
 docs/zh-CN/不再推荐使用的功能.md
-     1→# 不再推荐使用的功能
-     2→
-      →…
-    18→## .option() 方法的正则表达式参数
-    19→
-      →…
-    30→## noHelp
-    31→
-      →…
-    40→## 默认导入的全局 Command 对象
-    41→
-      →…
-    61→## .help() 与 .outputHelp() 的回调函数参数
-    62→
-      →…
-    79→## .on('--help')
-    80→
-      →…
-   104→## .on('command:*')
-   105→
-      →…
-   114→## .command('*')
-   115→
-      →…
-   134→## cmd.description(cmdDescription, argDescriptions)
-   135→
-      →…
-   157→## InvalidOptionArgumentError
-   158→
-      →…
-   187→## 短选项标志长于单个字符
-   188→
-      →…
+     1→# 不再推荐使用的功能 …
+    18→## .option() 方法的正则表达式参数 …
+    30→## noHelp …
+    40→## 默认导入的全局 Command 对象 …
+    61→## .help() 与 .outputHelp() 的回调函数参数 …
+    79→## .on('--help') …
+   104→## .on('command:*') …
+   114→## .command('*') …
+   134→## cmd.description(cmdDescription, argDescriptions) …
+   157→## InvalidOptionArgumentError …
+   187→## 短选项标志长于单个字符 …
 docs/zh-CN/可变参数的选项.md
-     1→# 可变参数的选项
-     2→
-      →…
-    26→## 解析中的歧义
-    27→
-      →…
-    73→### 方案一：让`--`成为语法的一部分
-    74→
-      →…
-    98→### 方案二：把选项放在最后
-    99→
-      →…
-   120→### 方案三：使用选项替代命令参数
-   121→
-      →…
-   142→## 合并短选项和带有参数的选项
-   143→
-      →…
-   183→### 将短选项视作 boolean 类型选项合并
-   184→
-      →…
+     1→# 可变参数的选项 …
+    26→## 解析中的歧义 …
+    73→### 方案一：让`--`成为语法的一部分 …
+    98→### 方案二：把选项放在最后 …
+   120→### 方案三：使用选项替代命令参数 …
+   142→## 合并短选项和带有参数的选项 …
+   183→### 将短选项视作 boolean 类型选项合并 …
 docs/zh-CN/术语表.md
-     1→# 术语表
-     2→
-      →…
+     1→# 术语表 …
 eslint.config.js
      8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
      9→const tsconfigJsFiles = ['*.{js,mjs}', 'lib/**/*.{js,mjs}']; // match "include" in tsconfig.js.json
@@ -201,12 +159,19 @@ lib/suggestSimilar.js
     56→function suggestSimilar(word, candidates) {
 typings/index.d.ts
     16→export class CommanderError extends Error {
+    17→  code: string;
     31→export class InvalidArgumentError extends CommanderError {
+    32→  /**
     40→export interface ErrorOptions {
+    41→  // optional parameter for error()
+      →…
     48→export class Argument {
+    49→  description: string;
     95→export class Option {
+    96→  flags: string;
    115→  constructor(flags: string, description?: string);
    210→export class Help {
+   211→  /** output helpWidth, long lines are wrapped to fit */
    218→  constructor();
    226→  prepareContext(contextOptions: {
    227→    error?: boolean;
@@ -222,8 +187,14 @@ typings/index.d.ts
    288→  styleArgumentTerm(str: string): string;
    340→export type HelpConfiguration = Partial<Help>;
    342→export interface ParseOptions {
+   343→  from: 'node' | 'electron' | 'user';
+      →…
    345→export interface HelpContext {
+   346→  // optional parameter for .help() and .outputHelp()
+      →…
    349→export interface AddHelpTextContext {
+   350→  // passed to text function used with .addHelpText()
+      →…
    354→export interface OutputConfiguration {
    355→  writeOut?(str: string): void;
    356→  writeErr?(str: string): void;
@@ -240,6 +211,7 @@ typings/index.d.ts
    372→  | undefined;
    374→export type OptionValues = Record<string, any>;
    376→export class Command {
+   377→  args: string[];
    384→  constructor(name?: string);
    493→  argument(name: string, description?: string, defaultValue?: unknown): this;
    528→  helpCommand(enable: boolean): this;
@@ -249,22 +221,20 @@ typings/index.d.ts
   1085→    text: (context: AddHelpTextContext) => string,
   1086→  ): this;
   1094→export interface CommandOptions {
+  1095→  hidden?: boolean;
+      →…
   1100→export interface ExecutableCommandOptions extends CommandOptions {
+  1101→  executableFile?: string;
+      →…
   1104→export interface ParseOptionsResult {
+  1105→  operands: string[];
+      →…
   1113→export const program: Command;
 typings/index.test-d.ts
-   168→function myParseInt(value: string): number {
-   169→  return parseInt(value);
-   170→}
-   172→function increaseVerbosity(dummyValue: string, previous: number): number {
-   173→  return previous + 1;
-   174→}
-   176→function collect(value: string, previous: string[]): string[] {
-   177→  return previous.concat([value]);
-   178→}
-   180→function commaSeparatedList(value: string): string[] {
-   181→  return value.split(',');
-   182→}
+   168→function myParseInt …
+   172→function increaseVerbosity …
+   176→function collect …
+   180→function commaSeparatedList …
    384→interface MyCheeseOption {
    385→  cheese: string;
    386→}
@@ -277,7 +247,5 @@ typings/index.test-d.ts
    515→    // do nothing.
    516→  }
    517→}
-   625→  const groupsItemsOptionHeading = (option: commander.Option) =>
-   626→    option.helpGroupHeading ?? 'Options:';
-   635→  const groupsItemsCommandHeading = (cmd: commander.Command) =>
-   636→    cmd.helpGroup() ?? 'Commands:';
+   625→  const groupsItemsOptionHeading …
+   635→  const groupsItemsCommandHeading …

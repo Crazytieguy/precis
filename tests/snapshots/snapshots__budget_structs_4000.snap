@@ -2,18 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3934 words)
+budget: 4000 (3936 words)
 
 README.md
      1→# Archived project. No maintenance. 
-     2→
      3→This project is not maintained anymore and is archived. Feel free to fork and
      4→make your own changes if needed. For more detail read my blog post: [Taking an indefinite sabbatical from my projects](https://arslan.io/2018/10/09/taking-an-indefinite-sabbatical-from-my-projects/)
      5→
      6→Thanks to everyone for their valuable feedback and contributions.
      7→
      8→# Structs [![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/fatih/structs) [![Build Status](http://img.shields.io/travis/fatih/structs.svg?style=flat-square)](https://travis-ci.org/fatih/structs) [![Coverage Status](http://img.shields.io/coveralls/fatih/structs.svg?style=flat-square)](https://coveralls.io/r/fatih/structs)
-     9→
     10→Structs contains various utilities to work with Go (Golang) structs. It was
     11→initially used by me to convert a struct into a `map[string]interface{}`. With
     12→time I've added other utilities for structs.  It's basically a high level
@@ -21,13 +19,11 @@ README.md
     14→functions or improve the existing code.
     15→
     16→## Install
-    17→
     18→```bash
     19→go get github.com/fatih/structs
     20→```
     21→
     22→## Usage and Examples
-    23→
     24→Just like the standard lib `strings`, `bytes` and co packages, `structs` has
     25→many global functions to manipulate or organize your struct data. Lets define
     26→and declare a struct:
@@ -79,7 +75,6 @@ README.md
     72→```
     73→
     74→### Struct methods
-    75→
     76→The structs functions can be also used as independent methods by creating a new
     77→`*structs.Struct`. This is handy if you want to have more control over the
     78→structs (such as retrieving a single Field).
@@ -100,7 +95,6 @@ README.md
     93→```
     94→
     95→### Field methods
-    96→
     97→We can easily examine a single Field for more detail. Below you can see how we
     98→get and interact with various field methods:
     99→
@@ -168,12 +162,10 @@ README.md
    161→```
    162→
    163→## Credits
-   164→
    165→ * [Fatih Arslan](https://github.com/fatih)
    166→ * [Cihangir Savas](https://github.com/cihangir)
    167→
    168→## License
-   169→
    170→The MIT License (MIT) - see LICENSE.md for more details
 field.go
      9→var (
@@ -691,6 +683,7 @@ structs.go
    415→		}
    416→
    417→		// don't check if it's omitted
+   418→		if tag := field.Tag.Get(s.TagName); tag == "-" {
       →…
    428→func strctVal(s interface{}) reflect.Value {
    429→	v := reflect.ValueOf(s)
@@ -776,6 +769,7 @@ structs.go
    519→		n := New(val.Interface())
    520→		n.TagName = s.TagName
    521→		m := n.Map()
+   522→
       →…
 tags.go
      5→// tagOptions contains a slice of tag options

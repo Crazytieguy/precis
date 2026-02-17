@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (499 words)
+budget: 500 (496 words)
 
 README.md
      1→# Format
-     2→
      3→In this section you will learn how to:
      4→
      5→- Structure your book correctly
@@ -15,7 +14,6 @@ README.md
      8→- Customize your theme
 configuration/README.md
      1→# Configuration
-     2→
      3→This section details the configuration options available in the ***book.toml***:
      4→- **[General]** configuration including the `book`, `rust`, `build` sections
      5→- **[Preprocessor]** configuration for default and custom book preprocessors
@@ -26,6 +24,35 @@ configuration/README.md
     10→[Preprocessor]: preprocessors.md
     11→[Renderer]: renderers.md
     12→[Environment Variable]: environment-variables.md
+configuration/environment-variables.md
+     1→# Environment variables …
+configuration/general.md
+     1→# General configuration …
+    31→## Supported configuration options …
+    37→### General metadata …
+    64→### Rust options …
+    85→### Build options …
+configuration/preprocessors.md
+     1→# Configuring Preprocessors …
+    26→## Custom preprocessor configuration …
+    45→## Locking a preprocessor dependency to a renderer …
+    55→## Provide your own command …
+    67→### Optional preprocessors …
+    79→## Require a certain order …
+configuration/renderers.md
+     1→# Configuring Renderers …
+    20→## Output tables …
+    59→### Custom backend commands …
+    71→### Optional backends …
+    84→## HTML renderer options …
+   176→### `[output.html.print]` …
+   191→### `[output.html.fold]` …
+   206→### `[output.html.playground]` …
+   230→### `[output.html.code]` …
+   244→### `[output.html.search]` …
+   286→#### `[output.html.search.chapter]` …
+   300→### `[output.html.redirect]` …
+   325→## Markdown renderer …
 example.rs
      1→fn main() {
      2→    println!("Hello World!");
@@ -33,7 +60,6 @@ example.rs
       →…
 mdbook.md
      3→## Hiding code lines
-     4→
      5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
      6→
      7→For the Rust language, you can prefix lines with `# ` (`#` followed by a space) to hide them [like you would with Rustdoc][rustdoc-hide].
@@ -64,7 +90,6 @@ mdbook.md
       →…
 theme/README.md
      1→# Theme
-     2→
      3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
      4→render your markdown files and comes with a default theme included in the mdBook
      5→binary.
@@ -77,52 +102,19 @@ theme/README.md
     12→Here are the files you can override:
     13→
     14→- **_index.hbs_** is the handlebars template.
-    15→- **_head.hbs_** is appended to the HTML `<head>` section.
-    16→- **_header.hbs_** content is appended on top of every book page.
-    17→- **_css/_** contains the CSS files for styling the book.
-    18→    - **_css/chrome.css_** is for UI elements.
-    19→    - **_css/general.css_** is the base styles.
-    20→    - **_css/print.css_** is the style for printer output.
-    21→    - **_css/variables.css_** contains variables used in other CSS files.
-    22→- **_book.js_** is mostly used to add client side functionality, like hiding /
-    23→  un-hiding the sidebar, changing the theme, ...
       →…
 theme/editor.md
-     1→# Editor
-     2→
-      →…
-    35→## Customizing the editor
-    36→
-      →…
+     1→# Editor …
+    35→## Customizing the editor …
 theme/index-hbs.md
-     1→# index.hbs
-     2→
-      →…
-     9→## Data
-    10→
-      →…
-    41→## Handlebars helpers
-    42→
-      →…
-    46→### toc
-    47→
-      →…
-    80→### resource
-    81→
-      →…
-    90→### fa
-    91→
-      →…
+     1→# index.hbs …
+     9→## Data …
+    41→## Handlebars helpers …
+    46→### toc …
+    80→### resource …
+    90→### fa …
 theme/syntax-highlighting.md
-     1→# Syntax highlighting
-     2→
-      →…
-    17→## Supported languages
-    18→
-      →…
-    68→## Custom theme
-    69→Like the rest of the theme, the files used for syntax highlighting can be
-      →…
-    82→## Improve default theme
-    83→
-      →…
+     1→# Syntax highlighting …
+    17→## Supported languages …
+    68→## Custom theme …
+    82→## Improve default theme …

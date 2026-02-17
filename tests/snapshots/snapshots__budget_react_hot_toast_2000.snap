@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1968 words)
+budget: 2000 (1967 words)
 
 README.md
     28→## Features
-    29→
     30→- 🔥 **Hot by default**
     31→- 🔩 **Easily Customizable**
     32→- ⏳ **Promise API** - _Automatic loader from a promise_
@@ -15,21 +14,17 @@ README.md
     35→- 🤯 **Headless Hooks** - _Create your own with [`useToaster()`](https://react-hot-toast.com/docs/use-toaster)_
     36→
     37→## Installation
-    38→
     39→#### With pnpm
-    40→
     41→```sh
     42→pnpm add react-hot-toast
     43→```
     44→
     45→#### With NPM
-    46→
     47→```sh
     48→npm install react-hot-toast
     49→```
     50→
     51→## Getting Started
-    52→
     53→Add the Toaster to your app first. It will take care of rendering all notifications emitted. Now you can trigger `toast()` from anywhere!
     54→
     55→```jsx
@@ -48,11 +43,9 @@ README.md
     68→```
     69→
     70→## Documentation
-    71→
     72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
 site/README.md
      3→## Getting Started
-     4→
      5→First, run the development server:
      6→
      7→```bash
@@ -66,7 +59,6 @@ site/README.md
     15→You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
     16→
     17→## Learn More
-    18→
     19→To learn more about Next.js, take a look at the following resources:
     20→
     21→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
@@ -75,7 +67,6 @@ site/README.md
     24→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
     25→
     26→## Deploy on Vercel
-    27→
     28→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     29→
     30→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
@@ -139,6 +130,7 @@ site/components/sections/toast-example.tsx
     12→}> = [
     13→  {
     14→    title: 'Success',
+    15→    emoji: '✅',
       →…
    270→export const ToastExample = () => {
    271→  const [snippet, setSnippet] = useState(examples[0].snippet);
@@ -196,6 +188,7 @@ site/pages/_app.tsx
     15→      <a {...props} />
     16→    </Link>
     17→  ),
+    18→  h1: (props) => {
       →…
     71→function MyApp …
 site/pages/index.tsx

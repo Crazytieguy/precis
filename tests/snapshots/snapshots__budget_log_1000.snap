@@ -2,19 +2,19 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (989 words)
+budget: 1000 (986 words)
 
 README.md
      1→log
-     3→
+     4→A Rust library providing a lightweight logging *facade*.
+     5→
       →…
     19→## Minimum supported `rustc`
-    20→
+    21→`1.68.0+`
+    22→
       →…
     25→## Usage
-    26→
     27→### In libraries
-    28→
     29→Libraries should link only to the `log` crate, and use the provided macros to
     30→log whatever information will be useful to downstream consumers:
     31→
@@ -45,18 +45,18 @@ README.md
     56→```
     57→
     58→### In executables
-    59→
+    60→In order to produce log output, executables have to use a logger implementation compatible with the facade.
+    61→There are many available implementations to choose from, here are some options:
       →…
    106→## Structured logging
-   107→
+   108→If you enable the `kv` feature, you can associate structured data with your log records:
+   109→
       →…
 rfcs/0296-structured-logging.md
    502→### Don't break anything
-   503→
    504→Allow structured logging to be added in the current `0.4.x` series of `log`. This gives us the option of including structured logging in an `0.4.x` release, or bumping the minor crate version without introducing any actual breaking changes.
    505→
   1598→#### Build a serialization contract in `log`
-  1599→
   1600→Instead of internalizing a few serialization frameworks, `log` could provide a public common contract for them to conform to:
   1601→
   1602→```rust
@@ -88,6 +88,7 @@ src/__private_api.rs
    114→    use crate::kv;
    115→
    116→    pub type Value<'a> = kv::Value<'a>;
+   117→
 src/kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
@@ -128,10 +129,6 @@ src/kv/source.rs
    114→fn count_default …
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
-   241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
-   242→where
-   243→    T: VisitSource<'kvs> + ?Sized,
-   244→{
    280→mod std_support {
 src/kv/value.rs
     11→pub trait ToValue {
@@ -140,19 +137,12 @@ src/kv/value.rs
    120→    inner: inner::Inner<'v>,
       →…
    204→    fn from_inner …
-   235→impl<'v> serde_core::Serialize for Value<'v> {
-   245→impl<'v> sval::Value for Value<'v> {
-   252→impl<'v> sval_ref::ValueRef<'v> for Value<'v> {
    288→macro_rules! impl_to_value_primitive {
    312→macro_rules! impl_to_value_nonzero_primitive {
    336→macro_rules! impl_value_to_primitive {
    390→mod std_support {
    462→pub trait VisitValue<'v> {
    463→    /// Visit a `Value`.
-   539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
-   540→where
-   541→    T: VisitValue<'v>,
-   542→{
    601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {
    603→    /**
@@ -259,7 +249,6 @@ src/lib.rs
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
   1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
   1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
-  1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
       →…
 test_max_level_features/main.rs
      6→#[cfg(not(feature = "std"))]

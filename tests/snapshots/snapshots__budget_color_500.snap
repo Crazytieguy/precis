@@ -2,19 +2,17 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (473 words)
+budget: 500 (481 words)
 
 README.md
      1→# color [![](https://github.com/fatih/color/workflows/build/badge.svg)](https://github.com/fatih/color/actions) [![PkgGoDev](https://pkg.go.dev/badge/github.com/fatih/color)](https://pkg.go.dev/github.com/fatih/color)
-     2→
+     3→Color lets you use colorized outputs in terms of [ANSI Escape
       →…
     10→## Install
-    11→
+    12→```
       →…
     16→## Examples
-    17→
     18→### Standard colors
-    19→
     20→```go
     21→// Print with default helper functions
     22→color.Cyan("Prints text in cyan.")
@@ -29,38 +27,37 @@ README.md
     31→```
     32→
     33→### RGB colors
-    34→
+    35→If your terminal supports 24-bit colors, you can use RGB color codes.
       →…
     45→### Mix and reuse colors
-    46→
+    47→```go
       →…
     71→### Use your own output (io.Writer)
-    72→
+    73→```go
       →…
     81→### Custom print functions (PrintFunc)
-    82→
+    83→```go
       →…
     94→### Custom fprint functions (FprintFunc)
-    95→
+    96→```go
       →…
    105→### Insert into noncolor strings (SprintFunc)
-   106→
+   107→```go
       →…
    124→### Plug into existing code
-   125→
+   126→```go
       →…
    142→### Disable/Enable color
-   143→
+   144→There might be a case where you want to explicitly disable/enable color output. the 
       →…
    177→## GitHub Actions
-   178→
+   179→To output color in GitHub Actions (or other CI systems that support ANSI colors), make sure to set `color.NoColor = false` so that it bypasses the check for non-tty output streams. 
       →…
    182→## Credits
-   183→
+   184→* [Fatih Arslan](https://github.com/fatih)
       →…
    187→## License
-   188→
-      →…
+   189→The MIT License (MIT) - see [`LICENSE.md`](https://github.com/fatih/color/blob/master/LICENSE.md) for more details
 color.go
     15→var (
     16→	// NoColor defines if the output is colorized or not. It's dynamically set to
@@ -76,8 +73,6 @@ color.go
     27→	Output = colorable.NewColorableStdout()
     29→	// Error defines a color supporting writer for os.Stderr.
     30→	Error = colorable.NewColorableStderr()
-    32→	// colorsCache is used to reduce the count of created Color objects and
-    33→	// allows to reuse already created objects with required Attribute.
     34→	colorsCache   = make(map[Attribute]*Color)
     35→	colorsCacheMu sync.Mutex // protects colorsCache
     39→func noColorIsSet() bool {
@@ -89,21 +84,14 @@ color.go
     49→// Attribute defines a single SGR Code
     50→type Attribute int
     52→const escape = "\x1b"
-    54→// Base attributes
     55→const (
     68→const (
     79→var mapResetAttributes map[Attribute]Attribute = map[Attribute]Attribute{
-    91→// Foreground text colors
     92→const (
-   102→	// used internally for 256 and 24-bit coloring
    103→	foreground
-   106→// Foreground Hi-Intensity text colors
    107→const (
-   118→// Background text colors
    119→const (
-   129→	// used internally for 256 and 24-bit coloring
    130→	background
-   133→// Background Hi-Intensity text colors
    134→const (
    211→func (c *Color) unset() {
    405→func (c *Color) sequence() string {

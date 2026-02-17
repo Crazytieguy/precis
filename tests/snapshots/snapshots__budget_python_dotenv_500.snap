@@ -2,15 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (490 words)
 
 CHANGELOG.md
-    21→### Fixed
-    22→
-      →…
+    21→### Fixed …
 CONTRIBUTING.md
      1→Contributing
-     3→
      4→All the contributions are welcome! Please open [an
      5→issue](https://github.com/theskumar/python-dotenv/issues/new) or send us
      6→a pull request.
@@ -20,16 +17,10 @@ CONTRIBUTING.md
     10→    $ uv venv
       →…
 README.md
-     1→# python-dotenv
-     2→
-      →…
-    22→## Getting Started
-    23→
-      →…
-    78→## Other Use Cases
-    79→
+     1→# python-dotenv …
+    22→## Getting Started …
+    78→## Other Use Cases …
     80→### Load configuration without altering the environment
-    81→
     82→The function `dotenv_values` works more or less the same way as `load_dotenv`,
     83→except it doesn't touch the environment, it just returns a `dict` with the
     84→values parsed from the `.env` file.
@@ -47,47 +38,30 @@ README.md
     96→from dotenv import dotenv_values
     97→
     98→config = {
-      →…
-   105→### Parse configuration as a stream
-   106→
-      →…
-   120→### Load .env files in IPython
-   121→
-      →…
-   141→### Disable load_dotenv
-   142→
-      →…
-   147→## Command-line Interface
-   148→
-      →…
-   169→## File format
-   170→
-      →…
-   185→### Multiline values
-   186→
-      →…
-   199→### Variable without a value
-   200→
-      →…
-   214→### Variable expansion
-   215→
-      →…
-   234→## Related Projects
-   235→
-      →…
-   246→## Acknowledgements
-   247→
-      →…
+    99→    **dotenv_values(".env.shared"),  # load shared development variables
+   100→    **dotenv_values(".env.secret"),  # load sensitive variables
+   101→    **os.environ,  # override loaded values with environment variables
+   102→}
+   103→```
+   104→
+   105→### Parse configuration as a stream …
+   120→### Load .env files in IPython …
+   141→### Disable load_dotenv …
+   147→## Command-line Interface …
+   169→## File format …
+   185→### Multiline values …
+   199→### Variable without a value …
+   214→### Variable expansion …
+   234→## Related Projects …
+   246→## Acknowledgements …
 docs/reference.md
-     1→# ::: dotenv
-     2→
+     1→# ::: dotenv …
 src/dotenv/__init__.py
     42→__all__ = [
     43→    "get_cli_string",
     44→    "load_dotenv",
     45→    "dotenv_values",
     46→    "get_key",
-    47→    "set_key",
       →…
 src/dotenv/cli.py
     60→@click.version_option(version=__version__)
@@ -150,8 +124,6 @@ src/dotenv/ipython.py
     45→        load_dotenv(dotenv_path, verbose=args.verbose, override=args.override)
 src/dotenv/main.py
     25→def _load_dotenv_disabled() -> bool:
-    26→    """
-      →…
     45→class DotEnv:
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
@@ -163,11 +135,7 @@ src/dotenv/main.py
    144→    encoding: Optional[str],
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    269→def _walk_to_root(path: str) -> Iterator[str]:
-   270→    """
-      →…
    423→def _is_file_or_fifo(path: StrPath) -> bool:
-   424→    """
-      →…
 src/dotenv/parser.py
     35→class Original(NamedTuple):
     40→class Binding(NamedTuple):

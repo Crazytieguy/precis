@@ -6,13 +6,11 @@ budget: 1000 (1001 words)
 
 CHANGELOG.md
      3→## [1.4.2]
-     4→
-      →…
+     5→- chore(input): remove unintentional log within internal pasteListener
+     6→
 README.md
-     1→# The only accessible & unstyled & full featured Input OTP component in the Web.
-     2→
+     1→# The only accessible & unstyled & full featured Input OTP component in the Web. …
      3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
-     4→
      5→<h3 align="center">Hero Sponsors 🎖️</h3>
      6→<p align="center">
      7→<a href="https://go.clerk.com/input-otp" target="_blank">
@@ -28,52 +26,24 @@ README.md
     17→
     18→https://github.com/guilhermerodz/input-otp/assets/10366880/753751f5-eda8-4145-a4b9-7ef51ca5e453
     19→
-    20→## Usage
-    21→
-      →…
-    39→## Default example
-    40→
-      →…
-   136→## How it works
-   137→
-      →…
-   141→## Features
-   142→
-      →…
-   198→### Auto tracks if the input has space in the right side for the badge
-   199→
-      →…
-   204→## API Reference
-   205→
+    20→## Usage …
+    39→## Default example …
+   136→## How it works …
+   141→## Features …
+   198→### Auto tracks if the input has space in the right side for the badge …
+   204→## API Reference …
    206→### OTPInput
-   207→
    208→The root container. Define settings for the input via props. Then, use the `render` prop to create the slots.
    209→
-   210→#### Props
-   211→
-      →…
-   293→## Examples
-   294→
-      →…
-   377→## Caveats
-   378→
-      →…
-   539→#### Sponsors
-   540→
-      →…
+   210→#### Props …
+   293→## Examples …
+   377→## Caveats …
+   539→#### Sponsors …
 apps/storybook/README.md
-    13→## 🚅 Quick start
-    14→
-      →…
-    44→## 🔎 What's inside?
-    45→
-      →…
-    83→## Contribute
-    84→
-      →…
-    87→## Learning Storybook
-    88→
-      →…
+    13→## 🚅 Quick start …
+    44→## 🔎 What's inside? …
+    83→## Contribute …
+    87→## Learning Storybook …
 apps/storybook/src/components/ui/input-otp.tsx
      9→const InputOTP = React.forwardRef<
     21→const InputOTPGroup = React.forwardRef<
@@ -113,7 +83,6 @@ apps/storybook/tailwind.config.js
       →…
 apps/website/README.md
      3→## Getting Started
-     4→
      5→First, run the development server:
      6→
      7→```bash
@@ -128,7 +97,6 @@ apps/website/README.md
     16→
       →…
     23→## Learn More
-    24→
     25→To learn more about Next.js, take a look at the following resources:
     26→
     27→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
@@ -137,7 +105,6 @@ apps/website/README.md
     30→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
     31→
     32→## Deploy on Vercel
-    33→
     34→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     35→
     36→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
@@ -251,12 +218,17 @@ apps/website/src/components/ui/badge.tsx
     26→export interface BadgeProps
     27→  extends React.HTMLAttributes<HTMLDivElement>,
     28→    VariantProps<typeof badgeVariants> {}
+    30→function Badge …
 apps/website/src/components/ui/button.tsx
     36→export interface ButtonProps
     37→  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     38→    VariantProps<typeof buttonVariants> {
     39→  asChild?: boolean
     40→}
+apps/website/src/components/ui/dropdown-menu.tsx
+   171→const DropdownMenuShortcut …
+apps/website/src/components/ui/sonner.tsx
+     8→const Toaster …
 apps/website/src/config/site.ts
      1→export const siteConfig = {
      2→  name: 'rodz/input-otp',

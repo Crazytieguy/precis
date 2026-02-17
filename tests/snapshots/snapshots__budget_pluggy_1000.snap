@@ -2,35 +2,41 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (985 words)
+budget: 1000 (984 words)
 
 AGENTS.md
      1→# AGENTS.md
-     2→
-      →…
+     3→See @CLAUDE.md for AI coding agent instructions.
 CLAUDE.md
      1→# CLAUDE.md
-     2→
-      →…
+     3→This file provides guidance to AI coding agents when working with code in this repository.
+     4→
      5→## Project Overview
-     6→
-      →…
+     7→Pluggy is a minimalist production-ready plugin system that serves as the core framework for pytest, datasette and devpi.
+     8→It provides hook specification and implementation mechanisms through a plugin manager system.
+     9→
     10→## Development Commands
-    11→
-      →…
+    12→All commands use `uv run` for consistent environments.
+    13→
     14→### Testing
     15→- `uv run pytest` - Run all tests (prefer running all tests for quick feedback)
-      →…
+    16→- `uv run pytest testing/benchmark.py` - Run benchmark tests
+    17→
     18→### Code Quality
     19→- `uv run pre-commit run -a` - Run all pre-commit hooks (linting, formatting, type checking)
-      →…
+    20→- Always reread files modified by pre-commit
+    21→
     22→## Development Process
-    23→
-      →…
+    24→- Always read `src/pluggy/*.py` to get a full picture
+    25→- Consider backward compatibility
+    26→- Always run all tests: `uv run pytest`
+    27→- Always run pre-commit before committing: `uv run pre-commit run -a`
+    28→- Prefer running full pre-commit over individual tools (ruff/mypy)
+    29→
+    30→
+    31→
     32→## Core Architecture
-    33→
     34→### Main Components
-    35→
     36→- **PluginManager** (`src/pluggy/_manager.py`): Central registry that manages plugins and coordinates hook calls
     37→- **HookCaller** (`src/pluggy/_hooks.py`): Executes hook implementations with proper argument binding
     38→- **HookImpl/HookSpec** (`src/pluggy/_hooks.py`): Represent hook implementations and specifications
@@ -39,14 +45,17 @@ CLAUDE.md
     41→
     42→### Package Structure
     43→- `src/pluggy/` - Main package source
-      →…
+    44→- `testing/` - Test suite using pytest
+    45→- `docs/` - Sphinx documentation and examples
+    46→- `changelog/` - Towncrier fragments for changelog generation
+    47→
     48→## Configuration Files
     49→- `pyproject.toml` - Project metadata, build system, tool configuration (ruff, mypy, setuptools-scm)
-      →…
+    50→- `tox.ini` - Multi-environment testing configuration
+    51→- `.pre-commit-config.yaml` - Code quality automation (ruff, mypy, flake8, etc.)
 SECURITY.md
      1→# Security
-     2→
-      →…
+     3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
    107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
@@ -60,13 +69,6 @@ docs/conf.py
    115→
    116→            Ref: https://github.com/sphinx-doc/sphinx/issues/2150."""
    117→            if (
-   118→                record.msg.startswith('Problems with "include" directive path:')
-   119→                and "_changelog_towncrier_draft.rst" in record.msg
-   120→            ):
-   121→                return False
-   122→            return True
-   123→
-   124→    logger = logging.getLogger(sphinx.util.logging.NAMESPACE)
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
@@ -74,25 +76,20 @@ scripts/release.py
     15→def create_branch(version: str) -> Repo:
     16→    """Create a fresh branch from upstream/main"""
     17→    repo = Repo.init(".")
-    18→    if repo.is_dirty(untracked_files=True):
       →…
     30→def get_upstream(repo: Repo) -> Remote:
     31→    """Find upstream repository for pluggy on the remotes"""
     32→    for remote in repo.remotes:
-    33→        for url in remote.urls:
       →…
     39→def pre_release(version: str) -> None:
     40→    """Generates new docs, release announcements and creates a local tag."""
     41→    create_branch(version)
-    42→    changelog(version, write_out=True)
       →…
     50→def changelog(version: str, write_out: bool = False) -> None:
     51→    if write_out:
-    52→        addopts = []
       →…
     59→def main() -> int:
     60→    init(autoreset=True)
-    61→    parser = argparse.ArgumentParser()
       →…
 scripts/towncrier-draft-to-file.py
      5→def main() -> int:
@@ -102,7 +99,7 @@ scripts/towncrier-draft-to-file.py
      9→    run tox -e docs to build pytest docs.
     10→    """
     11→    with open("docs/_changelog_towncrier_draft.rst", "w") as draft_file:
-    12→        return call(("towncrier", "--draft"), stdout=draft_file)
+      →…
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
@@ -146,9 +143,6 @@ src/pluggy/_hooks.py
     90→
     91→    @overload
     92→    def __call__(
-    93→        self,
-    94→        function: _F,
-    95→        firstresult: bool = False,
    165→class HookimplMarker:
    172→
    173→    __slots__ = ("project_name",)
@@ -158,9 +152,6 @@ src/pluggy/_hooks.py
    177→
    178→    @overload
    179→    def __call__(
-   180→        self,
-   181→        function: _F,
-   182→        hookwrapper: bool = ...,
    290→_PYPY …
    359→class HookRelay:
    362→
@@ -171,7 +162,6 @@ src/pluggy/_hooks.py
    367→
    368→    if TYPE_CHECKING:
    369→
-   370→        def __getattr__(self, name: str) -> HookCaller: ...
    377→_CallHistory …
    382→class HookCaller:
    384→
@@ -188,22 +178,16 @@ src/pluggy/_hooks.py
    430→            raise ValueError(
    431→                f"Hook {self.spec.name!r} is already registered "
    432→                f"within namespace {self.spec.namespace}"
-   433→            )
-   434→        self.spec = HookSpec(specmodule_or_class, self.name, spec_opts)
-   435→        if spec_opts.get("historic"):
-   436→            self._call_history = []
+      →…
    593→class _SubsetHookCaller(HookCaller):
    596→
    597→    # This class is unusual: in inhertits from `HookCaller` so all of
-   598→    # the *code* runs in the class, but it delegates all underlying *data*
-   599→    # to the original HookCaller.
    618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [
    621→            impl
    622→            for impl in self._orig._hookimpls
-   623→            if impl.plugin not in self._remove_plugins
-   624→        ]
+      →…
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    628→        return self._orig.spec
@@ -219,9 +203,6 @@ src/pluggy/_hooks.py
    646→        "plugin",
    647→        "opts",
    648→        "plugin_name",
-   649→        "wrapper",
-   650→        "hookwrapper",
-   651→        "optionalhook",
    697→class HookSpec:
    698→    __slots__ = (
    699→        "namespace",
@@ -231,9 +212,6 @@ src/pluggy/_hooks.py
    703→        "kwargnames",
    704→        "opts",
    705→        "warn_on_impl",
-   706→        "warn_on_impl_args",
-   707→    )
-   708→
 src/pluggy/_manager.py
     36→_BeforeTrace …
     37→_AfterTrace …
@@ -259,9 +237,6 @@ src/pluggy/_result.py
     33→        result: ResultType | None,
     34→        exception: BaseException | None,
     35→    ) -> None:
-    36→        """:meta private:"""
-    37→        self._result = result
-    38→        self._exception = exception
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
     44→        """:meta private:"""
@@ -269,7 +244,7 @@ src/pluggy/_result.py
     46→        if exc is None:
     47→            return None
     48→        else:
-    49→            return (type(exc), exc, self._traceback)
+      →…
     51→    @property
     52→    def exception(self) -> BaseException | None:
     53→        """:meta private:"""
@@ -281,9 +256,7 @@ src/pluggy/_result.py
     60→        result = exception = None
     61→        try:
     62→            result = func()
-    63→        except BaseException as exc:
-    64→            exception = exc
-    65→        return cls(result, exception)
+      →…
 src/pluggy/_tracing.py
     16→class TagTracer:
     17→    def __init__(self) -> None:

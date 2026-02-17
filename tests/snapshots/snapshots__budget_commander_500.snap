@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (505 words)
+budget: 500 (506 words)
 
 CONTRIBUTING.md
      3→## Issues
-     4→
      5→New issues are welcome, whether questions or suggestions or reporting bugs.
      6→You are also welcome to contribute by adding helpful comments on an existing issue.
      7→
@@ -15,7 +14,6 @@ CONTRIBUTING.md
       →…
 Readme.md
    968→### .parse() and .parseAsync()
-   969→
    970→Call with no parameters to parse `process.argv`. Detects Electron and special node options like `node --eval`. Easy mode!
    971→
    972→Or, call with an array of strings to parse, and optionally where the user arguments start by specifying where the arguments are `from`:
@@ -30,7 +28,6 @@ Readme.md
       →…
 Readme_zh-CN.md
    907→### .parse() 和 .parseAsync()
-   908→
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
    911→如果参数遵循与 node 不同的约定，可以在第二个参数中传递`from`选项：
@@ -39,7 +36,6 @@ Readme_zh-CN.md
       →…
 docs/deprecated.md
    229→### Short option flag longer than a single character
-   230→
    231→Short option flags like `-ws` were never supported, but the old README did not make this clear. The README now states that short options are a single character.
    232→
    233→- README updated in Commander v3.
@@ -142,3 +138,5 @@ typings/index.test-d.ts
    511→    return new MyCommand(name);
    512→  }
    513→
+   514→  myFunction(): void {
+      →…

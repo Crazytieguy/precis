@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3719 words)
+budget: 4000 (3714 words)
 
 README.md
      1→derive(Error)
-     3→
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/thiserror-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/thiserror)
      5→[<img alt="crates.io" src="https://img.shields.io/crates/v/thiserror.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/thiserror)
      6→[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-thiserror-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/thiserror)
@@ -25,7 +24,6 @@ README.md
     19→<br>
     20→
     21→## Example
-    22→
     23→```rust
     24→use thiserror::Error;
     25→
@@ -48,7 +46,6 @@ README.md
     42→<br>
     43→
     44→## Details
-    45→
     46→- Thiserror deliberately does not appear in your public API. You get the same
     47→  thing as if you had written an implementation of `std::error::Error` by hand,
     48→  and switching from handwritten impls to thiserror or vice versa is not a
@@ -215,7 +212,6 @@ README.md
    209→<br>
    210→
    211→## Comparison to anyhow
-   212→
    213→Use thiserror if you care about designing your own dedicated error type(s) so
    214→that the caller receives exactly the information that you choose in the event of
    215→failure. This most often applies to library-like code. Use [Anyhow] if you don't
@@ -227,7 +223,6 @@ README.md
    221→<br>
    222→
    223→#### License
-   224→
    225→<sup>
    226→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
    227→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.

@@ -2,19 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (489 words)
+budget: 500 (488 words)
 
 README.md
-     1→log
-     3→
-      →…
-    19→## Minimum supported `rustc`
-    20→
-      →…
-    25→## Usage
-    26→
+     1→log …
+    19→## Minimum supported `rustc` …
+    25→## Usage …
     27→### In libraries
-    28→
     29→Libraries should link only to the `log` crate, and use the provided macros to
     30→log whatever information will be useful to downstream consumers:
     31→
@@ -30,20 +24,13 @@ README.md
     41→    trace!("Commencing yak shaving");
     42→
     43→    loop {
+    44→        match find_a_razor() {
       →…
-    58→### In executables
-    59→
-      →…
-   106→## Structured logging
-   107→
-      →…
+    58→### In executables …
+   106→## Structured logging …
 rfcs/0296-structured-logging.md
-   502→### Don't break anything
-   503→
-      →…
-  1598→#### Build a serialization contract in `log`
-  1599→
-      →…
+   502→### Don't break anything …
+  1598→#### Build a serialization contract in `log` …
 src/__private_api.rs
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -154,10 +141,10 @@ test_max_level_features/main.rs
     17→impl Log for Logger {
     18→    fn enabled(&self, _: &Metadata) -> bool {
     19→        true
-      →…
+    20→    }
     22→    fn log(&self, record: &Record) {
     23→        *self.0.last_log.lock().unwrap() = Some(record.level());
-      →…
+    24→    }
     26→    fn flush(&self) {}
     29→fn main() {
     44→fn test(a: &State, filter: LevelFilter) {

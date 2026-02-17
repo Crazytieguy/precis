@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1007 words)
+budget: 1000 (1002 words)
 
 README.md
    417→### `match`
-   418→
    419→```ts
    420→match(value);
    421→```
@@ -14,7 +13,6 @@ README.md
    423→Create a `Match` object on which you can later call `.with`, `.when`, `.otherwise` and `.run`.
    424→
    857→#### `P._` wildcard
-   858→
    859→The `P._` pattern will match any value. You can also use `P.any`, which is an alias to `P._`.
    860→
    861→```ts
@@ -33,7 +31,6 @@ README.md
    874→```
    875→
   1623→### `P.infer`
-  1624→
   1625→`P.infer<typeof somePattern>` lets you infer a type of value from a type of pattern.
   1626→
   1627→It's particularly useful when validating an API response.
@@ -62,30 +59,15 @@ README.md
   1650→
       →…
 docs/v3-to-v4-migration-guide.md
-     3→## Breaking changes
-     4→
-     5→### Imports
-     6→
-      →…
-   128→#### `P.array(pattern)`
-   129→
-      →…
-   159→#### `P.optional(pattern)`
-   160→
-      →…
-   298→#### `P.infer<typeof pattern>`
-   299→
-      →…
-   336→#### `P.symbol`
-   337→
-      →…
+     3→## Breaking changes …
+     5→### Imports …
+   128→#### `P.array(pattern)` …
+   159→#### `P.optional(pattern)` …
+   298→#### `P.infer<typeof pattern>` …
+   336→#### `P.symbol` …
 docs/v4-to-v5-migration-guide.md
-     7→## TypeScript v5
-     8→
-      →…
-    65→## chainable methods
-    66→
-      →…
+     7→## TypeScript v5 …
+    65→## chainable methods …
 src/errors.ts
      1→/**
      2→ * Error when the given input value does not match any included pattern
@@ -105,9 +87,7 @@ src/errors.ts
 src/internals/helpers.ts
     12→export const isObject …
     16→export const isMatcher …
-    24→const isOptionalPattern = (
-    25→  x: unknown
-    26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
+    24→const isOptionalPattern …
     32→export const matchPattern …
    120→export const getSelectionKeys …
    132→export const flatMap …
@@ -130,7 +110,9 @@ src/internals/symbols.ts
 src/is-matching.ts
      6→/**
      7→ * This constraint allows using additional properties
-      →…
+     8→ * in object patterns. See "should allow targetting unknown properties"
+     9→ * unit test in `is-matching.test.ts`.
+    10→ */
     11→type PatternConstraint<T> = T extends readonly any[]
     12→  ? P.Pattern<T>
     13→  : T extends object

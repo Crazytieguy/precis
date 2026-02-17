@@ -2,49 +2,47 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (502 words)
+budget: 500 (498 words)
 
 README.md
     28→## Features
-    29→
+    30→- 🔥 **Hot by default**
+    31→- 🔩 **Easily Customizable**
+    32→- ⏳ **Promise API** - _Automatic loader from a promise_
       →…
     37→## Installation
-    38→
     39→#### With pnpm
-    40→
     41→```sh
     42→pnpm add react-hot-toast
     43→```
     44→
     45→#### With NPM
-    46→
+    47→```sh
+    48→npm install react-hot-toast
+    49→```
       →…
     51→## Getting Started
-    52→
+    53→Add the Toaster to your app first. It will take care of rendering all notifications emitted. Now you can trigger `toast()` from anywhere!
+    54→
+    55→```jsx
       →…
     70→## Documentation
-    71→
-      →…
+    72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
 site/README.md
      3→## Getting Started
-     4→
      5→First, run the development server:
      6→
       →…
     17→## Learn More
-    18→
     19→To learn more about Next.js, take a look at the following resources:
     20→
       →…
     26→## Deploy on Vercel
-    27→
     28→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     29→
       →…
 site/components/code.tsx
      8→const theme: PrismTheme = {
-     9→  plain: {
-      →…
    104→export const Code: React.FC<{
 site/components/docs-layout.tsx
      8→const TableItem: React.FC<{
@@ -53,18 +51,13 @@ site/components/docs-layout.tsx
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
 site/components/sections/footer.tsx
-     4→export function Footer({ noBadge }: { noBadge?: boolean }) {
+     4→export function Footer …
 site/components/sections/splitbee-counter.tsx
-     4→export const useSplitbeeCount = <T extends string>(
-     5→  event: T,
-     6→  token: string
-     7→): number => {
-    36→export const SplitbeeCounter = () => {
+     4→export const useSplitbeeCount …
+    36→export const SplitbeeCounter …
 site/components/sections/toast-example.tsx
      7→const examples: Array<{
-     8→  title: string;
-      →…
-   270→export const ToastExample = () => {
+   270→export const ToastExample …
 site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
      9→  'top-left',
@@ -74,7 +67,7 @@ site/components/sections/toaster-example.tsx
     13→  'bottom-center',
     14→  'bottom-right',
     15→];
-    17→export const ToasterExample: React.FC<{
+    17→export const ToasterExample …
 site/next.config.mjs
      5→const withMDX = nextMdx({
      6→  extension: /\.mdx?$/,
@@ -94,7 +87,6 @@ site/pages/index.tsx
     22→const version = packageInfo.version;
    102→export default function Home() {
    103→  const [position, setPosition] = useState<ToastPosition>('top-center');
-   104→  const [reverse, setReverse] = useState(false);
       →…
 site/types/svg.d.ts
      1→interface SvgrComponent
@@ -147,16 +139,12 @@ src/core/store.ts
     52→interface ToasterState {
     58→interface State {
     62→export const reducer …
-   136→const listeners …
-   140→const defaultToasterState …
    149→export const dispatch …
    161→export const dispatchAll …
    164→export const getToasterIdFromToastId …
    169→export const createDispatch …
    185→export const useStore …
 src/core/toast.ts
-    19→type Message …
-    21→type ToastHandler …
     23→const createToast …
     42→const createHandler …
     55→const toast …

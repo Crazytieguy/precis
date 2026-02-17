@@ -2,35 +2,19 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1896 words)
+budget: 2000 (1906 words)
 
 Readme.md
-    42→### Usage
-    43→
-      →…
-   145→### Why?
-   146→
-      →…
-   167→### Principles
-   168→
-      →…
-   181→### Demo
-   182→
-      →…
-   189→### Examples
-   190→
-      →…
-   205→### Documentation
-   206→
-      →…
-   231→### License
-   232→
-      →…
+    42→### Usage …
+   145→### Why? …
+   167→### Principles …
+   181→### Demo …
+   189→### Examples …
+   205→### Documentation …
+   231→### License …
 docs/guides/01-getting-started.md
-     1→# Getting Started
-     2→
+     1→# Getting Started …
      3→## Installing Superstruct
-     4→
      5→To install Superstruct run:
      6→
      7→```bash
@@ -67,71 +51,32 @@ docs/guides/01-getting-started.md
     38→
     39→This will expose the `Superstruct` global.
     40→
-    41→## Defining Structs
-    42→
-      →…
+    41→## Defining Structs …
 docs/guides/02-validating-data.md
-     1→# Validating Data
-     2→
-      →…
-     5→## Primitive Values
-     6→
-      →…
-    37→## Composed Values
-    38→
-      →…
-   114→## Optional Values
-   115→
-      →…
-   157→## Custom Values
-   158→
-      →…
+     1→# Validating Data …
+     5→## Primitive Values …
+    37→## Composed Values …
+   114→## Optional Values …
+   157→## Custom Values …
 docs/guides/03-coercing-data.md
-     1→# Coercing Data
-     2→
-      →…
-     7→## Default Values
-     8→
-      →…
-    49→## Custom Coercions
-    50→
-      →…
+     1→# Coercing Data …
+     7→## Default Values …
+    49→## Custom Coercions …
 docs/guides/04-refining-validation.md
-     1→# Refining Validation
-     2→
-      →…
-     7→## Built-in Refinements
-     8→
-      →…
-    47→## Custom Refinements
-    48→
-      →…
+     1→# Refining Validation …
+     7→## Built-in Refinements …
+    47→## Custom Refinements …
 docs/guides/05-handling-errors.md
-     1→# Handling Errors
-     2→
-      →…
-    53→## Customizing Errors
-    54→
-      →…
-   102→## Multiple Failures
-   103→
-      →…
+     1→# Handling Errors …
+    53→## Customizing Errors …
+   102→## Multiple Failures …
 docs/guides/06-using-typescript.md
-     1→# Using TypeScript
-     2→
-      →…
-     7→## Narrowing Types
-     8→
-      →…
-    37→## Describing Types
-    38→
-      →…
-    55→## Inferring Types
-    56→
-      →…
+     1→# Using TypeScript …
+     7→## Narrowing Types …
+    37→## Describing Types …
+    55→## Inferring Types …
 docs/readme.md
      7→### Usage
-     8→
      9→Superstruct allows you to define the shape of data you want to validate:
     10→
     11→```js
@@ -160,10 +105,27 @@ docs/readme.md
     34→// If you'd rather not throw, you can use `is()` or `validate()`.
     35→```
     36→
+    37→Superstruct ships with validators for all the common JavaScript data types, and you can define custom ones too:
+    38→
+    39→```js
+    40→import { is, define, object, string } from 'superstruct'
+    41→import isUuid from 'is-uuid'
+    42→import isEmail from 'is-email'
+    43→
+    44→const Email = define('Email', isEmail)
+    45→const Uuid = define('Uuid', isUuid.v4)
+    46→
+    47→const User = object({
+    48→  id: Uuid,
+    49→  email: Email,
+    50→  name: string(),
+    51→})
+    52→
+    53→const data = {
+    54→  id: 'c8d63140-a1f7-45e0-bfc6-df72973fea86',
       →…
 docs/reference/core.md
      3→### `assert`
-     4→
      5→`assert<T>(value: unknown, struct: Struct<T>, message?: string) => asserts value is T`
      6→
      7→```ts
@@ -176,7 +138,6 @@ docs/reference/core.md
     14→
 docs/reference/typescript.md
      7→### `Describe`
-     8→
      9→The `Describe` utility returns a type representing a struct for a given valid value type. This allows you to ensure you're writing your struct definitions properly, for example:
     10→
     11→```ts
@@ -193,25 +154,14 @@ docs/reference/typescript.md
     22→
       →…
 docs/resources/faq.md
-     1→# FAQ
-     2→
-      →…
-     5→### How can I allow unknown keys with `object` structs?
-     6→
-      →…
-    11→### Why not have a built-in `json` struct?
-    12→
-      →…
+     1→# FAQ …
+     5→### How can I allow unknown keys with `object` structs? …
+    11→### Why not have a built-in `json` struct? …
 docs/resources/links.md
-     1→# Resources
-     2→
-      →…
-     5→## Libraries
-     6→
-      →…
+     1→# Resources …
+     5→## Libraries …
 docs/summary.md
      3→## Guides
-     4→
      5→- [Getting Started](./guides/01-getting-started.md)
      6→- [Validating Data](./guides/02-validating-data.md)
      7→- [Coercing Data](./guides/03-coercing-data.md)
@@ -220,7 +170,6 @@ docs/summary.md
     10→- [Using TypeScript](./guides/06-using-typescript.md)
     11→
     12→## API Reference
-    13→
     14→- [Core](./reference/core.md)
     15→- [Types](./reference/types.md)
     16→- [Refinements](./reference/refinements.md)
@@ -230,7 +179,6 @@ docs/summary.md
     20→- [TypeScript](./reference/typescript.md)
     21→
     22→## Resources
-    23→
     24→- [FAQ](./resources/faq.md)
     25→- [Links](./resources/links.md)
 src/error.ts
@@ -428,12 +376,6 @@ src/structs/coercions.ts
 src/structs/refinements.ts
      8→export function empty …
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
-    22→  if (value instanceof Map || value instanceof Set) {
-    23→    return value.size
-    24→  } else {
-    25→    return value.length
-    26→  }
-    27→}
     33→export function max …
     55→export function min …
     77→export function nonempty …

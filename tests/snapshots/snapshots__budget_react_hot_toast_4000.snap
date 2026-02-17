@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3969 words)
+budget: 4000 (3971 words)
 
 README.md
     28→## Features
-    29→
     30→- 🔥 **Hot by default**
     31→- 🔩 **Easily Customizable**
     32→- ⏳ **Promise API** - _Automatic loader from a promise_
@@ -15,21 +14,17 @@ README.md
     35→- 🤯 **Headless Hooks** - _Create your own with [`useToaster()`](https://react-hot-toast.com/docs/use-toaster)_
     36→
     37→## Installation
-    38→
     39→#### With pnpm
-    40→
     41→```sh
     42→pnpm add react-hot-toast
     43→```
     44→
     45→#### With NPM
-    46→
     47→```sh
     48→npm install react-hot-toast
     49→```
     50→
     51→## Getting Started
-    52→
     53→Add the Toaster to your app first. It will take care of rendering all notifications emitted. Now you can trigger `toast()` from anywhere!
     54→
     55→```jsx
@@ -48,11 +43,9 @@ README.md
     68→```
     69→
     70→## Documentation
-    71→
     72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
 site/README.md
      3→## Getting Started
-     4→
      5→First, run the development server:
      6→
      7→```bash
@@ -66,7 +59,6 @@ site/README.md
     15→You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
     16→
     17→## Learn More
-    18→
     19→To learn more about Next.js, take a look at the following resources:
     20→
     21→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
@@ -75,7 +67,6 @@ site/README.md
     24→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
     25→
     26→## Deploy on Vercel
-    27→
     28→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     29→
     30→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
@@ -105,6 +96,12 @@ site/components/code.tsx
     30→      },
     31→    },
     32→    {
+    33→      types: ['property', 'function'],
+    34→      style: {
+    35→        color: '#9a86fd',
+    36→      },
+    37→    },
+    38→    {
       →…
    104→export const Code: React.FC<{
    105→  snippet: string;
@@ -344,6 +341,7 @@ site/components/sections/toast-example.tsx
     34→  saveSettings(settings),
     35→   {
     36→     loading: 'Saving...',
+    37→     success: <b>Settings saved!</b>,
       →…
    270→export const ToastExample = () => {
    271→  const [snippet, setSnippet] = useState(examples[0].snippet);
@@ -692,7 +690,6 @@ src/components/toast-bar.tsx
     64→  const [enter, exit] = prefersReducedMotion()
     65→    ? [fadeInAnimation, fadeOutAnimation]
     66→    : [enterAnimation(factor), exitAnimation(factor)];
-    67→
       →…
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
@@ -796,7 +793,6 @@ src/components/toaster.tsx
     19→  onHeightUpdate,
     20→  children,
     21→}: ToastWrapperProps) => {
-    22→  const ref = React.useCallback(
       →…
     47→const getPositionStyle = (
     48→  position: ToastPosition,
@@ -808,7 +804,6 @@ src/components/toaster.tsx
     54→    ? {
     55→        justifyContent: 'center',
     56→      }
-    57→    : position.includes('right')
       →…
     76→const activeClass = css`
     77→  z-index: 9999;

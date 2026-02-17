@@ -2,75 +2,38 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3811 words)
+budget: 4000 (3820 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
      9→  .map((file) => `./${file}`)
 CHANGELOG.md
-     3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16)
-     4→### Bug Fixes
-     5→* [`a29faa5`](https://github.com/npm/node-semver/commit/a29faa5f3309a01c8e5aeb965fb5c02c4c4e80e2) [#835](https://github.com/npm/node-semver/pull/835) cli: pass options to semver.valid() for loose version validation (#835) (@mldangelo)
-    16→### Bug Fixes
-    17→* [`e37e0ca`](https://github.com/npm/node-semver/commit/e37e0ca0b5fc910d2b1948d25dbc83cc3a0921ea) [#813](https://github.com/npm/node-semver/pull/813) faster paths for compare (#813) (@H4ad)
-      →…
-    23→### Bug Fixes
-    24→* [`fcafb61`](https://github.com/npm/node-semver/commit/fcafb61ed566ff8ccf24818dd94b76738f037aa4) [#780](https://github.com/npm/node-semver/pull/780) add missing `'use strict'` directives (#780) (@Fdawgs)
-      →…
-    31→### Bug Fixes
-    32→* [`af761c0`](https://github.com/npm/node-semver/commit/af761c05bd53eef83b5e20f8b09360b0e70557dc) [#764](https://github.com/npm/node-semver/pull/764) inc: fully capture prerelease identifier (#764) (@wraithgar)
-      →…
-    35→### Features
-    36→* [`0864b3c`](https://github.com/npm/node-semver/commit/0864b3ce7932667013e0c7c5ec764777d4682883) [#753](https://github.com/npm/node-semver/pull/753) add "release" inc type (#753) (@mbtools)
-    50→### Bug Fixes
-    51→
-      →…
-    60→### Bug Fixes
-    61→
-      →…
-    66→### Bug Fixes
-    67→
-      →…
-    88→### Features
-    89→
-      →…
-   110→### Bug Fixes
-   111→
-      →…
-   117→### Bug Fixes
-   118→
-      →…
-   127→### Bug Fixes
-   128→
-      →…
-   135→### Bug Fixes
-   136→
-      →…
-   141→### Features
-   142→
-      →…
-   153→### Features
-   154→
-      →…
-   174→### Bug Fixes
-   175→
-      →…
-   185→### Bug Fixes
-   186→
-      →…
-   200→### Bug Fixes
-   201→
-      →…
+     3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16) …
+     4→### Bug Fixes …
+    16→### Bug Fixes …
+    23→### Bug Fixes …
+    31→### Bug Fixes …
+    35→### Features …
+    50→### Bug Fixes …
+    60→### Bug Fixes …
+    66→### Bug Fixes …
+    88→### Features …
+   110→### Bug Fixes …
+   117→### Bug Fixes …
+   127→### Bug Fixes …
+   135→### Bug Fixes …
+   141→### Features …
+   153→### Features …
+   174→### Bug Fixes …
+   185→### Bug Fixes …
+   200→### Bug Fixes …
 CONTRIBUTING.md
      3→# Contributing
-     4→
      5→## Code of Conduct
-     6→
      7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
      8→
      9→## Reporting Bugs
-    10→
     11→Before submitting a new bug report please search for an existing or similar report.
     12→
     13→Use one of our existing issue templates if you believe you've come across a unique problem.
@@ -78,9 +41,7 @@ CONTRIBUTING.md
     15→Duplicate issues, or issues that don't use one of our templates may get closed without a response.
     16→
     17→## Pull Request Conventions
-    18→
     19→### Commits
-    20→
     21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
     22→
     23→When opening a pull request please be sure that either the pull request title, or each commit in the pull request, has one of the following prefixes:
@@ -91,37 +52,29 @@ CONTRIBUTING.md
     28→ - `chore`: For changes that do not affect the published module.  Often these are changes to tests.  The result will be *no* change to the version of the package when it is next published (as the commit does not affect the published version).
     29→
     30→### Test Coverage
-    31→
     32→Pull requests made against this repo will run `npm test` automatically.  Please make sure tests pass locally before submitting a PR.
     33→
     34→Every new feature or bug fix should come with a corresponding test or tests that validate the solutions. Testing also reports on code coverage and will fail if code coverage drops.
     35→
     36→### Linting
-    37→
     38→Linting is also done automatically once tests pass.  `npm run lintfix` will fix most linting errors automatically.
     39→
     40→Please make sure linting passes before submitting a PR.
     41→
     42→## What _not_ to contribute?
-    43→
     44→### Dependencies
-    45→
     46→It should be noted that our team does not accept third-party dependency updates/PRs.  If you submit a PR trying to update our dependencies we will close it with or without a reference to these contribution guidelines.
     47→
     48→### Tools/Automation
-    49→
     50→Our core team is responsible for the maintenance of the tooling/automation in this project and we ask contributors to not make changes to these when contributing (e.g. `.github/*`, `.eslintrc.json`, `.licensee.json`).  Most of those files also have a header at the top to remind folks they are automatically generated.  Pull requests that alter these will not be accepted.
 README.md
      1→semver(1) -- The semantic versioner for npm
-     3→
      4→## Install
-     5→
      6→```bash
      7→npm install semver
      8→````
      9→
     10→## Usage
-    11→
     12→As a node module:
     13→
     14→```js
@@ -130,9 +83,9 @@ README.md
     17→semver.valid('1.2.3') // '1.2.3'
     18→semver.valid('a.b.c') // null
     19→semver.clean('  =v1.2.3   ') // '1.2.3'
+    20→semver.satisfies('1.2.3', '1.x || >=2.5.0 || 5.0.0 - 7.2.3') // true
       →…
    139→## Versions
-   140→
    141→A "version" is described by the `v2.0.0` specification found at
    142→<https://semver.org/>.
    143→
@@ -141,7 +94,6 @@ README.md
    146→specification but should not be used anymore.
    147→
    148→## Ranges
-   149→
    150→A `version range` is a set of `comparators` that specify versions
    151→that satisfy the range.
    152→
@@ -150,9 +102,9 @@ README.md
    155→
    156→* `<` Less than
    157→* `<=` Less than or equal to
+   158→* `>` Greater than
       →…
    184→### Prerelease Tags
-   185→
    186→If a version has a prerelease tag (for example, `1.2.3-alpha.3`) then
    187→it will only be allowed to satisfy comparator sets if at least one
    188→comparator with the same `[major, minor, patch]` tuple also has a
@@ -161,9 +113,9 @@ README.md
    191→For example, the range `>1.2.3-alpha.3` would be allowed to match the
    192→version `1.2.3-alpha.7`, but it would *not* be satisfied by
    193→`3.4.5-alpha.9`, even though `3.4.5-alpha.9` is technically "greater
+   194→than" `1.2.3-alpha.3` according to the SemVer sort rules.  The version
       →…
    219→#### Prerelease Identifiers
-   220→
    221→The method `.inc` takes an additional `identifier` string argument that
    222→will append the value of the string as a prerelease identifier:
    223→
@@ -172,9 +124,9 @@ README.md
    226→// '1.2.4-beta.0'
    227→```
    228→
+   229→command-line example:
       →…
    250→#### Prerelease Identifier Base
-   251→
    252→The method `.inc` takes an optional parameter 'identifierBase' string
    253→that will let you let your prerelease number as zero-based or one-based.
    254→Set to `false` to omit the prerelease number altogether.
@@ -183,9 +135,9 @@ README.md
    257→```javascript
    258→semver.inc('1.2.3', 'prerelease', 'beta', '1')
    259→// '1.2.4-beta.1'
+   260→```
       →…
    279→### Advanced Range Syntax
-   280→
    281→Advanced range syntax desugars to primitive comparators in
    282→deterministic ways.
    283→
@@ -193,7 +145,6 @@ README.md
    285→comparators using white space or `||`.
    286→
    287→#### Hyphen Ranges `X.Y.Z - A.B.C`
-   288→
    289→Specifies an inclusive set.
    290→
    291→* `1.2.3 - 2.3.4` := `>=1.2.3 <=2.3.4`
@@ -202,9 +153,9 @@ README.md
    294→range, then the missing pieces are replaced with zeroes.
    295→
    296→* `1.2 - 2.3.4` := `>=1.2.0 <=2.3.4`
+   297→
       →…
    306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
-   307→
    308→Any of `X`, `x`, or `*` may be used to "stand in" for one of the
    309→numeric values in the `[major, minor, patch]` tuple.
    310→
@@ -213,9 +164,9 @@ README.md
    313→  satisfies)
    314→* `1.x` := `>=1.0.0 <2.0.0-0` (Matching major version)
    315→* `1.2.x` := `>=1.2.0 <1.3.0-0` (Matching major and minor versions)
+   316→
       →…
    324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
-   325→
    326→Allows patch-level changes if a minor version is specified on the
    327→comparator.  Allows minor-level changes if not.
    328→
@@ -224,9 +175,9 @@ README.md
    331→* `~1` := `>=1.0.0 <(1+1).0.0` := `>=1.0.0 <2.0.0-0` (Same as `1.x`)
    332→* `~0.2.3` := `>=0.2.3 <0.(2+1).0` := `>=0.2.3 <0.3.0-0`
    333→* `~0.2` := `>=0.2.0 <0.(2+1).0` := `>=0.2.0 <0.3.0-0` (Same as `0.2.x`)
+   334→* `~0` := `>=0.0.0 <(0+1).0.0` := `>=0.0.0 <1.0.0-0` (Same as `0.x`)
       →…
    341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
-   342→
    343→Allows changes that do not modify the left-most non-zero element in the
    344→`[major, minor, patch]` tuple.  In other words, this allows patch and
    345→minor updates for versions `1.0.0` and above, patch updates for
@@ -235,9 +186,9 @@ README.md
    348→Many authors treat a `0.x` version as if the `x` were the major
    349→"breaking-change" indicator.
    350→
+   351→Caret ranges are ideal when an author may make breaking changes
       →…
    384→### Range Grammar
-   385→
    386→Putting all this together, here is a Backus-Naur grammar for ranges,
    387→for the benefit of parser authors:
    388→
@@ -246,9 +197,9 @@ README.md
    391→logical-or ::= ( ' ' ) * '||' ( ' ' ) *
    392→range      ::= hyphen | simple ( ' ' simple ) * | ''
    393→hyphen     ::= partial ' - ' partial
+   394→simple     ::= primitive | partial | tilde | caret
       →…
    408→## Functions
-   409→
    410→All methods and classes take a final `options` object argument.  All
    411→options in this object are `false` by default.  The options supported
    412→are:
@@ -257,9 +208,9 @@ README.md
    415→  (Any resulting output will always be 100% strict compliant, of
    416→  course.)  For backwards compatibility reasons, if the `options`
    417→  argument is a boolean value instead of an object, it is interpreted
+   418→  to be the `loose` param.
       →…
    453→### Comparison
-   454→
    455→* `gt(v1, v2)`: `v1 > v2`
    456→* `gte(v1, v2)`: `v1 >= v2`
    457→* `lt(v1, v2)`: `v1 < v2`
@@ -268,20 +219,18 @@ README.md
    460→  even if they're not the same string.  You already know how to
    461→  compare strings.
    462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
+   463→* `cmp(v1, comparator, v2)`: Pass in a comparison string, and it'll call
       →…
    478→### Sorting
-   479→
    480→* `sort(versions)`: Returns a sorted array of versions based on the `compareBuild` 
    481→  function.
    482→* `rsort(versions)`: The reverse of `sort`. Returns an array of versions based on
    483→  the `compareBuild` function in descending order.
    484→
    485→### Comparators
-   486→
    487→* `intersects(comparator)`: Return true if the comparators intersect
    488→
    489→### Ranges
-   490→
    491→* `validRange(range)`: Return the valid range or null if it's not valid.
    492→* `satisfies(version, range)`: Return true if the version satisfies the
    493→  range.
@@ -290,9 +239,9 @@ README.md
    496→* `minSatisfying(versions, range)`: Return the lowest version in the list
    497→  that satisfies the range, or `null` if none of them do.
    498→* `minVersion(range)`: Return the lowest version that can match
+   499→  the given range.
       →…
    531→### Coercion
-   532→
    533→* `coerce(version, options)`: Coerces a string to semver if possible
    534→
    535→This aims to provide a very forgiving translation of a non-semver string to
@@ -301,9 +250,9 @@ README.md
    538→`1.2`, `1.2.3`) up to the max permitted length (256 characters).  Longer
    539→versions are simply truncated (`4.6.3.9.2-alpha2` becomes `4.6.3`).  All
    540→surrounding text is simply ignored (`v3.4 replaces v3.3.1` becomes
+   541→`3.4.0`).  Only text which lacks digits will fail coercion (`version one`
       →…
    558→### Clean
-   559→
    560→* `clean(version)`: Clean a string to be a valid semver if possible
    561→
    562→This will return a cleaned and trimmed semver version. If the provided
@@ -312,13 +261,12 @@ README.md
    565→
    566→ex.
    567→* `s.clean(' = v 2.1.5foo')`: `null`
+   568→* `s.clean(' = v 2.1.5foo', { loose: true })`: `'2.1.5-foo'`
       →…
    576→## Constants
-   577→
    578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
    579→
    580→### `RELEASE_TYPES`
-   581→
    582→- major
    583→- premajor
    584→- minor
@@ -327,9 +275,9 @@ README.md
    587→- prepatch
    588→- prerelease
    589→
+   590→```
       →…
    600→### `SEMVER_SPEC_VERSION`
-   601→
    602→2.0.0
    603→
    604→```
@@ -339,7 +287,6 @@ README.md
    608→```
    609→
    610→## Exported Modules
-   611→
    612→<!--
    613→TODO: Make sure that all of these items are documented (classes aren't,
    614→eg), and then pull the module name into the documentation for that specific
@@ -348,6 +295,7 @@ README.md
    617→
    618→You may pull in just the part of this semver utility that you need if you
    619→are sensitive to packing and tree-shaking concerns.  The main
+   620→`require('semver')` export uses getter functions to lazily load the parts
       →…
 bin/semver.js
      8→const argv = process.argv.slice(2)
@@ -366,6 +314,7 @@ bin/semver.js
     48→    }
     49→    switch (a) {
     50→      case '-rv': case '-rev': case '--rev': case '--reverse':
+    51→        reverse = true
       →…
    132→const failInc = () => {
    133→  console.error('--inc can only be used on a single version with no range')
@@ -386,6 +335,7 @@ bin/semver.js
    150→        Print versions that match the specified range.
    151→
    152→-i --increment [<level>]
+   153→        Increment a version by the specified level.  Level can
       →…
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -413,7 +363,6 @@ classes/comparator.js
     26→
     27→    if (this.semver === ANY) {
     28→      this.value = ''
-    29→    } else {
     36→  parse (comp) {
     37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
     38→    const m = comp.match(r)
@@ -461,7 +410,6 @@ classes/range.js
     27→    }
     28→
     29→    this.options = options
-    30→    this.loose = !!options.loose
     73→  get range () {
     74→    if (this.formatted === undefined) {
     75→      this.formatted = ''
@@ -559,7 +507,6 @@ classes/semver.js
     30→    debug('SemVer', version, options)
     31→    this.options = options
     32→    this.loose = !!options.loose
-    33→    // this isn't actually relevant for versions, but keep it so that we
     81→  format () {
     82→    this.version = `${this.major}.${this.minor}.${this.patch}`
     83→    if (this.prerelease.length) {

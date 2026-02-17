@@ -2,26 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (491 words)
+budget: 500 (489 words)
 
 README.md
-     1→# mdBook
-     2→
-      →…
-    14→## License
-    15→
-      →…
+     1→# mdBook …
+    14→## License …
 crates/mdbook-compare/README.md
-     1→# mdbook-compare
-     2→
-      →…
+     1→# mdbook-compare …
 crates/mdbook-core/README.md
-     1→# mdbook-core
-     2→
-      →…
-    11→## License
-    12→
-      →…
+     1→# mdbook-core …
+    11→## License …
+crates/mdbook-core/src/config.rs
+   718→trait Updateable …
 crates/mdbook-core/src/lib.rs
      3→/// The current version of `mdbook`.
      4→///
@@ -34,12 +26,8 @@ crates/mdbook-core/src/utils/mod.rs
 crates/mdbook-core/src/utils/toml_ext.rs
      6→pub(crate) trait TomlExt {
 crates/mdbook-driver/README.md
-     1→# mdbook-driver
-     2→
-      →…
-    11→## License
-    12→
-      →…
+     1→# mdbook-driver …
+    11→## License …
 crates/mdbook-driver/src/builtin_preprocessors/links.rs
    401→    type Item = Link<'a>;
 crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
@@ -62,20 +50,20 @@ crates/mdbook-driver/src/mdbook.rs
    397→struct OutputConfig {
    435→struct PreprocessorConfig {
 crates/mdbook-html/README.md
-     1→# mdbook-html
-     2→
-      →…
-    11→## License
-    12→
-      →…
+     1→# mdbook-html …
+    11→## License …
 crates/mdbook-html/src/html/tokenizer.rs
     22→    type Handle = ();
+crates/mdbook-html/src/html/tree.rs
+    25→macro_rules! attr_qual_name {
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     22→pub struct HtmlHandlebars;
 crates/mdbook-html/src/html_handlebars/helpers/resources.rs
     11→pub(crate) struct ResourceHelper {
 crates/mdbook-html/src/html_handlebars/helpers/toc.rs
     11→pub(crate) struct RenderToc {
+crates/mdbook-html/src/html_handlebars/mod.rs
+     4→mod search;
 crates/mdbook-html/src/html_handlebars/static_files.rs
     22→pub(super) struct StaticFiles {
     23→    static_files: Vec<StaticFile>,
@@ -93,16 +81,15 @@ crates/mdbook-html/src/theme/mod.rs
       →…
    201→    fn default() -> Theme {
 crates/mdbook-html/src/utils.rs
+     7→pub(crate) fn normalize_path …
     42→pub(crate) trait ToUrlPath {
     43→    fn to_url_path(&self) -> String;
     44→}
+    58→pub(crate) fn unique_id …
+    76→pub(crate) fn id_from_content …
 crates/mdbook-markdown/README.md
-     1→# mdbook-markdown
-     2→
-      →…
-    11→## License
-    12→
-      →…
+     1→# mdbook-markdown …
+    11→## License …
 crates/mdbook-markdown/src/lib.rs
     15→pub struct MarkdownOptions {
     16→    /// Enables smart punctuation.
@@ -111,34 +98,22 @@ crates/mdbook-markdown/src/lib.rs
     34→    fn default() -> MarkdownOptions {
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
 crates/mdbook-preprocessor/README.md
-     1→# mdbook-preprocessor
-     2→
-      →…
-    11→## License
-    12→
-      →…
+     1→# mdbook-preprocessor …
+    11→## License …
 crates/mdbook-preprocessor/src/lib.rs
     30→pub trait Preprocessor {
     51→pub struct PreprocessorContext {
     68→impl PreprocessorContext {
 crates/mdbook-renderer/README.md
-     1→# mdbook-renderer
-     2→
-      →…
-    11→## License
-    12→
-      →…
+     1→# mdbook-renderer …
+    11→## License …
 crates/mdbook-renderer/src/lib.rs
     28→pub trait Renderer {
     40→pub struct RenderContext {
     63→impl RenderContext {
 crates/mdbook-summary/README.md
-     1→# mdbook-summary
-     2→
-      →…
-    11→## License
-    12→
-      →…
+     1→# mdbook-summary …
+    11→## License …
 crates/mdbook-summary/src/lib.rs
     59→pub fn parse_summary …
     67→pub struct Summary {
@@ -148,9 +123,7 @@ crates/mdbook-summary/src/lib.rs
    173→struct SummaryParser<'a> {
    190→macro_rules! collect_events {
 crates/xtask/README.md
-     1→# xtask
-     2→
-      →…
+     1→# xtask …
 crates/xtask/src/changelog.rs
     10→pub(crate) fn changelog() -> Result<()> {
 eslint.config.mjs
@@ -164,37 +137,23 @@ guide/guide-helper/src/lib.rs
 guide/guide-helper/src/main.rs
      3→fn main() {
 guide/src/cli/README.md
-     1→# Command-line tool
-     2→
-      →…
+     1→# Command-line tool …
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     46→pub struct WordcountConfig {
     47→    pub ignores: Vec<String>,
       →…
 guide/src/format/README.md
-     1→# Format
-     2→
-      →…
+     1→# Format …
 guide/src/format/configuration/README.md
-     1→# Configuration
-     2→
-      →…
+     1→# Configuration …
 guide/src/format/mdbook.md
-     3→## Hiding code lines
-     4→
-      →…
+     3→## Hiding code lines …
 guide/src/format/theme/README.md
-     1→# Theme
-     2→
-      →…
+     1→# Theme …
 guide/src/guide/README.md
-     1→# User guide
-     2→
-      →…
+     1→# User guide …
 guide/src/misc/contributors.md
-     1→# Contributors
-     2→
-      →…
+     1→# Contributors …
 src/cmd/clean.rs
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     45→#[derive(Debug)]
