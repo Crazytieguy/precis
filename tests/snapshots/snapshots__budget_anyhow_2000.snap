@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1927 words)
+budget: 2000 (1929 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -12,6 +12,9 @@ README.md
      7→[<img alt="build status" src="https://img.shields.io/github/actions/workflow/status/dtolnay/anyhow/ci.yml?branch=master&style=for-the-badge" height="20">](https://github.com/dtolnay/anyhow/actions?query=branch%3Amaster)
      8→
      9→This library provides [`anyhow::Error`][Error], a trait object based error type
+    10→for easy idiomatic error handling in Rust applications.
+    11→
+    12→[Error]: https://docs.rs/anyhow/1.0/anyhow/struct.Error.html
       →…
     21→## Details
     23→- Use `Result<T, anyhow::Error>`, or equivalently `anyhow::Result<T>`, as the
@@ -20,6 +23,9 @@ README.md
     26→  Within the function, use `?` to easily propagate any error that implements the
     27→  [`std::error::Error`] trait.
     28→
+    29→  ```rust
+    30→  use anyhow::Result;
+    31→
       →…
    126→## No-std support
    128→In no_std mode, almost all of the same API is available and works the same way.
@@ -28,6 +34,9 @@ README.md
    131→
    132→```toml
    133→[dependencies]
+   134→anyhow = { version = "1.0", default-features = false }
+   135→```
+   136→
       →…
    144→## Comparison to failure
    146→The `anyhow::Error` type works something like `failure::Error`, but unlike
@@ -36,7 +45,9 @@ README.md
    149→the necessary improvements for this to be possible as part of [RFC 2504].
    150→
    151→[RFC 2504]: https://github.com/rust-lang/rfcs/blob/master/text/2504-fix-error.md
-      →…
+   152→
+   153→<br>
+   154→
    155→## Comparison to thiserror
    157→Use Anyhow if you don't care what error type your functions return, you just
    158→want it to be easy. This is common in application code. Use [thiserror] if you
@@ -44,7 +55,9 @@ README.md
    160→failures the caller gets exactly the information that you choose.
    161→
    162→[thiserror]: https://github.com/dtolnay/thiserror
-      →…
+   163→
+   164→<br>
+   165→
    166→#### License
    169→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
    170→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
@@ -52,6 +65,7 @@ README.md
    172→
    173→<br>
    174→
+   175→<sub>
       →…
 src/backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
@@ -132,6 +146,7 @@ src/context.rs
     79→///     # unimplemented!()
     80→/// }
     81→///
+    82→/// fn demo() -> Result<()> {
       →…
     90→impl<T> Context<T, Infallible> for Option<T> {
    147→    fn provide …
@@ -296,10 +311,6 @@ src/lib.rs
    296→/// - `Error` is represented as a narrow pointer &mdash; exactly one word in
    297→///   size instead of two.
    298→///
-   299→/// <br>
-   300→///
-   301→/// # Display representations
-   302→///
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -315,10 +326,6 @@ src/lib.rs
    402→/// use std::io;
    403→///
    404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
-   405→///     for cause in error.chain() {
-   406→///         if let Some(io_error) = cause.downcast_ref::<io::Error>() {
-   407→///             return Some(io_error.kind());
-   408→///         }
       →…
    415→pub struct Chain<'a> {
    416→    state: crate::chain::ChainState<'a>,
@@ -384,10 +391,6 @@ src/lib.rs
    478→///
    479→/// ```
    480→/// use anyhow::{Context, Result};
-   481→/// use std::fs;
-   482→/// use std::path::PathBuf;
-   483→///
-   484→/// pub struct ImportantThing {
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.

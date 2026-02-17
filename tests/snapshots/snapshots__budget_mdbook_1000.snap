@@ -2,10 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (960 words)
+budget: 1000 (951 words)
 
 README.md
-     1→# mdBook …
+     1→# mdBook
+     7→mdBook is a utility to create modern online books from Markdown files.
+     8→
+      →…
     14→## License …
 crates/mdbook-compare/README.md
      1→# mdbook-compare …
@@ -13,7 +16,8 @@ crates/mdbook-compare/src/main.rs
      6→macro_rules! error {
 crates/mdbook-core/README.md
      1→# mdbook-core …
-    11→## License …
+    11→## License
+    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-core/src/book.rs
    245→    type Target = Vec<u32>;
    274→    type Item = &'a BookItem;
@@ -41,7 +45,8 @@ crates/mdbook-core/src/utils/toml_ext.rs
      6→pub(crate) trait TomlExt {
 crates/mdbook-driver/README.md
      1→# mdbook-driver …
-    11→## License …
+    11→## License
+    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     14→pub struct CmdPreprocessor {
     15→    name: String,
@@ -73,7 +78,6 @@ crates/mdbook-driver/src/init.rs
     15→    create_gitignore: bool,
     16→    config: Config,
       →…
-    20→impl BookBuilder {
 crates/mdbook-driver/src/lib.rs
      1→//! High-level library for running mdBook.
      2→//!
@@ -83,21 +87,19 @@ crates/mdbook-driver/src/lib.rs
     69→pub mod init;
     70→mod load;
     71→mod mdbook;
-crates/mdbook-driver/src/mdbook/tests.rs
-   225→struct BoolPreprocessor(bool);
 crates/mdbook-driver/src/mdbook.rs
     29→pub struct MDBook {
     30→    /// The book's root directory.
     31→    pub root: PathBuf,
     32→
       →…
-    46→impl MDBook {
    397→struct OutputConfig {
    426→const DEFAULT_PREPROCESSORS …
    435→struct PreprocessorConfig {
 crates/mdbook-html/README.md
      1→# mdbook-html …
-    11→## License …
+    11→## License
+    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-html/src/html/tokenizer.rs
     22→    type Handle = ();
 crates/mdbook-html/src/html/tree.rs
@@ -110,10 +112,7 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     20→#[derive(Default)]
     21→#[non_exhaustive]
     22→pub struct HtmlHandlebars;
-    25→    /// Returns a new instance of [`HtmlHandlebars`].
     26→    pub fn new() -> Self {
-    27→        HtmlHandlebars
-    28→    }
    649→type CombinedRedirects …
 crates/mdbook-html/src/html_handlebars/mod.rs
      4→mod search;
@@ -142,7 +141,8 @@ crates/mdbook-html/src/utils.rs
     47→    fn to_url_path(&self) -> String {
 crates/mdbook-markdown/README.md
      1→# mdbook-markdown …
-    11→## License …
+    11→## License
+    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-markdown/src/lib.rs
     15→pub struct MarkdownOptions {
     16→    /// Enables smart punctuation.
@@ -153,8 +153,12 @@ crates/mdbook-markdown/src/lib.rs
     43→/// Creates a new pulldown-cmark parser of the given text.
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
 crates/mdbook-preprocessor/README.md
-     1→# mdbook-preprocessor …
-    11→## License …
+     1→# mdbook-preprocessor
+     7→This is the Rust library to implement a [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html) for [mdBook](https://rust-lang.github.io/mdBook/).
+     8→
+      →…
+    11→## License
+    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-preprocessor/src/lib.rs
     30→pub trait Preprocessor {
     32→    fn name …
@@ -165,20 +169,20 @@ crates/mdbook-preprocessor/src/lib.rs
     70→    pub fn new …
     82→pub fn parse_input …
 crates/mdbook-renderer/README.md
-     1→# mdbook-renderer …
-    11→## License …
+     1→# mdbook-renderer
+     7→This is the Rust library to implement a [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html) for [mdBook](https://rust-lang.github.io/mdBook/).
+     8→
+      →…
+    11→## License
+    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-renderer/src/lib.rs
     28→pub trait Renderer {
-    30→    fn name …
-    34→    fn render …
     40→pub struct RenderContext {
     63→impl RenderContext {
-    65→    pub fn new …
-    81→    pub fn source_dir …
-    86→    pub fn from_json …
 crates/mdbook-summary/README.md
      1→# mdbook-summary …
-    11→## License …
+    11→## License
+    13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-summary/src/lib.rs
     59→pub fn parse_summary(summary: &str) -> Result<Summary> {
     67→pub struct Summary {
@@ -188,8 +192,6 @@ crates/mdbook-summary/src/lib.rs
    122→pub enum SummaryItem {
    141→    fn from(other: Link) -> SummaryItem {
    173→struct SummaryParser<'a> {
-   174→    src: &'a str,
-      →…
    190→macro_rules! collect_events {
 crates/xtask/README.md
      1→# xtask …
@@ -200,21 +202,29 @@ guide/guide-helper/src/lib.rs
     10→pub fn handle_preprocessing() -> Result<()> {
     33→struct GuideHelper;
     35→impl Preprocessor for GuideHelper {
-    36→    fn name(&self) -> &str {
-    40→    fn run(&self, _ctx: &PreprocessorContext, mut book: Book) -> Result<Book> {
+    36→    fn name …
+    40→    fn run …
     46→fn insert_version(book: &mut Book) {
 guide/guide-helper/src/main.rs
      3→fn main() {
 guide/src/README.md
-     1→# Introduction …
+     1→# Introduction
+     4→    .mdbook-version {
+     5→        position: absolute;
+     6→        right: 20px;
+      →…
     46→## Contributing …
     55→## License …
 guide/src/cli/README.md
      1→# Command-line tool …
+guide/src/cli/serve.md
+    27→### Server options …
 guide/src/for_developers/README.md
      1→# For developers …
     17→## The build process …
     30→## Using `mdbook` as a library …
+guide/src/for_developers/backends.md
+     1→# Alternative backends …
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     44→#[derive(Debug, Default, Serialize, Deserialize)]
     45→#[serde(default, rename_all = "kebab-case")]
@@ -222,6 +232,8 @@ guide/src/for_developers/mdbook-wordcount/src/main.rs
     47→    pub ignores: Vec<String>,
     48→    pub deny_odds: bool,
     49→}
+guide/src/for_developers/preprocessors.md
+     1→# Preprocessors …
 guide/src/format/README.md
      1→# Format
      3→In this section you will learn how to:
@@ -242,8 +254,6 @@ guide/src/guide/README.md
      5→- [Installation](installation.md)
       →…
 src/cmd/clean.rs
-    36→/// Formats a number of bytes into a human readable SI-prefixed size.
-    37→/// Returns a tuple of `(quantity, units)`.
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     45→#[derive(Debug)]
     46→pub struct Clean {
@@ -255,7 +265,6 @@ src/cmd/command_prelude.rs
      7→pub trait CommandExt: Sized {
      8→    fn _arg(self, arg: Arg) -> Self;
      9→
-    41→    #[cfg(any(feature = "watch", feature = "serve"))]
     42→    fn arg_watcher(self) -> Self {
 src/cmd/mod.rs
      1→//! Subcommand modules for the `mdbook` binary.
@@ -274,7 +283,6 @@ src/cmd/serve.rs
 src/cmd/watch/native.rs
     11→pub fn rebuild_on_change …
 src/cmd/watch/poller.rs
-    17→/// Calls the closure when a book source file is changed, blocking indefinitely.
     18→pub fn rebuild_on_change(
     19→    book_dir: &Path,
     20→    update_config: &dyn Fn(&mut MDBook),

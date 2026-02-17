@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1967 words)
+budget: 2000 (1968 words)
 
 README.md
      1→# debug
@@ -59,7 +59,11 @@ README.md
    102→
    103→Then, run the program to be debugged as usual.
    104→
-      →…
+   105→npm script example:
+   106→```js
+   107→  "windowsDebug": "@powershell -Command $env:DEBUG='*';node app.js",
+   108→```
+   109→
    110→## Namespace Colors
    112→Every debug instance has a color generated for it based on its namespace name.
    113→This helps when visually parsing the debug output to identify which debug instance
@@ -150,7 +154,9 @@ README.md
    209→const debug = createDebug('foo')
    210→debug('this is hex: %h', new Buffer('hello world'))
    211→//   foo this is hex: 68656c6c6f20776f726c6421 +0ms
-      →…
+   212→```
+   213→
+   214→
    215→## Browser Support
    217→You can build a browser-ready script using [browserify](https://github.com/substack/node-browserify),
    218→or just use the [browserify-as-a-service](https://wzrd.in/) [build](https://wzrd.in/standalone/debug@latest),
@@ -315,8 +321,6 @@ src/browser.js
    128→	let m;
    129→
    130→	// Is webkit? http://stackoverflow.com/a/16459606/376773
-   131→	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-   132→	// eslint-disable-next-line no-return-assign
       →…
    143→/**
    144→ * Colorize log arguments if enabled.

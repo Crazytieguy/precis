@@ -78,7 +78,31 @@ SUMMARY.md
     16→    - [watch](cli/watch.md)
     17→    - [serve](cli/serve.md)
     18→    - [test](cli/test.md)
-      →…
+    19→    - [clean](cli/clean.md)
+    20→    - [completions](cli/completions.md)
+    21→- [Format](format/README.md)
+    22→    - [SUMMARY.md](format/summary.md)
+    23→        - [Draft chapter]()
+    24→    - [Configuration](format/configuration/README.md)
+    25→        - [General](format/configuration/general.md)
+    26→        - [Preprocessors](format/configuration/preprocessors.md)
+    27→        - [Renderers](format/configuration/renderers.md)
+    28→        - [Environment variables](format/configuration/environment-variables.md)
+    29→    - [Theme](format/theme/README.md)
+    30→        - [index.hbs](format/theme/index-hbs.md)
+    31→        - [Syntax highlighting](format/theme/syntax-highlighting.md)
+    32→        - [Editor](format/theme/editor.md)
+    33→    - [MathJax support](format/mathjax.md)
+    34→    - [mdBook-specific features](format/mdbook.md)
+    35→    - [Markdown](format/markdown.md)
+    36→- [Continuous integration](continuous-integration.md)
+    37→- [For developers](for_developers/README.md)
+    38→    - [Preprocessors](for_developers/preprocessors.md)
+    39→    - [Alternative backends](for_developers/backends.md)
+    40→
+    41→-----------
+    42→
+    43→[Contributors](misc/contributors.md)
 cli/README.md
      1→# Command-line tool
      3→The `mdbook` command-line tool is used to create and build books.
@@ -93,46 +117,75 @@ cli/README.md
     12→* [`mdbook test`](test.md) --- Tests Rust code samples.
     13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
     14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
-cli/arg-watcher.md
-     1→#### `--watcher` …
 cli/build.md
-     1→# The build command …
-    16→#### Specify a directory …
-    25→#### `--open` …
-    30→#### `--dest-dir` …
+     1→# The build command
+     3→The build command is used to render your book:
+     4→
+     5→```bash
+     6→mdbook build
+     7→```
+     8→
+      →…
 cli/clean.md
-     1→# The clean command …
-    10→#### Specify a directory …
-    19→#### `--dest-dir` …
+     1→# The clean command
+     3→The clean command is used to delete the generated book and any other build
+     4→artifacts.
+     5→
+     6→```bash
+     7→mdbook clean
+     8→```
+      →…
 cli/completions.md
-     1→# The completions command …
+     1→# The completions command
+     3→The completions command is used to generate auto-completions for some common shells.
+     4→This means when you type `mdbook` in your shell, you can then press your shell's auto-complete key (usually the Tab key) and it may display what the valid options are, or finish partial input.
+     5→
+     6→The completions first need to be installed for your shell:
+     7→
+     8→```bash
+      →…
 cli/init.md
-     1→# The init command …
-    32→#### Tip: Generate chapters from SUMMARY.md …
-    39→#### Specify a directory …
-    48→#### `--theme` …
-    56→#### `--title` …
-    65→#### `--ignore` …
-    80→#### `--force` …
+     1→# The init command
+     3→There is some minimal boilerplate that is the same for every new book. It's for
+     4→this purpose that mdBook includes an `init` command.
+     5→
+     6→The `init` command is used like this:
+     7→
+     8→```bash
+      →…
 cli/serve.md
-     1→# The serve command …
-    18→#### Specify a directory …
-    27→### Server options …
-    35→#### `--open` …
-    40→#### `--dest-dir` …
-    49→#### Specify exclude patterns …
+     1→# The serve command
+     3→The serve command is used to preview a book by serving it via HTTP at
+     4→`localhost:3000` by default: 
+     5→
+     6→```bash
+     7→mdbook serve
+     8→```
+      →…
+    27→### Server options
+    29→The `serve` hostname defaults to `localhost`, and the port defaults to `3000`. Either option can be specified on the command line:
+    30→
+    31→```bash
+    32→mdbook serve path/to/book -p 8000 -n 127.0.0.1 
+    33→```
+    34→
 cli/test.md
-     1→# The test command …
-    11→#### Disable tests on a code block …
-    31→#### Specify a directory …
-    40→#### `--library-path` …
-    57→#### `--chapter` …
+     1→# The test command
+     3→When writing a book, you sometimes need to automate some tests. For example,
+     4→[The Rust Programming Book](https://doc.rust-lang.org/stable/book/) uses a lot
+     5→of code examples that could get outdated. Therefore it is very important for
+     6→them to be able to automatically test these code examples.
+     7→
+     8→mdBook supports a `test` command that will run all available tests in a book. At
+      →…
 cli/watch.md
-     1→# The watch command …
-     9→#### Specify a directory …
-    18→#### `--open` …
-    23→#### `--dest-dir` …
-    32→#### Specify exclude patterns …
+     1→# The watch command
+     3→The `watch` command is useful when you want your book to be rendered on every
+     4→file change. You could repeatedly issue `mdbook build` every time a file is
+     5→changed. But using `mdbook watch` once will watch your files and will trigger a
+     6→build automatically whenever you modify a file; this includes re-creating
+     7→deleted files still mentioned in `SUMMARY.md`!
+     8→
 continuous-integration.md
      1→# Running `mdbook` in continuous integration
      3→There are a variety of services such as [GitHub Actions] or [GitLab CI/CD] which can be used to test and deploy your book automatically.
@@ -141,7 +194,9 @@ continuous-integration.md
      6→Specific recipes can be found at the [Automated Deployment] wiki page.
      7→
      8→[GitHub Actions]: https://docs.github.com/en/actions
-      →…
+     9→[GitLab CI/CD]: https://docs.gitlab.com/ee/ci/
+    10→[Automated Deployment]: https://github.com/rust-lang/mdBook/wiki/Automated-Deployment
+    11→
     12→## Installing mdBook
     14→There are several different strategies for installing mdBook.
     15→The particular method depends on your needs and preferences.
@@ -150,17 +205,11 @@ continuous-integration.md
     19→Perhaps the easiest method is to use the pre-compiled binaries found on the [GitHub Releases page][releases].
     20→A simple approach would be to use the popular `curl` CLI tool to download the executable:
     21→
-    22→```sh
-    23→mkdir bin
-    24→curl -sSL https://github.com/rust-lang/mdBook/releases/download/{{ mdbook-version }}/mdbook-{{ mdbook-version }}-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
       →…
     39→### Building from source
     41→Building from source will require having Rust installed.
     42→Some services have Rust pre-installed, but if your service does not, you will need to add a step to install it.
     43→
-    44→After Rust is installed, `cargo install` can be used to build and install mdBook.
-    45→We recommend using a SemVer version specifier so that you get the latest **non-breaking** version of mdBook.
-    46→For example:
       →…
     67→## Running tests
     69→You may want to run tests using [`mdbook test`] every time you push a change or create a pull request.
@@ -182,9 +231,6 @@ continuous-integration.md
    102→mdBook automatically generates a 404 page to be used for broken links.
    103→The default output is a file named `404.html` at the root of the book.
    104→Some services like [GitHub Pages] will automatically use this page for broken links.
-   105→For other services, you may want to consider configuring the web server to use this page as it will provide the reader navigation to get back to the book.
-   106→
-   107→If your book is not deployed at the root of the domain, then you should set the [`output.html.site-url`] setting so that the 404 page works correctly.
       →…
 for_developers/README.md
      1→# For developers
@@ -235,49 +281,17 @@ for_developers/backends.md
      5→configuration information via `stdin`. Once the backend receives this
      6→information it is free to do whatever it wants.
      7→
-      →…
-    13→## Setting up
-    15→This page will step you through creating your own alternative backend in the form
-    16→of a simple word counting program. Although it will be written in Rust, there's
-    17→no reason why it couldn't be accomplished using something like Python or Ruby.
-    18→
-    19→First you'll want to create a new binary program and add `mdbook-renderer` as a
-      →…
-    53→## Inspecting the book
-    55→Now our backend has a copy of the book, lets count how many words are in each
-    56→chapter!
-    57→
-    58→Because the `RenderContext` contains a [`Book`] field (`book`), and a `Book` has
-    59→the [`Book::iter()`] method for iterating over all items in a `Book`, this step
-      →…
-    82→## Enabling the backend
-    84→Now we've got the basics running, we want to actually use it. First, install the
-    85→program.
-    86→
-    87→```shell
-    88→$ cargo install --path .
-      →…
-   159→## Configuration
-   161→Now imagine you don't want to count the number of words on a particular chapter
-   162→(it might be generated text/code, etc). The canonical way to do this is via the
-   163→usual `book.toml` configuration file by adding items to your `[output.foo]`
-   164→table.
-   165→
-      →…
-   219→## Output and signalling failure
-   221→While it's nice to print word counts to the terminal when a book is built, it
-   222→might also be a good idea to output them to a file somewhere. `mdbook` tells a
-   223→backend where it should place any generated output via the `destination` field
-   224→in [`RenderContext`].
-   225→
-      →…
-   322→## Wrapping up
-   324→Although contrived, hopefully this example was enough to show how you'd create
-   325→an alternative backend for `mdbook`. If you feel it's missing something, don't
-   326→hesitate to create an issue in the [issue tracker] so we can improve the user
-   327→guide.
-   328→
-      →…
+     8→See [Configuring Renderers](../format/configuration/renderers.md) for more information about using backends.
+     9→
+    10→The community has developed several backends.
+    11→See the [Third Party Plugins] wiki page for a list of available backends.
+    12→
+    13→## Setting up …
+    53→## Inspecting the book …
+    82→## Enabling the backend …
+   159→## Configuration …
+   219→## Output and signalling failure …
+   322→## Wrapping up …
 for_developers/mdbook-wordcount/src/main.rs
     12→fn main() {
     13→    let mut stdin = io::stdin();
@@ -286,9 +300,6 @@ for_developers/mdbook-wordcount/src/main.rs
     16→        .get_deserialized("output.wordcount")
     17→        .unwrap_or_default();
     18→
-    19→    let _ = fs::create_dir_all(&ctx.destination);
-    20→    let mut f = File::create(ctx.destination.join("wordcounts.txt")).unwrap();
-    21→
       →…
     40→fn count_words(ch: &Chapter) -> usize {
     41→    ch.content.split_whitespace().count()
@@ -306,28 +317,14 @@ for_developers/preprocessors.md
      5→the book. Possible use cases are:
      6→
      7→- Creating custom helpers like `\{{#include /path/to/file.md}}`
-      →…
-    13→## Hooking into MDBook
-    15→MDBook uses a fairly simple mechanism for discovering third party plugins.
-    16→A new table is added to `book.toml` (e.g. `[preprocessor.foo]` for the `foo`
-    17→preprocessor) and then `mdbook` will try to invoke the `mdbook-foo` program as
-    18→part of the build process.
-    19→
-      →…
-    46→## Hints for implementing a preprocessor
-    48→By pulling in `mdbook-preprocessor` as a library, preprocessors can have access to the
-    49→existing infrastructure for dealing with books.
-    50→
-    51→For example, a custom preprocessor could use the
-    52→[`parse_input()`] function to deserialize the JSON written to
-      →…
-    74→## Implementing a preprocessor with a different language
-    76→The fact that mdBook utilizes stdin and stdout to communicate with the preprocessors makes it easy to implement them in a language other than Rust.
-    77→The following code shows how to implement a simple preprocessor in Python, which will modify the content of the first chapter.
-    78→The example below follows the configuration shown above with `preprocessor.foo.command` actually pointing to a Python script.
-    79→
-    80→```python
-      →…
+     8→- Substituting in latex-style expressions (`$$ \frac{1}{3} $$`) with their
+     9→  mathjax equivalents
+    10→
+    11→See [Configuring Preprocessors](../format/configuration/preprocessors.md) for more information about using preprocessors.
+    12→
+    13→## Hooking into MDBook …
+    46→## Hints for implementing a preprocessor …
+    74→## Implementing a preprocessor with a different language …
 format/README.md
      1→# Format
      3→In this section you will learn how to:
@@ -349,22 +346,42 @@ format/configuration/README.md
     11→[Renderer]: renderers.md
     12→[Environment Variable]: environment-variables.md
 format/configuration/environment-variables.md
-     1→# Environment variables …
+     1→# Environment variables
+     3→All configuration values can be overridden from the command line by setting the
+     4→corresponding environment variable. Because many operating systems restrict
+     5→environment variables to be alphanumeric characters or `_`, the configuration
+     6→key needs to be formatted slightly differently to the normal `foo.bar.baz` form.
+      →…
 format/configuration/general.md
-     1→# General configuration …
+     1→# General configuration
+     3→You can configure the parameters for your book in the ***book.toml*** file.
+     4→
+     5→Here is an example of what a ***book.toml*** file might look like:
+     6→
+      →…
     31→## Supported configuration options …
     37→### General metadata …
     64→### Rust options …
     85→### Build options …
 format/configuration/preprocessors.md
-     1→# Configuring Preprocessors …
+     1→# Configuring Preprocessors
+     3→Preprocessors are extensions that can modify the raw Markdown source before it gets sent to the renderer.
+     4→
+     5→The following preprocessors are built-in and included by default:
+     6→
+      →…
     26→## Custom preprocessor configuration …
     45→## Locking a preprocessor dependency to a renderer …
     55→## Provide your own command …
     67→### Optional preprocessors …
     79→## Require a certain order …
 format/configuration/renderers.md
-     1→# Configuring Renderers …
+     1→# Configuring Renderers
+     3→Renderers (also called "backends") are responsible for creating the output of the book.
+     4→
+     5→The following backends are built-in:
+     6→
+      →…
     20→## Output tables …
     59→### Custom backend commands …
     71→### Optional backends …
@@ -374,7 +391,12 @@ format/configuration/renderers.md
    206→### `[output.html.playground]` …
    230→### `[output.html.code]` …
    244→### `[output.html.search]` …
-   286→#### `[output.html.search.chapter]` …
+   286→#### `[output.html.search.chapter]`
+   288→The [`output.html.search.chapter`] table provides the ability to modify search settings per chapter or directory. Each key is the path to the chapter source file or directory, and the value is a table of settings to apply to that path. This will merge recursively, with more specific paths taking precedence.
+   289→
+   290→```toml
+   291→[output.html.search.chapter]
+      →…
    300→### `[output.html.redirect]` …
    325→## Markdown renderer …
 format/example.rs
@@ -385,11 +407,19 @@ format/example.rs
      5→#     println!("I am hidden! Expand the code snippet to see me");
      6→}
 format/markdown.md
-     1→# Markdown …
+     1→# Markdown
+     3→mdBook's [parser](https://github.com/raphlinus/pulldown-cmark) adheres to the [CommonMark](https://commonmark.org/) specification with some extensions described below.
+     4→You can take a quick [tutorial](https://commonmark.org/help/tutorial/),
+     5→or [try out](https://spec.commonmark.org/dingus/) CommonMark in real time. A complete Markdown overview is out of scope for 
+     6→this documentation, but below is a high level overview of some of the basics. For a more in-depth experience, check out the
+     7→[Markdown Guide](https://www.markdownguide.org).
+     8→
      9→## Text and paragraphs …
     25→## Headings …
     39→### A heading …
-    43→#### A smaller heading …
+    43→#### A smaller heading 
+    45→More text.
+    46→
     47→## Lists …
     69→## Links …
    108→## Images …
@@ -403,11 +433,32 @@ format/markdown.md
    244→### Definition lists …
    279→### Admonitions …
 format/mathjax.md
-     1→# MathJax support …
+     1→# MathJax support
+     3→mdBook has optional support for math equations through
+     4→[MathJax](https://www.mathjax.org/).
+     5→
+     6→To enable MathJax, you need to add the `mathjax-support` key to your `book.toml`
+     7→under the `output.html` section.
+     8→
+     9→```toml
+    10→[output.html]
+    11→mathjax-support = true
+    12→```
+    13→
+    14→>**Note:** The usual delimiters MathJax uses are not yet supported. You can't
+    15→currently use `$$ ... $$` as delimiters and the `\[ ... \]` delimiters need an
+    16→extra backslash to work. Hopefully this limitation will be lifted soon.
+    17→
+    18→>**Note:** When you use double backslashes in MathJax blocks (for example in
+    19→> commands such as `\begin{cases} \frac 1 2 \\ \frac 3 4 \end{cases}`) you need
+    20→> to add _two extra_ backslashes (e.g., `\begin{cases} \frac 1 2 \\\\ \frac 3 4
+    21→> \end{cases}`).
+    22→
+    23→
     24→### Inline equations …
     32→### Block equations …
 format/mdbook.md
-     1→# mdBook-specific features …
+     1→# mdBook-specific features
      3→## Hiding code lines
      5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
      6→
@@ -490,7 +541,16 @@ format/mdbook.md
    331→### `class="hidden"` …
    341→## Font-Awesome icons …
 format/summary.md
-     1→# SUMMARY.md …
+     1→# SUMMARY.md
+     3→The summary file is used by mdBook to know what chapters to include, in what
+     4→order they should appear, what their hierarchy is and where the source files
+     5→are. Without this file, there is no book.
+     6→
+     7→This markdown file must be named `SUMMARY.md`. Its formatting
+     8→is very strict and must follow the structure outlined below to allow for easy
+     9→parsing. Any element not specified below, be it formatting or textual, is likely
+    10→to be ignored at best, or may cause an error when attempting to build the book.
+    11→
     12→### Structure …
     93→### Example …
 format/theme/README.md
@@ -516,56 +576,61 @@ format/theme/README.md
     21→    - **_css/variables.css_** contains variables used in other CSS files.
     22→- **_book.js_** is mostly used to add client side functionality, like hiding /
     23→  un-hiding the sidebar, changing the theme, ...
-    24→- **_highlight.js_** is the JavaScript that is used to highlight code snippets,
-    25→  you should not need to modify this.
-    26→- **_highlight.css_** is the theme used for the code highlighting.
-    27→- **_favicon.svg_** and **_favicon.png_** the favicon that will be used. The SVG
-    28→  version is used by [newer browsers].
-    29→- **fonts/fonts.css** contains the definition of which fonts to load.
-    30→  Custom fonts can be included in the `fonts` directory.
-    31→
-    32→Generally, when you want to tweak the theme, you don't need to override all the
-    33→files. If you only need changes in the stylesheet, there is no point in
-    34→overriding all the other files. Because custom files take precedence over
-    35→built-in ones, they will not get updated with new fixes / features.
-    36→
-    37→**Note:** When you override a file, it is possible that you break some
-    38→functionality. Therefore I recommend to use the file from the default theme as
-    39→template and only add / modify what you need. You can copy the default theme
-    40→into your source directory automatically by using `mdbook init --theme` and just
-    41→remove the files you don't want to override.
-    42→
-    43→`mdbook init --theme` will not create every file listed above.
-    44→Some files, such as `head.hbs`, do not have built-in equivalents.
-    45→Just create the file if you need it.
-    46→
-    47→If you completely replace all built-in themes, be sure to also set
-    48→[`output.html.preferred-dark-theme`] in the config, which defaults to the
-    49→built-in `navy` theme.
-    50→
-    51→[`output.html.preferred-dark-theme`]: ../configuration/renderers.md#html-renderer-options
-    52→[newer browsers]: https://caniuse.com/#feat=link-icon-svg
+      →…
 format/theme/editor.md
      1→# Editor
      3→In addition to providing runnable code playgrounds, mdBook optionally allows them
      4→to be editable. In order to enable editable code blocks, the following needs to
      5→be added to the ***book.toml***:
+     6→
+     7→```toml
+     8→[output.html.playground]
+     9→editable = true
+    10→```
+    11→
+    12→After enabling editable code blocks, the `editable` attribute must be added to a
+    13→code block to make it editable:
+    14→
+    15→~~~markdown
+    16→```rust,editable
+    17→fn main() {
+    18→    let number = 5;
+    19→    print!("{}", number);
+    20→}
+    21→```
+    22→~~~
+    23→
+    24→The above will result in this editable playground:
+    25→
+    26→```rust,editable
+    27→fn main() {
+    28→    let number = 5;
+    29→    print!("{}", number);
+    30→}
+    31→```
+    32→
       →…
     35→## Customizing the editor
     37→By default, the editor is the [Ace](https://ace.c9.io/) editor, but, if desired,
     38→the functionality may be overridden by providing a different folder:
     39→
+    40→```toml
+    41→[output.html.playground]
       →…
 format/theme/index-hbs.md
      1→# index.hbs
      3→`index.hbs` is the handlebars template that is used to render the book. The
      4→markdown files are processed to html and then injected in that template.
      5→
-      →…
+     6→If you want to change the layout or style of your book, chances are that you
+     7→will have to modify this template a little bit. Here is what you need to know.
+     8→
      9→## Data
     11→A lot of data is exposed to the handlebars template with the "context". In the
     12→handlebars template you can access this information by using
     13→
+    14→```handlebars
+    15→{{name_of_property}}
       →…
     41→## Handlebars helpers
     43→In addition to the properties you can access, there are some handlebars helpers
@@ -575,37 +640,59 @@ format/theme/index-hbs.md
     48→The toc helper is used like this
     49→
     50→```handlebars
+    51→{{#toc}}{{/toc}}
+    52→```
       →…
     80→### resource
     82→The path to a static file.
     83→It implicitly includes `path_to_root`,
     84→and accounts for files that are renamed with a hash in their filename.
+    85→
+    86→```handlebars
       →…
     90→### fa
     92→mdBook includes a copy of [Font Awesome Free's](https://fontawesome.com)
     93→MIT-licensed SVG files. It accepts three positional arguments:
     94→
+    95→1. Type: one of "solid", "regular", and "brands" (light and duotone are not
+    96→   currently supported)
       →…
 format/theme/syntax-highlighting.md
      1→# Syntax highlighting
      3→mdBook uses [Highlight.js](https://highlightjs.org) with a custom theme
      4→for syntax highlighting.
      5→
-      →…
+     6→Automatic language detection has been turned off, so you will probably want to
+     7→specify the programming language you use like this:
+     8→
+     9→~~~markdown
+    10→```rust
+    11→fn main() {
+    12→    // Some code
+    13→}
+    14→```
+    15→~~~
+    16→
     17→## Supported languages
     19→These languages are supported by default, but you can add more by supplying
     20→your own `highlight.js` file:
     21→
+    22→- apache
+    23→- armasm
       →…
     68→## Custom theme
     69→Like the rest of the theme, the files used for syntax highlighting can be
     70→overridden with your own.
     71→
+    72→- ***highlight.js*** normally you shouldn't have to overwrite this file, unless
+    73→  you want to use a more recent version.
       →…
     82→## Improve default theme
     84→If you think the default theme doesn't look quite right for a specific language,
     85→or could be improved, feel free to [submit a new
     86→issue](https://github.com/rust-lang/mdBook/issues) explaining what you
+    87→have in mind and I will take a look at it.
+    88→
       →…
 guide/README.md
      1→# User guide
@@ -618,13 +705,8 @@ guide/creating.md
      1→# Creating a book
      3→Once you have the `mdbook` CLI tool installed, you can use it to create and render a book.
      4→
-     5→## Initializing a book
-     7→The `mdbook init` command will create a new directory containing an empty book for you to get started.
-     8→Give it the name of the directory that you want to create:
-      →…
-    32→## Anatomy of a book
-    34→A book is built from several files which define the settings and layout of the book.
-    35→
+     5→## Initializing a book …
+    32→## Anatomy of a book …
     36→### `book.toml`
     38→In the root of your book, there is a `book.toml` file which contains settings for describing how to build your book.
     39→This is written in the [TOML markup language](https://toml.io/).
@@ -637,52 +719,37 @@ guide/creating.md
     75→The content of your book is all contained in the `src` directory.
     76→Each chapter is a separate Markdown file.
       →…
-    96→## Publishing a book
-    98→Once you've written your book, you may want to host it somewhere for others to view.
-    99→The first step is to build the output of the book.
-      →…
+    96→## Publishing a book …
 guide/installation.md
      1→# Installation
      3→There are multiple ways to install the mdBook CLI tool.
      4→Choose any one of the methods below that best suit your needs.
-      →…
-     9→## Pre-compiled binaries
-    11→Executable binaries are available for download on the [GitHub Releases page][releases].
-    12→Download the binary for your platform (Windows, macOS, or Linux) and extract the archive.
-      →…
-    19→## Build from source using Rust
-    21→To build the `mdbook` executable from source, you will first need to install Rust and Cargo.
-    22→Follow the instructions on the [Rust installation page].
-      →…
+     5→If you are installing mdBook for automatic deployment, check out the [continuous integration] chapter for more examples on how to install.
+     6→
+     7→[continuous integration]: ../continuous-integration.md
+     8→
+     9→## Pre-compiled binaries …
+    19→## Build from source using Rust …
     41→### Installing the latest master version
     43→The version published to crates.io will ever so slightly be behind the version hosted on GitHub.
     44→If you need the latest version you can build the git version of mdBook yourself.
       →…
-    53→## Modifying and contributing
-    55→If you are interested in making modifications to mdBook itself, check out the [Contributing Guide] for more information.
-    56→
-      →…
+    53→## Modifying and contributing …
 guide/reading.md
      1→# Reading books
      3→This chapter gives an introduction on how to interact with a book produced by mdBook.
      4→This assumes you are reading an HTML book.
-      →…
-    12→## Navigation
-    14→There are several methods for navigating through the chapters of a book.
-    15→
-      →…
-    26→## Top menu bar
-    28→The menu bar at the top of the page provides some icons for interacting with the book.
-    29→The icons displayed will depend on the settings of how the book was generated.
-      →…
-    42→## Search
-    44→Each book has a built-in search system.
-    45→Pressing the search icon <i class="fas fa-magnifying-glass"></i> in the menu bar, or pressing the <kbd>/</kbd> or <kbd>S</kbd> key on the keyboard will open an input box for entering search terms.
-      →…
-    54→## Code blocks
-    56→mdBook books are often used for programming projects, and thus support highlighting code blocks and samples.
-    57→Code blocks may contain several different icons for interacting with them:
-      →…
+     5→The options and formatting will be different for other output formats such as PDF.
+     6→
+     7→A book is organized into *chapters*.
+     8→Each chapter is a separate page.
+     9→Chapters can be nested into a hierarchy of sub-chapters.
+    10→Typically, each chapter will be organized into a series of *headings* to subdivide a chapter.
+    11→
+    12→## Navigation …
+    26→## Top menu bar …
+    42→## Search …
+    54→## Code blocks …
 misc/contributors.md
      1→# Contributors
      3→Here is a list of the contributors who have helped improving mdBook. Big
@@ -693,15 +760,4 @@ misc/contributors.md
      8→- Steve Klabnik ([steveklabnik](https://github.com/steveklabnik))
      9→- Adam Solove ([asolove](https://github.com/asolove))
     10→- Wayne Nilsen ([waynenilsen](https://github.com/waynenilsen))
-    11→- [funnkill](https://github.com/funkill)
-    12→- Fu Gangqiang ([FuGangqiang](https://github.com/FuGangqiang))
-    13→- [Michael-F-Bryan](https://github.com/Michael-F-Bryan)
-    14→- Chris Spiegel ([cspiegel](https://github.com/cspiegel))
-    15→- [projektir](https://github.com/projektir)
-    16→- [Phaiax](https://github.com/Phaiax)
-    17→- Matt Ickstadt ([mattico](https://github.com/mattico))
-    18→- Weihang Lo ([weihanglo](https://github.com/weihanglo))
-    19→- Avision Ho ([avisionh](https://github.com/avisionh))
-    20→- Vivek Akupatni ([apatniv](https://github.com/apatniv))
-    21→- Eric Huss ([ehuss](https://github.com/ehuss))
       →…

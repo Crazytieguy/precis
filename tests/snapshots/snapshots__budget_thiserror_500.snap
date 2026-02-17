@@ -2,31 +2,30 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (469 words)
+budget: 500 (468 words)
 
 README.md
      1→derive(Error) …
     21→## Example …
     44→## Details …
    211→## Comparison to anyhow …
-   223→#### License …
+   223→#### License
+   226→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
+   227→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
+   228→</sup>
+   229→
+   230→<br>
+   231→
+      →…
 build/probe.rs
     11→struct MyError(Thing);
     12→struct Thing;
     14→impl Debug for MyError {
     15→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
-    16→        unimplemented!()
-    17→    }
     20→impl Display for MyError {
     21→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
-    22→        unimplemented!()
-    23→    }
     26→impl Error for MyError {
     27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
-    28→        request.provide_ref(&self.0);
-    29→    }
-build.rs
-    10→const PRIVATE …
 impl/src/ast.rs
     10→pub enum Input<'a> {
     15→pub struct Struct<'a> {
@@ -106,8 +105,6 @@ src/display.rs
     58→#[cfg(not(feature = "std"))]
     59→mod placeholder {
     60→    use super::{AsDisplay, Sealed};
-    61→    use core::fmt::{self, Display};
-    62→
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
     67→        type Target = Self;

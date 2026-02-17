@@ -2,42 +2,46 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (493 words)
+budget: 500 (497 words)
 
+CHANGELOG.md
+     1→# neverthrow …
+     3→## 8.2.0 …
+    56→### Patch Changes …
 README.md
-   141→### Synchronous API (`Result`)
+     1→# NeverThrow 🙅 …
+     5→## Description …
+    19→## Table Of Contents …
+    73→## Installation …
+    79→## Recommended: Use `eslint-plugin-neverthrow` …
+   100→## Top-Level API …
+   139→## API Documentation …
+   141→### Synchronous API (`Result`) …
    143→#### `ok`
    145→Constructs an `Ok` variant of `Result`
    146→
    147→**Signature:**
    148→
    149→```typescript
-   150→ok<T, E>(value: T): Ok<T, E> { ... }
-   151→```
-   152→
-   153→**Example:**
-   154→
-   155→```typescript
       →…
+   863→### Asynchronous API (`ResultAsync`) …
    865→#### `okAsync`
    867→Constructs an `Ok` variant of `ResultAsync`
    868→
    869→**Signature:**
    870→
    871→```typescript
-   872→okAsync<T, E>(value: T): ResultAsync<T, E>
-   873→```
-   874→
-   875→**Example:**
-   876→
-   877→```typescript
       →…
+  1519→### Utilities …
   1521→#### `fromThrowable`
   1523→Top level export of `Result.fromThrowable`.
   1524→Please find documentation at [Result.fromThrowable](#resultfromthrowable-static-class-method)
   1525→
   1526→[⬆️  Back to top](#toc)
   1527→
+  1633→### Testing …
+  1673→## A note on the Package Name …
+  1681→### License …
 src/_internals/error.ts
      3→export interface ErrorConfig {
      4→  withStackTrace: boolean
@@ -52,9 +56,6 @@ src/_internals/error.ts
     15→        value: T
     16→      }
     17→    | {
-    18→        type: string
-    19→        value: E
-    20→      }
       →…
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
@@ -94,51 +95,26 @@ src/result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
-   210→  /**
-      →…
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
 src/result.ts
     14→export namespace Result {
     15→  /**
    134→interface IResult<T, E> {
    135→  /**
-      →…
+   136→   * Used to check if a `Result` is an `OK`
+   137→   *
    140→  isOk(): this is Ok<T, E>
-   142→  /**
-      →…
    147→  isErr(): this is Err<T, E>
-   149→  /**
-      →…
    157→  map<A>(f: (t: T) => A): Result<A, E>
-   159→  /**
-      →…
    168→  mapErr<U>(f: (e: E) => U): Result<T, U>
-   185→  /**
-      →…
    195→  andTee(f: (t: T) => unknown): Result<T, E>
-   197→  /**
-      →…
    207→  orTee(f: (t: E) => unknown): Result<T, E>
-   235→  /**
-      →…
    244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
-   246→  /**
-      →…
    253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
-   255→  /**
-      →…
    260→  unwrapOr<A>(v: A): T | A
-   262→  /**
-      →…
    276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
-   278→  /**
-      →…
    290→  safeUnwrap(): Generator<Err<never, E>, T>
-   292→  /**
-      →…
    299→  _unsafeUnwrap(config?: ErrorConfig): T
-   301→  /**
-      →…
    309→  _unsafeUnwrapErr(config?: ErrorConfig): E
    312→export class Ok<T, E> implements IResult<T, E> {
    313→  constructor(readonly value: T) {}

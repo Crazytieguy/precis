@@ -2,16 +2,28 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1810 words)
+budget: 2000 (1818 words)
 
+AGENTS.md
+     1→# AGENTS.md
+     3→See @CLAUDE.md for AI coding agent instructions.
 CLAUDE.md
+     1→# CLAUDE.md
+     3→This file provides guidance to AI coding agents when working with code in this repository.
+     4→
+     5→## Project Overview …
+    10→## Development Commands …
+    14→### Testing …
+    18→### Code Quality …
+    22→## Development Process …
+    32→## Core Architecture …
     34→### Main Components
     36→- **PluginManager** (`src/pluggy/_manager.py`): Central registry that manages plugins and coordinates hook calls
     37→- **HookCaller** (`src/pluggy/_hooks.py`): Executes hook implementations with proper argument binding
     38→- **HookImpl/HookSpec** (`src/pluggy/_hooks.py`): Represent hook implementations and specifications
-    39→- **Result** (`src/pluggy/_result.py`): Handles hook call results and exception propagation
-    40→- **Multicall** (`src/pluggy/_callers.py`): Core execution engine for calling multiple hook implementations
-    41→
+      →…
+    42→### Package Structure …
+    48→## Configuration Files …
 SECURITY.md
      1→# Security
      3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
@@ -35,7 +47,6 @@ docs/conf.py
    122→            return True
    123→
    124→    logger = logging.getLogger(sphinx.util.logging.NAMESPACE)
-   125→    warn_handler = [x for x in logger.handlers if x.level == logging.WARNING]
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
@@ -112,7 +123,6 @@ src/pluggy/_hooks.py
     44→    firstresult: bool
     45→    #: Whether the hook is :ref:`historic <historic>`.
     46→    historic: bool
-    47→    #: Whether the hook :ref:`warns when implemented <warn_on_impl>`.
       →…
     56→class HookimplOpts(TypedDict):
     58→
@@ -120,7 +130,6 @@ src/pluggy/_hooks.py
     60→    wrapper: bool
     61→    #: Whether the hook implementation is an :ref:`old-style wrapper
     62→    #: <old_style_hookwrappers>`.
-    63→    hookwrapper: bool
       →…
     78→class HookspecMarker:
     85→
@@ -194,7 +203,6 @@ src/pluggy/_hooks.py
    386→        "name",
    387→        "spec",
    388→        "_hookexec",
-   389→        "_hookimpls",
    393→    def __init__ …
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
@@ -332,6 +340,8 @@ src/pluggy/_manager.py
     70→
     71→    @property
     72→    def project_name(self) -> str:
+    73→        name: str = self.metadata["name"]
+    74→        return name
     76→    def __getattr__ …
     79→    def __dir__ …
     83→class PluginManager:
@@ -340,7 +350,6 @@ src/pluggy/_manager.py
    101→        #: The project name.
    102→        self.project_name: Final = project_name
    103→        self._name2plugin: Final[dict[str, _Plugin]] = {}
-   104→        self._plugin_distinfo: Final[list[tuple[_Plugin, DistFacade]]] = []
    114→    def _hookexec(
    115→        self,
    116→        hook_name: str,
@@ -423,7 +432,7 @@ src/pluggy/_tracing.py
     19→        self._writer: _Writer | None = None
     20→        self.indent = 0
     21→
-    22→    def get(self, name: str) -> TagTracerSub:
+    22→    def get …
     25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
     42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
     48→    def setwriter …
@@ -434,7 +443,6 @@ src/pluggy/_tracing.py
     62→        self.tags = tags
     63→
     64→    def __call__(self, *args: object) -> None:
-    65→        self.root._processmessage(self.tags, args)
     67→    def get …
 src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):

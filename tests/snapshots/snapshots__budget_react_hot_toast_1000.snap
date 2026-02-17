@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (990 words)
+budget: 1000 (989 words)
 
 README.md
     28→## Features
@@ -56,8 +56,7 @@ site/README.md
     12→
     13→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
     14→
-    15→You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-    16→
+      →…
     17→## Learn More
     19→To learn more about Next.js, take a look at the following resources:
     20→
@@ -74,7 +73,6 @@ site/components/code.tsx
      8→const theme: PrismTheme = {
      9→  plain: {
     10→    backgroundColor: '#351e11',
-    11→    color: '#d6ceff',
       →…
    104→export const Code: React.FC<{
    105→  snippet: string;
@@ -117,11 +115,7 @@ site/next.config.mjs
     14→/** @type {import('next').NextConfig} */
     15→const nextConfig = {
     17→  webpack(config) {
-    18→    config.module.rules.push({
-      →…
     24→  async rewrites() {
-    25→    return [
-      →…
 site/pages/_app.tsx
     12→const components = {
     13→  a: (props) => (
@@ -151,18 +145,24 @@ src/components/checkmark.tsx
     31→  secondary?: string;
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
+    35→  width: 20px;
+      →…
 src/components/error.tsx
     33→export interface ErrorTheme {
     34→  primary?: string;
     35→  secondary?: string;
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
+    39→  width: 20px;
+      →…
 src/components/loader.tsx
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
+    18→  width: 12px;
+      →…
 src/components/toast-bar.tsx
      8→const enterAnimation …
     13→const exitAnimation …
@@ -177,8 +177,12 @@ src/components/toast-bar.tsx
     55→}
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
+    76→  ({ toast, position, style, children }) => {
+      →…
 src/components/toast-icon.tsx
     32→export const AnimatedIconWrapper = styled('div')`
+    33→  position: relative;
+      →…
     41→export type IconThemes = Partial<{
     42→  success: CheckmarkTheme;
     43→  error: ErrorTheme;

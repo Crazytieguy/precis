@@ -2,9 +2,22 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (959 words)
+budget: 1000 (939 words)
 
 readme.md
+    20→## Benefits over plain `fetch`
+    22→- Simpler API
+      →…
+    33→## Install
+    35→```sh
+      →…
+    39→###### CDN
+    41→- [jsdelivr](https://cdn.jsdelivr.net/npm/ky/+esm)
+      →…
+    45→## Usage
+    47→```js
+      →…
+    85→## API
     87→### ky(input, options?)
     89→The `input` and `options` are the same as [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch), with additional `options` available (see below).
     90→
@@ -17,6 +30,19 @@ readme.md
    129→Sets `options.method` to the method name and makes a request.
    130→
       →…
+   342→###### hooks.beforeRequest
+   344→Type: `Function[]`\
+      →…
+   373→###### hooks.beforeRetry
+   375→Type: `Function[]`\
+      →…
+   446→###### hooks.beforeError
+   448→Type: `Function[]`\
+      →…
+   485→###### hooks.afterResponse
+   487→Type: `Function[]`\
+      →…
+  1050→## Tips
   1052→### Sending form data
   1054→Sending form data in Ky is identical to `fetch`. Just pass a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to the `body` option. The `Content-Type` header will be automatically set to `multipart/form-data`, overriding any existing `Content-Type` header.
   1055→
@@ -24,20 +50,40 @@ readme.md
   1158→#### Native proxy support
   1160→Node.js 24.5+ supports automatic proxy configuration via environment variables. Set `NODE_USE_ENV_PROXY=1` or use the `--use-env-proxy` CLI flag.
   1161→
+  1162→```sh
+  1163→NODE_USE_ENV_PROXY=1 HTTP_PROXY=http://proxy.example.com:8080 node app.js
+  1164→```
+  1165→
+  1166→Or:
+  1167→
+  1168→```sh
+  1169→node --use-env-proxy app.js
+  1170→```
+  1171→
+  1172→Supported environment variables:
       →…
+  1292→## FAQ
   1294→#### How do I use this in Node.js?
   1296→Node.js 18 and later supports `fetch` natively, so you can just use this package directly.
   1297→
+  1339→## Browser support
+  1341→The latest version of Chrome, Firefox, and Safari.
+      →…
+  1343→## Node.js support
+  1345→Node.js 18 and later.
+      →…
+  1347→## Related
+  1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
+      →…
+  1352→## Maintainers
+  1354→- [Sindre Sorhus](https://github.com/sindresorhus)
+      →…
 source/core/Ky.ts
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {
     35→		const ky = new Ky(input, options);
     36→
     37→		const function_ = async (): Promise<Response> => {
-    38→			if (typeof ky.#options.timeout === 'number' && ky.#options.timeout > maxSafeTimeout) {
-    39→				throw new RangeError(`The \`timeout\` option cannot be greater than ${maxSafeTimeout}`);
-    40→			}
-    41→
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
@@ -64,8 +110,6 @@ source/core/constants.ts
    163→const api = ky.extend({
    164→	hooks: {
    165→		afterResponse: [
-   166→			async (request, options, response) => {
-   167→				// Retry based on response body content
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
 source/errors/ForceRetryError.ts
@@ -174,9 +218,7 @@ source/types/options.ts
 source/utils/body.ts
     57→const withProgress …
 source/utils/delay.ts
-     5→export type DelayOptions = {
-     6→	signal?: InternalOptions['signal'];
-     7→};
+     5→export type DelayOptions …
 source/utils/merge.ts
     32→function newHookValue …
     47→const appendSearchParameters …
@@ -187,35 +229,20 @@ source/utils/normalize.ts
     14→type InternalRetryOptions …
     16→const defaultRetryOptions …
 source/utils/timeout.ts
-     3→export type TimeoutOptions = {
-     4→	timeout: number;
-     5→	fetch: typeof fetch;
-     6→};
+     3→export type TimeoutOptions …
 source/utils/type-guards.ts
      5→/**
-     6→Type guard to check if an error is a Ky error.
-     7→
       →…
     27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
     31→/**
-    32→Type guard to check if an error is an HTTPError.
-    33→
       →…
     49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
     53→/**
-    54→Type guard to check if an error is a TimeoutError.
-    55→
       →…
     71→export function isTimeoutError(error: unknown): error is TimeoutError {
     75→/**
-    76→Type guard to check if an error is a ForceRetryError.
-    77→
       →…
     98→export function isForceRetryError(error: unknown): error is ForceRetryError {
 source/utils/types.ts
-     1→export type Mutable<T> = {
-     2→	-readonly[P in keyof T]: T[P]
-     3→};
-     5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
-     6→	? Array<[string, U]>
-     7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
+     1→export type Mutable …
+     5→export type ObjectEntries …

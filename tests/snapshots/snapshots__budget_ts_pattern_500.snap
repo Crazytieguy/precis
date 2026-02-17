@@ -2,9 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (491 words)
+budget: 500 (494 words)
 
 README.md
+    91→# Documentation
+    93→- [Sandbox examples](#sandbox-examples)
+    94→- [Getting Started](#getting-started)
+    95→- [API Reference](#api-reference)
+    96→  - [`match`](#match)
+    97→  - [`.with`](#with)
+    98→  - [`.when`](#when)
+    99→  - [`.returnType`](#returntype)
+      →…
    417→### `match`
    419→```ts
    420→match(value);
@@ -15,7 +24,6 @@ README.md
    859→The `P._` pattern will match any value. You can also use `P.any`, which is an alias to `P._`.
    860→
    861→```ts
-   862→import { match, P } from 'ts-pattern';
       →…
   1623→### `P.infer`
   1625→`P.infer<typeof somePattern>` lets you infer a type of value from a type of pattern.
@@ -24,14 +32,22 @@ README.md
   1628→
       →…
 docs/v3-to-v4-migration-guide.md
+     1→# TS-Pattern v3 to v4 Migration Guide …
      3→## Breaking changes …
-     5→### Imports …
+     5→### Imports
+     7→type-specific wildcard patterns have moved from `__.<pattern>` to a new `Pattern` qualified module, also exported as `P` by ts-pattern.
+     8→
+     9→```diff
+      →…
    128→#### `P.array(pattern)` …
    159→#### `P.optional(pattern)` …
    298→#### `P.infer<typeof pattern>` …
    336→#### `P.symbol` …
 docs/v4-to-v5-migration-guide.md
+     1→# TS-Pattern v4 to v5 Migration Guide …
+     5→# Breaking changes …
      7→## TypeScript v5 …
+    63→# New features …
     65→## chainable methods …
 src/errors.ts
      1→/**
@@ -64,22 +80,12 @@ src/internals/symbols.ts
       →…
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
 src/is-matching.ts
-     6→/**
-     7→ * This constraint allows using additional properties
-      →…
-    11→type PatternConstraint<T> = T extends readonly any[]
-    12→  ? P.Pattern<T>
-    13→  : T extends object
-    14→  ? P.Pattern<T> & UnknownProperties
-    15→  : P.Pattern<T>;
+    11→type PatternConstraint …
 src/match.ts
     32→export function match …
     47→class MatchExpression<input, output> {
     48→  constructor(private input: input, private state: MatchState<output>) {}
     49→
-    50→  with(...args: any[]): MatchExpression<input, output> {
-    51→    if (this.state.matched) return this;
-    52→
 src/patterns.ts
    187→export function optional …
    536→export function intersection …
@@ -94,11 +100,7 @@ src/types/InvertPattern.ts
    303→export type InvertPatternForExclude …
 src/types/Match.ts
     10→interface NonExhaustiveError<i> {
-    11→  __nonExhaustive: never;
-    12→}
     14→interface TSPatternError<i> {
-    15→  __nonExhaustive: never;
-    16→}
     22→export type Match …
    132→  with …
    245→type DeepExcludeAll …
@@ -106,7 +108,6 @@ src/types/Match.ts
 src/types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
-    45→ * protocol. It must define a `symbols.matcher` property
       →…
     50→export interface Matcher<
     51→  input,

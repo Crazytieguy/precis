@@ -2,59 +2,115 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (970 words)
+budget: 1000 (968 words)
 
+CHANGELOG.md
+     1→# Changelog
+     3→All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+     4→
+     7→## [17.3.1](https://github.com/motdotla/dotenv/compare/v17.3.0...v17.3.1) (2026-02-12) …
+   484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02)
 CONTRIBUTING.md
-     1→# Contributing …
+     1→# Contributing
+     3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
+     4→2. Install dependencies (`npm install`)
+      →…
     11→## Testing …
     19→## Code Style …
 README-es.md
-   607→##### path
-   609→Default: `path.resolve(process.cwd(), '.env')`
-   610→
-      →…
-   707→##### debug
-   709→Default: `false`
-   710→
-      →…
-   750→##### Debug
-   752→Default: `false`
-   753→
-      →…
+     1→# dotenv …
+   331→### Inicio rápido …
+   587→### Config …
+   607→##### path …
+   692→### Parse …
+   707→##### debug …
+   721→### Populate …
+   750→##### Debug …
 README.md
      1→# dotenv
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
      6→
-      →…
+     7→[Watch the tutorial](https://www.youtube.com/watch?v=YtkZR0NFd1g)
+     8→
+     9→&nbsp;
+    10→
     11→## Usage
     13→Install it.
     14→
+    15→```sh
+    16→npm install dotenv --save
+    17→```
+    18→
+    19→Create a `.env` file in the root of your project:
+    20→
+    21→```ini
+    22→# .env
+    23→S3_BUCKET="YOURS3BUCKET"
+    24→SECRET_KEY="YOURSECRETKEYGOESHERE"
       →…
     39→## Advanced
     43→Import with [ES6](#how-do-i-use-dotenv-with-import):
     44→
+    45→```javascript
+    46→import 'dotenv/config'
+    47→```
+    48→
+    49→ES6 import if you need to set config options:
+    50→
+    51→```javascript
+    52→import dotenv from 'dotenv'
+    53→dotenv.config({ path: '/custom/path/to/.env' })
+    54→```
       →…
    319→## Agents
    323→> Software is changing, and dotenv must change with it—that is why I built [agentic secret storage (AS2)](https://dotenvx.com/as2). Agents run code without humans at terminals, so plaintext `.env` files are the wrong primitive.
    324→>
-      →…
+   325→> AS2 is built for autonomous software: encrypted by default, zero console access, and cryptography‑first delivery that keeps operators out of the loop.
+   326→>
+   327→> It is backed by [Vestauth](https://github.com/vestauth/vestauth), the trusted, pioneering auth layer for agents—giving each agent a cryptographic identity so requests are signed with private keys and verified with public keys. No shared secrets to leak.
+   328→>
+   329→> It's what I'm using now. - [motdotla](https://mot.la)
+   330→
    331→### Quickstart
    333→Install vestauth and initialize your agent.
    334→
+   335→```bash
+   336→npm i -g vestauth
+   337→
+   338→vestauth agent init
+   339→```
       →…
    357→## FAQ
    361→No.
    362→
+   363→Unless you encrypt it with [dotenvx](https://github.com/dotenvx/dotenvx). Then we recommend you do.
+   364→
+   365→</details>
+   366→<details><summary>What about variable expansion?</summary><br/>
+   367→
+   368→Use [dotenvx](https://github.com/dotenvx/dotenvx).
+   369→
+   370→</details>
+   371→<details><summary>Should I have multiple `.env` files?</summary><br/>
+   372→
       →…
    579→## Docs
    581→Dotenv exposes four functions:
    582→
-      →…
+   583→* `config`
+   584→* `parse`
+   585→* `populate`
+   586→
    587→### Config
    589→`config` will read your `.env` file, parse the contents, assign it to
    590→[`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env),
+   591→and return an Object with a `parsed` key containing the loaded content or an `error` key if it failed.
+   592→
+   593→```js
+   594→const result = dotenv.config()
+   595→
       →…
-   605→#### Options
+   605→#### Options …
    607→##### path
    609→Default: `path.resolve(process.cwd(), '.env')`
    610→
@@ -64,14 +120,7 @@ README.md
    614→require('dotenv').config({ path: '/custom/path/to/.env' })
    615→```
    616→
-   617→By default, `config` will look for a file called .env in the current working directory.
-   618→
-   619→Pass in multiple files as an array, and they will be parsed in order and combined with `process.env` (or `option.processEnv`, if set). The first value set for a variable will win, unless the `options.override` flag is set, in which case the last value set will win.  If a value already exists in `process.env` and the `options.override` flag is NOT set, no changes will be made to that value. 
-   620→
-   621→```js  
-   622→require('dotenv').config({ path: ['.env.local', '.env'] })
-   623→```
-   624→
+      →…
    625→##### quiet
    627→Default: `false`
    628→
@@ -95,8 +144,13 @@ README.md
    692→### Parse
    694→The engine which parses the contents of your file containing environment
    695→variables is available to use. It accepts a String or Buffer and will return
+   696→an Object with the parsed keys and values.
+   697→
+   698→```js
+   699→const dotenv = require('dotenv')
+   700→const buf = Buffer.from('BASIC=basic')
       →…
-   705→#### Options
+   705→#### Options …
    707→##### debug
    709→Default: `false`
    710→
@@ -106,15 +160,17 @@ README.md
    714→const dotenv = require('dotenv')
    715→const buf = Buffer.from('hello world')
    716→const opt = { debug: true }
-   717→const config = dotenv.parse(buf, opt)
-   718→// expect a debug message because the buffer is not in KEY=VAL form
-   719→```
-   720→
+      →…
    721→### Populate
    723→The engine which populates the contents of your .env file to `process.env` is available for use. It accepts a target, a source, and options. This is useful for power users who want to supply their own objects.
    724→
+   725→For example, customizing the source:
+   726→
+   727→```js
+   728→const dotenv = require('dotenv')
+   729→const parsed = { HELLO: 'world' }
       →…
-   748→#### options
+   748→#### options …
    750→##### Debug
    752→Default: `false`
    753→
@@ -127,11 +183,12 @@ README.md
    764→## CHANGELOG
    766→See [CHANGELOG.md](CHANGELOG.md)
    767→
-      →…
+   768→&nbsp;
+   769→
    770→## Who's using dotenv?
    772→[These npm modules depend on it.](https://www.npmjs.com/browse/depended/dotenv)
    773→
-      →…
+   774→Projects that expand it often use the [keyword "dotenv" on npm](https://www.npmjs.com/search?q=keywords:dotenv).
 lib/cli-options.js
      1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
 lib/env-options.js
@@ -156,35 +213,6 @@ lib/main.d.ts
     35→  path?: string | string[] | URL;
     36→
     37→  /**
-    38→   * Default: `utf8`
-    39→   *
-    40→   * Specify the encoding of your file containing environment variables.
-    41→   *
-    42→   * example: `require('dotenv').config({ encoding: 'latin1' })`
-    43→   */
-    44→  encoding?: string;
-    45→
-    46→  /**
-    47→   * Default: `false`
-    48→   *
-    49→   * Suppress all output (except errors).
-    50→   *
-    51→   * example: `require('dotenv').config({ quiet: true })`
-    52→   */
-    53→  quiet?: boolean;
-    54→
-    55→  /**
-    56→   * Default: `false`
-    57→   *
-    58→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
-    59→   *
-    60→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
-    61→   */
-    62→  debug?: boolean;
-    63→
-    64→  /**
-    65→   * Default: `false`
-    66→   *
       →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
@@ -211,12 +239,7 @@ lib/main.d.ts
    116→  /**
    117→   * Default: `false`
    118→   *
-   119→   * Override any environment variables that have already been set on your machine with values from your .env file.
-   120→   *
-   121→   * example: `require('dotenv').config({ override: true })`
-   122→   */
-   123→  override?: boolean;
-   124→}
+      →…
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;
    128→}
@@ -224,9 +247,6 @@ lib/main.js
      7→const version = packageJson.version
     10→const TIPS = [
     11→  '🔐 encrypt with Dotenvx: https://dotenvx.com',
-    12→  '🔐 prevent committing .env to code: https://dotenvx.com/precommit',
-    13→  '🔐 prevent building .env in docker: https://dotenvx.com/prebuild',
-    14→  '🤖 agentic secret storage: https://dotenvx.com/as2',
       →…
     27→function _getRandomTip () {
     31→function parseBoolean (value) {
@@ -249,7 +269,4 @@ lib/main.js
    378→function populate (processEnv, parsed, options = {}) {
    413→const DotenvModule = {
    414→  configDotenv,
-   415→  _configVault,
-   416→  _parseVault,
-   417→  config,
       →…

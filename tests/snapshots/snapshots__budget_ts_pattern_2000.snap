@@ -2,9 +2,53 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1971 words)
+budget: 2000 (1975 words)
 
 README.md
+    40→## About …
+    48→## Features …
+    59→## What is Pattern Matching? …
+    67→## Installation …
+    87→## Want to become a TypeScript Expert? …
+    91→# Documentation
+    93→- [Sandbox examples](#sandbox-examples)
+    94→- [Getting Started](#getting-started)
+    95→- [API Reference](#api-reference)
+    96→  - [`match`](#match)
+    97→  - [`.with`](#with)
+    98→  - [`.when`](#when)
+    99→  - [`.returnType`](#returntype)
+   100→  - [`.exhaustive`](#exhaustive)
+   101→  - [`.otherwise`](#otherwise)
+   102→  - [`.narrow`](#narrow)
+   103→  - [`isMatching`](#ismatching)
+   104→  - [Patterns](#patterns)
+   105→    - [Literals](#literals)
+   106→    - [Wildcards](#wildcards)
+   107→    - [Objects](#objects)
+   108→    - [Tuples (arrays)](#tuples-arrays)
+   109→    - [`P.array` patterns](#parray-patterns)
+   110→    - [`P.record` patterns](#precord-patterns)
+   111→    - [`P.set`](#pset-patterns)
+   112→    - [`P.map`](#pmap-patterns)
+   113→    - [`P.when` patterns](#pwhen-patterns)
+   114→    - [`P.not` patterns](#pnot-patterns)
+   115→    - [`P.select` patterns](#pselect-patterns)
+   116→    - [`P.optional` patterns](#poptional-patterns)
+   117→    - [`P.instanceOf` patterns](#pinstanceof-patterns)
+   118→    - [`P.union` patterns](#punion-patterns)
+   119→    - [`P.intersection` patterns](#pintersection-patterns)
+   120→    - [`P.string` predicates](#pstring-predicates)
+   121→    - [`P.number` and `P.bigint` predicates](#pnumber-and-pbigint-predicates)
+   122→  - [Types](#types)
+   123→    - [`P.infer`](#pinfer)
+   124→    - [`P.Pattern`](#pPattern)
+   125→    - [Type inference](#type-inference)
+   126→- [Inspirations](#inspirations)
+   127→
+   128→## Sandbox examples …
+   139→## Getting Started …
+   415→## API Reference …
    417→### `match`
    419→```ts
    420→match(value);
@@ -12,6 +56,7 @@ README.md
    422→
    423→Create a `Match` object on which you can later call `.with`, `.when`, `.otherwise` and `.run`.
    424→
+   742→## Patterns …
    857→#### `P._` wildcard
    859→The `P._` pattern will match any value. You can also use `P.any`, which is an alias to `P._`.
    860→
@@ -30,6 +75,9 @@ README.md
    873→// => 'It will always match'
    874→```
    875→
+  1405→## `P.string` predicates …
+  1500→## `P.number` and `P.bigint` predicates …
+  1621→## Types …
   1623→### `P.infer`
   1625→`P.infer<typeof somePattern>` lets you infer a type of value from a type of pattern.
   1626→
@@ -57,9 +105,12 @@ README.md
   1648→  );
   1649→```
   1650→
-  1651→Although not strictly necessary, using `as const` after the pattern definition ensures that TS-Pattern infers the most precise types possible.
-  1652→
+      →…
+  1766→## Inspirations …
+docs/roadmap.md
+     1→### Roadmap …
 docs/v3-to-v4-migration-guide.md
+     1→# TS-Pattern v3 to v4 Migration Guide
      3→## Breaking changes
      5→### Imports
      7→type-specific wildcard patterns have moved from `__.<pattern>` to a new `Pattern` qualified module, also exported as `P` by ts-pattern.
@@ -74,67 +125,58 @@ docs/v3-to-v4-migration-guide.md
     16→-   .with(__.string, (v) => v)
     17→-   .with(__.number, (v) => `${v}`)
     18→+   .with(Pattern.string, (v) => v)
+    19→+   .with(Pattern.number, (v) => `${v}`)
+    20→    .exhaustive();
+    21→```
+    22→
+    23→or
+    24→
+    25→```diff
+    26→- import { match, __ } from 'ts-pattern';
+    27→+ import { match, P } from 'ts-pattern';
+    28→
+    29→
       →…
-   128→#### `P.array(pattern)`
-   130→To match an array of elements, you can now use `P.array`:
-   131→
-   132→```ts
-   133→import { match, P } from 'ts-pattern';
-   134→
-   135→const responsePattern = {
-   136→  data: P.array({
-   137→    id: P.string,
-   138→    post: P.array({
-   139→      title: P.string,
-   140→      content: P.string,
-   141→    }),
-      →…
-   159→#### `P.optional(pattern)`
-   161→If you want one of the keys of your pattern to be optional, you can now use `P.optional(subpattern)`.
-   162→
-   163→If you `P.select()` something in an optional pattern, it's type will be infered as `T | undefined`.
-   164→
-   165→```ts
-   166→import { match, P } from 'ts-pattern';
-   167→
-   168→const doSomethingWithUser = (user: User | Org) =>
-   169→  match(user)
-   170→    .with(
-   171→      {
-   172→        type: 'user',
-      →…
-   298→#### `P.infer<typeof pattern>`
-   300→TS-Pattern is pretty handy for parsing unknown payloads like HTTP responses. You can write a pattern for the shape you are expecting, and then use `isMatching(pattern, response)` to make sure the response has the correct shape.
-   301→
-   302→One limitation TS-Pattern had in its previous version was that it did not provide a way to get the TypeScript type of the value a given pattern matches. This is what `P.infer<typeof pattern>` does :)
-   303→
-   304→```ts
-   305→const postPattern = {
-   306→  title: P.string,
-   307→  description: P.optional(P.string),
-   308→  content: P.string,
-   309→  likeCount: P.number,
-   310→};
-   311→
-      →…
-   336→#### `P.symbol`
-   338→`P.symbol` is a wildcard pattern matching any **symbol**.
-   339→
-   340→```ts
-   341→match(Symbol('Hello'))
-   342→  .with(P.symbol, () => 'this is a symbol!')
-   343→  .exhaustive();
-   344→```
-   345→
+    39→#### `__` …
+    57→#### `select()`, `not()`, `when()` …
+    79→#### `Pattern` type …
+    91→### list patterns …
+   111→### NaN …
+   122→## New features …
+   126→### Arrays and unary tuples …
+   128→#### `P.array(pattern)` …
+   157→### Optional object properties …
+   159→#### `P.optional(pattern)` …
+   197→### Union & intersection patterns …
+   201→#### `P.union(...patterns)` …
+   234→#### `P.intersection(...patterns)` …
+   265→### Select with sub pattern …
+   296→### Infer the matching types from a pattern …
+   298→#### `P.infer<typeof pattern>` …
+   334→### New type specific wildcards …
+   336→#### `P.symbol` …
+   346→#### `P.bigint` …
 docs/v4-to-v5-migration-guide.md
+     1→# TS-Pattern v4 to v5 Migration Guide
+     3→This file contains all breaking changes and new features between the version 4 and 5 of TS-Pattern.
+     4→
+     5→# Breaking changes
      7→## TypeScript v5
      9→Because it relies on [const type parameters](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#const-type-parameters), TS-Pattern v5 requires TypeScript v5+!
     10→
+    11→## `.with` is now evaluated eagerly …
+    42→## Matching on Map and Sets …
+    63→# New features
     65→## chainable methods
     67→TS-Pattern v5's major addition is the ability to chain methods to narrow down the values matched by primitive patterns, like `P.string` or `P.number`.
     68→
     69→Since a few examples is worth a thousand words, here are a few ways you can use chainable methods:
     70→
+    71→### P.number methods …
+   100→### P.string methods …
+   122→### Global methods …
+   156→## Variadic tuple patterns …
+   214→## `.returnType` …
 src/errors.ts
      1→/**
      2→ * Error when the given input value does not match any included pattern
@@ -392,26 +434,7 @@ src/types/Match.ts
     15→  __nonExhaustive: never;
     16→}
     22→export type Match …
-   132→  with<
-   133→    const pat extends Pattern<i>,
-   134→    pred extends (value: MatchedValue<i, InvertPattern<pat, i>>) => unknown,
-   135→    c,
-   136→    value extends GuardValue<pred>
-   137→  >(
-   138→    pattern: pat,
-   139→    predicate: pred,
-   140→    handler: (
-   141→      selections: FindSelected<value, pat>,
-   142→      value: value
-   143→    ) => PickReturnValue<o, c>
-   144→  ): pred extends (value: any) => value is infer narrowed
-   145→    ? Match<
-   146→        Exclude<i, narrowed>,
-   147→        o,
-   148→        [...handledCases, narrowed],
-   149→        Union<inferredOutput, c>
-   150→      >
-   151→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
+   132→  with …
    159→  when …
    180→  otherwise …
    205→  run …
@@ -453,9 +476,7 @@ src/types/Pattern.ts
    223→      optional …
    237→      and …
    253→      or …
-   269→      select<input, k extends string>(
-   270→        key: k
-   271→      ): Chainable<SelectP<k, input, p>, omitted | 'select' | 'or' | 'and'>;
+   269→      select …
    291→      startsWith …
    306→      endsWith …
    321→      minLength …
@@ -480,9 +501,7 @@ src/types/Pattern.ts
    622→      positive …
    635→      negative …
    661→      optional …
-   678→      select<input, k extends string>(
-   679→        key: k
-   680→      ): ArrayChainable<SelectP<k, input, pattern>, omitted | 'select'>;
+   678→      select …
 src/types/helpers.ts
     14→export type LeastUpperBound …
    182→export type GuardValue …

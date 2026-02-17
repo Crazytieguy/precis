@@ -2,8 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1887 words)
+budget: 2000 (1849 words)
 
+Changelog.md
+     1→# Changelog
+     3→This document maintains a list of major changes to Superstruct with each new release.
+     4→
 Readme.md
     42→### Usage …
    145→### Why? …
@@ -101,16 +105,11 @@ docs/readme.md
     30→}
     31→
     32→assert(data, Article)
-    33→// This will throw an error when the data is invalid.
-    34→// If you'd rather not throw, you can use `is()` or `validate()`.
-    35→```
-    36→
-    37→Superstruct ships with validators for all the common JavaScript data types, and you can define custom ones too:
-    38→
-    39→```js
-    40→import { is, define, object, string } from 'superstruct'
       →…
+docs/reference/coercions.md
+     1→# Coercions …
 docs/reference/core.md
+     1→# Core …
      3→### `assert`
      5→`assert<T>(value: unknown, struct: Struct<T>, message?: string) => asserts value is T`
      6→
@@ -118,11 +117,16 @@ docs/reference/core.md
      8→assert(value, User, 'The user is invalid!')
      9→```
     10→
-    11→Assert that `value` is valid according to a `struct`. If the value is invalid a [`StructError`](./errors.md#structerror) will be thrown (the optional `message` parameter allows you to override error's message).
-    12→
-    13→> 🤖 When using TypeScript `assert` acts as an [assertion function](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#assertion-functions), so you can ensure that after calling it the type of the `value` matches the shape of the struct.
-    14→
+      →…
+docs/reference/errors.md
+     1→# Errors …
+docs/reference/refinements.md
+     1→# Refinements …
+docs/reference/types.md
+     1→# Types …
 docs/reference/typescript.md
+     1→# TypeScript …
+     5→## Utilities …
      7→### `Describe`
      9→The `Describe` utility returns a type representing a struct for a given valid value type. This allows you to ensure you're writing your struct definitions properly, for example:
     10→
@@ -130,22 +134,22 @@ docs/reference/typescript.md
     12→type User = {
     13→  id: number
     14→  name: string
-    15→}
-    16→
-    17→const User: Describe<User> = object({
-    18→  id: string(), // This mistake will fail to pass type checking!
-    19→  name: string(),
-    20→})
-    21→```
-    22→
       →…
+docs/reference/utilities.md
+     1→# Utilities …
 docs/resources/faq.md
-     1→# FAQ …
+     1→# FAQ
+     3→Some common questions you might have when first learning Superstruct.
+     4→
      5→### How can I allow unknown keys with `object` structs? …
     11→### Why not have a built-in `json` struct? …
 docs/resources/links.md
-     1→# Resources …
-     5→## Libraries …
+     1→# Resources
+     3→A few resources that are helpful for building with Superstruct.
+     4→
+     5→## Libraries
+     7→- [`bumpover`](https://github.com/doodlewind/bumpover) helps you transform data asynchronously with simple rules, whose validation API is built with Superstruct.
+     8→- [micro-superstruct](https://github.com/brandon93s/micro-superstruct) allows you to easily validate your [Micro](https://github.com/zeit/micro) API request body and query string parameters using Superstruct.
 docs/summary.md
      3→## Guides
      5→- [Getting Started](./guides/01-getting-started.md)

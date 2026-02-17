@@ -2,14 +2,71 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3822 words)
+budget: 4000 (3834 words)
 
 readme.md
-    20→## Benefits over plain `fetch` …
-    33→## Install …
-    39→###### CDN …
-    45→## Usage …
-    85→## API …
+    20→## Benefits over plain `fetch`
+    22→- Simpler API
+    23→- Method shortcuts (`ky.post()`)
+    24→- Treats non-2xx status codes as errors (after redirects)
+    25→- Retries failed requests
+    26→- JSON option
+    27→- Timeout support
+    28→- URL prefix option
+    29→- Instances with custom defaults
+    30→- Hooks
+    31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
+    32→
+    33→## Install
+    35→```sh
+    36→npm install ky
+    37→```
+    38→
+    39→###### CDN
+    41→- [jsdelivr](https://cdn.jsdelivr.net/npm/ky/+esm)
+    42→- [unpkg](https://unpkg.com/ky)
+    43→- [esm.sh](https://esm.sh/ky)
+      →…
+    45→## Usage
+    47→```js
+    48→import ky from 'ky';
+    49→
+    50→const json = await ky.post('https://example.com', {json: {foo: true}}).json();
+    51→
+    52→console.log(json);
+    53→//=> {data: '🦄'}
+    54→```
+    55→
+    56→With plain `fetch`, it would be:
+    57→
+    58→```js
+    59→class HTTPError extends Error {}
+    60→
+    61→const response = await fetch('https://example.com', {
+    62→	method: 'POST',
+    63→	body: JSON.stringify({foo: true}),
+    64→	headers: {
+    65→		'content-type': 'application/json'
+    66→	}
+    67→});
+    68→
+    69→if (!response.ok) {
+    70→	throw new HTTPError(`Fetch error: ${response.statusText}`);
+    71→}
+    72→
+    73→const json = await response.json();
+    74→
+    75→console.log(json);
+    76→//=> {data: '🦄'}
+    77→```
+    78→
+    79→If you are using [Deno](https://github.com/denoland/deno), import Ky from a URL. For example, using a CDN:
+    80→
+    81→```js
+    82→import ky from 'https://esm.sh/ky';
+    83→```
+    84→
+    85→## API
     87→### ky(input, options?)
     89→The `input` and `options` are the same as [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch), with additional `options` available (see below).
     90→
@@ -63,10 +120,26 @@ readme.md
    197→##### retry …
    327→##### timeout …
    335→##### hooks …
-   342→###### hooks.beforeRequest …
-   373→###### hooks.beforeRetry …
-   446→###### hooks.beforeError …
-   485→###### hooks.afterResponse …
+   342→###### hooks.beforeRequest
+   344→Type: `Function[]`\
+   345→Default: `[]`
+   346→
+      →…
+   373→###### hooks.beforeRetry
+   375→Type: `Function[]`\
+   376→Default: `[]`
+   377→
+      →…
+   446→###### hooks.beforeError
+   448→Type: `Function[]`\
+   449→Default: `[]`
+   450→
+      →…
+   485→###### hooks.afterResponse
+   487→Type: `Function[]`\
+   488→Default: `[]`
+   489→
+      →…
    553→##### throwHttpErrors …
    566→##### onDownloadProgress …
    592→##### onUploadProgress …
@@ -87,7 +160,7 @@ readme.md
    923→#### Example …
   1000→### HTTPError …
   1046→### TimeoutError …
-  1050→## Tips …
+  1050→## Tips
   1052→### Sending form data
   1054→Sending form data in Ky is identical to `fetch`. Just pass a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to the `body` option. The `Content-Type` header will be automatically set to `multipart/form-data`, overriding any existing `Content-Type` header.
   1055→
@@ -141,7 +214,7 @@ readme.md
   1209→### HTTP/2 support (Node.js) …
   1249→### Consuming Server-Sent Events (SSE) …
   1264→### Extending types …
-  1292→## FAQ …
+  1292→## FAQ
   1294→#### How do I use this in Node.js?
   1296→Node.js 18 and later supports `fetch` natively, so you can just use this package directly.
   1297→
@@ -152,10 +225,20 @@ readme.md
   1325→#### How is it different from [`axios`](https://github.com/axios/axios)? …
   1329→#### How is it different from [`r2`](https://github.com/mikeal/r2)? …
   1333→#### What does `ky` mean? …
-  1339→## Browser support …
-  1343→## Node.js support …
-  1347→## Related …
-  1352→## Maintainers …
+  1339→## Browser support
+  1341→The latest version of Chrome, Firefox, and Safari.
+  1342→
+  1343→## Node.js support
+  1345→Node.js 18 and later.
+  1346→
+  1347→## Related
+  1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
+  1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
+  1351→
+  1352→## Maintainers
+  1354→- [Sindre Sorhus](https://github.com/sindresorhus)
+  1355→- [Seth Holladay](https://github.com/sholladay)
+  1356→- [Szymon Marczak](https://github.com/szmarczak)
 source/core/Ky.ts
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {
@@ -193,46 +276,6 @@ source/core/Ky.ts
     66→				}
     67→
     68→				if (modifiedResponse instanceof RetryMarker) {
-    69→					// Cancel both the cloned response passed to the hook and the current response to prevent resource leaks (especially important in Deno/Bun).
-    70→					// Do not await cancellation since hooks can clone the response, leaving extra tee branches that keep cancel promises pending per the Streams spec.
-    71→					ky.#cancelResponseBody(clonedResponse);
-    72→					ky.#cancelResponseBody(response);
-    73→					throw new ForceRetryError(modifiedResponse.options);
-    74→				}
-    75→
-    76→				// Determine which response to use going forward
-    77→				const nextResponse = modifiedResponse instanceof globalThis.Response ? modifiedResponse : response;
-    78→
-    79→				// Cancel any response bodies we won't use to prevent memory leaks.
-    80→				// Uses fire-and-forget since hooks may have cloned the response, creating tee branches that block cancellation.
-    81→				if (clonedResponse !== nextResponse) {
-    82→					ky.#cancelResponseBody(clonedResponse);
-    83→				}
-    84→
-    85→				if (response !== nextResponse) {
-    86→					ky.#cancelResponseBody(response);
-    87→				}
-    88→
-    89→				response = nextResponse;
-    90→			}
-    91→
-    92→			ky.#decorateResponse(response);
-    93→
-    94→			if (!response.ok && (
-    95→				typeof ky.#options.throwHttpErrors === 'function'
-    96→					? ky.#options.throwHttpErrors(response.status)
-    97→					: ky.#options.throwHttpErrors
-    98→			)) {
-    99→				let error = new HTTPError(response, ky.request, ky.#getNormalizedOptions());
-   100→
-   101→				for (const hook of ky.#options.hooks.beforeError) {
-   102→					// eslint-disable-next-line no-await-in-loop
-   103→					error = await hook(error, {retryCount: ky.#retryCount});
-   104→				}
-   105→
-   106→				throw error;
-   107→			}
-   108→
    178→	static #normalizeSearchParams(searchParams: SearchParamsOption): SearchParamsOption {
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
@@ -557,9 +600,6 @@ source/index.ts
     13→
     14→	for (const method of requestMethods) {
     15→		// eslint-disable-next-line @typescript-eslint/promise-function-async
-    16→		ky[method] = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options, {method}));
-    17→	}
-    18→
       →…
     34→const ky = createInstance();
 source/types/ResponsePromise.ts

@@ -2,8 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (951 words)
+budget: 1000 (976 words)
 
+Changelog.md
+     1→# Changelog …
 Readme.md
     42→### Usage …
    145→### Why? …
@@ -13,6 +15,7 @@ Readme.md
    205→### Documentation …
    231→### License …
 docs/guides/01-getting-started.md
+     1→# Getting Started …
      3→## Installing Superstruct
      5→To install Superstruct run:
      6→
@@ -42,14 +45,17 @@ docs/guides/01-getting-started.md
     30→})
     31→```
     32→
-    33→If you'd rather use a `<script>` tag, you can use the UMD build:
-    34→
-    35→```html
-    36→<script src="https://unpkg.com/superstruct/lib/index.cjs"></script>
-    37→```
-    38→
-    39→This will expose the `Superstruct` global.
-    40→
+      →…
+docs/guides/02-validating-data.md
+     1→# Validating Data …
+docs/guides/03-coercing-data.md
+     1→# Coercing Data …
+docs/guides/04-refining-validation.md
+     1→# Refining Validation …
+docs/guides/05-handling-errors.md
+     1→# Handling Errors …
+docs/guides/06-using-typescript.md
+     1→# Using TypeScript …
 docs/readme.md
      7→### Usage
      9→Superstruct allows you to define the shape of data you want to validate:
@@ -66,18 +72,11 @@ docs/readme.md
     20→  }),
     21→})
     22→
-    23→const data = {
-    24→  id: 34,
-    25→  title: 'Hello World',
-    26→  tags: ['news', 'features'],
-    27→  author: {
-    28→    id: 1,
-    29→  },
-    30→}
-    31→
-    32→assert(data, Article)
       →…
+docs/reference/coercions.md
+     1→# Coercions …
 docs/reference/core.md
+     1→# Core …
      3→### `assert`
      5→`assert<T>(value: unknown, struct: Struct<T>, message?: string) => asserts value is T`
      6→
@@ -86,7 +85,15 @@ docs/reference/core.md
      9→```
     10→
       →…
+docs/reference/errors.md
+     1→# Errors …
+docs/reference/refinements.md
+     1→# Refinements …
+docs/reference/types.md
+     1→# Types …
 docs/reference/typescript.md
+     1→# TypeScript …
+     5→## Utilities …
      7→### `Describe`
      9→The `Describe` utility returns a type representing a struct for a given valid value type. This allows you to ensure you're writing your struct definitions properly, for example:
     10→
@@ -95,13 +102,21 @@ docs/reference/typescript.md
     13→  id: number
     14→  name: string
       →…
+docs/reference/utilities.md
+     1→# Utilities …
 docs/resources/faq.md
-     1→# FAQ …
+     1→# FAQ
+     3→Some common questions you might have when first learning Superstruct.
+     4→
      5→### How can I allow unknown keys with `object` structs? …
     11→### Why not have a built-in `json` struct? …
 docs/resources/links.md
-     1→# Resources …
-     5→## Libraries …
+     1→# Resources
+     3→A few resources that are helpful for building with Superstruct.
+     4→
+     5→## Libraries
+     7→- [`bumpover`](https://github.com/doodlewind/bumpover) helps you transform data asynchronously with simple rules, whose validation API is built with Superstruct.
+      →…
 docs/summary.md
      3→## Guides
      5→- [Getting Started](./guides/01-getting-started.md)
@@ -137,9 +152,6 @@ src/error.ts
     34→
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
     36→    let cached: Array<Failure> | undefined
-    37→    const { message, explanation, ...rest } = failure
-    38→    const { path } = failure
-    39→    const msg =
       →…
 src/struct.ts
     10→export class Struct<T = unknown, S = unknown> {
@@ -156,7 +168,7 @@ src/struct.ts
     21→
     22→  constructor(props: {
     23→    type: string
-    24→    schema: S
+      →…
     63→  /**
       →…
     67→  assert(value: unknown, message?: string): asserts value is T {

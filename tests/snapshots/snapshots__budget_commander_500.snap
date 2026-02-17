@@ -2,48 +2,75 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (493 words)
+budget: 500 (490 words)
 
+CHANGELOG.md
+     1→# Changelog …
 CONTRIBUTING.md
      3→## Issues …
+    13→## Pull Requests …
 Readme.md
+     1→# Commander.js
+     8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
+     9→
+    10→Read this in other languages: English | [简体中文](./Readme_zh-CN.md)
+    11→
+    12→- [Commander.js](#commanderjs)
+    13→  - [Installation](#installation)
+    14→  - [Quick Start](#quick-start)
+    15→  - [Declaring _program_ variable](#declaring-program-variable)
+    16→  - [Options](#options)
+      →…
+    61→## Installation …
+    67→## Quick Start …
+   147→## Declaring _program_ variable …
+   177→## Options …
+   523→## Commands …
+   613→#### More configuration …
+   625→#### Custom argument processing …
+   754→## Automated help …
+   956→## Custom event listeners …
+   966→## Bits and pieces …
    968→### .parse() and .parseAsync()
    970→Call with no parameters to parse `process.argv`. Detects Electron and special node options like `node --eval`. Easy mode!
    971→
    972→Or, call with an array of strings to parse, and optionally where the user arguments start by specifying where the arguments are `from`:
    973→
-   974→- `'node'`: default, `argv[0]` is the application and `argv[1]` is the script being run, with user arguments after that
-   975→- `'electron'`: `argv[0]` is the application and `argv[1]` varies depending on whether the electron application is packaged
-   976→- `'user'`: just user arguments
-   977→
-   978→For example:
-   979→
-   980→```js
-   981→program.parse(); // parse process.argv and auto-detect electron and special node flags
-   982→program.parse(process.argv); // assume argv[0] is app and argv[1] is script
-   983→program.parse(['--port', '80'], { from: 'user' }); // just user supplied arguments, nothing special about argv[0]
-   984→```
-   985→
-   986→Use `.parseAsync()` instead of `.parse()` if any of your action handlers are async.
-   987→
+      →…
+  1164→## Support …
 Readme_zh-CN.md
+     1→# Commander.js
+     8→完整的 [node.js](http://nodejs.org) 命令行解决方案。
+     9→
+      →…
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
-   911→如果参数遵循与 node 不同的约定，可以在第二个参数中传递`from`选项：
-   912→
-   913→- `node`：默认值，`argv[0]`是应用，`argv[1]`是要跑的脚本，后续为用户参数；
-   914→- `electron`：`argv[1]`根据 electron 应用是否打包而变化；
       →…
 docs/deprecated.md
+     1→# Deprecated …
+   227→## Removed …
    229→### Short option flag longer than a single character
    231→Short option flags like `-ws` were never supported, but the old README did not make this clear. The README now states that short options are a single character.
    232→
    233→- README updated in Commander v3.
    234→- Deprecated from Commander v9.
-   235→- Throws an exception in Commander v13. Deprecated and gone!
-   236→- Replacement added in Commander v13.1 with support for dual long options, like `--ws, --workspace`.
-   237→
+      →…
+docs/help-in-depth.md
+     1→# Help in Depth …
+    20→## Data Properties …
+    34→## Stringify and Style …
+   118→## Layout …
+docs/options-in-depth.md
+     2→# Options in Depth …
+    15→## Options taking varying numbers of option-arguments …
+   148→## Combining short options, and options taking arguments …
+docs/parsing-and-hooks.md
+     1→# Parsing life cycle and hooks …
+docs/release-policy.md
+     1→# Release Policy …
+docs/terminology.md
+     1→# Terminology …
 lib/argument.js
      3→class Argument {
      4→  /**
@@ -54,10 +81,8 @@ lib/command.js
 lib/error.js
      4→class CommanderError extends Error {
      5→  /**
-     6→   * Constructs the CommanderError class
     25→class InvalidArgumentError extends CommanderError {
     26→  /**
-    27→   * Constructs the InvalidArgumentError class
 lib/help.js
     12→class Help {
     13→  constructor() {
@@ -79,14 +104,11 @@ lib/option.js
      4→  /**
    268→class DualOptions {
    269→  /**
-   270→   * @param {Option[]} options
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
 typings/index.d.ts
-    12→type LiteralUnion<LiteralType, BaseType extends string | number> =
-    13→  | LiteralType
-    14→  | (BaseType & Record<never, never>);
+    12→type LiteralUnion …
     16→export class CommanderError extends Error {
     31→export class InvalidArgumentError extends CommanderError {
     40→export interface ErrorOptions {

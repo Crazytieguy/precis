@@ -2,17 +2,62 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (984 words)
+budget: 1000 (982 words)
 
 ARCHITECTURE.md
-     1→# Architecture …
+     1→# Architecture
+     3→> Document is a work in progress!
+     4→
+     5→⌘K is born from a simple constraint: can you write a combobox with filtering and sorting using the [compound component](https://kentcdodds.com/blog/compound-components-with-react-hooks) approach? We didn't want to render items manually from an array:
+     6→
+     7→```tsx
+     8→// No
+     9→<>
+    10→  {items.map((item) => {
+    11→    return <div>{item}</div>
+    12→  })}
+    13→</>
+    14→```
+    15→
+    16→We didn't want to provide a render prop:
+    17→
+    18→```tsx
+    19→// No
+    20→onItemRender={({ item }) => {
+    21→  return <div>{item}</div>
+    22→}}
+    23→```
+    24→
+    25→Instead, we wanted to render components:
+    26→
+    27→```tsx
+    28→// Yes
+    29→<Item>My item</Item>
+    30→```
+    31→
+    32→Especially, we wanted full component composition:
+    33→
+    34→```tsx
+    35→// YES
+    36→<>
+    37→  <BlogItems />
+    38→  {staticItems}
+    39→</>
+    40→```
+    41→
+      →…
     46→## Approach …
-    50→### Discarded approach …
+    50→### Discarded approach
+    52→We did not use `React.Children` iteration because it will not support component composition. There is no way to "peek inside" the items contained within `<BlogItems />`, so those items cannot be filtered.
+    53→
+      →…
     60→## Example …
     92→## Performance …
     96→## Groups …
 README.md
-     5→# ⌘K …
+     5→# ⌘K
+     7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
+     8→
      9→## Install …
     15→## Use …
     82→## Parts and styling …
@@ -48,7 +93,6 @@ cmdk/src/command-score.ts
    150→function formatInput(string) {
    155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
    156→  /* NOTE:
-   157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
       →…
 cmdk/src/index.tsx
    161→const defaultFilter …
@@ -87,26 +131,18 @@ cmdk/src/index.tsx
    961→ */
    962→
    963→function findNextSibling(el: Element, selector: string) {
-   964→  let sibling = el.nextElementSibling
-      →…
    972→function findPreviousSibling …
    981→function useAsRef …
    993→function useLazyRef …
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
-  1005→  const store = useStore()
-      →…
   1010→function useValue …
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
-  1047→  const [s, ss] = React.useState<object>()
-      →…
   1061→function renderChildren …
   1071→function SlottableWithNestedChildren …
 playwright.config.ts
      3→const config: PlaywrightTestConfig = {
-     4→  forbidOnly: !!process.env.CI,
-      →…
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -121,8 +157,7 @@ website/README.md
     14→
     15→[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
     16→
-    17→The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-    18→
+      →…
     19→## Learn More
     21→To learn more about Next.js, take a look at the following resources:
     22→
@@ -137,33 +172,20 @@ website/README.md
     32→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 website/components/cmdk/framer.tsx
      4→export function FramerCMDK() {
-     5→  const [value, setValue] = React.useState('Button')
-      →…
 website/components/cmdk/linear.tsx
      3→export function LinearCMDK() {
-     4→  return (
-      →…
     30→const items = [
     31→  {
     32→    icon: <AssignToIcon />,
-    33→    label: 'Assign to...',
-    34→    shortcut: ['A'],
-    35→  },
-    36→  {
       →…
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
-     8→  const { resolvedTheme: theme } = useTheme()
-      →…
 website/components/cmdk/vercel.tsx
      4→export function VercelCMDK() {
-     5→  const ref = React.useRef<HTMLDivElement | null>(null)
-      →…
 website/components/code/index.tsx
      7→const theme = {
      8→  plain: {
      9→    color: 'var(--gray12)',
-    10→    fontSize: 12,
       →…
     41→export function Code({ children }: { children: string }) {
     42→  return (
@@ -176,8 +198,6 @@ website/components/code/index.tsx
     49→              copy(children)
     50→            }}
     51→          >
-    52→            <CopyIcon />
-    53→          </button>
       →…
 website/components/icons/index.tsx
      3→export function FigmaIcon() {
@@ -198,13 +218,12 @@ website/next.config.js
      4→  swcMinify: true,
      5→}
 website/pages/_app.tsx
-    13→const title = '⌘K'
-    14→const description = 'Fast, composable, unstyled command menu for React'
-    15→const siteUrl = 'https://cmdk.paco.me'
+    13→const title …
+    14→const description …
+    15→const siteUrl …
     17→export default function App({ Component, pageProps }: AppProps) {
     18→  return (
     19→    <>
-    20→      <Head>
       →…
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
@@ -223,27 +242,17 @@ website/pages/_document.tsx
     18→  }
     19→}
 website/pages/index.tsx
-    20→type TTheme = {
-    21→  theme: Themes
-    22→  setTheme: Function
-    23→}
-    25→type Themes = 'linear' | 'raycast' | 'vercel' | 'framer'
-    27→const ThemeContext = React.createContext<TTheme>({} as TTheme)
+    20→type TTheme …
+    25→type Themes …
+    27→const ThemeContext …
     29→export default function Index() {
     30→  const [theme, setTheme] = React.useState<Themes>('raycast')
     31→
-    32→  return (
       →…
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     99→//////////////////////////////////////////////////////////////////
    100→
    101→function InstallButton() {
-   102→  const [copied, setCopied] = React.useState(false)
-   103→
-   104→  return (
-   105→    <button
-   106→      className={styles.installButton}
-      →…
    123→function GitHubButton() {
    137→//////////////////////////////////////////////////////////////////
    138→
@@ -253,26 +262,14 @@ website/pages/index.tsx
    142→    key: 'raycast',
    143→  },
    144→  {
-   145→    icon: <LinearIcon />,
-   146→    key: 'linear',
-   147→  },
-   148→  {
       →…
    158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////
    261→
    262→function Codeblock() {
-   263→  const code = `import { Command } from 'cmdk';
-   264→
-   265→<Command.Dialog open={open} onOpenChange={setOpen}>
-   266→  <Command.Input />
-   267→
-      →…
    294→//////////////////////////////////////////////////////////////////
    295→
    296→function VersionBadge() {
-   297→  return <span className={styles.versionBadge}>v{packageJSON.version}</span>
-   298→}
    300→function Footer() {
    326→function RaunoSignature() {
    350→function PacoSignature() {

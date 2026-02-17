@@ -2,9 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3607 words)
+budget: 4000 (3603 words)
 
 CHANGELOG.md
+     1→# Changelog …
      3→## 1.21.3
      5→- Outline more initialization in `race`: [#284](https://github.com/matklad/once_cell/pull/284),
      6→  [#285](https://github.com/matklad/once_cell/pull/285).
@@ -248,7 +249,6 @@ src/imp_std.rs
    223→            Ordering::Release,
    224→            Ordering::Relaxed,
    225→        );
-   226→        if let Err(new_queue) = exchange {
       →…
    245→mod strict {
    246→    #[must_use]

@@ -191,6 +191,27 @@ fn is_locale_dir(name: &str) -> bool {
     false
 }
 
+/// Detect heading depth from source lines for a markdown section symbol.
+/// ATX headings (`# h1`, `## h2`, etc.) are detected by counting leading `#` chars.
+/// Setext headings (underline with `=` or `-`) are detected by checking the underline.
+fn detect_heading_depth(lines: &[&str], sym_line_0: usize, end_line: usize) -> u8 {
+    let trimmed = lines[sym_line_0].trim_start();
+    if trimmed.starts_with('#') {
+        let depth = trimmed.bytes().take_while(|&b| b == b'#').count();
+        (depth as u8).clamp(1, 6)
+    } else {
+        // Setext heading: check underline character
+        let underline_idx = end_line.min(lines.len()) - 1;
+        if underline_idx > sym_line_0
+            && lines[underline_idx].trim_start().starts_with('=')
+        {
+            1
+        } else {
+            2 // '-' underline = h2
+        }
+    }
+}
+
 /// Detect build/tool configuration files by filename and path convention.
 /// These are files like `eslint.config.js`, `jest.config.ts`, `.eslintrc.js`, etc.
 /// that configure development tools rather than implementing library/app logic.
@@ -259,6 +280,10 @@ pub struct GroupKey {
     pub file_role: FileRole,
     /// Whether the file is a build/tool config file (e.g., eslint.config.js, jest.config.ts).
     pub is_config: bool,
+    /// Heading depth for markdown sections (1 = h1, 2 = h2, etc.).
+    /// None for non-section symbols. Separates top-level headings from
+    /// detail subsections so h1/h2 content gets priority over h3+ detail.
+    pub heading_depth: Option<u8>,
 }
 
 /// A symbol's precomputed content costs (word counts per rendering stage).
@@ -364,6 +389,12 @@ pub fn build_groups(
             let doc_start = format::doc_comment_start(&lines, sym_line_0, lang);
             let is_documented = doc_start < sym_line_0;
 
+            let heading_depth = if kind_category == KindCategory::Section {
+                Some(detect_heading_depth(&lines, sym_line_0, sym.end_line))
+            } else {
+                None
+            };
+
             let key = GroupKey {
                 is_public: sym.is_public,
                 kind_category,
@@ -372,6 +403,7 @@ pub fn build_groups(
                 is_documented,
                 file_role,
                 is_config,
+                heading_depth,
             };
 
             // Compute costs
@@ -588,7 +620,18 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // not core library logic. Show them only when there's plenty of budget.
     let config_factor = if key.is_config { 0.2 } else { 1.0 };
 
-    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor;
+    // Heading depth: top-level headings (h1, h2) are more important than
+    // subsections (h3+). This lets the scheduler show body content for
+    // h1/h2 headings before filling in h3/h4 detail sections.
+    let heading_depth_factor = match key.heading_depth {
+        Some(1) => 1.0,
+        Some(2) => 0.8,
+        Some(3) => 0.5,
+        Some(_) => 0.3, // h4, h5, h6
+        None => 1.0,    // non-section symbols
+    };
+
+    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * heading_depth_factor;
 
     let stage_value = match key.kind_category {
         KindCategory::Type => match stage {

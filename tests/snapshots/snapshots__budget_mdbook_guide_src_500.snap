@@ -2,8 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (491 words)
+budget: 500 (490 words)
 
+404.md
+     1→# Document not found (404) …
 README.md
      1→# Introduction
      4→    .mdbook-version {
@@ -23,17 +25,12 @@ README.md
     18→</div>
     19→
       →…
-    46→## Contributing
-    48→mdBook is free and open source. You can find the source code on
-    49→[GitHub](https://github.com/rust-lang/mdBook) and issues and feature requests can be posted on
-    50→the [GitHub issue tracker](https://github.com/rust-lang/mdBook/issues). mdBook relies on the community to fix bugs and
-    51→add features: if you'd like to contribute, please read
-    52→the [CONTRIBUTING](https://github.com/rust-lang/mdBook/blob/master/CONTRIBUTING.md) guide and consider opening
-    53→a [pull request](https://github.com/rust-lang/mdBook/pulls).
-    54→
-    55→## License
-    57→The mdBook source and documentation are released under
-    58→the [Mozilla Public License v2.0](https://www.mozilla.org/MPL/2.0/).
+    46→## Contributing …
+    55→## License …
+SUMMARY.md
+     1→# Summary …
+     5→# User guide …
+    11→# Reference guide …
 cli/README.md
      1→# Command-line tool
      3→The `mdbook` command-line tool is used to create and build books.
@@ -42,10 +39,25 @@ cli/README.md
      6→This following sections provide in-depth information on the different commands available.
      7→
       →…
+cli/serve.md
+    27→### Server options …
+continuous-integration.md
+     1→# Running `mdbook` in continuous integration …
+    12→## Installing mdBook …
+    17→### Pre-compiled binaries …
+    39→### Building from source …
+    67→## Running tests …
+    83→## Deploying …
+   100→### 404 handling …
 for_developers/README.md
-     1→# For developers …
+     1→# For developers
+     3→While `mdbook` is mainly used as a command line tool, you can also import the
+     4→underlying libraries directly and use those to manage a book. It also has a fairly
+      →…
     17→## The build process …
     30→## Using `mdbook` as a library …
+for_developers/backends.md
+     1→# Alternative backends …
 for_developers/mdbook-wordcount/src/main.rs
     12→fn main() {
     40→fn count_words(ch: &Chapter) -> usize {
@@ -55,6 +67,8 @@ for_developers/mdbook-wordcount/src/main.rs
     47→    pub ignores: Vec<String>,
     48→    pub deny_odds: bool,
     49→}
+for_developers/preprocessors.md
+     1→# Preprocessors …
 format/README.md
      1→# Format
      3→In this section you will learn how to:
@@ -67,41 +81,33 @@ format/configuration/README.md
      1→# Configuration
      3→This section details the configuration options available in the ***book.toml***:
      4→- **[General]** configuration including the `book`, `rust`, `build` sections
-     5→- **[Preprocessor]** configuration for default and custom book preprocessors
-     6→- **[Renderer]** configuration for the HTML, Markdown and custom renderers
-     7→- **[Environment Variable]** configuration for overriding configuration options in your environment
-     8→
-     9→[General]: general.md
-    10→[Preprocessor]: preprocessors.md
-    11→[Renderer]: renderers.md
-    12→[Environment Variable]: environment-variables.md
+      →…
+format/configuration/environment-variables.md
+     1→# Environment variables …
+format/configuration/general.md
+     1→# General configuration …
+format/configuration/preprocessors.md
+     1→# Configuring Preprocessors …
+format/configuration/renderers.md
+     1→# Configuring Renderers …
+   286→#### `[output.html.search.chapter]` …
 format/example.rs
      1→fn main() {
-     2→    println!("Hello World!");
-     3→#
-      →…
+format/markdown.md
+     1→# Markdown …
+    43→#### A smaller heading 
+    45→More text.
+    46→
+format/mathjax.md
+     1→# MathJax support …
 format/mdbook.md
+     1→# mdBook-specific features …
      3→## Hiding code lines
      5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
      6→
-     7→For the Rust language, you can prefix lines with `# ` (`#` followed by a space) to hide them [like you would with Rustdoc][rustdoc-hide].
-     8→This prefix can be escaped with `##` to prevent the hiding of a line that should begin with the literal string `# ` (see [Rustdoc's docs][rustdoc-hide] for more details)
-     9→
-    10→[rustdoc-hide]: https://doc.rust-lang.org/stable/rustdoc/write-documentation/documentation-tests.html#hiding-portions-of-the-example
-    11→
-    12→```bash
-    13→# fn main() {
-    14→    let x = 5;
-    15→    let y = 6;
-    16→
-    17→    println!("{}", x + y);
-    18→# }
-    19→```
-    20→
-    21→Will render as
-    22→
-    23→```rust
       →…
+format/summary.md
+     1→# SUMMARY.md …
 format/theme/README.md
      1→# Theme
      3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
@@ -109,6 +115,15 @@ format/theme/README.md
      5→binary.
      6→
       →…
+format/theme/editor.md
+     1→# Editor …
+format/theme/index-hbs.md
+     1→# index.hbs …
+    46→### toc …
+    80→### resource …
+    90→### fa …
+format/theme/syntax-highlighting.md
+     1→# Syntax highlighting …
 guide/README.md
      1→# User guide
      3→This user guide provides an introduction to basic concepts of using mdBook.
@@ -116,5 +131,15 @@ guide/README.md
      5→- [Installation](installation.md)
      6→- [Reading Books](reading.md)
      7→- [Creating a Book](creating.md)
+guide/creating.md
+     1→# Creating a book …
+    36→### `book.toml` …
+    50→### `SUMMARY.md` …
+    73→### Source files …
+guide/installation.md
+     1→# Installation …
+    41→### Installing the latest master version …
+guide/reading.md
+     1→# Reading books …
 misc/contributors.md
      1→# Contributors …

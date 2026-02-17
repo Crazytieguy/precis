@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3928 words)
+budget: 4000 (3927 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -56,8 +56,7 @@ ARCHITECTURE.md
     55→
     56→We did not use a render prop because they are an inelegant pattern and quickly fall to long, centralised if-else logic chains. For example, if you want a fancy sparkle rainbow item, you need a new if statement to render that item specially.
     57→
-    58→The original approach for tracking which item was selected was to keep an index 0..n. But it's impossible to know which Item is in which position within the React tree when React Strict Mode is enabled, because `useEffect` runs twice and `useRef` cannot be used for stable IDs. <sup>This may be possible with `useId`, now.</sup> We created [use-descendants](https://github.com/pacocoursey/use-descendants) to track relative component indeces, but abandoned it because it could not work in Strict Mode, and will be incompatible with upcoming concurrent mode. Now, we track the selected item with its value, because it is stable across item mounts and unmounts.
-    59→
+      →…
     60→## Example
     62→```tsx
     63→<Input value="b" />
@@ -116,7 +115,59 @@ README.md
     26→
     27→        <Command.Group heading="Letters">
     28→          <Command.Item>a</Command.Item>
-      →…
+    29→          <Command.Item>b</Command.Item>
+    30→          <Command.Separator />
+    31→          <Command.Item>c</Command.Item>
+    32→        </Command.Group>
+    33→
+    34→        <Command.Item>Apple</Command.Item>
+    35→      </Command.List>
+    36→    </Command>
+    37→  )
+    38→}
+    39→```
+    40→
+    41→Or in a dialog:
+    42→
+    43→```tsx
+    44→import { Command } from 'cmdk'
+    45→
+    46→const CommandMenu = () => {
+    47→  const [open, setOpen] = React.useState(false)
+    48→
+    49→  // Toggle the menu when ⌘K is pressed
+    50→  React.useEffect(() => {
+    51→    const down = (e) => {
+    52→      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+    53→        e.preventDefault()
+    54→        setOpen((open) => !open)
+    55→      }
+    56→    }
+    57→
+    58→    document.addEventListener('keydown', down)
+    59→    return () => document.removeEventListener('keydown', down)
+    60→  }, [])
+    61→
+    62→  return (
+    63→    <Command.Dialog open={open} onOpenChange={setOpen} label="Global Command Menu">
+    64→      <Command.Input />
+    65→      <Command.List>
+    66→        <Command.Empty>No results found.</Command.Empty>
+    67→
+    68→        <Command.Group heading="Letters">
+    69→          <Command.Item>a</Command.Item>
+    70→          <Command.Item>b</Command.Item>
+    71→          <Command.Separator />
+    72→          <Command.Item>c</Command.Item>
+    73→        </Command.Group>
+    74→
+    75→        <Command.Item>Apple</Command.Item>
+    76→      </Command.List>
+    77→    </Command.Dialog>
+    78→  )
+    79→}
+    80→```
+    81→
     82→## Parts and styling
     84→All parts forward props, including `ref`, to an appropriate element. Each part has a specific data-attribute (starting with `cmdk-`) that can be used for styling.
     85→
@@ -131,8 +182,6 @@ README.md
     95→const [value, setValue] = React.useState('apple')
     96→
     97→return (
-    98→  <Command value={value} onValueChange={setValue}>
-    99→    <Command.Input />
       →…
    153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
    155→Props are forwarded to [Command](#command-cmdk-root). Composes Radix UI's Dialog component. The overlay is always rendered. See the [Radix Documentation](https://www.radix-ui.com/docs/primitives/components/dialog) for more information. Can be controlled with the `open` and `onOpenChange` props.
@@ -145,8 +194,6 @@ README.md
    162→    ...
    163→  </Command.Dialog>
    164→)
-   165→```
-   166→
       →…
    180→### Input `[cmdk-input]`
    182→All props are forwarded to the underlying `input` element. Can be controlled with the `value` and `onValueChange` props.
@@ -168,8 +215,6 @@ README.md
    199→  transition: height 100ms ease;
    200→}
    201→```
-   202→
-   203→To scroll item into view earlier near the edges of the viewport, use scroll-padding:
       →…
    212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
    214→Item that becomes active on pointer enter. You should provide a unique `value` for each item, but it will be automatically inferred from the `.textContent`.
@@ -182,8 +227,6 @@ README.md
    221→  Apple
    222→</Command.Item>
    223→```
-   224→
-   225→You can also provide a `keywords` prop to help with filtering. Keywords are trimmed.
       →…
    242→### Group `[cmdk-group]` `[hidden?]`
    244→Groups items together with the given `heading` (`[cmdk-group-heading]`).
@@ -196,8 +239,7 @@ README.md
    251→
    252→Groups will not unmount from the DOM, rather the `hidden` attribute is applied to hide it from view. This may be relevant in your styling.
    253→
-   254→You can force a group to always render, regardless of filtering, by passing the `forceMount` prop.
-   255→
+      →…
    256→### Separator `[cmdk-separator]`
    258→Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
    259→
@@ -237,8 +279,6 @@ README.md
    298→const page = pages[pages.length - 1]
    299→
    300→return (
-   301→  <Command
-   302→    onKeyDown={(e) => {
       →…
    338→### Show sub-items when searching
    340→If your items have nested sub-items that you only want to reveal when searching, render based on the search state:
@@ -251,8 +291,6 @@ README.md
    347→}
    348→
    349→return (
-   350→  <Command>
-   351→    <Command.Input />
       →…
    361→### Asynchronous results
    363→Render the items as they become available. Filtering and sorting will happen automatically.
@@ -265,8 +303,6 @@ README.md
    370→  async function getItems() {
    371→    setLoading(true)
    372→    const res = await api.get('/dictionary')
-   373→    setItems(res)
-   374→    setLoading(false)
       →…
    397→### Use inside Popover
    399→We recommend using the [Radix UI popover](https://www.radix-ui.com/docs/primitives/components/popover) component. ⌘K relies on the Radix UI Dialog component, so this will reduce your bundle size a bit due to shared dependencies.
@@ -279,8 +315,6 @@ README.md
    406→
    407→```tsx
    408→import * as Popover from '@radix-ui/react-popover'
-   409→
-   410→return (
       →…
    426→### Drop in stylesheets
    428→You can find global stylesheets to drop in as a starting point for styling. See [website/styles/cmdk](website/styles/cmdk) for examples.
@@ -298,7 +332,18 @@ README.md
    441→
    442→**Hydration mismatch?** No, likely a bug in your code. Ensure the `open` prop to `Command.Dialog` is `false` on the server.
    443→
-      →…
+   444→**React strict mode safe?** Yes. Open an issue if you notice an issue.
+   445→
+   446→**Weird/wrong behavior?** Make sure your `Command.Item` has a `key` and unique `value`.
+   447→
+   448→**Concurrent mode safe?** Maybe, but concurrent mode is not yet real. Uses risky approaches like manual DOM ordering.
+   449→
+   450→**React server component?** No, it's a client component.
+   451→
+   452→**Listen for ⌘K automatically?** No, do it yourself to have full control over keybind context.
+   453→
+   454→**React Native?** No, and no plans to support it. If you build a React Native version, let us know and we'll link your repository here.
+   455→
    456→## History
    458→Written in 2019 by Paco ([@pacocoursey](https://twitter.com/pacocoursey)) to see if a composable combobox API was possible. Used for the Vercel command menu and autocomplete by Rauno ([@raunofreiberg](https://twitter.com/raunofreiberg)) in 2020. Re-written independently in 2022 with a simpler and more performant approach. Ideas and help from Shu ([@shuding\_](https://twitter.com/shuding_)).
    459→
@@ -317,7 +362,12 @@ README.md
    473→```bash
    474→pnpm build
    475→```
-      →…
+   476→
+   477→Then run the tests using your local build against real browser engines:
+   478→
+   479→```bash
+   480→pnpm test
+   481→```
 cmdk/src/command-score.ts
     54→function commandScoreInner(
     55→  string,
@@ -518,10 +568,6 @@ website/components/cmdk/framer.tsx
      9→        <div cmdk-framer-header="">
     10→          <SearchIcon />
     11→          <Command.Input autoFocus placeholder="Find components, packages, and interactions..." />
-    12→        </div>
-    13→        <Command.List>
-    14→          <div cmdk-framer-items="">
-    15→            <div cmdk-framer-left="">
       →…
     57→function Button() {
     61→function Input() {
@@ -549,10 +595,6 @@ website/components/cmdk/linear.tsx
      8→        <Command.Input autoFocus placeholder="Type a command or search..." />
      9→        <Command.List>
     10→          <Command.Empty>No results found.</Command.Empty>
-    11→          {items.map(({ icon, label, shortcut }) => {
-    12→            return (
-    13→              <Command.Item key={label} value={label}>
-    14→                {icon}
       →…
     30→const items = [
     31→  {
@@ -571,10 +613,6 @@ website/components/cmdk/linear.tsx
     44→    shortcut: ['S'],
     45→  },
     46→  {
-    47→    icon: <ChangePriorityIcon />,
-    48→    label: 'Change priority...',
-    49→    shortcut: ['P'],
-    50→  },
       →…
     68→function AssignToIcon() {
     76→function AssignToMeIcon() {
@@ -592,10 +630,6 @@ website/components/cmdk/raycast.tsx
     12→
     13→  React.useEffect(() => {
     14→    inputRef?.current?.focus()
-    15→  }, [])
-    16→
-    17→  return (
-    18→    <div className="raycast">
       →…
     97→function Item({
    116→function SubCommand({
@@ -617,10 +651,6 @@ website/components/cmdk/vercel.tsx
      9→  const activePage = pages[pages.length - 1]
     10→  const isHome = activePage === 'home'
     11→
-    12→  const popPage = React.useCallback(() => {
-    13→    setPages((pages) => {
-    14→      const x = [...pages]
-    15→      x.splice(-1, 1)
       →…
     91→function Home({ searchProjects }: { searchProjects: Function }) {
    137→function Projects() {
@@ -647,12 +677,6 @@ website/components/code/index.tsx
     18→      },
     19→    },
     20→    {
-    21→      types: ['atrule', 'keyword', 'attr-name', 'selector'],
-    22→      style: {
-    23→        color: 'var(--gray10)',
-    24→      },
-    25→    },
-    26→    {
       →…
     41→export function Code({ children }: { children: string }) {
     42→  return (

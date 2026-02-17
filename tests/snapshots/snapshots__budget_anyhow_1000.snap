@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (976 words)
+budget: 1000 (974 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -22,6 +22,12 @@ README.md
       →…
    166→#### License
    169→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
+   170→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
+   171→</sup>
+   172→
+   173→<br>
+   174→
+   175→<sub>
       →…
 src/backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
@@ -141,7 +147,6 @@ src/lib.rs
    290→/// `Error` works a lot like `Box<dyn std::error::Error>`, but with these
    291→/// differences:
    292→///
-   293→/// - `Error` requires that the error is `Send`, `Sync`, and `'static`.
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -151,7 +156,6 @@ src/lib.rs
    396→/// This type is the iterator returned by [`Error::chain`].
    397→///
    398→/// # Example
-   399→///
       →…
    415→pub struct Chain<'a> {
    416→    state: crate::chain::ChainState<'a>,
@@ -192,7 +196,6 @@ src/lib.rs
    472→/// This trait is sealed and cannot be implemented for types outside of
    473→/// `anyhow`.
    474→///
-   475→/// <br>
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.

@@ -2,10 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3875 words)
+budget: 4000 (3869 words)
 
 CHANGELOG.md
-     3→## mdBook 0.5.2 …
+     1→# Changelog …
+     3→## mdBook 0.5.2
+     4→[v0.5.1...v0.5.2](https://github.com/rust-lang/mdBook/compare/v0.5.1...v0.5.2)
+     5→
   1659→### Changed …
 README.md
      1→# mdBook
@@ -50,14 +53,11 @@ crates/mdbook-core/src/book.rs
    274→    type Item = &'a BookItem;
 crates/mdbook-core/src/config.rs
     63→pub struct Config {
-    80→/// Helper for serde serialization.
     81→fn is_default<T: Default + PartialEq>(t: &T) -> bool {
-    85→/// Helper for serde serialization.
     86→fn toml_is_empty(table: &Value) -> bool {
     91→    type Err = Error;
    308→fn parse_env …
    318→pub struct BookConfig {
-   335→/// Helper for serde serialization.
    336→fn is_default_src(src: &PathBuf) -> bool {
    368→pub enum TextDirection {
    394→pub struct BuildConfig {
@@ -186,7 +186,7 @@ crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
      6→/// A renderer to output the Markdown after the preprocessors have run. Mostly useful
      7→/// when debugging preprocessors.
      8→#[derive(Default)]
-     9→#[non_exhaustive]
+      →…
     10→pub struct MarkdownRenderer;
     13→    /// Create a new `MarkdownRenderer` instance.
     14→    pub fn new() -> Self {
@@ -199,8 +199,7 @@ crates/mdbook-driver/src/builtin_renderers/mod.rs
     15→/// A generic renderer which will shell out to an arbitrary executable.
     16→///
     17→/// See <https://rust-lang.github.io/mdBook/for_developers/backends.html>
-    18→/// for a description of the renderer protocol.
-    19→#[derive(Debug, Clone, PartialEq)]
+      →…
     20→pub struct CmdRenderer {
     21→    name: String,
     22→    cmd: String,
@@ -228,8 +227,6 @@ crates/mdbook-driver/src/lib.rs
      4→//! [mdBook](https://rust-lang.github.io/mdBook/). There are several
      5→//! reasons for using the programmatic API (over the CLI):
      6→//!
-     7→//! - Integrate mdBook in a current project.
-     8→//! - Extend the capabilities of mdBook.
       →…
     67→pub mod builtin_preprocessors;
     68→pub mod builtin_renderers;
@@ -381,7 +378,6 @@ crates/mdbook-html/src/theme/mod.rs
     46→    pub(crate) toc_html: Vec<u8>,
     47→    pub(crate) chrome_css: Vec<u8>,
     48→    pub(crate) general_css: Vec<u8>,
-    49→    pub(crate) print_css: Vec<u8>,
       →…
     63→impl Theme {
     64→    /// Creates a `Theme` from the given `theme_dir`.
@@ -392,7 +388,6 @@ crates/mdbook-html/src/theme/mod.rs
    200→impl Default for Theme {
    201→    fn default() -> Theme {
    202→        Theme {
-   203→            index: INDEX.to_owned(),
       →…
    229→fn load_file_contents<P: AsRef<Path>>(filename: P, dest: &mut Vec<u8>) -> Result<()> {
 crates/mdbook-html/src/theme/playground_editor.rs
@@ -451,9 +446,6 @@ crates/mdbook-markdown/src/lib.rs
     48→    opts.insert(Options::ENABLE_STRIKETHROUGH);
     49→    opts.insert(Options::ENABLE_TASKLISTS);
     50→    opts.insert(Options::ENABLE_HEADING_ATTRIBUTES);
-    51→    if options.smart_punctuation {
-    52→        opts.insert(Options::ENABLE_SMART_PUNCTUATION);
-    53→    }
       →…
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
@@ -583,36 +575,14 @@ crates/mdbook-summary/src/lib.rs
     21→///
       →…
     59→pub fn parse_summary(summary: &str) -> Result<Summary> {
-    64→/// The parsed `SUMMARY.md`, specifying how the book should be laid out.
-    65→#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-    66→#[non_exhaustive]
     67→pub struct Summary {
     68→    /// An optional title for the `SUMMARY.md`, currently just ignored.
     69→    pub title: Option<String>,
-    70→    /// Chapters before the main text (e.g. an introduction).
-    71→    pub prefix_chapters: Vec<SummaryItem>,
-    72→    /// The main numbered chapters of the book, broken into one or more possibly named parts.
-    73→    pub numbered_chapters: Vec<SummaryItem>,
-    74→    /// Items which come after the main document (e.g. a conclusion).
-    75→    pub suffix_chapters: Vec<SummaryItem>,
-    76→}
-    78→/// A struct representing an entry in the `SUMMARY.md`, possibly with nested
-    79→/// entries.
-    80→///
-    81→/// This is roughly the equivalent of `[Some section](./path/to/file.md)`.
-    82→#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-    83→#[non_exhaustive]
+      →…
     84→pub struct Link {
     85→    /// The name of the chapter.
     86→    pub name: String,
-    87→    /// The location of the chapter's source file, taking the book's `src`
-    88→    /// directory as the root.
-    89→    pub location: Option<PathBuf>,
-    90→    /// The section number, if this chapter is in the numbered section.
-    91→    pub number: Option<SectionNumber>,
-    92→    /// Any nested items this chapter may contain.
-    93→    pub nested_items: Vec<SummaryItem>,
-    94→}
+      →…
     96→impl Link {
     97→    /// Create a new link with no nested items.
     98→    pub fn new<S: Into<String>, P: AsRef<Path>>(name: S, location: P) -> Link {
@@ -622,17 +592,10 @@ crates/mdbook-summary/src/lib.rs
    111→            name: String::new(),
    112→            location: Some(PathBuf::new()),
       →…
-   119→/// An item in `SUMMARY.md`.
-   120→#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-   121→#[non_exhaustive]
    122→pub enum SummaryItem {
    123→    /// A link to a chapter.
    124→    Link(Link),
-   125→    /// A separator (`---`).
-   126→    Separator,
-   127→    /// A part title.
-   128→    PartTitle(String),
-   129→}
+      →…
    131→impl SummaryItem {
    140→impl From<Link> for SummaryItem {
    141→    fn from(other: Link) -> SummaryItem {
@@ -687,18 +650,42 @@ guide/guide-helper/src/main.rs
      1→//! Preprocessor for the mdBook guide.
      2→
      3→fn main() {
+guide/src/404.md
+     1→# Document not found (404) …
 guide/src/README.md
      1→# Introduction
      4→    .mdbook-version {
      5→        position: absolute;
+     6→        right: 20px;
+     7→        top: 60px;
+     8→        background-color: var(--theme-popup-bg);
+     9→        border-radius: 8px;
+    10→        padding: 2px 5px 2px 5px;
+    11→        border: 1px solid var(--theme-popup-border);
+    12→        font-size: 0.9em;
+    13→    }
+    14→</style>
+    15→
+    16→<div class="mdbook-version">
+    17→Version: {{ mdbook-version }}
+    18→</div>
+    19→
       →…
     46→## Contributing
     48→mdBook is free and open source. You can find the source code on
     49→[GitHub](https://github.com/rust-lang/mdBook) and issues and feature requests can be posted on
-      →…
+    50→the [GitHub issue tracker](https://github.com/rust-lang/mdBook/issues). mdBook relies on the community to fix bugs and
+    51→add features: if you'd like to contribute, please read
+    52→the [CONTRIBUTING](https://github.com/rust-lang/mdBook/blob/master/CONTRIBUTING.md) guide and consider opening
+    53→a [pull request](https://github.com/rust-lang/mdBook/pulls).
+    54→
     55→## License
     57→The mdBook source and documentation are released under
     58→the [Mozilla Public License v2.0](https://www.mozilla.org/MPL/2.0/).
+guide/src/SUMMARY.md
+     1→# Summary …
+     5→# User guide …
+    11→# Reference guide …
 guide/src/cli/README.md
      1→# Command-line tool
      3→The `mdbook` command-line tool is used to create and build books.
@@ -707,10 +694,45 @@ guide/src/cli/README.md
      6→This following sections provide in-depth information on the different commands available.
      7→
       →…
+guide/src/cli/build.md
+     1→# The build command …
+guide/src/cli/clean.md
+     1→# The clean command …
+guide/src/cli/completions.md
+     1→# The completions command …
+guide/src/cli/init.md
+     1→# The init command …
+guide/src/cli/serve.md
+     1→# The serve command …
+    27→### Server options …
+guide/src/cli/test.md
+     1→# The test command …
+guide/src/cli/watch.md
+     1→# The watch command …
+guide/src/continuous-integration.md
+     1→# Running `mdbook` in continuous integration …
+    12→## Installing mdBook …
+    17→### Pre-compiled binaries …
+    39→### Building from source …
+    67→## Running tests …
+    83→## Deploying …
+   100→### 404 handling …
 guide/src/for_developers/README.md
-     1→# For developers …
-    17→## The build process …
-    30→## Using `mdbook` as a library …
+     1→# For developers
+     3→While `mdbook` is mainly used as a command line tool, you can also import the
+     4→underlying libraries directly and use those to manage a book. It also has a fairly
+     5→flexible plugin mechanism, allowing you to create your own custom tooling and
+      →…
+    17→## The build process
+    19→The process of rendering a book project goes through several steps.
+    20→
+      →…
+    30→## Using `mdbook` as a library
+    32→The `mdbook` binary is just a wrapper around the underlying mdBook crates,
+    33→exposing their functionality as a command-line program. If you want to
+      →…
+guide/src/for_developers/backends.md
+     1→# Alternative backends …
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     12→fn main() {
     40→fn count_words(ch: &Chapter) -> usize {
@@ -720,6 +742,8 @@ guide/src/for_developers/mdbook-wordcount/src/main.rs
     47→    pub ignores: Vec<String>,
     48→    pub deny_odds: bool,
     49→}
+guide/src/for_developers/preprocessors.md
+     1→# Preprocessors …
 guide/src/format/README.md
      1→# Format
      3→In this section you will learn how to:
@@ -733,33 +757,32 @@ guide/src/format/configuration/README.md
      3→This section details the configuration options available in the ***book.toml***:
      4→- **[General]** configuration including the `book`, `rust`, `build` sections
       →…
+guide/src/format/configuration/environment-variables.md
+     1→# Environment variables …
+guide/src/format/configuration/general.md
+     1→# General configuration …
+guide/src/format/configuration/preprocessors.md
+     1→# Configuring Preprocessors …
+guide/src/format/configuration/renderers.md
+     1→# Configuring Renderers …
+   286→#### `[output.html.search.chapter]` …
 guide/src/format/example.rs
      1→fn main() {
-     2→    println!("Hello World!");
-     3→#
-      →…
+guide/src/format/markdown.md
+     1→# Markdown …
+    43→#### A smaller heading 
+    45→More text.
+    46→
+guide/src/format/mathjax.md
+     1→# MathJax support …
 guide/src/format/mdbook.md
+     1→# mdBook-specific features …
      3→## Hiding code lines
      5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
      6→
-     7→For the Rust language, you can prefix lines with `# ` (`#` followed by a space) to hide them [like you would with Rustdoc][rustdoc-hide].
-     8→This prefix can be escaped with `##` to prevent the hiding of a line that should begin with the literal string `# ` (see [Rustdoc's docs][rustdoc-hide] for more details)
-     9→
-    10→[rustdoc-hide]: https://doc.rust-lang.org/stable/rustdoc/write-documentation/documentation-tests.html#hiding-portions-of-the-example
-    11→
-    12→```bash
-    13→# fn main() {
-    14→    let x = 5;
-    15→    let y = 6;
-    16→
-    17→    println!("{}", x + y);
-    18→# }
-    19→```
-    20→
-    21→Will render as
-    22→
-    23→```rust
       →…
+guide/src/format/summary.md
+     1→# SUMMARY.md …
 guide/src/format/theme/README.md
      1→# Theme
      3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
@@ -767,6 +790,15 @@ guide/src/format/theme/README.md
      5→binary.
      6→
       →…
+guide/src/format/theme/editor.md
+     1→# Editor …
+guide/src/format/theme/index-hbs.md
+     1→# index.hbs …
+    46→### toc …
+    80→### resource …
+    90→### fa …
+guide/src/format/theme/syntax-highlighting.md
+     1→# Syntax highlighting …
 guide/src/guide/README.md
      1→# User guide
      3→This user guide provides an introduction to basic concepts of using mdBook.
@@ -774,6 +806,16 @@ guide/src/guide/README.md
      5→- [Installation](installation.md)
      6→- [Reading Books](reading.md)
      7→- [Creating a Book](creating.md)
+guide/src/guide/creating.md
+     1→# Creating a book …
+    36→### `book.toml` …
+    50→### `SUMMARY.md` …
+    73→### Source files …
+guide/src/guide/installation.md
+     1→# Installation …
+    41→### Installing the latest master version …
+guide/src/guide/reading.md
+     1→# Reading books …
 guide/src/misc/contributors.md
      1→# Contributors …
 src/cmd/clean.rs
@@ -870,22 +912,14 @@ src/cmd/watch/poller.rs
     26→    });
     27→
       →…
-    77→#[derive(PartialEq)]
     78→struct PathData {
     79→    file_type: FileType,
     80→    mtime: SystemTime,
-    81→    size: u64,
-    82→}
-    84→/// A very simple poll-watcher that scans for modified files.
-    85→#[derive(Default)]
+      →…
     86→struct Watcher {
     87→    /// The root paths where it will recursively scan for changes.
     88→    root_paths: Vec<PathBuf>,
-    89→    /// Data about files on disk.
-    90→    path_data: HashMap<PathBuf, PathData>,
-    91→    /// Filters paths that will be watched.
-    92→    ignore: Option<(PathBuf, Gitignore)>,
-    93→}
+      →…
     95→impl Watcher {
     96→    fn new …
    123→    /// Sets the root directories where scanning will start.

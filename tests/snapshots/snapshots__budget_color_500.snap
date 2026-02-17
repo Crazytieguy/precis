@@ -2,15 +2,22 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (479 words)
+budget: 500 (465 words)
 
 README.md
      1→# color
      3→Color lets you use colorized outputs in terms of [ANSI Escape
-      →…
+     4→Codes](http://en.wikipedia.org/wiki/ANSI_escape_code#Colors) in Go (Golang). It
+     5→has support for Windows too! The API can be used in several ways, pick one that
+     6→suits you.
+     7→
+     8→![Color](https://user-images.githubusercontent.com/438920/96832689-03b3e000-13f4-11eb-9803-46f4c4de3406.jpg)
+     9→
     10→## Install
     12→```
-      →…
+    13→go get github.com/fatih/color
+    14→```
+    15→
     16→## Examples
     18→### Standard colors
     20→```go
@@ -52,10 +59,12 @@ README.md
       →…
    177→## GitHub Actions
    179→To output color in GitHub Actions (or other CI systems that support ANSI colors), make sure to set `color.NoColor = false` so that it bypasses the check for non-tty output streams. 
-      →…
+   180→
+   181→
    182→## Credits
    184→* [Fatih Arslan](https://github.com/fatih)
-      →…
+   185→* Windows support via @mattn: [colorable](https://github.com/mattn/go-colorable)
+   186→
    187→## License
    189→The MIT License (MIT) - see [`LICENSE.md`](https://github.com/fatih/color/blob/master/LICENSE.md) for more details
 color.go
@@ -86,24 +95,16 @@ color.go
     52→const escape = "\x1b"
     55→const (
     68→const (
+    69→	ResetBold Attribute = iota + 22
     79→var mapResetAttributes map[Attribute]Attribute = map[Attribute]Attribute{
+    80→	Bold:         ResetBold,
+      →…
     92→const (
    103→	foreground
    107→const (
    119→const (
    130→	background
    134→const (
-   211→func (c *Color) unset() {
    405→func (c *Color) sequence() string {
    416→func (c *Color) wrap(s string) string {
-   424→func (c *Color) format() string {
-   428→func (c *Color) unformat() string {
-   456→func (c *Color) isNoColorSet() bool {
-   487→func (c *Color) attrExists(a Attribute) bool {
-   497→func boolPtr(v bool) *bool {
-   501→func getCachedColor(p Attribute) *Color {
-   514→func colorPrint(format string, p Attribute, a ...interface{}) {
-   528→func colorString(format string, p Attribute, a ...interface{}) string {
    679→func sprintln(a ...interface{}) string {
-color_windows.go
-     9→func init() {

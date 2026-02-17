@@ -2,12 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3660 words)
+budget: 4000 (3655 words)
 
 AGENTS.md
-     1→# AGENTS.md …
+     1→# AGENTS.md
+     3→See @CLAUDE.md for AI coding agent instructions.
 CLAUDE.md
-     1→# CLAUDE.md …
+     1→# CLAUDE.md
+     3→This file provides guidance to AI coding agents when working with code in this repository.
+     4→
      5→## Project Overview …
     10→## Development Commands …
     14→### Testing …
@@ -409,8 +412,6 @@ src/pluggy/_hooks.py
    409→        # 5. wrappers
    410→        # 6. tryfirst wrappers
    411→        self._hookimpls: Final[list[HookImpl]] = []
-   412→        self._call_history: _CallHistory | None = None
-   413→        # TODO: Document, or make private.
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None
@@ -616,8 +617,6 @@ src/pluggy/_manager.py
    124→
    125→    def register(self, plugin: _Plugin, name: str | None = None) -> str | None:
    126→        """Register a plugin and return its name.
-   127→
-   128→        :param name:
    176→    def parse_hookimpl_opts …
    201→    def unregister …
    233→    def set_blocked …
@@ -754,8 +753,6 @@ src/pluggy/_tracing.py
     42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
     43→        if self._writer is not None and args:
     44→            self._writer(self._format_message(tags, args))
-    45→        if processor := self._tags2proc.get(tags):
-    46→            processor(tags, args)
     48→    def setwriter …
     51→    def setprocessor …
     59→class TagTracerSub:

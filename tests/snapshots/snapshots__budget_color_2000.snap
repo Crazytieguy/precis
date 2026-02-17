@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1865 words)
+budget: 2000 (1812 words)
 
 README.md
      1→# color
@@ -64,11 +64,7 @@ README.md
     63→whiteBackground.Println("Red text with white background.")
     64→
     65→// Mix with RGB color codes
-    66→color.RGB(255, 128, 0).AddBgRGB(0, 0, 0).Println("orange with black background")
-    67→
-    68→color.BgRGB(255, 128, 0).AddRGB(255, 255, 255).Println("orange background with white foreground")
-    69→```
-    70→
+      →…
     71→### Use your own output (io.Writer)
     73→```go
     74→// Use your own io.Writer output
@@ -155,20 +151,7 @@ README.md
    160→}
    161→```
    162→
-   163→It also has support for single color definitions (local). You can
-   164→disable/enable color output on the fly:
-   165→
-   166→```go
-   167→c := color.New(color.FgCyan)
-   168→c.Println("Prints cyan text")
-   169→
-   170→c.DisableColor()
-   171→c.Println("This is printed without any color")
-   172→
-   173→c.EnableColor()
-   174→c.Println("This prints again cyan...")
-   175→```
-   176→
+      →…
    177→## GitHub Actions
    179→To output color in GitHub Actions (or other CI systems that support ANSI colors), make sure to set `color.NoColor = false` so that it bypasses the check for non-tty output streams. 
    180→
@@ -231,6 +214,8 @@ color.go
     75→	ResetConcealed
     76→	ResetCrossedOut
     79→var mapResetAttributes map[Attribute]Attribute = map[Attribute]Attribute{
+    80→	Bold:         ResetBold,
+      →…
     91→// Foreground text colors
     92→const (
     93→	FgBlack Attribute = iota + 30
@@ -253,6 +238,7 @@ color.go
    113→	FgHiMagenta
    114→	FgHiCyan
    115→	FgHiWhite
+      →…
    118→// Background text colors
    119→const (
    120→	BgBlack Attribute = iota + 40
@@ -275,6 +261,7 @@ color.go
    140→	BgHiMagenta
    141→	BgHiCyan
    142→	BgHiWhite
+      →…
    146→func New(value ...Attribute) *Color {
    160→func RGB(r, g, b int) *Color {
    165→func BgRGB(r, g, b int) *Color {

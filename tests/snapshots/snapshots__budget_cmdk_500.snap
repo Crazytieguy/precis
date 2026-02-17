@@ -5,12 +5,37 @@ expression: output
 budget: 500 (492 words)
 
 ARCHITECTURE.md
-     1→# Architecture …
+     1→# Architecture
+     3→> Document is a work in progress!
+     4→
+     5→⌘K is born from a simple constraint: can you write a combobox with filtering and sorting using the [compound component](https://kentcdodds.com/blog/compound-components-with-react-hooks) approach? We didn't want to render items manually from an array:
+     6→
+     7→```tsx
+     8→// No
+     9→<>
+    10→  {items.map((item) => {
+    11→    return <div>{item}</div>
+    12→  })}
+    13→</>
+    14→```
+    15→
+      →…
     46→## Approach …
     50→### Discarded approach …
     60→## Example …
     92→## Performance …
     96→## Groups …
+README.md
+     5→# ⌘K
+     7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
+     8→
+     9→## Install …
+    15→## Use …
+    82→## Parts and styling …
+   285→## Examples …
+   430→## FAQ …
+   456→## History …
+   462→## Testing …
 cmdk/src/command-score.ts
     54→function commandScoreInner …
    150→function formatInput …
@@ -26,18 +51,8 @@ cmdk/src/index.tsx
    882→const Dialog …
    899→const Empty …
    909→const Loading …
-   955→/**
-   956→ *
-   957→ *
-   958→ * Helpers
-   959→ *
-   960→ *
-   961→ */
-   962→
    963→function findNextSibling(el: Element, selector: string) {
-  1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
-  1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
 playwright.config.ts
      3→const config: PlaywrightTestConfig = {
@@ -45,25 +60,15 @@ website/README.md
      3→## Getting Started
      5→First, run the development server:
      6→
-     7→```bash
-     8→pnpm run dev
-     9→```
-    10→
-    11→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-    12→
       →…
     19→## Learn More
     21→To learn more about Next.js, take a look at the following resources:
     22→
-    23→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-    24→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-    25→
-    26→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-    27→
+      →…
     28→## Deploy on Vercel
     30→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     31→
-    32→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+      →…
 website/components/cmdk/framer.tsx
      4→export function FramerCMDK() {
 website/components/cmdk/linear.tsx
@@ -78,7 +83,6 @@ website/components/cmdk/vercel.tsx
 website/components/code/index.tsx
      7→const theme = {
      8→  plain: {
-     9→    color: 'var(--gray12)',
       →…
     41→export function Code({ children }: { children: string }) {
     42→  return (
@@ -119,27 +123,18 @@ website/pages/_document.tsx
     19→}
 website/pages/index.tsx
     29→export default function Index() {
-    84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     99→//////////////////////////////////////////////////////////////////
    100→
    101→function InstallButton() {
-   123→function GitHubButton() {
    137→//////////////////////////////////////////////////////////////////
    138→
    139→const themes = [
    140→  {
    141→    icon: <RaycastIcon />,
-   142→    key: 'raycast',
-   143→  },
-   144→  {
       →…
-   158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////
    261→
    262→function Codeblock() {
    294→//////////////////////////////////////////////////////////////////
    295→
    296→function VersionBadge() {
-   300→function Footer() {
-   326→function RaunoSignature() {
-   350→function PacoSignature() {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (965 words)
+budget: 1000 (964 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -48,6 +48,25 @@ README.md
     45→// Convert a struct to a map[string]interface{}
     46→// => {"Name":"gopher", "ID":123456, "Enabled":true}
     47→m := structs.Map(server)
+    48→
+    49→// Convert the values of a struct to a []interface{}
+    50→// => ["gopher", 123456, true]
+    51→v := structs.Values(server)
+    52→
+    53→// Convert the names of a struct to a []string
+    54→// (see "Names methods" for more info about fields)
+    55→n := structs.Names(server)
+    56→
+    57→// Convert the values of a struct to a []*Field
+    58→// (see "Field methods" for more info about fields)
+    59→f := structs.Fields(server)
+    60→
+    61→// Return the struct name => "Server"
+    62→n := structs.Name(server)
+    63→
+    64→// Check if any field of a struct is initialized or not.
+    65→h := structs.HasZero(server)
+    66→
       →…
     74→### Struct methods
     76→The structs functions can be also used as independent methods by creating a new
@@ -62,13 +81,7 @@ README.md
     85→v := s.Values()           // Get a []interface{}
     86→f := s.Fields()           // Get a []*Field
     87→n := s.Names()            // Get a []string
-    88→f := s.Field(name)        // Get a *Field based on the given field name
-    89→f, ok := s.FieldOk(name)  // Get a *Field based on the given field name
-    90→n := s.Name()             // Get the struct name
-    91→h := s.HasZero()          // Check if any field is uninitialized
-    92→z := s.IsZero()           // Check if all fields are uninitialized
-    93→```
-    94→
+      →…
     95→### Field methods
     97→We can easily examine a single Field for more detail. Below you can see how we
     98→get and interact with various field methods:
@@ -82,18 +95,6 @@ README.md
    106→
    107→// Get the underlying value,  value => "gopher"
    108→value := name.Value().(string)
-   109→
-   110→// Set the field's value
-   111→name.Set("another gopher")
-   112→
-   113→// Get the field's kind, kind =>  "string"
-   114→name.Kind()
-   115→
-   116→// Check if the field is exported or not
-   117→if name.IsExported() {
-   118→	fmt.Println("Name field is exported")
-   119→}
-   120→
       →…
    163→## Credits
    165→ * [Fatih Arslan](https://github.com/fatih)

@@ -2,38 +2,56 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1968 words)
+budget: 2000 (1967 words)
 
+CHANGELOG.md
+     1→# Changelog
+     3→All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+     4→
+     7→## [17.3.1](https://github.com/motdotla/dotenv/compare/v17.3.0...v17.3.1) (2026-02-12) …
+   484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02)
 CONTRIBUTING.md
-     1→# Contributing …
+     1→# Contributing
+     3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
+     4→2. Install dependencies (`npm install`)
+     5→3. Create your feature branch (`git checkout -b my-new-feature`)
+      →…
     11→## Testing …
     19→## Code Style …
 README-es.md
+     1→# dotenv
+     5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
+     6→
+     7→[Watch the tutorial](https://www.youtube.com/watch?v=YtkZR0NFd1g)
+     8→
+     9→&nbsp;
+    10→
+    11→## Usage …
+    39→## Advanced …
+   319→## Agentes …
+   331→### Inicio rápido …
+   357→## FAQ …
+   579→## Docs …
+   587→### Config …
+   605→#### Options …
    607→##### path
    609→Default: `path.resolve(process.cwd(), '.env')`
    610→
-   611→Specify a custom path if your file containing environment variables is located elsewhere.
-   612→
-   613→```js
-   614→require('dotenv').config({ path: '/custom/path/to/.env' })
-   615→```
-   616→
       →…
+   692→### Parse …
+   705→#### Options …
    707→##### debug
    709→Default: `false`
    710→
-   711→Turn on logging to help debug why certain keys or values are not being set as you expect.
-   712→
-   713→```js
-   714→const dotenv = require('dotenv')
-   715→const buf = Buffer.from('hello world')
-   716→const opt = { debug: true }
       →…
+   721→### Populate …
+   748→#### options …
    750→##### Debug
    752→Default: `false`
    753→
-   754→Turn on logging to help debug why certain keys or values are not being populated as you expect.
-   755→
+      →…
+   764→## CHANGELOG …
+   770→## Who's using dotenv? …
 README.md
      1→# dotenv
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
@@ -135,10 +153,7 @@ README.md
    350→vestauth agent curl "https://as2.dotenvx.com/get?key=KEY"
    351→```
    352→
-   353→That's it! This new primitive unlocks secrets access for agents without human-in-the-loop, oauth flows, or API keys. It's the future for agents.
-   354→
-   355→&nbsp;
-   356→
+      →…
    357→## FAQ
    361→No.
    362→
@@ -199,7 +214,7 @@ README.md
    602→
    603→You can additionally, pass options to `config`.
    604→
-   605→#### Options
+   605→#### Options …
    607→##### path
    609→Default: `path.resolve(process.cwd(), '.env')`
    610→
@@ -291,7 +306,7 @@ README.md
    702→console.log(typeof config, config) // object { BASIC : 'basic' }
    703→```
    704→
-   705→#### Options
+   705→#### Options …
    707→##### debug
    709→Default: `false`
    710→
@@ -326,12 +341,8 @@ README.md
    740→const parsed = { HELLO: 'universe' }
    741→const target = { HELLO: 'world' } // empty object
    742→
-   743→dotenv.populate(target, parsed, { override: true, debug: true })
-   744→
-   745→console.log(target) // { HELLO: 'universe' }
-   746→```
-   747→
-   748→#### options
+      →…
+   748→#### options …
    750→##### Debug
    752→Default: `false`
    753→
@@ -464,8 +475,6 @@ lib/main.js
     10→const TIPS = [
     11→  '🔐 encrypt with Dotenvx: https://dotenvx.com',
     12→  '🔐 prevent committing .env to code: https://dotenvx.com/precommit',
-    13→  '🔐 prevent building .env in docker: https://dotenvx.com/prebuild',
-    14→  '🤖 agentic secret storage: https://dotenvx.com/as2',
       →…
     27→function _getRandomTip () {
     31→function parseBoolean (value) {
@@ -489,6 +498,4 @@ lib/main.js
    413→const DotenvModule = {
    414→  configDotenv,
    415→  _configVault,
-   416→  _parseVault,
-   417→  config,
       →…

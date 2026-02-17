@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (496 words)
 
 README.md
      1→# xxhash
@@ -10,6 +10,23 @@ README.md
      7→high-quality hashing algorithm that is much faster than anything in the Go
      8→standard library.
      9→
+    10→This package provides a straightforward API:
+    11→
+    12→```
+    13→func Sum64(b []byte) uint64
+    14→func Sum64String(s string) uint64
+    15→type Digest struct{ ... }
+    16→    func New() *Digest
+    17→```
+    18→
+    19→The `Digest` type implements hash.Hash64. Its key methods are:
+    20→
+    21→```
+    22→func (*Digest) Write([]byte) (int, error)
+    23→func (*Digest) WriteString(string) (int, error)
+    24→func (*Digest) Sum64() uint64
+    25→```
+    26→
       →…
     33→## Compatibility
     35→This package is in a module and the latest code is in version 2 of the module.
@@ -35,11 +52,9 @@ dynamic/plugin.go
     16→	want = uint64(0x02a2e85470d6fd96)
     19→func TestSum(t *testing.T) {
     20→	got := xxhash.Sum64String(in)
-    21→	if got != want {
       →…
     26→func TestDigest(t *testing.T) {
     27→	for chunkSize := 1; chunkSize <= len(in); chunkSize++ {
-    28→		name := fmt.Sprintf("[chunkSize=%d]", chunkSize)
       →…
 xxhash.go
     11→const (
@@ -50,8 +65,7 @@ xxhash.go
     16→	prime5 uint64 = 2870177450012600261
     19→// Store the primes in an array as well.
     20→//
-    21→// The consts are used when possible in Go code to avoid MOVs but we need a
-    22→// contiguous array for the assembly code.
+      →…
     23→var primes = [...]uint64{prime1, prime2, prime3, prime4, prime5}
     25→// Digest implements hash.Hash64.
     26→//
@@ -93,7 +107,7 @@ xxhash_unsafe.go
     38→func Sum64String(s string) uint64 {
     45→func (d *Digest) WriteString(s string) (n int, err error) {
     53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
-    54→// of the first two words is the same as the layout of a string.
+      →…
     55→type sliceHeader struct {
     56→	s   string
     57→	cap int

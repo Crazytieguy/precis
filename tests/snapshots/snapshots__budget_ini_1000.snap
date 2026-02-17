@@ -2,49 +2,56 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (960 words)
+budget: 1000 (980 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
      9→  .map((file) => `./${file}`)
 CHANGELOG.md
-     3→## [6.0.0](https://github.com/npm/ini/compare/v5.0.0...v6.0.0) (2025-10-22)
-     4→### ⚠️ BREAKING CHANGES
-     5→* `ini` now supports node `^20.17.0 || >=22.9.0`
-    12→### ⚠️ BREAKING CHANGES
-    13→* `ini` now supports node `^18.17.0 || >=20.5.0`
-    24→### Bug Fixes
-    26→* [`858cc82`](https://github.com/npm/ini/commit/858cc82dff7eac9ff9a56181132d66d0e09a803c) [#252](https://github.com/npm/ini/pull/252) decoding bracketed arrays (#252) (@Cherry)
-    27→
-    36→### Bug Fixes
-    38→* [`e237377`](https://github.com/npm/ini/commit/e237377029caa6fe76b1290eb6e64247e3e11cf3) [#243](https://github.com/npm/ini/pull/243) Removed the unused doUnesc param in the unsafe function (#243) (@LoicE5)
-    39→
-    65→### Bug Fixes
-    67→* [`090f64e`](https://github.com/npm/ini/commit/090f64e92a7ff722adf723dc13e7b468e591f057) [#208](https://github.com/npm/ini/pull/208) check process on browser (#208) (@Creskendoll)
-    68→
-    71→### Features
-    73→* [`622106a`](https://github.com/npm/ini/commit/622106a1a0bcd2bc32bfd2e6f9cc45a1a1cb53f7) [#205](https://github.com/npm/ini/pull/205) add "align" and "sort" options (#205) (@rquadling)
-    74→* [`dc64a1a`](https://github.com/npm/ini/commit/dc64a1a3aa322c0c258383bedcae738aaa67028d) [#204](https://github.com/npm/ini/pull/204) add bracketedArray option (#204) (@wraithgar)
-    75→* [`6a3cb38`](https://github.com/npm/ini/commit/6a3cb38b134f674dff1a7b5d3732553e8bace777) [#199](https://github.com/npm/ini/pull/199) add platform option to force line endings (#199) (@wraithgar, Francois-Xavier Kowalski)
-    76→* [`b363ae6`](https://github.com/npm/ini/commit/b363ae67ddf9b1232daafb3cc2b2b1e5cb656406) [#198](https://github.com/npm/ini/pull/198) add newline option (#198) (@wraithgar, Francois-Xavier Kowalski)
-    77→
-    86→### ⚠️ BREAKING CHANGES
-    88→* `ini` is now compatible with the following semver range for node: `^14.17.0 || ^16.13.0 || >=18.0.0`
-    89→
-    97→### Bug Fixes
-    99→* linting ([#166](https://github.com/npm/ini/issues/166)) ([5d9ab39](https://github.com/npm/ini/commit/5d9ab392643a93358e1d7595e8efb3d6d97d1181))
-   100→
-   104→### ⚠ BREAKING CHANGES
-   106→* this drops support for node 10 and non-LTS versions of node 12 and node 14
-   107→
+     1→# Changelog …
+     3→## [6.0.0](https://github.com/npm/ini/compare/v5.0.0...v6.0.0) (2025-10-22) …
+     4→### ⚠️ BREAKING CHANGES …
+     6→### Bug Fixes …
+     8→### Chores …
+    11→## [5.0.0](https://github.com/npm/ini/compare/v4.1.3...v5.0.0) (2024-09-03) …
+    12→### ⚠️ BREAKING CHANGES …
+    14→### Bug Fixes …
+    16→### Chores …
+    22→## [4.1.3](https://github.com/npm/ini/compare/v4.1.2...v4.1.3) (2024-05-22) …
+    24→### Bug Fixes …
+    28→### Chores …
+    34→## [4.1.2](https://github.com/npm/ini/compare/v4.1.1...v4.1.2) (2024-03-04) …
+    36→### Bug Fixes …
+    40→### Documentation …
+    46→### Chores …
+    63→## [4.1.1](https://github.com/npm/ini/compare/v4.1.0...v4.1.1) (2023-05-16) …
+    65→### Bug Fixes …
+    69→## [4.1.0](https://github.com/npm/ini/compare/v4.0.0...v4.1.0) (2023-04-13) …
+    71→### Features …
+    78→### Bug Fixes …
+    84→## [4.0.0](https://github.com/npm/ini/compare/v3.0.1...v4.0.0) (2023-03-08) …
+    86→### ⚠️ BREAKING CHANGES …
+    90→### Features …
+    94→## [3.0.1](https://github.com/npm/ini/compare/v3.0.0...v3.0.1) (2022-08-22) …
+    97→### Bug Fixes …
+   101→## [3.0.0](https://github.com/npm/ini/compare/v2.0.1...v3.0.0) (2022-04-05) …
+   104→### ⚠ BREAKING CHANGES …
+   108→### Bug Fixes …
+   113→### Dependencies …
 CONTRIBUTING.md
      3→# Contributing …
      5→## Code of Conduct
      7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
      8→
-     9→## Reporting Bugs …
-    17→## Pull Request Conventions …
+     9→## Reporting Bugs
+    11→Before submitting a new bug report please search for an existing or similar report.
+    12→
+    13→Use one of our existing issue templates if you believe you've come across a unique problem.
+    14→
+    15→Duplicate issues, or issues that don't use one of our templates may get closed without a response.
+    16→
+    17→## Pull Request Conventions
     19→### Commits
     21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
     22→
@@ -53,7 +60,7 @@ CONTRIBUTING.md
       →…
     30→### Test Coverage …
     36→### Linting …
-    42→## What _not_ to contribute? …
+    42→## What _not_ to contribute?
     44→### Dependencies
     46→It should be noted that our team does not accept third-party dependency updates/PRs.  If you submit a PR trying to update our dependencies we will close it with or without a reference to these contribution guidelines.
     47→
@@ -234,24 +241,29 @@ lib/ini.js
      3→const encode = (obj, opt = {}) => {
      4→  if (typeof opt === 'string') {
      5→    opt = { section: opt }
+     6→  }
       →…
     80→function splitSections (str, separator) {
     81→  var lastMatchIndex = 0
     82→  var lastSeparatorIndex = 0
+    83→  var nextIndex = 0
       →…
    106→const decode = (str, opt = {}) => {
    107→  opt.bracketedArray = opt.bracketedArray !== false
    108→  const out = Object.create(null)
+   109→  let p = out
       →…
    212→const isQuoted = val => {
    213→  return (val.startsWith('"') && val.endsWith('"')) ||
    214→    (val.startsWith("'") && val.endsWith("'"))
-      →…
+   215→}
    217→const safe = val => {
    218→  if (
    219→    typeof val !== 'string' ||
+   220→    val.match(/[=\r\n]/) ||
       →…
    230→const unsafe = val => {
    231→  val = (val || '').trim()
    232→  if (isQuoted(val)) {
+   233→    // remove the single quotes before calling JSON.parse
       →…

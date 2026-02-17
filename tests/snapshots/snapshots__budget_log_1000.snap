@@ -2,12 +2,20 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (985 words)
+budget: 1000 (975 words)
 
+CHANGELOG.md
+     1→# Change Log …
 README.md
-     1→log …
-    19→## Minimum supported `rustc` …
-    25→## Usage …
+     1→log
+     4→A Rust library providing a lightweight logging *facade*.
+     5→
+      →…
+    19→## Minimum supported `rustc`
+    21→`1.68.0+`
+    22→
+      →…
+    25→## Usage
     27→### In libraries
     29→Libraries should link only to the `log` crate, and use the provided macros to
     30→log whatever information will be useful to downstream consumers:
@@ -24,45 +32,42 @@ README.md
     41→    trace!("Commencing yak shaving");
     42→
     43→    loop {
-    44→        match find_a_razor() {
-    45→            Ok(razor) => {
-    46→                info!("Razor located: {razor}");
-    47→                yak.shave(razor);
-    48→                break;
-    49→            }
-    50→            Err(err) => {
-    51→                warn!("Unable to locate a razor: {err}, retrying");
-    52→            }
-    53→        }
-    54→    }
-    55→}
-    56→```
-    57→
-    58→### In executables …
-   106→## Structured logging …
+      →…
+    58→### In executables
+    60→In order to produce log output, executables have to use a logger implementation compatible with the facade.
+    61→There are many available implementations to choose from, here are some options:
+    62→
+    63→* Simple minimal loggers:
+    64→    * [`env_logger`](https://docs.rs/env_logger/*/env_logger/)
+    65→    * [`colog`](https://docs.rs/colog/*/colog/)
+    66→    * [`simple_logger`](https://docs.rs/simple_logger/*/simple_logger/)
+    67→    * [`simplelog`](https://docs.rs/simplelog/*/simplelog/)
+    68→    * [`pretty_env_logger`](https://docs.rs/pretty_env_logger/*/pretty_env_logger/)
+    69→    * [`stderrlog`](https://docs.rs/stderrlog/*/stderrlog/)
+      →…
+   106→## Structured logging
+   108→If you enable the `kv` feature, you can associate structured data with your log records:
+   109→
+      →…
 rfcs/0296-structured-logging.md
+     5→# Summary …
+    16→# Contents …
+    43→# Motivation …
+    98→# Guide-level explanation …
+   495→# Reference-level explanation …
    502→### Don't break anything
    504→Allow structured logging to be added in the current `0.4.x` series of `log`. This gives us the option of including structured logging in an `0.4.x` release, or bumping the minor crate version without introducing any actual breaking changes.
    505→
+  1575→# Drawbacks, rationale, and alternatives …
   1598→#### Build a serialization contract in `log`
   1600→Instead of internalizing a few serialization frameworks, `log` could provide a public common contract for them to conform to:
   1601→
   1602→```rust
   1603→// Instead of `Value::from_any` + `FromAny`
   1604→
-  1605→pub trait Visit {
-  1606→    fn visit(&self, visitor: &mut dyn Visitor) -> Result<(), Error>;
-  1607→}
-  1608→
-  1609→pub trait Visitor {
-  1610→    fn u64(&mut self, v: u64) -> Result<(), Error>;
-  1611→    fn i64(&mut self, v: i64) -> Result<(), Error>;
-  1612→
-  1613→    ..
-  1614→}
-  1615→```
-  1616→
       →…
+  1629→# Prior art …
+  1650→# Unresolved questions …
 src/__private_api.rs
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -79,7 +84,7 @@ src/__private_api.rs
 src/kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
-     7→}
+      →…
      9→#[derive(Debug)]
     10→enum Inner {
     11→    #[cfg(feature = "std")]
@@ -96,11 +101,8 @@ src/kv/error.rs
 src/kv/key.rs
      7→pub trait ToKey {
      8→    /// Perform the conversion.
-     9→    fn to_key(&self) -> Key<'_>;
-      →…
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
-    39→    key: &'k str,
       →…
     94→mod std_support {
    113→mod sval_support {
@@ -117,13 +119,10 @@ src/kv/mod.rs
 src/kv/source.rs
     51→pub trait Source {
     52→    /// Visit key-values.
-    53→    ///
     91→fn get_default …
    114→fn count_default …
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
-   237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
-      →…
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    242→where
    243→    T: VisitSource<'kvs> + ?Sized,
@@ -132,11 +131,9 @@ src/kv/source.rs
 src/kv/value.rs
     11→pub trait ToValue {
     12→    /// Perform the conversion.
-    13→    fn to_value(&self) -> Value<'_>;
-      →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
-   121→}
+      →…
    204→    fn from_inner …
    235→impl<'v> serde_core::Serialize for Value<'v> {
    245→impl<'v> sval::Value for Value<'v> {
@@ -147,7 +144,6 @@ src/kv/value.rs
    390→mod std_support {
    462→pub trait VisitValue<'v> {
    463→    /// Visit a `Value`.
-   464→    ///
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
    541→    T: VisitValue<'v>,
@@ -156,7 +152,6 @@ src/kv/value.rs
    721→pub(in crate::kv) mod inner {
    738→    pub enum Inner<'v> {
    739→        None,
-   740→        Bool(bool),
       →…
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
@@ -246,7 +241,6 @@ src/lib.rs
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
   1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
   1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
-  1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
       →…
 test_max_level_features/main.rs
      6→#[cfg(not(feature = "std"))]

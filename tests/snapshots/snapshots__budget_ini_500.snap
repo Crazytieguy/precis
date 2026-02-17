@@ -9,19 +9,13 @@ budget: 500 (489 words)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
      9→  .map((file) => `./${file}`)
 CHANGELOG.md
+     1→# Changelog …
      3→## [6.0.0](https://github.com/npm/ini/compare/v5.0.0...v6.0.0) (2025-10-22) …
-     4→### ⚠️ BREAKING CHANGES …
-    12→### ⚠️ BREAKING CHANGES …
-    24→### Bug Fixes …
-    36→### Bug Fixes …
-    65→### Bug Fixes …
-    71→### Features …
-    86→### ⚠️ BREAKING CHANGES …
-    97→### Bug Fixes …
-   104→### ⚠ BREAKING CHANGES …
 CONTRIBUTING.md
      3→# Contributing …
-     5→## Code of Conduct …
+     5→## Code of Conduct
+     7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
+     8→
      9→## Reporting Bugs …
     17→## Pull Request Conventions …
     19→### Commits …
@@ -73,7 +67,40 @@ README.md
     45→
     46→//  Modify data object
     47→
-      →…
+    48→config.scope = 'local'
+    49→config.database.database = 'use_another_database'
+    50→config.paths.default.tmpdir = '/tmp'
+    51→delete config.paths.default.datadir
+    52→config.paths.default.array.push('fourth value')
+    53→
+    54→//  Stringify data object
+    55→
+    56→text = stringify(config,{ 
+    57→    section : 'section' 
+    58→})
+    59→
+    60→//  Write INI file as text
+    61→
+    62→await writeFile(`./Modified.ini`,text)
+    63→```
+    64→
+    65→The written file will contain the following:
+    66→
+    67→```ini
+    68→[section]
+    69→scope=local
+    70→[section.database]
+    71→user=dbuser
+    72→password=dbpassword
+    73→database=use_another_database
+    74→[section.paths.default]
+    75→tmpdir=/tmp
+    76→array[]=first value
+    77→array[]=second value
+    78→array[]=third value
+    79→array[]=fourth value
+    80→```
+    81→
     82→## API
     84→### Parse
     86→Attempts to turn the given INI string into a nested data object.
@@ -107,19 +134,6 @@ README.md
    115→    align : false ,
    116→
    117→    /**
-   118→     *  Identifier to use for global items 
-   119→     *  and to prepend to all other sections.
-   120→     */
-   121→
-   122→    section ,
-   123→
-   124→    /**
-   125→     *  Whether to sort all sections & their keys alphabetically.
-   126→     */
-   127→
-   128→    sort : false ,
-   129→
-   130→    /**
       →…
    167→### Un / Escape
    169→Turn the given string into a safe to  

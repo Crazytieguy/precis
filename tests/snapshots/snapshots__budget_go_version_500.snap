@@ -2,27 +2,46 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (478 words)
 
 README.md
      1→# Versioning Library for Go
      6→go-version is a library for parsing versions and version constraints,
-      →…
+     7→and verifying versions against a set of constraints. go-version
+     8→can sort a collection of versions properly, handles prerelease/beta
+     9→versions, can increment versions, etc.
+    10→
+    11→Versions used with go-version must follow [SemVer](http://semver.org/).
+    12→
     13→## Installation and Usage
     15→Package documentation can be found on
-      →…
+    16→[Go Reference](https://pkg.go.dev/github.com/hashicorp/go-version).
+    17→
+    18→Installation can be done with a normal `go get`:
+    19→
+    20→```
+    21→$ go get github.com/hashicorp/go-version
+    22→```
+    23→
     24→#### Version Parsing and Comparison
     26→```go
+    27→v1, err := version.NewVersion("1.2")
+    28→v2, err := version.NewVersion("1.5+metadata")
       →…
     37→#### Version Constraints
     39→```go
+    40→v1, err := version.NewVersion("1.2")
+    41→
       →…
     49→#### Version Sorting
     51→```go
+    52→versionsRaw := []string{"1.1", "0.7.1", "1.4-beta", "1.4", "2"}
+    53→versions := make([]*version.Version, len(versionsRaw))
       →…
     63→## Issues and Contributing
     65→If you find an issue with this library, please report an issue. If you'd
-      →…
+    66→like, we welcome any contributions. Fork this library and submit a pull
+    67→request.
 constraint.go
     31→// Constraint represents a single constraint for a version, such as
     32→// ">= 1.0".
@@ -33,6 +52,8 @@ constraint.go
     37→	original string
     38→}
     40→func (c *Constraint) Equals(con *Constraint) bool {
+    41→	return c.op == con.op && c.check.Equal(con.check)
+    42→}
     44→// Constraints is a slice of constraints. We make a custom type so that
     45→// we can add methods to it.
     46→type Constraints []*Constraint
@@ -40,17 +61,25 @@ constraint.go
     51→	op operator
     52→	f  constraintFunc
     53→}
-    58→func NewConstraint(v string) (Constraints, error) {
-    75→func MustConstraints(c Constraints, err error) Constraints {
-    84→func (cs Constraints) Check(v *Version) bool {
-   102→func (cs Constraints) Equals(c Constraints) bool {
    125→func (cs Constraints) Len() int {
+   126→	return len(cs)
+   127→}
    129→func (cs Constraints) Less(i, j int) bool {
+   130→	if cs[i].op < cs[j].op {
+   131→		return true
+   132→	}
+   133→	if cs[i].op > cs[j].op {
+   134→		return false
+   135→	}
+   136→
+   137→	return cs[i].check.LessThan(cs[j].check)
+   138→}
    140→func (cs Constraints) Swap(i, j int) {
-   145→func (cs Constraints) String() string {
-   155→func (c *Constraint) Check(v *Version) bool {
-   161→func (c *Constraint) Prerelease() bool {
+   141→	cs[i], cs[j] = cs[j], cs[i]
+   142→}
    165→func (c *Constraint) String() string {
+   166→	return c.original
+   167→}
    228→//-------------------------------------------------------------------
    229→// Constraint functions
    230→//-------------------------------------------------------------------
@@ -59,6 +88,11 @@ constraint.go
 version.go
     15→// The compiled regular expression used to test the validity of a version.
     16→var (
+    17→	versionRegexp     *regexp.Regexp
+    18→	versionRegexpOnce sync.Once
+    19→	semverRegexp      *regexp.Regexp
+    20→	semverRegexpOnce  sync.Once
+    21→)
     37→// The raw regular expression string used for testing the validity
     38→// of a version.
     39→const (
@@ -66,6 +100,7 @@ version.go
     41→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-?([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
     42→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
     43→		`?`
+    44→
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
@@ -79,30 +114,16 @@ version.go
     57→	si       int
     58→	original string
     59→}
-    63→func NewVersion(v string) (*Version, error) {
-    70→func NewSemver(v string) (*Version, error) {
-   114→func Must(v *Version, err error) *Version {
-   128→func (v *Version) Compare(other *Version) int {
-   309→func (v *Version) Core() *Version {
-   316→func (v *Version) Equal(o *Version) bool {
-   325→func (v *Version) GreaterThan(o *Version) bool {
-   330→func (v *Version) GreaterThanOrEqual(o *Version) bool {
-   335→func (v *Version) LessThan(o *Version) bool {
-   340→func (v *Version) LessThanOrEqual(o *Version) bool {
-   349→func (v *Version) Metadata() string {
-   359→func (v *Version) Prerelease() string {
-   368→func (v *Version) Segments() []int {
-   381→func (v *Version) Segments64() []int64 {
-   395→func (v *Version) String() string {
-   423→func (v *Version) Original() string {
-   428→func (v *Version) UnmarshalText(b []byte) error {
-   440→func (v *Version) MarshalText() ([]byte, error) {
-   445→func (v *Version) Scan(src interface{}) error {
-   457→func (v *Version) Value() (driver.Value, error) {
 version_collection.go
      6→// Collection is a type that implements the sort.Interface interface
      7→// so that versions can be sorted.
      8→type Collection []*Version
     10→func (v Collection) Len() int {
+    11→	return len(v)
+    12→}
     14→func (v Collection) Less(i, j int) bool {
+    15→	return v[i].LessThan(v[j])
+    16→}
     18→func (v Collection) Swap(i, j int) {
+    19→	v[i], v[j] = v[j], v[i]
+    20→}

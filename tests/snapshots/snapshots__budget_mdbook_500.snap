@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (485 words)
+budget: 500 (483 words)
 
 README.md
      1→# mdBook …
@@ -71,7 +71,6 @@ crates/mdbook-html/src/theme/mod.rs
     41→    pub(crate) index: Vec<u8>,
       →…
    201→    fn default() -> Theme {
-   229→fn load_file_contents …
 crates/mdbook-html/src/utils.rs
     42→pub(crate) trait ToUrlPath {
     43→    fn to_url_path(&self) -> String;
@@ -113,6 +112,8 @@ crates/mdbook-summary/src/lib.rs
    190→macro_rules! collect_events {
 crates/xtask/README.md
      1→# xtask …
+crates/xtask/src/main.rs
+     9→mod changelog;
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
@@ -120,11 +121,15 @@ guide/guide-helper/src/lib.rs
 guide/guide-helper/src/main.rs
      3→fn main() {
 guide/src/README.md
-     1→# Introduction …
+     1→# Introduction
+     4→    .mdbook-version {
+      →…
     46→## Contributing …
     55→## License …
 guide/src/cli/README.md
      1→# Command-line tool …
+guide/src/for_developers/README.md
+     1→# For developers …
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     46→pub struct WordcountConfig {
     47→    pub ignores: Vec<String>,
@@ -134,6 +139,8 @@ guide/src/format/README.md
      1→# Format …
 guide/src/format/configuration/README.md
      1→# Configuration …
+guide/src/format/example.rs
+     1→fn main() {
 guide/src/format/mdbook.md
      3→## Hiding code lines …
 guide/src/format/theme/README.md
@@ -152,12 +159,8 @@ src/cmd/command_prelude.rs
      7→pub trait CommandExt: Sized {
     42→    fn arg_watcher(self) -> Self {
 src/cmd/mod.rs
-     1→//! Subcommand modules for the `mdbook` binary.
-     2→
      3→pub mod build;
-     7→#[cfg(feature = "serve")]
      8→pub mod serve;
-    10→#[cfg(feature = "watch")]
     11→pub mod watch;
 src/cmd/serve.rs
     20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";

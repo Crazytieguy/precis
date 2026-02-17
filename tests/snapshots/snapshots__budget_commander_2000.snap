@@ -2,50 +2,93 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1962 words)
+budget: 2000 (1968 words)
 
+CHANGELOG.md
+     1→# Changelog
+     3→All notable changes to this project will be documented in this file.
+     4→
+      →…
+   911→#### Testing for no arguments
+   913→If you were previously using code like:
+   914→
+   915→```js
+      →…
 CONTRIBUTING.md
-     1→# Contributing …
+     1→# Contributing
      3→## Issues
      5→New issues are welcome, whether questions or suggestions or reporting bugs.
      6→You are also welcome to contribute by adding helpful comments on an existing issue.
      7→
-     8→We love reproducible code examples in questions and answers.
-     9→
       →…
     13→## Pull Requests …
 Readme.md
-     1→# Commander.js …
+     1→# Commander.js
+     8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
+     9→
+    10→Read this in other languages: English | [简体中文](./Readme_zh-CN.md)
+    11→
+    12→- [Commander.js](#commanderjs)
+    13→  - [Installation](#installation)
+    14→  - [Quick Start](#quick-start)
+    15→  - [Declaring _program_ variable](#declaring-program-variable)
+    16→  - [Options](#options)
+    17→    - [Common option types, boolean and value](#common-option-types-boolean-and-value)
+    18→    - [Default option value](#default-option-value)
+    19→    - [Other option types, negatable boolean and boolean|value](#other-option-types-negatable-boolean-and-booleanvalue)
+    20→    - [Required option](#required-option)
+    21→    - [Variadic option](#variadic-option)
+    22→    - [Version option](#version-option)
+    23→    - [More configuration](#more-configuration)
+    24→    - [Custom option processing](#custom-option-processing)
+    25→  - [Commands](#commands)
+    26→    - [Command-arguments](#command-arguments)
+    27→      - [More configuration](#more-configuration-1)
+    28→      - [Custom argument processing](#custom-argument-processing)
+    29→    - [Action handler](#action-handler)
+    30→    - [Stand-alone executable (sub)commands](#stand-alone-executable-subcommands)
+    31→    - [Life cycle hooks](#life-cycle-hooks)
+    32→  - [Automated help](#automated-help)
+    33→    - [Custom help](#custom-help)
+    34→    - [Display help after errors](#display-help-after-errors)
+    35→    - [Display help from code](#display-help-from-code)
+    36→    - [.name](#name)
+    37→    - [.usage](#usage)
+    38→    - [.description and .summary](#description-and-summary)
+    39→    - [.helpOption(flags, description)](#helpoptionflags-description)
+    40→    - [.helpCommand()](#helpcommand)
+    41→    - [Help Groups](#help-groups)
+    42→    - [More configuration](#more-configuration-2)
+    43→  - [Custom event listeners](#custom-event-listeners)
+    44→  - [Bits and pieces](#bits-and-pieces)
+    45→    - [.parse() and .parseAsync()](#parse-and-parseasync)
+    46→    - [Parsing Configuration](#parsing-configuration)
+    47→    - [Legacy options as properties](#legacy-options-as-properties)
+    48→    - [TypeScript](#typescript)
+    49→    - [createCommand()](#createcommand)
+      →…
     61→## Installation …
     67→## Quick Start …
    147→## Declaring _program_ variable …
    177→## Options …
-   211→### Common option types, boolean and value …
-   254→### Default option value …
-   276→### Other option types, negatable boolean and boolean|value …
-   342→### Required option …
-   362→### Variadic option …
-   396→### Version option …
-   416→### More configuration …
-   459→### Custom option processing …
    523→## Commands …
-   567→### Command-arguments …
-   613→#### More configuration …
-   625→#### Custom argument processing …
-   648→### Action handler …
-   700→### Stand-alone executable (sub)commands …
-   725→### Life cycle hooks …
+   613→#### More configuration
+   615→There are some additional features available by constructing an `Argument` explicitly for less common cases.
+   616→
+   617→Example file: [arguments-extra.js](./examples/arguments-extra.js)
+   618→
+   619→```js
+   620→program
+      →…
+   625→#### Custom argument processing
+   627→You may specify a function to do custom processing of command-arguments (like for option-arguments).
+   628→The callback function receives two parameters, the user specified command-argument and the previous value for the argument.
+   629→It returns the new value for the argument.
+   630→
+   631→The processed argument values are passed to the action handler, and saved as `.processedArgs`.
+   632→
+      →…
    754→## Automated help …
-   787→### Custom help …
-   830→### Display help after errors …
-   860→### Display help from code …
-   868→### .name …
-   884→### .usage …
-   900→### .description and .summary …
-   914→### .helpOption(flags, description) …
-   925→### .helpCommand() …
-   937→### Help Groups …
-   947→### More configuration …
    956→## Custom event listeners …
    966→## Bits and pieces …
    968→### .parse() and .parseAsync()
@@ -67,38 +110,29 @@ Readme.md
    985→
    986→Use `.parseAsync()` instead of `.parse()` if any of your action handlers are async.
    987→
-   988→### Parsing Configuration …
-  1023→### Legacy options as properties …
-  1042→### TypeScript …
-  1058→### createCommand() …
-  1071→### Node options such as `--harmony` …
-  1078→### Debugging stand-alone executable subcommands …
-  1087→### npm run-script …
-  1098→### Display error …
-  1110→### Override exit and output handling …
-  1154→### Additional documentation …
   1164→## Support …
-  1172→### Commander for enterprise …
 Readme_zh-CN.md
+     1→# Commander.js
+     8→完整的 [node.js](http://nodejs.org) 命令行解决方案。
+     9→
+    10→使用其他语言阅读：[English](./Readme.md) | 简体中文
+    11→
+    12→- [Commander.js](#commanderjs)
+      →…
+   570→#### 其他参数配置 …
+   582→#### 自定义参数处理 …
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
    911→如果参数遵循与 node 不同的约定，可以在第二个参数中传递`from`选项：
    912→
    913→- `node`：默认值，`argv[0]`是应用，`argv[1]`是要跑的脚本，后续为用户参数；
-   914→- `electron`：`argv[1]`根据 electron 应用是否打包而变化；
-   915→- `user`：来自用户的所有参数。
-   916→
-   917→例如：
-   918→
-   919→```js
-   920→program.parse(process.argv); // 指明，按 node 约定
-   921→program.parse(); // 默认，自动识别 electron
-   922→program.parse(['-f', 'filename'], { from: 'user' });
-   923→```
-   924→
+      →…
 SECURITY.md
-     1→# Security Policy …
+     1→# Security Policy
+     3→To report a security vulnerability, please use the
+     4→[Tidelift security contact](https://tidelift.com/security).
+      →…
 docs/deprecated.md
      1→# Deprecated …
     22→### RegExp .option() parameter …
@@ -112,7 +146,7 @@ docs/deprecated.md
    171→### Import from `commander/esm.mjs` …
    187→### cmd._args …
    203→### .addHelpCommand(string|boolean|undefined) …
-   227→## Removed …
+   227→## Removed
    229→### Short option flag longer than a single character
    231→Short option flags like `-ws` were never supported, but the old README did not make this clear. The README now states that short options are a single character.
    232→
@@ -124,17 +158,32 @@ docs/deprecated.md
    238→### Default import of global Command object …
 docs/help-in-depth.md
      1→# Help in Depth …
-    20→## Data Properties …
-    34→## Stringify and Style …
-   118→## Layout …
+    20→## Data Properties
+    22→The data properties are:
+    23→
+      →…
+    34→## Stringify and Style
+    36→The `Help` object has narrowly focused methods to allow customising the displayed help.
+    37→
+      →…
+   118→## Layout
+   120→Utility methods which control the layout include `padWidth`, `boxWrap`, and `formatItem`. These can be overridden to change the layout or replace with an alternative implementation.
+   121→
+      →…
 docs/options-in-depth.md
      2→# Options in Depth …
-    15→## Options taking varying numbers of option-arguments …
+    15→## Options taking varying numbers of option-arguments
+    17→Certain options take a varying number of arguments:
+    18→
+      →…
     30→### Parsing ambiguity …
     79→#### Alternative: Make `--` part of your syntax …
    104→#### Alternative: Put options last …
    126→#### Alternative: Use options instead of command-arguments …
-   148→## Combining short options, and options taking arguments …
+   148→## Combining short options, and options taking arguments
+   150→Multiple boolean short options can be combined after a single `-`, like `ls -al`. You can also include just
+   151→a single short option which might take a value, as any following characters will
+      →…
    191→### Combining short options as if boolean …
 docs/parsing-and-hooks.md
      1→# Parsing life cycle and hooks …
@@ -142,13 +191,17 @@ docs/release-policy.md
      1→# Release Policy …
 docs/terminology.md
      1→# Terminology …
+docs/zh-CN/不再推荐使用的功能.md
+     1→# 不再推荐使用的功能 …
+docs/zh-CN/可变参数的选项.md
+     1→# 可变参数的选项 …
+docs/zh-CN/术语表.md
+     1→# 术语表 …
 eslint.config.js
-     8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
-     9→const tsconfigJsFiles = ['*.{js,mjs}', 'lib/**/*.{js,mjs}']; // match "include" in tsconfig.js.json
+     8→const tsconfigTsFiles …
+     9→const tsconfigJsFiles …
 jest.config.js
-     1→const config = {
-     2→  testEnvironment: 'node',
-      →…
+     1→const config …
 lib/argument.js
      3→class Argument {
      4→  /**
@@ -271,32 +324,11 @@ lib/error.js
      4→class CommanderError extends Error {
      5→  /**
      6→   * Constructs the CommanderError class
-     7→   * @param {number} exitCode suggested exit code which could be used with process.exit
-     8→   * @param {string} code an id string representing the error
-     9→   * @param {string} message human-readable description of the error
-    10→   */
     11→  constructor(exitCode, code, message) {
-    12→    super(message);
-    13→    // properly capture stack trace in Node.js
-    14→    Error.captureStackTrace(this, this.constructor);
-    15→    this.name = this.constructor.name;
-    16→    this.code = code;
-    17→    this.exitCode = exitCode;
-    18→    this.nestedError = undefined;
-    19→  }
-    20→}
     25→class InvalidArgumentError extends CommanderError {
     26→  /**
     27→   * Constructs the InvalidArgumentError class
-    28→   * @param {string} [message] explanation of why argument is invalid
-    29→   */
     30→  constructor(message) {
-    31→    super(1, 'commander.invalidArgument', message);
-    32→    // properly capture stack trace in Node.js
-    33→    Error.captureStackTrace(this, this.constructor);
-    34→    this.name = this.constructor.name;
-    35→  }
-    36→}
 lib/help.js
     12→class Help {
     13→  constructor() {
@@ -363,26 +395,7 @@ lib/option.js
    268→class DualOptions {
    269→  /**
    270→   * @param {Option[]} options
-   271→   */
    272→  constructor(options) {
-   273→    this.positiveOptions = new Map();
-   274→    this.negativeOptions = new Map();
-   275→    this.dualOptions = new Set();
-   276→    options.forEach((option) => {
-   277→      if (option.negate) {
-   278→        this.negativeOptions.set(option.attributeName(), option);
-   279→      } else {
-   280→        this.positiveOptions.set(option.attributeName(), option);
-   281→      }
-   282→    });
-   283→    this.negativeOptions.forEach((value, key) => {
-   284→      if (this.positiveOptions.has(key)) {
-   285→        this.dualOptions.add(key);
-   286→      }
-   287→    });
-   288→  }
-   289→
-   290→  /**
    297→  valueFromOption(value, option) {
    316→function camelcase(str) {
    328→function splitOptionFlags(flags) {
@@ -399,29 +412,23 @@ typings/index.d.ts
     16→export class CommanderError extends Error {
     17→  code: string;
     18→  exitCode: number;
-    19→  message: string;
     31→export class InvalidArgumentError extends CommanderError {
     32→  /**
     33→   * Constructs the InvalidArgumentError class
-    34→   * @param message - explanation of why argument is invalid
     40→export interface ErrorOptions {
     41→  // optional parameter for error()
     42→  /** an id string representing the error */
-    43→  code?: string;
       →…
     48→export class Argument {
     49→  description: string;
     50→  required: boolean;
-    51→  variadic: boolean;
     95→export class Option {
     96→  flags: string;
     97→  description: string;
-    98→
    115→  constructor(flags: string, description?: string);
    210→export class Help {
    211→  /** output helpWidth, long lines are wrapped to fit */
    212→  helpWidth?: number;
-   213→  minWidthToWrap: number;
    218→  constructor();
    226→  prepareContext(contextOptions: {
    227→    error?: boolean;
@@ -442,11 +449,10 @@ typings/index.d.ts
    345→export interface HelpContext {
    346→  // optional parameter for .help() and .outputHelp()
    347→  error: boolean;
-   348→}
+      →…
    349→export interface AddHelpTextContext {
    350→  // passed to text function used with .addHelpText()
    351→  error: boolean;
-   352→  command: Command;
       →…
    354→export interface OutputConfiguration {
    355→  writeOut?(str: string): void;
@@ -466,7 +472,6 @@ typings/index.d.ts
    376→export class Command {
    377→  args: string[];
    378→  processedArgs: any[];
-   379→  readonly commands: readonly Command[];
    384→  constructor(name?: string);
    493→  argument(name: string, description?: string, defaultValue?: unknown): this;
    528→  helpCommand(enable: boolean): this;
@@ -478,7 +483,6 @@ typings/index.d.ts
   1094→export interface CommandOptions {
   1095→  hidden?: boolean;
   1096→  isDefault?: boolean;
-  1097→  /** @deprecated since v7, replaced by hidden */
       →…
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1101→  executableFile?: string;
@@ -486,5 +490,5 @@ typings/index.d.ts
   1104→export interface ParseOptionsResult {
   1105→  operands: string[];
   1106→  unknown: string[];
-  1107→}
+      →…
   1113→export const program: Command;

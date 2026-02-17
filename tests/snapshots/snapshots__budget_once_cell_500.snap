@@ -2,9 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (491 words)
+budget: 500 (492 words)
 
 CHANGELOG.md
+     1→# Changelog …
      3→## 1.21.3
      5→- Outline more initialization in `race`: [#284](https://github.com/matklad/once_cell/pull/284),
      6→  [#285](https://github.com/matklad/once_cell/pull/285).
@@ -53,7 +54,6 @@ src/imp_std.rs
     15→    // This `queue` field is the core of the implementation. It encodes two
     16→    // pieces of information:
     17→    //
-    18→    // * The current state of the cell (`INCOMPLETE`, `RUNNING`, `COMPLETE`)
       →…
    125→const INCOMPLETE …
    126→const RUNNING …
@@ -65,7 +65,7 @@ src/imp_std.rs
    139→    thread: Cell<Option<Thread>>,
    140→    signaled: AtomicBool,
    141→    next: *mut Waiter,
-   142→}
+      →…
    145→struct Guard<'a> {
    146→    queue: &'a AtomicPtr<Waiter>,
    147→    new_queue: *mut Waiter,
@@ -73,6 +73,8 @@ src/imp_std.rs
    245→mod strict {
    246→    #[must_use]
    247→    #[inline]
+   248→    pub(crate) fn addr<T>(ptr: *mut T) -> usize
+   249→    where
 src/lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]

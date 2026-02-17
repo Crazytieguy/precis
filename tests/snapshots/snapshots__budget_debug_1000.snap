@@ -2,13 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (992 words)
+budget: 1000 (990 words)
 
 README.md
-     1→# debug …
+     1→# debug
+     7→A tiny JavaScript debugging utility modelled after Node.js core's debugging
+     8→technique. Works in Node.js and web browsers.
+     9→
     10→## Installation …
     16→## Usage …
-    73→#### Windows command prompt notes …
+    73→#### Windows command prompt notes
     75→##### CMD
     77→On Windows the environment variable is set using the `set` command.
     78→
@@ -22,16 +25,66 @@ README.md
     86→set DEBUG=* & node app.js
     87→```
     88→
-    89→##### PowerShell (VS Code default) …
+    89→##### PowerShell (VS Code default)
+    91→PowerShell uses different syntax to set environment variables.
+    92→
+    93→```cmd
+    94→$env:DEBUG = "*,-not_this"
+    95→```
+    96→
+    97→Example:
+    98→
+    99→```cmd
+   100→$env:DEBUG='app';node app.js
+   101→```
+   102→
+   103→Then, run the program to be debugged as usual.
+   104→
+   105→npm script example:
+   106→```js
+   107→  "windowsDebug": "@powershell -Command $env:DEBUG='*';node app.js",
+   108→```
+   109→
    110→## Namespace Colors …
-   116→#### Node.js …
-   124→#### Web Browser …
+   116→#### Node.js
+   118→In Node.js, colors are enabled when stderr is a TTY. You also _should_ install
+   119→the [`supports-color`](https://npmjs.org/supports-color) module alongside debug,
+   120→otherwise debug will only use a small handful of basic colors.
+   121→
+   122→<img width="521" src="https://user-images.githubusercontent.com/71256/29092181-47f6a9e6-7c3a-11e7-9a14-1928d8a711cd.png">
+   123→
+   124→#### Web Browser
+   126→Colors are also enabled on "Web Inspectors" that understand the `%c` formatting
+   127→option. These are WebKit web inspectors, Firefox ([since version
+   128→31](https://hacks.mozilla.org/2014/05/editable-box-model-multiple-selection-sublime-text-keys-much-more-firefox-developer-tools-episode-31/))
+   129→and the Firebug plugin for Firefox (any version).
+   130→
+   131→<img width="524" src="https://user-images.githubusercontent.com/71256/29092033-b65f9f2e-7c39-11e7-8e32-f6f0d8e865c1.png">
+   132→
+   133→
    134→## Millisecond diff …
    145→## Conventions …
    149→## Wildcards …
    161→## Environment Variables …
    181→## Formatters …
-   196→### Custom formatters …
+   196→### Custom formatters
+   198→You can add custom formatters by extending the `debug.formatters` object.
+   199→For example, if you wanted to add support for rendering a Buffer as hex with
+   200→`%h`, you could do something like:
+   201→
+   202→```js
+   203→const createDebug = require('debug')
+   204→createDebug.formatters.h = (v) => {
+   205→  return v.toString('hex')
+   206→}
+   207→
+   208→// …elsewhere
+   209→const debug = createDebug('foo')
+   210→debug('this is hex: %h', new Buffer('hello world'))
+   211→//   foo this is hex: 68656c6c6f20776f726c6421 +0ms
+   212→```
+   213→
+   214→
    215→## Browser Support …
    248→## Output streams …
    274→## Extend …
@@ -61,6 +114,11 @@ src/browser.js
    130→	// Is webkit? http://stackoverflow.com/a/16459606/376773
    131→	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
    132→	// eslint-disable-next-line no-return-assign
+   133→	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
+   134→		// Is firebug? http://stackoverflow.com/a/398120/376773
+   135→		(typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
+   136→		// Is firefox >= v31?
+   137→		// https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
       →…
    143→/**
    144→ * Colorize log arguments if enabled.
@@ -73,16 +131,6 @@ src/browser.js
    151→		this.namespace +
    152→		(this.useColors ? ' %c' : ' ') +
    153→		args[0] +
-   154→		(this.useColors ? '%c ' : ' ') +
-   155→		'+' + module.exports.humanize(this.diff);
-   156→
-   157→	if (!this.useColors) {
-   158→		return;
-   159→	}
-   160→
-   161→	const c = 'color: ' + this.color;
-   162→	args.splice(1, 0, c, 'color: inherit');
-   163→
       →…
    194→/**
    195→ * Save `namespaces`.
@@ -95,13 +143,7 @@ src/browser.js
    202→		if (namespaces) {
    203→			exports.storage.setItem('debug', namespaces);
    204→		} else {
-   205→			exports.storage.removeItem('debug');
-   206→		}
-   207→	} catch (error) {
-   208→		// Swallow
-   209→		// XXX (@Qix-) should we be logging these?
-   210→	}
-   211→}
+      →…
    213→/**
    214→ * Load `namespaces`.
    215→ *
@@ -113,16 +155,6 @@ src/browser.js
    221→	try {
    222→		r = exports.storage.getItem('debug') || exports.storage.getItem('DEBUG') ;
    223→	} catch (error) {
-   224→		// Swallow
-   225→		// XXX (@Qix-) should we be logging these?
-   226→	}
-   227→
-   228→	// If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-   229→	if (!r && typeof process !== 'undefined' && 'env' in process) {
-   230→		r = process.env.DEBUG;
-   231→	}
-   232→
-   233→	return r;
       →…
    236→/**
    237→ * Localstorage attempts to return the localstorage.
@@ -140,11 +172,7 @@ src/browser.js
    249→		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
    250→		// The Browser also has localStorage in the global context.
    251→		return localStorage;
-   252→	} catch (error) {
-   253→		// Swallow
-   254→		// XXX (@Qix-) should we be logging these?
-   255→	}
-   256→}
+      →…
 src/common.js
      2→/**
      3→ * This is the common logic for both the Node.js and web browser
@@ -156,16 +184,6 @@ src/common.js
      9→	createDebug.default = createDebug;
     10→	createDebug.coerce = coerce;
     11→	createDebug.disable = disable;
-    12→	createDebug.enable = enable;
-    13→	createDebug.enabled = enabled;
-    14→	createDebug.humanize = require('ms');
-    15→	createDebug.destroy = destroy;
-    16→
-    17→	Object.keys(env).forEach(key => {
-    18→		createDebug[key] = env[key];
-    19→	});
-    20→
-    21→	/**
       →…
 src/node.js
    151→/**
@@ -188,15 +206,7 @@ src/node.js
    169→
    170→	if (useColors) {
    171→		const c = this.color;
-   172→		const colorCode = '\u001B[3' + (c < 8 ? c : '8;5;' + c);
-   173→		const prefix = `  ${colorCode};1m${name} \u001B[0m`;
-   174→
-   175→		args[0] = prefix + args[0].split('\n').join('\n' + prefix);
-   176→		args.push(colorCode + 'm+' + module.exports.humanize(this.diff) + '\u001B[0m');
-   177→	} else {
-   178→		args[0] = getDate() + name + ' ' + args[0];
-   179→	}
-   180→}
+      →…
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
    184→		return '';
@@ -221,10 +231,7 @@ src/node.js
    205→		process.env.DEBUG = namespaces;
    206→	} else {
    207→		// If you set a process.env field to null or undefined, it gets cast to the
-   208→		// string 'null' or 'undefined'. Just delete instead.
-   209→		delete process.env.DEBUG;
-   210→	}
-   211→}
+      →…
    213→/**
    214→ * Load `namespaces`.
    215→ *
@@ -247,8 +254,6 @@ src/node.js
    233→
    234→	const keys = Object.keys(exports.inspectOpts);
    235→	for (let i = 0; i < keys.length; i++) {
-   236→		debug.inspectOpts[keys[i]] = exports.inspectOpts[keys[i]];
-   237→	}
-   238→}
+      →…
 test.node.js
      8→const formatWithOptionsSpy = sinon.spy(util, 'formatWithOptions');

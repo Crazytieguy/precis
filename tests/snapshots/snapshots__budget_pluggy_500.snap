@@ -2,9 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (477 words)
+budget: 500 (479 words)
 
+AGENTS.md
+     1→# AGENTS.md …
 CLAUDE.md
+     1→# CLAUDE.md …
     34→### Main Components …
 SECURITY.md
      1→# Security …
@@ -96,7 +99,6 @@ src/pluggy/_hooks.py
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [
    621→            impl
-   622→            for impl in self._orig._hookimpls
       →…
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]

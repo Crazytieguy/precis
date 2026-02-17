@@ -2,16 +2,30 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 words)
+budget: 1000 (987 words)
 
 README.md
+    91→# Documentation
+    93→- [Sandbox examples](#sandbox-examples)
+    94→- [Getting Started](#getting-started)
+    95→- [API Reference](#api-reference)
+    96→  - [`match`](#match)
+    97→  - [`.with`](#with)
+    98→  - [`.when`](#when)
+    99→  - [`.returnType`](#returntype)
+   100→  - [`.exhaustive`](#exhaustive)
+   101→  - [`.otherwise`](#otherwise)
+   102→  - [`.narrow`](#narrow)
+   103→  - [`isMatching`](#ismatching)
+   104→  - [Patterns](#patterns)
+   105→    - [Literals](#literals)
+      →…
    417→### `match`
    419→```ts
    420→match(value);
    421→```
    422→
-   423→Create a `Match` object on which you can later call `.with`, `.when`, `.otherwise` and `.run`.
-   424→
+      →…
    857→#### `P._` wildcard
    859→The `P._` pattern will match any value. You can also use `P.any`, which is an alias to `P._`.
    860→
@@ -20,48 +34,48 @@ README.md
    863→
    864→const input = 'hello';
    865→
-   866→const output = match(input)
-   867→  .with(P._, () => 'It will always match')
-   868→  // OR
-   869→  .with(P.any, () => 'It will always match')
-   870→  .otherwise(() => 'This string will never be used');
-   871→
-   872→console.log(output);
-   873→// => 'It will always match'
-   874→```
-   875→
+      →…
   1623→### `P.infer`
   1625→`P.infer<typeof somePattern>` lets you infer a type of value from a type of pattern.
   1626→
   1627→It's particularly useful when validating an API response.
   1628→
-  1629→```ts
-  1630→const postPattern = {
-  1631→  title: P.string,
-  1632→  content: P.string,
-  1633→  stars: P.number.between(1, 5).optional(),
-  1634→  author: {
-  1635→    firstName: P.string,
-  1636→    lastName: P.string.optional(),
-  1637→    followerCount: P.number,
-  1638→  },
-  1639→} as const;
-  1640→
-  1641→type Post = P.infer<typeof postPattern>;
-  1642→
-  1643→// posts: Post[]
-  1644→const posts = await fetch(someUrl)
       →…
 docs/v3-to-v4-migration-guide.md
-     3→## Breaking changes …
-     5→### Imports …
+     1→# TS-Pattern v3 to v4 Migration Guide
+     3→## Breaking changes
+     5→### Imports
+     7→type-specific wildcard patterns have moved from `__.<pattern>` to a new `Pattern` qualified module, also exported as `P` by ts-pattern.
+     8→
+     9→```diff
+    10→- import { match, __ } from 'ts-pattern';
+    11→+ import { match, Pattern } from 'ts-pattern';
+    12→
+    13→
+      →…
+   122→## New features …
    128→#### `P.array(pattern)` …
    159→#### `P.optional(pattern)` …
    298→#### `P.infer<typeof pattern>` …
    336→#### `P.symbol` …
 docs/v4-to-v5-migration-guide.md
-     7→## TypeScript v5 …
-    65→## chainable methods …
+     1→# TS-Pattern v4 to v5 Migration Guide
+     3→This file contains all breaking changes and new features between the version 4 and 5 of TS-Pattern.
+     4→
+     5→# Breaking changes
+     7→## TypeScript v5
+     9→Because it relies on [const type parameters](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#const-type-parameters), TS-Pattern v5 requires TypeScript v5+!
+    10→
+    11→## `.with` is now evaluated eagerly …
+    42→## Matching on Map and Sets …
+    63→# New features
+    65→## chainable methods
+    67→TS-Pattern v5's major addition is the ability to chain methods to narrow down the values matched by primitive patterns, like `P.string` or `P.number`.
+    68→
+    69→Since a few examples is worth a thousand words, here are a few ways you can use chainable methods:
+    70→
+   156→## Variadic tuple patterns …
+   214→## `.returnType` …
 src/errors.ts
      1→/**
      2→ * Error when the given input value does not match any included pattern
@@ -81,9 +95,7 @@ src/errors.ts
 src/internals/helpers.ts
     12→export const isObject …
     16→export const isMatcher …
-    24→const isOptionalPattern = (
-    25→  x: unknown
-    26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
+    24→const isOptionalPattern …
     32→export const matchPattern …
    120→export const getSelectionKeys …
    132→export const flatMap …
@@ -92,17 +104,7 @@ src/internals/symbols.ts
      2→ * Symbols used internally within ts-pattern to construct and discriminate
      3→ * Guard, Not, and Select, and AnonymousSelect patterns
      4→ *
-     5→ * Symbols have the advantage of not appearing in auto-complete suggestions in
-     6→ * user defined patterns, and eliminate the risk of property
-     7→ * overlap between ts-pattern internals and user defined patterns.
-     8→ *
-     9→ * These symbols have to be visible to tsc for type inference to work, but
-    10→ * users should not import them
-    11→ * @module
-    12→ * @private
-    13→ * @internal
-    14→ */
-    15→
+      →…
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
     17→export type matcher = typeof matcher;
     19→export const unset = Symbol.for('@ts-pattern/unset');
@@ -241,9 +243,7 @@ src/types/Pattern.ts
     44→ * A `Matcher` is an object implementing the match
     45→ * protocol. It must define a `symbols.matcher` property
     46→ * which returns an object with a `match()` method, taking
-    47→ * the input value and returning whether the pattern matches
-    48→ * or not, along with optional selections.
-    49→ */
+      →…
     50→export interface Matcher<
     51→  input,
     52→  narrowed,

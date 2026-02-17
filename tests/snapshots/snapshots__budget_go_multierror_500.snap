@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (491 words)
+budget: 500 (489 words)
 
 CHANGELOG.md
      1→## Unreleased …
@@ -33,6 +33,9 @@ README.md
    115→this library takes advantage of.
    116→
    117→If you need to use an earlier version of go, you can use the
+   118→[v1.0.0](https://github.com/hashicorp/go-multierror/tree/v1.0.0)
+   119→tag, which doesn't rely on features in go 1.13.
+   120→
       →…
    129→## Usage
    131→go-multierror is easy to use and purposely built to be unobtrusive in
@@ -90,7 +93,6 @@ multierror.go
     90→// errors while accounting for the current represented error. This lets
     91→// Is/As be meaningful.
     92→//
-    93→// Unwrap returns the next error. In the cleanest form, Unwrap would return
       →…
     99→type chain []error
    102→func (e chain) Error() string {

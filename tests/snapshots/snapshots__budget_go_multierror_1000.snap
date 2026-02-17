@@ -38,8 +38,6 @@ README.md
     34→```
     35→
     36→**Custom formatting:**
-    37→```go
-    38→// go-multierror allows custom formatting
       →…
    104→## Installation and Docs
    106→Install using `go get github.com/hashicorp/go-multierror`.
@@ -88,8 +86,6 @@ README.md
    151→return result
    152→```
    153→
-   154→**Customizing the formatting of the errors**
-   155→
       →…
 append.go
      6→// Append is a helper function that will append more errors
@@ -166,6 +162,7 @@ multierror.go
     90→// errors while accounting for the current represented error. This lets
     91→// Is/As be meaningful.
     92→//
+    93→// Unwrap returns the next error. In the cleanest form, Unwrap would return
       →…
     99→type chain []error
    101→// Error implements the error interface

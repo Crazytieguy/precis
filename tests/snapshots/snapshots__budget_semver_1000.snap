@@ -2,29 +2,57 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (845 words)
+budget: 1000 (897 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
-     8→  .filter((file) => file.startsWith('.eslintrc.local.'))
-     9→  .map((file) => `./${file}`)
+CHANGELOG.md
+     1→# Changelog …
+     3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16) …
 CONTRIBUTING.md
      3→# Contributing …
-     5→## Code of Conduct …
-     9→## Reporting Bugs …
-    17→## Pull Request Conventions …
+     5→## Code of Conduct
+     7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
+     8→
+     9→## Reporting Bugs
+    11→Before submitting a new bug report please search for an existing or similar report.
+    12→
+      →…
+    17→## Pull Request Conventions
     19→### Commits …
     30→### Test Coverage …
     36→### Linting …
-    42→## What _not_ to contribute? …
+    42→## What _not_ to contribute?
     44→### Dependencies …
     48→### Tools/Automation …
 README.md
-     1→semver(1) -- The semantic versioner for npm …
-     4→## Install …
-    10→## Usage …
-   139→## Versions …
-   148→## Ranges …
+     1→semver(1) -- The semantic versioner for npm
+     4→## Install
+     6→```bash
+     7→npm install semver
+     8→````
+     9→
+    10→## Usage
+    12→As a node module:
+    13→
+    14→```js
+    15→const semver = require('semver')
+    16→
+      →…
+   139→## Versions
+   141→A "version" is described by the `v2.0.0` specification found at
+   142→<https://semver.org/>.
+   143→
+   144→A leading `"="` or `"v"` character is stripped off and ignored.
+   145→Support for stripping a leading "v" is kept for compatibility with `v1.0.0` of the SemVer
+      →…
+   148→## Ranges
+   150→A `version range` is a set of `comparators` that specify versions
+   151→that satisfy the range.
+   152→
+   153→A `comparator` is composed of an `operator` and a `version`.  The set
+   154→of primitive `operators` is:
+      →…
    184→### Prerelease Tags …
    219→#### Prerelease Identifiers …
    250→#### Prerelease Identifier Base …
@@ -34,37 +62,38 @@ README.md
    324→#### Tilde Ranges `~1.2.3` `~1.2` `~1` …
    341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4` …
    384→### Range Grammar …
-   408→## Functions …
+   408→## Functions
+   410→All methods and classes take a final `options` object argument.  All
+   411→options in this object are `false` by default.  The options supported
+   412→are:
+   413→
+   414→- `loose`: Be more forgiving about not-quite-valid semver strings.
+      →…
    453→### Comparison …
    478→### Sorting …
    485→### Comparators …
    489→### Ranges …
    531→### Coercion …
    558→### Clean …
-   576→## Constants …
+   576→## Constants
+   578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
+   579→
    580→### `RELEASE_TYPES` …
    600→### `SEMVER_SPEC_VERSION` …
-   610→## Exported Modules …
+   610→## Exported Modules
+   613→TODO: Make sure that all of these items are documented (classes aren't,
+   614→eg), and then pull the module name into the documentation for that specific
+   615→thing.
+   616→-->
+   617→
+      →…
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
     37→const main = () => {
-    38→  if (!argv.length) {
-    39→    return help()
-    40→  }
-    41→  while (argv.length) {
-      →…
    132→const failInc = () => {
-   133→  console.error('--inc can only be used on a single version with no range')
-   134→  fail()
-   135→}
    137→const fail = () => process.exit(1)
    139→const help = () => console.log(
-   140→`SemVer ${version}
-   141→
-   142→A JavaScript implementation of the https://semver.org/ specification
-   143→Copyright Isaac Z. Schlueter
-      →…
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
@@ -73,8 +102,6 @@ classes/comparator.js
      8→  }
      9→
     10→  constructor (comp, options) {
-    11→    options = parseOptions(options)
-    12→
     36→  parse (comp) {
     57→  toString () {
     61→  test (version) {
@@ -86,9 +113,6 @@ classes/range.js
      8→    options = parseOptions(options)
      9→
     10→    if (range instanceof Range) {
-    11→      if (
-    12→        range.loose === !!options.loose &&
-    13→        range.includePrerelease === !!options.includePrerelease
     73→  get range () {
     92→  format () {
     96→  toString () {
@@ -117,9 +141,6 @@ classes/semver.js
     11→    options = parseOptions(options)
     12→
     13→    if (version instanceof SemVer) {
-    14→      if (version.loose === !!options.loose &&
-    15→        version.includePrerelease === !!options.includePrerelease) {
-    16→        return version
     81→  format () {
     89→  toString () {
     93→  compare (other) {
@@ -131,22 +152,11 @@ internal/constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
      7→const MAX_LENGTH = 256
      8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
-     9→/* istanbul ignore next */ 9007199254740991
     12→const MAX_SAFE_COMPONENT_LENGTH = 16
     16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
     18→const RELEASE_TYPES = [
-    19→  'major',
-    20→  'premajor',
-    21→  'minor',
-    22→  'preminor',
-      →…
 internal/debug.js
      3→const debug = (
-     4→  typeof process === 'object' &&
-     5→  process.env &&
-     6→  process.env.NODE_DEBUG &&
-     7→  /\bsemver\b/i.test(process.env.NODE_DEBUG)
-      →…
 internal/identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
@@ -177,7 +187,18 @@ internal/lrucache.js
     25→  set (key, value) {
     26→    const deleted = this.delete(key)
     27→
-      →…
+    28→    if (!deleted && value !== undefined) {
+    29→      // If cache is full, delete the least recently used item
+    30→      if (this.map.size >= this.max) {
+    31→        const firstKey = this.map.keys().next().value
+    32→        this.delete(firstKey)
+    33→      }
+    34→
+    35→      this.map.set(key, value)
+    36→    }
+    37→
+    38→    return this
+    39→  }
 internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })
@@ -190,34 +211,30 @@ internal/re.js
     16→const t = exports.t = {}
     19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
     27→const safeRegexReplacements = [
-    28→  ['\\s', 1],
-    29→  ['\\d', MAX_LENGTH],
-    30→  [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH],
-    31→]
     33→const makeSafeRegex = (value) => {
     42→const createToken = (name, value, isGlobal) => {
 ranges/gtr.js
-     5→const gtr = (version, range, options) => outside(version, range, '>', options)
+     5→const gtr …
 ranges/intersects.js
-     4→const intersects = (r1, r2, options) => {
+     4→const intersects …
 ranges/ltr.js
-     5→const ltr = (version, range, options) => outside(version, range, '<', options)
+     5→const ltr …
 ranges/max-satisfying.js
-     6→const maxSatisfying = (versions, range, options) => {
+     6→const maxSatisfying …
 ranges/min-satisfying.js
-     5→const minSatisfying = (versions, range, options) => {
+     5→const minSatisfying …
 ranges/min-version.js
-     7→const minVersion = (range, loose) => {
+     7→const minVersion …
 ranges/outside.js
-    13→const outside = (version, range, hilo, options) => {
+    13→const outside …
 ranges/subset.js
-    45→const subset = (sub, dom, options = {}) => {
+    45→const subset …
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
-    76→const simpleSubset = (sub, dom, options) => {
-   226→const higherGT = (a, b, options) => {
-   238→const lowerLT = (a, b, options) => {
+    76→const simpleSubset …
+   226→const higherGT …
+   238→const lowerLT …
 ranges/to-comparators.js
-     6→const toComparators = (range, options) =>
+     6→const toComparators …
 ranges/valid.js
-     4→const validRange = (range, options) => {
+     4→const validRange …

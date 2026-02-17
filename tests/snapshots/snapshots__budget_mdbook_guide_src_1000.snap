@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (984 words)
+budget: 1000 (983 words)
 
 404.md
      1→# Document not found (404) …
@@ -47,13 +47,28 @@ cli/README.md
      5→
      6→This following sections provide in-depth information on the different commands available.
      7→
-     8→* [`mdbook init <directory>`](init.md) --- Creates a new book with minimal boilerplate to start with.
-     9→* [`mdbook build`](build.md) --- Renders the book.
-    10→* [`mdbook watch`](watch.md) --- Rebuilds the book any time a source file changes.
-    11→* [`mdbook serve`](serve.md) --- Runs a web server to view the book, and rebuilds on changes.
-    12→* [`mdbook test`](test.md) --- Tests Rust code samples.
-    13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
-    14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
+      →…
+cli/build.md
+     1→# The build command …
+cli/clean.md
+     1→# The clean command …
+cli/completions.md
+     1→# The completions command …
+cli/init.md
+     1→# The init command …
+cli/serve.md
+     1→# The serve command …
+    27→### Server options
+    29→The `serve` hostname defaults to `localhost`, and the port defaults to `3000`. Either option can be specified on the command line:
+    30→
+    31→```bash
+    32→mdbook serve path/to/book -p 8000 -n 127.0.0.1 
+    33→```
+    34→
+cli/test.md
+     1→# The test command …
+cli/watch.md
+     1→# The watch command …
 continuous-integration.md
      1→# Running `mdbook` in continuous integration …
     12→## Installing mdBook …
@@ -67,7 +82,17 @@ for_developers/README.md
      3→While `mdbook` is mainly used as a command line tool, you can also import the
      4→underlying libraries directly and use those to manage a book. It also has a fairly
      5→flexible plugin mechanism, allowing you to create your own custom tooling and
-      →…
+     6→consumers (often referred to as *backends*) if you need to do some analysis of
+     7→the book or render it in a different format.
+     8→
+     9→The *For Developers* chapters are here to show you the more advanced usage of
+    10→`mdbook`.
+    11→
+    12→The two main ways a developer can hook into the book's build process is via,
+    13→
+    14→- [Preprocessors](preprocessors.md)
+    15→- [Alternative Backends](backends.md)
+    16→
     17→## The build process
     19→The process of rendering a book project goes through several steps.
     20→
@@ -79,13 +104,9 @@ for_developers/README.md
     34→programmatically drive mdBook, you can use the [`mdbook-driver`] crate.
       →…
 for_developers/backends.md
-     1→# Alternative backends …
-    13→## Setting up …
-    53→## Inspecting the book …
-    82→## Enabling the backend …
-   159→## Configuration …
-   219→## Output and signalling failure …
-   322→## Wrapping up …
+     1→# Alternative backends
+     3→A "backend" is simply a program which `mdbook` will invoke during the book
+      →…
 for_developers/mdbook-wordcount/src/main.rs
     12→fn main() {
     40→fn count_words(ch: &Chapter) -> usize {
@@ -96,10 +117,9 @@ for_developers/mdbook-wordcount/src/main.rs
     48→    pub deny_odds: bool,
     49→}
 for_developers/preprocessors.md
-     1→# Preprocessors …
-    13→## Hooking into MDBook …
-    46→## Hints for implementing a preprocessor …
-    74→## Implementing a preprocessor with a different language …
+     1→# Preprocessors
+     3→A *preprocessor* is simply a bit of code which gets run immediately after the
+      →…
 format/README.md
      1→# Format
      3→In this section you will learn how to:
@@ -120,12 +140,29 @@ format/configuration/README.md
     10→[Preprocessor]: preprocessors.md
     11→[Renderer]: renderers.md
     12→[Environment Variable]: environment-variables.md
+format/configuration/environment-variables.md
+     1→# Environment variables …
+format/configuration/general.md
+     1→# General configuration …
+format/configuration/preprocessors.md
+     1→# Configuring Preprocessors …
+format/configuration/renderers.md
+     1→# Configuring Renderers …
+   286→#### `[output.html.search.chapter]` …
 format/example.rs
      1→fn main() {
      2→    println!("Hello World!");
      3→#
       →…
+format/markdown.md
+     1→# Markdown …
+    43→#### A smaller heading 
+    45→More text.
+    46→
+format/mathjax.md
+     1→# MathJax support …
 format/mdbook.md
+     1→# mdBook-specific features …
      3→## Hiding code lines
      5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
      6→
@@ -147,28 +184,15 @@ format/mdbook.md
     22→
     23→```rust
     24→# fn main() {
-    25→    let x = 5;
-    26→    let y = 6;
-    27→
-    28→    println!("{}", x + y);
-    29→# }
-    30→```
-    31→
       →…
+format/summary.md
+     1→# SUMMARY.md …
 format/theme/README.md
      1→# Theme
      3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
      4→render your markdown files and comes with a default theme included in the mdBook
      5→binary.
      6→
-     7→The theme is totally customizable, you can selectively replace every file from
-     8→the theme by your own by adding a `theme` directory next to `src` folder in your
-     9→project root. Create a new file with the name of the file you want to override
-    10→and now that file will be used instead of the default file.
-    11→
-    12→Here are the files you can override:
-    13→
-    14→- **_index.hbs_** is the handlebars template.
       →…
 format/theme/editor.md
      1→# Editor …

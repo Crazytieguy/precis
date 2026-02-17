@@ -2,14 +2,25 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (482 words)
+budget: 500 (481 words)
 
 CHANGELOG.md
+     1→# Changelog …
     21→### Fixed …
 CONTRIBUTING.md
      1→Contributing …
 README.md
-     1→# python-dotenv …
+     1→# python-dotenv
+     3→[![Build Status][build_status_badge]][build_status_link]
+     4→[![PyPI version][pypi_badge]][pypi_link]
+     5→
+     6→python-dotenv reads key-value pairs from a `.env` file and can set them as
+     7→environment variables. It helps in the development of applications following the
+     8→[12-factor](https://12factor.net/) principles.
+     9→
+    10→- [Getting Started](#getting-started)
+    11→- [Other Use Cases](#other-use-cases)
+      →…
     22→## Getting Started …
     78→## Other Use Cases …
     80→### Load configuration without altering the environment
@@ -29,13 +40,7 @@ README.md
     95→import os
     96→from dotenv import dotenv_values
     97→
-    98→config = {
-    99→    **dotenv_values(".env.shared"),  # load shared development variables
-   100→    **dotenv_values(".env.secret"),  # load sensitive variables
-   101→    **os.environ,  # override loaded values with environment variables
-   102→}
-   103→```
-   104→
+      →…
    105→### Parse configuration as a stream …
    120→### Load .env files in IPython …
    141→### Disable load_dotenv …
@@ -54,9 +59,6 @@ src/dotenv/__init__.py
     44→    "load_dotenv",
     45→    "dotenv_values",
     46→    "get_key",
-    47→    "set_key",
-    48→    "unset_key",
-    49→    "find_dotenv",
       →…
 src/dotenv/cli.py
     60→@click.version_option(version=__version__)
@@ -145,12 +147,7 @@ src/dotenv/variables.py
      7→    \$\{
      8→        (?P<name>[^\}:]*)
      9→        (?::-
-    10→            (?P<default>[^\}]*)
-    11→        )?
-    12→    \}
-    13→    """,
-    14→    re.VERBOSE,
-    15→)
+      →…
     18→class Atom(metaclass=ABCMeta):
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...

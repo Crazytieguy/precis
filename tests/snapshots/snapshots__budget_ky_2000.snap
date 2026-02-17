@@ -2,43 +2,71 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1949 words)
+budget: 2000 (1932 words)
 
 readme.md
+    20→## Benefits over plain `fetch`
+    22→- Simpler API
+    23→- Method shortcuts (`ky.post()`)
+    24→- Treats non-2xx status codes as errors (after redirects)
+    25→- Retries failed requests
+    26→- JSON option
+    27→- Timeout support
+    28→- URL prefix option
+    29→- Instances with custom defaults
+    30→- Hooks
+    31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
+    32→
+    33→## Install
+    35→```sh
+    36→npm install ky
+    37→```
+    38→
+    39→###### CDN
+    41→- [jsdelivr](https://cdn.jsdelivr.net/npm/ky/+esm)
+    42→- [unpkg](https://unpkg.com/ky)
+    43→- [esm.sh](https://esm.sh/ky)
+      →…
+    45→## Usage
+    47→```js
+    48→import ky from 'ky';
+    49→
+    50→const json = await ky.post('https://example.com', {json: {foo: true}}).json();
+    51→
+    52→console.log(json);
+    53→//=> {data: '🦄'}
+    54→```
+    55→
+    56→With plain `fetch`, it would be:
+    57→
+    58→```js
+    59→class HTTPError extends Error {}
+    60→
+    61→const response = await fetch('https://example.com', {
+    62→	method: 'POST',
+    63→	body: JSON.stringify({foo: true}),
+    64→	headers: {
+    65→		'content-type': 'application/json'
+    66→	}
+    67→});
+    68→
+    69→if (!response.ok) {
+    70→	throw new HTTPError(`Fetch error: ${response.statusText}`);
+    71→}
+    72→
+    73→const json = await response.json();
+    74→
+    75→console.log(json);
+    76→//=> {data: '🦄'}
+    77→```
+    78→
+      →…
+    85→## API
     87→### ky(input, options?)
     89→The `input` and `options` are the same as [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch), with additional `options` available (see below).
     90→
-    91→Returns a [`Response` object](https://developer.mozilla.org/en-US/docs/Web/API/Response) with [`Body` methods](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#body) added for convenience. So you can, for example, call `ky.get(input).json()` directly without having to await the `Response` first. When called like that, an appropriate `Accept` header will be set depending on the body method used. Unlike the `Body` methods of `window.Fetch`, these will throw an `HTTPError` if the response status is not in the range of `200...299`. Also, `.json()` will return an empty string if body is empty or the response status is `204` instead of throwing a parse error due to an empty body.
-    92→
-    93→Available body shortcuts: `.json()`, `.text()`, `.formData()`, `.arrayBuffer()`, `.blob()`, and `.bytes()`. The `.bytes()` shortcut is only present when the runtime supports `Response.prototype.bytes()`.
-    94→
-    95→```js
-    96→import ky from 'ky';
-    97→
-    98→const user = await ky('/api/user').json();
-    99→
-   100→console.log(user);
-   101→```
-   102→
-   103→⌨️ **TypeScript:** Accepts an optional [type parameter](https://www.typescriptlang.org/docs/handbook/2/generics.html), which defaults to [`unknown`](https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown), and is passed through to the return type of `.json()`.
-   104→
-   105→```ts
-   106→import ky from 'ky';
-   107→
-   108→// user1 is unknown
-   109→const user1 = await ky('/api/users/1').json();
-   110→// user2 is a User
-   111→const user2 = await ky<User>('/api/users/2').json();
-   112→// user3 is a User
-   113→const user3 = await ky('/api/users/3').json<User>();
-   114→
-   115→console.log([user1, user2, user3]);
-   116→
-   117→// Get raw bytes (when supported by the runtime)
-   118→const bytes = await ky('/api/file').bytes();
-   119→console.log(bytes instanceof Uint8Array);
-   120→```
-   121→
+      →…
+   122→### ky.get(input, options?) …
    123→### ky.post(input, options?)
    124→### ky.put(input, options?)
    125→### ky.patch(input, options?)
@@ -46,35 +74,59 @@ readme.md
    127→### ky.delete(input, options?)
    129→Sets `options.method` to the method name and makes a request.
    130→
-   131→⌨️ **TypeScript:** Accepts an optional type parameter for use with JSON responses (see [`ky()`](#kyinput-options)).
-   132→
+      →…
+   147→##### method …
+   156→##### json …
+   162→##### searchParams …
+   173→##### prefixUrl …
+   197→##### retry …
+   327→##### timeout …
+   335→##### hooks …
+   342→###### hooks.beforeRequest
+   344→Type: `Function[]`\
+   345→Default: `[]`
+   346→
+      →…
+   373→###### hooks.beforeRetry
+   375→Type: `Function[]`\
+   376→Default: `[]`
+   377→
+      →…
+   446→###### hooks.beforeError
+   448→Type: `Function[]`\
+   449→Default: `[]`
+   450→
+      →…
+   485→###### hooks.afterResponse
+   487→Type: `Function[]`\
+   488→Default: `[]`
+   489→
+      →…
+   553→##### throwHttpErrors …
+   566→##### onDownloadProgress …
+   592→##### onUploadProgress …
+   619→##### parseJson …
+   639→##### stringifyJson …
+   664→##### fetch …
+   683→##### context …
+   745→### ky.extend(defaultOptions) …
+   811→### ky.create(defaultOptions) …
+   833→### ky.stop …
+   864→### ky.retry(options?) …
+   874→##### delay …
+   882→##### code …
+   895→##### cause …
+   913→##### request …
+  1000→### HTTPError …
+  1046→### TimeoutError …
+  1050→## Tips
   1052→### Sending form data
   1054→Sending form data in Ky is identical to `fetch`. Just pass a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to the `body` option. The `Content-Type` header will be automatically set to `multipart/form-data`, overriding any existing `Content-Type` header.
   1055→
-  1056→```js
-  1057→import ky from 'ky';
-  1058→
-  1059→// `multipart/form-data`
-  1060→const formData = new FormData();
-  1061→formData.append('food', 'fries');
-  1062→formData.append('drink', 'icetea');
-  1063→
-  1064→const response = await ky.post(url, {body: formData});
-  1065→```
-  1066→
-  1067→If you want to send the data in `application/x-www-form-urlencoded` format, you will need to encode the data with [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams). Like `FormData`, this will override any existing `Content-Type` headers.
-  1068→
-  1069→```js
-  1070→import ky from 'ky';
-  1071→
-  1072→// `application/x-www-form-urlencoded`
-  1073→const searchParams = new URLSearchParams();
-  1074→searchParams.set('food', 'fries');
-  1075→searchParams.set('drink', 'icetea');
-  1076→
-  1077→const response = await ky.post(url, {body: searchParams});
-  1078→```
-  1079→
+      →…
+  1109→### Setting a custom `Content-Type` …
+  1129→### Cancellation …
+  1156→### Proxy support (Node.js) …
   1158→#### Native proxy support
   1160→Node.js 24.5+ supports automatic proxy configuration via environment variables. Set `NODE_USE_ENV_PROXY=1` or use the `--use-env-proxy` CLI flag.
   1161→
@@ -89,13 +141,28 @@ readme.md
   1170→```
   1171→
   1172→Supported environment variables:
-  1173→- `HTTP_PROXY` / `http_proxy`: Proxy URL for HTTP requests
-  1174→- `HTTPS_PROXY` / `https_proxy`: Proxy URL for HTTPS requests
-  1175→- `NO_PROXY` / `no_proxy`: Comma-separated list of hosts to bypass the proxy
-  1176→
+      →…
+  1209→### HTTP/2 support (Node.js) …
+  1249→### Consuming Server-Sent Events (SSE) …
+  1264→### Extending types …
+  1292→## FAQ
   1294→#### How do I use this in Node.js?
   1296→Node.js 18 and later supports `fetch` natively, so you can just use this package directly.
   1297→
+  1339→## Browser support
+  1341→The latest version of Chrome, Firefox, and Safari.
+  1342→
+  1343→## Node.js support
+  1345→Node.js 18 and later.
+  1346→
+  1347→## Related
+  1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
+  1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
+  1351→
+  1352→## Maintainers
+  1354→- [Sindre Sorhus](https://github.com/sindresorhus)
+  1355→- [Seth Holladay](https://github.com/sholladay)
+  1356→- [Szymon Marczak](https://github.com/szmarczak)
 source/core/Ky.ts
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {
@@ -106,8 +173,6 @@ source/core/Ky.ts
     39→				throw new RangeError(`The \`timeout\` option cannot be greater than ${maxSafeTimeout}`);
     40→			}
     41→
-    42→			// Delay the fetch so that body method shortcuts can set the Accept header
-    43→			await Promise.resolve();
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
@@ -257,6 +322,8 @@ source/errors/TimeoutError.ts
 source/index.ts
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
     11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
+    12→	const ky: Partial<Mutable<KyInstance>> = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options));
+    13→
       →…
     34→const ky = createInstance();
 source/types/options.ts
@@ -346,15 +413,11 @@ source/utils/merge.ts
     86→export const deepMerge …
 source/utils/normalize.ts
      5→export const normalizeRequestMethod …
-     8→const retryMethods: HttpMethod[] = ['get', 'put', 'head', 'delete', 'options', 'trace'];
-    10→const retryStatusCodes = [408, 413, 429, 500, 502, 503, 504];
-    12→const retryAfterStatusCodes = [413, 429, 503];
-    14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
-    16→const defaultRetryOptions: InternalRetryOptions = {
-    17→	limit: 2,
-    18→	methods: retryMethods,
-    19→	statusCodes: retryStatusCodes,
-      →…
+     8→const retryMethods …
+    10→const retryStatusCodes …
+    12→const retryAfterStatusCodes …
+    14→type InternalRetryOptions …
+    16→const defaultRetryOptions …
     28→export const normalizeRetryOptions …
 source/utils/options.ts
      4→export const findUnknownOptions …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1958 words)
+budget: 2000 (1969 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -52,12 +52,7 @@ ARCHITECTURE.md
     50→### Discarded approach
     52→We did not use `React.Children` iteration because it will not support component composition. There is no way to "peek inside" the items contained within `<BlogItems />`, so those items cannot be filtered.
     53→
-    54→We did not use an object-based data array for each item, like `{ name: "Logout", action: () => logout() }` because this is strict and limiting. In reality, the interface of those objects grows with edge-cases, like `image`, `detailedSubTitle`, `hideWhenRootSearch`, etc. We prefer that you have full control of item rendering, including icons, keyboard shortcuts, and styling. Don't want an item shown? Don't render it. Only want to show an item under condition xyz? Render it.
-    55→
-    56→We did not use a render prop because they are an inelegant pattern and quickly fall to long, centralised if-else logic chains. For example, if you want a fancy sparkle rainbow item, you need a new if statement to render that item specially.
-    57→
-    58→The original approach for tracking which item was selected was to keep an index 0..n. But it's impossible to know which Item is in which position within the React tree when React Strict Mode is enabled, because `useEffect` runs twice and `useRef` cannot be used for stable IDs. <sup>This may be possible with `useId`, now.</sup> We created [use-descendants](https://github.com/pacocoursey/use-descendants) to track relative component indeces, but abandoned it because it could not work in Strict Mode, and will be incompatible with upcoming concurrent mode. Now, we track the selected item with its value, because it is stable across item mounts and unmounts.
-    59→
+      →…
     60→## Example
     62→```tsx
     63→<Input value="b" />
@@ -95,10 +90,83 @@ ARCHITECTURE.md
     96→## Groups
     98→Item mount informs both the root and the parent group, which keeps track of items within it. Each group informs the root.
 README.md
-     5→# ⌘K …
-     9→## Install …
-    15→## Use …
-    82→## Parts and styling …
+     5→# ⌘K
+     7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
+     8→
+     9→## Install
+    11→```bash
+    12→pnpm install cmdk
+    13→```
+    14→
+    15→## Use
+    17→```tsx
+    18→import { Command } from 'cmdk'
+    19→
+    20→const CommandMenu = () => {
+    21→  return (
+    22→    <Command label="Command Menu">
+    23→      <Command.Input />
+    24→      <Command.List>
+    25→        <Command.Empty>No results found.</Command.Empty>
+    26→
+    27→        <Command.Group heading="Letters">
+    28→          <Command.Item>a</Command.Item>
+    29→          <Command.Item>b</Command.Item>
+    30→          <Command.Separator />
+    31→          <Command.Item>c</Command.Item>
+    32→        </Command.Group>
+    33→
+    34→        <Command.Item>Apple</Command.Item>
+    35→      </Command.List>
+    36→    </Command>
+    37→  )
+    38→}
+    39→```
+    40→
+    41→Or in a dialog:
+    42→
+    43→```tsx
+    44→import { Command } from 'cmdk'
+    45→
+    46→const CommandMenu = () => {
+    47→  const [open, setOpen] = React.useState(false)
+    48→
+    49→  // Toggle the menu when ⌘K is pressed
+    50→  React.useEffect(() => {
+    51→    const down = (e) => {
+    52→      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+    53→        e.preventDefault()
+    54→        setOpen((open) => !open)
+    55→      }
+    56→    }
+    57→
+    58→    document.addEventListener('keydown', down)
+    59→    return () => document.removeEventListener('keydown', down)
+    60→  }, [])
+    61→
+    62→  return (
+    63→    <Command.Dialog open={open} onOpenChange={setOpen} label="Global Command Menu">
+    64→      <Command.Input />
+    65→      <Command.List>
+    66→        <Command.Empty>No results found.</Command.Empty>
+    67→
+    68→        <Command.Group heading="Letters">
+    69→          <Command.Item>a</Command.Item>
+    70→          <Command.Item>b</Command.Item>
+    71→          <Command.Separator />
+    72→          <Command.Item>c</Command.Item>
+    73→        </Command.Group>
+    74→
+    75→        <Command.Item>Apple</Command.Item>
+    76→      </Command.List>
+    77→    </Command.Dialog>
+    78→  )
+    79→}
+    80→```
+    81→
+    82→## Parts and styling
+    84→All parts forward props, including `ref`, to an appropriate element. Each part has a specific data-attribute (starting with `cmdk-`) that can be used for styling.
+    85→
     86→### Command `[cmdk-root]` …
    153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]` …
    180→### Input `[cmdk-input]` …
@@ -109,15 +177,63 @@ README.md
    260→### Empty `[cmdk-empty]` …
    264→### Loading `[cmdk-loading]` …
    274→### `useCommandState(state => state.selectedField)` …
-   285→## Examples …
+   285→## Examples
+   287→Code snippets for common use cases.
+   288→
    289→### Nested items …
    338→### Show sub-items when searching …
    361→### Asynchronous results …
    397→### Use inside Popover …
    426→### Drop in stylesheets …
-   430→## FAQ …
-   456→## History …
-   462→## Testing …
+   430→## FAQ
+   432→**Accessible?** Yes. Labeling, aria attributes, and DOM ordering tested with Voice Over and Chrome DevTools. [Dialog](#dialog-cmdk-dialog-cmdk-overlay) composes an accessible Dialog implementation.
+   433→
+   434→**Virtualization?** No. Good performance up to 2,000-3,000 items, though. Read below to bring your own.
+   435→
+   436→**Filter/sort items manually?** Yes. Pass `shouldFilter={false}` to [Command](#command-cmdk-root). Better memory usage and performance. Bring your own virtualization this way.
+   437→
+   438→**React 18 safe?** Yes, required. Uses React 18 hooks like `useId` and `useSyncExternalStore`.
+   439→
+   440→**Unstyled?** Yes, use the listed CSS selectors.
+   441→
+   442→**Hydration mismatch?** No, likely a bug in your code. Ensure the `open` prop to `Command.Dialog` is `false` on the server.
+   443→
+   444→**React strict mode safe?** Yes. Open an issue if you notice an issue.
+   445→
+   446→**Weird/wrong behavior?** Make sure your `Command.Item` has a `key` and unique `value`.
+   447→
+   448→**Concurrent mode safe?** Maybe, but concurrent mode is not yet real. Uses risky approaches like manual DOM ordering.
+   449→
+   450→**React server component?** No, it's a client component.
+   451→
+   452→**Listen for ⌘K automatically?** No, do it yourself to have full control over keybind context.
+   453→
+   454→**React Native?** No, and no plans to support it. If you build a React Native version, let us know and we'll link your repository here.
+   455→
+   456→## History
+   458→Written in 2019 by Paco ([@pacocoursey](https://twitter.com/pacocoursey)) to see if a composable combobox API was possible. Used for the Vercel command menu and autocomplete by Rauno ([@raunofreiberg](https://twitter.com/raunofreiberg)) in 2020. Re-written independently in 2022 with a simpler and more performant approach. Ideas and help from Shu ([@shuding\_](https://twitter.com/shuding_)).
+   459→
+   460→[use-descendants](https://github.com/pacocoursey/use-descendants) was extracted from the 2019 version.
+   461→
+   462→## Testing
+   464→First, install dependencies and Playwright browsers:
+   465→
+   466→```bash
+   467→pnpm install
+   468→pnpm playwright install
+   469→```
+   470→
+   471→Then ensure you've built the library:
+   472→
+   473→```bash
+   474→pnpm build
+   475→```
+   476→
+   477→Then run the tests using your local build against real browser engines:
+   478→
+   479→```bash
+   480→pnpm test
+   481→```
 cmdk/src/command-score.ts
     54→function commandScoreInner(
     55→  string,
@@ -128,26 +244,13 @@ cmdk/src/command-score.ts
     60→  abbreviationIndex,
     61→  memoizedResults,
     62→) {
-    63→  if (abbreviationIndex === abbreviation.length) {
-    64→    if (stringIndex === string.length) {
-    65→      return SCORE_CONTINUE_MATCH
-    66→    }
-    67→    return PENALTY_NOT_COMPLETE
-    68→  }
-    69→
-      →…
    150→function formatInput(string) {
-   151→  // convert all valid space characters to space so they match each other
-   152→  return string.toLowerCase().replace(COUNT_SPACE_REGEXP, ' ')
-   153→}
    155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
    156→  /* NOTE:
    157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
    158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
    159→   */
-   160→  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
-   161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
-   162→}
+      →…
 cmdk/src/index.tsx
    161→const defaultFilter …
    164→const useCommand …
@@ -186,43 +289,23 @@ cmdk/src/index.tsx
    962→
    963→function findNextSibling(el: Element, selector: string) {
    964→  let sibling = el.nextElementSibling
-   965→
-   966→  while (sibling) {
-   967→    if (sibling.matches(selector)) return sibling
-   968→    sibling = sibling.nextElementSibling
-   969→  }
-   970→}
+      →…
    972→function findPreviousSibling …
    981→function useAsRef …
    993→function useLazyRef …
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1005→  const store = useStore()
-  1006→  const cb = () => selector(store.snapshot())
-  1007→  return React.useSyncExternalStore(store.subscribe, cb, cb)
-  1008→}
+      →…
   1010→function useValue …
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
   1047→  const [s, ss] = React.useState<object>()
-  1048→  const fns = useLazyRef(() => new Map<string | number, () => void>())
-  1049→
-  1050→  useLayoutEffect(() => {
-  1051→    fns.current.forEach((f) => f())
-  1052→    fns.current = new Map()
-  1053→  }, [s])
-  1054→
-  1055→  return (id: string | number, cb: () => void) => {
-  1056→    fns.current.set(id, cb)
-  1057→    ss({})
-  1058→  }
-  1059→}
+      →…
   1061→function renderChildren …
   1071→function SlottableWithNestedChildren …
 playwright.config.ts
      3→const config: PlaywrightTestConfig = {
-     4→  forbidOnly: !!process.env.CI,
-      →…
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -290,13 +373,6 @@ website/components/code/index.tsx
     10→    fontSize: 12,
     11→    fontFamily: 'Menlo, monospace',
     12→  },
-    13→  styles: [
-    14→    {
-    15→      types: ['comment'],
-    16→      style: {
-    17→        color: 'var(--gray9)',
-    18→      },
-    19→    },
       →…
     41→export function Code({ children }: { children: string }) {
     42→  return (
@@ -311,53 +387,19 @@ website/components/code/index.tsx
     51→          >
     52→            <CopyIcon />
     53→          </button>
-    54→          <div className={styles.shine} />
-    55→          {tokens.map((line, i) => (
-    56→            <div key={i} {...getLineProps({ line, key: i })}>
-    57→              {line.map((token, key) => (
-    58→                <span key={i} {...getTokenProps({ token, key })} />
-    59→              ))}
-    60→            </div>
-    61→          ))}
-    62→        </pre>
-    63→      )}
-    64→    </Highlight>
-    65→  )
-    66→}
+      →…
 website/components/icons/index.tsx
      3→export function FigmaIcon() {
-     4→  return (
-      →…
     15→export function RaycastIcon() {
-    16→  return (
-      →…
     28→export function YouTubeIcon() {
-    29→  return (
-      →…
     40→export function SlackIcon() {
-    41→  return (
-      →…
     79→export function VercelIcon() {
-    80→  return (
-      →…
     87→export function LinearIcon({ style }: { style?: Object }) {
-    88→  return (
-      →…
    110→export function Logo({ children, size = '20px' }: { children: React.ReactNode; size?: string }) {
-   111→  return (
-      →…
    127→export function CopyIcon() {
-   128→  return (
-      →…
    146→export function CopiedIcon() {
-   147→  return (
-      →…
    154→export function GitHubIcon() {
-   155→  return (
-      →…
    165→export function FramerIcon() {
-   166→  return (
-      →…
 website/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
@@ -372,12 +414,6 @@ website/pages/_app.tsx
     18→  return (
     19→    <>
     20→      <Head>
-    21→        <link rel="shortcut icon" href="/favicon.svg" />
-    22→        <meta name="twitter:card" content="summary_large_image" />
-    23→      </Head>
-    24→      <NextSeo
-    25→        title={`${description} — ${title}`}
-    26→        description={description}
       →…
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
@@ -406,12 +442,6 @@ website/pages/index.tsx
     30→  const [theme, setTheme] = React.useState<Themes>('raycast')
     31→
     32→  return (
-    33→    <main className={styles.main}>
-    34→      <div className={styles.content}>
-    35→        <div className={styles.meta}>
-    36→          <div className={styles.info}>
-    37→            <VersionBadge />
-    38→            <h1>⌘K</h1>
       →…
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     99→//////////////////////////////////////////////////////////////////
@@ -422,7 +452,6 @@ website/pages/index.tsx
    104→  return (
    105→    <button
    106→      className={styles.installButton}
-   107→      onClick={async () => {
       →…
    123→function GitHubButton() {
    137→//////////////////////////////////////////////////////////////////
@@ -437,14 +466,7 @@ website/pages/index.tsx
    146→    key: 'linear',
    147→  },
    148→  {
-   149→    icon: <VercelIcon />,
-   150→    key: 'vercel',
-   151→  },
-   152→  {
-   153→    icon: <FramerIcon />,
-   154→    key: 'framer',
-   155→  },
-   156→]
+      →…
    158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////
    261→
@@ -454,7 +476,6 @@ website/pages/index.tsx
    265→<Command.Dialog open={open} onOpenChange={setOpen}>
    266→  <Command.Input />
    267→
-   268→  <Command.List>
       →…
    294→//////////////////////////////////////////////////////////////////
    295→

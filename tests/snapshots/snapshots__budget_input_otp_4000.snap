@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3964 words)
+budget: 4000 (3965 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -31,7 +31,7 @@ CHANGELOG.md
    120→## [0.2.1] …
    124→## [0.2] …
 README.md
-     1→# The only accessible & unstyled & full featured Input OTP component in the Web.
+     1→# The only accessible & unstyled & full featured Input OTP component in the Web. …
      3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
     18→https://github.com/guilhermerodz/input-otp/assets/10366880/753751f5-eda8-4145-a4b9-7ef51ca5e453
     19→
@@ -76,6 +76,7 @@ README.md
     60→        {slots.slice(3).map((slot, idx) => (
     61→          <Slot key={idx} {...slot} />
     62→        ))}
+    63→      </div>
       →…
    136→## How it works
    138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
@@ -104,6 +105,7 @@ README.md
    162→<summary>Supports screen readers (a11y)</summary>
    163→
    164→Stripe was my first inspiration to build this library.
+   165→
       →…
    198→### Auto tracks if the input has space in the right side for the badge
    200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
@@ -137,6 +139,13 @@ README.md
    231→  // Callback when the input is complete
    232→  onComplete?: (...args: any[]) => unknown
    233→
+   234→  // Where is the text located within the input
+   235→  // Affects click-holding or long-press behavior
+   236→  // Default: 'left'
+   237→  textAlign?: 'left' | 'center' | 'right'
+   238→
+   239→  // Virtual keyboard appearance on mobile
+   240→  // Default: 'numeric'
       →…
    293→## Examples
    298→```tsx
@@ -161,6 +170,7 @@ README.md
    317→</details>
    318→
    319→<details>
+   320→<summary>Automatically focus the input when the page loads</summary>
       →…
    377→## Caveats
    382→By default, `input-otp` handles password managers for you.
@@ -185,6 +195,7 @@ README.md
    401→</details>
    402→
    403→<details>
+   404→<summary>[Setting] If you want to customize the `noscript` CSS fallback</summary>
       →…
    539→#### Sponsors
    541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
@@ -253,14 +264,7 @@ apps/storybook/README.md
     72→
     73→7.  **`LICENSE`**: The template is licensed under the MIT licence.
     74→
-    75→8.  **`package.json`**: Standard manifest file for Node.js projects, which typically includes project specific metadata (such as the project's name, the author among other information). It's based on this file that npm will know which packages are necessary to the project.
-    76→
-    77→9.  **`yarn.lock`**: This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(Do not change it manually).**
-    78→
-    79→10. **`vite.config.js`**: This is the configuration file for [Vite](https://vitejs.dev/), a build tool that aims to provide a faster and leaner development experience for modern web projects.
-    80→
-    81→11. **`README.md`**: A text file containing useful reference information about the project.
-    82→
+      →…
     83→## Contribute
     85→If you encounter an issue with the template, we encourage you to open an issue in this template's repository.
     86→
@@ -352,7 +356,6 @@ apps/storybook/tailwind.config.js
      7→    './src/**/*.{ts,tsx}',
      8→    '.storybook/**/*.{js,ts,tsx}',
      9→  ],
-    10→  prefix: '',
       →…
 apps/website/README.md
      3→## Getting Started
@@ -604,7 +607,10 @@ apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     49→        )}
     50→      />
     51→
-      →…
+    52→      <input type="submit" hidden />
+    53→    </form>
+    54→  )
+    55→}
 apps/website/src/app/(local-pages)/shadcn/static/page.tsx
      5→export default async function StaticPage(pageProps: any) {
      6→  return (
@@ -648,9 +654,17 @@ apps/website/src/app/(pages)/(home)/_components/showcase.tsx
       →…
    151→function Slot(props: {
    152→  char: string | null
+   153→  isActive: boolean
+   154→  isFocused: boolean
+   155→  animateIdx?: number
+   156→}) {
       →…
    199→function FakeCaret() {
    200→  return (
+   201→    <div className="absolute pointer-events-none inset-0 flex items-center justify-center animate-caret-blink [animate-delay:inherit]">
+   202→      <div className="w-px h-8 md:w-0.5 md:h-16 bg-white" />
+   203→    </div>
+   204→  )
       →…
 apps/website/src/app/(pages)/(home)/page.tsx
     19→const fadeUpClassname =
@@ -847,6 +861,10 @@ apps/website/src/components/icons.tsx
     32→    <svg
     33→      {...props}
     34→      height="23"
+    35→      viewBox="0 0 1200 1227"
+    36→      width="23"
+    37→      xmlns="http://www.w3.org/2000/svg"
+    38→    >
       →…
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {
@@ -971,7 +989,6 @@ apps/website/tailwind.config.ts
      5→  content: [
      6→    './pages/**/*.{ts,tsx}',
      7→    './components/**/*.{ts,tsx}',
-     8→    './app/**/*.{ts,tsx}',
       →…
 packages/input-otp/src/input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(
