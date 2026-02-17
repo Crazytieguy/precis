@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1935 words)
+budget: 2000 (1937 words)
 
 README.md
      1→# mdBook …
@@ -143,24 +143,30 @@ crates/mdbook-driver/src/mdbook.rs
    435→struct PreprocessorConfig {
    436→    command: Option<String>,
    437→    #[serde(default)]
+   438→    before: Vec<String>,
+   439→    #[serde(default)]
       →…
 crates/mdbook-html/README.md
      1→# mdbook-html …
     11→## License …
 crates/mdbook-html/front-end/js/book.js
      9→function playground_text(playground, hidden = true) {
+crates/mdbook-html/src/html/admonitions.rs
+    18→pub(crate) fn select_tag …
 crates/mdbook-html/src/html/mod.rs
     34→pub(crate) struct HtmlRenderOptions<'a> {
     80→pub(crate) struct ChapterTree<'book> {
 crates/mdbook-html/src/html/tokenizer.rs
     16→struct TokenCollector {
     22→    type Handle = ();
+    24→    fn process_token …
 crates/mdbook-html/src/html/tree.rs
     25→macro_rules! attr_qual_name {
     33→pub(crate) enum Node {
     73→pub(crate) struct Element {
    126→type Attributes = IndexMap<QualName, StrTendril>;
    129→trait ToTendril {
+   135→    fn into_tendril …
    150→enum TableState {
    160→pub(crate) struct MarkdownTreeBuilder<'opts, 'event, EventIter> {
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
@@ -367,11 +373,11 @@ crates/xtask/README.md
      3→This is a CLI utility for running development commands for mdbook.
      4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
 crates/xtask/src/changelog.rs
-     8→const CHANGELOG_PATH …
+     8→const CHANGELOG_PATH: &str = "CHANGELOG.md";
     10→pub(crate) fn changelog() -> Result<()> {
 crates/xtask/src/main.rs
      9→mod changelog;
-    11→type Result …
+    11→type Result<T> = std::result::Result<T, Box<dyn Error>>;
 eslint.config.mjs
      4→const handlebarsPreprocessor = {
      7→            preprocess(text, filename) {
@@ -437,13 +443,6 @@ guide/src/guide/README.md
      5→- [Installation](installation.md)
      6→- [Reading Books](reading.md)
      7→- [Creating a Book](creating.md)
-guide/src/misc/contributors.md
-     1→# Contributors
-     3→Here is a list of the contributors who have helped improving mdBook. Big
-     4→shout-out to them!
-     5→
-     6→- [mdinger](https://github.com/mdinger)
-      →…
 src/cmd/clean.rs
     36→/// Formats a number of bytes into a human readable SI-prefixed size.
     37→/// Returns a tuple of `(quantity, units)`.
@@ -463,6 +462,7 @@ src/cmd/command_prelude.rs
     12→            Arg::new("dest-dir")
     13→                .short('d')
     14→                .long("dest-dir")
+    15→                .value_name("dest-dir")
     41→    #[cfg(any(feature = "watch", feature = "serve"))]
     42→    fn arg_watcher(self) -> Self {
 src/cmd/init.rs

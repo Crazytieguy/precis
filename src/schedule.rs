@@ -83,6 +83,8 @@ pub enum FileRole {
     Changelog,
     /// Translated/localized files (e.g., README_zh-CN.md, README-es.md).
     Translated,
+    /// Community health files: CONTRIBUTING.md, LICENSE.md, SECURITY.md, CODE_OF_CONDUCT.md, etc.
+    CommunityHealth,
     /// Everything else.
     Normal,
 }
@@ -98,6 +100,8 @@ impl FileRole {
         match stem {
             "readme" => FileRole::Readme,
             "changelog" | "changes" | "history" | "news" | "releases" => FileRole::Changelog,
+            "contributing" | "contributors" | "security" | "license" | "licence"
+            | "code_of_conduct" | "codeowners" => FileRole::CommunityHealth,
             _ if is_doc && has_locale_suffix(stem) => FileRole::Translated,
             _ => FileRole::Normal,
         }
@@ -431,6 +435,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         FileRole::Normal => 1.0,
         FileRole::Translated => 0.1,
         FileRole::Changelog => 0.1,
+        FileRole::CommunityHealth => 0.1,
     };
 
     let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor;
@@ -955,4 +960,33 @@ fn compute_prereq_costs_with_state(
     }
 
     (prereq_value, prereq_cost)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn file_role_community_health() {
+        assert_eq!(FileRole::from_filename("CONTRIBUTING.md"), FileRole::CommunityHealth);
+        assert_eq!(FileRole::from_filename("contributing.md"), FileRole::CommunityHealth);
+        assert_eq!(FileRole::from_filename("CONTRIBUTORS.md"), FileRole::CommunityHealth);
+        assert_eq!(FileRole::from_filename("SECURITY.md"), FileRole::CommunityHealth);
+        assert_eq!(FileRole::from_filename("LICENSE.md"), FileRole::CommunityHealth);
+        assert_eq!(FileRole::from_filename("LICENCE.md"), FileRole::CommunityHealth);
+        assert_eq!(FileRole::from_filename("License.txt"), FileRole::CommunityHealth);
+        assert_eq!(FileRole::from_filename("CODE_OF_CONDUCT.md"), FileRole::CommunityHealth);
+        assert_eq!(FileRole::from_filename("CODEOWNERS"), FileRole::CommunityHealth);
+    }
+
+    #[test]
+    fn file_role_existing_roles() {
+        assert_eq!(FileRole::from_filename("README.md"), FileRole::Readme);
+        assert_eq!(FileRole::from_filename("CHANGELOG.md"), FileRole::Changelog);
+        assert_eq!(FileRole::from_filename("CHANGES.md"), FileRole::Changelog);
+        assert_eq!(FileRole::from_filename("README_zh-CN.md"), FileRole::Translated);
+        assert_eq!(FileRole::from_filename("README-es.md"), FileRole::Translated);
+        assert_eq!(FileRole::from_filename("lib.rs"), FileRole::Normal);
+        assert_eq!(FileRole::from_filename("main.py"), FileRole::Normal);
+    }
 }

@@ -2,51 +2,23 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (938 words)
+budget: 1000 (845 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
      9→  .map((file) => `./${file}`)
 CONTRIBUTING.md
-     3→# Contributing
-     5→## Code of Conduct
-     7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
-     8→
-     9→## Reporting Bugs
-    11→Before submitting a new bug report please search for an existing or similar report.
-    12→
-    13→Use one of our existing issue templates if you believe you've come across a unique problem.
-    14→
-    15→Duplicate issues, or issues that don't use one of our templates may get closed without a response.
-    16→
-    17→## Pull Request Conventions
-    19→### Commits
-    21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
-    22→
-    23→When opening a pull request please be sure that either the pull request title, or each commit in the pull request, has one of the following prefixes:
-    24→
-    25→ - `feat`: For when introducing a new feature.  The result will be a new semver minor version of the package when it is next published.
-    26→ - `fix`: For bug fixes. The result will be a new semver patch version of the package when it is next published.
-    27→ - `docs`: For documentation updates.  The result will be a new semver patch version of the package when it is next published.
-    28→ - `chore`: For changes that do not affect the published module.  Often these are changes to tests.  The result will be *no* change to the version of the package when it is next published (as the commit does not affect the published version).
-    29→
-    30→### Test Coverage
-    32→Pull requests made against this repo will run `npm test` automatically.  Please make sure tests pass locally before submitting a PR.
-    33→
-    34→Every new feature or bug fix should come with a corresponding test or tests that validate the solutions. Testing also reports on code coverage and will fail if code coverage drops.
-    35→
-    36→### Linting
-    38→Linting is also done automatically once tests pass.  `npm run lintfix` will fix most linting errors automatically.
-    39→
-    40→Please make sure linting passes before submitting a PR.
-    41→
-    42→## What _not_ to contribute?
-    44→### Dependencies
-    46→It should be noted that our team does not accept third-party dependency updates/PRs.  If you submit a PR trying to update our dependencies we will close it with or without a reference to these contribution guidelines.
-    47→
-    48→### Tools/Automation
-    50→Our core team is responsible for the maintenance of the tooling/automation in this project and we ask contributors to not make changes to these when contributing (e.g. `.github/*`, `.eslintrc.json`, `.licensee.json`).  Most of those files also have a header at the top to remind folks they are automatically generated.  Pull requests that alter these will not be accepted.
+     3→# Contributing …
+     5→## Code of Conduct …
+     9→## Reporting Bugs …
+    17→## Pull Request Conventions …
+    19→### Commits …
+    30→### Test Coverage …
+    36→### Linting …
+    42→## What _not_ to contribute? …
+    44→### Dependencies …
+    48→### Tools/Automation …
 README.md
      1→semver(1) -- The semantic versioner for npm …
      4→## Install …
@@ -77,9 +49,22 @@ bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
     37→const main = () => {
+    38→  if (!argv.length) {
+    39→    return help()
+    40→  }
+    41→  while (argv.length) {
+      →…
    132→const failInc = () => {
+   133→  console.error('--inc can only be used on a single version with no range')
+   134→  fail()
+   135→}
    137→const fail = () => process.exit(1)
    139→const help = () => console.log(
+   140→`SemVer ${version}
+   141→
+   142→A JavaScript implementation of the https://semver.org/ specification
+   143→Copyright Isaac Z. Schlueter
+      →…
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
@@ -88,6 +73,8 @@ classes/comparator.js
      8→  }
      9→
     10→  constructor (comp, options) {
+    11→    options = parseOptions(options)
+    12→
     36→  parse (comp) {
     57→  toString () {
     61→  test (version) {
@@ -99,6 +86,9 @@ classes/range.js
      8→    options = parseOptions(options)
      9→
     10→    if (range instanceof Range) {
+    11→      if (
+    12→        range.loose === !!options.loose &&
+    13→        range.includePrerelease === !!options.includePrerelease
     73→  get range () {
     92→  format () {
     96→  toString () {
@@ -127,6 +117,9 @@ classes/semver.js
     11→    options = parseOptions(options)
     12→
     13→    if (version instanceof SemVer) {
+    14→      if (version.loose === !!options.loose &&
+    15→        version.includePrerelease === !!options.includePrerelease) {
+    16→        return version
     81→  format () {
     89→  toString () {
     93→  compare (other) {
@@ -134,7 +127,28 @@ classes/semver.js
    135→  comparePre (other) {
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
+internal/constants.js
+     5→const SEMVER_SPEC_VERSION = '2.0.0'
+     7→const MAX_LENGTH = 256
+     8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
+     9→/* istanbul ignore next */ 9007199254740991
+    12→const MAX_SAFE_COMPONENT_LENGTH = 16
+    16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
+    18→const RELEASE_TYPES = [
+    19→  'major',
+    20→  'premajor',
+    21→  'minor',
+    22→  'preminor',
+      →…
+internal/debug.js
+     3→const debug = (
+     4→  typeof process === 'object' &&
+     5→  process.env &&
+     6→  process.env.NODE_DEBUG &&
+     7→  /\bsemver\b/i.test(process.env.NODE_DEBUG)
+      →…
 internal/identifiers.js
+     3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 internal/lrucache.js
@@ -149,41 +163,61 @@ internal/lrucache.js
     11→    if (value === undefined) {
     12→      return undefined
     13→    } else {
+    14→      // Remove the key from the map and add it to the end
+    15→      this.map.delete(key)
+    16→      this.map.set(key, value)
+    17→      return value
+    18→    }
+    19→  }
+    20→
     21→  delete (key) {
     22→    return this.map.delete(key)
     23→  }
+    24→
     25→  set (key, value) {
     26→    const deleted = this.delete(key)
     27→
-    28→    if (!deleted && value !== undefined) {
       →…
 internal/parse-options.js
+     4→const looseOption = Object.freeze({ loose: true })
+     5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
 internal/re.js
+    12→const re = exports.re = []
+    13→const safeRe = exports.safeRe = []
+    14→const src = exports.src = []
+    15→const safeSrc = exports.safeSrc = []
+    16→const t = exports.t = {}
+    19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
+    27→const safeRegexReplacements = [
+    28→  ['\\s', 1],
+    29→  ['\\d', MAX_LENGTH],
+    30→  [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH],
+    31→]
     33→const makeSafeRegex = (value) => {
     42→const createToken = (name, value, isGlobal) => {
 ranges/gtr.js
-     5→const gtr …
+     5→const gtr = (version, range, options) => outside(version, range, '>', options)
 ranges/intersects.js
-     4→const intersects …
+     4→const intersects = (r1, r2, options) => {
 ranges/ltr.js
-     5→const ltr …
+     5→const ltr = (version, range, options) => outside(version, range, '<', options)
 ranges/max-satisfying.js
-     6→const maxSatisfying …
+     6→const maxSatisfying = (versions, range, options) => {
 ranges/min-satisfying.js
-     5→const minSatisfying …
+     5→const minSatisfying = (versions, range, options) => {
 ranges/min-version.js
-     7→const minVersion …
+     7→const minVersion = (range, loose) => {
 ranges/outside.js
-    13→const outside …
+    13→const outside = (version, range, hilo, options) => {
 ranges/subset.js
-    45→const subset …
+    45→const subset = (sub, dom, options = {}) => {
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
-    76→const simpleSubset …
-   226→const higherGT …
-   238→const lowerLT …
+    76→const simpleSubset = (sub, dom, options) => {
+   226→const higherGT = (a, b, options) => {
+   238→const lowerLT = (a, b, options) => {
 ranges/to-comparators.js
-     6→const toComparators …
+     6→const toComparators = (range, options) =>
 ranges/valid.js
-     4→const validRange …
+     4→const validRange = (range, options) => {

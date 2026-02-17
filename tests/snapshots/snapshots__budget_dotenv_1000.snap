@@ -2,31 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (966 words)
+budget: 1000 (967 words)
 
 CONTRIBUTING.md
-     1→# Contributing
-     3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
-     4→2. Install dependencies (`npm install`)
-     5→3. Create your feature branch (`git checkout -b my-new-feature`)
-     6→4. Commit your changes (`git commit -am 'Added some feature'`)
-     7→5. Test your changes (`npm test`)
-     8→6. Push to the branch (`git push origin my-new-feature`)
-     9→7. [Create new Pull Request](https://help.github.com/articles/creating-a-pull-request/)
-    10→
-    11→## Testing
-    13→We use [TAP](https://github.com/tapjs/node-tap) to write tests. Run our test suite with this command:
-    14→
-    15→```
-    16→npm test
-    17→```
-    18→
-    19→## Code Style
-    21→We use [standard](https://www.npmjs.com/package/standard) and [editorconfig](http://editorconfig.org) to maintain code style and best practices. Please make sure your PR adheres to the guides by running:
-    22→
-    23→```
-    24→npm run lint
-    25→```
+     1→# Contributing …
+    11→## Testing …
+    19→## Code Style …
 README-es.md
    607→##### path
    609→Default: `path.resolve(process.cwd(), '.env')`
@@ -195,6 +176,24 @@ lib/main.d.ts
     55→  /**
     56→   * Default: `false`
     57→   *
+    58→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
+    59→   *
+    60→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
+    61→   */
+    62→  debug?: boolean;
+    63→
+    64→  /**
+    65→   * Default: `false`
+    66→   *
+    67→   * Override any environment variables that have already been set on your machine with values from your .env file.
+    68→   *
+    69→   * example: `require('dotenv').config({ override: true })`
+    70→   */
+    71→  override?: boolean;
+    72→
+    73→  /**
+    74→   * Default: `process.env`
+    75→   *
       →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
@@ -236,6 +235,7 @@ lib/main.js
     11→  '🔐 encrypt with Dotenvx: https://dotenvx.com',
     12→  '🔐 prevent committing .env to code: https://dotenvx.com/precommit',
     13→  '🔐 prevent building .env in docker: https://dotenvx.com/prebuild',
+    14→  '🤖 agentic secret storage: https://dotenvx.com/as2',
       →…
     27→function _getRandomTip () {
     31→function parseBoolean (value) {
@@ -260,4 +260,5 @@ lib/main.js
    414→  configDotenv,
    415→  _configVault,
    416→  _parseVault,
+   417→  config,
       →…

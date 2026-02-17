@@ -2,19 +2,36 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (491 words)
 
 README.md
      1→# Introduction
      3→<style>
      4→    .mdbook-version {
      5→        position: absolute;
+     6→        right: 20px;
+     7→        top: 60px;
+     8→        background-color: var(--theme-popup-bg);
+     9→        border-radius: 8px;
+    10→        padding: 2px 5px 2px 5px;
+    11→        border: 1px solid var(--theme-popup-border);
+    12→        font-size: 0.9em;
+    13→    }
+    14→</style>
+    15→
+    16→<div class="mdbook-version">
+    17→Version: {{ mdbook-version }}
+    18→</div>
+    19→
       →…
     46→## Contributing
     48→mdBook is free and open source. You can find the source code on
     49→[GitHub](https://github.com/rust-lang/mdBook) and issues and feature requests can be posted on
     50→the [GitHub issue tracker](https://github.com/rust-lang/mdBook/issues). mdBook relies on the community to fix bugs and
-      →…
+    51→add features: if you'd like to contribute, please read
+    52→the [CONTRIBUTING](https://github.com/rust-lang/mdBook/blob/master/CONTRIBUTING.md) guide and consider opening
+    53→a [pull request](https://github.com/rust-lang/mdBook/pulls).
+    54→
     55→## License
     57→The mdBook source and documentation are released under
     58→the [Mozilla Public License v2.0](https://www.mozilla.org/MPL/2.0/).
@@ -62,7 +79,6 @@ format/configuration/README.md
 format/example.rs
      1→fn main() {
      2→    println!("Hello World!");
-     3→#
       →…
 format/mdbook.md
      3→## Hiding code lines
@@ -85,7 +101,6 @@ format/mdbook.md
     21→Will render as
     22→
     23→```rust
-    24→# fn main() {
       →…
 format/theme/README.md
      1→# Theme
@@ -102,19 +117,4 @@ guide/README.md
      6→- [Reading Books](reading.md)
      7→- [Creating a Book](creating.md)
 misc/contributors.md
-     1→# Contributors
-     3→Here is a list of the contributors who have helped improving mdBook. Big
-     4→shout-out to them!
-     5→
-     6→- [mdinger](https://github.com/mdinger)
-     7→- Kevin ([kbknapp](https://github.com/kbknapp))
-     8→- Steve Klabnik ([steveklabnik](https://github.com/steveklabnik))
-     9→- Adam Solove ([asolove](https://github.com/asolove))
-    10→- Wayne Nilsen ([waynenilsen](https://github.com/waynenilsen))
-    11→- [funnkill](https://github.com/funkill)
-    12→- Fu Gangqiang ([FuGangqiang](https://github.com/FuGangqiang))
-    13→- [Michael-F-Bryan](https://github.com/Michael-F-Bryan)
-    14→- Chris Spiegel ([cspiegel](https://github.com/cspiegel))
-    15→- [projektir](https://github.com/projektir)
-    16→- [Phaiax](https://github.com/Phaiax)
-      →…
+     1→# Contributors …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3890 words)
+budget: 4000 (3885 words)
 
 CONTRIBUTING.md
      1→# Contributing
@@ -12,35 +12,10 @@ CONTRIBUTING.md
      7→
      8→We love reproducible code examples in questions and answers.
      9→
-    10→If you get a satisfactory reply to a question then please close your issue, but it is ok to leave an issue open for more replies or interest. Inactive issues may get closed after one month if they have an answer,
-    11→or after six months otherwise.
-    12→
+      →…
     13→## Pull Requests
     15→Pull Requests will be considered. Please submit pull requests against the develop branch.
     16→
-    17→Follow the existing code style. Check the tests succeed, including format and lint.
-    18→
-    19→- `npm run test`
-    20→- `npm run check`
-    21→
-    22→Don't update the CHANGELOG or command version number. That gets done by maintainers when preparing the release.
-    23→
-    24→Useful things to include in your request description are:
-    25→
-    26→- what problem are you solving?
-    27→- what Issues does this relate to?
-    28→- suggested summary for CHANGELOG
-    29→
-    30→There are a lot of forms of documentation which could need updating for a change in functionality. It
-    31→is ok if you want to show us the code to discuss before doing the extra work, and
-    32→you should say so in your comments so we focus on the concept first before talking about all the other pieces:
-    33→
-    34→- TypeScript typings
-    35→- JSDoc documentation in code
-    36→- tests
-    37→- README
-    38→- examples/
-    39→
       →…
 Readme.md
      1→# Commander.js …
@@ -129,9 +104,7 @@ SECURITY.md
      1→# Security Policy
      3→To report a security vulnerability, please use the
      4→[Tidelift security contact](https://tidelift.com/security).
-     5→Tidelift will coordinate the fix and disclosure.
-     6→
-     7→Please do not report security vulnerabilities through public GitHub issues or pull requests.
+      →…
 docs/deprecated.md
      1→# Deprecated …
     22→### RegExp .option() parameter …
@@ -180,51 +153,71 @@ docs/zh-CN/不再推荐使用的功能.md
      3→本文中列出的功能不再推荐使用。它们在 Commander 未来的主要版本（major version）中可能被移除。为保证后向兼容，这些功能目前还可以使用，但它们不应被用在新代码中。
      4→
      5→- [不再推荐使用的功能](#%E4%B8%8D%E5%86%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8%E7%9A%84%E5%8A%9F%E8%83%BD)
+     6→  - [.option() 方法的正则表达式参数](#option-%E6%96%B9%E6%B3%95%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%82%E6%95%B0)
+     7→  - [noHelp](#nohelp)
       →…
     18→## .option() 方法的正则表达式参数
     20→`.option()`方法可以接受一个正则表达式作为第三个参数，以规定可以接受的选项参数值。
     21→
     22→```js
+    23→program.option('-c,--coffee <type>', 'coffee', /short-white|long-black/);
+    24→```
       →…
     30→## noHelp
     32→此选项曾被用作传入`.command()`方法，以在内建的帮助信息中隐藏该命令：
     33→
     34→```js
+    35→program.command('example', 'example command', { noHelp: true });
+    36→```
       →…
     40→## 默认导入的全局 Command 对象
     42→Commander 的默认导入曾是一个全局的`Command`对象。
     43→
     44→```js
+    45→const program = require('commander');
+    46→```
       →…
     61→## .help() 与 .outputHelp() 的回调函数参数
     63→这两个方法曾允许传入一个回调函数，以在展示前处理帮助信息。
     64→
     65→```js
+    66→program.outputHelp((text) => {
+    67→  return colors.red(text);
       →…
     79→## .on('--help')
     81→此功能曾被用作在内建的帮助信息后输出自定义的帮助信息。自 Commander v3.0.0 起，如果有自定义的帮助选项，则此方法使用该自定义的帮助选项。
     82→
     83→```js
+    84→program.on('--help', function() {
+    85→  console.log('')
       →…
    104→## .on('command:*')
    106→当命令参数与已知子命令不匹配时发出此消息（作为 `.command('')` 实现的一部分）。
    107→
    108→一种用途是为未知子命令添加错误。错误现在是默认的内置行为。
+   109→
+   110→第二个相关用途是为未知子命令提出建议。替换内置支持是 `.showSuggestionAfterError()`，或者对于自定义行为捕获 `commander.unknownCommand` 错误。
       →…
    114→## .command('*')
    116→这用于向程序添加默认命令。
    117→
    118→```js
+   119→program
+   120→  .command('*')
       →…
    134→## cmd.description(cmdDescription, argDescriptions)
    136→此功能曾用来为命令参数添加描述信息。
    137→
    138→```js
+   139→program
+   140→  .command('price <book>')
       →…
    157→## InvalidOptionArgumentError
    159→此类曾被用来在自定义选项处理中抛出错误，以显示错误信息。
    160→
    161→```js
+   162→function myParseInt(value, dummyPrevious) {
+   163→  // parseInt 参数为字符串和进制数
       →…
    187→## 短选项标志长于单个字符
    189→短选项从未支持像 `-ws` 的标识，但旧的 README 并没有明确说明这一点。README 现在声明短选项是单个字符。
@@ -235,42 +228,58 @@ docs/zh-CN/可变参数的选项.md
      3→README 文档介绍了选项的声明与使用。大多数情况下，选项的解析行为，与您和您程序用户的期望相符。本文将详述一些特殊用例和细节问题。
      4→
      5→- [可变参数的选项](#%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E7%9A%84%E9%80%89%E9%A1%B9)
+     6→	- [解析中的歧义](#%E8%A7%A3%E6%9E%90%E4%B8%AD%E7%9A%84%E6%AD%A7%E4%B9%89)
+     7→		- [方案一：让`--`成为语法的一部分](#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9A%E8%AE%A9%60--%60%E6%88%90%E4%B8%BA%E8%AF%AD%E6%B3%95%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86)
       →…
     26→## 解析中的歧义
     28→解析选项时，有一些潜在的问题值得注意。当一个命令既有命令参数，又有选项的时候，在解析过程中有可能出现歧义。这可能会影响用户使用您的程序。
     29→Commander 首先解析选项的参数，而用户有可能想将选项后面跟的参数作为命令，或是作为命令参数进行解析。
     30→
+    31→```js
+    32→program
       →…
     73→### 方案一：让`--`成为语法的一部分
     75→与其让用户理解`--`的用法，您也可以直接把它作为程序语法的一部分。
     76→
     77→```js
+    78→program.usage('[options] -- [technique]');
+    79→```
       →…
     98→### 方案二：把选项放在最后
    100→Commander 遵循 GNU 解析命令的惯例，允许选项出现在命令参数之前或者之后，也可以将选项和命令参数相互穿插。
    101→因此，通过要求把选项放在最后，命令参数就不会和选项参数相混淆。
    102→
+   103→```js
+   104→program.usage('[technique] [options]');
       →…
    120→### 方案三：使用选项替代命令参数
    122→这个方案虽然有点激进，但是可以完美避免解析中的歧义。
    123→
    124→```js
+   125→program
+   126→  .name('cook')
       →…
    142→## 合并短选项和带有参数的选项
    144→多个 boolean 型的短选项可以合并起来写在同一个`-`号后面，比如`ls -al`。同时，你也可以在其中包括一个接受参数的短选项，此时，任何跟在其后的字符都将被视作这个选项的值。
    145→
    146→这就是说，默认情况下并不可以把多个带参数的选项合并起来。
+   147→
+   148→```js
       →…
    183→### 将短选项视作 boolean 类型选项合并
    185→在 Commander v5 之前，并不支持合并短选项和值。合并的 boolean 类型选项会被展开。
    186→因此，`-avl`将被展开为`-a -v -l`。
    187→
+   188→如果您需要后向兼容，或是倾向于在短选项合并的时候把它们视作 boolean 类型，可以改变此行为：
+   189→
       →…
 docs/zh-CN/术语表.md
      1→# 术语表
      3→命令行参数由选项（options）、选项参数（option-arguments）、命令（commands），以及命令参数（command-arguments）组成。
      4→
      5→|术语|解释|
+     6→|---|---|
+     7→|选项（option）|`-`后跟单个字母，或`--`后跟单词（或以`-`连接的多个单词），例如`-s`及`--short`|
       →…
 eslint.config.js
      8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
@@ -291,6 +300,10 @@ lib/argument.js
      6→   * The default is that the argument is required, and you can explicitly
      7→   * indicate this with <> around the name. Put [] around the name for an optional argument.
      8→   *
+     9→   * @param {string} name
+    10→   * @param {string} [description]
+    11→   */
+    12→
     13→  constructor(name, description) {
     48→  name() {
     56→  _collectValue(value, previous) {
@@ -308,6 +321,8 @@ lib/argument.js
    141→ */
    142→
    143→function humanReadableArgName(arg) {
+   144→  const nameOutput = arg.name() + (arg.variadic === true ? '...' : '');
+      →…
 lib/command.js
     13→class Command extends EventEmitter {
     14→  /**
@@ -315,7 +330,10 @@ lib/command.js
     16→   *
     17→   * @param {string} [name]
     18→   */
+    19→
     20→  constructor(name) {
+    21→    super();
+    22→    /** @type {Command[]} */
     99→  copyInheritedSettings(sourceCommand) {
    121→  _getCommandAndAncestors() {
    155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
@@ -429,11 +447,15 @@ lib/command.js
   2703→ */
   2704→
   2705→function incrementNodeInspectorPort(args) {
+  2706→  // Testing for these options:
+      →…
   2748→/**
   2749→ * @returns {boolean | undefined}
   2750→ * @package
   2751→ */
   2752→function useColor() {
+  2753→  // Test for common conventions.
+      →…
 lib/error.js
      1→/**
      2→ * CommanderError class
@@ -477,6 +499,10 @@ lib/help.js
     15→    this.minWidthToWrap = 40;
     16→    this.sortSubcommands = false;
     17→    this.sortOptions = false;
+    18→    this.showGlobalOptions = false;
+    19→  }
+    20→
+    21→  /**
     29→  prepareContext(contextOptions) {
     40→  visibleCommands(cmd) {
     62→  compareOptions(a, b) {
@@ -573,6 +599,8 @@ lib/help.js
    738→ */
    739→
    740→function stripColor(str) {
+   741→  // eslint-disable-next-line no-control-regex
+      →…
 lib/option.js
      3→class Option {
      4→  /**
@@ -580,7 +608,10 @@ lib/option.js
      6→   *
      7→   * @param {string} flags
      8→   * @param {string} [description]
+     9→   */
+    10→
     11→  constructor(flags, description) {
+    12→    this.flags = flags;
     47→  default(value, description) {
     65→  preset(arg) {
     82→  conflicts(names) {
@@ -651,6 +682,8 @@ lib/option.js
    314→ */
    315→
    316→function camelcase(str) {
+   317→  return str.split('-').reduce((str, word) => {
+      →…
    322→/**
    323→ * Split the short and long flag out of something like '-m,--mixed <value>'
    324→ *
@@ -658,6 +691,8 @@ lib/option.js
    326→ */
    327→
    328→function splitOptionFlags(flags) {
+   329→  let shortFlag;
+      →…
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
@@ -679,6 +714,8 @@ lib/suggestSimilar.js
     54→ */
     55→
     56→function suggestSimilar(word, candidates) {
+    57→  if (!candidates || candidates.length === 0) return '';
+      →…
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =
     13→  | LiteralType
@@ -693,6 +730,7 @@ typings/index.d.ts
     23→   * Constructs the CommanderError class
     24→   * @param exitCode - suggested exit code which could be used with process.exit
     25→   * @param code - an id string representing the error
+    26→   * @param message - human-readable description of the error
     28→  constructor(exitCode: number, code: string, message: string);
     31→export class InvalidArgumentError extends CommanderError {
     32→  /**
@@ -718,6 +756,7 @@ typings/index.d.ts
     55→  argChoices?: string[];
     56→
     57→  /**
+    58→   * Initialize a new command argument with the given name and description.
     62→  constructor(arg: string, description?: string);
     67→  name(): string;
     72→  default(value: unknown, description?: string): this;
@@ -735,6 +774,7 @@ typings/index.d.ts
    102→  mandatory: boolean; // The option must have a value after parsing, which usually means it must be specified on command line.
    103→  short?: string;
    104→  long?: string;
+   105→  negate: boolean;
    115→  constructor(flags: string, description?: string);
    120→  default(value: unknown, description?: string): this;
    132→  preset(arg: unknown): this;
@@ -759,6 +799,7 @@ typings/index.d.ts
    217→
    218→  constructor();
    219→
+   220→  /*
    226→  prepareContext(contextOptions: {
    227→    error?: boolean;
    228→    helpWidth?: number;
@@ -835,6 +876,7 @@ typings/index.d.ts
    362→  getOutHasColors?(): boolean;
    363→  getErrHasColors?(): boolean;
    364→  stripColor?(str: string): string;
+      →…
    367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
    368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
    370→export type OptionValueSource =
@@ -851,6 +893,7 @@ typings/index.d.ts
    383→
    384→  constructor(name?: string);
    385→
+   386→  /**
    398→  version(): string | undefined;
    442→  command(
    443→    nameAndArgs: string,

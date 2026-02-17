@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (977 words)
+budget: 1000 (979 words)
 
 AGENTS.md
      1→# AGENTS.md …
@@ -24,7 +24,8 @@ CLAUDE.md
     42→### Package Structure …
     48→## Configuration Files …
 SECURITY.md
-     1→# Security …
+     1→# Security
+     3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
    107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
@@ -44,7 +45,6 @@ docs/conf.py
    121→                return False
    122→            return True
    123→
-   124→    logger = logging.getLogger(sphinx.util.logging.NAMESPACE)
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)

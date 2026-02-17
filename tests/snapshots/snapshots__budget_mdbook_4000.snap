@@ -315,8 +315,8 @@ crates/mdbook-html/src/html/tree.rs
    135→    fn into_tendril(self) -> StrTendril {
    150→enum TableState {
    160→pub(crate) struct MarkdownTreeBuilder<'opts, 'event, EventIter> {
-   369→    fn start_tag …
-   585→    fn end_tag …
+   369→    fn start_tag(&mut self, tag: Tag<'event>) {
+   585→    fn end_tag(&mut self, tag: TagEnd) {
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     19→/// The HTML renderer for mdBook.
     20→#[derive(Default)]
@@ -689,6 +689,8 @@ guide/guide-helper/src/lib.rs
     14→    let book_version = Version::parse(&ctx.mdbook_version)?;
     15→    let version_req = VersionReq::parse(mdbook_preprocessor::MDBOOK_VERSION)?;
     16→
+    17→    if !version_req.matches(&book_version) {
+    18→        eprintln!(
       →…
     33→struct GuideHelper;
     35→impl Preprocessor for GuideHelper {
@@ -792,22 +794,13 @@ guide/src/guide/README.md
      6→- [Reading Books](reading.md)
      7→- [Creating a Book](creating.md)
 guide/src/misc/contributors.md
-     1→# Contributors
-     3→Here is a list of the contributors who have helped improving mdBook. Big
-     4→shout-out to them!
-     5→
-     6→- [mdinger](https://github.com/mdinger)
-     7→- Kevin ([kbknapp](https://github.com/kbknapp))
-     8→- Steve Klabnik ([steveklabnik](https://github.com/steveklabnik))
-     9→- Adam Solove ([asolove](https://github.com/asolove))
-    10→- Wayne Nilsen ([waynenilsen](https://github.com/waynenilsen))
-    11→- [funnkill](https://github.com/funkill)
-      →…
+     1→# Contributors …
 src/cmd/clean.rs
     36→/// Formats a number of bytes into a human readable SI-prefixed size.
     37→/// Returns a tuple of `(quantity, units)`.
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     39→    static UNITS: [&str; 7] = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"];
+    40→    let bytes = bytes as f32;
       →…
     45→#[derive(Debug)]
     46→pub struct Clean {
@@ -816,6 +809,7 @@ src/cmd/clean.rs
     49→    total_bytes_removed: u64,
     50→}
     52→impl Clean {
+    53→    fn new …
     91→impl fmt::Display for Clean {
 src/cmd/command_prelude.rs
      7→pub trait CommandExt: Sized {
@@ -832,11 +826,13 @@ src/cmd/command_prelude.rs
     41→    #[cfg(any(feature = "watch", feature = "serve"))]
     42→    fn arg_watcher(self) -> Self {
     43→        #[cfg(feature = "watch")]
+    44→        return self._arg(
       →…
     56→impl CommandExt for Command {
 src/cmd/init.rs
     88→fn get_author_name() -> Option<String> {
    102→fn request_book_title() -> Option<String> {
+   116→fn confirm …
 src/cmd/mod.rs
      1→//! Subcommand modules for the `mdbook` binary.
      2→
@@ -858,6 +854,7 @@ src/cmd/serve.rs
    112→    reload_tx: broadcast::Sender<Message>,
    113→    file_404: &str,
    114→) {
+   142→async fn websocket_connection …
 src/cmd/watch/native.rs
     11→pub fn rebuild_on_change(
     12→    book_dir: &Path,
@@ -906,6 +903,7 @@ src/cmd/watch.rs
     23→    Native,
     24→}
     26→impl WatcherKind {
+    74→fn find_gitignore …
 src/main.rs
     14→mod cmd;
     16→const VERSION: &str = concat!("v", clap::crate_version!());

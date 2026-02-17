@@ -2,31 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (485 words)
+budget: 500 (491 words)
 
 CONTRIBUTING.md
-     1→# Contributing
-     3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
-     4→2. Install dependencies (`npm install`)
-     5→3. Create your feature branch (`git checkout -b my-new-feature`)
-     6→4. Commit your changes (`git commit -am 'Added some feature'`)
-     7→5. Test your changes (`npm test`)
-     8→6. Push to the branch (`git push origin my-new-feature`)
-     9→7. [Create new Pull Request](https://help.github.com/articles/creating-a-pull-request/)
-    10→
-    11→## Testing
-    13→We use [TAP](https://github.com/tapjs/node-tap) to write tests. Run our test suite with this command:
-    14→
-    15→```
-    16→npm test
-    17→```
-    18→
-    19→## Code Style
-    21→We use [standard](https://www.npmjs.com/package/standard) and [editorconfig](http://editorconfig.org) to maintain code style and best practices. Please make sure your PR adheres to the guides by running:
-    22→
-    23→```
-    24→npm run lint
-    25→```
+     1→# Contributing …
+    11→## Testing …
+    19→## Code Style …
 README-es.md
    607→##### path
    609→Default: `path.resolve(process.cwd(), '.env')`
@@ -61,7 +42,12 @@ README.md
    616→
    617→By default, `config` will look for a file called .env in the current working directory.
    618→
-      →…
+   619→Pass in multiple files as an array, and they will be parsed in order and combined with `process.env` (or `option.processEnv`, if set). The first value set for a variable will win, unless the `options.override` flag is set, in which case the last value set will win.  If a value already exists in `process.env` and the `options.override` flag is NOT set, no changes will be made to that value. 
+   620→
+   621→```js  
+   622→require('dotenv').config({ path: ['.env.local', '.env'] })
+   623→```
+   624→
    625→##### quiet …
    648→##### encoding …
    658→##### debug …
@@ -80,7 +66,8 @@ README.md
    716→const opt = { debug: true }
    717→const config = dotenv.parse(buf, opt)
    718→// expect a debug message because the buffer is not in KEY=VAL form
-      →…
+   719→```
+   720→
    721→### Populate …
    748→#### options …
    750→##### Debug
@@ -107,6 +94,9 @@ lib/main.d.ts
     27→   * Default: `path.resolve(process.cwd(), '.env')`
     28→   *
     29→   * Specify a custom path if your file containing environment variables is located elsewhere.
+    30→   * Can also be an array of strings, specifying multiple paths.
+    31→   *
+    32→   * example: `require('dotenv').config({ path: '/custom/path/to/.env' })`
       →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
@@ -125,6 +115,9 @@ lib/main.d.ts
    108→   * Default: `false`
    109→   *
    110→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
+   111→   *
+   112→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
+   113→   */
       →…
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;
@@ -132,9 +125,5 @@ lib/main.d.ts
 lib/main.js
      7→const version = packageJson.version
     10→const TIPS = [
-    11→  '🔐 encrypt with Dotenvx: https://dotenvx.com',
-      →…
     46→const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
    413→const DotenvModule = {
-   414→  configDotenv,
-      →…

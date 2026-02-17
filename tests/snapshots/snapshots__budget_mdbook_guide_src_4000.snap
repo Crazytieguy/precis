@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3936 words)
+budget: 4000 (3933 words)
 
 404.md
      1→# Document not found (404)
@@ -78,6 +78,7 @@ SUMMARY.md
     15→    - [build](cli/build.md)
     16→    - [watch](cli/watch.md)
     17→    - [serve](cli/serve.md)
+    18→    - [test](cli/test.md)
       →…
 cli/README.md
      1→# Command-line tool
@@ -140,6 +141,7 @@ continuous-integration.md
      5→The following provides some general guidelines on how to configure your service to run mdBook.
      6→Specific recipes can be found at the [Automated Deployment] wiki page.
      7→
+     8→[GitHub Actions]: https://docs.github.com/en/actions
       →…
     12→## Installing mdBook
     14→There are several different strategies for installing mdBook.
@@ -151,6 +153,7 @@ continuous-integration.md
     21→
     22→```sh
     23→mkdir bin
+    24→curl -sSL https://github.com/rust-lang/mdBook/releases/download/{{ mdbook-version }}/mdbook-{{ mdbook-version }}-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
       →…
     39→### Building from source
     41→Building from source will require having Rust installed.
@@ -158,6 +161,7 @@ continuous-integration.md
     43→
     44→After Rust is installed, `cargo install` can be used to build and install mdBook.
     45→We recommend using a SemVer version specifier so that you get the latest **non-breaking** version of mdBook.
+    46→For example:
       →…
     67→## Running tests
     69→You may want to run tests using [`mdbook test`] every time you push a change or create a pull request.
@@ -165,6 +169,7 @@ continuous-integration.md
     71→
     72→This will require having Rust installed.
     73→Some services have Rust pre-installed, but if your service does not, you will need to add a step to install it.
+    74→
       →…
     83→## Deploying
     85→You may want to automatically deploy your book.
@@ -172,6 +177,7 @@ continuous-integration.md
     87→
     88→You'll also need to understand the specifics on how to push a change to your web service.
     89→For example, [GitHub Pages] just requires committing the output onto a specific git branch.
+    90→Other services may require using something like SSH to connect to a remote server.
       →…
    100→### 404 handling
    102→mdBook automatically generates a 404 page to be used for broken links.
@@ -179,6 +185,7 @@ continuous-integration.md
    104→Some services like [GitHub Pages] will automatically use this page for broken links.
    105→For other services, you may want to consider configuring the web server to use this page as it will provide the reader navigation to get back to the book.
    106→
+   107→If your book is not deployed at the root of the domain, then you should set the [`output.html.site-url`] setting so that the 404 page works correctly.
       →…
 for_developers/README.md
      1→# For developers
@@ -283,15 +290,6 @@ for_developers/mdbook-wordcount/src/main.rs
     19→    let _ = fs::create_dir_all(&ctx.destination);
     20→    let mut f = File::create(ctx.destination.join("wordcounts.txt")).unwrap();
     21→
-    22→    for item in ctx.book.iter() {
-    23→        if let BookItem::Chapter(ref ch) = *item {
-    24→            if cfg.ignores.contains(&ch.name) {
-    25→                continue;
-    26→            }
-    27→
-    28→            let num_words = count_words(ch);
-    29→            println!("{}: {}", ch.name, num_words);
-    30→            writeln!(f, "{}: {}", ch.name, num_words).unwrap();
       →…
     40→fn count_words(ch: &Chapter) -> usize {
     41→    ch.content.split_whitespace().count()
@@ -706,7 +704,4 @@ misc/contributors.md
     18→- Weihang Lo ([weihanglo](https://github.com/weihanglo))
     19→- Avision Ho ([avisionh](https://github.com/avisionh))
     20→- Vivek Akupatni ([apatniv](https://github.com/apatniv))
-    21→- Eric Huss ([ehuss](https://github.com/ehuss))
-    22→- Josh Rotenberg ([joshrotenberg](https://github.com/joshrotenberg))
-    23→
-    24→If you feel you're missing from this list, feel free to add yourself in a PR.
+      →…

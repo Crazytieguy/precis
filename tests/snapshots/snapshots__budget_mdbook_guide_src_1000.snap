@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (986 words)
+budget: 1000 (985 words)
 
 404.md
      1→# Document not found (404) …
@@ -53,7 +53,8 @@ cli/README.md
     10→* [`mdbook watch`](watch.md) --- Rebuilds the book any time a source file changes.
     11→* [`mdbook serve`](serve.md) --- Runs a web server to view the book, and rebuilds on changes.
     12→* [`mdbook test`](test.md) --- Tests Rust code samples.
-      →…
+    13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
+    14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
 continuous-integration.md
      1→# Running `mdbook` in continuous integration …
     12→## Installing mdBook …
@@ -162,6 +163,13 @@ format/theme/README.md
      5→binary.
      6→
      7→The theme is totally customizable, you can selectively replace every file from
+     8→the theme by your own by adding a `theme` directory next to `src` folder in your
+     9→project root. Create a new file with the name of the file you want to override
+    10→and now that file will be used instead of the default file.
+    11→
+    12→Here are the files you can override:
+    13→
+    14→- **_index.hbs_** is the handlebars template.
       →…
 format/theme/editor.md
      1→# Editor …
@@ -206,26 +214,4 @@ guide/reading.md
     42→## Search …
     54→## Code blocks …
 misc/contributors.md
-     1→# Contributors
-     3→Here is a list of the contributors who have helped improving mdBook. Big
-     4→shout-out to them!
-     5→
-     6→- [mdinger](https://github.com/mdinger)
-     7→- Kevin ([kbknapp](https://github.com/kbknapp))
-     8→- Steve Klabnik ([steveklabnik](https://github.com/steveklabnik))
-     9→- Adam Solove ([asolove](https://github.com/asolove))
-    10→- Wayne Nilsen ([waynenilsen](https://github.com/waynenilsen))
-    11→- [funnkill](https://github.com/funkill)
-    12→- Fu Gangqiang ([FuGangqiang](https://github.com/FuGangqiang))
-    13→- [Michael-F-Bryan](https://github.com/Michael-F-Bryan)
-    14→- Chris Spiegel ([cspiegel](https://github.com/cspiegel))
-    15→- [projektir](https://github.com/projektir)
-    16→- [Phaiax](https://github.com/Phaiax)
-    17→- Matt Ickstadt ([mattico](https://github.com/mattico))
-    18→- Weihang Lo ([weihanglo](https://github.com/weihanglo))
-    19→- Avision Ho ([avisionh](https://github.com/avisionh))
-    20→- Vivek Akupatni ([apatniv](https://github.com/apatniv))
-    21→- Eric Huss ([ehuss](https://github.com/ehuss))
-    22→- Josh Rotenberg ([joshrotenberg](https://github.com/joshrotenberg))
-    23→
-      →…
+     1→# Contributors …

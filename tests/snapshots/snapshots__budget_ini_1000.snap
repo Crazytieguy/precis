@@ -2,62 +2,62 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (983 words)
+budget: 1000 (960 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
      9→  .map((file) => `./${file}`)
 CHANGELOG.md
-     3→## [6.0.0](https://github.com/npm/ini/compare/v5.0.0...v6.0.0) (2025-10-22) …
-     4→### ⚠️ BREAKING CHANGES …
-    12→### ⚠️ BREAKING CHANGES …
-    24→### Bug Fixes …
-    36→### Bug Fixes …
-    65→### Bug Fixes …
-    71→### Features …
-    86→### ⚠️ BREAKING CHANGES …
-    97→### Bug Fixes …
-   104→### ⚠ BREAKING CHANGES …
+     3→## [6.0.0](https://github.com/npm/ini/compare/v5.0.0...v6.0.0) (2025-10-22)
+     4→### ⚠️ BREAKING CHANGES
+     5→* `ini` now supports node `^20.17.0 || >=22.9.0`
+    12→### ⚠️ BREAKING CHANGES
+    13→* `ini` now supports node `^18.17.0 || >=20.5.0`
+    24→### Bug Fixes
+    26→* [`858cc82`](https://github.com/npm/ini/commit/858cc82dff7eac9ff9a56181132d66d0e09a803c) [#252](https://github.com/npm/ini/pull/252) decoding bracketed arrays (#252) (@Cherry)
+    27→
+    36→### Bug Fixes
+    38→* [`e237377`](https://github.com/npm/ini/commit/e237377029caa6fe76b1290eb6e64247e3e11cf3) [#243](https://github.com/npm/ini/pull/243) Removed the unused doUnesc param in the unsafe function (#243) (@LoicE5)
+    39→
+    65→### Bug Fixes
+    67→* [`090f64e`](https://github.com/npm/ini/commit/090f64e92a7ff722adf723dc13e7b468e591f057) [#208](https://github.com/npm/ini/pull/208) check process on browser (#208) (@Creskendoll)
+    68→
+    71→### Features
+    73→* [`622106a`](https://github.com/npm/ini/commit/622106a1a0bcd2bc32bfd2e6f9cc45a1a1cb53f7) [#205](https://github.com/npm/ini/pull/205) add "align" and "sort" options (#205) (@rquadling)
+    74→* [`dc64a1a`](https://github.com/npm/ini/commit/dc64a1a3aa322c0c258383bedcae738aaa67028d) [#204](https://github.com/npm/ini/pull/204) add bracketedArray option (#204) (@wraithgar)
+    75→* [`6a3cb38`](https://github.com/npm/ini/commit/6a3cb38b134f674dff1a7b5d3732553e8bace777) [#199](https://github.com/npm/ini/pull/199) add platform option to force line endings (#199) (@wraithgar, Francois-Xavier Kowalski)
+    76→* [`b363ae6`](https://github.com/npm/ini/commit/b363ae67ddf9b1232daafb3cc2b2b1e5cb656406) [#198](https://github.com/npm/ini/pull/198) add newline option (#198) (@wraithgar, Francois-Xavier Kowalski)
+    77→
+    86→### ⚠️ BREAKING CHANGES
+    88→* `ini` is now compatible with the following semver range for node: `^14.17.0 || ^16.13.0 || >=18.0.0`
+    89→
+    97→### Bug Fixes
+    99→* linting ([#166](https://github.com/npm/ini/issues/166)) ([5d9ab39](https://github.com/npm/ini/commit/5d9ab392643a93358e1d7595e8efb3d6d97d1181))
+   100→
+   104→### ⚠ BREAKING CHANGES
+   106→* this drops support for node 10 and non-LTS versions of node 12 and node 14
+   107→
 CONTRIBUTING.md
-     3→# Contributing
+     3→# Contributing …
      5→## Code of Conduct
      7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
      8→
-     9→## Reporting Bugs
-    11→Before submitting a new bug report please search for an existing or similar report.
-    12→
-    13→Use one of our existing issue templates if you believe you've come across a unique problem.
-    14→
-    15→Duplicate issues, or issues that don't use one of our templates may get closed without a response.
-    16→
-    17→## Pull Request Conventions
+     9→## Reporting Bugs …
+    17→## Pull Request Conventions …
     19→### Commits
     21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
     22→
     23→When opening a pull request please be sure that either the pull request title, or each commit in the pull request, has one of the following prefixes:
     24→
-    25→ - `feat`: For when introducing a new feature.  The result will be a new semver minor version of the package when it is next published.
-    26→ - `fix`: For bug fixes. The result will be a new semver patch version of the package when it is next published.
-    27→ - `docs`: For documentation updates.  The result will be a new semver patch version of the package when it is next published.
-    28→ - `chore`: For changes that do not affect the published module.  Often these are changes to tests.  The result will be *no* change to the version of the package when it is next published (as the commit does not affect the published version).
-    29→
-    30→### Test Coverage
-    32→Pull requests made against this repo will run `npm test` automatically.  Please make sure tests pass locally before submitting a PR.
-    33→
-    34→Every new feature or bug fix should come with a corresponding test or tests that validate the solutions. Testing also reports on code coverage and will fail if code coverage drops.
-    35→
-    36→### Linting
-    38→Linting is also done automatically once tests pass.  `npm run lintfix` will fix most linting errors automatically.
-    39→
-    40→Please make sure linting passes before submitting a PR.
-    41→
-    42→## What _not_ to contribute?
+      →…
+    30→### Test Coverage …
+    36→### Linting …
+    42→## What _not_ to contribute? …
     44→### Dependencies
     46→It should be noted that our team does not accept third-party dependency updates/PRs.  If you submit a PR trying to update our dependencies we will close it with or without a reference to these contribution guidelines.
     47→
-    48→### Tools/Automation
-    50→Our core team is responsible for the maintenance of the tooling/automation in this project and we ask contributors to not make changes to these when contributing (e.g. `.github/*`, `.eslintrc.json`, `.licensee.json`).  Most of those files also have a header at the top to remind folks they are automatically generated.  Pull requests that alter these will not be accepted.
+    48→### Tools/Automation …
 README.md
      4→## Note
      6→-   Sections are treated as nested objects.
@@ -118,7 +118,23 @@ README.md
     62→await writeFile(`./Modified.ini`,text)
     63→```
     64→
-      →…
+    65→The written file will contain the following:
+    66→
+    67→```ini
+    68→[section]
+    69→scope=local
+    70→[section.database]
+    71→user=dbuser
+    72→password=dbpassword
+    73→database=use_another_database
+    74→[section.paths.default]
+    75→tmpdir=/tmp
+    76→array[]=first value
+    77→array[]=second value
+    78→array[]=third value
+    79→array[]=fourth value
+    80→```
+    81→
     82→## API
     84→### Parse
     86→Attempts to turn the given INI string into a nested data object.
@@ -182,7 +198,25 @@ README.md
    145→     */
    146→
    147→    platform ,
-      →…
+   148→
+   149→    /**
+   150→     *  Whether to append `[]` to array keys.
+   151→     * 
+   152→     *  Some parsers treat duplicate names by themselves as arrays
+   153→     */
+   154→
+   155→    bracketedArray : true
+   156→
+   157→})
+   158→```
+   159→
+   160→*For backwards compatibility any string passed as the*  
+   161→*options parameter is treated as the `section` option.*
+   162→
+   163→```js
+   164→stringify(object,'section')
+   165→```
+   166→
    167→### Un / Escape
    169→Turn the given string into a safe to  
    170→use key or value in your INI file.
@@ -198,8 +232,26 @@ README.md
    180→```
 lib/ini.js
      3→const encode = (obj, opt = {}) => {
+     4→  if (typeof opt === 'string') {
+     5→    opt = { section: opt }
+      →…
     80→function splitSections (str, separator) {
+    81→  var lastMatchIndex = 0
+    82→  var lastSeparatorIndex = 0
+      →…
    106→const decode = (str, opt = {}) => {
+   107→  opt.bracketedArray = opt.bracketedArray !== false
+   108→  const out = Object.create(null)
+      →…
    212→const isQuoted = val => {
+   213→  return (val.startsWith('"') && val.endsWith('"')) ||
+   214→    (val.startsWith("'") && val.endsWith("'"))
+      →…
    217→const safe = val => {
+   218→  if (
+   219→    typeof val !== 'string' ||
+      →…
    230→const unsafe = val => {
+   231→  val = (val || '').trim()
+   232→  if (isQuoted(val)) {
+      →…

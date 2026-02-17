@@ -2,36 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (988 words)
+budget: 1000 (982 words)
 
 CONTRIBUTING.md
-     1→# Contributing
+     1→# Contributing …
      3→## Issues
      5→New issues are welcome, whether questions or suggestions or reporting bugs.
      6→You are also welcome to contribute by adding helpful comments on an existing issue.
      7→
      8→We love reproducible code examples in questions and answers.
      9→
-    10→If you get a satisfactory reply to a question then please close your issue, but it is ok to leave an issue open for more replies or interest. Inactive issues may get closed after one month if they have an answer,
-    11→or after six months otherwise.
-    12→
-    13→## Pull Requests
-    15→Pull Requests will be considered. Please submit pull requests against the develop branch.
-    16→
-    17→Follow the existing code style. Check the tests succeed, including format and lint.
-    18→
-    19→- `npm run test`
-    20→- `npm run check`
-    21→
-    22→Don't update the CHANGELOG or command version number. That gets done by maintainers when preparing the release.
-    23→
-    24→Useful things to include in your request description are:
-    25→
-    26→- what problem are you solving?
-    27→- what Issues does this relate to?
-    28→- suggested summary for CHANGELOG
-    29→
       →…
+    13→## Pull Requests …
 Readme.md
    968→### .parse() and .parseAsync()
    970→Call with no parameters to parse `process.argv`. Detects Electron and special node options like `node --eval`. Easy mode!
@@ -65,16 +47,9 @@ Readme_zh-CN.md
    917→例如：
    918→
    919→```js
-   920→program.parse(process.argv); // 指明，按 node 约定
-   921→program.parse(); // 默认，自动识别 electron
       →…
 SECURITY.md
-     1→# Security Policy
-     3→To report a security vulnerability, please use the
-     4→[Tidelift security contact](https://tidelift.com/security).
-     5→Tidelift will coordinate the fix and disclosure.
-     6→
-     7→Please do not report security vulnerabilities through public GitHub issues or pull requests.
+     1→# Security Policy …
 docs/deprecated.md
    229→### Short option flag longer than a single character
    231→Short option flags like `-ws` were never supported, but the old README did not make this clear. The README now states that short options are a single character.
@@ -114,10 +89,7 @@ jest.config.js
      2→  testEnvironment: 'node',
      3→  collectCoverage: true,
      4→  transform: {
-     5→    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.ts.json' }],
-     6→  },
-     7→  testPathIgnorePatterns: ['/node_modules/'],
-     8→};
+      →…
 lib/argument.js
      3→class Argument {
      4→  /**
@@ -138,9 +110,16 @@ lib/error.js
      4→class CommanderError extends Error {
      5→  /**
      6→   * Constructs the CommanderError class
+     7→   * @param {number} exitCode suggested exit code which could be used with process.exit
+     8→   * @param {string} code an id string representing the error
+     9→   * @param {string} message human-readable description of the error
     25→class InvalidArgumentError extends CommanderError {
     26→  /**
     27→   * Constructs the InvalidArgumentError class
+    28→   * @param {string} [message] explanation of why argument is invalid
+    29→   */
+    30→  constructor(message) {
+      →…
 lib/help.js
     12→class Help {
     13→  constructor() {
@@ -166,6 +145,9 @@ lib/option.js
    268→class DualOptions {
    269→  /**
    270→   * @param {Option[]} options
+   271→   */
+   272→  constructor(options) {
+   273→    this.positiveOptions = new Map();
    308→/**
       →…
    316→function camelcase(str) {
@@ -185,12 +167,25 @@ typings/index.d.ts
     13→  | LiteralType
     14→  | (BaseType & Record<never, never>);
     16→export class CommanderError extends Error {
+    17→  code: string;
+    18→  exitCode: number;
     31→export class InvalidArgumentError extends CommanderError {
+    32→  /**
+    33→   * Constructs the InvalidArgumentError class
     40→export interface ErrorOptions {
+    41→  // optional parameter for error()
+    42→  /** an id string representing the error */
+      →…
     48→export class Argument {
+    49→  description: string;
+    50→  required: boolean;
     95→export class Option {
+    96→  flags: string;
+    97→  description: string;
    115→  constructor(flags: string, description?: string);
    210→export class Help {
+   211→  /** output helpWidth, long lines are wrapped to fit */
+   212→  helpWidth?: number;
    218→  constructor();
    226→  prepareContext(contextOptions: {
    227→    error?: boolean;
@@ -206,8 +201,16 @@ typings/index.d.ts
    288→  styleArgumentTerm(str: string): string;
    340→export type HelpConfiguration = Partial<Help>;
    342→export interface ParseOptions {
+   343→  from: 'node' | 'electron' | 'user';
+   344→}
    345→export interface HelpContext {
+   346→  // optional parameter for .help() and .outputHelp()
+   347→  error: boolean;
+      →…
    349→export interface AddHelpTextContext {
+   350→  // passed to text function used with .addHelpText()
+   351→  error: boolean;
+      →…
    354→export interface OutputConfiguration {
    355→  writeOut?(str: string): void;
    356→  writeErr?(str: string): void;
@@ -224,6 +227,8 @@ typings/index.d.ts
    372→  | undefined;
    374→export type OptionValues = Record<string, any>;
    376→export class Command {
+   377→  args: string[];
+   378→  processedArgs: any[];
    384→  constructor(name?: string);
    493→  argument(name: string, description?: string, defaultValue?: unknown): this;
    528→  helpCommand(enable: boolean): this;
@@ -233,6 +238,14 @@ typings/index.d.ts
   1085→    text: (context: AddHelpTextContext) => string,
   1086→  ): this;
   1094→export interface CommandOptions {
+  1095→  hidden?: boolean;
+  1096→  isDefault?: boolean;
+      →…
   1100→export interface ExecutableCommandOptions extends CommandOptions {
+  1101→  executableFile?: string;
+  1102→}
   1104→export interface ParseOptionsResult {
+  1105→  operands: string[];
+  1106→  unknown: string[];
+      →…
   1113→export const program: Command;

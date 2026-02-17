@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (959 words)
+budget: 1000 (958 words)
 
 README.md
      1→# mdBook …
@@ -84,6 +84,8 @@ crates/mdbook-driver/src/lib.rs
     69→pub mod init;
     70→mod load;
     71→mod mdbook;
+crates/mdbook-driver/src/mdbook/tests.rs
+   225→struct BoolPreprocessor(bool);
 crates/mdbook-driver/src/mdbook.rs
     29→pub struct MDBook {
     30→    /// The book's root directory.
@@ -255,8 +257,6 @@ guide/src/guide/README.md
      4→
      5→- [Installation](installation.md)
       →…
-guide/src/misc/contributors.md
-     1→# Contributors …
 src/cmd/clean.rs
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     45→#[derive(Debug)]

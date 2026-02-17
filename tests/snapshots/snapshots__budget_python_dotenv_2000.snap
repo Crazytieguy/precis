@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1902 words)
+budget: 2000 (1896 words)
 
 CHANGELOG.md
     21→### Fixed
@@ -18,32 +18,7 @@ CONTRIBUTING.md
      7→
      8→Executing the tests:
      9→
-    10→    $ uv venv
-    11→    $ uv pip install -r requirements.txt
-    12→    $ uv pip install -e .
-    13→    $ uv ruff check .
-    14→    $ uv format .
-    15→    $ uv run pytest
-    16→
-    17→or with [tox](https://pypi.org/project/tox/) installed:
-    18→
-    19→    $ tox
-    20→
-    21→
-    22→Use of pre-commit is recommended:
-    23→
-    24→    $ uv run precommit install
-    25→
-    26→
-    27→Documentation is published with [mkdocs]():
-    28→
-    29→```shell
-    30→$ uv pip install -r requirements-docs.txt
-    31→$ uv pip install -e .
-    32→$ uv run mkdocs serve
-    33→```
-    34→
-    35→Open http://127.0.0.1:8000/ to view the documentation locally.
+      →…
 README.md
      1→# python-dotenv
      3→[![Build Status][build_status_badge]][build_status_link]
@@ -314,6 +289,7 @@ src/dotenv/cli.py
     73→    """
     74→
     75→    try:
+    76→        with open(path) as stream:
       →…
     93→def list_values …
    112→@cli.command(name="set")
@@ -324,6 +300,7 @@ src/dotenv/cli.py
    117→    """Store the given key/value."""
    118→    file = ctx.obj["FILE"]
    119→    quote = ctx.obj["QUOTE"]
+   120→    export = ctx.obj["EXPORT"]
       →…
    128→@cli.command()
    129→@click.pass_context
@@ -332,6 +309,7 @@ src/dotenv/cli.py
    132→    """Retrieve the value for the given key."""
    133→    file = ctx.obj["FILE"]
    134→
+   135→    with stream_file(file) as stream:
       →…
    145→@cli.command()
    146→@click.pass_context
@@ -340,12 +318,14 @@ src/dotenv/cli.py
    149→    """Removes the given key."""
    150→    file = ctx.obj["FILE"]
    151→    quote = ctx.obj["QUOTE"]
+   152→    success, key = unset_key(file, key, quote)
       →…
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
    175→    file = ctx.obj["FILE"]
    176→    if not os.path.isfile(file):
+   177→        raise click.BadParameter(
       →…
    193→def run_command …
 src/dotenv/ipython.py
@@ -388,6 +368,9 @@ src/dotenv/ipython.py
 src/dotenv/main.py
     25→def _load_dotenv_disabled() -> bool:
     26→    """
+    27→    Determine if dotenv loading has been disabled.
+    28→    """
+    29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
       →…
     35→def with_warn_for_invalid_lines …
     45→class DotEnv:
@@ -421,18 +404,25 @@ src/dotenv/main.py
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    146→    pathlib.Path(path).touch()
    147→
+   148→    with tempfile.NamedTemporaryFile(mode="w", encoding=encoding, delete=False) as dest:
       →…
    163→def set_key …
    211→def unset_key …
    244→def resolve_variables …
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """
+   271→    Yield directories starting from the given directory up to the root
+   272→    """
+   273→    if not os.path.exists(path):
       →…
    287→def find_dotenv …
    338→def load_dotenv …
    387→def dotenv_values …
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
+   425→    Return True if `path` exists and is either a regular file or a FIFO.
+   426→    """
+   427→    if os.path.isfile(path):
       →…
 src/dotenv/parser.py
     14→def make_regex …

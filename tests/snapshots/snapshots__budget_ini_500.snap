@@ -2,34 +2,33 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (483 words)
+budget: 500 (489 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
      9→  .map((file) => `./${file}`)
+CHANGELOG.md
+     3→## [6.0.0](https://github.com/npm/ini/compare/v5.0.0...v6.0.0) (2025-10-22) …
+     4→### ⚠️ BREAKING CHANGES …
+    12→### ⚠️ BREAKING CHANGES …
+    24→### Bug Fixes …
+    36→### Bug Fixes …
+    65→### Bug Fixes …
+    71→### Features …
+    86→### ⚠️ BREAKING CHANGES …
+    97→### Bug Fixes …
+   104→### ⚠ BREAKING CHANGES …
 CONTRIBUTING.md
      3→# Contributing …
-     5→## Code of Conduct
-     7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
-     8→
+     5→## Code of Conduct …
      9→## Reporting Bugs …
     17→## Pull Request Conventions …
-    19→### Commits
-    21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
-    22→
-    23→When opening a pull request please be sure that either the pull request title, or each commit in the pull request, has one of the following prefixes:
-    24→
-    25→ - `feat`: For when introducing a new feature.  The result will be a new semver minor version of the package when it is next published.
-    26→ - `fix`: For bug fixes. The result will be a new semver patch version of the package when it is next published.
-    27→ - `docs`: For documentation updates.  The result will be a new semver patch version of the package when it is next published.
-      →…
+    19→### Commits …
     30→### Test Coverage …
     36→### Linting …
     42→## What _not_ to contribute? …
-    44→### Dependencies
-    46→It should be noted that our team does not accept third-party dependency updates/PRs.  If you submit a PR trying to update our dependencies we will close it with or without a reference to these contribution guidelines.
-    47→
+    44→### Dependencies …
     48→### Tools/Automation …
 README.md
      4→## Note
@@ -56,6 +55,24 @@ README.md
     27→array[] = third value
     28→```
     29→
+    30→You can **read**, **modify** and **write** it like so:
+    31→
+    32→```js
+    33→import { writeFile , readFile } from 'node:fs/promises'
+    34→import { stringify , parse } from 'ini'
+    35→
+    36→//  Read INI file as text
+    37→
+    38→let text = await readFile(`./Original.ini`,{
+    39→    encoding : 'utf-8'
+    40→})
+    41→
+    42→//  Parse text data to object
+    43→
+    44→const config = parse(text)
+    45→
+    46→//  Modify data object
+    47→
       →…
     82→## API
     84→### Parse
@@ -85,6 +102,24 @@ README.md
    110→    /**
    111→     *  Whether to align the `=` character for each section.
    112→     *  -> Also enables the `whitespace` option
+   113→     */
+   114→
+   115→    align : false ,
+   116→
+   117→    /**
+   118→     *  Identifier to use for global items 
+   119→     *  and to prepend to all other sections.
+   120→     */
+   121→
+   122→    section ,
+   123→
+   124→    /**
+   125→     *  Whether to sort all sections & their keys alphabetically.
+   126→     */
+   127→
+   128→    sort : false ,
+   129→
+   130→    /**
       →…
    167→### Un / Escape
    169→Turn the given string into a safe to  

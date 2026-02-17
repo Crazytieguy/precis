@@ -2,20 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (480 words)
+budget: 500 (482 words)
 
 CHANGELOG.md
     21→### Fixed …
 CONTRIBUTING.md
-     1→Contributing
-     4→All the contributions are welcome! Please open [an
-     5→issue](https://github.com/theskumar/python-dotenv/issues/new) or send us
-     6→a pull request.
-     7→
-     8→Executing the tests:
-     9→
-    10→    $ uv venv
-      →…
+     1→Contributing …
 README.md
      1→# python-dotenv …
     22→## Getting Started …
@@ -61,6 +53,10 @@ src/dotenv/__init__.py
     43→    "get_cli_string",
     44→    "load_dotenv",
     45→    "dotenv_values",
+    46→    "get_key",
+    47→    "set_key",
+    48→    "unset_key",
+    49→    "find_dotenv",
       →…
 src/dotenv/cli.py
     60→@click.version_option(version=__version__)
@@ -126,6 +122,8 @@ src/dotenv/main.py
     45→class DotEnv:
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
+    65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
+      →…
    141→@contextmanager
    142→def rewrite(
    143→    path: StrPath,
@@ -146,7 +144,13 @@ src/dotenv/variables.py
      6→    r"""
      7→    \$\{
      8→        (?P<name>[^\}:]*)
-      →…
+     9→        (?::-
+    10→            (?P<default>[^\}]*)
+    11→        )?
+    12→    \}
+    13→    """,
+    14→    re.VERBOSE,
+    15→)
     18→class Atom(metaclass=ABCMeta):
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...

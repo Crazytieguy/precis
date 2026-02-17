@@ -19,33 +19,15 @@ CONTRIBUTING.md
      8→Executing the tests:
      9→
     10→    $ uv venv
-    11→    $ uv pip install -r requirements.txt
-    12→    $ uv pip install -e .
-    13→    $ uv ruff check .
-    14→    $ uv format .
-    15→    $ uv run pytest
-    16→
-    17→or with [tox](https://pypi.org/project/tox/) installed:
-    18→
-    19→    $ tox
-    20→
-    21→
-    22→Use of pre-commit is recommended:
-    23→
-    24→    $ uv run precommit install
-    25→
-    26→
-    27→Documentation is published with [mkdocs]():
-    28→
-    29→```shell
-    30→$ uv pip install -r requirements-docs.txt
       →…
 README.md
      1→# python-dotenv
      3→[![Build Status][build_status_badge]][build_status_link]
+     4→[![PyPI version][pypi_badge]][pypi_link]
       →…
     22→## Getting Started
     24→```shell
+    25→pip install python-dotenv
       →…
     78→## Other Use Cases
     80→### Load configuration without altering the environment
@@ -74,33 +56,43 @@ README.md
    104→
    105→### Parse configuration as a stream
    107→`load_dotenv` and `dotenv_values` accept [streams][python_streams] via their
+   108→`stream` argument. It is thus possible to load the variables from sources other
       →…
    120→### Load .env files in IPython
    122→You can use dotenv in IPython. By default, it will use `find_dotenv` to search for a
+   123→`.env` file:
       →…
    141→### Disable load_dotenv
    143→Set `PYTHON_DOTENV_DISABLED=1` to disable `load_dotenv()` from loading .env
+   144→files or streams. Useful when you can't modify third-party package calls or in
       →…
    147→## Command-line Interface
    149→A CLI interface `dotenv` is also included, which helps you manipulate the `.env`
+   150→file without manually opening it.
       →…
    169→## File format
    171→The format is not formally specified and still improves over time. That being
+   172→said, `.env` files should mostly look like Bash files. Reading from FIFOs (named
       →…
    185→### Multiline values
    187→It is possible for single- or double-quoted values to span multiple lines. The
+   188→following examples are equivalent:
       →…
    199→### Variable without a value
    201→A variable can have no value:
+   202→
       →…
    214→### Variable expansion
    216→python-dotenv can interpolate variables using POSIX variable expansion.
+   217→
       →…
    234→## Related Projects
    236→- [environs](https://github.com/sloria/environs)
+   237→- [Honcho](https://github.com/nickstenning/honcho)
       →…
    246→## Acknowledgements
    248→This project is currently maintained by [Saurabh Kumar][saurabh-homepage] and
+   249→[Bertrand Bonnefoy-Claudet][gh-bbc2] and would not have been possible without
       →…
 docs/reference.md
      1→# ::: dotenv …

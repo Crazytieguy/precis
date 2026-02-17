@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (482 words)
+budget: 500 (481 words)
 
 README.md
      1→# mdBook …
@@ -149,8 +149,6 @@ guide/src/format/theme/README.md
      1→# Theme …
 guide/src/guide/README.md
      1→# User guide …
-guide/src/misc/contributors.md
-     1→# Contributors …
 src/cmd/clean.rs
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     45→#[derive(Debug)]
@@ -179,4 +177,5 @@ src/cmd/watch.rs
     21→pub enum WatcherKind {
 src/main.rs
     14→mod cmd;
+    16→const VERSION …
     58→fn create_clap_command() -> Command {
