@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (485 words)
+budget: 500 (489 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯ …
@@ -11,11 +11,6 @@ README.md
    144→## Comparison to failure …
    155→## Comparison to thiserror …
    166→#### License …
-build.rs
-    17→fn main() {
-    99→fn compile_probe(rustc_bootstrap: bool) -> bool {
-   188→fn rustc_minor_version() -> Option<u32> {
-   199→fn cargo_env_var(key: &str) -> OsString {
 src/backtrace.rs
      8→pub(crate) enum Backtrace {}
     11→macro_rules! impl_backtrace {
@@ -108,12 +103,20 @@ src/lib.rs
    657→    use self::not::Bool;
    658→    use crate::Error;
    659→    use alloc::fmt;
+   660→    use core::fmt::Arguments;
+   661→
+   662→    #[doc(hidden)]
+   663→    pub use crate::ensure::{BothDebug, NotBothDebug};
+   664→    #[doc(hidden)]
    671→    #[doc(hidden)]
    672→    pub mod kind {
    673→        #[doc(hidden)]
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    675→
-      →…
+   676→        #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+   677→        #[doc(hidden)]
+   678→        pub use crate::kind::BoxedKind;
+   679→    }
    710→        pub trait Bool {
 src/macros.rs
     58→macro_rules! bail {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (468 words)
+budget: 500 (469 words)
 
 README.md
      1→derive(Error) …
@@ -26,9 +26,7 @@ build/probe.rs
     28→        request.provide_ref(&self.0);
     29→    }
 build.rs
-    10→const PRIVATE: &str = "\
-    11→#[doc(hidden)]
-      →…
+    10→const PRIVATE …
 impl/src/ast.rs
     10→pub enum Input<'a> {
     15→pub struct Struct<'a> {
@@ -108,6 +106,8 @@ src/display.rs
     58→#[cfg(not(feature = "std"))]
     59→mod placeholder {
     60→    use super::{AsDisplay, Sealed};
+    61→    use core::fmt::{self, Display};
+    62→
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
     67→        type Target = Self;

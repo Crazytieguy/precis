@@ -188,11 +188,31 @@ fn is_locale_dir(name: &str) -> bool {
     false
 }
 
-/// Detect build/tool configuration files by filename convention.
+/// Detect build/tool configuration files by filename and path convention.
 /// These are files like `eslint.config.js`, `jest.config.ts`, `.eslintrc.js`, etc.
 /// that configure development tools rather than implementing library/app logic.
-fn is_config_file(filename: &str) -> bool {
+/// `relative_path` is the path relative to the project root.
+fn is_config_file(relative_path: &Path, filename: &str) -> bool {
     let lower = filename.to_ascii_lowercase();
+    let is_root = relative_path.parent().is_none_or(|p| p.as_os_str().is_empty());
+
+    // Build scripts and packaging files — only at project root.
+    // build.rs: Rust build scripts (compile-time codegen, feature probing)
+    // setup.py: Python setuptools packaging
+    // These filenames are generic enough that in subdirs they may be regular source files
+    // (e.g., src/cmd/build.rs implements a "build" CLI subcommand).
+    if is_root {
+        match lower.as_str() {
+            "build.rs" | "setup.py" => return true,
+            _ => {}
+        }
+    }
+
+    // JS task runners — matched by filename anywhere (these names are unambiguous).
+    match lower.as_str() {
+        "gulpfile.js" | "gruntfile.js" | "jakefile.js" => return true,
+        _ => {}
+    }
 
     // *.config.{ext} — catches eslint.config.js, jest.config.ts, vite.config.mjs,
     // next.config.js, tailwind.config.ts, postcss.config.js, tsup.config.ts,
@@ -316,7 +336,7 @@ pub fn build_groups(
         let file_role = FileRole::from_path(relative);
         let is_config = relative.file_name()
             .and_then(|n| n.to_str())
-            .is_some_and(is_config_file);
+            .is_some_and(|name| is_config_file(relative, name));
 
         for (symbol_idx, sym) in symbols.iter().enumerate() {
             let sym_line_0 = sym.line - 1;
@@ -1152,33 +1172,61 @@ mod tests {
 
     #[test]
     fn config_file_detection() {
-        // *.config.{ext} pattern
-        assert!(is_config_file("eslint.config.js"));
-        assert!(is_config_file("jest.config.ts"));
-        assert!(is_config_file("vite.config.mjs"));
-        assert!(is_config_file("next.config.js"));
-        assert!(is_config_file("next.config.mjs"));
-        assert!(is_config_file("tailwind.config.ts"));
-        assert!(is_config_file("postcss.config.js"));
-        assert!(is_config_file("tsup.config.ts"));
-        assert!(is_config_file("playwright.config.ts"));
-        assert!(is_config_file("rollup.config.js"));
-        assert!(is_config_file("webpack.config.js"));
-        assert!(is_config_file("babel.config.js"));
-        assert!(is_config_file("vitest.config.ts"));
-        assert!(is_config_file("theme.config.jsx"));
+        // Helper: root-level file (no parent dir)
+        fn at_root(name: &str) -> bool {
+            is_config_file(Path::new(name), name)
+        }
+        // Helper: file in a subdirectory
+        fn at_path(path: &str) -> bool {
+            let p = Path::new(path);
+            let name = p.file_name().unwrap().to_str().unwrap();
+            is_config_file(p, name)
+        }
+
+        // *.config.{ext} pattern (matched anywhere)
+        assert!(at_root("eslint.config.js"));
+        assert!(at_root("jest.config.ts"));
+        assert!(at_root("vite.config.mjs"));
+        assert!(at_root("next.config.js"));
+        assert!(at_root("next.config.mjs"));
+        assert!(at_root("tailwind.config.ts"));
+        assert!(at_root("postcss.config.js"));
+        assert!(at_root("tsup.config.ts"));
+        assert!(at_root("playwright.config.ts"));
+        assert!(at_root("rollup.config.js"));
+        assert!(at_root("webpack.config.js"));
+        assert!(at_root("babel.config.js"));
+        assert!(at_root("vitest.config.ts"));
+        assert!(at_root("theme.config.jsx"));
         // Case insensitive
-        assert!(is_config_file("ESLint.Config.JS"));
+        assert!(at_root("ESLint.Config.JS"));
         // .{name}rc.{ext} pattern
-        assert!(is_config_file(".eslintrc.js"));
-        assert!(is_config_file(".babelrc.js"));
-        assert!(is_config_file(".prettierrc.mjs"));
+        assert!(at_root(".eslintrc.js"));
+        assert!(at_root(".babelrc.js"));
+        assert!(at_root(".prettierrc.mjs"));
+        // Build scripts at project root
+        assert!(at_root("build.rs"));
+        assert!(at_root("Build.rs")); // case insensitive
+        assert!(at_root("setup.py"));
+        assert!(at_root("Setup.py"));
+        // Build scripts in subdirs are NOT config files (e.g., src/cmd/build.rs)
+        assert!(!at_path("src/cmd/build.rs"));
+        assert!(!at_path("lib/setup.py"));
+        // JS task runners (matched anywhere)
+        assert!(at_root("Gruntfile.js"));
+        assert!(at_root("gruntfile.js"));
+        assert!(at_root("Gulpfile.js"));
+        assert!(at_root("gulpfile.js"));
+        assert!(at_root("Jakefile.js"));
+        assert!(at_path("tools/Gulpfile.js")); // task runners match in subdirs too
         // Not config files
-        assert!(!is_config_file("main.js"));
-        assert!(!is_config_file("lib.rs"));
-        assert!(!is_config_file("index.ts"));
-        assert!(!is_config_file("config.js")); // just "config" as stem, no *.config.* pattern
-        assert!(!is_config_file("my_config.py")); // no dot-separated .config.
-        assert!(!is_config_file("README.md"));
+        assert!(!at_root("main.js"));
+        assert!(!at_root("lib.rs"));
+        assert!(!at_root("index.ts"));
+        assert!(!at_root("config.js")); // no *.config.* pattern
+        assert!(!at_root("my_config.py"));
+        assert!(!at_root("README.md"));
+        assert!(!at_root("build.go")); // build.rs is Rust-specific
+        assert!(!at_root("setup.rs")); // setup.py is Python-specific
     }
 }

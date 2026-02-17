@@ -8,22 +8,27 @@ README.md
      1→derive(Error)
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/thiserror-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/thiserror)
      5→[<img alt="crates.io" src="https://img.shields.io/crates/v/thiserror.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/thiserror)
+     6→[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-thiserror-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/thiserror)
       →…
     21→## Example
     23→```rust
     24→use thiserror::Error;
+    25→
       →…
     44→## Details
     46→- Thiserror deliberately does not appear in your public API. You get the same
     47→  thing as if you had written an implementation of `std::error::Error` by hand,
+    48→  and switching from handwritten impls to thiserror or vice versa is not a
       →…
    211→## Comparison to anyhow
    213→Use thiserror if you care about designing your own dedicated error type(s) so
    214→that the caller receives exactly the information that you choose in the event of
+   215→failure. This most often applies to library-like code. Use [Anyhow] if you don't
       →…
    223→#### License
    226→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
    227→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
+   228→</sup>
       →…
 build/probe.rs
     11→struct MyError(Thing);
@@ -43,15 +48,7 @@ build/probe.rs
 build.rs
     10→const PRIVATE: &str = "\
     11→#[doc(hidden)]
-    12→pub mod __private$$ {
-    13→    #[doc(hidden)]
-    14→    pub use crate::private::*;
-    15→}
-    16→";
-    18→fn main() {
-    91→fn compile_probe(rustc_bootstrap: bool) -> bool {
-   179→fn rustc_minor_version() -> Option<u32> {
-   190→fn cargo_env_var(key: &str) -> OsString {
+      →…
 impl/src/ast.rs
     10→pub enum Input<'a> {
     11→    Struct(Struct<'a>),
@@ -182,7 +179,6 @@ impl/src/scan_expr.rs
     14→    ConsumeLifetime,
     15→    ConsumeLiteral,
     16→    ConsumeNestedBrace,
-    17→    ExpectPath,
       →…
     25→enum Action {
     26→    SetState(&'static [(Input, Action)]),

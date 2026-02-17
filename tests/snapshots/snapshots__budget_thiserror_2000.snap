@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1840 words)
+budget: 2000 (1836 words)
 
 README.md
      1→derive(Error)
@@ -105,6 +105,7 @@ README.md
    102→  ```
    103→
    104→- The Error trait's `source()` method is implemented to return whichever field
+   105→  has a `#[source]` attribute or is named `source`, if any. This is for
       →…
    211→## Comparison to anyhow
    213→Use thiserror if you care about designing your own dedicated error type(s) so
@@ -156,17 +157,9 @@ build.rs
     15→}
     16→";
     18→fn main() {
-    19→    println!("cargo:rerun-if-changed=build/probe.rs");
-      →…
     91→fn compile_probe(rustc_bootstrap: bool) -> bool {
-    92→    if env::var_os("RUSTC_STAGE").is_some() {
-      →…
    179→fn rustc_minor_version() -> Option<u32> {
-   180→    let rustc = cargo_env_var("RUSTC");
-      →…
    190→fn cargo_env_var(key: &str) -> OsString {
-   191→    env::var_os(key).unwrap_or_else(|| {
-      →…
 impl/src/ast.rs
     10→pub enum Input<'a> {
     11→    Struct(Struct<'a>),

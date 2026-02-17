@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1923 words)
+budget: 2000 (1922 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -53,11 +53,6 @@ README.md
    173→<br>
    174→
       →…
-build.rs
-    17→fn main() {
-    99→fn compile_probe(rustc_bootstrap: bool) -> bool {
-   188→fn rustc_minor_version() -> Option<u32> {
-   199→fn cargo_env_var(key: &str) -> OsString {
 src/backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
      8→pub(crate) enum Backtrace {}
@@ -80,6 +75,8 @@ src/backtrace.rs
     74→    use backtrace::{BacktraceFmt, BytesOrWideString, Frame, PrintFmt, SymbolName};
     75→    use core::cell::UnsafeCell;
     76→    use core::fmt::{self, Debug, Display};
+    77→    use core::sync::atomic::{AtomicUsize, Ordering};
+    78→    use std::env;
     82→    pub(crate) struct Backtrace {
     83→        inner: Inner,
     84→    }
@@ -309,6 +306,7 @@ src/lib.rs
    295→///   error type does not provide one.
    296→/// - `Error` is represented as a narrow pointer &mdash; exactly one word in
    297→///   size instead of two.
+   298→///
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -323,6 +321,7 @@ src/lib.rs
    401→/// use anyhow::Error;
    402→/// use std::io;
    403→///
+   404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
       →…
    415→pub struct Chain<'a> {
    416→    state: crate::chain::ChainState<'a>,
@@ -387,6 +386,7 @@ src/lib.rs
    477→/// # Example
    478→///
    479→/// ```
+   480→/// use anyhow::{Context, Result};
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.
