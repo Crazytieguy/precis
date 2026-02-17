@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3886 words)
+budget: 4000 (3902 words)
 
 argument.js
      3→class Argument {
@@ -42,24 +42,16 @@ argument.js
     37→      this.variadic = true;
     38→      this._name = this._name.slice(0, -3);
     39→    }
-    40→  }
-    41→
     42→  /**
-    43→   * Return argument name.
-    44→   *
-    45→   * @return {string}
-    46→   */
-    47→
+      →…
     48→  name() {
-    49→    return this._name;
-    50→  }
-    51→
     52→  /**
     53→   * @package
     54→   */
     55→
-      →…
     56→  _collectValue(value, previous) {
+    57→    if (previous === this.defaultValue || !Array.isArray(previous)) {
+      →…
     65→  /**
       →…
     73→  default(value, description) {
@@ -85,9 +77,7 @@ argument.js
    142→
    143→function humanReadableArgName(arg) {
    144→  const nameOutput = arg.name() + (arg.variadic === true ? '...' : '');
-   145→
-   146→  return arg.required ? '<' + nameOutput + '>' : '[' + nameOutput + ']';
-   147→}
+      →…
 command.js
     13→class Command extends EventEmitter {
     14→  /**
@@ -126,28 +116,17 @@ command.js
     47→    this._aliases = [];
     48→    this._combineFlagAndOptionalValue = true;
     49→    this._description = '';
-    50→    this._summary = '';
-    51→    this._argsDescription = undefined; // legacy
-    52→    this._enablePositionalOptions = false;
-    53→    this._passThroughOptions = false;
-    54→    this._lifeCycleHooks = {}; // a hash of arrays
-    55→    /** @type {(boolean | string)} */
-    56→    this._showHelpAfterError = false;
-    57→    this._showSuggestionAfterError = true;
-    58→    this._savedState = null; // used in save/restoreStateBeforeParse
-    59→
-    60→    // see configureOutput() for docs
-    61→    this._outputConfiguration = {
-    62→      writeOut: (str) => process.stdout.write(str),
-    63→      writeErr: (str) => process.stderr.write(str),
-    64→      outputError: (str, write) => write(str),
-    65→      getOutHelpWidth: () =>
     91→  /**
       →…
     99→  copyInheritedSettings(sourceCommand) {
    116→  /**
-      →…
+   117→   * @returns {Command[]}
+   118→   * @private
+   119→   */
+   120→
    121→  _getCommandAndAncestors() {
+   122→    const result = [];
+      →…
    130→  /**
       →…
    155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
@@ -191,8 +170,14 @@ command.js
       →…
    443→  addHelpCommand(helpCommand, deprecatedDescription) {
    457→  /**
-      →…
+   458→   * Lazy create help command.
+   459→   *
+   460→   * @return {(Command|null)}
+   461→   * @package
+   462→   */
    463→  _getHelpCommand() {
+   464→    const hasImplicitHelpCommand =
+      →…
    479→  /**
       →…
    487→  hook(event, listener) {
@@ -200,8 +185,18 @@ command.js
       →…
    508→  exitOverride(fn) {
    523→  /**
-      →…
+   524→   * Call process.exit, and _exitCallback if defined.
+   525→   *
+   526→   * @param {number} exitCode exit code for using with process.exit
+   527→   * @param {string} code an id string representing the error
+   528→   * @param {string} message human-readable description of the error
+   529→   * @return never
+   530→   * @private
+   531→   */
+   532→
    533→  _exit(exitCode, code, message) {
+   534→    if (this._exitCallback) {
+      →…
    541→  /**
       →…
    556→  action(fn) {
@@ -209,20 +204,52 @@ command.js
       →…
    585→  createOption(flags, description) {
    589→  /**
-      →…
+   590→   * Wrap parseArgs to catch 'commander.invalidArgument'.
+   591→   *
+   592→   * @param {(Option | Argument)} target
+   593→   * @param {string} value
+   594→   * @param {*} previous
+   595→   * @param {string} invalidArgumentMessage
+   596→   * @private
+   597→   */
+   598→
    599→  _callParseArg(target, value, previous, invalidArgumentMessage) {
+   600→    try {
+      →…
    611→  /**
-      →…
+   612→   * Check for option flag conflicts.
+   613→   * Register option if no conflicts found, or throw on conflict.
+   614→   *
+   615→   * @param {Option} option
+   616→   * @private
+   617→   */
+   618→
    619→  _registerOption(option) {
-   636→  /**
+   620→    const matchingOption =
       →…
+   636→  /**
+   637→   * Check for command name and alias conflicts with existing commands.
+   638→   * Register command if no conflicts found, or throw on conflict.
+   639→   *
+   640→   * @param {Command} command
+   641→   * @private
+   642→   */
+   643→
    644→  _registerCommand(command) {
+   645→    const knownBy = (cmd) => {
+      →…
    664→  /**
       →…
    670→  addOption(option) {
    735→  /**
-      →…
+   736→   * Internal implementation shared by .option() and .requiredOption()
+   737→   *
+   738→   * @return {Command} `this` command for chaining
+   739→   * @private
+   740→   */
    741→  _optionEx(config, flags, description, fn, defaultValue) {
+   742→    if (typeof flags === 'object' && flags instanceof Option) {
+      →…
    766→  /**
       →…
    788→  option(flags, description, parseArg, defaultValue) {
@@ -245,8 +272,12 @@ command.js
       →…
    875→  passThroughOptions(passThrough = true) {
    881→  /**
-      →…
+   882→   * @private
+   883→   */
+   884→
    885→  _checkForBrokenPassThrough() {
+   886→    if (
+      →…
    897→  /**
       →…
    905→  storeOptionsAsProperties(storeAsProperties = true) {
@@ -266,8 +297,15 @@ command.js
       →…
    983→  getOptionValueSourceWithGlobals(key) {
    994→  /**
-      →…
+   995→   * Get user arguments from implied or explicit arguments.
+   996→   * Side-effects: set _scriptPath if args included script. Used for default program name, and subcommand searches.
+   997→   *
+   998→   * @private
+   999→   */
+  1000→
   1001→  _prepareUserArgs(argv, parseOptions) {
+  1002→    if (argv !== undefined && !Array.isArray(argv)) {
+      →…
   1067→  /**
       →…
   1090→  parse(argv, parseOptions) {
@@ -288,50 +326,151 @@ command.js
       →…
   1158→  restoreStateBeforeParse() {
   1176→  /**
-      →…
+  1177→   * Throw if expected executable is missing. Add lots of help for author.
+  1178→   *
+  1179→   * @param {string} executableFile
+  1180→   * @param {string} executableDir
+  1181→   * @param {string} subcommandName
+  1182→   */
   1183→  _checkForMissingExecutable(executableFile, executableDir, subcommandName) {
+  1184→    if (fs.existsSync(executableFile)) return;
+      →…
   1196→  /**
-      →…
+  1197→   * Execute a sub-command executable.
+  1198→   *
+  1199→   * @private
+  1200→   */
+  1201→
   1202→  _executeSubCommand(subcommand, args) {
+  1203→    args = args.slice();
+      →…
   1348→  /**
-      →…
+  1349→   * @private
+  1350→   */
+  1351→
   1352→  _dispatchSubcommand(commandName, operands, unknown) {
+  1353→    const subCommand = this._findCommand(commandName);
+      →…
   1373→  /**
-      →…
+  1374→   * Invoke help directly if possible, or dispatch if necessary.
+  1375→   * e.g. help foo
+  1376→   *
+  1377→   * @private
+  1378→   */
+  1379→
   1380→  _dispatchHelpCommand(subcommandName) {
+  1381→    if (!subcommandName) {
+      →…
   1397→  /**
-      →…
+  1398→   * Check this.args against expected this.registeredArguments.
+  1399→   *
+  1400→   * @private
+  1401→   */
+  1402→
   1403→  _checkNumberOfArguments() {
+  1404→    // too few
+      →…
   1422→  /**
-      →…
+  1423→   * Process this.args using this.registeredArguments and save as this.processedArgs!
+  1424→   *
+  1425→   * @private
+  1426→   */
+  1427→
   1428→  _processArguments() {
+  1429→    const myParseArg = (argument, value, previous) => {
+      →…
   1472→  /**
-      →…
+  1473→   * Once we have a promise we chain, but call synchronously until then.
+  1474→   *
+  1475→   * @param {(Promise|undefined)} promise
+  1476→   * @param {Function} fn
+  1477→   * @return {(Promise|undefined)}
+  1478→   * @private
+  1479→   */
+  1480→
   1481→  _chainOrCall(promise, fn) {
+  1482→    // thenable
+      →…
   1491→  /**
-      →…
+  1492→   *
+  1493→   * @param {(Promise|undefined)} promise
+  1494→   * @param {string} event
+  1495→   * @return {(Promise|undefined)}
+  1496→   * @private
+  1497→   */
+  1498→
   1499→  _chainOrCallHooks(promise, event) {
+  1500→    let result = promise;
+      →…
   1522→  /**
-      →…
+  1523→   *
+  1524→   * @param {(Promise|undefined)} promise
+  1525→   * @param {Command} subCommand
+  1526→   * @param {string} event
+  1527→   * @return {(Promise|undefined)}
+  1528→   * @private
+  1529→   */
+  1530→
   1531→  _chainOrCallSubCommandHook(promise, subCommand, event) {
+  1532→    let result = promise;
+      →…
   1543→  /**
-      →…
+  1544→   * Process arguments in context of this command.
+  1545→   * Returns action result, in case it is a promise.
+  1546→   *
+  1547→   * @private
+  1548→   */
+  1549→
   1550→  _parseCommand(operands, unknown) {
+  1551→    const parsed = this.parseOptions(unknown);
+      →…
   1643→  /**
-      →…
+  1644→   * Find matching command.
+  1645→   *
+  1646→   * @private
+  1647→   * @return {Command | undefined}
+  1648→   */
   1649→  _findCommand(name) {
+  1650→    if (!name) return undefined;
+      →…
   1656→  /**
-      →…
+  1657→   * Return an option matching `arg` if any.
+  1658→   *
+  1659→   * @param {string} arg
+  1660→   * @return {Option}
+  1661→   * @package
+  1662→   */
+  1663→
   1664→  _findOption(arg) {
+  1665→    return this.options.find((option) => option.is(arg));
+      →…
   1668→  /**
-      →…
+  1669→   * Display an error message if a mandatory option does not have a value.
+  1670→   * Called after checking for help flags in leaf subcommand.
+  1671→   *
+  1672→   * @private
+  1673→   */
+  1674→
   1675→  _checkForMissingMandatoryOptions() {
+  1676→    // Walk up hierarchy so can call in subcommand after checking for displaying help.
+      →…
   1689→  /**
-      →…
+  1690→   * Display an error message if conflicting options are used together in this.
+  1691→   *
+  1692→   * @private
+  1693→   */
   1694→  _checkForConflictingLocalOptions() {
-  1717→  /**
+  1695→    const definedNonDefaultOptions = this.options.filter((option) => {
       →…
+  1717→  /**
+  1718→   * Display an error message if conflicting options are used together.
+  1719→   * Called after checking for help flags in leaf subcommand.
+  1720→   *
+  1721→   * @private
+  1722→   */
   1723→  _checkForConflictingOptions() {
+  1724→    // Walk up hierarchy so can call in subcommand after checking for displaying help.
+      →…
   1730→  /**
       →…
   1748→  parseOptions(args) {
@@ -345,11 +484,22 @@ command.js
       →…
   1940→  error(message, errorOptions) {
   1960→  /**
-      →…
+  1961→   * Apply any option related environment variables, if option does
+  1962→   * not have a value from cli or client code.
+  1963→   *
+  1964→   * @private
+  1965→   */
   1966→  _parseOptionsEnv() {
-  1991→  /**
+  1967→    this.options.forEach((option) => {
       →…
+  1991→  /**
+  1992→   * Apply any implied option values, if option is undefined or default value.
+  1993→   *
+  1994→   * @private
+  1995→   */
   1996→  _parseOptionsImplied() {
+  1997→    const dualHelper = new DualOptions(this.options);
+      →…
   2027→  /**
       →…
   2034→  missingArgument(name) {
@@ -360,14 +510,28 @@ command.js
       →…
   2058→  missingMandatoryOptionValue(option) {
   2063→  /**
-      →…
+  2064→   * `Option` conflicts with another option.
+  2065→   *
+  2066→   * @param {Option} option
+  2067→   * @param {Option} conflictingOption
+  2068→   * @private
+  2069→   */
   2070→  _conflictingOption(option, conflictingOption) {
+  2071→    // The calling code does not know whether a negated option is the source of the
+      →…
   2107→  /**
       →…
   2114→  unknownOption(flag) {
   2139→  /**
-      →…
+  2140→   * Excess arguments, more than expected.
+  2141→   *
+  2142→   * @param {string[]} receivedArgs
+  2143→   * @private
+  2144→   */
+  2145→
   2146→  _excessArguments(receivedArgs) {
+  2147→    if (this._allowExcessArguments) return;
+      →…
   2156→  /**
       →…
   2162→  unknownCommand() {
@@ -402,11 +566,19 @@ command.js
       →…
   2382→  optionsGroup(heading) {
   2388→  /**
-      →…
+  2389→   * @param {Option} option
+  2390→   * @private
+  2391→   */
   2392→  _initOptionGroup(option) {
-  2397→  /**
+  2393→    if (this._defaultOptionGroup && !option.helpGroupHeading)
       →…
+  2397→  /**
+  2398→   * @param {Command} cmd
+  2399→   * @private
+  2400→   */
   2401→  _initCommandGroup(cmd) {
+  2402→    if (this._defaultCommandGroup && !cmd.helpGroup())
+      →…
   2406→  /**
       →…
   2419→  nameFromFilename(filename) {
@@ -417,8 +589,20 @@ command.js
       →…
   2450→  helpInformation(contextOptions) {
   2463→  /**
-      →…
+  2464→   * @typedef HelpContext
+  2465→   * @type {object}
+  2466→   * @property {boolean} error
+  2467→   * @property {number} helpWidth
+  2468→   * @property {boolean} hasColors
+  2469→   * @property {function} write - includes stripColor if needed
+  2470→   *
+  2471→   * @returns {HelpContext}
+  2472→   * @private
+  2473→   */
+  2474→
   2475→  _getOutputContext(contextOptions) {
+  2476→    contextOptions = contextOptions || {};
+      →…
   2497→  /**
       →…
   2505→  outputHelp(contextOptions) {
@@ -426,8 +610,15 @@ command.js
       →…
   2559→  helpOption(flags, description) {
   2585→  /**
-      →…
+  2586→   * Lazy create help option.
+  2587→   * Returns null if has been disabled with .helpOption(false).
+  2588→   *
+  2589→   * @returns {(Option | null)} the help option
+  2590→   * @package
+  2591→   */
   2592→  _getHelpOption() {
+  2593→    // Lazy create help option on demand.
+      →…
   2600→  /**
       →…
   2607→  addHelpOption(option) {
@@ -438,8 +629,15 @@ command.js
       →…
   2656→  addHelpText(position, text) {
   2679→  /**
-      →…
+  2680→   * Output help information if help flags specified
+  2681→   *
+  2682→   * @param {Array} args - array of options to search for help flags
+  2683→   * @private
+  2684→   */
+  2685→
   2686→  _outputHelpIfRequested(args) {
+  2687→    const helpOption = this._getHelpOption();
+      →…
   2697→/**
   2698→ * Scan arguments and increment port number for inspect calls (to avoid conflicts when spawning new command).
   2699→ *
@@ -450,73 +648,14 @@ command.js
   2704→
   2705→function incrementNodeInspectorPort(args) {
   2706→  // Testing for these options:
-  2707→  //  --inspect[=[host:]port]
-  2708→  //  --inspect-brk[=[host:]port]
-  2709→  //  --inspect-port=[host:]port
-  2710→  return args.map((arg) => {
-  2711→    if (!arg.startsWith('--inspect')) {
-  2712→      return arg;
-  2713→    }
-  2714→    let debugOption;
-  2715→    let debugHost = '127.0.0.1';
-  2716→    let debugPort = '9229';
-  2717→    let match;
-  2718→    if ((match = arg.match(/^(--inspect(-brk)?)$/)) !== null) {
-  2719→      // e.g. --inspect
-  2720→      debugOption = match[1];
-  2721→    } else if (
-  2722→      (match = arg.match(/^(--inspect(-brk|-port)?)=([^:]+)$/)) !== null
-  2723→    ) {
-  2724→      debugOption = match[1];
-  2725→      if (/^\d+$/.test(match[3])) {
-  2726→        // e.g. --inspect=1234
-  2727→        debugPort = match[3];
-  2728→      } else {
-  2729→        // e.g. --inspect=localhost
-  2730→        debugHost = match[3];
-  2731→      }
-  2732→    } else if (
-  2733→      (match = arg.match(/^(--inspect(-brk|-port)?)=([^:]+):(\d+)$/)) !== null
-  2734→    ) {
-  2735→      // e.g. --inspect=localhost:1234
-  2736→      debugOption = match[1];
-  2737→      debugHost = match[3];
-  2738→      debugPort = match[4];
-  2739→    }
-  2740→
-  2741→    if (debugOption && debugPort !== '0') {
-  2742→      return `${debugOption}=${debugHost}:${parseInt(debugPort) + 1}`;
-  2743→    }
-  2744→    return arg;
-  2745→  });
-  2746→}
+      →…
   2748→/**
   2749→ * @returns {boolean | undefined}
   2750→ * @package
   2751→ */
   2752→function useColor() {
   2753→  // Test for common conventions.
-  2754→  // NB: the observed behaviour is in combination with how author adds color! For example:
-  2755→  //   - we do not test NODE_DISABLE_COLORS, but util:styletext does
-  2756→  //   - we do test NO_COLOR, but Chalk does not
-  2757→  //
-  2758→  // References:
-  2759→  // https://no-color.org
-  2760→  // https://bixense.com/clicolors/
-  2761→  // https://github.com/nodejs/node/blob/0a00217a5f67ef4a22384cfc80eb6dd9a917fdc1/lib/internal/tty.js#L109
-  2762→  // https://github.com/chalk/supports-color/blob/c214314a14bcb174b12b3014b2b0a8de375029ae/index.js#L33
-  2763→  // (https://force-color.org recent web page from 2023, does not match major javascript implementations)
-  2764→
-  2765→  if (
-  2766→    process.env.NO_COLOR ||
-  2767→    process.env.FORCE_COLOR === '0' ||
-  2768→    process.env.FORCE_COLOR === 'false'
-  2769→  )
-  2770→    return false;
-  2771→  if (process.env.FORCE_COLOR || process.env.CLICOLOR_FORCE !== undefined)
-  2772→    return true;
-  2773→  return undefined;
-  2774→}
+      →…
 error.js
      1→/**
      2→ * CommanderError class
@@ -591,22 +730,9 @@ help.js
     46→    if (this.sortSubcommands) {
     47→      visibleCommands.sort((a, b) => {
     48→        // @ts-ignore: because overloaded return type
-    49→        return a.name().localeCompare(b.name());
-    50→      });
-    51→    }
-    52→    return visibleCommands;
-    53→  }
-    54→
     55→  /**
-    56→   * Compare options for sort.
-    57→   *
-    58→   * @param {Option} a
-    59→   * @param {Option} b
-    60→   * @returns {number}
-    61→   */
+      →…
     62→  compareOptions(a, b) {
-    63→    const getSortKey = (option) => {
-    64→      // WYSIWYG for order displayed in help. Short used for comparison if present. No special handling for negated.
     72→  /**
       →…
     79→  visibleOptions(cmd) {
@@ -749,9 +875,7 @@ help.js
    739→
    740→function stripColor(str) {
    741→  // eslint-disable-next-line no-control-regex
-   742→  const sgrPattern = /\x1b\[\d*(;\d*)*m/g;
-   743→  return str.replace(sgrPattern, '');
-   744→}
+      →…
 option.js
      3→class Option {
      4→  /**
@@ -790,22 +914,9 @@ option.js
     37→  }
     38→
     39→  /**
-    40→   * Set the default value, and optionally supply the description to be displayed in the help.
-    41→   *
-    42→   * @param {*} value
-    43→   * @param {string} [description]
-    44→   * @return {Option}
-    45→   */
-    46→
+      →…
     47→  default(value, description) {
-    48→    this.defaultValue = value;
-    49→    this.defaultValueDescription = description;
-    50→    return this;
-    51→  }
-    52→
     53→  /**
-    54→   * Preset to use when option used without option-argument, especially optional but also boolean and negated.
-    55→   * The custom processing (parseArg) is called.
       →…
     65→  preset(arg) {
     70→  /**
@@ -827,8 +938,12 @@ option.js
       →…
    156→  hideHelp(hide = true) {
    161→  /**
-      →…
+   162→   * @package
+   163→   */
+   164→
    165→  _collectValue(value, previous) {
+   166→    if (previous === this.defaultValue || !Array.isArray(previous)) {
+      →…
    174→  /**
       →…
    181→  choices(values) {
@@ -903,9 +1018,7 @@ option.js
    315→
    316→function camelcase(str) {
    317→  return str.split('-').reduce((str, word) => {
-   318→    return str + word[0].toUpperCase() + word.slice(1);
-   319→  });
-   320→}
+      →…
    322→/**
    323→ * Split the short and long flag out of something like '-m,--mixed <value>'
    324→ *
@@ -914,54 +1027,7 @@ option.js
    327→
    328→function splitOptionFlags(flags) {
    329→  let shortFlag;
-   330→  let longFlag;
-   331→  // short flag, single dash and single character
-   332→  const shortFlagExp = /^-[^-]$/;
-   333→  // long flag, double dash and at least one character
-   334→  const longFlagExp = /^--[^-]/;
-   335→
-   336→  const flagParts = flags.split(/[ |,]+/).concat('guard');
-   337→  // Normal is short and/or long.
-   338→  if (shortFlagExp.test(flagParts[0])) shortFlag = flagParts.shift();
-   339→  if (longFlagExp.test(flagParts[0])) longFlag = flagParts.shift();
-   340→  // Long then short. Rarely used but fine.
-   341→  if (!shortFlag && shortFlagExp.test(flagParts[0]))
-   342→    shortFlag = flagParts.shift();
-   343→  // Allow two long flags, like '--ws, --workspace'
-   344→  // This is the supported way to have a shortish option flag.
-   345→  if (!shortFlag && longFlagExp.test(flagParts[0])) {
-   346→    shortFlag = longFlag;
-   347→    longFlag = flagParts.shift();
-   348→  }
-   349→
-   350→  // Check for unprocessed flag. Fail noisily rather than silently ignore.
-   351→  if (flagParts[0].startsWith('-')) {
-   352→    const unsupportedFlag = flagParts[0];
-   353→    const baseError = `option creation failed due to '${unsupportedFlag}' in option flags '${flags}'`;
-   354→    if (/^-[^-][^-]/.test(unsupportedFlag))
-   355→      throw new Error(
-   356→        `${baseError}
-   357→- a short flag is a single dash and a single character
-   358→  - either use a single dash and a single character (for a short flag)
-   359→  - or use a double dash for a long option (and can have two, like '--ws, --workspace')`,
-   360→      );
-   361→    if (shortFlagExp.test(unsupportedFlag))
-   362→      throw new Error(`${baseError}
-   363→- too many short flags`);
-   364→    if (longFlagExp.test(unsupportedFlag))
-   365→      throw new Error(`${baseError}
-   366→- too many long flags`);
-   367→
-   368→    throw new Error(`${baseError}
-   369→- unrecognised flag format`);
-   370→  }
-   371→  if (shortFlag === undefined && longFlag === undefined)
-   372→    throw new Error(
-   373→      `option creation failed due to no flags found in '${flags}'.`,
-   374→    );
-   375→
-   376→  return { shortFlag, longFlag };
-   377→}
+      →…
 suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
@@ -1000,14 +1066,7 @@ suggestSimilar.js
     36→        d[i - 1][j - 1] + cost, // substitution
     37→      );
     38→      // transposition
-    39→      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) {
-    40→        d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
-    41→      }
-    42→    }
-    43→  }
-    44→
-    45→  return d[a.length][b.length];
-    46→}
+      →…
     48→/**
     49→ * Find close matches, restricted to same number of edits.
     50→ *
@@ -1018,45 +1077,4 @@ suggestSimilar.js
     55→
     56→function suggestSimilar(word, candidates) {
     57→  if (!candidates || candidates.length === 0) return '';
-    58→  // remove possible duplicates
-    59→  candidates = Array.from(new Set(candidates));
-    60→
-    61→  const searchingOptions = word.startsWith('--');
-    62→  if (searchingOptions) {
-    63→    word = word.slice(2);
-    64→    candidates = candidates.map((candidate) => candidate.slice(2));
-    65→  }
-    66→
-    67→  let similar = [];
-    68→  let bestDistance = maxDistance;
-    69→  const minSimilarity = 0.4;
-    70→  candidates.forEach((candidate) => {
-    71→    if (candidate.length <= 1) return; // no one character guesses
-    72→
-    73→    const distance = editDistance(word, candidate);
-    74→    const length = Math.max(word.length, candidate.length);
-    75→    const similarity = (length - distance) / length;
-    76→    if (similarity > minSimilarity) {
-    77→      if (distance < bestDistance) {
-    78→        // better edit distance, throw away previous worse matches
-    79→        bestDistance = distance;
-    80→        similar = [candidate];
-    81→      } else if (distance === bestDistance) {
-    82→        similar.push(candidate);
-    83→      }
-    84→    }
-    85→  });
-    86→
-    87→  similar.sort((a, b) => a.localeCompare(b));
-    88→  if (searchingOptions) {
-    89→    similar = similar.map((candidate) => `--${candidate}`);
-    90→  }
-    91→
-    92→  if (similar.length > 1) {
-    93→    return `\n(Did you mean one of ${similar.join(', ')}?)`;
-    94→  }
-    95→  if (similar.length === 1) {
-    96→    return `\n(Did you mean ${similar[0]}?)`;
-    97→  }
-    98→  return '';
-    99→}
+      →…

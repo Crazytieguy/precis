@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3590 words)
+budget: 4000 (3599 words)
 
 CHANGELOG.md
      1→# neverthrow
@@ -284,9 +284,6 @@ src/result-async.ts
     62→
     63→  static combine<
     64→    T extends readonly [ResultAsync<unknown, unknown>, ...ResultAsync<unknown, unknown>[]]
-    65→  >(asyncResultList: T): CombineResultAsyncs<T>
-    66→  static combine<T extends readonly ResultAsync<unknown, unknown>[]>(
-    67→    asyncResultList: T,
     69→  static combine<T extends readonly ResultAsync<unknown, unknown>[]>(
     70→    asyncResultList: T,
     71→  ): CombineResultAsyncs<T> {
@@ -568,8 +565,6 @@ src/result.ts
    352→      // Tee doesn't care about the error
    353→    }
    354→    return ok<T, E>(this.value)
-   355→  }
-   356→
    357→  orTee(_f: (t: E) => unknown): Result<T, E> {
    366→  orElse(_f: any): any {
    370→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F> {
@@ -579,7 +574,11 @@ src/result.ts
    393→  match<A, B = A>(ok: (t: T) => A, _err: (e: E) => B): A | B {
    397→  safeUnwrap(): Generator<Err<never, E>, T> {
    405→  _unsafeUnwrap(_?: ErrorConfig): T {
+   406→    return this.value
+   407→  }
    409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
+   410→    throw createNeverThrowError('Called `_unsafeUnwrapErr` on an Ok', this, config)
+   411→  }
    419→export class Err<T, E> implements IResult<T, E> {
    420→  constructor(readonly error: E) {}
    421→
@@ -623,9 +622,6 @@ src/result.ts
    459→  andThen<U, F>(_f: (t: T) => Result<U, F>): Result<U, E | F>
    460→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
    461→  andThen(_f: any): any {
-   462→    return err(this.error)
-   463→  }
-   464→
    470→  orElse(f: any): any {
    475→  asyncAndThen<U, F>(_f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F> {
    479→  asyncAndThrough<F>(_f: (t: T) => ResultAsync<unknown, F>): ResultAsync<T, E | F> {
@@ -634,7 +630,11 @@ src/result.ts
    492→  match<A, B = A>(_ok: (t: T) => A, err: (e: E) => B): A | B {
    496→  safeUnwrap(): Generator<Err<never, E>, T> {
    505→  _unsafeUnwrap(config?: ErrorConfig): T {
+   506→    throw createNeverThrowError('Called `_unsafeUnwrap` on an Err', this, config)
+   507→  }
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
+   510→    return this.error
+   511→  }
    523→export const fromThrowable = Result.fromThrowable
    530→type Prev …
    590→type CollectResults …

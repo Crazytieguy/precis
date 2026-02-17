@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (982 words)
+budget: 1000 (965 words)
 
 CONTRIBUTING.md
      1→# Contributing …
@@ -60,27 +60,84 @@ docs/deprecated.md
    236→- Replacement added in Commander v13.1 with support for dual long options, like `--ws, --workspace`.
    237→
 docs/zh-CN/不再推荐使用的功能.md
-     1→# 不再推荐使用的功能 …
-    18→## .option() 方法的正则表达式参数 …
-    30→## noHelp …
-    40→## 默认导入的全局 Command 对象 …
-    61→## .help() 与 .outputHelp() 的回调函数参数 …
-    79→## .on('--help') …
-   104→## .on('command:*') …
-   114→## .command('*') …
-   134→## cmd.description(cmdDescription, argDescriptions) …
-   157→## InvalidOptionArgumentError …
-   187→## 短选项标志长于单个字符 …
+     1→# 不再推荐使用的功能
+     3→本文中列出的功能不再推荐使用。它们在 Commander 未来的主要版本（major version）中可能被移除。为保证后向兼容，这些功能目前还可以使用，但它们不应被用在新代码中。
+     4→
+      →…
+    18→## .option() 方法的正则表达式参数
+    20→`.option()`方法可以接受一个正则表达式作为第三个参数，以规定可以接受的选项参数值。
+    21→
+      →…
+    30→## noHelp
+    32→此选项曾被用作传入`.command()`方法，以在内建的帮助信息中隐藏该命令：
+    33→
+      →…
+    40→## 默认导入的全局 Command 对象
+    42→Commander 的默认导入曾是一个全局的`Command`对象。
+    43→
+      →…
+    61→## .help() 与 .outputHelp() 的回调函数参数
+    63→这两个方法曾允许传入一个回调函数，以在展示前处理帮助信息。
+    64→
+      →…
+    79→## .on('--help')
+    81→此功能曾被用作在内建的帮助信息后输出自定义的帮助信息。自 Commander v3.0.0 起，如果有自定义的帮助选项，则此方法使用该自定义的帮助选项。
+    82→
+      →…
+   104→## .on('command:*')
+   106→当命令参数与已知子命令不匹配时发出此消息（作为 `.command('')` 实现的一部分）。
+   107→
+      →…
+   114→## .command('*')
+   116→这用于向程序添加默认命令。
+   117→
+      →…
+   134→## cmd.description(cmdDescription, argDescriptions)
+   136→此功能曾用来为命令参数添加描述信息。
+   137→
+      →…
+   157→## InvalidOptionArgumentError
+   159→此类曾被用来在自定义选项处理中抛出错误，以显示错误信息。
+   160→
+      →…
+   187→## 短选项标志长于单个字符
+   189→短选项从未支持像 `-ws` 的标识，但旧的 README 并没有明确说明这一点。README 现在声明短选项是单个字符。
+   190→
+      →…
 docs/zh-CN/可变参数的选项.md
-     1→# 可变参数的选项 …
-    26→## 解析中的歧义 …
-    73→### 方案一：让`--`成为语法的一部分 …
-    98→### 方案二：把选项放在最后 …
-   120→### 方案三：使用选项替代命令参数 …
-   142→## 合并短选项和带有参数的选项 …
-   183→### 将短选项视作 boolean 类型选项合并 …
+     1→# 可变参数的选项
+     3→README 文档介绍了选项的声明与使用。大多数情况下，选项的解析行为，与您和您程序用户的期望相符。本文将详述一些特殊用例和细节问题。
+     4→
+      →…
+    26→## 解析中的歧义
+    28→解析选项时，有一些潜在的问题值得注意。当一个命令既有命令参数，又有选项的时候，在解析过程中有可能出现歧义。这可能会影响用户使用您的程序。
+    29→Commander 首先解析选项的参数，而用户有可能想将选项后面跟的参数作为命令，或是作为命令参数进行解析。
+      →…
+    73→### 方案一：让`--`成为语法的一部分
+    75→与其让用户理解`--`的用法，您也可以直接把它作为程序语法的一部分。
+    76→
+      →…
+    98→### 方案二：把选项放在最后
+   100→Commander 遵循 GNU 解析命令的惯例，允许选项出现在命令参数之前或者之后，也可以将选项和命令参数相互穿插。
+   101→因此，通过要求把选项放在最后，命令参数就不会和选项参数相混淆。
+      →…
+   120→### 方案三：使用选项替代命令参数
+   122→这个方案虽然有点激进，但是可以完美避免解析中的歧义。
+   123→
+      →…
+   142→## 合并短选项和带有参数的选项
+   144→多个 boolean 型的短选项可以合并起来写在同一个`-`号后面，比如`ls -al`。同时，你也可以在其中包括一个接受参数的短选项，此时，任何跟在其后的字符都将被视作这个选项的值。
+   145→
+      →…
+   183→### 将短选项视作 boolean 类型选项合并
+   185→在 Commander v5 之前，并不支持合并短选项和值。合并的 boolean 类型选项会被展开。
+   186→因此，`-avl`将被展开为`-a -v -l`。
+      →…
 docs/zh-CN/术语表.md
-     1→# 术语表 …
+     1→# 术语表
+     3→命令行参数由选项（options）、选项参数（option-arguments）、命令（commands），以及命令参数（command-arguments）组成。
+     4→
+      →…
 eslint.config.js
      8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
      9→const tsconfigJsFiles = ['*.{js,mjs}', 'lib/**/*.{js,mjs}']; // match "include" in tsconfig.js.json
@@ -89,37 +146,24 @@ jest.config.js
      2→  testEnvironment: 'node',
      3→  collectCoverage: true,
      4→  transform: {
+     5→    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.ts.json' }],
       →…
 lib/argument.js
      3→class Argument {
      4→  /**
-   135→/**
-      →…
-   143→function humanReadableArgName(arg) {
 lib/command.js
     13→class Command extends EventEmitter {
     14→  /**
   1127→  _prepareForParse() {
-  2697→/**
+  1128→    if (this._savedState === null) {
       →…
-  2705→function incrementNodeInspectorPort(args) {
-  2748→/**
-      →…
-  2752→function useColor() {
 lib/error.js
      4→class CommanderError extends Error {
      5→  /**
      6→   * Constructs the CommanderError class
-     7→   * @param {number} exitCode suggested exit code which could be used with process.exit
-     8→   * @param {string} code an id string representing the error
-     9→   * @param {string} message human-readable description of the error
     25→class InvalidArgumentError extends CommanderError {
     26→  /**
     27→   * Constructs the InvalidArgumentError class
-    28→   * @param {string} [message] explanation of why argument is invalid
-    29→   */
-    30→  constructor(message) {
-      →…
 lib/help.js
     12→class Help {
     13→  constructor() {
@@ -136,32 +180,17 @@ lib/help.js
    600→  styleArgumentText(str) {
    603→  styleSubcommandText(str) {
    606→  styleCommandText(str) {
-   732→/**
-      →…
-   740→function stripColor(str) {
 lib/option.js
      3→class Option {
      4→  /**
    268→class DualOptions {
    269→  /**
    270→   * @param {Option[]} options
-   271→   */
-   272→  constructor(options) {
-   273→    this.positiveOptions = new Map();
-   308→/**
-      →…
-   316→function camelcase(str) {
-   322→/**
-      →…
-   328→function splitOptionFlags(flags) {
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
      4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
       →…
-    48→/**
-      →…
-    56→function suggestSimilar(word, candidates) {
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =
     13→  | LiteralType

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (493 words)
 
 README.md
    141→### Synchronous API (`Result`)
@@ -18,8 +18,6 @@ README.md
    153→**Example:**
    154→
    155→```typescript
-   156→import { ok } from 'neverthrow'
-   157→
       →…
    865→#### `okAsync`
    867→Constructs an `Ok` variant of `ResultAsync`
@@ -33,8 +31,6 @@ README.md
    875→**Example:**
    876→
    877→```typescript
-   878→import { okAsync } from 'neverthrow'
-   879→
       →…
   1521→#### `fromThrowable`
   1523→Top level export of `Result.fromThrowable`.
@@ -56,6 +52,9 @@ src/_internals/error.ts
     15→        value: T
     16→      }
     17→    | {
+    18→        type: string
+    19→        value: E
+    20→      }
       →…
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
@@ -103,8 +102,6 @@ src/result.ts
     15→  /**
    134→interface IResult<T, E> {
    135→  /**
-   136→   * Used to check if a `Result` is an `OK`
-   137→   *
       →…
    140→  isOk(): this is Ok<T, E>
    142→  /**
@@ -146,6 +143,10 @@ src/result.ts
    312→export class Ok<T, E> implements IResult<T, E> {
    313→  constructor(readonly value: T) {}
    314→
+   405→  _unsafeUnwrap(_?: ErrorConfig): T {
+   409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
    419→export class Err<T, E> implements IResult<T, E> {
    420→  constructor(readonly error: E) {}
    421→
+   505→  _unsafeUnwrap(config?: ErrorConfig): T {
+   509→  _unsafeUnwrapErr(_?: ErrorConfig): E {

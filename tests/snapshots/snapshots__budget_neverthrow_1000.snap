@@ -4,6 +4,16 @@ expression: output
 ---
 budget: 1000 (982 words)
 
+CHANGELOG.md
+     3→## 8.2.0 …
+     5→### Minor Changes …
+    13→### Patch Changes …
+    19→### Minor Changes …
+    25→### Major Changes …
+    45→### Minor Changes …
+    51→### Minor Changes …
+    64→### Patch Changes …
+    72→### Major Changes …
 README.md
    141→### Synchronous API (`Result`)
    143→#### `ok`
@@ -166,10 +176,6 @@ src/result-async.ts
     26→    this._promise = res
     27→  }
     28→
-    29→  static fromSafePromise<T, E = never>(promise: PromiseLike<T>): ResultAsync<T, E>
-    30→  static fromSafePromise<T, E = never>(promise: Promise<T>): ResultAsync<T, E> {
-    31→    const newPromise = promise.then((value: T) => new Ok<T, E>(value))
-    32→
    210→  /**
       →…
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
@@ -242,10 +248,8 @@ src/result.ts
    316→    return true
    317→  }
    318→
-   319→  isErr(): this is Err<T, E> {
-   320→    return !this.isOk()
-   321→  }
-   322→
+   405→  _unsafeUnwrap(_?: ErrorConfig): T {
+   409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
    419→export class Err<T, E> implements IResult<T, E> {
    420→  constructor(readonly error: E) {}
    421→
@@ -253,10 +257,8 @@ src/result.ts
    423→    return false
    424→  }
    425→
-   426→  isErr(): this is Err<T, E> {
-   427→    return !this.isOk()
-   428→  }
-   429→
+   505→  _unsafeUnwrap(config?: ErrorConfig): T {
+   509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
    523→export const fromThrowable …
    530→type Prev …
    590→type CollectResults …

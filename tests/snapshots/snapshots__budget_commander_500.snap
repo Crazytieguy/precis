@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (493 words)
+budget: 500 (494 words)
 
 CONTRIBUTING.md
      3→## Issues …
@@ -19,6 +19,11 @@ Readme.md
    978→For example:
    979→
    980→```js
+   981→program.parse(); // parse process.argv and auto-detect electron and special node flags
+   982→program.parse(process.argv); // assume argv[0] is app and argv[1] is script
+   983→program.parse(['--port', '80'], { from: 'user' }); // just user supplied arguments, nothing special about argv[0]
+   984→```
+   985→
       →…
 Readme_zh-CN.md
    907→### .parse() 和 .parseAsync()
@@ -44,23 +49,15 @@ jest.config.js
      1→const config = {
      2→  testEnvironment: 'node',
      3→  collectCoverage: true,
+     4→  transform: {
       →…
 lib/argument.js
      3→class Argument {
      4→  /**
-   135→/**
-      →…
-   143→function humanReadableArgName(arg) {
 lib/command.js
     13→class Command extends EventEmitter {
     14→  /**
   1127→  _prepareForParse() {
-  2697→/**
-      →…
-  2705→function incrementNodeInspectorPort(args) {
-  2748→/**
-      →…
-  2752→function useColor() {
 lib/error.js
      4→class CommanderError extends Error {
      5→  /**
@@ -82,28 +79,14 @@ lib/help.js
    600→  styleArgumentText(str) {
    603→  styleSubcommandText(str) {
    606→  styleCommandText(str) {
-   732→/**
-      →…
-   740→function stripColor(str) {
 lib/option.js
      3→class Option {
      4→  /**
    268→class DualOptions {
    269→  /**
-   308→/**
-      →…
-   316→function camelcase(str) {
-   322→/**
-      →…
-   328→function splitOptionFlags(flags) {
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
-     4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
-      →…
-    48→/**
-      →…
-    56→function suggestSimilar(word, candidates) {
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =
     13→  | LiteralType

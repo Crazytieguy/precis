@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3411 words)
+budget: 4000 (3422 words)
 
 _internals/error.ts
      3→export interface ErrorConfig {
@@ -179,9 +179,6 @@ result-async.ts
     89→  map<A>(f: (t: T) => A | Promise<A>): ResultAsync<A, E> {
     90→    return new ResultAsync(
     91→      this._promise.then(async (res: Result<T, E>) => {
-    92→        if (res.isErr()) {
-    93→          return new Err<A, E>(res.error)
-    94→        }
    101→  andThrough<F>(f: (t: T) => Result<unknown, F> | ResultAsync<unknown, F>): ResultAsync<T, E | F> {
    117→  andTee(f: (t: T) => unknown): ResultAsync<T, E> {
    133→  orTee(f: (t: E) => unknown): ResultAsync<T, E> {
@@ -487,14 +484,16 @@ result.ts
    379→  asyncAndThrough(f: (t: T) => ResultAsync<unknown, unknown>): any {
    380→    return f(this.value).map(() => this.value)
    381→  }
-   382→
    383→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E> {
-   384→    return ResultAsync.fromSafePromise(f(this.value))
    388→  unwrapOr<A>(_v: A): T | A {
    393→  match<A, B = A>(ok: (t: T) => A, _err: (e: E) => B): A | B {
    397→  safeUnwrap(): Generator<Err<never, E>, T> {
    405→  _unsafeUnwrap(_?: ErrorConfig): T {
+   406→    return this.value
+   407→  }
    409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
+   410→    throw createNeverThrowError('Called `_unsafeUnwrapErr` on an Ok', this, config)
+   411→  }
    419→export class Err<T, E> implements IResult<T, E> {
    420→  constructor(readonly error: E) {}
    421→
@@ -565,13 +564,14 @@ result.ts
    486→  }
    487→
    488→  unwrapOr<A>(v: A): T | A {
-   489→    return v
-   490→  }
-   491→
    492→  match<A, B = A>(_ok: (t: T) => A, err: (e: E) => B): A | B {
    496→  safeUnwrap(): Generator<Err<never, E>, T> {
    505→  _unsafeUnwrap(config?: ErrorConfig): T {
+   506→    throw createNeverThrowError('Called `_unsafeUnwrap` on an Err', this, config)
+   507→  }
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
+   510→    return this.error
+   511→  }
    523→export const fromThrowable = Result.fromThrowable
    530→type Prev …
    590→type CollectResults …

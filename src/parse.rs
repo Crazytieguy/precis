@@ -402,6 +402,17 @@ fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
             .children(&mut cursor)
             .any(|child| child.kind() == "accessibility_modifier");
         if !has_accessor {
+            // Convention: _prefix means private for concrete methods and fields.
+            // Interface signatures and abstract methods are always public (part of the type contract).
+            if matches!(node.kind(), "method_definition" | "public_field_definition") {
+                let is_underscore_prefixed = node
+                    .child_by_field_name("name")
+                    .and_then(|n| n.utf8_text(source.as_bytes()).ok())
+                    .is_some_and(|name| name.starts_with('_'));
+                if is_underscore_prefixed {
+                    return false;
+                }
+            }
             return true; // no modifier = public by default
         }
         let mut cursor = node.walk();
@@ -851,6 +862,8 @@ export class Parser {
     parse() { return []; }
     #advance() {}
     #reset() {}
+    _internal() {}
+    _prepareForParse() {}
 }
 "#;
         let symbols = extract_symbols(Path::new("test.js"), source);
@@ -864,6 +877,30 @@ export class Parser {
         // JS #private methods should be captured as non-public
         assert!(info.contains(&("#advance", SymbolKind::Function, false)));
         assert!(info.contains(&("#reset", SymbolKind::Function, false)));
+        // JS _prefix convention methods should be captured as non-public
+        assert!(info.contains(&("_internal", SymbolKind::Function, false)));
+        assert!(info.contains(&("_prepareForParse", SymbolKind::Function, false)));
+    }
+
+    #[test]
+    fn interface_underscore_methods_stay_public() {
+        let source = r#"
+interface IResult<T, E> {
+    isOk(): boolean;
+    _unsafeUnwrap(): T;
+    _unsafeUnwrapErr(): E;
+}
+"#;
+        let symbols = extract_symbols(Path::new("test.ts"), source);
+        let info: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.name.as_str(), s.kind, s.is_public))
+            .collect();
+
+        // Interface methods are always public, even with _ prefix
+        assert!(info.contains(&("isOk", SymbolKind::Function, true)));
+        assert!(info.contains(&("_unsafeUnwrap", SymbolKind::Function, true)));
+        assert!(info.contains(&("_unsafeUnwrapErr", SymbolKind::Function, true)));
     }
 
     #[test]
