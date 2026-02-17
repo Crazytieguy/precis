@@ -85,6 +85,8 @@ pub enum FileRole {
     Translated,
     /// Community health files: CONTRIBUTING.md, LICENSE.md, SECURITY.md, CODE_OF_CONDUCT.md, etc.
     CommunityHealth,
+    /// AI coding assistant config files: CLAUDE.md, AGENTS.md, COPILOT.md, etc.
+    AiConfig,
     /// Everything else.
     Normal,
 }
@@ -103,6 +105,7 @@ impl FileRole {
             "contributing" | "contributors" | "security" | "license" | "licence"
             | "code_of_conduct" | "codeowners" | "releasing" | "support"
             | "governance" | "authors" | "maintainers" => FileRole::CommunityHealth,
+            "claude" | "agents" | "copilot" | "copilot-instructions" => FileRole::AiConfig,
             _ if is_doc && has_locale_suffix(stem) => FileRole::Translated,
             _ => FileRole::Normal,
         }
@@ -556,13 +559,14 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     let sibling_count = group.symbols.len().max(1) as f64;
     let sibling_factor = 1.0 / (1.0 + sibling_count.ln() * 0.1);
 
-    // File role: README files are high-signal, changelogs and translations are low-signal.
+    // File role: README files are high-signal, changelogs/translations/metadata are low-signal.
     let file_role_factor = match key.file_role {
         FileRole::Readme => 1.5,
         FileRole::Normal => 1.0,
         FileRole::Translated => 0.1,
         FileRole::Changelog => 0.1,
         FileRole::CommunityHealth => 0.1,
+        FileRole::AiConfig => 0.1,
     };
 
     // Config files (eslint.config.js, jest.config.ts, etc.) are build/tool setup,
@@ -1144,6 +1148,19 @@ mod tests {
         assert_eq!(FileRole::from_filename("README-es.md"), FileRole::Translated);
         assert_eq!(FileRole::from_filename("lib.rs"), FileRole::Normal);
         assert_eq!(FileRole::from_filename("main.py"), FileRole::Normal);
+    }
+
+    #[test]
+    fn file_role_ai_config() {
+        assert_eq!(FileRole::from_filename("CLAUDE.md"), FileRole::AiConfig);
+        assert_eq!(FileRole::from_filename("claude.md"), FileRole::AiConfig);
+        assert_eq!(FileRole::from_filename("AGENTS.md"), FileRole::AiConfig);
+        assert_eq!(FileRole::from_filename("agents.md"), FileRole::AiConfig);
+        assert_eq!(FileRole::from_filename("COPILOT.md"), FileRole::AiConfig);
+        assert_eq!(FileRole::from_filename("copilot-instructions.md"), FileRole::AiConfig);
+        // Non-doc extensions should not match
+        assert_eq!(FileRole::from_filename("claude.toml"), FileRole::Normal);
+        assert_eq!(FileRole::from_filename("agents.json"), FileRole::Normal);
     }
 
     #[test]
