@@ -101,7 +101,8 @@ impl FileRole {
             "readme" => FileRole::Readme,
             "changelog" | "changes" | "history" | "news" | "releases" => FileRole::Changelog,
             "contributing" | "contributors" | "security" | "license" | "licence"
-            | "code_of_conduct" | "codeowners" => FileRole::CommunityHealth,
+            | "code_of_conduct" | "codeowners" | "releasing" | "support"
+            | "governance" | "authors" | "maintainers" => FileRole::CommunityHealth,
             _ if is_doc && has_locale_suffix(stem) => FileRole::Translated,
             _ => FileRole::Normal,
         }
@@ -977,6 +978,12 @@ mod tests {
         assert_eq!(FileRole::from_filename("License.txt"), FileRole::CommunityHealth);
         assert_eq!(FileRole::from_filename("CODE_OF_CONDUCT.md"), FileRole::CommunityHealth);
         assert_eq!(FileRole::from_filename("CODEOWNERS"), FileRole::CommunityHealth);
+        assert_eq!(FileRole::from_filename("RELEASING.md"), FileRole::CommunityHealth);
+        assert_eq!(FileRole::from_filename("SUPPORT.md"), FileRole::CommunityHealth);
+        assert_eq!(FileRole::from_filename("GOVERNANCE.md"), FileRole::CommunityHealth);
+        assert_eq!(FileRole::from_filename("AUTHORS"), FileRole::CommunityHealth);
+        assert_eq!(FileRole::from_filename("AUTHORS.md"), FileRole::CommunityHealth);
+        assert_eq!(FileRole::from_filename("MAINTAINERS.md"), FileRole::CommunityHealth);
     }
 
     #[test]

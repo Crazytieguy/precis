@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (974 words)
+budget: 1000 (973 words)
 
 README.md
      1→# humanize
@@ -35,6 +35,13 @@ README.md
     38→- Russian
     39→- Simplified Chinese
     40→- Slovak
+    41→- Slovenian
+    42→- Spanish
+    43→- Swedish
+    44→- Turkish
+    45→- Ukrainian
+    46→- Uzbek
+    47→- Vietnamese
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -205,6 +212,13 @@ README.md
    228→
    229→<!-- usage-end -->
    230→
+   231→How to add new phrases to existing locale files:
+   232→
+   233→```sh
+   234→xgettext --from-code=UTF-8 -o humanize.pot -k'_' -k'N_' -k'P_:1c,2' -k'NS_:1,2' -k'_ngettext:1,2' -l python src/humanize/*.py  # extract new phrases
+   235→msgmerge -U src/humanize/locale/ru_RU/LC_MESSAGES/humanize.po humanize.pot # add them to locale files
+   236→```
+   237→
       →…
 RELEASING.md
      1→# Release checklist
@@ -213,20 +227,6 @@ RELEASING.md
      5→      running cleanly for all merges to `main`.
      6→      [![GitHub Actions status](https://github.com/python-humanize/humanize/workflows/Test/badge.svg)](https://github.com/python-humanize/humanize/actions)
      7→
-     8→- [ ] Edit release draft, adjust text if needed:
-     9→      https://github.com/python-humanize/humanize/releases
-    10→
-    11→- [ ] Check next tag is correct, amend if needed
-    12→
-    13→- [ ] Publish release
-    14→
-    15→- [ ] Check the tagged
-    16→      [GitHub Actions build](https://github.com/python-humanize/humanize/actions/workflows/release.yml)
-    17→      has released to [PyPI](https://pypi.org/project/humanize/#history)
-    18→
-    19→- [ ] Check installation:
-    20→
-    21→```bash
       →…
 docs/filesize.md
      1→# Filesize
