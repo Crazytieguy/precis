@@ -123,6 +123,7 @@ fn render_scheduled(
 }
 
 /// Render a single symbol at the given included stage.
+#[allow(clippy::too_many_arguments)]
 fn render_symbol(
     out: &mut String,
     lines: &[&str],
@@ -145,10 +146,10 @@ fn render_symbol(
         .position(|&s| s == included.kind)
         .unwrap_or(0);
 
-    let show_names = stages.iter().position(|&s| s == StageKind::Names).map_or(false, |p| p <= stage_pos);
-    let show_sigs = stages.iter().position(|&s| s == StageKind::Signatures).map_or(false, |p| p <= stage_pos);
-    let show_doc = stages.iter().position(|&s| s == StageKind::Doc).map_or(false, |p| p <= stage_pos);
-    let show_body = stages.iter().position(|&s| s == StageKind::Body).map_or(false, |p| p <= stage_pos);
+    let show_names = stages.iter().position(|&s| s == StageKind::Names).is_some_and(|p| p <= stage_pos);
+    let show_sigs = stages.iter().position(|&s| s == StageKind::Signatures).is_some_and(|p| p <= stage_pos);
+    let show_doc = stages.iter().position(|&s| s == StageKind::Doc).is_some_and(|p| p <= stage_pos);
+    let show_body = stages.iter().position(|&s| s == StageKind::Body).is_some_and(|p| p <= stage_pos);
 
     let doc_n = if included.kind == StageKind::Doc { included.n_lines } else if show_doc { usize::MAX } else { 0 };
     let body_n = if included.kind == StageKind::Body { included.n_lines } else if show_body { usize::MAX } else { 0 };

@@ -10,7 +10,7 @@ use crate::Lang;
 // ---------------------------------------------------------------------------
 
 /// Category of symbol for grouping and stage progression.
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq)]
+#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
 pub enum KindCategory {
     Function, // Function, methods
     Type,     // Struct, Enum, Trait, Interface, Class
@@ -65,7 +65,7 @@ impl KindCategory {
 
 /// The kind of a rendering stage. Doc and Body are expanded line-by-line
 /// (Doc(1), Doc(2), ... up to the symbol's actual doc length).
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq)]
+#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
 pub enum StageKind {
     Names,
     Signatures,
@@ -74,7 +74,7 @@ pub enum StageKind {
 }
 
 /// Grouping dimensions. All symbols sharing a GroupKey are treated identically.
-#[derive(Debug, Clone, Hash, Eq, PartialEq)]
+#[derive(Debug, Clone, Hash, Eq, PartialEq, Ord, PartialOrd)]
 pub struct GroupKey {
     pub is_public: bool,
     pub kind_category: KindCategory,
@@ -191,7 +191,9 @@ pub fn build_groups(
         }
     }
 
-    group_map.into_values().collect()
+    let mut groups: Vec<Group> = group_map.into_values().collect();
+    groups.sort_by(|a, b| a.key.cmp(&b.key));
+    groups
 }
 
 /// Compute word costs for each rendering stage of a single symbol.
@@ -296,7 +298,12 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         _ => 0.4,
     };
 
-    let base_value = visibility * documented * depth_factor;
+    // Groups with many symbols: each individual symbol is less important.
+    // Gentle log decay: 1 sym → 1.0, 2 → 0.94, 5 → 0.86, 10 → 0.81, 50 → 0.72.
+    let sibling_count = group.symbols.len().max(1) as f64;
+    let sibling_factor = 1.0 / (1.0 + sibling_count.ln() * 0.1);
+
+    let base_value = visibility * documented * depth_factor * sibling_factor;
 
     let stage_value = match key.kind_category {
         KindCategory::Type => match stage {
@@ -370,11 +377,17 @@ impl PartialOrd for QueueItem {
 
 impl Ord for QueueItem {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        let self_priority = self.total_value() / self.total_cost() as f64;
-        let other_priority = other.total_value() / other.total_cost() as f64;
-        self_priority
-            .partial_cmp(&other_priority)
+        // Cross-multiplication avoids float division precision loss:
+        // self_value / self_cost vs other_value / other_cost
+        // becomes self_value * other_cost vs other_value * self_cost
+        let lhs = self.total_value() * other.total_cost() as f64;
+        let rhs = other.total_value() * self.total_cost() as f64;
+        lhs.partial_cmp(&rhs)
             .unwrap_or(std::cmp::Ordering::Equal)
+            // Deterministic tiebreaker: lower group_idx, then stage_kind, then n
+            .then_with(|| other.group_idx.cmp(&self.group_idx))
+            .then_with(|| other.stage_kind.cmp(&self.stage_kind))
+            .then_with(|| other.n.cmp(&self.n))
     }
 }
 
@@ -591,10 +604,10 @@ pub fn schedule(
                     if let Some(ref included) = group_stages[other_group_idx] {
                         let inc_pos = other_stages.iter().position(|&s| s == included.kind);
                         let this_pos = other_stages.iter().position(|&s| s == sk);
-                        if let (Some(ip), Some(tp)) = (inc_pos, this_pos) {
-                            if tp < ip || (tp == ip && n <= included.n_lines) {
-                                continue;
-                            }
+                        if let (Some(ip), Some(tp)) = (inc_pos, this_pos)
+                            && (tp < ip || (tp == ip && n <= included.n_lines))
+                        {
+                            continue;
                         }
                     }
 
@@ -751,7 +764,7 @@ fn compute_prereq_costs_with_state(
             // Include earlier lines of the same stage that aren't yet included
             let already_included_n = if included_pos == Some(pos) {
                 included_n
-            } else if included_pos.map_or(false, |ip| ip > pos) {
+            } else if included_pos.is_some_and(|ip| ip > pos) {
                 // This entire stage was included as a prereq of a later stage
                 match sk {
                     StageKind::Names | StageKind::Signatures => 1,
@@ -779,7 +792,7 @@ fn compute_prereq_costs_with_state(
         }
 
         // Check if this prerequisite stage is already included
-        let already_included = included_pos.map_or(false, |ip| ip >= pos);
+        let already_included = included_pos.is_some_and(|ip| ip >= pos);
         if already_included {
             continue; // Already paid for
         }

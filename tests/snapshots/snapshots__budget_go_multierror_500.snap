@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (349 words)
+budget: 500 (357 words)
 
 CHANGELOG.md
      1→## Unreleased
@@ -32,6 +32,7 @@ flatten.go
     20→func flatten(err error, flatErr *Error) {
     21→	switch err := err.(type) {
     22→	case *Error:
+    23→		for _, e := range err.Errors {
 format.go
     11→// ErrorFormatFunc is a function callback that is called by Error to
     12→// turn the list of errors into a string.
