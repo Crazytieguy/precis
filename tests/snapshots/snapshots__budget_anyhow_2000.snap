@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1922 words)
+budget: 2000 (1927 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -78,13 +78,7 @@ src/backtrace.rs
     77→    use core::sync::atomic::{AtomicUsize, Ordering};
     78→    use std::env;
     82→    pub(crate) struct Backtrace {
-    83→        inner: Inner,
-    84→    }
     86→    pub(crate) enum BacktraceStatus {
-    87→        Unsupported,
-    88→        Disabled,
-    89→        Captured,
-    90→    }
     92→    enum Inner {
     98→    struct Capture {
    104→    struct BacktraceFrame {
@@ -145,12 +139,7 @@ src/context.rs
    166→struct Quoted<C>(C);
    186→pub(crate) mod private {
    187→    use super::*;
-   188→
    189→    pub trait Sealed {}
-   190→
-   191→    impl<T, E> Sealed for Result<T, E> where E: ext::StdError {}
-   192→    impl<T> Sealed for Option<T> {}
-   193→}
 src/ensure.rs
      9→#[doc(hidden)]
     10→pub trait BothDebug {
@@ -307,6 +296,10 @@ src/lib.rs
    296→/// - `Error` is represented as a narrow pointer &mdash; exactly one word in
    297→///   size instead of two.
    298→///
+   299→/// <br>
+   300→///
+   301→/// # Display representations
+   302→///
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -322,6 +315,10 @@ src/lib.rs
    402→/// use std::io;
    403→///
    404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
+   405→///     for cause in error.chain() {
+   406→///         if let Some(io_error) = cause.downcast_ref::<io::Error>() {
+   407→///             return Some(io_error.kind());
+   408→///         }
       →…
    415→pub struct Chain<'a> {
    416→    state: crate::chain::ChainState<'a>,
@@ -387,6 +384,10 @@ src/lib.rs
    478→///
    479→/// ```
    480→/// use anyhow::{Context, Result};
+   481→/// use std::fs;
+   482→/// use std::path::PathBuf;
+   483→///
+   484→/// pub struct ImportantThing {
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.

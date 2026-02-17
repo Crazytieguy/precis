@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3371 words)
+budget: 4000 (3407 words)
 
 error.rs
      3→/// An error encountered while working with structured data.
@@ -130,6 +130,9 @@ mod.rs
     35→//! # use log::info;
     36→//! let a = 1;
     37→//!
+    38→//! info!(a; "Something of interest");
+    39→//! ```
+    40→//!
       →…
    246→mod error;
    247→mod key;
@@ -239,7 +242,11 @@ source.rs
    104→        }
    105→    }
    106→
-      →…
+   107→    let mut get = Get { key, found: None };
+   108→
+   109→    let _ = source.visit(&mut get);
+   110→    get.found
+   111→}
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
    115→    struct Count(usize);
@@ -330,6 +337,35 @@ value.rs
     82→///
     83→/// Values can hold one of a number of types:
     84→///
+    85→/// - **Null:** The absence of any other meaningful value. Note that
+    86→///   `Some(Value::null())` is not the same as `None`. The former is
+    87→///   `null` while the latter is `undefined`. This is important to be
+    88→///   able to tell the difference between a key-value that was logged,
+    89→///   but its value was empty (`Some(Value::null())`) and a key-value
+    90→///   that was never logged at all (`None`).
+    91→/// - **Strings:** `str`, `char`.
+    92→/// - **Booleans:** `bool`.
+    93→/// - **Integers:** `u8`-`u128`, `i8`-`i128`, `NonZero*`.
+    94→/// - **Floating point numbers:** `f32`-`f64`.
+    95→/// - **Errors:** `dyn (Error + 'static)`.
+    96→/// - **`serde`:** Any type in `serde`'s data model.
+    97→/// - **`sval`:** Any type in `sval`'s data model.
+    98→///
+    99→/// # Serialization
+   100→///
+   101→/// Values provide a number of ways to be serialized.
+   102→///
+   103→/// For basic types the [`Value::visit`] method can be used to extract the
+   104→/// underlying typed value. However, this is limited in the amount of types
+   105→/// supported (see the [`VisitValue`] trait methods).
+   106→///
+   107→/// For more complex types one of the following traits can be used:
+   108→///  * `sval::Value`, requires the `kv_sval` feature.
+   109→///  * `serde::Serialize`, requires the `kv_serde` feature.
+   110→///
+   111→/// You don't need a visitor to serialize values through `serde` or `sval`.
+   112→///
+   113→/// A value can always be serialized using any supported framework, regardless
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
@@ -444,14 +480,32 @@ value.rs
    288→macro_rules! impl_to_value_primitive {
    289→    ($($into_ty:ty,)*) => {
    290→        $(
+   291→            impl ToValue for $into_ty {
+   292→                fn to_value(&self) -> Value<'_> {
+   293→                    Value::from(*self)
+   294→                }
+   295→            }
+   296→
       →…
    312→macro_rules! impl_to_value_nonzero_primitive {
    313→    ($($into_ty:ident,)*) => {
    314→        $(
+   315→            impl ToValue for std::num::$into_ty {
+   316→                fn to_value(&self) -> Value<'_> {
+   317→                    Value::from(self.get())
+   318→                }
+   319→            }
+   320→
       →…
    336→macro_rules! impl_value_to_primitive {
    337→    ($(#[doc = $doc:tt] $into_name:ident -> $into_ty:ty,)*) => {
    338→        impl<'v> Value<'v> {
+   339→            $(
+   340→                #[doc = $doc]
+   341→                pub fn $into_name(&self) -> Option<$into_ty> {
+   342→                    self.inner.$into_name()
+   343→                }
+   344→            )*
       →…
    377→    /// Try to convert this value into an error.
    378→    #[cfg(feature = "kv_std")]
@@ -576,6 +630,18 @@ value.rs
    556→        (**self).visit_i64(value)
    557→    }
    558→
+   559→    fn visit_u128(&mut self, value: u128) -> Result<(), Error> {
+   560→        (**self).visit_u128(value)
+   561→    }
+   562→
+   563→    fn visit_i128(&mut self, value: i128) -> Result<(), Error> {
+   564→        (**self).visit_i128(value)
+   565→    }
+   566→
+   567→    fn visit_f64(&mut self, value: f64) -> Result<(), Error> {
+   568→        (**self).visit_f64(value)
+   569→    }
+   570→
    587→    #[cfg(feature = "kv_std")]
    588→    fn visit_error(&mut self, err: &(dyn std::error::Error + 'static)) -> Result<(), Error> {
    589→        (**self).visit_error(err)
@@ -589,60 +655,8 @@ value.rs
    598→    }
    601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {
-   603→    /**
-   604→    An implementation of `Value` based on a library called `value_bag`.
-   605→
-   606→    `value_bag` was written specifically for use in `log`'s value, but was split out when it outgrew
-   607→    the codebase here. It's a general-purpose type-erasure library that handles mapping between
-   608→    more fully-featured serialization frameworks.
-   609→    */
-   610→    use super::*;
-   611→
-   612→    pub use value_bag::ValueBag as Inner;
-   613→
-   614→    pub use value_bag::Error;
-   615→
-   616→    #[cfg(test)]
-   617→    pub use value_bag::test::TestToken as Token;
-   618→
-   619→    pub fn visit<'v>(
-   620→        inner: &Inner<'v>,
-   621→        visitor: impl VisitValue<'v>,
-   622→    ) -> Result<(), crate::kv::Error> {
-   623→        struct InnerVisitValue<V>(V);
-   624→
-   625→        impl<'v, V> value_bag::visit::Visit<'v> for InnerVisitValue<V>
-   626→        where
-   627→            V: VisitValue<'v>,
-   628→        {
-   629→            fn visit_any(&mut self, value: value_bag::ValueBag) -> Result<(), Error> {
-   630→                self.0
-   631→                    .visit_any(Value { inner: value })
-   632→                    .map_err(crate::kv::Error::into_value)
-   633→            }
-   634→
-   635→            fn visit_empty(&mut self) -> Result<(), Error> {
-   636→                self.0.visit_null().map_err(crate::kv::Error::into_value)
-   637→            }
-   638→
-      →…
    720→#[cfg(not(feature = "value-bag"))]
    721→pub(in crate::kv) mod inner {
-   722→    /**
-   723→    This is a dependency-free implementation of `Value` when there's no serialization frameworks involved.
-   724→    In these simple cases a more fully featured solution like `value_bag` isn't needed, so we avoid pulling it in.
-   725→
-   726→    There are a few things here that need to remain consistent with the `value_bag`-based implementation:
-   727→
-   728→    1. Conversions should always produce the same results. If a conversion here returns `Some`, then
-   729→       the same `value_bag`-based conversion must also. Of particular note here are floats to ints; they're
-   730→       based on the standard library's `TryInto` conversions, which need to be converted to `i32` or `u32`,
-   731→       and then to `f64`.
-   732→    2. VisitValues should always be called in the same way. If a particular type of value calls `visit_i64`,
-   733→       then the same `value_bag`-based visitor must also.
-   734→    */
-   735→    use super::*;
-   736→
    737→    #[derive(Clone)]
    738→    pub enum Inner<'v> {
    739→        None,
@@ -657,13 +671,6 @@ value.rs
    748→        Debug(&'v dyn fmt::Debug),
    749→        Display(&'v dyn fmt::Display),
    750→    }
-   751→
-   752→    impl<'v> From<()> for Inner<'v> {
-   753→        fn from(_: ()) -> Self {
-   754→            Inner::None
-   755→        }
-   756→    }
-   757→
   1052→    /// Get a value from a type implementing `std::fmt::Debug`.
   1053→    #[cfg(feature = "kv_unstable")]
   1054→    #[deprecated(note = "use `from_debug` instead")]

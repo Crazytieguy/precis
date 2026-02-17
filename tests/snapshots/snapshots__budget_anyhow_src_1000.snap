@@ -2,15 +2,20 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (976 words)
+budget: 1000 (956 words)
 
 backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
      8→pub(crate) enum Backtrace {}
+    10→#[cfg(std_backtrace)]
     11→macro_rules! impl_backtrace {
+    17→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     18→macro_rules! impl_backtrace {
+    24→#[cfg(any(std_backtrace, feature = "backtrace"))]
     25→macro_rules! backtrace {
+    31→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
     32→macro_rules! backtrace {
+    38→#[cfg(error_generic_member_access)]
     39→macro_rules! backtrace_if_absent {
     53→macro_rules! backtrace_if_absent {
     64→macro_rules! backtrace_if_absent {
@@ -19,13 +24,7 @@ backtrace.rs
     72→    use alloc::borrow::{Cow, ToOwned as _};
     73→    use alloc::vec::Vec;
     82→    pub(crate) struct Backtrace {
-    83→        inner: Inner,
-    84→    }
     86→    pub(crate) enum BacktraceStatus {
-    87→        Unsupported,
-    88→        Disabled,
-    89→        Captured,
-    90→    }
     92→    enum Inner {
     98→    struct Capture {
    104→    struct BacktraceFrame {
@@ -50,7 +49,6 @@ chain.rs
     36→    type Item = &'a (dyn StdError + 'static);
 context.rs
      9→mod ext {
-    10→    use super::*;
     12→    pub trait StdError {
     13→        fn ext_context<C>(self, context: C) -> Error
     14→        where
@@ -58,10 +56,7 @@ context.rs
     16→    }
    166→struct Quoted<C>(C);
    186→pub(crate) mod private {
-   187→    use super::*;
-   188→
    189→    pub trait Sealed {}
-   190→
 ensure.rs
      9→#[doc(hidden)]
     10→pub trait BothDebug {
@@ -72,18 +67,18 @@ ensure.rs
     26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     27→}
     35→struct Buf {
+   103→#[doc(hidden)]
+   104→#[macro_export]
    105→macro_rules! __parse_ensure {
+   884→#[doc(hidden)]
+   885→#[macro_export]
    886→macro_rules! __fancy_ensure {
+   910→#[doc(hidden)]
+   911→#[macro_export]
    912→macro_rules! __fallback_ensure {
 error.rs
-   293→    unsafe fn construct …
    705→    type Target = dyn StdError + Send + Sync + 'static;
    740→struct ErrorVTable {
-   788→unsafe fn object_boxed …
-   799→unsafe fn object_reallocate_boxed …
-   839→unsafe fn context_downcast …
-   859→unsafe fn context_drop_rest …
-   920→unsafe fn context_backtrace …
    933→#[repr(C)]
    934→pub(crate) struct ErrorImpl<E = ()> {
    935→    vtable: &'static ErrorVTable,
@@ -97,7 +92,6 @@ error.rs
    953→    pub context: C,
    954→    pub error: E,
    955→}
-  1002→    unsafe fn provide …
 fmt.rs
     69→struct Indented<'a, D> {
 kind.rs
@@ -233,22 +227,25 @@ lib.rs
    670→
    671→    #[doc(hidden)]
    672→    pub mod kind {
-   673→        #[doc(hidden)]
-   674→        pub use crate::kind::{AdhocKind, TraitKind};
-   675→
-   676→        #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-   677→        #[doc(hidden)]
-   678→        pub use crate::kind::BoxedKind;
-   679→    }
    708→    mod not {
    709→        #[doc(hidden)]
    710→        pub trait Bool {
    711→            fn not(self) -> bool;
    712→        }
 macros.rs
+     1→/// Return early with an error.
+     2→///
+     3→/// This macro is equivalent to
+      →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
+   174→/// Construct an ad-hoc error from a string or existing non-`anyhow` error
+   175→/// value.
+   176→///
+      →…
    204→macro_rules! anyhow {
+   228→#[doc(hidden)]
+   229→#[macro_export]
    230→macro_rules! __anyhow {
 ptr.rs
      5→#[repr(transparent)]

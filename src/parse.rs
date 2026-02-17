@@ -360,12 +360,15 @@ fn dedup_overloads(symbols: Vec<Symbol>, lang: Lang) -> Vec<Symbol> {
 
 fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
     let mut cursor = node.walk();
-    // Rust: `pub` keyword appears as a visibility_modifier child
-    if node
+    // Rust: `pub` keyword appears as a visibility_modifier child.
+    // Restricted visibility (`pub(crate)`, `pub(super)`, `pub(in ...)`) is NOT
+    // considered public — these are internal items, not part of the crate's API.
+    if let Some(vis) = node
         .children(&mut cursor)
-        .any(|child| child.kind() == "visibility_modifier")
+        .find(|child| child.kind() == "visibility_modifier")
     {
-        return true;
+        let vis_text = vis.utf8_text(source.as_bytes()).unwrap_or("");
+        return vis_text == "pub";
     }
     // TypeScript: exported symbols are children of export_statement
     if let Some(parent) = node.parent()
@@ -635,6 +638,30 @@ pub mod utils;
         );
         assert!(!names.contains(&(SymbolKind::Function, "greet", false)));
         assert!(names.contains(&(SymbolKind::Function, "new", true)));
+    }
+
+    #[test]
+    fn rust_restricted_visibility_is_not_public() {
+        let source = r#"
+pub fn fully_public() {}
+pub(crate) fn crate_visible() {}
+pub(super) fn super_visible() {}
+fn private() {}
+pub struct PubStruct {}
+pub(crate) struct CrateStruct {}
+"#;
+        let symbols = extract_symbols(Path::new("test.rs"), source);
+        let names: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.name.as_str(), s.is_public))
+            .collect();
+
+        assert!(names.contains(&("fully_public", true)));
+        assert!(names.contains(&("crate_visible", false)));
+        assert!(names.contains(&("super_visible", false)));
+        assert!(names.contains(&("private", false)));
+        assert!(names.contains(&("PubStruct", true)));
+        assert!(names.contains(&("CrateStruct", false)));
     }
 
     #[test]

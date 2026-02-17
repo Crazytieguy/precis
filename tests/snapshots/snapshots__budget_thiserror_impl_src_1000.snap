@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (925 words)
+budget: 1000 (953 words)
 
 ast.rs
     10→pub enum Input<'a> {
@@ -43,7 +43,14 @@ ast.rs
     50→    TupleVariant,
     51→    UnitVariant,
     52→}
+    54→impl<'a> Input<'a> {
     55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
+    67→impl<'a> Struct<'a> {
+    85→impl<'a> Enum<'a> {
+   118→impl<'a> Variant<'a> {
+   130→impl<'a> Field<'a> {
+   156→impl ContainerKind {
+   174→impl Display for ContainerKind {
    175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 attr.rs
     11→pub struct Attrs<'a> {
@@ -98,14 +105,14 @@ attr.rs
     66→    UpperExp,
     67→}
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
+   302→impl ToTokens for Display<'_> {
    303→    fn to_tokens(&self, tokens: &mut TokenStream) {
+   342→impl ToTokens for Trait {
    343→    fn to_tokens(&self, tokens: &mut TokenStream) {
 expand.rs
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
-   505→pub(crate) fn call_site_ident(ident: &Ident) -> Ident {
-fallback.rs
-     7→pub(crate) fn expand(input: &DeriveInput, error: syn::Error) -> TokenStream {
 fmt.rs
+    15→impl Display<'_> {
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
    166→struct FmtArguments {
    167→    named: BTreeSet<IdentUnraw>,
@@ -135,12 +142,14 @@ generics.rs
      8→pub struct ParamsInScope<'a> {
      9→    names: Set<&'a Ident>,
     10→}
+    12→impl<'a> ParamsInScope<'a> {
     13→    pub fn new(generics: &'a Generics) -> Self {
     19→    pub fn intersects(&self, ty: &Type) -> bool {
     48→pub struct InferredBounds {
     49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
     50→    order: Vec<TokenStream>,
     51→}
+    53→impl InferredBounds {
     54→    pub fn new() -> Self {
     61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
     74→    pub fn augment_where_clause(&self, generics: &Generics) -> WhereClause {
@@ -162,21 +171,13 @@ lib.rs
     43→}
     45→#[allow(non_camel_case_types)]
     46→struct private;
+    48→impl ToTokens for private {
     49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
 prop.rs
-     7→    pub(crate) fn from_field(&self) -> Option<&Field> {
-    11→    pub(crate) fn source_field(&self) -> Option<&Field> {
-    15→    pub(crate) fn backtrace_field(&self) -> Option<&Field> {
-    19→    pub(crate) fn distinct_backtrace_field(&self) -> Option<&Field> {
-    26→    pub(crate) fn has_source(&self) -> bool {
-    32→    pub(crate) fn has_backtrace(&self) -> bool {
-    38→    pub(crate) fn has_display(&self) -> bool {
-    54→    pub(crate) fn from_field(&self) -> Option<&Field> {
-    58→    pub(crate) fn source_field(&self) -> Option<&Field> {
-    62→    pub(crate) fn backtrace_field(&self) -> Option<&Field> {
-    66→    pub(crate) fn distinct_backtrace_field(&self) -> Option<&Field> {
-    73→    pub(crate) fn is_backtrace(&self) -> bool {
-    77→    pub(crate) fn source_span(&self) -> Span {
+     6→impl Struct<'_> {
+    25→impl Enum<'_> {
+    53→impl Variant<'_> {
+    72→impl Field<'_> {
 scan_expr.rs
      6→enum Input {
      7→    Keyword(&'static str),
@@ -224,31 +225,50 @@ scan_expr.rs
    175→static RAW …
    181→static REFERENCE …
    187→static RETURN …
-   192→pub(crate) fn scan_expr(input: ParseStream) -> Result<()> {
 unraw.rs
     10→#[derive(Clone)]
     11→#[repr(transparent)]
     12→pub struct IdentUnraw(Ident);
+    14→impl IdentUnraw {
     15→    pub fn new(ident: Ident) -> Self {
     19→    pub fn to_local(&self) -> Ident {
     32→    pub fn set_span(&mut self, span: Span) {
+    37→impl Display for IdentUnraw {
     38→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+    43→impl Eq for IdentUnraw {}
+    45→impl PartialEq for IdentUnraw {
     46→    fn eq(&self, other: &Self) -> bool {
+    51→impl PartialEq<str> for IdentUnraw {
     52→    fn eq(&self, other: &str) -> bool {
+    57→impl Ord for IdentUnraw {
     58→    fn cmp(&self, other: &Self) -> Ordering {
+    63→impl PartialOrd for IdentUnraw {
     64→    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+    69→impl Parse for IdentUnraw {
     70→    fn parse(input: ParseStream) -> Result<Self> {
+    75→impl ToTokens for IdentUnraw {
     76→    fn to_tokens(&self, tokens: &mut TokenStream) {
     81→#[derive(Clone)]
     82→pub enum MemberUnraw {
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
     85→}
+    87→impl MemberUnraw {
     88→    pub fn span(&self) -> Span {
+    96→impl Display for MemberUnraw {
     97→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+   105→impl Eq for MemberUnraw {}
+   107→impl PartialEq for MemberUnraw {
    108→    fn eq(&self, other: &Self) -> bool {
+   117→impl PartialEq<str> for MemberUnraw {
    118→    fn eq(&self, other: &str) -> bool {
+   126→impl Hash for MemberUnraw {
    127→    fn hash<H: Hasher>(&self, hasher: &mut H) {
+   135→impl ToTokens for MemberUnraw {
    136→    fn to_tokens(&self, tokens: &mut TokenStream) {
 valid.rs
-     6→    pub(crate) fn validate(&self) -> Result<()> {
+     5→impl Input<'_> {
+    14→impl Struct<'_> {
+    45→impl Enum<'_> {
+    66→impl Variant<'_> {
+    91→impl Field<'_> {

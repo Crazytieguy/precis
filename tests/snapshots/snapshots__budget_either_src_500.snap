@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (496 words)
 
 into_either.rs
      6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
@@ -73,6 +73,9 @@ iterator.rs
     19→pub struct IterEither<L, R> {
     20→    inner: Either<L, R>,
     21→}
+    24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
+    25→        IterEither { inner }
+      →…
     48→    type Item = L::Item;
    185→    type Item = Either<L::Item, R::Item>;
 lib.rs
@@ -106,10 +109,6 @@ lib.rs
   1522→macro_rules! check_t {
   1536→fn _unsized_ref_propagation() {
   1537→    check_t!(str);
-  1538→
-  1539→    fn check_array_ref<T: AsRef<[Item]>, Item>() {}
-  1540→    fn check_array_mut<T: AsMut<[Item]>, Item>() {}
-  1541→
       →…
   1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {

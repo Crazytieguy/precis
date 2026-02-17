@@ -2,11 +2,17 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1937 words)
+budget: 2000 (1934 words)
 
 README.md
-     1→# mdBook …
-    14→## License …
+     1→# mdBook
+     7→mdBook is a utility to create modern online books from Markdown files.
+     8→
+      →…
+    14→## License
+    16→All the code in this repository is released under the ***Mozilla Public License v2.0***, for more information take a look at the [LICENSE] file.
+    17→
+      →…
 crates/mdbook-compare/README.md
      1→# mdbook-compare
      3→This is a simple utility to compare the output of two different versions of mdbook.
@@ -34,7 +40,8 @@ crates/mdbook-core/src/config.rs
 crates/mdbook-core/src/lib.rs
      3→/// The current version of `mdbook`.
      4→///
-      →…
+     5→/// This is provided as a way for custom preprocessors and renderers to do
+     6→/// compatibility checks.
      7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
      9→pub mod book;
     10→pub mod config;
@@ -44,20 +51,15 @@ crates/mdbook-core/src/lib.rs
     15→    pub use anyhow::{Error, Result};
     16→}
 crates/mdbook-core/src/utils/fs.rs
-   155→fn copy …
+   154→/// Copies a file.
+   155→fn copy<P: AsRef<Path>, Q: AsRef<Path>>(from: P, to: Q) -> Result<()> {
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
      8→mod html;
      9→mod toml_ext;
     17→macro_rules! static_regex {
 crates/mdbook-core/src/utils/toml_ext.rs
-     5→/// Helper for working with toml types.
      6→pub(crate) trait TomlExt {
-     7→    /// Read a dotted key.
-     8→    fn read(&self, key: &str) -> Option<&Value>;
-     9→    /// Insert with a dotted key.
-    10→    fn insert(&mut self, key: &str, value: Value);
-    11→}
     13→impl TomlExt for Value {
     14→    fn read(&self, key: &str) -> Option<&Value> {
     22→    fn insert(&mut self, key: &str, value: Value) {
@@ -79,11 +81,6 @@ crates/mdbook-driver/src/builtin_preprocessors/index.rs
     15→    /// Name of this preprocessor.
     16→    pub const NAME: &'static str = "index";
     19→    pub fn new() -> Self {
-crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
-     6→pub(super) fn take_lines …
-    31→pub(super) fn take_anchored_lines …
-    63→pub(super) fn take_rustdoc_include_lines …
-    81→pub(super) fn take_rustdoc_include_anchored_lines …
 crates/mdbook-driver/src/builtin_preprocessors/links.rs
     32→pub struct LinkPreprocessor;
     35→    /// Name of this preprocessor.
@@ -151,60 +148,48 @@ crates/mdbook-html/README.md
     11→## License …
 crates/mdbook-html/front-end/js/book.js
      9→function playground_text(playground, hidden = true) {
-crates/mdbook-html/src/html/mod.rs
-    34→pub(crate) struct HtmlRenderOptions<'a> {
-    80→pub(crate) struct ChapterTree<'book> {
 crates/mdbook-html/src/html/tokenizer.rs
-    16→struct TokenCollector {
     22→    type Handle = ();
+    24→    fn process_token(&self, token: Token, _line_number: u64) -> TokenSinkResult<()> {
 crates/mdbook-html/src/html/tree.rs
     25→macro_rules! attr_qual_name {
-    33→pub(crate) enum Node {
-    73→pub(crate) struct Element {
    126→type Attributes = IndexMap<QualName, StrTendril>;
-   129→trait ToTendril {
-   150→enum TableState {
-   160→pub(crate) struct MarkdownTreeBuilder<'opts, 'event, EventIter> {
+   130→    /// Converts self to a [`StrTendril`].
+   131→    fn into_tendril(self) -> StrTendril;
+   135→    fn into_tendril(self) -> StrTendril {
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
+    19→/// The HTML renderer for mdBook.
+    20→#[derive(Default)]
+    21→#[non_exhaustive]
     22→pub struct HtmlHandlebars;
+    25→    /// Returns a new instance of [`HtmlHandlebars`].
     26→    pub fn new() -> Self {
+    27→        HtmlHandlebars
+    28→    }
+   304→    fn name(&self) -> &str {
+   308→    fn render(&self, ctx: &RenderContext) -> Result<()> {
    633→struct RenderChapterContext<'a> {
    642→/// Redirect mapping.
    643→///
       →…
    649→type CombinedRedirects = BTreeMap<String, (String, BTreeMap<String, String>)>;
-crates/mdbook-html/src/html_handlebars/helpers/mod.rs
-     1→pub(crate) mod fontawesome;
-     2→pub(crate) mod resources;
-     3→pub(crate) mod toc;
 crates/mdbook-html/src/html_handlebars/helpers/resources.rs
-    10→#[derive(Clone)]
     11→pub(crate) struct ResourceHelper {
-    12→    pub hash_map: HashMap<String, String>,
-    13→}
+    16→    fn call …
 crates/mdbook-html/src/html_handlebars/helpers/toc.rs
-    10→#[derive(Clone, Copy)]
     11→pub(crate) struct RenderToc {
-    12→    pub no_section_label: bool,
-    13→}
-   177→fn write_li_open_tag …
+    16→    fn call …
 crates/mdbook-html/src/html_handlebars/mod.rs
      3→#[cfg(feature = "search")]
      4→mod search;
 crates/mdbook-html/src/html_handlebars/search.rs
     17→const MAX_WORD_LENGTH_TO_INDEX: usize = 80;
-    29→pub(super) fn create_files(
-    30→    search_config: &Search,
-    31→    static_files: &mut StaticFiles,
-    32→    chapter_trees: &[ChapterTree<'_>],
-    33→) -> Result<()> {
 crates/mdbook-html/src/html_handlebars/static_files.rs
     22→pub(super) struct StaticFiles {
     23→    static_files: Vec<StaticFile>,
     24→    hash_map: HashMap<String, String>,
     25→}
     27→enum StaticFile {
-   138→    pub(super) fn hash_files(&mut self) -> Result<()> {
 crates/mdbook-html/src/lib.rs
      1→//! mdBook HTML renderer.
      2→
@@ -213,8 +198,6 @@ crates/mdbook-html/src/lib.rs
      5→pub mod theme;
      6→pub(crate) mod utils;
 crates/mdbook-html/src/theme/mod.rs
-     9→pub(crate) mod fonts;
-    10→pub(crate) mod playground_editor;
     11→#[cfg(feature = "search")]
     12→pub(crate) mod searcher;
     40→pub struct Theme {
@@ -222,6 +205,7 @@ crates/mdbook-html/src/theme/mod.rs
     42→    pub(crate) head: Vec<u8>,
     43→    pub(crate) redirect: Vec<u8>,
     44→    pub(crate) header: Vec<u8>,
+    45→    pub(crate) toc_js: Vec<u8>,
       →…
     66→    pub fn new<P: AsRef<Path>>(theme_dir: P) -> Self {
    166→    pub fn copy_theme(html_config: &HtmlConfig, root: &Path) -> Result<()> {
@@ -232,20 +216,14 @@ crates/mdbook-html/src/theme/playground_editor.rs
 crates/mdbook-html/src/theme/searcher.rs
      4→pub(crate) static JS: &[u8] = include_bytes!("../../front-end/searcher/searcher.js");
 crates/mdbook-html/src/utils.rs
-     6→/// Utility function to normalize path elements like `..`.
-     7→pub(crate) fn normalize_path(path: &Path) -> PathBuf {
-    41→/// Helper trait for converting a [`Path`] to a string suitable for an HTML path.
+     7→pub(crate) fn normalize_path …
     42→pub(crate) trait ToUrlPath {
     43→    fn to_url_path(&self) -> String;
     44→}
     46→impl ToUrlPath for Path {
     47→    fn to_url_path(&self) -> String {
-    54→/// Make sure an HTML id is unique.
-    55→///
-      →…
-    58→pub(crate) fn unique_id(id: &str, used: &mut HashSet<String>) -> String {
-    75→/// Generates an HTML id from the given text.
-    76→pub(crate) fn id_from_content(content: &str) -> String {
+    58→pub(crate) fn unique_id …
+    76→pub(crate) fn id_from_content …
 crates/mdbook-markdown/README.md
      1→# mdbook-markdown …
     11→## License …
@@ -315,9 +293,12 @@ crates/mdbook-renderer/src/lib.rs
     28→pub trait Renderer {
     29→    /// The `Renderer`'s name.
     30→    fn name(&self) -> &str;
+    31→
     34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
     40→pub struct RenderContext {
     41→    /// Which version of `mdbook` did this come from (as written in `mdbook`'s
+    42→    /// `Cargo.toml`). Useful if you know the renderer is only compatible with
+    43→    /// certain versions of `mdbook`.
       →…
     63→impl RenderContext {
     65→    pub fn new<P, Q>(root: P, book: Book, config: Config, destination: Q) -> RenderContext
@@ -370,12 +351,12 @@ crates/xtask/README.md
      3→This is a CLI utility for running development commands for mdbook.
      4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
 crates/xtask/src/changelog.rs
-     8→const CHANGELOG_PATH …
-    10→pub(crate) fn changelog() -> Result<()> {
+     8→const CHANGELOG_PATH: &str = "CHANGELOG.md";
 crates/xtask/src/main.rs
      9→mod changelog;
-    11→type Result …
+    11→type Result<T> = std::result::Result<T, Box<dyn Error>>;
 eslint.config.mjs
+     4→const handlebarsPreprocessor = {
      7→            preprocess(text, filename) {
     16→            postprocess(messages, filename) {
 guide/guide-helper/src/lib.rs
@@ -418,9 +399,12 @@ guide/src/format/README.md
      3→In this section you will learn how to:
      4→
      5→- Structure your book correctly
+     6→- Format your `SUMMARY.md` file
       →…
 guide/src/format/configuration/README.md
-     1→# Configuration …
+     1→# Configuration
+     3→This section details the configuration options available in the ***book.toml***:
+      →…
 guide/src/format/example.rs
      1→fn main() {
 guide/src/format/mdbook.md
@@ -522,5 +506,9 @@ src/cmd/watch.rs
 src/main.rs
     14→mod cmd;
     16→const VERSION: &str = concat!("v", clap::crate_version!());
+    18→fn main() {
     57→/// Create a list of valid arguments and sub-commands
     58→fn create_clap_command() -> Command {
+    93→fn init_logger() {
+   126→fn get_book_dir(args: &ArgMatches) -> PathBuf {
+   139→fn open<P: AsRef<OsStr>>(path: P) {

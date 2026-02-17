@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3846 words)
+budget: 4000 (3857 words)
 
 into_either.rs
      6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
@@ -82,7 +82,9 @@ iterator.rs
     20→    inner: Either<L, R>,
     21→}
     23→impl<L, R> IterEither<L, R> {
-    24→    pub(crate) fn new …
+    24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
+    25→        IterEither { inner }
+    26→    }
     29→impl<L, R, A> Extend<A> for Either<L, R>
     30→where
     31→    L: Extend<A>,

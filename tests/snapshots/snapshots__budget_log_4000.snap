@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3845 words)
+budget: 4000 (3843 words)
 
 README.md
      1→log
@@ -78,6 +78,19 @@ README.md
     77→    * [`log4rs`](https://docs.rs/log4rs/*/log4rs/)
     78→    * [`logforth`](https://docs.rs/logforth/*/logforth/)
     79→    * [`fern`](https://docs.rs/fern/*/fern/)
+    80→    * [`spdlog-rs`](https://docs.rs/spdlog-rs/*/spdlog/)
+    81→* Adaptors for other facilities:
+    82→    * [`syslog`](https://docs.rs/syslog/*/syslog/)
+    83→    * [`systemd-journal-logger`](https://docs.rs/systemd-journal-logger/*/systemd_journal_logger/)
+    84→    * [`slog-stdlog`](https://docs.rs/slog-stdlog/*/slog_stdlog/)
+    85→    * [`android_log`](https://docs.rs/android_log/*/android_log/)
+    86→    * [`win_dbg_logger`](https://docs.rs/win_dbg_logger/*/win_dbg_logger/)
+    87→    * [`db_logger`](https://docs.rs/db_logger/*/db_logger/)
+    88→    * [`log-to-defmt`](https://docs.rs/log-to-defmt/*/log_to_defmt/)
+    89→    * [`logcontrol-log`](https://docs.rs/logcontrol-log/*/logcontrol_log/)
+    90→* For WebAssembly binaries:
+    91→    * [`console_log`](https://docs.rs/console_log/*/console_log/)
+    92→* For dynamic libraries:
       →…
    106→## Structured logging
    108→If you enable the `kv` feature, you can associate structured data with your log records:
@@ -100,7 +113,13 @@ README.md
    125→                break;
    126→            }
    127→            Err(e) => {
-      →…
+   128→                // `e:err` will capture `e` using its `std::error::Error` impl
+   129→                warn!(e:err; "Unable to locate a razor, retrying");
+   130→            }
+   131→        }
+   132→    }
+   133→}
+   134→```
 rfcs/0296-structured-logging.md
    502→### Don't break anything
    504→Allow structured logging to be added in the current `0.4.x` series of `log`. This gives us the option of including structured logging in an `0.4.x` release, or bumping the minor crate version without introducing any actual breaking changes.
@@ -179,8 +198,14 @@ src/kv/error.rs
     16→    Fmt,
     17→}
     21→    pub fn msg …
-    29→    pub(super) fn from_value …
-    37→    pub(super) fn into_value …
+    28→    #[cfg(feature = "value-bag")]
+    29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
+    30→        Error {
+      →…
+    36→    #[cfg(feature = "value-bag")]
+    37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
+    38→        match self.inner {
+      →…
     68→#[cfg(feature = "std")]
     69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
@@ -286,12 +311,10 @@ src/kv/source.rs
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
     92→    struct Get<'k, 'v> {
-    93→        key: Key<'k>,
       →…
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
    115→    struct Count(usize);
-   116→
       →…
    234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
@@ -344,7 +367,6 @@ src/kv/value.rs
    206→        T: Into<inner::Inner<'v>>,
    207→    {
    208→        Value {
-   209→            inner: value.into(),
       →…
    217→    pub fn visit …
    234→#[cfg(feature = "kv_serde")]
@@ -457,16 +479,8 @@ src/kv/value.rs
    593→    fn visit_borrowed_error …
    601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {
-   603→    /**
-   604→    An implementation of `Value` based on a library called `value_bag`.
-   605→
-   606→    `value_bag` was written specifically for use in `log`'s value, but was split out when it outgrew
    720→#[cfg(not(feature = "value-bag"))]
    721→pub(in crate::kv) mod inner {
-   722→    /**
-   723→    This is a dependency-free implementation of `Value` when there's no serialization frameworks involved.
-   724→    In these simple cases a more fully featured solution like `value_bag` isn't needed, so we avoid pulling it in.
-   725→
    737→    #[derive(Clone)]
    738→    pub enum Inner<'v> {
    739→        None,
@@ -781,12 +795,6 @@ src/lib.rs
   1492→    ) {
   1493→        Ok(UNINITIALIZED) => {
   1494→            unsafe {
-  1495→                LOGGER = make_logger();
-  1496→            }
-  1497→            STATE.store(INITIALIZED, Ordering::Release);
-  1498→            Ok(())
-  1499→        }
-  1500→        Err(INITIALIZING) => {
       →…
   1529→pub unsafe fn set_logger_racy …
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.

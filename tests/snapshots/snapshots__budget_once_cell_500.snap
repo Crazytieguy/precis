@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (491 words)
 
 CHANGELOG.md
      3→## 1.21.3
@@ -17,6 +17,12 @@ README.md
     13→
     14→```rust
     15→impl OnceCell<T> {
+    16→    fn new() -> OnceCell<T> { ... }
+    17→    fn set(&self, value: T) -> Result<(), T> { ... }
+    18→    fn get(&self) -> Option<&T> { ... }
+    19→}
+    20→```
+    21→
       →…
     47→# Related crates
     49→* [double-checked-cell](https://github.com/niklasf/double-checked-cell)
@@ -25,36 +31,36 @@ README.md
     52→* [mitochondria](https://crates.io/crates/mitochondria)
     53→* [lazy_static](https://crates.io/crates/lazy_static)
     54→* [async_once_cell](https://crates.io/crates/async_once_cell)
-      →…
+    55→* [generic_once_cell](https://crates.io/crates/generic_once_cell) (bring your own mutex)
+    56→
+    57→Parts of `once_cell` API are included into `std` [as of Rust 1.70.0](https://github.com/rust-lang/rust/pull/105587).
 src/imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
-    10→    // Use `unsync::OnceCell` internally since `Mutex` does not provide
-    11→    // interior mutability and to be able to re-use `get_or_try_init`.
-    12→    value: Mutex<unsync::OnceCell<T>>,
-    13→}
+      →…
 src/imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
-     9→    value: UnsafeCell<Option<T>>,
-    10→}
+      →…
+    12→const INCOMPLETE …
+    13→const RUNNING …
+    14→const COMPLETE …
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
-   124→    new_state: u8,
-   125→}
+      →…
 src/imp_std.rs
     14→pub(crate) struct OnceCell<T> {
     15→    // This `queue` field is the core of the implementation. It encodes two
     16→    // pieces of information:
     17→    //
     18→    // * The current state of the cell (`INCOMPLETE`, `RUNNING`, `COMPLETE`)
-    19→    // * Linked list of threads waiting for the current cell.
-    20→    //
-    21→    // State is encoded in two low bits. Only `INCOMPLETE` and `RUNNING` states
-    22→    // allow waiters.
-    23→    queue: AtomicPtr<Waiter>,
-    24→    value: UnsafeCell<Option<T>>,
-    25→}
+      →…
+   125→const INCOMPLETE …
+   126→const RUNNING …
+   127→const COMPLETE …
+   128→const INCOMPLETE_PTR …
+   129→const COMPLETE_PTR …
+   133→const STATE_MASK …
    138→struct Waiter {
    139→    thread: Cell<Option<Thread>>,
    140→    signaled: AtomicBool,
@@ -64,7 +70,6 @@ src/imp_std.rs
    146→    queue: &'a AtomicPtr<Waiter>,
    147→    new_queue: *mut Waiter,
    148→}
-   210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
    245→mod strict {
    246→    #[must_use]
    247→    #[inline]

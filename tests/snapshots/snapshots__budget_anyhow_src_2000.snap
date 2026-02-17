@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1906 words)
+budget: 2000 (1895 words)
 
 backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
@@ -44,6 +44,7 @@ backtrace.rs
     88→        Disabled,
     89→        Captured,
     90→    }
+    91→
     92→    enum Inner {
     93→        Unsupported,
       →…
@@ -110,7 +111,14 @@ context.rs
     79→///     # unimplemented!()
     80→/// }
     81→///
-      →…
+    82→/// fn demo() -> Result<()> {
+    83→///     let t = maybe_get().context("there is no T")?;
+    84→///     # const IGNORE: &str = stringify! {
+    85→///     ...
+    86→///     # };
+    87→///     # unimplemented!()
+    88→/// }
+    89→/// ```
     90→impl<T> Context<T, Infallible> for Option<T> {
    147→    fn provide …
    161→    fn provide …
@@ -119,10 +127,6 @@ context.rs
    187→    use super::*;
    188→
    189→    pub trait Sealed {}
-   190→
-   191→    impl<T, E> Sealed for Result<T, E> where E: ext::StdError {}
-   192→    impl<T> Sealed for Option<T> {}
-   193→}
 ensure.rs
      9→#[doc(hidden)]
     10→pub trait BothDebug {
@@ -153,15 +157,7 @@ error.rs
    198→    pub(crate) fn construct_from_display …
    227→    pub(crate) fn construct_from_context …
    260→    pub(crate) fn construct_from_boxed …
-   292→    #[cold]
-   293→    unsafe fn construct<E>(
-   294→        error: E,
-   295→        vtable: &'static ErrorVTable,
-   296→        backtrace: Option<Backtrace>,
-   297→    ) -> Self
-   298→    where
-   299→        E: StdError + Send + Sync + 'static,
-   300→    {
+   293→    unsafe fn construct …
    372→    pub fn context …
    432→    pub fn backtrace …
    459→    pub fn chain …
@@ -188,33 +184,11 @@ error.rs
    740→struct ErrorVTable {
    741→    object_drop: unsafe fn(Own<ErrorImpl>),
       →…
-   787→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-   788→unsafe fn object_boxed<E>(e: Own<ErrorImpl>) -> Box<dyn StdError + Send + Sync + 'static>
-   789→where
-   790→    E: StdError + Send + Sync + 'static,
-   791→{
-   798→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-   799→unsafe fn object_reallocate_boxed<E>(e: Own<ErrorImpl>) -> Box<dyn StdError + Send + Sync + 'static>
-   800→where
-   801→    E: StdError + Send + Sync + 'static,
-   802→{
-   838→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-   839→unsafe fn context_downcast<C, E>(e: Ref<ErrorImpl>, target: TypeId) -> Option<Ref<()>>
-   840→where
-   841→    C: 'static,
-   842→    E: 'static,
-   843→{
-   858→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-   859→unsafe fn context_drop_rest<C, E>(e: Own<ErrorImpl>, target: TypeId)
-   860→where
-   861→    C: 'static,
-   862→    E: 'static,
-   863→{
-   919→#[allow(clippy::unnecessary_wraps)]
-   920→unsafe fn context_backtrace<C>(e: Ref<ErrorImpl>) -> Option<&Backtrace>
-   921→where
-   922→    C: 'static,
-   923→{
+   788→unsafe fn object_boxed …
+   799→unsafe fn object_reallocate_boxed …
+   839→unsafe fn context_downcast …
+   859→unsafe fn context_drop_rest …
+   920→unsafe fn context_backtrace …
    933→#[repr(C)]
    934→pub(crate) struct ErrorImpl<E = ()> {
    935→    vtable: &'static ErrorVTable,
@@ -230,8 +204,7 @@ error.rs
    955→}
    974→    pub(crate) unsafe fn error_mut …
    985→    pub(crate) unsafe fn backtrace …
-  1001→    #[cfg(error_generic_member_access)]
-  1002→    unsafe fn provide<'a>(this: Ref<'a, Self>, request: &mut Request<'a>) {
+  1002→    unsafe fn provide …
   1010→    pub(crate) unsafe fn chain …
   1024→    fn provide …
   1047→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
@@ -452,8 +425,26 @@ lib.rs
    681→    #[doc(hidden)]
    682→    #[inline]
    683→    #[cold]
-   684→    pub fn format_err …
-   698→    pub fn must_use …
+   684→    pub fn format_err(args: Arguments) -> Error {
+   685→        if let Some(message) = args.as_str() {
+   686→            // anyhow!("literal"), can downcast to &'static str
+   687→            Error::msg(message)
+   688→        } else {
+   689→            // anyhow!("interpolate {var}"), can downcast to String
+   690→            Error::msg(fmt::format(args))
+   691→        }
+   692→    }
+   693→
+   694→    #[doc(hidden)]
+   695→    #[inline]
+   696→    #[cold]
+   697→    #[must_use]
+   698→    pub fn must_use(error: Error) -> Error {
+   699→        error
+   700→    }
+   701→
+   702→    #[doc(hidden)]
+   703→    #[inline]
    704→    pub fn not …
    708→    mod not {
    709→        #[doc(hidden)]
@@ -465,6 +456,9 @@ macros.rs
      2→///
      3→/// This macro is equivalent to
      4→/// <code>return Err([anyhow!($args\...)][anyhow!])</code>.
+     5→///
+     6→/// The surrounding function's or closure's return value is required to be
+     7→/// <code>Result&lt;_, [anyhow::Error][crate::Error]&gt;</code>.
       →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
@@ -474,6 +468,9 @@ macros.rs
    175→/// value.
    176→///
    177→/// This evaluates to an [`Error`][crate::Error]. It can take either just a
+   178→/// string, or a format string with arguments. It also can take any custom type
+   179→/// which implements `Debug` and `Display`.
+   180→///
       →…
    204→macro_rules! anyhow {
    228→#[doc(hidden)]

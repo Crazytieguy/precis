@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (993 words)
+budget: 1000 (983 words)
 
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
@@ -11,6 +11,8 @@ imp_cs.rs
     11→    // interior mutability and to be able to re-use `get_or_try_init`.
     12→    value: Mutex<unsync::OnceCell<T>>,
     13→}
+    27→    pub(crate) const fn new() -> OnceCell<T> {
+    31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
 imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
@@ -19,12 +21,13 @@ imp_pl.rs
     12→const INCOMPLETE: u8 = 0x0;
     13→const RUNNING: u8 = 0x1;
     14→const COMPLETE: u8 = 0x2;
+    28→    pub(crate) const fn new() -> OnceCell<T> {
+    32→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
    124→    new_state: u8,
    125→}
-   138→#[inline(never)]
-   139→fn initialize_inner(state: &AtomicU8, init: &mut dyn FnMut() -> bool) {
+   128→    fn drop(&mut self) {
 imp_std.rs
     13→#[derive(Debug)]
     14→pub(crate) struct OnceCell<T> {
@@ -39,6 +42,8 @@ imp_std.rs
     23→    queue: AtomicPtr<Waiter>,
     24→    value: UnsafeCell<Option<T>>,
     25→}
+    39→    pub(crate) const fn new() -> OnceCell<T> {
+    43→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
    125→const INCOMPLETE: usize = 0x0;
    126→const RUNNING: usize = 0x1;
    127→const COMPLETE: usize = 0x2;
@@ -58,15 +63,15 @@ imp_std.rs
    146→    queue: &'a AtomicPtr<Waiter>,
    147→    new_queue: *mut Waiter,
    148→}
-   176→#[inline(never)]
-   177→fn initialize_or_wait(queue: &AtomicPtr<Waiter>, mut init: Option<&mut dyn FnMut() -> bool>) {
+   151→    fn drop(&mut self) {
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
-   211→    let curr_state = strict::addr(curr_queue) & STATE_MASK;
-   212→    loop {
-      →…
    245→mod strict {
    246→    #[must_use]
    247→    #[inline]
+   248→    pub(crate) fn addr<T>(ptr: *mut T) -> usize
+   249→    where
+   250→        T: Sized,
+   251→    {
 lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -93,15 +98,17 @@ lib.rs
    395→    ///
    396→    /// [`std::cell::RefCell`]: https://doc.rust-lang.org/std/cell/struct.RefCell.html
    397→    ///
-   398→    /// # Example
-   399→    /// ```
-   400→    /// use once_cell::unsync::OnceCell;
-   401→    ///
       →…
    411→    pub struct OnceCell<T> {
    412→        // Invariant: written to at most once.
    413→        inner: UnsafeCell<Option<T>>,
    414→    }
+   424→        fn default() -> Self {
+   430→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+   439→        fn clone(&self) -> OnceCell<T> {
+   446→        fn clone_from(&mut self, source: &Self) {
+   455→        fn eq(&self, other: &Self) -> bool {
+   463→        fn from(value: T) -> Self {
    694→    /// A value which is initialized on the first access.
    695→    ///
    696→    /// # Example
@@ -109,16 +116,15 @@ lib.rs
    698→    /// use once_cell::unsync::Lazy;
    699→    ///
    700→    /// let lazy: Lazy<i32> = Lazy::new(|| {
-   701→    ///     println!("initializing");
-   702→    ///     92
-   703→    /// });
-   704→    /// println!("ready");
       →…
    714→    pub struct Lazy<T, F = fn() -> T> {
    715→        cell: OnceCell<T>,
    716→        init: Cell<Option<F>>,
    717→    }
+   722→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
    841→        type Target = T;
+   842→        fn deref(&self) -> &T {
+   848→        fn deref_mut(&mut self) -> &mut T {
    861→/// Thread-safe, blocking version of `OnceCell`.
    862→#[cfg(any(feature = "std", feature = "critical-section"))]
    863→pub mod sync {
@@ -136,12 +142,14 @@ lib.rs
    877→    /// Reading a non-`None` value out of `OnceCell` establishes a
    878→    /// happens-before relationship with a corresponding write. For example, if
    879→    /// thread A initializes the cell with `get_or_init(f)`, and thread B
-   880→    /// subsequently reads the result of this call, B also observes all the side
-   881→    /// effects of `f`.
-   882→    ///
-   883→    /// # Example
       →…
    901→    pub struct OnceCell<T>(Imp<T>);
+   904→        fn default() -> OnceCell<T> {
+   910→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+   919→        fn clone(&self) -> OnceCell<T> {
+   926→        fn clone_from(&mut self, source: &Self) {
+   935→        fn from(value: T) -> Self {
+   941→        fn eq(&self, other: &OnceCell<T>) -> bool {
   1222→    /// A value which is initialized on the first access.
   1223→    ///
   1224→    /// This type is thread-safe and can be used in statics.
@@ -149,22 +157,15 @@ lib.rs
   1226→    /// # Example
   1227→    ///
   1228→    /// ```
-  1229→    /// use std::collections::HashMap;
-  1230→    ///
-  1231→    /// use once_cell::sync::Lazy;
-  1232→    ///
       →…
   1255→    pub struct Lazy<T, F = fn() -> T> {
   1256→        cell: OnceCell<T>,
   1257→        init: Cell<Option<F>>,
   1258→    }
+  1261→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
   1374→        type Target = T;
-  1393→    /// ```compile_fail
-  1394→    /// struct S(*mut ());
-  1395→    /// unsafe impl Sync for S {}
-  1396→    ///
-      →…
-  1408→    fn _dummy() {}
+  1375→        fn deref(&self) -> &T {
+  1381→        fn deref_mut(&mut self) -> &mut T {
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
 race.rs
@@ -173,36 +174,18 @@ race.rs
     43→pub struct OnceNonZeroUsize {
     44→    inner: AtomicUsize,
     45→}
-   148→    #[cold]
-   149→    #[inline(never)]
-   150→    fn init<E>(&self, f: impl FnOnce() -> Result<NonZeroUsize, E>) -> Result<NonZeroUsize, E> {
-   159→    #[inline(always)]
-   160→    fn compare_exchange(&self, val: NonZeroUsize) -> Result<usize, usize> {
    165→/// A thread-safe cell which can be written to only once.
    166→#[derive(Default, Debug)]
    167→pub struct OnceBool {
    168→    inner: OnceNonZeroUsize,
    169→}
-   220→    #[inline]
-   221→    fn from_usize(value: NonZeroUsize) -> bool {
-   225→    #[inline]
-   226→    fn to_usize(value: bool) -> NonZeroUsize {
    231→/// A thread-safe cell which can be written to only once.
    232→pub struct OnceRef<'a, T> {
    233→    inner: AtomicPtr<T>,
    234→    ghost: PhantomData<UnsafeCell<&'a T>>,
    235→}
-   309→    #[cold]
-   310→    #[inline(never)]
-   311→    fn init<E>(&self, f: impl FnOnce() -> Result<&'a T, E>) -> Result<&'a T, E> {
-   319→    #[inline(always)]
-   320→    fn compare_exchange(&self, value: &'a T) -> Result<(), *const T> {
-   332→    /// ```compile_fail
-   333→    /// use once_cell::race::OnceRef;
-   334→    ///
-   335→    /// let mut l = OnceRef::new();
-      →…
-   347→    fn _dummy() {}
+   241→    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+   247→    fn default() -> Self {
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
@@ -215,12 +198,7 @@ race.rs
    362→        inner: AtomicPtr<T>,
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
-   460→        #[cold]
-   461→        #[inline(never)]
-   462→        fn init<E>(&self, f: impl FnOnce() -> Result<Box<T>, E>) -> Result<&T, E> {
-   490→    /// ```compile_fail
-   491→    /// struct S(*mut ());
-   492→    /// unsafe impl Sync for S {}
-   493→    ///
-      →…
-   497→    fn _dummy() {}
+   367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+   373→        fn default() -> Self {
+   379→        fn drop(&mut self) {
+   482→        fn clone(&self) -> Self {

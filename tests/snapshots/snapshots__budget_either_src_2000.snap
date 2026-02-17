@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1924 words)
+budget: 2000 (1909 words)
 
 into_either.rs
      6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
@@ -80,7 +80,9 @@ iterator.rs
     19→pub struct IterEither<L, R> {
     20→    inner: Either<L, R>,
     21→}
-    24→    pub(crate) fn new …
+    24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
+    25→        IterEither { inner }
+    26→    }
     34→    fn extend …
     42→/// `Either<L, R>` is an iterator if both `L` and `R` are iterators.
     43→impl<L, R> Iterator for Either<L, R>
@@ -92,7 +94,6 @@ iterator.rs
     49→
     50→    fn next(&mut self) -> Option<Self::Item> {
     51→        for_both!(self, inner => inner.next())
-    52→    }
     54→    fn size_hint …
     58→    fn fold …
     65→    fn for_each …
@@ -287,7 +288,6 @@ lib.rs
   1120→        match r {
   1121→            Err(e) => Left(e),
   1122→            Ok(o) => Right(o),
-  1123→        }
       →…
   1127→/// Convert from `Either` to `Result` with `Right => Ok` and `Left => Err`.
   1128→impl<L, R> From<Either<L, R>> for Result<R, L> {
@@ -295,7 +295,6 @@ lib.rs
   1130→        match val {
   1131→            Left(l) => Err(l),
   1132→            Right(r) => Ok(r),
-  1133→        }
       →…
   1137→/// `Either<L, R>` is a future if both `L` and `R` are futures.
   1138→impl<L, R> Future for Either<L, R>
@@ -307,7 +306,6 @@ lib.rs
   1144→
   1145→    fn poll(
   1146→        self: Pin<&mut Self>,
-  1147→        cx: &mut core::task::Context<'_>,
       →…
   1154→/// `Either<L, R>` implements `Read` if both `L` and `R` do.
   1155→///
@@ -321,7 +319,7 @@ lib.rs
   1163→        for_both!(self, inner => inner.read(buf))
   1164→    }
   1165→
-  1166→    fn read_exact(&mut self, buf: &mut [u8]) -> io::Result<()> {
+  1166→    fn read_exact …
   1170→    fn read_to_end …
   1174→    fn read_to_string …
   1180→/// `Either<L, R>` implements `Seek` if both `L` and `R` do.
@@ -346,7 +344,7 @@ lib.rs
   1201→        for_both!(self, inner => inner.fill_buf())
   1202→    }
   1203→
-  1204→    fn consume(&mut self, amt: usize) {
+  1204→    fn consume …
   1208→    fn read_until …
   1212→    fn read_line …
   1218→/// `Either<L, R>` implements `Write` if both `L` and `R` do.
@@ -361,7 +359,7 @@ lib.rs
   1227→        for_both!(self, inner => inner.write(buf))
   1228→    }
   1229→
-  1230→    fn write_all(&mut self, buf: &[u8]) -> io::Result<()> {
+  1230→    fn write_all …
   1234→    fn write_fmt …
   1238→    fn flush …
   1248→    fn as_ref …
@@ -404,7 +402,6 @@ lib.rs
   1354→        for_both!(self, inner => inner.source())
   1355→    }
   1356→
-  1357→    #[allow(deprecated)]
   1358→    fn description …
   1363→    fn cause …
   1373→    fn fmt …

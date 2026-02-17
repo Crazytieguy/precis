@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1913 words)
+budget: 2000 (1918 words)
 
 error.rs
      3→/// An error encountered while working with structured data.
@@ -20,8 +20,18 @@ error.rs
     16→    Fmt,
     17→}
     21→    pub fn msg …
-    29→    pub(super) fn from_value …
-    37→    pub(super) fn into_value …
+    28→    #[cfg(feature = "value-bag")]
+    29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
+    30→        Error {
+    31→            inner: Inner::Value(err),
+    32→        }
+      →…
+    36→    #[cfg(feature = "value-bag")]
+    37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
+    38→        match self.inner {
+    39→            Inner::Value(err) => err,
+    40→            #[cfg(feature = "kv_std")]
+      →…
     68→#[cfg(feature = "std")]
     69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
@@ -59,6 +69,7 @@ mod.rs
     10→//!
     11→//! # Structured logging in `log`
     12→//!
+    13→//! Structured logging enhances traditional text-based log records with user-defined
       →…
    246→mod error;
    247→mod key;
@@ -108,7 +119,11 @@ source.rs
     43→///     ("c", 3),
     44→/// ];
     45→///
-      →…
+    46→/// // Pass an instance of the `VisitSource` to a `Source` to visit it
+    47→/// source.visit(&mut Printer)?;
+    48→/// # Ok(())
+    49→/// # }
+    50→/// ```
     51→pub trait Source {
     52→    /// Visit key-values.
     53→    ///
@@ -214,6 +229,22 @@ value.rs
     67→/// ```
     68→///
     69→/// ## Using the standard `From` trait
+    70→///
+    71→/// Standard types that implement `ToValue` also implement `From`.
+    72→///
+    73→/// ```
+    74→/// use log::kv::Value;
+    75→///
+    76→/// let value = Value::from(42i32);
+    77→///
+    78→/// assert_eq!(Some(42), value.to_i64());
+    79→/// ```
+    80→///
+    81→/// # Data model
+    82→///
+    83→/// Values can hold one of a number of types:
+    84→///
+    85→/// - **Null:** The absence of any other meaningful value. Note that
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
@@ -356,22 +387,8 @@ value.rs
    593→    fn visit_borrowed_error …
    601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {
-   603→    /**
-   604→    An implementation of `Value` based on a library called `value_bag`.
-   605→
-   606→    `value_bag` was written specifically for use in `log`'s value, but was split out when it outgrew
-   607→    the codebase here. It's a general-purpose type-erasure library that handles mapping between
-   608→    more fully-featured serialization frameworks.
-   609→    */
    720→#[cfg(not(feature = "value-bag"))]
    721→pub(in crate::kv) mod inner {
-   722→    /**
-   723→    This is a dependency-free implementation of `Value` when there's no serialization frameworks involved.
-   724→    In these simple cases a more fully featured solution like `value_bag` isn't needed, so we avoid pulling it in.
-   725→
-   726→    There are a few things here that need to remain consistent with the `value_bag`-based implementation:
-   727→
-   728→    1. Conversions should always produce the same results. If a conversion here returns `Some`, then
    737→    #[derive(Clone)]
    738→    pub enum Inner<'v> {
    739→        None,

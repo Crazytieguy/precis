@@ -73,6 +73,9 @@ src/iterator.rs
     19→pub struct IterEither<L, R> {
     20→    inner: Either<L, R>,
     21→}
+    24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
+    25→        IterEither { inner }
+    26→    }
     43→impl<L, R> Iterator for Either<L, R>
     44→where
     45→    L: Iterator,
@@ -103,18 +106,12 @@ src/lib.rs
     57→///
     58→/// This macro is useful in cases where both sides of [`Either`] can be interacted with
     59→/// in the same way even though the don't share the same type.
-    60→///
-    61→/// Syntax: `either::for_both!(` *expression* `,` *pattern* `=>` *expression* `)`
-    62→///
       →…
     81→macro_rules! for_both {
     90→/// Macro for unwrapping the left side of an [`Either`], which fails early
     91→/// with the opposite side. Can only be used in functions that return
     92→/// `Either` because of the early return of `Right` that it provides.
     93→///
-    94→/// See also [`try_right!`] for its dual, which applies the same just to the
-    95→/// right side.
-    96→///
       →…
    113→macro_rules! try_left {
    122→/// Dual to [`try_left!`], see its documentation for more information.
@@ -210,6 +207,9 @@ src/lib.rs
   1536→fn _unsized_ref_propagation() {
   1537→    check_t!(str);
   1538→
+  1539→    fn check_array_ref<T: AsRef<[Item]>, Item>() {}
+  1540→    fn check_array_mut<T: AsMut<[Item]>, Item>() {}
+  1541→
       →…
   1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {

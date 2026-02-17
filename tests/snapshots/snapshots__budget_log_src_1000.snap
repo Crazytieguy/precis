@@ -2,12 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (977 words)
+budget: 1000 (983 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
     12→mod sealed {
+    13→    /// Types for the `kv` argument.
     14→    pub trait KVs<'a> {
     15→        fn into_kvs(self) -> Option<&'a [(&'a str, super::Value<'a>)]>;
     16→    }
@@ -32,6 +33,10 @@ kv/error.rs
     15→    Value(crate::kv::value::inner::Error),
     16→    Fmt,
     17→}
+    28→    #[cfg(feature = "value-bag")]
+    29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
+    36→    #[cfg(feature = "value-bag")]
+    37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
     68→#[cfg(feature = "std")]
     69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
@@ -39,11 +44,11 @@ kv/key.rs
      7→pub trait ToKey {
      8→    /// Perform the conversion.
      9→    fn to_key(&self) -> Key<'_>;
-    10→}
+      →…
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
-    40→}
+      →…
     93→#[cfg(feature = "std")]
     94→mod std_support {
    112→#[cfg(feature = "kv_sval")]
@@ -76,7 +81,6 @@ kv/source.rs
     51→pub trait Source {
     52→    /// Visit key-values.
     53→    ///
-    54→    /// A source doesn't have to guarantee any ordering or uniqueness of key-values.
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
    113→/// The default implementation of `Source::count`.
@@ -84,7 +88,7 @@ kv/source.rs
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
-   238→}
+      →…
    240→#[allow(clippy::needless_lifetimes)] // Not needless.
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    242→where
@@ -96,7 +100,7 @@ kv/value.rs
     11→pub trait ToValue {
     12→    /// Perform the conversion.
     13→    fn to_value(&self) -> Value<'_>;
-    14→}
+      →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
@@ -119,7 +123,6 @@ kv/value.rs
    462→pub trait VisitValue<'v> {
    463→    /// Visit a `Value`.
    464→    ///
-   465→    /// This is the only required method on `VisitValue` and acts as a fallback for any
    538→#[allow(clippy::needless_lifetimes)] // Not needless.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
@@ -127,14 +130,11 @@ kv/value.rs
    542→{
    601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {
-   603→    /**
    720→#[cfg(not(feature = "value-bag"))]
    721→pub(in crate::kv) mod inner {
-   722→    /**
    738→    pub enum Inner<'v> {
    739→        None,
    740→        Bool(bool),
-   741→        Str(&'v str),
       →…
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
@@ -181,6 +181,7 @@ lib.rs
    788→    fn get(&self) -> &'a str {
    789→        match *self {
    790→            MaybeStaticStr::Static(s) => s,
+   791→            MaybeStaticStr::Borrowed(s) => s,
       →…
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
@@ -225,6 +226,7 @@ lib.rs
   1486→{
   1487→    match STATE.compare_exchange(
   1488→        UNINITIALIZED,
+  1489→        INITIALIZING,
       →…
   1549→pub struct SetLoggerError(());
   1558→#[cfg(feature = "std")]
@@ -249,6 +251,7 @@ lib.rs
   1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
   1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
   1616→    false if cfg!(feature = "release_max_level_debug") => LevelFilter::Debug,
+  1617→    false if cfg!(feature = "release_max_level_trace") => LevelFilter::Trace,
       →…
 macros.rs
     75→macro_rules! log {

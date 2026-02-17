@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1947 words)
+budget: 2000 (1932 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
@@ -10,8 +10,6 @@ __private_api.rs
     12→mod sealed {
     13→    /// Types for the `kv` argument.
     14→    pub trait KVs<'a> {
-    15→        fn into_kvs(self) -> Option<&'a [(&'a str, super::Value<'a>)]>;
-    16→    }
     37→/// The global logger proxy.
     38→#[derive(Debug)]
     39→pub struct GlobalLogger;
@@ -36,8 +34,10 @@ kv/error.rs
     16→    Fmt,
     17→}
     21→    pub fn msg …
-    29→    pub(super) fn from_value …
-    37→    pub(super) fn into_value …
+    28→    #[cfg(feature = "value-bag")]
+    29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
+    36→    #[cfg(feature = "value-bag")]
+    37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
     68→#[cfg(feature = "std")]
     69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
@@ -104,14 +104,8 @@ kv/source.rs
     85→    fn count …
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
-    92→    struct Get<'k, 'v> {
-    93→        key: Key<'k>,
-      →…
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
-   115→    struct Count(usize);
-   116→
-      →…
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
@@ -145,9 +139,6 @@ kv/value.rs
    205→    where
    206→        T: Into<inner::Inner<'v>>,
    207→    {
-   208→        Value {
-   209→            inner: value.into(),
-      →…
    217→    pub fn visit …
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
@@ -198,12 +189,8 @@ kv/value.rs
    593→    fn visit_borrowed_error …
    601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {
-   603→    /**
-   604→    An implementation of `Value` based on a library called `value_bag`.
    720→#[cfg(not(feature = "value-bag"))]
    721→pub(in crate::kv) mod inner {
-   722→    /**
-   723→    This is a dependency-free implementation of `Value` when there's no serialization frameworks involved.
    738→    pub enum Inner<'v> {
    739→        None,
    740→        Bool(bool),
@@ -420,6 +407,7 @@ lib.rs
   1490→        Ordering::Acquire,
   1491→        Ordering::Relaxed,
   1492→    ) {
+  1493→        Ok(UNINITIALIZED) => {
       →…
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///
@@ -453,7 +441,11 @@ lib.rs
   1617→    false if cfg!(feature = "release_max_level_trace") => LevelFilter::Trace,
   1618→    _ if cfg!(feature = "max_level_off") => LevelFilter::Off,
   1619→    _ if cfg!(feature = "max_level_error") => LevelFilter::Error,
-      →…
+  1620→    _ if cfg!(feature = "max_level_warn") => LevelFilter::Warn,
+  1621→    _ if cfg!(feature = "max_level_info") => LevelFilter::Info,
+  1622→    _ if cfg!(feature = "max_level_debug") => LevelFilter::Debug,
+  1623→    _ => LevelFilter::Trace,
+  1624→};
 macros.rs
     75→macro_rules! log {
    119→macro_rules! __log {
