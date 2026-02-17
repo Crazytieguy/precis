@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (976 words)
+budget: 1000 (990 words)
 
 Changelog.md
      1→# Changelog …
@@ -72,6 +72,8 @@ docs/readme.md
     20→  }),
     21→})
     22→
+    23→const data = {
+    24→  id: 34,
       →…
 docs/reference/coercions.md
      1→# Coercions …
@@ -116,7 +118,7 @@ docs/resources/links.md
      4→
      5→## Libraries
      7→- [`bumpover`](https://github.com/doodlewind/bumpover) helps you transform data asynchronously with simple rules, whose validation API is built with Superstruct.
-      →…
+     8→- [micro-superstruct](https://github.com/brandon93s/micro-superstruct) allows you to easily validate your [Micro](https://github.com/zeit/micro) API request body and query string parameters using Superstruct.
 docs/summary.md
      3→## Guides
      5→- [Getting Started](./guides/01-getting-started.md)
@@ -164,8 +166,6 @@ src/struct.ts
     17→  entries: (
     18→    value: unknown,
     19→    context: Context
-    20→  ) => Iterable<[string | number, unknown, Struct<any> | Struct<never>]>
-    21→
     22→  constructor(props: {
     23→    type: string
       →…
@@ -223,6 +223,7 @@ src/struct.ts
    253→export type Coercer …
    259→export type Validator …
    266→export type Refiner …
+src/structs/coercions.ts
 src/structs/refinements.ts
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
 src/structs/types.ts

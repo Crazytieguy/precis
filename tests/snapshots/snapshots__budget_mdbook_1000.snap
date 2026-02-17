@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (951 words)
+budget: 1000 (953 words)
 
 README.md
      1→# mdBook
@@ -38,6 +38,7 @@ crates/mdbook-core/src/lib.rs
     16→}
 crates/mdbook-core/src/utils/fs.rs
    155→fn copy …
+crates/mdbook-core/src/utils/html.rs
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
     17→macro_rules! static_regex {
@@ -51,12 +52,11 @@ crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     14→pub struct CmdPreprocessor {
     15→    name: String,
     16→    cmd: String,
-    17→    root: PathBuf,
-    18→    optional: bool,
-    19→}
+      →…
 crates/mdbook-driver/src/builtin_preprocessors/index.rs
     12→pub struct IndexPreprocessor;
     16→    pub const NAME: &'static str = "index";
+crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
 crates/mdbook-driver/src/builtin_preprocessors/links.rs
     32→pub struct LinkPreprocessor;
     36→    pub const NAME: &'static str = "links";
@@ -85,8 +85,9 @@ crates/mdbook-driver/src/lib.rs
     67→pub mod builtin_preprocessors;
     68→pub mod builtin_renderers;
     69→pub mod init;
-    70→mod load;
-    71→mod mdbook;
+crates/mdbook-driver/src/load.rs
+crates/mdbook-driver/src/mdbook/tests.rs
+   225→struct BoolPreprocessor(bool);
 crates/mdbook-driver/src/mdbook.rs
     29→pub struct MDBook {
     30→    /// The book's root directory.
@@ -100,12 +101,12 @@ crates/mdbook-html/README.md
      1→# mdbook-html …
     11→## License
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+crates/mdbook-html/src/html/mod.rs
 crates/mdbook-html/src/html/tokenizer.rs
     22→    type Handle = ();
 crates/mdbook-html/src/html/tree.rs
     25→macro_rules! attr_qual_name {
    126→type Attributes = IndexMap<QualName, StrTendril>;
-   130→    /// Converts self to a [`StrTendril`].
    131→    fn into_tendril(self) -> StrTendril;
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     19→/// The HTML renderer for mdBook.
@@ -116,6 +117,7 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
    649→type CombinedRedirects …
 crates/mdbook-html/src/html_handlebars/mod.rs
      4→mod search;
+crates/mdbook-html/src/html_handlebars/search.rs
 crates/mdbook-html/src/html_handlebars/static_files.rs
     22→pub(super) struct StaticFiles {
 crates/mdbook-html/src/lib.rs
@@ -195,8 +197,10 @@ crates/mdbook-summary/src/lib.rs
    190→macro_rules! collect_events {
 crates/xtask/README.md
      1→# xtask …
+crates/xtask/src/changelog.rs
 crates/xtask/src/main.rs
      9→mod changelog;
+eslint.config.mjs
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
@@ -207,6 +211,7 @@ guide/guide-helper/src/lib.rs
     46→fn insert_version(book: &mut Book) {
 guide/guide-helper/src/main.rs
      3→fn main() {
+guide/src/404.md
 guide/src/README.md
      1→# Introduction
      4→    .mdbook-version {
@@ -215,10 +220,12 @@ guide/src/README.md
       →…
     46→## Contributing …
     55→## License …
+guide/src/SUMMARY.md
 guide/src/cli/README.md
      1→# Command-line tool …
 guide/src/cli/serve.md
     27→### Server options …
+guide/src/continuous-integration.md
 guide/src/for_developers/README.md
      1→# For developers …
     17→## The build process …
@@ -227,7 +234,7 @@ guide/src/for_developers/backends.md
      1→# Alternative backends …
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     44→#[derive(Debug, Default, Serialize, Deserialize)]
-    45→#[serde(default, rename_all = "kebab-case")]
+      →…
     46→pub struct WordcountConfig {
     47→    pub ignores: Vec<String>,
     48→    pub deny_odds: bool,
@@ -243,8 +250,11 @@ guide/src/format/configuration/README.md
      1→# Configuration …
 guide/src/format/example.rs
      1→fn main() {
+guide/src/format/markdown.md
+guide/src/format/mathjax.md
 guide/src/format/mdbook.md
      3→## Hiding code lines …
+guide/src/format/summary.md
 guide/src/format/theme/README.md
      1→# Theme …
 guide/src/guide/README.md
@@ -253,6 +263,10 @@ guide/src/guide/README.md
      4→
      5→- [Installation](installation.md)
       →…
+guide/src/guide/creating.md
+guide/src/guide/installation.md
+guide/src/guide/reading.md
+src/cmd/build.rs
 src/cmd/clean.rs
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     45→#[derive(Debug)]
@@ -266,6 +280,7 @@ src/cmd/command_prelude.rs
      8→    fn _arg(self, arg: Arg) -> Self;
      9→
     42→    fn arg_watcher(self) -> Self {
+src/cmd/init.rs
 src/cmd/mod.rs
      1→//! Subcommand modules for the `mdbook` binary.
      2→
@@ -280,6 +295,7 @@ src/cmd/mod.rs
     11→pub mod watch;
 src/cmd/serve.rs
     20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
+src/cmd/test.rs
 src/cmd/watch/native.rs
     11→pub fn rebuild_on_change …
 src/cmd/watch/poller.rs

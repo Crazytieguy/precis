@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (494 words)
+budget: 500 (495 words)
 
 backtrace.rs
      8→pub(crate) enum Backtrace {}
@@ -17,6 +17,7 @@ backtrace.rs
     71→mod capture {
     72→    use alloc::borrow::{Cow, ToOwned as _};
     73→    use alloc::vec::Vec;
+    74→    use backtrace::{BacktraceFmt, BytesOrWideString, Frame, PrintFmt, SymbolName};
 chain.rs
     11→pub(crate) struct Chain<'a> {
     16→pub(crate) enum ChainState<'a> {
@@ -42,6 +43,7 @@ error.rs
    705→    type Target = dyn StdError + Send + Sync + 'static;
    934→pub(crate) struct ErrorImpl<E = ()> {
    952→pub(crate) struct ContextError<C, E> {
+fmt.rs
 kind.rs
     55→pub struct Adhoc;
     58→pub trait AdhocKind: Sized {
@@ -100,13 +102,11 @@ lib.rs
    657→    use self::not::Bool;
    658→    use crate::Error;
    659→    use alloc::fmt;
-   660→    use core::fmt::Arguments;
    671→    #[doc(hidden)]
    672→    pub mod kind {
    673→        #[doc(hidden)]
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    675→
-   676→        #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
       →…
    710→        pub trait Bool {
    711→            fn not(self) -> bool;
@@ -116,6 +116,7 @@ macros.rs
     70→macro_rules! __ensure {
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
+nightly.rs
 ptr.rs
      6→pub struct Own<T>
      7→where

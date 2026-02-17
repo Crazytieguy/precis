@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (466 words)
+budget: 500 (475 words)
 
 core/Ky.ts
     33→export class Ky {
@@ -10,9 +10,6 @@ core/Ky.ts
     35→		const ky = new Ky(input, options);
     36→
    200→	constructor(input: Input, options: Options = {}) {
-   201→		this.#input = input;
-   202→
-      →…
 core/constants.ts
     68→export type ForceRetryOptions …
    145→/**
@@ -71,7 +68,13 @@ errors/TimeoutError.ts
       →…
 index.ts
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
+    11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
+      →…
     34→const ky = createInstance();
+types/ResponsePromise.ts
+types/common.ts
+types/hooks.ts
+types/ky.ts
 types/options.ts
     33→export type KyOptions …
    307→export type KyOptionsRegistry …
@@ -85,13 +88,19 @@ types/options.ts
    375→	method: NonNullable<RequestInit['method']>;
    376→	credentials?: NonNullable<RequestInit['credentials']>;
       →…
+types/request.ts
+types/response.ts
+types/retry.ts
 utils/body.ts
     57→const withProgress …
 utils/delay.ts
      5→export type DelayOptions …
+utils/is.ts
 utils/merge.ts
     32→function newHookValue …
     47→const appendSearchParameters …
+utils/normalize.ts
+utils/options.ts
 utils/timeout.ts
      3→export type TimeoutOptions …
 utils/type-guards.ts

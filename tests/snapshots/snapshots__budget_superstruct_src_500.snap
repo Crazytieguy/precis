@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (466 words)
+budget: 500 (467 words)
 
 error.ts
      5→export type Failure …
@@ -55,6 +55,7 @@ struct.ts
    253→export type Coercer …
    259→export type Validator …
    266→export type Refiner …
+structs/coercions.ts
 structs/refinements.ts
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
 structs/types.ts

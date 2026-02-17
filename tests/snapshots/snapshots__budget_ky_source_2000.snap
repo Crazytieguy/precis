@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1949 words)
+budget: 2000 (1946 words)
 
 core/Ky.ts
     33→export class Ky {
@@ -160,7 +160,6 @@ core/constants.ts
    192→						});
    193→					}
    194→
-   195→					// Retry with refreshed authentication
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys: KyOptionsRegistry = {
@@ -258,6 +257,10 @@ index.ts
     11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
       →…
     34→const ky = createInstance();
+types/ResponsePromise.ts
+types/common.ts
+types/hooks.ts
+types/ky.ts
 types/options.ts
     33→export type KyOptions …
    307→export type KyOptionsRegistry …
@@ -324,6 +327,9 @@ types/options.ts
    382→	onUploadProgress: Options['onUploadProgress'];
    383→	context: Record<string, unknown>;
    384→}
+types/request.ts
+types/response.ts
+types/retry.ts
 utils/body.ts
      5→export const getBodySize …
     57→const withProgress = (stream: ReadableStream<Uint8Array>, totalBytes: number, onProgress: Options['onDownloadProgress'] | Options['onUploadProgress']): ReadableStream<Uint8Array> => {
@@ -350,8 +356,6 @@ utils/normalize.ts
     12→const retryAfterStatusCodes = [413, 429, 503];
     14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
     16→const defaultRetryOptions: InternalRetryOptions = {
-    17→	limit: 2,
-      →…
     28→export const normalizeRetryOptions …
 utils/options.ts
      4→export const findUnknownOptions …

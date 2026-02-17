@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1932 words)
+budget: 2000 (1934 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -141,6 +141,7 @@ readme.md
   1170→```
   1171→
   1172→Supported environment variables:
+  1173→- `HTTP_PROXY` / `http_proxy`: Proxy URL for HTTP requests
       →…
   1209→### HTTP/2 support (Node.js) …
   1249→### Consuming Server-Sent Events (SSE) …
@@ -322,10 +323,12 @@ source/errors/TimeoutError.ts
 source/index.ts
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
     11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
-    12→	const ky: Partial<Mutable<KyInstance>> = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options));
-    13→
       →…
     34→const ky = createInstance();
+source/types/ResponsePromise.ts
+source/types/common.ts
+source/types/hooks.ts
+source/types/ky.ts
 source/types/options.ts
     33→export type KyOptions …
    307→export type KyOptionsRegistry …
@@ -392,6 +395,9 @@ source/types/options.ts
    382→	onUploadProgress: Options['onUploadProgress'];
    383→	context: Record<string, unknown>;
    384→}
+source/types/request.ts
+source/types/response.ts
+source/types/retry.ts
 source/utils/body.ts
      5→export const getBodySize …
     57→const withProgress …

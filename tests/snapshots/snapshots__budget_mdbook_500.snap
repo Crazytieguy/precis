@@ -2,32 +2,43 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (483 words)
+budget: 500 (481 words)
 
 README.md
      1→# mdBook …
     14→## License …
 crates/mdbook-compare/README.md
      1→# mdbook-compare …
+crates/mdbook-compare/src/main.rs
+     6→macro_rules! error {
 crates/mdbook-core/README.md
      1→# mdbook-core …
     11→## License …
+crates/mdbook-core/src/book.rs
 crates/mdbook-core/src/config.rs
-   718→trait Updateable<'de>: Serialize + Deserialize<'de> {
+   718→trait Updateable …
 crates/mdbook-core/src/lib.rs
      3→/// The current version of `mdbook`.
      4→///
       →…
      7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
-    13→/// The error types used in mdbook.
     14→pub mod errors {
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
     17→macro_rules! static_regex {
+crates/mdbook-core/src/utils/toml_ext.rs
+     6→pub(crate) trait TomlExt {
 crates/mdbook-driver/README.md
      1→# mdbook-driver …
     11→## License …
+crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
+    14→pub struct CmdPreprocessor {
+    15→    name: String,
+      →…
+crates/mdbook-driver/src/builtin_preprocessors/index.rs
+    12→pub struct IndexPreprocessor;
 crates/mdbook-driver/src/builtin_preprocessors/links.rs
+    32→pub struct LinkPreprocessor;
    401→    type Item = Link<'a>;
 crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
     10→pub struct MarkdownRenderer;
@@ -45,6 +56,8 @@ crates/mdbook-driver/src/lib.rs
     67→pub mod builtin_preprocessors;
     68→pub mod builtin_renderers;
     69→pub mod init;
+crates/mdbook-driver/src/load.rs
+crates/mdbook-driver/src/mdbook/tests.rs
 crates/mdbook-driver/src/mdbook.rs
     29→pub struct MDBook {
    397→struct OutputConfig {
@@ -68,13 +81,9 @@ crates/mdbook-html/src/lib.rs
 crates/mdbook-html/src/theme/mod.rs
     12→pub(crate) mod searcher;
     40→pub struct Theme {
-    41→    pub(crate) index: Vec<u8>,
-      →…
    201→    fn default() -> Theme {
 crates/mdbook-html/src/utils.rs
     42→pub(crate) trait ToUrlPath {
-    43→    fn to_url_path(&self) -> String;
-    47→    fn to_url_path(&self) -> String {
 crates/mdbook-markdown/README.md
      1→# mdbook-markdown …
     11→## License …
@@ -128,25 +137,28 @@ guide/src/README.md
     55→## License …
 guide/src/cli/README.md
      1→# Command-line tool …
+guide/src/cli/serve.md
+guide/src/continuous-integration.md
 guide/src/for_developers/README.md
      1→# For developers …
+guide/src/for_developers/backends.md
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     46→pub struct WordcountConfig {
-    47→    pub ignores: Vec<String>,
-    48→    pub deny_odds: bool,
-    49→}
+guide/src/for_developers/preprocessors.md
 guide/src/format/README.md
      1→# Format …
 guide/src/format/configuration/README.md
      1→# Configuration …
 guide/src/format/example.rs
      1→fn main() {
+guide/src/format/markdown.md
 guide/src/format/mdbook.md
      3→## Hiding code lines …
 guide/src/format/theme/README.md
      1→# Theme …
 guide/src/guide/README.md
      1→# User guide …
+src/cmd/build.rs
 src/cmd/clean.rs
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     45→#[derive(Debug)]
@@ -158,12 +170,14 @@ src/cmd/clean.rs
 src/cmd/command_prelude.rs
      7→pub trait CommandExt: Sized {
     42→    fn arg_watcher(self) -> Self {
+src/cmd/init.rs
 src/cmd/mod.rs
      3→pub mod build;
      8→pub mod serve;
     11→pub mod watch;
 src/cmd/serve.rs
     20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
+src/cmd/test.rs
 src/cmd/watch/native.rs
     11→pub fn rebuild_on_change …
 src/cmd/watch/poller.rs
@@ -175,5 +189,4 @@ src/cmd/watch.rs
     21→pub enum WatcherKind {
 src/main.rs
     14→mod cmd;
-    16→const VERSION …
     58→fn create_clap_command() -> Command {

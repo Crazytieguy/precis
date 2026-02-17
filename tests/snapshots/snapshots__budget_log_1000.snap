@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (978 words)
+budget: 1000 (980 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -246,6 +246,8 @@ src/lib.rs
   1609→///
   1610→/// [`logger`]: fn.logger.html
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
+src/macros.rs
+src/serde.rs
 test_max_level_features/main.rs
      6→#[cfg(not(feature = "std"))]
      7→fn set_boxed_logger(logger: Box<dyn Log>) -> Result<(), log::SetLoggerError> {

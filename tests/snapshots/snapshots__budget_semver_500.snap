@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (455 words)
+budget: 500 (450 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -15,19 +15,11 @@ CONTRIBUTING.md
     19→### Commits …
     44→### Dependencies …
 README.md
-     1→semver(1) -- The semantic versioner for npm
-     4→## Install
-     6→```bash
-      →…
-    10→## Usage
-    12→As a node module:
-      →…
-   139→## Versions
-   141→A "version" is described by the `v2.0.0` specification found at
-      →…
-   148→## Ranges
-   150→A `version range` is a set of `comparators` that specify versions
-      →…
+     1→semver(1) -- The semantic versioner for npm …
+     4→## Install …
+    10→## Usage …
+   139→## Versions …
+   148→## Ranges …
    184→### Prerelease Tags …
    219→#### Prerelease Identifiers …
    250→#### Prerelease Identifier Base …
@@ -37,23 +29,17 @@ README.md
    324→#### Tilde Ranges `~1.2.3` `~1.2` `~1` …
    341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4` …
    384→### Range Grammar …
-   408→## Functions
-   410→All methods and classes take a final `options` object argument.  All
-      →…
+   408→## Functions …
    453→### Comparison …
    478→### Sorting …
    485→### Comparators …
    489→### Ranges …
    531→### Coercion …
    558→### Clean …
-   576→## Constants
-   578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
-      →…
+   576→## Constants …
    580→### `RELEASE_TYPES` …
    600→### `SEMVER_SPEC_VERSION` …
-   610→## Exported Modules
-   613→TODO: Make sure that all of these items are documented (classes aren't,
-      →…
+   610→## Exported Modules …
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
@@ -97,6 +83,8 @@ classes/semver.js
    135→  comparePre (other) {
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
+internal/constants.js
+internal/debug.js
 internal/identifiers.js
      4→const compareIdentifiers = (a, b) => {
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
@@ -108,17 +96,41 @@ internal/lrucache.js
      7→  }
      8→
      9→  get (key) {
+    10→    const value = this.map.get(key)
     21→  delete (key) {
     22→    return this.map.delete(key)
-      →…
+    23→  }
     25→  set (key, value) {
     26→    const deleted = this.delete(key)
+    27→
       →…
 internal/parse-options.js
      6→const parseOptions = options => {
 internal/re.js
     33→const makeSafeRegex = (value) => {
     42→const createToken = (name, value, isGlobal) => {
+ranges/gtr.js
+     5→const gtr …
+ranges/intersects.js
+     4→const intersects …
+ranges/ltr.js
+     5→const ltr …
+ranges/max-satisfying.js
+     6→const maxSatisfying …
+ranges/min-satisfying.js
+     5→const minSatisfying …
+ranges/min-version.js
+     7→const minVersion …
+ranges/outside.js
+    13→const outside …
 ranges/subset.js
+    45→const subset …
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
+    76→const simpleSubset …
+   226→const higherGT …
+   238→const lowerLT …
+ranges/to-comparators.js
+     6→const toComparators …
+ranges/valid.js
+     4→const validRange …

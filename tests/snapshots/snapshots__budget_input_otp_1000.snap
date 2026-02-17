@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (977 words)
+budget: 1000 (976 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -230,6 +230,8 @@ apps/website/src/components/ui/button.tsx
     40→}
 apps/website/src/components/ui/dropdown-menu.tsx
    171→const DropdownMenuShortcut …
+apps/website/src/components/ui/input-otp.tsx
+apps/website/src/components/ui/scroll-area.tsx
 apps/website/src/components/ui/sonner.tsx
      8→const Toaster …
 apps/website/src/config/site.ts
@@ -299,5 +301,4 @@ packages/input-otp/src/use-pwm-badge.tsx
     20→}: {
     21→  containerRef: React.RefObject<HTMLDivElement>
     22→  inputRef: React.RefObject<HTMLInputElement>
-    23→  pushPasswordManagerStrategy: OTPInputProps['pushPasswordManagerStrategy']
       →…

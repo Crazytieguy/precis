@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1850 words)
+budget: 2000 (1822 words)
 
 README.md
      1→derive(Error)
@@ -76,10 +76,6 @@ README.md
     73→  }
     74→  ```
     75→
-    76→  If one of the additional expression arguments needs to refer to a field of the
-    77→  struct or enum, then refer to named fields as `.var` and tuple fields as `.0`.
-    78→
-    79→  ```rust
       →…
    211→## Comparison to anyhow
    213→Use thiserror if you care about designing your own dedicated error type(s) so
@@ -228,6 +224,7 @@ impl/src/attr.rs
    343→    fn to_tokens(&self, tokens: &mut TokenStream) {
 impl/src/expand.rs
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
+impl/src/fallback.rs
 impl/src/fmt.rs
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
    166→struct FmtArguments {
@@ -286,6 +283,7 @@ impl/src/lib.rs
     45→#[allow(non_camel_case_types)]
     46→struct private;
     49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+impl/src/prop.rs
 impl/src/scan_expr.rs
      6→enum Input {
      7→    Keyword(&'static str),
@@ -358,6 +356,7 @@ impl/src/unraw.rs
    118→    fn eq(&self, other: &str) -> bool {
    127→    fn hash<H: Hasher>(&self, hasher: &mut H) {
    136→    fn to_tokens(&self, tokens: &mut TokenStream) {
+impl/src/valid.rs
 src/aserror.rs
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
@@ -458,7 +457,10 @@ src/display.rs
     76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     77→            unreachable!()
     78→        }
+    79→    }
+    80→
     81→    impl Sealed for Placeholder {}
+    82→}
 src/lib.rs
    281→mod aserror;
    282→mod display;

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1840 words)
+budget: 2000 (1842 words)
 
 src/typeguard/__init__.py
     34→config: TypeCheckConfiguration
@@ -130,6 +130,7 @@ src/typeguard/_config.py
    101→        CollectionCheckStrategy.FIRST_ITEM
    102→    )
    103→    debug_instrumentation: bool = False
+src/typeguard/_decorators.py
 src/typeguard/_exceptions.py
      5→class TypeHintWarning(UserWarning):
     12→class TypeCheckWarning(UserWarning):
@@ -209,6 +210,7 @@ src/typeguard/_memo.py
     42→        self_type: type | None = None,
     43→        config: TypeCheckConfiguration = global_config,
       →…
+src/typeguard/_pytest_plugin.py
 src/typeguard/_suppression.py
     15→P = ParamSpec("P")
     16→T = TypeVar("T")

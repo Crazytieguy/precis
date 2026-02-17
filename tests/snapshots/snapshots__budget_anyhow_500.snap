@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (496 words)
+budget: 500 (495 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯ …
@@ -19,6 +19,7 @@ README.md
    174→
    175→<sub>
       →…
+build.rs
 src/backtrace.rs
      8→pub(crate) enum Backtrace {}
     11→macro_rules! impl_backtrace {
@@ -57,6 +58,7 @@ src/error.rs
    705→    type Target = dyn StdError + Send + Sync + 'static;
    934→pub(crate) struct ErrorImpl<E = ()> {
    952→pub(crate) struct ContextError<C, E> {
+src/fmt.rs
 src/kind.rs
     55→pub struct Adhoc;
     58→pub trait AdhocKind: Sized {
@@ -104,7 +106,6 @@ src/lib.rs
    662→    #[doc(hidden)]
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
    664→    #[doc(hidden)]
-   665→    pub use alloc::format;
    671→    #[doc(hidden)]
    672→    pub mod kind {
    673→        #[doc(hidden)]
@@ -122,6 +123,7 @@ src/macros.rs
     70→macro_rules! __ensure {
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
+src/nightly.rs
 src/ptr.rs
      6→pub struct Own<T>
      7→where

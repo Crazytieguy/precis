@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (479 words)
+budget: 500 (478 words)
 
 README.md
      1→# humanize
@@ -97,7 +97,6 @@ README.md
    137→>>> humanize.naturaldelta(delta)
    138→'a moment'
    139→>>> humanize.naturaldelta(delta, minimum_unit="milliseconds")
-   140→'4 milliseconds'
       →…
    154→### File size humanization
    156→```pycon
@@ -163,6 +162,7 @@ docs/time.md
      3→::: humanize.time
 src/humanize/__init__.py
     28→__all__ = [
+src/humanize/filesize.py
 src/humanize/i18n.py
      8→TYPE_CHECKING = False
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]

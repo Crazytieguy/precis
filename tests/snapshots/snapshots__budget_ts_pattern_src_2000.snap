@@ -54,7 +54,6 @@ internals/helpers.ts
     49→    // Tuple pattern
     50→    if (Array.isArray(pattern)) {
     51→      if (!Array.isArray(value)) return false;
-    52→      let startPatterns = [];
       →…
    120→export const getSelectionKeys = (pattern: any): string[] => {
    121→  if (isObject(pattern)) {
@@ -372,12 +371,17 @@ patterns.ts
   1254→  return chainable(when(isInstanceOf(classConstructor)));
   1255→}
   1274→export function shape …
+types/BuildMany.ts
+types/DeepExclude.ts
 types/DistributeUnions.ts
     41→export type DistributeMatchingUnions …
     80→export type FindUnions …
+types/ExtractPreciseValue.ts
+types/FindSelected.ts
 types/InvertPattern.ts
    106→export type InvertPattern …
    303→export type InvertPatternForExclude …
+types/IsMatching.ts
 types/Match.ts
     10→interface NonExhaustiveError<i> {
     11→  __nonExhaustive: never;

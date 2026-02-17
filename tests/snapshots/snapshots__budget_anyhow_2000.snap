@@ -67,6 +67,11 @@ README.md
    174→
    175→<sub>
       →…
+build.rs
+    17→fn main …
+    99→fn compile_probe …
+   188→fn rustc_minor_version …
+   199→fn cargo_env_var …
 src/backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
      8→pub(crate) enum Backtrace {}
@@ -91,6 +96,7 @@ src/backtrace.rs
     76→    use core::fmt::{self, Debug, Display};
     77→    use core::sync::atomic::{AtomicUsize, Ordering};
     78→    use std::env;
+    79→    use std::path::{self, Path, PathBuf};
     82→    pub(crate) struct Backtrace {
     86→    pub(crate) enum BacktraceStatus {
     92→    enum Inner {
@@ -146,7 +152,6 @@ src/context.rs
     79→///     # unimplemented!()
     80→/// }
     81→///
-    82→/// fn demo() -> Result<()> {
       →…
     90→impl<T> Context<T, Infallible> for Option<T> {
    147→    fn provide …
@@ -310,7 +315,6 @@ src/lib.rs
    295→///   error type does not provide one.
    296→/// - `Error` is represented as a narrow pointer &mdash; exactly one word in
    297→///   size instead of two.
-   298→///
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -325,7 +329,6 @@ src/lib.rs
    401→/// use anyhow::Error;
    402→/// use std::io;
    403→///
-   404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
       →…
    415→pub struct Chain<'a> {
    416→    state: crate::chain::ChainState<'a>,
@@ -390,7 +393,6 @@ src/lib.rs
    477→/// # Example
    478→///
    479→/// ```
-   480→/// use anyhow::{Context, Result};
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.
@@ -460,6 +462,7 @@ src/macros.rs
    228→#[doc(hidden)]
    229→#[macro_export]
    230→macro_rules! __anyhow {
+src/nightly.rs
 src/ptr.rs
      5→#[repr(transparent)]
      6→pub struct Own<T>

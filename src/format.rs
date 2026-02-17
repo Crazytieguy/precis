@@ -112,6 +112,11 @@ fn render_scheduled(
                 None => continue, // group is hidden
             };
 
+            // FilePath stage: file path is shown but no symbol content
+            if included.kind == StageKind::FilePath {
+                continue;
+            }
+
             let sym_line_0 = sym.line - 1;
             if sym_line_0 < emitted_up_to {
                 continue;

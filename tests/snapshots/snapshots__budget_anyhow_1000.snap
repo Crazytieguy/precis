@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (974 words)
+budget: 1000 (977 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -29,6 +29,7 @@ README.md
    174→
    175→<sub>
       →…
+build.rs
 src/backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
      8→pub(crate) enum Backtrace {}
@@ -95,6 +96,7 @@ src/error.rs
    953→    pub context: C,
    954→    pub error: E,
    955→}
+src/fmt.rs
 src/kind.rs
     55→pub struct Adhoc;
     57→#[doc(hidden)]
@@ -245,6 +247,7 @@ src/macros.rs
     70→macro_rules! __ensure {
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
+src/nightly.rs
 src/ptr.rs
      5→#[repr(transparent)]
      6→pub struct Own<T>

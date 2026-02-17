@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (966 words)
+budget: 1000 (968 words)
 
 core/Ky.ts
     33→export class Ky {
@@ -89,9 +89,11 @@ errors/TimeoutError.ts
       →…
 index.ts
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
-    11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
-      →…
     34→const ky = createInstance();
+types/ResponsePromise.ts
+types/common.ts
+types/hooks.ts
+types/ky.ts
 types/options.ts
     33→export type KyOptions …
    307→export type KyOptionsRegistry …
@@ -158,6 +160,9 @@ types/options.ts
    382→	onUploadProgress: Options['onUploadProgress'];
    383→	context: Record<string, unknown>;
    384→}
+types/request.ts
+types/response.ts
+types/retry.ts
 utils/body.ts
      5→export const getBodySize …
     57→const withProgress …

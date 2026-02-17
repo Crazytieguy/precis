@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1931 words)
+budget: 2000 (1932 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -60,6 +60,7 @@ crates/mdbook-core/src/lib.rs
     16→}
 crates/mdbook-core/src/utils/fs.rs
    155→fn copy …
+crates/mdbook-core/src/utils/html.rs
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
      8→mod html;
@@ -68,8 +69,8 @@ crates/mdbook-core/src/utils/mod.rs
 crates/mdbook-core/src/utils/toml_ext.rs
      6→pub(crate) trait TomlExt {
     13→impl TomlExt for Value {
-    14→    fn read(&self, key: &str) -> Option<&Value> {
-    22→    fn insert(&mut self, key: &str, value: Value) {
+    14→    fn read …
+    22→    fn insert …
     40→fn split …
 crates/mdbook-driver/README.md
      1→# mdbook-driver …
@@ -89,17 +90,15 @@ crates/mdbook-driver/src/builtin_preprocessors/index.rs
     15→    /// Name of this preprocessor.
     16→    pub const NAME: &'static str = "index";
     19→    pub fn new() -> Self {
+crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
 crates/mdbook-driver/src/builtin_preprocessors/links.rs
     32→pub struct LinkPreprocessor;
     35→    /// Name of this preprocessor.
     36→    pub const NAME: &'static str = "links";
     39→    pub fn new() -> Self {
-   139→enum LinkType<'a> {
-   148→enum RangeOrAnchor {
-   155→enum LineRange {
-   275→struct Link<'a> {
    398→struct LinkIter<'a>(CaptureMatches<'a, 'a>);
    401→    type Item = Link<'a>;
+crates/mdbook-driver/src/builtin_preprocessors/mod.rs
 crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
     10→pub struct MarkdownRenderer;
     14→    pub fn new() -> Self {
@@ -128,6 +127,7 @@ crates/mdbook-driver/src/lib.rs
     69→pub mod init;
     70→mod load;
     71→mod mdbook;
+crates/mdbook-driver/src/load.rs
 crates/mdbook-driver/src/mdbook/tests.rs
    225→struct BoolPreprocessor(bool);
    226→impl Preprocessor for BoolPreprocessor {
@@ -150,14 +150,13 @@ crates/mdbook-driver/src/mdbook.rs
    437→    #[serde(default)]
       →…
 crates/mdbook-html/README.md
-     1→# mdbook-html
-     7→This is the HTML renderer for [mdBook](https://rust-lang.github.io/mdBook/). This is intended for internal use only. It is automatically included by [`mdbook-driver`](https://crates.io/crates/mdbook-driver) to render books to HTML.
-     8→
-      →…
+     1→# mdbook-html …
     11→## License
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-html/front-end/js/book.js
      9→function playground_text …
+crates/mdbook-html/src/html/admonitions.rs
+crates/mdbook-html/src/html/mod.rs
 crates/mdbook-html/src/html/tokenizer.rs
     22→    type Handle = ();
     24→    fn process_token(&self, token: Token, _line_number: u64) -> TokenSinkResult<()> {
@@ -183,6 +182,8 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
    643→///
       →…
    649→type CombinedRedirects = BTreeMap<String, (String, BTreeMap<String, String>)>;
+crates/mdbook-html/src/html_handlebars/helpers/fontawesome.rs
+crates/mdbook-html/src/html_handlebars/helpers/mod.rs
 crates/mdbook-html/src/html_handlebars/helpers/resources.rs
     11→pub(crate) struct ResourceHelper {
     16→    fn call …
@@ -220,6 +221,10 @@ crates/mdbook-html/src/theme/mod.rs
    166→    pub fn copy_theme(html_config: &HtmlConfig, root: &Path) -> Result<()> {
    201→    fn default() -> Theme {
    229→fn load_file_contents …
+crates/mdbook-html/src/theme/playground_editor.rs
+     3→pub(crate) static JS: &[u8] = include_bytes!("../../front-end/playground_editor/editor.js");
+crates/mdbook-html/src/theme/searcher.rs
+     4→pub(crate) static JS: &[u8] = include_bytes!("../../front-end/searcher/searcher.js");
 crates/mdbook-html/src/utils.rs
      7→pub(crate) fn normalize_path …
     42→pub(crate) trait ToUrlPath {
@@ -371,6 +376,7 @@ guide/guide-helper/src/main.rs
      1→//! Preprocessor for the mdBook guide.
      2→
      3→fn main() {
+guide/src/404.md
 guide/src/README.md
      1→# Introduction
      4→    .mdbook-version {
@@ -378,16 +384,23 @@ guide/src/README.md
      6→        right: 20px;
      7→        top: 60px;
      8→        background-color: var(--theme-popup-bg);
-     9→        border-radius: 8px;
       →…
     46→## Contributing …
     55→## License …
+guide/src/SUMMARY.md
 guide/src/cli/README.md
      1→# Command-line tool
      3→The `mdbook` command-line tool is used to create and build books.
       →…
+guide/src/cli/arg-watcher.md
+guide/src/cli/build.md
+guide/src/cli/clean.md
+guide/src/cli/completions.md
+guide/src/cli/init.md
 guide/src/cli/serve.md
     27→### Server options …
+guide/src/cli/test.md
+guide/src/cli/watch.md
 guide/src/continuous-integration.md
     12→## Installing mdBook …
     67→## Running tests …
@@ -417,6 +430,9 @@ guide/src/format/README.md
       →…
 guide/src/format/configuration/README.md
      1→# Configuration …
+guide/src/format/configuration/environment-variables.md
+guide/src/format/configuration/general.md
+guide/src/format/configuration/preprocessors.md
 guide/src/format/configuration/renderers.md
    286→#### `[output.html.search.chapter]` …
 guide/src/format/example.rs
@@ -440,6 +456,12 @@ guide/src/format/theme/README.md
      1→# Theme
      3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
       →…
+guide/src/format/theme/editor.md
+     1→# Editor …
+guide/src/format/theme/index-hbs.md
+     1→# index.hbs …
+guide/src/format/theme/syntax-highlighting.md
+     1→# Syntax highlighting …
 guide/src/guide/README.md
      1→# User guide
      3→This user guide provides an introduction to basic concepts of using mdBook.
@@ -453,6 +475,7 @@ guide/src/guide/installation.md
      1→# Installation …
 guide/src/guide/reading.md
      1→# Reading books …
+src/cmd/build.rs
 src/cmd/clean.rs
     36→/// Formats a number of bytes into a human readable SI-prefixed size.
     37→/// Returns a tuple of `(quantity, units)`.
@@ -474,6 +497,7 @@ src/cmd/command_prelude.rs
     14→                .long("dest-dir")
     15→                .value_name("dest-dir")
     16→                .value_parser(clap::value_parser!(PathBuf))
+    17→                .help(
     41→    #[cfg(any(feature = "watch", feature = "serve"))]
     42→    fn arg_watcher(self) -> Self {
 src/cmd/init.rs
@@ -494,6 +518,7 @@ src/cmd/mod.rs
 src/cmd/serve.rs
     20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
    109→async fn serve …
+src/cmd/test.rs
 src/cmd/watch/native.rs
     11→pub fn rebuild_on_change(
     12→    book_dir: &Path,

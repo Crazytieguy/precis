@@ -22,9 +22,6 @@ README.md
     37→```rust
     38→use log::{info, trace, warn};
     39→
-    40→pub fn shave_the_yak(yak: &mut Yak) {
-    41→    trace!("Commencing yak shaving");
-    42→
       →…
     58→### In executables …
    106→## Structured logging …
@@ -106,6 +103,8 @@ src/lib.rs
    784→}
    787→    #[inline]
    788→    fn get(&self) -> &'a str {
+   789→        match *self {
+      →…
    842→pub struct Record<'a> {
    858→struct KeyValues<'a>(&'a dyn kv::Source);
   1003→pub struct RecordBuilder<'a> {
@@ -118,6 +117,8 @@ src/lib.rs
   1484→where
   1485→    F: FnOnce() -> &'static dyn Log,
   1486→{
+  1487→    match STATE.compare_exchange(
+      →…
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
   1599→#[doc(hidden)]
@@ -128,6 +129,8 @@ src/lib.rs
   1605→///
       →…
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
+src/macros.rs
+src/serde.rs
 test_max_level_features/main.rs
      6→#[cfg(not(feature = "std"))]
      7→fn set_boxed_logger(logger: Box<dyn Log>) -> Result<(), log::SetLoggerError> {

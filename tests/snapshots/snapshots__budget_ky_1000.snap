@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (939 words)
+budget: 1000 (945 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -60,7 +60,6 @@ readme.md
   1169→node --use-env-proxy app.js
   1170→```
   1171→
-  1172→Supported environment variables:
       →…
   1292→## FAQ
   1294→#### How do I use this in Node.js?
@@ -149,6 +148,10 @@ source/index.ts
     11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
       →…
     34→const ky = createInstance();
+source/types/ResponsePromise.ts
+source/types/common.ts
+source/types/hooks.ts
+source/types/ky.ts
 source/types/options.ts
     33→export type KyOptions …
    307→export type KyOptionsRegistry …
@@ -215,10 +218,14 @@ source/types/options.ts
    382→	onUploadProgress: Options['onUploadProgress'];
    383→	context: Record<string, unknown>;
    384→}
+source/types/request.ts
+source/types/response.ts
+source/types/retry.ts
 source/utils/body.ts
     57→const withProgress …
 source/utils/delay.ts
      5→export type DelayOptions …
+source/utils/is.ts
 source/utils/merge.ts
     32→function newHookValue …
     47→const appendSearchParameters …
@@ -228,6 +235,7 @@ source/utils/normalize.ts
     12→const retryAfterStatusCodes …
     14→type InternalRetryOptions …
     16→const defaultRetryOptions …
+source/utils/options.ts
 source/utils/timeout.ts
      3→export type TimeoutOptions …
 source/utils/type-guards.ts

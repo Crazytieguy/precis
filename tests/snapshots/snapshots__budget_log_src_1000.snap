@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (978 words)
+budget: 1000 (979 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
@@ -272,3 +272,4 @@ macros.rs
    553→macro_rules! __log_value_serde {
    564→macro_rules! __log_value_error {
    573→macro_rules! __log_value_error {
+serde.rs

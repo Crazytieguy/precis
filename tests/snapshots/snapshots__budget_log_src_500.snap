@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (481 words)
+budget: 500 (483 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
@@ -146,3 +146,5 @@ lib.rs
   1605→///
       →…
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
+macros.rs
+serde.rs

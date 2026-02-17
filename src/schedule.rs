@@ -45,15 +45,17 @@ impl KindCategory {
         match self {
             // Types: body before doc (struct fields/enum variants are the useful content)
             KindCategory::Type => &[
+                StageKind::FilePath,
                 StageKind::Names,
                 StageKind::Signatures,
                 StageKind::Body,
                 StageKind::Doc,
             ],
             // Markdown: just names (headings) and body text
-            KindCategory::Section => &[StageKind::Names, StageKind::Body],
+            KindCategory::Section => &[StageKind::FilePath, StageKind::Names, StageKind::Body],
             // Everything else: names → signatures → doc → body
             _ => &[
+                StageKind::FilePath,
                 StageKind::Names,
                 StageKind::Signatures,
                 StageKind::Doc,
@@ -67,6 +69,7 @@ impl KindCategory {
 /// (Doc(1), Doc(2), ... up to the symbol's actual doc length).
 #[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
 pub enum StageKind {
+    FilePath, // Show file paths only (no symbol content)
     Names,
     Signatures,
     Doc, // Each increment = one more line of doc across the group
@@ -314,10 +317,10 @@ pub struct Group {
 }
 
 impl Group {
-    /// Max line count for a Doc/Body stage. Returns 1 for Names/Signatures.
+    /// Max line count for a Doc/Body stage. Returns 1 for Names/Signatures/FilePath.
     fn max_n(&self, stage: StageKind) -> usize {
         match stage {
-            StageKind::Names | StageKind::Signatures => 1,
+            StageKind::FilePath | StageKind::Names | StageKind::Signatures => 1,
             StageKind::Doc => self.max_doc_n,
             StageKind::Body => self.max_body_n,
         }
@@ -635,12 +638,14 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
 
     let stage_value = match key.kind_category {
         KindCategory::Type => match stage {
+            StageKind::FilePath => 0.3,
             StageKind::Names => 1.0,
             StageKind::Signatures => 0.7,
             StageKind::Body => 0.6,
             StageKind::Doc => 0.4,
         },
         KindCategory::Section => match stage {
+            StageKind::FilePath => 0.3,
             StageKind::Names => 1.0,
             StageKind::Body => 0.5,
             _ => 0.1,
@@ -649,12 +654,14 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         // multi-line bodies are usually data literals (large sets, dicts,
         // lookup tables) where the name tells you everything.
         KindCategory::Constant => match stage {
+            StageKind::FilePath => 0.3,
             StageKind::Names => 1.0,
             StageKind::Signatures => 0.7,
             StageKind::Doc => 0.5,
             StageKind::Body => 0.05,
         },
         _ => match stage {
+            StageKind::FilePath => 0.3,
             StageKind::Names => 1.0,
             StageKind::Signatures => 0.7,
             StageKind::Doc => 0.5,
@@ -1021,6 +1028,9 @@ pub fn schedule(
 /// ensures the total cost correctly reflects markers at the final included level.
 fn stage_cost(group: &Group, stage: StageKind, n: usize) -> usize {
     match stage {
+        // FilePath has zero own_cost — its cost is handled via file_path_cost
+        // on the QueueItem, which correctly accounts for cross-group sharing.
+        StageKind::FilePath => 0,
         StageKind::Names => group.symbols.iter().map(|s| s.name_words).sum(),
         StageKind::Signatures => group.symbols.iter().map(|s| s.signature_words).sum(),
         StageKind::Doc => {

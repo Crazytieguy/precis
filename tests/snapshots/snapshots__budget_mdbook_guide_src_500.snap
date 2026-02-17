@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (491 words)
 
 404.md
      1→# Document not found (404) …
@@ -39,8 +39,15 @@ cli/README.md
      6→This following sections provide in-depth information on the different commands available.
      7→
       →…
+cli/arg-watcher.md
+cli/build.md
+cli/clean.md
+cli/completions.md
+cli/init.md
 cli/serve.md
     27→### Server options …
+cli/test.md
+cli/watch.md
 continuous-integration.md
      1→# Running `mdbook` in continuous integration …
     12→## Installing mdBook …
@@ -52,7 +59,6 @@ continuous-integration.md
 for_developers/README.md
      1→# For developers
      3→While `mdbook` is mainly used as a command line tool, you can also import the
-     4→underlying libraries directly and use those to manage a book. It also has a fairly
       →…
     17→## The build process …
     30→## Using `mdbook` as a library …
@@ -81,6 +87,7 @@ format/configuration/README.md
      1→# Configuration
      3→This section details the configuration options available in the ***book.toml***:
      4→- **[General]** configuration including the `book`, `rust`, `build` sections
+     5→- **[Preprocessor]** configuration for default and custom book preprocessors
       →…
 format/configuration/environment-variables.md
      1→# Environment variables …

@@ -130,6 +130,8 @@ impl/src/attr.rs
     65→    LowerExp,
     66→    UpperExp,
     67→}
+impl/src/expand.rs
+impl/src/fallback.rs
 impl/src/fmt.rs
    166→struct FmtArguments {
    167→    named: BTreeSet<IdentUnraw>,
@@ -170,6 +172,7 @@ impl/src/lib.rs
     43→}
     45→#[allow(non_camel_case_types)]
     46→struct private;
+impl/src/prop.rs
 impl/src/scan_expr.rs
      6→enum Input {
      7→    Keyword(&'static str),
@@ -184,8 +187,6 @@ impl/src/scan_expr.rs
     16→    ConsumeNestedBrace,
     17→    ExpectPath,
     18→    ExpectTurbofish,
-    19→    ExpectType,
-    20→    CanBeginExpr,
       →…
     25→enum Action {
     26→    SetState(&'static [(Input, Action)]),
@@ -202,6 +203,7 @@ impl/src/unraw.rs
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
     85→}
+impl/src/valid.rs
 src/aserror.rs
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (493 words)
+budget: 500 (491 words)
 
 Changelog.md
      1→# Changelog …
@@ -45,7 +45,6 @@ docs/readme.md
     12→import { assert, object, number, string, array } from 'superstruct'
     13→
     14→const Article = object({
-    15→  id: number(),
       →…
 docs/reference/coercions.md
      1→# Coercions …
@@ -132,6 +131,7 @@ src/struct.ts
    157→export function mask …
    175→export function is …
    185→export function validate …
+src/structs/coercions.ts
 src/structs/refinements.ts
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
 src/structs/types.ts

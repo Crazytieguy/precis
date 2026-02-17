@@ -18,9 +18,11 @@ Takes a `--budget` flag (in words, default 1000).
 
 **Per-kind stage progressions:** Each group has an ordered progression of rendering stages. Different kind categories have different progressions:
 
-- **Functions / Constants / Modules / Macros / Impl:** Names → Signatures → Doc(N) → Body(N)
-- **Types (struct, enum, trait, interface, class):** Names → Signatures → Body(N) → Doc(N) — body before doc because struct fields and enum variants ARE the useful content
-- **Sections (markdown headings):** Names → Body(N)
+- **Functions / Constants / Modules / Macros / Impl:** FilePath → Names → Signatures → Doc(N) → Body(N)
+- **Types (struct, enum, trait, interface, class):** FilePath → Names → Signatures → Body(N) → Doc(N) — body before doc because struct fields and enum variants ARE the useful content
+- **Sections (markdown headings):** FilePath → Names → Body(N)
+
+FilePath is the cheapest stage — it shows just the file path with no symbol content. At tight budgets, low-priority groups may only reach FilePath, providing structural context about what files exist without consuming budget on symbol details.
 
 Doc(N) and Body(N) are continuous: each additional line is a separate scheduling item. A group might show 3 lines of body before the next line becomes too expensive relative to other available content.
 

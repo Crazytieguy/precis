@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1895 words)
+budget: 2000 (1896 words)
 
 backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
@@ -476,6 +476,7 @@ macros.rs
    228→#[doc(hidden)]
    229→#[macro_export]
    230→macro_rules! __anyhow {
+nightly.rs
 ptr.rs
      5→#[repr(transparent)]
      6→pub struct Own<T>

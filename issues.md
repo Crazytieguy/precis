@@ -9,7 +9,7 @@
 ## Remaining work
 
 - **Residual cost mismatch from emitted_up_to** — the renderer skips symbols whose start line falls within already-emitted ranges (e.g., nested symbols inside trait/impl/function bodies). The scheduler charges for these symbols but they don't render. This causes small overestimation (1-5%). Subsumes under the scheduler/renderer split-brain issue above.
-- **File paths as stages** — currently file paths are shown automatically when any symbol content is included. Making file paths an explicit stage would allow showing just file paths for low-value groups at tight budgets, and would create cheap items that improve budget utilization by filling gaps at the end of scheduling.
+- ~~**File paths as stages**~~ — done. FilePath is now the first stage in every progression. Groups at the FilePath stage show only the file path (no symbols), providing structural context at tight budgets.
 - **Import statement rendering** — show imports as a new group kind with its own stage progression. Distinguish 1st-party imports (relative paths, `crate::`, `super::`, Go module path) from 3rd-party. 1st-party imports are high signal for understanding a file's role.
 - **Test/vendor/example directories** — instead of excluding entirely during file discovery, render at lower priority. They appear as paths at tight budgets, content at generous budgets.
 - **Per-group stage value tuning** — the initial stage values (1.0, 0.7, 0.6, etc.) are starting points. Review snapshots across languages and tune per-kind values for better output quality.

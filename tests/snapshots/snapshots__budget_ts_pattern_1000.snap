@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (987 words)
+budget: 1000 (988 words)
 
 README.md
     91→# Documentation
@@ -19,6 +19,8 @@ README.md
    103→  - [`isMatching`](#ismatching)
    104→  - [Patterns](#patterns)
    105→    - [Literals](#literals)
+   106→    - [Wildcards](#wildcards)
+   107→    - [Objects](#objects)
       →…
    417→### `match`
    419→```ts
@@ -41,6 +43,7 @@ README.md
   1627→It's particularly useful when validating an API response.
   1628→
       →…
+docs/roadmap.md
 docs/v3-to-v4-migration-guide.md
      1→# TS-Pattern v3 to v4 Migration Guide
      3→## Breaking changes
@@ -221,12 +224,17 @@ src/patterns.ts
   1251→export function instanceOf<T extends AnyConstructor>(
   1252→  classConstructor: T
   1253→): Chainable<GuardP<unknown, InstanceType<T>>> {
+src/types/BuildMany.ts
+src/types/DeepExclude.ts
 src/types/DistributeUnions.ts
     41→export type DistributeMatchingUnions …
     80→export type FindUnions …
+src/types/ExtractPreciseValue.ts
+src/types/FindSelected.ts
 src/types/InvertPattern.ts
    106→export type InvertPattern …
    303→export type InvertPatternForExclude …
+src/types/IsMatching.ts
 src/types/Match.ts
     10→interface NonExhaustiveError<i> {
     11→  __nonExhaustive: never;
@@ -242,7 +250,6 @@ src/types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
     45→ * protocol. It must define a `symbols.matcher` property
-    46→ * which returns an object with a `match()` method, taking
       →…
     50→export interface Matcher<
     51→  input,

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (953 words)
+budget: 1000 (954 words)
 
 ast.rs
     10→pub enum Input<'a> {
@@ -111,6 +111,7 @@ attr.rs
    343→    fn to_tokens(&self, tokens: &mut TokenStream) {
 expand.rs
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
+fallback.rs
 fmt.rs
     15→impl Display<'_> {
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {

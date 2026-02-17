@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1943 words)
+budget: 2000 (1941 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -78,7 +78,6 @@ README.md
     77→    * [`log4rs`](https://docs.rs/log4rs/*/log4rs/)
     78→    * [`logforth`](https://docs.rs/logforth/*/logforth/)
     79→    * [`fern`](https://docs.rs/fern/*/fern/)
-    80→    * [`spdlog-rs`](https://docs.rs/spdlog-rs/*/spdlog/)
       →…
    106→## Structured logging
    108→If you enable the `kv` feature, you can associate structured data with your log records:
@@ -472,6 +471,7 @@ src/macros.rs
    553→macro_rules! __log_value_serde {
    564→macro_rules! __log_value_error {
    573→macro_rules! __log_value_error {
+src/serde.rs
 test_max_level_features/main.rs
      6→#[cfg(not(feature = "std"))]
      7→fn set_boxed_logger(logger: Box<dyn Log>) -> Result<(), log::SetLoggerError> {
