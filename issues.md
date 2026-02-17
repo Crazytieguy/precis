@@ -7,10 +7,11 @@
 **Current performance:** ~45 seconds in debug mode, ~2 seconds in release. Always run tests in release mode (`cargo test --release`). Do not run tests in debug mode until all fixture tests are re-introduced and the full suite runs quickly in release.
 
 **Next steps:**
-1. ~~Add criterion benchmarking infrastructure~~ Done — `cargo bench --bench hot_path` benchmarks `extract_all_symbols`, `build_groups`, `schedule`, and `render_with_budget` across three fixture sizes (either/src, pluggy/src/pluggy, commander/lib).
-2. Profile the hot path using benchmark results to identify bottlenecks
-3. Make performance improvements incrementally, re-introducing fixture snapshots as performance improves
-4. Once performance is much better, re-introduce all remaining snapshots
+1. ~~Add criterion benchmarking infrastructure~~ Done — `cargo bench --bench hot_path` benchmarks `extract_all_symbols`, `build_groups`, `schedule`, and `render_with_budget` across three fixture sizes (either/src, pluggy/src/pluggy, commander/lib). Use `--quick` flag for fast runs (5 samples).
+2. ~~Profile and optimize schedule hot path~~ Done — the greedy loop's update step iterated all groups on every inclusion. Two fixes: (a) file→groups reverse index to only visit groups sharing files with the included item, (b) track *newly shown* files so groups are only re-pushed when their file_path_cost actually changes. Result: schedule is 4-19x faster (either: 500ms→26ms, pluggy: 115ms→18ms, commander: 1.3s→318ms).
+3. Continue optimizing — commander_lib schedule is still 318ms. The remaining cost is likely from re-pushing all items in the same group on every prereq change, and from groups that share many files (single-directory codebases). Consider caching per-group max_n, precomputing stage positions, or batch-updating prereqs.
+4. Re-introduce remaining fixture snapshots as performance improves
+5. Once performance is much better, re-introduce all remaining snapshots
 
 ## Known bugs
 

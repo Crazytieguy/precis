@@ -421,6 +421,15 @@ pub fn schedule(
         })
         .collect();
 
+    // Reverse index: file_idx → set of group indices that reference this file.
+    // Used to efficiently find groups affected when a file's path cost is paid.
+    let mut file_to_groups: Vec<Vec<usize>> = vec![Vec::new(); files.len()];
+    for (group_idx, group) in groups.iter().enumerate() {
+        for &fi in &group.file_indices {
+            file_to_groups[fi].push(group_idx);
+        }
+    }
+
     // Track which files have been "shown" (path cost already paid)
     let mut files_shown: HashSet<usize> = HashSet::new();
 
@@ -511,9 +520,12 @@ pub fn schedule(
         // Include this item and all its prerequisites
         remaining_budget -= total_cost;
 
-        // Mark file paths as shown
+        // Mark file paths as shown, tracking which are newly shown
+        let mut newly_shown_files: Vec<usize> = Vec::new();
         for &fi in &groups[item.group_idx].file_indices {
-            files_shown.insert(fi);
+            if files_shown.insert(fi) {
+                newly_shown_files.push(fi);
+            }
         }
 
         // Update group stage: include all prerequisites up to this item
@@ -579,9 +591,20 @@ pub fn schedule(
             }
         }
 
-        // Update other items in the queue: prerequisite costs may have changed,
-        // file path costs may have changed
-        for (other_group_idx, other_group) in groups.iter().enumerate() {
+        // Update affected items in the queue. Only two kinds of groups need updates:
+        // 1. The same group (prerequisite costs changed)
+        // 2. Groups sharing *newly shown* files (file path costs just decreased)
+        // We use file_to_groups to find case 2 efficiently instead of scanning all groups.
+        let mut affected_groups: HashSet<usize> = HashSet::new();
+        affected_groups.insert(item.group_idx);
+        for &fi in &newly_shown_files {
+            for &gi in &file_to_groups[fi] {
+                affected_groups.insert(gi);
+            }
+        }
+
+        for &other_group_idx in &affected_groups {
+            let other_group = &groups[other_group_idx];
             let other_stages = other_group.key.kind_category.stage_sequence();
             for &sk in other_stages {
                 let max_n = match sk {
@@ -611,53 +634,40 @@ pub fn schedule(
                         }
                     }
 
-                    let needs_update = {
-                        // Check if file path costs changed
-                        let fp_changed = other_group
-                            .file_indices
-                            .iter()
-                            .any(|fi| files_shown.contains(fi));
-                        // Check if prerequisite costs changed (same group as included item)
-                        let prereq_changed = other_group_idx == item.group_idx;
-                        fp_changed || prereq_changed
-                    };
+                    let stage_pos = other_stages.iter().position(|&s| s == sk).unwrap();
+                    let own_value = compute_value(other_group, sk, n);
+                    let own_cost = stage_cost(other_group, sk, n);
+                    let (prereq_value, prereq_cost) = compute_prereq_costs_with_state(
+                        other_group,
+                        other_group_idx,
+                        other_stages,
+                        stage_pos,
+                        sk,
+                        n,
+                        &group_stages,
+                    );
+                    let fp_cost: usize = other_group
+                        .file_indices
+                        .iter()
+                        .filter(|fi| !files_shown.contains(fi))
+                        .map(|&fi| file_path_costs[fi])
+                        .sum();
 
-                    if needs_update {
-                        let stage_pos = other_stages.iter().position(|&s| s == sk).unwrap();
-                        let own_value = compute_value(other_group, sk, n);
-                        let own_cost = stage_cost(other_group, sk, n);
-                        let (prereq_value, prereq_cost) = compute_prereq_costs_with_state(
-                            other_group,
-                            other_group_idx,
-                            other_stages,
-                            stage_pos,
-                            sk,
-                            n,
-                            &group_stages,
-                        );
-                        let fp_cost: usize = other_group
-                            .file_indices
-                            .iter()
-                            .filter(|fi| !files_shown.contains(fi))
-                            .map(|&fi| file_path_costs[fi])
-                            .sum();
+                    let item_gen = generation;
+                    generation += 1;
+                    current_gen[other_group_idx].insert((sk, n), item_gen);
 
-                        let item_gen = generation;
-                        generation += 1;
-                        current_gen[other_group_idx].insert((sk, n), item_gen);
-
-                        heap.push(QueueItem {
-                            group_idx: other_group_idx,
-                            stage_kind: sk,
-                            n,
-                            own_value,
-                            own_cost,
-                            prereq_value,
-                            prereq_cost,
-                            file_path_cost: fp_cost,
-                            generation: item_gen,
-                        });
-                    }
+                    heap.push(QueueItem {
+                        group_idx: other_group_idx,
+                        stage_kind: sk,
+                        n,
+                        own_value,
+                        own_cost,
+                        prereq_value,
+                        prereq_cost,
+                        file_path_cost: fp_cost,
+                        generation: item_gen,
+                    });
                 }
             }
         }

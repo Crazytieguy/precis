@@ -17,6 +17,8 @@ API docs for this crate and its dependencies are at @target/doc-md/index.md. Alw
 
 ## Bash Operations
 
+All commands must complete within 1 minute. If a command would take longer, use different parameters (e.g. fewer benchmark samples) or a different approach.
+
 Complex bash syntax is hard for Claude Code to permission correctly. Keep commands simple.
 
 Simple operations are fine: `|`, `||`, `&&`, `>` redirects.
