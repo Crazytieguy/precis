@@ -45,3 +45,5 @@ If a command that should be allowed is denied, or if project structure changes s
 
 - Snapshot tests using real open-source projects (cloned into `test/fixtures/`, gitignored)
 - Token budget tests reuse the same test cases
+- Always run tests in release mode: `cargo test --release` (debug mode is much slower)
+- Always run `cargo bench --bench hot_path --quick` after tests to catch performance regressions. If benchmark times increase significantly, note it in `issues.md` or revert the change.

@@ -14,7 +14,7 @@ Uses **tree-sitter** for language-agnostic symbol extraction. Each supported lan
 
 Takes a `--budget` flag (in words, default 1000).
 
-**Groups:** Symbols are bucketed into groups by shared properties: **visibility** (public/private), **kind category** (Function, Type, Constant, Module, Section, Macro, Impl), **parent directory**, **file extension**, and **documented** (has doc comment or not). All symbols in a group always receive the same rendering treatment — this prevents confusing output where similar symbols are at different detail levels.
+**Groups:** Symbols are bucketed into groups by shared properties (visibility, kind, directory, file role, etc.). All symbols in a group always receive the same rendering treatment — this prevents confusing output where similar symbols are at different detail levels.
 
 **Per-kind stage progressions:** Each group has an ordered progression of rendering stages. Different kind categories have different progressions:
 
@@ -24,22 +24,9 @@ Takes a `--budget` flag (in words, default 1000).
 
 Doc(N) and Body(N) are continuous: each additional line is a separate scheduling item. A group might show 3 lines of body before the next line becomes too expensive relative to other available content.
 
-**File paths** are not a stage. They are shown automatically when any content from a file is included. The cost of a file path line is absorbed into the first item that includes content from that file.
+**Value and cost:** Each (group, stage) item has a value and a cost. Value comes from composable heuristic factors (visibility, documentation status, file role, etc.). Cost is the measured word count.
 
-**Value and cost:** Each (group, stage) item has a value and a cost. Value comes from composable heuristic factors: visibility (public > private), documentation status, file depth, and per-kind stage values. Cost is the measured word count. The value computation takes the full group (not just the key), so heuristics can reference aggregate properties like symbol count.
-
-**Greedy scheduling:** A priority queue ranks all (group, stage) items by `priority = (own_value + unmet_prerequisite_values) / (own_cost + unmet_prerequisite_costs)`. The algorithm greedily includes the highest-priority item, deducts its cost from the budget, updates affected items (prerequisites now met, file paths now shown for shared files), and repeats until nothing fits.
-
-**Monotonicity:** More budget → lower priority cutoff → more items included → more words. Automatic — no special invariant enforcement needed.
-
-**Extensibility:** The scheduling system has several extension points:
-
-- **Value factors** — add a function that adjusts group value based on any property (symbol count, file role, etc.). No architectural changes needed.
-- **Grouping dimensions** — add fields to GroupKey to split groups more finely (or merge to coarsen).
-- **Kind categories** — add KindCategory variants with their own stage progressions.
-- **Stage types** — add new stages beyond Names/Signatures/Doc/Body.
-- **Stage progression ordering** — change per-kind orderings (e.g., body before doc for types).
-- **Stage granularity** — finer-grained stages create more items in the priority queue, improving budget utilization by filling gaps at the end of scheduling.
+**Greedy scheduling:** A priority queue ranks all (group, stage) items by `priority = (own_value + unmet_prerequisite_values) / (own_cost + unmet_prerequisite_costs)`. The algorithm greedily includes the highest-priority item, deducts its cost from the budget, updates affected items, and repeats until nothing fits.
 
 ### Measuring Quality
 
