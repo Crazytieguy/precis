@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1922 words)
+budget: 2000 (1914 words)
 
 AGENTS.md
      1→# AGENTS.md
@@ -84,49 +84,24 @@ scripts/release.py
     16→    """Create a fresh branch from upstream/main"""
     17→    repo = Repo.init(".")
     18→    if repo.is_dirty(untracked_files=True):
-    19→        raise RuntimeError("Repository is dirty, please commit/stash your changes.")
-    20→
-    21→    branch_name = f"release-{version}"
-    22→    print(f"{Fore.CYAN}Create {branch_name} branch from upstream main")
-    23→    upstream = get_upstream(repo)
-    24→    upstream.fetch()
-    25→    release_branch = repo.create_head(branch_name, upstream.refs.main, force=True)
-    26→    release_branch.checkout()
       →…
     30→def get_upstream(repo: Repo) -> Remote:
     31→    """Find upstream repository for pluggy on the remotes"""
     32→    for remote in repo.remotes:
     33→        for url in remote.urls:
-    34→            if url.endswith(("pytest-dev/pluggy.git", "pytest-dev/pluggy")):
-    35→                return remote
-    36→    raise RuntimeError("could not find pytest-dev/pluggy remote")
+      →…
     39→def pre_release(version: str) -> None:
     40→    """Generates new docs, release announcements and creates a local tag."""
     41→    create_branch(version)
     42→    changelog(version, write_out=True)
-    43→
-    44→    check_call(["git", "commit", "-a", "-m", f"Preparing release {version}"])
-    45→
-    46→    print()
-    47→    print(f"{Fore.GREEN}Please push your branch to your fork and open a PR.")
+      →…
     50→def changelog(version: str, write_out: bool = False) -> None:
     51→    if write_out:
     52→        addopts = []
-    53→    else:
-    54→        addopts = ["--draft"]
-    55→    print(f"{Fore.CYAN}Generating CHANGELOG")
-    56→    check_call(["towncrier", "build", "--yes", "--version", version] + addopts)
+      →…
     59→def main() -> int:
     60→    init(autoreset=True)
     61→    parser = argparse.ArgumentParser()
-    62→    parser.add_argument("version", help="Release version")
-    63→    options = parser.parse_args()
-    64→    try:
-    65→        pre_release(options.version)
-    66→    except RuntimeError as e:
-    67→        print(f"{Fore.RED}ERROR: {e}")
-    68→        return 1
-    69→    else:
       →…
 scripts/towncrier-draft-to-file.py
      5→def main() -> int:
@@ -214,6 +189,10 @@ src/pluggy/_hooks.py
     93→        self,
     94→        function: _F,
     95→        firstresult: bool = False,
+    96→        historic: bool = False,
+    97→        warn_on_impl: Warning | None = None,
+    98→        warn_on_impl_args: Mapping[str, Warning] | None = None,
+    99→    ) -> _F: ...
    111→    def __call__ …
    165→class HookimplMarker:
    172→
@@ -227,6 +206,10 @@ src/pluggy/_hooks.py
    180→        self,
    181→        function: _F,
    182→        hookwrapper: bool = ...,
+   183→        optionalhook: bool = ...,
+   184→        tryfirst: bool = ...,
+   185→        trylast: bool = ...,
+   186→        specname: str | None = ...,
    202→    def __call__ …
    281→def normalize_hookimpl_opts …
    290→_PYPY = hasattr(sys, "pypy_version_info")
@@ -297,7 +280,7 @@ src/pluggy/_hooks.py
    609→        "_remove_plugins",
    610→    )
    611→
-   612→    def __init__ …
+   612→    def __init__(self, orig: HookCaller, remove_plugins: Set[_Plugin]) -> None:
    618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [
@@ -324,6 +307,10 @@ src/pluggy/_hooks.py
    649→        "wrapper",
    650→        "hookwrapper",
    651→        "optionalhook",
+   652→        "tryfirst",
+   653→        "trylast",
+   654→    )
+   655→
    656→    def __init__ …
    692→    def __repr__ …
    697→class HookSpec:
@@ -338,7 +325,11 @@ src/pluggy/_hooks.py
    706→        "warn_on_impl_args",
    707→    )
    708→
-   709→    def __init__ …
+   709→    def __init__(self, namespace: _Namespace, name: str, opts: HookspecOpts) -> None:
+   710→        self.namespace = namespace
+   711→        self.function: Callable[..., object] = getattr(namespace, name)
+   712→        self.name = name
+      →…
 src/pluggy/_manager.py
     36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
     37→_AfterTrace: TypeAlias = Callable[
@@ -414,6 +405,9 @@ src/pluggy/_result.py
     36→        """:meta private:"""
     37→        self._result = result
     38→        self._exception = exception
+    39→        # Exception __traceback__ is mutable, this keeps the original.
+    40→        self._traceback = exception.__traceback__ if exception is not None else None
+    41→
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
     44→        """:meta private:"""

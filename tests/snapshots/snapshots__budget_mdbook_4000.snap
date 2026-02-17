@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3866 words)
+budget: 4000 (3865 words)
 
 CHANGELOG.md
      3→## mdBook 0.5.2 …
@@ -142,25 +142,14 @@ crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     19→}
     22→    /// Create a new `CmdPreprocessor`.
     23→    pub fn new(name: String, cmd: String, root: PathBuf, optional: bool) -> CmdPreprocessor {
-    24→        CmdPreprocessor {
-    25→            name,
-    26→            cmd,
-    27→            root,
-    28→            optional,
-    29→        }
-    30→    }
     51→    /// The command this `Preprocessor` will invoke.
     52→    pub fn cmd(&self) -> &str {
-    53→        &self.cmd
-    54→    }
 crates/mdbook-driver/src/builtin_preprocessors/index.rs
     12→pub struct IndexPreprocessor;
     15→    /// Name of this preprocessor.
     16→    pub const NAME: &'static str = "index";
     18→    /// Create a new `IndexPreprocessor`.
     19→    pub fn new() -> Self {
-    20→        IndexPreprocessor
-    21→    }
 crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
      6→pub(super) fn take_lines<R: RangeBounds<usize>>(s: &str, range: R) -> String {
     31→pub(super) fn take_anchored_lines(s: &str, anchor: &str) -> String {
@@ -175,8 +164,6 @@ crates/mdbook-driver/src/builtin_preprocessors/links.rs
     36→    pub const NAME: &'static str = "links";
     38→    /// Create a new `LinkPreprocessor`.
     39→    pub fn new() -> Self {
-    40→        LinkPreprocessor
-    41→    }
    139→enum LinkType<'a> {
    148→enum RangeOrAnchor {
    155→enum LineRange {
@@ -315,8 +302,8 @@ crates/mdbook-html/src/html/tree.rs
    135→    fn into_tendril(self) -> StrTendril {
    150→enum TableState {
    160→pub(crate) struct MarkdownTreeBuilder<'opts, 'event, EventIter> {
-   369→    fn start_tag(&mut self, tag: Tag<'event>) {
-   585→    fn end_tag(&mut self, tag: TagEnd) {
+   369→    fn start_tag …
+   585→    fn end_tag …
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     19→/// The HTML renderer for mdBook.
     20→#[derive(Default)]
@@ -410,8 +397,6 @@ crates/mdbook-html/src/theme/mod.rs
     46→    pub(crate) toc_html: Vec<u8>,
     47→    pub(crate) chrome_css: Vec<u8>,
     48→    pub(crate) general_css: Vec<u8>,
-    49→    pub(crate) print_css: Vec<u8>,
-    50→    pub(crate) variables_css: Vec<u8>,
       →…
     63→impl Theme {
     64→    /// Creates a `Theme` from the given `theme_dir`.
@@ -493,9 +478,6 @@ crates/mdbook-markdown/src/lib.rs
     48→    opts.insert(Options::ENABLE_STRIKETHROUGH);
     49→    opts.insert(Options::ENABLE_TASKLISTS);
     50→    opts.insert(Options::ENABLE_HEADING_ATTRIBUTES);
-    51→    if options.smart_punctuation {
-    52→        opts.insert(Options::ENABLE_SMART_PUNCTUATION);
-    53→    }
       →…
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
@@ -753,9 +735,6 @@ guide/src/format/configuration/README.md
       →…
 guide/src/format/example.rs
      1→fn main() {
-     2→    println!("Hello World!");
-     3→#
-      →…
 guide/src/format/mdbook.md
      3→## Hiding code lines
      5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
@@ -800,7 +779,9 @@ src/cmd/clean.rs
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     39→    static UNITS: [&str; 7] = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"];
     40→    let bytes = bytes as f32;
-      →…
+    41→    let i = ((bytes.log2() / 10.0) as usize).min(UNITS.len() - 1);
+    42→    (bytes / 1024_f32.powi(i as i32), UNITS[i])
+    43→}
     45→#[derive(Debug)]
     46→pub struct Clean {
     47→    num_files_removed: u64,
@@ -808,7 +789,7 @@ src/cmd/clean.rs
     49→    total_bytes_removed: u64,
     50→}
     52→impl Clean {
-    53→    fn new …
+    53→    fn new(dir: &PathBuf) -> Result<Clean> {
     91→impl fmt::Display for Clean {
 src/cmd/command_prelude.rs
      7→pub trait CommandExt: Sized {
@@ -826,12 +807,20 @@ src/cmd/command_prelude.rs
     42→    fn arg_watcher(self) -> Self {
     43→        #[cfg(feature = "watch")]
     44→        return self._arg(
-      →…
+    45→            Arg::new("watcher")
+    46→                .long("watcher")
+    47→                .value_parser(["poll", "native"])
+    48→                .default_value("poll")
+    49→                .help("The filesystem watching technique"),
+    50→        );
+    51→        #[cfg(not(feature = "watch"))]
+    52→        return self;
+    53→    }
     56→impl CommandExt for Command {
 src/cmd/init.rs
     88→fn get_author_name() -> Option<String> {
    102→fn request_book_title() -> Option<String> {
-   116→fn confirm …
+   116→fn confirm() -> bool {
 src/cmd/mod.rs
      1→//! Subcommand modules for the `mdbook` binary.
      2→
@@ -853,7 +842,7 @@ src/cmd/serve.rs
    112→    reload_tx: broadcast::Sender<Message>,
    113→    file_404: &str,
    114→) {
-   142→async fn websocket_connection …
+   142→async fn websocket_connection(ws: WebSocket, reload_tx: broadcast::Sender<Message>) {
 src/cmd/watch/native.rs
     11→pub fn rebuild_on_change(
     12→    book_dir: &Path,
@@ -902,7 +891,7 @@ src/cmd/watch.rs
     23→    Native,
     24→}
     26→impl WatcherKind {
-    74→fn find_gitignore …
+    74→fn find_gitignore(book_root: &Path) -> Option<PathBuf> {
 src/main.rs
     14→mod cmd;
     16→const VERSION: &str = concat!("v", clap::crate_version!());

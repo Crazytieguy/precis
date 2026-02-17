@@ -32,7 +32,6 @@ docs/conf.py
    109→
    110→    import sphinx.util.logging
    111→
-   112→    class WarnLogFilter(logging.Filter):
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
@@ -49,9 +48,7 @@ scripts/towncrier-draft-to-file.py
      5→def main() -> int:
      6→    """
      7→    Platform agnostic wrapper script for towncrier.
-     8→    Fixes the issue (pytest#7251) where windows users are unable to natively
-     9→    run tox -e docs to build pytest docs.
-    10→    """
+      →…
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
@@ -66,7 +63,11 @@ src/pluggy/_callers.py
     24→Teardown: TypeAlias = Generator[None, object, object]
 src/pluggy/_hooks.py
     40→class HookspecOpts(TypedDict):
+    42→
+      →…
     56→class HookimplOpts(TypedDict):
+    58→
+      →…
     78→class HookspecMarker:
     85→
     86→    __slots__ = ("project_name",)
@@ -80,6 +81,7 @@ src/pluggy/_hooks.py
    363→    __slots__ = ("__dict__",)
    364→
    382→class HookCaller:
+   384→
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    423→    # TODO: Document, or make private.
@@ -110,10 +112,13 @@ src/pluggy/_hooks.py
    700→        "function",
 src/pluggy/_manager.py
     52→class PluginValidationError(Exception):
+    58→
     65→class DistFacade:
+    67→
     71→    @property
     72→    def project_name(self) -> str:
     83→class PluginManager:
+    99→
 src/pluggy/_result.py
     20→class HookCallError(Exception):
     25→class Result(Generic[ResultType]):
@@ -131,9 +136,13 @@ src/pluggy/_result.py
     58→        """:meta private:"""
 src/pluggy/_tracing.py
     16→class TagTracer:
+    17→    def __init__(self) -> None:
     59→class TagTracerSub:
+    60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
 src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):
+     6→
+      →…
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"

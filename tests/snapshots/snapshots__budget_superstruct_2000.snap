@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1888 words)
+budget: 2000 (1887 words)
 
 Readme.md
     42→### Usage …
@@ -109,13 +109,6 @@ docs/readme.md
     38→
     39→```js
     40→import { is, define, object, string } from 'superstruct'
-    41→import isUuid from 'is-uuid'
-    42→import isEmail from 'is-email'
-    43→
-    44→const Email = define('Email', isEmail)
-    45→const Uuid = define('Uuid', isUuid.v4)
-    46→
-    47→const User = object({
       →…
 docs/reference/core.md
      3→### `assert`
@@ -369,6 +362,12 @@ src/structs/coercions.ts
 src/structs/refinements.ts
      8→export function empty …
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
+    22→  if (value instanceof Map || value instanceof Set) {
+    23→    return value.size
+    24→  } else {
+    25→    return value.length
+    26→  }
+    27→}
     33→export function max …
     55→export function min …
     77→export function nonempty …

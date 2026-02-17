@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (971 words)
+budget: 1000 (970 words)
 
 README.md
     28→## Features
@@ -74,18 +74,12 @@ site/components/code.tsx
      9→  plain: {
       →…
    104→export const Code: React.FC<{
-   105→  snippet: string;
-      →…
 site/components/docs-layout.tsx
      8→const TableItem: React.FC<{
     19→const TableHeader: React.FC<{
     27→export default function DocsLayout({ meta, children }) {
-    28→  return (
-      →…
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
-     2→  onClick: () => void;
-      →…
 site/components/sections/footer.tsx
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
 site/components/sections/splitbee-counter.tsx
@@ -146,8 +140,6 @@ site/pages/index.tsx
    102→export default function Home() {
    103→  const [position, setPosition] = useState<ToastPosition>('top-center');
    104→  const [reverse, setReverse] = useState(false);
-   105→  const { toasts: allToasts } = useToasterStore();
-   106→
       →…
 site/types/svg.d.ts
      1→interface SvgrComponent
@@ -269,7 +261,15 @@ src/core/types.ts
     47→    'aria-live': 'assertive' | 'off' | 'polite';
     48→  };
     49→
-      →…
+    50→  style?: CSSProperties;
+    51→  className?: string;
+    52→  iconTheme?: IconTheme;
+    53→
+    54→  createdAt: number;
+    55→  visible: boolean;
+    56→  dismissed: boolean;
+    57→  height?: number;
+    58→}
     60→export type ToastOptions …
     76→export type DefaultToastOptions …
     80→export interface ToasterProps {

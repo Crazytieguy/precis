@@ -40,11 +40,6 @@ docs/conf.py
    116→            Ref: https://github.com/sphinx-doc/sphinx/issues/2150."""
    117→            if (
    118→                record.msg.startswith('Problems with "include" directive path:')
-   119→                and "_changelog_towncrier_draft.rst" in record.msg
-   120→            ):
-   121→                return False
-   122→            return True
-   123→
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
@@ -52,25 +47,20 @@ scripts/release.py
     15→def create_branch(version: str) -> Repo:
     16→    """Create a fresh branch from upstream/main"""
     17→    repo = Repo.init(".")
-    18→    if repo.is_dirty(untracked_files=True):
       →…
     30→def get_upstream(repo: Repo) -> Remote:
     31→    """Find upstream repository for pluggy on the remotes"""
     32→    for remote in repo.remotes:
-    33→        for url in remote.urls:
       →…
     39→def pre_release(version: str) -> None:
     40→    """Generates new docs, release announcements and creates a local tag."""
     41→    create_branch(version)
-    42→    changelog(version, write_out=True)
       →…
     50→def changelog(version: str, write_out: bool = False) -> None:
     51→    if write_out:
-    52→        addopts = []
       →…
     59→def main() -> int:
     60→    init(autoreset=True)
-    61→    parser = argparse.ArgumentParser()
       →…
 scripts/towncrier-draft-to-file.py
      5→def main() -> int:
@@ -80,7 +70,7 @@ scripts/towncrier-draft-to-file.py
      9→    run tox -e docs to build pytest docs.
     10→    """
     11→    with open("docs/_changelog_towncrier_draft.rst", "w") as draft_file:
-    12→        return call(("towncrier", "--draft"), stdout=draft_file)
+      →…
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
@@ -106,12 +96,12 @@ src/pluggy/_callers.py
     70→def _warn_teardown_exception …
     82→def _multicall …
 src/pluggy/_hooks.py
-    28→_T …
-    29→_F …
-    31→_Namespace …
-    32→_Plugin …
-    33→_HookExec …
-    37→_HookImplFunction …
+    28→_T = TypeVar("_T")
+    29→_F = TypeVar("_F", bound=Callable[..., object])
+    31→_Namespace: TypeAlias = ModuleType | type
+    32→_Plugin: TypeAlias = object
+    33→_HookExec: TypeAlias = Callable[
+    37→_HookImplFunction: TypeAlias = Callable[..., _T | Generator[None, Result[_T], None]]
     40→class HookspecOpts(TypedDict):
     42→
       →…
@@ -142,7 +132,7 @@ src/pluggy/_hooks.py
    180→        self,
    181→        function: _F,
    182→        hookwrapper: bool = ...,
-   290→_PYPY …
+   290→_PYPY = hasattr(sys, "pypy_version_info")
    359→class HookRelay:
    362→
    363→    __slots__ = ("__dict__",)
@@ -153,7 +143,7 @@ src/pluggy/_hooks.py
    368→    if TYPE_CHECKING:
    369→
    370→        def __getattr__(self, name: str) -> HookCaller: ...
-   377→_CallHistory …
+   377→_CallHistory: TypeAlias = list[
    382→class HookCaller:
    384→
    419→    # TODO: Document, or make private.
@@ -220,8 +210,8 @@ src/pluggy/_hooks.py
    707→    )
    708→
 src/pluggy/_manager.py
-    36→_BeforeTrace …
-    37→_AfterTrace …
+    36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
+    37→_AfterTrace: TypeAlias = Callable[
     42→def _warn_for_function …
     52→class PluginValidationError(Exception):
     58→
@@ -237,7 +227,7 @@ src/pluggy/_manager.py
    331→    def _verify_hook …
    525→def _formatdef …
 src/pluggy/_result.py
-    16→_ExcInfo …
+    16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
     20→class HookCallError(Exception):
     25→class Result(Generic[ResultType]):
     28→

@@ -411,6 +411,24 @@ fn compute_symbol_costs(
 // Value computation
 // ---------------------------------------------------------------------------
 
+/// Compute the effective depth of a path, skipping the first component if it's
+/// a conventional source root directory (`src`, `lib`, `pkg`, `cmd`). These
+/// directories are language-mandated or conventional organizational roots that
+/// don't represent meaningful project hierarchy.
+fn effective_depth(parent_dir: &Path) -> usize {
+    let mut components = parent_dir.components();
+    let total = components.clone().count();
+    if total == 0 {
+        return 0;
+    }
+    let first = components.next().and_then(|c| c.as_os_str().to_str());
+    if matches!(first, Some("src" | "lib" | "pkg" | "cmd")) {
+        total - 1
+    } else {
+        total
+    }
+}
+
 /// Compute the value of showing a particular stage for a group.
 fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     let key = &group.key;
@@ -418,7 +436,12 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     let visibility = if key.is_public { 1.0 } else { 0.3 };
     let documented = if key.is_documented { 1.0 } else { 0.5 };
 
-    let depth = key.parent_dir.components().count();
+    // Compute effective depth, skipping conventional source root directories
+    // (src/, lib/, pkg/, cmd/) that are purely organizational and don't represent
+    // meaningful hierarchy. Without this, `src/pluggy/_manager.py` (depth 2, factor
+    // 0.7) would be penalized relative to `docs/conf.py` (depth 1, factor 1.0),
+    // even though the source code is more valuable than build configuration.
+    let depth = effective_depth(&key.parent_dir);
     let depth_factor = match depth {
         0..=1 => 1.0,
         2..=3 => 0.7,
@@ -984,6 +1007,25 @@ mod tests {
         assert_eq!(FileRole::from_filename("AUTHORS"), FileRole::CommunityHealth);
         assert_eq!(FileRole::from_filename("AUTHORS.md"), FileRole::CommunityHealth);
         assert_eq!(FileRole::from_filename("MAINTAINERS.md"), FileRole::CommunityHealth);
+    }
+
+    #[test]
+    fn effective_depth_skips_source_roots() {
+        assert_eq!(effective_depth(Path::new("")), 0);
+        assert_eq!(effective_depth(Path::new("src")), 0);
+        assert_eq!(effective_depth(Path::new("lib")), 0);
+        assert_eq!(effective_depth(Path::new("pkg")), 0);
+        assert_eq!(effective_depth(Path::new("cmd")), 0);
+        assert_eq!(effective_depth(Path::new("src/pluggy")), 1);
+        assert_eq!(effective_depth(Path::new("lib/internal")), 1);
+        assert_eq!(effective_depth(Path::new("src/a/b")), 2);
+        // Non-source-root first components are not skipped
+        assert_eq!(effective_depth(Path::new("docs")), 1);
+        assert_eq!(effective_depth(Path::new("scripts")), 1);
+        assert_eq!(effective_depth(Path::new("docs/conf")), 2);
+        assert_eq!(effective_depth(Path::new("internal/pkg")), 2);
+        // Source root deeper in path is not skipped
+        assert_eq!(effective_depth(Path::new("packages/foo/src")), 3);
     }
 
     #[test]

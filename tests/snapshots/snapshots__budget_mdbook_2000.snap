@@ -144,29 +144,24 @@ crates/mdbook-driver/src/mdbook.rs
    436→    command: Option<String>,
    437→    #[serde(default)]
    438→    before: Vec<String>,
-   439→    #[serde(default)]
       →…
 crates/mdbook-html/README.md
      1→# mdbook-html …
     11→## License …
 crates/mdbook-html/front-end/js/book.js
      9→function playground_text(playground, hidden = true) {
-crates/mdbook-html/src/html/admonitions.rs
-    18→pub(crate) fn select_tag …
 crates/mdbook-html/src/html/mod.rs
     34→pub(crate) struct HtmlRenderOptions<'a> {
     80→pub(crate) struct ChapterTree<'book> {
 crates/mdbook-html/src/html/tokenizer.rs
     16→struct TokenCollector {
     22→    type Handle = ();
-    24→    fn process_token …
 crates/mdbook-html/src/html/tree.rs
     25→macro_rules! attr_qual_name {
     33→pub(crate) enum Node {
     73→pub(crate) struct Element {
    126→type Attributes = IndexMap<QualName, StrTendril>;
    129→trait ToTendril {
-   135→    fn into_tendril …
    150→enum TableState {
    160→pub(crate) struct MarkdownTreeBuilder<'opts, 'event, EventIter> {
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
@@ -373,11 +368,11 @@ crates/xtask/README.md
      3→This is a CLI utility for running development commands for mdbook.
      4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
 crates/xtask/src/changelog.rs
-     8→const CHANGELOG_PATH: &str = "CHANGELOG.md";
+     8→const CHANGELOG_PATH …
     10→pub(crate) fn changelog() -> Result<()> {
 crates/xtask/src/main.rs
      9→mod changelog;
-    11→type Result<T> = std::result::Result<T, Box<dyn Error>>;
+    11→type Result …
 eslint.config.mjs
      4→const handlebarsPreprocessor = {
      7→            preprocess(text, filename) {
@@ -453,6 +448,8 @@ src/cmd/clean.rs
     48→    num_dirs_removed: u64,
     49→    total_bytes_removed: u64,
     50→}
+    52→impl Clean {
+    91→impl fmt::Display for Clean {
 src/cmd/command_prelude.rs
      7→pub trait CommandExt: Sized {
      8→    fn _arg(self, arg: Arg) -> Self;
@@ -463,8 +460,11 @@ src/cmd/command_prelude.rs
     13→                .short('d')
     14→                .long("dest-dir")
     15→                .value_name("dest-dir")
+    16→                .value_parser(clap::value_parser!(PathBuf))
+    17→                .help(
     41→    #[cfg(any(feature = "watch", feature = "serve"))]
     42→    fn arg_watcher(self) -> Self {
+    56→impl CommandExt for Command {
 src/cmd/init.rs
     88→fn get_author_name …
    102→fn request_book_title …
@@ -517,6 +517,7 @@ src/cmd/watch.rs
     22→    Poll,
     23→    Native,
     24→}
+    26→impl WatcherKind {
 src/main.rs
     14→mod cmd;
     16→const VERSION: &str = concat!("v", clap::crate_version!());

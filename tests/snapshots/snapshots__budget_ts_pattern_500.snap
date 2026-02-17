@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (496 words)
+budget: 500 (491 words)
 
 README.md
    417→### `match`
@@ -10,27 +10,18 @@ README.md
    420→match(value);
    421→```
    422→
-   423→Create a `Match` object on which you can later call `.with`, `.when`, `.otherwise` and `.run`.
-   424→
+      →…
    857→#### `P._` wildcard
    859→The `P._` pattern will match any value. You can also use `P.any`, which is an alias to `P._`.
    860→
    861→```ts
    862→import { match, P } from 'ts-pattern';
-   863→
-   864→const input = 'hello';
-   865→
-   866→const output = match(input)
       →…
   1623→### `P.infer`
   1625→`P.infer<typeof somePattern>` lets you infer a type of value from a type of pattern.
   1626→
   1627→It's particularly useful when validating an API response.
   1628→
-  1629→```ts
-  1630→const postPattern = {
-  1631→  title: P.string,
-  1632→  content: P.string,
       →…
 docs/v3-to-v4-migration-guide.md
      3→## Breaking changes …
@@ -74,6 +65,7 @@ src/internals/symbols.ts
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
 src/is-matching.ts
      6→/**
+     7→ * This constraint allows using additional properties
       →…
     11→type PatternConstraint<T> = T extends readonly any[]
     12→  ? P.Pattern<T>
@@ -86,6 +78,8 @@ src/match.ts
     48→  constructor(private input: input, private state: MatchState<output>) {}
     49→
     50→  with(...args: any[]): MatchExpression<input, output> {
+    51→    if (this.state.matched) return this;
+    52→
 src/patterns.ts
    187→export function optional …
    536→export function intersection …
@@ -100,7 +94,11 @@ src/types/InvertPattern.ts
    303→export type InvertPatternForExclude …
 src/types/Match.ts
     10→interface NonExhaustiveError<i> {
+    11→  __nonExhaustive: never;
+    12→}
     14→interface TSPatternError<i> {
+    15→  __nonExhaustive: never;
+    16→}
     22→export type Match …
    132→  with …
    245→type DeepExcludeAll …
@@ -108,6 +106,7 @@ src/types/Match.ts
 src/types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
+    45→ * protocol. It must define a `symbols.matcher` property
       →…
     50→export interface Matcher<
     51→  input,

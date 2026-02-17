@@ -2,18 +2,8 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (985 words)
+budget: 1000 (982 words)
 
-CHANGELOG.md
-     3→## 8.2.0 …
-     5→### Minor Changes …
-    13→### Patch Changes …
-    19→### Minor Changes …
-    25→### Major Changes …
-    45→### Minor Changes …
-    51→### Minor Changes …
-    64→### Patch Changes …
-    72→### Major Changes …
 README.md
    141→### Synchronous API (`Result`)
    143→#### `ok`
@@ -101,7 +91,14 @@ src/_internals/error.ts
     33→    ? { type: 'Ok', value: result.value }
     34→    : { type: 'Err', value: result.error }
     35→
-      →…
+    36→  const maybeStack = config.withStackTrace ? new Error().stack : undefined
+    37→
+    38→  return {
+    39→    data,
+    40→    message,
+    41→    stack: maybeStack,
+    42→  }
+    43→}
 src/_internals/utils.ts
      5→export type ExtractOkTypes …
     10→export type ExtractOkAsyncTypes …
@@ -134,7 +131,7 @@ src/_internals/utils.ts
     56→): ResultAsync<readonly T[], E> =>
     57→  ResultAsync.fromSafePromise(Promise.all(asyncResultList)).andThen(
     58→    combineResultList,
-      →…
+    59→  ) as ResultAsync<T[], E>
     61→/**
     62→ * Give a list of all the errors we find
     63→ */
@@ -160,7 +157,7 @@ src/_internals/utils.ts
     84→): ResultAsync<readonly T[], E[]> =>
     85→  ResultAsync.fromSafePromise(Promise.all(asyncResultList)).andThen(
     86→    combineResultListWithAllErrors,
-      →…
+    87→  ) as ResultAsync<T[], E[]>
 src/result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
@@ -202,6 +199,7 @@ src/result.ts
    141→
    142→  /**
    143→   * Used to check if a `Result` is an `Err`
+   144→   *
       →…
    147→  isErr(): this is Err<T, E>
    149→  /**

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (984 words)
+budget: 1000 (994 words)
 
 README.md
    417→### `match`
@@ -51,12 +51,6 @@ README.md
   1642→
   1643→// posts: Post[]
   1644→const posts = await fetch(someUrl)
-  1645→  .then((res) => res.json())
-  1646→  .then((res: unknown): Post[] =>
-  1647→    isMatching({ data: P.array(postPattern) }, res) ? res.data : []
-  1648→  );
-  1649→```
-  1650→
       →…
 docs/v3-to-v4-migration-guide.md
      3→## Breaking changes …
@@ -87,7 +81,9 @@ src/errors.ts
 src/internals/helpers.ts
     12→export const isObject …
     16→export const isMatcher …
-    24→const isOptionalPattern …
+    24→const isOptionalPattern = (
+    25→  x: unknown
+    26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
     32→export const matchPattern …
    120→export const getSelectionKeys …
    132→export const flatMap …
@@ -96,7 +92,17 @@ src/internals/symbols.ts
      2→ * Symbols used internally within ts-pattern to construct and discriminate
      3→ * Guard, Not, and Select, and AnonymousSelect patterns
      4→ *
-      →…
+     5→ * Symbols have the advantage of not appearing in auto-complete suggestions in
+     6→ * user defined patterns, and eliminate the risk of property
+     7→ * overlap between ts-pattern internals and user defined patterns.
+     8→ *
+     9→ * These symbols have to be visible to tsc for type inference to work, but
+    10→ * users should not import them
+    11→ * @module
+    12→ * @private
+    13→ * @internal
+    14→ */
+    15→
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
     17→export type matcher = typeof matcher;
     19→export const unset = Symbol.for('@ts-pattern/unset');
@@ -116,7 +122,6 @@ src/is-matching.ts
     13→  : T extends object
     14→  ? P.Pattern<T> & UnknownProperties
     15→  : P.Pattern<T>;
-    53→export function isMatching …
 src/match.ts
     16→/**
       →…
@@ -129,12 +134,6 @@ src/match.ts
     50→  with(...args: any[]): MatchExpression<input, output> {
     51→    if (this.state.matched) return this;
     52→
-    94→  when …
-   110→  otherwise …
-   115→  exhaustive …
-   120→  run …
-   124→  returnType …
-   128→  narrow …
 src/patterns.ts
     67→/**
       →…
@@ -167,10 +166,6 @@ src/patterns.ts
    190→    ? UnknownValuePattern
    191→    : Pattern<input>
    192→>(pattern: pattern): Chainable<OptionalP<input, pattern>, 'optional'> {
-   246→export function array …
-   299→export function set …
-   362→export function map …
-   445→export function record …
    517→/**
       →…
    536→export function intersection<
@@ -189,8 +184,6 @@ src/patterns.ts
    612→  input,
    613→  const pattern extends Pattern<input> | UnknownValuePattern
    614→>(pattern: pattern): Chainable<NotP<input, pattern>> {
-   646→export function when …
-   696→export function select …
    773→/**
       →…
    782→export const any: UnknownPattern = chainable(when(isUnknown));
@@ -226,7 +219,6 @@ src/patterns.ts
   1251→export function instanceOf<T extends AnyConstructor>(
   1252→  classConstructor: T
   1253→): Chainable<GuardP<unknown, InstanceType<T>>> {
-  1274→export function shape …
 src/types/DistributeUnions.ts
     41→export type DistributeMatchingUnions …
     80→export type FindUnions …

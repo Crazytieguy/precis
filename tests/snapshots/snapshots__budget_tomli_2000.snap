@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1902 words)
+budget: 2000 (1887 words)
 
 CHANGELOG.md
      3→## 2.4.0
@@ -14,20 +14,15 @@ README.md
      5→# Tomli
      7→> A lil' TOML parser
      8→
-     9→**Table of Contents** *generated with [mdformat-toc](https://github.com/hukkin/mdformat-toc)*
-    10→
       →…
     32→## Intro<a name="intro"></a>
     34→Tomli is a Python library for parsing [TOML](https://toml.io).
     35→Version 2.4.0 and later are compatible with [TOML v1.1.0](https://toml.io/en/v1.1.0).
-    36→Older versions are [TOML v1.0.0](https://toml.io/en/v1.0.0) compatible.
-    37→
       →…
     50→## Installation<a name="installation"></a>
     52→```bash
     53→pip install tomli
-    54→```
-    55→
+      →…
     56→## Usage<a name="usage"></a>
     58→### Parse a TOML string<a name="parse-a-toml-string"></a>
     60→```python
@@ -52,26 +47,18 @@ README.md
     79→### Parse a TOML file<a name="parse-a-toml-file"></a>
     81→```python
     82→import tomli
-    83→
-    84→with open("path_to_file/conf.toml", "rb") as f:
       →…
     92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
     94→```python
     95→import tomli
-    96→
-    97→try:
       →…
    106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
    108→```python
    109→from decimal import Decimal
-   110→import tomli
-   111→
       →…
    123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
    125→Python versions 3.11+ ship with a version of Tomli:
    126→the `tomllib` standard library module.
-   127→To build code that uses the standard library if available,
-   128→but still works seamlessly with Python 3.6+,
       →…
    152→## FAQ<a name="faq"></a>
    154→### Why this parser?<a name="why-this-parser"></a>
@@ -89,36 +76,26 @@ README.md
    167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
    169→No.
    170→
-   171→The `tomli.loads` function returns a plain `dict` that is populated with builtin types and types from the standard library only.
-   172→Preserving comments requires a custom type to be returned so will not be supported,
       →…
    177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
    179→[Tomli-W](https://github.com/hukkin/tomli-w) is the write-only counterpart of Tomli, providing `dump` and `dumps` functions.
    180→
-   181→The core library does not include write capability, as most TOML use cases are read-only, and Tomli intends to be minimal.
-   182→
+      →…
    183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
    185→| TOML type        | Python type         | Details                                                      |
    186→| ---------------- | ------------------- | ------------------------------------------------------------ |
-   187→| Document Root    | `dict`              |                                                              |
-   188→| Key              | `str`               |                                                              |
       →…
    201→## Performance<a name="performance"></a>
    203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
    204→
-   205→Below are the results for commit [064e492](https://github.com/hukkin/tomli/tree/064e492919b2338def788753b8c981c9131334c0).
-   206→
+      →…
    207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
    209→```console
    210→foo@bar:~/dev/tomli$ python --version
-   211→Python 3.14.2
-   212→foo@bar:~/dev/tomli$ pip freeze
       →…
    230→### Pure Python<a name="pure-python"></a>
    232→```console
    233→foo@bar:~/dev/tomli$ python benchmark/run.py
-   234→Parsing data.toml 5000 times:
-   235→------------------------------------------------------
       →…
 fuzzer/fuzz.py
     20→def test_one_input(input_bytes: bytes) -> None:
@@ -151,7 +128,7 @@ fuzzer/fuzz.py
     47→        )
     48→        sys.stderr.flush()
     49→        print_err(data)
-      →…
+    50→        raise Exception("Dicts not equal after roundtrip")
     53→def print_err(data):
     54→    codepoints = [hex(ord(x)) for x in data]
     55→    sys.stderr.write(f"Input was {type(data)}:\n{data}\nCodepoints:\n{codepoints}\n")
@@ -239,6 +216,14 @@ src/tomli/_parser.py
     94→        if (
     95→            args
     96→            or not isinstance(msg, str)
+    97→            or not isinstance(doc, str)
+    98→            or not isinstance(pos, int)
+    99→        ):
+   100→            import warnings
+   101→
+   102→            warnings.warn(
+   103→                "Free-form arguments for TOMLDecodeError are deprecated. "
+   104→                "Please set 'msg' (str), 'doc' (str) and 'pos' (int) arguments only.",
       →…
    137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
    138→    """Parse TOML from a binary file object."""
@@ -257,7 +242,13 @@ src/tomli/_parser.py
    231→        self._pending_flags: set[tuple[Key, int]] = set()
    232→
    233→    def add_pending(self, key: Key, flag: int) -> None:
+   234→        self._pending_flags.add((key, flag))
+   235→
    236→    def finalize_pending(self) -> None:
+   237→        for key, flag in self._pending_flags:
+   238→            self.set(key, flag, recursive=False)
+   239→        self._pending_flags.clear()
+   240→
    241→    def unset_all(self, key: Key) -> None:
    249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
    260→    def is_(self, key: Key, flag: int) -> bool:
@@ -273,6 +264,14 @@ src/tomli/_parser.py
    287→        access_lists: bool = True,
    288→    ) -> dict[str, Any]:
    289→        cont: Any = self.dict
+   290→        for k in key:
+   291→            if k not in cont:
+   292→                cont[k] = {}
+   293→            cont = cont[k]
+   294→            if access_lists and isinstance(cont, list):
+   295→                cont = cont[-1]
+   296→            if not isinstance(cont, dict):
+   297→                raise KeyError("There is no nest behind this key")
    300→    def append_nest_to_list(self, key: Key) -> None:
    312→class Output:
    313→    def __init__(self) -> None:
@@ -333,7 +332,9 @@ src/tomli/_re.py
     19→:([0-5][0-9])                  # minutes
     20→(?:
     21→    :([0-5][0-9])              # optional seconds
-      →…
+    22→    (?:\.([0-9]{1,6})[0-9]*)?  # optional fractions of a second
+    23→)?
+    24→"""
     26→RE_NUMBER: Final = re.compile(
     27→    r"""
     28→0

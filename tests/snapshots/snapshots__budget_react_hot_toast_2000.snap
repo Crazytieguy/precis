@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1939 words)
+budget: 2000 (1940 words)
 
 README.md
     28→## Features
@@ -105,7 +105,6 @@ site/components/emoji-button.tsx
 site/components/sections/footer.tsx
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
      5→  return (
-     6→    <footer className="container relative justify-center my-8 flex flex-col items-center space-y-4">
       →…
 site/components/sections/splitbee-counter.tsx
      4→export const useSplitbeeCount = <T extends string>(
@@ -113,11 +112,9 @@ site/components/sections/splitbee-counter.tsx
      6→  token: string
      7→): number => {
      8→  const [data, setData] = React.useState<number>(0);
-     9→  const socket = React.useRef(null);
       →…
     36→export const SplitbeeCounter = () => {
     37→  const count = useSplitbeeCount('Trigger Toast', 'NTV7AYBLEXW3');
-    38→
       →…
 site/components/sections/toast-example.tsx
      7→const examples: Array<{
@@ -128,10 +125,10 @@ site/components/sections/toast-example.tsx
     12→}> = [
     13→  {
     14→    title: 'Success',
+    15→    emoji: '✅',
       →…
    270→export const ToastExample = () => {
    271→  const [snippet, setSnippet] = useState(examples[0].snippet);
-   272→  return (
       →…
 site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
@@ -144,7 +141,6 @@ site/components/sections/toaster-example.tsx
     15→];
     17→export const ToasterExample: React.FC<{
     18→  position: ToastPosition;
-    19→  onPosition: (pos: ToastPosition) => void;
       →…
 site/next.config.mjs
      5→const withMDX = nextMdx({
@@ -300,6 +296,8 @@ src/components/toast-icon.tsx
     54→    } else {
     55→      return icon;
     56→    }
+    57→  }
+    58→
       →…
 src/components/toaster.tsx
     15→const ToastWrapper …
@@ -316,6 +314,8 @@ src/components/toaster.tsx
     92→  containerStyle,
     93→  containerClassName,
     94→}) => {
+    95→  const { toasts, handlers } = useToaster(toastOptions, toasterId);
+    96→
       →…
 src/core/store.ts
      4→export const TOAST_EXPIRE_DISMISS_DELAY = 1000;
@@ -375,6 +375,7 @@ src/core/store.ts
     64→
     65→  switch (action.type) {
     66→    case ActionType.ADD_TOAST:
+    67→      return {
       →…
    136→const listeners: Array<
    137→  [toasterId: string, reducer: (state: ToasterState) => void]
@@ -391,6 +392,7 @@ src/core/store.ts
    151→    memoryState[toasterId] || defaultToasterState,
    152→    action
    153→  );
+   154→  listeners.forEach(([id, listener]) => {
       →…
    161→export const dispatchAll = (action: Action) =>
    162→  Object.keys(memoryState).forEach((toasterId) => dispatch(action, toasterId));
@@ -420,6 +422,7 @@ src/core/store.ts
    190→    memoryState[toasterId] || defaultToasterState
    191→  );
    192→  const initial = useRef(memoryState[toasterId]);
+   193→
       →…
 src/core/toast.ts
     19→type Message = ValueOrFunction<Renderable, Toast>;
@@ -536,6 +539,7 @@ src/core/use-toaster.ts
     13→  const toastTimeouts = useRef(
     14→    new Map<Toast['id'], ReturnType<typeof setTimeout>>()
     15→  ).current;
+    16→
       →…
 src/core/utils.ts
      1→export const genId = (() => {
