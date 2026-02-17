@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1836 words)
+budget: 2000 (1830 words)
 
 assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
@@ -197,9 +197,6 @@ state.ts
     82→      this.addToast({ title: message, ...rest, dismissible, id });
     83→    }
     84→
-    85→    return id;
-    86→  };
-    87→
     88→  dismiss = (id?: number | string) => {
     89→    if (id) {
     90→      this.dismissedToasts.add(id);

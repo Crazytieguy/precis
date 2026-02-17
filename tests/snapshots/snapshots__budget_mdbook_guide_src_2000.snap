@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1989 words)
+budget: 2000 (1987 words)
 
 404.md
      1→# Document not found (404) …
@@ -35,9 +35,6 @@ README.md
     27→* [Theme] files allow customizing the formatting of the output
     28→* [Preprocessors] can provide extensions for custom syntax and modifying content
     29→* [Backends] can render the output to multiple formats
-    30→* Written in [Rust] for speed, safety, and simplicity
-    31→* Automated testing of [Rust code samples]
-    32→
       →…
     46→## Contributing
     48→mdBook is free and open source. You can find the source code on
@@ -174,6 +171,7 @@ for_developers/mdbook-wordcount/src/main.rs
     16→        .get_deserialized("output.wordcount")
     17→        .unwrap_or_default();
     18→
+    19→    let _ = fs::create_dir_all(&ctx.destination);
       →…
     40→fn count_words(ch: &Chapter) -> usize {
     41→    ch.content.split_whitespace().count()
@@ -372,6 +370,7 @@ format/theme/README.md
     18→    - **_css/chrome.css_** is for UI elements.
     19→    - **_css/general.css_** is the base styles.
     20→    - **_css/print.css_** is the style for printer output.
+    21→    - **_css/variables.css_** contains variables used in other CSS files.
       →…
 format/theme/editor.md
      1→# Editor …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3776 words)
+budget: 4000 (3777 words)
 
 README.md
      5→## Usage
@@ -129,26 +129,31 @@ src/index.tsx
     50→  const [y, x] = position.split('-');
     51→  const directions: Array<SwipeDirection> = [];
     52→
+    53→  if (y) {
       →…
     64→const Toast = (props: ToastProps) => {
     65→  const {
     66→    invert: ToasterInvert,
     67→    toast,
+    68→    unstyled,
       →…
    507→function getDocumentDirection(): ToasterProps['dir'] {
    508→  if (typeof window === 'undefined') return 'ltr';
    509→  if (typeof document === 'undefined') return 'ltr'; // For Fresh purpose
    510→
+   511→  const dirAttribute = document.documentElement.getAttribute('dir');
       →…
    520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
    521→  const styles = {} as React.CSSProperties;
    522→
    523→  [defaultOffset, mobileOffset].forEach((offset, index) => {
+   524→    const isMobile = index === 1;
       →…
    552→function useSonner() {
    553→  const [activeToasts, setActiveToasts] = React.useState<ToastT[]>([]);
    554→
    555→  React.useEffect(() => {
+   556→    return ToastState.subscribe((toast) => {
       →…
    593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
    594→  const {
@@ -291,13 +296,6 @@ src/state.ts
    155→          shouldDismiss = false;
    156→
    157→          const promiseData =
-   158→            typeof data.error === 'function' ? await data.error(`HTTP error! status: ${response.status}`) : data.error;
-   159→
-   160→          const description =
-   161→            typeof data.description === 'function'
-   162→              ? await data.description(`HTTP error! status: ${response.status}`)
-   163→              : data.description;
-   164→
       →…
    243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
    244→    const id = data?.id || toastsCounter++;
@@ -949,6 +947,9 @@ website/src/components/Types/Types.tsx
     40→  {
     41→    name: 'Description',
     42→    snippet: `toast.message('Event has been created', {
+    43→  description: 'Monday, January 3rd at 6:00pm',
+    44→})`,
+    45→    action: () =>
       →…
 website/src/components/Usage/index.tsx
      3→export const Usage = () => {

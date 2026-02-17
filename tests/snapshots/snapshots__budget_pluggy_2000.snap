@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1926 words)
+budget: 2000 (1922 words)
 
 AGENTS.md
      1→# AGENTS.md
@@ -92,7 +92,7 @@ scripts/release.py
     24→    upstream.fetch()
     25→    release_branch = repo.create_head(branch_name, upstream.refs.main, force=True)
     26→    release_branch.checkout()
-    27→    return repo
+      →…
     30→def get_upstream(repo: Repo) -> Remote:
     31→    """Find upstream repository for pluggy on the remotes"""
     32→    for remote in repo.remotes:
@@ -127,7 +127,7 @@ scripts/release.py
     67→        print(f"{Fore.RED}ERROR: {e}")
     68→        return 1
     69→    else:
-    70→        return 0
+      →…
 scripts/towncrier-draft-to-file.py
      5→def main() -> int:
      6→    """

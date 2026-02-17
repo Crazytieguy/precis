@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4005 words)
+budget: 4000 (3992 words)
 
 src/browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -881,8 +881,6 @@ src/use-scale-background.ts
     41→              transform: `scale(${getScale()}) translate3d(0, calc(env(safe-area-inset-top) + 14px), 0)`,
     42→            }
     43→          : {
-    44→              transform: `scale(${getScale()}) translate3d(calc(env(safe-area-inset-top) + 14px), 0, 0)`,
-    45→            }),
       →…
 src/use-snap-points.ts
      7→export function useSnapPoints({
@@ -921,6 +919,4 @@ src/use-snap-points.ts
     40→          innerHeight: window.innerHeight,
     41→        }
     42→      : undefined,
-    43→  );
-    44→
       →…

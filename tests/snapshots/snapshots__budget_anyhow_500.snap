@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (485 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯ …
@@ -29,7 +29,6 @@ src/backtrace.rs
     71→mod capture {
     72→    use alloc::borrow::{Cow, ToOwned as _};
     73→    use alloc::vec::Vec;
-    74→    use backtrace::{BacktraceFmt, BytesOrWideString, Frame, PrintFmt, SymbolName};
     82→    pub(crate) struct Backtrace {
     83→        inner: Inner,
     84→    }

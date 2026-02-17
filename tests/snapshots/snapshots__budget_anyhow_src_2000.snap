@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1922 words)
+budget: 2000 (1906 words)
 
 backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
@@ -465,7 +465,6 @@ macros.rs
      2→///
      3→/// This macro is equivalent to
      4→/// <code>return Err([anyhow!($args\...)][anyhow!])</code>.
-     5→///
       →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
@@ -475,7 +474,6 @@ macros.rs
    175→/// value.
    176→///
    177→/// This evaluates to an [`Error`][crate::Error]. It can take either just a
-   178→/// string, or a format string with arguments. It also can take any custom type
       →…
    204→macro_rules! anyhow {
    228→#[doc(hidden)]

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3925 words)
+budget: 4000 (3866 words)
 
 CHANGELOG.md
      3→## mdBook 0.5.2 …
@@ -14,7 +14,8 @@ README.md
      9→Check out the **[User Guide]** for a list of features and installation and usage information.
     10→The User Guide also serves as a demonstration to showcase what a book looks like.
     11→
-      →…
+    12→If you are interested in contributing to the development of mdBook, check out the [Contribution Guide].
+    13→
     14→## License
     16→All the code in this repository is released under the ***Mozilla Public License v2.0***, for more information take a look at the [LICENSE] file.
     17→
@@ -146,7 +147,8 @@ crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     26→            cmd,
     27→            root,
     28→            optional,
-      →…
+    29→        }
+    30→    }
     51→    /// The command this `Preprocessor` will invoke.
     52→    pub fn cmd(&self) -> &str {
     53→        &self.cmd
@@ -176,17 +178,9 @@ crates/mdbook-driver/src/builtin_preprocessors/links.rs
     40→        LinkPreprocessor
     41→    }
    139→enum LinkType<'a> {
-   140→    Escaped,
-      →…
    148→enum RangeOrAnchor {
-   149→    Range(LineRange),
-      →…
    155→enum LineRange {
-   156→    Range(Range<usize>),
-      →…
    275→struct Link<'a> {
-   276→    start_index: usize,
-      →…
    398→struct LinkIter<'a>(CaptureMatches<'a, 'a>);
    401→    type Item = Link<'a>;
 crates/mdbook-driver/src/builtin_preprocessors/mod.rs
@@ -197,7 +191,7 @@ crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
      6→/// A renderer to output the Markdown after the preprocessors have run. Mostly useful
      7→/// when debugging preprocessors.
      8→#[derive(Default)]
-      →…
+     9→#[non_exhaustive]
     10→pub struct MarkdownRenderer;
     13→    /// Create a new `MarkdownRenderer` instance.
     14→    pub fn new() -> Self {
@@ -210,7 +204,8 @@ crates/mdbook-driver/src/builtin_renderers/mod.rs
     15→/// A generic renderer which will shell out to an arbitrary executable.
     16→///
     17→/// See <https://rust-lang.github.io/mdBook/for_developers/backends.html>
-      →…
+    18→/// for a description of the renderer protocol.
+    19→#[derive(Debug, Clone, PartialEq)]
     20→pub struct CmdRenderer {
     21→    name: String,
     22→    cmd: String,
@@ -304,11 +299,7 @@ crates/mdbook-html/src/html/admonitions.rs
     18→pub(crate) fn select_tag(kind: BlockQuoteKind) -> (&'static str, &'static str, &'static str) {
 crates/mdbook-html/src/html/mod.rs
     34→pub(crate) struct HtmlRenderOptions<'a> {
-    35→    /// Options for parsing markdown.
-      →…
     80→pub(crate) struct ChapterTree<'book> {
-    81→    pub(crate) chapter: &'book Chapter,
-      →…
 crates/mdbook-html/src/html/tokenizer.rs
     16→struct TokenCollector {
     22→    type Handle = ();
@@ -317,21 +308,15 @@ crates/mdbook-html/src/html/tree.rs
     24→/// Helper to create a [`QualName`].
     25→macro_rules! attr_qual_name {
     33→pub(crate) enum Node {
-    34→    /// An HTML [`Element`].
-      →…
     73→pub(crate) struct Element {
-    74→    /// The tag name.
-      →…
    125→/// A map of attributes on an [`Element`].
    126→type Attributes = IndexMap<QualName, StrTendril>;
    129→trait ToTendril {
    135→    fn into_tendril(self) -> StrTendril {
    150→enum TableState {
    160→pub(crate) struct MarkdownTreeBuilder<'opts, 'event, EventIter> {
-   161→    /// [`pulldown_cmark`] iterator of [`pulldown_cmark::Event`] elements.
-      →…
-   369→    fn start_tag(&mut self, tag: Tag<'event>) {
-   585→    fn end_tag(&mut self, tag: TagEnd) {
+   369→    fn start_tag …
+   585→    fn end_tag …
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     19→/// The HTML renderer for mdBook.
     20→#[derive(Default)]
@@ -498,7 +483,7 @@ crates/mdbook-markdown/src/lib.rs
     37→            definition_lists: true,
     38→            admonitions: true,
     39→        }
-      →…
+    40→    }
     43→/// Creates a new pulldown-cmark parser of the given text.
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
     45→    let mut opts = Options::empty();
@@ -704,8 +689,6 @@ guide/guide-helper/src/lib.rs
     14→    let book_version = Version::parse(&ctx.mdbook_version)?;
     15→    let version_req = VersionReq::parse(mdbook_preprocessor::MDBOOK_VERSION)?;
     16→
-    17→    if !version_req.matches(&book_version) {
-    18→        eprintln!(
       →…
     33→struct GuideHelper;
     35→impl Preprocessor for GuideHelper {
@@ -721,8 +704,6 @@ guide/guide-helper/src/main.rs
      1→//! Preprocessor for the mdBook guide.
      2→
      3→fn main() {
-     4→    let mut args = std::env::args().skip(1);
-      →…
 guide/src/README.md
      1→# Introduction
      3→<style>
@@ -827,7 +808,6 @@ src/cmd/clean.rs
     37→/// Returns a tuple of `(quantity, units)`.
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     39→    static UNITS: [&str; 7] = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"];
-    40→    let bytes = bytes as f32;
       →…
     45→#[derive(Debug)]
     46→pub struct Clean {
@@ -836,7 +816,6 @@ src/cmd/clean.rs
     49→    total_bytes_removed: u64,
     50→}
     52→impl Clean {
-    53→    fn new …
     91→impl fmt::Display for Clean {
 src/cmd/command_prelude.rs
      7→pub trait CommandExt: Sized {
@@ -853,13 +832,11 @@ src/cmd/command_prelude.rs
     41→    #[cfg(any(feature = "watch", feature = "serve"))]
     42→    fn arg_watcher(self) -> Self {
     43→        #[cfg(feature = "watch")]
-    44→        return self._arg(
       →…
     56→impl CommandExt for Command {
 src/cmd/init.rs
     88→fn get_author_name() -> Option<String> {
    102→fn request_book_title() -> Option<String> {
-   116→fn confirm …
 src/cmd/mod.rs
      1→//! Subcommand modules for the `mdbook` binary.
      2→
@@ -881,7 +858,6 @@ src/cmd/serve.rs
    112→    reload_tx: broadcast::Sender<Message>,
    113→    file_404: &str,
    114→) {
-   142→async fn websocket_connection …
 src/cmd/watch/native.rs
     11→pub fn rebuild_on_change(
     12→    book_dir: &Path,
@@ -930,7 +906,6 @@ src/cmd/watch.rs
     23→    Native,
     24→}
     26→impl WatcherKind {
-    74→fn find_gitignore …
 src/main.rs
     14→mod cmd;
     16→const VERSION: &str = concat!("v", clap::crate_version!());

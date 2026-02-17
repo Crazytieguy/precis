@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1997 words)
+budget: 2000 (1961 words)
 
 CONTRIBUTING.md
      1→# Contributing
@@ -110,6 +110,7 @@ Readme_zh-CN.md
    917→例如：
    918→
    919→```js
+   920→program.parse(process.argv); // 指明，按 node 约定
       →…
 SECURITY.md
      1→# Security Policy
@@ -165,80 +166,98 @@ docs/zh-CN/不再推荐使用的功能.md
      1→# 不再推荐使用的功能
      3→本文中列出的功能不再推荐使用。它们在 Commander 未来的主要版本（major version）中可能被移除。为保证后向兼容，这些功能目前还可以使用，但它们不应被用在新代码中。
      4→
+     5→- [不再推荐使用的功能](#%E4%B8%8D%E5%86%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8%E7%9A%84%E5%8A%9F%E8%83%BD)
       →…
     18→## .option() 方法的正则表达式参数
     20→`.option()`方法可以接受一个正则表达式作为第三个参数，以规定可以接受的选项参数值。
     21→
+    22→```js
       →…
     30→## noHelp
     32→此选项曾被用作传入`.command()`方法，以在内建的帮助信息中隐藏该命令：
     33→
+    34→```js
       →…
     40→## 默认导入的全局 Command 对象
     42→Commander 的默认导入曾是一个全局的`Command`对象。
     43→
+    44→```js
       →…
     61→## .help() 与 .outputHelp() 的回调函数参数
     63→这两个方法曾允许传入一个回调函数，以在展示前处理帮助信息。
     64→
+    65→```js
       →…
     79→## .on('--help')
     81→此功能曾被用作在内建的帮助信息后输出自定义的帮助信息。自 Commander v3.0.0 起，如果有自定义的帮助选项，则此方法使用该自定义的帮助选项。
     82→
+    83→```js
       →…
    104→## .on('command:*')
    106→当命令参数与已知子命令不匹配时发出此消息（作为 `.command('')` 实现的一部分）。
    107→
+   108→一种用途是为未知子命令添加错误。错误现在是默认的内置行为。
       →…
    114→## .command('*')
    116→这用于向程序添加默认命令。
    117→
+   118→```js
       →…
    134→## cmd.description(cmdDescription, argDescriptions)
    136→此功能曾用来为命令参数添加描述信息。
    137→
+   138→```js
       →…
    157→## InvalidOptionArgumentError
    159→此类曾被用来在自定义选项处理中抛出错误，以显示错误信息。
    160→
+   161→```js
       →…
    187→## 短选项标志长于单个字符
    189→短选项从未支持像 `-ws` 的标识，但旧的 README 并没有明确说明这一点。README 现在声明短选项是单个字符。
    190→
-      →…
+   191→README 在 Commander v3 更新。自 Commander v9 起不再推荐使用。
 docs/zh-CN/可变参数的选项.md
      1→# 可变参数的选项
      3→README 文档介绍了选项的声明与使用。大多数情况下，选项的解析行为，与您和您程序用户的期望相符。本文将详述一些特殊用例和细节问题。
      4→
+     5→- [可变参数的选项](#%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E7%9A%84%E9%80%89%E9%A1%B9)
       →…
     26→## 解析中的歧义
     28→解析选项时，有一些潜在的问题值得注意。当一个命令既有命令参数，又有选项的时候，在解析过程中有可能出现歧义。这可能会影响用户使用您的程序。
     29→Commander 首先解析选项的参数，而用户有可能想将选项后面跟的参数作为命令，或是作为命令参数进行解析。
+    30→
       →…
     73→### 方案一：让`--`成为语法的一部分
     75→与其让用户理解`--`的用法，您也可以直接把它作为程序语法的一部分。
     76→
+    77→```js
       →…
     98→### 方案二：把选项放在最后
    100→Commander 遵循 GNU 解析命令的惯例，允许选项出现在命令参数之前或者之后，也可以将选项和命令参数相互穿插。
    101→因此，通过要求把选项放在最后，命令参数就不会和选项参数相混淆。
+   102→
       →…
    120→### 方案三：使用选项替代命令参数
    122→这个方案虽然有点激进，但是可以完美避免解析中的歧义。
    123→
+   124→```js
       →…
    142→## 合并短选项和带有参数的选项
    144→多个 boolean 型的短选项可以合并起来写在同一个`-`号后面，比如`ls -al`。同时，你也可以在其中包括一个接受参数的短选项，此时，任何跟在其后的字符都将被视作这个选项的值。
    145→
+   146→这就是说，默认情况下并不可以把多个带参数的选项合并起来。
       →…
    183→### 将短选项视作 boolean 类型选项合并
    185→在 Commander v5 之前，并不支持合并短选项和值。合并的 boolean 类型选项会被展开。
    186→因此，`-avl`将被展开为`-a -v -l`。
+   187→
       →…
 docs/zh-CN/术语表.md
      1→# 术语表
      3→命令行参数由选项（options）、选项参数（option-arguments）、命令（commands），以及命令参数（command-arguments）组成。
      4→
+     5→|术语|解释|
       →…
 eslint.config.js
      8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
@@ -248,7 +267,10 @@ jest.config.js
      2→  testEnvironment: 'node',
      3→  collectCoverage: true,
      4→  transform: {
-      →…
+     5→    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.ts.json' }],
+     6→  },
+     7→  testPathIgnorePatterns: ['/node_modules/'],
+     8→};
 lib/argument.js
      3→class Argument {
      4→  /**
@@ -273,16 +295,6 @@ lib/error.js
      8→   * @param {string} code an id string representing the error
      9→   * @param {string} message human-readable description of the error
     10→   */
-    11→  constructor(exitCode, code, message) {
-    12→    super(message);
-    13→    // properly capture stack trace in Node.js
-    14→    Error.captureStackTrace(this, this.constructor);
-    15→    this.name = this.constructor.name;
-    16→    this.code = code;
-    17→    this.exitCode = exitCode;
-    18→    this.nestedError = undefined;
-    19→  }
-    20→}
     25→class InvalidArgumentError extends CommanderError {
     26→  /**
     27→   * Constructs the InvalidArgumentError class
@@ -290,11 +302,7 @@ lib/error.js
     29→   */
     30→  constructor(message) {
     31→    super(1, 'commander.invalidArgument', message);
-    32→    // properly capture stack trace in Node.js
-    33→    Error.captureStackTrace(this, this.constructor);
-    34→    this.name = this.constructor.name;
-    35→  }
-    36→}
+      →…
 lib/help.js
     12→class Help {
     13→  constructor() {
@@ -324,21 +332,6 @@ lib/option.js
    272→  constructor(options) {
    273→    this.positiveOptions = new Map();
    274→    this.negativeOptions = new Map();
-   275→    this.dualOptions = new Set();
-   276→    options.forEach((option) => {
-   277→      if (option.negate) {
-   278→        this.negativeOptions.set(option.attributeName(), option);
-   279→      } else {
-   280→        this.positiveOptions.set(option.attributeName(), option);
-   281→      }
-   282→    });
-   283→    this.negativeOptions.forEach((value, key) => {
-   284→      if (this.positiveOptions.has(key)) {
-   285→        this.dualOptions.add(key);
-   286→      }
-   287→    });
-   288→  }
-   289→
    308→/**
       →…
    316→function camelcase(str) {
@@ -349,6 +342,9 @@ lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
      4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
+     5→  // Calculating optimal string alignment distance, no substring is edited more than once.
+     6→  // (Simple implementation.)
+     7→
       →…
     48→/**
       →…

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1013 words)
+budget: 1000 (994 words)
 
 components/checkmark.tsx
      3→const circleAnimation = keyframes`
@@ -15,7 +15,6 @@ components/checkmark.tsx
     35→  width: 20px;
     36→  opacity: 0;
     37→  height: 20px;
-    38→  border-radius: 10px;
       →…
 components/error.tsx
      3→const circleAnimation = keyframes`
@@ -29,7 +28,6 @@ components/error.tsx
     39→  width: 20px;
     40→  opacity: 0;
     41→  height: 20px;
-    42→  border-radius: 10px;
       →…
 components/loader.tsx
      3→const rotate = keyframes`
@@ -41,7 +39,6 @@ components/loader.tsx
     18→  width: 12px;
     19→  height: 12px;
     20→  box-sizing: border-box;
-    21→  border: 2px solid;
       →…
 components/toast-bar.tsx
      8→const enterAnimation = (factor: number) => `
@@ -75,7 +72,6 @@ components/toast-bar.tsx
     76→  ({ toast, position, style, children }) => {
     77→    const animationStyle: React.CSSProperties = toast.height
     78→      ? getAnimationStyle(
-    79→          toast.position || position || 'top-center',
       →…
 components/toast-icon.tsx
      9→const StatusWrapper = styled('div')`
@@ -85,7 +81,6 @@ components/toast-icon.tsx
     33→  position: relative;
     34→  transform: scale(0.6);
     35→  opacity: 0.4;
-    36→  min-width: 20px;
       →…
     41→export type IconThemes = Partial<{
     42→  success: CheckmarkTheme;

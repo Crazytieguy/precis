@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3630 words)
+budget: 4000 (3617 words)
 
 core/Ky.ts
     33→export class Ky {
@@ -99,6 +99,17 @@ core/Ky.ts
    124→			return response;
    125→		};
    126→
+   127→		// Always wrap in #retry to catch forced retries from afterResponse hooks
+   128→		// Method retriability is checked in #calculateRetryDelay for non-forced retries
+   129→		const result = ky.#retry(function_)
+   130→			.finally(() => {
+   131→				const originalRequest = ky.#originalRequest;
+   132→
+   133→				// Ignore cancellation errors from already-locked or already-consumed streams.
+   134→				ky.#cancelBody(originalRequest?.body ?? undefined);
+   135→				ky.#cancelBody(ky.request.body ?? undefined);
+   136→			}) as ResponsePromise;
+   137→
    178→	static #normalizeSearchParams(searchParams: SearchParamsOption): SearchParamsOption {
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
@@ -475,6 +486,7 @@ index.ts
     16→		ky[method] = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options, {method}));
     17→	}
     18→
+    19→	ky.create = (newDefaults?: Partial<Options>) => createInstance(validateAndMerge(newDefaults));
       →…
     34→const ky = createInstance();
 types/ResponsePromise.ts
@@ -580,8 +592,6 @@ utils/body.ts
      5→export const getBodySize = (body?: BodyInit | null): number => {
      6→	if (!body) {
      7→		return 0;
-     8→	}
-     9→
       →…
     57→const withProgress = (stream: ReadableStream<Uint8Array>, totalBytes: number, onProgress: Options['onDownloadProgress'] | Options['onUploadProgress']): ReadableStream<Uint8Array> => {
     58→	let previousChunk: Uint8Array | undefined;
@@ -595,14 +605,10 @@ utils/body.ts
     90→export const streamResponse = (response: Response, onDownloadProgress: Options['onDownloadProgress']) => {
     91→	if (!response.body) {
     92→		return response;
-    93→	}
-    94→
       →…
    119→export const streamRequest = (request: Request, onUploadProgress: Options['onUploadProgress'], originalBody?: BodyInit | null) => {
    120→	if (!request.body) {
    121→		return request;
-   122→	}
-   123→
       →…
 utils/delay.ts
      5→export type DelayOptions = {
@@ -614,8 +620,6 @@ utils/delay.ts
     12→): Promise<void> {
     13→	return new Promise((resolve, reject) => {
     14→		if (signal) {
-    15→			signal.throwIfAborted();
-    16→			signal.addEventListener('abort', abortHandler, {once: true});
       →…
 utils/is.ts
      2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
@@ -623,14 +627,10 @@ utils/merge.ts
      6→export const validateAndMerge = (...sources: Array<Partial<Options> | undefined>): Partial<Options> => {
      7→	for (const source of sources) {
      8→		if ((!isObject(source) || Array.isArray(source)) && source !== undefined) {
-     9→			throw new TypeError('The `options` argument must be an object');
-    10→		}
       →…
     16→export const mergeHeaders = (source1: KyHeadersInit = {}, source2: KyHeadersInit = {}) => {
     17→	const result = new globalThis.Headers(source1 as RequestInit['headers']);
     18→	const isHeadersInstance = source2 instanceof globalThis.Headers;
-    19→	const source = new globalThis.Headers(source2 as RequestInit['headers']);
-    20→
       →…
     32→function newHookValue<K extends keyof Hooks>(original: Hooks, incoming: Hooks, property: K): Required<Hooks>[K] {
     33→	return (Object.hasOwn(incoming, property) && incoming[property] === undefined)
@@ -641,8 +641,6 @@ utils/merge.ts
     39→	{
     40→		beforeRequest: newHookValue(original, incoming, 'beforeRequest'),
     41→		beforeRetry: newHookValue(original, incoming, 'beforeRetry'),
-    42→		afterResponse: newHookValue(original, incoming, 'afterResponse'),
-    43→		beforeError: newHookValue(original, incoming, 'beforeError'),
       →…
     47→const appendSearchParameters = (target: any, source: any): URLSearchParams => {
     48→	const result = new URLSearchParams();
@@ -656,8 +654,6 @@ utils/merge.ts
     86→export const deepMerge = <T>(...sources: Array<Partial<T> | undefined>): T => {
     87→	let returnValue: any = {};
     88→	let headers = {};
-    89→	let hooks = {};
-    90→	let searchParameters: any;
       →…
 utils/normalize.ts
      5→export const normalizeRequestMethod = (input: string): string =>
@@ -680,8 +676,6 @@ utils/normalize.ts
     28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
     29→	if (typeof retry === 'number') {
     30→		return {
-    31→			...defaultRetryOptions,
-    32→			limit: retry,
       →…
 utils/options.ts
      4→export const findUnknownOptions = (
@@ -690,14 +684,10 @@ utils/options.ts
      7→): Record<string, unknown> => {
      8→	const unknownOptions: Record<string, unknown> = {};
      9→
-    10→	for (const key in options) {
-    11→		// Skip inherited properties
       →…
     30→export const hasSearchParameters = (search: SearchParamsOption): boolean => {
     31→	if (search === undefined) {
     32→		return false;
-    33→	}
-    34→
       →…
 utils/timeout.ts
      3→export type TimeoutOptions = {
@@ -712,8 +702,6 @@ utils/timeout.ts
     14→): Promise<Response> {
     15→	return new Promise((resolve, reject) => {
     16→		const timeoutId = setTimeout(() => {
-    17→			if (abortController) {
-    18→				abortController.abort();
       →…
 utils/type-guards.ts
      5→/**

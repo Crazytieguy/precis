@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (489 words)
+budget: 500 (482 words)
 
 README.md
      1→# mdBook …
@@ -35,7 +35,8 @@ crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
 crates/mdbook-driver/src/builtin_renderers/mod.rs
     20→pub struct CmdRenderer {
     21→    name: String,
-      →…
+    22→    cmd: String,
+    23→}
 crates/mdbook-driver/src/init.rs
     13→pub struct BookBuilder {
 crates/mdbook-driver/src/lib.rs
@@ -77,8 +78,6 @@ crates/mdbook-html/src/theme/mod.rs
     11→#[cfg(feature = "search")]
     12→pub(crate) mod searcher;
     40→pub struct Theme {
-    41→    pub(crate) index: Vec<u8>,
-      →…
    201→    fn default() -> Theme {
 crates/mdbook-html/src/utils.rs
      7→pub(crate) fn normalize_path …
@@ -140,8 +139,6 @@ guide/src/cli/README.md
      1→# Command-line tool …
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     46→pub struct WordcountConfig {
-    47→    pub ignores: Vec<String>,
-      →…
 guide/src/format/README.md
      1→# Format …
 guide/src/format/configuration/README.md

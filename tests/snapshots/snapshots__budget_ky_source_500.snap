@@ -2,14 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (475 words)
+budget: 500 (466 words)
 
 core/Ky.ts
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {
     35→		const ky = new Ky(input, options);
     36→
-    37→		const function_ = async (): Promise<Response> => {
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→

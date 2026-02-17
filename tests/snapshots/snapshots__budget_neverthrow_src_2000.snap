@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1880 words)
+budget: 2000 (1863 words)
 
 _internals/error.ts
      3→export interface ErrorConfig {
@@ -132,7 +132,6 @@ result-async.ts
     42→    return new ResultAsync(newPromise)
     43→  }
     44→
-    45→  // eslint-disable-next-line @typescript-eslint/no-explicit-any
     46→  static fromThrowable …
     69→  static combine …
     81→  static combineWithAllErrors …
@@ -323,7 +322,6 @@ result.ts
    332→  andThen<R extends Result<unknown, unknown>>(
    333→    f: (t: T) => R,
    334→  ): Result<InferOkTypes<R>, InferErrTypes<R> | E>
-   335→  andThen<U, F>(f: (t: T) => Result<U, F>): Result<U, E | F>
    337→  andThen …
    344→  andThrough …
    348→  andTee …
@@ -360,7 +358,6 @@ result.ts
    439→  andThrough<F>(_f: (t: T) => Result<unknown, F>): Result<T, E | F> {
    440→    return err(this.error)
    441→  }
-   442→
    443→  andTee …
    447→  orTee …
    461→  andThen …

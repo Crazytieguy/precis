@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1953 words)
+budget: 2000 (1942 words)
 
 README.md
      1→log
@@ -410,9 +410,6 @@ src/lib.rs
   1490→        Ordering::Acquire,
   1491→        Ordering::Relaxed,
   1492→    ) {
-  1493→        Ok(UNINITIALIZED) => {
-  1494→            unsafe {
-  1495→                LOGGER = make_logger();
       →…
   1549→pub struct SetLoggerError(());
   1558→#[cfg(feature = "std")]

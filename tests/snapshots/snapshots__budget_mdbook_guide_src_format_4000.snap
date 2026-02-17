@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3956 words)
+budget: 4000 (3853 words)
 
 README.md
      1→# Format
@@ -30,7 +30,6 @@ configuration/environment-variables.md
      4→corresponding environment variable. Because many operating systems restrict
      5→environment variables to be alphanumeric characters or `_`, the configuration
      6→key needs to be formatted slightly differently to the normal `foo.bar.baz` form.
-     7→
       →…
 configuration/general.md
      1→# General configuration
@@ -38,7 +37,6 @@ configuration/general.md
      4→
      5→Here is an example of what a ***book.toml*** file might look like:
      6→
-     7→```toml
       →…
     31→## Supported configuration options
     33→It is important to note that **any** relative path specified in the
@@ -50,21 +48,18 @@ configuration/general.md
     40→
     41→- **title:** The title of the book
     42→- **authors:** The author(s) of the book
-    43→- **description:** A description for the book, which is added as meta
       →…
     64→### Rust options
     66→Options for the Rust language, relevant to running tests and playground
     67→integration.
     68→
     69→```toml
-    70→[rust]
       →…
     85→### Build options
     87→This controls the build process of your book.
     88→
     89→```toml
     90→[build]
-    91→build-dir = "book"                # the directory where the output is placed
       →…
 configuration/preprocessors.md
      1→# Configuring Preprocessors
@@ -72,42 +67,36 @@ configuration/preprocessors.md
      4→
      5→The following preprocessors are built-in and included by default:
      6→
-     7→- `links`: Expands the `{{ #playground }}`, `{{ #include }}`, and `{{ #rustdoc_include }}` handlebars
       →…
     26→## Custom preprocessor configuration
     28→Preprocessors can be added by including a `preprocessor` table in `book.toml` with the name of the preprocessor.
     29→For example, if you have a preprocessor called `mdbook-example`, then you can include it with:
     30→
     31→```toml
-    32→[preprocessor.example]
       →…
     45→## Locking a preprocessor dependency to a renderer
     47→You can explicitly specify that a preprocessor should run for a renderer by
     48→binding the two together.
     49→
     50→```toml
-    51→[preprocessor.example]
       →…
     55→## Provide your own command
     57→By default when you add a `[preprocessor.foo]` table to your `book.toml` file,
     58→`mdbook` will try to invoke the `mdbook-foo` executable. If you want to use a
     59→different program name or pass in command-line arguments, this behaviour can
     60→be overridden by adding a `command` field.
-    61→
       →…
     67→### Optional preprocessors
     69→If you enable a preprocessor that isn't installed, the default behavior is to throw an error.
     70→This behavior can be changed by marking the preprocessor as optional:
     71→
     72→```toml
-    73→[preprocessor.example]
       →…
     79→## Require a certain order
     81→The order in which preprocessors are run can be controlled with the `before` and `after` fields.
     82→For example, suppose you want your `linenos` preprocessor to process lines that may have been `{{#include}}`d; then you want it to run after the built-in `links` preprocessor, which you can require using either the `before` or `after` field:
     83→
     84→```toml
-    85→[preprocessor.linenos]
       →…
 configuration/renderers.md
      1→# Configuring Renderers
@@ -115,91 +104,78 @@ configuration/renderers.md
      4→
      5→The following backends are built-in:
      6→
-     7→* [`html`](#html-renderer-options) --- This renders the book to HTML.
       →…
     20→## Output tables
     22→Backends can be added by including a `output` table in `book.toml` with the name of the backend.
     23→For example, if you have a backend called `mdbook-wordcount`, then you can include it with:
     24→
     25→```toml
-    26→[output.wordcount]
       →…
     59→### Custom backend commands
     61→By default when you add an `[output.foo]` table to your `book.toml` file,
     62→`mdbook` will try to invoke the `mdbook-foo` executable.
     63→If you want to use a different program name or pass in command-line arguments,
     64→this behaviour can be overridden by adding a `command` field.
-    65→
       →…
     71→### Optional backends
     73→If you enable a backend that isn't installed, the default behavior is to throw an error.
     74→This behavior can be changed by marking the backend as optional:
     75→
     76→```toml
-    77→[output.wordcount]
       →…
     84→## HTML renderer options
     86→The HTML renderer has a variety of options detailed below.
     87→They should be specified in the `[output.html]` table of the `book.toml` file.
     88→
     89→```toml
-    90→# Example book.toml file with all output options.
       →…
    176→### `[output.html.print]`
    178→The `[output.html.print]` table provides options for controlling the printable output.
    179→By default, mdBook will include an icon on the top right of the book (which looks like <i class="fas fa-print"></i>) that will print the book as a single page.
    180→
    181→```toml
-   182→[output.html.print]
       →…
    191→### `[output.html.fold]`
    193→The `[output.html.fold]` table provides options for controlling folding of the chapter listing in the navigation sidebar.
    194→
    195→```toml
    196→[output.html.fold]
-   197→enable = false    # whether or not to enable section folding
       →…
    206→### `[output.html.playground]`
    208→The `[output.html.playground]` table provides options for controlling Rust sample code blocks, and their integration with the [Rust Playground].
    209→
    210→[Rust Playground]: https://play.rust-lang.org/
    211→
-   212→```toml
       →…
    230→### `[output.html.code]`
    232→The `[output.html.code]` table provides options for controlling code blocks.
    233→
    234→```toml
    235→[output.html.code]
-   236→# A prefix string per language (one or more chars).
       →…
    244→### `[output.html.search]`
    246→The `[output.html.search]` table provides options for controlling the built-in text [search].
    247→mdBook must be compiled with the `search` feature enabled (on by default).
    248→
    249→[search]: ../../guide/reading.md#search
-   250→
       →…
    286→#### `[output.html.search.chapter]`
    288→The [`output.html.search.chapter`] table provides the ability to modify search settings per chapter or directory. Each key is the path to the chapter source file or directory, and the value is a table of settings to apply to that path. This will merge recursively, with more specific paths taking precedence.
    289→
    290→```toml
    291→[output.html.search.chapter]
-   292→# Disables search indexing for all chapters in the `appendix` directory.
       →…
    300→### `[output.html.redirect]`
    302→The `[output.html.redirect]` table provides a way to add redirects.
    303→This is useful when you move, rename, or remove a page to ensure that links to the old URL will go to the new location.
    304→
    305→```toml
-   306→[output.html.redirect]
       →…
    325→## Markdown renderer
    327→The Markdown renderer will run preprocessors and then output the resulting
    328→Markdown. This is mostly useful for debugging preprocessors, especially in
    329→conjunction with `mdbook test` to see the Markdown that `mdbook` is passing
    330→to `rustdoc`.
-   331→
       →…
 example.rs
      1→fn main() {

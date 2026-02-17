@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2000 words)
+budget: 2000 (1976 words)
 
 README.md
    417→### `match`
@@ -57,7 +57,8 @@ README.md
   1648→  );
   1649→```
   1650→
-      →…
+  1651→Although not strictly necessary, using `as const` after the pattern definition ensures that TS-Pattern infers the most precise types possible.
+  1652→
 docs/roadmap.md
      1→### Roadmap …
 docs/v3-to-v4-migration-guide.md
@@ -76,11 +77,6 @@ docs/v3-to-v4-migration-guide.md
     16→-   .with(__.string, (v) => v)
     17→-   .with(__.number, (v) => `${v}`)
     18→+   .with(Pattern.string, (v) => v)
-    19→+   .with(Pattern.number, (v) => `${v}`)
-    20→    .exhaustive();
-    21→```
-    22→
-    23→or
       →…
     39→#### `__` …
     57→#### `select()`, `not()`, `when()` …
@@ -102,11 +98,6 @@ docs/v3-to-v4-migration-guide.md
    139→      title: P.string,
    140→      content: P.string,
    141→    }),
-   142→  }),
-   143→};
-   144→
-   145→fetchSomething().then((value: unknown) =>
-   146→  match(value)
       →…
    157→### Optional object properties …
    159→#### `P.optional(pattern)`
@@ -122,11 +113,6 @@ docs/v3-to-v4-migration-guide.md
    170→    .with(
    171→      {
    172→        type: 'user',
-   173→        detail: {
-   174→          bio: P.optional(P.string),
-   175→          socialLinks: P.optional({
-   176→            twitter: P.select(),
-   177→          }),
       →…
    197→### Union & intersection patterns …
    201→#### `P.union(...patterns)` …
@@ -146,11 +132,6 @@ docs/v3-to-v4-migration-guide.md
    309→  likeCount: P.number,
    310→};
    311→
-   312→type Post = P.infer<typeof postPattern>;
-   313→// Post: { title: string, description?: string, content: string, likeCount: number }
-   314→
-   315→const userPattern = {
-   316→  name: P.string,
       →…
    334→### New type specific wildcards …
    336→#### `P.symbol`
@@ -205,6 +186,7 @@ src/internals/helpers.ts
     17→  x: unknown
     18→): x is Matcher<unknown, unknown, MatcherType, SelectionType> => {
     19→  const pattern = x as Matcher<unknown, unknown, MatcherType, SelectionType>;
+    20→  return pattern && !!pattern[symbols.matcher];
       →…
     24→const isOptionalPattern = (
     25→  x: unknown
@@ -217,9 +199,11 @@ src/internals/helpers.ts
     35→  select: (key: string, value: unknown) => void
     36→): boolean => {
     37→  if (isMatcher(pattern)) {
+    38→    const matcher = pattern[symbols.matcher]();
       →…
    120→export const getSelectionKeys = (pattern: any): string[] => {
    121→  if (isObject(pattern)) {
+   122→    if (isMatcher(pattern)) {
       →…
    132→export const flatMap = <a, b>(
    133→  xs: readonly a[],

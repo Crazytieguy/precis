@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3971 words)
+budget: 4000 (3941 words)
 
 README.md
     28→## Features
@@ -96,12 +96,6 @@ site/components/code.tsx
     30→      },
     31→    },
     32→    {
-    33→      types: ['property', 'function'],
-    34→      style: {
-    35→        color: '#9a86fd',
-    36→      },
-    37→    },
-    38→    {
       →…
    104→export const Code: React.FC<{
    105→  snippet: string;
@@ -341,7 +335,6 @@ site/components/sections/toast-example.tsx
     34→  saveSettings(settings),
     35→   {
     36→     loading: 'Saving...',
-    37→     success: <b>Settings saved!</b>,
       →…
    270→export const ToastExample = () => {
    271→  const [snippet, setSnippet] = useState(examples[0].snippet);
@@ -689,7 +682,6 @@ src/components/toast-bar.tsx
     63→
     64→  const [enter, exit] = prefersReducedMotion()
     65→    ? [fadeInAnimation, fadeOutAnimation]
-    66→    : [enterAnimation(factor), exitAnimation(factor)];
       →…
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
@@ -792,7 +784,6 @@ src/components/toaster.tsx
     18→  style,
     19→  onHeightUpdate,
     20→  children,
-    21→}: ToastWrapperProps) => {
       →…
     47→const getPositionStyle = (
     48→  position: ToastPosition,
@@ -803,7 +794,6 @@ src/components/toaster.tsx
     53→  const horizontalStyle: React.CSSProperties = position.includes('center')
     54→    ? {
     55→        justifyContent: 'center',
-    56→      }
       →…
     76→const activeClass = css`
     77→  z-index: 9999;

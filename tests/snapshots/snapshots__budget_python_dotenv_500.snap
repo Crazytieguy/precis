@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (480 words)
 
 CHANGELOG.md
     21→### Fixed …
@@ -61,7 +61,6 @@ src/dotenv/__init__.py
     43→    "get_cli_string",
     44→    "load_dotenv",
     45→    "dotenv_values",
-    46→    "get_key",
       →…
 src/dotenv/cli.py
     60→@click.version_option(version=__version__)
@@ -127,8 +126,6 @@ src/dotenv/main.py
     45→class DotEnv:
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
-    65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
-      →…
    141→@contextmanager
    142→def rewrite(
    143→    path: StrPath,
@@ -149,7 +146,6 @@ src/dotenv/variables.py
      6→    r"""
      7→    \$\{
      8→        (?P<name>[^\}:]*)
-     9→        (?::-
       →…
     18→class Atom(metaclass=ABCMeta):
     25→    @abstractmethod

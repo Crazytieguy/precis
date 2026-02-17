@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (985 words)
+budget: 1000 (980 words)
 
 __init__.py
     34→config: TypeCheckConfiguration
@@ -45,9 +45,9 @@ _checkers.py
    121→    "__itruediv__",
    122→    "__ixor__",
    123→    "__le__",
+   124→    "__lshift__",
       →…
    586→def _is_literal_type(typ: object) -> bool:
-   587→    return typ is typing.Literal or typ is typing_extensions.Literal
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
   1006→    Any, Callable[[Any, Any, tuple[Any, ...], TypeCheckMemo], None]
@@ -74,6 +74,7 @@ _checkers.py
   1027→    Sequence: check_sequence,
   1028→    collections.abc.Sequence: check_sequence,
   1029→    collections.abc.Set: check_set,
+  1030→    set: check_set,
       →…
 _config.py
     11→T = TypeVar("T")
@@ -150,7 +151,8 @@ _importhook.py
     93→            print("----------------------------------------------", file=sys.stderr)
     94→
     95→        return _call_with_frames_removed(
-      →…
+    96→            compile, tree, filename, "exec", 0, dont_inherit=True
+    97→        )
    109→class TypeguardFinder(MetaPathFinder):
    119→
    156→class ImportHookManager:
@@ -276,15 +278,12 @@ _transformer.py
    523→
    524→        if isinstance(node, (FunctionDef, AsyncFunctionDef)):
    525→            new_memo.should_instrument = (
+   526→                self._target_path is None or new_memo.path == self._target_path
+   527→            )
+   528→            if new_memo.should_instrument:
       →…
    570→    def _get_import(self, module: str, name: str) -> Name:
-   571→        memo = self._memo if self._target_path else self._module_memo
-   572→        return memo.get_import(module, name)
    580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
-   581→        if annotation is None:
-   582→            return None
-   583→
-      →…
 _utils.py
    173→class Unset:
    174→    __slots__ = ()

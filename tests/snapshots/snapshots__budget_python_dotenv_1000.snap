@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (980 words)
+budget: 1000 (953 words)
 
 CHANGELOG.md
     21→### Fixed
@@ -39,11 +39,7 @@ CONTRIBUTING.md
     28→
     29→```shell
     30→$ uv pip install -r requirements-docs.txt
-    31→$ uv pip install -e .
-    32→$ uv run mkdocs serve
-    33→```
-    34→
-    35→Open http://127.0.0.1:8000/ to view the documentation locally.
+      →…
 README.md
      1→# python-dotenv
      3→[![Build Status][build_status_badge]][build_status_link]
@@ -220,7 +216,6 @@ src/dotenv/main.py
     70→        else:
     71→            if self.verbose:
     72→                logger.info(
-    73→                    "python-dotenv could not find configuration file %s.",
       →…
    141→@contextmanager
    142→def rewrite(

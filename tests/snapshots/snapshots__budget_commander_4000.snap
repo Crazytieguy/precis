@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3917 words)
+budget: 4000 (3890 words)
 
 CONTRIBUTING.md
      1→# Contributing
@@ -291,10 +291,6 @@ lib/argument.js
      6→   * The default is that the argument is required, and you can explicitly
      7→   * indicate this with <> around the name. Put [] around the name for an optional argument.
      8→   *
-     9→   * @param {string} name
-    10→   * @param {string} [description]
-    11→   */
-    12→
     13→  constructor(name, description) {
     48→  name() {
     56→  _collectValue(value, previous) {
@@ -312,8 +308,6 @@ lib/argument.js
    141→ */
    142→
    143→function humanReadableArgName(arg) {
-   144→  const nameOutput = arg.name() + (arg.variadic === true ? '...' : '');
-      →…
 lib/command.js
     13→class Command extends EventEmitter {
     14→  /**
@@ -321,10 +315,7 @@ lib/command.js
     16→   *
     17→   * @param {string} [name]
     18→   */
-    19→
     20→  constructor(name) {
-    21→    super();
-    22→    /** @type {Command[]} */
     99→  copyInheritedSettings(sourceCommand) {
    121→  _getCommandAndAncestors() {
    155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
@@ -375,7 +366,7 @@ lib/command.js
   1130→    } else {
   1131→      this.restoreStateBeforeParse();
   1132→    }
-      →…
+  1133→  }
   1141→  saveStateBeforeParse() {
   1158→  restoreStateBeforeParse() {
   1183→  _checkForMissingExecutable(executableFile, executableDir, subcommandName) {
@@ -438,15 +429,11 @@ lib/command.js
   2703→ */
   2704→
   2705→function incrementNodeInspectorPort(args) {
-  2706→  // Testing for these options:
-      →…
   2748→/**
   2749→ * @returns {boolean | undefined}
   2750→ * @package
   2751→ */
   2752→function useColor() {
-  2753→  // Test for common conventions.
-      →…
 lib/error.js
      1→/**
      2→ * CommanderError class
@@ -490,10 +477,6 @@ lib/help.js
     15→    this.minWidthToWrap = 40;
     16→    this.sortSubcommands = false;
     17→    this.sortOptions = false;
-    18→    this.showGlobalOptions = false;
-    19→  }
-    20→
-    21→  /**
     29→  prepareContext(contextOptions) {
     40→  visibleCommands(cmd) {
     62→  compareOptions(a, b) {
@@ -523,7 +506,14 @@ lib/help.js
    552→    return str
    553→      .split(' ')
    554→      .map((word) => {
-      →…
+   555→        if (word === '[options]') return this.styleOptionText(word);
+   556→        if (word === '[command]') return this.styleSubcommandText(word);
+   557→        if (word[0] === '[' || word[0] === '<')
+   558→          return this.styleArgumentText(word);
+   559→        return this.styleCommandText(word); // Restrict to initial words?
+   560→      })
+   561→      .join(' ');
+   562→  }
    563→  styleCommandDescription(str) {
    564→    return this.styleDescriptionText(str);
    565→  }
@@ -548,7 +538,13 @@ lib/help.js
    584→    return str
    585→      .split(' ')
    586→      .map((word) => {
-      →…
+   587→        if (word === '[options]') return this.styleOptionText(word);
+   588→        if (word[0] === '[' || word[0] === '<')
+   589→          return this.styleArgumentText(word);
+   590→        return this.styleSubcommandText(word); // Restrict to initial words?
+   591→      })
+   592→      .join(' ');
+   593→  }
    594→  styleArgumentTerm(str) {
    595→    return this.styleArgumentText(str);
    596→  }
@@ -577,8 +573,6 @@ lib/help.js
    738→ */
    739→
    740→function stripColor(str) {
-   741→  // eslint-disable-next-line no-control-regex
-      →…
 lib/option.js
      3→class Option {
      4→  /**
@@ -586,10 +580,7 @@ lib/option.js
      6→   *
      7→   * @param {string} flags
      8→   * @param {string} [description]
-     9→   */
-    10→
     11→  constructor(flags, description) {
-    12→    this.flags = flags;
     47→  default(value, description) {
     65→  preset(arg) {
     82→  conflicts(names) {
@@ -660,8 +651,6 @@ lib/option.js
    314→ */
    315→
    316→function camelcase(str) {
-   317→  return str.split('-').reduce((str, word) => {
-      →…
    322→/**
    323→ * Split the short and long flag out of something like '-m,--mixed <value>'
    324→ *
@@ -669,8 +658,6 @@ lib/option.js
    326→ */
    327→
    328→function splitOptionFlags(flags) {
-   329→  let shortFlag;
-      →…
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
@@ -682,7 +669,6 @@ lib/suggestSimilar.js
      9→  if (Math.abs(a.length - b.length) > maxDistance)
     10→    return Math.max(a.length, b.length);
     11→
-    12→  // distance between prefix substrings of a and b
       →…
     48→/**
     49→ * Find close matches, restricted to same number of edits.
@@ -693,8 +679,6 @@ lib/suggestSimilar.js
     54→ */
     55→
     56→function suggestSimilar(word, candidates) {
-    57→  if (!candidates || candidates.length === 0) return '';
-      →…
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =
     13→  | LiteralType

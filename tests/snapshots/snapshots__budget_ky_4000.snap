@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3829 words)
+budget: 4000 (3822 words)
 
 readme.md
     20→## Benefits over plain `fetch` …
@@ -560,7 +560,6 @@ source/index.ts
     16→		ky[method] = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options, {method}));
     17→	}
     18→
-    19→	ky.create = (newDefaults?: Partial<Options>) => createInstance(validateAndMerge(newDefaults));
       →…
     34→const ky = createInstance();
 source/types/ResponsePromise.ts

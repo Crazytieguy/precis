@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1997 words)
+budget: 2000 (1984 words)
 
 CHANGELOG.md
      1→## Unreleased …
@@ -65,7 +65,6 @@ README.md
     61→g.Go(func() error { return task2() })
     62→err := g.Wait() // Returns first error only
     63→
-    64→// To collect ALL errors like multierror.Group does, use a mutex:
       →…
    104→## Installation and Docs
    106→Install using `go get github.com/hashicorp/go-multierror`.
@@ -141,7 +140,6 @@ README.md
    178→if err := something(); err != nil {
    179→	if merr, ok := err.(*multierror.Error); ok {
    180→		// Use merr.Errors
-   181→	}
       →…
 append.go
      6→// Append is a helper function that will append more errors

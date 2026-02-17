@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1779 words)
+budget: 2000 (1761 words)
 
 comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -59,7 +59,6 @@ comparator.js
     55→  }
     56→
     57→  toString () {
-    58→    return this.value
     61→  test (version) {
     62→    debug('Comparator.test', version, this.options.loose)
     63→
@@ -143,7 +142,6 @@ range.js
     56→      this.set = this.set.filter(c => !isNullSet(c[0]))
     57→      if (this.set.length === 0) {
     58→        this.set = [first]
-    59→      } else if (this.set.length > 1) {
     73→  get range () {
     74→    if (this.formatted === undefined) {
     75→      this.formatted = ''
@@ -326,7 +324,6 @@ semver.js
     59→      throw new TypeError('Invalid patch version')
     60→    }
     61→
-    62→    // numberify any prerelease numeric ids
     81→  format () {
     82→    this.version = `${this.major}.${this.minor}.${this.patch}`
     83→    if (this.prerelease.length) {

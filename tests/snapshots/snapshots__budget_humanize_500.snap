@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (478 words)
 
 README.md
      1→# humanize
@@ -134,10 +134,6 @@ src/humanize/__init__.py
     38→    "metric",
     39→    "natural_list",
     40→    "naturaldate",
-    41→    "naturalday",
-    42→    "naturaldelta",
-    43→    "naturalsize",
-    44→    "naturaltime",
       →…
 src/humanize/i18n.py
      8→TYPE_CHECKING = False
@@ -150,13 +146,11 @@ src/humanize/i18n.py
     22→_THOUSANDS_SEPARATOR = {
     23→    "de_DE": ".",
     24→    "fr_FR": " ",
-    25→    "it_IT": ".",
       →…
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
     32→    "de_DE": ",",
     33→    "fr_FR": ".",
-    34→    "it_IT": ",",
       →…
 src/humanize/lists.py
      5→TYPE_CHECKING = False

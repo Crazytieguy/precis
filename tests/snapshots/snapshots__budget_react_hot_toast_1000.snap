@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (986 words)
+budget: 1000 (971 words)
 
 README.md
     28→## Features
@@ -72,7 +72,6 @@ site/README.md
 site/components/code.tsx
      8→const theme: PrismTheme = {
      9→  plain: {
-    10→    backgroundColor: '#351e11',
       →…
    104→export const Code: React.FC<{
    105→  snippet: string;
@@ -137,8 +136,6 @@ site/next.config.mjs
     35→  },
 site/pages/_app.tsx
     12→const components = {
-    13→  a: (props) => (
-      →…
     71→function MyApp …
 site/pages/index.tsx
     22→const version = packageInfo.version;
@@ -184,7 +181,8 @@ src/components/toast-bar.tsx
     51→  children?: (components: {
     52→    icon: Renderable;
     53→    message: Renderable;
-      →…
+    54→  }) => Renderable;
+    55→}
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 src/components/toast-icon.tsx
@@ -271,10 +269,6 @@ src/core/types.ts
     47→    'aria-live': 'assertive' | 'off' | 'polite';
     48→  };
     49→
-    50→  style?: CSSProperties;
-    51→  className?: string;
-    52→  iconTheme?: IconTheme;
-    53→
       →…
     60→export type ToastOptions …
     76→export type DefaultToastOptions …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1991 words)
+budget: 2000 (1964 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -275,7 +275,6 @@ website/components/cmdk/linear.tsx
     34→    shortcut: ['A'],
     35→  },
     36→  {
-    37→    icon: <AssignToMeIcon />,
       →…
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
@@ -299,11 +298,6 @@ website/components/code/index.tsx
     13→  styles: [
     14→    {
     15→      types: ['comment'],
-    16→      style: {
-    17→        color: 'var(--gray9)',
-    18→      },
-    19→    },
-    20→    {
       →…
     41→export function Code({ children }: { children: string }) {
     42→  return (
@@ -383,8 +377,6 @@ website/pages/_app.tsx
     22→        <meta name="twitter:card" content="summary_large_image" />
     23→      </Head>
     24→      <NextSeo
-    25→        title={`${description} — ${title}`}
-    26→        description={description}
       →…
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
@@ -417,8 +409,6 @@ website/pages/index.tsx
     34→      <div className={styles.content}>
     35→        <div className={styles.meta}>
     36→          <div className={styles.info}>
-    37→            <VersionBadge />
-    38→            <h1>⌘K</h1>
       →…
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     99→//////////////////////////////////////////////////////////////////

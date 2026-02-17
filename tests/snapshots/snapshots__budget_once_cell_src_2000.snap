@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1950 words)
+budget: 2000 (1947 words)
 
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
@@ -91,8 +91,6 @@ imp_std.rs
    213→        let node = Waiter {
    214→            thread: Cell::new(Some(thread::current())),
    215→            signaled: AtomicBool::new(false),
-   216→            next: strict::map_addr(curr_queue, |q| q & !STATE_MASK),
-   217→        };
       →…
    245→mod strict {
    246→    #[must_use]
@@ -391,6 +389,7 @@ race.rs
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
    365→
+   366→    impl<T> core::fmt::Debug for OnceBox<T> {
    367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
    373→        fn default() -> Self {
    379→        fn drop(&mut self) {

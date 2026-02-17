@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1952 words)
+budget: 2000 (1947 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
@@ -10,6 +10,8 @@ __private_api.rs
     12→mod sealed {
     13→    /// Types for the `kv` argument.
     14→    pub trait KVs<'a> {
+    15→        fn into_kvs(self) -> Option<&'a [(&'a str, super::Value<'a>)]>;
+    16→    }
     37→/// The global logger proxy.
     38→#[derive(Debug)]
     39→pub struct GlobalLogger;
@@ -418,8 +420,6 @@ lib.rs
   1490→        Ordering::Acquire,
   1491→        Ordering::Relaxed,
   1492→    ) {
-  1493→        Ok(UNINITIALIZED) => {
-  1494→            unsafe {
       →…
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///
@@ -453,7 +453,6 @@ lib.rs
   1617→    false if cfg!(feature = "release_max_level_trace") => LevelFilter::Trace,
   1618→    _ if cfg!(feature = "max_level_off") => LevelFilter::Off,
   1619→    _ if cfg!(feature = "max_level_error") => LevelFilter::Error,
-  1620→    _ if cfg!(feature = "max_level_warn") => LevelFilter::Warn,
       →…
 macros.rs
     75→macro_rules! log {

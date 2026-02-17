@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (463 words)
+budget: 500 (445 words)
 
 comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -17,7 +17,6 @@ comparator.js
     13→    if (comp instanceof Comparator) {
     14→      if (comp.loose === !!options.loose) {
     15→        return comp
-    16→      } else {
     36→  parse (comp) {
     37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
       →…
@@ -43,7 +42,6 @@ range.js
     14→      ) {
     15→        return range
     16→      } else {
-    17→        return new Range(range.raw, options)
     73→  get range () {
     74→    if (this.formatted === undefined) {
       →…
@@ -92,7 +90,6 @@ semver.js
     17→      } else {
     18→        version = version.version
     19→      }
-    20→    } else if (typeof version !== 'string') {
     81→  format () {
     82→    this.version = `${this.major}.${this.minor}.${this.patch}`
       →…

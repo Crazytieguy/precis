@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3765 words)
+budget: 4000 (3708 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -249,10 +249,6 @@ src/context.rs
     10→    use super::*;
     11→
     12→    pub trait StdError {
-    13→        fn ext_context<C>(self, context: C) -> Error
-    14→        where
-    15→            C: Display + Send + Sync + 'static;
-    16→    }
     18→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     19→    impl<E> StdError for E
     20→    where
@@ -635,9 +631,6 @@ src/lib.rs
    313→/// alternate selector "{:#}".
    314→///
    315→/// ```console
-   316→/// Failed to read instrs from ./path/to/instrs.json: No such file or directory (os error 2)
-   317→/// ```
-   318→///
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -744,9 +737,6 @@ src/lib.rs
    495→/// }
    496→///
    497→/// pub fn do_it(mut it: ImportantThing) -> Result<Vec<u8>> {
-   498→///     it.detach().context("Failed to detach the important thing")?;
-   499→///
-   500→///     let path = &it.path;
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.
@@ -831,7 +821,6 @@ src/lib.rs
    718→            }
    719→        }
    720→
-   721→        impl Bool for &bool {
    722→            #[inline]
    723→            fn not(self) -> bool {
 src/macros.rs

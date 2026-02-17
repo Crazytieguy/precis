@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4020 words)
+budget: 4000 (3886 words)
 
 argument.js
      3→class Argument {
@@ -58,15 +58,8 @@ argument.js
     53→   * @package
     54→   */
     55→
+      →…
     56→  _collectValue(value, previous) {
-    57→    if (previous === this.defaultValue || !Array.isArray(previous)) {
-    58→      return [value];
-    59→    }
-    60→
-    61→    previous.push(value);
-    62→    return previous;
-    63→  }
-    64→
     65→  /**
       →…
     73→  default(value, description) {
@@ -149,16 +142,6 @@ command.js
     63→      writeErr: (str) => process.stderr.write(str),
     64→      outputError: (str, write) => write(str),
     65→      getOutHelpWidth: () =>
-    66→        process.stdout.isTTY ? process.stdout.columns : undefined,
-    67→      getErrHelpWidth: () =>
-    68→        process.stderr.isTTY ? process.stderr.columns : undefined,
-    69→      getOutHasColors: () =>
-    70→        useColor() ?? (process.stdout.isTTY && process.stdout.hasColors?.()),
-    71→      getErrHasColors: () =>
-    72→        useColor() ?? (process.stderr.isTTY && process.stderr.hasColors?.()),
-    73→      stripColor: (str) => stripColor(str),
-    74→    };
-    75→
     91→  /**
       →…
     99→  copyInheritedSettings(sourceCommand) {
@@ -624,16 +607,7 @@ help.js
     62→  compareOptions(a, b) {
     63→    const getSortKey = (option) => {
     64→      // WYSIWYG for order displayed in help. Short used for comparison if present. No special handling for negated.
-    65→      return option.short
-    66→        ? option.short.replace(/^-/, '')
-    67→        : option.long.replace(/^--/, '');
-    68→    };
-    69→    return getSortKey(a).localeCompare(getSortKey(b));
-    70→  }
-    71→
     72→  /**
-    73→   * Get an array of the visible options. Includes a placeholder for the implicit help option, if there is one.
-    74→   *
       →…
     79→  visibleOptions(cmd) {
    105→  /**
@@ -832,15 +806,7 @@ option.js
     53→  /**
     54→   * Preset to use when option used without option-argument, especially optional but also boolean and negated.
     55→   * The custom processing (parseArg) is called.
-    56→   *
-    57→   * @example
-    58→   * new Option('--color').default('GREYSCALE').preset('RGB');
-    59→   * new Option('--donate [amount]').preset('20').argParser(parseFloat);
-    60→   *
-    61→   * @param {*} arg
-    62→   * @return {Option}
-    63→   */
-    64→
+      →…
     65→  preset(arg) {
     70→  /**
       →…

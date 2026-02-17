@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (921 words)
+budget: 1000 (902 words)
 
 __init__.py
      6→def load_ipython_extension …
@@ -34,7 +34,6 @@ cli.py
     74→
     75→    try:
     76→        with open(path) as stream:
-    77→            yield stream
       →…
     93→def list_values …
    112→@cli.command(name="set")
@@ -46,7 +45,6 @@ cli.py
    118→    file = ctx.obj["FILE"]
    119→    quote = ctx.obj["QUOTE"]
    120→    export = ctx.obj["EXPORT"]
-   121→    success, key, value = set_key(file, key, value, quote, export)
       →…
    128→@cli.command()
    129→@click.pass_context
@@ -56,7 +54,6 @@ cli.py
    133→    file = ctx.obj["FILE"]
    134→
    135→    with stream_file(file) as stream:
-   136→        values = dotenv_values(stream=stream)
       →…
    145→@cli.command()
    146→@click.pass_context
@@ -66,7 +63,6 @@ cli.py
    150→    file = ctx.obj["FILE"]
    151→    quote = ctx.obj["QUOTE"]
    152→    success, key = unset_key(file, key, quote)
-   153→    if success:
       →…
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
@@ -74,7 +70,6 @@ cli.py
    175→    file = ctx.obj["FILE"]
    176→    if not os.path.isfile(file):
    177→        raise click.BadParameter(
-   178→            f"Invalid value for '-f' \"{file}\" does not exist.", ctx=ctx
       →…
    193→def run_command …
 ipython.py
@@ -132,6 +127,7 @@ main.py
     50→        verbose: bool = False,
     51→        encoding: Optional[str] = None,
     52→        interpolate: bool = True,
+    53→        override: bool = True,
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
@@ -159,7 +155,6 @@ main.py
    146→    pathlib.Path(path).touch()
    147→
    148→    with tempfile.NamedTemporaryFile(mode="w", encoding=encoding, delete=False) as dest:
-   149→        error = None
       →…
    163→def set_key …
    211→def unset_key …
@@ -201,6 +196,7 @@ parser.py
     52→    @classmethod
     53→    def start(cls) -> "Position":
     54→        return cls(chars=0, line=1)
+    55→
     56→    def set …
     60→    def advance …
     65→class Error(Exception):
@@ -213,6 +209,7 @@ parser.py
     74→
     75→    def has_next(self) -> bool:
     76→        return self.position.chars < len(self.string)
+    77→
     78→    def set_mark …
     81→    def get_marked …
     87→    def peek …
@@ -253,6 +250,7 @@ variables.py
     34→        return f"Literal(value={self.value})"
     35→
     36→    def __eq__(self, other: object) -> bool:
+    37→        if not isinstance(other, self.__class__):
     41→    def __hash__ …
     44→    def resolve …
     48→class Variable(Atom):
@@ -263,7 +261,7 @@ variables.py
     53→    def __repr__(self) -> str:
     54→        return f"Variable(name={self.name}, default={self.default})"
     55→
-    56→    def __eq__ …
+    56→    def __eq__(self, other: object) -> bool:
     61→    def __hash__ …
     64→    def resolve …
     70→def parse_variables …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3714 words)
+budget: 4000 (3659 words)
 
 README.md
      1→derive(Error)
@@ -276,6 +276,8 @@ build.rs
     30→    let error_generic_member_access;
     31→    let consider_rustc_bootstrap;
     32→    if compile_probe(false) {
+    33→        // This is a nightly or dev compiler, so it supports unstable features
+    34→        // regardless of RUSTC_BOOTSTRAP. No need to rerun build script if
       →…
     91→fn compile_probe(rustc_bootstrap: bool) -> bool {
     92→    if env::var_os("RUSTC_STAGE").is_some() {
@@ -292,6 +294,8 @@ build.rs
    103→    let rustc = cargo_env_var("RUSTC");
    104→    let out_dir = cargo_env_var("OUT_DIR");
    105→    let out_subdir = Path::new(&out_dir).join("probe");
+   106→    let probefile = Path::new("build").join("probe.rs");
+   107→
       →…
    179→fn rustc_minor_version() -> Option<u32> {
    180→    let rustc = cargo_env_var("RUSTC");
@@ -619,92 +623,63 @@ impl/src/scan_expr.rs
     30→}
     32→static INIT: [(Input, Action); 28] = [
     33→    (ConsumeDelimiter, SetState(&POSTFIX)),
-    34→    (Keyword("async"), SetState(&ASYNC)),
-    35→    (Keyword("break"), SetState(&BREAK_LABEL)),
       →…
     63→static POSTFIX: [(Input, Action); 10] = [
     64→    (Keyword("as"), SetState(&[(ExpectType, SetState(&POSTFIX))])),
-    65→    (Punct("..="), SetState(&INIT)),
-    66→    (Punct(".."), SetState(&RANGE)),
       →…
     76→static ASYNC: [(Input, Action); 3] = [
     77→    (Keyword("move"), SetState(&ASYNC)),
-    78→    (Punct("|"), SetState(&CLOSURE_ARGS)),
-    79→    (ConsumeBrace, SetState(&POSTFIX)),
       →…
     82→static BLOCK: [(Input, Action); 1] = [(ConsumeBrace, SetState(&POSTFIX))];
     84→static BREAK_LABEL: [(Input, Action); 2] = [
     85→    (ConsumeLifetime, SetState(&BREAK_VALUE)),
-    86→    (Otherwise, SetState(&BREAK_VALUE)),
-    87→];
+      →…
     89→static BREAK_VALUE: [(Input, Action); 3] = [
     90→    (ConsumeNestedBrace, SetState(&IF_THEN)),
-    91→    (CanBeginExpr, SetState(&INIT)),
-    92→    (Otherwise, SetState(&POSTFIX)),
       →…
     95→static CLOSURE: [(Input, Action); 6] = [
     96→    (Keyword("async"), SetState(&CLOSURE)),
-    97→    (Keyword("move"), SetState(&CLOSURE)),
-    98→    (Punct(","), SetState(&CLOSURE)),
       →…
    104→static CLOSURE_ARGS: [(Input, Action); 2] = [
    105→    (Punct("|"), SetState(&CLOSURE_RET)),
-   106→    (ConsumeAny, SetState(&CLOSURE_ARGS)),
-   107→];
+      →…
    109→static CLOSURE_RET: [(Input, Action); 2] = [
    110→    (Punct("->"), SetState(&[(ExpectType, SetState(&BLOCK))])),
-   111→    (Otherwise, SetState(&INIT)),
-   112→];
+      →…
    114→static CONST: [(Input, Action); 2] = [
    115→    (Punct("|"), SetState(&CLOSURE_ARGS)),
-   116→    (ConsumeBrace, SetState(&POSTFIX)),
-   117→];
+      →…
    119→static CONTINUE: [(Input, Action); 2] = [
    120→    (ConsumeLifetime, SetState(&POSTFIX)),
-   121→    (Otherwise, SetState(&POSTFIX)),
-   122→];
+      →…
    124→static DOT: [(Input, Action); 3] = [
    125→    (Keyword("await"), SetState(&POSTFIX)),
-   126→    (ConsumeIdent, SetState(&METHOD)),
-   127→    (ConsumeLiteral, SetState(&POSTFIX)),
       →…
    130→static FOR: [(Input, Action); 2] = [
    131→    (Punct("<"), SetState(&CLOSURE)),
-   132→    (Otherwise, SetState(&PATTERN)),
-   133→];
+      →…
    135→static IF_ELSE: [(Input, Action); 2] = [(Keyword("if"), SetState(&INIT)), (ConsumeBrace, DecDepth)];
    136→static IF_THEN: [(Input, Action); 2] =
    137→    [(Keyword("else"), SetState(&IF_ELSE)), (Otherwise, DecDepth)];
    139→static METHOD: [(Input, Action); 1] = [(ExpectTurbofish, SetState(&POSTFIX))];
    141→static PATH: [(Input, Action); 4] = [
    142→    (Punct("!="), SetState(&INIT)),
-   143→    (Punct("!"), SetState(&INIT)),
-   144→    (ConsumeNestedBrace, SetState(&IF_THEN)),
       →…
    148→static PATTERN: [(Input, Action); 15] = [
    149→    (ConsumeDelimiter, SetState(&PATTERN)),
-   150→    (Keyword("box"), SetState(&PATTERN)),
-   151→    (Keyword("in"), IncDepth),
       →…
    166→static RANGE: [(Input, Action); 6] = [
    167→    (Punct("..="), SetState(&INIT)),
-   168→    (Punct(".."), SetState(&RANGE)),
-   169→    (Punct("."), SetState(&DOT)),
       →…
    175→static RAW: [(Input, Action); 3] = [
    176→    (Keyword("const"), SetState(&INIT)),
-   177→    (Keyword("mut"), SetState(&INIT)),
-   178→    (Otherwise, SetState(&POSTFIX)),
       →…
    181→static REFERENCE: [(Input, Action); 3] = [
    182→    (Keyword("mut"), SetState(&INIT)),
-   183→    (Keyword("raw"), SetState(&RAW)),
-   184→    (Otherwise, SetState(&INIT)),
       →…
    187→static RETURN: [(Input, Action); 2] = [
    188→    (CanBeginExpr, SetState(&INIT)),
-   189→    (Otherwise, SetState(&POSTFIX)),
-   190→];
+      →…
    192→pub(crate) fn scan_expr(input: ParseStream) -> Result<()> {
    193→    let mut state = INIT.as_slice();
       →…

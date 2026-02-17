@@ -2,15 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (521 words)
+budget: 500 (495 words)
 
 checkmark.tsx
      3→const circleAnimation = keyframes`
-     4→from {
-      →…
     13→const checkmarkAnimation = keyframes`
-    14→0% {
-      →…
     29→export interface CheckmarkTheme {
     30→  primary?: string;
     31→  secondary?: string;
@@ -23,14 +19,8 @@ checkmark.tsx
       →…
 error.tsx
      3→const circleAnimation = keyframes`
-     4→from {
-      →…
     13→const firstLineAnimation = keyframes`
-    14→from {
-      →…
     23→const secondLineAnimation = keyframes`
-    24→from {
-      →…
     33→export interface ErrorTheme {
     34→  primary?: string;
     35→  secondary?: string;
@@ -43,8 +33,6 @@ error.tsx
       →…
 loader.tsx
      3→const rotate = keyframes`
-     4→  from {
-      →…
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
@@ -67,11 +55,7 @@ toast-bar.tsx
     18→const fadeInAnimation = `0%{opacity:0;} 100%{opacity:1;}`;
     19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
     22→const ToastBarBase = styled('div')`
-    23→  :where(&) {
-      →…
     38→const Message = styled('div')`
-    39→  display: flex;
-      →…
     47→interface ToastBarProps {
     48→  toast: Toast;
     49→  position?: ToastPosition;
@@ -95,14 +79,8 @@ toast-bar.tsx
       →…
 toast-icon.tsx
      9→const StatusWrapper = styled('div')`
-    10→  position: absolute;
-      →…
     13→const IndicatorWrapper = styled('div')`
-    14→  position: relative;
-      →…
     22→const enter = keyframes`
-    23→from {
-      →…
     32→export const AnimatedIconWrapper = styled('div')`
     33→  position: relative;
     34→  transform: scale(0.6);
@@ -135,6 +113,8 @@ toast-icon.tsx
     65→      <LoaderIcon {...iconTheme} />
     66→      {type !== 'loading' && (
     67→        <StatusWrapper>
+    68→          {type === 'error' ? (
+    69→            <ErrorIcon {...iconTheme} />
       →…
 toaster.tsx
     15→const ToastWrapper = ({
@@ -147,8 +127,6 @@ toaster.tsx
     51→  const top = position.includes('top');
       →…
     76→const activeClass = css`
-    77→  z-index: 9999;
-      →…
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
@@ -171,4 +149,6 @@ toaster.tsx
    103→        top: DEFAULT_OFFSET,
    104→        left: DEFAULT_OFFSET,
    105→        right: DEFAULT_OFFSET,
+   106→        bottom: DEFAULT_OFFSET,
+   107→        pointerEvents: 'none',
       →…

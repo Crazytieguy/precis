@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (499 words)
+budget: 500 (485 words)
 
 CONTRIBUTING.md
      1→# Contributing
@@ -107,7 +107,6 @@ lib/main.d.ts
     27→   * Default: `path.resolve(process.cwd(), '.env')`
     28→   *
     29→   * Specify a custom path if your file containing environment variables is located elsewhere.
-    30→   * Can also be an array of strings, specifying multiple paths.
       →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
@@ -126,7 +125,6 @@ lib/main.d.ts
    108→   * Default: `false`
    109→   *
    110→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
-   111→   *
       →…
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;

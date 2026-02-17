@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (497 words)
+budget: 500 (496 words)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -44,7 +44,6 @@ _parser.py
     60→        "\\t": "\u0009",  # tab
     61→        "\\n": "\u000a",  # linefeed
     62→        "\\f": "\u000c",  # form feed
-    63→        "\\r": "\u000d",  # carriage return
       →…
     71→class DEPRECATED_DEFAULT:
     76→class TOMLDecodeError(ValueError):
@@ -70,6 +69,7 @@ _re.py
     18→([01][0-9]|2[0-3])             # hours
     19→:([0-5][0-9])                  # minutes
     20→(?:
+    21→    :([0-5][0-9])              # optional seconds
       →…
     26→RE_NUMBER: Final = re.compile(
     27→    r"""

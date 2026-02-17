@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1906 words)
+budget: 2000 (1905 words)
 
 README.md
      1→# Versioning Library for Go
@@ -192,7 +192,6 @@ constraint.go
    239→	greaterThanEqual operator = '≥'
    240→	lessThanEqual    operator = '≤'
    241→	pessimistic      operator = '~'
-   242→)
    244→func constraintEqual(v, c *Version) bool {
    248→func constraintNotEqual(v, c *Version) bool {
    252→func constraintGreaterThan(v, c *Version) bool {

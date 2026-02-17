@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1010 words)
+budget: 1000 (998 words)
 
 command-score.ts
     54→function commandScoreInner(
@@ -38,10 +38,6 @@ command-score.ts
     84→      abbreviation,
     85→      lowerString,
     86→      lowerAbbreviation,
-    87→      index + 1,
-    88→      abbreviationIndex + 1,
-    89→      memoizedResults,
-    90→    )
       →…
    150→function formatInput(string) {
    151→  // convert all valid space characters to space so they match each other

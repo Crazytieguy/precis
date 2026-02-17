@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2000 words)
+budget: 2000 (1998 words)
 
 input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(
@@ -290,7 +290,6 @@ input.tsx
    293→          // a value with smaller length, which is not ideal for performance.
    294→          document.dispatchEvent(new Event('selectionchange'))
    295→        }
-   296→        onChange(newValue)
       →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {

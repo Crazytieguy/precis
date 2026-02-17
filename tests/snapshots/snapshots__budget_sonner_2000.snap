@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2009 words)
+budget: 2000 (1990 words)
 
 README.md
      5→## Usage
@@ -417,8 +417,6 @@ website/src/components/How/How.tsx
       →…
 website/src/components/Installation/index.tsx
      9→const variants = {
-    10→  visible: { opacity: 1, scale: 1 },
-      →…
     14→export const Installation = () => {
     15→  const [copying, setCopying] = React.useState(0);
     16→
@@ -462,9 +460,6 @@ website/src/components/Position/index.tsx
     19→    toasts.forEach((t) => toast.dismiss(t.id));
     20→  }
     21→
-    22→  return (
-    23→    <div>
-    24→      <h2>Position</h2>
       →…
 website/src/components/Types/Types.tsx
      5→const promiseCode = '`${data.name} toast has been added`';
@@ -521,7 +516,6 @@ website/src/pages/index.tsx
     28→        position={position}
     29→        duration={Infinity}
     30→      />
-    31→      <main className="container">
       →…
 website/theme.config.jsx
      7→  useNextSeoProps() {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1925 words)
+budget: 2000 (1913 words)
 
 error.rs
      3→/// An error encountered while working with structured data.
@@ -107,6 +107,7 @@ source.rs
     42→///     ("b", 2),
     43→///     ("c", 3),
     44→/// ];
+    45→///
       →…
     51→pub trait Source {
     52→    /// Visit key-values.
@@ -151,16 +152,12 @@ source.rs
     92→    struct Get<'k, 'v> {
     93→        key: Key<'k>,
     94→        found: Option<Value<'v>>,
-    95→    }
-    96→
       →…
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
    115→    struct Count(usize);
    116→
    117→    impl<'kvs> VisitSource<'kvs> for Count {
-   118→        fn visit_pair(&mut self, _: Key<'kvs>, _: Value<'kvs>) -> Result<(), Error> {
-   119→            self.0 += 1;
       →…
    234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
@@ -216,6 +213,7 @@ value.rs
     66→/// assert_eq!(Some(42), value.to_i64());
     67→/// ```
     68→///
+    69→/// ## Using the standard `From` trait
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
@@ -237,7 +235,7 @@ value.rs
    208→        Value {
    209→            inner: value.into(),
    210→        }
-   211→    }
+      →…
    217→    pub fn visit …
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {

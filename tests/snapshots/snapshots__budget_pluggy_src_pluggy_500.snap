@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (487 words)
+budget: 500 (482 words)
 
 __init__.py
      1→__all__ = [
@@ -89,7 +89,6 @@ _hooks.py
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [
    621→            impl
-   622→            for impl in self._orig._hookimpls
       →…
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]

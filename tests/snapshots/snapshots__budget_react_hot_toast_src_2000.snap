@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2018 words)
+budget: 2000 (1994 words)
 
 components/checkmark.tsx
      3→const circleAnimation = keyframes`
@@ -144,7 +144,6 @@ components/toast-bar.tsx
     63→
     64→  const [enter, exit] = prefersReducedMotion()
     65→    ? [fadeInAnimation, fadeOutAnimation]
-    66→    : [enterAnimation(factor), exitAnimation(factor)];
       →…
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
@@ -247,7 +246,6 @@ components/toaster.tsx
     18→  style,
     19→  onHeightUpdate,
     20→  children,
-    21→}: ToastWrapperProps) => {
       →…
     47→const getPositionStyle = (
     48→  position: ToastPosition,
@@ -258,7 +256,6 @@ components/toaster.tsx
     53→  const horizontalStyle: React.CSSProperties = position.includes('center')
     54→    ? {
     55→        justifyContent: 'center',
-    56→      }
       →…
     76→const activeClass = css`
     77→  z-index: 9999;
@@ -388,7 +385,6 @@ core/store.ts
     71→
     72→    case ActionType.UPDATE_TOAST:
     73→      return {
-    74→        ...state,
       →…
    136→const listeners: Array<
    137→  [toasterId: string, reducer: (state: ToasterState) => void]
@@ -446,7 +442,6 @@ core/store.ts
    197→      setState(memoryState[toasterId]);
    198→    }
    199→    listeners.push([toasterId, setState]);
-   200→    return () => {
       →…
 core/toast.ts
     19→type Message = ValueOrFunction<Renderable, Toast>;
@@ -586,7 +581,6 @@ core/use-toaster.ts
     20→        return;
     21→      }
     22→
-    23→      const timeout = setTimeout(() => {
       →…
 core/utils.ts
      1→export const genId = (() => {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1935 words)
+budget: 2000 (1923 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -91,9 +91,6 @@ src/backtrace.rs
     73→    use alloc::vec::Vec;
     74→    use backtrace::{BacktraceFmt, BytesOrWideString, Frame, PrintFmt, SymbolName};
     75→    use core::cell::UnsafeCell;
-    76→    use core::fmt::{self, Debug, Display};
-    77→    use core::sync::atomic::{AtomicUsize, Ordering};
-    78→    use std::env;
     82→    pub(crate) struct Backtrace {
     83→        inner: Inner,
     84→    }

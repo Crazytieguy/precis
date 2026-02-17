@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (475 words)
+budget: 500 (468 words)
 
 README.md
      1→derive(Error) …
@@ -16,15 +16,15 @@ build/probe.rs
     14→impl Debug for MyError {
     15→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     16→        unimplemented!()
-      →…
+    17→    }
     20→impl Display for MyError {
     21→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     22→        unimplemented!()
-      →…
+    23→    }
     26→impl Error for MyError {
     27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
     28→        request.provide_ref(&self.0);
-      →…
+    29→    }
 build.rs
     10→const PRIVATE: &str = "\
     11→#[doc(hidden)]
@@ -93,8 +93,6 @@ src/display.rs
     12→}
     18→    type Target = &'a T;
     20→    fn as_display(&'a self) -> Self::Target {
-    21→        *self
-      →…
     26→impl<'a> AsDisplay<'a> for Path {
     27→    type Target = path::Display<'a>;
     29→    #[inline]
@@ -116,8 +114,6 @@ src/display.rs
     69→        #[inline]
     70→        fn as_display(&'a self) -> Self::Target {
     76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
-    77→            unreachable!()
-      →…
 src/lib.rs
    281→mod aserror;
    282→mod display;
@@ -137,5 +133,3 @@ src/provide.rs
 src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-     7→        Pointer::fmt(self.0, formatter)
-      →…

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2005 words)
+budget: 2000 (1995 words)
 
 src/browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -182,11 +182,6 @@ src/index.tsx
    181→        onAnimationEnd?.(o);
    182→      }, TRANSITIONS.DURATION * 1000);
    183→
-   184→      if (o && !modal) {
-   185→        if (typeof window !== 'undefined') {
-   186→          window.requestAnimationFrame(() => {
-   187→            document.body.style.pointerEvents = 'auto';
-   188→          });
       →…
    803→export const Overlay …
    831→export type ContentProps …
@@ -391,6 +386,9 @@ src/use-position-fixed.ts
    112→  React.useEffect(() => {
    113→    if (!modal) return;
    114→
+   115→    return () => {
+   116→      if (typeof document === 'undefined') return;
+   117→
       →…
 src/use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;

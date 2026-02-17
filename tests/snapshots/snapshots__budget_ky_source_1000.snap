@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (973 words)
+budget: 1000 (966 words)
 
 core/Ky.ts
     33→export class Ky {
@@ -50,7 +50,6 @@ core/constants.ts
    163→const api = ky.extend({
    164→	hooks: {
    165→		afterResponse: [
-   166→			async (request, options, response) => {
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys: KyOptionsRegistry = {

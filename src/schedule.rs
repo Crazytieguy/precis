@@ -153,6 +153,9 @@ pub struct SymbolCosts {
     pub doc_line_words: Vec<usize>,
     /// Words per body line (ordered).
     pub body_line_words: Vec<usize>,
+    /// Whether the symbol's body contains nested symbols (e.g., class methods).
+    /// When true, body truncation markers are suppressed by the renderer.
+    pub body_has_nested: bool,
 }
 
 /// A group of similarly-valued symbols that always receive the same treatment.
@@ -367,6 +370,27 @@ fn compute_symbol_costs(
         }
     }
 
+    // Check if body region contains nested symbols (used to predict
+    // whether the renderer will suppress body truncation markers).
+    let body_has_nested = if sym.kind == parse::SymbolKind::Section {
+        false // Markdown sections don't suppress truncation markers
+    } else {
+        let body_end = sym.end_line.min(lines.len());
+        let actual_body_start = if lang == Some(Lang::Python) {
+            let ds_end = format::docstring_end(lines, sig_end);
+            if ds_end > sig_end + 1 { ds_end } else { sig_end + 1 }
+        } else {
+            sig_end + 1
+        };
+        all_symbols
+            .iter()
+            .skip(symbol_idx + 1)
+            .any(|s| {
+                let sl = s.line - 1;
+                sl >= actual_body_start && sl < body_end
+            })
+    };
+
     SymbolCosts {
         file_idx,
         symbol_idx,
@@ -374,6 +398,7 @@ fn compute_symbol_costs(
         signature_words,
         doc_line_words,
         body_line_words,
+        body_has_nested,
     }
 }
 
@@ -779,24 +804,65 @@ pub fn schedule(
 }
 
 /// Compute the word cost of a single stage for a group.
+///
+/// For Doc and Body stages, includes the cost delta of standalone truncation
+/// markers (`→…`, 1 word each). At Doc/Body(n), symbols with more than n lines
+/// get a truncation marker. Advancing from n-1 to n removes markers for symbols
+/// that had exactly n-1 remaining lines, so the delta is:
+///   markers_at(n) - markers_at(n-1)
+/// which is non-positive for n >= 2. The telescoping sum across prerequisites
+/// ensures the total cost correctly reflects markers at the final included level.
 fn stage_cost(group: &Group, stage: StageKind, n: usize) -> usize {
     match stage {
         StageKind::Names => group.symbols.iter().map(|s| s.name_words).sum(),
         StageKind::Signatures => group.symbols.iter().map(|s| s.signature_words).sum(),
         StageKind::Doc => {
-            // Cost of showing doc line `n` (1-indexed) for all symbols that have it
-            group
+            let line_cost: usize = group
                 .symbols
                 .iter()
                 .filter_map(|s| s.doc_line_words.get(n - 1))
-                .sum()
+                .sum();
+            // Truncation markers: count symbols with more doc lines than shown
+            let markers_at_n = group
+                .symbols
+                .iter()
+                .filter(|s| s.doc_line_words.len() > n)
+                .count();
+            let markers_at_prev = if n >= 2 {
+                group
+                    .symbols
+                    .iter()
+                    .filter(|s| s.doc_line_words.len() > (n - 1))
+                    .count()
+            } else {
+                0
+            };
+            (line_cost + markers_at_n).saturating_sub(markers_at_prev)
         }
         StageKind::Body => {
-            group
+            let line_cost: usize = group
                 .symbols
                 .iter()
                 .filter_map(|s| s.body_line_words.get(n - 1))
-                .sum()
+                .sum();
+            // Body truncation markers are suppressed for symbols with nested
+            // children (e.g., class bodies containing individually-rendered
+            // methods). Only count markers for symbols without nested children.
+            let markers_at_n = group
+                .symbols
+                .iter()
+                .filter(|s| s.body_line_words.len() > n && !s.body_has_nested)
+                .count();
+            let markers_at_prev = if n >= 2 {
+                group
+                    .symbols
+                    .iter()
+                    .filter(|s| s.body_line_words.len() > (n - 1) && !s.body_has_nested)
+                    .count()
+            } else {
+                0
+            };
+            (line_cost + markers_at_n).saturating_sub(markers_at_prev)
         }
     }
 }

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1955 words)
+budget: 2000 (1931 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -328,7 +328,6 @@ lib/ini.js
     16→  /* istanbul ignore next */
     17→  const eol = opt.platform === 'win32' ? '\r\n' : '\n'
     18→  const separator = opt.whitespace ? ' = ' : '='
-    19→  const children = []
       →…
     80→function splitSections (str, separator) {
     81→  var lastMatchIndex = 0
@@ -346,7 +345,6 @@ lib/ini.js
     93→        continue
     94→      }
     95→
-    96→      sections.push(str.slice(lastSeparatorIndex, nextIndex))
       →…
    106→const decode = (str, opt = {}) => {
    107→  opt.bracketedArray = opt.bracketedArray !== false
@@ -364,7 +362,6 @@ lib/ini.js
    119→    }
    120→    const match = line.match(re)
    121→    if (!match) {
-   122→      continue
       →…
    212→const isQuoted = val => {
    213→  return (val.startsWith('"') && val.endsWith('"')) ||
@@ -398,5 +395,4 @@ lib/ini.js
    243→    // walk the val to find the first not-escaped ; character
    244→    let esc = false
    245→    let unesc = ''
-   246→    for (let i = 0, l = val.length; i < l; i++) {
       →…

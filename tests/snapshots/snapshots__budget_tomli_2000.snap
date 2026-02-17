@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1917 words)
+budget: 2000 (1902 words)
 
 CHANGELOG.md
      3→## 2.4.0
@@ -151,7 +151,7 @@ fuzzer/fuzz.py
     47→        )
     48→        sys.stderr.flush()
     49→        print_err(data)
-    50→        raise Exception("Dicts not equal after roundtrip")
+      →…
     53→def print_err(data):
     54→    codepoints = [hex(ord(x)) for x in data]
     55→    sys.stderr.write(f"Input was {type(data)}:\n{data}\nCodepoints:\n{codepoints}\n")
@@ -333,9 +333,7 @@ src/tomli/_re.py
     19→:([0-5][0-9])                  # minutes
     20→(?:
     21→    :([0-5][0-9])              # optional seconds
-    22→    (?:\.([0-9]{1,6})[0-9]*)?  # optional fractions of a second
-    23→)?
-    24→"""
+      →…
     26→RE_NUMBER: Final = re.compile(
     27→    r"""
     28→0

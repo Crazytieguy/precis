@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (942 words)
+budget: 1000 (934 words)
 
 README.md
      1→derive(Error)
@@ -187,8 +187,7 @@ impl/src/scan_expr.rs
     19→    ExpectType,
     20→    CanBeginExpr,
     21→    Otherwise,
-    22→    Empty,
-    23→}
+      →…
     25→enum Action {
     26→    SetState(&'static [(Input, Action)]),
     27→    IncDepth,
@@ -274,7 +273,6 @@ src/display.rs
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
     65→
-    66→    impl<'a> AsDisplay<'a> for Placeholder {
     67→        type Target = Self;
     69→        #[inline]
     70→        fn as_display(&'a self) -> Self::Target {

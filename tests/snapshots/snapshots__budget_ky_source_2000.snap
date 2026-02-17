@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1970 words)
+budget: 2000 (1949 words)
 
 core/Ky.ts
     33→export class Ky {
@@ -19,19 +19,16 @@ core/Ky.ts
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
+   203→		this.#options = {
       →…
 core/constants.ts
      4→export const supportsRequestStreams = (() => {
-     5→	let duplexAccessed = false;
-      →…
     34→export const supportsAbortController = typeof globalThis.AbortController === 'function';
     35→export const supportsAbortSignal = typeof globalThis.AbortSignal === 'function' && typeof globalThis.AbortSignal.any === 'function';
     36→export const supportsResponseStreams = typeof globalThis.ReadableStream === 'function';
     37→export const supportsFormData = typeof globalThis.FormData === 'function';
     39→export const requestMethods = ['get', 'post', 'put', 'patch', 'head', 'delete'] as const;
     46→export const responseTypes = {
-    47→	json: 'application/json',
-      →…
     58→export const maxSafeTimeout = 2_147_483_647;
     61→export const usualFormBoundarySize = new TextEncoder().encode('------WebKitFormBoundaryaxpyiPgbbPti10Rw').length;
     63→export const stop = Symbol('stop');
@@ -166,14 +163,8 @@ core/constants.ts
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys: KyOptionsRegistry = {
-   238→	json: true,
-      →…
    256→export const vendorSpecificOptions = {
-   257→	next: true, // Next.js cache revalidation (revalidate, tags)
-      →…
    265→export const requestOptionsRegistry = {
-   266→	method: true,
-      →…
 errors/ForceRetryError.ts
      4→/**
      5→Internal error used to signal a forced retry from afterResponse hooks.
@@ -360,6 +351,7 @@ utils/normalize.ts
     16→const defaultRetryOptions: InternalRetryOptions = {
     17→	limit: 2,
     18→	methods: retryMethods,
+    19→	statusCodes: retryStatusCodes,
       →…
     28→export const normalizeRetryOptions …
 utils/options.ts

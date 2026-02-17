@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (501 words)
+budget: 500 (493 words)
 
 errors.ts
      1→/**
@@ -45,7 +45,6 @@ internals/symbols.ts
     30→export type override = typeof override;
 is-matching.ts
      6→/**
-     7→ * This constraint allows using additional properties
       →…
     11→type PatternConstraint<T> = T extends readonly any[]
     12→  ? P.Pattern<T>

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3995 words)
+budget: 4000 (3973 words)
 
 __init__.py
     28→__all__ = [
@@ -77,7 +77,6 @@ filesize.py
     82→    elif binary:
     83→        suffix = suffixes["binary"]
     84→    else:
-    85→        suffix = suffixes["decimal"]
       →…
 i18n.py
      8→TYPE_CHECKING = False
@@ -105,6 +104,7 @@ i18n.py
     40→def _get_default_locale_path() -> pathlib.Path | None:
     41→    package = __spec__ and __spec__.parent
     42→    if not package:
+    43→        return None
       →…
     51→def get_translation() -> gettext_module.NullTranslations:
     52→    try:
@@ -134,7 +134,6 @@ i18n.py
     78→        return _TRANSLATIONS[None]
     79→
     80→    if path is None:
-    81→        path = _get_default_locale_path()
       →…
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
@@ -260,13 +259,14 @@ lists.py
     33→    elif len(items) == 2:
     34→        return f"{str(items[0])} and {str(items[1])}"
     35→    else:
-    36→        return ", ".join(str(item) for item in items[:-1]) + f" and {str(items[-1])}"
+      →…
 number.py
     12→TYPE_CHECKING = False
     21→def _format_not_finite(value: float) -> str:
     22→    """Utility function to handle infinite and nan cases."""
     23→    import math
     24→
+    25→    if math.isnan(value):
       →…
     34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
     35→    """Converts an integer to its ordinal as a string.
@@ -310,7 +310,6 @@ number.py
     73→    try:
     74→        if not math.isfinite(float(value)):
     75→            return _format_not_finite(float(value))
-    76→        value = int(value)
       →…
    110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
    111→    """Converts an integer to a string containing commas every three digits.
@@ -351,7 +350,6 @@ number.py
    146→    thousands_sep = thousands_separator()
    147→    decimal_sep = decimal_separator()
    148→    try:
-   149→        if isinstance(value, str):
       →…
    195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
    196→    """Converts a large integer to a friendly text representation.
@@ -393,7 +391,6 @@ number.py
    232→    try:
    233→        if not math.isfinite(float(value)):
    234→            return _format_not_finite(float(value))
-   235→        value = int(value)
       →…
    269→def apnumber(value: NumberOrString) -> str:
    270→    """Converts an integer to Associated Press style.
@@ -428,7 +425,6 @@ number.py
    299→    try:
    300→        if not math.isfinite(float(value)):
    301→            return _format_not_finite(float(value))
-   302→        value = int(value)
       →…
    321→def fractional(value: NumberOrString) -> str:
    322→    """Convert to fractional number.
@@ -474,7 +470,6 @@ number.py
    362→    try:
    363→        number = float(value)
    364→        if not math.isfinite(number):
-   365→            return _format_not_finite(number)
       →…
    385→def scientific(value: NumberOrString, precision: int = 2) -> str:
    386→    """Return number in string scientific notation z.wq x 10ⁿ.
@@ -512,7 +507,6 @@ number.py
    418→    exponents = {
    419→        "0": "⁰",
    420→        "1": "¹",
-   421→        "2": "²",
       →…
    454→def clamp(
    455→    value: float,
@@ -566,7 +560,6 @@ number.py
    503→    if value is None:
    504→        return None
    505→
-   506→    if not math.isfinite(value):
       →…
    531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
    532→    """Return a value with a metric SI unit-prefix appended.
@@ -608,7 +601,6 @@ number.py
    568→    if not math.isfinite(value):
    569→        return _format_not_finite(value)
    570→    exponent = int(math.floor(math.log10(abs(value)))) if value != 0 else 0
-   571→
       →…
 time.py
     15→TYPE_CHECKING = False
@@ -637,7 +629,7 @@ time.py
     47→def _now() -> dt.datetime:
     48→    import datetime as dt
     49→
-      →…
+    50→    return dt.datetime.now()
     53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
     54→    """Return an "absolute" value for a timedelta, always representing a time distance.
     55→
@@ -649,6 +641,7 @@ time.py
     61→    """
     62→    if delta.days < 0:
     63→        now = _now()
+    64→        return now - (now + delta)
       →…
     68→def _date_and_delta(
     69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
@@ -659,6 +652,7 @@ time.py
     74→    """
     75→    import datetime as dt
     76→
+    77→    if not now:
       →…
     95→def naturaldelta(
     96→    value: dt.timedelta | float,
@@ -707,7 +701,6 @@ time.py
    139→    tmp = Unit[minimum_unit.upper()]
    140→    if tmp not in (Unit.SECONDS, Unit.MILLISECONDS, Unit.MICROSECONDS):
    141→        msg = f"Minimum unit '{minimum_unit}' not supported"
-   142→        raise ValueError(msg)
       →…
    249→def naturaltime(
    250→    value: dt.datetime | dt.timedelta | float,
@@ -742,7 +735,6 @@ time.py
    279→    value = _convert_aware_datetime(value)
    280→    when = _convert_aware_datetime(when)
    281→
-   282→    now = when or _now()
       →…
    300→def _convert_aware_datetime(
    301→    value: dt.datetime | dt.timedelta | float | None,
@@ -750,6 +742,7 @@ time.py
    303→    """Convert aware datetime to naive datetime and pass through any other type."""
    304→    import datetime as dt
    305→
+   306→    if isinstance(value, dt.datetime) and value.tzinfo is not None:
       →…
    311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
    312→    """Return a natural day.
@@ -764,7 +757,6 @@ time.py
    321→    try:
    322→        value = dt.date(value.year, value.month, value.day)
    323→    except AttributeError:
-   324→        # Passed value wasn't date-ish
       →…
    343→def naturaldate(value: dt.date | dt.datetime) -> str:
    344→    """Like `naturalday`, but append a year for dates more than ~five months away."""
@@ -773,7 +765,6 @@ time.py
    347→    try:
    348→        value = dt.date(value.year, value.month, value.day)
    349→    except AttributeError:
-   350→        # Passed value wasn't date-ish
       →…
    361→def _quotient_and_remainder(
    362→    value: float,
@@ -809,6 +800,7 @@ time.py
    392→    """
    393→    if unit == minimum_unit:
    394→        return _rounding_by_fmt(format, value / divisor), 0
+   395→
       →…
    406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
    407→    """Return a minimum unit suitable that is not suppressed.
@@ -830,6 +822,7 @@ time.py
    423→    """
    424→    if min_unit in suppress:
    425→        for unit in Unit:
+   426→            if unit > min_unit and unit not in suppress:
       →…
    435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
    436→    """Extend suppressed units (if any) with all units lower than the minimum unit.
@@ -840,6 +833,7 @@ time.py
    441→    """
    442→    suppress = set(suppress)
    443→    for unit in Unit:
+   444→        if unit == min_unit:
       →…
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
@@ -918,7 +912,6 @@ time.py
    525→        return str(value)
    526→
    527→    suppress_set = {Unit[s.upper()] for s in suppress}
-   528→
       →…
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
    655→    """Round a number according to the string format provided.
@@ -933,4 +926,5 @@ time.py
    664→    """
    665→    result = format % value
    666→
+   667→    try:
       →…

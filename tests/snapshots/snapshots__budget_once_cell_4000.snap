@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3513 words)
+budget: 4000 (3502 words)
 
 CHANGELOG.md
      3→## 1.21.3
@@ -704,8 +704,6 @@ src/race.rs
    384→        }
    385→    }
    386→
-   387→    impl<T> OnceBox<T> {
-   388→        /// Creates a new empty cell.
    389→        pub const fn new() -> Self {
    394→        pub fn with_value(value: Box<T>) -> Self {
    399→        pub fn get(&self) -> Option<&T> {

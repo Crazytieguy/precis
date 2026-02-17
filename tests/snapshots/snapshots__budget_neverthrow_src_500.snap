@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (516 words)
+budget: 500 (498 words)
 
 _internals/error.ts
      3→export interface ErrorConfig {
@@ -25,8 +25,6 @@ _internals/error.ts
     29→  result: Result<T, E>,
     30→  config: ErrorConfig = defaultErrorConfig,
     31→): NeverThrowError<T, E> => {
-    32→  const data = result.isOk()
-      →…
 _internals/utils.ts
      5→export type ExtractOkTypes …
     10→export type ExtractOkAsyncTypes …
@@ -46,8 +44,6 @@ _internals/utils.ts
     37→
       →…
     54→export const combineResultAsyncList = <T, E>(
-    55→  asyncResultList: readonly ResultAsync<T, E>[],
-      →…
     61→/**
     62→ * Give a list of all the errors we find
     63→ */
@@ -58,8 +54,6 @@ _internals/utils.ts
     68→
       →…
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
-    83→  asyncResultList: readonly ResultAsync<T, E>[],
-      →…
 result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>

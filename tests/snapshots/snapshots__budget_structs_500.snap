@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (498 words)
+budget: 500 (481 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -71,9 +71,6 @@ structs.go
    222→func (s *Struct) Fields() []*Field {
    233→func (s *Struct) Names() []string {
    245→func getFields(v reflect.Value, tagName string) []*Field {
-   246→	if v.Kind() == reflect.Ptr {
-   247→		v = v.Elem()
-      →…
    275→func (s *Struct) Field(name string) *Field {
    287→func (s *Struct) FieldOk(name string) (*Field, bool) {
    318→func (s *Struct) IsZero() bool {
@@ -81,9 +78,6 @@ structs.go
    398→func (s *Struct) Name() string {
    405→func (s *Struct) structFields() []reflect.StructField {
    428→func strctVal(s interface{}) reflect.Value {
-   429→	v := reflect.ValueOf(s)
-   430→
-      →…
    445→func Map(s interface{}) map[string]interface{} {
    451→func FillMap(s interface{}, out map[string]interface{}) {
    457→func Values(s interface{}) []interface{} {

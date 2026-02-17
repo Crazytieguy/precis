@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (982 words)
+budget: 1000 (974 words)
 
 __init__.py
      1→__all__ = [
@@ -138,8 +138,6 @@ _hooks.py
    613→        self._orig = orig
    614→        self._remove_plugins = remove_plugins
    615→        self.name = orig.name  # type: ignore[misc]
-   616→        self._hookexec = orig._hookexec  # type: ignore[misc]
-   617→
    618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [

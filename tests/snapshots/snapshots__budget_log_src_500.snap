@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (488 words)
+budget: 500 (480 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
@@ -15,6 +15,7 @@ __private_api.rs
    114→    use crate::kv;
    115→
    116→    pub type Value<'a> = kv::Value<'a>;
+   117→
 kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
@@ -105,8 +106,6 @@ lib.rs
    784→}
    787→    #[inline]
    788→    fn get(&self) -> &'a str {
-   789→        match *self {
-      →…
    842→pub struct Record<'a> {
    858→struct KeyValues<'a>(&'a dyn kv::Source);
   1003→pub struct RecordBuilder<'a> {
@@ -119,8 +118,6 @@ lib.rs
   1484→where
   1485→    F: FnOnce() -> &'static dyn Log,
   1486→{
-  1487→    match STATE.compare_exchange(
-      →…
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
   1599→#[doc(hidden)]

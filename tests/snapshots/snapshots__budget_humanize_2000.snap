@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1990 words)
+budget: 2000 (1903 words)
 
 README.md
      1→# humanize
@@ -316,7 +316,6 @@ src/humanize/filesize.py
     42→    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
     43→
     44→    By default, decimal suffixes (kB, MB) are used.
-    45→
       →…
 src/humanize/i18n.py
      8→TYPE_CHECKING = False
@@ -349,7 +348,6 @@ src/humanize/i18n.py
     61→    """Activate internationalisation.
     62→
     63→    Set `locale` as current locale. Search for locale in directory `path`.
-    64→
       →…
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
@@ -377,13 +375,11 @@ src/humanize/i18n.py
    184→    """Return the thousands separator for a locale, default to comma.
    185→
    186→    Returns:
-   187→         str: Thousands separator.
       →…
    196→def decimal_separator() -> str:
    197→    """Return the decimal separator for a locale, default to dot.
    198→
    199→    Returns:
-   200→         str: Decimal separator.
       →…
 src/humanize/lists.py
      5→TYPE_CHECKING = False
@@ -392,7 +388,6 @@ src/humanize/lists.py
     13→    """Natural list.
     14→
     15→    Convert a list of items into a human-readable string with commas and 'and'.
-    16→
       →…
 src/humanize/number.py
     12→TYPE_CHECKING = False
@@ -402,37 +397,31 @@ src/humanize/number.py
     35→    """Converts an integer to its ordinal as a string.
     36→
     37→    For example, 1 is "1st", 2 is "2nd", 3 is "3rd", etc. Works for any integer or
-    38→    anything `int()` will turn into an integer. Anything else will return the output
       →…
    110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
    111→    """Converts an integer to a string containing commas every three digits.
    112→
    113→    For example, 3000 becomes "3,000" and 45000 becomes "45,000". To maintain some
-   114→    compatibility with Django's `intcomma`, this function also accepts floats.
       →…
    195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
    196→    """Converts a large integer to a friendly text representation.
    197→
    198→    Works best for numbers over 1 million. For example, 1_000_000 becomes "1.0 million",
-   199→    1_200_000 becomes "1.2 million" and "1_200_000_000" becomes "1.2 billion". Supports
       →…
    269→def apnumber(value: NumberOrString) -> str:
    270→    """Converts an integer to Associated Press style.
    271→
    272→    Examples:
-   273→      ```pycon
       →…
    321→def fractional(value: NumberOrString) -> str:
    322→    """Convert to fractional number.
    323→
    324→    There will be some cases where one might not want to show ugly decimal places for
-   325→    floats and decimals.
       →…
    385→def scientific(value: NumberOrString, precision: int = 2) -> str:
    386→    """Return number in string scientific notation z.wq x 10ⁿ.
    387→
    388→    Examples:
-   389→        ```pycon
       →…
    454→def clamp(
    455→    value: float,
@@ -445,13 +434,11 @@ src/humanize/number.py
    462→    """Returns number with the specified format, clamped between floor and ceil.
    463→
    464→    If the number is larger than ceil or smaller than floor, then the respective limit
-   465→    will be returned, formatted and prepended with a token specifying as such.
       →…
    531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
    532→    """Return a value with a metric SI unit-prefix appended.
    533→
    534→    Examples:
-   535→        ```pycon
       →…
 src/humanize/time.py
     15→TYPE_CHECKING = False
@@ -496,7 +483,6 @@ src/humanize/time.py
    100→    """Return a natural representation of a timedelta or number of seconds.
    101→
    102→    This is similar to `naturaltime`, but does not add tense to the result.
-   103→
       →…
    249→def naturaltime(
    250→    value: dt.datetime | dt.timedelta | float,
@@ -508,7 +494,6 @@ src/humanize/time.py
    256→    """Return a natural representation of a time in a resolution that makes sense.
    257→
    258→    This is more or less compatible with Django's `naturaltime` filter.
-   259→
       →…
    300→def _convert_aware_datetime(
    301→    value: dt.datetime | dt.timedelta | float | None,
@@ -518,7 +503,6 @@ src/humanize/time.py
    312→    """Return a natural day.
    313→
    314→    For date values that are tomorrow, today or yesterday compared to
-   315→    present day return representing string. Otherwise, return a string
       →…
    343→def naturaldate(value: dt.date | dt.datetime) -> str:
    344→    """Like `naturalday`, but append a year for dates more than ~five months away."""
@@ -550,7 +534,6 @@ src/humanize/time.py
    457→    """Return a precise representation of a timedelta or number of seconds.
    458→
    459→    ```pycon
-   460→    >>> import datetime as dt
       →…
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
    655→    """Round a number according to the string format provided.

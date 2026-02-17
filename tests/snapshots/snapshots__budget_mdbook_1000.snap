@@ -2,18 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (968 words)
+budget: 1000 (959 words)
 
 README.md
      1→# mdBook …
     14→## License …
 crates/mdbook-compare/README.md
-     1→# mdbook-compare
-     3→This is a simple utility to compare the output of two different versions of mdbook.
-     4→
-     5→To use this:
-     6→
-      →…
+     1→# mdbook-compare …
 crates/mdbook-compare/src/main.rs
      6→macro_rules! error {
 crates/mdbook-core/README.md
@@ -52,7 +47,9 @@ crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     14→pub struct CmdPreprocessor {
     15→    name: String,
     16→    cmd: String,
-      →…
+    17→    root: PathBuf,
+    18→    optional: bool,
+    19→}
 crates/mdbook-driver/src/builtin_preprocessors/index.rs
     12→pub struct IndexPreprocessor;
     16→    pub const NAME: &'static str = "index";
@@ -87,8 +84,6 @@ crates/mdbook-driver/src/lib.rs
     69→pub mod init;
     70→mod load;
     71→mod mdbook;
-crates/mdbook-driver/src/mdbook/tests.rs
-   225→struct BoolPreprocessor(bool);
 crates/mdbook-driver/src/mdbook.rs
     29→pub struct MDBook {
     30→    /// The book's root directory.
@@ -97,7 +92,7 @@ crates/mdbook-driver/src/mdbook.rs
       →…
     46→impl MDBook {
    397→struct OutputConfig {
-   426→const DEFAULT_PREPROCESSORS …
+   426→const DEFAULT_PREPROCESSORS: &[&str] = &["links", "index"];
    435→struct PreprocessorConfig {
 crates/mdbook-html/README.md
      1→# mdbook-html …
@@ -203,8 +198,6 @@ crates/mdbook-summary/src/lib.rs
    122→pub enum SummaryItem {
    141→    fn from(other: Link) -> SummaryItem {
    173→struct SummaryParser<'a> {
-   174→    src: &'a str,
-      →…
    190→macro_rules! collect_events {
 crates/xtask/README.md
      1→# xtask …
@@ -219,8 +212,6 @@ eslint.config.mjs
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
-    11→    let pre = GuideHelper;
-      →…
     33→struct GuideHelper;
     35→impl Preprocessor for GuideHelper {
     36→    fn name …
@@ -240,7 +231,7 @@ guide/src/for_developers/README.md
     30→## Using `mdbook` as a library …
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     44→#[derive(Debug, Default, Serialize, Deserialize)]
-      →…
+    45→#[serde(default, rename_all = "kebab-case")]
     46→pub struct WordcountConfig {
     47→    pub ignores: Vec<String>,
     48→    pub deny_odds: bool,
@@ -294,6 +285,7 @@ src/cmd/serve.rs
 src/cmd/watch/native.rs
     11→pub fn rebuild_on_change …
 src/cmd/watch/poller.rs
+    17→/// Calls the closure when a book source file is changed, blocking indefinitely.
     18→pub fn rebuild_on_change(
     19→    book_dir: &Path,
     20→    update_config: &dyn Fn(&mut MDBook),

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1010 words)
+budget: 1000 (1000 words)
 
 checkmark.tsx
      3→const circleAnimation = keyframes`
@@ -179,12 +179,7 @@ toast-bar.tsx
    106→          <>
    107→            {icon}
    108→            {message}
-   109→          </>
-   110→        )}
-   111→      </ToastBarBase>
-   112→    );
-   113→  }
-   114→);
+      →…
 toast-icon.tsx
      9→const StatusWrapper = styled('div')`
     10→  position: absolute;

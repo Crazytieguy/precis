@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3962 words)
+budget: 4000 (3933 words)
 
 errors.ts
      1→/**
@@ -114,8 +114,6 @@ is-matching.ts
     53→export function isMatching<const p extends Pattern<any>>(
     54→  ...args: [pattern: p, value?: any]
     55→): boolean | ((vale: any) => boolean) {
-    56→  if (args.length === 1) {
-      →…
 match.ts
      7→type MatchState<output> =
      8→  | { matched: true; value: output }
@@ -304,6 +302,7 @@ patterns.ts
    203→              selector(key, undefined)
    204→            );
    205→            return { matched: true, selections };
+   206→          }
       →…
    217→type UnwrapArray<xs> = xs extends readonly (infer x)[] ? x : never;
    219→type UnwrapSet<xs> = xs extends Set<infer x> ? x : never;
@@ -315,14 +314,10 @@ patterns.ts
    246→export function array(
    247→  ...args: [pattern?: any]
    248→): ArrayChainable<ArrayP<any, any>> {
-   249→  return arrayChainable({
-      →…
    299→export function set<
    300→  input,
    301→  const pattern extends Pattern<WithDefault<UnwrapSet<input>, unknown>>
    302→>(...args: [pattern?: pattern]): Chainable<SetP<input, pattern>> {
-   303→  return chainable({
-      →…
    336→const setEvery …
    362→export function map<
    363→  input,
@@ -331,14 +326,10 @@ patterns.ts
    366→>(
    367→  ...args: [patternKey?: pkey, patternValue?: pvalue]
    368→): Chainable<MapP<input, pkey, pvalue>> {
-   369→  return chainable({
-      →…
    410→const mapEvery …
    445→export function record(
    446→  ...args: [patternKey?: unknown, patternValue?: unknown]
    447→): Chainable<RecordP<unknown, unknown, unknown>> {
-   448→  return chainable({
-      →…
    505→const recordEvery …
    517→/**
    518→ * `P.intersection(...patterns)` returns a pattern which matches
@@ -376,6 +367,7 @@ patterns.ts
    550→        return { matched, selections };
    551→      },
    552→      getSelectionKeys: () =>
+   553→        flatMap(patterns as readonly UnknownValuePattern[], getSelectionKeys),
       →…
    559→/**
    560→ * `P.union(...patterns)` returns a pattern which matches
@@ -407,6 +399,7 @@ patterns.ts
    586→        ).forEach((key) => selector(key, undefined));
    587→        const matched = (patterns as readonly UnknownValuePattern[]).some((p) =>
    588→          matchPattern(p, value, selector)
+   589→        );
       →…
    599→/**
    600→ * `P.not(pattern)` returns a pattern which matches if the sub pattern
@@ -440,13 +433,9 @@ patterns.ts
    649→  input,
    650→  predicate extends (value: any) => value is infer narrowed ? narrowed : never
    651→> {
-   652→  return {
-      →…
    696→export function select(
    697→  ...args: [keyOrPattern?: unknown | string, pattern?: unknown]
    698→): Chainable<SelectP<string>, 'select' | 'or' | 'and'> {
-   699→  const key: string | undefined =
-      →…
    734→function isUnknown …
    738→function isNumber …
    742→function isString …
@@ -547,8 +536,6 @@ patterns.ts
   1254→  return chainable(when(isInstanceOf(classConstructor)));
   1255→}
   1274→export function shape(pattern: UnknownValuePattern) {
-  1275→  return chainable(when(isMatching(pattern)));
-      →…
 types/BuildMany.ts
     11→type BuildOne …
 types/DistributeUnions.ts

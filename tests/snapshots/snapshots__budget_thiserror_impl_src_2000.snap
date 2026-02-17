@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1998 words)
+budget: 2000 (1988 words)
 
 ast.rs
     10→pub enum Input<'a> {
@@ -338,10 +338,7 @@ scan_expr.rs
     55→    (Punct("..="), SetState(&INIT)),
     56→    (Punct(".."), SetState(&RANGE)),
     57→    (Punct("|"), SetState(&CLOSURE_ARGS)),
-    58→    (ConsumeLifetime, SetState(&[(Punct(":"), SetState(&INIT))])),
-    59→    (ConsumeLiteral, SetState(&POSTFIX)),
-    60→    (ExpectPath, SetState(&PATH)),
-    61→];
+      →…
     63→static POSTFIX: [(Input, Action); 10] = [
     64→    (Keyword("as"), SetState(&[(ExpectType, SetState(&POSTFIX))])),
     65→    (Punct("..="), SetState(&INIT)),

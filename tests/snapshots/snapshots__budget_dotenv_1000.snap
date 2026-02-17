@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (989 words)
+budget: 1000 (966 words)
 
 CONTRIBUTING.md
      1→# Contributing
@@ -195,15 +195,6 @@ lib/main.d.ts
     55→  /**
     56→   * Default: `false`
     57→   *
-    58→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
-    59→   *
-    60→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
-    61→   */
-    62→  debug?: boolean;
-    63→
-    64→  /**
-    65→   * Default: `false`
-    66→   *
       →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
@@ -243,6 +234,8 @@ lib/main.js
      7→const version = packageJson.version
     10→const TIPS = [
     11→  '🔐 encrypt with Dotenvx: https://dotenvx.com',
+    12→  '🔐 prevent committing .env to code: https://dotenvx.com/precommit',
+    13→  '🔐 prevent building .env in docker: https://dotenvx.com/prebuild',
       →…
     27→function _getRandomTip () {
     31→function parseBoolean (value) {
@@ -265,4 +258,6 @@ lib/main.js
    378→function populate (processEnv, parsed, options = {}) {
    413→const DotenvModule = {
    414→  configDotenv,
+   415→  _configVault,
+   416→  _parseVault,
       →…

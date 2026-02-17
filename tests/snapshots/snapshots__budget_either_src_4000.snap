@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3870 words)
+budget: 4000 (3846 words)
 
 into_either.rs
      6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
@@ -99,7 +99,6 @@ iterator.rs
     49→
     50→    fn next(&mut self) -> Option<Self::Item> {
     51→        for_both!(self, inner => inner.next())
-    52→    }
     54→    fn size_hint …
     58→    fn fold …
     65→    fn for_each …
@@ -651,7 +650,6 @@ lib.rs
   1120→        match r {
   1121→            Err(e) => Left(e),
   1122→            Ok(o) => Right(o),
-  1123→        }
       →…
   1127→/// Convert from `Either` to `Result` with `Right => Ok` and `Left => Err`.
   1128→impl<L, R> From<Either<L, R>> for Result<R, L> {
@@ -659,7 +657,6 @@ lib.rs
   1130→        match val {
   1131→            Left(l) => Err(l),
   1132→            Right(r) => Ok(r),
-  1133→        }
       →…
   1137→/// `Either<L, R>` is a future if both `L` and `R` are futures.
   1138→impl<L, R> Future for Either<L, R>
@@ -671,7 +668,6 @@ lib.rs
   1144→
   1145→    fn poll(
   1146→        self: Pin<&mut Self>,
-  1147→        cx: &mut core::task::Context<'_>,
       →…
   1154→/// `Either<L, R>` implements `Read` if both `L` and `R` do.
   1155→///
@@ -685,7 +681,7 @@ lib.rs
   1163→        for_both!(self, inner => inner.read(buf))
   1164→    }
   1165→
-  1166→    fn read_exact(&mut self, buf: &mut [u8]) -> io::Result<()> {
+  1166→    fn read_exact …
   1170→    fn read_to_end …
   1174→    fn read_to_string …
   1180→/// `Either<L, R>` implements `Seek` if both `L` and `R` do.
@@ -710,7 +706,7 @@ lib.rs
   1201→        for_both!(self, inner => inner.fill_buf())
   1202→    }
   1203→
-  1204→    fn consume(&mut self, amt: usize) {
+  1204→    fn consume …
   1208→    fn read_until …
   1212→    fn read_line …
   1218→/// `Either<L, R>` implements `Write` if both `L` and `R` do.
@@ -725,7 +721,7 @@ lib.rs
   1227→        for_both!(self, inner => inner.write(buf))
   1228→    }
   1229→
-  1230→    fn write_all(&mut self, buf: &[u8]) -> io::Result<()> {
+  1230→    fn write_all …
   1234→    fn write_fmt …
   1238→    fn flush …
   1243→impl<L, R, Target> AsRef<Target> for Either<L, R>

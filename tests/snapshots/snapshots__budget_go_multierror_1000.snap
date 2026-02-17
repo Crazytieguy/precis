@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1005 words)
+budget: 1000 (992 words)
 
 CHANGELOG.md
      1→## Unreleased …
@@ -166,7 +166,6 @@ multierror.go
     90→// errors while accounting for the current represented error. This lets
     91→// Is/As be meaningful.
     92→//
-    93→// Unwrap returns the next error. In the cleanest form, Unwrap would return
       →…
     99→type chain []error
    101→// Error implements the error interface

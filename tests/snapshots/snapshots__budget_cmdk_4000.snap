@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3977 words)
+budget: 4000 (3928 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -114,6 +114,8 @@ README.md
     24→      <Command.List>
     25→        <Command.Empty>No results found.</Command.Empty>
     26→
+    27→        <Command.Group heading="Letters">
+    28→          <Command.Item>a</Command.Item>
       →…
     82→## Parts and styling
     84→All parts forward props, including `ref`, to an appropriate element. Each part has a specific data-attribute (starting with `cmdk-`) that can be used for styling.
@@ -129,6 +131,8 @@ README.md
     95→const [value, setValue] = React.useState('apple')
     96→
     97→return (
+    98→  <Command value={value} onValueChange={setValue}>
+    99→    <Command.Input />
       →…
    153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
    155→Props are forwarded to [Command](#command-cmdk-root). Composes Radix UI's Dialog component. The overlay is always rendered. See the [Radix Documentation](https://www.radix-ui.com/docs/primitives/components/dialog) for more information. Can be controlled with the `open` and `onOpenChange` props.
@@ -141,6 +145,8 @@ README.md
    162→    ...
    163→  </Command.Dialog>
    164→)
+   165→```
+   166→
       →…
    180→### Input `[cmdk-input]`
    182→All props are forwarded to the underlying `input` element. Can be controlled with the `value` and `onValueChange` props.
@@ -162,6 +168,8 @@ README.md
    199→  transition: height 100ms ease;
    200→}
    201→```
+   202→
+   203→To scroll item into view earlier near the edges of the viewport, use scroll-padding:
       →…
    212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
    214→Item that becomes active on pointer enter. You should provide a unique `value` for each item, but it will be automatically inferred from the `.textContent`.
@@ -174,6 +182,8 @@ README.md
    221→  Apple
    222→</Command.Item>
    223→```
+   224→
+   225→You can also provide a `keywords` prop to help with filtering. Keywords are trimmed.
       →…
    242→### Group `[cmdk-group]` `[hidden?]`
    244→Groups items together with the given `heading` (`[cmdk-group-heading]`).
@@ -186,7 +196,8 @@ README.md
    251→
    252→Groups will not unmount from the DOM, rather the `hidden` attribute is applied to hide it from view. This may be relevant in your styling.
    253→
-      →…
+   254→You can force a group to always render, regardless of filtering, by passing the `forceMount` prop.
+   255→
    256→### Separator `[cmdk-separator]`
    258→Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
    259→
@@ -226,6 +237,8 @@ README.md
    298→const page = pages[pages.length - 1]
    299→
    300→return (
+   301→  <Command
+   302→    onKeyDown={(e) => {
       →…
    338→### Show sub-items when searching
    340→If your items have nested sub-items that you only want to reveal when searching, render based on the search state:
@@ -238,6 +251,8 @@ README.md
    347→}
    348→
    349→return (
+   350→  <Command>
+   351→    <Command.Input />
       →…
    361→### Asynchronous results
    363→Render the items as they become available. Filtering and sorting will happen automatically.
@@ -250,6 +265,8 @@ README.md
    370→  async function getItems() {
    371→    setLoading(true)
    372→    const res = await api.get('/dictionary')
+   373→    setItems(res)
+   374→    setLoading(false)
       →…
    397→### Use inside Popover
    399→We recommend using the [Radix UI popover](https://www.radix-ui.com/docs/primitives/components/popover) component. ⌘K relies on the Radix UI Dialog component, so this will reduce your bundle size a bit due to shared dependencies.
@@ -262,6 +279,8 @@ README.md
    406→
    407→```tsx
    408→import * as Popover from '@radix-ui/react-popover'
+   409→
+   410→return (
       →…
    426→### Drop in stylesheets
    428→You can find global stylesheets to drop in as a starting point for styling. See [website/styles/cmdk](website/styles/cmdk) for examples.
@@ -277,6 +296,8 @@ README.md
    439→
    440→**Unstyled?** Yes, use the listed CSS selectors.
    441→
+   442→**Hydration mismatch?** No, likely a bug in your code. Ensure the `open` prop to `Command.Dialog` is `false` on the server.
+   443→
       →…
    456→## History
    458→Written in 2019 by Paco ([@pacocoursey](https://twitter.com/pacocoursey)) to see if a composable combobox API was possible. Used for the Vercel command menu and autocomplete by Rauno ([@raunofreiberg](https://twitter.com/raunofreiberg)) in 2020. Re-written independently in 2022 with a simpler and more performant approach. Ideas and help from Shu ([@shuding\_](https://twitter.com/shuding_)).
@@ -294,6 +315,8 @@ README.md
    471→Then ensure you've built the library:
    472→
    473→```bash
+   474→pnpm build
+   475→```
       →…
 cmdk/src/command-score.ts
     54→function commandScoreInner(
@@ -367,62 +390,38 @@ cmdk/src/index.tsx
    662→ * the rendered item's `textContent`.
    663→ */
    664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
-   665→  const id = useId()
-   666→  const ref = React.useRef<HTMLDivElement>(null)
-      →…
    725→/**
    726→ * Group command menu items together with a heading.
    727→ * Grouped items are always shown together.
    728→ */
    729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
-   730→  const { heading, children, forceMount, ...etc } = props
-   731→  const id = useId()
-      →…
    770→/**
    771→ * A visual and semantic separator between items or groups.
    772→ * Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
    773→ */
    774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
-   775→  const { alwaysRender, ...etc } = props
-   776→  const ref = React.useRef<HTMLDivElement>(null)
-      →…
    783→/**
    784→ * Command menu input.
    785→ * All props are forwarded to the underyling `input` element.
    786→ */
    787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
-   788→  const { onValueChange, ...etc } = props
-   789→  const isControlled = props.value != null
-      →…
    829→/**
    830→ * Contains `Item`, `Group`, and `Separator`.
    831→ * Use the `--cmdk-list-height` CSS variable to animate height based on the number of results.
    832→ */
    833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
-   834→  const { children, label = 'Suggestions', ...etc } = props
-   835→  const ref = React.useRef<HTMLDivElement>(null)
-      →…
    879→/**
    880→ * Renders the command menu in a Radix Dialog.
    881→ */
    882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
-   883→  const { open, onOpenChange, overlayClassName, contentClassName, container, ...etc } = props
-   884→  return (
-      →…
    896→/**
    897→ * Automatically renders when there are no results for the search query.
    898→ */
    899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
-   900→  const render = useCmdk((state) => state.filtered.count === 0)
-   901→
-      →…
    906→/**
    907→ * You should conditionally render this with `progress` while loading asynchronous items.
    908→ */
    909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
-   910→  const { progress, children, label = 'Loading...', ...etc } = props
-   911→
-      →…
    930→const pkg …
    955→/**
    956→ *
@@ -441,15 +440,9 @@ cmdk/src/index.tsx
    969→  }
    970→}
    972→function findPreviousSibling(el: Element, selector: string) {
-   973→  let sibling = el.previousElementSibling
-      →…
    981→function useAsRef<T>(data: T) {
-   982→  const ref = React.useRef<T>(data)
-      →…
    991→const useLayoutEffect …
    993→function useLazyRef<T>(fn: () => T) {
-   994→  const ref = React.useRef<T>()
-      →…
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1005→  const store = useStore()
@@ -462,8 +455,6 @@ cmdk/src/index.tsx
   1013→  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
   1014→  aliases: string[] = [],
   1015→) {
-  1016→  const valueRef = React.useRef<string>()
-      →…
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
   1047→  const [s, ss] = React.useState<object>()
@@ -480,14 +471,10 @@ cmdk/src/index.tsx
   1058→  }
   1059→}
   1061→function renderChildren(children: React.ReactElement) {
-  1062→  const childrenType = children.type as any
-      →…
   1071→function SlottableWithNestedChildren(
   1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
   1073→  render: (child: React.ReactNode) => JSX.Element,
   1074→) {
-  1075→  if (asChild && React.isValidElement(children)) {
-      →…
   1081→const srOnlyStyles …
 playwright.config.ts
      3→const config: PlaywrightTestConfig = {
@@ -661,6 +648,7 @@ website/components/code/index.tsx
     20→    {
     21→      types: ['atrule', 'keyword', 'attr-name', 'selector'],
     22→      style: {
+    23→        color: 'var(--gray10)',
       →…
     41→export function Code({ children }: { children: string }) {
     42→  return (

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (453 words)
+budget: 500 (466 words)
 
 error.ts
      5→export type Failure …
@@ -57,10 +57,6 @@ struct.ts
    266→export type Refiner …
 structs/refinements.ts
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
-    22→  if (value instanceof Map || value instanceof Set) {
-    23→    return value.size
-    24→  } else {
-      →…
 structs/types.ts
     33→export function array<T extends Struct<any>>(Element?: T): any {
    105→export function enums<U extends string | number, T extends readonly U[]>(
@@ -106,4 +102,11 @@ utils.ts
    379→export type TupleSchema …
    385→export type AnyStruct …
    394→export type InferStructTuple …
-   402→type _InferTuple …
+   402→type _InferTuple<
+   403→  Tuple extends AnyStruct[],
+   404→  Length extends number,
+   405→  Accumulated extends unknown[],
+   406→  Index extends number = Accumulated['length'],
+   407→> = Index extends Length
+   408→  ? Accumulated
+   409→  : _InferTuple<Tuple, Length, [...Accumulated, Infer<Tuple[Index]>]>

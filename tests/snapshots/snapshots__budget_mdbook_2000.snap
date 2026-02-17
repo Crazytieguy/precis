@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1966 words)
+budget: 2000 (1935 words)
 
 README.md
      1→# mdBook …
@@ -143,30 +143,24 @@ crates/mdbook-driver/src/mdbook.rs
    435→struct PreprocessorConfig {
    436→    command: Option<String>,
    437→    #[serde(default)]
-   438→    before: Vec<String>,
-   439→    #[serde(default)]
       →…
 crates/mdbook-html/README.md
      1→# mdbook-html …
     11→## License …
 crates/mdbook-html/front-end/js/book.js
      9→function playground_text(playground, hidden = true) {
-crates/mdbook-html/src/html/admonitions.rs
-    18→pub(crate) fn select_tag …
 crates/mdbook-html/src/html/mod.rs
     34→pub(crate) struct HtmlRenderOptions<'a> {
     80→pub(crate) struct ChapterTree<'book> {
 crates/mdbook-html/src/html/tokenizer.rs
     16→struct TokenCollector {
     22→    type Handle = ();
-    24→    fn process_token …
 crates/mdbook-html/src/html/tree.rs
     25→macro_rules! attr_qual_name {
     33→pub(crate) enum Node {
     73→pub(crate) struct Element {
    126→type Attributes = IndexMap<QualName, StrTendril>;
    129→trait ToTendril {
-   135→    fn into_tendril …
    150→enum TableState {
    160→pub(crate) struct MarkdownTreeBuilder<'opts, 'event, EventIter> {
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
@@ -375,8 +369,6 @@ crates/xtask/README.md
 crates/xtask/src/changelog.rs
      8→const CHANGELOG_PATH …
     10→pub(crate) fn changelog() -> Result<()> {
-    11→    let previous = get_previous()?;
-      →…
 crates/xtask/src/main.rs
      9→mod changelog;
     11→type Result …
@@ -426,9 +418,7 @@ guide/src/format/README.md
      5→- Structure your book correctly
       →…
 guide/src/format/configuration/README.md
-     1→# Configuration
-     3→This section details the configuration options available in the ***book.toml***:
-      →…
+     1→# Configuration …
 guide/src/format/example.rs
      1→fn main() {
 guide/src/format/mdbook.md
@@ -446,7 +436,7 @@ guide/src/guide/README.md
      4→
      5→- [Installation](installation.md)
      6→- [Reading Books](reading.md)
-      →…
+     7→- [Creating a Book](creating.md)
 guide/src/misc/contributors.md
      1→# Contributors
      3→Here is a list of the contributors who have helped improving mdBook. Big

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2001 words)
+budget: 2000 (1992 words)
 
 __init__.py
     28→__all__ = [
@@ -47,8 +47,6 @@ filesize.py
     52→        >>> naturalsize(300, False, True)
     53→        '300B'
     54→        >>> naturalsize(3000, False, True)
-    55→        '2.9K'
-    56→        >>> naturalsize(3000, False, True, "%.3f")
       →…
 i18n.py
      8→TYPE_CHECKING = False
@@ -91,8 +89,7 @@ i18n.py
     71→        dict: Translations.
     72→
     73→    Raises:
-    74→        FileNotFoundError: If humanize cannot find the locale folder.
-    75→    """
+      →…
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
    101→def _gettext(message: str) -> str:
@@ -100,30 +97,40 @@ i18n.py
    103→
    104→    Args:
    105→        message (str): Text to translate.
+   106→
+   107→    Returns:
       →…
    113→def _pgettext(msgctxt: str, message: str) -> str:
    114→    """Fetches a particular translation.
    115→
    116→    It works with `msgctxt` .po modifiers and allows duplicate keys with different
    117→    translations.
+   118→
+   119→    Args:
       →…
    129→def _ngettext(message: str, plural: str, num: int) -> str:
    130→    """Plural version of _gettext.
    131→
    132→    Args:
    133→        message (str): Singular text to translate.
+   134→        plural (str): Plural text to translate.
+   135→        num (int): The number (e.g. item count) to determine translation for the
       →…
    144→def _gettext_noop(message: str) -> str:
    145→    """Mark a string as a translation string without translating it.
    146→
    147→    Example usage:
    148→    ```python
+   149→    CONSTANTS = [_gettext_noop('first'), _gettext_noop('second')]
+   150→    def num_name(n):
       →…
    163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
    164→    """Mark two strings as pluralized translations without translating them.
    165→
    166→    Example usage:
    167→    ```python
+   168→    CONSTANTS = [ngettext_noop('first', 'firsts'), ngettext_noop('second', 'seconds')]
+   169→    def num_name(n):
       →…
    183→def thousands_separator() -> str:
    184→    """Return the thousands separator for a locale, default to comma.
@@ -154,8 +161,6 @@ lists.py
     23→        'one'
     24→
     25→    Args:
-    26→        items (list): An iterable of items.
-    27→
       →…
 number.py
     12→TYPE_CHECKING = False
@@ -175,8 +180,6 @@ number.py
     45→        >>> ordinal(1002)
     46→        '1002nd'
     47→        >>> ordinal(103)
-    48→        '103rd'
-    49→        >>> ordinal(4)
       →…
    110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
    111→    """Converts an integer to a string containing commas every three digits.
@@ -192,8 +195,6 @@ number.py
    121→        '1,000'
    122→        >>> intcomma(1_000_000)
    123→        '1,000,000'
-   124→        >>> intcomma(1_234_567.25)
-   125→        '1,234,567.25'
       →…
    195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
    196→    """Converts a large integer to a friendly text representation.
@@ -209,8 +210,6 @@ number.py
    206→        >>> intword("12400")
    207→        '12.4 thousand'
    208→        >>> intword("1000000")
-   209→        '1.0 million'
-   210→        >>> intword(1_200_000_000)
       →…
    269→def apnumber(value: NumberOrString) -> str:
    270→    """Converts an integer to Associated Press style.
@@ -226,8 +225,6 @@ number.py
    280→      >>> apnumber("7")
    281→      'seven'
    282→      >>> apnumber("foo")
-   283→      'foo'
-   284→      >>> apnumber(None)
       →…
    321→def fractional(value: NumberOrString) -> str:
    322→    """Convert to fractional number.
@@ -243,8 +240,6 @@ number.py
    332→    * a string representation of a fraction
    333→    * or a whole number
    334→    * or a mixed fraction
-   335→    * or the str output of the value, if it could not be converted
-   336→
       →…
    385→def scientific(value: NumberOrString, precision: int = 2) -> str:
    386→    """Return number in string scientific notation z.wq x 10ⁿ.
@@ -260,8 +255,6 @@ number.py
    396→        >>> scientific(1000, 1)
    397→        '1.0 x 10³'
    398→        >>> scientific(1000, 3)
-   399→        '1.000 x 10³'
-   400→        >>> scientific("99")
       →…
    454→def clamp(
    455→    value: float,
@@ -284,8 +277,6 @@ number.py
    472→        '<0.01'
    473→        >>> clamp(0.99, format="{:.0%}", ceil=0.99)
    474→        '99%'
-   475→        >>> clamp(0.999, format="{:.0%}", ceil=0.99)
-   476→        '>99%'
       →…
    531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
    532→    """Return a value with a metric SI unit-prefix appended.
@@ -301,8 +292,6 @@ number.py
    542→        >>> metric(1e-14, precision=4)
    543→        '10.00 f'
    544→
-   545→        ```
-   546→
       →…
 time.py
     15→TYPE_CHECKING = False
@@ -334,6 +323,8 @@ time.py
     55→
     56→    Args:
     57→        delta (datetime.timedelta): Input timedelta.
+    58→
+    59→    Returns:
       →…
     68→def _date_and_delta(
     69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
@@ -360,8 +351,6 @@ time.py
    110→        minimum_unit (str): The lowest unit that can be used.
    111→
    112→    Returns:
-   113→        str (str or `value`): A natural representation of the amount of time
-   114→            elapsed unless `value` is not datetime.timedelta or cannot be
       →…
    249→def naturaltime(
    250→    value: dt.datetime | dt.timedelta | float,
@@ -383,8 +372,6 @@ time.py
    266→            always figured out based on the current time. For integers and floats, the
    267→            return value will be past tense by default, unless future is `True`.
    268→        months (bool): If `True`, then a number of months (based on 30.5 days) will be
-   269→            used for fuzziness between years.
-   270→        minimum_unit (str): The lowest unit that can be used.
       →…
    300→def _convert_aware_datetime(
    301→    value: dt.datetime | dt.timedelta | float | None,
@@ -412,19 +399,24 @@ time.py
    370→
    371→    If `unit` is `minimum_unit`, the quotient will be the rounding of `value / divisor`
    372→    according to the `format` string and the remainder will be zero. The rationale is
+   373→    that if `unit` is the unit of the quotient, we cannot represent the remainder
+   374→    because it would require a unit smaller than the `minimum_unit`.
       →…
    406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
    407→    """Return a minimum unit suitable that is not suppressed.
    408→
    409→    If not suppressed, return the same unit:
    410→
+   411→    >>> from humanize.time import _suitable_minimum_unit, Unit
+   412→    >>> _suitable_minimum_unit(Unit.HOURS, []).name
       →…
    435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
    436→    """Extend suppressed units (if any) with all units lower than the minimum unit.
    437→
    438→    >>> from humanize.time import _suppress_lower_units, Unit
    439→    >>> [x.name for x in sorted(_suppress_lower_units(Unit.SECONDS, [Unit.DAYS]))]
-      →…
+   440→    ['MICROSECONDS', 'MILLISECONDS', 'DAYS']
+   441→    """
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
    453→    minimum_unit: str = "seconds",
@@ -444,12 +436,12 @@ time.py
    467→    ```
    468→
    469→    A custom `format` can be specified to control how the fractional part
-   470→    is represented:
-   471→
       →…
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
    655→    """Round a number according to the string format provided.
    656→
    657→    The string format is the old printf-style string formatting.
    658→
+   659→    If we are using a format which truncates the value, such as "%d" or "%i", the
+   660→    returned value will be of type `int`.
       →…

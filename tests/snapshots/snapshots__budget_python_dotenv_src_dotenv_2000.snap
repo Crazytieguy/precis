@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1687 words)
+budget: 2000 (1682 words)
 
 __init__.py
      6→def load_ipython_extension(ipython: Any) -> None:
@@ -202,7 +202,6 @@ main.py
     77→
     78→    def dict(self) -> Dict[str, Optional[str]]:
     79→        """Return dotenv as dict"""
-    80→        if self._dict:
     94→    def parse(self) -> Iterator[Tuple[str, Optional[str]]]:
    100→    def set_as_environment_variables(self) -> bool:
    101→        """
@@ -374,7 +373,7 @@ parser.py
     99→        if match is None:
    100→            raise Error("read_regex: Pattern not found")
    101→        self.position.advance(self.string[match.start() : match.end()])
-   102→        return match.groups()
+      →…
    105→def decode_escapes(regex: Pattern[str], string: str) -> str:
    112→def parse_key(reader: Reader) -> Optional[str]:
    123→def parse_unquoted_value(reader: Reader) -> str:

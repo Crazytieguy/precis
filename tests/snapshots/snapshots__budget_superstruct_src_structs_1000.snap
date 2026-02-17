@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1032 words)
+budget: 1000 (987 words)
 
 coercions.ts
      5→/**
@@ -87,8 +87,6 @@ types.ts
     41→        }
     42→      }
     43→    },
-    44→    coercer(value) {
-    45→      return Array.isArray(value) ? value.slice() : value
       →…
     56→/**
       →…
@@ -112,8 +110,6 @@ types.ts
    115→  return new Struct({
    116→    type: 'enums',
    117→    schema,
-   118→    validator(value) {
-   119→      return (
       →…
    127→/**
       →…
@@ -142,8 +138,6 @@ types.ts
    212→      return (
    213→        value === constant ||
    214→        `Expected the literal \`${description}\`, but received: ${print(value)}`
-   215→      )
-   216→    },
       →…
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    231→  return new Struct({
@@ -156,8 +150,6 @@ types.ts
    238→          yield [k as string, v, Value]
    239→        }
    240→      }
-   241→    },
-   242→    coercer(value) {
       →…
    254→/**
       →…
@@ -179,8 +171,6 @@ types.ts
    306→        const unknowns = new Set(Object.keys(value))
    307→
    308→        for (const key of knowns) {
-   309→          unknowns.delete(key)
-   310→          yield [key, value[key], schema[key]]
       →…
    347→/**
       →…
@@ -205,8 +195,6 @@ types.ts
    423→        }
    424→      }
    425→    },
-   426→    coercer(value) {
-   427→      return value instanceof Set ? new Set(value) : value
       →…
    438→/**
       →…

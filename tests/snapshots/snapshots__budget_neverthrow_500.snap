@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (512 words)
+budget: 500 (492 words)
 
 README.md
    141→### Synchronous API (`Result`)
@@ -54,6 +54,8 @@ src/_internals/error.ts
     13→    | {
     14→        type: string
     15→        value: T
+    16→      }
+    17→    | {
       →…
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
@@ -93,10 +95,6 @@ src/result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
-    25→  constructor(res: Promise<Result<T, E>>) {
-    26→    this._promise = res
-    27→  }
-    28→
    210→  /**
       →…
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
@@ -105,6 +103,8 @@ src/result.ts
     15→  /**
    134→interface IResult<T, E> {
    135→  /**
+   136→   * Used to check if a `Result` is an `OK`
+   137→   *
       →…
    140→  isOk(): this is Ok<T, E>
    142→  /**
@@ -146,14 +146,6 @@ src/result.ts
    312→export class Ok<T, E> implements IResult<T, E> {
    313→  constructor(readonly value: T) {}
    314→
-   315→  isOk(): this is Ok<T, E> {
-   316→    return true
-   317→  }
-   318→
    419→export class Err<T, E> implements IResult<T, E> {
    420→  constructor(readonly error: E) {}
    421→
-   422→  isOk(): this is Ok<T, E> {
-   423→    return false
-   424→  }
-   425→

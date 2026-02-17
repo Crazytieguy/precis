@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (485 words)
+budget: 500 (480 words)
 
 src/typeguard/__init__.py
     34→config: TypeCheckConfiguration
@@ -27,7 +27,6 @@ src/typeguard/_checkers.py
    103→    "__divmod__",
    104→    "__div__",
    105→    "__eq__",
-   106→    "__floordiv__",
       →…
    586→def _is_literal_type(typ: object) -> bool:
   1004→# Equality checks are applied to these
@@ -38,7 +37,6 @@ src/typeguard/_checkers.py
   1009→    AbstractSet: check_set,
   1010→    BinaryIO: check_io,
   1011→    Callable: check_callable,
-  1012→    collections.abc.Callable: check_callable,
       →…
 src/typeguard/_config.py
     11→T = TypeVar("T")

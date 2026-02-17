@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4012 words)
+budget: 4000 (3963 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -291,14 +291,7 @@ apps/storybook/README.md
     72→
     73→7.  **`LICENSE`**: The template is licensed under the MIT licence.
     74→
-    75→8.  **`package.json`**: Standard manifest file for Node.js projects, which typically includes project specific metadata (such as the project's name, the author among other information). It's based on this file that npm will know which packages are necessary to the project.
-    76→
-    77→9.  **`yarn.lock`**: This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(Do not change it manually).**
-    78→
-    79→10. **`vite.config.js`**: This is the configuration file for [Vite](https://vitejs.dev/), a build tool that aims to provide a faster and leaner development experience for modern web projects.
-    80→
-    81→11. **`README.md`**: A text file containing useful reference information about the project.
-    82→
+      →…
     83→## Contribute
     85→If you encounter an issue with the template, we encourage you to open an issue in this template's repository.
     86→
@@ -309,15 +302,19 @@ apps/storybook/README.md
 apps/storybook/src/components/ui/input-otp.tsx
      9→const InputOTP = React.forwardRef<
     10→  React.ElementRef<typeof OTPInput>,
+    11→  React.ComponentPropsWithoutRef<typeof OTPInput>
       →…
     21→const InputOTPGroup = React.forwardRef<
     22→  React.ElementRef<"div">,
+    23→  React.ComponentPropsWithoutRef<"div">
       →…
     29→const InputOTPSlot = React.forwardRef<
     30→  React.ElementRef<"div">,
+    31→  SlotProps & React.ComponentPropsWithoutRef<"div">
       →…
     54→const InputOTPSeparator = React.forwardRef<
     55→  React.ElementRef<"div">,
+    56→  React.ComponentPropsWithoutRef<"div">
       →…
 apps/storybook/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
@@ -409,6 +406,7 @@ apps/storybook/tailwind.config.js
     30→          DEFAULT: 'hsl(var(--primary))',
     31→          foreground: 'hsl(var(--primary-foreground))',
     32→        },
+    33→        secondary: {
       →…
 apps/website/README.md
      3→## Getting Started
@@ -752,6 +750,11 @@ apps/website/src/app/(pages)/layout.tsx
     38→    type: 'website',
     39→    locale: 'en_US',
     40→    url: siteConfig.url,
+    41→    title: siteConfig.name,
+    42→    description: siteConfig.description,
+    43→    siteName: siteConfig.name,
+    44→    images: [
+    45→      {
       →…
     68→export default function RootLayout({
     69→  children,
@@ -900,6 +903,7 @@ apps/website/src/components/ui/badge.tsx
     28→    VariantProps<typeof badgeVariants> {}
     30→function Badge({ className, variant, ...props }: BadgeProps) {
     31→  return (
+    32→    <div className={cn(badgeVariants({ variant }), className)} {...props} />
       →…
 apps/website/src/components/ui/button.tsx
      7→const buttonVariants = cva(
@@ -926,6 +930,7 @@ apps/website/src/components/ui/dropdown-menu.tsx
    159→const DropdownMenuSeparator = React.forwardRef<
    171→const DropdownMenuShortcut = ({
    172→  className,
+   173→  ...props
       →…
 apps/website/src/components/ui/input-otp.tsx
      9→const InputOTP = React.forwardRef<
@@ -941,6 +946,7 @@ apps/website/src/components/ui/sonner.tsx
      6→type ToasterProps = React.ComponentProps<typeof Sonner>
      8→const Toaster = ({ ...props }: ToasterProps) => {
      9→  const { theme = 'system' } = useTheme()
+    10→
       →…
 apps/website/src/config/site.ts
      1→export const siteConfig = {
@@ -1029,6 +1035,13 @@ packages/input-otp/src/input.tsx
     52→    const regexp = React.useMemo(
     53→      () =>
     54→        pattern
+    55→          ? typeof pattern === 'string'
+    56→            ? new RegExp(pattern)
+    57→            : pattern
+    58→          : null,
+    59→      [pattern],
+    60→    )
+    61→
       →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {

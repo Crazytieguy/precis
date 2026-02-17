@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1003 words)
+budget: 1000 (988 words)
 
 CONTRIBUTING.md
      1→# Contributing
@@ -23,6 +23,14 @@ CONTRIBUTING.md
     19→- `npm run test`
     20→- `npm run check`
     21→
+    22→Don't update the CHANGELOG or command version number. That gets done by maintainers when preparing the release.
+    23→
+    24→Useful things to include in your request description are:
+    25→
+    26→- what problem are you solving?
+    27→- what Issues does this relate to?
+    28→- suggested summary for CHANGELOG
+    29→
       →…
 Readme.md
    968→### .parse() and .parseAsync()
@@ -57,6 +65,8 @@ Readme_zh-CN.md
    917→例如：
    918→
    919→```js
+   920→program.parse(process.argv); // 指明，按 node 约定
+   921→program.parse(); // 默认，自动识别 electron
       →…
 SECURITY.md
      1→# Security Policy
@@ -107,7 +117,7 @@ jest.config.js
      5→    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.ts.json' }],
      6→  },
      7→  testPathIgnorePatterns: ['/node_modules/'],
-      →…
+     8→};
 lib/argument.js
      3→class Argument {
      4→  /**
@@ -175,19 +185,12 @@ typings/index.d.ts
     13→  | LiteralType
     14→  | (BaseType & Record<never, never>);
     16→export class CommanderError extends Error {
-    17→  code: string;
     31→export class InvalidArgumentError extends CommanderError {
-    32→  /**
     40→export interface ErrorOptions {
-    41→  // optional parameter for error()
-      →…
     48→export class Argument {
-    49→  description: string;
     95→export class Option {
-    96→  flags: string;
    115→  constructor(flags: string, description?: string);
    210→export class Help {
-   211→  /** output helpWidth, long lines are wrapped to fit */
    218→  constructor();
    226→  prepareContext(contextOptions: {
    227→    error?: boolean;
@@ -203,14 +206,8 @@ typings/index.d.ts
    288→  styleArgumentTerm(str: string): string;
    340→export type HelpConfiguration = Partial<Help>;
    342→export interface ParseOptions {
-   343→  from: 'node' | 'electron' | 'user';
-      →…
    345→export interface HelpContext {
-   346→  // optional parameter for .help() and .outputHelp()
-      →…
    349→export interface AddHelpTextContext {
-   350→  // passed to text function used with .addHelpText()
-      →…
    354→export interface OutputConfiguration {
    355→  writeOut?(str: string): void;
    356→  writeErr?(str: string): void;
@@ -227,7 +224,6 @@ typings/index.d.ts
    372→  | undefined;
    374→export type OptionValues = Record<string, any>;
    376→export class Command {
-   377→  args: string[];
    384→  constructor(name?: string);
    493→  argument(name: string, description?: string, defaultValue?: unknown): this;
    528→  helpCommand(enable: boolean): this;
@@ -237,12 +233,6 @@ typings/index.d.ts
   1085→    text: (context: AddHelpTextContext) => string,
   1086→  ): this;
   1094→export interface CommandOptions {
-  1095→  hidden?: boolean;
-      →…
   1100→export interface ExecutableCommandOptions extends CommandOptions {
-  1101→  executableFile?: string;
-      →…
   1104→export interface ParseOptionsResult {
-  1105→  operands: string[];
-      →…
   1113→export const program: Command;

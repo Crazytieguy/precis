@@ -2,19 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1001 words)
+budget: 1000 (992 words)
 
 README.md
-     1→# debug
-     5→<img width="647" src="https://user-images.githubusercontent.com/71256/29091486-fa38524c-7c37-11e7-895f-e7ec8e1039b6.png">
-      →…
-    10→## Installation
-    12→```bash
-      →…
-    16→## Usage
-    18→`debug` exposes a function; simply pass this function the name of your module, and it will return a decorated version of `console.error` for you to pass debug statements to. This will allow you to toggle the debug output for different parts of your module as well as the module as a whole.
-      →…
-    73→#### Windows command prompt notes
+     1→# debug …
+    10→## Installation …
+    16→## Usage …
+    73→#### Windows command prompt notes …
     75→##### CMD
     77→On Windows the environment variable is set using the `set` command.
     78→
@@ -28,66 +22,26 @@ README.md
     86→set DEBUG=* & node app.js
     87→```
     88→
-    89→##### PowerShell (VS Code default)
-    91→PowerShell uses different syntax to set environment variables.
-      →…
-   110→## Namespace Colors
-   112→Every debug instance has a color generated for it based on its namespace name.
-      →…
-   116→#### Node.js
-   118→In Node.js, colors are enabled when stderr is a TTY. You also _should_ install
-      →…
-   124→#### Web Browser
-   126→Colors are also enabled on "Web Inspectors" that understand the `%c` formatting
-      →…
-   134→## Millisecond diff
-   136→When actively developing an application it can be useful to see when the time spent between one `debug()` call and the next. Suppose for example you invoke `debug()` before requesting a resource, and after as well, the "+NNNms" will show you how much time was spent between calls.
-      →…
-   145→## Conventions
-   147→If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. If you have more than one debuggers you _should_ prefix them with your library name and use ":" to separate features. For example "bodyParser" from Connect would then be "connect:bodyParser".  If you append a "*" to the end of your name, it will always be enabled regardless of the setting of the DEBUG environment variable.  You can then use it for normal output as well as debug output.
-      →…
-   149→## Wildcards
-   151→The `*` character may be used as a wildcard. Suppose for example your library has
-      →…
-   161→## Environment Variables
-   163→When running through Node.js, you can set a few environment variables that will
-      →…
-   181→## Formatters
-   183→Debug uses [printf-style](https://wikipedia.org/wiki/Printf_format_string) formatting.
-      →…
-   196→### Custom formatters
-   198→You can add custom formatters by extending the `debug.formatters` object.
-      →…
-   215→## Browser Support
-   217→You can build a browser-ready script using [browserify](https://github.com/substack/node-browserify),
-      →…
-   248→## Output streams
-   250→  By default `debug` will log to stderr, however this can be configured per-namespace by overriding the `log` method:
-      →…
-   274→## Extend
-   275→You can simply extend debugger 
-      →…
-   288→## Set dynamically
-   290→You can also enable debug dynamically by calling the `enable()` method :
-      →…
-   341→## Checking whether a debug target is enabled
-   343→After you've created a debug instance, you can determine whether or not it is
-      →…
-   357→## Usage in child processes
-   359→Due to the way `debug` detects if the output is a TTY or not, colors are not shown in child processes when `stderr` is piped. A solution is to pass the `DEBUG_COLORS=1` environment variable to the child process.  
-      →…
-   379→## Authors
-   381→ - TJ Holowaychuk
-      →…
-   386→## Backers
-   388→Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/debug#backer)]
-      →…
-   422→## Sponsors
-   424→Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/debug#sponsor)]
-      →…
-   457→## License
-   459→(The MIT License)
-      →…
+    89→##### PowerShell (VS Code default) …
+   110→## Namespace Colors …
+   116→#### Node.js …
+   124→#### Web Browser …
+   134→## Millisecond diff …
+   145→## Conventions …
+   149→## Wildcards …
+   161→## Environment Variables …
+   181→## Formatters …
+   196→### Custom formatters …
+   215→## Browser Support …
+   248→## Output streams …
+   274→## Extend …
+   288→## Set dynamically …
+   341→## Checking whether a debug target is enabled …
+   357→## Usage in child processes …
+   379→## Authors …
+   386→## Backers …
+   422→## Sponsors …
+   457→## License …
 src/browser.js
    115→function useColors() {
    116→	// NB: In an Electron preload script, document will be defined but not fully
@@ -98,6 +52,15 @@ src/browser.js
    121→	}
    122→
    123→	// Internet Explorer and Edge do not support colors.
+   124→	if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/)) {
+   125→		return false;
+   126→	}
+   127→
+   128→	let m;
+   129→
+   130→	// Is webkit? http://stackoverflow.com/a/16459606/376773
+   131→	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+   132→	// eslint-disable-next-line no-return-assign
       →…
    143→/**
    144→ * Colorize log arguments if enabled.
@@ -107,6 +70,19 @@ src/browser.js
    148→
    149→function formatArgs(args) {
    150→	args[0] = (this.useColors ? '%c' : '') +
+   151→		this.namespace +
+   152→		(this.useColors ? ' %c' : ' ') +
+   153→		args[0] +
+   154→		(this.useColors ? '%c ' : ' ') +
+   155→		'+' + module.exports.humanize(this.diff);
+   156→
+   157→	if (!this.useColors) {
+   158→		return;
+   159→	}
+   160→
+   161→	const c = 'color: ' + this.color;
+   162→	args.splice(1, 0, c, 'color: inherit');
+   163→
       →…
    194→/**
    195→ * Save `namespaces`.
@@ -116,7 +92,16 @@ src/browser.js
    199→ */
    200→function save(namespaces) {
    201→	try {
-      →…
+   202→		if (namespaces) {
+   203→			exports.storage.setItem('debug', namespaces);
+   204→		} else {
+   205→			exports.storage.removeItem('debug');
+   206→		}
+   207→	} catch (error) {
+   208→		// Swallow
+   209→		// XXX (@Qix-) should we be logging these?
+   210→	}
+   211→}
    213→/**
    214→ * Load `namespaces`.
    215→ *
@@ -125,6 +110,19 @@ src/browser.js
    218→ */
    219→function load() {
    220→	let r;
+   221→	try {
+   222→		r = exports.storage.getItem('debug') || exports.storage.getItem('DEBUG') ;
+   223→	} catch (error) {
+   224→		// Swallow
+   225→		// XXX (@Qix-) should we be logging these?
+   226→	}
+   227→
+   228→	// If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+   229→	if (!r && typeof process !== 'undefined' && 'env' in process) {
+   230→		r = process.env.DEBUG;
+   231→	}
+   232→
+   233→	return r;
       →…
    236→/**
    237→ * Localstorage attempts to return the localstorage.
@@ -139,7 +137,14 @@ src/browser.js
    246→
    247→function localstorage() {
    248→	try {
-      →…
+   249→		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
+   250→		// The Browser also has localStorage in the global context.
+   251→		return localStorage;
+   252→	} catch (error) {
+   253→		// Swallow
+   254→		// XXX (@Qix-) should we be logging these?
+   255→	}
+   256→}
 src/common.js
      2→/**
      3→ * This is the common logic for both the Node.js and web browser
@@ -148,6 +153,19 @@ src/common.js
      6→
      7→function setup(env) {
      8→	createDebug.debug = createDebug;
+     9→	createDebug.default = createDebug;
+    10→	createDebug.coerce = coerce;
+    11→	createDebug.disable = disable;
+    12→	createDebug.enable = enable;
+    13→	createDebug.enabled = enabled;
+    14→	createDebug.humanize = require('ms');
+    15→	createDebug.destroy = destroy;
+    16→
+    17→	Object.keys(env).forEach(key => {
+    18→		createDebug[key] = env[key];
+    19→	});
+    20→
+    21→	/**
       →…
 src/node.js
    151→/**
@@ -156,7 +174,9 @@ src/node.js
    154→
    155→function useColors() {
    156→	return 'colors' in exports.inspectOpts ?
-      →…
+   157→		Boolean(exports.inspectOpts.colors) :
+   158→		tty.isatty(process.stderr.fd);
+   159→}
    161→/**
    162→ * Adds ANSI color escape codes if enabled.
    163→ *
@@ -165,7 +185,18 @@ src/node.js
    166→
    167→function formatArgs(args) {
    168→	const {namespace: name, useColors} = this;
-      →…
+   169→
+   170→	if (useColors) {
+   171→		const c = this.color;
+   172→		const colorCode = '\u001B[3' + (c < 8 ? c : '8;5;' + c);
+   173→		const prefix = `  ${colorCode};1m${name} \u001B[0m`;
+   174→
+   175→		args[0] = prefix + args[0].split('\n').join('\n' + prefix);
+   176→		args.push(colorCode + 'm+' + module.exports.humanize(this.diff) + '\u001B[0m');
+   177→	} else {
+   178→		args[0] = getDate() + name + ' ' + args[0];
+   179→	}
+   180→}
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
    184→		return '';
@@ -178,7 +209,7 @@ src/node.js
    192→
    193→function log(...args) {
    194→	return process.stderr.write(util.formatWithOptions(exports.inspectOpts, ...args) + '\n');
-      →…
+   195→}
    197→/**
    198→ * Save `namespaces`.
    199→ *
@@ -187,7 +218,13 @@ src/node.js
    202→ */
    203→function save(namespaces) {
    204→	if (namespaces) {
-      →…
+   205→		process.env.DEBUG = namespaces;
+   206→	} else {
+   207→		// If you set a process.env field to null or undefined, it gets cast to the
+   208→		// string 'null' or 'undefined'. Just delete instead.
+   209→		delete process.env.DEBUG;
+   210→	}
+   211→}
    213→/**
    214→ * Load `namespaces`.
    215→ *
@@ -197,7 +234,7 @@ src/node.js
    219→
    220→function load() {
    221→	return process.env.DEBUG;
-      →…
+   222→}
    224→/**
    225→ * Init logic for `debug` instances.
    226→ *
@@ -207,6 +244,11 @@ src/node.js
    230→
    231→function init(debug) {
    232→	debug.inspectOpts = {};
-      →…
+   233→
+   234→	const keys = Object.keys(exports.inspectOpts);
+   235→	for (let i = 0; i < keys.length; i++) {
+   236→		debug.inspectOpts[keys[i]] = exports.inspectOpts[keys[i]];
+   237→	}
+   238→}
 test.node.js
      8→const formatWithOptionsSpy = sinon.spy(util, 'formatWithOptions');

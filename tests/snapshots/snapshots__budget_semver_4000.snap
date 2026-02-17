@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3820 words)
+budget: 4000 (3745 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -83,7 +83,6 @@ README.md
     17→semver.valid('1.2.3') // '1.2.3'
     18→semver.valid('a.b.c') // null
     19→semver.clean('  =v1.2.3   ') // '1.2.3'
-    20→semver.satisfies('1.2.3', '1.x || >=2.5.0 || 5.0.0 - 7.2.3') // true
       →…
    139→## Versions
    141→A "version" is described by the `v2.0.0` specification found at
@@ -102,7 +101,6 @@ README.md
    155→
    156→* `<` Less than
    157→* `<=` Less than or equal to
-   158→* `>` Greater than
       →…
    184→### Prerelease Tags
    186→If a version has a prerelease tag (for example, `1.2.3-alpha.3`) then
@@ -113,7 +111,6 @@ README.md
    191→For example, the range `>1.2.3-alpha.3` would be allowed to match the
    192→version `1.2.3-alpha.7`, but it would *not* be satisfied by
    193→`3.4.5-alpha.9`, even though `3.4.5-alpha.9` is technically "greater
-   194→than" `1.2.3-alpha.3` according to the SemVer sort rules.  The version
       →…
    219→#### Prerelease Identifiers
    221→The method `.inc` takes an additional `identifier` string argument that
@@ -124,7 +121,6 @@ README.md
    226→// '1.2.4-beta.0'
    227→```
    228→
-   229→command-line example:
       →…
    250→#### Prerelease Identifier Base
    252→The method `.inc` takes an optional parameter 'identifierBase' string
@@ -135,7 +131,6 @@ README.md
    257→```javascript
    258→semver.inc('1.2.3', 'prerelease', 'beta', '1')
    259→// '1.2.4-beta.1'
-   260→```
       →…
    279→### Advanced Range Syntax
    281→Advanced range syntax desugars to primitive comparators in
@@ -153,7 +148,6 @@ README.md
    294→range, then the missing pieces are replaced with zeroes.
    295→
    296→* `1.2 - 2.3.4` := `>=1.2.0 <=2.3.4`
-   297→
       →…
    306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
    308→Any of `X`, `x`, or `*` may be used to "stand in" for one of the
@@ -164,7 +158,6 @@ README.md
    313→  satisfies)
    314→* `1.x` := `>=1.0.0 <2.0.0-0` (Matching major version)
    315→* `1.2.x` := `>=1.2.0 <1.3.0-0` (Matching major and minor versions)
-   316→
       →…
    324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
    326→Allows patch-level changes if a minor version is specified on the
@@ -175,7 +168,6 @@ README.md
    331→* `~1` := `>=1.0.0 <(1+1).0.0` := `>=1.0.0 <2.0.0-0` (Same as `1.x`)
    332→* `~0.2.3` := `>=0.2.3 <0.(2+1).0` := `>=0.2.3 <0.3.0-0`
    333→* `~0.2` := `>=0.2.0 <0.(2+1).0` := `>=0.2.0 <0.3.0-0` (Same as `0.2.x`)
-   334→* `~0` := `>=0.0.0 <(0+1).0.0` := `>=0.0.0 <1.0.0-0` (Same as `0.x`)
       →…
    341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
    343→Allows changes that do not modify the left-most non-zero element in the
@@ -186,7 +178,6 @@ README.md
    348→Many authors treat a `0.x` version as if the `x` were the major
    349→"breaking-change" indicator.
    350→
-   351→Caret ranges are ideal when an author may make breaking changes
       →…
    384→### Range Grammar
    386→Putting all this together, here is a Backus-Naur grammar for ranges,
@@ -197,7 +188,6 @@ README.md
    391→logical-or ::= ( ' ' ) * '||' ( ' ' ) *
    392→range      ::= hyphen | simple ( ' ' simple ) * | ''
    393→hyphen     ::= partial ' - ' partial
-   394→simple     ::= primitive | partial | tilde | caret
       →…
    408→## Functions
    410→All methods and classes take a final `options` object argument.  All
@@ -208,7 +198,6 @@ README.md
    415→  (Any resulting output will always be 100% strict compliant, of
    416→  course.)  For backwards compatibility reasons, if the `options`
    417→  argument is a boolean value instead of an object, it is interpreted
-   418→  to be the `loose` param.
       →…
    453→### Comparison
    455→* `gt(v1, v2)`: `v1 > v2`
@@ -219,7 +208,6 @@ README.md
    460→  even if they're not the same string.  You already know how to
    461→  compare strings.
    462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
-   463→* `cmp(v1, comparator, v2)`: Pass in a comparison string, and it'll call
       →…
    478→### Sorting
    480→* `sort(versions)`: Returns a sorted array of versions based on the `compareBuild` 
@@ -239,7 +227,6 @@ README.md
    496→* `minSatisfying(versions, range)`: Return the lowest version in the list
    497→  that satisfies the range, or `null` if none of them do.
    498→* `minVersion(range)`: Return the lowest version that can match
-   499→  the given range.
       →…
    531→### Coercion
    533→* `coerce(version, options)`: Coerces a string to semver if possible
@@ -250,7 +237,6 @@ README.md
    538→`1.2`, `1.2.3`) up to the max permitted length (256 characters).  Longer
    539→versions are simply truncated (`4.6.3.9.2-alpha2` becomes `4.6.3`).  All
    540→surrounding text is simply ignored (`v3.4 replaces v3.3.1` becomes
-   541→`3.4.0`).  Only text which lacks digits will fail coercion (`version one`
       →…
    558→### Clean
    560→* `clean(version)`: Clean a string to be a valid semver if possible
@@ -261,7 +247,6 @@ README.md
    565→
    566→ex.
    567→* `s.clean(' = v 2.1.5foo')`: `null`
-   568→* `s.clean(' = v 2.1.5foo', { loose: true })`: `'2.1.5-foo'`
       →…
    576→## Constants
    578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
@@ -275,7 +260,6 @@ README.md
    587→- prepatch
    588→- prerelease
    589→
-   590→```
       →…
    600→### `SEMVER_SPEC_VERSION`
    602→2.0.0
@@ -295,7 +279,6 @@ README.md
    617→
    618→You may pull in just the part of this semver utility that you need if you
    619→are sensitive to packing and tree-shaking concerns.  The main
-   620→`require('semver')` export uses getter functions to lazily load the parts
       →…
 bin/semver.js
      8→const argv = process.argv.slice(2)
@@ -314,7 +297,6 @@ bin/semver.js
     48→    }
     49→    switch (a) {
     50→      case '-rv': case '-rev': case '--rev': case '--reverse':
-    51→        reverse = true
       →…
    132→const failInc = () => {
    133→  console.error('--inc can only be used on a single version with no range')
@@ -335,7 +317,6 @@ bin/semver.js
    150→        Print versions that match the specified range.
    151→
    152→-i --increment [<level>]
-   153→        Increment a version by the specified level.  Level can
       →…
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -749,45 +730,55 @@ ranges/gtr.js
 ranges/intersects.js
      4→const intersects = (r1, r2, options) => {
      5→  r1 = new Range(r1, options)
+     6→  r2 = new Range(r2, options)
       →…
 ranges/ltr.js
      5→const ltr = (version, range, options) => outside(version, range, '<', options)
 ranges/max-satisfying.js
      6→const maxSatisfying = (versions, range, options) => {
      7→  let max = null
+     8→  let maxSV = null
       →…
 ranges/min-satisfying.js
      5→const minSatisfying = (versions, range, options) => {
      6→  let min = null
+     7→  let minSV = null
       →…
 ranges/min-version.js
      7→const minVersion = (range, loose) => {
      8→  range = new Range(range, loose)
+     9→
       →…
 ranges/outside.js
     13→const outside = (version, range, hilo, options) => {
     14→  version = new SemVer(version, options)
+    15→  range = new Range(range, options)
       →…
 ranges/subset.js
     45→const subset = (sub, dom, options = {}) => {
     46→  if (sub === dom) {
+    47→    return true
       →…
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
     76→const simpleSubset = (sub, dom, options) => {
     77→  if (sub === dom) {
+    78→    return true
       →…
    226→const higherGT = (a, b, options) => {
    227→  if (!a) {
+   228→    return b
       →…
    238→const lowerLT = (a, b, options) => {
    239→  if (!a) {
+   240→    return b
       →…
 ranges/to-comparators.js
      6→const toComparators = (range, options) =>
      7→  new Range(range, options).set
-      →…
+     8→    .map(comp => comp.map(c => c.value).join(' ').trim().split(' '))
 ranges/valid.js
      4→const validRange = (range, options) => {
      5→  try {
+     6→    // Return '*' instead of '' so that truthiness works.
       →…

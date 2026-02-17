@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3894 words)
+budget: 4000 (3876 words)
 
 CHANGELOG.md
      1→# 1.8.0 (Nov 28, 2025)
@@ -316,7 +316,7 @@ constraint.go
    203→		check:    check,
    204→		original: v,
    205→	}, nil
-   206→}
+      →…
    208→func prereleaseCheck(v, c *Version) bool {
    209→	switch vPre, cPre := v.Prerelease() != "", c.Prerelease() != ""; {
    210→	case cPre && vPre:
@@ -405,7 +405,6 @@ constraint.go
    302→		return false
    303→	}
    304→
-   305→	// If nothing has rejected the version by now, it's valid
       →…
 version.go
     15→// The compiled regular expression used to test the validity of a version.
@@ -638,7 +637,6 @@ version.go
    254→	if selfNumeric && !otherNumeric {
    255→		return -1
    256→	} else if !selfNumeric && otherNumeric {
-   257→		return 1
       →…
    267→func comparePrereleases(v string, other string) int {
    268→	// the same pre release!
@@ -677,7 +675,6 @@ version.go
    301→		}
    302→	}
    303→
-   304→	return 0
       →…
    307→// Core returns a new version constructed from only the MAJOR.MINOR.PATCH
    308→// segments of the version, without prerelease or metadata.

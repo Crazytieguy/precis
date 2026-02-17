@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (953 words)
+budget: 1000 (947 words)
 
 README.md
      9→# Mitt
@@ -36,7 +36,6 @@ README.md
     40→```javascript
     41→// using ES6 modules
     42→import mitt from 'mitt'
-    43→
       →…
     56→## Usage
     58→```js
@@ -50,7 +49,6 @@ README.md
     66→// listen to all events
     67→emitter.on('*', (type, e) => console.log(type, e) )
     68→
-    69→// fire an event
       →…
     81→### Typescript
     83→Set `"strict": true` in your tsconfig.json to get improved type inference for `mitt` instance methods.
@@ -64,7 +62,6 @@ README.md
     91→};
     92→
     93→const emitter = mitt<Events>(); // inferred as Emitter<Events>
-    94→
       →…
    113→## Examples & Demos
    115→<a href="http://codepen.io/developit/pen/rjMEwW?editors=0110">
@@ -141,7 +138,7 @@ README.md
    199→-   Commit your changes: `git commit -am 'Add some feature'`
    200→-   Push to the branch: `git push origin my-new-feature`
    201→-   Submit a pull request with full remarks documenting your changes.
-   202→
+      →…
    203→## License
    205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
 src/index.ts

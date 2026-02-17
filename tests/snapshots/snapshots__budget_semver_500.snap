@@ -2,12 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (468 words)
+budget: 500 (476 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
-      →…
+     9→  .map((file) => `./${file}`)
 CONTRIBUTING.md
      3→# Contributing …
      5→## Code of Conduct
@@ -65,6 +65,8 @@ classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
      6→  static get ANY () {
+     7→    return ANY
+     8→  }
     10→  constructor (comp, options) {
     36→  parse (comp) {
     57→  toString () {
@@ -74,6 +76,8 @@ classes/range.js
      3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
      7→  constructor (range, options) {
+     8→    options = parseOptions(options)
+     9→
     73→  get range () {
     92→  format () {
     96→  toString () {
@@ -84,6 +88,8 @@ classes/range.js
 classes/semver.js
      9→class SemVer {
     10→  constructor (version, options) {
+    11→    options = parseOptions(options)
+    12→
     81→  format () {
     89→  toString () {
     93→  compare (other) {
@@ -103,11 +109,7 @@ internal/lrucache.js
      8→
      9→  get (key) {
     21→  delete (key) {
-    22→    return this.map.delete(key)
-      →…
     25→  set (key, value) {
-    26→    const deleted = this.delete(key)
-      →…
 internal/parse-options.js
      6→const parseOptions …
 internal/re.js

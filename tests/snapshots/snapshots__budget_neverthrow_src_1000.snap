@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1002 words)
+budget: 1000 (987 words)
 
 _internals/error.ts
      3→export interface ErrorConfig {
@@ -141,7 +141,6 @@ result.ts
     16→   * Wraps a function with a try catch, creating a new function with the same
     17→   * arguments but returning `Ok` if successful, `Err` if the function throws
     18→   *
-    19→   * @param fn function to wrap with ok on success or err on failure
     62→export type Result …
    134→interface IResult<T, E> {
    135→  /**

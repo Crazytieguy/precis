@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (988 words)
+budget: 1000 (971 words)
 
 CHANGELOG.md
      3→## 2.4.0
@@ -128,8 +128,7 @@ src/tomli/_parser.py
     30→# https://mypyc.readthedocs.io/en/latest/differences_from_python.html#stack-overflows
     31→# Before mypyc's fix is in, recursion needs to be limited by this library.
     32→# Choosing `sys.getrecursionlimit()` as maximum inline table/array nesting
-    33→# level, as it allows more nesting than pure Python, but still seems a far
-    34→# lower number than where mypyc binaries crash.
+      →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
     37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
     39→# Neither of these sets include quotation mark or backslash. They are
@@ -150,6 +149,7 @@ src/tomli/_parser.py
     58→    {
     59→        "\\b": "\u0008",  # backspace
     60→        "\\t": "\u0009",  # tab
+    61→        "\\n": "\u000a",  # linefeed
       →…
     71→class DEPRECATED_DEFAULT:
     76→class TOMLDecodeError(ValueError):

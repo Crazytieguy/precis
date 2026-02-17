@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (505 words)
+budget: 500 (492 words)
 
 argument.js
      3→class Argument {
@@ -81,10 +81,7 @@ option.js
    261→/**
    262→ * This class is to make it easier to work with dual options, without changing the existing
    263→ * implementation. We support separate dual options for separate positive and negative options,
-   264→ * like `--build` and `--no-build`, which share a single option value. This works nicely for some
-   265→ * use cases, but is tricky for others where we want separate behaviours despite
-   266→ * the single shared option value.
-   267→ */
+      →…
    268→class DualOptions {
    269→  /**
    270→   * @param {Option[]} options
@@ -134,6 +131,10 @@ suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
      4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
+     5→  // Calculating optimal string alignment distance, no substring is edited more than once.
+     6→  // (Simple implementation.)
+     7→
+     8→  // Quick early exit, return worst case.
       →…
     48→/**
       →…

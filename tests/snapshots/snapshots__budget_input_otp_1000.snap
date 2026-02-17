@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1001 words)
+budget: 1000 (984 words)
 
 CHANGELOG.md
      3→## [1.4.2]
@@ -79,7 +79,6 @@ apps/storybook/tailwind.config.js
      3→  darkMode: ['class'],
      4→  content: [
      5→    './index.html',
-     6→    './src/stories/**/*.{ts,tsx}',
       →…
 apps/website/README.md
      3→## Getting Started
@@ -218,17 +217,12 @@ apps/website/src/components/ui/badge.tsx
     26→export interface BadgeProps
     27→  extends React.HTMLAttributes<HTMLDivElement>,
     28→    VariantProps<typeof badgeVariants> {}
-    30→function Badge …
 apps/website/src/components/ui/button.tsx
     36→export interface ButtonProps
     37→  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     38→    VariantProps<typeof buttonVariants> {
     39→  asChild?: boolean
     40→}
-apps/website/src/components/ui/dropdown-menu.tsx
-   171→const DropdownMenuShortcut …
-apps/website/src/components/ui/sonner.tsx
-     8→const Toaster …
 apps/website/src/config/site.ts
      1→export const siteConfig = {
      2→  name: 'rodz/input-otp',
@@ -247,8 +241,6 @@ apps/website/src/lib/utils.ts
      6→}
 apps/website/tailwind.config.ts
      3→const config = {
-     4→  darkMode: ['class'],
-      →…
 packages/input-otp/src/input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(
     11→  {} as RenderProps,

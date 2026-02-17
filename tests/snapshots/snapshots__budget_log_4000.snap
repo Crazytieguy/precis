@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3863 words)
+budget: 4000 (3829 words)
 
 README.md
      1→log
@@ -446,13 +446,11 @@ src/kv/value.rs
    603→    /**
    604→    An implementation of `Value` based on a library called `value_bag`.
    605→
-   606→    `value_bag` was written specifically for use in `log`'s value, but was split out when it outgrew
    720→#[cfg(not(feature = "value-bag"))]
    721→pub(in crate::kv) mod inner {
    722→    /**
    723→    This is a dependency-free implementation of `Value` when there's no serialization frameworks involved.
    724→    In these simple cases a more fully featured solution like `value_bag` isn't needed, so we avoid pulling it in.
-   725→
    737→    #[derive(Clone)]
    738→    pub enum Inner<'v> {
    739→        None,
@@ -833,13 +831,8 @@ test_max_level_features/main.rs
     22→    fn log(&self, record: &Record) {
     23→        *self.0.last_log.lock().unwrap() = Some(record.level());
     24→    }
+    25→
     26→    fn flush(&self) {}
     29→fn main() {
-    30→    let me = Arc::new(State {
-      →…
     44→fn test(a: &State, filter: LevelFilter) {
-    45→    log::set_max_level(filter);
-      →…
     72→fn last(state: &State, expected: Option<Level>) {
-    73→    let mut lvl = state.last_log.lock().unwrap();
-      →…

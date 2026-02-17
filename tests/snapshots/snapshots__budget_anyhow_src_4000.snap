@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3725 words)
+budget: 4000 (3697 words)
 
 backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
@@ -19,13 +19,9 @@ backtrace.rs
     39→macro_rules! backtrace_if_absent {
     53→macro_rules! backtrace_if_absent {
     54→    ($err:expr) => {
-    55→        backtrace!()
-    56→    };
       →…
     64→macro_rules! backtrace_if_absent {
     65→    ($err:expr) => {
-    66→        None
-    67→    };
       →…
     70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
@@ -56,6 +52,10 @@ backtrace.rs
     96→    }
     97→
     98→    struct Capture {
+    99→        actual_start: usize,
+   100→        resolved: bool,
+   101→        frames: Vec<BacktraceFrame>,
+   102→    }
    104→    struct BacktraceFrame {
    105→        frame: Frame,
    106→        symbols: Vec<BacktraceSymbol>,
@@ -121,10 +121,7 @@ context.rs
     10→    use super::*;
     11→
     12→    pub trait StdError {
-    13→        fn ext_context<C>(self, context: C) -> Error
-    14→        where
-    15→            C: Display + Send + Sync + 'static;
-    16→    }
+    13→        fn ext_context …
     18→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     19→    impl<E> StdError for E
     20→    where
@@ -786,8 +783,6 @@ macros.rs
     58→macro_rules! bail {
     70→macro_rules! __ensure {
     71→    ($ensure:item) => {
-    72→        /// Return early with an error if a condition is not satisfied.
-    73→        ///
       →…
    174→/// Construct an ad-hoc error from a string or existing non-`anyhow` error
    175→/// value.

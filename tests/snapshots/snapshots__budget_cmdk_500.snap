@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (500 words)
+budget: 500 (493 words)
 
 ARCHITECTURE.md
      1→# Architecture …
@@ -105,8 +105,6 @@ website/next.config.js
      5→}
 website/pages/_app.tsx
     17→export default function App({ Component, pageProps }: AppProps) {
-    18→  return (
-      →…
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
      6→  render() {
@@ -125,8 +123,6 @@ website/pages/_document.tsx
     19→}
 website/pages/index.tsx
     29→export default function Index() {
-    30→  const [theme, setTheme] = React.useState<Themes>('raycast')
-      →…
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     99→//////////////////////////////////////////////////////////////////
    100→
@@ -136,6 +132,7 @@ website/pages/index.tsx
    138→
    139→const themes = [
    140→  {
+   141→    icon: <RaycastIcon />,
       →…
    158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3873 words)
+budget: 4000 (3840 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
@@ -261,17 +261,8 @@ kv/value.rs
    251→#[cfg(feature = "kv_sval")]
    252→impl<'v> sval_ref::ValueRef<'v> for Value<'v> {
    288→macro_rules! impl_to_value_primitive {
-   289→    ($($into_ty:ty,)*) => {
-   290→        $(
-      →…
    312→macro_rules! impl_to_value_nonzero_primitive {
-   313→    ($($into_ty:ident,)*) => {
-   314→        $(
-      →…
    336→macro_rules! impl_value_to_primitive {
-   337→    ($(#[doc = $doc:tt] $into_name:ident -> $into_ty:ty,)*) => {
-   338→        impl<'v> Value<'v> {
-      →…
    379→    pub fn to_borrowed_error …
    384→    pub fn to_borrowed_str …
    389→#[cfg(feature = "kv_std")]
@@ -462,9 +453,6 @@ lib.rs
    425→#[cfg(not(target_has_atomic = "ptr"))]
    426→impl AtomicUsize {
    427→    const fn new(v: usize) -> AtomicUsize {
-   428→        AtomicUsize { v: Cell::new(v) }
-   429→    }
-   430→
    431→    fn load(&self, _order: Ordering) -> usize {
    435→    fn store(&self, val: usize, _order: Ordering) {
    442→#[cfg(not(target_has_atomic = "ptr"))]
@@ -481,6 +469,10 @@ lib.rs
    467→/// An enum representing the available verbosity levels of the logger.
    468→///
    469→/// Typical usage includes: checking if a certain `Level` is enabled with
+   470→/// [`log_enabled!`](macro.log_enabled.html), specifying the `Level` of
+   471→/// [`log!`](macro.log.html), and comparing a `Level` directly to a
+   472→/// [`LevelFilter`](enum.LevelFilter.html).
+   473→#[repr(usize)]
       →…
    475→pub enum Level {
    476→    /// The "error" level.
@@ -522,6 +514,10 @@ lib.rs
    626→/// An enum representing the available verbosity level filters of the logger.
    627→///
    628→/// A `LevelFilter` may be compared directly to a [`Level`]. Use this type
+   629→/// to get and set the maximum log level with [`max_level()`] and [`set_max_level`].
+   630→///
+   631→/// [`Level`]: enum.Level.html
+   632→/// [`max_level()`]: fn.max_level.html
       →…
    636→pub enum LevelFilter {
    637→    /// A level lower than all log levels.
@@ -564,6 +560,10 @@ lib.rs
    796→/// The "payload" of a log message.
    797→///
    798→/// # Use
+   799→///
+   800→/// `Record` structures are passed as parameters to the [`log`][method.log]
+   801→/// method of the [`Log`] trait. Logger implementors manipulate these
+   802→/// structures in order to display log messages. `Record`s are automatically
       →…
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
@@ -580,9 +580,6 @@ lib.rs
    860→#[cfg(feature = "kv")]
    861→impl<'a> fmt::Debug for KeyValues<'a> {
    862→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-   863→        let mut visitor = f.debug_map();
-   864→        self.0.visit(&mut visitor).map_err(|_| fmt::Error)?;
-   865→        visitor.finish()
       →…
    872→    pub fn builder() -> RecordBuilder<'a> {
    878→    pub fn args(&self) -> &fmt::Arguments<'a> {
@@ -599,6 +596,10 @@ lib.rs
    963→/// Builder for [`Record`](struct.Record.html).
    964→///
    965→/// Typically should only be used by log library creators or for testing and "shim loggers".
+   966→/// The `RecordBuilder` can set the different parameters of `Record` object, and returns
+   967→/// the created object when `build` is called.
+   968→///
+   969→/// # Examples
       →…
   1003→pub struct RecordBuilder<'a> {
   1004→    record: Record<'a>,
@@ -619,6 +620,10 @@ lib.rs
   1119→/// Metadata about a log message.
   1120→///
   1121→/// # Use
+  1122→///
+  1123→/// `Metadata` structs are created when users of the library use
+  1124→/// logging macros.
+  1125→///
       →…
   1158→pub struct Metadata<'a> {
   1159→    level: Level,
@@ -630,6 +635,10 @@ lib.rs
   1183→/// Builder for [`Metadata`](struct.Metadata.html).
   1184→///
   1185→/// Typically should only be used by log library creators or for testing and "shim loggers".
+  1186→/// The `MetadataBuilder` can set the different parameters of a `Metadata` object, and returns
+  1187→/// the created object when `build` is called.
+  1188→///
+  1189→/// # Example
       →…
   1200→pub struct MetadataBuilder<'a> {
   1201→    metadata: Metadata<'a>,
@@ -686,9 +695,6 @@ lib.rs
   1313→    T: ?Sized + Log,
   1314→{
   1315→    fn enabled(&self, metadata: &Metadata) -> bool {
-  1316→        self.as_ref().enabled(metadata)
-  1317→    }
-  1318→
   1319→    fn log …
   1322→    fn flush …
   1327→#[cfg(feature = "std")]
@@ -697,9 +703,6 @@ lib.rs
   1330→    T: ?Sized + Log,
   1331→{
   1332→    fn enabled(&self, metadata: &Metadata) -> bool {
-  1333→        self.as_ref().enabled(metadata)
-  1334→    }
-  1335→
   1336→    fn log …
   1339→    fn flush …
   1351→pub fn set_max_level(level: LevelFilter) {
@@ -725,13 +728,13 @@ lib.rs
   1497→            STATE.store(INITIALIZED, Ordering::Release);
   1498→            Ok(())
   1499→        }
-  1500→        Err(INITIALIZING) => {
       →…
   1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///
   1546→/// [`set_logger`]: fn.set_logger.html
-      →…
+  1547→#[allow(missing_copy_implementations)]
+  1548→#[derive(Debug)]
   1549→pub struct SetLoggerError(());
   1552→    fn fmt …
   1558→#[cfg(feature = "std")]
@@ -739,7 +742,8 @@ lib.rs
   1561→/// The type returned by [`from_str`] when the string doesn't match any of the log levels.
   1562→///
   1563→/// [`from_str`]: https://doc.rust-lang.org/std/str/trait.FromStr.html#tymethod.from_str
-      →…
+  1564→#[allow(missing_copy_implementations)]
+  1565→#[derive(Debug, PartialEq, Eq)]
   1566→pub struct ParseLevelError(());
   1569→    fn fmt …
   1575→#[cfg(feature = "std")]
@@ -771,82 +775,25 @@ lib.rs
   1623→    _ => LevelFilter::Trace,
   1624→};
 macros.rs
-    11→/// The standard logging macro.
-    12→///
-      →…
     75→macro_rules! log {
-   117→#[doc(hidden)]
-   118→#[macro_export]
    119→macro_rules! __log {
-   149→/// Logs a message at the error level.
-   150→///
-      →…
    165→macro_rules! error {
-   188→/// Logs a message at the warn level.
-   189→///
-      →…
    204→macro_rules! warn {
-   227→/// Logs a message at the info level.
-   228→///
-      →…
    252→macro_rules! info {
-   275→/// Logs a message at the debug level.
-   276→///
-      →…
    292→macro_rules! debug {
-   315→/// Logs a message at the trace level.
-   316→///
-      →…
    336→macro_rules! trace {
-   359→/// Determines if a message logged at the specified level in that module will
-   360→/// be logged.
-      →…
    391→macro_rules! log_enabled {
-   413→#[doc(hidden)]
-   414→#[macro_export]
    415→macro_rules! __log_enabled {
-   427→#[doc(hidden)]
-   428→#[macro_export]
    429→macro_rules! __log_logger {
-   442→#[doc(hidden)]
-   443→#[macro_export]
-      →…
    445→macro_rules! __log_key {
-   456→#[doc(hidden)]
-   457→#[macro_export]
-      →…
    459→macro_rules! __log_key {
-   465→#[doc(hidden)]
-   466→#[macro_export]
-      →…
    468→macro_rules! __log_value {
-   514→#[doc(hidden)]
-   515→#[macro_export]
-      →…
    517→macro_rules! __log_value {
-   523→#[doc(hidden)]
-   524→#[macro_export]
-      →…
    526→macro_rules! __log_value_sval {
-   532→#[doc(hidden)]
-   533→#[macro_export]
-      →…
    535→macro_rules! __log_value_sval {
-   541→#[doc(hidden)]
-   542→#[macro_export]
-      →…
    544→macro_rules! __log_value_serde {
-   550→#[doc(hidden)]
-   551→#[macro_export]
-      →…
    553→macro_rules! __log_value_serde {
-   561→#[doc(hidden)]
-   562→#[macro_export]
-      →…
    564→macro_rules! __log_value_error {
-   570→#[doc(hidden)]
-   571→#[macro_export]
-      →…
    573→macro_rules! __log_value_error {
 serde.rs
     17→    fn serialize …

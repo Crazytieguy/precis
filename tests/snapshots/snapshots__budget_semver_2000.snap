@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1840 words)
+budget: 2000 (1815 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -170,6 +170,7 @@ bin/semver.js
     38→  if (!argv.length) {
     39→    return help()
     40→  }
+    41→  while (argv.length) {
       →…
    132→const failInc = () => {
    133→  console.error('--inc can only be used on a single version with no range')
@@ -180,6 +181,7 @@ bin/semver.js
    140→`SemVer ${version}
    141→
    142→A JavaScript implementation of the https://semver.org/ specification
+   143→Copyright Isaac Z. Schlueter
       →…
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -316,8 +318,6 @@ internal/debug.js
 internal/identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
-     5→  if (typeof a === 'number' && typeof b === 'number') {
-      →…
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 internal/lrucache.js
      3→class LRUCache {
@@ -350,8 +350,6 @@ internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
-     7→  if (!options) {
-      →…
 internal/re.js
     12→const re = exports.re = []
     13→const safeRe = exports.safeRe = []
@@ -365,11 +363,7 @@ internal/re.js
     30→  [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH],
     31→]
     33→const makeSafeRegex = (value) => {
-    34→  for (const [token, max] of safeRegexReplacements) {
-      →…
     42→const createToken = (name, value, isGlobal) => {
-    43→  const safe = makeSafeRegex(value)
-      →…
 ranges/gtr.js
      5→const gtr = (version, range, options) => outside(version, range, '>', options)
 ranges/intersects.js

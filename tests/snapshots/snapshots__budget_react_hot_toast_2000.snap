@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1967 words)
+budget: 2000 (1939 words)
 
 README.md
     28→## Features
@@ -87,11 +87,9 @@ site/components/code.tsx
 site/components/docs-layout.tsx
      8→const TableItem: React.FC<{
      9→  href: string;
-    10→  children?: React.ReactNode;
       →…
     19→const TableHeader: React.FC<{
     20→  children?: React.ReactNode;
-    21→}> = ({ children }) => (
       →…
     27→export default function DocsLayout({ meta, children }) {
     28→  return (
@@ -130,7 +128,6 @@ site/components/sections/toast-example.tsx
     12→}> = [
     13→  {
     14→    title: 'Success',
-    15→    emoji: '✅',
       →…
    270→export const ToastExample = () => {
    271→  const [snippet, setSnippet] = useState(examples[0].snippet);
@@ -188,7 +185,6 @@ site/pages/_app.tsx
     15→      <a {...props} />
     16→    </Link>
     17→  ),
-    18→  h1: (props) => {
       →…
     71→function MyApp …
 site/pages/index.tsx
@@ -379,7 +375,6 @@ src/core/store.ts
     64→
     65→  switch (action.type) {
     66→    case ActionType.ADD_TOAST:
-    67→      return {
       →…
    136→const listeners: Array<
    137→  [toasterId: string, reducer: (state: ToasterState) => void]
@@ -396,7 +391,6 @@ src/core/store.ts
    151→    memoryState[toasterId] || defaultToasterState,
    152→    action
    153→  );
-   154→  listeners.forEach(([id, listener]) => {
       →…
    161→export const dispatchAll = (action: Action) =>
    162→  Object.keys(memoryState).forEach((toasterId) => dispatch(action, toasterId));
@@ -426,7 +420,6 @@ src/core/store.ts
    190→    memoryState[toasterId] || defaultToasterState
    191→  );
    192→  const initial = useRef(memoryState[toasterId]);
-   193→
       →…
 src/core/toast.ts
     19→type Message = ValueOrFunction<Renderable, Toast>;
@@ -543,7 +536,6 @@ src/core/use-toaster.ts
     13→  const toastTimeouts = useRef(
     14→    new Map<Toast['id'], ReturnType<typeof setTimeout>>()
     15→  ).current;
-    16→
       →…
 src/core/utils.ts
      1→export const genId = (() => {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (475 words)
+budget: 500 (464 words)
 
 readme.md
     87→### ky(input, options?) …
@@ -20,7 +20,6 @@ source/core/Ky.ts
     35→		const ky = new Ky(input, options);
     36→
     37→		const function_ = async (): Promise<Response> => {
-    38→			if (typeof ky.#options.timeout === 'number' && ky.#options.timeout > maxSafeTimeout) {
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→

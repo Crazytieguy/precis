@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1958 words)
+budget: 2000 (1949 words)
 
 readme.md
     87→### ky(input, options?)
@@ -354,9 +354,6 @@ source/utils/normalize.ts
     17→	limit: 2,
     18→	methods: retryMethods,
     19→	statusCodes: retryStatusCodes,
-    20→	afterStatusCodes: retryAfterStatusCodes,
-    21→	maxRetryAfter: Number.POSITIVE_INFINITY,
-    22→	backoffLimit: Number.POSITIVE_INFINITY,
       →…
     28→export const normalizeRetryOptions …
 source/utils/options.ts

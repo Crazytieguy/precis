@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (504 words)
+budget: 500 (488 words)
 
 ini.js
      3→const encode = (obj, opt = {}) => {
@@ -25,7 +25,6 @@ ini.js
     20→
     21→  const keys = opt.sort ? Object.keys(obj).sort() : Object.keys(obj)
     22→
-    23→  let padToChars = 0
       →…
     80→function splitSections (str, separator) {
     81→  var lastMatchIndex = 0
@@ -47,7 +46,6 @@ ini.js
     97→      lastSeparatorIndex = nextIndex + separator.length
     98→    }
     99→  } while (nextIndex !== -1)
-   100→
       →…
    106→const decode = (str, opt = {}) => {
    107→  opt.bracketedArray = opt.bracketedArray !== false
@@ -69,7 +67,6 @@ ini.js
    123→    }
    124→    if (match[1] !== undefined) {
    125→      section = unsafe(match[1])
-   126→      if (section === '__proto__') {
       →…
    212→const isQuoted = val => {
    213→  return (val.startsWith('"') && val.endsWith('"')) ||
@@ -107,5 +104,4 @@ ini.js
    247→      const c = val.charAt(i)
    248→      if (esc) {
    249→        if ('\\;#'.indexOf(c) !== -1) {
-   250→          unesc += c
       →…

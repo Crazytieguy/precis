@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2010 words)
+budget: 2000 (1990 words)
 
 errors.ts
      1→/**
@@ -54,6 +54,7 @@ internals/helpers.ts
     49→    // Tuple pattern
     50→    if (Array.isArray(pattern)) {
     51→      if (!Array.isArray(value)) return false;
+    52→      let startPatterns = [];
       →…
    120→export const getSelectionKeys = (pattern: any): string[] => {
    121→  if (isObject(pattern)) {
@@ -153,12 +154,6 @@ match.ts
     66→
     67→    let hasSelections = false;
     68→    let selected: Record<string, unknown> = {};
-    69→    const select = (key: string, value: unknown) => {
-    70→      hasSelections = true;
-    71→      selected[key] = value;
-    72→    };
-    73→
-    74→    const matched =
     94→  when …
    110→  otherwise …
    115→  exhaustive …

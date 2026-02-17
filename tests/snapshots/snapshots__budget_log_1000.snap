@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (986 words)
+budget: 1000 (976 words)
 
 README.md
      1→log
@@ -88,7 +88,6 @@ src/__private_api.rs
    114→    use crate::kv;
    115→
    116→    pub type Value<'a> = kv::Value<'a>;
-   117→
 src/kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
@@ -188,8 +187,6 @@ src/lib.rs
    784→}
    787→    #[inline]
    788→    fn get(&self) -> &'a str {
-   789→        match *self {
-      →…
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
    844→    args: fmt::Arguments<'a>,
@@ -228,8 +225,6 @@ src/lib.rs
   1484→where
   1485→    F: FnOnce() -> &'static dyn Log,
   1486→{
-  1487→    match STATE.compare_exchange(
-      →…
   1549→pub struct SetLoggerError(());
   1559→impl error::Error for SetLoggerError {}
   1566→pub struct ParseLevelError(());

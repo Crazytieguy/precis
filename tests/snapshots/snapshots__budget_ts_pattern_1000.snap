@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1002 words)
+budget: 1000 (984 words)
 
 README.md
    417→### `match`
@@ -110,9 +110,7 @@ src/internals/symbols.ts
 src/is-matching.ts
      6→/**
      7→ * This constraint allows using additional properties
-     8→ * in object patterns. See "should allow targetting unknown properties"
-     9→ * unit test in `is-matching.test.ts`.
-    10→ */
+      →…
     11→type PatternConstraint<T> = T extends readonly any[]
     12→  ? P.Pattern<T>
     13→  : T extends object

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (502 words)
+budget: 500 (499 words)
 
 input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(
@@ -150,5 +150,4 @@ use-pwm-badge.tsx
     42→      hasPWMBadge &&
     43→      hasPWMBadgeSpace
     44→
-    45→    return increaseWidthCase
       →…

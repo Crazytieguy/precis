@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1915 words)
+budget: 2000 (1902 words)
 
 CHANGELOG.md
     21→### Fixed
@@ -314,7 +314,6 @@ src/dotenv/cli.py
     73→    """
     74→
     75→    try:
-    76→        with open(path) as stream:
       →…
     93→def list_values …
    112→@cli.command(name="set")
@@ -325,7 +324,6 @@ src/dotenv/cli.py
    117→    """Store the given key/value."""
    118→    file = ctx.obj["FILE"]
    119→    quote = ctx.obj["QUOTE"]
-   120→    export = ctx.obj["EXPORT"]
       →…
    128→@cli.command()
    129→@click.pass_context
@@ -334,7 +332,6 @@ src/dotenv/cli.py
    132→    """Retrieve the value for the given key."""
    133→    file = ctx.obj["FILE"]
    134→
-   135→    with stream_file(file) as stream:
       →…
    145→@cli.command()
    146→@click.pass_context
@@ -343,14 +340,12 @@ src/dotenv/cli.py
    149→    """Removes the given key."""
    150→    file = ctx.obj["FILE"]
    151→    quote = ctx.obj["QUOTE"]
-   152→    success, key = unset_key(file, key, quote)
       →…
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
    175→    file = ctx.obj["FILE"]
    176→    if not os.path.isfile(file):
-   177→        raise click.BadParameter(
       →…
    193→def run_command …
 src/dotenv/ipython.py
@@ -402,6 +397,7 @@ src/dotenv/main.py
     49→        stream: Optional[IO[str]] = None,
     50→        verbose: bool = False,
     51→        encoding: Optional[str] = None,
+    52→        interpolate: bool = True,
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
@@ -425,7 +421,6 @@ src/dotenv/main.py
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    146→    pathlib.Path(path).touch()
    147→
-   148→    with tempfile.NamedTemporaryFile(mode="w", encoding=encoding, delete=False) as dest:
       →…
    163→def set_key …
    211→def unset_key …
@@ -456,6 +451,7 @@ src/dotenv/parser.py
     51→
     52→    @classmethod
     53→    def start(cls) -> "Position":
+    54→        return cls(chars=0, line=1)
     56→    def set …
     60→    def advance …
     65→class Error(Exception):
@@ -467,6 +463,7 @@ src/dotenv/parser.py
     73→        self.mark = Position.start()
     74→
     75→    def has_next(self) -> bool:
+    76→        return self.position.chars < len(self.string)
     78→    def set_mark …
     81→    def get_marked …
     87→    def peek …
@@ -506,7 +503,7 @@ src/dotenv/variables.py
     33→    def __repr__(self) -> str:
     34→        return f"Literal(value={self.value})"
     35→
-    36→    def __eq__ …
+    36→    def __eq__(self, other: object) -> bool:
     41→    def __hash__ …
     44→    def resolve …
     48→class Variable(Atom):
@@ -516,6 +513,7 @@ src/dotenv/variables.py
     52→
     53→    def __repr__(self) -> str:
     54→        return f"Variable(name={self.name}, default={self.default})"
+    55→
     56→    def __eq__ …
     61→    def __hash__ …
     64→    def resolve …

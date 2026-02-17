@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3024 words)
+budget: 4000 (3018 words)
 
 assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
@@ -294,7 +294,6 @@ index.tsx
    655→
    656→  React.useEffect(() => {
    657→    return ToastState.subscribe((toast) => {
-   658→      if ((toast as ToastToDismiss).dismiss) {
       →…
 state.ts
     15→type titleT = (() => React.ReactNode) | React.ReactNode;

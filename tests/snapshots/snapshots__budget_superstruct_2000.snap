@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1906 words)
+budget: 2000 (1888 words)
 
 Readme.md
     42→### Usage …
@@ -116,13 +116,6 @@ docs/readme.md
     45→const Uuid = define('Uuid', isUuid.v4)
     46→
     47→const User = object({
-    48→  id: Uuid,
-    49→  email: Email,
-    50→  name: string(),
-    51→})
-    52→
-    53→const data = {
-    54→  id: 'c8d63140-a1f7-45e0-bfc6-df72973fea86',
       →…
 docs/reference/core.md
      3→### `assert`

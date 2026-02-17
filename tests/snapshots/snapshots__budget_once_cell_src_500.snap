@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (496 words)
+budget: 500 (493 words)
 
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
@@ -57,7 +57,6 @@ imp_std.rs
    211→    let curr_state = strict::addr(curr_queue) & STATE_MASK;
    212→    loop {
    213→        let node = Waiter {
-   214→            thread: Cell::new(Some(thread::current())),
       →…
    245→mod strict {
    246→    #[must_use]

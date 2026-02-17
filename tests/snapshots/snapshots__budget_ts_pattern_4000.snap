@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3941 words)
+budget: 4000 (3922 words)
 
 README.md
     40→## About …
@@ -384,10 +384,6 @@ src/internals/helpers.ts
     47→    if (!isObject(value)) return false;
     48→
     49→    // Tuple pattern
-    50→    if (Array.isArray(pattern)) {
-    51→      if (!Array.isArray(value)) return false;
-    52→      let startPatterns = [];
-    53→      let endPatterns = [];
       →…
    120→export const getSelectionKeys = (pattern: any): string[] => {
    121→  if (isObject(pattern)) {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 words)
+budget: 1000 (996 words)
 
 assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
@@ -10,8 +10,6 @@ assets.tsx
      7→    case 'success':
      8→      return SuccessIcon;
      9→
-    10→    case 'info':
-    11→      return InfoIcon;
       →…
     24→const bars = Array(12).fill(0);
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
@@ -19,8 +17,6 @@ assets.tsx
     28→    <div className={['sonner-loading-wrapper', className].filter(Boolean).join(' ')} data-visible={visible}>
     29→      <div className="sonner-spinner">
     30→        {bars.map((_, i) => (
-    31→          <div className="sonner-loading-bar" key={`spinner-bar-${i}`} />
-    32→        ))}
       →…
     38→const SuccessIcon = (
     48→const WarningIcon = (
@@ -48,8 +44,6 @@ hooks.tsx
      5→
      6→  React.useEffect(() => {
      7→    const callback = () => {
-     8→      setIsDocumentHidden(document.hidden);
-     9→    };
       →…
 index.tsx
     22→const VISIBLE_TOASTS_AMOUNT = 3;
@@ -76,6 +70,7 @@ state.ts
     21→
     22→  constructor() {
     23→    this.subscribers = [];
+    24→    this.toasts = [];
     29→  subscribe = (subscriber: (toast: ToastT | ToastToDismiss) => void) => {
     38→  publish = (data: ToastT) => {
     42→  addToast = (data: ToastT) => {
@@ -190,6 +185,7 @@ types.ts
    108→  style?: React.CSSProperties;
    109→  cancelButtonStyle?: React.CSSProperties;
    110→  actionButtonStyle?: React.CSSProperties;
+   111→  duration?: number;
       →…
    118→type Offset =
    119→  | {

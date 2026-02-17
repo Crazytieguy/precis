@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (487 words)
 
 CHANGELOG.md
      3→## 2.4.0
@@ -103,7 +103,6 @@ src/tomli/_re.py
     18→([01][0-9]|2[0-3])             # hours
     19→:([0-5][0-9])                  # minutes
     20→(?:
-    21→    :([0-5][0-9])              # optional seconds
       →…
     26→RE_NUMBER …
     45→RE_LOCALTIME …

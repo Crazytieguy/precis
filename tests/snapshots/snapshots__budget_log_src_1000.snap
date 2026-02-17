@@ -2,13 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (992 words)
+budget: 1000 (977 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
     12→mod sealed {
-    13→    /// Types for the `kv` argument.
     14→    pub trait KVs<'a> {
     15→        fn into_kvs(self) -> Option<&'a [(&'a str, super::Value<'a>)]>;
     16→    }
@@ -40,11 +39,11 @@ kv/key.rs
      7→pub trait ToKey {
      8→    /// Perform the conversion.
      9→    fn to_key(&self) -> Key<'_>;
-      →…
+    10→}
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
-      →…
+    40→}
     93→#[cfg(feature = "std")]
     94→mod std_support {
    112→#[cfg(feature = "kv_sval")]
@@ -77,18 +76,15 @@ kv/source.rs
     51→pub trait Source {
     52→    /// Visit key-values.
     53→    ///
+    54→    /// A source doesn't have to guarantee any ordering or uniqueness of key-values.
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
-    92→    struct Get<'k, 'v> {
-      →…
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
-   115→    struct Count(usize);
-      →…
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
-      →…
+   238→}
    240→#[allow(clippy::needless_lifetimes)] // Not needless.
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    242→where
@@ -100,7 +96,7 @@ kv/value.rs
     11→pub trait ToValue {
     12→    /// Perform the conversion.
     13→    fn to_value(&self) -> Value<'_>;
-      →…
+    14→}
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
@@ -109,8 +105,6 @@ kv/value.rs
    205→    where
    206→        T: Into<inner::Inner<'v>>,
    207→    {
-   208→        Value {
-      →…
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
    244→#[cfg(feature = "kv_sval")]
@@ -125,6 +119,7 @@ kv/value.rs
    462→pub trait VisitValue<'v> {
    463→    /// Visit a `Value`.
    464→    ///
+   465→    /// This is the only required method on `VisitValue` and acts as a fallback for any
    538→#[allow(clippy::needless_lifetimes)] // Not needless.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
@@ -139,6 +134,7 @@ kv/value.rs
    738→    pub enum Inner<'v> {
    739→        None,
    740→        Bool(bool),
+   741→        Str(&'v str),
       →…
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
@@ -162,15 +158,6 @@ lib.rs
    435→    fn store …
    442→#[cfg(not(target_has_atomic = "ptr"))]
    443→unsafe impl Sync for AtomicUsize {}
-   447→static mut LOGGER …
-   449→static STATE …
-   454→const UNINITIALIZED …
-   455→const INITIALIZING …
-   456→const INITIALIZED …
-   458→static MAX_LOG_LEVEL_FILTER …
-   460→static LOG_LEVEL_NAMES …
-   462→static SET_LOGGER_ERROR …
-   464→static LEVEL_PARSE_ERROR …
    475→pub enum Level {
    476→    /// The "error" level.
    477→    ///
