@@ -533,6 +533,13 @@ pub fn schedule(
                     .map(|&fi| file_path_costs[fi])
                     .sum();
 
+                // Budget pruning: skip items that can never fit. For Doc/Body
+                // stages, total_cost is monotonically non-decreasing with n
+                // (each line adds to prerequisite costs), so we can break early.
+                if own_cost + prereq_cost + fp_cost > budget {
+                    break;
+                }
+
                 let item_gen = generation;
                 generation += 1;
                 current_gen[group_idx].insert((stage_kind, n), item_gen);
@@ -685,6 +692,26 @@ pub fn schedule(
                         .filter(|fi| !files_shown.contains(fi))
                         .map(|&fi| file_path_costs[fi])
                         .sum();
+
+                    let total_cost = own_cost + prereq_cost + fp_cost;
+
+                    // Budget pruning: skip items that can't fit in remaining
+                    // budget. Invalidate their generation so stale heap entries
+                    // are ignored. For Doc/Body, total_cost is monotonically
+                    // non-decreasing with n, so break the inner loop early.
+                    // Safe: if conditions change (file paths shown, prereqs
+                    // included), the group will be in affected_groups and
+                    // items will be re-evaluated.
+                    if total_cost > remaining_budget {
+                        // Invalidate any stale heap entries for this and
+                        // all remaining n values
+                        for invalidate_n in n..=max_n {
+                            let item_gen = generation;
+                            generation += 1;
+                            current_gen[other_group_idx].insert((sk, invalidate_n), item_gen);
+                        }
+                        break;
+                    }
 
                     let item_gen = generation;
                     generation += 1;

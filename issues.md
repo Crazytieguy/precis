@@ -8,7 +8,7 @@
 
 **Benchmarking:** `cargo bench --bench hot_path` benchmarks `extract_all_symbols`, `build_groups`, `schedule`, and `render_with_budget` across three fixture sizes (either/src, pluggy/src/pluggy, commander/lib). Use `--quick` flag for fast runs (5 samples).
 
-**Remaining performance work:** commander_lib schedule is still ~318ms (from benchmarks). The remaining cost is likely from re-pushing all items in the same group on every prereq change, and from groups that share many files (single-directory codebases). Consider caching per-group max_n, precomputing stage positions, or batch-updating prereqs.
+**Remaining performance work:** ~~commander_lib schedule is still ~318ms (from benchmarks). The remaining cost is likely from re-pushing all items in the same group on every prereq change, and from groups that share many files (single-directory codebases). Consider caching per-group max_n, precomputing stage positions, or batch-updating prereqs.~~ Budget pruning in the scheduler reduced commander_lib schedule from ~268ms to ~0.9ms (99.7% reduction). The optimization skips pushing items whose total cost (own + prereq + file path) exceeds remaining budget, and breaks out of the inner `n` loop early since Doc/Body total_cost is monotonically non-decreasing with `n`. Stale heap entries are invalidated so they're ignored when popped. The full test suite (306 tests) now runs in ~9s in release mode.
 
 ## Known bugs
 
