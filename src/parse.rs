@@ -278,6 +278,12 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             continue;
         }
 
+        // Filter out symbols nested inside Rust `const _: T = { ... }` blocks
+        // (build probes, type assertions — nothing inside is accessible)
+        if lang == Lang::Rust && is_inside_rust_anon_const(symbol_node, source) {
+            continue;
+        }
+
         let name = if kind == SymbolKind::Impl {
             impl_name(symbol_node, source)
         } else if matches!(symbol_node.kind(), "const_declaration" | "var_declaration") {
@@ -295,8 +301,10 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             }
         };
 
-        // Filter out Go blank identifier in const blocks (used to skip iota values)
-        if lang == Lang::Go && name == "_" {
+        // Filter out blank identifier `_` in Go and Rust.
+        // Go: `_ = iota` in const blocks (skips iota values), `var _ error = ...` (interface checks).
+        // Rust: `const _: () = { ... }` (build probes, type assertions, compile-time checks).
+        if matches!(lang, Lang::Go | Lang::Rust) && name == "_" {
             continue;
         }
 
@@ -483,6 +491,29 @@ fn has_preceding_attribute(node: tree_sitter::Node, source: &str, needle: &str) 
     false
 }
 
+/// Check if a node is inside a Rust `const _: T = { ... }` block.
+/// These anonymous constants are used for build probes, type assertions, and compile-time checks.
+/// Nothing inside them is accessible from outside — all nested types, impls, and functions
+/// are internal to the constant expression and should be filtered from output.
+fn is_inside_rust_anon_const(node: tree_sitter::Node, source: &str) -> bool {
+    let mut current = node.parent();
+    while let Some(parent) = current {
+        if parent.kind() == "const_item" {
+            // Check if this const_item has name `_`
+            let mut cursor = parent.walk();
+            let is_anon = parent.children(&mut cursor).any(|child| {
+                child.kind() == "identifier"
+                    && child.utf8_text(source.as_bytes()).unwrap_or("") == "_"
+            });
+            if is_anon {
+                return true;
+            }
+        }
+        current = parent.parent();
+    }
+    false
+}
+
 /// Check if a Rust node is test code that should be filtered from output.
 /// Returns true for `#[test]` functions, `#[cfg(test)]` modules, and anything nested inside them.
 fn is_rust_test_code(node: tree_sitter::Node, source: &str) -> bool {
@@ -616,6 +647,38 @@ mod tests {
         assert!(!names.contains(&"tests"));
         assert!(!names.contains(&"helper"));
         assert!(!names.contains(&"another_test"));
+    }
+
+    #[test]
+    fn filters_rust_anon_const_blocks() {
+        let source = r#"
+pub fn real_function() {}
+
+const _: () = {
+    use core::fmt::Debug;
+
+    struct ProbeType;
+
+    impl Debug for ProbeType {
+        fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+            Ok(())
+        }
+    }
+};
+
+const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
+
+pub const REAL_CONST: usize = 42;
+"#;
+        let symbols = extract_symbols(Path::new("test.rs"), source);
+        let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
+
+        assert!(names.contains(&"real_function"));
+        assert!(names.contains(&"REAL_CONST"));
+        // Anonymous constants and everything inside them should be filtered
+        assert!(!names.contains(&"_"));
+        assert!(!names.contains(&"ProbeType"));
+        assert!(!names.contains(&"fmt"));
     }
 
     #[test]

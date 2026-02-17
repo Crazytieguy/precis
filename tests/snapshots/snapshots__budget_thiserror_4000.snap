@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3742 words)
+budget: 4000 (3737 words)
 
 README.md
      1→derive(Error)
@@ -258,7 +258,6 @@ build/probe.rs
     28→        request.provide_ref(&self.0);
     29→    }
     30→}
-    33→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
 build.rs
     10→const PRIVATE: &str = "\
     11→#[doc(hidden)]

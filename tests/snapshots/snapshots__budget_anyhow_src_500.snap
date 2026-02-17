@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (500 words)
+budget: 500 (504 words)
 
 backtrace.rs
      8→pub(crate) enum Backtrace {}
@@ -31,6 +31,7 @@ chain.rs
     36→    type Item = &'a (dyn StdError + 'static);
 context.rs
      9→mod ext {
+    10→    use super::*;
     12→    pub trait StdError {
     13→        fn ext_context<C>(self, context: C) -> Error
     14→        where
@@ -98,6 +99,10 @@ lib.rs
    427→/// ```rust
    428→/// use anyhow::Result;
    429→///
+   430→/// # const IGNORE: &str = stringify! {
+   431→/// fn demo1() -> Result<T> {...}
+   432→///            // ^ equivalent to std::result::Result<T, anyhow::Error>
+   433→///
       →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    616→pub trait Context<T, E>: context::private::Sealed {
@@ -117,21 +122,13 @@ lib.rs
    677→        #[doc(hidden)]
       →…
    708→    mod not {
+   709→        #[doc(hidden)]
    710→        pub trait Bool {
 macros.rs
     58→macro_rules! bail {
     70→macro_rules! __ensure {
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
-nightly.rs
-    12→#[cfg(anyhow_build_probe)]
-    13→const _: () = {
-    14→    use core::fmt::{self, Debug, Display};
-    15→
-    16→    struct MyError(Backtrace);
-    17→
-    38→#[cfg(anyhow_build_probe)]
-    39→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
 ptr.rs
      6→pub struct Own<T>
      7→where

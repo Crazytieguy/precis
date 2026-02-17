@@ -35,7 +35,6 @@ build/probe.rs
     27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
     28→        request.provide_ref(&self.0);
       →…
-    33→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
 build.rs
     10→const PRIVATE: &str = "\
     11→#[doc(hidden)]
@@ -139,6 +138,8 @@ src/display.rs
     58→#[cfg(not(feature = "std"))]
     59→mod placeholder {
     60→    use super::{AsDisplay, Sealed};
+    61→    use core::fmt::{self, Display};
+    62→
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
     67→        type Target = Self;

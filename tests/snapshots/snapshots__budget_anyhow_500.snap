@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (514 words)
+budget: 500 (513 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -54,6 +54,8 @@ src/chain.rs
     16→pub(crate) enum ChainState<'a> {
     36→    type Item = &'a (dyn StdError + 'static);
 src/context.rs
+     9→mod ext {
+    10→    use super::*;
     12→    pub trait StdError {
     13→        fn ext_context<C>(self, context: C) -> Error
     14→        where
@@ -91,8 +93,17 @@ src/kind.rs
 src/lib.rs
    251→#[macro_use]
    252→mod backtrace;
+   253→mod chain;
+   254→mod context;
+   255→mod ensure;
+   256→mod error;
+   257→mod fmt;
+   258→mod kind;
+   259→mod macros;
    260→#[cfg(error_generic_member_access)]
    261→mod nightly;
+   262→mod ptr;
+   263→mod wrapper;
    278→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
@@ -120,29 +131,20 @@ src/lib.rs
    657→    use self::not::Bool;
    658→    use crate::Error;
    659→    use alloc::fmt;
-   660→    use core::fmt::Arguments;
    671→    #[doc(hidden)]
    672→    pub mod kind {
    673→        #[doc(hidden)]
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    675→
-   676→        #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
       →…
+   708→    mod not {
+   709→        #[doc(hidden)]
    710→        pub trait Bool {
 src/macros.rs
     58→macro_rules! bail {
     70→macro_rules! __ensure {
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
-src/nightly.rs
-    12→#[cfg(anyhow_build_probe)]
-    13→const _: () = {
-    14→    use core::fmt::{self, Debug, Display};
-    15→
-    16→    struct MyError(Backtrace);
-    17→
-    38→#[cfg(anyhow_build_probe)]
-    39→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
 src/ptr.rs
      6→pub struct Own<T>
      7→where

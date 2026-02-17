@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2011 words)
+budget: 2000 (2015 words)
 
 backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
@@ -116,7 +116,14 @@ context.rs
     79→///     # unimplemented!()
     80→/// }
     81→///
-      →…
+    82→/// fn demo() -> Result<()> {
+    83→///     let t = maybe_get().context("there is no T")?;
+    84→///     # const IGNORE: &str = stringify! {
+    85→///     ...
+    86→///     # };
+    87→///     # unimplemented!()
+    88→/// }
+    89→/// ```
     90→impl<T> Context<T, Infallible> for Option<T> {
    147→    fn provide …
    161→    fn provide …
@@ -482,6 +489,7 @@ macros.rs
      1→/// Return early with an error.
      2→///
      3→/// This macro is equivalent to
+     4→/// <code>return Err([anyhow!($args\...)][anyhow!])</code>.
       →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
@@ -490,26 +498,13 @@ macros.rs
    174→/// Construct an ad-hoc error from a string or existing non-`anyhow` error
    175→/// value.
    176→///
+   177→/// This evaluates to an [`Error`][crate::Error]. It can take either just a
       →…
    204→macro_rules! anyhow {
    228→#[doc(hidden)]
    229→#[macro_export]
    230→macro_rules! __anyhow {
 nightly.rs
-    12→#[cfg(anyhow_build_probe)]
-    13→const _: () = {
-    14→    use core::fmt::{self, Debug, Display};
-    15→
-    16→    struct MyError(Backtrace);
-    17→
-    18→    impl Debug for MyError {
-    19→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
-    20→            unimplemented!()
-    21→        }
-    22→    }
-    23→
-    38→#[cfg(anyhow_build_probe)]
-    39→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
     45→fn request_ref …
 ptr.rs
      5→#[repr(transparent)]
