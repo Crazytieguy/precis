@@ -2,23 +2,29 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (557 words)
+budget: 500 (549 words)
 
 README.md
    417→### `match`
    418→
    419→```ts
    420→match(value);
+   421→```
+   422→
       →…
    857→#### `P._` wildcard
    858→
    859→The `P._` pattern will match any value. You can also use `P.any`, which is an alias to `P._`.
    860→
+   861→```ts
+   862→import { match, P } from 'ts-pattern';
       →…
   1623→### `P.infer`
   1624→
   1625→`P.infer<typeof somePattern>` lets you infer a type of value from a type of pattern.
   1626→
+  1627→It's particularly useful when validating an API response.
+  1628→
       →…
 docs/v3-to-v4-migration-guide.md
      3→## Breaking changes
@@ -75,15 +81,6 @@ src/internals/symbols.ts
      4→ *
       →…
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
-    17→export type matcher …
-    19→export const unset …
-    20→export type unset …
-    22→export const isVariadic …
-    23→export type isVariadic …
-    26→export const anonymousSelectKey …
-    27→export type anonymousSelectKey …
-    29→export const override …
-    30→export type override …
 src/is-matching.ts
      6→/**
       →…
@@ -140,6 +137,7 @@ src/types/Match.ts
 src/types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
+    45→ * protocol. It must define a `symbols.matcher` property
       →…
     50→export interface Matcher<
     51→  input,

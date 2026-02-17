@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (561 words)
+budget: 500 (534 words)
 
 404.md
      1→# Document not found (404)
@@ -27,6 +27,15 @@ SUMMARY.md
       →…
     11→# Reference guide
     12→
+      →…
+cli/README.md
+     1→# Command-line tool
+     2→
+     3→The `mdbook` command-line tool is used to create and build books.
+     4→After you have [installed](../guide/installation.md) `mdbook`, you can run the `mdbook help` command in your terminal to view the available commands.
+     5→
+     6→This following sections provide in-depth information on the different commands available.
+     7→
       →…
 continuous-integration.md
      1→# Running `mdbook` in continuous integration
@@ -104,6 +113,22 @@ for_developers/preprocessors.md
     74→## Implementing a preprocessor with a different language
     75→
       →…
+format/README.md
+     1→# Format
+     2→
+     3→In this section you will learn how to:
+     4→
+     5→- Structure your book correctly
+     6→- Format your `SUMMARY.md` file
+     7→- Configure your book using `book.toml`
+     8→- Customize your theme
+format/configuration/README.md
+     1→# Configuration
+     2→
+     3→This section details the configuration options available in the ***book.toml***:
+     4→- **[General]** configuration including the `book`, `rust`, `build` sections
+     5→- **[Preprocessor]** configuration for default and custom book preprocessors
+      →…
 format/example.rs
      1→fn main() {
      2→    println!("Hello World!");
@@ -132,89 +157,23 @@ format/mdbook.md
     22→
     23→```rust
     24→# fn main() {
-    25→    let x = 5;
-    26→    let y = 6;
-    27→
-    28→    println!("{}", x + y);
-    29→# }
-    30→```
-    31→
       →…
 format/theme/README.md
-     1→# Theme …
-format/theme/editor.md
-     1→# Editor …
-    35→## Customizing the editor …
-format/theme/index-hbs.md
-     1→# index.hbs …
-     9→## Data …
-    41→## Handlebars helpers …
-    46→### toc …
-    80→### resource …
-    90→### fa …
-format/theme/syntax-highlighting.md
-     1→# Syntax highlighting …
-    17→## Supported languages …
-    68→## Custom theme …
-    82→## Improve default theme …
+     1→# Theme
+     2→
+     3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
+     4→render your markdown files and comes with a default theme included in the mdBook
+     5→binary.
+     6→
+      →…
 guide/README.md
      1→# User guide
      2→
-      →…
-guide/creating.md
-     1→# Creating a book
-     2→
-      →…
-     5→## Initializing a book
-     6→
-      →…
-    32→## Anatomy of a book
-    33→
-      →…
-    36→### `book.toml`
-    37→
-      →…
-    50→### `SUMMARY.md`
-    51→
-      →…
-    73→### Source files
-    74→
-      →…
-    96→## Publishing a book
-    97→
-      →…
-guide/installation.md
-     1→# Installation
-     2→
-      →…
-     9→## Pre-compiled binaries
-    10→
-      →…
-    19→## Build from source using Rust
-    20→
-      →…
-    41→### Installing the latest master version
-    42→
-      →…
-    53→## Modifying and contributing
-    54→
-      →…
-guide/reading.md
-     1→# Reading books
-     2→
-      →…
-    12→## Navigation
-    13→
-      →…
-    26→## Top menu bar
-    27→
-      →…
-    42→## Search
-    43→
-      →…
-    54→## Code blocks
-    55→
-      →…
+     3→This user guide provides an introduction to basic concepts of using mdBook.
+     4→
+     5→- [Installation](installation.md)
+     6→- [Reading Books](reading.md)
+     7→- [Creating a Book](creating.md)
 misc/contributors.md
      1→# Contributors
      2→
@@ -227,12 +186,4 @@ misc/contributors.md
      9→- Adam Solove ([asolove](https://github.com/asolove))
     10→- Wayne Nilsen ([waynenilsen](https://github.com/waynenilsen))
     11→- [funnkill](https://github.com/funkill)
-    12→- Fu Gangqiang ([FuGangqiang](https://github.com/FuGangqiang))
-    13→- [Michael-F-Bryan](https://github.com/Michael-F-Bryan)
-    14→- Chris Spiegel ([cspiegel](https://github.com/cspiegel))
-    15→- [projektir](https://github.com/projektir)
-    16→- [Phaiax](https://github.com/Phaiax)
-    17→- Matt Ickstadt ([mattico](https://github.com/mattico))
-    18→- Weihang Lo ([weihanglo](https://github.com/weihanglo))
-    19→- Avision Ho ([avisionh](https://github.com/avisionh))
       →…

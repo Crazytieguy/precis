@@ -2,73 +2,107 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1921 words)
+budget: 2000 (1908 words)
 
 CHANGELOG.md
      1→# 1.8.0 (Nov 28, 2025)
      2→
-     3→ENHANCEMENTS:
       →…
     24→# 1.7.0 (May 24, 2024)
     25→
-    26→ENHANCEMENTS:
       →…
     43→# 1.6.0 (June 28, 2022)
     44→
-    45→FEATURES:
       →…
     49→# 1.5.0 (May 18, 2022)
     50→
-    51→FEATURES:
       →…
     56→# 1.4.0 (January 5, 2022)
     57→
-    58→FEATURES:
       →…
     63→# 1.3.0 (March 31, 2021)
     64→
-    65→Please note that CHANGELOG.md does not exist in the source code prior to this release.
       →…
     70→# 1.2.1 (June 17, 2020)
     71→
-    72→BUG FIXES:
       →…
     75→# 1.2.0 (April 23, 2019)
     76→
-    77→FEATURES:
       →…
     80→# 1.1.0 (Jan 07, 2019)
     81→
-    82→FEATURES:
       →…
     85→# 1.0.0 (August 24, 2018)
     86→
-    87→Initial release.
+      →…
 README.md
      1→# Versioning Library for Go
      2→
      3→![Build Status](https://github.com/hashicorp/go-version/actions/workflows/go-tests.yml/badge.svg)
-      →…
+     4→[![Go Reference](https://pkg.go.dev/badge/github.com/hashicorp/go-version.svg)](https://pkg.go.dev/github.com/hashicorp/go-version)
+     5→
+     6→go-version is a library for parsing versions and version constraints,
+     7→and verifying versions against a set of constraints. go-version
+     8→can sort a collection of versions properly, handles prerelease/beta
+     9→versions, can increment versions, etc.
+    10→
+    11→Versions used with go-version must follow [SemVer](http://semver.org/).
+    12→
     13→## Installation and Usage
     14→
     15→Package documentation can be found on
-      →…
+    16→[Go Reference](https://pkg.go.dev/github.com/hashicorp/go-version).
+    17→
+    18→Installation can be done with a normal `go get`:
+    19→
+    20→```
+    21→$ go get github.com/hashicorp/go-version
+    22→```
+    23→
     24→#### Version Parsing and Comparison
     25→
     26→```go
-      →…
+    27→v1, err := version.NewVersion("1.2")
+    28→v2, err := version.NewVersion("1.5+metadata")
+    29→
+    30→// Comparison example. There is also GreaterThan, Equal, and just
+    31→// a simple Compare that returns an int allowing easy >=, <=, etc.
+    32→if v1.LessThan(v2) {
+    33→    fmt.Printf("%s is less than %s", v1, v2)
+    34→}
+    35→```
+    36→
     37→#### Version Constraints
     38→
     39→```go
-      →…
+    40→v1, err := version.NewVersion("1.2")
+    41→
+    42→// Constraints example.
+    43→constraints, err := version.NewConstraint(">= 1.0, < 1.4")
+    44→if constraints.Check(v1) {
+    45→	fmt.Printf("%s satisfies constraints %s", v1, constraints)
+    46→}
+    47→```
+    48→
     49→#### Version Sorting
     50→
     51→```go
-      →…
+    52→versionsRaw := []string{"1.1", "0.7.1", "1.4-beta", "1.4", "2"}
+    53→versions := make([]*version.Version, len(versionsRaw))
+    54→for i, raw := range versionsRaw {
+    55→    v, _ := version.NewVersion(raw)
+    56→    versions[i] = v
+    57→}
+    58→
+    59→// After this, the versions are properly sorted
+    60→sort.Sort(version.Collection(versions))
+    61→```
+    62→
     63→## Issues and Contributing
     64→
     65→If you find an issue with this library, please report an issue. If you'd
-      →…
+    66→like, we welcome any contributions. Fork this library and submit a pull
+    67→request.
 constraint.go
     14→var (
     15→	constraintRegexp     *regexp.Regexp
@@ -103,14 +137,7 @@ constraint.go
     61→	for i, single := range vs {
     62→		c, err := parseSingle(single)
     63→		if err != nil {
-    64→			return nil, err
-    65→		}
-    66→
-    67→		result[i] = c
-    68→	}
-    69→
-    70→	return Constraints(result), nil
-    71→}
+      →…
     73→// MustConstraints is a helper that wraps a call to a function
     74→// returning (Constraints, error) and panics if error is non-nil.
     75→func MustConstraints(c Constraints, err error) Constraints {
@@ -119,7 +146,7 @@ constraint.go
     78→	}
     79→
     80→	return c
-    81→}
+      →…
     83→// Check tests if a version satisfies all the constraints.
     84→func (cs Constraints) Check(v *Version) bool {
     85→	for _, c := range cs {
@@ -127,9 +154,7 @@ constraint.go
     87→			return false
     88→		}
     89→	}
-    90→
-    91→	return true
-    92→}
+      →…
     94→// Equals compares Constraints with other Constraints
     95→// for equality. This may not represent logical equivalence
     96→// of compared constraints.
@@ -144,22 +169,7 @@ constraint.go
    105→	}
    106→
    107→	// make copies to retain order of the original slices
-   108→	left := make(Constraints, len(cs))
-   109→	copy(left, cs)
-   110→	sort.Stable(left)
-   111→	right := make(Constraints, len(c))
-   112→	copy(right, c)
-   113→	sort.Stable(right)
-   114→
-   115→	// compare sorted slices
-   116→	for i, con := range left {
-   117→		if !con.Equals(right[i]) {
-   118→			return false
-   119→		}
-   120→	}
-   121→
-   122→	return true
-   123→}
+      →…
    125→func (cs Constraints) Len() int {
    126→	return len(cs)
    127→}
@@ -183,8 +193,7 @@ constraint.go
    148→		csStr[i] = c.String()
    149→	}
    150→
-   151→	return strings.Join(csStr, ",")
-   152→}
+      →…
    154→// Check tests if a constraint is validated by the given version.
    155→func (c *Constraint) Check(v *Version) bool {
    156→	return c.f(v, c.check)
@@ -272,7 +281,7 @@ version.go
    117→	}
    118→
    119→	return v
-   120→}
+      →…
    122→// Compare compares this version to another version. This
    123→// returns -1, 0, or 1 if this version is smaller, equal,
    124→// or larger than the other version, respectively.
@@ -285,25 +294,6 @@ version.go
    131→		return 0
    132→	}
    133→
-   134→	// If the segments are the same, we must compare on prerelease info
-   135→	if v.equalSegments(other) {
-   136→		preSelf := v.Prerelease()
-   137→		preOther := other.Prerelease()
-   138→		if preSelf == "" && preOther == "" {
-   139→			return 0
-   140→		}
-   141→		if preSelf == "" {
-   142→			return 1
-   143→		}
-   144→		if preOther == "" {
-   145→			return -1
-   146→		}
-   147→
-   148→		return comparePrereleases(preSelf, preOther)
-   149→	}
-   150→
-   151→	segmentsSelf := v.Segments64()
-   152→	segmentsOther := other.Segments64()
       →…
    196→func (v *Version) equalSegments(other *Version) bool {
    211→func allZero(segs []int64) bool {
@@ -323,7 +313,7 @@ version.go
    319→	}
    320→
    321→	return v.Compare(o) == 0
-   322→}
+      →…
    324→// GreaterThan tests if this version is greater than another version.
    325→func (v *Version) GreaterThan(o *Version) bool {
    326→	return v.Compare(o) > 0
@@ -368,7 +358,7 @@ version.go
    371→		segmentSlice[i] = int(v)
    372→	}
    373→	return segmentSlice
-   374→}
+      →…
    376→// Segments64 returns the numeric segments of the version as a slice of int64s.
    377→//
    378→// This excludes any metadata or pre-release information. For example,
@@ -403,10 +393,7 @@ version.go
    431→		return err
    432→	}
    433→
-   434→	*v = *temp
-   435→
-   436→	return nil
-   437→}
+      →…
    439→// MarshalText implements encoding.TextMarshaler interface.
    440→func (v *Version) MarshalText() ([]byte, error) {
    441→	return []byte(v.String()), nil
@@ -418,10 +405,7 @@ version.go
    448→		return v.UnmarshalText([]byte(src))
    449→	case nil:
    450→		return nil
-   451→	default:
-   452→		return fmt.Errorf("cannot scan %T as Version", src)
-   453→	}
-   454→}
+      →…
    456→// Value implements the driver.Valuer interface.
    457→func (v *Version) Value() (driver.Value, error) {
    458→	return v.String(), nil

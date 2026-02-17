@@ -2,67 +2,64 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1109 words)
+budget: 1000 (1064 words)
 
 CHANGELOG.md
-     1→# Changelog …
      3→## 1.21.3
      4→
      5→- Outline more initialization in `race`: [#284](https://github.com/matklad/once_cell/pull/284),
      6→  [#285](https://github.com/matklad/once_cell/pull/285).
      7→
-     8→## 1.21.2 …
-    11→## 1.21.1 …
-    14→## 1.21.0 …
-    21→## 1.20.2 …
-    26→## 1.20.1 …
-    32→## 1.19.0 …
-    36→## 1.18.0 …
-    41→## 1.17.2 …
-    45→## 1.17.1 …
-    49→## 1.17.0 …
-    53→## 1.16.0 …
-    59→## 1.15.0 …
-    64→## 1.14.0 …
-    71→## 1.13.1 …
-    76→## 1.13.0 …
-    80→## 1.12.1 …
-    84→## 1.12.0 …
-    88→## 1.11.0 …
-    94→## 1.10.0 …
-    98→## 1.9.0 …
-   102→## 1.8.0 …
-   106→## 1.7.2 …
-   110→## 1.7.1 …
-   114→## 1.7.0 …
-   122→## 1.6.0 …
-   128→## 1.5.2 …
-   133→## 1.5.1 …
-   140→## 1.5.0 …
-   145→## 1.4.1 …
-   151→## 1.4.0 …
-   157→## 1.3.1 …
-   161→## 1.3.0 …
-   166→## 1.2.0 …
-   170→## 1.1.0 …
-   175→## 1.0.2 …
-   179→## 1.0.1 …
-   186→## 1.0.0 …
-   194→## 0.2.7 …
-   201→## 0.2.6 …
-   205→## 0.2.5 …
-   209→## 0.2.4 …
-   213→## 0.2.3 …
-   219→## 0.2.2 …
-   223→## 0.2.1 …
-   231→## 0.2.0 …
-   237→## 0.1.8 …
-   242→## 0.1.7 …
-   248→## 0.1.6 …
-   252→## 0.1.5 …
 README.md
-     8→# Overview …
-    47→# Related crates …
+     8→# Overview
+     9→
+    10→`once_cell` provides two new cell-like types, `unsync::OnceCell` and `sync::OnceCell`. `OnceCell`
+    11→might store arbitrary non-`Copy` types, can be assigned to at most once and provide direct access
+    12→to the stored contents. In a nutshell, API looks *roughly* like this:
+    13→
+    14→```rust
+    15→impl OnceCell<T> {
+    16→    fn new() -> OnceCell<T> { ... }
+    17→    fn set(&self, value: T) -> Result<(), T> { ... }
+    18→    fn get(&self) -> Option<&T> { ... }
+    19→}
+    20→```
+    21→
+    22→Note that, like with `RefCell` and `Mutex`, the `set` method requires only a shared reference.
+    23→Because of the single assignment restriction `get` can return an `&T` instead of `Ref<T>`
+    24→or `MutexGuard<T>`.
+    25→
+    26→`once_cell` also has a `Lazy<T>` type, build on top of `OnceCell` which provides the same API as
+    27→the `lazy_static!` macro, but without using any macros:
+    28→
+    29→```rust
+    30→use std::{sync::Mutex, collections::HashMap};
+    31→use once_cell::sync::Lazy;
+    32→
+    33→static GLOBAL_DATA: Lazy<Mutex<HashMap<i32, String>>> = Lazy::new(|| {
+    34→    let mut m = HashMap::new();
+    35→    m.insert(13, "Spica".to_string());
+    36→    m.insert(74, "Hoyten".to_string());
+    37→    Mutex::new(m)
+    38→});
+    39→
+    40→fn main() {
+    41→    println!("{:?}", GLOBAL_DATA.lock().unwrap());
+    42→}
+    43→```
+    44→
+      →…
+    47→# Related crates
+    48→
+    49→* [double-checked-cell](https://github.com/niklasf/double-checked-cell)
+    50→* [lazy-init](https://crates.io/crates/lazy-init)
+    51→* [lazycell](https://crates.io/crates/lazycell)
+    52→* [mitochondria](https://crates.io/crates/mitochondria)
+    53→* [lazy_static](https://crates.io/crates/lazy_static)
+    54→* [async_once_cell](https://crates.io/crates/async_once_cell)
+    55→* [generic_once_cell](https://crates.io/crates/generic_once_cell) (bring your own mutex)
+    56→
+    57→Parts of `once_cell` API are included into `std` [as of Rust 1.70.0](https://github.com/rust-lang/rust/pull/105587).
 src/imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
@@ -112,7 +109,7 @@ src/imp_std.rs
    133→const STATE_MASK …
    135→/// Representation of a node in the linked list of waiters in the RUNNING state.
    136→/// A waiters is stored on the stack of the waiting threads.
-   137→#[repr(align(4))] // Ensure the two lower bits are free to use as state bits.
+      →…
    138→struct Waiter {
    139→    thread: Cell<Option<Thread>>,
    140→    signaled: AtomicBool,
@@ -128,15 +125,10 @@ src/imp_std.rs
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
    211→    let curr_state = strict::addr(curr_queue) & STATE_MASK;
    212→    loop {
-   213→        let node = Waiter {
-   214→            thread: Cell::new(Some(thread::current())),
-   215→            signaled: AtomicBool::new(false),
       →…
    245→mod strict {
    246→    #[must_use]
    247→    #[inline]
-   248→    pub(crate) fn addr<T>(ptr: *mut T) -> usize
-   249→    where
 src/lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -160,8 +152,6 @@ src/lib.rs
    392→    ///
    393→    /// Unlike [`std::cell::RefCell`], a `OnceCell` provides simple `&`
    394→    /// references to the contents.
-   395→    ///
-   396→    /// [`std::cell::RefCell`]: https://doc.rust-lang.org/std/cell/struct.RefCell.html
       →…
    411→    pub struct OnceCell<T> {
    412→        // Invariant: written to at most once.
@@ -177,8 +167,6 @@ src/lib.rs
    695→    ///
    696→    /// # Example
    697→    /// ```
-   698→    /// use once_cell::unsync::Lazy;
-   699→    ///
       →…
    714→    pub struct Lazy<T, F = fn() -> T> {
    715→        cell: OnceCell<T>,
@@ -202,8 +190,6 @@ src/lib.rs
    874→    ///
    875→    /// `OnceCell` provides `&` references to the contents without RAII guards.
    876→    ///
-   877→    /// Reading a non-`None` value out of `OnceCell` establishes a
-   878→    /// happens-before relationship with a corresponding write. For example, if
       →…
    901→    pub struct OnceCell<T>(Imp<T>);
    904→        fn default …
@@ -216,8 +202,6 @@ src/lib.rs
   1223→    ///
   1224→    /// This type is thread-safe and can be used in statics.
   1225→    ///
-  1226→    /// # Example
-  1227→    ///
       →…
   1255→    pub struct Lazy<T, F = fn() -> T> {
   1256→        cell: OnceCell<T>,
@@ -274,10 +258,7 @@ src/race.rs
    482→        fn clone …
    497→    fn _dummy …
 xtask/src/main.rs
-     8→fn main() -> xshell::Result<()> {
-   116→fn push_toolchain<'a>(
-   117→    sh: &'a xshell::Shell,
-   118→    toolchain: &str,
-   119→) -> xshell::Result<xshell::PushEnv<'a>> {
-   126→fn section(name: &'static str) -> impl Drop {
-   136→fn defer<F: FnOnce()>(f: F) -> impl Drop {
+     8→fn main …
+   116→fn push_toolchain …
+   126→fn section …
+   136→fn defer …

@@ -73,6 +73,34 @@ pub enum StageKind {
     Body, // Each increment = one more line of body across the group
 }
 
+/// Role of the file a symbol lives in, for separating high-value files
+/// (README) from low-value files (CHANGELOG) in markdown grouping.
+#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
+pub enum FileRole {
+    /// README.md, readme.md, etc.
+    Readme,
+    /// CHANGELOG.md, CHANGES.md, HISTORY.md, NEWS.md, etc.
+    Changelog,
+    /// Everything else.
+    Normal,
+}
+
+impl FileRole {
+    pub fn from_filename(name: &str) -> Self {
+        let lower = name.to_ascii_lowercase();
+        // Strip extension for matching
+        let stem = lower.strip_suffix(".md")
+            .or_else(|| lower.strip_suffix(".markdown"))
+            .or_else(|| lower.strip_suffix(".txt"))
+            .unwrap_or(&lower);
+        match stem {
+            "readme" => FileRole::Readme,
+            "changelog" | "changes" | "history" | "news" | "releases" => FileRole::Changelog,
+            _ => FileRole::Normal,
+        }
+    }
+}
+
 /// Grouping dimensions. All symbols sharing a GroupKey are treated identically.
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Ord, PartialOrd)]
 pub struct GroupKey {
@@ -81,6 +109,7 @@ pub struct GroupKey {
     pub parent_dir: PathBuf,
     pub extension: String,
     pub is_documented: bool,
+    pub file_role: FileRole,
 }
 
 /// A symbol's precomputed content costs (word counts per rendering stage).
@@ -170,6 +199,11 @@ pub fn build_groups(
             .unwrap_or("")
             .to_string();
         let lines: Vec<&str> = source.lines().collect();
+        let file_role = relative
+            .file_name()
+            .and_then(|n| n.to_str())
+            .map(FileRole::from_filename)
+            .unwrap_or(FileRole::Normal);
 
         for (symbol_idx, sym) in symbols.iter().enumerate() {
             let sym_line_0 = sym.line - 1;
@@ -185,6 +219,7 @@ pub fn build_groups(
                 parent_dir: parent_dir.clone(),
                 extension: extension.clone(),
                 is_documented,
+                file_role,
             };
 
             // Compute costs
@@ -324,7 +359,14 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     let sibling_count = group.symbols.len().max(1) as f64;
     let sibling_factor = 1.0 / (1.0 + sibling_count.ln() * 0.1);
 
-    let base_value = visibility * documented * depth_factor * sibling_factor;
+    // File role: README files are high-signal, changelogs are low-signal.
+    let file_role_factor = match key.file_role {
+        FileRole::Readme => 1.5,
+        FileRole::Normal => 1.0,
+        FileRole::Changelog => 0.1,
+    };
+
+    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor;
 
     let stage_value = match key.kind_category {
         KindCategory::Type => match stage {

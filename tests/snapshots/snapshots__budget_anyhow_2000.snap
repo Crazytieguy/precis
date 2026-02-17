@@ -2,26 +2,32 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2000 words)
+budget: 2000 (2013 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
      3→
+     4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/anyhow-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/anyhow)
       →…
     21→## Details
     22→
+    23→- Use `Result<T, anyhow::Error>`, or equivalently `anyhow::Result<T>`, as the
       →…
    126→## No-std support
    127→
+   128→In no_std mode, almost all of the same API is available and works the same way.
       →…
    144→## Comparison to failure
    145→
+   146→The `anyhow::Error` type works something like `failure::Error`, but unlike
       →…
    155→## Comparison to thiserror
    156→
+   157→Use Anyhow if you don't care what error type your functions return, you just
       →…
    166→#### License
    167→
+   168→<sup>
       →…
 build.rs
     17→fn main() {
@@ -56,9 +62,6 @@ src/backtrace.rs
     76→    use core::fmt::{self, Debug, Display};
     77→    use core::sync::atomic::{AtomicUsize, Ordering};
     78→    use std::env;
-    79→    use std::path::{self, Path, PathBuf};
-    80→    use std::sync::Once;
-    81→
     82→    pub(crate) struct Backtrace {
     83→        inner: Inner,
     84→    }
@@ -110,7 +113,6 @@ src/chain.rs
 src/context.rs
      9→mod ext {
     10→    use super::*;
-    11→
     12→    pub trait StdError {
     13→        fn ext_context<C>(self, context: C) -> Error
     14→        where
@@ -481,13 +483,14 @@ src/lib.rs
    708→    mod not {
    709→        #[doc(hidden)]
    710→        pub trait Bool {
+   711→            fn not(self) -> bool;
+   712→        }
    716→            fn not …
    723→            fn not …
 src/macros.rs
      1→/// Return early with an error.
      2→///
      3→/// This macro is equivalent to
-     4→/// <code>return Err([anyhow!($args\...)][anyhow!])</code>.
       →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
@@ -496,7 +499,6 @@ src/macros.rs
    174→/// Construct an ad-hoc error from a string or existing non-`anyhow` error
    175→/// value.
    176→///
-   177→/// This evaluates to an [`Error`][crate::Error]. It can take either just a
       →…
    204→macro_rules! anyhow {
    228→#[doc(hidden)]
@@ -509,12 +511,6 @@ src/nightly.rs
     15→
     16→    struct MyError(Backtrace);
     17→
-    18→    impl Debug for MyError {
-    19→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
-    20→            unimplemented!()
-    21→        }
-    22→    }
-    23→
     38→#[cfg(anyhow_build_probe)]
     39→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
 src/ptr.rs

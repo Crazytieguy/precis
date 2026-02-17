@@ -2,53 +2,29 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1054 words)
+budget: 1000 (1060 words)
 
-Changelog.md
-    40→###### NEW
-    41→
+Readme.md
+    42→### Usage
+    43→
       →…
-    55→###### BREAKING
-    56→
+   145→### Why?
+   146→
       →…
-    61→###### FIXED
-    62→
+   167→### Principles
+   168→
       →…
-    69→###### BREAKING
-    70→
+   181→### Demo
+   182→
       →…
-    77→###### NEW
-    78→
+   189→### Examples
+   190→
       →…
-    95→###### NEW
-    96→
+   205→### Documentation
+   206→
       →…
-   129→###### NEW
-   130→
-      →…
-   394→###### BREAKING
-   395→
-      →…
-   446→###### BREAKING
-   447→
-      →…
-   454→###### BREAKING
-   455→
-      →…
-   462→###### BREAKING
-   463→
-      →…
-   476→###### BREAKING
-   477→
-      →…
-   490→###### BREAKING
-   491→
-      →…
-   500→###### BREAKING
-   501→
-      →…
-   512→###### BREAKING
-   513→
+   231→### License
+   232→
       →…
 docs/guides/01-getting-started.md
      1→# Getting Started
@@ -163,6 +139,16 @@ docs/readme.md
     20→  }),
     21→})
     22→
+    23→const data = {
+    24→  id: 34,
+    25→  title: 'Hello World',
+    26→  tags: ['news', 'features'],
+    27→  author: {
+    28→    id: 1,
+    29→  },
+    30→}
+    31→
+    32→assert(data, Article)
       →…
 docs/reference/core.md
      3→### `assert`
@@ -315,6 +301,8 @@ src/struct.ts
    266→export type Refiner …
 src/structs/refinements.ts
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
+    22→  if (value instanceof Map || value instanceof Set) {
+      →…
 src/structs/types.ts
     33→export function array<T extends Struct<any>>(Element?: T): any {
    105→export function enums<U extends string | number, T extends readonly U[]>(

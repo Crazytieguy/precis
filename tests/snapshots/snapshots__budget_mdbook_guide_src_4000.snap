@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4121 words)
+budget: 4000 (4134 words)
 
 404.md
      1→# Document not found (404)
@@ -93,28 +93,22 @@ SUMMARY.md
     23→        - [Draft chapter]()
     24→    - [Configuration](format/configuration/README.md)
     25→        - [General](format/configuration/general.md)
-    26→        - [Preprocessors](format/configuration/preprocessors.md)
-    27→        - [Renderers](format/configuration/renderers.md)
-    28→        - [Environment variables](format/configuration/environment-variables.md)
-    29→    - [Theme](format/theme/README.md)
-    30→        - [index.hbs](format/theme/index-hbs.md)
-    31→        - [Syntax highlighting](format/theme/syntax-highlighting.md)
-    32→        - [Editor](format/theme/editor.md)
-    33→    - [MathJax support](format/mathjax.md)
-    34→    - [mdBook-specific features](format/mdbook.md)
-    35→    - [Markdown](format/markdown.md)
-    36→- [Continuous integration](continuous-integration.md)
-    37→- [For developers](for_developers/README.md)
-    38→    - [Preprocessors](for_developers/preprocessors.md)
-    39→    - [Alternative backends](for_developers/backends.md)
-    40→
-    41→-----------
-    42→
-    43→[Contributors](misc/contributors.md)
+      →…
 cli/README.md
      1→# Command-line tool
      2→
-      →…
+     3→The `mdbook` command-line tool is used to create and build books.
+     4→After you have [installed](../guide/installation.md) `mdbook`, you can run the `mdbook help` command in your terminal to view the available commands.
+     5→
+     6→This following sections provide in-depth information on the different commands available.
+     7→
+     8→* [`mdbook init <directory>`](init.md) --- Creates a new book with minimal boilerplate to start with.
+     9→* [`mdbook build`](build.md) --- Renders the book.
+    10→* [`mdbook watch`](watch.md) --- Rebuilds the book any time a source file changes.
+    11→* [`mdbook serve`](serve.md) --- Runs a web server to view the book, and rebuilds on changes.
+    12→* [`mdbook test`](test.md) --- Tests Rust code samples.
+    13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
+    14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
 cli/arg-watcher.md
      1→#### `--watcher`
      2→
@@ -251,13 +245,7 @@ continuous-integration.md
     29→
     30→* This is relatively fast, and does not necessarily require dealing with caching.
     31→* This does not require installing Rust.
-    32→* Specifying a specific URL means you have to manually update your script to get a new version.
-    33→  This may be a benefit if you want to lock to a specific version.
-    34→  However, some users prefer to automatically get a newer version when they are published.
-    35→* You are reliant on the GitHub CDN being available.
-    36→
-    37→[releases]: https://github.com/rust-lang/mdBook/releases
-    38→
+      →…
     39→### Building from source
     40→
     41→Building from source will require having Rust installed.
@@ -273,19 +261,7 @@ continuous-integration.md
     51→
     52→This includes several recommended options:
     53→
-    54→* `--no-default-features` --- Disables features like the HTTP server used by `mdbook serve` that is likely not needed on CI.
-    55→  This will speed up the build time significantly.
-    56→* `--features search` --- Disabling default features means you should then manually enable features that you want, such as the built-in [search] capability.
-    57→* `--vers "^0.4"` --- This will install the most recent version of the `0.4` series.
-    58→  However, versions after like `0.5.0` won't be installed, as they may break your build.
-    59→  Cargo will automatically upgrade mdBook if you have an older version already installed.
-    60→* `--locked` --- This will use the dependencies that were used when mdBook was released.
-    61→  Without `--locked`, it will use the latest version of all dependencies, which may include some fixes since the last release, but may also (rarely) cause build problems.
-    62→
-    63→You will likely want to investigate caching options, as building mdBook can be somewhat slow.
-    64→
-    65→[search]: guide/reading.md#search
-    66→
+      →…
     67→## Running tests
     68→
     69→You may want to run tests using [`mdbook test`] every time you push a change or create a pull request.
@@ -301,7 +277,7 @@ continuous-integration.md
     79→
     80→[`mdbook test`]: cli/test.md
     81→[mdbook-linkcheck]: https://github.com/Michael-F-Bryan/mdbook-linkcheck#continuous-integration
-    82→
+      →…
     83→## Deploying
     84→
     85→You may want to automatically deploy your book.
@@ -317,8 +293,7 @@ continuous-integration.md
     95→
     96→See the [Automated Deployment] wiki page for examples of various different services.
     97→
-    98→[GitHub Pages]: https://docs.github.com/en/pages
-    99→
+      →…
    100→### 404 handling
    101→
    102→mdBook automatically generates a 404 page to be used for broken links.
@@ -334,13 +309,7 @@ continuous-integration.md
    112→# book.toml
    113→[output.html]
    114→site-url = "/mdBook/"
-   115→```
-   116→
-   117→You can customize the look of the 404 page by creating a file named `src/404.md` in your book.
-   118→If you want to use a different filename, you can set [`output.html.input-404`] to a different filename.
-   119→
-   120→[`output.html.site-url`]: format/configuration/renderers.md#html-renderer-options
-   121→[`output.html.input-404`]: format/configuration/renderers.md#html-renderer-options
+      →…
 for_developers/README.md
      1→# For developers
      2→
@@ -349,7 +318,15 @@ for_developers/README.md
      5→flexible plugin mechanism, allowing you to create your own custom tooling and
      6→consumers (often referred to as *backends*) if you need to do some analysis of
      7→the book or render it in a different format.
-      →…
+     8→
+     9→The *For Developers* chapters are here to show you the more advanced usage of
+    10→`mdbook`.
+    11→
+    12→The two main ways a developer can hook into the book's build process is via,
+    13→
+    14→- [Preprocessors](preprocessors.md)
+    15→- [Alternative Backends](backends.md)
+    16→
     17→## The build process
     18→
     19→The process of rendering a book project goes through several steps.
@@ -357,7 +334,12 @@ for_developers/README.md
     21→1. Load the book
     22→    - Parse the `book.toml`, falling back to the default `Config` if it doesn't
     23→       exist
-      →…
+    24→    - Load the book chapters into memory
+    25→    - Discover which preprocessors/backends should be used
+    26→2. For each backend:
+    27→   1. Run all the preprocessors.
+    28→   2. Call the backend to render the processed result.
+    29→
     30→## Using `mdbook` as a library
     31→
     32→The `mdbook` binary is just a wrapper around the underlying mdBook crates,
@@ -365,7 +347,14 @@ for_developers/README.md
     34→programmatically drive mdBook, you can use the [`mdbook-driver`] crate.
     35→This can be used to add your own functionality or tweak the build process.
     36→
-      →…
+    37→The easiest way to find out how to use the `mdbook-driver` crate is by looking at the
+    38→[API Docs]. The top level documentation explains how one would use the
+    39→[`MDBook`] type to load and build a book, while the [config] module gives a good
+    40→explanation on the configuration system.
+    41→
+    42→[`MDBook`]: https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html
+    43→[API Docs]: https://docs.rs/mdbook-driver/latest/mdbook_driver/
+    44→[config]: https://docs.rs/mdbook-driver/latest/mdbook_driver/config/index.html
 for_developers/backends.md
      1→# Alternative backends
      2→
@@ -440,17 +429,7 @@ for_developers/mdbook-wordcount/src/main.rs
     25→                continue;
     26→            }
     27→
-    28→            let num_words = count_words(ch);
-    29→            println!("{}: {}", ch.name, num_words);
-    30→            writeln!(f, "{}: {}", ch.name, num_words).unwrap();
-    31→
-    32→            if cfg.deny_odds && num_words % 2 == 1 {
-    33→                eprintln!("{} has an odd number of words!", ch.name);
-    34→                process::exit(1);
-    35→            }
-    36→        }
-    37→    }
-    38→}
+      →…
     40→fn count_words(ch: &Chapter) -> usize {
     41→    ch.content.split_whitespace().count()
     42→}
@@ -496,11 +475,25 @@ for_developers/preprocessors.md
 format/README.md
      1→# Format
      2→
-      →…
+     3→In this section you will learn how to:
+     4→
+     5→- Structure your book correctly
+     6→- Format your `SUMMARY.md` file
+     7→- Configure your book using `book.toml`
+     8→- Customize your theme
 format/configuration/README.md
      1→# Configuration
      2→
-      →…
+     3→This section details the configuration options available in the ***book.toml***:
+     4→- **[General]** configuration including the `book`, `rust`, `build` sections
+     5→- **[Preprocessor]** configuration for default and custom book preprocessors
+     6→- **[Renderer]** configuration for the HTML, Markdown and custom renderers
+     7→- **[Environment Variable]** configuration for overriding configuration options in your environment
+     8→
+     9→[General]: general.md
+    10→[Preprocessor]: preprocessors.md
+    11→[Renderer]: renderers.md
+    12→[Environment Variable]: environment-variables.md
 format/configuration/environment-variables.md
      1→# Environment variables
      2→
@@ -776,7 +769,49 @@ format/theme/README.md
      7→The theme is totally customizable, you can selectively replace every file from
      8→the theme by your own by adding a `theme` directory next to `src` folder in your
      9→project root. Create a new file with the name of the file you want to override
-      →…
+    10→and now that file will be used instead of the default file.
+    11→
+    12→Here are the files you can override:
+    13→
+    14→- **_index.hbs_** is the handlebars template.
+    15→- **_head.hbs_** is appended to the HTML `<head>` section.
+    16→- **_header.hbs_** content is appended on top of every book page.
+    17→- **_css/_** contains the CSS files for styling the book.
+    18→    - **_css/chrome.css_** is for UI elements.
+    19→    - **_css/general.css_** is the base styles.
+    20→    - **_css/print.css_** is the style for printer output.
+    21→    - **_css/variables.css_** contains variables used in other CSS files.
+    22→- **_book.js_** is mostly used to add client side functionality, like hiding /
+    23→  un-hiding the sidebar, changing the theme, ...
+    24→- **_highlight.js_** is the JavaScript that is used to highlight code snippets,
+    25→  you should not need to modify this.
+    26→- **_highlight.css_** is the theme used for the code highlighting.
+    27→- **_favicon.svg_** and **_favicon.png_** the favicon that will be used. The SVG
+    28→  version is used by [newer browsers].
+    29→- **fonts/fonts.css** contains the definition of which fonts to load.
+    30→  Custom fonts can be included in the `fonts` directory.
+    31→
+    32→Generally, when you want to tweak the theme, you don't need to override all the
+    33→files. If you only need changes in the stylesheet, there is no point in
+    34→overriding all the other files. Because custom files take precedence over
+    35→built-in ones, they will not get updated with new fixes / features.
+    36→
+    37→**Note:** When you override a file, it is possible that you break some
+    38→functionality. Therefore I recommend to use the file from the default theme as
+    39→template and only add / modify what you need. You can copy the default theme
+    40→into your source directory automatically by using `mdbook init --theme` and just
+    41→remove the files you don't want to override.
+    42→
+    43→`mdbook init --theme` will not create every file listed above.
+    44→Some files, such as `head.hbs`, do not have built-in equivalents.
+    45→Just create the file if you need it.
+    46→
+    47→If you completely replace all built-in themes, be sure to also set
+    48→[`output.html.preferred-dark-theme`] in the config, which defaults to the
+    49→built-in `navy` theme.
+    50→
+    51→[`output.html.preferred-dark-theme`]: ../configuration/renderers.md#html-renderer-options
+    52→[newer browsers]: https://caniuse.com/#feat=link-icon-svg
 format/theme/editor.md
      1→# Editor
      2→
@@ -785,8 +820,6 @@ format/theme/editor.md
      5→be added to the ***book.toml***:
      6→
      7→```toml
-     8→[output.html.playground]
-     9→editable = true
       →…
     35→## Customizing the editor
     36→
@@ -795,8 +828,6 @@ format/theme/editor.md
     39→
     40→```toml
     41→[output.html.playground]
-    42→editable = true
-    43→editor = "/path/to/editor"
       →…
 format/theme/index-hbs.md
      1→# index.hbs
@@ -806,7 +837,7 @@ format/theme/index-hbs.md
      5→
      6→If you want to change the layout or style of your book, chances are that you
      7→will have to modify this template a little bit. Here is what you need to know.
-     8→
+      →…
      9→## Data
     10→
     11→A lot of data is exposed to the handlebars template with the "context". In the
@@ -814,8 +845,6 @@ format/theme/index-hbs.md
     13→
     14→```handlebars
     15→{{name_of_property}}
-    16→```
-    17→
       →…
     41→## Handlebars helpers
     42→
@@ -829,8 +858,6 @@ format/theme/index-hbs.md
     50→```handlebars
     51→{{#toc}}{{/toc}}
     52→```
-    53→
-    54→and outputs something that looks like this, depending on the structure of your
       →…
     80→### resource
     81→
@@ -839,8 +866,6 @@ format/theme/index-hbs.md
     84→and accounts for files that are renamed with a hash in their filename.
     85→
     86→```handlebars
-    87→<link rel="stylesheet" href="{{ resource "css/chrome.css" }}">
-    88→```
       →…
     90→### fa
     91→
@@ -849,8 +874,6 @@ format/theme/index-hbs.md
     94→
     95→1. Type: one of "solid", "regular", and "brands" (light and duotone are not
     96→   currently supported)
-    97→2. Icon: anything chosen from the
-    98→   [free icon set](https://fontawesome.com/v6/search)
       →…
 format/theme/syntax-highlighting.md
      1→# Syntax highlighting
@@ -860,8 +883,6 @@ format/theme/syntax-highlighting.md
      5→
      6→Automatic language detection has been turned off, so you will probably want to
      7→specify the programming language you use like this:
-     8→
-     9→~~~markdown
       →…
     17→## Supported languages
     18→
@@ -870,8 +891,6 @@ format/theme/syntax-highlighting.md
     21→
     22→- apache
     23→- armasm
-    24→- bash
-    25→- c
       →…
     68→## Custom theme
     69→Like the rest of the theme, the files used for syntax highlighting can be
@@ -880,8 +899,6 @@ format/theme/syntax-highlighting.md
     72→- ***highlight.js*** normally you shouldn't have to overwrite this file, unless
     73→  you want to use a more recent version.
     74→- ***highlight.css*** theme used by highlight.js for syntax highlighting.
-    75→
-    76→If you want to use another theme for `highlight.js` download it from their
       →…
     82→## Improve default theme
     83→
@@ -890,84 +907,68 @@ format/theme/syntax-highlighting.md
     86→issue](https://github.com/rust-lang/mdBook/issues) explaining what you
     87→have in mind and I will take a look at it.
     88→
-    89→You could also create a pull-request with the proposed improvements.
-    90→
       →…
 guide/README.md
      1→# User guide
      2→
      3→This user guide provides an introduction to basic concepts of using mdBook.
-      →…
+     4→
+     5→- [Installation](installation.md)
+     6→- [Reading Books](reading.md)
+     7→- [Creating a Book](creating.md)
 guide/creating.md
      1→# Creating a book
      2→
-     3→Once you have the `mdbook` CLI tool installed, you can use it to create and render a book.
       →…
      5→## Initializing a book
      6→
-     7→The `mdbook init` command will create a new directory containing an empty book for you to get started.
       →…
     32→## Anatomy of a book
     33→
-    34→A book is built from several files which define the settings and layout of the book.
       →…
     36→### `book.toml`
     37→
-    38→In the root of your book, there is a `book.toml` file which contains settings for describing how to build your book.
       →…
     50→### `SUMMARY.md`
     51→
-    52→The next major part of a book is the summary file located at `src/SUMMARY.md`.
       →…
     73→### Source files
     74→
-    75→The content of your book is all contained in the `src` directory.
       →…
     96→## Publishing a book
     97→
-    98→Once you've written your book, you may want to host it somewhere for others to view.
       →…
 guide/installation.md
      1→# Installation
      2→
-     3→There are multiple ways to install the mdBook CLI tool.
       →…
      9→## Pre-compiled binaries
     10→
-    11→Executable binaries are available for download on the [GitHub Releases page][releases].
       →…
     19→## Build from source using Rust
     20→
-    21→To build the `mdbook` executable from source, you will first need to install Rust and Cargo.
       →…
     41→### Installing the latest master version
     42→
-    43→The version published to crates.io will ever so slightly be behind the version hosted on GitHub.
       →…
     53→## Modifying and contributing
     54→
-    55→If you are interested in making modifications to mdBook itself, check out the [Contributing Guide] for more information.
       →…
 guide/reading.md
      1→# Reading books
      2→
-     3→This chapter gives an introduction on how to interact with a book produced by mdBook.
       →…
     12→## Navigation
     13→
-    14→There are several methods for navigating through the chapters of a book.
       →…
     26→## Top menu bar
     27→
-    28→The menu bar at the top of the page provides some icons for interacting with the book.
       →…
     42→## Search
     43→
-    44→Each book has a built-in search system.
       →…
     54→## Code blocks
     55→
-    56→mdBook books are often used for programming projects, and thus support highlighting code blocks and samples.
       →…
 misc/contributors.md
      1→# Contributors

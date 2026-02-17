@@ -2,54 +2,42 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (554 words)
+budget: 500 (521 words)
 
-CHANGELOG.md
-    13→### Added …
-    25→### Changed …
-    32→### Fixed …
-    47→### Added …
-    65→### Added …
-    71→### Added …
-   162→### Added …
-   179→### Added …
-   236→### Fixed …
-   260→### Fixed …
-   272→### Added …
-   286→### Added …
-   296→### Added …
-   303→### Fixed …
-   315→### Added …
-   329→### Added …
-   345→### Added …
-   360→### Added …
-   367→### Added …
-   407→### Added …
-   418→### Added …
-   433→### Added …
-   441→### Added …
-   524→### Added …
-   537→### Added …
-   557→### Added …
-   683→### Fixed …
-   689→### Added …
-   707→### Added …
-   724→### Added …
-   741→### Added …
-   762→### Added …
-   853→### Fixed …
-   859→### Added …
-   880→### Fixed …
-   886→### Added …
-   911→#### Testing for no arguments …
-   947→### Added …
-  1014→### Fixed …
 CONTRIBUTING.md
-     3→## Issues …
+     3→## Issues
+     4→
+     5→New issues are welcome, whether questions or suggestions or reporting bugs.
+     6→You are also welcome to contribute by adding helpful comments on an existing issue.
+     7→
+     8→We love reproducible code examples in questions and answers.
+     9→
+      →…
 Readme.md
-   968→### .parse() and .parseAsync() …
+   968→### .parse() and .parseAsync()
+   969→
+   970→Call with no parameters to parse `process.argv`. Detects Electron and special node options like `node --eval`. Easy mode!
+   971→
+   972→Or, call with an array of strings to parse, and optionally where the user arguments start by specifying where the arguments are `from`:
+   973→
+   974→- `'node'`: default, `argv[0]` is the application and `argv[1]` is the script being run, with user arguments after that
+   975→- `'electron'`: `argv[0]` is the application and `argv[1]` varies depending on whether the electron application is packaged
+   976→- `'user'`: just user arguments
+   977→
+   978→For example:
+   979→
+   980→```js
+   981→program.parse(); // parse process.argv and auto-detect electron and special node flags
+      →…
 Readme_zh-CN.md
-   907→### .parse() 和 .parseAsync() …
+   907→### .parse() 和 .parseAsync()
+   908→
+   909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
+   910→
+   911→如果参数遵循与 node 不同的约定，可以在第二个参数中传递`from`选项：
+   912→
+   913→- `node`：默认值，`argv[0]`是应用，`argv[1]`是要跑的脚本，后续为用户参数；
+      →…
 docs/deprecated.md
    229→### Short option flag longer than a single character
    230→
@@ -61,12 +49,10 @@ docs/deprecated.md
    236→- Replacement added in Commander v13.1 with support for dual long options, like `--ws, --workspace`.
    237→
 eslint.config.js
-     8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
-     9→const tsconfigJsFiles = ['*.{js,mjs}', 'lib/**/*.{js,mjs}']; // match "include" in tsconfig.js.json
+     8→const tsconfigTsFiles …
+     9→const tsconfigJsFiles …
 jest.config.js
-     1→const config = {
-     2→  testEnvironment: 'node',
-      →…
+     1→const config …
 lib/argument.js
      3→class Argument {
      4→  /**
@@ -133,22 +119,20 @@ typings/index.d.ts
     48→export class Argument {
     95→export class Option {
    210→export class Help {
-   340→export type HelpConfiguration = Partial<Help>;
+   340→export type HelpConfiguration …
    342→export interface ParseOptions {
    345→export interface HelpContext {
    349→export interface AddHelpTextContext {
    354→export interface OutputConfiguration {
-   367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
-   368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
-   370→export type OptionValueSource =
-   371→  | LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string>
-   372→  | undefined;
-   374→export type OptionValues = Record<string, any>;
+   367→export type AddHelpTextPosition …
+   368→export type HookEvent …
+   370→export type OptionValueSource …
+   374→export type OptionValues …
    376→export class Command {
   1094→export interface CommandOptions {
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1104→export interface ParseOptionsResult {
-  1113→export const program: Command;
+  1113→export const program …
 typings/index.test-d.ts
    168→function myParseInt …
    172→function increaseVerbosity …
@@ -162,9 +146,5 @@ typings/index.test-d.ts
    511→    return new MyCommand(name);
    512→  }
    513→
-   514→  myFunction(): void {
-   515→    // do nothing.
-   516→  }
-   517→}
    625→  const groupsItemsOptionHeading …
    635→  const groupsItemsCommandHeading …

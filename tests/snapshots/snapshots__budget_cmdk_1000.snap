@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1052 words)
+budget: 1000 (1050 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -183,7 +183,8 @@ website/README.md
     14→
     15→[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
     16→
-      →…
+    17→The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+    18→
     19→## Learn More
     20→
     21→To learn more about Next.js, take a look at the following resources:
@@ -201,12 +202,10 @@ website/README.md
 website/components/cmdk/framer.tsx
      4→export function FramerCMDK() {
      5→  const [value, setValue] = React.useState('Button')
-     6→  return (
       →…
 website/components/cmdk/linear.tsx
      3→export function LinearCMDK() {
      4→  return (
-     5→    <div className="linear">
       →…
     30→const items = [
     31→  {
@@ -219,12 +218,10 @@ website/components/cmdk/linear.tsx
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
      8→  const { resolvedTheme: theme } = useTheme()
-     9→  const [value, setValue] = React.useState('linear')
       →…
 website/components/cmdk/vercel.tsx
      4→export function VercelCMDK() {
      5→  const ref = React.useRef<HTMLDivElement | null>(null)
-     6→  const [inputValue, setInputValue] = React.useState('')
       →…
 website/components/code/index.tsx
      7→const theme = {
@@ -245,7 +242,6 @@ website/components/code/index.tsx
     51→          >
     52→            <CopyIcon />
     53→          </button>
-    54→          <div className={styles.shine} />
       →…
 website/components/icons/index.tsx
      3→export function FigmaIcon() {

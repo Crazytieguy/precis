@@ -2,88 +2,76 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (886 words)
+budget: 1000 (912 words)
 
-CHANGELOG.md
-     1→# 1.8.0 (Nov 28, 2025)
-     2→
-     3→ENHANCEMENTS:
-     4→
-      →…
-    24→# 1.7.0 (May 24, 2024)
-    25→
-    26→ENHANCEMENTS:
-    27→
-      →…
-    43→# 1.6.0 (June 28, 2022)
-    44→
-    45→FEATURES:
-    46→
-      →…
-    49→# 1.5.0 (May 18, 2022)
-    50→
-    51→FEATURES:
-    52→
-      →…
-    56→# 1.4.0 (January 5, 2022)
-    57→
-    58→FEATURES:
-    59→
-      →…
-    63→# 1.3.0 (March 31, 2021)
-    64→
-    65→Please note that CHANGELOG.md does not exist in the source code prior to this release.
-    66→
-      →…
-    70→# 1.2.1 (June 17, 2020)
-    71→
-    72→BUG FIXES:
-    73→ - Prevent `Version.Equal` method from panicking on `nil` encounter ([#73](https://github.com/hashicorp/go-version/pull/73))
-      →…
-    75→# 1.2.0 (April 23, 2019)
-    76→
-    77→FEATURES:
-    78→ - Add `GreaterThanOrEqual` and `LessThanOrEqual` helper methods ([#53](https://github.com/hashicorp/go-version/pull/53))
-      →…
-    80→# 1.1.0 (Jan 07, 2019)
-    81→
-    82→FEATURES:
-    83→ - Add `NewSemver` constructor ([#45](https://github.com/hashicorp/go-version/pull/45))
-      →…
-    85→# 1.0.0 (August 24, 2018)
-    86→
-    87→Initial release.
 README.md
      1→# Versioning Library for Go
      2→
      3→![Build Status](https://github.com/hashicorp/go-version/actions/workflows/go-tests.yml/badge.svg)
      4→[![Go Reference](https://pkg.go.dev/badge/github.com/hashicorp/go-version.svg)](https://pkg.go.dev/github.com/hashicorp/go-version)
-      →…
+     5→
+     6→go-version is a library for parsing versions and version constraints,
+     7→and verifying versions against a set of constraints. go-version
+     8→can sort a collection of versions properly, handles prerelease/beta
+     9→versions, can increment versions, etc.
+    10→
+    11→Versions used with go-version must follow [SemVer](http://semver.org/).
+    12→
     13→## Installation and Usage
     14→
     15→Package documentation can be found on
     16→[Go Reference](https://pkg.go.dev/github.com/hashicorp/go-version).
-      →…
+    17→
+    18→Installation can be done with a normal `go get`:
+    19→
+    20→```
+    21→$ go get github.com/hashicorp/go-version
+    22→```
+    23→
     24→#### Version Parsing and Comparison
     25→
     26→```go
     27→v1, err := version.NewVersion("1.2")
-      →…
+    28→v2, err := version.NewVersion("1.5+metadata")
+    29→
+    30→// Comparison example. There is also GreaterThan, Equal, and just
+    31→// a simple Compare that returns an int allowing easy >=, <=, etc.
+    32→if v1.LessThan(v2) {
+    33→    fmt.Printf("%s is less than %s", v1, v2)
+    34→}
+    35→```
+    36→
     37→#### Version Constraints
     38→
     39→```go
     40→v1, err := version.NewVersion("1.2")
-      →…
+    41→
+    42→// Constraints example.
+    43→constraints, err := version.NewConstraint(">= 1.0, < 1.4")
+    44→if constraints.Check(v1) {
+    45→	fmt.Printf("%s satisfies constraints %s", v1, constraints)
+    46→}
+    47→```
+    48→
     49→#### Version Sorting
     50→
     51→```go
     52→versionsRaw := []string{"1.1", "0.7.1", "1.4-beta", "1.4", "2"}
-      →…
+    53→versions := make([]*version.Version, len(versionsRaw))
+    54→for i, raw := range versionsRaw {
+    55→    v, _ := version.NewVersion(raw)
+    56→    versions[i] = v
+    57→}
+    58→
+    59→// After this, the versions are properly sorted
+    60→sort.Sort(version.Collection(versions))
+    61→```
+    62→
     63→## Issues and Contributing
     64→
     65→If you find an issue with this library, please report an issue. If you'd
     66→like, we welcome any contributions. Fork this library and submit a pull
-      →…
+    67→request.
 constraint.go
     14→var (
     15→	constraintRegexp     *regexp.Regexp
@@ -150,7 +138,6 @@ constraint.go
    239→	greaterThanEqual operator = '≥'
    240→	lessThanEqual    operator = '≤'
    241→	pessimistic      operator = '~'
-   242→)
    244→func constraintEqual(v, c *Version) bool {
    248→func constraintNotEqual(v, c *Version) bool {
    252→func constraintGreaterThan(v, c *Version) bool {

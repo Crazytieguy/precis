@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4049 words)
+budget: 4000 (4069 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -13,104 +13,67 @@ CHANGELOG.md
      6→
      7→## [1.4.1]
      8→
-     9→- chore(input): add peer dep for react@19-rc
-    10→
+      →…
     11→## [1.4.0]
     12→
-    13→I'm sorry to skip `1.3.0` due to an issue I've had while publishing the NPM package.
-    14→
-    15→- chore(input): stop enforcing only digits regexp by default
-    16→  - Before 1.4.0, the input would take `REGEXP_ONLY_DIGITS` as the default pattern behavior, mistaking mobile users when they couldn't type in or even paste alphanumeric entries.
-    17→- feat(input): add pasteTransformer prop
-    18→  - Allows pasting invalid codes and then transforming them into something that the input's regex/pattern would accept. Example: you can now take "XXX-XXX" as pasted input even though you've determined a pattern of 6 numerical digits; just add a prop to your OTPInput: `pasteTransformer={pasted => pasted.replaceAll('-','')}`.
-    19→- feat(input): add placeholder
       →…
     25→## [1.2.5]
     26→
-    27→- chore(input): add peer dep for react@19
-    28→
+      →…
     29→## [1.2.4]
     30→
-    31→- fix(input): prevent single caret selection on deletion/cutting
-    32→
+      →…
     33→## [1.2.3]
     34→
-    35→- fix(input/css): specify `color: transparent !important` for `::selection` modifier
-    36→- fix(input/node-env): check for CSS supports api before calling fn
-    37→
+      →…
     38→## [1.2.2]
     39→
-    40→- chore(input): remove experimental flag `pushPasswordManagerStrategy`
-    41→
+      →…
     42→## [1.2.1]
     43→
-    44→- fix(input): use `color` not `text` for autofillStyles
-    45→- chore(input): keep support for prop pushPasswordManagerStrategy="experimental-no-flickering"
-    46→- fix(input): prevent layout expansion when password managers aren't there and remove "experimental-no-flickering" strategy
-    47→
+      →…
     48→## [1.2.0]
     49→
-    50→- chore(input): don't restrict inputMode typing
-    51→
+      →…
     52→## [1.2.0-beta.1]
     53→
-    54→- fix(input): renderfn typing
-    55→
+      →…
     56→## [1.2.0-beta.0]
     57→
-    58→- feat(input): add context option
-    59→- chore(input): remove unused type `SelectionType`
-    60→
+      →…
     61→## [1.1.0]
     62→
-    63→- feat(input/no-js): allow opting out of no-js fallback
-    64→- fix(input/no-js): move noscript to the top
-    65→- chore(input): optimize use-badge
-    66→- fix(input): set no extra width on default noscript css fallback
-    67→- fix(input): check window during ssr
-    68→- fix(input/ios): add right: 1px to compensate left: -1px
-    69→- chore(input/ios): revert paste listener (re-add)
       →…
     87→## [1.0.1]
     88→
-    89→- fix(input): immediately update selection after paste
-    90→- fix(input): hide selection on iOS webkit
-    91→
+      →…
     92→## [1.0.0]
     93→
-    94→- fix(input/firefox): use setselectionrange direction:backwards
-    95→
+      →…
     96→## [0.3.31-beta]
     97→
-    98→No input scope changes for this version.
-    99→
+      →…
    100→## [0.3.3-beta]
    101→
-   102→No input scope changes for this version.
-   103→
+      →…
    104→## [0.3.2-beta]
    105→
-   106→No input scope changes for this version.
-   107→
+      →…
    108→## [0.3.11-beta]
    109→
-   110→No input scope changes for this version.
-   111→
+      →…
    112→## [0.3.1-beta]
    113→
-   114→No input scope changes for this version.
-   115→
+      →…
    116→## [0.2.4]
    117→
-   118→- chore(input): always focus onContainerClick
-   119→
+      →…
    120→## [0.2.1]
    121→
-   122→- fix(input): do not trigger `onComplete` twice
-   123→
+      →…
    124→## [0.2]
    125→
-   126→No input scope changes for this version.
+      →…
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web.
      2→
@@ -140,7 +103,16 @@ README.md
     26→Then import the component.
     27→
     28→```diff
-      →…
+    29→+'use client'
+    30→+import { OTPInput } from 'input-otp'
+    31→
+    32→function MyForm() {
+    33→  return <form>
+    34→+   <OTPInput maxLength={6} render={({slots})  => (...)} />
+    35→  </form>
+    36→}
+    37→```
+    38→
     39→## Default example
     40→
     41→The example below uses `tailwindcss` `@shadcn/ui` `tailwind-merge` `clsx`:
@@ -150,6 +122,26 @@ README.md
     45→import { OTPInput, SlotProps } from 'input-otp'
     46→<OTPInput
     47→  maxLength={6}
+    48→  containerClassName="group flex items-center has-[:disabled]:opacity-30"
+    49→  render={({ slots }) => (
+    50→    <>
+    51→      <div className="flex">
+    52→        {slots.slice(0, 3).map((slot, idx) => (
+    53→          <Slot key={idx} {...slot} />
+    54→        ))}
+    55→      </div>
+    56→
+    57→      <FakeDash />
+    58→
+    59→      <div className="flex">
+    60→        {slots.slice(3).map((slot, idx) => (
+    61→          <Slot key={idx} {...slot} />
+    62→        ))}
+    63→      </div>
+    64→    </>
+    65→  )}
+    66→/>
+    67→
       →…
    136→## How it works
    137→
@@ -165,6 +157,26 @@ README.md
    147→
    148→https://github.com/guilhermerodz/input-otp/assets/10366880/bdbdc96a-23da-4e89-bff8-990e6a1c4c23
    149→
+   150→</details>
+   151→
+   152→<details>
+   153→<summary>Automatic OTP code retrieval from transport (e.g SMS)</summary>
+   154→
+   155→By default, this input uses `autocomplete='one-time-code'` and it works as it's a single input. 
+   156→
+   157→https://github.com/guilhermerodz/input-otp/assets/10366880/5705dac6-9159-443b-9c27-b52e93c60ea8
+   158→
+   159→</details>
+   160→
+   161→<details>
+   162→<summary>Supports screen readers (a11y)</summary>
+   163→
+   164→Stripe was my first inspiration to build this library.
+   165→
+   166→Take a look at Stripe's input. The screen reader does not behave like it normally should on a normal single input.
+   167→That's because Stripe's solution is to render a 1-digit input with "clone-divs" rendering a single char per div.
+   168→
+   169→https://github.com/guilhermerodz/input-otp/assets/10366880/3d127aef-147c-4f28-9f6c-57a357a802d0
       →…
    198→### Auto tracks if the input has space in the right side for the badge
    199→
@@ -187,6 +199,26 @@ README.md
    216→
    217→  // Render function creating the slots
    218→  render: (props: RenderProps) => React.ReactElement
+   219→  // PS: Render prop is mandatory, except in cases
+   220→  // you'd like to consume the original Context API.
+   221→  // (search for Context in this docs)
+   222→
+   223→  // The class name for the root container
+   224→  containerClassName?: string
+   225→
+   226→  // Value state controlling the input
+   227→  value?: string
+   228→  // Setter for the controlled value (or callback for uncontrolled value)
+   229→  onChange?: (newValue: string) => unknown
+   230→
+   231→  // Callback when the input is complete
+   232→  onComplete?: (...args: any[]) => unknown
+   233→
+   234→  // Where is the text located within the input
+   235→  // Affects click-holding or long-press behavior
+   236→  // Default: 'left'
+   237→  textAlign?: 'left' | 'center' | 'right'
+   238→
       →…
    293→## Examples
    294→
@@ -197,6 +229,26 @@ README.md
    299→export default function Page() {
    300→  const formRef = useRef<HTMLFormElement>(null)
    301→  const buttonRef = useRef<HTMLButtonElement>(null)
+   302→
+   303→  return (
+   304→    <form ref={formRef}>
+   305→      <OTPInput
+   306→        // ... automatically submit the form
+   307→        onComplete={() => formRef.current?.submit()}
+   308→        // ... or focus the button like as you wish
+   309→        onComplete={() => buttonRef.current?.focus()}
+   310→      />
+   311→
+   312→      <button ref={buttonRef}>Submit</button>
+   313→    </form>
+   314→  )
+   315→}
+   316→```
+   317→</details>
+   318→
+   319→<details>
+   320→<summary>Automatically focus the input when the page loads</summary>
+   321→
       →…
    377→## Caveats
    378→
@@ -207,6 +259,26 @@ README.md
    383→The password manager badges should be automatically shifted to the right side.
    384→
    385→However, if you still want to block password managers, please disable the `pushPasswordManagerStrategy` and then manually block each PWM.
+   386→
+   387→```diff
+   388→<OTPInput
+   389→  // First, disable library's built-in strategy
+   390→  // for shifting badges automatically
+   391→- pushPasswordManagerStrategy="increase-width"
+   392→+ pushPasswordManagerStrategy="none"
+   393→  // Then, manually add specifics attributes
+   394→  // your password manager docs
+   395→  // Example: block LastPass
+   396→+ data-lpignore="true" 
+   397→  // Example: block 1Password
+   398→+ data-1p-ignore="true"
+   399→/>
+   400→```
+   401→</details>
+   402→
+   403→<details>
+   404→<summary>[Setting] If you want to customize the `noscript` CSS fallback</summary>
+   405→
       →…
    539→#### Sponsors
    540→
@@ -241,7 +313,12 @@ apps/storybook/README.md
     35→
     36→1.  **Open the source code and start editing!**
     37→
-      →…
+    38→    Open the `taskbox` directory in your code editor of choice and building your first component!
+    39→
+    40→1.  **Browse your stories!**
+    41→
+    42→    Run `yarn storybook` to see your component's stories at `http://localhost:6006`
+    43→
     44→## 🔎 What's inside?
     45→
     46→A quick look at the top-level files and directories included with this template.
@@ -267,6 +344,12 @@ apps/storybook/README.md
     66→
     67→4.  **`src`**: This directory will contain all of the code related to what you will see on your application.
     68→
+    69→5.  **`.gitignore`**: This file tells git which files it should not track or maintain during the development process of your project.
+    70→
+    71→6.  **`.index.html`**: This is the HTML page that is served when generating a development or production build.
+    72→
+    73→7.  **`LICENSE`**: The template is licensed under the MIT licence.
+    74→
       →…
     83→## Contribute
     84→
@@ -628,20 +711,6 @@ apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     35→        render={({ slots }) => (
     36→          <>
     37→            <InputOTPGroup>
-    38→              {slots.slice(0, 3).map((slot, index) => (
-    39→                <InputOTPRenderSlot key={index} {...slot} />
-    40→              ))}
-    41→            </InputOTPGroup>
-    42→            <InputOTPSeparator />
-    43→            <InputOTPGroup>
-    44→              {slots.slice(3).map((slot, index) => (
-    45→                <InputOTPRenderSlot key={index} {...slot} />
-    46→              ))}
-    47→            </InputOTPGroup>
-    48→          </>
-    49→        )}
-    50→      />
-    51→
       →…
 apps/website/src/app/(local-pages)/shadcn/static/page.tsx
      5→export default async function StaticPage(pageProps: any) {
@@ -660,10 +729,6 @@ apps/website/src/app/(pages)/(home)/_components/confetti.tsx
     10→}) {
     11→  return (
     12→    <VFX
-    13→      autorun={{ speed: 1 }}
-    14→      globalOptions={{ disableForReducedMotion: true }}
-    15→      style={{
-    16→        position: 'absolute',
       →…
 apps/website/src/app/(pages)/(home)/_components/showcase.tsx
     10→const DynamicConfetti = dynamic(() =>
@@ -679,24 +744,12 @@ apps/website/src/app/(pages)/(home)/_components/showcase.tsx
     21→  const inputRef = React.useRef<HTMLInputElement>(null)
     22→
     23→  React.useEffect(() => {
-    24→    const isMobile = window.matchMedia('(max-width: 1023px)').matches
-    25→    if (!isMobile) {
-    26→      setDisabled(true)
-    27→    }
       →…
    151→function Slot(props: {
    152→  char: string | null
-   153→  isActive: boolean
-   154→  isFocused: boolean
-   155→  animateIdx?: number
-   156→}) {
       →…
    199→function FakeCaret() {
    200→  return (
-   201→    <div className="absolute pointer-events-none inset-0 flex items-center justify-center animate-caret-blink [animate-delay:inherit]">
-   202→      <div className="w-px h-8 md:w-0.5 md:h-16 bg-white" />
-   203→    </div>
-   204→  )
       →…
 apps/website/src/app/(pages)/(home)/page.tsx
     19→const fadeUpClassname =
@@ -785,7 +838,6 @@ apps/website/src/app/(pages)/layout.tsx
     49→        alt: siteConfig.name,
     50→      },
     51→    ],
-    52→  },
       →…
     68→export default function RootLayout({
     69→  children,
@@ -893,10 +945,6 @@ apps/website/src/components/icons.tsx
     32→    <svg
     33→      {...props}
     34→      height="23"
-    35→      viewBox="0 0 1200 1227"
-    36→      width="23"
-    37→      xmlns="http://www.w3.org/2000/svg"
-    38→    >
       →…
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {
@@ -943,8 +991,7 @@ apps/website/src/components/ui/badge.tsx
     30→function Badge({ className, variant, ...props }: BadgeProps) {
     31→  return (
     32→    <div className={cn(badgeVariants({ variant }), className)} {...props} />
-    33→  )
-    34→}
+      →…
 apps/website/src/components/ui/button.tsx
      7→const buttonVariants = cva(
     36→export interface ButtonProps
@@ -971,8 +1018,6 @@ apps/website/src/components/ui/dropdown-menu.tsx
    171→const DropdownMenuShortcut = ({
    172→  className,
    173→  ...props
-   174→}: React.HTMLAttributes<HTMLSpanElement>) => {
-   175→  return (
       →…
 apps/website/src/components/ui/input-otp.tsx
      9→const InputOTP = React.forwardRef<
@@ -989,8 +1034,6 @@ apps/website/src/components/ui/sonner.tsx
      8→const Toaster = ({ ...props }: ToasterProps) => {
      9→  const { theme = 'system' } = useTheme()
     10→
-    11→  return (
-    12→    <Sonner
       →…
 apps/website/src/config/site.ts
      1→export const siteConfig = {
@@ -1104,10 +1147,6 @@ packages/input-otp/src/input.tsx
    560→  caret-color: var(--nojs-fg) !important;
    561→  letter-spacing: .25em !important;
    562→  text-align: center !important;
-   563→  border: 1px solid var(--nojs-fg) !important;
-   564→  border-radius: 4px !important;
-   565→  width: 100% !important;
-   566→}
       →…
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'

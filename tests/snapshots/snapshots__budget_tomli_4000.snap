@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3807 words)
+budget: 4000 (3765 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -16,196 +16,119 @@ CHANGELOG.md
      9→## 2.3.0
     10→
     11→- Added
-    12→  - Binary wheels for Python 3.14 (also free-threaded)
-    13→- Performance
-    14→  - Reduced import time
-    15→
+      →…
     16→## 2.2.1
     17→
     18→- Fixed
-    19→  - Don't attempt to compile binary wheels for Python 3.8, 3.9 and 3.10 where cibuildwheel depends on a conflicting Tomli version
-    20→
+      →…
     21→## 2.2.0
     22→
     23→- Added
-    24→  - mypyc generated binary wheels for common platforms
-    25→
+      →…
     26→## 2.1.0
     27→
     28→- Deprecated
-    29→  - Instantiating `TOMLDecodeError` with free-form arguments.
-    30→    `msg`, `doc` and `pos` arguments should be given.
-    31→- Added
-    32→  - `msg`, `doc`, `pos`, `lineno` and `colno` attributes to `TOMLDecodeError`
-    33→
+      →…
     34→## 2.0.2
     35→
     36→- Removed
-    37→  - Python 3.7 support
-    38→- Improved
-    39→  - Make `loads` raise `TypeError` not `AttributeError` on bad input types that do not have the `replace` attribute.
-    40→    Improve error message when `bytes` is received.
-    41→- Type annotations
-    42→  - Type annotate `load` input as `typing.IO[bytes]` (previously `typing.BinaryIO`).
-    43→
+      →…
     44→## 2.0.1
     45→
     46→- Improved
-    47→  - Make bundling easier by using relative imports internally and adding license and copyright notice to source files.
-    48→  - Make error messages more uniform
-    49→  - Raise a friendly `TypeError` for wrong file mode
-    50→  - Allow `parse_float` to return objects having the `append` attr
-    51→  - Eagerly raise an error if `parse_float` returns an illegal type
-    52→- Packaging
-    53→  - Move from `pytest` testing framework to `unittest` and remove `python-dateutil` test dependency.
-    54→    Tests now only require Python interpreter.
-    55→
+      →…
     56→## 1.2.3
     57→
     58→- Fixed
-    59→  - Backport: Allow lower case "t" and "z" in datetimes
-    60→
+      →…
     61→## 2.0.0
     62→
     63→- Removed
-    64→  - Python 3.6 support
-    65→  - Support for text file objects as `load` input. Use binary file objects instead.
-    66→  - First argument of `load` and `loads` can no longer be passed by keyword.
-    67→- Fixed
-    68→  - Allow lower case "t" and "z" in datetimes
-    69→- Improved
-    70→  - Raise an error when dotted keys define values outside the "current table".
-    71→    Technically speaking TOML v1.0.0 does allow such assignments
-    72→    but that isn't intended by specification writers,
       →…
     75→## 1.2.2
     76→
     77→- Fixed
-    78→  - Illegal characters in error messages were surrounded by two pairs of quotation marks
-    79→- Improved
-    80→  - `TOMLDecodeError.__module__` is now the public import path (`tomli`) instead of private import path (`tomli._parser`)
-    81→  - Eliminated an import cycle when `typing.TYPE_CHECKING` is `True`.
-    82→    This allows `sphinx-autodoc-typehints` to resolve type annotations.
-    83→
+      →…
     84→## 1.2.1
     85→
     86→- Fixed
-    87→  - Raise an error if a carriage return (without a following line feed) is found in a multi-line basic string
-    88→- Type annotations
-    89→  - Type annotate `load` input as `typing.BinaryIO` only to discourage use of deprecated text file objects.
-    90→- Packaging
-    91→  - Remove legacy `setup.py` from PyPI source distribution.
-    92→    If you're a packager and absolutely need this file, please create an issue.
-    93→
+      →…
     94→## 1.2.0
     95→
     96→- Deprecated
-    97→  - Text file objects as input to `load`.
-    98→    Binary file objects should be used instead to avoid opening a TOML file with universal newlines or with an encoding other than UTF-8.
-    99→
+      →…
    100→## 1.1.0
    101→
    102→- Added
-   103→  - `load` can now take a binary file object
-   104→
+      →…
    105→## 1.0.4
    106→
    107→- Performance
-   108→  - Minor boost (~4%)
-   109→
+      →…
    110→## 1.0.3
    111→
    112→- Fixed
-   113→  - Raise `TOMLDecodeError` instead of `ValueError` when parsing dates and datetimes that pass the regex check but don't correspond to a valid date or datetime.
-   114→- Performance
-   115→  - Improved multiline literal string parsing performance
-   116→
+      →…
    117→## 1.0.2
    118→
    119→- Performance
-   120→  - Minor boost (~4%)
-   121→
+      →…
    122→## 1.0.1
    123→
    124→- Performance
-   125→  - A significant boost
-   126→
+      →…
    127→## 1.0.0
    128→
    129→- Fixed
-   130→  - Raise `TOMLDecodeError` instead of `KeyError` when overwriting implicitly in an inline table
-   131→
+      →…
    132→## 0.2.10
    133→
    134→- Fixed
-   135→  - Raise `TOMLDecodeError` if overwriting nested inline tables from the parent inline
-   136→  - Raise `TOMLDecodeError` if escaped Unicode character is not a Unicode scalar value
-   137→- Performance
-   138→  - Increased parsing speed of single line basic strings, and multi-line literal and basic strings
-   139→
+      →…
    140→## 0.2.9
    141→
    142→- Fixed
-   143→  - `TOMLDecodeError` now raised when opening a table implicitly created by a key/value pair
-   144→  - Don't error when two array-of-tables items open a subtable with the same name
-   145→  - Don't error when opening parent table of an already defined array-of-tables item
-   146→
+      →…
    147→## 0.2.8
    148→
    149→- Performance
-   150→  - Significant boost to comment parsing speed
-   151→
+      →…
    152→## 0.2.7
    153→
    154→- Added
-   155→  - Improved `TOMLDecodeError` error messages.
-   156→    Line and column are included when applicable.
-   157→
+      →…
    158→## 0.2.6
    159→
    160→- Performance
-   161→  - Over 5% boost
-   162→
+      →…
    163→## 0.2.5
    164→
    165→- Fixed
-   166→  - Made exception type `TOMLDecodeError` when overwriting a value with a deeply nested table
-   167→
+      →…
    168→## 0.2.4
    169→
    170→- Fixed
-   171→  - `TOMLDecodeError` is now raised when attempting to overwrite a value in an inline table's or array's namespace with a table definition
-   172→
+      →…
    173→## 0.2.3
    174→
    175→- Fixed
-   176→  - Error type was not TOMLDecodeError in some obscure cases
-   177→
+      →…
    178→## 0.2.2
    179→
    180→- Added
-   181→  - `tomli.load` for parsing IO streams returned by `open()`
-   182→  - `parse_float` keyword argument to `tomli.loads`.
-   183→    Allows parsing TOML floats to a non-float type in Python.
-   184→
+      →…
    185→## 0.2.1
    186→
    187→- Fixed
-   188→  - `TOMLDecodeError` is now raised for duplicate keys in inline tables,
-   189→    as opposed to silently overriding the previous value
-   190→
+      →…
    191→## 0.2.0
    192→
    193→- Changed
-   194→  - Project name to Tomli
-   195→- Performance
-   196→  - A performance boost
-   197→
+      →…
    198→## 0.1.0
    199→
    200→- Added
-   201→  - `tomli.loads` for parsing TOML strings
-   202→  - `tomli.TOMLDecodeError` that is raised for parse errors
+      →…
 README.md
      5→# Tomli
      6→
@@ -219,7 +142,21 @@ README.md
     14→- [Installation](#installation)
     15→- [Usage](#usage)
     16→  - [Parse a TOML string](#parse-a-toml-string)
-      →…
+    17→  - [Parse a TOML file](#parse-a-toml-file)
+    18→  - [Handle invalid TOML](#handle-invalid-toml)
+    19→  - [Construct `decimal.Decimal`s from TOML floats](#construct-decimaldecimals-from-toml-floats)
+    20→  - [Building a `tomli`/`tomllib` compatibility layer](#building-a-tomlitomllib-compatibility-layer)
+    21→- [FAQ](#faq)
+    22→  - [Why this parser?](#why-this-parser)
+    23→  - [Is comment preserving round-trip parsing supported?](#is-comment-preserving-round-trip-parsing-supported)
+    24→  - [Is there a `dumps`, `write` or `encode` function?](#is-there-a-dumps-write-or-encode-function)
+    25→  - [How do TOML types map into Python types?](#how-do-toml-types-map-into-python-types)
+    26→- [Performance](#performance)
+    27→  - [Mypyc generated wheel](#mypyc-generated-wheel)
+    28→  - [Pure Python](#pure-python)
+    29→
+    30→<!-- mdformat-toc end -->
+    31→
     32→## Intro<a name="intro"></a>
     33→
     34→Tomli is a Python library for parsing [TOML](https://toml.io).
@@ -232,7 +169,12 @@ README.md
     41→Tomli continues to provide a backport on PyPI for Python versions
     42→where the standard library module is not available
     43→and that have not yet reached their end-of-life.
-      →…
+    44→
+    45→Tomli uses [mypyc](https://github.com/mypyc/mypyc)
+    46→to generate binary wheels for most of the widely used platforms,
+    47→so Python 3.11+ users may prefer it over `tomllib` for improved performance.
+    48→Pure Python wheels are available on any platform and should perform the same as `tomllib`.
+    49→
     50→## Installation<a name="installation"></a>
     51→
     52→```bash
@@ -274,7 +216,7 @@ README.md
     88→The file must be opened in binary mode (with the `"rb"` flag).
     89→Binary mode will enforce decoding the file as UTF-8 with universal newlines disabled,
     90→both of which are required to correctly parse TOML.
-      →…
+    91→
     92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
     93→
     94→```python
@@ -287,7 +229,8 @@ README.md
    101→```
    102→
    103→Note that error messages are considered informational only.
-      →…
+   104→They should not be assumed to stay constant across Tomli versions.
+   105→
    106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
    107→
    108→```python
@@ -300,7 +243,11 @@ README.md
    115→```
    116→
    117→Note that `decimal.Decimal` can be replaced with another callable that converts a TOML float from string to a Python type.
-      →…
+   118→The `decimal.Decimal` is, however, a practical choice for use cases where float inaccuracies can not be tolerated.
+   119→
+   120→Illegal types are `dict` and `list`, and their subtypes.
+   121→A `ValueError` will be raised if `parse_float` produces illegal types.
+   122→
    123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
    124→
    125→Python versions 3.11+ ship with a version of Tomli:
@@ -313,7 +260,23 @@ README.md
    132→[dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/)
    133→to only require Tomli when the standard library module is not available:
    134→
-      →…
+   135→```
+   136→tomli >= 1.1.0 ; python_version < "3.11"
+   137→```
+   138→
+   139→Then, in your code, import a TOML parser using the following fallback mechanism:
+   140→
+   141→```python
+   142→import sys
+   143→
+   144→if sys.version_info >= (3, 11):
+   145→    import tomllib
+   146→else:
+   147→    import tomli as tomllib
+   148→
+   149→tomllib.loads("['This parses fine with Python 3.6+']")
+   150→```
+   151→
    152→## FAQ<a name="faq"></a>
    153→
    154→### Why this parser?<a name="why-this-parser"></a>
@@ -357,7 +320,12 @@ README.md
    192→| Boolean          | `bool`              |                                                              |
    193→| Offset Date-Time | `datetime.datetime` | `tzinfo` attribute set to an instance of `datetime.timezone` |
    194→| Local Date-Time  | `datetime.datetime` | `tzinfo` attribute set to `None`                             |
-      →…
+   195→| Local Date       | `datetime.date`     |                                                              |
+   196→| Local Time       | `datetime.time`     |                                                              |
+   197→| Array            | `list`              |                                                              |
+   198→| Table            | `dict`              |                                                              |
+   199→| Inline Table     | `dict`              |                                                              |
+   200→
    201→## Performance<a name="performance"></a>
    202→
    203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
@@ -376,7 +344,17 @@ README.md
    216→tomli @ file:///home/foo/dev/tomli
    217→tomlkit==0.13.3
    218→foo@bar:~/dev/tomli$ python benchmark/run.py
-      →…
+   219→Parsing data.toml 5000 times:
+   220→------------------------------------------------------
+   221→    parser |  exec time | performance (more is better)
+   222→-----------+------------+-----------------------------
+   223→     rtoml |    0.328 s | baseline (100%)
+   224→  pytomlpp |    0.365 s | 89.75%
+   225→     tomli |    0.838 s | 39.12%
+   226→      toml |     3.01 s | 10.90%
+   227→   tomlkit |     20.7 s | 1.59%
+   228→```
+   229→
    230→### Pure Python<a name="pure-python"></a>
    231→
    232→```console
@@ -389,7 +367,8 @@ README.md
    239→  pytomlpp |    0.365 s | 88.40%
    240→     tomli |     1.44 s | 22.36%
    241→      toml |     3.03 s | 10.65%
-      →…
+   242→   tomlkit |     20.6 s | 1.57%
+   243→```
 fuzzer/fuzz.py
     20→def test_one_input(input_bytes: bytes) -> None:
     21→    # We need a Unicode string, not bytes
@@ -561,10 +540,16 @@ src/tomli/_parser.py
    137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
    138→    """Parse TOML from a binary file object."""
    139→    b = __fp.read()
+   140→    try:
+   141→        s = b.decode()
+   142→    except AttributeError:
       →…
    149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
    150→    """Parse TOML from a string."""
    151→
+   152→    # The spec allows converting "\r\n" to "\n", even in string
+   153→    # literals. Let's do so to simplify parsing.
+   154→    try:
       →…
    220→class Flags:
    221→    """Flags that map to parsed keys/namespaces."""
@@ -660,6 +645,9 @@ src/tomli/_parser.py
    315→        self.flags = Flags()
    318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
    319→    try:
+   320→        while src[pos] in chars:
+   321→            pos += 1
+   322→    except IndexError:
       →…
    327→def skip_until(
    328→    src: str,
@@ -670,71 +658,122 @@ src/tomli/_parser.py
    333→    error_on_eof: bool,
    334→) -> Pos:
    335→    try:
+   336→        new_pos = src.index(expect, pos)
+   337→    except ValueError:
+   338→        new_pos = len(src)
       →…
    349→def skip_comment(src: str, pos: Pos) -> Pos:
    350→    try:
+   351→        char: str | None = src[pos]
+   352→    except IndexError:
+   353→        char = None
       →…
    361→def skip_comments_and_array_ws(src: str, pos: Pos) -> Pos:
    362→    while True:
+   363→        pos_before_skip = pos
+   364→        pos = skip_chars(src, pos, TOML_WS_AND_NEWLINE)
+   365→        pos = skip_comment(src, pos)
       →…
    370→def create_dict_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
    371→    pos += 1  # Skip "["
+   372→    pos = skip_chars(src, pos, TOML_WS)
+   373→    pos, key = parse_key(src, pos)
+   374→
       →…
    390→def create_list_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
    391→    pos += 2  # Skip "[["
+   392→    pos = skip_chars(src, pos, TOML_WS)
+   393→    pos, key = parse_key(src, pos)
+   394→
       →…
    413→def key_value_rule(
    414→    src: str, pos: Pos, out: Output, header: Key, parse_float: ParseFloat
    415→) -> Pos:
    416→    pos, key, value = parse_key_value_pair(src, pos, parse_float, nest_lvl=0)
+   417→    key_parent, key_stem = key[:-1], key[-1]
+   418→    abs_key_parent = header + key_parent
+   419→
       →…
    447→def parse_key_value_pair(
    448→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    449→) -> tuple[Pos, Key, Any]:
    450→    pos, key = parse_key(src, pos)
+   451→    try:
+   452→        char: str | None = src[pos]
+   453→    except IndexError:
       →…
    463→def parse_key(src: str, pos: Pos) -> tuple[Pos, Key]:
    464→    pos, key_part = parse_key_part(src, pos)
+   465→    key: Key = (key_part,)
+   466→    pos = skip_chars(src, pos, TOML_WS)
+   467→    while True:
       →…
    481→def parse_key_part(src: str, pos: Pos) -> tuple[Pos, str]:
    482→    try:
+   483→        char: str | None = src[pos]
+   484→    except IndexError:
+   485→        char = None
       →…
    497→def parse_one_line_basic_str(src: str, pos: Pos) -> tuple[Pos, str]:
    498→    pos += 1
-      →…
+   499→    return parse_basic_str(src, pos, multiline=False)
    502→def parse_array(
    503→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    504→) -> tuple[Pos, list[Any]]:
    505→    pos += 1
+   506→    array: list[Any] = []
+   507→
+   508→    pos = skip_comments_and_array_ws(src, pos)
       →…
    528→def parse_inline_table(
    529→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    530→) -> tuple[Pos, dict[str, Any]]:
    531→    pos += 1
+   532→    nested_dict = NestedDict()
+   533→    flags = Flags()
+   534→
       →…
    564→def parse_basic_str_escape(
    565→    src: str, pos: Pos, *, multiline: bool = False
    566→) -> tuple[Pos, str]:
    567→    escape_id = src[pos : pos + 2]
+   568→    pos += 2
+   569→    if multiline and escape_id in {"\\ ", "\\\t", "\\\n"}:
+   570→        # Skip whitespace until next non-whitespace character or end of
       →…
    595→def parse_basic_str_escape_multiline(src: str, pos: Pos) -> tuple[Pos, str]:
    596→    return parse_basic_str_escape(src, pos, multiline=True)
    599→def parse_hex_char(src: str, pos: Pos, hex_len: int) -> tuple[Pos, str]:
    600→    hex_str = src[pos : pos + hex_len]
+   601→    if len(hex_str) != hex_len or not HEXDIGIT_CHARS.issuperset(hex_str):
+   602→        raise TOMLDecodeError("Invalid hex value", src, pos)
+   603→    pos += hex_len
       →…
    612→def parse_literal_str(src: str, pos: Pos) -> tuple[Pos, str]:
    613→    pos += 1  # Skip starting apostrophe
+   614→    start_pos = pos
+   615→    pos = skip_until(
+   616→        src, pos, "'", error_on=ILLEGAL_LITERAL_STR_CHARS, error_on_eof=True
       →…
    621→def parse_multiline_str(src: str, pos: Pos, *, literal: bool) -> tuple[Pos, str]:
    622→    pos += 3
+   623→    if src.startswith("\n", pos):
+   624→        pos += 1
+   625→
       →…
    652→def parse_basic_str(src: str, pos: Pos, *, multiline: bool) -> tuple[Pos, str]:
    653→    if multiline:
+   654→        error_on = ILLEGAL_MULTILINE_BASIC_STR_CHARS
+   655→        parse_escapes = parse_basic_str_escape_multiline
+   656→    else:
       →…
    684→def parse_value(
    685→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    686→) -> tuple[Pos, Any]:
    687→    if nest_lvl > MAX_INLINE_NESTING:
+   688→        # Pure Python should have raised RecursionError already.
+   689→        # This ensures mypyc binaries eventually do the same.
+   690→        raise RecursionError(  # pragma: no cover
       →…
    760→def is_unicode_scalar_value(codepoint: int) -> bool:
    761→    return (0 <= codepoint <= 55295) or (57344 <= codepoint <= 1114111)
@@ -747,6 +786,9 @@ src/tomli/_parser.py
    770→    instead of returning illegal types.
    771→    """
    772→    # The default `float` callable never returns illegal types. Optimize it.
+   773→    if parse_float is float:
+   774→        return float
+   775→
       →…
 src/tomli/_re.py
     11→TYPE_CHECKING = False
@@ -796,6 +838,9 @@ src/tomli/_re.py
     63→    or datetime.
     64→    """
     65→    (
+    66→        year_str,
+    67→        month_str,
+    68→        day_str,
       →…
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
@@ -811,10 +856,13 @@ src/tomli/_re.py
    106→    )
    109→def match_to_localtime(match: re.Match[str]) -> time:
    110→    hour_str, minute_str, sec_str, micros_str = match.groups()
-      →…
+   111→    sec = int(sec_str) if sec_str else 0
+   112→    micros = int(micros_str.ljust(6, "0")) if micros_str else 0
+   113→    return time(int(hour_str), int(minute_str), sec, micros)
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
    117→    if match.group("floatpart"):
-      →…
+   118→        return parse_float(match.group())
+   119→    return int(match.group(), 0)
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
      2→
@@ -847,4 +895,27 @@ tomllib.md
     29→  - `tomli:tests/data/valid/_external/`
     30→
     31→- Create `cpython:Lib/test/test_tomllib/__main__.py`:
-      →…
+    32→
+    33→  ```python
+    34→  import unittest
+    35→
+    36→  from . import load_tests
+    37→
+    38→
+    39→  unittest.main()
+    40→  ```
+    41→
+    42→- Add the following to `cpython:Lib/test/test_tomllib/__init__.py`:
+    43→
+    44→  ```python
+    45→  import os
+    46→  from test.support import load_package_tests
+    47→
+    48→
+    49→  def load_tests(*args):
+    50→      return load_package_tests(os.path.dirname(__file__), *args)
+    51→  ```
+    52→
+    53→  Also change `import tomli as tomllib` to `import tomllib`.
+    54→
+    55→- In `cpython:Lib/tomllib/_parser.py` replace `__fp` with `fp` and `__s` with `s`. Add the `/` to `load` and `loads` function signatures.

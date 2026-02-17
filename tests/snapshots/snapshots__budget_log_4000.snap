@@ -2,217 +2,136 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4084 words)
+budget: 4000 (4033 words)
 
-CHANGELOG.md
-     1→# Change Log
-     2→
-     3→## [Unreleased]
-     4→
-     5→## [0.4.29] - 2025-12-02
-     6→
-     7→## What's Changed
-     8→* perf: reduce llvm-lines of FromStr for `Level` and `LevelFilter` by @dishmaker in https://github.com/rust-lang/log/pull/709
-      →…
-    11→## New Contributors
-    12→* @AldaronLau made their first contribution in https://github.com/rust-lang/log/pull/703
-      →…
-    17→## [0.4.28] - 2025-09-02
-    18→
-    19→## What's Changed
-    20→* ci: drop really old trick and ensure MSRV for all feature combo by @tisonkun in https://github.com/rust-lang/log/pull/676
-      →…
-    24→## New Contributors
-    25→* @xixishidibei made their first contribution in https://github.com/rust-lang/log/pull/677
-      →…
-    32→### Notable Changes
-    33→* MSRV is bumped to 1.61.0 in https://github.com/rust-lang/log/pull/676
-      →…
-    35→## [0.4.27] - 2025-03-24
-    36→
-    37→### What's Changed
-    38→* A few minor lint fixes by @nyurik in https://github.com/rust-lang/log/pull/671
-      →…
-    47→## [0.4.26] - 2025-02-18
-    48→
-    49→### What's Changed
-    50→* Derive `Clone` for `kv::Value` by @SpriteOvO in https://github.com/rust-lang/log/pull/668
-      →…
-    56→## [0.4.25] - 2025-01-14
-    57→
-    58→### What's Changed
-    59→* Revert loosening of kv cargo features by @KodrAus in https://github.com/rust-lang/log/pull/662
-      →…
-    64→## [0.4.24] - 2025-01-11
-    65→
-    66→### What's Changed
-    67→* Fix up kv feature activation by @KodrAus in https://github.com/rust-lang/log/pull/659
-      →…
-    72→## [0.4.23] - 2025-01-10 (yanked)
-    73→
-    74→### What's Changed
-    75→* Fix some typos by @Kleinmarb in https://github.com/rust-lang/log/pull/637
-      →…
-    85→### New Contributors
-    86→* @Kleinmarb made their first contribution in https://github.com/rust-lang/log/pull/637
-      →…
-    96→## [0.4.22] - 2024-06-27
-    97→
-    98→### What's Changed
-    99→* Add some clarifications to the library docs by @KodrAus in https://github.com/rust-lang/log/pull/620
-      →…
-   109→### New Contributors
-   110→* @chrivers made their first contribution in https://github.com/rust-lang/log/pull/621
-      →…
-   116→## [0.4.21] - 2024-02-27
-   117→
-   118→### What's Changed
-   119→* Minor clippy nits by @nyurik in https://github.com/rust-lang/log/pull/578
-      →…
-   138→### New Contributors
-   139→* @nyurik made their first contribution in https://github.com/rust-lang/log/pull/578
-      →…
-   146→## [0.4.20] - 2023-07-11
-   147→
-      →…
-   151→## [0.4.19] - 2023-06-10
-   152→
-      →…
-   156→## [0.4.18] - 2023-05-28
-   157→
-      →…
-   175→## [0.4.17] - 2022-04-29
-   176→
-      →…
-   179→## [0.4.16] - 2022-03-22
-   180→
-      →…
-   183→## [0.4.15] - 2022-02-23
-   184→
-      →…
-   198→## [0.4.14] - 2021-01-27
-   199→
-      →…
-   205→## [0.4.13] - 2021-01-11
-   206→
-      →…
-   209→## [0.4.12] - 2020-12-24
-   210→
-   211→### New
-   212→
-      →…
-   220→### Fixed
-   221→
-      →…
-   224→## [0.4.11] - 2020-07-09
-   225→
-   226→### New
-   227→
-      →…
-   231→### Fixed
-   232→
-      →…
-   239→## [0.4.10] - 2019-12-16 (yanked)
-   240→
-   241→### Fixed
-   242→
-      →…
-   245→## [0.4.9] - 2019-12-12 (yanked)
-   246→
-   247→### Minimum Supported Rust Version
-   248→
-      →…
-   253→### New
-   254→
-      →…
-   257→### Improved
-   258→
-      →…
-   262→## [0.4.8] - 2019-07-28
-   263→
-   264→### New
-   265→
-      →…
-   268→## [0.4.7] - 2019-07-06
-   269→
-   270→### New
-   271→
-      →…
-   277→### Improved
-   278→
-      →…
-   282→## [0.4.6] - 2018-10-27
-   283→
-   284→### Improved
-   285→
-      →…
-   288→## [0.4.5] - 2018-09-03
-   289→
-   290→### Improved
-   291→
-      →…
-   295→## [0.4.4] - 2018-08-17
-   296→
-   297→### Improved
-   298→
-      →…
-   301→## [0.4.3] - 2018-06-29
-   302→
-   303→### Improved
-   304→
-      →…
-   307→## [0.4.2] - 2018-06-05
-   308→
-   309→### Improved
-   310→
-      →…
-   313→### Fixed
-   314→
-      →…
-   317→## [0.4.1] - 2017-12-30
-   318→
-   319→### Fixed
-   320→
-      →…
-   323→## [0.4.0] - 2017-12-24
-   324→
-      →…
-   329→### Compatibility
-   330→
-      →…
-   345→### New
-   346→
-      →…
-   359→### Removed
-   360→
-      →…
-   366→### Changed
-   367→
-      →…
-   382→### In the Future
-   383→
-      →…
-   388→## Older
-   389→
-      →…
 README.md
      1→log
      3→
-      →…
+     4→A Rust library providing a lightweight logging *facade*.
+     5→
+     6→[![Build status](https://img.shields.io/github/actions/workflow/status/rust-lang/log/main.yml?branch=master)](https://github.com/rust-lang/log/actions)
+     7→[![Latest version](https://img.shields.io/crates/v/log.svg)](https://crates.io/crates/log)
+     8→[![Documentation](https://docs.rs/log/badge.svg)](https://docs.rs/log)
+     9→![License](https://img.shields.io/crates/l/log.svg)
+    10→
+    11→* [`log` documentation](https://docs.rs/log)
+    12→
+    13→A logging facade provides a single logging API that abstracts over the actual
+    14→logging implementation. Libraries can use the logging API provided by this
+    15→crate, and the consumer of those libraries can choose the logging
+    16→implementation that is most suitable for its use case.
+    17→
+    18→
     19→## Minimum supported `rustc`
     20→
-      →…
+    21→`1.68.0+`
+    22→
+    23→This version is explicitly tested in CI and may be bumped in any release as needed. Maintaining compatibility with older compilers is a priority though, so the bar for bumping the minimum supported version is set very high. Any changes to the supported minimum version will be called out in the release notes.
+    24→
     25→## Usage
     26→
     27→### In libraries
     28→
-      →…
+    29→Libraries should link only to the `log` crate, and use the provided macros to
+    30→log whatever information will be useful to downstream consumers:
+    31→
+    32→```toml
+    33→[dependencies]
+    34→log = "0.4"
+    35→```
+    36→
+    37→```rust
+    38→use log::{info, trace, warn};
+    39→
+    40→pub fn shave_the_yak(yak: &mut Yak) {
+    41→    trace!("Commencing yak shaving");
+    42→
+    43→    loop {
+    44→        match find_a_razor() {
+    45→            Ok(razor) => {
+    46→                info!("Razor located: {razor}");
+    47→                yak.shave(razor);
+    48→                break;
+    49→            }
+    50→            Err(err) => {
+    51→                warn!("Unable to locate a razor: {err}, retrying");
+    52→            }
+    53→        }
+    54→    }
+    55→}
+    56→```
+    57→
     58→### In executables
     59→
+    60→In order to produce log output, executables have to use a logger implementation compatible with the facade.
+    61→There are many available implementations to choose from, here are some options:
+    62→
+    63→* Simple minimal loggers:
+    64→    * [`env_logger`](https://docs.rs/env_logger/*/env_logger/)
+    65→    * [`colog`](https://docs.rs/colog/*/colog/)
+    66→    * [`simple_logger`](https://docs.rs/simple_logger/*/simple_logger/)
+    67→    * [`simplelog`](https://docs.rs/simplelog/*/simplelog/)
+    68→    * [`pretty_env_logger`](https://docs.rs/pretty_env_logger/*/pretty_env_logger/)
+    69→    * [`stderrlog`](https://docs.rs/stderrlog/*/stderrlog/)
+    70→    * [`flexi_logger`](https://docs.rs/flexi_logger/*/flexi_logger/)
+    71→    * [`call_logger`](https://docs.rs/call_logger/*/call_logger/)
+    72→    * [`std-logger`](https://docs.rs/std-logger/*/std_logger/)
+    73→    * [`structured-logger`](https://docs.rs/structured-logger/latest/structured_logger/)
+    74→    * [`clang_log`](https://docs.rs/clang_log/latest/clang_log)
+    75→    * [`ftail`](https://docs.rs/ftail/latest/ftail/)
+    76→* Complex configurable frameworks:
+    77→    * [`log4rs`](https://docs.rs/log4rs/*/log4rs/)
+    78→    * [`logforth`](https://docs.rs/logforth/*/logforth/)
+    79→    * [`fern`](https://docs.rs/fern/*/fern/)
+    80→    * [`spdlog-rs`](https://docs.rs/spdlog-rs/*/spdlog/)
+    81→* Adaptors for other facilities:
+    82→    * [`syslog`](https://docs.rs/syslog/*/syslog/)
+    83→    * [`systemd-journal-logger`](https://docs.rs/systemd-journal-logger/*/systemd_journal_logger/)
+    84→    * [`slog-stdlog`](https://docs.rs/slog-stdlog/*/slog_stdlog/)
+    85→    * [`android_log`](https://docs.rs/android_log/*/android_log/)
+    86→    * [`win_dbg_logger`](https://docs.rs/win_dbg_logger/*/win_dbg_logger/)
+    87→    * [`db_logger`](https://docs.rs/db_logger/*/db_logger/)
+    88→    * [`log-to-defmt`](https://docs.rs/log-to-defmt/*/log_to_defmt/)
+    89→    * [`logcontrol-log`](https://docs.rs/logcontrol-log/*/logcontrol_log/)
+    90→* For WebAssembly binaries:
+    91→    * [`console_log`](https://docs.rs/console_log/*/console_log/)
+    92→* For dynamic libraries:
+    93→    * You may need to construct [an FFI-safe wrapper over `log`](https://github.com/rust-lang/log/issues/421) to initialize in your libraries.
+    94→* Utilities:
+    95→    * [`log_err`](https://docs.rs/log_err/*/log_err/)
+    96→    * [`log-reload`](https://docs.rs/log-reload/*/log_reload/)
+    97→    * [`alterable_logger`](https://docs.rs/alterable_logger/*/alterable_logger)
+    98→
       →…
    106→## Structured logging
    107→
-      →…
+   108→If you enable the `kv` feature, you can associate structured data with your log records:
+   109→
+   110→```rust
+   111→use log::{info, trace, warn};
+   112→
+   113→pub fn shave_the_yak(yak: &mut Yak) {
+   114→    // `yak:serde` will capture `yak` using its `serde::Serialize` impl
+   115→    //
+   116→    // You could also use `:?` for `Debug`, or `:%` for `Display`. For a
+   117→    // full list, see the `log` crate documentation
+   118→    trace!(target = "yak_events", yak:serde; "Commencing yak shaving");
+   119→
+   120→    loop {
+   121→        match find_a_razor() {
+   122→            Ok(razor) => {
+   123→                info!(razor; "Razor located");
+   124→                yak.shave(razor);
+   125→                break;
+   126→            }
+   127→            Err(e) => {
+   128→                // `e:err` will capture `e` using its `std::error::Error` impl
+   129→                warn!(e:err; "Unable to locate a razor, retrying");
+   130→            }
+   131→        }
+   132→    }
+   133→}
+   134→```
 rfcs/0296-structured-logging.md
    502→### Don't break anything
    503→
@@ -350,6 +269,8 @@ src/kv/source.rs
     12→/// Use the [`VisitSource`](trait.VisitSource.html) trait to inspect the structured data
     13→/// in a source.
     14→///
+    15→/// A source is like an iterator over its key-values, except with a push-based API
+    16→/// instead of a pull-based one.
       →…
     51→pub trait Source {
     52→    /// Visit key-values.
@@ -423,6 +344,8 @@ src/kv/value.rs
     36→///
     37→/// # Capturing values
     38→///
+    39→/// There are a few ways to capture a value:
+    40→///
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
@@ -465,6 +388,8 @@ src/kv/value.rs
    453→/// to a more fully-featured serialization framework like `serde` or `sval`. A value visitor
    454→/// can differentiate primitive types through methods like [`VisitValue::visit_bool`] and
    455→/// [`VisitValue::visit_str`], but more complex types like maps and sequences
+   456→/// will fallthrough to [`VisitValue::visit_any`].
+   457→///
       →…
    462→pub trait VisitValue<'v> {
    463→    /// Visit a `Value`.
@@ -611,6 +536,9 @@ src/lib.rs
    425→#[cfg(not(target_has_atomic = "ptr"))]
    426→impl AtomicUsize {
    427→    const fn new(v: usize) -> AtomicUsize {
+   428→        AtomicUsize { v: Cell::new(v) }
+   429→    }
+   430→
    431→    fn load(&self, _order: Ordering) -> usize {
    435→    fn store(&self, val: usize, _order: Ordering) {
    442→#[cfg(not(target_has_atomic = "ptr"))]
@@ -627,10 +555,6 @@ src/lib.rs
    467→/// An enum representing the available verbosity levels of the logger.
    468→///
    469→/// Typical usage includes: checking if a certain `Level` is enabled with
-   470→/// [`log_enabled!`](macro.log_enabled.html), specifying the `Level` of
-   471→/// [`log!`](macro.log.html), and comparing a `Level` directly to a
-   472→/// [`LevelFilter`](enum.LevelFilter.html).
-   473→#[repr(usize)]
       →…
    475→pub enum Level {
    476→    /// The "error" level.
@@ -672,10 +596,6 @@ src/lib.rs
    626→/// An enum representing the available verbosity level filters of the logger.
    627→///
    628→/// A `LevelFilter` may be compared directly to a [`Level`]. Use this type
-   629→/// to get and set the maximum log level with [`max_level()`] and [`set_max_level`].
-   630→///
-   631→/// [`Level`]: enum.Level.html
-   632→/// [`max_level()`]: fn.max_level.html
       →…
    636→pub enum LevelFilter {
    637→    /// A level lower than all log levels.
@@ -718,10 +638,6 @@ src/lib.rs
    796→/// The "payload" of a log message.
    797→///
    798→/// # Use
-   799→///
-   800→/// `Record` structures are passed as parameters to the [`log`][method.log]
-   801→/// method of the [`Log`] trait. Logger implementors manipulate these
-   802→/// structures in order to display log messages. `Record`s are automatically
       →…
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
@@ -737,7 +653,11 @@ src/lib.rs
    858→struct KeyValues<'a>(&'a dyn kv::Source);
    860→#[cfg(feature = "kv")]
    861→impl<'a> fmt::Debug for KeyValues<'a> {
-   862→    fn fmt …
+   862→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+   863→        let mut visitor = f.debug_map();
+   864→        self.0.visit(&mut visitor).map_err(|_| fmt::Error)?;
+   865→        visitor.finish()
+      →…
    872→    pub fn builder …
    878→    pub fn args …
    884→    pub fn metadata …
@@ -753,10 +673,6 @@ src/lib.rs
    963→/// Builder for [`Record`](struct.Record.html).
    964→///
    965→/// Typically should only be used by log library creators or for testing and "shim loggers".
-   966→/// The `RecordBuilder` can set the different parameters of `Record` object, and returns
-   967→/// the created object when `build` is called.
-   968→///
-   969→/// # Examples
       →…
   1003→pub struct RecordBuilder<'a> {
   1004→    record: Record<'a>,
@@ -777,10 +693,6 @@ src/lib.rs
   1119→/// Metadata about a log message.
   1120→///
   1121→/// # Use
-  1122→///
-  1123→/// `Metadata` structs are created when users of the library use
-  1124→/// logging macros.
-  1125→///
       →…
   1158→pub struct Metadata<'a> {
   1159→    level: Level,
@@ -792,10 +704,6 @@ src/lib.rs
   1183→/// Builder for [`Metadata`](struct.Metadata.html).
   1184→///
   1185→/// Typically should only be used by log library creators or for testing and "shim loggers".
-  1186→/// The `MetadataBuilder` can set the different parameters of a `Metadata` object, and returns
-  1187→/// the created object when `build` is called.
-  1188→///
-  1189→/// # Example
       →…
   1200→pub struct MetadataBuilder<'a> {
   1201→    metadata: Metadata<'a>,
@@ -851,7 +759,10 @@ src/lib.rs
   1312→where
   1313→    T: ?Sized + Log,
   1314→{
-  1315→    fn enabled …
+  1315→    fn enabled(&self, metadata: &Metadata) -> bool {
+  1316→        self.as_ref().enabled(metadata)
+  1317→    }
+  1318→
   1319→    fn log …
   1322→    fn flush …
   1327→#[cfg(feature = "std")]
@@ -859,7 +770,10 @@ src/lib.rs
   1329→where
   1330→    T: ?Sized + Log,
   1331→{
-  1332→    fn enabled …
+  1332→    fn enabled(&self, metadata: &Metadata) -> bool {
+  1333→        self.as_ref().enabled(metadata)
+  1334→    }
+  1335→
   1336→    fn log …
   1339→    fn flush …
   1351→pub fn set_max_level …
@@ -890,8 +804,7 @@ src/lib.rs
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///
   1546→/// [`set_logger`]: fn.set_logger.html
-  1547→#[allow(missing_copy_implementations)]
-  1548→#[derive(Debug)]
+      →…
   1549→pub struct SetLoggerError(());
   1552→    fn fmt …
   1558→#[cfg(feature = "std")]
@@ -899,8 +812,7 @@ src/lib.rs
   1561→/// The type returned by [`from_str`] when the string doesn't match any of the log levels.
   1562→///
   1563→/// [`from_str`]: https://doc.rust-lang.org/std/str/trait.FromStr.html#tymethod.from_str
-  1564→#[allow(missing_copy_implementations)]
-  1565→#[derive(Debug, PartialEq, Eq)]
+      →…
   1566→pub struct ParseLevelError(());
   1569→    fn fmt …
   1575→#[cfg(feature = "std")]
@@ -1031,9 +943,7 @@ test_max_level_features/main.rs
     22→    fn log(&self, record: &Record) {
     23→        *self.0.last_log.lock().unwrap() = Some(record.level());
     24→    }
-    25→
     26→    fn flush(&self) {}
-    27→}
     29→fn main() {
     30→    let me = Arc::new(State {
     31→        last_log: Mutex::new(None),

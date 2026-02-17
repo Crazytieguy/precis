@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4048 words)
+budget: 4000 (4044 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -13,6 +13,39 @@ ARCHITECTURE.md
      6→
      7→```tsx
      8→// No
+     9→<>
+    10→  {items.map((item) => {
+    11→    return <div>{item}</div>
+    12→  })}
+    13→</>
+    14→```
+    15→
+    16→We didn't want to provide a render prop:
+    17→
+    18→```tsx
+    19→// No
+    20→onItemRender={({ item }) => {
+    21→  return <div>{item}</div>
+    22→}}
+    23→```
+    24→
+    25→Instead, we wanted to render components:
+    26→
+    27→```tsx
+    28→// Yes
+    29→<Item>My item</Item>
+    30→```
+    31→
+    32→Especially, we wanted full component composition:
+    33→
+    34→```tsx
+    35→// YES
+    36→<>
+    37→  <BlogItems />
+    38→  {staticItems}
+    39→</>
+    40→```
+    41→
       →…
     46→## Approach
     47→
@@ -26,7 +59,8 @@ ARCHITECTURE.md
     55→
     56→We did not use a render prop because they are an inelegant pattern and quickly fall to long, centralised if-else logic chains. For example, if you want a fancy sparkle rainbow item, you need a new if statement to render that item specially.
     57→
-      →…
+    58→The original approach for tracking which item was selected was to keep an index 0..n. But it's impossible to know which Item is in which position within the React tree when React Strict Mode is enabled, because `useEffect` runs twice and `useRef` cannot be used for stable IDs. <sup>This may be possible with `useId`, now.</sup> We created [use-descendants](https://github.com/pacocoursey/use-descendants) to track relative component indeces, but abandoned it because it could not work in Strict Mode, and will be incompatible with upcoming concurrent mode. Now, we track the selected item with its value, because it is stable across item mounts and unmounts.
+    59→
     60→## Example
     61→
     62→```tsx
@@ -35,7 +69,30 @@ ARCHITECTURE.md
     65→  <Item>A</Item>
     66→  <Item>B</Item>
     67→</List>
-      →…
+    68→```
+    69→
+    70→The "A" item should not be shown! But we cannot remove it from the React tree, because the user controls it. In most cases, this is easy because the rendered items is sourced from a backing data array:
+    71→
+    72→```tsx
+    73→<>
+    74→  {['A', 'B'].map((item) => {
+    75→    if (matches(item, search)) {
+    76→      return <Item>{item}</Item>
+    77→    }
+    78→  })}
+    79→</>
+    80→```
+    81→
+    82→But in our case, the item will remain in the React tree and just be removed from the DOM:
+    83→
+    84→```tsx
+    85→<List>
+    86→  {/* returns `null`, no DOM created */}
+    87→  <Item>A</Item>
+    88→  <Item>B</Item>
+    89→</List>
+    90→```
+    91→
     92→## Performance
     93→
     94→This is more expensive memory wise, because if there are 2,000 items but the list is filtered to only 2 items, we still allocate memory for 2,000 instances of the Item component. But it's our only option! Thankfully we can still keep the DOM size to 2 items.
@@ -62,6 +119,10 @@ README.md
     20→const CommandMenu = () => {
     21→  return (
     22→    <Command label="Command Menu">
+    23→      <Command.Input />
+    24→      <Command.List>
+    25→        <Command.Empty>No results found.</Command.Empty>
+    26→
       →…
     82→## Parts and styling
     83→
@@ -75,6 +136,10 @@ README.md
     91→>
     92→> Values are always trimmed with the [trim()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim) method.
     93→
+    94→```tsx
+    95→const [value, setValue] = React.useState('apple')
+    96→
+    97→return (
       →…
    153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
    154→
@@ -84,6 +149,10 @@ README.md
    158→const [open, setOpen] = React.useState(false)
    159→
    160→return (
+   161→  <Command.Dialog open={open} onOpenChange={setOpen}>
+   162→    ...
+   163→  </Command.Dialog>
+   164→)
       →…
    180→### Input `[cmdk-input]`
    181→
@@ -93,7 +162,8 @@ README.md
    185→const [search, setSearch] = React.useState('')
    186→
    187→return <Command.Input value={search} onValueChange={setSearch} />
-      →…
+   188→```
+   189→
    190→### List `[cmdk-list]`
    191→
    192→Contains items and groups. Animate height using the `--cmdk-list-height` CSS variable.
@@ -102,6 +172,10 @@ README.md
    195→[cmdk-list] {
    196→  min-height: 300px;
    197→  height: var(--cmdk-list-height);
+   198→  max-height: 500px;
+   199→  transition: height 100ms ease;
+   200→}
+   201→```
       →…
    212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
    213→
@@ -111,6 +185,10 @@ README.md
    217→<Command.Item
    218→  onSelect={(value) => console.log('Selected', value)}
    219→  // Value is implicity "apple" because of the provided text content
+   220→>
+   221→  Apple
+   222→</Command.Item>
+   223→```
       →…
    242→### Group `[cmdk-group]` `[hidden?]`
    243→
@@ -120,6 +198,10 @@ README.md
    247→<Command.Group heading="Fruit">
    248→  <Command.Item>Apple</Command.Item>
    249→</Command.Group>
+   250→```
+   251→
+   252→Groups will not unmount from the DOM, rather the `hidden` attribute is applied to hide it from view. This may be relevant in your styling.
+   253→
       →…
    256→### Separator `[cmdk-separator]`
    257→
@@ -137,7 +219,8 @@ README.md
    269→const [loading, setLoading] = React.useState(false)
    270→
    271→return <Command.List>{loading && <Command.Loading>Hang on…</Command.Loading>}</Command.List>
-      →…
+   272→```
+   273→
    274→### `useCommandState(state => state.selectedField)`
    275→
    276→Hook that composes [`useSyncExternalStore`](https://reactjs.org/docs/hooks-reference.html#usesyncexternalstore). Pass a function that returns a slice of the command menu state to re-render when that slice changes. This hook is provided for advanced use cases and should not be commonly used.
@@ -146,7 +229,9 @@ README.md
    279→
    280→```tsx
    281→const search = useCommandState((state) => state.search)
-      →…
+   282→return <Command.Empty>No results found for "{search}".</Command.Empty>
+   283→```
+   284→
    285→## Examples
    286→
    287→Code snippets for common use cases.
@@ -159,6 +244,10 @@ README.md
    294→const ref = React.useRef(null)
    295→const [open, setOpen] = React.useState(false)
    296→const [search, setSearch] = React.useState('')
+   297→const [pages, setPages] = React.useState([])
+   298→const page = pages[pages.length - 1]
+   299→
+   300→return (
       →…
    338→### Show sub-items when searching
    339→
@@ -168,6 +257,10 @@ README.md
    343→const SubItem = (props) => {
    344→  const search = useCommandState((state) => state.search)
    345→  if (!search) return null
+   346→  return <Command.Item {...props} />
+   347→}
+   348→
+   349→return (
       →…
    361→### Asynchronous results
    362→
@@ -177,6 +270,10 @@ README.md
    366→const [loading, setLoading] = React.useState(false)
    367→const [items, setItems] = React.useState([])
    368→
+   369→React.useEffect(() => {
+   370→  async function getItems() {
+   371→    setLoading(true)
+   372→    const res = await api.get('/dictionary')
       →…
    397→### Use inside Popover
    398→
@@ -186,6 +283,10 @@ README.md
    402→$ pnpm install @radix-ui/react-popover
    403→```
    404→
+   405→Render `Command` inside of the popover content:
+   406→
+   407→```tsx
+   408→import * as Popover from '@radix-ui/react-popover'
       →…
    426→### Drop in stylesheets
    427→
@@ -199,6 +300,10 @@ README.md
    435→
    436→**Filter/sort items manually?** Yes. Pass `shouldFilter={false}` to [Command](#command-cmdk-root). Better memory usage and performance. Bring your own virtualization this way.
    437→
+   438→**React 18 safe?** Yes, required. Uses React 18 hooks like `useId` and `useSyncExternalStore`.
+   439→
+   440→**Unstyled?** Yes, use the listed CSS selectors.
+   441→
       →…
    456→## History
    457→
@@ -214,6 +319,10 @@ README.md
    467→pnpm install
    468→pnpm playwright install
    469→```
+   470→
+   471→Then ensure you've built the library:
+   472→
+   473→```bash
       →…
 cmdk/src/command-score.ts
     54→function commandScoreInner(
@@ -237,22 +346,6 @@ cmdk/src/command-score.ts
     72→    return memoizedResults[memoizeKey]
     73→  }
     74→
-    75→  var abbreviationChar = lowerAbbreviation.charAt(abbreviationIndex)
-    76→  var index = lowerString.indexOf(abbreviationChar, stringIndex)
-    77→  var highScore = 0
-    78→
-    79→  var score, transposedScore, wordBreaks, spaceBreaks
-    80→
-    81→  while (index >= 0) {
-    82→    score = commandScoreInner(
-    83→      string,
-    84→      abbreviation,
-    85→      lowerString,
-    86→      lowerAbbreviation,
-    87→      index + 1,
-    88→      abbreviationIndex + 1,
-    89→      memoizedResults,
-    90→    )
       →…
    150→function formatInput(string) {
    151→  // convert all valid space characters to space so they match each other
@@ -305,7 +398,6 @@ cmdk/src/index.tsx
    664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
    665→  const id = useId()
    666→  const ref = React.useRef<HTMLDivElement>(null)
-   667→  const groupContext = React.useContext(GroupContext)
       →…
    725→/**
    726→ * Group command menu items together with a heading.
@@ -314,7 +406,6 @@ cmdk/src/index.tsx
    729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
    730→  const { heading, children, forceMount, ...etc } = props
    731→  const id = useId()
-   732→  const ref = React.useRef<HTMLDivElement>(null)
       →…
    770→/**
    771→ * A visual and semantic separator between items or groups.
@@ -323,7 +414,6 @@ cmdk/src/index.tsx
    774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
    775→  const { alwaysRender, ...etc } = props
    776→  const ref = React.useRef<HTMLDivElement>(null)
-   777→  const render = useCmdk((state) => !state.search)
       →…
    783→/**
    784→ * Command menu input.
@@ -332,7 +422,6 @@ cmdk/src/index.tsx
    787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
    788→  const { onValueChange, ...etc } = props
    789→  const isControlled = props.value != null
-   790→  const store = useStore()
       →…
    829→/**
    830→ * Contains `Item`, `Group`, and `Separator`.
@@ -341,7 +430,6 @@ cmdk/src/index.tsx
    833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
    834→  const { children, label = 'Suggestions', ...etc } = props
    835→  const ref = React.useRef<HTMLDivElement>(null)
-   836→  const height = React.useRef<HTMLDivElement>(null)
       →…
    879→/**
    880→ * Renders the command menu in a Radix Dialog.
@@ -349,7 +437,6 @@ cmdk/src/index.tsx
    882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
    883→  const { open, onOpenChange, overlayClassName, contentClassName, container, ...etc } = props
    884→  return (
-   885→    <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
       →…
    896→/**
    897→ * Automatically renders when there are no results for the search query.
@@ -357,7 +444,6 @@ cmdk/src/index.tsx
    899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
    900→  const render = useCmdk((state) => state.filtered.count === 0)
    901→
-   902→  if (!render) return null
       →…
    906→/**
    907→ * You should conditionally render this with `progress` while loading asynchronous items.
@@ -365,7 +451,6 @@ cmdk/src/index.tsx
    909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
    910→  const { progress, children, label = 'Loading...', ...etc } = props
    911→
-   912→  return (
       →…
    930→const pkg …
    955→/**
@@ -386,16 +471,13 @@ cmdk/src/index.tsx
    970→}
    972→function findPreviousSibling(el: Element, selector: string) {
    973→  let sibling = el.previousElementSibling
-   974→
       →…
    981→function useAsRef<T>(data: T) {
    982→  const ref = React.useRef<T>(data)
-   983→
       →…
    991→const useLayoutEffect …
    993→function useLazyRef<T>(fn: () => T) {
    994→  const ref = React.useRef<T>()
-   995→
       →…
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
@@ -410,7 +492,6 @@ cmdk/src/index.tsx
   1014→  aliases: string[] = [],
   1015→) {
   1016→  const valueRef = React.useRef<string>()
-  1017→  const context = useCommand()
       →…
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
@@ -429,14 +510,12 @@ cmdk/src/index.tsx
   1059→}
   1061→function renderChildren(children: React.ReactElement) {
   1062→  const childrenType = children.type as any
-  1063→  // The children is a component
       →…
   1071→function SlottableWithNestedChildren(
   1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
   1073→  render: (child: React.ReactNode) => JSX.Element,
   1074→) {
   1075→  if (asChild && React.isValidElement(children)) {
-  1076→    return React.cloneElement(renderChildren(children), { ref: (children as any).ref }, render(children.props.children))
       →…
   1081→const srOnlyStyles …
 playwright.config.ts
@@ -505,12 +584,6 @@ website/components/cmdk/framer.tsx
     11→          <Command.Input autoFocus placeholder="Find components, packages, and interactions..." />
     12→        </div>
     13→        <Command.List>
-    14→          <div cmdk-framer-items="">
-    15→            <div cmdk-framer-left="">
-    16→              <Command.Group heading="Components">
-    17→                <Item value="Button" subtitle="Trigger actions">
-    18→                  <ButtonIcon />
-    19→                </Item>
       →…
     57→function Button() {
     61→function Input() {
@@ -540,12 +613,6 @@ website/components/cmdk/linear.tsx
     10→          <Command.Empty>No results found.</Command.Empty>
     11→          {items.map(({ icon, label, shortcut }) => {
     12→            return (
-    13→              <Command.Item key={label} value={label}>
-    14→                {icon}
-    15→                {label}
-    16→                <div cmdk-linear-shortcuts="">
-    17→                  {shortcut.map((key) => {
-    18→                    return <kbd key={key}>{key}</kbd>
       →…
     30→const items = [
     31→  {
@@ -564,20 +631,6 @@ website/components/cmdk/linear.tsx
     44→    shortcut: ['S'],
     45→  },
     46→  {
-    47→    icon: <ChangePriorityIcon />,
-    48→    label: 'Change priority...',
-    49→    shortcut: ['P'],
-    50→  },
-    51→  {
-    52→    icon: <ChangeLabelsIcon />,
-    53→    label: 'Change labels...',
-    54→    shortcut: ['L'],
-    55→  },
-    56→  {
-    57→    icon: <RemoveLabelIcon />,
-    58→    label: 'Remove label...',
-    59→    shortcut: ['⇧', 'L'],
-    60→  },
       →…
     68→function AssignToIcon() {
     76→function AssignToMeIcon() {
@@ -597,12 +650,6 @@ website/components/cmdk/raycast.tsx
     14→    inputRef?.current?.focus()
     15→  }, [])
     16→
-    17→  return (
-    18→    <div className="raycast">
-    19→      <Command value={value} onValueChange={(v) => setValue(v)}>
-    20→        <div cmdk-raycast-top-shine="" />
-    21→        <Command.Input ref={inputRef} autoFocus placeholder="Search for apps and commands..." />
-    22→        <hr cmdk-raycast-loader="" />
       →…
     97→function Item({
    116→function SubCommand({
@@ -626,12 +673,6 @@ website/components/cmdk/vercel.tsx
     11→
     12→  const popPage = React.useCallback(() => {
     13→    setPages((pages) => {
-    14→      const x = [...pages]
-    15→      x.splice(-1, 1)
-    16→      return x
-    17→    })
-    18→  }, [])
-    19→
       →…
     91→function Home({ searchProjects }: { searchProjects: Function }) {
    137→function Projects() {
@@ -662,21 +703,7 @@ website/components/code/index.tsx
     22→      style: {
     23→        color: 'var(--gray10)',
     24→      },
-    25→    },
-    26→    {
-    27→      types: ['punctuation', 'operator'],
-    28→      style: {
-    29→        color: 'var(--gray9)',
-    30→      },
-    31→    },
-    32→    {
-    33→      types: ['class-name', 'function', 'tag'],
-    34→      style: {
-    35→        color: 'var(--gray12)',
-    36→      },
-    37→    },
-    38→  ],
-    39→}
+      →…
     41→export function Code({ children }: { children: string }) {
     42→  return (
     43→    <Highlight {...defaultProps} theme={theme} code={children} language="jsx">
@@ -706,58 +733,36 @@ website/components/code/index.tsx
 website/components/icons/index.tsx
      3→export function FigmaIcon() {
      4→  return (
-     5→    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px">
-     6→      <path fill="#e64a19" d="M26,17h-8c-3.866,0-7-3.134-7-7v0c0-3.866,3.134-7,7-7h8V17z" />
       →…
     15→export function RaycastIcon() {
     16→  return (
-    17→    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    18→      <path
       →…
     28→export function YouTubeIcon() {
     29→  return (
-    30→    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px">
-    31→      <path
       →…
     40→export function SlackIcon() {
     41→  return (
-    42→    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px">
-    43→      <path
       →…
     79→export function VercelIcon() {
     80→  return (
-    81→    <svg aria-label="Vercel Logo" fill="var(--highContrast)" height="26" viewBox="0 0 75 65">
-    82→      <path d="M37.59.25l36.95 64H.64l36.95-64z"></path>
       →…
     87→export function LinearIcon({ style }: { style?: Object }) {
     88→  return (
-    89→    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style={style}>
-    90→      <path
       →…
    110→export function Logo({ children, size = '20px' }: { children: React.ReactNode; size?: string }) {
    111→  return (
-   112→    <div
-   113→      className={styles.blurLogo}
       →…
    127→export function CopyIcon() {
    128→  return (
-   129→    <svg width="16" height="16" strokeWidth="1.5" viewBox="0 0 24 24" fill="none">
-   130→      <path
       →…
    146→export function CopiedIcon() {
    147→  return (
-   148→    <svg width="16" height="16" strokeWidth="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-   149→      <path d="M5 13L9 17L19 7" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
       →…
    154→export function GitHubIcon() {
    155→  return (
-   156→    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-   157→      <path
       →…
    165→export function FramerIcon() {
    166→  return (
-   167→    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 24">
-   168→      <path
       →…
 website/next.config.js
      1→/** @type {import('next').NextConfig} */
@@ -877,7 +882,6 @@ website/pages/index.tsx
     82→}
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     85→  return (
-    86→    <motion.div
       →…
     99→//////////////////////////////////////////////////////////////////
    100→
@@ -904,7 +908,6 @@ website/pages/index.tsx
    121→}
    123→function GitHubButton() {
    124→  return (
-   125→    <a
       →…
    137→//////////////////////////////////////////////////////////////////
    138→
@@ -928,7 +931,6 @@ website/pages/index.tsx
    156→]
    158→function ThemeSwitcher() {
    159→  const { theme, setTheme } = React.useContext(ThemeContext)
-   160→  const ref = React.useRef<HTMLButtonElement | null>(null)
       →…
    260→//////////////////////////////////////////////////////////////////
    261→
@@ -970,13 +972,10 @@ website/pages/index.tsx
    298→}
    300→function Footer() {
    301→  const ref = React.useRef<HTMLElement | null>(null)
-   302→  const isInView = useInView(ref, {
       →…
    326→function RaunoSignature() {
    327→  return (
-   328→    <motion.svg
       →…
    350→function PacoSignature() {
    351→  return (
-   352→    <motion.svg
       →…

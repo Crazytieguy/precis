@@ -2,78 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1068 words)
+budget: 1000 (1047 words)
 
 CHANGELOG.md
-     1→# Changelog
-     2→
      3→## [1.4.2]
      4→
      5→- chore(input): remove unintentional log within internal pasteListener
      6→
-     7→## [1.4.1]
-     8→
-      →…
-    11→## [1.4.0]
-    12→
-      →…
-    25→## [1.2.5]
-    26→
-      →…
-    29→## [1.2.4]
-    30→
-      →…
-    33→## [1.2.3]
-    34→
-      →…
-    38→## [1.2.2]
-    39→
-      →…
-    42→## [1.2.1]
-    43→
-      →…
-    48→## [1.2.0]
-    49→
-      →…
-    52→## [1.2.0-beta.1]
-    53→
-      →…
-    56→## [1.2.0-beta.0]
-    57→
-      →…
-    61→## [1.1.0]
-    62→
-      →…
-    87→## [1.0.1]
-    88→
-      →…
-    92→## [1.0.0]
-    93→
-      →…
-    96→## [0.3.31-beta]
-    97→
-      →…
-   100→## [0.3.3-beta]
-   101→
-      →…
-   104→## [0.3.2-beta]
-   105→
-      →…
-   108→## [0.3.11-beta]
-   109→
-      →…
-   112→## [0.3.1-beta]
-   113→
-      →…
-   116→## [0.2.4]
-   117→
-      →…
-   120→## [0.2.1]
-   121→
-      →…
-   124→## [0.2]
-   125→
-      →…
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web.
      2→
@@ -141,10 +76,10 @@ apps/storybook/README.md
     88→
       →…
 apps/storybook/src/components/ui/input-otp.tsx
-     9→const InputOTP = React.forwardRef<
-    21→const InputOTPGroup = React.forwardRef<
-    29→const InputOTPSlot = React.forwardRef<
-    54→const InputOTPSeparator = React.forwardRef<
+     9→const InputOTP …
+    21→const InputOTPGroup …
+    29→const InputOTPSlot …
+    54→const InputOTPSeparator …
 apps/storybook/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
@@ -176,18 +111,37 @@ apps/storybook/tailwind.config.js
      4→  content: [
      5→    './index.html',
      6→    './src/stories/**/*.{ts,tsx}',
-     7→    './src/**/*.{ts,tsx}',
       →…
 apps/website/README.md
      3→## Getting Started
      4→
+     5→First, run the development server:
+     6→
+     7→```bash
+     8→npm run dev
+     9→# or
+    10→yarn dev
+    11→# or
+    12→pnpm dev
+    13→# or
+    14→bun dev
+    15→```
+    16→
       →…
     23→## Learn More
     24→
-      →…
+    25→To learn more about Next.js, take a look at the following resources:
+    26→
+    27→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+    28→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    29→
+    30→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    31→
     32→## Deploy on Vercel
     33→
-      →…
+    34→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    35→
+    36→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 apps/website/next.config.mjs
      3→/** @type {import('next').NextConfig} */
      4→const nextProdConfig = {}
@@ -233,7 +187,6 @@ apps/website/src/app/(local-pages)/raw-input/page.tsx
      7→
      8→  return (
      9→    <form
-    10→      method="POST"
       →…
 apps/website/src/app/(local-pages)/shadcn/page.tsx
     12→export default function ShadcnPage() {
@@ -266,7 +219,6 @@ apps/website/src/app/(pages)/(home)/page.tsx
     34→export default async function IndexPage() {
     35→  const starCount = await getRepoStarCount()
     36→
-    37→  return (
       →…
    148→export const revalidate = 3600
    150→const SponsorBadgeClerk = () => {
@@ -329,8 +281,6 @@ apps/website/src/config/site.ts
      1→export const siteConfig = {
      2→  name: 'rodz/input-otp',
      3→  url: 'https://input-otp.rodz.dev',
-     4→  ogImage: 'https://input-otp.rodz.dev/og.jpg',
-     5→  description:
       →…
     13→export type SiteConfig = typeof siteConfig
 apps/website/src/lib/fonts.ts
@@ -369,8 +319,6 @@ packages/input-otp/src/regexp.ts
      3→export const REGEXP_ONLY_DIGITS_AND_CHARS = '^[a-zA-Z0-9]+$'
 packages/input-otp/src/sync-timeouts.ts
      1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
-     2→  const t1 = setTimeout(cb, 0) // For faster machines
-      →…
 packages/input-otp/src/types.ts
      1→export interface SlotProps {
      2→  isActive: boolean
@@ -399,8 +347,6 @@ packages/input-otp/src/types.ts
     43→  )
 packages/input-otp/src/use-previous.ts
      3→export function usePrevious<T>(value: T) {
-     4→  const ref = React.useRef<T>()
-      →…
 packages/input-otp/src/use-pwm-badge.tsx
      4→const PWM_BADGE_MARGIN_RIGHT = 18
      5→const PWM_BADGE_SPACE_WIDTH_PX = 40

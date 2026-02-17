@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3879 words)
+budget: 4000 (3901 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -69,6 +69,18 @@ README.md
     63→      No such file or directory (os error 2)
     64→  ```
     65→
+    66→- Downcasting is supported and can be by value, by shared reference, or by
+    67→  mutable reference as needed.
+    68→
+    69→  ```rust
+    70→  // If the error was caused by redaction, then return a
+    71→  // tombstone instead of the content.
+    72→  match root_cause.downcast_ref::<DataStoreError>() {
+    73→      Some(DataStoreError::Censored(_)) => Ok(Poll::Ready(REDACTED_CONTENT)),
+    74→      None => Err(error),
+    75→  }
+    76→  ```
+    77→
       →…
    126→## No-std support
    127→
@@ -483,10 +495,7 @@ src/error.rs
    748→    object_drop_rest: unsafe fn(Own<ErrorImpl>, TypeId),
    749→    #[cfg(all(
    750→        not(error_generic_member_access),
-   751→        any(std_backtrace, feature = "backtrace")
-   752→    ))]
-   753→    object_backtrace: unsafe fn(Ref<ErrorImpl>) -> Option<&Backtrace>,
-   754→}
+      →…
    757→unsafe fn object_drop …
    765→unsafe fn object_drop_front …
    775→unsafe fn object_ref …
@@ -811,9 +820,6 @@ src/lib.rs
    702→    #[doc(hidden)]
    703→    #[inline]
    704→    pub fn not(cond: impl Bool) -> bool {
-   705→        cond.not()
-   706→    }
-   707→
    708→    mod not {
    709→        #[doc(hidden)]
    710→        pub trait Bool {
@@ -876,12 +882,7 @@ src/nightly.rs
     21→        }
     22→    }
     23→
-    24→    impl Display for MyError {
-    25→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
-    26→            unimplemented!()
-    27→        }
-    28→    }
-    29→
+    25→        fn fmt …
     31→        fn provide …
     38→#[cfg(anyhow_build_probe)]
     39→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");

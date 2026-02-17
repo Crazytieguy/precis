@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1003 words)
+budget: 1000 (991 words)
 
 README.md
      1→# xxhash
@@ -14,6 +14,23 @@ README.md
      7→high-quality hashing algorithm that is much faster than anything in the Go
      8→standard library.
      9→
+    10→This package provides a straightforward API:
+    11→
+    12→```
+    13→func Sum64(b []byte) uint64
+    14→func Sum64String(s string) uint64
+    15→type Digest struct{ ... }
+    16→    func New() *Digest
+    17→```
+    18→
+    19→The `Digest` type implements hash.Hash64. Its key methods are:
+    20→
+    21→```
+    22→func (*Digest) Write([]byte) (int, error)
+    23→func (*Digest) WriteString(string) (int, error)
+    24→func (*Digest) Sum64() uint64
+    25→```
+    26→
       →…
     33→## Compatibility
     34→
@@ -24,7 +41,9 @@ README.md
     39→* 1.9.7+ for Go 1.9
     40→* 1.10.3+ for Go 1.10
     41→* Go 1.11 or later
-      →…
+    42→
+    43→I recommend using the latest release of Go.
+    44→
     45→## Benchmarks
     46→
     47→Here are some quick benchmarks comparing the pure-Go and assembly
@@ -34,7 +53,18 @@ README.md
     51→| ---------- | --------- | --------- |
     52→| 4 B        |  1.3 GB/s |  1.2 GB/s |
     53→| 16 B       |  2.9 GB/s |  3.5 GB/s |
-      →…
+    54→| 100 B      |  6.9 GB/s |  8.1 GB/s |
+    55→| 4 KB       | 11.7 GB/s | 16.7 GB/s |
+    56→| 10 MB      | 12.0 GB/s | 17.3 GB/s |
+    57→
+    58→These numbers were generated on Ubuntu 20.04 with an Intel Xeon Platinum 8252C
+    59→CPU using the following commands under Go 1.19.2:
+    60→
+    61→```
+    62→benchstat <(go test -tags purego -benchtime 500ms -count 15 -bench 'Sum64$')
+    63→benchstat <(go test -benchtime 500ms -count 15 -bench 'Sum64$')
+    64→```
+    65→
     66→## Projects using this package
     67→
     68→- [InfluxDB](https://github.com/influxdata/influxdb)
@@ -64,8 +94,6 @@ dynamic/plugin.go
     32→				chunk := in[i:]
     33→				if len(chunk) > chunkSize {
     34→					chunk = chunk[:chunkSize]
-    35→				}
-    36→				n, err := d.WriteString(chunk)
       →…
 xxhash.go
     11→const (
@@ -94,56 +122,31 @@ xxhash.go
     37→}
     39→// New creates a new Digest with a zero seed.
     40→func New() *Digest {
-    41→	return NewWithSeed(0)
-    42→}
     44→// NewWithSeed creates a new Digest with the given seed.
     45→func NewWithSeed(seed uint64) *Digest {
-    46→	var d Digest
-    47→	d.ResetWithSeed(seed)
-      →…
     51→// Reset clears the Digest's state so that it can be reused.
     52→// It uses a seed value of zero.
     53→func (d *Digest) Reset() {
-    54→	d.ResetWithSeed(0)
-    55→}
     57→// ResetWithSeed clears the Digest's state so that it can be reused.
     58→// It uses the given seed to initialize the state.
     59→func (d *Digest) ResetWithSeed(seed uint64) {
-    60→	d.v1 = seed + prime1 + prime2
-    61→	d.v2 = seed + prime2
-      →…
     68→// Size always returns 8 bytes.
     69→func (d *Digest) Size() int { return 8 }
     71→// BlockSize always returns 32 bytes.
     72→func (d *Digest) BlockSize() int { return 32 }
     74→// Write adds more data to d. It always returns len(b), nil.
     75→func (d *Digest) Write(b []byte) (n int, err error) {
-    76→	n = len(b)
-    77→	d.total += uint64(n)
-      →…
    112→// Sum appends the current hash to b and returns the resulting slice.
    113→func (d *Digest) Sum(b []byte) []byte {
-   114→	s := d.Sum64()
-   115→	return append(
-      →…
    128→// Sum64 returns the current hash.
    129→func (d *Digest) Sum64() uint64 {
-   130→	var h uint64
-   131→
-      →…
    170→const (
    171→	magic         = "xxh\x06"
    172→	marshaledSize = len(magic) + 8*5 + 32
    175→// MarshalBinary implements the encoding.BinaryMarshaler interface.
    176→func (d *Digest) MarshalBinary() ([]byte, error) {
-   177→	b := make([]byte, 0, marshaledSize)
-   178→	b = append(b, magic...)
-      →…
    189→// UnmarshalBinary implements the encoding.BinaryUnmarshaler interface.
    190→func (d *Digest) UnmarshalBinary(b []byte) error {
-   191→	if len(b) < len(magic) || string(b[:len(magic)]) != magic {
-   192→		return errors.New("xxhash: invalid hash state identifier")
-      →…
    208→func appendUint64 …
    214→func consumeUint64 …
    219→func u64 …
@@ -168,32 +171,19 @@ xxhash_asm.go
 xxhash_other.go
      6→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
      7→func Sum64(b []byte) uint64 {
-     8→	// A simpler version would be
-     9→	//   d := New()
-      →…
     64→func writeBlocks …
 xxhash_safe.go
      8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
      9→func Sum64String(s string) uint64 {
-    10→	return Sum64([]byte(s))
-    11→}
     13→// WriteString adds more data to d. It always returns len(s), nil.
     14→func (d *Digest) WriteString(s string) (n int, err error) {
-    15→	return d.Write([]byte(s))
-    16→}
 xxhash_unsafe.go
     36→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
     37→// It may be faster than Sum64([]byte(s)) by avoiding a copy.
     38→func Sum64String(s string) uint64 {
-    39→	b := *(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)}))
-    40→	return Sum64(b)
-      →…
     43→// WriteString adds more data to d. It always returns len(s), nil.
     44→// It may be faster than Write([]byte(s)) by avoiding a copy.
     45→func (d *Digest) WriteString(s string) (n int, err error) {
-    46→	d.Write(*(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)})))
-    47→	// d.Write always returns len(s), nil.
-      →…
     53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
     54→// of the first two words is the same as the layout of a string.
     55→type sliceHeader struct {
@@ -202,11 +192,5 @@ xxhash_unsafe.go
     58→}
 xxhsum/xxhsum.go
     11→func main() {
-    12→	if contains(os.Args[1:], "-h") {
-      →…
     34→func contains(ss []string, s string) bool {
-    35→	for _, s1 := range ss {
-      →…
     43→func printHash(r io.Reader, name string) {
-    44→	h := xxhash.New()
-      →…

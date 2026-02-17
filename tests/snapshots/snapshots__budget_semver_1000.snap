@@ -2,75 +2,124 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (928 words)
+budget: 1000 (968 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
      9→  .map((file) => `./${file}`)
-CHANGELOG.md
-     3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16)
-     4→### Bug Fixes
-     5→* [`a29faa5`](https://github.com/npm/node-semver/commit/a29faa5f3309a01c8e5aeb965fb5c02c4c4e80e2) [#835](https://github.com/npm/node-semver/pull/835) cli: pass options to semver.valid() for loose version validation (#835) (@mldangelo)
-    16→### Bug Fixes
-    17→* [`e37e0ca`](https://github.com/npm/node-semver/commit/e37e0ca0b5fc910d2b1948d25dbc83cc3a0921ea) [#813](https://github.com/npm/node-semver/pull/813) faster paths for compare (#813) (@H4ad)
-      →…
-    23→### Bug Fixes
-    24→* [`fcafb61`](https://github.com/npm/node-semver/commit/fcafb61ed566ff8ccf24818dd94b76738f037aa4) [#780](https://github.com/npm/node-semver/pull/780) add missing `'use strict'` directives (#780) (@Fdawgs)
-      →…
-    31→### Bug Fixes
-    32→* [`af761c0`](https://github.com/npm/node-semver/commit/af761c05bd53eef83b5e20f8b09360b0e70557dc) [#764](https://github.com/npm/node-semver/pull/764) inc: fully capture prerelease identifier (#764) (@wraithgar)
-      →…
-    35→### Features
-    36→* [`0864b3c`](https://github.com/npm/node-semver/commit/0864b3ce7932667013e0c7c5ec764777d4682883) [#753](https://github.com/npm/node-semver/pull/753) add "release" inc type (#753) (@mbtools)
-    50→### Bug Fixes
-    51→
-      →…
-    60→### Bug Fixes
-    61→
-      →…
-    66→### Bug Fixes
-    67→
-      →…
-    88→### Features
-    89→
-      →…
-   110→### Bug Fixes
-   111→
-      →…
-   117→### Bug Fixes
-   118→
-      →…
-   127→### Bug Fixes
-   128→
-      →…
-   135→### Bug Fixes
-   136→
-      →…
-   141→### Features
-   142→
-      →…
-   153→### Features
-   154→
-      →…
-   174→### Bug Fixes
-   175→
-      →…
-   185→### Bug Fixes
-   186→
-      →…
-   200→### Bug Fixes
-   201→
-      →…
 CONTRIBUTING.md
+     3→# Contributing
+     4→
      5→## Code of Conduct
      6→
+     7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
+     8→
+     9→## Reporting Bugs
+    10→
       →…
+    17→## Pull Request Conventions
+    18→
     19→### Commits
     20→
+    21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+    22→
+    23→When opening a pull request please be sure that either the pull request title, or each commit in the pull request, has one of the following prefixes:
+    24→
+    25→ - `feat`: For when introducing a new feature.  The result will be a new semver minor version of the package when it is next published.
+    26→ - `fix`: For bug fixes. The result will be a new semver patch version of the package when it is next published.
+    27→ - `docs`: For documentation updates.  The result will be a new semver patch version of the package when it is next published.
+    28→ - `chore`: For changes that do not affect the published module.  Often these are changes to tests.  The result will be *no* change to the version of the package when it is next published (as the commit does not affect the published version).
+    29→
+    30→### Test Coverage
+    31→
       →…
+    36→### Linting
+    37→
+      →…
+    42→## What _not_ to contribute?
+    43→
     44→### Dependencies
     45→
+    46→It should be noted that our team does not accept third-party dependency updates/PRs.  If you submit a PR trying to update our dependencies we will close it with or without a reference to these contribution guidelines.
+    47→
+    48→### Tools/Automation
+    49→
+      →…
+README.md
+     1→semver(1) -- The semantic versioner for npm
+     3→
+     4→## Install
+     5→
+      →…
+    10→## Usage
+    11→
+      →…
+   139→## Versions
+   140→
+      →…
+   148→## Ranges
+   149→
+      →…
+   184→### Prerelease Tags
+   185→
+      →…
+   219→#### Prerelease Identifiers
+   220→
+      →…
+   250→#### Prerelease Identifier Base
+   251→
+      →…
+   279→### Advanced Range Syntax
+   280→
+      →…
+   287→#### Hyphen Ranges `X.Y.Z - A.B.C`
+   288→
+      →…
+   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
+   307→
+      →…
+   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
+   325→
+      →…
+   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
+   342→
+      →…
+   384→### Range Grammar
+   385→
+      →…
+   408→## Functions
+   409→
+      →…
+   453→### Comparison
+   454→
+      →…
+   478→### Sorting
+   479→
+      →…
+   485→### Comparators
+   486→
+      →…
+   489→### Ranges
+   490→
+      →…
+   531→### Coercion
+   532→
+      →…
+   558→### Clean
+   559→
+      →…
+   576→## Constants
+   577→
+      →…
+   580→### `RELEASE_TYPES`
+   581→
+      →…
+   600→### `SEMVER_SPEC_VERSION`
+   601→
+      →…
+   610→## Exported Modules
+   611→
       →…
 bin/semver.js
      8→const argv = process.argv.slice(2)
@@ -78,21 +127,15 @@ bin/semver.js
     37→const main = () => {
     38→  if (!argv.length) {
     39→    return help()
-    40→  }
-    41→  while (argv.length) {
-    42→    let a = argv.shift()
       →…
    132→const failInc = () => {
    133→  console.error('--inc can only be used on a single version with no range')
    134→  fail()
-   135→}
+      →…
    137→const fail = () => process.exit(1)
    139→const help = () => console.log(
    140→`SemVer ${version}
    141→
-   142→A JavaScript implementation of the https://semver.org/ specification
-   143→Copyright Isaac Z. Schlueter
-   144→
       →…
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -102,9 +145,6 @@ classes/comparator.js
      8→  }
      9→
     10→  constructor (comp, options) {
-    11→    options = parseOptions(options)
-    12→
-    13→    if (comp instanceof Comparator) {
     36→  parse (comp) {
     57→  toString () {
     61→  test (version) {
@@ -116,10 +156,6 @@ classes/range.js
      8→    options = parseOptions(options)
      9→
     10→    if (range instanceof Range) {
-    11→      if (
-    12→        range.loose === !!options.loose &&
-    13→        range.includePrerelease === !!options.includePrerelease
-    14→      ) {
     73→  get range () {
     92→  format () {
     96→  toString () {
@@ -148,10 +184,6 @@ classes/semver.js
     11→    options = parseOptions(options)
     12→
     13→    if (version instanceof SemVer) {
-    14→      if (version.loose === !!options.loose &&
-    15→        version.includePrerelease === !!options.includePrerelease) {
-    16→        return version
-    17→      } else {
     81→  format () {
     89→  toString () {
     93→  compare (other) {
@@ -159,79 +191,18 @@ classes/semver.js
    135→  comparePre (other) {
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
-functions/clean.js
-     4→const clean …
-functions/cmp.js
-    10→const cmp …
-functions/coerce.js
-     7→const coerce …
-functions/compare-build.js
-     4→const compareBuild …
-functions/compare-loose.js
-     4→const compareLoose …
-functions/compare.js
-     4→const compare …
-functions/diff.js
-     5→const diff …
-functions/eq.js
-     4→const eq …
-functions/gt.js
-     4→const gt …
-functions/gte.js
-     4→const gte …
-functions/inc.js
-     5→const inc …
-functions/lt.js
-     4→const lt …
-functions/lte.js
-     4→const lte …
-functions/major.js
-     4→const major …
-functions/minor.js
-     4→const minor …
-functions/neq.js
-     4→const neq …
-functions/parse.js
-     4→const parse …
-functions/patch.js
-     4→const patch …
-functions/prerelease.js
-     4→const prerelease …
-functions/rcompare.js
-     4→const rcompare …
-functions/rsort.js
-     4→const rsort …
-functions/satisfies.js
-     4→const satisfies …
-functions/sort.js
-     4→const sort …
-functions/valid.js
-     4→const valid …
 internal/constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
      7→const MAX_LENGTH = 256
      8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
-     9→/* istanbul ignore next */ 9007199254740991
     12→const MAX_SAFE_COMPONENT_LENGTH = 16
     16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
     18→const RELEASE_TYPES = [
-    19→  'major',
-    20→  'premajor',
-    21→  'minor',
-    22→  'preminor',
-      →…
 internal/debug.js
      3→const debug = (
-     4→  typeof process === 'object' &&
-     5→  process.env &&
-     6→  process.env.NODE_DEBUG &&
-     7→  /\bsemver\b/i.test(process.env.NODE_DEBUG)
-      →…
 internal/identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
-     5→  if (typeof a === 'number' && typeof b === 'number') {
-      →…
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 internal/lrucache.js
      3→class LRUCache {
@@ -259,13 +230,22 @@ internal/lrucache.js
     25→  set (key, value) {
     26→    const deleted = this.delete(key)
     27→
-      →…
+    28→    if (!deleted && value !== undefined) {
+    29→      // If cache is full, delete the least recently used item
+    30→      if (this.map.size >= this.max) {
+    31→        const firstKey = this.map.keys().next().value
+    32→        this.delete(firstKey)
+    33→      }
+    34→
+    35→      this.map.set(key, value)
+    36→    }
+    37→
+    38→    return this
+    39→  }
 internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
-     7→  if (!options) {
-      →…
 internal/re.js
     12→const re = exports.re = []
     13→const safeRe = exports.safeRe = []
@@ -274,16 +254,8 @@ internal/re.js
     16→const t = exports.t = {}
     19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
     27→const safeRegexReplacements = [
-    28→  ['\\s', 1],
-    29→  ['\\d', MAX_LENGTH],
-    30→  [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH],
-    31→]
     33→const makeSafeRegex = (value) => {
-    34→  for (const [token, max] of safeRegexReplacements) {
-      →…
     42→const createToken = (name, value, isGlobal) => {
-    43→  const safe = makeSafeRegex(value)
-      →…
 ranges/gtr.js
      5→const gtr …
 ranges/intersects.js

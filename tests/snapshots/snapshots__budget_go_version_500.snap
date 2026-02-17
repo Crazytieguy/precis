@@ -2,12 +2,34 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (467 words)
+budget: 500 (489 words)
 
+README.md
+     1→# Versioning Library for Go
+     2→
+     3→![Build Status](https://github.com/hashicorp/go-version/actions/workflows/go-tests.yml/badge.svg)
+      →…
+    13→## Installation and Usage
+    14→
+    15→Package documentation can be found on
+      →…
+    24→#### Version Parsing and Comparison
+    25→
+    26→```go
+      →…
+    37→#### Version Constraints
+    38→
+    39→```go
+      →…
+    49→#### Version Sorting
+    50→
+    51→```go
+      →…
+    63→## Issues and Contributing
+    64→
+    65→If you find an issue with this library, please report an issue. If you'd
+      →…
 constraint.go
-    14→var …
-    15→	constraintRegexp …
-    16→	constraintRegexpOnce …
     31→// Constraint represents a single constraint for a version, such as
     32→// ">= 1.0".
     33→type Constraint struct {
@@ -20,7 +42,6 @@ constraint.go
     44→// Constraints is a slice of constraints. We make a custom type so that
     45→// we can add methods to it.
     46→type Constraints []*Constraint
-    48→type constraintFunc …
     50→type constraintOperation struct {
     51→	op operator
     52→	f  constraintFunc
@@ -41,33 +62,21 @@ constraint.go
    230→//-------------------------------------------------------------------
    231→
    232→type operator rune
-   234→const …
-   235→	equal …
-   236→	notEqual …
-   237→	greaterThan …
-   238→	lessThan …
-   239→	greaterThanEqual …
-   240→	lessThanEqual …
-   241→	pessimistic …
 version.go
     15→// The compiled regular expression used to test the validity of a version.
     16→var (
     17→	versionRegexp     *regexp.Regexp
     18→	versionRegexpOnce sync.Once
-    19→	semverRegexp      *regexp.Regexp
-    20→	semverRegexpOnce  sync.Once
-    21→)
     37→// The raw regular expression string used for testing the validity
     38→// of a version.
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     41→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-?([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
-    42→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
-    43→		`?`
-    44→
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
-      →…
+    47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
+    48→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
+    49→		`?`
     52→// Version represents a single version.
     53→type Version struct {
     54→	metadata string

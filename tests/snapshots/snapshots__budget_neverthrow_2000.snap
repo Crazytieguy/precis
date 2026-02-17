@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2085 words)
+budget: 2000 (2065 words)
 
 CHANGELOG.md
      1→# neverthrow
@@ -11,75 +11,47 @@ CHANGELOG.md
      4→
      5→### Minor Changes
      6→
-     7→- [#615](https://github.com/supermacro/neverthrow/pull/615) [`85ed7fd`](https://github.com/supermacro/neverthrow/commit/85ed7fd3a1247e4c0e83bba13f5e874282243d75) Thanks [@konker](https://github.com/konker)! - Add orTee, which is the equivalent of andTee but for the error track.
-     8→
-     9→- [#584](https://github.com/supermacro/neverthrow/pull/584) [`acea44a`](https://github.com/supermacro/neverthrow/commit/acea44adb98dda2ca32fe4e882879461cc7cedc2) Thanks [@macksal](https://github.com/macksal)! - Allow ok/err/okAsync/errAsync to accept zero arguments when returning void
-    10→
+      →…
     11→## 8.1.1
     12→
     13→### Patch Changes
     14→
-    15→- [#600](https://github.com/supermacro/neverthrow/pull/600) [`3aee20a`](https://github.com/supermacro/neverthrow/commit/3aee20a1c429062d26f440fde32a3f26ef05533a) Thanks [@m-shaka](https://github.com/m-shaka)! - docs: updated README.md about `safeTry` and added @deprecated tag to safeUnwrap
-    16→
+      →…
     17→## 8.1.0
     18→
     19→### Minor Changes
     20→
-    21→- [#589](https://github.com/supermacro/neverthrow/pull/589) [`609b398`](https://github.com/supermacro/neverthrow/commit/609b398aa1fd258a1fede974707d54eb4c230f3c) Thanks [@dmmulroy](https://github.com/dmmulroy)! - safeTry should not require .safeUnwrap()
-    22→
+      →…
     23→## 8.0.0
     24→
     25→### Major Changes
     26→
-    27→- [#484](https://github.com/supermacro/neverthrow/pull/484) [`09faf35`](https://github.com/supermacro/neverthrow/commit/09faf35a5ce701ed55b13b82074da9e50050526d) Thanks [@braxtonhall](https://github.com/braxtonhall)! - Allow orElse method to change ok types.
-    28→  This makes the orElse types match the implementation.
-    29→
-    30→  This is a breaking change for the orElse type argument list,
-    31→  as the ok type must now be provided before the err type.
-    32→
-    33→  ```diff
-    34→  - result.orElse<ErrType>(foo)
-    35→  + result.orElse<OkType, ErrType>(foo)
-    36→  ```
-    37→
-    38→  This only applies if type arguments were
-    39→  explicitly provided at an orElse callsite.
-    40→  If the type arguments were inferred,
-    41→  no updates are needed during the upgrade.
-    42→
+      →…
     43→## 7.2.0
     44→
     45→### Minor Changes
     46→
-    47→- [#562](https://github.com/supermacro/neverthrow/pull/562) [`547352f`](https://github.com/supermacro/neverthrow/commit/547352f326206b2c5b403bde4ddc88825172f25c) Thanks [@sharno](https://github.com/sharno)! - change the return type of `safeTry` to be `ResultAsync<T, E>` instead of `Promise<Result<T, E>>` for better composability
-    48→
+      →…
     49→## 7.1.0
     50→
     51→### Minor Changes
     52→
-    53→- [#467](https://github.com/supermacro/neverthrow/pull/467) [`4b9d2fd`](https://github.com/supermacro/neverthrow/commit/4b9d2fdaf03223945068509f948b57194732aa03) Thanks [@untidy-hair
-    54→  ](https://github.com/untidy-hair)! - feat: add `andTee` and `andThrough` to handle side-effect
-    55→
+      →…
     56→### Patch Changes
     57→
+    58→- [#483](https://github.com/supermacro/neverthrow/pull/483) [`96f7f66`](https://github.com/supermacro/neverthrow/commit/96f7f669ac83be705a389d47ed804e9d44a13932) Thanks [@braxtonhall](https://github.com/braxtonhall)! - Fix `combineWithAllErrors` types
+    59→
       →…
     62→## 7.0.1
     63→
     64→### Patch Changes
     65→
-    66→- [#527](https://github.com/supermacro/neverthrow/pull/527) [`2e1f198`](https://github.com/supermacro/neverthrow/commit/2e1f19899800ce5e1164412c6a693cf2f1c40b20) Thanks [@3846masa](https://github.com/3846masa)! - fix: change type definitions to make inferring types of safeTry more strict
-    67→
-    68→- [#497](https://github.com/supermacro/neverthrow/pull/497) [`e06203e`](https://github.com/supermacro/neverthrow/commit/e06203e90b2b64edaa42707cbca8383c9f4765e8) Thanks [@braxtonhall](https://github.com/braxtonhall)! - enhance type inferrence of `match`
-    69→
+      →…
     70→## 7.0.0
     71→
     72→### Major Changes
     73→
-    74→- [#553](https://github.com/supermacro/neverthrow/pull/553) [`5a3af0a`](https://github.com/supermacro/neverthrow/commit/5a3af0a55d0c440dfd50bfbbe021c6e4b973184b) Thanks [@m-shaka](https://github.com/m-shaka)! - Declare the minimum supported Node.js version
-    75→
-    76→  `Neverthrow` does not depend on any Node.js version-specific features, so it should work with any version of Node.js that supports ES6 and other runtimes like Browser, Deno, etc.
-    77→
-    78→  However, for the sake of maintaining a consistent development environment, we should declare the minimum supported version of Node.js in the `engines` field of the `package.json` file.
+      →…
 README.md
      1→# NeverThrow 🙅
      2→
@@ -413,6 +385,8 @@ src/result-async.ts
     35→
     36→  static fromPromise<T, E>(promise: PromiseLike<T>, errorFn: (e: unknown) => E): ResultAsync<T, E>
     37→  static fromPromise<T, E>(promise: Promise<T>, errorFn: (e: unknown) => E): ResultAsync<T, E> {
+    38→    const newPromise = promise
+    39→      .then((value: T) => new Ok<T, E>(value))
     46→  static fromThrowable …
     69→  static combine …
     81→  static combineWithAllErrors …
@@ -426,6 +400,8 @@ src/result-async.ts
    202→  match …
    206→  unwrapOr …
    210→  /**
+   211→   * @deprecated will be removed in 9.0.0.
+   212→   *
       →…
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
    227→  then …
@@ -487,39 +463,61 @@ src/result.ts
    147→  isErr(): this is Err<T, E>
    148→
    149→  /**
+   150→   * Maps a `Result<T, E>` to `Result<U, E>`
+   151→   * by applying a function to a contained `Ok` value, leaving an `Err` value
       →…
    157→  map<A>(f: (t: T) => A): Result<A, E>
    159→  /**
+   160→   * Maps a `Result<T, E>` to `Result<T, F>` by applying a function to a
+   161→   * contained `Err` value, leaving an `Ok` value untouched.
       →…
    168→  mapErr<U>(f: (e: E) => U): Result<T, U>
    183→  andThen …
    185→  /**
+   186→   * This "tee"s the current value to an passed-in computation such as side
+   187→   * effect functions but still returns the same current value as the result.
       →…
    195→  andTee(f: (t: T) => unknown): Result<T, E>
    197→  /**
+   198→   * This "tee"s the current `Err` value to an passed-in computation such as side
+   199→   * effect functions but still returns the same `Err` value as the result.
       →…
    207→  orTee(f: (t: E) => unknown): Result<T, E>
    219→  andThrough …
    233→  orElse …
    235→  /**
+   236→   * Similar to `map` Except you must return a new `Result`.
+   237→   *
       →…
    244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
    246→  /**
+   247→   * Maps a `Result<T, E>` to `ResultAsync<U, E>`
+   248→   * by applying an async function to a contained `Ok` value, leaving an `Err`
       →…
    253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
    255→  /**
+   256→   * Unwrap the `Ok` value, or return the default if there is an `Err`
+   257→   *
       →…
    260→  unwrapOr<A>(v: A): T | A
    262→  /**
+   263→   *
+   264→   * Given 2 functions (one for the `Ok` variant and one for the `Err` variant)
       →…
    276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
    278→  /**
+   279→   * @deprecated will be removed in 9.0.0.
+   280→   *
       →…
    290→  safeUnwrap(): Generator<Err<never, E>, T>
    292→  /**
+   293→   * **This method is unsafe, and should only be used in a test environments**
+   294→   *
       →…
    299→  _unsafeUnwrap(config?: ErrorConfig): T
    301→  /**
+   302→   * **This method is unsafe, and should only be used in a test environments**
+   303→   *
       →…
    309→  _unsafeUnwrapErr(config?: ErrorConfig): E
    312→export class Ok<T, E> implements IResult<T, E> {
@@ -538,7 +536,8 @@ src/result.ts
    325→  }
    326→
    327→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-   328→  mapErr …
+   328→  mapErr<U>(_f: (e: E) => U): Result<T, U> {
+   329→    return ok(this.value)
    337→  andThen …
    344→  andThrough …
    348→  andTee …
@@ -568,7 +567,8 @@ src/result.ts
    432→    return err(this.error)
    433→  }
    434→
-   435→  mapErr …
+   435→  mapErr<U>(f: (e: E) => U): Result<T, U> {
+   436→    return err(f(this.error))
    439→  andThrough …
    443→  andTee …
    447→  orTee …

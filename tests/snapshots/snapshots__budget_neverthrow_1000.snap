@@ -2,62 +2,56 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1041 words)
+budget: 1000 (1098 words)
 
 CHANGELOG.md
      3→## 8.2.0
      4→
      5→### Minor Changes
      6→
-     7→- [#615](https://github.com/supermacro/neverthrow/pull/615) [`85ed7fd`](https://github.com/supermacro/neverthrow/commit/85ed7fd3a1247e4c0e83bba13f5e874282243d75) Thanks [@konker](https://github.com/konker)! - Add orTee, which is the equivalent of andTee but for the error track.
-     8→
-     9→- [#584](https://github.com/supermacro/neverthrow/pull/584) [`acea44a`](https://github.com/supermacro/neverthrow/commit/acea44adb98dda2ca32fe4e882879461cc7cedc2) Thanks [@macksal](https://github.com/macksal)! - Allow ok/err/okAsync/errAsync to accept zero arguments when returning void
-    10→
+      →…
     13→### Patch Changes
     14→
-    15→- [#600](https://github.com/supermacro/neverthrow/pull/600) [`3aee20a`](https://github.com/supermacro/neverthrow/commit/3aee20a1c429062d26f440fde32a3f26ef05533a) Thanks [@m-shaka](https://github.com/m-shaka)! - docs: updated README.md about `safeTry` and added @deprecated tag to safeUnwrap
-    16→
+      →…
     19→### Minor Changes
     20→
-    21→- [#589](https://github.com/supermacro/neverthrow/pull/589) [`609b398`](https://github.com/supermacro/neverthrow/commit/609b398aa1fd258a1fede974707d54eb4c230f3c) Thanks [@dmmulroy](https://github.com/dmmulroy)! - safeTry should not require .safeUnwrap()
-    22→
+      →…
     25→### Major Changes
     26→
-    27→- [#484](https://github.com/supermacro/neverthrow/pull/484) [`09faf35`](https://github.com/supermacro/neverthrow/commit/09faf35a5ce701ed55b13b82074da9e50050526d) Thanks [@braxtonhall](https://github.com/braxtonhall)! - Allow orElse method to change ok types.
-    28→  This makes the orElse types match the implementation.
-    29→
-    30→  This is a breaking change for the orElse type argument list,
-    31→  as the ok type must now be provided before the err type.
-    32→
-    33→  ```diff
-    34→  - result.orElse<ErrType>(foo)
-    35→  + result.orElse<OkType, ErrType>(foo)
-    36→  ```
-    37→
       →…
     45→### Minor Changes
     46→
-    47→- [#562](https://github.com/supermacro/neverthrow/pull/562) [`547352f`](https://github.com/supermacro/neverthrow/commit/547352f326206b2c5b403bde4ddc88825172f25c) Thanks [@sharno](https://github.com/sharno)! - change the return type of `safeTry` to be `ResultAsync<T, E>` instead of `Promise<Result<T, E>>` for better composability
-    48→
+      →…
     51→### Minor Changes
     52→
-    53→- [#467](https://github.com/supermacro/neverthrow/pull/467) [`4b9d2fd`](https://github.com/supermacro/neverthrow/commit/4b9d2fdaf03223945068509f948b57194732aa03) Thanks [@untidy-hair
-    54→  ](https://github.com/untidy-hair)! - feat: add `andTee` and `andThrough` to handle side-effect
-    55→
+      →…
     64→### Patch Changes
     65→
-    66→- [#527](https://github.com/supermacro/neverthrow/pull/527) [`2e1f198`](https://github.com/supermacro/neverthrow/commit/2e1f19899800ce5e1164412c6a693cf2f1c40b20) Thanks [@3846masa](https://github.com/3846masa)! - fix: change type definitions to make inferring types of safeTry more strict
-    67→
-    68→- [#497](https://github.com/supermacro/neverthrow/pull/497) [`e06203e`](https://github.com/supermacro/neverthrow/commit/e06203e90b2b64edaa42707cbca8383c9f4765e8) Thanks [@braxtonhall](https://github.com/braxtonhall)! - enhance type inferrence of `match`
-    69→
+      →…
     72→### Major Changes
     73→
-    74→- [#553](https://github.com/supermacro/neverthrow/pull/553) [`5a3af0a`](https://github.com/supermacro/neverthrow/commit/5a3af0a55d0c440dfd50bfbbe021c6e4b973184b) Thanks [@m-shaka](https://github.com/m-shaka)! - Declare the minimum supported Node.js version
-    75→
-    76→  `Neverthrow` does not depend on any Node.js version-specific features, so it should work with any version of Node.js that supports ES6 and other runtimes like Browser, Deno, etc.
-    77→
-    78→  However, for the sake of maintaining a consistent development environment, we should declare the minimum supported version of Node.js in the `engines` field of the `package.json` file.
+      →…
 README.md
+     1→# NeverThrow 🙅
+     2→
+      →…
+     5→## Description
+     6→
+      →…
+    19→## Table Of Contents
+    20→
+      →…
+    73→## Installation
+    74→
+      →…
+    79→## Recommended: Use `eslint-plugin-neverthrow`
+    80→
+      →…
+   100→## Top-Level API
+   101→
+      →…
+   139→## API Documentation
+   140→
    141→### Synchronous API (`Result`)
    142→
    143→#### `ok`
@@ -73,7 +67,77 @@ README.md
    153→**Example:**
    154→
    155→```typescript
+   156→import { ok } from 'neverthrow'
+   157→
+   158→const myResult = ok({ myData: 'test' }) // instance of `Ok`
+   159→
+   160→myResult.isOk() // true
+   161→myResult.isErr() // false
+   162→```
+   163→
+   164→[⬆️  Back to top](#toc)
+   165→
+   166→---
+   167→
+   168→#### `err`
+   169→
       →…
+   193→#### `Result.isOk` (method)
+   194→
+      →…
+   207→#### `Result.isErr` (method)
+   208→
+      →…
+   221→#### `Result.map` (method)
+   222→
+      →…
+   259→#### `Result.mapErr` (method)
+   260→
+      →…
+   297→#### `Result.unwrapOr` (method)
+   298→
+      →…
+   323→#### `Result.andThen` (method)
+   324→
+      →…
+   384→#### `Result.asyncAndThen` (method)
+   385→
+      →…
+   404→#### `Result.orElse` (method)
+   405→
+      →…
+   445→#### `Result.match` (method)
+   446→
+      →…
+   514→#### `Result.asyncMap` (method)
+   515→
+      →…
+   551→#### `Result.andTee` (method)
+   552→
+      →…
+   598→#### `Result.orTee` (method)
+   599→
+      →…
+   645→#### `Result.andThrough` (method)
+   646→
+      →…
+   692→#### `Result.asyncAndThrough` (method)
+   693→
+      →…
+   728→#### `Result.fromThrowable` (static class method)
+   729→
+      →…
+   761→#### `Result.combine` (static class method)
+   762→
+      →…
+   814→#### `Result.combineWithAllErrors` (static class method)
+   815→
+      →…
+   852→#### `Result.safeUnwrap()`
+   853→
+      →…
+   863→### Asynchronous API (`ResultAsync`)
+   864→
    865→#### `okAsync`
    866→
    867→Constructs an `Ok` variant of `ResultAsync`
@@ -87,7 +151,70 @@ README.md
    875→**Example:**
    876→
    877→```typescript
+   878→import { okAsync } from 'neverthrow'
+   879→
+   880→const myResultAsync = okAsync({ myData: 'test' }) // instance of `ResultAsync`
+   881→
+   882→const myResult = await myResultAsync // instance of `Ok`
+   883→
+   884→myResult.isOk() // true
+   885→myResult.isErr() // false
+   886→```
+   887→
+   888→[⬆️  Back to top](#toc)
+   889→
+   890→---
+   891→
+   892→#### `errAsync`
+   893→
       →…
+   919→#### `ResultAsync.fromThrowable` (static class method)
+   920→
+      →…
+   960→#### `ResultAsync.fromPromise` (static class method)
+   961→
+      →…
+   996→#### `ResultAsync.fromSafePromise` (static class method)
+   997→
+      →…
+  1041→#### `ResultAsync.map` (method)
+  1042→
+      →…
+  1087→#### `ResultAsync.mapErr` (method)
+  1088→
+      →…
+  1142→#### `ResultAsync.unwrapOr` (method)
+  1143→
+      →…
+  1166→#### `ResultAsync.andThen` (method)
+  1167→
+      →…
+  1223→#### `ResultAsync.orElse` (method)
+  1224→
+      →…
+  1241→#### `ResultAsync.match` (method)
+  1242→
+      →…
+  1283→#### `ResultAsync.andTee` (method)
+  1284→
+      →…
+  1330→#### `ResultAsync.orTee` (method)
+  1331→
+      →…
+  1377→#### `ResultAsync.andThrough` (method)
+  1378→
+      →…
+  1425→#### `ResultAsync.combine` (static class method)
+  1426→
+      →…
+  1475→#### `ResultAsync.combineWithAllErrors` (static class method)
+  1476→
+      →…
+  1509→#### `ResultAsync.safeUnwrap()`
+  1510→
+      →…
+  1519→### Utilities
+  1520→
   1521→#### `fromThrowable`
   1522→
   1523→Top level export of `Result.fromThrowable`.
@@ -95,6 +222,27 @@ README.md
   1525→
   1526→[⬆️  Back to top](#toc)
   1527→
+  1528→#### `fromAsyncThrowable`
+  1529→
+      →…
+  1535→#### `fromPromise`
+  1536→
+      →…
+  1542→#### `fromSafePromise`
+  1543→
+      →…
+  1549→#### `safeTry`
+  1550→
+      →…
+  1633→### Testing
+  1634→
+      →…
+  1673→## A note on the Package Name
+  1674→
+      →…
+  1681→### License
+  1682→
+      →…
 src/_internals/error.ts
      3→export interface ErrorConfig {
      4→  withStackTrace: boolean
@@ -141,8 +289,6 @@ src/_internals/utils.ts
     38→  for (const result of resultList) {
     39→    if (result.isErr()) {
     40→      acc = err(result.error)
-    41→      break
-    42→    } else {
       →…
     54→export const combineResultAsyncList = <T, E>(
     55→  asyncResultList: readonly ResultAsync<T, E>[],
@@ -158,8 +304,6 @@ src/_internals/utils.ts
     69→  for (const result of resultList) {
     70→    if (result.isErr() && acc.isErr()) {
     71→      acc.error.push(result.error)
-    72→    } else if (result.isErr() && acc.isOk()) {
-    73→      acc = err([result.error])
       →…
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
     83→  asyncResultList: readonly ResultAsync<T, E>[],

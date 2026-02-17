@@ -2,14 +2,31 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (526 words)
+budget: 500 (513 words)
 
 CHANGELOG.md
      3→## 1.21.3
      4→
-     5→- Outline more initialization in `race`: [#284](https://github.com/matklad/once_cell/pull/284),
-     6→  [#285](https://github.com/matklad/once_cell/pull/285).
-     7→
+      →…
+README.md
+     8→# Overview
+     9→
+    10→`once_cell` provides two new cell-like types, `unsync::OnceCell` and `sync::OnceCell`. `OnceCell`
+    11→might store arbitrary non-`Copy` types, can be assigned to at most once and provide direct access
+    12→to the stored contents. In a nutshell, API looks *roughly* like this:
+    13→
+    14→```rust
+    15→impl OnceCell<T> {
+      →…
+    47→# Related crates
+    48→
+    49→* [double-checked-cell](https://github.com/niklasf/double-checked-cell)
+    50→* [lazy-init](https://crates.io/crates/lazy-init)
+    51→* [lazycell](https://crates.io/crates/lazycell)
+    52→* [mitochondria](https://crates.io/crates/mitochondria)
+    53→* [lazy_static](https://crates.io/crates/lazy_static)
+    54→* [async_once_cell](https://crates.io/crates/async_once_cell)
+      →…
 src/imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
@@ -29,7 +46,6 @@ src/imp_pl.rs
    123→    state: &'a AtomicU8,
    124→    new_state: u8,
    125→}
-   139→fn initialize_inner …
 src/imp_std.rs
     14→pub(crate) struct OnceCell<T> {
     15→    // This `queue` field is the core of the implementation. It encodes two
@@ -58,14 +74,7 @@ src/imp_std.rs
    146→    queue: &'a AtomicPtr<Waiter>,
    147→    new_queue: *mut Waiter,
    148→}
-   177→fn initialize_or_wait …
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
-   211→    let curr_state = strict::addr(curr_queue) & STATE_MASK;
-   212→    loop {
-   213→        let node = Waiter {
-   214→            thread: Cell::new(Some(thread::current())),
-   215→            signaled: AtomicBool::new(false),
-      →…
    245→mod strict {
    246→    #[must_use]
    247→    #[inline]
@@ -113,27 +122,19 @@ src/lib.rs
   1257→        init: Cell<Option<F>>,
   1258→    }
   1374→        type Target = T;
-  1408→    fn _dummy …
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
 src/race.rs
     43→pub struct OnceNonZeroUsize {
     44→    inner: AtomicUsize,
     45→}
-   150→    fn init …
-   160→    fn compare_exchange …
    167→pub struct OnceBool {
    168→    inner: OnceNonZeroUsize,
    169→}
-   221→    fn from_usize …
-   226→    fn to_usize …
    232→pub struct OnceRef<'a, T> {
    233→    inner: AtomicPtr<T>,
    234→    ghost: PhantomData<UnsafeCell<&'a T>>,
    235→}
-   311→    fn init …
-   320→    fn compare_exchange …
-   347→    fn _dummy …
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
@@ -145,8 +146,6 @@ src/race.rs
    362→        inner: AtomicPtr<T>,
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
-   462→        fn init …
-   497→    fn _dummy …
 xtask/src/main.rs
      8→fn main …
    116→fn push_toolchain …

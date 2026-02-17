@@ -2,27 +2,104 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2064 words)
+budget: 2000 (2068 words)
 
 ARCHITECTURE.md
      1→# Architecture
      2→
+     3→> Document is a work in progress!
+     4→
+     5→⌘K is born from a simple constraint: can you write a combobox with filtering and sorting using the [compound component](https://kentcdodds.com/blog/compound-components-with-react-hooks) approach? We didn't want to render items manually from an array:
+     6→
+     7→```tsx
+     8→// No
+     9→<>
+    10→  {items.map((item) => {
+    11→    return <div>{item}</div>
+    12→  })}
+    13→</>
+    14→```
+    15→
+    16→We didn't want to provide a render prop:
+    17→
+    18→```tsx
+    19→// No
+    20→onItemRender={({ item }) => {
+    21→  return <div>{item}</div>
+    22→}}
+    23→```
+    24→
+    25→Instead, we wanted to render components:
+    26→
+    27→```tsx
+    28→// Yes
+    29→<Item>My item</Item>
+    30→```
+    31→
+    32→Especially, we wanted full component composition:
+    33→
+    34→```tsx
+    35→// YES
+    36→<>
+    37→  <BlogItems />
+    38→  {staticItems}
+    39→</>
+    40→```
+    41→
       →…
     46→## Approach
     47→
-      →…
+    48→⌘K always keeps every item and group rendered in the React tree. Each item and group adds or removes itself from the DOM based on the search input. The DOM is authoritative. Item selection order is based on the DOM order, which is based on the React render order, which the consumer provides.
+    49→
     50→### Discarded approach
     51→
-      →…
+    52→We did not use `React.Children` iteration because it will not support component composition. There is no way to "peek inside" the items contained within `<BlogItems />`, so those items cannot be filtered.
+    53→
+    54→We did not use an object-based data array for each item, like `{ name: "Logout", action: () => logout() }` because this is strict and limiting. In reality, the interface of those objects grows with edge-cases, like `image`, `detailedSubTitle`, `hideWhenRootSearch`, etc. We prefer that you have full control of item rendering, including icons, keyboard shortcuts, and styling. Don't want an item shown? Don't render it. Only want to show an item under condition xyz? Render it.
+    55→
+    56→We did not use a render prop because they are an inelegant pattern and quickly fall to long, centralised if-else logic chains. For example, if you want a fancy sparkle rainbow item, you need a new if statement to render that item specially.
+    57→
+    58→The original approach for tracking which item was selected was to keep an index 0..n. But it's impossible to know which Item is in which position within the React tree when React Strict Mode is enabled, because `useEffect` runs twice and `useRef` cannot be used for stable IDs. <sup>This may be possible with `useId`, now.</sup> We created [use-descendants](https://github.com/pacocoursey/use-descendants) to track relative component indeces, but abandoned it because it could not work in Strict Mode, and will be incompatible with upcoming concurrent mode. Now, we track the selected item with its value, because it is stable across item mounts and unmounts.
+    59→
     60→## Example
     61→
-      →…
+    62→```tsx
+    63→<Input value="b" />
+    64→<List>
+    65→  <Item>A</Item>
+    66→  <Item>B</Item>
+    67→</List>
+    68→```
+    69→
+    70→The "A" item should not be shown! But we cannot remove it from the React tree, because the user controls it. In most cases, this is easy because the rendered items is sourced from a backing data array:
+    71→
+    72→```tsx
+    73→<>
+    74→  {['A', 'B'].map((item) => {
+    75→    if (matches(item, search)) {
+    76→      return <Item>{item}</Item>
+    77→    }
+    78→  })}
+    79→</>
+    80→```
+    81→
+    82→But in our case, the item will remain in the React tree and just be removed from the DOM:
+    83→
+    84→```tsx
+    85→<List>
+    86→  {/* returns `null`, no DOM created */}
+    87→  <Item>A</Item>
+    88→  <Item>B</Item>
+    89→</List>
+    90→```
+    91→
     92→## Performance
     93→
-      →…
+    94→This is more expensive memory wise, because if there are 2,000 items but the list is filtered to only 2 items, we still allocate memory for 2,000 instances of the Item component. But it's our only option! Thankfully we can still keep the DOM size to 2 items.
+    95→
     96→## Groups
     97→
-      →…
+    98→Item mount informs both the root and the parent group, which keeps track of items within it. Each group informs the root.
 README.md
      5→# ⌘K [![cmdk minzip package size](https://img.shields.io/bundlephobia/minzip/cmdk)](https://www.npmjs.com/package/cmdk?activeTab=code) [![cmdk package version](https://img.shields.io/npm/v/cmdk.svg?colorB=green)](https://www.npmjs.com/package/cmdk)
      6→
@@ -110,11 +187,6 @@ cmdk/src/command-score.ts
     67→    return PENALTY_NOT_COMPLETE
     68→  }
     69→
-    70→  var memoizeKey = `${stringIndex},${abbreviationIndex}`
-    71→  if (memoizedResults[memoizeKey] !== undefined) {
-    72→    return memoizedResults[memoizeKey]
-    73→  }
-    74→
       →…
    150→function formatInput(string) {
    151→  // convert all valid space characters to space so they match each other
@@ -152,11 +224,11 @@ cmdk/src/index.tsx
    158→const VALID_ITEM_SELECTOR …
    159→const SELECT_EVENT …
    160→const VALUE_ATTR …
-   161→const defaultFilter: CommandFilter = (value, search, keywords) => commandScore(value, search, keywords)
+   161→const defaultFilter …
    163→const CommandContext …
-   164→const useCommand = () => React.useContext(CommandContext)
+   164→const useCommand …
    165→const StoreContext …
-   166→const useStore = () => React.useContext(StoreContext)
+   166→const useStore …
    167→const GroupContext …
    169→const Command …
    659→/**
@@ -198,32 +270,18 @@ cmdk/src/index.tsx
    966→  while (sibling) {
    967→    if (sibling.matches(selector)) return sibling
    968→    sibling = sibling.nextElementSibling
-   969→  }
-   970→}
-   972→function findPreviousSibling(el: Element, selector: string) {
-   973→  let sibling = el.previousElementSibling
       →…
-   981→function useAsRef<T>(data: T) {
-   982→  const ref = React.useRef<T>(data)
-      →…
+   972→function findPreviousSibling …
+   981→function useAsRef …
    991→const useLayoutEffect …
-   993→function useLazyRef<T>(fn: () => T) {
-   994→  const ref = React.useRef<T>()
-      →…
+   993→function useLazyRef …
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1005→  const store = useStore()
   1006→  const cb = () => selector(store.snapshot())
   1007→  return React.useSyncExternalStore(store.subscribe, cb, cb)
   1008→}
-  1010→function useValue(
-  1011→  id: string,
-  1012→  ref: React.RefObject<HTMLElement>,
-  1013→  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
-  1014→  aliases: string[] = [],
-  1015→) {
-  1016→  const valueRef = React.useRef<string>()
-      →…
+  1010→function useValue …
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
   1047→  const [s, ss] = React.useState<object>()
@@ -231,23 +289,9 @@ cmdk/src/index.tsx
   1049→
   1050→  useLayoutEffect(() => {
   1051→    fns.current.forEach((f) => f())
-  1052→    fns.current = new Map()
-  1053→  }, [s])
-  1054→
-  1055→  return (id: string | number, cb: () => void) => {
-  1056→    fns.current.set(id, cb)
-  1057→    ss({})
-  1058→  }
-  1059→}
-  1061→function renderChildren(children: React.ReactElement) {
-  1062→  const childrenType = children.type as any
       →…
-  1071→function SlottableWithNestedChildren(
-  1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
-  1073→  render: (child: React.ReactNode) => JSX.Element,
-  1074→) {
-  1075→  if (asChild && React.isValidElement(children)) {
-      →…
+  1061→function renderChildren …
+  1071→function SlottableWithNestedChildren …
   1081→const srOnlyStyles …
 playwright.config.ts
      3→const config: PlaywrightTestConfig = {
@@ -261,14 +305,6 @@ playwright.config.ts
     11→  },
     12→  timeout: 5000,
     13→  webServer: {
-    14→    command: 'npm run dev',
-    15→    url: 'http://localhost:3000',
-    16→    cwd: './test',
-    17→    reuseExistingServer: !process.env.CI,
-    18→  },
-    19→  projects: [
-    20→    {
-    21→      name: 'webkit',
       →…
 website/README.md
      3→## Getting Started
@@ -306,37 +342,12 @@ website/components/cmdk/framer.tsx
      5→  const [value, setValue] = React.useState('Button')
      6→  return (
      7→    <div className="framer">
-     8→      <Command value={value} onValueChange={(v) => setValue(v)}>
-     9→        <div cmdk-framer-header="">
-    10→          <SearchIcon />
-    11→          <Command.Input autoFocus placeholder="Find components, packages, and interactions..." />
       →…
-    57→function Button() {
-    61→function Input() {
-    65→function Badge() {
-    69→function Radio() {
-    78→function Slider() {
-    86→function Avatar() {
-    90→function Container() {
-    94→function Item({ children, value, subtitle }: { children: React.ReactNode; value: string; subtitle: string }) {
-   106→function ButtonIcon() {
-   119→function InputIcon() {
-   132→function RadioIcon() {
-   145→function BadgeIcon() {
-   158→function ToggleIcon() {
-   171→function AvatarIcon() {
-   184→function ContainerIcon() {
-   197→function SearchIcon() {
-   212→function SliderIcon() {
 website/components/cmdk/linear.tsx
      3→export function LinearCMDK() {
      4→  return (
      5→    <div className="linear">
      6→      <Command>
-     7→        <div cmdk-linear-badge="">Issue - FUN-343</div>
-     8→        <Command.Input autoFocus placeholder="Type a command or search..." />
-     9→        <Command.List>
-    10→          <Command.Empty>No results found.</Command.Empty>
       →…
     30→const items = [
     31→  {
@@ -345,61 +356,19 @@ website/components/cmdk/linear.tsx
     34→    shortcut: ['A'],
     35→  },
     36→  {
-    37→    icon: <AssignToMeIcon />,
-    38→    label: 'Assign to me',
-    39→    shortcut: ['I'],
-    40→  },
-    41→  {
-    42→    icon: <ChangeStatusIcon />,
       →…
-    68→function AssignToIcon() {
-    76→function AssignToMeIcon() {
-    90→function ChangeStatusIcon() {
-   103→function ChangePriorityIcon() {
-   113→function ChangeLabelsIcon() {
-   125→function RemoveLabelIcon() {
-   137→function SetDueDateIcon() {
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
      8→  const { resolvedTheme: theme } = useTheme()
      9→  const [value, setValue] = React.useState('linear')
     10→  const inputRef = React.useRef<HTMLInputElement | null>(null)
-    11→  const listRef = React.useRef(null)
-    12→
-    13→  React.useEffect(() => {
-    14→    inputRef?.current?.focus()
       →…
-    97→function Item({
-   116→function SubCommand({
-   200→function SubItem({ children, shortcut }: { children: React.ReactNode; shortcut: string }) {
-   213→function TerminalIcon() {
-   231→function RaycastLightIcon() {
-   244→function RaycastDarkIcon() {
-   257→function WindowIcon() {
-   271→function FinderIcon() {
-   285→function StarIcon() {
-   299→function ClipboardIcon() {
-   315→function HammerIcon() {
 website/components/cmdk/vercel.tsx
      4→export function VercelCMDK() {
      5→  const ref = React.useRef<HTMLDivElement | null>(null)
      6→  const [inputValue, setInputValue] = React.useState('')
      7→
-     8→  const [pages, setPages] = React.useState<string[]>(['home'])
-     9→  const activePage = pages[pages.length - 1]
-    10→  const isHome = activePage === 'home'
-    11→
       →…
-    91→function Home({ searchProjects }: { searchProjects: Function }) {
-   137→function Projects() {
-   150→function Item({
-   173→function ProjectsIcon() {
-   194→function PlusIcon() {
-   213→function TeamsIcon() {
-   234→function CopyIcon() {
-   252→function DocsIcon() {
-   274→function FeedbackIcon() {
-   292→function ContactIcon() {
 website/components/code/index.tsx
      7→const theme = {
      8→  plain: {
@@ -410,11 +379,6 @@ website/components/code/index.tsx
     13→  styles: [
     14→    {
     15→      types: ['comment'],
-    16→      style: {
-    17→        color: 'var(--gray9)',
-    18→      },
-    19→    },
-    20→    {
       →…
     41→export function Code({ children }: { children: string }) {
     42→  return (
@@ -494,18 +458,6 @@ website/pages/_app.tsx
     22→        <meta name="twitter:card" content="summary_large_image" />
     23→      </Head>
     24→      <NextSeo
-    25→        title={`${description} — ${title}`}
-    26→        description={description}
-    27→        openGraph={{
-    28→          type: 'website',
-    29→          url: siteUrl,
-    30→          title,
-    31→          description: description + '.',
-    32→          images: [
-    33→            {
-    34→              url: `${siteUrl}/og.png`,
-    35→              alt: title,
-    36→            },
       →…
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
@@ -538,22 +490,8 @@ website/pages/index.tsx
     34→      <div className={styles.content}>
     35→        <div className={styles.meta}>
     36→          <div className={styles.info}>
-    37→            <VersionBadge />
-    38→            <h1>⌘K</h1>
-    39→            <p>Fast, composable, unstyled command menu for React.</p>
-    40→          </div>
-    41→
-    42→          <div className={styles.buttons}>
-    43→            <InstallButton />
-    44→            <GitHubButton />
-    45→          </div>
-    46→        </div>
-    47→
-    48→        <AnimatePresence exitBeforeEnter initial={false}>
       →…
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
-    85→  return (
-      →…
     99→//////////////////////////////////////////////////////////////////
    100→
    101→function InstallButton() {
@@ -562,20 +500,8 @@ website/pages/index.tsx
    104→  return (
    105→    <button
    106→      className={styles.installButton}
-   107→      onClick={async () => {
-   108→        try {
-   109→          await navigator.clipboard.writeText(`npm install cmdk`)
-   110→          setCopied(true)
-   111→          setTimeout(() => {
-   112→            setCopied(false)
-   113→          }, 2000)
-   114→        } catch (e) {}
-   115→      }}
-   116→    >
       →…
    123→function GitHubButton() {
-   124→  return (
-      →…
    137→//////////////////////////////////////////////////////////////////
    138→
    139→const themes = [
@@ -597,8 +523,6 @@ website/pages/index.tsx
    155→  },
    156→]
    158→function ThemeSwitcher() {
-   159→  const { theme, setTheme } = React.useContext(ThemeContext)
-      →…
    260→//////////////////////////////////////////////////////////////////
    261→
    262→function Codeblock() {
@@ -607,16 +531,6 @@ website/pages/index.tsx
    265→<Command.Dialog open={open} onOpenChange={setOpen}>
    266→  <Command.Input />
    267→
-   268→  <Command.List>
-   269→    {loading && <Command.Loading>Hang on…</Command.Loading>}
-   270→
-   271→    <Command.Empty>No results found.</Command.Empty>
-   272→
-   273→    <Command.Group heading="Fruits">
-   274→      <Command.Item>Apple</Command.Item>
-   275→      <Command.Item>Orange</Command.Item>
-   276→      <Command.Separator />
-   277→      <Command.Item>Pear</Command.Item>
       →…
    294→//////////////////////////////////////////////////////////////////
    295→
@@ -624,11 +538,5 @@ website/pages/index.tsx
    297→  return <span className={styles.versionBadge}>v{packageJSON.version}</span>
    298→}
    300→function Footer() {
-   301→  const ref = React.useRef<HTMLElement | null>(null)
-      →…
    326→function RaunoSignature() {
-   327→  return (
-      →…
    350→function PacoSignature() {
-   351→  return (
-      →…

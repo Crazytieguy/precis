@@ -2,16 +2,30 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1027 words)
+budget: 1000 (1068 words)
 
 README.md
      1→# Format
      2→
-      →…
+     3→In this section you will learn how to:
+     4→
+     5→- Structure your book correctly
+     6→- Format your `SUMMARY.md` file
+     7→- Configure your book using `book.toml`
+     8→- Customize your theme
 configuration/README.md
      1→# Configuration
      2→
-      →…
+     3→This section details the configuration options available in the ***book.toml***:
+     4→- **[General]** configuration including the `book`, `rust`, `build` sections
+     5→- **[Preprocessor]** configuration for default and custom book preprocessors
+     6→- **[Renderer]** configuration for the HTML, Markdown and custom renderers
+     7→- **[Environment Variable]** configuration for overriding configuration options in your environment
+     8→
+     9→[General]: general.md
+    10→[Preprocessor]: preprocessors.md
+    11→[Renderer]: renderers.md
+    12→[Environment Variable]: environment-variables.md
 configuration/environment-variables.md
      1→# Environment variables
      2→
@@ -95,9 +109,7 @@ example.rs
      1→fn main() {
      2→    println!("Hello World!");
      3→#
-     4→#     // You can even hide lines! :D
-     5→#     println!("I am hidden! Expand the code snippet to see me");
-     6→}
+      →…
 markdown.md
      1→# Markdown
      2→
@@ -283,78 +295,67 @@ theme/README.md
      3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
      4→render your markdown files and comes with a default theme included in the mdBook
      5→binary.
+     6→
+     7→The theme is totally customizable, you can selectively replace every file from
+     8→the theme by your own by adding a `theme` directory next to `src` folder in your
+     9→project root. Create a new file with the name of the file you want to override
+    10→and now that file will be used instead of the default file.
+    11→
+    12→Here are the files you can override:
+    13→
+    14→- **_index.hbs_** is the handlebars template.
+    15→- **_head.hbs_** is appended to the HTML `<head>` section.
+    16→- **_header.hbs_** content is appended on top of every book page.
+    17→- **_css/_** contains the CSS files for styling the book.
+    18→    - **_css/chrome.css_** is for UI elements.
+    19→    - **_css/general.css_** is the base styles.
+    20→    - **_css/print.css_** is the style for printer output.
+    21→    - **_css/variables.css_** contains variables used in other CSS files.
+    22→- **_book.js_** is mostly used to add client side functionality, like hiding /
+    23→  un-hiding the sidebar, changing the theme, ...
+    24→- **_highlight.js_** is the JavaScript that is used to highlight code snippets,
+    25→  you should not need to modify this.
+    26→- **_highlight.css_** is the theme used for the code highlighting.
+    27→- **_favicon.svg_** and **_favicon.png_** the favicon that will be used. The SVG
+    28→  version is used by [newer browsers].
+    29→- **fonts/fonts.css** contains the definition of which fonts to load.
       →…
 theme/editor.md
      1→# Editor
      2→
-     3→In addition to providing runnable code playgrounds, mdBook optionally allows them
-     4→to be editable. In order to enable editable code blocks, the following needs to
-     5→be added to the ***book.toml***:
       →…
     35→## Customizing the editor
     36→
-    37→By default, the editor is the [Ace](https://ace.c9.io/) editor, but, if desired,
-    38→the functionality may be overridden by providing a different folder:
-    39→
       →…
 theme/index-hbs.md
      1→# index.hbs
      2→
-     3→`index.hbs` is the handlebars template that is used to render the book. The
-     4→markdown files are processed to html and then injected in that template.
-     5→
       →…
      9→## Data
     10→
-    11→A lot of data is exposed to the handlebars template with the "context". In the
-    12→handlebars template you can access this information by using
-    13→
       →…
     41→## Handlebars helpers
     42→
-    43→In addition to the properties you can access, there are some handlebars helpers
-    44→at your disposal.
-    45→
+      →…
     46→### toc
     47→
-    48→The toc helper is used like this
-    49→
-    50→```handlebars
       →…
     80→### resource
     81→
-    82→The path to a static file.
-    83→It implicitly includes `path_to_root`,
-    84→and accounts for files that are renamed with a hash in their filename.
       →…
     90→### fa
     91→
-    92→mdBook includes a copy of [Font Awesome Free's](https://fontawesome.com)
-    93→MIT-licensed SVG files. It accepts three positional arguments:
-    94→
       →…
 theme/syntax-highlighting.md
      1→# Syntax highlighting
      2→
-     3→mdBook uses [Highlight.js](https://highlightjs.org) with a custom theme
-     4→for syntax highlighting.
-     5→
       →…
     17→## Supported languages
     18→
-    19→These languages are supported by default, but you can add more by supplying
-    20→your own `highlight.js` file:
-    21→
       →…
     68→## Custom theme
     69→Like the rest of the theme, the files used for syntax highlighting can be
-    70→overridden with your own.
-    71→
-    72→- ***highlight.js*** normally you shouldn't have to overwrite this file, unless
       →…
     82→## Improve default theme
     83→
-    84→If you think the default theme doesn't look quite right for a specific language,
-    85→or could be improved, feel free to [submit a new
-    86→issue](https://github.com/rust-lang/mdBook/issues) explaining what you
       →…

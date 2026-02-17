@@ -2,34 +2,47 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (525 words)
+budget: 500 (509 words)
 
-CHANGELOG.md
-     3→## [Unreleased] …
-     5→## [0.4.29] - 2025-12-02 …
-     7→## What's Changed …
-    19→## What's Changed …
-    37→### What's Changed …
-    49→### What's Changed …
-    58→### What's Changed …
-    66→### What's Changed …
-    74→### What's Changed …
-    98→### What's Changed …
-   118→### What's Changed …
-   211→### New …
-   226→### New …
-   241→### Fixed …
-   247→### Minimum Supported Rust Version …
-   264→### New …
-   270→### New …
-   284→### Improved …
-   290→### Improved …
-   297→### Improved …
-   303→### Improved …
-   309→### Improved …
-   319→### Fixed …
 README.md
-    27→### In libraries …
+     1→log
+     3→
+      →…
+    19→## Minimum supported `rustc`
+    20→
+      →…
+    25→## Usage
+    26→
+    27→### In libraries
+    28→
+    29→Libraries should link only to the `log` crate, and use the provided macros to
+    30→log whatever information will be useful to downstream consumers:
+    31→
+    32→```toml
+    33→[dependencies]
+    34→log = "0.4"
+    35→```
+    36→
+    37→```rust
+    38→use log::{info, trace, warn};
+    39→
+    40→pub fn shave_the_yak(yak: &mut Yak) {
+    41→    trace!("Commencing yak shaving");
+    42→
+    43→    loop {
+    44→        match find_a_razor() {
+    45→            Ok(razor) => {
+    46→                info!("Razor located: {razor}");
+    47→                yak.shave(razor);
+    48→                break;
+    49→            }
+      →…
+    58→### In executables
+    59→
+      →…
+   106→## Structured logging
+   107→
+      →…
 rfcs/0296-structured-logging.md
    502→### Don't break anything
    503→
@@ -59,19 +72,12 @@ src/kv/error.rs
     15→    Value(crate::kv::value::inner::Error),
     16→    Fmt,
     17→}
-    69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
 src/kv/key.rs
      7→pub trait ToKey {
     37→pub struct Key<'k> {
-    94→mod std_support {
-   113→mod sval_support {
-   136→mod serde_support {
 src/kv/mod.rs
-   246→mod error;
    247→mod key;
-   250→mod source;
-   252→mod value;
    259→#[cfg(feature = "kv_unstable")]
    260→pub mod source;
    261→#[cfg(feature = "kv_unstable")]
@@ -81,7 +87,6 @@ src/kv/source.rs
     91→fn get_default …
    114→fn count_default …
    235→pub trait VisitSource<'kvs> {
-   280→mod std_support {
 src/kv/value.rs
     11→pub trait ToValue {
    119→pub struct Value<'v> {
@@ -89,7 +94,6 @@ src/kv/value.rs
    288→macro_rules! impl_to_value_primitive {
    312→macro_rules! impl_to_value_nonzero_primitive {
    336→macro_rules! impl_value_to_primitive {
-   390→mod std_support {
    462→pub trait VisitValue<'v> {
    601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {

@@ -2,16 +2,32 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (498 words)
+budget: 500 (518 words)
 
 CHANGELOG.md
     21→### Fixed
     22→
-    23→* CLI: Ensure `find_dotenv` work reliably on python 3.13 by [@theskumar] in [#563](https://github.com/theskumar/python-dotenv/pull/563)
-    24→* CLI: revert the use of execvpe on Windows by [@wrongontheinternet] in [#566](https://github.com/theskumar/python-dotenv/pull/566)
-    25→
-    26→
+      →…
+CONTRIBUTING.md
+     1→Contributing
+     3→
+     4→All the contributions are welcome! Please open [an
+     5→issue](https://github.com/theskumar/python-dotenv/issues/new) or send us
+     6→a pull request.
+     7→
+     8→Executing the tests:
+     9→
+    10→    $ uv venv
+      →…
 README.md
+     1→# python-dotenv
+     2→
+      →…
+    22→## Getting Started
+    23→
+      →…
+    78→## Other Use Cases
+    79→
     80→### Load configuration without altering the environment
     81→
     82→The function `dotenv_values` works more or less the same way as `load_dotenv`,
@@ -37,6 +53,36 @@ README.md
    102→}
    103→```
    104→
+   105→### Parse configuration as a stream
+   106→
+      →…
+   120→### Load .env files in IPython
+   121→
+      →…
+   141→### Disable load_dotenv
+   142→
+      →…
+   147→## Command-line Interface
+   148→
+      →…
+   169→## File format
+   170→
+      →…
+   185→### Multiline values
+   186→
+      →…
+   199→### Variable without a value
+   200→
+      →…
+   214→### Variable expansion
+   215→
+      →…
+   234→## Related Projects
+   235→
+      →…
+   246→## Acknowledgements
+   247→
+      →…
 docs/reference.md
      1→# ::: dotenv
      2→
@@ -48,31 +94,26 @@ src/dotenv/__init__.py
     46→    "get_key",
     47→    "set_key",
     48→    "unset_key",
-    49→    "find_dotenv",
-    50→    "load_ipython_extension",
-    51→]
+      →…
 src/dotenv/cli.py
     60→@click.version_option(version=__version__)
     61→@click.pass_context
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
-    63→    """This script is used to set, get or unset values from a .env file."""
     67→@contextmanager
     68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
     69→    """
-    70→    Open a file and yield the corresponding (decoded) stream.
       →…
    112→@cli.command(name="set")
    113→@click.pass_context
-   114→@click.argument("key", required=True)
       →…
    116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
    128→@cli.command()
    129→@click.pass_context
-   130→@click.argument("key", required=True)
+      →…
    131→def get(ctx: click.Context, key: Any) -> None:
    145→@cli.command()
    146→@click.pass_context
-   147→@click.argument("key", required=True)
+      →…
    148→def unset(ctx: click.Context, key: Any) -> None:
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
@@ -121,8 +162,6 @@ src/dotenv/main.py
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
-    66→            with open(self.dotenv_path, encoding=self.encoding) as stream:
-    67→                yield stream
       →…
    141→@contextmanager
    142→def rewrite(
@@ -149,12 +188,7 @@ src/dotenv/variables.py
      7→    \$\{
      8→        (?P<name>[^\}:]*)
      9→        (?::-
-    10→            (?P<default>[^\}]*)
-    11→        )?
-    12→    \}
-    13→    """,
-    14→    re.VERBOSE,
-    15→)
+      →…
     18→class Atom(metaclass=ABCMeta):
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...

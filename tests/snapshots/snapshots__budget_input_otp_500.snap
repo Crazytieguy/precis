@@ -2,14 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (528 words)
+budget: 500 (532 words)
 
 CHANGELOG.md
      3→## [1.4.2]
      4→
-     5→- chore(input): remove unintentional log within internal pasteListener
-     6→
+      →…
 README.md
+     1→# The only accessible & unstyled & full featured Input OTP component in the Web.
+     2→
      3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
      4→
      5→<h3 align="center">Hero Sponsors 🎖️</h3>
@@ -27,10 +28,39 @@ README.md
     17→
     18→https://github.com/guilhermerodz/input-otp/assets/10366880/753751f5-eda8-4145-a4b9-7ef51ca5e453
     19→
+    20→## Usage
+    21→
+      →…
+    39→## Default example
+    40→
+      →…
+   136→## How it works
+   137→
+      →…
+   141→## Features
+   142→
+      →…
+   198→### Auto tracks if the input has space in the right side for the badge
+   199→
+      →…
+   204→## API Reference
+   205→
    206→### OTPInput
    207→
    208→The root container. Define settings for the input via props. Then, use the `render` prop to create the slots.
    209→
+   210→#### Props
+   211→
+      →…
+   293→## Examples
+   294→
+      →…
+   377→## Caveats
+   378→
+      →…
+   539→#### Sponsors
+   540→
+      →…
 apps/storybook/README.md
     13→## 🚅 Quick start
     14→
@@ -59,14 +89,10 @@ apps/storybook/src/stories/Button.tsx
      7→ */
      8→export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
 apps/storybook/src/stories/InputOTP.stories.tsx
-     4→const meta …
-    27→type Story …
     29→export const Default: Story = {}
 apps/storybook/tailwind.config.js
      1→/** @type {import('tailwindcss').Config} */
      2→const config = {
-     3→  darkMode: ['class'],
-      →…
 apps/website/README.md
      3→## Getting Started
      4→
@@ -85,14 +111,6 @@ apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
      9→export default function ExampleAutoSubmit() {
 apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
      3→export async function formAction(formData: FormData) {
-apps/website/src/app/(local-pages)/example-playground/code.tsx
-    99→export function ExampleCode() {
-apps/website/src/app/(local-pages)/example-playground/component.tsx
-     8→export function ExampleComponent(
-     9→  props: Partial<Omit<React.ComponentProps<typeof OTPInput>, 'children'>>,
-    10→) {
-apps/website/src/app/(local-pages)/example-playground/page.tsx
-     3→export default function ExamplePlayground() {
 apps/website/src/app/(local-pages)/layout.tsx
      7→export default function RootLayout({
      8→  children,
@@ -105,12 +123,10 @@ apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     13→export default function ShadcnPage() {
 apps/website/src/app/(local-pages)/shadcn/static/page.tsx
      5→export default async function StaticPage(pageProps: any) {
-     6→  return (
-      →…
 apps/website/src/app/(pages)/(home)/_components/confetti.tsx
      3→export function Confetti({
 apps/website/src/app/(pages)/(home)/_components/showcase.tsx
-    10→const DynamicConfetti = dynamic(() =>
+    10→const DynamicConfetti …
     14→export function Showcase({ className, ...props }: { className?: string }) {
    151→function Slot(props: {
    199→function FakeCaret() {
@@ -120,8 +136,6 @@ apps/website/src/app/(pages)/(home)/page.tsx
    148→export const revalidate = 3600
 apps/website/src/app/(pages)/layout.tsx
     14→export const metadata: Metadata = {
-    15→  title: {
-      →…
     68→export default function RootLayout({
     69→  children,
       →…
@@ -140,14 +154,10 @@ apps/website/src/components/ui/button.tsx
       →…
 apps/website/src/config/site.ts
      1→export const siteConfig = {
-     2→  name: 'rodz/input-otp',
-      →…
     13→export type SiteConfig = typeof siteConfig
 apps/website/src/lib/fonts.ts
     10→export const fontSans = GeistSans
     12→export const fontMono = FontMono({
-    13→  subsets: ['latin'],
-      →…
 apps/website/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
@@ -167,11 +177,9 @@ packages/input-otp/src/sync-timeouts.ts
 packages/input-otp/src/types.ts
      1→export interface SlotProps {
      2→  isActive: boolean
-     3→  char: string | null
       →…
      7→export interface RenderProps {
      8→  slots: SlotProps[]
-     9→  isFocused: boolean
       →…
     12→type OverrideProps …
     13→type OTPInputBaseProps …
@@ -183,5 +191,4 @@ packages/input-otp/src/use-pwm-badge.tsx
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,
-    18→  pushPasswordManagerStrategy,
       →…

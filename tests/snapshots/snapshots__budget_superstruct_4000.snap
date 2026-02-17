@@ -2,160 +2,111 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3745 words)
+budget: 4000 (3773 words)
 
 Changelog.md
-     1→# Changelog
-     2→
-      →…
-     5→### `2.0.0` - July 3, 2024
-     6→
-      →…
-    11→#### Breaking
-    12→
-      →…
-    16→#### New
-    17→
-      →…
-    20→#### Fixed
-    21→
-      →…
-    24→#### Deprecations
-    25→
-      →…
-    28→#### New Maintainers & Next Steps
-    29→
-      →…
-    38→### `1.0.0` — November 17, 2022
-    39→
     40→###### NEW
     41→
       →…
-    49→### BREAKING
-    50→
-      →…
-    53→### `0.16.0` — June 6, 2022
-    54→
     55→###### BREAKING
     56→
       →…
-    59→### `0.15.0` — March 25, 2021
-    60→
     61→###### FIXED
     62→
       →…
-    67→### `0.14.0` — January 26, 2021
-    68→
     69→###### BREAKING
     70→
       →…
-    75→### `0.13.0` — December 11, 2020
-    76→
     77→###### NEW
     78→
       →…
-    85→###### BREAKING
-    86→
-      →…
-    93→### `0.12.0` — November 24, 2020
-    94→
     95→###### NEW
     96→
       →…
-   111→###### BREAKING
-   112→
-      →…
-   127→### `0.11.0` — November 20, 2020
-   128→
    129→###### NEW
    130→
       →…
-   176→###### BREAKING
-   177→
-      →…
-   242→### `0.10.0` — June 6, 2020
-   243→
-      →…
-   248→###### BREAKING
-   249→
-      →…
-   392→### `0.8.0` — October 8, 2019
-   393→
    394→###### BREAKING
    395→
       →…
-   434→###### NEW
-   435→
-      →…
-   444→### `0.7.0` — September 21, 2019
-   445→
    446→###### BREAKING
    447→
       →…
-   452→### `0.6.0` — September 13, 2018
-   453→
    454→###### BREAKING
    455→
       →…
-   460→### `0.5.0` — December 21, 2017
-   461→
    462→###### BREAKING
    463→
       →…
-   468→###### NEW
-   469→
-      →…
-   474→### `0.4.0` — December 1, 2017
-   475→
    476→###### BREAKING
    477→
       →…
-   482→###### NEW
-   483→
-      →…
-   488→### `0.3.0` — November 30, 2017
-   489→
    490→###### BREAKING
    491→
       →…
-   498→### `0.2.0` — November 30, 2017
-   499→
    500→###### BREAKING
    501→
       →…
-   504→###### NEW
-   505→
-      →…
-   510→### `0.1.0` — November 29, 2017
-   511→
    512→###### BREAKING
    513→
-      →…
-   518→### `0.0.0` — November 24, 2017
-   519→
       →…
 Readme.md
     42→### Usage
     43→
+    44→Superstruct allows you to define the shape of data you want to validate:
+    45→
+    46→```js
+    47→import { assert, object, number, string, array } from 'superstruct'
+    48→
+    49→const Article = object({
       →…
    145→### Why?
    146→
+   147→There are lots of existing validation libraries—[`joi`](https://github.com/hapijs/joi), [`express-validator`](https://github.com/ctavan/express-validator), [`validator.js`](https://github.com/chriso/validator.js), [`yup`](https://github.com/jquense/yup), [`ajv`](https://github.com/epoberezkin/ajv), [`is-my-json-valid`](https://github.com/mafintosh/is-my-json-valid)... But they exhibit many issues that lead to your codebase becoming hard to maintain...
+   148→
+   149→- **They don't expose detailed errors.** Many validators simply return string-only errors or booleans without any details as to why, making it difficult to customize the errors to be helpful for end-users.
+   150→
+   151→- **They make custom types hard.** Many validators ship with built-in types like emails, URLs, UUIDs, etc. with no way to know what they check for, and complicated APIs for defining new types.
+   152→
       →…
    167→### Principles
    168→
+   169→1. **Customizable types.** Superstruct's power is in making it easy to define an entire set of custom data types that are specific to your application, and defined in a _single_ place, so you have full control over your requirements.
+   170→
+   171→2. **Unopinionated defaults.** Superstruct ships with native JavaScript types, and everything else is customizable, so you never have to fight to override decisions made by "core" that differ from your application's needs.
+   172→
+   173→3. **Composable interfaces.** Superstruct interfaces are composable, so you can break down commonly-repeated pieces of data into components, and compose them to build up the more complex objects.
+   174→
       →…
    181→### Demo
    182→
-      →…
+   183→Try out the [live demo on CodeSandbox](https://codesandbox.io/s/bold-water-s2cr8d?file=/index.js) to get an idea for how the API works, or to quickly verify your use case:
+   184→
+   185→[![Demo screenshot.](./docs/images/demo-screenshot.png)](https://codesandbox.io/s/bold-water-s2cr8d?file=/index.js)
+   186→
+   187→<br/>
+   188→
    189→### Examples
    190→
+   191→Superstruct's API is very flexible, allowing it to be used for a variety of use cases on your servers and in the browser. Here are a few examples of common patterns...
+   192→
+   193→- [Basic Validation](./examples/basic-validation.js)
+   194→- [Custom Types](./examples/custom-types.js)
+   195→- [Default Values](./examples/default-values.js)
+   196→- [Optional Values](./examples/optional-values.js)
       →…
    205→### Documentation
    206→
+   207→Read the getting started guide to familiarize yourself with how Superstruct works. After that, check out the full API reference for more detailed information about structs, types and errors...
+   208→
+   209→- [**Guide**](https://docs.superstructjs.org/guides/01-getting-started)
+   210→  - [Getting Started](https://docs.superstructjs.org/guides/01-getting-started)
+   211→  - [Validating Data](https://docs.superstructjs.org/guides/02-validating-data)
+   212→  - [Coercing Data](https://docs.superstructjs.org/guides/03-coercing-data)
       →…
    231→### License
    232→
-      →…
+   233→This package is [MIT-licensed](./License.md).
 docs/guides/01-getting-started.md
      1→# Getting Started
      2→
@@ -317,6 +268,38 @@ docs/readme.md
     61→}
     62→```
     63→
+    64→Superstruct can also handle coercion of your data before validating it, for example to mix in default values:
+    65→
+    66→```ts
+    67→import { create, object, number, string, defaulted } from 'superstruct'
+    68→
+    69→const User = object({
+    70→  id: defaulted(number(), () => 1),
+    71→  name: string(),
+    72→})
+    73→
+    74→const data = {
+    75→  name: 'Jane',
+    76→}
+    77→
+    78→// You can apply the defaults to your data while validating.
+    79→const user = create(data, User)
+    80→// {
+    81→//   id: 1,
+    82→//   name: 'Jane',
+    83→// }
+    84→```
+    85→
+    86→And if you use TypeScript, Superstruct automatically ensures that your data has proper typings whenever you validate it:
+    87→
+    88→```ts
+    89→import { is, object, number, string } from 'superstruct'
+    90→
+    91→const User = object({
+    92→  id: number(),
+    93→  name: string()
+    94→})
+    95→
       →…
 docs/reference/coercions.md
      1→# Coercions
@@ -500,8 +483,7 @@ docs/reference/typescript.md
     20→})
     21→```
     22→
-    23→> 🤖 There are limitations to what `Describe` can do, specifically it will always assume object types are as strict as possible. So describing the `type()` struct is not possible, and simple unions of strings will be required to use `enums()`.
-    24→
+      →…
     25→### `Infer`
     26→
       →…
@@ -746,8 +728,7 @@ src/struct.ts
    129→
    130→  if (result[0]) {
    131→    throw result[0]
-   132→  }
-   133→}
+      →…
    135→/**
    136→ * Create a value with the coercion logic of struct and validate it.
    137→ */
@@ -761,10 +742,7 @@ src/struct.ts
    145→
    146→  if (result[0]) {
    147→    throw result[0]
-   148→  } else {
-   149→    return result[1]
-   150→  }
-   151→}
+      →…
    153→/**
    154→ * Mask a value, returning only the subset of properties defined by a struct.
    155→ */
@@ -778,10 +756,7 @@ src/struct.ts
    163→
    164→  if (result[0]) {
    165→    throw result[0]
-   166→  } else {
-   167→    return result[1]
-   168→  }
-   169→}
+      →…
    171→/**
    172→ * Check if a value passes a struct.
    173→ */
@@ -803,25 +778,7 @@ src/struct.ts
    190→    mask?: boolean
    191→    message?: string
    192→  } = {}
-   193→): [StructError, undefined] | [undefined, T] {
-   194→  const tuples = run(value, struct, options)
-   195→  const tuple = shiftIterator(tuples)!
-   196→
-   197→  if (tuple[0]) {
-   198→    const error = new StructError(tuple[0], function* () {
-   199→      for (const t of tuples) {
-   200→        if (t[0]) {
-   201→          yield t[0]
-   202→        }
-   203→      }
-   204→    })
-   205→
-   206→    return [error, undefined]
-   207→  } else {
-   208→    const v = tuple[1]
-   209→    return [undefined, v]
-   210→  }
-   211→}
+      →…
    213→/**
       →…
    221→export type Context = {
@@ -953,9 +910,7 @@ src/utils.ts
     34→    return false
     35→  }
     36→
-    37→  const prototype = Object.getPrototypeOf(x)
-    38→  return prototype === null || prototype === Object.prototype
-    39→}
+      →…
     41→/**
     42→ * Return a value as a printable string.
     43→ */
@@ -965,8 +920,7 @@ src/utils.ts
     47→    return value.toString()
     48→  }
     49→
-    50→  return typeof value === 'string' ? JSON.stringify(value) : `${value}`
-    51→}
+      →…
     53→/**
     54→ * Shifts (removes and returns) the first value from the `input` iterator.
     55→ * Like `Array.prototype.shift()` but for an `Iterator`.
@@ -990,30 +944,7 @@ src/utils.ts
     74→    return
     75→  } else if (result === false) {
     76→    result = {}
-    77→  } else if (typeof result === 'string') {
-    78→    result = { message: result }
-    79→  }
-    80→
-    81→  const { path, branch } = context
-    82→  const { type } = struct
-    83→  const {
-    84→    refinement,
-    85→    message = `Expected a value of type \`${type}\`${
-    86→      refinement ? ` with refinement \`${refinement}\`` : ''
-    87→    }, but received: \`${print(value)}\``,
-    88→  } = result
-    89→
-    90→  return {
-    91→    value,
-    92→    type,
-    93→    refinement,
-    94→    key: path[path.length - 1],
-    95→    path,
-    96→    branch,
-    97→    ...result,
-    98→    message,
-    99→  }
-   100→}
+      →…
    198→/**
       →…
    202→export type UnionToIntersection<U> = (

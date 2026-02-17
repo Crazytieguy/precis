@@ -2,11 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1017 words)
+budget: 1000 (1023 words)
 
 readme.md
     87→### ky(input, options?)
     88→
+    89→The `input` and `options` are the same as [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch), with additional `options` available (see below).
+    90→
       →…
    123→### ky.post(input, options?)
    124→### ky.put(input, options?)
@@ -14,16 +16,23 @@ readme.md
    126→### ky.head(input, options?)
    127→### ky.delete(input, options?)
    128→
+   129→Sets `options.method` to the method name and makes a request.
+   130→
       →…
   1052→### Sending form data
   1053→
+  1054→Sending form data in Ky is identical to `fetch`. Just pass a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to the `body` option. The `Content-Type` header will be automatically set to `multipart/form-data`, overriding any existing `Content-Type` header.
+  1055→
       →…
   1158→#### Native proxy support
   1159→
+  1160→Node.js 24.5+ supports automatic proxy configuration via environment variables. Set `NODE_USE_ENV_PROXY=1` or use the `--use-env-proxy` CLI flag.
+  1161→
       →…
   1294→#### How do I use this in Node.js?
   1295→
-      →…
+  1296→Node.js 18 and later supports `fetch` natively, so you can just use this package directly.
+  1297→
 source/core/Ky.ts
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {
@@ -33,7 +42,6 @@ source/core/Ky.ts
     38→			if (typeof ky.#options.timeout === 'number' && ky.#options.timeout > maxSafeTimeout) {
     39→				throw new RangeError(`The \`timeout\` option cannot be greater than ${maxSafeTimeout}`);
     40→			}
-    41→
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
@@ -70,16 +78,6 @@ source/core/constants.ts
    163→const api = ky.extend({
    164→	hooks: {
    165→		afterResponse: [
-   166→			async (request, options, response) => {
-   167→				// Retry based on response body content
-   168→				if (response.status === 200) {
-   169→					const data = await response.clone().json();
-   170→
-   171→					// Simple retry with default delay
-   172→					if (data.error?.code === 'TEMPORARY_ERROR') {
-   173→						return ky.retry();
-   174→					}
-   175→
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys …
@@ -194,9 +192,7 @@ source/utils/body.ts
     90→export const streamResponse …
    119→export const streamRequest …
 source/utils/delay.ts
-     5→export type DelayOptions = {
-     6→	signal?: InternalOptions['signal'];
-     7→};
+     5→export type DelayOptions …
      9→export default async function delay …
 source/utils/is.ts
      2→export const isObject …
@@ -219,10 +215,7 @@ source/utils/options.ts
      4→export const findUnknownOptions …
     30→export const hasSearchParameters …
 source/utils/timeout.ts
-     3→export type TimeoutOptions = {
-     4→	timeout: number;
-     5→	fetch: typeof fetch;
-     6→};
+     3→export type TimeoutOptions …
      9→export default async function timeout …
 source/utils/type-guards.ts
      5→/**
@@ -246,9 +239,5 @@ source/utils/type-guards.ts
       →…
     98→export function isForceRetryError(error: unknown): error is ForceRetryError {
 source/utils/types.ts
-     1→export type Mutable<T> = {
-     2→	-readonly[P in keyof T]: T[P]
-     3→};
-     5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
-     6→	? Array<[string, U]>
-     7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
+     1→export type Mutable …
+     5→export type ObjectEntries …

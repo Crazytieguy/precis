@@ -2,34 +2,54 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1051 words)
+budget: 1000 (1033 words)
 
-CHANGELOG.md
-     3→## [Unreleased] …
-     5→## [0.4.29] - 2025-12-02 …
-     7→## What's Changed …
-    19→## What's Changed …
-    37→### What's Changed …
-    49→### What's Changed …
-    58→### What's Changed …
-    66→### What's Changed …
-    74→### What's Changed …
-    98→### What's Changed …
-   118→### What's Changed …
-   211→### New …
-   226→### New …
-   241→### Fixed …
-   247→### Minimum Supported Rust Version …
-   264→### New …
-   270→### New …
-   284→### Improved …
-   290→### Improved …
-   297→### Improved …
-   303→### Improved …
-   309→### Improved …
-   319→### Fixed …
 README.md
-    27→### In libraries …
+     1→log
+     3→
+      →…
+    19→## Minimum supported `rustc`
+    20→
+      →…
+    25→## Usage
+    26→
+    27→### In libraries
+    28→
+    29→Libraries should link only to the `log` crate, and use the provided macros to
+    30→log whatever information will be useful to downstream consumers:
+    31→
+    32→```toml
+    33→[dependencies]
+    34→log = "0.4"
+    35→```
+    36→
+    37→```rust
+    38→use log::{info, trace, warn};
+    39→
+    40→pub fn shave_the_yak(yak: &mut Yak) {
+    41→    trace!("Commencing yak shaving");
+    42→
+    43→    loop {
+    44→        match find_a_razor() {
+    45→            Ok(razor) => {
+    46→                info!("Razor located: {razor}");
+    47→                yak.shave(razor);
+    48→                break;
+    49→            }
+    50→            Err(err) => {
+    51→                warn!("Unable to locate a razor: {err}, retrying");
+    52→            }
+    53→        }
+    54→    }
+    55→}
+    56→```
+    57→
+    58→### In executables
+    59→
+      →…
+   106→## Structured logging
+   107→
+      →…
 rfcs/0296-structured-logging.md
    502→### Don't break anything
    503→
@@ -109,7 +129,6 @@ src/kv/source.rs
    114→fn count_default …
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
-   240→#[allow(clippy::needless_lifetimes)] // Not needless.
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    242→where
    243→    T: VisitSource<'kvs> + ?Sized,
@@ -122,11 +141,8 @@ src/kv/value.rs
    120→    inner: inner::Inner<'v>,
       →…
    204→    fn from_inner …
-   234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
-   244→#[cfg(feature = "kv_sval")]
    245→impl<'v> sval::Value for Value<'v> {
-   251→#[cfg(feature = "kv_sval")]
    252→impl<'v> sval_ref::ValueRef<'v> for Value<'v> {
    288→macro_rules! impl_to_value_primitive {
    312→macro_rules! impl_to_value_nonzero_primitive {
@@ -134,7 +150,6 @@ src/kv/value.rs
    390→mod std_support {
    462→pub trait VisitValue<'v> {
    463→    /// Visit a `Value`.
-   538→#[allow(clippy::needless_lifetimes)] // Not needless.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
    541→    T: VisitValue<'v>,
@@ -163,12 +178,10 @@ src/lib.rs
    421→struct AtomicUsize {
    422→    v: Cell<usize>,
    423→}
-   425→#[cfg(not(target_has_atomic = "ptr"))]
    426→impl AtomicUsize {
    427→    const fn new …
    431→    fn load …
    435→    fn store …
-   442→#[cfg(not(target_has_atomic = "ptr"))]
    443→unsafe impl Sync for AtomicUsize {}
    447→static mut LOGGER …
    449→static STATE …
@@ -210,7 +223,6 @@ src/lib.rs
    856→#[cfg(feature = "kv")]
    857→#[derive(Clone)]
    858→struct KeyValues<'a>(&'a dyn kv::Source);
-   860→#[cfg(feature = "kv")]
    861→impl<'a> fmt::Debug for KeyValues<'a> {
   1003→pub struct RecordBuilder<'a> {
   1004→    record: Record<'a>,
@@ -228,12 +240,10 @@ src/lib.rs
   1252→    ///
   1282→/// A dummy initial value for LOGGER.
   1283→struct NopLogger;
-  1310→#[cfg(feature = "std")]
   1311→impl<T> Log for std::boxed::Box<T>
   1312→where
   1313→    T: ?Sized + Log,
   1314→{
-  1327→#[cfg(feature = "std")]
   1328→impl<T> Log for std::sync::Arc<T>
   1329→where
   1330→    T: ?Sized + Log,
@@ -246,10 +256,8 @@ src/lib.rs
   1487→    match STATE.compare_exchange(
       →…
   1549→pub struct SetLoggerError(());
-  1558→#[cfg(feature = "std")]
   1559→impl error::Error for SetLoggerError {}
   1566→pub struct ParseLevelError(());
-  1575→#[cfg(feature = "std")]
   1576→impl error::Error for ParseLevelError {}
   1599→#[doc(hidden)]
   1600→pub mod __private_api;
@@ -266,7 +274,6 @@ src/lib.rs
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
   1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
   1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
-  1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
       →…
 test_max_level_features/main.rs
      6→#[cfg(not(feature = "std"))]

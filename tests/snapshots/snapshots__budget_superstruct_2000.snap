@@ -2,137 +2,53 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2040 words)
+budget: 2000 (2024 words)
 
 Changelog.md
-     1→# Changelog
-     2→
-      →…
-     5→### `2.0.0` - July 3, 2024
-     6→
-      →…
-    11→#### Breaking
-    12→
-      →…
-    16→#### New
-    17→
-      →…
-    20→#### Fixed
-    21→
-      →…
-    24→#### Deprecations
-    25→
-      →…
-    28→#### New Maintainers & Next Steps
-    29→
-      →…
-    38→### `1.0.0` — November 17, 2022
-    39→
     40→###### NEW
     41→
       →…
-    49→### BREAKING
-    50→
-      →…
-    53→### `0.16.0` — June 6, 2022
-    54→
     55→###### BREAKING
     56→
       →…
-    59→### `0.15.0` — March 25, 2021
-    60→
     61→###### FIXED
     62→
       →…
-    67→### `0.14.0` — January 26, 2021
-    68→
     69→###### BREAKING
     70→
       →…
-    75→### `0.13.0` — December 11, 2020
-    76→
     77→###### NEW
     78→
       →…
-    85→###### BREAKING
-    86→
-      →…
-    93→### `0.12.0` — November 24, 2020
-    94→
     95→###### NEW
     96→
       →…
-   111→###### BREAKING
-   112→
-      →…
-   127→### `0.11.0` — November 20, 2020
-   128→
    129→###### NEW
    130→
       →…
-   176→###### BREAKING
-   177→
-      →…
-   242→### `0.10.0` — June 6, 2020
-   243→
-      →…
-   248→###### BREAKING
-   249→
-      →…
-   392→### `0.8.0` — October 8, 2019
-   393→
    394→###### BREAKING
    395→
       →…
-   434→###### NEW
-   435→
-      →…
-   444→### `0.7.0` — September 21, 2019
-   445→
    446→###### BREAKING
    447→
       →…
-   452→### `0.6.0` — September 13, 2018
-   453→
    454→###### BREAKING
    455→
       →…
-   460→### `0.5.0` — December 21, 2017
-   461→
    462→###### BREAKING
    463→
       →…
-   468→###### NEW
-   469→
-      →…
-   474→### `0.4.0` — December 1, 2017
-   475→
    476→###### BREAKING
    477→
       →…
-   482→###### NEW
-   483→
-      →…
-   488→### `0.3.0` — November 30, 2017
-   489→
    490→###### BREAKING
    491→
       →…
-   498→### `0.2.0` — November 30, 2017
-   499→
    500→###### BREAKING
    501→
       →…
-   504→###### NEW
-   505→
-      →…
-   510→### `0.1.0` — November 29, 2017
-   511→
    512→###### BREAKING
    513→
-      →…
-   518→### `0.0.0` — November 24, 2017
-   519→
       →…
 Readme.md
     42→### Usage
@@ -286,6 +202,32 @@ docs/readme.md
     30→}
     31→
     32→assert(data, Article)
+    33→// This will throw an error when the data is invalid.
+    34→// If you'd rather not throw, you can use `is()` or `validate()`.
+    35→```
+    36→
+    37→Superstruct ships with validators for all the common JavaScript data types, and you can define custom ones too:
+    38→
+    39→```js
+    40→import { is, define, object, string } from 'superstruct'
+    41→import isUuid from 'is-uuid'
+    42→import isEmail from 'is-email'
+    43→
+    44→const Email = define('Email', isEmail)
+    45→const Uuid = define('Uuid', isUuid.v4)
+    46→
+    47→const User = object({
+    48→  id: Uuid,
+    49→  email: Email,
+    50→  name: string(),
+    51→})
+    52→
+    53→const data = {
+    54→  id: 'c8d63140-a1f7-45e0-bfc6-df72973fea86',
+    55→  email: 'jane@example.com',
+    56→  name: 'Jane',
+    57→}
+    58→
       →…
 docs/reference/core.md
      3→### `assert`
@@ -296,7 +238,10 @@ docs/reference/core.md
      8→assert(value, User, 'The user is invalid!')
      9→```
     10→
-      →…
+    11→Assert that `value` is valid according to a `struct`. If the value is invalid a [`StructError`](./errors.md#structerror) will be thrown (the optional `message` parameter allows you to override error's message).
+    12→
+    13→> 🤖 When using TypeScript `assert` acts as an [assertion function](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#assertion-functions), so you can ensure that after calling it the type of the `value` matches the shape of the struct.
+    14→
 docs/reference/typescript.md
      7→### `Describe`
      8→
@@ -306,6 +251,14 @@ docs/reference/typescript.md
     12→type User = {
     13→  id: number
     14→  name: string
+    15→}
+    16→
+    17→const User: Describe<User> = object({
+    18→  id: string(), // This mistake will fail to pass type checking!
+    19→  name: string(),
+    20→})
+    21→```
+    22→
       →…
 docs/resources/faq.md
      1→# FAQ
@@ -544,11 +497,7 @@ src/structs/refinements.ts
      8→export function empty …
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
     22→  if (value instanceof Map || value instanceof Set) {
-    23→    return value.size
-    24→  } else {
-    25→    return value.length
-    26→  }
-    27→}
+      →…
     33→export function max …
     55→export function min …
     77→export function nonempty …

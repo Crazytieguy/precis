@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (542 words)
+budget: 500 (535 words)
 
 README.md
     28→## Features
@@ -28,30 +28,30 @@ README.md
 site/README.md
      3→## Getting Started
      4→
+     5→First, run the development server:
+     6→
       →…
     17→## Learn More
     18→
+    19→To learn more about Next.js, take a look at the following resources:
+    20→
       →…
     26→## Deploy on Vercel
     27→
+    28→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    29→
       →…
 site/components/code.tsx
      8→const theme: PrismTheme = {
      9→  plain: {
       →…
    104→export const Code: React.FC<{
-   105→  snippet: string;
-      →…
 site/components/docs-layout.tsx
      8→const TableItem: React.FC<{
     19→const TableHeader: React.FC<{
     27→export default function DocsLayout({ meta, children }) {
-    28→  return (
-      →…
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
-     2→  onClick: () => void;
-      →…
 site/components/sections/footer.tsx
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
 site/components/sections/splitbee-counter.tsx
@@ -87,6 +87,7 @@ site/next.config.mjs
     24→  async rewrites() {
     25→    return [
     26→      {
+    27→        source: '/bee.js',
       →…
 site/pages/_app.tsx
     12→const components = {
@@ -151,20 +152,11 @@ src/components/toaster.tsx
       →…
 src/core/store.ts
      8→interface ToasterSettings {
-     9→  toastLimit: number;
-    10→}
     12→export enum ActionType {
     13→  ADD_TOAST,
-    14→  UPDATE_TOAST,
       →…
     52→interface ToasterState {
-    53→  toasts: Toast[];
-    54→  settings: ToasterSettings;
-    55→  pausedAt: number | undefined;
-    56→}
     58→interface State {
-    59→  [toasterId: string]: ToasterState;
-    60→}
     62→export const reducer …
    136→const listeners …
    140→const defaultToasterState …
@@ -182,21 +174,17 @@ src/core/toast.ts
 src/core/types.ts
     14→export interface IconTheme {
     15→  primary: string;
-    16→  secondary: string;
       →…
     24→const isFunction …
     29→export const resolveValue …
     34→export interface Toast {
     35→  type: ToastType;
-    36→  id: string;
       →…
     80→export interface ToasterProps {
     81→  position?: ToastPosition;
-    82→  toastOptions?: DefaultToastOptions;
       →…
     91→export interface ToastWrapperProps {
     92→  id: string;
-    93→  className?: string;
       →…
 src/core/use-toaster.ts
      8→export const useToaster …

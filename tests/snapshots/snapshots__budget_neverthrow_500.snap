@@ -2,47 +2,50 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (559 words)
+budget: 500 (539 words)
 
-CHANGELOG.md
-     3→## 8.2.0
-     4→
-     5→### Minor Changes
-     6→
-      →…
-    13→### Patch Changes
-    14→
-      →…
-    19→### Minor Changes
-    20→
-      →…
-    25→### Major Changes
-    26→
-      →…
-    45→### Minor Changes
-    46→
-      →…
-    51→### Minor Changes
-    52→
-      →…
-    64→### Patch Changes
-    65→
-      →…
-    72→### Major Changes
-    73→
-      →…
 README.md
    141→### Synchronous API (`Result`)
    142→
    143→#### `ok`
    144→
+   145→Constructs an `Ok` variant of `Result`
+   146→
+   147→**Signature:**
+   148→
+   149→```typescript
+   150→ok<T, E>(value: T): Ok<T, E> { ... }
+   151→```
+   152→
+   153→**Example:**
+   154→
+   155→```typescript
+   156→import { ok } from 'neverthrow'
+   157→
       →…
    865→#### `okAsync`
    866→
+   867→Constructs an `Ok` variant of `ResultAsync`
+   868→
+   869→**Signature:**
+   870→
+   871→```typescript
+   872→okAsync<T, E>(value: T): ResultAsync<T, E>
+   873→```
+   874→
+   875→**Example:**
+   876→
+   877→```typescript
+   878→import { okAsync } from 'neverthrow'
+   879→
       →…
   1521→#### `fromThrowable`
   1522→
-      →…
+  1523→Top level export of `Result.fromThrowable`.
+  1524→Please find documentation at [Result.fromThrowable](#resultfromthrowable-static-class-method)
+  1525→
+  1526→[⬆️  Back to top](#toc)
+  1527→
 src/_internals/error.ts
      3→export interface ErrorConfig {
      4→  withStackTrace: boolean
@@ -54,9 +57,6 @@ src/_internals/error.ts
     12→  data:
     13→    | {
     14→        type: string
-    15→        value: T
-    16→      }
-    17→    | {
       →…
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
@@ -104,18 +104,12 @@ src/result-async.ts
    262→export const fromAsyncThrowable …
    265→export type CombineResultAsyncs …
    272→export type CombineResultsWithAllErrorsArrayAsync …
-   279→type UnwrapAsync …
-   300→type TraverseAsync …
-   330→type TraverseWithAllErrorsAsync …
-   338→type Writable …
 src/result.ts
     14→export namespace Result {
     15→  /**
     62→export type Result …
    134→interface IResult<T, E> {
    135→  /**
-   136→   * Used to check if a `Result` is an `OK`
-   137→   *
       →…
    140→  isOk(): this is Ok<T, E>
    142→  /**
@@ -161,17 +155,12 @@ src/result.ts
    420→  constructor(readonly error: E) {}
    421→
    523→export const fromThrowable …
-   530→type Prev …
-   590→type CollectResults …
    614→export type Transpose …
    635→export type Combine …
    645→export type Dedup …
    652→export type MemberListOf …
    669→export type EmptyArrayToNever …
-   680→type UnknownMembersToNever …
    685→export type MembersToUnion …
    688→export type IsLiteralArray …
-   698→type Traverse …
-   704→type TraverseWithAllErrors …
    712→export type CombineResults …
    719→export type CombineResultsWithAllErrorsArray …

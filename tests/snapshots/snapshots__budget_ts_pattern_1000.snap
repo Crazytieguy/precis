@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1096 words)
+budget: 1000 (1087 words)
 
 README.md
    417→### `match`
@@ -23,7 +23,15 @@ README.md
    864→const input = 'hello';
    865→
    866→const output = match(input)
-      →…
+   867→  .with(P._, () => 'It will always match')
+   868→  // OR
+   869→  .with(P.any, () => 'It will always match')
+   870→  .otherwise(() => 'This string will never be used');
+   871→
+   872→console.log(output);
+   873→// => 'It will always match'
+   874→```
+   875→
   1623→### `P.infer`
   1624→
   1625→`P.infer<typeof somePattern>` lets you infer a type of value from a type of pattern.
@@ -34,6 +42,24 @@ README.md
   1630→const postPattern = {
   1631→  title: P.string,
   1632→  content: P.string,
+  1633→  stars: P.number.between(1, 5).optional(),
+  1634→  author: {
+  1635→    firstName: P.string,
+  1636→    lastName: P.string.optional(),
+  1637→    followerCount: P.number,
+  1638→  },
+  1639→} as const;
+  1640→
+  1641→type Post = P.infer<typeof postPattern>;
+  1642→
+  1643→// posts: Post[]
+  1644→const posts = await fetch(someUrl)
+  1645→  .then((res) => res.json())
+  1646→  .then((res: unknown): Post[] =>
+  1647→    isMatching({ data: P.array(postPattern) }, res) ? res.data : []
+  1648→  );
+  1649→```
+  1650→
       →…
 docs/v3-to-v4-migration-guide.md
      3→## Breaking changes
@@ -79,11 +105,7 @@ src/errors.ts
 src/internals/helpers.ts
     12→export const isObject …
     16→export const isMatcher …
-    24→const isOptionalPattern = (
-    25→  x: unknown
-    26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
-    27→  return isMatcher(x) && x[symbols.matcher]().matcherType === 'optional';
-    28→};
+    24→const isOptionalPattern …
     32→export const matchPattern …
    120→export const getSelectionKeys …
    132→export const flatMap …
@@ -92,10 +114,6 @@ src/internals/symbols.ts
      2→ * Symbols used internally within ts-pattern to construct and discriminate
      3→ * Guard, Not, and Select, and AnonymousSelect patterns
      4→ *
-     5→ * Symbols have the advantage of not appearing in auto-complete suggestions in
-     6→ * user defined patterns, and eliminate the risk of property
-     7→ * overlap between ts-pattern internals and user defined patterns.
-     8→ *
       →…
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
     17→export type matcher = typeof matcher;
@@ -110,9 +128,7 @@ src/internals/symbols.ts
 src/is-matching.ts
      6→/**
      7→ * This constraint allows using additional properties
-     8→ * in object patterns. See "should allow targetting unknown properties"
-     9→ * unit test in `is-matching.test.ts`.
-    10→ */
+      →…
     11→type PatternConstraint<T> = T extends readonly any[]
     12→  ? P.Pattern<T>
     13→  : T extends object
@@ -120,8 +136,6 @@ src/is-matching.ts
     15→  : P.Pattern<T>;
     53→export function isMatching …
 src/match.ts
-     7→type MatchState …
-    11→const unmatched …
     16→/**
       →…
     32→export function match<const input, output = symbols.unset>(
@@ -171,13 +185,6 @@ src/patterns.ts
    190→    ? UnknownValuePattern
    191→    : Pattern<input>
    192→>(pattern: pattern): Chainable<OptionalP<input, pattern>, 'optional'> {
-   217→type UnwrapArray …
-   219→type UnwrapSet …
-   221→type UnwrapMapKey …
-   223→type UnwrapMapValue …
-   225→type UnwrapRecordKey …
-   227→type UnwrapRecordValue …
-   229→type WithDefault …
    246→export function array …
    299→export function set …
    362→export function map …
@@ -202,7 +209,6 @@ src/patterns.ts
    614→>(pattern: pattern): Chainable<NotP<input, pattern>> {
    646→export function when …
    696→export function select …
-   766→type AnyConstructor …
    773→/**
       →…
    782→export const any: UnknownPattern = chainable(when(isUnknown));

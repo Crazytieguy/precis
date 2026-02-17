@@ -2,78 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2076 words)
+budget: 2000 (2034 words)
 
 CHANGELOG.md
-     1→# Changelog
-     2→
      3→## [1.4.2]
      4→
      5→- chore(input): remove unintentional log within internal pasteListener
      6→
-     7→## [1.4.1]
-     8→
-      →…
-    11→## [1.4.0]
-    12→
-      →…
-    25→## [1.2.5]
-    26→
-      →…
-    29→## [1.2.4]
-    30→
-      →…
-    33→## [1.2.3]
-    34→
-      →…
-    38→## [1.2.2]
-    39→
-      →…
-    42→## [1.2.1]
-    43→
-      →…
-    48→## [1.2.0]
-    49→
-      →…
-    52→## [1.2.0-beta.1]
-    53→
-      →…
-    56→## [1.2.0-beta.0]
-    57→
-      →…
-    61→## [1.1.0]
-    62→
-      →…
-    87→## [1.0.1]
-    88→
-      →…
-    92→## [1.0.0]
-    93→
-      →…
-    96→## [0.3.31-beta]
-    97→
-      →…
-   100→## [0.3.3-beta]
-   101→
-      →…
-   104→## [0.3.2-beta]
-   105→
-      →…
-   108→## [0.3.11-beta]
-   109→
-      →…
-   112→## [0.3.1-beta]
-   113→
-      →…
-   116→## [0.2.4]
-   117→
-      →…
-   120→## [0.2.1]
-   121→
-      →…
-   124→## [0.2]
-   125→
-      →…
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web.
      2→
@@ -96,19 +31,42 @@ README.md
     19→
     20→## Usage
     21→
+    22→```bash
+    23→npm install input-otp
+    24→```
+    25→
+    26→Then import the component.
+    27→
       →…
     39→## Default example
     40→
+    41→The example below uses `tailwindcss` `@shadcn/ui` `tailwind-merge` `clsx`:
+    42→
+    43→```tsx
+    44→'use client'
+    45→import { OTPInput, SlotProps } from 'input-otp'
+    46→<OTPInput
       →…
    136→## How it works
    137→
-      →…
+   138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
+   139→This library works by rendering an invisible input as a sibling of the slots, contained by a `relative`ly positioned parent (the container root called _OTPInput_).
+   140→
    141→## Features
    142→
+   143→This is the most complete OTP input on the web. It's fully featured 
+   144→
+   145→<details>
+   146→<summary>Supports iOS + Android copy-paste-cut</summary>
+   147→
+   148→https://github.com/guilhermerodz/input-otp/assets/10366880/bdbdc96a-23da-4e89-bff8-990e6a1c4c23
       →…
    198→### Auto tracks if the input has space in the right side for the badge
    199→
-      →…
+   200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
+   201→
+   202→</details>
+   203→
    204→## API Reference
    205→
    206→### OTPInput
@@ -117,16 +75,38 @@ README.md
    209→
    210→#### Props
    211→
+   212→```ts
+   213→type OTPInputProps = {
+   214→  // The number of slots
+   215→  maxLength: number
+   216→
+   217→  // Render function creating the slots
       →…
    293→## Examples
    294→
+   295→<details>
+   296→<summary>Automatic form submission on OTP completion</summary>
+   297→
+   298→```tsx
+   299→export default function Page() {
+   300→  const formRef = useRef<HTMLFormElement>(null)
       →…
    377→## Caveats
    378→
+   379→<details>
+   380→<summary>[Workaround] If you want to block specific password manager/badges:</summary>
+   381→
+   382→By default, `input-otp` handles password managers for you.
+   383→The password manager badges should be automatically shifted to the right side.
+   384→
       →…
    539→#### Sponsors
    540→
-      →…
+   541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
+   542→
+   543→> [Resend](https://go.resend.com/input-otp) is email for developers.
+   544→
+   545→> [Evomi](https://evomi.com/?utm_source=github&utm_campaign=otp) offers Residential Proxies starting from $0.49.
 apps/storybook/README.md
     13→## 🚅 Quick start
     14→
@@ -179,17 +159,9 @@ apps/storybook/README.md
     91→3. See our official documentation at [Storybook](https://storybook.js.org/).
 apps/storybook/src/components/ui/input-otp.tsx
      9→const InputOTP = React.forwardRef<
-    10→  React.ElementRef<typeof OTPInput>,
-      →…
     21→const InputOTPGroup = React.forwardRef<
-    22→  React.ElementRef<"div">,
-      →…
     29→const InputOTPSlot = React.forwardRef<
-    30→  React.ElementRef<"div">,
-      →…
     54→const InputOTPSeparator = React.forwardRef<
-    55→  React.ElementRef<"div">,
-      →…
 apps/storybook/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
@@ -239,7 +211,6 @@ apps/storybook/src/stories/InputOTP.stories.tsx
      4→const meta = {
      5→  title: "ui/InputOTP",
      6→  component: InputOTP,
-     7→  tags: ["autodocs"],
       →…
     27→type Story = StoryObj<typeof meta>
     29→export const Default: Story = {}
@@ -256,12 +227,6 @@ apps/storybook/tailwind.config.js
     10→  prefix: '',
     11→  theme: {
     12→    container: {
-    13→      center: true,
-    14→      padding: '2rem',
-    15→      screens: {
-    16→        '2xl': '1400px',
-    17→      },
-    18→    },
       →…
 apps/website/README.md
      3→## Getting Started
@@ -280,7 +245,10 @@ apps/website/README.md
     16→
     17→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
     18→
-      →…
+    19→You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+    20→
+    21→This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+    22→
     23→## Learn More
     24→
     25→To learn more about Next.js, take a look at the following resources:
@@ -313,12 +281,7 @@ apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
     17→        name="otp"
     18→        value={value}
     19→        onChange={setValue}
-    20→        onComplete={() => formRef.current?.submit()}
-    21→      />
-    22→      <Button type="submit">Submit</Button>
-    23→    </form>
-    24→  )
-    25→}
+      →…
 apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
      3→export async function formAction(formData: FormData) {
      4→  const rawFormData = {
@@ -340,14 +303,8 @@ apps/website/src/app/(local-pages)/example-playground/component.tsx
     11→  return (
       →…
     38→function Slot(props: SlotProps) {
-    39→  return (
-      →…
     58→function FakeCaret() {
-    59→  return (
-      →…
     67→function FakeDash() {
-    68→  return (
-      →…
     76→const config = {
 apps/website/src/app/(local-pages)/example-playground/page.tsx
      3→export default function ExamplePlayground() {
@@ -393,9 +350,6 @@ apps/website/src/app/(local-pages)/shadcn/page.tsx
     19→        value={value}
     20→        onChange={setValue}
     21→        maxLength={6}
-    22→        render={({ slots }) => (
-    23→          <>
-    24→            <InputOTPGroup>
       →…
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     13→export default function ShadcnPage() {
@@ -443,34 +397,15 @@ apps/website/src/app/(pages)/(home)/page.tsx
     19→const fadeUpClassname =
     20→  'lg:motion-safe:opacity-0 lg:motion-safe:animate-fade-up'
     22→async function getRepoStarCount() {
-    23→  const res = await fetch(
-      →…
     34→export default async function IndexPage() {
     35→  const starCount = await getRepoStarCount()
     36→
     37→  return (
     38→    <div className="container relative flex-1 flex flex-col justify-center items-center">
     39→      <PageHeader>
-    40→        {/* <div className="opacity-0 animate-fade-in [animation-delay:2700ms] [animation-duration:500ms] mb-2"><SponsorBadgeClerk /></div> */}
-    41→
-    42→        <PageHeaderHeading className={cn(fadeUpClassname)}>
-    43→          Stop wasting time building OTP inputs.
-    44→        </PageHeaderHeading>
-    45→
-    46→        <Showcase
-    47→          className={cn(
-    48→            fadeUpClassname,
-    49→            'lg:motion-safe:[animation-delay:1000ms]',
-    50→          )}
-    51→        />
-    52→
-    53→        <PageHeaderDescription
-    54→          className={cn(
       →…
    148→export const revalidate = 3600
    150→const SponsorBadgeClerk = () => {
-   151→  return (
-      →…
 apps/website/src/app/(pages)/layout.tsx
     14→export const metadata: Metadata = {
     15→  title: {
@@ -484,10 +419,6 @@ apps/website/src/app/(pages)/layout.tsx
     23→    'one-time-code',
     24→    'Input',
     25→    'Next.js',
-    26→    'Tailwind CSS',
-    27→    'Server Components',
-    28→    'Accessible',
-    29→  ],
       →…
     68→export default function RootLayout({
     69→  children,
@@ -506,8 +437,6 @@ apps/website/src/app/(pages)/layout.tsx
       →…
 apps/website/src/components/code.tsx
      9→export async function Code({
-    10→  code,
-      →…
     36→async function highlightCode(code: string, dark: boolean) {
 apps/website/src/components/copy-button.tsx
     17→interface CopyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
@@ -515,19 +444,13 @@ apps/website/src/components/copy-button.tsx
     19→  src?: string
     20→}
     22→export async function copyToClipboardWithMeta(value: string) {
-    23→  window && window.isSecureContext && navigator.clipboard.writeText(value)
-      →…
     26→export function CopyButton({
-    27→  value,
-      →…
     64→interface CopyWithClassNamesProps extends DropdownMenuTriggerProps {
     65→  value: string
     66→  classNames: string
     67→  className?: string
     68→}
     70→export function CopyWithClassNames({
-    71→  value,
-      →…
    120→interface CopyNpmCommandButtonProps extends DropdownMenuTriggerProps {
    121→  commands: {
    122→    __npmCommand__: string
@@ -537,8 +460,6 @@ apps/website/src/components/copy-button.tsx
    126→  }
    127→}
    129→export function CopyNpmCommandButton({
-   130→  commands,
-      →…
 apps/website/src/components/icons.tsx
      1→type IconProps = React.HTMLAttributes<SVGElement>
      3→export const Icons = {
@@ -557,16 +478,9 @@ apps/website/src/components/icons.tsx
     16→        strokeWidth="16"
     17→      />
     18→      <line
-    19→        x1="192"
-    20→        y1="40"
-    21→        x2="40"
-    22→        y2="192"
-    23→        fill="none"
       →…
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {
-    16→  const { setTheme } = useTheme()
-      →…
 apps/website/src/components/page-header.tsx
      3→function PageHeader({
     21→function PageHeaderHeading({
@@ -574,16 +488,10 @@ apps/website/src/components/page-header.tsx
     51→function PageActions({
 apps/website/src/components/provider.tsx
      5→export function AppProvider({
-     6→  children,
-      →…
 apps/website/src/components/site-footer.tsx
      3→export function SiteFooter() {
-     4→  return (
-      →…
 apps/website/src/components/site-header.tsx
      9→export function SiteHeader() {
-    10→  return (
-      →…
 apps/website/src/components/ui/badge.tsx
     26→export interface BadgeProps
     27→  extends React.HTMLAttributes<HTMLDivElement>,
@@ -658,12 +566,9 @@ packages/input-otp/src/input.tsx
    541→  try {
    542→    sheet.insertRule(rule)
    543→  } catch {
-   544→    console.error('input-otp could not insert CSS rule:', rule)
-   545→  }
-   546→}
+      →…
    553→const NOSCRIPT_CSS_FALLBACK = `
    554→[data-input-otp] {
-   555→  --nojs-bg: white !important;
       →…
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
@@ -716,7 +621,6 @@ packages/input-otp/src/use-pwm-badge.tsx
      6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
      8→const PASSWORD_MANAGERS_SELECTORS = [
      9→  '[data-lastpass-icon-root]', // LastPass
-    10→  'com-1password-button', // 1Password
       →…
     15→export function usePasswordManagerBadge({
     16→  containerRef,

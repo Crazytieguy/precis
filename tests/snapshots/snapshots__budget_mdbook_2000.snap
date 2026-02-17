@@ -2,21 +2,26 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2082 words)
+budget: 2000 (2097 words)
 
 CHANGELOG.md
-     3→## mdBook 0.5.2
-     4→[v0.5.1...v0.5.2](https://github.com/rust-lang/mdBook/compare/v0.5.1...v0.5.2)
-     5→
-  1659→### Changed
-  1660→- 💥 This release changes how links are handled in mdBook. Previously, relative
-  1661→  links were interpreted relative to the book's root. In `0.2.0`+ links are
-  1662→  relative to the page they are in, and use the `.md` extension. This has [several
-  1663→  advantages](https://github.com/rust-lang/mdBook/pull/603#issue-166701447),
+     3→## mdBook 0.5.2 …
+  1659→### Changed …
+README.md
+     1→# mdBook
+     2→
+      →…
+    14→## License
+    15→
       →…
 crates/mdbook-compare/README.md
      1→# mdbook-compare
      2→
+     3→This is a simple utility to compare the output of two different versions of mdbook.
+     4→
+     5→To use this:
+     6→
+     7→1. Install [`tidy`](https://www.html-tidy.org/).
       →…
 crates/mdbook-compare/src/main.rs
      6→macro_rules! error {
@@ -226,11 +231,8 @@ crates/mdbook-html/src/html/tree.rs
    150→enum TableState {
    160→pub(crate) struct MarkdownTreeBuilder<'opts, 'event, EventIter> {
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
-    19→/// The HTML renderer for mdBook.
-    20→#[derive(Default)]
-      →…
     22→pub struct HtmlHandlebars;
-    26→    pub fn new() -> Self {
+    26→    pub fn new …
    633→struct RenderChapterContext<'a> {
    642→/// Redirect mapping.
    643→///
@@ -263,21 +265,14 @@ crates/mdbook-html/src/html_handlebars/mod.rs
      5→mod static_files;
 crates/mdbook-html/src/html_handlebars/search.rs
     17→const MAX_WORD_LENGTH_TO_INDEX: usize = 80;
-    29→pub(super) fn create_files(
-    30→    search_config: &Search,
-    31→    static_files: &mut StaticFiles,
-    32→    chapter_trees: &[ChapterTree<'_>],
-    33→) -> Result<()> {
+    29→pub(super) fn create_files …
 crates/mdbook-html/src/html_handlebars/static_files.rs
-    14→/// Map static files to their final names and contents.
-    15→///
-      →…
     22→pub(super) struct StaticFiles {
     23→    static_files: Vec<StaticFile>,
     24→    hash_map: HashMap<String, String>,
     25→}
     27→enum StaticFile {
-   138→    pub(super) fn hash_files(&mut self) -> Result<()> {
+   138→    pub(super) fn hash_files …
 crates/mdbook-html/src/lib.rs
      1→//! mdBook HTML renderer.
      2→
@@ -304,13 +299,8 @@ crates/mdbook-html/src/theme/mod.rs
       →…
    229→fn load_file_contents …
 crates/mdbook-html/src/theme/playground_editor.rs
-     1→//! Theme dependencies for the playground editor.
-     2→
      3→pub(crate) static JS: &[u8] = include_bytes!("../../front-end/playground_editor/editor.js");
 crates/mdbook-html/src/theme/searcher.rs
-     1→//! Theme dependencies for in-browser search. Not included in mdbook when
-     2→//! the "search" cargo feature is disabled.
-     3→
      4→pub(crate) static JS: &[u8] = include_bytes!("../../front-end/searcher/searcher.js");
 crates/mdbook-html/src/utils.rs
      6→/// Utility function to normalize path elements like `..`.
@@ -361,6 +351,7 @@ crates/mdbook-markdown/src/lib.rs
     33→impl Default for MarkdownOptions {
     34→    fn default() -> MarkdownOptions {
     35→        MarkdownOptions {
+    36→            smart_punctuation: true,
       →…
     43→/// Creates a new pulldown-cmark parser of the given text.
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
@@ -369,7 +360,6 @@ crates/mdbook-markdown/src/lib.rs
     47→    opts.insert(Options::ENABLE_FOOTNOTES);
     48→    opts.insert(Options::ENABLE_STRIKETHROUGH);
     49→    opts.insert(Options::ENABLE_TASKLISTS);
-    50→    opts.insert(Options::ENABLE_HEADING_ATTRIBUTES);
       →…
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
@@ -505,6 +495,30 @@ guide/guide-helper/src/main.rs
      1→//! Preprocessor for the mdBook guide.
      2→
      3→fn main() {
+guide/src/README.md
+     1→# Introduction
+     2→
+      →…
+    46→## Contributing
+    47→
+      →…
+    55→## License
+    56→
+      →…
+guide/src/cli/README.md
+     1→# Command-line tool
+     2→
+      →…
+guide/src/for_developers/README.md
+     1→# For developers
+     2→
+      →…
+    17→## The build process
+    18→
+      →…
+    30→## Using `mdbook` as a library
+    31→
+      →…
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     12→fn main …
     40→fn count_words …
@@ -514,6 +528,17 @@ guide/src/for_developers/mdbook-wordcount/src/main.rs
     47→    pub ignores: Vec<String>,
     48→    pub deny_odds: bool,
     49→}
+guide/src/format/README.md
+     1→# Format
+     2→
+     3→In this section you will learn how to:
+     4→
+     5→- Structure your book correctly
+      →…
+guide/src/format/configuration/README.md
+     1→# Configuration
+     2→
+      →…
 guide/src/format/example.rs
      1→fn main() {
 guide/src/format/mdbook.md
@@ -521,6 +546,18 @@ guide/src/format/mdbook.md
      4→
      5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
      6→
+      →…
+guide/src/format/theme/README.md
+     1→# Theme
+     2→
+      →…
+guide/src/guide/README.md
+     1→# User guide
+     2→
+     3→This user guide provides an introduction to basic concepts of using mdBook.
+     4→
+     5→- [Installation](installation.md)
+     6→- [Reading Books](reading.md)
       →…
 guide/src/misc/contributors.md
      1→# Contributors

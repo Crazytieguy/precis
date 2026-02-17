@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2151 words)
+budget: 2000 (2146 words)
 
 README.md
    417→### `match`
@@ -60,7 +60,8 @@ README.md
   1648→  );
   1649→```
   1650→
-      →…
+  1651→Although not strictly necessary, using `as const` after the pattern definition ensures that TS-Pattern infers the most precise types possible.
+  1652→
 docs/roadmap.md
      1→### Roadmap
      2→
@@ -184,7 +185,6 @@ src/internals/helpers.ts
     17→  x: unknown
     18→): x is Matcher<unknown, unknown, MatcherType, SelectionType> => {
     19→  const pattern = x as Matcher<unknown, unknown, MatcherType, SelectionType>;
-    20→  return pattern && !!pattern[symbols.matcher];
       →…
     24→const isOptionalPattern = (
     25→  x: unknown
@@ -197,11 +197,9 @@ src/internals/helpers.ts
     35→  select: (key: string, value: unknown) => void
     36→): boolean => {
     37→  if (isMatcher(pattern)) {
-    38→    const matcher = pattern[symbols.matcher]();
       →…
    120→export const getSelectionKeys = (pattern: any): string[] => {
    121→  if (isObject(pattern)) {
-   122→    if (isMatcher(pattern)) {
       →…
    132→export const flatMap = <a, b>(
    133→  xs: readonly a[],
@@ -281,7 +279,6 @@ src/match.ts
     56→    const patterns: Pattern<input>[] = [args[0]];
     57→    let predicate: ((value: input) => unknown) | undefined = undefined;
     58→
-    59→    if (args.length === 3 && typeof args[1] === 'function') {
     94→  when …
    110→  otherwise …
    115→  exhaustive …

@@ -2,120 +2,108 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2008 words)
+budget: 2000 (2011 words)
 
 README.md
      1→# Format
      2→
-      →…
+     3→In this section you will learn how to:
+     4→
+     5→- Structure your book correctly
+     6→- Format your `SUMMARY.md` file
+     7→- Configure your book using `book.toml`
+     8→- Customize your theme
 configuration/README.md
      1→# Configuration
      2→
      3→This section details the configuration options available in the ***book.toml***:
-      →…
+     4→- **[General]** configuration including the `book`, `rust`, `build` sections
+     5→- **[Preprocessor]** configuration for default and custom book preprocessors
+     6→- **[Renderer]** configuration for the HTML, Markdown and custom renderers
+     7→- **[Environment Variable]** configuration for overriding configuration options in your environment
+     8→
+     9→[General]: general.md
+    10→[Preprocessor]: preprocessors.md
+    11→[Renderer]: renderers.md
+    12→[Environment Variable]: environment-variables.md
 configuration/environment-variables.md
      1→# Environment variables
      2→
-     3→All configuration values can be overridden from the command line by setting the
       →…
 configuration/general.md
      1→# General configuration
      2→
-     3→You can configure the parameters for your book in the ***book.toml*** file.
       →…
     31→## Supported configuration options
     32→
-    33→It is important to note that **any** relative path specified in the
       →…
     37→### General metadata
     38→
-    39→This is general information about your book.
       →…
     64→### Rust options
     65→
-    66→Options for the Rust language, relevant to running tests and playground
       →…
     85→### Build options
     86→
-    87→This controls the build process of your book.
       →…
 configuration/preprocessors.md
      1→# Configuring Preprocessors
      2→
-     3→Preprocessors are extensions that can modify the raw Markdown source before it gets sent to the renderer.
       →…
     26→## Custom preprocessor configuration
     27→
-    28→Preprocessors can be added by including a `preprocessor` table in `book.toml` with the name of the preprocessor.
       →…
     45→## Locking a preprocessor dependency to a renderer
     46→
-    47→You can explicitly specify that a preprocessor should run for a renderer by
       →…
     55→## Provide your own command
     56→
-    57→By default when you add a `[preprocessor.foo]` table to your `book.toml` file,
       →…
     67→### Optional preprocessors
     68→
-    69→If you enable a preprocessor that isn't installed, the default behavior is to throw an error.
       →…
     79→## Require a certain order
     80→
-    81→The order in which preprocessors are run can be controlled with the `before` and `after` fields.
       →…
 configuration/renderers.md
      1→# Configuring Renderers
      2→
-     3→Renderers (also called "backends") are responsible for creating the output of the book.
       →…
     20→## Output tables
     21→
-    22→Backends can be added by including a `output` table in `book.toml` with the name of the backend.
       →…
     59→### Custom backend commands
     60→
-    61→By default when you add an `[output.foo]` table to your `book.toml` file,
       →…
     71→### Optional backends
     72→
-    73→If you enable a backend that isn't installed, the default behavior is to throw an error.
       →…
     84→## HTML renderer options
     85→
-    86→The HTML renderer has a variety of options detailed below.
       →…
    176→### `[output.html.print]`
    177→
-   178→The `[output.html.print]` table provides options for controlling the printable output.
       →…
    191→### `[output.html.fold]`
    192→
-   193→The `[output.html.fold]` table provides options for controlling folding of the chapter listing in the navigation sidebar.
       →…
    206→### `[output.html.playground]`
    207→
-   208→The `[output.html.playground]` table provides options for controlling Rust sample code blocks, and their integration with the [Rust Playground].
       →…
    230→### `[output.html.code]`
    231→
-   232→The `[output.html.code]` table provides options for controlling code blocks.
       →…
    244→### `[output.html.search]`
    245→
-   246→The `[output.html.search]` table provides options for controlling the built-in text [search].
       →…
    286→#### `[output.html.search.chapter]`
    287→
-   288→The [`output.html.search.chapter`] table provides the ability to modify search settings per chapter or directory. Each key is the path to the chapter source file or directory, and the value is a table of settings to apply to that path. This will merge recursively, with more specific paths taking precedence.
       →…
    300→### `[output.html.redirect]`
    301→
-   302→The `[output.html.redirect]` table provides a way to add redirects.
       →…
    325→## Markdown renderer
    326→
-   327→The Markdown renderer will run preprocessors and then output the resulting
       →…
 example.rs
      1→fn main() {
@@ -323,7 +311,39 @@ theme/README.md
     17→- **_css/_** contains the CSS files for styling the book.
     18→    - **_css/chrome.css_** is for UI elements.
     19→    - **_css/general.css_** is the base styles.
-      →…
+    20→    - **_css/print.css_** is the style for printer output.
+    21→    - **_css/variables.css_** contains variables used in other CSS files.
+    22→- **_book.js_** is mostly used to add client side functionality, like hiding /
+    23→  un-hiding the sidebar, changing the theme, ...
+    24→- **_highlight.js_** is the JavaScript that is used to highlight code snippets,
+    25→  you should not need to modify this.
+    26→- **_highlight.css_** is the theme used for the code highlighting.
+    27→- **_favicon.svg_** and **_favicon.png_** the favicon that will be used. The SVG
+    28→  version is used by [newer browsers].
+    29→- **fonts/fonts.css** contains the definition of which fonts to load.
+    30→  Custom fonts can be included in the `fonts` directory.
+    31→
+    32→Generally, when you want to tweak the theme, you don't need to override all the
+    33→files. If you only need changes in the stylesheet, there is no point in
+    34→overriding all the other files. Because custom files take precedence over
+    35→built-in ones, they will not get updated with new fixes / features.
+    36→
+    37→**Note:** When you override a file, it is possible that you break some
+    38→functionality. Therefore I recommend to use the file from the default theme as
+    39→template and only add / modify what you need. You can copy the default theme
+    40→into your source directory automatically by using `mdbook init --theme` and just
+    41→remove the files you don't want to override.
+    42→
+    43→`mdbook init --theme` will not create every file listed above.
+    44→Some files, such as `head.hbs`, do not have built-in equivalents.
+    45→Just create the file if you need it.
+    46→
+    47→If you completely replace all built-in themes, be sure to also set
+    48→[`output.html.preferred-dark-theme`] in the config, which defaults to the
+    49→built-in `navy` theme.
+    50→
+    51→[`output.html.preferred-dark-theme`]: ../configuration/renderers.md#html-renderer-options
+    52→[newer browsers]: https://caniuse.com/#feat=link-icon-svg
 theme/editor.md
      1→# Editor
      2→

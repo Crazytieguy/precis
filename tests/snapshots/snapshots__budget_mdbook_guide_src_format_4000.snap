@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4022 words)
+budget: 4000 (4040 words)
 
 README.md
      1→# Format
@@ -11,7 +11,8 @@ README.md
      4→
      5→- Structure your book correctly
      6→- Format your `SUMMARY.md` file
-      →…
+     7→- Configure your book using `book.toml`
+     8→- Customize your theme
 configuration/README.md
      1→# Configuration
      2→
@@ -20,7 +21,11 @@ configuration/README.md
      5→- **[Preprocessor]** configuration for default and custom book preprocessors
      6→- **[Renderer]** configuration for the HTML, Markdown and custom renderers
      7→- **[Environment Variable]** configuration for overriding configuration options in your environment
-      →…
+     8→
+     9→[General]: general.md
+    10→[Preprocessor]: preprocessors.md
+    11→[Renderer]: renderers.md
+    12→[Environment Variable]: environment-variables.md
 configuration/environment-variables.md
      1→# Environment variables
      2→

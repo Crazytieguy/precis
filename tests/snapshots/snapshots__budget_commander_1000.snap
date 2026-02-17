@@ -2,177 +2,60 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1083 words)
+budget: 1000 (1009 words)
 
-CHANGELOG.md
-    13→### Added
-    14→
-      →…
-    25→### Changed
-    26→
-      →…
-    32→### Fixed
-    33→
-      →…
-    47→### Added
-    48→
-      →…
-    65→### Added
-    66→
-      →…
-    71→### Added
-    72→
-      →…
-   162→### Added
-   163→
-      →…
-   179→### Added
-   180→
-      →…
-   236→### Fixed
-   237→
-      →…
-   260→### Fixed
-   261→
-      →…
-   272→### Added
-   273→
-      →…
-   286→### Added
-   287→
-      →…
-   296→### Added
-   297→
-      →…
-   303→### Fixed
-   304→
-      →…
-   315→### Added
-   316→
-      →…
-   329→### Added
-   330→
-      →…
-   345→### Added
-   346→
-      →…
-   360→### Added
-   361→
-      →…
-   367→### Added
-   368→
-      →…
-   407→### Added
-   408→
-      →…
-   418→### Added
-   419→
-      →…
-   433→### Added
-   434→
-      →…
-   441→### Added
-   442→
-      →…
-   524→### Added
-   525→
-      →…
-   537→### Added
-   538→
-      →…
-   557→### Added
-   558→
-      →…
-   683→### Fixed
-   684→
-      →…
-   689→### Added
-   690→
-      →…
-   707→### Added
-   708→
-      →…
-   724→### Added
-   725→
-      →…
-   741→### Added
-   742→
-      →…
-   762→### Added
-   763→
-      →…
-   853→### Fixed
-   854→
-      →…
-   859→### Added
-   860→
-      →…
-   880→### Fixed
-   881→
-      →…
-   886→### Added
-   887→
-      →…
-   911→#### Testing for no arguments
-   912→
-      →…
-   947→### Added
-   948→
-      →…
-  1014→### Fixed
-  1015→
-      →…
 CONTRIBUTING.md
      3→## Issues
      4→
-      →…
+     5→New issues are welcome, whether questions or suggestions or reporting bugs.
+     6→You are also welcome to contribute by adding helpful comments on an existing issue.
+     7→
+     8→We love reproducible code examples in questions and answers.
+     9→
+    10→If you get a satisfactory reply to a question then please close your issue, but it is ok to leave an issue open for more replies or interest. Inactive issues may get closed after one month if they have an answer,
+    11→or after six months otherwise.
+    12→
 Readme.md
    968→### .parse() and .parseAsync()
    969→
-      →…
+   970→Call with no parameters to parse `process.argv`. Detects Electron and special node options like `node --eval`. Easy mode!
+   971→
+   972→Or, call with an array of strings to parse, and optionally where the user arguments start by specifying where the arguments are `from`:
+   973→
+   974→- `'node'`: default, `argv[0]` is the application and `argv[1]` is the script being run, with user arguments after that
+   975→- `'electron'`: `argv[0]` is the application and `argv[1]` varies depending on whether the electron application is packaged
+   976→- `'user'`: just user arguments
+   977→
+   978→For example:
+   979→
+   980→```js
+   981→program.parse(); // parse process.argv and auto-detect electron and special node flags
+   982→program.parse(process.argv); // assume argv[0] is app and argv[1] is script
+   983→program.parse(['--port', '80'], { from: 'user' }); // just user supplied arguments, nothing special about argv[0]
+   984→```
+   985→
+   986→Use `.parseAsync()` instead of `.parse()` if any of your action handlers are async.
+   987→
 Readme_zh-CN.md
    907→### .parse() 和 .parseAsync()
    908→
-      →…
+   909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
+   910→
+   911→如果参数遵循与 node 不同的约定，可以在第二个参数中传递`from`选项：
+   912→
+   913→- `node`：默认值，`argv[0]`是应用，`argv[1]`是要跑的脚本，后续为用户参数；
+   914→- `electron`：`argv[1]`根据 electron 应用是否打包而变化；
+   915→- `user`：来自用户的所有参数。
+   916→
+   917→例如：
+   918→
+   919→```js
+   920→program.parse(process.argv); // 指明，按 node 约定
+   921→program.parse(); // 默认，自动识别 electron
+   922→program.parse(['-f', 'filename'], { from: 'user' });
+   923→```
+   924→
 docs/deprecated.md
-     1→# Deprecated
-     2→
-      →…
-    22→### RegExp .option() parameter
-    23→
-      →…
-    34→### noHelp
-    35→
-      →…
-    44→### Callback to .help() and .outputHelp()
-    45→
-      →…
-    62→### .on('--help')
-    63→
-      →…
-    87→### .on('command:*')
-    88→
-      →…
-    98→### .command('*')
-    99→
-      →…
-   118→### cmd.description(cmdDescription, argDescriptions)
-   119→
-      →…
-   141→### InvalidOptionArgumentError
-   142→
-      →…
-   171→### Import from `commander/esm.mjs`
-   172→
-      →…
-   187→### cmd._args
-   188→
-      →…
-   203→### .addHelpCommand(string|boolean|undefined)
-   204→
-      →…
-   227→## Removed
-   228→
    229→### Short option flag longer than a single character
    230→
    231→Short option flags like `-ws` were never supported, but the old README did not make this clear. The README now states that short options are a single character.
@@ -182,59 +65,6 @@ docs/deprecated.md
    235→- Throws an exception in Commander v13. Deprecated and gone!
    236→- Replacement added in Commander v13.1 with support for dual long options, like `--ws, --workspace`.
    237→
-   238→### Default import of global Command object
-   239→
-      →…
-docs/help-in-depth.md
-     1→# Help in Depth
-     2→
-      →…
-    20→## Data Properties
-    21→
-      →…
-    34→## Stringify and Style
-    35→
-      →…
-   118→## Layout
-   119→
-      →…
-docs/options-in-depth.md
-     2→# Options in Depth
-     3→
-      →…
-    15→## Options taking varying numbers of option-arguments
-    16→
-      →…
-    30→### Parsing ambiguity
-    31→
-      →…
-    79→#### Alternative: Make `--` part of your syntax
-    80→
-      →…
-   104→#### Alternative: Put options last
-   105→
-      →…
-   126→#### Alternative: Use options instead of command-arguments
-   127→
-      →…
-   148→## Combining short options, and options taking arguments
-   149→
-      →…
-   191→### Combining short options as if boolean
-   192→
-      →…
-docs/parsing-and-hooks.md
-     1→# Parsing life cycle and hooks
-     2→
-      →…
-docs/release-policy.md
-     1→# Release Policy
-     2→
-      →…
-docs/terminology.md
-     1→# Terminology
-     2→
-      →…
 docs/zh-CN/不再推荐使用的功能.md
      1→# 不再推荐使用的功能
      2→
@@ -303,9 +133,6 @@ jest.config.js
      2→  testEnvironment: 'node',
      3→  collectCoverage: true,
      4→  transform: {
-     5→    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.ts.json' }],
-     6→  },
-     7→  testPathIgnorePatterns: ['/node_modules/'],
       →…
 lib/argument.js
      3→class Argument {
@@ -365,6 +192,9 @@ lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
      4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
+     5→  // Calculating optimal string alignment distance, no substring is edited more than once.
+     6→  // (Simple implementation.)
+     7→
       →…
     48→/**
       →…
