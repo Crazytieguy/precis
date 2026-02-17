@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1971 words)
+budget: 2000 (1974 words)
 
 README.md
     40→## About …
@@ -107,6 +107,11 @@ README.md
   1650→
       →…
   1766→## Inspirations …
+benchmarks/always-last-digit.ts
+     4→type Digit …
+benchmarks/nested-objects.ts
+benchmarks/random-digit.ts
+     4→type Digit …
 docs/roadmap.md
      1→### Roadmap …
 docs/v3-to-v4-migration-guide.md
@@ -173,6 +178,24 @@ docs/v4-to-v5-migration-guide.md
    122→### Global methods …
    156→## Variadic tuple patterns …
    214→## `.returnType` …
+examples/gif-fetcher/src/App.tsx
+    11→type State …
+    24→type Event …
+    33→const initState …
+    42→const reducer …
+    75→export default function App() {
+examples/gif-fetcher/src/constants.ts
+     1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
+examples/gif-fetcher/src/index.tsx
+     6→const rootElement = document.getElementById('root');
+examples/gif-fetcher/src/searchGif.ts
+     4→const delay …
+     6→export function searchGif(query: string) {
+examples/one-file-demo/one-file-demo.ts
+    20→type Response …
+    56→type UserType …
+    79→const example3 …
+   102→const User …
 src/errors.ts
      1→/**
      2→ * Error when the given input value does not match any included pattern
@@ -280,8 +303,6 @@ src/match.ts
     54→      args[args.length - 1];
     55→
     56→    const patterns: Pattern<input>[] = [args[0]];
-    57→    let predicate: ((value: input) => unknown) | undefined = undefined;
-    58→
     94→  when …
    110→  otherwise …
    115→  exhaustive …
@@ -366,35 +387,12 @@ src/patterns.ts
    795→/**
       →…
    805→export const _ = any;
-   817→const startsWith …
-   831→const endsWith …
-   845→const minLength …
-   857→const length …
-   869→const maxLength …
-   881→const includes …
-   895→const regex …
    919→/**
       →…
    928→export const string: StringPattern = stringChainable(when(isString));
-   940→const between …
-   955→const lt …
-   969→const gt …
-   983→const lte …
-   997→const gte …
-  1011→const int …
-  1023→const finite …
-  1035→const positive …
-  1047→const negative …
   1066→/**
       →…
   1075→export const number: NumberPattern = numberChainable(when(isNumber));
-  1087→const betweenBigInt …
-  1106→const ltBigInt …
-  1120→const gtBigInt …
-  1134→const lteBigInt …
-  1148→const gteBigInt …
-  1162→const positiveBigInt …
-  1174→const negativeBigInt …
   1193→/**
       →…
   1201→export const bigint: BigIntPattern = bigintChainable(when(isBigInt));
@@ -511,3 +509,12 @@ src/types/helpers.ts
    267→  input: unknown;
    268→  output: unknown;
    269→}
+tests/instance-of.test.ts
+     4→class A {
+     7→class B {
+tests/types-catalog/definition.ts
+tests/types-catalog/utils.ts
+     4→export const some = <a>(value: a): Option<a> => ({
+     5→  kind: 'some',
+     6→  value,
+     7→});

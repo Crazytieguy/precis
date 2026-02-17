@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (973 words)
+budget: 1000 (972 words)
 
 README.md
      1→# humanize
@@ -215,27 +215,11 @@ README.md
    231→How to add new phrases to existing locale files:
    232→
    233→```sh
-   234→xgettext --from-code=UTF-8 -o humanize.pot -k'_' -k'N_' -k'P_:1c,2' -k'NS_:1,2' -k'_ngettext:1,2' -l python src/humanize/*.py  # extract new phrases
-   235→msgmerge -U src/humanize/locale/ru_RU/LC_MESSAGES/humanize.po humanize.pot # add them to locale files
-   236→```
-   237→
-   238→How to add a new locale:
-   239→
-   240→```sh
-   241→msginit -i humanize.pot -o humanize/locale/<locale name>/LC_MESSAGES/humanize.po --locale <locale name>
-   242→```
-   243→
-   244→Where `<locale name>` is a locale abbreviation, eg. `en_GB`, `pt_BR` or just `ru`, `fr`
-   245→etc.
-   246→
       →…
 RELEASING.md
      1→# Release checklist
      3→- [ ] Get `main` to the appropriate code release state.
      4→      [GitHub Actions](https://github.com/python-humanize/humanize/actions) should be
-     5→      running cleanly for all merges to `main`.
-     6→      [![GitHub Actions status](https://github.com/python-humanize/humanize/workflows/Test/badge.svg)](https://github.com/python-humanize/humanize/actions)
-     7→
       →…
 docs/filesize.md
      1→# Filesize
@@ -273,15 +257,6 @@ src/humanize/__init__.py
     29→    "__version__",
     30→    "activate",
     31→    "apnumber",
-    32→    "clamp",
-    33→    "deactivate",
-    34→    "decimal_separator",
-    35→    "fractional",
-    36→    "intcomma",
-    37→    "intword",
-    38→    "metric",
-    39→    "natural_list",
-    40→    "naturaldate",
       →…
 src/humanize/filesize.py
     36→def naturalsize …
@@ -294,14 +269,8 @@ src/humanize/i18n.py
     18→_CURRENT = local()
     21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
-    23→    "de_DE": ".",
-    24→    "fr_FR": " ",
-      →…
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
-    32→    "de_DE": ",",
-    33→    "fr_FR": ".",
-      →…
     40→def _get_default_locale_path …
     51→def get_translation …
     58→def activate …
@@ -334,9 +303,7 @@ src/humanize/time.py
     22→    "naturaldate",
     23→    "naturalday",
     24→    "naturaldelta",
-    25→    "naturaltime",
-    26→    "precisedelta",
-    27→]
+      →…
     30→@total_ordering
     31→class Unit(Enum):
     32→    MICROSECONDS = 0
@@ -365,3 +332,34 @@ src/humanize/time.py
    435→def _suppress_lower_units …
    451→def precisedelta …
    654→def _rounding_by_fmt …
+tests/test_filesize.py
+tests/test_i18n.py
+    17→@freeze_time("2020-02-02")
+    18→def test_i18n() -> None:
+   225→class TestActivate:
+   226→    expected_msg = (
+   249→    @freeze_time("2020-02-02")
+   250→    def test_en_locale(self) -> None:
+   262→    @freeze_time("2020-02-02")
+   263→    def test_none_locale(self) -> None:
+tests/test_lists.py
+tests/test_number.py
+tests/test_time.py
+    14→ONE_DAY_DELTA = dt.timedelta(days=1)
+    16→# In seconds
+    17→ONE_MICROSECOND = 1 / 1000000
+    18→FOUR_MICROSECONDS = 4 / 1000000
+    19→ONE_MILLISECOND = 1 / 1000
+    20→FOUR_MILLISECONDS = 4 / 1000
+    23→ONE_HOUR = 3600
+    24→ONE_DAY = 24 * ONE_HOUR
+    25→ONE_YEAR = 365.25 * ONE_DAY
+    26→FROZEN_DATE = "2010-02-02"
+    37→class FakeDate:
+    38→    def __init__(self, year: int, month: int, day: int) -> None:
+    45→VALUE_ERROR_TEST = FakeDate(290149024, 2, 2)
+    46→OVERFLOW_ERROR_TEST = FakeDate(120390192341, 2, 2)
+    58→# These are not considered "public" interfaces, but require tests anyway.
+    59→
+    60→
+    61→def test_date_and_delta() -> None:

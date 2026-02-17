@@ -2,13 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3920 words)
+budget: 4000 (3904 words)
 
 CHANGELOG.md
      1→# Changelog
      3→All notable changes to this project will be documented in this file.
      4→
-      →…
+     5→The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+     6→and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+     7→
+     8→<!-- markdownlint-disable MD024 -->
+     9→<!-- markdownlint-disable MD004 -->
+    10→
    911→#### Testing for no arguments
    913→If you were previously using code like:
    914→
@@ -231,10 +236,16 @@ Readme_zh-CN.md
    570→#### 其他参数配置
    572→有少数附加功能可以直接构造`Argument`对象，对参数进行更详尽的配置。
    573→
+   574→示例代码：[arguments-extra.js](./examples/arguments-extra.js)
+   575→
+   576→```js
       →…
    582→#### 自定义参数处理
    584→选项的参数可以通过自定义函数来处理（与处理选项参数时类似），该函数接收两个参数：用户新输入的参数值和当前已有的参数值（即上一次调用自定义处理函数后的返回值），返回新的命令参数值。
    585→
+   586→处理后的参数值会传递给命令处理函数，同时可通过`.processedArgs`获取。
+   587→
+   588→可以在自定义函数的后面设置命令参数的默认值或初始值。
       →…
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
@@ -379,22 +390,66 @@ docs/zh-CN/不再推荐使用的功能.md
      1→# 不再推荐使用的功能
      3→本文中列出的功能不再推荐使用。它们在 Commander 未来的主要版本（major version）中可能被移除。为保证后向兼容，这些功能目前还可以使用，但它们不应被用在新代码中。
      4→
+     5→- [不再推荐使用的功能](#%E4%B8%8D%E5%86%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8%E7%9A%84%E5%8A%9F%E8%83%BD)
       →…
 docs/zh-CN/可变参数的选项.md
      1→# 可变参数的选项
      3→README 文档介绍了选项的声明与使用。大多数情况下，选项的解析行为，与您和您程序用户的期望相符。本文将详述一些特殊用例和细节问题。
      4→
+     5→- [可变参数的选项](#%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E7%9A%84%E9%80%89%E9%A1%B9)
       →…
 docs/zh-CN/术语表.md
      1→# 术语表
      3→命令行参数由选项（options）、选项参数（option-arguments）、命令（commands），以及命令参数（command-arguments）组成。
      4→
+     5→|术语|解释|
       →…
 eslint.config.js
      8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
      9→const tsconfigJsFiles = ['*.{js,mjs}', 'lib/**/*.{js,mjs}']; // match "include" in tsconfig.js.json
 esm.mjs
      1→import commander from './index.js';
+examples/arguments-custom-processing.js
+examples/color-help-replacement.mjs
+    20→class MyHelp extends Help {
+    21→  constructor() {
+    26→  prepareContext(contextOptions) {
+    33→  displayWidth(str) {
+    37→  boxWrap(str, width) {
+    41→  styleTitle(str) {
+    44→  styleCommandText(str) {
+    47→  styleCommandDescription(str) {
+    50→  styleDescriptionText(str) {
+    53→  styleOptionText(str) {
+    56→  styleArgumentText(str) {
+    59→  styleSubcommandText(str) {
+    64→class MyCommand extends Command {
+    65→  createCommand(name) {
+    68→  createHelp() {
+    73→const program = new MyCommand();
+examples/color-help.mjs
+     6→const program = new Command();
+examples/configure-output.js
+examples/custom-command-class.js
+     6→class CommandWithTrace extends commander.Command {
+     7→  createCommand(name) {
+      →…
+examples/global-options-added.js
+    16→class MyRootCommand extends Command {
+    17→  createCommand(name) {
+      →…
+examples/help-centered.mjs
+     6→class MyHelp extends Help {
+     7→  formatItem(term, termWidth, description, helper) {
+    17→class MyCommand extends Command {
+    18→  createCommand(name) {
+    21→  createHelp() {
+    26→const program = new MyCommand();
+examples/man-style-help.mjs
+     5→function formatItem(term, termWidth, description, helper) {
+    25→const program = new Command();
+examples/nestedCommands.js
+examples/options-custom-processing.js
 jest.config.js
      1→const config = {
 lib/argument.js
@@ -668,6 +723,27 @@ lib/suggestSimilar.js
      4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
       →…
     56→function suggestSimilar(word, candidates) {
+tests/command.createArgument.test.js
+     3→class MyArgument extends commander.Argument {
+     4→  constructor(name, description) {
+    10→class MyCommand extends commander.Command {
+    11→  createArgument(name, description) {
+    16→  createCommand(name) {
+tests/command.createOption.test.js
+     3→class MyOption extends commander.Option {
+     4→  constructor(flags, description) {
+    10→class MyCommand extends commander.Command {
+    11→  createOption(flags, description) {
+tests/esm-imports-test.mjs
+     1→../esm.mjs …
+    19→function check(condition, explanation) {
+    26→function checkClass(obj, name) {
+tests/ts-imports.test.ts
+     1→../ …
+    17→function checkClass(obj: object, name: string): void {
+    18→  expect(typeof obj).toEqual('object');
+    19→  expect(obj.constructor.name).toEqual(name);
+    20→}
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =
     13→  | LiteralType
@@ -676,12 +752,12 @@ typings/index.d.ts
     17→  code: string;
     18→  exitCode: number;
     19→  message: string;
-    28→  constructor(exitCode: number, code: string, message: string);
+    28→  constructor …
     31→export class InvalidArgumentError extends CommanderError {
     32→  /**
     33→   * Constructs the InvalidArgumentError class
     34→   * @param message - explanation of why argument is invalid
-    36→  constructor(message: string);
+    36→  constructor …
     40→export interface ErrorOptions {
     41→  // optional parameter for error()
     42→  /** an id string representing the error */
@@ -691,31 +767,31 @@ typings/index.d.ts
     49→  description: string;
     50→  required: boolean;
     51→  variadic: boolean;
-    62→  constructor(arg: string, description?: string);
-    67→  name(): string;
-    72→  default(value: unknown, description?: string): this;
-    77→  argParser<T>(fn: (value: string, previous: T) => T): this;
-    82→  choices(values: readonly string[]): this;
-    87→  argRequired(): this;
-    92→  argOptional(): this;
+    62→  constructor …
+    67→  name …
+    72→  default …
+    77→  argParser …
+    82→  choices …
+    87→  argRequired …
+    92→  argOptional …
     95→export class Option {
     96→  flags: string;
     97→  description: string;
     98→
    115→  constructor(flags: string, description?: string);
-   120→  default(value: unknown, description?: string): this;
-   132→  preset(arg: unknown): this;
-   144→  conflicts(names: string | string[]): this;
-   156→  implies(optionValues: OptionValues): this;
-   164→  env(name: string): this;
-   169→  argParser<T>(fn: (value: string, previous: T) => T): this;
-   174→  makeOptionMandatory(mandatory?: boolean): this;
-   179→  hideHelp(hide?: boolean): this;
-   184→  choices(values: readonly string[]): this;
-   189→  name(): string;
-   195→  attributeName(): string;
-   200→  helpGroup(heading: string): this;
-   207→  isBoolean(): boolean;
+   120→  default …
+   132→  preset …
+   144→  conflicts …
+   156→  implies …
+   164→  env …
+   169→  argParser …
+   174→  makeOptionMandatory …
+   179→  hideHelp …
+   184→  choices …
+   189→  name …
+   195→  attributeName …
+   200→  helpGroup …
+   207→  isBoolean …
    210→export class Help {
    211→  /** output helpWidth, long lines are wrapped to fit */
    212→  helpWidth?: number;
@@ -726,53 +802,44 @@ typings/index.d.ts
    228→    helpWidth?: number;
    229→    outputHasColors?: boolean;
    230→  }): void;
-   233→  subcommandTerm(cmd: Command): string;
-   235→  subcommandDescription(cmd: Command): string;
-   237→  optionTerm(option: Option): string;
-   239→  optionDescription(option: Option): string;
-   241→  argumentTerm(argument: Argument): string;
-   243→  argumentDescription(argument: Argument): string;
-   246→  commandUsage(cmd: Command): string;
-   248→  commandDescription(cmd: Command): string;
-   251→  visibleCommands(cmd: Command): Command[];
-   253→  visibleOptions(cmd: Command): Option[];
-   255→  visibleGlobalOptions(cmd: Command): Option[];
-   257→  visibleArguments(cmd: Command): Argument[];
-   260→  longestSubcommandTermLength(cmd: Command, helper: Help): number;
-   262→  longestOptionTermLength(cmd: Command, helper: Help): number;
-   264→  longestGlobalOptionTermLength(cmd: Command, helper: Help): number;
-   266→  longestArgumentTermLength(cmd: Command, helper: Help): number;
-   269→  displayWidth(str: string): number;
-   272→  styleTitle(title: string): string;
-   275→  styleUsage(str: string): string;
-   277→  styleCommandText(str: string): string;
+   233→  subcommandTerm …
+   235→  subcommandDescription …
+   237→  optionTerm …
+   239→  optionDescription …
+   241→  argumentTerm …
+   243→  argumentDescription …
+   246→  commandUsage …
+   248→  commandDescription …
+   251→  visibleCommands …
+   253→  visibleOptions …
+   255→  visibleGlobalOptions …
+   257→  visibleArguments …
+   260→  longestSubcommandTermLength …
+   262→  longestOptionTermLength …
+   264→  longestGlobalOptionTermLength …
+   266→  longestArgumentTermLength …
+   269→  displayWidth …
+   272→  styleTitle …
+   275→  styleUsage …
+   277→  styleCommandText …
    279→  styleCommandDescription(str: string): string;
    280→  styleOptionDescription(str: string): string;
    281→  styleSubcommandDescription(str: string): string;
    282→  styleArgumentDescription(str: string): string;
-   284→  styleDescriptionText(str: string): string;
+   284→  styleDescriptionText …
    286→  styleOptionTerm(str: string): string;
    287→  styleSubcommandTerm(str: string): string;
    288→  styleArgumentTerm(str: string): string;
-   291→  styleOptionText(str: string): string;
-   293→  styleSubcommandText(str: string): string;
-   295→  styleArgumentText(str: string): string;
-   298→  padWidth(cmd: Command, helper: Help): number;
-   304→  boxWrap(str: string, width: number): string;
-   307→  preformatted(str: string): boolean;
-   316→  formatItem(
-   317→    term: string,
-   318→    termWidth: number,
-   319→    description: string,
-   320→    helper: Help,
-   321→  ): string;
-   326→  formatItemList(heading: string, items: string[], helper: Help): string[];
-   331→  groupItems<T extends Command | Option>(
-   332→    unsortedItems: T[],
-   333→    visibleItems: T[],
-   334→    getGroup: (item: T) => string,
-   335→  ): Map<string, T[]>;
-   338→  formatHelp(cmd: Command, helper: Help): string;
+   291→  styleOptionText …
+   293→  styleSubcommandText …
+   295→  styleArgumentText …
+   298→  padWidth …
+   304→  boxWrap …
+   307→  preformatted …
+   316→  formatItem …
+   326→  formatItemList …
+   331→  groupItems …
+   338→  formatHelp …
    340→export type HelpConfiguration = Partial<Help>;
    342→export interface ParseOptions {
    343→  from: 'node' | 'electron' | 'user';
@@ -806,96 +873,69 @@ typings/index.d.ts
    378→  processedArgs: any[];
    379→  readonly commands: readonly Command[];
    384→  constructor(name?: string);
-   398→  version(): string | undefined;
-   442→  command(
-   443→    nameAndArgs: string,
-   444→    description: string,
-   445→    opts?: ExecutableCommandOptions,
-   446→  ): this;
-   454→  createCommand(name?: string): Command;
-   463→  addCommand(cmd: Command, opts?: CommandOptions): this;
-   471→  createArgument(name: string, description?: string): Argument;
+   398→  version …
+   442→  command …
+   454→  createCommand …
+   463→  addCommand …
+   471→  createArgument …
    493→  argument(name: string, description?: string, defaultValue?: unknown): this;
-   500→  addArgument(arg: Argument): this;
-   514→  arguments(names: string): this;
+   500→  addArgument …
+   514→  arguments …
    528→  helpCommand(enable: boolean): this;
-   537→  addHelpCommand(enable?: boolean): this;
-   542→  hook(
-   543→    event: HookEvent,
-   544→    listener: (
-   545→      thisCommand: Command,
-   546→      actionCommand: Command,
-   547→    ) => void | Promise<void>,
-   548→  ): this;
-   553→  exitOverride(callback?: (err: CommanderError) => never | void): this;
-   558→  error(message: string, errorOptions?: ErrorOptions): never;
-   564→  createHelp(): Help;
-   572→  configureHelp(): HelpConfiguration;
-   592→  configureOutput(): OutputConfiguration;
-   599→  copyInheritedSettings(sourceCommand: Command): this;
-   604→  showHelpAfterError(displayHelp?: boolean | string): this;
-   609→  showSuggestionAfterError(displaySuggestion?: boolean): this;
-   626→  action(fn: (this: this, ...args: any[]) => void | Promise<void>): this;
-   660→  option(
-   661→    flags: string,
-   662→    description: string,
-   663→    regexp: RegExp,
-   664→    defaultValue?: string | boolean | string[],
-   665→  ): this;
-   685→  requiredOption(
-   686→    flags: string,
-   687→    description: string,
-   688→    regexp: RegExp,
-   689→    defaultValue?: string | boolean | string[],
-   690→  ): this;
-   699→  createOption(flags: string, description?: string): Option;
-   706→  addOption(option: Option): this;
+   537→  addHelpCommand …
+   542→  hook …
+   553→  exitOverride …
+   558→  error …
+   564→  createHelp …
+   572→  configureHelp …
+   592→  configureOutput …
+   599→  copyInheritedSettings …
+   604→  showHelpAfterError …
+   609→  showSuggestionAfterError …
+   626→  action …
+   660→  option …
+   685→  requiredOption …
+   699→  createOption …
+   706→  addOption …
    718→  storeOptionsAsProperties(storeAsProperties?: boolean): this;
-   723→  getOptionValue(key: string): any;
-   728→  setOptionValue(key: string, value: unknown): this;
-   733→  setOptionValueWithSource(
-   734→    key: string,
-   735→    value: unknown,
-   736→    source: OptionValueSource,
-   737→  ): this;
-   742→  getOptionValueSource(key: string): OptionValueSource | undefined;
-   747→  getOptionValueSourceWithGlobals(key: string): OptionValueSource | undefined;
-   761→  combineFlagAndOptionalValue(combine?: boolean): this;
-   768→  allowUnknownOption(allowUnknown?: boolean): this;
-   775→  allowExcessArguments(allowExcess?: boolean): this;
-   785→  enablePositionalOptions(positional?: boolean): this;
-   796→  passThroughOptions(passThrough?: boolean): this;
-   819→  parse(argv?: readonly string[], parseOptions?: ParseOptions): this;
-   840→  parseAsync(
-   841→    argv?: readonly string[],
-   842→    parseOptions?: ParseOptions,
-   843→  ): Promise<this>;
-   851→  saveStateBeforeParse(): void;
-   859→  restoreStateBeforeParse(): void;
-   873→  parseOptions(argv: string[]): ParseOptionsResult;
-   878→  opts<T extends OptionValues>(): T;
-   883→  optsWithGlobals<T extends OptionValues>(): T;
-   897→  description(): string;
-   909→  summary(): string;
-   922→  alias(): string;
-   935→  aliases(): string[];
-   946→  usage(): string;
-   957→  name(): string;
-   972→  nameFromFilename(filename: string): this;
-   990→  executableDir(): string | null;
-  1001→  helpGroup(): string;
-  1019→  commandsGroup(): string;
-  1037→  optionsGroup(): string;
-  1047→  outputHelp(cb: (str: string) => string): void;
-  1052→  helpInformation(context?: HelpContext): string;
-  1059→  helpOption(flags?: string | boolean, description?: string): this;
-  1065→  addHelpOption(option: Option): this;
-  1074→  help(cb: (str: string) => string): never;
+   723→  getOptionValue …
+   728→  setOptionValue …
+   733→  setOptionValueWithSource …
+   742→  getOptionValueSource …
+   747→  getOptionValueSourceWithGlobals …
+   761→  combineFlagAndOptionalValue …
+   768→  allowUnknownOption …
+   775→  allowExcessArguments …
+   785→  enablePositionalOptions …
+   796→  passThroughOptions …
+   819→  parse …
+   840→  parseAsync …
+   851→  saveStateBeforeParse …
+   859→  restoreStateBeforeParse …
+   873→  parseOptions …
+   878→  opts …
+   883→  optsWithGlobals …
+   897→  description …
+   909→  summary …
+   922→  alias …
+   935→  aliases …
+   946→  usage …
+   957→  name …
+   972→  nameFromFilename …
+   990→  executableDir …
+  1001→  helpGroup …
+  1019→  commandsGroup …
+  1037→  optionsGroup …
+  1047→  outputHelp …
+  1052→  helpInformation …
+  1059→  helpOption …
+  1065→  addHelpOption …
+  1074→  help …
   1083→  addHelpText(
   1084→    position: AddHelpTextPosition,
   1085→    text: (context: AddHelpTextContext) => string,
   1086→  ): this;
-  1091→  on(event: string | symbol, listener: (...args: any[]) => void): this;
+  1091→  on …
   1094→export interface CommandOptions {
   1095→  hidden?: boolean;
   1096→  isDefault?: boolean;
@@ -909,3 +949,17 @@ typings/index.d.ts
   1106→  unknown: string[];
   1107→}
   1113→export const program: Command;
+typings/index.test-d.ts
+     1→import * as commander from './index';
+     2→import { expectType } from 'tsd';
+   384→interface MyCheeseOption {
+   385→  cheese: string;
+   386→}
+   509→class MyCommand extends commander.Command {
+   510→  createCommand(name?: string): MyCommand {
+   511→    return new MyCommand(name);
+   512→  }
+   513→
+   514→  myFunction(): void {
+   515→    // do nothing.
+   516→  }

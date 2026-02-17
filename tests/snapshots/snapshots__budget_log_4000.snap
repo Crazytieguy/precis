@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3813 words)
+budget: 4000 (3808 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -20,13 +20,7 @@ README.md
      9→![License](https://img.shields.io/crates/l/log.svg)
     10→
     11→* [`log` documentation](https://docs.rs/log)
-    12→
-    13→A logging facade provides a single logging API that abstracts over the actual
-    14→logging implementation. Libraries can use the logging API provided by this
-    15→crate, and the consumer of those libraries can choose the logging
-    16→implementation that is most suitable for its use case.
-    17→
-    18→
+      →…
     19→## Minimum supported `rustc`
     21→`1.68.0+`
     22→
@@ -93,7 +87,6 @@ README.md
     86→    * [`win_dbg_logger`](https://docs.rs/win_dbg_logger/*/win_dbg_logger/)
     87→    * [`db_logger`](https://docs.rs/db_logger/*/db_logger/)
     88→    * [`log-to-defmt`](https://docs.rs/log-to-defmt/*/log_to_defmt/)
-    89→    * [`logcontrol-log`](https://docs.rs/logcontrol-log/*/logcontrol_log/)
       →…
    106→## Structured logging
    108→If you enable the `kv` feature, you can associate structured data with your log records:
@@ -104,25 +97,17 @@ README.md
    113→pub fn shave_the_yak(yak: &mut Yak) {
    114→    // `yak:serde` will capture `yak` using its `serde::Serialize` impl
    115→    //
-   116→    // You could also use `:?` for `Debug`, or `:%` for `Display`. For a
-   117→    // full list, see the `log` crate documentation
-   118→    trace!(target = "yak_events", yak:serde; "Commencing yak shaving");
-   119→
-   120→    loop {
-   121→        match find_a_razor() {
-   122→            Ok(razor) => {
-   123→                info!(razor; "Razor located");
-   124→                yak.shave(razor);
-   125→                break;
-   126→            }
-   127→            Err(e) => {
-   128→                // `e:err` will capture `e` using its `std::error::Error` impl
-   129→                warn!(e:err; "Unable to locate a razor, retrying");
-   130→            }
-   131→        }
-   132→    }
-   133→}
-   134→```
+      →…
+benches/value.rs
+     4→use log::kv::Value;
+     6→#[bench]
+     7→fn u8_to_value(b: &mut test::Bencher) {
+    11→#[bench]
+    12→fn u8_to_value_debug(b: &mut test::Bencher) {
+    16→#[bench]
+    17→fn str_to_value_debug(b: &mut test::Bencher) {
+    21→#[bench]
+    22→fn custom_to_value_debug(b: &mut test::Bencher) {
 rfcs/0296-structured-logging.md
      5→# Summary
      8→Add support for structured logging to the `log` crate in both `std` and `no_std` environments, allowing log records to carry typed data beyond a textual message. This document serves as an introduction to what structured logging is all about, and as an RFC for an implementation in the `log` crate.
@@ -783,9 +768,6 @@ src/lib.rs
   1490→        Ordering::Acquire,
   1491→        Ordering::Relaxed,
   1492→    ) {
-  1493→        Ok(UNINITIALIZED) => {
-  1494→            unsafe {
-  1495→                LOGGER = make_logger();
       →…
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///
@@ -874,3 +856,31 @@ test_max_level_features/main.rs
     29→fn main() {
     44→fn test(a: &State, filter: LevelFilter) {
     72→fn last(state: &State, expected: Option<Level>) {
+tests/integration.rs
+     3→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
+     4→use std::sync::{Arc, Mutex};
+     6→struct State {
+     7→    last_log_level: Mutex<Option<Level>>,
+     8→    last_log_location: Mutex<Option<u32>>,
+     9→}
+    11→struct Logger(Arc<State>);
+    13→impl Log for Logger {
+    14→    fn enabled(&self, _: &Metadata) -> bool {
+    18→    fn log(&self, record: &Record) {
+    22→    fn flush(&self) {}
+    62→fn test_filter …
+    89→fn test_line_numbers …
+tests/macros.rs
+     1→use log::{log, log_enabled, Log, Metadata, Record};
+     3→macro_rules! all_log_macros {
+    14→struct Logger;
+    16→impl Log for Logger {
+    17→    fn enabled(&self, _: &Metadata) -> bool {
+    20→    fn log(&self, _: &Record) {}
+    21→    fn flush(&self) {}
+   418→/// Some and None (from Option) are used in the macros.
+   419→#[derive(Debug)]
+   420→enum Type {
+   421→    Some,
+   422→    None,
+   423→}

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3888 words)
+budget: 4000 (3889 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -180,6 +180,8 @@ README.md
     93→
     94→```tsx
     95→const [value, setValue] = React.useState('apple')
+    96→
+    97→return (
       →…
    153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
    155→Props are forwarded to [Command](#command-cmdk-root). Composes Radix UI's Dialog component. The overlay is always rendered. See the [Radix Documentation](https://www.radix-ui.com/docs/primitives/components/dialog) for more information. Can be controlled with the `open` and `onOpenChange` props.
@@ -190,6 +192,8 @@ README.md
    160→return (
    161→  <Command.Dialog open={open} onOpenChange={setOpen}>
    162→    ...
+   163→  </Command.Dialog>
+   164→)
       →…
    180→### Input `[cmdk-input]`
    182→All props are forwarded to the underlying `input` element. Can be controlled with the `value` and `onValueChange` props.
@@ -209,6 +213,8 @@ README.md
    197→  height: var(--cmdk-list-height);
    198→  max-height: 500px;
    199→  transition: height 100ms ease;
+   200→}
+   201→```
       →…
    212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
    214→Item that becomes active on pointer enter. You should provide a unique `value` for each item, but it will be automatically inferred from the `.textContent`.
@@ -219,6 +225,8 @@ README.md
    219→  // Value is implicity "apple" because of the provided text content
    220→>
    221→  Apple
+   222→</Command.Item>
+   223→```
       →…
    242→### Group `[cmdk-group]` `[hidden?]`
    244→Groups items together with the given `heading` (`[cmdk-group-heading]`).
@@ -229,6 +237,8 @@ README.md
    249→</Command.Group>
    250→```
    251→
+   252→Groups will not unmount from the DOM, rather the `hidden` attribute is applied to hide it from view. This may be relevant in your styling.
+   253→
       →…
    256→### Separator `[cmdk-separator]`
    258→Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
@@ -254,7 +264,7 @@ README.md
    281→const search = useCommandState((state) => state.search)
    282→return <Command.Empty>No results found for "{search}".</Command.Empty>
    283→```
-      →…
+   284→
    285→## Examples
    287→Code snippets for common use cases.
    288→
@@ -267,6 +277,8 @@ README.md
    296→const [search, setSearch] = React.useState('')
    297→const [pages, setPages] = React.useState([])
    298→const page = pages[pages.length - 1]
+   299→
+   300→return (
       →…
    338→### Show sub-items when searching
    340→If your items have nested sub-items that you only want to reveal when searching, render based on the search state:
@@ -277,6 +289,8 @@ README.md
    345→  if (!search) return null
    346→  return <Command.Item {...props} />
    347→}
+   348→
+   349→return (
       →…
    361→### Asynchronous results
    363→Render the items as they become available. Filtering and sorting will happen automatically.
@@ -287,6 +301,8 @@ README.md
    368→
    369→React.useEffect(() => {
    370→  async function getItems() {
+   371→    setLoading(true)
+   372→    const res = await api.get('/dictionary')
       →…
    397→### Use inside Popover
    399→We recommend using the [Radix UI popover](https://www.radix-ui.com/docs/primitives/components/popover) component. ⌘K relies on the Radix UI Dialog component, so this will reduce your bundle size a bit due to shared dependencies.
@@ -297,6 +313,8 @@ README.md
    404→
    405→Render `Command` inside of the popover content:
    406→
+   407→```tsx
+   408→import * as Popover from '@radix-ui/react-popover'
       →…
    426→### Drop in stylesheets
    428→You can find global stylesheets to drop in as a starting point for styling. See [website/styles/cmdk](website/styles/cmdk) for examples.
@@ -519,6 +537,19 @@ cmdk/tsup.config.ts
 playwright.config.ts
      1→import { PlaywrightTestConfig, devices } from '@playwright/test'
      3→const config: PlaywrightTestConfig = {
+test/basic.test.ts
+test/dialog.test.ts
+test/group.test.ts
+test/item.test.ts
+test/keybind.test.ts
+test/numeric.test.ts
+test/pages/_app.tsx
+     3→export default function App({ Component, pageProps }) {
+     4→  return <Component {...pageProps} />
+     5→}
+test/pages/huge.tsx
+     4→const items = new Array(1000).fill(0)
+test/props.test.ts
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -590,9 +621,6 @@ website/components/cmdk/linear.tsx
     30→const items = [
     31→  {
     32→    icon: <AssignToIcon />,
-    33→    label: 'Assign to...',
-    34→    shortcut: ['A'],
-    35→  },
       →…
     68→function AssignToIcon() {
     76→function AssignToMeIcon() {
@@ -760,15 +788,7 @@ website/pages/_app.tsx
     34→              url: `${siteUrl}/og.png`,
     35→              alt: title,
     36→            },
-    37→          ],
-    38→        }}
-    39→      />
-    40→      <ThemeProvider disableTransitionOnChange attribute="class">
-    41→        <Component {...pageProps} />
-    42→      </ThemeProvider>
-    43→    </>
-    44→  )
-    45→}
+      →…
 website/pages/_document.tsx
      2→import React from 'react'
      3→import NextDocument, { Html, Head, Main, NextScript } from 'next/document'
@@ -832,28 +852,6 @@ website/pages/index.tsx
     46→        </div>
     47→
     48→        <AnimatePresence exitBeforeEnter initial={false}>
-    49→          {theme === 'framer' && (
-    50→            <CMDKWrapper key="framer">
-    51→              <FramerCMDK />
-    52→            </CMDKWrapper>
-    53→          )}
-    54→          {theme === 'vercel' && (
-    55→            <CMDKWrapper key="vercel">
-    56→              <VercelCMDK />
-    57→            </CMDKWrapper>
-    58→          )}
-    59→          {theme === 'linear' && (
-    60→            <CMDKWrapper key="linear">
-    61→              <LinearCMDK />
-    62→            </CMDKWrapper>
-    63→          )}
-    64→          {theme === 'raycast' && (
-    65→            <CMDKWrapper key="raycast">
-    66→              <RaycastCMDK />
-    67→            </CMDKWrapper>
-    68→          )}
-    69→        </AnimatePresence>
-    70→
       →…
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     99→//////////////////////////////////////////////////////////////////
@@ -871,6 +869,8 @@ website/pages/index.tsx
    111→          setTimeout(() => {
    112→            setCopied(false)
    113→          }, 2000)
+   114→        } catch (e) {}
+   115→      }}
       →…
    123→function GitHubButton() {
    137→//////////////////////////////////////////////////////////////////
@@ -902,6 +902,8 @@ website/pages/index.tsx
    272→
    273→    <Command.Group heading="Fruits">
    274→      <Command.Item>Apple</Command.Item>
+   275→      <Command.Item>Orange</Command.Item>
+   276→      <Command.Separator />
       →…
    294→//////////////////////////////////////////////////////////////////
    295→

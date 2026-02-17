@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (908 words)
+budget: 1000 (909 words)
 
 README.md
      1→derive(Error)
@@ -45,24 +45,12 @@ build/probe.rs
     29→    }
 build.rs
     10→const PRIVATE: &str = "\
-    11→#[doc(hidden)]
-      →…
 impl/src/ast.rs
     10→pub enum Input<'a> {
-    11→    Struct(Struct<'a>),
-      →…
     15→pub struct Struct<'a> {
-    16→    pub attrs: Attrs<'a>,
-      →…
     22→pub struct Enum<'a> {
-    23→    pub attrs: Attrs<'a>,
-      →…
     29→pub struct Variant<'a> {
-    30→    pub original: &'a syn::Variant,
-      →…
     36→pub struct Field<'a> {
-    37→    pub original: &'a syn::Field,
-      →…
     44→#[derive(Copy, Clone)]
     45→pub enum ContainerKind {
     46→    Struct,
@@ -74,8 +62,6 @@ impl/src/ast.rs
     52→}
 impl/src/attr.rs
     11→pub struct Attrs<'a> {
-    12→    pub display: Option<Display<'a>>,
-      →…
     20→#[derive(Clone)]
     21→pub struct Display<'a> {
     22→    pub original: &'a Attribute,
@@ -123,25 +109,13 @@ impl/src/expand.rs
 impl/src/fallback.rs
 impl/src/fmt.rs
    166→struct FmtArguments {
-   167→    named: BTreeSet<IdentUnraw>,
-   168→    first_unnamed: Option<TokenStream>,
-   169→}
    171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
    173→    let ahead = input.fork();
-   174→    if let Ok(set) = try_explicit_named_args(&ahead) {
-   175→        input.advance_to(&ahead);
-   176→        return Ok(set);
-   177→    }
-   178→
       →…
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
-     9→    names: Set<&'a Ident>,
-      →…
     48→pub struct InferredBounds {
-    49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
-      →…
 impl/src/lib.rs
     23→mod ast;
     24→mod attr;
@@ -163,29 +137,7 @@ impl/src/lib.rs
 impl/src/prop.rs
 impl/src/scan_expr.rs
      6→enum Input {
-     7→    Keyword(&'static str),
-     8→    Punct(&'static str),
-     9→    ConsumeAny,
-    10→    ConsumeBinOp,
-    11→    ConsumeBrace,
-    12→    ConsumeDelimiter,
-    13→    ConsumeIdent,
-    14→    ConsumeLifetime,
-    15→    ConsumeLiteral,
-    16→    ConsumeNestedBrace,
-    17→    ExpectPath,
-    18→    ExpectTurbofish,
-    19→    ExpectType,
-    20→    CanBeginExpr,
-    21→    Otherwise,
-    22→    Empty,
-    23→}
     25→enum Action {
-    26→    SetState(&'static [(Input, Action)]),
-    27→    IncDepth,
-    28→    DecDepth,
-    29→    Finish,
-    30→}
 impl/src/unraw.rs
     10→#[derive(Clone)]
     11→#[repr(transparent)]
@@ -269,7 +221,6 @@ src/display.rs
     62→
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
-    65→
     67→        type Target = Self;
     69→        #[inline]
     70→        fn as_display(&'a self) -> Self::Target {
@@ -311,3 +262,51 @@ src/var.rs
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
      7→        Pointer::fmt(self.0, formatter)
      8→    }
+tests/no-std/test.rs
+     3→use thiserror::Error;
+     5→#[derive(Error, Debug)]
+     6→pub enum Error {
+     7→    #[error("Error::E")]
+     8→    E(#[from] SourceError),
+     9→}
+    11→#[derive(Error, Debug)]
+    12→#[error("SourceError {field}")]
+    13→pub struct SourceError {
+    14→    pub field: i32,
+    15→}
+tests/test_backtrace.rs
+    17→#[cfg(thiserror_nightly_testing)]
+    18→pub mod structs {
+    25→    mod not_backtrace {
+   162→#[cfg(thiserror_nightly_testing)]
+   163→pub mod enums {
+tests/test_display.rs
+   414→mod util {
+tests/test_error.rs
+     7→macro_rules! unimplemented_display {
+tests/test_expr.rs
+    55→#[track_caller]
+    56→fn assert<T: Display>(expected: &str, value: T) {
+tests/test_from.rs
+tests/test_generics.rs
+     7→pub struct NoFormat;
+    12→pub struct DisplayOnly;
+tests/test_lints.rs
+     5→pub use std::error::Error;
+tests/test_option.rs
+     1→#![cfg(feature = "std")]
+     2→#![cfg_attr(thiserror_nightly_testing, feature(error_generic_member_access))]
+     3→
+     4→#[cfg(thiserror_nightly_testing)]
+     5→pub mod structs {
+    49→#[cfg(thiserror_nightly_testing)]
+    50→pub mod enums {
+tests/test_path.rs
+tests/test_source.rs
+    50→macro_rules! error_from_macro {
+tests/test_transparent.rs
+tests/ui/concat-display.rs
+     3→macro_rules! error_type {
+tests/ui/fallback-impl-with-display.rs
+     8→impl Display for MyError {
+     9→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {

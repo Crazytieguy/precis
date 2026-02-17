@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (983 words)
+budget: 1000 (989 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -53,20 +53,6 @@ README.md
     50→// => ["gopher", 123456, true]
     51→v := structs.Values(server)
     52→
-    53→// Convert the names of a struct to a []string
-    54→// (see "Names methods" for more info about fields)
-    55→n := structs.Names(server)
-    56→
-    57→// Convert the values of a struct to a []*Field
-    58→// (see "Field methods" for more info about fields)
-    59→f := structs.Fields(server)
-    60→
-    61→// Return the struct name => "Server"
-    62→n := structs.Name(server)
-    63→
-    64→// Check if any field of a struct is initialized or not.
-    65→h := structs.HasZero(server)
-    66→
       →…
     74→### Struct methods
     76→The structs functions can be also used as independent methods by creating a new
@@ -79,8 +65,6 @@ README.md
     83→
     84→m := s.Map()              // Get a map[string]interface{}
     85→v := s.Values()           // Get a []interface{}
-    86→f := s.Fields()           // Get a []*Field
-    87→n := s.Names()            // Get a []string
       →…
     95→### Field methods
     97→We can easily examine a single Field for more detail. Below you can see how we
@@ -93,8 +77,6 @@ README.md
    104→// Get the Field struct for the "Name" field
    105→name := s.Field("Name")
    106→
-   107→// Get the underlying value,  value => "gopher"
-   108→value := name.Value().(string)
       →…
    163→## Credits
    165→ * [Fatih Arslan](https://github.com/fatih)
@@ -130,6 +112,30 @@ field.go
    102→func (f *Field) Fields() []*Field {
    108→func (f *Field) Field(name string) *Field {
    119→func (f *Field) FieldOk(name string) (*Field, bool) {
+field_test.go
+     3→import …
+     8→// A test struct that defines all cases
+     9→type Foo struct {
+    10→	A    string
+    11→	B    int    `structs:"y"`
+    12→	C    bool   `json:"c"`
+    13→	d    string // not exported
+    14→	E    *Baz
+    15→	x    string `xml:"x"` // not exported, with tag
+    16→	Y    []string
+    17→	Z    map[string]interface{}
+    18→	*Bar // embedded
+    19→}
+    21→type Baz struct {
+    22→	A string
+    23→	B int
+    24→}
+    26→type Bar struct {
+    27→	E string
+    28→	F int
+    29→	g []string
+    30→}
+    32→func newStruct() *Struct {
 structs.go
      4→import (
      5→	"fmt"
@@ -169,8 +175,6 @@ structs.go
    405→func (s *Struct) structFields() []reflect.StructField {
    406→	t := s.value.Type()
    407→
-   408→	var f []reflect.StructField
-   409→
       →…
    428→func strctVal(s interface{}) reflect.Value {
    429→	v := reflect.ValueOf(s)
@@ -190,9 +194,22 @@ structs.go
    509→func (s *Struct) nested(val reflect.Value) interface{} {
    510→	var finalVal interface{}
    511→
-   512→	v := reflect.ValueOf(val.Interface())
-   513→	if v.Kind() == reflect.Ptr {
       →…
+structs_example_test.go
+     3→import …
+structs_test.go
+     3→import …
+  1309→type Person struct {
+  1310→	Name string
+  1311→	Age  int
+  1312→}
+  1358→type Animal struct {
+  1359→	Name string
+  1360→	Age  int
+  1361→}
+  1363→type Dog struct {
+  1364→	Animal *Animal `json:"animal,string"`
+  1365→}
 tags.go
      3→import "strings"
      5→// tagOptions contains a slice of tag options
@@ -204,6 +221,6 @@ tags.go
     22→func parseTag(tag string) (string, tagOptions) {
     23→	// tag is one of followings:
     24→	// ""
-    25→	// "name"
-    26→	// "name,opt"
       →…
+tags_test.go
+     3→import "testing …

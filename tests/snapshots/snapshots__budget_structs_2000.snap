@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1988 words)
+budget: 2000 (1990 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -215,6 +215,37 @@ field.go
    117→// FieldOk returns the field from a nested struct. The boolean returns whether
       →…
    119→func (f *Field) FieldOk(name string) (*Field, bool) {
+field_test.go
+     3→import …
+     8→// A test struct that defines all cases
+     9→type Foo struct {
+    10→	A    string
+    11→	B    int    `structs:"y"`
+    12→	C    bool   `json:"c"`
+    13→	d    string // not exported
+    14→	E    *Baz
+    15→	x    string `xml:"x"` // not exported, with tag
+    16→	Y    []string
+    17→	Z    map[string]interface{}
+    18→	*Bar // embedded
+    19→}
+    21→type Baz struct {
+    22→	A string
+    23→	B int
+    24→}
+    26→type Bar struct {
+    27→	E string
+    28→	F int
+    29→	g []string
+    30→}
+    32→func newStruct() *Struct {
+    33→	b := &Bar{
+    34→		E: "example",
+    35→		F: 2,
+    36→		g: []string{"zeynep", "fatih"},
+    37→	}
+    38→
+      →…
 structs.go
      4→import (
      5→	"fmt"
@@ -260,24 +291,7 @@ structs.go
    251→
    252→	var fields []*Field
    253→
-   254→	for i := 0; i < t.NumField(); i++ {
-   255→		field := t.Field(i)
-   256→
-   257→		if tag := field.Tag.Get(tagName); tag == "-" {
-   258→			continue
-   259→		}
-   260→
-   261→		f := &Field{
-   262→			field: field,
-   263→			value: v.FieldByName(field.Name),
-   264→		}
-   265→
-   266→		fields = append(fields, f)
-   267→
-   268→	}
-   269→
-   270→	return fields
-   271→}
+      →…
    273→// Field returns a new Field struct that provides several high level functions
       →…
    275→func (s *Struct) Field(name string) *Field {
@@ -304,14 +318,6 @@ structs.go
    410→	for i := 0; i < t.NumField(); i++ {
    411→		field := t.Field(i)
    412→		// we can't access the value of unexported fields
-   413→		if field.PkgPath != "" {
-   414→			continue
-   415→		}
-   416→
-   417→		// don't check if it's omitted
-   418→		if tag := field.Tag.Get(s.TagName); tag == "-" {
-   419→			continue
-   420→		}
       →…
    428→func strctVal(s interface{}) reflect.Value {
    429→	v := reflect.ValueOf(s)
@@ -322,11 +328,7 @@ structs.go
    434→	}
    435→
    436→	if v.Kind() != reflect.Struct {
-   437→		panic("not struct")
-   438→	}
-   439→
-   440→	return v
-   441→}
+      →…
    443→// Map converts the given struct to a map[string]interface{}. For more info
       →…
    445→func Map(s interface{}) map[string]interface{} {
@@ -364,15 +366,22 @@ structs.go
    514→		v = v.Elem()
    515→	}
    516→
-   517→	switch v.Kind() {
-   518→	case reflect.Struct:
-   519→		n := New(val.Interface())
-   520→		n.TagName = s.TagName
-   521→		m := n.Map()
-   522→
-   523→		// do not add the converted value if there are no exported fields, ie:
-   524→		// time.Time
       →…
+structs_example_test.go
+     3→import …
+structs_test.go
+     3→import …
+  1309→type Person struct {
+  1310→	Name string
+  1311→	Age  int
+  1312→}
+  1358→type Animal struct {
+  1359→	Name string
+  1360→	Age  int
+  1361→}
+  1363→type Dog struct {
+  1364→	Animal *Animal `json:"animal,string"`
+  1365→}
 tags.go
      3→import "strings"
      5→// tagOptions contains a slice of tag options
@@ -390,6 +399,6 @@ tags.go
     27→	// "name,opt,opt2"
     28→	// ",opt"
     29→
-    30→	res := strings.Split(tag, ",")
-    31→	return res[0], res[1:]
-    32→}
+      →…
+tags_test.go
+     3→import "testing …

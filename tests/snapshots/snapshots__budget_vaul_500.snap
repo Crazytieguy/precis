@@ -2,10 +2,9 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (496 words)
+budget: 500 (498 words)
 
 playwright.config.ts
-     1→import { defineConfig, devices } from '@playwright/test';
 src/browser.ts
 src/constants.ts
      1→export const TRANSITIONS = {
@@ -21,18 +20,12 @@ src/context.ts
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
 src/helpers.ts
      3→interface Style {
-     7→const cache …
    105→/**
    106→ * Receives functions as arguments and returns a new function that calls all.
    107→ */
    108→export function chain<T>(...fns: T[]) {
    109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
    110→    for (const fn of fns) {
-   111→      if (typeof fn === 'function') {
-   112→        // @ts-ignore
-   113→        fn(...args);
-   114→      }
-   115→    }
       →…
 src/index.tsx
     27→export interface WithFadeFromProps {
@@ -43,8 +36,6 @@ src/index.tsx
       →…
     50→export type DialogProps …
    139→export function Root({
-   140→  open: openProp,
-      →…
    803→export const Overlay …
    831→export type ContentProps …
    833→export const Content …
@@ -53,12 +44,8 @@ src/index.tsx
    994→const DOUBLE_TAP_TIMEOUT = 120;
    996→export const Handle …
   1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
-  1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
-      →…
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
   1130→export function Portal(props: PortalProps) {
-  1131→  const context = useDrawerContext();
-      →…
   1137→export const Drawer …
 src/types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
@@ -68,7 +55,6 @@ src/types.ts
      5→}
      7→export type AnyFunction = (...args: any) => any;
 src/use-composed-refs.ts
-     5→type PossibleRef …
      7→/**
       →…
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
@@ -79,10 +65,6 @@ src/use-composed-refs.ts
       →…
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 src/use-controllable-state.ts
-     5→type UseControllableStateParams …
-    11→type SetStateFn …
-    13→function useCallbackRef …
-    24→function useUncontrolledState …
 src/use-position-fixed.ts
      6→/**
      7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
@@ -96,19 +78,10 @@ src/use-position-fixed.ts
     15→export function usePositionFixed({
     16→  isOpen,
     17→  modal,
-    18→  nested,
-    19→  hasBeenOpened,
-    20→  preventScrollRestoration,
-    21→  noBodyStyles,
-    22→}: {
       →…
 src/use-prevent-scroll.ts
-     6→const KEYBOARD_BUFFER …
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
-    16→function chain …
-    27→const visualViewport …
-    47→const nonTextInputTypes …
     63→/**
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
@@ -117,16 +90,46 @@ src/use-prevent-scroll.ts
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
     69→  let { isDisabled } = options;
     70→
-    71→  useIsomorphicLayoutEffect(() => {
-    72→    if (isDisabled) {
-    73→      return;
-    74→    }
-    75→
       →…
-   118→function preventScrollMobileSafari …
-   243→function setStyle …
-   257→function addEvent …
-   272→function scrollIntoView …
 src/use-scale-background.ts
-     6→const noop …
 src/use-snap-points.ts
+test/README.md
+test/src/app/controlled/page.tsx
+     6→export default function Page() {
+test/src/app/default-open/page.tsx
+     6→export default function Page() {
+test/src/app/different-directions/page.tsx
+   118→export default function Page() {
+test/src/app/initial-snap/page.tsx
+     9→export default function Page() {
+test/src/app/layout.tsx
+     7→export const metadata: Metadata = {
+test/src/app/nested-drawers/page.tsx
+     5→export default function Page() {
+test/src/app/non-dismissible/page.tsx
+     6→export default function Page() {
+test/src/app/open-another-drawer/page.tsx
+test/src/app/page.tsx
+test/src/app/parent-container/page.tsx
+     6→export default function Page() {
+test/src/app/scrollable-page/page.tsx
+     6→export default function Page() {
+test/src/app/scrollable-with-inputs/page.tsx
+     5→export default function Page() {
+test/src/app/with-handle/page.tsx
+     9→export default function Page() {
+test/src/app/with-modal-false/page.tsx
+     9→export default function Page() {
+test/src/app/with-redirect/long-page/page.tsx
+     3→export default function Page() {
+test/src/app/with-redirect/page.tsx
+     6→export default function Page() {
+test/src/app/with-scaled-background/page.tsx
+    65→export default function Page() {
+test/src/app/with-snap-points/page.tsx
+     9→export default function Page() {
+test/src/app/without-scaled-background/page.tsx
+     6→export default function Page() {
+test/tests/constants.ts
+     1→export const ANIMATION_DURATION = 500;
+test/tests/helpers.ts

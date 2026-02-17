@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1962 words)
+budget: 2000 (1957 words)
 
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
@@ -17,8 +17,7 @@ src/browser.ts
 src/constants.ts
      1→export const TRANSITIONS = {
      2→  DURATION: 0.5,
-     3→  EASE: [0.32, 0.72, 0, 1],
-     4→};
+      →…
      6→export const VELOCITY_THRESHOLD = 0.4;
      8→export const CLOSE_THRESHOLD = 0.25;
     10→export const SCROLL_LOCK_TIMEOUT = 100;
@@ -47,33 +46,9 @@ src/context.ts
     19→  activeSnapPointIndex?: number | null;
     20→  modal: boolean;
     21→  shouldFade: boolean;
-    22→  activeSnapPoint?: number | string | null;
-    23→  setActiveSnapPoint: (o: number | string | null) => void;
-    24→  closeDrawer: () => void;
-    25→  openProp?: boolean;
-    26→  onOpenChange?: (o: boolean) => void;
-    27→  direction: DrawerDirection;
-    28→  shouldScaleBackground: boolean;
-    29→  setBackgroundColorOnScale: boolean;
-    30→  noBodyStyles: boolean;
-    31→  handleOnly?: boolean;
-    32→  container?: HTMLElement | null;
-    33→  autoFocus?: boolean;
-    34→  shouldAnimate?: React.RefObject<boolean>;
-    35→}
+      →…
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     38→  drawerRef: { current: null },
-    39→  overlayRef: { current: null },
-    40→  onPress: () => {},
-    41→  onRelease: () => {},
-    42→  onDrag: () => {},
-    43→  onNestedDrag: () => {},
-    44→  onNestedOpenChange: () => {},
-    45→  onNestedRelease: () => {},
-    46→  openProp: undefined,
-    47→  dismissible: false,
-    48→  isOpen: false,
-    49→  isDragging: false,
       →…
     69→export const useDrawerContext = () => {
 src/helpers.ts
@@ -159,40 +134,6 @@ src/index.tsx
    147→  setBackgroundColorOnScale = true,
    148→  closeThreshold = CLOSE_THRESHOLD,
    149→  scrollLockTimeout = SCROLL_LOCK_TIMEOUT,
-   150→  dismissible = true,
-   151→  handleOnly = false,
-   152→  fadeFromIndex = snapPoints && snapPoints.length - 1,
-   153→  activeSnapPoint: activeSnapPointProp,
-   154→  setActiveSnapPoint: setActiveSnapPointProp,
-   155→  fixed,
-   156→  modal = true,
-   157→  onClose,
-   158→  nested,
-   159→  noBodyStyles = false,
-   160→  direction = 'bottom',
-   161→  defaultOpen = false,
-   162→  disablePreventScroll = true,
-   163→  snapToSequentialPoint = false,
-   164→  preventScrollRestoration = false,
-   165→  repositionInputs = true,
-   166→  onAnimationEnd,
-   167→  container,
-   168→  autoFocus = false,
-   169→}: DialogProps) {
-   170→  const [isOpen = false, setIsOpen] = useControllableState({
-   171→    defaultProp: defaultOpen,
-   172→    prop: openProp,
-   173→    onChange: (o: boolean) => {
-   174→      onOpenChange?.(o);
-   175→
-   176→      if (!o && !nested) {
-   177→        restorePositionSetting();
-   178→      }
-   179→
-   180→      setTimeout(() => {
-   181→        onAnimationEnd?.(o);
-   182→      }, TRANSITIONS.DURATION * 1000);
-   183→
       →…
    803→export const Overlay …
    831→export type ContentProps …
@@ -212,24 +153,7 @@ src/index.tsx
   1106→    <Root
   1107→      nested
   1108→      open={nestedIsOpen}
-  1109→      onClose={() => {
-  1110→        onNestedOpenChange(false);
-  1111→      }}
-  1112→      onDrag={(e, p) => {
-  1113→        onNestedDrag(e, p);
-  1114→        onDrag?.(e, p);
-  1115→      }}
-  1116→      onOpenChange={(o) => {
-  1117→        if (o) {
-  1118→          onNestedOpenChange(o);
-  1119→        }
-  1120→        onOpenChange?.(o);
-  1121→      }}
-  1122→      onRelease={onNestedRelease}
-  1123→      {...rest}
-  1124→    />
-  1125→  );
-  1126→}
+      →…
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
   1130→export function Portal(props: PortalProps) {
   1131→  const context = useDrawerContext();
@@ -342,20 +266,6 @@ src/use-position-fixed.ts
     57→
     58→      window.setTimeout(
     59→        () =>
-    60→          window.requestAnimationFrame(() => {
-    61→            // Attempt to check if the bottom bar appeared due to the position change
-    62→            const bottomBarHeight = innerHeight - window.innerHeight;
-    63→            if (bottomBarHeight && scrollPos.current >= innerHeight) {
-    64→              // Move the content further up so that the bottom bar doesn't hide it
-    65→              document.body.style.top = `${-(scrollPos.current + bottomBarHeight)}px`;
-    66→            }
-    67→          }),
-    68→        300,
-    69→      );
-    70→    }
-    71→  }, [isOpen]);
-    72→
-    73→  const restorePositionSetting = React.useCallback(() => {
       →…
 src/use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
@@ -375,13 +285,7 @@ src/use-prevent-scroll.ts
     48→  'checkbox',
     49→  'radio',
     50→  'range',
-    51→  'color',
-    52→  'file',
-    53→  'image',
-    54→  'button',
-    55→  'submit',
-    56→  'reset',
-    57→]);
+      →…
     63→/**
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
@@ -434,3 +338,105 @@ src/use-snap-points.ts
      4→import { useControllableState } from './use-controllable-state';
      5→import { DrawerDirection } from './types';
      7→export function useSnapPoints({
+test/README.md
+     3→## Getting Started
+     5→First, run the development server:
+     6→
+      →…
+    21→## Learn More
+    23→To learn more about Next.js, take a look at the following resources:
+    24→
+      →…
+    30→## Deploy on Vercel
+    32→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    33→
+      →…
+test/next.config.js
+     2→const nextConfig = {
+test/src/app/controlled/page.tsx
+     6→export default function Page() {
+test/src/app/default-open/page.tsx
+     6→export default function Page() {
+     7→  return (
+      →…
+test/src/app/different-directions/page.tsx
+     6→function DirectionalDrawer({
+   118→export default function Page() {
+   119→  return (
+      →…
+test/src/app/initial-snap/page.tsx
+     7→const snapPoints = [0, '148px', '355px', 1];
+     9→export default function Page() {
+test/src/app/layout.tsx
+     5→const inter = Inter({ subsets: ['latin'] });
+     7→export const metadata: Metadata = {
+    12→export default function RootLayout({ children }: { children: React.ReactNode }) {
+    13→  return (
+      →…
+test/src/app/nested-drawers/page.tsx
+     3→import { Drawer } from 'vaul';
+     5→export default function Page() {
+     6→  return (
+      →…
+test/src/app/non-dismissible/page.tsx
+     6→export default function Page() {
+test/src/app/open-another-drawer/page.tsx
+     6→export function MyDrawer({
+    96→export function MyDrawer2({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
+   195→export default function Home() {
+test/src/app/page.tsx
+     5→export default function Page() {
+     6→  return (
+      →…
+test/src/app/parent-container/page.tsx
+     6→export default function Page() {
+     7→  return (
+      →…
+    15→function Default() {
+    39→function WithNested() {
+test/src/app/scrollable-page/page.tsx
+     6→export default function Page() {
+test/src/app/scrollable-with-inputs/page.tsx
+     3→import { Drawer } from 'vaul';
+     5→export default function Page() {
+     6→  return (
+      →…
+test/src/app/with-handle/page.tsx
+     7→const snapPoints = ['148px', '355px'];
+     9→export default function Page() {
+test/src/app/with-modal-false/page.tsx
+     7→const snapPoints = ['148px', '355px', 1];
+     9→export default function Page() {
+test/src/app/with-redirect/long-page/page.tsx
+     3→export default function Page() {
+     4→  return (
+      →…
+test/src/app/with-redirect/page.tsx
+     6→export default function Page() {
+     7→  return (
+      →…
+test/src/app/with-scaled-background/page.tsx
+     8→const CenteredContent …
+    29→const DrawerContent …
+    65→export default function Page() {
+test/src/app/with-snap-points/page.tsx
+     7→const snapPoints = ['148px', '355px', 1];
+     9→export default function Page() {
+test/src/app/without-scaled-background/page.tsx
+     6→export default function Page() {
+test/tailwind.config.ts
+     3→const config: Config = {
+test/tests/constants.ts
+     1→export const ANIMATION_DURATION = 500;
+test/tests/helpers.ts
+     4→export async function openDrawer(page: Page) {
+    11→export async function dragWithSpeed(
+    12→  page: Page,
+    13→  selector: string,
+    14→  startY: number,
+    15→  endY: number,
+    16→  speed: number = 10,
+    17→): Promise<void> {
+test/tests/initial-snap.spec.ts
+     8→const snapPointYPositions = {
+    15→const snapTo = async (page: Page, snapPointIndex: keyof typeof snapPointYPositions) => {

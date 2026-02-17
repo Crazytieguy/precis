@@ -118,7 +118,6 @@ src/core/store.ts
     12→export enum ActionType {
     13→  ADD_TOAST,
     14→  UPDATE_TOAST,
-    15→  UPSERT_TOAST,
       →…
     52→interface ToasterState {
     58→interface State {
@@ -140,23 +139,20 @@ src/core/types.ts
     14→export interface IconTheme {
     15→  primary: string;
     16→  secondary: string;
-    17→}
+      →…
     24→const isFunction …
     29→export const resolveValue …
     34→export interface Toast {
     35→  type: ToastType;
     36→  id: string;
-    37→  toasterId?: string;
       →…
     80→export interface ToasterProps {
     81→  position?: ToastPosition;
     82→  toastOptions?: DefaultToastOptions;
-    83→  reverseOrder?: boolean;
       →…
     91→export interface ToastWrapperProps {
     92→  id: string;
     93→  className?: string;
-    94→  style?: React.CSSProperties;
       →…
 src/core/use-toaster.ts
      8→export const useToaster …
@@ -165,5 +161,10 @@ src/headless/index.ts
      1→import { toast } from '../core/toast';
 src/index.ts
      1→import { toast } from './core/toast';
+test/setup.ts
+     1→import '@testing-library/jest-dom';
+test/toast.test.tsx
+    29→const waitTime …
+    35→const TOAST_DURATION = 1000;
 tsup.config.ts
      4→const commonConfig: Options = {

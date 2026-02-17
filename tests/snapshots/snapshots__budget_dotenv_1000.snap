@@ -2,12 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (976 words)
+budget: 1000 (971 words)
 
 CHANGELOG.md
-     1→# Changelog …
+     1→# Changelog
+     3→All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+     4→
      7→## [17.3.1](https://github.com/motdotla/dotenv/compare/v17.3.0...v17.3.1) (2026-02-12) …
-   484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02) …
+   484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02)
 CONTRIBUTING.md
      1→# Contributing
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
@@ -71,6 +73,8 @@ README.md
    335→```bash
    336→npm i -g vestauth
    337→
+   338→vestauth agent init
+   339→```
       →…
    357→## FAQ
    361→No.
@@ -99,6 +103,8 @@ README.md
    591→and return an Object with a `parsed` key containing the loaded content or an `error` key if it failed.
    592→
    593→```js
+   594→const result = dotenv.config()
+   595→
       →…
    605→#### Options …
    607→##### path
@@ -137,6 +143,8 @@ README.md
    696→an Object with the parsed keys and values.
    697→
    698→```js
+   699→const dotenv = require('dotenv')
+   700→const buf = Buffer.from('BASIC=basic')
       →…
    705→#### Options …
    707→##### debug
@@ -155,6 +163,8 @@ README.md
    725→For example, customizing the source:
    726→
    727→```js
+   728→const dotenv = require('dotenv')
+   729→const parsed = { HELLO: 'world' }
       →…
    748→#### options …
    750→##### Debug
@@ -200,15 +210,6 @@ lib/main.d.ts
     35→  path?: string | string[] | URL;
     36→
     37→  /**
-    38→   * Default: `utf8`
-    39→   *
-    40→   * Specify the encoding of your file containing environment variables.
-    41→   *
-    42→   * example: `require('dotenv').config({ encoding: 'latin1' })`
-    43→   */
-    44→  encoding?: string;
-    45→
-    46→  /**
       →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
@@ -235,12 +236,7 @@ lib/main.d.ts
    116→  /**
    117→   * Default: `false`
    118→   *
-   119→   * Override any environment variables that have already been set on your machine with values from your .env file.
-   120→   *
-   121→   * example: `require('dotenv').config({ override: true })`
-   122→   */
-   123→  override?: boolean;
-   124→}
+      →…
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;
    128→}
@@ -267,3 +263,10 @@ lib/main.js
    346→function decrypt (encrypted, keyStr) {
    378→function populate (processEnv, parsed, options = {}) {
    413→const DotenvModule = {
+tests/test-config-cli.js
+     6→function spawn …
+tests/test-env-options.js
+    16→function options …
+    21→function testOption …
+tests/types/test.ts
+     1→import { config, parse } from "dotenv";

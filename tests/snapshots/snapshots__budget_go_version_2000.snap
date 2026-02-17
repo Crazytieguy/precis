@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1967 words)
+budget: 2000 (1973 words)
 
 CHANGELOG.md
 README.md
@@ -213,6 +213,8 @@ constraint.go
    260→func constraintGreaterThanEqual(v, c *Version) bool {
    264→func constraintLessThanEqual(v, c *Version) bool {
    268→func constraintPessimistic(v, c *Version) bool {
+constraint_test.go
+     6→import …
 version.go
      6→import (
      7→	"database/sql/driver"
@@ -235,7 +237,6 @@ version.go
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     41→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-?([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
-    42→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
@@ -425,3 +426,7 @@ version_collection.go
     18→func (v Collection) Swap(i, j int) {
     19→	v[i], v[j] = v[j], v[i]
     20→}
+version_collection_test.go
+     6→import …
+version_test.go
+     6→import …

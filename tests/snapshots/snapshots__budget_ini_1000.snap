@@ -49,8 +49,7 @@ CONTRIBUTING.md
     12→
     13→Use one of our existing issue templates if you believe you've come across a unique problem.
     14→
-    15→Duplicate issues, or issues that don't use one of our templates may get closed without a response.
-    16→
+      →…
     17→## Pull Request Conventions
     19→### Commits
     21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
@@ -241,29 +240,34 @@ lib/ini.js
      3→const encode = (obj, opt = {}) => {
      4→  if (typeof opt === 'string') {
      5→    opt = { section: opt }
-     6→  }
       →…
     80→function splitSections (str, separator) {
     81→  var lastMatchIndex = 0
     82→  var lastSeparatorIndex = 0
-    83→  var nextIndex = 0
       →…
    106→const decode = (str, opt = {}) => {
    107→  opt.bracketedArray = opt.bracketedArray !== false
    108→  const out = Object.create(null)
-   109→  let p = out
       →…
    212→const isQuoted = val => {
    213→  return (val.startsWith('"') && val.endsWith('"')) ||
    214→    (val.startsWith("'") && val.endsWith("'"))
-   215→}
+      →…
    217→const safe = val => {
    218→  if (
    219→    typeof val !== 'string' ||
-   220→    val.match(/[=\r\n]/) ||
       →…
    230→const unsafe = val => {
    231→  val = (val || '').trim()
    232→  if (isQuoted(val)) {
-   233→    // remove the single quotes before calling JSON.parse
       →…
+test/duplicate-properties.js
+     3→const test = tap.test
+     7→const fixture = path.resolve(__dirname, './fixtures/duplicate.ini')
+     8→const data = fs.readFileSync(fixture, 'utf8')
+test/foo.js
+     3→const test = tap.test
+     6→const fixture = path.resolve(__dirname, './fixtures/foo.ini')
+     7→const data = fs.readFileSync(fixture, 'utf8')
+test/win32.js
+     5→const res = ini.encode({ foo: { bar: 'baz' } })

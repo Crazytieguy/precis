@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3902 words)
+budget: 4000 (3903 words)
 
 README.md
     40→## About …
@@ -48,8 +48,6 @@ README.md
    127→
    128→## Sandbox examples …
    139→## Getting Started …
-   319→#### using P.when(predicate) …
-   334→#### Passing a guard function to `.with(...)` …
    415→## API Reference …
    417→### `match`
    419→```ts
@@ -58,23 +56,6 @@ README.md
    422→
    423→Create a `Match` object on which you can later call `.with`, `.when`, `.otherwise` and `.run`.
    424→
-   425→#### Signature …
-   431→#### Arguments …
-   444→#### Signature …
-   471→#### Arguments …
-   497→#### Signature …
-   506→#### Arguments …
-   528→#### Signature …
-   534→#### Type arguments …
-   572→#### Signature …
-   579→#### Example …
-   613→#### Signature …
-   619→#### Arguments …
-   637→#### Signature …
-   656→#### Signature …
-   662→#### Example …
-   720→#### Signature …
-   732→#### Arguments …
    742→## Patterns …
    857→#### `P._` wildcard
    859→The `P._` pattern will match any value. You can also use `P.any`, which is an alias to `P._`.
@@ -94,13 +75,6 @@ README.md
    873→// => 'It will always match'
    874→```
    875→
-   876→#### `P.string` wildcard …
-   894→#### `P.number` wildcard …
-   912→#### `P.boolean` wildcard …
-   931→#### `P.nullish` wildcard …
-   952→#### `P.nonNullable` wildcard …
-   969→#### `P.bigint` wildcard …
-   986→#### `P.symbol` wildcard …
   1405→## `P.string` predicates …
   1500→## `P.number` and `P.bigint` predicates …
   1621→## Types …
@@ -131,12 +105,13 @@ README.md
   1648→  );
   1649→```
   1650→
-  1651→Although not strictly necessary, using `as const` after the pattern definition ensures that TS-Pattern infers the most precise types possible.
-  1652→
-  1685→#### Type narrowing …
-  1732→#### Type guard function …
-  1748→#### Exhaustiveness checking …
+      →…
   1766→## Inspirations …
+benchmarks/always-last-digit.ts
+     4→type Digit …
+benchmarks/nested-objects.ts
+benchmarks/random-digit.ts
+     4→type Digit …
 docs/roadmap.md
      1→### Roadmap …
 docs/v3-to-v4-migration-guide.md
@@ -239,18 +214,12 @@ docs/v4-to-v5-migration-guide.md
     14→
     15→```ts
     16→// TS-Pattern v4
-    17→type Input = { type: 'ok'; value: number } | { type: 'error'; error: Error };
-    18→
-    19→// We don't call `.exhaustive`, so handlers don't run.
       →…
     42→## Matching on Map and Sets
     44→Matching `Set` and `Map` instances using `.with(new Set(...))` and `.with(new Map(...))` is no longer supported. If you want to match specific sets and maps, you should now use the `P.map(keyPattern, valuePattern)` and `P.set(valuePattern)` patterns:
     45→
     46→```diff
     47→- import { match } from 'ts-pattern';
-    48→+ import { match, P } from 'ts-pattern';
-    49→
-    50→
       →…
     63→# New features
     65→## chainable methods
@@ -266,19 +235,43 @@ docs/v4-to-v5-migration-guide.md
    159→
    160→```ts
    161→const example = (value: unknown) =>
-   162→  match(value)
-   163→    .with(
-   164→      // non-empty list of strings
       →…
    214→## `.returnType`
    216→In TS-Pattern v4, the only way to explicitly set the return type of your `match` expression is to set the two `<Input, Output>` type parameters of `match`:
    217→
    218→```ts
    219→// TS-Pattern v4
-   220→match<
-   221→  { isAdmin: boolean; plan: 'free' | 'paid' }, // input type
-   222→  number // return type
       →…
+examples/gif-fetcher/src/App.tsx
+    11→type State …
+    24→type Event …
+    33→const initState …
+    38→/**
+      →…
+    42→const reducer = (state: State, event: Event): State =>
+    43→  match<Event, State>(event)
+    44→    .with({ type: 'search' }, ({ query }) => ({
+    75→export default function App() {
+    76→  const [state, dispatch] = React.useReducer(reducer, initState);
+    77→
+      →…
+examples/gif-fetcher/src/constants.ts
+     1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
+examples/gif-fetcher/src/index.tsx
+     6→const rootElement = document.getElementById('root');
+examples/gif-fetcher/src/searchGif.ts
+     4→const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+     6→export function searchGif(query: string) {
+     7→  return fetch(
+     8→    `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${query}&limit=25&offset=0&rating=g&lang=en`
+     9→  )
+      →…
+examples/one-file-demo/one-file-demo.ts
+     1→import { isMatching, match, P } from 'ts-pattern';
+    20→type Response …
+    56→type UserType …
+    79→const example3 …
+   102→const User …
 src/errors.ts
      1→/**
      2→ * Error when the given input value does not match any included pattern
@@ -332,9 +325,6 @@ src/internals/helpers.ts
     48→
     49→    // Tuple pattern
     50→    if (Array.isArray(pattern)) {
-    51→      if (!Array.isArray(value)) return false;
-    52→      let startPatterns = [];
-    53→      let endPatterns = [];
       →…
    120→export const getSelectionKeys = (pattern: any): string[] => {
    121→  if (isObject(pattern)) {
@@ -556,7 +546,6 @@ src/patterns.ts
    193→  return chainable({
    194→    [matcher]() {
    195→      return {
-   196→        match: <UnknownInput>(value: UnknownInput | input) => {
       →…
    217→type UnwrapArray …
    219→type UnwrapSet …
@@ -611,7 +600,6 @@ src/patterns.ts
    540→  return chainable({
    541→    [matcher]: () => ({
    542→      match: (value) => {
-   543→        let selections: Record<string, unknown[]> = {};
       →…
    559→/**
    560→ * `P.union(...patterns)` returns a pattern which matches
@@ -633,7 +621,6 @@ src/patterns.ts
    576→  return chainable({
    577→    [matcher]: () => ({
    578→      match: <UnknownInput>(value: UnknownInput | input) => {
-   579→        let selections: Record<string, unknown[]> = {};
       →…
    599→/**
    600→ * `P.not(pattern)` returns a pattern which matches if the sub pattern
@@ -654,7 +641,6 @@ src/patterns.ts
    615→  return chainable({
    616→    [matcher]: () => ({
    617→      match: <UnknownInput>(value: UnknownInput | input) => ({
-   618→        matched: !matchPattern(pattern, value, () => {}),
       →…
    646→export function when<input, predicate extends (value: input) => unknown>(
    647→  predicate: predicate
@@ -903,3 +889,43 @@ src/types/helpers.ts
    267→  input: unknown;
    268→  output: unknown;
    269→}
+tests/deep-exclude.test.ts
+    11→type Colors …
+tests/find-selected.test.ts
+    17→type AnonymousSelectP …
+tests/instance-of.test.ts
+     4→class A {
+     5→  a = 'a';
+     6→}
+     7→class B {
+     8→  b = 'b';
+     9→}
+tests/pattern.test.ts
+     5→type ExtendsPattern …
+tests/type-error.test.ts
+     5→type Country …
+tests/types-catalog/definition.ts
+tests/types-catalog/utils.ts
+     4→export const some = <a>(value: a): Option<a> => ({
+     5→  kind: 'some',
+     6→  value,
+     7→});
+    56→export interface BaseAsyncResult<TData, TError = Error> {
+    57→  status: AsyncResultStatus;
+    58→  data?: TData;
+    59→  error?: TError;
+    60→}
+    62→export interface AsyncResultIdleOrLoading<TData, TError = Error>
+    63→  extends BaseAsyncResult<TData, TError> {
+    64→  status: 'idle' | 'loading';
+    65→}
+    67→export interface AsyncResultSuccess<TData, TError = Error>
+    68→  extends BaseAsyncResult<TData, TError> {
+    69→  status: 'success';
+    70→  data: TData;
+    71→}
+    73→export interface AsyncResultError<TData, TError = Error>
+    74→  extends BaseAsyncResult<TData, TError> {
+    75→  status: 'error';
+    76→  error: TError;
+    77→}

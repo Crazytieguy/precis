@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1918 words)
+budget: 2000 (1929 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -74,10 +74,6 @@ README.md
     73→    * [`structured-logger`](https://docs.rs/structured-logger/latest/structured_logger/)
     74→    * [`clang_log`](https://docs.rs/clang_log/latest/clang_log)
     75→    * [`ftail`](https://docs.rs/ftail/latest/ftail/)
-    76→* Complex configurable frameworks:
-    77→    * [`log4rs`](https://docs.rs/log4rs/*/log4rs/)
-    78→    * [`logforth`](https://docs.rs/logforth/*/logforth/)
-    79→    * [`fern`](https://docs.rs/fern/*/fern/)
       →…
    106→## Structured logging
    108→If you enable the `kv` feature, you can associate structured data with your log records:
@@ -89,6 +85,16 @@ README.md
    114→    // `yak:serde` will capture `yak` using its `serde::Serialize` impl
    115→    //
       →…
+benches/value.rs
+     4→use log::kv::Value;
+     6→#[bench]
+     7→fn u8_to_value(b: &mut test::Bencher) {
+    11→#[bench]
+    12→fn u8_to_value_debug(b: &mut test::Bencher) {
+    16→#[bench]
+    17→fn str_to_value_debug(b: &mut test::Bencher) {
+    21→#[bench]
+    22→fn custom_to_value_debug(b: &mut test::Bencher) {
 rfcs/0296-structured-logging.md
      5→# Summary …
     16→# Contents …
@@ -110,21 +116,11 @@ rfcs/0296-structured-logging.md
   1607→}
   1608→
   1609→pub trait Visitor {
-  1610→    fn u64(&mut self, v: u64) -> Result<(), Error>;
-  1611→    fn i64(&mut self, v: i64) -> Result<(), Error>;
-  1612→
-  1613→    ..
-  1614→}
-  1615→```
-  1616→
       →…
   1629→# Prior art …
   1650→# Unresolved questions …
 src/__private_api.rs
      3→use self::sealed::KVs;
-     4→use crate::{logger, Level, Log, Metadata, Record};
-     5→use std::fmt::Arguments;
-     6→use std::panic::Location;
      7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -297,10 +293,7 @@ src/kv/value.rs
   1159→macro_rules! as_serde {
   1169→macro_rules! as_sval {
 src/lib.rs
-   399→use std::cfg;
    401→use std::error;
-   402→use std::str::FromStr;
-   403→use std::{cmp, fmt, mem};
    405→#[macro_use]
    406→mod macros;
    407→mod serde;
@@ -423,7 +416,6 @@ src/lib.rs
   1489→        INITIALIZING,
   1490→        Ordering::Acquire,
   1491→        Ordering::Relaxed,
-  1492→    ) {
       →…
   1549→pub struct SetLoggerError(());
   1558→#[cfg(feature = "std")]
@@ -471,10 +463,6 @@ src/serde.rs
      4→    Deserialize, DeserializeSeed, Deserializer, EnumAccess, Error, Unexpected, VariantAccess,
      5→    Visitor,
      6→};
-     7→use serde_core::ser::{Serialize, Serializer};
-     9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
-    11→use std::fmt;
-    12→use std::str::{self, FromStr};
 test_max_level_features/main.rs
      1→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
      2→use std::sync::{Arc, Mutex};
@@ -499,3 +487,21 @@ test_max_level_features/main.rs
     29→fn main() {
     44→fn test(a: &State, filter: LevelFilter) {
     72→fn last(state: &State, expected: Option<Level>) {
+tests/integration.rs
+     3→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
+     6→struct State {
+     7→    last_log_level: Mutex<Option<Level>>,
+     8→    last_log_location: Mutex<Option<u32>>,
+     9→}
+    11→struct Logger(Arc<State>);
+    13→impl Log for Logger {
+    62→fn test_filter …
+    89→fn test_line_numbers …
+tests/macros.rs
+     3→macro_rules! all_log_macros {
+    14→struct Logger;
+    16→impl Log for Logger {
+   420→enum Type {
+   421→    Some,
+   422→    None,
+   423→}

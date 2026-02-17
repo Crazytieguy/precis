@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (927 words)
+budget: 1000 (926 words)
 
 README.md
      1→# mdBook
@@ -202,6 +202,8 @@ crates/xtask/src/changelog.rs
 crates/xtask/src/main.rs
      3→use std::collections::BTreeMap;
      9→mod changelog;
+examples/nop-preprocessor.rs
+    79→    pub struct Nop;
 guide/guide-helper/src/lib.rs
      3→use mdbook_preprocessor::book::Book;
      9→/// Preprocessing entry point.
@@ -258,6 +260,9 @@ guide/src/format/theme/README.md
      1→# Theme …
 guide/src/guide/README.md
      1→# User guide …
+guide/src/guide/creating.md
+guide/src/guide/installation.md
+guide/src/guide/reading.md
 src/cmd/build.rs
 src/cmd/clean.rs
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
@@ -270,8 +275,6 @@ src/cmd/clean.rs
 src/cmd/command_prelude.rs
      3→pub use clap::{Arg, ArgMatches, Command, arg};
      7→pub trait CommandExt: Sized {
-     8→    fn _arg(self, arg: Arg) -> Self;
-     9→
     42→    fn arg_watcher(self) -> Self {
 src/cmd/init.rs
 src/cmd/mod.rs
@@ -307,11 +310,10 @@ src/cmd/watch.rs
      8→mod native;
      9→mod poller;
     21→pub enum WatcherKind {
-    22→    Poll,
-    23→    Native,
-      →…
 src/main.rs
      5→use anyhow::anyhow;
     14→mod cmd;
     16→const VERSION: &str = concat!("v", clap::crate_version!());
     58→fn create_clap_command() -> Command {
+tests/testsuite/README.md
+     3→## Introduction …

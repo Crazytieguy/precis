@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1963 words)
+budget: 2000 (1994 words)
 
 README.md
      1→# xxhash
@@ -72,6 +72,34 @@ README.md
     72→- [FastCache](https://github.com/VictoriaMetrics/fastcache)
     73→- [Ristretto](https://github.com/dgraph-io/ristretto)
     74→- [Badger](https://github.com/dgraph-io/badger)
+bench_test.go
+     3→import …
+     8→var benchmarks = []struct {
+    19→func BenchmarkSum64(b *testing.B) {
+    34→func BenchmarkSum64String(b *testing.B) {
+    46→func BenchmarkDigestBytes(b *testing.B) {
+    63→func BenchmarkDigestString(b *testing.B) {
+dynamic/dynamic_test.go
+     6→import …
+    15→// This is a cursory test that checks whether things work under dynamic linking.
+    16→
+    17→func TestMain(m *testing.M) {
+    18→	cmd := exec.Command(
+    19→		"go", "build",
+    20→		"-buildmode", "plugin",
+    21→		"-o", "plugin.so",
+    22→		"plugin.go",
+    23→	)
+    24→	var out bytes.Buffer
+    25→	cmd.Stdout = &out
+    26→	cmd.Stderr = &out
+      →…
+    33→func TestDynamic(t *testing.T) {
+    34→	plug, err := plugin.Open("plugin.so")
+    35→	if err != nil {
+    36→		t.Fatal(err)
+    37→	}
+      →…
 dynamic/plugin.go
      6→import (
      7→	"fmt"
@@ -83,7 +111,6 @@ dynamic/plugin.go
     14→const (
     15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
     16→	want = uint64(0x02a2e85470d6fd96)
-    17→)
     19→func TestSum(t *testing.T) {
     20→	got := xxhash.Sum64String(in)
     21→	if got != want {
@@ -186,14 +213,6 @@ xxhash.go
     86→	}
     87→
     88→	if d.n > 0 {
-    89→		// Finish off the partial block.
-    90→		c := copy(memleft, b)
-    91→		d.v1 = round(d.v1, u64(d.mem[0:8]))
-    92→		d.v2 = round(d.v2, u64(d.mem[8:16]))
-    93→		d.v3 = round(d.v3, u64(d.mem[16:24]))
-    94→		d.v4 = round(d.v4, u64(d.mem[24:32]))
-    95→		b = b[c:]
-    96→		d.n = 0
       →…
    112→// Sum appends the current hash to b and returns the resulting slice.
    113→func (d *Digest) Sum(b []byte) []byte {
@@ -225,14 +244,6 @@ xxhash.go
    140→		h = d.v3 + prime5
    141→	}
    142→
-   143→	h += d.total
-   144→
-   145→	b := d.mem[:d.n&(len(d.mem)-1)]
-   146→	for ; len(b) >= 8; b = b[8:] {
-   147→		k1 := round(0, u64(b[:8]))
-   148→		h ^= k1
-   149→		h = rol27(h)*prime1 + prime4
-   150→	}
       →…
    170→const (
    171→	magic         = "xxh\x06"
@@ -265,32 +276,13 @@ xxhash.go
    201→	b, d.v4 = consumeUint64(b)
    202→	b, d.total = consumeUint64(b)
    203→	copy(d.mem[:], b)
-   204→	d.n = int(d.total % uint64(len(d.mem)))
-   205→	return nil
-   206→}
+      →…
    208→func appendUint64(b []byte, x uint64) []byte {
-   209→	var a [8]byte
-   210→	binary.LittleEndian.PutUint64(a[:], x)
-   211→	return append(b, a[:]...)
-   212→}
    214→func consumeUint64(b []byte) ([]byte, uint64) {
-   215→	x := u64(b)
-   216→	return b[8:], x
-   217→}
    219→func u64(b []byte) uint64 { return binary.LittleEndian.Uint64(b) }
    220→func u32(b []byte) uint32 { return binary.LittleEndian.Uint32(b) }
    222→func round(acc, input uint64) uint64 {
-   223→	acc += input * prime2
-   224→	acc = rol31(acc)
-   225→	acc *= prime1
-   226→	return acc
-   227→}
    229→func mergeRound(acc, val uint64) uint64 {
-   230→	val = round(0, val)
-   231→	acc ^= val
-   232→	acc = acc*prime1 + prime4
-   233→	return acc
-   234→}
    236→func rol1(x uint64) uint64  { return bits.RotateLeft64(x, 1) }
    237→func rol7(x uint64) uint64  { return bits.RotateLeft64(x, 7) }
    238→func rol11(x uint64) uint64 { return bits.RotateLeft64(x, 11) }
@@ -322,28 +314,8 @@ xxhash_other.go
     18→		v1 := primes[0] + prime2
     19→		v2 := prime2
     20→		v3 := uint64(0)
-    21→		v4 := -primes[0]
-    22→		for len(b) >= 32 {
-    23→			v1 = round(v1, u64(b[0:8:len(b)]))
-    24→			v2 = round(v2, u64(b[8:16:len(b)]))
-    25→			v3 = round(v3, u64(b[16:24:len(b)]))
-    26→			v4 = round(v4, u64(b[24:32:len(b)]))
-    27→			b = b[32:len(b):len(b)]
-    28→		}
       →…
     64→func writeBlocks(d *Digest, b []byte) int {
-    65→	v1, v2, v3, v4 := d.v1, d.v2, d.v3, d.v4
-    66→	n := len(b)
-    67→	for len(b) >= 32 {
-    68→		v1 = round(v1, u64(b[0:8:len(b)]))
-    69→		v2 = round(v2, u64(b[8:16:len(b)]))
-    70→		v3 = round(v3, u64(b[16:24:len(b)]))
-    71→		v4 = round(v4, u64(b[24:32:len(b)]))
-    72→		b = b[32:len(b):len(b)]
-    73→	}
-    74→	d.v1, d.v2, d.v3, d.v4 = v1, v2, v3, v4
-    75→	return n - len(b)
-    76→}
 xxhash_safe.go
      8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
      9→func Sum64String(s string) uint64 {
@@ -353,6 +325,17 @@ xxhash_safe.go
     14→func (d *Digest) WriteString(s string) (n int, err error) {
     15→	return d.Write([]byte(s))
     16→}
+xxhash_test.go
+     3→import …
+    12→func TestAll(t *testing.T) {
+    58→func testDigest(t *testing.T, input string, seed uint64, chunkSize int, want uint64) {
+    88→func testSum(t *testing.T, input string, want uint64) {
+    97→func TestReset(t *testing.T) {
+   114→func TestResetWithSeed(t *testing.T) {
+   131→func TestBinaryMarshaling(t *testing.T) {
+   168→var sink uint64
+   170→func TestAllocs(t *testing.T) {
+   193→func testAllocs(t *testing.T, fn func()) {
 xxhash_unsafe.go
      9→import (
     10→	"unsafe"
@@ -378,6 +361,49 @@ xxhash_unsafe.go
     56→	s   string
     57→	cap int
     58→}
+xxhash_unsafe_test.go
+     6→import …
+    13→func TestStringAllocs(t *testing.T) {
+    29→// This test is inspired by the Go runtime tests in https://go.dev/cl/57410.
+    30→// It asserts that certain important functions may be inlined.
+    31→func TestInlining(t *testing.T) {
+    32→	funcs := map[string]struct{}{
+    33→		"Sum64String":           {},
+    34→		"(*Digest).WriteString": {},
+    35→	}
+    36→
+    37→	cmd := exec.Command("go", "test", "-gcflags=-m", "-run", "xxxx")
+    38→	out, err := cmd.CombinedOutput()
+    39→	if err != nil {
+    40→		t.Log(string(out))
+    41→		t.Fatal(err)
+    42→	}
+    43→
+      →…
+xxhashbench/xxhashbench_test.go
+     3→import …
+    14→// TODO: The main benchmarks live in the xxhash package now, so the only purpose
+    15→// of this is to compare different hash functions. Consider deleting xxhashbench
+    16→// or replacing it with a more minimal comparison.
+    17→
+    18→var sink uint64
+    20→var benchmarks = []struct {
+   108→func BenchmarkHashes(b *testing.B) {
+   109→	for _, bb := range benchmarks {
+   110→		for _, benchSize := range []struct {
+   111→			name string
+   112→			n    int
+   113→		}{
+   114→			{"5B", 5},
+   115→			{"100B", 100},
+   116→			{"4KB", 4e3},
+      →…
+   152→func benchmarkHashBytes(b *testing.B, input []byte, fn func([]byte) uint64) {
+   153→	b.SetBytes(int64(len(input)))
+      →…
+   159→func benchmarkHashString(b *testing.B, input string, fn func(string) uint64) {
+   160→	b.SetBytes(int64(len(input)))
+      →…
 xxhsum/xxhsum.go
      3→import (
      4→	"fmt"
@@ -390,28 +416,14 @@ xxhsum/xxhsum.go
     12→	if contains(os.Args[1:], "-h") {
     13→		fmt.Fprintf(os.Stderr, `Usage:
     14→  %s [filenames]
-    15→If no filenames are provided or only - is given, input is read from stdin.
-    16→`, os.Args[0])
-    17→		os.Exit(1)
-    18→	}
-    19→	if len(os.Args) < 2 || len(os.Args) == 2 && os.Args[1] == "-" {
-    20→		printHash(os.Stdin, "-")
-    21→		return
-    22→	}
       →…
     34→func contains(ss []string, s string) bool {
     35→	for _, s1 := range ss {
     36→		if s1 == s {
     37→			return true
-    38→		}
-    39→	}
-    40→	return false
-    41→}
+      →…
     43→func printHash(r io.Reader, name string) {
     44→	h := xxhash.New()
     45→	if _, err := io.Copy(h, r); err != nil {
     46→		fmt.Fprintln(os.Stderr, err)
-    47→		return
-    48→	}
-    49→	fmt.Printf("%016x  %s\n", h.Sum64(), name)
-    50→}
+      →…

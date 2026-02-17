@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (481 words)
+budget: 500 (473 words)
 
 docs/conf.py
      2→from importlib.metadata import version as get_version
@@ -54,7 +54,6 @@ src/typeguard/_importhook.py
     45→def _call_with_frames_removed(
     46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
     47→) -> T:
-    48→    return f(*args, **kwargs)
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
     57→    def source_to_code(
@@ -76,16 +75,6 @@ src/typeguard/_importhook.py
     73→            else:
     74→                source = decode_source(data)
     75→
-    76→            module = _call_with_frames_removed(
-    77→                ast.parse,
-    78→                source,
-    79→                filename,
-    80→                "exec",
-    81→            )
-    82→
-    83→        tree = TypeguardTransformer().visit(module)
-    84→        ast.fix_missing_locations(tree)
-    85→
       →…
    109→class TypeguardFinder(MetaPathFinder):
    119→
@@ -117,7 +106,6 @@ src/typeguard/_transformer.py
    131→        init=False, default_factory=lambda: defaultdict(dict)
    132→    )
    133→    has_yield_expressions: bool = field(init=False, default=False)
-   134→    has_return_expressions: bool = field(init=False, default=False)
    285→class NameCollector(NodeVisitor):
    286→    def __init__(self) -> None:
    313→class GeneratorDetector(NodeVisitor):
@@ -130,11 +118,6 @@ src/typeguard/_transformer.py
    517→    def _use_memo(
    518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
    519→    ) -> Generator[None, Any, None]:
-   520→        new_memo = TransformMemo(node, self._memo, self._memo.path + (node.name,))
-   521→        old_memo = self._memo
-   522→        self._memo = new_memo
-   523→
-      →…
    570→    def _get_import(self, module: str, name: str) -> Name:
    580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
 src/typeguard/_utils.py
@@ -143,3 +126,23 @@ src/typeguard/_utils.py
    175→
    176→    def __repr__(self) -> str:
    177→        return "<unset>"
+tests/dummymodule.py
+    40→T = TypeVar("T", bound="DummyClass")
+    41→P = ParamSpec("P")
+    77→class DummyClass(metaclass=Metaclass):
+   118→class Outer:
+   305→class OverrideClass:
+   365→class ModuleLocalClass:
+tests/dummymodule_py312.py
+    17→class ParametrizedClass[T]:
+tests/mypy/negative.py
+    39→class MyClass:
+tests/mypy/positive.py
+    28→class MyClass:
+tests/mypy/test_type_annotations.py
+     8→POSITIVE_FILE = "positive.py"
+     9→NEGATIVE_FILE = "negative.py"
+tests/test_checkers.py
+    79→P = ParamSpec("P")
+tests/test_instrumentation.py
+    40→def _fixture_module(name: str, method: str):

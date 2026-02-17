@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1915 words)
+budget: 2000 (1917 words)
 
 CHANGELOG.md
      1→# neverthrow …
@@ -325,10 +325,7 @@ src/result.ts
     37→  export function combine<
     38→    T extends readonly [Result<unknown, unknown>, ...Result<unknown, unknown>[]]
     39→  >(resultList: T): CombineResults<T>
-    40→  export function combine<T extends readonly Result<unknown, unknown>[]>(
-    41→    resultList: T,
-    42→  ): CombineResults<T>
-    43→  export function combine<
+    43→  export function combine …
     55→  export function combineWithAllErrors …
     62→export type Result …
     66→export function ok …
@@ -468,3 +465,8 @@ src/result.ts
    704→type TraverseWithAllErrors …
    712→export type CombineResults …
    719→export type CombineResultsWithAllErrorsArray …
+tests/index.test.ts
+tests/safe-try.test.ts
+tests/typecheck-tests.ts
+    19→type CreateTuple …
+  2607→const input = <T>(): T => 123 as any

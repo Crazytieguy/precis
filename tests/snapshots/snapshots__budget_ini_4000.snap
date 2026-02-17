@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2788 words)
+budget: 4000 (2829 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -576,3 +576,13 @@ lib/ini.js
    269→  }
    270→  return val
    271→}
+test/duplicate-properties.js
+     3→const test = tap.test
+     7→const fixture = path.resolve(__dirname, './fixtures/duplicate.ini')
+     8→const data = fs.readFileSync(fixture, 'utf8')
+test/foo.js
+     3→const test = tap.test
+     6→const fixture = path.resolve(__dirname, './fixtures/foo.ini')
+     7→const data = fs.readFileSync(fixture, 'utf8')
+test/win32.js
+     5→const res = ini.encode({ foo: { bar: 'baz' } })

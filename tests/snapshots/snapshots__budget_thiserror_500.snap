@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (468 words)
+budget: 500 (465 words)
 
 README.md
      1→derive(Error) …
@@ -22,14 +22,8 @@ build/probe.rs
     26→impl Error for MyError {
     27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
 impl/src/ast.rs
-    10→pub enum Input<'a> {
-    15→pub struct Struct<'a> {
-    22→pub struct Enum<'a> {
-    29→pub struct Variant<'a> {
-    36→pub struct Field<'a> {
     45→pub enum ContainerKind {
 impl/src/attr.rs
-    11→pub struct Attrs<'a> {
     21→pub struct Display<'a> {
     33→pub struct Source<'a> {
     39→pub struct From<'a> {
@@ -37,14 +31,11 @@ impl/src/attr.rs
     51→pub struct Fmt<'a> {
     57→pub enum Trait {
 impl/src/expand.rs
-impl/src/fallback.rs
 impl/src/fmt.rs
    166→struct FmtArguments {
    171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
 impl/src/generics.rs
-     8→pub struct ParamsInScope<'a> {
-    48→pub struct InferredBounds {
 impl/src/lib.rs
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
@@ -53,14 +44,12 @@ impl/src/lib.rs
     43→}
     45→#[allow(non_camel_case_types)]
     46→struct private;
-impl/src/prop.rs
 impl/src/scan_expr.rs
      6→enum Input {
     25→enum Action {
 impl/src/unraw.rs
     12→pub struct IdentUnraw(Ident);
     82→pub enum MemberUnraw {
-impl/src/valid.rs
 src/aserror.rs
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
@@ -104,6 +93,7 @@ src/display.rs
     51→impl Sealed for PathBuf {}
     58→#[cfg(not(feature = "std"))]
     59→mod placeholder {
+    60→    use super::{AsDisplay, Sealed};
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
     67→        type Target = Self;
@@ -137,3 +127,17 @@ src/provide.rs
 src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
      6→    fn fmt …
+tests/no-std/test.rs
+     6→pub enum Error {
+    13→pub struct SourceError {
+tests/test_backtrace.rs
+tests/test_display.rs
+tests/test_expr.rs
+    56→fn assert …
+tests/test_generics.rs
+     7→pub struct NoFormat;
+    12→pub struct DisplayOnly;
+tests/test_lints.rs
+     5→pub use std::error::Error;
+tests/test_option.rs
+tests/ui/fallback-impl-with-display.rs

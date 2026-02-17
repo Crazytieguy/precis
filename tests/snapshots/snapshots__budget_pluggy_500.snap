@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (480 words)
+budget: 500 (467 words)
 
 AGENTS.md
      1→# AGENTS.md …
@@ -25,14 +25,42 @@ docs/conf.py
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
+docs/examples/eggsample/eggsample/__init__.py
+docs/examples/eggsample/eggsample/hookspecs.py
+     8→def eggsample_add_ingredients(ingredients: tuple):
+    17→def eggsample_prep_condiments(condiments: dict):
+docs/examples/eggsample/eggsample/host.py
+    29→class EggsellentCook:
+docs/examples/eggsample/eggsample/lib.py
+     5→def eggsample_add_ingredients():
+    13→def eggsample_prep_condiments(condiments):
+docs/examples/eggsample/setup.py
+docs/examples/eggsample-spam/eggsample_spam.py
+     4→@eggsample.hookimpl
+     5→def eggsample_add_ingredients(ingredients):
+    14→@eggsample.hookimpl
+    15→def eggsample_prep_condiments(condiments):
+docs/examples/eggsample-spam/setup.py
+docs/examples/toy-example.py
+     1→import pluggy
+     8→class MySpec:
+    10→
+    11→    @hookspec
+    12→    def myhook(self, arg1, arg2):
+    16→class Plugin_1:
+    18→
+    19→    @hookimpl
+    20→    def myhook(self, arg1, arg2):
+    25→class Plugin_2:
+    27→
+    28→    @hookimpl
+    29→    def myhook(self, arg1, arg2):
 scripts/release.py
 scripts/towncrier-draft-to-file.py
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
      3→    "PluginManager",
-     4→    "PluginValidationError",
-     5→    "HookCaller",
       →…
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
@@ -56,49 +84,37 @@ src/pluggy/_hooks.py
     86→    __slots__ = ("project_name",)
     87→
     88→    def __init__(self, project_name: str) -> None:
-    89→        self.project_name: Final = project_name
-    90→
    165→class HookimplMarker:
    172→
    173→    __slots__ = ("project_name",)
    174→
    175→    def __init__(self, project_name: str) -> None:
-   176→        self.project_name: Final = project_name
-   177→
    290→_PYPY …
    359→class HookRelay:
    362→
    363→    __slots__ = ("__dict__",)
    364→
    365→    def __init__(self) -> None:
-   366→        """:meta private:"""
-   367→
    377→_CallHistory …
    382→class HookCaller:
    384→
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
-   421→        return self.spec is not None
    423→    # TODO: Document, or make private.
    424→    def set_specification(
    425→        self,
    426→        specmodule_or_class: _Namespace,
    427→        spec_opts: HookspecOpts,
    428→    ) -> None:
-   429→        if self.spec is not None:
-   430→            raise ValueError(
-      →…
    593→class _SubsetHookCaller(HookCaller):
    596→
    618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [
    621→            impl
-   622→            for impl in self._orig._hookimpls
       →…
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
-   628→        return self._orig.spec
    630→    @property
    631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
    632→        return self._orig._call_history
@@ -107,15 +123,11 @@ src/pluggy/_hooks.py
    642→    __slots__ = (
    643→        "function",
    644→        "argnames",
-   645→        "kwargnames",
-   646→        "plugin",
    697→class HookSpec:
    698→    __slots__ = (
    699→        "namespace",
    700→        "function",
    701→        "name",
-   702→        "argnames",
-   703→        "kwargnames",
 src/pluggy/_manager.py
     33→    import importlib.metadata
     36→_BeforeTrace …
@@ -126,8 +138,6 @@ src/pluggy/_manager.py
     67→
     71→    @property
     72→    def project_name(self) -> str:
-    73→        name: str = self.metadata["name"]
-    74→        return name
     83→class PluginManager:
     99→
 src/pluggy/_result.py
@@ -138,24 +148,15 @@ src/pluggy/_result.py
     29→    __slots__ = ("_result", "_exception", "_traceback")
     30→
     31→    def __init__(
-    32→        self,
-    33→        result: ResultType | None,
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
     44→        """:meta private:"""
-    45→        exc = self._exception
-    46→        if exc is None:
-      →…
     51→    @property
     52→    def exception(self) -> BaseException | None:
     53→        """:meta private:"""
-    54→        return self._exception
     56→    @classmethod
     57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
     58→        """:meta private:"""
-    59→        __tracebackhide__ = True
-    60→        result = exception = None
-      →…
 src/pluggy/_tracing.py
     16→class TagTracer:
     17→    def __init__(self) -> None:
@@ -168,3 +169,13 @@ src/pluggy/_warnings.py
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"
+testing/benchmark.py
+testing/conftest.py
+testing/test_hookcaller.py
+    34→class AddMeth:
+    35→    def __init__(self, hc: HookCaller) -> None:
+    36→        self.hc = hc
+    37→
+testing/test_multicall.py
+testing/test_pluginmanager.py
+testing/test_tracer.py

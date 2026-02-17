@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1917 words)
+budget: 2000 (1922 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -141,6 +141,7 @@ readme.md
   1170→```
   1171→
   1172→Supported environment variables:
+  1173→- `HTTP_PROXY` / `http_proxy`: Proxy URL for HTTP requests
       →…
   1209→### HTTP/2 support (Node.js) …
   1249→### Consuming Server-Sent Events (SSE) …
@@ -219,14 +220,6 @@ source/core/constants.ts
    173→						return ky.retry();
    174→					}
    175→
-   176→					// Retry with custom delay from API response
-   177→					if (data.error?.code === 'RATE_LIMIT') {
-   178→						return ky.retry({
-   179→							delay: data.error.retryAfter * 1000,
-   180→							code: 'RATE_LIMIT'
-   181→						});
-   182→					}
-   183→
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys: KyOptionsRegistry = {
@@ -480,3 +473,17 @@ source/utils/types.ts
      5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
      6→	? Array<[string, U]>
      7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
+test/browser.ts
+    13→	interface Window {
+    14→		ky: typeof ky;
+    15→	}
+test/headers.ts
+test/helpers/create-http-test-server.ts
+     7→export type HttpServerOptions …
+    11→export type ExtendedHttpTestServer …
+test/helpers/create-large-file.ts
+test/helpers/parse-body.ts
+test/helpers/with-page.ts
+test/helpers/with-performance.ts
+test/hooks.ts
+test/http-error.ts

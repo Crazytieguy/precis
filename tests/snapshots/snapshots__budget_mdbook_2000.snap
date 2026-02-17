@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1885 words)
+budget: 2000 (1883 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -41,6 +41,7 @@ crates/mdbook-core/src/book/tests.rs
      1→use super::*;
 crates/mdbook-core/src/book.rs
      3→use serde::{Deserialize, Serialize};
+    99→fn for_each_mut …
    245→    type Target = Vec<u32>;
    274→    type Item = &'a BookItem;
 crates/mdbook-core/src/config.rs
@@ -48,6 +49,7 @@ crates/mdbook-core/src/config.rs
     81→fn is_default …
     86→fn toml_is_empty …
     91→    type Err = Error;
+   308→fn parse_env …
    336→fn is_default_src …
    718→trait Updateable<'de>: Serialize + Deserialize<'de> {
 crates/mdbook-core/src/lib.rs
@@ -86,17 +88,17 @@ crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     17→    root: PathBuf,
     18→    optional: bool,
     19→}
-    23→    pub fn new …
-    52→    pub fn cmd …
+    23→    pub fn new(name: String, cmd: String, root: PathBuf, optional: bool) -> CmdPreprocessor {
+    52→    pub fn cmd(&self) -> &str {
 crates/mdbook-driver/src/builtin_preprocessors/index.rs
     12→pub struct IndexPreprocessor;
     16→    pub const NAME: &'static str = "index";
-    19→    pub fn new …
+    19→    pub fn new() -> Self {
 crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
 crates/mdbook-driver/src/builtin_preprocessors/links.rs
     32→pub struct LinkPreprocessor;
     36→    pub const NAME: &'static str = "links";
-    39→    pub fn new …
+    39→    pub fn new() -> Self {
    398→struct LinkIter<'a>(CaptureMatches<'a, 'a>);
    401→    type Item = Link<'a>;
 crates/mdbook-driver/src/builtin_preprocessors/mod.rs
@@ -164,13 +166,13 @@ crates/mdbook-html/src/html/admonitions.rs
 crates/mdbook-html/src/html/mod.rs
 crates/mdbook-html/src/html/tokenizer.rs
     22→    type Handle = ();
-    24→    fn process_token …
+    24→    fn process_token(&self, token: Token, _line_number: u64) -> TokenSinkResult<()> {
 crates/mdbook-html/src/html/tree.rs
     25→macro_rules! attr_qual_name {
    126→type Attributes = IndexMap<QualName, StrTendril>;
    130→    /// Converts self to a [`StrTendril`].
    131→    fn into_tendril(self) -> StrTendril;
-   135→    fn into_tendril …
+   135→    fn into_tendril(self) -> StrTendril {
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     19→/// The HTML renderer for mdBook.
     20→#[derive(Default)]
@@ -213,7 +215,6 @@ crates/mdbook-html/src/lib.rs
      5→pub mod theme;
      6→pub(crate) mod utils;
      8→pub use html_handlebars::HtmlHandlebars;
-crates/mdbook-html/src/theme/fonts.rs
 crates/mdbook-html/src/theme/mod.rs
      3→use anyhow::Result;
     11→#[cfg(feature = "search")]
@@ -244,25 +245,10 @@ crates/mdbook-markdown/README.md
 crates/mdbook-markdown/src/lib.rs
      8→use pulldown_cmark::{Options, Parser};
     11→pub use pulldown_cmark;
-    13→/// Options for parsing markdown.
-    14→#[non_exhaustive]
     15→pub struct MarkdownOptions {
     16→    /// Enables smart punctuation.
     17→    ///
-    18→    /// Converts quotes to curly quotes, `...` to `…`, `--` to en-dash, and
-    19→    /// `---` to em-dash.
-    20→    ///
-    21→    /// This is `true` by default.
-    22→    pub smart_punctuation: bool,
-    23→    /// Enables definition lists.
-    24→    ///
-    25→    /// This is `true` by default.
-    26→    pub definition_lists: bool,
-    27→    /// Enables admonitions.
-    28→    ///
-    29→    /// This is `true` by default.
-    30→    pub admonitions: bool,
-    31→}
+      →…
     33→impl Default for MarkdownOptions {
     34→    fn default() -> MarkdownOptions {
     35→        MarkdownOptions {
@@ -362,12 +348,18 @@ crates/xtask/README.md
      4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
 crates/xtask/src/changelog.rs
      3→use super::Result;
+     8→const CHANGELOG_PATH …
 crates/xtask/src/main.rs
      3→use std::collections::BTreeMap;
      9→mod changelog;
+    11→type Result …
 eslint.config.mjs
      7→            preprocess(text, filename) {
     16→            postprocess(messages, filename) {
+examples/nop-preprocessor.rs
+     3→use crate::nop_lib::Nop;
+    75→mod nop_lib {
+    79→    pub struct Nop;
 guide/guide-helper/src/lib.rs
      3→use mdbook_preprocessor::book::Book;
      9→/// Preprocessing entry point.
@@ -499,7 +491,6 @@ src/cmd/command_prelude.rs
     13→                .short('d')
     14→                .long("dest-dir")
     15→                .value_name("dest-dir")
-    16→                .value_parser(clap::value_parser!(PathBuf))
     41→    #[cfg(any(feature = "watch", feature = "serve"))]
     42→    fn arg_watcher(self) -> Self {
 src/cmd/init.rs
@@ -541,6 +532,10 @@ src/cmd/watch/poller.rs
     21→    post_build: &dyn Fn(),
     22→) {
     23→    let mut book = MDBook::load(book_dir).unwrap_or_else(|e| {
+    24→        error!("failed to load book: {e}");
+    25→        std::process::exit(1);
+    26→    });
+    27→
       →…
     78→struct PathData {
     86→struct Watcher {
@@ -560,3 +555,11 @@ src/main.rs
     16→const VERSION: &str = concat!("v", clap::crate_version!());
     57→/// Create a list of valid arguments and sub-commands
     58→fn create_clap_command() -> Command {
+tests/testsuite/README.md
+     1→# Testsuite …
+     3→## Introduction …
+tests/testsuite/book_test.rs
+    23→pub struct BookTest {
+   361→pub struct BookCommand {
+tests/testsuite/main.rs
+tests/testsuite/search/reasonable_search_index/src/first/duplicate-headers.md

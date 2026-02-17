@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (961 words)
+budget: 1000 (962 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -102,8 +102,6 @@ src/dotenv/__init__.py
     44→    "load_dotenv",
     45→    "dotenv_values",
     46→    "get_key",
-    47→    "set_key",
-    48→    "unset_key",
       →…
 src/dotenv/__main__.py
 src/dotenv/cli.py
@@ -198,7 +196,6 @@ src/dotenv/main.py
     47→        self,
     48→        dotenv_path: Optional[StrPath],
     49→        stream: Optional[IO[str]] = None,
-    50→        verbose: bool = False,
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
@@ -248,7 +245,6 @@ src/dotenv/parser.py
     71→        self.string = stream.read()
     72→        self.position = Position.start()
     73→        self.mark = Position.start()
-    74→
 src/dotenv/variables.py
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
@@ -266,7 +262,6 @@ src/dotenv/variables.py
     20→        result = self.__eq__(other)
     21→        if result is NotImplemented:
     22→            return NotImplemented
-    23→        return not result
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
     29→class Literal(Atom):
@@ -274,12 +269,25 @@ src/dotenv/variables.py
     31→        self.value = value
     32→
     33→    def __repr__(self) -> str:
-    34→        return f"Literal(value={self.value})"
     48→class Variable(Atom):
     49→    def __init__(self, name: str, default: Optional[str]) -> None:
     50→        self.name = name
     51→        self.default = default
     52→
-    53→    def __repr__(self) -> str:
 src/dotenv/version.py
      1→__version__ = "1.2.1"
+tests/conftest.py
+tests/test_cli.py
+tests/test_fifo_dotenv.py
+tests/test_ipython.py
+tests/test_is_interactive.py
+     8→class TestIsInteractive:
+    31→
+tests/test_main.py
+tests/test_parser.py
+tests/test_utils.py
+tests/test_variables.py
+tests/test_zip_imports.py
+    23→class FileToAdd:
+    24→    def __init__(self, content: str, path: str):
+      →…

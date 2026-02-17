@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1928 words)
+budget: 2000 (1927 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -105,10 +105,6 @@ apps/storybook/README.md
     23→
     24→1.  **Install the dependencies.**
     25→
-    26→    Navigate into your new site’s directory and install the necessary dependencies.
-    27→
-    28→    ```shell
-    29→    # Navigate to the directory
       →…
     44→## 🔎 What's inside?
     46→A quick look at the top-level files and directories included with this template.
@@ -122,10 +118,6 @@ apps/storybook/README.md
     54→    ├── .index.html
     55→    ├── LICENSE
     56→    ├── package.json
-    57→    ├── yarn.lock
-    58→    ├── vite.config.js
-    59→    └── README.md
-    60→
       →…
     83→## Contribute
     85→If you encounter an issue with the template, we encourage you to open an issue in this template's repository.
@@ -187,6 +179,40 @@ apps/storybook/tailwind.config.js
 apps/storybook/vite.config.js
      1→import { defineConfig } from 'vite'
      2→import react from '@vitejs/plugin-react'
+apps/test/README.md
+     3→## Getting Started …
+    23→## Learn More …
+    32→## Deploy on Vercel …
+apps/test/next.config.mjs
+     2→const nextConfig = {};
+apps/test/src/app/base/page.tsx
+     7→export default function Page() {
+apps/test/src/app/layout.tsx
+     5→const inter …
+     7→export const metadata: Metadata = {
+    12→export default function RootLayout({
+apps/test/src/app/page.tsx
+     3→export default function Home() {
+apps/test/src/app/props/page.tsx
+     7→export default function Page() {
+apps/test/src/app/with-autofocus/page.tsx
+     7→export default function Page() {
+apps/test/src/app/with-on-complete/page.tsx
+     7→export default function Page() {
+apps/test/src/components/base-input.tsx
+     6→export function BaseOTPInput(
+     7→  overrideProps: Partial<React.ComponentProps<typeof OTPInput>> = {},
+     8→) {
+apps/test/src/lib/fonts.ts
+    10→export const fontSans = GeistSans
+    12→export const fontMono = FontMono({
+apps/test/src/lib/utils.ts
+     4→export function cn(...inputs: ClassValue[]) {
+     5→  return twMerge(clsx(inputs))
+     6→}
+apps/test/src/tests/util/modifier.ts
+     1→export const modifier = process.platform === 'darwin' ? 'Meta' : 'Control'
+apps/test/tailwind.config.ts
 apps/website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -298,12 +324,6 @@ apps/website/src/app/(local-pages)/shadcn/page.tsx
     13→  const [value, setValue] = React.useState('')
     14→
     15→  return (
-    16→    <form className="container relative flex-1 flex flex-col justify-center items-center">
-    17→      {/* With Render prop */}
-    18→      <InputOTP
-    19→        value={value}
-    20→        onChange={setValue}
-    21→        maxLength={6}
       →…
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
      3→@/components/ui/input-otp …
@@ -313,12 +333,6 @@ apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     14→  const [value, setValue] = React.useState('')
     15→
     16→  return (
-    17→    <form className="container relative flex-1 flex flex-col justify-center items-center">
-    18→      {/* <input
-    19→        // test pwmb
-    20→        type="text"
-    21→        autoComplete="username webauthn"
-    22→        pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
       →…
 apps/website/src/app/(local-pages)/shadcn/static/page.tsx
      3→import { default as ShadcnPage } from '../page'
@@ -329,17 +343,9 @@ apps/website/src/app/(local-pages)/shadcn/static/page.tsx
      9→}
 apps/website/src/app/(pages)/(home)/_components/confetti.tsx
      3→export function Confetti({
-     4→  pageCoords = { x: window.innerWidth / 2, y: window.innerHeight / 2 },
-     5→}: {
-     6→  pageCoords?: {
-      →…
 apps/website/src/app/(pages)/(home)/_components/showcase.tsx
     10→const DynamicConfetti = dynamic(() =>
     14→export function Showcase({ className, ...props }: { className?: string }) {
-    15→  const [value, setValue] = React.useState('12')
-    16→  const [disabled, setDisabled] = React.useState(false)
-    17→
-      →…
    151→function Slot(props: {
    199→function FakeCaret() {
 apps/website/src/app/(pages)/(home)/page.tsx

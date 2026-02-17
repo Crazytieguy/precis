@@ -3,6 +3,7 @@ use std::path::{Path, PathBuf};
 
 use crate::format;
 use crate::parse;
+use crate::walk;
 use crate::Lang;
 
 // ---------------------------------------------------------------------------
@@ -287,6 +288,8 @@ pub struct GroupKey {
     pub file_role: FileRole,
     /// Whether the file is a build/tool config file (e.g., eslint.config.js, jest.config.ts).
     pub is_config: bool,
+    /// Whether the file is test/benchmark/example infrastructure.
+    pub is_test: bool,
     /// Heading depth for markdown sections (1 = h1, 2 = h2, etc.).
     /// None for non-section symbols. Separates top-level headings from
     /// detail subsections so h1/h2 content gets priority over h3+ detail.
@@ -387,6 +390,7 @@ pub fn build_groups(
         let is_config = relative.file_name()
             .and_then(|n| n.to_str())
             .is_some_and(|name| is_config_file(relative, name));
+        let is_test = walk::is_test_file(relative);
 
         for (symbol_idx, sym) in symbols.iter().enumerate() {
             let sym_line_0 = sym.line - 1;
@@ -410,6 +414,7 @@ pub fn build_groups(
                 is_documented,
                 file_role,
                 is_config,
+                is_test,
                 heading_depth,
             };
 
@@ -627,6 +632,11 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // not core library logic. Show them only when there's plenty of budget.
     let config_factor = if key.is_config { 0.2 } else { 1.0 };
 
+    // Test/benchmark/example files are infrastructure, not core API.
+    // At tight budgets they appear as file paths only (structural context);
+    // at generous budgets their symbols are rendered normally.
+    let test_factor = if key.is_test { 0.15 } else { 1.0 };
+
     // Heading depth: top-level headings (h1, h2) are more important than
     // subsections (h3+). This lets the scheduler show body content for
     // h1/h2 headings before filling in h3/h4 detail sections.
@@ -638,7 +648,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         None => 1.0,    // non-section symbols
     };
 
-    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * heading_depth_factor;
+    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * heading_depth_factor;
 
     let stage_value = match key.kind_category {
         KindCategory::Type => match stage {

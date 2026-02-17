@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (494 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -34,12 +34,13 @@ Readme.md
    968→### .parse() and .parseAsync()
    970→Call with no parameters to parse `process.argv`. Detects Electron and special node options like `node --eval`. Easy mode!
    971→
-   972→Or, call with an array of strings to parse, and optionally where the user arguments start by specifying where the arguments are `from`:
-   973→
       →…
   1164→## Support …
 Readme_zh-CN.md
-     1→# Commander.js …
+     1→# Commander.js
+     8→完整的 [node.js](http://nodejs.org) 命令行解决方案。
+     9→
+      →…
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
@@ -71,12 +72,16 @@ docs/terminology.md
      1→# Terminology …
 esm.mjs
      1→import commander from './index.js';
+examples/color-help-replacement.mjs
+examples/custom-command-class.js
+     7→  createCommand(name) {
+examples/global-options-added.js
+    17→  createCommand(name) {
+examples/help-centered.mjs
 lib/argument.js
      3→class Argument {
-     4→  /**
 lib/command.js
     13→class Command extends EventEmitter {
-    14→  /**
   1127→  _prepareForParse() {
 lib/error.js
      4→class CommanderError extends Error {
@@ -101,12 +106,17 @@ lib/help.js
    606→  styleCommandText(str) {
 lib/option.js
      3→class Option {
-     4→  /**
    268→class DualOptions {
    269→  /**
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
+tests/command.createArgument.test.js
+tests/command.createOption.test.js
+tests/esm-imports-test.mjs
+     1→../esm.mjs …
+tests/ts-imports.test.ts
+     1→../ …
 typings/index.d.ts
     12→type LiteralUnion …
     16→export class CommanderError extends Error {
@@ -131,3 +141,6 @@ typings/index.d.ts
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1104→export interface ParseOptionsResult {
   1113→export const program: Command;
+typings/index.test-d.ts
+   510→  createCommand(name?: string): MyCommand {
+   514→  myFunction(): void {

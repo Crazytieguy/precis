@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3345 words)
+budget: 4000 (3361 words)
 
 docs/conf.py
      2→from importlib.metadata import version as get_version
@@ -45,38 +45,7 @@ src/typeguard/_checkers.py
    116→    "__imul__",
    117→    "__ior__",
    118→    "__ipow__",
-   119→    "__irshift__",
-   120→    "__isub__",
-   121→    "__itruediv__",
-   122→    "__ixor__",
-   123→    "__le__",
-   124→    "__lshift__",
-   125→    "__lt__",
-   126→    "__matmul__",
-   127→    "__mod__",
-   128→    "__mul__",
-   129→    "__ne__",
-   130→    "__or__",
-   131→    "__pow__",
-   132→    "__radd__",
-   133→    "__rand__",
-   134→    "__rdiv__",
-   135→    "__rfloordiv__",
-   136→    "__rlshift__",
-   137→    "__rmatmul__",
-   138→    "__rmod__",
-   139→    "__rmul__",
-   140→    "__ror__",
-   141→    "__rpow__",
-   142→    "__rrshift__",
-   143→    "__rshift__",
-   144→    "__rsub__",
-   145→    "__rtruediv__",
-   146→    "__rxor__",
-   147→    "__sub__",
-   148→    "__truediv__",
-   149→    "__xor__",
-   150→}
+      →…
    153→def check_callable …
    212→def check_mapping …
    247→def check_typed_dict …
@@ -125,27 +94,7 @@ src/typeguard/_checkers.py
   1022→    Mapping: check_mapping,
   1023→    MutableMapping: check_mapping,
   1024→    None: check_none,
-  1025→    collections.abc.Mapping: check_mapping,
-  1026→    collections.abc.MutableMapping: check_mapping,
-  1027→    Sequence: check_sequence,
-  1028→    collections.abc.Sequence: check_sequence,
-  1029→    collections.abc.Set: check_set,
-  1030→    set: check_set,
-  1031→    Set: check_set,
-  1032→    TextIO: check_io,
-  1033→    tuple: check_tuple,
-  1034→    Tuple: check_tuple,
-  1035→    type: check_class,
-  1036→    Type: check_class,
-  1037→    Union: check_union,
-  1038→    # On some versions of Python, these may simply be re-exports from "typing",
-  1039→    # but exactly which Python versions is subject to change.
-  1040→    # It's best to err on the safe side and just always specify these.
-  1041→    typing_extensions.Literal: check_literal,
-  1042→    typing_extensions.LiteralString: check_literal_string,
-  1043→    typing_extensions.Self: check_self,
-  1044→    typing_extensions.TypeGuard: check_typeguard,
-  1045→}
+      →…
   1061→def builtin_checker_lookup …
   1099→def load_plugins …
 src/typeguard/_config.py
@@ -299,18 +248,7 @@ src/typeguard/_importhook.py
     92→            print(ast.unparse(tree), file=sys.stderr)
     93→            print("----------------------------------------------", file=sys.stderr)
     94→
-    95→        return _call_with_frames_removed(
-    96→            compile, tree, filename, "exec", 0, dont_inherit=True
-    97→        )
-    98→
-    99→    def exec_module(self, module: ModuleType) -> None:
-   100→        # Use a custom optimization marker – the import lock should make this monkey
-   101→        # patch safe
-   102→        with patch(
-   103→            "importlib._bootstrap_external.cache_from_source",
-   104→            optimized_cache_from_source,
-   105→        ):
-   106→            super().exec_module(module)
+    99→    def exec_module …
    109→class TypeguardFinder(MetaPathFinder):
    119→
    120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
@@ -651,95 +589,9 @@ src/typeguard/_transformer.py
    375→        self.generic_visit(node)
    376→
    377→        if isinstance(node.op, BitOr):
-   378→            # If either branch of the BinOp has been transformed to `None`, it means
-   379→            # that a type in the union was ignored, so the entire annotation should be
-   380→            # ignored
-   381→            if not hasattr(node, "left") or not hasattr(node, "right"):
-   382→                return None
-   383→
-   384→            # Return Any if either side is Any
-   385→            if self._memo.name_matches(node.left, *anytype_names):
-   386→                return node.left
-   387→            elif self._memo.name_matches(node.right, *anytype_names):
-   388→                return node.right
-   389→
-   390→            # Turn union types to typing.Union constructs on Python 3.9
-   391→            if sys.version_info < (3, 10):
-   392→                union_name = self.transformer._get_import("typing", "Union")
-   393→                return Subscript(
-   394→                    value=union_name,
-   395→                    slice=Tuple(elts=[node.left, node.right], ctx=Load()),
-   396→                    ctx=Load(),
-   397→                )
-   398→
-   399→        return node
-   400→
-   401→    def visit_Attribute(self, node: Attribute) -> Any:
-   402→        if self._memo.is_ignored_name(node):
-   403→            return None
-   404→
-   405→        return node
-   406→
-   407→    def visit_Subscript(self, node: Subscript) -> Any:
-   408→        if self._memo.is_ignored_name(node.value):
-   409→            return None
-   410→
-   411→        # The subscript of typing(_extensions).Literal can be any arbitrary string, so
-   412→        # don't try to evaluate it as code
-   413→        if node.slice:
-   414→            if isinstance(node.slice, Tuple):
-   415→                if self._memo.name_matches(node.value, *annotated_names):
-   416→                    # Only treat the first argument to typing.Annotated as a potential
-   417→                    # forward reference
-   418→                    items = cast(
-   419→                        typing.List[expr],
-   420→                        [self.visit(node.slice.elts[0])] + node.slice.elts[1:],
-   421→                    )
-   422→                else:
-   423→                    items = cast(
-   424→                        typing.List[expr],
-   425→                        [self.visit(item) for item in node.slice.elts],
-   426→                    )
-   427→
-   428→                # If this is a Union and any of the items is Any, erase the entire
-   429→                # annotation
-   430→                if self._memo.name_matches(node.value, "typing.Union") and any(
-   431→                    item is None
-   432→                    or (
-   433→                        isinstance(item, expr)
-   434→                        and self._memo.name_matches(item, *anytype_names)
-   435→                    )
-   436→                    for item in items
-   437→                ):
-   438→                    return None
-   439→
-   440→                # If all items in the subscript were Any, erase the subscript entirely
-   441→                if all(item is None for item in items):
-   442→                    return node.value
-   443→
-   444→                for index, item in enumerate(items):
-   445→                    if item is None:
-   446→                        items[index] = self.transformer._get_import("typing", "Any")
-   447→
-   448→                node.slice.elts = items
-   449→            else:
-   450→                self.generic_visit(node)
-   451→
-   452→                # If the transformer erased the slice entirely, just return the node
-   453→                # value without the subscript (unless it's Optional, in which case erase
-   454→                # the node entirely
-   455→                if self._memo.name_matches(
-   456→                    node.value, "typing.Optional"
-   457→                ) and not hasattr(node, "slice"):
-   458→                    return None
-   459→                if sys.version_info >= (3, 9) and not hasattr(node, "slice"):
-   460→                    return node.value
-   461→                elif sys.version_info < (3, 9) and not hasattr(node.slice, "value"):
-   462→                    return node.value
-   463→
-   464→        return node
-   465→
-   466→    def visit_Name(self, node: Name) -> Any:
+   401→    def visit_Attribute …
+   407→    def visit_Subscript …
+   466→    def visit_Name …
    472→    def visit_Call …
    476→    def visit_Constant …
    488→class TypeguardTransformer(NodeTransformer):
@@ -782,58 +634,9 @@ src/typeguard/_transformer.py
    525→            new_memo.should_instrument = (
    526→                self._target_path is None or new_memo.path == self._target_path
    527→            )
-   528→            if new_memo.should_instrument:
-   529→                # Check if the function is a generator function
-   530→                detector = GeneratorDetector()
-   531→                detector.visit(node)
-   532→
-   533→                # Extract yield, send and return types where possible from a subscripted
-   534→                # annotation like Generator[int, str, bool]
-   535→                return_annotation = deepcopy(node.returns)
-   536→                if detector.contains_yields and new_memo.name_matches(
-   537→                    return_annotation, *generator_names
-   538→                ):
-   539→                    if isinstance(return_annotation, Subscript):
-   540→                        if isinstance(return_annotation.slice, Tuple):
-   541→                            items = return_annotation.slice.elts
-   542→                        else:
-   543→                            items = [return_annotation.slice]
-   544→
-   545→                        if len(items) > 0:
-   546→                            new_memo.yield_annotation = self._convert_annotation(
-   547→                                items[0]
-   548→                            )
-   549→
-   550→                        if len(items) > 1:
-   551→                            new_memo.send_annotation = self._convert_annotation(
-   552→                                items[1]
-   553→                            )
-   554→
-   555→                        if len(items) > 2:
-   556→                            new_memo.return_annotation = self._convert_annotation(
-   557→                                items[2]
-   558→                            )
-   559→                else:
-   560→                    new_memo.return_annotation = self._convert_annotation(
-   561→                        return_annotation
-   562→                    )
-   563→
-   564→        if isinstance(node, AsyncFunctionDef):
-   565→            new_memo.is_async = True
-   566→
-   567→        yield
-   568→        self._memo = old_memo
-   569→
    570→    def _get_import(self, module: str, name: str) -> Name:
    571→        memo = self._memo if self._target_path else self._module_memo
    572→        return memo.get_import(module, name)
-   573→
-   574→    @overload
-   575→    def _convert_annotation(self, annotation: None) -> None: ...
-   576→
-   577→    @overload
-   578→    def _convert_annotation(self, annotation: expr) -> expr: ...
-   579→
    580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
    581→        if annotation is None:
    582→            return None
@@ -849,28 +652,10 @@ src/typeguard/_transformer.py
    592→            self.names_used_in_annotations.update(names)
    593→
    594→        return new_annotation
-   595→
-   596→    def visit_Name(self, node: Name) -> Name:
-   597→        self._memo.local_names.add(node.id)
-   598→        return node
-   599→
-   600→    def visit_Module(self, node: Module) -> Module:
-   601→        self._module_memo = self._memo = TransformMemo(node, None, ())
-   602→        self.generic_visit(node)
-   603→        self._module_memo.insert_imports(node)
-   604→
-   605→        fix_missing_locations(node)
-   606→        return node
-   607→
-   608→    def visit_Import(self, node: Import) -> Import:
-   609→        for name in node.names:
-   610→            self._memo.local_names.add(name.asname or name.name)
-   611→            self._memo.imported_names[name.asname or name.name] = name.name
-   612→
-   613→        return node
-   614→
-   615→    def visit_ImportFrom(self, node: ImportFrom) -> ImportFrom:
-   616→        for name in node.names:
+   596→    def visit_Name …
+   600→    def visit_Module …
+   608→    def visit_Import …
+   615→    def visit_ImportFrom …
    624→    def visit_ClassDef …
    650→    def visit_FunctionDef …
    913→    def visit_AsyncFunctionDef …
@@ -895,3 +680,279 @@ src/typeguard/_utils.py
    175→
    176→    def __repr__(self) -> str:
    177→        return "<unset>"
+tests/__init__.py
+    24→class Employee(NamedTuple):
+    34→class FooGeneric(Generic[T_Foo]):
+    38→class Parent:
+    42→class Child(Parent):
+tests/conftest.py
+    29→def sample_set …
+tests/deferredannos.py
+     5→def uses_forwardref …
+     9→class NotYetDefined:
+tests/dummymodule.py
+    40→T = TypeVar("T", bound="DummyClass")
+    41→P = ParamSpec("P")
+    47→    def dummy_decorator …
+    51→    def non_type_checked_decorated_func …
+    58→def type_checked_func …
+    63→def non_type_checked_func …
+    68→def non_typeguard_checked_func …
+    72→class Metaclass(type):
+    76→@typechecked
+    77→class DummyClass(metaclass=Metaclass):
+    78→    bar: str
+    79→    baz: int
+    80→
+    81→    def type_checked_method(self, x: int, y: int) -> int:
+    82→        return x * y
+    83→
+    84→    @classmethod
+    85→    def type_checked_classmethod(cls, x: int, y: int) -> int:
+    86→        return x * y
+    87→
+    88→    @staticmethod
+    89→    def type_checked_staticmethod(x: int, y: int) -> int:
+    90→        return x * y
+    91→
+    92→    @classmethod
+    93→    def undocumented_classmethod(cls, x, y):
+    94→        pass
+    95→
+    96→    @staticmethod
+    97→    def undocumented_staticmethod(x, y):
+    98→        pass
+    99→
+   100→    @property
+   101→    def unannotated_property(self):
+   102→        return None
+   117→@typechecked
+   118→class Outer:
+   119→    class Inner:
+   120→        pass
+   121→
+   122→    def create_inner(self) -> "Inner":
+   123→        return Outer.Inner()
+   124→
+   125→    @classmethod
+   126→    def create_inner_classmethod(cls) -> "Inner":
+   127→        return Outer.Inner()
+   128→
+   129→    @staticmethod
+   130→    def create_inner_staticmethod() -> "Inner":
+   131→        return Outer.Inner()
+   136→def dummy_context_manager …
+   149→def overloaded_func …
+   154→def missing_return …
+   180→async def async_func …
+   185→def generator_func …
+   191→async def asyncgen_func …
+   196→def pep_604_union_args …
+   203→def pep_604_union_retval …
+   208→def builtin_generic_collections …
+   213→def paramspec_function …
+   218→def aug_assign …
+   225→def multi_assign_single_value …
+   234→def multi_assign_iterable …
+   243→def unpacking_assign …
+   250→def unpacking_assign_single_item_tuple …
+   257→def unpacking_assign_generator …
+   268→def unpacking_assign_star_with_annotation …
+   276→def unpacking_assign_star_no_annotation …
+   285→def attribute_assign_unpacking …
+   290→def override_forward_ref_policy …
+   295→def override_typecheck_fail_callback …
+   300→def override_collection_check_strategy …
+   304→@typechecked(typecheck_fail_callback=lambda exc, memo: print(exc))
+   305→class OverrideClass:
+   306→    def override_typecheck_fail_callback(self, value: int) -> None:
+   307→        pass
+   308→
+   309→    class Inner:
+   310→        @typechecked
+   311→        def override_typecheck_fail_callback(self, value: int) -> None:
+   312→            pass
+   316→def typed_variable_args …
+   323→def guarded_type_hint_plain …
+   329→def guarded_type_hint_subscript_toplevel …
+   335→def guarded_type_hint_subscript_nested …
+   343→def literal …
+   349→def literal_in_union …
+   355→def typevar_forwardref …
+   364→# Regression test for #536 - forward reference evaluation on Python 3.14
+   365→class ModuleLocalClass:
+   366→    """A class only available in this module's namespace, not the caller's."""
+   369→class TypedDictWithForwardRef(TypedDict):
+tests/dummymodule_py312.py
+     7→def func_using_type_alias …
+    12→def func_using_type_of_type_alias …
+    16→@typechecked
+    17→class ParametrizedClass[T]:
+    18→    def method(self, x: T, y: str) -> T:
+    19→        return x
+    23→def parametrized_func …
+tests/mypy/negative.py
+     1→from typeguard import typechecked, typeguard_ignore
+     4→@typechecked
+     5→def foo(x: int) -> int:
+     9→@typechecked
+    10→def bar(x: int) -> int:
+    14→@typeguard_ignore
+    15→def non_typeguard_checked_func(x: int) -> int:
+    19→@typechecked
+    20→def returns_str() -> str:
+    24→@typechecked
+    25→def arg_type(x: int) -> str:
+    29→@typechecked
+    30→def ret_type() -> str:
+    38→@typechecked
+    39→class MyClass:
+    40→    def __init__(self, x: int = 0) -> None:
+    41→        self.x = x
+    42→
+    43→    def add(self, y: int) -> int:
+    44→        return self.x + y
+    47→def get_value(c: MyClass) -> int:
+    51→def create_myclass(x: int) -> MyClass:
+tests/mypy/positive.py
+     1→from typing import Callable
+     3→from typeguard import typechecked
+     6→@typechecked
+     7→def foo(x: str) -> str:
+    11→def takes_callable(f: Callable[[str], str]) -> str:
+    18→@typechecked
+    19→def has_valid_arguments(x: int, y: str) -> None:
+    23→def has_valid_return_type(y: str) -> str:
+    27→@typechecked
+    28→class MyClass:
+    29→    def __init__(self, x: int) -> None:
+    30→        self.x = x
+    31→
+    32→    def add(self, y: int) -> int:
+    33→        return self.x + y
+    36→def get_value(c: MyClass) -> int:
+    40→@typechecked
+    41→def get_value_checked(c: MyClass) -> int:
+    45→def create_myclass(x: int) -> MyClass:
+    49→@typechecked
+    50→def create_myclass_checked(x: int) -> MyClass:
+tests/mypy/test_type_annotations.py
+     1→import json
+     2→import os
+     3→import platform
+     4→import subprocess
+     6→import pytest
+     8→POSITIVE_FILE = "positive.py"
+     9→NEGATIVE_FILE = "negative.py"
+    19→def get_mypy_cmd(filename: str) -> list[str]:
+    23→def get_negative_mypy_output() -> str:
+    24→    """
+      →…
+    35→def get_expected_errors() -> dict[int, str]:
+    36→    """
+      →…
+    54→def get_mypy_errors() -> dict[int, str]:
+    55→    """
+      →…
+    68→@pytest.fixture
+    69→def chdir_local() -> None:
+    70→    """
+    71→    Change to the local directory. This is so that mypy treats imports from
+    72→    typeguard as external imports instead of source code (which is handled
+    73→    differently by mypy).
+    74→    """
+    78→@pytest.mark.usefixtures("chdir_local")
+    79→def test_positive() -> None:
+    80→    """
+    81→    Run mypy on the positive test file.  There should be no errors.
+    82→    """
+    86→@pytest.mark.usefixtures("chdir_local")
+    87→def test_negative() -> None:
+    88→    """
+    89→    Run mypy on the negative test file. This should fail. The errors from mypy
+    90→    should match the comments in the file.
+    91→    """
+tests/test_checkers.py
+    79→P = ParamSpec("P")
+    85→class TestAnyStr:
+    98→class TestBytesLike:
+   116→class TestFloat:
+   129→class TestComplexNumber:
+   147→class TestCallable:
+   274→class TestLiteral:
+   301→class TestMapping:
+   302→    class DummyMapping(collections.abc.Mapping):
+   356→class TestMutableMapping:
+   357→    class DummyMutableMapping(collections.abc.MutableMapping):
+   403→class TestDict:
+   446→class TestTypedDict:
+   651→class TestList:
+   678→class TestSequence:
+   709→class TestAbstractSet:
+   744→class TestSet:
+   769→class TestFrozenSet:
+   817→class TestTuple:
+   872→class TestNamedTuple:
+   887→class TestUnion:
+   967→    def test_uniontype_reference_leak …
+   999→    def test_raw_uniontype_success …
+  1003→    def test_raw_uniontype_fail …
+  1015→class TestTypevar:
+  1041→class TestNewType:
+  1059→class TestType:
+  1061→    def test_unparametrized …
+  1065→    def test_unparametrized_fail …
+  1111→    def test_generic_aliase …
+  1117→class TestIO:
+  1165→class TestIntersectingProtocol:
+  1168→    class SizedIterable(
+  1245→class TestProtocol:
+  1320→    def test_empty_protocol …
+  1330→    def test_member_checks …
+  1546→class TestRecursiveType:
+  1573→class TestAnnotated:
+  1583→class TestLiteralString:
+  1593→class TestTypeGuard:
+tests/test_importhook.py
+    63→def test_debug_instrumentation …
+tests/test_instrumentation.py
+    36→def method …
+    40→def _fixture_module(name: str, method: str):
+    41→    # config.debug_instrumentation = True
+    42→    sys.path.insert(0, str(this_dir))
+    43→    try:
+      →…
+    73→def dummymodule …
+    78→def deferredannos …
+    86→def dummymodule_py312 …
+   135→def test_inner_class_method …
+   141→def test_inner_class_classmethod …
+   147→def test_inner_class_staticmethod …
+   303→class TestOptionsOverride:
+   332→class TestVariableArguments:
+   355→class TestGuardedType:
+   391→class TestUsesForwardRef:
+   404→class TestParametrized:
+   426→class TestTypeAlias:
+tests/test_plugins.py
+tests/test_pytest_plugin.py
+    10→def config …
+tests/test_suppression.py
+    41→def test_decorator_typechecked …
+    50→def test_decorator_check_type …
+tests/test_transformer.py
+    60→class TestGenerator:
+   157→class TestAsyncGenerator:
+   929→class TestTypecheckingImport:
+  1189→class TestAssign:
+  1274→    def test_pep604_assign …
+  1837→class TestTypeShadowedByArgument:
+tests/test_typechecked.py
+    30→class TestCoroutineFunction:
+    66→class TestGenerator:
+   213→class TestAsyncGenerator:
+   368→class TestSelf:
+   483→class TestMock:
+   560→def test_debug_instrumentation …
+tests/test_utils.py
+tests/test_warn_on_error.py

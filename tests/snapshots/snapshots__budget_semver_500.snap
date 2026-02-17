@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (450 words)
+budget: 500 (452 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -11,7 +11,9 @@ CHANGELOG.md
      3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16) …
 CONTRIBUTING.md
      3→# Contributing …
-     5→## Code of Conduct …
+     5→## Code of Conduct
+     7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
+     8→
     19→### Commits …
     44→### Dependencies …
 README.md
@@ -96,7 +98,6 @@ internal/lrucache.js
      7→  }
      8→
      9→  get (key) {
-    10→    const value = this.map.get(key)
     21→  delete (key) {
     22→    return this.map.delete(key)
     23→  }
@@ -110,27 +111,25 @@ internal/re.js
     33→const makeSafeRegex = (value) => {
     42→const createToken = (name, value, isGlobal) => {
 ranges/gtr.js
-     5→const gtr …
 ranges/intersects.js
-     4→const intersects …
 ranges/ltr.js
-     5→const ltr …
 ranges/max-satisfying.js
-     6→const maxSatisfying …
 ranges/min-satisfying.js
-     5→const minSatisfying …
 ranges/min-version.js
-     7→const minVersion …
 ranges/outside.js
-    13→const outside …
 ranges/subset.js
-    45→const subset …
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
-    76→const simpleSubset …
-   226→const higherGT …
-   238→const lowerLT …
 ranges/to-comparators.js
-     6→const toComparators …
 ranges/valid.js
-     4→const validRange …
+test/bin/semver.js
+     9→const bin = require.resolve('../../bin/semver')
+    10→const run …
+test/integration/whitespace.js
+test/internal/debug.js
+     3→const main = () => {
+test/map.js
+test/ranges/simplify.js
+     6→const versions = [
+test/ranges/subset.js
+     8→const cases = [

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (489 words)
+budget: 500 (492 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -154,3 +154,6 @@ lib/ini.js
    212→const isQuoted = val => {
    217→const safe = val => {
    230→const unsafe = val => {
+test/duplicate-properties.js
+test/foo.js
+test/win32.js

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (488 words)
+budget: 500 (495 words)
 
 README.md
      1→# xxhash
@@ -46,25 +46,22 @@ README.md
     70→- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
     71→- [FreeCache](https://github.com/coocood/freecache)
       →…
+bench_test.go
+dynamic/dynamic_test.go
+     6→import …
+    15→// This is a cursory test that checks whether things work under dynamic linking.
+    16→
+    17→func TestMain(m *testing.M) {
+    33→func TestDynamic(t *testing.T) {
 dynamic/plugin.go
      6→import …
     14→const (
     15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
     16→	want = uint64(0x02a2e85470d6fd96)
     19→func TestSum(t *testing.T) {
-    20→	got := xxhash.Sum64String(in)
-      →…
     26→func TestDigest(t *testing.T) {
-    27→	for chunkSize := 1; chunkSize <= len(in); chunkSize++ {
-      →…
 xxhash.go
      5→import …
-    11→const …
-    12→	prime1 …
-    13→	prime2 …
-    14→	prime3 …
-    15→	prime4 …
-    16→	prime5 …
     19→// Store the primes in an array as well.
     20→//
       →…
@@ -91,9 +88,6 @@ xxhash.go
     75→func (d *Digest) Write(b []byte) (n int, err error) {
    113→func (d *Digest) Sum(b []byte) []byte {
    129→func (d *Digest) Sum64() uint64 {
-   170→const …
-   171→	magic …
-   172→	marshaledSize …
    176→func (d *Digest) MarshalBinary() ([]byte, error) {
    190→func (d *Digest) UnmarshalBinary(b []byte) error {
 xxhash_asm.go
@@ -105,6 +99,7 @@ xxhash_other.go
 xxhash_safe.go
      9→func Sum64String(s string) uint64 {
     14→func (d *Digest) WriteString(s string) (n int, err error) {
+xxhash_test.go
 xxhash_unsafe.go
      9→import …
     38→func Sum64String(s string) uint64 {
@@ -115,6 +110,13 @@ xxhash_unsafe.go
     56→	s   string
     57→	cap int
     58→}
+xxhash_unsafe_test.go
+    31→func TestInlining(t *testing.T) {
+xxhashbench/xxhashbench_test.go
+     3→import …
+    18→var sink uint64
+    20→var benchmarks = []struct {
+   108→func BenchmarkHashes(b *testing.B) {
 xxhsum/xxhsum.go
      3→import …
     11→func main() {

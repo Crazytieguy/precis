@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 words)
+budget: 1000 (996 words)
 
 README.md
      1→# xxhash
@@ -37,8 +37,7 @@ README.md
     40→* 1.10.3+ for Go 1.10
     41→* Go 1.11 or later
     42→
-    43→I recommend using the latest release of Go.
-    44→
+      →…
     45→## Benchmarks
     47→Here are some quick benchmarks comparing the pure-Go and assembly
     48→implementations of Sum64.
@@ -48,17 +47,7 @@ README.md
     52→| 4 B        |  1.3 GB/s |  1.2 GB/s |
     53→| 16 B       |  2.9 GB/s |  3.5 GB/s |
     54→| 100 B      |  6.9 GB/s |  8.1 GB/s |
-    55→| 4 KB       | 11.7 GB/s | 16.7 GB/s |
-    56→| 10 MB      | 12.0 GB/s | 17.3 GB/s |
-    57→
-    58→These numbers were generated on Ubuntu 20.04 with an Intel Xeon Platinum 8252C
-    59→CPU using the following commands under Go 1.19.2:
-    60→
-    61→```
-    62→benchstat <(go test -tags purego -benchtime 500ms -count 15 -bench 'Sum64$')
-    63→benchstat <(go test -benchtime 500ms -count 15 -bench 'Sum64$')
-    64→```
-    65→
+      →…
     66→## Projects using this package
     68→- [InfluxDB](https://github.com/influxdata/influxdb)
     69→- [Prometheus](https://github.com/prometheus/prometheus)
@@ -67,6 +56,21 @@ README.md
     72→- [FastCache](https://github.com/VictoriaMetrics/fastcache)
     73→- [Ristretto](https://github.com/dgraph-io/ristretto)
     74→- [Badger](https://github.com/dgraph-io/badger)
+bench_test.go
+     3→import …
+     8→var benchmarks = []struct {
+dynamic/dynamic_test.go
+     6→import …
+    15→// This is a cursory test that checks whether things work under dynamic linking.
+    16→
+    17→func TestMain(m *testing.M) {
+    18→	cmd := exec.Command(
+    19→		"go", "build",
+    20→		"-buildmode", "plugin",
+    21→		"-o", "plugin.so",
+    22→		"plugin.go",
+      →…
+    33→func TestDynamic(t *testing.T) {
 dynamic/plugin.go
      6→import (
      7→	"fmt"
@@ -147,20 +151,6 @@ xxhash.go
    176→func (d *Digest) MarshalBinary() ([]byte, error) {
    189→// UnmarshalBinary implements the encoding.BinaryUnmarshaler interface.
    190→func (d *Digest) UnmarshalBinary(b []byte) error {
-   208→func appendUint64 …
-   214→func consumeUint64 …
-   219→func u64 …
-   220→func u32 …
-   222→func round …
-   229→func mergeRound …
-   236→func rol1 …
-   237→func rol7 …
-   238→func rol11 …
-   239→func rol12 …
-   240→func rol18 …
-   241→func rol23 …
-   242→func rol27 …
-   243→func rol31 …
 xxhash_asm.go
      9→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
     10→//
@@ -171,12 +161,14 @@ xxhash_asm.go
 xxhash_other.go
      6→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
      7→func Sum64(b []byte) uint64 {
-    64→func writeBlocks …
 xxhash_safe.go
      8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
      9→func Sum64String(s string) uint64 {
     13→// WriteString adds more data to d. It always returns len(s), nil.
     14→func (d *Digest) WriteString(s string) (n int, err error) {
+xxhash_test.go
+     3→import …
+   168→var sink uint64
 xxhash_unsafe.go
      9→import (
     10→	"unsafe"
@@ -193,6 +185,24 @@ xxhash_unsafe.go
     56→	s   string
     57→	cap int
     58→}
+xxhash_unsafe_test.go
+     6→import …
+    29→// This test is inspired by the Go runtime tests in https://go.dev/cl/57410.
+    30→// It asserts that certain important functions may be inlined.
+    31→func TestInlining(t *testing.T) {
+    32→	funcs := map[string]struct{}{
+    33→		"Sum64String":           {},
+    34→		"(*Digest).WriteString": {},
+    35→	}
+    36→
+      →…
+xxhashbench/xxhashbench_test.go
+     3→import …
+    18→var sink uint64
+    20→var benchmarks = []struct {
+   108→func BenchmarkHashes(b *testing.B) {
+   152→func benchmarkHashBytes …
+   159→func benchmarkHashString …
 xxhsum/xxhsum.go
      3→import (
      4→	"fmt"

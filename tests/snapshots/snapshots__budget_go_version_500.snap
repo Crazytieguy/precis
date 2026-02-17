@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (475 words)
+budget: 500 (489 words)
 
 CHANGELOG.md
 README.md
@@ -90,15 +90,19 @@ constraint.go
    230→//-------------------------------------------------------------------
    231→
    232→type operator rune
+constraint_test.go
+     6→import …
 version.go
      6→import …
     15→// The compiled regular expression used to test the validity of a version.
     16→var (
-    17→	versionRegexp     *regexp.Regexp
     37→// The raw regular expression string used for testing the validity
     38→// of a version.
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
+    41→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-?([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
+    42→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
+    43→		`?`
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
@@ -125,3 +129,7 @@ version_collection.go
     18→func (v Collection) Swap(i, j int) {
     19→	v[i], v[j] = v[j], v[i]
     20→}
+version_collection_test.go
+     6→import …
+version_test.go
+     6→import …

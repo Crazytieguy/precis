@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (489 words)
+budget: 500 (490 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -55,9 +55,12 @@ cmdk/src/index.tsx
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1046→const useScheduleLayoutEffect = () => {
 cmdk/tsup.config.ts
-     1→import { defineConfig } from 'tsup'
 playwright.config.ts
      3→const config: PlaywrightTestConfig = {
+test/pages/_app.tsx
+     3→export default function App({ Component, pageProps }) {
+test/pages/huge.tsx
+     4→const items …
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -84,7 +87,6 @@ website/components/code/index.tsx
      7→const theme = {
     41→export function Code({ children }: { children: string }) {
     42→  return (
-    43→    <Highlight {...defaultProps} theme={theme} code={children} language="jsx">
       →…
 website/components/icons/index.tsx
      1→import styles from './icons.module.scss'

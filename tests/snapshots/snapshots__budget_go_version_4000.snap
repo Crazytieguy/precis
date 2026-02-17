@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3891 words)
+budget: 4000 (3884 words)
 
 CHANGELOG.md
      1→# 1.8.0 (Nov 28, 2025)
@@ -302,26 +302,6 @@ constraint.go
    182→	case "=":
    183→		cop = constraintOperation{op: equal, f: constraintEqual}
    184→	case "!=":
-   185→		cop = constraintOperation{op: notEqual, f: constraintNotEqual}
-   186→	case ">":
-   187→		cop = constraintOperation{op: greaterThan, f: constraintGreaterThan}
-   188→	case "<":
-   189→		cop = constraintOperation{op: lessThan, f: constraintLessThan}
-   190→	case ">=":
-   191→		cop = constraintOperation{op: greaterThanEqual, f: constraintGreaterThanEqual}
-   192→	case "<=":
-   193→		cop = constraintOperation{op: lessThanEqual, f: constraintLessThanEqual}
-   194→	case "~>":
-   195→		cop = constraintOperation{op: pessimistic, f: constraintPessimistic}
-   196→	default:
-   197→		cop = constraintOperation{op: equal, f: constraintEqual}
-   198→	}
-   199→
-   200→	return &Constraint{
-   201→		f:        cop.f,
-   202→		op:       cop.op,
-   203→		check:    check,
-   204→		original: v,
       →…
    208→func prereleaseCheck(v, c *Version) bool {
    209→	switch vPre, cPre := v.Prerelease() != "", c.Prerelease() != ""; {
@@ -339,9 +319,7 @@ constraint.go
    221→		// OK, except with the pessimistic operator
    222→	case !cPre && !vPre:
    223→		// OK
-   224→	}
-   225→	return true
-   226→}
+      →…
    228→//-------------------------------------------------------------------
    229→// Constraint functions
    230→//-------------------------------------------------------------------
@@ -390,26 +368,43 @@ constraint.go
    281→	cs := len(c.segments)
    282→
    283→	// If the version being checked has less specificity than the constraint, then there
-   284→	// is no way for the version to be valid against the constraint
-   285→	if cs > len(v.segments) {
-   286→		return false
-   287→	}
-   288→
-   289→	// Check the segments in the constraint against those in the version. If the version
-   290→	// being checked, at any point, does not have the same values in each index of the
-   291→	// constraints segments, then it cannot be valid against the constraint.
-   292→	for i := 0; i < c.si-1; i++ {
-   293→		if v.segments[i] != c.segments[i] {
-   294→			return false
-   295→		}
-   296→	}
-   297→
-   298→	// Check the last part of the segment in the constraint. If the version segment at
-   299→	// this index is less than the constraints segment at this index, then it cannot
-   300→	// be valid against the constraint
-   301→	if c.segments[cs-1] > v.segments[cs-1] {
-   302→		return false
-   303→	}
+      →…
+constraint_test.go
+     6→import (
+     7→	"fmt"
+     8→	"reflect"
+     9→	"sort"
+    10→	"testing"
+    11→)
+    13→func TestNewConstraint(t *testing.T) {
+    14→	cases := []struct {
+    15→		input string
+    16→		count int
+      →…
+    43→func TestConstraintCheck(t *testing.T) {
+    44→	cases := []struct {
+    45→		constraint string
+    46→		version    string
+      →…
+   106→func TestConstraintPrerelease(t *testing.T) {
+   107→	cases := []struct {
+   108→		constraint string
+   109→		prerelease bool
+      →…
+   134→func TestConstraintEqual(t *testing.T) {
+   135→	cases := []struct {
+   136→		leftConstraint  string
+   137→		rightConstraint string
+      →…
+   190→func TestConstraint_sort(t *testing.T) {
+   191→	cases := []struct {
+   192→		constraint          string
+   193→		expectedConstraints string
+      →…
+   232→func TestConstraintsString(t *testing.T) {
+   233→	cases := []struct {
+   234→		constraint string
+   235→		result     string
       →…
 version.go
      6→import (
@@ -488,26 +483,6 @@ version.go
     87→
     88→		segments[i] = val
     89→	}
-    90→
-    91→	// Even though we could support more than three segments, if we
-    92→	// got less than three, pad it with 0s. This is to cover the basic
-    93→	// default usecase of semver, which is MAJOR.MINOR.PATCH at the minimum
-    94→	for i := len(segments); i < 3; i++ {
-    95→		segments = append(segments, 0)
-    96→	}
-    97→
-    98→	pre := matches[7]
-    99→	if pre == "" {
-   100→		pre = matches[4]
-   101→	}
-   102→
-   103→	return &Version{
-   104→		metadata: matches[10],
-   105→		pre:      pre,
-   106→		segments: segments,
-   107→		si:       len(segmentsStr),
-   108→		original: v,
-   109→	}, nil
       →…
    112→// Must is a helper that wraps a call to a function returning (*Version, error)
    113→// and panics if error is non-nil.
@@ -629,26 +604,6 @@ version.go
    233→	otherNumeric := true
    234→	otherInt, err = strconv.ParseInt(preOther, 10, 64)
    235→	if err != nil {
-   236→		otherNumeric = false
-   237→	}
-   238→
-   239→	// if a part is empty, we use the other to decide
-   240→	if preSelf == "" {
-   241→		if otherNumeric {
-   242→			return -1
-   243→		}
-   244→		return 1
-   245→	}
-   246→
-   247→	if preOther == "" {
-   248→		if selfNumeric {
-   249→			return 1
-   250→		}
-   251→		return -1
-   252→	}
-   253→
-   254→	if selfNumeric && !otherNumeric {
-   255→		return -1
       →…
    267→func comparePrereleases(v string, other string) int {
    268→	// the same pre release!
@@ -666,26 +621,6 @@ version.go
    280→	biggestLen := otherPreReleaseLen
    281→	if selfPreReleaseLen > otherPreReleaseLen {
    282→		biggestLen = selfPreReleaseLen
-   283→	}
-   284→
-   285→	// loop for parts to find the first difference
-   286→	for i := 0; i < biggestLen; i = i + 1 {
-   287→		partSelfPre := ""
-   288→		if i < selfPreReleaseLen {
-   289→			partSelfPre = selfPreReleaseMeta[i]
-   290→		}
-   291→
-   292→		partOtherPre := ""
-   293→		if i < otherPreReleaseLen {
-   294→			partOtherPre = otherPreReleaseMeta[i]
-   295→		}
-   296→
-   297→		compare := comparePart(partSelfPre, partOtherPre)
-   298→		// if parts are equals, continue the loop
-   299→		if compare != 0 {
-   300→			return compare
-   301→		}
-   302→	}
       →…
    307→// Core returns a new version constructed from only the MAJOR.MINOR.PATCH
    308→// segments of the version, without prerelease or metadata.
@@ -784,11 +719,7 @@ version.go
    412→
    413→	if v.metadata != "" {
    414→		buf = append(buf, '+')
-   415→		buf = append(buf, v.metadata...)
-   416→	}
-   417→
-   418→	return buf
-   419→}
+      →…
    421→// Original returns the original parsed version as-is, including any
    422→// potential whitespace, `v` prefix, etc.
    423→func (v *Version) Original() string {
@@ -837,3 +768,131 @@ version_collection.go
     18→func (v Collection) Swap(i, j int) {
     19→	v[i], v[j] = v[j], v[i]
     20→}
+version_collection_test.go
+     6→import (
+     7→	"reflect"
+     8→	"sort"
+     9→	"testing"
+    10→)
+    12→func TestCollection(t *testing.T) {
+    13→	versionsRaw := []string{
+    14→		"1.1.1",
+    15→		"1.0",
+      →…
+version_test.go
+     6→import (
+     7→	"encoding/json"
+     8→	"fmt"
+     9→	"reflect"
+    10→	"testing"
+    11→)
+    13→func TestNewVersion(t *testing.T) {
+    14→	cases := []struct {
+    15→		version string
+    16→		err     bool
+      →…
+    54→func TestNewSemver(t *testing.T) {
+    55→	cases := []struct {
+    56→		version string
+    57→		err     bool
+      →…
+    95→func TestCore(t *testing.T) {
+    96→	cases := []struct {
+    97→		v1 string
+    98→		v2 string
+      →…
+   127→func TestVersionCompare(t *testing.T) {
+   128→	cases := []struct {
+   129→		v1       string
+   130→		v2       string
+      →…
+   174→func TestVersionCompare_versionAndSemver(t *testing.T) {
+   175→	cases := []struct {
+   176→		versionRaw string
+   177→		semverRaw  string
+      →…
+   212→func TestVersionEqual_nil(t *testing.T) {
+   213→	mustVersion := func(v string) *Version {
+   214→		ver, err := NewVersion(v)
+   215→		if err != nil {
+      →…
+   238→func TestComparePreReleases(t *testing.T) {
+   239→	cases := []struct {
+   240→		v1       string
+   241→		v2       string
+      →…
+   285→func TestVersionMetadata(t *testing.T) {
+   286→	cases := []struct {
+   287→		version  string
+   288→		expected string
+      →…
+   311→func TestVersionPrerelease(t *testing.T) {
+   312→	cases := []struct {
+   313→		version  string
+   314→		expected string
+      →…
+   339→func TestVersionSegments(t *testing.T) {
+   340→	cases := []struct {
+   341→		version  string
+   342→		expected []int
+      →…
+   366→func TestVersionSegments64(t *testing.T) {
+   367→	cases := []struct {
+   368→		version  string
+   369→		expected []int64
+      →…
+   401→func TestJsonMarshal(t *testing.T) {
+   402→	cases := []struct {
+   403→		version string
+   404→		err     bool
+      →…
+   436→func TestJsonUnmarshal(t *testing.T) {
+   437→	cases := []struct {
+   438→		version string
+   439→		err     bool
+      →…
+   470→func TestVersionString(t *testing.T) {
+   471→	cases := [][]string{
+   472→		{"1.2.3", "1.2.3"},
+   473→		{"1.2-beta", "1.2.0-beta"},
+      →…
+   497→func TestEqual(t *testing.T) {
+   498→	cases := []struct {
+   499→		v1       string
+   500→		v2       string
+      →…
+   544→func TestGreaterThan(t *testing.T) {
+   545→	cases := []struct {
+   546→		v1       string
+   547→		v2       string
+      →…
+   591→func TestLessThan(t *testing.T) {
+   592→	cases := []struct {
+   593→		v1       string
+   594→		v2       string
+      →…
+   638→func TestGreaterThanOrEqual(t *testing.T) {
+   639→	cases := []struct {
+   640→		v1       string
+   641→		v2       string
+      →…
+   685→func TestLessThanOrEqual(t *testing.T) {
+   686→	cases := []struct {
+   687→		v1       string
+   688→		v2       string
+      →…
+   732→func BenchmarkVersionString(b *testing.B) {
+   733→	v, _ := NewVersion("3.4.5-rc1+meta")
+   734→	_ = v.String()
+   735→
+      →…
+   743→func BenchmarkCompareVersionV1(b *testing.B) {
+   744→	v, _ := NewVersion("3.4.5")
+   745→
+   746→	b.ResetTimer()
+      →…
+   753→func BenchmarkVersionCompareV2(b *testing.B) {
+   754→	v, _ := NewVersion("1.2.3")
+   755→	o, _ := NewVersion("v1.2.3.4")
+   756→
+      →…

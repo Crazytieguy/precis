@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (929 words)
+budget: 1000 (938 words)
 
 CHANGELOG.md
 README.md
@@ -75,6 +75,7 @@ constraint.go
     14→var (
     15→	constraintRegexp     *regexp.Regexp
     16→	constraintRegexpOnce sync.Once
+    17→)
     19→func getConstraintRegexp() *regexp.Regexp {
     31→// Constraint represents a single constraint for a version, such as
     32→// ">= 1.0".
@@ -143,6 +144,8 @@ constraint.go
    260→func constraintGreaterThanEqual(v, c *Version) bool {
    264→func constraintLessThanEqual(v, c *Version) bool {
    268→func constraintPessimistic(v, c *Version) bool {
+constraint_test.go
+     6→import …
 version.go
      6→import (
      7→	"database/sql/driver"
@@ -174,7 +177,6 @@ version.go
     47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
     48→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
     49→		`?`
-    50→)
     52→// Version represents a single version.
     53→type Version struct {
     54→	metadata string
@@ -222,3 +224,7 @@ version_collection.go
     18→func (v Collection) Swap(i, j int) {
     19→	v[i], v[j] = v[j], v[i]
     20→}
+version_collection_test.go
+     6→import …
+version_test.go
+     6→import …

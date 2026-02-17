@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (458 words)
+budget: 500 (461 words)
 
 README.md
      9→# Mitt
@@ -112,5 +112,10 @@ src/index.ts
     58→		all,
     59→
     60→		/**
-    61→		 * Register an event handler for the given type.
       →…
+test/index_test.ts
+test/test-types-compilation.ts
+     5→interface SomeEventData {
+     6→	name: string;
+     7→}
+     9→const emitter = mitt<{

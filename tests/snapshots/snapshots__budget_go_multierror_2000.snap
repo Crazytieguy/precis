@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1984 words)
+budget: 2000 (1992 words)
 
 CHANGELOG.md
      1→## Unreleased …
@@ -60,9 +60,6 @@ README.md
     56→// golang.org/x/sync/errgroup returns only the first error:
     57→import "golang.org/x/sync/errgroup"
     58→
-    59→g := new(errgroup.Group)
-    60→g.Go(func() error { return task1() })
-    61→g.Go(func() error { return task2() })
       →…
    104→## Installation and Docs
    106→Install using `go get github.com/hashicorp/go-multierror`.
@@ -133,9 +130,6 @@ README.md
    173→`multierror.Error` implements `error` so if the caller doesn't know about
    174→multierror, it will work just fine. But if you're aware a multierror might
    175→be returned, you can use type switches to access the list of errors:
-   176→
-   177→```go
-   178→if err := something(); err != nil {
       →…
 append.go
      6→// Append is a helper function that will append more errors
@@ -179,6 +173,8 @@ append.go
     44→		return Append(&Error{}, newErrs...)
     45→	}
     46→}
+append_test.go
+     6→import …
 flatten.go
      6→// Flatten flattens the given error, merging any *Errors together into
      7→// a single *Error.
@@ -203,6 +199,8 @@ flatten.go
     27→		flatErr.Errors = append(flatErr.Errors, err)
     28→	}
     29→}
+flatten_test.go
+     6→import …
 format.go
      6→import (
      7→	"fmt"
@@ -227,6 +225,8 @@ format.go
     28→		"%d errors occurred:\n\t%s\n\n",
     29→		len(es), strings.Join(points, "\n\t"))
     30→}
+format_test.go
+     6→import …
 group.go
      6→import "sync"
      8→// Group is a collection of goroutines which return errors that need to be
@@ -261,6 +261,8 @@ group.go
     39→	defer g.mutex.Unlock()
     40→	return g.err
     41→}
+group_test.go
+     6→import …
 multierror.go
      6→import (
      7→	"errors"
@@ -370,6 +372,10 @@ multierror.go
    122→func (e chain) Is(target error) bool {
    123→	return errors.Is(e[0], target)
    124→}
+multierror_test.go
+     6→import …
+   208→// nestedError implements error and is used for tests.
+   209→type nestedError struct{}
 prefix.go
      6→import (
      7→	"fmt"
@@ -402,6 +408,8 @@ prefix.go
     35→		return fmt.Errorf("%s %s", prefix, err)
     36→	}
     37→}
+prefix_test.go
+     6→import …
 sort.go
      6→// Len implements sort.Interface function for length
      7→func (err *Error) Len() int {
@@ -419,3 +427,5 @@ sort.go
     21→func (err Error) Less(i, j int) bool {
     22→	return err.Errors[i].Error() < err.Errors[j].Error()
     23→}
+sort_test.go
+     6→import …

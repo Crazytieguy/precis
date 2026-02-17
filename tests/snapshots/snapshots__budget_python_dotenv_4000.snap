@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3607 words)
+budget: 4000 (3588 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -25,17 +25,6 @@ CONTRIBUTING.md
      8→Executing the tests:
      9→
     10→    $ uv venv
-    11→    $ uv pip install -r requirements.txt
-    12→    $ uv pip install -e .
-    13→    $ uv ruff check .
-    14→    $ uv format .
-    15→    $ uv run pytest
-    16→
-    17→or with [tox](https://pypi.org/project/tox/) installed:
-    18→
-    19→    $ tox
-    20→
-    21→
       →…
 README.md
      1→# python-dotenv
@@ -286,8 +275,8 @@ README.md
 docs/reference.md
      1→# ::: dotenv …
 src/dotenv/__init__.py
-     1→from typing import Any, Optional
-     3→from .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key
+     1→from typing …
+     3→from .main …
      6→def load_ipython_extension(ipython: Any) -> None:
     12→def get_cli_string(
     13→    path: Optional[str] = None,
@@ -312,18 +301,18 @@ src/dotenv/__init__.py
     50→    "load_ipython_extension",
     51→]
 src/dotenv/__main__.py
-     3→from .cli import cli
+     3→from .cli …
 src/dotenv/cli.py
-     1→import json
-     2→import os
-     3→import shlex
-     4→import sys
-     5→from contextlib import contextmanager
-     6→from typing import IO, Any, Dict, Iterator, List, Optional
-     9→    from subprocess import Popen
-    12→    import click
-    20→from .main import dotenv_values, set_key, unset_key
-    21→from .version import __version__
+     1→import json …
+     2→import os …
+     3→import shlex …
+     4→import sys …
+     5→from contextlib …
+     6→from typing …
+     9→    from subprocess …
+    12→    import click …
+    20→from .main …
+    21→from .version …
     24→def enumerate_env() -> Optional[str]:
     25→    """
     26→    Return a path for the ${pwd}/.env file.
@@ -431,13 +420,9 @@ src/dotenv/cli.py
    210→
    211→    """
 src/dotenv/ipython.py
-     1→from IPython.core.magic import Magics, line_magic, magics_class  # type: ignore
-     2→from IPython.core.magic_arguments import (
-     3→    argument,
-     4→    magic_arguments,
-     5→    parse_argstring,
-     6→)  # type: ignore
-     8→from .main import find_dotenv, load_dotenv
+     1→from IPython.core.magic …
+     2→from IPython.core.magic_arguments …
+     8→from .main …
     11→@magics_class
     12→class IPythonDotEnv(Magics):
     13→    @magic_arguments()
@@ -476,19 +461,19 @@ src/dotenv/ipython.py
     48→def load_ipython_extension(ipython):
     49→    """Register the %dotenv magic."""
 src/dotenv/main.py
-     1→import io
-     2→import logging
-     3→import os
-     4→import pathlib
-     5→import shutil
-     6→import stat
-     7→import sys
-     8→import tempfile
-     9→from collections import OrderedDict
-    10→from contextlib import contextmanager
-    11→from typing import IO, Dict, Iterable, Iterator, Mapping, Optional, Tuple, Union
-    13→from .parser import Binding, parse_stream
-    14→from .variables import parse_variables
+     1→import io …
+     2→import logging …
+     3→import os …
+     4→import pathlib …
+     5→import shutil …
+     6→import stat …
+     7→import sys …
+     8→import tempfile …
+     9→from collections …
+    10→from contextlib …
+    11→from typing …
+    13→from .parser …
+    14→from .variables …
     25→def _load_dotenv_disabled() -> bool:
     26→    """
     27→    Determine if dotenv loading has been disabled.
@@ -496,7 +481,7 @@ src/dotenv/main.py
     29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
     30→        return False
     31→    value = os.environ["PYTHON_DOTENV_DISABLED"].casefold()
-    32→    return value in {"1", "true", "t", "yes", "y"}
+      →…
     35→def with_warn_for_invalid_lines(mappings: Iterator[Binding]) -> Iterator[Binding]:
     45→class DotEnv:
     46→    def __init__(
@@ -646,15 +631,7 @@ src/dotenv/main.py
    273→    if not os.path.exists(path):
    274→        raise IOError("Starting path not found")
    275→
-   276→    if os.path.isfile(path):
-   277→        path = os.path.dirname(path)
-   278→
-   279→    last_dir = None
-   280→    current_dir = os.path.abspath(path)
-   281→    while last_dir != current_dir:
-   282→        yield current_dir
-   283→        parent_dir = os.path.abspath(os.path.join(current_dir, os.path.pardir))
-   284→        last_dir, current_dir = current_dir, parent_dir
+      →…
    287→def find_dotenv(
    288→    filename: str = ".env",
    289→    raise_error_if_not_found: bool = False,
@@ -724,24 +701,11 @@ src/dotenv/main.py
    427→    if os.path.isfile(path):
    428→        return True
    429→
-   430→    try:
-   431→        st = os.stat(path)
-   432→    except (FileNotFoundError, OSError):
-   433→        return False
-   434→
-   435→    return stat.S_ISFIFO(st.st_mode)
+      →…
 src/dotenv/parser.py
-     1→import codecs
-     2→import re
-     3→from typing import (
-     4→    IO,
-     5→    Iterator,
-     6→    Match,
-     7→    NamedTuple,
-     8→    Optional,
-     9→    Pattern,
-    10→    Sequence,
-    11→)
+     1→import codecs …
+     2→import re …
+     3→from typing …
     14→def make_regex(string: str, extra_flags: int = 0) -> Pattern[str]:
     35→class Original(NamedTuple):
     36→    string: str
@@ -810,9 +774,9 @@ src/dotenv/parser.py
    142→def parse_binding(reader: Reader) -> Binding:
    179→def parse_stream(stream: IO[str]) -> Iterator[Binding]:
 src/dotenv/variables.py
-     1→import re
-     2→from abc import ABCMeta, abstractmethod
-     3→from typing import Iterator, Mapping, Optional, Pattern
+     1→import re …
+     2→from abc …
+     3→from typing …
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
      7→    \$\{
@@ -873,3 +837,57 @@ src/dotenv/variables.py
     70→def parse_variables(value: str) -> Iterator[Atom]:
 src/dotenv/version.py
      1→__version__ = "1.2.1"
+tests/conftest.py
+     6→def cli():
+    13→def dotenv_path(tmp_path):
+tests/test_cli.py
+   196→def test_get_default_path(tmp_path):
+   206→def test_run(tmp_path):
+   216→def test_run_with_existing_variable(tmp_path):
+   228→def test_run_with_existing_variable_not_overridden(tmp_path):
+   240→def test_run_with_none_value(tmp_path):
+   250→def test_run_with_other_env(dotenv_path):
+tests/test_fifo_dotenv.py
+tests/test_ipython.py
+    14→def test_ipython_existing_variable_no_override(tmp_path):
+    33→def test_ipython_existing_variable_override(tmp_path):
+    52→def test_ipython_new_variable(tmp_path):
+tests/test_is_interactive.py
+     8→class TestIsInteractive:
+    31→
+    32→    def _create_dotenv_file(self, tmp_path):
+    33→        """Helper to create a test .env file."""
+    34→        dotenv_path = tmp_path / ".env"
+    35→        dotenv_path.write_text("TEST=value")
+    36→        return dotenv_path
+    37→
+    38→    def _setup_subdir_and_chdir(self, tmp_path, monkeypatch):
+    39→        """Helper to create subdirectory and change to it."""
+    40→        test_dir = tmp_path / "subdir"
+    41→        test_dir.mkdir()
+    42→        monkeypatch.chdir(test_dir)
+    43→        return test_dir
+    44→
+    45→    def _remove_ps_attributes(self, monkeypatch):
+    52→    def _mock_main_import(self, monkeypatch, mock_main_module):
+    63→    def _mock_main_import_error(self, monkeypatch):
+tests/test_main.py
+   251→def test_load_dotenv_existing_file(dotenv_path):
+   386→def test_load_dotenv_doesnt_disable_itself(dotenv_path):
+   411→def test_load_dotenv_existing_variable_no_override(dotenv_path):
+   424→def test_load_dotenv_existing_variable_override(dotenv_path):
+   437→def test_load_dotenv_redefine_var_used_in_file_no_override(dotenv_path):
+   450→def test_load_dotenv_redefine_var_used_in_file_with_override(dotenv_path):
+   463→def test_load_dotenv_string_io_utf_8():
+   476→def test_load_dotenv_file_stream(dotenv_path):
+   487→def test_load_dotenv_in_current_dir(tmp_path):
+tests/test_parser.py
+tests/test_utils.py
+tests/test_variables.py
+tests/test_zip_imports.py
+    23→class FileToAdd:
+    24→    def __init__(self, content: str, path: str):
+    25→        self.content = content
+    26→        self.path = path
+    46→def test_load_dotenv_gracefully_handles_zip_imports_when_no_env_file(tmp_path):
+    69→def test_load_dotenv_outside_zip_file_when_called_in_zipfile(tmp_path):

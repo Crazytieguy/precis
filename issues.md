@@ -12,7 +12,7 @@
 - ~~**File paths as stages**~~ — done. FilePath is now the first stage in every progression. Groups at the FilePath stage show only the file path (no symbols), providing structural context at tight budgets.
 - ~~**Import statement rendering**~~ — done. Imports are now extracted and rendered as their own `Import` kind category with stage progression `FilePath → Names → Signatures`. All languages supported (Rust `use`, TypeScript/JS `import`, Go `import`, Python `import`/`from`). Rust `pub use` re-exports are treated as public; all other imports are private.
 - **Import 1st-party vs 3rd-party distinction** — imports could be split into 1st-party (relative paths, `crate::`, `super::`, Go module path) vs 3rd-party groups. 1st-party imports are higher signal for understanding a file's role. Requires a `is_first_party` field on `GroupKey` and per-language heuristics.
-- **Test/vendor/example directories** — instead of excluding entirely during file discovery, render at lower priority. They appear as paths at tight budgets, content at generous budgets.
+- ~~**Test/vendor/example directories**~~ — done. Test/benchmark/example files are now included in discovery but deprioritized (0.15x value factor). Vendor and testdata directories remain excluded. At tight budgets, test files appear as paths only; at generous budgets, their symbols render normally.
 - **Per-group stage value tuning** — the initial stage values (1.0, 0.7, 0.6, etc.) are starting points. Review snapshots across languages and tune per-kind values for better output quality.
 - **Config file support** — support json/yaml/toml files with different rendering heuristics than code.
 

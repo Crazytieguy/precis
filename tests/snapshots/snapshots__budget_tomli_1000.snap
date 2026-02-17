@@ -2,13 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (976 words)
+budget: 1000 (968 words)
 
 CHANGELOG.md
      1→# Changelog …
      3→## 2.4.0
      5→- Added
-     6→  - TOML v1.1.0 compatibility
       →…
 README.md
      5→# Tomli
@@ -37,11 +36,6 @@ README.md
     38→A version of Tomli, the `tomllib` module,
     39→was added to the standard library in Python 3.11
     40→via [PEP 680](https://www.python.org/dev/peps/pep-0680/).
-    41→Tomli continues to provide a backport on PyPI for Python versions
-    42→where the standard library module is not available
-    43→and that have not yet reached their end-of-life.
-    44→
-    45→Tomli uses [mypyc](https://github.com/mypyc/mypyc)
       →…
     50→## Installation<a name="installation"></a>
     52→```bash
@@ -87,6 +81,27 @@ README.md
    204→
    205→Below are the results for commit [064e492](https://github.com/hukkin/tomli/tree/064e492919b2338def788753b8c981c9131334c0).
    206→
+benchmark/README.md
+     1→# Benchmark …
+     3→## Acknowledgments
+     5→This benchmark was shamelessly copied from
+     6→[pytomlpp](https://github.com/bobfang1992/pytomlpp/tree/e6b03726f8347c6a6757f520ad1b5fab68ed8534/benchmark)
+     7→repository and edited.
+     8→Credit goes to the authors of that project.
+     9→
+    10→## Running …
+    12→### Against the local Tomli state
+    14→```bash
+    15→tox -e benchmark
+    16→```
+    17→
+    18→### Against the latest Tomli PyPI release
+    20→```bash
+    21→tox -e benchmark-pypi
+    22→```
+benchmark/run.py
+    15→def benchmark …
+    37→def run …
 fuzzer/fuzz.py
      1→import atheris
      4→    from math import isnan
@@ -159,8 +174,6 @@ src/tomli/_parser.py
 src/tomli/_re.py
     11→TYPE_CHECKING = False
     17→_TIME_RE_STR: Final = r"""
-    18→([01][0-9]|2[0-3])             # hours
-      →…
     26→RE_NUMBER: Final = re.compile(
     27→    r"""
     28→0
@@ -174,10 +187,7 @@ src/tomli/_re.py
     36→|
     37→[+-]?(?:0|[1-9](?:_?[0-9])*)         # dec, integer part
     38→(?P<floatpart>
-    39→    (?:\.[0-9](?:_?[0-9])*)?         # optional fractional part
-    40→    (?:[eE][+-]?[0-9](?:_?[0-9])*)?  # optional exponent part
-    41→)
-    42→""",
+      →…
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
     47→    rf"""
@@ -202,6 +212,29 @@ src/tomli/_re.py
    106→    )
 src/tomli/_types.py
      5→from typing import Any, Callable, Tuple
+tests/__init__.py
+     1→# SPDX-License-Identifier: MIT
+     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
+     3→# Licensed to PSF under a Contributor Agreement.
+     4→
+     5→__all__ = ("tomllib",)
+     9→import tomli as tomllib
+tests/burntsushi.py
+tests/test_data.py
+     5→import json
+    11→DATA_DIR …
+    13→VALID_FILES …
+    21→VALID_FILES_EXPECTED …
+    23→INVALID_FILES …
+    27→class TestData(unittest.TestCase):
+    28→    def test_invalid(self):
+tests/test_error.py
+    13→class TestError(unittest.TestCase):
+    14→    def test_line_and_col(self):
+tests/test_misc.py
+     5→import copy
+    17→class TestMiscellaneous(unittest.TestCase):
+    18→    def test_load(self):
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
      3→Tomli was added to the Python standard library in Python 3.11.
@@ -210,10 +243,7 @@ tomllib.md
      6→
      7→- Python Issue Tracker: https://bugs.python.org/issue40059
      8→- Tomli issue tracker: https://github.com/hukkin/tomli/issues/141
-     9→- Discussion on PyPA "blessing" a TOML parser and/or including one in the standard library: https://discuss.python.org/t/adopting-recommending-a-toml-parser/4068
-    10→- Python Enhancement Proposal: https://peps.python.org/pep-0680
-    11→- CPython pull request: https://github.com/python/cpython/pull/31498
-    12→
+      →…
     13→## Converting Tomli to tomllib …
     15→### Sync status
     17→`tomllib` in CPython commit https://github.com/python/cpython/commit/deaf509e8fc6e0363bd6f26d52ad42f976ec42f2
@@ -224,20 +254,4 @@ tomllib.md
     23→
     24→- Remove `__version__ = ...` line from `cpython:Lib/tomllib/__init__.py`
     25→
-    26→- Move everything in `tomli:tests` to `cpython:Lib/test/test_tomllib`. Exclude the following test data dirs recursively:
-    27→
-    28→  - `tomli:tests/data/invalid/_external/`
-    29→  - `tomli:tests/data/valid/_external/`
-    30→
-    31→- Create `cpython:Lib/test/test_tomllib/__main__.py`:
-    32→
-    33→  ```python
-    34→  import unittest
-    35→
-    36→  from . import load_tests
-    37→
-    38→
-    39→  unittest.main()
-    40→  ```
-    41→
       →…

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (987 words)
+budget: 1000 (989 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -47,18 +47,8 @@ Readme.md
    147→## Declaring _program_ variable …
    177→## Options …
    523→## Commands …
-   613→#### More configuration
-   615→There are some additional features available by constructing an `Argument` explicitly for less common cases.
-   616→
-   617→Example file: [arguments-extra.js](./examples/arguments-extra.js)
-   618→
-      →…
-   625→#### Custom argument processing
-   627→You may specify a function to do custom processing of command-arguments (like for option-arguments).
-   628→The callback function receives two parameters, the user specified command-argument and the previous value for the argument.
-   629→It returns the new value for the argument.
-   630→
-      →…
+   613→#### More configuration …
+   625→#### Custom argument processing …
    754→## Automated help …
    956→## Custom event listeners …
    966→## Bits and pieces …
@@ -79,8 +69,7 @@ Readme.md
    983→program.parse(['--port', '80'], { from: 'user' }); // just user supplied arguments, nothing special about argv[0]
    984→```
    985→
-   986→Use `.parseAsync()` instead of `.parse()` if any of your action handlers are async.
-   987→
+      →…
   1164→## Support …
 Readme_zh-CN.md
      1→# Commander.js
@@ -88,14 +77,12 @@ Readme_zh-CN.md
      9→
     10→使用其他语言阅读：[English](./Readme.md) | 简体中文
     11→
-    12→- [Commander.js](#commanderjs)
       →…
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
    911→如果参数遵循与 node 不同的约定，可以在第二个参数中传递`from`选项：
    912→
-   913→- `node`：默认值，`argv[0]`是应用，`argv[1]`是要跑的脚本，后续为用户参数；
       →…
 SECURITY.md
      1→# Security Policy …
@@ -135,12 +122,20 @@ docs/zh-CN/可变参数的选项.md
 docs/zh-CN/术语表.md
      1→# 术语表 …
 eslint.config.js
-     8→const tsconfigTsFiles …
-     9→const tsconfigJsFiles …
 esm.mjs
      1→import commander from './index.js';
+examples/color-help-replacement.mjs
+examples/color-help.mjs
+examples/custom-command-class.js
+     6→class CommandWithTrace extends commander.Command {
+     7→  createCommand(name) {
+examples/global-options-added.js
+    16→class MyRootCommand extends Command {
+    17→  createCommand(name) {
+examples/help-centered.mjs
+examples/man-style-help.mjs
+     5→function formatItem(term, termWidth, description, helper) {
 jest.config.js
-     1→const config …
 lib/argument.js
      3→class Argument {
      4→  /**
@@ -180,6 +175,20 @@ lib/option.js
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
+tests/command.createArgument.test.js
+     4→  constructor(name, description) {
+    11→  createArgument(name, description) {
+    16→  createCommand(name) {
+tests/command.createOption.test.js
+     4→  constructor(flags, description) {
+    11→  createOption(flags, description) {
+tests/esm-imports-test.mjs
+     1→../esm.mjs …
+    19→function check(condition, explanation) {
+    26→function checkClass(obj, name) {
+tests/ts-imports.test.ts
+     1→../ …
+    17→function checkClass(obj: object, name: string): void {
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =
     13→  | LiteralType
@@ -236,3 +245,8 @@ typings/index.d.ts
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1104→export interface ParseOptionsResult {
   1113→export const program: Command;
+typings/index.test-d.ts
+   384→interface MyCheeseOption {
+   509→class MyCommand extends commander.Command {
+   510→  createCommand(name?: string): MyCommand {
+   514→  myFunction(): void {

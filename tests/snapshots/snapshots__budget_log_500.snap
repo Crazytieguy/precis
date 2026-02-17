@@ -2,10 +2,9 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (476 words)
+budget: 500 (475 words)
 
 CHANGELOG.md
-     1→# Change Log …
 README.md
      1→log …
     19→## Minimum supported `rustc` …
@@ -20,11 +19,11 @@ README.md
     35→```
     36→
     37→```rust
-    38→use log::{info, trace, warn};
-    39→
       →…
     58→### In executables …
    106→## Structured logging …
+benches/value.rs
+     4→use log::kv::Value;
 rfcs/0296-structured-logging.md
    502→### Don't break anything …
   1598→#### Build a serialization contract in `log` …
@@ -146,3 +145,6 @@ test_max_level_features/main.rs
     29→fn main() {
     44→fn test(a: &State, filter: LevelFilter) {
     72→fn last(state: &State, expected: Option<Level>) {
+tests/integration.rs
+tests/macros.rs
+   420→enum Type {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3648 words)
+budget: 4000 (3790 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -11,93 +11,35 @@ CHANGELOG.md
      6→  - TOML v1.1.0 compatibility
      7→  - Binary wheels for Windows arm64
      8→
-     9→## 2.3.0
-    11→- Added
-      →…
-    16→## 2.2.1
-    18→- Fixed
-      →…
-    21→## 2.2.0
-    23→- Added
-      →…
-    26→## 2.1.0
-    28→- Deprecated
-      →…
-    34→## 2.0.2
-    36→- Removed
-      →…
-    44→## 2.0.1
-    46→- Improved
-      →…
-    56→## 1.2.3
-    58→- Fixed
-      →…
-    61→## 2.0.0
-    63→- Removed
-      →…
-    75→## 1.2.2
-    77→- Fixed
-      →…
-    84→## 1.2.1
-    86→- Fixed
-      →…
-    94→## 1.2.0
-    96→- Deprecated
-      →…
-   100→## 1.1.0
-   102→- Added
-      →…
-   105→## 1.0.4
-   107→- Performance
-      →…
-   110→## 1.0.3
-   112→- Fixed
-      →…
-   117→## 1.0.2
-   119→- Performance
-      →…
-   122→## 1.0.1
-   124→- Performance
-      →…
-   127→## 1.0.0
-   129→- Fixed
-      →…
-   132→## 0.2.10
-   134→- Fixed
-      →…
-   140→## 0.2.9
-   142→- Fixed
-      →…
-   147→## 0.2.8
-   149→- Performance
-      →…
-   152→## 0.2.7
-   154→- Added
-      →…
-   158→## 0.2.6
-   160→- Performance
-      →…
-   163→## 0.2.5
-   165→- Fixed
-      →…
-   168→## 0.2.4
-   170→- Fixed
-      →…
-   173→## 0.2.3
-   175→- Fixed
-      →…
-   178→## 0.2.2
-   180→- Added
-      →…
-   185→## 0.2.1
-   187→- Fixed
-      →…
-   191→## 0.2.0
-   193→- Changed
-      →…
-   198→## 0.1.0
-   200→- Added
-      →…
+     9→## 2.3.0 …
+    16→## 2.2.1 …
+    21→## 2.2.0 …
+    26→## 2.1.0 …
+    34→## 2.0.2 …
+    44→## 2.0.1 …
+    56→## 1.2.3 …
+    61→## 2.0.0 …
+    75→## 1.2.2 …
+    84→## 1.2.1 …
+    94→## 1.2.0 …
+   100→## 1.1.0 …
+   105→## 1.0.4 …
+   110→## 1.0.3 …
+   117→## 1.0.2 …
+   122→## 1.0.1 …
+   127→## 1.0.0 …
+   132→## 0.2.10 …
+   140→## 0.2.9 …
+   147→## 0.2.8 …
+   152→## 0.2.7 …
+   158→## 0.2.6 …
+   163→## 0.2.5 …
+   168→## 0.2.4 …
+   173→## 0.2.3 …
+   178→## 0.2.2 …
+   185→## 0.2.1 …
+   191→## 0.2.0 …
+   198→## 0.1.0 …
 README.md
      5→# Tomli
      7→> A lil' TOML parser
@@ -321,6 +263,55 @@ README.md
    241→      toml |     3.03 s | 10.65%
    242→   tomlkit |     20.6 s | 1.57%
    243→```
+benchmark/README.md
+     1→# Benchmark …
+     3→## Acknowledgments
+     5→This benchmark was shamelessly copied from
+     6→[pytomlpp](https://github.com/bobfang1992/pytomlpp/tree/e6b03726f8347c6a6757f520ad1b5fab68ed8534/benchmark)
+     7→repository and edited.
+     8→Credit goes to the authors of that project.
+     9→
+    10→## Running …
+    12→### Against the local Tomli state
+    14→```bash
+    15→tox -e benchmark
+    16→```
+    17→
+    18→### Against the latest Tomli PyPI release
+    20→```bash
+    21→tox -e benchmark-pypi
+    22→```
+benchmark/run.py
+     3→from collections.abc import Callable
+     4→from pathlib import Path
+     5→import timeit
+     7→import pytomlpp
+     8→import rtoml
+     9→import toml
+    10→import tomlkit
+    12→import tomli
+    15→def benchmark(
+    16→    name: str,
+    17→    run_count: int,
+    18→    func: Callable,
+    19→    col_width: tuple,
+    20→    compare_to: float | None = None,
+    21→) -> float:
+    22→    placeholder = "Running..."
+    23→    print(f"{name:>{col_width[0]}} | {placeholder}", end="", flush=True)
+    24→    time_taken = min(timeit.repeat(func, number=run_count, repeat=5))
+    25→    print("\b" * len(placeholder), end="")
+    26→    time_suffix = " s"
+    27→    print(f"{time_taken:{col_width[1]-len(time_suffix)}.3g}{time_suffix}", end="")
+      →…
+    37→def run(run_count: int) -> None:
+    38→    data_path = Path(__file__).parent / "data.toml"
+    39→    test_data = data_path.read_bytes().decode()
+    40→
+    41→    col_width = (10, 10, 28)
+    42→    col_head = ("parser", "exec time", "performance (more is better)")
+    43→    print(f"Parsing data.toml {run_count} times:")
+      →…
 fuzzer/fuzz.py
      1→import atheris
      4→    from math import isnan
@@ -522,14 +513,8 @@ src/tomli/_parser.py
    134→        self.colno = colno
    137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
    138→    """Parse TOML from a binary file object."""
-   139→    b = __fp.read()
-   140→    try:
-      →…
    149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
    150→    """Parse TOML from a string."""
-   151→
-   152→    # The spec allows converting "\r\n" to "\n", even in string
-      →…
    220→class Flags:
    221→    """Flags that map to parsed keys/namespaces."""
    222→
@@ -623,9 +608,6 @@ src/tomli/_parser.py
    314→        self.data = NestedDict()
    315→        self.flags = Flags()
    318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
-   319→    try:
-   320→        while src[pos] in chars:
-      →…
    327→def skip_until(
    328→    src: str,
    329→    pos: Pos,
@@ -634,92 +616,37 @@ src/tomli/_parser.py
    332→    error_on: frozenset[str],
    333→    error_on_eof: bool,
    334→) -> Pos:
-   335→    try:
-   336→        new_pos = src.index(expect, pos)
-      →…
    349→def skip_comment(src: str, pos: Pos) -> Pos:
-   350→    try:
-   351→        char: str | None = src[pos]
-      →…
    361→def skip_comments_and_array_ws(src: str, pos: Pos) -> Pos:
-   362→    while True:
-   363→        pos_before_skip = pos
-      →…
    370→def create_dict_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
-   371→    pos += 1  # Skip "["
-   372→    pos = skip_chars(src, pos, TOML_WS)
-      →…
    390→def create_list_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
-   391→    pos += 2  # Skip "[["
-   392→    pos = skip_chars(src, pos, TOML_WS)
-      →…
    413→def key_value_rule(
    414→    src: str, pos: Pos, out: Output, header: Key, parse_float: ParseFloat
    415→) -> Pos:
-   416→    pos, key, value = parse_key_value_pair(src, pos, parse_float, nest_lvl=0)
-   417→    key_parent, key_stem = key[:-1], key[-1]
-      →…
    447→def parse_key_value_pair(
    448→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    449→) -> tuple[Pos, Key, Any]:
-   450→    pos, key = parse_key(src, pos)
-   451→    try:
-      →…
    463→def parse_key(src: str, pos: Pos) -> tuple[Pos, Key]:
-   464→    pos, key_part = parse_key_part(src, pos)
-   465→    key: Key = (key_part,)
-      →…
    481→def parse_key_part(src: str, pos: Pos) -> tuple[Pos, str]:
-   482→    try:
-   483→        char: str | None = src[pos]
-      →…
    497→def parse_one_line_basic_str(src: str, pos: Pos) -> tuple[Pos, str]:
-   498→    pos += 1
-   499→    return parse_basic_str(src, pos, multiline=False)
    502→def parse_array(
    503→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    504→) -> tuple[Pos, list[Any]]:
-   505→    pos += 1
-   506→    array: list[Any] = []
-      →…
    528→def parse_inline_table(
    529→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    530→) -> tuple[Pos, dict[str, Any]]:
-   531→    pos += 1
-   532→    nested_dict = NestedDict()
-      →…
    564→def parse_basic_str_escape(
    565→    src: str, pos: Pos, *, multiline: bool = False
    566→) -> tuple[Pos, str]:
-   567→    escape_id = src[pos : pos + 2]
-   568→    pos += 2
-      →…
    595→def parse_basic_str_escape_multiline(src: str, pos: Pos) -> tuple[Pos, str]:
-   596→    return parse_basic_str_escape(src, pos, multiline=True)
    599→def parse_hex_char(src: str, pos: Pos, hex_len: int) -> tuple[Pos, str]:
-   600→    hex_str = src[pos : pos + hex_len]
-   601→    if len(hex_str) != hex_len or not HEXDIGIT_CHARS.issuperset(hex_str):
-      →…
    612→def parse_literal_str(src: str, pos: Pos) -> tuple[Pos, str]:
-   613→    pos += 1  # Skip starting apostrophe
-   614→    start_pos = pos
-      →…
    621→def parse_multiline_str(src: str, pos: Pos, *, literal: bool) -> tuple[Pos, str]:
-   622→    pos += 3
-   623→    if src.startswith("\n", pos):
-      →…
    652→def parse_basic_str(src: str, pos: Pos, *, multiline: bool) -> tuple[Pos, str]:
-   653→    if multiline:
-   654→        error_on = ILLEGAL_MULTILINE_BASIC_STR_CHARS
-      →…
    684→def parse_value(
    685→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    686→) -> tuple[Pos, Any]:
-   687→    if nest_lvl > MAX_INLINE_NESTING:
-   688→        # Pure Python should have raised RecursionError already.
-      →…
    760→def is_unicode_scalar_value(codepoint: int) -> bool:
-   761→    return (0 <= codepoint <= 55295) or (57344 <= codepoint <= 1114111)
    764→def make_safe_parse_float(parse_float: ParseFloat) -> ParseFloat:
    765→    """A decorator to make `parse_float` safe.
    766→
@@ -728,9 +655,6 @@ src/tomli/_parser.py
    769→    the parser. The returned decorated callable raises `ValueError`
    770→    instead of returning illegal types.
    771→    """
-   772→    # The default `float` callable never returns illegal types. Optimize it.
-   773→    if parse_float is float:
-      →…
 src/tomli/_re.py
      7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
      8→from functools import lru_cache
@@ -783,9 +707,6 @@ src/tomli/_re.py
     62→    Raises ValueError if the match does not correspond to a valid date
     63→    or datetime.
     64→    """
-    65→    (
-    66→        year_str,
-      →…
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
@@ -799,15 +720,109 @@ src/tomli/_re.py
    105→        )
    106→    )
    109→def match_to_localtime(match: re.Match[str]) -> time:
-   110→    hour_str, minute_str, sec_str, micros_str = match.groups()
-   111→    sec = int(sec_str) if sec_str else 0
-      →…
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
-   117→    if match.group("floatpart"):
-   118→        return parse_float(match.group())
-      →…
 src/tomli/_types.py
      5→from typing import Any, Callable, Tuple
+tests/__init__.py
+     1→# SPDX-License-Identifier: MIT
+     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
+     3→# Licensed to PSF under a Contributor Agreement.
+     4→
+     5→__all__ = ("tomllib",)
+     9→import tomli as tomllib
+tests/burntsushi.py
+     7→import datetime
+     8→from typing import Any
+    11→def convert(obj):
+    42→def normalize(obj: Any) -> Any:
+    43→    """Normalize test objects.
+    44→
+    45→    This normalizes primitive values (e.g. floats)."""
+    68→def _normalize_datetime_str(dt_str: str) -> str:
+    92→def _normalize_localtime_str(lt_str: str) -> str:
+    96→def _normalize_float_str(float_str: str) -> str:
+tests/test_data.py
+     5→import json
+     6→from pathlib import Path
+     7→import unittest
+     9→from . import burntsushi, tomllib
+    11→DATA_DIR = Path(__file__).parent / "data"
+    13→VALID_FILES = tuple((DATA_DIR / "valid").glob("**/*.toml"))
+    21→VALID_FILES_EXPECTED = tuple(_expected_files)
+    23→INVALID_FILES = tuple((DATA_DIR / "invalid").glob("**/*.toml"))
+    27→class TestData(unittest.TestCase):
+    28→    def test_invalid(self):
+    29→        for invalid in INVALID_FILES:
+    30→            with self.subTest(msg=invalid.stem):
+    31→                toml_bytes = invalid.read_bytes()
+    32→                try:
+    33→                    toml_str = toml_bytes.decode()
+    34→                except UnicodeDecodeError:
+    35→                    # Some BurntSushi tests are not valid UTF-8. Skip those.
+    36→                    continue
+    37→                with self.assertRaises(tomllib.TOMLDecodeError):
+    38→                    tomllib.loads(toml_str)
+    39→
+    40→    def test_valid(self):
+      →…
+tests/test_error.py
+     7→from typing import Any
+     8→import unittest
+    10→from . import tomllib
+    13→class TestError(unittest.TestCase):
+    14→    def test_line_and_col(self):
+    15→        with self.assertRaises(tomllib.TOMLDecodeError) as exc_info:
+    16→            tomllib.loads("val=.")
+    17→        self.assertEqual(str(exc_info.exception), "Invalid value (at line 1, column 5)")
+    18→
+    19→        with self.assertRaises(tomllib.TOMLDecodeError) as exc_info:
+    20→            tomllib.loads(".")
+    21→        self.assertEqual(
+    22→            str(exc_info.exception), "Invalid statement (at line 1, column 1)"
+    23→        )
+    24→
+    25→        with self.assertRaises(tomllib.TOMLDecodeError) as exc_info:
+    26→            tomllib.loads("\n\nval=.")
+    35→    def test_missing_value(self):
+    40→    def test_invalid_char_quotes(self):
+    45→    def test_type_error(self):
+    62→    def test_invalid_parse_float(self):
+    76→    def test_deprecated_tomldecodeerror(self):
+    92→    def test_tomldecodeerror(self):
+tests/test_misc.py
+     5→import copy
+     6→import datetime
+     7→from decimal import Decimal as D
+     8→import importlib
+     9→from pathlib import Path
+    10→import sys
+    11→import tempfile
+    12→import unittest
+    14→from . import tomllib
+    17→class TestMiscellaneous(unittest.TestCase):
+    18→    def test_load(self):
+    19→        content = "one=1 \n two='two' \n arr=[]"
+    20→        expected = {"one": 1, "two": "two", "arr": []}
+    21→        with tempfile.TemporaryDirectory() as tmp_dir_path:
+    22→            file_path = Path(tmp_dir_path) / "test.toml"
+    23→            file_path.write_text(content)
+    24→
+    25→            with open(file_path, "rb") as bin_f:
+    26→                actual = tomllib.load(bin_f)
+    27→        self.assertEqual(actual, expected)
+    28→
+    29→    def test_incorrect_load(self):
+    30→        content = "one=1"
+    47→    def test_parse_float(self):
+    75→    def test_deepcopy(self):
+   103→    def test_inline_array_recursion_limit(self):
+   118→    def test_inline_table_recursion_limit(self):
+   133→    def test_types_import(self):
+   134→        """Test that `_types` module runs.
+   135→
+   136→        The module is for type annotations only, so it is otherwise
+   137→        never imported by tests.
+   138→        """
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
      3→Tomli was added to the Python standard library in Python 3.11.
@@ -859,4 +874,4 @@ tomllib.md
     52→
     53→  Also change `import tomli as tomllib` to `import tomllib`.
     54→
-    55→- In `cpython:Lib/tomllib/_parser.py` replace `__fp` with `fp` and `__s` with `s`. Add the `/` to `load` and `loads` function signatures.
+      →…

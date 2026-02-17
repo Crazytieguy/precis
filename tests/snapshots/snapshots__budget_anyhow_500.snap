@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (476 words)
+budget: 500 (477 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯ …
@@ -32,8 +32,6 @@ src/backtrace.rs
     64→macro_rules! backtrace_if_absent {
     70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
-    72→    use alloc::borrow::{Cow, ToOwned as _};
-    73→    use alloc::vec::Vec;
 src/chain.rs
     11→pub(crate) struct Chain<'a> {
     16→pub(crate) enum ChainState<'a> {
@@ -83,10 +81,6 @@ src/lib.rs
    427→/// ```rust
    428→/// use anyhow::Result;
    429→///
-   430→/// # const IGNORE: &str = stringify! {
-   431→/// fn demo1() -> Result<T> {...}
-   432→///            // ^ equivalent to std::result::Result<T, anyhow::Error>
-   433→///
       →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    616→pub trait Context<T, E>: context::private::Sealed {
@@ -95,9 +89,6 @@ src/lib.rs
    657→    use self::not::Bool;
    658→    use crate::Error;
    659→    use alloc::fmt;
-   660→    use core::fmt::Arguments;
-   661→
-   662→    #[doc(hidden)]
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
    665→    pub use alloc::format;
    667→    pub use core::result::Result::Err;
@@ -107,10 +98,7 @@ src/lib.rs
    673→        #[doc(hidden)]
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    675→
-   676→        #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-   677→        #[doc(hidden)]
    678→        pub use crate::kind::BoxedKind;
-      →…
    710→        pub trait Bool {
 src/macros.rs
     58→macro_rules! bail {
@@ -140,3 +128,29 @@ src/wrapper.rs
     11→pub struct MessageError<M>(pub M);
     34→pub struct DisplayError<M>(pub M);
     58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
+tests/common/mod.rs
+tests/crate/test.rs
+     3→pub use anyhow::*;
+tests/drop/mod.rs
+     8→#[derive(Debug)]
+     9→pub struct Flag {
+    10→    atomic: Arc<AtomicBool>,
+    11→}
+    25→#[derive(Debug)]
+    26→pub struct DetectDrop {
+    27→    has_dropped: Flag,
+    28→}
+tests/test_autotrait.rs
+tests/test_boxed.rs
+tests/test_context.rs
+tests/test_ensure.rs
+    43→    type Output = bool;
+    78→fn assert_err …
+tests/test_ffi.rs
+tests/test_source.rs
+tests/ui/ensure-nonbool.rs
+tests/ui/must-use.rs
+     3→use anyhow::anyhow;
+tests/ui/no-impl.rs
+     3→#[derive(Debug)]
+     4→struct Error;

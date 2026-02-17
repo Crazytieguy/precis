@@ -2,15 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1890 words)
+budget: 2000 (1876 words)
 
 CHANGELOG.md
      1→# Changelog
      3→All notable changes to this project will be documented in this file.
      4→
-     5→The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
-     6→project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-     7→
+      →…
     21→### Fixed
     23→* CLI: Ensure `find_dotenv` work reliably on python 3.13 by [@theskumar] in [#563](https://github.com/theskumar/python-dotenv/pull/563)
     24→* CLI: revert the use of execvpe on Windows by [@wrongontheinternet] in [#566](https://github.com/theskumar/python-dotenv/pull/566)
@@ -24,7 +22,6 @@ CONTRIBUTING.md
      7→
      8→Executing the tests:
      9→
-    10→    $ uv venv
       →…
 README.md
      1→# python-dotenv
@@ -127,7 +124,6 @@ README.md
    110→
    111→```python
    112→from io import StringIO
-   113→
       →…
    120→### Load .env files in IPython
    122→You can use dotenv in IPython. By default, it will use `find_dotenv` to search for a
@@ -136,7 +132,6 @@ README.md
    125→```python
    126→%load_ext dotenv
    127→%dotenv
-   128→```
       →…
    141→### Disable load_dotenv
    143→Set `PYTHON_DOTENV_DISABLED=1` to disable `load_dotenv()` from loading .env
@@ -186,7 +181,6 @@ README.md
    190→```bash
    191→FOO="first line
    192→second line"
-   193→```
       →…
    199→### Variable without a value
    201→A variable can have no value:
@@ -195,7 +189,6 @@ README.md
    204→FOO
    205→```
    206→
-   207→It results in `dotenv_values` associating that variable name with the value
       →…
    214→### Variable expansion
    216→python-dotenv can interpolate variables using POSIX variable expansion.
@@ -204,7 +197,6 @@ README.md
    219→is the first of the values defined in the following list:
    220→
    221→- Value of that variable in the `.env` file.
-   222→- Value of that variable in the environment.
       →…
    234→## Related Projects
    236→- [environs](https://github.com/sloria/environs)
@@ -263,8 +255,6 @@ src/dotenv/cli.py
     74→
     75→    try:
     76→        with open(path) as stream:
-    77→            yield stream
-    78→    except OSError as exc:
       →…
     93→def list_values …
    112→@cli.command(name="set")
@@ -276,8 +266,6 @@ src/dotenv/cli.py
    118→    file = ctx.obj["FILE"]
    119→    quote = ctx.obj["QUOTE"]
    120→    export = ctx.obj["EXPORT"]
-   121→    success, key, value = set_key(file, key, value, quote, export)
-   122→    if success:
       →…
    128→@cli.command()
    129→@click.pass_context
@@ -287,8 +275,6 @@ src/dotenv/cli.py
    133→    file = ctx.obj["FILE"]
    134→
    135→    with stream_file(file) as stream:
-   136→        values = dotenv_values(stream=stream)
-   137→
       →…
    145→@cli.command()
    146→@click.pass_context
@@ -298,8 +284,6 @@ src/dotenv/cli.py
    150→    file = ctx.obj["FILE"]
    151→    quote = ctx.obj["QUOTE"]
    152→    success, key = unset_key(file, key, quote)
-   153→    if success:
-   154→        click.echo(f"Successfully removed {key}")
       →…
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
@@ -307,8 +291,6 @@ src/dotenv/cli.py
    175→    file = ctx.obj["FILE"]
    176→    if not os.path.isfile(file):
    177→        raise click.BadParameter(
-   178→            f"Invalid value for '-f' \"{file}\" does not exist.", ctx=ctx
-   179→        )
       →…
    193→def run_command …
 src/dotenv/ipython.py
@@ -354,8 +336,6 @@ src/dotenv/main.py
     27→    Determine if dotenv loading has been disabled.
     28→    """
     29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
-    30→        return False
-    31→    value = os.environ["PYTHON_DOTENV_DISABLED"].casefold()
       →…
     35→def with_warn_for_invalid_lines …
     45→class DotEnv:
@@ -365,7 +345,6 @@ src/dotenv/main.py
     49→        stream: Optional[IO[str]] = None,
     50→        verbose: bool = False,
     51→        encoding: Optional[str] = None,
-    52→        interpolate: bool = True,
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
@@ -379,7 +358,7 @@ src/dotenv/main.py
     73→                    "python-dotenv could not find configuration file %s.",
     74→                    self.dotenv_path or ".env",
     75→                )
-    76→            yield io.StringIO("")
+      →…
     78→    def dict …
     94→    def parse …
    100→    def set_as_environment_variables …
@@ -393,8 +372,6 @@ src/dotenv/main.py
    146→    pathlib.Path(path).touch()
    147→
    148→    with tempfile.NamedTemporaryFile(mode="w", encoding=encoding, delete=False) as dest:
-   149→        error = None
-   150→        try:
       →…
    163→def set_key …
    211→def unset_key …
@@ -404,8 +381,6 @@ src/dotenv/main.py
    271→    Yield directories starting from the given directory up to the root
    272→    """
    273→    if not os.path.exists(path):
-   274→        raise IOError("Starting path not found")
-   275→
       →…
    287→def find_dotenv …
    338→def load_dotenv …
@@ -415,8 +390,6 @@ src/dotenv/main.py
    425→    Return True if `path` exists and is either a regular file or a FIFO.
    426→    """
    427→    if os.path.isfile(path):
-   428→        return True
-   429→
       →…
 src/dotenv/parser.py
     14→def make_regex …
@@ -435,7 +408,6 @@ src/dotenv/parser.py
     51→
     52→    @classmethod
     53→    def start(cls) -> "Position":
-    54→        return cls(chars=0, line=1)
     56→    def set …
     60→    def advance …
     65→class Error(Exception):
@@ -447,7 +419,6 @@ src/dotenv/parser.py
     73→        self.mark = Position.start()
     74→
     75→    def has_next(self) -> bool:
-    76→        return self.position.chars < len(self.string)
     78→    def set_mark …
     81→    def get_marked …
     87→    def peek …
@@ -487,7 +458,7 @@ src/dotenv/variables.py
     33→    def __repr__(self) -> str:
     34→        return f"Literal(value={self.value})"
     35→
-    36→    def __eq__(self, other: object) -> bool:
+    36→    def __eq__ …
     41→    def __hash__ …
     44→    def resolve …
     48→class Variable(Atom):
@@ -497,10 +468,57 @@ src/dotenv/variables.py
     52→
     53→    def __repr__(self) -> str:
     54→        return f"Variable(name={self.name}, default={self.default})"
-    55→
     56→    def __eq__ …
     61→    def __hash__ …
     64→    def resolve …
     70→def parse_variables …
 src/dotenv/version.py
      1→__version__ = "1.2.1"
+tests/conftest.py
+     6→def cli():
+    13→def dotenv_path(tmp_path):
+tests/test_cli.py
+   196→def test_get_default_path(tmp_path):
+   206→def test_run(tmp_path):
+   216→def test_run_with_existing_variable(tmp_path):
+   228→def test_run_with_existing_variable_not_overridden(tmp_path):
+   240→def test_run_with_none_value(tmp_path):
+   250→def test_run_with_other_env(dotenv_path):
+tests/test_fifo_dotenv.py
+tests/test_ipython.py
+    14→def test_ipython_existing_variable_no_override(tmp_path):
+    33→def test_ipython_existing_variable_override(tmp_path):
+    52→def test_ipython_new_variable(tmp_path):
+tests/test_is_interactive.py
+     8→class TestIsInteractive:
+    31→
+    32→    def _create_dotenv_file(self, tmp_path):
+    33→        """Helper to create a test .env file."""
+    34→        dotenv_path = tmp_path / ".env"
+    35→        dotenv_path.write_text("TEST=value")
+    36→        return dotenv_path
+    37→
+    38→    def _setup_subdir_and_chdir(self, tmp_path, monkeypatch):
+    45→    def _remove_ps_attributes(self, monkeypatch):
+    52→    def _mock_main_import(self, monkeypatch, mock_main_module):
+    63→    def _mock_main_import_error(self, monkeypatch):
+tests/test_main.py
+   251→def test_load_dotenv_existing_file(dotenv_path):
+   386→def test_load_dotenv_doesnt_disable_itself(dotenv_path):
+   411→def test_load_dotenv_existing_variable_no_override(dotenv_path):
+   424→def test_load_dotenv_existing_variable_override(dotenv_path):
+   437→def test_load_dotenv_redefine_var_used_in_file_no_override(dotenv_path):
+   450→def test_load_dotenv_redefine_var_used_in_file_with_override(dotenv_path):
+   463→def test_load_dotenv_string_io_utf_8():
+   476→def test_load_dotenv_file_stream(dotenv_path):
+   487→def test_load_dotenv_in_current_dir(tmp_path):
+tests/test_parser.py
+tests/test_utils.py
+tests/test_variables.py
+tests/test_zip_imports.py
+    23→class FileToAdd:
+    24→    def __init__(self, content: str, path: str):
+    25→        self.content = content
+    26→        self.path = path
+    46→def test_load_dotenv_gracefully_handles_zip_imports_when_no_env_file(tmp_path):
+    69→def test_load_dotenv_outside_zip_file_when_called_in_zipfile(tmp_path):

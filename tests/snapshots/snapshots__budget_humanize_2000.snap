@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1960 words)
+budget: 2000 (1943 words)
 
 README.md
      1→# humanize
@@ -243,15 +243,7 @@ RELEASING.md
     12→
     13→- [ ] Publish release
     14→
-    15→- [ ] Check the tagged
-    16→      [GitHub Actions build](https://github.com/python-humanize/humanize/actions/workflows/release.yml)
-    17→      has released to [PyPI](https://pypi.org/project/humanize/#history)
-    18→
-    19→- [ ] Check installation:
-    20→
-    21→```bash
-    22→pip3 uninstall -y humanize && pip3 install -U humanize && python3 -c "import humanize; print(humanize.__version__)"
-    23→```
+      →…
 docs/filesize.md
      1→# Filesize
      3→::: humanize.filesize
@@ -376,30 +368,10 @@ src/humanize/i18n.py
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
    101→def _gettext(message: str) -> str:
-   102→    """Get translation.
-   103→
-   104→    Args:
-      →…
    113→def _pgettext(msgctxt: str, message: str) -> str:
-   114→    """Fetches a particular translation.
-   115→
-   116→    It works with `msgctxt` .po modifiers and allows duplicate keys with different
-      →…
    129→def _ngettext(message: str, plural: str, num: int) -> str:
-   130→    """Plural version of _gettext.
-   131→
-   132→    Args:
-      →…
    144→def _gettext_noop(message: str) -> str:
-   145→    """Mark a string as a translation string without translating it.
-   146→
-   147→    Example usage:
-      →…
    163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
-   164→    """Mark two strings as pluralized translations without translating them.
-   165→
-   166→    Example usage:
-      →…
    183→def thousands_separator() -> str:
    184→    """Return the thousands separator for a locale, default to comma.
    185→
@@ -425,7 +397,6 @@ src/humanize/number.py
     12→TYPE_CHECKING = False
     14→    from typing import TypeAlias
     21→def _format_not_finite(value: float) -> str:
-    22→    """Utility function to handle infinite and nan cases."""
     34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
     35→    """Converts an integer to its ordinal as a string.
     36→
@@ -499,17 +470,9 @@ src/humanize/time.py
     44→        return NotImplemented
     47→def _now() -> dt.datetime:
     53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
-    54→    """Return an "absolute" value for a timedelta, always representing a time distance.
-    55→
-    56→    Args:
-      →…
     68→def _date_and_delta(
     69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
     70→) -> tuple[Any, Any]:
-    71→    """Turn a value into a date and a timedelta which represents how long ago it was.
-    72→
-    73→    If that's not possible, return `(None, value)`.
-      →…
     95→def naturaldelta(
     96→    value: dt.timedelta | float,
     97→    months: bool = True,
@@ -531,7 +494,6 @@ src/humanize/time.py
    300→def _convert_aware_datetime(
    301→    value: dt.datetime | dt.timedelta | float | None,
    302→) -> Any:
-   303→    """Convert aware datetime to naive datetime and pass through any other type."""
    311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
    312→    """Return a natural day.
    313→
@@ -546,20 +508,8 @@ src/humanize/time.py
    366→    suppress: Iterable[Unit],
    367→    format: str,
    368→) -> tuple[float, float]:
-   369→    """Divide `value` by `divisor`, returning the quotient and remainder.
-   370→
-   371→    If `unit` is `minimum_unit`, the quotient will be the rounding of `value / divisor`
-      →…
    406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
-   407→    """Return a minimum unit suitable that is not suppressed.
-   408→
-   409→    If not suppressed, return the same unit:
-      →…
    435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
-   436→    """Extend suppressed units (if any) with all units lower than the minimum unit.
-   437→
-   438→    >>> from humanize.time import _suppress_lower_units, Unit
-      →…
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
    453→    minimum_unit: str = "seconds",
@@ -570,7 +520,72 @@ src/humanize/time.py
    458→
       →…
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
-   655→    """Round a number according to the string format provided.
-   656→
-   657→    The string format is the old printf-style string formatting.
+tests/test_filesize.py
+tests/test_i18n.py
+    17→@freeze_time("2020-02-02")
+    18→def test_i18n() -> None:
+    19→    three_seconds = NOW - dt.timedelta(seconds=3)
+    20→    one_min_three_seconds = dt.timedelta(milliseconds=67_000)
+    21→
+      →…
+   225→class TestActivate:
+   226→    expected_msg = (
+   227→        "Humanize cannot determinate the default location of the"
+   228→        " 'locale' folder. You need to pass the path explicitly."
+   229→    )
+   230→
+   231→    def test_default_locale_path_null__spec__(
+   232→        self, monkeypatch: pytest.MonkeyPatch
+   233→    ) -> None:
+   234→        i18n = importlib.import_module("humanize.i18n")
+   235→        monkeypatch.setattr(i18n, "__spec__", None)
+   236→
+   237→        with pytest.raises(FileNotFoundError, match=self.expected_msg):
+   238→            i18n.activate("ru_RU")
+   239→
+   240→    def test_default_locale_path_undefined__spec__(
+   241→        self, monkeypatch: pytest.MonkeyPatch
+   242→    ) -> None:
+   243→        i18n = importlib.import_module("humanize.i18n")
+   244→        monkeypatch.delattr(i18n, "__spec__")
+   245→
+   246→        with pytest.raises(FileNotFoundError, match=self.expected_msg):
+   247→            i18n.activate("ru_RU")
+   248→
+   249→    @freeze_time("2020-02-02")
+   250→    def test_en_locale(self) -> None:
+   262→    @freeze_time("2020-02-02")
+   263→    def test_none_locale(self) -> None:
+   264→        three_seconds = NOW - dt.timedelta(seconds=3)
+   265→
+   266→        try:
+      →…
+tests/test_lists.py
+tests/test_number.py
+tests/test_time.py
+    14→ONE_DAY_DELTA = dt.timedelta(days=1)
+    16→# In seconds
+    17→ONE_MICROSECOND = 1 / 1000000
+    18→FOUR_MICROSECONDS = 4 / 1000000
+    19→ONE_MILLISECOND = 1 / 1000
+    20→FOUR_MILLISECONDS = 4 / 1000
+    23→ONE_HOUR = 3600
+    24→ONE_DAY = 24 * ONE_HOUR
+    25→ONE_YEAR = 365.25 * ONE_DAY
+    26→FROZEN_DATE = "2010-02-02"
+    37→class FakeDate:
+    38→    def __init__(self, year: int, month: int, day: int) -> None:
+    39→        self.year, self.month, self.day = year, month, day
+    40→
+    41→    def __str__(self) -> str:
+    42→        return f"{self.year}-{self.month}-{self.day}"
+    45→VALUE_ERROR_TEST = FakeDate(290149024, 2, 2)
+    46→OVERFLOW_ERROR_TEST = FakeDate(120390192341, 2, 2)
+    58→# These are not considered "public" interfaces, but require tests anyway.
+    59→
+    60→
+    61→def test_date_and_delta() -> None:
+    62→    now = dt.datetime.now()
+    63→    td = dt.timedelta
+    64→    int_tests = (3, 29, 86399, 86400, 86401 * 30)
       →…

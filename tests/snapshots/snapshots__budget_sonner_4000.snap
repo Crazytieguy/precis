@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3730 words)
+budget: 4000 (3755 words)
 
 README.md
      5→## Usage
@@ -206,39 +206,6 @@ src/state.ts
     52→      jsx?: React.ReactElement;
     53→    },
     54→  ) => {
-    55→    const { message, ...rest } = data;
-    56→    const id = typeof data?.id === 'number' || data.id?.length > 0 ? data.id : toastsCounter++;
-    57→    const alreadyExists = this.toasts.find((toast) => {
-    58→      return toast.id === id;
-    59→    });
-    60→    const dismissible = data.dismissible === undefined ? true : data.dismissible;
-    61→
-    62→    if (this.dismissedToasts.has(id)) {
-    63→      this.dismissedToasts.delete(id);
-    64→    }
-    65→
-    66→    if (alreadyExists) {
-    67→      this.toasts = this.toasts.map((toast) => {
-    68→        if (toast.id === id) {
-    69→          this.publish({ ...toast, ...data, id, title: message });
-    70→          return {
-    71→            ...toast,
-    72→            ...data,
-    73→            id,
-    74→            dismissible,
-    75→            title: message,
-    76→          };
-    77→        }
-    78→
-    79→        return toast;
-    80→      });
-    81→    } else {
-    82→      this.addToast({ title: message, ...rest, dismissible, id });
-    83→    }
-    84→
-    85→    return id;
-    86→  };
-    87→
     88→  dismiss = (id?: number | string) => {
     89→    if (id) {
     90→      this.dismissedToasts.add(id);
@@ -288,15 +255,6 @@ src/state.ts
    141→
    142→    const p = Promise.resolve(promise instanceof Function ? promise() : promise);
    143→
-   144→    let shouldDismiss = id !== undefined;
-   145→    let result: ['resolve', ToastData] | ['reject', unknown];
-   146→
-   147→    const originalPromise = p
-   148→      .then(async (response) => {
-   149→        result = ['resolve', response];
-   150→        const isReactElementResponse = React.isValidElement(response);
-   151→        if (isReactElementResponse) {
-   152→          shouldDismiss = false;
       →…
    243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
    244→    const id = data?.id || toastsCounter++;
@@ -524,6 +482,59 @@ src/types.ts
    198→  id?: number | string;
    199→  toasterId?: string;
    200→};
+test/README.md
+     3→## Getting Started
+     5→First, run the development server:
+     6→
+     7→```bash
+     8→npm run dev
+     9→# or
+    10→yarn dev
+    11→# or
+    12→pnpm dev
+    13→```
+    14→
+    15→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    16→
+      →…
+    25→## Learn More
+    27→To learn more about Next.js, take a look at the following resources:
+    28→
+    29→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+    30→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    31→
+    32→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    33→
+    34→## Deploy on Vercel
+    36→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    37→
+    38→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+test/next.config.js
+     1→/** @type {import('next').NextConfig} */
+     2→const nextConfig = {};
+test/src/app/action.tsx
+     2→import { createStreamableUI } from 'ai/rsc';
+     4→export async function action() {
+     5→  'use server';
+      →…
+test/src/app/layout.tsx
+     1→export const metadata = {
+     2→  title: 'Create Next App',
+      →…
+     6→export default function RootLayout({ children }: { children: React.ReactNode }) {
+     7→  return (
+      →…
+test/src/app/page.tsx
+     3→import React from 'react';
+     4→import { Toaster, toast } from 'sonner';
+     5→import { action } from '@/app/action';
+     7→const promise = () => new Promise((resolve) => setTimeout(resolve, 2000));
+     9→export default function Home({ searchParams }: any) {
+    10→  const [showAutoClose, setShowAutoClose] = React.useState(false);
+      →…
+test/tests/basic.spec.ts
+     1→import { expect, test } from '@playwright/test';
+     2→import { toast } from 'sonner';
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -611,13 +622,6 @@ website/src/components/CodeBlock/index.tsx
     79→                </svg>
     80→              </motion.div>
     81→            ) : (
-    82→              <motion.div animate="visible" exit="hidden" initial="hidden" key="copy" variants={variants}>
-    83→                <svg
-    84→                  viewBox="0 0 24 24"
-    85→                  width="14"
-    86→                  height="14"
-    87→                  stroke="currentColor"
-    88→                  strokeWidth="1.5"
       →…
 website/src/components/ExpandModes/index.tsx
      1→import { toast } from 'sonner';
@@ -783,9 +787,6 @@ website/src/components/Installation/index.tsx
     43→                    fill="none"
     44→                    shapeRendering="geometricPrecision"
     45→                  >
-    46→                    <path d="M20 6L9 17l-5-5"></path>
-    47→                  </svg>
-    48→                </motion.div>
       →…
 website/src/components/Other/Other.tsx
      1→import React from 'react';

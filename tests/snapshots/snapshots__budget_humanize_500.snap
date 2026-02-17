@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (478 words)
+budget: 500 (477 words)
 
 README.md
      1→# humanize
@@ -40,9 +40,7 @@ README.md
     43→- Swedish
     44→- Turkish
     45→- Ukrainian
-    46→- Uzbek
-    47→- Vietnamese
-    48→
+      →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
     52→
@@ -56,7 +54,6 @@ README.md
     62→
     63→### From source
     65→```bash
-    66→git clone https://github.com/python-humanize/humanize
       →…
     71→## Usage
     73→### Integer humanization
@@ -76,11 +73,9 @@ README.md
     88→
     89→### Date & time humanization
     91→```pycon
-    92→>>> import humanize
       →…
    110→### Precise time delta
    112→```pycon
-   113→>>> import humanize
       →…
    124→#### Smaller units
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
@@ -93,22 +88,15 @@ README.md
    133→```
    134→
    135→```pycon
-   136→>>> delta = dt.timedelta(milliseconds=4)
-   137→>>> humanize.naturaldelta(delta)
-   138→'a moment'
-   139→>>> humanize.naturaldelta(delta, minimum_unit="milliseconds")
       →…
    154→### File size humanization
    156→```pycon
-   157→>>> import humanize
       →…
    166→### Human-readable floating point numbers
    168→```pycon
-   169→>>> import humanize
       →…
    182→### Scientific notation
    184→```pycon
-   185→>>> import humanize
       →…
    200→## Localization
    202→How to change locale at runtime:
@@ -195,3 +183,13 @@ src/humanize/time.py
     42→        if self.__class__ is other.__class__:
     43→            return self.value < other.value
     44→        return NotImplemented
+tests/test_i18n.py
+    18→def test_i18n() -> None:
+   225→class TestActivate:
+   250→    def test_en_locale(self) -> None:
+   263→    def test_none_locale(self) -> None:
+tests/test_time.py
+    16→# In seconds
+    17→ONE_MICROSECOND = 1 / 1000000
+    37→class FakeDate:
+    61→def test_date_and_delta() -> None:

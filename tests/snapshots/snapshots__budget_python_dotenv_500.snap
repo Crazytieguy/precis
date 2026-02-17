@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (481 words)
+budget: 500 (479 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -40,7 +40,6 @@ README.md
     95→import os
     96→from dotenv import dotenv_values
     97→
-    98→config = {
       →…
    105→### Parse configuration as a stream …
    120→### Load .env files in IPython …
@@ -56,8 +55,6 @@ docs/reference.md
      1→# ::: dotenv …
 src/dotenv/__init__.py
     42→__all__ = [
-    43→    "get_cli_string",
-      →…
 src/dotenv/__main__.py
 src/dotenv/cli.py
     60→@click.version_option(version=__version__)
@@ -146,7 +143,6 @@ src/dotenv/variables.py
      7→    \$\{
      8→        (?P<name>[^\}:]*)
      9→        (?::-
-    10→            (?P<default>[^\}]*)
       →…
     18→class Atom(metaclass=ABCMeta):
     25→    @abstractmethod
@@ -155,3 +151,7 @@ src/dotenv/variables.py
     48→class Variable(Atom):
 src/dotenv/version.py
      1→__version__ = "1.2.1"
+tests/test_is_interactive.py
+     8→class TestIsInteractive:
+tests/test_zip_imports.py
+    23→class FileToAdd:

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1970 words)
+budget: 2000 (1961 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -15,8 +15,6 @@ CONTRIBUTING.md
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
      4→2. Install dependencies (`npm install`)
      5→3. Create your feature branch (`git checkout -b my-new-feature`)
-     6→4. Commit your changes (`git commit -am 'Added some feature'`)
-     7→5. Test your changes (`npm test`)
       →…
     11→## Testing …
     19→## Code Style …
@@ -429,15 +427,6 @@ lib/main.d.ts
     73→  /**
     74→   * Default: `process.env`
     75→   *
-    76→   * Specify an object to write your secrets to. Defaults to process.env environment variables.
-    77→   *
-    78→   * example: `const processEnv = {}; require('dotenv').config({ processEnv: processEnv })`
-    79→   */
-    80→  processEnv?: DotenvPopulateInput;
-    81→
-    82→  /**
-    83→   * Default: `undefined`
-    84→   *
       →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
@@ -496,3 +485,20 @@ lib/main.js
    346→function decrypt (encrypted, keyStr) {
    378→function populate (processEnv, parsed, options = {}) {
    413→const DotenvModule = {
+tests/test-config-cli.js
+     6→function spawn (cmd, options = {}) {
+tests/test-config-vault.js
+tests/test-env-options.js
+    16→function options () {
+    21→function testOption (envVar, tmpVal, expect) {
+tests/test-parse-multiline.js
+tests/test-parse.js
+tests/test-populate.js
+tests/types/test.ts
+     1→import { config, parse } from "dotenv";
+     3→const env …
+     4→const dbUrl …
+    15→const parsed …
+    16→const dbHost …
+    18→const parsedFromBuffer …
+    19→const justice …

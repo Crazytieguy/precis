@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3946 words)
+budget: 4000 (3950 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -86,7 +86,6 @@ README-es.md
    336→npm i -g vestauth
    337→
    338→vestauth agent init
-   339→```
       →…
    357→## FAQ
    361→No.
@@ -107,7 +106,6 @@ README-es.md
    592→
    593→```js
    594→const result = dotenv.config()
-   595→
       →…
    605→#### Options …
    607→##### path
@@ -147,7 +145,6 @@ README-es.md
    697→
    698→```js
    699→const dotenv = require('dotenv')
-   700→const buf = Buffer.from('BASIC=basic')
       →…
    705→#### Options …
    707→##### debug
@@ -167,7 +164,6 @@ README-es.md
    726→
    727→```js
    728→const dotenv = require('dotenv')
-   729→const parsed = { HELLO: 'world' }
       →…
    748→#### options …
    750→##### Debug
@@ -874,82 +870,24 @@ lib/main.js
     16→  '🛡️ auth for agents: https://vestauth.com',
       →…
     27→function _getRandomTip () {
-    28→  return TIPS[Math.floor(Math.random() * TIPS.length)]
-    29→}
     31→function parseBoolean (value) {
-    32→  if (typeof value === 'string') {
-    33→    return !['false', '0', 'no', 'off', ''].includes(value.toLowerCase())
-    34→  }
-      →…
     38→function supportsAnsi () {
-    39→  return process.stdout.isTTY // && process.env.TERM !== 'dumb'
-    40→}
     42→function dim (text) {
-    43→  return supportsAnsi() ? `\x1b[2m${text}\x1b[0m` : text
-    44→}
     46→const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
     49→function parse (src) {
-    50→  const obj = {}
-    51→
-    52→  // Convert buffer to string
-      →…
     87→function _parseVault (options) {
-    88→  options = options || {}
-    89→
-    90→  const vaultPath = _vaultPath(options)
-      →…
    130→function _warn (message) {
-   131→  console.error(`[dotenv@${version}][WARN] ${message}`)
-   132→}
    134→function _debug (message) {
-   135→  console.log(`[dotenv@${version}][DEBUG] ${message}`)
-   136→}
    138→function _log (message) {
-   139→  console.log(`[dotenv@${version}] ${message}`)
-   140→}
    142→function _dotenvKey (options) {
-   143→  // prioritize developer directly setting options.DOTENV_KEY
-   144→  if (options && options.DOTENV_KEY && options.DOTENV_KEY.length > 0) {
-   145→    return options.DOTENV_KEY
-      →…
    157→function _instructions (result, dotenvKey) {
-   158→  // Parse DOTENV_KEY. Format is a URI
-   159→  let uri
-   160→  try {
-      →…
    200→function _vaultPath (options) {
-   201→  let possibleVaultPath = null
-   202→
-   203→  if (options && options.path && options.path.length > 0) {
-      →…
    224→function _resolveHome (envPath) {
-   225→  return envPath[0] === '~' ? path.join(os.homedir(), envPath.slice(1)) : envPath
-   226→}
    228→function _configVault (options) {
-   229→  const debug = parseBoolean(process.env.DOTENV_CONFIG_DEBUG || (options && options.debug))
-   230→  const quiet = parseBoolean(process.env.DOTENV_CONFIG_QUIET || (options && options.quiet))
-   231→
-      →…
    248→function configDotenv (options) {
-   249→  const dotenvPath = path.resolve(process.cwd(), '.env')
-   250→  let encoding = 'utf8'
-   251→  let processEnv = process.env
-      →…
    328→function config (options) {
-   329→  // fallback to original dotenv if DOTENV_KEY is not set
-   330→  if (_dotenvKey(options).length === 0) {
-   331→    return DotenvModule.configDotenv(options)
-      →…
    346→function decrypt (encrypted, keyStr) {
-   347→  const key = Buffer.from(keyStr.slice(-64), 'hex')
-   348→  let ciphertext = Buffer.from(encrypted, 'base64')
-   349→
-      →…
    378→function populate (processEnv, parsed, options = {}) {
-   379→  const debug = Boolean(options && options.debug)
-   380→  const override = Boolean(options && options.override)
-   381→  const populated = {}
-      →…
    413→const DotenvModule = {
    414→  configDotenv,
    415→  _configVault,
@@ -958,3 +896,75 @@ lib/main.js
    418→  decrypt,
    419→  parse,
       →…
+tests/test-config-cli.js
+     6→function spawn (cmd, options = {}) {
+     7→  const { stdout } = cp.spawnSync(
+     8→    process.argv[0], // node binary
+     9→    cmd,
+    10→    Object.assign(
+    11→      {},
+    12→      {
+    13→        cwd: path.resolve(__dirname, '..'),
+    14→        timeout: 5000,
+    15→        encoding: 'utf8'
+    16→      },
+    17→      options
+    18→    )
+    19→  )
+    20→
+    21→  return stdout
+    22→}
+tests/test-config-vault.js
+     8→const testPath = 'tests/.env'
+    10→const dotenvKey = 'dotenv://:key_ddcaa26504cd70a6fef9801901c3981538563a1767c297cb8416e8a38c62fe00@dotenvx.com/vault/.env.vault?environment=development'
+tests/test-env-options.js
+     8→const e = process.env.DOTENV_CONFIG_ENCODING
+     9→const p = process.env.DOTENV_CONFIG_PATH
+    10→const q = process.env.DOTENV_CONFIG_QUIET
+    11→const d = process.env.DOTENV_CONFIG_DEBUG
+    12→const o = process.env.DOTENV_CONFIG_OVERRIDE
+    13→const dk = process.env.DOTENV_CONFIG_DOTENV_KEY
+    16→function options () {
+    17→  decache('../lib/env-options.js')
+    18→  return require('../lib/env-options')
+    19→}
+    21→function testOption (envVar, tmpVal, expect) {
+    22→  delete process.env[envVar]
+    23→  process.env[envVar] = tmpVal
+    24→
+    25→  t.same(options(), expect)
+    26→
+    27→  delete process.env[envVar]
+    28→}
+tests/test-parse-multiline.js
+     6→const parsed = dotenv.parse(fs.readFileSync('tests/.env.multiline', { encoding: 'utf8' }))
+    50→const multiPem = `-----BEGIN PUBLIC KEY-----
+    51→MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnNl1tL3QjKp3DZWM0T3u
+    52→LgGJQwu9WqyzHKZ6WIA5T+7zPjO1L8l3S8k8YzBrfH4mqWOD1GBI8Yjq2L1ac3Y/
+    53→bTdfHN8CmQr2iDJC0C6zY8YV93oZB3x0zC/LPbRYpF8f6OqX1lZj5vo2zJZy4fI/
+    54→kKcI5jHYc8VJq+KCuRZrvn+3V+KuL9tF9v8ZgjF2PZbU+LsCy5Yqg1M8f5Jp5f6V
+    55→u4QuUoobAgMBAAE=
+    56→-----END PUBLIC KEY-----`
+    59→const payload = dotenv.parse(Buffer.from('BUFFER=true'))
+    62→const expectedPayload = { SERVER: 'localhost', PASSWORD: 'password', DB: 'tests' }
+    64→const RPayload = dotenv.parse(Buffer.from('SERVER=localhost\rPASSWORD=password\rDB=tests\r'))
+    67→const NPayload = dotenv.parse(Buffer.from('SERVER=localhost\nPASSWORD=password\nDB=tests\n'))
+    70→const RNPayload = dotenv.parse(Buffer.from('SERVER=localhost\r\nPASSWORD=password\r\nDB=tests\r\n'))
+tests/test-parse.js
+     6→const parsed = dotenv.parse(fs.readFileSync('tests/.env', { encoding: 'utf8' }))
+    82→const payload = dotenv.parse(Buffer.from('BUFFER=true'))
+    85→const duplicate = dotenv.parse(Buffer.from('DUP=one\nDUP=two'))
+    88→const expectedPayload = { SERVER: 'localhost', PASSWORD: 'password', DB: 'tests' }
+    90→const RPayload = dotenv.parse(Buffer.from('SERVER=localhost\rPASSWORD=password\rDB=tests\r'))
+    93→const NPayload = dotenv.parse(Buffer.from('SERVER=localhost\nPASSWORD=password\nDB=tests\n'))
+    96→const RNPayload = dotenv.parse(Buffer.from('SERVER=localhost\r\nPASSWORD=password\r\nDB=tests\r\n'))
+tests/test-populate.js
+     8→const mockParseResponse = { test: 'foo' }
+tests/types/test.ts
+     1→import { config, parse } from "dotenv";
+     3→const env = config();
+     4→const dbUrl: string | null =
+    15→const parsed = parse("NODE_ENV=production\nDB_HOST=a.b.c");
+    16→const dbHost: string = parsed["DB_HOST"];
+    18→const parsedFromBuffer = parse(Buffer.from("JUSTICE=league\n"));
+    19→const justice: string = parsedFromBuffer["JUSTICE"];

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (980 words)
+budget: 1000 (973 words)
 
 docs/conf.py
      2→from importlib.metadata import version as get_version
@@ -12,17 +12,9 @@ src/typeguard/__init__.py
 src/typeguard/_checkers.py
     42→from typing_extensions import is_typeddict
     81→TypeCheckerCallable: TypeAlias = Callable[
-    82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
-    83→]
     84→TypeCheckLookupCallback: TypeAlias = Callable[
-    85→    [Any, Tuple[Any, ...], Tuple[Any, ...]], Optional[TypeCheckerCallable]
-    86→]
     88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
     89→generic_alias_types: tuple[type, ...] = (
-    90→    type(List),
-    91→    type(List[Any]),
-    92→    types.GenericAlias,
-    93→)
     98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS = {
    100→    "__add__",
@@ -30,16 +22,8 @@ src/typeguard/_checkers.py
    102→    "__cmp__",
    103→    "__divmod__",
    104→    "__div__",
-   105→    "__eq__",
-   106→    "__floordiv__",
-   107→    "__ge__",
-   108→    "__gt__",
-   109→    "__iadd__",
-   110→    "__iand__",
-   111→    "__idiv__",
       →…
    586→def _is_literal_type(typ: object) -> bool:
-   587→    return typ is typing.Literal or typ is typing_extensions.Literal
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
   1006→    Any, Callable[[Any, Any, tuple[Any, ...], TypeCheckMemo], None]
@@ -47,13 +31,6 @@ src/typeguard/_checkers.py
   1008→    bytes: check_byteslike,
   1009→    AbstractSet: check_set,
   1010→    BinaryIO: check_io,
-  1011→    Callable: check_callable,
-  1012→    collections.abc.Callable: check_callable,
-  1013→    complex: check_number,
-  1014→    dict: check_mapping,
-  1015→    Dict: check_mapping,
-  1016→    float: check_number,
-  1017→    frozenset: check_set,
       →…
 src/typeguard/_config.py
     11→T = TypeVar("T")
@@ -131,8 +108,7 @@ src/typeguard/_importhook.py
     93→            print("----------------------------------------------", file=sys.stderr)
     94→
     95→        return _call_with_frames_removed(
-    96→            compile, tree, filename, "exec", 0, dont_inherit=True
-    97→        )
+      →…
    109→class TypeguardFinder(MetaPathFinder):
    119→
    156→class ImportHookManager:
@@ -212,35 +188,6 @@ src/typeguard/_transformer.py
    180→        self.local_names.add(name)
    181→        return name
    182→
-   183→    def is_ignored_name(self, expression: expr | Expr | None) -> bool:
-   184→        top_expression = (
-   185→            expression.value if isinstance(expression, Expr) else expression
-   186→        )
-   187→
-   188→        if isinstance(top_expression, Attribute) and isinstance(
-   189→            top_expression.value, Name
-   190→        ):
-   191→            name = top_expression.value.id
-   192→        elif isinstance(top_expression, Name):
-   193→            name = top_expression.id
-   194→        else:
-   195→            return False
-   196→
-   197→        memo: TransformMemo | None = self
-   198→        while memo is not None:
-   199→            if name in memo.ignored_names:
-   200→                return True
-   201→
-   202→            memo = memo.parent
-   203→
-   204→        return False
-   205→
-   206→    def get_memo_name(self) -> Name:
-   207→        if not self.memo_var_name:
-   208→            self.memo_var_name = Name(id="memo", ctx=Load())
-   209→
-   210→        return self.memo_var_name
-   211→
    285→class NameCollector(NodeVisitor):
    286→    def __init__(self) -> None:
    313→class GeneratorDetector(NodeVisitor):
@@ -259,25 +206,98 @@ src/typeguard/_transformer.py
    523→
    524→        if isinstance(node, (FunctionDef, AsyncFunctionDef)):
    525→            new_memo.should_instrument = (
-   526→                self._target_path is None or new_memo.path == self._target_path
-   527→            )
-   528→            if new_memo.should_instrument:
-   529→                # Check if the function is a generator function
-   530→                detector = GeneratorDetector()
-   531→                detector.visit(node)
-   532→
       →…
    570→    def _get_import(self, module: str, name: str) -> Name:
-   571→        memo = self._memo if self._target_path else self._module_memo
-   572→        return memo.get_import(module, name)
    580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
-   581→        if annotation is None:
-   582→            return None
-   583→
-      →…
 src/typeguard/_utils.py
    173→class Unset:
    174→    __slots__ = ()
    175→
    176→    def __repr__(self) -> str:
    177→        return "<unset>"
+tests/__init__.py
+tests/conftest.py
+tests/deferredannos.py
+tests/dummymodule.py
+    40→T = TypeVar("T", bound="DummyClass")
+    41→P = ParamSpec("P")
+    77→class DummyClass(metaclass=Metaclass):
+    78→    bar: str
+    79→    baz: int
+    80→
+   118→class Outer:
+   119→    class Inner:
+   120→        pass
+   121→
+   305→class OverrideClass:
+   306→    def override_typecheck_fail_callback(self, value: int) -> None:
+   307→        pass
+   308→
+   365→class ModuleLocalClass:
+tests/dummymodule_py312.py
+    17→class ParametrizedClass[T]:
+    18→    def method(self, x: T, y: str) -> T:
+    19→        return x
+tests/mypy/negative.py
+     4→@typechecked
+     5→def foo(x: int) -> int:
+     9→@typechecked
+    10→def bar(x: int) -> int:
+    14→@typeguard_ignore
+    15→def non_typeguard_checked_func(x: int) -> int:
+    19→@typechecked
+    20→def returns_str() -> str:
+    24→@typechecked
+    25→def arg_type(x: int) -> str:
+    29→@typechecked
+    30→def ret_type() -> str:
+    38→@typechecked
+    39→class MyClass:
+    40→    def __init__(self, x: int = 0) -> None:
+    41→        self.x = x
+    42→
+    43→    def add(self, y: int) -> int:
+    44→        return self.x + y
+tests/mypy/positive.py
+     6→@typechecked
+     7→def foo(x: str) -> str:
+    18→@typechecked
+    19→def has_valid_arguments(x: int, y: str) -> None:
+    27→@typechecked
+    28→class MyClass:
+    29→    def __init__(self, x: int) -> None:
+    30→        self.x = x
+    31→
+    32→    def add(self, y: int) -> int:
+    33→        return self.x + y
+    40→@typechecked
+    41→def get_value_checked(c: MyClass) -> int:
+    49→@typechecked
+    50→def create_myclass_checked(x: int) -> MyClass:
+tests/mypy/test_type_annotations.py
+     8→POSITIVE_FILE = "positive.py"
+     9→NEGATIVE_FILE = "negative.py"
+    68→@pytest.fixture
+    69→def chdir_local() -> None:
+    70→    """
+      →…
+    78→@pytest.mark.usefixtures("chdir_local")
+    79→def test_positive() -> None:
+    80→    """
+      →…
+    86→@pytest.mark.usefixtures("chdir_local")
+    87→def test_negative() -> None:
+    88→    """
+      →…
+tests/test_checkers.py
+    79→P = ParamSpec("P")
+tests/test_importhook.py
+tests/test_instrumentation.py
+    40→def _fixture_module(name: str, method: str):
+tests/test_plugins.py
+tests/test_pytest_plugin.py
+tests/test_suppression.py
+tests/test_transformer.py
+tests/test_typechecked.py
+tests/test_utils.py
+tests/test_warn_on_error.py

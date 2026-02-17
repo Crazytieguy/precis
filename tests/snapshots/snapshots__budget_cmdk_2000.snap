@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1947 words)
+budget: 2000 (1946 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -119,17 +119,6 @@ README.md
     34→        <Command.Item>Apple</Command.Item>
     35→      </Command.List>
     36→    </Command>
-    37→  )
-    38→}
-    39→```
-    40→
-    41→Or in a dialog:
-    42→
-    43→```tsx
-    44→import { Command } from 'cmdk'
-    45→
-    46→const CommandMenu = () => {
-    47→  const [open, setOpen] = React.useState(false)
       →…
     82→## Parts and styling
     84→All parts forward props, including `ref`, to an appropriate element. Each part has a specific data-attribute (starting with `cmdk-`) that can be used for styling.
@@ -173,10 +162,7 @@ README.md
    449→
    450→**React server component?** No, it's a client component.
    451→
-   452→**Listen for ⌘K automatically?** No, do it yourself to have full control over keybind context.
-   453→
-   454→**React Native?** No, and no plans to support it. If you build a React Native version, let us know and we'll link your repository here.
-   455→
+      →…
    456→## History
    458→Written in 2019 by Paco ([@pacocoursey](https://twitter.com/pacocoursey)) to see if a composable combobox API was possible. Used for the Vercel command menu and autocomplete by Rauno ([@raunofreiberg](https://twitter.com/raunofreiberg)) in 2020. Re-written independently in 2022 with a simpler and more performant approach. Ideas and help from Shu ([@shuding\_](https://twitter.com/shuding_)).
    459→
@@ -217,7 +203,9 @@ cmdk/src/command-score.ts
    157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
    158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
    159→   */
-      →…
+   160→  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
+   161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
+   162→}
 cmdk/src/index.tsx
      3→import * as RadixDialog from '@radix-ui/react-dialog'
      4→import * as React from 'react'
@@ -282,6 +270,12 @@ cmdk/tsup.config.ts
 playwright.config.ts
      1→import { PlaywrightTestConfig, devices } from '@playwright/test'
      3→const config: PlaywrightTestConfig = {
+test/pages/_app.tsx
+     3→export default function App({ Component, pageProps }) {
+     4→  return <Component {...pageProps} />
+     5→}
+test/pages/huge.tsx
+     4→const items = new Array(1000).fill(0)
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -354,6 +348,9 @@ website/components/code/index.tsx
      4→import styles from './code.module.scss'
      5→import { CopyIcon } from 'components/icons'
      7→const theme = {
+     8→  plain: {
+     9→    color: 'var(--gray12)',
+      →…
     41→export function Code({ children }: { children: string }) {
     42→  return (
     43→    <Highlight {...defaultProps} theme={theme} code={children} language="jsx">
@@ -367,6 +364,7 @@ website/components/code/index.tsx
     51→          >
     52→            <CopyIcon />
     53→          </button>
+    54→          <div className={styles.shine} />
       →…
 website/components/icons/index.tsx
      1→import styles from './icons.module.scss'
@@ -436,6 +434,10 @@ website/pages/index.tsx
    138→
    139→const themes = [
    140→  {
+   141→    icon: <RaycastIcon />,
+   142→    key: 'raycast',
+   143→  },
+   144→  {
       →…
    158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (494 words)
+budget: 500 (490 words)
 
 CHANGELOG.md
      1→## Unreleased …
@@ -47,7 +47,6 @@ flatten.go
     20→func flatten(err error, flatErr *Error) {
     21→	switch err := err.(type) {
     22→	case *Error:
-    23→		for _, e := range err.Errors {
       →…
 format.go
      6→import …
@@ -99,6 +98,8 @@ multierror.go
    108→func (e chain) Unwrap() error {
    117→func (e chain) As(target interface{}) bool {
    122→func (e chain) Is(target error) bool {
+multierror_test.go
+   209→type nestedError struct{}
 prefix.go
      6→import …
     16→func Prefix(err error, prefix string) error {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (491 words)
+budget: 500 (492 words)
 
 README.md
      5→## Usage
@@ -61,6 +61,11 @@ src/types.ts
    190→export type Theme …
    192→export interface ToastToDismiss {
    197→export type ExternalToast …
+test/README.md
+test/src/app/action.tsx
+test/src/app/layout.tsx
+     1→export const metadata = {
+test/src/app/page.tsx
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -91,7 +96,6 @@ website/src/components/ExpandModes/index.tsx
 website/src/components/Footer/index.tsx
      5→export const Footer = () => {
      6→  return (
-     7→    <footer className={styles.wrapper}>
       →…
 website/src/components/Head/index.tsx
      1→import NextHead from 'next/head';
@@ -100,14 +104,12 @@ website/src/components/Head/index.tsx
 website/src/components/Hero/index.tsx
      6→export const Hero = () => {
      7→  return (
-     8→    <div className={styles.wrapper}>
       →…
 website/src/components/How/How.tsx
      1→import React from 'react';
      3→export const How = () => {
      4→  return (
      5→    <>
-     6→      <div>
       →…
 website/src/components/Installation/index.tsx
      9→const variants = {

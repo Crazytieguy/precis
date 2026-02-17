@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3858 words)
+budget: 4000 (3936 words)
 
 README.md
      1→# color
@@ -345,9 +345,6 @@ color.go
    208→	return c
    209→}
    211→func (c *Color) unset() {
-   212→	if c.isNoColorSet() {
-   213→		return
-      →…
    219→// SetWriter is used to set the SGR sequence with the given io.Writer. This is
    220→// a low-level function, and users should use the higher-level functions, such
    221→// as color.Fprint, color.Print, etc.
@@ -531,12 +528,7 @@ color.go
    421→	return c.format() + s + c.unformat()
    422→}
    424→func (c *Color) format() string {
-   425→	return fmt.Sprintf("%s[%sm", escape, c.sequence())
-   426→}
    428→func (c *Color) unformat() string {
-   429→	//return fmt.Sprintf("%s[%dm", escape, Reset)
-   430→	//for each element in sequence let's use the specific reset escape, or the generic one if not found
-      →…
    443→// DisableColor disables the color output. Useful to not change any existing
    444→// code and still being able to output. Can be used for flags like
    445→// "--no-color". To enable back use EnableColor() method.
@@ -549,9 +541,6 @@ color.go
    453→	c.noColor = boolPtr(false)
    454→}
    456→func (c *Color) isNoColorSet() bool {
-   457→	// check first if we have user set action
-   458→	if c.noColor != nil {
-      →…
    466→// Equals returns a boolean value indicating whether two colors are equal.
    467→func (c *Color) Equals(c2 *Color) bool {
    468→	if c == nil && c2 == nil {
@@ -573,24 +562,10 @@ color.go
    484→	return true
    485→}
    487→func (c *Color) attrExists(a Attribute) bool {
-   488→	for _, attr := range c.params {
-   489→		if attr == a {
-      →…
    497→func boolPtr(v bool) *bool {
-   498→	return &v
-   499→}
    501→func getCachedColor(p Attribute) *Color {
-   502→	colorsCacheMu.Lock()
-   503→	defer colorsCacheMu.Unlock()
-      →…
    514→func colorPrint(format string, p Attribute, a ...interface{}) {
-   515→	c := getCachedColor(p)
-   516→
-      →…
    528→func colorString(format string, p Attribute, a ...interface{}) string {
-   529→	c := getCachedColor(p)
-   530→
-      →…
    538→// Black is a convenient helper function to print with black foreground. A
    539→// newline is appended to format by default.
    540→func Black(format string, a ...interface{}) { colorPrint(format, FgBlack, a...) }
@@ -703,6 +678,54 @@ color.go
    679→func sprintln(a ...interface{}) string {
    680→	return strings.TrimSuffix(fmt.Sprintln(a...), "\n")
    681→}
+color_test.go
+     3→import (
+     4→	"bytes"
+     5→	"fmt"
+     6→	"io"
+     7→	"os"
+     8→	"testing"
+     9→
+    10→	"github.com/mattn/go-colorable"
+    11→)
+    13→// Testing colors is kinda different. First we test for given colors and their
+    14→// escaped formatted results. Next we create some visual tests to be tested.
+    15→// Each visual test includes the color name to be compared.
+    16→func TestColor(t *testing.T) {
+    17→	rb := new(bytes.Buffer)
+    18→	Output = rb
+    19→
+    20→	NoColor = false
+    21→
+    22→	testColors := []struct {
+    23→		text string
+    24→		code Attribute
+    25→	}{
+    26→		{text: "black", code: FgBlack},
+    27→		{text: "red", code: FgRed},
+    28→		{text: "green", code: FgGreen},
+    29→		{text: "yellow", code: FgYellow},
+    30→		{text: "blue", code: FgBlue},
+    31→		{text: "magent", code: FgMagenta},
+      →…
+    73→func TestColorEquals(t *testing.T) {
+   107→func TestNoColor(t *testing.T) {
+   161→func TestNoColor_Env(t *testing.T) {
+   203→func Test_noColorIsSet(t *testing.T) {
+   238→func TestColorVisual(t *testing.T) {
+   339→func TestNoFormat(t *testing.T) {
+   389→func TestNoFormatString(t *testing.T) {
+   423→func TestColor_Println_Newline(t *testing.T) {
+   438→func TestColor_Sprintln_Newline(t *testing.T) {
+   449→func TestColor_Fprintln_Newline(t *testing.T) {
+   462→func readRaw(t *testing.T, r io.Reader) string {
+   463→	t.Helper()
+   464→
+      →…
+   473→func TestIssue206_1(t *testing.T) {
+   492→func TestIssue206_2(t *testing.T) {
+   508→func TestIssue218(t *testing.T) {
+   539→func TestRGB(t *testing.T) {
 color_windows.go
      3→import (
      4→	"os"
@@ -710,6 +733,3 @@ color_windows.go
      6→	"golang.org/x/sys/windows"
      7→)
      9→func init() {
-    10→	// Opt-in for ansi color support for current process.
-    11→	// https://learn.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences#output-sequences
-      →…

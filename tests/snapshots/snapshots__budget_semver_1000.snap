@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (897 words)
+budget: 1000 (901 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -14,15 +14,12 @@ CONTRIBUTING.md
      5→## Code of Conduct
      7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
      8→
-     9→## Reporting Bugs
-    11→Before submitting a new bug report please search for an existing or similar report.
-    12→
-      →…
-    17→## Pull Request Conventions
+     9→## Reporting Bugs …
+    17→## Pull Request Conventions …
     19→### Commits …
     30→### Test Coverage …
     36→### Linting …
-    42→## What _not_ to contribute?
+    42→## What _not_ to contribute? …
     44→### Dependencies …
     48→### Tools/Automation …
 README.md
@@ -37,21 +34,18 @@ README.md
     13→
     14→```js
     15→const semver = require('semver')
-    16→
       →…
    139→## Versions
    141→A "version" is described by the `v2.0.0` specification found at
    142→<https://semver.org/>.
    143→
    144→A leading `"="` or `"v"` character is stripped off and ignored.
-   145→Support for stripping a leading "v" is kept for compatibility with `v1.0.0` of the SemVer
       →…
    148→## Ranges
    150→A `version range` is a set of `comparators` that specify versions
    151→that satisfy the range.
    152→
    153→A `comparator` is composed of an `operator` and a `version`.  The set
-   154→of primitive `operators` is:
       →…
    184→### Prerelease Tags …
    219→#### Prerelease Identifiers …
@@ -67,7 +61,6 @@ README.md
    411→options in this object are `false` by default.  The options supported
    412→are:
    413→
-   414→- `loose`: Be more forgiving about not-quite-valid semver strings.
       →…
    453→### Comparison …
    478→### Sorting …
@@ -85,7 +78,6 @@ README.md
    614→eg), and then pull the module name into the documentation for that specific
    615→thing.
    616→-->
-   617→
       →…
 bin/semver.js
      8→const argv = process.argv.slice(2)
@@ -100,7 +92,6 @@ classes/comparator.js
      6→  static get ANY () {
      7→    return ANY
      8→  }
-     9→
     10→  constructor (comp, options) {
     36→  parse (comp) {
     57→  toString () {
@@ -112,7 +103,6 @@ classes/range.js
      7→  constructor (range, options) {
      8→    options = parseOptions(options)
      9→
-    10→    if (range instanceof Range) {
     73→  get range () {
     92→  format () {
     96→  toString () {
@@ -140,7 +130,6 @@ classes/semver.js
     10→  constructor (version, options) {
     11→    options = parseOptions(options)
     12→
-    13→    if (version instanceof SemVer) {
     81→  format () {
     89→  toString () {
     93→  compare (other) {
@@ -238,3 +227,23 @@ ranges/to-comparators.js
      6→const toComparators …
 ranges/valid.js
      4→const validRange …
+test/bin/semver.js
+     9→const bin = require.resolve('../../bin/semver')
+    10→const run …
+test/integration/whitespace.js
+    12→const wsMedium …
+    13→const wsLarge …
+    14→const zeroLarge …
+test/internal/debug.js
+     3→const main = () => {
+test/map.js
+     9→const ROOT = resolve(__dirname, '..')
+    10→const TEST = join(ROOT, 'test')
+    11→const IGNORE_DIRS = ['fixtures', 'integration']
+    13→const getFile …
+    23→const walk …
+    28→const walkAll …
+test/ranges/simplify.js
+     6→const versions = [
+test/ranges/subset.js
+     8→const cases = [

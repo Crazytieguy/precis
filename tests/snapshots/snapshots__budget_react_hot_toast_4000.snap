@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3898 words)
+budget: 4000 (3893 words)
 
 README.md
     28→## Features
@@ -341,7 +341,6 @@ site/next.config.mjs
      3→import nextMdx from '@next/mdx';
      5→const withMDX = nextMdx({
      6→  extension: /\.mdx?$/,
-     7→  options: {
       →…
     14→/** @type {import('next').NextConfig} */
     15→const nextConfig = {
@@ -484,19 +483,6 @@ site/pages/index.tsx
    143→            />
    144→          </div>
    145→          <div className="text-center my-12 relative duration-200">
-   146→            <h1 className="text-3xl md:text-4xl animate-custom-enter font-bold text-toast-900">
-   147→              The Best Toast in Town.
-   148→            </h1>
-   149→            <h2 className="text-xl md:text-2xl font-bold text-toast-600 mt-2">
-   150→              Smoking hot React notifications.
-   151→            </h2>
-   152→          </div>
-   153→
-   154→          <div className="grid md:grid-cols-2 gap-4 rounded-2xl bg-toast-200 p-4 w-full max-w-lg">
-   155→            <button
-   156→              data-splitbee-event="Trigger Toast"
-   157→              data-splitbee-event-example="CTA"
-   158→              className={clsx(
       →…
 site/types/svg.d.ts
      1→interface SvgrComponent
@@ -813,8 +799,6 @@ src/core/store.ts
     87→      });
     88→
     89→    case ActionType.DISMISS_TOAST:
-    90→      const { toastId } = action;
-    91→
       →…
    136→const listeners: Array<
    137→  [toasterId: string, reducer: (state: ToasterState) => void]
@@ -888,8 +872,6 @@ src/core/store.ts
    213→      t.removeDelay ||
    214→      toastOptions[t.type]?.removeDelay ||
    215→      toastOptions?.removeDelay,
-   216→    duration:
-   217→      t.duration ||
       →…
 src/core/toast.ts
      1→import {
@@ -1067,8 +1049,6 @@ src/core/use-toaster.ts
     36→  useEffect(() => {
     37→    if (pausedAt) {
     38→      return;
-    39→    }
-    40→
       →…
 src/core/utils.ts
      1→export const genId = (() => {
@@ -1093,10 +1073,29 @@ src/headless/index.ts
      1→import { toast } from '../core/toast';
 src/index.ts
      1→import { toast } from './core/toast';
+test/setup.ts
+     1→import '@testing-library/jest-dom';
+test/toast.test.tsx
+     1→import React, { useEffect, useState } from 'react';
+     2→import {
+     3→  render,
+     4→  screen,
+     5→  act,
+     6→  waitFor,
+     7→  fireEvent,
+     8→} from '@testing-library/react';
+    10→import toast, { resolveValue, Toaster, ToastIcon } from '../src';
+    11→import { defaultTimeouts } from '../src/core/store';
+    12→import { REMOVE_DELAY } from '../src/core/use-toaster';
+    29→const waitTime = (time: number) => {
+    30→  act(() => {
+    31→    jest.advanceTimersByTime(time);
+    32→  });
+    33→};
+    35→const TOAST_DURATION = 1000;
 tsup.config.ts
      1→import { defineConfig, Options } from 'tsup';
      2→import { minifyTemplates, writeFiles } from 'esbuild-minify-templates';
      4→const commonConfig: Options = {
      5→  minify: true,
-     6→  dts: true,
       →…

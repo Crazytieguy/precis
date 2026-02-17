@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1878 words)
+budget: 2000 (1898 words)
 
 Changelog.md
      1→# Changelog …
@@ -45,14 +45,7 @@ docs/guides/01-getting-started.md
     30→})
     31→```
     32→
-    33→If you'd rather use a `<script>` tag, you can use the UMD build:
-    34→
-    35→```html
-    36→<script src="https://unpkg.com/superstruct/lib/index.cjs"></script>
-    37→```
-    38→
-    39→This will expose the `Superstruct` global.
-    40→
+      →…
     41→## Defining Structs …
 docs/guides/02-validating-data.md
      1→# Validating Data …
@@ -169,9 +162,9 @@ docs/summary.md
     22→## Resources
     24→- [FAQ](./resources/faq.md)
     25→- [Links](./resources/links.md)
+examples/README.md
+     1→# Examples …
 rollup.config.js
-     1→import { defineConfig } from 'rollup'
-     2→import typescript from '@rollup/plugin-typescript'
 src/error.ts
      5→export type Failure …
     16→/**
@@ -369,12 +362,6 @@ src/structs/coercions.ts
 src/structs/refinements.ts
      8→export function empty …
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
-    22→  if (value instanceof Map || value instanceof Set) {
-    23→    return value.size
-    24→  } else {
-    25→    return value.length
-    26→  }
-    27→}
     33→export function max …
     55→export function min …
     77→export function nonempty …
@@ -472,11 +459,69 @@ src/utils.ts
    379→export type TupleSchema …
    385→export type AnyStruct …
    394→export type InferStructTuple …
-   402→type _InferTuple<
-   403→  Tuple extends AnyStruct[],
-   404→  Length extends number,
-   405→  Accumulated extends unknown[],
-   406→  Index extends number = Accumulated['length'],
-   407→> = Index extends Length
-   408→  ? Accumulated
-   409→  : _InferTuple<Tuple, Length, [...Accumulated, Infer<Tuple[Index]>]>
+   402→type _InferTuple …
+test/deprecated.test.ts
+test/index.test.ts
+test/index.ts
+     1→/**
+     2→ * A helper for testing type signatures.
+     3→ */
+     4→
+     5→export function test<T>(fn: (x: unknown) => T) {}
+test/typings/infer.ts
+test/validation/any/valid-number.ts
+test/validation/any/valid-string.ts
+test/validation/any/valid-undefined.ts
+test/validation/bigint/invalid-number.ts
+test/validation/bigint/invalid.ts
+test/validation/bigint/valid.ts
+test/validation/boolean/invalid.ts
+test/validation/boolean/valid.ts
+test/validation/coerce/changed.ts
+test/validation/coerce/condition-not-met.ts
+test/validation/coerce/unchanged.ts
+test/validation/date/invalid-date.ts
+test/validation/date/invalid.ts
+test/validation/date/valid.ts
+test/validation/enums/invalid-numbers.ts
+test/validation/enums/invalid-strings.ts
+test/validation/enums/valid.ts
+test/validation/function/invalid.ts
+test/validation/function/valid.ts
+     5→export const data = function () {}
+test/validation/instance/invalid.ts
+test/validation/instance/valid.ts
+test/validation/integer/invalid-decimal.ts
+test/validation/integer/invalid.ts
+test/validation/integer/valid.ts
+test/validation/lazy/invalid.ts
+test/validation/lazy/valid.ts
+test/validation/lazy/with-refiners.ts
+test/validation/literal/invalid.ts
+test/validation/literal/valid.ts
+test/validation/never/invalid.ts
+     3→export const Struct = never()
+     5→export const data = true
+     7→export const failures = [
+test/validation/number/invalid.ts
+test/validation/number/valid.ts
+test/validation/pattern/invalid.ts
+test/validation/pattern/valid.ts
+test/validation/refine/invalid-multiple-refinements.ts
+test/validation/refine/invalid-shorthand.ts
+test/validation/refine/invalid.ts
+test/validation/refine/valid.ts
+test/validation/regexp/invalid.ts
+test/validation/regexp/valid.ts
+test/validation/string/invalid.ts
+test/validation/string/valid.ts
+test/validation/trimmed/invalid.ts
+test/validation/trimmed/valid.ts
+test/validation/type/valid-instance.ts
+     3→class Person {
+     4→  name: string
+     5→
+     6→  constructor(name: string) {
+test/validation/unknown/valid-number.ts
+test/validation/unknown/valid-string.ts
+test/validation/unknown/valid-undefined.ts

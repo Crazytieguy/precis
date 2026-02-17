@@ -56,8 +56,7 @@ site/README.md
     12→
     13→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
     14→
-    15→You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-    16→
+      →…
     17→## Learn More
     19→To learn more about Next.js, take a look at the following resources:
     20→
@@ -101,6 +100,7 @@ site/components/sections/toaster-example.tsx
      9→  'top-left',
     10→  'top-center',
     11→  'top-right',
+    12→  'bottom-left',
       →…
     17→export const ToasterExample: React.FC<{
 site/next.config.mjs
@@ -289,5 +289,10 @@ src/headless/index.ts
      1→import { toast } from '../core/toast';
 src/index.ts
      1→import { toast } from './core/toast';
+test/setup.ts
+     1→import '@testing-library/jest-dom';
+test/toast.test.tsx
+    29→const waitTime = (time: number) => {
+    35→const TOAST_DURATION = 1000;
 tsup.config.ts
      4→const commonConfig: Options = {

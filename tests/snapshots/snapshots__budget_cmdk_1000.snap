@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (973 words)
+budget: 1000 (975 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -146,6 +146,10 @@ cmdk/tsup.config.ts
 playwright.config.ts
      1→import { PlaywrightTestConfig, devices } from '@playwright/test'
      3→const config: PlaywrightTestConfig = {
+test/pages/_app.tsx
+     3→export default function App({ Component, pageProps }) {
+test/pages/huge.tsx
+     4→const items = new Array(1000).fill(0)
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -174,8 +178,6 @@ website/components/cmdk/framer.tsx
 website/components/cmdk/linear.tsx
      3→export function LinearCMDK() {
     30→const items = [
-    31→  {
-      →…
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
 website/components/cmdk/vercel.tsx
@@ -198,8 +200,6 @@ website/components/code/index.tsx
     49→              copy(children)
     50→            }}
     51→          >
-    52→            <CopyIcon />
-    53→          </button>
       →…
 website/components/icons/index.tsx
      1→import styles from './icons.module.scss'
@@ -224,7 +224,6 @@ website/pages/_app.tsx
     17→export default function App({ Component, pageProps }: AppProps) {
     18→  return (
     19→    <>
-    20→      <Head>
       →…
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
@@ -249,7 +248,6 @@ website/pages/index.tsx
     29→export default function Index() {
     30→  const [theme, setTheme] = React.useState<Themes>('raycast')
     31→
-    32→  return (
       →…
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     99→//////////////////////////////////////////////////////////////////

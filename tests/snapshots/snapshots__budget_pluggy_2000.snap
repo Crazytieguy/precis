@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1825 words)
+budget: 2000 (1903 words)
 
 AGENTS.md
      1→# AGENTS.md
@@ -20,7 +20,6 @@ CLAUDE.md
     34→### Main Components
     36→- **PluginManager** (`src/pluggy/_manager.py`): Central registry that manages plugins and coordinates hook calls
     37→- **HookCaller** (`src/pluggy/_hooks.py`): Executes hook implementations with proper argument binding
-    38→- **HookImpl/HookSpec** (`src/pluggy/_hooks.py`): Represent hook implementations and specifications
       →…
     42→### Package Structure …
     48→## Configuration Files …
@@ -50,11 +49,66 @@ docs/conf.py
    122→            return True
    123→
    124→    logger = logging.getLogger(sphinx.util.logging.NAMESPACE)
-   125→    warn_handler = [x for x in logger.handlers if x.level == logging.WARNING]
-   126→    assert len(warn_handler) == 1, warn_handler
-   127→    warn_handler[0].filters.insert(0, WarnLogFilter())
+      →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
+docs/examples/eggsample/eggsample/__init__.py
+docs/examples/eggsample/eggsample/hookspecs.py
+     7→@hookspec
+     8→def eggsample_add_ingredients(ingredients: tuple):
+    16→@hookspec
+    17→def eggsample_prep_condiments(condiments: dict):
+docs/examples/eggsample/eggsample/host.py
+    13→def main():
+    21→def get_plugin_manager():
+    29→class EggsellentCook:
+    30→    FAVORITE_INGREDIENTS = ("egg", "egg", "egg")
+    31→
+    32→    def __init__(self, hook):
+    36→    def add_ingredients(self):
+    45→    def prepare_the_food(self):
+    48→    def serve_the_food(self):
+docs/examples/eggsample/eggsample/lib.py
+     4→@eggsample.hookimpl
+     5→def eggsample_add_ingredients():
+    12→@eggsample.hookimpl
+    13→def eggsample_prep_condiments(condiments):
+docs/examples/eggsample/setup.py
+     1→from setuptools import find_packages
+     2→from setuptools import setup
+docs/examples/eggsample-spam/eggsample_spam.py
+     1→import eggsample
+     4→@eggsample.hookimpl
+     5→def eggsample_add_ingredients(ingredients):
+     6→    """Here the caller expects us to return a list."""
+     7→    if "egg" in ingredients:
+      →…
+    14→@eggsample.hookimpl
+    15→def eggsample_prep_condiments(condiments):
+    16→    """Here the caller passes a mutable object, so we mess with it directly."""
+    17→    try:
+      →…
+docs/examples/eggsample-spam/setup.py
+     1→from setuptools import setup
+docs/examples/toy-example.py
+     1→import pluggy
+     8→class MySpec:
+    10→
+    11→    @hookspec
+    12→    def myhook(self, arg1, arg2):
+    13→        """My special little hook that you can customize."""
+    16→class Plugin_1:
+    18→
+    19→    @hookimpl
+    20→    def myhook(self, arg1, arg2):
+    21→        print("inside Plugin_1.myhook()")
+      →…
+    25→class Plugin_2:
+    27→
+    28→    @hookimpl
+    29→    def myhook(self, arg1, arg2):
+    30→        print("inside Plugin_2.myhook()")
+      →…
 scripts/release.py
     15→def create_branch(version: str) -> Repo:
     16→    """Create a fresh branch from upstream/main"""
@@ -85,9 +139,7 @@ src/pluggy/__init__.py
     11→    "HookspecMarker",
     12→    "HookimplMarker",
     13→    "Result",
-    14→    "PluggyWarning",
-    15→    "PluggyTeardownRaisedWarning",
-    16→]
+      →…
     32→def __getattr__ …
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
@@ -145,18 +197,6 @@ src/pluggy/_hooks.py
     93→        self,
     94→        function: _F,
     95→        firstresult: bool = False,
-    96→        historic: bool = False,
-    97→        warn_on_impl: Warning | None = None,
-    98→        warn_on_impl_args: Mapping[str, Warning] | None = None,
-    99→    ) -> _F: ...
-   100→
-   101→    @overload  # noqa: F811
-   102→    def __call__(  # noqa: F811
-   103→        self,
-   104→        function: None = ...,
-   105→        firstresult: bool = ...,
-   106→        historic: bool = ...,
-   107→        warn_on_impl: Warning | None = ...,
    111→    def __call__ …
    165→class HookimplMarker:
    172→
@@ -170,18 +210,6 @@ src/pluggy/_hooks.py
    180→        self,
    181→        function: _F,
    182→        hookwrapper: bool = ...,
-   183→        optionalhook: bool = ...,
-   184→        tryfirst: bool = ...,
-   185→        trylast: bool = ...,
-   186→        specname: str | None = ...,
-   187→        wrapper: bool = ...,
-   188→    ) -> _F: ...
-   189→
-   190→    @overload  # noqa: F811
-   191→    def __call__(  # noqa: F811
-   192→        self,
-   193→        function: None = ...,
-   194→        hookwrapper: bool = ...,
    202→    def __call__ …
    281→def normalize_hookimpl_opts …
    290→_PYPY = hasattr(sys, "pypy_version_info")
@@ -234,8 +262,6 @@ src/pluggy/_hooks.py
    577→    def _maybe_apply_history(self, method: HookImpl) -> None:
    578→        """Apply call history to a new hookimpl if it is marked as historic."""
    593→class _SubsetHookCaller(HookCaller):
-   594→    """A proxy to another HookCaller which manages calls to all registered
-   595→    plugins except the ones from remove_plugins."""
    596→
    597→    # This class is unusual: in inhertits from `HookCaller` so all of
    598→    # the *code* runs in the class, but it delegates all underlying *data*
@@ -252,12 +278,7 @@ src/pluggy/_hooks.py
    609→        "_remove_plugins",
    610→    )
    611→
-   612→    def __init__(self, orig: HookCaller, remove_plugins: Set[_Plugin]) -> None:
-   613→        self._orig = orig
-   614→        self._remove_plugins = remove_plugins
-   615→        self.name = orig.name  # type: ignore[misc]
-   616→        self._hookexec = orig._hookexec  # type: ignore[misc]
-   617→
+   612→    def __init__ …
    618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [
@@ -265,17 +286,13 @@ src/pluggy/_hooks.py
    622→            for impl in self._orig._hookimpls
    623→            if impl.plugin not in self._remove_plugins
    624→        ]
-   625→
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    628→        return self._orig.spec
-   629→
    630→    @property
    631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
    632→        return self._orig._call_history
-   633→
-   634→    def __repr__(self) -> str:
-   635→        return f"<_SubsetHookCaller {self.name!r}>"
+   634→    def __repr__ …
    639→class HookImpl:
    641→
    642→    __slots__ = (
@@ -288,18 +305,7 @@ src/pluggy/_hooks.py
    649→        "wrapper",
    650→        "hookwrapper",
    651→        "optionalhook",
-   652→        "tryfirst",
-   653→        "trylast",
-   654→    )
-   655→
-   656→    def __init__(
-   657→        self,
-   658→        plugin: _Plugin,
-   659→        plugin_name: str,
-   660→        function: _HookImplFunction[object],
-   661→        hook_impl_opts: HookimplOpts,
-   662→    ) -> None:
-   663→        """:meta private:"""
+   656→    def __init__ …
    692→    def __repr__ …
    697→class HookSpec:
    698→    __slots__ = (
@@ -313,14 +319,7 @@ src/pluggy/_hooks.py
    706→        "warn_on_impl_args",
    707→    )
    708→
-   709→    def __init__(self, namespace: _Namespace, name: str, opts: HookspecOpts) -> None:
-   710→        self.namespace = namespace
-   711→        self.function: Callable[..., object] = getattr(namespace, name)
-   712→        self.name = name
-   713→        self.argnames, self.kwargnames = varnames(self.function)
-   714→        self.opts = opts
-   715→        self.warn_on_impl = opts.get("warn_on_impl")
-   716→        self.warn_on_impl_args = opts.get("warn_on_impl_args")
+   709→    def __init__ …
 src/pluggy/_manager.py
     33→    import importlib.metadata
     36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
@@ -395,9 +394,6 @@ src/pluggy/_result.py
     36→        """:meta private:"""
     37→        self._result = result
     38→        self._exception = exception
-    39→        # Exception __traceback__ is mutable, this keeps the original.
-    40→        self._traceback = exception.__traceback__ if exception is not None else None
-    41→
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
     44→        """:meta private:"""
@@ -406,7 +402,6 @@ src/pluggy/_result.py
     47→            return None
     48→        else:
     49→            return (type(exc), exc, self._traceback)
-    50→
     51→    @property
     52→    def exception(self) -> BaseException | None:
     53→        """:meta private:"""
@@ -450,3 +445,66 @@ src/pluggy/_warnings.py
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"
+testing/benchmark.py
+    20→@hookimpl
+    21→def hook(arg1, arg2, arg3):
+    25→@hookimpl(wrapper=True)
+    26→def wrapper(arg1, arg2, arg3):
+    30→@pytest.fixture(params=[10, 100], ids="hooks={}".format)
+    31→def hooks(request: Any) -> list[object]:
+    35→@pytest.fixture(params=[10, 100], ids="wrappers={}".format)
+    36→def wrappers(request: Any) -> list[object]:
+testing/conftest.py
+    23→@pytest.fixture
+    24→def pm() -> PluginManager:
+testing/test_details.py
+testing/test_helpers.py
+testing/test_hookcaller.py
+    20→@pytest.fixture
+    21→def hc(pm: PluginManager) -> HookCaller:
+    34→class AddMeth:
+    35→    def __init__(self, hc: HookCaller) -> None:
+    36→        self.hc = hc
+    37→
+    38→    def __call__(
+    39→        self,
+    40→        tryfirst: bool = False,
+    41→        trylast: bool = False,
+      →…
+    60→@pytest.fixture
+    61→def addmeth(hc: HookCaller) -> AddMeth:
+   327→@pytest.mark.parametrize("name", ["hookwrapper", "optionalhook", "tryfirst", "trylast"])
+   328→@pytest.mark.parametrize("val", [True, False])
+   329→def test_hookimpl(name: str, val: bool) -> None:
+testing/test_invocations.py
+testing/test_multicall.py
+   249→@pytest.mark.parametrize("exc", [ValueError, SystemExit])
+   250→def test_hookwrapper_exception(exc: type[BaseException]) -> None:
+   319→@pytest.mark.parametrize("exc", [ValueError, SystemExit])
+   320→def test_wrapper_exception(exc: type[BaseException]) -> None:
+   416→@pytest.mark.parametrize("has_hookwrapper", [True, False])
+   417→def test_wrapper_stopiteration_passtrough(has_hookwrapper: bool) -> None:
+testing/test_pluginmanager.py
+   298→@pytest.mark.parametrize("result_callback", [True, False])
+   299→def test_with_result_memorized(pm: PluginManager, result_callback: bool) -> None:
+   300→    """Verify that ``HookCaller._maybe_apply_history()`
+   301→    correctly applies the ``result_callback`` function, when provided,
+   302→    to the result from calling each newly registered hook.
+   303→    """
+   698→@pytest.mark.parametrize("historic", [False, True])
+   699→def test_register_while_calling(
+   700→    pm: PluginManager,
+   701→    historic: bool,
+   702→) -> None:
+   703→    """Test that registering an impl of a hook while it is being called does
+   704→    not affect the call itself, only later calls.
+   705→
+   706→    For historic hooks however, the hook is called immediately on registration.
+   707→
+   708→    Regression test for #438.
+   709→    """
+testing/test_result.py
+testing/test_tracer.py
+     6→@pytest.fixture
+     7→def rootlogger() -> TagTracer:
+testing/test_warnings.py
