@@ -174,9 +174,11 @@ fn render_symbol(
 
     // Doc comment lines (before symbol for most languages)
     let doc_start = doc_comment_start(lines, sym_line_0, lang);
+    let mut doc_lines_shown = 0;
     if doc_n > 0 && doc_start < sym_line_0 {
         let doc_lines_available = sym_line_0 - doc_start;
         let doc_lines_to_show = doc_lines_available.min(doc_n);
+        doc_lines_shown = doc_lines_to_show;
         let start = doc_start.max(*emitted_up_to);
         let end = (doc_start + doc_lines_to_show).min(sym_line_0);
         for (i, line) in lines.iter().enumerate().take(end).skip(start) {
@@ -193,11 +195,14 @@ fn render_symbol(
     *emitted_up_to = (*emitted_up_to).max(sig_end + 1);
 
     // Python docstrings (after signature)
-    if doc_n > 0 && lang == Some(Lang::Python) {
+    // doc_n is a cumulative limit across pre-symbol comments and docstrings,
+    // matching the scheduler's flat doc_line_words vector.
+    let doc_n_remaining = doc_n.saturating_sub(doc_lines_shown);
+    if doc_n_remaining > 0 && lang == Some(Lang::Python) {
         let ds_end = docstring_end(lines, sig_end);
         if ds_end > sig_end + 1 {
             let ds_lines_available = ds_end - (sig_end + 1);
-            let ds_lines_to_show = ds_lines_available.min(doc_n);
+            let ds_lines_to_show = ds_lines_available.min(doc_n_remaining);
             let end = sig_end + 1 + ds_lines_to_show;
             for (i, line) in lines.iter().enumerate().take(end).skip(sig_end + 1) {
                 out.push_str(&fmt_line(i, line));

@@ -15,8 +15,7 @@
 
 ## Known bugs
 
-- **Cost accounting mismatch** — the scheduling algorithm's cost tracking diverges from actual rendered word counts. Some entries significantly exceed their budget (e.g., 390% at budget 500 for pluggy). The greedy algorithm deducts estimated costs, but the actual rendering can produce more words than estimated.
-- **Python doc cost double-application** — the scheduler puts all doc lines (pre-symbol `#` comments + post-signature docstrings) into a single `doc_line_words` vector and budgets `Doc(N)` as N lines from it. But the renderer applies the N limit independently to both pre-symbol comments and docstrings — so `Doc(4)` can render up to 4 comment lines AND 4 docstring lines (8 total), double what was budgeted. This is a concrete source of cost overruns for Python files.
+- **Cost accounting mismatch** — the scheduling algorithm's cost tracking diverges from actual rendered word counts. Some entries significantly exceed their budget (e.g., 418% at budget 500 for pluggy). The greedy algorithm deducts estimated costs, but the actual rendering can produce more words than estimated. ~~Python doc cost double-application~~ was fixed (renderer now shares a cumulative doc_n limit across pre-symbol comments and docstrings, matching the scheduler's flat doc_line_words vector), but large overruns remain — other sources of divergence need investigation.
 
 ## Remaining work
 
