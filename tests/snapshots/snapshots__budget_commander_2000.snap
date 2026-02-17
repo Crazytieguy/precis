@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1960 words)
+budget: 2000 (1964 words)
 
 CONTRIBUTING.md
      1→# Contributing …
@@ -138,85 +138,6 @@ docs/release-policy.md
      1→# Release Policy …
 docs/terminology.md
      1→# Terminology …
-docs/zh-CN/不再推荐使用的功能.md
-     1→# 不再推荐使用的功能
-     3→本文中列出的功能不再推荐使用。它们在 Commander 未来的主要版本（major version）中可能被移除。为保证后向兼容，这些功能目前还可以使用，但它们不应被用在新代码中。
-     4→
-      →…
-    18→## .option() 方法的正则表达式参数
-    20→`.option()`方法可以接受一个正则表达式作为第三个参数，以规定可以接受的选项参数值。
-    21→
-      →…
-    30→## noHelp
-    32→此选项曾被用作传入`.command()`方法，以在内建的帮助信息中隐藏该命令：
-    33→
-      →…
-    40→## 默认导入的全局 Command 对象
-    42→Commander 的默认导入曾是一个全局的`Command`对象。
-    43→
-      →…
-    61→## .help() 与 .outputHelp() 的回调函数参数
-    63→这两个方法曾允许传入一个回调函数，以在展示前处理帮助信息。
-    64→
-      →…
-    79→## .on('--help')
-    81→此功能曾被用作在内建的帮助信息后输出自定义的帮助信息。自 Commander v3.0.0 起，如果有自定义的帮助选项，则此方法使用该自定义的帮助选项。
-    82→
-      →…
-   104→## .on('command:*')
-   106→当命令参数与已知子命令不匹配时发出此消息（作为 `.command('')` 实现的一部分）。
-   107→
-      →…
-   114→## .command('*')
-   116→这用于向程序添加默认命令。
-   117→
-      →…
-   134→## cmd.description(cmdDescription, argDescriptions)
-   136→此功能曾用来为命令参数添加描述信息。
-   137→
-      →…
-   157→## InvalidOptionArgumentError
-   159→此类曾被用来在自定义选项处理中抛出错误，以显示错误信息。
-   160→
-      →…
-   187→## 短选项标志长于单个字符
-   189→短选项从未支持像 `-ws` 的标识，但旧的 README 并没有明确说明这一点。README 现在声明短选项是单个字符。
-   190→
-      →…
-docs/zh-CN/可变参数的选项.md
-     1→# 可变参数的选项
-     3→README 文档介绍了选项的声明与使用。大多数情况下，选项的解析行为，与您和您程序用户的期望相符。本文将详述一些特殊用例和细节问题。
-     4→
-      →…
-    26→## 解析中的歧义
-    28→解析选项时，有一些潜在的问题值得注意。当一个命令既有命令参数，又有选项的时候，在解析过程中有可能出现歧义。这可能会影响用户使用您的程序。
-    29→Commander 首先解析选项的参数，而用户有可能想将选项后面跟的参数作为命令，或是作为命令参数进行解析。
-      →…
-    73→### 方案一：让`--`成为语法的一部分
-    75→与其让用户理解`--`的用法，您也可以直接把它作为程序语法的一部分。
-    76→
-      →…
-    98→### 方案二：把选项放在最后
-   100→Commander 遵循 GNU 解析命令的惯例，允许选项出现在命令参数之前或者之后，也可以将选项和命令参数相互穿插。
-   101→因此，通过要求把选项放在最后，命令参数就不会和选项参数相混淆。
-      →…
-   120→### 方案三：使用选项替代命令参数
-   122→这个方案虽然有点激进，但是可以完美避免解析中的歧义。
-   123→
-      →…
-   142→## 合并短选项和带有参数的选项
-   144→多个 boolean 型的短选项可以合并起来写在同一个`-`号后面，比如`ls -al`。同时，你也可以在其中包括一个接受参数的短选项，此时，任何跟在其后的字符都将被视作这个选项的值。
-   145→
-      →…
-   183→### 将短选项视作 boolean 类型选项合并
-   185→在 Commander v5 之前，并不支持合并短选项和值。合并的 boolean 类型选项会被展开。
-   186→因此，`-avl`将被展开为`-a -v -l`。
-      →…
-docs/zh-CN/术语表.md
-     1→# 术语表
-     3→命令行参数由选项（options）、选项参数（option-arguments）、命令（commands），以及命令参数（command-arguments）组成。
-     4→
-      →…
 eslint.config.js
      8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
      9→const tsconfigJsFiles = ['*.{js,mjs}', 'lib/**/*.{js,mjs}']; // match "include" in tsconfig.js.json
@@ -227,7 +148,8 @@ jest.config.js
      4→  transform: {
      5→    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.ts.json' }],
      6→  },
-      →…
+     7→  testPathIgnorePatterns: ['/node_modules/'],
+     8→};
 lib/argument.js
      3→class Argument {
      4→  /**
@@ -355,6 +277,15 @@ lib/error.js
      9→   * @param {string} message human-readable description of the error
     10→   */
     11→  constructor(exitCode, code, message) {
+    12→    super(message);
+    13→    // properly capture stack trace in Node.js
+    14→    Error.captureStackTrace(this, this.constructor);
+    15→    this.name = this.constructor.name;
+    16→    this.code = code;
+    17→    this.exitCode = exitCode;
+    18→    this.nestedError = undefined;
+    19→  }
+    20→}
     25→class InvalidArgumentError extends CommanderError {
     26→  /**
     27→   * Constructs the InvalidArgumentError class
@@ -362,7 +293,11 @@ lib/error.js
     29→   */
     30→  constructor(message) {
     31→    super(1, 'commander.invalidArgument', message);
-      →…
+    32→    // properly capture stack trace in Node.js
+    33→    Error.captureStackTrace(this, this.constructor);
+    34→    this.name = this.constructor.name;
+    35→  }
+    36→}
 lib/help.js
     12→class Help {
     13→  constructor() {
@@ -433,6 +368,22 @@ lib/option.js
    272→  constructor(options) {
    273→    this.positiveOptions = new Map();
    274→    this.negativeOptions = new Map();
+   275→    this.dualOptions = new Set();
+   276→    options.forEach((option) => {
+   277→      if (option.negate) {
+   278→        this.negativeOptions.set(option.attributeName(), option);
+   279→      } else {
+   280→        this.positiveOptions.set(option.attributeName(), option);
+   281→      }
+   282→    });
+   283→    this.negativeOptions.forEach((value, key) => {
+   284→      if (this.positiveOptions.has(key)) {
+   285→        this.dualOptions.add(key);
+   286→      }
+   287→    });
+   288→  }
+   289→
+   290→  /**
    297→  valueFromOption(value, option) {
    316→function camelcase(str) {
    328→function splitOptionFlags(flags) {
@@ -449,23 +400,29 @@ typings/index.d.ts
     16→export class CommanderError extends Error {
     17→  code: string;
     18→  exitCode: number;
+    19→  message: string;
     31→export class InvalidArgumentError extends CommanderError {
     32→  /**
     33→   * Constructs the InvalidArgumentError class
+    34→   * @param message - explanation of why argument is invalid
     40→export interface ErrorOptions {
     41→  // optional parameter for error()
     42→  /** an id string representing the error */
+    43→  code?: string;
       →…
     48→export class Argument {
     49→  description: string;
     50→  required: boolean;
+    51→  variadic: boolean;
     95→export class Option {
     96→  flags: string;
     97→  description: string;
+    98→
    115→  constructor(flags: string, description?: string);
    210→export class Help {
    211→  /** output helpWidth, long lines are wrapped to fit */
    212→  helpWidth?: number;
+   213→  minWidthToWrap: number;
    218→  constructor();
    226→  prepareContext(contextOptions: {
    227→    error?: boolean;
@@ -486,10 +443,11 @@ typings/index.d.ts
    345→export interface HelpContext {
    346→  // optional parameter for .help() and .outputHelp()
    347→  error: boolean;
-      →…
+   348→}
    349→export interface AddHelpTextContext {
    350→  // passed to text function used with .addHelpText()
    351→  error: boolean;
+   352→  command: Command;
       →…
    354→export interface OutputConfiguration {
    355→  writeOut?(str: string): void;
@@ -509,6 +467,7 @@ typings/index.d.ts
    376→export class Command {
    377→  args: string[];
    378→  processedArgs: any[];
+   379→  readonly commands: readonly Command[];
    384→  constructor(name?: string);
    493→  argument(name: string, description?: string, defaultValue?: unknown): this;
    528→  helpCommand(enable: boolean): this;
@@ -520,6 +479,7 @@ typings/index.d.ts
   1094→export interface CommandOptions {
   1095→  hidden?: boolean;
   1096→  isDefault?: boolean;
+  1097→  /** @deprecated since v7, replaced by hidden */
       →…
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1101→  executableFile?: string;
@@ -527,5 +487,5 @@ typings/index.d.ts
   1104→export interface ParseOptionsResult {
   1105→  operands: string[];
   1106→  unknown: string[];
-      →…
+  1107→}
   1113→export const program: Command;

@@ -107,6 +107,34 @@ impl FileRole {
             _ => FileRole::Normal,
         }
     }
+
+    /// Determine file role from the full relative path.
+    /// Checks both the filename and directory components for locale patterns.
+    /// Locale directories override filename-based detection (a translated README
+    /// is low value, not high value).
+    pub fn from_path(path: &Path) -> Self {
+        let is_doc = path.extension()
+            .and_then(|e| e.to_str())
+            .map(|e| matches!(e, "md" | "markdown" | "txt"))
+            .unwrap_or(false);
+        // For doc files, check if any parent directory is a locale directory
+        // (e.g., docs/zh-CN/guide.md, i18n/es/readme.md).
+        // This takes priority over filename-based detection.
+        if is_doc {
+            for component in path.components() {
+                if let std::path::Component::Normal(seg) = component
+                    && let Some(s) = seg.to_str()
+                    && is_locale_dir(s)
+                {
+                    return FileRole::Translated;
+                }
+            }
+        }
+        path.file_name()
+            .and_then(|n| n.to_str())
+            .map(FileRole::from_filename)
+            .unwrap_or(FileRole::Normal)
+    }
 }
 
 /// Detect locale suffixes like `_zh-CN`, `-es`, `.ja`, `_pt-BR`.
@@ -131,6 +159,30 @@ fn has_locale_suffix(stem: &str) -> bool {
     }
     // Try `[sep]xx` at end (3 chars)
     if is_sep(bytes[len - 3]) && is_alpha(bytes[len - 2]) && is_alpha(bytes[len - 1]) {
+        return true;
+    }
+    false
+}
+
+/// Detect locale directory names like `zh-CN`, `pt-BR`, `en-US`,
+/// or well-known i18n directories like `i18n`, `l10n`, `locales`, `translations`.
+/// Only matches the `xx-YY` / `xx_YY` pattern (not bare 2-letter codes, which
+/// have too many false positives like `go`, `js`, `ci`).
+fn is_locale_dir(name: &str) -> bool {
+    let bytes = name.as_bytes();
+    // Well-known i18n directory names
+    let lower = name.to_ascii_lowercase();
+    if matches!(lower.as_str(), "i18n" | "l10n" | "locales" | "locale" | "translations") {
+        return true;
+    }
+    // xx-YY or xx_YY (5 chars): e.g. zh-CN, pt-BR, en-US
+    if bytes.len() == 5
+        && bytes[0].is_ascii_alphabetic()
+        && bytes[1].is_ascii_alphabetic()
+        && (bytes[2] == b'-' || bytes[2] == b'_')
+        && bytes[3].is_ascii_alphabetic()
+        && bytes[4].is_ascii_alphabetic()
+    {
         return true;
     }
     false
@@ -237,11 +289,7 @@ pub fn build_groups(
             .unwrap_or("")
             .to_string();
         let lines: Vec<&str> = source.lines().collect();
-        let file_role = relative
-            .file_name()
-            .and_then(|n| n.to_str())
-            .map(FileRole::from_filename)
-            .unwrap_or(FileRole::Normal);
+        let file_role = FileRole::from_path(relative);
 
         for (symbol_idx, sym) in symbols.iter().enumerate() {
             let sym_line_0 = sym.line - 1;
@@ -1044,5 +1092,29 @@ mod tests {
         assert_eq!(FileRole::from_filename("README-es.md"), FileRole::Translated);
         assert_eq!(FileRole::from_filename("lib.rs"), FileRole::Normal);
         assert_eq!(FileRole::from_filename("main.py"), FileRole::Normal);
+    }
+
+    #[test]
+    fn file_role_from_path_locale_dirs() {
+        // Locale directory patterns (xx-YY) detect translated docs
+        assert_eq!(FileRole::from_path(Path::new("docs/zh-CN/guide.md")), FileRole::Translated);
+        assert_eq!(FileRole::from_path(Path::new("docs/pt-BR/readme.md")), FileRole::Translated);
+        assert_eq!(FileRole::from_path(Path::new("docs/en_US/intro.md")), FileRole::Translated);
+        // Well-known i18n directory names
+        assert_eq!(FileRole::from_path(Path::new("i18n/guide.md")), FileRole::Translated);
+        assert_eq!(FileRole::from_path(Path::new("l10n/guide.md")), FileRole::Translated);
+        assert_eq!(FileRole::from_path(Path::new("locales/readme.md")), FileRole::Translated);
+        assert_eq!(FileRole::from_path(Path::new("translations/guide.md")), FileRole::Translated);
+        // Non-doc files in locale dirs stay Normal
+        assert_eq!(FileRole::from_path(Path::new("docs/zh-CN/lib.rs")), FileRole::Normal);
+        // Plain 2-letter dirs are NOT matched (too many false positives)
+        assert_eq!(FileRole::from_path(Path::new("docs/go/guide.md")), FileRole::Normal);
+        assert_eq!(FileRole::from_path(Path::new("docs/js/guide.md")), FileRole::Normal);
+        // Locale directory overrides filename-based roles (translated README is low value)
+        assert_eq!(FileRole::from_path(Path::new("docs/zh-CN/README.md")), FileRole::Translated);
+        assert_eq!(FileRole::from_path(Path::new("docs/zh-CN/CHANGELOG.md")), FileRole::Translated);
+        // Root-level files work normally
+        assert_eq!(FileRole::from_path(Path::new("README.md")), FileRole::Readme);
+        assert_eq!(FileRole::from_path(Path::new("guide.md")), FileRole::Normal);
     }
 }
