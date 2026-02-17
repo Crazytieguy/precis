@@ -328,12 +328,12 @@ pub(crate) fn is_markdown_leading_noise(line: &str) -> bool {
         return true;
     }
     // Link reference definitions: [label]: URL
-    if trimmed.starts_with('[') {
-        if let Some(pos) = trimmed.find("]: ") {
-            let after = trimmed[pos + 3..].trim();
-            if after.starts_with("http") || after.starts_with('/') || after.starts_with('#') {
-                return true;
-            }
+    if trimmed.starts_with('[')
+        && let Some(pos) = trimmed.find("]: ")
+    {
+        let after = trimmed[pos + 3..].trim();
+        if after.starts_with("http") || after.starts_with('/') || after.starts_with('#') {
+            return true;
         }
     }
     false
