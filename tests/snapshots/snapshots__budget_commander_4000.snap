@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3879 words)
+budget: 4000 (3883 words)
 
 CONTRIBUTING.md
      1→# Contributing
@@ -163,10 +163,7 @@ jest.config.js
      2→  testEnvironment: 'node',
      3→  collectCoverage: true,
      4→  transform: {
-     5→    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.ts.json' }],
-     6→  },
-     7→  testPathIgnorePatterns: ['/node_modules/'],
-     8→};
+      →…
 lib/argument.js
      3→class Argument {
      4→  /**
@@ -828,6 +825,9 @@ lib/suggestSimilar.js
      9→  if (Math.abs(a.length - b.length) > maxDistance)
     10→    return Math.max(a.length, b.length);
     11→
+    12→  // distance between prefix substrings of a and b
+    13→  const d = [];
+    14→
       →…
     48→/**
       →…

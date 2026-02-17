@@ -144,6 +144,7 @@ crates/mdbook-driver/src/mdbook.rs
    436→    command: Option<String>,
    437→    #[serde(default)]
    438→    before: Vec<String>,
+   439→    #[serde(default)]
       →…
 crates/mdbook-html/README.md
      1→# mdbook-html …
@@ -279,6 +280,7 @@ crates/mdbook-markdown/src/lib.rs
     47→    opts.insert(Options::ENABLE_FOOTNOTES);
     48→    opts.insert(Options::ENABLE_STRIKETHROUGH);
     49→    opts.insert(Options::ENABLE_TASKLISTS);
+    50→    opts.insert(Options::ENABLE_HEADING_ATTRIBUTES);
       →…
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
@@ -374,7 +376,6 @@ crates/xtask/src/main.rs
      9→mod changelog;
     11→type Result …
 eslint.config.mjs
-     4→const handlebarsPreprocessor = {
      7→            preprocess(text, filename) {
     16→            postprocess(messages, filename) {
 guide/guide-helper/src/lib.rs

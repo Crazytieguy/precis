@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (987 words)
+budget: 1000 (984 words)
 
 CONTRIBUTING.md
      1→# Contributing …
@@ -10,8 +10,6 @@ CONTRIBUTING.md
      5→New issues are welcome, whether questions or suggestions or reporting bugs.
      6→You are also welcome to contribute by adding helpful comments on an existing issue.
      7→
-     8→We love reproducible code examples in questions and answers.
-     9→
       →…
     13→## Pull Requests …
 Readme.md
@@ -105,15 +103,6 @@ docs/deprecated.md
    235→- Throws an exception in Commander v13. Deprecated and gone!
    236→- Replacement added in Commander v13.1 with support for dual long options, like `--ws, --workspace`.
    237→
-eslint.config.js
-     8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
-     9→const tsconfigJsFiles = ['*.{js,mjs}', 'lib/**/*.{js,mjs}']; // match "include" in tsconfig.js.json
-jest.config.js
-     1→const config = {
-     2→  testEnvironment: 'node',
-     3→  collectCoverage: true,
-     4→  transform: {
-      →…
 lib/argument.js
      3→class Argument {
      4→  /**
@@ -163,18 +152,24 @@ typings/index.d.ts
     14→  | (BaseType & Record<never, never>);
     16→export class CommanderError extends Error {
     17→  code: string;
+    18→  exitCode: number;
     31→export class InvalidArgumentError extends CommanderError {
     32→  /**
+    33→   * Constructs the InvalidArgumentError class
     40→export interface ErrorOptions {
     41→  // optional parameter for error()
+    42→  /** an id string representing the error */
       →…
     48→export class Argument {
     49→  description: string;
+    50→  required: boolean;
     95→export class Option {
     96→  flags: string;
+    97→  description: string;
    115→  constructor(flags: string, description?: string);
    210→export class Help {
    211→  /** output helpWidth, long lines are wrapped to fit */
+   212→  helpWidth?: number;
    218→  constructor();
    226→  prepareContext(contextOptions: {
    227→    error?: boolean;
@@ -191,12 +186,14 @@ typings/index.d.ts
    340→export type HelpConfiguration = Partial<Help>;
    342→export interface ParseOptions {
    343→  from: 'node' | 'electron' | 'user';
-      →…
+   344→}
    345→export interface HelpContext {
    346→  // optional parameter for .help() and .outputHelp()
+   347→  error: boolean;
       →…
    349→export interface AddHelpTextContext {
    350→  // passed to text function used with .addHelpText()
+   351→  error: boolean;
       →…
    354→export interface OutputConfiguration {
    355→  writeOut?(str: string): void;
@@ -215,6 +212,7 @@ typings/index.d.ts
    374→export type OptionValues = Record<string, any>;
    376→export class Command {
    377→  args: string[];
+   378→  processedArgs: any[];
    384→  constructor(name?: string);
    493→  argument(name: string, description?: string, defaultValue?: unknown): this;
    528→  helpCommand(enable: boolean): this;
@@ -225,11 +223,13 @@ typings/index.d.ts
   1086→  ): this;
   1094→export interface CommandOptions {
   1095→  hidden?: boolean;
+  1096→  isDefault?: boolean;
       →…
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1101→  executableFile?: string;
-      →…
+  1102→}
   1104→export interface ParseOptionsResult {
   1105→  operands: string[];
+  1106→  unknown: string[];
       →…
   1113→export const program: Command;

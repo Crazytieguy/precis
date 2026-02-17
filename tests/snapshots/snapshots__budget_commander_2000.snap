@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1964 words)
+budget: 2000 (1962 words)
 
 CONTRIBUTING.md
      1→# Contributing …
@@ -92,7 +92,11 @@ Readme_zh-CN.md
    917→例如：
    918→
    919→```js
-      →…
+   920→program.parse(process.argv); // 指明，按 node 约定
+   921→program.parse(); // 默认，自动识别 electron
+   922→program.parse(['-f', 'filename'], { from: 'user' });
+   923→```
+   924→
 SECURITY.md
      1→# Security Policy …
 docs/deprecated.md
@@ -144,12 +148,7 @@ eslint.config.js
 jest.config.js
      1→const config = {
      2→  testEnvironment: 'node',
-     3→  collectCoverage: true,
-     4→  transform: {
-     5→    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.ts.json' }],
-     6→  },
-     7→  testPathIgnorePatterns: ['/node_modules/'],
-     8→};
+      →…
 lib/argument.js
      3→class Argument {
      4→  /**

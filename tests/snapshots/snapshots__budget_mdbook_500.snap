@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (481 words)
+budget: 500 (477 words)
 
 README.md
      1→# mdBook …
@@ -13,7 +13,7 @@ crates/mdbook-core/README.md
      1→# mdbook-core …
     11→## License …
 crates/mdbook-core/src/config.rs
-   718→trait Updateable …
+   718→trait Updateable<'de>: Serialize + Deserialize<'de> {
 crates/mdbook-core/src/lib.rs
      3→/// The current version of `mdbook`.
      4→///
@@ -84,6 +84,7 @@ crates/mdbook-html/src/utils.rs
     42→pub(crate) trait ToUrlPath {
     43→    fn to_url_path(&self) -> String;
     44→}
+    47→    fn to_url_path(&self) -> String {
     58→pub(crate) fn unique_id …
     76→pub(crate) fn id_from_content …
 crates/mdbook-markdown/README.md
@@ -125,10 +126,6 @@ crates/xtask/README.md
      1→# xtask …
 crates/xtask/src/changelog.rs
     10→pub(crate) fn changelog() -> Result<()> {
-eslint.config.mjs
-     4→const handlebarsPreprocessor = {
-     7→            preprocess(text, filename) {
-    16→            postprocess(messages, filename) {
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {

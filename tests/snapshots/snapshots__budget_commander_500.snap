@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (494 words)
+budget: 500 (493 words)
 
 CONTRIBUTING.md
      3→## Issues …
@@ -24,7 +24,8 @@ Readme.md
    983→program.parse(['--port', '80'], { from: 'user' }); // just user supplied arguments, nothing special about argv[0]
    984→```
    985→
-      →…
+   986→Use `.parseAsync()` instead of `.parse()` if any of your action handlers are async.
+   987→
 Readme_zh-CN.md
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
@@ -32,6 +33,7 @@ Readme_zh-CN.md
    911→如果参数遵循与 node 不同的约定，可以在第二个参数中传递`from`选项：
    912→
    913→- `node`：默认值，`argv[0]`是应用，`argv[1]`是要跑的脚本，后续为用户参数；
+   914→- `electron`：`argv[1]`根据 electron 应用是否打包而变化；
       →…
 docs/deprecated.md
    229→### Short option flag longer than a single character
@@ -42,15 +44,6 @@ docs/deprecated.md
    235→- Throws an exception in Commander v13. Deprecated and gone!
    236→- Replacement added in Commander v13.1 with support for dual long options, like `--ws, --workspace`.
    237→
-eslint.config.js
-     8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
-     9→const tsconfigJsFiles = ['*.{js,mjs}', 'lib/**/*.{js,mjs}']; // match "include" in tsconfig.js.json
-jest.config.js
-     1→const config = {
-     2→  testEnvironment: 'node',
-     3→  collectCoverage: true,
-     4→  transform: {
-      →…
 lib/argument.js
      3→class Argument {
      4→  /**
@@ -61,8 +54,10 @@ lib/command.js
 lib/error.js
      4→class CommanderError extends Error {
      5→  /**
+     6→   * Constructs the CommanderError class
     25→class InvalidArgumentError extends CommanderError {
     26→  /**
+    27→   * Constructs the InvalidArgumentError class
 lib/help.js
     12→class Help {
     13→  constructor() {
@@ -84,6 +79,7 @@ lib/option.js
      4→  /**
    268→class DualOptions {
    269→  /**
+   270→   * @param {Option[]} options
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {

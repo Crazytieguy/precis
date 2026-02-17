@@ -212,21 +212,16 @@ cmdk/src/index.tsx
   1052→    fns.current = new Map()
   1053→  }, [s])
   1054→
-      →…
+  1055→  return (id: string | number, cb: () => void) => {
+  1056→    fns.current.set(id, cb)
+  1057→    ss({})
+  1058→  }
+  1059→}
   1061→function renderChildren …
   1071→function SlottableWithNestedChildren …
 playwright.config.ts
      3→const config: PlaywrightTestConfig = {
      4→  forbidOnly: !!process.env.CI,
-     5→  retries: process.env.CI ? 2 : 0,
-     6→  reporter: process.env.CI ? [['github'], ['json', { outputFile: 'playwright-report.json' }]] : 'list',
-     7→  testDir: './test',
-     8→  use: {
-     9→    trace: 'on-first-retry',
-    10→    baseURL: 'http://localhost:3000',
-    11→  },
-    12→  timeout: 5000,
-    13→  webServer: {
       →…
 website/README.md
      3→## Getting Started
@@ -297,6 +292,11 @@ website/components/code/index.tsx
     12→  },
     13→  styles: [
     14→    {
+    15→      types: ['comment'],
+    16→      style: {
+    17→        color: 'var(--gray9)',
+    18→      },
+    19→    },
       →…
     41→export function Code({ children }: { children: string }) {
     42→  return (
@@ -422,6 +422,7 @@ website/pages/index.tsx
    104→  return (
    105→    <button
    106→      className={styles.installButton}
+   107→      onClick={async () => {
       →…
    123→function GitHubButton() {
    137→//////////////////////////////////////////////////////////////////
@@ -453,6 +454,7 @@ website/pages/index.tsx
    265→<Command.Dialog open={open} onOpenChange={setOpen}>
    266→  <Command.Input />
    267→
+   268→  <Command.List>
       →…
    294→//////////////////////////////////////////////////////////////////
    295→

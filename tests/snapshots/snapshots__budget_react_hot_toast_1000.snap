@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (970 words)
+budget: 1000 (990 words)
 
 README.md
     28→## Features
@@ -56,7 +56,8 @@ site/README.md
     12→
     13→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
     14→
-      →…
+    15→You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+    16→
     17→## Learn More
     19→To learn more about Next.js, take a look at the following resources:
     20→
@@ -72,14 +73,22 @@ site/README.md
 site/components/code.tsx
      8→const theme: PrismTheme = {
      9→  plain: {
+    10→    backgroundColor: '#351e11',
+    11→    color: '#d6ceff',
       →…
    104→export const Code: React.FC<{
+   105→  snippet: string;
+      →…
 site/components/docs-layout.tsx
      8→const TableItem: React.FC<{
     19→const TableHeader: React.FC<{
     27→export default function DocsLayout({ meta, children }) {
+    28→  return (
+      →…
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
+     2→  onClick: () => void;
+      →…
 site/components/sections/footer.tsx
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
 site/components/sections/splitbee-counter.tsx
@@ -105,31 +114,19 @@ site/components/sections/toaster-example.tsx
     17→export const ToasterExample: React.FC<{
 site/next.config.mjs
      5→const withMDX = nextMdx({
-     6→  extension: /\.mdx?$/,
-     7→  options: {
-      →…
     14→/** @type {import('next').NextConfig} */
     15→const nextConfig = {
-    16→  pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
     17→  webpack(config) {
     18→    config.module.rules.push({
-    19→      test: /\.svg$/,
-    20→      use: ['@svgr/webpack'],
-    21→    });
+      →…
     24→  async rewrites() {
     25→    return [
-    26→      {
-    27→        source: '/bee.js',
-    28→        destination: 'https://cdn.splitbee.io/sb.js',
-    29→      },
-    30→      {
-    31→        source: '/_hive/:slug',
-    32→        destination: 'https://hive.splitbee.io/:slug',
-    33→      },
-    34→    ];
-    35→  },
+      →…
 site/pages/_app.tsx
     12→const components = {
+    13→  a: (props) => (
+    14→    <Link href={props.href}>
+      →…
     71→function MyApp …
 site/pages/index.tsx
     22→const version = packageInfo.version;
@@ -140,6 +137,9 @@ site/pages/index.tsx
    102→export default function Home() {
    103→  const [position, setPosition] = useState<ToastPosition>('top-center');
    104→  const [reverse, setReverse] = useState(false);
+   105→  const { toasts: allToasts } = useToasterStore();
+   106→
+   107→  const shouldFade =
       →…
 site/types/svg.d.ts
      1→interface SvgrComponent
@@ -186,12 +186,14 @@ src/components/toast-icon.tsx
     45→}>;
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
+    49→}> = ({ toast }) => {
       →…
 src/components/toaster.tsx
     15→const ToastWrapper …
     47→const getPositionStyle …
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
+    87→  position = 'top-center',
       →…
 src/core/store.ts
      4→export const TOAST_EXPIRE_DISMISS_DELAY …
@@ -297,6 +299,3 @@ src/core/utils.ts
      8→export const prefersReducedMotion …
 tsup.config.ts
      4→const commonConfig: Options = {
-     5→  minify: true,
-     6→  dts: true,
-      →…

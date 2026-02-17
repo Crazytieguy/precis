@@ -348,10 +348,7 @@ website/next.config.js
      6→};
      8→const withNextra = require('nextra')({
      9→  title: 'Sonner',
-    10→  theme: 'nextra-theme-docs',
-    11→  themeConfig: './theme.config.jsx',
-    12→  defaultShowCopyCode: true,
-    13→});
+      →…
 website/src/components/CodeBlock/index.tsx
      9→const variants = {
     14→const theme = {
@@ -417,6 +414,8 @@ website/src/components/How/How.tsx
       →…
 website/src/components/Installation/index.tsx
      9→const variants = {
+    10→  visible: { opacity: 1, scale: 1 },
+      →…
     14→export const Installation = () => {
     15→  const [copying, setCopying] = React.useState(0);
     16→

@@ -188,6 +188,28 @@ fn is_locale_dir(name: &str) -> bool {
     false
 }
 
+/// Detect build/tool configuration files by filename convention.
+/// These are files like `eslint.config.js`, `jest.config.ts`, `.eslintrc.js`, etc.
+/// that configure development tools rather than implementing library/app logic.
+fn is_config_file(filename: &str) -> bool {
+    let lower = filename.to_ascii_lowercase();
+
+    // *.config.{ext} — catches eslint.config.js, jest.config.ts, vite.config.mjs,
+    // next.config.js, tailwind.config.ts, postcss.config.js, tsup.config.ts,
+    // playwright.config.ts, rollup.config.js, webpack.config.js, babel.config.js, etc.
+    if let Some(stem) = lower.rsplit_once('.').map(|(s, _)| s) {
+        if stem.ends_with(".config") {
+            return true;
+        }
+        // .{name}rc.{ext} — catches .eslintrc.js, .babelrc.js, .prettierrc.mjs, etc.
+        if stem.starts_with('.') && stem.ends_with("rc") {
+            return true;
+        }
+    }
+
+    false
+}
+
 /// Grouping dimensions. All symbols sharing a GroupKey are treated identically.
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Ord, PartialOrd)]
 pub struct GroupKey {
@@ -197,6 +219,8 @@ pub struct GroupKey {
     pub extension: String,
     pub is_documented: bool,
     pub file_role: FileRole,
+    /// Whether the file is a build/tool config file (e.g., eslint.config.js, jest.config.ts).
+    pub is_config: bool,
 }
 
 /// A symbol's precomputed content costs (word counts per rendering stage).
@@ -290,6 +314,9 @@ pub fn build_groups(
             .to_string();
         let lines: Vec<&str> = source.lines().collect();
         let file_role = FileRole::from_path(relative);
+        let is_config = relative.file_name()
+            .and_then(|n| n.to_str())
+            .is_some_and(is_config_file);
 
         for (symbol_idx, sym) in symbols.iter().enumerate() {
             let sym_line_0 = sym.line - 1;
@@ -306,6 +333,7 @@ pub fn build_groups(
                 extension: extension.clone(),
                 is_documented,
                 file_role,
+                is_config,
             };
 
             // Compute costs
@@ -517,7 +545,11 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         FileRole::CommunityHealth => 0.1,
     };
 
-    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor;
+    // Config files (eslint.config.js, jest.config.ts, etc.) are build/tool setup,
+    // not core library logic. Show them only when there's plenty of budget.
+    let config_factor = if key.is_config { 0.2 } else { 1.0 };
+
+    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor;
 
     let stage_value = match key.kind_category {
         KindCategory::Type => match stage {
@@ -1116,5 +1148,37 @@ mod tests {
         // Root-level files work normally
         assert_eq!(FileRole::from_path(Path::new("README.md")), FileRole::Readme);
         assert_eq!(FileRole::from_path(Path::new("guide.md")), FileRole::Normal);
+    }
+
+    #[test]
+    fn config_file_detection() {
+        // *.config.{ext} pattern
+        assert!(is_config_file("eslint.config.js"));
+        assert!(is_config_file("jest.config.ts"));
+        assert!(is_config_file("vite.config.mjs"));
+        assert!(is_config_file("next.config.js"));
+        assert!(is_config_file("next.config.mjs"));
+        assert!(is_config_file("tailwind.config.ts"));
+        assert!(is_config_file("postcss.config.js"));
+        assert!(is_config_file("tsup.config.ts"));
+        assert!(is_config_file("playwright.config.ts"));
+        assert!(is_config_file("rollup.config.js"));
+        assert!(is_config_file("webpack.config.js"));
+        assert!(is_config_file("babel.config.js"));
+        assert!(is_config_file("vitest.config.ts"));
+        assert!(is_config_file("theme.config.jsx"));
+        // Case insensitive
+        assert!(is_config_file("ESLint.Config.JS"));
+        // .{name}rc.{ext} pattern
+        assert!(is_config_file(".eslintrc.js"));
+        assert!(is_config_file(".babelrc.js"));
+        assert!(is_config_file(".prettierrc.mjs"));
+        // Not config files
+        assert!(!is_config_file("main.js"));
+        assert!(!is_config_file("lib.rs"));
+        assert!(!is_config_file("index.ts"));
+        assert!(!is_config_file("config.js")); // just "config" as stem, no *.config.* pattern
+        assert!(!is_config_file("my_config.py")); // no dot-separated .config.
+        assert!(!is_config_file("README.md"));
     }
 }

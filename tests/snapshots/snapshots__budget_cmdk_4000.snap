@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3927 words)
+budget: 4000 (3928 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -480,26 +480,7 @@ playwright.config.ts
      3→const config: PlaywrightTestConfig = {
      4→  forbidOnly: !!process.env.CI,
      5→  retries: process.env.CI ? 2 : 0,
-     6→  reporter: process.env.CI ? [['github'], ['json', { outputFile: 'playwright-report.json' }]] : 'list',
-     7→  testDir: './test',
-     8→  use: {
-     9→    trace: 'on-first-retry',
-    10→    baseURL: 'http://localhost:3000',
-    11→  },
-    12→  timeout: 5000,
-    13→  webServer: {
-    14→    command: 'npm run dev',
-    15→    url: 'http://localhost:3000',
-    16→    cwd: './test',
-    17→    reuseExistingServer: !process.env.CI,
-    18→  },
-    19→  projects: [
-    20→    {
-    21→      name: 'webkit',
-    22→      use: { ...devices['Desktop Safari'], headless: true },
-    23→    },
-    24→  ],
-    25→}
+      →…
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -537,6 +518,10 @@ website/components/cmdk/framer.tsx
      9→        <div cmdk-framer-header="">
     10→          <SearchIcon />
     11→          <Command.Input autoFocus placeholder="Find components, packages, and interactions..." />
+    12→        </div>
+    13→        <Command.List>
+    14→          <div cmdk-framer-items="">
+    15→            <div cmdk-framer-left="">
       →…
     57→function Button() {
     61→function Input() {
@@ -564,6 +549,10 @@ website/components/cmdk/linear.tsx
      8→        <Command.Input autoFocus placeholder="Type a command or search..." />
      9→        <Command.List>
     10→          <Command.Empty>No results found.</Command.Empty>
+    11→          {items.map(({ icon, label, shortcut }) => {
+    12→            return (
+    13→              <Command.Item key={label} value={label}>
+    14→                {icon}
       →…
     30→const items = [
     31→  {
@@ -582,6 +571,10 @@ website/components/cmdk/linear.tsx
     44→    shortcut: ['S'],
     45→  },
     46→  {
+    47→    icon: <ChangePriorityIcon />,
+    48→    label: 'Change priority...',
+    49→    shortcut: ['P'],
+    50→  },
       →…
     68→function AssignToIcon() {
     76→function AssignToMeIcon() {
@@ -599,6 +592,10 @@ website/components/cmdk/raycast.tsx
     12→
     13→  React.useEffect(() => {
     14→    inputRef?.current?.focus()
+    15→  }, [])
+    16→
+    17→  return (
+    18→    <div className="raycast">
       →…
     97→function Item({
    116→function SubCommand({
@@ -620,6 +617,10 @@ website/components/cmdk/vercel.tsx
      9→  const activePage = pages[pages.length - 1]
     10→  const isHome = activePage === 'home'
     11→
+    12→  const popPage = React.useCallback(() => {
+    13→    setPages((pages) => {
+    14→      const x = [...pages]
+    15→      x.splice(-1, 1)
       →…
     91→function Home({ searchProjects }: { searchProjects: Function }) {
    137→function Projects() {

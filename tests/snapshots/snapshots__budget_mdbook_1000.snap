@@ -207,10 +207,6 @@ crates/xtask/src/changelog.rs
     10→pub(crate) fn changelog() -> Result<()> {
 crates/xtask/src/main.rs
      9→mod changelog;
-eslint.config.mjs
-     4→const handlebarsPreprocessor = {
-     7→            preprocess(text, filename) {
-    16→            postprocess(messages, filename) {
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
@@ -287,6 +283,7 @@ src/cmd/serve.rs
 src/cmd/watch/native.rs
     11→pub fn rebuild_on_change …
 src/cmd/watch/poller.rs
+    17→/// Calls the closure when a book source file is changed, blocking indefinitely.
     18→pub fn rebuild_on_change(
     19→    book_dir: &Path,
     20→    update_config: &dyn Fn(&mut MDBook),

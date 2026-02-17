@@ -353,32 +353,6 @@ apps/storybook/tailwind.config.js
      8→    '.storybook/**/*.{js,ts,tsx}',
      9→  ],
     10→  prefix: '',
-    11→  theme: {
-    12→    container: {
-    13→      center: true,
-    14→      padding: '2rem',
-    15→      screens: {
-    16→        '2xl': '1400px',
-    17→      },
-    18→    },
-    19→    extend: {
-    20→      transitionDelay: {
-    21→        1500: '1500ms',
-    22→      },
-    23→      colors: {
-    24→        border: 'hsl(var(--border))',
-    25→        input: 'hsl(var(--input))',
-    26→        ring: 'hsl(var(--ring))',
-    27→        background: 'hsl(var(--background))',
-    28→        foreground: 'hsl(var(--foreground))',
-    29→        primary: {
-    30→          DEFAULT: 'hsl(var(--primary))',
-    31→          foreground: 'hsl(var(--primary-foreground))',
-    32→        },
-    33→        secondary: {
-    34→          DEFAULT: 'hsl(var(--secondary))',
-    35→          foreground: 'hsl(var(--secondary-foreground))',
-    36→        },
       →…
 apps/website/README.md
      3→## Getting Started
@@ -616,6 +590,20 @@ apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     35→        render={({ slots }) => (
     36→          <>
     37→            <InputOTPGroup>
+    38→              {slots.slice(0, 3).map((slot, index) => (
+    39→                <InputOTPRenderSlot key={index} {...slot} />
+    40→              ))}
+    41→            </InputOTPGroup>
+    42→            <InputOTPSeparator />
+    43→            <InputOTPGroup>
+    44→              {slots.slice(3).map((slot, index) => (
+    45→                <InputOTPRenderSlot key={index} {...slot} />
+    46→              ))}
+    47→            </InputOTPGroup>
+    48→          </>
+    49→        )}
+    50→      />
+    51→
       →…
 apps/website/src/app/(local-pages)/shadcn/static/page.tsx
      5→export default async function StaticPage(pageProps: any) {
@@ -634,6 +622,10 @@ apps/website/src/app/(pages)/(home)/_components/confetti.tsx
     10→}) {
     11→  return (
     12→    <VFX
+    13→      autorun={{ speed: 1 }}
+    14→      globalOptions={{ disableForReducedMotion: true }}
+    15→      style={{
+    16→        position: 'absolute',
       →…
 apps/website/src/app/(pages)/(home)/_components/showcase.tsx
     10→const DynamicConfetti = dynamic(() =>
@@ -649,6 +641,10 @@ apps/website/src/app/(pages)/(home)/_components/showcase.tsx
     21→  const inputRef = React.useRef<HTMLInputElement>(null)
     22→
     23→  React.useEffect(() => {
+    24→    const isMobile = window.matchMedia('(max-width: 1023px)').matches
+    25→    if (!isMobile) {
+    26→      setDisabled(true)
+    27→    }
       →…
    151→function Slot(props: {
    152→  char: string | null
@@ -737,6 +733,13 @@ apps/website/src/app/(pages)/layout.tsx
     43→    siteName: siteConfig.name,
     44→    images: [
     45→      {
+    46→        url: siteConfig.ogImage,
+    47→        width: 1200,
+    48→        height: 630,
+    49→        alt: siteConfig.name,
+    50→      },
+    51→    ],
+    52→  },
       →…
     68→export default function RootLayout({
     69→  children,
@@ -890,7 +893,8 @@ apps/website/src/components/ui/badge.tsx
     30→function Badge({ className, variant, ...props }: BadgeProps) {
     31→  return (
     32→    <div className={cn(badgeVariants({ variant }), className)} {...props} />
-      →…
+    33→  )
+    34→}
 apps/website/src/components/ui/button.tsx
      7→const buttonVariants = cva(
     36→export interface ButtonProps
@@ -917,6 +921,8 @@ apps/website/src/components/ui/dropdown-menu.tsx
    171→const DropdownMenuShortcut = ({
    172→  className,
    173→  ...props
+   174→}: React.HTMLAttributes<HTMLSpanElement>) => {
+   175→  return (
       →…
 apps/website/src/components/ui/input-otp.tsx
      9→const InputOTP = React.forwardRef<
@@ -933,6 +939,8 @@ apps/website/src/components/ui/sonner.tsx
      8→const Toaster = ({ ...props }: ToasterProps) => {
      9→  const { theme = 'system' } = useTheme()
     10→
+    11→  return (
+    12→    <Sonner
       →…
 apps/website/src/config/site.ts
      1→export const siteConfig = {
@@ -964,17 +972,6 @@ apps/website/tailwind.config.ts
      6→    './pages/**/*.{ts,tsx}',
      7→    './components/**/*.{ts,tsx}',
      8→    './app/**/*.{ts,tsx}',
-     9→    './src/**/*.{ts,tsx}',
-    10→  ],
-    11→  prefix: '',
-    12→  theme: {
-    13→    container: {
-    14→      center: true,
-    15→      padding: '2rem',
-    16→      screens: {
-    17→        '2xl': '1400px',
-    18→      },
-    19→    },
       →…
 packages/input-otp/src/input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(

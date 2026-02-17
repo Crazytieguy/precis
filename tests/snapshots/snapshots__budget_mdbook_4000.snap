@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3865 words)
+budget: 4000 (3866 words)
 
 CHANGELOG.md
      3→## mdBook 0.5.2 …
@@ -397,6 +397,7 @@ crates/mdbook-html/src/theme/mod.rs
     46→    pub(crate) toc_html: Vec<u8>,
     47→    pub(crate) chrome_css: Vec<u8>,
     48→    pub(crate) general_css: Vec<u8>,
+    49→    pub(crate) print_css: Vec<u8>,
       →…
     63→impl Theme {
     64→    /// Creates a `Theme` from the given `theme_dir`.
@@ -660,7 +661,6 @@ crates/xtask/src/main.rs
     11→type Result<T> = std::result::Result<T, Box<dyn Error>>;
 eslint.config.mjs
      4→const handlebarsPreprocessor = {
-     5→    processors: {
      7→            preprocess(text, filename) {
     16→            postprocess(messages, filename) {
 guide/guide-helper/src/lib.rs

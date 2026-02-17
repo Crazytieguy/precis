@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1964 words)
+budget: 2000 (1965 words)
 
 CHANGELOG.md
      3→## [1.4.2]
@@ -186,6 +186,7 @@ apps/storybook/src/stories/InputOTP.stories.tsx
      4→const meta = {
      5→  title: "ui/InputOTP",
      6→  component: InputOTP,
+     7→  tags: ["autodocs"],
       →…
     27→type Story = StoryObj<typeof meta>
     29→export const Default: Story = {}
@@ -195,13 +196,6 @@ apps/storybook/tailwind.config.js
      3→  darkMode: ['class'],
      4→  content: [
      5→    './index.html',
-     6→    './src/stories/**/*.{ts,tsx}',
-     7→    './src/**/*.{ts,tsx}',
-     8→    '.storybook/**/*.{js,ts,tsx}',
-     9→  ],
-    10→  prefix: '',
-    11→  theme: {
-    12→    container: {
       →…
 apps/website/README.md
      3→## Getting Started
@@ -292,6 +286,11 @@ apps/website/src/app/(local-pages)/layout.tsx
     13→    <html lang="en">
     14→      <body
     15→        className={cn(
+    16→          'min-h-[100dvh] bg-background font-sans antialiased',
+    17→          fontSans.className,
+    18→        )}
+    19→      >
+    20→        <AppProvider>
       →…
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      5→export default function ShadcnPage() {
@@ -392,6 +391,11 @@ apps/website/src/app/(pages)/layout.tsx
     74→    <html lang="en">
     75→      <body
     76→        className={cn(
+    77→          'min-h-[100dvh] bg-background font-sans antialiased',
+    78→          fontSans.className,
+    79→        )}
+    80→      >
+    81→        <AppProvider>
       →…
 apps/website/src/components/code.tsx
      9→export async function Code({
@@ -436,6 +440,9 @@ apps/website/src/components/icons.tsx
     16→        strokeWidth="16"
     17→      />
     18→      <line
+    19→        x1="192"
+    20→        y1="40"
+    21→        x2="40"
       →…
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {
@@ -485,14 +492,6 @@ apps/website/src/lib/utils.ts
      6→}
 apps/website/tailwind.config.ts
      3→const config = {
-     4→  darkMode: ['class'],
-     5→  content: [
-     6→    './pages/**/*.{ts,tsx}',
-     7→    './components/**/*.{ts,tsx}',
-     8→    './app/**/*.{ts,tsx}',
-     9→    './src/**/*.{ts,tsx}',
-    10→  ],
-      →…
 packages/input-otp/src/input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(
     11→  {} as RenderProps,

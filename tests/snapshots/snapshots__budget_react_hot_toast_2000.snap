@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1940 words)
+budget: 2000 (1980 words)
 
 README.md
     28→## Features
@@ -105,6 +105,7 @@ site/components/emoji-button.tsx
 site/components/sections/footer.tsx
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
      5→  return (
+     6→    <footer className="container relative justify-center my-8 flex flex-col items-center space-y-4">
       →…
 site/components/sections/splitbee-counter.tsx
      4→export const useSplitbeeCount = <T extends string>(
@@ -112,9 +113,11 @@ site/components/sections/splitbee-counter.tsx
      6→  token: string
      7→): number => {
      8→  const [data, setData] = React.useState<number>(0);
+     9→  const socket = React.useRef(null);
       →…
     36→export const SplitbeeCounter = () => {
     37→  const count = useSplitbeeCount('Trigger Toast', 'NTV7AYBLEXW3');
+    38→
       →…
 site/components/sections/toast-example.tsx
      7→const examples: Array<{
@@ -124,11 +127,10 @@ site/components/sections/toast-example.tsx
     11→  snippet: string;
     12→}> = [
     13→  {
-    14→    title: 'Success',
-    15→    emoji: '✅',
       →…
    270→export const ToastExample = () => {
    271→  const [snippet, setSnippet] = useState(examples[0].snippet);
+   272→  return (
       →…
 site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
@@ -141,39 +143,21 @@ site/components/sections/toaster-example.tsx
     15→];
     17→export const ToasterExample: React.FC<{
     18→  position: ToastPosition;
+    19→  onPosition: (pos: ToastPosition) => void;
       →…
 site/next.config.mjs
      5→const withMDX = nextMdx({
      6→  extension: /\.mdx?$/,
-     7→  options: {
-     8→    rehypePlugins: [rehypeSlug],
-     9→    remarkPlugins: [remarkGfm],
-    10→    providerImportSource: '@mdx-js/react',
-    11→  },
-    12→});
+      →…
     14→/** @type {import('next').NextConfig} */
     15→const nextConfig = {
     16→  pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
     17→  webpack(config) {
     18→    config.module.rules.push({
-    19→      test: /\.svg$/,
-    20→      use: ['@svgr/webpack'],
-    21→    });
-    22→    return config;
-    23→  },
     24→  async rewrites() {
     25→    return [
     26→      {
-    27→        source: '/bee.js',
-    28→        destination: 'https://cdn.splitbee.io/sb.js',
-    29→      },
-    30→      {
-    31→        source: '/_hive/:slug',
-    32→        destination: 'https://hive.splitbee.io/:slug',
-    33→      },
-    34→    ];
-    35→  },
-    36→};
+      →…
 site/pages/_app.tsx
     12→const components = {
     13→  a: (props) => (
@@ -251,8 +235,14 @@ src/components/loader.tsx
     20→  box-sizing: border-box;
       →…
 src/components/toast-bar.tsx
-     8→const enterAnimation …
-    13→const exitAnimation …
+     8→const enterAnimation = (factor: number) => `
+     9→0% {transform: translate3d(0,${factor * -200}%,0) scale(.6); opacity:.5;}
+    10→100% {transform: translate3d(0,0,0) scale(1); opacity:1;}
+    11→`;
+    13→const exitAnimation = (factor: number) => `
+    14→0% {transform: translate3d(0,0,-1px) scale(1); opacity:1;}
+    15→100% {transform: translate3d(0,${factor * -150}%,-1px) scale(.6); opacity:0;}
+    16→`;
     18→const fadeInAnimation = `0%{opacity:0;} 100%{opacity:1;}`;
     19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
     22→const ToastBarBase = styled('div')`
@@ -266,7 +256,12 @@ src/components/toast-bar.tsx
     53→    message: Renderable;
     54→  }) => Renderable;
     55→}
-    57→const getAnimationStyle …
+    57→const getAnimationStyle = (
+    58→  position: ToastPosition,
+    59→  visible: boolean
+    60→): React.CSSProperties => {
+    61→  const top = position.includes('top');
+      →…
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
     77→    const animationStyle: React.CSSProperties = toast.height
@@ -298,10 +293,21 @@ src/components/toast-icon.tsx
     56→    }
     57→  }
     58→
+    59→  if (type === 'blank') {
+    60→    return null;
+    61→  }
+    62→
       →…
 src/components/toaster.tsx
-    15→const ToastWrapper …
-    47→const getPositionStyle …
+    15→const ToastWrapper = ({
+    16→  id,
+      →…
+    47→const getPositionStyle = (
+    48→  position: ToastPosition,
+    49→  offset: number
+    50→): React.CSSProperties => {
+    51→  const top = position.includes('top');
+      →…
     76→const activeClass = css`
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
@@ -316,6 +322,10 @@ src/components/toaster.tsx
     94→}) => {
     95→  const { toasts, handlers } = useToaster(toastOptions, toasterId);
     96→
+    97→  return (
+    98→    <div
+    99→      data-rht-toaster={toasterId || ''}
+   100→      style={{
       →…
 src/core/store.ts
      4→export const TOAST_EXPIRE_DISMISS_DELAY = 1000;
@@ -563,12 +573,4 @@ src/core/utils.ts
 tsup.config.ts
      4→const commonConfig: Options = {
      5→  minify: true,
-     6→  dts: true,
-     7→  format: ['esm', 'cjs'],
-     8→  sourcemap: true,
-     9→  clean: true,
-    10→  esbuildPlugins: [
-    11→    minifyTemplates({ taggedOnly: false }),
-    12→    writeFiles(),
-    13→  ],
-    14→};
+      →…

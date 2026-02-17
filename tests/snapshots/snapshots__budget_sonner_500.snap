@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (494 words)
+budget: 500 (495 words)
 
 README.md
      5→## Usage
@@ -29,24 +29,36 @@ src/hooks.tsx
 src/state.ts
     15→type titleT …
     17→class Observer {
+   254→export const ToastState …
    257→const toastFunction …
    268→const isHttpResponse …
    279→const basicToast …
    281→const getHistory …
    282→const getToasts …
+   285→export const toast …
 src/types.ts
+     3→export type ToastTypes …
+     5→export type PromiseT …
      7→export interface PromiseIExtendedResult extends ExternalToast {
+    11→export type PromiseTExtendedResult …
+    15→export type PromiseTResult …
+    20→export type PromiseExternalToast …
+    22→export type PromiseData …
     30→export interface ToastClassnames {
     48→export interface ToastIcons {
     57→export interface Action {
     63→export interface ToastT {
+    97→export type Position …
     98→export interface HeightT {
    104→interface ToastOptions {
    118→type Offset …
    128→export interface ToasterProps {
+   152→export type SwipeDirection …
    154→export interface ToastProps {
    184→export enum SwipeStateTypes {
+   190→export type Theme …
    192→export interface ToastToDismiss {
+   197→export type ExternalToast …
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -73,15 +85,8 @@ website/README.md
     37→
     38→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 website/next.config.js
-     1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
-     3→  experimental: {
-     4→    appDir: true,
-     5→  },
-     6→};
      8→const withNextra = require('nextra')({
-     9→  title: 'Sonner',
-      →…
 website/src/components/CodeBlock/index.tsx
      9→const variants = {
     14→const theme = {
@@ -90,7 +95,6 @@ website/src/components/ExpandModes/index.tsx
      4→export const ExpandModes = ({
      5→  expand,
      6→  setExpand,
-     7→}: {
       →…
 website/src/components/Footer/index.tsx
      5→export const Footer = () => {
@@ -111,9 +115,6 @@ website/src/components/How/How.tsx
 website/src/components/Installation/index.tsx
      9→const variants = {
     14→export const Installation = () => {
-    15→  const [copying, setCopying] = React.useState(0);
-    16→
-      →…
 website/src/components/Other/Other.tsx
      7→export const Other = ({
      8→  setRichColors,
@@ -129,9 +130,6 @@ website/src/components/Position/index.tsx
 website/src/components/Types/Types.tsx
      5→const promiseCode …
      7→export const Types = () => {
-     8→  const [activeType, setActiveType] = React.useState(allTypes[0]);
-     9→
-      →…
     34→const allTypes …
 website/src/components/Usage/index.tsx
      3→export const Usage = () => {
@@ -144,7 +142,3 @@ website/src/pages/index.tsx
     14→export default function Home() {
 website/theme.config.jsx
      7→  useNextSeoProps() {
-     8→    return {
-     9→      titleTemplate: '%s – Sonner',
-    10→    };
-    11→  },

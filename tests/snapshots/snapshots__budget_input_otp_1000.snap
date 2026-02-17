@@ -63,11 +63,6 @@ apps/storybook/src/stories/InputOTP.stories.tsx
 apps/storybook/tailwind.config.js
      1→/** @type {import('tailwindcss').Config} */
      2→const config = {
-     3→  darkMode: ['class'],
-     4→  content: [
-     5→    './index.html',
-     6→    './src/stories/**/*.{ts,tsx}',
-      →…
 apps/website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -99,8 +94,6 @@ apps/website/next.config.mjs
      3→/** @type {import('next').NextConfig} */
      4→const nextProdConfig = {}
      6→const nextDevConfig = withHydrationOverlay({
-     7→  appRootSelector: 'main',
-     8→})(nextProdConfig)
 apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
      9→export default function ExampleAutoSubmit() {
     10→  const formRef = React.useRef<HTMLFormElement>(null)
@@ -140,6 +133,7 @@ apps/website/src/app/(local-pages)/raw-input/page.tsx
      7→
      8→  return (
      9→    <form
+    10→      method="POST"
       →…
 apps/website/src/app/(local-pages)/shadcn/page.tsx
     12→export default function ShadcnPage() {
@@ -168,10 +162,12 @@ apps/website/src/app/(pages)/(home)/_components/showcase.tsx
    199→function FakeCaret() {
 apps/website/src/app/(pages)/(home)/page.tsx
     19→const fadeUpClassname =
+    20→  'lg:motion-safe:opacity-0 lg:motion-safe:animate-fade-up'
     22→async function getRepoStarCount() {
     34→export default async function IndexPage() {
     35→  const starCount = await getRepoStarCount()
     36→
+    37→  return (
       →…
    148→export const revalidate = 3600
    150→const SponsorBadgeClerk = () => {
@@ -228,6 +224,8 @@ apps/website/src/config/site.ts
      1→export const siteConfig = {
      2→  name: 'rodz/input-otp',
      3→  url: 'https://input-otp.rodz.dev',
+     4→  ogImage: 'https://input-otp.rodz.dev/og.jpg',
+     5→  description:
       →…
     13→export type SiteConfig = typeof siteConfig
 apps/website/src/lib/fonts.ts
@@ -242,8 +240,6 @@ apps/website/src/lib/utils.ts
      6→}
 apps/website/tailwind.config.ts
      3→const config = {
-     4→  darkMode: ['class'],
-      →…
 packages/input-otp/src/input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(
     11→  {} as RenderProps,
@@ -305,4 +301,6 @@ packages/input-otp/src/use-pwm-badge.tsx
     18→  pushPasswordManagerStrategy,
     19→  isFocused,
     20→}: {
+    21→  containerRef: React.RefObject<HTMLDivElement>
+    22→  inputRef: React.RefObject<HTMLInputElement>
       →…
