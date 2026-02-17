@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1995 words)
+budget: 2000 (1994 words)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -70,24 +70,7 @@ context.ts
     47→  dismissible: false,
     48→  isOpen: false,
     49→  isDragging: false,
-    50→  keyboardIsOpen: { current: false },
-    51→  snapPointsOffset: null,
-    52→  snapPoints: null,
-    53→  handleOnly: false,
-    54→  modal: false,
-    55→  shouldFade: false,
-    56→  activeSnapPoint: null,
-    57→  onOpenChange: () => {},
-    58→  setActiveSnapPoint: () => {},
-    59→  closeDrawer: () => {},
-    60→  direction: 'bottom',
-    61→  shouldAnimate: { current: true },
-    62→  shouldScaleBackground: false,
-    63→  setBackgroundColorOnScale: true,
-    64→  noBodyStyles: false,
-    65→  container: null,
-    66→  autoFocus: false,
-    67→});
+      →…
     69→export const useDrawerContext = () => {
 helpers.ts
      3→interface Style {
@@ -182,6 +165,15 @@ index.tsx
    181→        onAnimationEnd?.(o);
    182→      }, TRANSITIONS.DURATION * 1000);
    183→
+   184→      if (o && !modal) {
+   185→        if (typeof window !== 'undefined') {
+   186→          window.requestAnimationFrame(() => {
+   187→            document.body.style.pointerEvents = 'auto';
+   188→          });
+   189→        }
+   190→      }
+   191→
+   192→      if (!o) {
       →…
    803→export const Overlay …
    831→export type ContentProps …
@@ -389,6 +381,14 @@ use-position-fixed.ts
    115→    return () => {
    116→      if (typeof document === 'undefined') return;
    117→
+   118→      // Another drawer is opened, safe to ignore the execution
+   119→      const hasDrawerOpened = !!document.querySelector('[data-vaul-drawer]');
+   120→      if (hasDrawerOpened) return;
+   121→
+   122→      restorePositionSetting();
+   123→    };
+   124→  }, [modal, restorePositionSetting]);
+   125→
       →…
 use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;

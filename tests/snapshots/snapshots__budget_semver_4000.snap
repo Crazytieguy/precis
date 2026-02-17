@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3785 words)
+budget: 4000 (3789 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -39,7 +39,8 @@ CONTRIBUTING.md
     12→
     13→Use one of our existing issue templates if you believe you've come across a unique problem.
     14→
-      →…
+    15→Duplicate issues, or issues that don't use one of our templates may get closed without a response.
+    16→
     17→## Pull Request Conventions
     19→### Commits
     21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
@@ -469,6 +470,10 @@ bin/semver.js
     41→  while (argv.length) {
     42→    let a = argv.shift()
     43→    const indexOfEqualSign = a.indexOf('=')
+    44→    if (indexOfEqualSign !== -1) {
+    45→      const value = a.slice(indexOfEqualSign + 1)
+    46→      a = a.slice(0, indexOfEqualSign)
+    47→      argv.unshift(value)
       →…
    132→const failInc = () => {
    133→  console.error('--inc can only be used on a single version with no range')
@@ -482,6 +487,10 @@ bin/semver.js
    143→Copyright Isaac Z. Schlueter
    144→
    145→Usage: semver [options] <version> [<version> [...]]
+   146→Prints valid versions sorted by SemVer precedence
+   147→
+   148→Options:
+   149→-r --range <range>
       →…
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -507,6 +516,7 @@ classes/comparator.js
     24→    this.loose = !!options.loose
     25→    this.parse(comp)
     26→
+    27→    if (this.semver === ANY) {
     36→  parse (comp) {
     37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
     38→    const m = comp.match(r)
@@ -546,6 +556,7 @@ classes/range.js
     25→      this.formatted = undefined
     26→      return this
     27→    }
+    28→
     73→  get range () {
     74→    if (this.formatted === undefined) {
     75→      this.formatted = ''
@@ -609,6 +620,7 @@ classes/semver.js
     28→    }
     29→
     30→    debug('SemVer', version, options)
+    31→    this.options = options
     81→  format () {
     82→    this.version = `${this.major}.${this.minor}.${this.patch}`
     83→    if (this.prerelease.length) {
@@ -688,26 +700,11 @@ internal/constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
      7→const MAX_LENGTH = 256
      8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
-     9→/* istanbul ignore next */ 9007199254740991
     12→const MAX_SAFE_COMPONENT_LENGTH = 16
     16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
     18→const RELEASE_TYPES = [
-    19→  'major',
-    20→  'premajor',
-    21→  'minor',
-    22→  'preminor',
-    23→  'patch',
-    24→  'prepatch',
-    25→  'prerelease',
-    26→]
 internal/debug.js
      3→const debug = (
-     4→  typeof process === 'object' &&
-     5→  process.env &&
-     6→  process.env.NODE_DEBUG &&
-     7→  /\bsemver\b/i.test(process.env.NODE_DEBUG)
-     8→) ? (...args) => console.error('SEMVER', ...args)
-     9→  : () => {}
 internal/identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
@@ -773,10 +770,6 @@ internal/re.js
     16→const t = exports.t = {}
     19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
     27→const safeRegexReplacements = [
-    28→  ['\\s', 1],
-    29→  ['\\d', MAX_LENGTH],
-    30→  [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH],
-    31→]
     33→const makeSafeRegex = (value) => {
     34→  for (const [token, max] of safeRegexReplacements) {
     35→    value = value

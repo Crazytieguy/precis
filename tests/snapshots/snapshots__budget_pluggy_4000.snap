@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3655 words)
+budget: 4000 (3654 words)
 
 AGENTS.md
      1→# AGENTS.md
@@ -129,9 +129,6 @@ src/pluggy/_hooks.py
     31→_Namespace: TypeAlias = ModuleType | type
     32→_Plugin: TypeAlias = object
     33→_HookExec: TypeAlias = Callable[
-    34→    [str, Sequence["HookImpl"], Mapping[str, object], bool],
-    35→    object | list[object],
-    36→]
     37→_HookImplFunction: TypeAlias = Callable[..., _T | Generator[None, Result[_T], None]]
     40→class HookspecOpts(TypedDict):
     42→
@@ -381,8 +378,6 @@ src/pluggy/_hooks.py
    369→
    370→        def __getattr__(self, name: str) -> HookCaller: ...
    377→_CallHistory: TypeAlias = list[
-   378→    tuple[Mapping[str, object], Callable[[Any], None] | None]
-   379→]
    382→class HookCaller:
    384→
    385→    __slots__ = (
@@ -412,6 +407,8 @@ src/pluggy/_hooks.py
    409→        # 5. wrappers
    410→        # 6. tryfirst wrappers
    411→        self._hookimpls: Final[list[HookImpl]] = []
+   412→        self._call_history: _CallHistory | None = None
+   413→        # TODO: Document, or make private.
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None
@@ -564,8 +561,6 @@ src/pluggy/_hooks.py
 src/pluggy/_manager.py
     36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
     37→_AfterTrace: TypeAlias = Callable[
-    38→    [Result[Any], str, Sequence[HookImpl], Mapping[str, Any]], None
-    39→]
     42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
     52→class PluginValidationError(Exception):
     58→
@@ -617,6 +612,8 @@ src/pluggy/_manager.py
    124→
    125→    def register(self, plugin: _Plugin, name: str | None = None) -> str | None:
    126→        """Register a plugin and return its name.
+   127→
+   128→        :param name:
    176→    def parse_hookimpl_opts …
    201→    def unregister …
    233→    def set_blocked …
@@ -753,6 +750,8 @@ src/pluggy/_tracing.py
     42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
     43→        if self._writer is not None and args:
     44→            self._writer(self._format_message(tags, args))
+    45→        if processor := self._tags2proc.get(tags):
+    46→            processor(tags, args)
     48→    def setwriter …
     51→    def setprocessor …
     59→class TagTracerSub:

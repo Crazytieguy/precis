@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1722 words)
+budget: 2000 (1733 words)
 
 __init__.py
      1→__all__ = [
@@ -51,9 +51,6 @@ _hooks.py
     31→_Namespace: TypeAlias = ModuleType | type
     32→_Plugin: TypeAlias = object
     33→_HookExec: TypeAlias = Callable[
-    34→    [str, Sequence["HookImpl"], Mapping[str, object], bool],
-    35→    object | list[object],
-    36→]
     37→_HookImplFunction: TypeAlias = Callable[..., _T | Generator[None, Result[_T], None]]
     40→class HookspecOpts(TypedDict):
     42→
@@ -108,6 +105,8 @@ _hooks.py
    112→        self,
    113→        function: _F | None = None,
    114→        firstresult: bool = False,
+   115→        historic: bool = False,
+   116→        warn_on_impl: Warning | None = None,
       →…
    165→class HookimplMarker:
    172→
@@ -140,7 +139,9 @@ _hooks.py
    199→        wrapper: bool = ...,
    200→    ) -> Callable[[_F], _F]: ...
    201→
-   202→    def __call__ …
+   202→    def __call__(  # noqa: F811
+   203→        self,
+      →…
    281→def normalize_hookimpl_opts …
    290→_PYPY = hasattr(sys, "pypy_version_info")
    293→def varnames …
@@ -155,8 +156,6 @@ _hooks.py
    369→
    370→        def __getattr__(self, name: str) -> HookCaller: ...
    377→_CallHistory: TypeAlias = list[
-   378→    tuple[Mapping[str, object], Callable[[Any], None] | None]
-   379→]
    382→class HookCaller:
    384→
    385→    __slots__ = (
@@ -271,6 +270,8 @@ _hooks.py
    668→        self.argnames: Final = argnames
    669→        #: The keyword parameter names of ``function```.
    670→        self.kwargnames: Final = kwargnames
+   671→        #: The plugin which defined this hook implementation.
+   672→        self.plugin: Final = plugin
    692→    def __repr__ …
    697→class HookSpec:
    698→    __slots__ = (
@@ -295,8 +296,6 @@ _hooks.py
 _manager.py
     36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
     37→_AfterTrace: TypeAlias = Callable[
-    38→    [Result[Any], str, Sequence[HookImpl], Mapping[str, Any]], None
-    39→]
     42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
     52→class PluginValidationError(Exception):
     58→
@@ -391,6 +390,8 @@ _result.py
     55→
     56→    @classmethod
     57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
+    58→        """:meta private:"""
+    59→        __tracebackhide__ = True
     67→    def force_result …
     80→    def force_exception …
     91→    def get_result …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3992 words)
+budget: 4000 (3995 words)
 
 src/browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -394,6 +394,20 @@ src/index.tsx
    195→      }
    196→    },
    197→  });
+   198→  const [hasBeenOpened, setHasBeenOpened] = React.useState<boolean>(false);
+   199→  const [isDragging, setIsDragging] = React.useState<boolean>(false);
+   200→  const [justReleased, setJustReleased] = React.useState<boolean>(false);
+   201→  const overlayRef = React.useRef<HTMLDivElement>(null);
+   202→  const openTime = React.useRef<Date | null>(null);
+   203→  const dragStartTime = React.useRef<Date | null>(null);
+   204→  const dragEndTime = React.useRef<Date | null>(null);
+   205→  const lastTimeDragPrevented = React.useRef<Date | null>(null);
+   206→  const isAllowedToDrag = React.useRef<boolean>(false);
+   207→  const nestedOpenChangeTimer = React.useRef<NodeJS.Timeout | null>(null);
+   208→  const pointerStart = React.useRef(0);
+   209→  const keyboardIsOpen = React.useRef(false);
+   210→  const shouldAnimate = React.useRef(!defaultOpen);
+   211→  const previousDiffFromInitial = React.useRef(0);
       →…
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    804→  function ({ ...rest }, ref) {
@@ -402,24 +416,7 @@ src/index.tsx
    807→    const hasSnapPoints = snapPoints && snapPoints.length > 0;
    808→    const onMouseUp = React.useCallback((event: React.PointerEvent<HTMLDivElement>) => onRelease(event), [onRelease]);
    809→
-   810→    // Overlay is the component that is locking scroll, removing it will unlock the scroll without having to dig into Radix's Dialog library
-   811→    if (!modal) {
-   812→      return null;
-   813→    }
-   814→
-   815→    return (
-   816→      <DialogPrimitive.Overlay
-   817→        onMouseUp={onMouseUp}
-   818→        ref={composedRef}
-   819→        data-vaul-overlay=""
-   820→        data-vaul-snap-points={isOpen && hasSnapPoints ? 'true' : 'false'}
-   821→        data-vaul-snap-points-overlay={isOpen && shouldFade ? 'true' : 'false'}
-   822→        data-vaul-animate={shouldAnimate?.current ? 'true' : 'false'}
-   823→        {...rest}
-   824→      />
-   825→    );
-   826→  },
-   827→);
+      →…
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
    833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
    834→  { onPointerDownOutside, style, onOpenAutoFocus, ...rest },
@@ -428,29 +425,6 @@ src/index.tsx
    837→  const {
    838→    drawerRef,
    839→    onPress,
-   840→    onRelease,
-   841→    onDrag,
-   842→    keyboardIsOpen,
-   843→    snapPointsOffset,
-   844→    activeSnapPointIndex,
-   845→    modal,
-   846→    isOpen,
-   847→    direction,
-   848→    snapPoints,
-   849→    container,
-   850→    handleOnly,
-   851→    shouldAnimate,
-   852→    autoFocus,
-   853→  } = useDrawerContext();
-   854→  // Needed to use transition instead of animations
-   855→  const [delayedSnapPoints, setDelayedSnapPoints] = React.useState(false);
-   856→  const composedRef = useComposedRefs(ref, drawerRef);
-   857→  const pointerStartRef = React.useRef<{ x: number; y: number } | null>(null);
-   858→  const lastKnownPointerEventRef = React.useRef<React.PointerEvent<HTMLDivElement> | null>(null);
-   859→  const wasBeyondThePointRef = React.useRef(false);
-   860→  const hasSnapPoints = snapPoints && snapPoints.length > 0;
-   861→  useScaleBackground();
-   862→
       →…
    989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
    990→  preventCycle?: boolean;
@@ -464,29 +438,6 @@ src/index.tsx
   1000→  const {
   1001→    closeDrawer,
   1002→    isDragging,
-  1003→    snapPoints,
-  1004→    activeSnapPoint,
-  1005→    setActiveSnapPoint,
-  1006→    dismissible,
-  1007→    handleOnly,
-  1008→    isOpen,
-  1009→    onPress,
-  1010→    onDrag,
-  1011→  } = useDrawerContext();
-  1012→
-  1013→  const closeTimeoutIdRef = React.useRef<number | null>(null);
-  1014→  const shouldCancelInteractionRef = React.useRef(false);
-  1015→
-  1016→  function handleStartCycle() {
-  1017→    // Stop if this is the second click of a double click
-  1018→    if (shouldCancelInteractionRef.current) {
-  1019→      handleCancelInteraction();
-  1020→      return;
-  1021→    }
-  1022→    window.setTimeout(() => {
-  1023→      handleCycleSnapPoints();
-  1024→    }, DOUBLE_TAP_TIMEOUT);
-  1025→  }
       →…
   1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
   1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
@@ -531,11 +482,7 @@ src/index.tsx
   1141→  Overlay,
   1142→  Trigger: DialogPrimitive.Trigger,
   1143→  Portal,
-  1144→  Handle,
-  1145→  Close: DialogPrimitive.Close,
-  1146→  Title: DialogPrimitive.Title,
-  1147→  Description: DialogPrimitive.Description,
-  1148→};
+      →…
 src/types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
      2→export interface SnapPoint {
@@ -881,7 +828,23 @@ src/use-scale-background.ts
     41→              transform: `scale(${getScale()}) translate3d(0, calc(env(safe-area-inset-top) + 14px), 0)`,
     42→            }
     43→          : {
-      →…
+    44→              transform: `scale(${getScale()}) translate3d(calc(env(safe-area-inset-top) + 14px), 0, 0)`,
+    45→            }),
+    46→      });
+    47→
+    48→      return () => {
+    49→        wrapperStylesCleanup();
+    50→        timeoutIdRef.current = window.setTimeout(() => {
+    51→          if (initialBackgroundColor) {
+    52→            document.body.style.background = initialBackgroundColor;
+    53→          } else {
+    54→            document.body.style.removeProperty('background');
+    55→          }
+    56→        }, TRANSITIONS.DURATION * 1000);
+    57→      };
+    58→    }
+    59→  }, [isOpen, shouldScaleBackground, initialBackgroundColor]);
+    60→}
 src/use-snap-points.ts
      7→export function useSnapPoints({
      8→  activeSnapPointProp,
@@ -919,4 +882,36 @@ src/use-snap-points.ts
     40→          innerHeight: window.innerHeight,
     41→        }
     42→      : undefined,
+    43→  );
+    44→
+    45→  React.useEffect(() => {
+    46→    function onResize() {
+    47→      setWindowDimensions({
+    48→        innerWidth: window.innerWidth,
+    49→        innerHeight: window.innerHeight,
+    50→      });
+    51→    }
+    52→    window.addEventListener('resize', onResize);
+    53→
+    54→    return () => window.removeEventListener('resize', onResize);
+    55→  }, []);
+    56→
+    57→  const isLastSnapPoint = React.useMemo(
+    58→    () => activeSnapPoint === snapPoints?.[snapPoints.length - 1] || null,
+    59→    [snapPoints, activeSnapPoint],
+    60→  );
+    61→
+    62→  const activeSnapPointIndex = React.useMemo(
+    63→    () => snapPoints?.findIndex((snapPoint) => snapPoint === activeSnapPoint) ?? null,
+    64→    [snapPoints, activeSnapPoint],
+    65→  );
+    66→
+    67→  const shouldFade =
+    68→    (snapPoints &&
+    69→      snapPoints.length > 0 &&
+    70→      (fadeFromIndex || fadeFromIndex === 0) &&
+    71→      !Number.isNaN(fadeFromIndex) &&
+    72→      snapPoints[fadeFromIndex] === activeSnapPoint) ||
+    73→    !snapPoints;
+    74→
       →…

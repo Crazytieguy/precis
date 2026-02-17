@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (352 words)
+budget: 500 (369 words)
 
 constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
@@ -14,24 +14,19 @@ constants.js
     18→const RELEASE_TYPES = [
     19→  'major',
     20→  'premajor',
-    21→  'minor',
-    22→  'preminor',
-    23→  'patch',
-    24→  'prepatch',
-    25→  'prerelease',
-    26→]
+      →…
 debug.js
      3→const debug = (
      4→  typeof process === 'object' &&
      5→  process.env &&
-     6→  process.env.NODE_DEBUG &&
-     7→  /\bsemver\b/i.test(process.env.NODE_DEBUG)
-     8→) ? (...args) => console.error('SEMVER', ...args)
-     9→  : () => {}
+      →…
 identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
      5→  if (typeof a === 'number' && typeof b === 'number') {
+     6→    return a === b ? 0 : a < b ? -1 : 1
+     7→  }
+     8→
       →…
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 lrucache.js
@@ -78,6 +73,9 @@ parse-options.js
      5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
      7→  if (!options) {
+     8→    return emptyOpts
+     9→  }
+    10→
       →…
 re.js
     12→const re = exports.re = []
@@ -89,11 +87,16 @@ re.js
     27→const safeRegexReplacements = [
     28→  ['\\s', 1],
     29→  ['\\d', MAX_LENGTH],
-    30→  [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH],
-    31→]
+      →…
     33→const makeSafeRegex = (value) => {
     34→  for (const [token, max] of safeRegexReplacements) {
+    35→    value = value
+    36→      .split(`${token}*`).join(`${token}{0,${max}}`)
+    37→      .split(`${token}+`).join(`${token}{1,${max}}`)
       →…
     42→const createToken = (name, value, isGlobal) => {
     43→  const safe = makeSafeRegex(value)
+    44→  const index = R++
+    45→  debug(name, index, value)
+    46→  t[name] = index
       →…

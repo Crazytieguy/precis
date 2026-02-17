@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (982 words)
+budget: 1000 (980 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -157,7 +157,8 @@ website/README.md
     14→
     15→[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
     16→
-      →…
+    17→The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+    18→
     19→## Learn More
     21→To learn more about Next.js, take a look at the following resources:
     22→
@@ -175,18 +176,12 @@ website/components/cmdk/framer.tsx
 website/components/cmdk/linear.tsx
      3→export function LinearCMDK() {
     30→const items = [
-    31→  {
-    32→    icon: <AssignToIcon />,
-      →…
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
 website/components/cmdk/vercel.tsx
      4→export function VercelCMDK() {
 website/components/code/index.tsx
      7→const theme = {
-     8→  plain: {
-     9→    color: 'var(--gray12)',
-      →…
     41→export function Code({ children }: { children: string }) {
     42→  return (
     43→    <Highlight {...defaultProps} theme={theme} code={children} language="jsx">
@@ -198,6 +193,8 @@ website/components/code/index.tsx
     49→              copy(children)
     50→            }}
     51→          >
+    52→            <CopyIcon />
+    53→          </button>
       →…
 website/components/icons/index.tsx
      3→export function FigmaIcon() {
@@ -214,9 +211,6 @@ website/components/icons/index.tsx
 website/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
-     3→  reactStrictMode: true,
-     4→  swcMinify: true,
-     5→}
 website/pages/_app.tsx
     13→const title …
     14→const description …
@@ -224,6 +218,7 @@ website/pages/_app.tsx
     17→export default function App({ Component, pageProps }: AppProps) {
     18→  return (
     19→    <>
+    20→      <Head>
       →…
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
@@ -248,6 +243,7 @@ website/pages/index.tsx
     29→export default function Index() {
     30→  const [theme, setTheme] = React.useState<Themes>('raycast')
     31→
+    32→  return (
       →…
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     99→//////////////////////////////////////////////////////////////////
@@ -258,10 +254,6 @@ website/pages/index.tsx
    138→
    139→const themes = [
    140→  {
-   141→    icon: <RaycastIcon />,
-   142→    key: 'raycast',
-   143→  },
-   144→  {
       →…
    158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////

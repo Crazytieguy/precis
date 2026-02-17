@@ -645,6 +645,15 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
             StageKind::Body => 0.5,
             _ => 0.1,
         },
+        // Constants: signature captures the value for short constants;
+        // multi-line bodies are usually data literals (large sets, dicts,
+        // lookup tables) where the name tells you everything.
+        KindCategory::Constant => match stage {
+            StageKind::Names => 1.0,
+            StageKind::Signatures => 0.7,
+            StageKind::Doc => 0.5,
+            StageKind::Body => 0.05,
+        },
         _ => match stage {
             StageKind::Names => 1.0,
             StageKind::Signatures => 0.7,

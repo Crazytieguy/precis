@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3834 words)
+budget: 4000 (3816 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -113,13 +113,34 @@ readme.md
    132→
    133→#### input …
    141→#### options …
-   147→##### method …
-   156→##### json …
-   162→##### searchParams …
-   173→##### prefixUrl …
-   197→##### retry …
-   327→##### timeout …
-   335→##### hooks …
+   147→##### method
+   149→Type: `string`\
+   150→Default: `'get'`
+      →…
+   156→##### json
+   158→Type: `object` and any other value accepted by [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+   159→
+      →…
+   162→##### searchParams
+   164→Type: `string | object<string, string | number | boolean | undefined> | Array<Array<string | number | boolean>> | URLSearchParams`\
+   165→Default: `''`
+      →…
+   173→##### prefixUrl
+   175→Type: `string | URL`
+   176→
+      →…
+   197→##### retry
+   199→Type: `object | number`\
+   200→Default:
+      →…
+   327→##### timeout
+   329→Type: `number | false`\
+   330→Default: `10000`
+      →…
+   335→##### hooks
+   337→Type: `object<string, Function[]>`\
+   338→Default: `{beforeRequest: [], beforeRetry: [], afterResponse: []}`
+      →…
    342→###### hooks.beforeRequest
    344→Type: `Function[]`\
    345→Default: `[]`
@@ -140,23 +161,56 @@ readme.md
    488→Default: `[]`
    489→
       →…
-   553→##### throwHttpErrors …
-   566→##### onDownloadProgress …
-   592→##### onUploadProgress …
-   619→##### parseJson …
-   639→##### stringifyJson …
-   664→##### fetch …
-   683→##### context …
+   553→##### throwHttpErrors
+   555→Type: `boolean | (status: number) => boolean`\
+   556→Default: `true`
+      →…
+   566→##### onDownloadProgress
+   568→Type: `Function`
+   569→
+      →…
+   592→##### onUploadProgress
+   594→Type: `Function`
+   595→
+      →…
+   619→##### parseJson
+   621→Type: `Function`\
+   622→Default: `JSON.parse()`
+      →…
+   639→##### stringifyJson
+   641→Type: `Function`\
+   642→Default: `JSON.stringify()`
+      →…
+   664→##### fetch
+   666→Type: `Function`\
+   667→Default: `fetch`
+      →…
+   683→##### context
+   685→Type: `object<string, unknown>`\
+   686→Default: `{}`
+      →…
    745→### ky.extend(defaultOptions) …
    811→### ky.create(defaultOptions) …
    829→#### defaultOptions …
    833→### ky.stop …
    864→### ky.retry(options?) …
    870→#### options …
-   874→##### delay …
-   882→##### code …
-   895→##### cause …
-   913→##### request …
+   874→##### delay
+   876→Type: `number`
+   877→
+      →…
+   882→##### code
+   884→Type: `string`
+   885→
+      →…
+   895→##### cause
+   897→Type: `Error`
+   898→
+      →…
+   913→##### request
+   915→Type: `Request`
+   916→
+      →…
    923→#### Example …
   1000→### HTTPError …
   1046→### TimeoutError …
@@ -298,12 +352,6 @@ source/core/Ky.ts
    517→	#wrapRequestWithUploadProgress(request: Request, originalBody?: BodyInit): Request {
 source/core/constants.ts
      4→export const supportsRequestStreams = (() => {
-     5→	let duplexAccessed = false;
-     6→	let hasContentType = false;
-     7→	const supportsReadableStream = typeof globalThis.ReadableStream === 'function';
-     8→	const supportsRequest = typeof globalThis.Request === 'function';
-     9→
-      →…
     34→export const supportsAbortController = typeof globalThis.AbortController === 'function';
     35→export const supportsAbortSignal = typeof globalThis.AbortSignal === 'function' && typeof globalThis.AbortSignal.any === 'function';
     36→export const supportsResponseStreams = typeof globalThis.ReadableStream === 'function';
@@ -311,12 +359,6 @@ source/core/constants.ts
     39→export const requestMethods = ['get', 'post', 'put', 'patch', 'head', 'delete'] as const;
     41→const validate = <T extends Array<true>>() => undefined as unknown as T;
     46→export const responseTypes = {
-    47→	json: 'application/json',
-    48→	text: 'text/*',
-    49→	formData: 'multipart/form-data',
-    50→	arrayBuffer: '*/*',
-    51→	blob: '*/*',
-      →…
     58→export const maxSafeTimeout = 2_147_483_647;
     61→export const usualFormBoundarySize = new TextEncoder().encode('------WebKitFormBoundaryaxpyiPgbbPti10Rw').length;
     63→export const stop = Symbol('stop');
@@ -490,22 +532,8 @@ source/core/constants.ts
    234→*/
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys: KyOptionsRegistry = {
-   238→	json: true,
-   239→	parseJson: true,
-   240→	stringifyJson: true,
-   241→	searchParams: true,
-   242→	prefixUrl: true,
-      →…
    256→export const vendorSpecificOptions = {
-   257→	next: true, // Next.js cache revalidation (revalidate, tags)
-   258→} as const;
    265→export const requestOptionsRegistry = {
-   266→	method: true,
-   267→	headers: true,
-   268→	body: true,
-   269→	mode: true,
-   270→	credentials: true,
-      →…
 source/errors/ForceRetryError.ts
      4→/**
      5→Internal error used to signal a forced retry from afterResponse hooks.
@@ -704,9 +732,6 @@ source/types/retry.ts
 source/utils/body.ts
      5→export const getBodySize = (body?: BodyInit | null): number => {
     57→const withProgress = (stream: ReadableStream<Uint8Array>, totalBytes: number, onProgress: Options['onDownloadProgress'] | Options['onUploadProgress']): ReadableStream<Uint8Array> => {
-    58→	let previousChunk: Uint8Array | undefined;
-    59→	let transferredBytes = 0;
-      →…
     90→export const streamResponse = (response: Response, onDownloadProgress: Options['onDownloadProgress']) => {
    119→export const streamRequest = (request: Request, onUploadProgress: Options['onUploadProgress'], originalBody?: BodyInit | null) => {
 source/utils/delay.ts
@@ -723,15 +748,9 @@ source/utils/merge.ts
      6→export const validateAndMerge = (...sources: Array<Partial<Options> | undefined>): Partial<Options> => {
     16→export const mergeHeaders = (source1: KyHeadersInit = {}, source2: KyHeadersInit = {}) => {
     32→function newHookValue<K extends keyof Hooks>(original: Hooks, incoming: Hooks, property: K): Required<Hooks>[K] {
-    33→	return (Object.hasOwn(incoming, property) && incoming[property] === undefined)
-    34→		? []
-      →…
     38→export const mergeHooks = (original: Hooks = {}, incoming: Hooks = {}): Required<Hooks> => (
     39→	{
     47→const appendSearchParameters = (target: any, source: any): URLSearchParams => {
-    48→	const result = new URLSearchParams();
-    49→
-      →…
     86→export const deepMerge = <T>(...sources: Array<Partial<T> | undefined>): T => {
 source/utils/normalize.ts
      5→export const normalizeRequestMethod = (input: string): string =>
@@ -746,7 +765,6 @@ source/utils/normalize.ts
     19→	statusCodes: retryStatusCodes,
     20→	afterStatusCodes: retryAfterStatusCodes,
     21→	maxRetryAfter: Number.POSITIVE_INFINITY,
-    22→	backoffLimit: Number.POSITIVE_INFINITY,
       →…
     28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
 source/utils/options.ts

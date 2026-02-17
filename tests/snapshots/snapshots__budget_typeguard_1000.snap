@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (980 words)
+budget: 1000 (847 words)
 
 src/typeguard/__init__.py
     34→config: TypeCheckConfiguration
@@ -26,28 +26,9 @@ src/typeguard/_checkers.py
    102→    "__cmp__",
    103→    "__divmod__",
    104→    "__div__",
-   105→    "__eq__",
-   106→    "__floordiv__",
-   107→    "__ge__",
-   108→    "__gt__",
-   109→    "__iadd__",
-   110→    "__iand__",
-   111→    "__idiv__",
-   112→    "__ifloordiv__",
-   113→    "__ilshift__",
-   114→    "__imatmul__",
-   115→    "__imod__",
-   116→    "__imul__",
-   117→    "__ior__",
-   118→    "__ipow__",
-   119→    "__irshift__",
-   120→    "__isub__",
-   121→    "__itruediv__",
-   122→    "__ixor__",
-   123→    "__le__",
-   124→    "__lshift__",
       →…
    586→def _is_literal_type(typ: object) -> bool:
+   587→    return typ is typing.Literal or typ is typing_extensions.Literal
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
   1006→    Any, Callable[[Any, Any, tuple[Any, ...], TypeCheckMemo], None]
@@ -55,34 +36,16 @@ src/typeguard/_checkers.py
   1008→    bytes: check_byteslike,
   1009→    AbstractSet: check_set,
   1010→    BinaryIO: check_io,
-  1011→    Callable: check_callable,
-  1012→    collections.abc.Callable: check_callable,
-  1013→    complex: check_number,
-  1014→    dict: check_mapping,
-  1015→    Dict: check_mapping,
-  1016→    float: check_number,
-  1017→    frozenset: check_set,
-  1018→    IO: check_io,
-  1019→    list: check_list,
-  1020→    List: check_list,
-  1021→    typing.Literal: check_literal,
-  1022→    Mapping: check_mapping,
-  1023→    MutableMapping: check_mapping,
-  1024→    None: check_none,
-  1025→    collections.abc.Mapping: check_mapping,
-  1026→    collections.abc.MutableMapping: check_mapping,
-  1027→    Sequence: check_sequence,
-  1028→    collections.abc.Sequence: check_sequence,
-  1029→    collections.abc.Set: check_set,
-  1030→    set: check_set,
       →…
 src/typeguard/_config.py
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
     24→
+    25→    ERROR = auto()
       →…
     30→class CollectionCheckStrategy(Enum):
     48→
+    49→    FIRST_ITEM = auto()
     63→class TypeCheckConfiguration:
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
@@ -95,10 +58,15 @@ src/typeguard/_exceptions.py
      5→class TypeHintWarning(UserWarning):
     12→class TypeCheckWarning(UserWarning):
     14→
+    15→    def __init__(self, message: str):
+      →…
     19→class InstrumentationWarning(UserWarning):
     21→
+    22→    def __init__(self, message: str):
+      →…
     26→class TypeCheckError(Exception):
     30→
+    31→    def __init__(self, message: str):
 src/typeguard/_functions.py
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
@@ -113,53 +81,16 @@ src/typeguard/_importhook.py
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
     57→    def source_to_code(
-    58→        data: Buffer | str | ast.Module | ast.Expression | ast.Interactive,
-    59→        path: Buffer | str | PathLike[str] = "<string>",
-    60→        *,
-    61→        _optimize: int = -1,
-    62→    ) -> CodeType:
-    63→        if isinstance(path, (str, PathLike)):
-    64→            filename = path
-    65→        else:
-    66→            filename = os.fsdecode(bytes(path))
-    67→
-    68→        if isinstance(data, (ast.Module, ast.Expression, ast.Interactive)):
-    69→            module = data
-    70→        else:
-    71→            if isinstance(data, str):
-    72→                source = data
-    73→            else:
-    74→                source = decode_source(data)
-    75→
-    76→            module = _call_with_frames_removed(
-    77→                ast.parse,
-    78→                source,
-    79→                filename,
-    80→                "exec",
-    81→            )
-    82→
-    83→        tree = TypeguardTransformer().visit(module)
-    84→        ast.fix_missing_locations(tree)
-    85→
-    86→        if global_config.debug_instrumentation and sys.version_info >= (3, 9):
-    87→            print(
-    88→                f"Source code of {path!r} after instrumentation:\n"
-    89→                "----------------------------------------------",
-    90→                file=sys.stderr,
-    91→            )
-    92→            print(ast.unparse(tree), file=sys.stderr)
-    93→            print("----------------------------------------------", file=sys.stderr)
-    94→
-    95→        return _call_with_frames_removed(
-    96→            compile, tree, filename, "exec", 0, dont_inherit=True
-    97→        )
    109→class TypeguardFinder(MetaPathFinder):
    119→
+   120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
    156→class ImportHookManager:
    160→
+   161→    def __init__(self, hook: MetaPathFinder):
 src/typeguard/_memo.py
      8→class TypeCheckMemo:
     34→
+    35→    __slots__ = "globals", "locals", "self_type", "config"
 src/typeguard/_suppression.py
     15→P = ParamSpec("P")
     16→T = TypeVar("T")
@@ -262,12 +193,16 @@ src/typeguard/_transformer.py
    211→
    285→class NameCollector(NodeVisitor):
    286→    def __init__(self) -> None:
+   287→        self.names: set[str] = set()
    313→class GeneratorDetector(NodeVisitor):
    315→
+   316→    contains_yields: bool = False
    338→class AnnotationTransformer(NodeTransformer):
    339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
+   340→        "builtins.dict": ("typing", "Dict"),
    488→class TypeguardTransformer(NodeTransformer):
    489→    def __init__(
+   490→        self, target_path: Sequence[str] | None = None, target_lineno: int | None = None
    516→    @contextmanager
    517→    def _use_memo(
    518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
@@ -283,7 +218,13 @@ src/typeguard/_transformer.py
    528→            if new_memo.should_instrument:
       →…
    570→    def _get_import(self, module: str, name: str) -> Name:
+   571→        memo = self._memo if self._target_path else self._module_memo
+   572→        return memo.get_import(module, name)
    580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
+   581→        if annotation is None:
+   582→            return None
+   583→
+      →…
 src/typeguard/_utils.py
    173→class Unset:
    174→    __slots__ = ()

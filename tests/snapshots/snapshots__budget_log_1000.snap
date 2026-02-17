@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (975 words)
+budget: 1000 (978 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -42,8 +42,6 @@ README.md
     65→    * [`colog`](https://docs.rs/colog/*/colog/)
     66→    * [`simple_logger`](https://docs.rs/simple_logger/*/simple_logger/)
     67→    * [`simplelog`](https://docs.rs/simplelog/*/simplelog/)
-    68→    * [`pretty_env_logger`](https://docs.rs/pretty_env_logger/*/pretty_env_logger/)
-    69→    * [`stderrlog`](https://docs.rs/stderrlog/*/stderrlog/)
       →…
    106→## Structured logging
    108→If you enable the `kv` feature, you can associate structured data with your log records:
@@ -84,7 +82,7 @@ src/__private_api.rs
 src/kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
-      →…
+     7→}
      9→#[derive(Debug)]
     10→enum Inner {
     11→    #[cfg(feature = "std")]
@@ -101,8 +99,11 @@ src/kv/error.rs
 src/kv/key.rs
      7→pub trait ToKey {
      8→    /// Perform the conversion.
+     9→    fn to_key(&self) -> Key<'_>;
+      →…
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
+    39→    key: &'k str,
       →…
     94→mod std_support {
    113→mod sval_support {
@@ -119,10 +120,13 @@ src/kv/mod.rs
 src/kv/source.rs
     51→pub trait Source {
     52→    /// Visit key-values.
+    53→    ///
     91→fn get_default …
    114→fn count_default …
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
+   237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
+      →…
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    242→where
    243→    T: VisitSource<'kvs> + ?Sized,
@@ -131,9 +135,11 @@ src/kv/source.rs
 src/kv/value.rs
     11→pub trait ToValue {
     12→    /// Perform the conversion.
+    13→    fn to_value(&self) -> Value<'_>;
+      →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
-      →…
+   121→}
    204→    fn from_inner …
    235→impl<'v> serde_core::Serialize for Value<'v> {
    245→impl<'v> sval::Value for Value<'v> {
@@ -144,6 +150,7 @@ src/kv/value.rs
    390→mod std_support {
    462→pub trait VisitValue<'v> {
    463→    /// Visit a `Value`.
+   464→    ///
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
    541→    T: VisitValue<'v>,
@@ -152,6 +159,7 @@ src/kv/value.rs
    721→pub(in crate::kv) mod inner {
    738→    pub enum Inner<'v> {
    739→        None,
+   740→        Bool(bool),
       →…
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
@@ -238,10 +246,6 @@ src/lib.rs
   1609→///
   1610→/// [`logger`]: fn.logger.html
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
-  1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
-  1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
-  1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
-      →…
 test_max_level_features/main.rs
      6→#[cfg(not(feature = "std"))]
      7→fn set_boxed_logger(logger: Box<dyn Log>) -> Result<(), log::SetLoggerError> {

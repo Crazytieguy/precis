@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 words)
+budget: 1000 (999 words)
 
 components/checkmark.tsx
      3→const circleAnimation = keyframes`
@@ -13,8 +13,6 @@ components/checkmark.tsx
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
     35→  width: 20px;
-    36→  opacity: 0;
-    37→  height: 20px;
       →…
 components/error.tsx
      3→const circleAnimation = keyframes`
@@ -26,8 +24,6 @@ components/error.tsx
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
     39→  width: 20px;
-    40→  opacity: 0;
-    41→  height: 20px;
       →…
 components/loader.tsx
      3→const rotate = keyframes`
@@ -37,8 +33,6 @@ components/loader.tsx
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
     18→  width: 12px;
-    19→  height: 12px;
-    20→  box-sizing: border-box;
       →…
 components/toast-bar.tsx
      8→const enterAnimation = (factor: number) => `
@@ -70,8 +64,6 @@ components/toast-bar.tsx
       →…
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
-    77→    const animationStyle: React.CSSProperties = toast.height
-    78→      ? getAnimationStyle(
       →…
 components/toast-icon.tsx
      9→const StatusWrapper = styled('div')`
@@ -79,8 +71,6 @@ components/toast-icon.tsx
     22→const enter = keyframes`
     32→export const AnimatedIconWrapper = styled('div')`
     33→  position: relative;
-    34→  transform: scale(0.6);
-    35→  opacity: 0.4;
       →…
     41→export type IconThemes = Partial<{
     42→  success: CheckmarkTheme;
@@ -99,6 +89,13 @@ components/toast-icon.tsx
     56→    }
     57→  }
     58→
+    59→  if (type === 'blank') {
+    60→    return null;
+    61→  }
+    62→
+    63→  return (
+    64→    <IndicatorWrapper>
+    65→      <LoaderIcon {...iconTheme} />
       →…
 components/toaster.tsx
     15→const ToastWrapper = ({
@@ -124,6 +121,13 @@ components/toaster.tsx
     94→}) => {
     95→  const { toasts, handlers } = useToaster(toastOptions, toasterId);
     96→
+    97→  return (
+    98→    <div
+    99→      data-rht-toaster={toasterId || ''}
+   100→      style={{
+   101→        position: 'fixed',
+   102→        zIndex: 9999,
+   103→        top: DEFAULT_OFFSET,
       →…
 core/store.ts
      4→export const TOAST_EXPIRE_DISMISS_DELAY …
@@ -158,15 +162,7 @@ core/store.ts
     67→      return {
       →…
    136→const listeners: Array<
-   137→  [toasterId: string, reducer: (state: ToasterState) => void]
-   138→> = [];
    140→const defaultToasterState: ToasterState = {
-   141→  toasts: [],
-   142→  pausedAt: undefined,
-   143→  settings: {
-   144→    toastLimit: TOAST_LIMIT,
-   145→  },
-   146→};
    149→export const dispatch = (action: Action, toasterId = DEFAULT_TOASTER_ID) => {
    150→  memoryState[toasterId] = reducer(
    151→    memoryState[toasterId] || defaultToasterState,
@@ -206,12 +202,20 @@ core/toast.ts
     27→): Toast => ({
     28→  createdAt: Date.now(),
     29→  visible: true,
+    30→  dismissed: false,
+    31→  type,
+    32→  ariaProps: {
+    33→    role: 'status',
       →…
     42→const createHandler =
     43→  (type?: ToastType): ToastHandler =>
     44→  (message, options) => {
     45→    const toast = createToast(message, type, options);
     46→
+    47→    const dispatch = createDispatch(
+    48→      toast.toasterId || getToasterIdFromToastId(toast.id)
+    49→    );
+    50→
       →…
     55→const toast = (message: Message, opts?: ToastOptions) =>
     56→  createHandler('blank')(message, opts);

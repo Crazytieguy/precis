@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (490 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -19,6 +19,10 @@ ARCHITECTURE.md
     13→</>
     14→```
     15→
+    16→We didn't want to provide a render prop:
+    17→
+    18→```tsx
+    19→// No
       →…
     46→## Approach …
     50→### Discarded approach …
@@ -74,16 +78,12 @@ website/components/cmdk/framer.tsx
 website/components/cmdk/linear.tsx
      3→export function LinearCMDK() {
     30→const items = [
-    31→  {
-      →…
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
 website/components/cmdk/vercel.tsx
      4→export function VercelCMDK() {
 website/components/code/index.tsx
      7→const theme = {
-     8→  plain: {
-      →…
     41→export function Code({ children }: { children: string }) {
     42→  return (
     43→    <Highlight {...defaultProps} theme={theme} code={children} language="jsx">
@@ -129,9 +129,6 @@ website/pages/index.tsx
    137→//////////////////////////////////////////////////////////////////
    138→
    139→const themes = [
-   140→  {
-   141→    icon: <RaycastIcon />,
-      →…
    260→//////////////////////////////////////////////////////////////////
    261→
    262→function Codeblock() {

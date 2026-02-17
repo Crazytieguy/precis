@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3751 words)
+budget: 4000 (3732 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
@@ -488,6 +488,9 @@ lib.rs
    425→#[cfg(not(target_has_atomic = "ptr"))]
    426→impl AtomicUsize {
    427→    const fn new(v: usize) -> AtomicUsize {
+   428→        AtomicUsize { v: Cell::new(v) }
+   429→    }
+   430→
    431→    fn load(&self, _order: Ordering) -> usize {
    435→    fn store(&self, val: usize, _order: Ordering) {
    442→#[cfg(not(target_has_atomic = "ptr"))]
@@ -599,7 +602,11 @@ lib.rs
    858→struct KeyValues<'a>(&'a dyn kv::Source);
    860→#[cfg(feature = "kv")]
    861→impl<'a> fmt::Debug for KeyValues<'a> {
-   862→    fn fmt …
+   862→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+   863→        let mut visitor = f.debug_map();
+   864→        self.0.visit(&mut visitor).map_err(|_| fmt::Error)?;
+   865→        visitor.finish()
+      →…
    872→    pub fn builder() -> RecordBuilder<'a> {
    878→    pub fn args(&self) -> &fmt::Arguments<'a> {
    884→    pub fn metadata(&self) -> &Metadata<'a> {
@@ -698,7 +705,10 @@ lib.rs
   1312→where
   1313→    T: ?Sized + Log,
   1314→{
-  1315→    fn enabled …
+  1315→    fn enabled(&self, metadata: &Metadata) -> bool {
+  1316→        self.as_ref().enabled(metadata)
+  1317→    }
+  1318→
   1319→    fn log …
   1322→    fn flush …
   1327→#[cfg(feature = "std")]
@@ -706,7 +716,10 @@ lib.rs
   1329→where
   1330→    T: ?Sized + Log,
   1331→{
-  1332→    fn enabled …
+  1332→    fn enabled(&self, metadata: &Metadata) -> bool {
+  1333→        self.as_ref().enabled(metadata)
+  1334→    }
+  1335→
   1336→    fn log …
   1339→    fn flush …
   1351→pub fn set_max_level(level: LevelFilter) {
@@ -732,7 +745,6 @@ lib.rs
   1497→            STATE.store(INITIALIZED, Ordering::Release);
   1498→            Ok(())
   1499→        }
-  1500→        Err(INITIALIZING) => {
       →…
   1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
@@ -766,15 +778,7 @@ lib.rs
   1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
   1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
   1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
-  1616→    false if cfg!(feature = "release_max_level_debug") => LevelFilter::Debug,
-  1617→    false if cfg!(feature = "release_max_level_trace") => LevelFilter::Trace,
-  1618→    _ if cfg!(feature = "max_level_off") => LevelFilter::Off,
-  1619→    _ if cfg!(feature = "max_level_error") => LevelFilter::Error,
-  1620→    _ if cfg!(feature = "max_level_warn") => LevelFilter::Warn,
-  1621→    _ if cfg!(feature = "max_level_info") => LevelFilter::Info,
-  1622→    _ if cfg!(feature = "max_level_debug") => LevelFilter::Debug,
-  1623→    _ => LevelFilter::Trace,
-  1624→};
+      →…
 macros.rs
     75→macro_rules! log {
    119→macro_rules! __log {

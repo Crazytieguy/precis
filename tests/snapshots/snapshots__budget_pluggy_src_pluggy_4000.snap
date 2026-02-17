@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3452 words)
+budget: 4000 (3453 words)
 
 __init__.py
      1→__all__ = [
@@ -54,8 +54,7 @@ _hooks.py
     32→_Plugin: TypeAlias = object
     33→_HookExec: TypeAlias = Callable[
     34→    [str, Sequence["HookImpl"], Mapping[str, object], bool],
-    35→    object | list[object],
-    36→]
+      →…
     37→_HookImplFunction: TypeAlias = Callable[..., _T | Generator[None, Result[_T], None]]
     40→class HookspecOpts(TypedDict):
     42→
@@ -306,7 +305,7 @@ _hooks.py
    370→        def __getattr__(self, name: str) -> HookCaller: ...
    377→_CallHistory: TypeAlias = list[
    378→    tuple[Mapping[str, object], Callable[[Any], None] | None]
-   379→]
+      →…
    382→class HookCaller:
    384→
    385→    __slots__ = (
@@ -333,6 +332,7 @@ _hooks.py
    406→        # 2. nonwrappers
    407→        # 3. tryfirst nonwrappers
    408→        # 4. trylast wrappers
+   409→        # 5. wrappers
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None
@@ -492,7 +492,7 @@ _manager.py
     36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
     37→_AfterTrace: TypeAlias = Callable[
     38→    [Result[Any], str, Sequence[HookImpl], Mapping[str, Any]], None
-    39→]
+      →…
     42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
     52→class PluginValidationError(Exception):
     58→
@@ -541,6 +541,7 @@ _manager.py
    121→        # called from all hookcaller instances.
    122→        # enable_tracing will set its own wrapping function at self._inner_hookexec
    123→        return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+   124→
    125→    def register(self, plugin: _Plugin, name: str | None = None) -> str | None:
    176→    def parse_hookimpl_opts(self, plugin: _Plugin, name: str) -> HookimplOpts | None:
    201→    def unregister(

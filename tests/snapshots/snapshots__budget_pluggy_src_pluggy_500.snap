@@ -14,13 +14,7 @@ __init__.py
      7→    "HookspecOpts",
      8→    "HookimplOpts",
      9→    "HookImpl",
-    10→    "HookRelay",
-    11→    "HookspecMarker",
-    12→    "HookimplMarker",
-    13→    "Result",
-    14→    "PluggyWarning",
-    15→    "PluggyTeardownRaisedWarning",
-    16→]
+      →…
 _callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
@@ -89,7 +83,9 @@ _hooks.py
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [
    621→            impl
-      →…
+   622→            for impl in self._orig._hookimpls
+   623→            if impl.plugin not in self._remove_plugins
+   624→        ]
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    628→        return self._orig.spec

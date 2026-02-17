@@ -23,6 +23,8 @@ README.md
     27→
     28→```diff
     29→+'use client'
+    30→+import { OTPInput } from 'input-otp'
+    31→
       →…
     39→## Default example
     41→The example below uses `tailwindcss` `@shadcn/ui` `tailwind-merge` `clsx`:
@@ -33,6 +35,8 @@ README.md
     46→<OTPInput
     47→  maxLength={6}
     48→  containerClassName="group flex items-center has-[:disabled]:opacity-30"
+    49→  render={({ slots }) => (
+    50→    <>
       →…
    136→## How it works
    138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
@@ -47,6 +51,8 @@ README.md
    148→https://github.com/guilhermerodz/input-otp/assets/10366880/bdbdc96a-23da-4e89-bff8-990e6a1c4c23
    149→
    150→</details>
+   151→
+   152→<details>
       →…
    198→### Auto tracks if the input has space in the right side for the badge
    200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
@@ -72,6 +78,8 @@ README.md
    223→  // The class name for the root container
    224→  containerClassName?: string
    225→
+   226→  // Value state controlling the input
+   227→  value?: string
       →…
    293→## Examples
    298→```tsx
@@ -82,6 +90,8 @@ README.md
    303→  return (
    304→    <form ref={formRef}>
    305→      <OTPInput
+   306→        // ... automatically submit the form
+   307→        onComplete={() => formRef.current?.submit()}
       →…
    377→## Caveats
    382→By default, `input-otp` handles password managers for you.
@@ -92,6 +102,8 @@ README.md
    387→```diff
    388→<OTPInput
    389→  // First, disable library's built-in strategy
+   390→  // for shifting badges automatically
+   391→- pushPasswordManagerStrategy="increase-width"
       →…
    539→#### Sponsors
    541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
@@ -156,28 +168,9 @@ apps/storybook/src/lib/utils.ts
      6→}
 apps/storybook/src/stories/Button.stories.ts
     14→export const Primary = {
-    15→  args: {
-    16→    primary: true,
-    17→    label: 'Button',
-    18→  },
-    19→};
     21→export const Secondary = {
-    22→  args: {
-    23→    label: 'Button',
-    24→  },
-    25→};
     27→export const Large = {
-    28→  args: {
-    29→    size: 'large',
-    30→    label: 'Button',
-    31→  },
-    32→};
     34→export const Small = {
-    35→  args: {
-    36→    size: 'small',
-    37→    label: 'Button',
-    38→  },
-    39→};
 apps/storybook/src/stories/Button.tsx
      5→/**
      6→ * Primary UI component for user interaction
@@ -197,16 +190,11 @@ apps/storybook/src/stories/Button.tsx
     20→};
 apps/storybook/src/stories/InputOTP.stories.tsx
      4→const meta = {
-     5→  title: "ui/InputOTP",
-     6→  component: InputOTP,
-      →…
     27→type Story = StoryObj<typeof meta>
     29→export const Default: Story = {}
 apps/storybook/tailwind.config.js
      1→/** @type {import('tailwindcss').Config} */
      2→const config = {
-     3→  darkMode: ['class'],
-      →…
 apps/website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -223,7 +211,10 @@ apps/website/README.md
     16→
     17→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
     18→
-      →…
+    19→You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+    20→
+    21→This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+    22→
     23→## Learn More
     25→To learn more about Next.js, take a look at the following resources:
     26→
@@ -240,8 +231,6 @@ apps/website/next.config.mjs
      3→/** @type {import('next').NextConfig} */
      4→const nextProdConfig = {}
      6→const nextDevConfig = withHydrationOverlay({
-     7→  appRootSelector: 'main',
-     8→})(nextProdConfig)
 apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
      9→export default function ExampleAutoSubmit() {
     10→  const formRef = React.useRef<HTMLFormElement>(null)
@@ -254,7 +243,12 @@ apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
     17→        name="otp"
     18→        value={value}
     19→        onChange={setValue}
-      →…
+    20→        onComplete={() => formRef.current?.submit()}
+    21→      />
+    22→      <Button type="submit">Submit</Button>
+    23→    </form>
+    24→  )
+    25→}
 apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
      3→export async function formAction(formData: FormData) {
      4→  const rawFormData = {
@@ -297,6 +291,7 @@ apps/website/src/app/(local-pages)/layout.tsx
     17→          fontSans.className,
     18→        )}
     19→      >
+    20→        <AppProvider>
       →…
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      5→export default function ShadcnPage() {
@@ -322,6 +317,9 @@ apps/website/src/app/(local-pages)/shadcn/page.tsx
     19→        value={value}
     20→        onChange={setValue}
     21→        maxLength={6}
+    22→        render={({ slots }) => (
+    23→          <>
+    24→            <InputOTPGroup>
       →…
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     13→export default function ShadcnPage() {
@@ -352,18 +350,19 @@ apps/website/src/app/(pages)/(home)/_components/confetti.tsx
       →…
 apps/website/src/app/(pages)/(home)/_components/showcase.tsx
     10→const DynamicConfetti = dynamic(() =>
-    11→  import('./confetti').then(m => m.Confetti),
-    12→)
     14→export function Showcase({ className, ...props }: { className?: string }) {
     15→  const [value, setValue] = React.useState('12')
     16→  const [disabled, setDisabled] = React.useState(false)
     17→
       →…
    151→function Slot(props: {
+   152→  char: string | null
+      →…
    199→function FakeCaret() {
+   200→  return (
+      →…
 apps/website/src/app/(pages)/(home)/page.tsx
     19→const fadeUpClassname =
-    20→  'lg:motion-safe:opacity-0 lg:motion-safe:animate-fade-up'
     22→async function getRepoStarCount() {
     34→export default async function IndexPage() {
     35→  const starCount = await getRepoStarCount()
@@ -371,6 +370,20 @@ apps/website/src/app/(pages)/(home)/page.tsx
     37→  return (
     38→    <div className="container relative flex-1 flex flex-col justify-center items-center">
     39→      <PageHeader>
+    40→        {/* <div className="opacity-0 animate-fade-in [animation-delay:2700ms] [animation-duration:500ms] mb-2"><SponsorBadgeClerk /></div> */}
+    41→
+    42→        <PageHeaderHeading className={cn(fadeUpClassname)}>
+    43→          Stop wasting time building OTP inputs.
+    44→        </PageHeaderHeading>
+    45→
+    46→        <Showcase
+    47→          className={cn(
+    48→            fadeUpClassname,
+    49→            'lg:motion-safe:[animation-delay:1000ms]',
+    50→          )}
+    51→        />
+    52→
+    53→        <PageHeaderDescription
       →…
    148→export const revalidate = 3600
    150→const SponsorBadgeClerk = () => {
@@ -378,15 +391,6 @@ apps/website/src/app/(pages)/layout.tsx
     14→export const metadata: Metadata = {
     15→  title: {
     16→    default: siteConfig.name,
-    17→    template: `%s - ${siteConfig.name}`,
-    18→  },
-    19→  metadataBase: new URL(siteConfig.url),
-    20→  description: siteConfig.description,
-    21→  keywords: [
-    22→    'React',
-    23→    'one-time-code',
-    24→    'Input',
-    25→    'Next.js',
       →…
     68→export default function RootLayout({
     69→  children,
@@ -397,6 +401,11 @@ apps/website/src/app/(pages)/layout.tsx
     74→    <html lang="en">
     75→      <body
     76→        className={cn(
+    77→          'min-h-[100dvh] bg-background font-sans antialiased',
+    78→          fontSans.className,
+    79→        )}
+    80→      >
+    81→        <AppProvider>
       →…
 apps/website/src/components/code.tsx
      9→export async function Code({
@@ -427,19 +436,6 @@ apps/website/src/components/icons.tsx
      1→type IconProps = React.HTMLAttributes<SVGElement>
      3→export const Icons = {
      4→  logo: (props: IconProps) => (
-     5→    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" {...props}>
-     6→      <rect width="256" height="256" fill="none" />
-     7→      <line
-     8→        x1="208"
-     9→        y1="128"
-    10→        x2="128"
-    11→        y2="208"
-    12→        fill="none"
-    13→        stroke="currentColor"
-    14→        strokeLinecap="round"
-    15→        strokeLinejoin="round"
-    16→        strokeWidth="16"
-    17→      />
       →…
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {
@@ -499,31 +495,15 @@ packages/input-otp/src/input.tsx
     17→      value: uncheckedValue,
     18→      onChange: uncheckedOnChange,
     19→      maxLength,
-    20→      textAlign = 'left',
-    21→      pattern,
-    22→      placeholder,
-    23→      inputMode = 'numeric',
-    24→      onComplete,
-    25→      pushPasswordManagerStrategy = 'increase-width',
-    26→      pasteTransformer,
-    27→      containerClassName,
-    28→      noScriptCSSFallback = NOSCRIPT_CSS_FALLBACK,
-    29→
-    30→      render,
-    31→      children,
-    32→
-    33→      ...props
-    34→    },
-    35→    ref,
       →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
    542→    sheet.insertRule(rule)
    543→  } catch {
-      →…
+   544→    console.error('input-otp could not insert CSS rule:', rule)
+   545→  }
+   546→}
    553→const NOSCRIPT_CSS_FALLBACK = `
-   554→[data-input-otp] {
-      →…
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
      2→export const REGEXP_ONLY_CHARS = '^[a-zA-Z]+$'
@@ -574,8 +554,6 @@ packages/input-otp/src/use-pwm-badge.tsx
      5→const PWM_BADGE_SPACE_WIDTH_PX = 40
      6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
      8→const PASSWORD_MANAGERS_SELECTORS = [
-     9→  '[data-lastpass-icon-root]', // LastPass
-      →…
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,

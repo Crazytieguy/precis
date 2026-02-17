@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1969 words)
+budget: 2000 (1970 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -250,7 +250,9 @@ cmdk/src/command-score.ts
    157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
    158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
    159→   */
-      →…
+   160→  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
+   161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
+   162→}
 cmdk/src/index.tsx
    161→const defaultFilter …
    164→const useCommand …
@@ -348,11 +350,6 @@ website/components/cmdk/linear.tsx
       →…
     30→const items = [
     31→  {
-    32→    icon: <AssignToIcon />,
-    33→    label: 'Assign to...',
-    34→    shortcut: ['A'],
-    35→  },
-    36→  {
       →…
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
@@ -370,9 +367,6 @@ website/components/code/index.tsx
      7→const theme = {
      8→  plain: {
      9→    color: 'var(--gray12)',
-    10→    fontSize: 12,
-    11→    fontFamily: 'Menlo, monospace',
-    12→  },
       →…
     41→export function Code({ children }: { children: string }) {
     42→  return (
@@ -387,6 +381,8 @@ website/components/code/index.tsx
     51→          >
     52→            <CopyIcon />
     53→          </button>
+    54→          <div className={styles.shine} />
+    55→          {tokens.map((line, i) => (
       →…
 website/components/icons/index.tsx
      3→export function FigmaIcon() {
@@ -403,9 +399,6 @@ website/components/icons/index.tsx
 website/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
-     3→  reactStrictMode: true,
-     4→  swcMinify: true,
-     5→}
 website/pages/_app.tsx
     13→const title = '⌘K'
     14→const description = 'Fast, composable, unstyled command menu for React'
@@ -452,6 +445,7 @@ website/pages/index.tsx
    104→  return (
    105→    <button
    106→      className={styles.installButton}
+   107→      onClick={async () => {
       →…
    123→function GitHubButton() {
    137→//////////////////////////////////////////////////////////////////
@@ -462,10 +456,6 @@ website/pages/index.tsx
    142→    key: 'raycast',
    143→  },
    144→  {
-   145→    icon: <LinearIcon />,
-   146→    key: 'linear',
-   147→  },
-   148→  {
       →…
    158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////
@@ -476,6 +466,7 @@ website/pages/index.tsx
    265→<Command.Dialog open={open} onOpenChange={setOpen}>
    266→  <Command.Input />
    267→
+   268→  <Command.List>
       →…
    294→//////////////////////////////////////////////////////////////////
    295→

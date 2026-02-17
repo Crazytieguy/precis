@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3933 words)
+budget: 4000 (3934 words)
 
 errors.ts
      1→/**
@@ -59,6 +59,16 @@ internals/helpers.ts
     54→      let variadicPatterns: AnyMatcher[] = [];
     55→
     56→      for (const i of pattern.keys()) {
+    57→        const subpattern = pattern[i];
+    58→        if (isMatcher(subpattern) && subpattern[symbols.isVariadic]) {
+    59→          variadicPatterns.push(subpattern);
+    60→        } else if (variadicPatterns.length) {
+    61→          endPatterns.push(subpattern);
+    62→        } else {
+    63→          startPatterns.push(subpattern);
+    64→        }
+    65→      }
+    66→
       →…
    120→export const getSelectionKeys = (pattern: any): string[] => {
    121→  if (isObject(pattern)) {
@@ -115,13 +125,8 @@ is-matching.ts
     54→  ...args: [pattern: p, value?: any]
     55→): boolean | ((vale: any) => boolean) {
 match.ts
-     7→type MatchState<output> =
-     8→  | { matched: true; value: output }
-     9→  | { matched: false; value: undefined };
-    11→const unmatched: MatchState<never> = {
-    12→  matched: false,
-    13→  value: undefined,
-    14→};
+     7→type MatchState …
+    11→const unmatched …
     16→/**
     17→ * `match` creates a **pattern matching expression**.
     18→ *  * Use `.with(pattern, handler)` to pattern match on the input.
@@ -303,14 +308,22 @@ patterns.ts
    204→            );
    205→            return { matched: true, selections };
    206→          }
-      →…
-   217→type UnwrapArray<xs> = xs extends readonly (infer x)[] ? x : never;
-   219→type UnwrapSet<xs> = xs extends Set<infer x> ? x : never;
-   221→type UnwrapMapKey<xs> = xs extends Map<infer k, any> ? k : never;
-   223→type UnwrapMapValue<xs> = xs extends Map<any, infer v> ? v : never;
-   225→type UnwrapRecordKey<xs> = xs extends Record<infer k, any> ? k : never;
-   227→type UnwrapRecordValue<xs> = xs extends Record<any, infer v> ? v : never;
-   229→type WithDefault<a, b> = [a] extends [never] ? b : a;
+   207→          const matched = matchPattern(pattern, value, selector);
+   208→          return { matched, selections };
+   209→        },
+   210→        getSelectionKeys: () => getSelectionKeys(pattern),
+   211→        matcherType: 'optional',
+   212→      };
+   213→    },
+   214→  });
+   215→}
+   217→type UnwrapArray …
+   219→type UnwrapSet …
+   221→type UnwrapMapKey …
+   223→type UnwrapMapValue …
+   225→type UnwrapRecordKey …
+   227→type UnwrapRecordValue …
+   229→type WithDefault …
    246→export function array(
    247→  ...args: [pattern?: any]
    248→): ArrayChainable<ArrayP<any, any>> {
@@ -368,7 +381,10 @@ patterns.ts
    551→      },
    552→      getSelectionKeys: () =>
    553→        flatMap(patterns as readonly UnknownValuePattern[], getSelectionKeys),
-      →…
+   554→      matcherType: 'and',
+   555→    }),
+   556→  });
+   557→}
    559→/**
    560→ * `P.union(...patterns)` returns a pattern which matches
    561→ * if **at least one** of the patterns provided in parameter match the input.
@@ -400,7 +416,14 @@ patterns.ts
    587→        const matched = (patterns as readonly UnknownValuePattern[]).some((p) =>
    588→          matchPattern(p, value, selector)
    589→        );
-      →…
+   590→        return { matched, selections };
+   591→      },
+   592→      getSelectionKeys: () =>
+   593→        flatMap(patterns as readonly UnknownValuePattern[], getSelectionKeys),
+   594→      matcherType: 'or',
+   595→    }),
+   596→  });
+   597→}
    599→/**
    600→ * `P.not(pattern)` returns a pattern which matches if the sub pattern
    601→ * doesn't match.
@@ -444,7 +467,7 @@ patterns.ts
    754→function isSymbol …
    758→function isNullish …
    762→function isNonNullable …
-   766→type AnyConstructor = abstract new (...args: any[]) => any;
+   766→type AnyConstructor …
    768→function isInstanceOf …
    773→/**
    774→ * `P.any` is a wildcard pattern, matching **any value**.

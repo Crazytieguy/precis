@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (482 words)
+budget: 500 (483 words)
 
 __init__.py
     42→__all__ = [
@@ -12,9 +12,7 @@ __init__.py
     46→    "get_key",
     47→    "set_key",
     48→    "unset_key",
-    49→    "find_dotenv",
-    50→    "load_ipython_extension",
-    51→]
+      →…
 cli.py
     60→@click.version_option(version=__version__)
     61→@click.pass_context
@@ -97,6 +95,8 @@ main.py
     68→        elif self.stream is not None:
     69→            yield self.stream
     70→        else:
+    71→            if self.verbose:
+    72→                logger.info(
       →…
    141→@contextmanager
    142→def rewrite(

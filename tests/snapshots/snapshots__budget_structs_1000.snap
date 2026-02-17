@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (964 words)
+budget: 1000 (990 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -67,6 +67,9 @@ README.md
     64→// Check if any field of a struct is initialized or not.
     65→h := structs.HasZero(server)
     66→
+    67→// Check if all fields of a struct is initialized or not.
+    68→z := structs.IsZero(server)
+    69→
       →…
     74→### Struct methods
     76→The structs functions can be also used as independent methods by creating a new
@@ -147,6 +150,7 @@ structs.go
    245→func getFields(v reflect.Value, tagName string) []*Field {
    246→	if v.Kind() == reflect.Ptr {
    247→		v = v.Elem()
+   248→	}
       →…
    275→func (s *Struct) Field(name string) *Field {
    287→func (s *Struct) FieldOk(name string) (*Field, bool) {
@@ -165,6 +169,7 @@ structs.go
    428→func strctVal(s interface{}) reflect.Value {
    429→	v := reflect.ValueOf(s)
    430→
+   431→	// if pointer get the underlying element≤
       →…
    445→func Map(s interface{}) map[string]interface{} {
    451→func FillMap(s interface{}, out map[string]interface{}) {

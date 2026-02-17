@@ -2,13 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (483 words)
+budget: 500 (481 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
     12→mod sealed {
     14→    pub trait KVs<'a> {
+    15→        fn into_kvs(self) -> Option<&'a [(&'a str, super::Value<'a>)]>;
+    16→    }
     39→pub struct GlobalLogger;
    112→#[cfg(feature = "kv")]
    113→mod kv_support {
@@ -18,7 +20,7 @@ __private_api.rs
 kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
-     7→}
+      →…
      9→#[derive(Debug)]
     10→enum Inner {
     11→    #[cfg(feature = "std")]
@@ -35,11 +37,8 @@ kv/error.rs
 kv/key.rs
      7→pub trait ToKey {
      8→    /// Perform the conversion.
-     9→    fn to_key(&self) -> Key<'_>;
-      →…
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
-    39→    key: &'k str,
       →…
     94→mod std_support {
    113→mod sval_support {
@@ -56,22 +55,17 @@ kv/mod.rs
 kv/source.rs
     51→pub trait Source {
     52→    /// Visit key-values.
-    53→    ///
     91→fn get_default …
    114→fn count_default …
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
-   237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
-      →…
    280→mod std_support {
 kv/value.rs
     11→pub trait ToValue {
     12→    /// Perform the conversion.
-    13→    fn to_value(&self) -> Value<'_>;
-      →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
-   121→}
+      →…
    204→    fn from_inner …
    288→macro_rules! impl_to_value_primitive {
    312→macro_rules! impl_to_value_nonzero_primitive {
@@ -79,12 +73,10 @@ kv/value.rs
    390→mod std_support {
    462→pub trait VisitValue<'v> {
    463→    /// Visit a `Value`.
-   464→    ///
    602→pub(in crate::kv) mod inner {
    721→pub(in crate::kv) mod inner {
    738→    pub enum Inner<'v> {
    739→        None,
-   740→        Bool(bool),
       →…
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
@@ -101,8 +93,16 @@ lib.rs
    422→    v: Cell<usize>,
    423→}
    475→pub enum Level {
+   476→    /// The "error" level.
+   477→    ///
+   478→    /// Designates very serious errors.
+      →…
    516→    type Err = ParseLevelError;
    636→pub enum LevelFilter {
+   637→    /// A level lower than all log levels.
+   638→    Off,
+   639→    /// Corresponds to the `Error` log level.
+      →…
    666→    type Err = ParseLevelError;
    781→enum MaybeStaticStr<'a> {
    782→    Static(&'static str),
@@ -111,11 +111,25 @@ lib.rs
    787→    #[inline]
    788→    fn get(&self) -> &'a str {
    842→pub struct Record<'a> {
+   843→    metadata: Metadata<'a>,
+   844→    args: fmt::Arguments<'a>,
+   845→    module_path: Option<MaybeStaticStr<'a>>,
+      →…
    858→struct KeyValues<'a>(&'a dyn kv::Source);
   1003→pub struct RecordBuilder<'a> {
+  1004→    record: Record<'a>,
+  1005→}
   1158→pub struct Metadata<'a> {
+  1159→    level: Level,
+  1160→    target: &'a str,
+  1161→}
   1200→pub struct MetadataBuilder<'a> {
+  1201→    metadata: Metadata<'a>,
+  1202→}
   1249→pub trait Log: Sync + Send {
+  1250→    /// Determines if a log message with the specified metadata would be
+  1251→    /// logged.
+  1252→    ///
   1283→struct NopLogger;
   1482→#[cfg(target_has_atomic = "ptr")]
   1483→fn set_logger_inner<F>(make_logger: F) -> Result<(), SetLoggerError>
@@ -130,12 +144,5 @@ lib.rs
   1603→///
   1604→/// See the crate level documentation for information on how to configure this.
   1605→///
-  1606→/// This value is checked by the log macros, but not by the `Log`ger returned by
-  1607→/// the [`logger`] function. Code that manually calls functions on that value
-  1608→/// should compare the level against this value.
-  1609→///
-  1610→/// [`logger`]: fn.logger.html
-  1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
-  1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
-  1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
       →…
+  1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {

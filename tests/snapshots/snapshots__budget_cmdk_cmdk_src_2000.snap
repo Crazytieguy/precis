@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1996 words)
+budget: 2000 (1989 words)
 
 command-score.ts
     54→function commandScoreInner(
@@ -73,7 +73,33 @@ command-score.ts
    119→      (score < SCORE_TRANSPOSITION &&
    120→        lowerString.charAt(index - 1) === lowerAbbreviation.charAt(abbreviationIndex + 1)) ||
    121→      (lowerAbbreviation.charAt(abbreviationIndex + 1) === lowerAbbreviation.charAt(abbreviationIndex) && // allow duplicate letters. Ref #7428
-      →…
+   122→        lowerString.charAt(index - 1) !== lowerAbbreviation.charAt(abbreviationIndex))
+   123→    ) {
+   124→      transposedScore = commandScoreInner(
+   125→        string,
+   126→        abbreviation,
+   127→        lowerString,
+   128→        lowerAbbreviation,
+   129→        index + 1,
+   130→        abbreviationIndex + 2,
+   131→        memoizedResults,
+   132→      )
+   133→
+   134→      if (transposedScore * SCORE_TRANSPOSITION > score) {
+   135→        score = transposedScore * SCORE_TRANSPOSITION
+   136→      }
+   137→    }
+   138→
+   139→    if (score > highScore) {
+   140→      highScore = score
+   141→    }
+   142→
+   143→    index = lowerString.indexOf(abbreviationChar, index + 1)
+   144→  }
+   145→
+   146→  memoizedResults[memoizeKey] = highScore
+   147→  return highScore
+   148→}
    150→function formatInput(string) {
    151→  // convert all valid space characters to space so they match each other
    152→  return string.toLowerCase().replace(COUNT_SPACE_REGEXP, ' ')
@@ -160,28 +186,7 @@ index.tsx
    699→    store.setState('value', value.current, true)
    700→  }
    701→
-   702→  if (!render) return null
-   703→
-   704→  const { disabled, value: _, onSelect: __, forceMount: ___, keywords: ____, ...etc } = props
-   705→
-   706→  return (
-   707→    <Primitive.div
-   708→      ref={composeRefs(ref, forwardedRef)}
-   709→      {...etc}
-   710→      id={id}
-   711→      cmdk-item=""
-   712→      role="option"
-   713→      aria-disabled={Boolean(disabled)}
-   714→      aria-selected={Boolean(selected)}
-   715→      data-disabled={Boolean(disabled)}
-   716→      data-selected={Boolean(selected)}
-   717→      onPointerMove={disabled || context.getDisablePointerSelection() ? undefined : select}
-   718→      onClick={disabled ? undefined : onSelect}
-   719→    >
-   720→      {props.children}
-   721→    </Primitive.div>
-   722→  )
-   723→})
+      →…
    725→/**
    726→ * Group command menu items together with a heading.
    727→ * Grouped items are always shown together.
@@ -224,8 +229,7 @@ index.tsx
    764→        </div>
    765→      ))}
    766→    </Primitive.div>
-   767→  )
-   768→})
+      →…
    770→/**
    771→ * A visual and semantic separator between items or groups.
    772→ * Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
@@ -280,9 +284,7 @@ index.tsx
    822→
    823→        onValueChange?.(e.target.value)
    824→      }}
-   825→    />
-   826→  )
-   827→})
+      →…
    829→/**
    830→ * Contains `Item`, `Group`, and `Separator`.
    831→ * Use the `--cmdk-list-height` CSS variable to animate height based on the number of results.
@@ -325,13 +327,7 @@ index.tsx
    868→      id={context.listId}
    869→    >
    870→      {SlottableWithNestedChildren(props, (child) => (
-   871→        <div ref={composeRefs(height, context.listInnerRef)} cmdk-list-sizer="">
-   872→          {child}
-   873→        </div>
-   874→      ))}
-   875→    </Primitive.div>
-   876→  )
-   877→})
+      →…
    879→/**
    880→ * Renders the command menu in a Radix Dialog.
    881→ */

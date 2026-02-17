@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (496 words)
+budget: 500 (495 words)
 
 assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
@@ -25,13 +25,6 @@ assets.tsx
     80→    xmlns="http://www.w3.org/2000/svg"
     81→    width="12"
     82→    height="12"
-    83→    viewBox="0 0 24 24"
-    84→    fill="none"
-    85→    stroke="currentColor"
-    86→    strokeWidth="1.5"
-    87→    strokeLinecap="round"
-    88→    strokeLinejoin="round"
-    89→  >
       →…
 hooks.tsx
      3→export const useIsDocumentHidden = () => {
@@ -79,7 +72,13 @@ state.ts
    249→  getActiveToasts …
    254→export const ToastState …
    257→const toastFunction = (message: titleT, data?: ExternalToast) => {
+   258→  const id = data?.id || toastsCounter++;
+   259→
+      →…
    268→const isHttpResponse = (data: any): data is Response => {
+   269→  return (
+   270→    data &&
+      →…
    279→const basicToast …
    281→const getHistory = () => ToastState.toasts;
    282→const getToasts = () => ToastState.getActiveToasts();

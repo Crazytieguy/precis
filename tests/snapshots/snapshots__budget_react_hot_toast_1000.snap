@@ -56,7 +56,8 @@ site/README.md
     12→
     13→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
     14→
-      →…
+    15→You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+    16→
     17→## Learn More
     19→To learn more about Next.js, take a look at the following resources:
     20→
@@ -71,9 +72,6 @@ site/README.md
     30→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 site/components/code.tsx
      8→const theme: PrismTheme = {
-     9→  plain: {
-    10→    backgroundColor: '#351e11',
-      →…
    104→export const Code: React.FC<{
    105→  snippet: string;
       →…
@@ -97,8 +95,6 @@ site/components/sections/splitbee-counter.tsx
     36→export const SplitbeeCounter = () => {
 site/components/sections/toast-example.tsx
      7→const examples: Array<{
-     8→  title: string;
-      →…
    270→export const ToastExample = () => {
 site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
@@ -106,9 +102,7 @@ site/components/sections/toaster-example.tsx
     10→  'top-center',
     11→  'top-right',
     12→  'bottom-left',
-    13→  'bottom-center',
-    14→  'bottom-right',
-    15→];
+      →…
     17→export const ToasterExample: React.FC<{
 site/next.config.mjs
      5→const withMDX = nextMdx({
@@ -118,9 +112,6 @@ site/next.config.mjs
     24→  async rewrites() {
 site/pages/_app.tsx
     12→const components = {
-    13→  a: (props) => (
-    14→    <Link href={props.href}>
-      →…
     71→function MyApp …
 site/pages/index.tsx
     22→const version = packageInfo.version;
@@ -134,6 +125,10 @@ site/pages/index.tsx
    105→  const { toasts: allToasts } = useToasterStore();
    106→
    107→  const shouldFade =
+   108→    allToasts.filter((t) => t.visible).length && position.includes('top');
+   109→  return (
+   110→    <div className="overflow-x-hidden">
+   111→      <NextSeo
       →…
 site/types/svg.d.ts
      1→interface SvgrComponent
@@ -145,24 +140,18 @@ src/components/checkmark.tsx
     31→  secondary?: string;
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
-    35→  width: 20px;
-      →…
 src/components/error.tsx
     33→export interface ErrorTheme {
     34→  primary?: string;
     35→  secondary?: string;
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
-    39→  width: 20px;
-      →…
 src/components/loader.tsx
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
-    18→  width: 12px;
-      →…
 src/components/toast-bar.tsx
      8→const enterAnimation …
     13→const exitAnimation …
@@ -177,12 +166,8 @@ src/components/toast-bar.tsx
     55→}
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
-    76→  ({ toast, position, style, children }) => {
-      →…
 src/components/toast-icon.tsx
     32→export const AnimatedIconWrapper = styled('div')`
-    33→  position: relative;
-      →…
     41→export type IconThemes = Partial<{
     42→  success: CheckmarkTheme;
     43→  error: ErrorTheme;
@@ -191,6 +176,8 @@ src/components/toast-icon.tsx
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {
+    50→  const { icon, type, iconTheme } = toast;
+    51→  if (icon !== undefined) {
       →…
 src/components/toaster.tsx
     15→const ToastWrapper …
@@ -198,6 +185,8 @@ src/components/toaster.tsx
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
     87→  position = 'top-center',
+    88→  toastOptions,
+    89→  gutter,
       →…
 src/core/store.ts
      4→export const TOAST_EXPIRE_DISMISS_DELAY …

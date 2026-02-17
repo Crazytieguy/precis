@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1932 words)
+budget: 2000 (1929 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
@@ -36,8 +36,12 @@ kv/error.rs
     21→    pub fn msg …
     28→    #[cfg(feature = "value-bag")]
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
+    30→        Error {
+      →…
     36→    #[cfg(feature = "value-bag")]
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
+    38→        match self.inner {
+      →…
     68→#[cfg(feature = "std")]
     69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
@@ -100,12 +104,21 @@ kv/source.rs
     63→
     64→    /// Get the value for a given key.
     65→    ///
+    66→    /// If the key appears multiple times in the source then which key is returned
+    67→    /// is implementation specific.
+    68→    ///
+    69→    /// # Implementation notes
+    70→    ///
     73→    fn get …
     85→    fn count …
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
+    92→    struct Get<'k, 'v> {
+      →…
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
+   115→    struct Count(usize);
+      →…
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
@@ -139,6 +152,8 @@ kv/value.rs
    205→    where
    206→        T: Into<inner::Inner<'v>>,
    207→    {
+   208→        Value {
+      →…
    217→    pub fn visit …
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
@@ -169,7 +184,11 @@ kv/value.rs
    474→    }
    475→
    476→    /// Visit an unsigned integer.
-   477→    fn visit_u64 …
+   477→    fn visit_u64(&mut self, value: u64) -> Result<(), Error> {
+   478→        self.visit_any(value.into())
+   479→    }
+   480→
+   481→    /// Visit a signed integer.
    482→    fn visit_i64 …
    487→    fn visit_u128 …
    492→    fn visit_i128 …
@@ -408,6 +427,7 @@ lib.rs
   1491→        Ordering::Relaxed,
   1492→    ) {
   1493→        Ok(UNINITIALIZED) => {
+  1494→            unsafe {
       →…
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///
@@ -435,17 +455,7 @@ lib.rs
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
   1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
-  1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
-  1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
-  1616→    false if cfg!(feature = "release_max_level_debug") => LevelFilter::Debug,
-  1617→    false if cfg!(feature = "release_max_level_trace") => LevelFilter::Trace,
-  1618→    _ if cfg!(feature = "max_level_off") => LevelFilter::Off,
-  1619→    _ if cfg!(feature = "max_level_error") => LevelFilter::Error,
-  1620→    _ if cfg!(feature = "max_level_warn") => LevelFilter::Warn,
-  1621→    _ if cfg!(feature = "max_level_info") => LevelFilter::Info,
-  1622→    _ if cfg!(feature = "max_level_debug") => LevelFilter::Debug,
-  1623→    _ => LevelFilter::Trace,
-  1624→};
+      →…
 macros.rs
     75→macro_rules! log {
    119→macro_rules! __log {

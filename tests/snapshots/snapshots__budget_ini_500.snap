@@ -6,8 +6,6 @@ budget: 500 (489 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
-     8→  .filter((file) => file.startsWith('.eslintrc.local.'))
-     9→  .map((file) => `./${file}`)
 CHANGELOG.md
      1→# Changelog …
      3→## [6.0.0](https://github.com/npm/ini/compare/v5.0.0...v6.0.0) (2025-10-22) …
@@ -134,6 +132,7 @@ README.md
    115→    align : false ,
    116→
    117→    /**
+   118→     *  Identifier to use for global items 
       →…
    167→### Un / Escape
    169→Turn the given string into a safe to  

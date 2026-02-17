@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1906 words)
+budget: 2000 (1907 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -52,7 +52,9 @@ README.md
     44→
     45→Tomli uses [mypyc](https://github.com/mypyc/mypyc)
     46→to generate binary wheels for most of the widely used platforms,
-      →…
+    47→so Python 3.11+ users may prefer it over `tomllib` for improved performance.
+    48→Pure Python wheels are available on any platform and should perform the same as `tomllib`.
+    49→
     50→## Installation<a name="installation"></a>
     52→```bash
     53→pip install tomli
@@ -155,6 +157,9 @@ fuzzer/fuzz.py
     38→        print_err(data)
     39→        raise
     40→
+    41→    roundtripped_obj = tomli.loads(recovered_data)
+    42→    normalize_toml_obj(roundtripped_obj)
+    43→    normalize_toml_obj(toml_obj)
       →…
     53→def print_err(data):
     54→    codepoints = [hex(ord(x)) for x in data]
@@ -180,7 +185,10 @@ scripts/use_setuptools.py
     13→    pyproject_path = Path(__file__).parent.parent / "pyproject.toml"
     14→    data = tomllib.loads(pyproject_path.read_bytes().decode())
     15→    data["build-system"] = {
-      →…
+    16→        "requires": ["setuptools>=77.0.3", "mypy[mypyc]>=1.15"],
+    17→        "build-backend": "setuptools.build_meta",
+    18→    }
+    19→    pyproject_path.write_bytes(tomli_w.dumps(data).encode())
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
@@ -212,21 +220,12 @@ src/tomli/_parser.py
     50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
     51→BARE_KEY_CHARS: Final = frozenset(
     52→    "abcdefghijklmnopqrstuvwxyz" "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "0123456789" "-_"
-    53→)
+      →…
     54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
     55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
     57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
     58→    {
-    59→        "\\b": "\u0008",  # backspace
-    60→        "\\t": "\u0009",  # tab
-    61→        "\\n": "\u000a",  # linefeed
-    62→        "\\f": "\u000c",  # form feed
-    63→        "\\r": "\u000d",  # carriage return
-    64→        "\\e": "\u001b",  # escape
-    65→        '\\"': "\u0022",  # quote
-    66→        "\\\\": "\u005c",  # backslash
-    67→    }
-    68→)
+      →…
     71→class DEPRECATED_DEFAULT:
     76→class TOMLDecodeError(ValueError):
     86→
@@ -352,7 +351,7 @@ src/tomli/_re.py
     41→)
     42→""",
     43→    flags=re.VERBOSE,
-    44→)
+      →…
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
     47→    rf"""
@@ -364,7 +363,7 @@ src/tomli/_re.py
     53→)?
     54→""",
     55→    flags=re.VERBOSE,
-    56→)
+      →…
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
     60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
     61→

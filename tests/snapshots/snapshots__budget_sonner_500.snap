@@ -20,9 +20,6 @@ src/assets.tsx
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     78→export const CloseIcon = (
     79→  <svg
-    80→    xmlns="http://www.w3.org/2000/svg"
-    81→    width="12"
-    82→    height="12"
       →…
 src/hooks.tsx
      3→export const useIsDocumentHidden = () => {
@@ -100,7 +97,6 @@ website/src/components/ExpandModes/index.tsx
      4→export const ExpandModes = ({
      5→  expand,
      6→  setExpand,
-     7→}: {
       →…
 website/src/components/Footer/index.tsx
      5→export const Footer = () => {
@@ -121,6 +117,9 @@ website/src/components/How/How.tsx
 website/src/components/Installation/index.tsx
      9→const variants = {
     14→export const Installation = () => {
+    15→  const [copying, setCopying] = React.useState(0);
+    16→
+      →…
 website/src/components/Other/Other.tsx
      7→export const Other = ({
      8→  setRichColors,

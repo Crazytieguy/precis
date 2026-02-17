@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1839 words)
+budget: 2000 (1840 words)
 
 __init__.py
     34→config: TypeCheckConfiguration
@@ -42,36 +42,7 @@ _checkers.py
    118→    "__ipow__",
    119→    "__irshift__",
    120→    "__isub__",
-   121→    "__itruediv__",
-   122→    "__ixor__",
-   123→    "__le__",
-   124→    "__lshift__",
-   125→    "__lt__",
-   126→    "__matmul__",
-   127→    "__mod__",
-   128→    "__mul__",
-   129→    "__ne__",
-   130→    "__or__",
-   131→    "__pow__",
-   132→    "__radd__",
-   133→    "__rand__",
-   134→    "__rdiv__",
-   135→    "__rfloordiv__",
-   136→    "__rlshift__",
-   137→    "__rmatmul__",
-   138→    "__rmod__",
-   139→    "__rmul__",
-   140→    "__ror__",
-   141→    "__rpow__",
-   142→    "__rrshift__",
-   143→    "__rshift__",
-   144→    "__rsub__",
-   145→    "__rtruediv__",
-   146→    "__rxor__",
-   147→    "__sub__",
-   148→    "__truediv__",
-   149→    "__xor__",
-   150→}
+      →…
    586→def _is_literal_type(typ: object) -> bool:
    587→    return typ is typing.Literal or typ is typing_extensions.Literal
   1004→# Equality checks are applied to these
@@ -97,25 +68,7 @@ _checkers.py
   1024→    None: check_none,
   1025→    collections.abc.Mapping: check_mapping,
   1026→    collections.abc.MutableMapping: check_mapping,
-  1027→    Sequence: check_sequence,
-  1028→    collections.abc.Sequence: check_sequence,
-  1029→    collections.abc.Set: check_set,
-  1030→    set: check_set,
-  1031→    Set: check_set,
-  1032→    TextIO: check_io,
-  1033→    tuple: check_tuple,
-  1034→    Tuple: check_tuple,
-  1035→    type: check_class,
-  1036→    Type: check_class,
-  1037→    Union: check_union,
-  1038→    # On some versions of Python, these may simply be re-exports from "typing",
-  1039→    # but exactly which Python versions is subject to change.
-  1040→    # It's best to err on the safe side and just always specify these.
-  1041→    typing_extensions.Literal: check_literal,
-  1042→    typing_extensions.LiteralString: check_literal_string,
-  1043→    typing_extensions.Self: check_self,
-  1044→    typing_extensions.TypeGuard: check_typeguard,
-  1045→}
+      →…
 _config.py
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
@@ -133,6 +86,7 @@ _config.py
     54→            try:
     55→                return [next(iter(collection))]
     56→            except StopIteration:
+    57→                return ()
       →…
     62→@dataclass
     63→class TypeCheckConfiguration:
@@ -196,6 +150,7 @@ _exceptions.py
     36→        self._path.append(element)
     37→
     38→    def __str__(self) -> str:
+    39→        if self._path:
       →…
 _functions.py
     24→T = TypeVar("T")
@@ -218,6 +173,7 @@ _importhook.py
     62→    ) -> CodeType:
     63→        if isinstance(path, (str, PathLike)):
     64→            filename = path
+    65→        else:
    109→class TypeguardFinder(MetaPathFinder):
    119→
    120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
@@ -228,6 +184,7 @@ _importhook.py
    125→        self,
    126→        fullname: str,
    127→        path: Sequence[str] | None,
+   128→        target: types.ModuleType | None = None,
    156→class ImportHookManager:
    160→
    161→    def __init__(self, hook: MetaPathFinder):
@@ -238,6 +195,7 @@ _importhook.py
    166→
    167→    def __exit__(
    168→        self,
+   169→        exc_type: type[BaseException],
 _memo.py
      8→class TypeCheckMemo:
     34→
@@ -249,6 +207,7 @@ _memo.py
     40→        locals: dict[str, Any],
     41→        *,
     42→        self_type: type | None = None,
+    43→        config: TypeCheckConfiguration = global_config,
       →…
 _suppression.py
     15→P = ParamSpec("P")
@@ -432,6 +391,7 @@ _transformer.py
    292→
    293→    def visit_ImportFrom(self, node: ImportFrom) -> None:
    294→        for name in node.names:
+   295→            self.names.add(name.asname or name.name)
    313→class GeneratorDetector(NodeVisitor):
    315→
    316→    contains_yields: bool = False
@@ -442,6 +402,7 @@ _transformer.py
    321→
    322→    def visit_YieldFrom(self, node: YieldFrom) -> Any:
    323→        self.contains_yields = True
+   324→
    338→class AnnotationTransformer(NodeTransformer):
    339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
    340→        "builtins.dict": ("typing", "Dict"),
@@ -452,6 +413,7 @@ _transformer.py
    345→    }
    346→
    347→    def __init__(self, transformer: TypeguardTransformer):
+   348→        self.transformer = transformer
    488→class TypeguardTransformer(NodeTransformer):
    489→    def __init__(
    490→        self, target_path: Sequence[str] | None = None, target_lineno: int | None = None
@@ -462,6 +424,7 @@ _transformer.py
    495→        self.target_node: FunctionDef | AsyncFunctionDef | None = None
    496→        self.target_lineno = target_lineno
    497→
+   498→    def generic_visit(self, node: AST) -> AST:
    516→    @contextmanager
    517→    def _use_memo(
    518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
@@ -479,6 +442,37 @@ _transformer.py
    530→                detector = GeneratorDetector()
    531→                detector.visit(node)
    532→
+   533→                # Extract yield, send and return types where possible from a subscripted
+   534→                # annotation like Generator[int, str, bool]
+   535→                return_annotation = deepcopy(node.returns)
+   536→                if detector.contains_yields and new_memo.name_matches(
+   537→                    return_annotation, *generator_names
+   538→                ):
+   539→                    if isinstance(return_annotation, Subscript):
+   540→                        if isinstance(return_annotation.slice, Tuple):
+   541→                            items = return_annotation.slice.elts
+   542→                        else:
+   543→                            items = [return_annotation.slice]
+   544→
+   545→                        if len(items) > 0:
+   546→                            new_memo.yield_annotation = self._convert_annotation(
+   547→                                items[0]
+   548→                            )
+   549→
+   550→                        if len(items) > 1:
+   551→                            new_memo.send_annotation = self._convert_annotation(
+   552→                                items[1]
+   553→                            )
+   554→
+   555→                        if len(items) > 2:
+   556→                            new_memo.return_annotation = self._convert_annotation(
+   557→                                items[2]
+   558→                            )
+   559→                else:
+   560→                    new_memo.return_annotation = self._convert_annotation(
+   561→                        return_annotation
+   562→                    )
+   563→
       →…
    570→    def _get_import(self, module: str, name: str) -> Name:
    571→        memo = self._memo if self._target_path else self._module_memo

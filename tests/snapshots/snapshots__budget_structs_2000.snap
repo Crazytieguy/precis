@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1928 words)
+budget: 2000 (1991 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -171,7 +171,6 @@ field.go
      9→var (
     10→	errNotExported = errors.New("field is not exported")
     11→	errNotSettable = errors.New("field is not settable")
-    12→)
     14→// Field represents a single struct field that encapsulates high level
     15→// functions around the field.
     16→type Field struct {
@@ -217,7 +216,6 @@ structs.go
     12→	// a more granular to tweak certain structs. Lookup the necessary functions
     13→	// for more info.
     14→	DefaultTagName = "structs" // struct's field default tag name
-    15→)
     17→// Struct encapsulates a struct type to provide several high level functions
     18→// around the struct.
     19→type Struct struct {
@@ -300,6 +298,13 @@ structs.go
    414→			continue
    415→		}
    416→
+   417→		// don't check if it's omitted
+   418→		if tag := field.Tag.Get(s.TagName); tag == "-" {
+   419→			continue
+   420→		}
+   421→
+   422→		f = append(f, field)
+   423→	}
       →…
    428→func strctVal(s interface{}) reflect.Value {
    429→	v := reflect.ValueOf(s)
@@ -356,6 +361,13 @@ structs.go
    518→	case reflect.Struct:
    519→		n := New(val.Interface())
    520→		n.TagName = s.TagName
+   521→		m := n.Map()
+   522→
+   523→		// do not add the converted value if there are no exported fields, ie:
+   524→		// time.Time
+   525→		if len(m) == 0 {
+   526→			finalVal = val.Interface()
+   527→		} else {
       →…
 tags.go
      5→// tagOptions contains a slice of tag options

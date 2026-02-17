@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (478 words)
+budget: 500 (476 words)
 
 README.md
      1→# Versioning Library for Go
@@ -27,16 +27,19 @@ README.md
     26→```go
     27→v1, err := version.NewVersion("1.2")
     28→v2, err := version.NewVersion("1.5+metadata")
+    29→
       →…
     37→#### Version Constraints
     39→```go
     40→v1, err := version.NewVersion("1.2")
     41→
+    42→// Constraints example.
       →…
     49→#### Version Sorting
     51→```go
     52→versionsRaw := []string{"1.1", "0.7.1", "1.4-beta", "1.4", "2"}
     53→versions := make([]*version.Version, len(versionsRaw))
+    54→for i, raw := range versionsRaw {
       →…
     63→## Issues and Contributing
     65→If you find an issue with this library, please report an issue. If you'd
@@ -90,17 +93,11 @@ version.go
     16→var (
     17→	versionRegexp     *regexp.Regexp
     18→	versionRegexpOnce sync.Once
-    19→	semverRegexp      *regexp.Regexp
-    20→	semverRegexpOnce  sync.Once
-    21→)
     37→// The raw regular expression string used for testing the validity
     38→// of a version.
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     41→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-?([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
-    42→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
-    43→		`?`
-    44→
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +

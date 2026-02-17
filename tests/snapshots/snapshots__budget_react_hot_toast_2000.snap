@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1980 words)
+budget: 2000 (1989 words)
 
 README.md
     28→## Features
@@ -76,36 +76,61 @@ site/components/code.tsx
     10→    backgroundColor: '#351e11',
     11→    color: '#d6ceff',
     12→  },
-    13→  styles: [
-    14→    {
       →…
    104→export const Code: React.FC<{
    105→  snippet: string;
    106→  language?: Language;
    107→  className?: string;
+   108→}> = (props) => {
+   109→  const language = props.language || 'jsx';
+   110→
+   111→  return (
+   112→    <Highlight
+   113→      {...defaultProps}
+   114→      code={props.snippet}
+   115→      theme={theme}
       →…
 site/components/docs-layout.tsx
      8→const TableItem: React.FC<{
      9→  href: string;
+    10→  children?: React.ReactNode;
       →…
     19→const TableHeader: React.FC<{
     20→  children?: React.ReactNode;
+    21→}> = ({ children }) => (
       →…
     27→export default function DocsLayout({ meta, children }) {
     28→  return (
     29→    <div className="bg-toast-50 bg-opacity-50 min-h-screen flex flex-col">
     30→      <NextSeo
+    31→        titleTemplate="%s - react-hot-toast"
+    32→        title={meta.title}
+    33→        openGraph={{
+    34→          images: [
+    35→            {
+    36→              url: `https://react-hot-toast.com/social-image.png`,
+    37→              width: 1200,
+    38→              height: 630,
       →…
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
      2→  onClick: () => void;
      3→  emoji: string | React.ReactElement;
      4→  children?: React.ReactNode;
+     5→}> = ({ onClick, children, emoji }) => (
+     6→  <button
+     7→    className="rounded bg-white text-sm font-semibold py-2 px-2 shadow-small-button flex items-center"
+     8→    onClick={onClick}
+     9→  >
+    10→    <span
+    11→      style={{
+    12→        fontFamily:
       →…
 site/components/sections/footer.tsx
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
      5→  return (
      6→    <footer className="container relative justify-center my-8 flex flex-col items-center space-y-4">
+     7→      <div className="flex space-x-4">
       →…
 site/components/sections/splitbee-counter.tsx
      4→export const useSplitbeeCount = <T extends string>(
@@ -114,23 +139,21 @@ site/components/sections/splitbee-counter.tsx
      7→): number => {
      8→  const [data, setData] = React.useState<number>(0);
      9→  const socket = React.useRef(null);
+    10→  React.useEffect(() => {
       →…
     36→export const SplitbeeCounter = () => {
     37→  const count = useSplitbeeCount('Trigger Toast', 'NTV7AYBLEXW3');
     38→
+    39→  const letters = count.toString().split('');
       →…
 site/components/sections/toast-example.tsx
      7→const examples: Array<{
      8→  title: string;
-     9→  action: () => void;
-    10→  emoji: string;
-    11→  snippet: string;
-    12→}> = [
-    13→  {
       →…
    270→export const ToastExample = () => {
    271→  const [snippet, setSnippet] = useState(examples[0].snippet);
    272→  return (
+   273→    <section className="grid md:grid-cols-2 gap-4">
       →…
 site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
@@ -144,27 +167,35 @@ site/components/sections/toaster-example.tsx
     17→export const ToasterExample: React.FC<{
     18→  position: ToastPosition;
     19→  onPosition: (pos: ToastPosition) => void;
+    20→  reverse: boolean;
       →…
 site/next.config.mjs
      5→const withMDX = nextMdx({
-     6→  extension: /\.mdx?$/,
-      →…
     14→/** @type {import('next').NextConfig} */
     15→const nextConfig = {
-    16→  pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
     17→  webpack(config) {
     18→    config.module.rules.push({
+    19→      test: /\.svg$/,
+    20→      use: ['@svgr/webpack'],
+    21→    });
+    22→    return config;
+    23→  },
     24→  async rewrites() {
     25→    return [
     26→      {
-      →…
+    27→        source: '/bee.js',
+    28→        destination: 'https://cdn.splitbee.io/sb.js',
+    29→      },
+    30→      {
+    31→        source: '/_hive/:slug',
+    32→        destination: 'https://hive.splitbee.io/:slug',
+    33→      },
+    34→    ];
+    35→  },
 site/pages/_app.tsx
     12→const components = {
     13→  a: (props) => (
     14→    <Link href={props.href}>
-    15→      <a {...props} />
-    16→    </Link>
-    17→  ),
       →…
     71→function MyApp …
 site/pages/index.tsx
@@ -207,8 +238,6 @@ src/components/checkmark.tsx
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
     35→  width: 20px;
-    36→  opacity: 0;
-    37→  height: 20px;
       →…
 src/components/error.tsx
      3→const circleAnimation = keyframes`
@@ -220,8 +249,6 @@ src/components/error.tsx
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
     39→  width: 20px;
-    40→  opacity: 0;
-    41→  height: 20px;
       →…
 src/components/loader.tsx
      3→const rotate = keyframes`
@@ -231,8 +258,6 @@ src/components/loader.tsx
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
     18→  width: 12px;
-    19→  height: 12px;
-    20→  box-sizing: border-box;
       →…
 src/components/toast-bar.tsx
      8→const enterAnimation = (factor: number) => `
@@ -264,8 +289,6 @@ src/components/toast-bar.tsx
       →…
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
-    77→    const animationStyle: React.CSSProperties = toast.height
-    78→      ? getAnimationStyle(
       →…
 src/components/toast-icon.tsx
      9→const StatusWrapper = styled('div')`
@@ -273,8 +296,6 @@ src/components/toast-icon.tsx
     22→const enter = keyframes`
     32→export const AnimatedIconWrapper = styled('div')`
     33→  position: relative;
-    34→  transform: scale(0.6);
-    35→  opacity: 0.4;
       →…
     41→export type IconThemes = Partial<{
     42→  success: CheckmarkTheme;
@@ -297,6 +318,9 @@ src/components/toast-icon.tsx
     60→    return null;
     61→  }
     62→
+    63→  return (
+    64→    <IndicatorWrapper>
+    65→      <LoaderIcon {...iconTheme} />
       →…
 src/components/toaster.tsx
     15→const ToastWrapper = ({
@@ -326,6 +350,9 @@ src/components/toaster.tsx
     98→    <div
     99→      data-rht-toaster={toasterId || ''}
    100→      style={{
+   101→        position: 'fixed',
+   102→        zIndex: 9999,
+   103→        top: DEFAULT_OFFSET,
       →…
 src/core/store.ts
      4→export const TOAST_EXPIRE_DISMISS_DELAY = 1000;
@@ -388,15 +415,7 @@ src/core/store.ts
     67→      return {
       →…
    136→const listeners: Array<
-   137→  [toasterId: string, reducer: (state: ToasterState) => void]
-   138→> = [];
    140→const defaultToasterState: ToasterState = {
-   141→  toasts: [],
-   142→  pausedAt: undefined,
-   143→  settings: {
-   144→    toastLimit: TOAST_LIMIT,
-   145→  },
-   146→};
    149→export const dispatch = (action: Action, toasterId = DEFAULT_TOASTER_ID) => {
    150→  memoryState[toasterId] = reducer(
    151→    memoryState[toasterId] || defaultToasterState,
@@ -417,13 +436,7 @@ src/core/store.ts
    173→  };
    175→export const defaultTimeouts: {
    176→  [key in ToastType]: number;
-   177→} = {
-   178→  blank: 4000,
-   179→  error: 4000,
-   180→  success: 2000,
-   181→  loading: Infinity,
-   182→  custom: 4000,
-   183→};
+      →…
    185→export const useStore = (
    186→  toastOptions: DefaultToastOptions = {},
    187→  toasterId: string = DEFAULT_TOASTER_ID
@@ -444,12 +457,20 @@ src/core/toast.ts
     27→): Toast => ({
     28→  createdAt: Date.now(),
     29→  visible: true,
+    30→  dismissed: false,
+    31→  type,
+    32→  ariaProps: {
+    33→    role: 'status',
       →…
     42→const createHandler =
     43→  (type?: ToastType): ToastHandler =>
     44→  (message, options) => {
     45→    const toast = createToast(message, type, options);
     46→
+    47→    const dispatch = createDispatch(
+    48→      toast.toasterId || getToasterIdFromToastId(toast.id)
+    49→    );
+    50→
       →…
     55→const toast = (message: Message, opts?: ToastOptions) =>
     56→  createHandler('blank')(message, opts);
@@ -554,23 +575,9 @@ src/core/use-toaster.ts
 src/core/utils.ts
      1→export const genId = (() => {
      2→  let count = 0;
-     3→  return () => {
-     4→    return (++count).toString();
-     5→  };
-     6→})();
+      →…
      8→export const prefersReducedMotion = (() => {
      9→  // Cache result
-    10→  let shouldReduceMotion: boolean | undefined = undefined;
-    11→
-    12→  return () => {
-    13→    if (shouldReduceMotion === undefined && typeof window !== 'undefined') {
-    14→      const mediaQuery = matchMedia('(prefers-reduced-motion: reduce)');
-    15→      shouldReduceMotion = !mediaQuery || mediaQuery.matches;
-    16→    }
-    17→    return shouldReduceMotion;
-    18→  };
-    19→})();
+      →…
 tsup.config.ts
      4→const commonConfig: Options = {
-     5→  minify: true,
-      →…

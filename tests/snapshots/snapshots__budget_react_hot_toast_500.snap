@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (489 words)
+budget: 500 (488 words)
 
 README.md
     28→## Features
@@ -58,15 +58,10 @@ site/components/sections/toast-example.tsx
    270→export const ToastExample …
 site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
-     9→  'top-left',
-    10→  'top-center',
-    11→  'top-right',
-    12→  'bottom-left',
-    13→  'bottom-center',
-      →…
     17→export const ToasterExample …
 site/next.config.mjs
      5→const withMDX = nextMdx({
+    14→/** @type {import('next').NextConfig} */
     15→const nextConfig = {
     17→  webpack(config) {
     24→  async rewrites() {
@@ -163,3 +158,5 @@ src/core/types.ts
       →…
 src/core/use-toaster.ts
      8→export const useToaster …
+tsup.config.ts
+     4→const commonConfig: Options = {

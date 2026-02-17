@@ -77,6 +77,31 @@ README.md
     61→          <Slot key={idx} {...slot} />
     62→        ))}
     63→      </div>
+    64→    </>
+    65→  )}
+    66→/>
+    67→
+    68→// Feel free to copy. Uses @shadcn/ui tailwind colors.
+    69→function Slot(props: SlotProps) {
+    70→  return (
+    71→    <div
+    72→      className={cn(
+    73→        'relative w-10 h-14 text-[2rem]',
+    74→        'flex items-center justify-center',
+    75→        'transition-all duration-300',
+    76→        'border-border border-y border-r first:border-l first:rounded-l-md last:rounded-r-md',
+    77→        'group-hover:border-accent-foreground/20 group-focus-within:border-accent-foreground/20',
+    78→        'outline outline-0 outline-accent-foreground/20',
+    79→        { 'outline-4 outline-accent-foreground': props.isActive },
+    80→      )}
+    81→    >
+    82→      <div className="group-has-[input[data-input-otp-placeholder-shown]]:opacity-20">
+    83→        {props.char ?? props.placeholderChar}
+    84→      </div>
+    85→      {props.hasFakeCaret && <FakeCaret />}
+    86→    </div>
+    87→  )
+    88→}
       →…
    136→## How it works
    138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
@@ -106,6 +131,31 @@ README.md
    163→
    164→Stripe was my first inspiration to build this library.
    165→
+   166→Take a look at Stripe's input. The screen reader does not behave like it normally should on a normal single input.
+   167→That's because Stripe's solution is to render a 1-digit input with "clone-divs" rendering a single char per div.
+   168→
+   169→https://github.com/guilhermerodz/input-otp/assets/10366880/3d127aef-147c-4f28-9f6c-57a357a802d0
+   170→
+   171→So we're rendering a single input with invisible/transparent colors instead.
+   172→The screen reader now gets to read it, but there is no appearance. Feel free to build whatever UI you want:
+   173→
+   174→https://github.com/guilhermerodz/input-otp/assets/10366880/718710f0-2198-418c-8fa0-46c05ae5475d
+   175→
+   176→</details>
+   177→
+   178→<details>
+   179→<summary>Supports all keybindings</summary>
+   180→
+   181→Should be able to support all keybindings of a common text input as it's an input.
+   182→
+   183→https://github.com/guilhermerodz/input-otp/assets/10366880/185985c0-af64-48eb-92f9-2e59be9eb78f
+   184→
+   185→</details>
+   186→
+   187→<details>
+   188→<summary>Automatically optimizes for password managers</summary>
+   189→
+   190→
       →…
    198→### Auto tracks if the input has space in the right side for the badge
    200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
@@ -146,6 +196,8 @@ README.md
    238→
    239→  // Virtual keyboard appearance on mobile
    240→  // Default: 'numeric'
+   241→  inputMode?: 'numeric' | 'text' | 'decimal' | 'tel' | 'search' | 'email' | 'url'
+   242→
       →…
    293→## Examples
    298→```tsx
@@ -171,6 +223,31 @@ README.md
    318→
    319→<details>
    320→<summary>Automatically focus the input when the page loads</summary>
+   321→
+   322→```tsx
+   323→export default function Page() {
+   324→  return (
+   325→    <form ref={formRef}>
+   326→      <OTPInput
+   327→        autoFocus
+   328→        // Pro tip: accepts all common HTML input props...
+   329→      />
+   330→    </form>
+   331→  )
+   332→}
+   333→```
+   334→</details>
+   335→
+   336→<details>
+   337→<summary>Usage with react-hook-form</summary>
+   338→Just use it as a regular text input:
+   339→
+   340→```tsx
+   341→const { register, handleSubmit } = useForm();
+   342→// Then register it like a text input
+   343→<InputOTP {...register("otp")} />
+   344→```
+   345→
       →…
    377→## Caveats
    382→By default, `input-otp` handles password managers for you.
@@ -196,6 +273,31 @@ README.md
    402→
    403→<details>
    404→<summary>[Setting] If you want to customize the `noscript` CSS fallback</summary>
+   405→
+   406→By default, `input-otp` handles cases where JS is not in the page by applying custom CSS styles.
+   407→If you do not like the fallback design and want to apply it to your own, just pass a prop:
+   408→
+   409→```diff
+   410→// This is the default CSS fallback.
+   411→// Feel free to change it entirely and apply to your design system.
+   412→const NOSCRIPT_CSS_FALLBACK = `
+   413→[data-input-otp] {
+   414→  --nojs-bg: white !important;
+   415→  --nojs-fg: black !important;
+   416→
+   417→  background-color: var(--nojs-bg) !important;
+   418→  color: var(--nojs-fg) !important;
+   419→  caret-color: var(--nojs-fg) !important;
+   420→  letter-spacing: .25em !important;
+   421→  text-align: center !important;
+   422→  border: 1px solid var(--nojs-fg) !important;
+   423→  border-radius: 4px !important;
+   424→  width: 100% !important;
+   425→}
+   426→@media (prefers-color-scheme: dark) {
+   427→  [data-input-otp] {
+   428→    --nojs-bg: black !important;
+   429→    --nojs-fg: white !important;
       →…
    539→#### Sponsors
    541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
@@ -274,21 +376,9 @@ apps/storybook/README.md
     91→3. See our official documentation at [Storybook](https://storybook.js.org/).
 apps/storybook/src/components/ui/input-otp.tsx
      9→const InputOTP = React.forwardRef<
-    10→  React.ElementRef<typeof OTPInput>,
-    11→  React.ComponentPropsWithoutRef<typeof OTPInput>
-      →…
     21→const InputOTPGroup = React.forwardRef<
-    22→  React.ElementRef<"div">,
-    23→  React.ComponentPropsWithoutRef<"div">
-      →…
     29→const InputOTPSlot = React.forwardRef<
-    30→  React.ElementRef<"div">,
-    31→  SlotProps & React.ComponentPropsWithoutRef<"div">
-      →…
     54→const InputOTPSeparator = React.forwardRef<
-    55→  React.ElementRef<"div">,
-    56→  React.ComponentPropsWithoutRef<"div">
-      →…
 apps/storybook/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
@@ -296,27 +386,16 @@ apps/storybook/src/lib/utils.ts
 apps/storybook/src/stories/Button.stories.ts
     14→export const Primary = {
     15→  args: {
-    16→    primary: true,
-    17→    label: 'Button',
-    18→  },
-    19→};
+      →…
     21→export const Secondary = {
     22→  args: {
-    23→    label: 'Button',
-    24→  },
-    25→};
+      →…
     27→export const Large = {
     28→  args: {
-    29→    size: 'large',
-    30→    label: 'Button',
-    31→  },
-    32→};
+      →…
     34→export const Small = {
     35→  args: {
-    36→    size: 'small',
-    37→    label: 'Button',
-    38→  },
-    39→};
+      →…
 apps/storybook/src/stories/Button.tsx
      5→/**
      6→ * Primary UI component for user interaction
@@ -338,11 +417,6 @@ apps/storybook/src/stories/InputOTP.stories.tsx
      4→const meta = {
      5→  title: "ui/InputOTP",
      6→  component: InputOTP,
-     7→  tags: ["autodocs"],
-     8→  argTypes: {},
-     9→  args: {
-    10→    maxLength: 6,
-    11→    pattern: REGEXP_ONLY_DIGITS_AND_CHARS,
       →…
     27→type Story = StoryObj<typeof meta>
     29→export const Default: Story = {}
@@ -350,12 +424,6 @@ apps/storybook/tailwind.config.js
      1→/** @type {import('tailwindcss').Config} */
      2→const config = {
      3→  darkMode: ['class'],
-     4→  content: [
-     5→    './index.html',
-     6→    './src/stories/**/*.{ts,tsx}',
-     7→    './src/**/*.{ts,tsx}',
-     8→    '.storybook/**/*.{js,ts,tsx}',
-     9→  ],
       →…
 apps/website/README.md
      3→## Getting Started
@@ -423,14 +491,7 @@ apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
      9→}
 apps/website/src/app/(local-pages)/example-playground/code.tsx
      4→const tsx = `'use client'
-     5→import { OTPInput, SlotProps } from 'input-otp'
-     6→
-     7→<OTPInput
-     8→  maxLength={6}
-      →…
     95→const code = `\`\`\`tsx /maxLength={6}/ /render/ /slots/1 /.map((slot, idx)/1 /Slot/2,3,4 /props.char/2 /<FakeCaret />/
-    96→${tsx}
-    97→\`\`\``
     99→export function ExampleCode() {
    100→  return (
    101→    <div className="relative code-example w-full overflow-hidden lg:opacity-0 lg:animate-fade-up !duration-1000 ![animation-delay:3000ms] animate-none">
@@ -485,11 +546,6 @@ apps/website/src/app/(local-pages)/example-playground/component.tsx
     68→  return (
       →…
     76→const config = {
-    77→  theme: {
-    78→    extend: {
-    79→      keyframes: {
-    80→        'caret-blink': {
-      →…
 apps/website/src/app/(local-pages)/example-playground/page.tsx
      3→export default function ExamplePlayground() {
      4→  return (
@@ -727,33 +783,6 @@ apps/website/src/app/(pages)/layout.tsx
     23→    'one-time-code',
     24→    'Input',
     25→    'Next.js',
-    26→    'Tailwind CSS',
-    27→    'Server Components',
-    28→    'Accessible',
-    29→  ],
-    30→  authors: [
-    31→    {
-    32→      name: 'guilhermerodz',
-    33→      url: 'https://rodz.dev',
-    34→    },
-    35→  ],
-    36→  creator: 'guilhermerodz',
-    37→  openGraph: {
-    38→    type: 'website',
-    39→    locale: 'en_US',
-    40→    url: siteConfig.url,
-    41→    title: siteConfig.name,
-    42→    description: siteConfig.description,
-    43→    siteName: siteConfig.name,
-    44→    images: [
-    45→      {
-    46→        url: siteConfig.ogImage,
-    47→        width: 1200,
-    48→        height: 630,
-    49→        alt: siteConfig.name,
-    50→      },
-    51→    ],
-    52→  },
       →…
     68→export default function RootLayout({
     69→  children,
@@ -843,28 +872,6 @@ apps/website/src/components/icons.tsx
     14→        strokeLinecap="round"
     15→        strokeLinejoin="round"
     16→        strokeWidth="16"
-    17→      />
-    18→      <line
-    19→        x1="192"
-    20→        y1="40"
-    21→        x2="40"
-    22→        y2="192"
-    23→        fill="none"
-    24→        stroke="currentColor"
-    25→        strokeLinecap="round"
-    26→        strokeLinejoin="round"
-    27→        strokeWidth="16"
-    28→      />
-    29→    </svg>
-    30→  ),
-    31→  twitter: (props: IconProps) => (
-    32→    <svg
-    33→      {...props}
-    34→      height="23"
-    35→      viewBox="0 0 1200 1227"
-    36→      width="23"
-    37→      xmlns="http://www.w3.org/2000/svg"
-    38→    >
       →…
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {
@@ -941,6 +948,7 @@ apps/website/src/components/ui/dropdown-menu.tsx
    173→  ...props
    174→}: React.HTMLAttributes<HTMLSpanElement>) => {
    175→  return (
+   176→    <span
       →…
 apps/website/src/components/ui/input-otp.tsx
      9→const InputOTP = React.forwardRef<
@@ -959,6 +967,7 @@ apps/website/src/components/ui/sonner.tsx
     10→
     11→  return (
     12→    <Sonner
+    13→      theme={theme as ToasterProps['theme']}
       →…
 apps/website/src/config/site.ts
      1→export const siteConfig = {
@@ -966,12 +975,7 @@ apps/website/src/config/site.ts
      3→  url: 'https://input-otp.rodz.dev',
      4→  ogImage: 'https://input-otp.rodz.dev/og.jpg',
      5→  description:
-     6→    'One-time password input component for React. Accessible. Unstyled. Customizable. Open Source. Build your own OTP form effortlessly.',
-     7→  links: {
-     8→    twitter: 'https://twitter.com/guilherme_rodz',
-     9→    github: 'https://github.com/guilhermerodz/input-otp',
-    10→  },
-    11→}
+      →…
     13→export type SiteConfig = typeof siteConfig
 apps/website/src/lib/fonts.ts
     10→export const fontSans = GeistSans
@@ -985,11 +989,6 @@ apps/website/src/lib/utils.ts
      6→}
 apps/website/tailwind.config.ts
      3→const config = {
-     4→  darkMode: ['class'],
-     5→  content: [
-     6→    './pages/**/*.{ts,tsx}',
-     7→    './components/**/*.{ts,tsx}',
-      →…
 packages/input-otp/src/input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(
     11→  {} as RenderProps,
@@ -1016,32 +1015,6 @@ packages/input-otp/src/input.tsx
     33→      ...props
     34→    },
     35→    ref,
-    36→  ) => {
-    37→    // Only used when `value` state is not provided
-    38→    const [internalValue, setInternalValue] = React.useState(
-    39→      typeof props.defaultValue === 'string' ? props.defaultValue : '',
-    40→    )
-    41→
-    42→    // Definitions
-    43→    const value = uncheckedValue ?? internalValue
-    44→    const previousValue = usePrevious(value)
-    45→    const onChange = React.useCallback(
-    46→      (newValue: string) => {
-    47→        uncheckedOnChange?.(newValue)
-    48→        setInternalValue(newValue)
-    49→      },
-    50→      [uncheckedOnChange],
-    51→    )
-    52→    const regexp = React.useMemo(
-    53→      () =>
-    54→        pattern
-    55→          ? typeof pattern === 'string'
-    56→            ? new RegExp(pattern)
-    57→            : pattern
-    58→          : null,
-    59→      [pattern],
-    60→    )
-    61→
       →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
@@ -1052,14 +1025,6 @@ packages/input-otp/src/input.tsx
    546→}
    553→const NOSCRIPT_CSS_FALLBACK = `
    554→[data-input-otp] {
-   555→  --nojs-bg: white !important;
-   556→  --nojs-fg: black !important;
-   557→
-   558→  background-color: var(--nojs-bg) !important;
-   559→  color: var(--nojs-fg) !important;
-   560→  caret-color: var(--nojs-fg) !important;
-   561→  letter-spacing: .25em !important;
-   562→  text-align: center !important;
       →…
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
@@ -1130,10 +1095,7 @@ packages/input-otp/src/use-pwm-badge.tsx
      6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
      8→const PASSWORD_MANAGERS_SELECTORS = [
      9→  '[data-lastpass-icon-root]', // LastPass
-    10→  'com-1password-button', // 1Password
-    11→  '[data-dashlanecreated]', // Dashlane
-    12→  '[style$="2147483647 !important;"]', // Bitwarden
-    13→].join(',')
+      →…
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,

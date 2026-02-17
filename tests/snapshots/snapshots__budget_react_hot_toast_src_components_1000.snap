@@ -2,15 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 words)
+budget: 1000 (999 words)
 
 checkmark.tsx
      3→const circleAnimation = keyframes`
-     4→from {
-      →…
     13→const checkmarkAnimation = keyframes`
-    14→0% {
-      →…
     29→export interface CheckmarkTheme {
     30→  primary?: string;
     31→  secondary?: string;
@@ -33,26 +29,11 @@ checkmark.tsx
     49→    animation: ${checkmarkAnimation} 0.2s ease-out forwards;
     50→    opacity: 0;
     51→    animation-delay: 200ms;
-    52→    position: absolute;
-    53→    border-right: 2px solid;
-    54→    border-bottom: 2px solid;
-    55→    border-color: ${(p) => p.secondary || '#fff'};
-    56→    bottom: 6px;
-    57→    left: 6px;
-    58→    height: 10px;
-    59→    width: 6px;
-    60→  }
-    61→`;
+      →…
 error.tsx
      3→const circleAnimation = keyframes`
-     4→from {
-      →…
     13→const firstLineAnimation = keyframes`
-    14→from {
-      →…
     23→const secondLineAnimation = keyframes`
-    24→from {
-      →…
     33→export interface ErrorTheme {
     34→  primary?: string;
     35→  secondary?: string;
@@ -75,26 +56,9 @@ error.tsx
     53→    content: '';
     54→    animation: ${firstLineAnimation} 0.15s ease-out forwards;
     55→    animation-delay: 150ms;
-    56→    position: absolute;
-    57→    border-radius: 3px;
-    58→    opacity: 0;
-    59→    background: ${(p) => p.secondary || '#fff'};
-    60→    bottom: 9px;
-    61→    left: 4px;
-    62→    height: 2px;
-    63→    width: 12px;
-    64→  }
-    65→
-    66→  &:before {
-    67→    animation: ${secondLineAnimation} 0.15s ease-out forwards;
-    68→    animation-delay: 180ms;
-    69→    transform: rotate(90deg);
-    70→  }
-    71→`;
+      →…
 loader.tsx
      3→const rotate = keyframes`
-     4→  from {
-      →…
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
@@ -121,11 +85,7 @@ toast-bar.tsx
     18→const fadeInAnimation = `0%{opacity:0;} 100%{opacity:1;}`;
     19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
     22→const ToastBarBase = styled('div')`
-    23→  :where(&) {
-      →…
     38→const Message = styled('div')`
-    39→  display: flex;
-      →…
     47→interface ToastBarProps {
     48→  toast: Toast;
     49→  position?: ToastPosition;
@@ -144,7 +104,14 @@ toast-bar.tsx
     63→
     64→  const [enter, exit] = prefersReducedMotion()
     65→    ? [fadeInAnimation, fadeOutAnimation]
-      →…
+    66→    : [enterAnimation(factor), exitAnimation(factor)];
+    67→
+    68→  return {
+    69→    animation: visible
+    70→      ? `${keyframes(enter)} 0.35s cubic-bezier(.21,1.02,.73,1) forwards`
+    71→      : `${keyframes(exit)} 0.4s forwards cubic-bezier(.06,.71,.55,1)`,
+    72→  };
+    73→};
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
     77→    const animationStyle: React.CSSProperties = toast.height
@@ -163,33 +130,11 @@ toast-bar.tsx
     90→
     91→    return (
     92→      <ToastBarBase
-    93→        className={toast.className}
-    94→        style={{
-    95→          ...animationStyle,
-    96→          ...style,
-    97→          ...toast.style,
-    98→        }}
-    99→      >
-   100→        {typeof children === 'function' ? (
-   101→          children({
-   102→            icon,
-   103→            message,
-   104→          })
-   105→        ) : (
-   106→          <>
-   107→            {icon}
-   108→            {message}
       →…
 toast-icon.tsx
      9→const StatusWrapper = styled('div')`
-    10→  position: absolute;
-      →…
     13→const IndicatorWrapper = styled('div')`
-    14→  position: relative;
-      →…
     22→const enter = keyframes`
-    23→from {
-      →…
     32→export const AnimatedIconWrapper = styled('div')`
     33→  position: relative;
     34→  transform: scale(0.6);
@@ -241,7 +186,31 @@ toaster.tsx
     18→  style,
     19→  onHeightUpdate,
     20→  children,
-      →…
+    21→}: ToastWrapperProps) => {
+    22→  const ref = React.useCallback(
+    23→    (el: HTMLElement | null) => {
+    24→      if (el) {
+    25→        const updateHeight = () => {
+    26→          const height = el.getBoundingClientRect().height;
+    27→          onHeightUpdate(id, height);
+    28→        };
+    29→        updateHeight();
+    30→        new MutationObserver(updateHeight).observe(el, {
+    31→          subtree: true,
+    32→          childList: true,
+    33→          characterData: true,
+    34→        });
+    35→      }
+    36→    },
+    37→    [id, onHeightUpdate]
+    38→  );
+    39→
+    40→  return (
+    41→    <div ref={ref} className={className} style={style}>
+    42→      {children}
+    43→    </div>
+    44→  );
+    45→};
     47→const getPositionStyle = (
     48→  position: ToastPosition,
     49→  offset: number
@@ -251,10 +220,26 @@ toaster.tsx
     53→  const horizontalStyle: React.CSSProperties = position.includes('center')
     54→    ? {
     55→        justifyContent: 'center',
-      →…
+    56→      }
+    57→    : position.includes('right')
+    58→    ? {
+    59→        justifyContent: 'flex-end',
+    60→      }
+    61→    : {};
+    62→  return {
+    63→    left: 0,
+    64→    right: 0,
+    65→    display: 'flex',
+    66→    position: 'absolute',
+    67→    transition: prefersReducedMotion()
+    68→      ? undefined
+    69→      : `all 230ms cubic-bezier(.21,1.02,.73,1)`,
+    70→    transform: `translateY(${offset * (top ? 1 : -1)}px)`,
+    71→    ...verticalStyle,
+    72→    ...horizontalStyle,
+    73→  };
+    74→};
     76→const activeClass = css`
-    77→  z-index: 9999;
-      →…
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,

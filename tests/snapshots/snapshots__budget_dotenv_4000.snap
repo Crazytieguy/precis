@@ -64,14 +64,20 @@ README-es.md
     11→## Usage
     13→Install it.
     14→
+    15→```sh
+    16→npm install dotenv --save
       →…
     39→## Advanced
     43→Import with [ES6](#how-do-i-use-dotenv-with-import):
     44→
+    45→```javascript
+    46→import 'dotenv/config'
       →…
    319→## Agentes
    323→> El software está cambiando, y dotenv debe cambiar con él—por eso construí [agentic secret storage (AS2)](https://dotenvx.com/as2). Los agentes ejecutan código sin humanos en la terminal, por lo que los archivos `.env` en texto plano son el primitivo equivocado.
    324→>
+   325→> AS2 está diseñado para software autónomo: cifrado por defecto, cero acceso a consola y entrega priorizando la criptografía que mantiene a los operadores fuera del circuito.
+   326→>
       →…
    331→### Inicio rápido
    333→Instala vestauth e inicializa tu agente.
@@ -81,14 +87,19 @@ README-es.md
    337→
    338→vestauth agent init
    339→```
+   340→
       →…
    357→## FAQ
    361→No.
    362→
+   363→Unless you encrypt it with [dotenvx](https://github.com/dotenvx/dotenvx). Then we recommend you do.
+   364→
       →…
    579→## Docs
    581→Dotenv exposes four functions:
    582→
+   583→* `config`
+   584→* `parse`
       →…
    587→### Config
    589→`config` will read your `.env` file, parse the contents, assign it to
@@ -98,6 +109,7 @@ README-es.md
    593→```js
    594→const result = dotenv.config()
    595→
+   596→if (result.error) {
       →…
    605→#### Options …
    607→##### path
@@ -138,6 +150,7 @@ README-es.md
    698→```js
    699→const dotenv = require('dotenv')
    700→const buf = Buffer.from('BASIC=basic')
+   701→const config = dotenv.parse(buf) // will return an object
       →…
    705→#### Options …
    707→##### debug
@@ -158,6 +171,7 @@ README-es.md
    727→```js
    728→const dotenv = require('dotenv')
    729→const parsed = { HELLO: 'world' }
+   730→
       →…
    748→#### options …
    750→##### Debug
@@ -172,11 +186,12 @@ README-es.md
    764→## CHANGELOG
    766→See [CHANGELOG.md](CHANGELOG.md)
    767→
-      →…
+   768→&nbsp;
+   769→
    770→## Who's using dotenv?
    772→[These npm modules depend on it.](https://www.npmjs.com/browse/depended/dotenv)
    773→
-      →…
+   774→Projects that expand it often use the [keyword "dotenv" on npm](https://www.npmjs.com/search?q=keywords:dotenv).
 README.md
      1→# dotenv
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
@@ -860,14 +875,7 @@ lib/main.js
     14→  '🤖 agentic secret storage: https://dotenvx.com/as2',
     15→  '⚡️ secrets for agents: https://dotenvx.com/as2',
     16→  '🛡️ auth for agents: https://vestauth.com',
-    17→  '🛠️  run anywhere with `dotenvx run -- yourcommand`',
-    18→  '⚙️  specify custom .env file path with { path: \'/custom/path/.env\' }',
-    19→  '⚙️  enable debug logging with { debug: true }',
-    20→  '⚙️  override existing env vars with { override: true }',
-    21→  '⚙️  suppress all logs with { quiet: true }',
-    22→  '⚙️  write to custom object with { processEnv: myObject }',
-    23→  '⚙️  load multiple .env files with { path: [\'.env.local\', \'.env\'] }'
-    24→]
+      →…
     27→function _getRandomTip () {
     28→  return TIPS[Math.floor(Math.random() * TIPS.length)]
     29→}
@@ -952,5 +960,4 @@ lib/main.js
    417→  config,
    418→  decrypt,
    419→  parse,
-   420→  populate
-   421→}
+      →…

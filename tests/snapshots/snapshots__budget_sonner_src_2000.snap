@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1830 words)
+budget: 2000 (1799 words)
 
 assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
@@ -36,25 +36,9 @@ assets.tsx
     35→  );
     36→};
     38→const SuccessIcon = (
-    39→  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" height="20" width="20">
-    40→    <path
-    41→      fillRule="evenodd"
-      →…
     48→const WarningIcon = (
-    49→  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" height="20" width="20">
-    50→    <path
-    51→      fillRule="evenodd"
-      →…
     58→const InfoIcon = (
-    59→  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" height="20" width="20">
-    60→    <path
-    61→      fillRule="evenodd"
-      →…
     68→const ErrorIcon = (
-    69→  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" height="20" width="20">
-    70→    <path
-    71→      fillRule="evenodd"
-      →…
     78→export const CloseIcon = (
     79→  <svg
     80→    xmlns="http://www.w3.org/2000/svg"
@@ -123,10 +107,6 @@ index.tsx
    555→  React.useEffect(() => {
       →…
    593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
-   594→  const {
-   595→    id,
-   596→    invert,
-      →…
 state.ts
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
@@ -197,6 +177,9 @@ state.ts
     82→      this.addToast({ title: message, ...rest, dismissible, id });
     83→    }
     84→
+    85→    return id;
+    86→  };
+    87→
     88→  dismiss = (id?: number | string) => {
     89→    if (id) {
     90→      this.dismissedToasts.add(id);
@@ -246,6 +229,12 @@ state.ts
    141→
    142→    const p = Promise.resolve(promise instanceof Function ? promise() : promise);
    143→
+   144→    let shouldDismiss = id !== undefined;
+   145→    let result: ['resolve', ToastData] | ['reject', unknown];
+   146→
+   147→    const originalPromise = p
+   148→      .then(async (response) => {
+   149→        result = ['resolve', response];
       →…
    243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
    244→    const id = data?.id || toastsCounter++;

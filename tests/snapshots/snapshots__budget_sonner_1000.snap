@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 words)
+budget: 1000 (993 words)
 
 README.md
      5→## Usage
@@ -36,11 +36,13 @@ src/assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
      6→  switch (type) {
      7→    case 'success':
+     8→      return SuccessIcon;
       →…
     24→const bars = Array(12).fill(0);
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     27→  return (
     28→    <div className={['sonner-loading-wrapper', className].filter(Boolean).join(' ')} data-visible={visible}>
+    29→      <div className="sonner-spinner">
       →…
     38→const SuccessIcon = (
     48→const WarningIcon = (
@@ -51,18 +53,12 @@ src/assets.tsx
     80→    xmlns="http://www.w3.org/2000/svg"
     81→    width="12"
     82→    height="12"
-    83→    viewBox="0 0 24 24"
-    84→    fill="none"
-    85→    stroke="currentColor"
-    86→    strokeWidth="1.5"
-    87→    strokeLinecap="round"
-    88→    strokeLinejoin="round"
-    89→  >
       →…
 src/hooks.tsx
      3→export const useIsDocumentHidden = () => {
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
      5→
+     6→  React.useEffect(() => {
       →…
 src/index.tsx
     22→const VISIBLE_TOASTS_AMOUNT = 3;
@@ -218,6 +214,7 @@ website/src/components/Footer/index.tsx
      6→  return (
      7→    <footer className={styles.wrapper}>
      8→      <div className="container">
+     9→        <p className={styles.p}>
       →…
 website/src/components/Head/index.tsx
      3→const ogImage = 'https://sonner.emilkowal.ski/og.png';
@@ -245,6 +242,7 @@ website/src/components/Other/Other.tsx
      8→  setRichColors,
      9→  setCloseButton,
     10→}: {
+    11→  setRichColors: React.Dispatch<React.SetStateAction<boolean>>;
       →…
 website/src/components/Position/index.tsx
      5→const positions = ['top-left', 'top-center', 'top-right', 'bottom-left', 'bottom-center', 'bottom-right'] as const;
@@ -253,6 +251,7 @@ website/src/components/Position/index.tsx
     10→  position: activePosition,
     11→  setPosition,
     12→}: {
+    13→  position: Position;
       →…
 website/src/components/Types/Types.tsx
      5→const promiseCode = '`${data.name} toast has been added`';
@@ -264,8 +263,6 @@ website/src/components/Types/Types.tsx
     12→      <h2>Types</h2>
       →…
     34→const allTypes = [
-    35→  {
-      →…
 website/src/components/Usage/index.tsx
      3→export const Usage = () => {
      4→  return (

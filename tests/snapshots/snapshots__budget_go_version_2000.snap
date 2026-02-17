@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1905 words)
+budget: 2000 (1972 words)
 
 README.md
      1→# Versioning Library for Go
@@ -67,7 +67,6 @@ constraint.go
     14→var (
     15→	constraintRegexp     *regexp.Regexp
     16→	constraintRegexpOnce sync.Once
-    17→)
     19→func getConstraintRegexp() *regexp.Regexp {
     31→// Constraint represents a single constraint for a version, such as
     32→// ">= 1.0".
@@ -101,7 +100,10 @@ constraint.go
     65→		}
     66→
     67→		result[i] = c
-      →…
+    68→	}
+    69→
+    70→	return Constraints(result), nil
+    71→}
     73→// MustConstraints is a helper that wraps a call to a function
     74→// returning (Constraints, error) and panics if error is non-nil.
     75→func MustConstraints(c Constraints, err error) Constraints {
@@ -139,6 +141,16 @@ constraint.go
    109→	copy(left, cs)
    110→	sort.Stable(left)
    111→	right := make(Constraints, len(c))
+   112→	copy(right, c)
+   113→	sort.Stable(right)
+   114→
+   115→	// compare sorted slices
+   116→	for i, con := range left {
+   117→		if !con.Equals(right[i]) {
+   118→			return false
+   119→		}
+   120→	}
+   121→
       →…
    125→func (cs Constraints) Len() int {
    126→	return len(cs)
@@ -206,7 +218,6 @@ version.go
     18→	versionRegexpOnce sync.Once
     19→	semverRegexp      *regexp.Regexp
     20→	semverRegexpOnce  sync.Once
-    21→)
     23→func getVersionRegexp() *regexp.Regexp {
     30→func getSemverRegexp() *regexp.Regexp {
     37→// The raw regular expression string used for testing the validity
@@ -214,15 +225,11 @@ version.go
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     41→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-?([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
-    42→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
-    43→		`?`
-    44→
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
     48→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
     49→		`?`
-    50→)
     52→// Version represents a single version.
     53→type Version struct {
     54→	metadata string
@@ -268,6 +275,16 @@ version.go
    135→	if v.equalSegments(other) {
    136→		preSelf := v.Prerelease()
    137→		preOther := other.Prerelease()
+   138→		if preSelf == "" && preOther == "" {
+   139→			return 0
+   140→		}
+   141→		if preSelf == "" {
+   142→			return 1
+   143→		}
+   144→		if preOther == "" {
+   145→			return -1
+   146→		}
+   147→
       →…
    196→func (v *Version) equalSegments(other *Version) bool {
    211→func allZero(segs []int64) bool {

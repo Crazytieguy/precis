@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3741 words)
+budget: 4000 (3859 words)
 
 README.md
      1→# color
@@ -222,7 +222,6 @@ color.go
     63→	ReverseVideo
     64→	Concealed
     65→	CrossedOut
-    66→)
     68→const (
     69→	ResetBold Attribute = iota + 22
     70→	ResetItalic
@@ -232,10 +231,6 @@ color.go
     75→	ResetConcealed
     76→	ResetCrossedOut
     79→var mapResetAttributes map[Attribute]Attribute = map[Attribute]Attribute{
-    80→	Bold:         ResetBold,
-    81→	Faint:        ResetBold,
-    82→	Italic:       ResetItalic,
-      →…
     91→// Foreground text colors
     92→const (
     93→	FgBlack Attribute = iota + 30
@@ -246,10 +241,8 @@ color.go
     98→	FgMagenta
     99→	FgCyan
    100→	FgWhite
-   101→
    102→	// used internally for 256 and 24-bit coloring
    103→	foreground
-   104→)
    106→// Foreground Hi-Intensity text colors
    107→const (
    108→	FgHiBlack Attribute = iota + 90
@@ -260,7 +253,6 @@ color.go
    113→	FgHiMagenta
    114→	FgHiCyan
    115→	FgHiWhite
-   116→)
    118→// Background text colors
    119→const (
    120→	BgBlack Attribute = iota + 40
@@ -271,10 +263,8 @@ color.go
    125→	BgMagenta
    126→	BgCyan
    127→	BgWhite
-   128→
    129→	// used internally for 256 and 24-bit coloring
    130→	background
-   131→)
    133→// Background Hi-Intensity text colors
    134→const (
    135→	BgHiBlack Attribute = iota + 100
@@ -285,7 +275,6 @@ color.go
    140→	BgHiMagenta
    141→	BgHiCyan
    142→	BgHiWhite
-   143→)
    145→// New returns a newly created color object.
    146→func New(value ...Attribute) *Color {
    147→	c := &Color{
@@ -345,6 +334,10 @@ color.go
    208→	return c
    209→}
    211→func (c *Color) unset() {
+   212→	if c.isNoColorSet() {
+   213→		return
+   214→	}
+      →…
    219→// SetWriter is used to set the SGR sequence with the given io.Writer. This is
    220→// a low-level function, and users should use the higher-level functions, such
    221→// as color.Fprint, color.Print, etc.
@@ -528,7 +521,13 @@ color.go
    421→	return c.format() + s + c.unformat()
    422→}
    424→func (c *Color) format() string {
+   425→	return fmt.Sprintf("%s[%sm", escape, c.sequence())
+   426→}
    428→func (c *Color) unformat() string {
+   429→	//return fmt.Sprintf("%s[%dm", escape, Reset)
+   430→	//for each element in sequence let's use the specific reset escape, or the generic one if not found
+   431→	format := make([]string, len(c.params))
+      →…
    443→// DisableColor disables the color output. Useful to not change any existing
    444→// code and still being able to output. Can be used for flags like
    445→// "--no-color". To enable back use EnableColor() method.
@@ -541,6 +540,10 @@ color.go
    453→	c.noColor = boolPtr(false)
    454→}
    456→func (c *Color) isNoColorSet() bool {
+   457→	// check first if we have user set action
+   458→	if c.noColor != nil {
+   459→		return *c.noColor
+      →…
    466→// Equals returns a boolean value indicating whether two colors are equal.
    467→func (c *Color) Equals(c2 *Color) bool {
    468→	if c == nil && c2 == nil {
@@ -562,10 +565,28 @@ color.go
    484→	return true
    485→}
    487→func (c *Color) attrExists(a Attribute) bool {
+   488→	for _, attr := range c.params {
+   489→		if attr == a {
+   490→			return true
+      →…
    497→func boolPtr(v bool) *bool {
+   498→	return &v
+   499→}
    501→func getCachedColor(p Attribute) *Color {
+   502→	colorsCacheMu.Lock()
+   503→	defer colorsCacheMu.Unlock()
+   504→
+      →…
    514→func colorPrint(format string, p Attribute, a ...interface{}) {
+   515→	c := getCachedColor(p)
+   516→
+   517→	if !strings.HasSuffix(format, "\n") {
+      →…
    528→func colorString(format string, p Attribute, a ...interface{}) string {
+   529→	c := getCachedColor(p)
+   530→
+   531→	if len(a) == 0 {
+      →…
    538→// Black is a convenient helper function to print with black foreground. A
    539→// newline is appended to format by default.
    540→func Black(format string, a ...interface{}) { colorPrint(format, FgBlack, a...) }
@@ -680,3 +701,7 @@ color.go
    681→}
 color_windows.go
      9→func init() {
+    10→	// Opt-in for ansi color support for current process.
+    11→	// https://learn.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences#output-sequences
+    12→	var outMode uint32
+      →…

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (498 words)
+budget: 500 (500 words)
 
 components/checkmark.tsx
     29→export interface CheckmarkTheme {
@@ -10,24 +10,18 @@ components/checkmark.tsx
     31→  secondary?: string;
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
-    35→  width: 20px;
-      →…
 components/error.tsx
     33→export interface ErrorTheme {
     34→  primary?: string;
     35→  secondary?: string;
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
-    39→  width: 20px;
-      →…
 components/loader.tsx
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
-    18→  width: 12px;
-      →…
 components/toast-bar.tsx
      8→const enterAnimation …
     13→const exitAnimation …
@@ -42,12 +36,8 @@ components/toast-bar.tsx
     55→}
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
-    76→  ({ toast, position, style, children }) => {
-      →…
 components/toast-icon.tsx
     32→export const AnimatedIconWrapper = styled('div')`
-    33→  position: relative;
-      →…
     41→export type IconThemes = Partial<{
     42→  success: CheckmarkTheme;
     43→  error: ErrorTheme;
@@ -56,6 +46,9 @@ components/toast-icon.tsx
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {
+    50→  const { icon, type, iconTheme } = toast;
+    51→  if (icon !== undefined) {
+    52→    if (typeof icon === 'string') {
       →…
 components/toaster.tsx
     15→const ToastWrapper …
@@ -63,6 +56,9 @@ components/toaster.tsx
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
     87→  position = 'top-center',
+    88→  toastOptions,
+    89→  gutter,
+    90→  children,
       →…
 core/store.ts
      4→export const TOAST_EXPIRE_DISMISS_DELAY …

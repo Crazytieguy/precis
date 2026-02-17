@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1959 words)
+budget: 2000 (1943 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -78,6 +78,7 @@ README.md
     77→    * [`log4rs`](https://docs.rs/log4rs/*/log4rs/)
     78→    * [`logforth`](https://docs.rs/logforth/*/logforth/)
     79→    * [`fern`](https://docs.rs/fern/*/fern/)
+    80→    * [`spdlog-rs`](https://docs.rs/spdlog-rs/*/spdlog/)
       →…
    106→## Structured logging
    108→If you enable the `kv` feature, you can associate structured data with your log records:
@@ -93,25 +94,12 @@ rfcs/0296-structured-logging.md
      5→# Summary …
     16→# Contents …
     43→# Motivation …
-    46→## What is structured logging? …
-    86→## Why do we need structured logging in `log`? …
     98→# Guide-level explanation …
-   103→## Logging structured key-value pairs …
-   255→## Supporting key-value pairs in `Log` implementations …
-   401→## Integrating log frameworks with `log` …
-   489→## How producers and consumers of structured values interact …
    495→# Reference-level explanation …
-   500→## Design considerations …
    502→### Don't break anything
    504→Allow structured logging to be added in the current `0.4.x` series of `log`. This gives us the option of including structured logging in an `0.4.x` release, or bumping the minor crate version without introducing any actual breaking changes.
    505→
-   522→## Cargo features …
-   541→## A complete key-values API …
-  1460→## A minimal key-values API …
-  1569→## The `log!` macros …
   1575→# Drawbacks, rationale, and alternatives …
-  1578→## Supporting structured logging at all …
-  1582→## Internalizing `sval` and `serde` …
   1598→#### Build a serialization contract in `log`
   1600→Instead of internalizing a few serialization frameworks, `log` could provide a public common contract for them to conform to:
   1601→
@@ -125,9 +113,6 @@ rfcs/0296-structured-logging.md
   1609→pub trait Visitor {
       →…
   1629→# Prior art …
-  1634→## Rust …
-  1640→## Go …
-  1644→## .NET …
   1650→# Unresolved questions …
 src/__private_api.rs
      9→#[cfg(not(feature = "kv"))]
@@ -158,6 +143,7 @@ src/kv/error.rs
     15→    Value(crate::kv::value::inner::Error),
     16→    Fmt,
     17→}
+    21→    pub fn msg …
     28→    #[cfg(feature = "value-bag")]
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
     36→    #[cfg(feature = "value-bag")]
@@ -165,6 +151,7 @@ src/kv/error.rs
     68→#[cfg(feature = "std")]
     69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
+    77→        pub fn boxed …
 src/kv/key.rs
      7→pub trait ToKey {
      8→    /// Perform the conversion.
@@ -174,6 +161,9 @@ src/kv/key.rs
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
     40→}
+    45→    pub fn from_str …
+    53→    pub fn as_str …
+    61→    pub fn to_borrowed_str …
     93→#[cfg(feature = "std")]
     94→mod std_support {
    112→#[cfg(feature = "kv_sval")]
@@ -212,6 +202,9 @@ src/kv/source.rs
     57→    ///
     58→    /// # Implementation notes
     59→    ///
+    62→    fn visit …
+    73→    fn get …
+    85→    fn count …
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
    113→/// The default implementation of `Source::count`.
@@ -235,11 +228,21 @@ src/kv/value.rs
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
+   125→    pub fn from_any …
+   133→    pub fn from_debug …
+   143→    pub fn from_display …
+   154→    pub fn from_serde …
+   165→    pub fn from_sval …
+   175→    pub fn from_dyn_debug …
+   182→    pub fn from_dyn_display …
+   190→    pub fn from_dyn_error …
+   197→    pub fn null …
    203→    /// Get a value from an internal primitive.
    204→    fn from_inner<T>(value: T) -> Self
    205→    where
    206→        T: Into<inner::Inner<'v>>,
    207→    {
+   217→    pub fn visit …
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
    244→#[cfg(feature = "kv_sval")]
@@ -249,8 +252,11 @@ src/kv/value.rs
    288→macro_rules! impl_to_value_primitive {
    312→macro_rules! impl_to_value_nonzero_primitive {
    336→macro_rules! impl_value_to_primitive {
+   379→    pub fn to_borrowed_error …
+   384→    pub fn to_borrowed_str …
    389→#[cfg(feature = "kv_std")]
    390→mod std_support {
+   438→        pub fn to_cow_str …
    462→pub trait VisitValue<'v> {
    463→    /// Visit a `Value`.
    464→    ///
@@ -260,11 +266,25 @@ src/kv/value.rs
    468→    /// or serialized using its `sval::Value` or `serde::Serialize` implementation.
    469→    fn visit_any(&mut self, value: Value) -> Result<(), Error>;
    470→
+   472→    fn visit_null …
+   477→    fn visit_u64 …
+   482→    fn visit_i64 …
+   487→    fn visit_u128 …
+   492→    fn visit_i128 …
+   497→    fn visit_f64 …
+   502→    fn visit_bool …
+   507→    fn visit_str …
+   512→    fn visit_borrowed_str …
+   517→    fn visit_char …
+   524→    fn visit_error …
+   530→    fn visit_borrowed_error …
    538→#[allow(clippy::needless_lifetimes)] // Not needless.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
    541→    T: VisitValue<'v>,
    542→{
+   588→    fn visit_error …
+   593→    fn visit_borrowed_error …
    601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {
    720→#[cfg(not(feature = "value-bag"))]
@@ -279,24 +299,15 @@ src/kv/value.rs
    745→        F64(f64),
    746→        I128(i128),
       →…
-  1125→/// Get a value from a type implementing `std::fmt::Debug`.
-  1126→#[cfg(feature = "kv_unstable")]
-      →…
+  1055→    pub fn capture_debug …
+  1065→    pub fn capture_display …
+  1075→    pub fn capture_error …
+  1085→    pub fn capture_serde …
+  1095→    pub fn capture_sval …
   1129→macro_rules! as_debug {
-  1135→/// Get a value from a type implementing `std::fmt::Display`.
-  1136→#[cfg(feature = "kv_unstable")]
-      →…
   1139→macro_rules! as_display {
-  1145→/// Get a value from an error.
-  1146→#[cfg(feature = "kv_unstable_std")]
-      →…
   1149→macro_rules! as_error {
-  1157→/// Get a value from a type implementing `serde::Serialize`.
-  1158→#[macro_export]
   1159→macro_rules! as_serde {
-  1165→/// Get a value from a type implementing `sval::Value`.
-  1166→#[cfg(feature = "kv_unstable_sval")]
-      →…
   1169→macro_rules! as_sval {
 src/lib.rs
    405→#[macro_use]
@@ -439,12 +450,6 @@ src/lib.rs
   1610→/// [`logger`]: fn.logger.html
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
-  1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
-  1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
-  1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
-  1616→    false if cfg!(feature = "release_max_level_debug") => LevelFilter::Debug,
-  1617→    false if cfg!(feature = "release_max_level_trace") => LevelFilter::Trace,
-  1618→    _ if cfg!(feature = "max_level_off") => LevelFilter::Off,
       →…
 src/macros.rs
     75→macro_rules! log {

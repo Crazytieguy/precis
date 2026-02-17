@@ -47,8 +47,6 @@ build/probe.rs
     29→    }
 build.rs
     10→const PRIVATE: &str = "\
-    11→#[doc(hidden)]
-      →…
 impl/src/ast.rs
     10→pub enum Input<'a> {
     11→    Struct(Struct<'a>),
@@ -187,6 +185,7 @@ impl/src/scan_expr.rs
     17→    ExpectPath,
     18→    ExpectTurbofish,
     19→    ExpectType,
+    20→    CanBeginExpr,
       →…
     25→enum Action {
     26→    SetState(&'static [(Input, Action)]),

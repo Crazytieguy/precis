@@ -219,6 +219,15 @@ README.md
    235→msgmerge -U src/humanize/locale/ru_RU/LC_MESSAGES/humanize.po humanize.pot # add them to locale files
    236→```
    237→
+   238→How to add a new locale:
+   239→
+   240→```sh
+   241→msginit -i humanize.pot -o humanize/locale/<locale name>/LC_MESSAGES/humanize.po --locale <locale name>
+   242→```
+   243→
+   244→Where `<locale name>` is a locale abbreviation, eg. `en_GB`, `pt_BR` or just `ru`, `fr`
+   245→etc.
+   246→
       →…
 RELEASING.md
      1→# Release checklist
@@ -273,15 +282,7 @@ src/humanize/__init__.py
     38→    "metric",
     39→    "natural_list",
     40→    "naturaldate",
-    41→    "naturalday",
-    42→    "naturaldelta",
-    43→    "naturalsize",
-    44→    "naturaltime",
-    45→    "ordinal",
-    46→    "precisedelta",
-    47→    "scientific",
-    48→    "thousands_separator",
-    49→]
+      →…
 src/humanize/filesize.py
     36→def naturalsize …
 src/humanize/i18n.py
@@ -295,18 +296,12 @@ src/humanize/i18n.py
     22→_THOUSANDS_SEPARATOR = {
     23→    "de_DE": ".",
     24→    "fr_FR": " ",
-    25→    "it_IT": ".",
-    26→    "pt_BR": ".",
-    27→    "hu_HU": " ",
-    28→}
+      →…
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
     32→    "de_DE": ",",
     33→    "fr_FR": ".",
-    34→    "it_IT": ",",
-    35→    "pt_BR": ",",
-    36→    "hu_HU": ",",
-    37→}
+      →…
     40→def _get_default_locale_path …
     51→def get_translation …
     58→def activate …

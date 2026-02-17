@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (479 words)
+budget: 500 (481 words)
 
 AGENTS.md
      1→# AGENTS.md …
@@ -28,17 +28,7 @@ src/pluggy/__init__.py
      3→    "PluginManager",
      4→    "PluginValidationError",
      5→    "HookCaller",
-     6→    "HookCallError",
-     7→    "HookspecOpts",
-     8→    "HookimplOpts",
-     9→    "HookImpl",
-    10→    "HookRelay",
-    11→    "HookspecMarker",
-    12→    "HookimplMarker",
-    13→    "Result",
-    14→    "PluggyWarning",
-    15→    "PluggyTeardownRaisedWarning",
-    16→]
+      →…
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
@@ -92,6 +82,8 @@ src/pluggy/_hooks.py
    428→    ) -> None:
    429→        if self.spec is not None:
    430→            raise ValueError(
+   431→                f"Hook {self.spec.name!r} is already registered "
+   432→                f"within namespace {self.spec.namespace}"
       →…
    593→class _SubsetHookCaller(HookCaller):
    596→
@@ -148,6 +140,8 @@ src/pluggy/_result.py
     44→        """:meta private:"""
     45→        exc = self._exception
     46→        if exc is None:
+    47→            return None
+    48→        else:
       →…
     51→    @property
     52→    def exception(self) -> BaseException | None:
@@ -158,6 +152,8 @@ src/pluggy/_result.py
     58→        """:meta private:"""
     59→        __tracebackhide__ = True
     60→        result = exception = None
+    61→        try:
+    62→            result = func()
       →…
 src/pluggy/_tracing.py
     16→class TagTracer:

@@ -22,15 +22,6 @@ input.tsx
     25→      pushPasswordManagerStrategy = 'increase-width',
     26→      pasteTransformer,
     27→      containerClassName,
-    28→      noScriptCSSFallback = NOSCRIPT_CSS_FALLBACK,
-    29→
-    30→      render,
-    31→      children,
-    32→
-    33→      ...props
-    34→    },
-    35→    ref,
-    36→  ) => {
       →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
@@ -41,11 +32,6 @@ input.tsx
    546→}
    553→const NOSCRIPT_CSS_FALLBACK = `
    554→[data-input-otp] {
-   555→  --nojs-bg: white !important;
-   556→  --nojs-fg: black !important;
-   557→
-   558→  background-color: var(--nojs-bg) !important;
-   559→  color: var(--nojs-fg) !important;
       →…
 regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
@@ -116,10 +102,7 @@ use-pwm-badge.tsx
      6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
      8→const PASSWORD_MANAGERS_SELECTORS = [
      9→  '[data-lastpass-icon-root]', // LastPass
-    10→  'com-1password-button', // 1Password
-    11→  '[data-dashlanecreated]', // Dashlane
-    12→  '[style$="2147483647 !important;"]', // Bitwarden
-    13→].join(',')
+      →…
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,
@@ -150,4 +133,19 @@ use-pwm-badge.tsx
     42→      hasPWMBadge &&
     43→      hasPWMBadgeSpace
     44→
+    45→    return increaseWidthCase
+    46→  }, [hasPWMBadge, hasPWMBadgeSpace, pushPasswordManagerStrategy])
+    47→
+    48→  const trackPWMBadge = React.useCallback(() => {
+    49→    const container = containerRef.current
+    50→    const input = inputRef.current
+    51→    if (
+    52→      !container ||
+    53→      !input ||
+    54→      done ||
+    55→      pushPasswordManagerStrategy === 'none'
+    56→    ) {
+    57→      return
+    58→    }
+    59→
       →…

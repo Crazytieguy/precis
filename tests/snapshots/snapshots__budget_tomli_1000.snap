@@ -2,13 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (982 words)
+budget: 1000 (979 words)
 
 CHANGELOG.md
      1→# Changelog …
      3→## 2.4.0
      5→- Added
-     6→  - TOML v1.1.0 compatibility
       →…
 README.md
      5→# Tomli
@@ -69,6 +68,10 @@ README.md
     76→}
     77→```
     78→
+    79→### Parse a TOML file<a name="parse-a-toml-file"></a> …
+    92→### Handle invalid TOML<a name="handle-invalid-toml"></a> …
+   106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a> …
+   123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a> …
    152→## FAQ<a name="faq"></a>
    154→### Why this parser?<a name="why-this-parser"></a>
    156→- it's lil'
@@ -82,11 +85,16 @@ README.md
    164→  test suite
    165→- thoroughly tested: 100% branch coverage
    166→
+   167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a> …
+   177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a> …
+   183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a> …
    201→## Performance<a name="performance"></a>
    203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
    204→
    205→Below are the results for commit [064e492](https://github.com/hukkin/tomli/tree/064e492919b2338def788753b8c981c9131334c0).
    206→
+   207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a> …
+   230→### Pure Python<a name="pure-python"></a> …
 fuzzer/fuzz.py
     20→def test_one_input(input_bytes: bytes) -> None:
     53→def print_err(data):
@@ -125,17 +133,9 @@ src/tomli/_parser.py
     49→TOML_WS: Final = frozenset(" \t")
     50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
     51→BARE_KEY_CHARS: Final = frozenset(
-    52→    "abcdefghijklmnopqrstuvwxyz" "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "0123456789" "-_"
-    53→)
     54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
     55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
     57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
-    58→    {
-    59→        "\\b": "\u0008",  # backspace
-    60→        "\\t": "\u0009",  # tab
-    61→        "\\n": "\u000a",  # linefeed
-    62→        "\\f": "\u000c",  # form feed
-      →…
     71→class DEPRECATED_DEFAULT:
     76→class TOMLDecodeError(ValueError):
     86→
@@ -157,10 +157,6 @@ src/tomli/_parser.py
 src/tomli/_re.py
     11→TYPE_CHECKING = False
     17→_TIME_RE_STR: Final = r"""
-    18→([01][0-9]|2[0-3])             # hours
-    19→:([0-5][0-9])                  # minutes
-    20→(?:
-      →…
     26→RE_NUMBER: Final = re.compile(
     27→    r"""
     28→0
@@ -174,12 +170,7 @@ src/tomli/_re.py
     36→|
     37→[+-]?(?:0|[1-9](?:_?[0-9])*)         # dec, integer part
     38→(?P<floatpart>
-    39→    (?:\.[0-9](?:_?[0-9])*)?         # optional fractional part
-    40→    (?:[eE][+-]?[0-9](?:_?[0-9])*)?  # optional exponent part
-    41→)
-    42→""",
-    43→    flags=re.VERBOSE,
-    44→)
+      →…
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
     47→    rf"""
@@ -190,8 +181,6 @@ src/tomli/_re.py
     52→    (?:([Zz])|([+-])([01][0-9]|2[0-3]):([0-5][0-9]))?  # optional time offset
     53→)?
     54→""",
-    55→    flags=re.VERBOSE,
-    56→)
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
@@ -236,10 +225,4 @@ tomllib.md
     33→  ```python
     34→  import unittest
     35→
-    36→  from . import load_tests
-    37→
-    38→
-    39→  unittest.main()
-    40→  ```
-    41→
       →…

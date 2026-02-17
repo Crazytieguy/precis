@@ -2,12 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (974 words)
+budget: 1000 (979 words)
 
 AGENTS.md
-     1→# AGENTS.md …
+     1→# AGENTS.md
+     3→See @CLAUDE.md for AI coding agent instructions.
 CLAUDE.md
-     1→# CLAUDE.md …
+     1→# CLAUDE.md
+     3→This file provides guidance to AI coding agents when working with code in this repository.
+     4→
      5→## Project Overview …
     10→## Development Commands …
     14→### Testing …
@@ -41,7 +44,6 @@ docs/conf.py
    121→                return False
    122→            return True
    123→
-   124→    logger = logging.getLogger(sphinx.util.logging.NAMESPACE)
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
@@ -63,13 +65,7 @@ src/pluggy/__init__.py
      7→    "HookspecOpts",
      8→    "HookimplOpts",
      9→    "HookImpl",
-    10→    "HookRelay",
-    11→    "HookspecMarker",
-    12→    "HookimplMarker",
-    13→    "Result",
-    14→    "PluggyWarning",
-    15→    "PluggyTeardownRaisedWarning",
-    16→]
+      →…
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.

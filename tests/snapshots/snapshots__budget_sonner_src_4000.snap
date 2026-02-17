@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3018 words)
+budget: 4000 (2973 words)
 
 assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
@@ -39,38 +39,22 @@ assets.tsx
     39→  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" height="20" width="20">
     40→    <path
     41→      fillRule="evenodd"
-    42→      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-    43→      clipRule="evenodd"
-    44→    />
-    45→  </svg>
-    46→);
+      →…
     48→const WarningIcon = (
     49→  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" height="20" width="20">
     50→    <path
     51→      fillRule="evenodd"
-    52→      d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
-    53→      clipRule="evenodd"
-    54→    />
-    55→  </svg>
-    56→);
+      →…
     58→const InfoIcon = (
     59→  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" height="20" width="20">
     60→    <path
     61→      fillRule="evenodd"
-    62→      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z"
-    63→      clipRule="evenodd"
-    64→    />
-    65→  </svg>
-    66→);
+      →…
     68→const ErrorIcon = (
     69→  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" height="20" width="20">
     70→    <path
     71→      fillRule="evenodd"
-    72→      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
-    73→      clipRule="evenodd"
-    74→    />
-    75→  </svg>
-    76→);
+      →…
     78→export const CloseIcon = (
     79→  <svg
     80→    xmlns="http://www.w3.org/2000/svg"
@@ -156,6 +140,48 @@ index.tsx
     90→    closeButtonAriaLabel = 'Close toast',
     91→  } = props;
     92→  const [swipeDirection, setSwipeDirection] = React.useState<'x' | 'y' | null>(null);
+    93→  const [swipeOutDirection, setSwipeOutDirection] = React.useState<'left' | 'right' | 'up' | 'down' | null>(null);
+    94→  const [mounted, setMounted] = React.useState(false);
+    95→  const [removed, setRemoved] = React.useState(false);
+    96→  const [swiping, setSwiping] = React.useState(false);
+    97→  const [swipeOut, setSwipeOut] = React.useState(false);
+    98→  const [isSwiped, setIsSwiped] = React.useState(false);
+    99→  const [offsetBeforeRemove, setOffsetBeforeRemove] = React.useState(0);
+   100→  const [initialHeight, setInitialHeight] = React.useState(0);
+   101→  const remainingTime = React.useRef(toast.duration || durationFromToaster || TOAST_LIFETIME);
+   102→  const dragStartTime = React.useRef<Date | null>(null);
+   103→  const toastRef = React.useRef<HTMLLIElement>(null);
+   104→  const isFront = index === 0;
+   105→  const isVisible = index + 1 <= visibleToasts;
+   106→  const toastType = toast.type;
+   107→  const dismissible = toast.dismissible !== false;
+   108→  const toastClassname = toast.className || '';
+   109→  const toastDescriptionClassname = toast.descriptionClassName || '';
+   110→  // Height index is used to calculate the offset as it gets updated before the toast array, which means we can calculate the new layout faster.
+   111→  const heightIndex = React.useMemo(
+   112→    () => heights.findIndex((height) => height.toastId === toast.id) || 0,
+   113→    [heights, toast.id],
+   114→  );
+   115→  const closeButton = React.useMemo(
+   116→    () => toast.closeButton ?? closeButtonFromToaster,
+   117→    [toast.closeButton, closeButtonFromToaster],
+   118→  );
+   119→  const duration = React.useMemo(
+   120→    () => toast.duration || durationFromToaster || TOAST_LIFETIME,
+   121→    [toast.duration, durationFromToaster],
+   122→  );
+   123→  const closeTimerStartTimeRef = React.useRef(0);
+   124→  const offset = React.useRef(0);
+   125→  const lastCloseTimerStartTimeRef = React.useRef(0);
+   126→  const pointerStartRef = React.useRef<{ x: number; y: number } | null>(null);
+   127→  const [y, x] = position.split('-');
+   128→  const toastsHeightBefore = React.useMemo(() => {
+   129→    return heights.reduce((prev, curr, reducerIndex) => {
+   130→      // Calculate offset up until current toast
+   131→      if (reducerIndex >= heightIndex) {
+   132→        return prev;
+   133→      }
+   134→
       →…
    507→function getDocumentDirection(): ToasterProps['dir'] {
    508→  if (typeof window === 'undefined') return 'ltr';
@@ -198,7 +224,8 @@ index.tsx
    546→    }
    547→  });
    548→
-      →…
+   549→  return styles;
+   550→}
    552→function useSonner() {
    553→  const [activeToasts, setActiveToasts] = React.useState<ToastT[]>([]);
    554→
@@ -228,72 +255,21 @@ index.tsx
    578→              ];
    579→            }
    580→
-      →…
+   581→            return [toast, ...toasts];
+   582→          });
+   583→        });
+   584→      });
+   585→    });
+   586→  }, []);
+   587→
+   588→  return {
+   589→    toasts: activeToasts,
+   590→  };
+   591→}
    593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
    594→  const {
    595→    id,
    596→    invert,
-   597→    position = 'bottom-right',
-   598→    hotkey = ['altKey', 'KeyT'],
-   599→    expand,
-   600→    closeButton,
-   601→    className,
-   602→    offset,
-   603→    mobileOffset,
-   604→    theme = 'light',
-   605→    richColors,
-   606→    duration,
-   607→    style,
-   608→    visibleToasts = VISIBLE_TOASTS_AMOUNT,
-   609→    toastOptions,
-   610→    dir = getDocumentDirection(),
-   611→    gap = GAP,
-   612→    icons,
-   613→    customAriaLabel,
-   614→    containerAriaLabel = 'Notifications',
-   615→  } = props;
-   616→  const [toasts, setToasts] = React.useState<ToastT[]>([]);
-   617→  const filteredToasts = React.useMemo(() => {
-   618→    if (id) {
-   619→      return toasts.filter((toast) => toast.toasterId === id);
-   620→    }
-   621→    return toasts.filter((toast) => !toast.toasterId);
-   622→  }, [toasts, id]);
-   623→  const possiblePositions = React.useMemo(() => {
-   624→    return Array.from(
-   625→      new Set([position].concat(filteredToasts.filter((toast) => toast.position).map((toast) => toast.position))),
-   626→    );
-   627→  }, [filteredToasts, position]);
-   628→  const [heights, setHeights] = React.useState<HeightT[]>([]);
-   629→  const [expanded, setExpanded] = React.useState(false);
-   630→  const [interacting, setInteracting] = React.useState(false);
-   631→  const [actualTheme, setActualTheme] = React.useState(
-   632→    theme !== 'system'
-   633→      ? theme
-   634→      : typeof window !== 'undefined'
-   635→      ? window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-   636→        ? 'dark'
-   637→        : 'light'
-   638→      : 'light',
-   639→  );
-   640→
-   641→  const listRef = React.useRef<HTMLOListElement>(null);
-   642→  const hotkeyLabel = hotkey.join('+').replace(/Key/g, '').replace(/Digit/g, '');
-   643→  const lastFocusedElementRef = React.useRef<HTMLElement>(null);
-   644→  const isFocusWithinRef = React.useRef(false);
-   645→
-   646→  const removeToast = React.useCallback((toastToRemove: ToastT) => {
-   647→    setToasts((toasts) => {
-   648→      if (!toasts.find((toast) => toast.id === toastToRemove.id)?.delete) {
-   649→        ToastState.dismiss(toastToRemove.id);
-   650→      }
-   651→
-   652→      return toasts.filter(({ id }) => id !== toastToRemove.id);
-   653→    });
-   654→  }, []);
-   655→
-   656→  React.useEffect(() => {
-   657→    return ToastState.subscribe((toast) => {
       →…
 state.ts
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
@@ -515,14 +491,24 @@ state.ts
    232→        originalPromise.then(() => (result[0] === 'reject' ? reject(result[1]) : resolve(result[1]))).catch(reject),
    233→      );
    234→
+   235→    if (typeof id !== 'string' && typeof id !== 'number') {
+   236→      // cannot Object.assign on undefined
+   237→      return { unwrap };
+   238→    } else {
+   239→      return Object.assign(id, { unwrap });
+   240→    }
+   241→  };
+   242→
    243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
    244→    const id = data?.id || toastsCounter++;
    245→    this.create({ jsx: jsx(id), ...data, id });
    246→    return id;
    247→  };
+   248→
    249→  getActiveToasts = () => {
    250→    return this.toasts.filter((toast) => !this.dismissedToasts.has(toast.id));
    251→  };
+   252→}
    254→export const ToastState = new Observer();
    257→const toastFunction = (message: titleT, data?: ExternalToast) => {
    258→  const id = data?.id || toastsCounter++;

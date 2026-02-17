@@ -160,6 +160,7 @@ core/constants.ts
    192→						});
    193→					}
    194→
+   195→					// Retry with refreshed authentication
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys: KyOptionsRegistry = {
@@ -350,8 +351,6 @@ utils/normalize.ts
     14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
     16→const defaultRetryOptions: InternalRetryOptions = {
     17→	limit: 2,
-    18→	methods: retryMethods,
-    19→	statusCodes: retryStatusCodes,
       →…
     28→export const normalizeRetryOptions …
 utils/options.ts
