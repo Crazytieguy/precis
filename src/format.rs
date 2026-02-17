@@ -15,10 +15,22 @@ pub fn render_with_budget(
     files: &[PathBuf],
     sources: &[Option<String>],
 ) -> String {
+    let (output, _) = render_with_budget_stats(budget, root, files, sources);
+    output
+}
+
+/// Render files within a word budget, returning output and estimated word count.
+pub fn render_with_budget_stats(
+    budget: usize,
+    root: &Path,
+    files: &[PathBuf],
+    sources: &[Option<String>],
+) -> (String, usize) {
     let all_symbols = extract_all_symbols(files, sources);
     let groups = schedule::build_groups(root, files, sources, &all_symbols);
     let sched = schedule::schedule(&groups, budget, root, files);
-    render_scheduled(root, files, sources, &all_symbols, &groups, &sched)
+    let output = render_scheduled(root, files, sources, &all_symbols, &groups, &sched);
+    (output, sched.estimated_words)
 }
 
 /// Render a single file within a word budget.

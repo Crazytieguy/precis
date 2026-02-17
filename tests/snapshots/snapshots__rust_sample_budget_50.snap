@@ -3,13 +3,14 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.rs
-     3→pub fn process
+     3→pub fn process(input: &str) -> Result<Vec<Token>, Error> {
      7→fn helper() {}
     10→pub struct Token {
     16→pub enum TokenKind {
     23→pub trait Visitor {
-    40→    pub fn new
+    40→    pub fn new(kind: TokenKind, span: Span) -> Self {
     45→pub type Span
+    47→const MAX_TOKENS
     49→pub static VERSION
     51→macro_rules! token {
     57→pub mod lexer;

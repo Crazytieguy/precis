@@ -4,6 +4,8 @@ expression: output
 ---
 sample.rs
      3→pub fn process
-     7→fn helper() {}
+    10→pub struct Token
+    16→pub enum TokenKind
+    23→pub trait Visitor
     40→    pub fn new
     57→pub mod lexer;

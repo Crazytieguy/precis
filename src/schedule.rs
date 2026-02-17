@@ -113,6 +113,8 @@ pub struct Schedule {
     pub visible_files: HashSet<usize>,
     /// Reverse lookup: for a (file_idx, symbol_idx) pair, which group index it belongs to.
     pub symbol_to_group: HashMap<(usize, usize), usize>,
+    /// Total words the scheduler estimated it would use (budget - remaining).
+    pub estimated_words: usize,
 }
 
 /// What stage a group has been included up to.
@@ -509,6 +511,23 @@ pub fn schedule(
             _ => continue,
         }
 
+        // Skip if this item's stage is already covered by the group's current
+        // included stage. This prevents double-deduction when a high-level item
+        // (e.g. Doc(3)) is included before a lower-level item (e.g. Names):
+        // the high-level item pays for Names as a prerequisite, but the original
+        // Names heap entry still has a valid generation number. Without this
+        // check, popping that stale Names entry would deduct its cost again.
+        if let Some(ref included) = group_stages[item.group_idx] {
+            let stages = groups[item.group_idx].key.kind_category.stage_sequence();
+            let inc_pos = stages.iter().position(|&s| s == included.kind);
+            let this_pos = stages.iter().position(|&s| s == item.stage_kind);
+            if let (Some(ip), Some(tp)) = (inc_pos, this_pos)
+                && (tp < ip || (tp == ip && item.n <= included.n_lines))
+            {
+                continue;
+            }
+        }
+
         let total_cost = item.total_cost();
         if total_cost > remaining_budget {
             // This item doesn't fit. Try the next one.
@@ -677,6 +696,7 @@ pub fn schedule(
         group_stages,
         visible_files: files_shown,
         symbol_to_group,
+        estimated_words: budget - remaining_budget,
     }
 }
 
@@ -802,12 +822,6 @@ fn compute_prereq_costs_with_state(
         }
 
         // Check if this prerequisite stage is already included
-        let already_included = included_pos.is_some_and(|ip| ip >= pos);
-        if already_included {
-            continue; // Already paid for
-        }
-
-        // Include all lines of this prerequisite stage
         let max_n = match sk {
             StageKind::Names | StageKind::Signatures => 1,
             StageKind::Doc => group
@@ -823,7 +837,20 @@ fn compute_prereq_costs_with_state(
                 .max()
                 .unwrap_or(0),
         };
-        for line_n in 1..=max_n {
+
+        if included_pos.is_some_and(|ip| ip > pos) {
+            continue; // Fully included as a prereq of a later stage
+        }
+
+        // If this stage is the current included stage, only pay for
+        // lines beyond what's already included
+        let start_n = if included_pos == Some(pos) {
+            included_n + 1
+        } else {
+            1
+        };
+
+        for line_n in start_n..=max_n {
             prereq_value += compute_value(group, sk, line_n);
             prereq_cost += stage_cost(group, sk, line_n);
         }

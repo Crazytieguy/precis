@@ -3,11 +3,11 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.py
-     5→T
+     5→T = TypeVar("T")
      8→def process_items
     15→class Token:
     21→class Visitor:
     29→class TokenParser(Generic[T]):
     34→
     47→    def from_file
-    54→VERSION
+    54→VERSION: str = "0.1.0"

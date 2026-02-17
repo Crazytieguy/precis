@@ -6,6 +6,7 @@ sample.py
      5→T = TypeVar("T")
      7→# Process the input items and return the total count.
      8→def process_items(items: list[str]) -> int:
+     9→    return len(items)
     11→def _helper() -> None:
     12→    pass
     14→@dataclass
@@ -22,8 +23,6 @@ sample.py
     26→        for t in tokens:
     27→            self.visit_token(t)
     29→class TokenParser(Generic[T]):
-    30→    """A generic token parser.
-    31→
     34→
     35→    MAX_TOKENS: int = 1024
     36→
@@ -40,7 +39,6 @@ sample.py
     47→    def from_file(cls, path: str) -> "TokenParser[T]":
     48→        with open(path) as f:
     49→            return cls(f.read())
-    50→
     51→    def _advance(self) -> None:
     52→        pass
     54→VERSION: str = "0.1.0"

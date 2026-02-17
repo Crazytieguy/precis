@@ -38,7 +38,16 @@ fn main() {
         let files = walk::discover_source_files(path);
         let sources = format::read_sources(&files);
         let n_files = files.len();
-        let output = format::render_with_budget(budget, path, &files, &sources);
+        let (output, estimated) = format::render_with_budget_stats(budget, path, &files, &sources);
+        let actual = format::count_words(&output);
+        if estimated != actual {
+            eprintln!(
+                "cost mismatch: scheduler estimated {} words, rendered {} (diff {:+})",
+                estimated,
+                actual,
+                actual as isize - estimated as isize,
+            );
+        }
         (output, n_files)
     } else {
         eprintln!("Error: {:?} is not a file or directory", path);

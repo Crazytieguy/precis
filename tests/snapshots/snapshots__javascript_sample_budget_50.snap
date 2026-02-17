@@ -5,7 +5,6 @@ expression: output
 sample.js
      2→/**
      7→export function processItems(items) {
-    13→/**
     16→export class TokenParser {
     17→    constructor(input) {
     18→        this.tokens = [];
@@ -15,7 +14,7 @@ sample.js
     22→        return this.tokens;
     23→    }
     24→
-    25→    #advance() {}
-    26→}
     28→export const MAX_TOKENS = 1024;
     30→export default class DefaultExport {
+    31→    name = "";
+    32→}

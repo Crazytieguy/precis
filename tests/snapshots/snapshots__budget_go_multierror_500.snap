@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (357 words)
+budget: 500 (495 words)
 
 CHANGELOG.md
      1→## Unreleased
@@ -17,14 +17,34 @@ CHANGELOG.md
 README.md
      1→# go-multierror
      2→
+     3→[![CircleCI](https://img.shields.io/circleci/build/github/hashicorp/go-multierror/master)](https://circleci.com/gh/hashicorp/go-multierror)
+     4→[![Go Reference](https://pkg.go.dev/badge/github.com/hashicorp/go-multierror.svg)](https://pkg.go.dev/github.com/hashicorp/go-multierror)
+     5→![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/hashicorp/go-multierror)
+     6→
     12→## Migrating to `errors.Join`
     13→
+    14→**Basic error aggregation:**
+    15→```go
+    16→// Before (go-multierror)
+    17→var result error
    104→## Installation and Docs
    105→
+   106→Install using `go get github.com/hashicorp/go-multierror`.
+   107→
+   108→Full documentation is available at
+   109→https://pkg.go.dev/github.com/hashicorp/go-multierror
    111→### Requires go version 1.13 or newer
    112→
+   113→`go-multierror` requires go version 1.13 or newer. Go 1.13 introduced
+   114→[error wrapping](https://golang.org/doc/go1.13#error_wrapping), which
+   115→this library takes advantage of.
+   116→
    129→## Usage
    130→
+   131→go-multierror is easy to use and purposely built to be unobtrusive in
+   132→existing Go applications/libraries that may not be aware of it.
+   133→
+   134→**Building a list of errors**
 append.go
     14→func Append(err error, errs ...error) *Error {
 flatten.go
@@ -33,6 +53,12 @@ flatten.go
     21→	switch err := err.(type) {
     22→	case *Error:
     23→		for _, e := range err.Errors {
+    24→			flatten(e, flatErr)
+    25→		}
+    26→	default:
+    27→		flatErr.Errors = append(flatErr.Errors, err)
+    28→	}
+    29→}
 format.go
     11→// ErrorFormatFunc is a function callback that is called by Error to
     12→// turn the list of errors into a string.
@@ -75,6 +101,11 @@ multierror.go
     91→// Is/As be meaningful.
     92→//
     93→// Unwrap returns the next error. In the cleanest form, Unwrap would return
+    94→// the wrapped error here but we can't do that if we want to properly
+    95→// get access to all the errors. Instead, users are recommended to use
+    96→// Is/As to get the correct error type out.
+    97→//
+    98→// Precondition: []error is non-empty (len > 0)
     99→type chain []error
    102→func (e chain) Error() string {
    108→func (e chain) Unwrap() error {

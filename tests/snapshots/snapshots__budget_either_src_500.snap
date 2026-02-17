@@ -2,12 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (414 words)
+budget: 500 (495 words)
 
 into_either.rs
      6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
      7→/// variant of [`Either<Self, Self>`](Either).
      8→///
+     9→/// The [`into_either`](IntoEither::into_either) method takes a [`bool`] to determine
     14→pub trait IntoEither: Sized {
     15→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
     16→    /// if `into_left` is `true`.
@@ -62,9 +63,11 @@ iterator.rs
     13→/// Iterator that maps left or right iterators to corresponding `Either`-wrapped items.
     14→///
     15→/// This struct is created by the [`Either::factor_into_iter`],
+    16→/// [`factor_iter`][Either::factor_iter],
     19→pub struct IterEither<L, R> {
     20→    inner: Either<L, R>,
     21→}
+    43→impl<L, R> Iterator for Either<L, R>
     48→    type Item = L::Item;
    185→    type Item = Either<L::Item, R::Item>;
 lib.rs
@@ -75,6 +78,7 @@ lib.rs
     41→/// The enum `Either` with variants `Left` and `Right` is a general purpose
     42→/// sum type with two cases.
     43→///
+    44→/// The `Either` type is symmetric and treats its variants the same way, without
     49→pub enum Either<L, R> {
     50→    /// A value of type `L`.
     51→    Left(L),
@@ -87,9 +91,17 @@ lib.rs
    133→macro_rules! map_either {
    142→mod iterator;
    145→mod into_either;
+  1118→impl<L, R> From<Result<R, L>> for Either<L, R>
+  1128→impl<L, R> From<Either<L, R>> for Result<R, L>
+  1138→impl<L, R> Future for Either<L, R>
   1143→    type Output = L::Output;
+  1157→impl<L, R> Read for Either<L, R>
+  1183→impl<L, R> Seek for Either<L, R>
+  1195→impl<L, R> BufRead for Either<L, R>
+  1221→impl<L, R> Write for Either<L, R>
   1253→macro_rules! impl_specific_ref_and_mut {
   1327→    type Target = L::Target;
+  1348→impl<L, R> Error for Either<L, R>
   1522→macro_rules! check_t {
   1536→fn _unsized_ref_propagation() {
   1537→    check_t!(str);
