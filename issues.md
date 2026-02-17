@@ -7,8 +7,8 @@
 **Current performance:** ~45 seconds in debug mode, ~2 seconds in release. Always run tests in release mode (`cargo test --release`). Do not run tests in debug mode until all fixture tests are re-introduced and the full suite runs quickly in release.
 
 **Next steps:**
-1. Add criterion benchmarking infrastructure
-2. Benchmark each function in the hot path (`build_groups`, `schedule`, `render_scheduled`)
+1. ~~Add criterion benchmarking infrastructure~~ Done — `cargo bench --bench hot_path` benchmarks `extract_all_symbols`, `build_groups`, `schedule`, and `render_with_budget` across three fixture sizes (either/src, pluggy/src/pluggy, commander/lib).
+2. Profile the hot path using benchmark results to identify bottlenecks
 3. Make performance improvements incrementally, re-introducing fixture snapshots as performance improves
 4. Once performance is much better, re-introduce all remaining snapshots
 

@@ -19,8 +19,13 @@ tree-sitter-rust = "0.24.0"
 tree-sitter-typescript = "0.23.2"
 
 [dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
 insta = "1"
 tempfile = "3"
+
+[[bench]]
+name = "hot_path"
+harness = false
 
 # Tree-sitter parsing is ~4x slower without optimizations, which dominates test runtime.
 [profile.dev.package.tree-sitter]
