@@ -101,6 +101,21 @@ pub struct Group {
     pub key: GroupKey,
     pub symbols: Vec<SymbolCosts>,
     pub file_indices: HashSet<usize>,
+    /// Cached: max doc lines across all symbols in this group.
+    pub max_doc_n: usize,
+    /// Cached: max body lines across all symbols in this group.
+    pub max_body_n: usize,
+}
+
+impl Group {
+    /// Max line count for a Doc/Body stage. Returns 1 for Names/Signatures.
+    fn max_n(&self, stage: StageKind) -> usize {
+        match stage {
+            StageKind::Names | StageKind::Signatures => 1,
+            StageKind::Doc => self.max_doc_n,
+            StageKind::Body => self.max_body_n,
+        }
+    }
 }
 
 /// The result of scheduling: for each group, the highest included stage
@@ -187,7 +202,11 @@ pub fn build_groups(
                 key,
                 symbols: Vec::new(),
                 file_indices: HashSet::new(),
+                max_doc_n: 0,
+                max_body_n: 0,
             });
+            group.max_doc_n = group.max_doc_n.max(costs.doc_line_words.len());
+            group.max_body_n = group.max_body_n.max(costs.body_line_words.len());
             group.symbols.push(costs);
             group.file_indices.insert(file_idx);
         }
@@ -448,21 +467,7 @@ pub fn schedule(
     for (group_idx, group) in groups.iter().enumerate() {
         let stages = group.key.kind_category.stage_sequence();
         for (stage_pos, &stage_kind) in stages.iter().enumerate() {
-            let max_n = match stage_kind {
-                StageKind::Names | StageKind::Signatures => 1,
-                StageKind::Doc => group
-                    .symbols
-                    .iter()
-                    .map(|s| s.doc_line_words.len())
-                    .max()
-                    .unwrap_or(0),
-                StageKind::Body => group
-                    .symbols
-                    .iter()
-                    .map(|s| s.body_line_words.len())
-                    .max()
-                    .unwrap_or(0),
-            };
+            let max_n = group.max_n(stage_kind);
             if max_n == 0 {
                 continue;
             }
@@ -552,38 +557,14 @@ pub fn schedule(
         let stages = group.key.kind_category.stage_sequence();
         // Find the position of this stage in the progression
         for (pos, &sk) in stages.iter().enumerate() {
+            let stage_pos = stages.iter().position(|&s| s == item.stage_kind).unwrap();
             let target_n = if sk == item.stage_kind {
                 item.n
-            } else if matches!(sk, StageKind::Doc | StageKind::Body) {
-                // Prerequisites: if this stage is before our target in the sequence,
-                // we need to include all its lines
-                let stage_pos = stages.iter().position(|&s| s == item.stage_kind).unwrap();
-                if pos < stage_pos {
-                    match sk {
-                        StageKind::Doc => group
-                            .symbols
-                            .iter()
-                            .map(|s| s.doc_line_words.len())
-                            .max()
-                            .unwrap_or(0),
-                        StageKind::Body => group
-                            .symbols
-                            .iter()
-                            .map(|s| s.body_line_words.len())
-                            .max()
-                            .unwrap_or(0),
-                        _ => 1,
-                    }
-                } else {
-                    continue;
-                }
+            } else if pos < stage_pos {
+                // Prerequisite stage: include all its lines
+                group.max_n(sk)
             } else {
-                let stage_pos = stages.iter().position(|&s| s == item.stage_kind).unwrap();
-                if pos <= stage_pos {
-                    1
-                } else {
-                    continue;
-                }
+                continue;
             };
             if target_n == 0 {
                 continue;
@@ -626,21 +607,7 @@ pub fn schedule(
             let other_group = &groups[other_group_idx];
             let other_stages = other_group.key.kind_category.stage_sequence();
             for &sk in other_stages {
-                let max_n = match sk {
-                    StageKind::Names | StageKind::Signatures => 1,
-                    StageKind::Doc => other_group
-                        .symbols
-                        .iter()
-                        .map(|s| s.doc_line_words.len())
-                        .max()
-                        .unwrap_or(0),
-                    StageKind::Body => other_group
-                        .symbols
-                        .iter()
-                        .map(|s| s.body_line_words.len())
-                        .max()
-                        .unwrap_or(0),
-                };
+                let max_n = other_group.max_n(sk);
                 for n in 1..=max_n {
                     // Skip items already included
                     if let Some(ref included) = group_stages[other_group_idx] {
@@ -746,22 +713,7 @@ fn compute_prereq_costs(
             break;
         }
         // Include all lines of prerequisite stages
-        let max_n = match sk {
-            StageKind::Names | StageKind::Signatures => 1,
-            StageKind::Doc => group
-                .symbols
-                .iter()
-                .map(|s| s.doc_line_words.len())
-                .max()
-                .unwrap_or(0),
-            StageKind::Body => group
-                .symbols
-                .iter()
-                .map(|s| s.body_line_words.len())
-                .max()
-                .unwrap_or(0),
-        };
-        for line_n in 1..=max_n {
+        for line_n in 1..=group.max_n(sk) {
             prereq_value += compute_value(group, sk, line_n);
             prereq_cost += stage_cost(group, sk, line_n);
         }
@@ -796,21 +748,7 @@ fn compute_prereq_costs_with_state(
                 included_n
             } else if included_pos.is_some_and(|ip| ip > pos) {
                 // This entire stage was included as a prereq of a later stage
-                match sk {
-                    StageKind::Names | StageKind::Signatures => 1,
-                    StageKind::Doc => group
-                        .symbols
-                        .iter()
-                        .map(|s| s.doc_line_words.len())
-                        .max()
-                        .unwrap_or(0),
-                    StageKind::Body => group
-                        .symbols
-                        .iter()
-                        .map(|s| s.body_line_words.len())
-                        .max()
-                        .unwrap_or(0),
-                }
+                group.max_n(sk)
             } else {
                 0
             };
@@ -820,23 +758,6 @@ fn compute_prereq_costs_with_state(
             }
             break;
         }
-
-        // Check if this prerequisite stage is already included
-        let max_n = match sk {
-            StageKind::Names | StageKind::Signatures => 1,
-            StageKind::Doc => group
-                .symbols
-                .iter()
-                .map(|s| s.doc_line_words.len())
-                .max()
-                .unwrap_or(0),
-            StageKind::Body => group
-                .symbols
-                .iter()
-                .map(|s| s.body_line_words.len())
-                .max()
-                .unwrap_or(0),
-        };
 
         if included_pos.is_some_and(|ip| ip > pos) {
             continue; // Fully included as a prereq of a later stage
@@ -850,7 +771,7 @@ fn compute_prereq_costs_with_state(
             1
         };
 
-        for line_n in start_n..=max_n {
+        for line_n in start_n..=group.max_n(sk) {
             prereq_value += compute_value(group, sk, line_n);
             prereq_cost += stage_cost(group, sk, line_n);
         }
