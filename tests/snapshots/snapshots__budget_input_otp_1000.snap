@@ -11,19 +11,6 @@ CHANGELOG.md
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web. …
      3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
-     5→<h3 align="center">Hero Sponsors 🎖️</h3>
-     6→<p align="center">
-     7→<a href="https://go.clerk.com/input-otp" target="_blank">
-     8→<img alt="Clerk" src='https://input-otp.rodz.dev/sponsors/clerk-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
-     9→</a>
-    10→<a href="https://go.resend.com/input-otp" target="_blank">
-    11→<img alt="Resend" src='https://input-otp.rodz.dev/sponsors/resend-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
-    12→</a>
-    13→<a href="https://evomi.com/?utm_source=github&utm_campaign=otp" target="_blank">
-    14→<img alt="Evomi" src='https://input-otp.rodz.dev/sponsors/evomi-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
-    15→</a>
-    16→</p>
-    17→
     18→https://github.com/guilhermerodz/input-otp/assets/10366880/753751f5-eda8-4145-a4b9-7ef51ca5e453
     19→
     20→## Usage …
@@ -79,6 +66,7 @@ apps/storybook/tailwind.config.js
      3→  darkMode: ['class'],
      4→  content: [
      5→    './index.html',
+     6→    './src/stories/**/*.{ts,tsx}',
       →…
 apps/website/README.md
      3→## Getting Started
@@ -143,21 +131,27 @@ apps/website/src/app/(local-pages)/layout.tsx
      7→export default function RootLayout({
      8→  children,
      9→}: Readonly<{
+    10→  children: React.ReactNode
+    11→}>) {
       →…
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      5→export default function ShadcnPage() {
      6→  const [value, setValue] = React.useState('')
      7→
+     8→  return (
+     9→    <form
       →…
 apps/website/src/app/(local-pages)/shadcn/page.tsx
     12→export default function ShadcnPage() {
     13→  const [value, setValue] = React.useState('')
     14→
+    15→  return (
       →…
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     13→export default function ShadcnPage() {
     14→  const [value, setValue] = React.useState('')
     15→
+    16→  return (
       →…
 apps/website/src/app/(local-pages)/shadcn/static/page.tsx
      5→export default async function StaticPage(pageProps: any) {
@@ -189,6 +183,8 @@ apps/website/src/app/(pages)/layout.tsx
     68→export default function RootLayout({
     69→  children,
     70→}: Readonly<{
+    71→  children: React.ReactNode
+    72→}>) {
       →…
 apps/website/src/components/code.tsx
      9→export async function Code({
@@ -217,12 +213,17 @@ apps/website/src/components/ui/badge.tsx
     26→export interface BadgeProps
     27→  extends React.HTMLAttributes<HTMLDivElement>,
     28→    VariantProps<typeof badgeVariants> {}
+    30→function Badge …
 apps/website/src/components/ui/button.tsx
     36→export interface ButtonProps
     37→  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     38→    VariantProps<typeof buttonVariants> {
     39→  asChild?: boolean
     40→}
+apps/website/src/components/ui/dropdown-menu.tsx
+   171→const DropdownMenuShortcut …
+apps/website/src/components/ui/sonner.tsx
+     8→const Toaster …
 apps/website/src/config/site.ts
      1→export const siteConfig = {
      2→  name: 'rodz/input-otp',
@@ -241,6 +242,8 @@ apps/website/src/lib/utils.ts
      6→}
 apps/website/tailwind.config.ts
      3→const config = {
+     4→  darkMode: ['class'],
+      →…
 packages/input-otp/src/input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(
     11→  {} as RenderProps,

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3949 words)
+budget: 4000 (3970 words)
 
 CHANGELOG.md
      7→## [17.3.1](https://github.com/motdotla/dotenv/compare/v17.3.0...v17.3.1) (2026-02-12) …
@@ -160,8 +160,6 @@ README-es.md
    770→## Who's using dotenv? …
 README.md
      1→# dotenv [![NPM version](https://img.shields.io/npm/v/dotenv.svg?style=flat-square)](https://www.npmjs.com/package/dotenv) [![downloads](https://img.shields.io/npm/dw/dotenv)](https://www.npmjs.com/package/dotenv)
-     3→<img src="https://raw.githubusercontent.com/motdotla/dotenv/master/dotenv.svg" alt="dotenv" align="right" width="200" />
-     4→
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
      6→
      7→[Watch the tutorial](https://www.youtube.com/watch?v=YtkZR0NFd1g)
@@ -196,8 +194,6 @@ README.md
     37→&nbsp;
     38→
     39→## Advanced
-    41→<details><summary>ES6</summary><br>
-    42→
     43→Import with [ES6](#how-do-i-use-dotenv-with-import):
     44→
     45→```javascript
@@ -354,10 +350,10 @@ README.md
    196→console.log('DATABASE_URL', process.env.DATABASE_URL)
    197→```
    198→```sh
+   199→$ dotenvx run --debug -- node index.js
+   200→[dotenvx@0.14.1] injecting env (1) from .env
       →…
    319→## Agents
-   321→<img src="https://dotenvx.com/assets/img/as2/9.jpg" height="400" alt="dotenvx-as2" align="right"/>
-   322→
    323→> Software is changing, and dotenv must change with it—that is why I built [agentic secret storage (AS2)](https://dotenvx.com/as2). Agents run code without humans at terminals, so plaintext `.env` files are the wrong primitive.
    324→>
    325→> AS2 is built for autonomous software: encrypted by default, zero console access, and cryptography‑first delivery that keeps operators out of the loop.
@@ -392,8 +388,6 @@ README.md
    355→&nbsp;
    356→
    357→## FAQ
-   359→<details><summary>Should I commit my `.env` file?</summary><br/>
-   360→
    361→No.
    362→
    363→Unless you encrypt it with [dotenvx](https://github.com/dotenvx/dotenvx). Then we recommend you do.
@@ -550,6 +544,8 @@ README.md
    514→</details>
    515→<details><summary>How come my environment variables are not showing up for React?</summary><br/>
    516→
+   517→Your React code is run in Webpack, where the `fs` module or even the `process` global itself are not accessible out-of-the-box. `process.env` can only be injected through Webpack configuration.
+   518→
       →…
    579→## Docs
    581→Dotenv exposes four functions:

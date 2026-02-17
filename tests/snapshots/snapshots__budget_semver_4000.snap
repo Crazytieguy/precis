@@ -2,87 +2,45 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3745 words)
+budget: 4000 (3755 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
      9→  .map((file) => `./${file}`)
 CHANGELOG.md
-     3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16)
-     4→### Bug Fixes
-     5→* [`a29faa5`](https://github.com/npm/node-semver/commit/a29faa5f3309a01c8e5aeb965fb5c02c4c4e80e2) [#835](https://github.com/npm/node-semver/pull/835) cli: pass options to semver.valid() for loose version validation (#835) (@mldangelo)
-    16→### Bug Fixes
-    17→* [`e37e0ca`](https://github.com/npm/node-semver/commit/e37e0ca0b5fc910d2b1948d25dbc83cc3a0921ea) [#813](https://github.com/npm/node-semver/pull/813) faster paths for compare (#813) (@H4ad)
-    18→* [`2471d75`](https://github.com/npm/node-semver/commit/2471d7543e2e63d9d95358e2405e7e1cde926c36) [#811](https://github.com/npm/node-semver/pull/811) x-range build metadata support (i529015)
-    23→### Bug Fixes
-    24→* [`fcafb61`](https://github.com/npm/node-semver/commit/fcafb61ed566ff8ccf24818dd94b76738f037aa4) [#780](https://github.com/npm/node-semver/pull/780) add missing `'use strict'` directives (#780) (@Fdawgs)
-    25→* [`c99f336`](https://github.com/npm/node-semver/commit/c99f336fa3bdff465652f9041eab2127d2f52eb2) [#781](https://github.com/npm/node-semver/pull/781) prerelease identifier starting with digits (#781) (@mbtools)
-    31→### Bug Fixes
-    32→* [`af761c0`](https://github.com/npm/node-semver/commit/af761c05bd53eef83b5e20f8b09360b0e70557dc) [#764](https://github.com/npm/node-semver/pull/764) inc: fully capture prerelease identifier (#764) (@wraithgar)
-    33→
-    35→### Features
-    36→* [`0864b3c`](https://github.com/npm/node-semver/commit/0864b3ce7932667013e0c7c5ec764777d4682883) [#753](https://github.com/npm/node-semver/pull/753) add "release" inc type (#753) (@mbtools)
-    50→### Bug Fixes
-    52→* [`73a3d79`](https://github.com/npm/node-semver/commit/73a3d79c4ec32d5dd62c9d5f64e5af7fbdad9ec0) [#726](https://github.com/npm/node-semver/pull/726) optimize Range parsing and formatting (#726) (@jviide)
-    53→
-    60→### Bug Fixes
-    62→* [`6466ba9`](https://github.com/npm/node-semver/commit/6466ba9b540252db405fdd2a289dd4651495beea) [#713](https://github.com/npm/node-semver/pull/713) lru: use map.delete() directly (#713) (@negezor, @lukekarrys)
-    63→
-    66→### Bug Fixes
-    68→* [`c570a34`](https://github.com/npm/node-semver/commit/c570a348ffc6612af07fe94fa46b9affa5e4eff0) [#704](https://github.com/npm/node-semver/pull/704) linting: no-unused-vars (@wraithgar)
-    69→* [`ad8ff11`](https://github.com/npm/node-semver/commit/ad8ff11dd200dac3a05097d9a82d1977ccfa1535) [#704](https://github.com/npm/node-semver/pull/704) use internal cache implementation (@mbtools)
-    70→* [`ac9b357`](https://github.com/npm/node-semver/commit/ac9b35769ab0ddfefd5a3af4a3ecaf3da2012352) [#682](https://github.com/npm/node-semver/pull/682) typo in compareBuild debug message (#682) (@mbtools)
-    71→
-    88→### Features
-    90→* [`a7ab13a`](https://github.com/npm/node-semver/commit/a7ab13a46201e342d34e84a989632b380f755baf) [#671](https://github.com/npm/node-semver/pull/671) preserve pre-release and build parts of a version on coerce (#671) (@madtisa, madtisa, @wraithgar)
-    91→
-   110→### Bug Fixes
-   112→* [`cc6fde2`](https://github.com/npm/node-semver/commit/cc6fde2d34b95cb600d126649d926901bd2a9703) [#588](https://github.com/npm/node-semver/pull/588) trim each range set before parsing (@lukekarrys)
-   113→* [`99d8287`](https://github.com/npm/node-semver/commit/99d8287516a1d2abf0286033e2e26eca6b69c09f) [#583](https://github.com/npm/node-semver/pull/583) correctly parse long build ids as valid (#583) (@lukekarrys)
-   114→
-   117→### Bug Fixes
-   119→* [`abdd93d`](https://github.com/npm/node-semver/commit/abdd93d55496d22e3c15a454a5cf13f101e48bce) [#571](https://github.com/npm/node-semver/pull/571) set max lengths in regex for numeric and build identifiers (#571) (@lukekarrys)
-   120→
-   127→### Bug Fixes
-   129→* [`58c791f`](https://github.com/npm/node-semver/commit/58c791f40ba8cf4be35a5ca6644353ecd6249edc) [#566](https://github.com/npm/node-semver/pull/566) diff when detecting major change from prerelease (#566) (@lukekarrys)
-   130→* [`5c8efbc`](https://github.com/npm/node-semver/commit/5c8efbcb3c6c125af10746d054faff13e8c33fbd) [#565](https://github.com/npm/node-semver/pull/565) preserve build in raw after inc (#565) (@lukekarrys)
-   131→* [`717534e`](https://github.com/npm/node-semver/commit/717534ee353682f3bcf33e60a8af4292626d4441) [#564](https://github.com/npm/node-semver/pull/564) better handling of whitespace (#564) (@lukekarrys)
-   132→
-   135→### Bug Fixes
-   137→* [`d30d25a`](https://github.com/npm/node-semver/commit/d30d25a5c1fb963c3cc9178cb1769fe45e4a3cab) [#559](https://github.com/npm/node-semver/pull/559) show type on invalid semver error (#559) (@tjenkinson)
-   138→
-   141→### Features
-   143→* [`503a4e5`](https://github.com/npm/node-semver/commit/503a4e52fe2b1c6ed1400d33149f7733c8361eed) [#548](https://github.com/npm/node-semver/pull/548) allow identifierBase to be false (#548) (@lsvalina)
-   144→
-   153→### Features
-   155→* [`113f513`](https://github.com/npm/node-semver/commit/113f51312a1a6b6aa50d4f9486b4fde21782c1f5) [#532](https://github.com/npm/node-semver/pull/532) identifierBase parameter for .inc (#532) (@wraithgar, @b-bly)
-   156→* [`48d8f8f`](https://github.com/npm/node-semver/commit/48d8f8fa63bf6e35db70ff840b6da1a51596a5a8) [#530](https://github.com/npm/node-semver/pull/530) export new RELEASE_TYPES constant (@hcharley)
-   157→
-   174→### Bug Fixes
-   176→* [`d8ef32c`](https://github.com/npm/node-semver/commit/d8ef32cee7a7e34310838f32451c9bcf52956b64) [#383](https://github.com/npm/node-semver/pull/383) add support for node.js esm auto exports (#383) (@MylesBorins)
-   177→
-   185→### Bug Fixes
-   187→* allow node >=10 ([85b269a](https://github.com/npm/node-semver/commit/85b269a90806713d2a41e8e990b0ea6bc274b171))
-   188→* **bin:** get correct value from arg separated by equals ([#449](https://github.com/npm/node-semver/issues/449)) ([4ceca76](https://github.com/npm/node-semver/commit/4ceca76729c577166395f19172854cbbcce3cec1)), closes [#431](https://github.com/npm/node-semver/issues/431)
-   189→* ensure SemVer instance passed to inc are not modified ([#427](https://github.com/npm/node-semver/issues/427)) ([f070dde](https://github.com/npm/node-semver/commit/f070dde0cc22894ac254e281cb36a79ab790272d))
-   190→* inc prerelease with numeric preid ([#380](https://github.com/npm/node-semver/issues/380)) ([802e161](https://github.com/npm/node-semver/commit/802e16174fe2a704dba16e97891ce36dc4f2ad76))
-   191→
-   192→
-   200→### Bug Fixes
-   202→* https://github.com/npm/node-semver/issues/329 ([cb1ca1d](https://github.com/npm/node-semver/commit/cb1ca1d5480a6c07c12ac31ba5f2071ed530c4ed))
-   203→* properly escape dots in `GTE0` regexes ([#432](https://github.com/npm/node-semver/issues/432)) ([11494f1](https://github.com/npm/node-semver/commit/11494f1446a907c8fa5d9cfbc9fab04d553311f5))
-   204→* replace deprecated String.prototype.substr() ([#445](https://github.com/npm/node-semver/issues/445)) ([e2d55e7](https://github.com/npm/node-semver/commit/e2d55e79f0d288ea88c0e0ba6620fe5636a4a552))
-   205→* replace regex used to split ranges ([#434](https://github.com/npm/node-semver/issues/434)) ([9ab7b71](https://github.com/npm/node-semver/commit/9ab7b717dd7848c639b8ce3366d2241d430cdad2))
-   206→
-   207→
+     3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16) …
+     4→### Bug Fixes …
+    16→### Bug Fixes …
+    23→### Bug Fixes …
+    31→### Bug Fixes …
+    35→### Features …
+    50→### Bug Fixes …
+    60→### Bug Fixes …
+    66→### Bug Fixes …
+    88→### Features …
+   110→### Bug Fixes …
+   117→### Bug Fixes …
+   127→### Bug Fixes …
+   135→### Bug Fixes …
+   141→### Features …
+   153→### Features …
+   174→### Bug Fixes …
+   185→### Bug Fixes …
+   200→### Bug Fixes …
 CONTRIBUTING.md
-     3→# Contributing …
+     3→# Contributing
      5→## Code of Conduct
      7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
      8→
-     9→## Reporting Bugs …
-    17→## Pull Request Conventions …
+     9→## Reporting Bugs
+    11→Before submitting a new bug report please search for an existing or similar report.
+    12→
+    13→Use one of our existing issue templates if you believe you've come across a unique problem.
+    14→
+    15→Duplicate issues, or issues that don't use one of our templates may get closed without a response.
+    16→
+    17→## Pull Request Conventions
     19→### Commits
     21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
     22→
@@ -90,14 +48,24 @@ CONTRIBUTING.md
     24→
     25→ - `feat`: For when introducing a new feature.  The result will be a new semver minor version of the package when it is next published.
     26→ - `fix`: For bug fixes. The result will be a new semver patch version of the package when it is next published.
+    27→ - `docs`: For documentation updates.  The result will be a new semver patch version of the package when it is next published.
       →…
-    30→### Test Coverage …
-    36→### Linting …
-    42→## What _not_ to contribute? …
+    30→### Test Coverage
+    32→Pull requests made against this repo will run `npm test` automatically.  Please make sure tests pass locally before submitting a PR.
+    33→
+    34→Every new feature or bug fix should come with a corresponding test or tests that validate the solutions. Testing also reports on code coverage and will fail if code coverage drops.
+    35→
+    36→### Linting
+    38→Linting is also done automatically once tests pass.  `npm run lintfix` will fix most linting errors automatically.
+    39→
+    40→Please make sure linting passes before submitting a PR.
+    41→
+    42→## What _not_ to contribute?
     44→### Dependencies
     46→It should be noted that our team does not accept third-party dependency updates/PRs.  If you submit a PR trying to update our dependencies we will close it with or without a reference to these contribution guidelines.
     47→
-    48→### Tools/Automation …
+    48→### Tools/Automation
+    50→Our core team is responsible for the maintenance of the tooling/automation in this project and we ask contributors to not make changes to these when contributing (e.g. `.github/*`, `.eslintrc.json`, `.licensee.json`).  Most of those files also have a header at the top to remind folks they are automatically generated.  Pull requests that alter these will not be accepted.
 README.md
      1→semver(1) -- The semantic versioner for npm
      4→## Install
@@ -114,6 +82,7 @@ README.md
     17→semver.valid('1.2.3') // '1.2.3'
     18→semver.valid('a.b.c') // null
     19→semver.clean('  =v1.2.3   ') // '1.2.3'
+    20→semver.satisfies('1.2.3', '1.x || >=2.5.0 || 5.0.0 - 7.2.3') // true
       →…
    139→## Versions
    141→A "version" is described by the `v2.0.0` specification found at
@@ -132,6 +101,7 @@ README.md
    155→
    156→* `<` Less than
    157→* `<=` Less than or equal to
+   158→* `>` Greater than
       →…
    184→### Prerelease Tags
    186→If a version has a prerelease tag (for example, `1.2.3-alpha.3`) then
@@ -142,6 +112,7 @@ README.md
    191→For example, the range `>1.2.3-alpha.3` would be allowed to match the
    192→version `1.2.3-alpha.7`, but it would *not* be satisfied by
    193→`3.4.5-alpha.9`, even though `3.4.5-alpha.9` is technically "greater
+   194→than" `1.2.3-alpha.3` according to the SemVer sort rules.  The version
       →…
    219→#### Prerelease Identifiers
    221→The method `.inc` takes an additional `identifier` string argument that
@@ -152,6 +123,7 @@ README.md
    226→// '1.2.4-beta.0'
    227→```
    228→
+   229→command-line example:
       →…
    250→#### Prerelease Identifier Base
    252→The method `.inc` takes an optional parameter 'identifierBase' string
@@ -162,6 +134,7 @@ README.md
    257→```javascript
    258→semver.inc('1.2.3', 'prerelease', 'beta', '1')
    259→// '1.2.4-beta.1'
+   260→```
       →…
    279→### Advanced Range Syntax
    281→Advanced range syntax desugars to primitive comparators in
@@ -179,6 +152,7 @@ README.md
    294→range, then the missing pieces are replaced with zeroes.
    295→
    296→* `1.2 - 2.3.4` := `>=1.2.0 <=2.3.4`
+   297→
       →…
    306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
    308→Any of `X`, `x`, or `*` may be used to "stand in" for one of the
@@ -189,6 +163,7 @@ README.md
    313→  satisfies)
    314→* `1.x` := `>=1.0.0 <2.0.0-0` (Matching major version)
    315→* `1.2.x` := `>=1.2.0 <1.3.0-0` (Matching major and minor versions)
+   316→
       →…
    324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
    326→Allows patch-level changes if a minor version is specified on the
@@ -199,6 +174,7 @@ README.md
    331→* `~1` := `>=1.0.0 <(1+1).0.0` := `>=1.0.0 <2.0.0-0` (Same as `1.x`)
    332→* `~0.2.3` := `>=0.2.3 <0.(2+1).0` := `>=0.2.3 <0.3.0-0`
    333→* `~0.2` := `>=0.2.0 <0.(2+1).0` := `>=0.2.0 <0.3.0-0` (Same as `0.2.x`)
+   334→* `~0` := `>=0.0.0 <(0+1).0.0` := `>=0.0.0 <1.0.0-0` (Same as `0.x`)
       →…
    341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
    343→Allows changes that do not modify the left-most non-zero element in the
@@ -209,6 +185,7 @@ README.md
    348→Many authors treat a `0.x` version as if the `x` were the major
    349→"breaking-change" indicator.
    350→
+   351→Caret ranges are ideal when an author may make breaking changes
       →…
    384→### Range Grammar
    386→Putting all this together, here is a Backus-Naur grammar for ranges,
@@ -219,6 +196,7 @@ README.md
    391→logical-or ::= ( ' ' ) * '||' ( ' ' ) *
    392→range      ::= hyphen | simple ( ' ' simple ) * | ''
    393→hyphen     ::= partial ' - ' partial
+   394→simple     ::= primitive | partial | tilde | caret
       →…
    408→## Functions
    410→All methods and classes take a final `options` object argument.  All
@@ -229,6 +207,7 @@ README.md
    415→  (Any resulting output will always be 100% strict compliant, of
    416→  course.)  For backwards compatibility reasons, if the `options`
    417→  argument is a boolean value instead of an object, it is interpreted
+   418→  to be the `loose` param.
       →…
    453→### Comparison
    455→* `gt(v1, v2)`: `v1 > v2`
@@ -239,6 +218,7 @@ README.md
    460→  even if they're not the same string.  You already know how to
    461→  compare strings.
    462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
+   463→* `cmp(v1, comparator, v2)`: Pass in a comparison string, and it'll call
       →…
    478→### Sorting
    480→* `sort(versions)`: Returns a sorted array of versions based on the `compareBuild` 
@@ -258,6 +238,7 @@ README.md
    496→* `minSatisfying(versions, range)`: Return the lowest version in the list
    497→  that satisfies the range, or `null` if none of them do.
    498→* `minVersion(range)`: Return the lowest version that can match
+   499→  the given range.
       →…
    531→### Coercion
    533→* `coerce(version, options)`: Coerces a string to semver if possible
@@ -268,6 +249,7 @@ README.md
    538→`1.2`, `1.2.3`) up to the max permitted length (256 characters).  Longer
    539→versions are simply truncated (`4.6.3.9.2-alpha2` becomes `4.6.3`).  All
    540→surrounding text is simply ignored (`v3.4 replaces v3.3.1` becomes
+   541→`3.4.0`).  Only text which lacks digits will fail coercion (`version one`
       →…
    558→### Clean
    560→* `clean(version)`: Clean a string to be a valid semver if possible
@@ -278,6 +260,7 @@ README.md
    565→
    566→ex.
    567→* `s.clean(' = v 2.1.5foo')`: `null`
+   568→* `s.clean(' = v 2.1.5foo', { loose: true })`: `'2.1.5-foo'`
       →…
    576→## Constants
    578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
@@ -291,6 +274,7 @@ README.md
    587→- prepatch
    588→- prerelease
    589→
+   590→```
       →…
    600→### `SEMVER_SPEC_VERSION`
    602→2.0.0
@@ -302,7 +286,6 @@ README.md
    608→```
    609→
    610→## Exported Modules
-   612→<!--
    613→TODO: Make sure that all of these items are documented (classes aren't,
    614→eg), and then pull the module name into the documentation for that specific
    615→thing.
@@ -310,6 +293,8 @@ README.md
    617→
    618→You may pull in just the part of this semver utility that you need if you
    619→are sensitive to packing and tree-shaking concerns.  The main
+   620→`require('semver')` export uses getter functions to lazily load the parts
+   621→of the API that are used.
       →…
 bin/semver.js
      8→const argv = process.argv.slice(2)

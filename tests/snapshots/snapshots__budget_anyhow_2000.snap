@@ -12,8 +12,6 @@ README.md
      7→[<img alt="build status" src="https://img.shields.io/github/actions/workflow/status/dtolnay/anyhow/ci.yml?branch=master&style=for-the-badge" height="20">](https://github.com/dtolnay/anyhow/actions?query=branch%3Amaster)
      8→
      9→This library provides [`anyhow::Error`][Error], a trait object based error type
-    10→for easy idiomatic error handling in Rust applications.
-    11→
       →…
     21→## Details
     23→- Use `Result<T, anyhow::Error>`, or equivalently `anyhow::Result<T>`, as the
@@ -22,8 +20,6 @@ README.md
     26→  Within the function, use `?` to easily propagate any error that implements the
     27→  [`std::error::Error`] trait.
     28→
-    29→  ```rust
-    30→  use anyhow::Result;
       →…
    126→## No-std support
    128→In no_std mode, almost all of the same API is available and works the same way.
@@ -32,8 +28,6 @@ README.md
    131→
    132→```toml
    133→[dependencies]
-   134→anyhow = { version = "1.0", default-features = false }
-   135→```
       →…
    144→## Comparison to failure
    146→The `anyhow::Error` type works something like `failure::Error`, but unlike
@@ -42,8 +36,6 @@ README.md
    149→the necessary improvements for this to be possible as part of [RFC 2504].
    150→
    151→[RFC 2504]: https://github.com/rust-lang/rfcs/blob/master/text/2504-fix-error.md
-   152→
-   153→<br>
       →…
    155→## Comparison to thiserror
    157→Use Anyhow if you don't care what error type your functions return, you just
@@ -52,18 +44,14 @@ README.md
    160→failures the caller gets exactly the information that you choose.
    161→
    162→[thiserror]: https://github.com/dtolnay/thiserror
-   163→
-   164→<br>
       →…
    166→#### License
-   168→<sup>
    169→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
    170→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
    171→</sup>
    172→
    173→<br>
    174→
-   175→<sub>
       →…
 build.rs
     17→fn main() {
@@ -91,6 +79,7 @@ src/backtrace.rs
     73→    use alloc::vec::Vec;
     74→    use backtrace::{BacktraceFmt, BytesOrWideString, Frame, PrintFmt, SymbolName};
     75→    use core::cell::UnsafeCell;
+    76→    use core::fmt::{self, Debug, Display};
     82→    pub(crate) struct Backtrace {
     83→        inner: Inner,
     84→    }
@@ -318,6 +307,8 @@ src/lib.rs
    293→/// - `Error` requires that the error is `Send`, `Sync`, and `'static`.
    294→/// - `Error` guarantees that a backtrace is available, even if the underlying
    295→///   error type does not provide one.
+   296→/// - `Error` is represented as a narrow pointer &mdash; exactly one word in
+   297→///   size instead of two.
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -330,6 +321,8 @@ src/lib.rs
    399→///
    400→/// ```
    401→/// use anyhow::Error;
+   402→/// use std::io;
+   403→///
       →…
    415→pub struct Chain<'a> {
    416→    state: crate::chain::ChainState<'a>,
@@ -392,6 +385,8 @@ src/lib.rs
    475→/// <br>
    476→///
    477→/// # Example
+   478→///
+   479→/// ```
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.

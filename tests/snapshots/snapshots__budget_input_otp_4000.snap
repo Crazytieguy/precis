@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3963 words)
+budget: 4000 (3964 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -33,19 +33,6 @@ CHANGELOG.md
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web.
      3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
-     5→<h3 align="center">Hero Sponsors 🎖️</h3>
-     6→<p align="center">
-     7→<a href="https://go.clerk.com/input-otp" target="_blank">
-     8→<img alt="Clerk" src='https://input-otp.rodz.dev/sponsors/clerk-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
-     9→</a>
-    10→<a href="https://go.resend.com/input-otp" target="_blank">
-    11→<img alt="Resend" src='https://input-otp.rodz.dev/sponsors/resend-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
-    12→</a>
-    13→<a href="https://evomi.com/?utm_source=github&utm_campaign=otp" target="_blank">
-    14→<img alt="Evomi" src='https://input-otp.rodz.dev/sponsors/evomi-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
-    15→</a>
-    16→</p>
-    17→
     18→https://github.com/guilhermerodz/input-otp/assets/10366880/753751f5-eda8-4145-a4b9-7ef51ca5e453
     19→
     20→## Usage
@@ -89,11 +76,6 @@ README.md
     60→        {slots.slice(3).map((slot, idx) => (
     61→          <Slot key={idx} {...slot} />
     62→        ))}
-    63→      </div>
-    64→    </>
-    65→  )}
-    66→/>
-    67→
       →…
    136→## How it works
    138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
@@ -122,11 +104,6 @@ README.md
    162→<summary>Supports screen readers (a11y)</summary>
    163→
    164→Stripe was my first inspiration to build this library.
-   165→
-   166→Take a look at Stripe's input. The screen reader does not behave like it normally should on a normal single input.
-   167→That's because Stripe's solution is to render a 1-digit input with "clone-divs" rendering a single char per div.
-   168→
-   169→https://github.com/guilhermerodz/input-otp/assets/10366880/3d127aef-147c-4f28-9f6c-57a357a802d0
       →…
    198→### Auto tracks if the input has space in the right side for the badge
    200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
@@ -160,16 +137,8 @@ README.md
    231→  // Callback when the input is complete
    232→  onComplete?: (...args: any[]) => unknown
    233→
-   234→  // Where is the text located within the input
-   235→  // Affects click-holding or long-press behavior
-   236→  // Default: 'left'
-   237→  textAlign?: 'left' | 'center' | 'right'
-   238→
       →…
    293→## Examples
-   295→<details>
-   296→<summary>Automatic form submission on OTP completion</summary>
-   297→
    298→```tsx
    299→export default function Page() {
    300→  const formRef = useRef<HTMLFormElement>(null)
@@ -192,13 +161,8 @@ README.md
    317→</details>
    318→
    319→<details>
-   320→<summary>Automatically focus the input when the page loads</summary>
-   321→
       →…
    377→## Caveats
-   379→<details>
-   380→<summary>[Workaround] If you want to block specific password manager/badges:</summary>
-   381→
    382→By default, `input-otp` handles password managers for you.
    383→The password manager badges should be automatically shifted to the right side.
    384→
@@ -221,8 +185,6 @@ README.md
    401→</details>
    402→
    403→<details>
-   404→<summary>[Setting] If you want to customize the `noscript` CSS fallback</summary>
-   405→
       →…
    539→#### Sponsors
    541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
@@ -291,7 +253,14 @@ apps/storybook/README.md
     72→
     73→7.  **`LICENSE`**: The template is licensed under the MIT licence.
     74→
-      →…
+    75→8.  **`package.json`**: Standard manifest file for Node.js projects, which typically includes project specific metadata (such as the project's name, the author among other information). It's based on this file that npm will know which packages are necessary to the project.
+    76→
+    77→9.  **`yarn.lock`**: This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(Do not change it manually).**
+    78→
+    79→10. **`vite.config.js`**: This is the configuration file for [Vite](https://vitejs.dev/), a build tool that aims to provide a faster and leaner development experience for modern web projects.
+    80→
+    81→11. **`README.md`**: A text file containing useful reference information about the project.
+    82→
     83→## Contribute
     85→If you encounter an issue with the template, we encourage you to open an issue in this template's repository.
     86→
@@ -407,6 +376,9 @@ apps/storybook/tailwind.config.js
     31→          foreground: 'hsl(var(--primary-foreground))',
     32→        },
     33→        secondary: {
+    34→          DEFAULT: 'hsl(var(--secondary))',
+    35→          foreground: 'hsl(var(--secondary-foreground))',
+    36→        },
       →…
 apps/website/README.md
      3→## Getting Started
@@ -716,6 +688,16 @@ apps/website/src/app/(pages)/(home)/page.tsx
     56→            'lg:motion-safe:[animation-delay:3000ms]',
     57→          )}
     58→        >
+    59→          One-time password input component for React. Accessible. Unstyled.
+    60→          Customizable. Open Source.
+    61→        </PageHeaderDescription>
+    62→
+    63→        <PageActions
+    64→          className={cn(
+    65→            fadeUpClassname,
+    66→            'lg:motion-safe:[animation-delay:3000ms]',
+    67→          )}
+    68→        >
       →…
    148→export const revalidate = 3600
    150→const SponsorBadgeClerk = () => {
@@ -858,6 +840,10 @@ apps/website/src/components/icons.tsx
     28→      />
     29→    </svg>
     30→  ),
+    31→  twitter: (props: IconProps) => (
+    32→    <svg
+    33→      {...props}
+    34→      height="23"
       →…
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {

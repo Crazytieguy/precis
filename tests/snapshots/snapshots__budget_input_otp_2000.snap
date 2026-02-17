@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1965 words)
+budget: 2000 (1964 words)
 
 CHANGELOG.md
      3→## [1.4.2]
@@ -11,19 +11,6 @@ CHANGELOG.md
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web.
      3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
-     5→<h3 align="center">Hero Sponsors 🎖️</h3>
-     6→<p align="center">
-     7→<a href="https://go.clerk.com/input-otp" target="_blank">
-     8→<img alt="Clerk" src='https://input-otp.rodz.dev/sponsors/clerk-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
-     9→</a>
-    10→<a href="https://go.resend.com/input-otp" target="_blank">
-    11→<img alt="Resend" src='https://input-otp.rodz.dev/sponsors/resend-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
-    12→</a>
-    13→<a href="https://evomi.com/?utm_source=github&utm_campaign=otp" target="_blank">
-    14→<img alt="Evomi" src='https://input-otp.rodz.dev/sponsors/evomi-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
-    15→</a>
-    16→</p>
-    17→
     18→https://github.com/guilhermerodz/input-otp/assets/10366880/753751f5-eda8-4145-a4b9-7ef51ca5e453
     19→
     20→## Usage
@@ -33,6 +20,7 @@ README.md
     25→
     26→Then import the component.
     27→
+    28→```diff
       →…
     39→## Default example
     41→The example below uses `tailwindcss` `@shadcn/ui` `tailwind-merge` `clsx`:
@@ -41,6 +29,7 @@ README.md
     44→'use client'
     45→import { OTPInput, SlotProps } from 'input-otp'
     46→<OTPInput
+    47→  maxLength={6}
       →…
    136→## How it works
    138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
@@ -53,6 +42,7 @@ README.md
    146→<summary>Supports iOS + Android copy-paste-cut</summary>
    147→
    148→https://github.com/guilhermerodz/input-otp/assets/10366880/bdbdc96a-23da-4e89-bff8-990e6a1c4c23
+   149→
       →…
    198→### Auto tracks if the input has space in the right side for the badge
    200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
@@ -70,22 +60,25 @@ README.md
    215→  maxLength: number
    216→
    217→  // Render function creating the slots
+   218→  render: (props: RenderProps) => React.ReactElement
       →…
    293→## Examples
-   295→<details>
-   296→<summary>Automatic form submission on OTP completion</summary>
-   297→
    298→```tsx
    299→export default function Page() {
    300→  const formRef = useRef<HTMLFormElement>(null)
+   301→  const buttonRef = useRef<HTMLButtonElement>(null)
+   302→
+   303→  return (
+   304→    <form ref={formRef}>
       →…
    377→## Caveats
-   379→<details>
-   380→<summary>[Workaround] If you want to block specific password manager/badges:</summary>
-   381→
    382→By default, `input-otp` handles password managers for you.
    383→The password manager badges should be automatically shifted to the right side.
    384→
+   385→However, if you still want to block password managers, please disable the `pushPasswordManagerStrategy` and then manually block each PWM.
+   386→
+   387→```diff
+   388→<OTPInput
       →…
    539→#### Sponsors
    541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
@@ -208,6 +201,7 @@ apps/storybook/tailwind.config.js
      9→  ],
     10→  prefix: '',
     11→  theme: {
+    12→    container: {
       →…
 apps/website/README.md
      3→## Getting Started
@@ -298,11 +292,6 @@ apps/website/src/app/(local-pages)/layout.tsx
     13→    <html lang="en">
     14→      <body
     15→        className={cn(
-    16→          'min-h-[100dvh] bg-background font-sans antialiased',
-    17→          fontSans.className,
-    18→        )}
-    19→      >
-    20→        <AppProvider>
       →…
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      5→export default function ShadcnPage() {
@@ -311,7 +300,12 @@ apps/website/src/app/(local-pages)/raw-input/page.tsx
      8→  return (
      9→    <form
     10→      method="POST"
-      →…
+    11→      className="container relative flex-1 flex flex-col justify-center items-center"
+    12→    >
+    13→      <input autoFocus type="password" autoComplete="username" />
+    14→    </form>
+    15→  )
+    16→}
 apps/website/src/app/(local-pages)/shadcn/page.tsx
     12→export default function ShadcnPage() {
     13→  const [value, setValue] = React.useState('')
@@ -441,6 +435,7 @@ apps/website/src/components/icons.tsx
     15→        strokeLinejoin="round"
     16→        strokeWidth="16"
     17→      />
+    18→      <line
       →…
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {

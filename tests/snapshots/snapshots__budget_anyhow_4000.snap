@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3708 words)
+budget: 4000 (3696 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -118,7 +118,6 @@ README.md
    164→<br>
    165→
    166→#### License
-   168→<sup>
    169→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
    170→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
    171→</sup>
@@ -191,10 +190,6 @@ src/backtrace.rs
     96→    }
     97→
     98→    struct Capture {
-    99→        actual_start: usize,
-   100→        resolved: bool,
-   101→        frames: Vec<BacktraceFrame>,
-   102→    }
    104→    struct BacktraceFrame {
    105→        frame: Frame,
    106→        symbols: Vec<BacktraceSymbol>,

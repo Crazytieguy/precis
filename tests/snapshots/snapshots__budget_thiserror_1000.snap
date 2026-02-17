@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (934 words)
+budget: 1000 (933 words)
 
 README.md
      1→derive(Error)
@@ -22,8 +22,8 @@ README.md
    214→that the caller receives exactly the information that you choose in the event of
       →…
    223→#### License
-   225→<sup>
    226→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
+   227→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
       →…
 build/probe.rs
     11→struct MyError(Thing);
@@ -183,10 +183,6 @@ impl/src/scan_expr.rs
     15→    ConsumeLiteral,
     16→    ConsumeNestedBrace,
     17→    ExpectPath,
-    18→    ExpectTurbofish,
-    19→    ExpectType,
-    20→    CanBeginExpr,
-    21→    Otherwise,
       →…
     25→enum Action {
     26→    SetState(&'static [(Input, Action)]),

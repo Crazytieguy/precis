@@ -2,25 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (493 words)
+budget: 500 (492 words)
 
 CHANGELOG.md
      3→## [1.4.2] …
 README.md
      3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
-     5→<h3 align="center">Hero Sponsors 🎖️</h3>
-     6→<p align="center">
-     7→<a href="https://go.clerk.com/input-otp" target="_blank">
-     8→<img alt="Clerk" src='https://input-otp.rodz.dev/sponsors/clerk-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
-     9→</a>
-    10→<a href="https://go.resend.com/input-otp" target="_blank">
-    11→<img alt="Resend" src='https://input-otp.rodz.dev/sponsors/resend-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
-    12→</a>
-    13→<a href="https://evomi.com/?utm_source=github&utm_campaign=otp" target="_blank">
-    14→<img alt="Evomi" src='https://input-otp.rodz.dev/sponsors/evomi-wordmark-white-in-black-bg.svg' width="130" style="aspect-ratio: auto;"/>
-    15→</a>
-    16→</p>
-    17→
     18→https://github.com/guilhermerodz/input-otp/assets/10366880/753751f5-eda8-4145-a4b9-7ef51ca5e453
     19→
    206→### OTPInput
@@ -46,6 +33,8 @@ apps/storybook/src/stories/Button.tsx
      7→ */
      8→export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
 apps/storybook/src/stories/InputOTP.stories.tsx
+     4→const meta = {
+    27→type Story = StoryObj<typeof meta>
     29→export const Default: Story = {}
 apps/storybook/tailwind.config.js
      1→/** @type {import('tailwindcss').Config} */
@@ -75,6 +64,7 @@ apps/website/src/app/(local-pages)/example-playground/page.tsx
 apps/website/src/app/(local-pages)/layout.tsx
      7→export default function RootLayout({
      8→  children,
+     9→}: Readonly<{
       →…
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      5→export default function ShadcnPage() {
@@ -84,6 +74,8 @@ apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     13→export default function ShadcnPage() {
 apps/website/src/app/(local-pages)/shadcn/static/page.tsx
      5→export default async function StaticPage(pageProps: any) {
+     6→  return (
+      →…
 apps/website/src/app/(pages)/(home)/_components/confetti.tsx
      3→export function Confetti({
 apps/website/src/app/(pages)/(home)/_components/showcase.tsx
@@ -97,8 +89,11 @@ apps/website/src/app/(pages)/(home)/page.tsx
    148→export const revalidate = 3600
 apps/website/src/app/(pages)/layout.tsx
     14→export const metadata: Metadata = {
+    15→  title: {
+      →…
     68→export default function RootLayout({
     69→  children,
+    70→}: Readonly<{
       →…
 apps/website/src/components/icons.tsx
      1→type IconProps = React.HTMLAttributes<SVGElement>
@@ -119,6 +114,9 @@ apps/website/src/config/site.ts
 apps/website/src/lib/fonts.ts
     10→export const fontSans = GeistSans
     12→export const fontMono = FontMono({
+    13→  subsets: ['latin'],
+    14→  variable: '--font-mono',
+    15→})
 apps/website/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
@@ -147,6 +145,9 @@ packages/input-otp/src/types.ts
      9→  isFocused: boolean
     10→  isHovering: boolean
     11→}
+    12→type OverrideProps …
+    13→type OTPInputBaseProps …
+    32→type InputOTPRenderFn …
     33→export type OTPInputProps …
 packages/input-otp/src/use-previous.ts
      3→export function usePrevious<T>(value: T) {

@@ -315,6 +315,9 @@ pub fn count_words(text: &str) -> usize {
 /// - Markdown images: `![alt](url)` (badges/shields)
 /// - Linked images: `[![alt](url)](url)` (clickable badges)
 /// - Link reference definitions: `[label]: http...`
+/// - HTML tags: `<div>`, `<p align=...>`, `<img .../>`, `</div>`, etc.
+/// - HTML comments: `<!-- ... -->`
+/// - Horizontal rules: `---`, `***`, `___`, `* * *`, etc.
 ///
 /// Only used to skip contiguous noise at the start of a section body,
 /// so mid-section images and links are still rendered normally.
@@ -336,7 +339,48 @@ pub(crate) fn is_markdown_leading_noise(line: &str) -> bool {
             return true;
         }
     }
+    // HTML tags: <div>, </div>, <p align=...>, <img .../>, <br>, <br/>, etc.
+    // Also matches HTML comments: <!-- ... -->
+    if let Some(rest) = trimmed.strip_prefix('<')
+        && (rest.starts_with('/')
+            || rest.starts_with('!')
+            || rest.as_bytes().first().is_some_and(|b| b.is_ascii_alphabetic()))
+    {
+        return true;
+    }
+    // Horizontal rules: 3+ of the same character (-, *, _) with optional spaces
+    if is_horizontal_rule(trimmed) {
+        return true;
+    }
     false
+}
+
+/// Check if a trimmed line is a markdown horizontal rule (thematic break).
+/// Matches 3+ of the same character (`-`, `*`, or `_`), optionally
+/// separated by spaces.
+fn is_horizontal_rule(trimmed: &str) -> bool {
+    if trimmed.len() < 3 {
+        return false;
+    }
+    let mut rule_char = None;
+    let mut count = 0;
+    for b in trimmed.bytes() {
+        match b {
+            b'-' | b'*' | b'_' => {
+                if let Some(rc) = rule_char {
+                    if b != rc {
+                        return false;
+                    }
+                } else {
+                    rule_char = Some(b);
+                }
+                count += 1;
+            }
+            b' ' => {}
+            _ => return false,
+        }
+    }
+    count >= 3
 }
 
 /// Convert rendered output to JSON, splitting into per-file entries.
