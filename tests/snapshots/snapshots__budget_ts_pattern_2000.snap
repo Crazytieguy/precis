@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1992 words)
+budget: 2000 (2151 words)
 
 README.md
    417→### `match`
@@ -60,9 +60,11 @@ README.md
   1648→  );
   1649→```
   1650→
+      →…
 docs/roadmap.md
      1→### Roadmap
      2→
+      →…
 docs/v3-to-v4-migration-guide.md
      1→# TS-Pattern v3 to v4 Migration Guide
      2→
@@ -70,69 +72,95 @@ docs/v3-to-v4-migration-guide.md
      4→
      5→### Imports
      6→
+      →…
     39→#### `__`
     40→
+      →…
     57→#### `select()`, `not()`, `when()`
     58→
+      →…
     79→#### `Pattern` type
     80→
+      →…
     91→### list patterns
     92→
+      →…
    111→### NaN
    112→
+      →…
    122→## New features
    123→
+      →…
    126→### Arrays and unary tuples
    127→
    128→#### `P.array(pattern)`
    129→
+      →…
    157→### Optional object properties
    158→
    159→#### `P.optional(pattern)`
    160→
+      →…
    197→### Union & intersection patterns
    198→
+      →…
    201→#### `P.union(...patterns)`
    202→
+      →…
    234→#### `P.intersection(...patterns)`
    235→
+      →…
    265→### Select with sub pattern
    266→
+      →…
    296→### Infer the matching types from a pattern
    297→
    298→#### `P.infer<typeof pattern>`
    299→
+      →…
    334→### New type specific wildcards
    335→
    336→#### `P.symbol`
    337→
+      →…
    346→#### `P.bigint`
    347→
+      →…
 docs/v4-to-v5-migration-guide.md
      1→# TS-Pattern v4 to v5 Migration Guide
      2→
+      →…
      5→# Breaking changes
      6→
      7→## TypeScript v5
      8→
+      →…
     11→## `.with` is now evaluated eagerly
     12→
+      →…
     42→## Matching on Map and Sets
     43→
+      →…
     63→# New features
     64→
     65→## chainable methods
     66→
+      →…
     71→### P.number methods
     72→
+      →…
    100→### P.string methods
    101→
+      →…
    122→### Global methods
    123→
+      →…
    156→## Variadic tuple patterns
    157→
+      →…
    214→## `.returnType`
    215→
+      →…
 src/errors.ts
      1→/**
      2→ * Error when the given input value does not match any included pattern
@@ -157,6 +185,7 @@ src/internals/helpers.ts
     18→): x is Matcher<unknown, unknown, MatcherType, SelectionType> => {
     19→  const pattern = x as Matcher<unknown, unknown, MatcherType, SelectionType>;
     20→  return pattern && !!pattern[symbols.matcher];
+      →…
     24→const isOptionalPattern = (
     25→  x: unknown
     26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
@@ -169,9 +198,11 @@ src/internals/helpers.ts
     36→): boolean => {
     37→  if (isMatcher(pattern)) {
     38→    const matcher = pattern[symbols.matcher]();
+      →…
    120→export const getSelectionKeys = (pattern: any): string[] => {
    121→  if (isObject(pattern)) {
    122→    if (isMatcher(pattern)) {
+      →…
    132→export const flatMap = <a, b>(
    133→  xs: readonly a[],
    134→  f: (v: a) => readonly b[]
@@ -213,10 +244,10 @@ src/is-matching.ts
     13→  : T extends object
     14→  ? P.Pattern<T> & UnknownProperties
     15→  : P.Pattern<T>;
-    53→export function isMatching
+    53→export function isMatching …
 src/match.ts
-     7→type MatchState
-    11→const unmatched
+     7→type MatchState …
+    11→const unmatched …
     16→/**
     17→ * `match` creates a **pattern matching expression**.
     18→ *  * Use `.with(pattern, handler)` to pattern match on the input.
@@ -251,36 +282,40 @@ src/match.ts
     57→    let predicate: ((value: input) => unknown) | undefined = undefined;
     58→
     59→    if (args.length === 3 && typeof args[1] === 'function') {
-    94→  when
-   110→  otherwise
-   115→  exhaustive
-   120→  run
-   124→  returnType
-   128→  narrow
-   133→function defaultCatcher
+    94→  when …
+   110→  otherwise …
+   115→  exhaustive …
+   120→  run …
+   124→  returnType …
+   128→  narrow …
+   133→function defaultCatcher …
 src/patterns.ts
     67→/**
+      →…
     81→export type unstable_Matchable<
     82→  narrowedOrFn,
     83→  input = unknown,
     84→  pattern = never
     85→> = CustomP<input, pattern, narrowedOrFn>;
     87→/**
+      →…
    100→export type unstable_Matcher<
    101→  narrowedOrFn,
    102→  input = unknown,
    103→  pattern = never
    104→> = ReturnType<CustomP<input, pattern, narrowedOrFn>[matcher]>;
    106→/**
+      →…
    116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
    118→/**
+      →…
    131→export type narrow<input, pattern> = ExtractPreciseValue<
    132→  input,
    133→  InvertPattern<pattern, input>
    134→>;
-   136→function chainable
-   148→const variadic
-   165→function arrayChainable
+   136→function chainable …
+   148→const variadic …
+   165→function arrayChainable …
    177→/**
    178→ * `P.optional(subpattern)` takes a sub pattern and returns a pattern which matches if the
    179→ * key is undefined or if it is defined and the sub pattern matches its value.
@@ -300,20 +335,21 @@ src/patterns.ts
    193→  return chainable({
    194→    [matcher]() {
    195→      return {
-   217→type UnwrapArray
-   219→type UnwrapSet
-   221→type UnwrapMapKey
-   223→type UnwrapMapValue
-   225→type UnwrapRecordKey
-   227→type UnwrapRecordValue
-   229→type WithDefault
-   246→export function array
-   299→export function set
-   336→const setEvery
-   362→export function map
-   410→const mapEvery
-   445→export function record
-   505→const recordEvery
+      →…
+   217→type UnwrapArray …
+   219→type UnwrapSet …
+   221→type UnwrapMapKey …
+   223→type UnwrapMapValue …
+   225→type UnwrapRecordKey …
+   227→type UnwrapRecordValue …
+   229→type WithDefault …
+   246→export function array …
+   299→export function set …
+   336→const setEvery …
+   362→export function map …
+   410→const mapEvery …
+   445→export function record …
+   505→const recordEvery …
    517→/**
    518→ * `P.intersection(...patterns)` returns a pattern which matches
    519→ * only if **every** patterns provided in parameter match the input.
@@ -340,6 +376,7 @@ src/patterns.ts
    540→  return chainable({
    541→    [matcher]: () => ({
    542→      match: (value) => {
+      →…
    559→/**
    560→ * `P.union(...patterns)` returns a pattern which matches
    561→ * if **at least one** of the patterns provided in parameter match the input.
@@ -360,6 +397,7 @@ src/patterns.ts
    576→  return chainable({
    577→    [matcher]: () => ({
    578→      match: <UnknownInput>(value: UnknownInput | input) => {
+      →…
    599→/**
    600→ * `P.not(pattern)` returns a pattern which matches if the sub pattern
    601→ * doesn't match.
@@ -379,63 +417,74 @@ src/patterns.ts
    615→  return chainable({
    616→    [matcher]: () => ({
    617→      match: <UnknownInput>(value: UnknownInput | input) => ({
-   646→export function when
-   696→export function select
-   734→function isUnknown
-   738→function isNumber
-   742→function isString
-   746→function isBoolean
-   750→function isBigInt
-   754→function isSymbol
-   758→function isNullish
-   762→function isNonNullable
-   766→type AnyConstructor
-   768→function isInstanceOf
+      →…
+   646→export function when …
+   696→export function select …
+   734→function isUnknown …
+   738→function isNumber …
+   742→function isString …
+   746→function isBoolean …
+   750→function isBigInt …
+   754→function isSymbol …
+   758→function isNullish …
+   762→function isNonNullable …
+   766→type AnyConstructor …
+   768→function isInstanceOf …
    773→/**
+      →…
    782→export const any: UnknownPattern = chainable(when(isUnknown));
    784→/**
+      →…
    793→export const unknown: UnknownPattern = chainable(when(isUnknown));
    795→/**
+      →…
    805→export const _ = any;
-   817→const startsWith
-   831→const endsWith
-   845→const minLength
-   857→const length
-   869→const maxLength
-   881→const includes
-   895→const regex
-   900→const stringChainable
+   817→const startsWith …
+   831→const endsWith …
+   845→const minLength …
+   857→const length …
+   869→const maxLength …
+   881→const includes …
+   895→const regex …
+   900→const stringChainable …
    919→/**
+      →…
    928→export const string: StringPattern = stringChainable(when(isString));
-   940→const between
-   955→const lt
-   969→const gt
-   983→const lte
-   997→const gte
-  1011→const int
-  1023→const finite
-  1035→const positive
-  1047→const negative
-  1050→const numberChainable
+   940→const between …
+   955→const lt …
+   969→const gt …
+   983→const lte …
+   997→const gte …
+  1011→const int …
+  1023→const finite …
+  1035→const positive …
+  1047→const negative …
+  1050→const numberChainable …
   1066→/**
+      →…
   1075→export const number: NumberPattern = numberChainable(when(isNumber));
-  1087→const betweenBigInt
-  1106→const ltBigInt
-  1120→const gtBigInt
-  1134→const lteBigInt
-  1148→const gteBigInt
-  1162→const positiveBigInt
-  1174→const negativeBigInt
-  1177→const bigintChainable
+  1087→const betweenBigInt …
+  1106→const ltBigInt …
+  1120→const gtBigInt …
+  1134→const lteBigInt …
+  1148→const gteBigInt …
+  1162→const positiveBigInt …
+  1174→const negativeBigInt …
+  1177→const bigintChainable …
   1193→/**
+      →…
   1201→export const bigint: BigIntPattern = bigintChainable(when(isBigInt));
   1203→/**
+      →…
   1211→export const boolean: BooleanPattern = chainable(when(isBoolean));
   1213→/**
+      →…
   1221→export const symbol: SymbolPattern = chainable(when(isSymbol));
   1223→/**
+      →…
   1231→export const nullish: NullishPattern = chainable(when(isNullish));
   1233→/**
+      →…
   1241→export const nonNullable: NonNullablePattern = chainable(when(isNonNullable));
   1243→/**
   1244→ * `P.instanceOf(SomeClass)` is a pattern matching instances of a given class.
@@ -450,13 +499,13 @@ src/patterns.ts
   1253→): Chainable<GuardP<unknown, InstanceType<T>>> {
   1254→  return chainable(when(isInstanceOf(classConstructor)));
   1255→}
-  1274→export function shape
+  1274→export function shape …
 src/types/DistributeUnions.ts
-    41→export type DistributeMatchingUnions
-    80→export type FindUnions
+    41→export type DistributeMatchingUnions …
+    80→export type FindUnions …
 src/types/InvertPattern.ts
-   106→export type InvertPattern
-   303→export type InvertPatternForExclude
+   106→export type InvertPattern …
+   303→export type InvertPatternForExclude …
 src/types/Match.ts
     10→interface NonExhaustiveError<i> {
     11→  __nonExhaustive: never;
@@ -464,14 +513,14 @@ src/types/Match.ts
     14→interface TSPatternError<i> {
     15→  __nonExhaustive: never;
     16→}
-    22→export type Match
-   132→  with
-   159→  when
-   180→  otherwise
-   205→  run
-   225→  narrow
-   245→type DeepExcludeAll
-   261→type Exhaustive
+    22→export type Match …
+   132→  with …
+   159→  when …
+   180→  otherwise …
+   205→  run …
+   225→  narrow …
+   245→type DeepExcludeAll …
+   261→type Exhaustive …
 src/types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
@@ -503,39 +552,39 @@ src/types/Pattern.ts
    132→export interface Override<a> {
    133→  [symbols.override]: a;
    134→}
-   157→export type Pattern
-   223→      optional
-   237→      and
-   253→      or
-   269→      select
-   291→      startsWith
-   306→      endsWith
-   321→      minLength
-   336→      length
-   351→      maxLength
-   366→      includes
-   381→      regex
-   407→      between
-   423→      lt
-   438→      gt
-   453→      lte
-   468→      gte
-   483→      int
-   496→      finite
-   509→      positive
-   522→      negative
-   546→      between
-   562→      lt
-   577→      gt
-   592→      lte
-   607→      gte
-   622→      positive
-   635→      negative
-   661→      optional
-   678→      select
+   157→export type Pattern …
+   223→      optional …
+   237→      and …
+   253→      or …
+   269→      select …
+   291→      startsWith …
+   306→      endsWith …
+   321→      minLength …
+   336→      length …
+   351→      maxLength …
+   366→      includes …
+   381→      regex …
+   407→      between …
+   423→      lt …
+   438→      gt …
+   453→      lte …
+   468→      gte …
+   483→      int …
+   496→      finite …
+   509→      positive …
+   522→      negative …
+   546→      between …
+   562→      lt …
+   577→      gt …
+   592→      lte …
+   607→      gte …
+   622→      positive …
+   635→      negative …
+   661→      optional …
+   678→      select …
 src/types/helpers.ts
-    14→export type LeastUpperBound
-   182→export type GuardValue
+    14→export type LeastUpperBound …
+   182→export type GuardValue …
    266→export interface Fn {
    267→  input: unknown;
    268→  output: unknown;

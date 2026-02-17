@@ -2,24 +2,31 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 words)
+budget: 1000 (1043 words)
 
 AGENTS.md
      1→# AGENTS.md
      2→
+      →…
 CLAUDE.md
      1→# CLAUDE.md
      2→
+      →…
      5→## Project Overview
      6→
+      →…
     10→## Development Commands
     11→
+      →…
     14→### Testing
     15→- `uv run pytest` - Run all tests (prefer running all tests for quick feedback)
+      →…
     18→### Code Quality
     19→- `uv run pre-commit run -a` - Run all pre-commit hooks (linting, formatting, type checking)
+      →…
     22→## Development Process
     23→
+      →…
     32→## Core Architecture
     33→
     34→### Main Components
@@ -32,11 +39,14 @@ CLAUDE.md
     41→
     42→### Package Structure
     43→- `src/pluggy/` - Main package source
+      →…
     48→## Configuration Files
     49→- `pyproject.toml` - Project metadata, build system, tool configuration (ruff, mypy, setuptools-scm)
+      →…
 SECURITY.md
      1→# Security
      2→
+      →…
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
    107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
@@ -57,6 +67,7 @@ docs/conf.py
    122→            return True
    123→
    124→    logger = logging.getLogger(sphinx.util.logging.NAMESPACE)
+      →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
 scripts/release.py
@@ -64,20 +75,25 @@ scripts/release.py
     16→    """Create a fresh branch from upstream/main"""
     17→    repo = Repo.init(".")
     18→    if repo.is_dirty(untracked_files=True):
+      →…
     30→def get_upstream(repo: Repo) -> Remote:
     31→    """Find upstream repository for pluggy on the remotes"""
     32→    for remote in repo.remotes:
     33→        for url in remote.urls:
+      →…
     39→def pre_release(version: str) -> None:
     40→    """Generates new docs, release announcements and creates a local tag."""
     41→    create_branch(version)
     42→    changelog(version, write_out=True)
+      →…
     50→def changelog(version: str, write_out: bool = False) -> None:
     51→    if write_out:
     52→        addopts = []
+      →…
     59→def main() -> int:
     60→    init(autoreset=True)
     61→    parser = argparse.ArgumentParser()
+      →…
 scripts/towncrier-draft-to-file.py
      5→def main() -> int:
      6→    """
@@ -108,20 +124,22 @@ src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
-    60→def _raise_wrapfail
-    70→def _warn_teardown_exception
-    82→def _multicall
+    60→def _raise_wrapfail …
+    70→def _warn_teardown_exception …
+    82→def _multicall …
 src/pluggy/_hooks.py
-    28→_T
-    29→_F
-    31→_Namespace
-    32→_Plugin
-    33→_HookExec
-    37→_HookImplFunction
+    28→_T …
+    29→_F …
+    31→_Namespace …
+    32→_Plugin …
+    33→_HookExec …
+    37→_HookImplFunction …
     40→class HookspecOpts(TypedDict):
     42→
+      →…
     56→class HookimplOpts(TypedDict):
     58→
+      →…
     78→class HookspecMarker:
     85→
     86→    __slots__ = ("project_name",)
@@ -146,7 +164,7 @@ src/pluggy/_hooks.py
    180→        self,
    181→        function: _F,
    182→        hookwrapper: bool = ...,
-   290→_PYPY
+   290→_PYPY …
    359→class HookRelay:
    362→
    363→    __slots__ = ("__dict__",)
@@ -157,7 +175,7 @@ src/pluggy/_hooks.py
    368→    if TYPE_CHECKING:
    369→
    370→        def __getattr__(self, name: str) -> HookCaller: ...
-   377→_CallHistory
+   377→_CallHistory …
    382→class HookCaller:
    384→
    419→    # TODO: Document, or make private.
@@ -177,10 +195,10 @@ src/pluggy/_hooks.py
    434→        self.spec = HookSpec(specmodule_or_class, self.name, spec_opts)
    435→        if spec_opts.get("historic"):
    436→            self._call_history = []
-   442→    def _remove_plugin
-   453→    def _add_hookimpl
-   480→    def _verify_all_args_are_provided
-   577→    def _maybe_apply_history
+   442→    def _remove_plugin …
+   453→    def _add_hookimpl …
+   480→    def _verify_all_args_are_provided …
+   577→    def _maybe_apply_history …
    593→class _SubsetHookCaller(HookCaller):
    596→
    597→    # This class is unusual: in inhertits from `HookCaller` so all of
@@ -225,9 +243,9 @@ src/pluggy/_hooks.py
    707→    )
    708→
 src/pluggy/_manager.py
-    36→_BeforeTrace
-    37→_AfterTrace
-    42→def _warn_for_function
+    36→_BeforeTrace …
+    37→_AfterTrace …
+    42→def _warn_for_function …
     52→class PluginValidationError(Exception):
     58→
     65→class DistFacade:
@@ -238,11 +256,11 @@ src/pluggy/_manager.py
     74→        return name
     83→class PluginManager:
     99→
-   114→    def _hookexec
-   331→    def _verify_hook
-   525→def _formatdef
+   114→    def _hookexec …
+   331→    def _verify_hook …
+   525→def _formatdef …
 src/pluggy/_result.py
-    16→_ExcInfo
+    16→_ExcInfo …
     20→class HookCallError(Exception):
     25→class Result(Generic[ResultType]):
     28→
@@ -281,13 +299,14 @@ src/pluggy/_result.py
 src/pluggy/_tracing.py
     16→class TagTracer:
     17→    def __init__(self) -> None:
-    25→    def _format_message
-    42→    def _processmessage
+    25→    def _format_message …
+    42→    def _processmessage …
     59→class TagTracerSub:
     60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
 src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):
      6→
+      →…
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"

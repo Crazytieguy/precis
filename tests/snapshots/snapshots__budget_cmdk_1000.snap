@@ -2,68 +2,97 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (988 words)
+budget: 1000 (1052 words)
 
 ARCHITECTURE.md
      1→# Architecture
      2→
+      →…
     46→## Approach
     47→
+      →…
     50→### Discarded approach
     51→
+      →…
     60→## Example
     61→
+      →…
     92→## Performance
     93→
+      →…
     96→## Groups
     97→
+      →…
 README.md
      5→# ⌘K [![cmdk minzip package size](https://img.shields.io/bundlephobia/minzip/cmdk)](https://www.npmjs.com/package/cmdk?activeTab=code) [![cmdk package version](https://img.shields.io/npm/v/cmdk.svg?colorB=green)](https://www.npmjs.com/package/cmdk)
      6→
+      →…
      9→## Install
     10→
+      →…
     15→## Use
     16→
+      →…
     82→## Parts and styling
     83→
+      →…
     86→### Command `[cmdk-root]`
     87→
+      →…
    153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
    154→
+      →…
    180→### Input `[cmdk-input]`
    181→
+      →…
    190→### List `[cmdk-list]`
    191→
+      →…
    212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
    213→
+      →…
    242→### Group `[cmdk-group]` `[hidden?]`
    243→
+      →…
    256→### Separator `[cmdk-separator]`
    257→
+      →…
    260→### Empty `[cmdk-empty]`
    261→
+      →…
    264→### Loading `[cmdk-loading]`
    265→
+      →…
    274→### `useCommandState(state => state.selectedField)`
    275→
+      →…
    285→## Examples
    286→
+      →…
    289→### Nested items
    290→
+      →…
    338→### Show sub-items when searching
    339→
+      →…
    361→### Asynchronous results
    362→
+      →…
    397→### Use inside Popover
    398→
+      →…
    426→### Drop in stylesheets
    427→
+      →…
    430→## FAQ
    431→
+      →…
    456→## History
    457→
+      →…
    462→## Testing
    463→
+      →…
 cmdk/src/command-score.ts
     54→function commandScoreInner(
     55→  string,
@@ -80,25 +109,34 @@ cmdk/src/command-score.ts
    157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
    158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
    159→   */
+      →…
 cmdk/src/index.tsx
-   161→const defaultFilter
-   164→const useCommand
-   166→const useStore
+   161→const defaultFilter …
+   164→const useCommand …
+   166→const useStore …
    659→/**
+      →…
    664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
    725→/**
+      →…
    729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
    770→/**
+      →…
    774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
    783→/**
+      →…
    787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
    829→/**
+      →…
    833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
    879→/**
+      →…
    882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
    896→/**
+      →…
    899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
    906→/**
+      →…
    909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
    955→/**
    956→ *
@@ -110,22 +148,26 @@ cmdk/src/index.tsx
    962→
    963→function findNextSibling(el: Element, selector: string) {
    964→  let sibling = el.nextElementSibling
-   972→function findPreviousSibling
-   981→function useAsRef
-   993→function useLazyRef
+      →…
+   972→function findPreviousSibling …
+   981→function useAsRef …
+   993→function useLazyRef …
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1005→  const store = useStore()
-  1010→function useValue
+      →…
+  1010→function useValue …
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
   1047→  const [s, ss] = React.useState<object>()
-  1061→function renderChildren
-  1071→function SlottableWithNestedChildren
+      →…
+  1061→function renderChildren …
+  1071→function SlottableWithNestedChildren …
 playwright.config.ts
      3→const config: PlaywrightTestConfig = {
      4→  forbidOnly: !!process.env.CI,
      5→  retries: process.env.CI ? 2 : 0,
+      →…
 website/README.md
      3→## Getting Started
      4→
@@ -141,6 +183,7 @@ website/README.md
     14→
     15→[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
     16→
+      →…
     19→## Learn More
     20→
     21→To learn more about Next.js, take a look at the following resources:
@@ -159,10 +202,12 @@ website/components/cmdk/framer.tsx
      4→export function FramerCMDK() {
      5→  const [value, setValue] = React.useState('Button')
      6→  return (
+      →…
 website/components/cmdk/linear.tsx
      3→export function LinearCMDK() {
      4→  return (
      5→    <div className="linear">
+      →…
     30→const items = [
     31→  {
     32→    icon: <AssignToIcon />,
@@ -170,19 +215,23 @@ website/components/cmdk/linear.tsx
     34→    shortcut: ['A'],
     35→  },
     36→  {
+      →…
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
      8→  const { resolvedTheme: theme } = useTheme()
      9→  const [value, setValue] = React.useState('linear')
+      →…
 website/components/cmdk/vercel.tsx
      4→export function VercelCMDK() {
      5→  const ref = React.useRef<HTMLDivElement | null>(null)
      6→  const [inputValue, setInputValue] = React.useState('')
+      →…
 website/components/code/index.tsx
      7→const theme = {
      8→  plain: {
      9→    color: 'var(--gray12)',
     10→    fontSize: 12,
+      →…
     41→export function Code({ children }: { children: string }) {
     42→  return (
     43→    <Highlight {...defaultProps} theme={theme} code={children} language="jsx">
@@ -197,6 +246,7 @@ website/components/code/index.tsx
     52→            <CopyIcon />
     53→          </button>
     54→          <div className={styles.shine} />
+      →…
 website/components/icons/index.tsx
      3→export function FigmaIcon() {
     15→export function RaycastIcon() {
@@ -223,6 +273,7 @@ website/pages/_app.tsx
     18→  return (
     19→    <>
     20→      <Head>
+      →…
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
      6→  render() {
@@ -250,6 +301,7 @@ website/pages/index.tsx
     30→  const [theme, setTheme] = React.useState<Themes>('raycast')
     31→
     32→  return (
+      →…
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     99→//////////////////////////////////////////////////////////////////
    100→
@@ -259,6 +311,7 @@ website/pages/index.tsx
    104→  return (
    105→    <button
    106→      className={styles.installButton}
+      →…
    123→function GitHubButton() {
    137→//////////////////////////////////////////////////////////////////
    138→
@@ -272,6 +325,7 @@ website/pages/index.tsx
    146→    key: 'linear',
    147→  },
    148→  {
+      →…
    158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////
    261→
@@ -281,6 +335,7 @@ website/pages/index.tsx
    265→<Command.Dialog open={open} onOpenChange={setOpen}>
    266→  <Command.Input />
    267→
+      →…
    294→//////////////////////////////////////////////////////////////////
    295→
    296→function VersionBadge() {

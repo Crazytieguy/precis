@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1999 words)
+budget: 2000 (2001 words)
 
 CHANGELOG.md
      1→## Unreleased
@@ -78,6 +78,7 @@ README.md
     61→g.Go(func() error { return task2() })
     62→err := g.Wait() // Returns first error only
     63→
+      →…
    104→## Installation and Docs
    105→
    106→Install using `go get github.com/hashicorp/go-multierror`.
@@ -155,6 +156,7 @@ README.md
    178→if err := something(); err != nil {
    179→	if merr, ok := err.(*multierror.Error); ok {
    180→		// Use merr.Errors
+      →…
 append.go
      6→// Append is a helper function that will append more errors
      7→// onto an Error in order to create a larger multi-error.

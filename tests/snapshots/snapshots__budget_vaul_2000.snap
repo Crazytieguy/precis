@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1998 words)
+budget: 2000 (2014 words)
 
 src/browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -136,7 +136,7 @@ src/index.tsx
     46→  snapPoints?: (number | string)[];
     47→  fadeFromIndex?: never;
     48→}
-    50→export type DialogProps
+    50→export type DialogProps …
    139→export function Root({
    140→  open: openProp,
    141→  onOpenChange,
@@ -191,13 +191,14 @@ src/index.tsx
    190→      }
    191→
    192→      if (!o) {
-   803→export const Overlay
-   831→export type ContentProps
-   833→export const Content
-   989→export type HandleProps
+      →…
+   803→export const Overlay …
+   831→export type ContentProps …
+   833→export const Content …
+   989→export type HandleProps …
    993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
    994→const DOUBLE_TAP_TIMEOUT = 120;
-   996→export const Handle
+   996→export const Handle …
   1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
   1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
   1100→
@@ -234,7 +235,7 @@ src/index.tsx
   1133→
   1134→  return <DialogPrimitive.Portal container={container} {...portalProps} />;
   1135→}
-  1137→export const Drawer
+  1137→export const Drawer …
 src/types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
      2→export interface SnapPoint {
@@ -279,8 +280,10 @@ src/use-controllable-state.ts
     11→type SetStateFn<T> = (prevState?: T) => T;
     13→function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
     14→  const callbackRef = React.useRef(callback);
+      →…
     24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
     25→  const uncontrolledState = React.useState<T | undefined>(defaultProp);
+      →…
     39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
 src/use-position-fixed.ts
      6→/**
@@ -392,6 +395,7 @@ src/use-position-fixed.ts
    112→  React.useEffect(() => {
    113→    if (!modal) return;
    114→
+      →…
 src/use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -402,6 +406,7 @@ src/use-prevent-scroll.ts
     14→}
     16→function chain(...callbacks: any[]): (...args: any[]) => void {
     17→  return (...args: any[]) => {
+      →…
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {
     34→export function getScrollParent(node: Element): Element {
@@ -446,8 +451,10 @@ src/use-prevent-scroll.ts
     90→}
    118→function preventScrollMobileSafari() {
    119→  let scrollable: Element;
+      →…
    243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {
    244→  // https://github.com/microsoft/TypeScript/issues/17827#issuecomment-391663310
+      →…
    257→function addEvent<K extends keyof GlobalEventHandlersEventMap>(
    258→  target: EventTarget,
    259→  event: K,
@@ -455,8 +462,10 @@ src/use-prevent-scroll.ts
    261→  options?: boolean | AddEventListenerOptions,
    262→) {
    263→  // @ts-ignore
+      →…
    272→function scrollIntoView(target: Element) {
    273→  let root = document.scrollingElement || document.documentElement;
+      →…
    294→export function isInput(target: Element) {
 src/use-scale-background.ts
      6→const noop = () => () => {};

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3997 words)
+budget: 4000 (3998 words)
 
 command-score.ts
     54→function commandScoreInner(
@@ -527,6 +527,7 @@ index.tsx
    427→
    428→  function selectFirstItem() {
    429→    const item = getValidItems().find((item) => item.getAttribute('aria-disabled') !== 'true')
+      →…
    659→/**
    660→ * Command menu item. Becomes active on pointer enter or through keyboard navigation.
    661→ * Preferably pass a `value`, otherwise the value will be inferred from `children` or

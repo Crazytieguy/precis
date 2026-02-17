@@ -2,54 +2,54 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (497 words)
+budget: 500 (554 words)
 
 CHANGELOG.md
-    13→### Added
-    25→### Changed
-    32→### Fixed
-    47→### Added
-    65→### Added
-    71→### Added
-   162→### Added
-   179→### Added
-   236→### Fixed
-   260→### Fixed
-   272→### Added
-   286→### Added
-   296→### Added
-   303→### Fixed
-   315→### Added
-   329→### Added
-   345→### Added
-   360→### Added
-   367→### Added
-   407→### Added
-   418→### Added
-   433→### Added
-   441→### Added
-   524→### Added
-   537→### Added
-   557→### Added
-   683→### Fixed
-   689→### Added
-   707→### Added
-   724→### Added
-   741→### Added
-   762→### Added
-   853→### Fixed
-   859→### Added
-   880→### Fixed
-   886→### Added
-   911→#### Testing for no arguments
-   947→### Added
-  1014→### Fixed
+    13→### Added …
+    25→### Changed …
+    32→### Fixed …
+    47→### Added …
+    65→### Added …
+    71→### Added …
+   162→### Added …
+   179→### Added …
+   236→### Fixed …
+   260→### Fixed …
+   272→### Added …
+   286→### Added …
+   296→### Added …
+   303→### Fixed …
+   315→### Added …
+   329→### Added …
+   345→### Added …
+   360→### Added …
+   367→### Added …
+   407→### Added …
+   418→### Added …
+   433→### Added …
+   441→### Added …
+   524→### Added …
+   537→### Added …
+   557→### Added …
+   683→### Fixed …
+   689→### Added …
+   707→### Added …
+   724→### Added …
+   741→### Added …
+   762→### Added …
+   853→### Fixed …
+   859→### Added …
+   880→### Fixed …
+   886→### Added …
+   911→#### Testing for no arguments …
+   947→### Added …
+  1014→### Fixed …
 CONTRIBUTING.md
-     3→## Issues
+     3→## Issues …
 Readme.md
-   968→### .parse() and .parseAsync()
+   968→### .parse() and .parseAsync() …
 Readme_zh-CN.md
-   907→### .parse() 和 .parseAsync()
+   907→### .parse() 和 .parseAsync() …
 docs/deprecated.md
    229→### Short option flag longer than a single character
    230→
@@ -66,18 +66,22 @@ eslint.config.js
 jest.config.js
      1→const config = {
      2→  testEnvironment: 'node',
+      →…
 lib/argument.js
      3→class Argument {
      4→  /**
    135→/**
+      →…
    143→function humanReadableArgName(arg) {
 lib/command.js
     13→class Command extends EventEmitter {
     14→  /**
   1127→  _prepareForParse() {
   2697→/**
+      →…
   2705→function incrementNodeInspectorPort(args) {
   2748→/**
+      →…
   2752→function useColor() {
 lib/error.js
      4→class CommanderError extends Error {
@@ -101,6 +105,7 @@ lib/help.js
    603→  styleSubcommandText(str) {
    606→  styleCommandText(str) {
    732→/**
+      →…
    740→function stripColor(str) {
 lib/option.js
      3→class Option {
@@ -108,14 +113,18 @@ lib/option.js
    268→class DualOptions {
    269→  /**
    308→/**
+      →…
    316→function camelcase(str) {
    322→/**
+      →…
    328→function splitOptionFlags(flags) {
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
      4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
+      →…
     48→/**
+      →…
     56→function suggestSimilar(word, candidates) {
 typings/index.d.ts
     16→export class CommanderError extends Error {
@@ -141,10 +150,10 @@ typings/index.d.ts
   1104→export interface ParseOptionsResult {
   1113→export const program: Command;
 typings/index.test-d.ts
-   168→function myParseInt
-   172→function increaseVerbosity
-   176→function collect
-   180→function commaSeparatedList
+   168→function myParseInt …
+   172→function increaseVerbosity …
+   176→function collect …
+   180→function commaSeparatedList …
    384→interface MyCheeseOption {
    385→  cheese: string;
    386→}
@@ -157,5 +166,5 @@ typings/index.test-d.ts
    515→    // do nothing.
    516→  }
    517→}
-   625→  const groupsItemsOptionHeading
-   635→  const groupsItemsCommandHeading
+   625→  const groupsItemsOptionHeading …
+   635→  const groupsItemsCommandHeading …

@@ -2,17 +2,21 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3795 words)
+budget: 4000 (3888 words)
 
 readme.md
     20→## Benefits over plain `fetch`
     21→
+      →…
     33→## Install
     34→
+      →…
     39→###### CDN
     40→
+      →…
     45→## Usage
     46→
+      →…
     85→## API
     86→
     87→### ky(input, options?)
@@ -63,70 +67,103 @@ readme.md
    132→
    133→#### input
    134→
+      →…
    141→#### options
    142→
+      →…
    147→##### method
    148→
+      →…
    156→##### json
    157→
+      →…
    162→##### searchParams
    163→
+      →…
    173→##### prefixUrl
    174→
+      →…
    197→##### retry
    198→
+      →…
    327→##### timeout
    328→
+      →…
    335→##### hooks
    336→
+      →…
    342→###### hooks.beforeRequest
    343→
+      →…
    373→###### hooks.beforeRetry
    374→
+      →…
    446→###### hooks.beforeError
    447→
+      →…
    485→###### hooks.afterResponse
    486→
+      →…
    553→##### throwHttpErrors
    554→
+      →…
    566→##### onDownloadProgress
    567→
+      →…
    592→##### onUploadProgress
    593→
+      →…
    619→##### parseJson
    620→
+      →…
    639→##### stringifyJson
    640→
+      →…
    664→##### fetch
    665→
+      →…
    683→##### context
    684→
+      →…
    745→### ky.extend(defaultOptions)
    746→
+      →…
    811→### ky.create(defaultOptions)
    812→
+      →…
    829→#### defaultOptions
    830→
+      →…
    833→### ky.stop
    834→
+      →…
    864→### ky.retry(options?)
    865→
+      →…
    870→#### options
    871→
+      →…
    874→##### delay
    875→
+      →…
    882→##### code
    883→
+      →…
    895→##### cause
    896→
+      →…
    913→##### request
    914→
+      →…
    923→#### Example
    924→
+      →…
   1000→### HTTPError
   1001→
+      →…
   1046→### TimeoutError
   1047→
+      →…
   1050→## Tips
   1051→
   1052→### Sending form data
@@ -159,10 +196,13 @@ readme.md
   1079→
   1080→#### Modifying FormData in hooks
   1081→
+      →…
   1109→### Setting a custom `Content-Type`
   1110→
+      →…
   1129→### Cancellation
   1130→
+      →…
   1156→### Proxy support (Node.js)
   1157→
   1158→#### Native proxy support
@@ -186,12 +226,16 @@ readme.md
   1176→
   1177→#### Using ProxyAgent
   1178→
+      →…
   1209→### HTTP/2 support (Node.js)
   1210→
+      →…
   1249→### Consuming Server-Sent Events (SSE)
   1250→
+      →…
   1264→### Extending types
   1265→
+      →…
   1292→## FAQ
   1293→
   1294→#### How do I use this in Node.js?
@@ -200,26 +244,37 @@ readme.md
   1297→
   1298→#### How do I use this with a web app (React, Vue.js, etc.) that uses server-side rendering (SSR)?
   1299→
+      →…
   1302→#### How do I test a browser library that uses this?
   1303→
+      →…
   1306→#### How do I use this without a bundler like Webpack?
   1307→
+      →…
   1321→#### How is it different from [`got`](https://github.com/sindresorhus/got)
   1322→
+      →…
   1325→#### How is it different from [`axios`](https://github.com/axios/axios)?
   1326→
+      →…
   1329→#### How is it different from [`r2`](https://github.com/mikeal/r2)?
   1330→
+      →…
   1333→#### What does `ky` mean?
   1334→
+      →…
   1339→## Browser support
   1340→
+      →…
   1343→## Node.js support
   1344→
+      →…
   1347→## Related
   1348→
+      →…
   1352→## Maintainers
   1353→
+      →…
 source/core/Ky.ts
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {
@@ -306,6 +361,7 @@ source/core/Ky.ts
    205→			headers: mergeHeaders((this.#input as Request).headers, options.headers),
    206→			hooks: mergeHooks(
    207→				{
+      →…
    297→	#calculateDelay(): number {
    316→	async #calculateRetryDelay(error: unknown) {
    390→	#decorateResponse(response: Response): Response {
@@ -323,6 +379,7 @@ source/core/constants.ts
      7→	const supportsReadableStream = typeof globalThis.ReadableStream === 'function';
      8→	const supportsRequest = typeof globalThis.Request === 'function';
      9→
+      →…
     34→export const supportsAbortController = typeof globalThis.AbortController === 'function';
     35→export const supportsAbortSignal = typeof globalThis.AbortSignal === 'function' && typeof globalThis.AbortSignal.any === 'function';
     36→export const supportsResponseStreams = typeof globalThis.ReadableStream === 'function';
@@ -335,6 +392,7 @@ source/core/constants.ts
     49→	formData: 'multipart/form-data',
     50→	arrayBuffer: '*/*',
     51→	blob: '*/*',
+      →…
     58→export const maxSafeTimeout = 2_147_483_647;
     61→export const usualFormBoundarySize = new TextEncoder().encode('------WebKitFormBoundaryaxpyiPgbbPti10Rw').length;
     63→export const stop = Symbol('stop');
@@ -513,6 +571,7 @@ source/core/constants.ts
    240→	stringifyJson: true,
    241→	searchParams: true,
    242→	prefixUrl: true,
+      →…
    256→export const vendorSpecificOptions = {
    257→	next: true, // Next.js cache revalidation (revalidate, tags)
    258→} as const;
@@ -522,6 +581,7 @@ source/core/constants.ts
    268→	body: true,
    269→	mode: true,
    270→	credentials: true,
+      →…
 source/errors/ForceRetryError.ts
      4→/**
      5→Internal error used to signal a forced retry from afterResponse hooks.
@@ -620,35 +680,36 @@ source/index.ts
     17→	}
     18→
     19→	ky.create = (newDefaults?: Partial<Options>) => createInstance(validateAndMerge(newDefaults));
+      →…
     34→const ky = createInstance();
 source/types/ResponsePromise.ts
-     6→export type ResponsePromise
+     6→export type ResponsePromise …
 source/types/common.ts
-     2→export type Primitive
-     4→export type Required
-     6→export type LiteralUnion
+     2→export type Primitive …
+     4→export type Required …
+     6→export type LiteralUnion …
 source/types/hooks.ts
-     5→export type BeforeRequestState
-    14→export type BeforeRequestHook
-    20→export type BeforeRetryState
-    30→export type BeforeRetryHook
-    32→export type AfterResponseState
-    41→export type AfterResponseHook
-    48→export type BeforeErrorState
-    57→export type BeforeErrorHook
-    59→export type Hooks
+     5→export type BeforeRequestState …
+    14→export type BeforeRequestHook …
+    20→export type BeforeRetryState …
+    30→export type BeforeRetryHook …
+    32→export type AfterResponseState …
+    41→export type AfterResponseHook …
+    48→export type BeforeErrorState …
+    57→export type BeforeErrorHook …
+    59→export type Hooks …
 source/types/ky.ts
-     5→export type KyInstance
+     5→export type KyInstance …
 source/types/options.ts
-     6→export type SearchParamsInit
-     9→export type SearchParamsOption
-    11→export type RequestHttpMethod
-    12→export type HttpMethod
-    14→export type Input
-    16→export type Progress
-    27→export type KyHeadersInit
-    33→export type KyOptions
-   307→export type KyOptionsRegistry
+     6→export type SearchParamsInit …
+     9→export type SearchParamsOption …
+    11→export type RequestHttpMethod …
+    12→export type HttpMethod …
+    14→export type Input …
+    16→export type Progress …
+    27→export type KyHeadersInit …
+    33→export type KyOptions …
+   307→export type KyOptionsRegistry …
    309→/**
    310→Options are the same as `window.fetch`, except for the KyOptions
    311→*/
@@ -697,7 +758,7 @@ source/types/options.ts
    354→	*/
    355→	headers?: KyHeadersInit;
    356→}
-   358→export type InternalOptions
+   358→export type InternalOptions …
    370→/**
    371→Normalized options passed to the `fetch` call and the `beforeRequest` hooks.
    372→*/
@@ -714,17 +775,18 @@ source/types/options.ts
    383→	context: Record<string, unknown>;
    384→}
 source/types/request.ts
-     1→export type KyRequest
+     1→export type KyRequest …
 source/types/response.ts
-     1→export type KyResponse
+     1→export type KyResponse …
 source/types/retry.ts
-     3→export type ShouldRetryState
-    15→export type RetryOptions
+     3→export type ShouldRetryState …
+    15→export type RetryOptions …
 source/utils/body.ts
      5→export const getBodySize = (body?: BodyInit | null): number => {
     57→const withProgress = (stream: ReadableStream<Uint8Array>, totalBytes: number, onProgress: Options['onDownloadProgress'] | Options['onUploadProgress']): ReadableStream<Uint8Array> => {
     58→	let previousChunk: Uint8Array | undefined;
     59→	let transferredBytes = 0;
+      →…
     90→export const streamResponse = (response: Response, onDownloadProgress: Options['onDownloadProgress']) => {
    119→export const streamRequest = (request: Request, onUploadProgress: Options['onUploadProgress'], originalBody?: BodyInit | null) => {
 source/utils/delay.ts
@@ -743,11 +805,13 @@ source/utils/merge.ts
     32→function newHookValue<K extends keyof Hooks>(original: Hooks, incoming: Hooks, property: K): Required<Hooks>[K] {
     33→	return (Object.hasOwn(incoming, property) && incoming[property] === undefined)
     34→		? []
+      →…
     38→export const mergeHooks = (original: Hooks = {}, incoming: Hooks = {}): Required<Hooks> => (
     39→	{
     47→const appendSearchParameters = (target: any, source: any): URLSearchParams => {
     48→	const result = new URLSearchParams();
     49→
+      →…
     86→export const deepMerge = <T>(...sources: Array<Partial<T> | undefined>): T => {
 source/utils/normalize.ts
      5→export const normalizeRequestMethod = (input: string): string =>
@@ -763,6 +827,7 @@ source/utils/normalize.ts
     20→	afterStatusCodes: retryAfterStatusCodes,
     21→	maxRetryAfter: Number.POSITIVE_INFINITY,
     22→	backoffLimit: Number.POSITIVE_INFINITY,
+      →…
     28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
 source/utils/options.ts
      4→export const findUnknownOptions = (

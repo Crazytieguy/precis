@@ -2,49 +2,69 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (471 words)
+budget: 500 (492 words)
 
 README.md
      9→# Mitt
     10→
+      →…
     21→## Table of Contents
     22→
+      →…
     30→## Install
     31→
+      →…
     56→## Usage
     57→
+      →…
     81→### Typescript
     82→
+      →…
    113→## Examples & Demos
    114→
+      →…
    123→## API
    124→
+      →…
    127→#### Table of Contents
    128→
+      →…
    138→### mitt
    139→
+      →…
    144→### all
    145→
+      →…
    148→### on
    149→
+      →…
    152→#### Parameters
    153→
+      →…
    157→### off
    158→
+      →…
    162→#### Parameters
    163→
+      →…
    167→### emit
    168→
+      →…
    174→#### Parameters
    175→
+      →…
    179→## Contribute
    180→
+      →…
    184→### Reporting Issues
    185→
+      →…
    189→### Submitting pull requests
    190→
+      →…
    203→## License
    204→
+      →…
 src/index.ts
      1→export type EventType = string | symbol;
      5→export type Handler<T = unknown> = (event: T) => void;
@@ -124,3 +144,4 @@ src/index.ts
     85→				if (handler) {
     86→					handlers.splice(handlers.indexOf(handler) >>> 0, 1);
     87→				} else {
+      →…

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1951 words)
+budget: 2000 (1988 words)
 
 README.md
     28→## Features
@@ -87,30 +87,37 @@ site/components/code.tsx
     12→  },
     13→  styles: [
     14→    {
+      →…
    104→export const Code: React.FC<{
    105→  snippet: string;
    106→  language?: Language;
    107→  className?: string;
+      →…
 site/components/docs-layout.tsx
      8→const TableItem: React.FC<{
      9→  href: string;
     10→  children?: React.ReactNode;
+      →…
     19→const TableHeader: React.FC<{
     20→  children?: React.ReactNode;
     21→}> = ({ children }) => (
+      →…
     27→export default function DocsLayout({ meta, children }) {
     28→  return (
     29→    <div className="bg-toast-50 bg-opacity-50 min-h-screen flex flex-col">
     30→      <NextSeo
+      →…
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
      2→  onClick: () => void;
      3→  emoji: string | React.ReactElement;
      4→  children?: React.ReactNode;
+      →…
 site/components/sections/footer.tsx
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
      5→  return (
      6→    <footer className="container relative justify-center my-8 flex flex-col items-center space-y-4">
+      →…
 site/components/sections/splitbee-counter.tsx
      4→export const useSplitbeeCount = <T extends string>(
      5→  event: T,
@@ -118,9 +125,11 @@ site/components/sections/splitbee-counter.tsx
      7→): number => {
      8→  const [data, setData] = React.useState<number>(0);
      9→  const socket = React.useRef(null);
+      →…
     36→export const SplitbeeCounter = () => {
     37→  const count = useSplitbeeCount('Trigger Toast', 'NTV7AYBLEXW3');
     38→
+      →…
 site/components/sections/toast-example.tsx
      7→const examples: Array<{
      8→  title: string;
@@ -132,9 +141,11 @@ site/components/sections/toast-example.tsx
     14→    title: 'Success',
     15→    emoji: '✅',
     16→    snippet: "toast.success('Successfully toasted!')",
+      →…
    270→export const ToastExample = () => {
    271→  const [snippet, setSnippet] = useState(examples[0].snippet);
    272→  return (
+      →…
 site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
      9→  'top-left',
@@ -147,6 +158,7 @@ site/components/sections/toaster-example.tsx
     17→export const ToasterExample: React.FC<{
     18→  position: ToastPosition;
     19→  onPosition: (pos: ToastPosition) => void;
+      →…
 site/next.config.mjs
      5→const withMDX = nextMdx({
      6→  extension: /\.mdx?$/,
@@ -186,13 +198,14 @@ site/pages/_app.tsx
     15→      <a {...props} />
     16→    </Link>
     17→  ),
-    71→function MyApp
+      →…
+    71→function MyApp …
 site/pages/index.tsx
     22→const version = packageInfo.version;
-    24→const Feature
-    31→const Step
-    49→const Steps
-    88→const Features
+    24→const Feature …
+    31→const Step …
+    49→const Steps …
+    88→const Features …
    102→export default function Home() {
    103→  const [position, setPosition] = useState<ToastPosition>('top-center');
    104→  const [reverse, setReverse] = useState(false);
@@ -213,6 +226,7 @@ site/pages/index.tsx
    119→            },
    120→          ],
    121→        }}
+      →…
 site/types/svg.d.ts
      1→interface SvgrComponent
      2→  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
@@ -228,6 +242,7 @@ src/components/checkmark.tsx
     35→  width: 20px;
     36→  opacity: 0;
     37→  height: 20px;
+      →…
 src/components/error.tsx
      3→const circleAnimation = keyframes`
     13→const firstLineAnimation = keyframes`
@@ -240,6 +255,7 @@ src/components/error.tsx
     39→  width: 20px;
     40→  opacity: 0;
     41→  height: 20px;
+      →…
 src/components/loader.tsx
      3→const rotate = keyframes`
     12→export interface LoaderTheme {
@@ -250,9 +266,10 @@ src/components/loader.tsx
     18→  width: 12px;
     19→  height: 12px;
     20→  box-sizing: border-box;
+      →…
 src/components/toast-bar.tsx
-     8→const enterAnimation
-    13→const exitAnimation
+     8→const enterAnimation …
+    13→const exitAnimation …
     18→const fadeInAnimation = `0%{opacity:0;} 100%{opacity:1;}`;
     19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
     22→const ToastBarBase = styled('div')`
@@ -266,11 +283,12 @@ src/components/toast-bar.tsx
     53→    message: Renderable;
     54→  }) => Renderable;
     55→}
-    57→const getAnimationStyle
+    57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
     77→    const animationStyle: React.CSSProperties = toast.height
     78→      ? getAnimationStyle(
+      →…
 src/components/toast-icon.tsx
      9→const StatusWrapper = styled('div')`
     13→const IndicatorWrapper = styled('div')`
@@ -279,6 +297,7 @@ src/components/toast-icon.tsx
     33→  position: relative;
     34→  transform: scale(0.6);
     35→  opacity: 0.4;
+      →…
     41→export type IconThemes = Partial<{
     42→  success: CheckmarkTheme;
     43→  error: ErrorTheme;
@@ -296,9 +315,10 @@ src/components/toast-icon.tsx
     56→    }
     57→  }
     58→
+      →…
 src/components/toaster.tsx
-    15→const ToastWrapper
-    47→const getPositionStyle
+    15→const ToastWrapper …
+    47→const getPositionStyle …
     76→const activeClass = css`
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
@@ -313,6 +333,7 @@ src/components/toaster.tsx
     94→}) => {
     95→  const { toasts, handlers } = useToaster(toastOptions, toasterId);
     96→
+      →…
 src/core/store.ts
      4→export const TOAST_EXPIRE_DISMISS_DELAY = 1000;
      5→export const TOAST_LIMIT = 20;
@@ -372,6 +393,7 @@ src/core/store.ts
     65→  switch (action.type) {
     66→    case ActionType.ADD_TOAST:
     67→      return {
+      →…
    136→const listeners: Array<
    137→  [toasterId: string, reducer: (state: ToasterState) => void]
    138→> = [];
@@ -388,6 +410,7 @@ src/core/store.ts
    152→    action
    153→  );
    154→  listeners.forEach(([id, listener]) => {
+      →…
    161→export const dispatchAll = (action: Action) =>
    162→  Object.keys(memoryState).forEach((toasterId) => dispatch(action, toasterId));
    164→export const getToasterIdFromToastId = (toastId: string) =>
@@ -417,6 +440,7 @@ src/core/store.ts
    191→  );
    192→  const initial = useRef(memoryState[toasterId]);
    193→
+      →…
 src/core/toast.ts
     19→type Message = ValueOrFunction<Renderable, Toast>;
     21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
@@ -427,11 +451,13 @@ src/core/toast.ts
     27→): Toast => ({
     28→  createdAt: Date.now(),
     29→  visible: true,
+      →…
     42→const createHandler =
     43→  (type?: ToastType): ToastHandler =>
     44→  (message, options) => {
     45→    const toast = createToast(message, type, options);
     46→
+      →…
     55→const toast = (message: Message, opts?: ToastOptions) =>
     56→  createHandler('blank')(message, opts);
 src/core/types.ts
@@ -531,6 +557,7 @@ src/core/use-toaster.ts
     14→    new Map<Toast['id'], ReturnType<typeof setTimeout>>()
     15→  ).current;
     16→
+      →…
 src/core/utils.ts
      1→export const genId = (() => {
      2→  let count = 0;

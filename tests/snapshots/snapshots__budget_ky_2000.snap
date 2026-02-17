@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1957 words)
+budget: 2000 (2031 words)
 
 readme.md
     87→### ky(input, options?)
@@ -20,6 +20,7 @@ readme.md
     99→
    100→console.log(user);
    101→```
+      →…
    123→### ky.post(input, options?)
    124→### ky.put(input, options?)
    125→### ky.patch(input, options?)
@@ -45,6 +46,7 @@ readme.md
   1064→const response = await ky.post(url, {body: formData});
   1065→```
   1066→
+      →…
   1158→#### Native proxy support
   1159→
   1160→Node.js 24.5+ supports automatic proxy configuration via environment variables. Set `NODE_USE_ENV_PROXY=1` or use the `--use-env-proxy` CLI flag.
@@ -60,6 +62,7 @@ readme.md
   1170→```
   1171→
   1172→Supported environment variables:
+      →…
   1294→#### How do I use this in Node.js?
   1295→
   1296→Node.js 18 and later supports `fetch` natively, so you can just use this package directly.
@@ -76,35 +79,38 @@ source/core/Ky.ts
     41→
     42→			// Delay the fetch so that body method shortcuts can set the Accept header
     43→			await Promise.resolve();
-   178→	static #normalizeSearchParams
+   178→	static #normalizeSearchParams …
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
-   297→	#calculateDelay
-   316→	async #calculateRetryDelay
-   390→	#decorateResponse
-   398→	#cancelBody
-   407→	#cancelResponseBody
-   412→	async #retry
-   463→	async #fetch
-   503→	#getNormalizedOptions
-   512→	#assignRequest
-   517→	#wrapRequestWithUploadProgress
+      →…
+   297→	#calculateDelay …
+   316→	async #calculateRetryDelay …
+   390→	#decorateResponse …
+   398→	#cancelBody …
+   407→	#cancelResponseBody …
+   412→	async #retry …
+   463→	async #fetch …
+   503→	#getNormalizedOptions …
+   512→	#assignRequest …
+   517→	#wrapRequestWithUploadProgress …
 source/core/constants.ts
      4→export const supportsRequestStreams = (() => {
      5→	let duplexAccessed = false;
+      →…
     34→export const supportsAbortController = typeof globalThis.AbortController === 'function';
     35→export const supportsAbortSignal = typeof globalThis.AbortSignal === 'function' && typeof globalThis.AbortSignal.any === 'function';
     36→export const supportsResponseStreams = typeof globalThis.ReadableStream === 'function';
     37→export const supportsFormData = typeof globalThis.FormData === 'function';
     39→export const requestMethods = ['get', 'post', 'put', 'patch', 'head', 'delete'] as const;
-    41→const validate
+    41→const validate …
     46→export const responseTypes = {
     47→	json: 'application/json',
+      →…
     58→export const maxSafeTimeout = 2_147_483_647;
     61→export const usualFormBoundarySize = new TextEncoder().encode('------WebKitFormBoundaryaxpyiPgbbPti10Rw').length;
     63→export const stop = Symbol('stop');
-    68→export type ForceRetryOptions
+    68→export type ForceRetryOptions …
    145→/**
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    147→*/
@@ -154,13 +160,17 @@ source/core/constants.ts
    192→						});
    193→					}
    194→
+      →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys: KyOptionsRegistry = {
    238→	json: true,
+      →…
    256→export const vendorSpecificOptions = {
    257→	next: true, // Next.js cache revalidation (revalidate, tags)
+      →…
    265→export const requestOptionsRegistry = {
    266→	method: true,
+      →…
 source/errors/ForceRetryError.ts
      4→/**
      5→Internal error used to signal a forced retry from afterResponse hooks.
@@ -251,35 +261,36 @@ source/errors/TimeoutError.ts
 source/index.ts
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
     11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
+      →…
     34→const ky = createInstance();
 source/types/ResponsePromise.ts
-     6→export type ResponsePromise
+     6→export type ResponsePromise …
 source/types/common.ts
-     2→export type Primitive
-     4→export type Required
-     6→export type LiteralUnion
+     2→export type Primitive …
+     4→export type Required …
+     6→export type LiteralUnion …
 source/types/hooks.ts
-     5→export type BeforeRequestState
-    14→export type BeforeRequestHook
-    20→export type BeforeRetryState
-    30→export type BeforeRetryHook
-    32→export type AfterResponseState
-    41→export type AfterResponseHook
-    48→export type BeforeErrorState
-    57→export type BeforeErrorHook
-    59→export type Hooks
+     5→export type BeforeRequestState …
+    14→export type BeforeRequestHook …
+    20→export type BeforeRetryState …
+    30→export type BeforeRetryHook …
+    32→export type AfterResponseState …
+    41→export type AfterResponseHook …
+    48→export type BeforeErrorState …
+    57→export type BeforeErrorHook …
+    59→export type Hooks …
 source/types/ky.ts
-     5→export type KyInstance
+     5→export type KyInstance …
 source/types/options.ts
-     6→export type SearchParamsInit
-     9→export type SearchParamsOption
-    11→export type RequestHttpMethod
-    12→export type HttpMethod
-    14→export type Input
-    16→export type Progress
-    27→export type KyHeadersInit
-    33→export type KyOptions
-   307→export type KyOptionsRegistry
+     6→export type SearchParamsInit …
+     9→export type SearchParamsOption …
+    11→export type RequestHttpMethod …
+    12→export type HttpMethod …
+    14→export type Input …
+    16→export type Progress …
+    27→export type KyHeadersInit …
+    33→export type KyOptions …
+   307→export type KyOptionsRegistry …
    309→/**
    310→Options are the same as `window.fetch`, except for the KyOptions
    311→*/
@@ -328,7 +339,7 @@ source/types/options.ts
    354→	*/
    355→	headers?: KyHeadersInit;
    356→}
-   358→export type InternalOptions
+   358→export type InternalOptions …
    370→/**
    371→Normalized options passed to the `fetch` call and the `beforeRequest` hooks.
    372→*/
@@ -345,33 +356,33 @@ source/types/options.ts
    383→	context: Record<string, unknown>;
    384→}
 source/types/request.ts
-     1→export type KyRequest
+     1→export type KyRequest …
 source/types/response.ts
-     1→export type KyResponse
+     1→export type KyResponse …
 source/types/retry.ts
-     3→export type ShouldRetryState
-    15→export type RetryOptions
+     3→export type ShouldRetryState …
+    15→export type RetryOptions …
 source/utils/body.ts
-     5→export const getBodySize
-    57→const withProgress
-    90→export const streamResponse
-   119→export const streamRequest
+     5→export const getBodySize …
+    57→const withProgress …
+    90→export const streamResponse …
+   119→export const streamRequest …
 source/utils/delay.ts
      5→export type DelayOptions = {
      6→	signal?: InternalOptions['signal'];
      7→};
-     9→export default async function delay
+     9→export default async function delay …
 source/utils/is.ts
-     2→export const isObject
+     2→export const isObject …
 source/utils/merge.ts
-     6→export const validateAndMerge
-    16→export const mergeHeaders
-    32→function newHookValue
-    38→export const mergeHooks
-    47→const appendSearchParameters
-    86→export const deepMerge
+     6→export const validateAndMerge …
+    16→export const mergeHeaders …
+    32→function newHookValue …
+    38→export const mergeHooks …
+    47→const appendSearchParameters …
+    86→export const deepMerge …
 source/utils/normalize.ts
-     5→export const normalizeRequestMethod
+     5→export const normalizeRequestMethod …
      8→const retryMethods: HttpMethod[] = ['get', 'put', 'head', 'delete', 'options', 'trace'];
     10→const retryStatusCodes = [408, 413, 429, 500, 502, 503, 504];
     12→const retryAfterStatusCodes = [413, 429, 503];
@@ -379,16 +390,17 @@ source/utils/normalize.ts
     16→const defaultRetryOptions: InternalRetryOptions = {
     17→	limit: 2,
     18→	methods: retryMethods,
-    28→export const normalizeRetryOptions
+      →…
+    28→export const normalizeRetryOptions …
 source/utils/options.ts
-     4→export const findUnknownOptions
-    30→export const hasSearchParameters
+     4→export const findUnknownOptions …
+    30→export const hasSearchParameters …
 source/utils/timeout.ts
      3→export type TimeoutOptions = {
      4→	timeout: number;
      5→	fetch: typeof fetch;
      6→};
-     9→export default async function timeout
+     9→export default async function timeout …
 source/utils/type-guards.ts
      5→/**
      6→Type guard to check if an error is a Ky error.
@@ -400,6 +412,7 @@ source/utils/type-guards.ts
     12→```
     13→import ky, {isKyError} from 'ky';
     14→try {
+      →…
     27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
     31→/**
     32→Type guard to check if an error is an HTTPError.
@@ -411,6 +424,7 @@ source/utils/type-guards.ts
     38→```
     39→import ky, {isHTTPError} from 'ky';
     40→try {
+      →…
     49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
     53→/**
     54→Type guard to check if an error is a TimeoutError.
@@ -422,6 +436,7 @@ source/utils/type-guards.ts
     60→```
     61→import ky, {isTimeoutError} from 'ky';
     62→try {
+      →…
     71→export function isTimeoutError(error: unknown): error is TimeoutError {
     75→/**
     76→Type guard to check if an error is a ForceRetryError.
@@ -433,6 +448,7 @@ source/utils/type-guards.ts
     82→```
     83→import ky, {isForceRetryError} from 'ky';
     84→
+      →…
     98→export function isForceRetryError(error: unknown): error is ForceRetryError {
 source/utils/types.ts
      1→export type Mutable<T> = {

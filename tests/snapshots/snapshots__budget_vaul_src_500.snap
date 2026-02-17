@@ -2,20 +2,21 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (500 words)
+budget: 500 (556 words)
 
 browser.ts
-     1→export function isMobileFirefox
-    10→export function isMac
-    14→export function isIPhone
-    18→export function isSafari
-    22→export function isIPad
-    30→export function isIOS
-    34→export function testPlatform
+     1→export function isMobileFirefox …
+    10→export function isMac …
+    14→export function isIPhone …
+    18→export function isSafari …
+    22→export function isIPad …
+    30→export function isIOS …
+    34→export function testPlatform …
 constants.ts
      1→export const TRANSITIONS = {
      2→  DURATION: 0.5,
      3→  EASE: [0.32, 0.72, 0, 1],
+      →…
      6→export const VELOCITY_THRESHOLD = 0.4;
      8→export const CLOSE_THRESHOLD = 0.25;
     10→export const SCROLL_LOCK_TIMEOUT = 100;
@@ -28,44 +29,51 @@ context.ts
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     38→  drawerRef: { current: null },
     39→  overlayRef: { current: null },
-    69→export const useDrawerContext
+      →…
+    69→export const useDrawerContext …
 helpers.ts
      3→interface Style {
-     7→const cache
-     9→export function isInView
-    23→export function set
-    42→export function reset
-    59→export const isVertical
-    72→export function getTranslate
-    90→export function dampenValue
-    94→export function assignStyle
+     7→const cache …
+     9→export function isInView …
+    23→export function set …
+    42→export function reset …
+    59→export const isVertical …
+    72→export function getTranslate …
+    90→export function dampenValue …
+    94→export function assignStyle …
    105→/**
    106→ * Receives functions as arguments and returns a new function that calls all.
    107→ */
    108→export function chain<T>(...fns: T[]) {
    109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
    110→    for (const fn of fns) {
+      →…
 index.tsx
     27→export interface WithFadeFromProps {
     28→  /**
+      →…
     40→export interface WithoutFadeFromProps {
     41→  /**
-    50→export type DialogProps
+      →…
+    50→export type DialogProps …
    139→export function Root({
    140→  open: openProp,
-   803→export const Overlay
-   831→export type ContentProps
-   833→export const Content
-   989→export type HandleProps
+      →…
+   803→export const Overlay …
+   831→export type ContentProps …
+   833→export const Content …
+   989→export type HandleProps …
    993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
    994→const DOUBLE_TAP_TIMEOUT = 120;
-   996→export const Handle
+   996→export const Handle …
   1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
   1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
+      →…
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
   1130→export function Portal(props: PortalProps) {
   1131→  const context = useDrawerContext();
-  1137→export const Drawer
+      →…
+  1137→export const Drawer …
 types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
      2→export interface SnapPoint {
@@ -74,19 +82,22 @@ types.ts
      5→}
      7→export type AnyFunction = (...args: any) => any;
 use-composed-refs.ts
-     5→type PossibleRef
+     5→type PossibleRef …
      7→/**
+      →…
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
     19→/**
+      →…
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
     27→/**
+      →…
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 use-controllable-state.ts
-     5→type UseControllableStateParams
-    11→type SetStateFn
-    13→function useCallbackRef
-    24→function useUncontrolledState
-    39→export function useControllableState
+     5→type UseControllableStateParams …
+    11→type SetStateFn …
+    13→function useCallbackRef …
+    24→function useUncontrolledState …
+    39→export function useControllableState …
 use-position-fixed.ts
      6→/**
      7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
@@ -100,15 +111,16 @@ use-position-fixed.ts
     15→export function usePositionFixed({
     16→  isOpen,
     17→  modal,
+      →…
 use-prevent-scroll.ts
-     6→const KEYBOARD_BUFFER
+     6→const KEYBOARD_BUFFER …
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
-    16→function chain
-    27→const visualViewport
-    29→export function isScrollable
-    34→export function getScrollParent
-    47→const nonTextInputTypes
+    16→function chain …
+    27→const visualViewport …
+    29→export function isScrollable …
+    34→export function getScrollParent …
+    47→const nonTextInputTypes …
     63→/**
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
@@ -117,13 +129,14 @@ use-prevent-scroll.ts
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
     69→  let { isDisabled } = options;
     70→
-   118→function preventScrollMobileSafari
-   243→function setStyle
-   257→function addEvent
-   272→function scrollIntoView
-   294→export function isInput
+      →…
+   118→function preventScrollMobileSafari …
+   243→function setStyle …
+   257→function addEvent …
+   272→function scrollIntoView …
+   294→export function isInput …
 use-scale-background.ts
-     6→const noop
-     8→export function useScaleBackground
+     6→const noop …
+     8→export function useScaleBackground …
 use-snap-points.ts
-     7→export function useSnapPoints
+     7→export function useSnapPoints …

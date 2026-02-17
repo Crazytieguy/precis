@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (446 words)
+budget: 500 (463 words)
 
 comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -20,12 +20,16 @@ comparator.js
     16→      } else {
     36→  parse (comp) {
     37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
+      →…
     57→  toString () {
     58→    return this.value
+      →…
     61→  test (version) {
     62→    debug('Comparator.test', version, this.options.loose)
+      →…
     79→  intersects (comp, options) {
     80→    if (!(comp instanceof Comparator)) {
+      →…
 range.js
      3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
@@ -42,16 +46,22 @@ range.js
     17→        return new Range(range.raw, options)
     73→  get range () {
     74→    if (this.formatted === undefined) {
+      →…
     92→  format () {
     93→    return this.range
+      →…
     96→  toString () {
     97→    return this.range
+      →…
    100→  parseRange (range) {
    101→    // memoize range parsing for performance.
+      →…
    170→  intersects (range, options) {
    171→    if (!(range instanceof Range)) {
+      →…
    193→  test (version) {
    194→    if (!version) {
+      →…
    218→const cache = new LRU()
    233→const isNullSet = c => c.value === '<0.0.0-0'
    234→const isAny = c => c.value === ''
@@ -85,15 +95,22 @@ semver.js
     20→    } else if (typeof version !== 'string') {
     81→  format () {
     82→    this.version = `${this.major}.${this.minor}.${this.patch}`
+      →…
     89→  toString () {
     90→    return this.version
+      →…
     93→  compare (other) {
     94→    debug('SemVer.compare', this.version, this.options, other)
+      →…
    109→  compareMain (other) {
    110→    if (!(other instanceof SemVer)) {
+      →…
    135→  comparePre (other) {
    136→    if (!(other instanceof SemVer)) {
+      →…
    168→  compareBuild (other) {
    169→    if (!(other instanceof SemVer)) {
+      →…
    194→  inc (release, identifier, identifierBase) {
    195→    if (release.startsWith('pre')) {
+      →…

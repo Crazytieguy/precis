@@ -2,11 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (542 words)
 
 README.md
     28→## Features
     29→
+      →…
     37→## Installation
     38→
     39→#### With pnpm
@@ -17,30 +18,40 @@ README.md
     44→
     45→#### With NPM
     46→
+      →…
     51→## Getting Started
     52→
+      →…
     70→## Documentation
     71→
+      →…
 site/README.md
      3→## Getting Started
      4→
+      →…
     17→## Learn More
     18→
+      →…
     26→## Deploy on Vercel
     27→
+      →…
 site/components/code.tsx
      8→const theme: PrismTheme = {
      9→  plain: {
+      →…
    104→export const Code: React.FC<{
    105→  snippet: string;
+      →…
 site/components/docs-layout.tsx
      8→const TableItem: React.FC<{
     19→const TableHeader: React.FC<{
     27→export default function DocsLayout({ meta, children }) {
     28→  return (
+      →…
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
      2→  onClick: () => void;
+      →…
 site/components/sections/footer.tsx
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
 site/components/sections/splitbee-counter.tsx
@@ -52,6 +63,7 @@ site/components/sections/splitbee-counter.tsx
 site/components/sections/toast-example.tsx
      7→const examples: Array<{
      8→  title: string;
+      →…
    270→export const ToastExample = () => {
 site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
@@ -66,6 +78,7 @@ site/components/sections/toaster-example.tsx
 site/next.config.mjs
      5→const withMDX = nextMdx({
      6→  extension: /\.mdx?$/,
+      →…
     14→/** @type {import('next').NextConfig} */
     15→const nextConfig = {
     16→  pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
@@ -74,18 +87,20 @@ site/next.config.mjs
     24→  async rewrites() {
     25→    return [
     26→      {
+      →…
 site/pages/_app.tsx
     12→const components = {
-    71→function MyApp
+    71→function MyApp …
 site/pages/index.tsx
     22→const version = packageInfo.version;
-    24→const Feature
-    31→const Step
-    49→const Steps
-    88→const Features
+    24→const Feature …
+    31→const Step …
+    49→const Steps …
+    88→const Features …
    102→export default function Home() {
    103→  const [position, setPosition] = useState<ToastPosition>('top-center');
    104→  const [reverse, setReverse] = useState(false);
+      →…
 site/types/svg.d.ts
      1→interface SvgrComponent
      2→  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
@@ -109,13 +124,14 @@ src/components/loader.tsx
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
 src/components/toast-bar.tsx
-     8→const enterAnimation
-    13→const exitAnimation
+     8→const enterAnimation …
+    13→const exitAnimation …
     47→interface ToastBarProps {
     48→  toast: Toast;
     49→  position?: ToastPosition;
     50→  style?: React.CSSProperties;
-    57→const getAnimationStyle
+      →…
+    57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 src/components/toast-icon.tsx
     32→export const AnimatedIconWrapper = styled('div')`
@@ -126,11 +142,13 @@ src/components/toast-icon.tsx
     45→}>;
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
+      →…
 src/components/toaster.tsx
-    15→const ToastWrapper
-    47→const getPositionStyle
+    15→const ToastWrapper …
+    47→const getPositionStyle …
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
+      →…
 src/core/store.ts
      8→interface ToasterSettings {
      9→  toastLimit: number;
@@ -138,6 +156,7 @@ src/core/store.ts
     12→export enum ActionType {
     13→  ADD_TOAST,
     14→  UPDATE_TOAST,
+      →…
     52→interface ToasterState {
     53→  toasts: Toast[];
     54→  settings: ToasterSettings;
@@ -146,37 +165,42 @@ src/core/store.ts
     58→interface State {
     59→  [toasterId: string]: ToasterState;
     60→}
-    62→export const reducer
-   136→const listeners
-   140→const defaultToasterState
-   149→export const dispatch
-   161→export const dispatchAll
-   164→export const getToasterIdFromToastId
-   169→export const createDispatch
-   185→export const useStore
+    62→export const reducer …
+   136→const listeners …
+   140→const defaultToasterState …
+   149→export const dispatch …
+   161→export const dispatchAll …
+   164→export const getToasterIdFromToastId …
+   169→export const createDispatch …
+   185→export const useStore …
 src/core/toast.ts
-    19→type Message
-    21→type ToastHandler
-    23→const createToast
-    42→const createHandler
-    55→const toast
+    19→type Message …
+    21→type ToastHandler …
+    23→const createToast …
+    42→const createHandler …
+    55→const toast …
 src/core/types.ts
     14→export interface IconTheme {
     15→  primary: string;
     16→  secondary: string;
-    24→const isFunction
-    29→export const resolveValue
+      →…
+    24→const isFunction …
+    29→export const resolveValue …
     34→export interface Toast {
     35→  type: ToastType;
     36→  id: string;
+      →…
     80→export interface ToasterProps {
     81→  position?: ToastPosition;
     82→  toastOptions?: DefaultToastOptions;
+      →…
     91→export interface ToastWrapperProps {
     92→  id: string;
     93→  className?: string;
+      →…
 src/core/use-toaster.ts
-     8→export const useToaster
+     8→export const useToaster …
 tsup.config.ts
      4→const commonConfig: Options = {
      5→  minify: true,
+      →…

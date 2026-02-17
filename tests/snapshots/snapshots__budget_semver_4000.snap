@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3724 words)
+budget: 4000 (3834 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -20,18 +20,21 @@ CHANGELOG.md
      9→* [`120968b`](https://github.com/npm/node-semver/commit/120968b76760cb0db85a72bde2adedd0e9628793) [#840](https://github.com/npm/node-semver/pull/840) `@npmcli/template-oss@4.29.0` (#840)
     10→### Chores
     11→* [`44d7130`](https://github.com/npm/node-semver/commit/44d7130c60cedd3703048aa671bb1d659b79ab07) [#824](https://github.com/npm/node-semver/pull/824) bump @npmcli/eslint-config from 5.1.0 to 6.0.0 (#824) (@dependabot[bot])
+      →…
     15→## [7.7.3](https://github.com/npm/node-semver/compare/v7.7.2...v7.7.3) (2025-10-06)
     16→### Bug Fixes
     17→* [`e37e0ca`](https://github.com/npm/node-semver/commit/e37e0ca0b5fc910d2b1948d25dbc83cc3a0921ea) [#813](https://github.com/npm/node-semver/pull/813) faster paths for compare (#813) (@H4ad)
     18→* [`2471d75`](https://github.com/npm/node-semver/commit/2471d7543e2e63d9d95358e2405e7e1cde926c36) [#811](https://github.com/npm/node-semver/pull/811) x-range build metadata support (i529015)
     19→### Chores
     20→* [`8f05c87`](https://github.com/npm/node-semver/commit/8f05c87f56a4123259b8c6d9324f53eadb02e48f) [#807](https://github.com/npm/node-semver/pull/807) bump @npmcli/template-oss from 4.25.0 to 4.25.1 (#807) (@dependabot[bot], @owlstronaut)
+      →…
     22→## [7.7.2](https://github.com/npm/node-semver/compare/v7.7.1...v7.7.2) (2025-05-12)
     23→### Bug Fixes
     24→* [`fcafb61`](https://github.com/npm/node-semver/commit/fcafb61ed566ff8ccf24818dd94b76738f037aa4) [#780](https://github.com/npm/node-semver/pull/780) add missing `'use strict'` directives (#780) (@Fdawgs)
     25→* [`c99f336`](https://github.com/npm/node-semver/commit/c99f336fa3bdff465652f9041eab2127d2f52eb2) [#781](https://github.com/npm/node-semver/pull/781) prerelease identifier starting with digits (#781) (@mbtools)
     26→### Chores
     27→* [`c760403`](https://github.com/npm/node-semver/commit/c760403b935d3ad35f83e9bbe5ebe1badef2fc71) [#784](https://github.com/npm/node-semver/pull/784) template-oss-apply for workflow permissions (#784) (@wraithgar)
+      →…
     30→## [7.7.1](https://github.com/npm/node-semver/compare/v7.7.0...v7.7.1) (2025-02-03)
     31→### Bug Fixes
     32→* [`af761c0`](https://github.com/npm/node-semver/commit/af761c05bd53eef83b5e20f8b09360b0e70557dc) [#764](https://github.com/npm/node-semver/pull/764) inc: fully capture prerelease identifier (#764) (@wraithgar)
@@ -41,10 +44,13 @@ CHANGELOG.md
     36→* [`0864b3c`](https://github.com/npm/node-semver/commit/0864b3ce7932667013e0c7c5ec764777d4682883) [#753](https://github.com/npm/node-semver/pull/753) add "release" inc type (#753) (@mbtools)
     37→### Bug Fixes
     38→* [`d588e37`](https://github.com/npm/node-semver/commit/d588e3782864b1cab2fe9f2452b848e8c7f609d1) [#755](https://github.com/npm/node-semver/pull/755) diff: fix prerelease to stable version diff logic (#755) (@eminberkayd, berkay.daglar)
+      →…
     40→### Documentation
     41→* [`67e5478`](https://github.com/npm/node-semver/commit/67e54785a0f871361230f84323cbb631b9b6d834) [#756](https://github.com/npm/node-semver/pull/756) readme: added missing period for consistency (#756) (@shaymolcho)
+      →…
     43→### Chores
     44→* [`145c554`](https://github.com/npm/node-semver/commit/145c554b8c7b7ecfcb451153ad18bdb2f24ad10d) [#741](https://github.com/npm/node-semver/pull/741) bump @npmcli/eslint-config from 4.0.5 to 5.0.0 (@dependabot[bot])
+      →…
     48→## [7.6.3](https://github.com/npm/node-semver/compare/v7.6.2...v7.6.3) (2024-07-16)
     49→
     50→### Bug Fixes
@@ -53,6 +59,7 @@ CHANGELOG.md
     53→
     54→### Documentation
     55→
+      →…
     58→## [7.6.2](https://github.com/npm/node-semver/compare/v7.6.1...v7.6.2) (2024-05-09)
     59→
     60→### Bug Fixes
@@ -69,8 +76,10 @@ CHANGELOG.md
     71→
     72→### Dependencies
     73→
+      →…
     77→### Chores
     78→
+      →…
     86→## [7.6.0](https://github.com/npm/node-semver/compare/v7.5.4...v7.6.0) (2024-01-31)
     87→
     88→### Features
@@ -79,6 +88,7 @@ CHANGELOG.md
     91→
     92→### Chores
     93→
+      →…
    108→## [7.5.4](https://github.com/npm/node-semver/compare/v7.5.3...v7.5.4) (2023-07-07)
    109→
    110→### Bug Fixes
@@ -94,6 +104,7 @@ CHANGELOG.md
    120→
    121→### Documentation
    122→
+      →…
    125→## [7.5.2](https://github.com/npm/node-semver/compare/v7.5.1...v7.5.2) (2023-06-15)
    126→
    127→### Bug Fixes
@@ -116,6 +127,7 @@ CHANGELOG.md
    144→
    145→### Bug Fixes
    146→
+      →…
    151→## [7.4.0](https://github.com/npm/node-semver/compare/v7.3.8...v7.4.0) (2023-04-10)
    152→
    153→### Features
@@ -125,8 +137,10 @@ CHANGELOG.md
    157→
    158→### Bug Fixes
    159→
+      →…
    168→### Documentation
    169→
+      →…
    172→## [7.3.8](https://github.com/npm/node-semver/compare/v7.3.7...v7.3.8) (2022-10-04)
    173→
    174→### Bug Fixes
@@ -135,8 +149,10 @@ CHANGELOG.md
    177→
    178→### Documentation
    179→
+      →…
    182→### [7.3.7](https://github.com/npm/node-semver/compare/v7.3.6...v7.3.7) (2022-04-11)
    183→
+      →…
    185→### Bug Fixes
    186→
    187→* allow node >=10 ([85b269a](https://github.com/npm/node-semver/commit/85b269a90806713d2a41e8e990b0ea6bc274b171))
@@ -147,8 +163,10 @@ CHANGELOG.md
    192→
    193→### Dependencies
    194→
+      →…
    197→### [7.3.6](https://github.com/npm/node-semver/compare/v7.3.5...v7.3.6) (2022-04-05)
    198→
+      →…
    200→### Bug Fixes
    201→
    202→* https://github.com/npm/node-semver/issues/329 ([cb1ca1d](https://github.com/npm/node-semver/commit/cb1ca1d5480a6c07c12ac31ba5f2071ed530c4ed))
@@ -159,52 +177,76 @@ CHANGELOG.md
    207→
    208→### Documentation
    209→
+      →…
    213→### Dependencies
    214→
+      →…
    218→## 7.3.0
    219→
+      →…
    223→## 7.2.3
    224→
+      →…
    228→## 7.2.2
    229→
+      →…
    233→## 7.2.0
    234→
+      →…
    239→## 7.1.2
    240→
+      →…
    244→## 7.1.0
    245→
+      →…
    249→## 7.0.0
    250→
+      →…
    255→## 6.3.0
    256→
+      →…
    259→## 6.2.0
    260→
+      →…
    264→## 6.1.3
    265→
+      →…
    268→## 6.1.2
    269→
+      →…
    272→## 6.1.1
    273→
+      →…
    277→## 6.1.0
    278→
+      →…
    282→## 6.0
    283→
+      →…
    290→## 5.7
    291→
+      →…
    294→## 5.6
    295→
+      →…
    301→## 5.5
    302→
+      →…
    305→## 5.4
    306→
+      →…
    309→## 5.3
    310→
+      →…
    313→## 5.2
    314→
+      →…
    317→## 5.1
    318→
+      →…
    322→## 5.0
    323→
+      →…
 CONTRIBUTING.md
      3→# Contributing
      4→
@@ -214,6 +256,7 @@ CONTRIBUTING.md
      8→
      9→## Reporting Bugs
     10→
+      →…
     17→## Pull Request Conventions
     18→
     19→### Commits
@@ -229,8 +272,10 @@ CONTRIBUTING.md
     29→
     30→### Test Coverage
     31→
+      →…
     36→### Linting
     37→
+      →…
     42→## What _not_ to contribute?
     43→
     44→### Dependencies
@@ -239,57 +284,82 @@ CONTRIBUTING.md
     47→
     48→### Tools/Automation
     49→
+      →…
 README.md
      1→semver(1) -- The semantic versioner for npm
      3→
      4→## Install
      5→
+      →…
     10→## Usage
     11→
+      →…
    139→## Versions
    140→
+      →…
    148→## Ranges
    149→
+      →…
    184→### Prerelease Tags
    185→
+      →…
    219→#### Prerelease Identifiers
    220→
+      →…
    250→#### Prerelease Identifier Base
    251→
+      →…
    279→### Advanced Range Syntax
    280→
+      →…
    287→#### Hyphen Ranges `X.Y.Z - A.B.C`
    288→
+      →…
    306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
    307→
+      →…
    324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
    325→
+      →…
    341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
    342→
+      →…
    384→### Range Grammar
    385→
+      →…
    408→## Functions
    409→
+      →…
    453→### Comparison
    454→
+      →…
    478→### Sorting
    479→
+      →…
    485→### Comparators
    486→
+      →…
    489→### Ranges
    490→
+      →…
    531→### Coercion
    532→
+      →…
    558→### Clean
    559→
+      →…
    576→## Constants
    577→
+      →…
    580→### `RELEASE_TYPES`
    581→
+      →…
    600→### `SEMVER_SPEC_VERSION`
    601→
+      →…
    610→## Exported Modules
    611→
+      →…
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
@@ -313,6 +383,7 @@ bin/semver.js
     54→        loose = true
     55→        break
     56→      case '-p': case '--include-prerelease':
+      →…
    132→const failInc = () => {
    133→  console.error('--inc can only be used on a single version with no range')
    134→  fail()
@@ -338,6 +409,7 @@ bin/semver.js
    156→        Only one version may be specified.
    157→
    158→--preid <identifier>
+      →…
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
@@ -387,6 +459,7 @@ classes/comparator.js
     66→    }
     67→
     68→    if (typeof version === 'string') {
+      →…
     79→  intersects (comp, options) {
     80→    if (!(comp instanceof Comparator)) {
     81→      throw new TypeError('a Comparator is required')
@@ -395,6 +468,7 @@ classes/comparator.js
     84→    if (this.operator === '') {
     85→      if (this.value === '') {
     86→        return true
+      →…
 classes/range.js
      3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
@@ -441,6 +515,7 @@ classes/range.js
     78→          this.formatted += '||'
     79→        }
     80→        const comps = this.set[i]
+      →…
     92→  format () {
     93→    return this.range
     94→  }
@@ -455,6 +530,7 @@ classes/range.js
    105→      (this.options.loose && FLAG_LOOSE)
    106→    const memoKey = memoOpts + ':' + range
    107→    const cached = cache.get(memoKey)
+      →…
    170→  intersects (range, options) {
    171→    if (!(range instanceof Range)) {
    172→      throw new TypeError('a Range is required')
@@ -463,6 +539,7 @@ classes/range.js
    175→    return this.set.some((thisComparators) => {
    176→      return (
    177→        isSatisfiable(thisComparators, options) &&
+      →…
    193→  test (version) {
    194→    if (!version) {
    195→      return false
@@ -471,48 +548,61 @@ classes/range.js
    198→    if (typeof version === 'string') {
    199→      try {
    200→        version = new SemVer(version, this.options)
+      →…
    218→const cache = new LRU()
    233→const isNullSet = c => c.value === '<0.0.0-0'
    234→const isAny = c => c.value === ''
    238→const isSatisfiable = (comparators, options) => {
    239→  let result = true
    240→  const remainingComparators = comparators.slice()
+      →…
    257→const parseComparator = (comp, options) => {
    258→  comp = comp.replace(re[t.BUILD], '')
    259→  debug('comp', comp, options)
+      →…
    271→const isX = id => !id || id.toLowerCase() === 'x' || id === '*'
    280→const replaceTildes = (comp, options) => {
    281→  return comp
    282→    .trim()
+      →…
    288→const replaceTilde = (comp, options) => {
    289→  const r = options.loose ? re[t.TILDELOOSE] : re[t.TILDE]
    290→  return comp.replace(r, (_, M, m, p, pr) => {
+      →…
    324→const replaceCarets = (comp, options) => {
    325→  return comp
    326→    .trim()
+      →…
    332→const replaceCaret = (comp, options) => {
    333→  debug('caret', comp, options)
    334→  const r = options.loose ? re[t.CARETLOOSE] : re[t.CARET]
+      →…
    385→const replaceXRanges = (comp, options) => {
    386→  debug('replaceXRanges', comp, options)
    387→  return comp
+      →…
    393→const replaceXRange = (comp, options) => {
    394→  comp = comp.trim()
    395→  const r = options.loose ? re[t.XRANGELOOSE] : re[t.XRANGE]
+      →…
    470→const replaceStars = (comp, options) => {
    471→  debug('replaceStars', comp, options)
    472→  // Looseness is ignored here.  star is always as loose as it gets!
+      →…
    478→const replaceGTE0 = (comp, options) => {
    479→  debug('replaceGTE0', comp, options)
    480→  return comp
+      →…
    491→const hyphenReplace = incPr => ($0,
    492→  from, fM, fm, fp, fpr, fb,
    493→  to, tM, tm, tp, tpr) => {
    494→  if (isX(fM)) {
    495→    from = ''
+      →…
    523→const testSet = (set, version, options) => {
    524→  for (let i = 0; i < set.length; i++) {
    525→    if (!set[i].test(version)) {
+      →…
 classes/semver.js
      9→class SemVer {
     10→  constructor (version, options) {
@@ -568,6 +658,7 @@ classes/semver.js
     98→      }
     99→      other = new SemVer(other, this.options)
    100→    }
+      →…
    109→  compareMain (other) {
    110→    if (!(other instanceof SemVer)) {
    111→      other = new SemVer(other, this.options)
@@ -576,6 +667,7 @@ classes/semver.js
    114→    if (this.major < other.major) {
    115→      return -1
    116→    }
+      →…
    135→  comparePre (other) {
    136→    if (!(other instanceof SemVer)) {
    137→      other = new SemVer(other, this.options)
@@ -584,6 +676,7 @@ classes/semver.js
    140→    // NOT having a prerelease is > having one
    141→    if (this.prerelease.length && !other.prerelease.length) {
    142→      return -1
+      →…
    168→  compareBuild (other) {
    169→    if (!(other instanceof SemVer)) {
    170→      other = new SemVer(other, this.options)
@@ -592,6 +685,7 @@ classes/semver.js
    173→    let i = 0
    174→    do {
    175→      const a = this.build[i]
+      →…
    194→  inc (release, identifier, identifierBase) {
    195→    if (release.startsWith('pre')) {
    196→      if (!identifier && identifierBase === false) {
@@ -600,6 +694,7 @@ classes/semver.js
    199→      // Avoid an invalid semver results
    200→      if (identifier) {
    201→        const match = `-${identifier}`.match(this.options.loose ? re[t.PRERELEASELOOSE] : re[t.PRERELEASE])
+      →…
 functions/clean.js
      4→const clean = (version, options) => {
      5→  const s = parse(version.trim().replace(/^[=v]+/, ''), options)
@@ -615,6 +710,7 @@ functions/cmp.js
     16→      if (typeof b === 'object') {
     17→        b = b.version
     18→      }
+      →…
 functions/coerce.js
      7→const coerce = (version, options) => {
      8→  if (version instanceof SemVer) {
@@ -625,6 +721,7 @@ functions/coerce.js
     13→    version = String(version)
     14→  }
     15→
+      →…
 functions/compare-build.js
      4→const compareBuild = (a, b, loose) => {
      5→  const versionA = new SemVer(a, loose)
@@ -646,6 +743,7 @@ functions/diff.js
     11→    return null
     12→  }
     13→
+      →…
 functions/eq.js
      4→const eq = (a, b, loose) => compare(a, b, loose) === 0
 functions/gt.js
@@ -662,6 +760,7 @@ functions/inc.js
     11→
     12→  try {
     13→    return new SemVer(
+      →…
 functions/lt.js
      4→const lt = (a, b, loose) => compare(a, b, loose) < 0
 functions/lte.js
@@ -682,6 +781,7 @@ functions/parse.js
     10→  } catch (er) {
     11→    if (!throwErrors) {
     12→      return null
+      →…
 functions/patch.js
      4→const patch = (a, loose) => new SemVer(a, loose).patch
 functions/prerelease.js
@@ -845,6 +945,7 @@ ranges/intersects.js
      5→  r1 = new Range(r1, options)
      6→  r2 = new Range(r2, options)
      7→  return r1.intersects(r2, options)
+      →…
 ranges/ltr.js
      5→const ltr = (version, range, options) => outside(version, range, '<', options)
 ranges/max-satisfying.js
@@ -852,40 +953,48 @@ ranges/max-satisfying.js
      7→  let max = null
      8→  let maxSV = null
      9→  let rangeObj = null
+      →…
 ranges/min-satisfying.js
      5→const minSatisfying = (versions, range, options) => {
      6→  let min = null
      7→  let minSV = null
      8→  let rangeObj = null
+      →…
 ranges/min-version.js
      7→const minVersion = (range, loose) => {
      8→  range = new Range(range, loose)
      9→
     10→  let minver = new SemVer('0.0.0')
+      →…
 ranges/outside.js
     13→const outside = (version, range, hilo, options) => {
     14→  version = new SemVer(version, options)
     15→  range = new Range(range, options)
     16→
+      →…
 ranges/subset.js
     45→const subset = (sub, dom, options = {}) => {
     46→  if (sub === dom) {
     47→    return true
     48→  }
+      →…
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
     76→const simpleSubset = (sub, dom, options) => {
     77→  if (sub === dom) {
     78→    return true
     79→  }
+      →…
    226→const higherGT = (a, b, options) => {
    227→  if (!a) {
    228→    return b
    229→  }
+      →…
    238→const lowerLT = (a, b, options) => {
    239→  if (!a) {
    240→    return b
    241→  }
+      →…
 ranges/to-comparators.js
      6→const toComparators = (range, options) =>
      7→  new Range(range, options).set
@@ -895,3 +1004,4 @@ ranges/valid.js
      5→  try {
      6→    // Return '*' instead of '' so that truthiness works.
      7→    // This will throw if it's invalid anyway
+      →…

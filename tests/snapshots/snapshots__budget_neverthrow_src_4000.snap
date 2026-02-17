@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3402 words)
+budget: 4000 (3411 words)
 
 _internals/error.ts
      3→export interface ErrorConfig {
@@ -224,10 +224,10 @@ result-async.ts
    274→> = IsLiteralArray<T> extends 1
    275→  ? TraverseWithAllErrorsAsync<UnwrapAsync<T>>
    276→  : ResultAsync<ExtractOkAsyncTypes<T>, ExtractErrAsyncTypes<T>[number][]>
-   279→type UnwrapAsync
-   300→type TraverseAsync
-   330→type TraverseWithAllErrorsAsync
-   338→type Writable
+   279→type UnwrapAsync …
+   300→type TraverseAsync …
+   330→type TraverseWithAllErrorsAsync …
+   338→type Writable …
 result.ts
     14→export namespace Result {
     15→  /**
@@ -573,8 +573,8 @@ result.ts
    505→  _unsafeUnwrap(config?: ErrorConfig): T {
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
    523→export const fromThrowable = Result.fromThrowable
-   530→type Prev
-   590→type CollectResults
+   530→type Prev …
+   590→type CollectResults …
    614→export type Transpose<
    615→  A,
    616→  Transposed extends unknown[][] = [],
@@ -621,7 +621,7 @@ result.ts
    675→      : T
    676→    : T
    677→  : T
-   680→type UnknownMembersToNever
+   680→type UnknownMembersToNever …
    685→export type MembersToUnion<T> = T extends unknown[] ? T[number] : never
    688→export type IsLiteralArray<T> = T extends { length: infer L }
    689→  ? L extends number
@@ -630,8 +630,8 @@ result.ts
    692→      : 1
    693→    : 0
    694→  : 0
-   698→type Traverse
-   704→type TraverseWithAllErrors
+   698→type Traverse …
+   704→type TraverseWithAllErrors …
    712→export type CombineResults<
    713→  T extends readonly Result<unknown, unknown>[]
    714→> = IsLiteralArray<T> extends 1

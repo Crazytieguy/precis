@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (503 words)
 
 src/typeguard/__init__.py
     34→config: TypeCheckConfiguration
@@ -27,7 +27,8 @@ src/typeguard/_checkers.py
    103→    "__divmod__",
    104→    "__div__",
    105→    "__eq__",
-   586→def _is_literal_type
+      →…
+   586→def _is_literal_type …
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
   1006→    Any, Callable[[Any, Any, tuple[Any, ...], TypeCheckMemo], None]
@@ -36,10 +37,12 @@ src/typeguard/_checkers.py
   1009→    AbstractSet: check_set,
   1010→    BinaryIO: check_io,
   1011→    Callable: check_callable,
+      →…
 src/typeguard/_config.py
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
     24→
+      →…
     30→class CollectionCheckStrategy(Enum):
     48→
     63→class TypeCheckConfiguration:
@@ -97,6 +100,7 @@ src/typeguard/_importhook.py
     80→                "exec",
     81→            )
     82→
+      →…
    109→class TypeguardFinder(MetaPathFinder):
    119→
    156→class ImportHookManager:
@@ -143,8 +147,9 @@ src/typeguard/_transformer.py
    521→        old_memo = self._memo
    522→        self._memo = new_memo
    523→
-   570→    def _get_import
-   580→    def _convert_annotation
+      →…
+   570→    def _get_import …
+   580→    def _convert_annotation …
 src/typeguard/_utils.py
    173→class Unset:
    174→    __slots__ = ()

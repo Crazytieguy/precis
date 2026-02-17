@@ -2,24 +2,29 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (955 words)
+budget: 1000 (961 words)
 
 README.md
      1→derive(Error)
      3→
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/thiserror-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/thiserror)
+      →…
     21→## Example
     22→
     23→```rust
+      →…
     44→## Details
     45→
     46→- Thiserror deliberately does not appear in your public API. You get the same
+      →…
    211→## Comparison to anyhow
    212→
    213→Use thiserror if you care about designing your own dedicated error type(s) so
+      →…
    223→#### License
    224→
    225→<sup>
+      →…
 build/probe.rs
     11→struct MyError(Thing);
     12→struct Thing;
@@ -152,6 +157,7 @@ impl/src/fmt.rs
    176→        return Ok(set);
    177→    }
    178→
+      →…
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
      9→    names: Set<&'a Ident>,

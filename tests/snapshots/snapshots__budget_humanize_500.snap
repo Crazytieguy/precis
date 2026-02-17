@@ -2,17 +2,19 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (493 words)
+budget: 500 (541 words)
 
 README.md
      1→# humanize
      2→
      3→[![PyPI version](https://img.shields.io/pypi/v/humanize.svg?logo=pypi&logoColor=FFE873)](https://pypi.org/project/humanize/)
      4→[![Supported Python versions](https://img.shields.io/pypi/pyversions/humanize.svg?logo=python&logoColor=FFE873)](https://pypi.org/project/humanize/)
+      →…
     49→## API reference
     50→
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
     52→
+      →…
     55→## Installation
     56→
     57→### From PyPI
@@ -25,6 +27,7 @@ README.md
     64→
     65→```bash
     66→git clone https://github.com/python-humanize/humanize
+      →…
     71→## Usage
     72→
     73→### Integer humanization
@@ -47,35 +50,43 @@ README.md
     90→
     91→```pycon
     92→>>> import humanize
+      →…
    110→### Precise time delta
    111→
    112→```pycon
    113→>>> import humanize
+      →…
    124→#### Smaller units
    125→
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
    127→
+      →…
    154→### File size humanization
    155→
    156→```pycon
    157→>>> import humanize
+      →…
    166→### Human-readable floating point numbers
    167→
    168→```pycon
    169→>>> import humanize
+      →…
    182→### Scientific notation
    183→
    184→```pycon
    185→>>> import humanize
+      →…
    200→## Localization
    201→
    202→How to change locale at runtime:
    203→
+      →…
 RELEASING.md
      1→# Release checklist
      2→
      3→- [ ] Get `main` to the appropriate code release state.
      4→      [GitHub Actions](https://github.com/python-humanize/humanize/actions) should be
+      →…
 docs/filesize.md
      1→# Filesize
      2→
@@ -137,7 +148,7 @@ src/humanize/__init__.py
     48→    "thousands_separator",
     49→]
 src/humanize/filesize.py
-    36→def naturalsize
+    36→def naturalsize …
 src/humanize/i18n.py
      8→TYPE_CHECKING = False
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
@@ -150,37 +161,39 @@ src/humanize/i18n.py
     23→    "de_DE": ".",
     24→    "fr_FR": " ",
     25→    "it_IT": ".",
+      →…
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
     32→    "de_DE": ",",
     33→    "fr_FR": ".",
     34→    "it_IT": ",",
-    40→def _get_default_locale_path
-    51→def get_translation
-    58→def activate
-    96→def deactivate
-   101→def _gettext
-   113→def _pgettext
-   129→def _ngettext
-   144→def _gettext_noop
-   163→def _ngettext_noop
-   183→def thousands_separator
-   196→def decimal_separator
+      →…
+    40→def _get_default_locale_path …
+    51→def get_translation …
+    58→def activate …
+    96→def deactivate …
+   101→def _gettext …
+   113→def _pgettext …
+   129→def _ngettext …
+   144→def _gettext_noop …
+   163→def _ngettext_noop …
+   183→def thousands_separator …
+   196→def decimal_separator …
 src/humanize/lists.py
      5→TYPE_CHECKING = False
      9→__all__ = ["natural_list"]
-    12→def natural_list
+    12→def natural_list …
 src/humanize/number.py
     12→TYPE_CHECKING = False
-    21→def _format_not_finite
-    34→def ordinal
-   110→def intcomma
-   195→def intword
-   269→def apnumber
-   321→def fractional
-   385→def scientific
-   454→def clamp
-   531→def metric
+    21→def _format_not_finite …
+    34→def ordinal …
+   110→def intcomma …
+   195→def intword …
+   269→def apnumber …
+   321→def fractional …
+   385→def scientific …
+   454→def clamp …
+   531→def metric …
 src/humanize/time.py
     15→TYPE_CHECKING = False
     21→__all__ = [
@@ -205,16 +218,16 @@ src/humanize/time.py
     42→        if self.__class__ is other.__class__:
     43→            return self.value < other.value
     44→        return NotImplemented
-    47→def _now
-    53→def _abs_timedelta
-    68→def _date_and_delta
-    95→def naturaldelta
-   249→def naturaltime
-   300→def _convert_aware_datetime
-   311→def naturalday
-   343→def naturaldate
-   361→def _quotient_and_remainder
-   406→def _suitable_minimum_unit
-   435→def _suppress_lower_units
-   451→def precisedelta
-   654→def _rounding_by_fmt
+    47→def _now …
+    53→def _abs_timedelta …
+    68→def _date_and_delta …
+    95→def naturaldelta …
+   249→def naturaltime …
+   300→def _convert_aware_datetime …
+   311→def naturalday …
+   343→def naturaldate …
+   361→def _quotient_and_remainder …
+   406→def _suitable_minimum_unit …
+   435→def _suppress_lower_units …
+   451→def precisedelta …
+   654→def _rounding_by_fmt …

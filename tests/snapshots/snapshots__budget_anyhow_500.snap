@@ -2,26 +2,32 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (514 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
      3→
+      →…
     21→## Details
     22→
+      →…
    126→## No-std support
    127→
+      →…
    144→## Comparison to failure
    145→
+      →…
    155→## Comparison to thiserror
    156→
+      →…
    166→#### License
    167→
+      →…
 build.rs
-    17→fn main
-    99→fn compile_probe
-   188→fn rustc_minor_version
-   199→fn cargo_env_var
+    17→fn main …
+    99→fn compile_probe …
+   188→fn rustc_minor_version …
+   199→fn cargo_env_var …
 src/backtrace.rs
      8→pub(crate) enum Backtrace {}
     11→macro_rules! impl_backtrace {
@@ -65,16 +71,16 @@ src/ensure.rs
    886→macro_rules! __fancy_ensure {
    912→macro_rules! __fallback_ensure {
 src/error.rs
-   293→    unsafe fn construct
+   293→    unsafe fn construct …
    705→    type Target = dyn StdError + Send + Sync + 'static;
-   788→unsafe fn object_boxed
-   799→unsafe fn object_reallocate_boxed
-   839→unsafe fn context_downcast
-   859→unsafe fn context_drop_rest
-   920→unsafe fn context_backtrace
+   788→unsafe fn object_boxed …
+   799→unsafe fn object_reallocate_boxed …
+   839→unsafe fn context_downcast …
+   859→unsafe fn context_drop_rest …
+   920→unsafe fn context_backtrace …
    934→pub(crate) struct ErrorImpl<E = ()> {
    952→pub(crate) struct ContextError<C, E> {
-  1002→    unsafe fn provide
+  1002→    unsafe fn provide …
 src/kind.rs
     55→pub struct Adhoc;
     58→pub trait AdhocKind: Sized {
@@ -106,6 +112,7 @@ src/lib.rs
    427→/// ```rust
    428→/// use anyhow::Result;
    429→///
+      →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    616→pub trait Context<T, E>: context::private::Sealed {
    655→#[doc(hidden)]
@@ -120,6 +127,7 @@ src/lib.rs
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    675→
    676→        #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+      →…
    710→        pub trait Bool {
 src/macros.rs
     58→macro_rules! bail {

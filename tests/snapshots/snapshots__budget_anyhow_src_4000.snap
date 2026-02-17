@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3697 words)
+budget: 4000 (3805 words)
 
 backtrace.rs
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
@@ -21,10 +21,12 @@ backtrace.rs
     54→    ($err:expr) => {
     55→        backtrace!()
     56→    };
+      →…
     64→macro_rules! backtrace_if_absent {
     65→    ($err:expr) => {
     66→        None
     67→    };
+      →…
     70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
     72→    use alloc::borrow::{Cow, ToOwned as _};
@@ -72,25 +74,25 @@ backtrace.rs
    117→        Bytes(Vec<u8>),
    118→        Wide(Vec<u16>),
    119→    }
-   122→        fn fmt
-   148→        fn fmt
-   156→        fn fmt
-   178→        fn fmt
-   192→        fn enabled
+   122→        fn fmt …
+   148→        fn fmt …
+   156→        fn fmt …
+   178→        fn fmt …
+   192→        fn enabled …
    210→        #[inline(never)] // want to make sure there's a frame here to remove
    211→        pub(crate) fn capture() -> Backtrace {
-   222→        fn create
-   252→        pub(crate) fn status
-   262→        fn fmt
+   222→        fn create …
+   252→        pub(crate) fn status …
+   262→        fn fmt …
    311→    struct LazilyResolvedCapture {
    312→        sync: Once,
    313→        capture: UnsafeCell<Capture>,
    314→    }
-   317→        fn new
-   324→        fn force
-   344→        fn resolve
-   370→    fn output_filename
-   407→fn _assert_send_sync
+   317→        fn new …
+   324→        fn force …
+   344→        fn resolve …
+   370→    fn output_filename …
+   407→fn _assert_send_sync …
 chain.rs
     10→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
     11→pub(crate) struct Chain<'a> {
@@ -109,30 +111,30 @@ chain.rs
     27→    #[cold]
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
     36→    type Item = &'a (dyn StdError + 'static);
-    38→    fn next
-    50→    fn size_hint
+    38→    fn next …
+    50→    fn size_hint …
     56→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     57→impl DoubleEndedIterator for Chain<'_> {
-    58→    fn next_back
-    77→    fn len
+    58→    fn next_back …
+    77→    fn len …
     93→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     94→impl Default for Chain<'_> {
-    95→    fn default
+    95→    fn default …
 context.rs
      9→mod ext {
     10→    use super::*;
     11→
     12→    pub trait StdError {
-    13→        fn ext_context
+    13→        fn ext_context …
     18→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     19→    impl<E> StdError for E
     20→    where
     21→        E: crate::StdError + Send + Sync + 'static,
     22→    {
-    23→        fn ext_context
-    33→        fn ext_context
-    46→    fn context
-    58→    fn with_context
+    23→        fn ext_context …
+    33→        fn ext_context …
+    46→    fn context …
+    58→    fn with_context …
     70→/// ```
     71→/// # type T = ();
     72→/// #
@@ -154,19 +156,19 @@ context.rs
     88→/// }
     89→/// ```
     90→impl<T> Context<T, Infallible> for Option<T> {
-    91→    fn context
-   103→    fn with_context
-   120→    fn fmt
-   132→    fn fmt
-   142→    fn source
+    91→    fn context …
+   103→    fn with_context …
+   120→    fn fmt …
+   132→    fn fmt …
+   142→    fn source …
    146→    #[cfg(error_generic_member_access)]
    147→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
-   156→    fn source
+   156→    fn source …
    160→    #[cfg(error_generic_member_access)]
    161→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
    166→struct Quoted<C>(C);
-   172→    fn fmt
-   181→    fn write_str
+   172→    fn fmt …
+   181→    fn write_str …
    186→pub(crate) mod private {
    187→    use super::*;
    188→
@@ -180,20 +182,20 @@ ensure.rs
     10→pub trait BothDebug {
     11→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     12→}
-    19→    fn __dispatch_ensure
+    19→    fn __dispatch_ensure …
     24→#[doc(hidden)]
     25→pub trait NotBothDebug {
     26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     27→}
-    30→    fn __dispatch_ensure
+    30→    fn __dispatch_ensure …
     35→struct Buf {
     36→    bytes: [MaybeUninit<u8>; 40],
     37→    written: usize,
     38→}
-    41→    fn new
-    48→    fn as_str
-    59→    fn write_str
-    81→fn render
+    41→    fn new …
+    48→    fn as_str …
+    59→    fn write_str …
+    81→fn render …
    103→#[doc(hidden)]
    104→#[macro_export]
    105→macro_rules! __parse_ensure {
@@ -209,6 +211,7 @@ error.rs
     22→    /// The error type must be threadsafe and `'static`, so that the `Error`
     23→    /// will be as well.
     24→    ///
+      →…
     30→    pub fn new<E>(error: E) -> Self
     31→    where
     32→        E: StdError + Send + Sync + 'static,
@@ -218,6 +221,7 @@ error.rs
     40→    /// If the argument implements std::error::Error, prefer `Error::new`
     41→    /// instead which preserves the underlying error's cause chain and
     42→    /// backtrace. If the argument may or may not implement std::error::Error
+      →…
     77→    pub fn msg<M>(message: M) -> Self
     78→    where
     79→        M: Display + Debug + Send + Sync + 'static,
@@ -227,6 +231,7 @@ error.rs
     86→    /// This is mostly useful for interop with other error libraries.
     87→    ///
     88→    /// # Example
+      →…
    140→    pub fn from_boxed(boxed_error: Box<dyn StdError + Send + Sync + 'static>) -> Self {
    145→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    146→    #[cold]
@@ -275,6 +280,7 @@ error.rs
    318→    /// For attaching context to a `Result` as it is propagated, the
    319→    /// [`Context`][crate::Context] extension trait may be more convenient than
    320→    /// this function.
+      →…
    372→    pub fn context<C>(self, context: C) -> Self
    373→    where
    374→        C: Display + Send + Sync + 'static,
@@ -284,24 +290,28 @@ error.rs
    406→    /// In order for the backtrace to be meaningful, one of the two environment
    407→    /// variables `RUST_LIB_BACKTRACE=1` or `RUST_BACKTRACE=1` must be defined
    408→    /// and `RUST_LIB_BACKTRACE` must not be `0`. Backtraces are somewhat
+      →…
    432→    pub fn backtrace(&self) -> &impl_backtrace!() {
    436→    /// An iterator of the chain of source errors contained by this Error.
    437→    ///
    438→    /// This iterator will visit every error in the cause chain of this error
    439→    /// object, beginning with the error that this error object was created
    440→    /// from.
+      →…
    459→    pub fn chain(&self) -> Chain {
    463→    /// The lowest level cause of this error &mdash; this error's cause's
    464→    /// cause's cause etc.
    465→    ///
    466→    /// The root cause is the last error in the iterator produced by
    467→    /// [`chain()`][Error::chain].
+      →…
    470→    pub fn root_cause(&self) -> &(dyn StdError + 'static) {
    474→    /// Returns true if `E` is the type held by this error object.
    475→    ///
    476→    /// For errors with context, this method returns true if `E` matches the
    477→    /// type of the context `C` **or** the type of the error on which the
    478→    /// context has been attached. For details about the interaction between
+      →…
    482→    pub fn is<E>(&self) -> bool
    483→    where
    484→        E: Display + Debug + Send + Sync + 'static,
@@ -316,6 +326,7 @@ error.rs
    520→    /// # Example
    521→    ///
    522→    /// ```
+      →…
    554→    pub fn downcast_ref<E>(&self) -> Option<&E>
    555→    where
    556→        E: Display + Debug + Send + Sync + 'static,
@@ -352,13 +363,13 @@ error.rs
    703→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    704→impl Deref for Error {
    705→    type Target = dyn StdError + Send + Sync + 'static;
-   707→    fn deref
+   707→    fn deref …
    712→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    713→impl DerefMut for Error {
-   714→    fn deref_mut
-   720→    fn fmt
-   726→    fn fmt
-   732→    fn drop
+   714→    fn deref_mut …
+   720→    fn fmt …
+   726→    fn fmt …
+   732→    fn drop …
    740→struct ErrorVTable {
    741→    object_drop: unsafe fn(Own<ErrorImpl>),
    742→    object_ref: unsafe fn(Ref<ErrorImpl>) -> Ref<dyn StdError + Send + Sync + 'static>,
@@ -374,9 +385,9 @@ error.rs
    752→    ))]
    753→    object_backtrace: unsafe fn(Ref<ErrorImpl>) -> Option<&Backtrace>,
    754→}
-   757→unsafe fn object_drop
-   765→unsafe fn object_drop_front
-   775→unsafe fn object_ref
+   757→unsafe fn object_drop …
+   765→unsafe fn object_drop_front …
+   775→unsafe fn object_ref …
    787→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    788→unsafe fn object_boxed<E>(e: Own<ErrorImpl>) -> Box<dyn StdError + Send + Sync + 'static>
    789→where
@@ -387,8 +398,8 @@ error.rs
    800→where
    801→    E: StdError + Send + Sync + 'static,
    802→{
-   809→unsafe fn object_downcast
-   832→fn no_backtrace
+   809→unsafe fn object_downcast …
+   832→fn no_backtrace …
    838→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    839→unsafe fn context_downcast<C, E>(e: Ref<ErrorImpl>, target: TypeId) -> Option<Ref<()>>
    840→where
@@ -401,8 +412,8 @@ error.rs
    861→    C: 'static,
    862→    E: 'static,
    863→{
-   876→unsafe fn context_chain_downcast
-   892→unsafe fn context_chain_drop_rest
+   876→unsafe fn context_chain_downcast …
+   892→unsafe fn context_chain_drop_rest …
    919→#[allow(clippy::unnecessary_wraps)]
    920→unsafe fn context_backtrace<C>(e: Ref<ErrorImpl>) -> Option<&Backtrace>
    921→where
@@ -416,14 +427,14 @@ error.rs
    938→    // different alignment.
    939→    _object: E,
    940→}
-   944→unsafe fn vtable
+   944→unsafe fn vtable …
    951→#[repr(C)]
    952→pub(crate) struct ContextError<C, E> {
    953→    pub context: C,
    954→    pub error: E,
    955→}
-   958→    fn erase
-   967→    pub(crate) unsafe fn error
+   958→    fn erase …
+   967→    pub(crate) unsafe fn error …
    973→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    974→    pub(crate) unsafe fn error_mut(this: Mut<Self>) -> &mut (dyn StdError + Send + Sync + 'static) {
    984→    #[cfg(any(std_backtrace, feature = "backtrace"))]
@@ -432,11 +443,11 @@ error.rs
   1002→    unsafe fn provide<'a>(this: Ref<'a, Self>, request: &mut Request<'a>) {
   1009→    #[cold]
   1010→    pub(crate) unsafe fn chain(this: Ref<Self>) -> Chain {
-  1019→    fn source
+  1019→    fn source …
   1023→    #[cfg(error_generic_member_access)]
   1024→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
-  1033→    fn fmt
-  1042→    fn fmt
+  1033→    fn fmt …
+  1042→    fn fmt …
   1047→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
   1048→impl From<Error> for Box<dyn StdError + Send + Sync + 'static> {
   1049→    #[cold]
@@ -451,19 +462,19 @@ error.rs
   1066→    fn from(error: Error) -> Self {
   1071→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
   1072→impl AsRef<dyn StdError + Send + Sync> for Error {
-  1073→    fn as_ref
+  1073→    fn as_ref …
   1078→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
   1079→impl AsRef<dyn StdError> for Error {
-  1080→    fn as_ref
+  1080→    fn as_ref …
 fmt.rs
-     7→    pub(crate) unsafe fn display
-    20→    pub(crate) unsafe fn debug
+     7→    pub(crate) unsafe fn display …
+    20→    pub(crate) unsafe fn debug …
     69→struct Indented<'a, D> {
     70→    inner: &'a mut D,
     71→    number: Option<usize>,
     72→    started: bool,
     73→}
-    79→    fn write_str
+    79→    fn write_str …
 kind.rs
     55→pub struct Adhoc;
     57→#[doc(hidden)]
@@ -558,6 +569,7 @@ lib.rs
    316→/// Failed to read instrs from ./path/to/instrs.json: No such file or directory (os error 2)
    317→/// ```
    318→///
+      →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
    392→}
@@ -666,6 +678,7 @@ lib.rs
    498→///     it.detach().context("Failed to detach the important thing")?;
    499→///
    500→///     let path = &it.path;
+      →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.
    618→    fn context<C>(self, context: C) -> Result<T, Error>
@@ -684,6 +697,7 @@ lib.rs
    632→/// This simplifies creation of an `anyhow::Result` in places where type
    633→/// inference cannot deduce the `E` type of the result &mdash; without needing
    634→/// to write `Ok::<_, anyhow::Error>(value)`.
+      →…
    650→pub fn Ok<T>(value: T) -> Result<T> {
    655→#[doc(hidden)]
    656→pub mod __private {
@@ -775,11 +789,13 @@ macros.rs
     13→/// ```
     14→/// # use anyhow::{bail, Result};
     15→/// #
+      →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
     71→    ($ensure:item) => {
     72→        /// Return early with an error if a condition is not satisfied.
     73→        ///
+      →…
    174→/// Construct an ad-hoc error from a string or existing non-`anyhow` error
    175→/// value.
    176→///
@@ -795,6 +811,7 @@ macros.rs
    186→/// # Example
    187→///
    188→/// ```
+      →…
    204→macro_rules! anyhow {
    228→#[doc(hidden)]
    229→#[macro_export]
@@ -818,13 +835,13 @@ nightly.rs
     27→        }
     28→    }
     29→
-    31→        fn provide
+    31→        fn provide …
     38→#[cfg(anyhow_build_probe)]
     39→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
-    41→pub fn request_ref_backtrace
-    45→fn request_ref
-    52→pub fn provide_ref_backtrace
-    56→pub fn provide
+    41→pub fn request_ref_backtrace …
+    45→fn request_ref …
+    52→pub fn provide_ref_backtrace …
+    56→pub fn provide …
 ptr.rs
      5→#[repr(transparent)]
      6→pub struct Own<T>
@@ -833,12 +850,12 @@ ptr.rs
      9→{
     10→    pub ptr: NonNull<T>,
     11→}
-    23→    fn clone
-    32→    pub fn new
-    38→    pub fn cast
-    44→    pub unsafe fn boxed
-    48→    pub fn by_ref
-    55→    pub fn by_mut
+    23→    fn clone …
+    32→    pub fn new …
+    38→    pub fn cast …
+    44→    pub unsafe fn boxed …
+    48→    pub fn by_ref …
+    55→    pub fn by_mut …
     63→#[repr(transparent)]
     64→pub struct Ref<'a, T>
     65→where
@@ -847,13 +864,13 @@ ptr.rs
     68→    pub ptr: NonNull<T>,
     69→    lifetime: PhantomData<&'a T>,
     70→}
-    78→    fn clone
-    87→    pub fn new
-    94→    pub fn from_raw
-   101→    pub fn cast
-   108→    pub fn by_mut
-   115→    pub fn as_ptr
-   119→    pub unsafe fn deref
+    78→    fn clone …
+    87→    pub fn new …
+    94→    pub fn from_raw …
+   101→    pub fn cast …
+   108→    pub fn by_mut …
+   115→    pub fn as_ptr …
+   119→    pub unsafe fn deref …
    124→#[repr(transparent)]
    125→pub struct Mut<'a, T>
    126→where
@@ -862,12 +879,12 @@ ptr.rs
    129→    pub ptr: NonNull<T>,
    130→    lifetime: PhantomData<&'a mut T>,
    131→}
-   139→    fn clone
-   148→    pub fn cast
-   155→    pub fn by_ref
-   162→    pub fn extend
-   169→    pub unsafe fn deref_mut
-   175→    pub unsafe fn read
+   139→    fn clone …
+   148→    pub fn cast …
+   155→    pub fn by_ref …
+   162→    pub fn extend …
+   169→    pub unsafe fn deref_mut …
+   175→    pub unsafe fn read …
    181→pub trait CastTo {
    182→    type Target;
    183→}
@@ -875,23 +892,23 @@ ptr.rs
 wrapper.rs
     10→#[repr(transparent)]
     11→pub struct MessageError<M>(pub M);
-    17→    fn fmt
-    26→    fn fmt
+    17→    fn fmt …
+    26→    fn fmt …
     33→#[repr(transparent)]
     34→pub struct DisplayError<M>(pub M);
-    40→    fn fmt
-    49→    fn fmt
+    40→    fn fmt …
+    49→    fn fmt …
     56→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     57→#[repr(transparent)]
     58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
     60→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     61→impl Debug for BoxedError {
-    62→    fn fmt
+    62→    fn fmt …
     67→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     68→impl Display for BoxedError {
-    69→    fn fmt
+    69→    fn fmt …
     74→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     75→impl StdError for BoxedError {
-    76→    fn source
+    76→    fn source …
     80→    #[cfg(error_generic_member_access)]
     81→    fn provide<'a>(&'a self, request: &mut Request<'a>) {

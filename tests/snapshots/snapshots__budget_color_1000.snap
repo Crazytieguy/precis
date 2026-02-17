@@ -2,13 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (898 words)
+budget: 1000 (976 words)
 
 README.md
      1→# color [![](https://github.com/fatih/color/workflows/build/badge.svg)](https://github.com/fatih/color/actions) [![PkgGoDev](https://pkg.go.dev/badge/github.com/fatih/color)](https://pkg.go.dev/github.com/fatih/color)
      2→
+      →…
     10→## Install
     11→
+      →…
     16→## Examples
     17→
     18→### Standard colors
@@ -28,26 +30,37 @@ README.md
     32→
     33→### RGB colors
     34→
+      →…
     45→### Mix and reuse colors
     46→
+      →…
     71→### Use your own output (io.Writer)
     72→
+      →…
     81→### Custom print functions (PrintFunc)
     82→
+      →…
     94→### Custom fprint functions (FprintFunc)
     95→
+      →…
    105→### Insert into noncolor strings (SprintFunc)
    106→
+      →…
    124→### Plug into existing code
    125→
+      →…
    142→### Disable/Enable color
    143→
+      →…
    177→## GitHub Actions
    178→
+      →…
    182→## Credits
    183→
+      →…
    187→## License
    188→
+      →…
 color.go
     15→var (
     16→	// NoColor defines if the output is colorized or not. It's dynamically set to
@@ -101,6 +114,7 @@ color.go
     76→	ResetCrossedOut
     79→var mapResetAttributes map[Attribute]Attribute = map[Attribute]Attribute{
     80→	Bold:         ResetBold,
+      →…
     91→// Foreground text colors
     92→const (
     93→	FgBlack Attribute = iota + 30
@@ -145,36 +159,36 @@ color.go
    140→	BgHiMagenta
    141→	BgHiCyan
    142→	BgHiWhite
-   146→func New
-   160→func RGB
-   165→func BgRGB
-   171→func (c *Color) AddRGB
-   178→func (c *Color) AddBgRGB
-   185→func Set
-   193→func Unset
-   202→func (c *Color) Set
+   146→func New …
+   160→func RGB …
+   165→func BgRGB …
+   171→func (c *Color) AddRGB …
+   178→func (c *Color) AddBgRGB …
+   185→func Set …
+   193→func Unset …
+   202→func (c *Color) Set …
    211→func (c *Color) unset() {
-   222→func (c *Color) SetWriter
-   233→func (c *Color) UnsetWriter
-   243→func (c *Color) Add
-   253→func (c *Color) Fprint
-   265→func (c *Color) Print
-   276→func (c *Color) Fprintf
-   286→func (c *Color) Printf
-   297→func (c *Color) Fprintln
-   306→func (c *Color) Println
-   311→func (c *Color) Sprint
-   316→func (c *Color) Sprintln
-   321→func (c *Color) Sprintf
-   327→func (c *Color) FprintFunc
-   335→func (c *Color) PrintFunc
-   343→func (c *Color) FprintfFunc
-   351→func (c *Color) PrintfFunc
-   359→func (c *Color) FprintlnFunc
-   367→func (c *Color) PrintlnFunc
-   379→func (c *Color) SprintFunc
-   388→func (c *Color) SprintfFunc
-   397→func (c *Color) SprintlnFunc
+   222→func (c *Color) SetWriter …
+   233→func (c *Color) UnsetWriter …
+   243→func (c *Color) Add …
+   253→func (c *Color) Fprint …
+   265→func (c *Color) Print …
+   276→func (c *Color) Fprintf …
+   286→func (c *Color) Printf …
+   297→func (c *Color) Fprintln …
+   306→func (c *Color) Println …
+   311→func (c *Color) Sprint …
+   316→func (c *Color) Sprintln …
+   321→func (c *Color) Sprintf …
+   327→func (c *Color) FprintFunc …
+   335→func (c *Color) PrintFunc …
+   343→func (c *Color) FprintfFunc …
+   351→func (c *Color) PrintfFunc …
+   359→func (c *Color) FprintlnFunc …
+   367→func (c *Color) PrintlnFunc …
+   379→func (c *Color) SprintFunc …
+   388→func (c *Color) SprintfFunc …
+   397→func (c *Color) SprintlnFunc …
    403→// sequence returns a formatted SGR sequence to be plugged into a "\x1b[...m"
    404→// an example output might be: "1;36" -> bold cyan
    405→func (c *Color) sequence() string {
@@ -196,47 +210,47 @@ color.go
    422→}
    424→func (c *Color) format() string {
    428→func (c *Color) unformat() string {
-   446→func (c *Color) DisableColor
-   452→func (c *Color) EnableColor
+   446→func (c *Color) DisableColor …
+   452→func (c *Color) EnableColor …
    456→func (c *Color) isNoColorSet() bool {
-   467→func (c *Color) Equals
+   467→func (c *Color) Equals …
    487→func (c *Color) attrExists(a Attribute) bool {
    497→func boolPtr(v bool) *bool {
    501→func getCachedColor(p Attribute) *Color {
    514→func colorPrint(format string, p Attribute, a ...interface{}) {
    528→func colorString(format string, p Attribute, a ...interface{}) string {
-   540→func Black
-   544→func Red
-   548→func Green
-   552→func Yellow
-   556→func Blue
-   560→func Magenta
-   564→func Cyan
-   568→func White
-   572→func BlackString
-   576→func RedString
-   580→func GreenString
-   584→func YellowString
-   588→func BlueString
-   592→func MagentaString
-   598→func CyanString
-   602→func WhiteString
-   606→func HiBlack
-   610→func HiRed
-   614→func HiGreen
-   618→func HiYellow
-   622→func HiBlue
-   626→func HiMagenta
-   630→func HiCyan
-   634→func HiWhite
-   638→func HiBlackString
-   644→func HiRedString
-   648→func HiGreenString
-   654→func HiYellowString
-   660→func HiBlueString
-   664→func HiMagentaString
-   670→func HiCyanString
-   674→func HiWhiteString
+   540→func Black …
+   544→func Red …
+   548→func Green …
+   552→func Yellow …
+   556→func Blue …
+   560→func Magenta …
+   564→func Cyan …
+   568→func White …
+   572→func BlackString …
+   576→func RedString …
+   580→func GreenString …
+   584→func YellowString …
+   588→func BlueString …
+   592→func MagentaString …
+   598→func CyanString …
+   602→func WhiteString …
+   606→func HiBlack …
+   610→func HiRed …
+   614→func HiGreen …
+   618→func HiYellow …
+   622→func HiBlue …
+   626→func HiMagenta …
+   630→func HiCyan …
+   634→func HiWhite …
+   638→func HiBlackString …
+   644→func HiRedString …
+   648→func HiGreenString …
+   654→func HiYellowString …
+   660→func HiBlueString …
+   664→func HiMagentaString …
+   670→func HiCyanString …
+   674→func HiWhiteString …
    678→// sprintln is a helper function to format a string with fmt.Sprintln and trim the trailing newline.
    679→func sprintln(a ...interface{}) string {
    680→	return strings.TrimSuffix(fmt.Sprintln(a...), "\n")

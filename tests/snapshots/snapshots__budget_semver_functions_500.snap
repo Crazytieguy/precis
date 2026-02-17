@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (498 words)
+budget: 500 (503 words)
 
 clean.js
      4→const clean = (version, options) => {
@@ -19,6 +19,7 @@ cmp.js
     16→      if (typeof b === 'object') {
     17→        b = b.version
     18→      }
+      →…
 coerce.js
      7→const coerce = (version, options) => {
      8→  if (version instanceof SemVer) {
@@ -29,6 +30,7 @@ coerce.js
     13→    version = String(version)
     14→  }
     15→
+      →…
 compare-build.js
      4→const compareBuild = (a, b, loose) => {
      5→  const versionA = new SemVer(a, loose)
@@ -50,6 +52,7 @@ diff.js
     11→    return null
     12→  }
     13→
+      →…
 eq.js
      4→const eq = (a, b, loose) => compare(a, b, loose) === 0
 gt.js
@@ -66,6 +69,7 @@ inc.js
     11→
     12→  try {
     13→    return new SemVer(
+      →…
 lt.js
      4→const lt = (a, b, loose) => compare(a, b, loose) < 0
 lte.js
@@ -86,6 +90,7 @@ parse.js
     10→  } catch (er) {
     11→    if (!throwErrors) {
     12→      return null
+      →…
 patch.js
      4→const patch = (a, loose) => new SemVer(a, loose).patch
 prerelease.js

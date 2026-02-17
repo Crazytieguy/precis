@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3950 words)
+budget: 4000 (3980 words)
 
 README.md
      1→# humanize
@@ -384,6 +384,7 @@ src/humanize/filesize.py
     80→    if gnu:
     81→        suffix = suffixes["gnu"]
     82→    elif binary:
+      →…
 src/humanize/i18n.py
      8→TYPE_CHECKING = False
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
@@ -412,6 +413,7 @@ src/humanize/i18n.py
     52→    try:
     53→        return _TRANSLATIONS[_CURRENT.locale]
     54→    except (AttributeError, KeyError):
+      →…
     58→def activate(
     59→    locale: str | None, path: str | os.PathLike[str] | None = None
     60→) -> gettext_module.NullTranslations:
@@ -433,24 +435,30 @@ src/humanize/i18n.py
     76→    if locale is None or locale.startswith("en"):
     77→        _CURRENT.locale = None
     78→        return _TRANSLATIONS[None]
+      →…
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
     98→    _CURRENT.locale = None
    101→def _gettext(message: str) -> str:
    102→    """Get translation.
    103→
+      →…
    113→def _pgettext(msgctxt: str, message: str) -> str:
    114→    """Fetches a particular translation.
    115→
+      →…
    129→def _ngettext(message: str, plural: str, num: int) -> str:
    130→    """Plural version of _gettext.
    131→
+      →…
    144→def _gettext_noop(message: str) -> str:
    145→    """Mark a string as a translation string without translating it.
    146→
+      →…
    163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
    164→    """Mark two strings as pluralized translations without translating them.
    165→
+      →…
    183→def thousands_separator() -> str:
    184→    """Return the thousands separator for a locale, default to comma.
    185→
@@ -460,6 +468,7 @@ src/humanize/i18n.py
    189→    try:
    190→        sep = _THOUSANDS_SEPARATOR[_CURRENT.locale]
    191→    except (AttributeError, KeyError):
+      →…
    196→def decimal_separator() -> str:
    197→    """Return the decimal separator for a locale, default to dot.
    198→
@@ -469,6 +478,7 @@ src/humanize/i18n.py
    202→    try:
    203→        sep = _DECIMAL_SEPARATOR[_CURRENT.locale]
    204→    except (AttributeError, KeyError):
+      →…
 src/humanize/lists.py
      5→TYPE_CHECKING = False
      9→__all__ = ["natural_list"]
@@ -494,6 +504,7 @@ src/humanize/lists.py
     31→    if len(items) == 1:
     32→        return str(items[0])
     33→    elif len(items) == 2:
+      →…
 src/humanize/number.py
     12→TYPE_CHECKING = False
     21→def _format_not_finite(value: float) -> str:
@@ -538,6 +549,7 @@ src/humanize/number.py
     71→    import math
     72→
     73→    try:
+      →…
    110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
    111→    """Converts an integer to a string containing commas every three digits.
    112→
@@ -575,6 +587,7 @@ src/humanize/number.py
    144→    import math
    145→
    146→    thousands_sep = thousands_separator()
+      →…
    195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
    196→    """Converts a large integer to a friendly text representation.
    197→
@@ -613,6 +626,7 @@ src/humanize/number.py
    230→    import math
    231→
    232→    try:
+      →…
    269→def apnumber(value: NumberOrString) -> str:
    270→    """Converts an integer to Associated Press style.
    271→
@@ -644,6 +658,7 @@ src/humanize/number.py
    297→    import math
    298→
    299→    try:
+      →…
    321→def fractional(value: NumberOrString) -> str:
    322→    """Convert to fractional number.
    323→
@@ -686,6 +701,7 @@ src/humanize/number.py
    360→    import math
    361→
    362→    try:
+      →…
    385→def scientific(value: NumberOrString, precision: int = 2) -> str:
    386→    """Return number in string scientific notation z.wq x 10ⁿ.
    387→
@@ -720,6 +736,7 @@ src/humanize/number.py
    416→    import math
    417→
    418→    exponents = {
+      →…
    454→def clamp(
    455→    value: float,
    456→    format: str = "{:}",
@@ -770,6 +787,7 @@ src/humanize/number.py
    501→    import math
    502→
    503→    if value is None:
+      →…
    531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
    532→    """Return a value with a metric SI unit-prefix appended.
    533→
@@ -808,6 +826,7 @@ src/humanize/number.py
    566→    import math
    567→
    568→    if not math.isfinite(value):
+      →…
 src/humanize/time.py
     15→TYPE_CHECKING = False
     21→__all__ = [
@@ -836,11 +855,13 @@ src/humanize/time.py
     53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
     54→    """Return an "absolute" value for a timedelta, always representing a time distance.
     55→
+      →…
     68→def _date_and_delta(
     69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
     70→) -> tuple[Any, Any]:
     71→    """Turn a value into a date and a timedelta which represents how long ago it was.
     72→
+      →…
     95→def naturaldelta(
     96→    value: dt.timedelta | float,
     97→    months: bool = True,
@@ -886,6 +907,7 @@ src/humanize/time.py
    137→    import datetime as dt
    138→
    139→    tmp = Unit[minimum_unit.upper()]
+      →…
    249→def naturaltime(
    250→    value: dt.datetime | dt.timedelta | float,
    251→    future: bool = False,
@@ -917,6 +939,7 @@ src/humanize/time.py
    277→    import datetime as dt
    278→
    279→    value = _convert_aware_datetime(value)
+      →…
    300→def _convert_aware_datetime(
    301→    value: dt.datetime | dt.timedelta | float | None,
    302→) -> Any:
@@ -932,11 +955,13 @@ src/humanize/time.py
    319→    import datetime as dt
    320→
    321→    try:
+      →…
    343→def naturaldate(value: dt.date | dt.datetime) -> str:
    344→    """Like `naturalday`, but append a year for dates more than ~five months away."""
    345→    import datetime as dt
    346→
    347→    try:
+      →…
    361→def _quotient_and_remainder(
    362→    value: float,
    363→    divisor: float,
@@ -947,12 +972,15 @@ src/humanize/time.py
    368→) -> tuple[float, float]:
    369→    """Divide `value` by `divisor`, returning the quotient and remainder.
    370→
+      →…
    406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
    407→    """Return a minimum unit suitable that is not suppressed.
    408→
+      →…
    435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
    436→    """Extend suppressed units (if any) with all units lower than the minimum unit.
    437→
+      →…
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
    453→    minimum_unit: str = "seconds",
@@ -1028,6 +1056,8 @@ src/humanize/time.py
    523→    date, delta = _date_and_delta(value, precise=True)
    524→    if date is None:
    525→        return str(value)
+      →…
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
    655→    """Round a number according to the string format provided.
    656→
+      →…

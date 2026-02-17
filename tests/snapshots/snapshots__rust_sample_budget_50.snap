@@ -9,8 +9,8 @@ sample.rs
     16→pub enum TokenKind {
     23→pub trait Visitor {
     40→    pub fn new(kind: TokenKind, span: Span) -> Self {
-    45→pub type Span
-    47→const MAX_TOKENS
-    49→pub static VERSION
+    45→pub type Span …
+    47→const MAX_TOKENS …
+    49→pub static VERSION …
     51→macro_rules! token {
     57→pub mod lexer;

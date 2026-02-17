@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3615 words)
+budget: 4000 (3644 words)
 
 __init__.py
      1→__all__ = [
@@ -21,12 +21,12 @@ __init__.py
     14→    "PluggyWarning",
     15→    "PluggyTeardownRaisedWarning",
     16→]
-    32→def __getattr__
+    32→def __getattr__ …
 _callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
-    27→def run_old_style_hookwrapper
+    27→def run_old_style_hookwrapper …
     60→def _raise_wrapfail(
     61→    wrap_controller: Generator[None, object, object],
     62→    msg: str,
@@ -286,9 +286,9 @@ _hooks.py
    276→            return setattr_hookimpl_opts
    277→        else:
    278→            return setattr_hookimpl_opts(function)
-   281→def normalize_hookimpl_opts
+   281→def normalize_hookimpl_opts …
    290→_PYPY = hasattr(sys, "pypy_version_info")
-   293→def varnames
+   293→def varnames …
    358→@final
    359→class HookRelay:
    360→    """Hook holder object for performing 1:N hook calls where N is the number
@@ -376,11 +376,11 @@ _hooks.py
    451→        return self._hookimpls.copy()
    453→    def _add_hookimpl(self, hookimpl: HookImpl) -> None:
    454→        """Add an implementation to the callback chain."""
-   477→    def __repr__
+   477→    def __repr__ …
    480→    def _verify_all_args_are_provided(self, kwargs: Mapping[str, object]) -> None:
-   499→    def __call__
-   516→    def call_historic
-   543→    def call_extra
+   499→    def __call__ …
+   516→    def call_historic …
+   543→    def call_extra …
    577→    def _maybe_apply_history(self, method: HookImpl) -> None:
    578→        """Apply call history to a new hookimpl if it is marked as historic."""
    593→class _SubsetHookCaller(HookCaller):
@@ -599,28 +599,28 @@ _manager.py
    164→                hookimpl = HookImpl(plugin, plugin_name, method, hookimpl_opts)
    165→                name = hookimpl_opts.get("specname") or name
    166→                hook: HookCaller | None = getattr(self.hook, name, None)
-   176→    def parse_hookimpl_opts
-   201→    def unregister
-   233→    def set_blocked
-   238→    def is_blocked
-   242→    def unblock
-   252→    def add_hookspecs
-   278→    def parse_hookspec_opts
-   296→    def get_plugins
-   300→    def is_registered
-   304→    def get_canonical_name
-   315→    def get_plugin
-   319→    def has_plugin
-   323→    def get_name
+   176→    def parse_hookimpl_opts …
+   201→    def unregister …
+   233→    def set_blocked …
+   238→    def is_blocked …
+   242→    def unblock …
+   252→    def add_hookspecs …
+   278→    def parse_hookspec_opts …
+   296→    def get_plugins …
+   300→    def is_registered …
+   304→    def get_canonical_name …
+   315→    def get_plugin …
+   319→    def has_plugin …
+   323→    def get_name …
    331→    def _verify_hook(self, hook: HookCaller, hookimpl: HookImpl) -> None:
-   379→    def check_pending
-   395→    def load_setuptools_entrypoints
-   425→    def list_plugin_distinfo
-   430→    def list_name_plugin
-   434→    def get_hookcallers
-   450→    def add_hookcall_monitoring
-   487→    def enable_tracing
-   512→    def subset_hook_caller
+   379→    def check_pending …
+   395→    def load_setuptools_entrypoints …
+   425→    def list_plugin_distinfo …
+   430→    def list_name_plugin …
+   434→    def get_hookcallers …
+   450→    def add_hookcall_monitoring …
+   487→    def enable_tracing …
+   512→    def subset_hook_caller …
    525→def _formatdef(func: Callable[..., object]) -> str:
 _result.py
     16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]

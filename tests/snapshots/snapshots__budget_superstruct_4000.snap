@@ -2,120 +2,160 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3552 words)
+budget: 4000 (3745 words)
 
 Changelog.md
      1→# Changelog
      2→
+      →…
      5→### `2.0.0` - July 3, 2024
      6→
+      →…
     11→#### Breaking
     12→
+      →…
     16→#### New
     17→
+      →…
     20→#### Fixed
     21→
+      →…
     24→#### Deprecations
     25→
+      →…
     28→#### New Maintainers & Next Steps
     29→
+      →…
     38→### `1.0.0` — November 17, 2022
     39→
     40→###### NEW
     41→
+      →…
     49→### BREAKING
     50→
+      →…
     53→### `0.16.0` — June 6, 2022
     54→
     55→###### BREAKING
     56→
+      →…
     59→### `0.15.0` — March 25, 2021
     60→
     61→###### FIXED
     62→
+      →…
     67→### `0.14.0` — January 26, 2021
     68→
     69→###### BREAKING
     70→
+      →…
     75→### `0.13.0` — December 11, 2020
     76→
     77→###### NEW
     78→
+      →…
     85→###### BREAKING
     86→
+      →…
     93→### `0.12.0` — November 24, 2020
     94→
     95→###### NEW
     96→
+      →…
    111→###### BREAKING
    112→
+      →…
    127→### `0.11.0` — November 20, 2020
    128→
    129→###### NEW
    130→
+      →…
    176→###### BREAKING
    177→
+      →…
    242→### `0.10.0` — June 6, 2020
    243→
+      →…
    248→###### BREAKING
    249→
+      →…
    392→### `0.8.0` — October 8, 2019
    393→
    394→###### BREAKING
    395→
+      →…
    434→###### NEW
    435→
+      →…
    444→### `0.7.0` — September 21, 2019
    445→
    446→###### BREAKING
    447→
+      →…
    452→### `0.6.0` — September 13, 2018
    453→
    454→###### BREAKING
    455→
+      →…
    460→### `0.5.0` — December 21, 2017
    461→
    462→###### BREAKING
    463→
+      →…
    468→###### NEW
    469→
+      →…
    474→### `0.4.0` — December 1, 2017
    475→
    476→###### BREAKING
    477→
+      →…
    482→###### NEW
    483→
+      →…
    488→### `0.3.0` — November 30, 2017
    489→
    490→###### BREAKING
    491→
+      →…
    498→### `0.2.0` — November 30, 2017
    499→
    500→###### BREAKING
    501→
+      →…
    504→###### NEW
    505→
+      →…
    510→### `0.1.0` — November 29, 2017
    511→
    512→###### BREAKING
    513→
+      →…
    518→### `0.0.0` — November 24, 2017
    519→
+      →…
 Readme.md
     42→### Usage
     43→
+      →…
    145→### Why?
    146→
+      →…
    167→### Principles
    168→
+      →…
    181→### Demo
    182→
+      →…
    189→### Examples
    190→
+      →…
    205→### Documentation
    206→
+      →…
    231→### License
    232→
+      →…
 docs/guides/01-getting-started.md
      1→# Getting Started
      2→
@@ -159,47 +199,66 @@ docs/guides/01-getting-started.md
     40→
     41→## Defining Structs
     42→
+      →…
 docs/guides/02-validating-data.md
      1→# Validating Data
      2→
+      →…
      5→## Primitive Values
      6→
+      →…
     37→## Composed Values
     38→
+      →…
    114→## Optional Values
    115→
+      →…
    157→## Custom Values
    158→
+      →…
 docs/guides/03-coercing-data.md
      1→# Coercing Data
      2→
+      →…
      7→## Default Values
      8→
+      →…
     49→## Custom Coercions
     50→
+      →…
 docs/guides/04-refining-validation.md
      1→# Refining Validation
      2→
+      →…
      7→## Built-in Refinements
      8→
+      →…
     47→## Custom Refinements
     48→
+      →…
 docs/guides/05-handling-errors.md
      1→# Handling Errors
      2→
+      →…
     53→## Customizing Errors
     54→
+      →…
    102→## Multiple Failures
    103→
+      →…
 docs/guides/06-using-typescript.md
      1→# Using TypeScript
      2→
+      →…
      7→## Narrowing Types
      8→
+      →…
     37→## Describing Types
     38→
+      →…
     55→## Inferring Types
     56→
+      →…
 docs/readme.md
      7→### Usage
      8→
@@ -258,15 +317,20 @@ docs/readme.md
     61→}
     62→```
     63→
+      →…
 docs/reference/coercions.md
      1→# Coercions
      2→
+      →…
      5→### `defaulted`
      6→
+      →…
     21→### `trimmed`
     22→
+      →…
     29→### Custom Coercions
     30→
+      →…
 docs/reference/core.md
      1→# Core
      2→
@@ -284,96 +348,140 @@ docs/reference/core.md
     14→
     15→### `create`
     16→
+      →…
     27→### `is`
     28→
+      →…
     41→### `mask`
     42→
+      →…
     56→### `validate`
     57→
+      →…
 docs/reference/errors.md
      1→# Errors
      2→
+      →…
      5→### `StructError`
      6→
+      →…
     19→### Error Properties
     20→
+      →…
     32→### Multiple Errors
     33→
+      →…
 docs/reference/refinements.md
      1→# Refinements
      2→
+      →…
      5→### `empty`
      6→
+      →…
     21→### `max`
     22→
+      →…
     35→### `min`
     36→
+      →…
     49→### `nonempty`
     50→
+      →…
     58→### `pattern`
     59→
+      →…
     70→### `size`
     71→
+      →…
     88→### Custom Refinements
     89→
+      →…
 docs/reference/types.md
      1→# Types
      2→
+      →…
      5→### `any`
      6→
+      →…
     26→### `array`
     27→
+      →…
     40→### `bigint`
     41→
+      →…
     55→### `boolean`
     56→
+      →…
     68→### `date`
     69→
+      →…
     82→### `enums`
     83→
+      →…
     95→### `func`
     96→
+      →…
    107→### `instance`
    108→
+      →…
    119→### `integer`
    120→
+      →…
    133→### `intersection`
    134→
+      →…
    145→### `literal`
    146→
+      →…
    157→### `map`
    158→
+      →…
    174→### `never`
    175→
+      →…
    186→### `number`
    187→
+      →…
    201→### `nullable`
    202→
+      →…
    214→### `object`
    215→
+      →…
    234→### `optional`
    235→
+      →…
    249→### `record`
    250→
+      →…
    264→### `regexp`
    265→
+      →…
    279→### `set`
    280→
+      →…
    293→### `string`
    294→
+      →…
    305→### `tuple`
    306→
+      →…
    317→### `type`
    318→
+      →…
    341→### `union`
    342→
+      →…
    354→### `unknown`
    355→
+      →…
    373→### Custom Types
    374→
+      →…
 docs/reference/typescript.md
      1→# TypeScript
      2→
+      →…
      5→## Utilities
      6→
      7→### `Describe`
@@ -396,35 +504,49 @@ docs/reference/typescript.md
     24→
     25→### `Infer`
     26→
+      →…
 docs/reference/utilities.md
      1→# Utilities
      2→
+      →…
      5→### `assign`
      6→
+      →…
     20→### `deprecated`
     21→
+      →…
     38→### `dynamic`
     39→
+      →…
     51→### `lazy`
     52→
+      →…
     64→### `omit`
     65→
+      →…
     78→### `partial`
     79→
+      →…
     97→### `pick`
     98→
+      →…
 docs/resources/faq.md
      1→# FAQ
      2→
+      →…
      5→### How can I allow unknown keys with `object` structs?
      6→
+      →…
     11→### Why not have a built-in `json` struct?
     12→
+      →…
 docs/resources/links.md
      1→# Resources
      2→
+      →…
      5→## Libraries
      6→
+      →…
 docs/summary.md
      3→## Guides
      4→
@@ -451,6 +573,7 @@ docs/summary.md
     25→- [Links](./resources/links.md)
 src/error.ts
      1→/**
+      →…
      5→export type Failure = {
      6→  value: any
      7→  key: any
@@ -700,33 +823,40 @@ src/struct.ts
    210→  }
    211→}
    213→/**
+      →…
    221→export type Context = {
    222→  branch: Array<any>
    223→  path: Array<any>
    224→  mask?: boolean
    225→}
    227→/**
+      →…
    231→export type Infer<T extends Struct<any, any>> = T['TYPE']
    233→/**
+      →…
    237→export type Describe<T> = Struct<T, StructSchema<T>>
    239→/**
+      →…
    243→export type Result =
    244→  | boolean
    245→  | string
    246→  | Partial<Failure>
    247→  | Iterable<boolean | string | Partial<Failure>>
    249→/**
+      →…
    253→export type Coercer<T = unknown> = (value: T, context: Context) => unknown
    255→/**
+      →…
    259→export type Validator = (value: unknown, context: Context) => Result
    261→/**
+      →…
    266→export type Refiner<T> = (value: T, context: Context) => Result
 src/structs/coercions.ts
-    16→export function coerce
-    38→export function defaulted
-    79→export function trimmed
+    16→export function coerce …
+    38→export function defaulted …
+    79→export function trimmed …
 src/structs/refinements.ts
-     8→export function empty
+     8→export function empty …
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
     22→  if (value instanceof Map || value instanceof Set) {
     23→    return value.size
@@ -734,57 +864,64 @@ src/structs/refinements.ts
     25→    return value.length
     26→  }
     27→}
-    33→export function max
-    55→export function min
-    77→export function nonempty
-    93→export function pattern
-   109→export function size
-   146→export function refine
+    33→export function max …
+    55→export function min …
+    77→export function nonempty …
+    93→export function pattern …
+   109→export function size …
+   146→export function refine …
 src/structs/types.ts
-    19→export function any
+    19→export function any …
     33→export function array<T extends Struct<any>>(Element?: T): any {
     34→  return new Struct({
-    60→export function bigint
-    70→export function boolean
-    83→export function date
+      →…
+    60→export function bigint …
+    70→export function boolean …
+    83→export function date …
    105→export function enums<U extends string | number, T extends readonly U[]>(
    106→  values: T
    107→): any {
    108→  const schema: any = {}
-   131→export function func
-   144→export function instance
-   159→export function integer
-   172→export function intersection
+      →…
+   131→export function func …
+   144→export function instance …
+   159→export function integer …
+   172→export function intersection …
    204→export function literal<T>(constant: T): any {
    205→  const description = print(constant)
+      →…
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    231→  return new Struct({
-   258→export function never
-   266→export function nullable
-   278→export function number
+      →…
+   258→export function never …
+   266→export function nullable …
+   278→export function number …
    298→export function object<S extends ObjectSchema>(schema?: S): any {
    299→  const knowns = schema ? Object.keys(schema) : []
-   351→export function optional
-   367→export function record
-   402→export function regexp
+      →…
+   351→export function optional …
+   367→export function record …
+   402→export function regexp …
    415→export function set<T>(Element?: Struct<T>): any {
    416→  return new Struct({
-   442→export function string
-   456→export function tuple
-   492→export function type
-   522→export function union
-   574→export function unknown
+      →…
+   442→export function string …
+   456→export function tuple …
+   492→export function type …
+   522→export function union …
+   574→export function unknown …
 src/structs/utilities.ts
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
-    71→export function define
-    80→export function deprecated
-   106→export function dynamic
-   140→export function lazy
-   171→export function omit
-   197→export function partial
-   221→export function pick
-   247→export function struct
+      →…
+    71→export function define …
+    80→export function deprecated …
+   106→export function dynamic …
+   140→export function lazy …
+   171→export function omit …
+   197→export function partial …
+   221→export function pick …
+   247→export function struct …
 src/utils.ts
      4→/**
      5→ * Check if a value is an iterator.
@@ -878,31 +1015,38 @@ src/utils.ts
     99→  }
    100→}
    198→/**
+      →…
    202→export type UnionToIntersection<U> = (
    203→  U extends any ? (arg: U) => any : never
    204→) extends (arg: infer I) => void
    205→  ? I
    206→  : never
    208→/**
+      →…
    212→export type Assign<T, U> = Simplify<U & Omit<T, keyof U>>
    214→/**
+      →…
    218→export type EnumSchema<T extends string | number | undefined | null> = {
    219→  [K in NonNullable<T>]: K
    220→}
    222→/**
+      →…
    227→export type IsMatch<T, G> = T extends G ? (G extends T ? T : never) : never
    229→/**
+      →…
    233→export type IsExactMatch<T, U> =
    234→  (<G>() => G extends T ? 1 : 2) extends <G>() => G extends U ? 1 : 2
    235→    ? T
    236→    : never
    238→/**
+      →…
    242→export type IsRecord<T> = T extends object
    243→  ? string extends keyof T
    244→    ? T
    245→    : never
    246→  : never
    247→/**
+      →…
    251→export type IsTuple<T> = T extends [any]
    252→  ? T
    253→  : T extends [any, any]
@@ -915,40 +1059,49 @@ src/utils.ts
    260→          ? T
    261→          : never
    263→/**
+      →…
    267→export type IsUnion<T, U extends T = T> = (
    268→  T extends any ? (U extends T ? false : true) : false
    269→) extends false
    270→  ? never
    271→  : T
    273→/**
+      →…
    277→export type ObjectSchema = Record<string, Struct<any, any>>
    279→/**
+      →…
    283→export type ObjectType<S extends ObjectSchema> = Simplify<
    284→  Optionalize<{ [K in keyof S]: Infer<S[K]> }>
    285→>
    287→/**
+      →…
    291→export type OmitBy<T, V> = Omit<
    292→  T,
    293→  { [K in keyof T]: V extends Extract<T[K], V> ? K : never }[keyof T]
    294→>
    296→/**
+      →…
    300→export type Optionalize<S extends object> = OmitBy<S, undefined> &
    301→  Partial<PickBy<S, undefined>>
    303→/**
+      →…
    307→export type PartialObjectSchema<S extends ObjectSchema> = {
    308→  [K in keyof S]: Struct<Infer<S[K]> | undefined>
    309→}
    311→/**
+      →…
    315→export type PickBy<T, V> = Pick<
    316→  T,
    317→  { [K in keyof T]: V extends Extract<T[K], V> ? K : never }[keyof T]
    318→>
    320→/**
+      →…
    324→export type Simplify<T> = T extends any[] | Date
    325→  ? T
    326→  : { [K in keyof T]: T[K] } & {}
    328→export type If<B extends Boolean, Then, Else> = B extends true ? Then : Else
    330→/**
+      →…
    334→export type StructSchema<T> = [T] extends [string | undefined | null]
    335→  ? [T] extends [IsMatch<T, string | undefined | null>]
    336→    ? null
@@ -990,10 +1143,13 @@ src/utils.ts
    372→              : { [K in keyof T]: Describe<T[K]> }
    373→            : null
    375→/**
+      →…
    379→export type TupleSchema<T> = { [K in keyof T]: Struct<T[K]> }
    381→/**
+      →…
    385→export type AnyStruct = Struct<any, any>
    387→/**
+      →…
    394→export type InferStructTuple<
    395→  Tuple extends AnyStruct[],
    396→  Length extends number = Tuple['length'],

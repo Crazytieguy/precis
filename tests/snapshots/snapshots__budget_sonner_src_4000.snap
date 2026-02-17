@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3020 words)
+budget: 4000 (3024 words)
 
 assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
@@ -156,6 +156,7 @@ index.tsx
     90→    closeButtonAriaLabel = 'Close toast',
     91→  } = props;
     92→  const [swipeDirection, setSwipeDirection] = React.useState<'x' | 'y' | null>(null);
+      →…
    507→function getDocumentDirection(): ToasterProps['dir'] {
    508→  if (typeof window === 'undefined') return 'ltr';
    509→  if (typeof document === 'undefined') return 'ltr'; // For Fresh purpose
@@ -197,6 +198,7 @@ index.tsx
    546→    }
    547→  });
    548→
+      →…
    552→function useSonner() {
    553→  const [activeToasts, setActiveToasts] = React.useState<ToastT[]>([]);
    554→
@@ -226,6 +228,7 @@ index.tsx
    578→              ];
    579→            }
    580→
+      →…
    593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
    594→  const {
    595→    id,
@@ -292,6 +295,7 @@ index.tsx
    656→  React.useEffect(() => {
    657→    return ToastState.subscribe((toast) => {
    658→      if ((toast as ToastToDismiss).dismiss) {
+      →…
 state.ts
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (499 words)
+budget: 500 (566 words)
 
 README.md
      5→## Usage
@@ -13,87 +13,96 @@ README.md
     10→npm install sonner
     11→```
     12→
+      →…
     31→## Documentation
     32→
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
 src/assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
      6→  switch (type) {
+      →…
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     27→  return (
+      →…
     78→export const CloseIcon = (
     79→  <svg
     80→    xmlns="http://www.w3.org/2000/svg"
     81→    width="12"
     82→    height="12"
+      →…
 src/hooks.tsx
      3→export const useIsDocumentHidden = () => {
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
+      →…
 src/index.tsx
-    45→function cn
-    49→function getDefaultSwipeDirections
-    64→const Toast
-   507→function getDocumentDirection
-   520→function assignOffset
-   552→function useSonner
+    45→function cn …
+    49→function getDefaultSwipeDirections …
+    64→const Toast …
+   507→function getDocumentDirection …
+   520→function assignOffset …
+   552→function useSonner …
 src/state.ts
-    15→type titleT
+    15→type titleT …
     17→class Observer {
     18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
-    22→  constructor
-    29→  subscribe
-    38→  publish
-    42→  addToast
-    47→  create
-    88→  dismiss
-   101→  message
-   105→  error
-   109→  success
-   113→  info
-   117→  warning
-   121→  loading
-   125→  promise
-   243→  custom
-   249→  getActiveToasts
-   254→export const ToastState
-   257→const toastFunction
-   268→const isHttpResponse
-   279→const basicToast
-   281→const getHistory
-   282→const getToasts
-   285→export const toast
+    22→  constructor …
+    29→  subscribe …
+    38→  publish …
+    42→  addToast …
+    47→  create …
+    88→  dismiss …
+   101→  message …
+   105→  error …
+   109→  success …
+   113→  info …
+   117→  warning …
+   121→  loading …
+   125→  promise …
+   243→  custom …
+   249→  getActiveToasts …
+   254→export const ToastState …
+   257→const toastFunction …
+   268→const isHttpResponse …
+   279→const basicToast …
+   281→const getHistory …
+   282→const getToasts …
+   285→export const toast …
 src/types.ts
-     3→export type ToastTypes
-     5→export type PromiseT
+     3→export type ToastTypes …
+     5→export type PromiseT …
      7→export interface PromiseIExtendedResult extends ExternalToast {
-    11→export type PromiseTExtendedResult
-    15→export type PromiseTResult
-    20→export type PromiseExternalToast
-    22→export type PromiseData
+    11→export type PromiseTExtendedResult …
+    15→export type PromiseTResult …
+    20→export type PromiseExternalToast …
+    22→export type PromiseData …
     30→export interface ToastClassnames {
     48→export interface ToastIcons {
     57→export interface Action {
     63→export interface ToastT {
-    93→export function isAction
-    97→export type Position
+    93→export function isAction …
+    97→export type Position …
     98→export interface HeightT {
    104→interface ToastOptions {
    105→  className?: string;
-   118→type Offset
+      →…
+   118→type Offset …
    128→export interface ToasterProps {
-   152→export type SwipeDirection
+   152→export type SwipeDirection …
    154→export interface ToastProps {
    184→export enum SwipeStateTypes {
-   190→export type Theme
+   190→export type Theme …
    192→export interface ToastToDismiss {
-   197→export type ExternalToast
+   197→export type ExternalToast …
 website/README.md
      3→## Getting Started
      4→
+      →…
     25→## Learn More
     26→
+      →…
     34→## Deploy on Vercel
     35→
+      →…
 website/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
@@ -103,60 +112,73 @@ website/next.config.js
      6→};
      8→const withNextra = require('nextra')({
      9→  title: 'Sonner',
+      →…
 website/src/components/CodeBlock/index.tsx
      9→const variants = {
     14→const theme = {
     48→export const CodeBlock = ({ children, initialHeight = 0 }: { children: string; initialHeight?: number }) => {
     49→  const [ref, bounds] = useMeasure();
+      →…
 website/src/components/ExpandModes/index.tsx
      4→export const ExpandModes = ({
      5→  expand,
      6→  setExpand,
      7→}: {
+      →…
 website/src/components/Footer/index.tsx
      5→export const Footer = () => {
      6→  return (
+      →…
 website/src/components/Head/index.tsx
      3→const ogImage = 'https://sonner.emilkowal.ski/og.png';
-     5→const Head
+     5→const Head …
 website/src/components/Hero/index.tsx
      6→export const Hero = () => {
      7→  return (
+      →…
 website/src/components/How/How.tsx
      3→export const How = () => {
      4→  return (
      5→    <>
+      →…
 website/src/components/Installation/index.tsx
      9→const variants = {
     14→export const Installation = () => {
     15→  const [copying, setCopying] = React.useState(0);
     16→
+      →…
 website/src/components/Other/Other.tsx
      7→export const Other = ({
      8→  setRichColors,
      9→  setCloseButton,
+      →…
 website/src/components/Position/index.tsx
-     5→const positions
+     5→const positions …
      7→export type Position = (typeof positions)[number];
      9→export const Position = ({
     10→  position: activePosition,
     11→  setPosition,
+      →…
 website/src/components/Types/Types.tsx
-     5→const promiseCode
+     5→const promiseCode …
      7→export const Types = () => {
      8→  const [activeType, setActiveType] = React.useState(allTypes[0]);
      9→
-    34→const allTypes
+      →…
+    34→const allTypes …
 website/src/components/Usage/index.tsx
      3→export const Usage = () => {
      4→  return (
      5→    <div>
+      →…
 website/src/pages/_app.tsx
      7→export default function Nextra({ Component, pageProps }: AppProps): ReactElement {
      8→  return (
+      →…
 website/src/pages/index.tsx
     14→export default function Home() {
     15→  const [expand, setExpand] = React.useState(false);
+      →…
 website/theme.config.jsx
      7→  useNextSeoProps() {
      8→    return {

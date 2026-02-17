@@ -2,13 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2000 words)
+budget: 2000 (2018 words)
 
 components/checkmark.tsx
      3→const circleAnimation = keyframes`
      4→from {
+      →…
     13→const checkmarkAnimation = keyframes`
     14→0% {
+      →…
     29→export interface CheckmarkTheme {
     30→  primary?: string;
     31→  secondary?: string;
@@ -44,10 +46,13 @@ components/checkmark.tsx
 components/error.tsx
      3→const circleAnimation = keyframes`
      4→from {
+      →…
     13→const firstLineAnimation = keyframes`
     14→from {
+      →…
     23→const secondLineAnimation = keyframes`
     24→from {
+      →…
     33→export interface ErrorTheme {
     34→  primary?: string;
     35→  secondary?: string;
@@ -89,6 +94,7 @@ components/error.tsx
 components/loader.tsx
      3→const rotate = keyframes`
      4→  from {
+      →…
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
@@ -116,8 +122,10 @@ components/toast-bar.tsx
     19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
     22→const ToastBarBase = styled('div')`
     23→  :where(&) {
+      →…
     38→const Message = styled('div')`
     39→  display: flex;
+      →…
     47→interface ToastBarProps {
     48→  toast: Toast;
     49→  position?: ToastPosition;
@@ -137,6 +145,7 @@ components/toast-bar.tsx
     64→  const [enter, exit] = prefersReducedMotion()
     65→    ? [fadeInAnimation, fadeOutAnimation]
     66→    : [enterAnimation(factor), exitAnimation(factor)];
+      →…
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
     77→    const animationStyle: React.CSSProperties = toast.height
@@ -180,10 +189,13 @@ components/toast-bar.tsx
 components/toast-icon.tsx
      9→const StatusWrapper = styled('div')`
     10→  position: absolute;
+      →…
     13→const IndicatorWrapper = styled('div')`
     14→  position: relative;
+      →…
     22→const enter = keyframes`
     23→from {
+      →…
     32→export const AnimatedIconWrapper = styled('div')`
     33→  position: relative;
     34→  transform: scale(0.6);
@@ -236,6 +248,7 @@ components/toaster.tsx
     19→  onHeightUpdate,
     20→  children,
     21→}: ToastWrapperProps) => {
+      →…
     47→const getPositionStyle = (
     48→  position: ToastPosition,
     49→  offset: number
@@ -246,8 +259,10 @@ components/toaster.tsx
     54→    ? {
     55→        justifyContent: 'center',
     56→      }
+      →…
     76→const activeClass = css`
     77→  z-index: 9999;
+      →…
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
@@ -374,6 +389,7 @@ core/store.ts
     72→    case ActionType.UPDATE_TOAST:
     73→      return {
     74→        ...state,
+      →…
    136→const listeners: Array<
    137→  [toasterId: string, reducer: (state: ToasterState) => void]
    138→> = [];
@@ -431,6 +447,7 @@ core/store.ts
    198→    }
    199→    listeners.push([toasterId, setState]);
    200→    return () => {
+      →…
 core/toast.ts
     19→type Message = ValueOrFunction<Renderable, Toast>;
     21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
@@ -570,6 +587,7 @@ core/use-toaster.ts
     21→      }
     22→
     23→      const timeout = setTimeout(() => {
+      →…
 core/utils.ts
      1→export const genId = (() => {
      2→  let count = 0;

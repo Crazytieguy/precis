@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (500 words)
+budget: 500 (526 words)
 
 CHANGELOG.md
      3→## 1.21.3
@@ -22,14 +22,14 @@ src/imp_pl.rs
      8→    state: AtomicU8,
      9→    value: UnsafeCell<Option<T>>,
     10→}
-    12→const INCOMPLETE
-    13→const RUNNING
-    14→const COMPLETE
+    12→const INCOMPLETE …
+    13→const RUNNING …
+    14→const COMPLETE …
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
    124→    new_state: u8,
    125→}
-   139→fn initialize_inner
+   139→fn initialize_inner …
 src/imp_std.rs
     14→pub(crate) struct OnceCell<T> {
     15→    // This `queue` field is the core of the implementation. It encodes two
@@ -43,12 +43,12 @@ src/imp_std.rs
     23→    queue: AtomicPtr<Waiter>,
     24→    value: UnsafeCell<Option<T>>,
     25→}
-   125→const INCOMPLETE
-   126→const RUNNING
-   127→const COMPLETE
-   128→const INCOMPLETE_PTR
-   129→const COMPLETE_PTR
-   133→const STATE_MASK
+   125→const INCOMPLETE …
+   126→const RUNNING …
+   127→const COMPLETE …
+   128→const INCOMPLETE_PTR …
+   129→const COMPLETE_PTR …
+   133→const STATE_MASK …
    138→struct Waiter {
    139→    thread: Cell<Option<Thread>>,
    140→    signaled: AtomicBool,
@@ -58,13 +58,14 @@ src/imp_std.rs
    146→    queue: &'a AtomicPtr<Waiter>,
    147→    new_queue: *mut Waiter,
    148→}
-   177→fn initialize_or_wait
+   177→fn initialize_or_wait …
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
    211→    let curr_state = strict::addr(curr_queue) & STATE_MASK;
    212→    loop {
    213→        let node = Waiter {
    214→            thread: Cell::new(Some(thread::current())),
    215→            signaled: AtomicBool::new(false),
+      →…
    245→mod strict {
    246→    #[must_use]
    247→    #[inline]
@@ -112,27 +113,27 @@ src/lib.rs
   1257→        init: Cell<Option<F>>,
   1258→    }
   1374→        type Target = T;
-  1408→    fn _dummy
+  1408→    fn _dummy …
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
 src/race.rs
     43→pub struct OnceNonZeroUsize {
     44→    inner: AtomicUsize,
     45→}
-   150→    fn init
-   160→    fn compare_exchange
+   150→    fn init …
+   160→    fn compare_exchange …
    167→pub struct OnceBool {
    168→    inner: OnceNonZeroUsize,
    169→}
-   221→    fn from_usize
-   226→    fn to_usize
+   221→    fn from_usize …
+   226→    fn to_usize …
    232→pub struct OnceRef<'a, T> {
    233→    inner: AtomicPtr<T>,
    234→    ghost: PhantomData<UnsafeCell<&'a T>>,
    235→}
-   311→    fn init
-   320→    fn compare_exchange
-   347→    fn _dummy
+   311→    fn init …
+   320→    fn compare_exchange …
+   347→    fn _dummy …
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
@@ -144,10 +145,10 @@ src/race.rs
    362→        inner: AtomicPtr<T>,
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
-   462→        fn init
-   497→    fn _dummy
+   462→        fn init …
+   497→    fn _dummy …
 xtask/src/main.rs
-     8→fn main
-   116→fn push_toolchain
-   126→fn section
-   136→fn defer
+     8→fn main …
+   116→fn push_toolchain …
+   126→fn section …
+   136→fn defer …

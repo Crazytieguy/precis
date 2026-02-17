@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1999 words)
+budget: 2000 (2030 words)
 
 command-score.ts
     54→function commandScoreInner(
@@ -85,6 +85,7 @@ command-score.ts
    131→        memoizedResults,
    132→      )
    133→
+      →…
    150→function formatInput(string) {
    151→  // convert all valid space characters to space so they match each other
    152→  return string.toLowerCase().replace(COUNT_SPACE_REGEXP, ' ')
@@ -98,36 +99,36 @@ command-score.ts
    161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
    162→}
 index.tsx
-    10→type Children
-    11→type DivProps
-    13→type LoadingProps
-    23→type EmptyProps
-    24→type SeparatorProps
-    28→type DialogProps
-    37→type ListProps
-    44→type ItemProps
-    60→type GroupProps
-    69→type InputProps
-    79→type CommandFilter
-    80→type CommandProps
-   123→type Context
-   137→type State
-   143→type Store
-   149→type Group
-   154→const GROUP_SELECTOR
-   155→const GROUP_ITEMS_SELECTOR
-   156→const GROUP_HEADING_SELECTOR
-   157→const ITEM_SELECTOR
-   158→const VALID_ITEM_SELECTOR
-   159→const SELECT_EVENT
-   160→const VALUE_ATTR
+    10→type Children …
+    11→type DivProps …
+    13→type LoadingProps …
+    23→type EmptyProps …
+    24→type SeparatorProps …
+    28→type DialogProps …
+    37→type ListProps …
+    44→type ItemProps …
+    60→type GroupProps …
+    69→type InputProps …
+    79→type CommandFilter …
+    80→type CommandProps …
+   123→type Context …
+   137→type State …
+   143→type Store …
+   149→type Group …
+   154→const GROUP_SELECTOR …
+   155→const GROUP_ITEMS_SELECTOR …
+   156→const GROUP_HEADING_SELECTOR …
+   157→const ITEM_SELECTOR …
+   158→const VALID_ITEM_SELECTOR …
+   159→const SELECT_EVENT …
+   160→const VALUE_ATTR …
    161→const defaultFilter: CommandFilter = (value, search, keywords) => commandScore(value, search, keywords)
-   163→const CommandContext
+   163→const CommandContext …
    164→const useCommand = () => React.useContext(CommandContext)
-   165→const StoreContext
+   165→const StoreContext …
    166→const useStore = () => React.useContext(StoreContext)
-   167→const GroupContext
-   169→const Command
+   167→const GroupContext …
+   169→const Command …
    659→/**
    660→ * Command menu item. Becomes active on pointer enter or through keyboard navigation.
    661→ * Preferably pass a `value`, otherwise the value will be inferred from `children` or
@@ -391,7 +392,7 @@ index.tsx
    926→    </Primitive.div>
    927→  )
    928→})
-   930→const pkg
+   930→const pkg …
    955→/**
    956→ *
    957→ *
@@ -425,7 +426,7 @@ index.tsx
    987→
    988→  return ref
    989→}
-   991→const useLayoutEffect
+   991→const useLayoutEffect …
    993→function useLazyRef<T>(fn: () => T) {
    994→  const ref = React.useRef<T>()
    995→
@@ -508,4 +509,4 @@ index.tsx
   1077→  }
   1078→  return render(children)
   1079→}
-  1081→const srOnlyStyles
+  1081→const srOnlyStyles …

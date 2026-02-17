@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (486 words)
+budget: 500 (498 words)
 
 __init__.py
     42→__all__ = [
@@ -29,6 +29,7 @@ cli.py
     72→    Exits with error code 2 if the file cannot be opened.
     73→    """
     74→
+      →…
    112→@cli.command(name="set")
    113→@click.pass_context
    114→@click.argument("key", required=True)
@@ -36,22 +37,26 @@ cli.py
    116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
    117→    """Store the given key/value."""
    118→    file = ctx.obj["FILE"]
+      →…
    128→@cli.command()
    129→@click.pass_context
    130→@click.argument("key", required=True)
    131→def get(ctx: click.Context, key: Any) -> None:
    132→    """Retrieve the value for the given key."""
    133→    file = ctx.obj["FILE"]
+      →…
    145→@cli.command()
    146→@click.pass_context
    147→@click.argument("key", required=True)
    148→def unset(ctx: click.Context, key: Any) -> None:
    149→    """Removes the given key."""
    150→    file = ctx.obj["FILE"]
+      →…
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
    175→    file = ctx.obj["FILE"]
+      →…
 ipython.py
     11→@magics_class
     12→class IPythonDotEnv(Magics):
@@ -91,6 +96,7 @@ ipython.py
 main.py
     25→def _load_dotenv_disabled() -> bool:
     26→    """
+      →…
     45→class DotEnv:
     46→    def __init__(
     63→    @contextmanager
@@ -103,21 +109,27 @@ main.py
     70→        else:
     71→            if self.verbose:
     72→                logger.info(
+      →…
    141→@contextmanager
    142→def rewrite(
    143→    path: StrPath,
    144→    encoding: Optional[str],
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    146→    pathlib.Path(path).touch()
+      →…
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """
+      →…
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
+      →…
 parser.py
     35→class Original(NamedTuple):
     36→    string: str
+      →…
     40→class Binding(NamedTuple):
     41→    key: Optional[str]
+      →…
     47→class Position:
     48→    def __init__(self, chars: int, line: int) -> None:
     52→    @classmethod

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1948 words)
+budget: 2000 (2085 words)
 
 CHANGELOG.md
      1→# neverthrow
@@ -62,6 +62,7 @@ CHANGELOG.md
     55→
     56→### Patch Changes
     57→
+      →…
     62→## 7.0.1
     63→
     64→### Patch Changes
@@ -82,16 +83,22 @@ CHANGELOG.md
 README.md
      1→# NeverThrow 🙅
      2→
+      →…
      5→## Description
      6→
+      →…
     19→## Table Of Contents
     20→
+      →…
     73→## Installation
     74→
+      →…
     79→## Recommended: Use `eslint-plugin-neverthrow`
     80→
+      →…
    100→## Top-Level API
    101→
+      →…
    139→## API Documentation
    140→
    141→### Synchronous API (`Result`)
@@ -123,42 +130,61 @@ README.md
    167→
    168→#### `err`
    169→
+      →…
    193→#### `Result.isOk` (method)
    194→
+      →…
    207→#### `Result.isErr` (method)
    208→
+      →…
    221→#### `Result.map` (method)
    222→
+      →…
    259→#### `Result.mapErr` (method)
    260→
+      →…
    297→#### `Result.unwrapOr` (method)
    298→
+      →…
    323→#### `Result.andThen` (method)
    324→
+      →…
    384→#### `Result.asyncAndThen` (method)
    385→
+      →…
    404→#### `Result.orElse` (method)
    405→
+      →…
    445→#### `Result.match` (method)
    446→
+      →…
    514→#### `Result.asyncMap` (method)
    515→
+      →…
    551→#### `Result.andTee` (method)
    552→
+      →…
    598→#### `Result.orTee` (method)
    599→
+      →…
    645→#### `Result.andThrough` (method)
    646→
+      →…
    692→#### `Result.asyncAndThrough` (method)
    693→
+      →…
    728→#### `Result.fromThrowable` (static class method)
    729→
+      →…
    761→#### `Result.combine` (static class method)
    762→
+      →…
    814→#### `Result.combineWithAllErrors` (static class method)
    815→
+      →…
    852→#### `Result.safeUnwrap()`
    853→
+      →…
    863→### Asynchronous API (`ResultAsync`)
    864→
    865→#### `okAsync`
@@ -190,36 +216,52 @@ README.md
    891→
    892→#### `errAsync`
    893→
+      →…
    919→#### `ResultAsync.fromThrowable` (static class method)
    920→
+      →…
    960→#### `ResultAsync.fromPromise` (static class method)
    961→
+      →…
    996→#### `ResultAsync.fromSafePromise` (static class method)
    997→
+      →…
   1041→#### `ResultAsync.map` (method)
   1042→
+      →…
   1087→#### `ResultAsync.mapErr` (method)
   1088→
+      →…
   1142→#### `ResultAsync.unwrapOr` (method)
   1143→
+      →…
   1166→#### `ResultAsync.andThen` (method)
   1167→
+      →…
   1223→#### `ResultAsync.orElse` (method)
   1224→
+      →…
   1241→#### `ResultAsync.match` (method)
   1242→
+      →…
   1283→#### `ResultAsync.andTee` (method)
   1284→
+      →…
   1330→#### `ResultAsync.orTee` (method)
   1331→
+      →…
   1377→#### `ResultAsync.andThrough` (method)
   1378→
+      →…
   1425→#### `ResultAsync.combine` (static class method)
   1426→
+      →…
   1475→#### `ResultAsync.combineWithAllErrors` (static class method)
   1476→
+      →…
   1509→#### `ResultAsync.safeUnwrap()`
   1510→
+      →…
   1519→### Utilities
   1520→
   1521→#### `fromThrowable`
@@ -231,18 +273,25 @@ README.md
   1527→
   1528→#### `fromAsyncThrowable`
   1529→
+      →…
   1535→#### `fromPromise`
   1536→
+      →…
   1542→#### `fromSafePromise`
   1543→
+      →…
   1549→#### `safeTry`
   1550→
+      →…
   1633→### Testing
   1634→
+      →…
   1673→## A note on the Package Name
   1674→
+      →…
   1681→### License
   1682→
+      →…
 src/_internals/error.ts
      3→export interface ErrorConfig {
      4→  withStackTrace: boolean
@@ -364,32 +413,33 @@ src/result-async.ts
     35→
     36→  static fromPromise<T, E>(promise: PromiseLike<T>, errorFn: (e: unknown) => E): ResultAsync<T, E>
     37→  static fromPromise<T, E>(promise: Promise<T>, errorFn: (e: unknown) => E): ResultAsync<T, E> {
-    46→  static fromThrowable
-    69→  static combine
-    81→  static combineWithAllErrors
-    89→  map
-   101→  andThrough
-   117→  andTee
-   133→  orTee
-   149→  mapErr
-   169→  andThen
-   190→  orElse
-   202→  match
-   206→  unwrapOr
+    46→  static fromThrowable …
+    69→  static combine …
+    81→  static combineWithAllErrors …
+    89→  map …
+   101→  andThrough …
+   117→  andTee …
+   133→  orTee …
+   149→  mapErr …
+   169→  andThen …
+   190→  orElse …
+   202→  match …
+   206→  unwrapOr …
    210→  /**
+      →…
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
-   227→  then
-   249→export function okAsync
-   255→export function errAsync
-   259→export const fromPromise
-   260→export const fromSafePromise
-   262→export const fromAsyncThrowable
-   265→export type CombineResultAsyncs
-   272→export type CombineResultsWithAllErrorsArrayAsync
-   279→type UnwrapAsync
-   300→type TraverseAsync
-   330→type TraverseWithAllErrorsAsync
-   338→type Writable
+   227→  then …
+   249→export function okAsync …
+   255→export function errAsync …
+   259→export const fromPromise …
+   260→export const fromSafePromise …
+   262→export const fromAsyncThrowable …
+   265→export type CombineResultAsyncs …
+   272→export type CombineResultsWithAllErrorsArrayAsync …
+   279→type UnwrapAsync …
+   300→type TraverseAsync …
+   330→type TraverseWithAllErrorsAsync …
+   338→type Writable …
 src/result.ts
     14→export namespace Result {
     15→  /**
@@ -415,12 +465,12 @@ src/result.ts
     35→  }
     36→
     37→  export function combine<
-    43→  export function combine
-    55→  export function combineWithAllErrors
-    62→export type Result
-    66→export function ok
-    73→export function err
-   122→export function safeTry
+    43→  export function combine …
+    55→  export function combineWithAllErrors …
+    62→export type Result …
+    66→export function ok …
+    73→export function err …
+   122→export function safeTry …
    134→interface IResult<T, E> {
    135→  /**
    136→   * Used to check if a `Result` is an `OK`
@@ -437,29 +487,40 @@ src/result.ts
    147→  isErr(): this is Err<T, E>
    148→
    149→  /**
+      →…
    157→  map<A>(f: (t: T) => A): Result<A, E>
    159→  /**
+      →…
    168→  mapErr<U>(f: (e: E) => U): Result<T, U>
-   183→  andThen
+   183→  andThen …
    185→  /**
+      →…
    195→  andTee(f: (t: T) => unknown): Result<T, E>
    197→  /**
+      →…
    207→  orTee(f: (t: E) => unknown): Result<T, E>
-   219→  andThrough
-   233→  orElse
+   219→  andThrough …
+   233→  orElse …
    235→  /**
+      →…
    244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
    246→  /**
+      →…
    253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
    255→  /**
+      →…
    260→  unwrapOr<A>(v: A): T | A
    262→  /**
+      →…
    276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
    278→  /**
+      →…
    290→  safeUnwrap(): Generator<Err<never, E>, T>
    292→  /**
+      →…
    299→  _unsafeUnwrap(config?: ErrorConfig): T
    301→  /**
+      →…
    309→  _unsafeUnwrapErr(config?: ErrorConfig): E
    312→export class Ok<T, E> implements IResult<T, E> {
    313→  constructor(readonly value: T) {}
@@ -477,20 +538,20 @@ src/result.ts
    325→  }
    326→
    327→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-   328→  mapErr
-   337→  andThen
-   344→  andThrough
-   348→  andTee
-   357→  orTee
-   366→  orElse
-   370→  asyncAndThen
-   379→  asyncAndThrough
-   383→  asyncMap
-   388→  unwrapOr
-   393→  match
-   397→  safeUnwrap
-   405→  _unsafeUnwrap
-   409→  _unsafeUnwrapErr
+   328→  mapErr …
+   337→  andThen …
+   344→  andThrough …
+   348→  andTee …
+   357→  orTee …
+   366→  orElse …
+   370→  asyncAndThen …
+   379→  asyncAndThrough …
+   383→  asyncMap …
+   388→  unwrapOr …
+   393→  match …
+   397→  safeUnwrap …
+   405→  _unsafeUnwrap …
+   409→  _unsafeUnwrapErr …
    419→export class Err<T, E> implements IResult<T, E> {
    420→  constructor(readonly error: E) {}
    421→
@@ -507,32 +568,32 @@ src/result.ts
    432→    return err(this.error)
    433→  }
    434→
-   435→  mapErr
-   439→  andThrough
-   443→  andTee
-   447→  orTee
-   461→  andThen
-   470→  orElse
-   475→  asyncAndThen
-   479→  asyncAndThrough
-   484→  asyncMap
-   488→  unwrapOr
-   492→  match
-   496→  safeUnwrap
-   505→  _unsafeUnwrap
-   509→  _unsafeUnwrapErr
-   523→export const fromThrowable
-   530→type Prev
-   590→type CollectResults
-   614→export type Transpose
-   635→export type Combine
-   645→export type Dedup
-   652→export type MemberListOf
-   669→export type EmptyArrayToNever
-   680→type UnknownMembersToNever
-   685→export type MembersToUnion
-   688→export type IsLiteralArray
-   698→type Traverse
-   704→type TraverseWithAllErrors
-   712→export type CombineResults
-   719→export type CombineResultsWithAllErrorsArray
+   435→  mapErr …
+   439→  andThrough …
+   443→  andTee …
+   447→  orTee …
+   461→  andThen …
+   470→  orElse …
+   475→  asyncAndThen …
+   479→  asyncAndThrough …
+   484→  asyncMap …
+   488→  unwrapOr …
+   492→  match …
+   496→  safeUnwrap …
+   505→  _unsafeUnwrap …
+   509→  _unsafeUnwrapErr …
+   523→export const fromThrowable …
+   530→type Prev …
+   590→type CollectResults …
+   614→export type Transpose …
+   635→export type Combine …
+   645→export type Dedup …
+   652→export type MemberListOf …
+   669→export type EmptyArrayToNever …
+   680→type UnknownMembersToNever …
+   685→export type MembersToUnion …
+   688→export type IsLiteralArray …
+   698→type Traverse …
+   704→type TraverseWithAllErrors …
+   712→export type CombineResults …
+   719→export type CombineResultsWithAllErrorsArray …

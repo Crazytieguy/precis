@@ -8,6 +8,7 @@ sample.py
     15→class Token:
     16→    kind: str
     17→    span: tuple[int, int]
+      →…
     21→class Visitor:
     22→    def visit_token(self, token: Token) -> None:
     23→        pass

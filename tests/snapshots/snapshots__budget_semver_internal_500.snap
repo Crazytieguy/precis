@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (348 words)
+budget: 500 (352 words)
 
 constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
@@ -32,6 +32,7 @@ identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
      5→  if (typeof a === 'number' && typeof b === 'number') {
+      →…
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 lrucache.js
      3→class LRUCache {
@@ -77,6 +78,7 @@ parse-options.js
      5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
      7→  if (!options) {
+      →…
 re.js
     12→const re = exports.re = []
     13→const safeRe = exports.safeRe = []
@@ -91,5 +93,7 @@ re.js
     31→]
     33→const makeSafeRegex = (value) => {
     34→  for (const [token, max] of safeRegexReplacements) {
+      →…
     42→const createToken = (name, value, isGlobal) => {
     43→  const safe = makeSafeRegex(value)
+      →…

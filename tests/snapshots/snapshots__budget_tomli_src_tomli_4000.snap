@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3447 words)
+budget: 4000 (3454 words)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -150,6 +150,7 @@ _parser.py
    174→        #    - comment
    175→        #    - key/value pair
    176→        #    - append dict to list (and move to its namespace)
+      →…
    220→class Flags:
    221→    """Flags that map to parsed keys/namespaces."""
    222→
@@ -354,6 +355,7 @@ _parser.py
    439→        raise TOMLDecodeError("Cannot overwrite a value", src, pos)
    440→    # Mark inline table and array namespaces recursively immutable
    441→    if isinstance(value, (dict, list)):
+      →…
    447→def parse_key_value_pair(
    448→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    449→) -> tuple[Pos, Key, Any]:
@@ -454,6 +456,7 @@ _parser.py
    554→        if c != ",":
    555→            raise TOMLDecodeError("Unclosed inline table", src, pos)
    556→        pos += 1
+      →…
    564→def parse_basic_str_escape(
    565→    src: str, pos: Pos, *, multiline: bool = False
    566→) -> tuple[Pos, str]:
@@ -530,6 +533,7 @@ _parser.py
    645→    pos += 1
    646→    if not src.startswith(delim, pos):
    647→        return pos, result + delim
+      →…
    652→def parse_basic_str(src: str, pos: Pos, *, multiline: bool) -> tuple[Pos, str]:
    653→    if multiline:
    654→        error_on = ILLEGAL_MULTILINE_BASIC_STR_CHARS
@@ -557,6 +561,7 @@ _parser.py
    676→            result += parsed_escape
    677→            start_pos = pos
    678→            continue
+      →…
    684→def parse_value(
    685→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    686→) -> tuple[Pos, Any]:
@@ -586,6 +591,7 @@ _parser.py
    710→        if src.startswith("'''", pos):
    711→            return parse_multiline_str(src, pos, literal=True)
    712→        return parse_literal_str(src, pos)
+      →…
    760→def is_unicode_scalar_value(codepoint: int) -> bool:
    761→    return (0 <= codepoint <= 55295) or (57344 <= codepoint <= 1114111)
    764→def make_safe_parse_float(parse_float: ParseFloat) -> ParseFloat:
@@ -680,6 +686,7 @@ _re.py
     88→    elif zulu_time:
     89→        tz = timezone.utc
     90→    else:  # local date-time
+      →…
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.

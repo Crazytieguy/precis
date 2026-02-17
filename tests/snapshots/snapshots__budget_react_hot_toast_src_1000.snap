@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 words)
+budget: 1000 (1031 words)
 
 components/checkmark.tsx
      3→const circleAnimation = keyframes`
@@ -15,6 +15,7 @@ components/checkmark.tsx
     35→  width: 20px;
     36→  opacity: 0;
     37→  height: 20px;
+      →…
 components/error.tsx
      3→const circleAnimation = keyframes`
     13→const firstLineAnimation = keyframes`
@@ -27,6 +28,7 @@ components/error.tsx
     39→  width: 20px;
     40→  opacity: 0;
     41→  height: 20px;
+      →…
 components/loader.tsx
      3→const rotate = keyframes`
     12→export interface LoaderTheme {
@@ -37,6 +39,7 @@ components/loader.tsx
     18→  width: 12px;
     19→  height: 12px;
     20→  box-sizing: border-box;
+      →…
 components/toast-bar.tsx
      8→const enterAnimation = (factor: number) => `
      9→0% {transform: translate3d(0,${factor * -200}%,0) scale(.6); opacity:.5;}
@@ -64,10 +67,12 @@ components/toast-bar.tsx
     59→  visible: boolean
     60→): React.CSSProperties => {
     61→  const top = position.includes('top');
+      →…
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
     77→    const animationStyle: React.CSSProperties = toast.height
     78→      ? getAnimationStyle(
+      →…
 components/toast-icon.tsx
      9→const StatusWrapper = styled('div')`
     13→const IndicatorWrapper = styled('div')`
@@ -76,6 +81,7 @@ components/toast-icon.tsx
     33→  position: relative;
     34→  transform: scale(0.6);
     35→  opacity: 0.4;
+      →…
     41→export type IconThemes = Partial<{
     42→  success: CheckmarkTheme;
     43→  error: ErrorTheme;
@@ -97,14 +103,17 @@ components/toast-icon.tsx
     60→    return null;
     61→  }
     62→
+      →…
 components/toaster.tsx
     15→const ToastWrapper = ({
     16→  id,
+      →…
     47→const getPositionStyle = (
     48→  position: ToastPosition,
     49→  offset: number
     50→): React.CSSProperties => {
     51→  const top = position.includes('top');
+      →…
     76→const activeClass = css`
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
@@ -123,10 +132,11 @@ components/toaster.tsx
     98→    <div
     99→      data-rht-toaster={toasterId || ''}
    100→      style={{
+      →…
 core/store.ts
-     4→export const TOAST_EXPIRE_DISMISS_DELAY
-     5→export const TOAST_LIMIT
-     6→export const DEFAULT_TOASTER_ID
+     4→export const TOAST_EXPIRE_DISMISS_DELAY …
+     5→export const TOAST_LIMIT …
+     6→export const DEFAULT_TOASTER_ID …
      8→interface ToasterSettings {
      9→  toastLimit: number;
     10→}
@@ -139,7 +149,7 @@ core/store.ts
     18→  START_PAUSE,
     19→  END_PAUSE,
     20→}
-    22→export type Action
+    22→export type Action …
     52→interface ToasterState {
     53→  toasts: Toast[];
     54→  settings: ToasterSettings;
@@ -154,6 +164,7 @@ core/store.ts
     65→  switch (action.type) {
     66→    case ActionType.ADD_TOAST:
     67→      return {
+      →…
    136→const listeners: Array<
    137→  [toasterId: string, reducer: (state: ToasterState) => void]
    138→> = [];
@@ -170,6 +181,7 @@ core/store.ts
    152→    action
    153→  );
    154→  listeners.forEach(([id, listener]) => {
+      →…
    161→export const dispatchAll = (action: Action) =>
    162→  Object.keys(memoryState).forEach((toasterId) => dispatch(action, toasterId));
    164→export const getToasterIdFromToastId = (toastId: string) =>
@@ -181,7 +193,7 @@ core/store.ts
    171→  (action: Action) => {
    172→    dispatch(action, toasterId);
    173→  };
-   175→export const defaultTimeouts
+   175→export const defaultTimeouts …
    185→export const useStore = (
    186→  toastOptions: DefaultToastOptions = {},
    187→  toasterId: string = DEFAULT_TOASTER_ID
@@ -191,6 +203,7 @@ core/store.ts
    191→  );
    192→  const initial = useRef(memoryState[toasterId]);
    193→
+      →…
 core/toast.ts
     19→type Message = ValueOrFunction<Renderable, Toast>;
     21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
@@ -203,6 +216,7 @@ core/toast.ts
     29→  visible: true,
     30→  dismissed: false,
     31→  type,
+      →…
     42→const createHandler =
     43→  (type?: ToastType): ToastHandler =>
     44→  (message, options) => {
@@ -210,18 +224,19 @@ core/toast.ts
     46→
     47→    const dispatch = createDispatch(
     48→      toast.toasterId || getToasterIdFromToastId(toast.id)
+      →…
     55→const toast = (message: Message, opts?: ToastOptions) =>
     56→  createHandler('blank')(message, opts);
 core/types.ts
-     3→export type ToastType
-     4→export type ToastPosition
-    12→export type Renderable
+     3→export type ToastType …
+     4→export type ToastPosition …
+    12→export type Renderable …
     14→export interface IconTheme {
     15→  primary: string;
     16→  secondary: string;
     17→}
-    19→export type ValueFunction
-    20→export type ValueOrFunction
+    19→export type ValueFunction …
+    20→export type ValueOrFunction …
     24→const isFunction = <TValue, TArg>(
     25→  valOrFunction: ValueOrFunction<TValue, TArg>
     26→): valOrFunction is ValueFunction<TValue, TArg> =>
@@ -255,8 +270,8 @@ core/types.ts
     56→  dismissed: boolean;
     57→  height?: number;
     58→}
-    60→export type ToastOptions
-    76→export type DefaultToastOptions
+    60→export type ToastOptions …
+    76→export type DefaultToastOptions …
     80→export interface ToasterProps {
     81→  position?: ToastPosition;
     82→  toastOptions?: DefaultToastOptions;
@@ -275,7 +290,7 @@ core/types.ts
     96→  children?: React.ReactNode;
     97→}
 core/use-toaster.ts
-     6→export const REMOVE_DELAY
+     6→export const REMOVE_DELAY …
      8→export const useToaster = (
      9→  toastOptions?: DefaultToastOptions,
     10→  toasterId: string = 'default'
@@ -285,6 +300,7 @@ core/use-toaster.ts
     14→    new Map<Toast['id'], ReturnType<typeof setTimeout>>()
     15→  ).current;
     16→
+      →…
 core/utils.ts
-     1→export const genId
-     8→export const prefersReducedMotion
+     1→export const genId …
+     8→export const prefersReducedMotion …

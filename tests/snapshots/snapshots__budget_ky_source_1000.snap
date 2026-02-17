@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (959 words)
+budget: 1000 (1008 words)
 
 core/Ky.ts
     33→export class Ky {
@@ -17,18 +17,19 @@ core/Ky.ts
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
+      →…
 core/constants.ts
-     4→export const supportsRequestStreams
-    34→export const supportsAbortController
-    35→export const supportsAbortSignal
-    36→export const supportsResponseStreams
-    37→export const supportsFormData
-    39→export const requestMethods
-    46→export const responseTypes
-    58→export const maxSafeTimeout
-    61→export const usualFormBoundarySize
-    63→export const stop
-    68→export type ForceRetryOptions
+     4→export const supportsRequestStreams …
+    34→export const supportsAbortController …
+    35→export const supportsAbortSignal …
+    36→export const supportsResponseStreams …
+    37→export const supportsFormData …
+    39→export const requestMethods …
+    46→export const responseTypes …
+    58→export const maxSafeTimeout …
+    61→export const usualFormBoundarySize …
+    63→export const stop …
+    68→export type ForceRetryOptions …
    145→/**
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    147→*/
@@ -67,10 +68,11 @@ core/constants.ts
    181→						});
    182→					}
    183→
+      →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
-   237→export const kyOptionKeys
-   256→export const vendorSpecificOptions
-   265→export const requestOptionsRegistry
+   237→export const kyOptionKeys …
+   256→export const vendorSpecificOptions …
+   265→export const requestOptionsRegistry …
 errors/ForceRetryError.ts
      8→export class ForceRetryError extends Error {
      9→	override name = 'ForceRetryError' as const;
@@ -79,6 +81,7 @@ errors/ForceRetryError.ts
     12→	customRequest: Request | undefined;
     13→
     14→	constructor(options?: ForceRetryOptions) {
+      →…
 errors/HTTPError.ts
      5→export class HTTPError<T = unknown> extends Error {
      6→	public response: KyResponse<T>;
@@ -86,6 +89,7 @@ errors/HTTPError.ts
      8→	public options: NormalizedOptions;
      9→
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
+      →…
 errors/NonError.ts
      6→export class NonError extends Error {
      7→	override name = 'NonError';
@@ -94,6 +98,7 @@ errors/NonError.ts
     10→	constructor(value: unknown) {
     11→		let message = 'Non-error value was thrown';
     12→
+      →…
 errors/TimeoutError.ts
      3→export class TimeoutError extends Error {
      4→	public request: KyRequest;
@@ -101,13 +106,15 @@ errors/TimeoutError.ts
      6→	constructor(request: Request) {
      7→		super(`Request timed out: ${request.method} ${request.url}`);
      8→		this.name = 'TimeoutError';
+      →…
 index.ts
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
     11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
+      →…
     34→const ky = createInstance();
 types/options.ts
-    33→export type KyOptions
-   307→export type KyOptionsRegistry
+    33→export type KyOptions …
+   307→export type KyOptionsRegistry …
    309→/**
    310→Options are the same as `window.fetch`, except for the KyOptions
    311→*/
@@ -172,57 +179,61 @@ types/options.ts
    383→	context: Record<string, unknown>;
    384→}
 utils/body.ts
-     5→export const getBodySize
-    57→const withProgress
-    90→export const streamResponse
-   119→export const streamRequest
+     5→export const getBodySize …
+    57→const withProgress …
+    90→export const streamResponse …
+   119→export const streamRequest …
 utils/delay.ts
      5→export type DelayOptions = {
      6→	signal?: InternalOptions['signal'];
      7→};
-     9→export default async function delay
+     9→export default async function delay …
 utils/is.ts
-     2→export const isObject
+     2→export const isObject …
 utils/merge.ts
-     6→export const validateAndMerge
-    16→export const mergeHeaders
-    32→function newHookValue
-    38→export const mergeHooks
-    47→const appendSearchParameters
-    86→export const deepMerge
+     6→export const validateAndMerge …
+    16→export const mergeHeaders …
+    32→function newHookValue …
+    38→export const mergeHooks …
+    47→const appendSearchParameters …
+    86→export const deepMerge …
 utils/normalize.ts
-     5→export const normalizeRequestMethod
-     8→const retryMethods
-    10→const retryStatusCodes
-    12→const retryAfterStatusCodes
-    14→type InternalRetryOptions
-    16→const defaultRetryOptions
-    28→export const normalizeRetryOptions
+     5→export const normalizeRequestMethod …
+     8→const retryMethods …
+    10→const retryStatusCodes …
+    12→const retryAfterStatusCodes …
+    14→type InternalRetryOptions …
+    16→const defaultRetryOptions …
+    28→export const normalizeRetryOptions …
 utils/options.ts
-     4→export const findUnknownOptions
-    30→export const hasSearchParameters
+     4→export const findUnknownOptions …
+    30→export const hasSearchParameters …
 utils/timeout.ts
      3→export type TimeoutOptions = {
      4→	timeout: number;
      5→	fetch: typeof fetch;
      6→};
-     9→export default async function timeout
+     9→export default async function timeout …
 utils/type-guards.ts
      5→/**
      6→Type guard to check if an error is a Ky error.
      7→
+      →…
     27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
     31→/**
     32→Type guard to check if an error is an HTTPError.
     33→
+      →…
     49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
     53→/**
     54→Type guard to check if an error is a TimeoutError.
     55→
+      →…
     71→export function isTimeoutError(error: unknown): error is TimeoutError {
     75→/**
     76→Type guard to check if an error is a ForceRetryError.
     77→
+      →…
     98→export function isForceRetryError(error: unknown): error is ForceRetryError {
 utils/types.ts
      1→export type Mutable<T> = {

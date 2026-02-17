@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (988 words)
+budget: 1000 (1047 words)
 
 ast.rs
     10→pub enum Input<'a> {
@@ -44,13 +44,13 @@ ast.rs
     51→    UnitVariant,
     52→}
     55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
-    68→    fn from_syn
-    86→    fn from_syn
-   119→    fn from_syn
-   131→    fn multiple_from_syn
-   139→    fn from_syn
-   157→    fn from_struct
-   165→    fn from_variant
+    68→    fn from_syn …
+    86→    fn from_syn …
+   119→    fn from_syn …
+   131→    fn multiple_from_syn …
+   139→    fn from_syn …
+   157→    fn from_struct …
+   165→    fn from_variant …
    175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 attr.rs
     11→pub struct Attrs<'a> {
@@ -105,22 +105,22 @@ attr.rs
     66→    UpperExp,
     67→}
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
-   124→fn parse_error_attribute
-   196→fn parse_token_expr
+   124→fn parse_error_attribute …
+   196→fn parse_token_expr …
    303→    fn to_tokens(&self, tokens: &mut TokenStream) {
    343→    fn to_tokens(&self, tokens: &mut TokenStream) {
 expand.rs
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
-    22→fn try_expand
-    31→fn impl_struct
-   221→fn impl_enum
+    22→fn try_expand …
+    31→fn impl_struct …
+   221→fn impl_enum …
    505→pub(crate) fn call_site_ident(ident: &Ident) -> Ident {
-   511→fn fields_pat
-   526→fn use_as_display
-   536→fn from_initializer
-   565→fn type_is_option
-   569→fn unoptional_type
-   574→fn type_parameter_of_option
+   511→fn fields_pat …
+   526→fn use_as_display …
+   536→fn from_initializer …
+   565→fn type_is_option …
+   569→fn unoptional_type …
+   574→fn type_parameter_of_option …
 fallback.rs
      7→pub(crate) fn expand(input: &DeriveInput, error: syn::Error) -> TokenStream {
 fmt.rs
@@ -149,19 +149,19 @@ fmt.rs
    188→        first_unnamed: None,
    189→    })
    190→}
-   192→fn try_explicit_named_args
-   231→fn fallback_explicit_named_args
-   255→fn is_syn_full
-   273→fn take_int
-   286→fn take_ident
-   299→fn between
+   192→fn try_explicit_named_args …
+   231→fn fallback_explicit_named_args …
+   255→fn is_syn_full …
+   273→fn take_int …
+   286→fn take_ident …
+   299→fn between …
 generics.rs
      8→pub struct ParamsInScope<'a> {
      9→    names: Set<&'a Ident>,
     10→}
     13→    pub fn new(generics: &'a Generics) -> Self {
     19→    pub fn intersects(&self, ty: &Type) -> bool {
-    26→fn crawl
+    26→fn crawl …
     48→pub struct InferredBounds {
     49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
     50→    order: Vec<TokenStream>,
@@ -202,11 +202,11 @@ prop.rs
     66→    pub(crate) fn distinct_backtrace_field(&self) -> Option<&Field> {
     73→    pub(crate) fn is_backtrace(&self) -> bool {
     77→    pub(crate) fn source_span(&self) -> Span {
-    88→fn from_field
-    97→fn source_field
-   112→fn backtrace_field
-   127→fn distinct_backtrace_field
-   138→fn type_is_backtrace
+    88→fn from_field …
+    97→fn source_field …
+   112→fn backtrace_field …
+   127→fn distinct_backtrace_field …
+   138→fn type_is_backtrace …
 scan_expr.rs
      6→enum Input {
      7→    Keyword(&'static str),
@@ -232,28 +232,28 @@ scan_expr.rs
     28→    DecDepth,
     29→    Finish,
     30→}
-    32→static INIT
-    63→static POSTFIX
-    76→static ASYNC
-    82→static BLOCK
-    84→static BREAK_LABEL
-    89→static BREAK_VALUE
-    95→static CLOSURE
-   104→static CLOSURE_ARGS
-   109→static CLOSURE_RET
-   114→static CONST
-   119→static CONTINUE
-   124→static DOT
-   130→static FOR
-   135→static IF_ELSE
-   136→static IF_THEN
-   139→static METHOD
-   141→static PATH
-   148→static PATTERN
-   166→static RANGE
-   175→static RAW
-   181→static REFERENCE
-   187→static RETURN
+    32→static INIT …
+    63→static POSTFIX …
+    76→static ASYNC …
+    82→static BLOCK …
+    84→static BREAK_LABEL …
+    89→static BREAK_VALUE …
+    95→static CLOSURE …
+   104→static CLOSURE_ARGS …
+   109→static CLOSURE_RET …
+   114→static CONST …
+   119→static CONTINUE …
+   124→static DOT …
+   130→static FOR …
+   135→static IF_ELSE …
+   136→static IF_THEN …
+   139→static METHOD …
+   141→static PATH …
+   148→static PATTERN …
+   166→static RANGE …
+   175→static RAW …
+   181→static REFERENCE …
+   187→static RETURN …
    192→pub(crate) fn scan_expr(input: ParseStream) -> Result<()> {
 unraw.rs
     10→#[derive(Clone)]
@@ -282,10 +282,10 @@ unraw.rs
    136→    fn to_tokens(&self, tokens: &mut TokenStream) {
 valid.rs
      6→    pub(crate) fn validate(&self) -> Result<()> {
-    15→    fn validate
-    46→    fn validate
-    67→    fn validate
-    92→    fn validate
-   109→fn check_non_field_attrs
-   151→fn check_field_attrs
-   224→fn contains_non_static_lifetime
+    15→    fn validate …
+    46→    fn validate …
+    67→    fn validate …
+    92→    fn validate …
+   109→fn check_non_field_attrs …
+   151→fn check_field_attrs …
+   224→fn contains_non_static_lifetime …

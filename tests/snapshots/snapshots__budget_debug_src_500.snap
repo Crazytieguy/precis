@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (498 words)
+budget: 500 (508 words)
 
 browser.js
    115→function useColors() {
@@ -21,6 +21,7 @@ browser.js
    128→	let m;
    129→
    130→	// Is webkit? http://stackoverflow.com/a/16459606/376773
+      →…
    143→/**
    144→ * Colorize log arguments if enabled.
    145→ *
@@ -30,6 +31,7 @@ browser.js
    149→function formatArgs(args) {
    150→	args[0] = (this.useColors ? '%c' : '') +
    151→		this.namespace +
+      →…
    194→/**
    195→ * Save `namespaces`.
    196→ *
@@ -39,6 +41,7 @@ browser.js
    200→function save(namespaces) {
    201→	try {
    202→		if (namespaces) {
+      →…
    213→/**
    214→ * Load `namespaces`.
    215→ *
@@ -48,6 +51,7 @@ browser.js
    219→function load() {
    220→	let r;
    221→	try {
+      →…
    236→/**
    237→ * Localstorage attempts to return the localstorage.
    238→ *
@@ -62,6 +66,7 @@ browser.js
    247→function localstorage() {
    248→	try {
    249→		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
+      →…
 common.js
      2→/**
      3→ * This is the common logic for both the Node.js and web browser
@@ -71,6 +76,7 @@ common.js
      7→function setup(env) {
      8→	createDebug.debug = createDebug;
      9→	createDebug.default = createDebug;
+      →…
 node.js
    151→/**
    152→ * Is stdout a TTY? Colored output is enabled when `true`.
@@ -79,6 +85,7 @@ node.js
    155→function useColors() {
    156→	return 'colors' in exports.inspectOpts ?
    157→		Boolean(exports.inspectOpts.colors) :
+      →…
    161→/**
    162→ * Adds ANSI color escape codes if enabled.
    163→ *
@@ -88,6 +95,7 @@ node.js
    167→function formatArgs(args) {
    168→	const {namespace: name, useColors} = this;
    169→
+      →…
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
    184→		return '';
@@ -110,6 +118,7 @@ node.js
    203→function save(namespaces) {
    204→	if (namespaces) {
    205→		process.env.DEBUG = namespaces;
+      →…
    213→/**
    214→ * Load `namespaces`.
    215→ *
@@ -130,3 +139,4 @@ node.js
    231→function init(debug) {
    232→	debug.inspectOpts = {};
    233→
+      →…

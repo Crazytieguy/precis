@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (999 words)
+budget: 1000 (1002 words)
 
 browser.js
    115→function useColors() {
@@ -25,6 +25,7 @@ browser.js
    132→	// eslint-disable-next-line no-return-assign
    133→	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
    134→		// Is firebug? http://stackoverflow.com/a/398120/376773
+      →…
    143→/**
    144→ * Colorize log arguments if enabled.
    145→ *
@@ -56,6 +57,7 @@ browser.js
    171→			return;
    172→		}
    173→		index++;
+      →…
    194→/**
    195→ * Save `namespaces`.
    196→ *
@@ -148,6 +150,7 @@ common.js
     29→	* Map of special "%n" handling functions, for the debug "format" argument.
     30→	*
     31→	* Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+      →…
 node.js
    151→/**
    152→ * Is stdout a TTY? Colored output is enabled when `true`.

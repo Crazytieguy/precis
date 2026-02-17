@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1843 words)
+budget: 2000 (1959 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -20,18 +20,21 @@ CHANGELOG.md
      9→* [`120968b`](https://github.com/npm/node-semver/commit/120968b76760cb0db85a72bde2adedd0e9628793) [#840](https://github.com/npm/node-semver/pull/840) `@npmcli/template-oss@4.29.0` (#840)
     10→### Chores
     11→* [`44d7130`](https://github.com/npm/node-semver/commit/44d7130c60cedd3703048aa671bb1d659b79ab07) [#824](https://github.com/npm/node-semver/pull/824) bump @npmcli/eslint-config from 5.1.0 to 6.0.0 (#824) (@dependabot[bot])
+      →…
     15→## [7.7.3](https://github.com/npm/node-semver/compare/v7.7.2...v7.7.3) (2025-10-06)
     16→### Bug Fixes
     17→* [`e37e0ca`](https://github.com/npm/node-semver/commit/e37e0ca0b5fc910d2b1948d25dbc83cc3a0921ea) [#813](https://github.com/npm/node-semver/pull/813) faster paths for compare (#813) (@H4ad)
     18→* [`2471d75`](https://github.com/npm/node-semver/commit/2471d7543e2e63d9d95358e2405e7e1cde926c36) [#811](https://github.com/npm/node-semver/pull/811) x-range build metadata support (i529015)
     19→### Chores
     20→* [`8f05c87`](https://github.com/npm/node-semver/commit/8f05c87f56a4123259b8c6d9324f53eadb02e48f) [#807](https://github.com/npm/node-semver/pull/807) bump @npmcli/template-oss from 4.25.0 to 4.25.1 (#807) (@dependabot[bot], @owlstronaut)
+      →…
     22→## [7.7.2](https://github.com/npm/node-semver/compare/v7.7.1...v7.7.2) (2025-05-12)
     23→### Bug Fixes
     24→* [`fcafb61`](https://github.com/npm/node-semver/commit/fcafb61ed566ff8ccf24818dd94b76738f037aa4) [#780](https://github.com/npm/node-semver/pull/780) add missing `'use strict'` directives (#780) (@Fdawgs)
     25→* [`c99f336`](https://github.com/npm/node-semver/commit/c99f336fa3bdff465652f9041eab2127d2f52eb2) [#781](https://github.com/npm/node-semver/pull/781) prerelease identifier starting with digits (#781) (@mbtools)
     26→### Chores
     27→* [`c760403`](https://github.com/npm/node-semver/commit/c760403b935d3ad35f83e9bbe5ebe1badef2fc71) [#784](https://github.com/npm/node-semver/pull/784) template-oss-apply for workflow permissions (#784) (@wraithgar)
+      →…
     30→## [7.7.1](https://github.com/npm/node-semver/compare/v7.7.0...v7.7.1) (2025-02-03)
     31→### Bug Fixes
     32→* [`af761c0`](https://github.com/npm/node-semver/commit/af761c05bd53eef83b5e20f8b09360b0e70557dc) [#764](https://github.com/npm/node-semver/pull/764) inc: fully capture prerelease identifier (#764) (@wraithgar)
@@ -41,10 +44,13 @@ CHANGELOG.md
     36→* [`0864b3c`](https://github.com/npm/node-semver/commit/0864b3ce7932667013e0c7c5ec764777d4682883) [#753](https://github.com/npm/node-semver/pull/753) add "release" inc type (#753) (@mbtools)
     37→### Bug Fixes
     38→* [`d588e37`](https://github.com/npm/node-semver/commit/d588e3782864b1cab2fe9f2452b848e8c7f609d1) [#755](https://github.com/npm/node-semver/pull/755) diff: fix prerelease to stable version diff logic (#755) (@eminberkayd, berkay.daglar)
+      →…
     40→### Documentation
     41→* [`67e5478`](https://github.com/npm/node-semver/commit/67e54785a0f871361230f84323cbb631b9b6d834) [#756](https://github.com/npm/node-semver/pull/756) readme: added missing period for consistency (#756) (@shaymolcho)
+      →…
     43→### Chores
     44→* [`145c554`](https://github.com/npm/node-semver/commit/145c554b8c7b7ecfcb451153ad18bdb2f24ad10d) [#741](https://github.com/npm/node-semver/pull/741) bump @npmcli/eslint-config from 4.0.5 to 5.0.0 (@dependabot[bot])
+      →…
     48→## [7.6.3](https://github.com/npm/node-semver/compare/v7.6.2...v7.6.3) (2024-07-16)
     49→
     50→### Bug Fixes
@@ -53,6 +59,7 @@ CHANGELOG.md
     53→
     54→### Documentation
     55→
+      →…
     58→## [7.6.2](https://github.com/npm/node-semver/compare/v7.6.1...v7.6.2) (2024-05-09)
     59→
     60→### Bug Fixes
@@ -69,8 +76,10 @@ CHANGELOG.md
     71→
     72→### Dependencies
     73→
+      →…
     77→### Chores
     78→
+      →…
     86→## [7.6.0](https://github.com/npm/node-semver/compare/v7.5.4...v7.6.0) (2024-01-31)
     87→
     88→### Features
@@ -79,6 +88,7 @@ CHANGELOG.md
     91→
     92→### Chores
     93→
+      →…
    108→## [7.5.4](https://github.com/npm/node-semver/compare/v7.5.3...v7.5.4) (2023-07-07)
    109→
    110→### Bug Fixes
@@ -94,6 +104,7 @@ CHANGELOG.md
    120→
    121→### Documentation
    122→
+      →…
    125→## [7.5.2](https://github.com/npm/node-semver/compare/v7.5.1...v7.5.2) (2023-06-15)
    126→
    127→### Bug Fixes
@@ -116,6 +127,7 @@ CHANGELOG.md
    144→
    145→### Bug Fixes
    146→
+      →…
    151→## [7.4.0](https://github.com/npm/node-semver/compare/v7.3.8...v7.4.0) (2023-04-10)
    152→
    153→### Features
@@ -125,8 +137,10 @@ CHANGELOG.md
    157→
    158→### Bug Fixes
    159→
+      →…
    168→### Documentation
    169→
+      →…
    172→## [7.3.8](https://github.com/npm/node-semver/compare/v7.3.7...v7.3.8) (2022-10-04)
    173→
    174→### Bug Fixes
@@ -135,8 +149,10 @@ CHANGELOG.md
    177→
    178→### Documentation
    179→
+      →…
    182→### [7.3.7](https://github.com/npm/node-semver/compare/v7.3.6...v7.3.7) (2022-04-11)
    183→
+      →…
    185→### Bug Fixes
    186→
    187→* allow node >=10 ([85b269a](https://github.com/npm/node-semver/commit/85b269a90806713d2a41e8e990b0ea6bc274b171))
@@ -147,8 +163,10 @@ CHANGELOG.md
    192→
    193→### Dependencies
    194→
+      →…
    197→### [7.3.6](https://github.com/npm/node-semver/compare/v7.3.5...v7.3.6) (2022-04-05)
    198→
+      →…
    200→### Bug Fixes
    201→
    202→* https://github.com/npm/node-semver/issues/329 ([cb1ca1d](https://github.com/npm/node-semver/commit/cb1ca1d5480a6c07c12ac31ba5f2071ed530c4ed))
@@ -159,52 +177,76 @@ CHANGELOG.md
    207→
    208→### Documentation
    209→
+      →…
    213→### Dependencies
    214→
+      →…
    218→## 7.3.0
    219→
+      →…
    223→## 7.2.3
    224→
+      →…
    228→## 7.2.2
    229→
+      →…
    233→## 7.2.0
    234→
+      →…
    239→## 7.1.2
    240→
+      →…
    244→## 7.1.0
    245→
+      →…
    249→## 7.0.0
    250→
+      →…
    255→## 6.3.0
    256→
+      →…
    259→## 6.2.0
    260→
+      →…
    264→## 6.1.3
    265→
+      →…
    268→## 6.1.2
    269→
+      →…
    272→## 6.1.1
    273→
+      →…
    277→## 6.1.0
    278→
+      →…
    282→## 6.0
    283→
+      →…
    290→## 5.7
    291→
+      →…
    294→## 5.6
    295→
+      →…
    301→## 5.5
    302→
+      →…
    305→## 5.4
    306→
+      →…
    309→## 5.3
    310→
+      →…
    313→## 5.2
    314→
+      →…
    317→## 5.1
    318→
+      →…
    322→## 5.0
    323→
+      →…
 CONTRIBUTING.md
      3→# Contributing
      4→
@@ -214,6 +256,7 @@ CONTRIBUTING.md
      8→
      9→## Reporting Bugs
     10→
+      →…
     17→## Pull Request Conventions
     18→
     19→### Commits
@@ -229,8 +272,10 @@ CONTRIBUTING.md
     29→
     30→### Test Coverage
     31→
+      →…
     36→### Linting
     37→
+      →…
     42→## What _not_ to contribute?
     43→
     44→### Dependencies
@@ -239,57 +284,82 @@ CONTRIBUTING.md
     47→
     48→### Tools/Automation
     49→
+      →…
 README.md
      1→semver(1) -- The semantic versioner for npm
      3→
      4→## Install
      5→
+      →…
     10→## Usage
     11→
+      →…
    139→## Versions
    140→
+      →…
    148→## Ranges
    149→
+      →…
    184→### Prerelease Tags
    185→
+      →…
    219→#### Prerelease Identifiers
    220→
+      →…
    250→#### Prerelease Identifier Base
    251→
+      →…
    279→### Advanced Range Syntax
    280→
+      →…
    287→#### Hyphen Ranges `X.Y.Z - A.B.C`
    288→
+      →…
    306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
    307→
+      →…
    324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
    325→
+      →…
    341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
    342→
+      →…
    384→### Range Grammar
    385→
+      →…
    408→## Functions
    409→
+      →…
    453→### Comparison
    454→
+      →…
    478→### Sorting
    479→
+      →…
    485→### Comparators
    486→
+      →…
    489→### Ranges
    490→
+      →…
    531→### Coercion
    532→
+      →…
    558→### Clean
    559→
+      →…
    576→## Constants
    577→
+      →…
    580→### `RELEASE_TYPES`
    581→
+      →…
    600→### `SEMVER_SPEC_VERSION`
    601→
+      →…
    610→## Exported Modules
    611→
+      →…
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
@@ -299,6 +369,7 @@ bin/semver.js
     40→  }
     41→  while (argv.length) {
     42→    let a = argv.shift()
+      →…
    132→const failInc = () => {
    133→  console.error('--inc can only be used on a single version with no range')
    134→  fail()
@@ -310,6 +381,7 @@ bin/semver.js
    142→A JavaScript implementation of the https://semver.org/ specification
    143→Copyright Isaac Z. Schlueter
    144→
+      →…
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
@@ -343,21 +415,21 @@ classes/range.js
    170→  intersects (range, options) {
    193→  test (version) {
    218→const cache = new LRU()
-   233→const isNullSet
-   234→const isAny
-   238→const isSatisfiable
-   257→const parseComparator
-   271→const isX
-   280→const replaceTildes
-   288→const replaceTilde
-   324→const replaceCarets
-   332→const replaceCaret
-   385→const replaceXRanges
-   393→const replaceXRange
-   470→const replaceStars
-   478→const replaceGTE0
-   491→const hyphenReplace
-   523→const testSet
+   233→const isNullSet …
+   234→const isAny …
+   238→const isSatisfiable …
+   257→const parseComparator …
+   271→const isX …
+   280→const replaceTildes …
+   288→const replaceTilde …
+   324→const replaceCarets …
+   332→const replaceCaret …
+   385→const replaceXRanges …
+   393→const replaceXRange …
+   470→const replaceStars …
+   478→const replaceGTE0 …
+   491→const hyphenReplace …
+   523→const testSet …
 classes/semver.js
      9→class SemVer {
     10→  constructor (version, options) {
@@ -376,53 +448,53 @@ classes/semver.js
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
 functions/clean.js
-     4→const clean
+     4→const clean …
 functions/cmp.js
-    10→const cmp
+    10→const cmp …
 functions/coerce.js
-     7→const coerce
+     7→const coerce …
 functions/compare-build.js
-     4→const compareBuild
+     4→const compareBuild …
 functions/compare-loose.js
-     4→const compareLoose
+     4→const compareLoose …
 functions/compare.js
-     4→const compare
+     4→const compare …
 functions/diff.js
-     5→const diff
+     5→const diff …
 functions/eq.js
-     4→const eq
+     4→const eq …
 functions/gt.js
-     4→const gt
+     4→const gt …
 functions/gte.js
-     4→const gte
+     4→const gte …
 functions/inc.js
-     5→const inc
+     5→const inc …
 functions/lt.js
-     4→const lt
+     4→const lt …
 functions/lte.js
-     4→const lte
+     4→const lte …
 functions/major.js
-     4→const major
+     4→const major …
 functions/minor.js
-     4→const minor
+     4→const minor …
 functions/neq.js
-     4→const neq
+     4→const neq …
 functions/parse.js
-     4→const parse
+     4→const parse …
 functions/patch.js
-     4→const patch
+     4→const patch …
 functions/prerelease.js
-     4→const prerelease
+     4→const prerelease …
 functions/rcompare.js
-     4→const rcompare
+     4→const rcompare …
 functions/rsort.js
-     4→const rsort
+     4→const rsort …
 functions/satisfies.js
-     4→const satisfies
+     4→const satisfies …
 functions/sort.js
-     4→const sort
+     4→const sort …
 functions/valid.js
-     4→const valid
+     4→const valid …
 internal/constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
      7→const MAX_LENGTH = 256
@@ -451,6 +523,7 @@ internal/identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
      5→  if (typeof a === 'number' && typeof b === 'number') {
+      →…
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 internal/lrucache.js
      3→class LRUCache {
@@ -478,11 +551,13 @@ internal/lrucache.js
     25→  set (key, value) {
     26→    const deleted = this.delete(key)
     27→
+      →…
 internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
      7→  if (!options) {
+      →…
 internal/re.js
     12→const re = exports.re = []
     13→const safeRe = exports.safeRe = []
@@ -497,8 +572,10 @@ internal/re.js
     31→]
     33→const makeSafeRegex = (value) => {
     34→  for (const [token, max] of safeRegexReplacements) {
+      →…
     42→const createToken = (name, value, isGlobal) => {
     43→  const safe = makeSafeRegex(value)
+      →…
 ranges/gtr.js
      5→const gtr = (version, range, options) => outside(version, range, '>', options)
 ranges/intersects.js

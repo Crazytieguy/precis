@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1669 words)
+budget: 2000 (1681 words)
 
 __init__.py
      6→def load_ipython_extension(ipython: Any) -> None:
@@ -14,6 +14,7 @@ __init__.py
     17→    quote: Optional[str] = None,
     18→):
     19→    """Returns a string suitable for running as a shell script.
+      →…
     42→__all__ = [
     43→    "get_cli_string",
     44→    "load_dotenv",
@@ -27,6 +28,7 @@ __init__.py
 cli.py
     24→def enumerate_env() -> Optional[str]:
     25→    """
+      →…
     60→@click.version_option(version=__version__)
     61→@click.pass_context
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
@@ -110,6 +112,7 @@ cli.py
    190→    run_command([*commandline, *ctx.args], dotenv_as_dict)
    193→def run_command(command: List[str], env: Dict[str, str]) -> None:
    194→    """Replace the current process with the specified command.
+      →…
 ipython.py
     11→@magics_class
     12→class IPythonDotEnv(Magics):
@@ -156,6 +159,7 @@ main.py
     29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
     30→        return False
     31→    value = os.environ["PYTHON_DOTENV_DISABLED"].casefold()
+      →…
     35→def with_warn_for_invalid_lines(mappings: Iterator[Binding]) -> Iterator[Binding]:
     45→class DotEnv:
     46→    def __init__(
@@ -235,6 +239,7 @@ main.py
    131→    encoding: Optional[str] = "utf-8",
    132→) -> Optional[str]:
    133→    """
+      →…
    141→@contextmanager
    142→def rewrite(
    143→    path: StrPath,
@@ -264,6 +269,7 @@ main.py
    169→    encoding: Optional[str] = "utf-8",
    170→) -> Tuple[Optional[bool], str, str]:
    171→    """
+      →…
    211→def unset_key(
    212→    dotenv_path: StrPath,
    213→    key_to_unset: str,
@@ -271,6 +277,7 @@ main.py
    215→    encoding: Optional[str] = "utf-8",
    216→) -> Tuple[Optional[bool], str]:
    217→    """
+      →…
    244→def resolve_variables(
    245→    values: Iterable[Tuple[str, Optional[str]]],
    246→    override: bool,
@@ -282,12 +289,14 @@ main.py
    273→    if not os.path.exists(path):
    274→        raise IOError("Starting path not found")
    275→
+      →…
    287→def find_dotenv(
    288→    filename: str = ".env",
    289→    raise_error_if_not_found: bool = False,
    290→    usecwd: bool = False,
    291→) -> str:
    292→    """
+      →…
    338→def load_dotenv(
    339→    dotenv_path: Optional[StrPath] = None,
    340→    stream: Optional[IO[str]] = None,
@@ -297,6 +306,7 @@ main.py
    344→    encoding: Optional[str] = "utf-8",
    345→) -> bool:
    346→    """Parse a .env file and then load all the variables found as environment variables.
+      →…
    387→def dotenv_values(
    388→    dotenv_path: Optional[StrPath] = None,
    389→    stream: Optional[IO[str]] = None,
@@ -305,6 +315,7 @@ main.py
    392→    encoding: Optional[str] = "utf-8",
    393→) -> Dict[str, Optional[str]]:
    394→    """
+      →…
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
    425→    Return True if `path` exists and is either a regular file or a FIFO.
@@ -312,6 +323,7 @@ main.py
    427→    if os.path.isfile(path):
    428→        return True
    429→
+      →…
 parser.py
     14→def make_regex(string: str, extra_flags: int = 0) -> Pattern[str]:
     35→class Original(NamedTuple):

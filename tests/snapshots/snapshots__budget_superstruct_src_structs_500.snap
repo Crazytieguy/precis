@@ -2,14 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (486 words)
+budget: 500 (529 words)
 
 coercions.ts
-    16→export function coerce
-    38→export function defaulted
-    79→export function trimmed
+    16→export function coerce …
+    38→export function defaulted …
+    79→export function trimmed …
 refinements.ts
-     8→export function empty
+     8→export function empty …
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
     22→  if (value instanceof Map || value instanceof Set) {
     23→    return value.size
@@ -17,14 +17,14 @@ refinements.ts
     25→    return value.length
     26→  }
     27→}
-    33→export function max
-    55→export function min
-    77→export function nonempty
-    93→export function pattern
-   109→export function size
-   146→export function refine
+    33→export function max …
+    55→export function min …
+    77→export function nonempty …
+    93→export function pattern …
+   109→export function size …
+   146→export function refine …
 types.ts
-    19→export function any
+    19→export function any …
     33→export function array<T extends Struct<any>>(Element?: T): any {
     34→  return new Struct({
     35→    type: 'array',
@@ -35,9 +35,10 @@ types.ts
     40→          yield [i, v, Element]
     41→        }
     42→      }
-    60→export function bigint
-    70→export function boolean
-    83→export function date
+      →…
+    60→export function bigint …
+    70→export function boolean …
+    83→export function date …
    105→export function enums<U extends string | number, T extends readonly U[]>(
    106→  values: T
    107→): any {
@@ -50,10 +51,11 @@ types.ts
    114→
    115→  return new Struct({
    116→    type: 'enums',
-   131→export function func
-   144→export function instance
-   159→export function integer
-   172→export function intersection
+      →…
+   131→export function func …
+   144→export function instance …
+   159→export function integer …
+   172→export function intersection …
    204→export function literal<T>(constant: T): any {
    205→  const description = print(constant)
    206→  const t = typeof constant
@@ -64,6 +66,7 @@ types.ts
    211→    validator(value) {
    212→      return (
    213→        value === constant ||
+      →…
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    231→  return new Struct({
    232→    type: 'map',
@@ -74,9 +77,10 @@ types.ts
    237→          yield [k as string, k, Key]
    238→          yield [k as string, v, Value]
    239→        }
-   258→export function never
-   266→export function nullable
-   278→export function number
+      →…
+   258→export function never …
+   266→export function nullable …
+   278→export function number …
    298→export function object<S extends ObjectSchema>(schema?: S): any {
    299→  const knowns = schema ? Object.keys(schema) : []
    300→  const Never = never()
@@ -87,9 +91,10 @@ types.ts
    305→      if (schema && isObject(value)) {
    306→        const unknowns = new Set(Object.keys(value))
    307→
-   351→export function optional
-   367→export function record
-   402→export function regexp
+      →…
+   351→export function optional …
+   367→export function record …
+   402→export function regexp …
    415→export function set<T>(Element?: Struct<T>): any {
    416→  return new Struct({
    417→    type: 'set',
@@ -100,11 +105,12 @@ types.ts
    422→          yield [v as string, v, Element]
    423→        }
    424→      }
-   442→export function string
-   456→export function tuple
-   492→export function type
-   522→export function union
-   574→export function unknown
+      →…
+   442→export function string …
+   456→export function tuple …
+   492→export function type …
+   522→export function union …
+   574→export function unknown …
 utilities.ts
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
@@ -112,11 +118,11 @@ utilities.ts
     63→  const schema = Object.assign({}, ...schemas)
     64→  return isType ? type(schema) : object(schema)
     65→}
-    71→export function define
-    80→export function deprecated
-   106→export function dynamic
-   140→export function lazy
-   171→export function omit
-   197→export function partial
-   221→export function pick
-   247→export function struct
+    71→export function define …
+    80→export function deprecated …
+   106→export function dynamic …
+   140→export function lazy …
+   171→export function omit …
+   197→export function partial …
+   221→export function pick …
+   247→export function struct …

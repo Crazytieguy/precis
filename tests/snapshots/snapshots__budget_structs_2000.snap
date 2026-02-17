@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1975 words)
+budget: 2000 (1987 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -41,6 +41,7 @@ README.md
     34→	http.Server          // embedded
     35→}
     36→
+      →…
     74→### Struct methods
     75→
     76→The structs functions can be also used as independent methods by creating a new
@@ -56,6 +57,7 @@ README.md
     86→f := s.Fields()           // Get a []*Field
     87→n := s.Names()            // Get a []string
     88→f := s.Field(name)        // Get a *Field based on the given field name
+      →…
     95→### Field methods
     96→
     97→We can easily examine a single Field for more detail. Below you can see how we
@@ -71,6 +73,7 @@ README.md
    107→// Get the underlying value,  value => "gopher"
    108→value := name.Value().(string)
    109→
+      →…
    163→## Credits
    164→
    165→ * [Fatih Arslan](https://github.com/fatih)
@@ -159,6 +162,7 @@ structs.go
     46→//   // Field is ignored by this package.
     47→//   Field bool `structs:"-"`
     48→//
+      →…
     81→func (s *Struct) Map() map[string]interface{} {
     87→// FillMap is the same as Map. Instead of returning the output, it fills the
     88→// given map.
@@ -177,6 +181,7 @@ structs.go
    163→//   Field time.Time     `structs:",omitnested"`
    164→//   Field *http.Request `structs:",omitnested"`
    165→//
+      →…
    174→func (s *Struct) Values() []interface{} {
    215→// Fields returns a slice of Fields. A struct tag with the content of "-"
    216→// ignores the checking of that particular field. Example:
@@ -198,6 +203,7 @@ structs.go
    246→	if v.Kind() == reflect.Ptr {
    247→		v = v.Elem()
    248→	}
+      →…
    273→// Field returns a new Field struct that provides several high level functions
    274→// around a single struct field entity. It panics if the field is not found.
    275→func (s *Struct) Field(name string) *Field {
@@ -219,6 +225,7 @@ structs.go
    313→//   Field time.Time     `structs:"myName,omitnested"`
    314→//   Field *http.Request `structs:",omitnested"`
    315→//
+      →…
    318→func (s *Struct) IsZero() bool {
    349→// HasZero returns true if a field in a struct is not initialized (zero value).
    350→// A struct tag with the content of "-" ignores the checking of that particular
@@ -234,6 +241,7 @@ structs.go
    360→//   Field time.Time     `structs:"myName,omitnested"`
    361→//   Field *http.Request `structs:",omitnested"`
    362→//
+      →…
    365→func (s *Struct) HasZero() bool {
    396→// Name returns the structs's type name within its package. For more info refer
    397→// to Name() function.
@@ -246,10 +254,12 @@ structs.go
    407→
    408→	var f []reflect.StructField
    409→
+      →…
    428→func strctVal(s interface{}) reflect.Value {
    429→	v := reflect.ValueOf(s)
    430→
    431→	// if pointer get the underlying element≤
+      →…
    443→// Map converts the given struct to a map[string]interface{}. For more info
    444→// refer to Struct types Map() method. It panics if s's kind is not struct.
    445→func Map(s interface{}) map[string]interface{} {
@@ -284,6 +294,7 @@ structs.go
    511→
    512→	v := reflect.ValueOf(val.Interface())
    513→	if v.Kind() == reflect.Ptr {
+      →…
 tags.go
      5→// tagOptions contains a slice of tag options
      6→type tagOptions []string
@@ -297,3 +308,4 @@ tags.go
     24→	// ""
     25→	// "name"
     26→	// "name,opt"
+      →…

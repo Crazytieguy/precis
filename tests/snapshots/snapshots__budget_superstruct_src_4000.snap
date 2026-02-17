@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3505 words)
+budget: 4000 (3548 words)
 
 error.ts
      1→/**
@@ -307,20 +307,24 @@ struct.ts
    266→export type Refiner<T> = (value: T, context: Context) => Result
 structs/coercions.ts
      5→/**
+      →…
     16→export function coerce<T, S, C>(
     17→  struct: Struct<T, S>,
     18→  condition: Struct<C, any>,
     19→  coercer: Coercer<C>
     20→): Struct<T, S> {
     31→/**
+      →…
     38→export function defaulted<T, S>(
     39→  struct: Struct<T, S>,
     40→  fallback: any,
     41→  options: {
     72→/**
+      →…
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
 structs/refinements.ts
      4→/**
+      →…
      8→export function empty<
      9→  T extends string | any[] | Map<any, any> | Set<any>,
     10→  S extends any,
@@ -333,31 +337,37 @@ structs/refinements.ts
     26→  }
     27→}
     29→/**
+      →…
     33→export function max<T extends number | Date, S extends any>(
     34→  struct: Struct<T, S>,
     35→  threshold: T,
     36→  options: {
     51→/**
+      →…
     55→export function min<T extends number | Date, S extends any>(
     56→  struct: Struct<T, S>,
     57→  threshold: T,
     58→  options: {
     73→/**
+      →…
     77→export function nonempty<
     78→  T extends string | any[] | Map<any, any> | Set<any>,
     79→  S extends any,
     80→>(struct: Struct<T, S>): Struct<T, S> {
     89→/**
+      →…
     93→export function pattern<T extends string, S extends any>(
     94→  struct: Struct<T, S>,
     95→  regexp: RegExp
     96→): Struct<T, S> {
    105→/**
+      →…
    109→export function size<
    110→  T extends string | number | Date | any[] | Map<any, any> | Set<any>,
    111→  S extends any,
    112→>(struct: Struct<T, S>, min: number, max: number = min): Struct<T, S> {
    138→/**
+      →…
    146→export function refine<T, S>(
    147→  struct: Struct<T, S>,
    148→  name: string,
@@ -365,6 +375,7 @@ structs/refinements.ts
    150→): Struct<T, S> {
 structs/types.ts
     15→/**
+      →…
     19→export function any(): Struct<any, null> {
     33→export function array<T extends Struct<any>>(Element?: T): any {
     34→  return new Struct({
@@ -373,11 +384,15 @@ structs/types.ts
     37→    *entries(value) {
     38→      if (Element && Array.isArray(value)) {
     39→        for (const [i, v] of value.entries()) {
+      →…
     56→/**
+      →…
     60→export function bigint(): Struct<bigint, null> {
     66→/**
+      →…
     70→export function boolean(): Struct<boolean, null> {
     76→/**
+      →…
     83→export function date(): Struct<Date, null> {
    105→export function enums<U extends string | number, T extends readonly U[]>(
    106→  values: T
@@ -388,15 +403,20 @@ structs/types.ts
    111→  for (const key of values) {
    112→    schema[key] = key
    113→  }
+      →…
    127→/**
+      →…
    131→export function func(): Struct<Function, null> {
    140→/**
+      →…
    144→export function instance<T extends { new (...args: any): any }>(
    145→  Class: T
    146→): Struct<InstanceType<T>, null> {
    155→/**
+      →…
    159→export function integer(): Struct<number, null> {
    168→/**
+      →…
    172→export function intersection<A extends AnyStruct, B extends AnyStruct[]>(
    173→  Structs: [A, ...B]
    174→): Struct<Infer<A> & UnionToIntersection<InferStructTuple<B>[number]>, null> {
@@ -407,6 +427,7 @@ structs/types.ts
    208→    type: 'literal',
    209→    schema:
    210→      t === 'string' || t === 'number' || t === 'boolean' ? constant : null,
+      →…
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    231→  return new Struct({
    232→    type: 'map',
@@ -414,11 +435,15 @@ structs/types.ts
    234→    *entries(value) {
    235→      if (Key && Value && value instanceof Map) {
    236→        for (const [k, v] of value.entries()) {
+      →…
    254→/**
+      →…
    258→export function never(): Struct<never, null> {
    262→/**
+      →…
    266→export function nullable<T, S>(struct: Struct<T, S>): Struct<T | null, S> {
    274→/**
+      →…
    278→export function number(): Struct<number, null> {
    298→export function object<S extends ObjectSchema>(schema?: S): any {
    299→  const knowns = schema ? Object.keys(schema) : []
@@ -427,14 +452,18 @@ structs/types.ts
    302→    type: 'object',
    303→    schema: schema ? schema : null,
    304→    *entries(value) {
+      →…
    347→/**
+      →…
    351→export function optional<T, S>(struct: Struct<T, S>): Struct<T | undefined, S> {
    360→/**
+      →…
    367→export function record<K extends string, V>(
    368→  Key: Struct<K>,
    369→  Value: Struct<V>
    370→): Struct<Record<K, V>, null> {
    395→/**
+      →…
    402→export function regexp(): Struct<RegExp, null> {
    415→export function set<T>(Element?: Struct<T>): any {
    416→  return new Struct({
@@ -443,21 +472,27 @@ structs/types.ts
    419→    *entries(value) {
    420→      if (Element && value instanceof Set) {
    421→        for (const v of value) {
+      →…
    438→/**
+      →…
    442→export function string(): Struct<string, null> {
    451→/**
+      →…
    456→export function tuple<A extends AnyStruct, B extends AnyStruct[]>(
    457→  Structs: [A, ...B]
    458→): Struct<[Infer<A>, ...InferStructTuple<B>], null> {
    485→/**
+      →…
    492→export function type<S extends ObjectSchema>(
    493→  schema: S
    494→): Struct<ObjectType<S>, S> {
    518→/**
+      →…
    522→export function union<A extends AnyStruct, B extends AnyStruct[]>(
    523→  Structs: [A, ...B]
    524→): Struct<Infer<A> | InferStructTuple<B>[number], null> {
    570→/**
+      →…
    574→export function unknown(): Struct<unknown, null> {
 structs/utilities.ts
     60→export function assign(...Structs: Struct<any>[]): any {
@@ -467,33 +502,41 @@ structs/utilities.ts
     64→  return isType ? type(schema) : object(schema)
     65→}
     67→/**
+      →…
     71→export function define<T>(name: string, validator: Validator): Struct<T, null> {
     75→/**
+      →…
     80→export function deprecated<T>(
     81→  struct: Struct<T>,
     82→  log: (value: unknown, ctx: Context) => void
     83→): Struct<T> {
     98→/**
+      →…
    106→export function dynamic<T>(
    107→  fn: (value: unknown, ctx: Context) => Struct<T, any>
    108→): Struct<T, null> {
    131→/**
+      →…
    140→export function lazy<T>(fn: () => Struct<T, any>): Struct<T, null> {
    164→/**
+      →…
    171→export function omit<S extends ObjectSchema, K extends keyof S>(
    172→  struct: Struct<ObjectType<S>, S>,
    173→  keys: K[]
    174→): Struct<ObjectType<Omit<S, K>>, Omit<S, K>> {
    190→/**
+      →…
    197→export function partial<S extends ObjectSchema>(
    198→  struct: Struct<ObjectType<S>, S> | S
    199→): Struct<ObjectType<PartialObjectSchema<S>>, PartialObjectSchema<S>> {
    214→/**
+      →…
    221→export function pick<S extends ObjectSchema, K extends keyof S>(
    222→  struct: Struct<ObjectType<S>, S>,
    223→  keys: K[]
    224→): Struct<ObjectType<Pick<S, K>>, Pick<S, K>> {
    241→/**
+      →…
    247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
 utils.ts
      4→/**

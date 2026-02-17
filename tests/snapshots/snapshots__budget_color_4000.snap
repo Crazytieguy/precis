@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3812 words)
+budget: 4000 (3823 words)
 
 README.md
      1→# color [![](https://github.com/fatih/color/workflows/build/badge.svg)](https://github.com/fatih/color/actions) [![PkgGoDev](https://pkg.go.dev/badge/github.com/fatih/color)](https://pkg.go.dev/github.com/fatih/color)
@@ -250,6 +250,7 @@ color.go
     80→	Bold:         ResetBold,
     81→	Faint:        ResetBold,
     82→	Italic:       ResetItalic,
+      →…
     91→// Foreground text colors
     92→const (
     93→	FgBlack Attribute = iota + 30
@@ -360,6 +361,7 @@ color.go
    209→}
    211→func (c *Color) unset() {
    212→	if c.isNoColorSet() {
+      →…
    219→// SetWriter is used to set the SGR sequence with the given io.Writer. This is
    220→// a low-level function, and users should use the higher-level functions, such
    221→// as color.Fprint, color.Print, etc.
@@ -544,8 +546,10 @@ color.go
    422→}
    424→func (c *Color) format() string {
    425→	return fmt.Sprintf("%s[%sm", escape, c.sequence())
+      →…
    428→func (c *Color) unformat() string {
    429→	//return fmt.Sprintf("%s[%dm", escape, Reset)
+      →…
    443→// DisableColor disables the color output. Useful to not change any existing
    444→// code and still being able to output. Can be used for flags like
    445→// "--no-color". To enable back use EnableColor() method.
@@ -559,6 +563,7 @@ color.go
    454→}
    456→func (c *Color) isNoColorSet() bool {
    457→	// check first if we have user set action
+      →…
    466→// Equals returns a boolean value indicating whether two colors are equal.
    467→func (c *Color) Equals(c2 *Color) bool {
    468→	if c == nil && c2 == nil {
@@ -581,14 +586,19 @@ color.go
    485→}
    487→func (c *Color) attrExists(a Attribute) bool {
    488→	for _, attr := range c.params {
+      →…
    497→func boolPtr(v bool) *bool {
    498→	return &v
+      →…
    501→func getCachedColor(p Attribute) *Color {
    502→	colorsCacheMu.Lock()
+      →…
    514→func colorPrint(format string, p Attribute, a ...interface{}) {
    515→	c := getCachedColor(p)
+      →…
    528→func colorString(format string, p Attribute, a ...interface{}) string {
    529→	c := getCachedColor(p)
+      →…
    538→// Black is a convenient helper function to print with black foreground. A
    539→// newline is appended to format by default.
    540→func Black(format string, a ...interface{}) { colorPrint(format, FgBlack, a...) }
@@ -704,3 +714,4 @@ color.go
 color_windows.go
      9→func init() {
     10→	// Opt-in for ansi color support for current process.
+      →…

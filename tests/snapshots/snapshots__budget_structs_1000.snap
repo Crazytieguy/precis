@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (971 words)
+budget: 1000 (978 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -52,6 +52,7 @@ README.md
     45→// Convert a struct to a map[string]interface{}
     46→// => {"Name":"gopher", "ID":123456, "Enabled":true}
     47→m := structs.Map(server)
+      →…
     74→### Struct methods
     75→
     76→The structs functions can be also used as independent methods by creating a new
@@ -99,6 +100,7 @@ README.md
    118→	fmt.Println("Name field is exported")
    119→}
    120→
+      →…
    163→## Credits
    164→
    165→ * [Fatih Arslan](https://github.com/fatih)
@@ -152,6 +154,7 @@ structs.go
    245→func getFields(v reflect.Value, tagName string) []*Field {
    246→	if v.Kind() == reflect.Ptr {
    247→		v = v.Elem()
+      →…
    275→func (s *Struct) Field(name string) *Field {
    287→func (s *Struct) FieldOk(name string) (*Field, bool) {
    318→func (s *Struct) IsZero() bool {
@@ -165,9 +168,11 @@ structs.go
    407→
    408→	var f []reflect.StructField
    409→
+      →…
    428→func strctVal(s interface{}) reflect.Value {
    429→	v := reflect.ValueOf(s)
    430→
+      →…
    445→func Map(s interface{}) map[string]interface{} {
    451→func FillMap(s interface{}, out map[string]interface{}) {
    457→func Values(s interface{}) []interface{} {
@@ -184,6 +189,7 @@ structs.go
    511→
    512→	v := reflect.ValueOf(val.Interface())
    513→	if v.Kind() == reflect.Ptr {
+      →…
 tags.go
      5→// tagOptions contains a slice of tag options
      6→type tagOptions []string
@@ -196,3 +202,4 @@ tags.go
     24→	// ""
     25→	// "name"
     26→	// "name,opt"
+      →…

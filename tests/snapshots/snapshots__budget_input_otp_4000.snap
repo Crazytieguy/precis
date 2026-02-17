@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3998 words)
+budget: 4000 (4049 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -24,6 +24,7 @@ CHANGELOG.md
     17→- feat(input): add pasteTransformer prop
     18→  - Allows pasting invalid codes and then transforming them into something that the input's regex/pattern would accept. Example: you can now take "XXX-XXX" as pasted input even though you've determined a pattern of 6 numerical digits; just add a prop to your OTPInput: `pasteTransformer={pasted => pasted.replaceAll('-','')}`.
     19→- feat(input): add placeholder
+      →…
     25→## [1.2.5]
     26→
     27→- chore(input): add peer dep for react@19
@@ -69,6 +70,7 @@ CHANGELOG.md
     67→- fix(input): check window during ssr
     68→- fix(input/ios): add right: 1px to compensate left: -1px
     69→- chore(input/ios): revert paste listener (re-add)
+      →…
     87→## [1.0.1]
     88→
     89→- fix(input): immediately update selection after paste
@@ -138,6 +140,7 @@ README.md
     26→Then import the component.
     27→
     28→```diff
+      →…
     39→## Default example
     40→
     41→The example below uses `tailwindcss` `@shadcn/ui` `tailwind-merge` `clsx`:
@@ -147,6 +150,7 @@ README.md
     45→import { OTPInput, SlotProps } from 'input-otp'
     46→<OTPInput
     47→  maxLength={6}
+      →…
    136→## How it works
    137→
    138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
@@ -161,6 +165,7 @@ README.md
    147→
    148→https://github.com/guilhermerodz/input-otp/assets/10366880/bdbdc96a-23da-4e89-bff8-990e6a1c4c23
    149→
+      →…
    198→### Auto tracks if the input has space in the right side for the badge
    199→
    200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
@@ -182,6 +187,7 @@ README.md
    216→
    217→  // Render function creating the slots
    218→  render: (props: RenderProps) => React.ReactElement
+      →…
    293→## Examples
    294→
    295→<details>
@@ -191,6 +197,7 @@ README.md
    299→export default function Page() {
    300→  const formRef = useRef<HTMLFormElement>(null)
    301→  const buttonRef = useRef<HTMLButtonElement>(null)
+      →…
    377→## Caveats
    378→
    379→<details>
@@ -200,6 +207,7 @@ README.md
    383→The password manager badges should be automatically shifted to the right side.
    384→
    385→However, if you still want to block password managers, please disable the `pushPasswordManagerStrategy` and then manually block each PWM.
+      →…
    539→#### Sponsors
    540→
    541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
@@ -233,6 +241,7 @@ apps/storybook/README.md
     35→
     36→1.  **Open the source code and start editing!**
     37→
+      →…
     44→## 🔎 What's inside?
     45→
     46→A quick look at the top-level files and directories included with this template.
@@ -258,6 +267,7 @@ apps/storybook/README.md
     66→
     67→4.  **`src`**: This directory will contain all of the code related to what you will see on your application.
     68→
+      →…
     83→## Contribute
     84→
     85→If you encounter an issue with the template, we encourage you to open an issue in this template's repository.
@@ -271,15 +281,19 @@ apps/storybook/src/components/ui/input-otp.tsx
      9→const InputOTP = React.forwardRef<
     10→  React.ElementRef<typeof OTPInput>,
     11→  React.ComponentPropsWithoutRef<typeof OTPInput>
+      →…
     21→const InputOTPGroup = React.forwardRef<
     22→  React.ElementRef<"div">,
     23→  React.ComponentPropsWithoutRef<"div">
+      →…
     29→const InputOTPSlot = React.forwardRef<
     30→  React.ElementRef<"div">,
     31→  SlotProps & React.ComponentPropsWithoutRef<"div">
+      →…
     54→const InputOTPSeparator = React.forwardRef<
     55→  React.ElementRef<"div">,
     56→  React.ComponentPropsWithoutRef<"div">
+      →…
 apps/storybook/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
@@ -334,6 +348,7 @@ apps/storybook/src/stories/InputOTP.stories.tsx
      9→  args: {
     10→    maxLength: 6,
     11→    pattern: REGEXP_ONLY_DIGITS_AND_CHARS,
+      →…
     27→type Story = StoryObj<typeof meta>
     29→export const Default: Story = {}
 apps/storybook/tailwind.config.js
@@ -373,6 +388,7 @@ apps/storybook/tailwind.config.js
     34→          DEFAULT: 'hsl(var(--secondary))',
     35→          foreground: 'hsl(var(--secondary-foreground))',
     36→        },
+      →…
 apps/website/README.md
      3→## Getting Started
      4→
@@ -446,6 +462,7 @@ apps/website/src/app/(local-pages)/example-playground/code.tsx
      6→
      7→<OTPInput
      8→  maxLength={6}
+      →…
     95→const code = `\`\`\`tsx /maxLength={6}/ /render/ /slots/1 /.map((slot, idx)/1 /Slot/2,3,4 /props.char/2 /<FakeCaret />/
     96→${tsx}
     97→\`\`\``
@@ -495,15 +512,19 @@ apps/website/src/app/(local-pages)/example-playground/component.tsx
     35→}
     38→function Slot(props: SlotProps) {
     39→  return (
+      →…
     58→function FakeCaret() {
     59→  return (
+      →…
     67→function FakeDash() {
     68→  return (
+      →…
     76→const config = {
     77→  theme: {
     78→    extend: {
     79→      keyframes: {
     80→        'caret-blink': {
+      →…
 apps/website/src/app/(local-pages)/example-playground/page.tsx
      3→export default function ExamplePlayground() {
      4→  return (
@@ -580,6 +601,7 @@ apps/website/src/app/(local-pages)/shadcn/page.tsx
     36→        )}
     37→      />
     38→      
+      →…
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     13→export default function ShadcnPage() {
     14→  const [value, setValue] = React.useState('')
@@ -620,6 +642,7 @@ apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     49→        )}
     50→      />
     51→
+      →…
 apps/website/src/app/(local-pages)/shadcn/static/page.tsx
      5→export default async function StaticPage(pageProps: any) {
      6→  return (
@@ -641,6 +664,7 @@ apps/website/src/app/(pages)/(home)/_components/confetti.tsx
     14→      globalOptions={{ disableForReducedMotion: true }}
     15→      style={{
     16→        position: 'absolute',
+      →…
 apps/website/src/app/(pages)/(home)/_components/showcase.tsx
     10→const DynamicConfetti = dynamic(() =>
     11→  import('./confetti').then(m => m.Confetti),
@@ -659,24 +683,28 @@ apps/website/src/app/(pages)/(home)/_components/showcase.tsx
     25→    if (!isMobile) {
     26→      setDisabled(true)
     27→    }
+      →…
    151→function Slot(props: {
    152→  char: string | null
    153→  isActive: boolean
    154→  isFocused: boolean
    155→  animateIdx?: number
    156→}) {
+      →…
    199→function FakeCaret() {
    200→  return (
    201→    <div className="absolute pointer-events-none inset-0 flex items-center justify-center animate-caret-blink [animate-delay:inherit]">
    202→      <div className="w-px h-8 md:w-0.5 md:h-16 bg-white" />
    203→    </div>
    204→  )
+      →…
 apps/website/src/app/(pages)/(home)/page.tsx
     19→const fadeUpClassname =
     20→  'lg:motion-safe:opacity-0 lg:motion-safe:animate-fade-up'
     22→async function getRepoStarCount() {
     23→  const res = await fetch(
     24→    'https://api.github.com/repos/guilhermerodz/input-otp',
+      →…
     34→export default async function IndexPage() {
     35→  const starCount = await getRepoStarCount()
     36→
@@ -712,10 +740,12 @@ apps/website/src/app/(pages)/(home)/page.tsx
     66→            'lg:motion-safe:[animation-delay:3000ms]',
     67→          )}
     68→        >
+      →…
    148→export const revalidate = 3600
    150→const SponsorBadgeClerk = () => {
    151→  return (
    152→    <a href="https://go.clerk.com/input-otp" target="_blank">
+      →…
 apps/website/src/app/(pages)/layout.tsx
     14→export const metadata: Metadata = {
     15→  title: {
@@ -756,6 +786,7 @@ apps/website/src/app/(pages)/layout.tsx
     50→      },
     51→    ],
     52→  },
+      →…
     68→export default function RootLayout({
     69→  children,
     70→}: Readonly<{
@@ -790,9 +821,11 @@ apps/website/src/components/code.tsx
      9→export async function Code({
     10→  code,
     11→  toCopy,
+      →…
     36→async function highlightCode(code: string, dark: boolean) {
     37→  const file = await unified()
     38→    .use(remarkParse)
+      →…
 apps/website/src/components/copy-button.tsx
     17→interface CopyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     18→  value: string
@@ -804,6 +837,7 @@ apps/website/src/components/copy-button.tsx
     26→export function CopyButton({
     27→  value,
     28→  className,
+      →…
     64→interface CopyWithClassNamesProps extends DropdownMenuTriggerProps {
     65→  value: string
     66→  classNames: string
@@ -812,6 +846,7 @@ apps/website/src/components/copy-button.tsx
     70→export function CopyWithClassNames({
     71→  value,
     72→  classNames,
+      →…
    120→interface CopyNpmCommandButtonProps extends DropdownMenuTriggerProps {
    121→  commands: {
    122→    __npmCommand__: string
@@ -823,6 +858,7 @@ apps/website/src/components/copy-button.tsx
    129→export function CopyNpmCommandButton({
    130→  commands,
    131→  className,
+      →…
 apps/website/src/components/icons.tsx
      1→type IconProps = React.HTMLAttributes<SVGElement>
      3→export const Icons = {
@@ -861,35 +897,44 @@ apps/website/src/components/icons.tsx
     36→      width="23"
     37→      xmlns="http://www.w3.org/2000/svg"
     38→    >
+      →…
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {
     16→  const { setTheme } = useTheme()
     17→
+      →…
 apps/website/src/components/page-header.tsx
      3→function PageHeader({
      4→  className,
      5→  children,
+      →…
     21→function PageHeaderHeading({
     22→  className,
     23→  ...props
+      →…
     36→function PageHeaderDescription({
     37→  className,
     38→  ...props
+      →…
     51→function PageActions({
     52→  className,
     53→  ...props
+      →…
 apps/website/src/components/provider.tsx
      5→export function AppProvider({
      6→  children,
      7→  ...props
+      →…
 apps/website/src/components/site-footer.tsx
      3→export function SiteFooter() {
      4→  return (
      5→    <footer className="py-6 md:px-8 md:py-0">
+      →…
 apps/website/src/components/site-header.tsx
      9→export function SiteHeader() {
     10→  return (
     11→    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      →…
 apps/website/src/components/ui/badge.tsx
      6→const badgeVariants = cva(
     26→export interface BadgeProps
@@ -928,6 +973,7 @@ apps/website/src/components/ui/dropdown-menu.tsx
    173→  ...props
    174→}: React.HTMLAttributes<HTMLSpanElement>) => {
    175→  return (
+      →…
 apps/website/src/components/ui/input-otp.tsx
      9→const InputOTP = React.forwardRef<
     25→const InputOTPGroup = React.forwardRef<
@@ -945,6 +991,7 @@ apps/website/src/components/ui/sonner.tsx
     10→
     11→  return (
     12→    <Sonner
+      →…
 apps/website/src/config/site.ts
      1→export const siteConfig = {
      2→  name: 'rodz/input-otp',
@@ -986,6 +1033,7 @@ apps/website/tailwind.config.ts
     17→        '2xl': '1400px',
     18→      },
     19→    },
+      →…
 packages/input-otp/src/input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(
     11→  {} as RenderProps,
@@ -1038,6 +1086,7 @@ packages/input-otp/src/input.tsx
     59→      [pattern],
     60→    )
     61→
+      →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
    542→    sheet.insertRule(rule)
@@ -1059,6 +1108,7 @@ packages/input-otp/src/input.tsx
    564→  border-radius: 4px !important;
    565→  width: 100% !important;
    566→}
+      →…
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
      2→export const REGEXP_ONLY_CHARS = '^[a-zA-Z]+$'
@@ -1179,3 +1229,4 @@ packages/input-otp/src/use-pwm-badge.tsx
     59→
     60→    const elementToCompare = container
     61→
+      →…

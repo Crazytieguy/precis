@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3999 words)
+budget: 4000 (4011 words)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -394,6 +394,7 @@ index.tsx
    195→      }
    196→    },
    197→  });
+      →…
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    804→  function ({ ...rest }, ref) {
    805→    const { overlayRef, snapPoints, onRelease, shouldFade, isOpen, modal, shouldAnimate } = useDrawerContext();
@@ -450,6 +451,7 @@ index.tsx
    860→  const hasSnapPoints = snapPoints && snapPoints.length > 0;
    861→  useScaleBackground();
    862→
+      →…
    989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
    990→  preventCycle?: boolean;
    991→};
@@ -485,6 +487,7 @@ index.tsx
   1023→      handleCycleSnapPoints();
   1024→    }, DOUBLE_TAP_TIMEOUT);
   1025→  }
+      →…
   1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
   1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
   1100→
@@ -578,9 +581,11 @@ use-controllable-state.ts
     13→function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
     14→  const callbackRef = React.useRef(callback);
     15→
+      →…
     24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
     25→  const uncontrolledState = React.useState<T | undefined>(defaultProp);
     26→  const [value] = uncontrolledState;
+      →…
     39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
     40→  const [uncontrolledProp, setUncontrolledProp] = useUncontrolledState({ defaultProp, onChange });
     41→  const isControlled = prop !== undefined;
@@ -754,6 +759,7 @@ use-prevent-scroll.ts
     16→function chain(...callbacks: any[]): (...args: any[]) => void {
     17→  return (...args: any[]) => {
     18→    for (let callback of callbacks) {
+      →…
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {
     30→  let style = window.getComputedStyle(node);
@@ -812,9 +818,11 @@ use-prevent-scroll.ts
    118→function preventScrollMobileSafari() {
    119→  let scrollable: Element;
    120→  let lastY = 0;
+      →…
    243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {
    244→  // https://github.com/microsoft/TypeScript/issues/17827#issuecomment-391663310
    245→  // @ts-ignore
+      →…
    257→function addEvent<K extends keyof GlobalEventHandlersEventMap>(
    258→  target: EventTarget,
    259→  event: K,
@@ -823,9 +831,11 @@ use-prevent-scroll.ts
    262→) {
    263→  // @ts-ignore
    264→  target.addEventListener(event, handler, options);
+      →…
    272→function scrollIntoView(target: Element) {
    273→  let root = document.scrollingElement || document.documentElement;
    274→  while (target && target !== root) {
+      →…
    294→export function isInput(target: Element) {
    295→  return (
    296→    (target instanceof HTMLInputElement && !nonTextInputTypes.has(target.type)) ||
@@ -874,6 +884,7 @@ use-scale-background.ts
     44→              transform: `scale(${getScale()}) translate3d(calc(env(safe-area-inset-top) + 14px), 0, 0)`,
     45→            }),
     46→      });
+      →…
 use-snap-points.ts
      7→export function useSnapPoints({
      8→  activeSnapPointProp,
@@ -914,3 +925,4 @@ use-snap-points.ts
     43→  );
     44→
     45→  React.useEffect(() => {
+      →…

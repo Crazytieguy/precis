@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (500 words)
+budget: 500 (528 words)
 
 CHANGELOG.md
      3→## [1.4.2]
@@ -34,12 +34,16 @@ README.md
 apps/storybook/README.md
     13→## 🚅 Quick start
     14→
+      →…
     44→## 🔎 What's inside?
     45→
+      →…
     83→## Contribute
     84→
+      →…
     87→## Learning Storybook
     88→
+      →…
 apps/storybook/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
@@ -55,20 +59,24 @@ apps/storybook/src/stories/Button.tsx
      7→ */
      8→export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
 apps/storybook/src/stories/InputOTP.stories.tsx
-     4→const meta
-    27→type Story
+     4→const meta …
+    27→type Story …
     29→export const Default: Story = {}
 apps/storybook/tailwind.config.js
      1→/** @type {import('tailwindcss').Config} */
      2→const config = {
      3→  darkMode: ['class'],
+      →…
 apps/website/README.md
      3→## Getting Started
      4→
+      →…
     23→## Learn More
     24→
+      →…
     32→## Deploy on Vercel
     33→
+      →…
 apps/website/next.config.mjs
      3→/** @type {import('next').NextConfig} */
      4→const nextProdConfig = {}
@@ -88,6 +96,7 @@ apps/website/src/app/(local-pages)/example-playground/page.tsx
 apps/website/src/app/(local-pages)/layout.tsx
      7→export default function RootLayout({
      8→  children,
+      →…
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      5→export default function ShadcnPage() {
 apps/website/src/app/(local-pages)/shadcn/page.tsx
@@ -97,6 +106,7 @@ apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
 apps/website/src/app/(local-pages)/shadcn/static/page.tsx
      5→export default async function StaticPage(pageProps: any) {
      6→  return (
+      →…
 apps/website/src/app/(pages)/(home)/_components/confetti.tsx
      3→export function Confetti({
 apps/website/src/app/(pages)/(home)/_components/showcase.tsx
@@ -111,27 +121,33 @@ apps/website/src/app/(pages)/(home)/page.tsx
 apps/website/src/app/(pages)/layout.tsx
     14→export const metadata: Metadata = {
     15→  title: {
+      →…
     68→export default function RootLayout({
     69→  children,
+      →…
 apps/website/src/components/icons.tsx
      1→type IconProps = React.HTMLAttributes<SVGElement>
      3→export const Icons = {
 apps/website/src/components/ui/badge.tsx
     26→export interface BadgeProps
     27→  extends React.HTMLAttributes<HTMLDivElement>,
+      →…
 apps/website/src/components/ui/button.tsx
     36→export interface ButtonProps
     37→  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     38→    VariantProps<typeof buttonVariants> {
     39→  asChild?: boolean
+      →…
 apps/website/src/config/site.ts
      1→export const siteConfig = {
      2→  name: 'rodz/input-otp',
+      →…
     13→export type SiteConfig = typeof siteConfig
 apps/website/src/lib/fonts.ts
     10→export const fontSans = GeistSans
     12→export const fontMono = FontMono({
     13→  subsets: ['latin'],
+      →…
 apps/website/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
@@ -143,22 +159,24 @@ packages/input-otp/src/input.tsx
     14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
 packages/input-otp/src/regexp.ts
-     1→export const REGEXP_ONLY_DIGITS
-     2→export const REGEXP_ONLY_CHARS
-     3→export const REGEXP_ONLY_DIGITS_AND_CHARS
+     1→export const REGEXP_ONLY_DIGITS …
+     2→export const REGEXP_ONLY_CHARS …
+     3→export const REGEXP_ONLY_DIGITS_AND_CHARS …
 packages/input-otp/src/sync-timeouts.ts
      1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
 packages/input-otp/src/types.ts
      1→export interface SlotProps {
      2→  isActive: boolean
      3→  char: string | null
+      →…
      7→export interface RenderProps {
      8→  slots: SlotProps[]
      9→  isFocused: boolean
-    12→type OverrideProps
-    13→type OTPInputBaseProps
-    32→type InputOTPRenderFn
-    33→export type OTPInputProps
+      →…
+    12→type OverrideProps …
+    13→type OTPInputBaseProps …
+    32→type InputOTPRenderFn …
+    33→export type OTPInputProps …
 packages/input-otp/src/use-previous.ts
      3→export function usePrevious<T>(value: T) {
 packages/input-otp/src/use-pwm-badge.tsx
@@ -166,3 +184,4 @@ packages/input-otp/src/use-pwm-badge.tsx
     16→  containerRef,
     17→  inputRef,
     18→  pushPasswordManagerStrategy,
+      →…

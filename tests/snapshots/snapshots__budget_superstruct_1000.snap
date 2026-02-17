@@ -2,39 +2,54 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (966 words)
+budget: 1000 (1054 words)
 
 Changelog.md
     40→###### NEW
     41→
+      →…
     55→###### BREAKING
     56→
+      →…
     61→###### FIXED
     62→
+      →…
     69→###### BREAKING
     70→
+      →…
     77→###### NEW
     78→
+      →…
     95→###### NEW
     96→
+      →…
    129→###### NEW
    130→
+      →…
    394→###### BREAKING
    395→
+      →…
    446→###### BREAKING
    447→
+      →…
    454→###### BREAKING
    455→
+      →…
    462→###### BREAKING
    463→
+      →…
    476→###### BREAKING
    477→
+      →…
    490→###### BREAKING
    491→
+      →…
    500→###### BREAKING
    501→
+      →…
    512→###### BREAKING
    513→
+      →…
 docs/guides/01-getting-started.md
      1→# Getting Started
      2→
@@ -68,49 +83,69 @@ docs/guides/01-getting-started.md
     30→})
     31→```
     32→
+      →…
     41→## Defining Structs
     42→
+      →…
 docs/guides/02-validating-data.md
      1→# Validating Data
      2→
+      →…
      5→## Primitive Values
      6→
+      →…
     37→## Composed Values
     38→
+      →…
    114→## Optional Values
    115→
+      →…
    157→## Custom Values
    158→
+      →…
 docs/guides/03-coercing-data.md
      1→# Coercing Data
      2→
+      →…
      7→## Default Values
      8→
+      →…
     49→## Custom Coercions
     50→
+      →…
 docs/guides/04-refining-validation.md
      1→# Refining Validation
      2→
+      →…
      7→## Built-in Refinements
      8→
+      →…
     47→## Custom Refinements
     48→
+      →…
 docs/guides/05-handling-errors.md
      1→# Handling Errors
      2→
+      →…
     53→## Customizing Errors
     54→
+      →…
    102→## Multiple Failures
    103→
+      →…
 docs/guides/06-using-typescript.md
      1→# Using TypeScript
      2→
+      →…
      7→## Narrowing Types
      8→
+      →…
     37→## Describing Types
     38→
+      →…
     55→## Inferring Types
     56→
+      →…
 docs/readme.md
      7→### Usage
      8→
@@ -128,6 +163,7 @@ docs/readme.md
     20→  }),
     21→})
     22→
+      →…
 docs/reference/core.md
      3→### `assert`
      4→
@@ -137,6 +173,7 @@ docs/reference/core.md
      8→assert(value, User, 'The user is invalid!')
      9→```
     10→
+      →…
 docs/reference/typescript.md
      7→### `Describe`
      8→
@@ -146,18 +183,24 @@ docs/reference/typescript.md
     12→type User = {
     13→  id: number
     14→  name: string
+      →…
 docs/resources/faq.md
      1→# FAQ
      2→
+      →…
      5→### How can I allow unknown keys with `object` structs?
      6→
+      →…
     11→### Why not have a built-in `json` struct?
     12→
+      →…
 docs/resources/links.md
      1→# Resources
      2→
+      →…
      5→## Libraries
      6→
+      →…
 docs/summary.md
      3→## Guides
      4→
@@ -183,7 +226,7 @@ docs/summary.md
     24→- [FAQ](./resources/faq.md)
     25→- [Links](./resources/links.md)
 src/error.ts
-     5→export type Failure
+     5→export type Failure …
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
@@ -199,6 +242,7 @@ src/error.ts
     37→    const { message, explanation, ...rest } = failure
     38→    const { path } = failure
     39→    const msg =
+      →…
 src/struct.ts
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
@@ -216,49 +260,59 @@ src/struct.ts
     23→    type: string
     24→    schema: S
     63→  /**
+      →…
     67→  assert(value: unknown, message?: string): asserts value is T {
     71→  /**
+      →…
     75→  create(value: unknown, message?: string): T {
     79→  /**
+      →…
     83→  is(value: unknown): value is T {
     87→  /**
+      →…
     93→  mask(value: unknown, message?: string): T {
     97→  /**
+      →…
    107→  validate(
    108→    value: unknown,
    109→    options: {
    119→/**
+      →…
    123→export function assert<T, S>(
    124→  value: unknown,
    125→  struct: Struct<T, S>,
    126→  message?: string
    127→): asserts value is T {
    135→/**
+      →…
    139→export function create<T, S>(
    140→  value: unknown,
    141→  struct: Struct<T, S>,
    142→  message?: string
    143→): T {
    153→/**
+      →…
    157→export function mask<T, S>(
    158→  value: unknown,
    159→  struct: Struct<T, S>,
    160→  message?: string
    161→): T {
    171→/**
+      →…
    175→export function is<T, S>(value: unknown, struct: Struct<T, S>): value is T {
    180→/**
+      →…
    185→export function validate<T, S>(
    186→  value: unknown,
    187→  struct: Struct<T, S>,
    188→  options: {
-   221→export type Context
-   231→export type Infer
-   237→export type Describe
-   243→export type Result
-   253→export type Coercer
-   259→export type Validator
-   266→export type Refiner
+   221→export type Context …
+   231→export type Infer …
+   237→export type Describe …
+   243→export type Result …
+   253→export type Coercer …
+   259→export type Validator …
+   266→export type Refiner …
 src/structs/refinements.ts
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
 src/structs/types.ts
@@ -281,40 +335,46 @@ src/utils.ts
      9→  return isObject(x) && typeof x[Symbol.iterator] === 'function'
     10→}
     12→/**
+      →…
     16→export function isObject(x: unknown): x is object {
     20→/**
+      →…
     24→export function isNonArrayObject(x: unknown): x is object {
     28→/**
+      →…
     32→export function isPlainObject(x: unknown): x is { [key: string]: any } {
     41→/**
+      →…
     45→export function print(value: any): string {
     53→/**
+      →…
     58→export function shiftIterator<T>(input: Iterator<T>): T | undefined {
     63→/**
+      →…
     67→export function toFailure<T, S>(
     68→  result: string | boolean | Partial<Failure>,
     69→  context: Context,
     70→  struct: Struct<T, S>,
     71→  value: any
     72→): Failure | undefined {
-   202→export type UnionToIntersection
-   212→export type Assign
-   218→export type EnumSchema
-   227→export type IsMatch
-   233→export type IsExactMatch
-   242→export type IsRecord
-   251→export type IsTuple
-   267→export type IsUnion
-   277→export type ObjectSchema
-   283→export type ObjectType
-   291→export type OmitBy
-   300→export type Optionalize
-   307→export type PartialObjectSchema
-   315→export type PickBy
-   324→export type Simplify
+   202→export type UnionToIntersection …
+   212→export type Assign …
+   218→export type EnumSchema …
+   227→export type IsMatch …
+   233→export type IsExactMatch …
+   242→export type IsRecord …
+   251→export type IsTuple …
+   267→export type IsUnion …
+   277→export type ObjectSchema …
+   283→export type ObjectType …
+   291→export type OmitBy …
+   300→export type Optionalize …
+   307→export type PartialObjectSchema …
+   315→export type PickBy …
+   324→export type Simplify …
    328→export type If<B extends Boolean, Then, Else> = B extends true ? Then : Else
-   334→export type StructSchema
-   379→export type TupleSchema
-   385→export type AnyStruct
-   394→export type InferStructTuple
-   402→type _InferTuple
+   334→export type StructSchema …
+   379→export type TupleSchema …
+   385→export type AnyStruct …
+   394→export type InferStructTuple …
+   402→type _InferTuple …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1903 words)
+budget: 2000 (2038 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -14,107 +14,158 @@ CHANGELOG.md
      7→
      8→## 1.21.2
      9→- Relax success ordering from AcqRel to Release in `race`: [#278](https://github.com/matklad/once_cell/pull/278).
+      →…
     11→## 1.21.1
     12→- Reduce MSRV to 1.65: [#277](https://github.com/matklad/once_cell/pull/277).
+      →…
     14→## 1.21.0
     15→
+      →…
     21→## 1.20.2
     22→
+      →…
     26→## 1.20.1
     27→
+      →…
     32→## 1.19.0
     33→
+      →…
     36→## 1.18.0
     37→
+      →…
     41→## 1.17.2
     42→
+      →…
     45→## 1.17.1
     46→
+      →…
     49→## 1.17.0
     50→
+      →…
     53→## 1.16.0
     54→
+      →…
     59→## 1.15.0
     60→
+      →…
     64→## 1.14.0
     65→
+      →…
     71→## 1.13.1
     72→
+      →…
     76→## 1.13.0
     77→
+      →…
     80→## 1.12.1
     81→
+      →…
     84→## 1.12.0
     85→
+      →…
     88→## 1.11.0
     89→
+      →…
     94→## 1.10.0
     95→
+      →…
     98→## 1.9.0
     99→
+      →…
    102→## 1.8.0
    103→
+      →…
    106→## 1.7.2
    107→
+      →…
    110→## 1.7.1
    111→
+      →…
    114→## 1.7.0
    115→
+      →…
    122→## 1.6.0
    123→
+      →…
    128→## 1.5.2
    129→
+      →…
    133→## 1.5.1
    134→
+      →…
    140→## 1.5.0
    141→
+      →…
    145→## 1.4.1
    146→
+      →…
    151→## 1.4.0
    152→
+      →…
    157→## 1.3.1
    158→
+      →…
    161→## 1.3.0
    162→
+      →…
    166→## 1.2.0
    167→
+      →…
    170→## 1.1.0
    171→
+      →…
    175→## 1.0.2
    176→
+      →…
    179→## 1.0.1
    180→
+      →…
    186→## 1.0.0
    187→
+      →…
    194→## 0.2.7
    195→
+      →…
    201→## 0.2.6
    202→
+      →…
    205→## 0.2.5
    206→
+      →…
    209→## 0.2.4
    210→
+      →…
    213→## 0.2.3
    214→
+      →…
    219→## 0.2.2
    220→
+      →…
    223→## 0.2.1
    224→
+      →…
    231→## 0.2.0
    232→
+      →…
    237→## 0.1.8
    238→
+      →…
    242→## 0.1.7
    243→
+      →…
    248→## 0.1.6
    249→
+      →…
    252→## 0.1.5
    253→
+      →…
 README.md
      8→# Overview
      9→
+      →…
     47→# Related crates
     48→
+      →…
 src/imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
@@ -124,11 +175,11 @@ src/imp_cs.rs
     13→}
     27→    pub(crate) const fn new() -> OnceCell<T> {
     31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
-    39→    pub(crate) fn is_initialized
-    44→    pub(crate) fn initialize
-    63→    pub(crate) unsafe fn get_unchecked
-    70→    pub(crate) fn get_mut
-    75→    pub(crate) fn into_inner
+    39→    pub(crate) fn is_initialized …
+    44→    pub(crate) fn initialize …
+    63→    pub(crate) unsafe fn get_unchecked …
+    70→    pub(crate) fn get_mut …
+    75→    pub(crate) fn into_inner …
 src/imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
@@ -139,12 +190,12 @@ src/imp_pl.rs
     14→const COMPLETE: u8 = 0x2;
     28→    pub(crate) const fn new() -> OnceCell<T> {
     32→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
-    38→    pub(crate) fn is_initialized
-    45→    pub(crate) fn initialize
-    80→    pub(crate) fn wait
-   101→    pub(crate) unsafe fn get_unchecked
-   109→    pub(crate) fn get_mut
-   117→    pub(crate) fn into_inner
+    38→    pub(crate) fn is_initialized …
+    45→    pub(crate) fn initialize …
+    80→    pub(crate) fn wait …
+   101→    pub(crate) unsafe fn get_unchecked …
+   109→    pub(crate) fn get_mut …
+   117→    pub(crate) fn into_inner …
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
    124→    new_state: u8,
@@ -168,12 +219,12 @@ src/imp_std.rs
     25→}
     39→    pub(crate) const fn new() -> OnceCell<T> {
     43→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
-    49→    pub(crate) fn is_initialized
-    61→    pub(crate) fn initialize
-    88→    pub(crate) fn wait
-    99→    pub(crate) unsafe fn get_unchecked
-   107→    pub(crate) fn get_mut
-   115→    pub(crate) fn into_inner
+    49→    pub(crate) fn is_initialized …
+    61→    pub(crate) fn initialize …
+    88→    pub(crate) fn wait …
+    99→    pub(crate) unsafe fn get_unchecked …
+   107→    pub(crate) fn get_mut …
+   115→    pub(crate) fn into_inner …
    125→const INCOMPLETE: usize = 0x0;
    126→const RUNNING: usize = 0x1;
    127→const COMPLETE: usize = 0x2;
@@ -202,6 +253,7 @@ src/imp_std.rs
    213→        let node = Waiter {
    214→            thread: Cell::new(Some(thread::current())),
    215→            signaled: AtomicBool::new(false),
+      →…
    245→mod strict {
    246→    #[must_use]
    247→    #[inline]
@@ -209,8 +261,8 @@ src/imp_std.rs
    249→    where
    250→        T: Sized,
    251→    {
-   260→    pub(crate) fn with_addr
-   281→    pub(crate) fn map_addr
+   260→    pub(crate) fn with_addr …
+   281→    pub(crate) fn map_addr …
 src/lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -244,6 +296,7 @@ src/lib.rs
    402→    /// let cell = OnceCell::new();
    403→    /// assert!(cell.get().is_none());
    404→    ///
+      →…
    411→    pub struct OnceCell<T> {
    412→        // Invariant: written to at most once.
    413→        inner: UnsafeCell<Option<T>>,
@@ -254,16 +307,16 @@ src/lib.rs
    446→        fn clone_from(&mut self, source: &Self) {
    455→        fn eq(&self, other: &Self) -> bool {
    463→        fn from(value: T) -> Self {
-   470→        pub const fn new
-   475→        pub const fn with_value
-   483→        pub fn get
-   508→        pub fn get_mut
-   530→        pub fn set
-   551→        pub fn try_insert
-   586→        pub fn get_or_init
-   622→        pub fn get_or_try_init
-   667→        pub fn take
-   687→        pub fn into_inner
+   470→        pub const fn new …
+   475→        pub const fn with_value …
+   483→        pub fn get …
+   508→        pub fn get_mut …
+   530→        pub fn set …
+   551→        pub fn try_insert …
+   586→        pub fn get_or_init …
+   622→        pub fn get_or_try_init …
+   667→        pub fn take …
+   687→        pub fn into_inner …
    694→    /// A value which is initialized on the first access.
    695→    ///
    696→    /// # Example
@@ -278,21 +331,22 @@ src/lib.rs
    705→    /// println!("{}", *lazy);
    706→    /// println!("{}", *lazy);
    707→    ///
+      →…
    714→    pub struct Lazy<T, F = fn() -> T> {
    715→        cell: OnceCell<T>,
    716→        init: Cell<Option<F>>,
    717→    }
    722→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-   742→        pub const fn new
-   749→        pub fn into_value
-   773→        pub fn force
-   794→        pub fn force_mut
-   818→        pub fn get
-   835→        pub fn get_mut
+   742→        pub const fn new …
+   749→        pub fn into_value …
+   773→        pub fn force …
+   794→        pub fn force_mut …
+   818→        pub fn get …
+   835→        pub fn get_mut …
    841→        type Target = T;
    842→        fn deref(&self) -> &T {
    848→        fn deref_mut(&mut self) -> &mut T {
-   855→        fn default
+   855→        fn default …
    861→/// Thread-safe, blocking version of `OnceCell`.
    862→#[cfg(any(feature = "std", feature = "critical-section"))]
    863→pub mod sync {
@@ -319,6 +373,7 @@ src/lib.rs
    884→    /// ```
    885→    /// use once_cell::sync::OnceCell;
    886→    ///
+      →…
    901→    pub struct OnceCell<T>(Imp<T>);
    904→        fn default() -> OnceCell<T> {
    910→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -326,18 +381,18 @@ src/lib.rs
    926→        fn clone_from(&mut self, source: &Self) {
    935→        fn from(value: T) -> Self {
    941→        fn eq(&self, other: &OnceCell<T>) -> bool {
-   950→        pub const fn new
-   955→        pub const fn with_value
-   963→        pub fn get
-   993→        pub fn wait
-  1019→        pub fn get_mut
-  1031→        pub unsafe fn get_unchecked
-  1058→        pub fn set
-  1080→        pub fn try_insert
-  1115→        pub fn get_or_init
-  1152→        pub fn get_or_try_init
-  1197→        pub fn take
-  1217→        pub fn into_inner
+   950→        pub const fn new …
+   955→        pub const fn with_value …
+   963→        pub fn get …
+   993→        pub fn wait …
+  1019→        pub fn get_mut …
+  1031→        pub unsafe fn get_unchecked …
+  1058→        pub fn set …
+  1080→        pub fn try_insert …
+  1115→        pub fn get_or_init …
+  1152→        pub fn get_or_try_init …
+  1197→        pub fn take …
+  1217→        pub fn into_inner …
   1222→    /// A value which is initialized on the first access.
   1223→    ///
   1224→    /// This type is thread-safe and can be used in statics.
@@ -352,21 +407,22 @@ src/lib.rs
   1233→    /// static HASHMAP: Lazy<HashMap<i32, String>> = Lazy::new(|| {
   1234→    ///     println!("initializing");
   1235→    ///     let mut m = HashMap::new();
+      →…
   1255→    pub struct Lazy<T, F = fn() -> T> {
   1256→        cell: OnceCell<T>,
   1257→        init: Cell<Option<F>>,
   1258→    }
   1261→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-  1278→        pub const fn new
-  1285→        pub fn into_value
-  1308→        pub fn force
-  1327→        pub fn force_mut
-  1351→        pub fn get
-  1368→        pub fn get_mut
+  1278→        pub const fn new …
+  1285→        pub fn into_value …
+  1308→        pub fn force …
+  1327→        pub fn force_mut …
+  1351→        pub fn get …
+  1368→        pub fn get_mut …
   1374→        type Target = T;
   1375→        fn deref(&self) -> &T {
   1381→        fn deref_mut(&mut self) -> &mut T {
-  1388→        fn default
+  1388→        fn default …
   1393→    /// ```compile_fail
   1394→    /// struct S(*mut ());
   1395→    /// unsafe impl Sync for S {}
@@ -376,6 +432,7 @@ src/lib.rs
   1399→    /// ```
   1400→    ///
   1401→    /// ```compile_fail
+      →…
   1408→    fn _dummy() {}
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
@@ -385,12 +442,12 @@ src/race.rs
     43→pub struct OnceNonZeroUsize {
     44→    inner: AtomicUsize,
     45→}
-    50→    pub const fn new
-    56→    pub fn get
-    68→    pub unsafe fn get_unchecked
-   107→    pub fn set
-   120→    pub fn get_or_init
-   138→    pub fn get_or_try_init
+    50→    pub const fn new …
+    56→    pub fn get …
+    68→    pub unsafe fn get_unchecked …
+   107→    pub fn set …
+   120→    pub fn get_or_init …
+   138→    pub fn get_or_try_init …
    148→    #[cold]
    149→    #[inline(never)]
    150→    fn init<E>(&self, f: impl FnOnce() -> Result<NonZeroUsize, E>) -> Result<NonZeroUsize, E> {
@@ -401,11 +458,11 @@ src/race.rs
    167→pub struct OnceBool {
    168→    inner: OnceNonZeroUsize,
    169→}
-   174→    pub const fn new
-   180→    pub fn get
-   189→    pub fn set
-   199→    pub fn get_or_init
-   213→    pub fn get_or_try_init
+   174→    pub const fn new …
+   180→    pub fn get …
+   189→    pub fn set …
+   199→    pub fn get_or_init …
+   213→    pub fn get_or_try_init …
    220→    #[inline]
    221→    fn from_usize(value: NonZeroUsize) -> bool {
    225→    #[inline]
@@ -417,11 +474,11 @@ src/race.rs
    235→}
    241→    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
    247→    fn default() -> Self {
-   254→    pub const fn new
-   259→    pub fn get
-   268→    pub fn set
-   281→    pub fn get_or_init
-   299→    pub fn get_or_try_init
+   254→    pub const fn new …
+   259→    pub fn get …
+   268→    pub fn set …
+   281→    pub fn get_or_init …
+   299→    pub fn get_or_try_init …
    309→    #[cold]
    310→    #[inline(never)]
    311→    fn init<E>(&self, f: impl FnOnce() -> Result<&'a T, E>) -> Result<&'a T, E> {
@@ -436,6 +493,7 @@ src/race.rs
    338→    ///     let y = 2;
    339→    ///     let mut r = OnceRef::new();
    340→    ///     r.set(&y).unwrap();
+      →…
    347→    fn _dummy() {}
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
@@ -454,12 +512,12 @@ src/race.rs
    367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
    373→        fn default() -> Self {
    379→        fn drop(&mut self) {
-   389→        pub const fn new
-   394→        pub fn with_value
-   399→        pub fn get
-   411→        pub fn set
-   432→        pub fn get_or_init
-   450→        pub fn get_or_try_init
+   389→        pub const fn new …
+   394→        pub fn with_value …
+   399→        pub fn get …
+   411→        pub fn set …
+   432→        pub fn get_or_init …
+   450→        pub fn get_or_try_init …
    460→        #[cold]
    461→        #[inline(never)]
    462→        fn init<E>(&self, f: impl FnOnce() -> Result<Box<T>, E>) -> Result<&T, E> {

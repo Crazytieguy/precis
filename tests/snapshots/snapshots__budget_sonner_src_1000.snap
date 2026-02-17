@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (996 words)
+budget: 1000 (1006 words)
 
 assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
@@ -12,6 +12,7 @@ assets.tsx
      9→
     10→    case 'info':
     11→      return InfoIcon;
+      →…
     24→const bars = Array(12).fill(0);
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     27→  return (
@@ -20,6 +21,7 @@ assets.tsx
     30→        {bars.map((_, i) => (
     31→          <div className="sonner-loading-bar" key={`spinner-bar-${i}`} />
     32→        ))}
+      →…
     38→const SuccessIcon = (
     48→const WarningIcon = (
     58→const InfoIcon = (
@@ -48,6 +50,7 @@ hooks.tsx
      7→    const callback = () => {
      8→      setIsDocumentHidden(document.hidden);
      9→    };
+      →…
 index.tsx
     22→const VISIBLE_TOASTS_AMOUNT = 3;
     25→const VIEWPORT_OFFSET = '24px';
@@ -92,9 +95,11 @@ state.ts
    257→const toastFunction = (message: titleT, data?: ExternalToast) => {
    258→  const id = data?.id || toastsCounter++;
    259→
+      →…
    268→const isHttpResponse = (data: any): data is Response => {
    269→  return (
    270→    data &&
+      →…
    279→const basicToast = toastFunction;
    281→const getHistory = () => ToastState.toasts;
    282→const getToasts = () => ToastState.getActiveToasts();
@@ -145,6 +150,7 @@ types.ts
     38→  success?: string;
     39→  error?: string;
     40→  info?: string;
+      →…
     48→export interface ToastIcons {
     49→  success?: React.ReactNode;
     50→  info?: React.ReactNode;
@@ -169,6 +175,7 @@ types.ts
     71→  invert?: boolean;
     72→  closeButton?: boolean;
     73→  dismissible?: boolean;
+      →…
     93→export function isAction(action: Action | React.ReactNode): action is Action {
     97→export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
     98→export interface HeightT {
@@ -183,6 +190,7 @@ types.ts
    108→  style?: React.CSSProperties;
    109→  cancelButtonStyle?: React.CSSProperties;
    110→  actionButtonStyle?: React.CSSProperties;
+      →…
    118→type Offset =
    119→  | {
    120→      top?: string | number;
@@ -203,6 +211,7 @@ types.ts
    136→  duration?: number;
    137→  gap?: number;
    138→  visibleToasts?: number;
+      →…
    152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
    154→export interface ToastProps {
    155→  toast: ToastT;
@@ -215,6 +224,7 @@ types.ts
    162→  setHeights: React.Dispatch<React.SetStateAction<HeightT[]>>;
    163→  removeToast: (toast: ToastT) => void;
    164→  gap?: number;
+      →…
    184→export enum SwipeStateTypes {
    185→  SwipedOut = 'SwipedOut',
    186→  SwipedBack = 'SwipedBack',

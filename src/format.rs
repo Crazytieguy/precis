@@ -170,10 +170,10 @@ fn render_symbol(
         return;
     }
 
-    // Names only: truncated symbol name
+    // Names only: truncated symbol name with inline ellipsis
     if !show_sigs && doc_n == 0 && body_n == 0 {
         out.push_str(&format_symbol_name(sym, lines));
-        out.push('\n');
+        out.push_str(" …\n");
         return;
     }
 
@@ -195,6 +195,9 @@ fn render_symbol(
         let end = (doc_start + doc_lines_to_show).min(sym_line_0);
         for (i, line) in lines.iter().enumerate().take(end).skip(start) {
             out.push_str(&fmt_line(i, line));
+        }
+        if doc_lines_to_show < doc_lines_available {
+            out.push_str(TRUNCATION_MARKER);
         }
     }
 
@@ -219,6 +222,9 @@ fn render_symbol(
             for (i, line) in lines.iter().enumerate().take(end).skip(sig_end + 1) {
                 out.push_str(&fmt_line(i, line));
             }
+            if ds_lines_to_show < ds_lines_available {
+                out.push_str(TRUNCATION_MARKER);
+            }
             *emitted_up_to = (*emitted_up_to).max(end);
         }
     }
@@ -241,6 +247,9 @@ fn render_symbol(
             for (i, line) in lines.iter().enumerate().take(end).skip(start) {
                 out.push_str(&fmt_line(i, line));
             }
+            if body_lines_to_show < body_lines_available {
+                out.push_str(TRUNCATION_MARKER);
+            }
             *emitted_up_to = (*emitted_up_to).max(end);
         } else {
             // Code: body lines after signature (skip Python docstrings)
@@ -258,6 +267,18 @@ fn render_symbol(
             for (i, line) in lines.iter().enumerate().take(end).skip(start) {
                 out.push_str(&fmt_line(i, line));
             }
+            if body_lines_to_show < body_lines_available {
+                // Skip marker when truncated lines overlap with nested symbols
+                // (e.g., class body containing methods that render individually)
+                let trunc_start = body_start + body_lines_to_show;
+                let has_nested = all_symbols.iter().skip(sym_idx + 1).any(|s| {
+                    let sl = s.line - 1;
+                    sl >= trunc_start && sl < body_end
+                });
+                if !has_nested {
+                    out.push_str(TRUNCATION_MARKER);
+                }
+            }
             *emitted_up_to = (*emitted_up_to).max(end);
         }
     }
@@ -272,6 +293,9 @@ fn render_symbol(
 pub(crate) fn fmt_line(line_idx_0: usize, line: &str) -> String {
     format!("{:>6}→{}\n", line_idx_0 + 1, line)
 }
+
+/// Standalone truncation marker line indicating omitted content.
+const TRUNCATION_MARKER: &str = "      →…\n";
 
 /// Count whitespace-delimited words in text.
 pub fn count_words(text: &str) -> usize {

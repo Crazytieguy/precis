@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (848 words)
+budget: 1000 (928 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -14,45 +14,64 @@ CHANGELOG.md
      5→* [`a29faa5`](https://github.com/npm/node-semver/commit/a29faa5f3309a01c8e5aeb965fb5c02c4c4e80e2) [#835](https://github.com/npm/node-semver/pull/835) cli: pass options to semver.valid() for loose version validation (#835) (@mldangelo)
     16→### Bug Fixes
     17→* [`e37e0ca`](https://github.com/npm/node-semver/commit/e37e0ca0b5fc910d2b1948d25dbc83cc3a0921ea) [#813](https://github.com/npm/node-semver/pull/813) faster paths for compare (#813) (@H4ad)
+      →…
     23→### Bug Fixes
     24→* [`fcafb61`](https://github.com/npm/node-semver/commit/fcafb61ed566ff8ccf24818dd94b76738f037aa4) [#780](https://github.com/npm/node-semver/pull/780) add missing `'use strict'` directives (#780) (@Fdawgs)
+      →…
     31→### Bug Fixes
     32→* [`af761c0`](https://github.com/npm/node-semver/commit/af761c05bd53eef83b5e20f8b09360b0e70557dc) [#764](https://github.com/npm/node-semver/pull/764) inc: fully capture prerelease identifier (#764) (@wraithgar)
+      →…
     35→### Features
     36→* [`0864b3c`](https://github.com/npm/node-semver/commit/0864b3ce7932667013e0c7c5ec764777d4682883) [#753](https://github.com/npm/node-semver/pull/753) add "release" inc type (#753) (@mbtools)
     50→### Bug Fixes
     51→
+      →…
     60→### Bug Fixes
     61→
+      →…
     66→### Bug Fixes
     67→
+      →…
     88→### Features
     89→
+      →…
    110→### Bug Fixes
    111→
+      →…
    117→### Bug Fixes
    118→
+      →…
    127→### Bug Fixes
    128→
+      →…
    135→### Bug Fixes
    136→
+      →…
    141→### Features
    142→
+      →…
    153→### Features
    154→
+      →…
    174→### Bug Fixes
    175→
+      →…
    185→### Bug Fixes
    186→
+      →…
    200→### Bug Fixes
    201→
+      →…
 CONTRIBUTING.md
      5→## Code of Conduct
      6→
+      →…
     19→### Commits
     20→
+      →…
     44→### Dependencies
     45→
+      →…
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
@@ -62,6 +81,7 @@ bin/semver.js
     40→  }
     41→  while (argv.length) {
     42→    let a = argv.shift()
+      →…
    132→const failInc = () => {
    133→  console.error('--inc can only be used on a single version with no range')
    134→  fail()
@@ -73,6 +93,7 @@ bin/semver.js
    142→A JavaScript implementation of the https://semver.org/ specification
    143→Copyright Isaac Z. Schlueter
    144→
+      →…
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
@@ -106,21 +127,21 @@ classes/range.js
    170→  intersects (range, options) {
    193→  test (version) {
    218→const cache = new LRU()
-   233→const isNullSet
-   234→const isAny
-   238→const isSatisfiable
-   257→const parseComparator
-   271→const isX
-   280→const replaceTildes
-   288→const replaceTilde
-   324→const replaceCarets
-   332→const replaceCaret
-   385→const replaceXRanges
-   393→const replaceXRange
-   470→const replaceStars
-   478→const replaceGTE0
-   491→const hyphenReplace
-   523→const testSet
+   233→const isNullSet …
+   234→const isAny …
+   238→const isSatisfiable …
+   257→const parseComparator …
+   271→const isX …
+   280→const replaceTildes …
+   288→const replaceTilde …
+   324→const replaceCarets …
+   332→const replaceCaret …
+   385→const replaceXRanges …
+   393→const replaceXRange …
+   470→const replaceStars …
+   478→const replaceGTE0 …
+   491→const hyphenReplace …
+   523→const testSet …
 classes/semver.js
      9→class SemVer {
     10→  constructor (version, options) {
@@ -139,53 +160,53 @@ classes/semver.js
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
 functions/clean.js
-     4→const clean
+     4→const clean …
 functions/cmp.js
-    10→const cmp
+    10→const cmp …
 functions/coerce.js
-     7→const coerce
+     7→const coerce …
 functions/compare-build.js
-     4→const compareBuild
+     4→const compareBuild …
 functions/compare-loose.js
-     4→const compareLoose
+     4→const compareLoose …
 functions/compare.js
-     4→const compare
+     4→const compare …
 functions/diff.js
-     5→const diff
+     5→const diff …
 functions/eq.js
-     4→const eq
+     4→const eq …
 functions/gt.js
-     4→const gt
+     4→const gt …
 functions/gte.js
-     4→const gte
+     4→const gte …
 functions/inc.js
-     5→const inc
+     5→const inc …
 functions/lt.js
-     4→const lt
+     4→const lt …
 functions/lte.js
-     4→const lte
+     4→const lte …
 functions/major.js
-     4→const major
+     4→const major …
 functions/minor.js
-     4→const minor
+     4→const minor …
 functions/neq.js
-     4→const neq
+     4→const neq …
 functions/parse.js
-     4→const parse
+     4→const parse …
 functions/patch.js
-     4→const patch
+     4→const patch …
 functions/prerelease.js
-     4→const prerelease
+     4→const prerelease …
 functions/rcompare.js
-     4→const rcompare
+     4→const rcompare …
 functions/rsort.js
-     4→const rsort
+     4→const rsort …
 functions/satisfies.js
-     4→const satisfies
+     4→const satisfies …
 functions/sort.js
-     4→const sort
+     4→const sort …
 functions/valid.js
-     4→const valid
+     4→const valid …
 internal/constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
      7→const MAX_LENGTH = 256
@@ -198,16 +219,19 @@ internal/constants.js
     20→  'premajor',
     21→  'minor',
     22→  'preminor',
+      →…
 internal/debug.js
      3→const debug = (
      4→  typeof process === 'object' &&
      5→  process.env &&
      6→  process.env.NODE_DEBUG &&
      7→  /\bsemver\b/i.test(process.env.NODE_DEBUG)
+      →…
 internal/identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
      5→  if (typeof a === 'number' && typeof b === 'number') {
+      →…
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 internal/lrucache.js
      3→class LRUCache {
@@ -235,11 +259,13 @@ internal/lrucache.js
     25→  set (key, value) {
     26→    const deleted = this.delete(key)
     27→
+      →…
 internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
      7→  if (!options) {
+      →…
 internal/re.js
     12→const re = exports.re = []
     13→const safeRe = exports.safeRe = []
@@ -254,30 +280,32 @@ internal/re.js
     31→]
     33→const makeSafeRegex = (value) => {
     34→  for (const [token, max] of safeRegexReplacements) {
+      →…
     42→const createToken = (name, value, isGlobal) => {
     43→  const safe = makeSafeRegex(value)
+      →…
 ranges/gtr.js
-     5→const gtr
+     5→const gtr …
 ranges/intersects.js
-     4→const intersects
+     4→const intersects …
 ranges/ltr.js
-     5→const ltr
+     5→const ltr …
 ranges/max-satisfying.js
-     6→const maxSatisfying
+     6→const maxSatisfying …
 ranges/min-satisfying.js
-     5→const minSatisfying
+     5→const minSatisfying …
 ranges/min-version.js
-     7→const minVersion
+     7→const minVersion …
 ranges/outside.js
-    13→const outside
+    13→const outside …
 ranges/subset.js
-    45→const subset
+    45→const subset …
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
-    76→const simpleSubset
-   226→const higherGT
-   238→const lowerLT
+    76→const simpleSubset …
+   226→const higherGT …
+   238→const lowerLT …
 ranges/to-comparators.js
-     6→const toComparators
+     6→const toComparators …
 ranges/valid.js
-     4→const validRange
+     4→const validRange …

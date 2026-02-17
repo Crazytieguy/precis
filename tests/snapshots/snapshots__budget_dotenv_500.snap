@@ -2,169 +2,247 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (493 words)
+budget: 500 (591 words)
 
 CHANGELOG.md
      7→## [17.3.1](https://github.com/motdotla/dotenv/compare/v17.3.0...v17.3.1) (2026-02-12)
      8→
      9→### Changed
     10→
+      →…
     15→### Added
     16→
+      →…
     25→### Changed
     26→
+      →…
     32→### Changed
     33→
+      →…
     38→### Added
     39→
+      →…
     44→### Changed
     45→
+      →…
     50→### Added
     51→
+      →…
     76→### Added
     77→
+      →…
     98→### Changed
     99→
+      →…
    104→### Changed
    105→
+      →…
    110→### Changed
    111→
+      →…
    118→### Added
    119→
+      →…
    126→### Added
    127→
+      →…
    142→### Changed
    143→
+      →…
    148→### Changed
    149→
+      →…
    155→### Changed
    156→
+      →…
    161→### Changed
    162→
+      →…
    167→### Changed
    168→
+      →…
    173→### Changed
    174→
+      →…
    188→### Added
    189→
+      →…
    199→### Added
    200→
+      →…
    205→### Added
    206→
+      →…
    211→### Added
    212→
+      →…
    218→### Added
    219→
+      →…
    224→### Removed
    225→
+      →…
    230→### Changed
    231→
+      →…
    236→### Added
    237→
+      →…
    246→### Added
    247→
+      →…
    262→### Changed
    263→
+      →…
    268→### Added
    269→
+      →…
    274→### Changed
    275→
+      →…
    281→### Added
    282→
+      →…
    289→### Changed
    290→
+      →…
    313→### Changed
    314→
+      →…
    319→### Changed
    320→
+      →…
    325→### Added
    326→
+      →…
    331→### Added
    332→
+      →…
    338→### Added
    339→
+      →…
    344→### Added
    345→
+      →…
    350→### Added
    351→
+      →…
    356→### Added
    357→
+      →…
    362→### Changed
    363→
+      →…
    368→### Added
    369→
+      →…
    374→### Changed
    375→
+      →…
    381→### Changed
    382→
+      →…
    387→### Changed
    388→
+      →…
    393→### Changed
    394→
+      →…
    399→### Removed
    400→
+      →…
    411→### Changed
    412→
+      →…
    418→### Added
    419→
+      →…
    426→### Changed
    427→
+      →…
    432→### Changed
    433→
+      →…
    438→### Changed
    439→
+      →…
    444→### Added
    445→
+      →…
    450→### Changed
    451→
+      →…
    456→### Added
    457→
+      →…
    462→### Changed
    463→
+      →…
    468→### Changed
    469→
+      →…
    474→### Added
    475→
+      →…
    480→### Changed
    481→
+      →…
    486→### Changed
    487→
+      →…
    492→### Fixed
    493→
+      →…
    502→### Added
    503→
+      →…
    508→### Added
    509→
+      →…
    514→### Changed
    515→
+      →…
    520→### Added
    521→
+      →…
    538→### Changed
    539→
+      →…
    548→### Added
    549→
+      →…
    569→### Added
    570→
+      →…
    587→### Added
    588→
+      →…
    601→### Added
    602→
+      →…
    607→### Removed
    608→
+      →…
 README-es.md
    607→##### path
    608→
+      →…
    707→##### debug
    708→
+      →…
    750→##### Debug
    751→
+      →…
 README.md
    607→##### path
    608→
+      →…
    707→##### debug
    708→
+      →…
    750→##### Debug
    751→
+      →…
 lib/cli-options.js
      1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
 lib/env-options.js
@@ -189,6 +267,7 @@ lib/main.d.ts
     35→  path?: string | string[] | URL;
     36→
     37→  /**
+      →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
     94→  parsed?: DotenvParseOutput;
@@ -214,29 +293,30 @@ lib/main.d.ts
    116→  /**
    117→   * Default: `false`
    118→   *
+      →…
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;
    128→}
 lib/main.js
      7→const version = packageJson.version
     10→const TIPS = [
-    27→function _getRandomTip
-    31→function parseBoolean
-    38→function supportsAnsi
-    42→function dim
+    27→function _getRandomTip …
+    31→function parseBoolean …
+    38→function supportsAnsi …
+    42→function dim …
     46→const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
-    49→function parse
-    87→function _parseVault
-   130→function _warn
-   134→function _debug
-   138→function _log
-   142→function _dotenvKey
-   157→function _instructions
-   200→function _vaultPath
-   224→function _resolveHome
-   228→function _configVault
-   248→function configDotenv
-   328→function config
-   346→function decrypt
-   378→function populate
+    49→function parse …
+    87→function _parseVault …
+   130→function _warn …
+   134→function _debug …
+   138→function _log …
+   142→function _dotenvKey …
+   157→function _instructions …
+   200→function _vaultPath …
+   224→function _resolveHome …
+   228→function _configVault …
+   248→function configDotenv …
+   328→function config …
+   346→function decrypt …
+   378→function populate …
    413→const DotenvModule = {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (498 words)
 
 CHANGELOG.md
     21→### Fixed
@@ -60,9 +60,11 @@ src/dotenv/cli.py
     68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
     69→    """
     70→    Open a file and yield the corresponding (decoded) stream.
+      →…
    112→@cli.command(name="set")
    113→@click.pass_context
    114→@click.argument("key", required=True)
+      →…
    116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
    128→@cli.command()
    129→@click.pass_context
@@ -114,12 +116,14 @@ src/dotenv/ipython.py
 src/dotenv/main.py
     25→def _load_dotenv_disabled() -> bool:
     26→    """
+      →…
     45→class DotEnv:
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
     66→            with open(self.dotenv_path, encoding=self.encoding) as stream:
     67→                yield stream
+      →…
    141→@contextmanager
    142→def rewrite(
    143→    path: StrPath,
@@ -127,8 +131,10 @@ src/dotenv/main.py
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """
+      →…
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
+      →…
 src/dotenv/parser.py
     35→class Original(NamedTuple):
     40→class Binding(NamedTuple):

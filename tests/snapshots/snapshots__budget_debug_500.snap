@@ -2,15 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (499 words)
+budget: 500 (523 words)
 
 README.md
      1→# debug
      2→[![OpenCollective](https://opencollective.com/debug/backers/badge.svg)](#backers)
+      →…
     10→## Installation
     11→
+      →…
     16→## Usage
     17→
+      →…
     73→#### Windows command prompt notes
     74→
     75→##### CMD
@@ -29,44 +32,64 @@ README.md
     88→
     89→##### PowerShell (VS Code default)
     90→
+      →…
    110→## Namespace Colors
    111→
+      →…
    116→#### Node.js
    117→
+      →…
    124→#### Web Browser
    125→
+      →…
    134→## Millisecond diff
    135→
+      →…
    145→## Conventions
    146→
+      →…
    149→## Wildcards
    150→
+      →…
    161→## Environment Variables
    162→
+      →…
    181→## Formatters
    182→
+      →…
    196→### Custom formatters
    197→
+      →…
    215→## Browser Support
    216→
+      →…
    248→## Output streams
    249→
+      →…
    274→## Extend
    275→You can simply extend debugger 
+      →…
    288→## Set dynamically
    289→
+      →…
    341→## Checking whether a debug target is enabled
    342→
+      →…
    357→## Usage in child processes
    358→
+      →…
    379→## Authors
    380→
+      →…
    386→## Backers
    387→
+      →…
    422→## Sponsors
    423→
+      →…
    457→## License
    458→
+      →…
 src/browser.js
    115→function useColors() {
    116→	// NB: In an Electron preload script, document will be defined but not fully
@@ -74,6 +97,7 @@ src/browser.js
    118→	// explicitly
    119→	if (typeof window !== 'undefined' && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
    120→		return true;
+      →…
    143→/**
    144→ * Colorize log arguments if enabled.
    145→ *

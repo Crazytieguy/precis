@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2539 words)
+budget: 4000 (2548 words)
 
 comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -113,6 +113,7 @@ comparator.js
    109→    if (this.operator.startsWith('>') && comp.operator.startsWith('>')) {
    110→      return true
    111→    }
+      →…
 range.js
      3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
@@ -276,6 +277,7 @@ range.js
    245→      return testComparator.intersects(otherComparator, options)
    246→    })
    247→
+      →…
    257→const parseComparator = (comp, options) => {
    258→  comp = comp.replace(re[t.BUILD], '')
    259→  debug('comp', comp, options)
@@ -286,6 +288,7 @@ range.js
    264→  comp = replaceXRanges(comp, options)
    265→  debug('xrange', comp)
    266→  comp = replaceStars(comp, options)
+      →…
    271→const isX = id => !id || id.toLowerCase() === 'x' || id === '*'
    280→const replaceTildes = (comp, options) => {
    281→  return comp
@@ -304,6 +307,7 @@ range.js
    295→      ret = ''
    296→    } else if (isX(m)) {
    297→      ret = `>=${M}.0.0 <${+M + 1}.0.0-0`
+      →…
    324→const replaceCarets = (comp, options) => {
    325→  return comp
    326→    .trim()
@@ -321,6 +325,7 @@ range.js
    339→
    340→    if (isX(M)) {
    341→      ret = ''
+      →…
    385→const replaceXRanges = (comp, options) => {
    386→  debug('replaceXRanges', comp, options)
    387→  return comp
@@ -338,6 +343,7 @@ range.js
    400→    const xp = xm || isX(p)
    401→    const anyX = xp
    402→
+      →…
    470→const replaceStars = (comp, options) => {
    471→  debug('replaceStars', comp, options)
    472→  // Looseness is ignored here.  star is always as loose as it gets!
@@ -363,6 +369,7 @@ range.js
    500→  } else if (fpr) {
    501→    from = `>=${from}`
    502→  } else {
+      →…
    523→const testSet = (set, version, options) => {
    524→  for (let i = 0; i < set.length; i++) {
    525→    if (!set[i].test(version)) {
@@ -373,6 +380,7 @@ range.js
    530→  if (version.prerelease.length && !options.includePrerelease) {
    531→    // Find the set of versions that are allowed to have prereleases
    532→    // For example, ^1.2.3-pr.1 desugars to >=1.2.3-pr.1 <2.0.0
+      →…
 semver.js
      9→class SemVer {
     10→  constructor (version, options) {
@@ -584,3 +592,4 @@ semver.js
    239→        if (this.prerelease.length === 0) {
    240→          throw new Error(`version ${this.raw} is not a prerelease`)
    241→        }
+      →…

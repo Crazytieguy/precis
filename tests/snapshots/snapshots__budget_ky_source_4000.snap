@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3615 words)
+budget: 4000 (3659 words)
 
 core/Ky.ts
     33→export class Ky {
@@ -115,6 +115,7 @@ core/Ky.ts
    212→				},
    213→				options.hooks,
    214→			),
+      →…
    297→	#calculateDelay(): number {
    316→	async #calculateRetryDelay(error: unknown) {
    390→	#decorateResponse(response: Response): Response {
@@ -475,35 +476,36 @@ index.ts
     17→	}
     18→
     19→	ky.create = (newDefaults?: Partial<Options>) => createInstance(validateAndMerge(newDefaults));
+      →…
     34→const ky = createInstance();
 types/ResponsePromise.ts
-     6→export type ResponsePromise
+     6→export type ResponsePromise …
 types/common.ts
-     2→export type Primitive
-     4→export type Required
-     6→export type LiteralUnion
+     2→export type Primitive …
+     4→export type Required …
+     6→export type LiteralUnion …
 types/hooks.ts
-     5→export type BeforeRequestState
-    14→export type BeforeRequestHook
-    20→export type BeforeRetryState
-    30→export type BeforeRetryHook
-    32→export type AfterResponseState
-    41→export type AfterResponseHook
-    48→export type BeforeErrorState
-    57→export type BeforeErrorHook
-    59→export type Hooks
+     5→export type BeforeRequestState …
+    14→export type BeforeRequestHook …
+    20→export type BeforeRetryState …
+    30→export type BeforeRetryHook …
+    32→export type AfterResponseState …
+    41→export type AfterResponseHook …
+    48→export type BeforeErrorState …
+    57→export type BeforeErrorHook …
+    59→export type Hooks …
 types/ky.ts
-     5→export type KyInstance
+     5→export type KyInstance …
 types/options.ts
-     6→export type SearchParamsInit
-     9→export type SearchParamsOption
-    11→export type RequestHttpMethod
-    12→export type HttpMethod
-    14→export type Input
-    16→export type Progress
-    27→export type KyHeadersInit
-    33→export type KyOptions
-   307→export type KyOptionsRegistry
+     6→export type SearchParamsInit …
+     9→export type SearchParamsOption …
+    11→export type RequestHttpMethod …
+    12→export type HttpMethod …
+    14→export type Input …
+    16→export type Progress …
+    27→export type KyHeadersInit …
+    33→export type KyOptions …
+   307→export type KyOptionsRegistry …
    309→/**
    310→Options are the same as `window.fetch`, except for the KyOptions
    311→*/
@@ -552,7 +554,7 @@ types/options.ts
    354→	*/
    355→	headers?: KyHeadersInit;
    356→}
-   358→export type InternalOptions
+   358→export type InternalOptions …
    370→/**
    371→Normalized options passed to the `fetch` call and the `beforeRequest` hooks.
    372→*/
@@ -569,18 +571,19 @@ types/options.ts
    383→	context: Record<string, unknown>;
    384→}
 types/request.ts
-     1→export type KyRequest
+     1→export type KyRequest …
 types/response.ts
-     1→export type KyResponse
+     1→export type KyResponse …
 types/retry.ts
-     3→export type ShouldRetryState
-    15→export type RetryOptions
+     3→export type ShouldRetryState …
+    15→export type RetryOptions …
 utils/body.ts
      5→export const getBodySize = (body?: BodyInit | null): number => {
      6→	if (!body) {
      7→		return 0;
      8→	}
      9→
+      →…
     57→const withProgress = (stream: ReadableStream<Uint8Array>, totalBytes: number, onProgress: Options['onDownloadProgress'] | Options['onUploadProgress']): ReadableStream<Uint8Array> => {
     58→	let previousChunk: Uint8Array | undefined;
     59→	let transferredBytes = 0;
@@ -591,16 +594,19 @@ utils/body.ts
     64→
     65→			if (previousChunk) {
     66→				transferredBytes += previousChunk.byteLength;
+      →…
     90→export const streamResponse = (response: Response, onDownloadProgress: Options['onDownloadProgress']) => {
     91→	if (!response.body) {
     92→		return response;
     93→	}
     94→
+      →…
    119→export const streamRequest = (request: Request, onUploadProgress: Options['onUploadProgress'], originalBody?: BodyInit | null) => {
    120→	if (!request.body) {
    121→		return request;
    122→	}
    123→
+      →…
 utils/delay.ts
      5→export type DelayOptions = {
      6→	signal?: InternalOptions['signal'];
@@ -613,6 +619,7 @@ utils/delay.ts
     14→		if (signal) {
     15→			signal.throwIfAborted();
     16→			signal.addEventListener('abort', abortHandler, {once: true});
+      →…
 utils/is.ts
      2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
 utils/merge.ts
@@ -621,11 +628,13 @@ utils/merge.ts
      8→		if ((!isObject(source) || Array.isArray(source)) && source !== undefined) {
      9→			throw new TypeError('The `options` argument must be an object');
     10→		}
+      →…
     16→export const mergeHeaders = (source1: KyHeadersInit = {}, source2: KyHeadersInit = {}) => {
     17→	const result = new globalThis.Headers(source1 as RequestInit['headers']);
     18→	const isHeadersInstance = source2 instanceof globalThis.Headers;
     19→	const source = new globalThis.Headers(source2 as RequestInit['headers']);
     20→
+      →…
     32→function newHookValue<K extends keyof Hooks>(original: Hooks, incoming: Hooks, property: K): Required<Hooks>[K] {
     33→	return (Object.hasOwn(incoming, property) && incoming[property] === undefined)
     34→		? []
@@ -637,6 +646,7 @@ utils/merge.ts
     41→		beforeRetry: newHookValue(original, incoming, 'beforeRetry'),
     42→		afterResponse: newHookValue(original, incoming, 'afterResponse'),
     43→		beforeError: newHookValue(original, incoming, 'beforeError'),
+      →…
     47→const appendSearchParameters = (target: any, source: any): URLSearchParams => {
     48→	const result = new URLSearchParams();
     49→
@@ -647,11 +657,13 @@ utils/merge.ts
     54→
     55→		if (input instanceof URLSearchParams) {
     56→			for (const [key, value] of input.entries()) {
+      →…
     86→export const deepMerge = <T>(...sources: Array<Partial<T> | undefined>): T => {
     87→	let returnValue: any = {};
     88→	let headers = {};
     89→	let hooks = {};
     90→	let searchParameters: any;
+      →…
 utils/normalize.ts
      5→export const normalizeRequestMethod = (input: string): string =>
      6→	requestMethods.includes(input as RequestHttpMethod) ? input.toUpperCase() : input;
@@ -675,6 +687,7 @@ utils/normalize.ts
     30→		return {
     31→			...defaultRetryOptions,
     32→			limit: retry,
+      →…
 utils/options.ts
      4→export const findUnknownOptions = (
      5→	request: Request,
@@ -684,11 +697,13 @@ utils/options.ts
      9→
     10→	for (const key in options) {
     11→		// Skip inherited properties
+      →…
     30→export const hasSearchParameters = (search: SearchParamsOption): boolean => {
     31→	if (search === undefined) {
     32→		return false;
     33→	}
     34→
+      →…
 utils/timeout.ts
      3→export type TimeoutOptions = {
      4→	timeout: number;
@@ -704,6 +719,7 @@ utils/timeout.ts
     16→		const timeoutId = setTimeout(() => {
     17→			if (abortController) {
     18→				abortController.abort();
+      →…
 utils/type-guards.ts
      5→/**
      6→Type guard to check if an error is a Ky error.

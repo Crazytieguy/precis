@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1945 words)
+budget: 2000 (1950 words)
 
 README.md
      1→# xxhash
@@ -192,6 +192,7 @@ xxhash.go
     96→		d.n = 0
     97→	}
     98→
+      →…
    112→// Sum appends the current hash to b and returns the resulting slice.
    113→func (d *Digest) Sum(b []byte) []byte {
    114→	s := d.Sum64()
@@ -232,6 +233,7 @@ xxhash.go
    150→	}
    151→	if len(b) >= 4 {
    152→		h ^= uint64(u32(b[:4])) * prime1
+      →…
    170→const (
    171→	magic         = "xxh\x06"
    172→	marshaledSize = len(magic) + 8*5 + 32
@@ -331,6 +333,7 @@ xxhash_other.go
     28→		}
     29→		h = rol1(v1) + rol7(v2) + rol12(v3) + rol18(v4)
     30→		h = mergeRound(h, v1)
+      →…
     64→func writeBlocks(d *Digest, b []byte) int {
     65→	v1, v2, v3, v4 := d.v1, d.v2, d.v3, d.v4
     66→	n := len(b)
@@ -341,6 +344,7 @@ xxhash_other.go
     71→		v4 = round(v4, u64(b[24:32:len(b)]))
     72→		b = b[32:len(b):len(b)]
     73→	}
+      →…
 xxhash_safe.go
      8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
      9→func Sum64String(s string) uint64 {
@@ -385,6 +389,7 @@ xxhsum/xxhsum.go
     20→		printHash(os.Stdin, "-")
     21→		return
     22→	}
+      →…
     34→func contains(ss []string, s string) bool {
     35→	for _, s1 := range ss {
     36→		if s1 == s {

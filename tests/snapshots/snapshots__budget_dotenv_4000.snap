@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3957 words)
+budget: 4000 (4002 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -189,6 +189,7 @@ CHANGELOG.md
    182→
    183→- Add `error.code` to error messages around `.env.vault` decryption handling [#795](https://github.com/motdotla/dotenv/pull/795)
    184→- Add ability to find `.env.vault` file when filename(s) passed as an array [#784](https://github.com/motdotla/dotenv/pull/784)
+      →…
    186→## [16.3.2](https://github.com/motdotla/dotenv/compare/v16.3.1...v16.3.2) (2024-01-18)
    187→
    188→### Added
@@ -199,6 +200,7 @@ CHANGELOG.md
    193→
    194→- Fix output typing for `populate` [#792](https://github.com/motdotla/dotenv/pull/792)
    195→- Use subarray instead of slice [#793](https://github.com/motdotla/dotenv/pull/793)
+      →…
    197→## [16.3.1](https://github.com/motdotla/dotenv/compare/v16.3.0...v16.3.1) (2023-06-17)
    198→
    199→### Added
@@ -307,6 +309,7 @@ CHANGELOG.md
    302→
    303→- _Breaking:_ `#` marks the beginning of a comment (UNLESS the value is wrapped in quotes. Please update your `.env` files to wrap in quotes any values containing `#`. For example: `SECRET_HASH="something-with-a-#-hash"`).
    304→
+      →…
    307→### Removed
    308→
    309→- _Breaking:_ Remove multiline option (just works out of the box now. no need for the flag.)
@@ -407,6 +410,7 @@ CHANGELOG.md
    404→
    405→- Move types/index.d.ts to lib/main.d.ts ([#585](https://github.com/motdotla/dotenv/pull/585))
    406→- Typescript cleanup ([#587](https://github.com/motdotla/dotenv/pull/587))
+      →…
    409→## [11.0.0](https://github.com/motdotla/dotenv/compare/v10.0.0...v11.0.0) (2022-01-11)
    410→
    411→### Changed
@@ -528,6 +532,7 @@ CHANGELOG.md
    527→
    528→- _Breaking_: default `path` is now `path.resolve(process.cwd(), '.env')`
    529→- _Breaking_: does not write over keys already in `process.env` if the key has a falsy value
+      →…
    532→### Removed
    533→
    534→- Testing against Node v7
@@ -554,6 +559,7 @@ CHANGELOG.md
    555→
    556→- Suppress error messages by default ([#154](https://github.com/motdotla/dotenv/pull/154))
    557→- Ignoring more files for NPM to make package download smaller
+      →…
    559→### Fixed
    560→
    561→- False positive test due to case-sensitive variable ([#124](https://github.com/motdotla/dotenv/pull/124))
@@ -622,47 +628,58 @@ CONTRIBUTING.md
      2→
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
      4→2. Install dependencies (`npm install`)
+      →…
     11→## Testing
     12→
     13→We use [TAP](https://github.com/tapjs/node-tap) to write tests. Run our test suite with this command:
     14→
+      →…
     19→## Code Style
     20→
     21→We use [standard](https://www.npmjs.com/package/standard) and [editorconfig](http://editorconfig.org) to maintain code style and best practices. Please make sure your PR adheres to the guides by running:
     22→
+      →…
 README-es.md
      1→# dotenv [![NPM version](https://img.shields.io/npm/v/dotenv.svg?style=flat-square)](https://www.npmjs.com/package/dotenv) [![downloads](https://img.shields.io/npm/dw/dotenv)](https://www.npmjs.com/package/dotenv)
      2→
      3→<img src="https://raw.githubusercontent.com/motdotla/dotenv/master/dotenv.svg" alt="dotenv" align="right" width="200" />
      4→
+      →…
     11→## Usage
     12→
     13→Install it.
     14→
+      →…
     39→## Advanced
     40→
     41→<details><summary>ES6</summary><br>
     42→
+      →…
    319→## Agentes
    320→
    321→<img src="https://dotenvx.com/assets/img/as2/9.jpg" height="400" alt="dotenvx-as2" align="right"/>
    322→
+      →…
    331→### Inicio rápido
    332→
    333→Instala vestauth e inicializa tu agente.
    334→
+      →…
    357→## FAQ
    358→
    359→<details><summary>Should I commit my `.env` file?</summary><br/>
    360→
+      →…
    579→## Docs
    580→
    581→Dotenv exposes four functions:
    582→
+      →…
    587→### Config
    588→
    589→`config` will read your `.env` file, parse the contents, assign it to
    590→[`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env),
+      →…
    605→#### Options
    606→
    607→##### path
@@ -687,26 +704,32 @@ README-es.md
    626→
    627→Default: `false`
    628→
+      →…
    648→##### encoding
    649→
    650→Default: `utf8`
    651→
+      →…
    658→##### debug
    659→
    660→Default: `false`
    661→
+      →…
    668→##### override
    669→
    670→Default: `false`
    671→
+      →…
    678→##### processEnv
    679→
    680→Default: `process.env`
    681→
+      →…
    692→### Parse
    693→
    694→The engine which parses the contents of your file containing environment
    695→variables is available to use. It accepts a String or Buffer and will return
+      →…
    705→#### Options
    706→
    707→##### debug
@@ -727,6 +750,7 @@ README-es.md
    722→
    723→The engine which populates the contents of your .env file to `process.env` is available for use. It accepts a target, a source, and options. This is useful for power users who want to supply their own objects.
    724→
+      →…
    748→#### options
    749→
    750→##### Debug
@@ -739,47 +763,58 @@ README-es.md
    757→
    758→Default: `false`
    759→
+      →…
    764→## CHANGELOG
    765→
    766→See [CHANGELOG.md](CHANGELOG.md)
    767→
+      →…
    770→## Who's using dotenv?
    771→
    772→[These npm modules depend on it.](https://www.npmjs.com/browse/depended/dotenv)
    773→
+      →…
 README.md
      1→# dotenv [![NPM version](https://img.shields.io/npm/v/dotenv.svg?style=flat-square)](https://www.npmjs.com/package/dotenv) [![downloads](https://img.shields.io/npm/dw/dotenv)](https://www.npmjs.com/package/dotenv)
      2→
      3→<img src="https://raw.githubusercontent.com/motdotla/dotenv/master/dotenv.svg" alt="dotenv" align="right" width="200" />
      4→
+      →…
     11→## Usage
     12→
     13→Install it.
     14→
+      →…
     39→## Advanced
     40→
     41→<details><summary>ES6</summary><br>
     42→
+      →…
    319→## Agents
    320→
    321→<img src="https://dotenvx.com/assets/img/as2/9.jpg" height="400" alt="dotenvx-as2" align="right"/>
    322→
+      →…
    331→### Quickstart
    332→
    333→Install vestauth and initialize your agent.
    334→
+      →…
    357→## FAQ
    358→
    359→<details><summary>Should I commit my `.env` file?</summary><br/>
    360→
+      →…
    579→## Docs
    580→
    581→Dotenv exposes four functions:
    582→
+      →…
    587→### Config
    588→
    589→`config` will read your `.env` file, parse the contents, assign it to
    590→[`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env),
+      →…
    605→#### Options
    606→
    607→##### path
@@ -804,26 +839,32 @@ README.md
    626→
    627→Default: `false`
    628→
+      →…
    648→##### encoding
    649→
    650→Default: `utf8`
    651→
+      →…
    658→##### debug
    659→
    660→Default: `false`
    661→
+      →…
    668→##### override
    669→
    670→Default: `false`
    671→
+      →…
    678→##### processEnv
    679→
    680→Default: `process.env`
    681→
+      →…
    692→### Parse
    693→
    694→The engine which parses the contents of your file containing environment
    695→variables is available to use. It accepts a String or Buffer and will return
+      →…
    705→#### Options
    706→
    707→##### debug
@@ -844,6 +885,7 @@ README.md
    722→
    723→The engine which populates the contents of your .env file to `process.env` is available for use. It accepts a target, a source, and options. This is useful for power users who want to supply their own objects.
    724→
+      →…
    748→#### options
    749→
    750→##### Debug
@@ -856,14 +898,17 @@ README.md
    757→
    758→Default: `false`
    759→
+      →…
    764→## CHANGELOG
    765→
    766→See [CHANGELOG.md](CHANGELOG.md)
    767→
+      →…
    770→## Who's using dotenv?
    771→
    772→[These npm modules depend on it.](https://www.npmjs.com/browse/depended/dotenv)
    773→
+      →…
 lib/cli-options.js
      1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
 lib/env-options.js

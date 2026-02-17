@@ -2,11 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1785 words)
+budget: 2000 (1882 words)
 
 __init__.py
     34→config: TypeCheckConfiguration
-    37→def __getattr__
+    37→def __getattr__ …
 _checkers.py
     81→TypeCheckerCallable: TypeAlias = Callable[
     82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
@@ -54,33 +54,34 @@ _checkers.py
    129→    "__ne__",
    130→    "__or__",
    131→    "__pow__",
-   153→def check_callable
-   212→def check_mapping
-   247→def check_typed_dict
-   305→def check_list
-   324→def check_sequence
-   343→def check_set
-   365→def check_tuple
-   423→def check_union
-   447→def check_uniontype
-   474→def check_class
-   536→def check_newtype
-   545→def check_instance
-   555→def check_typevar
+      →…
+   153→def check_callable …
+   212→def check_mapping …
+   247→def check_typed_dict …
+   305→def check_list …
+   324→def check_sequence …
+   343→def check_set …
+   365→def check_tuple …
+   423→def check_union …
+   447→def check_uniontype …
+   474→def check_class …
+   536→def check_newtype …
+   545→def check_instance …
+   555→def check_typevar …
    586→def _is_literal_type(typ: object) -> bool:
    587→    return typ is typing.Literal or typ is typing_extensions.Literal
-   590→def check_literal
-   623→def check_literal_string
-   632→def check_typeguard
-   641→def check_none
-   651→def check_number
-   663→def check_io
-   679→def check_signature_compatible
-   834→def check_protocol
-   885→def check_byteslike
-   895→def check_self
-   915→def check_paramspec
-   924→def check_type_internal
+   590→def check_literal …
+   623→def check_literal_string …
+   632→def check_typeguard …
+   641→def check_none …
+   651→def check_number …
+   663→def check_io …
+   679→def check_signature_compatible …
+   834→def check_protocol …
+   885→def check_byteslike …
+   895→def check_self …
+   915→def check_paramspec …
+   924→def check_type_internal …
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
   1006→    Any, Callable[[Any, Any, tuple[Any, ...], TypeCheckMemo], None]
@@ -115,8 +116,9 @@ _checkers.py
   1035→    type: check_class,
   1036→    Type: check_class,
   1037→    Union: check_union,
-  1061→def builtin_checker_lookup
-  1099→def load_plugins
+      →…
+  1061→def builtin_checker_lookup …
+  1099→def load_plugins …
 _config.py
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
@@ -130,6 +132,7 @@ _config.py
     50→    ALL_ITEMS = auto()
     51→
     52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
+      →…
     62→@dataclass
     63→class TypeCheckConfiguration:
     64→    """
@@ -173,11 +176,11 @@ _config.py
    102→    )
    103→    debug_instrumentation: bool = False
 _decorators.py
-    24→    def typeguard_ignore
-    32→def make_cell
-    36→def find_target_function
-    56→def instrument
-   150→def typechecked
+    24→    def typeguard_ignore …
+    32→def make_cell …
+    36→def find_target_function …
+    56→def instrument …
+   150→def typechecked …
 _exceptions.py
      5→class TypeHintWarning(UserWarning):
     12→class TypeCheckWarning(UserWarning):
@@ -194,18 +197,18 @@ _exceptions.py
     32→        super().__init__(message)
     33→        self._path: Deque[str] = deque()
     34→
-    35→    def append_path_element
-    38→    def __str__
+    35→    def append_path_element …
+    38→    def __str__ …
 _functions.py
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
-    50→def check_type
-   118→def check_argument_types
-   149→def check_return_type
-   185→def check_send_type
-   216→def check_yield_type
-   245→def check_variable_assignment
-   291→def warn_on_error
+    50→def check_type …
+   118→def check_argument_types …
+   149→def check_return_type …
+   185→def check_send_type …
+   216→def check_yield_type …
+   245→def check_variable_assignment …
+   291→def warn_on_error …
 _importhook.py
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
@@ -214,31 +217,31 @@ _importhook.py
     46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
     47→) -> T:
     48→    return f(*args, **kwargs)
-    51→def optimized_cache_from_source
+    51→def optimized_cache_from_source …
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
     57→    def source_to_code(
     58→        data: Buffer | str | ast.Module | ast.Expression | ast.Interactive,
     59→        path: Buffer | str | PathLike[str] = "<string>",
     60→        *,
-    99→    def exec_module
+    99→    def exec_module …
    109→class TypeguardFinder(MetaPathFinder):
    119→
    120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
    121→        self.packages = packages
    122→        self._original_pathfinder = original_pathfinder
    123→
-   124→    def find_spec
-   138→    def should_instrument
+   124→    def find_spec …
+   138→    def should_instrument …
    156→class ImportHookManager:
    160→
    161→    def __init__(self, hook: MetaPathFinder):
    162→        self.hook = hook
    163→
    164→    def __enter__(self) -> None:
-   167→    def __exit__
-   175→    def uninstall
-   183→def install_import_hook
+   167→    def __exit__ …
+   175→    def uninstall …
+   183→def install_import_hook …
 _memo.py
      8→class TypeCheckMemo:
     34→
@@ -246,13 +249,14 @@ _memo.py
     36→
     37→    def __init__(
     38→        self,
+      →…
 _pytest_plugin.py
-    16→def pytest_addoption
-    75→def pytest_configure
+    16→def pytest_addoption …
+    75→def pytest_configure …
 _suppression.py
     15→P = ParamSpec("P")
     16→T = TypeVar("T")
-    30→def suppress_type_checks
+    30→def suppress_type_checks …
 _transformer.py
     67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
     68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
@@ -428,42 +432,42 @@ _transformer.py
    288→
    289→    def visit_Import(self, node: Import) -> None:
    290→        for name in node.names:
-   293→    def visit_ImportFrom
-   297→    def visit_Assign
-   302→    def visit_NamedExpr
-   306→    def visit_FunctionDef
-   309→    def visit_ClassDef
+   293→    def visit_ImportFrom …
+   297→    def visit_Assign …
+   302→    def visit_NamedExpr …
+   306→    def visit_FunctionDef …
+   309→    def visit_ClassDef …
    313→class GeneratorDetector(NodeVisitor):
    315→
    316→    contains_yields: bool = False
    317→    in_root_function: bool = False
    318→
    319→    def visit_Yield(self, node: Yield) -> Any:
-   322→    def visit_YieldFrom
-   325→    def visit_ClassDef
-   328→    def visit_FunctionDef
-   334→    def visit_AsyncFunctionDef
+   322→    def visit_YieldFrom …
+   325→    def visit_ClassDef …
+   328→    def visit_FunctionDef …
+   334→    def visit_AsyncFunctionDef …
    338→class AnnotationTransformer(NodeTransformer):
    339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
    340→        "builtins.dict": ("typing", "Dict"),
    341→        "builtins.list": ("typing", "List"),
    342→        "builtins.tuple": ("typing", "Tuple"),
    343→        "builtins.set": ("typing", "Set"),
-   347→    def __init__
-   352→    def visit
-   374→    def visit_BinOp
-   401→    def visit_Attribute
-   407→    def visit_Subscript
-   466→    def visit_Name
-   472→    def visit_Call
-   476→    def visit_Constant
+   347→    def __init__ …
+   352→    def visit …
+   374→    def visit_BinOp …
+   401→    def visit_Attribute …
+   407→    def visit_Subscript …
+   466→    def visit_Name …
+   472→    def visit_Call …
+   476→    def visit_Constant …
    488→class TypeguardTransformer(NodeTransformer):
    489→    def __init__(
    490→        self, target_path: Sequence[str] | None = None, target_lineno: int | None = None
    491→    ) -> None:
    492→        self._target_path = tuple(target_path) if target_path else None
    493→        self._memo = self._module_memo = TransformMemo(None, None, ())
-   498→    def generic_visit
+   498→    def generic_visit …
    516→    @contextmanager
    517→    def _use_memo(
    518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
@@ -481,6 +485,7 @@ _transformer.py
    530→                detector = GeneratorDetector()
    531→                detector.visit(node)
    532→
+      →…
    570→    def _get_import(self, module: str, name: str) -> Name:
    571→        memo = self._memo if self._target_path else self._module_memo
    572→        return memo.get_import(module, name)
@@ -488,28 +493,29 @@ _transformer.py
    581→        if annotation is None:
    582→            return None
    583→
-   596→    def visit_Name
-   600→    def visit_Module
-   608→    def visit_Import
-   615→    def visit_ImportFrom
-   624→    def visit_ClassDef
-   650→    def visit_FunctionDef
-   913→    def visit_AsyncFunctionDef
-   918→    def visit_Return
-   945→    def visit_Yield
-   994→    def visit_AnnAssign
-  1036→    def visit_Assign
-  1138→    def visit_NamedExpr
-  1181→    def visit_AugAssign
-  1224→    def visit_If
+      →…
+   596→    def visit_Name …
+   600→    def visit_Module …
+   608→    def visit_Import …
+   615→    def visit_ImportFrom …
+   624→    def visit_ClassDef …
+   650→    def visit_FunctionDef …
+   913→    def visit_AsyncFunctionDef …
+   918→    def visit_Return …
+   945→    def visit_Yield …
+   994→    def visit_AnnAssign …
+  1036→    def visit_Assign …
+  1138→    def visit_NamedExpr …
+  1181→    def visit_AugAssign …
+  1224→    def visit_If …
 _utils.py
-    48→    def evaluate_forwardref
-    66→def get_type_name
-   104→def qualified_name
-   127→def function_name
-   142→def resolve_reference
-   154→def is_method_of
-   162→def get_stacklevel
+    48→    def evaluate_forwardref …
+    66→def get_type_name …
+   104→def qualified_name …
+   127→def function_name …
+   142→def resolve_reference …
+   154→def is_method_of …
+   162→def get_stacklevel …
    172→@final
    173→class Unset:
    174→    __slots__ = ()

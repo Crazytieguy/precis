@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1903 words)
+budget: 2000 (1949 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -16,100 +16,132 @@ CHANGELOG.md
      9→## 2.3.0
     10→
     11→- Added
+      →…
     16→## 2.2.1
     17→
     18→- Fixed
+      →…
     21→## 2.2.0
     22→
     23→- Added
+      →…
     26→## 2.1.0
     27→
     28→- Deprecated
+      →…
     34→## 2.0.2
     35→
     36→- Removed
+      →…
     44→## 2.0.1
     45→
     46→- Improved
+      →…
     56→## 1.2.3
     57→
     58→- Fixed
+      →…
     61→## 2.0.0
     62→
     63→- Removed
+      →…
     75→## 1.2.2
     76→
     77→- Fixed
+      →…
     84→## 1.2.1
     85→
     86→- Fixed
+      →…
     94→## 1.2.0
     95→
     96→- Deprecated
+      →…
    100→## 1.1.0
    101→
    102→- Added
+      →…
    105→## 1.0.4
    106→
    107→- Performance
+      →…
    110→## 1.0.3
    111→
    112→- Fixed
+      →…
    117→## 1.0.2
    118→
    119→- Performance
+      →…
    122→## 1.0.1
    123→
    124→- Performance
+      →…
    127→## 1.0.0
    128→
    129→- Fixed
+      →…
    132→## 0.2.10
    133→
    134→- Fixed
+      →…
    140→## 0.2.9
    141→
    142→- Fixed
+      →…
    147→## 0.2.8
    148→
    149→- Performance
+      →…
    152→## 0.2.7
    153→
    154→- Added
+      →…
    158→## 0.2.6
    159→
    160→- Performance
+      →…
    163→## 0.2.5
    164→
    165→- Fixed
+      →…
    168→## 0.2.4
    169→
    170→- Fixed
+      →…
    173→## 0.2.3
    174→
    175→- Fixed
+      →…
    178→## 0.2.2
    179→
    180→- Added
+      →…
    185→## 0.2.1
    186→
    187→- Fixed
+      →…
    191→## 0.2.0
    192→
    193→- Changed
+      →…
    198→## 0.1.0
    199→
    200→- Added
+      →…
 README.md
      5→# Tomli
      6→
      7→> A lil' TOML parser
+      →…
     32→## Intro<a name="intro"></a>
     33→
     34→Tomli is a Python library for parsing [TOML](https://toml.io).
+      →…
     50→## Installation<a name="installation"></a>
     51→
     52→```bash
+      →…
     56→## Usage<a name="usage"></a>
     57→
     58→### Parse a TOML string<a name="parse-a-toml-string"></a>
@@ -136,15 +168,19 @@ README.md
     79→### Parse a TOML file<a name="parse-a-toml-file"></a>
     80→
     81→```python
+      →…
     92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
     93→
     94→```python
+      →…
    106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
    107→
    108→```python
+      →…
    123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
    124→
    125→Python versions 3.11+ ship with a version of Tomli:
+      →…
    152→## FAQ<a name="faq"></a>
    153→
    154→### Why this parser?<a name="why-this-parser"></a>
@@ -163,21 +199,27 @@ README.md
    167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
    168→
    169→No.
+      →…
    177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
    178→
    179→[Tomli-W](https://github.com/hukkin/tomli-w) is the write-only counterpart of Tomli, providing `dump` and `dumps` functions.
+      →…
    183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
    184→
    185→| TOML type        | Python type         | Details                                                      |
+      →…
    201→## Performance<a name="performance"></a>
    202→
    203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
+      →…
    207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
    208→
    209→```console
+      →…
    230→### Pure Python<a name="pure-python"></a>
    231→
    232→```console
+      →…
 fuzzer/fuzz.py
     20→def test_one_input(input_bytes: bytes) -> None:
     21→    # We need a Unicode string, not bytes
@@ -309,6 +351,7 @@ src/tomli/_parser.py
    106→                stacklevel=2,
    107→            )
    108→            if pos is not DEPRECATED_DEFAULT:
+      →…
    137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
    138→    """Parse TOML from a binary file object."""
    149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
@@ -363,6 +406,7 @@ src/tomli/_parser.py
    299→
    300→    def append_nest_to_list(self, key: Key) -> None:
    301→        cont = self.get_or_create_nest(key[:-1])
+      →…
    312→class Output:
    313→    def __init__(self) -> None:
    314→        self.data = NestedDict()
@@ -480,6 +524,7 @@ tomllib.md
      1→# `tomllib` – Tomli in the standard library
      2→
      3→Tomli was added to the Python standard library in Python 3.11.
+      →…
     13→## Converting Tomli to tomllib
     14→
     15→### Sync status
@@ -490,3 +535,4 @@ tomllib.md
     20→### Steps to convert
     21→
     22→- Move everything in `tomli:src/tomli` to `cpython:Lib/tomllib`. Exclude `py.typed`.
+      →…

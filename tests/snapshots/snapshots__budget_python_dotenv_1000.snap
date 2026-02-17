@@ -2,15 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (980 words)
+budget: 1000 (1043 words)
 
 CHANGELOG.md
      1→# Changelog
      2→
+      →…
      8→## [1.2.1] - 2025-10-26
      9→
+      →…
     13→## [1.2.0] - 2025-10-26
     14→
+      →…
     19→## [1.1.1] - 2025-06-24
     20→
     21→### Fixed
@@ -21,86 +24,126 @@ CHANGELOG.md
     26→
     27→## [1.1.0] - 2025-03-25
     28→
+      →…
     42→## [1.0.1] - 2024-01-23
     43→
+      →…
     55→## [1.0.0] - 2023-02-24
     56→
+      →…
     62→## [0.21.1] - 2023-01-21
     63→
+      →…
     80→## [0.21.0] - 2022-09-03
     81→
+      →…
     97→## [0.20.0] - 2022-03-24
     98→
+      →…
    110→## [0.19.2] - 2021-11-11
    111→
+      →…
    117→## [0.19.1] - 2021-08-09
    118→
+      →…
    123→## [0.19.0] - 2021-07-24
    124→
+      →…
    138→## [0.18.0] - 2021-06-20
    139→
+      →…
    151→## [0.17.1] - 2021-04-29
    152→
+      →…
    157→## [0.17.0] - 2021-04-02
    158→
+      →…
    167→## [0.16.0] - 2021-03-27
    168→
+      →…
    175→## [0.15.0] - 2020-10-28
    176→
+      →…
    194→## [0.14.0] - 2020-07-03
    195→
+      →…
    206→## [0.13.0] - 2020-04-16
    207→
+      →…
    212→## [0.12.0] - 2020-02-28
    213→
+      →…
    225→## [0.11.0] - 2020-02-07
    226→
+      →…
    241→## [0.10.5] - 2020-01-19
    242→
+      →…
    250→## [0.10.4] - 2020-01-17
    251→
+      →…
    258→## 0.10.3
    259→
+      →…
    265→## 0.10.2
    266→
+      →…
    273→## 0.10.1
    274→- Fix parsing of variable without a value ([@asyncee])([@bbc2])([#158])
+      →…
    276→## 0.10.0
    277→
+      →…
    287→## 0.9.0
    288→
+      →…
    293→## 0.8.1
    294→
+      →…
    298→## 0.8.0
    299→
+      →…
    307→## 0.7.1
    308→
+      →…
    311→## 0.7.0
    312→
+      →…
    320→## 0.6.5
    321→
+      →…
    326→## 0.6.4
    327→
+      →…
    331→## 0.6.3
    332→
+      →…
    336→## 0.6.2
    337→
+      →…
    342→## 0.6.0
    343→
+      →…
    352→## 0.5.1
    353→
+      →…
    357→## 0.5.0
    358→
+      →…
    362→## 0.4.0
    363→
+      →…
 CONTRIBUTING.md
      1→Contributing
      3→
+      →…
 README.md
      1→# python-dotenv
      2→
+      →…
     22→## Getting Started
     23→
+      →…
     78→## Other Use Cases
     79→
     80→### Load configuration without altering the environment
@@ -130,24 +173,34 @@ README.md
    104→
    105→### Parse configuration as a stream
    106→
+      →…
    120→### Load .env files in IPython
    121→
+      →…
    141→### Disable load_dotenv
    142→
+      →…
    147→## Command-line Interface
    148→
+      →…
    169→## File format
    170→
+      →…
    185→### Multiline values
    186→
+      →…
    199→### Variable without a value
    200→
+      →…
    214→### Variable expansion
    215→
+      →…
    234→## Related Projects
    235→
+      →…
    246→## Acknowledgements
    247→
+      →…
 docs/reference.md
      1→# ::: dotenv
      2→
@@ -177,6 +230,7 @@ src/dotenv/cli.py
     73→    """
     74→
     75→    try:
+      →…
    112→@cli.command(name="set")
    113→@click.pass_context
    114→@click.argument("key", required=True)
@@ -185,6 +239,7 @@ src/dotenv/cli.py
    117→    """Store the given key/value."""
    118→    file = ctx.obj["FILE"]
    119→    quote = ctx.obj["QUOTE"]
+      →…
    128→@cli.command()
    129→@click.pass_context
    130→@click.argument("key", required=True)
@@ -192,6 +247,7 @@ src/dotenv/cli.py
    132→    """Retrieve the value for the given key."""
    133→    file = ctx.obj["FILE"]
    134→
+      →…
    145→@cli.command()
    146→@click.pass_context
    147→@click.argument("key", required=True)
@@ -199,11 +255,13 @@ src/dotenv/cli.py
    149→    """Removes the given key."""
    150→    file = ctx.obj["FILE"]
    151→    quote = ctx.obj["QUOTE"]
+      →…
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
    175→    file = ctx.obj["FILE"]
    176→    if not os.path.isfile(file):
+      →…
 src/dotenv/ipython.py
     11→@magics_class
     12→class IPythonDotEnv(Magics):
@@ -243,6 +301,7 @@ src/dotenv/ipython.py
 src/dotenv/main.py
     25→def _load_dotenv_disabled() -> bool:
     26→    """
+      →…
     45→class DotEnv:
     46→    def __init__(
     47→        self,
@@ -260,6 +319,7 @@ src/dotenv/main.py
     71→            if self.verbose:
     72→                logger.info(
     73→                    "python-dotenv could not find configuration file %s.",
+      →…
    141→@contextmanager
    142→def rewrite(
    143→    path: StrPath,
@@ -267,10 +327,13 @@ src/dotenv/main.py
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    146→    pathlib.Path(path).touch()
    147→
+      →…
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """
+      →…
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
+      →…
 src/dotenv/parser.py
     35→class Original(NamedTuple):
     36→    string: str

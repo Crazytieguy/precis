@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3966 words)
+budget: 4000 (4022 words)
 
 README.md
      1→# Format
@@ -11,6 +11,7 @@ README.md
      4→
      5→- Structure your book correctly
      6→- Format your `SUMMARY.md` file
+      →…
 configuration/README.md
      1→# Configuration
      2→
@@ -19,6 +20,7 @@ configuration/README.md
      5→- **[Preprocessor]** configuration for default and custom book preprocessors
      6→- **[Renderer]** configuration for the HTML, Markdown and custom renderers
      7→- **[Environment Variable]** configuration for overriding configuration options in your environment
+      →…
 configuration/environment-variables.md
      1→# Environment variables
      2→
@@ -27,6 +29,7 @@ configuration/environment-variables.md
      5→environment variables to be alphanumeric characters or `_`, the configuration
      6→key needs to be formatted slightly differently to the normal `foo.bar.baz` form.
      7→
+      →…
 configuration/general.md
      1→# General configuration
      2→
@@ -35,6 +38,7 @@ configuration/general.md
      5→Here is an example of what a ***book.toml*** file might look like:
      6→
      7→```toml
+      →…
     31→## Supported configuration options
     32→
     33→It is important to note that **any** relative path specified in the
@@ -48,6 +52,7 @@ configuration/general.md
     41→- **title:** The title of the book
     42→- **authors:** The author(s) of the book
     43→- **description:** A description for the book, which is added as meta
+      →…
     64→### Rust options
     65→
     66→Options for the Rust language, relevant to running tests and playground
@@ -55,6 +60,7 @@ configuration/general.md
     68→
     69→```toml
     70→[rust]
+      →…
     85→### Build options
     86→
     87→This controls the build process of your book.
@@ -62,6 +68,7 @@ configuration/general.md
     89→```toml
     90→[build]
     91→build-dir = "book"                # the directory where the output is placed
+      →…
 configuration/preprocessors.md
      1→# Configuring Preprocessors
      2→
@@ -70,6 +77,7 @@ configuration/preprocessors.md
      5→The following preprocessors are built-in and included by default:
      6→
      7→- `links`: Expands the `{{ #playground }}`, `{{ #include }}`, and `{{ #rustdoc_include }}` handlebars
+      →…
     26→## Custom preprocessor configuration
     27→
     28→Preprocessors can be added by including a `preprocessor` table in `book.toml` with the name of the preprocessor.
@@ -77,6 +85,7 @@ configuration/preprocessors.md
     30→
     31→```toml
     32→[preprocessor.example]
+      →…
     45→## Locking a preprocessor dependency to a renderer
     46→
     47→You can explicitly specify that a preprocessor should run for a renderer by
@@ -84,6 +93,7 @@ configuration/preprocessors.md
     49→
     50→```toml
     51→[preprocessor.example]
+      →…
     55→## Provide your own command
     56→
     57→By default when you add a `[preprocessor.foo]` table to your `book.toml` file,
@@ -91,6 +101,7 @@ configuration/preprocessors.md
     59→different program name or pass in command-line arguments, this behaviour can
     60→be overridden by adding a `command` field.
     61→
+      →…
     67→### Optional preprocessors
     68→
     69→If you enable a preprocessor that isn't installed, the default behavior is to throw an error.
@@ -98,6 +109,7 @@ configuration/preprocessors.md
     71→
     72→```toml
     73→[preprocessor.example]
+      →…
     79→## Require a certain order
     80→
     81→The order in which preprocessors are run can be controlled with the `before` and `after` fields.
@@ -105,6 +117,7 @@ configuration/preprocessors.md
     83→
     84→```toml
     85→[preprocessor.linenos]
+      →…
 configuration/renderers.md
      1→# Configuring Renderers
      2→
@@ -113,6 +126,7 @@ configuration/renderers.md
      5→The following backends are built-in:
      6→
      7→* [`html`](#html-renderer-options) --- This renders the book to HTML.
+      →…
     20→## Output tables
     21→
     22→Backends can be added by including a `output` table in `book.toml` with the name of the backend.
@@ -120,6 +134,7 @@ configuration/renderers.md
     24→
     25→```toml
     26→[output.wordcount]
+      →…
     59→### Custom backend commands
     60→
     61→By default when you add an `[output.foo]` table to your `book.toml` file,
@@ -127,6 +142,7 @@ configuration/renderers.md
     63→If you want to use a different program name or pass in command-line arguments,
     64→this behaviour can be overridden by adding a `command` field.
     65→
+      →…
     71→### Optional backends
     72→
     73→If you enable a backend that isn't installed, the default behavior is to throw an error.
@@ -134,6 +150,7 @@ configuration/renderers.md
     75→
     76→```toml
     77→[output.wordcount]
+      →…
     84→## HTML renderer options
     85→
     86→The HTML renderer has a variety of options detailed below.
@@ -141,6 +158,7 @@ configuration/renderers.md
     88→
     89→```toml
     90→# Example book.toml file with all output options.
+      →…
    176→### `[output.html.print]`
    177→
    178→The `[output.html.print]` table provides options for controlling the printable output.
@@ -148,6 +166,7 @@ configuration/renderers.md
    180→
    181→```toml
    182→[output.html.print]
+      →…
    191→### `[output.html.fold]`
    192→
    193→The `[output.html.fold]` table provides options for controlling folding of the chapter listing in the navigation sidebar.
@@ -155,6 +174,7 @@ configuration/renderers.md
    195→```toml
    196→[output.html.fold]
    197→enable = false    # whether or not to enable section folding
+      →…
    206→### `[output.html.playground]`
    207→
    208→The `[output.html.playground]` table provides options for controlling Rust sample code blocks, and their integration with the [Rust Playground].
@@ -162,6 +182,7 @@ configuration/renderers.md
    210→[Rust Playground]: https://play.rust-lang.org/
    211→
    212→```toml
+      →…
    230→### `[output.html.code]`
    231→
    232→The `[output.html.code]` table provides options for controlling code blocks.
@@ -169,6 +190,7 @@ configuration/renderers.md
    234→```toml
    235→[output.html.code]
    236→# A prefix string per language (one or more chars).
+      →…
    244→### `[output.html.search]`
    245→
    246→The `[output.html.search]` table provides options for controlling the built-in text [search].
@@ -176,6 +198,7 @@ configuration/renderers.md
    248→
    249→[search]: ../../guide/reading.md#search
    250→
+      →…
    286→#### `[output.html.search.chapter]`
    287→
    288→The [`output.html.search.chapter`] table provides the ability to modify search settings per chapter or directory. Each key is the path to the chapter source file or directory, and the value is a table of settings to apply to that path. This will merge recursively, with more specific paths taking precedence.
@@ -183,6 +206,7 @@ configuration/renderers.md
    290→```toml
    291→[output.html.search.chapter]
    292→# Disables search indexing for all chapters in the `appendix` directory.
+      →…
    300→### `[output.html.redirect]`
    301→
    302→The `[output.html.redirect]` table provides a way to add redirects.
@@ -190,6 +214,7 @@ configuration/renderers.md
    304→
    305→```toml
    306→[output.html.redirect]
+      →…
    325→## Markdown renderer
    326→
    327→The Markdown renderer will run preprocessors and then output the resulting
@@ -197,6 +222,7 @@ configuration/renderers.md
    329→conjunction with `mdbook test` to see the Markdown that `mdbook` is passing
    330→to `rustdoc`.
    331→
+      →…
 example.rs
      1→fn main() {
      2→    println!("Hello World!");
@@ -211,18 +237,21 @@ markdown.md
      4→You can take a quick [tutorial](https://commonmark.org/help/tutorial/),
      5→or [try out](https://spec.commonmark.org/dingus/) CommonMark in real time. A complete Markdown overview is out of scope for 
      6→this documentation, but below is a high level overview of some of the basics. For a more in-depth experience, check out the
+      →…
      9→## Text and paragraphs
     10→
     11→Text is rendered relatively predictably: 
     12→
     13→```markdown
     14→Here is a line of text.
+      →…
     25→## Headings
     26→
     27→Headings use the `#` marker and should be on a line by themselves. More `#` mean smaller headings:
     28→
     29→```markdown
     30→### A heading 
+      →…
     39→### A heading 
     40→
     41→Some text.
@@ -237,18 +266,21 @@ markdown.md
     50→
     51→```markdown
     52→* milk
+      →…
     69→## Links
     70→
     71→Linking to a URL or local file is easy:
     72→
     73→```markdown
     74→Use [mdBook](https://github.com/rust-lang/mdBook). 
+      →…
    108→## Images
    109→
    110→Including images is simply a matter of including a link to them, much like in the _Links_ section above. The following markdown
    111→includes the Rust logo SVG image found in the `images` directory at the same level as this file:
    112→
    113→```markdown
+      →…
    127→## Extensions
    128→
    129→mdBook has several extensions beyond the standard CommonMark specification.
@@ -259,48 +291,56 @@ markdown.md
    134→text with one or two tilde characters on each side:
    135→
    136→```text
+      →…
    146→### Footnotes
    147→
    148→A footnote generates a small numbered link in the text which when clicked
    149→takes the reader to the footnote text at the bottom of the item. The footnote
    150→label is written similarly to a link reference with a caret at the front. The
    151→footnote text is written like a link reference definition, with the text
+      →…
    171→### Tables
    172→
    173→Tables can be written using pipes and dashes to draw the rows and columns of
    174→the table. These will be translated to HTML table matching the shape. Example:
    175→
    176→```text
+      →…
    191→### Task lists
    192→
    193→Task lists can be used as a checklist of items that have been completed.
    194→Example:
    195→
    196→```md
+      →…
    208→### Smart punctuation
    209→
    210→Some ASCII punctuation sequences will be automatically turned into fancy Unicode
    211→characters:
    212→
    213→| ASCII sequence | Unicode |
+      →…
    231→### Heading attributes
    232→
    233→Headings can have a custom HTML ID and classes. This lets you maintain the same ID even if you change the heading's text, it also lets you add multiple classes in the heading.
    234→
    235→Example:
    236→```md
+      →…
    244→### Definition lists
    245→
    246→Definition lists can be used for things like glossary entries. The term is listed on a line by itself, followed by one or more definitions. Each definition must begin with a `:` (after 0-2 spaces).
    247→
    248→Example:
    249→
+      →…
    279→### Admonitions
    280→
    281→An admonition is a special type of callout or notice block used to highlight important information. It is written as a blockquote with a special tag on the first line.
    282→
    283→```md
    284→> [!NOTE]
+      →…
 mathjax.md
      1→# MathJax support
      2→
@@ -308,18 +348,21 @@ mathjax.md
      4→[MathJax](https://www.mathjax.org/).
      5→
      6→To enable MathJax, you need to add the `mathjax-support` key to your `book.toml`
+      →…
     24→### Inline equations
     25→Inline equations are delimited by `\\(` and `\\)`. So for example, to render the
     26→following inline equation \\( \int x dx = \frac{x^2}{2} + C \\) you would write
     27→the following:
     28→```
     29→\\( \int x dx = \frac{x^2}{2} + C \\)
+      →…
     32→### Block equations
     33→Block equations are delimited by `\\[` and `\\]`. To render the following
     34→equation
     35→
     36→\\[ \mu = \frac{1}{N} \sum_{i=0} x_i \\]
     37→
+      →…
 mdbook.md
      1→# mdBook-specific features
      2→
@@ -400,42 +443,49 @@ mdbook.md
     77→This works by sending the code to the [Rust Playground].
     78→
     79→```rust
+      →…
    102→## Rust code block attributes
    103→
    104→Additional attributes can be included in Rust code blocks with comma, space, or tab-separated terms just after the language term. For example:
    105→
    106→~~~markdown
    107→```rust,ignore
+      →…
    133→## Including files
    134→
    135→With the following syntax, you can include files into your book:
    136→
    137→```hbs
    138→\{{#include file.rs}}
+      →…
    154→## Including portions of a file
    155→Often you only need a specific part of the file, e.g. relevant lines for an
    156→example. We support four different modes of partial includes:
    157→
    158→```hbs
    159→\{{#include file.rs:2}}
+      →…
    215→## Including a file but initially hiding all except specified lines
    216→
    217→The `rustdoc_include` helper is for including code from external Rust files that contain complete
    218→examples, but only initially showing particular lines specified with line numbers or anchors in the
    219→same way as with `include`.
    220→
+      →…
    279→## Inserting runnable Rust files
    280→
    281→With the following syntax, you can insert runnable Rust files into your book:
    282→
    283→```hbs
    284→\{{#playground file.rs}}
+      →…
    310→## Controlling page \<title\>
    311→
    312→A chapter can set a \<title\> that is different from its entry in the table of
    313→contents (sidebar) by including a `\{{#title ...}}` near the top of the page.
    314→
    315→```hbs
+      →…
    319→## HTML classes provided by mdBook
    320→
    321→<img class="right" src="images/rust-logo-blk.svg" alt="The Rust logo">
@@ -446,18 +496,21 @@ mdbook.md
    326→
    327→```html
    328→<img class="right" src="images/rust-logo-blk.svg" alt="The Rust logo">
+      →…
    331→### `class="hidden"`
    332→
    333→HTML tags with class `hidden` will not be shown.
    334→
    335→```html
    336→<div class="hidden">This will not be seen.</div>
+      →…
    341→## Font-Awesome icons
    342→
    343→mdBook includes a copy of version 6 of [Font Awesome Free's](https://fontawesome.com)
    344→MIT-licensed SVG files. It emulates the `<i>` syntax, but converts the results
    345→to inline SVG. Only the regular, solid, and brands icons are included; paid
    346→features like the light icons are not.
+      →…
 summary.md
      1→# SUMMARY.md
      2→
@@ -465,18 +518,21 @@ summary.md
      4→order they should appear, what their hierarchy is and where the source files
      5→are. Without this file, there is no book.
      6→
+      →…
     12→### Structure
     13→
     14→1. ***Title*** - While optional, it's common practice to begin with a title, generally <code
     15→   class="language-markdown"># Summary</code>. This is ignored by the parser however, and
     16→   can be omitted.
     17→   ```markdown
+      →…
     93→### Example
     94→
     95→Below is the markdown source for the `SUMMARY.md` for this guide, with the resulting table
     96→of contents as rendered to the left.
     97→
     98→```markdown
+      →…
 theme/README.md
      1→# Theme
      2→

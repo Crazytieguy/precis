@@ -2,21 +2,27 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (988 words)
+budget: 1000 (1005 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
      3→
+      →…
     21→## Details
     22→
+      →…
    126→## No-std support
    127→
+      →…
    144→## Comparison to failure
    145→
+      →…
    155→## Comparison to thiserror
    156→
+      →…
    166→#### License
    167→
+      →…
 build.rs
     17→fn main() {
     99→fn compile_probe(rustc_bootstrap: bool) -> bool {
@@ -86,13 +92,13 @@ src/ensure.rs
    886→macro_rules! __fancy_ensure {
    912→macro_rules! __fallback_ensure {
 src/error.rs
-   293→    unsafe fn construct
+   293→    unsafe fn construct …
    705→    type Target = dyn StdError + Send + Sync + 'static;
-   788→unsafe fn object_boxed
-   799→unsafe fn object_reallocate_boxed
-   839→unsafe fn context_downcast
-   859→unsafe fn context_drop_rest
-   920→unsafe fn context_backtrace
+   788→unsafe fn object_boxed …
+   799→unsafe fn object_reallocate_boxed …
+   839→unsafe fn context_downcast …
+   859→unsafe fn context_drop_rest …
+   920→unsafe fn context_backtrace …
    933→#[repr(C)]
    934→pub(crate) struct ErrorImpl<E = ()> {
    935→    vtable: &'static ErrorVTable,
@@ -106,7 +112,7 @@ src/error.rs
    953→    pub context: C,
    954→    pub error: E,
    955→}
-  1002→    unsafe fn provide
+  1002→    unsafe fn provide …
 src/kind.rs
     55→pub struct Adhoc;
     57→#[doc(hidden)]
@@ -159,6 +165,7 @@ src/lib.rs
    290→/// `Error` works a lot like `Box<dyn std::error::Error>`, but with these
    291→/// differences:
    292→///
+      →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
    392→}
@@ -167,6 +174,7 @@ src/lib.rs
    396→/// This type is the iterator returned by [`Error::chain`].
    397→///
    398→/// # Example
+      →…
    415→pub struct Chain<'a> {
    416→    state: crate::chain::ChainState<'a>,
    417→}
@@ -199,12 +207,14 @@ src/lib.rs
    445→/// #     use super::Deserialize;
    446→/// #     use std::io;
    447→/// #
+      →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    470→/// Provides the `context` method for `Result`.
    471→///
    472→/// This trait is sealed and cannot be implemented for types outside of
    473→/// `anyhow`.
    474→///
+      →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.
    618→    fn context<C>(self, context: C) -> Result<T, Error>

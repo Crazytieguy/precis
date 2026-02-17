@@ -2,15 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1790 words)
+budget: 2000 (1868 words)
 
 CHANGELOG.md
      1→# Changelog
      2→
+      →…
      8→## [1.2.1] - 2025-10-26
      9→
+      →…
     13→## [1.2.0] - 2025-10-26
     14→
+      →…
     19→## [1.1.1] - 2025-06-24
     20→
     21→### Fixed
@@ -21,86 +24,126 @@ CHANGELOG.md
     26→
     27→## [1.1.0] - 2025-03-25
     28→
+      →…
     42→## [1.0.1] - 2024-01-23
     43→
+      →…
     55→## [1.0.0] - 2023-02-24
     56→
+      →…
     62→## [0.21.1] - 2023-01-21
     63→
+      →…
     80→## [0.21.0] - 2022-09-03
     81→
+      →…
     97→## [0.20.0] - 2022-03-24
     98→
+      →…
    110→## [0.19.2] - 2021-11-11
    111→
+      →…
    117→## [0.19.1] - 2021-08-09
    118→
+      →…
    123→## [0.19.0] - 2021-07-24
    124→
+      →…
    138→## [0.18.0] - 2021-06-20
    139→
+      →…
    151→## [0.17.1] - 2021-04-29
    152→
+      →…
    157→## [0.17.0] - 2021-04-02
    158→
+      →…
    167→## [0.16.0] - 2021-03-27
    168→
+      →…
    175→## [0.15.0] - 2020-10-28
    176→
+      →…
    194→## [0.14.0] - 2020-07-03
    195→
+      →…
    206→## [0.13.0] - 2020-04-16
    207→
+      →…
    212→## [0.12.0] - 2020-02-28
    213→
+      →…
    225→## [0.11.0] - 2020-02-07
    226→
+      →…
    241→## [0.10.5] - 2020-01-19
    242→
+      →…
    250→## [0.10.4] - 2020-01-17
    251→
+      →…
    258→## 0.10.3
    259→
+      →…
    265→## 0.10.2
    266→
+      →…
    273→## 0.10.1
    274→- Fix parsing of variable without a value ([@asyncee])([@bbc2])([#158])
+      →…
    276→## 0.10.0
    277→
+      →…
    287→## 0.9.0
    288→
+      →…
    293→## 0.8.1
    294→
+      →…
    298→## 0.8.0
    299→
+      →…
    307→## 0.7.1
    308→
+      →…
    311→## 0.7.0
    312→
+      →…
    320→## 0.6.5
    321→
+      →…
    326→## 0.6.4
    327→
+      →…
    331→## 0.6.3
    332→
+      →…
    336→## 0.6.2
    337→
+      →…
    342→## 0.6.0
    343→
+      →…
    352→## 0.5.1
    353→
+      →…
    357→## 0.5.0
    358→
+      →…
    362→## 0.4.0
    363→
+      →…
 CONTRIBUTING.md
      1→Contributing
      3→
+      →…
 README.md
      1→# python-dotenv
      2→
+      →…
     22→## Getting Started
     23→
+      →…
     78→## Other Use Cases
     79→
     80→### Load configuration without altering the environment
@@ -130,30 +173,40 @@ README.md
    104→
    105→### Parse configuration as a stream
    106→
+      →…
    120→### Load .env files in IPython
    121→
+      →…
    141→### Disable load_dotenv
    142→
+      →…
    147→## Command-line Interface
    148→
+      →…
    169→## File format
    170→
+      →…
    185→### Multiline values
    186→
+      →…
    199→### Variable without a value
    200→
+      →…
    214→### Variable expansion
    215→
+      →…
    234→## Related Projects
    235→
+      →…
    246→## Acknowledgements
    247→
+      →…
 docs/reference.md
      1→# ::: dotenv
      2→
 src/dotenv/__init__.py
-     6→def load_ipython_extension
-    12→def get_cli_string
+     6→def load_ipython_extension …
+    12→def get_cli_string …
     42→__all__ = [
     43→    "get_cli_string",
     44→    "load_dotenv",
@@ -165,7 +218,7 @@ src/dotenv/__init__.py
     50→    "load_ipython_extension",
     51→]
 src/dotenv/cli.py
-    24→def enumerate_env
+    24→def enumerate_env …
     60→@click.version_option(version=__version__)
     61→@click.pass_context
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
@@ -185,7 +238,7 @@ src/dotenv/cli.py
     78→    except OSError as exc:
     79→        print(f"Error opening env file: {exc}", file=sys.stderr)
     80→        sys.exit(2)
-    93→def list_values
+    93→def list_values …
    112→@cli.command(name="set")
    113→@click.pass_context
    114→@click.argument("key", required=True)
@@ -246,7 +299,7 @@ src/dotenv/cli.py
    188→        sys.exit(1)
    189→
    190→    run_command([*commandline, *ctx.args], dotenv_as_dict)
-   193→def run_command
+   193→def run_command …
 src/dotenv/ipython.py
     11→@magics_class
     12→class IPythonDotEnv(Magics):
@@ -283,7 +336,7 @@ src/dotenv/ipython.py
     43→
     44→        # Load the .env file
     45→        load_dotenv(dotenv_path, verbose=args.verbose, override=args.override)
-    48→def load_ipython_extension
+    48→def load_ipython_extension …
 src/dotenv/main.py
     25→def _load_dotenv_disabled() -> bool:
     26→    """
@@ -292,7 +345,8 @@ src/dotenv/main.py
     29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
     30→        return False
     31→    value = os.environ["PYTHON_DOTENV_DISABLED"].casefold()
-    35→def with_warn_for_invalid_lines
+      →…
+    35→def with_warn_for_invalid_lines …
     45→class DotEnv:
     46→    def __init__(
     47→        self,
@@ -374,7 +428,7 @@ src/dotenv/main.py
    123→            logger.warning("Key %s not found in %s.", key, self.dotenv_path)
    124→
    125→        return None
-   128→def get_key
+   128→def get_key …
    141→@contextmanager
    142→def rewrite(
    143→    path: StrPath,
@@ -395,9 +449,9 @@ src/dotenv/main.py
    158→    else:
    159→        os.unlink(dest.name)
    160→        raise error from None
-   163→def set_key
-   211→def unset_key
-   244→def resolve_variables
+   163→def set_key …
+   211→def unset_key …
+   244→def resolve_variables …
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """
    271→    Yield directories starting from the given directory up to the root
@@ -405,9 +459,10 @@ src/dotenv/main.py
    273→    if not os.path.exists(path):
    274→        raise IOError("Starting path not found")
    275→
-   287→def find_dotenv
-   338→def load_dotenv
-   387→def dotenv_values
+      →…
+   287→def find_dotenv …
+   338→def load_dotenv …
+   387→def dotenv_values …
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
    425→    Return True if `path` exists and is either a regular file or a FIFO.
@@ -415,8 +470,9 @@ src/dotenv/main.py
    427→    if os.path.isfile(path):
    428→        return True
    429→
+      →…
 src/dotenv/parser.py
-    14→def make_regex
+    14→def make_regex …
     35→class Original(NamedTuple):
     36→    string: str
     37→    line: int
@@ -477,12 +533,12 @@ src/dotenv/parser.py
    100→            raise Error("read_regex: Pattern not found")
    101→        self.position.advance(self.string[match.start() : match.end()])
    102→        return match.groups()
-   105→def decode_escapes
-   112→def parse_key
-   123→def parse_unquoted_value
-   128→def parse_value
-   142→def parse_binding
-   179→def parse_stream
+   105→def decode_escapes …
+   112→def parse_key …
+   123→def parse_unquoted_value …
+   128→def parse_value …
+   142→def parse_binding …
+   179→def parse_stream …
 src/dotenv/variables.py
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
@@ -541,6 +597,6 @@ src/dotenv/variables.py
     65→        default = self.default if self.default is not None else ""
     66→        result = env.get(self.name, default)
     67→        return result if result is not None else ""
-    70→def parse_variables
+    70→def parse_variables …
 src/dotenv/version.py
      1→__version__ = "1.2.1"

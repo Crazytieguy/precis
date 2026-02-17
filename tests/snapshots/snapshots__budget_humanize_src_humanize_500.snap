@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (384 words)
+budget: 500 (404 words)
 
 __init__.py
     28→__all__ = [
@@ -28,7 +28,7 @@ __init__.py
     48→    "thousands_separator",
     49→]
 filesize.py
-    36→def naturalsize
+    36→def naturalsize …
 i18n.py
      8→TYPE_CHECKING = False
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
@@ -53,31 +53,31 @@ i18n.py
     36→    "hu_HU": ",",
     37→}
     40→def _get_default_locale_path() -> pathlib.Path | None:
-    51→def get_translation
-    58→def activate
-    96→def deactivate
+    51→def get_translation …
+    58→def activate …
+    96→def deactivate …
    101→def _gettext(message: str) -> str:
    113→def _pgettext(msgctxt: str, message: str) -> str:
    129→def _ngettext(message: str, plural: str, num: int) -> str:
    144→def _gettext_noop(message: str) -> str:
    163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
-   183→def thousands_separator
-   196→def decimal_separator
+   183→def thousands_separator …
+   196→def decimal_separator …
 lists.py
      5→TYPE_CHECKING = False
      9→__all__ = ["natural_list"]
-    12→def natural_list
+    12→def natural_list …
 number.py
     12→TYPE_CHECKING = False
     21→def _format_not_finite(value: float) -> str:
-    34→def ordinal
-   110→def intcomma
-   195→def intword
-   269→def apnumber
-   321→def fractional
-   385→def scientific
-   454→def clamp
-   531→def metric
+    34→def ordinal …
+   110→def intcomma …
+   195→def intword …
+   269→def apnumber …
+   321→def fractional …
+   385→def scientific …
+   454→def clamp …
+   531→def metric …
 time.py
     15→TYPE_CHECKING = False
     21→__all__ = [
@@ -107,13 +107,13 @@ time.py
     68→def _date_and_delta(
     69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
     70→) -> tuple[Any, Any]:
-    95→def naturaldelta
-   249→def naturaltime
+    95→def naturaldelta …
+   249→def naturaltime …
    300→def _convert_aware_datetime(
    301→    value: dt.datetime | dt.timedelta | float | None,
    302→) -> Any:
-   311→def naturalday
-   343→def naturaldate
+   311→def naturalday …
+   343→def naturaldate …
    361→def _quotient_and_remainder(
    362→    value: float,
    363→    divisor: float,
@@ -124,5 +124,5 @@ time.py
    368→) -> tuple[float, float]:
    406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
    435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
-   451→def precisedelta
+   451→def precisedelta …
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:

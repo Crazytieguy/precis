@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (499 words)
+budget: 500 (502 words)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -46,11 +46,13 @@ _parser.py
     62→        "\\f": "\u000c",  # form feed
     63→        "\\r": "\u000d",  # carriage return
     64→        "\\e": "\u001b",  # escape
+      →…
     71→class DEPRECATED_DEFAULT:
     76→class TOMLDecodeError(ValueError):
     86→
     87→    def __init__(
     88→        self,
+      →…
    220→class Flags:
    222→
    223→    # Marks an immutable namespace (inline array or inline table).
@@ -69,6 +71,7 @@ _re.py
     18→([01][0-9]|2[0-3])             # hours
     19→:([0-5][0-9])                  # minutes
     20→(?:
+      →…
     26→RE_NUMBER: Final = re.compile(
     27→    r"""
     28→0

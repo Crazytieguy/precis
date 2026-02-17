@@ -2,39 +2,41 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (525 words)
 
 CHANGELOG.md
-     3→## [Unreleased]
-     5→## [0.4.29] - 2025-12-02
-     7→## What's Changed
-    19→## What's Changed
-    37→### What's Changed
-    49→### What's Changed
-    58→### What's Changed
-    66→### What's Changed
-    74→### What's Changed
-    98→### What's Changed
-   118→### What's Changed
-   211→### New
-   226→### New
-   241→### Fixed
-   247→### Minimum Supported Rust Version
-   264→### New
-   270→### New
-   284→### Improved
-   290→### Improved
-   297→### Improved
-   303→### Improved
-   309→### Improved
-   319→### Fixed
+     3→## [Unreleased] …
+     5→## [0.4.29] - 2025-12-02 …
+     7→## What's Changed …
+    19→## What's Changed …
+    37→### What's Changed …
+    49→### What's Changed …
+    58→### What's Changed …
+    66→### What's Changed …
+    74→### What's Changed …
+    98→### What's Changed …
+   118→### What's Changed …
+   211→### New …
+   226→### New …
+   241→### Fixed …
+   247→### Minimum Supported Rust Version …
+   264→### New …
+   270→### New …
+   284→### Improved …
+   290→### Improved …
+   297→### Improved …
+   303→### Improved …
+   309→### Improved …
+   319→### Fixed …
 README.md
-    27→### In libraries
+    27→### In libraries …
 rfcs/0296-structured-logging.md
    502→### Don't break anything
    503→
+      →…
   1598→#### Build a serialization contract in `log`
   1599→
+      →…
 src/__private_api.rs
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -76,14 +78,14 @@ src/kv/mod.rs
    262→pub mod value;
 src/kv/source.rs
     51→pub trait Source {
-    91→fn get_default
-   114→fn count_default
+    91→fn get_default …
+   114→fn count_default …
    235→pub trait VisitSource<'kvs> {
    280→mod std_support {
 src/kv/value.rs
     11→pub trait ToValue {
    119→pub struct Value<'v> {
-   204→    fn from_inner
+   204→    fn from_inner …
    288→macro_rules! impl_to_value_primitive {
    312→macro_rules! impl_to_value_nonzero_primitive {
    336→macro_rules! impl_value_to_primitive {
@@ -140,6 +142,7 @@ src/lib.rs
   1603→///
   1604→/// See the crate level documentation for information on how to configure this.
   1605→///
+      →…
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 test_max_level_features/main.rs
      6→#[cfg(not(feature = "std"))]

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (986 words)
+budget: 1000 (1009 words)
 
 README.md
      1→# humanize
@@ -18,6 +18,7 @@ README.md
     11→
     12→This modest package contains various common humanization utilities, like turning a
     13→number into a fuzzy human-readable duration ("3 minutes ago") or into a human-readable
+      →…
     49→## API reference
     50→
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -71,6 +72,7 @@ README.md
     99→'yesterday'
    100→>>> humanize.naturalday(dt.date(2007, 6, 5))
    101→'Jun 05'
+      →…
    110→### Precise time delta
    111→
    112→```pycon
@@ -84,6 +86,7 @@ README.md
    120→>>> humanize.precisedelta(delta, suppress=["days"], format="%0.4f")
    121→'49 hours and 33.1230 seconds'
    122→```
+      →…
    124→#### Smaller units
    125→
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
@@ -97,6 +100,7 @@ README.md
    134→
    135→```pycon
    136→>>> delta = dt.timedelta(milliseconds=4)
+      →…
    154→### File size humanization
    155→
    156→```pycon
@@ -122,6 +126,7 @@ README.md
    176→>>> humanize.fractional(0.333)
    177→'333/1000'
    178→>>> humanize.fractional(1)
+      →…
    182→### Scientific notation
    183→
    184→```pycon
@@ -135,6 +140,7 @@ README.md
    192→>>> humanize.scientific(1**10)
    193→'1.00 x 10⁰'
    194→>>> humanize.scientific(1**10, precision=1)
+      →…
    200→## Localization
    201→
    202→How to change locale at runtime:
@@ -148,6 +154,7 @@ README.md
    210→>>> humanize.naturaltime(dt.timedelta(seconds=3))
    211→'3 секунды назад'
    212→>>> humanize.i18n.deactivate()
+      →…
 RELEASING.md
      1→# Release checklist
      2→
@@ -162,6 +169,7 @@ RELEASING.md
     11→- [ ] Check next tag is correct, amend if needed
     12→
     13→- [ ] Publish release
+      →…
 docs/filesize.md
      1→# Filesize
      2→
@@ -252,17 +260,17 @@ src/humanize/i18n.py
     35→    "pt_BR": ",",
     36→    "hu_HU": ",",
     37→}
-    40→def _get_default_locale_path
+    40→def _get_default_locale_path …
     51→def get_translation() -> gettext_module.NullTranslations:
     58→def activate(
     59→    locale: str | None, path: str | os.PathLike[str] | None = None
     60→) -> gettext_module.NullTranslations:
     96→def deactivate() -> None:
-   101→def _gettext
-   113→def _pgettext
-   129→def _ngettext
-   144→def _gettext_noop
-   163→def _ngettext_noop
+   101→def _gettext …
+   113→def _pgettext …
+   129→def _ngettext …
+   144→def _gettext_noop …
+   163→def _ngettext_noop …
    183→def thousands_separator() -> str:
    196→def decimal_separator() -> str:
 src/humanize/lists.py
@@ -271,7 +279,7 @@ src/humanize/lists.py
     12→def natural_list(items: list[Any]) -> str:
 src/humanize/number.py
     12→TYPE_CHECKING = False
-    21→def _format_not_finite
+    21→def _format_not_finite …
     34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
    110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
    195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
@@ -311,9 +319,9 @@ src/humanize/time.py
     42→        if self.__class__ is other.__class__:
     43→            return self.value < other.value
     44→        return NotImplemented
-    47→def _now
-    53→def _abs_timedelta
-    68→def _date_and_delta
+    47→def _now …
+    53→def _abs_timedelta …
+    68→def _date_and_delta …
     95→def naturaldelta(
     96→    value: dt.timedelta | float,
     97→    months: bool = True,
@@ -326,16 +334,16 @@ src/humanize/time.py
    253→    minimum_unit: str = "seconds",
    254→    when: dt.datetime | None = None,
    255→) -> str:
-   300→def _convert_aware_datetime
+   300→def _convert_aware_datetime …
    311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
    343→def naturaldate(value: dt.date | dt.datetime) -> str:
-   361→def _quotient_and_remainder
-   406→def _suitable_minimum_unit
-   435→def _suppress_lower_units
+   361→def _quotient_and_remainder …
+   406→def _suitable_minimum_unit …
+   435→def _suppress_lower_units …
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
    453→    minimum_unit: str = "seconds",
    454→    suppress: Iterable[str] = (),
    455→    format: str = "%0.2f",
    456→) -> str:
-   654→def _rounding_by_fmt
+   654→def _rounding_by_fmt …

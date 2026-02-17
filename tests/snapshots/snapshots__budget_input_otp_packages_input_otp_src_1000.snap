@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (997 words)
+budget: 1000 (999 words)
 
 input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(
@@ -113,6 +113,7 @@ input.tsx
    116→        // Algorithm
    117→        let start = -1
    118→        let end = -1
+      →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
    542→    sheet.insertRule(rule)
@@ -280,3 +281,4 @@ use-pwm-badge.tsx
     79→    if (pmws.length === 0) {
     80→      const maybeBadgeEl = document.elementFromPoint(x, y)
     81→
+      →…

@@ -2,13 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (515 words)
 
 README.md
      1→# color [![](https://github.com/fatih/color/workflows/build/badge.svg)](https://github.com/fatih/color/actions) [![PkgGoDev](https://pkg.go.dev/badge/github.com/fatih/color)](https://pkg.go.dev/github.com/fatih/color)
      2→
+      →…
     10→## Install
     11→
+      →…
     16→## Examples
     17→
     18→### Standard colors
@@ -28,26 +30,37 @@ README.md
     32→
     33→### RGB colors
     34→
+      →…
     45→### Mix and reuse colors
     46→
+      →…
     71→### Use your own output (io.Writer)
     72→
+      →…
     81→### Custom print functions (PrintFunc)
     82→
+      →…
     94→### Custom fprint functions (FprintFunc)
     95→
+      →…
    105→### Insert into noncolor strings (SprintFunc)
    106→
+      →…
    124→### Plug into existing code
    125→
+      →…
    142→### Disable/Enable color
    143→
+      →…
    177→## GitHub Actions
    178→
+      →…
    182→## Credits
    183→
+      →…
    187→## License
    188→
+      →…
 color.go
     15→var (
     16→	// NoColor defines if the output is colorized or not. It's dynamically set to
@@ -132,17 +145,17 @@ color.go
    140→	BgHiMagenta
    141→	BgHiCyan
    142→	BgHiWhite
-   211→func (c *Color) unset
+   211→func (c *Color) unset …
    405→func (c *Color) sequence() string {
    416→func (c *Color) wrap(s string) string {
-   424→func (c *Color) format
-   428→func (c *Color) unformat
-   456→func (c *Color) isNoColorSet
-   487→func (c *Color) attrExists
-   497→func boolPtr
-   501→func getCachedColor
-   514→func colorPrint
-   528→func colorString
+   424→func (c *Color) format …
+   428→func (c *Color) unformat …
+   456→func (c *Color) isNoColorSet …
+   487→func (c *Color) attrExists …
+   497→func boolPtr …
+   501→func getCachedColor …
+   514→func colorPrint …
+   528→func colorString …
    679→func sprintln(a ...interface{}) string {
 color_windows.go
-     9→func init
+     9→func init …

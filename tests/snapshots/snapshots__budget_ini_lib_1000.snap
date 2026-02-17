@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (993 words)
+budget: 1000 (995 words)
 
 ini.js
      3→const encode = (obj, opt = {}) => {
@@ -64,6 +64,7 @@ ini.js
     59→  if (opt.section && out.length) {
     60→    out = '[' + safe(opt.section) + ']' + (opt.newline ? eol + eol : eol) + out
     61→  }
+      →…
     80→function splitSections (str, separator) {
     81→  var lastMatchIndex = 0
     82→  var lastSeparatorIndex = 0
@@ -148,6 +149,7 @@ ini.js
    162→    }
    163→
    164→    // safeguard against resetting a previously defined
+      →…
    212→const isQuoted = val => {
    213→  return (val.startsWith('"') && val.endsWith('"')) ||
    214→    (val.startsWith("'") && val.endsWith("'"))

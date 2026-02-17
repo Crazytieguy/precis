@@ -2,25 +2,33 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (499 words)
+budget: 500 (510 words)
 
 README.md
      1→# Archived project. No maintenance. 
      2→
+      →…
      8→# Structs [![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/fatih/structs) [![Build Status](http://img.shields.io/travis/fatih/structs.svg?style=flat-square)](https://travis-ci.org/fatih/structs) [![Coverage Status](http://img.shields.io/coveralls/fatih/structs.svg?style=flat-square)](https://coveralls.io/r/fatih/structs)
      9→
+      →…
     16→## Install
     17→
+      →…
     22→## Usage and Examples
     23→
+      →…
     74→### Struct methods
     75→
+      →…
     95→### Field methods
     96→
+      →…
    163→## Credits
    164→
+      →…
    168→## License
    169→
+      →…
 field.go
      9→var (
     10→	errNotExported = errors.New("field is not exported")
@@ -75,6 +83,7 @@ structs.go
    405→func (s *Struct) structFields() []reflect.StructField {
    406→	t := s.value.Type()
    407→
+      →…
    428→func strctVal(s interface{}) reflect.Value {
    445→func Map(s interface{}) map[string]interface{} {
    451→func FillMap(s interface{}, out map[string]interface{}) {
@@ -90,6 +99,7 @@ structs.go
    509→func (s *Struct) nested(val reflect.Value) interface{} {
    510→	var finalVal interface{}
    511→
+      →…
 tags.go
      5→// tagOptions contains a slice of tag options
      6→type tagOptions []string
@@ -100,3 +110,4 @@ tags.go
     22→func parseTag(tag string) (string, tagOptions) {
     23→	// tag is one of followings:
     24→	// ""
+      →…

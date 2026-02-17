@@ -2,21 +2,24 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3387 words)
+budget: 4000 (3454 words)
 
 CHANGELOG.md
      1→# Changelog
      2→
      3→All notable changes to this project will be documented in this file.
      4→
+      →…
      8→## [1.2.1] - 2025-10-26
      9→
     10→- Move more config to `pyproject.toml`, removed `setup.cfg`
     11→- Add support for reading `.env` from FIFOs (Unix) by [@sidharth-sudhir] in [#586]
+      →…
     13→## [1.2.0] - 2025-10-26
     14→
     15→- Upgrade build system to use PEP 517 & PEP 518 to use `build` and `pyproject.toml` by [@EpicWink] in [#583]
     16→- Add support for Python 3.14 by [@23f3001135] in [#579](https://github.com/theskumar/python-dotenv/pull/563)
+      →…
     19→## [1.1.1] - 2025-06-24
     20→
     21→### Fixed
@@ -29,90 +32,112 @@ CHANGELOG.md
     28→
     29→**Feature**
     30→
+      →…
     42→## [1.0.1] - 2024-01-23
     43→
     44→**Fixed**
     45→
+      →…
     55→## [1.0.0] - 2023-02-24
     56→
     57→**Fixed**
     58→
+      →…
     62→## [0.21.1] - 2023-01-21
     63→
     64→**Added**
     65→
+      →…
     80→## [0.21.0] - 2022-09-03
     81→
     82→**Added**
     83→
+      →…
     97→## [0.20.0] - 2022-03-24
     98→
     99→**Added**
    100→
+      →…
    110→## [0.19.2] - 2021-11-11
    111→
    112→**Fixed**
    113→
+      →…
    117→## [0.19.1] - 2021-08-09
    118→
    119→**Added**
    120→
+      →…
    123→## [0.19.0] - 2021-07-24
    124→
    125→**Changed**
    126→
+      →…
    138→## [0.18.0] - 2021-06-20
    139→
    140→**Changed**
    141→
+      →…
    151→## [0.17.1] - 2021-04-29
    152→
    153→**Fixed**
    154→
+      →…
    157→## [0.17.0] - 2021-04-02
    158→
    159→**Changed**
    160→
+      →…
    167→## [0.16.0] - 2021-03-27
    168→
    169→**Changed**
    170→
+      →…
    175→## [0.15.0] - 2020-10-28
    176→
    177→**Added**
    178→
+      →…
    194→## [0.14.0] - 2020-07-03
    195→
    196→**Changed**
    197→
+      →…
    206→## [0.13.0] - 2020-04-16
    207→
    208→**Added**
    209→
+      →…
    212→## [0.12.0] - 2020-02-28
    213→
    214→**Changed**
    215→
+      →…
    225→## [0.11.0] - 2020-02-07
    226→
    227→**Added**
    228→
+      →…
    241→## [0.10.5] - 2020-01-19
    242→
    243→**Fixed**
    244→
+      →…
    250→## [0.10.4] - 2020-01-17
    251→
    252→**Added**
    253→
+      →…
    258→## 0.10.3
    259→
    260→- Improve interactive mode detection ([@andrewsmith])([#183]).
    261→- Refactor parser to fix parsing inconsistencies ([@bbc2])([#170]).
+      →…
    265→## 0.10.2
    266→
    267→- Add type hints and expose them to users ([@qnighy])([#172])
    268→- `load_dotenv` and `dotenv_values` now accept an `encoding` parameter, defaults to `None`
+      →…
    273→## 0.10.1
    274→- Fix parsing of variable without a value ([@asyncee])([@bbc2])([#158])
    275→
@@ -120,18 +145,22 @@ CHANGELOG.md
    277→
    278→- Add support for UTF-8 in unquoted values ([@bbc2])([#148])
    279→- Add support for trailing comments ([@bbc2])([#148])
+      →…
    287→## 0.9.0
    288→
    289→- Add `--version` parameter to cli ([@venthur])
    290→- Enable loading from current directory ([@cjauvin])
+      →…
    293→## 0.8.1
    294→
    295→-   Add tests for docs ([@Flimm])
    296→-   Make 'cli' support optional. Use `pip install python-dotenv[cli]`. ([@theskumar])
+      →…
    298→## 0.8.0
    299→
    300→-   `set_key` and `unset_key` only modified the affected file instead of
    301→    parsing and re-writing file, this causes comments and other file
+      →…
    307→## 0.7.1
    308→
    309→-   Remove hard dependency on iPython ([@theskumar])
@@ -140,52 +169,64 @@ CHANGELOG.md
    312→
    313→-   Add support to override system environment variable via .env.
    314→    ([@milonimrod](https://github.com/milonimrod))
+      →…
    320→## 0.6.5
    321→
    322→-   Add support for special characters `\`.
    323→    ([@pjona](https://github.com/pjona))
+      →…
    326→## 0.6.4
    327→
    328→-   Fix issue with single quotes ([@Flimm])
    329→    ([\#52](https://github.com/theskumar/python-dotenv/issues/52))
+      →…
    331→## 0.6.3
    332→
    333→-   Handle unicode exception in setup.py
    334→    ([\#46](https://github.com/theskumar/python-dotenv/issues/46))
+      →…
    336→## 0.6.2
    337→
    338→-   Fix dotenv list command ([@ticosax](https://github.com/ticosax))
    339→-   Add iPython Support
+      →…
    342→## 0.6.0
    343→
    344→-   Drop support for Python 2.6
    345→-   Handle escaped characters and newlines in quoted values. (Thanks
+      →…
    352→## 0.5.1
    353→
    354→-   Fix `find_dotenv` - it now start search from the file where this
    355→    function is called from.
+      →…
    357→## 0.5.0
    358→
    359→-   Add `find_dotenv` method that will try to find a `.env` file.
    360→    (Thanks [@isms](https://github.com/isms))
+      →…
    362→## 0.4.0
    363→
    364→-   cli: Added `-q/--quote` option to control the behaviour of quotes
    365→    around values in `.env`. (Thanks
+      →…
 CONTRIBUTING.md
      1→Contributing
      3→
      4→All the contributions are welcome! Please open [an
      5→issue](https://github.com/theskumar/python-dotenv/issues/new) or send us
+      →…
 README.md
      1→# python-dotenv
      2→
      3→[![Build Status][build_status_badge]][build_status_link]
      4→[![PyPI version][pypi_badge]][pypi_link]
+      →…
     22→## Getting Started
     23→
     24→```shell
     25→pip install python-dotenv
+      →…
     78→## Other Use Cases
     79→
     80→### Load configuration without altering the environment
@@ -217,42 +258,52 @@ README.md
    106→
    107→`load_dotenv` and `dotenv_values` accept [streams][python_streams] via their
    108→`stream` argument. It is thus possible to load the variables from sources other
+      →…
    120→### Load .env files in IPython
    121→
    122→You can use dotenv in IPython. By default, it will use `find_dotenv` to search for a
    123→`.env` file:
+      →…
    141→### Disable load_dotenv
    142→
    143→Set `PYTHON_DOTENV_DISABLED=1` to disable `load_dotenv()` from loading .env
    144→files or streams. Useful when you can't modify third-party package calls or in
+      →…
    147→## Command-line Interface
    148→
    149→A CLI interface `dotenv` is also included, which helps you manipulate the `.env`
    150→file without manually opening it.
+      →…
    169→## File format
    170→
    171→The format is not formally specified and still improves over time. That being
    172→said, `.env` files should mostly look like Bash files. Reading from FIFOs (named
+      →…
    185→### Multiline values
    186→
    187→It is possible for single- or double-quoted values to span multiple lines. The
    188→following examples are equivalent:
+      →…
    199→### Variable without a value
    200→
    201→A variable can have no value:
    202→
+      →…
    214→### Variable expansion
    215→
    216→python-dotenv can interpolate variables using POSIX variable expansion.
    217→
+      →…
    234→## Related Projects
    235→
    236→- [environs](https://github.com/sloria/environs)
    237→- [Honcho](https://github.com/nickstenning/honcho)
+      →…
    246→## Acknowledgements
    247→
    248→This project is currently maintained by [Saurabh Kumar][saurabh-homepage] and
    249→[Bertrand Bonnefoy-Claudet][gh-bbc2] and would not have been possible without
+      →…
 docs/reference.md
      1→# ::: dotenv
      2→
@@ -276,6 +327,7 @@ src/dotenv/__init__.py
     24→    command = ["dotenv"]
     25→    if quote:
     26→        command.append(f"-q {quote}")
+      →…
     42→__all__ = [
     43→    "get_cli_string",
     44→    "load_dotenv",
@@ -296,6 +348,7 @@ src/dotenv/cli.py
     30→    try:
     31→        cwd = os.getcwd()
     32→    except FileNotFoundError:
+      →…
     60→@click.version_option(version=__version__)
     61→@click.pass_context
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
@@ -320,6 +373,7 @@ src/dotenv/cli.py
     95→    file = ctx.obj["FILE"]
     96→
     97→    with stream_file(file) as stream:
+      →…
    112→@cli.command(name="set")
    113→@click.pass_context
    114→@click.argument("key", required=True)
@@ -402,6 +456,7 @@ src/dotenv/cli.py
    212→    # copy the current environment variables and add the vales from
    213→    # `env`
    214→    cmd_env = os.environ.copy()
+      →…
 src/dotenv/ipython.py
     11→@magics_class
     12→class IPythonDotEnv(Magics):
@@ -454,6 +509,7 @@ src/dotenv/main.py
     36→    for mapping in mappings:
     37→        if mapping.error:
     38→            logger.warning(
+      →…
     45→class DotEnv:
     46→    def __init__(
     47→        self,
@@ -583,6 +639,7 @@ src/dotenv/main.py
    177→    if quote_mode not in ("always", "auto", "never"):
    178→        raise ValueError(f"Unknown quote_mode: {quote_mode}")
    179→
+      →…
    211→def unset_key(
    212→    dotenv_path: StrPath,
    213→    key_to_unset: str,
@@ -598,6 +655,7 @@ src/dotenv/main.py
    223→    if not os.path.exists(dotenv_path):
    224→        logger.warning("Can't delete from %s - it doesn't exist.", dotenv_path)
    225→        return None, key_to_unset
+      →…
    244→def resolve_variables(
    245→    values: Iterable[Tuple[str, Optional[str]]],
    246→    override: bool,
@@ -605,6 +663,7 @@ src/dotenv/main.py
    248→    new_values: Dict[str, Optional[str]] = {}
    249→
    250→    for name, value in values:
+      →…
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """
    271→    Yield directories starting from the given directory up to the root
@@ -634,6 +693,7 @@ src/dotenv/main.py
    297→
    298→    def _is_interactive():
    299→        """Decide whether this is running in a REPL or IPython notebook"""
+      →…
    338→def load_dotenv(
    339→    dotenv_path: Optional[StrPath] = None,
    340→    stream: Optional[IO[str]] = None,
@@ -666,6 +726,7 @@ src/dotenv/main.py
    367→    if _load_dotenv_disabled():
    368→        logger.debug(
    369→            "python-dotenv: .env loading disabled by PYTHON_DOTENV_DISABLED environment variable"
+      →…
    387→def dotenv_values(
    388→    dotenv_path: Optional[StrPath] = None,
    389→    stream: Optional[IO[str]] = None,
@@ -692,6 +753,7 @@ src/dotenv/main.py
    410→    if dotenv_path is None and stream is None:
    411→        dotenv_path = find_dotenv()
    412→
+      →…
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
    425→    Return True if `path` exists and is either a regular file or a FIFO.
@@ -772,10 +834,12 @@ src/dotenv/parser.py
    106→    def decode_match(match: Match[str]) -> str:
    107→        return codecs.decode(match.group(0), "unicode-escape")  # type: ignore
    108→
+      →…
    112→def parse_key(reader: Reader) -> Optional[str]:
    113→    char = reader.peek(1)
    114→    if char == "#":
    115→        return None
+      →…
    123→def parse_unquoted_value(reader: Reader) -> str:
    124→    (part,) = reader.read_regex(_unquoted_value)
    125→    return re.sub(r"\s+#.*", "", part).rstrip()
@@ -783,10 +847,12 @@ src/dotenv/parser.py
    129→    char = reader.peek(1)
    130→    if char == "'":
    131→        (value,) = reader.read_regex(_single_quoted_value)
+      →…
    142→def parse_binding(reader: Reader) -> Binding:
    143→    reader.set_mark()
    144→    try:
    145→        reader.read_regex(_multiline_whitespace)
+      →…
    179→def parse_stream(stream: IO[str]) -> Iterator[Binding]:
    180→    reader = Reader(stream)
    181→    while reader.has_next():
@@ -853,5 +919,6 @@ src/dotenv/variables.py
     71→    cursor = 0
     72→
     73→    for match in _posix_variable.finditer(value):
+      →…
 src/dotenv/version.py
      1→__version__ = "1.2.1"

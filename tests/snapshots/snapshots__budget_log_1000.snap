@@ -2,34 +2,34 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (998 words)
+budget: 1000 (1051 words)
 
 CHANGELOG.md
-     3→## [Unreleased]
-     5→## [0.4.29] - 2025-12-02
-     7→## What's Changed
-    19→## What's Changed
-    37→### What's Changed
-    49→### What's Changed
-    58→### What's Changed
-    66→### What's Changed
-    74→### What's Changed
-    98→### What's Changed
-   118→### What's Changed
-   211→### New
-   226→### New
-   241→### Fixed
-   247→### Minimum Supported Rust Version
-   264→### New
-   270→### New
-   284→### Improved
-   290→### Improved
-   297→### Improved
-   303→### Improved
-   309→### Improved
-   319→### Fixed
+     3→## [Unreleased] …
+     5→## [0.4.29] - 2025-12-02 …
+     7→## What's Changed …
+    19→## What's Changed …
+    37→### What's Changed …
+    49→### What's Changed …
+    58→### What's Changed …
+    66→### What's Changed …
+    74→### What's Changed …
+    98→### What's Changed …
+   118→### What's Changed …
+   211→### New …
+   226→### New …
+   241→### Fixed …
+   247→### Minimum Supported Rust Version …
+   264→### New …
+   270→### New …
+   284→### Improved …
+   290→### Improved …
+   297→### Improved …
+   303→### Improved …
+   309→### Improved …
+   319→### Fixed …
 README.md
-    27→### In libraries
+    27→### In libraries …
 rfcs/0296-structured-logging.md
    502→### Don't break anything
    503→
@@ -54,6 +54,7 @@ rfcs/0296-structured-logging.md
   1614→}
   1615→```
   1616→
+      →…
 src/__private_api.rs
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -62,7 +63,7 @@ src/__private_api.rs
     15→        fn into_kvs(self) -> Option<&'a [(&'a str, super::Value<'a>)]>;
     16→    }
     39→pub struct GlobalLogger;
-    56→fn log_impl
+    56→fn log_impl …
    112→#[cfg(feature = "kv")]
    113→mod kv_support {
    114→    use crate::kv;
@@ -71,6 +72,7 @@ src/__private_api.rs
 src/kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
+      →…
      9→#[derive(Debug)]
     10→enum Inner {
     11→    #[cfg(feature = "std")]
@@ -87,6 +89,7 @@ src/kv/key.rs
      8→    /// Perform the conversion.
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
+      →…
     94→mod std_support {
    113→mod sval_support {
    136→mod serde_support {
@@ -102,8 +105,8 @@ src/kv/mod.rs
 src/kv/source.rs
     51→pub trait Source {
     52→    /// Visit key-values.
-    91→fn get_default
-   114→fn count_default
+    91→fn get_default …
+   114→fn count_default …
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
    240→#[allow(clippy::needless_lifetimes)] // Not needless.
@@ -117,7 +120,8 @@ src/kv/value.rs
     12→    /// Perform the conversion.
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
-   204→    fn from_inner
+      →…
+   204→    fn from_inner …
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
    244→#[cfg(feature = "kv_sval")]
@@ -143,6 +147,7 @@ src/kv/value.rs
    722→    /**
    738→    pub enum Inner<'v> {
    739→        None,
+      →…
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
   1149→macro_rules! as_error {
@@ -160,32 +165,34 @@ src/lib.rs
    423→}
    425→#[cfg(not(target_has_atomic = "ptr"))]
    426→impl AtomicUsize {
-   427→    const fn new
-   431→    fn load
-   435→    fn store
+   427→    const fn new …
+   431→    fn load …
+   435→    fn store …
    442→#[cfg(not(target_has_atomic = "ptr"))]
    443→unsafe impl Sync for AtomicUsize {}
-   447→static mut LOGGER
-   449→static STATE
-   454→const UNINITIALIZED
-   455→const INITIALIZING
-   456→const INITIALIZED
-   458→static MAX_LOG_LEVEL_FILTER
-   460→static LOG_LEVEL_NAMES
-   462→static SET_LOGGER_ERROR
-   464→static LEVEL_PARSE_ERROR
+   447→static mut LOGGER …
+   449→static STATE …
+   454→const UNINITIALIZED …
+   455→const INITIALIZING …
+   456→const INITIALIZED …
+   458→static MAX_LOG_LEVEL_FILTER …
+   460→static LOG_LEVEL_NAMES …
+   462→static SET_LOGGER_ERROR …
+   464→static LEVEL_PARSE_ERROR …
    475→pub enum Level {
    476→    /// The "error" level.
    477→    ///
    478→    /// Designates very serious errors.
+      →…
    516→    type Err = ParseLevelError;
-   535→    fn from_usize
+   535→    fn from_usize …
    636→pub enum LevelFilter {
    637→    /// A level lower than all log levels.
    638→    Off,
    639→    /// Corresponds to the `Error` log level.
+      →…
    666→    type Err = ParseLevelError;
-   685→    fn from_usize
+   685→    fn from_usize …
    780→#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
    781→enum MaybeStaticStr<'a> {
    782→    Static(&'static str),
@@ -194,10 +201,12 @@ src/lib.rs
    787→    #[inline]
    788→    fn get(&self) -> &'a str {
    789→        match *self {
+      →…
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
    844→    args: fmt::Arguments<'a>,
    845→    module_path: Option<MaybeStaticStr<'a>>,
+      →…
    856→#[cfg(feature = "kv")]
    857→#[derive(Clone)]
    858→struct KeyValues<'a>(&'a dyn kv::Source);
@@ -235,6 +244,7 @@ src/lib.rs
   1485→    F: FnOnce() -> &'static dyn Log,
   1486→{
   1487→    match STATE.compare_exchange(
+      →…
   1549→pub struct SetLoggerError(());
   1558→#[cfg(feature = "std")]
   1559→impl error::Error for SetLoggerError {}
@@ -257,6 +267,7 @@ src/lib.rs
   1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
   1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
   1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
+      →…
 test_max_level_features/main.rs
      6→#[cfg(not(feature = "std"))]
      7→fn set_boxed_logger(logger: Box<dyn Log>) -> Result<(), log::SetLoggerError> {

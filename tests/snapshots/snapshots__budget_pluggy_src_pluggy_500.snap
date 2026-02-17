@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (507 words)
 
 __init__.py
      1→__all__ = [
@@ -26,16 +26,18 @@ _callers.py
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
 _hooks.py
-    28→_T
-    29→_F
-    31→_Namespace
-    32→_Plugin
-    33→_HookExec
-    37→_HookImplFunction
+    28→_T …
+    29→_F …
+    31→_Namespace …
+    32→_Plugin …
+    33→_HookExec …
+    37→_HookImplFunction …
     40→class HookspecOpts(TypedDict):
     42→
+      →…
     56→class HookimplOpts(TypedDict):
     58→
+      →…
     78→class HookspecMarker:
     85→
     86→    __slots__ = ("project_name",)
@@ -54,7 +56,7 @@ _hooks.py
    177→
    178→    @overload
    179→    def __call__(
-   290→_PYPY
+   290→_PYPY …
    359→class HookRelay:
    362→
    363→    __slots__ = ("__dict__",)
@@ -64,7 +66,7 @@ _hooks.py
    367→
    368→    if TYPE_CHECKING:
    369→
-   377→_CallHistory
+   377→_CallHistory …
    382→class HookCaller:
    384→
    419→    # TODO: Document, or make private.
@@ -80,6 +82,7 @@ _hooks.py
    430→            raise ValueError(
    431→                f"Hook {self.spec.name!r} is already registered "
    432→                f"within namespace {self.spec.namespace}"
+      →…
    593→class _SubsetHookCaller(HookCaller):
    596→
    597→    # This class is unusual: in inhertits from `HookCaller` so all of
@@ -115,8 +118,8 @@ _hooks.py
    704→        "opts",
    705→        "warn_on_impl",
 _manager.py
-    36→_BeforeTrace
-    37→_AfterTrace
+    36→_BeforeTrace …
+    37→_AfterTrace …
     52→class PluginValidationError(Exception):
     58→
     65→class DistFacade:
@@ -128,7 +131,7 @@ _manager.py
     83→class PluginManager:
     99→
 _result.py
-    16→_ExcInfo
+    16→_ExcInfo …
     20→class HookCallError(Exception):
     25→class Result(Generic[ResultType]):
     28→
@@ -146,6 +149,7 @@ _result.py
     46→        if exc is None:
     47→            return None
     48→        else:
+      →…
     51→    @property
     52→    def exception(self) -> BaseException | None:
     53→        """:meta private:"""
@@ -157,6 +161,7 @@ _result.py
     60→        result = exception = None
     61→        try:
     62→            result = func()
+      →…
 _tracing.py
     16→class TagTracer:
     17→    def __init__(self) -> None:
@@ -165,6 +170,7 @@ _tracing.py
 _warnings.py
      4→class PluggyWarning(UserWarning):
      6→
+      →…
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"

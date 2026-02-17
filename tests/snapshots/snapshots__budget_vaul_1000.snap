@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 words)
+budget: 1000 (1026 words)
 
 src/browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -31,6 +31,7 @@ src/context.ts
      7→  onPress: (event: React.PointerEvent<HTMLDivElement>) => void;
      8→  onRelease: (event: React.PointerEvent<HTMLDivElement> | null) => void;
      9→  onDrag: (event: React.PointerEvent<HTMLDivElement>) => void;
+      →…
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     38→  drawerRef: { current: null },
     39→  overlayRef: { current: null },
@@ -38,6 +39,7 @@ src/context.ts
     41→  onRelease: () => {},
     42→  onDrag: () => {},
     43→  onNestedDrag: () => {},
+      →…
     69→export const useDrawerContext = () => {
 src/helpers.ts
      3→interface Style {
@@ -86,28 +88,31 @@ src/index.tsx
     46→  snapPoints?: (number | string)[];
     47→  fadeFromIndex?: never;
     48→}
-    50→export type DialogProps
+    50→export type DialogProps …
    139→export function Root({
    140→  open: openProp,
    141→  onOpenChange,
    142→  children,
-   803→export const Overlay
-   831→export type ContentProps
-   833→export const Content
-   989→export type HandleProps
+      →…
+   803→export const Overlay …
+   831→export type ContentProps …
+   833→export const Content …
+   989→export type HandleProps …
    993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
    994→const DOUBLE_TAP_TIMEOUT = 120;
-   996→export const Handle
+   996→export const Handle …
   1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
   1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
   1100→
   1101→  if (!onNestedDrag) {
+      →…
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
   1130→export function Portal(props: PortalProps) {
   1131→  const context = useDrawerContext();
   1132→  const { container = context.container, ...portalProps } = props;
   1133→
-  1137→export const Drawer
+      →…
+  1137→export const Drawer …
 src/types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
      2→export interface SnapPoint {
@@ -119,12 +124,15 @@ src/use-composed-refs.ts
      5→type PossibleRef<T> = React.Ref<T> | undefined;
      7→/**
      8→ * Set a given ref to a given value
+      →…
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
     19→/**
     20→ * A utility to compose multiple refs together
+      →…
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
     27→/**
     28→ * A custom hook that composes multiple refs
+      →…
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 src/use-controllable-state.ts
      5→type UseControllableStateParams<T> = {
@@ -133,8 +141,8 @@ src/use-controllable-state.ts
      8→  onChange?: (state: T) => void;
      9→};
     11→type SetStateFn<T> = (prevState?: T) => T;
-    13→function useCallbackRef
-    24→function useUncontrolledState
+    13→function useCallbackRef …
+    24→function useUncontrolledState …
     39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
 src/use-position-fixed.ts
      6→/**
@@ -161,6 +169,7 @@ src/use-position-fixed.ts
     27→  preventScrollRestoration: boolean;
     28→  noBodyStyles: boolean;
     29→}) {
+      →…
 src/use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -169,7 +178,7 @@ src/use-prevent-scroll.ts
     12→  isDisabled?: boolean;
     13→  focusCallback?: () => void;
     14→}
-    16→function chain
+    16→function chain …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {
     34→export function getScrollParent(node: Element): Element {
@@ -181,6 +190,7 @@ src/use-prevent-scroll.ts
     52→  'file',
     53→  'image',
     54→  'button',
+      →…
     63→/**
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
@@ -201,13 +211,14 @@ src/use-prevent-scroll.ts
     80→      }
     81→    }
     82→
-   118→function preventScrollMobileSafari
-   243→function setStyle
-   257→function addEvent
-   272→function scrollIntoView
+      →…
+   118→function preventScrollMobileSafari …
+   243→function setStyle …
+   257→function addEvent …
+   272→function scrollIntoView …
    294→export function isInput(target: Element) {
 src/use-scale-background.ts
-     6→const noop
+     6→const noop …
      8→export function useScaleBackground() {
 src/use-snap-points.ts
      7→export function useSnapPoints({

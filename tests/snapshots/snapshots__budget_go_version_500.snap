@@ -2,12 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (454 words)
+budget: 500 (467 words)
 
 constraint.go
-    14→var
-    15→	constraintRegexp
-    16→	constraintRegexpOnce
+    14→var …
+    15→	constraintRegexp …
+    16→	constraintRegexpOnce …
     31→// Constraint represents a single constraint for a version, such as
     32→// ">= 1.0".
     33→type Constraint struct {
@@ -20,7 +20,7 @@ constraint.go
     44→// Constraints is a slice of constraints. We make a custom type so that
     45→// we can add methods to it.
     46→type Constraints []*Constraint
-    48→type constraintFunc
+    48→type constraintFunc …
     50→type constraintOperation struct {
     51→	op operator
     52→	f  constraintFunc
@@ -41,14 +41,14 @@ constraint.go
    230→//-------------------------------------------------------------------
    231→
    232→type operator rune
-   234→const
-   235→	equal
-   236→	notEqual
-   237→	greaterThan
-   238→	lessThan
-   239→	greaterThanEqual
-   240→	lessThanEqual
-   241→	pessimistic
+   234→const …
+   235→	equal …
+   236→	notEqual …
+   237→	greaterThan …
+   238→	lessThan …
+   239→	greaterThanEqual …
+   240→	lessThanEqual …
+   241→	pessimistic …
 version.go
     15→// The compiled regular expression used to test the validity of a version.
     16→var (
@@ -67,6 +67,7 @@ version.go
     44→
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
+      →…
     52→// Version represents a single version.
     53→type Version struct {
     54→	metadata string

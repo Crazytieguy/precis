@@ -2,15 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (993 words)
+budget: 1000 (1020 words)
 
 README.md
      1→# debug
      2→[![OpenCollective](https://opencollective.com/debug/backers/badge.svg)](#backers)
+      →…
     10→## Installation
     11→
+      →…
     16→## Usage
     17→
+      →…
     73→#### Windows command prompt notes
     74→
     75→##### CMD
@@ -29,44 +32,64 @@ README.md
     88→
     89→##### PowerShell (VS Code default)
     90→
+      →…
    110→## Namespace Colors
    111→
+      →…
    116→#### Node.js
    117→
+      →…
    124→#### Web Browser
    125→
+      →…
    134→## Millisecond diff
    135→
+      →…
    145→## Conventions
    146→
+      →…
    149→## Wildcards
    150→
+      →…
    161→## Environment Variables
    162→
+      →…
    181→## Formatters
    182→
+      →…
    196→### Custom formatters
    197→
+      →…
    215→## Browser Support
    216→
+      →…
    248→## Output streams
    249→
+      →…
    274→## Extend
    275→You can simply extend debugger 
+      →…
    288→## Set dynamically
    289→
+      →…
    341→## Checking whether a debug target is enabled
    342→
+      →…
    357→## Usage in child processes
    358→
+      →…
    379→## Authors
    380→
+      →…
    386→## Backers
    387→
+      →…
    422→## Sponsors
    423→
+      →…
    457→## License
    458→
+      →…
 src/browser.js
    115→function useColors() {
    116→	// NB: In an Electron preload script, document will be defined but not fully
@@ -86,6 +109,7 @@ src/browser.js
    130→	// Is webkit? http://stackoverflow.com/a/16459606/376773
    131→	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
    132→	// eslint-disable-next-line no-return-assign
+      →…
    143→/**
    144→ * Colorize log arguments if enabled.
    145→ *
@@ -107,6 +131,7 @@ src/browser.js
    161→	const c = 'color: ' + this.color;
    162→	args.splice(1, 0, c, 'color: inherit');
    163→
+      →…
    194→/**
    195→ * Save `namespaces`.
    196→ *
@@ -146,6 +171,7 @@ src/browser.js
    231→	}
    232→
    233→	return r;
+      →…
    236→/**
    237→ * Localstorage attempts to return the localstorage.
    238→ *
@@ -188,6 +214,7 @@ src/common.js
     19→	});
     20→
     21→	/**
+      →…
 src/node.js
    151→/**
    152→ * Is stdout a TTY? Colored output is enabled when `true`.

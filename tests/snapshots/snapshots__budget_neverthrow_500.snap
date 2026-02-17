@@ -2,36 +2,47 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (498 words)
+budget: 500 (559 words)
 
 CHANGELOG.md
      3→## 8.2.0
      4→
      5→### Minor Changes
      6→
+      →…
     13→### Patch Changes
     14→
+      →…
     19→### Minor Changes
     20→
+      →…
     25→### Major Changes
     26→
+      →…
     45→### Minor Changes
     46→
+      →…
     51→### Minor Changes
     52→
+      →…
     64→### Patch Changes
     65→
+      →…
     72→### Major Changes
     73→
+      →…
 README.md
    141→### Synchronous API (`Result`)
    142→
    143→#### `ok`
    144→
+      →…
    865→#### `okAsync`
    866→
+      →…
   1521→#### `fromThrowable`
   1522→
+      →…
 src/_internals/error.ts
      3→export interface ErrorConfig {
      4→  withStackTrace: boolean
@@ -46,20 +57,21 @@ src/_internals/error.ts
     15→        value: T
     16→      }
     17→    | {
+      →…
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
     29→  result: Result<T, E>,
     30→  config: ErrorConfig = defaultErrorConfig,
     31→): NeverThrowError<T, E> => {
 src/_internals/utils.ts
-     5→export type ExtractOkTypes
-    10→export type ExtractOkAsyncTypes
-    15→export type ExtractErrTypes
-    20→export type ExtractErrAsyncTypes
-    24→export type InferOkTypes
-    25→export type InferErrTypes
-    27→export type InferAsyncOkTypes
-    28→export type InferAsyncErrTypes
+     5→export type ExtractOkTypes …
+    10→export type ExtractOkAsyncTypes …
+    15→export type ExtractErrTypes …
+    20→export type ExtractErrAsyncTypes …
+    24→export type InferOkTypes …
+    25→export type InferErrTypes …
+    27→export type InferAsyncOkTypes …
+    28→export type InferAsyncErrTypes …
     30→/**
     31→ * Short circuits on the FIRST Err value that we find
     32→ */
@@ -68,6 +80,7 @@ src/_internals/utils.ts
     35→): Result<readonly T[], E> => {
     36→  let acc = ok([]) as Result<T[], E>
     37→
+      →…
     54→export const combineResultAsyncList = <T, E>(
     61→/**
     62→ * Give a list of all the errors we find
@@ -77,54 +90,69 @@ src/_internals/utils.ts
     66→): Result<readonly T[], E[]> => {
     67→  let acc = ok([]) as Result<T[], E[]>
     68→
+      →…
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
 src/result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
    210→  /**
+      →…
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
-   259→export const fromPromise
-   260→export const fromSafePromise
-   262→export const fromAsyncThrowable
-   265→export type CombineResultAsyncs
-   272→export type CombineResultsWithAllErrorsArrayAsync
-   279→type UnwrapAsync
-   300→type TraverseAsync
-   330→type TraverseWithAllErrorsAsync
-   338→type Writable
+   259→export const fromPromise …
+   260→export const fromSafePromise …
+   262→export const fromAsyncThrowable …
+   265→export type CombineResultAsyncs …
+   272→export type CombineResultsWithAllErrorsArrayAsync …
+   279→type UnwrapAsync …
+   300→type TraverseAsync …
+   330→type TraverseWithAllErrorsAsync …
+   338→type Writable …
 src/result.ts
     14→export namespace Result {
     15→  /**
-    62→export type Result
+    62→export type Result …
    134→interface IResult<T, E> {
    135→  /**
    136→   * Used to check if a `Result` is an `OK`
    137→   *
+      →…
    140→  isOk(): this is Ok<T, E>
    142→  /**
+      →…
    147→  isErr(): this is Err<T, E>
    149→  /**
+      →…
    157→  map<A>(f: (t: T) => A): Result<A, E>
    159→  /**
+      →…
    168→  mapErr<U>(f: (e: E) => U): Result<T, U>
    185→  /**
+      →…
    195→  andTee(f: (t: T) => unknown): Result<T, E>
    197→  /**
+      →…
    207→  orTee(f: (t: E) => unknown): Result<T, E>
    235→  /**
+      →…
    244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
    246→  /**
+      →…
    253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
    255→  /**
+      →…
    260→  unwrapOr<A>(v: A): T | A
    262→  /**
+      →…
    276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
    278→  /**
+      →…
    290→  safeUnwrap(): Generator<Err<never, E>, T>
    292→  /**
+      →…
    299→  _unsafeUnwrap(config?: ErrorConfig): T
    301→  /**
+      →…
    309→  _unsafeUnwrapErr(config?: ErrorConfig): E
    312→export class Ok<T, E> implements IResult<T, E> {
    313→  constructor(readonly value: T) {}
@@ -132,18 +160,18 @@ src/result.ts
    419→export class Err<T, E> implements IResult<T, E> {
    420→  constructor(readonly error: E) {}
    421→
-   523→export const fromThrowable
-   530→type Prev
-   590→type CollectResults
-   614→export type Transpose
-   635→export type Combine
-   645→export type Dedup
-   652→export type MemberListOf
-   669→export type EmptyArrayToNever
-   680→type UnknownMembersToNever
-   685→export type MembersToUnion
-   688→export type IsLiteralArray
-   698→type Traverse
-   704→type TraverseWithAllErrors
-   712→export type CombineResults
-   719→export type CombineResultsWithAllErrorsArray
+   523→export const fromThrowable …
+   530→type Prev …
+   590→type CollectResults …
+   614→export type Transpose …
+   635→export type Combine …
+   645→export type Dedup …
+   652→export type MemberListOf …
+   669→export type EmptyArrayToNever …
+   680→type UnknownMembersToNever …
+   685→export type MembersToUnion …
+   688→export type IsLiteralArray …
+   698→type Traverse …
+   704→type TraverseWithAllErrors …
+   712→export type CombineResults …
+   719→export type CombineResultsWithAllErrorsArray …

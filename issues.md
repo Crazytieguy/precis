@@ -2,7 +2,7 @@
 
 ## Testing infrastructure
 
-~~All fixture snapshot tests were commented out due to slow scheduling performance.~~ All 270 fixture snapshot tests have been re-introduced. The full suite (276 budget snapshot tests + 30 other tests) runs in ~13 seconds in release mode.
+~~All fixture snapshot tests were commented out due to slow scheduling performance.~~ All fixture snapshot tests have been re-introduced. The full suite (306 tests) runs in ~14 seconds in release mode.
 
 **Always run tests in release mode** (`cargo test --release`). Debug mode is much slower and not recommended for the full suite.
 
@@ -17,7 +17,7 @@
 ## Remaining work
 
 - **Residual cost mismatch from emitted_up_to** — the renderer skips symbols whose start line falls within already-emitted ranges (e.g., nested symbols inside trait/impl/function bodies). The scheduler charges for these symbols but they don't render. This causes small overestimation (1-5%). A proper fix would either exclude overlapping body lines from parent symbol costs or teach the scheduler about line-level deduplication.
-- **Truncation markers** — `…` inline for truncated lines (e.g. name only instead of full signature), standalone `…` line for omitted content (e.g. remaining doc lines, body). Makes it visually clear what's summarized vs complete. The old rendering system had this; the new one doesn't yet.
+- ~~**Truncation markers** — `…` inline for truncated lines (e.g. name only instead of full signature), standalone `…` line for omitted content (e.g. remaining doc lines, body). Makes it visually clear what's summarized vs complete. The old rendering system had this; the new one doesn't yet.~~ Implemented: inline ` …` on name-only lines, standalone `→…` after partial doc/body. Body truncation markers are suppressed when truncated lines overlap with nested symbols (e.g., class bodies containing methods rendered individually).
 - **File paths as stages** — currently file paths are shown automatically when any symbol content is included. Making file paths an explicit stage would allow showing just file paths for low-value groups at tight budgets, and would create cheap items that improve budget utilization by filling gaps at the end of scheduling.
 - **Import statement rendering** — show imports as a new group kind with its own stage progression. Distinguish 1st-party imports (relative paths, `crate::`, `super::`, Go module path) from 3rd-party. 1st-party imports are high signal for understanding a file's role.
 - **README.md priority boost** — render `README.md` at higher priority than other markdown files. Previously attempted with the old level-based system and was utilization-neutral. Should be revisited now that value is per-group.

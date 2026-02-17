@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (967 words)
+budget: 1000 (996 words)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -83,8 +83,9 @@ _parser.py
    114→            ValueError.__init__(self, *args)
    115→            return
    116→
-   137→def load
-   149→def loads
+      →…
+   137→def load …
+   149→def loads …
    220→class Flags:
    222→
    223→    # Marks an immutable namespace (inline array or inline table).
@@ -117,7 +118,7 @@ _parser.py
    250→        cont = self._flags
    251→        key_parent, key_stem = key[:-1], key[-1]
    252→        for k in key_parent:
-   260→    def is_
+   260→    def is_ …
    278→class NestedDict:
    279→    def __init__(self) -> None:
    280→        # The parsed content of the TOML document
@@ -154,28 +155,28 @@ _parser.py
    313→    def __init__(self) -> None:
    314→        self.data = NestedDict()
    315→        self.flags = Flags()
-   318→def skip_chars
-   327→def skip_until
-   349→def skip_comment
-   361→def skip_comments_and_array_ws
-   370→def create_dict_rule
-   390→def create_list_rule
-   413→def key_value_rule
-   447→def parse_key_value_pair
-   463→def parse_key
-   481→def parse_key_part
-   497→def parse_one_line_basic_str
-   502→def parse_array
-   528→def parse_inline_table
-   564→def parse_basic_str_escape
-   595→def parse_basic_str_escape_multiline
-   599→def parse_hex_char
-   612→def parse_literal_str
-   621→def parse_multiline_str
-   652→def parse_basic_str
-   684→def parse_value
-   760→def is_unicode_scalar_value
-   764→def make_safe_parse_float
+   318→def skip_chars …
+   327→def skip_until …
+   349→def skip_comment …
+   361→def skip_comments_and_array_ws …
+   370→def create_dict_rule …
+   390→def create_list_rule …
+   413→def key_value_rule …
+   447→def parse_key_value_pair …
+   463→def parse_key …
+   481→def parse_key_part …
+   497→def parse_one_line_basic_str …
+   502→def parse_array …
+   528→def parse_inline_table …
+   564→def parse_basic_str_escape …
+   595→def parse_basic_str_escape_multiline …
+   599→def parse_hex_char …
+   612→def parse_literal_str …
+   621→def parse_multiline_str …
+   652→def parse_basic_str …
+   684→def parse_value …
+   760→def is_unicode_scalar_value …
+   764→def make_safe_parse_float …
 _re.py
     11→TYPE_CHECKING = False
     17→_TIME_RE_STR: Final = r"""
@@ -217,7 +218,7 @@ _re.py
     54→""",
     55→    flags=re.VERBOSE,
     56→)
-    59→def match_to_datetime
+    59→def match_to_datetime …
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
@@ -230,5 +231,5 @@ _re.py
    104→            minutes=sign * int(minute_str),
    105→        )
    106→    )
-   109→def match_to_localtime
-   116→def match_to_number
+   109→def match_to_localtime …
+   116→def match_to_number …

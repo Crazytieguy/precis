@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (499 words)
+budget: 500 (502 words)
 
 input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(
@@ -31,6 +31,7 @@ input.tsx
     34→    },
     35→    ref,
     36→  ) => {
+      →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
    542→    sheet.insertRule(rule)
@@ -45,6 +46,7 @@ input.tsx
    557→
    558→  background-color: var(--nojs-bg) !important;
    559→  color: var(--nojs-fg) !important;
+      →…
 regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
      2→export const REGEXP_ONLY_CHARS = '^[a-zA-Z]+$'
@@ -149,3 +151,4 @@ use-pwm-badge.tsx
     43→      hasPWMBadgeSpace
     44→
     45→    return increaseWidthCase
+      →…

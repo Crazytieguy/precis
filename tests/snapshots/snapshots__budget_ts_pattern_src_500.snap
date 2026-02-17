@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (491 words)
+budget: 500 (532 words)
 
 errors.ts
      1→/**
@@ -21,17 +21,18 @@ errors.ts
     14→  }
     15→}
 internals/helpers.ts
-    12→export const isObject
-    16→export const isMatcher
-    24→const isOptionalPattern
-    32→export const matchPattern
-   120→export const getSelectionKeys
-   132→export const flatMap
+    12→export const isObject …
+    16→export const isMatcher …
+    24→const isOptionalPattern …
+    32→export const matchPattern …
+   120→export const getSelectionKeys …
+   132→export const flatMap …
 internals/symbols.ts
      1→/**
      2→ * Symbols used internally within ts-pattern to construct and discriminate
      3→ * Guard, Not, and Select, and AnonymousSelect patterns
      4→ *
+      →…
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
     17→export type matcher = typeof matcher;
     19→export const unset = Symbol.for('@ts-pattern/unset');
@@ -45,13 +46,14 @@ internals/symbols.ts
 is-matching.ts
      6→/**
      7→ * This constraint allows using additional properties
+      →…
     11→type PatternConstraint<T> = T extends readonly any[]
     12→  ? P.Pattern<T>
     13→  : T extends object
     14→  ? P.Pattern<T> & UnknownProperties
     15→  : P.Pattern<T>;
 match.ts
-    32→export function match
+    32→export function match …
     47→class MatchExpression<input, output> {
     48→  constructor(private input: input, private state: MatchState<output>) {}
     49→
@@ -59,31 +61,31 @@ match.ts
     51→    if (this.state.matched) return this;
     52→
 patterns.ts
-    81→export type unstable_Matchable
-   100→export type unstable_Matcher
-   116→export type infer
-   131→export type narrow
-   187→export function optional
-   536→export function intersection
-   572→export function union
-   611→export function not
-   782→export const any
-   793→export const unknown
-   805→export const _
-   928→export const string
-  1075→export const number
-  1201→export const bigint
-  1211→export const boolean
-  1221→export const symbol
-  1231→export const nullish
-  1241→export const nonNullable
-  1251→export function instanceOf
+    81→export type unstable_Matchable …
+   100→export type unstable_Matcher …
+   116→export type infer …
+   131→export type narrow …
+   187→export function optional …
+   536→export function intersection …
+   572→export function union …
+   611→export function not …
+   782→export const any …
+   793→export const unknown …
+   805→export const _ …
+   928→export const string …
+  1075→export const number …
+  1201→export const bigint …
+  1211→export const boolean …
+  1221→export const symbol …
+  1231→export const nullish …
+  1241→export const nonNullable …
+  1251→export function instanceOf …
 types/DistributeUnions.ts
-    41→export type DistributeMatchingUnions
-    80→export type FindUnions
+    41→export type DistributeMatchingUnions …
+    80→export type FindUnions …
 types/InvertPattern.ts
-   106→export type InvertPattern
-   303→export type InvertPatternForExclude
+   106→export type InvertPattern …
+   303→export type InvertPatternForExclude …
 types/Match.ts
     10→interface NonExhaustiveError<i> {
     11→  __nonExhaustive: never;
@@ -91,10 +93,10 @@ types/Match.ts
     14→interface TSPatternError<i> {
     15→  __nonExhaustive: never;
     16→}
-    22→export type Match
-   132→  with
-   245→type DeepExcludeAll
-   261→type Exhaustive
+    22→export type Match …
+   132→  with …
+   245→type DeepExcludeAll …
+   261→type Exhaustive …
 types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
@@ -126,12 +128,12 @@ types/Pattern.ts
    132→export interface Override<a> {
    133→  [symbols.override]: a;
    134→}
-   157→export type Pattern
-   269→      select
-   678→      select
+   157→export type Pattern …
+   269→      select …
+   678→      select …
 types/helpers.ts
-    14→export type LeastUpperBound
-   182→export type GuardValue
+    14→export type LeastUpperBound …
+   182→export type GuardValue …
    266→export interface Fn {
    267→  input: unknown;
    268→  output: unknown;

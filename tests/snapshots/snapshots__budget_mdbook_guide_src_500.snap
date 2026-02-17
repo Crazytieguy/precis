@@ -2,62 +2,86 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (499 words)
+budget: 500 (561 words)
 
 404.md
      1→# Document not found (404)
      2→
+      →…
 README.md
      1→# Introduction
      2→
+      →…
     46→## Contributing
     47→
+      →…
     55→## License
     56→
+      →…
 SUMMARY.md
      1→# Summary
      2→
+      →…
      5→# User guide
      6→
+      →…
     11→# Reference guide
     12→
+      →…
 continuous-integration.md
      1→# Running `mdbook` in continuous integration
      2→
+      →…
     12→## Installing mdBook
     13→
+      →…
     17→### Pre-compiled binaries
     18→
+      →…
     39→### Building from source
     40→
+      →…
     67→## Running tests
     68→
+      →…
     83→## Deploying
     84→
+      →…
    100→### 404 handling
    101→
+      →…
 for_developers/README.md
      1→# For developers
      2→
+      →…
     17→## The build process
     18→
+      →…
     30→## Using `mdbook` as a library
     31→
+      →…
 for_developers/backends.md
      1→# Alternative backends
      2→
+      →…
     13→## Setting up
     14→
+      →…
     53→## Inspecting the book
     54→
+      →…
     82→## Enabling the backend
     83→
+      →…
    159→## Configuration
    160→
+      →…
    219→## Output and signalling failure
    220→
+      →…
    322→## Wrapping up
    323→
+      →…
 for_developers/mdbook-wordcount/src/main.rs
     12→fn main() {
     40→fn count_words(ch: &Chapter) -> usize {
@@ -70,16 +94,21 @@ for_developers/mdbook-wordcount/src/main.rs
 for_developers/preprocessors.md
      1→# Preprocessors
      2→
+      →…
     13→## Hooking into MDBook
     14→
+      →…
     46→## Hints for implementing a preprocessor
     47→
+      →…
     74→## Implementing a preprocessor with a different language
     75→
+      →…
 format/example.rs
      1→fn main() {
      2→    println!("Hello World!");
      3→#
+      →…
 format/mdbook.md
      3→## Hiding code lines
      4→
@@ -110,63 +139,82 @@ format/mdbook.md
     29→# }
     30→```
     31→
+      →…
 format/theme/README.md
-     1→# Theme
+     1→# Theme …
 format/theme/editor.md
-     1→# Editor
-    35→## Customizing the editor
+     1→# Editor …
+    35→## Customizing the editor …
 format/theme/index-hbs.md
-     1→# index.hbs
-     9→## Data
-    41→## Handlebars helpers
-    46→### toc
-    80→### resource
-    90→### fa
+     1→# index.hbs …
+     9→## Data …
+    41→## Handlebars helpers …
+    46→### toc …
+    80→### resource …
+    90→### fa …
 format/theme/syntax-highlighting.md
-     1→# Syntax highlighting
-    17→## Supported languages
-    68→## Custom theme
-    82→## Improve default theme
+     1→# Syntax highlighting …
+    17→## Supported languages …
+    68→## Custom theme …
+    82→## Improve default theme …
 guide/README.md
      1→# User guide
      2→
+      →…
 guide/creating.md
      1→# Creating a book
      2→
+      →…
      5→## Initializing a book
      6→
+      →…
     32→## Anatomy of a book
     33→
+      →…
     36→### `book.toml`
     37→
+      →…
     50→### `SUMMARY.md`
     51→
+      →…
     73→### Source files
     74→
+      →…
     96→## Publishing a book
     97→
+      →…
 guide/installation.md
      1→# Installation
      2→
+      →…
      9→## Pre-compiled binaries
     10→
+      →…
     19→## Build from source using Rust
     20→
+      →…
     41→### Installing the latest master version
     42→
+      →…
     53→## Modifying and contributing
     54→
+      →…
 guide/reading.md
      1→# Reading books
      2→
+      →…
     12→## Navigation
     13→
+      →…
     26→## Top menu bar
     27→
+      →…
     42→## Search
     43→
+      →…
     54→## Code blocks
     55→
+      →…
 misc/contributors.md
      1→# Contributors
      2→
@@ -187,3 +235,4 @@ misc/contributors.md
     17→- Matt Ickstadt ([mattico](https://github.com/mattico))
     18→- Weihang Lo ([weihanglo](https://github.com/weihanglo))
     19→- Avision Ho ([avisionh](https://github.com/avisionh))
+      →…

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (512 words)
 
 __private_api.rs
      9→#[cfg(not(feature = "kv"))]
@@ -10,6 +10,7 @@ __private_api.rs
     12→mod sealed {
     14→    pub trait KVs<'a> {
     15→        fn into_kvs(self) -> Option<&'a [(&'a str, super::Value<'a>)]>;
+      →…
     39→pub struct GlobalLogger;
    112→#[cfg(feature = "kv")]
    113→mod kv_support {
@@ -19,6 +20,7 @@ __private_api.rs
 kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
+      →…
      9→#[derive(Debug)]
     10→enum Inner {
     11→    #[cfg(feature = "std")]
@@ -35,6 +37,7 @@ kv/key.rs
      8→    /// Perform the conversion.
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
+      →…
     94→mod std_support {
    113→mod sval_support {
    136→mod serde_support {
@@ -50,8 +53,8 @@ kv/mod.rs
 kv/source.rs
     51→pub trait Source {
     52→    /// Visit key-values.
-    91→fn get_default
-   114→fn count_default
+    91→fn get_default …
+   114→fn count_default …
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
    280→mod std_support {
@@ -60,7 +63,8 @@ kv/value.rs
     12→    /// Perform the conversion.
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
-   204→    fn from_inner
+      →…
+   204→    fn from_inner …
    288→macro_rules! impl_to_value_primitive {
    312→macro_rules! impl_to_value_nonzero_primitive {
    336→macro_rules! impl_value_to_primitive {
@@ -75,6 +79,7 @@ kv/value.rs
    722→    /**
    738→    pub enum Inner<'v> {
    739→        None,
+      →…
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
   1149→macro_rules! as_error {
@@ -91,9 +96,11 @@ lib.rs
    423→}
    475→pub enum Level {
    476→    /// The "error" level.
+      →…
    516→    type Err = ParseLevelError;
    636→pub enum LevelFilter {
    637→    /// A level lower than all log levels.
+      →…
    666→    type Err = ParseLevelError;
    781→enum MaybeStaticStr<'a> {
    782→    Static(&'static str),
@@ -102,15 +109,20 @@ lib.rs
    787→    #[inline]
    788→    fn get(&self) -> &'a str {
    789→        match *self {
+      →…
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
+      →…
    858→struct KeyValues<'a>(&'a dyn kv::Source);
   1003→pub struct RecordBuilder<'a> {
   1004→    record: Record<'a>,
+      →…
   1158→pub struct Metadata<'a> {
   1159→    level: Level,
+      →…
   1200→pub struct MetadataBuilder<'a> {
   1201→    metadata: Metadata<'a>,
+      →…
   1249→pub trait Log: Sync + Send {
   1250→    /// Determines if a log message with the specified metadata would be
   1283→struct NopLogger;
@@ -120,6 +132,7 @@ lib.rs
   1485→    F: FnOnce() -> &'static dyn Log,
   1486→{
   1487→    match STATE.compare_exchange(
+      →…
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
   1599→#[doc(hidden)]
@@ -136,3 +149,4 @@ lib.rs
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
   1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
+      →…
