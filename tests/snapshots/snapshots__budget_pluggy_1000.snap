@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (972 words)
+budget: 1000 (980 words)
 
 CLAUDE.md
     34→### Main Components
@@ -39,36 +39,17 @@ docs/conf.py
 scripts/release.py
     15→def create_branch(version: str) -> Repo:
     16→    """Create a fresh branch from upstream/main"""
-    17→    repo = Repo.init(".")
-    18→    if repo.is_dirty(untracked_files=True):
-      →…
     30→def get_upstream(repo: Repo) -> Remote:
     31→    """Find upstream repository for pluggy on the remotes"""
-    32→    for remote in repo.remotes:
-    33→        for url in remote.urls:
-      →…
     39→def pre_release(version: str) -> None:
     40→    """Generates new docs, release announcements and creates a local tag."""
-    41→    create_branch(version)
-    42→    changelog(version, write_out=True)
-      →…
     50→def changelog(version: str, write_out: bool = False) -> None:
-    51→    if write_out:
-    52→        addopts = []
-      →…
     59→def main() -> int:
-    60→    init(autoreset=True)
-    61→    parser = argparse.ArgumentParser()
-      →…
 scripts/towncrier-draft-to-file.py
      5→def main() -> int:
      6→    """
      7→    Platform agnostic wrapper script for towncrier.
-     8→    Fixes the issue (pytest#7251) where windows users are unable to natively
-     9→    run tox -e docs to build pytest docs.
-    10→    """
-    11→    with open("docs/_changelog_towncrier_draft.rst", "w") as draft_file:
-    12→        return call(("towncrier", "--draft"), stdout=draft_file)
+      →…
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
@@ -102,9 +83,13 @@ src/pluggy/_hooks.py
     37→_HookImplFunction: TypeAlias = Callable[..., _T | Generator[None, Result[_T], None]]
     40→class HookspecOpts(TypedDict):
     42→
+    43→    #: Whether the hook is :ref:`first result only <firstresult>`.
+    44→    firstresult: bool
       →…
     56→class HookimplOpts(TypedDict):
     58→
+    59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
+    60→    wrapper: bool
       →…
     78→class HookspecMarker:
     85→
@@ -144,6 +129,8 @@ src/pluggy/_hooks.py
    377→_CallHistory: TypeAlias = list[
    382→class HookCaller:
    384→
+   385→    __slots__ = (
+   386→        "name",
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None
@@ -170,7 +157,6 @@ src/pluggy/_hooks.py
    597→    # This class is unusual: in inhertits from `HookCaller` so all of
    598→    # the *code* runs in the class, but it delegates all underlying *data*
    599→    # to the original HookCaller.
-   600→    # `subset_hook_caller` used to be implemented by creating a full-fledged
    618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [
@@ -214,14 +200,21 @@ src/pluggy/_manager.py
     42→def _warn_for_function …
     52→class PluginValidationError(Exception):
     58→
+    59→    def __init__(self, plugin: _Plugin, message: str) -> None:
+    60→        super().__init__(message)
+      →…
     65→class DistFacade:
     67→
+    68→    def __init__(self, dist: importlib.metadata.Distribution) -> None:
+    69→        self._dist = dist
     71→    @property
     72→    def project_name(self) -> str:
     73→        name: str = self.metadata["name"]
     74→        return name
     83→class PluginManager:
     99→
+   100→    def __init__(self, project_name: str) -> None:
+   101→        #: The project name.
    114→    def _hookexec …
    331→    def _verify_hook …
    525→def _formatdef …
@@ -265,14 +258,18 @@ src/pluggy/_result.py
 src/pluggy/_tracing.py
     16→class TagTracer:
     17→    def __init__(self) -> None:
+    18→        self._tags2proc: dict[tuple[str, ...], _Processor] = {}
+    19→        self._writer: _Writer | None = None
     25→    def _format_message …
     42→    def _processmessage …
     59→class TagTracerSub:
     60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
+    61→        self.root = root
+    62→        self.tags = tags
 src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):
      6→
-      →…
+     7→    __module__ = "pluggy"
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"

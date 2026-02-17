@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1828 words)
+budget: 2000 (1810 words)
 
 CLAUDE.md
     34→### Main Components
@@ -42,32 +42,12 @@ docs/conf.py
 scripts/release.py
     15→def create_branch(version: str) -> Repo:
     16→    """Create a fresh branch from upstream/main"""
-    17→    repo = Repo.init(".")
-    18→    if repo.is_dirty(untracked_files=True):
-    19→        raise RuntimeError("Repository is dirty, please commit/stash your changes.")
-      →…
     30→def get_upstream(repo: Repo) -> Remote:
     31→    """Find upstream repository for pluggy on the remotes"""
-    32→    for remote in repo.remotes:
-    33→        for url in remote.urls:
-    34→            if url.endswith(("pytest-dev/pluggy.git", "pytest-dev/pluggy")):
-      →…
     39→def pre_release(version: str) -> None:
     40→    """Generates new docs, release announcements and creates a local tag."""
-    41→    create_branch(version)
-    42→    changelog(version, write_out=True)
-    43→
-      →…
     50→def changelog(version: str, write_out: bool = False) -> None:
-    51→    if write_out:
-    52→        addopts = []
-    53→    else:
-      →…
     59→def main() -> int:
-    60→    init(autoreset=True)
-    61→    parser = argparse.ArgumentParser()
-    62→    parser.add_argument("version", help="Release version")
-      →…
 scripts/towncrier-draft-to-file.py
      5→def main() -> int:
      6→    """
@@ -75,8 +55,6 @@ scripts/towncrier-draft-to-file.py
      8→    Fixes the issue (pytest#7251) where windows users are unable to natively
      9→    run tox -e docs to build pytest docs.
     10→    """
-    11→    with open("docs/_changelog_towncrier_draft.rst", "w") as draft_file:
-    12→        return call(("towncrier", "--draft"), stdout=draft_file)
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
@@ -134,6 +112,7 @@ src/pluggy/_hooks.py
     44→    firstresult: bool
     45→    #: Whether the hook is :ref:`historic <historic>`.
     46→    historic: bool
+    47→    #: Whether the hook :ref:`warns when implemented <warn_on_impl>`.
       →…
     56→class HookimplOpts(TypedDict):
     58→
@@ -141,6 +120,7 @@ src/pluggy/_hooks.py
     60→    wrapper: bool
     61→    #: Whether the hook implementation is an :ref:`old-style wrapper
     62→    #: <old_style_hookwrappers>`.
+    63→    hookwrapper: bool
       →…
     78→class HookspecMarker:
     85→
@@ -164,6 +144,8 @@ src/pluggy/_hooks.py
    103→        self,
    104→        function: None = ...,
    105→        firstresult: bool = ...,
+   106→        historic: bool = ...,
+   107→        warn_on_impl: Warning | None = ...,
    111→    def __call__ …
    165→class HookimplMarker:
    172→
@@ -187,6 +169,8 @@ src/pluggy/_hooks.py
    190→    @overload  # noqa: F811
    191→    def __call__(  # noqa: F811
    192→        self,
+   193→        function: None = ...,
+   194→        hookwrapper: bool = ...,
    202→    def __call__ …
    281→def normalize_hookimpl_opts …
    290→_PYPY = hasattr(sys, "pypy_version_info")
@@ -210,6 +194,7 @@ src/pluggy/_hooks.py
    386→        "name",
    387→        "spec",
    388→        "_hookexec",
+   389→        "_hookimpls",
    393→    def __init__ …
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
@@ -305,6 +290,8 @@ src/pluggy/_hooks.py
    659→        plugin_name: str,
    660→        function: _HookImplFunction[object],
    661→        hook_impl_opts: HookimplOpts,
+   662→    ) -> None:
+   663→        """:meta private:"""
    692→    def __repr__ …
    697→class HookSpec:
    698→    __slots__ = (
@@ -345,8 +332,6 @@ src/pluggy/_manager.py
     70→
     71→    @property
     72→    def project_name(self) -> str:
-    73→        name: str = self.metadata["name"]
-    74→        return name
     76→    def __getattr__ …
     79→    def __dir__ …
     83→class PluginManager:
@@ -355,6 +340,7 @@ src/pluggy/_manager.py
    101→        #: The project name.
    102→        self.project_name: Final = project_name
    103→        self._name2plugin: Final[dict[str, _Plugin]] = {}
+   104→        self._plugin_distinfo: Final[list[tuple[_Plugin, DistFacade]]] = []
    114→    def _hookexec(
    115→        self,
    116→        hook_name: str,
@@ -411,6 +397,8 @@ src/pluggy/_result.py
     46→        if exc is None:
     47→            return None
     48→        else:
+    49→            return (type(exc), exc, self._traceback)
+    50→
     51→    @property
     52→    def exception(self) -> BaseException | None:
     53→        """:meta private:"""
@@ -435,7 +423,7 @@ src/pluggy/_tracing.py
     19→        self._writer: _Writer | None = None
     20→        self.indent = 0
     21→
-    22→    def get …
+    22→    def get(self, name: str) -> TagTracerSub:
     25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
     42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
     48→    def setwriter …
@@ -446,6 +434,7 @@ src/pluggy/_tracing.py
     62→        self.tags = tags
     63→
     64→    def __call__(self, *args: object) -> None:
+    65→        self.root._processmessage(self.tags, args)
     67→    def get …
 src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):

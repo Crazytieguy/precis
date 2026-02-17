@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (983 words)
+budget: 1000 (970 words)
 
 CHANGELOG.md
      3→## 2.4.0
@@ -11,10 +11,16 @@ CHANGELOG.md
      7→  - Binary wheels for Windows arm64
      8→
 README.md
-     5→# Tomli …
-    32→## Intro<a name="intro"></a> …
-    50→## Installation<a name="installation"></a> …
-    56→## Usage<a name="usage"></a> …
+     5→# Tomli
+     7→> A lil' TOML parser
+      →…
+    32→## Intro<a name="intro"></a>
+    34→Tomli is a Python library for parsing [TOML](https://toml.io).
+      →…
+    50→## Installation<a name="installation"></a>
+    52→```bash
+      →…
+    56→## Usage<a name="usage"></a>
     58→### Parse a TOML string<a name="parse-a-toml-string"></a>
     60→```python
     61→import tomli
@@ -35,11 +41,19 @@ README.md
     76→}
     77→```
     78→
-    79→### Parse a TOML file<a name="parse-a-toml-file"></a> …
-    92→### Handle invalid TOML<a name="handle-invalid-toml"></a> …
-   106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a> …
-   123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a> …
-   152→## FAQ<a name="faq"></a> …
+    79→### Parse a TOML file<a name="parse-a-toml-file"></a>
+    81→```python
+      →…
+    92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
+    94→```python
+      →…
+   106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
+   108→```python
+      →…
+   123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
+   125→Python versions 3.11+ ship with a version of Tomli:
+      →…
+   152→## FAQ<a name="faq"></a>
    154→### Why this parser?<a name="why-this-parser"></a>
    156→- it's lil'
    157→- pure Python with zero dependencies
@@ -52,12 +66,24 @@ README.md
    164→  test suite
    165→- thoroughly tested: 100% branch coverage
    166→
-   167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a> …
-   177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a> …
-   183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a> …
-   201→## Performance<a name="performance"></a> …
-   207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a> …
-   230→### Pure Python<a name="pure-python"></a> …
+   167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
+   169→No.
+      →…
+   177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
+   179→[Tomli-W](https://github.com/hukkin/tomli-w) is the write-only counterpart of Tomli, providing `dump` and `dumps` functions.
+      →…
+   183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
+   185→| TOML type        | Python type         | Details                                                      |
+      →…
+   201→## Performance<a name="performance"></a>
+   203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
+      →…
+   207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
+   209→```console
+      →…
+   230→### Pure Python<a name="pure-python"></a>
+   232→```console
+      →…
 fuzzer/fuzz.py
     20→def test_one_input(input_bytes: bytes) -> None:
     53→def print_err(data):
@@ -66,13 +92,6 @@ fuzzer/fuzz.py
     71→def main():
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
-    13→    pyproject_path = Path(__file__).parent.parent / "pyproject.toml"
-    14→    data = tomllib.loads(pyproject_path.read_bytes().decode())
-    15→    data["build-system"] = {
-    16→        "requires": ["setuptools>=77.0.3", "mypy[mypyc]>=1.15"],
-    17→        "build-backend": "setuptools.build_meta",
-    18→    }
-    19→    pyproject_path.write_bytes(tomli_w.dumps(data).encode())
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
@@ -112,28 +131,21 @@ src/tomli/_parser.py
     59→        "\\b": "\u0008",  # backspace
     60→        "\\t": "\u0009",  # tab
     61→        "\\n": "\u000a",  # linefeed
-    62→        "\\f": "\u000c",  # form feed
       →…
     71→class DEPRECATED_DEFAULT:
     76→class TOMLDecodeError(ValueError):
     86→
     87→    def __init__(
     88→        self,
-    89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-    90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
       →…
    220→class Flags:
    222→
    223→    # Marks an immutable namespace (inline array or inline table).
    224→    FROZEN: Final = 0
-   225→    # Marks a nest that has been explicitly created and can no longer
-   226→    # be opened using the "[table]" syntax.
    278→class NestedDict:
    279→    def __init__(self) -> None:
    280→        # The parsed content of the TOML document
    281→        self.dict: dict[str, Any] = {}
-   282→
-   283→    def get_or_create_nest(
    312→class Output:
    313→    def __init__(self) -> None:
    314→        self.data = NestedDict()
@@ -234,7 +246,4 @@ tomllib.md
     47→
     48→
     49→  def load_tests(*args):
-    50→      return load_package_tests(os.path.dirname(__file__), *args)
-    51→  ```
-    52→
       →…

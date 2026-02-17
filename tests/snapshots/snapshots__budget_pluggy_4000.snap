@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3670 words)
+budget: 4000 (3660 words)
 
 AGENTS.md
      1→# AGENTS.md …
@@ -55,51 +55,21 @@ scripts/release.py
     15→def create_branch(version: str) -> Repo:
     16→    """Create a fresh branch from upstream/main"""
     17→    repo = Repo.init(".")
-    18→    if repo.is_dirty(untracked_files=True):
-    19→        raise RuntimeError("Repository is dirty, please commit/stash your changes.")
-    20→
-    21→    branch_name = f"release-{version}"
-    22→    print(f"{Fore.CYAN}Create {branch_name} branch from upstream main")
-    23→    upstream = get_upstream(repo)
-    24→    upstream.fetch()
-    25→    release_branch = repo.create_head(branch_name, upstream.refs.main, force=True)
-    26→    release_branch.checkout()
-    27→    return repo
+      →…
     30→def get_upstream(repo: Repo) -> Remote:
     31→    """Find upstream repository for pluggy on the remotes"""
     32→    for remote in repo.remotes:
-    33→        for url in remote.urls:
-    34→            if url.endswith(("pytest-dev/pluggy.git", "pytest-dev/pluggy")):
-    35→                return remote
-    36→    raise RuntimeError("could not find pytest-dev/pluggy remote")
+      →…
     39→def pre_release(version: str) -> None:
     40→    """Generates new docs, release announcements and creates a local tag."""
     41→    create_branch(version)
-    42→    changelog(version, write_out=True)
-    43→
-    44→    check_call(["git", "commit", "-a", "-m", f"Preparing release {version}"])
-    45→
-    46→    print()
-    47→    print(f"{Fore.GREEN}Please push your branch to your fork and open a PR.")
+      →…
     50→def changelog(version: str, write_out: bool = False) -> None:
     51→    if write_out:
-    52→        addopts = []
-    53→    else:
-    54→        addopts = ["--draft"]
-    55→    print(f"{Fore.CYAN}Generating CHANGELOG")
-    56→    check_call(["towncrier", "build", "--yes", "--version", version] + addopts)
+      →…
     59→def main() -> int:
     60→    init(autoreset=True)
-    61→    parser = argparse.ArgumentParser()
-    62→    parser.add_argument("version", help="Release version")
-    63→    options = parser.parse_args()
-    64→    try:
-    65→        pre_release(options.version)
-    66→    except RuntimeError as e:
-    67→        print(f"{Fore.RED}ERROR: {e}")
-    68→        return 1
-    69→    else:
-    70→        return 0
+      →…
 scripts/towncrier-draft-to-file.py
      5→def main() -> int:
      6→    """
@@ -108,7 +78,7 @@ scripts/towncrier-draft-to-file.py
      9→    run tox -e docs to build pytest docs.
     10→    """
     11→    with open("docs/_changelog_towncrier_draft.rst", "w") as draft_file:
-    12→        return call(("towncrier", "--draft"), stdout=draft_file)
+      →…
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
@@ -432,6 +402,15 @@ src/pluggy/_hooks.py
    402→        self.name: Final = name
    403→        self._hookexec: Final = hook_execute
    404→        # The hookimpls list. The caller iterates it *in reverse*. Format:
+   405→        # 1. trylast nonwrappers
+   406→        # 2. nonwrappers
+   407→        # 3. tryfirst nonwrappers
+   408→        # 4. trylast wrappers
+   409→        # 5. wrappers
+   410→        # 6. tryfirst wrappers
+   411→        self._hookimpls: Final[list[HookImpl]] = []
+   412→        self._call_history: _CallHistory | None = None
+   413→        # TODO: Document, or make private.
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None
@@ -630,7 +609,15 @@ src/pluggy/_manager.py
    117→        methods: Sequence[HookImpl],
    118→        kwargs: Mapping[str, object],
    119→        firstresult: bool,
-   125→    def register …
+   120→    ) -> object | list[object]:
+   121→        # called from all hookcaller instances.
+   122→        # enable_tracing will set its own wrapping function at self._inner_hookexec
+   123→        return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+   124→
+   125→    def register(self, plugin: _Plugin, name: str | None = None) -> str | None:
+   126→        """Register a plugin and return its name.
+   127→
+   128→        :param name:
    176→    def parse_hookimpl_opts …
    201→    def unregister …
    233→    def set_blocked …
@@ -760,7 +747,15 @@ src/pluggy/_tracing.py
     35→        lines = [f"{indent}{content} [{':'.join(tags)}]\n"]
     36→
     37→        for name, value in extra.items():
+    38→            lines.append(f"{indent}    {name}: {value}\n")
+    39→
+    40→        return "".join(lines)
+    41→
     42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
+    43→        if self._writer is not None and args:
+    44→            self._writer(self._format_message(tags, args))
+    45→        if processor := self._tags2proc.get(tags):
+    46→            processor(tags, args)
     48→    def setwriter …
     51→    def setprocessor …
     59→class TagTracerSub:

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (487 words)
+budget: 500 (484 words)
 
 CHANGELOG.md
      3→## 2.4.0
@@ -50,13 +50,6 @@ fuzzer/fuzz.py
     71→def main():
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
-    13→    pyproject_path = Path(__file__).parent.parent / "pyproject.toml"
-    14→    data = tomllib.loads(pyproject_path.read_bytes().decode())
-    15→    data["build-system"] = {
-    16→        "requires": ["setuptools>=77.0.3", "mypy[mypyc]>=1.15"],
-    17→        "build-backend": "setuptools.build_meta",
-    18→    }
-    19→    pyproject_path.write_bytes(tomli_w.dumps(data).encode())
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
@@ -71,6 +64,8 @@ src/tomli/_parser.py
     28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
     29→# mypyc docs this will be fixed in the future:
     30→# https://mypyc.readthedocs.io/en/latest/differences_from_python.html#stack-overflows
+    31→# Before mypyc's fix is in, recursion needs to be limited by this library.
+    32→# Choosing `sys.getrecursionlimit()` as maximum inline table/array nesting
       →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
     37→ASCII_CTRL …

@@ -194,6 +194,7 @@ fn is_locale_dir(name: &str) -> bool {
 /// Detect build/tool configuration files by filename and path convention.
 /// These are files like `eslint.config.js`, `jest.config.ts`, `.eslintrc.js`, etc.
 /// that configure development tools rather than implementing library/app logic.
+/// Also detects files in conventional tooling directories (`scripts/`, `tools/`).
 /// `relative_path` is the path relative to the project root.
 fn is_config_file(relative_path: &Path, filename: &str) -> bool {
     let lower = filename.to_ascii_lowercase();
@@ -227,6 +228,20 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
         // .{name}rc.{ext} — catches .eslintrc.js, .babelrc.js, .prettierrc.mjs, etc.
         if stem.starts_with('.') && stem.ends_with("rc") {
             return true;
+        }
+    }
+
+    // Files in conventional tooling directories are development utilities
+    // (release scripts, build helpers, CI glue), not core library/app code.
+    // Only `scripts/` and `tools/` — these are unambiguous across ecosystems.
+    for component in relative_path.components() {
+        if let std::path::Component::Normal(seg) = component
+            && let Some(name) = seg.to_str()
+        {
+            match name.to_ascii_lowercase().as_str() {
+                "scripts" | "script" | "tools" | "tool" => return true,
+                _ => {}
+            }
         }
     }
 
@@ -1245,5 +1260,19 @@ mod tests {
         assert!(!at_root("README.md"));
         assert!(!at_root("build.go")); // build.rs is Rust-specific
         assert!(!at_root("setup.rs")); // setup.py is Python-specific
+        // Files in scripts/ and tools/ directories
+        assert!(at_path("scripts/release.py"));
+        assert!(at_path("scripts/build.sh"));
+        assert!(at_path("tools/lint.py"));
+        assert!(at_path("tool/gen.rs"));
+        assert!(at_path("script/deploy.js"));
+        // Nested scripts dir also matches
+        assert!(at_path("ci/scripts/test.sh"));
+        // Case insensitive
+        assert!(at_path("Scripts/release.py"));
+        // Normal source dirs are NOT matched
+        assert!(!at_path("src/main.rs"));
+        assert!(!at_path("lib/index.js"));
+        assert!(!at_path("pkg/server.go"));
     }
 }
