@@ -2,22 +2,49 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (491 tokens)
+budget: 1000 (992 tokens)
 
 README.md
 
 sds.c
     33→#include <stdio.h>
+    34→#include <stdlib.h>
+    35→#include <string.h>
+    36→#include <ctype.h>
+    37→#include <assert.h>
+    38→#include <limits.h>
+    39→#include "sds.h"
+    40→#include "sdsalloc.h"
+    44→static inline int sdsHdrSize(char type) {
+    60→static inline char sdsReqType(size_t string_size) {
    444→/* Helper for sdscatlonglong() doing the actual number -> string
    445→ * conversion. 's' must point to a string with room for at least
    446→ * SDS_LLSTR_SIZE bytes.
    447→ *
-      →…
+   448→ * The function returns the length of the null-terminated string
+   449→ * representation stored at 's'. */
    450→#define SDS_LLSTR_SIZE 21
+   451→int sdsll2str(char *s, long long value) {
+   452→    char *p, aux;
+      →…
+  1137→void *sds_realloc(void *ptr, size_t size) { return s_realloc(ptr,size); }
+  1138→void sds_free(void *ptr) { s_free(ptr); }
+  1141→#include <stdio.h>
+  1142→#include "testhelp.h"
+  1143→#include "limits.h"
   1145→#define UNUSED(x) (void)(x)
+  1146→int sdsTest(void) {
+  1147→    {
+      →…
+  1325→int main(void) {
+  1326→    return sdsTest();
+      →…
 
 sds.h
     34→#define __SDS_H
+    39→#include <sys/types.h>
+    40→#include <stdarg.h>
+    41→#include <stdint.h>
     43→typedef char *sds;
     45→/* Note: sdshdr5 is never used, we just access the flags byte directly.
     46→ * However is here to document the layout of type 5 SDS strings. */
@@ -26,10 +53,23 @@ sds.h
     49→    char buf[];
     50→};
     51→struct __attribute__ ((__packed__)) sdshdr8 {
+    52→    uint8_t len; /* used */
+      →…
     57→struct __attribute__ ((__packed__)) sdshdr16 {
+    58→    uint16_t len; /* used */
+      →…
     63→struct __attribute__ ((__packed__)) sdshdr32 {
+    64→    uint32_t len; /* used */
+      →…
     69→struct __attribute__ ((__packed__)) sdshdr64 {
+    70→    uint64_t len; /* used */
+      →…
+   179→/* sdsalloc() = sdsavail() + sdslen() */
    180→static inline size_t sdsalloc(const sds s) {
+   181→    unsigned char flags = s[-1];
+   182→    switch(flags&SDS_TYPE_MASK) {
+   183→        case SDS_TYPE_5:
+      →…
    255→/* Low level functions exposed to the user API */
    256→sds sdsMakeRoomFor(sds s, size_t addlen);
    262→/* Export the allocator used by SDS to the program using SDS.
@@ -42,7 +82,10 @@ sdsalloc.h
     33→/* SDS allocator selection.
     34→ *
     35→ * This file is used in order to change the SDS allocator at compile time.
-      →…
+    36→ * Just define the following defines to what you want to use. Also add
+    37→ * the include of your alternate allocator if needed (not needed in order
+    38→ * to use the default libc allocator). */
+    39→
     40→#define s_malloc malloc
 
 testhelp.h

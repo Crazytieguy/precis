@@ -12,7 +12,7 @@ Uses **tree-sitter** for language-agnostic symbol extraction. Each supported lan
 
 ### Token Budgeting
 
-Takes a `--budget` flag (in BPE tokens, default 2500). Token counts use the o200k_base tokenizer (GPT-4o / Claude-class models) via tiktoken for accurate LLM budget estimation.
+Takes a `--budget` flag (in BPE tokens, default 2000). Token counts use the o200k_base tokenizer (GPT-4o / Claude-class models) via tiktoken for accurate LLM budget estimation.
 
 **Groups:** Symbols are bucketed into groups by shared properties (visibility, kind, directory, file role, etc.). All symbols in a group always receive the same rendering treatment — this prevents confusing output where similar symbols are at different detail levels.
 
