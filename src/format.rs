@@ -770,7 +770,10 @@ pub(crate) fn compute_layout(
     lang: Option<Lang>,
 ) -> SymbolLayout {
     let sym_line_0 = sym.line - 1;
-    let doc_start = doc_comment_start(lines, sym_line_0, lang);
+    let doc_start = sym
+        .doc_start_line
+        .map(|l| l - 1)
+        .unwrap_or_else(|| doc_comment_start(lines, sym_line_0, lang));
     let sig_end = signature_end_line(lines, sym, lang);
 
     // Python docstring range
@@ -835,7 +838,10 @@ pub(crate) fn compute_layout(
             });
         match first {
             Some(child) => {
-                let child_doc = doc_comment_start(lines, child.line - 1, lang);
+                let child_doc = child
+                    .doc_start_line
+                    .map(|l| l - 1)
+                    .unwrap_or_else(|| doc_comment_start(lines, child.line - 1, lang));
                 (true, Some(child_doc.max(raw_body_start)))
             }
             None => (false, None),
@@ -950,6 +956,7 @@ mod tests {
             line: 1,
             end_line: 3,
             sig_end_line: None, // test text fallback
+            doc_start_line: None,
         };
         assert_eq!(signature_end_line(&lines, &sym, Some(Lang::JsTs)), 0);
     }

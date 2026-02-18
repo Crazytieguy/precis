@@ -2,13 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1943 words)
+budget: 2000 (1940 words)
 
 CHANGELOG.md
      1→# Changelog
      3→All notable changes to this project will be documented in this file.
      4→
-      →…
+     5→The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
+     6→project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+     7→
     21→### Fixed …
 
 CONTRIBUTING.md
@@ -19,6 +21,7 @@ CONTRIBUTING.md
      7→
      8→Executing the tests:
      9→
+    10→    $ uv venv
       →…
 
 README.md
@@ -325,7 +328,11 @@ src/dotenv/cli.py
 
 src/dotenv/ipython.py
      1→from IPython.core.magic …
-     2→from IPython.core.magic_arguments …
+     2→from IPython.core.magic_arguments import (
+     3→    argument,
+     4→    magic_arguments,
+     5→    parse_argstring,
+     6→)  # type: ignore
      8→from .main import find_dotenv, load_dotenv
     11→@magics_class
     12→class IPythonDotEnv(Magics):
@@ -547,10 +554,6 @@ tests/test_is_interactive.py
      8→class TestIsInteractive:
      9→    """Tests for the _is_interactive helper function within find_dotenv.
     10→
-    11→    The _is_interactive function is used by find_dotenv to determine if the code
-    12→    is running in an interactive environment (like a REPL, IPython notebook, etc.)
-    13→    versus a normal script execution.
-    14→
       →…
     31→
     32→    def _create_dotenv_file(self, tmp_path):

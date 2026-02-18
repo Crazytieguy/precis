@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1965 words)
+budget: 2000 (1966 words)
 
 README.md
      1→# humanize
@@ -248,9 +248,6 @@ RELEASING.md
     16→      [GitHub Actions build](https://github.com/python-humanize/humanize/actions/workflows/release.yml)
     17→      has released to [PyPI](https://pypi.org/project/humanize/#history)
     18→
-    19→- [ ] Check installation:
-    20→
-    21→```bash
       →…
 
 docs/filesize.md
@@ -614,6 +611,7 @@ tests/test_time.py
     18→FOUR_MICROSECONDS = 4 / 1000000
     19→ONE_MILLISECOND = 1 / 1000
     20→FOUR_MILLISECONDS = 4 / 1000
+    22→MILLISECONDS_1_337 = 1337 / 1000  # 1.337 seconds
     23→ONE_HOUR = 3600
     24→ONE_DAY = 24 * ONE_HOUR
     25→ONE_YEAR = 365.25 * ONE_DAY

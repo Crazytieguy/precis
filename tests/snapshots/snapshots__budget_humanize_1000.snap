@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (969 words)
+budget: 1000 (970 words)
 
 README.md
      1→# humanize
@@ -98,6 +98,7 @@ README.md
    145→```pycon
    146→>>> humanize.naturaltime(delta)
    147→'now'
+   148→>>> humanize.naturaltime(delta, minimum_unit="milliseconds")
       →…
    154→### File size humanization
    156→```pycon
@@ -234,10 +235,6 @@ src/humanize/__init__.py
     30→    "activate",
     31→    "apnumber",
     32→    "clamp",
-    33→    "deactivate",
-    34→    "decimal_separator",
-    35→    "fractional",
-    36→    "intcomma",
       →…
 
 src/humanize/filesize.py
@@ -314,8 +311,7 @@ src/humanize/time.py
     23→    "naturalday",
     24→    "naturaldelta",
     25→    "naturaltime",
-    26→    "precisedelta",
-    27→]
+      →…
     30→@total_ordering
     31→class Unit(Enum):
     32→    MICROSECONDS = 0
@@ -369,6 +365,7 @@ tests/test_time.py
     18→FOUR_MICROSECONDS = 4 / 1000000
     19→ONE_MILLISECOND = 1 / 1000
     20→FOUR_MILLISECONDS = 4 / 1000
+    22→MILLISECONDS_1_337 = 1337 / 1000  # 1.337 seconds
     23→ONE_HOUR = 3600
     24→ONE_DAY = 24 * ONE_HOUR
     25→ONE_YEAR = 365.25 * ONE_DAY

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (484 words)
+budget: 500 (476 words)
 
 README.md
      1→# humanize
@@ -25,6 +25,15 @@ README.md
     28→- Greek
     29→- Hebrew
     30→- Indonesian
+    31→- Italian
+    32→- Japanese
+    33→- Klingon
+    34→- Korean
+    35→- Norwegian
+    36→- Persian
+    37→- Polish
+    38→- Russian
+    39→- Simplified Chinese
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -32,20 +41,43 @@ README.md
     53→<!-- usage-start -->
     54→
     55→## Installation
-    57→### From PyPI …
-    63→### From source …
+    57→### From PyPI
+    59→```bash
+      →…
+    63→### From source
+    65→```bash
+      →…
     71→## Usage
-    73→### Integer humanization …
-    89→### Date & time humanization …
-   110→### Precise time delta …
+    73→### Integer humanization
+    75→```pycon
+      →…
+    89→### Date & time humanization
+    91→```pycon
+      →…
+   110→### Precise time delta
+   112→```pycon
+      →…
    124→#### Smaller units
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
    127→
    128→```pycon
+   129→>>> import humanize
+   130→>>> import datetime as dt
+   131→>>> humanize.naturaldelta(dt.timedelta(seconds=2))
+   132→'2 seconds'
+   133→```
+   134→
+   135→```pycon
       →…
-   154→### File size humanization …
-   166→### Human-readable floating point numbers …
-   182→### Scientific notation …
+   154→### File size humanization
+   156→```pycon
+      →…
+   166→### Human-readable floating point numbers
+   168→```pycon
+      →…
+   182→### Scientific notation
+   184→```pycon
+      →…
    200→## Localization
    202→How to change locale at runtime:
    203→
@@ -106,7 +138,6 @@ src/humanize/__init__.py
     28→__all__ = [
 
 src/humanize/filesize.py
-    36→def naturalsize …
 
 src/humanize/i18n.py
      8→TYPE_CHECKING = False
@@ -117,16 +148,10 @@ src/humanize/i18n.py
     22→_THOUSANDS_SEPARATOR = {
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
-    51→def get_translation …
-    58→def activate …
-    96→def deactivate …
-   183→def thousands_separator …
-   196→def decimal_separator …
 
 src/humanize/lists.py
      5→TYPE_CHECKING = False
      9→__all__ = ["natural_list"]
-    12→def natural_list …
 
 src/humanize/number.py
      7→from .i18n …
@@ -134,14 +159,6 @@ src/humanize/number.py
      9→from .i18n …
     10→from .i18n …
     12→TYPE_CHECKING = False
-    34→def ordinal …
-   110→def intcomma …
-   195→def intword …
-   269→def apnumber …
-   321→def fractional …
-   385→def scientific …
-   454→def clamp …
-   531→def metric …
 
 src/humanize/time.py
     11→from .i18n …
@@ -160,12 +177,8 @@ src/humanize/time.py
     38→    MONTHS = 6
     39→    YEARS = 7
     40→
-    41→    def __lt__ …
-    95→def naturaldelta …
-   249→def naturaltime …
-   311→def naturalday …
-   343→def naturaldate …
-   451→def precisedelta …
+
+tests/test_filesize.py
 
 tests/test_i18n.py
     17→@freeze_time("2020-02-02")
@@ -177,9 +190,15 @@ tests/test_i18n.py
    262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
 
+tests/test_lists.py
+
+tests/test_number.py
+
 tests/test_time.py
     16→# In seconds
     17→ONE_MICROSECOND = 1 / 1000000
+    22→MILLISECONDS_1_337 = 1337 / 1000  # 1.337 seconds
+    23→ONE_HOUR = 3600
     37→class FakeDate:
     58→# These are not considered "public" interfaces, but require tests anyway.
     59→

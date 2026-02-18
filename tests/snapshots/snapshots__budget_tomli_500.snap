@@ -79,7 +79,7 @@ src/tomli/__init__.py
      4→
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ …
-     8→from ._parser …
+     8→from ._parser import TOMLDecodeError, load, loads
 
 src/tomli/_parser.py
     10→from ._re …
@@ -141,7 +141,6 @@ src/tomli/_types.py
 
 tests/__init__.py
      1→# SPDX-License-Identifier: MIT
-     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
       →…
      5→__all__ = ("tomllib",)
 
@@ -155,6 +154,10 @@ tests/data/valid/_external/toml-test/valid/bool/bool.json
 tests/data/valid/array/array-subtables.json
 
 tests/data/valid/array/open-parent-table.json
+
+tests/data/valid/inline-table/empty-inline-table.json
+
+tests/data/valid/inline-table/multiline-inline-table.json
 
 tests/test_data.py
     11→DATA_DIR …

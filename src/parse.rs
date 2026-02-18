@@ -21,6 +21,11 @@ pub struct Symbol {
     /// `None` when tree-sitter couldn't determine the boundary (fallback to
     /// text heuristics in `format::signature_end_line`).
     pub sig_end_line: Option<usize>,
+    /// First line of the doc comment block preceding the symbol (1-indexed),
+    /// computed from tree-sitter AST by walking previous sibling comment nodes.
+    /// `None` when tree-sitter couldn't find a doc comment (fallback to
+    /// text heuristics in `format::doc_comment_start`).
+    pub doc_start_line: Option<usize>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -572,6 +577,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
                 symbol_node.end_position().row + 1
             },
             sig_end_line: compute_sig_end_line(symbol_node, lang),
+            doc_start_line: compute_doc_start_line(symbol_node, source, lang),
         });
     }
 
@@ -916,6 +922,88 @@ fn compute_sig_end_line(node: tree_sitter::Node, lang: Lang) -> Option<usize> {
     }
 
     None
+}
+
+/// Compute the first line (1-indexed) of the doc comment block preceding a symbol,
+/// using tree-sitter AST sibling navigation. Returns `None` when no doc comment is
+/// found (fallback to text heuristics in `format::doc_comment_start`).
+///
+/// Walks backwards through previous named siblings looking for comment nodes that
+/// qualify as doc comments for the given language. For symbols wrapped in
+/// `export_statement` (TypeScript) or `decorated_definition` (Python), checks the
+/// wrapper's siblings when the symbol's own siblings don't have comments.
+fn compute_doc_start_line(symbol_node: tree_sitter::Node, source: &str, lang: Lang) -> Option<usize> {
+    if matches!(lang, Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml) {
+        return None;
+    }
+
+    // Find the nearest doc comment above this symbol.
+    // Check the symbol's own prev sibling first, then wrapper parent nodes
+    // (export_statement for TypeScript, decorated_definition for Python decorators).
+    // Gap limit: allow at most 1 blank line between doc comment and symbol/wrapper.
+    // Larger gaps indicate section separators, not doc comments.
+    // Max gap of 2 rows (allows 1 blank line between doc comment and symbol/wrapper).
+    // Larger gaps indicate section separators, not doc comments.
+    let max_gap = 2;
+
+    let first_doc = symbol_node
+        .prev_named_sibling()
+        .filter(|n| {
+            is_doc_comment_node(*n, source, lang)
+                && symbol_node.start_position().row.saturating_sub(n.end_position().row) <= max_gap
+        })
+        .or_else(|| {
+            let parent = symbol_node.parent()?;
+            if matches!(parent.kind(), "export_statement" | "decorated_definition") {
+                parent.prev_named_sibling().filter(|n| {
+                    is_doc_comment_node(*n, source, lang)
+                        && parent.start_position().row.saturating_sub(n.end_position().row)
+                            <= max_gap
+                })
+            } else {
+                None
+            }
+        })?;
+
+    // Walk backwards through contiguous doc comment siblings to find the block start
+    let mut doc_start_row = first_doc.start_position().row;
+    let mut current = first_doc;
+
+    while let Some(prev) = current.prev_named_sibling() {
+        if !is_doc_comment_node(prev, source, lang) {
+            break;
+        }
+        // Require contiguity within the doc block (no blank lines between comments)
+        if current.start_position().row.saturating_sub(prev.end_position().row) > 1 {
+            break;
+        }
+        doc_start_row = prev.start_position().row;
+        current = prev;
+    }
+
+    Some(doc_start_row + 1) // 1-indexed
+}
+
+/// Check whether a tree-sitter node is a doc comment for the given language.
+fn is_doc_comment_node(node: tree_sitter::Node, source: &str, lang: Lang) -> bool {
+    if !matches!(node.kind(), "comment" | "line_comment" | "block_comment") {
+        return false;
+    }
+    let text = match node.utf8_text(source.as_bytes()) {
+        Ok(t) => t.trim(),
+        Err(_) => return false,
+    };
+    match lang {
+        Lang::Rust => {
+            // Only outer doc comments (/// and /**) document the next item.
+            // Inner doc comments (//! and /*!) document the containing module.
+            text.starts_with("///") || text.starts_with("/**")
+        }
+        Lang::Go | Lang::C => true, // godoc / doxygen: any comment preceding a declaration
+        Lang::JsTs => text.starts_with("/**"), // JSDoc only
+        Lang::Python => text.starts_with('#'),
+        _ => false,
+    }
 }
 
 /// Check if a Rust node is test code that should be filtered from output.

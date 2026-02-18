@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3952 words)
+budget: 4000 (3940 words)
 
 README.md
      1→# humanize
@@ -423,7 +423,6 @@ src/humanize/i18n.py
     41→    package = __spec__ and __spec__.parent
     42→    if not package:
     43→        return None
-    44→
       →…
     51→def get_translation() -> gettext_module.NullTranslations:
     58→def activate(
@@ -563,7 +562,6 @@ src/humanize/number.py
     23→    import math
     24→
     25→    if math.isnan(value):
-    26→        return "NaN"
       →…
     34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
     35→    """Converts an integer to its ordinal as a string.
@@ -738,7 +736,7 @@ src/humanize/time.py
     62→    if delta.days < 0:
     63→        now = _now()
     64→        return now - (now + delta)
-    65→    return delta
+      →…
     68→def _date_and_delta(
     69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
     70→) -> tuple[Any, Any]:
@@ -749,7 +747,6 @@ src/humanize/time.py
     75→    import datetime as dt
     76→
     77→    if not now:
-    78→        now = _now()
       →…
     95→def naturaldelta(
     96→    value: dt.timedelta | float,
@@ -798,7 +795,6 @@ src/humanize/time.py
    304→    import datetime as dt
    305→
    306→    if isinstance(value, dt.datetime) and value.tzinfo is not None:
-   307→        value = dt.datetime.fromtimestamp(value.timestamp())
       →…
    311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
    312→    """Return a natural day.
@@ -845,7 +841,6 @@ src/humanize/time.py
    393→    if unit == minimum_unit:
    394→        return _rounding_by_fmt(format, value / divisor), 0
    395→
-   396→    if unit in suppress:
       →…
    406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
    407→    """Return a minimum unit suitable that is not suppressed.
@@ -868,7 +863,6 @@ src/humanize/time.py
    424→    if min_unit in suppress:
    425→        for unit in Unit:
    426→            if unit > min_unit and unit not in suppress:
-   427→                return unit
       →…
    435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
    436→    """Extend suppressed units (if any) with all units lower than the minimum unit.
@@ -880,7 +874,6 @@ src/humanize/time.py
    442→    suppress = set(suppress)
    443→    for unit in Unit:
    444→        if unit == min_unit:
-   445→            break
       →…
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
@@ -916,7 +909,6 @@ src/humanize/time.py
    665→    result = format % value
    666→
    667→    try:
-   668→        value = int(result)
       →…
 
 tests/test_filesize.py
@@ -952,7 +944,7 @@ tests/test_i18n.py
     36→        humanize.i18n.deactivate()
     37→        assert humanize.naturaltime(three_seconds) == "3 seconds ago"
     38→        assert humanize.ordinal(5) == "5th"
-      →…
+    39→        assert humanize.precisedelta(one_min_three_seconds) == "1 minute and 7 seconds"
     42→def test_intcomma …
     72→def test_naturaldelta …
    149→def test_intword_i18n …
@@ -1034,6 +1026,7 @@ tests/test_time.py
     18→FOUR_MICROSECONDS = 4 / 1000000
     19→ONE_MILLISECOND = 1 / 1000
     20→FOUR_MILLISECONDS = 4 / 1000
+    22→MILLISECONDS_1_337 = 1337 / 1000  # 1.337 seconds
     23→ONE_HOUR = 3600
     24→ONE_DAY = 24 * ONE_HOUR
     25→ONE_YEAR = 365.25 * ONE_DAY

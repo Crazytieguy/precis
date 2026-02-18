@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1986 words)
+budget: 2000 (1989 words)
 
 __init__.py
      1→from typing …
@@ -154,7 +154,11 @@ cli.py
 
 ipython.py
      1→from IPython.core.magic …
-     2→from IPython.core.magic_arguments …
+     2→from IPython.core.magic_arguments import (
+     3→    argument,
+     4→    magic_arguments,
+     5→    parse_argstring,
+     6→)  # type: ignore
      8→from .main import find_dotenv, load_dotenv
     11→@magics_class
     12→class IPythonDotEnv(Magics):
@@ -323,8 +327,6 @@ main.py
    279→    last_dir = None
    280→    current_dir = os.path.abspath(path)
    281→    while last_dir != current_dir:
-   282→        yield current_dir
-   283→        parent_dir = os.path.abspath(os.path.join(current_dir, os.path.pardir))
       →…
    287→def find_dotenv(
    288→    filename: str = ".env",

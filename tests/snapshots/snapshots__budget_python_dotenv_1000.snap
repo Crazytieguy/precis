@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (953 words)
+budget: 1000 (947 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -12,14 +12,7 @@ CHANGELOG.md
     21→### Fixed …
 
 CONTRIBUTING.md
-     1→Contributing
-     4→All the contributions are welcome! Please open [an
-     5→issue](https://github.com/theskumar/python-dotenv/issues/new) or send us
-     6→a pull request.
-     7→
-     8→Executing the tests:
-     9→
-      →…
+     1→Contributing …
 
 README.md
      1→# python-dotenv
@@ -187,6 +180,11 @@ src/dotenv/cli.py
       →…
 
 src/dotenv/ipython.py
+     2→from IPython.core.magic_arguments import (
+     3→    argument,
+     4→    magic_arguments,
+     5→    parse_argstring,
+     6→)  # type: ignore
      8→from .main import find_dotenv, load_dotenv
     11→@magics_class
     12→class IPythonDotEnv(Magics):

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (488 words)
+budget: 500 (489 words)
 
 __init__.py
      3→from .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key
@@ -11,11 +11,7 @@ __init__.py
     44→    "load_dotenv",
     45→    "dotenv_values",
     46→    "get_key",
-    47→    "set_key",
-    48→    "unset_key",
-    49→    "find_dotenv",
-    50→    "load_ipython_extension",
-    51→]
+      →…
 
 __main__.py
      3→from .cli import cli
@@ -71,6 +67,11 @@ cli.py
       →…
 
 ipython.py
+     2→from IPython.core.magic_arguments import (
+     3→    argument,
+     4→    magic_arguments,
+     5→    parse_argstring,
+     6→)  # type: ignore
      8→from .main import find_dotenv, load_dotenv
     11→@magics_class
     12→class IPythonDotEnv(Magics):
@@ -115,8 +116,6 @@ main.py
     68→        elif self.stream is not None:
     69→            yield self.stream
     70→        else:
-    71→            if self.verbose:
-    72→                logger.info(
       →…
    141→@contextmanager
    142→def rewrite(

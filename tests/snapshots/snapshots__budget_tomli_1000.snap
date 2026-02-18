@@ -104,16 +104,23 @@ src/tomli/__init__.py
      4→
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
-     8→from ._parser …
+     8→from ._parser import TOMLDecodeError, load, loads
 
 src/tomli/_parser.py
      7→import sys …
      8→from types …
-    10→from ._re …
+    10→from ._re import (
+    11→    RE_DATETIME,
+    12→    RE_LOCALTIME,
+    13→    RE_NUMBER,
+    14→    match_to_datetime,
+    15→    match_to_localtime,
+    16→    match_to_number,
+    17→)
     19→TYPE_CHECKING = False
     21→    from collections.abc …
     22→    from typing …
-    24→    from ._types …
+    24→    from ._types import Key, ParseFloat, Pos
     26→# Inline tables/arrays are implemented using recursion. Pathologically
     27→# nested documents cause pure Python to raise RecursionError (which is OK),
     28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
@@ -167,7 +174,7 @@ src/tomli/_re.py
      9→import re …
     11→TYPE_CHECKING = False
     13→    from typing …
-    15→    from ._types …
+    15→    from ._types import ParseFloat
     17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
     27→    r"""
@@ -182,10 +189,7 @@ src/tomli/_re.py
     36→|
     37→[+-]?(?:0|[1-9](?:_?[0-9])*)         # dec, integer part
     38→(?P<floatpart>
-    39→    (?:\.[0-9](?:_?[0-9])*)?         # optional fractional part
-    40→    (?:[eE][+-]?[0-9](?:_?[0-9])*)?  # optional exponent part
-    41→)
-    42→""",
+      →…
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
     47→    rf"""
@@ -222,10 +226,6 @@ tests/__init__.py
 
 tests/burntsushi.py
 
-tests/data/invalid/_external/toml-test/invalid/key/no-eol-04.toml
-
-tests/data/invalid/_external/toml-test/invalid/key/start-bracket.toml
-
 tests/data/invalid/array-of-tables/overwrite-array-in-parent.toml
      1→[[parent-table.arr …
      2→[parent-table …
@@ -236,22 +236,10 @@ tests/data/invalid/array-of-tables/overwrite-bool-with-aot.toml
 tests/data/invalid/keys-and-vals/overwrite-with-deep-table.toml
      2→[a.b.c.d …
 
-tests/data/invalid/table/redefine-1.toml
-
-tests/data/invalid/table/redefine-2.toml
-
 tests/data/valid/_external/toml-test/valid/bool/bool.json
      2→    "f": {"type": "bool", "value": "false"},
      3→    "t": {"type": "bool", "value": "true"}
      4→}
-
-tests/data/valid/_external/toml-test/valid/comment/everywhere.toml
-
-tests/data/valid/_external/toml-test/valid/comment/tricky.toml
-
-tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-03.toml
-
-tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-04.toml
 
 tests/data/valid/array/array-subtables.json
      1→{"arr …
