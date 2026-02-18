@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3990 tokens)
+budget: 4000 (3992 tokens)
 
 imp_cs.rs
      6→use crate::unsync;
@@ -205,7 +205,7 @@ lib.rs
    892→    ///         "Hello, World!".to_string()
    893→    ///     });
    894→    ///     assert_eq!(value, "Hello, World!");
-      →…
+      →    …
    901→    pub struct OnceCell<T>(Imp<T>);
    904→        fn default() -> OnceCell<T> {
    910→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -247,7 +247,7 @@ lib.rs
   1241→    /// fn main() {
   1242→    ///     println!("ready");
   1243→    ///     std::thread::spawn(|| {
-      →…
+      →    …
   1255→    pub struct Lazy<T, F = fn() -> T> {
   1256→        cell: OnceCell<T>,
   1257→        init: Cell<Option<F>>,

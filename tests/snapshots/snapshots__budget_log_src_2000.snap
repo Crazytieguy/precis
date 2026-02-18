@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1988 tokens)
+budget: 2000 (1993 tokens)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -137,7 +137,7 @@ lib.rs
    477→    ///
    478→    /// Designates very serious errors.
    479→    // This way these line up with the discriminants for LevelFilter below
-      →…
+      →    …
    516→    type Err = ParseLevelError;
    535→    fn from_usize …
    636→pub enum LevelFilter {
@@ -145,7 +145,7 @@ lib.rs
    638→    Off,
    639→    /// Corresponds to the `Error` log level.
    640→    Error,
-      →…
+      →    …
    666→    type Err = ParseLevelError;
    685→    fn from_usize …
    781→enum MaybeStaticStr<'a> {
@@ -155,13 +155,13 @@ lib.rs
    787→    #[inline]
    788→    fn get(&self) -> &'a str {
    789→        match *self {
-      →…
+      →        …
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
    844→    args: fmt::Arguments<'a>,
    845→    module_path: Option<MaybeStaticStr<'a>>,
    846→    file: Option<MaybeStaticStr<'a>>,
-      →…
+      →    …
    858→struct KeyValues<'a>(&'a dyn kv::Source);
   1003→pub struct RecordBuilder<'a> {
   1004→    record: Record<'a>,
@@ -181,7 +181,7 @@ lib.rs
   1485→    F: FnOnce() -> &'static dyn Log,
   1486→{
   1487→    match STATE.compare_exchange(
-      →…
+      →    …
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
   1599→#[doc(hidden)]

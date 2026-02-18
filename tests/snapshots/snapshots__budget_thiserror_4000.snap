@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4012 tokens)
+budget: 4000 (4020 tokens)
 
 Cargo.toml
      1→[package]
@@ -70,23 +70,23 @@ impl/src/ast.rs
     10→pub enum Input<'a> {
     11→    Struct(Struct<'a>),
     12→    Enum(Enum<'a>),
-      →…
+      →    …
     15→pub struct Struct<'a> {
     16→    pub attrs: Attrs<'a>,
     17→    pub ident: Ident,
-      →…
+      →    …
     22→pub struct Enum<'a> {
     23→    pub attrs: Attrs<'a>,
     24→    pub ident: Ident,
-      →…
+      →    …
     29→pub struct Variant<'a> {
     30→    pub original: &'a syn::Variant,
     31→    pub attrs: Attrs<'a>,
-      →…
+      →    …
     36→pub struct Field<'a> {
     37→    pub original: &'a syn::Field,
     38→    pub attrs: Attrs<'a>,
-      →…
+      →    …
     44→#[derive(Copy, Clone)]
     45→pub enum ContainerKind {
     46→    Struct,
@@ -103,7 +103,7 @@ impl/src/attr.rs
     11→pub struct Attrs<'a> {
     12→    pub display: Option<Display<'a>>,
     13→    pub source: Option<Source<'a>>,
-      →…
+      →    …
     20→#[derive(Clone)]
     21→pub struct Display<'a> {
     22→    pub original: &'a Attribute,
@@ -181,7 +181,7 @@ impl/src/generics.rs
     48→pub struct InferredBounds {
     49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
     50→    order: Vec<TokenStream>,
-      →…
+      →    …
     54→    pub fn new …
     61→    pub fn insert …
     74→    pub fn augment_where_clause …
@@ -219,7 +219,7 @@ impl/src/scan_expr.rs
     13→    ConsumeIdent,
     14→    ConsumeLifetime,
     15→    ConsumeLiteral,
-      →…
+      →    …
     25→enum Action {
     26→    SetState(&'static [(Input, Action)]),
     27→    IncDepth,

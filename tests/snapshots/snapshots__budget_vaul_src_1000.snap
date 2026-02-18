@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (986 tokens)
+budget: 1000 (988 tokens)
 
 browser.ts
 
@@ -32,10 +32,10 @@ index.tsx
      4→import React from 'react';
     27→export interface WithFadeFromProps {
     28→  /**
-      →…
+      →  …
     40→export interface WithoutFadeFromProps {
     41→  /**
-      →…
+      →  …
     50→export type DialogProps = {
    139→export function Root …
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(

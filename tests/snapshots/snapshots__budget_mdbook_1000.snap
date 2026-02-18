@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1002 tokens)
+budget: 1000 (1005 tokens)
 
 README.md
      1→# mdBook
@@ -55,7 +55,7 @@ crates/mdbook-markdown/src/lib.rs
     15→pub struct MarkdownOptions {
     16→    /// Enables smart punctuation.
     17→    ///
-      →…
+      →    …
     34→    fn default() -> MarkdownOptions {
     44→pub fn new_cmark_parser …
 
@@ -120,7 +120,7 @@ src/cmd/clean.rs
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     46→pub struct Clean {
     47→    num_files_removed: u64,
-      →…
+      →    …
 
 src/cmd/command_prelude.rs
      3→pub use clap::{Arg, ArgMatches, Command, arg};
@@ -141,7 +141,7 @@ src/cmd/watch/poller.rs
 src/cmd/watch.rs
     21→pub enum WatcherKind {
     22→    Poll,
-      →…
+      →    …
 
 src/main.rs
     14→mod cmd;

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (4001 tokens)
 
 __init__.py
      1→__all__ = [
@@ -11,7 +11,7 @@ __init__.py
      4→    "PluginValidationError",
      5→    "HookCaller",
      6→    "HookCallError",
-      →…
+      →    …
     17→from ._hooks import HookCaller
     18→from ._hooks import HookImpl
     19→from ._hooks import HookimplMarker

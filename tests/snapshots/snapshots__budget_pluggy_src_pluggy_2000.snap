@@ -2,13 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2005 tokens)
+budget: 2000 (2012 tokens)
 
 __init__.py
      1→__all__ = [
      2→    "__version__",
      3→    "PluginManager",
-      →…
+      →    …
 
 _callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
@@ -28,14 +28,14 @@ _hooks.py
     44→    firstresult: bool
     45→    #: Whether the hook is :ref:`historic <historic>`.
     46→    historic: bool
-      →…
+      →    …
     56→class HookimplOpts(TypedDict):
     58→
     59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
     60→    wrapper: bool
     61→    #: Whether the hook implementation is an :ref:`old-style wrapper
     62→    #: <old_style_hookwrappers>`.
-      →…
+      →    …
     77→@final
     78→class HookspecMarker:
     79→    """Decorator for marking functions as hook specifications.
@@ -85,7 +85,7 @@ _hooks.py
    429→        if self.spec is not None:
    430→            raise ValueError(
    431→                f"Hook {self.spec.name!r} is already registered "
-      →…
+      →                …
    593→class _SubsetHookCaller(HookCaller):
    596→
    597→    # This class is unusual: in inhertits from `HookCaller` so all of
@@ -95,7 +95,7 @@ _hooks.py
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [
    621→            impl
-      →…
+      →            …
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    628→        return self._orig.spec
@@ -165,7 +165,7 @@ _result.py
     45→        exc = self._exception
     46→        if exc is None:
     47→            return None
-      →…
+      →            …
     51→    @property
     52→    def exception(self) -> BaseException | None:
     53→        """:meta private:"""
@@ -176,7 +176,7 @@ _result.py
     59→        __tracebackhide__ = True
     60→        result = exception = None
     61→        try:
-      →…
+      →        …
 
 _tracing.py
     16→class TagTracer:

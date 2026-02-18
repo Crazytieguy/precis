@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2013 tokens)
+budget: 2000 (2020 tokens)
 
 command-score.ts
     54→function commandScoreInner(
@@ -22,7 +22,7 @@ command-score.ts
     68→  }
     69→
     70→  var memoizeKey = `${stringIndex},${abbreviationIndex}`
-      →…
+      →  …
    150→function formatInput(string) {
    151→  // convert all valid space characters to space so they match each other
    152→  return string.toLowerCase().replace(COUNT_SPACE_REGEXP, ' ')
@@ -130,14 +130,14 @@ index.tsx
    970→}
    972→function findPreviousSibling(el: Element, selector: string) {
    973→  let sibling = el.previousElementSibling
-      →…
+      →  …
    981→function useAsRef<T>(data: T) {
    982→  const ref = React.useRef<T>(data)
-      →…
+      →  …
    991→const useLayoutEffect …
    993→function useLazyRef<T>(fn: () => T) {
    994→  const ref = React.useRef<T>()
-      →…
+      →  …
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1005→  const store = useStore()
@@ -151,7 +151,7 @@ index.tsx
   1014→  aliases: string[] = [],
   1015→) {
   1016→  const valueRef = React.useRef<string>()
-      →…
+      →  …
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
   1047→  const [s, ss] = React.useState<object>()
@@ -169,11 +169,11 @@ index.tsx
   1059→}
   1061→function renderChildren(children: React.ReactElement) {
   1062→  const childrenType = children.type as any
-      →…
+      →  …
   1071→function SlottableWithNestedChildren(
   1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
   1073→  render: (child: React.ReactNode) => JSX.Element,
   1074→) {
   1075→  if (asChild && React.isValidElement(children)) {
-      →…
+      →  …
   1081→const srOnlyStyles …

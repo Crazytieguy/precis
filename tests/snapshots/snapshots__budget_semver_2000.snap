@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2003 tokens)
+budget: 2000 (2005 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -187,11 +187,11 @@ internal/lrucache.js
      4→  constructor () {
      5→    this.max = 1000
      6→    this.map = new Map()
-      →…
+      →    …
      9→  get (key) {
     10→    const value = this.map.get(key)
     11→    if (value === undefined) {
-      →…
+      →    …
     21→  delete (key) {
     22→    return this.map.delete(key)
     23→  }

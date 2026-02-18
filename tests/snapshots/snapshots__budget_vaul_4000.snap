@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4023 tokens)
+budget: 4000 (4033 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -70,7 +70,7 @@ src/context.ts
      5→  drawerRef: React.RefObject<HTMLDivElement>;
      6→  overlayRef: React.RefObject<HTMLDivElement>;
      7→  onPress: (event: React.PointerEvent<HTMLDivElement>) => void;
-      →…
+      →  …
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     69→export const useDrawerContext …
 
@@ -98,7 +98,7 @@ src/helpers.ts
    113→        fn(...args);
    114→      }
    115→    }
-      →…
+      →    …
 
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -250,7 +250,7 @@ src/use-prevent-scroll.ts
     11→  /** Whether the scroll lock is disabled. */
     12→  isDisabled?: boolean;
     13→  focusCallback?: () => void;
-      →…
+      →  …
     16→function chain …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable …
@@ -308,13 +308,13 @@ test/src/app/controlled/page.tsx
 test/src/app/default-open/page.tsx
      6→export default function Page() {
      7→  return (
-      →…
+      →  …
 
 test/src/app/different-directions/page.tsx
      6→function DirectionalDrawer …
    118→export default function Page() {
    119→  return (
-      →…
+      →  …
 
 test/src/app/initial-snap/page.tsx
      7→const snapPoints …
@@ -330,7 +330,7 @@ test/src/app/nested-drawers/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {
      6→  return (
-      →…
+      →  …
 
 test/src/app/non-dismissible/page.tsx
      6→export default function Page() {
@@ -346,7 +346,7 @@ test/src/app/page.tsx
 test/src/app/parent-container/page.tsx
      6→export default function Page() {
      7→  return (
-      →…
+      →  …
     15→function Default() {
     39→function WithNested() {
 
@@ -357,7 +357,7 @@ test/src/app/scrollable-with-inputs/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {
      6→  return (
-      →…
+      →  …
 
 test/src/app/with-handle/page.tsx
      7→const snapPoints = ['148px', '355px'];
@@ -370,12 +370,12 @@ test/src/app/with-modal-false/page.tsx
 test/src/app/with-redirect/long-page/page.tsx
      3→export default function Page() {
      4→  return (
-      →…
+      →  …
 
 test/src/app/with-redirect/page.tsx
      6→export default function Page() {
      7→  return (
-      →…
+      →  …
 
 test/src/app/with-scaled-background/page.tsx
     65→export default function Page() {

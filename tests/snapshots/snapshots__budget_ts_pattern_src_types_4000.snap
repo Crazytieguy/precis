@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3990 tokens)
+budget: 4000 (3992 tokens)
 
 BuildMany.ts
      1→import { Iterator, IsOptionalKeysOf, UpdateAt, ValueOf } from './helpers …
@@ -85,7 +85,7 @@ DistributeUnions.ts
    102→  : [a, p] extends [readonly any[], readonly any[]]
    103→  ? [a, p] extends [
    104→      readonly [infer a1, infer a2, infer a3, infer a4, infer a5],
-      →…
+      →      …
 
 ExtractPreciseValue.ts
      1→import type { Override } from './Pattern …
@@ -235,7 +235,7 @@ Match.ts
    271→   */
    272→  (): PickReturnValue<output, inferredOutput>;
    273→  /**
-      →…
+      →  …
 
 Pattern.ts
      1→import type * as symbols from '../internals/symbols …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3988 tokens)
+budget: 4000 (3997 tokens)
 
 README.md
      1→Simple Dynamic Strings
@@ -48,7 +48,7 @@ sds.c
     48→        case SDS_TYPE_8:
     49→            return sizeof(struct sdshdr8);
     50→        case SDS_TYPE_16:
-      →…
+      →        …
     60→static inline char sdsReqType(size_t string_size) {
     61→    if (string_size < 1<<5)
     62→        return SDS_TYPE_5;
@@ -56,7 +56,7 @@ sds.c
     64→        return SDS_TYPE_8;
     65→    if (string_size < 1<<16)
     66→        return SDS_TYPE_16;
-      →…
+      →        …
     89→sds sdsnewlen(const void *init, size_t initlen) {
    149→sds sdsempty(void) {
    154→sds sdsnew(const char *init) {
@@ -95,7 +95,7 @@ sds.c
    461→        if (value != LLONG_MIN) {
    462→            v = -value;
    463→        } else {
-      →…
+      →        …
    494→int sdsull2str(char *s, unsigned long long v) {
    526→sds sdsfromlonglong(long long value) {
    534→sds sdscatvprintf(sds s, const char *fmt, va_list ap) {
@@ -135,7 +135,7 @@ sds.c
   1156→            sdslen(x) == 2 && memcmp(x,"fo\0",3) == 0)
   1157→
   1158→        x = sdscat(x,"bar");
-      →…
+      →        …
   1325→int main(void) {
   1326→    return sdsTest();
   1327→}
@@ -189,16 +189,16 @@ sds.h
     85→#define SDS_TYPE_5_LEN(f) ((f)>>SDS_TYPE_BITS)
     87→static inline size_t sdslen(const sds s) {
     88→    unsigned char flags = s[-1];
-      →…
+      →    …
    104→static inline size_t sdsavail(const sds s) {
    105→    unsigned char flags = s[-1];
-      →…
+      →    …
    130→static inline void sdssetlen(sds s, size_t newlen) {
    131→    unsigned char flags = s[-1];
-      →…
+      →    …
    154→static inline void sdsinclen(sds s, size_t inc) {
    155→    unsigned char flags = s[-1];
-      →…
+      →    …
    179→/* sdsalloc() = sdsavail() + sdslen() */
    180→static inline size_t sdsalloc(const sds s) {
    181→    unsigned char flags = s[-1];
@@ -218,7 +218,7 @@ sds.h
    195→}
    197→static inline void sdssetalloc(sds s, size_t newlen) {
    198→    unsigned char flags = s[-1];
-      →…
+      →    …
    218→sds sdsnewlen(const void *init, size_t initlen);
    219→sds sdsnew(const char *init);
    220→sds sdsempty(void);

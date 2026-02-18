@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1005 tokens)
+budget: 1000 (1009 tokens)
 
 ast.rs
     10→pub enum Input<'a> {
@@ -73,12 +73,12 @@ fallback.rs
 fmt.rs
    166→struct FmtArguments {
    167→    named: BTreeSet<IdentUnraw>,
-      →…
+      →    …
    171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
    173→    let ahead = input.fork();
    174→    if let Ok(set) = try_explicit_named_args(&ahead) {
-      →…
+      →    …
 
 generics.rs
      8→pub struct ParamsInScope<'a> {
@@ -108,10 +108,10 @@ prop.rs
 scan_expr.rs
      6→enum Input {
      7→    Keyword(&'static str),
-      →…
+      →    …
     25→enum Action {
     26→    SetState(&'static [(Input, Action)]),
-      →…
+      →    …
 
 unraw.rs
     10→#[derive(Clone)]

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4013 tokens)
+budget: 4000 (4019 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -21,7 +21,7 @@ README.md
     16→  - [Parse a TOML string](#parse-a-toml-string)
     17→  - [Parse a TOML file](#parse-a-toml-file)
     18→  - [Handle invalid TOML](#handle-invalid-toml)
-      →…
+      →  …
     32→## Intro<a name="intro"></a>
     34→Tomli is a Python library for parsing [TOML](https://toml.io).
     35→Version 2.4.0 and later are compatible with [TOML v1.1.0](https://toml.io/en/v1.1.0).
@@ -87,17 +87,17 @@ fuzzer/fuzz.py
     10→    import tomli
     20→def test_one_input(input_bytes: bytes) -> None:
     21→    # We need a Unicode string, not bytes
-      →…
+      →    …
     53→def print_err(data):
     54→    codepoints = [hex(ord(x)) for x in data]
-      →…
+      →    …
     59→def normalize_toml_obj(toml_obj: dict) -> None:
     60→    """Make NaNs equal when compared (without using recursion)."""
     61→    to_process = [toml_obj]
-      →…
+      →    …
     71→def main():
     72→    # For possible options, see https://llvm.org/docs/LibFuzzer.html#options
-      →…
+      →    …
 
 profiler/profiler_script.py
      8→from pathlib import Path
@@ -129,7 +129,7 @@ scripts/use_setuptools.py
      9→import tomli_w  # type: ignore[import-not-found]
     12→def use_setuptools() -> None:
     13→    pyproject_path = Path(__file__).parent.parent / "pyproject.toml"
-      →…
+      →    …
 
 setup.py
 

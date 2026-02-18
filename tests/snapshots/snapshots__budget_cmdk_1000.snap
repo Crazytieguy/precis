@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 tokens)
+budget: 1000 (1007 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -37,7 +37,7 @@ cmdk/src/command-score.ts
    150→function formatInput …
    155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
    156→  /* NOTE:
-      →…
+      →  …
 
 cmdk/src/index.tsx
      5→import { commandScore } from './command-score'

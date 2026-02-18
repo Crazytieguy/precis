@@ -18,7 +18,7 @@ DistributeUnions.ts
     23→ *
     24→ * It does this in 3 main steps:
     25→ *  - 1. Find all unions contained in the data structure, that matches `p`
-      →…
+      → …
     41→export type DistributeMatchingUnions<a, p> = IsAny<a> extends true
     42→  ? any
     43→  : BuildMany<a, Distribute<FindUnionsMany<a, p>>>;
@@ -31,7 +31,7 @@ DistributeUnions.ts
     68→ *
     69→ * Kinds are types of types.
     70→ *
-      →…
+      → …
     80→export type FindUnions<
     81→  a,
     82→  p,
@@ -95,7 +95,7 @@ Match.ts
    230→ *
    231→ * Since DeepExclude distributes the union of the input type, it can
    232→ * generate very large union types on patterns touching several unions at once.
-      →…
+      → …
    245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
    246→  ? never
    247→  : tupleList extends [infer excluded, ...infer tail]
@@ -106,7 +106,7 @@ Match.ts
    257→ * permitting calling it with or without a catch-all handler function.
    258→ *
    259→ * By default, TS-Pattern will throw an error if a runtime value isn't handled.
-      →…
+      → …
    261→type Exhaustive<output, inferredOutput> = {
 
 Pattern.ts
@@ -149,7 +149,7 @@ Pattern.ts
    152→ * [Read the documentation for `P.Pattern` on GitHub](https://github.com/gvergnaud/ts-pattern#patterns)
    153→ *
    154→ * @example
-      →…
+      → …
    157→export type Pattern<a = unknown> = unknown extends a
    158→  ? UnknownValuePattern
    159→  : KnownPattern<a>;

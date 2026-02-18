@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2032 tokens)
+budget: 2000 (2048 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -26,7 +26,7 @@ README.md
     21→function App() {
     22→  return (
     23→    <div>
-      →…
+      →    …
     31→## Documentation
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
 
@@ -43,19 +43,19 @@ src/assets.tsx
      3→import type { ToastTypes } from './types …
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
      6→  switch (type) {
-      →…
+      →  …
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     27→  return (
-      →…
+      →  …
     78→export const CloseIcon = (
     79→  <svg
-      →…
+      →  …
 
 src/hooks.tsx
      1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
-      →…
+      →  …
 
 src/index.tsx
      3→import React from 'react';
@@ -118,51 +118,51 @@ src/types.ts
      5→export type PromiseT …
      7→export interface PromiseIExtendedResult extends ExternalToast {
      8→  message: React.ReactNode;
-      →…
+      →  …
     11→export type PromiseTExtendedResult …
     15→export type PromiseTResult …
     20→export type PromiseExternalToast …
     22→export type PromiseData …
     30→export interface ToastClassnames {
     31→  toast?: string;
-      →…
+      →  …
     48→export interface ToastIcons {
     49→  success?: React.ReactNode;
-      →…
+      →  …
     57→export interface Action {
     58→  label: React.ReactNode;
-      →…
+      →  …
     63→export interface ToastT {
     64→  id: number | string;
-      →…
+      →  …
     93→export function isAction …
     97→export type Position …
     98→export interface HeightT {
     99→  height: number;
-      →…
+      →  …
    104→interface ToastOptions {
    105→  className?: string;
    106→  closeButton?: boolean;
    107→  descriptionClassName?: string;
    108→  style?: React.CSSProperties;
    109→  cancelButtonStyle?: React.CSSProperties;
-      →…
+      →  …
    118→type Offset =
    119→  | {
    128→export interface ToasterProps {
    129→  id?: string;
-      →…
+      →  …
    152→export type SwipeDirection …
    154→export interface ToastProps {
    155→  toast: ToastT;
-      →…
+      →  …
    184→export enum SwipeStateTypes {
    185→  SwipedOut = 'SwipedOut',
-      →…
+      →  …
    190→export type Theme …
    192→export interface ToastToDismiss {
    193→  id: number | string;
-      →…
+      →  …
    197→export type ExternalToast …
 
 test/README.md

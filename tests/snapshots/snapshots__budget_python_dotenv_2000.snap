@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2012 tokens)
+budget: 2000 (2018 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -75,7 +75,7 @@ src/dotenv/__init__.py
      3→from .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key
     42→__all__ = [
     43→    "get_cli_string",
-      →…
+      →    …
 
 src/dotenv/__main__.py
      3→from .cli import cli
@@ -151,14 +151,14 @@ src/dotenv/main.py
     14→from .variables import parse_variables
     25→def _load_dotenv_disabled() -> bool:
     26→    """
-      →…
+      →    …
     45→class DotEnv:
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
     66→            with open(self.dotenv_path, encoding=self.encoding) as stream:
     67→                yield stream
-      →…
+      →                …
    141→@contextmanager
    142→def rewrite(
    143→    path: StrPath,
@@ -166,10 +166,10 @@ src/dotenv/main.py
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """
-      →…
+      →    …
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
-      →…
+      →    …
 
 src/dotenv/parser.py
     35→class Original(NamedTuple):
@@ -195,7 +195,7 @@ src/dotenv/variables.py
      9→        (?::-
     10→            (?P<default>[^\}]*)
     11→        )?
-      →…
+      →        …
     18→class Atom(metaclass=ABCMeta):
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...

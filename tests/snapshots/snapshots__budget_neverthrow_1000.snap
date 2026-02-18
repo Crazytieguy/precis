@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1003 tokens)
+budget: 1000 (1004 tokens)
 
 CHANGELOG.md
      1→# neverthrow
@@ -36,7 +36,7 @@ src/_internals/error.ts
     14→        type: string
     15→        value: T
     16→      }
-      →…
+      →      …
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
     29→  result: Result<T, E>,

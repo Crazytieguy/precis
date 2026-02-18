@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2008 tokens)
+budget: 2000 (2011 tokens)
 
 input.tsx
      3→import * as React from 'react'
@@ -36,7 +36,7 @@ input.tsx
     34→    },
     35→    ref,
     36→  ) => {
-      →…
+      →  …
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
    542→    sheet.insertRule(rule)
@@ -114,7 +114,7 @@ use-pwm-badge.tsx
      6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
      8→const PASSWORD_MANAGERS_SELECTORS = [
      9→  '[data-lastpass-icon-root]', // LastPass
-      →…
+      →  …
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,
@@ -187,4 +187,4 @@ use-pwm-badge.tsx
     84→      // We are not sure. Most times that means there isn't a badge.
     85→      if (maybeBadgeEl === container) {
     86→        return
-      →…
+      →        …

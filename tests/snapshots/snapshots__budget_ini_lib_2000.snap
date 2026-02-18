@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (2002 tokens)
 
 ini.js
      3→const encode = (obj, opt = {}) => {
@@ -46,7 +46,7 @@ ini.js
     41→  }
     42→
     43→  let out = ''
-      →…
+      →  …
     80→function splitSections (str, separator) {
     81→  var lastMatchIndex = 0
     82→  var lastSeparatorIndex = 0
@@ -113,7 +113,7 @@ ini.js
    144→      ? keyRaw.slice(0, -2) : keyRaw
    145→
    146→    if (key === '__proto__') {
-      →…
+      →    …
    212→const isQuoted = val => {
    213→  return (val.startsWith('"') && val.endsWith('"')) ||
    214→    (val.startsWith("'") && val.endsWith("'"))
@@ -171,4 +171,4 @@ ini.js
    268→    return unesc.trim()
    269→  }
    270→  return val
-      →…
+      →  …

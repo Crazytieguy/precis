@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2003 tokens)
+budget: 2000 (2004 tokens)
 
 docs/conf.py
      2→from importlib.metadata import version as get_version
@@ -109,7 +109,7 @@ src/typeguard/_importhook.py
     76→            module = _call_with_frames_removed(
     77→                ast.parse,
     78→                source,
-      →…
+      →                …
    109→class TypeguardFinder(MetaPathFinder):
    119→
    156→class ImportHookManager:

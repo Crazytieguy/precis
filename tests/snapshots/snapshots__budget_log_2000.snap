@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (2004 tokens)
 
 CHANGELOG.md
      1→# Change Log
@@ -126,7 +126,7 @@ src/kv/value.rs
    745→        F64(f64),
    746→        I128(i128),
    747→        U128(u128),
-      →…
+      →        …
   1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
@@ -150,12 +150,12 @@ src/lib.rs
    475→pub enum Level {
    476→    /// The "error" level.
    477→    ///
-      →…
+      →    …
    516→    type Err = ParseLevelError;
    636→pub enum LevelFilter {
    637→    /// A level lower than all log levels.
    638→    Off,
-      →…
+      →    …
    666→    type Err = ParseLevelError;
    781→enum MaybeStaticStr<'a> {
    782→    Static(&'static str),
@@ -165,7 +165,7 @@ src/lib.rs
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
    844→    args: fmt::Arguments<'a>,
-      →…
+      →    …
    858→struct KeyValues<'a>(&'a dyn kv::Source);
   1003→pub struct RecordBuilder<'a> {
   1004→    record: Record<'a>,
@@ -173,7 +173,7 @@ src/lib.rs
   1158→pub struct Metadata<'a> {
   1159→    level: Level,
   1160→    target: &'a str,
-      →…
+      →    …
   1200→pub struct MetadataBuilder<'a> {
   1201→    metadata: Metadata<'a>,
   1202→}

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2024 tokens)
+budget: 2000 (2026 tokens)
 
 README.md
      1→# humanize
@@ -153,7 +153,7 @@ src/humanize/__init__.py
     26→from ._version import __version__
     28→__all__ = [
     29→    "__version__",
-      →…
+      →    …
 
 src/humanize/filesize.py
     36→def naturalsize …
@@ -200,7 +200,7 @@ src/humanize/time.py
     15→TYPE_CHECKING = False
     21→__all__ = [
     22→    "naturaldate",
-      →…
+      →    …
     30→@total_ordering
     31→class Unit(Enum):
     32→    MICROSECONDS = 0

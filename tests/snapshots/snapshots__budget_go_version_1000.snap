@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (985 tokens)
+budget: 1000 (987 tokens)
 
 CHANGELOG.md
 
@@ -81,7 +81,7 @@ version.go
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
-      →…
+      →		…
     52→// Version represents a single version.
     53→type Version struct {
     54→	metadata string

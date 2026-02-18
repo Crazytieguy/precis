@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1008 tokens)
+budget: 1000 (1012 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -109,16 +109,16 @@ internal/lrucache.js
      3→class LRUCache {
      4→  constructor () {
      5→    this.max = 1000
-      →…
+      →    …
      9→  get (key) {
     10→    const value = this.map.get(key)
-      →…
+      →    …
     21→  delete (key) {
     22→    return this.map.delete(key)
-      →…
+      →    …
     25→  set (key, value) {
     26→    const deleted = this.delete(key)
-      →…
+      →    …
 
 internal/parse-options.js
      6→const parseOptions = options => {

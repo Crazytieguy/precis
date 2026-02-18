@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4029 tokens)
+budget: 4000 (4047 tokens)
 
 README.md
      1→# xxhash
@@ -93,13 +93,13 @@ dynamic/dynamic_test.go
     22→		"plugin.go",
     23→	)
     24→	var out bytes.Buffer
-      →…
+      →	…
     33→func TestDynamic(t *testing.T) {
     34→	plug, err := plugin.Open("plugin.so")
     35→	if err != nil {
     36→		t.Fatal(err)
     37→	}
-      →…
+      →	…
 
 dynamic/plugin.go
      6→import (
@@ -135,7 +135,7 @@ dynamic/plugin.go
     40→				}
     41→			}
     42→			if got := d.Sum64(); got != want {
-      →…
+      →			…
 
 xxhash.go
      5→import (
@@ -176,7 +176,7 @@ xxhash.go
     46→	var d Digest
     47→	d.ResetWithSeed(seed)
     48→	return &d
-      →…
+      →	…
     51→// Reset clears the Digest's state so that it can be reused.
     52→// It uses a seed value of zero.
     53→func (d *Digest) Reset() {
@@ -188,7 +188,7 @@ xxhash.go
     60→	d.v1 = seed + prime1 + prime2
     61→	d.v2 = seed + prime2
     62→	d.v3 = seed
-      →…
+      →	…
     68→// Size always returns 8 bytes.
     69→func (d *Digest) Size() int { return 8 }
     71→// BlockSize always returns 32 bytes.
@@ -204,13 +204,13 @@ xxhash.go
    114→	s := d.Sum64()
    115→	return append(
    116→		b,
-      →…
+      →		…
    128→// Sum64 returns the current hash.
    129→func (d *Digest) Sum64() uint64 {
    130→	var h uint64
    131→
    132→	if d.total >= 32 {
-      →…
+      →	…
    170→const (
    171→	magic         = "xxh\x06"
    172→	marshaledSize = len(magic) + 8*5 + 32
@@ -219,13 +219,13 @@ xxhash.go
    177→	b := make([]byte, 0, marshaledSize)
    178→	b = append(b, magic...)
    179→	b = appendUint64(b, d.v1)
-      →…
+      →	…
    189→// UnmarshalBinary implements the encoding.BinaryUnmarshaler interface.
    190→func (d *Digest) UnmarshalBinary(b []byte) error {
    191→	if len(b) < len(magic) || string(b[:len(magic)]) != magic {
    192→		return errors.New("xxhash: invalid hash state identifier")
    193→	}
-      →…
+      →	…
    208→func appendUint64 …
    214→func consumeUint64 …
    219→func u64 …
@@ -255,7 +255,7 @@ xxhash_other.go
      8→	// A simpler version would be
      9→	//   d := New()
     10→	//   d.Write(b)
-      →…
+      →	…
     64→func writeBlocks …
 
 xxhash_safe.go
@@ -296,7 +296,7 @@ xxhash_unsafe.go
     46→	d.Write(*(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)})))
     47→	// d.Write always returns len(s), nil.
     48→	// Ignoring the return output and returning these fixed values buys a
-      →…
+      →	…
     53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
     54→// of the first two words is the same as the layout of a string.
     55→type sliceHeader struct {
@@ -331,7 +331,7 @@ xxhashbench/xxhashbench_test.go
    111→			name string
    112→			n    int
    113→		}{
-      →…
+      →		…
    152→func benchmarkHashBytes(b *testing.B, input []byte, fn func([]byte) uint64) {
    159→func benchmarkHashString(b *testing.B, input string, fn func(string) uint64) {
 
@@ -345,10 +345,10 @@ xxhsum/xxhsum.go
      9→)
     11→func main() {
     12→	if contains(os.Args[1:], "-h") {
-      →…
+      →	…
     34→func contains(ss []string, s string) bool {
     35→	for _, s1 := range ss {
-      →…
+      →	…
     43→func printHash(r io.Reader, name string) {
     44→	h := xxhash.New()
-      →…
+      →	…

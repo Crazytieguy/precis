@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2004 tokens)
+budget: 2000 (2005 tokens)
 
 CHANGELOG.md
      1→## Unreleased
@@ -57,7 +57,7 @@ flatten.go
     20→func flatten(err error, flatErr *Error) {
     21→	switch err := err.(type) {
     22→	case *Error:
-      →…
+      →	…
 
 format.go
      6→import …

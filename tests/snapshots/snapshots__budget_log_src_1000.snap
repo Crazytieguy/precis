@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (998 tokens)
+budget: 1000 (1000 tokens)
 
 __private_api.rs
      7→pub use std::{format_args, module_path, stringify};
@@ -21,7 +21,7 @@ kv/error.rs
      7→}
     10→enum Inner {
     11→    #[cfg(feature = "std")]
-      →…
+      →    …
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
 
 kv/key.rs
@@ -68,7 +68,7 @@ kv/value.rs
    743→        I64(i64),
    744→        U64(u64),
    745→        F64(f64),
-      →…
+      →        …
   1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {

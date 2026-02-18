@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4026 tokens)
+budget: 4000 (4039 tokens)
 
 assets.tsx
      2→import React from 'react';
@@ -49,7 +49,7 @@ assets.tsx
     83→    viewBox="0 0 24 24"
     84→    fill="none"
     85→    stroke="currentColor"
-      →…
+      →    …
 
 hooks.tsx
      1→import React from 'react';
@@ -120,7 +120,7 @@ state.ts
     22→  constructor() {
     23→    this.subscribers = [];
     24→    this.toasts = [];
-      →…
+      →    …
     29→  subscribe = (subscriber: (toast: ToastT | ToastToDismiss) => void) => {
     30→    this.subscribers.push(subscriber);
     31→
@@ -131,16 +131,16 @@ state.ts
     42→  addToast = (data: ToastT) => {
     43→    this.publish(data);
     44→    this.toasts = [...this.toasts, data];
-      →…
+      →    …
     47→  create = (
     48→    data: ExternalToast & {
     49→      message?: titleT;
     50→      type?: ToastTypes;
-      →…
+      →      …
     88→  dismiss = (id?: number | string) => {
     89→    if (id) {
     90→      this.dismissedToasts.add(id);
-      →…
+      →      …
    101→  message = (message: titleT | React.ReactNode, data?: ExternalToast) => {
    102→    return this.create({ ...data, message });
    103→  };
@@ -162,11 +162,11 @@ state.ts
    125→  promise = <ToastData>(promise: PromiseT<ToastData>, data?: PromiseData<ToastData>) => {
    126→    if (!data) {
    127→      // Nothing to show
-      →…
+      →      …
    243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
    244→    const id = data?.id || toastsCounter++;
    245→    this.create({ jsx: jsx(id), ...data, id });
-      →…
+      →    …
    249→  getActiveToasts = () => {
    250→    return this.toasts.filter((toast) => !this.dismissedToasts.has(toast.id));
    251→  };
@@ -176,19 +176,19 @@ state.ts
    259→
    260→  ToastState.addToast({
    261→    title: message,
-      →…
+      →    …
    268→const isHttpResponse = (data: any): data is Response => {
    269→  return (
    270→    data &&
    271→    typeof data === 'object' &&
    272→    'ok' in data &&
-      →…
+      →    …
    279→const basicToast = toastFunction;
    281→const getHistory = () => ToastState.toasts;
    282→const getToasts = () => ToastState.getActiveToasts();
    285→export const toast = Object.assign(
    286→  basicToast,
-      →…
+      →  …
 
 types.ts
      1→import React from 'react';
@@ -207,7 +207,7 @@ types.ts
     20→export type PromiseExternalToast = Omit<ExternalToast, 'description'>;
     22→export type PromiseData<ToastData = any> = PromiseExternalToast & {
     23→  loading?: string | React.ReactNode;
-      →…
+      →  …
     30→export interface ToastClassnames {
     31→  toast?: string;
     32→  title?: string;
@@ -293,7 +293,7 @@ types.ts
    119→  | {
    120→      top?: string | number;
    121→      right?: string | number;
-      →…
+      →      …
    128→export interface ToasterProps {
    129→  id?: string;
    130→  invert?: boolean;
@@ -359,4 +359,4 @@ types.ts
    195→}
    197→export type ExternalToast = Omit<ToastT, 'id' | 'type' | 'title' | 'jsx' | 'delete' | 'promise'> & {
    198→  id?: number | string;
-      →…
+      →  …

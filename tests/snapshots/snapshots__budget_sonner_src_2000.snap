@@ -2,18 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2029 tokens)
+budget: 2000 (2044 tokens)
 
 assets.tsx
      2→import React from 'react';
      3→import type { ToastTypes } from './types …
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
      6→  switch (type) {
-      →…
+      →  …
     24→const bars = Array(12).fill(0);
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     27→  return (
-      →…
+      →  …
     38→const SuccessIcon = (
     48→const WarningIcon = (
     58→const InfoIcon = (
@@ -21,13 +21,13 @@ assets.tsx
     78→export const CloseIcon = (
     79→  <svg
     80→    xmlns="http://www.w3.org/2000/svg"
-      →…
+      →    …
 
 hooks.tsx
      1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
-      →…
+      →  …
 
 index.tsx
      3→import React from 'react';
@@ -94,7 +94,7 @@ state.ts
    268→const isHttpResponse = (data: any): data is Response => {
    269→  return (
    270→    data &&
-      →…
+      →    …
    279→const basicToast = toastFunction;
    281→const getHistory = () => ToastState.toasts;
    282→const getToasts = () => ToastState.getActiveToasts();
@@ -119,25 +119,25 @@ types.ts
     30→export interface ToastClassnames {
     31→  toast?: string;
     32→  title?: string;
-      →…
+      →  …
     48→export interface ToastIcons {
     49→  success?: React.ReactNode;
     50→  info?: React.ReactNode;
-      →…
+      →  …
     57→export interface Action {
     58→  label: React.ReactNode;
     59→  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-      →…
+      →  …
     63→export interface ToastT {
     64→  id: number | string;
     65→  toasterId?: string;
-      →…
+      →  …
     93→export function isAction(action: Action | React.ReactNode): action is Action {
     97→export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
     98→export interface HeightT {
     99→  height: number;
    100→  toastId: number | string;
-      →…
+      →  …
    104→interface ToastOptions {
    105→  className?: string;
    106→  closeButton?: boolean;
@@ -148,25 +148,25 @@ types.ts
    111→  duration?: number;
    112→  unstyled?: boolean;
    113→  classNames?: ToastClassnames;
-      →…
+      →  …
    118→type Offset =
    119→  | {
    128→export interface ToasterProps {
    129→  id?: string;
    130→  invert?: boolean;
-      →…
+      →  …
    152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
    154→export interface ToastProps {
    155→  toast: ToastT;
    156→  toasts: ToastT[];
-      →…
+      →  …
    184→export enum SwipeStateTypes {
    185→  SwipedOut = 'SwipedOut',
    186→  SwipedBack = 'SwipedBack',
-      →…
+      →  …
    190→export type Theme = 'light' | 'dark';
    192→export interface ToastToDismiss {
    193→  id: number | string;
    194→  dismiss: boolean;
-      →…
+      →  …
    197→export type ExternalToast = Omit<ToastT, 'id' | 'type' | 'title' | 'jsx' | 'delete' | 'promise'> & {

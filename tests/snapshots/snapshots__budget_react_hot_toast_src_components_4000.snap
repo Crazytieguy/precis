@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4016 tokens)
+budget: 4000 (4024 tokens)
 
 checkmark.tsx
      1→import { styled, keyframes } from 'goober';
@@ -89,13 +89,13 @@ error.tsx
     64→  }
     65→
     66→  &:before {
-      →…
+      →  …
 
 loader.tsx
      1→import { styled, keyframes } from 'goober';
      3→const rotate = keyframes`
      4→  from {
-      →…
+      →  …
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
@@ -129,10 +129,10 @@ toast-bar.tsx
     19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
     22→const ToastBarBase = styled('div')`
     23→  :where(&) {
-      →…
+      →  …
     38→const Message = styled('div')`
     39→  display: flex;
-      →…
+      →  …
     47→interface ToastBarProps {
     48→  toast: Toast;
     49→  position?: ToastPosition;
@@ -188,7 +188,7 @@ toast-bar.tsx
    101→          children({
    102→            icon,
    103→            message,
-      →…
+      →            …
 
 toast-icon.tsx
      1→import * as React from 'react';
@@ -199,10 +199,10 @@ toast-icon.tsx
      7→import { CheckmarkIcon, CheckmarkTheme } from './checkmark';
      9→const StatusWrapper = styled('div')`
     10→  position: absolute;
-      →…
+      →  …
     13→const IndicatorWrapper = styled('div')`
     14→  position: relative;
-      →…
+      →  …
     22→const enter = keyframes`
     23→from {
       →…
@@ -324,7 +324,7 @@ toaster.tsx
     74→};
     76→const activeClass = css`
     77→  z-index: 9999;
-      →…
+      →  …
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,

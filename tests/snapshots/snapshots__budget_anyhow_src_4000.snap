@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3995 tokens)
+budget: 4000 (3998 tokens)
 
 backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
@@ -21,10 +21,10 @@ backtrace.rs
     39→macro_rules! backtrace_if_absent {
     53→macro_rules! backtrace_if_absent {
     54→    ($err:expr) => {
-      →…
+      →    …
     64→macro_rules! backtrace_if_absent {
     65→    ($err:expr) => {
-      →…
+      →    …
     70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
     82→    pub(crate) struct Backtrace {
@@ -336,7 +336,7 @@ macros.rs
     58→macro_rules! bail {
     70→macro_rules! __ensure {
     71→    ($ensure:item) => {
-      →…
+      →    …
    174→/// Construct an ad-hoc error from a string or existing non-`anyhow` error
    175→/// value.
    176→///

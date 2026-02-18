@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (4000 tokens)
 
 input.tsx
      3→import * as React from 'react'
@@ -127,7 +127,7 @@ input.tsx
    125→            const c = _s
    126→            if (c === 0) {
    127→              start = 0
-      →…
+      →              …
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
    542→    sheet.insertRule(rule)

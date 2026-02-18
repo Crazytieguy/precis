@@ -56,7 +56,7 @@ internals/symbols.ts
 is-matching.ts
      6→/**
      7→ * This constraint allows using additional properties
-      →…
+      → …
     11→type PatternConstraint<T> = T extends readonly any[]
     12→  ? P.Pattern<T>
     13→  : T extends object
@@ -71,7 +71,7 @@ match.ts
     34→): Match<input, output> {
     38→/**
     39→ * This class represents a match expression. It follows the
-      →…
+      → …
     47→class MatchExpression<input, output> {
 
 patterns.ts

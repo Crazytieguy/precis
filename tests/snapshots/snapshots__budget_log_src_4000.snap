@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3993 tokens)
+budget: 4000 (3996 tokens)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -258,7 +258,7 @@ lib.rs
    787→    #[inline]
    788→    fn get(&self) -> &'a str {
    789→        match *self {
-      →…
+      →        …
    796→/// The "payload" of a log message.
    797→///
       →…
@@ -315,7 +315,7 @@ lib.rs
   1485→    F: FnOnce() -> &'static dyn Log,
   1486→{
   1487→    match STATE.compare_exchange(
-      →…
+      →    …
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///
       →…
@@ -341,7 +341,7 @@ lib.rs
   1610→/// [`logger`]: fn.logger.html
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
-      →…
+      →    …
 
 macros.rs
     75→macro_rules! log {

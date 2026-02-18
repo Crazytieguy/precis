@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3942 tokens)
+budget: 4000 (3956 tokens)
 
 __init__.py
      5→from humanize.filesize import naturalsize
@@ -64,7 +64,7 @@ filesize.py
     46→    Non-GNU modes are compatible with jinja2's `filesizeformat` filter.
     47→
     48→    Examples:
-      →…
+      →    …
 
 i18n.py
      5→import gettext as gettext_module
@@ -105,7 +105,7 @@ i18n.py
     65→    Args:
     66→        locale (str | None): Language name, e.g. `en_GB`. If `None`, defaults to no
     67→            transaltion. Similar to calling ``deactivate()``.
-      →…
+      →            …
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
    101→def _gettext(message: str) -> str:
@@ -153,7 +153,7 @@ lists.py
     17→    Examples:
     18→        >>> natural_list(["one", "two", "three"])
     19→        'one, two and three'
-      →…
+      →        …
 
 number.py
      5→import bisect
@@ -173,7 +173,7 @@ number.py
     39→    of str(value).
     40→
     41→    Examples:
-      →…
+      →    …
    110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
    111→    """Converts an integer to a string containing commas every three digits.
    112→
@@ -182,7 +182,7 @@ number.py
    115→
    116→    Examples:
    117→        ```pycon
-      →…
+      →        …
    195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
    196→    """Converts a large integer to a friendly text representation.
    197→
@@ -191,7 +191,7 @@ number.py
    200→    up to decillion (33 digits) and googol (100 digits).
    201→
    202→    Examples:
-      →…
+      →    …
    269→def apnumber(value: NumberOrString) -> str:
    270→    """Converts an integer to Associated Press style.
    271→
@@ -200,7 +200,7 @@ number.py
    274→      >>> apnumber(0)
    275→      'zero'
    276→      >>> apnumber(5)
-      →…
+      →      …
    321→def fractional(value: NumberOrString) -> str:
    322→    """Convert to fractional number.
    323→
@@ -209,7 +209,7 @@ number.py
    326→
    327→    This function returns a human-readable fractional number in form of fractions and
    328→    mixed fractions.
-      →…
+      →    …
    385→def scientific(value: NumberOrString, precision: int = 2) -> str:
    386→    """Return number in string scientific notation z.wq x 10ⁿ.
    387→
@@ -218,7 +218,7 @@ number.py
    390→        >>> scientific(float(0.3))
    391→        '3.00 x 10⁻¹'
    392→        >>> scientific(int(500))
-      →…
+      →        …
    454→def clamp(
    455→    value: float,
    456→    format: str = "{:}",
@@ -234,7 +234,7 @@ number.py
    466→
    467→    Examples:
    468→        ```pycon
-      →…
+      →        …
    531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
    532→    """Return a value with a metric SI unit-prefix appended.
    533→
@@ -243,7 +243,7 @@ number.py
    536→        >>> metric(1500, "V")
    537→        '1.50 kV'
    538→        >>> metric(2e8, "W")
-      →…
+      →        …
 
 time.py
      8→from enum import Enum
@@ -297,7 +297,7 @@ time.py
    104→    The timedelta will be rounded to the nearest unit that makes sense.
    105→
    106→    Args:
-      →…
+      →    …
    249→def naturaltime(
    250→    value: dt.datetime | dt.timedelta | float,
    251→    future: bool = False,
@@ -312,7 +312,7 @@ time.py
    260→    The time will be rounded to the nearest unit that makes sense.
    261→
    262→    Args:
-      →…
+      →    …
    300→def _convert_aware_datetime(
    301→    value: dt.datetime | dt.timedelta | float | None,
    302→) -> Any:
@@ -359,7 +359,7 @@ time.py
    461→    >>> from humanize.time import precisedelta
    462→
    463→    >>> delta = dt.timedelta(seconds=3633, days=2, microseconds=123000)
-      →…
+      →    …
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
    655→    """Round a number according to the string format provided.
    656→

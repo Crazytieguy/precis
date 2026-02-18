@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3928 tokens)
+budget: 4000 (3937 tokens)
 
 cli-options.js
      1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
@@ -166,7 +166,7 @@ main.js
     60→    const key = match[1]
     61→
     62→    // Default undefined or null to empty string
-      →…
+      →    …
     87→function _parseVault (options) {
     88→  options = options || {}
     89→
@@ -181,7 +181,7 @@ main.js
     98→
     99→  // handle scenario for comma separated keys - for use with key rotation
    100→  // example: DOTENV_KEY="dotenv://:key_1234@dotenvx.com/vault/.env.vault?environment=prod,dotenv://:key_7890@dotenvx.com/vault/.env.vault?environment=prod"
-      →…
+      →  …
    130→function _warn (message) {
    131→  console.error(`[dotenv@${version}][WARN] ${message}`)
    132→}
@@ -219,7 +219,7 @@ main.js
    168→
    169→    throw error
    170→  }
-      →…
+      →  …
    200→function _vaultPath (options) {
    201→  let possibleVaultPath = null
    202→
@@ -234,7 +234,7 @@ main.js
    211→      possibleVaultPath = options.path.endsWith('.vault') ? options.path : `${options.path}.vault`
    212→    }
    213→  } else {
-      →…
+      →  …
    224→function _resolveHome (envPath) {
    225→  return envPath[0] === '~' ? path.join(os.homedir(), envPath.slice(1)) : envPath
    226→}
@@ -252,7 +252,7 @@ main.js
    239→  if (options && options.processEnv != null) {
    240→    processEnv = options.processEnv
    241→  }
-      →…
+      →  …
    248→function configDotenv (options) {
    249→  const dotenvPath = path.resolve(process.cwd(), '.env')
    250→  let encoding = 'utf8'
@@ -267,7 +267,7 @@ main.js
    259→    encoding = options.encoding
    260→  } else {
    261→    if (debug) {
-      →…
+      →    …
    328→function config (options) {
    329→  // fallback to original dotenv if DOTENV_KEY is not set
    330→  if (_dotenvKey(options).length === 0) {
@@ -282,7 +282,7 @@ main.js
    339→
    340→    return DotenvModule.configDotenv(options)
    341→  }
-      →…
+      →  …
    346→function decrypt (encrypted, keyStr) {
    347→  const key = Buffer.from(keyStr.slice(-64), 'hex')
    348→  let ciphertext = Buffer.from(encrypted, 'base64')
@@ -297,7 +297,7 @@ main.js
    357→    return `${aesgcm.update(ciphertext)}${aesgcm.final()}`
    358→  } catch (error) {
    359→    const isRange = error instanceof RangeError
-      →…
+      →    …
    378→function populate (processEnv, parsed, options = {}) {
    379→  const debug = Boolean(options && options.debug)
    380→  const override = Boolean(options && options.override)
@@ -312,7 +312,7 @@ main.js
    389→  // Set process.env
    390→  for (const key of Object.keys(parsed)) {
    391→    if (Object.prototype.hasOwnProperty.call(processEnv, key)) {
-      →…
+      →    …
    413→const DotenvModule = {
    414→  configDotenv,
    415→  _configVault,

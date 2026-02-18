@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1014 tokens)
+budget: 1000 (1017 tokens)
 
 core/Ky.ts
     33→export class Ky {
@@ -16,7 +16,7 @@ core/constants.ts
     67→*/
     68→export type ForceRetryOptions = {
     69→	/**
-      →…
+      →	…
    145→/**
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    147→*/
@@ -76,7 +76,7 @@ types/options.ts
     32→
     33→export type KyOptions = {
     34→	/**
-      →…
+      →	…
    302→/**
    303→Each key from KyOptions is present and set to `true`.
    304→
@@ -92,7 +92,7 @@ types/options.ts
    374→	// Extended from `RequestInit`, but ensured to be set (not optional).
    375→	method: NonNullable<RequestInit['method']>;
    376→	credentials?: NonNullable<RequestInit['credentials']>;
-      →…
+      →	…
 
 utils/delay.ts
      5→export type DelayOptions …

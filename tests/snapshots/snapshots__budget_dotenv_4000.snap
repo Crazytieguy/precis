@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4035 tokens)
+budget: 4000 (4037 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -291,7 +291,7 @@ lib/main.d.ts
     82→  /**
     83→   * Default: `undefined`
     84→   *
-      →…
+      →   …
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
     94→  parsed?: DotenvParseOutput;
@@ -301,7 +301,7 @@ lib/main.d.ts
     99→    | 'MISSING_DATA'
    100→    | 'INVALID_DOTENV_KEY'
    101→    | 'NOT_FOUND_DOTENV_ENVIRONMENT'
-      →…
+      →    …
    106→export interface DotenvPopulateOptions {
    107→  /**
    108→   * Default: `false`

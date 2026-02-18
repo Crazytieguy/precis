@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4030 tokens)
+budget: 4000 (4040 tokens)
 
 Cargo.toml
 
@@ -93,7 +93,7 @@ crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     14→pub struct CmdPreprocessor {
     15→    name: String,
     16→    cmd: String,
-      →…
+      →    …
     23→    pub fn new …
     52→    pub fn cmd …
 
@@ -131,7 +131,7 @@ crates/mdbook-driver/src/init.rs
     14→    root: PathBuf,
     15→    create_gitignore: bool,
     16→    config: Config,
-      →…
+      →    …
     20→impl BookBuilder {
 
 crates/mdbook-driver/src/lib.rs
@@ -203,7 +203,7 @@ crates/mdbook-html/src/theme/mod.rs
     40→pub struct Theme {
     41→    pub(crate) index: Vec<u8>,
     42→    pub(crate) head: Vec<u8>,
-      →…
+      →    …
     66→    pub fn new<P: AsRef<Path>>(theme_dir: P) -> Self {
    166→    pub fn copy_theme(html_config: &HtmlConfig, root: &Path) -> Result<()> {
    201→    fn default() -> Theme {
@@ -230,13 +230,13 @@ crates/mdbook-markdown/src/lib.rs
     15→pub struct MarkdownOptions {
     16→    /// Enables smart punctuation.
     17→    ///
-      →…
+      →    …
     33→impl Default for MarkdownOptions {
     34→    fn default() -> MarkdownOptions {
     43→/// Creates a new pulldown-cmark parser of the given text.
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
     45→    let mut opts = Options::empty();
-      →…
+      →    …
 
 crates/mdbook-preprocessor/Cargo.toml
      1→[package]
@@ -257,7 +257,7 @@ crates/mdbook-preprocessor/src/lib.rs
     53→    pub root: PathBuf,
     54→    /// The book configuration (`book.toml`).
     55→    pub config: Config,
-      →…
+      →    …
     68→impl PreprocessorContext {
     70→    pub fn new …
     82→pub fn parse_input …
@@ -280,7 +280,7 @@ crates/mdbook-renderer/src/lib.rs
     42→    /// `Cargo.toml`). Useful if you know the renderer is only compatible with
     43→    /// certain versions of `mdbook`.
     44→    pub version: String,
-      →…
+      →    …
     63→impl RenderContext {
     65→    pub fn new …
     81→    pub fn source_dir …
@@ -313,7 +313,7 @@ crates/mdbook-summary/src/lib.rs
    141→    fn from(other: Link) -> SummaryItem {
    173→struct SummaryParser<'a> {
    174→    src: &'a str,
-      →…
+      →    …
    190→macro_rules! collect_events {
 
 crates/xtask/Cargo.toml
@@ -347,7 +347,7 @@ guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
     11→    let pre = GuideHelper;
-      →…
+      →    …
     33→struct GuideHelper;
     35→impl Preprocessor for GuideHelper {
     36→    fn name(&self) -> &str {
@@ -357,7 +357,7 @@ guide/src/README.md
      1→# Introduction
      4→    .mdbook-version {
      5→        position: absolute;
-      →…
+      →        …
     46→## Contributing
     55→## License
 

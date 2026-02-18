@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2013 tokens)
+budget: 2000 (2019 tokens)
 
 README.md
      1→# xxhash
@@ -50,7 +50,7 @@ dynamic/dynamic_test.go
     17→func TestMain(m *testing.M) {
     18→	cmd := exec.Command(
     19→		"go", "build",
-      →…
+      →		…
     33→func TestDynamic(t *testing.T) {
 
 dynamic/plugin.go
@@ -61,11 +61,11 @@ dynamic/plugin.go
     19→func TestSum(t *testing.T) {
     20→	got := xxhash.Sum64String(in)
     21→	if got != want {
-      →…
+      →	…
     26→func TestDigest(t *testing.T) {
     27→	for chunkSize := 1; chunkSize <= len(in); chunkSize++ {
     28→		name := fmt.Sprintf("[chunkSize=%d]", chunkSize)
-      →…
+      →		…
 
 xxhash.go
      5→import …
@@ -176,7 +176,7 @@ xxhashbench/xxhashbench_test.go
     20→var benchmarks = []struct {
    108→func BenchmarkHashes(b *testing.B) {
    109→	for _, bb := range benchmarks {
-      →…
+      →	…
    152→func benchmarkHashBytes …
    159→func benchmarkHashString …
 

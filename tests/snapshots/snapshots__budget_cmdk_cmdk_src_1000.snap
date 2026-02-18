@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1023 tokens)
+budget: 1000 (1025 tokens)
 
 command-score.ts
     54→function commandScoreInner(
@@ -88,12 +88,12 @@ index.tsx
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1005→  const store = useStore()
   1006→  const cb = () => selector(store.snapshot())
-      →…
+      →  …
   1010→function useValue …
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
   1047→  const [s, ss] = React.useState<object>()
   1048→  const fns = useLazyRef(() => new Map<string | number, () => void>())
-      →…
+      →  …
   1061→function renderChildren …
   1071→function SlottableWithNestedChildren …

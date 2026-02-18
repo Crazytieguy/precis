@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2011 tokens)
+budget: 2000 (2014 tokens)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -132,7 +132,7 @@ structs.go
    245→func getFields(v reflect.Value, tagName string) []*Field {
    246→	if v.Kind() == reflect.Ptr {
    247→		v = v.Elem()
-      →…
+      →		…
    275→func (s *Struct) Field(name string) *Field {
    287→func (s *Struct) FieldOk(name string) (*Field, bool) {
    318→func (s *Struct) IsZero() bool {
@@ -183,6 +183,6 @@ tags.go
     22→func parseTag(tag string) (string, tagOptions) {
     23→	// tag is one of followings:
     24→	// ""
-      →…
+      →	…
 
 tags_test.go

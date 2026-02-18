@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 tokens)
+budget: 1000 (1011 tokens)
 
 __init__.py
      3→from .main …
@@ -20,7 +20,7 @@ cli.py
     67→@contextmanager
     68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
     69→    """
-      →…
+      →    …
    112→@cli.command(name="set")
    113→@click.pass_context
       →…
@@ -70,7 +70,7 @@ main.py
     14→from .variables …
     25→def _load_dotenv_disabled() -> bool:
     26→    """
-      →…
+      →    …
     45→class DotEnv:
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
@@ -81,10 +81,10 @@ main.py
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """
-      →…
+      →    …
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
-      →…
+      →    …
 
 parser.py
     35→class Original(NamedTuple):
@@ -106,7 +106,7 @@ variables.py
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
      7→    \$\{
-      →…
+      →    …
     18→class Atom(metaclass=ABCMeta):
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...

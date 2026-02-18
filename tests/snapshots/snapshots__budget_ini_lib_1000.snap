@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (967 tokens)
+budget: 1000 (971 tokens)
 
 ini.js
      3→const encode = (obj, opt = {}) => {
@@ -20,7 +20,7 @@ ini.js
     15→
     16→  /* istanbul ignore next */
     17→  const eol = opt.platform === 'win32' ? '\r\n' : '\n'
-      →…
+      →  …
     80→function splitSections (str, separator) {
     81→  var lastMatchIndex = 0
     82→  var lastSeparatorIndex = 0
@@ -36,7 +36,7 @@ ini.js
     92→      if (nextIndex > 0 && str[nextIndex - 1] === '\\') {
     93→        continue
     94→      }
-      →…
+      →      …
    106→const decode = (str, opt = {}) => {
    107→  opt.bracketedArray = opt.bracketedArray !== false
    108→  const out = Object.create(null)
@@ -52,7 +52,7 @@ ini.js
    118→      continue
    119→    }
    120→    const match = line.match(re)
-      →…
+      →    …
    212→const isQuoted = val => {
    213→  return (val.startsWith('"') && val.endsWith('"')) ||
    214→    (val.startsWith("'") && val.endsWith("'"))
@@ -84,4 +84,4 @@ ini.js
    242→  } else {
    243→    // walk the val to find the first not-escaped ; character
    244→    let esc = false
-      →…
+      →    …

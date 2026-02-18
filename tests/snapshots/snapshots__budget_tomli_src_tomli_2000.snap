@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (1999 tokens)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -61,7 +61,7 @@ _parser.py
     62→        "\\f": "\u000c",  # form feed
     63→        "\\r": "\u000d",  # carriage return
     64→        "\\e": "\u001b",  # escape
-      →…
+      →        …
     71→class DEPRECATED_DEFAULT:
     72→    """Sentinel to be used as default arg during deprecation
     73→    period of TOMLDecodeError's free-form arguments."""

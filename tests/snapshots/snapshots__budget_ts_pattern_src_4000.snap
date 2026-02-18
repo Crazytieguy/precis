@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4029 tokens)
+budget: 4000 (4032 tokens)
 
 errors.ts
      1→/**
@@ -24,7 +24,7 @@ internals/helpers.ts
     17→  x: unknown
     18→): x is Matcher<unknown, unknown, MatcherType, SelectionType> => {
     19→  const pattern = x as Matcher<unknown, unknown, MatcherType, SelectionType>;
-      →…
+      →  …
     24→const isOptionalPattern = (
     25→  x: unknown
     26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
@@ -36,10 +36,10 @@ internals/helpers.ts
     35→  select: (key: string, value: unknown) => void
     36→): boolean => {
     37→  if (isMatcher(pattern)) {
-      →…
+      →  …
    120→export const getSelectionKeys = (pattern: any): string[] => {
    121→  if (isObject(pattern)) {
-      →…
+      →  …
    132→export const flatMap = <a, b>(
    133→  xs: readonly a[],
    134→  f: (v: a) => readonly b[]
@@ -92,7 +92,7 @@ match.ts
     17→ * `match` creates a **pattern matching expression**.
     18→ *  * Use `.with(pattern, handler)` to pattern match on the input.
     19→ *  * Use `.exhaustive()` or `.otherwise(() => defaultValue)` to end the expression and get the result.
-      →…
+      → …
     32→export function match<const input, output = symbols.unset>(
     33→  value: input
     34→): Match<input, output> {
@@ -144,7 +144,7 @@ patterns.ts
    178→ * `P.optional(subpattern)` takes a sub pattern and returns a pattern which matches if the
    179→ * key is undefined or if it is defined and the sub pattern matches its value.
    180→ *
-      →…
+      → …
    187→export function optional<
    188→  input,
    189→  const pattern extends unknown extends input
@@ -166,7 +166,7 @@ patterns.ts
    518→ * `P.intersection(...patterns)` returns a pattern which matches
    519→ * only if **every** patterns provided in parameter match the input.
    520→ *
-      →…
+      → …
    536→export function intersection<
    537→  input,
    538→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
@@ -175,7 +175,7 @@ patterns.ts
    560→ * `P.union(...patterns)` returns a pattern which matches
    561→ * if **at least one** of the patterns provided in parameter match the input.
    562→ *
-      →…
+      → …
    572→export function union<
    573→  input,
    574→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
@@ -184,7 +184,7 @@ patterns.ts
    600→ * `P.not(pattern)` returns a pattern which matches if the sub pattern
    601→ * doesn't match.
    602→ *
-      →…
+      → …
    611→export function not<
    612→  input,
    613→  const pattern extends Pattern<input> | UnknownValuePattern
@@ -226,7 +226,7 @@ patterns.ts
   1244→ * `P.instanceOf(SomeClass)` is a pattern matching instances of a given class.
   1245→ *
   1246→ * [Read the documentation for `P.instanceOf` on GitHub](https://github.com/gvergnaud/ts-pattern#pinstanceof-patterns)
-      →…
+      → …
   1251→export function instanceOf<T extends AnyConstructor>(
   1252→  classConstructor: T
   1253→): Chainable<GuardP<unknown, InstanceType<T>>> {
@@ -240,14 +240,14 @@ types/DistributeUnions.ts
     17→/**
     18→ * DistributeMatchingUnions takes two arguments:
     19→ * - a data structure of type `a` containing unions
-      →…
+      → …
     41→export type DistributeMatchingUnions<a, p> = IsAny<a> extends true
     42→  ? any
     43→  : BuildMany<a, Distribute<FindUnionsMany<a, p>>>;
     62→/**
     63→ * The reason we don't look further down the tree with lists,
     64→ * Set and Maps is that they can be heterogeneous,
-      →…
+      → …
     80→export type FindUnions<
     81→  a,
     82→  p,
@@ -270,7 +270,7 @@ types/InvertPattern.ts
    101→/**
    102→ * ### InvertPatternInternal
    103→ * Since patterns have special wildcard values, we need a way
-      →…
+      → …
    106→export type InvertPattern<p, input> = Equal<Pattern<input>, p> extends true
    107→  ? never
    108→  : InvertPatternInternal<p, input>;
@@ -293,7 +293,7 @@ types/Match.ts
     18→/**
     19→ * #### Match
     20→ * An interface to create a pattern matching clause.
-      →…
+      → …
     22→export type Match<
     23→  i,
     24→  o,
@@ -309,7 +309,7 @@ types/Match.ts
    229→ * Potential for optimization here:
    230→ *
    231→ * Since DeepExclude distributes the union of the input type, it can
-      →…
+      → …
    245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
    246→  ? never
    247→  : tupleList extends [infer excluded, ...infer tail]
@@ -319,7 +319,7 @@ types/Match.ts
    256→ * The type of an overloaded function for `.exhaustive`,
    257→ * permitting calling it with or without a catch-all handler function.
    258→ *
-      →…
+      → …
    261→type Exhaustive<output, inferredOutput> = {
 
 types/Pattern.ts
@@ -356,7 +356,7 @@ types/Pattern.ts
    146→/**
    147→ * `Pattern<a>` is the generic type for patterns matching a value of type `a`. A pattern can be any (nested) javascript value.
    148→ *
-      →…
+      → …
    157→export type Pattern<a = unknown> = unknown extends a
    158→  ? UnknownValuePattern
    159→  : KnownPattern<a>;
@@ -394,7 +394,7 @@ types/helpers.ts
      5→/**
      6→ * ### LeastUpperBound
      7→ * An interesting one. A type taking two imbricated sets and returning the
-      →…
+      → …
     14→export type LeastUpperBound<a, b> = b extends a ? b : a extends b ? a : never;
    179→/**
    180→ * GuardValue returns the value guarded by a type guard function.

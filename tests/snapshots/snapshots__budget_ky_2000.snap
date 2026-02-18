@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2017 tokens)
+budget: 2000 (2022 tokens)
 
 package.json
 
@@ -63,7 +63,7 @@ source/core/constants.ts
    163→const api = ky.extend({
    164→	hooks: {
    165→		afterResponse: [
-      →…
+      →		…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
 
 source/errors/ForceRetryError.ts
@@ -131,7 +131,7 @@ source/types/options.ts
     32→
     33→export type KyOptions = {
     34→	/**
-      →…
+      →	…
    302→/**
    303→Each key from KyOptions is present and set to `true`.
    304→
@@ -147,7 +147,7 @@ source/types/options.ts
    318→	method?: LiteralUnion<HttpMethod, string>;
    319→
    320→	/**
-      →…
+      →	…
    373→export interface NormalizedOptions extends RequestInit { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
    374→	// Extended from `RequestInit`, but ensured to be set (not optional).
    375→	method: NonNullable<RequestInit['method']>;
@@ -157,7 +157,7 @@ source/types/options.ts
    379→	retry: RetryOptions;
    380→	prefixUrl: string;
    381→	onDownloadProgress: Options['onDownloadProgress'];
-      →…
+      →	…
 
 source/types/request.ts
 

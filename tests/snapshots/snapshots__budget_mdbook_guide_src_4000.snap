@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4040 tokens)
+budget: 4000 (4042 tokens)
 
 404.md
      1→# Document not found (404)
@@ -50,7 +50,7 @@ SUMMARY.md
     11→# Reference guide
     13→- [Command-line tool](cli/README.md)
     14→    - [init](cli/init.md)
-      →…
+      →    …
 
 cli/README.md
      1→# Command-line tool
@@ -138,7 +138,7 @@ for_developers/README.md
     21→1. Load the book
     22→    - Parse the `book.toml`, falling back to the default `Config` if it doesn't
     23→       exist
-      →…
+      →       …
     30→## Using `mdbook` as a library
     32→The `mdbook` binary is just a wrapper around the underlying mdBook crates,
     33→exposing their functionality as a command-line program. If you want to

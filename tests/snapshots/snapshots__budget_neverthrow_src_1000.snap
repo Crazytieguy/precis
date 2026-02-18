@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1007 tokens)
+budget: 1000 (1010 tokens)
 
 _internals/error.ts
      1→import { Result } from '../result'
@@ -19,7 +19,7 @@ _internals/error.ts
     17→    | {
     18→        type: string
     19→        value: E
-      →…
+      →        …
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
     29→  result: Result<T, E>,
@@ -46,7 +46,7 @@ _internals/utils.ts
     36→  let acc = ok([]) as Result<T[], E>
     37→
     38→  for (const result of resultList) {
-      →…
+      →  …
     54→export const combineResultAsyncList = <T, E>(
     61→/**
     62→ * Give a list of all the errors we find
@@ -57,7 +57,7 @@ _internals/utils.ts
     67→  let acc = ok([]) as Result<T[], E[]>
     68→
     69→  for (const result of resultList) {
-      →…
+      →  …
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
 
 result-async.ts

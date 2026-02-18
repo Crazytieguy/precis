@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2010 tokens)
+budget: 2000 (2019 tokens)
 
 Cargo.toml
      1→[package]
@@ -56,28 +56,28 @@ impl/src/ast.rs
     36→pub struct Field<'a> {
     45→pub enum ContainerKind {
     46→    Struct,
-      →…
+      →    …
 
 impl/src/attr.rs
     11→pub struct Attrs<'a> {
     21→pub struct Display<'a> {
     22→    pub original: &'a Attribute,
-      →…
+      →    …
     33→pub struct Source<'a> {
     34→    pub original: &'a Attribute,
-      →…
+      →    …
     39→pub struct From<'a> {
     40→    pub original: &'a Attribute,
-      →…
+      →    …
     45→pub struct Transparent<'a> {
     46→    pub original: &'a Attribute,
-      →…
+      →    …
     51→pub struct Fmt<'a> {
     52→    pub original: &'a Attribute,
-      →…
+      →    …
     57→pub enum Trait {
     58→    Debug,
-      →…
+      →    …
 
 impl/src/expand.rs
 
@@ -86,7 +86,7 @@ impl/src/fmt.rs
    171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
    173→    let ahead = input.fork();
-      →…
+      →    …
 
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
@@ -109,7 +109,7 @@ impl/src/unraw.rs
     12→pub struct IdentUnraw(Ident);
     82→pub enum MemberUnraw {
     83→    Named(IdentUnraw),
-      →…
+      →    …
 
 rust-toolchain.toml
      1→[toolchain]

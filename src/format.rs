@@ -204,7 +204,7 @@ fn render_symbol(
             out.push_str(&fmt_line(i, line));
         }
         if doc_lines_to_show < doc_lines_available {
-            out.push_str(TRUNCATION_MARKER);
+            out.push_str(&truncation_marker(lines[end - 1]));
         }
     }
 
@@ -230,7 +230,7 @@ fn render_symbol(
             out.push_str(&fmt_line(i, line));
         }
         if ds_lines_to_show < ds_lines_available {
-            out.push_str(TRUNCATION_MARKER);
+            out.push_str(&truncation_marker(lines[end - 1]));
         }
     }
 
@@ -245,7 +245,7 @@ fn render_symbol(
                 out.push_str(&fmt_line(i, line));
             }
             if body_lines_to_show < body_lines_available {
-                out.push_str(TRUNCATION_MARKER);
+                out.push_str(&truncation_marker(lines[end - 1]));
             }
         } else {
             // Code: body lines from layout (already truncated at first child)
@@ -256,7 +256,7 @@ fn render_symbol(
                 out.push_str(&fmt_line(i, line));
             }
             if body_lines_to_show < body_lines_available && !layout.has_children {
-                out.push_str(TRUNCATION_MARKER);
+                out.push_str(&truncation_marker(lines[end - 1]));
             }
         }
     }
@@ -272,8 +272,15 @@ pub(crate) fn fmt_line(line_idx_0: usize, line: &str) -> String {
     format!("{:>6}→{}\n", line_idx_0 + 1, line)
 }
 
-/// Standalone truncation marker line indicating omitted content.
-const TRUNCATION_MARKER: &str = "      →…\n";
+/// Truncation marker indented to match the content being truncated.
+/// `last_line` is the source line just before the truncation point —
+/// the marker inherits its leading whitespace so nested content reads
+/// naturally (e.g. struct fields get an indented `…`).
+fn truncation_marker(last_line: &str) -> String {
+    let indent_len = last_line.len() - last_line.trim_start().len();
+    let indent = &last_line[..indent_len];
+    format!("      →{}…\n", indent)
+}
 
 /// Count BPE tokens in text using the o200k_base tokenizer.
 pub fn count_tokens(text: &str) -> usize {

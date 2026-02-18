@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (1002 tokens)
 
 cli-options.js
      1→const re …
@@ -51,14 +51,14 @@ main.d.ts
     55→  /**
     56→   * Default: `false`
     57→   *
-      →…
+      →   …
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
     94→  parsed?: DotenvParseOutput;
     95→}
     97→type DotenvError = Error & {
     98→  code: 
-      →…
+      →  …
    106→export interface DotenvPopulateOptions {
    107→  /**
    108→   * Default: `false`

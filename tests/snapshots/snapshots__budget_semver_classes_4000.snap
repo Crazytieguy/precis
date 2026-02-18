@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4011 tokens)
+budget: 4000 (4028 tokens)
 
 comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -24,7 +24,7 @@ comparator.js
     21→    comp = comp.trim().split(/\s+/).join(' ')
     22→    debug('comparator', comp, options)
     23→    this.options = options
-      →…
+      →    …
     36→  parse (comp) {
     37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
     38→    const m = comp.match(r)
@@ -39,7 +39,7 @@ comparator.js
     47→    }
     48→
     49→    // if it literally is just '>' or '' then allow anything.
-      →…
+      →    …
     57→  toString () {
     58→    return this.value
     59→  }
@@ -57,7 +57,7 @@ comparator.js
     72→        return false
     73→      }
     74→    }
-      →…
+      →    …
     79→  intersects (comp, options) {
     80→    if (!(comp instanceof Comparator)) {
     81→      throw new TypeError('a Comparator is required')
@@ -72,7 +72,7 @@ comparator.js
     90→      if (comp.value === '') {
     91→        return true
     92→      }
-      →…
+      →      …
 
 range.js
      3→const SPACE_CHARACTERS = /\s+/g
@@ -106,7 +106,7 @@ range.js
     84→          }
     85→          this.formatted += comps[k].toString().trim()
     86→        }
-      →…
+      →        …
     92→  format () {
     93→    return this.range
     94→  }
@@ -127,7 +127,7 @@ range.js
    111→
    112→    const loose = this.options.loose
    113→    // `1.2.3 - 1.2.4` => `>=1.2.3 <=1.2.4`
-      →…
+      →    …
    170→  intersects (range, options) {
    171→    if (!(range instanceof Range)) {
    172→      throw new TypeError('a Range is required')
@@ -142,7 +142,7 @@ range.js
    181→            thisComparators.every((thisComparator) => {
    182→              return rangeComparators.every((rangeComparator) => {
    183→                return thisComparator.intersects(rangeComparator, options)
-      →…
+      →                …
    193→  test (version) {
    194→    if (!version) {
    195→      return false
@@ -157,7 +157,7 @@ range.js
    204→    }
    205→
    206→    for (let i = 0; i < this.set.length; i++) {
-      →…
+      →    …
    218→const cache = new LRU()
    233→const isNullSet = c => c.value === '<0.0.0-0'
    234→const isAny = c => c.value === ''
@@ -169,7 +169,7 @@ range.js
    243→  while (result && remainingComparators.length) {
    244→    result = remainingComparators.every((otherComparator) => {
    245→      return testComparator.intersects(otherComparator, options)
-      →…
+      →      …
    257→const parseComparator = (comp, options) => {
    258→  comp = comp.replace(re[t.BUILD], '')
    259→  debug('comp', comp, options)
@@ -178,7 +178,7 @@ range.js
    262→  comp = replaceTildes(comp, options)
    263→  debug('tildes', comp)
    264→  comp = replaceXRanges(comp, options)
-      →…
+      →  …
    271→const isX = id => !id || id.toLowerCase() === 'x' || id === '*'
    280→const replaceTildes = (comp, options) => {
    281→  return comp
@@ -195,7 +195,7 @@ range.js
    293→
    294→    if (isX(M)) {
    295→      ret = ''
-      →…
+      →      …
    324→const replaceCarets = (comp, options) => {
    325→  return comp
    326→    .trim()
@@ -227,7 +227,7 @@ range.js
    398→    const xM = isX(M)
    399→    const xm = xM || isX(m)
    400→    const xp = xm || isX(p)
-      →…
+      →    …
    470→const replaceStars = (comp, options) => {
    471→  debug('replaceStars', comp, options)
    472→  // Looseness is ignored here.  star is always as loose as it gets!
@@ -251,7 +251,7 @@ range.js
    498→  } else if (isX(fp)) {
    499→    from = `>=${fM}.${fm}.0${incPr ? '-0' : ''}`
    500→  } else if (fpr) {
-      →…
+      →  …
    523→const testSet = (set, version, options) => {
    524→  for (let i = 0; i < set.length; i++) {
    525→    if (!set[i].test(version)) {
@@ -260,7 +260,7 @@ range.js
    528→  }
    529→
    530→  if (version.prerelease.length && !options.includePrerelease) {
-      →…
+      →  …
 
 semver.js
      9→class SemVer {
@@ -303,7 +303,7 @@ semver.js
    104→    }
    105→
    106→    return this.compareMain(other) || this.comparePre(other)
-      →…
+      →    …
    109→  compareMain (other) {
    110→    if (!(other instanceof SemVer)) {
    111→      other = new SemVer(other, this.options)
@@ -318,7 +318,7 @@ semver.js
    120→    if (this.minor < other.minor) {
    121→      return -1
    122→    }
-      →…
+      →    …
    135→  comparePre (other) {
    136→    if (!(other instanceof SemVer)) {
    137→      other = new SemVer(other, this.options)
@@ -348,7 +348,7 @@ semver.js
    179→        return 0
    180→      } else if (b === undefined) {
    181→        return 1
-      →…
+      →        …
    194→  inc (release, identifier, identifierBase) {
    195→    if (release.startsWith('pre')) {
    196→      if (!identifier && identifierBase === false) {

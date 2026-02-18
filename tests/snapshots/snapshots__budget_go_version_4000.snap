@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4037 tokens)
+budget: 4000 (4066 tokens)
 
 CHANGELOG.md
 
@@ -84,16 +84,16 @@ constraint.go
     57→// constraints.
     58→func NewConstraint(v string) (Constraints, error) {
     59→	vs := strings.Split(v, ",")
-      →…
+      →	…
     73→// MustConstraints is a helper that wraps a call to a function
     74→// returning (Constraints, error) and panics if error is non-nil.
     75→func MustConstraints(c Constraints, err error) Constraints {
     76→	if err != nil {
-      →…
+      →	…
     83→// Check tests if a version satisfies all the constraints.
     84→func (cs Constraints) Check(v *Version) bool {
     85→	for _, c := range cs {
-      →…
+      →	…
     94→// Equals compares Constraints with other Constraints
     95→// for equality. This may not represent logical equivalence
     96→// of compared constraints.
@@ -104,7 +104,7 @@ constraint.go
    101→// are ignored and constraints are sorted before comparison.
    102→func (cs Constraints) Equals(c Constraints) bool {
    103→	if len(cs) != len(c) {
-      →…
+      →	…
    125→func (cs Constraints) Len() int {
    126→	return len(cs)
    127→}
@@ -124,16 +124,16 @@ constraint.go
    144→// Returns the string format of the constraints
    145→func (cs Constraints) String() string {
    146→	csStr := make([]string, len(cs))
-      →…
+      →	…
    154→// Check tests if a constraint is validated by the given version.
    155→func (c *Constraint) Check(v *Version) bool {
    156→	return c.f(v, c.check)
-      →…
+      →	…
    159→// Prerelease returns true if the version underlying this constraint
    160→// contains a prerelease field.
    161→func (c *Constraint) Prerelease() bool {
    162→	return len(c.check.Prerelease()) > 0
-      →…
+      →	…
    165→func (c *Constraint) String() string {
    166→	return c.original
    167→}
@@ -185,7 +185,7 @@ version.go
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     41→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-?([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
-      →…
+      →		…
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
@@ -203,19 +203,19 @@ version.go
     62→// Version.
     63→func NewVersion(v string) (*Version, error) {
     64→	return newVersion(v, getVersionRegexp())
-      →…
+      →	…
     67→// NewSemver parses the given version and returns a new
     68→// Version that adheres strictly to SemVer specs
     69→// https://semver.org/
     70→func NewSemver(v string) (*Version, error) {
     71→	return newVersion(v, getSemverRegexp())
-      →…
+      →	…
     74→func newVersion(v string, pattern *regexp.Regexp) (*Version, error) {
    112→// Must is a helper that wraps a call to a function returning (*Version, error)
    113→// and panics if error is non-nil.
    114→func Must(v *Version, err error) *Version {
    115→	if err != nil {
-      →…
+      →	…
    122→// Compare compares this version to another version. This
    123→// returns -1, 0, or 1 if this version is smaller, equal,
    124→// or larger than the other version, respectively.
@@ -224,7 +224,7 @@ version.go
    127→// GreaterThan, GreaterThanOrEqual or LessThanOrEqual methods.
    128→func (v *Version) Compare(other *Version) int {
    129→	// A quick, efficient equality check
-      →…
+      →	…
    196→func (v *Version) equalSegments(other *Version) bool {
    211→func allZero(segs []int64) bool {
    220→func comparePart(preSelf string, preOther string) int {
@@ -233,27 +233,27 @@ version.go
    308→// segments of the version, without prerelease or metadata.
    309→func (v *Version) Core() *Version {
    310→	segments := v.Segments64()
-      →…
+      →	…
    315→// Equal tests if two versions are equal.
    316→func (v *Version) Equal(o *Version) bool {
    317→	if v == nil || o == nil {
-      →…
+      →	…
    324→// GreaterThan tests if this version is greater than another version.
    325→func (v *Version) GreaterThan(o *Version) bool {
    326→	return v.Compare(o) > 0
-      →…
+      →	…
    329→// GreaterThanOrEqual tests if this version is greater than or equal to another version.
    330→func (v *Version) GreaterThanOrEqual(o *Version) bool {
    331→	return v.Compare(o) >= 0
-      →…
+      →	…
    334→// LessThan tests if this version is less than another version.
    335→func (v *Version) LessThan(o *Version) bool {
    336→	return v.Compare(o) < 0
-      →…
+      →	…
    339→// LessThanOrEqual tests if this version is less than or equal to another version.
    340→func (v *Version) LessThanOrEqual(o *Version) bool {
    341→	return v.Compare(o) <= 0
-      →…
+      →	…
    344→// Metadata returns any metadata that was part of the version
    345→// string.
    346→//
@@ -261,7 +261,7 @@ version.go
    348→// For example, with "1.2.3+beta", the metadata is "beta".
    349→func (v *Version) Metadata() string {
    350→	return v.metadata
-      →…
+      →	…
    353→// Prerelease returns any prerelease data that is part of the version,
    354→// or blank if there is no prerelease data.
    355→//
@@ -270,7 +270,7 @@ version.go
    358→// the prerelease information is "beta".
    359→func (v *Version) Prerelease() string {
    360→	return v.pre
-      →…
+      →	…
    363→// Segments returns the numeric segments of the version as a slice of ints.
    364→//
    365→// This excludes any metadata or pre-release information. For example,
@@ -278,7 +278,7 @@ version.go
    367→// 1, 2, 3.
    368→func (v *Version) Segments() []int {
    369→	segmentSlice := make([]int, len(v.segments))
-      →…
+      →	…
    376→// Segments64 returns the numeric segments of the version as a slice of int64s.
    377→//
    378→// This excludes any metadata or pre-release information. For example,
@@ -286,7 +286,7 @@ version.go
    380→// 1, 2, 3.
    381→func (v *Version) Segments64() []int64 {
    382→	result := make([]int64, len(v.segments))
-      →…
+      →	…
    387→// String returns the full version string included pre-release
    388→// and metadata information.
    389→//
@@ -297,29 +297,29 @@ version.go
    394→// as shown in the parenthesized examples.
    395→func (v *Version) String() string {
    396→	return string(v.bytes())
-      →…
+      →	…
    399→func (v *Version) bytes() []byte {
    421→// Original returns the original parsed version as-is, including any
    422→// potential whitespace, `v` prefix, etc.
    423→func (v *Version) Original() string {
    424→	return v.original
-      →…
+      →	…
    427→// UnmarshalText implements encoding.TextUnmarshaler interface.
    428→func (v *Version) UnmarshalText(b []byte) error {
    429→	temp, err := NewVersion(string(b))
-      →…
+      →	…
    439→// MarshalText implements encoding.TextMarshaler interface.
    440→func (v *Version) MarshalText() ([]byte, error) {
    441→	return []byte(v.String()), nil
-      →…
+      →	…
    444→// Scan implements the sql.Scanner interface.
    445→func (v *Version) Scan(src interface{}) error {
    446→	switch src := src.(type) {
-      →…
+      →	…
    456→// Value implements the driver.Valuer interface.
    457→func (v *Version) Value() (driver.Value, error) {
    458→	return v.String(), nil
-      →…
+      →	…
 
 version_collection.go
      6→// Collection is a type that implements the sort.Interface interface

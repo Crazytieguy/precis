@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1003 tokens)
+budget: 1000 (1005 tokens)
 
 error.ts
     16→/**
@@ -26,7 +26,7 @@ error.ts
     34→
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
     36→    let cached: Array<Failure> | undefined
-      →…
+      →    …
 
 struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
@@ -58,7 +58,7 @@ struct.ts
     28→    entries?: Struct<T, S>['entries']
     29→  }) {
     30→    const {
-      →…
+      →    …
     67→  assert …
     75→  create …
     83→  is …

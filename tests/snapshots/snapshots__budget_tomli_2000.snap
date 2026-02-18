@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (2009 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -114,7 +114,7 @@ src/tomli/_parser.py
     79→    Adds the following attributes to ValueError:
     80→    msg: The unformatted error message
     81→    doc: The TOML document being parsed
-      →…
+      →    …
     86→
    220→class Flags:
    221→    """Flags that map to parsed keys/namespaces."""
@@ -134,11 +134,11 @@ src/tomli/_re.py
     17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
     27→    r"""
-      →…
+      →    …
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
     47→    rf"""
-      →…
+      →    …
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.

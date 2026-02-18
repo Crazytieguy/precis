@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4022 tokens)
+budget: 4000 (4024 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -221,11 +221,11 @@ bin/semver.js
     37→const main = () => {
     38→  if (!argv.length) {
     39→    return help()
-      →…
+      →    …
    132→const failInc = () => {
    133→  console.error('--inc can only be used on a single version with no range')
    134→  fail()
-      →…
+      →  …
    137→const fail = () => process.exit(1)
    139→const help = () => console.log(
    140→`SemVer ${version}

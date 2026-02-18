@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (2009 tokens)
 
 clean.js
      4→const clean = (version, options) => {
@@ -37,7 +37,7 @@ cmp.js
     33→      return eq(a, b, loose)
     34→
     35→    case '!=':
-      →…
+      →    …
 
 coerce.js
      7→const coerce = (version, options) => {
@@ -66,7 +66,7 @@ coerce.js
     30→    //
     31→    // Walk through the string checking with a /g regexp
     32→    // Manually set the index so as to pick up overlapping matches.
-      →…
+      →    …
 
 compare-build.js
      4→const compareBuild = (a, b, loose) => {
@@ -109,7 +109,7 @@ diff.js
     28→    if (!lowVersion.patch && !lowVersion.minor) {
     29→      return 'major'
     30→    }
-      →…
+      →    …
 
 eq.js
      4→const eq = (a, b, loose) => compare(a, b, loose) === 0

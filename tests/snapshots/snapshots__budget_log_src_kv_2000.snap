@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (2003 tokens)
 
 error.rs
      3→/// An error encountered while working with structured data.
@@ -22,11 +22,11 @@ error.rs
     28→    #[cfg(feature = "value-bag")]
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
     30→        Error {
-      →…
+      →        …
     36→    #[cfg(feature = "value-bag")]
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
     38→        match self.inner {
-      →…
+      →        …
     69→mod std_support {
     70→    use super::*;
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
@@ -76,11 +76,11 @@ source.rs
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
     92→    struct Get<'k, 'v> {
-      →…
+      →    …
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
    115→    struct Count(usize);
-      →…
+      →    …
    234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
    240→#[allow(clippy::needless_lifetimes)] // Not needless.
@@ -114,7 +114,7 @@ value.rs
    206→        T: Into<inner::Inner<'v>>,
    207→    {
    208→        Value {
-      →…
+      →        …
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
    244→#[cfg(feature = "kv_sval")]

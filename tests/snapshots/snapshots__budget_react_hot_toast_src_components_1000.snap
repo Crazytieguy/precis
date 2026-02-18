@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1002 tokens)
+budget: 1000 (1004 tokens)
 
 checkmark.tsx
      1→import { styled, keyframes } from 'goober';
@@ -78,7 +78,7 @@ toast-icon.tsx
     52→    if (typeof icon === 'string') {
     53→      return <AnimatedIconWrapper>{icon}</AnimatedIconWrapper>;
     54→    } else {
-      →…
+      →    …
 
 toaster.tsx
      1→import { css, setup } from 'goober';
@@ -104,4 +104,4 @@ toaster.tsx
     90→  children,
     91→  toasterId,
     92→  containerStyle,
-      →…
+      →  …

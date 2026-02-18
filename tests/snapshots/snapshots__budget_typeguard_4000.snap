@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4002 tokens)
+budget: 4000 (4007 tokens)
 
 docs/conf.py
      2→from importlib.metadata import version as get_version
@@ -42,7 +42,7 @@ src/typeguard/_checkers.py
    101→    "__and__",
    102→    "__cmp__",
    103→    "__divmod__",
-      →…
+      →    …
    586→def _is_literal_type(typ: object) -> bool:
    587→    return typ is typing.Literal or typ is typing_extensions.Literal
   1004→# Equality checks are applied to these
@@ -51,7 +51,7 @@ src/typeguard/_checkers.py
   1007→] = {
   1008→    bytes: check_byteslike,
   1009→    AbstractSet: check_set,
-      →…
+      →    …
 
 src/typeguard/_config.py
     11→T = TypeVar("T")
@@ -205,7 +205,7 @@ src/typeguard/_importhook.py
     93→            print("----------------------------------------------", file=sys.stderr)
     94→
     95→        return _call_with_frames_removed(
-      →…
+      →        …
    109→class TypeguardFinder(MetaPathFinder):
    110→    """
    111→    Wraps another path finder and instruments the module with
@@ -239,7 +239,7 @@ src/typeguard/_memo.py
     20→        Dictionary of local variables to use for resolving forward references.
     21→
     22→    .. attribute:: self_type
-      →…
+      →    …
     34→
     35→    __slots__ = "globals", "locals", "self_type", "config"
     36→
@@ -306,7 +306,7 @@ src/typeguard/_transformer.py
    525→            new_memo.should_instrument = (
    526→                self._target_path is None or new_memo.path == self._target_path
    527→            )
-      →…
+      →            …
    570→    def _get_import(self, module: str, name: str) -> Name:
    571→        memo = self._memo if self._target_path else self._module_memo
    572→        return memo.get_import(module, name)

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4023 tokens)
+budget: 4000 (4025 tokens)
 
 package.json
      2→	"name": "ky",
@@ -208,7 +208,7 @@ source/index.ts
      8→import {type Mutable} from './utils/types.js';
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
     11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
-      →…
+      →	…
     34→const ky = createInstance();
 
 source/types/ResponsePromise.ts
@@ -236,7 +236,7 @@ source/types/options.ts
     32→
     33→export type KyOptions = {
     34→	/**
-      →…
+      →	…
    302→/**
    303→Each key from KyOptions is present and set to `true`.
    304→

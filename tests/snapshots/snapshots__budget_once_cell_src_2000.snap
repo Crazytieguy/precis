@@ -2,14 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (2005 tokens)
 
 imp_cs.rs
      6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
     10→    // Use `unsync::OnceCell` internally since `Mutex` does not provide
-      →…
+      →    …
     27→    pub(crate) const fn new() -> OnceCell<T> {
     31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
 
@@ -17,7 +17,7 @@ imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
      9→    value: UnsafeCell<Option<T>>,
-      →…
+      →    …
     12→const INCOMPLETE: u8 = 0x0;
     13→const RUNNING: u8 = 0x1;
     14→const COMPLETE: u8 = 0x2;
@@ -26,7 +26,7 @@ imp_pl.rs
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
    124→    new_state: u8,
-      →…
+      →    …
    128→    fn drop …
 
 imp_std.rs
@@ -85,7 +85,7 @@ lib.rs
    393→    /// Unlike [`std::cell::RefCell`], a `OnceCell` provides simple `&`
    394→    /// references to the contents.
    395→    ///
-      →…
+      →    …
    411→    pub struct OnceCell<T> {
    412→        // Invariant: written to at most once.
    413→        inner: UnsafeCell<Option<T>>,
@@ -101,7 +101,7 @@ lib.rs
    696→    /// # Example
    697→    /// ```
    698→    /// use once_cell::unsync::Lazy;
-      →…
+      →    …
    714→    pub struct Lazy<T, F = fn() -> T> {
    715→        cell: OnceCell<T>,
    716→        init: Cell<Option<F>>,
@@ -119,7 +119,7 @@ lib.rs
    875→    /// `OnceCell` provides `&` references to the contents without RAII guards.
    876→    ///
    877→    /// Reading a non-`None` value out of `OnceCell` establishes a
-      →…
+      →    …
    901→    pub struct OnceCell<T>(Imp<T>);
    904→        fn default …
    910→        fn fmt …
@@ -132,7 +132,7 @@ lib.rs
   1224→    /// This type is thread-safe and can be used in statics.
   1225→    ///
   1226→    /// # Example
-      →…
+      →    …
   1255→    pub struct Lazy<T, F = fn() -> T> {
   1256→        cell: OnceCell<T>,
   1257→        init: Cell<Option<F>>,

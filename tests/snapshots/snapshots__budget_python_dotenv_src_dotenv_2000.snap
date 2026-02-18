@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2022 tokens)
+budget: 2000 (2031 tokens)
 
 __init__.py
      1→from typing …
@@ -15,7 +15,7 @@ __init__.py
     47→    "set_key",
     48→    "unset_key",
     49→    "find_dotenv",
-      →…
+      →    …
 
 __main__.py
      3→from .cli import cli
@@ -45,7 +45,7 @@ cli.py
     73→    """
     74→
     75→    try:
-      →…
+      →    …
    112→@cli.command(name="set")
    113→@click.pass_context
    114→@click.argument("key", required=True)
@@ -54,7 +54,7 @@ cli.py
    117→    """Store the given key/value."""
    118→    file = ctx.obj["FILE"]
    119→    quote = ctx.obj["QUOTE"]
-      →…
+      →    …
    128→@cli.command()
    129→@click.pass_context
    130→@click.argument("key", required=True)
@@ -70,13 +70,13 @@ cli.py
    149→    """Removes the given key."""
    150→    file = ctx.obj["FILE"]
    151→    quote = ctx.obj["QUOTE"]
-      →…
+      →    …
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
    175→    file = ctx.obj["FILE"]
    176→    if not os.path.isfile(file):
-      →…
+      →    …
 
 ipython.py
      1→from IPython.core.magic …
@@ -112,7 +112,7 @@ ipython.py
     34→    def dotenv(self, line):
     35→        args = parse_argstring(self.dotenv, line)
     36→        # Locate the .env file
-      →…
+      →        …
 
 main.py
      1→import io …
@@ -133,7 +133,7 @@ main.py
     27→    Determine if dotenv loading has been disabled.
     28→    """
     29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
-      →…
+      →    …
     45→class DotEnv:
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
@@ -162,13 +162,13 @@ main.py
    271→    Yield directories starting from the given directory up to the root
    272→    """
    273→    if not os.path.exists(path):
-      →…
+      →    …
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
    425→    Return True if `path` exists and is either a regular file or a FIFO.
    426→    """
    427→    if os.path.isfile(path):
-      →…
+      →    …
 
 parser.py
      1→import codecs …

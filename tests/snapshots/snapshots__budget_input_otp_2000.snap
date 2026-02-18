@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2007 tokens)
+budget: 2000 (2012 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -59,7 +59,7 @@ apps/storybook/src/stories/Button.tsx
     10→  return (
     11→    <button
     12→      type="button"
-      →…
+      →      …
 
 apps/storybook/src/stories/InputOTP.stories.tsx
      1→import { InputOTP, InputOTPGroup, InputOTPSlot } from "../components/ui/input-otp"
@@ -165,7 +165,7 @@ packages/input-otp/src/input.tsx
     14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
-      →…
+      →  …
 
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
@@ -175,7 +175,7 @@ packages/input-otp/src/regexp.ts
 packages/input-otp/src/sync-timeouts.ts
      1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
      2→  const t1 = setTimeout(cb, 0) // For faster machines
-      →…
+      →  …
 
 packages/input-otp/src/types.ts
      1→export interface SlotProps {
@@ -200,7 +200,7 @@ packages/input-otp/src/use-previous.ts
      1→import * as React from 'react'
      3→export function usePrevious<T>(value: T) {
      4→  const ref = React.useRef<T>()
-      →…
+      →  …
 
 packages/input-otp/src/use-pwm-badge.tsx
      1→import * as React from 'react'
@@ -219,7 +219,7 @@ packages/input-otp/src/use-pwm-badge.tsx
     26→  /** Password managers have a badge
     27→   *  and I'll use this state to push them
     28→   *  outside the input */
-      →…
+      →   …
 
 packages/input-otp/tsconfig.json
 

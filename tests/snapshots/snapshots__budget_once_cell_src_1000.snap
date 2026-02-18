@@ -2,21 +2,21 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1009 tokens)
+budget: 1000 (1017 tokens)
 
 imp_cs.rs
      6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
-      →…
+      →    …
 
 imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
-      →…
+      →    …
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
-      →…
+      →    …
 
 imp_std.rs
     14→pub(crate) struct OnceCell<T> {
@@ -26,7 +26,7 @@ imp_std.rs
     18→    // * The current state of the cell (`INCOMPLETE`, `RUNNING`, `COMPLETE`)
     19→    // * Linked list of threads waiting for the current cell.
     20→    //
-      →…
+      →    …
    138→struct Waiter {
    139→    thread: Cell<Option<Thread>>,
    140→    signaled: AtomicBool,
@@ -46,14 +46,14 @@ lib.rs
    383→pub mod unsync {
    391→    /// A cell which can be written to only once. It is not thread safe.
    392→    ///
-      →…
+      →    …
    411→    pub struct OnceCell<T> {
    412→        // Invariant: written to at most once.
    413→        inner: UnsafeCell<Option<T>>,
    414→    }
    694→    /// A value which is initialized on the first access.
    695→    ///
-      →…
+      →    …
    714→    pub struct Lazy<T, F = fn() -> T> {
    715→        cell: OnceCell<T>,
    716→        init: Cell<Option<F>>,
@@ -65,11 +65,11 @@ lib.rs
    871→    use super::imp::OnceCell as Imp;
    873→    /// A thread-safe cell which can be written to only once.
    874→    ///
-      →…
+      →    …
    901→    pub struct OnceCell<T>(Imp<T>);
   1222→    /// A value which is initialized on the first access.
   1223→    ///
-      →…
+      →    …
   1255→    pub struct Lazy<T, F = fn() -> T> {
   1256→        cell: OnceCell<T>,
   1257→        init: Cell<Option<F>>,

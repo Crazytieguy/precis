@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2015 tokens)
+budget: 2000 (2022 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -48,18 +48,18 @@ src/imp_cs.rs
      6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
-      →…
+      →    …
 
 src/imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
-      →…
+      →    …
     12→const INCOMPLETE …
     13→const RUNNING …
     14→const COMPLETE …
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
-      →…
+      →    …
 
 src/imp_std.rs
     13→#[derive(Debug)]
@@ -112,7 +112,7 @@ src/lib.rs
    392→    ///
    393→    /// Unlike [`std::cell::RefCell`], a `OnceCell` provides simple `&`
    394→    /// references to the contents.
-      →…
+      →    …
    411→    pub struct OnceCell<T> {
    412→        // Invariant: written to at most once.
    413→        inner: UnsafeCell<Option<T>>,
@@ -121,7 +121,7 @@ src/lib.rs
    695→    ///
    696→    /// # Example
    697→    /// ```
-      →…
+      →    …
    714→    pub struct Lazy<T, F = fn() -> T> {
    715→        cell: OnceCell<T>,
    716→        init: Cell<Option<F>>,
@@ -135,13 +135,13 @@ src/lib.rs
    874→    ///
    875→    /// `OnceCell` provides `&` references to the contents without RAII guards.
    876→    ///
-      →…
+      →    …
    901→    pub struct OnceCell<T>(Imp<T>);
   1222→    /// A value which is initialized on the first access.
   1223→    ///
   1224→    /// This type is thread-safe and can be used in statics.
   1225→    ///
-      →…
+      →    …
   1255→    pub struct Lazy<T, F = fn() -> T> {
   1256→        cell: OnceCell<T>,
   1257→        init: Cell<Option<F>>,

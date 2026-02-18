@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1010 tokens)
+budget: 1000 (1012 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -31,10 +31,10 @@ src/index.tsx
      4→import React from 'react';
     27→export interface WithFadeFromProps {
     28→  /**
-      →…
+      →  …
     40→export interface WithoutFadeFromProps {
     41→  /**
-      →…
+      →  …
     50→export type DialogProps = {
    139→export function Root …
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(

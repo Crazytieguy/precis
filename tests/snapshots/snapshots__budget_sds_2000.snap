@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (2007 tokens)
 
 README.md
      1→Simple Dynamic Strings
@@ -71,7 +71,7 @@ sds.c
    451→int sdsll2str(char *s, long long value) {
    452→    char *p, aux;
    453→    unsigned long long v;
-      →…
+      →    …
    494→int sdsull2str …
    526→sds sdsfromlonglong …
    534→sds sdscatvprintf …
@@ -101,7 +101,7 @@ sds.c
   1146→int sdsTest(void) {
   1147→    {
   1148→        sds x = sdsnew("foo"), y;
-      →…
+      →        …
   1325→int main(void) {
   1326→    return sdsTest();
   1327→}
@@ -121,16 +121,16 @@ sds.h
     50→};
     51→struct __attribute__ ((__packed__)) sdshdr8 {
     52→    uint8_t len; /* used */
-      →…
+      →    …
     57→struct __attribute__ ((__packed__)) sdshdr16 {
     58→    uint16_t len; /* used */
-      →…
+      →    …
     63→struct __attribute__ ((__packed__)) sdshdr32 {
     64→    uint32_t len; /* used */
-      →…
+      →    …
     69→struct __attribute__ ((__packed__)) sdshdr64 {
     70→    uint64_t len; /* used */
-      →…
+      →    …
     76→#define SDS_TYPE_5  0
     77→#define SDS_TYPE_8  1
     78→#define SDS_TYPE_16 2
@@ -150,7 +150,7 @@ sds.h
    181→    unsigned char flags = s[-1];
    182→    switch(flags&SDS_TYPE_MASK) {
    183→        case SDS_TYPE_5:
-      →…
+      →        …
    197→static inline void sdssetalloc(sds s, size_t newlen) {
    255→/* Low level functions exposed to the user API */
    256→sds sdsMakeRoomFor(sds s, size_t addlen);

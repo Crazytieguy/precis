@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (996 tokens)
+budget: 1000 (997 tokens)
 
 Cargo.toml
 
@@ -31,7 +31,7 @@ src/kv/error.rs
      5→pub struct Error {
     10→enum Inner {
     11→    #[cfg(feature = "std")]
-      →…
+      →    …
     73→    pub(super) type BoxedError …
 
 src/kv/key.rs

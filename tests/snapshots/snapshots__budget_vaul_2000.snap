@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2013 tokens)
+budget: 2000 (2017 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -40,7 +40,7 @@ src/helpers.ts
    108→export function chain<T>(...fns: T[]) {
    109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
    110→    for (const fn of fns) {
-      →…
+      →    …
 
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -51,14 +51,14 @@ src/index.tsx
     30→   * Should go from least visible. Example `[0.2, 0.5, 0.8]`.
     31→   * You can also use px values, which doesn't take screen height into account.
     32→   */
-      →…
+      →   …
     40→export interface WithoutFadeFromProps {
     41→  /**
     42→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
     43→   * Should go from least visible. Example `[0.2, 0.5, 0.8]`.
     44→   * You can also use px values, which doesn't take screen height into account.
     45→   */
-      →…
+      →   …
     50→export type DialogProps = {
    139→export function Root …
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
@@ -124,7 +124,7 @@ src/use-position-fixed.ts
     29→}) {
     30→  const [activeUrl, setActiveUrl] = React.useState(() => (typeof window !== 'undefined' ? window.location.href : ''));
     31→  const scrollPos = React.useRef(0);
-      →…
+      →  …
 
 src/use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (2003 tokens)
 
 components/checkmark.tsx
      1→import { styled, keyframes } from 'goober';
@@ -63,7 +63,7 @@ components/toast-icon.tsx
     50→  const { icon, type, iconTheme } = toast;
     51→  if (icon !== undefined) {
     52→    if (typeof icon === 'string') {
-      →…
+      →    …
 
 components/toaster.tsx
      1→import { css, setup } from 'goober';
@@ -85,7 +85,7 @@ components/toaster.tsx
     88→  toastOptions,
     89→  gutter,
     90→  children,
-      →…
+      →  …
 
 core/store.ts
      1→import { useEffect, useState, useRef } from 'react';

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1983 tokens)
+budget: 2000 (1985 tokens)
 
 error.ts
      5→export type Failure …
@@ -30,7 +30,7 @@ error.ts
     37→    const { message, explanation, ...rest } = failure
     38→    const { path } = failure
     39→    const msg =
-      →…
+      →    …
 
 struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
@@ -65,7 +65,7 @@ struct.ts
     31→      type,
     32→      schema,
     33→      validator,
-      →…
+      →      …
     67→  assert …
     75→  create …
     83→  is …

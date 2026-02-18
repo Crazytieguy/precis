@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4011 tokens)
+budget: 4000 (4018 tokens)
 
 README.md
     28→## Features
@@ -203,7 +203,7 @@ src/components/toast-icon.tsx
     50→  const { icon, type, iconTheme } = toast;
     51→  if (icon !== undefined) {
     52→    if (typeof icon === 'string') {
-      →…
+      →    …
 
 src/components/toaster.tsx
      1→import { css, setup } from 'goober';
@@ -227,7 +227,7 @@ src/components/toaster.tsx
     88→  toastOptions,
     89→  gutter,
     90→  children,
-      →…
+      →  …
 
 src/core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
@@ -258,12 +258,12 @@ src/core/store.ts
     60→}
     62→export const reducer = (state: ToasterState, action: Action): ToasterState => {
     63→  const { toastLimit } = state.settings;
-      →…
+      →  …
    136→const listeners: Array<
    140→const defaultToasterState: ToasterState = {
    149→export const dispatch = (action: Action, toasterId = DEFAULT_TOASTER_ID) => {
    150→  memoryState[toasterId] = reducer(
-      →…
+      →  …
    161→export const dispatchAll = (action: Action) =>
    162→  Object.keys(memoryState).forEach((toasterId) => dispatch(action, toasterId));
    164→export const getToasterIdFromToastId = (toastId: string) =>
@@ -274,14 +274,14 @@ src/core/store.ts
    170→  (toasterId = DEFAULT_TOASTER_ID) =>
    171→  (action: Action) => {
    172→    dispatch(action, toasterId);
-      →…
+      →    …
    175→export const defaultTimeouts …
    185→export const useStore = (
    186→  toastOptions: DefaultToastOptions = {},
    187→  toasterId: string = DEFAULT_TOASTER_ID
    188→): ToasterState => {
    189→  const [state, setState] = useState<ToasterState>(
-      →…
+      →  …
 
 src/core/toast.ts
      1→./types …
@@ -365,7 +365,7 @@ src/core/use-toaster.ts
     10→  toasterId: string = 'default'
     11→) => {
     12→  const { toasts, pausedAt } = useStore(toastOptions, toasterId);
-      →…
+      →  …
 
 src/core/utils.ts
      1→export const genId …

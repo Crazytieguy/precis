@@ -2,152 +2,152 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4238 tokens)
+budget: 4000 (4358 tokens)
 
 argument.js
      3→class Argument {
      4→  /**
-      →…
+      →  …
     13→  constructor(name, description) {
     42→  /**
-      →…
+      →  …
     48→  name() {
     56→  _collectValue(value, previous) {
     65→  /**
-      →…
+      →  …
     73→  default(value, description) {
     79→  /**
-      →…
+      →  …
     86→  argParser(fn) {
     91→  /**
-      →…
+      →  …
     98→  choices(values) {
    114→  /**
-      →…
+      →  …
    119→  argRequired() {
    124→  /**
-      →…
+      →  …
    129→  argOptional() {
    143→function humanReadableArgName(arg) {
 
 command.js
     13→class Command extends EventEmitter {
     14→  /**
-      →…
+      →  …
     20→  constructor(name) {
     91→  /**
-      →…
+      →  …
     99→  copyInheritedSettings(sourceCommand) {
    121→  _getCommandAndAncestors() {
    130→  /**
-      →…
+      →  …
    155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
    182→  /**
-      →…
+      →  …
    192→  createCommand(name) {
    196→  /**
-      →…
+      →  …
    203→  createHelp() {
    207→  /**
-      →…
+      →  …
    215→  configureHelp(configuration) {
    222→  /**
-      →…
+      →  …
    245→  configureOutput(configuration) {
    255→  /**
-      →…
+      →  …
    261→  showHelpAfterError(displayHelp = true) {
    267→  /**
-      →…
+      →  …
    273→  showSuggestionAfterError(displaySuggestion = true) {
    278→  /**
-      →…
+      →  …
    288→  addCommand(cmd, opts) {
    305→  /**
-      →…
+      →  …
    316→  createArgument(name, description) {
    320→  /**
-      →…
+      →  …
    336→  argument(name, description, parseArg, defaultValue) {
    347→  /**
-      →…
+      →  …
    359→  arguments(names) {
    369→  /**
-      →…
+      →  …
    375→  addArgument(argument) {
    395→  /**
-      →…
+      →  …
    409→  helpCommand(enableOrNameAndArgs, description) {
    436→  /**
-      →…
+      →  …
    443→  addHelpCommand(helpCommand, deprecatedDescription) {
    463→  _getHelpCommand() {
    479→  /**
-      →…
+      →  …
    487→  hook(event, listener) {
    501→  /**
-      →…
+      →  …
    508→  exitOverride(fn) {
    533→  _exit(exitCode, code, message) {
    541→  /**
-      →…
+      →  …
    556→  action(fn) {
    574→  /**
-      →…
+      →  …
    585→  createOption(flags, description) {
    599→  _callParseArg(target, value, previous, invalidArgumentMessage) {
    619→  _registerOption(option) {
    644→  _registerCommand(command) {
    664→  /**
-      →…
+      →  …
    670→  addOption(option) {
    741→  _optionEx(config, flags, description, fn, defaultValue) {
    766→  /**
-      →…
+      →  …
    788→  option(flags, description, parseArg, defaultValue) {
    792→  /**
-      →…
+      →  …
    805→  requiredOption(flags, description, parseArg, defaultValue) {
    815→  /**
-      →…
+      →  …
    826→  combineFlagAndOptionalValue(combine = true) {
    831→  /**
-      →…
+      →  …
    837→  allowUnknownOption(allowUnknown = true) {
    842→  /**
-      →…
+      →  …
    848→  allowExcessArguments(allowExcess = true) {
    853→  /**
-      →…
+      →  …
    861→  enablePositionalOptions(positional = true) {
    866→  /**
-      →…
+      →  …
    875→  passThroughOptions(passThrough = true) {
    885→  _checkForBrokenPassThrough() {
    897→  /**
-      →…
+      →  …
    905→  storeOptionsAsProperties(storeAsProperties = true) {
    918→  /**
-      →…
+      →  …
    925→  getOptionValue(key) {
    932→  /**
-      →…
+      →  …
    940→  setOptionValue(key, value) {
    944→  /**
-      →…
+      →  …
    953→  setOptionValueWithSource(key, value, source) {
    963→  /**
-      →…
+      →  …
    971→  getOptionValueSource(key) {
    975→  /**
-      →…
+      →  …
    983→  getOptionValueSourceWithGlobals(key) {
   1001→  _prepareUserArgs(argv, parseOptions) {
   1067→  /**
-      →…
+      →  …
   1090→  parse(argv, parseOptions) {
   1098→  /**
-      →…
+      →  …
   1119→  async parseAsync(argv, parseOptions) {
   1127→  _prepareForParse() {
   1128→    if (this._savedState === null) {
@@ -155,12 +155,12 @@ command.js
   1130→    } else {
   1131→      this.restoreStateBeforeParse();
   1132→    }
-      →…
+      →    …
   1135→  /**
-      →…
+      →  …
   1141→  saveStateBeforeParse() {
   1152→  /**
-      →…
+      →  …
   1158→  restoreStateBeforeParse() {
   1183→  _checkForMissingExecutable(executableFile, executableDir, subcommandName) {
   1202→  _executeSubCommand(subcommand, args) {
@@ -178,93 +178,93 @@ command.js
   1694→  _checkForConflictingLocalOptions() {
   1723→  _checkForConflictingOptions() {
   1730→  /**
-      →…
+      →  …
   1748→  parseOptions(args) {
   1897→  /**
-      →…
+      →  …
   1902→  opts() {
   1919→  /**
-      →…
+      →  …
   1924→  optsWithGlobals() {
   1932→  /**
-      →…
+      →  …
   1940→  error(message, errorOptions) {
   1966→  _parseOptionsEnv() {
   1996→  _parseOptionsImplied() {
   2027→  /**
-      →…
+      →  …
   2034→  missingArgument(name) {
   2039→  /**
-      →…
+      →  …
   2046→  optionMissingArgument(option) {
   2051→  /**
-      →…
+      →  …
   2058→  missingMandatoryOptionValue(option) {
   2070→  _conflictingOption(option, conflictingOption) {
   2107→  /**
-      →…
+      →  …
   2114→  unknownOption(flag) {
   2146→  _excessArguments(receivedArgs) {
   2156→  /**
-      →…
+      →  …
   2162→  unknownCommand() {
   2182→  /**
-      →…
+      →  …
   2195→  version(str, flags, description) {
   2211→  /**
-      →…
+      →  …
   2218→  description(str, argsDescription) {
   2228→  /**
-      →…
+      →  …
   2234→  summary(str) {
   2240→  /**
-      →…
+      →  …
   2249→  alias(alias) {
   2280→  /**
-      →…
+      →  …
   2289→  aliases(aliases) {
   2297→  /**
-      →…
+      →  …
   2304→  usage(str) {
   2324→  /**
-      →…
+      →  …
   2331→  name(str) {
   2337→  /**
-      →…
+      →  …
   2344→  helpGroup(heading) {
   2350→  /**
-      →…
+      →  …
   2363→  commandsGroup(heading) {
   2369→  /**
-      →…
+      →  …
   2382→  optionsGroup(heading) {
   2392→  _initOptionGroup(option) {
   2401→  _initCommandGroup(cmd) {
   2406→  /**
-      →…
+      →  …
   2419→  nameFromFilename(filename) {
   2425→  /**
-      →…
+      →  …
   2437→  executableDir(path) {
   2443→  /**
-      →…
+      →  …
   2450→  helpInformation(contextOptions) {
   2475→  _getOutputContext(contextOptions) {
   2497→  /**
-      →…
+      →  …
   2505→  outputHelp(contextOptions) {
   2546→  /**
-      →…
+      →  …
   2559→  helpOption(flags, description) {
   2592→  _getHelpOption() {
   2600→  /**
-      →…
+      →  …
   2607→  addHelpOption(option) {
   2613→  /**
-      →…
+      →  …
   2621→  help(contextOptions) {
   2645→  /**
-      →…
+      →  …
   2656→  addHelpText(position, text) {
   2686→  _outputHelpIfRequested(args) {
   2705→function incrementNodeInspectorPort(args) {
@@ -276,14 +276,14 @@ error.js
      3→ */
      4→class CommanderError extends Error {
      5→  /**
-      →…
+      →  …
     11→  constructor(exitCode, code, message) {
     22→/**
     23→ * InvalidArgumentError class
     24→ */
     25→class InvalidArgumentError extends CommanderError {
     26→  /**
-      →…
+      →  …
     30→  constructor(message) {
 
 help.js
@@ -296,73 +296,73 @@ help.js
     18→    this.showGlobalOptions = false;
     19→  }
     21→  /**
-      →…
+      →  …
     29→  prepareContext(contextOptions) {
     33→  /**
-      →…
+      →  …
     40→  visibleCommands(cmd) {
     55→  /**
-      →…
+      →  …
     62→  compareOptions(a, b) {
     72→  /**
-      →…
+      →  …
     79→  visibleOptions(cmd) {
    105→  /**
-      →…
+      →  …
    112→  visibleGlobalOptions(cmd) {
    132→  /**
-      →…
+      →  …
    139→  visibleArguments(cmd) {
    155→  /**
-      →…
+      →  …
    162→  subcommandTerm(cmd) {
    175→  /**
-      →…
+      →  …
    182→  optionTerm(option) {
    186→  /**
-      →…
+      →  …
    193→  argumentTerm(argument) {
    197→  /**
-      →…
+      →  …
    205→  longestSubcommandTermLength(cmd, helper) {
    216→  /**
-      →…
+      →  …
    224→  longestOptionTermLength(cmd, helper) {
    233→  /**
-      →…
+      →  …
    241→  longestGlobalOptionTermLength(cmd, helper) {
    250→  /**
-      →…
+      →  …
    258→  longestArgumentTermLength(cmd, helper) {
    269→  /**
-      →…
+      →  …
    276→  commandUsage(cmd) {
    293→  /**
-      →…
+      →  …
    300→  commandDescription(cmd) {
    305→  /**
-      →…
+      →  …
    313→  subcommandDescription(cmd) {
    318→  /**
-      →…
+      →  …
    325→  optionDescription(option) {
    365→  /**
-      →…
+      →  …
    372→  argumentDescription(argument) {
    395→  /**
-      →…
+      →  …
    403→  formatItemList(heading, items, helper) {
    409→  /**
-      →…
+      →  …
    417→  groupItems(unsortedItems, visibleItems, getGroup) {
    435→  /**
-      →…
+      →  …
    443→  formatHelp(cmd, helper) {
    529→  /**
-      →…
+      →  …
    535→  displayWidth(str) {
    539→  /**
-      →…
+      →  …
    545→  styleTitle(str) {
    549→  styleUsage(str) {
    550→    // Usage has lots of parts the user might like to color separately! Assume default usage string which is formed like:
@@ -425,66 +425,66 @@ help.js
    607→    return str;
    608→  }
    610→  /**
-      →…
+      →  …
    618→  padWidth(cmd, helper) {
    627→  /**
-      →…
+      →  …
    633→  preformatted(str) {
    637→  /**
-      →…
+      →  …
    650→  formatItem(term, termWidth, description, helper) {
    687→  /**
-      →…
+      →  …
    695→  boxWrap(str, width) {
    740→function stripColor(str) {
 
 option.js
      3→class Option {
      4→  /**
-      →…
+      →  …
     11→  constructor(flags, description) {
     39→  /**
-      →…
+      →  …
     47→  default(value, description) {
     53→  /**
-      →…
+      →  …
     65→  preset(arg) {
     70→  /**
-      →…
+      →  …
     82→  conflicts(names) {
     87→  /**
-      →…
+      →  …
    100→  implies(impliedOptionValues) {
    110→  /**
-      →…
+      →  …
    120→  env(name) {
    125→  /**
-      →…
+      →  …
    132→  argParser(fn) {
    137→  /**
-      →…
+      →  …
    144→  makeOptionMandatory(mandatory = true) {
    149→  /**
-      →…
+      →  …
    156→  hideHelp(hide = true) {
    165→  _collectValue(value, previous) {
    174→  /**
-      →…
+      →  …
    181→  choices(values) {
    197→  /**
-      →…
+      →  …
    203→  name() {
    210→  /**
-      →…
+      →  …
    217→  attributeName() {
    224→  /**
-      →…
+      →  …
    230→  helpGroup(heading) {
    235→  /**
-      →…
+      →  …
    243→  is(arg) {
    247→  /**
-      →…
+      →  …
    256→  isBoolean() {
    261→/**
    262→ * This class is to make it easier to work with dual options, without changing the existing
@@ -495,10 +495,10 @@ option.js
    267→ */
    268→class DualOptions {
    269→  /**
-      →…
+      →  …
    272→  constructor(options) {
    290→  /**
-      →…
+      →  …
    297→  valueFromOption(value, option) {
    316→function camelcase(str) {
    328→function splitOptionFlags(flags) {
@@ -511,5 +511,5 @@ suggestSimilar.js
      6→  // (Simple implementation.)
      7→
      8→  // Quick early exit, return worst case.
-      →…
+      →  …
     56→function suggestSimilar(word, candidates) {

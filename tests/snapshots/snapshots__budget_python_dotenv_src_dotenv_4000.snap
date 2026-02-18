@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4037 tokens)
+budget: 4000 (4050 tokens)
 
 __init__.py
      1→from typing …
@@ -18,7 +18,7 @@ __init__.py
     19→    """Returns a string suitable for running as a shell script.
     20→
     21→    Useful for converting a arguments passed to a fabric task
-      →…
+      →    …
     42→__all__ = [
     43→    "get_cli_string",
     44→    "load_dotenv",
@@ -26,7 +26,7 @@ __init__.py
     46→    "get_key",
     47→    "set_key",
     48→    "unset_key",
-      →…
+      →    …
 
 __main__.py
      3→from .cli import cli
@@ -64,7 +64,7 @@ cli.py
     76→        with open(path) as stream:
     77→            yield stream
     78→    except OSError as exc:
-      →…
+      →    …
     93→def list_values(ctx: click.Context, output_format: str) -> None:
     94→    """Display all the stored key/value."""
    112→@cli.command(name="set")
@@ -78,7 +78,7 @@ cli.py
    120→    export = ctx.obj["EXPORT"]
    121→    success, key, value = set_key(file, key, value, quote, export)
    122→    if success:
-      →…
+      →    …
    128→@cli.command()
    129→@click.pass_context
    130→@click.argument("key", required=True)
@@ -100,7 +100,7 @@ cli.py
    152→    success, key = unset_key(file, key, quote)
    153→    if success:
    154→        click.echo(f"Successfully removed {key}")
-      →…
+      →        …
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
@@ -109,12 +109,12 @@ cli.py
    177→        raise click.BadParameter(
    178→            f"Invalid value for '-f' \"{file}\" does not exist.", ctx=ctx
    179→        )
-      →…
+      →        …
    193→def run_command(command: List[str], env: Dict[str, str]) -> None:
    194→    """Replace the current process with the specified command.
    195→
    196→    Replaces the current process with the specified command and the variables from `env`
-      →…
+      →    …
 
 ipython.py
      1→from IPython.core.magic …
@@ -153,7 +153,7 @@ ipython.py
     37→        dotenv_path = args.dotenv_path
     38→        try:
     39→            dotenv_path = find_dotenv(dotenv_path, True, True)
-      →…
+      →            …
     48→def load_ipython_extension(ipython):
     49→    """Register the %dotenv magic."""
 
@@ -177,7 +177,7 @@ main.py
     28→    """
     29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
     30→        return False
-      →…
+      →        …
     35→def with_warn_for_invalid_lines(mappings: Iterator[Binding]) -> Iterator[Binding]:
     45→class DotEnv:
     46→    def __init__(
@@ -231,7 +231,7 @@ main.py
    148→    with tempfile.NamedTemporaryFile(mode="w", encoding=encoding, delete=False) as dest:
    149→        error = None
    150→        try:
-      →…
+      →        …
    163→def set_key(
    164→    dotenv_path: StrPath,
    165→    key_to_set: str,
@@ -264,7 +264,7 @@ main.py
    272→    """
    273→    if not os.path.exists(path):
    274→        raise IOError("Starting path not found")
-      →…
+      →        …
    287→def find_dotenv(
    288→    filename: str = ".env",
    289→    raise_error_if_not_found: bool = False,
@@ -285,7 +285,7 @@ main.py
    346→    """Parse a .env file and then load all the variables found as environment variables.
    347→
    348→    Parameters:
-      →…
+      →    …
    387→def dotenv_values(
    388→    dotenv_path: Optional[StrPath] = None,
    389→    stream: Optional[IO[str]] = None,
@@ -303,7 +303,7 @@ main.py
    426→    """
    427→    if os.path.isfile(path):
    428→        return True
-      →…
+      →        …
 
 parser.py
      1→import codecs …

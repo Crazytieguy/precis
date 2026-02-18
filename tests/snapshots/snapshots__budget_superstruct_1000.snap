@@ -38,7 +38,7 @@ src/error.ts
     16→/**
     17→ * `StructError` objects are thrown (or returned) when validation fails.
     18→ *
-      →…
+      → …
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
@@ -57,7 +57,7 @@ src/struct.ts
      4→/**
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
      6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
-      →…
+      → …
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string

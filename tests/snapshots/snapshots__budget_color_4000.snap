@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4023 tokens)
+budget: 4000 (4026 tokens)
 
 README.md
      1→# color
@@ -113,7 +113,7 @@ color.go
     80→	Bold:         ResetBold,
     81→	Faint:        ResetBold,
     82→	Italic:       ResetItalic,
-      →…
+      →	…
     91→// Foreground text colors
     92→const (
     93→	FgBlack Attribute = iota + 30
@@ -272,7 +272,7 @@ color_test.go
     25→	}{
     26→		{text: "black", code: FgBlack},
     27→		{text: "red", code: FgRed},
-      →…
+      →		…
     73→func TestColorEquals(t *testing.T) {
    107→func TestNoColor(t *testing.T) {
    161→func TestNoColor_Env(t *testing.T) {

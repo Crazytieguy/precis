@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1009 tokens)
+budget: 1000 (1013 tokens)
 
 input.tsx
      3→import * as React from 'react'
@@ -17,12 +17,12 @@ input.tsx
     15→  (
     16→    {
     17→      value: uncheckedValue,
-      →…
+      →      …
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
    542→    sheet.insertRule(rule)
    543→  } catch {
-      →…
+      →  …
    553→const NOSCRIPT_CSS_FALLBACK = `
 
 regexp.ts
@@ -62,7 +62,7 @@ types.ts
     37→        children?: never
     38→      }
     39→    | {
-      →…
+      →    …
 
 use-previous.ts
      1→import * as React from 'react'
@@ -96,4 +96,4 @@ use-pwm-badge.tsx
     27→   *  and I'll use this state to push them
     28→   *  outside the input */
     29→  const [hasPWMBadge, setHasPWMBadge] = React.useState(false)
-      →…
+      →  …

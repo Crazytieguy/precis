@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1020 tokens)
+budget: 1000 (1032 tokens)
 
 browser.js
    115→function useColors() {
@@ -14,7 +14,7 @@ browser.js
    121→	}
    122→
    123→	// Internet Explorer and Edge do not support colors.
-      →…
+      →	…
    143→/**
    144→ * Colorize log arguments if enabled.
    145→ *
@@ -23,7 +23,7 @@ browser.js
    148→
    149→function formatArgs(args) {
    150→	args[0] = (this.useColors ? '%c' : '') +
-      →…
+      →	…
    194→/**
    195→ * Save `namespaces`.
    196→ *
@@ -32,7 +32,7 @@ browser.js
    199→ */
    200→function save(namespaces) {
    201→	try {
-      →…
+      →	…
    213→/**
    214→ * Load `namespaces`.
    215→ *
@@ -41,7 +41,7 @@ browser.js
    218→ */
    219→function load() {
    220→	let r;
-      →…
+      →	…
    236→/**
    237→ * Localstorage attempts to return the localstorage.
    238→ *
@@ -55,7 +55,7 @@ browser.js
    246→
    247→function localstorage() {
    248→	try {
-      →…
+      →	…
 
 common.js
      2→/**
@@ -65,7 +65,7 @@ common.js
      6→
      7→function setup(env) {
      8→	createDebug.debug = createDebug;
-      →…
+      →	…
 
 node.js
    151→/**
@@ -74,7 +74,7 @@ node.js
    154→
    155→function useColors() {
    156→	return 'colors' in exports.inspectOpts ?
-      →…
+      →	…
    161→/**
    162→ * Adds ANSI color escape codes if enabled.
    163→ *
@@ -83,7 +83,7 @@ node.js
    166→
    167→function formatArgs(args) {
    168→	const {namespace: name, useColors} = this;
-      →…
+      →	…
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
    184→		return '';
@@ -96,7 +96,7 @@ node.js
    192→
    193→function log(...args) {
    194→	return process.stderr.write(util.formatWithOptions(exports.inspectOpts, ...args) + '\n');
-      →…
+      →	…
    197→/**
    198→ * Save `namespaces`.
    199→ *
@@ -105,7 +105,7 @@ node.js
    202→ */
    203→function save(namespaces) {
    204→	if (namespaces) {
-      →…
+      →	…
    213→/**
    214→ * Load `namespaces`.
    215→ *
@@ -115,7 +115,7 @@ node.js
    219→
    220→function load() {
    221→	return process.env.DEBUG;
-      →…
+      →	…
    224→/**
    225→ * Init logic for `debug` instances.
    226→ *
@@ -125,4 +125,4 @@ node.js
    230→
    231→function init(debug) {
    232→	debug.inspectOpts = {};
-      →…
+      →	…

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2003 tokens)
+budget: 2000 (2004 tokens)
 
 Cargo.toml
      1→[package]
@@ -154,7 +154,7 @@ src/lib.rs
   1538→
   1539→    fn check_array_ref<T: AsRef<[Item]>, Item>() {}
   1540→    fn check_array_mut<T: AsMut<[Item]>, Item>() {}
-      →…
+      →    …
   1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {
   1554→    check_t!(::std::path::Path);

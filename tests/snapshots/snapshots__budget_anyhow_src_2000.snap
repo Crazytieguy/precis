@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1991 tokens)
+budget: 2000 (1995 tokens)
 
 backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
@@ -23,10 +23,10 @@ chain.rs
      8→pub(crate) use crate::Chain;
     11→pub(crate) struct Chain<'a> {
     12→    state: ChainState<'a>,
-      →…
+      →    …
     16→pub(crate) enum ChainState<'a> {
     17→    Linked {
-      →…
+      →    …
     36→    type Item = &'a (dyn StdError + 'static);
 
 context.rs
@@ -52,10 +52,10 @@ error.rs
    705→    type Target = dyn StdError + Send + Sync + 'static;
    934→pub(crate) struct ErrorImpl<E = ()> {
    935→    vtable: &'static ErrorVTable,
-      →…
+      →    …
    952→pub(crate) struct ContextError<C, E> {
    953→    pub context: C,
-      →…
+      →    …
 
 fmt.rs
 

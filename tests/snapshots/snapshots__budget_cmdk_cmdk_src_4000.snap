@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4012 tokens)
+budget: 4000 (4021 tokens)
 
 command-score.ts
     54→function commandScoreInner(
@@ -77,7 +77,7 @@ command-score.ts
    123→    ) {
    124→      transposedScore = commandScoreInner(
    125→        string,
-      →…
+      →        …
    150→function formatInput(string) {
    151→  // convert all valid space characters to space so they match each other
    152→  return string.toLowerCase().replace(COUNT_SPACE_REGEXP, ' ')
@@ -143,7 +143,7 @@ index.tsx
    665→  const id = useId()
    666→  const ref = React.useRef<HTMLDivElement>(null)
    667→  const groupContext = React.useContext(GroupContext)
-      →…
+      →  …
    725→/**
    726→ * Group command menu items together with a heading.
    727→ * Grouped items are always shown together.
@@ -152,7 +152,7 @@ index.tsx
    730→  const { heading, children, forceMount, ...etc } = props
    731→  const id = useId()
    732→  const ref = React.useRef<HTMLDivElement>(null)
-      →…
+      →  …
    770→/**
    771→ * A visual and semantic separator between items or groups.
    772→ * Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
@@ -161,7 +161,7 @@ index.tsx
    775→  const { alwaysRender, ...etc } = props
    776→  const ref = React.useRef<HTMLDivElement>(null)
    777→  const render = useCmdk((state) => !state.search)
-      →…
+      →  …
    783→/**
    784→ * Command menu input.
    785→ * All props are forwarded to the underyling `input` element.
@@ -170,7 +170,7 @@ index.tsx
    788→  const { onValueChange, ...etc } = props
    789→  const isControlled = props.value != null
    790→  const store = useStore()
-      →…
+      →  …
    829→/**
    830→ * Contains `Item`, `Group`, and `Separator`.
    831→ * Use the `--cmdk-list-height` CSS variable to animate height based on the number of results.
@@ -179,7 +179,7 @@ index.tsx
    834→  const { children, label = 'Suggestions', ...etc } = props
    835→  const ref = React.useRef<HTMLDivElement>(null)
    836→  const height = React.useRef<HTMLDivElement>(null)
-      →…
+      →  …
    879→/**
    880→ * Renders the command menu in a Radix Dialog.
    881→ */
@@ -187,7 +187,7 @@ index.tsx
    883→  const { open, onOpenChange, overlayClassName, contentClassName, container, ...etc } = props
    884→  return (
    885→    <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
-      →…
+      →    …
    896→/**
    897→ * Automatically renders when there are no results for the search query.
    898→ */
@@ -195,7 +195,7 @@ index.tsx
    900→  const render = useCmdk((state) => state.filtered.count === 0)
    901→
    902→  if (!render) return null
-      →…
+      →  …
    906→/**
    907→ * You should conditionally render this with `progress` while loading asynchronous items.
    908→ */
@@ -203,7 +203,7 @@ index.tsx
    910→  const { progress, children, label = 'Loading...', ...etc } = props
    911→
    912→  return (
-      →…
+      →  …
    930→const pkg = Object.assign(Command, {
    955→/**
    956→ *

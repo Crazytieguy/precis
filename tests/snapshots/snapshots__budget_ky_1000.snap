@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1022 tokens)
+budget: 1000 (1024 tokens)
 
 package.json
 
@@ -20,7 +20,7 @@ source/core/constants.ts
     67→*/
     68→export type ForceRetryOptions = {
     69→	/**
-      →…
+      →	…
    145→/**
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    147→*/
@@ -93,7 +93,7 @@ source/types/options.ts
    374→	// Extended from `RequestInit`, but ensured to be set (not optional).
    375→	method: NonNullable<RequestInit['method']>;
    376→	credentials?: NonNullable<RequestInit['credentials']>;
-      →…
+      →	…
 
 source/utils/delay.ts
      5→export type DelayOptions …

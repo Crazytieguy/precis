@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2013 tokens)
+budget: 2000 (2017 tokens)
 
 core/Ky.ts
     33→export class Ky {
@@ -16,7 +16,7 @@ core/constants.ts
     67→*/
     68→export type ForceRetryOptions = {
     69→	/**
-      →…
+      →	…
    145→/**
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    147→*/
@@ -36,7 +36,7 @@ core/constants.ts
    163→const api = ky.extend({
    164→	hooks: {
    165→		afterResponse: [
-      →…
+      →		…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
 
 errors/ForceRetryError.ts
@@ -98,7 +98,7 @@ types/options.ts
     32→
     33→export type KyOptions = {
     34→	/**
-      →…
+      →	…
    302→/**
    303→Each key from KyOptions is present and set to `true`.
    304→

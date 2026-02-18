@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4001 tokens)
+budget: 4000 (4007 tokens)
 
 CHANGELOG.md
      1→## Unreleased
@@ -126,7 +126,7 @@ append.go
     23→		for _, e := range errs {
     24→			switch e := e.(type) {
     25→			case *Error:
-      →…
+      →			…
 
 append_test.go
      6→import …
@@ -181,7 +181,7 @@ format.go
     26→
     27→	return fmt.Sprintf(
     28→		"%d errors occurred:\n\t%s\n\n",
-      →…
+      →		…
 
 format_test.go
      6→import …
@@ -211,7 +211,7 @@ group.go
     29→			g.mutex.Unlock()
     30→		}
     31→	}()
-      →…
+      →	…
     34→// Wait blocks until all function calls from the Go method have returned, then
     35→// returns the multierror.
     36→func (g *Group) Wait() *Error {
@@ -296,7 +296,7 @@ multierror.go
     80→	}
     81→
     82→	// Shallow copy the slice
-      →…
+      →	…
     88→// chain implements the interfaces necessary for errors.Is/As/Unwrap to
     89→// work in a deterministic way with multierror. A chain tracks a list of
     90→// errors while accounting for the current represented error. This lets

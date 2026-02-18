@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2012 tokens)
+budget: 2000 (2021 tokens)
 
 browser.js
    115→function useColors() {
@@ -25,7 +25,7 @@ browser.js
    132→	// eslint-disable-next-line no-return-assign
    133→	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
    134→		// Is firebug? http://stackoverflow.com/a/398120/376773
-      →…
+      →		…
    143→/**
    144→ * Colorize log arguments if enabled.
    145→ *
@@ -42,7 +42,7 @@ browser.js
    156→
    157→	if (!this.useColors) {
    158→		return;
-      →…
+      →		…
    194→/**
    195→ * Save `namespaces`.
    196→ *
@@ -59,7 +59,7 @@ browser.js
    207→	} catch (error) {
    208→		// Swallow
    209→		// XXX (@Qix-) should we be logging these?
-      →…
+      →		…
    213→/**
    214→ * Load `namespaces`.
    215→ *
@@ -76,7 +76,7 @@ browser.js
    226→	}
    227→
    228→	// If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-      →…
+      →	…
    236→/**
    237→ * Localstorage attempts to return the localstorage.
    238→ *
@@ -143,7 +143,7 @@ node.js
    174→
    175→		args[0] = prefix + args[0].split('\n').join('\n' + prefix);
    176→		args.push(colorCode + 'm+' + module.exports.humanize(this.diff) + '\u001B[0m');
-      →…
+      →		…
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
    184→		return '';

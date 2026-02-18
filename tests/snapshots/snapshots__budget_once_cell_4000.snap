@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4008 tokens)
+budget: 4000 (4012 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -141,7 +141,7 @@ src/lib.rs
    397→    ///
    398→    /// # Example
    399→    /// ```
-      →…
+      →    …
    411→    pub struct OnceCell<T> {
    412→        // Invariant: written to at most once.
    413→        inner: UnsafeCell<Option<T>>,
@@ -171,7 +171,7 @@ src/lib.rs
    700→    /// let lazy: Lazy<i32> = Lazy::new(|| {
    701→    ///     println!("initializing");
    702→    ///     92
-      →…
+      →    …
    714→    pub struct Lazy<T, F = fn() -> T> {
    715→        cell: OnceCell<T>,
    716→        init: Cell<Option<F>>,
@@ -200,7 +200,7 @@ src/lib.rs
    879→    /// thread A initializes the cell with `get_or_init(f)`, and thread B
    880→    /// subsequently reads the result of this call, B also observes all the side
    881→    /// effects of `f`.
-      →…
+      →    …
    901→    pub struct OnceCell<T>(Imp<T>);
    904→        fn default() -> OnceCell<T> {
    910→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -229,7 +229,7 @@ src/lib.rs
   1228→    /// ```
   1229→    /// use std::collections::HashMap;
   1230→    ///
-      →…
+      →    …
   1255→    pub struct Lazy<T, F = fn() -> T> {
   1256→        cell: OnceCell<T>,
   1257→        init: Cell<Option<F>>,

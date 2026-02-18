@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2003 tokens)
+budget: 2000 (2005 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -98,7 +98,7 @@ cmdk/src/command-score.ts
    157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
    158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
    159→   */
-      →…
+      →   …
 
 cmdk/src/index.tsx
      3→import * as RadixDialog from '@radix-ui/react-dialog'
@@ -194,7 +194,7 @@ website/components/code/index.tsx
      7→const theme = {
     41→export function Code({ children }: { children: string }) {
     42→  return (
-      →…
+      →  …
 
 website/components/icons/index.tsx
      1→import styles from './icons.module.scss'

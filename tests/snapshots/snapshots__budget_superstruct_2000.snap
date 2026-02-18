@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2002 tokens)
+budget: 2000 (2004 tokens)
 
 Changelog.md
      1→# Changelog
@@ -69,7 +69,7 @@ src/error.ts
     34→
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
     36→    let cached: Array<Failure> | undefined
-      →…
+      →    …
 
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
@@ -101,7 +101,7 @@ src/struct.ts
     28→    entries?: Struct<T, S>['entries']
     29→  }) {
     30→    const {
-      →…
+      →    …
     67→  assert …
     75→  create …
     83→  is …

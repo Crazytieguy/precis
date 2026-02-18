@@ -39,7 +39,7 @@ src/internals/symbols.ts
      2→ * Symbols used internally within ts-pattern to construct and discriminate
      3→ * Guard, Not, and Select, and AnonymousSelect patterns
      4→ *
-      →…
+      → …
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
 
 src/is-matching.ts
@@ -93,7 +93,7 @@ src/types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
     45→ * protocol. It must define a `symbols.matcher` property
-      →…
+      → …
     50→export interface Matcher<
     51→  input,
     52→  narrowed,

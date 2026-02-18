@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4024 tokens)
+budget: 4000 (4038 tokens)
 
 error.ts
      5→export type Failure …
@@ -36,7 +36,7 @@ error.ts
     43→    Object.assign(this, rest)
     44→    this.name = this.constructor.name
     45→    this.failures = () => {
-      →…
+      →    …
 
 struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
@@ -77,7 +77,7 @@ struct.ts
     37→    } = props
     38→
     39→    this.type = type
-      →…
+      →    …
     63→  /**
     64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
     65→   */
@@ -141,7 +141,7 @@ struct.ts
    129→
    130→  if (result[0]) {
    131→    throw result[0]
-      →…
+      →    …
    135→/**
    136→ * Create a value with the coercion logic of struct and validate it.
    137→ */
@@ -155,7 +155,7 @@ struct.ts
    145→
    146→  if (result[0]) {
    147→    throw result[0]
-      →…
+      →    …
    153→/**
    154→ * Mask a value, returning only the subset of properties defined by a struct.
    155→ */
@@ -169,7 +169,7 @@ struct.ts
    163→
    164→  if (result[0]) {
    165→    throw result[0]
-      →…
+      →    …
    171→/**
    172→ * Check if a value passes a struct.
    173→ */
@@ -196,7 +196,7 @@ struct.ts
    195→  const tuple = shiftIterator(tuples)!
    196→
    197→  if (tuple[0]) {
-      →…
+      →  …
    221→export type Context …
    231→export type Infer …
    237→export type Describe …
@@ -248,7 +248,7 @@ structs/types.ts
     19→export function any …
     33→export function array<T extends Struct<any>>(Element?: T): any {
     34→  return new Struct({
-      →…
+      →  …
     60→export function bigint …
     70→export function boolean …
     83→export function date …
@@ -256,29 +256,29 @@ structs/types.ts
    106→  values: T
    107→): any {
    108→  const schema: any = {}
-      →…
+      →  …
    131→export function func …
    144→export function instance …
    159→export function integer …
    172→export function intersection …
    204→export function literal<T>(constant: T): any {
    205→  const description = print(constant)
-      →…
+      →  …
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    231→  return new Struct({
-      →…
+      →  …
    258→export function never …
    266→export function nullable …
    278→export function number …
    298→export function object<S extends ObjectSchema>(schema?: S): any {
    299→  const knowns = schema ? Object.keys(schema) : []
-      →…
+      →  …
    351→export function optional …
    367→export function record …
    402→export function regexp …
    415→export function set<T>(Element?: Struct<T>): any {
    416→  return new Struct({
-      →…
+      →  …
    442→export function string …
    456→export function tuple …
    492→export function type …
@@ -296,7 +296,7 @@ structs/utilities.ts
      8→import { object, optional, type } from './types.js'
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
-      →…
+      →  …
     71→export function define …
     80→export function deprecated …
    106→export function dynamic …
@@ -373,7 +373,7 @@ utils.ts
     74→    return
     75→  } else if (result === false) {
     76→    result = {}
-      →…
+      →    …
    202→export type UnionToIntersection …
    212→export type Assign …
    218→export type EnumSchema …

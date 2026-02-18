@@ -6,17 +6,17 @@ sample.go
      4→import "fmt"
      7→type Token struct {
      8→	Kind TokenKind
-      →…
+      →	…
     12→// TokenKind represents the kind of a lexical token.
     13→type TokenKind int
     15→const (
     22→type Visitor interface {
     23→	VisitToken(token *Token)
-      →…
+      →	…
     28→func Process(input string) ([]Token, error) {
     35→type TokenParser[T any] struct {
     36→	tokens []Token
-      →…
+      →	…
     41→func NewTokenParser[T any](source string) *TokenParser[T] {
     46→func (p *TokenParser[T]) Parse() []Token {
     52→// Span represents a source location as [start, end].

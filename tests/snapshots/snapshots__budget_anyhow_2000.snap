@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2004 tokens)
+budget: 2000 (2008 tokens)
 
 Cargo.toml
      1→[package]
@@ -41,10 +41,10 @@ src/backtrace.rs
 src/chain.rs
     11→pub(crate) struct Chain<'a> {
     12→    state: ChainState<'a>,
-      →…
+      →    …
     16→pub(crate) enum ChainState<'a> {
     17→    Linked {
-      →…
+      →    …
     36→    type Item = &'a (dyn StdError + 'static);
 
 src/context.rs
@@ -67,10 +67,10 @@ src/error.rs
    705→    type Target = dyn StdError + Send + Sync + 'static;
    934→pub(crate) struct ErrorImpl<E = ()> {
    935→    vtable: &'static ErrorVTable,
-      →…
+      →    …
    952→pub(crate) struct ContextError<C, E> {
    953→    pub context: C,
-      →…
+      →    …
 
 src/fmt.rs
 

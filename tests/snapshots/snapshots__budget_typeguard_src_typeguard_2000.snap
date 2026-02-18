@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (2001 tokens)
 
 __init__.py
     34→config: TypeCheckConfiguration
@@ -54,7 +54,7 @@ _config.py
     82→       :type: CollectionCheckStrategy
     83→
     84→         Specifies how thoroughly the contents of collections (list, dict, etc.) are
-      →…
+      →         …
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
     99→    typecheck_fail_callback: TypeCheckFailCallback | None = None

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3990 tokens)
+budget: 4000 (3997 tokens)
 
 Cargo.toml
      1→[package]
@@ -33,7 +33,7 @@ src/iterator.rs
      4→macro_rules! wrap_either {
      5→    ($value:expr => $( $tail:tt )*) => {
      6→        match $value {
-      →…
+      →        …
     13→/// Iterator that maps left or right iterators to corresponding `Either`-wrapped items.
     14→///
     15→/// This struct is created by the [`Either::factor_into_iter`],
@@ -150,7 +150,7 @@ src/lib.rs
     81→macro_rules! for_both {
     82→    ($value:expr, $pattern:pat => $result:expr) => {
     83→        match $value {
-      →…
+      →        …
     90→/// Macro for unwrapping the left side of an [`Either`], which fails early
     91→/// with the opposite side. Can only be used in functions that return
     92→/// `Either` because of the early return of `Right` that it provides.
@@ -177,17 +177,17 @@ src/lib.rs
    113→macro_rules! try_left {
    114→    ($expr:expr) => {
    115→        match $expr {
-      →…
+      →        …
    122→/// Dual to [`try_left!`], see its documentation for more information.
    123→#[macro_export]
    124→macro_rules! try_right {
    125→    ($expr:expr) => {
    126→        match $expr {
-      →…
+      →        …
    133→macro_rules! map_either {
    134→    ($value:expr, $pattern:pat => $result:expr) => {
    135→        match $value {
-      →…
+      →        …
    142→mod iterator;
    143→pub use self::iterator::IterEither;
    145→mod into_either;
@@ -300,7 +300,7 @@ src/lib.rs
   1253→macro_rules! impl_specific_ref_and_mut {
   1254→    ($t:ty, $($attr:meta),* ) => {
   1255→        $(#[$attr])*
-      →…
+      →        …
   1297→    fn as_ref …
   1307→    fn as_mut …
   1317→    fn as_mut …
@@ -326,7 +326,7 @@ src/lib.rs
   1522→macro_rules! check_t {
   1523→    ($t:ty) => {{
   1524→        fn check_ref<T: AsRef<$t>>() {}
-      →…
+      →        …
   1536→fn _unsized_ref_propagation() {
   1537→    check_t!(str);
   1538→

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (4002 tokens)
 
 __init__.py
      4→from ._checkers …
@@ -56,7 +56,7 @@ _checkers.py
    103→    "__divmod__",
    104→    "__div__",
    105→    "__eq__",
-      →…
+      →    …
    586→def _is_literal_type(typ: object) -> bool:
    587→    return typ is typing.Literal or typ is typing_extensions.Literal
   1004→# Equality checks are applied to these
@@ -67,7 +67,7 @@ _checkers.py
   1009→    AbstractSet: check_set,
   1010→    BinaryIO: check_io,
   1011→    Callable: check_callable,
-      →…
+      →    …
 
 _config.py
      9→    from ._functions …
@@ -366,7 +366,7 @@ _transformer.py
    585→        # necessary, and undo forward references
    586→        new_annotation = cast(expr, AnnotationTransformer(self).visit(annotation))
    587→        if isinstance(new_annotation, expr):
-      →…
+      →        …
 
 _utils.py
     21→    from ._memo …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2040 tokens)
+budget: 2000 (2043 tokens)
 
 __init__.py
      5→from humanize.filesize …
@@ -20,7 +20,7 @@ __init__.py
     34→    "decimal_separator",
     35→    "fractional",
     36→    "intcomma",
-      →…
+      →    …
 
 filesize.py
      5→from math …
@@ -49,12 +49,12 @@ i18n.py
     22→_THOUSANDS_SEPARATOR = {
     23→    "de_DE": ".",
     24→    "fr_FR": " ",
-      →…
+      →    …
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
     32→    "de_DE": ",",
     33→    "fr_FR": ".",
-      →…
+      →    …
     40→def _get_default_locale_path …
     51→def get_translation() -> gettext_module.NullTranslations:
     58→def activate(

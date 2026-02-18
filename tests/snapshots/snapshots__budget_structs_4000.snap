@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4021 tokens)
+budget: 4000 (4024 tokens)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -220,7 +220,7 @@ structs.go
    245→func getFields(v reflect.Value, tagName string) []*Field {
    246→	if v.Kind() == reflect.Ptr {
    247→		v = v.Elem()
-      →…
+      →		…
    273→// Field returns a new Field struct that provides several high level functions
    274→// around a single struct field entity. It panics if the field is not found.
    275→func (s *Struct) Field(name string) *Field {
@@ -327,7 +327,7 @@ tags.go
     22→func parseTag(tag string) (string, tagOptions) {
     23→	// tag is one of followings:
     24→	// ""
-      →…
+      →	…
 
 tags_test.go
      3→import "testing …

@@ -19,6 +19,6 @@ sample.c
     37→Token *token_new(int kind, int start, int end) {
     45→void token_free(Token *t) {
     46→    free(t);
-      →…
+      →    …
     50→static int _parse_next(const char *input, int pos) {
     56→void *alloc_node(size_t size);

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4004 tokens)
+budget: 4000 (4007 tokens)
 
 Changelog.md
      1→# Changelog
@@ -108,7 +108,7 @@ src/error.ts
     37→    const { message, explanation, ...rest } = failure
     38→    const { path } = failure
     39→    const msg =
-      →…
+      →    …
 
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
@@ -143,7 +143,7 @@ src/struct.ts
     31→      type,
     32→      schema,
     33→      validator,
-      →…
+      →      …
     63→  /**
     64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
     65→   */
@@ -254,7 +254,7 @@ src/structs/refinements.ts
     22→  if (value instanceof Map || value instanceof Set) {
     23→    return value.size
     24→  } else {
-      →…
+      →  …
     33→export function max …
     55→export function min …
     77→export function nonempty …
