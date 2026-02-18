@@ -3,6 +3,7 @@
 ## Remaining work
 
 - **Per-group stage value tuning** — the initial stage values (1.0, 0.7, 0.6, etc.) are starting points. Review snapshots across languages and tune per-kind values for better output quality.
+- **Try tiktoken-based budgeting** — replace word-count budgeting with tiktoken token counts for more accurate LLM budget estimation. Keep if performance is viable, otherwise revert and document findings.
 
 ## Implementation notes
 
