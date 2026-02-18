@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3988 tokens)
+budget: 4000 (4007 tokens)
 
 Cargo.toml
      1→[package]
@@ -86,55 +86,13 @@ src/iterator.rs
     20→    inner: Either<L, R>,
     21→}
     24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
-    25→        IterEither { inner }
-    26→    }
-    34→    fn extend …
-    42→/// `Either<L, R>` is an iterator if both `L` and `R` are iterators.
     43→impl<L, R> Iterator for Either<L, R>
     44→where
     45→    L: Iterator,
     46→    R: Iterator<Item = L::Item>,
     47→{
     48→    type Item = L::Item;
-    50→    fn next …
-    54→    fn size_hint …
-    58→    fn fold …
-    65→    fn for_each …
-    72→    fn count …
-    76→    fn last …
-    80→    fn nth …
-    84→    fn collect …
-    91→    fn partition …
-    99→    fn all …
-   106→    fn any …
-   113→    fn find …
-   120→    fn find_map …
-   127→    fn position …
-   140→    fn next_back …
-   144→    fn nth_back …
-   148→    fn rfold …
-   155→    fn rfind …
-   168→    fn len …
    185→    type Item = Either<L::Item, R::Item>;
-   187→    fn next …
-   191→    fn size_hint …
-   195→    fn fold …
-   202→    fn for_each …
-   209→    fn count …
-   213→    fn last …
-   217→    fn nth …
-   221→    fn collect …
-   228→    fn partition …
-   236→    fn all …
-   243→    fn any …
-   250→    fn find …
-   257→    fn find_map …
-   264→    fn position …
-   277→    fn next_back …
-   281→    fn nth_back …
-   285→    fn rfold …
-   292→    fn rfind …
-   305→    fn len …
 
 src/lib.rs
     21→#[cfg(feature = "serde")]
@@ -164,9 +122,80 @@ src/lib.rs
     52→    /// A value of type `R`.
     53→    Right(R),
     54→}
+    56→/// Evaluate the provided expression for both [`Either::Left`] and [`Either::Right`].
+    57→///
+    58→/// This macro is useful in cases where both sides of [`Either`] can be interacted with
+    59→/// in the same way even though the don't share the same type.
+    60→///
+    61→/// Syntax: `either::for_both!(` *expression* `,` *pattern* `=>` *expression* `)`
+    62→///
+    63→/// # Example
+    64→///
+    65→/// ```
+    66→/// use either::Either;
+    67→///
+    68→/// fn length(owned_or_borrowed: Either<String, &'static str>) -> usize {
+    69→///     either::for_both!(owned_or_borrowed, s => s.len())
+    70→/// }
+    71→///
+    72→/// fn main() {
+    73→///     let borrowed = Either::Right("Hello world!");
+    74→///     let owned = Either::Left("Hello world!".to_owned());
+    75→///
+    76→///     assert_eq!(length(borrowed), 12);
+    77→///     assert_eq!(length(owned), 12);
+    78→/// }
+    79→/// ```
+    80→#[macro_export]
     81→macro_rules! for_both {
+    82→    ($value:expr, $pattern:pat => $result:expr) => {
+    83→        match $value {
+    84→            $crate::Either::Left($pattern) => $result,
+    85→            $crate::Either::Right($pattern) => $result,
+    86→        }
+    87→    };
+    88→}
+    90→/// Macro for unwrapping the left side of an [`Either`], which fails early
+    91→/// with the opposite side. Can only be used in functions that return
+    92→/// `Either` because of the early return of `Right` that it provides.
+    93→///
+    94→/// See also [`try_right!`] for its dual, which applies the same just to the
+    95→/// right side.
+    96→///
+    97→/// # Example
+    98→///
+    99→/// ```
+   100→/// use either::{Either, Left, Right};
+   101→///
+   102→/// fn twice(wrapper: Either<u32, &str>) -> Either<u32, &str> {
+   103→///     let value = either::try_left!(wrapper);
+   104→///     Left(value * 2)
+   105→/// }
+   106→///
+   107→/// fn main() {
+   108→///     assert_eq!(twice(Left(2)), Left(4));
+   109→///     assert_eq!(twice(Right("ups")), Right("ups"));
+   110→/// }
+   111→/// ```
+   112→#[macro_export]
    113→macro_rules! try_left {
+   114→    ($expr:expr) => {
+   115→        match $expr {
+   116→            $crate::Left(val) => val,
+   117→            $crate::Right(err) => return $crate::Right(::core::convert::From::from(err)),
+   118→        }
+   119→    };
+   120→}
+   122→/// Dual to [`try_left!`], see its documentation for more information.
+   123→#[macro_export]
    124→macro_rules! try_right {
+   125→    ($expr:expr) => {
+   126→        match $expr {
+   127→            $crate::Left(err) => return $crate::Left(::core::convert::From::from(err)),
+   128→            $crate::Right(val) => val,
+   129→        }
+   130→    };
+   131→}
    133→macro_rules! map_either {
    142→mod iterator;
    143→pub use self::iterator::IterEither;
@@ -219,46 +248,26 @@ src/lib.rs
   1086→    pub fn copied …
   1098→    pub fn cloned …
   1108→    pub fn copied …
-  1118→impl<L, R> From<Result<R, L>> for Either<L, R> {
+  1118→impl<L, R> From<Result<R, L>> for Either<L, R> …
   1119→    fn from …
-  1128→impl<L, R> From<Either<L, R>> for Result<R, L> {
+  1128→impl<L, R> From<Either<L, R>> for Result<R, L> …
   1129→    fn from …
-  1138→impl<L, R> Future for Either<L, R>
-  1139→where
-  1140→    L: Future,
-  1141→    R: Future<Output = L::Output>,
-  1142→{
+  1138→impl<L, R> Future for Either<L, R> …
   1143→    type Output = L::Output;
   1145→    fn poll …
-  1157→impl<L, R> Read for Either<L, R>
-  1158→where
-  1159→    L: Read,
-  1160→    R: Read,
-  1161→{
+  1157→impl<L, R> Read for Either<L, R> …
   1162→    fn read …
   1166→    fn read_exact …
   1170→    fn read_to_end …
   1174→    fn read_to_string …
-  1183→impl<L, R> Seek for Either<L, R>
-  1184→where
-  1185→    L: Seek,
-  1186→    R: Seek,
-  1187→{
+  1183→impl<L, R> Seek for Either<L, R> …
   1188→    fn seek …
-  1195→impl<L, R> BufRead for Either<L, R>
-  1196→where
-  1197→    L: BufRead,
-  1198→    R: BufRead,
-  1199→{
+  1195→impl<L, R> BufRead for Either<L, R> …
   1200→    fn fill_buf …
   1204→    fn consume …
   1208→    fn read_until …
   1212→    fn read_line …
-  1221→impl<L, R> Write for Either<L, R>
-  1222→where
-  1223→    L: Write,
-  1224→    R: Write,
-  1225→{
+  1221→impl<L, R> Write for Either<L, R> …
   1226→    fn write …
   1230→    fn write_all …
   1234→    fn write_fmt …
@@ -271,11 +280,7 @@ src/lib.rs
   1327→    type Target = L::Target;
   1329→    fn deref …
   1339→    fn deref_mut …
-  1348→impl<L, R> Error for Either<L, R>
-  1349→where
-  1350→    L: Error,
-  1351→    R: Error,
-  1352→{
+  1348→impl<L, R> Error for Either<L, R> …
   1353→    fn source …
   1358→    fn description …
   1363→    fn cause …
@@ -283,16 +288,11 @@ src/lib.rs
   1383→    fn write_str …
   1387→    fn write_char …
   1391→    fn write_fmt …
+  1521→/// A helper macro to check if AsRef and AsMut are implemented for a given type.
   1522→macro_rules! check_t {
   1536→fn _unsized_ref_propagation() {
-  1537→    check_t!(str);
-  1538→
-      →…
   1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {
-  1554→    check_t!(::std::path::Path);
-  1555→    check_t!(::std::ffi::OsStr);
-      →    …
 
 src/serde_untagged.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
@@ -310,10 +310,7 @@ src/serde_untagged.rs
     50→{
     51→    let untagged = match this {
     52→        super::Either::Left(left) => Either::Left(left),
-    53→        super::Either::Right(right) => Either::Right(right),
-    54→    };
-    55→    untagged.serialize(serializer)
-    56→}
+      →        …
     58→pub fn deserialize<'de, L, R, D>(deserializer: D) -> Result<super::Either<L, R>, D::Error>
     59→where
     60→    D: Deserializer<'de>,
@@ -322,15 +319,12 @@ src/serde_untagged.rs
     63→{
     64→    match Either::deserialize(deserializer) {
     65→        Ok(Either::Left(left)) => Ok(super::Either::Left(left)),
-    66→        Ok(Either::Right(right)) => Ok(super::Either::Right(right)),
-    67→        Err(error) => Err(error),
-    68→    }
-    69→}
+      →        …
 
 src/serde_untagged_optional.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     38→#[derive(Serialize, Deserialize)]
-    39→#[serde(untagged)]
+      →…
     40→enum Either<L, R> {
     41→    Left(L),
     42→    Right(R),
@@ -345,12 +339,7 @@ src/serde_untagged_optional.rs
     52→    R: Serialize,
     53→{
     54→    let untagged = match this {
-    55→        Some(super::Either::Left(left)) => Some(Either::Left(left)),
-    56→        Some(super::Either::Right(right)) => Some(Either::Right(right)),
-    57→        None => None,
-    58→    };
-    59→    untagged.serialize(serializer)
-    60→}
+      →    …
     62→pub fn deserialize<'de, L, R, D>(deserializer: D) -> Result<Option<super::Either<L, R>>, D::Error>
     63→where
     64→    D: Deserializer<'de>,
@@ -358,9 +347,4 @@ src/serde_untagged_optional.rs
     66→    R: Deserialize<'de>,
     67→{
     68→    match Option::deserialize(deserializer) {
-    69→        Ok(Some(Either::Left(left))) => Ok(Some(super::Either::Left(left))),
-    70→        Ok(Some(Either::Right(right))) => Ok(Some(super::Either::Right(right))),
-    71→        Ok(None) => Ok(None),
-    72→        Err(error) => Err(error),
-    73→    }
-    74→}
+      →    …

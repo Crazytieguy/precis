@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (2013 tokens)
 
 error.rs
      1→use std::fmt;
@@ -88,11 +88,6 @@ source.rs
     12→/// Use the [`VisitSource`](trait.VisitSource.html) trait to inspect the structured data
     13→/// in a source.
     14→///
-    15→/// A source is like an iterator over its key-values, except with a push-based API
-    16→/// instead of a pull-based one.
-    17→///
-    18→/// # Examples
-    19→///
       →…
     51→pub trait Source {
     52→    /// Visit key-values.
@@ -122,7 +117,6 @@ source.rs
    462→pub use VisitSource as Visitor;
 
 value.rs
-     6→use std::fmt;
      8→pub use crate::kv::Error;
     10→/// A type that can be converted into a [`Value`](struct.Value.html).
     11→pub trait ToValue {
@@ -143,9 +137,6 @@ value.rs
    312→macro_rules! impl_to_value_nonzero_primitive {
    336→macro_rules! impl_value_to_primitive {
    390→mod std_support {
-   391→    use std::borrow::Cow;
-   392→    use std::rc::Rc;
-   393→    use std::sync::Arc;
    395→    use super::*;
    450→/// A visitor for a [`Value`].
    451→///
@@ -176,8 +167,18 @@ value.rs
    749→        Display(&'v dyn fmt::Display),
    750→    }
   1123→pub use VisitValue as Visit;
+  1125→/// Get a value from a type implementing `std::fmt::Debug`.
+      →…
   1129→macro_rules! as_debug {
+  1135→/// Get a value from a type implementing `std::fmt::Display`.
+      →…
   1139→macro_rules! as_display {
+  1145→/// Get a value from an error.
+      →…
   1149→macro_rules! as_error {
+  1157→/// Get a value from a type implementing `serde::Serialize`.
+      →…
   1159→macro_rules! as_serde {
+  1165→/// Get a value from a type implementing `sval::Value`.
+      →…
   1169→macro_rules! as_sval {

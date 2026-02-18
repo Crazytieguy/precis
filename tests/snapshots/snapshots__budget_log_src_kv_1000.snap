@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 tokens)
+budget: 1000 (991 tokens)
 
 error.rs
      3→/// An error encountered while working with structured data.
@@ -21,7 +21,6 @@ error.rs
     63→    fn from …
     69→mod std_support {
     70→    use super::*;
-    73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     76→        /// Create an error from a standard error type.
     77→        pub fn boxed<E>(err: E) -> Self
     78→        where
@@ -77,7 +76,6 @@ source.rs
    234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair …
-   241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T …
    280→mod std_support {
    281→    use super::*;
    462→pub use VisitSource as Visitor;
@@ -103,6 +101,10 @@ value.rs
    740→        Bool(bool),
    741→        Str(&'v str),
    742→        Char(char),
-   743→        I64(i64),
       →        …
   1123→pub use VisitValue as Visit;
+  1129→macro_rules! as_debug {
+  1139→macro_rules! as_display {
+  1149→macro_rules! as_error {
+  1159→macro_rules! as_serde {
+  1169→macro_rules! as_sval {

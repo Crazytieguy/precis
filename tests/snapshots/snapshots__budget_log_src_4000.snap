@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4008 tokens)
+budget: 4000 (4025 tokens)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -56,9 +56,6 @@ kv/error.rs
      6→    inner: Inner,
      7→}
     10→enum Inner {
-    11→    #[cfg(feature = "std")]
-      →    …
-    19→impl Error {
     20→    /// Create an error from a message.
     21→    pub fn msg(msg: &'static str) -> Self {
     22→        Error {
@@ -67,15 +64,12 @@ kv/error.rs
     25→    }
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
-    48→impl fmt::Display for Error {
     49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-    62→impl From<fmt::Error> for Error {
     63→    fn from(_: fmt::Error) -> Self {
     69→mod std_support {
     70→    use super::*;
     71→    use std::{error, io};
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
-    75→    impl Error {
     76→        /// Create an error from a standard error type.
     77→        pub fn boxed<E>(err: E) -> Self
     78→        where
@@ -85,8 +79,6 @@ kv/error.rs
     82→                inner: Inner::Boxed(err.into()),
     83→            }
     84→        }
-    87→    impl error::Error for Error {}
-    89→    impl From<io::Error> for Error {
     90→        fn from(err: io::Error) -> Self {
 
 kv/key.rs
@@ -175,20 +167,14 @@ kv/source.rs
     51→pub trait Source {
     52→    /// Visit key-values.
     53→    ///
-    54→    /// A source doesn't have to guarantee any ordering or uniqueness of key-values.
-    55→    /// If the given visitor returns an error then the source may early-return with it,
       →    …
     62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
     64→    /// Get the value for a given key.
     65→    ///
-    66→    /// If the key appears multiple times in the source then which key is returned
-    67→    /// is implementation specific.
       →    …
     73→    fn get(&self, key: Key) -> Option<Value<'_>> {
     77→    /// Count the number of key-values that can be visited.
     78→    ///
-    79→    /// # Implementation notes
-    80→    ///
       →    …
     85→    fn count(&self) -> usize {
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
@@ -262,10 +248,20 @@ kv/value.rs
    749→        Display(&'v dyn fmt::Display),
    750→    }
   1123→pub use VisitValue as Visit;
+  1125→/// Get a value from a type implementing `std::fmt::Debug`.
+      →…
   1129→macro_rules! as_debug {
+  1135→/// Get a value from a type implementing `std::fmt::Display`.
+      →…
   1139→macro_rules! as_display {
+  1145→/// Get a value from an error.
+      →…
   1149→macro_rules! as_error {
+  1157→/// Get a value from a type implementing `serde::Serialize`.
+      →…
   1159→macro_rules! as_serde {
+  1165→/// Get a value from a type implementing `sval::Value`.
+      →…
   1169→macro_rules! as_sval {
 
 lib.rs
@@ -281,32 +277,21 @@ lib.rs
    416→use std::cell::Cell;
    418→use std::sync::atomic::Ordering;
    421→struct AtomicUsize {
-   427→    const fn new …
-   431→    fn load …
-   435→    fn store …
    475→pub enum Level {
    476→    /// The "error" level.
    477→    ///
-   478→    /// Designates very serious errors.
-   479→    // This way these line up with the discriminants for LevelFilter below
       →    …
    516→    type Err = ParseLevelError;
-   535→    fn from_usize …
    636→pub enum LevelFilter {
    637→    /// A level lower than all log levels.
    638→    Off,
-   639→    /// Corresponds to the `Error` log level.
-   640→    Error,
       →    …
    666→    type Err = ParseLevelError;
-   685→    fn from_usize …
    781→enum MaybeStaticStr<'a> {
    788→    fn get(&self) -> &'a str {
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
    844→    args: fmt::Arguments<'a>,
-   845→    module_path: Option<MaybeStaticStr<'a>>,
-   846→    file: Option<MaybeStaticStr<'a>>,
       →    …
    858→struct KeyValues<'a>(&'a dyn kv::Source);
   1003→pub struct RecordBuilder<'a> {
@@ -315,7 +300,7 @@ lib.rs
   1158→pub struct Metadata<'a> {
   1159→    level: Level,
   1160→    target: &'a str,
-  1161→}
+      →    …
   1200→pub struct MetadataBuilder<'a> {
   1201→    metadata: Metadata<'a>,
   1202→}
@@ -340,6 +325,34 @@ lib.rs
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 
 macros.rs
+    11→/// The standard logging macro.
+    12→///
+      →…
+    75→macro_rules! log {
+   149→/// Logs a message at the error level.
+   150→///
+      →…
+   165→macro_rules! error {
+   188→/// Logs a message at the warn level.
+   189→///
+      →…
+   204→macro_rules! warn {
+   227→/// Logs a message at the info level.
+   228→///
+      →…
+   252→macro_rules! info {
+   275→/// Logs a message at the debug level.
+   276→///
+      →…
+   292→macro_rules! debug {
+   315→/// Logs a message at the trace level.
+   316→///
+      →…
+   336→macro_rules! trace {
+   359→/// Determines if a message logged at the specified level in that module will
+   360→/// be logged.
+      →…
+   391→macro_rules! log_enabled {
 
 serde.rs
      9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (1001 tokens)
 
 backtrace.rs
      8→pub(crate) enum Backtrace {}
@@ -57,8 +57,6 @@ kind.rs
     77→pub struct Trait;
     99→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    100→pub struct Boxed;
-   112→impl BoxedKind for Box<dyn StdError + Send + Sync> {}
-   115→impl Boxed {
 
 lib.rs
    279→trait StdError: Debug + Display {
@@ -86,7 +84,10 @@ lib.rs
    723→            fn not …
 
 macros.rs
+    58→macro_rules! bail {
     70→macro_rules! __ensure {
+   204→macro_rules! anyhow {
+   230→macro_rules! __anyhow {
 
 nightly.rs
     10→pub use core::error::Request;

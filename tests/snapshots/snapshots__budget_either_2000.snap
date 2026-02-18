@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (2003 tokens)
 
 Cargo.toml
      1→[package]
@@ -99,12 +99,6 @@ src/lib.rs
     22→pub mod serde_untagged;
     24→#[cfg(feature = "serde")]
     25→pub mod serde_untagged_optional;
-    27→use core::convert::{AsMut, AsRef};
-    28→use core::fmt;
-    29→use core::future::Future;
-    30→use core::ops::Deref;
-    31→use core::ops::DerefMut;
-    32→use core::pin::Pin;
     35→use std::error::Error;
     37→use std::io::{self, BufRead, Read, Seek, SeekFrom, Write};
     39→pub use crate::Either::{Left, Right};
@@ -122,8 +116,36 @@ src/lib.rs
     52→    /// A value of type `R`.
     53→    Right(R),
     54→}
+    56→/// Evaluate the provided expression for both [`Either::Left`] and [`Either::Right`].
+    57→///
+    58→/// This macro is useful in cases where both sides of [`Either`] can be interacted with
+    59→/// in the same way even though the don't share the same type.
+    60→///
+    61→/// Syntax: `either::for_both!(` *expression* `,` *pattern* `=>` *expression* `)`
+    62→///
+    63→/// # Example
+    64→///
+    65→/// ```
+    66→/// use either::Either;
+    67→///
+      →…
     81→macro_rules! for_both {
+    90→/// Macro for unwrapping the left side of an [`Either`], which fails early
+    91→/// with the opposite side. Can only be used in functions that return
+    92→/// `Either` because of the early return of `Right` that it provides.
+    93→///
+    94→/// See also [`try_right!`] for its dual, which applies the same just to the
+    95→/// right side.
+    96→///
+    97→/// # Example
+    98→///
+    99→/// ```
+   100→/// use either::{Either, Left, Right};
+   101→///
+      →…
    113→macro_rules! try_left {
+   122→/// Dual to [`try_left!`], see its documentation for more information.
+   123→#[macro_export]
    124→macro_rules! try_right {
    133→macro_rules! map_either {
    142→mod iterator;
@@ -135,7 +157,6 @@ src/lib.rs
   1327→    type Target = L::Target;
   1522→macro_rules! check_t {
   1536→fn _unsized_ref_propagation() {
-  1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {
 
 src/serde_untagged.rs
@@ -143,33 +164,14 @@ src/serde_untagged.rs
     40→enum Either<L, R> {
     41→    Left(L),
     42→    Right(R),
-    43→}
-    45→pub fn serialize<L, R, S>(this: &super::Either<L, R>, serializer: S) -> Result<S::Ok, S::Error>
-    46→where
-    47→    S: Serializer,
-    48→    L: Serialize,
-    49→    R: Serialize,
-    50→{
-    51→    let untagged = match this {
-    52→        super::Either::Left(left) => Either::Left(left),
-      →        …
-    58→pub fn deserialize<'de, L, R, D>(deserializer: D) -> Result<super::Either<L, R>, D::Error>
-    59→where
-    60→    D: Deserializer<'de>,
-    61→    L: Deserialize<'de>,
-    62→    R: Deserialize<'de>,
-    63→{
-    64→    match Either::deserialize(deserializer) {
-    65→        Ok(Either::Left(left)) => Ok(super::Either::Left(left)),
-      →        …
+      →    …
+    45→pub fn serialize …
+    58→pub fn deserialize …
 
 src/serde_untagged_optional.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
-    38→#[derive(Serialize, Deserialize)]
-      →…
     40→enum Either<L, R> {
     41→    Left(L),
-    42→    Right(R),
-    43→}
+      →    …
     45→pub fn serialize …
     62→pub fn deserialize …

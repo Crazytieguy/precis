@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2018 tokens)
+budget: 2000 (2015 tokens)
 
 Cargo.toml
 
@@ -33,6 +33,7 @@ crates/mdbook-core/src/lib.rs
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
     13→pub use self::html::{escape_html, escape_html_attribute};
+    17→macro_rules! static_regex {
     29→pub fn log_backtrace(e: &Error) {
 
 crates/mdbook-driver/README.md
@@ -41,8 +42,6 @@ crates/mdbook-driver/README.md
 
 crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     14→pub struct CmdPreprocessor {
-    15→    name: String,
-      →    …
 
 crates/mdbook-driver/src/builtin_preprocessors/index.rs
     12→pub struct IndexPreprocessor;

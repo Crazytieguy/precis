@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2013 tokens)
+budget: 2000 (2007 tokens)
 
 into_either.rs
      4→use super::{Either, Left, Right};
@@ -12,7 +12,6 @@ into_either.rs
      9→/// The [`into_either`](IntoEither::into_either) method takes a [`bool`] to determine
     10→/// whether to convert to [`Left`] or [`Right`].
     11→///
-    12→/// The [`into_either_with`](IntoEither::into_either_with) method takes a
       →…
     14→pub trait IntoEither: Sized {
     15→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
@@ -90,12 +89,6 @@ lib.rs
     22→pub mod serde_untagged;
     24→#[cfg(feature = "serde")]
     25→pub mod serde_untagged_optional;
-    27→use core::convert::{AsMut, AsRef};
-    28→use core::fmt;
-    29→use core::future::Future;
-    30→use core::ops::Deref;
-    31→use core::ops::DerefMut;
-    32→use core::pin::Pin;
     35→use std::error::Error;
     37→use std::io::{self, BufRead, Read, Seek, SeekFrom, Write};
     39→pub use crate::Either::{Left, Right};
@@ -106,15 +99,39 @@ lib.rs
     45→/// preference.
     46→/// (For representing success or error, use the regular `Result` enum instead.)
     47→#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-    48→#[derive(Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Debug)]
+      →…
     49→pub enum Either<L, R> {
     50→    /// A value of type `L`.
     51→    Left(L),
     52→    /// A value of type `R`.
     53→    Right(R),
     54→}
+    56→/// Evaluate the provided expression for both [`Either::Left`] and [`Either::Right`].
+    57→///
+    58→/// This macro is useful in cases where both sides of [`Either`] can be interacted with
+    59→/// in the same way even though the don't share the same type.
+    60→///
+    61→/// Syntax: `either::for_both!(` *expression* `,` *pattern* `=>` *expression* `)`
+    62→///
+    63→/// # Example
+    64→///
+    65→/// ```
+      →…
     81→macro_rules! for_both {
+    90→/// Macro for unwrapping the left side of an [`Either`], which fails early
+    91→/// with the opposite side. Can only be used in functions that return
+    92→/// `Either` because of the early return of `Right` that it provides.
+    93→///
+    94→/// See also [`try_right!`] for its dual, which applies the same just to the
+    95→/// right side.
+    96→///
+    97→/// # Example
+    98→///
+    99→/// ```
+      →…
    113→macro_rules! try_left {
+   122→/// Dual to [`try_left!`], see its documentation for more information.
+   123→#[macro_export]
    124→macro_rules! try_right {
    133→macro_rules! map_either {
    142→mod iterator;
@@ -126,6 +143,7 @@ lib.rs
   1327→    type Target = L::Target;
   1522→macro_rules! check_t {
   1536→fn _unsized_ref_propagation() {
+  1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {
 
 serde_untagged.rs
@@ -155,22 +173,5 @@ serde_untagged_optional.rs
     40→enum Either<L, R> {
     41→    Left(L),
       →    …
-    45→pub fn serialize<L, R, S>(
-    46→    this: &Option<super::Either<L, R>>,
-    47→    serializer: S,
-    48→) -> Result<S::Ok, S::Error>
-    49→where
-    50→    S: Serializer,
-    51→    L: Serialize,
-    52→    R: Serialize,
-    53→{
-    54→    let untagged = match this {
-      →    …
-    62→pub fn deserialize<'de, L, R, D>(deserializer: D) -> Result<Option<super::Either<L, R>>, D::Error>
-    63→where
-    64→    D: Deserializer<'de>,
-    65→    L: Deserialize<'de>,
-    66→    R: Deserialize<'de>,
-    67→{
-    68→    match Option::deserialize(deserializer) {
-      →    …
+    45→pub fn serialize …
+    62→pub fn deserialize …

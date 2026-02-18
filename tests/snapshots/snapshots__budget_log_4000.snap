@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4008 tokens)
+budget: 4000 (4033 tokens)
 
 CHANGELOG.md
      1→# Change Log
@@ -116,9 +116,6 @@ src/kv/key.rs
      7→pub trait ToKey {
      8→    /// Perform the conversion.
      9→    fn to_key(&self) -> Key<'_>;
-    16→    fn to_key …
-    22→    fn to_key …
-    28→    fn to_key …
     36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
@@ -135,21 +132,12 @@ src/kv/key.rs
     58→    ///
       →    …
     61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
-    70→    fn fmt …
-    76→    fn as_ref …
-    82→    fn borrow …
-    88→    fn from …
     94→mod std_support {
     95→    use super::*;
-   100→        fn to_key …
-   106→        fn to_key …
    113→mod sval_support {
    114→    use super::*;
-   120→        fn stream …
-   129→        fn stream_ref …
    136→mod serde_support {
    137→    use super::*;
-   142→        fn serialize …
 
 src/kv/mod.rs
    246→mod error;
@@ -174,14 +162,6 @@ src/kv/source.rs
     12→/// Use the [`VisitSource`](trait.VisitSource.html) trait to inspect the structured data
     13→/// in a source.
     14→///
-    15→/// A source is like an iterator over its key-values, except with a push-based API
-    16→/// instead of a pull-based one.
-    17→///
-    18→/// # Examples
-    19→///
-    20→/// Enumerating the key-values in a source:
-    21→///
-    22→/// ```
       →…
     51→pub trait Source {
     52→    /// Visit key-values.
@@ -211,7 +191,6 @@ src/kv/source.rs
    462→pub use VisitSource as Visitor;
 
 src/kv/value.rs
-     6→use std::fmt;
      8→pub use crate::kv::Error;
     10→/// A type that can be converted into a [`Value`](struct.Value.html).
     11→pub trait ToValue {
@@ -232,9 +211,6 @@ src/kv/value.rs
    312→macro_rules! impl_to_value_nonzero_primitive {
    336→macro_rules! impl_value_to_primitive {
    390→mod std_support {
-   391→    use std::borrow::Cow;
-   392→    use std::rc::Rc;
-   393→    use std::sync::Arc;
    395→    use super::*;
    450→/// A visitor for a [`Value`].
    451→///
@@ -265,10 +241,20 @@ src/kv/value.rs
    749→        Display(&'v dyn fmt::Display),
    750→    }
   1123→pub use VisitValue as Visit;
+  1125→/// Get a value from a type implementing `std::fmt::Debug`.
+      →…
   1129→macro_rules! as_debug {
+  1135→/// Get a value from a type implementing `std::fmt::Display`.
+      →…
   1139→macro_rules! as_display {
+  1145→/// Get a value from an error.
+      →…
   1149→macro_rules! as_error {
+  1157→/// Get a value from a type implementing `serde::Serialize`.
+      →…
   1159→macro_rules! as_serde {
+  1165→/// Get a value from a type implementing `sval::Value`.
+      →…
   1169→macro_rules! as_sval {
 
 src/lib.rs
@@ -295,7 +281,7 @@ src/lib.rs
       →    …
    666→    type Err = ParseLevelError;
    781→enum MaybeStaticStr<'a> {
-   788→    fn get(&self) -> &'a str {
+   788→    fn get …
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
    844→    args: fmt::Arguments<'a>,
@@ -313,10 +299,7 @@ src/lib.rs
   1202→}
   1249→pub trait Log: Sync + Send {
   1283→struct NopLogger;
-  1483→fn set_logger_inner<F>(make_logger: F) -> Result<(), SetLoggerError>
-  1484→where
-  1485→    F: FnOnce() -> &'static dyn Log,
-  1486→{
+  1483→fn set_logger_inner …
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
   1600→pub mod __private_api;
@@ -332,6 +315,34 @@ src/lib.rs
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 
 src/macros.rs
+    11→/// The standard logging macro.
+    12→///
+      →…
+    75→macro_rules! log {
+   149→/// Logs a message at the error level.
+   150→///
+      →…
+   165→macro_rules! error {
+   188→/// Logs a message at the warn level.
+   189→///
+      →…
+   204→macro_rules! warn {
+   227→/// Logs a message at the info level.
+   228→///
+      →…
+   252→macro_rules! info {
+   275→/// Logs a message at the debug level.
+   276→///
+      →…
+   292→macro_rules! debug {
+   315→/// Logs a message at the trace level.
+   316→///
+      →…
+   336→macro_rules! trace {
+   359→/// Determines if a message logged at the specified level in that module will
+   360→/// be logged.
+      →…
+   391→macro_rules! log_enabled {
 
 src/serde.rs
      9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
@@ -365,10 +376,8 @@ test_max_level_features/main.rs
     72→fn last(state: &State, expected: Option<Level>) {
 
 tests/integration.rs
-    13→impl Log for Logger {
 
 tests/macros.rs
-     3→macro_rules! all_log_macros {
     14→struct Logger;
     16→impl Log for Logger {
    420→enum Type {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1996 tokens)
+budget: 2000 (1995 tokens)
 
 Cargo.toml
      1→[package]
@@ -22,6 +22,8 @@ README.md
 rfcs/0296-structured-logging.md
 
 src/__private_api.rs
+     5→use std::fmt::Arguments;
+     6→use std::panic::Location;
      7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -70,10 +72,8 @@ src/kv/error.rs
     90→        fn from(err: io::Error) -> Self {
 
 src/kv/key.rs
-     6→/// A type that can be converted into a [`Key`](struct.Key.html).
      7→pub trait ToKey {
      9→    fn to_key(&self) -> Key<'_>;
-    36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
@@ -109,14 +109,14 @@ src/kv/source.rs
     10→///
       →…
     51→pub trait Source {
-    62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
-    73→    fn get(&self, key: Key) -> Option<Value<'_>> {
-    85→    fn count(&self) -> usize {
+    62→    fn visit …
+    73→    fn get …
+    85→    fn count …
     91→fn get_default …
    114→fn count_default …
    234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
-   237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
+   237→    fn visit_pair …
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T …
    280→mod std_support {
    281→    use super::*;
@@ -144,28 +144,30 @@ src/kv/value.rs
    741→        Str(&'v str),
    742→        Char(char),
    743→        I64(i64),
+   744→        U64(u64),
       →        …
   1123→pub use VisitValue as Visit;
+  1129→macro_rules! as_debug {
+  1139→macro_rules! as_display {
+  1149→macro_rules! as_error {
+  1159→macro_rules! as_serde {
+  1169→macro_rules! as_sval {
 
 src/lib.rs
    406→mod macros;
    407→mod serde;
    409→#[cfg(feature = "kv")]
    410→pub mod kv;
-   421→struct AtomicUsize {
    475→pub enum Level {
    516→    type Err = ParseLevelError;
    636→pub enum LevelFilter {
    666→    type Err = ParseLevelError;
-   781→enum MaybeStaticStr<'a> {
    788→    fn get …
    842→pub struct Record<'a> {
-   858→struct KeyValues<'a>(&'a dyn kv::Source);
   1003→pub struct RecordBuilder<'a> {
   1158→pub struct Metadata<'a> {
   1200→pub struct MetadataBuilder<'a> {
   1249→pub trait Log: Sync + Send {
-  1283→struct NopLogger;
   1483→fn set_logger_inner …
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
@@ -178,6 +180,13 @@ src/lib.rs
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 
 src/macros.rs
+    75→macro_rules! log {
+   165→macro_rules! error {
+   204→macro_rules! warn {
+   252→macro_rules! info {
+   292→macro_rules! debug {
+   336→macro_rules! trace {
+   391→macro_rules! log_enabled {
 
 src/serde.rs
      9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};

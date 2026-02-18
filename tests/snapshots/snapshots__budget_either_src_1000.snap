@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1012 tokens)
+budget: 1000 (1013 tokens)
 
 into_either.rs
      4→use super::{Either, Left, Right};
@@ -37,11 +37,7 @@ iterator.rs
     20→    inner: Either<L, R>,
     21→}
     24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
-    43→impl<L, R> Iterator for Either<L, R>
-    44→where
-    45→    L: Iterator,
-    46→    R: Iterator<Item = L::Item>,
-    47→{
+    43→impl<L, R> Iterator for Either<L, R> …
     48→    type Item = L::Item;
    185→    type Item = Either<L::Item, R::Item>;
 
@@ -56,8 +52,6 @@ lib.rs
     41→/// The enum `Either` with variants `Left` and `Right` is a general purpose
     42→/// sum type with two cases.
     43→///
-    44→/// The `Either` type is symmetric and treats its variants the same way, without
-    45→/// preference.
       →…
     49→pub enum Either<L, R> {
     50→    /// A value of type `L`.
@@ -65,8 +59,14 @@ lib.rs
     52→    /// A value of type `R`.
     53→    Right(R),
     54→}
+    56→/// Evaluate the provided expression for both [`Either::Left`] and [`Either::Right`].
+      →…
     81→macro_rules! for_both {
+    90→/// Macro for unwrapping the left side of an [`Either`], which fails early
+      →…
    113→macro_rules! try_left {
+   122→/// Dual to [`try_left!`], see its documentation for more information.
+      →…
    124→macro_rules! try_right {
    133→macro_rules! map_either {
    142→mod iterator;
@@ -91,7 +91,5 @@ serde_untagged.rs
 serde_untagged_optional.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     40→enum Either<L, R> {
-    41→    Left(L),
-      →    …
     45→pub fn serialize …
     62→pub fn deserialize …

@@ -2,12 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (1003 tokens)
 
 Cargo.toml
 
 README.md
    166→#### License
+
+build.rs
 
 rust-toolchain.toml
      1→[toolchain]
@@ -18,8 +20,6 @@ src/backtrace.rs
    211→        pub(crate) fn capture() -> Backtrace {
 
 src/chain.rs
-    11→pub(crate) struct Chain<'a> {
-    16→pub(crate) enum ChainState<'a> {
     27→    #[cold]
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
     29→        Chain {
@@ -57,7 +57,6 @@ src/fmt.rs
 
 src/kind.rs
     47→use crate::Error;
-    48→use core::fmt::{Debug, Display};
     51→use crate::StdError;
     53→use alloc::boxed::Box;
     55→pub struct Adhoc;
@@ -68,6 +67,8 @@ src/kind.rs
 src/lib.rs
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+   281→        None
+      →        …
    286→pub use anyhow as format_err;
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -89,7 +90,10 @@ src/lib.rs
    723→            fn not …
 
 src/macros.rs
+    58→macro_rules! bail {
     70→macro_rules! __ensure {
+   204→macro_rules! anyhow {
+   230→macro_rules! __anyhow {
 
 src/nightly.rs
     10→pub use core::error::Request;

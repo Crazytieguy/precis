@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3986 tokens)
+budget: 4000 (3994 tokens)
 
 backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
@@ -57,33 +57,20 @@ context.rs
      9→mod ext {
     10→    use super::*;
     12→    pub trait StdError {
-    13→        fn ext_context …
     19→    impl<E> StdError for E
     20→    where
     21→        E: crate::StdError + Send + Sync + 'static,
     22→    {
-    23→        fn ext_context …
-    33→        fn ext_context …
-    46→    fn context …
-    58→    fn with_context …
     90→impl<T> Context<T, Infallible> for Option<T> {
-    91→    fn context …
-   103→    fn with_context …
-   120→    fn fmt …
-   132→    fn fmt …
-   142→    fn source …
    146→    #[cfg(error_generic_member_access)]
    147→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
    148→        nightly::provide(&self.error, request);
    149→    }
-   156→    fn source …
    160→    #[cfg(error_generic_member_access)]
    161→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
    162→        Error::provide(&self.error, request);
    163→    }
    166→struct Quoted<C>(C);
-   172→    fn fmt …
-   181→    fn write_str …
    186→pub(crate) mod private {
    187→    use super::*;
    189→    pub trait Sealed {}
@@ -97,10 +84,10 @@ ensure.rs
     26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     30→    fn __dispatch_ensure(self, msg: &'static str) -> Error {
     35→struct Buf {
-    41→    fn new …
-    48→    fn as_str …
+    41→    fn new() -> Self {
+    48→    fn as_str(&self) -> &str {
     59→    fn write_str(&mut self, s: &str) -> fmt::Result {
-    81→fn render …
+    81→fn render(msg: &'static str, lhs: &dyn Debug, rhs: &dyn Debug) -> Error {
    105→macro_rules! __parse_ensure {
    886→macro_rules! __fancy_ensure {
    912→macro_rules! __fallback_ensure {
@@ -163,6 +150,7 @@ fmt.rs
     80→        for (i, line) in s.split('\n').enumerate() {
     81→            if !self.started {
     82→                self.started = true;
+    83→                match self.number {
       →                …
 
 kind.rs
@@ -288,9 +276,19 @@ lib.rs
    723→            fn not(self) -> bool {
 
 macros.rs
+     1→/// Return early with an error.
+     2→///
+     3→/// This macro is equivalent to
+      →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
+   174→/// Construct an ad-hoc error from a string or existing non-`anyhow` error
+   175→/// value.
+   176→///
+      →…
    204→macro_rules! anyhow {
+   228→#[doc(hidden)]
+      →…
    230→macro_rules! __anyhow {
 
 nightly.rs

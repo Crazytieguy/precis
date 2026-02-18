@@ -4,8 +4,6 @@ expression: output
 ---
 budget: 1000 (1011 tokens)
 
-Cargo.toml
-
 README.md
      1→# mdBook
     14→## License
@@ -23,6 +21,11 @@ crates/mdbook-core/src/config.rs
 crates/mdbook-core/src/lib.rs
      7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
     14→pub mod errors {
+
+crates/mdbook-core/src/utils/mod.rs
+     7→pub mod fs;
+    17→macro_rules! static_regex {
+    29→pub fn log_backtrace(e: &Error) {
 
 crates/mdbook-driver/README.md
      1→# mdbook-driver
@@ -71,15 +74,10 @@ crates/mdbook-markdown/src/lib.rs
 
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
-    11→## License
 
 crates/mdbook-preprocessor/src/lib.rs
     30→pub trait Preprocessor {
     51→pub struct PreprocessorContext {
-
-crates/mdbook-renderer/README.md
-     1→# mdbook-renderer
-    11→## License
 
 crates/mdbook-renderer/src/lib.rs
     28→pub trait Renderer {
@@ -99,8 +97,6 @@ crates/mdbook-summary/src/lib.rs
 
 crates/xtask/README.md
      1→# xtask
-
-guide/book.toml
 
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.

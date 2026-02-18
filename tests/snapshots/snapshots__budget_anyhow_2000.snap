@@ -12,14 +12,7 @@ Cargo.toml
     32→[package.metadata.docs.rs]
 
 README.md
-     1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
-    21→## Details
-   126→## No-std support
-   144→## Comparison to failure
-   155→## Comparison to thiserror
    166→#### License
-
-build.rs
 
 rust-toolchain.toml
      1→[toolchain]
@@ -119,7 +112,7 @@ src/lib.rs
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
    281→        None
-      →        …
+   282→    }
    286→pub use anyhow as format_err;
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -129,6 +122,7 @@ src/lib.rs
    417→}
    419→/// `Result<T, Error>`
    420→///
+   421→/// This is a reasonable return type to use throughout your application but also
       →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    616→pub trait Context<T, E>: context::private::Sealed {
@@ -140,9 +134,6 @@ src/lib.rs
    672→    pub mod kind {
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    678→        pub use crate::kind::BoxedKind;
-   684→    pub fn format_err(args: Arguments) -> Error {
-   698→    pub fn must_use(error: Error) -> Error {
-   704→    pub fn not(cond: impl Bool) -> bool {
    710→        pub trait Bool {
    711→            fn not(self) -> bool;
    714→        impl Bool for bool {
@@ -151,8 +142,16 @@ src/lib.rs
    723→            fn not …
 
 src/macros.rs
+     1→/// Return early with an error.
+     2→///
+     3→/// This macro is equivalent to
+      →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
+   174→/// Construct an ad-hoc error from a string or existing non-`anyhow` error
+   175→/// value.
+   176→///
+      →…
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
 
@@ -211,3 +210,6 @@ src/wrapper.rs
     81→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
     82→        nightly::provide(&*self.0, request);
     83→    }
+
+tests/test_ensure.rs
+    43→    type Output = bool;

@@ -546,6 +546,23 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             is_public
         };
 
+        // Rust: `macro_rules!` definitions don't use `pub`. Instead,
+        // `#[macro_export]` makes them available at the crate root — these
+        // are the crate's public API macros (e.g. `log!`, `bail!`, `anyhow!`).
+        // Exclude `#[doc(hidden)]` macros: these are internal helpers that
+        // happen to be `#[macro_export]` for technical reasons (e.g.
+        // `__parse_ensure`, `__anyhow`), not public API.
+        let is_public = if !is_public
+            && lang == Lang::Rust
+            && kind == SymbolKind::Macro
+            && has_preceding_attribute(symbol_node, source, "#[macro_export]")
+            && !has_preceding_attribute(symbol_node, source, "#[doc(hidden)]")
+        {
+            true
+        } else {
+            is_public
+        };
+
         let is_first_party = if kind == SymbolKind::Import {
             is_first_party_import(&name, lang)
         } else {
@@ -1140,6 +1157,50 @@ pub struct NormalStruct {}
         assert!(names.contains(&("HiddenStruct", false)));
         assert!(names.contains(&("__private", false)));
         assert!(names.contains(&("NormalStruct", true)));
+    }
+
+    #[test]
+    fn rust_macro_export_is_public() {
+        let source = r#"
+macro_rules! private_macro {
+    () => {};
+}
+
+#[macro_export]
+macro_rules! public_macro {
+    () => {};
+}
+
+/// Documented macro
+#[macro_export]
+macro_rules! documented_public_macro {
+    () => {};
+}
+"#;
+        let symbols = extract_symbols(Path::new("test.rs"), source);
+        let names: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.name.as_str(), s.is_public))
+            .collect();
+
+        assert!(names.contains(&("private_macro", false)));
+        assert!(names.contains(&("public_macro", true)));
+        assert!(names.contains(&("documented_public_macro", true)));
+
+        // #[doc(hidden)] #[macro_export] macros are internal helpers, not public
+        let source_hidden = r#"
+#[doc(hidden)]
+#[macro_export]
+macro_rules! __internal_helper {
+    () => {};
+}
+"#;
+        let symbols = extract_symbols(Path::new("test.rs"), source_hidden);
+        let names: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.name.as_str(), s.is_public))
+            .collect();
+        assert!(names.contains(&("__internal_helper", false)));
     }
 
     #[test]

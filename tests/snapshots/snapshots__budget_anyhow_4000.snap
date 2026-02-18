@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3988 tokens)
+budget: 4000 (3990 tokens)
 
 Cargo.toml
      1→[package]
@@ -190,9 +190,6 @@ src/lib.rs
    265→use crate::error::ErrorImpl;
    266→use crate::ptr::Own;
    267→use core::fmt::Display;
-   270→use core::fmt::Debug;
-   273→use std::error::Error as StdError;
-   276→use core::error::Error as StdError;
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
    281→        None
@@ -255,9 +252,6 @@ src/lib.rs
    659→    use alloc::fmt;
    660→    use core::fmt::Arguments;
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
-   665→    pub use alloc::format;
-   667→    pub use core::result::Result::Err;
-   669→    pub use core::{concat, format_args, stringify};
    672→    pub mod kind {
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    678→        pub use crate::kind::BoxedKind;
@@ -274,8 +268,16 @@ src/lib.rs
    723→            fn not(self) -> bool {
 
 src/macros.rs
+     1→/// Return early with an error.
+     2→///
+     3→/// This macro is equivalent to
+      →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
+   174→/// Construct an ad-hoc error from a string or existing non-`anyhow` error
+   175→/// value.
+   176→///
+      →…
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
 
@@ -367,6 +369,7 @@ tests/test_context.rs
 
 tests/test_convert.rs
      3→mod drop;
+     5→use self::drop::{DetectDrop, Flag};
 
 tests/test_ensure.rs
     31→use self::Enum::Generic;

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1991 tokens)
+budget: 2000 (1987 tokens)
 
 backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
@@ -42,8 +42,6 @@ context.rs
      7→use crate::nightly::{self, Request};
      9→mod ext {
     12→    pub trait StdError {
-    19→    impl<E> StdError for E …
-    90→impl<T> Context<T, Infallible> for Option<T> …
    146→    #[cfg(error_generic_member_access)]
    147→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
    160→    #[cfg(error_generic_member_access)]
@@ -115,8 +113,6 @@ lib.rs
    417→}
    419→/// `Result<T, Error>`
    420→///
-   421→/// This is a reasonable return type to use throughout your application but also
-   422→/// for `fn main`; if you do, failures will be printed along with any
       →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    616→pub trait Context<T, E>: context::private::Sealed {
@@ -139,8 +135,16 @@ lib.rs
    723→            fn not …
 
 macros.rs
+     1→/// Return early with an error.
+     2→///
+     3→/// This macro is equivalent to
+      →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
+   174→/// Construct an ad-hoc error from a string or existing non-`anyhow` error
+   175→/// value.
+   176→///
+      →…
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
 

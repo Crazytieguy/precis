@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3989 tokens)
+budget: 4000 (4007 tokens)
 
 error.rs
      1→use std::fmt;
@@ -28,7 +28,6 @@ error.rs
     50→        use self::Inner::*;
     51→        match &self.inner {
     52→            #[cfg(feature = "std")]
-    53→            Boxed(err) => err.fmt(f),
       →            …
     62→impl From<fmt::Error> for Error {
     63→    fn from(_: fmt::Error) -> Self {
@@ -62,9 +61,9 @@ key.rs
      7→pub trait ToKey {
      8→    /// Perform the conversion.
      9→    fn to_key(&self) -> Key<'_>;
-    16→    fn to_key(&self) -> Key<'_> {
-    22→    fn to_key(&self) -> Key<'_> {
-    28→    fn to_key(&self) -> Key<'_> {
+    16→    fn to_key …
+    22→    fn to_key …
+    28→    fn to_key …
     36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
@@ -92,31 +91,25 @@ key.rs
     64→        // this option open
     65→        Some(self.key)
     66→    }
-    70→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-    76→    fn as_ref(&self) -> &str {
-    82→    fn borrow(&self) -> &str {
-    88→    fn from(s: &'k str) -> Self {
+    70→    fn fmt …
+    76→    fn as_ref …
+    82→    fn borrow …
+    88→    fn from …
     94→mod std_support {
     95→    use super::*;
     97→    use std::borrow::Cow;
-   100→        fn to_key(&self) -> Key<'_> {
-   106→        fn to_key(&self) -> Key<'_> {
+   100→        fn to_key …
+   106→        fn to_key …
    113→mod sval_support {
    114→    use super::*;
    116→    use sval::Value;
    117→    use sval_ref::ValueRef;
-   120→        fn stream<'sval, S: sval::Stream<'sval> + ?Sized>(
-   121→            &'sval self,
-   122→            stream: &mut S,
-   123→        ) -> sval::Result {
-   129→        fn stream_ref<S: sval::Stream<'a> + ?Sized>(&self, stream: &mut S) -> sval::Result {
+   120→        fn stream …
+   129→        fn stream_ref …
    136→mod serde_support {
    137→    use super::*;
    139→    use serde_core::{Serialize, Serializer};
-   142→        fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-   143→        where
-   144→            S: Serializer,
-   145→        {
+   142→        fn serialize …
 
 mod.rs
    246→mod error;
@@ -150,13 +143,6 @@ source.rs
     20→/// Enumerating the key-values in a source:
     21→///
     22→/// ```
-    23→/// # fn main() -> Result<(), log::kv::Error> {
-    24→/// use log::kv::{self, Source, Key, Value, VisitSource};
-    25→///
-    26→/// // A `VisitSource` that prints all key-values
-    27→/// // VisitSources are fed the key-value pairs of each key-values
-    28→/// struct Printer;
-    29→///
       →…
     51→pub trait Source {
     52→    /// Visit key-values.
@@ -238,13 +224,6 @@ value.rs
     49→/// ```
     50→/// use log::kv::Value;
     51→///
-    52→/// let value = Value::from_debug(&42i32);
-    53→///
-    54→/// assert_eq!(None, value.to_i64());
-    55→/// ```
-    56→///
-    57→/// ## Using the `ToValue` trait
-    58→///
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
@@ -263,6 +242,8 @@ value.rs
    205→    where
    206→        T: Into<inner::Inner<'v>>,
    207→    {
+   208→        Value {
+      →        …
    217→    pub fn visit …
    235→impl<'v> serde_core::Serialize for Value<'v> {
    245→impl<'v> sval::Value for Value<'v> {
@@ -336,8 +317,36 @@ value.rs
   1085→    pub fn capture_serde …
   1095→    pub fn capture_sval …
   1123→pub use VisitValue as Visit;
+  1125→/// Get a value from a type implementing `std::fmt::Debug`.
+  1126→#[cfg(feature = "kv_unstable")]
+  1127→#[deprecated(note = "use the `key:? = value` macro syntax instead")]
+  1128→#[macro_export]
   1129→macro_rules! as_debug {
+  1130→    ($capture:expr) => {
+      →    …
+  1135→/// Get a value from a type implementing `std::fmt::Display`.
+  1136→#[cfg(feature = "kv_unstable")]
+  1137→#[deprecated(note = "use the `key:% = value` macro syntax instead")]
+  1138→#[macro_export]
   1139→macro_rules! as_display {
+  1140→    ($capture:expr) => {
+      →    …
+  1145→/// Get a value from an error.
+  1146→#[cfg(feature = "kv_unstable_std")]
+  1147→#[deprecated(note = "use the `key:err = value` macro syntax instead")]
+  1148→#[macro_export]
   1149→macro_rules! as_error {
+  1150→    ($capture:expr) => {
+      →    …
+  1157→/// Get a value from a type implementing `serde::Serialize`.
+  1158→#[macro_export]
   1159→macro_rules! as_serde {
+  1160→    ($capture:expr) => {
+      →    …
+  1165→/// Get a value from a type implementing `sval::Value`.
+  1166→#[cfg(feature = "kv_unstable_sval")]
+  1167→#[deprecated(note = "use the `key:sval = value` macro syntax instead")]
+  1168→#[macro_export]
   1169→macro_rules! as_sval {
+  1170→    ($capture:expr) => {
+      →    …

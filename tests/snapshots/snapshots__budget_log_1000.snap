@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (995 tokens)
+budget: 1000 (998 tokens)
 
 Cargo.toml
 
@@ -30,12 +30,9 @@ src/kv/error.rs
      7→}
     10→enum Inner {
     21→    pub fn msg …
-    49→    fn fmt …
-    63→    fn from …
     69→mod std_support {
     70→    use super::*;
     77→        pub fn boxed …
-    90→        fn from …
 
 src/kv/key.rs
      7→pub trait ToKey {
@@ -47,16 +44,11 @@ src/kv/key.rs
     45→    pub fn from_str(key: &'k str) -> Self {
     53→    pub fn as_str(&self) -> &str {
     61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
-    94→mod std_support {
-   113→mod sval_support {
-   136→mod serde_support {
 
 src/kv/mod.rs
    250→mod source;
    252→mod value;
-   259→#[cfg(feature = "kv_unstable")]
    260→pub mod source;
-   261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
    265→pub use self::source::Visitor;
 
@@ -86,8 +78,14 @@ src/kv/value.rs
    738→    pub enum Inner<'v> {
    739→        None,
    740→        Bool(bool),
+   741→        Str(&'v str),
       →        …
   1123→pub use VisitValue as Visit;
+  1129→macro_rules! as_debug {
+  1139→macro_rules! as_display {
+  1149→macro_rules! as_error {
+  1159→macro_rules! as_serde {
+  1169→macro_rules! as_sval {
 
 src/lib.rs
    406→mod macros;
@@ -103,22 +101,21 @@ src/lib.rs
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 
 src/macros.rs
+    75→macro_rules! log {
+   165→macro_rules! error {
+   204→macro_rules! warn {
+   252→macro_rules! info {
+   292→macro_rules! debug {
+   336→macro_rules! trace {
+   391→macro_rules! log_enabled {
 
 src/serde.rs
      9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
-
-test_max_level_features/Cargo.toml
-     1→[package]
-     7→[[bin]]
-    11→[dependencies.log]
 
 test_max_level_features/main.rs
      5→use log::set_boxed_logger;
      7→fn set_boxed_logger …
     17→impl Log for Logger {
-    18→    fn enabled …
-    22→    fn log …
-    26→    fn flush …
 
 triagebot.toml
      1→[assign]

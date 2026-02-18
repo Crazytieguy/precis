@@ -2,17 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (991 tokens)
+budget: 1000 (998 tokens)
 
 __private_api.rs
      7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
     12→mod sealed {
-    13→    /// Types for the `kv` argument.
     14→    pub trait KVs<'a> {
-    37→/// The global logger proxy.
-    38→#[derive(Debug)]
     39→pub struct GlobalLogger;
     56→fn log_impl …
    113→mod kv_support {
@@ -49,14 +46,8 @@ kv/key.rs
    136→mod serde_support {
 
 kv/mod.rs
-   246→mod error;
-   247→mod key;
    250→mod source;
    252→mod value;
-   254→pub use self::error::Error;
-   255→pub use self::key::{Key, ToKey};
-   256→pub use self::source::{Source, VisitSource};
-   257→pub use self::value::{ToValue, Value, VisitValue};
    259→#[cfg(feature = "kv_unstable")]
    260→pub mod source;
    261→#[cfg(feature = "kv_unstable")]
@@ -92,9 +83,13 @@ kv/value.rs
    739→        None,
    740→        Bool(bool),
    741→        Str(&'v str),
-   742→        Char(char),
       →        …
   1123→pub use VisitValue as Visit;
+  1129→macro_rules! as_debug {
+  1139→macro_rules! as_display {
+  1149→macro_rules! as_error {
+  1159→macro_rules! as_serde {
+  1169→macro_rules! as_sval {
 
 lib.rs
    406→mod macros;
@@ -110,6 +105,13 @@ lib.rs
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 
 macros.rs
+    75→macro_rules! log {
+   165→macro_rules! error {
+   204→macro_rules! warn {
+   252→macro_rules! info {
+   292→macro_rules! debug {
+   336→macro_rules! trace {
+   391→macro_rules! log_enabled {
 
 serde.rs
      9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
