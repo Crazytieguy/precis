@@ -54,15 +54,17 @@ fn is_vendored_or_fixture(path: &Path) -> bool {
     })
 }
 
-/// Check if a file is test/benchmark/example infrastructure.
+/// Check if a file is test/benchmark/example/docs-site infrastructure.
 /// These files are included in output but deprioritized by the scheduler.
 /// Matches test directories, benchmark directories, example directories,
-/// and test file naming conventions.
+/// documentation site directories, and test file naming conventions.
 pub fn is_test_file(path: &Path) -> bool {
-    // Check for test/benchmark/example directories anywhere in the path:
+    // Check for deprioritized directories anywhere in the path:
     // __tests__/ (Jest), tests/ (Rust/Python/JS), test/ (JS/TS), testing/ (Python),
     // benches/ (Rust), benchmark/ and benchmarks/ (cross-language),
-    // examples/ and example/ (usage demonstrations, not core API: Rust, Go, JS)
+    // examples/ and example/ (usage demonstrations, not core API: Rust, Go, JS),
+    // website/ and site/ (documentation sites: Docusaurus, Next.js, etc.),
+    // docs/ and doc/ (supplementary documentation, Sphinx configs, GitHub Pages)
     if path.components().any(|c| {
         let s = c.as_os_str();
         s == "__tests__"
@@ -74,6 +76,10 @@ pub fn is_test_file(path: &Path) -> bool {
             || s == "benchmarks"
             || s == "examples"
             || s == "example"
+            || s == "website"
+            || s == "site"
+            || s == "docs"
+            || s == "doc"
     }) {
         return true;
     }
@@ -242,6 +248,11 @@ mod tests {
         assert!(is_test_file(Path::new("benchmarks/perf.rs")));
         assert!(is_test_file(Path::new("examples/basic.rs")));
         assert!(is_test_file(Path::new("example/demo.ts")));
+        // Documentation site directories
+        assert!(is_test_file(Path::new("website/src/App.tsx")));
+        assert!(is_test_file(Path::new("site/pages/index.tsx")));
+        assert!(is_test_file(Path::new("docs/conf.py")));
+        assert!(is_test_file(Path::new("doc/guide.md")));
         // Test file naming conventions
         assert!(is_test_file(Path::new("index.test.ts")));
         assert!(is_test_file(Path::new("utils.spec.ts")));

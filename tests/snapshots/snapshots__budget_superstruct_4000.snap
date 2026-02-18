@@ -2,12 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3940 words)
+budget: 4000 (3954 words)
 
 Changelog.md
-     1→# Changelog
-     3→This document maintains a list of major changes to Superstruct with each new release.
-     4→
+     1→# Changelog …
 Readme.md
     42→### Usage …
    145→### Why? …
@@ -25,99 +23,28 @@ docs/guides/01-getting-started.md
      8→npm install --save superstruct
      9→```
     10→
-    11→And then you can import it:
-    12→
-    13→```ts
-    14→import { object, string, number } from 'superstruct'
-    15→
-    16→const User = object({
-    17→  id: number(),
-    18→  name: string(),
-    19→})
-    20→```
-    21→
-    22→If you'd like, you can use a wildcard import:
-    23→
-    24→```ts
-    25→import * as s from 'superstruct'
-    26→
-    27→const User = s.object({
-    28→  id: s.number(),
-    29→  name: s.string(),
-    30→})
-    31→```
-    32→
-    33→If you'd rather use a `<script>` tag, you can use the UMD build:
-    34→
-    35→```html
-    36→<script src="https://unpkg.com/superstruct/lib/index.cjs"></script>
-    37→```
-    38→
-    39→This will expose the `Superstruct` global.
-    40→
-    41→## Defining Structs …
+      →…
 docs/guides/02-validating-data.md
      1→# Validating Data …
-     5→## Primitive Values …
-    37→## Composed Values …
-   114→## Optional Values …
-   157→## Custom Values …
 docs/guides/03-coercing-data.md
      1→# Coercing Data …
-     7→## Default Values …
-    49→## Custom Coercions …
 docs/guides/04-refining-validation.md
      1→# Refining Validation …
-     7→## Built-in Refinements …
-    47→## Custom Refinements …
 docs/guides/05-handling-errors.md
      1→# Handling Errors …
-    53→## Customizing Errors …
-   102→## Multiple Failures …
 docs/guides/06-using-typescript.md
      1→# Using TypeScript …
-     7→## Narrowing Types …
-    37→## Describing Types …
-    55→## Inferring Types …
 docs/readme.md
      7→### Usage
      9→Superstruct allows you to define the shape of data you want to validate:
     10→
     11→```js
-    12→import { assert, object, number, string, array } from 'superstruct'
-    13→
-    14→const Article = object({
-    15→  id: number(),
-    16→  title: string(),
-    17→  tags: array(string()),
-    18→  author: object({
-    19→    id: number(),
-    20→  }),
-    21→})
-    22→
-    23→const data = {
-    24→  id: 34,
-    25→  title: 'Hello World',
-    26→  tags: ['news', 'features'],
-    27→  author: {
-    28→    id: 1,
-    29→  },
-    30→}
-    31→
-    32→assert(data, Article)
       →…
 docs/reference/coercions.md
      1→# Coercions …
 docs/reference/core.md
      1→# Core …
-     3→### `assert`
-     5→`assert<T>(value: unknown, struct: Struct<T>, message?: string) => asserts value is T`
-     6→
-     7→```ts
-     8→assert(value, User, 'The user is invalid!')
-     9→```
-    10→
-      →…
+     3→### `assert` …
 docs/reference/errors.md
      1→# Errors …
 docs/reference/refinements.md
@@ -127,50 +54,24 @@ docs/reference/types.md
 docs/reference/typescript.md
      1→# TypeScript …
      5→## Utilities …
-     7→### `Describe`
-     9→The `Describe` utility returns a type representing a struct for a given valid value type. This allows you to ensure you're writing your struct definitions properly, for example:
-    10→
-    11→```ts
-    12→type User = {
-    13→  id: number
-    14→  name: string
-      →…
+     7→### `Describe` …
 docs/reference/utilities.md
      1→# Utilities …
 docs/resources/faq.md
-     1→# FAQ
-     3→Some common questions you might have when first learning Superstruct.
-     4→
-     5→### How can I allow unknown keys with `object` structs? …
-    11→### Why not have a built-in `json` struct? …
+     1→# FAQ …
 docs/resources/links.md
-     1→# Resources
-     3→A few resources that are helpful for building with Superstruct.
-     4→
-     5→## Libraries
-     7→- [`bumpover`](https://github.com/doodlewind/bumpover) helps you transform data asynchronously with simple rules, whose validation API is built with Superstruct.
-     8→- [micro-superstruct](https://github.com/brandon93s/micro-superstruct) allows you to easily validate your [Micro](https://github.com/zeit/micro) API request body and query string parameters using Superstruct.
+     1→# Resources …
+     5→## Libraries …
 docs/summary.md
      3→## Guides
      5→- [Getting Started](./guides/01-getting-started.md)
-     6→- [Validating Data](./guides/02-validating-data.md)
-     7→- [Coercing Data](./guides/03-coercing-data.md)
-     8→- [Refining Validation](./guides/04-refining-validation.md)
-     9→- [Handling Errors](./guides/05-handling-errors.md)
-    10→- [Using TypeScript](./guides/06-using-typescript.md)
-    11→
+      →…
     12→## API Reference
     14→- [Core](./reference/core.md)
-    15→- [Types](./reference/types.md)
-    16→- [Refinements](./reference/refinements.md)
-    17→- [Coercions](./reference/coercions.md)
-    18→- [Utilities](./reference/utilities.md)
-    19→- [Errors](./reference/errors.md)
-    20→- [TypeScript](./reference/typescript.md)
-    21→
+      →…
     22→## Resources
     24→- [FAQ](./resources/faq.md)
-    25→- [Links](./resources/links.md)
+      →…
 examples/README.md
      1→# Examples …
 examples/package.json
@@ -212,7 +113,9 @@ rollup.config.js
      1→import { defineConfig } from 'rollup'
      2→import typescript from '@rollup/plugin-typescript'
 src/error.ts
-     5→export type Failure …
+     1→/**
+      →…
+     5→export type Failure = {
     16→/**
     17→ * `StructError` objects are thrown (or returned) when validation fails.
     18→ *
@@ -237,13 +140,6 @@ src/error.ts
     37→    const { message, explanation, ...rest } = failure
     38→    const { path } = failure
     39→    const msg =
-    40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
-    41→    super(explanation ?? msg)
-    42→    if (explanation != null) this.cause = msg
-    43→    Object.assign(this, rest)
-    44→    this.name = this.constructor.name
-    45→    this.failures = () => {
-    46→      return (cached ??= [failure, ...failures()])
       →…
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
@@ -271,13 +167,6 @@ src/struct.ts
     24→    schema: S
     25→    coercer?: Coercer
     26→    validator?: Validator
-    27→    refiner?: Refiner<T>
-    28→    entries?: Struct<T, S>['entries']
-    29→  }) {
-    30→    const {
-    31→      type,
-    32→      schema,
-    33→      validator,
       →…
     63→  /**
     64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
@@ -391,13 +280,31 @@ src/struct.ts
    191→    message?: string
    192→  } = {}
       →…
-   221→export type Context …
-   231→export type Infer …
-   237→export type Describe …
-   243→export type Result …
-   253→export type Coercer …
-   259→export type Validator …
-   266→export type Refiner …
+   213→/**
+      →…
+   221→export type Context = {
+   227→/**
+      →…
+   231→export type Infer<T extends Struct<any, any>> = T['TYPE']
+   233→/**
+      →…
+   237→export type Describe<T> = Struct<T, StructSchema<T>>
+   239→/**
+      →…
+   243→export type Result =
+   244→  | boolean
+   245→  | string
+   246→  | Partial<Failure>
+   247→  | Iterable<boolean | string | Partial<Failure>>
+   249→/**
+      →…
+   253→export type Coercer<T = unknown> = (value: T, context: Context) => unknown
+   255→/**
+      →…
+   259→export type Validator = (value: unknown, context: Context) => Result
+   261→/**
+      →…
+   266→export type Refiner<T> = (value: T, context: Context) => Result
 src/structs/coercions.ts
      1→import { Struct, is, Coercer } from '../struct.js'
      2→import { isPlainObject } from '../utils.js'
@@ -692,26 +599,146 @@ src/utils.ts
     75→  } else if (result === false) {
     76→    result = {}
       →…
-   202→export type UnionToIntersection …
-   212→export type Assign …
-   218→export type EnumSchema …
-   227→export type IsMatch …
-   233→export type IsExactMatch …
-   242→export type IsRecord …
-   251→export type IsTuple …
-   267→export type IsUnion …
-   277→export type ObjectSchema …
-   283→export type ObjectType …
-   291→export type OmitBy …
-   300→export type Optionalize …
-   307→export type PartialObjectSchema …
-   315→export type PickBy …
-   324→export type Simplify …
+   198→/**
+      →…
+   202→export type UnionToIntersection<U> = (
+   203→  U extends any ? (arg: U) => any : never
+   204→) extends (arg: infer I) => void
+   205→  ? I
+   206→  : never
+   208→/**
+      →…
+   212→export type Assign<T, U> = Simplify<U & Omit<T, keyof U>>
+   214→/**
+      →…
+   218→export type EnumSchema<T extends string | number | undefined | null> = {
+   222→/**
+      →…
+   227→export type IsMatch<T, G> = T extends G ? (G extends T ? T : never) : never
+   229→/**
+      →…
+   233→export type IsExactMatch<T, U> =
+   234→  (<G>() => G extends T ? 1 : 2) extends <G>() => G extends U ? 1 : 2
+   235→    ? T
+   236→    : never
+   238→/**
+      →…
+   242→export type IsRecord<T> = T extends object
+   243→  ? string extends keyof T
+   244→    ? T
+   245→    : never
+   246→  : never
+   247→/**
+      →…
+   251→export type IsTuple<T> = T extends [any]
+   252→  ? T
+   253→  : T extends [any, any]
+   254→    ? T
+   255→    : T extends [any, any, any]
+   256→      ? T
+   257→      : T extends [any, any, any, any]
+   258→        ? T
+   259→        : T extends [any, any, any, any, any]
+   260→          ? T
+   261→          : never
+   263→/**
+      →…
+   267→export type IsUnion<T, U extends T = T> = (
+   268→  T extends any ? (U extends T ? false : true) : false
+   269→) extends false
+   270→  ? never
+   271→  : T
+   273→/**
+      →…
+   277→export type ObjectSchema = Record<string, Struct<any, any>>
+   279→/**
+      →…
+   283→export type ObjectType<S extends ObjectSchema> = Simplify<
+   284→  Optionalize<{ [K in keyof S]: Infer<S[K]> }>
+   285→>
+   287→/**
+      →…
+   291→export type OmitBy<T, V> = Omit<
+   292→  T,
+   293→  { [K in keyof T]: V extends Extract<T[K], V> ? K : never }[keyof T]
+   294→>
+   296→/**
+      →…
+   300→export type Optionalize<S extends object> = OmitBy<S, undefined> &
+   301→  Partial<PickBy<S, undefined>>
+   303→/**
+      →…
+   307→export type PartialObjectSchema<S extends ObjectSchema> = {
+   311→/**
+      →…
+   315→export type PickBy<T, V> = Pick<
+   316→  T,
+   317→  { [K in keyof T]: V extends Extract<T[K], V> ? K : never }[keyof T]
+   318→>
+   320→/**
+      →…
+   324→export type Simplify<T> = T extends any[] | Date
+   325→  ? T
+   326→  : { [K in keyof T]: T[K] } & {}
    328→export type If<B extends Boolean, Then, Else> = B extends true ? Then : Else
-   334→export type StructSchema …
-   379→export type TupleSchema …
-   385→export type AnyStruct …
-   394→export type InferStructTuple …
+   330→/**
+      →…
+   334→export type StructSchema<T> = [T] extends [string | undefined | null]
+   335→  ? [T] extends [IsMatch<T, string | undefined | null>]
+   336→    ? null
+   337→    : [T] extends [IsUnion<T>]
+   338→      ? EnumSchema<T>
+   339→      : T
+   340→  : [T] extends [number | undefined | null]
+   341→    ? [T] extends [IsMatch<T, number | undefined | null>]
+   342→      ? null
+   343→      : [T] extends [IsUnion<T>]
+   344→        ? EnumSchema<T>
+   345→        : T
+   346→    : [T] extends [boolean]
+   347→      ? [T] extends [IsExactMatch<T, boolean>]
+   348→        ? null
+   349→        : T
+   350→      : T extends
+   351→            | bigint
+   352→            | symbol
+   353→            | undefined
+   354→            | null
+   355→            | Function
+   356→            | Date
+   357→            | Error
+   358→            | RegExp
+   359→            | Map<any, any>
+   360→            | WeakMap<any, any>
+   361→            | Set<any>
+   362→            | WeakSet<any>
+   363→            | Promise<any>
+   364→        ? null
+   365→        : T extends Array<infer E>
+   366→          ? T extends IsTuple<T>
+   367→            ? null
+   368→            : Struct<E>
+   369→          : T extends object
+   370→            ? T extends IsRecord<T>
+   371→              ? null
+   372→              : { [K in keyof T]: Describe<T[K]> }
+   373→            : null
+   375→/**
+      →…
+   379→export type TupleSchema<T> = { [K in keyof T]: Struct<T[K]> }
+   381→/**
+      →…
+   385→export type AnyStruct = Struct<any, any>
+   387→/**
+      →…
+   394→export type InferStructTuple<
+   395→  Tuple extends AnyStruct[],
+   396→  Length extends number = Tuple['length'],
+   397→> = Length extends Length
+   398→  ? number extends Length
+   399→    ? Tuple
+   400→    : _InferTuple<Tuple, Length, []>
+   401→  : never
    402→type _InferTuple<
    403→  Tuple extends AnyStruct[],
    404→  Length extends number,
@@ -795,11 +822,8 @@ test/validation/boolean/valid.ts
      5→export const data = true
      7→export const output = true
 test/validation/coerce/changed.ts
-     1→import { string, unknown, coerce } from '../../../src'
 test/validation/coerce/condition-not-met.ts
-     1→import { string, number, coerce } from '../../../src'
 test/validation/coerce/unchanged.ts
-     1→import { string, unknown, coerce } from '../../../src'
 test/validation/date/invalid-date.ts
      1→import { date } from '../../../src'
      3→export const Struct = date()
@@ -895,20 +919,8 @@ test/validation/intersection/invalid.ts
 test/validation/intersection/valid-refinement.ts
 test/validation/intersection/valid.ts
 test/validation/lazy/invalid.ts
-     1→import { lazy, string } from '../../../src'
-     3→export const Struct = lazy(() => string())
-     5→export const data = 3
-     7→export const failures = [
 test/validation/lazy/valid.ts
-     1→import { lazy, string } from '../../../src'
-     3→export const Struct = lazy(() => string())
-     5→export const data = 'two'
-     7→export const output = 'two'
 test/validation/lazy/with-refiners.ts
-     1→import { lazy, nonempty, string } from '../../../src'
-     3→export const Struct = lazy(() => nonempty(string()))
-     5→export const data = ''
-     7→export const failures = [
 test/validation/literal/invalid.ts
      1→import { literal } from '../../../src'
      3→export const Struct = literal(42)
@@ -937,6 +949,8 @@ test/validation/never/invalid.ts
      3→export const Struct = never()
      5→export const data = true
      7→export const failures = [
+     8→  {
+      →…
 test/validation/nullable/invalid.ts
 test/validation/nullable/valid-defined-nested.ts
 test/validation/nullable/valid-defined.ts
@@ -956,27 +970,11 @@ test/validation/object/invalid-referential.ts
      3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
 test/validation/object/valid-referential.ts
      3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
-test/validation/omit/invalid-element-nested.ts
-test/validation/omit/invalid-property-nested.ts
-test/validation/omit/invalid-property-unknown.ts
-test/validation/omit/invalid-property.ts
-test/validation/omit/invalid.ts
-test/validation/omit/valid-nested.ts
-test/validation/omit/valid-type.ts
-test/validation/omit/valid.ts
 test/validation/optional/invalid.ts
 test/validation/optional/valid-defined-nested.ts
 test/validation/optional/valid-defined.ts
 test/validation/optional/valid-undefined-nested.ts
 test/validation/optional/valid-undefined.ts
-test/validation/partial/composed.ts
-test/validation/partial/invalid-property-unknown.ts
-test/validation/partial/invalid-property.ts
-test/validation/partial/invalid.ts
-test/validation/partial/valid-empty.ts
-test/validation/partial/valid-full.ts
-test/validation/partial/valid-partial.ts
-test/validation/partial/valid-type.ts
 test/validation/pattern/invalid.ts
      1→import { string, pattern } from '../../../src'
      3→export const Struct = pattern(string(), /\d+/)
@@ -987,14 +985,6 @@ test/validation/pattern/valid.ts
      3→export const Struct = pattern(string(), /\d+/)
      5→export const data = '123'
      7→export const output = '123'
-test/validation/pick/invalid-element-nested.ts
-test/validation/pick/invalid-property-nested.ts
-test/validation/pick/invalid-property-unknown.ts
-test/validation/pick/invalid-property.ts
-test/validation/pick/invalid.ts
-test/validation/pick/valid-nested.ts
-test/validation/pick/valid-type.ts
-test/validation/pick/valid.ts
 test/validation/record/invalid-array.ts
 test/validation/record/invalid-property.ts
 test/validation/record/invalid.ts

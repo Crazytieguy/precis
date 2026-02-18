@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (491 words)
+budget: 500 (496 words)
 
 Changelog.md
      1→# Changelog …
@@ -15,70 +15,33 @@ Readme.md
    205→### Documentation …
    231→### License …
 docs/guides/01-getting-started.md
-     1→# Getting Started …
-     3→## Installing Superstruct
-     5→To install Superstruct run:
-     6→
-     7→```bash
-     8→npm install --save superstruct
-     9→```
-    10→
-      →…
-docs/guides/02-validating-data.md
-     1→# Validating Data …
-docs/guides/03-coercing-data.md
-     1→# Coercing Data …
-docs/guides/04-refining-validation.md
-     1→# Refining Validation …
-docs/guides/05-handling-errors.md
-     1→# Handling Errors …
-docs/guides/06-using-typescript.md
-     1→# Using TypeScript …
+     3→## Installing Superstruct …
 docs/readme.md
-     7→### Usage
-     9→Superstruct allows you to define the shape of data you want to validate:
-    10→
-    11→```js
-      →…
-docs/reference/coercions.md
-     1→# Coercions …
+     7→### Usage …
 docs/reference/core.md
-     1→# Core …
      3→### `assert` …
-docs/reference/errors.md
-     1→# Errors …
-docs/reference/refinements.md
-     1→# Refinements …
-docs/reference/types.md
-     1→# Types …
 docs/reference/typescript.md
-     1→# TypeScript …
      5→## Utilities …
      7→### `Describe` …
-docs/reference/utilities.md
-     1→# Utilities …
 docs/resources/faq.md
      1→# FAQ …
 docs/resources/links.md
      1→# Resources …
      5→## Libraries …
 docs/summary.md
-     3→## Guides
-     5→- [Getting Started](./guides/01-getting-started.md)
-      →…
-    12→## API Reference
-    14→- [Core](./reference/core.md)
-      →…
-    22→## Resources
-    24→- [FAQ](./resources/faq.md)
-      →…
 examples/README.md
      1→# Examples …
 examples/package.json
+     2→  "type": "module",
+     3→  "license": "MIT",
+     4→  "dependencies": {
+    10→}
 jsr.json
 package.json
+rollup.config.js
 src/error.ts
     16→/**
+    17→ * `StructError` objects are thrown (or returned) when validation fails.
       →…
     25→export class StructError extends TypeError {
     26→  value: any
@@ -91,10 +54,13 @@ src/error.ts
     33→  [x: string]: any
     34→
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
+    36→    let cached: Array<Failure> | undefined
+      →…
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
      4→/**
+     5→ * `Struct` objects encapsulate the validation logic for a specific type of
       →…
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
@@ -109,6 +75,8 @@ src/struct.ts
     20→  ) => Iterable<[string | number, unknown, Struct<any> | Struct<never>]>
     21→
     22→  constructor(props: {
+    23→    type: string
+      →…
     67→  assert …
     75→  create …
     83→  is …
@@ -123,14 +91,16 @@ src/structs/coercions.ts
 src/structs/refinements.ts
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
 src/structs/types.ts
-    33→export function array …
-   105→export function enums …
-   204→export function literal …
-   230→export function map …
-   298→export function object …
-   415→export function set …
+    33→export function array<T extends Struct<any>>(Element?: T): any {
+   105→export function enums<U extends string | number, T extends readonly U[]>(
+   106→  values: T
+   107→): any {
+   204→export function literal<T>(constant: T): any {
+   230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
+   298→export function object<S extends ObjectSchema>(schema?: S): any {
+   415→export function set<T>(Element?: Struct<T>): any {
 src/structs/utilities.ts
-    60→export function assign …
+    60→export function assign(...Structs: Struct<any>[]): any {
 src/utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'
@@ -151,13 +121,23 @@ src/utils.ts
    402→type _InferTuple …
 test/index.ts
      1→/**
-      →…
+     2→ * A helper for testing type signatures.
+     3→ */
+     4→
      5→export function test<T>(fn: (x: unknown) => T) {}
 test/tsconfig.json
+     2→  "extends": "../tsconfig.json",
+     3→  "include": ["./**/*.ts"],
+     4→  "compilerOptions": {
+     7→}
+test/typings/infer.ts
+test/validation/boolean/invalid.ts
+test/validation/boolean/valid.ts
 test/validation/function/invalid.ts
 test/validation/function/valid.ts
      5→export const data = function () {}
 test/validation/never/invalid.ts
 test/validation/type/valid-instance.ts
+     3→class Person {
      6→  constructor(name: string) {
 tsconfig.json

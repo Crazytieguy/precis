@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3923 words)
+budget: 4000 (3924 words)
 
 README.md
     28→## Features
@@ -112,53 +112,12 @@ site/components/code.tsx
      6→} from 'prism-react-renderer';
      8→const theme: PrismTheme = {
      9→  plain: {
-    10→    backgroundColor: '#351e11',
-    11→    color: '#d6ceff',
-    12→  },
-    13→  styles: [
-    14→    {
       →…
    104→export const Code: React.FC<{
    105→  snippet: string;
    106→  language?: Language;
    107→  className?: string;
-   108→}> = (props) => {
-   109→  const language = props.language || 'jsx';
-   110→
-   111→  return (
-   112→    <Highlight
-   113→      {...defaultProps}
-   114→      code={props.snippet}
-   115→      theme={theme}
-   116→      language={language}
-   117→    >
-   118→      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-   119→        <pre
-   120→          className={clsx(
-   121→            props.className,
-   122→            className,
-   123→            'h-full w-full rounded-lg p-4 overflow-x-auto flex flex-col items justify-center'
-   124→          )}
-   125→          style={style}
-   126→        >
-   127→          {tokens.map((line, i) => {
-   128→            if (tokens.length - 1 === i && line[0].empty) {
-   129→              return null;
-   130→            }
-   131→
-   132→            return (
-   133→              <div {...getLineProps({ line, key: i })} key={i}>
-   134→                {line.map((token, key) => (
-   135→                  <span {...getTokenProps({ token, key })} key={key} />
-   136→                ))}
-   137→              </div>
-   138→            );
-   139→          })}
-   140→        </pre>
-   141→      )}
-   142→    </Highlight>
-   143→  );
-   144→};
+      →…
 site/components/docs-layout.tsx
      1→import * as React from 'react';
      2→import { Toaster } from 'react-hot-toast';
@@ -168,124 +127,27 @@ site/components/docs-layout.tsx
      6→import Logo from '../assets/logo-small.svg';
      8→const TableItem: React.FC<{
      9→  href: string;
-    10→  children?: React.ReactNode;
-    11→}> = ({ children, href }) => (
-    12→  <Link href={href}>
-    13→    <a className="rounded px-3 py-1.5 transition-colors duration-200 relative block hover:text-toast-500 text-toast-700">
-    14→      {children}
-    15→    </a>
-    16→  </Link>
-    17→);
+      →…
     19→const TableHeader: React.FC<{
     20→  children?: React.ReactNode;
-    21→}> = ({ children }) => (
-    22→  <span className="px-3 mt-3 mb-1 text-sm font-semibold tracking-wide text-toast-900 uppercase">
-    23→    {children}
-    24→  </span>
-    25→);
+      →…
     27→export default function DocsLayout({ meta, children }) {
     28→  return (
     29→    <div className="bg-toast-50 bg-opacity-50 min-h-screen flex flex-col">
     30→      <NextSeo
-    31→        titleTemplate="%s - react-hot-toast"
-    32→        title={meta.title}
-    33→        openGraph={{
-    34→          images: [
-    35→            {
-    36→              url: `https://react-hot-toast.com/social-image.png`,
-    37→              width: 1200,
-    38→              height: 630,
-    39→            },
-    40→          ],
-    41→        }}
-    42→      />
-    43→
-    44→      <div className="flex-1 mx-auto px-2 max-w-4xl w-full">
-    45→        <header className=" col-start-1 col-end-6 mt-12 mb-16 px-2 flex justify-between items-center">
-    46→          <Link href="/">
-    47→            <Logo
-    48→              className="cursor-pointer"
-    49→              aria-label="react-hot-toast Logo"
-    50→            />
-    51→          </Link>
-    52→          <a
-    53→            className="flex text-toast-600 underline"
-    54→            href="https://github.com/timolins/react-hot-toast"
-    55→          >
-    56→            GitHub
-    57→          </a>
-    58→        </header>
-    59→
-    60→        <div className="md:flex md:space-x-4">
-    61→          <nav className="font-medium rounded-lg ">
-    62→            <div className="flex flex-col mb-8 sticky top-0">
-    63→              <TableHeader>Overview</TableHeader>
-    64→
-    65→              <TableItem href="/docs">Get Started</TableItem>
-    66→
-    67→              <TableHeader>API</TableHeader>
-    68→
-    69→              <TableItem href="/docs/toast">toast()</TableItem>
-    70→              <TableItem href="/docs/toaster">{`Toaster`}</TableItem>
-    71→              <TableItem href="/docs/toast-bar">{`ToastBar`}</TableItem>
-    72→              <TableItem href="/docs/use-toaster">useToaster()</TableItem>
-    73→              <TableItem href="/docs/use-toaster-store">
-    74→                useToasterStore()
-    75→              </TableItem>
-    76→              <TableHeader>Guides</TableHeader>
-    77→              <TableItem href="/docs/styling">Styling</TableItem>
-    78→              <TableItem href="/docs/multi-toaster">Multi Toaster</TableItem>
-    79→
-    80→              <TableHeader>Releases</TableHeader>
-    81→              <TableItem href="/docs/version-2">New in 2.0</TableItem>
-    82→            </div>
-    83→          </nav>
-    84→
-    85→          <main className="col-span-4 w-full prose prose-toast text-toast-900 flex-1">
-    86→            {children}
-    87→          </main>
-    88→        </div>
-    89→      </div>
-    90→      <Footer />
-    91→      <Toaster />
-    92→    </div>
-    93→  );
-    94→}
+      →…
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
      2→  onClick: () => void;
      3→  emoji: string | React.ReactElement;
      4→  children?: React.ReactNode;
-     5→}> = ({ onClick, children, emoji }) => (
-     6→  <button
-     7→    className="rounded bg-white text-sm font-semibold py-2 px-2 shadow-small-button flex items-center"
-     8→    onClick={onClick}
-     9→  >
-    10→    <span
-    11→      style={{
-    12→        fontFamily:
-    13→          '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji',
-    14→      }}
-    15→    >
-    16→      {emoji}
-    17→    </span>
-    18→    <div className="flex-1 px-3">{children}</div>
-    19→  </button>
-    20→);
+      →…
 site/components/sections/footer.tsx
      1→import React from 'react';
      2→import Link from 'next/link';
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
      5→  return (
      6→    <footer className="container relative justify-center my-8 flex flex-col items-center space-y-4">
-     7→      <div className="flex space-x-4">
-     8→        <a
-     9→          className="underline"
-    10→          href="https://github.com/timolins/react-hot-toast"
-    11→        >
-    12→          GitHub
-    13→        </a>
-    14→        <Link href="/docs">
       →…
 site/components/sections/splitbee-counter.tsx
      1→import React from 'react';
@@ -296,26 +158,10 @@ site/components/sections/splitbee-counter.tsx
      7→): number => {
      8→  const [data, setData] = React.useState<number>(0);
      9→  const socket = React.useRef(null);
-    10→  React.useEffect(() => {
-    11→    if (typeof window !== undefined) {
-    12→      socket.current = new WebSocket('wss://realtime.react-hot-toast.com/');
-    13→      socket.current.onopen = (e) => {
-    14→        socket.current.send(
-    15→          JSON.stringify({
-    16→            type: 'subscribe',
-    17→            data: {
       →…
     36→export const SplitbeeCounter = () => {
     37→  const count = useSplitbeeCount('Trigger Toast', 'NTV7AYBLEXW3');
     38→
-    39→  const letters = count.toString().split('');
-    40→
-    41→  return (
-    42→    <div className="flex items-center justify-center p-4 flex-col gap-3 mt-4">
-    43→      <div className="font-semibold text-toast-900 rounded text-lg">
-    44→        Toasts made on this website so far
-    45→      </div>
-    46→      <div
       →…
 site/components/sections/toast-example.tsx
      1→import React, { useState } from 'react';
@@ -324,23 +170,10 @@ site/components/sections/toast-example.tsx
      5→import { Code } from '../code';
      7→const examples: Array<{
      8→  title: string;
-     9→  action: () => void;
-    10→  emoji: string;
-    11→  snippet: string;
-    12→}> = [
-    13→  {
       →…
    270→export const ToastExample = () => {
    271→  const [snippet, setSnippet] = useState(examples[0].snippet);
    272→  return (
-   273→    <section className="grid md:grid-cols-2 gap-4">
-   274→      <div className="flex items-center">
-   275→        <div className="w-full grid grid-cols-2 gap-2 bg-toast-100  rounded-xl p-4">
-   276→          {examples.map((e) => (
-   277→            <EmojiButton
-   278→              key={e.title}
-   279→              emoji={e.emoji}
-   280→              onClick={() => {
       →…
 site/components/sections/toaster-example.tsx
      1→import clsx from 'clsx';
@@ -359,44 +192,24 @@ site/components/sections/toaster-example.tsx
     17→export const ToasterExample: React.FC<{
     18→  position: ToastPosition;
     19→  onPosition: (pos: ToastPosition) => void;
-    20→  reverse: boolean;
-    21→  onReverse: (rev: boolean) => void;
-    22→}> = ({ position, onPosition, reverse, onReverse }) => {
-    23→  const reverseIt = () => {
-    24→    setTimeout(() => {
-    25→      toast('Notification 1', {
-    26→        icon: '1️⃣',
-    27→        id: 'reverse-1',
       →…
 site/next.config.mjs
      1→import rehypeSlug from 'rehype-slug';
      2→import remarkGfm from 'remark-gfm';
      3→import nextMdx from '@next/mdx';
      5→const withMDX = nextMdx({
-     6→  extension: /\.mdx?$/,
-      →…
     14→/** @type {import('next').NextConfig} */
     15→const nextConfig = {
-    16→  pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
     17→  webpack(config) {
     18→    config.module.rules.push({
     19→      test: /\.svg$/,
     20→      use: ['@svgr/webpack'],
-    21→    });
-    22→    return config;
-    23→  },
+      →…
     24→  async rewrites() {
     25→    return [
     26→      {
     27→        source: '/bee.js',
-    28→        destination: 'https://cdn.splitbee.io/sb.js',
-    29→      },
-    30→      {
-    31→        source: '/_hive/:slug',
-    32→        destination: 'https://hive.splitbee.io/:slug',
-    33→      },
-    34→    ];
-    35→  },
+      →…
 site/package.json
      2→  "name": "site",
      3→  "scripts": {
@@ -415,18 +228,7 @@ site/pages/_app.tsx
      9→import { MDXProvider } from '@mdx-js/react';
     10→import { Code } from '../components/code';
     12→const components = {
-    13→  a: (props) => (
-    14→    <Link href={props.href}>
-    15→      <a {...props} />
-    16→    </Link>
-    17→  ),
-      →…
-    71→function MyApp({ Component, pageProps }) {
-    72→  return (
-    73→    <>
-    74→      <Head>
-    75→        {process.browser && (
-      →…
+    71→function MyApp …
 site/pages/index.tsx
      1→import { NextSeo } from 'next-seo';
      2→import toast, {
@@ -448,43 +250,10 @@ site/pages/index.tsx
     19→import { SplitbeeCounter } from '../components/sections/splitbee-counter';
     21→import packageInfo from '../../package.json';
     22→const version = packageInfo.version;
-    24→const Feature: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
-    25→  <div className="flex gap-1 items-center">
-    26→    <Checkmark />
-    27→    <span className="font-bold">{children}</span>
-    28→  </div>
-    29→);
-    31→const Step: React.FC<{
-    32→  count: number;
-    33→  title: string;
-    34→  subTitle: string;
-    35→  code: React.ReactElement;
-      →…
-    49→const Steps = () => (
-    50→  <div className="grid  grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-8 my-12">
-    51→    <Step
-    52→      count={1}
-    53→      title="Install package"
-    54→      subTitle="It weighs less than 5kb"
-    55→      code={
-    56→        <code>
-    57→          <span className="text-toast-600">pnpm add</span>{' '}
-    58→          <span className="text-toast-800">react-hot-toast</span>
-    59→        </code>
-      →…
-    88→const Features = () => (
-    89→  <div className="my-12 grid gap-x-8 gap-y-5 grid-cols-2 md:grid-cols-3">
-    90→    <Feature>Hot by default</Feature>
-    91→    <Feature>Easy to use</Feature>
-    92→    <Feature>Accessible</Feature>
-    93→    <Feature>Emoji Support</Feature>
-    94→    <Feature>Customizable</Feature>
-    95→    <Feature>Promise API</Feature>
-    96→    <Feature>Lightweight</Feature>
-    97→    <Feature>Pause on hover</Feature>
-    98→    <Feature>Headless Hooks</Feature>
-    99→  </div>
-   100→);
+    24→const Feature …
+    31→const Step …
+    49→const Steps …
+    88→const Features …
    102→export default function Home() {
    103→  const [position, setPosition] = useState<ToastPosition>('top-center');
    104→  const [reverse, setReverse] = useState(false);
@@ -505,29 +274,6 @@ site/pages/index.tsx
    119→            },
    120→          ],
    121→        }}
-   122→        description="Add beautiful notifications to your React app with react-hot-toast. Lightweight. Smoking hot by default."
-   123→      />
-   124→      <header className="bg-gradient-to-b from-toast-50 to-white bg-opacity-10">
-   125→        <div className="container  flex flex-col items-center relative">
-   126→          <Butter1
-   127→            className="absolute -left-24 md:left-24 transition-opacity duration-200"
-   128→            style={{
-   129→              opacity: shouldFade ? 0.5 : 1,
-   130→            }}
-   131→          />
-   132→
-   133→          <div>
-   134→            <Logo
-   135→              role="img"
-   136→              aria-label="react-hot-toast"
-   137→              className="relative animate-slide-in transition-all duration-200 -mt-8 md:-mt-4"
-   138→              style={{
-   139→                willChange: 'filter',
-   140→                opacity: shouldFade ? 0.2 : 1,
-   141→                filter: `blur(${shouldFade ? 6 : 0}px)`,
-   142→              }}
-   143→            />
-   144→          </div>
       →…
 site/tsconfig.json
      2→  "compilerOptions": {
@@ -552,6 +298,8 @@ src/components/checkmark.tsx
     35→  width: 20px;
     36→  opacity: 0;
     37→  height: 20px;
+    38→  border-radius: 10px;
+    39→  background: ${(p) => p.primary || '#61d345'};
       →…
 src/components/error.tsx
      1→import { styled, keyframes } from 'goober';
@@ -566,6 +314,8 @@ src/components/error.tsx
     39→  width: 20px;
     40→  opacity: 0;
     41→  height: 20px;
+    42→  border-radius: 10px;
+    43→  background: ${(p) => p.primary || '#ff4b4b'};
       →…
 src/components/loader.tsx
      1→import { styled, keyframes } from 'goober';
@@ -578,6 +328,8 @@ src/components/loader.tsx
     18→  width: 12px;
     19→  height: 12px;
     20→  box-sizing: border-box;
+    21→  border: 2px solid;
+    22→  border-radius: 100%;
       →…
 src/components/toast-bar.tsx
      1→import * as React from 'react';
@@ -617,11 +369,18 @@ src/components/toast-bar.tsx
     65→    ? [fadeInAnimation, fadeOutAnimation]
     66→    : [enterAnimation(factor), exitAnimation(factor)];
     67→
-      →…
+    68→  return {
+    69→    animation: visible
+    70→      ? `${keyframes(enter)} 0.35s cubic-bezier(.21,1.02,.73,1) forwards`
+    71→      : `${keyframes(exit)} 0.4s forwards cubic-bezier(.06,.71,.55,1)`,
+    72→  };
+    73→};
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
     77→    const animationStyle: React.CSSProperties = toast.height
     78→      ? getAnimationStyle(
+    79→          toast.position || position || 'top-center',
+    80→          toast.visible
       →…
 src/components/toast-icon.tsx
      1→import * as React from 'react';
@@ -637,12 +396,14 @@ src/components/toast-icon.tsx
     33→  position: relative;
     34→  transform: scale(0.6);
     35→  opacity: 0.4;
+    36→  min-width: 20px;
+    37→  animation: ${enter} 0.3s 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275)
       →…
     41→export type IconThemes = Partial<{
     42→  success: CheckmarkTheme;
     43→  error: ErrorTheme;
     44→  loading: LoaderTheme;
-      →…
+    45→}>;
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {
@@ -694,7 +455,29 @@ src/components/toaster.tsx
     20→  children,
     21→}: ToastWrapperProps) => {
     22→  const ref = React.useCallback(
-      →…
+    23→    (el: HTMLElement | null) => {
+    24→      if (el) {
+    25→        const updateHeight = () => {
+    26→          const height = el.getBoundingClientRect().height;
+    27→          onHeightUpdate(id, height);
+    28→        };
+    29→        updateHeight();
+    30→        new MutationObserver(updateHeight).observe(el, {
+    31→          subtree: true,
+    32→          childList: true,
+    33→          characterData: true,
+    34→        });
+    35→      }
+    36→    },
+    37→    [id, onHeightUpdate]
+    38→  );
+    39→
+    40→  return (
+    41→    <div ref={ref} className={className} style={style}>
+    42→      {children}
+    43→    </div>
+    44→  );
+    45→};
     47→const getPositionStyle = (
     48→  position: ToastPosition,
     49→  offset: number
@@ -706,7 +489,23 @@ src/components/toaster.tsx
     55→        justifyContent: 'center',
     56→      }
     57→    : position.includes('right')
-      →…
+    58→    ? {
+    59→        justifyContent: 'flex-end',
+    60→      }
+    61→    : {};
+    62→  return {
+    63→    left: 0,
+    64→    right: 0,
+    65→    display: 'flex',
+    66→    position: 'absolute',
+    67→    transition: prefersReducedMotion()
+    68→      ? undefined
+    69→      : `all 230ms cubic-bezier(.21,1.02,.73,1)`,
+    70→    transform: `translateY(${offset * (top ? 1 : -1)}px)`,
+    71→    ...verticalStyle,
+    72→    ...horizontalStyle,
+    73→  };
+    74→};
     76→const activeClass = css`
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
@@ -791,7 +590,30 @@ src/core/store.ts
     24→      type: ActionType.ADD_TOAST;
     25→      toast: Toast;
     26→    }
-      →…
+    27→  | {
+    28→      type: ActionType.UPSERT_TOAST;
+    29→      toast: Toast;
+    30→    }
+    31→  | {
+    32→      type: ActionType.UPDATE_TOAST;
+    33→      toast: Partial<Toast>;
+    34→    }
+    35→  | {
+    36→      type: ActionType.DISMISS_TOAST;
+    37→      toastId?: string;
+    38→    }
+    39→  | {
+    40→      type: ActionType.REMOVE_TOAST;
+    41→      toastId?: string;
+    42→    }
+    43→  | {
+    44→      type: ActionType.START_PAUSE;
+    45→      time: number;
+    46→    }
+    47→  | {
+    48→      type: ActionType.END_PAUSE;
+    49→      time: number;
+    50→    };
     52→interface ToasterState {
     53→  toasts: Toast[];
     54→  settings: ToasterSettings;
@@ -828,7 +650,51 @@ src/core/store.ts
     87→      });
     88→
     89→    case ActionType.DISMISS_TOAST:
-      →…
+    90→      const { toastId } = action;
+    91→
+    92→      return {
+    93→        ...state,
+    94→        toasts: state.toasts.map((t) =>
+    95→          t.id === toastId || toastId === undefined
+    96→            ? {
+    97→                ...t,
+    98→                dismissed: true,
+    99→                visible: false,
+   100→              }
+   101→            : t
+   102→        ),
+   103→      };
+   104→    case ActionType.REMOVE_TOAST:
+   105→      if (action.toastId === undefined) {
+   106→        return {
+   107→          ...state,
+   108→          toasts: [],
+   109→        };
+   110→      }
+   111→      return {
+   112→        ...state,
+   113→        toasts: state.toasts.filter((t) => t.id !== action.toastId),
+   114→      };
+   115→
+   116→    case ActionType.START_PAUSE:
+   117→      return {
+   118→        ...state,
+   119→        pausedAt: action.time,
+   120→      };
+   121→
+   122→    case ActionType.END_PAUSE:
+   123→      const diff = action.time - (state.pausedAt || 0);
+   124→
+   125→      return {
+   126→        ...state,
+   127→        pausedAt: undefined,
+   128→        toasts: state.toasts.map((t) => ({
+   129→          ...t,
+   130→          pauseDuration: t.pauseDuration + diff,
+   131→        })),
+   132→      };
+   133→  }
+   134→};
    136→const listeners: Array<
    137→  [toasterId: string, reducer: (state: ToasterState) => void]
    138→> = [];
@@ -865,7 +731,11 @@ src/core/store.ts
    176→  [key in ToastType]: number;
    177→} = {
    178→  blank: 4000,
-      →…
+   179→  error: 4000,
+   180→  success: 2000,
+   181→  loading: Infinity,
+   182→  custom: 4000,
+   183→};
    185→export const useStore = (
    186→  toastOptions: DefaultToastOptions = {},
    187→  toasterId: string = DEFAULT_TOASTER_ID
@@ -897,7 +767,23 @@ src/core/store.ts
    213→      t.removeDelay ||
    214→      toastOptions[t.type]?.removeDelay ||
    215→      toastOptions?.removeDelay,
-      →…
+   216→    duration:
+   217→      t.duration ||
+   218→      toastOptions[t.type]?.duration ||
+   219→      toastOptions?.duration ||
+   220→      defaultTimeouts[t.type],
+   221→    style: {
+   222→      ...toastOptions.style,
+   223→      ...toastOptions[t.type]?.style,
+   224→      ...t.style,
+   225→    },
+   226→  }));
+   227→
+   228→  return {
+   229→    ...state,
+   230→    toasts: mergedToasts,
+   231→  };
+   232→};
 src/core/toast.ts
      1→import {
      2→  Renderable,
@@ -1074,18 +960,132 @@ src/core/use-toaster.ts
     36→  useEffect(() => {
     37→    if (pausedAt) {
     38→      return;
-      →…
+    39→    }
+    40→
+    41→    const now = Date.now();
+    42→    const timeouts = toasts.map((t) => {
+    43→      if (t.duration === Infinity) {
+    44→        return;
+    45→      }
+    46→
+    47→      const durationLeft =
+    48→        (t.duration || 0) + t.pauseDuration - (now - t.createdAt);
+    49→
+    50→      if (durationLeft < 0) {
+    51→        if (t.visible) {
+    52→          toast.dismiss(t.id);
+    53→        }
+    54→        return;
+    55→      }
+    56→      return setTimeout(() => toast.dismiss(t.id, toasterId), durationLeft);
+    57→    });
+    58→
+    59→    return () => {
+    60→      timeouts.forEach((timeout) => timeout && clearTimeout(timeout));
+    61→    };
+    62→  }, [toasts, pausedAt, toasterId]);
+    63→
+    64→  const dispatch = useCallback(createDispatch(toasterId), [toasterId]);
+    65→
+    66→  const startPause = useCallback(() => {
+    67→    dispatch({
+    68→      type: ActionType.START_PAUSE,
+    69→      time: Date.now(),
+    70→    });
+    71→  }, [dispatch]);
+    72→
+    73→  const updateHeight = useCallback(
+    74→    (toastId: string, height: number) => {
+    75→      dispatch({
+    76→        type: ActionType.UPDATE_TOAST,
+    77→        toast: { id: toastId, height },
+    78→      });
+    79→    },
+    80→    [dispatch]
+    81→  );
+    82→
+    83→  const endPause = useCallback(() => {
+    84→    if (pausedAt) {
+    85→      dispatch({ type: ActionType.END_PAUSE, time: Date.now() });
+    86→    }
+    87→  }, [pausedAt, dispatch]);
+    88→
+    89→  const calculateOffset = useCallback(
+    90→    (
+    91→      toast: Toast,
+    92→      opts?: {
+    93→        reverseOrder?: boolean;
+    94→        gutter?: number;
+    95→        defaultPosition?: ToastPosition;
+    96→      }
+    97→    ) => {
+    98→      const { reverseOrder = false, gutter = 8, defaultPosition } = opts || {};
+    99→
+   100→      const relevantToasts = toasts.filter(
+   101→        (t) =>
+   102→          (t.position || defaultPosition) ===
+   103→            (toast.position || defaultPosition) && t.height
+   104→      );
+   105→      const toastIndex = relevantToasts.findIndex((t) => t.id === toast.id);
+   106→      const toastsBefore = relevantToasts.filter(
+   107→        (toast, i) => i < toastIndex && toast.visible
+   108→      ).length;
+   109→
+   110→      const offset = relevantToasts
+   111→        .filter((t) => t.visible)
+   112→        .slice(...(reverseOrder ? [toastsBefore + 1] : [0, toastsBefore]))
+   113→        .reduce((acc, t) => acc + (t.height || 0) + gutter, 0);
+   114→
+   115→      return offset;
+   116→    },
+   117→    [toasts]
+   118→  );
+   119→
+   120→  // Keep track of dismissed toasts and remove them after the delay
+   121→  useEffect(() => {
+   122→    toasts.forEach((toast) => {
+   123→      if (toast.dismissed) {
+   124→        addToRemoveQueue(toast.id, toast.removeDelay);
+   125→      } else {
+   126→        // If toast becomes visible again, remove it from the queue
+   127→        const timeout = toastTimeouts.get(toast.id);
+   128→        if (timeout) {
+   129→          clearTimeout(timeout);
+   130→          toastTimeouts.delete(toast.id);
+   131→        }
+   132→      }
+   133→    });
+   134→  }, [toasts, addToRemoveQueue]);
+   135→
+   136→  return {
+   137→    toasts,
+   138→    handlers: {
+   139→      updateHeight,
+   140→      startPause,
+   141→      endPause,
+   142→      calculateOffset,
+   143→    },
+   144→  };
+   145→};
 src/core/utils.ts
      1→export const genId = (() => {
      2→  let count = 0;
      3→  return () => {
      4→    return (++count).toString();
-      →…
+     5→  };
+     6→})();
      8→export const prefersReducedMotion = (() => {
      9→  // Cache result
     10→  let shouldReduceMotion: boolean | undefined = undefined;
     11→
-      →…
+    12→  return () => {
+    13→    if (shouldReduceMotion === undefined && typeof window !== 'undefined') {
+    14→      const mediaQuery = matchMedia('(prefers-reduced-motion: reduce)');
+    15→      shouldReduceMotion = !mediaQuery || mediaQuery.matches;
+    16→    }
+    17→    return shouldReduceMotion;
+    18→  };
+    19→})();
 src/headless/index.ts
      1→import { toast } from '../core/toast';
 src/index.ts
@@ -1119,4 +1119,5 @@ tsup.config.ts
      2→import { minifyTemplates, writeFiles } from 'esbuild-minify-templates';
      4→const commonConfig: Options = {
      5→  minify: true,
+     6→  dts: true,
       →…

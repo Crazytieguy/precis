@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3937 words)
+budget: 4000 (3939 words)
 
 FUNDING.yml
      1→github …
@@ -165,26 +165,46 @@ src/index.tsx
     50→  const [y, x] = position.split('-');
     51→  const directions: Array<SwipeDirection> = [];
     52→
+    53→  if (y) {
+    54→    directions.push(y as SwipeDirection);
+    55→  }
+    56→
       →…
     64→const Toast = (props: ToastProps) => {
     65→  const {
     66→    invert: ToasterInvert,
     67→    toast,
+    68→    unstyled,
+    69→    interacting,
+    70→    setHeights,
+    71→    visibleToasts,
       →…
    507→function getDocumentDirection(): ToasterProps['dir'] {
    508→  if (typeof window === 'undefined') return 'ltr';
    509→  if (typeof document === 'undefined') return 'ltr'; // For Fresh purpose
    510→
+   511→  const dirAttribute = document.documentElement.getAttribute('dir');
+   512→
+   513→  if (dirAttribute === 'auto' || !dirAttribute) {
+   514→    return window.getComputedStyle(document.documentElement).direction as ToasterProps['dir'];
       →…
    520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
    521→  const styles = {} as React.CSSProperties;
    522→
    523→  [defaultOffset, mobileOffset].forEach((offset, index) => {
+   524→    const isMobile = index === 1;
+   525→    const prefix = isMobile ? '--mobile-offset' : '--offset';
+   526→    const defaultValue = isMobile ? MOBILE_VIEWPORT_OFFSET : VIEWPORT_OFFSET;
+   527→
       →…
    552→function useSonner() {
    553→  const [activeToasts, setActiveToasts] = React.useState<ToastT[]>([]);
    554→
    555→  React.useEffect(() => {
+   556→    return ToastState.subscribe((toast) => {
+   557→      if ((toast as ToastToDismiss).dismiss) {
+   558→        setTimeout(() => {
+   559→          ReactDOM.flushSync(() => {
       →…
    593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
 src/state.ts
@@ -244,7 +264,26 @@ src/state.ts
     64→    }
     65→
     66→    if (alreadyExists) {
-      →…
+    67→      this.toasts = this.toasts.map((toast) => {
+    68→        if (toast.id === id) {
+    69→          this.publish({ ...toast, ...data, id, title: message });
+    70→          return {
+    71→            ...toast,
+    72→            ...data,
+    73→            id,
+    74→            dismissible,
+    75→            title: message,
+    76→          };
+    77→        }
+    78→
+    79→        return toast;
+    80→      });
+    81→    } else {
+    82→      this.addToast({ title: message, ...rest, dismissible, id });
+    83→    }
+    84→
+    85→    return id;
+    86→  };
     88→  dismiss = (id?: number | string) => {
     89→    if (id) {
     90→      this.dismissedToasts.add(id);
@@ -294,6 +333,69 @@ src/state.ts
    141→
    142→    const p = Promise.resolve(promise instanceof Function ? promise() : promise);
    143→
+   144→    let shouldDismiss = id !== undefined;
+   145→    let result: ['resolve', ToastData] | ['reject', unknown];
+   146→
+   147→    const originalPromise = p
+   148→      .then(async (response) => {
+   149→        result = ['resolve', response];
+   150→        const isReactElementResponse = React.isValidElement(response);
+   151→        if (isReactElementResponse) {
+   152→          shouldDismiss = false;
+   153→          this.create({ id, type: 'default', message: response });
+   154→        } else if (isHttpResponse(response) && !response.ok) {
+   155→          shouldDismiss = false;
+   156→
+   157→          const promiseData =
+   158→            typeof data.error === 'function' ? await data.error(`HTTP error! status: ${response.status}`) : data.error;
+   159→
+   160→          const description =
+   161→            typeof data.description === 'function'
+   162→              ? await data.description(`HTTP error! status: ${response.status}`)
+   163→              : data.description;
+   164→
+   165→          const isExtendedResult = typeof promiseData === 'object' && !React.isValidElement(promiseData);
+   166→
+   167→          const toastSettings: PromiseIExtendedResult = isExtendedResult
+   168→            ? (promiseData as PromiseIExtendedResult)
+   169→            : { message: promiseData };
+   170→
+   171→          this.create({ id, type: 'error', description, ...toastSettings });
+   172→        } else if (response instanceof Error) {
+   173→          shouldDismiss = false;
+   174→
+   175→          const promiseData = typeof data.error === 'function' ? await data.error(response) : data.error;
+   176→
+   177→          const description =
+   178→            typeof data.description === 'function' ? await data.description(response) : data.description;
+   179→
+   180→          const isExtendedResult = typeof promiseData === 'object' && !React.isValidElement(promiseData);
+   181→
+   182→          const toastSettings: PromiseIExtendedResult = isExtendedResult
+   183→            ? (promiseData as PromiseIExtendedResult)
+   184→            : { message: promiseData };
+   185→
+   186→          this.create({ id, type: 'error', description, ...toastSettings });
+   187→        } else if (data.success !== undefined) {
+   188→          shouldDismiss = false;
+   189→          const promiseData = typeof data.success === 'function' ? await data.success(response) : data.success;
+   190→
+   191→          const description =
+   192→            typeof data.description === 'function' ? await data.description(response) : data.description;
+   193→
+   194→          const isExtendedResult = typeof promiseData === 'object' && !React.isValidElement(promiseData);
+   195→
+   196→          const toastSettings: PromiseIExtendedResult = isExtendedResult
+   197→            ? (promiseData as PromiseIExtendedResult)
+   198→            : { message: promiseData };
+   199→
+   200→          this.create({ id, type: 'success', description, ...toastSettings });
+   201→        }
+   202→      })
+   203→      .catch(async (error) => {
+   204→        result = ['reject', error];
+   205→        if (data.error !== undefined) {
+   206→          shouldDismiss = false;
       →…
    243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
    244→    const id = data?.id || toastsCounter++;
@@ -450,7 +552,10 @@ src/types.ts
    120→      top?: string | number;
    121→      right?: string | number;
    122→      bottom?: string | number;
-      →…
+   123→      left?: string | number;
+   124→    }
+   125→  | string
+   126→  | number;
    128→export interface ToasterProps {
    129→  id?: string;
    130→  invert?: boolean;
@@ -530,6 +635,12 @@ test/README.md
     12→pnpm dev
     13→```
     14→
+    15→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    16→
+    17→You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+    18→
+    19→[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+    20→
       →…
     25→## Learn More
     27→To learn more about Next.js, take a look at the following resources:
@@ -558,14 +669,26 @@ test/src/app/action.tsx
      2→import { createStreamableUI } from 'ai/rsc';
      4→export async function action() {
      5→  'use server';
+     6→  let progress = 0;
+     7→  const ui = createStreamableUI('loading 0%');
+     8→  const interval = setInterval(() => {
+     9→    progress += 10;
+    10→    ui.update('loading ' + progress + '%');
+    11→    if (progress >= 100) {
+    12→      clearInterval(interval);
       →…
 test/src/app/layout.tsx
      1→export const metadata = {
      2→  title: 'Create Next App',
-      →…
+     3→  description: 'Generated by create next app',
+     4→};
      6→export default function RootLayout({ children }: { children: React.ReactNode }) {
      7→  return (
-      →…
+     8→    <html lang="en">
+     9→      <body>{children}</body>
+    10→    </html>
+    11→  );
+    12→}
 test/src/app/page.tsx
      3→import React from 'react';
      4→import { Toaster, toast } from 'sonner';
@@ -573,6 +696,13 @@ test/src/app/page.tsx
      7→const promise = () => new Promise((resolve) => setTimeout(resolve, 2000));
      9→export default function Home({ searchParams }: any) {
     10→  const [showAutoClose, setShowAutoClose] = React.useState(false);
+    11→  const [showDismiss, setShowDismiss] = React.useState(false);
+    12→  const [theme, setTheme] = React.useState(searchParams.theme || 'light');
+    13→  const [isFinally, setIsFinally] = React.useState(false);
+    14→  const [showAriaLabels, setShowAriaLabels] = React.useState(false);
+    15→
+    16→  return (
+    17→    <>
       →…
 test/tests/basic.spec.ts
      1→import { expect, test } from '@playwright/test';
@@ -611,10 +741,7 @@ website/README.md
     18→
     19→[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
     20→
-    21→The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-    22→
-    23→This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-    24→
+      →…
     25→## Learn More
     27→To learn more about Next.js, take a look at the following resources:
     28→
@@ -630,13 +757,7 @@ website/README.md
 website/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
-     3→  experimental: {
-     4→    appDir: true,
-     5→  },
-     6→};
      8→const withNextra = require('nextra')({
-     9→  title: 'Sonner',
-      →…
 website/package.json
      2→  "name": "website",
      3→  "version": "0.1.0",
@@ -668,23 +789,6 @@ website/src/components/CodeBlock/index.tsx
     58→  }, [children]);
     59→
     60→  return (
-    61→    <div className={styles.outerWrapper}>
-    62→      <button className={styles.copyButton} onClick={onCopy} aria-label="Copy code">
-    63→        <MotionConfig transition={{ duration: 0.15 }}>
-    64→          <AnimatePresence initial={false} mode="wait">
-    65→            {copying ? (
-    66→              <motion.div animate="visible" exit="hidden" initial="hidden" key="check" variants={variants}>
-    67→                <svg
-    68→                  viewBox="0 0 24 24"
-    69→                  width="14"
-    70→                  height="14"
-    71→                  stroke="currentColor"
-    72→                  strokeWidth="1.5"
-    73→                  strokeLinecap="round"
-    74→                  strokeLinejoin="round"
-    75→                  fill="none"
-    76→                  shapeRendering="geometricPrecision"
-    77→                >
       →…
 website/src/components/ExpandModes/index.tsx
      1→import { toast } from 'sonner';
@@ -700,24 +804,6 @@ website/src/components/ExpandModes/index.tsx
     12→    <div>
     13→      <h2>Expand</h2>
     14→      <p>
-    15→        You can change the amount of toasts visible through the <code>visibleToasts</code> prop.
-    16→      </p>
-    17→      <div className="buttons">
-    18→        <button
-    19→          data-active={expand}
-    20→          className="button"
-    21→          onClick={() => {
-    22→            toast('Event has been created', {
-    23→              description: 'Monday, January 3rd at 6:00pm',
-    24→            });
-    25→            setExpand(true);
-    26→          }}
-    27→        >
-    28→          Expand
-    29→        </button>
-    30→        <button
-    31→          data-active={!expand}
-    32→          className="button"
       →…
 website/src/components/Footer/index.tsx
      1→import Image from 'next/image';
@@ -757,29 +843,7 @@ website/src/components/Hero/index.tsx
     12→        <div className={styles.toast} />
     13→      </div>
     14→      <h1 className={styles.heading}>Sonner</h1>
-    15→      <p style={{ marginTop: 0, fontSize: 18, textAlign: 'center' }}>An opinionated toast component for React.</p>
-    16→      <div className={styles.buttons}>
-    17→        <button
-    18→          data-primary=""
-    19→          onClick={() => {
-    20→            toast('Sonner', {
-    21→              description: 'An opinionated toast component for React.',
-    22→            });
-    23→          }}
-    24→          className={styles.button}
-    25→        >
-    26→          Render a toast
-    27→        </button>
-    28→        <a className={styles.button} href="https://github.com/emilkowalski/sonner" target="_blank">
-    29→          GitHub
-    30→        </a>
-    31→      </div>
-    32→      <Link href="/getting-started" className={styles.link}>
-    33→        Documentation
-    34→      </Link>
-    35→    </div>
-    36→  );
-    37→};
+      →…
 website/src/components/How/How.tsx
      1→import React from 'react';
      3→export const How = () => {
@@ -788,17 +852,7 @@ website/src/components/How/How.tsx
      6→      <div>
      7→        <h2>Want to learn how to make components like this one?</h2>
      8→        <p>
-     9→          I created an animations course in which I share everything I know about motion on the web. You can check it
-    10→          out{' '}
-    11→          <a href="https://animations.dev/" target="_blank" style={{ textDecoration: 'underline' }}>
-    12→            here
-    13→          </a>
-    14→          .
-    15→        </p>
-    16→      </div>
-    17→    </>
-    18→  );
-    19→};
+      →…
 website/src/components/Installation/index.tsx
      3→import React from 'react';
      4→import copy from 'copy-to-clipboard';
@@ -819,24 +873,6 @@ website/src/components/Installation/index.tsx
     25→  return (
     26→    <div>
     27→      <h2>Installation</h2>
-    28→      <code className={styles.code} onClick={onCopy}>
-    29→        npm install sonner{' '}
-    30→        <button aria-label="Copy code" className={styles.copy}>
-    31→          <MotionConfig transition={{ duration: 0.15 }}>
-    32→            <AnimatePresence initial={false} mode="wait">
-    33→              {copying ? (
-    34→                <motion.div animate="visible" exit="hidden" initial="hidden" key="check" variants={variants}>
-    35→                  <svg
-    36→                    viewBox="0 0 24 24"
-    37→                    width="14"
-    38→                    height="14"
-    39→                    stroke="currentColor"
-    40→                    strokeWidth="1.5"
-    41→                    strokeLinecap="round"
-    42→                    strokeLinejoin="round"
-    43→                    fill="none"
-    44→                    shapeRendering="geometricPrecision"
-    45→                  >
       →…
 website/src/components/Other/Other.tsx
      1→import React from 'react';
@@ -854,22 +890,6 @@ website/src/components/Other/Other.tsx
     14→  const allTypes = useMemo(
     15→    () => [
     16→      {
-    17→        name: 'Rich Colors Success',
-    18→        snippet: `toast.success('Event has been created')`,
-    19→        action: () => {
-    20→          toast.success('Event has been created');
-    21→          setRichColors(true);
-    22→        },
-    23→      },
-    24→      {
-    25→        name: 'Rich Colors Error',
-    26→        snippet: `toast.error('Event has not been created')`,
-    27→        action: () => {
-    28→          toast.error('Event has not been created');
-    29→          setRichColors(true);
-    30→        },
-    31→      },
-    32→      {
       →…
 website/src/components/Position/index.tsx
      1→import { toast, useSonner } from 'sonner';
@@ -893,32 +913,7 @@ website/src/components/Position/index.tsx
     22→  return (
     23→    <div>
     24→      <h2>Position</h2>
-    25→      <p>Swipe direction changes depending on the position.</p>
-    26→      <div className="buttons">
-    27→        {positions.map((position) => (
-    28→          <button
-    29→            data-active={activePosition === position}
-    30→            className="button"
-    31→            onClick={() => {
-    32→              if (activePosition !== position) {
-    33→                setPosition(position);
-    34→                removeAllToasts();
-    35→              }
-    36→
-    37→              toast('Event has been created', {
-    38→                description: 'Monday, January 3rd at 6:00pm',
-    39→              });
-    40→            }}
-    41→            key={position}
-    42→          >
-    43→            {position}
-    44→          </button>
-    45→        ))}
-    46→      </div>
-    47→      <CodeBlock>{`<Toaster position="${activePosition}" />`}</CodeBlock>
-    48→    </div>
-    49→  );
-    50→};
+      →…
 website/src/components/Types/Types.tsx
      1→import React from 'react';
      2→import { toast } from 'sonner';
@@ -930,30 +925,8 @@ website/src/components/Types/Types.tsx
     10→  return (
     11→    <div>
     12→      <h2>Types</h2>
-    13→      <p>You can customize the type of toast you want to render, and pass an options object as the second argument.</p>
-    14→      <div className="buttons">
-    15→        {allTypes.map((type) => (
-    16→          <button
-    17→            className="button"
-    18→            data-active={activeType.name === type.name}
-    19→            onClick={() => {
-    20→              type.action();
-    21→              setActiveType(type);
-    22→            }}
-    23→            key={type.name}
-    24→          >
-    25→            {type.name}
-    26→          </button>
-    27→        ))}
-    28→      </div>
-    29→      <CodeBlock>{`${activeType.snippet}`}</CodeBlock>
-    30→    </div>
-    31→  );
-    32→};
-    34→const allTypes = [
-    35→  {
-    36→    name: 'Default',
       →…
+    34→const allTypes = [
 website/src/components/Usage/index.tsx
      1→import { CodeBlock } from '../CodeBlock';
      3→export const Usage = () => {
@@ -969,15 +942,7 @@ website/src/components/Usage/index.tsx
     13→  return (
     14→    <div>
     15→      <Toaster />
-    16→      <button onClick={() => toast('My first toast')}>
-    17→        Give me a toast
-    18→      </button>
-    19→    </div>
-    20→  )
-    21→}`}</CodeBlock>
-    22→    </div>
-    23→  );
-    24→};
+      →…
 website/src/pages/_app.tsx
      1→import type { ReactElement } from 'react';
      2→import type { AppProps } from 'next/app';
@@ -1041,17 +1006,7 @@ website/src/pages/index.tsx
     33→        <div className="content">
     34→          <Installation />
     35→          <Usage />
-    36→          <Types />
-    37→          <Position position={position} setPosition={setPosition} />
-    38→          <ExpandModes expand={expand} setExpand={setExpand} />
-    39→          <Other setCloseButton={setCloseButton} setRichColors={setRichColors} />
-    40→          <How />
-    41→        </div>
-    42→      </main>
-    43→      <Footer />
-    44→    </div>
-    45→  );
-    46→}
+      →…
 website/theme.config.jsx
      7→  useNextSeoProps() {
      8→    return {

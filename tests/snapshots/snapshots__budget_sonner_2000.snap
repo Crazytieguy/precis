@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1964 words)
+budget: 2000 (1976 words)
 
 FUNDING.yml
      1→github …
@@ -72,13 +72,32 @@ src/assets.tsx
      6→  switch (type) {
      7→    case 'success':
      8→      return SuccessIcon;
-      →…
+     9→
+    10→    case 'info':
+    11→      return InfoIcon;
+    12→
+    13→    case 'warning':
+    14→      return WarningIcon;
+    15→
+    16→    case 'error':
+    17→      return ErrorIcon;
+    18→
+    19→    default:
+    20→      return null;
+    21→  }
+    22→};
     24→const bars = Array(12).fill(0);
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     27→  return (
     28→    <div className={['sonner-loading-wrapper', className].filter(Boolean).join(' ')} data-visible={visible}>
     29→      <div className="sonner-spinner">
-      →…
+    30→        {bars.map((_, i) => (
+    31→          <div className="sonner-loading-bar" key={`spinner-bar-${i}`} />
+    32→        ))}
+    33→      </div>
+    34→    </div>
+    35→  );
+    36→};
     38→const SuccessIcon = (
     48→const WarningIcon = (
     58→const InfoIcon = (
@@ -88,6 +107,13 @@ src/assets.tsx
     80→    xmlns="http://www.w3.org/2000/svg"
     81→    width="12"
     82→    height="12"
+    83→    viewBox="0 0 24 24"
+    84→    fill="none"
+    85→    stroke="currentColor"
+    86→    strokeWidth="1.5"
+    87→    strokeLinecap="round"
+    88→    strokeLinejoin="round"
+    89→  >
       →…
 src/hooks.tsx
      1→import React from 'react';
@@ -95,7 +121,15 @@ src/hooks.tsx
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
      5→
      6→  React.useEffect(() => {
-      →…
+     7→    const callback = () => {
+     8→      setIsDocumentHidden(document.hidden);
+     9→    };
+    10→    document.addEventListener('visibilitychange', callback);
+    11→    return () => document.removeEventListener('visibilitychange', callback);
+    12→  }, []);
+    13→
+    14→  return isDocumentHidden;
+    15→};
 src/index.tsx
      3→import React from 'react';
      4→import ReactDOM from 'react-dom';
@@ -165,15 +199,20 @@ src/state.ts
    257→const toastFunction = (message: titleT, data?: ExternalToast) => {
    258→  const id = data?.id || toastsCounter++;
    259→
+   260→  ToastState.addToast({
       →…
    268→const isHttpResponse = (data: any): data is Response => {
    269→  return (
    270→    data &&
+   271→    typeof data === 'object' &&
       →…
    279→const basicToast = toastFunction;
    281→const getHistory = () => ToastState.toasts;
    282→const getToasts = () => ToastState.getActiveToasts();
    285→export const toast = Object.assign(
+   286→  basicToast,
+   287→  {
+      →…
 src/types.ts
      1→import React from 'react';
      3→export type ToastTypes = 'normal' | 'action' | 'success' | 'info' | 'warning' | 'error' | 'loading' | 'default';
@@ -190,6 +229,9 @@ src/types.ts
     18→  | ((data: Data) => React.ReactNode | string | Promise<React.ReactNode | string>);
     20→export type PromiseExternalToast = Omit<ExternalToast, 'description'>;
     22→export type PromiseData<ToastData = any> = PromiseExternalToast & {
+    23→  loading?: string | React.ReactNode;
+    24→  success?: PromiseTResult<ToastData> | PromiseTExtendedResult<ToastData>;
+      →…
     30→export interface ToastClassnames {
     31→  toast?: string;
     32→  title?: string;
@@ -199,7 +241,14 @@ src/types.ts
     36→  cancelButton?: string;
     37→  actionButton?: string;
     38→  success?: string;
-      →…
+    39→  error?: string;
+    40→  info?: string;
+    41→  warning?: string;
+    42→  loading?: string;
+    43→  default?: string;
+    44→  content?: string;
+    45→  icon?: string;
+    46→}
     48→export interface ToastIcons {
     49→  success?: React.ReactNode;
     50→  info?: React.ReactNode;
@@ -222,7 +271,26 @@ src/types.ts
     69→  jsx?: React.ReactNode;
     70→  richColors?: boolean;
     71→  invert?: boolean;
-      →…
+    72→  closeButton?: boolean;
+    73→  dismissible?: boolean;
+    74→  description?: (() => React.ReactNode) | React.ReactNode;
+    75→  duration?: number;
+    76→  delete?: boolean;
+    77→  action?: Action | React.ReactNode;
+    78→  cancel?: Action | React.ReactNode;
+    79→  onDismiss?: (toast: ToastT) => void;
+    80→  onAutoClose?: (toast: ToastT) => void;
+    81→  promise?: PromiseT;
+    82→  cancelButtonStyle?: React.CSSProperties;
+    83→  actionButtonStyle?: React.CSSProperties;
+    84→  style?: React.CSSProperties;
+    85→  unstyled?: boolean;
+    86→  className?: string;
+    87→  classNames?: ToastClassnames;
+    88→  descriptionClassName?: string;
+    89→  position?: Position;
+    90→  testId?: string;
+    91→}
     93→export function isAction(action: Action | React.ReactNode): action is Action {
     97→export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
     98→export interface HeightT {
@@ -245,6 +313,8 @@ src/types.ts
    116→}
    118→type Offset =
    119→  | {
+   120→      top?: string | number;
+      →…
    128→export interface ToasterProps {
    129→  id?: string;
    130→  invert?: boolean;
@@ -254,7 +324,20 @@ src/types.ts
    134→  richColors?: boolean;
    135→  expand?: boolean;
    136→  duration?: number;
-      →…
+   137→  gap?: number;
+   138→  visibleToasts?: number;
+   139→  closeButton?: boolean;
+   140→  toastOptions?: ToastOptions;
+   141→  className?: string;
+   142→  style?: React.CSSProperties;
+   143→  offset?: Offset;
+   144→  mobileOffset?: Offset;
+   145→  dir?: 'rtl' | 'ltr' | 'auto';
+   146→  swipeDirections?: SwipeDirection[];
+   147→  icons?: ToastIcons;
+   148→  customAriaLabel?: string;
+   149→  containerAriaLabel?: string;
+   150→}
    152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
    154→export interface ToastProps {
    155→  toast: ToastT;
@@ -265,7 +348,26 @@ src/types.ts
    160→  invert: boolean;
    161→  heights: HeightT[];
    162→  setHeights: React.Dispatch<React.SetStateAction<HeightT[]>>;
-      →…
+   163→  removeToast: (toast: ToastT) => void;
+   164→  gap?: number;
+   165→  position: Position;
+   166→  visibleToasts: number;
+   167→  expandByDefault: boolean;
+   168→  closeButton: boolean;
+   169→  interacting: boolean;
+   170→  style?: React.CSSProperties;
+   171→  cancelButtonStyle?: React.CSSProperties;
+   172→  actionButtonStyle?: React.CSSProperties;
+   173→  duration?: number;
+   174→  className?: string;
+   175→  unstyled?: boolean;
+   176→  descriptionClassName?: string;
+   177→  loadingIcon?: React.ReactNode;
+   178→  classNames?: ToastClassnames;
+   179→  icons?: ToastIcons;
+   180→  closeButtonAriaLabel?: string;
+   181→  defaultRichColors?: boolean;
+   182→}
    184→export enum SwipeStateTypes {
    185→  SwipedOut = 'SwipedOut',
    186→  SwipedBack = 'SwipedBack',
@@ -277,11 +379,15 @@ src/types.ts
    194→  dismiss: boolean;
    195→}
    197→export type ExternalToast = Omit<ToastT, 'id' | 'type' | 'title' | 'jsx' | 'delete' | 'promise'> & {
+   198→  id?: number | string;
+   199→  toasterId?: string;
+      →…
 test/README.md
      3→## Getting Started …
     25→## Learn More …
     34→## Deploy on Vercel …
 test/next.config.js
+     1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {};
 test/package.json
      2→  "name": "test",
@@ -297,9 +403,11 @@ test/src/app/layout.tsx
      1→export const metadata = {
      6→export default function RootLayout({ children }: { children: React.ReactNode }) {
 test/src/app/page.tsx
-     7→const promise …
+     7→const promise = () => new Promise((resolve) => setTimeout(resolve, 2000));
      9→export default function Home({ searchParams }: any) {
 test/tests/basic.spec.ts
+     1→import { expect, test } from '@playwright/test';
+     2→import { toast } from 'sonner';
 test/tsconfig.json
      2→  "compilerOptions": {
     25→  },
@@ -317,32 +425,9 @@ turbo.json
      4→  "pipeline": {
     13→}
 website/README.md
-     3→## Getting Started
-     5→First, run the development server:
-     6→
-     7→```bash
-     8→npm run dev
-     9→# or
-    10→yarn dev
-    11→# or
-    12→pnpm dev
-    13→```
-    14→
-    15→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-    16→
-      →…
-    25→## Learn More
-    27→To learn more about Next.js, take a look at the following resources:
-    28→
-    29→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-    30→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-    31→
-    32→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-    33→
-    34→## Deploy on Vercel
-    36→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-    37→
-    38→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+     3→## Getting Started …
+    25→## Learn More …
+    34→## Deploy on Vercel …
 website/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
@@ -361,10 +446,6 @@ website/src/components/CodeBlock/index.tsx
      9→const variants = {
     14→const theme = {
     48→export const CodeBlock = ({ children, initialHeight = 0 }: { children: string; initialHeight?: number }) => {
-    49→  const [ref, bounds] = useMeasure();
-    50→  const [copying, setCopying] = React.useState<number>(0);
-    51→
-      →…
 website/src/components/ExpandModes/index.tsx
      1→import { toast } from 'sonner';
      2→import { CodeBlock } from '../CodeBlock';
@@ -372,13 +453,6 @@ website/src/components/ExpandModes/index.tsx
      5→  expand,
      6→  setExpand,
      7→}: {
-     8→  expand: boolean;
-     9→  setExpand: React.Dispatch<React.SetStateAction<boolean>>;
-    10→}) => {
-    11→  return (
-    12→    <div>
-    13→      <h2>Expand</h2>
-    14→      <p>
       →…
 website/src/components/Footer/index.tsx
      1→import Image from 'next/image';
@@ -387,22 +461,16 @@ website/src/components/Footer/index.tsx
      5→export const Footer = () => {
      6→  return (
      7→    <footer className={styles.wrapper}>
-     8→      <div className="container">
-     9→        <p className={styles.p}>
       →…
 website/src/components/Head/index.tsx
      1→import NextHead from 'next/head';
      3→const ogImage = 'https://sonner.emilkowal.ski/og.png';
      5→const Head …
 website/src/components/Hero/index.tsx
-     1→import { toast } from 'sonner';
      3→import styles from './hero.module.css';
-     4→import Link from 'next/link';
      6→export const Hero = () => {
      7→  return (
      8→    <div className={styles.wrapper}>
-     9→      <div className={styles.toastWrapper}>
-    10→        <div className={styles.toast} />
       →…
 website/src/components/How/How.tsx
      1→import React from 'react';
@@ -412,9 +480,6 @@ website/src/components/How/How.tsx
      6→      <div>
       →…
 website/src/components/Installation/index.tsx
-     3→import React from 'react';
-     4→import copy from 'copy-to-clipboard';
-     5→import { motion, AnimatePresence, MotionConfig } from 'framer-motion';
      7→import styles from './installation.module.css';
      9→const variants = {
     14→export const Installation = () => {
@@ -422,46 +487,30 @@ website/src/components/Installation/index.tsx
     16→
       →…
 website/src/components/Other/Other.tsx
-     1→import React from 'react';
-     2→import { useMemo } from 'react';
-     3→import { toast } from 'sonner';
      4→import { CodeBlock } from '../CodeBlock';
      5→import styles from './other.module.css';
      7→export const Other = ({
      8→  setRichColors,
      9→  setCloseButton,
     10→}: {
-    11→  setRichColors: React.Dispatch<React.SetStateAction<boolean>>;
-    12→  setCloseButton: React.Dispatch<React.SetStateAction<boolean>>;
-    13→}) => {
       →…
 website/src/components/Position/index.tsx
-     1→import { toast, useSonner } from 'sonner';
      2→import { CodeBlock } from '../CodeBlock';
-     3→import React from 'react';
-     5→const positions = ['top-left', 'top-center', 'top-right', 'bottom-left', 'bottom-center', 'bottom-right'] as const;
+     5→const positions …
      7→export type Position = (typeof positions)[number];
      9→export const Position = ({
     10→  position: activePosition,
     11→  setPosition,
     12→}: {
-    13→  position: Position;
-    14→  setPosition: React.Dispatch<React.SetStateAction<Position>>;
-    15→}) => {
       →…
 website/src/components/Types/Types.tsx
-     1→import React from 'react';
-     2→import { toast } from 'sonner';
      3→import { CodeBlock } from '../CodeBlock';
-     5→const promiseCode = '`${data.name} toast has been added`';
+     5→const promiseCode …
      7→export const Types = () => {
      8→  const [activeType, setActiveType] = React.useState(allTypes[0]);
      9→
-    10→  return (
-    11→    <div>
-    12→      <h2>Types</h2>
       →…
-    34→const allTypes = [
+    34→const allTypes …
 website/src/components/Usage/index.tsx
      1→import { CodeBlock } from '../CodeBlock';
      3→export const Usage = () => {
@@ -473,14 +522,6 @@ website/src/pages/_app.tsx
      4→import '../style.css';
      5→import '../globals.css';
      7→export default function Nextra({ Component, pageProps }: AppProps): ReactElement {
-     8→  return (
-     9→    <>
-    10→      {/* @ts-ignore */}
-    11→      <Component {...pageProps} />
-    12→      <Analytics />
-    13→    </>
-    14→  );
-    15→}
 website/src/pages/_meta.json
      2→  "getting-started": {
      5→  },
@@ -499,29 +540,8 @@ website/src/pages/index.tsx
     11→import { How } from '../components/How/How';
     12→import { Footer } from '../components/Footer';
     14→export default function Home() {
-    15→  const [expand, setExpand] = React.useState(false);
-    16→  const [position, setPosition] = React.useState<Position>('bottom-right');
-    17→  const [richColors, setRichColors] = React.useState(false);
-    18→  const [closeButton, setCloseButton] = React.useState(false);
-    19→
-    20→  return (
-    21→    <div className="wrapper light">
-    22→      <Head />
-    23→      <Toaster
-    24→        theme="light"
-    25→        richColors={richColors}
-    26→        closeButton={closeButton}
-    27→        expand={expand}
-    28→        position={position}
-    29→        duration={Infinity}
-    30→      />
-      →…
 website/theme.config.jsx
      7→  useNextSeoProps() {
-     8→    return {
-     9→      titleTemplate: '%s – Sonner',
-    10→    };
-    11→  },
 website/tsconfig.json
      2→  "compilerOptions": {
     26→  },

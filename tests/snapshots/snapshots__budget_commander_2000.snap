@@ -2,11 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1999 words)
+budget: 2000 (1997 words)
 
 CHANGELOG.md
      1→# Changelog …
-   911→#### Testing for no arguments …
+   911→#### Testing for no arguments
+   913→If you were previously using code like:
+   914→
+   915→```js
+      →…
 CONTRIBUTING.md
      1→# Contributing …
      3→## Issues …
@@ -38,14 +42,25 @@ Readme.md
     30→    - [Stand-alone executable (sub)commands](#stand-alone-executable-subcommands)
     31→    - [Life cycle hooks](#life-cycle-hooks)
     32→  - [Automated help](#automated-help)
+    33→    - [Custom help](#custom-help)
       →…
     61→## Installation …
     67→## Quick Start …
    147→## Declaring _program_ variable …
    177→## Options …
    523→## Commands …
-   613→#### More configuration …
-   625→#### Custom argument processing …
+   613→#### More configuration
+   615→There are some additional features available by constructing an `Argument` explicitly for less common cases.
+   616→
+   617→Example file: [arguments-extra.js](./examples/arguments-extra.js)
+   618→
+      →…
+   625→#### Custom argument processing
+   627→You may specify a function to do custom processing of command-arguments (like for option-arguments).
+   628→The callback function receives two parameters, the user specified command-argument and the previous value for the argument.
+   629→It returns the new value for the argument.
+   630→
+      →…
    754→## Automated help …
    956→## Custom event listeners …
    966→## Bits and pieces …
@@ -61,6 +76,11 @@ Readme.md
    978→For example:
    979→
    980→```js
+   981→program.parse(); // parse process.argv and auto-detect electron and special node flags
+   982→program.parse(process.argv); // assume argv[0] is app and argv[1] is script
+   983→program.parse(['--port', '80'], { from: 'user' }); // just user supplied arguments, nothing special about argv[0]
+   984→```
+   985→
       →…
   1164→## Support …
 Readme_zh-CN.md
@@ -69,7 +89,6 @@ Readme_zh-CN.md
      9→
     10→使用其他语言阅读：[English](./Readme.md) | 简体中文
     11→
-    12→- [Commander.js](#commanderjs)
       →…
    570→#### 其他参数配置 …
    582→#### 自定义参数处理 …
@@ -83,53 +102,18 @@ SECURITY.md
      1→# Security Policy …
 docs/deprecated.md
      1→# Deprecated …
-    22→### RegExp .option() parameter …
-    34→### noHelp …
-    44→### Callback to .help() and .outputHelp() …
-    62→### .on('--help') …
-    87→### .on('command:*') …
-    98→### .command('*') …
-   118→### cmd.description(cmdDescription, argDescriptions) …
-   141→### InvalidOptionArgumentError …
-   171→### Import from `commander/esm.mjs` …
-   187→### cmd._args …
-   203→### .addHelpCommand(string|boolean|undefined) …
-   227→## Removed …
-   229→### Short option flag longer than a single character
-   231→Short option flags like `-ws` were never supported, but the old README did not make this clear. The README now states that short options are a single character.
-   232→
-   233→- README updated in Commander v3.
-   234→- Deprecated from Commander v9.
-   235→- Throws an exception in Commander v13. Deprecated and gone!
-   236→- Replacement added in Commander v13.1 with support for dual long options, like `--ws, --workspace`.
-   237→
-   238→### Default import of global Command object …
+   229→### Short option flag longer than a single character …
 docs/help-in-depth.md
      1→# Help in Depth …
-    20→## Data Properties …
-    34→## Stringify and Style …
-   118→## Layout …
 docs/options-in-depth.md
      2→# Options in Depth …
-    15→## Options taking varying numbers of option-arguments …
-    30→### Parsing ambiguity …
-    79→#### Alternative: Make `--` part of your syntax …
-   104→#### Alternative: Put options last …
-   126→#### Alternative: Use options instead of command-arguments …
-   148→## Combining short options, and options taking arguments …
-   191→### Combining short options as if boolean …
 docs/parsing-and-hooks.md
      1→# Parsing life cycle and hooks …
 docs/release-policy.md
      1→# Release Policy …
 docs/terminology.md
      1→# Terminology …
-docs/zh-CN/不再推荐使用的功能.md
-     1→# 不再推荐使用的功能 …
 docs/zh-CN/可变参数的选项.md
-     1→# 可变参数的选项 …
-docs/zh-CN/术语表.md
-     1→# 术语表 …
 eslint.config.js
      8→const tsconfigTsFiles …
      9→const tsconfigJsFiles …
@@ -266,11 +250,13 @@ lib/command.js
   2752→function useColor() {
 lib/error.js
      1→/**
-      →…
+     2→ * CommanderError class
+     3→ */
      4→class CommanderError extends Error {
     11→  constructor(exitCode, code, message) {
     22→/**
-      →…
+    23→ * InvalidArgumentError class
+    24→ */
     25→class InvalidArgumentError extends CommanderError {
     30→  constructor(message) {
 lib/help.js
@@ -336,7 +322,12 @@ lib/option.js
    243→  is(arg) {
    256→  isBoolean() {
    261→/**
-      →…
+   262→ * This class is to make it easier to work with dual options, without changing the existing
+   263→ * implementation. We support separate dual options for separate positive and negative options,
+   264→ * like `--build` and `--no-build`, which share a single option value. This works nicely for some
+   265→ * use cases, but is tricky for others where we want separate behaviours despite
+   266→ * the single shared option value.
+   267→ */
    268→class DualOptions {
    272→  constructor(options) {
    297→  valueFromOption(value, option) {

@@ -2,9 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (987 words)
+budget: 1000 (992 words)
 
 README.md
+    40→## About …
+    48→## Features …
+    59→## What is Pattern Matching? …
+    67→## Installation …
+    87→## Want to become a TypeScript Expert? …
     91→# Documentation
     93→- [Sandbox examples](#sandbox-examples)
     94→- [Getting Started](#getting-started)
@@ -15,56 +20,42 @@ README.md
     99→  - [`.returnType`](#returntype)
    100→  - [`.exhaustive`](#exhaustive)
    101→  - [`.otherwise`](#otherwise)
-   102→  - [`.narrow`](#narrow)
       →…
+   128→## Sandbox examples …
+   139→## Getting Started …
+   415→## API Reference …
    417→### `match`
    419→```ts
    420→match(value);
    421→```
    422→
       →…
+   742→## Patterns …
    857→#### `P._` wildcard
    859→The `P._` pattern will match any value. You can also use `P.any`, which is an alias to `P._`.
    860→
    861→```ts
    862→import { match, P } from 'ts-pattern';
    863→
-   864→const input = 'hello';
-   865→
       →…
+  1405→## `P.string` predicates …
+  1500→## `P.number` and `P.bigint` predicates …
+  1621→## Types …
   1623→### `P.infer`
   1625→`P.infer<typeof somePattern>` lets you infer a type of value from a type of pattern.
   1626→
   1627→It's particularly useful when validating an API response.
   1628→
       →…
+  1766→## Inspirations …
 benchmarks/package.json
 docs/roadmap.md
 docs/v3-to-v4-migration-guide.md
-     1→# TS-Pattern v3 to v4 Migration Guide
      3→## Breaking changes …
-     5→### Imports
-     7→type-specific wildcard patterns have moved from `__.<pattern>` to a new `Pattern` qualified module, also exported as `P` by ts-pattern.
-     8→
-     9→```diff
-      →…
-   122→## New features …
-   128→#### `P.array(pattern)` …
-   159→#### `P.optional(pattern)` …
-   298→#### `P.infer<typeof pattern>` …
-   336→#### `P.symbol` …
+     5→### Imports …
 docs/v4-to-v5-migration-guide.md
-     1→# TS-Pattern v4 to v5 Migration Guide
-     3→This file contains all breaking changes and new features between the version 4 and 5 of TS-Pattern.
-     4→
-     5→# Breaking changes
      7→## TypeScript v5 …
-    11→## `.with` is now evaluated eagerly …
-    42→## Matching on Map and Sets …
-    63→# New features
     65→## chainable methods …
-   156→## Variadic tuple patterns …
-   214→## `.returnType` …
 examples/gif-fetcher/src/App.tsx
     42→const reducer …
     75→export default function App() {
@@ -90,9 +81,7 @@ src/internals/helpers.ts
      9→import { Pattern, Matcher, MatcherType, AnyMatcher } from '../types/Pattern';
     12→export const isObject …
     16→export const isMatcher …
-    24→const isOptionalPattern = (
-    25→  x: unknown
-    26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
+    24→const isOptionalPattern …
     32→export const matchPattern …
    120→export const getSelectionKeys …
    132→export const flatMap …
@@ -101,7 +90,17 @@ src/internals/symbols.ts
      2→ * Symbols used internally within ts-pattern to construct and discriminate
      3→ * Guard, Not, and Select, and AnonymousSelect patterns
      4→ *
-      →…
+     5→ * Symbols have the advantage of not appearing in auto-complete suggestions in
+     6→ * user defined patterns, and eliminate the risk of property
+     7→ * overlap between ts-pattern internals and user defined patterns.
+     8→ *
+     9→ * These symbols have to be visible to tsc for type inference to work, but
+    10→ * users should not import them
+    11→ * @module
+    12→ * @private
+    13→ * @internal
+    14→ */
+    15→
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
     17→export type matcher = typeof matcher;
     19→export const unset = Symbol.for('@ts-pattern/unset');

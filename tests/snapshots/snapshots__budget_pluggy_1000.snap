@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (965 words)
+budget: 1000 (966 words)
 
 AGENTS.md
      1→# AGENTS.md …
@@ -15,20 +15,13 @@ codecov.yml
      1→coverage …
      7→comment …
 docs/conf.py
-     1→from importlib import metadata
-     2→from typing import TYPE_CHECKING
-     6→    import sphinx.application
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
    107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
    108→    import logging
    109→
-   110→    import sphinx.util.logging
-   111→
-   112→    class WarnLogFilter(logging.Filter):
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
-docs/examples/eggsample/eggsample/__init__.py
 docs/examples/eggsample/eggsample/hookspecs.py
      7→@hookspec
      8→def eggsample_add_ingredients(ingredients: tuple):
@@ -45,11 +38,13 @@ docs/examples/eggsample/eggsample/lib.py
     13→def eggsample_prep_condiments(condiments):
 docs/examples/eggsample/setup.py
 docs/examples/eggsample-spam/eggsample_spam.py
+     1→import eggsample
      4→@eggsample.hookimpl
      5→def eggsample_add_ingredients(ingredients):
     14→@eggsample.hookimpl
     15→def eggsample_prep_condiments(condiments):
 docs/examples/eggsample-spam/setup.py
+     1→from setuptools import setup
 docs/examples/toy-example.py
      1→import pluggy
      8→class MySpec:
@@ -116,6 +111,7 @@ src/pluggy/_hooks.py
     44→    firstresult: bool
     45→    #: Whether the hook is :ref:`historic <historic>`.
     46→    historic: bool
+    47→    #: Whether the hook :ref:`warns when implemented <warn_on_impl>`.
       →…
     56→class HookimplOpts(TypedDict):
     58→
@@ -123,6 +119,7 @@ src/pluggy/_hooks.py
     60→    wrapper: bool
     61→    #: Whether the hook implementation is an :ref:`old-style wrapper
     62→    #: <old_style_hookwrappers>`.
+    63→    hookwrapper: bool
       →…
     77→@final
     78→class HookspecMarker:
@@ -161,6 +158,7 @@ src/pluggy/_hooks.py
    386→        "name",
    387→        "spec",
    388→        "_hookexec",
+   389→        "_hookimpls",
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None

@@ -2,14 +2,17 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (977 words)
+budget: 1000 (989 words)
 
 README.md
     28→## Features
     30→- 🔥 **Hot by default**
     31→- 🔩 **Easily Customizable**
     32→- ⏳ **Promise API** - _Automatic loader from a promise_
-      →…
+    33→- 🕊 **Lightweight** - _less than 5kb including styles_
+    34→- ✅ **Accessible**
+    35→- 🤯 **Headless Hooks** - _Create your own with [`useToaster()`](https://react-hot-toast.com/docs/use-toaster)_
+    36→
     37→## Installation
     39→#### With pnpm
     41→```sh
@@ -25,112 +28,87 @@ README.md
     53→Add the Toaster to your app first. It will take care of rendering all notifications emitted. Now you can trigger `toast()` from anywhere!
     54→
     55→```jsx
-      →…
+    56→import toast, { Toaster } from 'react-hot-toast';
+    57→
+    58→const notify = () => toast('Here is your toast.');
+    59→
+    60→const App = () => {
+    61→  return (
+    62→    <div>
+    63→      <button onClick={notify}>Make me a toast</button>
+    64→      <Toaster />
+    65→    </div>
+    66→  );
+    67→};
+    68→```
+    69→
     70→## Documentation
     72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
 package.json
-     2→  "name …
-     3→  "description …
-     4→  "version …
-     5→  "author …
-     6→  "license …
-     7→  "repository …
-     8→  "keywords …
-    14→  "main …
-    15→  "types …
-    16→  "exports …
-    29→  "files …
-    34→  "engines …
-    37→  "scripts …
-    45→  "husky …
-    50→  "prettier …
-    57→  "size-limit …
-    75→  "devDependencies …
-    95→  "dependencies …
-    99→  "peerDependencies …
-   103→  "packageManager …
+     2→  "name": "react-hot-toast",
+     3→  "description": "Smoking hot React Notifications. Lightweight, customizable and beautiful by default.",
+     4→  "version": "2.6.0",
+     5→  "author": "Timo Lins",
+     6→  "license": "MIT",
+     7→  "repository": "timolins/react-hot-toast",
+     8→  "keywords": [
+    13→  ],
+    14→  "main": "dist/index.js",
+    15→  "types": "dist/index.d.ts",
+    16→  "exports": {
+    28→  },
+    29→  "files": [
+    33→  ],
+    34→  "engines": {
+    36→  },
+    37→  "scripts": {
+    44→  },
+    45→  "husky": {
+    49→  },
+    50→  "prettier": {
+    56→  },
+    57→  "size-limit": [
+    74→  ],
+    75→  "devDependencies": {
+    94→  },
+    95→  "dependencies": {
+    98→  },
+    99→  "peerDependencies": {
+   102→  },
+   103→  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
+   104→}
 site/README.md
-     3→## Getting Started
-     5→First, run the development server:
-     6→
-      →…
-    17→## Learn More
-    19→To learn more about Next.js, take a look at the following resources:
-    20→
-      →…
-    26→## Deploy on Vercel
-    28→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-    29→
-      →…
+     3→## Getting Started …
+    17→## Learn More …
+    26→## Deploy on Vercel …
 site/components/code.tsx
      8→const theme: PrismTheme = {
    104→export const Code: React.FC<{
 site/components/docs-layout.tsx
-     5→import { Footer } from './sections/footer';
-     6→import Logo from '../assets/logo-small.svg';
      8→const TableItem: React.FC<{
     19→const TableHeader: React.FC<{
     27→export default function DocsLayout({ meta, children }) {
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
 site/components/sections/footer.tsx
-     4→export function Footer({ noBadge }: { noBadge?: boolean }) {
 site/components/sections/splitbee-counter.tsx
-     4→export const useSplitbeeCount = <T extends string>(
-     5→  event: T,
-     6→  token: string
-     7→): number => {
-    36→export const SplitbeeCounter = () => {
 site/components/sections/toast-example.tsx
-     4→import { EmojiButton } from '../emoji-button';
-     5→import { Code } from '../code';
      7→const examples: Array<{
-   270→export const ToastExample = () => {
 site/components/sections/toaster-example.tsx
-     3→import Arrow from '../../assets/arrow.svg';
-     4→import { Code } from '../code';
-     6→import { EmojiButton } from '../emoji-button';
      8→export const positions: Array<ToastPosition> = [
-     9→  'top-left',
-      →…
-    17→export const ToasterExample: React.FC<{
 site/next.config.mjs
-     5→const withMDX = nextMdx({
-    14→/** @type {import('next').NextConfig} */
     15→const nextConfig = {
     17→  webpack(config) {
     24→  async rewrites() {
 site/package.json
-     2→  "name": "site",
-     3→  "scripts": {
-     7→  },
-     8→  "dependencies": {
-    24→  },
-    25→  "devDependencies": {
-    35→}
 site/pages/_app.tsx
     12→const components = {
-    71→function MyApp …
 site/pages/index.tsx
     22→const version = packageInfo.version;
-    24→const Feature …
-    31→const Step …
-    49→const Steps …
-    88→const Features …
    102→export default function Home() {
-   103→  const [position, setPosition] = useState<ToastPosition>('top-center');
-   104→  const [reverse, setReverse] = useState(false);
-      →…
 site/tsconfig.json
-     2→  "compilerOptions": {
-    21→  },
-    22→  "include": [
-    31→  ],
-    32→  "exclude": [
-    35→}
 site/types/svg.d.ts
      1→interface SvgrComponent
-     2→  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
      5→  const value: SvgrComponent;
 src/components/checkmark.tsx
     29→export interface CheckmarkTheme {
@@ -151,6 +129,9 @@ src/components/loader.tsx
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
 src/components/toast-bar.tsx
+     4→import { Toast, ToastPosition, resolveValue, Renderable } from '../core/types';
+     5→import { ToastIcon } from './toast-icon';
+     6→import { prefersReducedMotion } from '../core/utils';
      8→const enterAnimation …
     13→const exitAnimation …
     47→interface ToastBarProps {
@@ -165,16 +146,31 @@ src/components/toast-bar.tsx
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 src/components/toast-icon.tsx
+     4→import { Toast } from '../core/types';
+     5→import { ErrorIcon, ErrorTheme } from './error';
+     6→import { LoaderIcon, LoaderTheme } from './loader';
+     7→import { CheckmarkIcon, CheckmarkTheme } from './checkmark';
     32→export const AnimatedIconWrapper = styled('div')`
     41→export type IconThemes = Partial<{
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
+    49→}> = ({ toast }) => {
       →…
 src/components/toaster.tsx
+     3→import {
+     4→  resolveValue,
+     5→  ToasterProps,
+     6→  ToastPosition,
+     7→  ToastWrapperProps,
+     8→} from '../core/types';
+     9→import { useToaster } from '../core/use-toaster';
+    10→import { prefersReducedMotion } from '../core/utils';
+    11→import { ToastBar } from './toast-bar';
     15→const ToastWrapper …
     47→const getPositionStyle …
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
+    87→  position = 'top-center',
       →…
 src/core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
@@ -254,7 +250,11 @@ src/core/types.ts
     51→  className?: string;
     52→  iconTheme?: IconTheme;
     53→
-      →…
+    54→  createdAt: number;
+    55→  visible: boolean;
+    56→  dismissed: boolean;
+    57→  height?: number;
+    58→}
     60→export type ToastOptions …
     76→export type DefaultToastOptions …
     80→export interface ToasterProps {
@@ -291,10 +291,11 @@ src/index.ts
 test/setup.ts
      1→import '@testing-library/jest-dom';
 test/toast.test.tsx
-    29→const waitTime …
+    29→const waitTime = (time: number) => {
     35→const TOAST_DURATION = 1000;
 tsconfig.json
-     3→  "include …
-     4→  "compilerOptions …
+     3→  "include": ["src", "types", "test"],
+     4→  "compilerOptions": {
+    33→}
 tsup.config.ts
      4→const commonConfig: Options = {

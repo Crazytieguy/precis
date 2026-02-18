@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (477 words)
+budget: 500 (483 words)
 
 README.md
      1→# humanize
@@ -24,6 +24,17 @@ README.md
     27→- German
     28→- Greek
     29→- Hebrew
+    30→- Indonesian
+    31→- Italian
+    32→- Japanese
+    33→- Klingon
+    34→- Korean
+    35→- Norwegian
+    36→- Persian
+    37→- Polish
+    38→- Russian
+    39→- Simplified Chinese
+    40→- Slovak
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -65,6 +76,13 @@ README.md
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
    127→
    128→```pycon
+   129→>>> import humanize
+   130→>>> import datetime as dt
+   131→>>> humanize.naturaldelta(dt.timedelta(seconds=2))
+   132→'2 seconds'
+   133→```
+   134→
+   135→```pycon
       →…
    154→### File size humanization
    156→```pycon
@@ -87,36 +105,13 @@ README.md
    210→>>> humanize.naturaltime(dt.timedelta(seconds=3))
    211→'3 секунды назад'
    212→>>> humanize.i18n.deactivate()
+   213→>>> humanize.naturaltime(dt.timedelta(seconds=3))
+   214→'3 seconds ago'
+   215→```
+   216→
       →…
 RELEASING.md
      1→# Release checklist …
-docs/filesize.md
-     1→# Filesize
-     3→::: humanize.filesize
-docs/i18n.md
-     1→# Internationalisation
-     3→::: humanize.i18n
-docs/index.md
-     1→# humanize
-     3→Welcome to the humanize API reference.
-     4→
-     5→- [Number](number.md)
-     6→- [Time](time.md)
-     7→- [Filesize](filesize.md)
-     8→- [Lists](lists.md)
-     9→- [I18n](i18n.md)
-    10→
-    11→{%
-      →…
-docs/lists.md
-     1→# Lists
-     3→::: humanize.lists
-docs/number.md
-     1→# Number
-     3→::: humanize.number
-docs/time.md
-     1→# Time
-     3→::: humanize.time
 mkdocs.yml
      1→site_name …
      2→site_url …
@@ -142,6 +137,8 @@ pyproject.toml
 src/humanize/__init__.py
     26→from ._version …
     28→__all__ = [
+    29→    "__version__",
+      →…
 src/humanize/filesize.py
 src/humanize/i18n.py
      8→TYPE_CHECKING = False
@@ -167,6 +164,8 @@ src/humanize/time.py
     13→from .number …
     15→TYPE_CHECKING = False
     21→__all__ = [
+    22→    "naturaldate",
+      →…
     30→@total_ordering
     31→class Unit(Enum):
     32→    MICROSECONDS = 0
@@ -178,6 +177,7 @@ src/humanize/time.py
     38→    MONTHS = 6
     39→    YEARS = 7
     40→
+tests/test_filesize.py
 tests/test_i18n.py
     17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
@@ -187,6 +187,8 @@ tests/test_i18n.py
    250→    def test_en_locale(self) -> None:
    262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
+tests/test_lists.py
+tests/test_number.py
 tests/test_time.py
     16→# In seconds
     17→ONE_MICROSECOND = 1 / 1000000

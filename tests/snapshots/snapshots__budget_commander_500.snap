@@ -2,11 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (494 words)
+budget: 500 (495 words)
 
 CHANGELOG.md
      1→# Changelog …
+   911→#### Testing for no arguments …
 CONTRIBUTING.md
+     1→# Contributing …
      3→## Issues …
     13→## Pull Requests …
 Readme.md
@@ -18,6 +20,8 @@ Readme.md
     12→- [Commander.js](#commanderjs)
     13→  - [Installation](#installation)
     14→  - [Quick Start](#quick-start)
+    15→  - [Declaring _program_ variable](#declaring-program-variable)
+    16→  - [Options](#options)
       →…
     61→## Installation …
     67→## Quick Start …
@@ -32,6 +36,8 @@ Readme.md
    968→### .parse() and .parseAsync()
    970→Call with no parameters to parse `process.argv`. Detects Electron and special node options like `node --eval`. Easy mode!
    971→
+   972→Or, call with an array of strings to parse, and optionally where the user arguments start by specifying where the arguments are `from`:
+   973→
       →…
   1164→## Support …
 Readme_zh-CN.md
@@ -41,30 +47,14 @@ Readme_zh-CN.md
    910→
       →…
 SECURITY.md
+     1→# Security Policy …
 docs/deprecated.md
-     1→# Deprecated …
-   227→## Removed …
-   229→### Short option flag longer than a single character
-   231→Short option flags like `-ws` were never supported, but the old README did not make this clear. The README now states that short options are a single character.
-   232→
-   233→- README updated in Commander v3.
-      →…
+   229→### Short option flag longer than a single character …
 docs/help-in-depth.md
-     1→# Help in Depth …
-    20→## Data Properties …
-    34→## Stringify and Style …
-   118→## Layout …
 docs/options-in-depth.md
-     2→# Options in Depth …
-    15→## Options taking varying numbers of option-arguments …
-   148→## Combining short options, and options taking arguments …
 docs/parsing-and-hooks.md
-     1→# Parsing life cycle and hooks …
 docs/release-policy.md
-     1→# Release Policy …
 docs/terminology.md
-     1→# Terminology …
-docs/zh-CN/可变参数的选项.md
 esm.mjs
      1→import commander from './index.js';
 examples/color-help-replacement.mjs
@@ -75,6 +65,7 @@ examples/global-options-added.js
     17→  createCommand(name) {
 examples/help-centered.mjs
 examples/man-style-help.mjs
+     5→function formatItem(term, termWidth, description, helper) {
 lib/argument.js
      3→class Argument {
 lib/command.js
@@ -114,7 +105,12 @@ lib/suggestSimilar.js
 package-support.json
 package.json
 tests/command.createArgument.test.js
+     4→  constructor(name, description) {
+    11→  createArgument(name, description) {
+    16→  createCommand(name) {
 tests/command.createOption.test.js
+     4→  constructor(flags, description) {
+    11→  createOption(flags, description) {
 tests/esm-imports-test.mjs
      1→../esm.mjs …
 tests/ts-imports.test.ts
@@ -124,7 +120,9 @@ tsconfig.js.json
 tsconfig.json
 tsconfig.ts.json
 typings/index.d.ts
-    12→type LiteralUnion …
+    12→type LiteralUnion<LiteralType, BaseType extends string | number> =
+    13→  | LiteralType
+    14→  | (BaseType & Record<never, never>);
     16→export class CommanderError extends Error {
     31→export class InvalidArgumentError extends CommanderError {
     40→export interface ErrorOptions {
@@ -149,5 +147,9 @@ typings/index.d.ts
   1113→export const program: Command;
 typings/index.test-d.ts
      1→import * as commander from './index';
+   384→interface MyCheeseOption {
+   385→  cheese: string;
+   386→}
+   509→class MyCommand extends commander.Command {
    510→  createCommand(name?: string): MyCommand {
    514→  myFunction(): void {
