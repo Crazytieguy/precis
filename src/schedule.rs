@@ -726,6 +726,100 @@ fn file_path_cost(relative_path: &Path) -> usize {
     format::count_words(&format!("{}\n", relative_path.display()))
 }
 
+/// Enqueue (or re-enqueue) priority queue items for the given groups.
+///
+/// Computes values, costs, and prerequisite state for each (group, stage, n)
+/// triple. Skips items already included (based on `group_stages`) and items
+/// that exceed `remaining_budget`. For over-budget items, invalidates their
+/// generation entries so stale heap entries are ignored.
+///
+/// Used for both initial queue construction (with empty state) and updates
+/// after an item is accepted (with partial state for affected groups only).
+fn enqueue_group_items(
+    group_indices: &[usize],
+    groups: &[Group],
+    group_stages: &[Option<IncludedStage>],
+    file_path_costs: &[usize],
+    files_shown: &HashSet<usize>,
+    remaining_budget: usize,
+    generation: &mut u64,
+    current_gen: &mut [HashMap<(StageKind, usize), u64>],
+    heap: &mut BinaryHeap<QueueItem>,
+) {
+    for &group_idx in group_indices {
+        let group = &groups[group_idx];
+        let stages = group.key.kind_category.stage_sequence();
+        for (stage_pos, &stage_kind) in stages.iter().enumerate() {
+            let max_n = group.max_n(stage_kind);
+            if max_n == 0 {
+                continue;
+            }
+            for n in 1..=max_n {
+                // Skip items already included
+                if let Some(ref included) = group_stages[group_idx] {
+                    let inc_pos = stages.iter().position(|&s| s == included.kind);
+                    let this_pos = stages.iter().position(|&s| s == stage_kind);
+                    if let (Some(ip), Some(tp)) = (inc_pos, this_pos)
+                        && (tp < ip || (tp == ip && n <= included.n_lines))
+                    {
+                        continue;
+                    }
+                }
+
+                let own_value = compute_value(group, stage_kind, n);
+                let own_cost = stage_cost(group, stage_kind, n);
+                let (prereq_value, prereq_cost) = compute_prereq_costs(
+                    group,
+                    stages,
+                    stage_pos,
+                    stage_kind,
+                    n,
+                    group_stages[group_idx].as_ref(),
+                );
+                let fp_cost: usize = group
+                    .file_indices
+                    .iter()
+                    .filter(|fi| !files_shown.contains(fi))
+                    .map(|&fi| file_path_costs[fi])
+                    .sum();
+
+                let total_cost = own_cost + prereq_cost + fp_cost;
+
+                // Budget pruning: skip items that can't fit. Invalidate their
+                // generation so stale heap entries are ignored. For Doc/Body,
+                // total_cost is monotonically non-decreasing with n, so we
+                // can break the inner loop early. Safe: if conditions change
+                // (file paths shown, prereqs included), the group will be in
+                // affected_groups and items will be re-evaluated.
+                if total_cost > remaining_budget {
+                    for invalidate_n in n..=max_n {
+                        let item_gen = *generation;
+                        *generation += 1;
+                        current_gen[group_idx].insert((stage_kind, invalidate_n), item_gen);
+                    }
+                    break;
+                }
+
+                let item_gen = *generation;
+                *generation += 1;
+                current_gen[group_idx].insert((stage_kind, n), item_gen);
+
+                heap.push(QueueItem {
+                    group_idx,
+                    stage_kind,
+                    n,
+                    own_value,
+                    own_cost,
+                    prereq_value,
+                    prereq_cost,
+                    file_path_cost: fp_cost,
+                    generation: item_gen,
+                });
+            }
+        }
+    }
+}
+
 /// Run the greedy scheduling algorithm.
 pub fn schedule(
     groups: &[Group],
@@ -772,53 +866,18 @@ pub fn schedule(
         vec![HashMap::new(); groups.len()];
     let mut heap: BinaryHeap<QueueItem> = BinaryHeap::new();
 
-    for (group_idx, group) in groups.iter().enumerate() {
-        let stages = group.key.kind_category.stage_sequence();
-        for (stage_pos, &stage_kind) in stages.iter().enumerate() {
-            let max_n = group.max_n(stage_kind);
-            if max_n == 0 {
-                continue;
-            }
-            for n in 1..=max_n {
-                let own_value = compute_value(group, stage_kind, n);
-                let own_cost = stage_cost(group, stage_kind, n);
-
-                // Compute prerequisite costs: all earlier stages not yet included
-                let (prereq_value, prereq_cost) =
-                    compute_prereq_costs(group, stages, stage_pos, stage_kind, n, None);
-
-                // File path costs for files not yet shown
-                let fp_cost: usize = group
-                    .file_indices
-                    .iter()
-                    .map(|&fi| file_path_costs[fi])
-                    .sum();
-
-                // Budget pruning: skip items that can never fit. For Doc/Body
-                // stages, total_cost is monotonically non-decreasing with n
-                // (each line adds to prerequisite costs), so we can break early.
-                if own_cost + prereq_cost + fp_cost > budget {
-                    break;
-                }
-
-                let item_gen = generation;
-                generation += 1;
-                current_gen[group_idx].insert((stage_kind, n), item_gen);
-
-                heap.push(QueueItem {
-                    group_idx,
-                    stage_kind,
-                    n,
-                    own_value,
-                    own_cost,
-                    prereq_value,
-                    prereq_cost,
-                    file_path_cost: fp_cost,
-                    generation: item_gen,
-                });
-            }
-        }
-    }
+    let all_indices: Vec<usize> = (0..groups.len()).collect();
+    enqueue_group_items(
+        &all_indices,
+        groups,
+        &group_stages,
+        &file_path_costs,
+        &files_shown,
+        budget,
+        &mut generation,
+        &mut current_gen,
+        &mut heap,
+    );
 
     let mut remaining_budget = budget;
 
@@ -871,8 +930,8 @@ pub fn schedule(
         let group = &groups[item.group_idx];
         let stages = group.key.kind_category.stage_sequence();
         // Find the position of this stage in the progression
+        let stage_pos = stages.iter().position(|&s| s == item.stage_kind).unwrap();
         for (pos, &sk) in stages.iter().enumerate() {
-            let stage_pos = stages.iter().position(|&s| s == item.stage_kind).unwrap();
             let target_n = if sk == item.stage_kind {
                 item.n
             } else if pos < stage_pos {
@@ -918,79 +977,18 @@ pub fn schedule(
             }
         }
 
-        for &other_group_idx in &affected_groups {
-            let other_group = &groups[other_group_idx];
-            let other_stages = other_group.key.kind_category.stage_sequence();
-            for &sk in other_stages {
-                let max_n = other_group.max_n(sk);
-                for n in 1..=max_n {
-                    // Skip items already included
-                    if let Some(ref included) = group_stages[other_group_idx] {
-                        let inc_pos = other_stages.iter().position(|&s| s == included.kind);
-                        let this_pos = other_stages.iter().position(|&s| s == sk);
-                        if let (Some(ip), Some(tp)) = (inc_pos, this_pos)
-                            && (tp < ip || (tp == ip && n <= included.n_lines))
-                        {
-                            continue;
-                        }
-                    }
-
-                    let stage_pos = other_stages.iter().position(|&s| s == sk).unwrap();
-                    let own_value = compute_value(other_group, sk, n);
-                    let own_cost = stage_cost(other_group, sk, n);
-                    let (prereq_value, prereq_cost) = compute_prereq_costs(
-                        other_group,
-                        other_stages,
-                        stage_pos,
-                        sk,
-                        n,
-                        group_stages[other_group_idx].as_ref(),
-                    );
-                    let fp_cost: usize = other_group
-                        .file_indices
-                        .iter()
-                        .filter(|fi| !files_shown.contains(fi))
-                        .map(|&fi| file_path_costs[fi])
-                        .sum();
-
-                    let total_cost = own_cost + prereq_cost + fp_cost;
-
-                    // Budget pruning: skip items that can't fit in remaining
-                    // budget. Invalidate their generation so stale heap entries
-                    // are ignored. For Doc/Body, total_cost is monotonically
-                    // non-decreasing with n, so break the inner loop early.
-                    // Safe: if conditions change (file paths shown, prereqs
-                    // included), the group will be in affected_groups and
-                    // items will be re-evaluated.
-                    if total_cost > remaining_budget {
-                        // Invalidate any stale heap entries for this and
-                        // all remaining n values
-                        for invalidate_n in n..=max_n {
-                            let item_gen = generation;
-                            generation += 1;
-                            current_gen[other_group_idx].insert((sk, invalidate_n), item_gen);
-                        }
-                        break;
-                    }
-
-                    let item_gen = generation;
-                    generation += 1;
-                    current_gen[other_group_idx].insert((sk, n), item_gen);
-
-                    heap.push(QueueItem {
-                        group_idx: other_group_idx,
-                        stage_kind: sk,
-                        n,
-                        own_value,
-                        own_cost,
-                        prereq_value,
-                        prereq_cost,
-                        file_path_cost: fp_cost,
-                        generation: item_gen,
-                    });
-                }
-            }
-        }
+        let affected: Vec<usize> = affected_groups.into_iter().collect();
+        enqueue_group_items(
+            &affected,
+            groups,
+            &group_stages,
+            &file_path_costs,
+            &files_shown,
+            remaining_budget,
+            &mut generation,
+            &mut current_gen,
+            &mut heap,
+        );
     }
 
     Schedule {
