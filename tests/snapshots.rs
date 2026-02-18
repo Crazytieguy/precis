@@ -563,7 +563,7 @@ sample_test!(markdown_sample_budget_50, "README.md", markdown_sample, 50);
 sample_test!(markdown_sample_budget_200, "README.md", markdown_sample, 200);
 sample_test!(markdown_sample_budget_10000, "README.md", markdown_sample, 10000);
 
-// Budget monotonicity: more budget should never produce fewer words.
+// Budget monotonicity: more budget should never produce fewer tokens.
 #[test]
 fn budget_monotonicity_inline() {
     let samples: &[(&str, &str)] = &[
@@ -579,7 +579,7 @@ fn budget_monotonicity_inline() {
     let budgets = [0, 10, 20, 50, 100, 200, 500, 1000, 10000];
 
     for (filename, source) in samples {
-        let mut prev_words = 0;
+        let mut prev_tokens = 0;
         for &budget in &budgets {
             let output = format::render_file_with_budget(
                 budget,
@@ -587,16 +587,16 @@ fn budget_monotonicity_inline() {
                 Path::new(""),
                 source,
             );
-            let words = format::count_tokens(&output);
+            let tokens = format::count_tokens(&output);
             assert!(
-                words >= prev_words,
-                "Budget monotonicity violation in {}: budget {} ({} words) < previous ({} words)",
+                tokens >= prev_tokens,
+                "Budget monotonicity violation in {}: budget {} ({} tokens) < previous ({} tokens)",
                 filename,
                 budget,
-                words,
-                prev_words,
+                tokens,
+                prev_tokens,
             );
-            prev_words = words;
+            prev_tokens = tokens;
         }
     }
 }
@@ -613,18 +613,18 @@ fn single_file_budget_rust() {
     let source = std::fs::read_to_string(&file).unwrap();
 
     // Budget monotonicity across a range
-    let mut prev_words = 0;
+    let mut prev_tokens = 0;
     for budget in [0, 50, 100, 200, 500, 1000, 10000] {
         let output = format::render_file_with_budget(budget, &file, &root, &source);
-        let words = format::count_tokens(&output);
+        let tokens = format::count_tokens(&output);
         assert!(
-            words >= prev_words,
-            "Single file budget {} ({} words) < previous ({} words)",
+            tokens >= prev_tokens,
+            "Single file budget {} ({} tokens) < previous ({} tokens)",
             budget,
-            words,
-            prev_words,
+            tokens,
+            prev_tokens,
         );
-        prev_words = words;
+        prev_tokens = tokens;
     }
 }
 

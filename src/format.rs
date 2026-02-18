@@ -220,7 +220,7 @@ fn render_symbol(
 
     // Python docstrings (after signature)
     // doc_n is a cumulative limit across pre-symbol comments and docstrings,
-    // matching the scheduler's flat doc_line_words vector.
+    // matching the scheduler's flat doc_line_tokens vector.
     let doc_n_remaining = doc_n.saturating_sub(doc_lines_shown);
     if doc_n_remaining > 0 && layout.ds_end > layout.ds_start {
         let ds_lines_available = layout.ds_end - layout.ds_start;
@@ -792,7 +792,7 @@ fn find_word(needle: &str, haystack: &str) -> Option<usize> {
 // ---------------------------------------------------------------------------
 
 /// Pre-computed line ranges for a single symbol. Computed once per symbol,
-/// then read by both the scheduler (for word-cost counting) and the renderer
+/// then read by both the scheduler (for token-cost counting) and the renderer
 /// (for line emission). All line numbers are 0-indexed.
 pub struct SymbolLayout {
     /// First content line of the doc comment block preceding the symbol.
@@ -1076,18 +1076,18 @@ mod tests {
         let files = vec![path.to_path_buf()];
         let sources = vec![Some(source.to_string())];
 
-        let mut prev_words = 0;
+        let mut prev_tokens = 0;
         for budget in [10, 50, 100, 200, 500, 1000, 5000] {
             let output = render_with_budget(budget, root, &files, &sources);
-            let words = count_tokens(&output);
+            let tokens = count_tokens(&output);
             assert!(
-                words >= prev_words,
+                tokens >= prev_tokens,
                 "Budget monotonicity violated at budget {}: {} < {}",
                 budget,
-                words,
-                prev_words,
+                tokens,
+                prev_tokens,
             );
-            prev_words = words;
+            prev_tokens = tokens;
         }
     }
 }

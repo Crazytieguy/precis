@@ -307,19 +307,19 @@ pub struct GroupKey {
 pub struct SymbolCosts {
     pub file_idx: usize,
     pub symbol_idx: usize,
-    pub name_words: usize,
+    pub name_tokens: usize,
     /// Additional tokens for full signature beyond the name line.
-    pub signature_words: usize,
+    pub signature_tokens: usize,
     /// Tokens per doc comment line (ordered). For Python symbols with both
     /// pre-symbol `#` comments and post-signature docstrings, this is the
     /// concatenation of both sections (pre-comments first, then docstring lines).
-    pub doc_line_words: Vec<usize>,
-    /// Number of pre-symbol comment lines in `doc_line_words`. The renderer
+    pub doc_line_tokens: Vec<usize>,
+    /// Number of pre-symbol comment lines in `doc_line_tokens`. The renderer
     /// emits pre-comments and docstrings as separate sections with a signature
     /// in between, so truncation markers must account for this split point.
     pub pre_doc_count: usize,
     /// Tokens per body line (ordered).
-    pub body_line_words: Vec<usize>,
+    pub body_line_tokens: Vec<usize>,
     /// Whether the symbol's body contains nested symbols (e.g., class methods).
     /// When true, body truncation markers are suppressed by the renderer.
     pub body_has_nested: bool,
@@ -459,8 +459,8 @@ pub fn build_groups(
                 max_doc_n: 0,
                 max_body_n: 0,
             });
-            group.max_doc_n = group.max_doc_n.max(costs.doc_line_words.len());
-            group.max_body_n = group.max_body_n.max(costs.body_line_words.len());
+            group.max_doc_n = group.max_doc_n.max(costs.doc_line_tokens.len());
+            group.max_body_n = group.max_body_n.max(costs.body_line_tokens.len());
             group.symbols.push(costs);
             group.file_indices.insert(file_idx);
         }
@@ -471,7 +471,7 @@ pub fn build_groups(
     groups
 }
 
-/// Compute word costs for each rendering stage of a single symbol.
+/// Compute token costs for each rendering stage of a single symbol.
 /// Reads all line ranges from the pre-computed layout.
 fn compute_symbol_costs(
     file_idx: usize,
@@ -485,7 +485,7 @@ fn compute_symbol_costs(
     let sig_end = layout.sig_end;
     let is_section = sym.kind == parse::SymbolKind::Section;
 
-    let name_words = if is_section {
+    let name_tokens = if is_section {
         // Sections show the full heading/section line at Names stage (no
         // truncation marker). Cost matches the signature line since headings
         // are single-line.
@@ -496,15 +496,15 @@ fn compute_symbol_costs(
         // that the renderer appends to names-only entries. Including the
         // ellipsis cost keeps Names-only rendering in sync with the budget.
         // When Signatures are also included (no ellipsis rendered), the +1 is
-        // offset by a corresponding -1 in signature_words (sig_total -
-        // name_words), so the total Names+Signatures cost remains exact.
+        // offset by a corresponding -1 in signature_tokens (sig_total -
+        // name_tokens), so the total Names+Signatures cost remains exact.
         let name_line = format::format_symbol_name(sym, lines);
         format::count_tokens(&name_line) + 1
     };
 
     // Signature: additional tokens from showing full signature lines (with line numbers)
     // beyond what the name-only line shows.
-    let mut sig_formatted_words = 0;
+    let mut sig_formatted_tokens = 0;
     for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
         // Strip trailing badges from markdown heading lines (matches renderer)
         let line = if is_section && i == sym_line_0 {
@@ -512,47 +512,47 @@ fn compute_symbol_costs(
         } else {
             line
         };
-        sig_formatted_words += format::count_tokens(&format::fmt_line(i, line));
+        sig_formatted_tokens += format::count_tokens(&format::fmt_line(i, line));
     }
-    let signature_words = sig_formatted_words.saturating_sub(name_words);
+    let signature_tokens = sig_formatted_tokens.saturating_sub(name_tokens);
 
     // Doc comment lines (pre-symbol comments + Python docstrings)
-    let mut doc_line_words = Vec::new();
+    let mut doc_line_tokens = Vec::new();
     if layout.doc_start < layout.doc_end {
         for (i, line) in lines.iter().enumerate().take(layout.doc_end).skip(layout.doc_start) {
-            doc_line_words.push(format::count_tokens(&format::fmt_line(i, line)));
+            doc_line_tokens.push(format::count_tokens(&format::fmt_line(i, line)));
         }
     }
-    let pre_doc_count = doc_line_words.len();
+    let pre_doc_count = doc_line_tokens.len();
     // Python docstrings
     if layout.ds_end > layout.ds_start {
         for (i, line) in lines.iter().enumerate().take(layout.ds_end).skip(layout.ds_start) {
-            doc_line_words.push(format::count_tokens(&format::fmt_line(i, line)));
+            doc_line_tokens.push(format::count_tokens(&format::fmt_line(i, line)));
         }
     }
 
     // Body lines — ranges come from layout (already truncated at first child)
-    let mut body_line_words = Vec::new();
+    let mut body_line_tokens = Vec::new();
     if is_section {
         // Markdown: body is content text between headings
         for (i, line) in lines.iter().enumerate().take(layout.md_section_end).skip(layout.md_content_start) {
-            body_line_words.push(format::count_tokens(&format::fmt_line(i, line)));
+            body_line_tokens.push(format::count_tokens(&format::fmt_line(i, line)));
         }
     } else {
         // Code: body_start..body_end (truncated at first child by layout)
         for (i, line) in lines.iter().enumerate().take(layout.body_end).skip(layout.body_start) {
-            body_line_words.push(format::count_tokens(&format::fmt_line(i, line)));
+            body_line_tokens.push(format::count_tokens(&format::fmt_line(i, line)));
         }
     }
 
     SymbolCosts {
         file_idx,
         symbol_idx,
-        name_words,
-        signature_words,
-        doc_line_words,
+        name_tokens,
+        signature_tokens,
+        doc_line_tokens,
         pre_doc_count,
-        body_line_words,
+        body_line_tokens,
         body_has_nested: layout.has_children,
     }
 }
@@ -806,7 +806,7 @@ impl Ord for QueueItem {
     }
 }
 
-/// Compute the word cost of a file path line.
+/// Compute the token cost of a file path line.
 fn file_path_cost(relative_path: &Path) -> usize {
     // Path line is just the relative path as text, plus a newline.
     format::count_tokens(&format!("{}\n", relative_path.display()))
@@ -1058,10 +1058,10 @@ pub fn schedule(
     }
 }
 
-/// Compute the word cost of a single stage for a group.
+/// Compute the token cost of a single stage for a group.
 ///
 /// For Doc and Body stages, includes the cost delta of standalone truncation
-/// markers (`→…`, 1 word each). At Doc/Body(n), symbols with more than n lines
+/// markers (`→…`, 1 token each). At Doc/Body(n), symbols with more than n lines
 /// get a truncation marker. Advancing from n-1 to n removes markers for symbols
 /// that had exactly n-1 remaining lines, so the delta is:
 ///   markers_at(n) - markers_at(n-1)
@@ -1072,15 +1072,15 @@ fn stage_cost(group: &Group, stage: StageKind, n: usize) -> usize {
         // FilePath has zero own_cost — its cost is handled via file_path_cost
         // on the QueueItem, which correctly accounts for cross-group sharing.
         StageKind::FilePath => 0,
-        StageKind::Names => group.symbols.iter().map(|s| s.name_words).sum(),
-        StageKind::Signatures => group.symbols.iter().map(|s| s.signature_words).sum(),
+        StageKind::Names => group.symbols.iter().map(|s| s.name_tokens).sum(),
+        StageKind::Signatures => group.symbols.iter().map(|s| s.signature_tokens).sum(),
         StageKind::Doc => {
             // Suppress truncation marker at the pre-comment/docstring split
             // point. The renderer emits these as two sections separated by
             // the signature; at n == pre_doc_count the pre-comments are fully
             // shown (no marker) and the docstring hasn't started (no marker).
-            line_stage_cost(group, n, |s| &s.doc_line_words, |s, n| {
-                let total = s.doc_line_words.len();
+            line_stage_cost(group, n, |s| &s.doc_line_tokens, |s, n| {
+                let total = s.doc_line_tokens.len();
                 !(total > s.pre_doc_count && n == s.pre_doc_count)
             })
         }
@@ -1088,7 +1088,7 @@ fn stage_cost(group: &Group, stage: StageKind, n: usize) -> usize {
         // children (e.g., class bodies containing individually-rendered
         // methods). Only count markers for symbols without nested children.
         StageKind::Body => {
-            line_stage_cost(group, n, |s| &s.body_line_words, |s, _n| !s.body_has_nested)
+            line_stage_cost(group, n, |s| &s.body_line_tokens, |s, _n| !s.body_has_nested)
         }
     }
 }
