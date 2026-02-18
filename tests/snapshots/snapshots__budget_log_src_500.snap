@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (455 words)
+budget: 500 (466 words)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -35,7 +35,6 @@ kv/error.rs
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
 
 kv/key.rs
-     3→use std::borrow::Borrow;
      7→pub trait ToKey {
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
@@ -43,6 +42,7 @@ kv/key.rs
     40→}
 
 kv/mod.rs
+   246→mod error;
    247→mod key;
    254→pub use self::error::Error;
    255→pub use self::key::{Key, ToKey};
@@ -55,13 +55,11 @@ kv/mod.rs
    265→pub use self::source::Visitor;
 
 kv/source.rs
-     6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
     51→pub trait Source {
    235→pub trait VisitSource<'kvs> {
    462→pub use VisitSource as Visitor;
 
 kv/value.rs
-     6→use std::fmt;
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
    119→pub struct Value<'v> {
@@ -87,7 +85,7 @@ kv/value.rs
    747→        U128(u128),
    748→        Debug(&'v dyn fmt::Debug),
    749→        Display(&'v dyn fmt::Display),
-   750→    }
+      →…
   1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
@@ -122,7 +120,8 @@ lib.rs
    782→    Static(&'static str),
    783→    Borrowed(&'a str),
    784→}
-   788→    fn get …
+   787→    #[inline]
+   788→    fn get(&self) -> &'a str {
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
    844→    args: fmt::Arguments<'a>,
@@ -140,7 +139,11 @@ lib.rs
   1202→}
   1249→pub trait Log: Sync + Send {
   1283→struct NopLogger;
-  1483→fn set_logger_inner …
+  1482→#[cfg(target_has_atomic = "ptr")]
+  1483→fn set_logger_inner<F>(make_logger: F) -> Result<(), SetLoggerError>
+  1484→where
+  1485→    F: FnOnce() -> &'static dyn Log,
+  1486→{
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
   1599→#[doc(hidden)]

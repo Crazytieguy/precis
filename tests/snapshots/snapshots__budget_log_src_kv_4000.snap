@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3955 words)
+budget: 4000 (3767 words)
 
 error.rs
      1→use std::fmt;
@@ -121,59 +121,6 @@ key.rs
    142→        fn serialize …
 
 mod.rs
-     1→//! Structured logging.
-     2→//!
-     3→//! Add the `kv` feature to your `Cargo.toml` to enable
-     4→//! this module:
-     5→//!
-     6→//! ```toml
-     7→//! [dependencies.log]
-     8→//! features = ["kv"]
-     9→//! ```
-    10→//!
-    11→//! # Structured logging in `log`
-    12→//!
-    13→//! Structured logging enhances traditional text-based log records with user-defined
-    14→//! attributes. Structured logs can be analyzed using a variety of data processing
-    15→//! techniques, without needing to find and parse attributes from unstructured text first.
-    16→//!
-    17→//! In `log`, user-defined attributes are part of a [`Source`] on the log record.
-    18→//! Each attribute is a key-value; a pair of [`Key`] and [`Value`]. Keys are strings
-    19→//! and values are a datum of any type that can be formatted or serialized. Simple types
-    20→//! like strings, booleans, and numbers are supported, as well as arbitrarily complex
-    21→//! structures involving nested objects and sequences.
-    22→//!
-    23→//! ## Adding key-values to log records
-    24→//!
-    25→//! Key-values appear before the message format in the `log!` macros:
-    26→//!
-    27→//! ```
-    28→//! # use log::info;
-    29→//! info!(a = 1; "Something of interest");
-    30→//! ```
-    31→//!
-    32→//! Key-values support the same shorthand identifier syntax as `format_args`:
-    33→//!
-    34→//! ```
-    35→//! # use log::info;
-    36→//! let a = 1;
-    37→//!
-    38→//! info!(a; "Something of interest");
-    39→//! ```
-    40→//!
-    41→//! Values are capturing using the [`ToValue`] trait by default. To capture a value
-    42→//! using a different trait implementation, use a modifier after its key. Here's how
-    43→//! the same example can capture `a` using its `Debug` implementation instead:
-    44→//!
-    45→//! ```
-    46→//! # use log::info;
-    47→//! info!(a:? = 1; "Something of interest");
-    48→//! ```
-    49→//!
-    50→//! The following capturing modifiers are supported:
-    51→//!
-    52→//! - `:?` will capture the value using `Debug`.
-      →…
    246→mod error;
    247→mod key;
    249→#[cfg(not(feature = "kv_unstable"))]
@@ -574,7 +521,20 @@ value.rs
    294→                }
    295→            }
    296→
-      →…
+   297→            impl<'v> From<$into_ty> for Value<'v> {
+   298→                fn from(value: $into_ty) -> Self {
+   299→                    Value::from_inner(value)
+   300→                }
+   301→            }
+   302→
+   303→            impl<'v> From<&'v $into_ty> for Value<'v> {
+   304→                fn from(value: &'v $into_ty) -> Self {
+   305→                    Value::from_inner(*value)
+   306→                }
+   307→            }
+   308→        )*
+   309→    };
+   310→}
    312→macro_rules! impl_to_value_nonzero_primitive {
    313→    ($($into_ty:ident,)*) => {
    314→        $(
@@ -584,7 +544,20 @@ value.rs
    318→                }
    319→            }
    320→
-      →…
+   321→            impl<'v> From<std::num::$into_ty> for Value<'v> {
+   322→                fn from(value: std::num::$into_ty) -> Self {
+   323→                    Value::from(value.get())
+   324→                }
+   325→            }
+   326→
+   327→            impl<'v> From<&'v std::num::$into_ty> for Value<'v> {
+   328→                fn from(value: &'v std::num::$into_ty) -> Self {
+   329→                    Value::from(value.get())
+   330→                }
+   331→            }
+   332→        )*
+   333→    };
+   334→}
    336→macro_rules! impl_value_to_primitive {
    337→    ($(#[doc = $doc:tt] $into_name:ident -> $into_ty:ty,)*) => {
    338→        impl<'v> Value<'v> {
@@ -594,7 +567,9 @@ value.rs
    342→                    self.inner.$into_name()
    343→                }
    344→            )*
-      →…
+   345→        }
+   346→    }
+   347→}
    377→    /// Try to convert this value into an error.
    378→    #[cfg(feature = "kv_std")]
    379→    pub fn to_borrowed_error(&self) -> Option<&(dyn std::error::Error + 'static)> {

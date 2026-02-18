@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (473 words)
+budget: 500 (469 words)
 
 error.rs
      3→/// An error encountered while working with structured data.
@@ -26,7 +26,6 @@ error.rs
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
 
 key.rs
-     3→use std::borrow::Borrow;
      6→/// A type that can be converted into a [`Key`](struct.Key.html).
      7→pub trait ToKey {
     36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -76,7 +75,6 @@ source.rs
    462→pub use VisitSource as Visitor;
 
 value.rs
-     6→use std::fmt;
      8→pub use crate::kv::Error;
     10→/// A type that can be converted into a [`Value`](struct.Value.html).
     11→pub trait ToValue {

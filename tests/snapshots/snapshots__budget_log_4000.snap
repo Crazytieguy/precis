@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3906 words)
+budget: 4000 (3909 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -264,19 +264,6 @@ src/kv/key.rs
    139→    use serde_core::{Serialize, Serializer};
 
 src/kv/mod.rs
-     1→//! Structured logging.
-     2→//!
-     3→//! Add the `kv` feature to your `Cargo.toml` to enable
-     4→//! this module:
-     5→//!
-     6→//! ```toml
-     7→//! [dependencies.log]
-     8→//! features = ["kv"]
-     9→//! ```
-    10→//!
-    11→//! # Structured logging in `log`
-    12→//!
-      →…
    246→mod error;
    247→mod key;
    249→#[cfg(not(feature = "kv_unstable"))]
@@ -322,6 +309,9 @@ src/kv/source.rs
     32→///         println!("{key}: {value}");
     33→///
     34→///         Ok(())
+    35→///     }
+    36→/// }
+    37→///
       →…
     51→pub trait Source {
     62→    fn visit …
@@ -387,6 +377,9 @@ src/kv/value.rs
     56→///
     57→/// ## Using the `ToValue` trait
     58→///
+    59→/// The `ToValue` trait can be used to capture values generically.
+    60→/// It's the bound used by `Source`.
+    61→///
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
@@ -416,8 +409,14 @@ src/kv/value.rs
    251→#[cfg(feature = "kv_sval")]
    252→impl<'v> sval_ref::ValueRef<'v> for Value<'v> {
    288→macro_rules! impl_to_value_primitive {
+   289→    ($($into_ty:ty,)*) => {
+      →…
    312→macro_rules! impl_to_value_nonzero_primitive {
+   313→    ($($into_ty:ident,)*) => {
+      →…
    336→macro_rules! impl_value_to_primitive {
+   337→    ($(#[doc = $doc:tt] $into_name:ident -> $into_ty:ty,)*) => {
+      →…
    379→    pub fn to_borrowed_error …
    384→    pub fn to_borrowed_str …
    389→#[cfg(feature = "kv_std")]
@@ -768,7 +767,6 @@ src/lib.rs
   1497→            STATE.store(INITIALIZED, Ordering::Release);
   1498→            Ok(())
   1499→        }
-  1500→        Err(INITIALIZING) => {
       →…
   1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.

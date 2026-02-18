@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1946 words)
+budget: 2000 (1948 words)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -61,7 +61,6 @@ kv/error.rs
     77→        pub fn boxed …
 
 kv/key.rs
-     3→use std::borrow::Borrow;
      6→/// A type that can be converted into a [`Key`](struct.Key.html).
      7→pub trait ToKey {
      9→    fn to_key …
@@ -84,19 +83,6 @@ kv/key.rs
    137→    use super::*;
 
 kv/mod.rs
-     1→//! Structured logging.
-     2→//!
-     3→//! Add the `kv` feature to your `Cargo.toml` to enable
-     4→//! this module:
-     5→//!
-     6→//! ```toml
-     7→//! [dependencies.log]
-     8→//! features = ["kv"]
-     9→//! ```
-    10→//!
-    11→//! # Structured logging in `log`
-    12→//!
-      →…
    246→mod error;
    247→mod key;
    249→#[cfg(not(feature = "kv_unstable"))]
@@ -121,6 +107,8 @@ kv/source.rs
     12→/// Use the [`VisitSource`](trait.VisitSource.html) trait to inspect the structured data
     13→/// in a source.
     14→///
+    15→/// A source is like an iterator over its key-values, except with a push-based API
+    16→/// instead of a pull-based one.
       →…
     51→pub trait Source {
     62→    fn visit …
@@ -144,7 +132,6 @@ kv/source.rs
    462→pub use VisitSource as Visitor;
 
 kv/value.rs
-     6→use std::fmt;
      8→pub use crate::kv::Error;
     10→/// A type that can be converted into a [`Value`](struct.Value.html).
     11→pub trait ToValue {
@@ -155,6 +142,8 @@ kv/value.rs
     36→///
     37→/// # Capturing values
     38→///
+    39→/// There are a few ways to capture a value:
+    40→///
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
@@ -195,6 +184,8 @@ kv/value.rs
    453→/// to a more fully-featured serialization framework like `serde` or `sval`. A value visitor
    454→/// can differentiate primitive types through methods like [`VisitValue::visit_bool`] and
    455→/// [`VisitValue::visit_str`], but more complex types like maps and sequences
+   456→/// will fallthrough to [`VisitValue::visit_any`].
+   457→///
       →…
    462→pub trait VisitValue<'v> {
    469→    fn visit_any …
@@ -443,6 +434,8 @@ lib.rs
   1494→            unsafe {
   1495→                LOGGER = make_logger();
   1496→            }
+  1497→            STATE.store(INITIALIZED, Ordering::Release);
+  1498→            Ok(())
       →…
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///

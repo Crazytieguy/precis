@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1970 words)
+budget: 2000 (1972 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -73,7 +73,6 @@ README.md
 examples/bench.rs
 
 examples/bench_acquire.rs
-     5→use once_cell::sync::OnceCell;
     25→#[inline(never)]
     26→fn thread_main(i: usize) {
 
@@ -83,7 +82,6 @@ examples/regex.rs
      5→macro_rules! regex {
 
 examples/test_synchronization.rs
-    10→use once_cell::sync::OnceCell;
 
 src/imp_cs.rs
      1→use core::panic::{RefUnwindSafe, UnwindSafe} …
@@ -457,18 +455,13 @@ tests/it/race_once_box.rs
     24→    }
     27→impl Heap {
 
-tests/it/sync_lazy.rs
-
 tests/it/sync_once_cell.rs
      7→use std::sync::Barrier;
     10→use core::cell::Cell;
    178→#[test]
-      →…
+   179→#[cfg_attr(miri, ignore)] // miri doesn't support processes
+   180→#[cfg(feature = "std")]
    181→fn reentrant_init() {
-
-tests/it/unsync_lazy.rs
-
-tests/it/unsync_once_cell.rs
 
 xtask/Cargo.toml
      1→[package …

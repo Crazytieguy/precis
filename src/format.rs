@@ -559,12 +559,13 @@ pub(crate) fn doc_comment_start(lines: &[&str], symbol_line_0: usize, lang: Opti
 
     let prev_trimmed = lines[peek - 1].trim();
 
-    // Rust-style line doc comments (/// or //!)
-    if prev_trimmed.starts_with("///") || prev_trimmed.starts_with("//!") {
+    // Rust-style line doc comments (///).
+    // Note: //! (inner doc comments) document the containing module, not the next item.
+    if prev_trimmed.starts_with("///") {
         peek -= 1;
         while peek > 0 {
             let above = lines[peek - 1].trim();
-            if above.starts_with("///") || above.starts_with("//!") {
+            if above.starts_with("///") {
                 peek -= 1;
             } else {
                 break;

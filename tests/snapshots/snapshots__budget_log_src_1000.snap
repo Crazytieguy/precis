@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (954 words)
+budget: 1000 (956 words)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -41,7 +41,6 @@ kv/error.rs
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
 
 kv/key.rs
-     3→use std::borrow::Borrow;
      6→/// A type that can be converted into a [`Key`](struct.Key.html).
      7→pub trait ToKey {
     36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -91,7 +90,6 @@ kv/source.rs
    462→pub use VisitSource as Visitor;
 
 kv/value.rs
-     6→use std::fmt;
      8→pub use crate::kv::Error;
     10→/// A type that can be converted into a [`Value`](struct.Value.html).
     11→pub trait ToValue {
@@ -193,6 +191,7 @@ lib.rs
    788→    fn get(&self) -> &'a str {
    789→        match *self {
    790→            MaybeStaticStr::Static(s) => s,
+   791→            MaybeStaticStr::Borrowed(s) => s,
       →…
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
@@ -235,6 +234,7 @@ lib.rs
   1486→{
   1487→    match STATE.compare_exchange(
   1488→        UNINITIALIZED,
+  1489→        INITIALIZING,
       →…
   1549→pub struct SetLoggerError(());
   1558→#[cfg(feature = "std")]

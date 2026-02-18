@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (465 words)
+budget: 500 (467 words)
 
 CHANGELOG.md
 
@@ -21,10 +21,11 @@ README.md
     58→### In executables …
    106→## Structured logging …
 
+benches/value.rs
+
 rfcs/0296-structured-logging.md
 
 src/__private_api.rs
-     3→use self::sealed::KVs;
      7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -49,10 +50,9 @@ src/kv/error.rs
     15→    Value(crate::kv::value::inner::Error),
     16→    Fmt,
     17→}
-    73→    pub(super) type BoxedError …
+    73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
 
 src/kv/key.rs
-     3→use std::borrow::Borrow;
      7→pub trait ToKey {
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
@@ -60,6 +60,7 @@ src/kv/key.rs
     40→}
 
 src/kv/mod.rs
+   246→mod error;
    247→mod key;
    254→pub use self::error::Error;
    255→pub use self::key::{Key, ToKey};
@@ -72,13 +73,11 @@ src/kv/mod.rs
    265→pub use self::source::Visitor;
 
 src/kv/source.rs
-     6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
     51→pub trait Source {
    235→pub trait VisitSource<'kvs> {
    462→pub use VisitSource as Visitor;
 
 src/kv/value.rs
-     6→use std::fmt;
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
    119→pub struct Value<'v> {
@@ -172,6 +171,11 @@ test_max_level_features/main.rs
     18→    fn enabled(&self, _: &Metadata) -> bool {
     22→    fn log(&self, record: &Record) {
     26→    fn flush(&self) {}
+
+tests/integration.rs
+
+tests/macros.rs
+   420→enum Type {
 
 triagebot.toml
      1→[assign …

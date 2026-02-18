@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (943 words)
+budget: 1000 (948 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -79,7 +79,6 @@ src/kv/error.rs
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
 
 src/kv/key.rs
-     3→use std::borrow::Borrow;
      7→pub trait ToKey {
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
@@ -123,7 +122,6 @@ src/kv/source.rs
    462→pub use VisitSource as Visitor;
 
 src/kv/value.rs
-     6→use std::fmt;
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
    119→pub struct Value<'v> {
@@ -208,6 +206,8 @@ src/lib.rs
    784→}
    787→    #[inline]
    788→    fn get(&self) -> &'a str {
+   789→        match *self {
+      →…
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
    844→    args: fmt::Arguments<'a>,
@@ -243,6 +243,8 @@ src/lib.rs
   1484→where
   1485→    F: FnOnce() -> &'static dyn Log,
   1486→{
+  1487→    match STATE.compare_exchange(
+      →…
   1549→pub struct SetLoggerError(());
   1559→impl error::Error for SetLoggerError {}
   1566→pub struct ParseLevelError(());

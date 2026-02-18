@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1934 words)
+budget: 2000 (1936 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -120,7 +120,6 @@ src/kv/error.rs
     77→        pub fn boxed …
 
 src/kv/key.rs
-     3→use std::borrow::Borrow;
      6→/// A type that can be converted into a [`Key`](struct.Key.html).
      7→pub trait ToKey {
      9→    fn to_key …
@@ -143,17 +142,6 @@ src/kv/key.rs
    137→    use super::*;
 
 src/kv/mod.rs
-     1→//! Structured logging.
-     2→//!
-     3→//! Add the `kv` feature to your `Cargo.toml` to enable
-     4→//! this module:
-     5→//!
-     6→//! ```toml
-     7→//! [dependencies.log]
-     8→//! features = ["kv"]
-     9→//! ```
-    10→//!
-      →…
    246→mod error;
    247→mod key;
    249→#[cfg(not(feature = "kv_unstable"))]
@@ -197,7 +185,6 @@ src/kv/source.rs
    462→pub use VisitSource as Visitor;
 
 src/kv/value.rs
-     6→use std::fmt;
      8→pub use crate::kv::Error;
     10→/// A type that can be converted into a [`Value`](struct.Value.html).
     11→pub trait ToValue {
@@ -547,6 +534,9 @@ tests/integration.rs
      9→}
     11→struct Logger(Arc<State>);
     13→impl Log for Logger {
+    14→    fn enabled(&self, _: &Metadata) -> bool {
+    18→    fn log(&self, record: &Record) {
+    22→    fn flush(&self) {}
     62→fn test_filter …
     89→fn test_line_numbers …
 
@@ -554,6 +544,9 @@ tests/macros.rs
      3→macro_rules! all_log_macros {
     14→struct Logger;
     16→impl Log for Logger {
+    17→    fn enabled(&self, _: &Metadata) -> bool {
+    20→    fn log(&self, _: &Record) {}
+    21→    fn flush(&self) {}
    420→enum Type {
    421→    Some,
    422→    None,

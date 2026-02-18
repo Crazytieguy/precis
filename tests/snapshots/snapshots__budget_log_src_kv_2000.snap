@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1951 words)
+budget: 2000 (1955 words)
 
 error.rs
      1→use std::fmt;
@@ -35,8 +35,7 @@ error.rs
     41→            _ => crate::kv::value::inner::Error::boxed(self),
     42→            #[cfg(not(feature = "kv_std"))]
     43→            _ => crate::kv::value::inner::Error::msg("error inspecting a value"),
-    44→        }
-    45→    }
+      →…
     68→#[cfg(feature = "std")]
     69→mod std_support {
     70→    use super::*;
@@ -76,23 +75,6 @@ key.rs
    139→    use serde_core::{Serialize, Serializer};
 
 mod.rs
-     1→//! Structured logging.
-     2→//!
-     3→//! Add the `kv` feature to your `Cargo.toml` to enable
-     4→//! this module:
-     5→//!
-     6→//! ```toml
-     7→//! [dependencies.log]
-     8→//! features = ["kv"]
-     9→//! ```
-    10→//!
-    11→//! # Structured logging in `log`
-    12→//!
-    13→//! Structured logging enhances traditional text-based log records with user-defined
-    14→//! attributes. Structured logs can be analyzed using a variety of data processing
-    15→//! techniques, without needing to find and parse attributes from unstructured text first.
-    16→//!
-      →…
    246→mod error;
    247→mod key;
    249→#[cfg(not(feature = "kv_unstable"))]
@@ -166,20 +148,7 @@ source.rs
     95→    }
     96→
     97→    impl<'k, 'kvs> VisitSource<'kvs> for Get<'k, 'kvs> {
-    98→        fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error> {
-    99→            if self.key == key {
-   100→                self.found = Some(value);
-   101→            }
-   102→
-   103→            Ok(())
-   104→        }
-   105→    }
-   106→
-   107→    let mut get = Get { key, found: None };
-   108→
-   109→    let _ = source.visit(&mut get);
-   110→    get.found
-   111→}
+      →…
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
    115→    struct Count(usize);
@@ -188,14 +157,7 @@ source.rs
    118→        fn visit_pair(&mut self, _: Key<'kvs>, _: Value<'kvs>) -> Result<(), Error> {
    119→            self.0 += 1;
    120→
-   121→            Ok(())
-   122→        }
-   123→    }
-   124→
-   125→    let mut count = Count(0);
-   126→    let _ = source.visit(&mut count);
-   127→    count.0
-   128→}
+      →…
    234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
@@ -272,6 +234,25 @@ value.rs
     82→///
     83→/// Values can hold one of a number of types:
     84→///
+    85→/// - **Null:** The absence of any other meaningful value. Note that
+    86→///   `Some(Value::null())` is not the same as `None`. The former is
+    87→///   `null` while the latter is `undefined`. This is important to be
+    88→///   able to tell the difference between a key-value that was logged,
+    89→///   but its value was empty (`Some(Value::null())`) and a key-value
+    90→///   that was never logged at all (`None`).
+    91→/// - **Strings:** `str`, `char`.
+    92→/// - **Booleans:** `bool`.
+    93→/// - **Integers:** `u8`-`u128`, `i8`-`i128`, `NonZero*`.
+    94→/// - **Floating point numbers:** `f32`-`f64`.
+    95→/// - **Errors:** `dyn (Error + 'static)`.
+    96→/// - **`serde`:** Any type in `serde`'s data model.
+    97→/// - **`sval`:** Any type in `sval`'s data model.
+    98→///
+    99→/// # Serialization
+   100→///
+   101→/// Values provide a number of ways to be serialized.
+   102→///
+   103→/// For basic types the [`Value::visit`] method can be used to extract the
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
@@ -319,14 +300,17 @@ value.rs
    288→macro_rules! impl_to_value_primitive {
    289→    ($($into_ty:ty,)*) => {
    290→        $(
+   291→            impl ToValue for $into_ty {
       →…
    312→macro_rules! impl_to_value_nonzero_primitive {
    313→    ($($into_ty:ident,)*) => {
    314→        $(
+   315→            impl ToValue for std::num::$into_ty {
       →…
    336→macro_rules! impl_value_to_primitive {
    337→    ($(#[doc = $doc:tt] $into_name:ident -> $into_ty:ty,)*) => {
    338→        impl<'v> Value<'v> {
+   339→            $(
       →…
    379→    pub fn to_borrowed_error(&self) -> Option<&(dyn std::error::Error + 'static)> {
    384→    pub fn to_borrowed_str(&self) -> Option<&'v str> {
