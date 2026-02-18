@@ -785,7 +785,7 @@ pub fn schedule(
 
                 // Compute prerequisite costs: all earlier stages not yet included
                 let (prereq_value, prereq_cost) =
-                    compute_prereq_costs(group, group_idx, stages, stage_pos, stage_kind, n);
+                    compute_prereq_costs(group, stages, stage_pos, stage_kind, n, None);
 
                 // File path costs for files not yet shown
                 let fp_cost: usize = group
@@ -938,14 +938,13 @@ pub fn schedule(
                     let stage_pos = other_stages.iter().position(|&s| s == sk).unwrap();
                     let own_value = compute_value(other_group, sk, n);
                     let own_cost = stage_cost(other_group, sk, n);
-                    let (prereq_value, prereq_cost) = compute_prereq_costs_with_state(
+                    let (prereq_value, prereq_cost) = compute_prereq_costs(
                         other_group,
-                        other_group_idx,
                         other_stages,
                         stage_pos,
                         sk,
                         n,
-                        &group_stages,
+                        group_stages[other_group_idx].as_ref(),
                     );
                     let fp_cost: usize = other_group
                         .file_indices
@@ -1068,56 +1067,22 @@ fn stage_cost(group: &Group, stage: StageKind, n: usize) -> usize {
     }
 }
 
-/// Compute prerequisite costs for an item at initial queue construction
-/// (no stages included yet).
+/// Compute prerequisite costs for an item, accounting for already-included stages.
+/// Pass `None` for `included` at initial queue construction (no stages included yet).
 fn compute_prereq_costs(
     group: &Group,
-    _group_idx: usize,
     stages: &[StageKind],
     stage_pos: usize,
     stage_kind: StageKind,
     n: usize,
+    included: Option<&IncludedStage>,
 ) -> (f64, usize) {
     let mut prereq_value: f64 = 0.0;
     let mut prereq_cost = 0usize;
 
-    for (pos, &sk) in stages.iter().enumerate() {
-        if pos >= stage_pos && sk == stage_kind {
-            // Include earlier lines of the same stage (Doc(1) through Doc(n-1))
-            for earlier_n in 1..n {
-                prereq_value += compute_value(group, sk, earlier_n);
-                prereq_cost += stage_cost(group, sk, earlier_n);
-            }
-            break;
-        }
-        // Include all lines of prerequisite stages
-        for line_n in 1..=group.max_n(sk) {
-            prereq_value += compute_value(group, sk, line_n);
-            prereq_cost += stage_cost(group, sk, line_n);
-        }
-    }
-
-    (prereq_value, prereq_cost)
-}
-
-/// Compute prerequisite costs accounting for already-included stages.
-fn compute_prereq_costs_with_state(
-    group: &Group,
-    group_idx: usize,
-    stages: &[StageKind],
-    stage_pos: usize,
-    stage_kind: StageKind,
-    n: usize,
-    group_stages: &[Option<IncludedStage>],
-) -> (f64, usize) {
-    let mut prereq_value: f64 = 0.0;
-    let mut prereq_cost = 0usize;
-
-    let included = &group_stages[group_idx];
     let included_pos = included
-        .as_ref()
         .and_then(|inc| stages.iter().position(|&s| s == inc.kind));
-    let included_n = included.as_ref().map(|inc| inc.n_lines).unwrap_or(0);
+    let included_n = included.map(|inc| inc.n_lines).unwrap_or(0);
 
     for (pos, &sk) in stages.iter().enumerate() {
         if pos >= stage_pos && sk == stage_kind {
