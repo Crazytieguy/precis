@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 tokens)
+budget: 1000 (1005 tokens)
 
 pyproject.toml
 
@@ -12,9 +12,12 @@ src/typeguard/__init__.py
 
 src/typeguard/_checkers.py
     42→from typing_extensions import is_typeddict
+    81→TypeCheckerCallable: TypeAlias = Callable[
+    84→TypeCheckLookupCallback: TypeAlias = Callable[
+    88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
+    89→generic_alias_types: tuple[type, ...] = (
     98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS = {
-   586→def _is_literal_type(typ: object) -> bool:
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
 
@@ -27,32 +30,41 @@ src/typeguard/_config.py
     30→class CollectionCheckStrategy(Enum):
     48→
     52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
-    62→@dataclass
     63→class TypeCheckConfiguration:
-    64→    """
-      →    …
     97→
-    98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
-    99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
-   100→    collection_check_strategy: CollectionCheckStrategy = (
-   101→        CollectionCheckStrategy.FIRST_ITEM
-   102→    )
-   103→    debug_instrumentation: bool = False
+      →…
 
 src/typeguard/_decorators.py
+    24→    def typeguard_ignore …
+    32→def make_cell …
+    36→def find_target_function …
+    56→def instrument …
+   150→def typechecked …
 
 src/typeguard/_exceptions.py
      5→class TypeHintWarning(UserWarning):
     12→class TypeCheckWarning(UserWarning):
     14→
+    15→    def __init__(self, message: str):
     19→class InstrumentationWarning(UserWarning):
     21→
+    22→    def __init__(self, message: str):
     26→class TypeCheckError(Exception):
     30→
+    31→    def __init__(self, message: str):
+    35→    def append_path_element(self, element: str) -> None:
+    38→    def __str__(self) -> str:
 
 src/typeguard/_functions.py
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
+    50→def check_type …
+   118→def check_argument_types …
+   149→def check_return_type …
+   185→def check_send_type …
+   216→def check_yield_type …
+   245→def check_variable_assignment …
+   291→def warn_on_error …
 
 src/typeguard/_importhook.py
     17→from ._config …
@@ -61,13 +73,7 @@ src/typeguard/_importhook.py
     41→T = TypeVar("T")
     45→def _call_with_frames_removed …
     55→class TypeguardLoader(SourceFileLoader):
-    56→    @staticmethod
-    57→    def source_to_code(
-    58→        data: Buffer | str | ast.Module | ast.Expression | ast.Interactive,
-    59→        path: Buffer | str | PathLike[str] = "<string>",
-    60→        *,
-    61→        _optimize: int = -1,
-    62→    ) -> CodeType:
+    57→    def source_to_code …
    109→class TypeguardFinder(MetaPathFinder):
    119→
    156→class ImportHookManager:
@@ -85,19 +91,14 @@ src/typeguard/_pytest_plugin.py
 src/typeguard/_suppression.py
     15→P = ParamSpec("P")
     16→T = TypeVar("T")
-    30→def suppress_type_checks(
-    31→    func: Callable[P, T] | None = None,
-    32→) -> Callable[P, T] | ContextManager[None]:
-    33→    """
-      →    …
+    30→def suppress_type_checks …
 
 src/typeguard/_transformer.py
-    67→PreliminaryNameTypePair …
-    68→NameTypePair …
+    67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
+    68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
    118→class TransformMemo:
    119→    node: Module | ClassDef | FunctionDef | AsyncFunctionDef | None
    120→    parent: TransformMemo | None
-   121→    path: tuple[str, ...]
    285→class NameCollector(NodeVisitor):
    313→class GeneratorDetector(NodeVisitor):
    338→class AnnotationTransformer(NodeTransformer):
@@ -114,5 +115,4 @@ src/typeguard/_utils.py
 tests/conftest.py
     29→def sample_set() -> set:
 
-tests/dummymodule_py312.py
-    17→class ParametrizedClass[T]:
+tests/test_plugins.py

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1004 tokens)
+budget: 1000 (1002 tokens)
 
 core/Ky.ts
     33→export class Ky {
@@ -10,7 +10,6 @@ core/Ky.ts
    200→	constructor(input: Input, options: Options = {}) {
 
 core/constants.ts
-     2→import {type KyOptionsRegistry, type RequestHttpMethod} from '../types/options.js';
     41→const validate …
     66→Options for forcing a retry via `ky.retry()`.
     68→export type ForceRetryOptions = {
@@ -23,20 +22,14 @@ core/constants.ts
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
 
 errors/ForceRetryError.ts
-     5→Internal error used to signal a forced retry from afterResponse hooks.
-      →…
      8→export class ForceRetryError extends Error {
      9→	override name = 'ForceRetryError' as const;
     10→	customDelay: number | undefined;
-    11→	code: string | undefined;
-    12→	customRequest: Request | undefined;
-    13→
     14→	constructor(options?: ForceRetryOptions) {
 
 errors/HTTPError.ts
      5→export class HTTPError<T = unknown> extends Error {
      6→	public response: KyResponse<T>;
-     7→	public request: KyRequest;
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
 
 errors/NonError.ts
@@ -57,7 +50,6 @@ errors/TimeoutError.ts
      6→	constructor(request: Request) {
 
 index.ts
-    10→const createInstance …
     34→const ky = createInstance();
 
 types/ResponsePromise.ts
@@ -96,7 +88,9 @@ types/retry.ts
     15→export type RetryOptions = {
 
 utils/body.ts
-    57→const withProgress …
+     5→export const getBodySize …
+    90→export const streamResponse …
+   119→export const streamRequest …
 
 utils/delay.ts
      3→import {type InternalOptions} from '../types/options.js';
@@ -104,9 +98,13 @@ utils/delay.ts
      9→export default async function delay …
 
 utils/is.ts
-     2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
+     2→export const isObject …
 
 utils/merge.ts
+     6→export const validateAndMerge …
+    16→export const mergeHeaders …
+    38→export const mergeHooks …
+    86→export const deepMerge …
 
 utils/normalize.ts
      5→export const normalizeRequestMethod …
@@ -122,10 +120,10 @@ utils/timeout.ts
      9→export default async function timeout …
 
 utils/type-guards.ts
-    27→export function isKyError …
-    49→export function isHTTPError …
-    71→export function isTimeoutError …
-    98→export function isForceRetryError …
+    27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
+    49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
+    71→export function isTimeoutError(error: unknown): error is TimeoutError {
+    98→export function isForceRetryError(error: unknown): error is ForceRetryError {
 
 utils/types.ts
      1→export type Mutable …

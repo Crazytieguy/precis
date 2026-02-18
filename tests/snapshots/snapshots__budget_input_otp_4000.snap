@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4015 tokens)
+budget: 4000 (4009 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -10,21 +10,13 @@ CHANGELOG.md
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web.
      3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
-    18→https://github.com/guilhermerodz/input-otp/assets/10366880/753751f5-eda8-4145-a4b9-7ef51ca5e453
-    19→
     20→## Usage
     39→## Default example
    136→## How it works
    141→## Features
    198→### Auto tracks if the input has space in the right side for the badge
-   200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
-   201→
-   202→</details>
-   203→
    204→## API Reference
    206→### OTPInput
-   208→The root container. Define settings for the input via props. Then, use the `render` prop to create the slots.
-   209→
    210→#### Props
    212→```ts
    213→type OTPInputProps = {
@@ -106,10 +98,7 @@ apps/storybook/src/stories/Button.tsx
     11→    <button
     12→      type="button"
     13→      className="bg-[red]"
-    14→      style={backgroundColor && { backgroundColor }}
-    15→      {...props}
-    16→    >
-      →    …
+      →      …
 
 apps/storybook/src/stories/InputOTP.stories.tsx
      1→import { InputOTP, InputOTPGroup, InputOTPSlot } from "../components/ui/input-otp"
@@ -140,6 +129,11 @@ apps/test/README.md
     32→## Deploy on Vercel
 
 apps/test/package.json
+     2→  "name": "test",
+     3→  "private": true,
+     4→  "scripts": {
+    10→  "dependencies": {
+    18→  "devDependencies": {
 
 apps/test/src/app/base/page.tsx
      7→export default function Page() {
@@ -172,13 +166,15 @@ apps/test/src/lib/fonts.ts
 apps/test/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
 
-apps/test/src/tests/base.delete-word.spec.ts
-     2→import { modifier } from './util/modifier'
-
 apps/test/src/tests/util/modifier.ts
      1→export const modifier = process.platform === 'darwin' ? 'Meta' : 'Control'
 
 apps/test/tsconfig.json
+     2→  "compilerOptions": {
+    23→  },
+    24→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+    25→  "exclude": ["node_modules"]
+    26→}
 
 apps/website/README.md
      3→## Getting Started
@@ -186,8 +182,20 @@ apps/website/README.md
     32→## Deploy on Vercel
 
 apps/website/components.json
+     2→  "$schema": "https://ui.shadcn.com/schema.json",
+     3→  "style": "default",
+     4→  "rsc": true,
+     5→  "tsx": true,
+     6→  "tailwind": {
+    13→  "aliases": {
 
 apps/website/package.json
+     2→  "name": "website",
+     3→  "version": "0.1.0",
+     4→  "private": true,
+     5→  "scripts": {
+    11→  "dependencies": {
+    37→  "devDependencies": {
 
 apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
      9→export default function ExampleAutoSubmit() {
@@ -226,7 +234,6 @@ apps/website/src/app/(pages)/(home)/_components/confetti.tsx
      3→export function Confetti …
 
 apps/website/src/app/(pages)/(home)/_components/showcase.tsx
-    10→const DynamicConfetti = dynamic(() =>
     14→export function Showcase({ className, ...props }: { className?: string }) {
 
 apps/website/src/app/(pages)/(home)/page.tsx
@@ -248,9 +255,6 @@ apps/website/src/components/icons.tsx
 
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {
-
-apps/website/src/components/page-header.tsx
-     1→import { cn } from "../lib/utils"
 
 apps/website/src/components/provider.tsx
      5→export function AppProvider …
@@ -379,8 +383,6 @@ packages/input-otp/src/types.ts
     33→export type OTPInputProps = OTPInputBaseProps &
     34→  (
     35→    | {
-    36→        render: InputOTPRenderFn
-      →        …
 
 packages/input-otp/src/use-previous.ts
      1→import * as React from 'react'

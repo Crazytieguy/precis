@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2002 tokens)
+budget: 2000 (1999 tokens)
 
 .github/ISSUE_TEMPLATE/bug.yml
      3→name: Bug
@@ -103,13 +103,28 @@ README.md
     10→## Usage
    139→## Versions
    148→## Ranges
+   184→### Prerelease Tags
+   279→### Advanced Range Syntax
+   384→### Range Grammar
    408→## Functions
+   453→### Comparison
+   478→### Sorting
+   485→### Comparators
+   489→### Ranges
+   531→### Coercion
+   558→### Clean
    576→## Constants
+   580→### `RELEASE_TYPES`
+   600→### `SEMVER_SPEC_VERSION`
    610→## Exported Modules
 
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
+    37→const main = () => {
+   132→const failInc = () => {
+   137→const fail = () => process.exit(1)
+   139→const help = () => console.log(
 
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -157,7 +172,7 @@ functions/compare-build.js
      4→const compareBuild = (a, b, loose) => {
 
 functions/compare-loose.js
-     4→const compareLoose = (a, b) => compare(a, b, true)
+     4→const compareLoose …
 
 functions/compare.js
      4→const compare = (a, b, loose) =>
@@ -166,43 +181,43 @@ functions/diff.js
      5→const diff = (version1, version2) => {
 
 functions/eq.js
-     4→const eq = (a, b, loose) => compare(a, b, loose) === 0
+     4→const eq …
 
 functions/gt.js
-     4→const gt = (a, b, loose) => compare(a, b, loose) > 0
+     4→const gt …
 
 functions/gte.js
-     4→const gte = (a, b, loose) => compare(a, b, loose) >= 0
+     4→const gte …
 
 functions/inc.js
-     5→const inc = (version, release, options, identifier, identifierBase) => {
+     5→const inc …
 
 functions/lt.js
-     4→const lt = (a, b, loose) => compare(a, b, loose) < 0
+     4→const lt …
 
 functions/lte.js
      4→const lte …
 
 functions/major.js
-     4→const major = (a, loose) => new SemVer(a, loose).major
+     4→const major …
 
 functions/minor.js
-     4→const minor = (a, loose) => new SemVer(a, loose).minor
+     4→const minor …
 
 functions/neq.js
      4→const neq …
 
 functions/parse.js
-     4→const parse = (version, options, throwErrors = false) => {
+     4→const parse …
 
 functions/patch.js
-     4→const patch = (a, loose) => new SemVer(a, loose).patch
+     4→const patch …
 
 functions/prerelease.js
      4→const prerelease = (version, options) => {
 
 functions/rcompare.js
-     4→const rcompare = (a, b, loose) => compare(b, a, loose)
+     4→const rcompare …
 
 functions/rsort.js
      4→const rsort …
@@ -239,19 +254,19 @@ internal/parse-options.js
      6→const parseOptions = options => {
 
 internal/re.js
-    33→const makeSafeRegex = (value) => {
-    42→const createToken = (name, value, isGlobal) => {
+    33→const makeSafeRegex …
+    42→const createToken …
 
 package.json
 
 ranges/gtr.js
-     5→const gtr = (version, range, options) => outside(version, range, '>', options)
+     5→const gtr …
 
 ranges/intersects.js
      4→const intersects = (r1, r2, options) => {
 
 ranges/ltr.js
-     5→const ltr = (version, range, options) => outside(version, range, '<', options)
+     5→const ltr …
 
 ranges/max-satisfying.js
      6→const maxSatisfying = (versions, range, options) => {
@@ -276,3 +291,8 @@ ranges/valid.js
      4→const validRange = (range, options) => {
 
 release-please-config.json
+     2→  "group-pull-request-title-pattern": "chore: release ${version}",
+     3→  "pull-request-title-pattern": "chore: release${component} ${version}",
+     4→  "changelog-sections": [
+    31→  "packages": {
+    36→  "prerelease-type": "pre.0"

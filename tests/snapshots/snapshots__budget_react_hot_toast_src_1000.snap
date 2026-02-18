@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 tokens)
+budget: 1000 (1002 tokens)
 
 components/checkmark.tsx
      1→import { styled, keyframes } from 'goober';
@@ -42,12 +42,8 @@ components/toast-icon.tsx
     32→export const AnimatedIconWrapper = styled('div')`
     41→export type IconThemes = Partial<{
     47→export const ToastIcon: React.FC<{
-    48→  toast: Toast;
-      →  …
 
 components/toaster.tsx
-    15→const ToastWrapper …
-    47→const getPositionStyle …
     76→const activeClass = css`
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
@@ -55,7 +51,6 @@ components/toaster.tsx
       →  …
 
 core/store.ts
-     1→import { useEffect, useState, useRef } from 'react';
      2→import { DefaultToastOptions, Toast, ToastType } from './types';
      4→export const TOAST_EXPIRE_DISMISS_DELAY = 1000;
      5→export const TOAST_LIMIT = 20;
@@ -64,8 +59,6 @@ core/store.ts
     12→export enum ActionType {
     13→  ADD_TOAST,
     14→  UPDATE_TOAST,
-    15→  UPSERT_TOAST,
-    16→  DISMISS_TOAST,
       →  …
     22→export type Action =
     23→  | {
@@ -90,20 +83,26 @@ core/toast.ts
 
 core/types.ts
      1→import { CSSProperties } from 'react';
+     3→export type ToastType …
+     4→export type ToastPosition …
+    12→export type Renderable …
     14→export interface IconTheme {
+    19→export type ValueFunction …
+    20→export type ValueOrFunction …
     24→const isFunction …
     29→export const resolveValue …
     34→export interface Toast {
+    60→export type ToastOptions …
+    76→export type DefaultToastOptions …
     80→export interface ToasterProps {
     91→export interface ToastWrapperProps {
 
 core/use-toaster.ts
-     1→import { useEffect, useCallback, useRef } from 'react';
+     2→import { createDispatch, ActionType, useStore, dispatch } from './store';
+     3→import { toast } from './toast';
+     4→import { DefaultToastOptions, Toast, ToastPosition } from './types';
      6→export const REMOVE_DELAY = 1000;
-     8→export const useToaster = (
-     9→  toastOptions?: DefaultToastOptions,
-    10→  toasterId: string = 'default'
-    11→) => {
+     8→export const useToaster …
 
 core/utils.ts
      1→export const genId = (() => {

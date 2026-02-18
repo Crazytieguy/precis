@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2016 tokens)
+budget: 2000 (2014 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -11,11 +11,6 @@ README.md
      5→# Tomli
      7→> A lil' TOML parser
      8→
-     9→**Table of Contents** *generated with [mdformat-toc](https://github.com/hukkin/mdformat-toc)*
-    10→
-    11→<!-- mdformat-toc start --slug=github --maxlevel=6 --minlevel=2 -->
-    12→
-    13→- [Intro](#intro)
       →…
     32→## Intro<a name="intro"></a>
     50→## Installation<a name="installation"></a>
@@ -52,6 +47,24 @@ profiler/profiler_script.py
     10→import tomli
 
 pyproject.toml
+     1→[build-system]
+     5→[project]
+    28→[project.urls]
+    33→[tool.isort]
+    46→[tool.tox]
+    51→[tool.tox.env_run_base]
+    58→[tool.tox.env."profile"]
+    75→[tool.tox.env."pre-commit"]
+    83→[tool.tox.env."benchmark"]
+    92→[tool.tox.env."benchmark-pypi"]
+   105→[tool.tox.env."benchmark-import"]
+   111→[tool.tox.env."fuzz"]
+   129→[tool.coverage.run]
+   133→[tool.coverage.report]
+   145→[tool.mypy]
+   157→[[tool.mypy.overrides]]
+   161→[[tool.mypy.overrides]]
+   167→[[tool.mypy.overrides]]
 
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
@@ -70,7 +83,7 @@ src/tomli/_parser.py
      7→import sys
      8→from types import MappingProxyType
     10→from ._re …
-    19→TYPE_CHECKING …
+    19→TYPE_CHECKING = False
     21→    from collections.abc import Iterable
     22→    from typing import IO, Any, Final
     24→    from ._types …
@@ -78,45 +91,29 @@ src/tomli/_parser.py
     27→# nested documents cause pure Python to raise RecursionError (which is OK),
     28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
     29→# mypyc docs this will be fixed in the future:
-    30→# https://mypyc.readthedocs.io/en/latest/differences_from_python.html#stack-overflows
-    31→# Before mypyc's fix is in, recursion needs to be limited by this library.
-    32→# Choosing `sys.getrecursionlimit()` as maximum inline table/array nesting
-    33→# level, as it allows more nesting than pure Python, but still seems a far
-    34→# lower number than where mypyc binaries crash.
+      →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
-    37→ASCII_CTRL …
+    37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
     39→# Neither of these sets include quotation mark or backslash. They are
     40→# currently handled as separate cases in the parser functions.
     41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
-    42→ILLEGAL_MULTILINE_BASIC_STR_CHARS …
-    44→ILLEGAL_LITERAL_STR_CHARS …
-    45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS …
-    47→ILLEGAL_COMMENT_CHARS …
-    49→TOML_WS …
-    50→TOML_WS_AND_NEWLINE …
-    51→BARE_KEY_CHARS …
-    54→KEY_INITIAL_CHARS …
-    55→HEXDIGIT_CHARS …
-    57→BASIC_STR_ESCAPE_REPLACEMENTS …
+    42→ILLEGAL_MULTILINE_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t\n")
+    44→ILLEGAL_LITERAL_STR_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
+    45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS: Final = ILLEGAL_MULTILINE_BASIC_STR_CHARS
+    47→ILLEGAL_COMMENT_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
+    49→TOML_WS: Final = frozenset(" \t")
+    50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
+    51→BARE_KEY_CHARS: Final = frozenset(
+    54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
+    55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
+    57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
     71→class DEPRECATED_DEFAULT:
-    72→    """Sentinel to be used as default arg during deprecation
-    73→    period of TOMLDecodeError's free-form arguments."""
     76→class TOMLDecodeError(ValueError):
-    77→    """An error raised if a document is not valid TOML.
-    78→
-    79→    Adds the following attributes to ValueError:
-    80→    msg: The unformatted error message
-      →    …
     86→
    220→class Flags:
-   221→    """Flags that map to parsed keys/namespaces."""
    222→
    223→    # Marks an immutable namespace (inline array or inline table).
    224→    FROZEN: Final = 0
-   225→    # Marks a nest that has been explicitly created and can no longer
-   226→    # be opened using the "[table]" syntax.
-   227→    EXPLICIT_NEST: Final = 1
-   228→
    278→class NestedDict:
    312→class Output:
 
@@ -168,9 +165,6 @@ tests/__init__.py
 tests/burntsushi.py
     11→def convert(obj):
     42→def normalize(obj: Any) -> Any:
-    43→    """Normalize test objects.
-    44→
-      →…
 
 tests/data/valid/trailing-comma.json
      1→{"arr":
@@ -178,6 +172,10 @@ tests/data/valid/trailing-comma.json
 tests/test_data.py
      5→import json
      9→from . …
+    11→DATA_DIR …
+    13→VALID_FILES …
+    21→VALID_FILES_EXPECTED …
+    23→INVALID_FILES …
     27→class TestData(unittest.TestCase):
     28→    def test_invalid(self):
     40→    def test_valid(self):

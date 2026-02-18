@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2029 tokens)
+budget: 2000 (2002 tokens)
 
 CHANGELOG.md
 
@@ -22,18 +22,10 @@ README.md
     18→Installation can be done with a normal `go get`:
     19→
     20→```
-    21→$ go get github.com/hashicorp/go-version
-    22→```
-    23→
+      →…
     24→#### Version Parsing and Comparison
-    26→```go
-      →…
     37→#### Version Constraints
-    39→```go
-      →…
     49→#### Version Sorting
-    51→```go
-      →…
     63→## Issues and Contributing
     65→If you find an issue with this library, please report an issue. If you'd
     66→like, we welcome any contributions. Fork this library and submit a pull
@@ -41,6 +33,10 @@ README.md
 
 constraint.go
      6→import …
+    14→var (
+    15→	constraintRegexp     *regexp.Regexp
+    16→	constraintRegexpOnce sync.Once
+    19→func getConstraintRegexp() *regexp.Regexp {
     31→// Constraint represents a single constraint for a version, such as
     32→// ">= 1.0".
     33→type Constraint struct {
@@ -50,11 +46,10 @@ constraint.go
     37→	original string
     38→}
     40→func (c *Constraint) Equals(con *Constraint) bool {
-    41→	return c.op == con.op && c.check.Equal(con.check)
-    42→}
     44→// Constraints is a slice of constraints. We make a custom type so that
     45→// we can add methods to it.
     46→type Constraints []*Constraint
+    48→type constraintFunc func(v, c *Version) bool
     50→type constraintOperation struct {
     51→	op operator
       →	…
@@ -62,17 +57,11 @@ constraint.go
     56→// constraint string. The string must be a comma-separated list of
     57→// constraints.
     58→func NewConstraint(v string) (Constraints, error) {
-    59→	vs := strings.Split(v, ",")
-      →	…
     73→// MustConstraints is a helper that wraps a call to a function
     74→// returning (Constraints, error) and panics if error is non-nil.
     75→func MustConstraints(c Constraints, err error) Constraints {
-    76→	if err != nil {
-      →	…
     83→// Check tests if a version satisfies all the constraints.
     84→func (cs Constraints) Check(v *Version) bool {
-    85→	for _, c := range cs {
-      →	…
     94→// Equals compares Constraints with other Constraints
     95→// for equality. This may not represent logical equivalence
     96→// of compared constraints.
@@ -82,43 +71,37 @@ constraint.go
    100→// Missing operator is treated as equal to '=', whitespaces
    101→// are ignored and constraints are sorted before comparison.
    102→func (cs Constraints) Equals(c Constraints) bool {
-   103→	if len(cs) != len(c) {
-      →	…
    125→func (cs Constraints) Len() int {
-   126→	return len(cs)
-   127→}
    129→func (cs Constraints) Less(i, j int) bool {
-   130→	if cs[i].op < cs[j].op {
-   131→		return true
-   132→	}
-   133→	if cs[i].op > cs[j].op {
-   134→		return false
-   135→	}
-   136→
-      →…
    140→func (cs Constraints) Swap(i, j int) {
-   141→	cs[i], cs[j] = cs[j], cs[i]
-   142→}
    144→// Returns the string format of the constraints
    145→func (cs Constraints) String() string {
-   146→	csStr := make([]string, len(cs))
-      →	…
    154→// Check tests if a constraint is validated by the given version.
    155→func (c *Constraint) Check(v *Version) bool {
-   156→	return c.f(v, c.check)
-      →	…
    159→// Prerelease returns true if the version underlying this constraint
    160→// contains a prerelease field.
    161→func (c *Constraint) Prerelease() bool {
-   162→	return len(c.check.Prerelease()) > 0
-      →	…
    165→func (c *Constraint) String() string {
-   166→	return c.original
-   167→}
+   169→func parseSingle(v string) (*Constraint, error) {
+   208→func prereleaseCheck(v, c *Version) bool {
    228→//-------------------------------------------------------------------
-   229→// Constraint functions
-   230→//-------------------------------------------------------------------
+      →…
    232→type operator rune
+   234→const (
+   235→	equal            operator = '='
+   236→	notEqual         operator = '≠'
+   237→	greaterThan      operator = '>'
+   238→	lessThan         operator = '<'
+   239→	greaterThanEqual operator = '≥'
+   240→	lessThanEqual    operator = '≤'
+   241→	pessimistic      operator = '~'
+   244→func constraintEqual(v, c *Version) bool {
+   248→func constraintNotEqual(v, c *Version) bool {
+   252→func constraintGreaterThan(v, c *Version) bool {
+   256→func constraintLessThan(v, c *Version) bool {
+   260→func constraintGreaterThanEqual(v, c *Version) bool {
+   264→func constraintLessThanEqual(v, c *Version) bool {
+   268→func constraintPessimistic(v, c *Version) bool {
 
 constraint_test.go
      6→import …
@@ -130,8 +113,8 @@ version.go
     18→	versionRegexpOnce sync.Once
     19→	semverRegexp      *regexp.Regexp
     20→	semverRegexpOnce  sync.Once
-    23→func getVersionRegexp …
-    30→func getSemverRegexp …
+    23→func getVersionRegexp() *regexp.Regexp {
+    30→func getSemverRegexp() *regexp.Regexp {
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     45→	// SemverRegexpRaw requires a separator between version and prerelease
@@ -146,13 +129,13 @@ version.go
     59→}
     63→func NewVersion(v string) (*Version, error) {
     70→func NewSemver(v string) (*Version, error) {
-    74→func newVersion …
+    74→func newVersion(v string, pattern *regexp.Regexp) (*Version, error) {
    114→func Must(v *Version, err error) *Version {
    128→func (v *Version) Compare(other *Version) int {
-   196→func (v *Version) equalSegments …
-   211→func allZero …
-   220→func comparePart …
-   267→func comparePrereleases …
+   196→func (v *Version) equalSegments(other *Version) bool {
+   211→func allZero(segs []int64) bool {
+   220→func comparePart(preSelf string, preOther string) int {
+   267→func comparePrereleases(v string, other string) int {
    309→func (v *Version) Core() *Version {
    316→func (v *Version) Equal(o *Version) bool {
    325→func (v *Version) GreaterThan(o *Version) bool {
@@ -164,7 +147,7 @@ version.go
    368→func (v *Version) Segments() []int {
    381→func (v *Version) Segments64() []int64 {
    395→func (v *Version) String() string {
-   399→func (v *Version) bytes …
+   399→func (v *Version) bytes() []byte {
    423→func (v *Version) Original() string {
    428→func (v *Version) UnmarshalText(b []byte) error {
    440→func (v *Version) MarshalText() ([]byte, error) {
@@ -176,20 +159,12 @@ version_collection.go
      7→// so that versions can be sorted.
      8→type Collection []*Version
     10→func (v Collection) Len() int {
-    11→	return len(v)
-    12→}
     14→func (v Collection) Less(i, j int) bool {
-    15→	return v[i].LessThan(v[j])
-    16→}
     18→func (v Collection) Swap(i, j int) {
-    19→	v[i], v[j] = v[j], v[i]
-    20→}
 
 version_collection_test.go
      6→import …
     12→func TestCollection(t *testing.T) {
-    13→	versionsRaw := []string{
-      →	…
 
 version_test.go
      6→import …

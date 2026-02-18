@@ -2,10 +2,9 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2013 tokens)
+budget: 2000 (2004 tokens)
 
 CHANGELOG.md
-     1→# neverthrow
 
 README.md
      1→# NeverThrow 🙅
@@ -23,8 +22,23 @@ README.md
   1681→### License
 
 package.json
-
-rollup.config.mjs
+     2→  "name": "neverthrow",
+     3→  "version": "8.2.0",
+     4→  "description": "Stop throwing errors, and instead return Results!",
+     5→  "main": "dist/index.cjs.js",
+     6→  "module": "dist/index.es.js",
+     7→  "types": "dist/index.d.ts",
+     8→  "files": [
+    11→  "scripts": {
+    24→  "repository": {
+    28→  "author": "Giorgio Delgado",
+    29→  "license": "MIT",
+    30→  "bugs": {
+    33→  "homepage": "https://github.com/supermacro/neverthrow#readme",
+    34→  "devDependencies": {
+    53→  "keywords": [
+    59→  "engines": {
+    63→  "optionalDependencies": {
 
 src/_internals/error.ts
      1→import { Result } from '../result'
@@ -39,10 +53,7 @@ src/_internals/error.ts
     30→  config: ErrorConfig = defaultErrorConfig,
     31→): NeverThrowError<T, E> => {
     32→  const data = result.isOk()
-    33→    ? { type: 'Ok', value: result.value }
-    34→    : { type: 'Err', value: result.error }
-    35→
-      →…
+      →  …
 
 src/_internals/utils.ts
      1→import { Result, ok, err } from '../result'
@@ -59,24 +70,12 @@ src/_internals/utils.ts
     33→export const combineResultList = <T, E>(
     34→  resultList: readonly Result<T, E>[],
     35→): Result<readonly T[], E> => {
-    36→  let acc = ok([]) as Result<T[], E>
-    37→
-    38→  for (const result of resultList) {
-      →  …
     54→export const combineResultAsyncList = <T, E>(
-    55→  asyncResultList: readonly ResultAsync<T, E>[],
-      →  …
     62→ * Give a list of all the errors we find
     64→export const combineResultListWithAllErrors = <T, E>(
     65→  resultList: readonly Result<T, E>[],
     66→): Result<readonly T[], E[]> => {
-    67→  let acc = ok([]) as Result<T[], E[]>
-    68→
-    69→  for (const result of resultList) {
-      →  …
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
-    83→  asyncResultList: readonly ResultAsync<T, E>[],
-      →  …
 
 src/result-async.ts
      1→import type { …
@@ -85,6 +84,21 @@ src/result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
+    25→  constructor …
+    30→  static fromSafePromise …
+    37→  static fromPromise …
+    46→  static fromThrowable …
+    69→  static combine …
+    81→  static combineWithAllErrors …
+    89→  map …
+   101→  andThrough …
+   117→  andTee …
+   133→  orTee …
+   149→  mapErr …
+   169→  andThen …
+   190→  orElse …
+   202→  match …
+   206→  unwrapOr …
    211→   * @deprecated will be removed in 9.0.0.
    212→   *
    213→   * You can use `safeTry` without this method.
@@ -94,10 +108,11 @@ src/result-async.ts
    217→   *   const okValue = yield* yourResult
    218→   * })
    219→   * ```
-   220→   * Emulates Rust's `?` operator in `safeTry`'s body. See also `safeTry`.
+      →   …
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
-   223→    return yield* await this._promise.then((res) => res.safeUnwrap())
-   224→  }
+   227→  then …
+   249→export function okAsync …
+   255→export function errAsync …
    259→export const fromPromise …
    260→export const fromSafePromise …
    262→export const fromAsyncThrowable …
@@ -114,9 +129,6 @@ src/result.ts
      3→import { …
     14→export namespace Result {
     15→  /**
-    16→   * Wraps a function with a try catch, creating a new function with the same
-    17→   * arguments but returning `Ok` if successful, `Err` if the function throws
-    18→   *
     62→export type Result …
    134→interface IResult<T, E> {
    140→  isOk(): this is Ok<T, E>
@@ -153,23 +165,6 @@ src/result.ts
    704→type TraverseWithAllErrors …
    712→export type CombineResults …
    719→export type CombineResultsWithAllErrorsArray …
-
-tests/index.test.ts
-     3→import { …
-
-tests/safe-try.test.ts
-     1→import { …
-
-tests/tsconfig.tests.json
-     2→  "compilerOptions": {
-    22→  },
-    23→  "include": [
-    26→  ]
-    27→}
-
-tests/typecheck-tests.ts
-    19→type CreateTuple …
-  2607→const input …
 
 tsconfig.json
      2→  "compilerOptions": {

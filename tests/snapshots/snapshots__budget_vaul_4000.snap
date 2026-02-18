@@ -55,8 +55,6 @@ src/browser.ts
 
 src/constants.ts
      1→export const TRANSITIONS = {
-     2→  DURATION: 0.5,
-      →  …
      6→export const VELOCITY_THRESHOLD = 0.4;
      8→export const CLOSE_THRESHOLD = 0.25;
     10→export const SCROLL_LOCK_TIMEOUT = 100;
@@ -70,8 +68,6 @@ src/context.ts
      2→import { DrawerDirection } from './types';
      4→interface DrawerContextValue {
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
-    38→  drawerRef: { current: null },
-      →  …
     69→export const useDrawerContext = () => {
     70→  const context = React.useContext(DrawerContext);
     71→  if (!context) {
@@ -106,27 +102,35 @@ src/helpers.ts
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
+     5→import { DrawerContext, useDrawerContext } from './context';
+     6→import './style.css';
+     7→import { usePreventScroll, isInput } from './use-prevent-scroll';
+     8→import { useComposedRefs } from './use-composed-refs';
+     9→import { useSnapPoints } from './use-snap-points';
+    10→import { set, getTranslate, dampenValue, isVertical, reset } from './helpers';
+    11→import {
+    12→  TRANSITIONS,
+    13→  VELOCITY_THRESHOLD,
+    14→  CLOSE_THRESHOLD,
+    15→  SCROLL_LOCK_TIMEOUT,
+    16→  BORDER_RADIUS,
+    17→  NESTED_DISPLACEMENT,
+    18→  WINDOW_TOP_OFFSET,
+    19→  DRAG_CLASS,
+    20→} from './constants';
+    21→import { DrawerDirection } from './types';
+    22→import { useControllableState } from './use-controllable-state';
+    23→import { useScaleBackground } from './use-scale-background';
+    24→import { usePositionFixed } from './use-position-fixed';
+    25→import { isIOS, isMobileFirefox } from './browser';
     27→export interface WithFadeFromProps {
     28→  /**
     29→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
-    30→   * Should go from least visible. Example `[0.2, 0.5, 0.8]`.
-    31→   * You can also use px values, which doesn't take screen height into account.
-    32→   */
-    33→  snapPoints: (number | string)[];
-    34→  /**
-    35→   * Index of a `snapPoint` from which the overlay fade should be applied. Defaults to the last snap point.
-    36→   */
-    37→  fadeFromIndex: number;
-    38→}
+      →   …
     40→export interface WithoutFadeFromProps {
     41→  /**
     42→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
-    43→   * Should go from least visible. Example `[0.2, 0.5, 0.8]`.
-    44→   * You can also use px values, which doesn't take screen height into account.
-    45→   */
-    46→  snapPoints?: (number | string)[];
-    47→  fadeFromIndex?: never;
-    48→}
+      →   …
     50→export type DialogProps = {
    139→export function Root …
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
@@ -201,16 +205,6 @@ src/use-position-fixed.ts
     34→    // All browsers on iOS will return true here.
     35→    if (!isSafari()) return;
     36→
-    37→    // If previousBodyPosition is already set, don't set it again.
-    38→    if (previousBodyPosition === null && isOpen && !noBodyStyles) {
-    39→      previousBodyPosition = {
-    40→        position: document.body.style.position,
-    41→        top: document.body.style.top,
-    42→        left: document.body.style.left,
-    43→        height: document.body.style.height,
-    44→        right: 'unset',
-    45→      };
-    46→
       →…
 
 src/use-prevent-scroll.ts
@@ -219,7 +213,7 @@ src/use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
-    16→function chain …
+    16→function chain(...callbacks: any[]): (...args: any[]) => void {
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {
     30→  let style = window.getComputedStyle(node);
@@ -240,19 +234,16 @@ src/use-prevent-scroll.ts
     74→    }
     75→
     76→    preventScrollCount++;
-    77→    if (preventScrollCount === 1) {
-    78→      if (isIOS()) {
-    79→        restore = preventScrollMobileSafari();
-    80→      }
-    81→    }
-    82→
-    83→    return () => {
-    84→      preventScrollCount--;
-      →      …
-   118→function preventScrollMobileSafari …
-   243→function setStyle …
-   257→function addEvent …
-   272→function scrollIntoView …
+      →    …
+   118→function preventScrollMobileSafari() {
+   243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {
+   257→function addEvent<K extends keyof GlobalEventHandlersEventMap>(
+   258→  target: EventTarget,
+   259→  event: K,
+   260→  handler: (this: Document, ev: GlobalEventHandlersEventMap[K]) => any,
+   261→  options?: boolean | AddEventListenerOptions,
+   262→) {
+   272→function scrollIntoView(target: Element) {
    294→export function isInput(target: Element) {
    295→  return (
       →  …
@@ -285,6 +276,12 @@ test/README.md
     30→## Deploy on Vercel
 
 test/package.json
+     2→  "name": "test",
+     3→  "version": "0.1.0",
+     4→  "private": true,
+     5→  "scripts": {
+    11→  "devDependencies": {
+    21→  "dependencies": {
 
 test/src/app/controlled/page.tsx
      6→export default function Page() {
@@ -311,7 +308,6 @@ test/src/app/non-dismissible/page.tsx
      6→export default function Page() {
 
 test/src/app/page.tsx
-     3→import Link from 'next/link';
      5→export default function Page() {
 
 test/src/app/parent-container/page.tsx

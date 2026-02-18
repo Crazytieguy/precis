@@ -2,26 +2,23 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1029 tokens)
+budget: 1000 (1015 tokens)
 
 README.md
      1→# Format
      3→In this section you will learn how to:
      4→
      5→- Structure your book correctly
-     6→- Format your `SUMMARY.md` file
       →…
 
 configuration/README.md
      1→# Configuration
      3→This section details the configuration options available in the ***book.toml***:
-     4→- **[General]** configuration including the `book`, `rust`, `build` sections
       →…
 
 configuration/environment-variables.md
      1→# Environment variables
      3→All configuration values can be overridden from the command line by setting the
-     4→corresponding environment variable. Because many operating systems restrict
       →…
 
 configuration/general.md
@@ -30,8 +27,6 @@ configuration/general.md
      4→
       →…
     31→## Supported configuration options
-    33→It is important to note that **any** relative path specified in the
-      →…
     37→### General metadata
     64→### Rust options
     85→### Build options
@@ -40,8 +35,6 @@ configuration/preprocessors.md
      1→# Configuring Preprocessors
      3→Preprocessors are extensions that can modify the raw Markdown source before it gets sent to the renderer.
      4→
-     5→The following preprocessors are built-in and included by default:
-     6→
       →…
     26→## Custom preprocessor configuration
     45→## Locking a preprocessor dependency to a renderer
@@ -53,8 +46,6 @@ configuration/renderers.md
      1→# Configuring Renderers
      3→Renderers (also called "backends") are responsible for creating the output of the book.
      4→
-     5→The following backends are built-in:
-     6→
       →…
     20→## Output tables
     84→## HTML renderer options
@@ -63,13 +54,12 @@ configuration/renderers.md
 
 example.rs
      1→fn main() {
-     2→    println!("Hello World!");
-      →    …
 
 markdown.md
      1→# Markdown
      9→## Text and paragraphs
     25→## Headings
+    39→### A heading 
     43→#### A smaller heading 
     45→More text.
     46→
@@ -77,20 +67,36 @@ markdown.md
     69→## Links
    108→## Images
    127→## Extensions
+   131→### Strikethrough
+   146→### Footnotes
+   171→### Tables
+   191→### Task lists
+   208→### Smart punctuation
+   231→### Heading attributes
+   244→### Definition lists
+   279→### Admonitions
 
 mathjax.md
      1→# MathJax support
      3→mdBook has optional support for math equations through
-     4→[MathJax](https://www.mathjax.org/).
-     5→
       →…
     24→### Inline equations
     32→### Block equations
 
 mdbook.md
      1→# mdBook-specific features
+     3→## Hiding code lines
+    74→## Rust playground
+   102→## Rust code block attributes
+   133→## Including files
+   154→## Including portions of a file
+   215→## Including a file but initially hiding all except specified lines
+   279→## Inserting runnable Rust files
+   310→## Controlling page \<title\>
+   319→## HTML classes provided by mdBook
    323→### `class="left"` and `"right"`
    331→### `class="hidden"`
+   341→## Font-Awesome icons
 
 summary.md
      1→# SUMMARY.md
@@ -115,10 +121,6 @@ theme/editor.md
 
 theme/index-hbs.md
      1→# index.hbs
-     3→`index.hbs` is the handlebars template that is used to render the book. The
-     4→markdown files are processed to html and then injected in that template.
-     5→
-      →…
      9→## Data
     41→## Handlebars helpers
     46→### toc

@@ -25,9 +25,7 @@ chain.rs
 context.rs
      7→use crate::nightly::{self, Request};
     12→    pub trait StdError {
-   146→    #[cfg(error_generic_member_access)]
    147→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
-   160→    #[cfg(error_generic_member_access)]
    161→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
    166→struct Quoted<C>(C);
    189→    pub trait Sealed {}
@@ -41,7 +39,6 @@ ensure.rs
 error.rs
      4→use crate::nightly::{self, Request};
      6→use crate::ptr::Mut;
-    14→use core::ops::{Deref, DerefMut};
    705→    type Target = dyn StdError + Send + Sync + 'static;
    740→struct ErrorVTable {
 
@@ -54,22 +51,23 @@ kind.rs
     51→use crate::StdError;
     53→use alloc::boxed::Box;
     55→pub struct Adhoc;
+    60→    fn anyhow_kind …
+    69→    pub fn new …
     77→pub struct Trait;
-    99→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+    82→    fn anyhow_kind …
+    91→    pub fn new …
    100→pub struct Boxed;
+   106→    fn anyhow_kind …
+   117→    pub fn new …
 
 lib.rs
+   252→mod backtrace;
+   261→mod nightly;
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
-   281→        None
-      →        …
    286→pub use anyhow as format_err;
    390→pub struct Error {
-   391→    inner: Own<ErrorImpl>,
-   392→}
    415→pub struct Chain<'a> {
-   416→    state: crate::chain::ChainState<'a>,
-   417→}
    419→/// `Result<T, Error>`
    420→///
       →…
@@ -78,6 +76,8 @@ lib.rs
    618→    fn context …
    624→    fn with_context …
    650→pub fn Ok …
+   656→pub mod __private {
+   672→    pub mod kind {
    710→        pub trait Bool {
    711→            fn not(self) -> bool;
    716→            fn not …
@@ -91,7 +91,9 @@ macros.rs
 
 nightly.rs
     10→pub use core::error::Request;
-    45→fn request_ref …
+    41→pub fn request_ref_backtrace …
+    52→pub fn provide_ref_backtrace …
+    56→pub fn provide …
 
 ptr.rs
      6→pub struct Own …

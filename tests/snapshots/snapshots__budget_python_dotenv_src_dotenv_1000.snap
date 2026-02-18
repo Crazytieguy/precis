@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (999 tokens)
+budget: 1000 (1003 tokens)
 
 __init__.py
      1→from typing import Any, Optional
@@ -15,8 +15,8 @@ __main__.py
      3→from .cli import cli
 
 cli.py
-    20→from .main import dotenv_values, set_key, unset_key
-    21→from .version import __version__
+    20→from .main …
+    21→from .version …
     24→def enumerate_env() -> Optional[str]:
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
     68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
@@ -31,43 +31,31 @@ ipython.py
      1→from IPython.core.magic …
      2→from IPython.core.magic_arguments …
      8→from .main import find_dotenv, load_dotenv
-    11→@magics_class
     12→class IPythonDotEnv(Magics):
     13→    @magic_arguments()
     14→    @argument(
     15→        "-o",
     16→        "--override",
     17→        action="store_true",
-    18→        help="Indicate to override existing variables",
-    19→    )
-    20→    @argument(
-    21→        "-v",
-    22→        "--verbose",
-    23→        action="store_true",
-    24→        help="Indicate function calls to be verbose",
-    25→    )
-    26→    @argument(
-    27→        "dotenv_path",
-    28→        nargs="?",
-    29→        type=str,
-    30→        default=".env",
-    31→        help="Search in increasingly higher folders for the `dotenv_path`",
-    32→    )
     33→    @line_magic
     34→    def dotenv(self, line):
     35→        args = parse_argstring(self.dotenv, line)
-    36→        # Locate the .env file
-    37→        dotenv_path = args.dotenv_path
       →        …
     48→def load_ipython_extension(ipython):
     49→    """Register the %dotenv magic."""
-    50→    ipython.register_magics(IPythonDotEnv)
 
 main.py
     13→from .parser import Binding, parse_stream
     14→from .variables import parse_variables
+    35→def with_warn_for_invalid_lines …
     45→class DotEnv:
+    46→    def __init__ …
     64→    def _get_stream(self) -> Iterator[IO[str]]:
+    78→    def dict …
+    94→    def parse …
+   100→    def set_as_environment_variables …
+   115→    def get …
+   128→def get_key …
    141→@contextmanager
    142→def rewrite(
    143→    path: StrPath,
@@ -76,31 +64,48 @@ main.py
    146→    pathlib.Path(path).touch()
    147→
       →…
+   163→def set_key …
+   211→def unset_key …
+   244→def resolve_variables …
+   287→def find_dotenv …
+   338→def load_dotenv …
+   387→def dotenv_values …
 
 parser.py
+     1→import codecs …
+     2→import re …
+     3→from typing …
     35→class Original(NamedTuple):
-    36→    string: str
-    37→    line: int
     40→class Binding(NamedTuple):
-    41→    key: Optional[str]
-    42→    value: Optional[str]
-    43→    original: Original
-    44→    error: bool
     47→class Position:
     52→    @classmethod
     53→    def start(cls) -> "Position":
     54→        return cls(chars=0, line=1)
     65→class Error(Exception):
-    66→    pass
     69→class Reader:
 
 variables.py
+     1→import re …
+     2→from abc …
+     3→from typing …
      5→_posix_variable: Pattern[str] = re.compile(
     18→class Atom(metaclass=ABCMeta):
+    19→    def __ne__ …
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
     29→class Literal(Atom):
+    30→    def __init__ …
+    33→    def __repr__ …
+    36→    def __eq__ …
+    41→    def __hash__ …
+    44→    def resolve …
     48→class Variable(Atom):
+    49→    def __init__ …
+    53→    def __repr__ …
+    56→    def __eq__ …
+    61→    def __hash__ …
+    64→    def resolve …
+    70→def parse_variables …
 
 version.py
      1→__version__ = "1.2.1"

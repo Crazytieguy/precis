@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1995 tokens)
+budget: 2000 (1989 tokens)
 
 Cargo.toml
      1→[package]
@@ -20,10 +20,16 @@ README.md
    106→## Structured logging
 
 rfcs/0296-structured-logging.md
+     5→# Summary
+    16→# Contents
+    43→# Motivation
+    98→# Guide-level explanation
+   495→# Reference-level explanation
+  1575→# Drawbacks, rationale, and alternatives
+  1629→# Prior art
+  1650→# Unresolved questions
 
 src/__private_api.rs
-     5→use std::fmt::Arguments;
-     6→use std::panic::Location;
      7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -53,22 +59,17 @@ src/kv/error.rs
     10→enum Inner {
     20→    /// Create an error from a message.
     21→    pub fn msg(msg: &'static str) -> Self {
-    22→        Error {
-      →        …
     29→    pub(super) fn from_value …
     37→    pub(super) fn into_value …
     49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     63→    fn from(_: fmt::Error) -> Self {
     69→mod std_support {
     70→    use super::*;
-    73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     76→        /// Create an error from a standard error type.
     77→        pub fn boxed<E>(err: E) -> Self
     78→        where
     79→            E: Into<BoxedError>,
     80→        {
-    81→            Error {
-      →            …
     90→        fn from(err: io::Error) -> Self {
 
 src/kv/key.rs
@@ -105,19 +106,14 @@ src/kv/mod.rs
 
 src/kv/source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
-     9→/// A source of key-values.
-    10→///
-      →…
     51→pub trait Source {
-    62→    fn visit …
-    73→    fn get …
-    85→    fn count …
+    62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
+    73→    fn get(&self, key: Key) -> Option<Value<'_>> {
+    85→    fn count(&self) -> usize {
     91→fn get_default …
    114→fn count_default …
-   234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
-   237→    fn visit_pair …
-   241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T …
+   237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
    280→mod std_support {
    281→    use super::*;
    462→pub use VisitSource as Visitor;
@@ -143,8 +139,6 @@ src/kv/value.rs
    740→        Bool(bool),
    741→        Str(&'v str),
    742→        Char(char),
-   743→        I64(i64),
-   744→        U64(u64),
       →        …
   1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
@@ -158,24 +152,26 @@ src/lib.rs
    407→mod serde;
    409→#[cfg(feature = "kv")]
    410→pub mod kv;
+   421→struct AtomicUsize {
    475→pub enum Level {
    516→    type Err = ParseLevelError;
    636→pub enum LevelFilter {
    666→    type Err = ParseLevelError;
+   781→enum MaybeStaticStr<'a> {
    788→    fn get …
    842→pub struct Record<'a> {
+   858→struct KeyValues<'a>(&'a dyn kv::Source);
   1003→pub struct RecordBuilder<'a> {
   1158→pub struct Metadata<'a> {
   1200→pub struct MetadataBuilder<'a> {
   1249→pub trait Log: Sync + Send {
+  1283→struct NopLogger;
   1483→fn set_logger_inner …
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
   1600→pub mod __private_api;
   1602→/// The statically resolved maximum log level.
   1603→///
-  1604→/// See the crate level documentation for information on how to configure this.
-  1605→///
       →…
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 
@@ -202,13 +198,15 @@ test_max_level_features/Cargo.toml
 
 test_max_level_features/main.rs
      5→use log::set_boxed_logger;
-     7→fn set_boxed_logger(logger: Box<dyn Log>) -> Result<(), log::SetLoggerError> {
+     7→fn set_boxed_logger …
     11→struct State {
     15→struct Logger(Arc<State>);
     17→impl Log for Logger {
     18→    fn enabled(&self, _: &Metadata) -> bool {
     22→    fn log(&self, record: &Record) {
     26→    fn flush(&self) {}
+
+tests/integration.rs
 
 triagebot.toml
      1→[assign]

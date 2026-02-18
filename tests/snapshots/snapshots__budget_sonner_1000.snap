@@ -2,22 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1007 tokens)
+budget: 1000 (1000 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
 
 README.md
      5→## Usage
-     7→To start using the library, install it in your project:
-     8→
-     9→```bash
-    10→npm install sonner
-    11→```
-    12→
-      →…
     31→## Documentation
-    33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
 
 package.json
 
@@ -28,12 +20,8 @@ src/assets.tsx
      2→import React from 'react';
      3→import type { ToastTypes } from './types';
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
-     6→  switch (type) {
-      →  …
     24→const bars = Array(12).fill(0);
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
-    27→  return (
-      →  …
     38→const SuccessIcon = (
     48→const WarningIcon = (
     58→const InfoIcon = (
@@ -43,9 +31,6 @@ src/assets.tsx
 src/hooks.tsx
      1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
-     4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
-     5→
-      →…
 
 src/index.tsx
      3→import React from 'react';
@@ -55,14 +40,39 @@ src/index.tsx
      8→import { toast, ToastState } from './state …
      9→import './styles.css …
     10→import { …
+    45→function cn …
+    49→function getDefaultSwipeDirections …
+    64→const Toast …
+   507→function getDocumentDirection …
+   520→function assignOffset …
+   552→function useSonner …
 
 src/state.ts
      1→import type { …
     11→import React from 'react';
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
+    22→  constructor …
+    29→  subscribe …
+    38→  publish …
+    42→  addToast …
+    47→  create …
+    88→  dismiss …
+   101→  message …
+   105→  error …
+   109→  success …
+   113→  info …
+   117→  warning …
+   121→  loading …
+   125→  promise …
+   243→  custom …
+   249→  getActiveToasts …
    254→export const ToastState = new Observer();
+   257→const toastFunction …
+   268→const isHttpResponse …
    279→const basicToast = toastFunction;
+   281→const getHistory …
+   282→const getToasts …
    285→export const toast = Object.assign(
 
 src/types.ts
@@ -94,8 +104,6 @@ src/types.ts
    192→export interface ToastToDismiss {
    197→export type ExternalToast …
 
-test/README.md
-
 test/package.json
 
 test/src/app/action.tsx
@@ -103,10 +111,7 @@ test/src/app/action.tsx
 
 test/src/app/layout.tsx
      1→export const metadata = {
-     6→export default function RootLayout({ children }: { children: React.ReactNode }) {
-
-test/src/app/page.tsx
-     9→export default function Home({ searchParams }: any) {
+     6→export default function RootLayout …
 
 tsconfig.json
      2→  "compilerOptions": {
@@ -120,13 +125,6 @@ turbo.json
      4→  "pipeline": {
     12→  }
     13→}
-
-website/README.md
-
-website/package.json
-
-website/src/pages/_app.tsx
-     7→export default function Nextra …
 
 website/src/pages/index.tsx
     14→export default function Home() {

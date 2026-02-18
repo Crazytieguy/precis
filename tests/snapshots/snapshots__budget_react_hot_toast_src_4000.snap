@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4048 tokens)
+budget: 4000 (4046 tokens)
 
 components/checkmark.tsx
      1→import { styled, keyframes } from 'goober';
@@ -16,7 +16,6 @@ components/checkmark.tsx
     35→  width: 20px;
     36→  opacity: 0;
     37→  height: 20px;
-    38→  border-radius: 10px;
       →  …
 
 components/error.tsx
@@ -32,7 +31,6 @@ components/error.tsx
     39→  width: 20px;
     40→  opacity: 0;
     41→  height: 20px;
-    42→  border-radius: 10px;
       →  …
 
 components/loader.tsx
@@ -46,8 +44,6 @@ components/loader.tsx
     18→  width: 12px;
     19→  height: 12px;
     20→  box-sizing: border-box;
-    21→  border: 2px solid;
-    22→  border-radius: 100%;
       →  …
 
 components/toast-bar.tsx
@@ -56,8 +52,14 @@ components/toast-bar.tsx
      4→import { Toast, ToastPosition, resolveValue, Renderable } from '../core/types';
      5→import { ToastIcon } from './toast-icon';
      6→import { prefersReducedMotion } from '../core/utils';
-     8→const enterAnimation …
-    13→const exitAnimation …
+     8→const enterAnimation = (factor: number) => `
+     9→0% {transform: translate3d(0,${factor * -200}%,0) scale(.6); opacity:.5;}
+    10→100% {transform: translate3d(0,0,0) scale(1); opacity:1;}
+    11→`;
+    13→const exitAnimation = (factor: number) => `
+    14→0% {transform: translate3d(0,0,-1px) scale(1); opacity:1;}
+    15→100% {transform: translate3d(0,${factor * -150}%,-1px) scale(.6); opacity:0;}
+    16→`;
     18→const fadeInAnimation = `0%{opacity:0;} 100%{opacity:1;}`;
     19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
     22→const ToastBarBase = styled('div')`
@@ -66,15 +68,15 @@ components/toast-bar.tsx
     48→  toast: Toast;
     49→  position?: ToastPosition;
       →  …
-    57→const getAnimationStyle …
+    57→const getAnimationStyle = (
+    58→  position: ToastPosition,
+    59→  visible: boolean
+    60→): React.CSSProperties => {
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
     77→    const animationStyle: React.CSSProperties = toast.height
     78→      ? getAnimationStyle(
-    79→          toast.position || position || 'top-center',
-    80→          toast.visible
-    81→        )
-      →        …
+      →      …
 
 components/toast-icon.tsx
      1→import * as React from 'react';
@@ -88,11 +90,9 @@ components/toast-icon.tsx
     22→const enter = keyframes`
     32→export const AnimatedIconWrapper = styled('div')`
     33→  position: relative;
-    34→  transform: scale(0.6);
       →  …
     41→export type IconThemes = Partial<{
     42→  success: CheckmarkTheme;
-    43→  error: ErrorTheme;
       →  …
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
@@ -150,15 +150,7 @@ components/toaster.tsx
     99→      data-rht-toaster={toasterId || ''}
    100→      style={{
    101→        position: 'fixed',
-   102→        zIndex: 9999,
-   103→        top: DEFAULT_OFFSET,
-   104→        left: DEFAULT_OFFSET,
-   105→        right: DEFAULT_OFFSET,
-   106→        bottom: DEFAULT_OFFSET,
-   107→        pointerEvents: 'none',
-   108→        ...containerStyle,
-   109→      }}
-      →      …
+      →        …
 
 core/store.ts
      1→import { useEffect, useState, useRef } from 'react';

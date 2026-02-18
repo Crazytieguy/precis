@@ -2,14 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1003 tokens)
+budget: 1000 (1001 tokens)
 
 README.md
      1→# humanize
     12→This modest package contains various common humanization utilities, like turning a
-    13→number into a fuzzy human-readable duration ("3 minutes ago") or into a human-readable
-    14→size or throughput. It is localized to:
-    15→
       →…
     49→## API reference
     55→## Installation
@@ -17,27 +14,29 @@ README.md
    124→#### Smaller units
    200→## Localization
 
-docs/filesize.md
-     1→# Filesize
-
-docs/i18n.md
-     1→# Internationalisation
-
-docs/index.md
-     1→# humanize
-
-docs/lists.md
-     1→# Lists
-
-docs/number.md
-     1→# Number
-
-docs/time.md
-     1→# Time
-
 mkdocs.yml
+     1→site_name: humanize
+     2→site_url: https://humanize.readthedocs.io
+     3→repo_url: https://github.com/python-humanize/humanize
+     4→theme:
+    18→nav:
+    26→plugins:
+    31→markdown_extensions:
+    37→extra_css:
+    40→watch:
 
 pyproject.toml
+     1→[build-system]
+     8→[project]
+    50→[tool.hatch]
+    53→[tool.hatch.build]
+    56→[tool.hatch.build.hooks.vcs]
+    59→[tool.hatch.version.raw-options]
+    62→[tool.ruff]
+   103→[tool.pyproject-fmt]
+   106→[tool.pytest.ini_options]
+   113→[tool.coverage.report]
+   120→[tool.mypy]
 
 src/humanize/__init__.py
     26→from ._version import __version__
@@ -45,28 +44,22 @@ src/humanize/__init__.py
 
 src/humanize/filesize.py
      5→from math import log
-    36→def naturalsize(
-    37→    value: float | str,
-    38→    binary: bool = False,
-    39→    gnu: bool = False,
-    40→    format: str = "%.1f",
-    41→) -> str:
-    42→    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
-    43→
-      →…
+    36→def naturalsize …
 
 src/humanize/i18n.py
      8→TYPE_CHECKING = False
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
-    15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
-    18→_CURRENT = local()
+    15→_TRANSLATIONS …
+    18→_CURRENT …
     22→_THOUSANDS_SEPARATOR = {
     31→_DECIMAL_SEPARATOR = {
-    51→def get_translation …
-    58→def activate …
-    96→def deactivate …
-   183→def thousands_separator …
-   196→def decimal_separator …
+    51→def get_translation() -> gettext_module.NullTranslations:
+    58→def activate(
+    59→    locale: str | None, path: str | os.PathLike[str] | None = None
+    60→) -> gettext_module.NullTranslations:
+    96→def deactivate() -> None:
+   183→def thousands_separator() -> str:
+   196→def decimal_separator() -> str:
 
 src/humanize/lists.py
      5→TYPE_CHECKING = False
@@ -118,12 +111,6 @@ src/humanize/time.py
    311→def naturalday …
    343→def naturaldate …
    451→def precisedelta …
-
-tests/test_i18n.py
-   225→class TestActivate:
-
-tests/test_lists.py
-    20→def test_natural_list …
 
 tests/test_time.py
     17→ONE_MICROSECOND = 1 / 1000000

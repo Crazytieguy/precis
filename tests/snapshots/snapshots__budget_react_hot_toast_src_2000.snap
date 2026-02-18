@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2023 tokens)
+budget: 2000 (2022 tokens)
 
 components/checkmark.tsx
      1→import { styled, keyframes } from 'goober';
@@ -13,8 +13,6 @@ components/checkmark.tsx
     31→  secondary?: string;
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
-    35→  width: 20px;
-      →  …
 
 components/error.tsx
      1→import { styled, keyframes } from 'goober';
@@ -26,8 +24,6 @@ components/error.tsx
     35→  secondary?: string;
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
-    39→  width: 20px;
-      →  …
 
 components/loader.tsx
      1→import { styled, keyframes } from 'goober';
@@ -37,8 +33,6 @@ components/loader.tsx
     14→  secondary?: string;
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
-    18→  width: 12px;
-      →  …
 
 components/toast-bar.tsx
      1→import * as React from 'react';
@@ -71,9 +65,7 @@ components/toast-icon.tsx
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {
-    50→  const { icon, type, iconTheme } = toast;
-    51→  if (icon !== undefined) {
-      →  …
+      →…
 
 components/toaster.tsx
      1→import { css, setup } from 'goober';
@@ -100,7 +92,6 @@ components/toaster.tsx
     88→  toastOptions,
     89→  gutter,
     90→  children,
-    91→  toasterId,
       →  …
 
 core/store.ts
@@ -123,15 +114,24 @@ core/store.ts
     23→  | {
     52→interface ToasterState {
     58→interface State {
-    62→export const reducer …
+    62→export const reducer = (state: ToasterState, action: Action): ToasterState => {
    136→const listeners: Array<
    140→const defaultToasterState: ToasterState = {
-   149→export const dispatch …
-   161→export const dispatchAll …
-   164→export const getToasterIdFromToastId …
-   169→export const createDispatch …
+   149→export const dispatch = (action: Action, toasterId = DEFAULT_TOASTER_ID) => {
+   161→export const dispatchAll = (action: Action) =>
+   162→  Object.keys(memoryState).forEach((toasterId) => dispatch(action, toasterId));
+   164→export const getToasterIdFromToastId = (toastId: string) =>
+   165→  Object.keys(memoryState).find((toasterId) =>
+   166→    memoryState[toasterId].toasts.some((t) => t.id === toastId)
+   167→  );
+   169→export const createDispatch =
+   170→  (toasterId = DEFAULT_TOASTER_ID) =>
+   171→  (action: Action) => {
    175→export const defaultTimeouts: {
-   185→export const useStore …
+   185→export const useStore = (
+   186→  toastOptions: DefaultToastOptions = {},
+   187→  toasterId: string = DEFAULT_TOASTER_ID
+   188→): ToasterState => {
 
 core/toast.ts
      1→import { …
@@ -150,8 +150,7 @@ core/types.ts
     12→export type Renderable …
     14→export interface IconTheme {
     15→  primary: string;
-    16→  secondary: string;
-    17→}
+      →  …
     19→export type ValueFunction …
     20→export type ValueOrFunction …
     24→const isFunction …
@@ -161,20 +160,14 @@ core/types.ts
     32→): TValue => (isFunction(valOrFunction) ? valOrFunction(arg) : valOrFunction);
     34→export interface Toast {
     35→  type: ToastType;
-    36→  id: string;
-    37→  toasterId?: string;
       →  …
     60→export type ToastOptions …
     76→export type DefaultToastOptions …
     80→export interface ToasterProps {
     81→  position?: ToastPosition;
-    82→  toastOptions?: DefaultToastOptions;
-    83→  reverseOrder?: boolean;
       →  …
     91→export interface ToastWrapperProps {
     92→  id: string;
-    93→  className?: string;
-    94→  style?: React.CSSProperties;
       →  …
 
 core/use-toaster.ts
@@ -189,10 +182,7 @@ core/use-toaster.ts
     11→) => {
     12→  const { toasts, pausedAt } = useStore(toastOptions, toasterId);
     13→  const toastTimeouts = useRef(
-    14→    new Map<Toast['id'], ReturnType<typeof setTimeout>>()
-    15→  ).current;
-    16→
-      →…
+      →  …
 
 core/utils.ts
      1→export const genId = (() => {

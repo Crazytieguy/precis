@@ -13,12 +13,8 @@ error.rs
     10→enum Inner {
     20→    /// Create an error from a message.
     21→    pub fn msg(msg: &'static str) -> Self {
-    22→        Error {
-      →        …
-    29→    pub(super) fn from_value …
-    37→    pub(super) fn into_value …
-    49→    fn fmt …
-    63→    fn from …
+    49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    63→    fn from(_: fmt::Error) -> Self {
     69→mod std_support {
     70→    use super::*;
     76→        /// Create an error from a standard error type.
@@ -26,9 +22,7 @@ error.rs
     78→        where
     79→            E: Into<BoxedError>,
     80→        {
-    81→            Error {
-      →            …
-    90→        fn from …
+    90→        fn from(err: io::Error) -> Self {
 
 key.rs
      7→pub trait ToKey {
@@ -64,18 +58,14 @@ mod.rs
 
 source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
-     9→/// A source of key-values.
-    10→///
-      →…
     51→pub trait Source {
-    62→    fn visit …
-    73→    fn get …
-    85→    fn count …
+    62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
+    73→    fn get(&self, key: Key) -> Option<Value<'_>> {
+    85→    fn count(&self) -> usize {
     91→fn get_default …
    114→fn count_default …
-   234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
-   237→    fn visit_pair …
+   237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
    280→mod std_support {
    281→    use super::*;
    462→pub use VisitSource as Visitor;
@@ -100,7 +90,6 @@ value.rs
    739→        None,
    740→        Bool(bool),
    741→        Str(&'v str),
-   742→        Char(char),
       →        …
   1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {

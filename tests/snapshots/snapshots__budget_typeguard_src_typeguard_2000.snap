@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2037 tokens)
+budget: 2000 (2031 tokens)
 
 __init__.py
      1→import os
@@ -29,6 +29,10 @@ _checkers.py
   1005→origin_type_checkers: dict[
 
 _config.py
+     3→from collections.abc …
+     4→from dataclasses …
+     5→from enum …
+     6→from typing …
      9→    from ._functions import TypeCheckFailCallback
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
@@ -46,16 +50,12 @@ _config.py
     50→    ALL_ITEMS = auto()
     51→
     52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
-    53→        if self is CollectionCheckStrategy.FIRST_ITEM:
-    54→            try:
-      →            …
     62→@dataclass
     63→class TypeCheckConfiguration:
     64→    """
     65→     You can change Typeguard's behavior with these settings.
     66→
-    67→    .. attribute:: typecheck_fail_callback
-      →    …
+      →…
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
     99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
@@ -93,6 +93,12 @@ _exceptions.py
     38→    def __str__(self) -> str:
 
 _functions.py
+     8→from . …
+     9→from ._checkers …
+    10→from ._config …
+    15→from ._exceptions …
+    16→from ._memo …
+    17→from ._utils …
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
     50→def check_type …
@@ -108,9 +114,8 @@ _importhook.py
     18→from ._transformer import TypeguardTransformer
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
-    45→def _call_with_frames_removed(
-    46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
-    47→) -> T:
+    45→def _call_with_frames_removed …
+    51→def optimized_cache_from_source …
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
     57→    def source_to_code(
@@ -123,14 +128,23 @@ _importhook.py
     64→            filename = path
     65→        else:
       →        …
+    99→    def exec_module …
    109→class TypeguardFinder(MetaPathFinder):
    110→    """
       →    …
    119→
+   120→    def __init__ …
+   124→    def find_spec …
+   138→    def should_instrument …
    156→class ImportHookManager:
    157→    """
       →    …
    160→
+   161→    def __init__ …
+   164→    def __enter__ …
+   167→    def __exit__ …
+   175→    def uninstall …
+   183→def install_import_hook …
 
 _memo.py
      3→from typing …
@@ -143,17 +157,7 @@ _memo.py
     34→
     35→    __slots__ = "globals", "locals", "self_type", "config"
     36→
-    37→    def __init__(
-    38→        self,
-    39→        globals: dict[str, Any],
-    40→        locals: dict[str, Any],
-    41→        *,
-    42→        self_type: type | None = None,
-    43→        config: TypeCheckConfiguration = global_config,
-    44→    ):
-    45→        self.globals = globals
-    46→        self.locals = locals
-      →        …
+    37→    def __init__ …
 
 _pytest_plugin.py
     16→def pytest_addoption(parser: Parser) -> None:
@@ -180,21 +184,23 @@ _transformer.py
    122→    joined_path: Constant = field(init=False)
    123→    return_annotation: expr | None = None
    124→    yield_annotation: expr | None = None
-   125→    send_annotation: expr | None = None
-   126→    is_async: bool = False
    285→class NameCollector(NodeVisitor):
    313→class GeneratorDetector(NodeVisitor):
    315→
    338→class AnnotationTransformer(NodeTransformer):
    339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
    488→class TypeguardTransformer(NodeTransformer):
-   517→    def _use_memo(
-   518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
-   519→    ) -> Generator[None, Any, None]:
+   517→    def _use_memo …
    570→    def _get_import …
    580→    def _convert_annotation …
 
 _utils.py
+     3→import inspect …
+     4→import sys …
+     5→from importlib …
+     6→from inspect …
+     7→from types …
+     8→from typing …
     21→    from ._memo import TypeCheckMemo
     48→    def evaluate_forwardref(forwardref: ForwardRef, memo: TypeCheckMemo) -> Any:
     66→def get_type_name(type_: Any) -> str:

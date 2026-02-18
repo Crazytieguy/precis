@@ -2,12 +2,23 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (999 tokens)
+budget: 1000 (1008 tokens)
 
 CHANGELOG.md
-     1→# Changelog
 
 Cargo.toml
+     1→[package]
+    19→[workspace]
+    22→[dependencies]
+    27→[dev-dependencies]
+    31→[features]
+    66→[[example]]
+    70→[[example]]
+    74→[[example]]
+    78→[[example]]
+    82→[[example]]
+    86→[[example]]
+    90→[package.metadata.docs.rs]
 
 README.md
      8→# Overview
@@ -16,19 +27,12 @@ README.md
 src/imp_cs.rs
      6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
-    27→    pub(crate) const fn new() -> OnceCell<T> {
-    31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
 
 src/imp_pl.rs
      1→use std::{ …
      7→pub(crate) struct OnceCell<T> {
-    28→    pub(crate) const fn new() -> OnceCell<T> {
-    32→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
    122→struct Guard<'a> {
    128→    fn drop(&mut self) {
-   129→        self.state.store(self.new_state, Ordering::Release);
-   130→        unsafe {
-      →        …
 
 src/imp_std.rs
      6→use std::{ …
@@ -47,12 +51,10 @@ src/lib.rs
    384→    use core::{ …
    411→    pub struct OnceCell<T> {
    412→        // Invariant: written to at most once.
-   413→        inner: UnsafeCell<Option<T>>,
-   414→    }
+      →        …
    714→    pub struct Lazy<T, F = fn() -> T> {
    715→        cell: OnceCell<T>,
-   716→        init: Cell<Option<F>>,
-   717→    }
+      →        …
    841→        type Target = T;
    861→/// Thread-safe, blocking version of `OnceCell`.
    862→#[cfg(any(feature = "std", feature = "critical-section"))]
@@ -62,8 +64,7 @@ src/lib.rs
    901→    pub struct OnceCell<T>(Imp<T>);
   1255→    pub struct Lazy<T, F = fn() -> T> {
   1256→        cell: OnceCell<T>,
-  1257→        init: Cell<Option<F>>,
-  1258→    }
+      →        …
   1374→        type Target = T;
   1408→    fn _dummy() {}
   1411→#[cfg(feature = "race")]
@@ -72,39 +73,42 @@ src/lib.rs
 src/race.rs
     31→use core::sync::atomic;
     33→use portable_atomic as atomic;
-    41→/// A thread-safe cell which can be written to only once.
-    42→#[derive(Default, Debug)]
     43→pub struct OnceNonZeroUsize {
-    44→    inner: AtomicUsize,
-    45→}
-   165→/// A thread-safe cell which can be written to only once.
-   166→#[derive(Default, Debug)]
+    50→    pub const fn new …
+    56→    pub fn get …
+    68→    pub unsafe fn get_unchecked …
+   107→    pub fn set …
+   120→    pub fn get_or_init …
+   138→    pub fn get_or_try_init …
    167→pub struct OnceBool {
-   168→    inner: OnceNonZeroUsize,
-   169→}
-   231→/// A thread-safe cell which can be written to only once.
+   174→    pub const fn new …
+   180→    pub fn get …
+   189→    pub fn set …
+   199→    pub fn get_or_init …
+   213→    pub fn get_or_try_init …
    232→pub struct OnceRef<'a, T> {
-   233→    inner: AtomicPtr<T>,
-   234→    ghost: PhantomData<UnsafeCell<&'a T>>,
-   235→}
-   241→    fn fmt …
-   247→    fn default …
+   241→    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+   247→    fn default() -> Self {
+   254→    pub const fn new …
+   259→    pub fn get …
+   268→    pub fn set …
+   281→    pub fn get_or_init …
+   299→    pub fn get_or_try_init …
    351→pub use self::once_box::OnceBox;
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
-   360→    /// A thread-safe cell which can be written to only once.
    361→    pub struct OnceBox<T> {
-   362→        inner: AtomicPtr<T>,
-   363→        ghost: PhantomData<Option<Box<T>>>,
-   364→    }
-   367→        fn fmt …
-   373→        fn default …
-   379→        fn drop …
-   482→        fn clone …
+   367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+   373→        fn default() -> Self {
+   379→        fn drop(&mut self) {
+   389→        pub const fn new …
+   394→        pub fn with_value …
+   399→        pub fn get …
+   411→        pub fn set …
+   432→        pub fn get_or_init …
+   450→        pub fn get_or_try_init …
+   482→        fn clone(&self) -> Self {
 
 xtask/Cargo.toml
      1→[package]
      8→[dependencies]
-
-xtask/src/tidy.rs
-     1→use xshell::{cmd, Shell};

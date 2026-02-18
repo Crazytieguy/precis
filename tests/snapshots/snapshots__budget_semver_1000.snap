@@ -2,23 +2,23 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (999 tokens)
+budget: 1000 (998 tokens)
 
 .github/ISSUE_TEMPLATE/config.yml
      3→blank_issues_enabled: true
 
 .github/actions/create-check/action.yml
+     3→name: 'Create Check'
+     4→inputs:
+    13→outputs:
+    16→runs:
 
 .github/dependabot.yml
      3→version: 2
      5→updates:
 
-.github/matchers/tap.json
-
 .github/settings.yml
      3→repository:
-    11→  enable_vulnerability_alerts: true
-    12→
     13→branches:
 
 .github/workflows/audit.yml
@@ -28,6 +28,10 @@ budget: 1000 (999 tokens)
     14→jobs:
 
 .github/workflows/ci-release.yml
+     3→name: CI - Release
+     5→on:
+    21→permissions:
+    25→jobs:
 
 .github/workflows/ci.yml
      3→name: CI
@@ -36,8 +40,28 @@ budget: 1000 (999 tokens)
     19→jobs:
 
 .github/workflows/codeql-analysis.yml
+     3→name: CodeQL
+     5→on:
+    18→permissions:
+    21→jobs:
+
+.github/workflows/post-dependabot.yml
+     3→name: Post Dependabot
+     5→on: pull_request
+     7→permissions:
+    10→jobs:
 
 .github/workflows/pull-request.yml
+     3→name: Pull Request
+     5→on:
+    13→permissions:
+    16→jobs:
+
+.github/workflows/release-integration.yml
+     3→name: Release Integration
+     5→on:
+    22→permissions:
+    26→jobs:
 
 .github/workflows/release.yml
      3→name: Release
@@ -50,6 +74,14 @@ budget: 1000 (999 tokens)
      3→}
 
 README.md
+     1→semver(1) -- The semantic versioner for npm
+     4→## Install
+    10→## Usage
+   139→## Versions
+   148→## Ranges
+   408→## Functions
+   576→## Constants
+   610→## Exported Modules
 
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -63,9 +95,24 @@ classes/comparator.js
 
 classes/range.js
      6→class Range {
+     7→  constructor (range, options) {
+    73→  get range () {
+    92→  format () {
+    96→  toString () {
+   100→  parseRange (range) {
+   170→  intersects (range, options) {
+   193→  test (version) {
 
 classes/semver.js
      9→class SemVer {
+    10→  constructor (version, options) {
+    81→  format () {
+    89→  toString () {
+    93→  compare (other) {
+   109→  compareMain (other) {
+   135→  comparePre (other) {
+   168→  compareBuild (other) {
+   194→  inc (release, identifier, identifierBase) {
 
 functions/clean.js
      4→const clean = (version, options) => {
@@ -73,20 +120,11 @@ functions/clean.js
 functions/cmp.js
     10→const cmp …
 
-functions/coerce.js
-     7→const coerce = (version, options) => {
-
-functions/compare-build.js
-     4→const compareBuild = (a, b, loose) => {
-
-functions/compare-loose.js
-     4→const compareLoose …
-
 functions/compare.js
-     4→const compare = (a, b, loose) =>
+     4→const compare …
 
 functions/diff.js
-     5→const diff = (version1, version2) => {
+     5→const diff …
 
 functions/eq.js
      4→const eq …
@@ -94,17 +132,11 @@ functions/eq.js
 functions/gt.js
      4→const gt …
 
-functions/gte.js
-     4→const gte …
-
 functions/inc.js
      5→const inc …
 
 functions/lt.js
      4→const lt …
-
-functions/lte.js
-     4→const lte …
 
 functions/major.js
      4→const major …
@@ -121,29 +153,8 @@ functions/parse.js
 functions/patch.js
      4→const patch …
 
-functions/prerelease.js
-     4→const prerelease = (version, options) => {
-
-functions/rcompare.js
-     4→const rcompare …
-
-functions/rsort.js
-     4→const rsort …
-
-functions/satisfies.js
-     4→const satisfies = (version, range, options) => {
-
-functions/sort.js
-     4→const sort …
-
-functions/valid.js
-     4→const valid = (version, options) => {
-
 internal/debug.js
      3→const debug = (
-
-internal/identifiers.js
-     3→const numeric = /^[0-9]+$/
 
 internal/lrucache.js
      3→class LRUCache {
@@ -156,32 +167,5 @@ internal/parse-options.js
      6→const parseOptions = options => {
 
 package.json
-
-ranges/gtr.js
-     5→const gtr …
-
-ranges/intersects.js
-     4→const intersects …
-
-ranges/ltr.js
-     5→const ltr …
-
-ranges/max-satisfying.js
-     6→const maxSatisfying = (versions, range, options) => {
-
-ranges/min-satisfying.js
-     5→const minSatisfying = (versions, range, options) => {
-
-ranges/min-version.js
-     7→const minVersion = (range, loose) => {
-
-ranges/outside.js
-    13→const outside …
-
-ranges/to-comparators.js
-     6→const toComparators = (range, options) =>
-
-ranges/valid.js
-     4→const validRange = (range, options) => {
 
 release-please-config.json

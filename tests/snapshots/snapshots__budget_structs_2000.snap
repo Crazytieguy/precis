@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2015 tokens)
+budget: 2000 (2022 tokens)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -13,20 +13,10 @@ README.md
       →…
     16→## Install
     18→```bash
-    19→go get github.com/fatih/structs
-    20→```
-    21→
+      →…
     22→## Usage and Examples
     24→Just like the standard lib `strings`, `bytes` and co packages, `structs` has
-    25→many global functions to manipulate or organize your struct data. Lets define
-    26→and declare a struct:
-    27→
-    28→```go
-    29→type Server struct {
-    30→	Name        string `json:"name,omitempty"`
-    31→	ID          int
-    32→	Enabled     bool
-      →	…
+      →…
     74→### Struct methods
     76→The structs functions can be also used as independent methods by creating a new
       →…
@@ -35,8 +25,7 @@ README.md
       →…
    163→## Credits
    165→ * [Fatih Arslan](https://github.com/fatih)
-   166→ * [Cihangir Savas](https://github.com/cihangir)
-   167→
+      → …
    168→## License
    170→The MIT License (MIT) - see LICENSE.md for more details
 
@@ -150,6 +139,19 @@ structs.go
 
 structs_example_test.go
      3→import …
+     8→func ExampleNew() {
+    33→func ExampleMap() {
+    58→func ExampleMap_tags() {
+    84→func ExampleMap_omitNested() {
+   114→func ExampleMap_omitEmpty() {
+   136→func ExampleValues() {
+   156→func ExampleValues_omitEmpty() {
+   178→func ExampleValues_tags() {
+   207→func ExampleFields() {
+   232→func ExampleFields_nested() {
+   263→func ExampleField() {
+   297→func ExampleIsZero() {
+   322→func ExampleHasZero() {
 
 structs_test.go
      3→import …

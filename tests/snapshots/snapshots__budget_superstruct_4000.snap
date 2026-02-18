@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4020 tokens)
+budget: 4000 (4017 tokens)
 
 Changelog.md
      1→# Changelog
@@ -15,24 +15,6 @@ Readme.md
    189→### Examples
    205→### Documentation
    231→### License
-
-docs/guides/01-getting-started.md
-     1→# Getting Started
-
-docs/guides/02-validating-data.md
-     1→# Validating Data
-
-docs/guides/03-coercing-data.md
-     1→# Coercing Data
-
-docs/guides/04-refining-validation.md
-     1→# Refining Validation
-
-docs/guides/05-handling-errors.md
-     1→# Handling Errors
-
-docs/guides/06-using-typescript.md
-     1→# Using TypeScript
 
 docs/readme.md
      7→### Usage
@@ -66,8 +48,6 @@ docs/resources/links.md
      1→# Resources
      5→## Libraries
 
-docs/summary.md
-
 examples/README.md
      1→# Examples
 
@@ -83,21 +63,40 @@ jsr.json
      9→}
 
 package.json
-
-rollup.config.js
+     2→  "name": "superstruct",
+     3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
+     4→  "version": "2.0.2",
+     5→  "license": "MIT",
+     6→  "repository": "git://github.com/ianstormtaylor/superstruct.git",
+     7→  "type": "module",
+     8→  "main": "./dist/index.cjs",
+     9→  "module": "./dist/index.mjs",
+    10→  "types": "./dist/index.d.ts",
+    11→  "sideEffects": false,
+    12→  "files": [
+    14→  ],
+    15→  "publishConfig": {
+    17→  },
+    18→  "engines": {
+    20→  },
+    21→  "devDependencies": {
+    37→  },
+    38→  "scripts": {
+    53→  },
+    54→  "keywords": [
+    84→  ]
+    85→}
 
 src/error.ts
      2→ * A `StructFailure` represents a single specific failure in validation.
      5→export type Failure = {
      6→  value: any
-     7→  key: any
       →  …
     17→ * `StructError` objects are thrown (or returned) when validation fails.
     18→ *
     19→ * Validation logic is design to exit early for maximum performance. The error
     20→ * represents the first error encountered during validation. For more detail,
-    21→ * the `error.failures` property is a generator function that can be run to
-    22→ * continue validation and receive all the failures in the data.
+      → …
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
@@ -110,9 +109,6 @@ src/error.ts
     34→
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
     36→    let cached: Array<Failure> | undefined
-    37→    const { message, explanation, ...rest } = failure
-    38→    const { path } = failure
-    39→    const msg =
       →    …
 
 src/struct.ts
@@ -145,42 +141,54 @@ src/struct.ts
     31→      type,
     32→      schema,
     33→      validator,
-    34→      refiner,
       →      …
-    67→  assert …
-    75→  create …
-    83→  is …
-    93→  mask …
-   107→  validate …
-   123→export function assert …
-   139→export function create …
-   157→export function mask …
-   175→export function is …
-   185→export function validate …
-   214→ * A `Context` contains information about the current location of the
-   215→ * validation inside the initial input value. It also carries `mask`
-   216→ * since it's a run-time flag determining how the validation was invoked
-   217→ * (via `mask()` or via `validate()`), plus it applies recursively
-   218→ * to all of the nested structs.
+    67→  assert(value: unknown, message?: string): asserts value is T {
+    75→  create(value: unknown, message?: string): T {
+    83→  is(value: unknown): value is T {
+    93→  mask(value: unknown, message?: string): T {
+   107→  validate(
+   108→    value: unknown,
+   109→    options: {
+   110→      coerce?: boolean
+   111→      mask?: boolean
+   112→      message?: string
+   113→    } = {}
+   114→  ): [StructError, undefined] | [undefined, T] {
+   123→export function assert<T, S>(
+   124→  value: unknown,
+   125→  struct: Struct<T, S>,
+   126→  message?: string
+   127→): asserts value is T {
+   139→export function create<T, S>(
+   140→  value: unknown,
+   141→  struct: Struct<T, S>,
+   142→  message?: string
+   143→): T {
+   157→export function mask<T, S>(
+   158→  value: unknown,
+   159→  struct: Struct<T, S>,
+   160→  message?: string
+   161→): T {
+   175→export function is<T, S>(value: unknown, struct: Struct<T, S>): value is T {
+   185→export function validate<T, S>(
+   186→  value: unknown,
+   187→  struct: Struct<T, S>,
+   188→  options: {
+   189→    coerce?: boolean
+   190→    mask?: boolean
+   191→    message?: string
+   192→  } = {}
+   193→): [StructError, undefined] | [undefined, T] {
    221→export type Context = {
-   222→  branch: Array<any>
-      →  …
-   228→ * A type utility to extract the type from a `Struct` class.
    231→export type Infer<T extends Struct<any, any>> = T['TYPE']
-   234→ * A type utility to describe that a struct represents a TypeScript type.
    237→export type Describe<T> = Struct<T, StructSchema<T>>
-   240→ * A `Result` is returned from validation functions.
    243→export type Result =
    244→  | boolean
    245→  | string
    246→  | Partial<Failure>
    247→  | Iterable<boolean | string | Partial<Failure>>
-   250→ * A `Coercer` takes an unknown value and optionally coerces it.
    253→export type Coercer<T = unknown> = (value: T, context: Context) => unknown
-   256→ * A `Validator` takes an unknown value and validates it.
    259→export type Validator = (value: unknown, context: Context) => Result
-   262→ * A `Refiner` takes a value of a known type and validates it against a further
-   263→ * constraint.
    266→export type Refiner<T> = (value: T, context: Context) => Result
 
 src/structs/coercions.ts
@@ -189,25 +197,15 @@ src/structs/coercions.ts
      3→import { string, unknown } from './types.js'
      6→ * Augment a `Struct` to add an additional coercion step to its input.
      7→ *
-     8→ * This allows you to transform input data before validating it, to increase the
-     9→ * likelihood that it passes validation—for example for default values, parsing
-    10→ * different formats, etc.
-    11→ *
-    12→ * Note: You must use `create(value, Struct)` on the value to have the coercion
-    13→ * take effect! Using simply `assert()` or `is()` will not use coercion.
+      → …
     16→export function coerce<T, S, C>(
     17→  struct: Struct<T, S>,
     18→  condition: Struct<C, any>,
     19→  coercer: Coercer<C>
     20→): Struct<T, S> {
-    21→  return new Struct({
-    22→    ...struct,
-    23→    coercer: (value, ctx) => {
-      →    …
     32→ * Augment a struct to replace `undefined` values with a default.
     33→ *
-    34→ * Note: You must use `create(value, Struct)` on the value to have the coercion
-    35→ * take effect! Using simply `assert()` or `is()` will not use coercion.
+      → …
     38→export function defaulted<T, S>(
     39→  struct: Struct<T, S>,
     40→  fallback: any,
@@ -215,17 +213,10 @@ src/structs/coercions.ts
     42→    strict?: boolean
     43→  } = {}
     44→): Struct<T, S> {
-    45→  return coerce(struct, unknown(), (x) => {
-    46→    const f = typeof fallback === 'function' ? fallback() : fallback
-    47→
-      →…
     73→ * Augment a struct to trim string inputs.
     74→ *
-    75→ * Note: You must use `create(value, Struct)` on the value to have the coercion
-    76→ * take effect! Using simply `assert()` or `is()` will not use coercion.
+      → …
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
-    80→  return coerce(struct, string(), (x) => x.trim())
-    81→}
 
 src/structs/refinements.ts
      1→import { Struct, Refiner } from '../struct.js'
@@ -243,33 +234,46 @@ src/structs/types.ts
      1→import { Infer, Struct } from '../struct.js …
      2→import { define } from './utilities.js …
      3→import { …
-    19→export function any …
+    19→export function any(): Struct<any, null> {
     33→export function array<T extends Struct<any>>(Element?: T): any {
-    60→export function bigint …
-    70→export function boolean …
-    83→export function date …
+    60→export function bigint(): Struct<bigint, null> {
+    70→export function boolean(): Struct<boolean, null> {
+    83→export function date(): Struct<Date, null> {
    105→export function enums<U extends string | number, T extends readonly U[]>(
    106→  values: T
    107→): any {
-   131→export function func …
-   144→export function instance …
-   159→export function integer …
-   172→export function intersection …
+   131→export function func(): Struct<Function, null> {
+   144→export function instance<T extends { new (...args: any): any }>(
+   145→  Class: T
+   146→): Struct<InstanceType<T>, null> {
+   159→export function integer(): Struct<number, null> {
+   172→export function intersection<A extends AnyStruct, B extends AnyStruct[]>(
+   173→  Structs: [A, ...B]
+   174→): Struct<Infer<A> & UnionToIntersection<InferStructTuple<B>[number]>, null> {
    204→export function literal<T>(constant: T): any {
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
-   258→export function never …
-   266→export function nullable …
-   278→export function number …
+   258→export function never(): Struct<never, null> {
+   266→export function nullable<T, S>(struct: Struct<T, S>): Struct<T | null, S> {
+   278→export function number(): Struct<number, null> {
    298→export function object<S extends ObjectSchema>(schema?: S): any {
-   351→export function optional …
-   367→export function record …
-   402→export function regexp …
+   351→export function optional<T, S>(struct: Struct<T, S>): Struct<T | undefined, S> {
+   367→export function record<K extends string, V>(
+   368→  Key: Struct<K>,
+   369→  Value: Struct<V>
+   370→): Struct<Record<K, V>, null> {
+   402→export function regexp(): Struct<RegExp, null> {
    415→export function set<T>(Element?: Struct<T>): any {
-   442→export function string …
-   456→export function tuple …
-   492→export function type …
-   522→export function union …
-   574→export function unknown …
+   442→export function string(): Struct<string, null> {
+   456→export function tuple<A extends AnyStruct, B extends AnyStruct[]>(
+   457→  Structs: [A, ...B]
+   458→): Struct<[Infer<A>, ...InferStructTuple<B>], null> {
+   492→export function type<S extends ObjectSchema>(
+   493→  schema: S
+   494→): Struct<ObjectType<S>, S> {
+   522→export function union<A extends AnyStruct, B extends AnyStruct[]>(
+   523→  Structs: [A, ...B]
+   524→): Struct<Infer<A> | InferStructTuple<B>[number], null> {
+   574→export function unknown(): Struct<unknown, null> {
 
 src/structs/utilities.ts
      1→import { Context, Struct, Validator } from '../struct.js …
@@ -277,16 +281,28 @@ src/structs/utilities.ts
      8→import { object, optional, type } from './types.js …
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
-    62→  const schemas = Structs.map((s) => s.schema)
       →  …
-    71→export function define …
-    80→export function deprecated …
-   106→export function dynamic …
-   140→export function lazy …
-   171→export function omit …
-   197→export function partial …
-   221→export function pick …
-   247→export function struct …
+    71→export function define<T>(name: string, validator: Validator): Struct<T, null> {
+    80→export function deprecated<T>(
+    81→  struct: Struct<T>,
+    82→  log: (value: unknown, ctx: Context) => void
+    83→): Struct<T> {
+   106→export function dynamic<T>(
+   107→  fn: (value: unknown, ctx: Context) => Struct<T, any>
+   108→): Struct<T, null> {
+   140→export function lazy<T>(fn: () => Struct<T, any>): Struct<T, null> {
+   171→export function omit<S extends ObjectSchema, K extends keyof S>(
+   172→  struct: Struct<ObjectType<S>, S>,
+   173→  keys: K[]
+   174→): Struct<ObjectType<Omit<S, K>>, Omit<S, K>> {
+   197→export function partial<S extends ObjectSchema>(
+   198→  struct: Struct<ObjectType<S>, S> | S
+   199→): Struct<ObjectType<PartialObjectSchema<S>>, PartialObjectSchema<S>> {
+   221→export function pick<S extends ObjectSchema, K extends keyof S>(
+   222→  struct: Struct<ObjectType<S>, S>,
+   223→  keys: K[]
+   224→): Struct<ObjectType<Pick<S, K>>, Pick<S, K>> {
+   247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
 
 src/utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
@@ -332,18 +348,6 @@ src/utils.ts
    394→export type InferStructTuple …
    402→type _InferTuple …
 
-test/api/create.test.ts
-     2→import { …
-
-test/api/mask.test.ts
-     2→import { …
-
-test/api/validate.test.ts
-     2→import { …
-
-test/deprecated.test.ts
-     2→import { any, assert, deprecated } from '../src'
-
 test/index.test.ts
      5→import { …
 
@@ -353,70 +357,22 @@ test/index.ts
 
 test/tsconfig.json
 
-test/typings/describe.ts
-     1→import { …
-
-test/validation/function/invalid.ts
-     1→import { func } from '../../../src'
-     3→export const Struct = func()
-     5→export const data = false
-     7→export const failures = [
-
 test/validation/function/valid.ts
-     1→import { func } from '../../../src'
      3→export const Struct = func()
      5→export const data = function () {}
      7→export const output = data
 
-test/validation/object/invalid-array.ts
-     1→import { object } from '../../../src'
-     3→export const Struct = object()
-     5→export const data = []
-     7→export const failures = [
-
-test/validation/object/invalid-property.ts
-     1→import { object, string, number } from '../../../src'
-     3→export const Struct = object({
-     9→export const data = {
-    15→export const failures = [
-
 test/validation/object/valid.ts
-     1→import { object, string, number } from '../../../src'
      3→export const Struct = object({
      8→export const data = {
     13→export const output = {
 
-test/validation/omit/valid.ts
-     3→export const Struct = omit(
-    11→export const data = {
-    15→export const output = {
-
-test/validation/partial/composed.ts
-     3→export const Struct = partial(
-    10→export const data = {
-    14→export const output = {
-
-test/validation/pick/valid.ts
-     3→export const Struct = pick(
-    11→export const data = {
-    15→export const output = {
-
-test/validation/string/invalid.ts
-     1→import { string } from '../../../src'
-     3→export const Struct = string()
-     5→export const data = false
-     7→export const failures = [
-
-test/validation/type/invalid-array.ts
-     1→import { type } from '../../../src'
-     3→export const Struct = type({})
-     5→export const data = []
-     7→export const failures = [
-
 test/validation/type/valid-instance.ts
-     1→import { type, string } from '../../../src'
      3→class Person {
      6→  constructor(name: string) {
+    11→export const Struct = type({
+    15→export const data = new Person('john')
+    17→export const output = data
 
 tsconfig.json
      2→  "include": ["./src/**/*.ts"],

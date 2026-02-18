@@ -2,50 +2,50 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4058 tokens)
+budget: 4000 (4027 tokens)
 
 README.md
     28→## Features
     30→- 🔥 **Hot by default**
     31→- 🔩 **Easily Customizable**
     32→- ⏳ **Promise API** - _Automatic loader from a promise_
-    33→- 🕊 **Lightweight** - _less than 5kb including styles_
-    34→- ✅ **Accessible**
-    35→- 🤯 **Headless Hooks** - _Create your own with [`useToaster()`](https://react-hot-toast.com/docs/use-toaster)_
-    36→
+      →…
     37→## Installation
     39→#### With pnpm
     41→```sh
-    42→pnpm add react-hot-toast
-    43→```
-    44→
+      →…
     45→#### With NPM
     47→```sh
-    48→npm install react-hot-toast
-    49→```
-    50→
+      →…
     51→## Getting Started
     53→Add the Toaster to your app first. It will take care of rendering all notifications emitted. Now you can trigger `toast()` from anywhere!
     54→
     55→```jsx
-    56→import toast, { Toaster } from 'react-hot-toast';
-    57→
-    58→const notify = () => toast('Here is your toast.');
-    59→
-    60→const App = () => {
-    61→  return (
-    62→    <div>
-    63→      <button onClick={notify}>Make me a toast</button>
-    64→      <Toaster />
-    65→    </div>
-    66→  );
-    67→};
-    68→```
-    69→
+      →…
     70→## Documentation
     72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
 
 package.json
+     2→  "name": "react-hot-toast",
+     3→  "description": "Smoking hot React Notifications. Lightweight, customizable and beautiful by default.",
+     4→  "version": "2.6.0",
+     5→  "author": "Timo Lins",
+     6→  "license": "MIT",
+     7→  "repository": "timolins/react-hot-toast",
+     8→  "keywords": [
+    14→  "main": "dist/index.js",
+    15→  "types": "dist/index.d.ts",
+    16→  "exports": {
+    29→  "files": [
+    34→  "engines": {
+    37→  "scripts": {
+    45→  "husky": {
+    50→  "prettier": {
+    57→  "size-limit": [
+    75→  "devDependencies": {
+    95→  "dependencies": {
+    99→  "peerDependencies": {
+   103→  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
 
 site/README.md
      3→## Getting Started
@@ -55,27 +55,17 @@ site/README.md
 site/components/code.tsx
      8→const theme: PrismTheme = {
    104→export const Code: React.FC<{
-   105→  snippet: string;
-      →  …
 
 site/components/docs-layout.tsx
      5→import { Footer } from './sections/footer';
      6→import Logo from '../assets/logo-small.svg';
-     8→const TableItem: React.FC<{
-    19→const TableHeader: React.FC<{
     27→export default function DocsLayout({ meta, children }) {
-    28→  return (
-      →  …
 
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
-     2→  onClick: () => void;
-      →  …
 
 site/components/sections/footer.tsx
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
-     5→  return (
-      →  …
 
 site/components/sections/splitbee-counter.tsx
      4→export const useSplitbeeCount …
@@ -90,25 +80,17 @@ site/components/sections/toast-example.tsx
 site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
     17→export const ToasterExample: React.FC<{
-    18→  position: ToastPosition;
-      →  …
-
-site/next.config.mjs
-    15→const nextConfig = {
-    17→  webpack(config) {
-    24→  async rewrites() {
 
 site/package.json
      2→  "name": "site",
      3→  "scripts": {
-     7→  },
      8→  "dependencies": {
-    24→  },
     25→  "devDependencies": {
-    34→  }
-    35→}
 
 site/pages/_app.tsx
+     1→import '../styles/tailwind-utils.css';
+     2→import '../styles/main.css';
+    10→import { Code } from '../components/code';
     12→const components = {
     71→function MyApp({ Component, pageProps }) {
 
@@ -118,12 +100,8 @@ site/pages/index.tsx
 
 site/tsconfig.json
      2→  "compilerOptions": {
-    21→  },
     22→  "include": [
-    31→  ],
     32→  "exclude": [
-    34→  ]
-    35→}
 
 site/types/svg.d.ts
      1→interface SvgrComponent …
@@ -139,7 +117,6 @@ src/components/checkmark.tsx
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
     35→  width: 20px;
-    36→  opacity: 0;
       →  …
 
 src/components/error.tsx
@@ -153,7 +130,6 @@ src/components/error.tsx
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
     39→  width: 20px;
-    40→  opacity: 0;
       →  …
 
 src/components/loader.tsx
@@ -165,7 +141,6 @@ src/components/loader.tsx
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
     18→  width: 12px;
-    19→  height: 12px;
       →  …
 
 src/components/toast-bar.tsx
@@ -181,12 +156,8 @@ src/components/toast-bar.tsx
     22→const ToastBarBase = styled('div')`
     38→const Message = styled('div')`
     47→interface ToastBarProps {
-    48→  toast: Toast;
-      →  …
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
-    76→  ({ toast, position, style, children }) => {
-      →  …
 
 src/components/toast-icon.tsx
      1→import * as React from 'react';
@@ -199,24 +170,13 @@ src/components/toast-icon.tsx
     13→const IndicatorWrapper = styled('div')`
     22→const enter = keyframes`
     32→export const AnimatedIconWrapper = styled('div')`
-    33→  position: relative;
-      →  …
     41→export type IconThemes = Partial<{
-    42→  success: CheckmarkTheme;
-      →  …
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {
     50→  const { icon, type, iconTheme } = toast;
     51→  if (icon !== undefined) {
-    52→    if (typeof icon === 'string') {
-    53→      return <AnimatedIconWrapper>{icon}</AnimatedIconWrapper>;
-    54→    } else {
-    55→      return icon;
-    56→    }
-    57→  }
-    58→
-      →…
+      →  …
 
 src/components/toaster.tsx
      1→import { css, setup } from 'goober';
@@ -245,9 +205,7 @@ src/components/toaster.tsx
     90→  children,
     91→  toasterId,
     92→  containerStyle,
-    93→  containerClassName,
-    94→}) => {
-      →…
+      →  …
 
 src/core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
@@ -270,13 +228,9 @@ src/core/store.ts
     52→interface ToasterState {
     58→interface State {
     62→export const reducer = (state: ToasterState, action: Action): ToasterState => {
-    63→  const { toastLimit } = state.settings;
-      →  …
    136→const listeners: Array<
    140→const defaultToasterState: ToasterState = {
    149→export const dispatch = (action: Action, toasterId = DEFAULT_TOASTER_ID) => {
-   150→  memoryState[toasterId] = reducer(
-      →  …
    161→export const dispatchAll = (action: Action) =>
    162→  Object.keys(memoryState).forEach((toasterId) => dispatch(action, toasterId));
    164→export const getToasterIdFromToastId = (toastId: string) =>
@@ -286,15 +240,11 @@ src/core/store.ts
    169→export const createDispatch =
    170→  (toasterId = DEFAULT_TOASTER_ID) =>
    171→  (action: Action) => {
-   172→    dispatch(action, toasterId);
-      →    …
    175→export const defaultTimeouts: {
    185→export const useStore = (
    186→  toastOptions: DefaultToastOptions = {},
    187→  toasterId: string = DEFAULT_TOASTER_ID
    188→): ToasterState => {
-   189→  const [state, setState] = useState<ToasterState>(
-      →  …
 
 src/core/toast.ts
      1→import { …
@@ -302,21 +252,36 @@ src/core/toast.ts
     11→import { …
     19→type Message = ValueOrFunction<Renderable, Toast>;
     21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
-    23→const createToast …
-    42→const createHandler …
-    55→const toast …
+    23→const createToast = (
+    24→  message: Message,
+    25→  type: ToastType = 'blank',
+    26→  opts?: ToastOptions
+    27→): Toast => ({
+    42→const createHandler =
+    43→  (type?: ToastType): ToastHandler =>
+    44→  (message, options) => {
+    55→const toast = (message: Message, opts?: ToastOptions) =>
+    56→  createHandler('blank')(message, opts);
 
 src/core/types.ts
      1→import { CSSProperties } from 'react';
-     3→export type ToastType …
-     4→export type ToastPosition …
-    12→export type Renderable …
+     3→export type ToastType = 'success' | 'error' | 'loading' | 'blank' | 'custom';
+     4→export type ToastPosition =
+     5→  | 'top-left'
+     6→  | 'top-center'
+     7→  | 'top-right'
+     8→  | 'bottom-left'
+     9→  | 'bottom-center'
+    10→  | 'bottom-right';
+    12→export type Renderable = React.ReactElement | string | null;
     14→export interface IconTheme {
     15→  primary: string;
     16→  secondary: string;
     17→}
-    19→export type ValueFunction …
-    20→export type ValueOrFunction …
+    19→export type ValueFunction<TValue, TArg> = (arg: TArg) => TValue;
+    20→export type ValueOrFunction<TValue, TArg> =
+    21→  | TValue
+    22→  | ValueFunction<TValue, TArg>;
     24→const isFunction = <TValue, TArg>(
     25→  valOrFunction: ValueOrFunction<TValue, TArg>
     26→): valOrFunction is ValueFunction<TValue, TArg> =>
@@ -343,15 +308,23 @@ src/core/types.ts
     49→
     50→  style?: CSSProperties;
     51→  className?: string;
-    52→  iconTheme?: IconTheme;
-    53→
-    54→  createdAt: number;
-    55→  visible: boolean;
-    56→  dismissed: boolean;
-    57→  height?: number;
-    58→}
-    60→export type ToastOptions …
-    76→export type DefaultToastOptions …
+      →  …
+    60→export type ToastOptions = Partial<
+    61→  Pick<
+    62→    Toast,
+    63→    | 'id'
+    64→    | 'icon'
+    65→    | 'duration'
+    66→    | 'ariaProps'
+    67→    | 'className'
+    68→    | 'style'
+    69→    | 'position'
+    70→    | 'iconTheme'
+    71→    | 'toasterId'
+    72→    | 'removeDelay'
+    73→  >
+    74→>;
+    76→export type DefaultToastOptions = ToastOptions & {
     80→export interface ToasterProps {
     81→  position?: ToastPosition;
     82→  toastOptions?: DefaultToastOptions;
@@ -385,21 +358,11 @@ src/core/use-toaster.ts
     14→    new Map<Toast['id'], ReturnType<typeof setTimeout>>()
     15→  ).current;
     16→
-    17→  const addToRemoveQueue = useCallback(
-    18→    (toastId: string, removeDelay = REMOVE_DELAY) => {
-    19→      if (toastTimeouts.has(toastId)) {
-    20→        return;
-    21→      }
-    22→
       →…
 
 src/core/utils.ts
      1→export const genId = (() => {
-     2→  let count = 0;
-      →  …
      8→export const prefersReducedMotion = (() => {
-     9→  // Cache result
-      →  …
 
 src/headless/index.ts
      1→import { toast } from '../core/toast';
@@ -411,6 +374,9 @@ test/setup.ts
      1→import '@testing-library/jest-dom';
 
 test/toast.test.tsx
+    10→import toast, { resolveValue, Toaster, ToastIcon } from '../src';
+    11→import { defaultTimeouts } from '../src/core/store';
+    12→import { REMOVE_DELAY } from '../src/core/use-toaster';
     29→const waitTime = (time: number) => {
     35→const TOAST_DURATION = 1000;
 

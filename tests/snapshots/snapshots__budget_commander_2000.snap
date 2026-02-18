@@ -5,17 +5,11 @@ expression: output
 budget: 2000 (2008 tokens)
 
 CHANGELOG.md
-     1→# Changelog
-
-CONTRIBUTING.md
-     1→# Contributing
 
 Readme.md
      1→# Commander.js
      8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
      9→
-    10→Read this in other languages: English | [简体中文](./Readme_zh-CN.md)
-    11→
       →…
     61→## Installation
     67→## Quick Start
@@ -29,51 +23,18 @@ Readme.md
    966→## Bits and pieces
   1164→## Support
 
-Readme_zh-CN.md
-     1→# Commander.js
-
-SECURITY.md
-     1→# Security Policy
-
 docs/deprecated.md
      1→# Deprecated
    227→## Removed
-
-docs/help-in-depth.md
-     1→# Help in Depth
-
-docs/options-in-depth.md
-     2→# Options in Depth
-
-docs/parsing-and-hooks.md
-     1→# Parsing life cycle and hooks
-
-docs/release-policy.md
-     1→# Release Policy
-
-docs/terminology.md
-     1→# Terminology
-
-eslint.config.js
 
 esm.mjs
      1→import commander from './index.js';
 
 examples/custom-command-class.js
      7→  createCommand(name) {
-    15→function inspectCommand(command) {
-    22→const program …
 
 examples/global-options-added.js
-    16→class MyRootCommand extends Command {
     17→  createCommand(name) {
-    24→const program = new MyRootCommand();
-
-examples/help-centered.mjs
-    26→const program = new MyCommand();
-
-jest.config.js
-     1→const config = {
 
 lib/argument.js
      3→class Argument {
@@ -94,18 +55,12 @@ lib/command.js
 lib/error.js
      4→class CommanderError extends Error {
      6→   * Constructs the CommanderError class
-     7→   * @param {number} exitCode suggested exit code which could be used with process.exit
-     8→   * @param {string} code an id string representing the error
-     9→   * @param {string} message human-readable description of the error
+      →   …
     11→  constructor(exitCode, code, message) {
-    12→    super(message);
-      →    …
     25→class InvalidArgumentError extends CommanderError {
     27→   * Constructs the InvalidArgumentError class
-    28→   * @param {string} [message] explanation of why argument is invalid
+      →   …
     30→  constructor(message) {
-    31→    super(1, 'commander.invalidArgument', message);
-      →    …
 
 lib/help.js
     12→class Help {
@@ -188,16 +143,6 @@ package-support.json
 
 package.json
 
-tests/command.createOption.test.js
-     4→  constructor(flags, description) {
-    11→  createOption(flags, description) {
-
-tests/esm-imports-test.mjs
-     1→import { …
-
-tests/ts-imports.test.ts
-     1→import { …
-
 tsconfig.js.json
      7→  "extends": "./tsconfig.json",
      8→  "include": [
@@ -227,23 +172,46 @@ typings/index.d.ts
     40→export interface ErrorOptions {
     48→export class Argument {
     95→export class Option {
+   115→  constructor(flags: string, description?: string);
    210→export class Help {
-   340→export type HelpConfiguration …
+   218→  constructor();
+   226→  prepareContext(contextOptions: {
+   279→  styleCommandDescription(str: string): string;
+   280→  styleOptionDescription(str: string): string;
+   281→  styleSubcommandDescription(str: string): string;
+   282→  styleArgumentDescription(str: string): string;
+   286→  styleOptionTerm(str: string): string;
+   287→  styleSubcommandTerm(str: string): string;
+   288→  styleArgumentTerm(str: string): string;
+   340→export type HelpConfiguration = Partial<Help>;
    342→export interface ParseOptions {
    345→export interface HelpContext {
    349→export interface AddHelpTextContext {
    354→export interface OutputConfiguration {
-   367→export type AddHelpTextPosition …
-   368→export type HookEvent …
-   370→export type OptionValueSource …
-   374→export type OptionValues …
+   355→  writeOut?(str: string): void;
+   356→  writeErr?(str: string): void;
+   357→  outputError?(str: string, write: (str: string) => void): void;
+   359→  getOutHelpWidth?(): number;
+   360→  getErrHelpWidth?(): number;
+   362→  getOutHasColors?(): boolean;
+   363→  getErrHasColors?(): boolean;
+   364→  stripColor?(str: string): string;
+   367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
+   368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
+   370→export type OptionValueSource =
+   371→  | LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string>
+   372→  | undefined;
+   374→export type OptionValues = Record<string, any>;
    376→export class Command {
+   384→  constructor(name?: string);
+   493→  argument(name: string, description?: string, defaultValue?: unknown): this;
+   528→  helpCommand(enable: boolean): this;
+   718→  storeOptionsAsProperties(storeAsProperties?: boolean): this;
+  1083→  addHelpText(
+  1084→    position: AddHelpTextPosition,
+  1085→    text: (context: AddHelpTextContext) => string,
+  1086→  ): this;
   1094→export interface CommandOptions {
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1104→export interface ParseOptionsResult {
-  1113→export const program …
-
-typings/index.test-d.ts
-     1→import * as commander from './index';
-   510→  createCommand(name?: string): MyCommand {
-   514→  myFunction(): void {
+  1113→export const program: Command;

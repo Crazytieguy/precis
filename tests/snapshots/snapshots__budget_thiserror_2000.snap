@@ -2,9 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1997 tokens)
+budget: 2000 (1996 tokens)
 
 Cargo.toml
+     1→[package]
+    14→[features]
+    30→[dependencies]
+    33→[dev-dependencies]
+    39→[workspace]
+    42→[package.metadata.docs.rs]
 
 README.md
      1→derive(Error)
@@ -16,8 +22,11 @@ README.md
 build/probe.rs
     11→struct MyError(Thing);
     12→struct Thing;
+    14→impl Debug for MyError {
     15→    fn fmt …
+    20→impl Display for MyError {
     21→    fn fmt …
+    26→impl Error for MyError {
     27→    fn provide …
 
 impl/Cargo.toml
@@ -27,6 +36,11 @@ impl/Cargo.toml
     19→[package.metadata.docs.rs]
 
 impl/src/ast.rs
+    10→pub enum Input<'a> {
+    15→pub struct Struct<'a> {
+    22→pub struct Enum<'a> {
+    29→pub struct Variant<'a> {
+    36→pub struct Field<'a> {
     44→#[derive(Copy, Clone)]
     45→pub enum ContainerKind {
     46→    Struct,
@@ -49,9 +63,9 @@ impl/src/attr.rs
     45→pub struct Transparent<'a> {
     51→pub struct Fmt<'a> {
     57→pub enum Trait {
-    69→pub fn get …
-   303→    fn to_tokens …
-   343→    fn to_tokens …
+    69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
+   303→    fn to_tokens(&self, tokens: &mut TokenStream) {
+   343→    fn to_tokens(&self, tokens: &mut TokenStream) {
 
 impl/src/expand.rs
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
@@ -69,8 +83,13 @@ impl/src/fmt.rs
 
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
+    13→    pub fn new …
+    19→    pub fn intersects …
     26→fn crawl …
     48→pub struct InferredBounds {
+    54→    pub fn new …
+    61→    pub fn insert …
+    74→    pub fn augment_where_clause …
 
 impl/src/lib.rs
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
@@ -100,31 +119,30 @@ rust-toolchain.toml
 src/aserror.rs
      5→pub trait AsDynError<'a>: Sealed {
      6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
-    10→    #[inline]
     11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
-    17→    #[inline]
     18→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
-    24→    #[inline]
     25→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
-    31→    #[inline]
     32→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
-    38→    #[inline]
     39→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     45→pub trait Sealed {}
 
 src/display.rs
      3→use std::path::{self, Path, PathBuf};
      6→pub trait AsDisplay<'a>: Sealed {
-    11→    fn as_display …
+    11→    fn as_display(&'a self) -> Self::Target;
     18→    type Target = &'a T;
-    20→    fn as_display …
+    20→    fn as_display(&'a self) -> Self::Target {
+    26→impl<'a> AsDisplay<'a> for Path {
     27→    type Target = path::Display<'a>;
     29→    #[inline]
     30→    fn as_display(&'a self) -> Self::Target {
+    36→impl<'a> AsDisplay<'a> for PathBuf {
     37→    type Target = path::Display<'a>;
     39→    #[inline]
     40→    fn as_display(&'a self) -> Self::Target {
     46→pub trait Sealed {}
+    49→impl Sealed for Path {}
+    51→impl Sealed for PathBuf {}
     59→mod placeholder {
     60→    use super::{AsDisplay, Sealed};
     63→    #[allow(dead_code)]
@@ -132,11 +150,15 @@ src/display.rs
     67→        type Target = Self;
     69→        #[inline]
     70→        fn as_display(&'a self) -> Self::Target {
-    76→        fn fmt …
+    76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
 
 src/lib.rs
+   281→mod aserror;
+   282→mod display;
    284→mod provide;
+   285→mod var;
    287→pub use thiserror_impl::*;
+   289→mod private;
 
 src/private.rs
      2→pub use crate::aserror::AsDynError;
@@ -159,7 +181,6 @@ src/provide.rs
 src/var.rs
      1→use core::fmt::{self, Pointer};
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
-     5→impl<'a, T: Pointer + ?Sized> Pointer for Var<'a, T> {
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 
 tests/test_backtrace.rs
@@ -179,24 +200,15 @@ tests/test_path.rs
     35→pub enum BothError {
 
 tests/test_source.rs
+     7→pub struct ImplicitSource {
+    13→pub struct ExplicitSource {
+    21→pub struct BoxedSource {
 
 tests/ui/display-underscore.rs
      5→pub struct Error;
 
-tests/ui/duplicate-enum-source.rs
-     4→pub enum ErrorEnum {
-
-tests/ui/duplicate-struct-source.rs
-     4→pub struct ErrorStruct {
-
-tests/ui/duplicate-transparent.rs
-     6→pub struct Error(anyhow::Error);
-
 tests/ui/expression-fallback.rs
      5→pub struct ArgError;
-
-tests/ui/fallback-impl-with-display.rs
-     6→pub struct MyError;
 
 tests/ui/from-backtrace-backtrace.rs
      8→pub struct Error(
@@ -204,17 +216,11 @@ tests/ui/from-backtrace-backtrace.rs
 tests/ui/from-not-source.rs
      4→pub struct Error {
 
-tests/ui/invalid-input-impl-anyway.rs
-     5→pub struct MyError;
-
 tests/ui/missing-display.rs
      4→pub enum MyError {
 
 tests/ui/missing-fmt.rs
      4→pub enum Error {
-
-tests/ui/numbered-positional-tuple.rs
-     5→pub struct Error(u32);
 
 tests/ui/raw-identifier.rs
      5→pub struct Error {
@@ -222,35 +228,5 @@ tests/ui/raw-identifier.rs
 tests/ui/same-from-type.rs
      4→pub enum Error {
 
-tests/ui/source-struct-not-error.rs
-     8→pub struct ErrorStruct {
-
-tests/ui/struct-with-fmt.rs
-     5→pub struct Error(i32);
-
-tests/ui/transparent-display.rs
-     6→pub struct Error(anyhow::Error);
-
-tests/ui/transparent-enum-many.rs
-     4→pub enum Error {
-
-tests/ui/transparent-enum-not-error.rs
-     4→pub enum Error {
-
-tests/ui/transparent-enum-source.rs
-     4→pub enum Error {
-
-tests/ui/transparent-struct-many.rs
-     5→pub struct Error {
-
-tests/ui/transparent-struct-not-error.rs
-     5→pub struct Error {
-
 tests/ui/unconditional-recursion.rs
-     5→pub struct Error;
-
-tests/ui/unexpected-field-fmt.rs
-     4→pub enum Error {
-
-tests/ui/unexpected-struct-source.rs
      5→pub struct Error;

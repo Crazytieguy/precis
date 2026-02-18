@@ -2,28 +2,17 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1015 tokens)
-
-CHANGELOG.md
+budget: 1000 (999 tokens)
 
 README.md
      1→# Versioning Library for Go
      6→go-version is a library for parsing versions and version constraints,
-     7→and verifying versions against a set of constraints. go-version
-     8→can sort a collection of versions properly, handles prerelease/beta
-     9→versions, can increment versions, etc.
-    10→
-    11→Versions used with go-version must follow [SemVer](http://semver.org/).
-    12→
-    13→## Installation and Usage
-    15→Package documentation can be found on
       →…
+    13→## Installation and Usage
     24→#### Version Parsing and Comparison
     37→#### Version Constraints
     49→#### Version Sorting
     63→## Issues and Contributing
-    65→If you find an issue with this library, please report an issue. If you'd
-      →…
 
 constraint.go
      6→import …
@@ -40,45 +29,24 @@ constraint.go
     45→// we can add methods to it.
     46→type Constraints []*Constraint
     50→type constraintOperation struct {
-    51→	op operator
-      →	…
-    55→// NewConstraint will parse one or more constraints from the given
-      →…
     58→func NewConstraint(v string) (Constraints, error) {
-    73→// MustConstraints is a helper that wraps a call to a function
-      →…
     75→func MustConstraints(c Constraints, err error) Constraints {
-    83→// Check tests if a version satisfies all the constraints.
     84→func (cs Constraints) Check(v *Version) bool {
-    94→// Equals compares Constraints with other Constraints
-      →…
    102→func (cs Constraints) Equals(c Constraints) bool {
    125→func (cs Constraints) Len() int {
    129→func (cs Constraints) Less(i, j int) bool {
    140→func (cs Constraints) Swap(i, j int) {
-   144→// Returns the string format of the constraints
    145→func (cs Constraints) String() string {
-   154→// Check tests if a constraint is validated by the given version.
    155→func (c *Constraint) Check(v *Version) bool {
-   159→// Prerelease returns true if the version underlying this constraint
-      →…
    161→func (c *Constraint) Prerelease() bool {
    165→func (c *Constraint) String() string {
-   228→//-------------------------------------------------------------------
-   229→// Constraint functions
-      →…
    232→type operator rune
 
 constraint_test.go
-     6→import …
 
 version.go
      6→import …
     16→var (
-    17→	versionRegexp     *regexp.Regexp
-    18→	versionRegexpOnce sync.Once
-    19→	semverRegexp      *regexp.Regexp
-    20→	semverRegexpOnce  sync.Once
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     45→	// SemverRegexpRaw requires a separator between version and prerelease
@@ -91,6 +59,26 @@ version.go
     57→	si       int
     58→	original string
     59→}
+    63→func NewVersion(v string) (*Version, error) {
+    70→func NewSemver(v string) (*Version, error) {
+   114→func Must(v *Version, err error) *Version {
+   128→func (v *Version) Compare(other *Version) int {
+   309→func (v *Version) Core() *Version {
+   316→func (v *Version) Equal(o *Version) bool {
+   325→func (v *Version) GreaterThan(o *Version) bool {
+   330→func (v *Version) GreaterThanOrEqual(o *Version) bool {
+   335→func (v *Version) LessThan(o *Version) bool {
+   340→func (v *Version) LessThanOrEqual(o *Version) bool {
+   349→func (v *Version) Metadata() string {
+   359→func (v *Version) Prerelease() string {
+   368→func (v *Version) Segments() []int {
+   381→func (v *Version) Segments64() []int64 {
+   395→func (v *Version) String() string {
+   423→func (v *Version) Original() string {
+   428→func (v *Version) UnmarshalText(b []byte) error {
+   440→func (v *Version) MarshalText() ([]byte, error) {
+   445→func (v *Version) Scan(src interface{}) error {
+   457→func (v *Version) Value() (driver.Value, error) {
 
 version_collection.go
      6→// Collection is a type that implements the sort.Interface interface
@@ -99,10 +87,3 @@ version_collection.go
     10→func (v Collection) Len() int {
     14→func (v Collection) Less(i, j int) bool {
     18→func (v Collection) Swap(i, j int) {
-
-version_collection_test.go
-     6→import …
-    12→func TestCollection(t *testing.T) {
-
-version_test.go
-     6→import …

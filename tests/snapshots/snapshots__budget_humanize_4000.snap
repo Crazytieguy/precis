@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4072 tokens)
+budget: 4000 (4059 tokens)
 
 README.md
      1→# humanize
@@ -28,11 +28,6 @@ README.md
     31→- Italian
     32→- Japanese
     33→- Klingon
-    34→- Korean
-    35→- Norwegian
-    36→- Persian
-    37→- Polish
-    38→- Russian
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -41,37 +36,20 @@ README.md
     54→
     55→## Installation
     57→### From PyPI
-    59→```bash
-      →…
     63→### From source
-    65→```bash
-      →…
     71→## Usage
     73→### Integer humanization
-    75→```pycon
-      →…
     89→### Date & time humanization
-    91→```pycon
-      →…
    110→### Precise time delta
-   112→```pycon
-      →…
    124→#### Smaller units
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
    127→
    128→```pycon
    129→>>> import humanize
-   130→>>> import datetime as dt
       →…
    154→### File size humanization
-   156→```pycon
-      →…
    166→### Human-readable floating point numbers
-   168→```pycon
-      →…
    182→### Scientific notation
-   184→```pycon
-      →…
    200→## Localization
    202→How to change locale at runtime:
    203→
@@ -80,7 +58,6 @@ README.md
    206→>>> import datetime as dt
    207→>>> humanize.naturaltime(dt.timedelta(seconds=3))
    208→'3 seconds ago'
-   209→>>> _t = humanize.i18n.activate("ru_RU")
       →…
 
 RELEASING.md
@@ -178,8 +155,6 @@ src/humanize/filesize.py
     51→        '3.0 MB'
     52→        >>> naturalsize(300, False, True)
     53→        '300B'
-    54→        >>> naturalsize(3000, False, True)
-    55→        '2.9K'
       →        …
 
 src/humanize/i18n.py
@@ -333,7 +308,6 @@ src/humanize/time.py
     19→    from typing import Any
     21→__all__ = [
     22→    "naturaldate",
-    23→    "naturalday",
       →    …
     30→@total_ordering
     31→class Unit(Enum):
@@ -395,14 +369,10 @@ tests/test_filesize.py
     86→def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> None:
 
 tests/test_i18n.py
-    17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
    225→class TestActivate:
    226→    expected_msg = (
-   227→        "Humanize cannot determinate the default location of the"
-   249→    @freeze_time("2020-02-02")
    250→    def test_en_locale(self) -> None:
-   262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
 
 tests/test_lists.py
@@ -413,13 +383,31 @@ tests/test_lists.py
     22→) -> None:
 
 tests/test_number.py
+    37→def test_ordinal …
+    80→def test_intcomma …
+    86→def test_intword_powers …
+   139→def test_intword …
+   162→def test_apnumber …
+   188→def test_fractional …
+   219→def test_scientific …
+   239→def test_clamp …
+   308→def test_metric …
 
 tests/test_time.py
+    14→ONE_DAY_DELTA = dt.timedelta(days=1)
     16→# In seconds
     17→ONE_MICROSECOND = 1 / 1000000
+    18→FOUR_MICROSECONDS = 4 / 1000000
+    19→ONE_MILLISECOND = 1 / 1000
+    20→FOUR_MILLISECONDS = 4 / 1000
     22→MILLISECONDS_1_337 = 1337 / 1000  # 1.337 seconds
     23→ONE_HOUR = 3600
+    24→ONE_DAY = 24 * ONE_HOUR
+    25→ONE_YEAR = 365.25 * ONE_DAY
+    26→FROZEN_DATE = "2010-02-02"
     37→class FakeDate:
+    45→VALUE_ERROR_TEST = FakeDate(290149024, 2, 2)
+    46→OVERFLOW_ERROR_TEST = FakeDate(120390192341, 2, 2)
     58→# These are not considered "public" interfaces, but require tests anyway.
     61→def test_date_and_delta() -> None:
     62→    now = dt.datetime.now()

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3999 tokens)
 
 README.md
      9→# Mitt
@@ -306,9 +306,7 @@ src/index.ts
    118→						handler(type, evt!);
    119→					});
    120→			}
-   121→		}
-   122→	};
-   123→}
+      →			…
 
 test/index_test.ts
      1→import mitt, { Emitter, EventHandlerMap } from '..';
@@ -319,16 +317,13 @@ test/index_test.ts
 test/test-types-compilation.ts
      3→import mitt from '..';
      5→interface SomeEventData {
-     6→	name: string;
-     7→}
      9→const emitter = mitt<{
-    10→	foo: string;
-    11→	someEvent: SomeEventData;
-    12→	bar?: number;
-      →	…
-    15→const barHandler …
-    16→const fooHandler …
-    17→const wildcardHandler …
+    15→const barHandler = (x?: number) => {};
+    16→const fooHandler = (x: string) => {};
+    17→const wildcardHandler = (
+    18→	_type: 'foo' | 'bar' | 'someEvent',
+    19→	_event: string | SomeEventData | number | undefined
+    20→) => {};
 
 tsconfig.json
      2→	"compileOnSave": false,

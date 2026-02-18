@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1013 tokens)
+budget: 1000 (1007 tokens)
 
 README.md
      1→# python-dotenv
@@ -16,9 +16,15 @@ README.md
    246→## Acknowledgements
 
 docs/reference.md
-     1→# ::: dotenv
 
 mkdocs.yml
+     1→site_name: python-dotenv
+     2→repo_url: https://github.com/theskumar/python-dotenv
+     3→edit_uri: ""
+     4→theme:
+    12→markdown_extensions:
+    15→plugins:
+    25→nav:
 
 pyproject.toml
 
@@ -39,13 +45,13 @@ src/dotenv/cli.py
     20→from .main …
     21→from .version …
     24→def enumerate_env() -> Optional[str]:
-    62→def cli …
-    68→def stream_file …
+    62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
+    68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
     93→def list_values(ctx: click.Context, output_format: str) -> None:
-   116→def set_value …
-   131→def get …
-   148→def unset …
-   173→def run …
+   116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
+   131→def get(ctx: click.Context, key: Any) -> None:
+   148→def unset(ctx: click.Context, key: Any) -> None:
+   173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    193→def run_command(command: List[str], env: Dict[str, str]) -> None:
 
 src/dotenv/ipython.py
@@ -58,15 +64,9 @@ src/dotenv/ipython.py
     15→        "-o",
     16→        "--override",
     17→        action="store_true",
-    18→        help="Indicate to override existing variables",
-    19→    )
-    20→    @argument(
-    21→        "-v",
-    22→        "--verbose",
     33→    @line_magic
     34→    def dotenv(self, line):
     35→        args = parse_argstring(self.dotenv, line)
-    36→        # Locate the .env file
       →        …
     48→def load_ipython_extension(ipython):
     49→    """Register the %dotenv magic."""
@@ -86,21 +86,22 @@ src/dotenv/main.py
       →…
 
 src/dotenv/parser.py
+     1→import codecs …
+     2→import re …
+     3→from typing …
     35→class Original(NamedTuple):
-    36→    string: str
-      →    …
     40→class Binding(NamedTuple):
-    41→    key: Optional[str]
-      →    …
     47→class Position:
     52→    @classmethod
     53→    def start(cls) -> "Position":
     54→        return cls(chars=0, line=1)
     65→class Error(Exception):
-    66→    pass
     69→class Reader:
 
 src/dotenv/variables.py
+     1→import re …
+     2→from abc …
+     3→from typing …
      5→_posix_variable: Pattern[str] = re.compile(
     18→class Atom(metaclass=ABCMeta):
     25→    @abstractmethod
@@ -116,23 +117,3 @@ tests/conftest.py
     13→def dotenv_path(tmp_path):
 
 tests/test_cli.py
-
-tests/test_ipython.py
-
-tests/test_is_interactive.py
-     8→class TestIsInteractive:
-    31→
-
-tests/test_main.py
-
-tests/test_parser.py
-   550→def test_parse_stream(test_input, expected):
-
-tests/test_utils.py
-     4→def test_to_cli_string():
-
-tests/test_variables.py
-    32→def test_parse_variables(value, expected):
-
-tests/test_zip_imports.py
-    23→class FileToAdd:

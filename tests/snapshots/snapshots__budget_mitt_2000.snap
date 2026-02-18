@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2002 tokens)
+budget: 2000 (2003 tokens)
 
 README.md
      9→# Mitt
@@ -37,10 +37,6 @@ README.md
     41→// using ES6 modules
     42→import mitt from 'mitt'
     43→
-    44→// using CommonJS modules
-    45→var mitt = require('mitt')
-    46→```
-    47→
       →…
     56→## Usage
     58→```js
@@ -55,10 +51,6 @@ README.md
     67→emitter.on('*', (type, e) => console.log(type, e) )
     68→
     69→// fire an event
-    70→emitter.emit('foo', { a: 'b' })
-    71→
-    72→// clearing all events
-    73→emitter.all.clear()
       →…
     81→### Typescript
    113→## Examples & Demos
@@ -173,10 +165,16 @@ src/index.ts
       →		 …
 
 test/index_test.ts
+     1→import mitt, { Emitter, EventHandlerMap } from '..';
+     2→import chai, { expect } from 'chai';
+     3→import { spy } from 'sinon';
+     4→import sinonChai from 'sinon-chai';
 
 test/test-types-compilation.ts
      3→import mitt from '..';
      5→interface SomeEventData {
+     6→	name: string;
+     7→}
      9→const emitter = mitt<{
     15→const barHandler …
     16→const fooHandler …

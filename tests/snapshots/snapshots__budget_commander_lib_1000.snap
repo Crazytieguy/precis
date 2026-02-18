@@ -2,38 +2,17 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1026 tokens)
+budget: 1000 (1006 tokens)
 
 argument.js
      3→class Argument {
-     5→   * Initialize a new command argument with the given name and description.
-     6→   * The default is that the argument is required, and you can explicitly
-      →   …
     13→  constructor(name, description) {
-    43→   * Return argument name.
-    44→   *
-      →   …
     48→  name() {
     56→  _collectValue(value, previous) {
-    66→   * Set the default value, and optionally supply the description to be displayed in the help.
-    67→   *
-      →   …
     73→  default(value, description) {
-    80→   * Set the custom handler for processing CLI command arguments into argument values.
-    81→   *
-      →   …
     86→  argParser(fn) {
-    92→   * Only allow argument value to be one of choices.
-    93→   *
-      →   …
     98→  choices(values) {
-   115→   * Make argument required.
-   116→   *
-      →   …
    119→  argRequired() {
-   125→   * Make argument optional.
-   126→   *
-      →   …
    129→  argOptional() {
    143→function humanReadableArgName(arg) {
 
@@ -44,28 +23,39 @@ command.js
 error.js
      4→class CommanderError extends Error {
      6→   * Constructs the CommanderError class
-     7→   * @param {number} exitCode suggested exit code which could be used with process.exit
-     8→   * @param {string} code an id string representing the error
-     9→   * @param {string} message human-readable description of the error
+      →   …
     11→  constructor(exitCode, code, message) {
-    12→    super(message);
-    13→    // properly capture stack trace in Node.js
-    14→    Error.captureStackTrace(this, this.constructor);
-    15→    this.name = this.constructor.name;
-      →    …
     25→class InvalidArgumentError extends CommanderError {
     27→   * Constructs the InvalidArgumentError class
-    28→   * @param {string} [message] explanation of why argument is invalid
+      →   …
     30→  constructor(message) {
-    31→    super(1, 'commander.invalidArgument', message);
-    32→    // properly capture stack trace in Node.js
-    33→    Error.captureStackTrace(this, this.constructor);
-    34→    this.name = this.constructor.name;
-      →    …
 
 help.js
     12→class Help {
     13→  constructor() {
+    29→  prepareContext(contextOptions) {
+    40→  visibleCommands(cmd) {
+    62→  compareOptions(a, b) {
+    79→  visibleOptions(cmd) {
+   112→  visibleGlobalOptions(cmd) {
+   139→  visibleArguments(cmd) {
+   162→  subcommandTerm(cmd) {
+   182→  optionTerm(option) {
+   193→  argumentTerm(argument) {
+   205→  longestSubcommandTermLength(cmd, helper) {
+   224→  longestOptionTermLength(cmd, helper) {
+   241→  longestGlobalOptionTermLength(cmd, helper) {
+   258→  longestArgumentTermLength(cmd, helper) {
+   276→  commandUsage(cmd) {
+   300→  commandDescription(cmd) {
+   313→  subcommandDescription(cmd) {
+   325→  optionDescription(option) {
+   372→  argumentDescription(argument) {
+   403→  formatItemList(heading, items, helper) {
+   417→  groupItems(unsortedItems, visibleItems, getGroup) {
+   443→  formatHelp(cmd, helper) {
+   535→  displayWidth(str) {
+   545→  styleTitle(str) {
    549→  styleUsage(str) {
    563→  styleCommandDescription(str) {
    566→  styleOptionDescription(str) {
@@ -79,6 +69,10 @@ help.js
    600→  styleArgumentText(str) {
    603→  styleSubcommandText(str) {
    606→  styleCommandText(str) {
+   618→  padWidth(cmd, helper) {
+   633→  preformatted(str) {
+   650→  formatItem(term, termWidth, description, helper) {
+   695→  boxWrap(str, width) {
    740→function stripColor(str) {
 
 option.js
@@ -108,4 +102,8 @@ option.js
 suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
+    49→ * Find close matches, restricted to same number of edits.
+    50→ *
+    51→ * @param {string} word
+      → …
     56→function suggestSimilar(word, candidates) {

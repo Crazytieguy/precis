@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (4015 tokens)
 
 CHANGELOG.md
 
@@ -79,14 +79,7 @@ constraint.go
     61→	for i, single := range vs {
     62→		c, err := parseSingle(single)
     63→		if err != nil {
-    64→			return nil, err
-    65→		}
-    66→
-    67→		result[i] = c
-    68→	}
-    69→
-    70→	return Constraints(result), nil
-    71→}
+      →		…
     73→// MustConstraints is a helper that wraps a call to a function
     74→// returning (Constraints, error) and panics if error is non-nil.
     75→func MustConstraints(c Constraints, err error) Constraints {
@@ -95,7 +88,7 @@ constraint.go
     78→	}
     79→
     80→	return c
-    81→}
+      →	…
     83→// Check tests if a version satisfies all the constraints.
     84→func (cs Constraints) Check(v *Version) bool {
     85→	for _, c := range cs {
@@ -103,9 +96,7 @@ constraint.go
     87→			return false
     88→		}
     89→	}
-    90→
-    91→	return true
-    92→}
+      →	…
     94→// Equals compares Constraints with other Constraints
     95→// for equality. This may not represent logical equivalence
     96→// of compared constraints.
@@ -120,22 +111,7 @@ constraint.go
    105→	}
    106→
    107→	// make copies to retain order of the original slices
-   108→	left := make(Constraints, len(cs))
-   109→	copy(left, cs)
-   110→	sort.Stable(left)
-   111→	right := make(Constraints, len(c))
-   112→	copy(right, c)
-   113→	sort.Stable(right)
-   114→
-   115→	// compare sorted slices
-   116→	for i, con := range left {
-   117→		if !con.Equals(right[i]) {
-   118→			return false
-   119→		}
-   120→	}
-   121→
-   122→	return true
-   123→}
+      →	…
    125→func (cs Constraints) Len() int {
    126→	return len(cs)
    127→}
@@ -159,8 +135,7 @@ constraint.go
    148→		csStr[i] = c.String()
    149→	}
    150→
-   151→	return strings.Join(csStr, ",")
-   152→}
+      →…
    154→// Check tests if a constraint is validated by the given version.
    155→func (c *Constraint) Check(v *Version) bool {
    156→	return c.f(v, c.check)
@@ -224,9 +199,6 @@ version.go
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
-    47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
-    48→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
-    49→		`?`
     52→// Version represents a single version.
     53→type Version struct {
     54→	metadata string
@@ -335,7 +307,31 @@ version_collection_test.go
      6→import …
     12→func TestCollection(t *testing.T) {
     13→	versionsRaw := []string{
-      →	…
+    14→		"1.1.1",
+    15→		"1.0",
+      →		…
 
 version_test.go
      6→import …
+    13→func TestNewVersion(t *testing.T) {
+    54→func TestNewSemver(t *testing.T) {
+    95→func TestCore(t *testing.T) {
+   127→func TestVersionCompare(t *testing.T) {
+   174→func TestVersionCompare_versionAndSemver(t *testing.T) {
+   212→func TestVersionEqual_nil(t *testing.T) {
+   238→func TestComparePreReleases(t *testing.T) {
+   285→func TestVersionMetadata(t *testing.T) {
+   311→func TestVersionPrerelease(t *testing.T) {
+   339→func TestVersionSegments(t *testing.T) {
+   366→func TestVersionSegments64(t *testing.T) {
+   401→func TestJsonMarshal(t *testing.T) {
+   436→func TestJsonUnmarshal(t *testing.T) {
+   470→func TestVersionString(t *testing.T) {
+   497→func TestEqual(t *testing.T) {
+   544→func TestGreaterThan(t *testing.T) {
+   591→func TestLessThan(t *testing.T) {
+   638→func TestGreaterThanOrEqual(t *testing.T) {
+   685→func TestLessThanOrEqual(t *testing.T) {
+   732→func BenchmarkVersionString(b *testing.B) {
+   743→func BenchmarkCompareVersionV1(b *testing.B) {
+   753→func BenchmarkVersionCompareV2(b *testing.B) {

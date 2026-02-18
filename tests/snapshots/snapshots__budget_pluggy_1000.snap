@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 tokens)
+budget: 1000 (1008 tokens)
 
 codecov.yml
      1→coverage:
@@ -17,8 +17,12 @@ src/pluggy/__init__.py
     32→def __getattr__(name: str) -> str:
 
 src/pluggy/_callers.py
+    16→from ._hooks …
+    17→from ._result …
+    18→from ._result …
+    19→from ._warnings …
     22→# Need to distinguish between old- and new-style hook wrappers.
-    23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
+      →…
     24→Teardown: TypeAlias = Generator[None, object, object]
     27→def run_old_style_hookwrapper(
     28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
@@ -42,9 +46,7 @@ src/pluggy/_hooks.py
    362→
    382→class HookCaller:
    384→
-   419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
-   423→    # TODO: Document, or make private.
    424→    def set_specification(
    425→        self,
    426→        specmodule_or_class: _Namespace,
@@ -52,7 +54,6 @@ src/pluggy/_hooks.py
    428→    ) -> None:
    593→class _SubsetHookCaller(HookCaller):
    619→    def _hookimpls …
-   626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    631→    def _call_history …
    639→class HookImpl:
@@ -79,8 +80,6 @@ src/pluggy/_result.py
     21→    """Hook was called incorrectly."""
     24→@final
     25→class Result(Generic[ResultType]):
-    26→    """An object used to inspect and set the result in a :ref:`hook wrapper
-    27→    <hookwrappers>`."""
     28→
     29→    __slots__ = ("_result", "_exception", "_traceback")
     30→
@@ -97,7 +96,14 @@ src/pluggy/_result.py
 
 src/pluggy/_tracing.py
     16→class TagTracer:
+    17→    def __init__ …
+    22→    def get …
+    48→    def setwriter …
+    51→    def setprocessor …
     59→class TagTracerSub:
+    60→    def __init__ …
+    64→    def __call__ …
+    67→    def get …
 
 src/pluggy/_warnings.py
      1→from typing import final
@@ -110,11 +116,10 @@ src/pluggy/_warnings.py
     26→
     27→    __module__ = "pluggy"
 
+testing/benchmark.py
+
 testing/conftest.py
     24→def pm() -> PluginManager:
-
-testing/test_hookcaller.py
-    34→class AddMeth:
 
 testing/test_tracer.py
      7→def rootlogger() -> TagTracer:

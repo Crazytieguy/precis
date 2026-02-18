@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (1009 tokens)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -16,35 +16,34 @@ _parser.py
      7→import sys …
      8→from types …
     10→from ._re …
+    19→TYPE_CHECKING = False
     21→    from collections.abc …
     22→    from typing …
     24→    from ._types …
     26→# Inline tables/arrays are implemented using recursion. Pathologically
     27→# nested documents cause pure Python to raise RecursionError (which is OK),
-    28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
-    29→# mypyc docs this will be fixed in the future:
       →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
+    37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
     39→# Neither of these sets include quotation mark or backslash. They are
     40→# currently handled as separate cases in the parser functions.
     41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
+    42→ILLEGAL_MULTILINE_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t\n")
+    44→ILLEGAL_LITERAL_STR_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
+    45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS: Final = ILLEGAL_MULTILINE_BASIC_STR_CHARS
+    47→ILLEGAL_COMMENT_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
+    49→TOML_WS: Final = frozenset(" \t")
+    50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
+    51→BARE_KEY_CHARS: Final = frozenset(
+    54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
+    55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
+    57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
     71→class DEPRECATED_DEFAULT:
-    72→    """Sentinel to be used as default arg during deprecation
-    73→    period of TOMLDecodeError's free-form arguments."""
     76→class TOMLDecodeError(ValueError):
-    77→    """An error raised if a document is not valid TOML.
-    78→
-      →…
     86→
    220→class Flags:
-   221→    """Flags that map to parsed keys/namespaces."""
    222→
    223→    # Marks an immutable namespace (inline array or inline table).
-   224→    FROZEN: Final = 0
-   225→    # Marks a nest that has been explicitly created and can no longer
-   226→    # be opened using the "[table]" syntax.
-   227→    EXPLICIT_NEST: Final = 1
-   228→
    278→class NestedDict:
    312→class Output:
 
@@ -66,9 +65,7 @@ _re.py
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
     60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
     61→
-    62→    Raises ValueError if the match does not correspond to a valid date
-    63→    or datetime.
-    64→    """
+      →…
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
@@ -77,10 +74,7 @@ _re.py
    100→    sign = 1 if sign_str == "+" else -1
    101→    return timezone(
    102→        timedelta(
-   103→            hours=sign * int(hour_str),
-   104→            minutes=sign * int(minute_str),
-   105→        )
-   106→    )
+      →        …
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 

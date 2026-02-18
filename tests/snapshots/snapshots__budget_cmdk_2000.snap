@@ -2,23 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2003 tokens)
+budget: 2000 (2004 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
      3→> Document is a work in progress!
      4→
-     5→⌘K is born from a simple constraint: can you write a combobox with filtering and sorting using the [compound component](https://kentcdodds.com/blog/compound-components-with-react-hooks) approach? We didn't want to render items manually from an array:
-     6→
-     7→```tsx
-     8→// No
-     9→<>
-    10→  {items.map((item) => {
-    11→    return <div>{item}</div>
-    12→  })}
-    13→</>
-    14→```
-    15→
       →…
     46→## Approach
     50→### Discarded approach
@@ -36,7 +25,22 @@ README.md
      9→## Install
     15→## Use
     82→## Parts and styling
+    86→### Command `[cmdk-root]`
+   153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
+   180→### Input `[cmdk-input]`
+   190→### List `[cmdk-list]`
+   212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
+   242→### Group `[cmdk-group]` `[hidden?]`
+   256→### Separator `[cmdk-separator]`
+   260→### Empty `[cmdk-empty]`
+   264→### Loading `[cmdk-loading]`
+   274→### `useCommandState(state => state.selectedField)`
    285→## Examples
+   289→### Nested items
+   338→### Show sub-items when searching
+   361→### Asynchronous results
+   397→### Use inside Popover
+   426→### Drop in stylesheets
    430→## FAQ
    456→## History
    462→## Testing
@@ -78,18 +82,32 @@ cmdk/src/command-score.ts
       →  …
 
 cmdk/src/index.tsx
+     3→import * as RadixDialog from '@radix-ui/react-dialog'
+     4→import * as React from 'react'
      5→import { commandScore } from './command-score'
-   664→const Item …
-   729→const Group …
-   774→const Separator …
-   787→const Input …
-   833→const List …
-   882→const Dialog …
-   899→const Empty …
-   909→const Loading …
+     6→import { Primitive } from '@radix-ui/react-primitive'
+     7→import { useId } from '@radix-ui/react-id'
+     8→import { composeRefs } from '@radix-ui/react-compose-refs'
+   161→const defaultFilter …
+   164→const useCommand …
+   166→const useStore …
+   664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
+   729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
+   774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
+   787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
+   833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
+   882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
+   899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
+   909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
    963→function findNextSibling(el: Element, selector: string) {
+   972→function findPreviousSibling …
+   981→function useAsRef …
+   993→function useLazyRef …
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
+  1010→function useValue …
   1046→const useScheduleLayoutEffect = () => {
+  1061→function renderChildren …
+  1071→function SlottableWithNestedChildren …
 
 cmdk/tsup.config.ts
      1→import { defineConfig } from 'tsup'
@@ -113,32 +131,11 @@ playwright.config.ts
 pnpm-workspace.yaml
      1→packages:
 
-test/basic.test.ts
-     1→import { expect, test } from '@playwright/test'
-
-test/dialog.test.ts
-     1→import { expect, test } from '@playwright/test'
-
-test/group.test.ts
-     1→import { expect, test } from '@playwright/test'
-
-test/item.test.ts
-     1→import { expect, test } from '@playwright/test'
-
-test/keybind.test.ts
-     1→import { expect, test } from '@playwright/test'
-
-test/numeric.test.ts
-     1→import { expect, test } from '@playwright/test'
-
 test/package.json
      2→  "name": "cmdk-tests",
      3→  "version": "0.0.0",
      4→  "scripts": {
-     6→  },
      7→  "dependencies": {
-    17→  }
-    18→}
 
 test/pages/_app.tsx
      1→import '../style.css'
@@ -147,41 +144,10 @@ test/pages/_app.tsx
 test/pages/dialog.tsx
      4→const Page = () => {
 
-test/pages/group.tsx
-     4→const Page = () => {
-
-test/pages/index.tsx
-     1→import { Command } from 'cmdk'
-     3→const Page = () => {
-
-test/pages/item-advanced.tsx
-     4→const Page = () => {
-
-test/pages/item.tsx
-     4→const Page = () => {
-
-test/pages/keybinds.tsx
-     5→const Page = () => {
-
-test/pages/numeric.tsx
-     1→import { Command } from 'cmdk'
-     3→const Page = () => {
-
-test/pages/portal.tsx
-     5→const Page = () => {
-
-test/pages/props.tsx
-     5→const Page = () => {
-
-test/props.test.ts
-     1→import { expect, test } from '@playwright/test'
-
 test/tsconfig.json
      2→  "compilerOptions": {
-    17→  },
     18→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../dialog.test.ts"],
     19→  "exclude": ["node_modules"]
-    20→}
 
 tsconfig.json
      2→  "compilerOptions": {
@@ -199,7 +165,6 @@ website/components/cmdk/framer.tsx
      4→export function FramerCMDK() {
 
 website/components/cmdk/linear.tsx
-     1→import { Command } from 'cmdk'
      3→export function LinearCMDK() {
     30→const items = [
 
@@ -236,10 +201,8 @@ website/pages/index.tsx
 
 website/tsconfig.json
      2→  "compilerOptions": {
-    18→  },
     19→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
     20→  "exclude": ["node_modules"]
-    21→}
 
 website/vercel.json
      2→  "headers": [

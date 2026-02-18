@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2025 tokens)
+budget: 2000 (1997 tokens)
 
 README.md
      1→# color
@@ -11,64 +11,24 @@ README.md
      5→has support for Windows too! The API can be used in several ways, pick one that
      6→suits you.
      7→
-     8→![Color](https://user-images.githubusercontent.com/438920/96832689-03b3e000-13f4-11eb-9803-46f4c4de3406.jpg)
-     9→
+      →…
     10→## Install
-    12→```
-    13→go get github.com/fatih/color
-    14→```
-    15→
     16→## Examples
     18→### Standard colors
-    20→```go
-      →…
     33→### RGB colors
-    35→If your terminal supports 24-bit colors, you can use RGB color codes.
-      →…
     45→### Mix and reuse colors
-    47→```go
-      →…
     71→### Use your own output (io.Writer)
-    73→```go
-      →…
     81→### Custom print functions (PrintFunc)
-    83→```go
-      →…
     94→### Custom fprint functions (FprintFunc)
-    96→```go
-      →…
    105→### Insert into noncolor strings (SprintFunc)
-   107→```go
-      →…
    124→### Plug into existing code
-   126→```go
-      →…
    142→### Disable/Enable color
-   144→There might be a case where you want to explicitly disable/enable color output. the 
-      →…
    177→## GitHub Actions
-   179→To output color in GitHub Actions (or other CI systems that support ANSI colors), make sure to set `color.NoColor = false` so that it bypasses the check for non-tty output streams. 
-   180→
-   181→
    182→## Credits
-   184→* [Fatih Arslan](https://github.com/fatih)
-   185→* Windows support via @mattn: [colorable](https://github.com/mattn/go-colorable)
-   186→
    187→## License
-   189→The MIT License (MIT) - see [`LICENSE.md`](https://github.com/fatih/color/blob/master/LICENSE.md) for more details
 
 color.go
-     3→import (
-     4→	"fmt"
-     5→	"io"
-     6→	"os"
-     7→	"strconv"
-     8→	"strings"
-     9→	"sync"
-    10→
-    11→	"github.com/mattn/go-colorable"
-    12→	"github.com/mattn/go-isatty"
-    13→)
+     3→import …
     15→var (
     16→	// NoColor defines if the output is colorized or not. It's dynamically set to
     17→	// false or true based on the stdout's file descriptor referring to a terminal
@@ -77,7 +37,6 @@ color.go
     20→	// colors. For more control over each color block use the methods
     21→	// DisableColor() individually.
     22→	NoColor = noColorIsSet() || os.Getenv("TERM") == "dumb" ||
-    23→		(!isatty.IsTerminal(os.Stdout.Fd()) && !isatty.IsCygwinTerminal(os.Stdout.Fd()))
     25→	// Output defines the standard output of the print functions. By default,
     26→	// os.Stdout is used.
     27→	Output = colorable.NewColorableStdout()
@@ -152,45 +111,87 @@ color.go
    140→	BgHiMagenta
    141→	BgHiCyan
    142→	BgHiWhite
+   146→func New …
+   160→func RGB …
+   165→func BgRGB …
+   171→func (c *Color) AddRGB …
+   178→func (c *Color) AddBgRGB …
+   185→func Set …
+   193→func Unset …
+   202→func (c *Color) Set …
    211→func (c *Color) unset() {
+   222→func (c *Color) SetWriter …
+   233→func (c *Color) UnsetWriter …
+   243→func (c *Color) Add …
+   253→func (c *Color) Fprint …
+   265→func (c *Color) Print …
+   276→func (c *Color) Fprintf …
+   286→func (c *Color) Printf …
+   297→func (c *Color) Fprintln …
+   306→func (c *Color) Println …
+   311→func (c *Color) Sprint …
+   316→func (c *Color) Sprintln …
+   321→func (c *Color) Sprintf …
+   327→func (c *Color) FprintFunc …
+   335→func (c *Color) PrintFunc …
+   343→func (c *Color) FprintfFunc …
+   351→func (c *Color) PrintfFunc …
+   359→func (c *Color) FprintlnFunc …
+   367→func (c *Color) PrintlnFunc …
+   379→func (c *Color) SprintFunc …
+   388→func (c *Color) SprintfFunc …
+   397→func (c *Color) SprintlnFunc …
    405→func (c *Color) sequence() string {
    416→func (c *Color) wrap(s string) string {
    424→func (c *Color) format() string {
    428→func (c *Color) unformat() string {
+   446→func (c *Color) DisableColor …
+   452→func (c *Color) EnableColor …
    456→func (c *Color) isNoColorSet() bool {
+   467→func (c *Color) Equals …
    487→func (c *Color) attrExists(a Attribute) bool {
    497→func boolPtr(v bool) *bool {
    501→func getCachedColor(p Attribute) *Color {
    514→func colorPrint(format string, p Attribute, a ...interface{}) {
    528→func colorString(format string, p Attribute, a ...interface{}) string {
+   540→func Black …
+   544→func Red …
+   548→func Green …
+   552→func Yellow …
+   556→func Blue …
+   560→func Magenta …
+   564→func Cyan …
+   568→func White …
+   572→func BlackString …
+   576→func RedString …
+   580→func GreenString …
+   584→func YellowString …
+   588→func BlueString …
+   592→func MagentaString …
+   598→func CyanString …
+   602→func WhiteString …
+   606→func HiBlack …
+   610→func HiRed …
+   614→func HiGreen …
+   618→func HiYellow …
+   622→func HiBlue …
+   626→func HiMagenta …
+   630→func HiCyan …
+   634→func HiWhite …
+   638→func HiBlackString …
+   644→func HiRedString …
+   648→func HiGreenString …
+   654→func HiYellowString …
+   660→func HiBlueString …
+   664→func HiMagentaString …
+   670→func HiCyanString …
+   674→func HiWhiteString …
    679→func sprintln(a ...interface{}) string {
 
 color_test.go
      3→import …
-    13→// Testing colors is kinda different. First we test for given colors and their
-    14→// escaped formatted results. Next we create some visual tests to be tested.
-    15→// Each visual test includes the color name to be compared.
     16→func TestColor(t *testing.T) {
-    17→	rb := new(bytes.Buffer)
-    18→	Output = rb
-    19→
-    20→	NoColor = false
-    21→
-    22→	testColors := []struct {
-    23→		text string
-    24→		code Attribute
-    25→	}{
-    26→		{text: "black", code: FgBlack},
-    27→		{text: "red", code: FgRed},
-      →		…
-   462→func readRaw(t *testing.T, r io.Reader) string {
 
 color_windows.go
-     3→import (
-     4→	"os"
-     5→
-     6→	"golang.org/x/sys/windows"
-     7→)
+     3→import …
      9→func init() {
-    10→	// Opt-in for ansi color support for current process.
-      →	…

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1005 tokens)
+budget: 1000 (1006 tokens)
 
 CHANGELOG.md
 
@@ -28,11 +28,14 @@ apps/storybook/README.md
     87→## Learning Storybook
 
 apps/storybook/components.json
+     2→  "$schema": "https://ui.shadcn.com/schema.json",
+     3→  "style": "new-york",
+     4→  "rsc": true,
+     5→  "tsx": true,
+     6→  "tailwind": {
+    13→  "aliases": {
 
 apps/storybook/package.json
-
-apps/storybook/src/components/ui/input-otp.tsx
-     7→import { cn } from "../../lib/utils"
 
 apps/storybook/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
@@ -50,15 +53,12 @@ apps/storybook/src/stories/Button.tsx
      8→export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
 
 apps/storybook/src/stories/InputOTP.stories.tsx
-     1→import { InputOTP, InputOTPGroup, InputOTPSlot } from "../components/ui/input-otp"
     29→export const Default: Story = {}
 
 apps/storybook/tsconfig.json
      2→  "compilerOptions": {
-    21→  },
     22→  "include": ["src"],
     23→  "references": [{ "path": "./tsconfig.node.json" }]
-    24→}
 
 apps/storybook/tsconfig.node.json
      2→  "compilerOptions": {
@@ -74,7 +74,7 @@ packages/input-otp/src/input.tsx
      3→import * as React from 'react'
     10→export const OTPInputContext = React.createContext<RenderProps>(
     14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
-   540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
+   540→function safeInsertRule …
    553→const NOSCRIPT_CSS_FALLBACK = `
 
 packages/input-otp/src/regexp.ts

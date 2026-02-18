@@ -2,9 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 tokens)
-
-CHANGELOG.md
+budget: 1000 (1015 tokens)
 
 CONTRIBUTING.md
      1→# Contributing
@@ -56,33 +54,46 @@ lib/main.d.ts
      3→import type { URL } from 'url';
      5→export interface DotenvParseOutput {
      6→  [name: string]: string;
-     7→}
+      →  …
      9→export interface DotenvPopulateOutput {
     10→  [name: string]: string;
-    11→}
+      →  …
     25→export interface DotenvConfigOptions {
     26→  /**
-    27→   * Default: `path.resolve(process.cwd(), '.env')`
-    28→   *
-      →   …
+      →  …
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
-    94→  parsed?: DotenvParseOutput;
-    95→}
+      →  …
     97→type DotenvError = Error & {
    106→export interface DotenvPopulateOptions {
    107→  /**
-   108→   * Default: `false`
-   109→   *
-      →   …
+      →  …
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;
-   128→}
+      →  …
 
 lib/main.js
      7→const version …
     10→const TIPS …
+    27→function _getRandomTip () {
+    31→function parseBoolean (value) {
+    38→function supportsAnsi () {
+    42→function dim (text) {
     46→const LINE …
+    49→function parse (src) {
+    87→function _parseVault (options) {
+   130→function _warn (message) {
+   134→function _debug (message) {
+   138→function _log (message) {
+   142→function _dotenvKey (options) {
+   157→function _instructions (result, dotenvKey) {
+   200→function _vaultPath (options) {
+   224→function _resolveHome (envPath) {
+   228→function _configVault (options) {
+   248→function configDotenv (options) {
+   328→function config (options) {
+   346→function decrypt (encrypted, keyStr) {
+   378→function populate (processEnv, parsed, options = {}) {
    413→const DotenvModule …
 
 package.json
@@ -92,35 +103,13 @@ package.json
      5→  "main": "lib/main.js",
      6→  "types": "lib/main.d.ts",
      7→  "exports": {
-    20→  },
     21→  "scripts": {
-    29→  },
     30→  "repository": {
-    33→  },
     34→  "homepage": "https://github.com/motdotla/dotenv#readme",
     35→  "funding": "https://dotenvx.com",
     36→  "keywords": [
-    44→  ],
     45→  "readmeFilename": "README.md",
     46→  "license": "BSD-2-Clause",
     47→  "devDependencies": {
-    55→  },
     56→  "engines": {
-    58→  },
     59→  "browser": {
-    61→  }
-    62→}
-
-tests/test-config-cli.js
-     6→function spawn (cmd, options = {}) {
-
-tests/test-env-options.js
-
-tests/test-populate.js
-     8→const mockParseResponse = { test: 'foo' }
-
-tests/types/tsconfig.json
-     2→  "compilerOptions": {
-    15→  },
-    16→  "include": ["./test.ts", "../../main.d.ts"]
-    17→}

@@ -7,39 +7,18 @@ budget: 1000 (1000 tokens)
 error.ts
      2→ * A `StructFailure` represents a single specific failure in validation.
      5→export type Failure = {
-    17→ * `StructError` objects are thrown (or returned) when validation fails.
-    18→ *
-      → …
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
     28→  type!: string
     29→  refinement!: string | undefined
-    30→  path!: Array<any>
-    31→  branch!: Array<any>
-    32→  failures: () => Array<Failure>;
-    33→  [x: string]: any
-    34→
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
 
 struct.ts
-     1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
-     2→import { StructError, Failure } from './error.js'
-     5→ * `Struct` objects encapsulate the validation logic for a specific type of
-     6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
-     7→ * validate unknown input data against the struct.
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
     13→  schema: S
-    14→  coercer: (value: unknown, context: Context) => unknown
-    15→  validator: (value: unknown, context: Context) => Iterable<Failure>
-    16→  refiner: (value: T, context: Context) => Iterable<Failure>
-    17→  entries: (
-    18→    value: unknown,
-    19→    context: Context
-    20→  ) => Iterable<[string | number, unknown, Struct<any> | Struct<never>]>
-    21→
     22→  constructor …
     67→  assert …
     75→  create …
@@ -77,12 +56,31 @@ structs/refinements.ts
    146→export function refine …
 
 structs/types.ts
+    19→export function any …
     33→export function array …
+    60→export function bigint …
+    70→export function boolean …
+    83→export function date …
    105→export function enums …
+   131→export function func …
+   144→export function instance …
+   159→export function integer …
+   172→export function intersection …
    204→export function literal …
    230→export function map …
+   258→export function never …
+   266→export function nullable …
+   278→export function number …
    298→export function object …
+   351→export function optional …
+   367→export function record …
+   402→export function regexp …
    415→export function set …
+   442→export function string …
+   456→export function tuple …
+   492→export function type …
+   522→export function union …
+   574→export function unknown …
 
 structs/utilities.ts
     60→export function assign(...Structs: Struct<any>[]): any {
@@ -96,8 +94,6 @@ structs/utilities.ts
    247→export function struct …
 
 utils.ts
-     1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
-     2→import { Failure } from './error.js'
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
     16→export function isObject …
     24→export function isNonArrayObject …
@@ -105,5 +101,24 @@ utils.ts
     45→export function print …
     58→export function shiftIterator …
     67→export function toFailure …
+   202→export type UnionToIntersection …
+   212→export type Assign …
+   218→export type EnumSchema …
+   227→export type IsMatch …
+   233→export type IsExactMatch …
+   242→export type IsRecord …
+   251→export type IsTuple …
+   267→export type IsUnion …
+   277→export type ObjectSchema …
+   283→export type ObjectType …
+   291→export type OmitBy …
+   300→export type Optionalize …
+   307→export type PartialObjectSchema …
+   315→export type PickBy …
+   324→export type Simplify …
    328→export type If<B extends Boolean, Then, Else> = B extends true ? Then : Else
+   334→export type StructSchema …
+   379→export type TupleSchema …
+   385→export type AnyStruct …
+   394→export type InferStructTuple …
    402→type _InferTuple …

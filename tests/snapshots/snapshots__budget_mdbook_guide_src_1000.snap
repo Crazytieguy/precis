@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1012 tokens)
+budget: 1000 (1007 tokens)
 
 404.md
      1→# Document not found (404)
@@ -10,8 +10,7 @@ budget: 1000 (1012 tokens)
 README.md
      1→# Introduction
      4→    .mdbook-version {
-     5→        position: absolute;
-      →        …
+      →    …
     46→## Contributing
     55→## License
 
@@ -22,17 +21,9 @@ SUMMARY.md
 
 cli/README.md
      1→# Command-line tool
-     3→The `mdbook` command-line tool is used to create and build books.
-      →…
-
-cli/arg-watcher.md
-     1→#### `--watcher`
 
 cli/build.md
      1→# The build command
-     3→The build command is used to render your book:
-     4→
-      →…
 
 cli/clean.md
      1→# The clean command
@@ -86,7 +77,6 @@ format/README.md
      1→# Format
      3→In this section you will learn how to:
      4→
-     5→- Structure your book correctly
       →…
 
 format/configuration/README.md
@@ -114,7 +104,13 @@ format/example.rs
 
 format/markdown.md
      1→# Markdown
+     9→## Text and paragraphs
+    25→## Headings
     43→#### A smaller heading 
+    47→## Lists
+    69→## Links
+   108→## Images
+   127→## Extensions
 
 format/mathjax.md
      1→# MathJax support
@@ -143,17 +139,20 @@ format/theme/index-hbs.md
 
 format/theme/syntax-highlighting.md
      1→# Syntax highlighting
+    17→## Supported languages
+    68→## Custom theme
+    82→## Improve default theme
 
 guide/README.md
      1→# User guide
-     3→This user guide provides an introduction to basic concepts of using mdBook.
-     4→
-      →…
 
 guide/creating.md
      1→# Creating a book
      5→## Initializing a book
     32→## Anatomy of a book
+    36→### `book.toml`
+    50→### `SUMMARY.md`
+    73→### Source files
     96→## Publishing a book
 
 guide/installation.md
@@ -169,3 +168,5 @@ guide/reading.md
     26→## Top menu bar
     42→## Search
     54→## Code blocks
+
+misc/contributors.md

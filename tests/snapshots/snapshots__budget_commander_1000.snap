@@ -2,49 +2,19 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1005 tokens)
+budget: 1000 (1001 tokens)
 
 Readme.md
      1→# Commander.js
-     8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
-     9→
-      →…
-    61→## Installation
-    67→## Quick Start
-   147→## Declaring _program_ variable
-   177→## Options
-   523→## Commands
    613→#### More configuration
    625→#### Custom argument processing
-   754→## Automated help
-   956→## Custom event listeners
-   966→## Bits and pieces
-  1164→## Support
 
 docs/deprecated.md
-     1→# Deprecated
-   227→## Removed
-
-docs/help-in-depth.md
-     1→# Help in Depth
-
-docs/options-in-depth.md
-     2→# Options in Depth
-
-docs/release-policy.md
-     1→# Release Policy
-
-docs/terminology.md
-     1→# Terminology
 
 esm.mjs
      1→import commander from './index.js';
 
 examples/custom-command-class.js
-     7→  createCommand(name) {
-
-examples/global-options-added.js
-    17→  createCommand(name) {
 
 lib/argument.js
      3→class Argument {
@@ -64,16 +34,39 @@ lib/command.js
 
 lib/error.js
      4→class CommanderError extends Error {
-     6→   * Constructs the CommanderError class
-      →   …
     11→  constructor(exitCode, code, message) {
     25→class InvalidArgumentError extends CommanderError {
-    27→   * Constructs the InvalidArgumentError class
-      →   …
     30→  constructor(message) {
 
 lib/help.js
     12→class Help {
+    29→  prepareContext(contextOptions) {
+    40→  visibleCommands(cmd) {
+    62→  compareOptions(a, b) {
+    79→  visibleOptions(cmd) {
+   112→  visibleGlobalOptions(cmd) {
+   139→  visibleArguments(cmd) {
+   162→  subcommandTerm(cmd) {
+   182→  optionTerm(option) {
+   193→  argumentTerm(argument) {
+   205→  longestSubcommandTermLength(cmd, helper) {
+   224→  longestOptionTermLength(cmd, helper) {
+   241→  longestGlobalOptionTermLength(cmd, helper) {
+   258→  longestArgumentTermLength(cmd, helper) {
+   276→  commandUsage(cmd) {
+   300→  commandDescription(cmd) {
+   313→  subcommandDescription(cmd) {
+   325→  optionDescription(option) {
+   372→  argumentDescription(argument) {
+   403→  formatItemList(heading, items, helper) {
+   417→  groupItems(unsortedItems, visibleItems, getGroup) {
+   443→  formatHelp(cmd, helper) {
+   535→  displayWidth(str) {
+   545→  styleTitle(str) {
+   618→  padWidth(cmd, helper) {
+   633→  preformatted(str) {
+   650→  formatItem(term, termWidth, description, helper) {
+   695→  boxWrap(str, width) {
    740→function stripColor(str) {
 
 lib/option.js
@@ -120,25 +113,13 @@ tsconfig.js.json
 
 tsconfig.json
     12→  "compilerOptions": {
-    32→  },
     33→  "include": [
-    42→  ],
     43→  "exclude": ["node_modules"],
-    44→}
 
 tsconfig.ts.json
      8→  "extends": "./tsconfig.json",
      9→  "compilerOptions": {
-    14→  },
     15→  "include": [
-    19→  ],
-    20→}
 
 typings/index.d.ts
     12→type LiteralUnion …
-   340→export type HelpConfiguration …
-   367→export type AddHelpTextPosition …
-   368→export type HookEvent …
-   370→export type OptionValueSource …
-   374→export type OptionValues …
-  1113→export const program …

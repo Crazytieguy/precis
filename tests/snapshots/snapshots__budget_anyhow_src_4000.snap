@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3994 tokens)
+budget: 4000 (3992 tokens)
 
 backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
@@ -57,20 +57,29 @@ context.rs
      9→mod ext {
     10→    use super::*;
     12→    pub trait StdError {
+    13→        fn ext_context …
     19→    impl<E> StdError for E
     20→    where
     21→        E: crate::StdError + Send + Sync + 'static,
     22→    {
+    23→        fn ext_context …
+    33→        fn ext_context …
+    46→    fn context …
+    58→    fn with_context …
     90→impl<T> Context<T, Infallible> for Option<T> {
+    91→    fn context …
+   103→    fn with_context …
+   120→    fn fmt …
+   132→    fn fmt …
+   142→    fn source …
    146→    #[cfg(error_generic_member_access)]
    147→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
-   148→        nightly::provide(&self.error, request);
-   149→    }
+   156→    fn source …
    160→    #[cfg(error_generic_member_access)]
    161→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
-   162→        Error::provide(&self.error, request);
-   163→    }
    166→struct Quoted<C>(C);
+   172→    fn fmt …
+   181→    fn write_str …
    186→pub(crate) mod private {
    187→    use super::*;
    189→    pub trait Sealed {}
@@ -84,10 +93,10 @@ ensure.rs
     26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     30→    fn __dispatch_ensure(self, msg: &'static str) -> Error {
     35→struct Buf {
-    41→    fn new() -> Self {
-    48→    fn as_str(&self) -> &str {
+    41→    fn new …
+    48→    fn as_str …
     59→    fn write_str(&mut self, s: &str) -> fmt::Result {
-    81→fn render(msg: &'static str, lhs: &dyn Debug, rhs: &dyn Debug) -> Error {
+    81→fn render …
    105→macro_rules! __parse_ensure {
    886→macro_rules! __fancy_ensure {
    912→macro_rules! __fallback_ensure {
@@ -138,20 +147,12 @@ fmt.rs
      2→use crate::error::ErrorImpl;
      3→use crate::ptr::Ref;
      4→use core::fmt::{self, Debug, Write};
-     6→impl ErrorImpl {
+     6→impl ErrorImpl …
      7→    pub(crate) unsafe fn display …
     20→    pub(crate) unsafe fn debug …
     69→struct Indented<'a, D> {
-    75→impl<T> Write for Indented<'_, T>
-    76→where
-    77→    T: Write,
-    78→{
+    75→impl<T> Write for Indented<'_, T> …
     79→    fn write_str(&mut self, s: &str) -> fmt::Result {
-    80→        for (i, line) in s.split('\n').enumerate() {
-    81→            if !self.started {
-    82→                self.started = true;
-    83→                match self.number {
-      →                …
 
 kind.rs
     47→use crate::Error;
@@ -188,7 +189,16 @@ kind.rs
 
 lib.rs
    252→mod backtrace;
+   253→mod chain;
+   254→mod context;
+   255→mod ensure;
+   256→mod error;
+   257→mod fmt;
+   258→mod kind;
+   259→mod macros;
    261→mod nightly;
+   262→mod ptr;
+   263→mod wrapper;
    265→use crate::error::ErrorImpl;
    266→use crate::ptr::Own;
    267→use core::fmt::Display;
@@ -215,14 +225,6 @@ lib.rs
    419→/// `Result<T, Error>`
    420→///
    421→/// This is a reasonable return type to use throughout your application but also
-   422→/// for `fn main`; if you do, failures will be printed along with any
-   423→/// [context][Context] and a backtrace if one was captured.
-   424→///
-   425→/// `anyhow::Result` may be used with one *or* two type parameters.
-   426→///
-   427→/// ```rust
-   428→/// use anyhow::Result;
-   429→///
       →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    470→/// Provides the `context` method for `Result`.
@@ -241,14 +243,6 @@ lib.rs
    627→        F: FnOnce() -> C;
    630→/// Equivalent to `Ok::<_, anyhow::Error>(value)`.
    631→///
-   632→/// This simplifies creation of an `anyhow::Result` in places where type
-   633→/// inference cannot deduce the `E` type of the result &mdash; without needing
-   634→/// to write `Ok::<_, anyhow::Error>(value)`.
-   635→///
-   636→/// One might think that `anyhow::Result::Ok(value)` would work in such cases
-   637→/// but it does not.
-   638→///
-   639→/// ```console
       →…
    650→pub fn Ok<T>(value: T) -> Result<T> {
    656→pub mod __private {
@@ -266,6 +260,7 @@ lib.rs
    684→    pub fn format_err(args: Arguments) -> Error {
    698→    pub fn must_use(error: Error) -> Error {
    704→    pub fn not(cond: impl Bool) -> bool {
+   708→    mod not {
    710→        pub trait Bool {
    711→            fn not(self) -> bool;
    714→        impl Bool for bool {
@@ -287,8 +282,6 @@ macros.rs
    176→///
       →…
    204→macro_rules! anyhow {
-   228→#[doc(hidden)]
-      →…
    230→macro_rules! __anyhow {
 
 nightly.rs
@@ -311,6 +304,12 @@ ptr.rs
      9→{
     10→    pub ptr: NonNull<T>,
     11→}
+    23→    fn clone …
+    32→    pub fn new …
+    38→    pub fn cast …
+    44→    pub unsafe fn boxed …
+    48→    pub fn by_ref …
+    55→    pub fn by_mut …
     63→#[repr(transparent)]
     64→pub struct Ref<'a, T>
     65→where
@@ -319,6 +318,13 @@ ptr.rs
     68→    pub ptr: NonNull<T>,
     69→    lifetime: PhantomData<&'a T>,
     70→}
+    78→    fn clone …
+    87→    pub fn new …
+    94→    pub fn from_raw …
+   101→    pub fn cast …
+   108→    pub fn by_mut …
+   115→    pub fn as_ptr …
+   119→    pub unsafe fn deref …
    124→#[repr(transparent)]
    125→pub struct Mut<'a, T>
    126→where
@@ -327,6 +333,12 @@ ptr.rs
    129→    pub ptr: NonNull<T>,
    130→    lifetime: PhantomData<&'a mut T>,
    131→}
+   139→    fn clone …
+   148→    pub fn cast …
+   155→    pub fn by_ref …
+   162→    pub fn extend …
+   169→    pub unsafe fn deref_mut …
+   175→    pub unsafe fn read …
    181→pub trait CastTo {
    182→    type Target;
    183→}

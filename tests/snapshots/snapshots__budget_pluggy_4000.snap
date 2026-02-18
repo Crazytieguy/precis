@@ -2,13 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4048 tokens)
+budget: 4000 (4026 tokens)
 
 AGENTS.md
      1→# AGENTS.md
-
-CLAUDE.md
-     1→# CLAUDE.md
 
 SECURITY.md
      1→# Security
@@ -20,40 +17,39 @@ codecov.yml
      7→comment: off
 
 docs/conf.py
-   106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
-   130→def setup(app: "sphinx.application.Sphinx") -> None:
-
-docs/examples/eggsample/eggsample/hookspecs.py
-     8→def eggsample_add_ingredients(ingredients: tuple):
-    17→def eggsample_prep_condiments(condiments: dict):
-
-docs/examples/eggsample/eggsample/host.py
-    29→class EggsellentCook:
-
-docs/examples/eggsample/eggsample/lib.py
-     5→def eggsample_add_ingredients():
-    13→def eggsample_prep_condiments(condiments):
+   106→def configure_logging …
+   130→def setup …
 
 docs/examples/eggsample-spam/eggsample_spam.py
-     1→import eggsample
-     4→@eggsample.hookimpl
      5→def eggsample_add_ingredients(ingredients):
-    14→@eggsample.hookimpl
     15→def eggsample_prep_condiments(condiments):
 
 docs/examples/toy-example.py
-     1→import pluggy
      8→class MySpec:
-    10→
     12→    def myhook(self, arg1, arg2):
     16→class Plugin_1:
-    18→
     20→    def myhook(self, arg1, arg2):
     25→class Plugin_2:
-    27→
     29→    def myhook(self, arg1, arg2):
 
 pyproject.toml
+     1→[build-system]
+     8→[project]
+    38→[dependency-groups]
+    43→[tool.setuptools]
+    49→[tool.ruff.lint]
+    57→[tool.ruff.lint.extend-per-file-ignores]
+    61→[tool.ruff.lint.isort]
+    69→[tool.setuptools_scm]
+    71→[tool.uv]
+    74→[tool.towncrier]
+    82→  [[tool.towncrier.type]]
+    87→  [[tool.towncrier.type]]
+    92→  [[tool.towncrier.type]]
+    97→  [[tool.towncrier.type]]
+   102→  [[tool.towncrier.type]]
+   107→  [[tool.towncrier.type]]
+   112→[tool.mypy]
 
 scripts/release.py
     15→def create_branch …
@@ -63,35 +59,29 @@ scripts/release.py
     59→def main …
 
 scripts/towncrier-draft-to-file.py
-     1→from subprocess import call
-     2→import sys
      5→def main() -> int:
      6→    """
       →    …
 
 src/pluggy/__init__.py
      1→__all__ = [
-     2→    "__version__",
-      →    …
-    17→from ._hooks …
-    18→from ._hooks …
-    19→from ._hooks …
-    20→from ._hooks …
-    21→from ._hooks …
-    22→from ._hooks …
-    23→from ._hooks …
-    24→from ._manager …
-    25→from ._manager …
-    26→from ._result …
-    27→from ._result …
-    28→from ._warnings …
-    29→from ._warnings …
+    17→from ._hooks import HookCaller
+    18→from ._hooks import HookImpl
+    19→from ._hooks import HookimplMarker
+    20→from ._hooks import HookimplOpts
+    21→from ._hooks import HookRelay
+    22→from ._hooks import HookspecMarker
+    23→from ._hooks import HookspecOpts
+    24→from ._manager import PluginManager
+    25→from ._manager import PluginValidationError
+    26→from ._result import HookCallError
+    27→from ._result import Result
+    28→from ._warnings import PluggyTeardownRaisedWarning
+    29→from ._warnings import PluggyWarning
     32→def __getattr__(name: str) -> str:
     33→    if name == "__version__":
     34→        from importlib.metadata import version
     35→
-    36→        return version("pluggy")
-    37→
       →…
 
 src/pluggy/_callers.py
@@ -117,57 +107,53 @@ src/pluggy/_callers.py
     31→    backward compatibility wrapper to run a old style hookwrapper as a wrapper
     32→    """
     33→    if TYPE_CHECKING:
-    34→        teardown = cast(Teardown, hook_impl.function(*args))
-    35→    else:
-    36→        teardown = hook_impl.function(*args)
-    37→    try:
-    38→        next(teardown)
-      →        …
+      →    …
     60→def _raise_wrapfail …
     70→def _warn_teardown_exception …
     82→def _multicall …
 
 src/pluggy/_hooks.py
     25→from ._result import Result
+    28→_T …
+    29→_F …
+    31→_Namespace …
+    32→_Plugin …
+    33→_HookExec …
+    37→_HookImplFunction …
     40→class HookspecOpts(TypedDict):
     42→
-    43→    #: Whether the hook is :ref:`first result only <firstresult>`.
-    44→    firstresult: bool
-      →    …
+      →…
     56→class HookimplOpts(TypedDict):
     58→
-    59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
-    60→    wrapper: bool
-      →    …
+      →…
     77→@final
     78→class HookspecMarker:
-    79→    """Decorator for marking functions as hook specifications.
-    80→
-    81→    Instantiate it with a project_name to get a decorator.
-      →    …
     85→
     86→    __slots__ = ("project_name",)
     87→
+    88→    def __init__ …
+   111→    def __call__ …
    164→@final
    165→class HookimplMarker:
-   166→    """Decorator for marking functions as hook implementations.
-   167→
-   168→    Instantiate it with a ``project_name`` to get a decorator.
-      →    …
    172→
    173→    __slots__ = ("project_name",)
    174→
+   175→    def __init__ …
+   202→    def __call__ …
+   281→def normalize_hookimpl_opts …
+   290→_PYPY …
+   293→def varnames …
    358→@final
    359→class HookRelay:
-   360→    """Hook holder object for performing 1:N hook calls where N is the number
-   361→    of registered plugins."""
    362→
    363→    __slots__ = ("__dict__",)
    364→
+   365→    def __init__ …
+   370→        def __getattr__ …
+   377→_CallHistory …
    382→class HookCaller:
    384→
-   385→    __slots__ = (
-   386→        "name",
+   393→    def __init__ …
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None
@@ -179,24 +165,27 @@ src/pluggy/_hooks.py
    428→    ) -> None:
    429→        if self.spec is not None:
    430→            raise ValueError(
-   431→                f"Hook {self.spec.name!r} is already registered "
-   432→                f"within namespace {self.spec.namespace}"
-   433→            )
       →            …
-   442→    def _remove_plugin(self, plugin: _Plugin) -> None:
-   453→    def _add_hookimpl(self, hookimpl: HookImpl) -> None:
-   480→    def _verify_all_args_are_provided(self, kwargs: Mapping[str, object]) -> None:
-   577→    def _maybe_apply_history(self, method: HookImpl) -> None:
+   438→    def is_historic …
+   442→    def _remove_plugin …
+   449→    def get_hookimpls …
+   453→    def _add_hookimpl …
+   477→    def __repr__ …
+   480→    def _verify_all_args_are_provided …
+   499→    def __call__ …
+   516→    def call_historic …
+   543→    def call_extra …
+   577→    def _maybe_apply_history …
    593→class _SubsetHookCaller(HookCaller):
-   596→
+   612→    def __init__ …
    619→    def _hookimpls(self) -> list[HookImpl]:
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    628→        return self._orig.spec
    631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
+   634→    def __repr__ …
    638→@final
    639→class HookImpl:
-   640→    """A hook implementation in a :class:`HookCaller`."""
    641→
    642→    __slots__ = (
    643→        "function",
@@ -212,6 +201,8 @@ src/pluggy/_hooks.py
    653→        "trylast",
    654→    )
    655→
+   656→    def __init__ …
+   692→    def __repr__ …
    696→@final
    697→class HookSpec:
    698→    __slots__ = (
@@ -225,21 +216,34 @@ src/pluggy/_hooks.py
    706→        "warn_on_impl_args",
    707→    )
    708→
+   709→    def __init__ …
 
 src/pluggy/_manager.py
-    16→from . …
-    17→from ._callers …
-    18→from ._hooks …
-    19→from ._hooks …
-    20→from ._hooks …
-    21→from ._hooks …
-    22→from ._hooks …
-    23→from ._hooks …
-    24→from ._hooks …
-    25→from ._hooks …
-    26→from ._hooks …
-    27→from ._hooks …
-    28→from ._result …
+     3→from collections.abc import Callable
+     4→from collections.abc import Iterable
+     5→from collections.abc import Mapping
+     6→from collections.abc import Sequence
+     7→import inspect
+     8→import types
+     9→from typing import Any
+    10→from typing import cast
+    11→from typing import Final
+    12→from typing import TYPE_CHECKING
+    13→from typing import TypeAlias
+    14→import warnings
+    16→from . import _tracing
+    17→from ._callers import _multicall
+    18→from ._hooks import _HookImplFunction
+    19→from ._hooks import _Namespace
+    20→from ._hooks import _Plugin
+    21→from ._hooks import _SubsetHookCaller
+    22→from ._hooks import HookCaller
+    23→from ._hooks import HookImpl
+    24→from ._hooks import HookimplOpts
+    25→from ._hooks import HookRelay
+    26→from ._hooks import HookspecOpts
+    27→from ._hooks import normalize_hookimpl_opts
+    28→from ._result import Result
     33→    import importlib.metadata
     36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
     37→_AfterTrace: TypeAlias = Callable[
@@ -247,24 +251,49 @@ src/pluggy/_manager.py
     52→class PluginValidationError(Exception):
     53→    """Plugin failed validation.
     54→
-    55→    :param plugin: The plugin which failed validation.
-      →    …
+      →…
     58→
+    59→    def __init__ …
     65→class DistFacade:
     66→    """Emulate a pkg_resources Distribution"""
     67→
+    68→    def __init__ …
     71→    @property
     72→    def project_name(self) -> str:
     73→        name: str = self.metadata["name"]
     74→        return name
+    76→    def __getattr__ …
+    79→    def __dir__ …
     83→class PluginManager:
     84→    """Core class which manages registration of plugin objects and 1:N hook
     85→    calling.
-    86→
-      →…
+      →    …
     99→
+   100→    def __init__ …
    114→    def _hookexec …
+   125→    def register …
+   176→    def parse_hookimpl_opts …
+   201→    def unregister …
+   233→    def set_blocked …
+   238→    def is_blocked …
+   242→    def unblock …
+   252→    def add_hookspecs …
+   278→    def parse_hookspec_opts …
+   296→    def get_plugins …
+   300→    def is_registered …
+   304→    def get_canonical_name …
+   315→    def get_plugin …
+   319→    def has_plugin …
+   323→    def get_name …
    331→    def _verify_hook …
+   379→    def check_pending …
+   395→    def load_setuptools_entrypoints …
+   425→    def list_plugin_distinfo …
+   430→    def list_name_plugin …
+   434→    def get_hookcallers …
+   450→    def add_hookcall_monitoring …
+   487→    def enable_tracing …
+   512→    def subset_hook_caller …
    525→def _formatdef …
 
 src/pluggy/_result.py
@@ -290,14 +319,10 @@ src/pluggy/_result.py
     33→        result: ResultType | None,
     34→        exception: BaseException | None,
     35→    ) -> None:
-    36→        """:meta private:"""
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
     44→        """:meta private:"""
     45→        exc = self._exception
-    46→        if exc is None:
-    47→            return None
-    48→        else:
       →        …
     51→    @property
     52→    def exception(self) -> BaseException | None:
@@ -307,22 +332,10 @@ src/pluggy/_result.py
     57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
     58→        """:meta private:"""
     59→        __tracebackhide__ = True
-    60→        result = exception = None
-    61→        try:
-    62→            result = func()
-      →            …
+      →        …
     67→    def force_result(self, result: ResultType) -> None:
-    68→        """Force the result(s) to ``result``.
-    69→
-      →…
     80→    def force_exception(self, exception: BaseException) -> None:
-    81→        """Force the result to fail with ``exception``.
-    82→
-      →…
     91→    def get_result(self) -> ResultType:
-    92→        """Get the result(s) for this hook call.
-    93→
-      →…
 
 src/pluggy/_tracing.py
      7→from collections.abc import Callable
@@ -331,8 +344,8 @@ src/pluggy/_tracing.py
     16→class TagTracer:
     17→    def __init__(self) -> None:
     22→    def get(self, name: str) -> TagTracerSub:
-    25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
-    42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
+    25→    def _format_message …
+    42→    def _processmessage …
     48→    def setwriter(self, writer: _Writer | None) -> None:
     51→    def setprocessor(self, tags: str | tuple[str, ...], processor: _Processor) -> None:
     59→class TagTracerSub:
@@ -356,8 +369,6 @@ src/pluggy/_warnings.py
     17→
     18→    This is an issue in the plugin implementation.
     19→
-    20→    If the exception is unintended, fix the underlying cause.
-    21→
       →…
     26→
     27→    __module__ = "pluggy"
@@ -367,16 +378,11 @@ testing/benchmark.py
     26→def wrapper(arg1, arg2, arg3):
     31→def hooks(request: Any) -> list[object]:
     36→def wrappers(request: Any) -> list[object]:
-    40→def test_hook_and_wrappers_speed(benchmark, hooks, wrappers) -> None:
-    70→def test_call_hook(benchmark, plugins, wrappers, nesting) -> None:
 
 testing/conftest.py
     11→def he_pm(request, pm: PluginManager) -> PluginManager:
     23→@pytest.fixture
     24→def pm() -> PluginManager:
-    25→    return PluginManager("example")
-
-testing/test_details.py
 
 testing/test_helpers.py
 
@@ -386,21 +392,14 @@ testing/test_hookcaller.py
     61→def addmeth(hc: HookCaller) -> AddMeth:
    329→def test_hookimpl(name: str, val: bool) -> None:
 
-testing/test_invocations.py
-
 testing/test_multicall.py
    250→def test_hookwrapper_exception(exc: type[BaseException]) -> None:
    320→def test_wrapper_exception(exc: type[BaseException]) -> None:
    417→def test_wrapper_stopiteration_passtrough(has_hookwrapper: bool) -> None:
 
 testing/test_pluginmanager.py
-   298→@pytest.mark.parametrize("result_callback", [True, False])
-   299→def test_with_result_memorized(pm: PluginManager, result_callback: bool) -> None:
-   698→@pytest.mark.parametrize("historic", [False, True])
-   699→def test_register_while_calling(
-   700→    pm: PluginManager,
-   701→    historic: bool,
-   702→) -> None:
+   299→def test_with_result_memorized …
+   699→def test_register_while_calling …
 
 testing/test_result.py
      6→def test_exceptions_traceback_doesnt_get_longer_and_longer() -> None:
@@ -408,9 +407,6 @@ testing/test_result.py
 testing/test_tracer.py
      6→@pytest.fixture
      7→def rootlogger() -> TagTracer:
-     8→    return TagTracer()
 
 testing/test_warnings.py
     15→def test_teardown_raised_warning(pm: PluginManager) -> None:
-    16→    class Api:
-      →    …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4012 tokens)
+budget: 4000 (4053 tokens)
 
 argument.js
      3→class Argument {
@@ -25,7 +25,17 @@ argument.js
     23→        this.required = true;
     24→        this._name = name.slice(1, -1);
     25→        break;
-      →        …
+    26→      case '[': // e.g. [optional]
+    27→        this.required = false;
+    28→        this._name = name.slice(1, -1);
+    29→        break;
+    30→      default:
+    31→        this.required = true;
+    32→        this._name = name;
+    33→        break;
+    34→    }
+    35→
+      →…
     43→   * Return argument name.
     44→   *
     45→   * @return {string}
@@ -69,7 +79,8 @@ argument.js
    108→      }
    109→      return arg;
    110→    };
-      →    …
+   111→    return this;
+   112→  }
    115→   * Make argument required.
    116→   *
    117→   * @returns {Argument}
@@ -86,6 +97,7 @@ argument.js
    132→  }
    136→ * Takes an argument and returns its human readable equivalent for help usage.
    137→ *
+   138→ * @param {Argument} arg
       → …
    143→function humanReadableArgName(arg) {
 
@@ -93,6 +105,7 @@ command.js
     13→class Command extends EventEmitter {
     20→  constructor(name) {
     99→  copyInheritedSettings(sourceCommand) {
+   121→  _getCommandAndAncestors() {
    155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
    192→  createCommand(name) {
    203→  createHelp() {
@@ -107,11 +120,17 @@ command.js
    375→  addArgument(argument) {
    409→  helpCommand(enableOrNameAndArgs, description) {
    443→  addHelpCommand(helpCommand, deprecatedDescription) {
+   463→  _getHelpCommand() {
    487→  hook(event, listener) {
    508→  exitOverride(fn) {
+   533→  _exit(exitCode, code, message) {
    556→  action(fn) {
    585→  createOption(flags, description) {
+   599→  _callParseArg(target, value, previous, invalidArgumentMessage) {
+   619→  _registerOption(option) {
+   644→  _registerCommand(command) {
    670→  addOption(option) {
+   741→  _optionEx(config, flags, description, fn, defaultValue) {
    788→  option(flags, description, parseArg, defaultValue) {
    805→  requiredOption(flags, description, parseArg, defaultValue) {
    826→  combineFlagAndOptionalValue(combine = true) {
@@ -119,25 +138,46 @@ command.js
    848→  allowExcessArguments(allowExcess = true) {
    861→  enablePositionalOptions(positional = true) {
    875→  passThroughOptions(passThrough = true) {
+   885→  _checkForBrokenPassThrough() {
    905→  storeOptionsAsProperties(storeAsProperties = true) {
    925→  getOptionValue(key) {
    940→  setOptionValue(key, value) {
    953→  setOptionValueWithSource(key, value, source) {
    971→  getOptionValueSource(key) {
    983→  getOptionValueSourceWithGlobals(key) {
+  1001→  _prepareUserArgs(argv, parseOptions) {
   1090→  parse(argv, parseOptions) {
   1119→  async parseAsync(argv, parseOptions) {
   1127→  _prepareForParse() {
   1141→  saveStateBeforeParse() {
   1158→  restoreStateBeforeParse() {
+  1183→  _checkForMissingExecutable(executableFile, executableDir, subcommandName) {
+  1202→  _executeSubCommand(subcommand, args) {
+  1352→  _dispatchSubcommand(commandName, operands, unknown) {
+  1380→  _dispatchHelpCommand(subcommandName) {
+  1403→  _checkNumberOfArguments() {
+  1428→  _processArguments() {
+  1481→  _chainOrCall(promise, fn) {
+  1499→  _chainOrCallHooks(promise, event) {
+  1531→  _chainOrCallSubCommandHook(promise, subCommand, event) {
+  1550→  _parseCommand(operands, unknown) {
+  1649→  _findCommand(name) {
+  1664→  _findOption(arg) {
+  1675→  _checkForMissingMandatoryOptions() {
+  1694→  _checkForConflictingLocalOptions() {
+  1723→  _checkForConflictingOptions() {
   1748→  parseOptions(args) {
   1902→  opts() {
   1924→  optsWithGlobals() {
   1940→  error(message, errorOptions) {
+  1966→  _parseOptionsEnv() {
+  1996→  _parseOptionsImplied() {
   2034→  missingArgument(name) {
   2046→  optionMissingArgument(option) {
   2058→  missingMandatoryOptionValue(option) {
+  2070→  _conflictingOption(option, conflictingOption) {
   2114→  unknownOption(flag) {
+  2146→  _excessArguments(receivedArgs) {
   2162→  unknownCommand() {
   2195→  version(str, flags, description) {
   2218→  description(str, argsDescription) {
@@ -149,14 +189,21 @@ command.js
   2344→  helpGroup(heading) {
   2363→  commandsGroup(heading) {
   2382→  optionsGroup(heading) {
+  2392→  _initOptionGroup(option) {
+  2401→  _initCommandGroup(cmd) {
   2419→  nameFromFilename(filename) {
   2437→  executableDir(path) {
   2450→  helpInformation(contextOptions) {
+  2475→  _getOutputContext(contextOptions) {
   2505→  outputHelp(contextOptions) {
   2559→  helpOption(flags, description) {
+  2592→  _getHelpOption() {
   2607→  addHelpOption(option) {
   2621→  help(contextOptions) {
   2656→  addHelpText(position, text) {
+  2686→  _outputHelpIfRequested(args) {
+  2705→function incrementNodeInspectorPort(args) {
+  2752→function useColor() {
 
 error.js
      2→ * CommanderError class
@@ -232,118 +279,82 @@ help.js
    734→ *
    735→ * @param {string} str
    736→ * @returns {string}
-      → …
+   737→ * @package
    740→function stripColor(str) {
+   741→  // eslint-disable-next-line no-control-regex
+      →  …
 
 option.js
      3→class Option {
      5→   * Initialize a new `Option` with the given `flags` and `description`.
      6→   *
-     7→   * @param {string} flags
-     8→   * @param {string} [description]
+      →   …
     11→  constructor(flags, description) {
     40→   * Set the default value, and optionally supply the description to be displayed in the help.
     41→   *
-    42→   * @param {*} value
-    43→   * @param {string} [description]
-    44→   * @return {Option}
+      →   …
     47→  default(value, description) {
     54→   * Preset to use when option used without option-argument, especially optional but also boolean and negated.
     55→   * The custom processing (parseArg) is called.
-    56→   *
-    57→   * @example
-    58→   * new Option('--color').default('GREYSCALE').preset('RGB');
-    59→   * new Option('--donate [amount]').preset('20').argParser(parseFloat);
-    60→   *
-    61→   * @param {*} arg
-    62→   * @return {Option}
+      →   …
     65→  preset(arg) {
     71→   * Add option name(s) that conflict with this option.
     72→   * An error will be displayed if conflicting options are found during parsing.
-    73→   *
-    74→   * @example
-    75→   * new Option('--rgb').conflicts('cmyk');
-    76→   * new Option('--js').conflicts(['ts', 'jsx']);
-    77→   *
-    78→   * @param {(string | string[])} names
-    79→   * @return {Option}
+      →   …
     82→  conflicts(names) {
     88→   * Specify implied option values for when this option is set and the implied options are not.
     89→   *
-    90→   * The custom processing (parseArg) is not called on the implied values.
-    91→   *
-    92→   * @example
-    93→   * program
-    94→   *   .addOption(new Option('--log', 'write logging information to file'))
-    95→   *   .addOption(new Option('--trace', 'log extra details').implies({ log: 'trace.txt' }));
-    96→   *
-    97→   * @param {object} impliedOptionValues
-    98→   * @return {Option}
+      →   …
    100→  implies(impliedOptionValues) {
    111→   * Set environment variable to check for option value.
    112→   *
-   113→   * An environment variable is only used if when processed the current option value is
-   114→   * undefined, or the source of the current value is 'default' or 'config' or 'env'.
-   115→   *
-   116→   * @param {string} name
-   117→   * @return {Option}
+      →   …
    120→  env(name) {
    126→   * Set the custom handler for processing CLI option arguments into option values.
    127→   *
-   128→   * @param {Function} [fn]
-   129→   * @return {Option}
+      →   …
    132→  argParser(fn) {
    138→   * Whether the option is mandatory and must have a value after parsing.
    139→   *
-   140→   * @param {boolean} [mandatory=true]
-   141→   * @return {Option}
+      →   …
    144→  makeOptionMandatory(mandatory = true) {
    150→   * Hide option in help.
    151→   *
-   152→   * @param {boolean} [hide=true]
-   153→   * @return {Option}
+      →   …
    156→  hideHelp(hide = true) {
    165→  _collectValue(value, previous) {
    175→   * Only allow option value to be one of choices.
    176→   *
-   177→   * @param {string[]} values
-   178→   * @return {Option}
+      →   …
    181→  choices(values) {
    198→   * Return option name.
    199→   *
-   200→   * @return {string}
+      →   …
    203→  name() {
    211→   * Return option name, in a camelcase format that can be used
    212→   * as an object attribute key.
-   213→   *
-   214→   * @return {string}
+      →   …
    217→  attributeName() {
    225→   * Set the help group heading.
    226→   *
-   227→   * @param {string} heading
-   228→   * @return {Option}
+      →   …
    230→  helpGroup(heading) {
    236→   * Check if `arg` matches the short or long flag.
    237→   *
-   238→   * @param {string} arg
-   239→   * @return {boolean}
-   240→   * @package
+      →   …
    243→  is(arg) {
    248→   * Return whether a boolean option.
    249→   *
-   250→   * Options are one of boolean, negated, required argument, or optional argument.
-   251→   *
-   252→   * @return {boolean}
-   253→   * @package
+      →   …
    256→  isBoolean() {
+   262→ * This class is to make it easier to work with dual options, without changing the existing
+      → …
    268→class DualOptions {
    270→   * @param {Option[]} options
    272→  constructor(options) {
    291→   * Did the value come from the option, and not from possible matching dual option?
    292→   *
-   293→   * @param {*} value
-   294→   * @param {Option} option
-   295→   * @returns {boolean}
+      →   …
    297→  valueFromOption(value, option) {
    316→function camelcase(str) {
    328→function splitOptionFlags(flags) {
@@ -353,5 +364,6 @@ suggestSimilar.js
      3→function editDistance(a, b) {
     49→ * Find close matches, restricted to same number of edits.
     50→ *
+    51→ * @param {string} word
       → …
     56→function suggestSimilar(word, candidates) {

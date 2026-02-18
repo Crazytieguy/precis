@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2025 tokens)
+budget: 2000 (2024 tokens)
 
 README.md
     28→## Features
@@ -19,6 +19,9 @@ README.md
 package.json
 
 site/README.md
+     3→## Getting Started
+    17→## Learn More
+    26→## Deploy on Vercel
 
 site/components/code.tsx
    104→export const Code: React.FC<{
@@ -30,7 +33,7 @@ site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
 
 site/components/sections/footer.tsx
-     4→export function Footer({ noBadge }: { noBadge?: boolean }) {
+     4→export function Footer …
 
 site/components/sections/toast-example.tsx
    270→export const ToastExample = () => {
@@ -114,14 +117,18 @@ src/components/toaster.tsx
      9→import { useToaster } from '../core/use-toaster …
     10→import { prefersReducedMotion } from '../core/utils …
     11→import { ToastBar } from './toast-bar …
-    15→const ToastWrapper …
-    47→const getPositionStyle …
+    15→const ToastWrapper = ({
+    47→const getPositionStyle = (
+    48→  position: ToastPosition,
+    49→  offset: number
+    50→): React.CSSProperties => {
     76→const activeClass = css`
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
     87→  position = 'top-center',
     88→  toastOptions,
+    89→  gutter,
       →  …
 
 src/core/store.ts
@@ -201,9 +208,6 @@ src/core/use-toaster.ts
      9→  toastOptions?: DefaultToastOptions,
     10→  toasterId: string = 'default'
     11→) => {
-    12→  const { toasts, pausedAt } = useStore(toastOptions, toasterId);
-    13→  const toastTimeouts = useRef(
-      →  …
 
 src/core/utils.ts
      1→export const genId = (() => {
@@ -220,6 +224,3 @@ tsconfig.json
      4→  "compilerOptions": {
     32→  }
     33→}
-
-tsup.config.ts
-     4→const commonConfig: Options = {

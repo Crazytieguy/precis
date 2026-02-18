@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (998 tokens)
+budget: 1000 (1001 tokens)
 
 Cargo.toml
 
@@ -19,6 +19,10 @@ build/probe.rs
     27→    fn provide …
 
 impl/Cargo.toml
+     1→[package]
+    11→[lib]
+    14→[dependencies]
+    19→[package.metadata.docs.rs]
 
 impl/src/ast.rs
     45→pub enum ContainerKind {
@@ -42,31 +46,20 @@ impl/src/expand.rs
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
 
 impl/src/fmt.rs
-    15→impl Display<'_> {
     16→    pub fn expand_shorthand …
-   166→struct FmtArguments {
    172→fn explicit_named_args …
 
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
-    26→fn crawl …
     48→pub struct InferredBounds {
 
 impl/src/lib.rs
-    39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
     46→struct private;
-    48→impl ToTokens for private {
-    49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-
-impl/src/scan_expr.rs
-     1→use self::{Action::*, Input::*};
+    49→    fn to_tokens …
 
 impl/src/unraw.rs
-    10→#[derive(Clone)]
-    11→#[repr(transparent)]
     12→pub struct IdentUnraw(Ident);
-    81→#[derive(Clone)]
     82→pub enum MemberUnraw {
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
@@ -78,28 +71,28 @@ rust-toolchain.toml
 src/aserror.rs
      5→pub trait AsDynError<'a>: Sealed {
      6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
-    11→    fn as_dyn_error …
-    18→    fn as_dyn_error …
-    25→    fn as_dyn_error …
-    32→    fn as_dyn_error …
-    39→    fn as_dyn_error …
+    11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    18→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    25→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    32→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    39→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     45→pub trait Sealed {}
 
 src/display.rs
-     3→use std::path::{self, Path, PathBuf};
      6→pub trait AsDisplay<'a>: Sealed {
     11→    fn as_display …
+    18→    type Target = &'a T;
     20→    fn as_display …
-    29→    #[inline]
+    27→    type Target = path::Display<'a>;
     30→    fn as_display(&'a self) -> Self::Target {
-    39→    #[inline]
+    37→    type Target = path::Display<'a>;
     40→    fn as_display(&'a self) -> Self::Target {
     46→pub trait Sealed {}
     59→mod placeholder {
     60→    use super::{AsDisplay, Sealed};
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
-    69→        #[inline]
+    67→        type Target = Self;
     70→        fn as_display(&'a self) -> Self::Target {
     76→        fn fmt …
 
@@ -108,19 +101,18 @@ src/lib.rs
    287→pub use thiserror_impl::*;
 
 src/private.rs
+     2→pub use crate::aserror::AsDynError;
+     4→pub use crate::display::AsDisplay;
+     7→pub use crate::provide::ThiserrorProvide;
+     9→pub use crate::var::Var;
 
 src/provide.rs
      4→pub trait ThiserrorProvide: Sealed {
      5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
     12→    #[inline]
     13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
-    14→        self.provide(request);
-    15→    }
     19→pub trait Sealed {}
 
 src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-
-tests/ui/display-underscore.rs
-     5→pub struct Error;

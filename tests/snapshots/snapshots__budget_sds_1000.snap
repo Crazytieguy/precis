@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (998 tokens)
+budget: 1000 (977 tokens)
 
 README.md
 
@@ -30,7 +30,7 @@ sds.c
 
 sds.h
     34→#define __SDS_H
-    36→#define SDS_MAX_PREALLOC …
+    36→#define SDS_MAX_PREALLOC (1024*1024)
     39→#include <sys/types.h>
     40→#include <stdarg.h>
     41→#include <stdint.h>
@@ -42,27 +42,19 @@ sds.h
     49→    char buf[];
     50→};
     51→struct __attribute__ ((__packed__)) sdshdr8 {
-    52→    uint8_t len; /* used */
-      →    …
     57→struct __attribute__ ((__packed__)) sdshdr16 {
-    58→    uint16_t len; /* used */
-      →    …
     63→struct __attribute__ ((__packed__)) sdshdr32 {
-    64→    uint32_t len; /* used */
-      →    …
     69→struct __attribute__ ((__packed__)) sdshdr64 {
-    70→    uint64_t len; /* used */
-      →    …
-    76→#define SDS_TYPE_5 …
-    77→#define SDS_TYPE_8 …
-    78→#define SDS_TYPE_16 …
-    79→#define SDS_TYPE_32 …
-    80→#define SDS_TYPE_64 …
-    81→#define SDS_TYPE_MASK …
-    82→#define SDS_TYPE_BITS …
-    83→#define SDS_HDR_VAR …
-    84→#define SDS_HDR …
-    85→#define SDS_TYPE_5_LEN …
+    76→#define SDS_TYPE_5  0
+    77→#define SDS_TYPE_8  1
+    78→#define SDS_TYPE_16 2
+    79→#define SDS_TYPE_32 3
+    80→#define SDS_TYPE_64 4
+    81→#define SDS_TYPE_MASK 7
+    82→#define SDS_TYPE_BITS 3
+    83→#define SDS_HDR_VAR(T,s) struct sdshdr##T *sh = (void*)((s)-(sizeof(struct sdshdr##T)));
+    84→#define SDS_HDR(T,s) ((struct sdshdr##T *)((s)-(sizeof(struct sdshdr##T))))
+    85→#define SDS_TYPE_5_LEN(f) ((f)>>SDS_TYPE_BITS)
    180→static inline size_t sdsalloc(const sds s) {
    255→/* Low level functions exposed to the user API */
    256→sds sdsMakeRoomFor(sds s, size_t addlen);
@@ -77,8 +69,7 @@ sdsalloc.h
     34→ *
     35→ * This file is used in order to change the SDS allocator at compile time.
     36→ * Just define the following defines to what you want to use. Also add
-    37→ * the include of your alternate allocator if needed (not needed in order
-    38→ * to use the default libc allocator). */
+      → …
     40→#define s_malloc malloc
     41→#define s_realloc realloc
     42→#define s_free free

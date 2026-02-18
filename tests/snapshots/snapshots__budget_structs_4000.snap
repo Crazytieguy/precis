@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4027 tokens)
+budget: 4000 (4052 tokens)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -45,6 +45,7 @@ README.md
     42→```
     43→
     44→```go
+    45→// Convert a struct to a map[string]interface{}
       →…
     74→### Struct methods
     76→The structs functions can be also used as independent methods by creating a new
@@ -54,6 +55,7 @@ README.md
     80→```go
     81→// Create a new struct type:
     82→s := structs.New(server)
+    83→
       →…
     95→### Field methods
     97→We can easily examine a single Field for more detail. Below you can see how we
@@ -63,6 +65,7 @@ README.md
    101→```go
    102→s := structs.New(server)
    103→
+   104→// Get the Field struct for the "Name" field
       →…
    163→## Credits
    165→ * [Fatih Arslan](https://github.com/fatih)
@@ -206,8 +209,20 @@ field_test.go
     29→	g []string
     30→}
     32→func newStruct() *Struct {
-    33→	b := &Bar{
-      →	…
+    53→func TestField_Set(t *testing.T) {
+   136→func TestField_NotSettable(t *testing.T) {
+   150→func TestField_Zero(t *testing.T) {
+   209→func TestField(t *testing.T) {
+   222→func TestField_Kind(t *testing.T) {
+   242→func TestField_Tag(t *testing.T) {
+   271→func TestField_Value(t *testing.T) {
+   295→func TestField_IsEmbedded(t *testing.T) {
+   307→func TestField_IsExported(t *testing.T) {
+   323→func TestField_IsZero(t *testing.T) {
+   335→func TestField_Name(t *testing.T) {
+   343→func TestField_Field(t *testing.T) {
+   367→func TestField_Fields(t *testing.T) {
+   376→func TestField_FieldOk(t *testing.T) {
 
 structs.go
      4→import (
@@ -228,85 +243,85 @@ structs.go
     22→	TagName string
     23→}
     25→// New returns a new *Struct with the struct s. It panics if the s's kind is
-    26→// not struct.
+      →…
     27→func New(s interface{}) *Struct {
     35→// Map converts the given struct to a map[string]interface{}, where the keys
-    36→// of the map are the field names and the values of the map the associated
-    37→// values of the fields. The default key string is the struct field name but
       →…
     81→func (s *Struct) Map() map[string]interface{} {
     87→// FillMap is the same as Map. Instead of returning the output, it fills the
-    88→// given map.
+      →…
     89→func (s *Struct) FillMap(out map[string]interface{}) {
    152→// Values converts the given s struct's field values to a []interface{}.  A
-   153→// struct tag with the content of "-" ignores the that particular field.
-   154→// Example:
       →…
    174→func (s *Struct) Values() []interface{} {
    215→// Fields returns a slice of Fields. A struct tag with the content of "-"
-   216→// ignores the checking of that particular field. Example:
-   217→//
       →…
    222→func (s *Struct) Fields() []*Field {
    226→// Names returns a slice of field names. A struct tag with the content of "-"
-   227→// ignores the checking of that particular field. Example:
-   228→//
       →…
    233→func (s *Struct) Names() []string {
    245→func getFields(v reflect.Value, tagName string) []*Field {
    273→// Field returns a new Field struct that provides several high level functions
-   274→// around a single struct field entity. It panics if the field is not found.
+      →…
    275→func (s *Struct) Field(name string) *Field {
    284→// FieldOk returns a new Field struct that provides several high level functions
-   285→// around a single struct field entity. The boolean returns true if the field
-   286→// was found.
+      →…
    287→func (s *Struct) FieldOk(name string) (*Field, bool) {
    302→// IsZero returns true if all fields in a struct is a zero value (not
-   303→// initialized) A struct tag with the content of "-" ignores the checking of
-   304→// that particular field. Example:
       →…
    318→func (s *Struct) IsZero() bool {
    349→// HasZero returns true if a field in a struct is not initialized (zero value).
-   350→// A struct tag with the content of "-" ignores the checking of that particular
-   351→// field. Example:
       →…
    365→func (s *Struct) HasZero() bool {
    396→// Name returns the structs's type name within its package. For more info refer
-   397→// to Name() function.
+      →…
    398→func (s *Struct) Name() string {
    405→func (s *Struct) structFields() []reflect.StructField {
    428→func strctVal(s interface{}) reflect.Value {
    443→// Map converts the given struct to a map[string]interface{}. For more info
-   444→// refer to Struct types Map() method. It panics if s's kind is not struct.
+      →…
    445→func Map(s interface{}) map[string]interface{} {
    449→// FillMap is the same as Map. Instead of returning the output, it fills the
-   450→// given map.
+      →…
    451→func FillMap(s interface{}, out map[string]interface{}) {
    455→// Values converts the given struct to a []interface{}. For more info refer to
-   456→// Struct types Values() method.  It panics if s's kind is not struct.
+      →…
    457→func Values(s interface{}) []interface{} {
    461→// Fields returns a slice of *Field. For more info refer to Struct types
-   462→// Fields() method.  It panics if s's kind is not struct.
+      →…
    463→func Fields(s interface{}) []*Field {
    467→// Names returns a slice of field names. For more info refer to Struct types
-   468→// Names() method.  It panics if s's kind is not struct.
+      →…
    469→func Names(s interface{}) []string {
    473→// IsZero returns true if all fields is equal to a zero value. For more info
-   474→// refer to Struct types IsZero() method.  It panics if s's kind is not struct.
+      →…
    475→func IsZero(s interface{}) bool {
    479→// HasZero returns true if any field is equal to a zero value. For more info
-   480→// refer to Struct types HasZero() method.  It panics if s's kind is not struct.
+      →…
    481→func HasZero(s interface{}) bool {
    485→// IsStruct returns true if the given variable is a struct or a pointer to
-   486→// struct.
+      →…
    487→func IsStruct(s interface{}) bool {
    501→// Name returns the structs's type name within its package. It returns an
-   502→// empty string for unnamed types. It panics if s's kind is not struct.
+      →…
    503→func Name(s interface{}) string {
    509→func (s *Struct) nested(val reflect.Value) interface{} {
 
 structs_example_test.go
      3→import …
+     8→func ExampleNew() {
+    33→func ExampleMap() {
+    58→func ExampleMap_tags() {
+    84→func ExampleMap_omitNested() {
+   114→func ExampleMap_omitEmpty() {
+   136→func ExampleValues() {
+   156→func ExampleValues_omitEmpty() {
+   178→func ExampleValues_tags() {
+   207→func ExampleFields() {
+   232→func ExampleFields_nested() {
+   263→func ExampleField() {
+   297→func ExampleIsZero() {
+   322→func ExampleHasZero() {
 
 structs_test.go
      3→import …
@@ -343,4 +358,10 @@ tags.go
 tags_test.go
      3→import "testing"
      5→func TestParseTag_Name(t *testing.T) {
+     6→	tags := []struct {
+     7→		tag string
+      →		…
     26→func TestParseTag_Opts(t *testing.T) {
+    27→	tags := []struct {
+    28→		opts string
+      →		…

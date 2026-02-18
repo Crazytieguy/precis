@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2028 tokens)
+budget: 2000 (2026 tokens)
 
 CHANGELOG.md
      1→## Unreleased
@@ -12,11 +12,7 @@ README.md
     10→> **Note**: As of Go 1.20, the standard library provides [`errors.Join`](https://pkg.go.dev/errors#Join) which offers similar functionality for combining multiple errors. **For new projects, we recommend using `errors.Join` from the standard library.** This package provides additional features like custom formatting, the `Group` pattern for concurrent error collection, and utility functions (`Append`, `Flatten`, `Prefix`).
     11→
     12→## Migrating to `errors.Join`
-    14→**Basic error aggregation:**
-      →…
    104→## Installation and Docs
-   106→Install using `go get github.com/hashicorp/go-multierror`.
-      →…
    111→### Requires go version 1.13 or newer
    113→`go-multierror` requires go version 1.13 or newer. Go 1.13 introduced
    114→[error wrapping](https://golang.org/doc/go1.13#error_wrapping), which
@@ -24,8 +20,6 @@ README.md
    116→
       →…
    129→## Usage
-   131→go-multierror is easy to use and purposely built to be unobtrusive in
-      →…
 
 append.go
      6→// Append is a helper function that will append more errors
@@ -131,7 +125,8 @@ multierror.go
     21→		fn = ListFormatFunc
     22→	}
     23→
-      →…
+    24→	return fn(e.Errors)
+    25→}
     27→// ErrorOrNil returns an error interface if this Error represents
       →…
     31→func (e *Error) ErrorOrNil() error {
@@ -180,6 +175,9 @@ prefix.go
 
 prefix_test.go
      6→import …
+    11→func TestPrefix_Error(t *testing.T) {
+    22→func TestPrefix_NilError(t *testing.T) {
+    30→func TestPrefix_NonError(t *testing.T) {
 
 sort.go
      6→// Len implements sort.Interface function for length

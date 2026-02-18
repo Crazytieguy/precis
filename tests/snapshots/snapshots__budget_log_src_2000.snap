@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (1982 tokens)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -15,16 +15,25 @@ __private_api.rs
     12→mod sealed {
     13→    /// Types for the `kv` argument.
     14→    pub trait KVs<'a> {
+    15→        fn into_kvs …
     23→    fn into_kvs …
     30→    fn into_kvs …
     37→/// The global logger proxy.
     38→#[derive(Debug)]
     39→pub struct GlobalLogger;
+    42→    fn enabled …
+    46→    fn log …
+    50→    fn flush …
     56→fn log_impl …
+    84→pub fn log …
+   103→pub fn enabled …
    108→pub fn loc …
    113→mod kv_support {
    114→    use crate::kv;
    116→    pub type Value<'a> = kv::Value<'a>;
+   122→    pub fn capture_to_value …
+   126→    pub fn capture_debug …
+   130→    pub fn capture_display …
    135→    pub fn capture_error …
    140→    pub fn capture_sval …
    145→    pub fn capture_serde …
@@ -39,29 +48,25 @@ kv/error.rs
     10→enum Inner {
     20→    /// Create an error from a message.
     21→    pub fn msg(msg: &'static str) -> Self {
-    22→        Error {
-      →        …
     29→    pub(super) fn from_value …
     37→    pub(super) fn into_value …
     49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     63→    fn from(_: fmt::Error) -> Self {
     69→mod std_support {
     70→    use super::*;
-    73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     76→        /// Create an error from a standard error type.
     77→        pub fn boxed<E>(err: E) -> Self
     78→        where
     79→            E: Into<BoxedError>,
     80→        {
-    81→            Error {
-      →            …
     90→        fn from(err: io::Error) -> Self {
 
 kv/key.rs
-     6→/// A type that can be converted into a [`Key`](struct.Key.html).
      7→pub trait ToKey {
      9→    fn to_key(&self) -> Key<'_>;
-    36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    16→    fn to_key …
+    22→    fn to_key …
+    28→    fn to_key …
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
@@ -69,12 +74,21 @@ kv/key.rs
     45→    pub fn from_str(key: &'k str) -> Self {
     53→    pub fn as_str(&self) -> &str {
     61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
+    70→    fn fmt …
+    76→    fn as_ref …
+    82→    fn borrow …
+    88→    fn from …
     94→mod std_support {
     95→    use super::*;
+   100→        fn to_key …
+   106→        fn to_key …
    113→mod sval_support {
    114→    use super::*;
+   120→        fn stream …
+   129→        fn stream_ref …
    136→mod serde_support {
    137→    use super::*;
+   142→        fn serialize …
 
 kv/mod.rs
    246→mod error;
@@ -97,25 +111,14 @@ kv/source.rs
     10→///
       →…
     51→pub trait Source {
-    52→    /// Visit key-values.
-    53→    ///
-      →    …
     62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
-    64→    /// Get the value for a given key.
-    65→    ///
-      →    …
     73→    fn get(&self, key: Key) -> Option<Value<'_>> {
-    77→    /// Count the number of key-values that can be visited.
-    78→    ///
-      →    …
     85→    fn count(&self) -> usize {
     91→fn get_default …
    114→fn count_default …
    234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
-   236→    /// Visit a key-value pair.
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
-   241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T …
    280→mod std_support {
    281→    use super::*;
    462→pub use VisitSource as Visitor;
@@ -141,9 +144,6 @@ kv/value.rs
    740→        Bool(bool),
    741→        Str(&'v str),
    742→        Char(char),
-   743→        I64(i64),
-   744→        U64(u64),
-   745→        F64(f64),
       →        …
   1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
@@ -153,10 +153,14 @@ kv/value.rs
   1169→macro_rules! as_sval {
 
 lib.rs
+   401→use std::error;
    406→mod macros;
    407→mod serde;
    409→#[cfg(feature = "kv")]
    410→pub mod kv;
+   413→use std::sync::atomic::{AtomicUsize, Ordering};
+   416→use std::cell::Cell;
+   418→use std::sync::atomic::Ordering;
    421→struct AtomicUsize {
    475→pub enum Level {
    516→    type Err = ParseLevelError;
@@ -177,8 +181,6 @@ lib.rs
   1600→pub mod __private_api;
   1602→/// The statically resolved maximum log level.
   1603→///
-  1604→/// See the crate level documentation for information on how to configure this.
-  1605→///
       →…
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 

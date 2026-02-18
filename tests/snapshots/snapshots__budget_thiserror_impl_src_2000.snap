@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (2020 tokens)
 
 ast.rs
      1→use crate::attr::{self, Attrs};
@@ -25,65 +25,39 @@ ast.rs
     50→    TupleVariant,
     51→    UnitVariant,
     52→}
+    54→impl<'a> Input<'a> {
     55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
-    56→        match &node.data {
-      →        …
+    67→impl<'a> Struct<'a> {
+    85→impl<'a> Enum<'a> {
+   118→impl<'a> Variant<'a> {
+   130→impl<'a> Field<'a> {
+   156→impl ContainerKind {
+   174→impl Display for ContainerKind {
    175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-   176→        formatter.write_str(match self {
-      →        …
 
 attr.rs
     11→pub struct Attrs<'a> {
     12→    pub display: Option<Display<'a>>,
     13→    pub source: Option<Source<'a>>,
-    14→    pub backtrace: Option<&'a Attribute>,
-    15→    pub from: Option<From<'a>>,
-    16→    pub transparent: Option<Transparent<'a>>,
-    17→    pub fmt: Option<Fmt<'a>>,
-    18→}
-    20→#[derive(Clone)]
+      →    …
     21→pub struct Display<'a> {
     22→    pub original: &'a Attribute,
-    23→    pub fmt: LitStr,
-    24→    pub args: TokenStream,
-    25→    pub requires_fmt_machinery: bool,
-    26→    pub has_bonus_display: bool,
-    27→    pub infinite_recursive: bool,
-    28→    pub implied_bounds: Set<(usize, Trait)>,
-    29→    pub bindings: Vec<(Ident, TokenStream)>,
-    30→}
-    32→#[derive(Copy, Clone)]
+      →    …
     33→pub struct Source<'a> {
     34→    pub original: &'a Attribute,
-    35→    pub span: Span,
-    36→}
-    38→#[derive(Copy, Clone)]
+      →    …
     39→pub struct From<'a> {
     40→    pub original: &'a Attribute,
-    41→    pub span: Span,
-    42→}
-    44→#[derive(Copy, Clone)]
+      →    …
     45→pub struct Transparent<'a> {
     46→    pub original: &'a Attribute,
-    47→    pub span: Span,
-    48→}
-    50→#[derive(Clone)]
+      →    …
     51→pub struct Fmt<'a> {
     52→    pub original: &'a Attribute,
-    53→    pub path: ExprPath,
-    54→}
-    56→#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Debug)]
+      →    …
     57→pub enum Trait {
     58→    Debug,
-    59→    Display,
-    60→    Octal,
-    61→    LowerHex,
-    62→    UpperHex,
-    63→    Pointer,
-    64→    Binary,
-    65→    LowerExp,
-    66→    UpperExp,
-    67→}
+      →    …
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
    124→fn parse_error_attribute …
    196→fn parse_token_expr …
@@ -101,8 +75,7 @@ expand.rs
      6→use crate::unraw::MemberUnraw;
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
     13→    match try_expand(input) {
-    14→        Ok(expanded) => expanded,
-      →        …
+      →    …
 
 fallback.rs
      1→use crate::expand::call_site_ident;
@@ -110,7 +83,7 @@ fallback.rs
      3→use proc_macro2::TokenStream;
      4→use quote::quote;
      5→use syn::DeriveInput;
-     7→pub(crate) fn expand(input: &DeriveInput, error: syn::Error) -> TokenStream {
+     7→pub(crate) fn expand …
 
 fmt.rs
      1→use crate::ast::{ContainerKind, Field};
@@ -122,8 +95,7 @@ fmt.rs
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
     17→        let raw_args = self.args.clone();
     18→        let FmtArguments {
-    19→            named: user_named_args,
-      →            …
+      →        …
    166→struct FmtArguments {
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
 
@@ -134,7 +106,7 @@ generics.rs
     12→impl<'a> ParamsInScope<'a> {
     13→    pub fn new(generics: &'a Generics) -> Self {
     19→    pub fn intersects(&self, ty: &Type) -> bool {
-    26→fn crawl(in_scope: &ParamsInScope, ty: &Type, found: &mut bool) {
+    26→fn crawl …
     48→pub struct InferredBounds {
     49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
     50→    order: Vec<TokenStream>,
@@ -145,6 +117,16 @@ generics.rs
     74→    pub fn augment_where_clause(&self, generics: &Generics) -> WhereClause {
 
 lib.rs
+    23→mod ast;
+    24→mod attr;
+    25→mod expand;
+    26→mod fallback;
+    27→mod fmt;
+    28→mod generics;
+    29→mod prop;
+    30→mod scan_expr;
+    31→mod unraw;
+    32→mod valid;
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
     41→    let input = parse_macro_input!(input as DeriveInput);
@@ -154,8 +136,7 @@ lib.rs
     48→impl ToTokens for private {
     49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
     50→        tokens.append(Ident::new(
-    51→            concat!("__private", env!("CARGO_PKG_VERSION_PATCH")),
-      →            …
+      →        …
 
 prop.rs
      1→use crate::ast::{Enum, Field, Struct, Variant};
@@ -177,11 +158,27 @@ unraw.rs
     10→#[derive(Clone)]
     11→#[repr(transparent)]
     12→pub struct IdentUnraw(Ident);
+    15→    pub fn new(ident: Ident) -> Self {
+    19→    pub fn to_local(&self) -> Ident {
+    32→    pub fn set_span(&mut self, span: Span) {
+    38→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+    46→    fn eq(&self, other: &Self) -> bool {
+    52→    fn eq(&self, other: &str) -> bool {
+    58→    fn cmp(&self, other: &Self) -> Ordering {
+    64→    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+    70→    fn parse(input: ParseStream) -> Result<Self> {
+    76→    fn to_tokens(&self, tokens: &mut TokenStream) {
     81→#[derive(Clone)]
     82→pub enum MemberUnraw {
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
     85→}
+    88→    pub fn span(&self) -> Span {
+    97→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+   108→    fn eq(&self, other: &Self) -> bool {
+   118→    fn eq(&self, other: &str) -> bool {
+   127→    fn hash<H: Hasher>(&self, hasher: &mut H) {
+   136→    fn to_tokens(&self, tokens: &mut TokenStream) {
 
 valid.rs
      1→use crate::ast::{Enum, Field, Input, Struct, Variant};

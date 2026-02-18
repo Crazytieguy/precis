@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4037 tokens)
+budget: 4000 (4030 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -76,7 +76,7 @@ src/dotenv/__init__.py
      6→def load_ipython_extension(ipython: Any) -> None:
      7→    from .ipython import load_ipython_extension
      8→
-     9→    load_ipython_extension(ipython)
+      →…
     12→def get_cli_string(
     13→    path: Optional[str] = None,
     14→    action: Optional[str] = None,
@@ -91,8 +91,6 @@ src/dotenv/__init__.py
     23→    """
     24→    command = ["dotenv"]
     25→    if quote:
-    26→        command.append(f"-q {quote}")
-    27→    if path:
       →    …
     42→__all__ = [
     43→    "get_cli_string",
@@ -118,9 +116,6 @@ src/dotenv/cli.py
     27→
     28→    If pwd does not exist, return None.
     29→    """
-    30→    try:
-    31→        cwd = os.getcwd()
-      →        …
     60→@click.version_option(version=__version__)
     61→@click.pass_context
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
@@ -134,13 +129,9 @@ src/dotenv/cli.py
     72→    Exits with error code 2 if the file cannot be opened.
     73→    """
     74→
-    75→    try:
-      →    …
+      →…
     93→def list_values(ctx: click.Context, output_format: str) -> None:
     94→    """Display all the stored key/value."""
-    95→    file = ctx.obj["FILE"]
-    96→
-      →…
    112→@cli.command(name="set")
    113→@click.pass_context
    114→@click.argument("key", required=True)
@@ -148,7 +139,6 @@ src/dotenv/cli.py
    116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
    117→    """Store the given key/value."""
    118→    file = ctx.obj["FILE"]
-   119→    quote = ctx.obj["QUOTE"]
       →    …
    128→@cli.command()
    129→@click.pass_context
@@ -156,21 +146,18 @@ src/dotenv/cli.py
    131→def get(ctx: click.Context, key: Any) -> None:
    132→    """Retrieve the value for the given key."""
    133→    file = ctx.obj["FILE"]
-   134→
-      →…
+      →    …
    145→@cli.command()
    146→@click.pass_context
    147→@click.argument("key", required=True)
    148→def unset(ctx: click.Context, key: Any) -> None:
    149→    """Removes the given key."""
    150→    file = ctx.obj["FILE"]
-   151→    quote = ctx.obj["QUOTE"]
       →    …
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
    175→    file = ctx.obj["FILE"]
-   176→    if not os.path.isfile(file):
       →    …
    193→def run_command(command: List[str], env: Dict[str, str]) -> None:
    194→    """Replace the current process with the specified command.
@@ -188,11 +175,6 @@ src/dotenv/cli.py
    206→    Returns
    207→    -------
    208→    None
-   209→        This function does not return any value. It replaces the current process with the new one.
-   210→
-   211→    """
-   212→    # copy the current environment variables and add the vales from
-   213→    # `env`
       →    …
 
 src/dotenv/ipython.py
@@ -242,6 +224,17 @@ src/dotenv/ipython.py
     50→    ipython.register_magics(IPythonDotEnv)
 
 src/dotenv/main.py
+     1→import io
+     2→import logging
+     3→import os
+     4→import pathlib
+     5→import shutil
+     6→import stat
+     7→import sys
+     8→import tempfile
+     9→from collections import OrderedDict
+    10→from contextlib import contextmanager
+    11→from typing import IO, Dict, Iterable, Iterator, Mapping, Optional, Tuple, Union
     13→from .parser import Binding, parse_stream
     14→from .variables import parse_variables
     25→def _load_dotenv_disabled() -> bool:
@@ -270,10 +263,7 @@ src/dotenv/main.py
    153→        except BaseException as err:
    154→            error = err
    155→
-   156→    if error is None:
-   157→        shutil.move(dest.name, path)
-   158→    else:
-      →    …
+      →…
    163→def set_key …
    211→def unset_key …
    244→def resolve_variables …
@@ -347,6 +337,8 @@ src/dotenv/version.py
      1→__version__ = "1.2.1"
 
 tests/conftest.py
+     1→import pytest
+     2→from click.testing import CliRunner
      5→@pytest.fixture
      6→def cli():
     12→@pytest.fixture
@@ -370,12 +362,18 @@ tests/test_ipython.py
 
 tests/test_is_interactive.py
      8→class TestIsInteractive:
-     9→    """Tests for the _is_interactive helper function within find_dotenv.
-    10→
-      →…
     31→
 
 tests/test_main.py
+   251→def test_load_dotenv_existing_file(dotenv_path):
+   386→def test_load_dotenv_doesnt_disable_itself(dotenv_path):
+   411→def test_load_dotenv_existing_variable_no_override(dotenv_path):
+   424→def test_load_dotenv_existing_variable_override(dotenv_path):
+   437→def test_load_dotenv_redefine_var_used_in_file_no_override(dotenv_path):
+   450→def test_load_dotenv_redefine_var_used_in_file_with_override(dotenv_path):
+   463→def test_load_dotenv_string_io_utf_8():
+   476→def test_load_dotenv_file_stream(dotenv_path):
+   487→def test_load_dotenv_in_current_dir(tmp_path):
 
 tests/test_parser.py
    550→def test_parse_stream(test_input, expected):
@@ -392,7 +390,5 @@ tests/test_zip_imports.py
     23→class FileToAdd:
     24→    def __init__(self, content: str, path: str):
     29→def setup_zipfile(path, files: List[FileToAdd]):
-    45→@mock.patch.object(sys, "path", list(sys.path))
     46→def test_load_dotenv_gracefully_handles_zip_imports_when_no_env_file(tmp_path):
-    68→@pytest.mark.skipif(sys.platform == "win32", reason="sh module doesn't support Windows")
     69→def test_load_dotenv_outside_zip_file_when_called_in_zipfile(tmp_path):

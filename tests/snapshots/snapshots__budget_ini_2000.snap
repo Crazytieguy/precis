@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1993 tokens)
+budget: 2000 (1997 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -138,7 +138,12 @@ CONTRIBUTING.md
      5→## Code of Conduct
      9→## Reporting Bugs
     17→## Pull Request Conventions
+    19→### Commits
+    30→### Test Coverage
+    36→### Linting
     42→## What _not_ to contribute?
+    44→### Dependencies
+    48→### Tools/Automation
 
 README.md
      4→## Note
@@ -188,14 +193,7 @@ README.md
    101→    /**
    102→     *  Whether to insert spaces before & after `=`
    103→     * 
-   104→     *  Disabled by default to have better 
-   105→     *  compatibility with old picky parsers.
-   106→     */
-   107→
-   108→    whitespace : false ,
-   109→
-   110→    /**
-      →    …
+      →     …
    167→### Un / Escape
    169→Turn the given string into a safe to  
    170→use key or value in your INI file.
@@ -206,9 +204,7 @@ README.md
    175→
    176→Or reverse the process with:
    177→
-   178→```js
-   179→unsafe(`\\"safe string\\"`) // -> "safe string"
-   180→```
+      →…
 
 lib/ini.js
      3→const encode = (obj, opt = {}) => {
@@ -252,14 +248,14 @@ release-please-config.json
     37→}
 
 test/duplicate-properties.js
-     3→const test …
-     7→const fixture …
-     8→const data …
+     3→const test = tap.test
+     7→const fixture = path.resolve(__dirname, './fixtures/duplicate.ini')
+     8→const data = fs.readFileSync(fixture, 'utf8')
 
 test/foo.js
-     3→const test …
-     6→const fixture …
-     7→const data …
+     3→const test = tap.test
+     6→const fixture = path.resolve(__dirname, './fixtures/foo.ini')
+     7→const data = fs.readFileSync(fixture, 'utf8')
 
 test/win32.js
      5→const res = ini.encode({ foo: { bar: 'baz' } })

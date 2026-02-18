@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4076 tokens)
+budget: 4000 (4069 tokens)
 
 404.md
      1→# Document not found (404)
@@ -83,7 +83,6 @@ cli/completions.md
      6→The completions first need to be installed for your shell:
      7→
      8→```bash
-     9→# bash
       →…
 
 cli/init.md
@@ -98,6 +97,12 @@ cli/init.md
     10→```
     11→
       →…
+    32→#### Tip: Generate chapters from SUMMARY.md
+    39→#### Specify a directory
+    48→#### `--theme`
+    56→#### `--title`
+    65→#### `--ignore`
+    80→#### `--force`
 
 cli/serve.md
      1→# The serve command
@@ -146,9 +151,6 @@ continuous-integration.md
      1→# Running `mdbook` in continuous integration
      3→There are a variety of services such as [GitHub Actions] or [GitLab CI/CD] which can be used to test and deploy your book automatically.
      4→
-     5→The following provides some general guidelines on how to configure your service to run mdBook.
-     6→Specific recipes can be found at the [Automated Deployment] wiki page.
-     7→
       →…
     12→## Installing mdBook
     17→### Pre-compiled binaries
@@ -165,9 +167,6 @@ for_developers/README.md
      6→consumers (often referred to as *backends*) if you need to do some analysis of
      7→the book or render it in a different format.
      8→
-     9→The *For Developers* chapters are here to show you the more advanced usage of
-    10→`mdbook`.
-    11→
       →…
     17→## The build process
     19→The process of rendering a book project goes through several steps.
@@ -198,6 +197,11 @@ for_developers/mdbook-wordcount/Cargo.toml
      6→[dependencies]
 
 for_developers/mdbook-wordcount/src/main.rs
+     6→use std::process;
+     7→use std::fs::{self, File};
+     8→use std::io::{self, Write};
+     9→use mdbook::renderer::RenderContext;
+    10→use mdbook::book::{BookItem, Chapter};
     12→fn main() {
     40→fn count_words(ch: &Chapter) -> usize {
     44→#[derive(Debug, Default, Serialize, Deserialize)]
@@ -231,7 +235,6 @@ format/configuration/README.md
      1→# Configuration
      3→This section details the configuration options available in the ***book.toml***:
      4→- **[General]** configuration including the `book`, `rust`, `build` sections
-     5→- **[Preprocessor]** configuration for default and custom book preprocessors
       →…
 
 format/configuration/environment-variables.md
@@ -244,10 +247,6 @@ format/configuration/general.md
      1→# General configuration
      3→You can configure the parameters for your book in the ***book.toml*** file.
      4→
-     5→Here is an example of what a ***book.toml*** file might look like:
-     6→
-     7→```toml
-     8→[book]
       →…
     31→## Supported configuration options
     33→It is important to note that **any** relative path specified in the
@@ -279,8 +278,16 @@ format/configuration/renderers.md
      6→
       →…
     20→## Output tables
+    59→### Custom backend commands
+    71→### Optional backends
     84→## HTML renderer options
+   176→### `[output.html.print]`
+   191→### `[output.html.fold]`
+   206→### `[output.html.playground]`
+   230→### `[output.html.code]`
+   244→### `[output.html.search]`
    286→#### `[output.html.search.chapter]`
+   300→### `[output.html.redirect]`
    325→## Markdown renderer
 
 format/example.rs
@@ -331,13 +338,7 @@ format/mdbook.md
    310→## Controlling page \<title\>
    319→## HTML classes provided by mdBook
    323→### `class="left"` and `"right"`
-   325→These classes are provided by default, for inline HTML to float images.
-   326→
-      →…
    331→### `class="hidden"`
-   333→HTML tags with class `hidden` will not be shown.
-   334→
-      →…
    341→## Font-Awesome icons
 
 format/summary.md
@@ -364,13 +365,11 @@ format/theme/editor.md
      4→to be editable. In order to enable editable code blocks, the following needs to
      5→be added to the ***book.toml***:
      6→
-     7→```toml
       →…
     35→## Customizing the editor
     37→By default, the editor is the [Ace](https://ace.c9.io/) editor, but, if desired,
     38→the functionality may be overridden by providing a different folder:
     39→
-    40→```toml
       →…
 
 format/theme/index-hbs.md

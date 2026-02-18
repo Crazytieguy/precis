@@ -2,9 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 tokens)
+budget: 1000 (993 tokens)
 
 ast.rs
+     1→use crate::attr::{self, Attrs};
+     2→use crate::generics::ParamsInScope;
+     3→use crate::unraw::{IdentUnraw, MemberUnraw};
     10→pub enum Input<'a> {
     15→pub struct Struct<'a> {
     22→pub struct Enum<'a> {
@@ -25,7 +28,6 @@ ast.rs
 attr.rs
     11→pub struct Attrs<'a> {
     12→    pub display: Option<Display<'a>>,
-    13→    pub source: Option<Source<'a>>,
       →    …
     21→pub struct Display<'a> {
     33→pub struct Source<'a> {
@@ -43,8 +45,6 @@ attr.rs
 
 expand.rs
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
-    13→    match try_expand(input) {
-      →    …
 
 fallback.rs
      1→use crate::expand::call_site_ident;
@@ -60,26 +60,21 @@ fmt.rs
 generics.rs
      8→pub struct ParamsInScope<'a> {
     12→impl<'a> ParamsInScope<'a> {
-    13→    pub fn new …
-    19→    pub fn intersects …
+    13→    pub fn new(generics: &'a Generics) -> Self {
+    19→    pub fn intersects(&self, ty: &Type) -> bool {
     26→fn crawl …
     48→pub struct InferredBounds {
     53→impl InferredBounds {
-    54→    pub fn new …
-    61→    pub fn insert …
-    74→    pub fn augment_where_clause …
+    54→    pub fn new() -> Self {
+    61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
+    74→    pub fn augment_where_clause(&self, generics: &Generics) -> WhereClause {
 
 lib.rs
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
-    41→    let input = parse_macro_input!(input as DeriveInput);
-    42→    expand::derive(&input).into()
-    43→}
     46→struct private;
     48→impl ToTokens for private {
     49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-    50→        tokens.append(Ident::new(
-      →        …
 
 prop.rs
      1→use crate::ast::{Enum, Field, Struct, Variant};
@@ -106,4 +101,3 @@ unraw.rs
 valid.rs
      1→use crate::ast::{Enum, Field, Input, Struct, Variant};
      2→use crate::attr::Attrs;
-     3→use syn::{Error, GenericArgument, PathArguments, Result, Type};

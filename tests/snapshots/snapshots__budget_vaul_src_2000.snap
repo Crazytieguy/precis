@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2012 tokens)
+budget: 2000 (2014 tokens)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -52,9 +52,7 @@ helpers.ts
    112→        // @ts-ignore
    113→        fn(...args);
    114→      }
-   115→    }
-   116→  };
-   117→}
+      →      …
 
 index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -129,8 +127,7 @@ use-position-fixed.ts
     30→  const [activeUrl, setActiveUrl] = React.useState(() => (typeof window !== 'undefined' ? window.location.href : ''));
     31→  const scrollPos = React.useRef(0);
     32→
-    33→  const setPositionFixed = React.useCallback(() => {
-      →  …
+      →…
 
 use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
@@ -138,6 +135,7 @@ use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
+    16→function chain …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {
     34→export function getScrollParent(node: Element): Element {
@@ -153,8 +151,11 @@ use-prevent-scroll.ts
     73→      return;
     74→    }
     75→
-    76→    preventScrollCount++;
-      →    …
+      →…
+   118→function preventScrollMobileSafari …
+   243→function setStyle …
+   257→function addEvent …
+   272→function scrollIntoView …
    294→export function isInput(target: Element) {
 
 use-scale-background.ts

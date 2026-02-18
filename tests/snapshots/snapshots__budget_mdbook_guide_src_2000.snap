@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2040 tokens)
+budget: 2000 (2026 tokens)
 
 404.md
      1→# Document not found (404)
@@ -36,13 +36,15 @@ cli/build.md
      4→
      5→```bash
       →…
+    16→#### Specify a directory
+    25→#### `--open`
+    30→#### `--dest-dir`
 
 cli/clean.md
      1→# The clean command
      3→The clean command is used to delete the generated book and any other build
      4→artifacts.
      5→
-     6→```bash
       →…
     10→#### Specify a directory
     19→#### `--dest-dir`
@@ -54,28 +56,32 @@ cli/completions.md
 
 cli/init.md
      1→# The init command
-     3→There is some minimal boilerplate that is the same for every new book. It's for
-     4→this purpose that mdBook includes an `init` command.
-     5→
-      →…
 
 cli/serve.md
      1→# The serve command
      3→The serve command is used to preview a book by serving it via HTTP at
-     4→`localhost:3000` by default: 
-     5→
       →…
+    18→#### Specify a directory
     27→### Server options
+    35→#### `--open`
+    40→#### `--dest-dir`
+    49→#### Specify exclude patterns
 
 cli/test.md
      1→# The test command
      3→When writing a book, you sometimes need to automate some tests. For example,
       →…
+    11→#### Disable tests on a code block
+    31→#### Specify a directory
+    40→#### `--library-path`
+    57→#### `--chapter`
 
 cli/watch.md
      1→# The watch command
-     3→The `watch` command is useful when you want your book to be rendered on every
-      →…
+     9→#### Specify a directory
+    18→#### `--open`
+    23→#### `--dest-dir`
+    32→#### Specify exclude patterns
 
 continuous-integration.md
      1→# Running `mdbook` in continuous integration
@@ -95,8 +101,6 @@ for_developers/README.md
 
 for_developers/backends.md
      1→# Alternative backends
-     3→A "backend" is simply a program which `mdbook` will invoke during the book
-      →…
     13→## Setting up
     53→## Inspecting the book
     82→## Enabling the backend
@@ -120,8 +124,6 @@ for_developers/mdbook-wordcount/src/main.rs
 
 for_developers/preprocessors.md
      1→# Preprocessors
-     3→A *preprocessor* is simply a bit of code which gets run immediately after the
-      →…
     13→## Hooking into MDBook
     46→## Hints for implementing a preprocessor
     74→## Implementing a preprocessor with a different language
@@ -140,14 +142,9 @@ format/configuration/README.md
 
 format/configuration/environment-variables.md
      1→# Environment variables
-     3→All configuration values can be overridden from the command line by setting the
-      →…
 
 format/configuration/general.md
      1→# General configuration
-     3→You can configure the parameters for your book in the ***book.toml*** file.
-     4→
-      →…
     31→## Supported configuration options
     37→### General metadata
     64→### Rust options
@@ -175,42 +172,50 @@ format/markdown.md
      1→# Markdown
      9→## Text and paragraphs
     25→## Headings
+    39→### A heading 
     43→#### A smaller heading 
-    45→More text.
-    46→
     47→## Lists
     69→## Links
    108→## Images
    127→## Extensions
+   131→### Strikethrough
+   146→### Footnotes
+   171→### Tables
+   191→### Task lists
+   208→### Smart punctuation
+   231→### Heading attributes
+   244→### Definition lists
+   279→### Admonitions
 
 format/mathjax.md
      1→# MathJax support
      3→mdBook has optional support for math equations through
-     4→[MathJax](https://www.mathjax.org/).
-     5→
       →…
     24→### Inline equations
     32→### Block equations
 
 format/mdbook.md
      1→# mdBook-specific features
+     3→## Hiding code lines
+    74→## Rust playground
+   102→## Rust code block attributes
+   133→## Including files
+   154→## Including portions of a file
+   215→## Including a file but initially hiding all except specified lines
+   279→## Inserting runnable Rust files
+   310→## Controlling page \<title\>
+   319→## HTML classes provided by mdBook
    323→### `class="left"` and `"right"`
    331→### `class="hidden"`
+   341→## Font-Awesome icons
 
 format/summary.md
      1→# SUMMARY.md
-     3→The summary file is used by mdBook to know what chapters to include, in what
-      →…
     12→### Structure
     93→### Example
 
 format/theme/README.md
      1→# Theme
-     3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
-     4→render your markdown files and comes with a default theme included in the mdBook
-     5→binary.
-     6→
-      →…
 
 format/theme/editor.md
      1→# Editor
@@ -260,12 +265,8 @@ guide/installation.md
 guide/reading.md
      1→# Reading books
      3→This chapter gives an introduction on how to interact with a book produced by mdBook.
-     4→This assumes you are reading an HTML book.
       →…
     12→## Navigation
     26→## Top menu bar
     42→## Search
     54→## Code blocks
-
-misc/contributors.md
-     1→# Contributors

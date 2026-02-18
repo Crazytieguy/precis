@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2014 tokens)
+budget: 2000 (2015 tokens)
 
 README.md
      1→# humanize
@@ -13,17 +13,11 @@ README.md
     16→- Arabic
     17→- Basque
     18→- Bengali
-    19→- Brazilian Portuguese
-    20→- Catalan
-    21→- Danish
-    22→- Dutch
-    23→- Esperanto
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
     52→
-    53→<!-- usage-start -->
-    54→
+      →…
     55→## Installation
     57→### From PyPI
     63→### From source
@@ -32,19 +26,12 @@ README.md
     89→### Date & time humanization
    110→### Precise time delta
    124→#### Smaller units
-   126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
-   127→
-   128→```pycon
-      →…
    154→### File size humanization
    166→### Human-readable floating point numbers
    182→### Scientific notation
    200→## Localization
    202→How to change locale at runtime:
    203→
-   204→```pycon
-   205→>>> import humanize
-   206→>>> import datetime as dt
       →…
 
 RELEASING.md
@@ -93,6 +80,11 @@ pyproject.toml
    120→[tool.mypy]
 
 src/humanize/__init__.py
+     5→from humanize.filesize …
+     6→from humanize.i18n …
+     7→from humanize.lists …
+     8→from humanize.number …
+    18→from humanize.time …
     26→from ._version import __version__
     28→__all__ = [
 
@@ -108,11 +100,7 @@ src/humanize/filesize.py
     43→
     44→    By default, decimal suffixes (kB, MB) are used.
     45→
-    46→    Non-GNU modes are compatible with jinja2's `filesizeformat` filter.
-    47→
-    48→    Examples:
-    49→        ```pycon
-      →        …
+      →…
 
 src/humanize/i18n.py
      5→import gettext as gettext_module
@@ -125,6 +113,7 @@ src/humanize/i18n.py
     18→_CURRENT = local()
     22→_THOUSANDS_SEPARATOR = {
     31→_DECIMAL_SEPARATOR = {
+    40→def _get_default_locale_path …
     51→def get_translation() -> gettext_module.NullTranslations:
     58→def activate(
     59→    locale: str | None, path: str | os.PathLike[str] | None = None
@@ -134,6 +123,11 @@ src/humanize/i18n.py
       →…
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
+   101→def _gettext …
+   113→def _pgettext …
+   129→def _ngettext …
+   144→def _gettext_noop …
+   163→def _ngettext_noop …
    183→def thousands_separator() -> str:
    184→    """Return the thousands separator for a locale, default to comma.
    185→
@@ -153,14 +147,6 @@ src/humanize/lists.py
     15→    Convert a list of items into a human-readable string with commas and 'and'.
     16→
     17→    Examples:
-    18→        >>> natural_list(["one", "two", "three"])
-    19→        'one, two and three'
-    20→        >>> natural_list(["one", "two"])
-    21→        'one and two'
-    22→        >>> natural_list(["one"])
-    23→        'one'
-    24→
-    25→    Args:
       →    …
 
 src/humanize/number.py
@@ -172,14 +158,21 @@ src/humanize/number.py
     12→TYPE_CHECKING = False
     14→    from typing import TypeAlias
     21→def _format_not_finite(value: float) -> str:
-    34→def ordinal …
-   110→def intcomma …
-   195→def intword …
-   269→def apnumber …
-   321→def fractional …
-   385→def scientific …
-   454→def clamp …
-   531→def metric …
+    34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
+   110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
+   195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
+   269→def apnumber(value: NumberOrString) -> str:
+   321→def fractional(value: NumberOrString) -> str:
+   385→def scientific(value: NumberOrString, precision: int = 2) -> str:
+   454→def clamp(
+   455→    value: float,
+   456→    format: str = "{:}",
+   457→    floor: float | None = None,
+   458→    ceil: float | None = None,
+   459→    floor_token: str = "<",
+   460→    ceil_token: str = ">",
+   461→) -> str:
+   531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
 
 src/humanize/time.py
      8→from enum import Enum
@@ -211,7 +204,7 @@ src/humanize/time.py
    451→def precisedelta …
 
 tests/test_filesize.py
-    86→def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> None:
+    86→def test_naturalsize …
 
 tests/test_i18n.py
     18→def test_i18n() -> None:
@@ -223,11 +216,8 @@ tests/test_i18n.py
 tests/test_lists.py
     20→def test_natural_list …
 
-tests/test_number.py
-
 tests/test_time.py
     17→ONE_MICROSECOND = 1 / 1000000
     23→ONE_HOUR = 3600
     37→class FakeDate:
-    58→# These are not considered "public" interfaces, but require tests anyway.
     61→def test_date_and_delta() -> None:

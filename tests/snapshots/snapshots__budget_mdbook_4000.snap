@@ -2,19 +2,27 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4018 tokens)
+budget: 4000 (4010 tokens)
 
 Cargo.toml
 
 README.md
      1→# mdBook
-     7→mdBook is a utility to create modern online books from Markdown files.
-     8→
-      →…
     14→## License
+
+crates/mdbook-compare/Cargo.toml
+     1→[package]
+     9→[dependencies]
+    11→[lints]
 
 crates/mdbook-compare/README.md
      1→# mdbook-compare
+
+crates/mdbook-core/Cargo.toml
+     1→[package]
+    10→[dependencies]
+    18→[dev-dependencies]
+    21→[lints]
 
 crates/mdbook-core/README.md
      1→# mdbook-core
@@ -30,9 +38,21 @@ crates/mdbook-core/src/book.rs
    274→    type Item = &'a BookItem;
 
 crates/mdbook-core/src/config.rs
+    63→pub struct Config {
     91→    type Err = Error;
-   308→fn parse_env …
-   718→trait Updateable<'de>: Serialize + Deserialize<'de> {
+   318→pub struct BookConfig {
+   368→pub enum TextDirection {
+   394→pub struct BuildConfig {
+   422→pub struct RustConfig {
+   430→pub enum RustEdition {
+   449→pub struct HtmlConfig {
+   578→pub struct Print {
+   598→pub struct Fold {
+   611→pub struct Playground {
+   641→pub struct Code {
+   650→pub struct Search {
+   708→pub struct SearchChapterSettings {
+   718→trait Updateable …
 
 crates/mdbook-core/src/lib.rs
      3→/// The current version of `mdbook`.
@@ -61,6 +81,12 @@ crates/mdbook-core/src/utils/toml_ext.rs
      8→    fn read …
     10→    fn insert …
 
+crates/mdbook-driver/Cargo.toml
+     1→[package]
+    10→[dependencies]
+    28→[lints]
+    31→[features]
+
 crates/mdbook-driver/README.md
      1→# mdbook-driver
     11→## License
@@ -68,52 +94,45 @@ crates/mdbook-driver/README.md
 crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     14→pub struct CmdPreprocessor {
     15→    name: String,
-    16→    cmd: String,
       →    …
     23→    pub fn new …
     52→    pub fn cmd …
 
 crates/mdbook-driver/src/builtin_preprocessors/index.rs
     12→pub struct IndexPreprocessor;
-    15→    /// Name of this preprocessor.
     16→    pub const NAME: &'static str = "index";
-    18→    /// Create a new `IndexPreprocessor`.
     19→    pub fn new() -> Self {
 
 crates/mdbook-driver/src/builtin_preprocessors/links.rs
-    15→mod take_lines;
     32→pub struct LinkPreprocessor;
-    35→    /// Name of this preprocessor.
     36→    pub const NAME: &'static str = "links";
-    38→    /// Create a new `LinkPreprocessor`.
     39→    pub fn new() -> Self {
    401→    type Item = Link<'a>;
 
 crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
     10→pub struct MarkdownRenderer;
-    13→    /// Create a new `MarkdownRenderer` instance.
     14→    pub fn new() -> Self {
 
 crates/mdbook-driver/src/builtin_renderers/mod.rs
     11→pub use self::markdown_renderer::MarkdownRenderer;
-    13→mod markdown_renderer;
     20→pub struct CmdRenderer {
     21→    name: String,
-    22→    cmd: String,
-    23→}
+      →    …
     27→    pub fn new(name: String, cmd: String) -> CmdRenderer {
 
 crates/mdbook-driver/src/init.rs
      3→use super::MDBook;
-    11→/// A helper for setting up a new book and its directory structure.
-      →…
     13→pub struct BookBuilder {
     14→    root: PathBuf,
     15→    create_gitignore: bool,
-    16→    config: Config,
-    17→    copy_theme: bool,
-    18→}
+      →    …
     20→impl BookBuilder {
+    23→    pub fn new …
+    33→    pub fn with_config …
+    39→    pub fn config …
+    45→    pub fn copy_theme …
+    51→    pub fn create_gitignore …
+    64→    pub fn build …
 
 crates/mdbook-driver/src/lib.rs
     67→pub mod builtin_preprocessors;
@@ -150,7 +169,6 @@ crates/mdbook-html/src/html/tree.rs
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     22→pub struct HtmlHandlebars;
     26→    pub fn new() -> Self {
-   649→type CombinedRedirects …
 
 crates/mdbook-html/src/html_handlebars/mod.rs
      4→mod search;
@@ -163,18 +181,19 @@ crates/mdbook-html/src/lib.rs
 crates/mdbook-html/src/theme/mod.rs
     12→pub(crate) mod searcher;
     40→pub struct Theme {
-    41→    pub(crate) index: Vec<u8>,
-      →    …
     66→    pub fn new …
    166→    pub fn copy_theme …
    201→    fn default() -> Theme {
-   229→fn load_file_contents …
 
 crates/mdbook-html/src/utils.rs
     42→pub(crate) trait ToUrlPath {
     43→    fn to_url_path(&self) -> String;
-    46→impl ToUrlPath for Path {
     47→    fn to_url_path(&self) -> String {
+
+crates/mdbook-markdown/Cargo.toml
+     1→[package]
+    10→[dependencies]
+    15→[lints]
 
 crates/mdbook-markdown/README.md
      1→# mdbook-markdown
@@ -190,6 +209,11 @@ crates/mdbook-markdown/src/lib.rs
     34→    fn default() -> MarkdownOptions {
     43→/// Creates a new pulldown-cmark parser of the given text.
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
+
+crates/mdbook-preprocessor/Cargo.toml
+     1→[package]
+    10→[dependencies]
+    16→[lints]
 
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
@@ -208,6 +232,11 @@ crates/mdbook-preprocessor/src/lib.rs
     70→    pub fn new …
     82→pub fn parse_input …
 
+crates/mdbook-renderer/Cargo.toml
+     1→[package]
+    10→[dependencies]
+    16→[lints]
+
 crates/mdbook-renderer/README.md
      1→# mdbook-renderer
     11→## License
@@ -217,8 +246,6 @@ crates/mdbook-renderer/src/lib.rs
     30→    fn name …
     34→    fn render …
     40→pub struct RenderContext {
-    41→    /// Which version of `mdbook` did this come from (as written in `mdbook`'s
-      →    …
     63→impl RenderContext {
     65→    pub fn new …
     81→    pub fn source_dir …
@@ -256,6 +283,8 @@ crates/xtask/README.md
 crates/xtask/src/changelog.rs
      3→use super::Result;
 
+eslint.config.mjs
+
 examples/nop-preprocessor.rs
     79→    pub struct Nop;
 
@@ -270,21 +299,14 @@ guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
     33→struct GuideHelper;
-    35→impl Preprocessor for GuideHelper {
     36→    fn name …
     40→    fn run …
-    46→fn insert_version(book: &mut Book) {
-
-guide/guide-helper/src/main.rs
-     3→fn main() {
 
 guide/src/404.md
      1→# Document not found (404)
 
 guide/src/README.md
      1→# Introduction
-     4→    .mdbook-version {
-      →    …
     46→## Contributing
     55→## License
 
@@ -320,6 +342,9 @@ guide/src/cli/watch.md
 
 guide/src/continuous-integration.md
      1→# Running `mdbook` in continuous integration
+    12→## Installing mdBook
+    67→## Running tests
+    83→## Deploying
 
 guide/src/for_developers/README.md
      1→# For developers
@@ -343,22 +368,6 @@ guide/src/format/README.md
 guide/src/format/configuration/README.md
      1→# Configuration
 
-guide/src/format/configuration/environment-variables.md
-     1→# Environment variables
-
-guide/src/format/configuration/general.md
-     1→# General configuration
-    31→## Supported configuration options
-
-guide/src/format/configuration/preprocessors.md
-     1→# Configuring Preprocessors
-
-guide/src/format/configuration/renderers.md
-     1→# Configuring Renderers
-
-guide/src/format/example.rs
-     1→fn main() {
-
 guide/src/format/markdown.md
      1→# Markdown
 
@@ -376,13 +385,6 @@ guide/src/format/theme/README.md
 
 guide/src/format/theme/editor.md
      1→# Editor
-    35→## Customizing the editor
-
-guide/src/format/theme/index-hbs.md
-     1→# index.hbs
-
-guide/src/format/theme/syntax-highlighting.md
-     1→# Syntax highlighting
 
 guide/src/guide/README.md
      1→# User guide
@@ -392,7 +394,6 @@ guide/src/guide/creating.md
 
 guide/src/guide/installation.md
      1→# Installation
-    41→### Installing the latest master version
 
 guide/src/guide/reading.md
      1→# Reading books
@@ -406,8 +407,8 @@ src/cmd/build.rs
 src/cmd/clean.rs
      1→use super::command_prelude::*;
      2→use crate::get_book_dir;
-    11→pub fn make_subcommand …
-    19→pub fn execute …
+    11→pub fn make_subcommand() -> Command {
+    19→pub fn execute(args: &ArgMatches) -> Result<()> {
     36→/// Formats a number of bytes into a human readable SI-prefixed size.
     37→/// Returns a tuple of `(quantity, units)`.
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
@@ -420,16 +421,20 @@ src/cmd/clean.rs
     52→impl Clean {
     53→    fn new …
     91→impl fmt::Display for Clean {
-    92→    fn fmt …
+    92→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 
 src/cmd/command_prelude.rs
      3→pub use clap::{Arg, ArgMatches, Command, arg};
      7→pub trait CommandExt: Sized {
+     8→    fn _arg(self, arg: Arg) -> Self;
+    10→    fn arg_dest_dir(self) -> Self {
+    26→    fn arg_root_dir(self) -> Self {
+    37→    fn arg_open(self) -> Self {
     41→    #[cfg(any(feature = "watch", feature = "serve"))]
     42→    fn arg_watcher(self) -> Self {
-    43→        #[cfg(feature = "watch")]
-      →        …
     56→impl CommandExt for Command {
+    57→    fn _arg(self, arg: Arg) -> Self {
+    62→pub fn set_dest_dir(args: &ArgMatches, book: &mut MDBook) {
 
 src/cmd/init.rs
      1→use crate::get_book_dir;
@@ -458,7 +463,6 @@ src/cmd/serve.rs
     23→pub fn make_subcommand() -> Command {
     51→pub fn execute(args: &ArgMatches) -> Result<()> {
    109→async fn serve …
-   142→async fn websocket_connection …
 
 src/cmd/test.rs
      1→use super::command_prelude::*;
@@ -470,28 +474,25 @@ src/cmd/watch/native.rs
     11→pub fn rebuild_on_change …
 
 src/cmd/watch/poller.rs
-    17→/// Calls the closure when a book source file is changed, blocking indefinitely.
-    18→pub fn rebuild_on_change(
-    19→    book_dir: &Path,
-    20→    update_config: &dyn Fn(&mut MDBook),
-    21→    post_build: &dyn Fn(),
-    22→) {
+    18→pub fn rebuild_on_change …
     78→struct PathData {
     86→struct Watcher {
     95→impl Watcher {
-    96→    fn new …
 
 src/cmd/watch.rs
      1→use super::command_prelude::*;
      2→use crate::{get_book_dir, open};
      8→mod native;
      9→mod poller;
+    12→pub fn make_subcommand …
     21→pub enum WatcherKind {
     22→    Poll,
     23→    Native,
     24→}
     26→impl WatcherKind {
-    74→fn find_gitignore …
+    27→    pub fn from_str …
+    37→pub fn execute …
+    62→pub fn rebuild_on_change …
 
 src/main.rs
     14→mod cmd;

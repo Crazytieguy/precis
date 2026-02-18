@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1010 tokens)
+budget: 1000 (1007 tokens)
 
 README.md
     28→## Features
@@ -13,8 +13,6 @@ README.md
     70→## Documentation
 
 package.json
-
-site/package.json
 
 src/components/checkmark.tsx
      1→import { styled, keyframes } from 'goober';
@@ -51,12 +49,8 @@ src/components/toast-icon.tsx
     32→export const AnimatedIconWrapper = styled('div')`
     41→export type IconThemes = Partial<{
     47→export const ToastIcon: React.FC<{
-    48→  toast: Toast;
-      →  …
 
 src/components/toaster.tsx
-    15→const ToastWrapper …
-    47→const getPositionStyle …
     76→const activeClass = css`
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
@@ -64,7 +58,6 @@ src/components/toaster.tsx
       →  …
 
 src/core/store.ts
-     1→import { useEffect, useState, useRef } from 'react';
      2→import { DefaultToastOptions, Toast, ToastType } from './types';
      4→export const TOAST_EXPIRE_DISMISS_DELAY = 1000;
      5→export const TOAST_LIMIT = 20;
@@ -73,16 +66,20 @@ src/core/store.ts
     12→export enum ActionType {
     13→  ADD_TOAST,
     14→  UPDATE_TOAST,
-    15→  UPSERT_TOAST,
-    16→  DISMISS_TOAST,
       →  …
     22→export type Action =
     23→  | {
     52→interface ToasterState {
     58→interface State {
+    62→export const reducer …
    136→const listeners: Array<
    140→const defaultToasterState: ToasterState = {
+   149→export const dispatch …
+   161→export const dispatchAll …
+   164→export const getToasterIdFromToastId …
+   169→export const createDispatch …
    175→export const defaultTimeouts: {
+   185→export const useStore …
 
 src/core/toast.ts
      1→import { …
@@ -93,20 +90,23 @@ src/core/toast.ts
 
 src/core/types.ts
      1→import { CSSProperties } from 'react';
+     3→export type ToastType …
+     4→export type ToastPosition …
+    12→export type Renderable …
     14→export interface IconTheme {
+    19→export type ValueFunction …
+    20→export type ValueOrFunction …
     24→const isFunction …
     29→export const resolveValue …
     34→export interface Toast {
+    60→export type ToastOptions …
+    76→export type DefaultToastOptions …
     80→export interface ToasterProps {
     91→export interface ToastWrapperProps {
 
 src/core/use-toaster.ts
-     1→import { useEffect, useCallback, useRef } from 'react';
      6→export const REMOVE_DELAY = 1000;
-     8→export const useToaster = (
-     9→  toastOptions?: DefaultToastOptions,
-    10→  toasterId: string = 'default'
-    11→) => {
+     8→export const useToaster …
 
 src/core/utils.ts
      1→export const genId = (() => {

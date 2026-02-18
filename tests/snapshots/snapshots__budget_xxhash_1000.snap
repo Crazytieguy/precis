@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1010 tokens)
+budget: 1000 (1009 tokens)
 
 README.md
      1→# xxhash
@@ -14,6 +14,8 @@ README.md
     33→## Compatibility
     45→## Benchmarks
     66→## Projects using this package
+
+bench_test.go
 
 dynamic/dynamic_test.go
     17→func TestMain(m *testing.M) {
@@ -67,7 +69,6 @@ xxhash_other.go
      7→func Sum64(b []byte) uint64 {
      8→	// A simpler version would be
      9→	//   d := New()
-    10→	//   d.Write(b)
       →	…
     64→func writeBlocks(d *Digest, b []byte) int {
 
@@ -95,9 +96,8 @@ xxhash_unsafe_test.go
     13→func TestStringAllocs(t *testing.T) {
     31→func TestInlining(t *testing.T) {
 
-xxhashbench/xxhashbench_test.go
-    18→var sink uint64
-   108→func BenchmarkHashes(b *testing.B) {
-
 xxhsum/xxhsum.go
      3→import …
+    11→func main() {
+    34→func contains(ss []string, s string) bool {
+    43→func printHash(r io.Reader, name string) {

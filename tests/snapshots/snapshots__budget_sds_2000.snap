@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1997 tokens)
+budget: 2000 (1973 tokens)
 
 README.md
      1→Simple Dynamic Strings
@@ -34,33 +34,28 @@ README.md
 
 sds.c
     33→#include <stdio.h>
-    34→#include <stdlib.h>
-    35→#include <string.h>
-    36→#include <ctype.h>
-    37→#include <assert.h>
-    38→#include <limits.h>
     39→#include "sds.h"
     40→#include "sdsalloc.h"
     44→static inline int sdsHdrSize(char type) {
     60→static inline char sdsReqType(size_t string_size) {
-    89→sds sdsnewlen …
-   149→sds sdsempty …
-   154→sds sdsnew …
-   160→sds sdsdup …
-   165→void sdsfree …
-   184→void sdsupdatelen …
-   193→void sdsclear …
-   204→sds sdsMakeRoomFor …
-   256→sds sdsRemoveFreeSpace …
-   300→size_t sdsAllocSize …
-   307→void *sdsAllocPtr …
-   334→void sdsIncrLen …
-   380→sds sdsgrowzero …
-   398→sds sdscatlen …
-   413→sds sdscat …
-   421→sds sdscatsds …
-   427→sds sdscpylen …
-   440→sds sdscpy …
+    89→sds sdsnewlen(const void *init, size_t initlen) {
+   149→sds sdsempty(void) {
+   154→sds sdsnew(const char *init) {
+   160→sds sdsdup(const sds s) {
+   165→void sdsfree(sds s) {
+   184→void sdsupdatelen(sds s) {
+   193→void sdsclear(sds s) {
+   204→sds sdsMakeRoomFor(sds s, size_t addlen) {
+   256→sds sdsRemoveFreeSpace(sds s) {
+   300→size_t sdsAllocSize(sds s) {
+   307→void *sdsAllocPtr(sds s) {
+   334→void sdsIncrLen(sds s, ssize_t incr) {
+   380→sds sdsgrowzero(sds s, size_t len) {
+   398→sds sdscatlen(sds s, const void *t, size_t len) {
+   413→sds sdscat(sds s, const char *t) {
+   421→sds sdscatsds(sds s, const sds t) {
+   427→sds sdscpylen(sds s, const char *t, size_t len) {
+   440→sds sdscpy(sds s, const char *t) {
    444→/* Helper for sdscatlonglong() doing the actual number -> string
    445→ * conversion. 's' must point to a string with room for at least
    446→ * SDS_LLSTR_SIZE bytes.
@@ -69,42 +64,33 @@ sds.c
    449→ * representation stored at 's'. */
    450→#define SDS_LLSTR_SIZE 21
    451→int sdsll2str(char *s, long long value) {
-   452→    char *p, aux;
-   453→    unsigned long long v;
-      →    …
-   494→int sdsull2str …
-   526→sds sdsfromlonglong …
-   534→sds sdscatvprintf …
-   591→sds sdscatprintf …
-   616→sds sdscatfmt …
-   725→sds sdstrim …
-   756→void sdsrange …
-   783→void sdstolower …
-   790→void sdstoupper …
-   807→int sdscmp …
-   835→sds *sdssplitlen …
-   885→void sdsfreesplitres …
-   898→sds sdscatrepr …
-   925→int is_hex_digit …
-   932→int hex_digit_to_int …
-   973→sds *sdssplitargs …
-  1092→sds sdsmapchars …
-  1108→sds sdsjoin …
-  1120→sds sdsjoinsds …
-  1136→void *sds_malloc …
+   494→int sdsull2str(char *s, unsigned long long v) {
+   526→sds sdsfromlonglong(long long value) {
+   534→sds sdscatvprintf(sds s, const char *fmt, va_list ap) {
+   591→sds sdscatprintf(sds s, const char *fmt, ...) {
+   616→sds sdscatfmt(sds s, char const *fmt, ...) {
+   725→sds sdstrim(sds s, const char *cset) {
+   756→void sdsrange(sds s, ssize_t start, ssize_t end) {
+   783→void sdstolower(sds s) {
+   790→void sdstoupper(sds s) {
+   807→int sdscmp(const sds s1, const sds s2) {
+   835→sds *sdssplitlen(const char *s, ssize_t len, const char *sep, int seplen, int *count) {
+   885→void sdsfreesplitres(sds *tokens, int count) {
+   898→sds sdscatrepr(sds s, const char *p, size_t len) {
+   925→int is_hex_digit(char c) {
+   932→int hex_digit_to_int(char c) {
+   973→sds *sdssplitargs(const char *line, int *argc) {
+  1092→sds sdsmapchars(sds s, const char *from, const char *to, size_t setlen) {
+  1108→sds sdsjoin(char **argv, int argc, char *sep) {
+  1120→sds sdsjoinsds(sds *argv, int argc, const char *sep, size_t seplen) {
+  1136→void *sds_malloc(size_t size) { return s_malloc(size); }
   1137→void *sds_realloc(void *ptr, size_t size) { return s_realloc(ptr,size); }
   1138→void sds_free(void *ptr) { s_free(ptr); }
-  1141→#include <stdio.h>
   1142→#include "testhelp.h"
   1143→#include "limits.h"
   1145→#define UNUSED(x) (void)(x)
   1146→int sdsTest(void) {
-  1147→    {
-  1148→        sds x = sdsnew("foo"), y;
-      →        …
   1325→int main(void) {
-  1326→    return sdsTest();
-  1327→}
 
 sds.h
     34→#define __SDS_H
@@ -120,17 +106,9 @@ sds.h
     49→    char buf[];
     50→};
     51→struct __attribute__ ((__packed__)) sdshdr8 {
-    52→    uint8_t len; /* used */
-      →    …
     57→struct __attribute__ ((__packed__)) sdshdr16 {
-    58→    uint16_t len; /* used */
-      →    …
     63→struct __attribute__ ((__packed__)) sdshdr32 {
-    64→    uint32_t len; /* used */
-      →    …
     69→struct __attribute__ ((__packed__)) sdshdr64 {
-    70→    uint64_t len; /* used */
-      →    …
     76→#define SDS_TYPE_5  0
     77→#define SDS_TYPE_8  1
     78→#define SDS_TYPE_16 2
@@ -141,12 +119,7 @@ sds.h
     83→#define SDS_HDR_VAR(T,s) struct sdshdr##T *sh = (void*)((s)-(sizeof(struct sdshdr##T)));
     84→#define SDS_HDR(T,s) ((struct sdshdr##T *)((s)-(sizeof(struct sdshdr##T))))
     85→#define SDS_TYPE_5_LEN(f) ((f)>>SDS_TYPE_BITS)
-    87→static inline size_t sdslen(const sds s) {
-   104→static inline size_t sdsavail(const sds s) {
-   130→static inline void sdssetlen(sds s, size_t newlen) {
-   154→static inline void sdsinclen(sds s, size_t inc) {
    180→static inline size_t sdsalloc(const sds s) {
-   197→static inline void sdssetalloc(sds s, size_t newlen) {
    255→/* Low level functions exposed to the user API */
    256→sds sdsMakeRoomFor(sds s, size_t addlen);
    262→/* Export the allocator used by SDS to the program using SDS.
@@ -169,8 +142,4 @@ sdsalloc.h
 testhelp.h
     40→#define __TESTHELP_H
     44→#define test_cond(descr,_c) do { \
-    45→    __test_num++; printf("%d - %s: ", __test_num, descr); \
-      →    …
     48→#define test_report() do { \
-    49→    printf("%d tests, %d passed, %d failed\n", __test_num, \
-      →    …

@@ -2,13 +2,19 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1009 tokens)
+budget: 1000 (1007 tokens)
 
 __init__.py
      1→__all__ = [
     32→def __getattr__(name: str) -> str:
+    33→    if name == "__version__":
+      →    …
 
 _callers.py
+    16→from ._hooks …
+    17→from ._result …
+    18→from ._result …
+    19→from ._warnings …
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
@@ -16,9 +22,6 @@ _callers.py
     28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
     29→) -> Teardown:
     30→    """
-    31→    backward compatibility wrapper to run a old style hookwrapper as a wrapper
-    32→    """
-    33→    if TYPE_CHECKING:
       →    …
 
 _hooks.py
@@ -46,7 +49,6 @@ _hooks.py
    427→        spec_opts: HookspecOpts,
    428→    ) -> None:
    593→class _SubsetHookCaller(HookCaller):
-   596→
    619→    def _hookimpls(self) -> list[HookImpl]:
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
@@ -77,8 +79,6 @@ _result.py
     21→    """Hook was called incorrectly."""
     24→@final
     25→class Result(Generic[ResultType]):
-    26→    """An object used to inspect and set the result in a :ref:`hook wrapper
-    27→    <hookwrappers>`."""
     28→
     29→    __slots__ = ("_result", "_exception", "_traceback")
     30→
@@ -95,7 +95,14 @@ _result.py
 
 _tracing.py
     16→class TagTracer:
+    17→    def __init__ …
+    22→    def get …
+    48→    def setwriter …
+    51→    def setprocessor …
     59→class TagTracerSub:
+    60→    def __init__ …
+    64→    def __call__ …
+    67→    def get …
 
 _warnings.py
      1→from typing import final
@@ -105,9 +112,5 @@ _warnings.py
      7→    __module__ = "pluggy"
     10→@final
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
-    12→    """A plugin raised an exception during an :ref:`old-style hookwrapper
-    13→    <old_style_hookwrappers>` teardown.
-    14→
-      →…
     26→
     27→    __module__ = "pluggy"

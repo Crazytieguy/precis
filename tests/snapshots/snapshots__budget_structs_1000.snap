@@ -2,23 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1008 tokens)
+budget: 1000 (1005 tokens)
 
 README.md
      1→# Archived project. No maintenance. 
-     3→This project is not maintained anymore and is archived. Feel free to fork and
-      →…
      8→# Structs
-    10→Structs contains various utilities to work with Go (Golang) structs. It was
-      →…
     16→## Install
     22→## Usage and Examples
     74→### Struct methods
-    76→The structs functions can be also used as independent methods by creating a new
-      →…
     95→### Field methods
-    97→We can easily examine a single Field for more detail. Below you can see how we
-      →…
    163→## Credits
    168→## License
 
@@ -48,18 +40,11 @@ field.go
    119→func (f *Field) FieldOk(name string) (*Field, bool) {
 
 field_test.go
-     3→import …
      9→type Foo struct {
     10→	A    string
-    11→	B    int    `structs:"y"`
       →	…
     21→type Baz struct {
-    22→	A string
-      →	…
     26→type Bar struct {
-    27→	E string
-      →	…
-    32→func newStruct() *Struct {
 
 structs.go
      4→import …
@@ -75,19 +60,32 @@ structs.go
     21→	value   reflect.Value
     22→	TagName string
     23→}
-   245→func getFields(v reflect.Value, tagName string) []*Field {
+    27→func New(s interface{}) *Struct {
+    81→func (s *Struct) Map() map[string]interface{} {
+    89→func (s *Struct) FillMap(out map[string]interface{}) {
+   174→func (s *Struct) Values() []interface{} {
+   222→func (s *Struct) Fields() []*Field {
+   233→func (s *Struct) Names() []string {
+   245→func getFields …
+   275→func (s *Struct) Field(name string) *Field {
+   287→func (s *Struct) FieldOk(name string) (*Field, bool) {
+   318→func (s *Struct) IsZero() bool {
+   365→func (s *Struct) HasZero() bool {
+   398→func (s *Struct) Name() string {
    405→func (s *Struct) structFields() []reflect.StructField {
-   428→func strctVal(s interface{}) reflect.Value {
+   428→func strctVal …
+   445→func Map(s interface{}) map[string]interface{} {
+   451→func FillMap(s interface{}, out map[string]interface{}) {
+   457→func Values(s interface{}) []interface{} {
+   463→func Fields(s interface{}) []*Field {
+   469→func Names(s interface{}) []string {
+   475→func IsZero(s interface{}) bool {
+   481→func HasZero(s interface{}) bool {
+   487→func IsStruct(s interface{}) bool {
+   503→func Name(s interface{}) string {
    509→func (s *Struct) nested(val reflect.Value) interface{} {
 
-structs_example_test.go
-     3→import …
-
 structs_test.go
-     3→import …
-  1309→type Person struct {
-  1358→type Animal struct {
-  1363→type Dog struct {
 
 tags.go
      3→import "strings"
@@ -95,16 +93,7 @@ tags.go
      8→// Has returns true if the given option is available in tagOptions
      9→func (t tagOptions) Has(opt string) bool {
     10→	for _, tagOpt := range t {
-    11→		if tagOpt == opt {
-    12→			return true
-    13→		}
-    14→	}
-    15→
-    16→	return false
-    17→}
+      →	…
     22→func parseTag(tag string) (string, tagOptions) {
 
 tags_test.go
-     3→import "testing"
-     5→func TestParseTag_Name(t *testing.T) {
-    26→func TestParseTag_Opts(t *testing.T) {

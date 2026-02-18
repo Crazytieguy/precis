@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4037 tokens)
+budget: 4000 (4031 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -15,19 +15,12 @@ CONTRIBUTING.md
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
      4→2. Install dependencies (`npm install`)
      5→3. Create your feature branch (`git checkout -b my-new-feature`)
-     6→4. Commit your changes (`git commit -am 'Added some feature'`)
       →…
     11→## Testing
     19→## Code Style
 
 README-es.md
      1→# dotenv
-     5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
-     6→
-     7→[Watch the tutorial](https://www.youtube.com/watch?v=YtkZR0NFd1g)
-     8→
-     9→&nbsp;
-    10→
     11→## Usage
     39→## Advanced
    319→## Agentes
@@ -36,10 +29,19 @@ README-es.md
    579→## Docs
    587→### Config
    605→#### Options
+   607→##### path
+   625→##### quiet
+   648→##### encoding
+   658→##### debug
+   668→##### override
+   678→##### processEnv
    692→### Parse
    705→#### Options
+   707→##### debug
    721→### Populate
    748→#### options
+   750→##### Debug
+   756→##### override
    764→## CHANGELOG
    770→## Who's using dotenv?
 
@@ -62,8 +64,6 @@ README.md
     20→
     21→```ini
     22→# .env
-    23→S3_BUCKET="YOURS3BUCKET"
-    24→SECRET_KEY="YOURSECRETKEYGOESHERE"
       →…
     39→## Advanced
     43→Import with [ES6](#how-do-i-use-dotenv-with-import):
@@ -76,8 +76,6 @@ README.md
     50→
     51→```javascript
     52→import dotenv from 'dotenv'
-    53→dotenv.config({ path: '/custom/path/to/.env' })
-    54→```
       →…
    319→## Agents
    323→> Software is changing, and dotenv must change with it—that is why I built [agentic secret storage (AS2)](https://dotenvx.com/as2). Agents run code without humans at terminals, so plaintext `.env` files are the wrong primitive.
@@ -109,8 +107,6 @@ README.md
    368→Use [dotenvx](https://github.com/dotenvx/dotenvx).
    369→
    370→</details>
-   371→<details><summary>Should I have multiple `.env` files?</summary><br/>
-   372→
       →…
    579→## Docs
    581→Dotenv exposes four functions:
@@ -278,8 +274,6 @@ lib/main.d.ts
     94→  parsed?: DotenvParseOutput;
     95→}
     97→type DotenvError = Error & {
-    98→  code: 
-      →  …
    106→export interface DotenvPopulateOptions {
    107→  /**
    108→   * Default: `false`
@@ -357,16 +351,16 @@ tests/test-config-cli.js
      6→function spawn (cmd, options = {}) {
 
 tests/test-config-vault.js
-     8→const testPath …
-    10→const dotenvKey …
+     8→const testPath = 'tests/.env'
+    10→const dotenvKey = 'dotenv://:key_ddcaa26504cd70a6fef9801901c3981538563a1767c297cb8416e8a38c62fe00@dotenvx.com/vault/.env.vault?environment=development'
 
 tests/test-env-options.js
-     8→const e …
-     9→const p …
-    10→const q …
-    11→const d …
-    12→const o …
-    13→const dk …
+     8→const e = process.env.DOTENV_CONFIG_ENCODING
+     9→const p = process.env.DOTENV_CONFIG_PATH
+    10→const q = process.env.DOTENV_CONFIG_QUIET
+    11→const d = process.env.DOTENV_CONFIG_DEBUG
+    12→const o = process.env.DOTENV_CONFIG_OVERRIDE
+    13→const dk = process.env.DOTENV_CONFIG_DOTENV_KEY
     16→function options () {
     21→function testOption (envVar, tmpVal, expect) {
 
@@ -393,12 +387,12 @@ tests/test-populate.js
 
 tests/types/test.ts
      1→import { config, parse } from "dotenv";
-     3→const env …
-     4→const dbUrl …
-    15→const parsed …
-    16→const dbHost …
-    18→const parsedFromBuffer …
-    19→const justice …
+     3→const env = config();
+     4→const dbUrl: string | null =
+    15→const parsed = parse("NODE_ENV=production\nDB_HOST=a.b.c");
+    16→const dbHost: string = parsed["DB_HOST"];
+    18→const parsedFromBuffer = parse(Buffer.from("JUSTICE=league\n"));
+    19→const justice: string = parsedFromBuffer["JUSTICE"];
 
 tests/types/tsconfig.json
      2→  "compilerOptions": {

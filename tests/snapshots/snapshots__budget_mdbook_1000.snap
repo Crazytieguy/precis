@@ -2,24 +2,31 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1011 tokens)
+budget: 1000 (1010 tokens)
 
 README.md
      1→# mdBook
     14→## License
 
-crates/mdbook-compare/README.md
-     1→# mdbook-compare
-
 crates/mdbook-core/README.md
      1→# mdbook-core
     11→## License
+
+crates/mdbook-core/src/book.rs
+    26→pub struct Book {
+   119→pub enum BookItem {
+   141→pub struct Chapter {
+   222→pub struct SectionNumber(Vec<u32>);
+   269→pub struct BookItems<'a> {
 
 crates/mdbook-core/src/config.rs
     91→    type Err = Error;
 
 crates/mdbook-core/src/lib.rs
      7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
+     9→pub mod book;
+    10→pub mod config;
+    11→pub mod utils;
     14→pub mod errors {
 
 crates/mdbook-core/src/utils/mod.rs
@@ -30,11 +37,6 @@ crates/mdbook-core/src/utils/mod.rs
 crates/mdbook-driver/README.md
      1→# mdbook-driver
     11→## License
-
-crates/mdbook-driver/src/builtin_preprocessors/index.rs
-    12→pub struct IndexPreprocessor;
-    16→    pub const NAME: &'static str = "index";
-    19→    pub fn new() -> Self {
 
 crates/mdbook-driver/src/builtin_renderers/mod.rs
     11→pub use self::markdown_renderer::MarkdownRenderer;
@@ -59,10 +61,6 @@ crates/mdbook-html/src/lib.rs
 crates/mdbook-html/src/theme/mod.rs
     40→pub struct Theme {
 
-crates/mdbook-markdown/README.md
-     1→# mdbook-markdown
-    11→## License
-
 crates/mdbook-markdown/src/lib.rs
     11→pub use pulldown_cmark;
     15→pub struct MarkdownOptions {
@@ -71,9 +69,6 @@ crates/mdbook-markdown/src/lib.rs
       →    …
     34→    fn default() -> MarkdownOptions {
     44→pub fn new_cmark_parser …
-
-crates/mdbook-preprocessor/README.md
-     1→# mdbook-preprocessor
 
 crates/mdbook-preprocessor/src/lib.rs
     30→pub trait Preprocessor {
@@ -99,17 +94,15 @@ crates/xtask/README.md
      1→# xtask
 
 guide/guide-helper/src/lib.rs
-     9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
 
 guide/src/README.md
      1→# Introduction
+    46→## Contributing
+    55→## License
 
 guide/src/cli/README.md
      1→# Command-line tool
-
-guide/src/for_developers/README.md
-     1→# For developers
 
 guide/src/format/README.md
      1→# Format
@@ -129,11 +122,18 @@ src/cmd/command_prelude.rs
     42→    fn arg_watcher(self) -> Self {
 
 src/cmd/mod.rs
+     3→pub mod build;
+     4→pub mod clean;
+     5→pub mod command_prelude;
+     6→pub mod init;
      8→pub mod serve;
+     9→pub mod test;
     11→pub mod watch;
 
 src/cmd/serve.rs
      3→use super::watch;
+    23→pub fn make_subcommand() -> Command {
+    51→pub fn execute(args: &ArgMatches) -> Result<()> {
    109→async fn serve …
 
 src/cmd/watch/poller.rs
@@ -143,7 +143,3 @@ src/cmd/watch.rs
     21→pub enum WatcherKind {
     22→    Poll,
       →    …
-
-src/main.rs
-    14→mod cmd;
-    58→fn create_clap_command() -> Command {

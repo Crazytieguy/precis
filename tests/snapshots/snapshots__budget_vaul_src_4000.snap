@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4029 tokens)
+budget: 4000 (4035 tokens)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -31,7 +31,6 @@ context.ts
      4→interface DrawerContextValue {
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     38→  drawerRef: { current: null },
-    39→  overlayRef: { current: null },
       →  …
     69→export const useDrawerContext = () => {
     70→  const context = React.useContext(DrawerContext);
@@ -44,8 +43,6 @@ context.ts
 helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
      3→interface Style {
-     4→  [key: string]: string;
-     5→}
      7→const cache = new WeakMap();
      9→export function isInView(el: HTMLElement): boolean {
     23→export function set(el: Element | HTMLElement | null | undefined, styles: Style, ignoreCache = false) {
@@ -69,18 +66,27 @@ helpers.ts
 index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
-     5→import { DrawerContext, useDrawerContext } from './context …
-     6→import './style.css …
-     7→import { usePreventScroll, isInput } from './use-prevent-scroll …
-     8→import { useComposedRefs } from './use-composed-refs …
-     9→import { useSnapPoints } from './use-snap-points …
-    10→import { set, getTranslate, dampenValue, isVertical, reset } from './helpers …
-    11→import { …
-    21→import { DrawerDirection } from './types …
-    22→import { useControllableState } from './use-controllable-state …
-    23→import { useScaleBackground } from './use-scale-background …
-    24→import { usePositionFixed } from './use-position-fixed …
-    25→import { isIOS, isMobileFirefox } from './browser …
+     5→import { DrawerContext, useDrawerContext } from './context';
+     6→import './style.css';
+     7→import { usePreventScroll, isInput } from './use-prevent-scroll';
+     8→import { useComposedRefs } from './use-composed-refs';
+     9→import { useSnapPoints } from './use-snap-points';
+    10→import { set, getTranslate, dampenValue, isVertical, reset } from './helpers';
+    11→import {
+    12→  TRANSITIONS,
+    13→  VELOCITY_THRESHOLD,
+    14→  CLOSE_THRESHOLD,
+    15→  SCROLL_LOCK_TIMEOUT,
+    16→  BORDER_RADIUS,
+    17→  NESTED_DISPLACEMENT,
+    18→  WINDOW_TOP_OFFSET,
+    19→  DRAG_CLASS,
+    20→} from './constants';
+    21→import { DrawerDirection } from './types';
+    22→import { useControllableState } from './use-controllable-state';
+    23→import { useScaleBackground } from './use-scale-background';
+    24→import { usePositionFixed } from './use-position-fixed';
+    25→import { isIOS, isMobileFirefox } from './browser';
     27→export interface WithFadeFromProps {
     28→  /**
     29→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
@@ -135,9 +141,7 @@ index.tsx
    168→  autoFocus = false,
    169→}: DialogProps) {
    170→  const [isOpen = false, setIsOpen] = useControllableState({
-   171→    defaultProp: defaultOpen,
-   172→    prop: openProp,
-      →    …
+      →  …
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
    833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
@@ -147,15 +151,11 @@ index.tsx
    996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
   1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
   1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
-  1100→
-  1101→  if (!onNestedDrag) {
       →  …
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
   1130→export function Portal(props: PortalProps) {
   1131→  const context = useDrawerContext();
-  1132→  const { container = context.container, ...portalProps } = props;
-  1133→
-      →…
+      →  …
   1137→export const Drawer = {
 
 types.ts
@@ -236,7 +236,7 @@ use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
-    16→function chain …
+    16→function chain(...callbacks: any[]): (...args: any[]) => void {
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {
     30→  let style = window.getComputedStyle(node);
@@ -265,16 +265,16 @@ use-prevent-scroll.ts
     82→
     83→    return () => {
     84→      preventScrollCount--;
-    85→      if (preventScrollCount === 0) {
-    86→        restore?.();
-    87→      }
-    88→    };
-    89→  }, [isDisabled]);
-    90→}
-   118→function preventScrollMobileSafari …
-   243→function setStyle …
-   257→function addEvent …
-   272→function scrollIntoView …
+      →      …
+   118→function preventScrollMobileSafari() {
+   243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {
+   257→function addEvent<K extends keyof GlobalEventHandlersEventMap>(
+   258→  target: EventTarget,
+   259→  event: K,
+   260→  handler: (this: Document, ev: GlobalEventHandlersEventMap[K]) => any,
+   261→  options?: boolean | AddEventListenerOptions,
+   262→) {
+   272→function scrollIntoView(target: Element) {
    294→export function isInput(target: Element) {
    295→  return (
       →  …
@@ -332,7 +332,4 @@ use-snap-points.ts
     33→    onChange: setActiveSnapPointProp,
     34→  });
     35→
-    36→  const [windowDimensions, setWindowDimensions] = React.useState(
-    37→    typeof window !== 'undefined'
-    38→      ? {
-      →      …
+      →…

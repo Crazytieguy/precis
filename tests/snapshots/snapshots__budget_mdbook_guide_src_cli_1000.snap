@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1014 tokens)
+budget: 1000 (1015 tokens)
 
 README.md
      1→# Command-line tool
@@ -67,6 +67,12 @@ init.md
     10→```
     11→
       →…
+    32→#### Tip: Generate chapters from SUMMARY.md
+    39→#### Specify a directory
+    48→#### `--theme`
+    56→#### `--title`
+    65→#### `--ignore`
+    80→#### `--force`
 
 serve.md
      1→# The serve command
@@ -105,10 +111,7 @@ watch.md
      1→# The watch command
      3→The `watch` command is useful when you want your book to be rendered on every
      4→file change. You could repeatedly issue `mdbook build` every time a file is
-     5→changed. But using `mdbook watch` once will watch your files and will trigger a
-     6→build automatically whenever you modify a file; this includes re-creating
-     7→deleted files still mentioned in `SUMMARY.md`!
-     8→
+      →…
      9→#### Specify a directory
     18→#### `--open`
     23→#### `--dest-dir`
