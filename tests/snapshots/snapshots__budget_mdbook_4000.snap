@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4040 tokens)
+budget: 4000 (4042 tokens)
 
 Cargo.toml
 
@@ -103,9 +103,11 @@ crates/mdbook-driver/src/builtin_preprocessors/index.rs
     19→    pub fn new …
 
 crates/mdbook-driver/src/builtin_preprocessors/links.rs
+     1→use self::take_lines::{ …
     32→pub struct LinkPreprocessor;
     36→    pub const NAME: &'static str = "links";
     39→    pub fn new …
+   398→struct LinkIter …
    401→    type Item = Link<'a>;
 
 crates/mdbook-driver/src/builtin_preprocessors/mod.rs
@@ -380,10 +382,6 @@ guide/src/for_developers/README.md
 guide/src/for_developers/backends.md
      1→# Alternative backends
 
-guide/src/for_developers/mdbook-wordcount/Cargo.toml
-     1→[package]
-     6→[dependencies]
-
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     44→#[derive(Debug, Default, Serialize, Deserialize)]
       →…
@@ -492,7 +490,7 @@ src/cmd/watch.rs
 
 src/main.rs
     14→mod cmd;
-    16→const VERSION …
+    16→const VERSION: &str = concat!("v", clap::crate_version!());
     57→/// Create a list of valid arguments and sub-commands
     58→fn create_clap_command() -> Command {
 

@@ -2,9 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3992 tokens)
+budget: 4000 (3984 tokens)
 
 imp_cs.rs
+     1→use core::panic::{RefUnwindSafe, UnwindSafe} …
+     3→use critical_section::{CriticalSection, Mutex} …
+     4→use portable_atomic::{AtomicBool, Ordering} …
      6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
@@ -21,6 +24,7 @@ imp_cs.rs
     75→    pub(crate) fn into_inner …
 
 imp_pl.rs
+     1→use std::{ …
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
      9→    value: UnsafeCell<Option<T>>,
@@ -44,6 +48,7 @@ imp_pl.rs
    139→fn initialize_inner …
 
 imp_std.rs
+     6→use std::{ …
     13→#[derive(Debug)]
     14→pub(crate) struct OnceCell<T> {
     15→    // This `queue` field is the core of the implementation. It encodes two
@@ -104,6 +109,7 @@ lib.rs
    380→mod imp;
    382→/// Single-threaded version of `OnceCell`.
    383→pub mod unsync {
+   384→    use core::{ …
    391→    /// A cell which can be written to only once. It is not thread safe.
    392→    ///
    393→    /// Unlike [`std::cell::RefCell`], a `OnceCell` provides simple `&`
@@ -121,9 +127,7 @@ lib.rs
    405→    /// let value: &String = cell.get_or_init(|| {
    406→    ///     "Hello, World!".to_string()
    407→    /// });
-   408→    /// assert_eq!(value, "Hello, World!");
-   409→    /// assert!(cell.get().is_some());
-   410→    /// ```
+      →    …
    411→    pub struct OnceCell<T> {
    412→        // Invariant: written to at most once.
    413→        inner: UnsafeCell<Option<T>>,
@@ -161,9 +165,7 @@ lib.rs
    708→    /// // Prints:
    709→    /// //   ready
    710→    /// //   initializing
-   711→    /// //   92
-   712→    /// //   92
-   713→    /// ```
+      →    …
    714→    pub struct Lazy<T, F = fn() -> T> {
    715→        cell: OnceCell<T>,
    716→        init: Cell<Option<F>>,
@@ -182,6 +184,7 @@ lib.rs
    861→/// Thread-safe, blocking version of `OnceCell`.
    862→#[cfg(any(feature = "std", feature = "critical-section"))]
    863→pub mod sync {
+   864→    use core::{ …
    871→    use super::imp::OnceCell as Imp;
    873→    /// A thread-safe cell which can be written to only once.
    874→    ///
@@ -200,11 +203,6 @@ lib.rs
    887→    /// static CELL: OnceCell<String> = OnceCell::new();
    888→    /// assert!(CELL.get().is_none());
    889→    ///
-   890→    /// std::thread::spawn(|| {
-   891→    ///     let value: &String = CELL.get_or_init(|| {
-   892→    ///         "Hello, World!".to_string()
-   893→    ///     });
-   894→    ///     assert_eq!(value, "Hello, World!");
       →    …
    901→    pub struct OnceCell<T>(Imp<T>);
    904→        fn default() -> OnceCell<T> {
@@ -242,11 +240,6 @@ lib.rs
   1236→    ///     m.insert(13, "Spica".to_string());
   1237→    ///     m.insert(74, "Hoyten".to_string());
   1238→    ///     m
-  1239→    /// });
-  1240→    ///
-  1241→    /// fn main() {
-  1242→    ///     println!("ready");
-  1243→    ///     std::thread::spawn(|| {
       →    …
   1255→    pub struct Lazy<T, F = fn() -> T> {
   1256→        cell: OnceCell<T>,
@@ -270,6 +263,11 @@ lib.rs
 race.rs
     31→use core::sync::atomic;
     33→use portable_atomic as atomic;
+    35→use atomic::{AtomicPtr, AtomicUsize, Ordering} …
+    36→use core::cell::UnsafeCell …
+    37→use core::marker::PhantomData …
+    38→use core::num::NonZeroUsize …
+    39→use core::ptr …
     41→/// A thread-safe cell which can be written to only once.
     42→#[derive(Default, Debug)]
     43→pub struct OnceNonZeroUsize {
@@ -314,6 +312,8 @@ race.rs
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
+   356→    use core::{marker::PhantomData, ptr} …
+   358→    use alloc::boxed::Box …
    360→    /// A thread-safe cell which can be written to only once.
    361→    pub struct OnceBox<T> {
    362→        inner: AtomicPtr<T>,

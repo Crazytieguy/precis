@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4007 tokens)
+budget: 4000 (4008 tokens)
 
 Changelog.md
      1→# Changelog
@@ -265,7 +265,7 @@ src/structs/refinements.ts
 src/structs/types.ts
      1→import { Infer, Struct } from '../struct.js …
      2→import { define } from './utilities.js …
-     3→../utils.js …
+     3→import { …
     19→export function any …
     33→export function array<T extends Struct<any>>(Element?: T): any {
     60→export function bigint …
@@ -296,7 +296,7 @@ src/structs/types.ts
 
 src/structs/utilities.ts
      1→import { Context, Struct, Validator } from '../struct.js …
-     2→../utils.js …
+     2→import { …
      8→import { object, optional, type } from './types.js …
     60→export function assign(...Structs: Struct<any>[]): any {
     71→export function define …
@@ -380,7 +380,7 @@ test/deprecated.test.ts
      2→import { any, assert, deprecated } from '../src …
 
 test/index.test.ts
-     5→../src …
+     5→import { …
 
 test/index.ts
      1→/**
@@ -395,10 +395,6 @@ test/tsconfig.json
      4→  "compilerOptions": {
      6→  }
      7→}
-
-test/typings/infer.ts
-     4→const Struct = object()
-     5→type T = Infer<typeof Struct>
 
 test/validation/function/invalid.ts
      1→import { func } from '../../../src'
@@ -418,9 +414,14 @@ test/validation/never/invalid.ts
      5→export const data = true
      7→export const failures = [
 
+test/validation/string/invalid.ts
+     1→import { string } from '../../../src'
+
+test/validation/string/valid.ts
+     1→import { string } from '../../../src'
+
 test/validation/type/valid-instance.ts
      3→class Person {
-     4→  name: string
      6→  constructor(name: string) {
 
 tsconfig.json

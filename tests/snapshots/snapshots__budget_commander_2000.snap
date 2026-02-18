@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2028 tokens)
+budget: 2000 (2027 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -135,12 +135,12 @@ tests/command.createOption.test.js
     11→  createOption(flags, description) {
 
 tests/esm-imports-test.mjs
-     1→../esm.mjs …
+     1→import { …
     19→function check(condition, explanation) {
     26→function checkClass(obj, name) {
 
 tests/ts-imports.test.ts
-     1→../ …
+     1→import { …
     17→function checkClass(obj: object, name: string): void {
 
 tsconfig.js.json

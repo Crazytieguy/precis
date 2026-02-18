@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2055 tokens)
+budget: 2000 (2061 tokens)
 
 CHANGELOG.md
      1→# neverthrow
@@ -47,6 +47,7 @@ src/_internals/error.ts
     19→        value: E
     20→      }
     21→  message: string
+    22→  stack: string | undefined
       →  …
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
@@ -99,9 +100,9 @@ src/_internals/utils.ts
       →  …
 
 src/result-async.ts
-     1→./result …
+     1→import type { …
     10→import { Err, Ok, Result } from './ …
-    11→./_internals/utils …
+    11→import { …
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
@@ -117,7 +118,7 @@ src/result-async.ts
 src/result.ts
      1→import { errAsync, ResultAsync } from './ …
      2→import { createNeverThrowError, ErrorConfig } from './_internals/error …
-     3→./_internals/utils …
+     3→import { …
     14→export namespace Result {
     15→  /**
     16→   * Wraps a function with a try catch, creating a new function with the same

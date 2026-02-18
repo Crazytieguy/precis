@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 tokens)
+budget: 1000 (1009 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -32,6 +32,8 @@ Readme.md
 
 Readme_zh-CN.md
      1→# Commander.js
+
+SECURITY.md
 
 esm.mjs
      1→import commander from './index.js';
@@ -89,10 +91,10 @@ package-support.json
 package.json
 
 tests/esm-imports-test.mjs
-     1→../esm.mjs …
+     1→import { …
 
 tests/ts-imports.test.ts
-     1→../ …
+     1→import { …
     17→function checkClass …
 
 tsconfig.js.json

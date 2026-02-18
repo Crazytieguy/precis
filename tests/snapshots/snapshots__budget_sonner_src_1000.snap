@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1042 tokens)
+budget: 1000 (1043 tokens)
 
 assets.tsx
      2→import React from 'react';
@@ -30,7 +30,7 @@ index.tsx
      7→import { useIsDocumentHidden } from './hooks …
      8→import { toast, ToastState } from './state …
      9→import './styles.css …
-    10→./types …
+    10→import { …
     45→function cn(...classes: (string | undefined)[]) {
     49→function getDefaultSwipeDirections(position: string): Array<SwipeDirection> {
     64→const Toast = (props: ToastProps) => {
@@ -39,7 +39,7 @@ index.tsx
    552→function useSonner() {
 
 state.ts
-     1→./types …
+     1→import type { …
     11→import React from 'react';
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1004 tokens)
+budget: 1000 (1005 tokens)
 
 CHANGELOG.md
      1→# neverthrow
@@ -35,8 +35,7 @@ src/_internals/error.ts
     13→    | {
     14→        type: string
     15→        value: T
-    16→      }
-      →      …
+      →        …
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
     29→  result: Result<T, E>,
@@ -76,12 +75,18 @@ src/_internals/utils.ts
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
 
 src/result-async.ts
+     1→import type { …
+    10→import { Err, Ok, Result } from './ …
+    11→import { …
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
    222→  async *safeUnwrap …
 
 src/result.ts
+     1→import { errAsync, ResultAsync } from './ …
+     2→import { createNeverThrowError, ErrorConfig } from './_internals/error …
+     3→import { …
     14→export namespace Result {
     15→  /**
    134→interface IResult<T, E> {
@@ -99,11 +104,7 @@ src/result.ts
    299→  _unsafeUnwrap …
    309→  _unsafeUnwrapErr …
    312→export class Ok<T, E> implements IResult<T, E> {
-   405→  _unsafeUnwrap(_?: ErrorConfig): T {
-   409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
    419→export class Err<T, E> implements IResult<T, E> {
-   505→  _unsafeUnwrap(config?: ErrorConfig): T {
-   509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
 
 tests/tsconfig.tests.json
      2→  "compilerOptions": {

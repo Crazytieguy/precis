@@ -434,7 +434,16 @@ pub(crate) fn format_symbol_name(sym: &parse::Symbol, lines: &[&str]) -> String 
     let indent = &source_line[..source_line.len() - trimmed.len()];
     let name_prefix = match find_word(&sym.name, trimmed) {
         Some(pos) => format!("{}{}", indent, &trimmed[..pos + sym.name.len()]),
-        None => sym.name.clone(),
+        None => {
+            if sym.kind == parse::SymbolKind::Import {
+                // Multi-line import: the module path is on a later line,
+                // so show the source first line (e.g. `import type {`) to
+                // preserve the import keyword context.
+                format!("{}{}", indent, trimmed)
+            } else {
+                sym.name.clone()
+            }
+        }
     };
     format!("{:>6}→{}", sym.line, name_prefix)
 }
