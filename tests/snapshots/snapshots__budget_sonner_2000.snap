@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2055 tokens)
+budget: 2000 (2050 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -76,10 +76,6 @@ src/state.ts
     11→import React from 'react';
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
-    18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
-    19→  toasts: Array<ToastT | ToastToDismiss>;
-    20→  dismissedToasts: Set<string | number>;
-    21→
     22→  constructor …
     29→  subscribe …
     38→  publish …
@@ -137,11 +133,6 @@ src/types.ts
     99→  height: number;
       →  …
    104→interface ToastOptions {
-   105→  className?: string;
-   106→  closeButton?: boolean;
-   107→  descriptionClassName?: string;
-   108→  style?: React.CSSProperties;
-      →  …
    118→type Offset =
    119→  | {
    128→export interface ToasterProps {
@@ -173,12 +164,12 @@ test/src/app/action.tsx
 test/src/app/layout.tsx
      1→export const metadata = {
      6→export default function RootLayout({ children }: { children: React.ReactNode }) {
-     7→  return (
-      →  …
 
 test/src/app/page.tsx
      7→const promise …
      9→export default function Home({ searchParams }: any) {
+
+test/tests/basic.spec.ts
 
 test/tsconfig.json
 
@@ -230,13 +221,16 @@ website/src/components/Other/Other.tsx
      7→export const Other = ({
 
 website/src/components/Position/index.tsx
+     2→import { CodeBlock } from '../CodeBlock';
      7→export type Position = (typeof positions)[number];
      9→export const Position = ({
 
 website/src/components/Types/Types.tsx
+     3→import { CodeBlock } from '../CodeBlock';
      7→export const Types = () => {
 
 website/src/components/Usage/index.tsx
+     1→import { CodeBlock } from '../CodeBlock';
      3→export const Usage = () => {
 
 website/src/pages/_app.tsx
@@ -253,3 +247,8 @@ website/theme.config.jsx
      7→  useNextSeoProps() {
 
 website/tsconfig.json
+     2→  "compilerOptions": {
+    26→  },
+    27→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+    28→  "exclude": ["node_modules"]
+    29→}

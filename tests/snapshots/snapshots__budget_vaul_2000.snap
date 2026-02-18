@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2022 tokens)
+budget: 2000 (2015 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -35,8 +35,6 @@ src/context.ts
      1→import React from 'react';
      2→import { DrawerDirection } from './types';
      4→interface DrawerContextValue {
-     5→  drawerRef: React.RefObject<HTMLDivElement>;
-      →  …
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     69→export const useDrawerContext = () => {
     70→  const context = React.useContext(DrawerContext);
@@ -46,8 +44,6 @@ src/context.ts
 src/helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
      3→interface Style {
-     4→  [key: string]: string;
-     5→}
      7→const cache = new WeakMap();
      9→export function isInView …
     23→export function set …
@@ -62,7 +58,9 @@ src/helpers.ts
    110→    for (const fn of fns) {
    111→      if (typeof fn === 'function') {
    112→        // @ts-ignore
-      →        …
+   113→        fn(...args);
+   114→      }
+      →      …
 
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -79,8 +77,11 @@ src/index.tsx
    831→export type ContentProps …
    833→export const Content …
    989→export type HandleProps …
+   993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
+   994→const DOUBLE_TAP_TIMEOUT = 120;
    996→export const Handle …
   1098→export function NestedRoot …
+  1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
   1130→export function Portal …
   1137→export const Drawer …
 
@@ -142,8 +143,6 @@ src/use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
-    11→  /** Whether the scroll lock is disabled. */
-      →  …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {
     34→export function getScrollParent(node: Element): Element {
@@ -178,10 +177,6 @@ src/use-snap-points.ts
      5→import { DrawerDirection } from './types';
      7→export function useSnapPoints …
 
-test/README.md
-
-test/package.json
-
 test/src/app/layout.tsx
      7→export const metadata: Metadata = {
     12→export default function RootLayout …
@@ -191,8 +186,6 @@ test/src/app/page.tsx
 
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;
-
-test/tests/helpers.ts
 
 tsconfig.json
      2→  "compilerOptions": {

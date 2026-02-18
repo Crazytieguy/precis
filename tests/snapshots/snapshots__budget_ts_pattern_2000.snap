@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2015 tokens)
+budget: 2000 (2014 tokens)
 
 README.md
     91→# Documentation
@@ -54,6 +54,8 @@ src/is-matching.ts
     53→export function isMatching<const p extends Pattern<any>>(
     54→  ...args: [pattern: p, value?: any]
     55→): boolean | ((vale: any) => boolean) {
+    56→  if (args.length === 1) {
+      →  …
 
 src/match.ts
      7→type MatchState …
@@ -66,8 +68,6 @@ src/match.ts
     32→export function match<const input, output = symbols.unset>(
     33→  value: input
     34→): Match<input, output> {
-    39→ * This class represents a match expression. It follows the
-      → …
     47→class MatchExpression<input, output> {
    133→function defaultCatcher(input: unknown): never {
 

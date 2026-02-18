@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2024 tokens)
+budget: 2000 (2029 tokens)
 
 CHANGELOG.md
 
@@ -57,8 +57,7 @@ constraint.go
     46→type Constraints []*Constraint
     50→type constraintOperation struct {
     51→	op operator
-    52→	f  constraintFunc
-    53→}
+      →	…
     55→// NewConstraint will parse one or more constraints from the given
     56→// constraint string. The string must be a comma-separated list of
     57→// constraints.
@@ -96,8 +95,7 @@ constraint.go
    134→		return false
    135→	}
    136→
-   137→	return cs[i].check.LessThan(cs[j].check)
-   138→}
+      →…
    140→func (cs Constraints) Swap(i, j int) {
    141→	cs[i], cs[j] = cs[j], cs[i]
    142→}
@@ -127,14 +125,13 @@ constraint_test.go
 
 version.go
      6→import …
-    15→// The compiled regular expression used to test the validity of a version.
     16→var (
     17→	versionRegexp     *regexp.Regexp
     18→	versionRegexpOnce sync.Once
     19→	semverRegexp      *regexp.Regexp
     20→	semverRegexpOnce  sync.Once
-    37→// The raw regular expression string used for testing the validity
-    38→// of a version.
+    23→func getVersionRegexp …
+    30→func getSemverRegexp …
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     45→	// SemverRegexpRaw requires a separator between version and prerelease
@@ -149,8 +146,13 @@ version.go
     59→}
     63→func NewVersion(v string) (*Version, error) {
     70→func NewSemver(v string) (*Version, error) {
+    74→func newVersion …
    114→func Must(v *Version, err error) *Version {
    128→func (v *Version) Compare(other *Version) int {
+   196→func (v *Version) equalSegments …
+   211→func allZero …
+   220→func comparePart …
+   267→func comparePrereleases …
    309→func (v *Version) Core() *Version {
    316→func (v *Version) Equal(o *Version) bool {
    325→func (v *Version) GreaterThan(o *Version) bool {
@@ -162,6 +164,7 @@ version.go
    368→func (v *Version) Segments() []int {
    381→func (v *Version) Segments64() []int64 {
    395→func (v *Version) String() string {
+   399→func (v *Version) bytes …
    423→func (v *Version) Original() string {
    428→func (v *Version) UnmarshalText(b []byte) error {
    440→func (v *Version) MarshalText() ([]byte, error) {

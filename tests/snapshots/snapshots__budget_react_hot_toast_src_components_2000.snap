@@ -2,16 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2042 tokens)
+budget: 2000 (2017 tokens)
 
 checkmark.tsx
      1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
-     4→from {
-      →…
     13→const checkmarkAnimation = keyframes`
-    14→0% {
-      →…
     29→export interface CheckmarkTheme {
     30→  primary?: string;
     31→  secondary?: string;
@@ -21,7 +17,11 @@ checkmark.tsx
     36→  opacity: 0;
     37→  height: 20px;
     38→  border-radius: 10px;
-      →  …
+    39→  background: ${(p) => p.primary || '#61d345'};
+    40→  position: relative;
+    41→  transform: rotate(45deg);
+    42→
+      →…
 
 error.tsx
      1→import { styled, keyframes } from 'goober';
@@ -42,8 +42,6 @@ error.tsx
 loader.tsx
      1→import { styled, keyframes } from 'goober';
      3→const rotate = keyframes`
-     4→  from {
-      →  …
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
@@ -80,17 +78,11 @@ toast-bar.tsx
     50→  style?: React.CSSProperties;
     51→  children?: (components: {
     52→    icon: Renderable;
-    53→    message: Renderable;
-    54→  }) => Renderable;
-    55→}
+      →    …
     57→const getAnimationStyle = (
     58→  position: ToastPosition,
     59→  visible: boolean
     60→): React.CSSProperties => {
-    61→  const top = position.includes('top');
-    62→  const factor = top ? 1 : -1;
-    63→
-      →…
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
     77→    const animationStyle: React.CSSProperties = toast.height
@@ -98,7 +90,9 @@ toast-bar.tsx
     79→          toast.position || position || 'top-center',
     80→          toast.visible
     81→        )
-      →        …
+    82→      : { opacity: 0 };
+    83→
+      →…
 
 toast-icon.tsx
      1→import * as React from 'react';
@@ -113,11 +107,14 @@ toast-icon.tsx
     32→export const AnimatedIconWrapper = styled('div')`
     33→  position: relative;
     34→  transform: scale(0.6);
+    35→  opacity: 0.4;
+    36→  min-width: 20px;
       →  …
     41→export type IconThemes = Partial<{
     42→  success: CheckmarkTheme;
     43→  error: ErrorTheme;
-      →  …
+    44→  loading: LoaderTheme;
+    45→}>;
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {
@@ -147,7 +144,8 @@ toast-icon.tsx
     73→        </StatusWrapper>
     74→      )}
     75→    </IndicatorWrapper>
-      →    …
+    76→  );
+    77→};
 
 toaster.tsx
      1→import { css, setup } from 'goober';
@@ -162,18 +160,11 @@ toaster.tsx
     10→import { prefersReducedMotion } from '../core/utils';
     11→import { ToastBar } from './toast-bar';
     15→const ToastWrapper = ({
-    16→  id,
-      →  …
     47→const getPositionStyle = (
     48→  position: ToastPosition,
     49→  offset: number
     50→): React.CSSProperties => {
-    51→  const top = position.includes('top');
-      →  …
     76→const activeClass = css`
-    77→  z-index: 9999;
-    78→  > * {
-      →  …
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
@@ -200,4 +191,5 @@ toaster.tsx
    107→        pointerEvents: 'none',
    108→        ...containerStyle,
    109→      }}
+   110→      className={containerClassName}
       →      …

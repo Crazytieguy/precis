@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4032 tokens)
+budget: 4000 (4024 tokens)
 
 assets.tsx
      2→import React from 'react';
@@ -97,28 +97,12 @@ index.tsx
     40→const SWIPE_THRESHOLD = 45;
     43→const TIME_BEFORE_UNMOUNT = 200;
     45→function cn(...classes: (string | undefined)[]) {
-    46→  return classes.filter(Boolean).join(' ');
-      →  …
     49→function getDefaultSwipeDirections(position: string): Array<SwipeDirection> {
-    50→  const [y, x] = position.split('-');
-      →  …
     64→const Toast = (props: ToastProps) => {
-    65→  const {
-      →  …
    507→function getDocumentDirection(): ToasterProps['dir'] {
-   508→  if (typeof window === 'undefined') return 'ltr';
-      →  …
    520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
-   521→  const styles = {} as React.CSSProperties;
-      →  …
    552→function useSonner() {
-   553→  const [activeToasts, setActiveToasts] = React.useState<ToastT[]>([]);
-      →  …
    593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
-   594→  const {
-   595→    id,
-   596→    invert,
-      →    …
 
 state.ts
      1→import type {
@@ -138,38 +122,61 @@ state.ts
     20→  dismissedToasts: Set<string | number>;
     21→
     22→  constructor() {
+    23→    this.subscribers = [];
+    24→    this.toasts = [];
+      →    …
     29→  subscribe = (subscriber: (toast: ToastT | ToastToDismiss) => void) => {
+    30→    this.subscribers.push(subscriber);
+    31→
+      →…
     38→  publish = (data: ToastT) => {
+    39→    this.subscribers.forEach((subscriber) => subscriber(data));
+    40→  };
     42→  addToast = (data: ToastT) => {
+    43→    this.publish(data);
+    44→    this.toasts = [...this.toasts, data];
+      →    …
     47→  create = (
     48→    data: ExternalToast & {
+    49→      message?: titleT;
+    50→      type?: ToastTypes;
+      →      …
     88→  dismiss = (id?: number | string) => {
+    89→    if (id) {
+    90→      this.dismissedToasts.add(id);
+      →      …
    101→  message = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   102→    return this.create({ ...data, message });
+   103→  };
    105→  error = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   106→    return this.create({ ...data, message, type: 'error' });
+   107→  };
    109→  success = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   110→    return this.create({ ...data, type: 'success', message });
+   111→  };
    113→  info = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   114→    return this.create({ ...data, type: 'info', message });
+   115→  };
    117→  warning = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   118→    return this.create({ ...data, type: 'warning', message });
+   119→  };
    121→  loading = (message: titleT | React.ReactNode, data?: ExternalToast) => {
+   122→    return this.create({ ...data, type: 'loading', message });
+   123→  };
    125→  promise = <ToastData>(promise: PromiseT<ToastData>, data?: PromiseData<ToastData>) => {
+   126→    if (!data) {
+   127→      // Nothing to show
+      →      …
    243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
+   244→    const id = data?.id || toastsCounter++;
+   245→    this.create({ jsx: jsx(id), ...data, id });
+      →    …
    249→  getActiveToasts = () => {
+   250→    return this.toasts.filter((toast) => !this.dismissedToasts.has(toast.id));
+   251→  };
    254→export const ToastState = new Observer();
    257→const toastFunction = (message: titleT, data?: ExternalToast) => {
-   258→  const id = data?.id || toastsCounter++;
-   259→
-   260→  ToastState.addToast({
-   261→    title: message,
-   262→    ...data,
-   263→    id,
-      →    …
    268→const isHttpResponse = (data: any): data is Response => {
-   269→  return (
-   270→    data &&
-   271→    typeof data === 'object' &&
-   272→    'ok' in data &&
-   273→    typeof data.ok === 'boolean' &&
-   274→    'status' in data &&
-      →    …
    279→const basicToast = toastFunction;
    281→const getHistory = () => ToastState.toasts;
    282→const getToasts = () => ToastState.getActiveToasts();
@@ -181,8 +188,6 @@ state.ts
    290→    warning: ToastState.warning,
    291→    error: ToastState.error,
    292→    custom: ToastState.custom,
-   293→    message: ToastState.message,
-   294→    promise: ToastState.promise,
       →    …
 
 types.ts
@@ -280,19 +285,9 @@ types.ts
    106→  closeButton?: boolean;
    107→  descriptionClassName?: string;
    108→  style?: React.CSSProperties;
-   109→  cancelButtonStyle?: React.CSSProperties;
-   110→  actionButtonStyle?: React.CSSProperties;
-   111→  duration?: number;
-   112→  unstyled?: boolean;
-   113→  classNames?: ToastClassnames;
-   114→  closeButtonAriaLabel?: string;
-   115→  toasterId?: string;
-   116→}
+      →  …
    118→type Offset =
    119→  | {
-   120→      top?: string | number;
-   121→      right?: string | number;
-      →      …
    128→export interface ToasterProps {
    129→  id?: string;
    130→  invert?: boolean;

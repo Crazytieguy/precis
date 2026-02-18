@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4019 tokens)
+budget: 4000 (4003 tokens)
 
 ast.rs
      1→use crate::attr::{self, Attrs};
@@ -73,6 +73,12 @@ ast.rs
       →            …
 
 attr.rs
+     1→use proc_macro2::{Delimiter, Group, Literal, Punct, Spacing, Span, TokenStream, TokenTree} …
+     2→use quote::{format_ident, quote, quote_spanned, ToTokens} …
+     3→use std::collections::BTreeSet as Set …
+     4→use syn::parse::discouraged::Speculative …
+     5→use syn::parse::{End, ParseStream} …
+     6→use syn::{ …
     11→pub struct Attrs<'a> {
     12→    pub display: Option<Display<'a>>,
     13→    pub source: Option<Source<'a>>,
@@ -161,6 +167,16 @@ expand.rs
     18→        Err(error) => fallback::expand(input, error),
     19→    }
     20→}
+    22→fn try_expand …
+    31→fn impl_struct …
+   221→fn impl_enum …
+   505→pub(crate) fn call_site_ident …
+   511→fn fields_pat …
+   526→fn use_as_display …
+   536→fn from_initializer …
+   565→fn type_is_option …
+   569→fn unoptional_type …
+   574→fn type_parameter_of_option …
 
 fallback.rs
      1→use crate::expand::call_site_ident;
@@ -169,8 +185,6 @@ fallback.rs
      4→use quote::quote;
      5→use syn::DeriveInput;
      7→pub(crate) fn expand(input: &DeriveInput, error: syn::Error) -> TokenStream {
-     8→    let ty = call_site_ident(&input.ident);
-      →    …
 
 fmt.rs
      1→use crate::ast::{ContainerKind, Field};
@@ -188,24 +202,14 @@ fmt.rs
     22→
       →…
    166→struct FmtArguments {
-   167→    named: BTreeSet<IdentUnraw>,
-   168→    first_unnamed: Option<TokenStream>,
-   169→}
    171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
-   173→    let ahead = input.fork();
-   174→    if let Ok(set) = try_explicit_named_args(&ahead) {
-   175→        input.advance_to(&ahead);
-   176→        return Ok(set);
-   177→    }
-   178→
-      →…
-   192→fn try_explicit_named_args …
-   231→fn fallback_explicit_named_args …
-   255→fn is_syn_full …
-   273→fn take_int …
-   286→fn take_ident …
-   299→fn between …
+   192→fn try_explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
+   231→fn fallback_explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
+   255→fn is_syn_full() -> bool {
+   273→fn take_int<'a>(read: &mut &'a str) -> &'a str {
+   286→fn take_ident<'a>(read: &mut &'a str) -> &'a str {
+   299→fn between<'a>(begin: ParseStream<'a>, end: ParseStream<'a>) -> TokenStream {
 
 generics.rs
      1→use proc_macro2::TokenStream;
@@ -225,8 +229,6 @@ generics.rs
     20→        let mut found = false;
       →        …
     26→fn crawl(in_scope: &ParamsInScope, ty: &Type, found: &mut bool) {
-    27→    if let Type::Path(ty) = ty {
-      →    …
     48→pub struct InferredBounds {
     49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
     50→    order: Vec<TokenStream>,
@@ -288,25 +290,8 @@ scan_expr.rs
      3→use syn::parse::{ParseStream, Result};
      4→use syn::{AngleBracketedGenericArguments, BinOp, Expr, ExprPath, Lifetime, Lit, Token, Type};
      6→enum Input {
-     7→    Keyword(&'static str),
-     8→    Punct(&'static str),
-     9→    ConsumeAny,
-    10→    ConsumeBinOp,
-    11→    ConsumeBrace,
-    12→    ConsumeDelimiter,
-    13→    ConsumeIdent,
-    14→    ConsumeLifetime,
-    15→    ConsumeLiteral,
-      →    …
     25→enum Action {
-    26→    SetState(&'static [(Input, Action)]),
-    27→    IncDepth,
-    28→    DecDepth,
-    29→    Finish,
-    30→}
    192→pub(crate) fn scan_expr(input: ParseStream) -> Result<()> {
-   193→    let mut state = INIT.as_slice();
-      →    …
 
 unraw.rs
      1→use proc_macro2::{Ident, Span, TokenStream};

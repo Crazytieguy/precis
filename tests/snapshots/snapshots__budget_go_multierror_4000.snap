@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4017 tokens)
+budget: 4000 (4006 tokens)
 
 CHANGELOG.md
      1→## Unreleased
@@ -27,6 +27,8 @@ README.md
     22→// After (stdlib)
     23→var errs []error
     24→if err1 != nil {
+    25→    errs = append(errs, err1)
+    26→}
       →…
    104→## Installation and Docs
    106→Install using `go get github.com/hashicorp/go-multierror`.
@@ -60,6 +62,8 @@ README.md
    139→the function behaves as you would expect.
    140→
    141→```go
+   142→var result error
+   143→
       →…
 
 append.go
@@ -121,9 +125,6 @@ flatten.go
     17→	return flatErr
     18→}
     20→func flatten(err error, flatErr *Error) {
-    21→	switch err := err.(type) {
-    22→	case *Error:
-      →	…
 
 flatten_test.go
      6→import …
@@ -278,15 +279,6 @@ multierror.go
     85→	return chain(errs)
     86→}
     88→// chain implements the interfaces necessary for errors.Is/As/Unwrap to
-    89→// work in a deterministic way with multierror. A chain tracks a list of
-    90→// errors while accounting for the current represented error. This lets
-    91→// Is/As be meaningful.
-    92→//
-    93→// Unwrap returns the next error. In the cleanest form, Unwrap would return
-    94→// the wrapped error here but we can't do that if we want to properly
-    95→// get access to all the errors. Instead, users are recommended to use
-    96→// Is/As to get the correct error type out.
-    97→//
       →…
     99→type chain []error
    101→// Error implements the error interface
@@ -313,8 +305,16 @@ multierror.go
 
 multierror_test.go
      6→import …
-   208→// nestedError implements error and is used for tests.
+    13→func TestError_Impl(t *testing.T) {
+    17→func TestErrorError_custom(t *testing.T) {
+    33→func TestErrorError_default(t *testing.T) {
+    51→func TestErrorErrorOrNil(t *testing.T) {
+    65→func TestErrorWrappedErrors(t *testing.T) {
+    82→func TestErrorUnwrap(t *testing.T) {
+   118→func TestErrorIs(t *testing.T) {
+   157→func TestErrorAs(t *testing.T) {
    209→type nestedError struct{}
+   211→func (*nestedError) Error() string { return "" }
 
 prefix.go
      6→import (

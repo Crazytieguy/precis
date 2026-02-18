@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2024 tokens)
+budget: 2000 (2006 tokens)
 
 argument.js
      3→class Argument {
@@ -14,13 +14,22 @@ argument.js
     10→   * @param {string} [description]
     13→  constructor(name, description) {
     14→    this.description = description || '';
-      →    …
+    15→    this.variadic = false;
+    16→    this.parseArg = undefined;
+    17→    this.defaultValue = undefined;
+    18→    this.defaultValueDescription = undefined;
+    19→    this.argChoices = undefined;
+    20→
+    21→    switch (name[0]) {
+    22→      case '<': // e.g. <required>
+    23→        this.required = true;
+      →        …
     43→   * Return argument name.
     44→   *
     45→   * @return {string}
     48→  name() {
     49→    return this._name;
-      →    …
+    50→  }
     53→   * @package
     56→  _collectValue(value, previous) {
     66→   * Set the default value, and optionally supply the description to be displayed in the help.
@@ -30,38 +39,50 @@ argument.js
     70→   * @return {Argument}
     73→  default(value, description) {
     74→    this.defaultValue = value;
-      →    …
+    75→    this.defaultValueDescription = description;
+    76→    return this;
+    77→  }
     80→   * Set the custom handler for processing CLI command arguments into argument values.
     81→   *
     82→   * @param {Function} [fn]
     83→   * @return {Argument}
     86→  argParser(fn) {
     87→    this.parseArg = fn;
-      →    …
+    88→    return this;
+    89→  }
     92→   * Only allow argument value to be one of choices.
     93→   *
     94→   * @param {string[]} values
     95→   * @return {Argument}
     98→  choices(values) {
     99→    this.argChoices = values.slice();
-      →    …
+   100→    this.parseArg = (arg, previous) => {
+   101→      if (!this.argChoices.includes(arg)) {
+   102→        throw new InvalidArgumentError(
+   103→          `Allowed choices are ${this.argChoices.join(', ')}.`,
+   104→        );
+   105→      }
+   106→      if (this.variadic) {
+   107→        return this._collectValue(arg, previous);
+   108→      }
+      →      …
    115→   * Make argument required.
    116→   *
    117→   * @returns {Argument}
    119→  argRequired() {
    120→    this.required = true;
-      →    …
+   121→    return this;
+   122→  }
    125→   * Make argument optional.
    126→   *
    127→   * @returns {Argument}
    129→  argOptional() {
    130→    this.required = false;
-      →    …
+   131→    return this;
+   132→  }
    136→ * Takes an argument and returns its human readable equivalent for help usage.
    137→ *
-   138→ * @param {Argument} arg
-   139→ * @return {string}
-   140→ * @private
+      → …
    143→function humanReadableArgName(arg) {
 
 command.js
@@ -140,12 +161,8 @@ help.js
    695→  boxWrap(str, width) {
    733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
    734→ *
-   735→ * @param {string} str
-   736→ * @returns {string}
-   737→ * @package
+      → …
    740→function stripColor(str) {
-   741→  // eslint-disable-next-line no-control-regex
-      →  …
 
 option.js
      3→class Option {
@@ -158,7 +175,6 @@ option.js
    132→  argParser(fn) {
    144→  makeOptionMandatory(mandatory = true) {
    156→  hideHelp(hide = true) {
-   162→   * @package
    165→  _collectValue(value, previous) {
    181→  choices(values) {
    203→  name() {
@@ -166,21 +182,10 @@ option.js
    230→  helpGroup(heading) {
    243→  is(arg) {
    256→  isBoolean() {
-   262→ * This class is to make it easier to work with dual options, without changing the existing
-   263→ * implementation. We support separate dual options for separate positive and negative options,
-      → …
    268→class DualOptions {
    272→  constructor(options) {
    297→  valueFromOption(value, option) {
-   309→ * Convert string from kebab-case to camelCase.
-   310→ *
-   311→ * @param {string} str
-   312→ * @return {string}
-   313→ * @private
    316→function camelcase(str) {
-   323→ * Split the short and long flag out of something like '-m,--mixed <value>'
-   324→ *
-   325→ * @private
    328→function splitOptionFlags(flags) {
 
 suggestSimilar.js
@@ -188,10 +193,5 @@ suggestSimilar.js
      3→function editDistance(a, b) {
     49→ * Find close matches, restricted to same number of edits.
     50→ *
-    51→ * @param {string} word
-    52→ * @param {string[]} candidates
-    53→ * @returns {string}
+      → …
     56→function suggestSimilar(word, candidates) {
-    57→  if (!candidates || candidates.length === 0) return '';
-    58→  // remove possible duplicates
-      →  …

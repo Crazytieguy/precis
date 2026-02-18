@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (1015 tokens)
 
 CHANGELOG.md
 
@@ -13,22 +13,17 @@ README.md
      8→can sort a collection of versions properly, handles prerelease/beta
      9→versions, can increment versions, etc.
     10→
-      →…
+    11→Versions used with go-version must follow [SemVer](http://semver.org/).
+    12→
     13→## Installation and Usage
     15→Package documentation can be found on
-    16→[Go Reference](https://pkg.go.dev/github.com/hashicorp/go-version).
-    17→
-    18→Installation can be done with a normal `go get`:
-    19→
-    20→```
       →…
     24→#### Version Parsing and Comparison
     37→#### Version Constraints
     49→#### Version Sorting
     63→## Issues and Contributing
     65→If you find an issue with this library, please report an issue. If you'd
-    66→like, we welcome any contributions. Fork this library and submit a pull
-    67→request.
+      →…
 
 constraint.go
      6→import …
@@ -46,22 +41,32 @@ constraint.go
     46→type Constraints []*Constraint
     50→type constraintOperation struct {
     51→	op operator
-    52→	f  constraintFunc
-    53→}
+      →	…
+    55→// NewConstraint will parse one or more constraints from the given
+      →…
     58→func NewConstraint(v string) (Constraints, error) {
+    73→// MustConstraints is a helper that wraps a call to a function
+      →…
     75→func MustConstraints(c Constraints, err error) Constraints {
+    83→// Check tests if a version satisfies all the constraints.
     84→func (cs Constraints) Check(v *Version) bool {
+    94→// Equals compares Constraints with other Constraints
+      →…
    102→func (cs Constraints) Equals(c Constraints) bool {
    125→func (cs Constraints) Len() int {
    129→func (cs Constraints) Less(i, j int) bool {
    140→func (cs Constraints) Swap(i, j int) {
+   144→// Returns the string format of the constraints
    145→func (cs Constraints) String() string {
+   154→// Check tests if a constraint is validated by the given version.
    155→func (c *Constraint) Check(v *Version) bool {
+   159→// Prerelease returns true if the version underlying this constraint
+      →…
    161→func (c *Constraint) Prerelease() bool {
    165→func (c *Constraint) String() string {
    228→//-------------------------------------------------------------------
    229→// Constraint functions
-   230→//-------------------------------------------------------------------
+      →…
    232→type operator rune
 
 constraint_test.go
@@ -69,14 +74,11 @@ constraint_test.go
 
 version.go
      6→import …
-    15→// The compiled regular expression used to test the validity of a version.
     16→var (
     17→	versionRegexp     *regexp.Regexp
     18→	versionRegexpOnce sync.Once
     19→	semverRegexp      *regexp.Regexp
     20→	semverRegexpOnce  sync.Once
-    37→// The raw regular expression string used for testing the validity
-    38→// of a version.
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     45→	// SemverRegexpRaw requires a separator between version and prerelease

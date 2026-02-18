@@ -2,7 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1009 tokens)
+budget: 1000 (999 tokens)
+
+CHANGELOG.md
+     1→# Changelog
 
 Cargo.toml
 
@@ -13,17 +16,12 @@ README.md
 src/imp_cs.rs
      6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
-     9→    initialized: AtomicBool,
-      →    …
     27→    pub(crate) const fn new() -> OnceCell<T> {
     31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
 
 src/imp_pl.rs
      1→use std::{ …
      7→pub(crate) struct OnceCell<T> {
-    12→const INCOMPLETE …
-    13→const RUNNING …
-    14→const COMPLETE …
     28→    pub(crate) const fn new() -> OnceCell<T> {
     32→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
    122→struct Guard<'a> {
@@ -38,9 +36,6 @@ src/imp_std.rs
    138→struct Waiter {
    145→struct Guard<'a> {
    151→    fn drop(&mut self) {
-   152→        let queue = self.queue.swap(self.new_queue, Ordering::AcqRel);
-   153→
-      →…
    245→mod strict {
 
 src/lib.rs
@@ -70,9 +65,6 @@ src/lib.rs
   1257→        init: Cell<Option<F>>,
   1258→    }
   1374→        type Target = T;
-  1393→    /// ```compile_fail
-  1394→    /// struct S(*mut ());
-      →    …
   1408→    fn _dummy() {}
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
@@ -80,12 +72,17 @@ src/lib.rs
 src/race.rs
     31→use core::sync::atomic;
     33→use portable_atomic as atomic;
+    41→/// A thread-safe cell which can be written to only once.
+    42→#[derive(Default, Debug)]
     43→pub struct OnceNonZeroUsize {
     44→    inner: AtomicUsize,
     45→}
+   165→/// A thread-safe cell which can be written to only once.
+   166→#[derive(Default, Debug)]
    167→pub struct OnceBool {
    168→    inner: OnceNonZeroUsize,
    169→}
+   231→/// A thread-safe cell which can be written to only once.
    232→pub struct OnceRef<'a, T> {
    233→    inner: AtomicPtr<T>,
    234→    ghost: PhantomData<UnsafeCell<&'a T>>,
@@ -93,9 +90,9 @@ src/race.rs
    241→    fn fmt …
    247→    fn default …
    351→pub use self::once_box::OnceBox;
-   353→#[cfg(feature = "alloc")]
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
+   360→    /// A thread-safe cell which can be written to only once.
    361→    pub struct OnceBox<T> {
    362→        inner: AtomicPtr<T>,
    363→        ghost: PhantomData<Option<Box<T>>>,
@@ -108,8 +105,6 @@ src/race.rs
 xtask/Cargo.toml
      1→[package]
      8→[dependencies]
-
-xtask/src/main.rs
 
 xtask/src/tidy.rs
      1→use xshell::{cmd, Shell};

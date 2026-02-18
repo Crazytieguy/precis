@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2018 tokens)
+budget: 2000 (2012 tokens)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -27,8 +27,6 @@ context.ts
      1→import React from 'react';
      2→import { DrawerDirection } from './types';
      4→interface DrawerContextValue {
-     5→  drawerRef: React.RefObject<HTMLDivElement>;
-      →  …
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     69→export const useDrawerContext = () => {
     70→  const context = React.useContext(DrawerContext);
@@ -38,16 +36,14 @@ context.ts
 helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
      3→interface Style {
-     4→  [key: string]: string;
-     5→}
      7→const cache = new WeakMap();
-     9→export function isInView …
-    23→export function set …
-    42→export function reset …
-    59→export const isVertical …
-    72→export function getTranslate …
-    90→export function dampenValue …
-    94→export function assignStyle …
+     9→export function isInView(el: HTMLElement): boolean {
+    23→export function set(el: Element | HTMLElement | null | undefined, styles: Style, ignoreCache = false) {
+    42→export function reset(el: Element | HTMLElement | null, prop?: string) {
+    59→export const isVertical = (direction: DrawerDirection) => {
+    72→export function getTranslate(element: HTMLElement, direction: DrawerDirection): number | null {
+    90→export function dampenValue(v: number) {
+    94→export function assignStyle(element: HTMLElement | null | undefined, style: Partial<CSSStyleDeclaration>) {
    106→ * Receives functions as arguments and returns a new function that calls all.
    108→export function chain<T>(...fns: T[]) {
    109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
@@ -105,9 +101,6 @@ use-controllable-state.ts
     13→function useCallbackRef …
     24→function useUncontrolledState …
     39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
-    40→  const [uncontrolledProp, setUncontrolledProp] = useUncontrolledState({ defaultProp, onChange });
-    41→  const isControlled = prop !== undefined;
-      →  …
 
 use-position-fixed.ts
      1→import React from 'react';
@@ -136,7 +129,8 @@ use-position-fixed.ts
     30→  const [activeUrl, setActiveUrl] = React.useState(() => (typeof window !== 'undefined' ? window.location.href : ''));
     31→  const scrollPos = React.useRef(0);
     32→
-      →…
+    33→  const setPositionFixed = React.useCallback(() => {
+      →  …
 
 use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
@@ -144,9 +138,6 @@ use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
-    11→  /** Whether the scroll lock is disabled. */
-    12→  isDisabled?: boolean;
-      →  …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {
     34→export function getScrollParent(node: Element): Element {
@@ -162,7 +153,8 @@ use-prevent-scroll.ts
     73→      return;
     74→    }
     75→
-      →…
+    76→    preventScrollCount++;
+      →    …
    294→export function isInput(target: Element) {
 
 use-scale-background.ts

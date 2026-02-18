@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2018 tokens)
+budget: 2000 (2005 tokens)
 
 command-score.ts
     54→function commandScoreInner(
@@ -21,15 +21,7 @@ command-score.ts
     67→    return PENALTY_NOT_COMPLETE
     68→  }
     69→
-    70→  var memoizeKey = `${stringIndex},${abbreviationIndex}`
-    71→  if (memoizedResults[memoizeKey] !== undefined) {
-    72→    return memoizedResults[memoizeKey]
-    73→  }
-    74→
-    75→  var abbreviationChar = lowerAbbreviation.charAt(abbreviationIndex)
-    76→  var index = lowerString.indexOf(abbreviationChar, stringIndex)
-    77→  var highScore = 0
-      →  …
+      →…
    150→function formatInput(string) {
    151→  // convert all valid space characters to space so they match each other
    152→  return string.toLowerCase().replace(COUNT_SPACE_REGEXP, ' ')
@@ -50,36 +42,42 @@ index.tsx
      6→import { Primitive } from '@radix-ui/react-primitive'
      7→import { useId } from '@radix-ui/react-id'
      8→import { composeRefs } from '@radix-ui/react-compose-refs'
-    10→type Children …
-    11→type DivProps …
-    13→type LoadingProps …
-    23→type EmptyProps …
-    24→type SeparatorProps …
-    28→type DialogProps …
-    37→type ListProps …
-    44→type ItemProps …
-    60→type GroupProps …
-    69→type InputProps …
-    79→type CommandFilter …
-    80→type CommandProps …
-   123→type Context …
-   137→type State …
-   143→type Store …
-   149→type Group …
-   154→const GROUP_SELECTOR …
-   155→const GROUP_ITEMS_SELECTOR …
-   156→const GROUP_HEADING_SELECTOR …
-   157→const ITEM_SELECTOR …
-   158→const VALID_ITEM_SELECTOR …
-   159→const SELECT_EVENT …
-   160→const VALUE_ATTR …
+    10→type Children = { children?: React.ReactNode }
+    11→type DivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>
+    13→type LoadingProps = Children &
+    14→  DivProps & {
+    23→type EmptyProps = Children & DivProps & {}
+    24→type SeparatorProps = DivProps & {
+    28→type DialogProps = RadixDialog.DialogProps &
+    29→  CommandProps & {
+    37→type ListProps = Children &
+    38→  DivProps & {
+    44→type ItemProps = Children &
+    45→  Omit<DivProps, 'disabled' | 'onSelect' | 'value'> & {
+    60→type GroupProps = Children &
+    61→  Omit<DivProps, 'heading' | 'value'> & {
+    69→type InputProps = Omit<React.ComponentPropsWithoutRef<typeof Primitive.input>, 'value' | 'onChange' | 'type'> & {
+    79→type CommandFilter = (value: string, search: string, keywords?: string[]) => number
+    80→type CommandProps = Children &
+    81→  DivProps & {
+   123→type Context = {
+   137→type State = {
+   143→type Store = {
+   149→type Group = {
+   154→const GROUP_SELECTOR = `[cmdk-group=""]`
+   155→const GROUP_ITEMS_SELECTOR = `[cmdk-group-items=""]`
+   156→const GROUP_HEADING_SELECTOR = `[cmdk-group-heading=""]`
+   157→const ITEM_SELECTOR = `[cmdk-item=""]`
+   158→const VALID_ITEM_SELECTOR = `${ITEM_SELECTOR}:not([aria-disabled="true"])`
+   159→const SELECT_EVENT = `cmdk-item-select`
+   160→const VALUE_ATTR = `data-value`
    161→const defaultFilter: CommandFilter = (value, search, keywords) => commandScore(value, search, keywords)
-   163→const CommandContext …
+   163→const CommandContext = React.createContext<Context>(undefined)
    164→const useCommand = () => React.useContext(CommandContext)
-   165→const StoreContext …
+   165→const StoreContext = React.createContext<Store>(undefined)
    166→const useStore = () => React.useContext(StoreContext)
-   167→const GroupContext …
-   169→const Command …
+   167→const GroupContext = React.createContext<Group>(undefined)
+   169→const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
    660→ * Command menu item. Becomes active on pointer enter or through keyboard navigation.
    661→ * Preferably pass a `value`, otherwise the value will be inferred from `children` or
    662→ * the rendered item's `textContent`.
@@ -102,7 +100,7 @@ index.tsx
    899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
    907→ * You should conditionally render this with `progress` while loading asynchronous items.
    909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
-   930→const pkg …
+   930→const pkg = Object.assign(Command, {
    956→ *
    957→ *
    958→ * Helpers
@@ -115,17 +113,11 @@ index.tsx
    967→    if (sibling.matches(selector)) return sibling
    968→    sibling = sibling.nextElementSibling
    969→  }
-   970→}
+      →  …
    972→function findPreviousSibling(el: Element, selector: string) {
-   973→  let sibling = el.previousElementSibling
-      →  …
    981→function useAsRef<T>(data: T) {
-   982→  const ref = React.useRef<T>(data)
-      →  …
-   991→const useLayoutEffect …
+   991→const useLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect
    993→function useLazyRef<T>(fn: () => T) {
-   994→  const ref = React.useRef<T>()
-      →  …
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1005→  const store = useStore()
@@ -138,8 +130,6 @@ index.tsx
   1013→  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
   1014→  aliases: string[] = [],
   1015→) {
-  1016→  const valueRef = React.useRef<string>()
-      →  …
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
   1047→  const [s, ss] = React.useState<object>()
@@ -148,20 +138,10 @@ index.tsx
   1050→  useLayoutEffect(() => {
   1051→    fns.current.forEach((f) => f())
   1052→    fns.current = new Map()
-  1053→  }, [s])
-  1054→
-  1055→  return (id: string | number, cb: () => void) => {
-  1056→    fns.current.set(id, cb)
-  1057→    ss({})
-  1058→  }
-  1059→}
+      →    …
   1061→function renderChildren(children: React.ReactElement) {
-  1062→  const childrenType = children.type as any
-      →  …
   1071→function SlottableWithNestedChildren(
   1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
   1073→  render: (child: React.ReactNode) => JSX.Element,
   1074→) {
-  1075→  if (asChild && React.isValidElement(children)) {
-      →  …
-  1081→const srOnlyStyles …
+  1081→const srOnlyStyles = {

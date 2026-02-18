@@ -2,17 +2,24 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1012 tokens)
-
-CHANGELOG.md
+budget: 1000 (1005 tokens)
 
 Readme.md
      1→# Commander.js
      8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
      9→
       →…
+    61→## Installation
+    67→## Quick Start
+   147→## Declaring _program_ variable
+   177→## Options
+   523→## Commands
    613→#### More configuration
    625→#### Custom argument processing
+   754→## Automated help
+   956→## Custom event listeners
+   966→## Bits and pieces
+  1164→## Support
 
 docs/deprecated.md
      1→# Deprecated
@@ -56,12 +63,10 @@ lib/command.js
   1127→  _prepareForParse() {
 
 lib/error.js
-     2→ * CommanderError class
      4→class CommanderError extends Error {
      6→   * Constructs the CommanderError class
       →   …
     11→  constructor(exitCode, code, message) {
-    23→ * InvalidArgumentError class
     25→class InvalidArgumentError extends CommanderError {
     27→   * Constructs the InvalidArgumentError class
       →   …
@@ -69,9 +74,6 @@ lib/error.js
 
 lib/help.js
     12→class Help {
-   733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
-   734→ *
-      → …
    740→function stripColor(str) {
 
 lib/option.js
@@ -101,9 +103,6 @@ lib/option.js
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
-    49→ * Find close matches, restricted to same number of edits.
-    50→ *
-      → …
     56→function suggestSimilar(word, candidates) {
 
 package-support.json

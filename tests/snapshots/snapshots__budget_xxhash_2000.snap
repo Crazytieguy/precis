@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2021 tokens)
+budget: 2000 (2026 tokens)
 
 README.md
      1→# xxhash
@@ -33,6 +33,10 @@ README.md
 bench_test.go
      3→import …
      8→var benchmarks = []struct {
+    19→func BenchmarkSum64(b *testing.B) {
+    34→func BenchmarkSum64String(b *testing.B) {
+    46→func BenchmarkDigestBytes(b *testing.B) {
+    63→func BenchmarkDigestString(b *testing.B) {
 
 dynamic/dynamic_test.go
      6→import …
@@ -49,17 +53,17 @@ dynamic/plugin.go
     16→	want = uint64(0x02a2e85470d6fd96)
     19→func TestSum(t *testing.T) {
     20→	got := xxhash.Sum64String(in)
+    21→	if got != want {
       →	…
     26→func TestDigest(t *testing.T) {
     27→	for chunkSize := 1; chunkSize <= len(in); chunkSize++ {
-      →	…
+    28→		name := fmt.Sprintf("[chunkSize=%d]", chunkSize)
+      →		…
 
 xxhash.go
      5→import …
     19→// Store the primes in an array as well.
-    20→//
-    21→// The consts are used when possible in Go code to avoid MOVs but we need a
-    22→// contiguous array for the assembly code.
+      →…
     23→var primes = [...]uint64{prime1, prime2, prime3, prime4, prime5}
     25→// Digest implements hash.Hash64.
     26→//
@@ -156,8 +160,6 @@ xxhash_unsafe.go
     49→	// savings of 6 in the inliner's cost model.
     50→	return len(s), nil
     51→}
-    53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
-    54→// of the first two words is the same as the layout of a string.
     55→type sliceHeader struct {
     56→	s   string
     57→	cap int

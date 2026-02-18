@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4004 tokens)
+budget: 4000 (3994 tokens)
 
 BuildMany.ts
      1→import { Iterator, IsOptionalKeysOf, UpdateAt, ValueOf } from './helpers';
@@ -32,6 +32,7 @@ DistributeUnions.ts
     24→ * It does this in 3 main steps:
     25→ *  - 1. Find all unions contained in the data structure, that matches `p`
     26→ *    with `FindUnions<a, p>`. It returns a tree of [union, path] pairs.
+    27→ *  - 2. this tree is passed to the `Distribute` type level function,
       → …
     41→export type DistributeMatchingUnions<a, p> = IsAny<a> extends true
     42→  ? any
@@ -46,6 +47,7 @@ DistributeUnions.ts
     69→ * Kinds are types of types.
     70→ *
     71→ * kind UnionConfig = {
+    72→ *  cases: Union<{
       → …
     80→export type FindUnions<
     81→  a,
@@ -140,7 +142,16 @@ InvertPattern.ts
    307→type InvertPatternForExcludeInternal …
 
 IsMatching.ts
-     1→import { …
+     1→import {
+     2→  Primitives,
+     3→  IsPlainObject,
+     4→  IsUnion,
+     5→  ValueOf,
+     6→  Length,
+     7→  IsLiteral,
+     8→  All,
+     9→  Equal,
+    10→} from './helpers';
     12→type IsMatchingTuple …
     26→type IsMatchingArray …
     57→export type IsMatching …
@@ -154,11 +165,7 @@ Match.ts
      6→import type { FindSelected } from './FindSelected';
      8→export type PickReturnValue<a, b> = a extends symbols.unset ? b : a;
     10→interface NonExhaustiveError<i> {
-    11→  __nonExhaustive: never;
-    12→}
     14→interface TSPatternError<i> {
-    15→  __nonExhaustive: never;
-    16→}
     19→ * #### Match
     20→ * An interface to create a pattern matching clause.
     22→export type Match<
@@ -227,20 +234,12 @@ Match.ts
    222→   *
    223→   * [Read the documentation for `.narrow() on GitHub](https://github.com/gvergnaud/ts-pattern#narrow)
    225→  narrow(): Match<DeepExcludeAll<i, handledCases>, o, [], inferredOutput>;
-   229→ * Potential for optimization here:
-   230→ *
-   231→ * Since DeepExclude distributes the union of the input type, it can
-      → …
    245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
    246→  ? never
    247→  : tupleList extends [infer excluded, ...infer tail]
    248→  ? DeepExcludeAll<DeepExclude<a, excluded>, tail>
    249→  : a;
    251→type MakeTuples<ps extends readonly any[], value> = {
-   256→ * The type of an overloaded function for `.exhaustive`,
-   257→ * permitting calling it with or without a catch-all handler function.
-   258→ *
-      → …
    261→type Exhaustive<output, inferredOutput> = {
 
 Pattern.ts

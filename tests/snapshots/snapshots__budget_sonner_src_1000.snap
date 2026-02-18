@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1017 tokens)
+budget: 1000 (1013 tokens)
 
 assets.tsx
      2→import React from 'react';
@@ -28,7 +28,10 @@ hooks.tsx
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
      5→
      6→  React.useEffect(() => {
-      →  …
+     7→    const callback = () => {
+     8→      setIsDocumentHidden(document.hidden);
+     9→    };
+      →    …
 
 index.tsx
      3→import React from 'react';
@@ -38,22 +41,18 @@ index.tsx
      8→import { toast, ToastState } from './state …
      9→import './styles.css …
     10→import { …
-    45→function cn …
-    49→function getDefaultSwipeDirections …
-    64→const Toast …
-   507→function getDocumentDirection …
-   520→function assignOffset …
-   552→function useSonner …
+    45→function cn(...classes: (string | undefined)[]) {
+    49→function getDefaultSwipeDirections(position: string): Array<SwipeDirection> {
+    64→const Toast = (props: ToastProps) => {
+   507→function getDocumentDirection(): ToasterProps['dir'] {
+   520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
+   552→function useSonner() {
 
 state.ts
      1→import type { …
     11→import React from 'react';
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
-    18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
-    19→  toasts: Array<ToastT | ToastToDismiss>;
-    20→  dismissedToasts: Set<string | number>;
-    21→
     22→  constructor …
     29→  subscribe …
     38→  publish …
@@ -77,6 +76,7 @@ state.ts
    282→const getToasts = () => ToastState.getActiveToasts();
    285→export const toast = Object.assign(
    286→  basicToast,
+   287→  {
       →  …
 
 types.ts
@@ -98,10 +98,6 @@ types.ts
     97→export type Position …
     98→export interface HeightT {
    104→interface ToastOptions {
-   105→  className?: string;
-   106→  closeButton?: boolean;
-   107→  descriptionClassName?: string;
-      →  …
    118→type Offset =
    119→  | {
    128→export interface ToasterProps {

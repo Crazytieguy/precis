@@ -43,6 +43,7 @@ configuration/general.md
      6→
      7→```toml
      8→[book]
+     9→title = "Example book"
       →…
     31→## Supported configuration options
     33→It is important to note that **any** relative path specified in the
@@ -93,9 +94,6 @@ configuration/renderers.md
 
 example.rs
      1→fn main() {
-     2→    println!("Hello World!");
-     3→#
-      →…
 
 markdown.md
      1→# Markdown
@@ -218,6 +216,7 @@ theme/syntax-highlighting.md
      8→
      9→~~~markdown
     10→```rust
+    11→fn main() {
       →…
     17→## Supported languages
     68→## Custom theme

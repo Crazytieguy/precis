@@ -22,7 +22,6 @@ __private_api.rs
     39→pub struct GlobalLogger;
     56→fn log_impl …
    108→pub fn loc …
-   112→#[cfg(feature = "kv")]
    113→mod kv_support {
    114→    use crate::kv;
    116→    pub type Value<'a> = kv::Value<'a>;
@@ -39,17 +38,14 @@ kv/error.rs
      6→    inner: Inner,
      7→}
     10→enum Inner {
-    11→    #[cfg(feature = "std")]
-      →    …
     20→    /// Create an error from a message.
     21→    pub fn msg(msg: &'static str) -> Self {
     22→        Error {
       →        …
-    29→    pub(super) fn from_value …
-    37→    pub(super) fn into_value …
+    29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
+    37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
     49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     63→    fn from(_: fmt::Error) -> Self {
-    68→#[cfg(feature = "std")]
     69→mod std_support {
     70→    use super::*;
     71→    use std::{error, io};
@@ -121,12 +117,7 @@ kv/source.rs
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
-   240→#[allow(clippy::needless_lifetimes)] // Not needless.
-   241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
-   242→where
-   243→    T: VisitSource<'kvs> + ?Sized,
-   244→{
-   279→#[cfg(feature = "std")]
+   241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T …
    280→mod std_support {
    281→    use super::*;
    462→pub use VisitSource as Visitor;
@@ -154,11 +145,18 @@ kv/value.rs
    742→        Char(char),
    743→        I64(i64),
    744→        U64(u64),
+   745→        F64(f64),
+   746→        I128(i128),
+   747→        U128(u128),
       →        …
   1123→pub use VisitValue as Visit;
+  1129→macro_rules! as_debug {
+  1139→macro_rules! as_display {
+  1149→macro_rules! as_error {
+  1159→macro_rules! as_serde {
+  1169→macro_rules! as_sval {
 
 lib.rs
-   405→#[macro_use]
    406→mod macros;
    407→mod serde;
    409→#[cfg(feature = "kv")]
@@ -180,7 +178,6 @@ lib.rs
   1483→fn set_logger_inner …
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
-  1599→#[doc(hidden)]
   1600→pub mod __private_api;
   1602→/// The statically resolved maximum log level.
   1603→///

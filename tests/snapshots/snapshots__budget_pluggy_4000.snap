@@ -44,10 +44,13 @@ docs/examples/eggsample-spam/eggsample_spam.py
 docs/examples/toy-example.py
      1→import pluggy
      8→class MySpec:
+    10→
     12→    def myhook(self, arg1, arg2):
     16→class Plugin_1:
+    18→
     20→    def myhook(self, arg1, arg2):
     25→class Plugin_2:
+    27→
     29→    def myhook(self, arg1, arg2):
 
 pyproject.toml
@@ -92,6 +95,14 @@ src/pluggy/__init__.py
       →…
 
 src/pluggy/_callers.py
+     7→from collections.abc import Generator
+     8→from collections.abc import Mapping
+     9→from collections.abc import Sequence
+    10→from typing import cast
+    11→from typing import NoReturn
+    12→from typing import TYPE_CHECKING
+    13→from typing import TypeAlias
+    14→import warnings
     16→from ._hooks import HookImpl
     17→from ._result import HookCallError
     18→from ._result import Result
@@ -110,19 +121,14 @@ src/pluggy/_callers.py
     35→    else:
     36→        teardown = hook_impl.function(*args)
     37→    try:
-      →    …
+    38→        next(teardown)
+      →        …
     60→def _raise_wrapfail …
     70→def _warn_teardown_exception …
     82→def _multicall …
 
 src/pluggy/_hooks.py
     25→from ._result import Result
-    28→_T …
-    29→_F …
-    31→_Namespace …
-    32→_Plugin …
-    33→_HookExec …
-    37→_HookImplFunction …
     40→class HookspecOpts(TypedDict):
     42→
     43→    #: Whether the hook is :ref:`first result only <firstresult>`.
@@ -151,7 +157,6 @@ src/pluggy/_hooks.py
    172→
    173→    __slots__ = ("project_name",)
    174→
-   290→_PYPY …
    358→@final
    359→class HookRelay:
    360→    """Hook holder object for performing 1:N hook calls where N is the number
@@ -159,7 +164,6 @@ src/pluggy/_hooks.py
    362→
    363→    __slots__ = ("__dict__",)
    364→
-   377→_CallHistory …
    382→class HookCaller:
    384→
    385→    __slots__ = (
@@ -185,17 +189,11 @@ src/pluggy/_hooks.py
    577→    def _maybe_apply_history(self, method: HookImpl) -> None:
    593→class _SubsetHookCaller(HookCaller):
    596→
-   618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
-   620→        return [
-   621→            impl
-      →            …
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    628→        return self._orig.spec
-   630→    @property
    631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
-   632→        return self._orig._call_history
    638→@final
    639→class HookImpl:
    640→    """A hook implementation in a :class:`HookCaller`."""
@@ -414,3 +412,5 @@ testing/test_tracer.py
 
 testing/test_warnings.py
     15→def test_teardown_raised_warning(pm: PluginManager) -> None:
+    16→    class Api:
+      →    …

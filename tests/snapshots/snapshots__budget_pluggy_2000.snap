@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2022 tokens)
+budget: 2000 (2020 tokens)
 
 AGENTS.md
      1→# AGENTS.md
@@ -17,8 +17,6 @@ codecov.yml
      7→comment: off
 
 docs/conf.py
-   106→def configure_logging …
-   130→def setup …
 
 pyproject.toml
 
@@ -33,9 +31,7 @@ src/pluggy/__init__.py
      1→__all__ = [
     32→def __getattr__(name: str) -> str:
     33→    if name == "__version__":
-    34→        from importlib.metadata import version
-    35→
-      →…
+      →    …
 
 src/pluggy/_callers.py
     16→from ._hooks import HookImpl
@@ -92,13 +88,10 @@ src/pluggy/_hooks.py
    430→            raise ValueError(
       →            …
    593→class _SubsetHookCaller(HookCaller):
-   596→
-   618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    628→        return self._orig.spec
-   630→    @property
    631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
    638→@final
    639→class HookImpl:
@@ -157,7 +150,11 @@ src/pluggy/_result.py
     28→
     29→    __slots__ = ("_result", "_exception", "_traceback")
     30→
-    31→    def __init__ …
+    31→    def __init__(
+    32→        self,
+    33→        result: ResultType | None,
+    34→        exception: BaseException | None,
+    35→    ) -> None:
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
     44→        """:meta private:"""
@@ -172,9 +169,9 @@ src/pluggy/_result.py
     58→        """:meta private:"""
     59→        __tracebackhide__ = True
       →        …
-    67→    def force_result …
-    80→    def force_exception …
-    91→    def get_result …
+    67→    def force_result(self, result: ResultType) -> None:
+    80→    def force_exception(self, exception: BaseException) -> None:
+    91→    def get_result(self) -> ResultType:
 
 src/pluggy/_tracing.py
      7→from collections.abc import Callable
@@ -213,8 +210,6 @@ testing/conftest.py
     11→def he_pm(request, pm: PluginManager) -> PluginManager:
     23→@pytest.fixture
     24→def pm() -> PluginManager:
-
-testing/test_helpers.py
 
 testing/test_hookcaller.py
     21→def hc …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (2000 tokens)
 
 Cargo.toml
      1→[package]
@@ -22,7 +22,7 @@ src/into_either.rs
     10→/// whether to convert to [`Left`] or [`Right`].
     11→///
     12→/// The [`into_either_with`](IntoEither::into_either_with) method takes a
-      →…
+    13→/// [predicate function](FnOnce) to determine whether to convert to [`Left`] or [`Right`].
     14→pub trait IntoEither: Sized {
     15→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
     16→    /// if `into_left` is `true`.
@@ -86,9 +86,6 @@ src/iterator.rs
     20→    inner: Either<L, R>,
     21→}
     24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
-    25→        IterEither { inner }
-    26→    }
-    42→/// `Either<L, R>` is an iterator if both `L` and `R` are iterators.
     43→impl<L, R> Iterator for Either<L, R>
     44→where
     45→    L: Iterator,
@@ -102,6 +99,12 @@ src/lib.rs
     22→pub mod serde_untagged;
     24→#[cfg(feature = "serde")]
     25→pub mod serde_untagged_optional;
+    27→use core::convert::{AsMut, AsRef};
+    28→use core::fmt;
+    29→use core::future::Future;
+    30→use core::ops::Deref;
+    31→use core::ops::DerefMut;
+    32→use core::pin::Pin;
     35→use std::error::Error;
     37→use std::io::{self, BufRead, Read, Seek, SeekFrom, Write};
     39→pub use crate::Either::{Left, Right};
@@ -132,19 +135,11 @@ src/lib.rs
   1327→    type Target = L::Target;
   1522→macro_rules! check_t {
   1536→fn _unsized_ref_propagation() {
-  1537→    check_t!(str);
-  1538→
-      →…
   1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {
-  1554→    check_t!(::std::path::Path);
-  1555→    check_t!(::std::ffi::OsStr);
-      →    …
 
 src/serde_untagged.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
-    38→#[derive(serde::Serialize, serde::Deserialize)]
-    39→#[serde(untagged)]
     40→enum Either<L, R> {
     41→    Left(L),
     42→    Right(R),
@@ -156,7 +151,8 @@ src/serde_untagged.rs
     49→    R: Serialize,
     50→{
     51→    let untagged = match this {
-      →    …
+    52→        super::Either::Left(left) => Either::Left(left),
+      →        …
     58→pub fn deserialize<'de, L, R, D>(deserializer: D) -> Result<super::Either<L, R>, D::Error>
     59→where
     60→    D: Deserializer<'de>,
@@ -164,12 +160,13 @@ src/serde_untagged.rs
     62→    R: Deserialize<'de>,
     63→{
     64→    match Either::deserialize(deserializer) {
-      →    …
+    65→        Ok(Either::Left(left)) => Ok(super::Either::Left(left)),
+      →        …
 
 src/serde_untagged_optional.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     38→#[derive(Serialize, Deserialize)]
-    39→#[serde(untagged)]
+      →…
     40→enum Either<L, R> {
     41→    Left(L),
     42→    Right(R),

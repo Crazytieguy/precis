@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4060 tokens)
+budget: 4000 (4010 tokens)
 
 comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -147,6 +147,16 @@ range.js
     17→        return new Range(range.raw, options)
     18→      }
     19→    }
+    20→
+    21→    if (range instanceof Comparator) {
+    22→      // just put it in the set and return
+    23→      this.raw = range.value
+    24→      this.set = [[range]]
+    25→      this.formatted = undefined
+    26→      return this
+    27→    }
+    28→
+    29→    this.options = options
       →    …
     73→  get range () {
     74→    if (this.formatted === undefined) {
@@ -161,7 +171,11 @@ range.js
     83→            this.formatted += ' '
     84→          }
     85→          this.formatted += comps[k].toString().trim()
-      →          …
+    86→        }
+    87→      }
+    88→    }
+    89→    return this.formatted
+    90→  }
     92→  format () {
     93→    return this.range
     94→  }
@@ -181,6 +195,16 @@ range.js
    110→    }
    111→
    112→    const loose = this.options.loose
+   113→    // `1.2.3 - 1.2.4` => `>=1.2.3 <=1.2.4`
+   114→    const hr = loose ? re[t.HYPHENRANGELOOSE] : re[t.HYPHENRANGE]
+   115→    range = range.replace(hr, hyphenReplace(this.options.includePrerelease))
+   116→    debug('hyphen replace', range)
+   117→
+   118→    // `> 1.2.3 < 1.2.5` => `>1.2.3 <1.2.5`
+   119→    range = range.replace(re[t.COMPARATORTRIM], comparatorTrimReplace)
+   120→    debug('comparator trim', range)
+   121→
+   122→    // `~ 1.2.3` => `~1.2.3`
       →    …
    170→  intersects (range, options) {
    171→    if (!(range instanceof Range)) {
@@ -195,7 +219,14 @@ range.js
    180→            isSatisfiable(rangeComparators, options) &&
    181→            thisComparators.every((thisComparator) => {
    182→              return rangeComparators.every((rangeComparator) => {
-      →              …
+   183→                return thisComparator.intersects(rangeComparator, options)
+   184→              })
+   185→            })
+   186→          )
+   187→        })
+   188→      )
+   189→    })
+   190→  }
    193→  test (version) {
    194→    if (!version) {
    195→      return false
@@ -209,49 +240,31 @@ range.js
    203→      }
    204→    }
    205→
-      →…
+   206→    for (let i = 0; i < this.set.length; i++) {
+   207→      if (testSet(this.set[i], version, this.options)) {
+   208→        return true
+   209→      }
+   210→    }
+   211→    return false
+   212→  }
    218→const cache = new LRU()
    233→const isNullSet = c => c.value === '<0.0.0-0'
    234→const isAny = c => c.value === ''
    238→const isSatisfiable = (comparators, options) => {
-   239→  let result = true
-      →  …
    257→const parseComparator = (comp, options) => {
-   258→  comp = comp.replace(re[t.BUILD], '')
-      →  …
    271→const isX = id => !id || id.toLowerCase() === 'x' || id === '*'
    280→const replaceTildes = (comp, options) => {
-   281→  return comp
-      →  …
    288→const replaceTilde = (comp, options) => {
-   289→  const r = options.loose ? re[t.TILDELOOSE] : re[t.TILDE]
-      →  …
    324→const replaceCarets = (comp, options) => {
-   325→  return comp
-      →  …
    332→const replaceCaret = (comp, options) => {
-   333→  debug('caret', comp, options)
-      →  …
    385→const replaceXRanges = (comp, options) => {
-   386→  debug('replaceXRanges', comp, options)
-      →  …
    393→const replaceXRange = (comp, options) => {
-   394→  comp = comp.trim()
-      →  …
    470→const replaceStars = (comp, options) => {
-   471→  debug('replaceStars', comp, options)
-      →  …
    478→const replaceGTE0 = (comp, options) => {
-   479→  debug('replaceGTE0', comp, options)
-      →  …
    491→const hyphenReplace = incPr => ($0,
    492→  from, fM, fm, fp, fpr, fb,
    493→  to, tM, tm, tp, tpr) => {
-   494→  if (isX(fM)) {
-      →  …
    523→const testSet = (set, version, options) => {
-   524→  for (let i = 0; i < set.length; i++) {
-      →  …
 
 semver.js
      9→class SemVer {
@@ -269,12 +282,7 @@ semver.js
     21→      throw new TypeError(`Invalid version. Must be a string. Got type "${typeof version}".`)
     22→    }
     23→
-    24→    if (version.length > MAX_LENGTH) {
-    25→      throw new TypeError(
-    26→        `version is longer than ${MAX_LENGTH} characters`
-    27→      )
-    28→    }
-      →    …
+      →…
     81→  format () {
     82→    this.version = `${this.major}.${this.minor}.${this.patch}`
     83→    if (this.prerelease.length) {
@@ -299,7 +307,7 @@ semver.js
    104→    }
    105→
    106→    return this.compareMain(other) || this.comparePre(other)
-   107→  }
+      →    …
    109→  compareMain (other) {
    110→    if (!(other instanceof SemVer)) {
    111→      other = new SemVer(other, this.options)
@@ -314,12 +322,7 @@ semver.js
    120→    if (this.minor < other.minor) {
    121→      return -1
    122→    }
-   123→    if (this.minor > other.minor) {
-   124→      return 1
-   125→    }
-   126→    if (this.patch < other.patch) {
-   127→      return -1
-      →      …
+      →    …
    135→  comparePre (other) {
    136→    if (!(other instanceof SemVer)) {
    137→      other = new SemVer(other, this.options)
@@ -334,12 +337,7 @@ semver.js
    146→      return 0
    147→    }
    148→
-   149→    let i = 0
-   150→    do {
-   151→      const a = this.prerelease[i]
-   152→      const b = other.prerelease[i]
-   153→      debug('prerelease compare', i, a, b)
-      →      …
+      →…
    168→  compareBuild (other) {
    169→    if (!(other instanceof SemVer)) {
    170→      other = new SemVer(other, this.options)
@@ -354,12 +352,7 @@ semver.js
    179→        return 0
    180→      } else if (b === undefined) {
    181→        return 1
-   182→      } else if (a === undefined) {
-   183→        return -1
-   184→      } else if (a === b) {
-   185→        continue
-   186→      } else {
-      →      …
+      →        …
    194→  inc (release, identifier, identifierBase) {
    195→    if (release.startsWith('pre')) {
    196→      if (!identifier && identifierBase === false) {
@@ -374,9 +367,4 @@ semver.js
    205→      }
    206→    }
    207→
-   208→    switch (release) {
-   209→      case 'premajor':
-   210→        this.prerelease.length = 0
-   211→        this.patch = 0
-   212→        this.minor = 0
-      →        …
+      →…

@@ -2,12 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1001 tokens)
+budget: 1000 (999 tokens)
 
 Readme.md
 
 examples/README.md
      1→# Examples
+
+examples/package.json
 
 jsr.json
 
@@ -18,6 +20,7 @@ src/error.ts
      5→export type Failure = {
     17→ * `StructError` objects are thrown (or returned) when validation fails.
     18→ *
+    19→ * Validation logic is design to exit early for maximum performance. The error
       → …
     25→export class StructError extends TypeError {
     26→  value: any
@@ -100,7 +103,6 @@ src/structs/utilities.ts
 src/utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'
-     5→ * Check if a value is an iterator.
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
     16→export function isObject …
     24→export function isNonArrayObject …
@@ -112,7 +114,6 @@ src/utils.ts
    402→type _InferTuple …
 
 test/index.ts
-     2→ * A helper for testing type signatures.
      5→export function test<T>(fn: (x: unknown) => T) {}
 
 tsconfig.json

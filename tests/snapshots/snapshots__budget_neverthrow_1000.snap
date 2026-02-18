@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1010 tokens)
+budget: 1000 (1004 tokens)
 
 CHANGELOG.md
      1→# neverthrow
@@ -31,9 +31,6 @@ src/_internals/error.ts
      5→}
      7→const defaultErrorConfig: ErrorConfig = {
     11→interface NeverThrowError<T, E> {
-    12→  data:
-    13→    | {
-      →    …
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
     29→  result: Result<T, E>,
@@ -99,6 +96,9 @@ src/result.ts
    309→  _unsafeUnwrapErr …
    312→export class Ok<T, E> implements IResult<T, E> {
    419→export class Err<T, E> implements IResult<T, E> {
+
+tests/index.test.ts
+     3→import { …
 
 tests/tsconfig.tests.json
 

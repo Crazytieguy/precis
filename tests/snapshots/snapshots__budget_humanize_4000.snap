@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4077 tokens)
+budget: 4000 (4072 tokens)
 
 README.md
      1→# humanize
@@ -31,6 +31,8 @@ README.md
     34→- Korean
     35→- Norwegian
     36→- Persian
+    37→- Polish
+    38→- Russian
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -78,6 +80,7 @@ README.md
    206→>>> import datetime as dt
    207→>>> humanize.naturaltime(dt.timedelta(seconds=3))
    208→'3 seconds ago'
+   209→>>> _t = humanize.i18n.activate("ru_RU")
       →…
 
 RELEASING.md
@@ -188,9 +191,7 @@ src/humanize/i18n.py
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
     18→_CURRENT = local()
-    21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
-    30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
     40→def _get_default_locale_path() -> pathlib.Path | None:
     51→def get_translation() -> gettext_module.NullTranslations:
@@ -280,10 +281,6 @@ src/humanize/number.py
     12→TYPE_CHECKING = False
     14→    from typing import TypeAlias
     21→def _format_not_finite(value: float) -> str:
-    22→    """Utility function to handle infinite and nan cases."""
-    23→    import math
-    24→
-      →…
     34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
     35→    """Converts an integer to its ordinal as a string.
     36→
@@ -402,6 +399,7 @@ tests/test_i18n.py
     18→def test_i18n() -> None:
    225→class TestActivate:
    226→    expected_msg = (
+   227→        "Humanize cannot determinate the default location of the"
    249→    @freeze_time("2020-02-02")
    250→    def test_en_locale(self) -> None:
    262→    @freeze_time("2020-02-02")

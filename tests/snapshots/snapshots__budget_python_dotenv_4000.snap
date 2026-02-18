@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4052 tokens)
+budget: 4000 (4037 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -76,7 +76,7 @@ src/dotenv/__init__.py
      6→def load_ipython_extension(ipython: Any) -> None:
      7→    from .ipython import load_ipython_extension
      8→
-      →…
+     9→    load_ipython_extension(ipython)
     12→def get_cli_string(
     13→    path: Optional[str] = None,
     14→    action: Optional[str] = None,
@@ -91,10 +91,11 @@ src/dotenv/__init__.py
     23→    """
     24→    command = ["dotenv"]
     25→    if quote:
+    26→        command.append(f"-q {quote}")
+    27→    if path:
       →    …
     42→__all__ = [
     43→    "get_cli_string",
-    44→    "load_dotenv",
       →    …
 
 src/dotenv/__main__.py
@@ -244,17 +245,11 @@ src/dotenv/main.py
     13→from .parser import Binding, parse_stream
     14→from .variables import parse_variables
     25→def _load_dotenv_disabled() -> bool:
-    26→    """
-      →    …
     35→def with_warn_for_invalid_lines …
     45→class DotEnv:
     46→    def __init__ …
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
-    65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
-    66→            with open(self.dotenv_path, encoding=self.encoding) as stream:
-    67→                yield stream
-      →                …
     78→    def dict …
     94→    def parse …
    100→    def set_as_environment_variables …
@@ -276,19 +271,17 @@ src/dotenv/main.py
    154→            error = err
    155→
    156→    if error is None:
+   157→        shutil.move(dest.name, path)
+   158→    else:
       →    …
    163→def set_key …
    211→def unset_key …
    244→def resolve_variables …
    269→def _walk_to_root(path: str) -> Iterator[str]:
-   270→    """
-      →    …
    287→def find_dotenv …
    338→def load_dotenv …
    387→def dotenv_values …
    423→def _is_file_or_fifo(path: StrPath) -> bool:
-   424→    """
-      →    …
 
 src/dotenv/parser.py
      1→import codecs …
@@ -332,11 +325,6 @@ src/dotenv/variables.py
      2→from abc import ABCMeta, abstractmethod
      3→from typing import Iterator, Mapping, Optional, Pattern
      5→_posix_variable: Pattern[str] = re.compile(
-     6→    r"""
-     7→    \$\{
-     8→        (?P<name>[^\}:]*)
-     9→        (?::-
-      →        …
     18→class Atom(metaclass=ABCMeta):
     19→    def __ne__(self, other: object) -> bool:
     25→    @abstractmethod
@@ -382,6 +370,9 @@ tests/test_ipython.py
 
 tests/test_is_interactive.py
      8→class TestIsInteractive:
+     9→    """Tests for the _is_interactive helper function within find_dotenv.
+    10→
+      →…
     31→
 
 tests/test_main.py
@@ -401,5 +392,7 @@ tests/test_zip_imports.py
     23→class FileToAdd:
     24→    def __init__(self, content: str, path: str):
     29→def setup_zipfile(path, files: List[FileToAdd]):
+    45→@mock.patch.object(sys, "path", list(sys.path))
     46→def test_load_dotenv_gracefully_handles_zip_imports_when_no_env_file(tmp_path):
+    68→@pytest.mark.skipif(sys.platform == "win32", reason="sh module doesn't support Windows")
     69→def test_load_dotenv_outside_zip_file_when_called_in_zipfile(tmp_path):

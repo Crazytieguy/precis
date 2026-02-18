@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4028 tokens)
+budget: 4000 (4029 tokens)
 
 __init__.py
      1→import os
@@ -180,11 +180,9 @@ _importhook.py
     18→from ._transformer import TypeguardTransformer
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
-    44→# The name of this function is magical
     45→def _call_with_frames_removed(
     46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
     47→) -> T:
-    48→    return f(*args, **kwargs)
     51→def optimized_cache_from_source …
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
@@ -202,7 +200,10 @@ _importhook.py
     68→        if isinstance(data, (ast.Module, ast.Expression, ast.Interactive)):
     69→            module = data
     70→        else:
-      →        …
+    71→            if isinstance(data, str):
+    72→                source = data
+    73→            else:
+      →            …
     99→    def exec_module …
    109→class TypeguardFinder(MetaPathFinder):
    110→    """

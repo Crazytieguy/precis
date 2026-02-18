@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3999 tokens)
 
 input.tsx
      3→import * as React from 'react'
@@ -127,7 +127,29 @@ input.tsx
    125→            const c = _s
    126→            if (c === 0) {
    127→              start = 0
-      →              …
+   128→              end = 1
+   129→              direction = 'forward'
+   130→            } else if (c === _ml) {
+   131→              start = c - 1
+   132→              end = c
+   133→              direction = 'backward'
+   134→            } else if (_ml > 1 && _val.length > 1) {
+   135→              let offset = 0
+   136→              if (_prev[0] !== null && _prev[1] !== null) {
+   137→                direction = c < _prev[1] ? 'backward' : 'forward'
+   138→                const wasPreviouslyInserting =
+   139→                  _prev[0] === _prev[1] && _prev[0] < _ml
+   140→                if (direction === 'backward' && !wasPreviouslyInserting) {
+   141→                  offset = -1
+   142→                }
+   143→              }
+   144→
+   145→              start = offset + c
+   146→              end = offset + c + 1
+   147→            }
+   148→          }
+   149→
+      →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
    542→    sheet.insertRule(rule)
@@ -141,20 +163,7 @@ input.tsx
    556→  --nojs-fg: black !important;
    557→
    558→  background-color: var(--nojs-bg) !important;
-   559→  color: var(--nojs-fg) !important;
-   560→  caret-color: var(--nojs-fg) !important;
-   561→  letter-spacing: .25em !important;
-   562→  text-align: center !important;
-   563→  border: 1px solid var(--nojs-fg) !important;
-   564→  border-radius: 4px !important;
-   565→  width: 100% !important;
-   566→}
-   567→@media (prefers-color-scheme: dark) {
-   568→  [data-input-otp] {
-   569→    --nojs-bg: black !important;
-   570→    --nojs-fg: white !important;
-   571→  }
-   572→}`
+      →  …
 
 regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
@@ -192,15 +201,7 @@ types.ts
     20→
     21→    textAlign?: 'left' | 'center' | 'right'
     22→
-    23→    onComplete?: (...args: any[]) => unknown
-    24→    pushPasswordManagerStrategy?: 'increase-width' | 'none'
-    25→    pasteTransformer?: (pasted: string) => string
-    26→
-    27→    containerClassName?: string
-    28→
-    29→    noScriptCSSFallback?: string | null
-    30→  }
-    31→>
+      →…
     32→type InputOTPRenderFn = (props: RenderProps) => React.ReactNode
     33→export type OTPInputProps = OTPInputBaseProps &
     34→  (

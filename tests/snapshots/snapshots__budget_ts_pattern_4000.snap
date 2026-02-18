@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4014 tokens)
+budget: 4000 (4013 tokens)
 
 README.md
     40→## About
@@ -25,10 +25,18 @@ README.md
   1621→## Types
   1766→## Inspirations
 
+benchmarks/always-last-digit.ts
+     2→import { match } from '../src';
+
 benchmarks/package.json
 
 benchmarks/random-digit.ts
      2→import { match } from '../src';
+
+docs/v3-to-v4-migration-guide.md
+     1→# TS-Pattern v3 to v4 Migration Guide
+     3→## Breaking changes
+   122→## New features
 
 examples/gif-fetcher/src/App.tsx
     42→const reducer …
@@ -101,9 +109,6 @@ src/is-matching.ts
      2→import * as P from './patterns';
      3→import { matchPattern } from './internals/helpers';
      4→import { WithDefault } from './types/helpers';
-     7→ * This constraint allows using additional properties
-     8→ * in object patterns. See "should allow targetting unknown properties"
-     9→ * unit test in `is-matching.test.ts`.
     11→type PatternConstraint<T> = T extends readonly any[]
     12→  ? P.Pattern<T>
     13→  : T extends object
@@ -143,8 +148,6 @@ src/match.ts
     34→): Match<input, output> {
     35→  return new MatchExpression(value, unmatched) as any;
     36→}
-    39→ * This class represents a match expression. It follows the
-      → …
     47→class MatchExpression<input, output> {
     48→  constructor …
     50→  with …

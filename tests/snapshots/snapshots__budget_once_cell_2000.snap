@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2027 tokens)
+budget: 2000 (2011 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -31,7 +31,6 @@ README.md
 
 examples/bench_acquire.rs
     14→fn main() {
-    25→#[inline(never)]
     26→fn thread_main(i: usize) {
 
 examples/regex.rs
@@ -43,8 +42,6 @@ src/imp_cs.rs
      4→use portable_atomic::{AtomicBool, Ordering};
      6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
-     9→    initialized: AtomicBool,
-      →    …
     27→    pub(crate) const fn new() -> OnceCell<T> {
     31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
     39→    pub(crate) fn is_initialized …
@@ -56,20 +53,23 @@ src/imp_cs.rs
 src/imp_pl.rs
      1→use std::{ …
      7→pub(crate) struct OnceCell<T> {
-     8→    state: AtomicU8,
-      →    …
     12→const INCOMPLETE: u8 = 0x0;
     13→const RUNNING: u8 = 0x1;
     14→const COMPLETE: u8 = 0x2;
     28→    pub(crate) const fn new() -> OnceCell<T> {
     32→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+    38→    pub(crate) fn is_initialized …
+    45→    pub(crate) fn initialize …
+    80→    pub(crate) fn wait …
+   101→    pub(crate) unsafe fn get_unchecked …
+   109→    pub(crate) fn get_mut …
+   117→    pub(crate) fn into_inner …
    122→struct Guard<'a> {
-   123→    state: &'a AtomicU8,
-      →    …
    128→    fn drop(&mut self) {
    129→        self.state.store(self.new_state, Ordering::Release);
    130→        unsafe {
       →        …
+   139→fn initialize_inner …
 
 src/imp_std.rs
      6→use std::{ …
@@ -124,11 +124,6 @@ src/lib.rs
   1257→        init: Cell<Option<F>>,
   1258→    }
   1374→        type Target = T;
-  1393→    /// ```compile_fail
-  1394→    /// struct S(*mut ());
-  1395→    /// unsafe impl Sync for S {}
-  1396→    ///
-      →    …
   1408→    fn _dummy() {}
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
@@ -170,7 +165,6 @@ src/race.rs
    281→    pub fn get_or_init …
    299→    pub fn get_or_try_init …
    351→pub use self::once_box::OnceBox;
-   353→#[cfg(feature = "alloc")]
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
    360→    /// A thread-safe cell which can be written to only once.
@@ -191,6 +185,8 @@ src/race.rs
 
 tests/it/race_once_box.rs
      2→use std::sync::Barrier;
+    11→struct Heap {
+    16→struct Pebble<T> {
     22→    fn drop(&mut self) {
 
 tests/it/sync_once_cell.rs

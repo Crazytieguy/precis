@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1014 tokens)
+budget: 1000 (1013 tokens)
 
 README.md
      1→# python-dotenv
@@ -62,6 +62,7 @@ src/dotenv/ipython.py
     19→    )
     20→    @argument(
     21→        "-v",
+    22→        "--verbose",
     33→    @line_magic
     34→    def dotenv(self, line):
     35→        args = parse_argstring(self.dotenv, line)
@@ -74,7 +75,6 @@ src/dotenv/main.py
     13→from .parser import Binding, parse_stream
     14→from .variables import parse_variables
     45→class DotEnv:
-    63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
    141→@contextmanager
    142→def rewrite(
@@ -102,8 +102,6 @@ src/dotenv/parser.py
 
 src/dotenv/variables.py
      5→_posix_variable: Pattern[str] = re.compile(
-     6→    r"""
-      →    …
     18→class Atom(metaclass=ABCMeta):
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
@@ -119,9 +117,13 @@ tests/conftest.py
 
 tests/test_cli.py
 
+tests/test_ipython.py
+
 tests/test_is_interactive.py
      8→class TestIsInteractive:
     31→
+
+tests/test_main.py
 
 tests/test_parser.py
    550→def test_parse_stream(test_input, expected):

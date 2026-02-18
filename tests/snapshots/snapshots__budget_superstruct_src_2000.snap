@@ -2,12 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2017 tokens)
+budget: 2000 (2020 tokens)
 
 error.ts
      2→ * A `StructFailure` represents a single specific failure in validation.
      5→export type Failure = {
      6→  value: any
+     7→  key: any
       →  …
     17→ * `StructError` objects are thrown (or returned) when validation fails.
     18→ *
@@ -57,6 +58,7 @@ struct.ts
     30→    const {
     31→      type,
     32→      schema,
+    33→      validator,
       →      …
     67→  assert …
     75→  create …
@@ -168,7 +170,6 @@ structs/utilities.ts
 utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'
-     5→ * Check if a value is an iterator.
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
     13→ * Check if a value is a plain object.
     16→export function isObject(x: unknown): x is object {

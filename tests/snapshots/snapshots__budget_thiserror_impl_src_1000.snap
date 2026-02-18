@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1002 tokens)
+budget: 1000 (994 tokens)
 
 ast.rs
     10→pub enum Input<'a> {
@@ -34,6 +34,8 @@ attr.rs
     51→pub struct Fmt<'a> {
     57→pub enum Trait {
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
+   124→fn parse_error_attribute …
+   196→fn parse_token_expr …
    302→impl ToTokens for Display<'_> {
    303→    fn to_tokens(&self, tokens: &mut TokenStream) {
    342→impl ToTokens for Trait {
@@ -53,7 +55,6 @@ fmt.rs
     15→impl Display<'_> {
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
    166→struct FmtArguments {
-   171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
 
 generics.rs
@@ -74,7 +75,6 @@ lib.rs
     41→    let input = parse_macro_input!(input as DeriveInput);
     42→    expand::derive(&input).into()
     43→}
-    45→#[allow(non_camel_case_types)]
     46→struct private;
     48→impl ToTokens for private {
     49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {

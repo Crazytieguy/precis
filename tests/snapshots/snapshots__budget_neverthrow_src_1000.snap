@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1007 tokens)
+budget: 1000 (1005 tokens)
 
 _internals/error.ts
      1→import { Result } from '../result'
@@ -11,18 +11,13 @@ _internals/error.ts
      5→}
      7→const defaultErrorConfig: ErrorConfig = {
     11→interface NeverThrowError<T, E> {
-    12→  data:
-    13→    | {
-    14→        type: string
-      →        …
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
     29→  result: Result<T, E>,
     30→  config: ErrorConfig = defaultErrorConfig,
     31→): NeverThrowError<T, E> => {
     32→  const data = result.isOk()
-    33→    ? { type: 'Ok', value: result.value }
-      →    …
+      →  …
 
 _internals/utils.ts
      1→import { Result, ok, err } from '../result'
@@ -95,4 +90,8 @@ result.ts
    299→  _unsafeUnwrap …
    309→  _unsafeUnwrapErr …
    312→export class Ok<T, E> implements IResult<T, E> {
+   405→  _unsafeUnwrap …
+   409→  _unsafeUnwrapErr …
    419→export class Err<T, E> implements IResult<T, E> {
+   505→  _unsafeUnwrap …
+   509→  _unsafeUnwrapErr …

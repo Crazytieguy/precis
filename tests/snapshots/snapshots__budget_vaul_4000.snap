@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4030 tokens)
+budget: 4000 (4023 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -69,10 +69,6 @@ src/context.ts
      1→import React from 'react';
      2→import { DrawerDirection } from './types';
      4→interface DrawerContextValue {
-     5→  drawerRef: React.RefObject<HTMLDivElement>;
-     6→  overlayRef: React.RefObject<HTMLDivElement>;
-     7→  onPress: (event: React.PointerEvent<HTMLDivElement>) => void;
-      →  …
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     38→  drawerRef: { current: null },
       →  …
@@ -87,8 +83,6 @@ src/context.ts
 src/helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
      3→interface Style {
-     4→  [key: string]: string;
-     5→}
      7→const cache = new WeakMap();
      9→export function isInView(el: HTMLElement): boolean {
     23→export function set(el: Element | HTMLElement | null | undefined, styles: Style, ignoreCache = false) {
@@ -158,14 +152,8 @@ src/types.ts
 src/use-composed-refs.ts
      3→import * as React from 'react';
      5→type PossibleRef<T> = React.Ref<T> | undefined;
-     8→ * Set a given ref to a given value
-      → …
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
-    20→ * A utility to compose multiple refs together
-      → …
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
-    28→ * A custom hook that composes multiple refs
-      → …
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 
 src/use-controllable-state.ts
@@ -213,6 +201,16 @@ src/use-position-fixed.ts
     34→    // All browsers on iOS will return true here.
     35→    if (!isSafari()) return;
     36→
+    37→    // If previousBodyPosition is already set, don't set it again.
+    38→    if (previousBodyPosition === null && isOpen && !noBodyStyles) {
+    39→      previousBodyPosition = {
+    40→        position: document.body.style.position,
+    41→        top: document.body.style.top,
+    42→        left: document.body.style.left,
+    43→        height: document.body.style.height,
+    44→        right: 'unset',
+    45→      };
+    46→
       →…
 
 src/use-prevent-scroll.ts
@@ -221,10 +219,6 @@ src/use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
-    11→  /** Whether the scroll lock is disabled. */
-    12→  isDisabled?: boolean;
-    13→  focusCallback?: () => void;
-    14→}
     16→function chain …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {
@@ -253,7 +247,8 @@ src/use-prevent-scroll.ts
     81→    }
     82→
     83→    return () => {
-      →    …
+    84→      preventScrollCount--;
+      →      …
    118→function preventScrollMobileSafari …
    243→function setStyle …
    257→function addEvent …
@@ -350,6 +345,8 @@ test/src/app/without-scaled-background/page.tsx
      6→export default function Page() {
 
 test/tests/base.spec.ts
+     2→import { ANIMATION_DURATION } from './constants';
+     3→import { openDrawer } from './helpers';
 
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;

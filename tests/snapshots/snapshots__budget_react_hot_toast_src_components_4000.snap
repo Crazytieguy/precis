@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4017 tokens)
+budget: 4000 (4025 tokens)
 
 checkmark.tsx
      1→import { styled, keyframes } from 'goober';
@@ -45,7 +45,13 @@ checkmark.tsx
     52→    position: absolute;
     53→    border-right: 2px solid;
     54→    border-bottom: 2px solid;
-      →    …
+    55→    border-color: ${(p) => p.secondary || '#fff'};
+    56→    bottom: 6px;
+    57→    left: 6px;
+    58→    height: 10px;
+    59→    width: 6px;
+    60→  }
+    61→`;
 
 error.tsx
      1→import { styled, keyframes } from 'goober';
@@ -91,7 +97,11 @@ error.tsx
     64→  }
     65→
     66→  &:before {
-      →  …
+    67→    animation: ${secondLineAnimation} 0.15s ease-out forwards;
+    68→    animation-delay: 180ms;
+    69→    transform: rotate(90deg);
+    70→  }
+    71→`;
 
 loader.tsx
      1→import { styled, keyframes } from 'goober';
@@ -137,12 +147,10 @@ toast-bar.tsx
     22→const ToastBarBase = styled('div')`
     23→  :where(&) {
     24→    display: flex;
-    25→    align-items: center;
       →    …
     38→const Message = styled('div')`
     39→  display: flex;
     40→  justify-content: center;
-    41→  margin: 4px 10px;
       →  …
     47→interface ToastBarProps {
     48→  toast: Toast;
@@ -224,15 +232,11 @@ toast-icon.tsx
     13→const IndicatorWrapper = styled('div')`
     14→  position: relative;
     15→  display: flex;
-    16→  justify-content: center;
-    17→  align-items: center;
       →  …
     22→const enter = keyframes`
     23→from {
     24→  transform: scale(0.6);
-    25→  opacity: 0.4;
-    26→}
-      →…
+      →  …
     32→export const AnimatedIconWrapper = styled('div')`
     33→  position: relative;
     34→  transform: scale(0.6);
@@ -302,10 +306,7 @@ toaster.tsx
     24→      if (el) {
     25→        const updateHeight = () => {
     26→          const height = el.getBoundingClientRect().height;
-    27→          onHeightUpdate(id, height);
-    28→        };
-    29→        updateHeight();
-      →        …
+      →          …
     47→const getPositionStyle = (
     48→  position: ToastPosition,
     49→  offset: number
@@ -321,9 +322,6 @@ toaster.tsx
     59→        justifyContent: 'flex-end',
     60→      }
     61→    : {};
-    62→  return {
-    63→    left: 0,
-    64→    right: 0,
       →    …
     76→const activeClass = css`
     77→  z-index: 9999;

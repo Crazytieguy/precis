@@ -2,9 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1010 tokens)
+budget: 1000 (998 tokens)
 
 Cargo.toml
+     1→[package]
+    20→[dependencies]
+    23→[features]
+    28→[dev-dependencies]
+    31→[package.metadata.release]
+    36→[package.metadata.docs.rs]
+    39→[package.metadata.playground]
 
 src/into_either.rs
      4→use super::{Either, Left, Right};
@@ -33,6 +40,7 @@ src/iterator.rs
     13→/// Iterator that maps left or right iterators to corresponding `Either`-wrapped items.
     14→///
     15→/// This struct is created by the [`Either::factor_into_iter`],
+    16→/// [`factor_iter`][Either::factor_iter],
       →…
     19→pub struct IterEither<L, R> {
     20→    inner: Either<L, R>,
@@ -73,27 +81,16 @@ src/lib.rs
   1327→    type Target = L::Target;
   1522→macro_rules! check_t {
   1536→fn _unsized_ref_propagation() {
-  1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {
 
 src/serde_untagged.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
-    38→#[derive(serde::Serialize, serde::Deserialize)]
-      →…
     40→enum Either<L, R> {
-    41→    Left(L),
-    42→    Right(R),
-    43→}
     45→pub fn serialize …
     58→pub fn deserialize …
 
 src/serde_untagged_optional.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
-    38→#[derive(Serialize, Deserialize)]
-      →…
     40→enum Either<L, R> {
-    41→    Left(L),
-    42→    Right(R),
-    43→}
     45→pub fn serialize …
     62→pub fn deserialize …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4032 tokens)
+budget: 4000 (4020 tokens)
 
 __init__.py
      1→from typing import Any, Optional
@@ -45,6 +45,8 @@ __init__.py
     45→    "dotenv_values",
     46→    "get_key",
     47→    "set_key",
+    48→    "unset_key",
+    49→    "find_dotenv",
       →    …
 
 __main__.py
@@ -90,7 +92,8 @@ cli.py
     76→        with open(path) as stream:
     77→            yield stream
     78→    except OSError as exc:
-      →    …
+    79→        print(f"Error opening env file: {exc}", file=sys.stderr)
+    80→        sys.exit(2)
     93→def list_values(ctx: click.Context, output_format: str) -> None:
     94→    """Display all the stored key/value."""
     95→    file = ctx.obj["FILE"]
@@ -99,6 +102,8 @@ cli.py
     98→        values = dotenv_values(stream=stream)
     99→
    100→    if output_format == "json":
+   101→        click.echo(json.dumps(values, indent=2, sort_keys=True))
+   102→    else:
       →    …
    112→@cli.command(name="set")
    113→@click.pass_context
@@ -111,7 +116,9 @@ cli.py
    120→    export = ctx.obj["EXPORT"]
    121→    success, key, value = set_key(file, key, value, quote, export)
    122→    if success:
-      →    …
+   123→        click.echo(f"{key}={value}")
+   124→    else:
+   125→        sys.exit(1)
    128→@cli.command()
    129→@click.pass_context
    130→@click.argument("key", required=True)
@@ -122,7 +129,11 @@ cli.py
    135→    with stream_file(file) as stream:
    136→        values = dotenv_values(stream=stream)
    137→
-      →…
+   138→    stored_value = values.get(key)
+   139→    if stored_value:
+   140→        click.echo(stored_value)
+   141→    else:
+   142→        sys.exit(1)
    145→@cli.command()
    146→@click.pass_context
    147→@click.argument("key", required=True)
@@ -133,7 +144,8 @@ cli.py
    152→    success, key = unset_key(file, key, quote)
    153→    if success:
    154→        click.echo(f"Successfully removed {key}")
-      →        …
+   155→    else:
+   156→        sys.exit(1)
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
@@ -142,7 +154,17 @@ cli.py
    177→        raise click.BadParameter(
    178→            f"Invalid value for '-f' \"{file}\" does not exist.", ctx=ctx
    179→        )
-      →        …
+   180→    dotenv_as_dict = {
+   181→        k: v
+   182→        for (k, v) in dotenv_values(file).items()
+   183→        if v is not None and (override or k not in os.environ)
+   184→    }
+   185→
+   186→    if not commandline:
+   187→        click.echo("No command given.")
+   188→        sys.exit(1)
+   189→
+   190→    run_command([*commandline, *ctx.args], dotenv_as_dict)
    193→def run_command(command: List[str], env: Dict[str, str]) -> None:
    194→    """Replace the current process with the specified command.
    195→
@@ -168,7 +190,9 @@ cli.py
    215→    cmd_env.update(env)
    216→
    217→    if sys.platform == "win32":
-      →    …
+   218→        # execvpe on Windows returns control immediately
+   219→        # rather than once the command has finished.
+      →        …
 
 ipython.py
      1→from IPython.core.magic import Magics, line_magic, magics_class  # type: ignore
@@ -233,27 +257,12 @@ main.py
     14→from .variables import parse_variables
     25→def _load_dotenv_disabled() -> bool:
     26→    """
-    27→    Determine if dotenv loading has been disabled.
-    28→    """
-    29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
       →    …
     35→def with_warn_for_invalid_lines …
     45→class DotEnv:
     46→    def __init__ …
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
-    65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
-    66→            with open(self.dotenv_path, encoding=self.encoding) as stream:
-    67→                yield stream
-    68→        elif self.stream is not None:
-    69→            yield self.stream
-    70→        else:
-    71→            if self.verbose:
-    72→                logger.info(
-    73→                    "python-dotenv could not find configuration file %s.",
-    74→                    self.dotenv_path or ".env",
-    75→                )
-    76→            yield io.StringIO("")
     78→    def dict …
     94→    def parse …
    100→    def set_as_environment_variables …
@@ -284,18 +293,12 @@ main.py
    244→def resolve_variables …
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """
-   271→    Yield directories starting from the given directory up to the root
-   272→    """
-   273→    if not os.path.exists(path):
       →    …
    287→def find_dotenv …
    338→def load_dotenv …
    387→def dotenv_values …
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
-   425→    Return True if `path` exists and is either a regular file or a FIFO.
-   426→    """
-   427→    if os.path.isfile(path):
       →    …
 
 parser.py
@@ -350,14 +353,7 @@ variables.py
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
      7→    \$\{
-     8→        (?P<name>[^\}:]*)
-     9→        (?::-
-    10→            (?P<default>[^\}]*)
-    11→        )?
-    12→    \}
-    13→    """,
-    14→    re.VERBOSE,
-    15→)
+      →    …
     18→class Atom(metaclass=ABCMeta):
     19→    def __ne__(self, other: object) -> bool:
     25→    @abstractmethod

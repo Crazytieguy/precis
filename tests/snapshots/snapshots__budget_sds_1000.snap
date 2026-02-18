@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1013 tokens)
+budget: 1000 (998 tokens)
 
 README.md
 
@@ -20,24 +20,17 @@ sds.c
    449→ * representation stored at 's'. */
    450→#define SDS_LLSTR_SIZE 21
    451→int sdsll2str(char *s, long long value) {
-   452→    char *p, aux;
-   453→    unsigned long long v;
-      →    …
   1137→void *sds_realloc(void *ptr, size_t size) { return s_realloc(ptr,size); }
   1138→void sds_free(void *ptr) { s_free(ptr); }
   1142→#include "testhelp.h"
   1143→#include "limits.h"
   1145→#define UNUSED(x) (void)(x)
   1146→int sdsTest(void) {
-  1147→    {
-  1148→        sds x = sdsnew("foo"), y;
-      →        …
   1325→int main(void) {
-  1326→    return sdsTest();
-  1327→}
 
 sds.h
     34→#define __SDS_H
+    36→#define SDS_MAX_PREALLOC …
     39→#include <sys/types.h>
     40→#include <stdarg.h>
     41→#include <stdint.h>
@@ -60,12 +53,17 @@ sds.h
     69→struct __attribute__ ((__packed__)) sdshdr64 {
     70→    uint64_t len; /* used */
       →    …
-   179→/* sdsalloc() = sdsavail() + sdslen() */
+    76→#define SDS_TYPE_5 …
+    77→#define SDS_TYPE_8 …
+    78→#define SDS_TYPE_16 …
+    79→#define SDS_TYPE_32 …
+    80→#define SDS_TYPE_64 …
+    81→#define SDS_TYPE_MASK …
+    82→#define SDS_TYPE_BITS …
+    83→#define SDS_HDR_VAR …
+    84→#define SDS_HDR …
+    85→#define SDS_TYPE_5_LEN …
    180→static inline size_t sdsalloc(const sds s) {
-   181→    unsigned char flags = s[-1];
-   182→    switch(flags&SDS_TYPE_MASK) {
-   183→        case SDS_TYPE_5:
-      →        …
    255→/* Low level functions exposed to the user API */
    256→sds sdsMakeRoomFor(sds s, size_t addlen);
    262→/* Export the allocator used by SDS to the program using SDS.

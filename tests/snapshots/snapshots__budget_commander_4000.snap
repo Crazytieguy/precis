@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4011 tokens)
+budget: 4000 (4022 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -52,6 +52,8 @@ docs/help-in-depth.md
 
 docs/options-in-depth.md
      2→# Options in Depth
+    15→## Options taking varying numbers of option-arguments
+   148→## Combining short options, and options taking arguments
 
 docs/parsing-and-hooks.md
      1→# Parsing life cycle and hooks
@@ -116,14 +118,20 @@ examples/global-options-nested.js
     10→const program = new Command();
 
 examples/help-centered.mjs
+     1→import { Command, Help } from 'commander';
      7→  formatItem(term, termWidth, description, helper) {
     18→  createCommand(name) {
     21→  createHelp() {
     26→const program = new MyCommand();
 
+examples/help-subcommands-usage.js
+     9→const program = new commander.Command().configureHelp({
+
+examples/hook.js
+
 examples/man-style-help.mjs
      1→import { Command } from 'commander';
-     5→function formatItem …
+     5→function formatItem(term, termWidth, description, helper) {
     25→const program = new Command();
 
 examples/nestedCommands.js
@@ -174,11 +182,14 @@ lib/argument.js
      9→   * @param {string} name
     10→   * @param {string} [description]
     13→  constructor(name, description) {
+    14→    this.description = description || '';
+      →    …
     43→   * Return argument name.
     44→   *
     45→   * @return {string}
     48→  name() {
-    53→   * @package
+    49→    return this._name;
+      →    …
     56→  _collectValue(value, previous) {
     66→   * Set the default value, and optionally supply the description to be displayed in the help.
     67→   *
@@ -186,29 +197,34 @@ lib/argument.js
     69→   * @param {string} [description]
     70→   * @return {Argument}
     73→  default(value, description) {
+    74→    this.defaultValue = value;
+      →    …
     80→   * Set the custom handler for processing CLI command arguments into argument values.
     81→   *
     82→   * @param {Function} [fn]
     83→   * @return {Argument}
     86→  argParser(fn) {
+    87→    this.parseArg = fn;
+      →    …
     92→   * Only allow argument value to be one of choices.
     93→   *
     94→   * @param {string[]} values
     95→   * @return {Argument}
     98→  choices(values) {
+    99→    this.argChoices = values.slice();
+      →    …
    115→   * Make argument required.
    116→   *
    117→   * @returns {Argument}
    119→  argRequired() {
+   120→    this.required = true;
+      →    …
    125→   * Make argument optional.
    126→   *
    127→   * @returns {Argument}
    129→  argOptional() {
-   136→ * Takes an argument and returns its human readable equivalent for help usage.
-   137→ *
-   138→ * @param {Argument} arg
-   139→ * @return {string}
-   140→ * @private
+   130→    this.required = false;
+      →    …
    143→function humanReadableArgName(arg) {
 
 lib/command.js
@@ -216,7 +232,6 @@ lib/command.js
   1127→  _prepareForParse() {
 
 lib/error.js
-     2→ * CommanderError class
      4→class CommanderError extends Error {
      6→   * Constructs the CommanderError class
      7→   * @param {number} exitCode suggested exit code which could be used with process.exit
@@ -231,7 +246,6 @@ lib/error.js
     17→    this.exitCode = exitCode;
     18→    this.nestedError = undefined;
     19→  }
-    23→ * InvalidArgumentError class
     25→class InvalidArgumentError extends CommanderError {
     27→   * Constructs the InvalidArgumentError class
     28→   * @param {string} [message] explanation of why argument is invalid
@@ -285,14 +299,7 @@ lib/help.js
    633→  preformatted(str) {
    650→  formatItem(term, termWidth, description, helper) {
    695→  boxWrap(str, width) {
-   733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
-   734→ *
-   735→ * @param {string} str
-   736→ * @returns {string}
-   737→ * @package
    740→function stripColor(str) {
-   741→  // eslint-disable-next-line no-control-regex
-      →  …
 
 lib/option.js
      3→class Option {
@@ -305,7 +312,6 @@ lib/option.js
    132→  argParser(fn) {
    144→  makeOptionMandatory(mandatory = true) {
    156→  hideHelp(hide = true) {
-   162→   * @package
    165→  _collectValue(value, previous) {
    181→  choices(values) {
    203→  name() {
@@ -313,35 +319,16 @@ lib/option.js
    230→  helpGroup(heading) {
    243→  is(arg) {
    256→  isBoolean() {
-   262→ * This class is to make it easier to work with dual options, without changing the existing
-   263→ * implementation. We support separate dual options for separate positive and negative options,
-      → …
    268→class DualOptions {
    272→  constructor(options) {
    297→  valueFromOption(value, option) {
-   309→ * Convert string from kebab-case to camelCase.
-   310→ *
-   311→ * @param {string} str
-   312→ * @return {string}
-   313→ * @private
    316→function camelcase(str) {
-   323→ * Split the short and long flag out of something like '-m,--mixed <value>'
-   324→ *
-   325→ * @private
    328→function splitOptionFlags(flags) {
 
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
-    49→ * Find close matches, restricted to same number of edits.
-    50→ *
-    51→ * @param {string} word
-    52→ * @param {string[]} candidates
-    53→ * @returns {string}
     56→function suggestSimilar(word, candidates) {
-    57→  if (!candidates || candidates.length === 0) return '';
-    58→  // remove possible duplicates
-      →  …
 
 package-support.json
      2→  "versions": [
@@ -385,6 +372,9 @@ tests/command.createArgument.test.js
 tests/command.createOption.test.js
      4→  constructor(flags, description) {
     11→  createOption(flags, description) {
+
+tests/command.default.test.js
+     6→const execFileAsync …
 
 tests/command.executableSubcommand.mock.test.js
      8→function makeSystemError(code) {
@@ -446,12 +436,30 @@ typings/index.d.ts
     40→export interface ErrorOptions {
     48→export class Argument {
     95→export class Option {
+   115→  constructor …
    210→export class Help {
+   218→  constructor …
+   226→  prepareContext …
+   279→  styleCommandDescription …
+   280→  styleOptionDescription …
+   281→  styleSubcommandDescription …
+   282→  styleArgumentDescription …
+   286→  styleOptionTerm …
+   287→  styleSubcommandTerm …
+   288→  styleArgumentTerm …
    340→export type HelpConfiguration = Partial<Help>;
    342→export interface ParseOptions {
    345→export interface HelpContext {
    349→export interface AddHelpTextContext {
    354→export interface OutputConfiguration {
+   355→  writeOut …
+   356→  writeErr …
+   357→  outputError …
+   359→  getOutHelpWidth …
+   360→  getErrHelpWidth …
+   362→  getOutHasColors …
+   363→  getErrHasColors …
+   364→  stripColor …
    367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
    368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
    370→export type OptionValueSource =
@@ -459,6 +467,11 @@ typings/index.d.ts
    372→  | undefined;
    374→export type OptionValues = Record<string, any>;
    376→export class Command {
+   384→  constructor …
+   493→  argument …
+   528→  helpCommand …
+   718→  storeOptionsAsProperties …
+  1083→  addHelpText …
   1094→export interface CommandOptions {
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1104→export interface ParseOptionsResult {

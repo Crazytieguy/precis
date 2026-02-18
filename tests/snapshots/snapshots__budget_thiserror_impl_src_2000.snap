@@ -2,12 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1996 tokens)
+budget: 2000 (2001 tokens)
 
 ast.rs
      1→use crate::attr::{self, Attrs};
      2→use crate::generics::ParamsInScope;
      3→use crate::unraw::{IdentUnraw, MemberUnraw};
+     4→use proc_macro2::Span …
+     5→use std::fmt::{self, Display} …
+     6→use syn::{ …
     10→pub enum Input<'a> {
     15→pub struct Struct<'a> {
     22→pub struct Enum<'a> {
@@ -23,7 +26,11 @@ ast.rs
     51→    UnitVariant,
     52→}
     55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
+    56→        match &node.data {
+      →        …
    175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+   176→        formatter.write_str(match self {
+      →        …
 
 attr.rs
     11→pub struct Attrs<'a> {
@@ -118,13 +125,7 @@ fmt.rs
     19→            named: user_named_args,
       →            …
    166→struct FmtArguments {
-   167→    named: BTreeSet<IdentUnraw>,
-   168→    first_unnamed: Option<TokenStream>,
-   169→}
-   171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
-   173→    let ahead = input.fork();
-      →    …
 
 generics.rs
      8→pub struct ParamsInScope<'a> {
@@ -149,12 +150,12 @@ lib.rs
     41→    let input = parse_macro_input!(input as DeriveInput);
     42→    expand::derive(&input).into()
     43→}
-    45→#[allow(non_camel_case_types)]
     46→struct private;
     48→impl ToTokens for private {
     49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
     50→        tokens.append(Ident::new(
-      →        …
+    51→            concat!("__private", env!("CARGO_PKG_VERSION_PATCH")),
+      →            …
 
 prop.rs
      1→use crate::ast::{Enum, Field, Struct, Variant};

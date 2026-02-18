@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1003 tokens)
+budget: 1000 (1002 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -46,16 +46,12 @@ cmdk/src/index.tsx
    882→const Dialog …
    899→const Empty …
    909→const Loading …
-   956→ *
-   957→ *
-   958→ * Helpers
-   959→ *
-   960→ *
    963→function findNextSibling(el: Element, selector: string) {
-  1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
-  1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
+
+cmdk/tsup.config.ts
+     1→import { defineConfig } from 'tsup'
 
 package.json
      2→  "name": "cmdk-root",
@@ -74,6 +70,8 @@ playwright.config.ts
 
 pnpm-workspace.yaml
      1→packages:
+
+test/basic.test.ts
 
 test/package.json
 
@@ -113,6 +111,9 @@ website/components/code/index.tsx
      7→const theme = {
     41→export function Code({ children }: { children: string }) {
 
+website/components/icons/index.tsx
+     1→import styles from './icons.module.scss'
+
 website/package.json
 
 website/pages/_app.tsx
@@ -123,6 +124,7 @@ website/pages/_document.tsx
      6→  render() {
 
 website/pages/index.tsx
+    18→import packageJSON from '../../cmdk/package.json'
     29→export default function Index() {
    139→const themes = [
 

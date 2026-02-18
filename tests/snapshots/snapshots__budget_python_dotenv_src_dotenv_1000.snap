@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 tokens)
+budget: 1000 (999 tokens)
 
 __init__.py
      1→from typing import Any, Optional
@@ -57,6 +57,7 @@ ipython.py
     34→    def dotenv(self, line):
     35→        args = parse_argstring(self.dotenv, line)
     36→        # Locate the .env file
+    37→        dotenv_path = args.dotenv_path
       →        …
     48→def load_ipython_extension(ipython):
     49→    """Register the %dotenv magic."""
@@ -66,7 +67,6 @@ main.py
     13→from .parser import Binding, parse_stream
     14→from .variables import parse_variables
     45→class DotEnv:
-    63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
    141→@contextmanager
    142→def rewrite(
@@ -96,8 +96,6 @@ parser.py
 
 variables.py
      5→_posix_variable: Pattern[str] = re.compile(
-     6→    r"""
-      →    …
     18→class Atom(metaclass=ABCMeta):
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...

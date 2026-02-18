@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (2003 tokens)
 
 coercions.ts
      1→import { Struct, is, Coercer } from '../struct.js'
@@ -52,7 +52,10 @@ coercions.ts
     53→      const ret = { ...x }
     54→      let changed = false
     55→
-      →…
+    56→      for (const key in f) {
+    57→        if (ret[key] === undefined) {
+    58→          ret[key] = f[key]
+      →          …
     73→ * Augment a struct to trim string inputs.
     74→ *
     75→ * Note: You must use `create(value, Struct)` on the value to have the coercion
@@ -70,10 +73,6 @@ refinements.ts
     10→  S extends any,
     11→>(struct: Struct<T, S>): Struct<T, S> {
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
-    22→  if (value instanceof Map || value instanceof Set) {
-    23→    return value.size
-    24→  } else {
-      →  …
     30→ * Ensure that a number or date is below a threshold.
     33→export function max<T extends number | Date, S extends any>(
     34→  struct: Struct<T, S>,

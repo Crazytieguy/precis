@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4064 tokens)
+budget: 4000 (4060 tokens)
 
 README.md
      1→# Format
@@ -75,17 +75,14 @@ configuration/general.md
     37→### General metadata
     39→This is general information about your book.
     40→
-    41→- **title:** The title of the book
       →…
     64→### Rust options
     66→Options for the Rust language, relevant to running tests and playground
     67→integration.
-    68→
       →…
     85→### Build options
     87→This controls the build process of your book.
     88→
-    89→```toml
       →…
 
 configuration/preprocessors.md
@@ -101,6 +98,9 @@ configuration/preprocessors.md
     11→  to say, all `README.md` would be rendered to an index file `index.html` in the
     12→  rendered book.
     13→
+    14→The built-in preprocessors can be disabled with the [`build.use-default-preprocessors`] config option.
+    15→
+    16→The community has developed several preprocessors.
       →…
     26→## Custom preprocessor configuration
     28→Preprocessors can be added by including a `preprocessor` table in `book.toml` with the name of the preprocessor.
@@ -167,9 +167,6 @@ configuration/renderers.md
 
 example.rs
      1→fn main() {
-     2→    println!("Hello World!");
-     3→#
-      →…
 
 markdown.md
      1→# Markdown

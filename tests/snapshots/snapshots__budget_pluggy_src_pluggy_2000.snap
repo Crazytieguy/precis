@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2028 tokens)
+budget: 2000 (2026 tokens)
 
 __init__.py
      1→__all__ = [
@@ -71,12 +71,10 @@ _hooks.py
       →            …
    593→class _SubsetHookCaller(HookCaller):
    596→
-   618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    628→        return self._orig.spec
-   630→    @property
    631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
    638→@final
    639→class HookImpl:
@@ -211,6 +209,8 @@ _warnings.py
     17→
     18→    This is an issue in the plugin implementation.
     19→
+    20→    If the exception is unintended, fix the underlying cause.
+    21→
       →…
     26→
     27→    __module__ = "pluggy"

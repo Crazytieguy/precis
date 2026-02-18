@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4012 tokens)
+budget: 4000 (4015 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -172,6 +172,9 @@ apps/test/src/lib/fonts.ts
 apps/test/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
 
+apps/test/src/tests/base.delete-word.spec.ts
+     2→import { modifier } from './util/modifier'
+
 apps/test/src/tests/util/modifier.ts
      1→export const modifier = process.platform === 'darwin' ? 'Meta' : 'Control'
 
@@ -207,7 +210,6 @@ apps/website/src/app/(local-pages)/layout.tsx
      7→export default function RootLayout …
 
 apps/website/src/app/(local-pages)/raw-input/page.tsx
-     3→import React from 'react'
      5→export default function ShadcnPage() {
 
 apps/website/src/app/(local-pages)/shadcn/page.tsx
@@ -342,8 +344,6 @@ packages/input-otp/src/input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(
     14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
-   541→  try {
-      →  …
    553→const NOSCRIPT_CSS_FALLBACK = `
 
 packages/input-otp/src/regexp.ts

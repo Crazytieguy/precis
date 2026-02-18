@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1011 tokens)
+budget: 1000 (1010 tokens)
 
 README.md
      1→# xxhash
@@ -29,12 +29,10 @@ dynamic/plugin.go
 
 xxhash.go
      5→import …
-    19→// Store the primes in an array as well.
-    20→//
-      →…
     23→var primes = [...]uint64{prime1, prime2, prime3, prime4, prime5}
     25→// Digest implements hash.Hash64.
     26→//
+    27→// Note that a zero-valued Digest is not ready to receive writes.
       →…
     29→type Digest struct {
     30→	v1    uint64
@@ -62,7 +60,6 @@ xxhash_asm.go
     10→//
     11→//go:noescape
     12→func Sum64(b []byte) uint64
-    14→//go:noescape
     15→func writeBlocks(d *Digest, b []byte) int
 
 xxhash_other.go
@@ -93,13 +90,14 @@ xxhash_unsafe.go
       →…
     45→func (d *Digest) WriteString(s string) (n int, err error) {
     55→type sliceHeader struct {
-    56→	s   string
-    57→	cap int
-    58→}
 
 xxhash_unsafe_test.go
     13→func TestStringAllocs(t *testing.T) {
     31→func TestInlining(t *testing.T) {
+
+xxhashbench/xxhashbench_test.go
+    18→var sink uint64
+   108→func BenchmarkHashes(b *testing.B) {
 
 xxhsum/xxhsum.go
      3→import …

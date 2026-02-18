@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4017 tokens)
+budget: 4000 (4020 tokens)
 
 Changelog.md
      1→# Changelog
@@ -84,6 +84,8 @@ jsr.json
 
 package.json
 
+rollup.config.js
+
 src/error.ts
      2→ * A `StructFailure` represents a single specific failure in validation.
      5→export type Failure = {
@@ -143,6 +145,7 @@ src/struct.ts
     31→      type,
     32→      schema,
     33→      validator,
+    34→      refiner,
       →      …
     67→  assert …
     75→  create …
@@ -288,10 +291,7 @@ src/structs/utilities.ts
 src/utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'
-     5→ * Check if a value is an iterator.
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
-     9→  return isObject(x) && typeof x[Symbol.iterator] === 'function'
-    10→}
     13→ * Check if a value is a plain object.
     16→export function isObject(x: unknown): x is object {
     21→ * Check if a value is a non-array object.
@@ -334,9 +334,6 @@ src/utils.ts
 
 test/api/create.test.ts
      2→import { …
-
-test/api/is.test.ts
-     2→import { is, string } from '../../src'
 
 test/api/mask.test.ts
      2→import { …
@@ -408,6 +405,12 @@ test/validation/string/invalid.ts
      1→import { string } from '../../../src'
      3→export const Struct = string()
      5→export const data = false
+     7→export const failures = [
+
+test/validation/type/invalid-array.ts
+     1→import { type } from '../../../src'
+     3→export const Struct = type({})
+     5→export const data = []
      7→export const failures = [
 
 test/validation/type/valid-instance.ts

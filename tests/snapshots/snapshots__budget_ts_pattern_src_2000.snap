@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2007 tokens)
+budget: 2000 (2006 tokens)
 
 errors.ts
      2→ * Error when the given input value does not match any included pattern
@@ -39,6 +39,8 @@ is-matching.ts
     53→export function isMatching<const p extends Pattern<any>>(
     54→  ...args: [pattern: p, value?: any]
     55→): boolean | ((vale: any) => boolean) {
+    56→  if (args.length === 1) {
+      →  …
 
 match.ts
      7→type MatchState …
@@ -51,8 +53,6 @@ match.ts
     32→export function match<const input, output = symbols.unset>(
     33→  value: input
     34→): Match<input, output> {
-    39→ * This class represents a match expression. It follows the
-      → …
     47→class MatchExpression<input, output> {
     48→  constructor …
     50→  with …

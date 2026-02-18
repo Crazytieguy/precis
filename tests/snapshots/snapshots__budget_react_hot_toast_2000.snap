@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2029 tokens)
+budget: 2000 (2025 tokens)
 
 README.md
     28→## Features
@@ -30,7 +30,7 @@ site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
 
 site/components/sections/footer.tsx
-     4→export function Footer …
+     4→export function Footer({ noBadge }: { noBadge?: boolean }) {
 
 site/components/sections/toast-example.tsx
    270→export const ToastExample = () => {
@@ -87,9 +87,6 @@ src/components/toast-bar.tsx
     22→const ToastBarBase …
     38→const Message …
     47→interface ToastBarProps {
-    48→  toast: Toast;
-    49→  position?: ToastPosition;
-      →  …
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 
@@ -125,7 +122,6 @@ src/components/toaster.tsx
     86→  reverseOrder,
     87→  position = 'top-center',
     88→  toastOptions,
-    89→  gutter,
       →  …
 
 src/core/store.ts
@@ -224,3 +220,6 @@ tsconfig.json
      4→  "compilerOptions": {
     32→  }
     33→}
+
+tsup.config.ts
+     4→const commonConfig: Options = {

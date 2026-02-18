@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (1996 tokens)
 
 Cargo.toml
      1→[package]
@@ -22,8 +22,6 @@ README.md
 rfcs/0296-structured-logging.md
 
 src/__private_api.rs
-     5→use std::fmt::Arguments;
-     6→use std::panic::Location;
      7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -37,7 +35,6 @@ src/__private_api.rs
     39→pub struct GlobalLogger;
     56→fn log_impl …
    108→pub fn loc …
-   112→#[cfg(feature = "kv")]
    113→mod kv_support {
    116→    pub type Value<'a> = kv::Value<'a>;
    135→    pub fn capture_error …
@@ -52,8 +49,6 @@ src/kv/error.rs
      6→    inner: Inner,
      7→}
     10→enum Inner {
-    11→    #[cfg(feature = "std")]
-      →    …
     20→    /// Create an error from a message.
     21→    pub fn msg(msg: &'static str) -> Self {
     22→        Error {
@@ -62,7 +57,6 @@ src/kv/error.rs
     37→    pub(super) fn into_value …
     49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     63→    fn from(_: fmt::Error) -> Self {
-    68→#[cfg(feature = "std")]
     69→mod std_support {
     70→    use super::*;
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
@@ -76,8 +70,10 @@ src/kv/error.rs
     90→        fn from(err: io::Error) -> Self {
 
 src/kv/key.rs
+     6→/// A type that can be converted into a [`Key`](struct.Key.html).
      7→pub trait ToKey {
      9→    fn to_key(&self) -> Key<'_>;
+    36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
@@ -122,7 +118,6 @@ src/kv/source.rs
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T …
-   279→#[cfg(feature = "std")]
    280→mod std_support {
    281→    use super::*;
    462→pub use VisitSource as Visitor;
@@ -149,7 +144,6 @@ src/kv/value.rs
    741→        Str(&'v str),
    742→        Char(char),
    743→        I64(i64),
-   744→        U64(u64),
       →        …
   1123→pub use VisitValue as Visit;
 
@@ -158,16 +152,20 @@ src/lib.rs
    407→mod serde;
    409→#[cfg(feature = "kv")]
    410→pub mod kv;
+   421→struct AtomicUsize {
    475→pub enum Level {
    516→    type Err = ParseLevelError;
    636→pub enum LevelFilter {
    666→    type Err = ParseLevelError;
+   781→enum MaybeStaticStr<'a> {
    788→    fn get …
    842→pub struct Record<'a> {
+   858→struct KeyValues<'a>(&'a dyn kv::Source);
   1003→pub struct RecordBuilder<'a> {
   1158→pub struct Metadata<'a> {
   1200→pub struct MetadataBuilder<'a> {
   1249→pub trait Log: Sync + Send {
+  1283→struct NopLogger;
   1483→fn set_logger_inner …
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
@@ -195,7 +193,6 @@ test_max_level_features/Cargo.toml
 
 test_max_level_features/main.rs
      5→use log::set_boxed_logger;
-     6→#[cfg(not(feature = "std"))]
      7→fn set_boxed_logger(logger: Box<dyn Log>) -> Result<(), log::SetLoggerError> {
     11→struct State {
     15→struct Logger(Arc<State>);

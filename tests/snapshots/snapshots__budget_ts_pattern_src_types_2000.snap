@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2005 tokens)
+budget: 2000 (1988 tokens)
 
 BuildMany.ts
      1→import { Iterator, IsOptionalKeysOf, UpdateAt, ValueOf } from './helpers';
@@ -94,11 +94,7 @@ IsMatching.ts
 Match.ts
      8→export type PickReturnValue<a, b> = a extends symbols.unset ? b : a;
     10→interface NonExhaustiveError<i> {
-    11→  __nonExhaustive: never;
-      →  …
     14→interface TSPatternError<i> {
-    15→  __nonExhaustive: never;
-      →  …
     19→ * #### Match
     20→ * An interface to create a pattern matching clause.
     22→export type Match<
@@ -159,7 +155,7 @@ Pattern.ts
    152→ * [Read the documentation for `P.Pattern` on GitHub](https://github.com/gvergnaud/ts-pattern#patterns)
    153→ *
    154→ * @example
-      → …
+   155→ * const pattern: P.Pattern<User> = { name: P.string }
    157→export type Pattern<a = unknown> = unknown extends a
    158→  ? UnknownValuePattern
    159→  : KnownPattern<a>;

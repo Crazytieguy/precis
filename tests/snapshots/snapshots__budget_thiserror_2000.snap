@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1995 tokens)
+budget: 2000 (1997 tokens)
 
 Cargo.toml
 
@@ -79,8 +79,6 @@ impl/src/lib.rs
     48→impl ToTokens for private {
     49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
 
-impl/src/prop.rs
-
 impl/src/scan_expr.rs
      1→use self::{Action::*, Input::*};
      6→enum Input {
@@ -117,7 +115,6 @@ src/aserror.rs
 src/display.rs
      3→use std::path::{self, Path, PathBuf};
      6→pub trait AsDisplay<'a>: Sealed {
-     7→    // TODO: convert to generic associated type.
     11→    fn as_display …
     18→    type Target = &'a T;
     20→    fn as_display …
@@ -128,7 +125,6 @@ src/display.rs
     39→    #[inline]
     40→    fn as_display(&'a self) -> Self::Target {
     46→pub trait Sealed {}
-    58→#[cfg(not(feature = "std"))]
     59→mod placeholder {
     60→    use super::{AsDisplay, Sealed};
     63→    #[allow(dead_code)]
@@ -139,7 +135,6 @@ src/display.rs
     76→        fn fmt …
 
 src/lib.rs
-   283→#[cfg(error_generic_member_access)]
    284→mod provide;
    287→pub use thiserror_impl::*;
 
@@ -183,6 +178,8 @@ tests/test_path.rs
     29→pub struct UnsizedError {
     35→pub enum BothError {
 
+tests/test_source.rs
+
 tests/ui/display-underscore.rs
      5→pub struct Error;
 
@@ -207,11 +204,17 @@ tests/ui/from-backtrace-backtrace.rs
 tests/ui/from-not-source.rs
      4→pub struct Error {
 
+tests/ui/invalid-input-impl-anyway.rs
+     5→pub struct MyError;
+
 tests/ui/missing-display.rs
      4→pub enum MyError {
 
 tests/ui/missing-fmt.rs
      4→pub enum Error {
+
+tests/ui/numbered-positional-tuple.rs
+     5→pub struct Error(u32);
 
 tests/ui/raw-identifier.rs
      5→pub struct Error {

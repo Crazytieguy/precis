@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1005 tokens)
+budget: 1000 (1012 tokens)
 
 into_either.rs
      4→use super::{Either, Left, Right};
@@ -31,12 +31,17 @@ iterator.rs
     13→/// Iterator that maps left or right iterators to corresponding `Either`-wrapped items.
     14→///
     15→/// This struct is created by the [`Either::factor_into_iter`],
+    16→/// [`factor_iter`][Either::factor_iter],
       →…
     19→pub struct IterEither<L, R> {
     20→    inner: Either<L, R>,
     21→}
     24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
-    43→impl<L, R> Iterator for Either<L, R> …
+    43→impl<L, R> Iterator for Either<L, R>
+    44→where
+    45→    L: Iterator,
+    46→    R: Iterator<Item = L::Item>,
+    47→{
     48→    type Item = L::Item;
    185→    type Item = Either<L::Item, R::Item>;
 
@@ -51,6 +56,8 @@ lib.rs
     41→/// The enum `Either` with variants `Left` and `Right` is a general purpose
     42→/// sum type with two cases.
     43→///
+    44→/// The `Either` type is symmetric and treats its variants the same way, without
+    45→/// preference.
       →…
     49→pub enum Either<L, R> {
     50→    /// A value of type `L`.
@@ -71,27 +78,20 @@ lib.rs
   1327→    type Target = L::Target;
   1522→macro_rules! check_t {
   1536→fn _unsized_ref_propagation() {
-  1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {
 
 serde_untagged.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
-    38→#[derive(serde::Serialize, serde::Deserialize)]
-    39→#[serde(untagged)]
     40→enum Either<L, R> {
     41→    Left(L),
-    42→    Right(R),
-    43→}
+      →    …
     45→pub fn serialize …
     58→pub fn deserialize …
 
 serde_untagged_optional.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
-    38→#[derive(Serialize, Deserialize)]
-      →…
     40→enum Either<L, R> {
     41→    Left(L),
-    42→    Right(R),
-    43→}
+      →    …
     45→pub fn serialize …
     62→pub fn deserialize …

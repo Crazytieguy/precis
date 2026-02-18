@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1003 tokens)
+budget: 1000 (1000 tokens)
 
 error.ts
      2→ * A `StructFailure` represents a single specific failure in validation.
@@ -27,7 +27,7 @@ struct.ts
      2→import { StructError, Failure } from './error.js'
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
      6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
-      → …
+     7→ * validate unknown input data against the struct.
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
@@ -98,7 +98,6 @@ structs/utilities.ts
 utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'
-     5→ * Check if a value is an iterator.
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
     16→export function isObject …
     24→export function isNonArrayObject …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4002 tokens)
+budget: 4000 (3998 tokens)
 
 CHANGELOG.md
 
@@ -213,7 +213,6 @@ version.go
     11→	"strings"
     12→	"sync"
     13→)
-    15→// The compiled regular expression used to test the validity of a version.
     16→var (
     17→	versionRegexp     *regexp.Regexp
     18→	versionRegexpOnce sync.Once
@@ -221,14 +220,13 @@ version.go
     20→	semverRegexpOnce  sync.Once
     23→func getVersionRegexp() *regexp.Regexp {
     30→func getSemverRegexp() *regexp.Regexp {
-    37→// The raw regular expression string used for testing the validity
-    38→// of a version.
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
-      →		…
+    48→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
+    49→		`?`
     52→// Version represents a single version.
     53→type Version struct {
     54→	metadata string

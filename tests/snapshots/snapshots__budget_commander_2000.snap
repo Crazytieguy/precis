@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2033 tokens)
+budget: 2000 (2008 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -54,56 +54,37 @@ docs/release-policy.md
 docs/terminology.md
      1→# Terminology
 
+eslint.config.js
+
 esm.mjs
      1→import commander from './index.js';
 
 examples/custom-command-class.js
      7→  createCommand(name) {
     15→function inspectCommand(command) {
+    22→const program …
 
 examples/global-options-added.js
+    16→class MyRootCommand extends Command {
     17→  createCommand(name) {
+    24→const program = new MyRootCommand();
+
+examples/help-centered.mjs
+    26→const program = new MyCommand();
 
 jest.config.js
      1→const config = {
 
 lib/argument.js
      3→class Argument {
-     5→   * Initialize a new command argument with the given name and description.
-     6→   * The default is that the argument is required, and you can explicitly
-      →   …
     13→  constructor(name, description) {
-    43→   * Return argument name.
-    44→   *
-      →   …
     48→  name() {
-    53→   * @package
     56→  _collectValue(value, previous) {
-    66→   * Set the default value, and optionally supply the description to be displayed in the help.
-    67→   *
-      →   …
     73→  default(value, description) {
-    80→   * Set the custom handler for processing CLI command arguments into argument values.
-    81→   *
-      →   …
     86→  argParser(fn) {
-    92→   * Only allow argument value to be one of choices.
-    93→   *
-      →   …
     98→  choices(values) {
-   115→   * Make argument required.
-   116→   *
-      →   …
    119→  argRequired() {
-   125→   * Make argument optional.
-   126→   *
-      →   …
    129→  argOptional() {
-   136→ * Takes an argument and returns its human readable equivalent for help usage.
-   137→ *
-   138→ * @param {Argument} arg
-   139→ * @return {string}
-   140→ * @private
    143→function humanReadableArgName(arg) {
 
 lib/command.js
@@ -111,7 +92,6 @@ lib/command.js
   1127→  _prepareForParse() {
 
 lib/error.js
-     2→ * CommanderError class
      4→class CommanderError extends Error {
      6→   * Constructs the CommanderError class
      7→   * @param {number} exitCode suggested exit code which could be used with process.exit
@@ -120,7 +100,6 @@ lib/error.js
     11→  constructor(exitCode, code, message) {
     12→    super(message);
       →    …
-    23→ * InvalidArgumentError class
     25→class InvalidArgumentError extends CommanderError {
     27→   * Constructs the InvalidArgumentError class
     28→   * @param {string} [message] explanation of why argument is invalid
@@ -131,6 +110,29 @@ lib/error.js
 lib/help.js
     12→class Help {
     13→  constructor() {
+    29→  prepareContext(contextOptions) {
+    40→  visibleCommands(cmd) {
+    62→  compareOptions(a, b) {
+    79→  visibleOptions(cmd) {
+   112→  visibleGlobalOptions(cmd) {
+   139→  visibleArguments(cmd) {
+   162→  subcommandTerm(cmd) {
+   182→  optionTerm(option) {
+   193→  argumentTerm(argument) {
+   205→  longestSubcommandTermLength(cmd, helper) {
+   224→  longestOptionTermLength(cmd, helper) {
+   241→  longestGlobalOptionTermLength(cmd, helper) {
+   258→  longestArgumentTermLength(cmd, helper) {
+   276→  commandUsage(cmd) {
+   300→  commandDescription(cmd) {
+   313→  subcommandDescription(cmd) {
+   325→  optionDescription(option) {
+   372→  argumentDescription(argument) {
+   403→  formatItemList(heading, items, helper) {
+   417→  groupItems(unsortedItems, visibleItems, getGroup) {
+   443→  formatHelp(cmd, helper) {
+   535→  displayWidth(str) {
+   545→  styleTitle(str) {
    549→  styleUsage(str) {
    563→  styleCommandDescription(str) {
    566→  styleOptionDescription(str) {
@@ -144,14 +146,11 @@ lib/help.js
    600→  styleArgumentText(str) {
    603→  styleSubcommandText(str) {
    606→  styleCommandText(str) {
-   733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
-   734→ *
-   735→ * @param {string} str
-   736→ * @returns {string}
-   737→ * @package
+   618→  padWidth(cmd, helper) {
+   633→  preformatted(str) {
+   650→  formatItem(term, termWidth, description, helper) {
+   695→  boxWrap(str, width) {
    740→function stripColor(str) {
-   741→  // eslint-disable-next-line no-control-regex
-      →  …
 
 lib/option.js
      3→class Option {
@@ -171,8 +170,6 @@ lib/option.js
    230→  helpGroup(heading) {
    243→  is(arg) {
    256→  isBoolean() {
-   262→ * This class is to make it easier to work with dual options, without changing the existing
-      → …
    268→class DualOptions {
    272→  constructor(options) {
    297→  valueFromOption(value, option) {
@@ -182,10 +179,6 @@ lib/option.js
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
-    49→ * Find close matches, restricted to same number of edits.
-    50→ *
-    51→ * @param {string} word
-      → …
     56→function suggestSimilar(word, candidates) {
 
 package-support.json
@@ -198,6 +191,9 @@ package.json
 tests/command.createOption.test.js
      4→  constructor(flags, description) {
     11→  createOption(flags, description) {
+
+tests/esm-imports-test.mjs
+     1→import { …
 
 tests/ts-imports.test.ts
      1→import { …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1012 tokens)
+budget: 1000 (1008 tokens)
 
 README.md
      1→# go-multierror
@@ -23,8 +23,11 @@ flatten.go
      7→// a single *Error.
      8→func Flatten(err error) error {
      9→	// If it isn't an *Error, just return the error as-is
+    10→	if _, ok := err.(*Error); !ok {
       →	…
     20→func flatten(err error, flatErr *Error) {
+
+flatten_test.go
 
 format.go
      6→import …
@@ -71,8 +74,6 @@ multierror.go
     42→func (e *Error) GoString() string {
     53→func (e *Error) WrappedErrors() []error {
     71→func (e *Error) Unwrap() error {
-    88→// chain implements the interfaces necessary for errors.Is/As/Unwrap to
-      →…
     99→type chain []error
    102→func (e chain) Error() string {
    108→func (e chain) Unwrap() error {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1013 tokens)
+budget: 1000 (1006 tokens)
 
 components/checkmark.tsx
      1→import { styled, keyframes } from 'goober';
@@ -32,9 +32,10 @@ components/loader.tsx
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
 
 components/toast-bar.tsx
+     4→import { Toast, ToastPosition, resolveValue, Renderable } from '../core/types';
+     5→import { ToastIcon } from './toast-icon';
+     6→import { prefersReducedMotion } from '../core/utils';
     47→interface ToastBarProps {
-    48→  toast: Toast;
-      →  …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 
 components/toast-icon.tsx
@@ -45,8 +46,6 @@ components/toast-icon.tsx
       →  …
 
 components/toaster.tsx
-     1→import { css, setup } from 'goober';
-     2→import * as React from 'react';
     15→const ToastWrapper …
     47→const getPositionStyle …
     76→const activeClass = css`
@@ -67,8 +66,6 @@ core/store.ts
     14→  UPDATE_TOAST,
     15→  UPSERT_TOAST,
     16→  DISMISS_TOAST,
-    17→  REMOVE_TOAST,
-    18→  START_PAUSE,
       →  …
     22→export type Action =
     23→  | {

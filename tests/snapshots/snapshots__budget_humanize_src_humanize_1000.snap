@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1009 tokens)
+budget: 1000 (1010 tokens)
 
 __init__.py
     26→from ._version import __version__
@@ -35,9 +35,7 @@ i18n.py
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
     18→_CURRENT = local()
-    21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
-    30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
     51→def get_translation() -> gettext_module.NullTranslations:
     58→def activate(
@@ -78,7 +76,6 @@ number.py
     12→TYPE_CHECKING = False
     14→    from typing import TypeAlias
     21→def _format_not_finite(value: float) -> str:
-    22→    """Utility function to handle infinite and nan cases."""
     34→def ordinal …
    110→def intcomma …
    195→def intword …
@@ -89,10 +86,15 @@ number.py
    531→def metric …
 
 time.py
+     8→from enum …
+     9→from functools …
     11→from .i18n import _gettext as _
     12→from .i18n import _ngettext
     13→from .number import intcomma
     15→TYPE_CHECKING = False
+    17→    import datetime …
+    18→    from collections.abc …
+    19→    from typing …
     21→__all__ = [
     30→@total_ordering
     31→class Unit(Enum):

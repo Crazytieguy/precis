@@ -12,9 +12,6 @@ codecov.yml
 
 pyproject.toml
 
-scripts/towncrier-draft-to-file.py
-     5→def main() -> int:
-
 src/pluggy/__init__.py
      1→__all__ = [
     32→def __getattr__(name: str) -> str:
@@ -54,7 +51,6 @@ src/pluggy/_hooks.py
    427→        spec_opts: HookspecOpts,
    428→    ) -> None:
    593→class _SubsetHookCaller(HookCaller):
-   596→
    619→    def _hookimpls …
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
@@ -83,6 +79,8 @@ src/pluggy/_result.py
     21→    """Hook was called incorrectly."""
     24→@final
     25→class Result(Generic[ResultType]):
+    26→    """An object used to inspect and set the result in a :ref:`hook wrapper
+    27→    <hookwrappers>`."""
     28→
     29→    __slots__ = ("_result", "_exception", "_traceback")
     30→
@@ -113,7 +111,6 @@ src/pluggy/_warnings.py
     27→    __module__ = "pluggy"
 
 testing/conftest.py
-    11→def he_pm …
     24→def pm() -> PluginManager:
 
 testing/test_hookcaller.py

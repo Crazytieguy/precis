@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4016 tokens)
+budget: 4000 (4029 tokens)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -29,11 +29,6 @@ context.ts
      1→import React from 'react';
      2→import { DrawerDirection } from './types';
      4→interface DrawerContextValue {
-     5→  drawerRef: React.RefObject<HTMLDivElement>;
-     6→  overlayRef: React.RefObject<HTMLDivElement>;
-     7→  onPress: (event: React.PointerEvent<HTMLDivElement>) => void;
-     8→  onRelease: (event: React.PointerEvent<HTMLDivElement> | null) => void;
-      →  …
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     38→  drawerRef: { current: null },
     39→  overlayRef: { current: null },
@@ -108,7 +103,41 @@ index.tsx
     47→  fadeFromIndex?: never;
     48→}
     50→export type DialogProps = {
-   139→export function Root …
+   139→export function Root({
+   140→  open: openProp,
+   141→  onOpenChange,
+   142→  children,
+   143→  onDrag: onDragProp,
+   144→  onRelease: onReleaseProp,
+   145→  snapPoints,
+   146→  shouldScaleBackground = false,
+   147→  setBackgroundColorOnScale = true,
+   148→  closeThreshold = CLOSE_THRESHOLD,
+   149→  scrollLockTimeout = SCROLL_LOCK_TIMEOUT,
+   150→  dismissible = true,
+   151→  handleOnly = false,
+   152→  fadeFromIndex = snapPoints && snapPoints.length - 1,
+   153→  activeSnapPoint: activeSnapPointProp,
+   154→  setActiveSnapPoint: setActiveSnapPointProp,
+   155→  fixed,
+   156→  modal = true,
+   157→  onClose,
+   158→  nested,
+   159→  noBodyStyles = false,
+   160→  direction = 'bottom',
+   161→  defaultOpen = false,
+   162→  disablePreventScroll = true,
+   163→  snapToSequentialPoint = false,
+   164→  preventScrollRestoration = false,
+   165→  repositionInputs = true,
+   166→  onAnimationEnd,
+   167→  container,
+   168→  autoFocus = false,
+   169→}: DialogProps) {
+   170→  const [isOpen = false, setIsOpen] = useControllableState({
+   171→    defaultProp: defaultOpen,
+   172→    prop: openProp,
+      →    …
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
    833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
@@ -116,9 +145,17 @@ index.tsx
    993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
    994→const DOUBLE_TAP_TIMEOUT = 120;
    996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
-  1098→export function NestedRoot …
+  1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
+  1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
+  1100→
+  1101→  if (!onNestedDrag) {
+      →  …
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
-  1130→export function Portal …
+  1130→export function Portal(props: PortalProps) {
+  1131→  const context = useDrawerContext();
+  1132→  const { container = context.container, ...portalProps } = props;
+  1133→
+      →…
   1137→export const Drawer = {
 
 types.ts
@@ -132,14 +169,8 @@ types.ts
 use-composed-refs.ts
      3→import * as React from 'react';
      5→type PossibleRef<T> = React.Ref<T> | undefined;
-     8→ * Set a given ref to a given value
-     9→ * This utility takes care of different types of refs: callback refs and RefObject(s)
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
-    20→ * A utility to compose multiple refs together
-    21→ * Accepts callback refs and RefObject(s)
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
-    28→ * A custom hook that composes multiple refs
-    29→ * Accepts callback refs and RefObject(s)
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 
 use-controllable-state.ts
@@ -154,10 +185,7 @@ use-controllable-state.ts
     42→  const value = isControlled ? prop : uncontrolledProp;
     43→  const handleChange = useCallbackRef(onChange);
     44→
-    45→  const setValue: React.Dispatch<React.SetStateAction<T | undefined>> = React.useCallback(
-    46→    (nextValue) => {
-    47→      if (isControlled) {
-      →      …
+      →…
 
 use-position-fixed.ts
      1→import React from 'react';
@@ -200,8 +228,7 @@ use-position-fixed.ts
     44→        right: 'unset',
     45→      };
     46→
-    47→      // Update the dom inside an animation frame
-      →      …
+      →…
 
 use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
@@ -209,26 +236,14 @@ use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
-    11→  /** Whether the scroll lock is disabled. */
-    12→  isDisabled?: boolean;
-    13→  focusCallback?: () => void;
-    14→}
     16→function chain …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {
     30→  let style = window.getComputedStyle(node);
-    31→  return /(auto|scroll)/.test(style.overflow + style.overflowX + style.overflowY);
-    32→}
+      →  …
     34→export function getScrollParent(node: Element): Element {
     35→  if (isScrollable(node)) {
-    36→    node = node.parentElement as HTMLElement;
-    37→  }
-    38→
-    39→  while (node && !isScrollable(node)) {
-    40→    node = node.parentElement as HTMLElement;
-    41→  }
-    42→
-      →…
+      →  …
     47→const nonTextInputTypes = new Set([
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
@@ -262,11 +277,7 @@ use-prevent-scroll.ts
    272→function scrollIntoView …
    294→export function isInput(target: Element) {
    295→  return (
-   296→    (target instanceof HTMLInputElement && !nonTextInputTypes.has(target.type)) ||
-   297→    target instanceof HTMLTextAreaElement ||
-   298→    (target instanceof HTMLElement && target.isContentEditable)
-   299→  );
-   300→}
+      →  …
 
 use-scale-background.ts
      1→import React, { useMemo } from 'react';
@@ -324,10 +335,4 @@ use-snap-points.ts
     36→  const [windowDimensions, setWindowDimensions] = React.useState(
     37→    typeof window !== 'undefined'
     38→      ? {
-    39→          innerWidth: window.innerWidth,
-    40→          innerHeight: window.innerHeight,
-    41→        }
-    42→      : undefined,
-    43→  );
-    44→
-      →…
+      →      …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4065 tokens)
+budget: 4000 (4012 tokens)
 
 argument.js
      3→class Argument {
@@ -34,13 +34,6 @@ argument.js
     50→  }
     53→   * @package
     56→  _collectValue(value, previous) {
-    57→    if (previous === this.defaultValue || !Array.isArray(previous)) {
-    58→      return [value];
-    59→    }
-    60→
-    61→    previous.push(value);
-    62→    return previous;
-    63→  }
     66→   * Set the default value, and optionally supply the description to be displayed in the help.
     67→   *
     68→   * @param {*} value
@@ -93,14 +86,8 @@ argument.js
    132→  }
    136→ * Takes an argument and returns its human readable equivalent for help usage.
    137→ *
-   138→ * @param {Argument} arg
-   139→ * @return {string}
-   140→ * @private
+      → …
    143→function humanReadableArgName(arg) {
-   144→  const nameOutput = arg.name() + (arg.variadic === true ? '...' : '');
-   145→
-   146→  return arg.required ? '<' + nameOutput + '>' : '[' + nameOutput + ']';
-   147→}
 
 command.js
     13→class Command extends EventEmitter {
@@ -141,12 +128,6 @@ command.js
   1090→  parse(argv, parseOptions) {
   1119→  async parseAsync(argv, parseOptions) {
   1127→  _prepareForParse() {
-  1128→    if (this._savedState === null) {
-  1129→      this.saveStateBeforeParse();
-  1130→    } else {
-  1131→      this.restoreStateBeforeParse();
-  1132→    }
-  1133→  }
   1141→  saveStateBeforeParse() {
   1158→  restoreStateBeforeParse() {
   1748→  parseOptions(args) {
@@ -251,124 +232,126 @@ help.js
    734→ *
    735→ * @param {string} str
    736→ * @returns {string}
-   737→ * @package
+      → …
    740→function stripColor(str) {
-   741→  // eslint-disable-next-line no-control-regex
-   742→  const sgrPattern = /\x1b\[\d*(;\d*)*m/g;
-   743→  return str.replace(sgrPattern, '');
-   744→}
 
 option.js
      3→class Option {
      5→   * Initialize a new `Option` with the given `flags` and `description`.
      6→   *
-      →   …
+     7→   * @param {string} flags
+     8→   * @param {string} [description]
     11→  constructor(flags, description) {
     40→   * Set the default value, and optionally supply the description to be displayed in the help.
     41→   *
-      →   …
+    42→   * @param {*} value
+    43→   * @param {string} [description]
+    44→   * @return {Option}
     47→  default(value, description) {
     54→   * Preset to use when option used without option-argument, especially optional but also boolean and negated.
     55→   * The custom processing (parseArg) is called.
-      →   …
+    56→   *
+    57→   * @example
+    58→   * new Option('--color').default('GREYSCALE').preset('RGB');
+    59→   * new Option('--donate [amount]').preset('20').argParser(parseFloat);
+    60→   *
+    61→   * @param {*} arg
+    62→   * @return {Option}
     65→  preset(arg) {
     71→   * Add option name(s) that conflict with this option.
     72→   * An error will be displayed if conflicting options are found during parsing.
-      →   …
+    73→   *
+    74→   * @example
+    75→   * new Option('--rgb').conflicts('cmyk');
+    76→   * new Option('--js').conflicts(['ts', 'jsx']);
+    77→   *
+    78→   * @param {(string | string[])} names
+    79→   * @return {Option}
     82→  conflicts(names) {
     88→   * Specify implied option values for when this option is set and the implied options are not.
     89→   *
-      →   …
+    90→   * The custom processing (parseArg) is not called on the implied values.
+    91→   *
+    92→   * @example
+    93→   * program
+    94→   *   .addOption(new Option('--log', 'write logging information to file'))
+    95→   *   .addOption(new Option('--trace', 'log extra details').implies({ log: 'trace.txt' }));
+    96→   *
+    97→   * @param {object} impliedOptionValues
+    98→   * @return {Option}
    100→  implies(impliedOptionValues) {
    111→   * Set environment variable to check for option value.
    112→   *
-      →   …
+   113→   * An environment variable is only used if when processed the current option value is
+   114→   * undefined, or the source of the current value is 'default' or 'config' or 'env'.
+   115→   *
+   116→   * @param {string} name
+   117→   * @return {Option}
    120→  env(name) {
    126→   * Set the custom handler for processing CLI option arguments into option values.
    127→   *
-      →   …
+   128→   * @param {Function} [fn]
+   129→   * @return {Option}
    132→  argParser(fn) {
    138→   * Whether the option is mandatory and must have a value after parsing.
    139→   *
-      →   …
+   140→   * @param {boolean} [mandatory=true]
+   141→   * @return {Option}
    144→  makeOptionMandatory(mandatory = true) {
    150→   * Hide option in help.
    151→   *
-      →   …
+   152→   * @param {boolean} [hide=true]
+   153→   * @return {Option}
    156→  hideHelp(hide = true) {
-   162→   * @package
    165→  _collectValue(value, previous) {
-   166→    if (previous === this.defaultValue || !Array.isArray(previous)) {
-      →    …
    175→   * Only allow option value to be one of choices.
    176→   *
-      →   …
+   177→   * @param {string[]} values
+   178→   * @return {Option}
    181→  choices(values) {
    198→   * Return option name.
    199→   *
-      →   …
+   200→   * @return {string}
    203→  name() {
    211→   * Return option name, in a camelcase format that can be used
    212→   * as an object attribute key.
-      →   …
+   213→   *
+   214→   * @return {string}
    217→  attributeName() {
    225→   * Set the help group heading.
    226→   *
-      →   …
+   227→   * @param {string} heading
+   228→   * @return {Option}
    230→  helpGroup(heading) {
    236→   * Check if `arg` matches the short or long flag.
    237→   *
-      →   …
+   238→   * @param {string} arg
+   239→   * @return {boolean}
+   240→   * @package
    243→  is(arg) {
    248→   * Return whether a boolean option.
    249→   *
-      →   …
+   250→   * Options are one of boolean, negated, required argument, or optional argument.
+   251→   *
+   252→   * @return {boolean}
+   253→   * @package
    256→  isBoolean() {
-   262→ * This class is to make it easier to work with dual options, without changing the existing
-   263→ * implementation. We support separate dual options for separate positive and negative options,
-   264→ * like `--build` and `--no-build`, which share a single option value. This works nicely for some
-   265→ * use cases, but is tricky for others where we want separate behaviours despite
-   266→ * the single shared option value.
    268→class DualOptions {
    270→   * @param {Option[]} options
    272→  constructor(options) {
    291→   * Did the value come from the option, and not from possible matching dual option?
    292→   *
-      →   …
+   293→   * @param {*} value
+   294→   * @param {Option} option
+   295→   * @returns {boolean}
    297→  valueFromOption(value, option) {
-   309→ * Convert string from kebab-case to camelCase.
-   310→ *
-   311→ * @param {string} str
-   312→ * @return {string}
-   313→ * @private
    316→function camelcase(str) {
-   317→  return str.split('-').reduce((str, word) => {
-      →  …
-   323→ * Split the short and long flag out of something like '-m,--mixed <value>'
-   324→ *
-   325→ * @private
    328→function splitOptionFlags(flags) {
-   329→  let shortFlag;
-      →  …
 
 suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
-     4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
-     5→  // Calculating optimal string alignment distance, no substring is edited more than once.
-     6→  // (Simple implementation.)
-     7→
-      →…
     49→ * Find close matches, restricted to same number of edits.
     50→ *
-    51→ * @param {string} word
-    52→ * @param {string[]} candidates
-    53→ * @returns {string}
+      → …
     56→function suggestSimilar(word, candidates) {
-    57→  if (!candidates || candidates.length === 0) return '';
-    58→  // remove possible duplicates
-    59→  candidates = Array.from(new Set(candidates));
-    60→
-    61→  const searchingOptions = word.startsWith('--');
-    62→  if (searchingOptions) {
-      →  …

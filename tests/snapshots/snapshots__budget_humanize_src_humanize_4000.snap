@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4058 tokens)
+budget: 4000 (4028 tokens)
 
 __init__.py
      5→from humanize.filesize …
@@ -20,6 +20,8 @@ __init__.py
     34→    "decimal_separator",
     35→    "fractional",
     36→    "intcomma",
+    37→    "intword",
+    38→    "metric",
       →    …
 
 filesize.py
@@ -83,7 +85,9 @@ filesize.py
     92→        return f"{int(bytes_)} Byte"
     93→
     94→    if abs_bytes < base:
-      →    …
+    95→        return f"{int(bytes_)}B" if gnu else f"{int(bytes_)} Bytes"
+    96→
+      →…
 
 i18n.py
      5→import gettext as gettext_module
@@ -93,17 +97,11 @@ i18n.py
     11→    import pathlib
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
-    16→    None: gettext_module.NullTranslations()
-    17→}
     18→_CURRENT = local()
     21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
-    23→    "de_DE": ".",
-      →    …
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
-    32→    "de_DE": ",",
-      →    …
     40→def _get_default_locale_path() -> pathlib.Path | None:
     51→def get_translation() -> gettext_module.NullTranslations:
     52→    try:
@@ -147,30 +145,10 @@ i18n.py
     97→    """Deactivate internationalisation."""
     98→    _CURRENT.locale = None
    101→def _gettext(message: str) -> str:
-   102→    """Get translation.
-   103→
-   104→    Args:
-      →    …
    113→def _pgettext(msgctxt: str, message: str) -> str:
-   114→    """Fetches a particular translation.
-   115→
-   116→    It works with `msgctxt` .po modifiers and allows duplicate keys with different
-      →    …
    129→def _ngettext(message: str, plural: str, num: int) -> str:
-   130→    """Plural version of _gettext.
-   131→
-   132→    Args:
-      →    …
    144→def _gettext_noop(message: str) -> str:
-   145→    """Mark a string as a translation string without translating it.
-   146→
-   147→    Example usage:
-      →    …
    163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
-   164→    """Mark two strings as pluralized translations without translating them.
-   165→
-   166→    Example usage:
-      →    …
    183→def thousands_separator() -> str:
    184→    """Return the thousands separator for a locale, default to comma.
    185→
@@ -236,11 +214,7 @@ number.py
     22→    """Utility function to handle infinite and nan cases."""
     23→    import math
     24→
-    25→    if math.isnan(value):
-    26→        return "NaN"
-    27→    if math.isinf(value) and value < 0:
-    28→        return "-Inf"
-      →        …
+      →…
     34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
     35→    """Converts an integer to its ordinal as a string.
     36→
@@ -310,9 +284,11 @@ time.py
     39→    YEARS = 7
     40→
     41→    def __lt__(self, other: Any) -> Any:
-    47→def _now …
-    53→def _abs_timedelta …
-    68→def _date_and_delta …
+    47→def _now() -> dt.datetime:
+    53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
+    68→def _date_and_delta(
+    69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
+    70→) -> tuple[Any, Any]:
     95→def naturaldelta(
     96→    value: dt.timedelta | float,
     97→    months: bool = True,
@@ -343,7 +319,9 @@ time.py
    262→    Args:
    263→        value (datetime.datetime, datetime.timedelta, int or float): A `datetime`, a
       →        …
-   300→def _convert_aware_datetime …
+   300→def _convert_aware_datetime(
+   301→    value: dt.datetime | dt.timedelta | float | None,
+   302→) -> Any:
    311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
    312→    """Return a natural day.
    313→
@@ -354,9 +332,16 @@ time.py
    318→    """
    343→def naturaldate(value: dt.date | dt.datetime) -> str:
    344→    """Like `naturalday`, but append a year for dates more than ~five months away."""
-   361→def _quotient_and_remainder …
-   406→def _suitable_minimum_unit …
-   435→def _suppress_lower_units …
+   361→def _quotient_and_remainder(
+   362→    value: float,
+   363→    divisor: float,
+   364→    unit: Unit,
+   365→    minimum_unit: Unit,
+   366→    suppress: Iterable[Unit],
+   367→    format: str,
+   368→) -> tuple[float, float]:
+   406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
+   435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
    453→    minimum_unit: str = "seconds",
@@ -372,4 +357,4 @@ time.py
    463→    >>> delta = dt.timedelta(seconds=3633, days=2, microseconds=123000)
    464→    >>> precisedelta(delta)
       →    …
-   654→def _rounding_by_fmt …
+   654→def _rounding_by_fmt(format: str, value: float) -> float | int:

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4049 tokens)
+budget: 4000 (4047 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -139,9 +139,25 @@ CONTRIBUTING.md
 README.md
      1→semver(1) -- The semantic versioner for npm
      4→## Install
+     6→```bash
+     7→npm install semver
+     8→````
+      →…
     10→## Usage
+    12→As a node module:
+    13→
+    14→```js
+      →…
    139→## Versions
+   141→A "version" is described by the `v2.0.0` specification found at
+   142→<https://semver.org/>.
+   143→
+      →…
    148→## Ranges
+   150→A `version range` is a set of `comparators` that specify versions
+   151→that satisfy the range.
+   152→
+      →…
    184→### Prerelease Tags
    219→#### Prerelease Identifiers
    250→#### Prerelease Identifier Base
@@ -152,6 +168,10 @@ README.md
    341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
    384→### Range Grammar
    408→## Functions
+   410→All methods and classes take a final `options` object argument.  All
+   411→options in this object are `false` by default.  The options supported
+   412→are:
+      →…
    453→### Comparison
    478→### Sorting
    485→### Comparators
@@ -159,9 +179,15 @@ README.md
    531→### Coercion
    558→### Clean
    576→## Constants
+   578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
+   579→
    580→### `RELEASE_TYPES`
    600→### `SEMVER_SPEC_VERSION`
    610→## Exported Modules
+   613→TODO: Make sure that all of these items are documented (classes aren't,
+   614→eg), and then pull the module name into the documentation for that specific
+   615→thing.
+      →…
 
 benchmarks/bench-compare.js
      5→const suite = new Benchmark.Suite()
@@ -169,6 +195,8 @@ benchmarks/bench-compare.js
 benchmarks/bench-diff.js
      5→const suite = new Benchmark.Suite()
      7→const cases = [
+
+benchmarks/bench-parse-options.js
 
 benchmarks/bench-parse.js
      5→const suite = new Benchmark.Suite()
@@ -189,22 +217,52 @@ classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
      6→  static get ANY () {
+     7→    return ANY
+     8→  }
     10→  constructor (comp, options) {
+    11→    options = parseOptions(options)
+    12→
+      →…
     36→  parse (comp) {
+    37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
+    38→    const m = comp.match(r)
+      →    …
     57→  toString () {
+    58→    return this.value
+    59→  }
     61→  test (version) {
+    62→    debug('Comparator.test', version, this.options.loose)
+    63→
+      →…
     79→  intersects (comp, options) {
+    80→    if (!(comp instanceof Comparator)) {
+    81→      throw new TypeError('a Comparator is required')
+      →      …
 
 classes/range.js
      3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
      7→  constructor (range, options) {
+     8→    options = parseOptions(options)
+      →    …
     73→  get range () {
+    74→    if (this.formatted === undefined) {
+      →    …
     92→  format () {
+    93→    return this.range
+      →    …
     96→  toString () {
+    97→    return this.range
+      →    …
    100→  parseRange (range) {
+   101→    // memoize range parsing for performance.
+      →    …
    170→  intersects (range, options) {
+   171→    if (!(range instanceof Range)) {
+      →    …
    193→  test (version) {
+   194→    if (!version) {
+      →    …
    218→const cache = new LRU()
 
 classes/semver.js
@@ -220,40 +278,24 @@ classes/semver.js
 
 functions/clean.js
      4→const clean = (version, options) => {
-     5→  const s = parse(version.trim().replace(/^[=v]+/, ''), options)
-     6→  return s ? s.version : null
-     7→}
 
 functions/cmp.js
     10→const cmp = (a, op, b, loose) => {
-    11→  switch (op) {
-    12→    case '===':
-      →    …
 
 functions/coerce.js
      7→const coerce = (version, options) => {
-     8→  if (version instanceof SemVer) {
-     9→    return version
-    10→  }
-    11→
-      →…
 
 functions/compare-build.js
      4→const compareBuild = (a, b, loose) => {
-     5→  const versionA = new SemVer(a, loose)
-      →  …
 
 functions/compare-loose.js
      4→const compareLoose = (a, b) => compare(a, b, true)
 
 functions/compare.js
      4→const compare = (a, b, loose) =>
-     5→  new SemVer(a, loose).compare(new SemVer(b, loose))
 
 functions/diff.js
      5→const diff = (version1, version2) => {
-     6→  const v1 = parse(version1, null, true)
-      →  …
 
 functions/eq.js
      4→const eq = (a, b, loose) => compare(a, b, loose) === 0
@@ -266,10 +308,6 @@ functions/gte.js
 
 functions/inc.js
      5→const inc = (version, release, options, identifier, identifierBase) => {
-     6→  if (typeof (options) === 'string') {
-     7→    identifierBase = identifier
-     8→    identifier = options
-      →    …
 
 functions/lt.js
      4→const lt = (a, b, loose) => compare(a, b, loose) < 0
@@ -288,19 +326,12 @@ functions/neq.js
 
 functions/parse.js
      4→const parse = (version, options, throwErrors = false) => {
-     5→  if (version instanceof SemVer) {
-     6→    return version
-     7→  }
-     8→  try {
-      →  …
 
 functions/patch.js
      4→const patch = (a, loose) => new SemVer(a, loose).patch
 
 functions/prerelease.js
      4→const prerelease = (version, options) => {
-     5→  const parsed = parse(version, options)
-      →  …
 
 functions/rcompare.js
      4→const rcompare = (a, b, loose) => compare(b, a, loose)
@@ -310,18 +341,12 @@ functions/rsort.js
 
 functions/satisfies.js
      4→const satisfies = (version, range, options) => {
-     5→  try {
-     6→    range = new Range(range, options)
-      →    …
 
 functions/sort.js
      4→const sort = (list, loose) => list.sort((a, b) => compareBuild(a, b, loose))
 
 functions/valid.js
      4→const valid = (version, options) => {
-     5→  const v = parse(version, options)
-     6→  return v ? v.version : null
-     7→}
 
 internal/constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
@@ -337,8 +362,6 @@ internal/debug.js
 internal/identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
-     5→  if (typeof a === 'number' && typeof b === 'number') {
-      →  …
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 
 internal/lrucache.js
@@ -365,11 +388,6 @@ internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
-     7→  if (!options) {
-     8→    return emptyOpts
-     9→  }
-    10→
-      →…
 
 internal/re.js
     12→const re = exports.re = []
@@ -412,36 +430,21 @@ ranges/gtr.js
 
 ranges/intersects.js
      4→const intersects = (r1, r2, options) => {
-     5→  r1 = new Range(r1, options)
-      →  …
 
 ranges/ltr.js
      5→const ltr = (version, range, options) => outside(version, range, '<', options)
 
 ranges/max-satisfying.js
      6→const maxSatisfying = (versions, range, options) => {
-     7→  let max = null
-     8→  let maxSV = null
-      →  …
 
 ranges/min-satisfying.js
      5→const minSatisfying = (versions, range, options) => {
-     6→  let min = null
-     7→  let minSV = null
-      →  …
 
 ranges/min-version.js
      7→const minVersion = (range, loose) => {
-     8→  range = new Range(range, loose)
-     9→
-      →…
 
 ranges/outside.js
     13→const outside = (version, range, hilo, options) => {
-    14→  version = new SemVer(version, options)
-    15→  range = new Range(range, options)
-    16→
-      →…
 
 ranges/subset.js
     45→const subset = (sub, dom, options = {}) => {
@@ -453,13 +456,9 @@ ranges/subset.js
 
 ranges/to-comparators.js
      6→const toComparators = (range, options) =>
-     7→  new Range(range, options).set
-      →  …
 
 ranges/valid.js
      4→const validRange = (range, options) => {
-     5→  try {
-      →  …
 
 release-please-config.json
      2→  "group-pull-request-title-pattern": "chore: release ${version}",

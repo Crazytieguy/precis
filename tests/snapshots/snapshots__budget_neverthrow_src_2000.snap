@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2012 tokens)
+budget: 2000 (2014 tokens)
 
 _internals/error.ts
      1→import { Result } from '../result'
@@ -12,15 +12,7 @@ _internals/error.ts
      7→const defaultErrorConfig: ErrorConfig = {
     11→interface NeverThrowError<T, E> {
     12→  data:
-    13→    | {
-    14→        type: string
-    15→        value: T
-    16→      }
-    17→    | {
-    18→        type: string
-    19→        value: E
-    20→      }
-      →      …
+      →  …
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
     29→  result: Result<T, E>,
@@ -30,7 +22,14 @@ _internals/error.ts
     33→    ? { type: 'Ok', value: result.value }
     34→    : { type: 'Err', value: result.error }
     35→
-      →…
+    36→  const maybeStack = config.withStackTrace ? new Error().stack : undefined
+    37→
+    38→  return {
+    39→    data,
+    40→    message,
+    41→    stack: maybeStack,
+    42→  }
+      →  …
 
 _internals/utils.ts
      1→import { Result, ok, err } from '../result'

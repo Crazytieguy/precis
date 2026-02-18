@@ -14,7 +14,11 @@ README.md
     16→## Install
     22→## Usage and Examples
     74→### Struct methods
+    76→The structs functions can be also used as independent methods by creating a new
+      →…
     95→### Field methods
+    97→We can easily examine a single Field for more detail. Below you can see how we
+      →…
    163→## Credits
    168→## License
 
@@ -47,9 +51,15 @@ field_test.go
      3→import …
      9→type Foo struct {
     10→	A    string
+    11→	B    int    `structs:"y"`
       →	…
     21→type Baz struct {
+    22→	A string
+      →	…
     26→type Bar struct {
+    27→	E string
+      →	…
+    32→func newStruct() *Struct {
 
 structs.go
      4→import …
@@ -71,6 +81,7 @@ structs.go
    509→func (s *Struct) nested(val reflect.Value) interface{} {
 
 structs_example_test.go
+     3→import …
 
 structs_test.go
      3→import …
@@ -80,7 +91,6 @@ structs_test.go
 
 tags.go
      3→import "strings"
-     5→// tagOptions contains a slice of tag options
      6→type tagOptions []string
      8→// Has returns true if the given option is available in tagOptions
      9→func (t tagOptions) Has(opt string) bool {
@@ -92,13 +102,7 @@ tags.go
     15→
     16→	return false
     17→}
-    19→// parseTag splits a struct field's tag into its name and a list of options
-    20→// which comes after a name. A tag is in the form of: "name,option1,option2".
-    21→// The name can be neglectected.
     22→func parseTag(tag string) (string, tagOptions) {
-    23→	// tag is one of followings:
-    24→	// ""
-      →	…
 
 tags_test.go
      3→import "testing"

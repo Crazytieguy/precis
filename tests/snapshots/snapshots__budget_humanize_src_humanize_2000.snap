@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2019 tokens)
+budget: 2000 (2022 tokens)
 
 __init__.py
      5→from humanize.filesize …
@@ -47,11 +47,9 @@ i18n.py
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
     18→_CURRENT = local()
-    21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
-    30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
-    40→def _get_default_locale_path …
+    40→def _get_default_locale_path() -> pathlib.Path | None:
     51→def get_translation() -> gettext_module.NullTranslations:
     58→def activate(
     59→    locale: str | None, path: str | os.PathLike[str] | None = None
@@ -72,11 +70,11 @@ i18n.py
       →    …
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
-   101→def _gettext …
-   113→def _pgettext …
-   129→def _ngettext …
-   144→def _gettext_noop …
-   163→def _ngettext_noop …
+   101→def _gettext(message: str) -> str:
+   113→def _pgettext(msgctxt: str, message: str) -> str:
+   129→def _ngettext(message: str, plural: str, num: int) -> str:
+   144→def _gettext_noop(message: str) -> str:
+   163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
    183→def thousands_separator() -> str:
    184→    """Return the thousands separator for a locale, default to comma.
    185→
@@ -129,10 +127,6 @@ number.py
     12→TYPE_CHECKING = False
     14→    from typing import TypeAlias
     21→def _format_not_finite(value: float) -> str:
-    22→    """Utility function to handle infinite and nan cases."""
-    23→    import math
-    24→
-      →…
     34→def ordinal …
    110→def intcomma …
    195→def intword …

@@ -91,16 +91,20 @@ src/typeguard/_exceptions.py
 src/typeguard/_functions.py
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
+    50→def check_type …
+   118→def check_argument_types …
+   149→def check_return_type …
+   185→def check_send_type …
+   216→def check_yield_type …
+   245→def check_variable_assignment …
+   291→def warn_on_error …
 
 src/typeguard/_importhook.py
     17→from ._config import global_config
     18→from ._transformer import TypeguardTransformer
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
-    44→# The name of this function is magical
-    45→def _call_with_frames_removed(
-    46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
-    47→) -> T:
+    45→def _call_with_frames_removed …
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
     57→    def source_to_code(
@@ -166,10 +170,7 @@ src/typeguard/_transformer.py
    338→class AnnotationTransformer(NodeTransformer):
    339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
    488→class TypeguardTransformer(NodeTransformer):
-   516→    @contextmanager
-   517→    def _use_memo(
-   518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
-   519→    ) -> Generator[None, Any, None]:
+   517→    def _use_memo …
    570→    def _get_import …
    580→    def _convert_annotation …
 
@@ -191,6 +192,7 @@ tests/deferredannos.py
      4→@typechecked
      5→def uses_forwardref(x: NotYetDefined) -> NotYetDefined:  # noqa: F821
      9→class NotYetDefined:
+    10→    pass
 
 tests/dummymodule_py312.py
     16→@typechecked
@@ -211,6 +213,7 @@ tests/test_importhook.py
     63→def test_debug_instrumentation(monkeypatch, capsys):
 
 tests/test_plugins.py
+     6→def test_custom_type_checker(monkeypatch: MonkeyPatch) -> None:
 
 tests/test_pytest_plugin.py
      9→@pytest.fixture

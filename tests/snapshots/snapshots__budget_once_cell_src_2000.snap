@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2027 tokens)
+budget: 2000 (2006 tokens)
 
 imp_cs.rs
      1→use core::panic::{RefUnwindSafe, UnwindSafe};
@@ -10,34 +10,20 @@ imp_cs.rs
      4→use portable_atomic::{AtomicBool, Ordering};
      6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
-     9→    initialized: AtomicBool,
-      →    …
     27→    pub(crate) const fn new() -> OnceCell<T> {
     31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
-    38→    #[inline]
     39→    pub(crate) fn is_initialized(&self) -> bool {
-    43→    #[cold]
     44→    pub(crate) fn initialize<F, E>(&self, f: F) -> Result<(), E>
     45→    where
     46→        F: FnOnce() -> Result<T, E>,
     47→    {
-    56→    /// Get the reference to the underlying value, without checking if the cell
-    57→    /// is initialized.
-    58→    ///
-    59→    /// # Safety
-    60→    ///
-      →    …
     63→    pub(crate) unsafe fn get_unchecked(&self) -> &T {
-    69→    #[inline]
     70→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
-    74→    #[inline]
     75→    pub(crate) fn into_inner(self) -> Option<T> {
 
 imp_pl.rs
      1→use std::{ …
      7→pub(crate) struct OnceCell<T> {
-     8→    state: AtomicU8,
-      →    …
     12→const INCOMPLETE: u8 = 0x0;
     13→const RUNNING: u8 = 0x1;
     14→const COMPLETE: u8 = 0x2;
@@ -50,8 +36,6 @@ imp_pl.rs
    109→    pub(crate) fn get_mut …
    117→    pub(crate) fn into_inner …
    122→struct Guard<'a> {
-   123→    state: &'a AtomicU8,
-      →    …
    128→    fn drop(&mut self) {
    129→        self.state.store(self.new_state, Ordering::Release);
    130→        unsafe {
@@ -61,22 +45,21 @@ imp_pl.rs
 imp_std.rs
      6→use std::{ …
     14→pub(crate) struct OnceCell<T> {
-    15→    // This `queue` field is the core of the implementation. It encodes two
-      →    …
-    39→    pub(crate) const fn new …
-    43→    pub(crate) const fn with_value …
+    39→    pub(crate) const fn new() -> OnceCell<T> {
+    43→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+   125→const INCOMPLETE …
+   126→const RUNNING …
+   127→const COMPLETE …
+   128→const INCOMPLETE_PTR …
+   129→const COMPLETE_PTR …
+   133→const STATE_MASK …
    138→struct Waiter {
-   139→    thread: Cell<Option<Thread>>,
-      →    …
    145→struct Guard<'a> {
-   146→    queue: &'a AtomicPtr<Waiter>,
-      →    …
    151→    fn drop(&mut self) {
    152→        let queue = self.queue.swap(self.new_queue, Ordering::AcqRel);
    153→
-   154→        let state = strict::addr(queue) & STATE_MASK;
-      →        …
-   210→fn wait …
+      →…
+   210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
    245→mod strict {
 
 lib.rs
@@ -93,6 +76,12 @@ lib.rs
    412→        // Invariant: written to at most once.
    413→        inner: UnsafeCell<Option<T>>,
    414→    }
+   424→        fn default …
+   430→        fn fmt …
+   439→        fn clone …
+   446→        fn clone_from …
+   455→        fn eq …
+   463→        fn from …
    694→    /// A value which is initialized on the first access.
    695→    ///
       →    …
@@ -100,7 +89,10 @@ lib.rs
    715→        cell: OnceCell<T>,
    716→        init: Cell<Option<F>>,
    717→    }
+   722→        fn fmt …
    841→        type Target = T;
+   842→        fn deref …
+   848→        fn deref_mut …
    861→/// Thread-safe, blocking version of `OnceCell`.
    862→#[cfg(any(feature = "std", feature = "critical-section"))]
    863→pub mod sync {
@@ -110,6 +102,12 @@ lib.rs
    874→    ///
       →    …
    901→    pub struct OnceCell<T>(Imp<T>);
+   904→        fn default …
+   910→        fn fmt …
+   919→        fn clone …
+   926→        fn clone_from …
+   935→        fn from …
+   941→        fn eq …
   1222→    /// A value which is initialized on the first access.
   1223→    ///
       →    …
@@ -117,12 +115,10 @@ lib.rs
   1256→        cell: OnceCell<T>,
   1257→        init: Cell<Option<F>>,
   1258→    }
+  1261→        fn fmt …
   1374→        type Target = T;
-  1393→    /// ```compile_fail
-  1394→    /// struct S(*mut ());
-  1395→    /// unsafe impl Sync for S {}
-  1396→    ///
-      →    …
+  1375→        fn deref …
+  1381→        fn deref_mut …
   1408→    fn _dummy() {}
   1411→#[cfg(feature = "race")]
   1412→pub mod race;

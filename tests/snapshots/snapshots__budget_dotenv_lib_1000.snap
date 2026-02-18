@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (999 tokens)
+budget: 1000 (1000 tokens)
 
 cli-options.js
      1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
@@ -37,14 +37,14 @@ main.d.ts
     41→   *
     42→   * example: `require('dotenv').config({ encoding: 'latin1' })`
     43→   */
-      →   …
+    44→  encoding?: string;
+    45→
+      →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
     94→  parsed?: DotenvParseOutput;
     95→}
     97→type DotenvError = Error & {
-    98→  code: 
-      →  …
    106→export interface DotenvPopulateOptions {
    107→  /**
    108→   * Default: `false`

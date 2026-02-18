@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2041 tokens)
+budget: 2000 (2039 tokens)
 
 assets.tsx
      2→import React from 'react';
@@ -38,16 +38,29 @@ hooks.tsx
      8→      setIsDocumentHidden(document.hidden);
      9→    };
     10→    document.addEventListener('visibilitychange', callback);
-      →    …
+    11→    return () => document.removeEventListener('visibilitychange', callback);
+    12→  }, []);
+    13→
+    14→  return isDocumentHidden;
+    15→};
 
 index.tsx
      3→import React from 'react';
      4→import ReactDOM from 'react-dom';
-     6→import { CloseIcon, getAsset, Loader } from './assets …
-     7→import { useIsDocumentHidden } from './hooks …
-     8→import { toast, ToastState } from './state …
-     9→import './styles.css …
-    10→import { …
+     6→import { CloseIcon, getAsset, Loader } from './assets';
+     7→import { useIsDocumentHidden } from './hooks';
+     8→import { toast, ToastState } from './state';
+     9→import './styles.css';
+    10→import {
+    11→  isAction,
+    12→  SwipeDirection,
+    13→  type ExternalToast,
+    14→  type HeightT,
+    15→  type ToasterProps,
+    16→  type ToastProps,
+    17→  type ToastT,
+    18→  type ToastToDismiss,
+    19→} from './types';
     22→const VISIBLE_TOASTS_AMOUNT = 3;
     25→const VIEWPORT_OFFSET = '24px';
     28→const MOBILE_VIEWPORT_OFFSET = '16px';
@@ -77,10 +90,6 @@ state.ts
     11→import React from 'react';
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
-    18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
-    19→  toasts: Array<ToastT | ToastToDismiss>;
-    20→  dismissedToasts: Set<string | number>;
-    21→
     22→  constructor() {
     29→  subscribe = (subscriber: (toast: ToastT | ToastToDismiss) => void) => {
     38→  publish = (data: ToastT) => {
@@ -106,7 +115,8 @@ state.ts
    285→export const toast = Object.assign(
    286→  basicToast,
    287→  {
-      →  …
+   288→    success: ToastState.success,
+      →    …
 
 types.ts
      1→import React from 'react';
@@ -145,13 +155,6 @@ types.ts
       →  …
    104→interface ToastOptions {
    105→  className?: string;
-   106→  closeButton?: boolean;
-   107→  descriptionClassName?: string;
-   108→  style?: React.CSSProperties;
-   109→  cancelButtonStyle?: React.CSSProperties;
-   110→  actionButtonStyle?: React.CSSProperties;
-   111→  duration?: number;
-   112→  unstyled?: boolean;
       →  …
    118→type Offset =
    119→  | {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2016 tokens)
+budget: 2000 (2013 tokens)
 
 CHANGELOG.md
      1→# neverthrow
@@ -33,13 +33,6 @@ src/_internals/error.ts
      5→}
      7→const defaultErrorConfig: ErrorConfig = {
     11→interface NeverThrowError<T, E> {
-    12→  data:
-    13→    | {
-    14→        type: string
-    15→        value: T
-    16→      }
-    17→    | {
-      →    …
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
     29→  result: Result<T, E>,
@@ -122,6 +115,8 @@ src/result.ts
     14→export namespace Result {
     15→  /**
     16→   * Wraps a function with a try catch, creating a new function with the same
+    17→   * arguments but returning `Ok` if successful, `Err` if the function throws
+    18→   *
     62→export type Result …
    134→interface IResult<T, E> {
    140→  isOk(): this is Ok<T, E>
@@ -167,7 +162,10 @@ tests/safe-try.test.ts
 
 tests/tsconfig.tests.json
      2→  "compilerOptions": {
+    22→  },
     23→  "include": [
+    26→  ]
+    27→}
 
 tests/typecheck-tests.ts
     19→type CreateTuple …

@@ -2,13 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1005 tokens)
+budget: 1000 (1001 tokens)
 
 imp_cs.rs
      6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
-     9→    initialized: AtomicBool,
-      →    …
     27→    pub(crate) const fn new() -> OnceCell<T> {
     31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
 
@@ -29,9 +27,15 @@ imp_pl.rs
 imp_std.rs
      6→use std::{ …
     14→pub(crate) struct OnceCell<T> {
+    39→    pub(crate) const fn new …
+    43→    pub(crate) const fn with_value …
    138→struct Waiter {
    145→struct Guard<'a> {
    151→    fn drop(&mut self) {
+   152→        let queue = self.queue.swap(self.new_queue, Ordering::AcqRel);
+   153→
+      →…
+   210→fn wait …
    245→mod strict {
 
 lib.rs
@@ -61,10 +65,6 @@ lib.rs
   1257→        init: Cell<Option<F>>,
   1258→    }
   1374→        type Target = T;
-  1393→    /// ```compile_fail
-  1394→    /// struct S(*mut ());
-  1395→    /// unsafe impl Sync for S {}
-      →    …
   1408→    fn _dummy() {}
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
@@ -90,7 +90,6 @@ race.rs
    241→    fn fmt …
    247→    fn default …
    351→pub use self::once_box::OnceBox;
-   353→#[cfg(feature = "alloc")]
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
    360→    /// A thread-safe cell which can be written to only once.

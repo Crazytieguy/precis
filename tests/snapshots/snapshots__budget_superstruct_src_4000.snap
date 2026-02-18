@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4027 tokens)
+budget: 4000 (4022 tokens)
 
 error.ts
      2→ * A `StructFailure` represents a single specific failure in validation.
@@ -82,6 +82,7 @@ struct.ts
    218→ * to all of the nested structs.
    221→export type Context = {
    222→  branch: Array<any>
+   223→  path: Array<any>
       →  …
    228→ * A type utility to extract the type from a `Struct` class.
    231→export type Infer<T extends Struct<any, any>> = T['TYPE']
@@ -121,7 +122,8 @@ structs/coercions.ts
     21→  return new Struct({
     22→    ...struct,
     23→    coercer: (value, ctx) => {
-      →    …
+    24→      return is(value, condition)
+      →      …
     32→ * Augment a struct to replace `undefined` values with a default.
     33→ *
     34→ * Note: You must use `create(value, Struct)` on the value to have the coercion
@@ -136,7 +138,8 @@ structs/coercions.ts
     45→  return coerce(struct, unknown(), (x) => {
     46→    const f = typeof fallback === 'function' ? fallback() : fallback
     47→
-      →…
+    48→    if (x === undefined) {
+      →    …
     73→ * Augment a struct to trim string inputs.
     74→ *
     75→ * Note: You must use `create(value, Struct)` on the value to have the coercion
@@ -284,10 +287,7 @@ structs/utilities.ts
 utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'
-     5→ * Check if a value is an iterator.
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
-     9→  return isObject(x) && typeof x[Symbol.iterator] === 'function'
-    10→}
     13→ * Check if a value is a plain object.
     16→export function isObject(x: unknown): x is object {
     21→ * Check if a value is a non-array object.

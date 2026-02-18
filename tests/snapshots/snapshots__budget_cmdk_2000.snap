@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2007 tokens)
+budget: 2000 (2003 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -87,15 +87,8 @@ cmdk/src/index.tsx
    882→const Dialog …
    899→const Empty …
    909→const Loading …
-   956→ *
-   957→ *
-   958→ * Helpers
-   959→ *
-   960→ *
    963→function findNextSibling(el: Element, selector: string) {
-  1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
-  1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
 
 cmdk/tsup.config.ts
@@ -139,6 +132,13 @@ test/numeric.test.ts
      1→import { expect, test } from '@playwright/test'
 
 test/package.json
+     2→  "name": "cmdk-tests",
+     3→  "version": "0.0.0",
+     4→  "scripts": {
+     6→  },
+     7→  "dependencies": {
+    17→  }
+    18→}
 
 test/pages/_app.tsx
      1→import '../style.css'
@@ -230,7 +230,6 @@ website/pages/index.tsx
     18→import packageJSON from '../../cmdk/package.json'
     29→export default function Index() {
    101→function InstallButton() {
-   137→//////////////////////////////////////////////////////////////////
    139→const themes = [
    262→function Codeblock() {
    296→function VersionBadge() {

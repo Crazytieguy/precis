@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2027 tokens)
+budget: 2000 (2017 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -138,10 +138,7 @@ src/dotenv/main.py
     13→from .parser import Binding, parse_stream
     14→from .variables import parse_variables
     25→def _load_dotenv_disabled() -> bool:
-    26→    """
-      →    …
     45→class DotEnv:
-    63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
    141→@contextmanager
    142→def rewrite(
@@ -150,13 +147,12 @@ src/dotenv/main.py
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    146→    pathlib.Path(path).touch()
    147→
-      →…
+   148→    with tempfile.NamedTemporaryFile(mode="w", encoding=encoding, delete=False) as dest:
+   149→        error = None
+   150→        try:
+      →        …
    269→def _walk_to_root(path: str) -> Iterator[str]:
-   270→    """
-      →    …
    423→def _is_file_or_fifo(path: StrPath) -> bool:
-   424→    """
-      →    …
 
 src/dotenv/parser.py
      1→import codecs …
@@ -183,9 +179,6 @@ src/dotenv/variables.py
      2→from abc …
      3→from typing …
      5→_posix_variable: Pattern[str] = re.compile(
-     6→    r"""
-     7→    \$\{
-      →    …
     18→class Atom(metaclass=ABCMeta):
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
@@ -221,6 +214,7 @@ tests/test_parser.py
    550→def test_parse_stream(test_input, expected):
 
 tests/test_utils.py
+     1→from dotenv …
      4→def test_to_cli_string():
 
 tests/test_variables.py

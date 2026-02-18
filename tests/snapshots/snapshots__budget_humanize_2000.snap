@@ -123,9 +123,7 @@ src/humanize/i18n.py
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
     18→_CURRENT = local()
-    21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
-    30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
     51→def get_translation() -> gettext_module.NullTranslations:
     58→def activate(
@@ -157,7 +155,13 @@ src/humanize/lists.py
     17→    Examples:
     18→        >>> natural_list(["one", "two", "three"])
     19→        'one, two and three'
-      →        …
+    20→        >>> natural_list(["one", "two"])
+    21→        'one and two'
+    22→        >>> natural_list(["one"])
+    23→        'one'
+    24→
+    25→    Args:
+      →    …
 
 src/humanize/number.py
      5→import bisect
@@ -168,10 +172,6 @@ src/humanize/number.py
     12→TYPE_CHECKING = False
     14→    from typing import TypeAlias
     21→def _format_not_finite(value: float) -> str:
-    22→    """Utility function to handle infinite and nan cases."""
-    23→    import math
-    24→
-      →…
     34→def ordinal …
    110→def intcomma …
    195→def intword …

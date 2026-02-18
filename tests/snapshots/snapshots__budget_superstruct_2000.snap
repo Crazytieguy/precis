@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2011 tokens)
+budget: 2000 (2010 tokens)
 
 Readme.md
     42→### Usage
@@ -81,17 +81,7 @@ src/struct.ts
     19→    context: Context
     20→  ) => Iterable<[string | number, unknown, Struct<any> | Struct<never>]>
     21→
-    22→  constructor(props: {
-    23→    type: string
-    24→    schema: S
-    25→    coercer?: Coercer
-    26→    validator?: Validator
-    27→    refiner?: Refiner<T>
-    28→    entries?: Struct<T, S>['entries']
-    29→  }) {
-    30→    const {
-    31→      type,
-      →      …
+    22→  constructor …
     67→  assert …
     75→  create …
     83→  is …
@@ -102,13 +92,17 @@ src/struct.ts
    157→export function mask …
    175→export function is …
    185→export function validate …
-   221→export type Context …
-   231→export type Infer …
-   237→export type Describe …
-   243→export type Result …
-   253→export type Coercer …
-   259→export type Validator …
-   266→export type Refiner …
+   221→export type Context = {
+   231→export type Infer<T extends Struct<any, any>> = T['TYPE']
+   237→export type Describe<T> = Struct<T, StructSchema<T>>
+   243→export type Result =
+   244→  | boolean
+   245→  | string
+   246→  | Partial<Failure>
+   247→  | Iterable<boolean | string | Partial<Failure>>
+   253→export type Coercer<T = unknown> = (value: T, context: Context) => unknown
+   259→export type Validator = (value: unknown, context: Context) => Result
+   266→export type Refiner<T> = (value: T, context: Context) => Result
 
 src/structs/coercions.ts
      1→import { Struct, is, Coercer } from '../struct.js'
@@ -177,7 +171,6 @@ src/structs/utilities.ts
 src/utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'
-     5→ * Check if a value is an iterator.
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
     13→ * Check if a value is a plain object.
     16→export function isObject(x: unknown): x is object {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1013 tokens)
+budget: 1000 (1010 tokens)
 
 README.md
     28→## Features
@@ -45,8 +45,6 @@ src/components/loader.tsx
 
 src/components/toast-bar.tsx
     47→interface ToastBarProps {
-    48→  toast: Toast;
-      →  …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 
 src/components/toast-icon.tsx
@@ -76,6 +74,7 @@ src/core/store.ts
     13→  ADD_TOAST,
     14→  UPDATE_TOAST,
     15→  UPSERT_TOAST,
+    16→  DISMISS_TOAST,
       →  …
     22→export type Action =
     23→  | {

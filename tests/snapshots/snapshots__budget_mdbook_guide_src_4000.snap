@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4069 tokens)
+budget: 4000 (4076 tokens)
 
 404.md
      1→# Document not found (404)
@@ -285,9 +285,6 @@ format/configuration/renderers.md
 
 format/example.rs
      1→fn main() {
-     2→    println!("Hello World!");
-     3→#
-      →…
 
 format/markdown.md
      1→# Markdown
@@ -334,7 +331,13 @@ format/mdbook.md
    310→## Controlling page \<title\>
    319→## HTML classes provided by mdBook
    323→### `class="left"` and `"right"`
+   325→These classes are provided by default, for inline HTML to float images.
+   326→
+      →…
    331→### `class="hidden"`
+   333→HTML tags with class `hidden` will not be shown.
+   334→
+      →…
    341→## Font-Awesome icons
 
 format/summary.md
@@ -432,8 +435,6 @@ guide/reading.md
      4→This assumes you are reading an HTML book.
      5→The options and formatting will be different for other output formats such as PDF.
      6→
-     7→A book is organized into *chapters*.
-     8→Each chapter is a separate page.
       →…
     12→## Navigation
     26→## Top menu bar

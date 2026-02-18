@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (2002 tokens)
 
 README.md
      9→# Mitt
@@ -169,15 +169,14 @@ src/index.ts
     73→		},
     74→
     75→		/**
-      →		…
+    76→		 * Remove an event handler for the given type.
+      →		 …
 
 test/index_test.ts
 
 test/test-types-compilation.ts
      3→import mitt from '..';
      5→interface SomeEventData {
-     6→	name: string;
-     7→}
      9→const emitter = mitt<{
     15→const barHandler …
     16→const fooHandler …

@@ -2,24 +2,39 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1008 tokens)
+budget: 1000 (1026 tokens)
 
 argument.js
      3→class Argument {
+     5→   * Initialize a new command argument with the given name and description.
+     6→   * The default is that the argument is required, and you can explicitly
+      →   …
     13→  constructor(name, description) {
+    43→   * Return argument name.
+    44→   *
+      →   …
     48→  name() {
-    53→   * @package
     56→  _collectValue(value, previous) {
+    66→   * Set the default value, and optionally supply the description to be displayed in the help.
+    67→   *
+      →   …
     73→  default(value, description) {
+    80→   * Set the custom handler for processing CLI command arguments into argument values.
+    81→   *
+      →   …
     86→  argParser(fn) {
+    92→   * Only allow argument value to be one of choices.
+    93→   *
+      →   …
     98→  choices(values) {
+   115→   * Make argument required.
+   116→   *
+      →   …
    119→  argRequired() {
+   125→   * Make argument optional.
+   126→   *
+      →   …
    129→  argOptional() {
-   136→ * Takes an argument and returns its human readable equivalent for help usage.
-   137→ *
-   138→ * @param {Argument} arg
-   139→ * @return {string}
-   140→ * @private
    143→function humanReadableArgName(arg) {
 
 command.js
@@ -27,7 +42,6 @@ command.js
   1127→  _prepareForParse() {
 
 error.js
-     2→ * CommanderError class
      4→class CommanderError extends Error {
      6→   * Constructs the CommanderError class
      7→   * @param {number} exitCode suggested exit code which could be used with process.exit
@@ -36,14 +50,17 @@ error.js
     11→  constructor(exitCode, code, message) {
     12→    super(message);
     13→    // properly capture stack trace in Node.js
+    14→    Error.captureStackTrace(this, this.constructor);
+    15→    this.name = this.constructor.name;
       →    …
-    23→ * InvalidArgumentError class
     25→class InvalidArgumentError extends CommanderError {
     27→   * Constructs the InvalidArgumentError class
     28→   * @param {string} [message] explanation of why argument is invalid
     30→  constructor(message) {
     31→    super(1, 'commander.invalidArgument', message);
     32→    // properly capture stack trace in Node.js
+    33→    Error.captureStackTrace(this, this.constructor);
+    34→    this.name = this.constructor.name;
       →    …
 
 help.js
@@ -62,14 +79,7 @@ help.js
    600→  styleArgumentText(str) {
    603→  styleSubcommandText(str) {
    606→  styleCommandText(str) {
-   733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
-   734→ *
-   735→ * @param {string} str
-   736→ * @returns {string}
-   737→ * @package
    740→function stripColor(str) {
-   741→  // eslint-disable-next-line no-control-regex
-      →  …
 
 option.js
      3→class Option {
@@ -89,8 +99,6 @@ option.js
    230→  helpGroup(heading) {
    243→  is(arg) {
    256→  isBoolean() {
-   262→ * This class is to make it easier to work with dual options, without changing the existing
-      → …
    268→class DualOptions {
    272→  constructor(options) {
    297→  valueFromOption(value, option) {
@@ -100,8 +108,4 @@ option.js
 suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
-    49→ * Find close matches, restricted to same number of edits.
-    50→ *
-    51→ * @param {string} word
-      → …
     56→function suggestSimilar(word, candidates) {

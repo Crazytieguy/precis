@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2026 tokens)
+budget: 2000 (2019 tokens)
 
 __init__.py
      1→from typing import Any, Optional
@@ -106,7 +106,12 @@ ipython.py
     36→        # Locate the .env file
     37→        dotenv_path = args.dotenv_path
     38→        try:
-      →        …
+    39→            dotenv_path = find_dotenv(dotenv_path, True, True)
+    40→        except IOError:
+    41→            print("cannot find .env file")
+    42→            return
+    43→
+      →…
     48→def load_ipython_extension(ipython):
     49→    """Register the %dotenv magic."""
     50→    ipython.register_magics(IPythonDotEnv)
@@ -115,12 +120,9 @@ main.py
     13→from .parser import Binding, parse_stream
     14→from .variables import parse_variables
     25→def _load_dotenv_disabled() -> bool:
-    26→    """
-      →    …
     35→def with_warn_for_invalid_lines …
     45→class DotEnv:
     46→    def __init__ …
-    63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     78→    def dict …
     94→    def parse …
@@ -142,14 +144,10 @@ main.py
    211→def unset_key …
    244→def resolve_variables …
    269→def _walk_to_root(path: str) -> Iterator[str]:
-   270→    """
-      →    …
    287→def find_dotenv …
    338→def load_dotenv …
    387→def dotenv_values …
    423→def _is_file_or_fifo(path: StrPath) -> bool:
-   424→    """
-      →    …
 
 parser.py
      1→import codecs …
@@ -176,9 +174,6 @@ variables.py
      2→from abc import ABCMeta, abstractmethod
      3→from typing import Iterator, Mapping, Optional, Pattern
      5→_posix_variable: Pattern[str] = re.compile(
-     6→    r"""
-     7→    \$\{
-      →    …
     18→class Atom(metaclass=ABCMeta):
     19→    def __ne__(self, other: object) -> bool:
     25→    @abstractmethod

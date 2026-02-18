@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4017 tokens)
+budget: 4000 (3988 tokens)
 
 Cargo.toml
      1→[package]
@@ -25,7 +25,6 @@ rust-toolchain.toml
 src/backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
      5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
-     7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
      8→pub(crate) enum Backtrace {}
     11→macro_rules! impl_backtrace {
     18→macro_rules! impl_backtrace {
@@ -34,16 +33,12 @@ src/backtrace.rs
     39→macro_rules! backtrace_if_absent {
     53→macro_rules! backtrace_if_absent {
     64→macro_rules! backtrace_if_absent {
-    70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
    122→        fn fmt …
    148→        fn fmt …
    156→        fn fmt …
    178→        fn fmt …
-   210→        #[inline(never)] // want to make sure there's a frame here to remove
    211→        pub(crate) fn capture() -> Backtrace {
-   212→            if Backtrace::enabled() {
-      →            …
    262→        fn fmt …
 
 src/chain.rs
@@ -52,13 +47,7 @@ src/chain.rs
      5→use alloc::vec::{self, Vec};
      8→pub(crate) use crate::Chain;
     11→pub(crate) struct Chain<'a> {
-    12→    state: ChainState<'a>,
-    13→}
     16→pub(crate) enum ChainState<'a> {
-    17→    Linked {
-    18→        next: Option<&'a (dyn StdError + 'static)>,
-    19→    },
-      →    …
     26→impl<'a> Chain<'a> {
     27→    #[cold]
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
@@ -86,15 +75,10 @@ src/context.rs
      9→mod ext {
     10→    use super::*;
     12→    pub trait StdError {
-    18→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     19→    impl<E> StdError for E
     20→    where
     21→        E: crate::StdError + Send + Sync + 'static,
     22→    {
-    70→/// ```
-    71→/// # type T = ();
-    72→/// #
-      →…
     90→impl<T> Context<T, Infallible> for Option<T> {
    146→    #[cfg(error_generic_member_access)]
    147→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
@@ -111,30 +95,19 @@ src/context.rs
 
 src/ensure.rs
      1→use crate::Error;
-     9→#[doc(hidden)]
     10→pub trait BothDebug {
     11→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     19→    fn __dispatch_ensure(self, msg: &'static str) -> Error {
-    24→#[doc(hidden)]
     25→pub trait NotBothDebug {
     26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     30→    fn __dispatch_ensure(self, msg: &'static str) -> Error {
     35→struct Buf {
-    36→    bytes: [MaybeUninit<u8>; 40],
-    37→    written: usize,
-    38→}
     41→    fn new …
     48→    fn as_str …
     59→    fn write_str(&mut self, s: &str) -> fmt::Result {
     81→fn render …
-   103→#[doc(hidden)]
-      →…
    105→macro_rules! __parse_ensure {
-   884→#[doc(hidden)]
-      →…
    886→macro_rules! __fancy_ensure {
-   910→#[doc(hidden)]
-      →…
    912→macro_rules! __fallback_ensure {
 
 src/error.rs
@@ -146,15 +119,19 @@ src/error.rs
      8→use crate::{Error, StdError};
     14→use core::ops::{Deref, DerefMut};
    705→    type Target = dyn StdError + Send + Sync + 'static;
+   707→    fn deref …
+   714→    fn deref_mut …
+   720→    fn fmt …
+   726→    fn fmt …
+   732→    fn drop …
    740→struct ErrorVTable {
-   741→    object_drop: unsafe fn(Own<ErrorImpl>),
-      →    …
    934→pub(crate) struct ErrorImpl<E = ()> {
-   935→    vtable: &'static ErrorVTable,
-      →    …
    952→pub(crate) struct ContextError<C, E> {
-   953→    pub context: C,
-      →    …
+  1019→    fn source …
+  1033→    fn fmt …
+  1042→    fn fmt …
+  1073→    fn as_ref …
+  1080→    fn as_ref …
 
 src/fmt.rs
      1→use crate::chain::Chain;
@@ -165,8 +142,6 @@ src/fmt.rs
      7→    pub(crate) unsafe fn display …
     20→    pub(crate) unsafe fn debug …
     69→struct Indented<'a, D> {
-    70→    inner: &'a mut D,
-      →    …
     75→impl<T> Write for Indented<'_, T>
     76→where
     77→    T: Write,
@@ -215,6 +190,9 @@ src/lib.rs
    265→use crate::error::ErrorImpl;
    266→use crate::ptr::Own;
    267→use core::fmt::Display;
+   270→use core::fmt::Debug;
+   273→use std::error::Error as StdError;
+   276→use core::error::Error as StdError;
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
    281→        None
@@ -265,6 +243,10 @@ src/lib.rs
    633→/// inference cannot deduce the `E` type of the result &mdash; without needing
    634→/// to write `Ok::<_, anyhow::Error>(value)`.
    635→///
+   636→/// One might think that `anyhow::Result::Ok(value)` would work in such cases
+   637→/// but it does not.
+   638→///
+   639→/// ```console
       →…
    650→pub fn Ok<T>(value: T) -> Result<T> {
    656→pub mod __private {
@@ -273,6 +255,9 @@ src/lib.rs
    659→    use alloc::fmt;
    660→    use core::fmt::Arguments;
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
+   665→    pub use alloc::format;
+   667→    pub use core::result::Result::Err;
+   669→    pub use core::{concat, format_args, stringify};
    672→    pub mod kind {
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    678→        pub use crate::kind::BoxedKind;
@@ -374,9 +359,14 @@ tests/test_boxed.rs
 
 tests/test_context.rs
      6→mod drop;
+     8→use crate::drop::{DetectDrop, Flag};
+    22→macro_rules! context_type {
     44→struct LowLevel {
     49→struct Dropped {
     55→impl Dropped {
+
+tests/test_convert.rs
+     3→mod drop;
 
 tests/test_ensure.rs
     31→use self::Enum::Generic;
@@ -385,9 +375,17 @@ tests/test_ensure.rs
 
 tests/test_ffi.rs
 
+tests/test_macros.rs
+    13→mod common;
+    15→use self::common::*;
+
+tests/test_repr.rs
+     3→mod drop;
+
 tests/test_source.rs
      7→enum TestError {
+    12→    fn fmt …
+    20→    fn source …
 
 tests/ui/no-impl.rs
      4→struct Error;
-     6→fn main() {

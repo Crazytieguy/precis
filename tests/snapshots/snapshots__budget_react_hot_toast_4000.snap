@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4042 tokens)
+budget: 4000 (4058 tokens)
 
 README.md
     28→## Features
@@ -61,12 +61,16 @@ site/components/code.tsx
 site/components/docs-layout.tsx
      5→import { Footer } from './sections/footer';
      6→import Logo from '../assets/logo-small.svg';
+     8→const TableItem: React.FC<{
+    19→const TableHeader: React.FC<{
     27→export default function DocsLayout({ meta, children }) {
     28→  return (
       →  …
 
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
+     2→  onClick: () => void;
+      →  …
 
 site/components/sections/footer.tsx
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
@@ -86,9 +90,13 @@ site/components/sections/toast-example.tsx
 site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
     17→export const ToasterExample: React.FC<{
+    18→  position: ToastPosition;
+      →  …
 
 site/next.config.mjs
     15→const nextConfig = {
+    17→  webpack(config) {
+    24→  async rewrites() {
 
 site/package.json
      2→  "name": "site",
@@ -174,13 +182,7 @@ src/components/toast-bar.tsx
     38→const Message = styled('div')`
     47→interface ToastBarProps {
     48→  toast: Toast;
-    49→  position?: ToastPosition;
-    50→  style?: React.CSSProperties;
-    51→  children?: (components: {
-    52→    icon: Renderable;
-    53→    message: Renderable;
-    54→  }) => Renderable;
-    55→}
+      →  …
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
@@ -197,7 +199,11 @@ src/components/toast-icon.tsx
     13→const IndicatorWrapper = styled('div')`
     22→const enter = keyframes`
     32→export const AnimatedIconWrapper = styled('div')`
+    33→  position: relative;
+      →  …
     41→export type IconThemes = Partial<{
+    42→  success: CheckmarkTheme;
+      →  …
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {
@@ -225,14 +231,10 @@ src/components/toaster.tsx
     10→import { prefersReducedMotion } from '../core/utils';
     11→import { ToastBar } from './toast-bar';
     15→const ToastWrapper = ({
-    16→  id,
-      →  …
     47→const getPositionStyle = (
     48→  position: ToastPosition,
     49→  offset: number
     50→): React.CSSProperties => {
-    51→  const top = position.includes('top');
-      →  …
     76→const activeClass = css`
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
@@ -254,8 +256,6 @@ src/core/store.ts
      5→export const TOAST_LIMIT = 20;
      6→export const DEFAULT_TOASTER_ID = 'default';
      8→interface ToasterSettings {
-     9→  toastLimit: number;
-    10→}
     12→export enum ActionType {
     13→  ADD_TOAST,
     14→  UPDATE_TOAST,
@@ -268,13 +268,7 @@ src/core/store.ts
     22→export type Action =
     23→  | {
     52→interface ToasterState {
-    53→  toasts: Toast[];
-    54→  settings: ToasterSettings;
-    55→  pausedAt: number | undefined;
-    56→}
     58→interface State {
-    59→  [toasterId: string]: ToasterState;
-    60→}
     62→export const reducer = (state: ToasterState, action: Action): ToasterState => {
     63→  const { toastLimit } = state.settings;
       →  …
@@ -392,11 +386,20 @@ src/core/use-toaster.ts
     15→  ).current;
     16→
     17→  const addToRemoveQueue = useCallback(
-      →  …
+    18→    (toastId: string, removeDelay = REMOVE_DELAY) => {
+    19→      if (toastTimeouts.has(toastId)) {
+    20→        return;
+    21→      }
+    22→
+      →…
 
 src/core/utils.ts
      1→export const genId = (() => {
+     2→  let count = 0;
+      →  …
      8→export const prefersReducedMotion = (() => {
+     9→  // Cache result
+      →  …
 
 src/headless/index.ts
      1→import { toast } from '../core/toast';

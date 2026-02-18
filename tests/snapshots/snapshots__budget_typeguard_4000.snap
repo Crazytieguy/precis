@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4042 tokens)
+budget: 4000 (4047 tokens)
 
 docs/conf.py
-     2→from importlib.metadata import version as get_version
-     4→from packaging.version import parse
+     2→from importlib.metadata …
 
 pyproject.toml
 
@@ -117,13 +116,19 @@ src/typeguard/_exceptions.py
      1→from collections import deque
      2→from typing import Deque
      5→class TypeHintWarning(UserWarning):
+     6→    """
+      →    …
     12→class TypeCheckWarning(UserWarning):
+    13→    """Emitted by typeguard's type checkers when a type mismatch is detected."""
     14→
     15→    def __init__(self, message: str):
     19→class InstrumentationWarning(UserWarning):
+    20→    """Emitted when there's a problem with instrumenting a function for type checks."""
     21→
     22→    def __init__(self, message: str):
     26→class TypeCheckError(Exception):
+    27→    """
+      →    …
     30→
     31→    def __init__(self, message: str):
     35→    def append_path_element(self, element: str) -> None:
@@ -151,11 +156,9 @@ src/typeguard/_importhook.py
     18→from ._transformer import TypeguardTransformer
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
-    44→# The name of this function is magical
     45→def _call_with_frames_removed(
     46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
     47→) -> T:
-    48→    return f(*args, **kwargs)
     51→def optimized_cache_from_source …
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
@@ -280,7 +283,6 @@ src/typeguard/_transformer.py
    345→    }
    346→
    488→class TypeguardTransformer(NodeTransformer):
-   516→    @contextmanager
    517→    def _use_memo(
    518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
    519→    ) -> Generator[None, Any, None]:
@@ -321,7 +323,6 @@ tests/conftest.py
     44→def typing_provider …
 
 tests/deferredannos.py
-     1→from typeguard …
      4→@typechecked
      5→def uses_forwardref(x: NotYetDefined) -> NotYetDefined:  # noqa: F821
      6→    return x

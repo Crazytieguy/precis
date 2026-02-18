@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4040 tokens)
+budget: 4000 (4037 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -14,6 +14,8 @@ CONTRIBUTING.md
      1→# Contributing
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
      4→2. Install dependencies (`npm install`)
+     5→3. Create your feature branch (`git checkout -b my-new-feature`)
+     6→4. Commit your changes (`git commit -am 'Added some feature'`)
       →…
     11→## Testing
     19→## Code Style
@@ -277,9 +279,7 @@ lib/main.d.ts
     95→}
     97→type DotenvError = Error & {
     98→  code: 
-    99→    | 'MISSING_DATA'
-   100→    | 'INVALID_DOTENV_KEY'
-      →    …
+      →  …
    106→export interface DotenvPopulateOptions {
    107→  /**
    108→   * Default: `false`
@@ -355,8 +355,6 @@ package.json
 
 tests/test-config-cli.js
      6→function spawn (cmd, options = {}) {
-     7→  const { stdout } = cp.spawnSync(
-      →  …
 
 tests/test-config-vault.js
      8→const testPath …
