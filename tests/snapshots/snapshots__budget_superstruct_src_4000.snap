@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3569 words)
+budget: 4000 (4015 words)
 
 error.ts
      1→/**
@@ -401,7 +401,24 @@ structs/types.ts
     34→  return new Struct({
     35→    type: 'array',
     36→    schema: Element,
-      →…
+    37→    *entries(value) {
+    38→      if (Element && Array.isArray(value)) {
+    39→        for (const [i, v] of value.entries()) {
+    40→          yield [i, v, Element]
+    41→        }
+    42→      }
+    43→    },
+    44→    coercer(value) {
+    45→      return Array.isArray(value) ? value.slice() : value
+    46→    },
+    47→    validator(value) {
+    48→      return (
+    49→        Array.isArray(value) ||
+    50→        `Expected an array value, but received: ${print(value)}`
+    51→      )
+    52→    },
+    53→  })
+    54→}
     56→/**
       →…
     60→export function bigint(): Struct<bigint, null> {
@@ -417,7 +434,21 @@ structs/types.ts
    108→  const schema: any = {}
    109→  const description = values.map((v) => print(v)).join()
    110→
-      →…
+   111→  for (const key of values) {
+   112→    schema[key] = key
+   113→  }
+   114→
+   115→  return new Struct({
+   116→    type: 'enums',
+   117→    schema,
+   118→    validator(value) {
+   119→      return (
+   120→        values.includes(value as any) ||
+   121→        `Expected one of \`${description}\`, but received: ${print(value)}`
+   122→      )
+   123→    },
+   124→  })
+   125→}
    127→/**
       →…
    131→export function func(): Struct<Function, null> {
@@ -438,12 +469,40 @@ structs/types.ts
    205→  const description = print(constant)
    206→  const t = typeof constant
    207→  return new Struct({
-      →…
+   208→    type: 'literal',
+   209→    schema:
+   210→      t === 'string' || t === 'number' || t === 'boolean' ? constant : null,
+   211→    validator(value) {
+   212→      return (
+   213→        value === constant ||
+   214→        `Expected the literal \`${description}\`, but received: ${print(value)}`
+   215→      )
+   216→    },
+   217→  })
+   218→}
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    231→  return new Struct({
    232→    type: 'map',
    233→    schema: null,
-      →…
+   234→    *entries(value) {
+   235→      if (Key && Value && value instanceof Map) {
+   236→        for (const [k, v] of value.entries()) {
+   237→          yield [k as string, k, Key]
+   238→          yield [k as string, v, Value]
+   239→        }
+   240→      }
+   241→    },
+   242→    coercer(value) {
+   243→      return value instanceof Map ? new Map(value) : value
+   244→    },
+   245→    validator(value) {
+   246→      return (
+   247→        value instanceof Map ||
+   248→        `Expected a \`Map\` object, but received: ${print(value)}`
+   249→      )
+   250→    },
+   251→  })
+   252→}
    254→/**
       →…
    258→export function never(): Struct<never, null> {
@@ -457,6 +516,37 @@ structs/types.ts
    299→  const knowns = schema ? Object.keys(schema) : []
    300→  const Never = never()
    301→  return new Struct({
+   302→    type: 'object',
+   303→    schema: schema ? schema : null,
+   304→    *entries(value) {
+   305→      if (schema && isObject(value)) {
+   306→        const unknowns = new Set(Object.keys(value))
+   307→
+   308→        for (const key of knowns) {
+   309→          unknowns.delete(key)
+   310→          yield [key, value[key], schema[key]]
+   311→        }
+   312→
+   313→        for (const key of unknowns) {
+   314→          yield [key, value[key], Never]
+   315→        }
+   316→      }
+   317→    },
+   318→    validator(value) {
+   319→      return (
+   320→        isNonArrayObject(value) ||
+   321→        `Expected an object, but received: ${print(value)}`
+   322→      )
+   323→    },
+   324→    coercer(value, ctx) {
+   325→      if (!isNonArrayObject(value)) {
+   326→        return value
+   327→      }
+   328→
+   329→      const coerced = { ...value }
+   330→
+   331→      // The `object` struct has special behaviour enabled by the mask flag.
+   332→      // When masking, properties that are not in the schema are deleted from
       →…
    347→/**
       →…
@@ -474,7 +564,24 @@ structs/types.ts
    416→  return new Struct({
    417→    type: 'set',
    418→    schema: null,
-      →…
+   419→    *entries(value) {
+   420→      if (Element && value instanceof Set) {
+   421→        for (const v of value) {
+   422→          yield [v as string, v, Element]
+   423→        }
+   424→      }
+   425→    },
+   426→    coercer(value) {
+   427→      return value instanceof Set ? new Set(value) : value
+   428→    },
+   429→    validator(value) {
+   430→      return (
+   431→        value instanceof Set ||
+   432→        `Expected a \`Set\` object, but received: ${print(value)}`
+   433→      )
+   434→    },
+   435→  })
+   436→}
    438→/**
       →…
    442→export function string(): Struct<string, null> {
@@ -509,7 +616,8 @@ structs/utilities.ts
     61→  const isType = Structs[0].type === 'type'
     62→  const schemas = Structs.map((s) => s.schema)
     63→  const schema = Object.assign({}, ...schemas)
-      →…
+    64→  return isType ? type(schema) : object(schema)
+    65→}
     67→/**
       →…
     71→export function define<T>(name: string, validator: Validator): Struct<T, null> {

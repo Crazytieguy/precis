@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (992 words)
+budget: 1000 (1016 words)
 
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
@@ -68,10 +68,6 @@ imp_std.rs
    245→mod strict {
    246→    #[must_use]
    247→    #[inline]
-   248→    pub(crate) fn addr<T>(ptr: *mut T) -> usize
-   249→    where
-   250→        T: Sized,
-   251→    {
 lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -98,6 +94,8 @@ lib.rs
    395→    ///
    396→    /// [`std::cell::RefCell`]: https://doc.rust-lang.org/std/cell/struct.RefCell.html
    397→    ///
+   398→    /// # Example
+   399→    /// ```
       →…
    411→    pub struct OnceCell<T> {
    412→        // Invariant: written to at most once.
@@ -116,6 +114,8 @@ lib.rs
    698→    /// use once_cell::unsync::Lazy;
    699→    ///
    700→    /// let lazy: Lazy<i32> = Lazy::new(|| {
+   701→    ///     println!("initializing");
+   702→    ///     92
       →…
    714→    pub struct Lazy<T, F = fn() -> T> {
    715→        cell: OnceCell<T>,
@@ -142,6 +142,8 @@ lib.rs
    877→    /// Reading a non-`None` value out of `OnceCell` establishes a
    878→    /// happens-before relationship with a corresponding write. For example, if
    879→    /// thread A initializes the cell with `get_or_init(f)`, and thread B
+   880→    /// subsequently reads the result of this call, B also observes all the side
+   881→    /// effects of `f`.
       →…
    901→    pub struct OnceCell<T>(Imp<T>);
    904→        fn default() -> OnceCell<T> {
@@ -157,6 +159,8 @@ lib.rs
   1226→    /// # Example
   1227→    ///
   1228→    /// ```
+  1229→    /// use std::collections::HashMap;
+  1230→    ///
       →…
   1255→    pub struct Lazy<T, F = fn() -> T> {
   1256→        cell: OnceCell<T>,

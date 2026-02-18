@@ -19,7 +19,12 @@ pub fn render_with_budget(
     output
 }
 
-/// Render files within a word budget, returning output and estimated word count.
+/// Render files within a word budget, returning output and actual word count.
+///
+/// Compensates for the scheduler/renderer cost mismatch: the scheduler charges
+/// per-symbol but the renderer deduplicates at the line level (`emitted_up_to`),
+/// causing nested symbols to be skipped. A small budget inflation absorbs the
+/// typical mismatch without an extra scheduling pass.
 pub fn render_with_budget_stats(
     budget: usize,
     root: &Path,
@@ -28,9 +33,25 @@ pub fn render_with_budget_stats(
 ) -> (String, usize) {
     let all_symbols = extract_all_symbols(files, sources);
     let groups = schedule::build_groups(root, files, sources, &all_symbols);
-    let sched = schedule::schedule(&groups, budget, root, files);
-    let output = render_scheduled(root, files, sources, &all_symbols, &groups, &sched);
-    (output, sched.estimated_words)
+
+    // Inflate budget by ~3% to compensate for renderer-side line deduplication.
+    // Nested symbols (e.g., methods inside class bodies) are charged by the
+    // scheduler but skipped by the renderer when their lines are already emitted.
+    let effective_budget = budget + budget / 33;
+    let sched = schedule::schedule(&groups, effective_budget, root, files);
+    let mut output = render_scheduled(root, files, sources, &all_symbols, &groups, &sched);
+    let mut actual = count_words(&output);
+
+    // If still significantly underutilized (>5%), retry with larger inflation.
+    let underuse = budget.saturating_sub(actual);
+    if underuse > budget / 20 {
+        let retry_budget = effective_budget + underuse;
+        let sched = schedule::schedule(&groups, retry_budget, root, files);
+        output = render_scheduled(root, files, sources, &all_symbols, &groups, &sched);
+        actual = count_words(&output);
+    }
+
+    (output, actual)
 }
 
 /// Render a single file within a word budget.

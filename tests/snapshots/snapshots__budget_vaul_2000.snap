@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1957 words)
+budget: 2000 (2017 words)
 
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
@@ -17,7 +17,8 @@ src/browser.ts
 src/constants.ts
      1→export const TRANSITIONS = {
      2→  DURATION: 0.5,
-      →…
+     3→  EASE: [0.32, 0.72, 0, 1],
+     4→};
      6→export const VELOCITY_THRESHOLD = 0.4;
      8→export const CLOSE_THRESHOLD = 0.25;
     10→export const SCROLL_LOCK_TIMEOUT = 100;
@@ -49,6 +50,9 @@ src/context.ts
       →…
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     38→  drawerRef: { current: null },
+    39→  overlayRef: { current: null },
+    40→  onPress: () => {},
+    41→  onRelease: () => {},
       →…
     69→export const useDrawerContext = () => {
 src/helpers.ts
@@ -134,6 +138,8 @@ src/index.tsx
    147→  setBackgroundColorOnScale = true,
    148→  closeThreshold = CLOSE_THRESHOLD,
    149→  scrollLockTimeout = SCROLL_LOCK_TIMEOUT,
+   150→  dismissible = true,
+   151→  handleOnly = false,
       →…
    803→export const Overlay …
    831→export type ContentProps …
@@ -153,6 +159,8 @@ src/index.tsx
   1106→    <Root
   1107→      nested
   1108→      open={nestedIsOpen}
+  1109→      onClose={() => {
+  1110→        onNestedOpenChange(false);
       →…
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
   1130→export function Portal(props: PortalProps) {
@@ -266,6 +274,7 @@ src/use-position-fixed.ts
     57→
     58→      window.setTimeout(
     59→        () =>
+    60→          window.requestAnimationFrame(() => {
       →…
 src/use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
@@ -352,6 +361,7 @@ test/README.md
     33→
       →…
 test/next.config.js
+     1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
 test/src/app/controlled/page.tsx
      6→export default function Page() {
@@ -396,6 +406,9 @@ test/src/app/parent-container/page.tsx
     39→function WithNested() {
 test/src/app/scrollable-page/page.tsx
      6→export default function Page() {
+     7→  const [open, setOpen] = useState(false);
+     8→
+      →…
 test/src/app/scrollable-with-inputs/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {
@@ -419,6 +432,9 @@ test/src/app/with-scaled-background/page.tsx
      8→const CenteredContent …
     29→const DrawerContent …
     65→export default function Page() {
+    66→  const [direction, setDirection] = useState<DrawerDirection>('bottom');
+    67→
+      →…
 test/src/app/with-snap-points/page.tsx
      7→const snapPoints = ['148px', '355px', 1];
      9→export default function Page() {

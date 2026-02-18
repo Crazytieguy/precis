@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (968 words)
+budget: 1000 (995 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -222,19 +222,16 @@ tests/__init__.py
 tests/burntsushi.py
 tests/test_data.py
      5→import json
-    11→DATA_DIR …
-    13→VALID_FILES …
-    21→VALID_FILES_EXPECTED …
-    23→INVALID_FILES …
+    11→DATA_DIR = Path(__file__).parent / "data"
+    13→VALID_FILES = tuple((DATA_DIR / "valid").glob("**/*.toml"))
+    21→VALID_FILES_EXPECTED = tuple(_expected_files)
+    23→INVALID_FILES = tuple((DATA_DIR / "invalid").glob("**/*.toml"))
     27→class TestData(unittest.TestCase):
-    28→    def test_invalid(self):
 tests/test_error.py
     13→class TestError(unittest.TestCase):
-    14→    def test_line_and_col(self):
 tests/test_misc.py
      5→import copy
     17→class TestMiscellaneous(unittest.TestCase):
-    18→    def test_load(self):
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
      3→Tomli was added to the Python standard library in Python 3.11.
@@ -243,7 +240,10 @@ tomllib.md
      6→
      7→- Python Issue Tracker: https://bugs.python.org/issue40059
      8→- Tomli issue tracker: https://github.com/hukkin/tomli/issues/141
-      →…
+     9→- Discussion on PyPA "blessing" a TOML parser and/or including one in the standard library: https://discuss.python.org/t/adopting-recommending-a-toml-parser/4068
+    10→- Python Enhancement Proposal: https://peps.python.org/pep-0680
+    11→- CPython pull request: https://github.com/python/cpython/pull/31498
+    12→
     13→## Converting Tomli to tomllib …
     15→### Sync status
     17→`tomllib` in CPython commit https://github.com/python/cpython/commit/deaf509e8fc6e0363bd6f26d52ad42f976ec42f2

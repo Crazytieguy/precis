@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3902 words)
+budget: 4000 (4015 words)
 
 argument.js
      3→class Argument {
@@ -42,7 +42,14 @@ argument.js
     37→      this.variadic = true;
     38→      this._name = this._name.slice(0, -3);
     39→    }
+    40→  }
+    41→
     42→  /**
+    43→   * Return argument name.
+    44→   *
+    45→   * @return {string}
+    46→   */
+    47→
       →…
     48→  name() {
     52→  /**
@@ -116,6 +123,14 @@ command.js
     47→    this._aliases = [];
     48→    this._combineFlagAndOptionalValue = true;
     49→    this._description = '';
+    50→    this._summary = '';
+    51→    this._argsDescription = undefined; // legacy
+    52→    this._enablePositionalOptions = false;
+    53→    this._passThroughOptions = false;
+    54→    this._lifeCycleHooks = {}; // a hash of arrays
+    55→    /** @type {(boolean | string)} */
+    56→    this._showHelpAfterError = false;
+    57→    this._showSuggestionAfterError = true;
     91→  /**
       →…
     99→  copyInheritedSettings(sourceCommand) {
@@ -730,7 +745,14 @@ help.js
     46→    if (this.sortSubcommands) {
     47→      visibleCommands.sort((a, b) => {
     48→        // @ts-ignore: because overloaded return type
+    49→        return a.name().localeCompare(b.name());
+    50→      });
+    51→    }
+    52→    return visibleCommands;
+    53→  }
+    54→
     55→  /**
+    56→   * Compare options for sort.
       →…
     62→  compareOptions(a, b) {
     72→  /**
@@ -914,7 +936,13 @@ option.js
     37→  }
     38→
     39→  /**
-      →…
+    40→   * Set the default value, and optionally supply the description to be displayed in the help.
+    41→   *
+    42→   * @param {*} value
+    43→   * @param {string} [description]
+    44→   * @return {Option}
+    45→   */
+    46→
     47→  default(value, description) {
     53→  /**
       →…

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (476 words)
+budget: 500 (493 words)
 
 src/into_either.rs
      4→use super::{Either, Left, Right};
@@ -71,6 +71,8 @@ src/iterator.rs
     20→    inner: Either<L, R>,
     21→}
     24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
+    25→        IterEither { inner }
+    26→    }
     48→    type Item = L::Item;
    185→    type Item = Either<L::Item, R::Item>;
 src/lib.rs
@@ -110,6 +112,10 @@ src/lib.rs
   1327→    type Target = L::Target;
   1522→macro_rules! check_t {
   1536→fn _unsized_ref_propagation() {
+  1537→    check_t!(str);
+  1538→
+  1539→    fn check_array_ref<T: AsRef<[Item]>, Item>() {}
+      →…
   1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {
   1554→    check_t!(::std::path::Path);

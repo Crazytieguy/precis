@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1736 words)
+budget: 2000 (1918 words)
 
 __init__.py
      1→__all__ = [
@@ -62,7 +62,9 @@ _hooks.py
     48→    warn_on_impl: Warning | None
     49→    #: Whether the hook warns when :ref:`certain arguments are requested
     50→    #: <warn_on_impl>`.
-      →…
+    51→    #:
+    52→    #: .. versionadded:: 1.5
+    53→    warn_on_impl_args: Mapping[str, Warning] | None
     56→class HookimplOpts(TypedDict):
     58→
     59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
@@ -73,7 +75,14 @@ _hooks.py
     64→    #: Whether validation against a hook specification is :ref:`optional
     65→    #: <optionalhook>`.
     66→    optionalhook: bool
-      →…
+    67→    #: Whether to try to order this hook implementation :ref:`first
+    68→    #: <callorder>`.
+    69→    tryfirst: bool
+    70→    #: Whether to try to order this hook implementation :ref:`last
+    71→    #: <callorder>`.
+    72→    trylast: bool
+    73→    #: The name of the hook specification to match, see :ref:`specname`.
+    74→    specname: str | None
     78→class HookspecMarker:
     85→
     86→    __slots__ = ("project_name",)
@@ -166,7 +175,17 @@ _hooks.py
    390→        "_call_history",
    391→    )
    392→
-   393→    def __init__ …
+   393→    def __init__(
+   394→        self,
+   395→        name: str,
+   396→        hook_execute: _HookExec,
+   397→        specmodule_or_class: _Namespace | None = None,
+   398→        spec_opts: HookspecOpts | None = None,
+   399→    ) -> None:
+   400→        """:meta private:"""
+   401→        #: Name of the hook getting called.
+   402→        self.name: Final = name
+   403→        self._hookexec: Final = hook_execute
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None
@@ -314,8 +333,11 @@ _manager.py
     73→        name: str = self.metadata["name"]
     74→        return name
     75→
-    76→    def __getattr__ …
-    79→    def __dir__ …
+    76→    def __getattr__(self, attr: str, default: Any | None = None) -> Any:
+    77→        return getattr(self._dist, attr, default)
+    78→
+    79→    def __dir__(self) -> list[str]:
+    80→        return sorted(dir(self._dist) + ["_dist", "project_name"])
     83→class PluginManager:
     99→
    100→    def __init__(self, project_name: str) -> None:
@@ -326,13 +348,17 @@ _manager.py
    105→        #: The "hook relay", used to call a hook on all registered plugins.
    106→        #: See :ref:`calling`.
    107→        self.hook: Final = HookRelay()
+   108→        #: The tracing entry point. See :ref:`tracing`.
+   109→        self.trace: Final[_tracing.TagTracerSub] = _tracing.TagTracer().get(
+   110→            "pluginmanage"
+   111→        )
+   112→        self._inner_hookexec = _multicall
+   113→
    114→    def _hookexec(
    115→        self,
    116→        hook_name: str,
    117→        methods: Sequence[HookImpl],
    118→        kwargs: Mapping[str, object],
-   119→        firstresult: bool,
-   120→    ) -> object | list[object]:
    125→    def register …
    176→    def parse_hookimpl_opts …
    201→    def unregister …
@@ -407,6 +433,17 @@ _tracing.py
     23→        return TagTracerSub(self, (name,))
     24→
     25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
+    26→        if isinstance(args[-1], dict):
+    27→            extra = args[-1]
+    28→            args = args[:-1]
+    29→        else:
+    30→            extra = {}
+    31→
+    32→        content = " ".join(map(str, args))
+    33→        indent = "  " * self.indent
+    34→
+    35→        lines = [f"{indent}{content} [{':'.join(tags)}]\n"]
+    36→
     42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
     48→    def setwriter …
     51→    def setprocessor …

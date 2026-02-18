@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1965 words)
+budget: 2000 (2017 words)
 
 README.md
     28→## Features
@@ -114,6 +114,7 @@ site/components/sections/footer.tsx
      2→import Link from 'next/link';
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
      5→  return (
+     6→    <footer className="container relative justify-center my-8 flex flex-col items-center space-y-4">
       →…
 site/components/sections/splitbee-counter.tsx
      1→import React from 'react';
@@ -123,9 +124,11 @@ site/components/sections/splitbee-counter.tsx
      6→  token: string
      7→): number => {
      8→  const [data, setData] = React.useState<number>(0);
+     9→  const socket = React.useRef(null);
       →…
     36→export const SplitbeeCounter = () => {
     37→  const count = useSplitbeeCount('Trigger Toast', 'NTV7AYBLEXW3');
+    38→
       →…
 site/components/sections/toast-example.tsx
      1→import React, { useState } from 'react';
@@ -137,6 +140,7 @@ site/components/sections/toast-example.tsx
       →…
    270→export const ToastExample = () => {
    271→  const [snippet, setSnippet] = useState(examples[0].snippet);
+   272→  return (
       →…
 site/components/sections/toaster-example.tsx
      1→import clsx from 'clsx';
@@ -154,6 +158,7 @@ site/components/sections/toaster-example.tsx
     15→];
     17→export const ToasterExample: React.FC<{
     18→  position: ToastPosition;
+    19→  onPosition: (pos: ToastPosition) => void;
       →…
 site/next.config.mjs
      1→import rehypeSlug from 'rehype-slug';
@@ -314,8 +319,8 @@ src/components/toaster.tsx
    100→      style={{
       →…
 src/core/store.ts
-     1→import { useEffect, useState, useRef } from 'react …
-     2→import { DefaultToastOptions, Toast, ToastType } from './types …
+     1→import { useEffect, useState, useRef } from 'react';
+     2→import { DefaultToastOptions, Toast, ToastType } from './types';
      4→export const TOAST_EXPIRE_DISMISS_DELAY = 1000;
      5→export const TOAST_LIMIT = 20;
      6→export const DEFAULT_TOASTER_ID = 'default';
@@ -407,9 +412,23 @@ src/core/store.ts
    193→
       →…
 src/core/toast.ts
-     1→./types …
-    10→import { genId } from './utils …
-    11→./store …
+     1→import {
+     2→  Renderable,
+     3→  Toast,
+     4→  ToastOptions,
+     5→  ToastType,
+     6→  DefaultToastOptions,
+     7→  ValueOrFunction,
+     8→  resolveValue,
+     9→} from './types';
+    10→import { genId } from './utils';
+    11→import {
+    12→  createDispatch,
+    13→  Action,
+    14→  ActionType,
+    15→  dispatchAll,
+    16→  getToasterIdFromToastId,
+    17→} from './store';
     19→type Message = ValueOrFunction<Renderable, Toast>;
     21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
     23→const createToast = (
@@ -429,7 +448,7 @@ src/core/toast.ts
     55→const toast = (message: Message, opts?: ToastOptions) =>
     56→  createHandler('blank')(message, opts);
 src/core/types.ts
-     1→import { CSSProperties } from 'react …
+     1→import { CSSProperties } from 'react';
      3→export type ToastType = 'success' | 'error' | 'loading' | 'blank' | 'custom';
      4→export type ToastPosition =
      5→  | 'top-left'
@@ -516,10 +535,10 @@ src/core/types.ts
     96→  children?: React.ReactNode;
     97→}
 src/core/use-toaster.ts
-     1→import { useEffect, useCallback, useRef } from 'react …
-     2→import { createDispatch, ActionType, useStore, dispatch } from './store …
-     3→import { toast } from './toast …
-     4→import { DefaultToastOptions, Toast, ToastPosition } from './types …
+     1→import { useEffect, useCallback, useRef } from 'react';
+     2→import { createDispatch, ActionType, useStore, dispatch } from './store';
+     3→import { toast } from './toast';
+     4→import { DefaultToastOptions, Toast, ToastPosition } from './types';
      6→export const REMOVE_DELAY = 1000;
      8→export const useToaster = (
      9→  toastOptions?: DefaultToastOptions,
@@ -542,6 +561,8 @@ test/setup.ts
      1→import '@testing-library/jest-dom';
 test/toast.test.tsx
     29→const waitTime = (time: number) => {
+    30→  act(() => {
+      →…
     35→const TOAST_DURATION = 1000;
 tsup.config.ts
      1→import { defineConfig, Options } from 'tsup';

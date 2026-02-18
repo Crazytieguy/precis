@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3790 words)
+budget: 4000 (3907 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -739,8 +739,17 @@ tests/burntsushi.py
     44→
     45→    This normalizes primitive values (e.g. floats)."""
     68→def _normalize_datetime_str(dt_str: str) -> str:
+    69→    if dt_str[-1].lower() == "z":
+    70→        dt_str = dt_str[:-1] + "+00:00"
+    71→
+      →…
     92→def _normalize_localtime_str(lt_str: str) -> str:
+    93→    return lt_str.rstrip("0") if "." in lt_str else lt_str
     96→def _normalize_float_str(float_str: str) -> str:
+    97→    as_float = float(float_str)
+    98→
+    99→    # Normalize "-0.0" and "+0.0"
+      →…
 tests/test_data.py
      5→import json
      6→from pathlib import Path
@@ -764,6 +773,11 @@ tests/test_data.py
     38→                    tomllib.loads(toml_str)
     39→
     40→    def test_valid(self):
+    41→        for valid, expected in zip(VALID_FILES, VALID_FILES_EXPECTED):
+    42→            with self.subTest(msg=valid.stem):
+    43→                toml_str = valid.read_bytes().decode()
+    44→                actual = tomllib.loads(toml_str)
+    45→                actual = burntsushi.convert(actual)  # type: ignore[no-untyped-call]
       →…
 tests/test_error.py
      7→from typing import Any
@@ -783,6 +797,11 @@ tests/test_error.py
     24→
     25→        with self.assertRaises(tomllib.TOMLDecodeError) as exc_info:
     26→            tomllib.loads("\n\nval=.")
+    27→        self.assertEqual(str(exc_info.exception), "Invalid value (at line 3, column 5)")
+    28→
+    29→        with self.assertRaises(tomllib.TOMLDecodeError) as exc_info:
+    30→            tomllib.loads("\n\n.")
+    31→        self.assertEqual(
     35→    def test_missing_value(self):
     40→    def test_invalid_char_quotes(self):
     45→    def test_type_error(self):
@@ -813,6 +832,11 @@ tests/test_misc.py
     28→
     29→    def test_incorrect_load(self):
     30→        content = "one=1"
+    31→        with tempfile.TemporaryDirectory() as tmp_dir_path:
+    32→            file_path = Path(tmp_dir_path) / "test.toml"
+    33→            file_path.write_text(content)
+    34→
+    35→            with open(file_path, "r") as txt_f:
     47→    def test_parse_float(self):
     75→    def test_deepcopy(self):
    103→    def test_inline_array_recursion_limit(self):
@@ -874,4 +898,4 @@ tomllib.md
     52→
     53→  Also change `import tomli as tomllib` to `import tomllib`.
     54→
-      →…
+    55→- In `cpython:Lib/tomllib/_parser.py` replace `__fp` with `fp` and `__s` with `s`. Add the `/` to `load` and `loads` function signatures.

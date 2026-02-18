@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (389 words)
+budget: 500 (405 words)
 
 aserror.rs
      1→use core::error::Error;
@@ -89,9 +89,14 @@ display.rs
     72→        }
     73→    }
     74→
+    75→    impl Display for Placeholder {
     76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     77→            unreachable!()
     78→        }
+    79→    }
+    80→
+    81→    impl Sealed for Placeholder {}
+    82→}
 lib.rs
    281→mod aserror;
    282→mod display;

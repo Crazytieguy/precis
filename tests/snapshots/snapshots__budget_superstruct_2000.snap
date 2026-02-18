@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1898 words)
+budget: 2000 (1941 words)
 
 Changelog.md
      1→# Changelog …
@@ -362,6 +362,9 @@ src/structs/coercions.ts
 src/structs/refinements.ts
      8→export function empty …
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
+    22→  if (value instanceof Map || value instanceof Set) {
+    23→    return value.size
+      →…
     33→export function max …
     55→export function min …
     77→export function nonempty …
@@ -459,9 +462,14 @@ src/utils.ts
    379→export type TupleSchema …
    385→export type AnyStruct …
    394→export type InferStructTuple …
-   402→type _InferTuple …
-test/deprecated.test.ts
-test/index.test.ts
+   402→type _InferTuple<
+   403→  Tuple extends AnyStruct[],
+   404→  Length extends number,
+   405→  Accumulated extends unknown[],
+   406→  Index extends number = Accumulated['length'],
+   407→> = Index extends Length
+   408→  ? Accumulated
+   409→  : _InferTuple<Tuple, Length, [...Accumulated, Infer<Tuple[Index]>]>
 test/index.ts
      1→/**
      2→ * A helper for testing type signatures.

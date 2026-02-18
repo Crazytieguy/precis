@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1834 words)
+budget: 2000 (1968 words)
 
 docs/conf.py
      2→from importlib.metadata import version as get_version
@@ -35,9 +35,6 @@ src/typeguard/_checkers.py
    107→    "__ge__",
    108→    "__gt__",
    109→    "__iadd__",
-   110→    "__iand__",
-   111→    "__idiv__",
-   112→    "__ifloordiv__",
       →…
    586→def _is_literal_type(typ: object) -> bool:
    587→    return typ is typing.Literal or typ is typing_extensions.Literal
@@ -53,9 +50,6 @@ src/typeguard/_checkers.py
   1013→    complex: check_number,
   1014→    dict: check_mapping,
   1015→    Dict: check_mapping,
-  1016→    float: check_number,
-  1017→    frozenset: check_set,
-  1018→    IO: check_io,
       →…
 src/typeguard/_config.py
     11→T = TypeVar("T")
@@ -69,6 +63,10 @@ src/typeguard/_config.py
     49→    FIRST_ITEM = auto()
     50→    ALL_ITEMS = auto()
     51→
+    52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
+    53→        if self is CollectionCheckStrategy.FIRST_ITEM:
+    54→            try:
+      →…
     62→@dataclass
     63→class TypeCheckConfiguration:
     64→    """
@@ -127,6 +125,9 @@ src/typeguard/_exceptions.py
     31→    def __init__(self, message: str):
     32→        super().__init__(message)
     33→        self._path: Deque[str] = deque()
+    34→
+    35→    def append_path_element(self, element: str) -> None:
+    36→        self._path.append(element)
 src/typeguard/_functions.py
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
@@ -143,22 +144,34 @@ src/typeguard/_importhook.py
     57→    def source_to_code(
     58→        data: Buffer | str | ast.Module | ast.Expression | ast.Interactive,
     59→        path: Buffer | str | PathLike[str] = "<string>",
+    60→        *,
+    61→        _optimize: int = -1,
+    62→    ) -> CodeType:
    109→class TypeguardFinder(MetaPathFinder):
    119→
    120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
    121→        self.packages = packages
    122→        self._original_pathfinder = original_pathfinder
+   123→
+   124→    def find_spec(
+   125→        self,
    156→class ImportHookManager:
    160→
    161→    def __init__(self, hook: MetaPathFinder):
    162→        self.hook = hook
    163→
+   164→    def __enter__(self) -> None:
+   165→        pass
+   166→
 src/typeguard/_memo.py
      8→class TypeCheckMemo:
     34→
     35→    __slots__ = "globals", "locals", "self_type", "config"
     36→
     37→    def __init__(
+    38→        self,
+    39→        globals: dict[str, Any],
+    40→        locals: dict[str, Any],
       →…
 src/typeguard/_pytest_plugin.py
 src/typeguard/_suppression.py
@@ -338,21 +351,33 @@ src/typeguard/_transformer.py
    287→        self.names: set[str] = set()
    288→
    289→    def visit_Import(self, node: Import) -> None:
+   290→        for name in node.names:
+   291→            self.names.add(name.asname or name.name)
+   292→
    313→class GeneratorDetector(NodeVisitor):
    315→
    316→    contains_yields: bool = False
    317→    in_root_function: bool = False
    318→
+   319→    def visit_Yield(self, node: Yield) -> Any:
+   320→        self.contains_yields = True
+   321→
    338→class AnnotationTransformer(NodeTransformer):
    339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
    340→        "builtins.dict": ("typing", "Dict"),
    341→        "builtins.list": ("typing", "List"),
    342→        "builtins.tuple": ("typing", "Tuple"),
+   343→        "builtins.set": ("typing", "Set"),
+   344→        "builtins.frozenset": ("typing", "FrozenSet"),
+   345→    }
    488→class TypeguardTransformer(NodeTransformer):
    489→    def __init__(
    490→        self, target_path: Sequence[str] | None = None, target_lineno: int | None = None
    491→    ) -> None:
    492→        self._target_path = tuple(target_path) if target_path else None
+   493→        self._memo = self._module_memo = TransformMemo(None, None, ())
+   494→        self.names_used_in_annotations: set[str] = set()
+   495→        self.target_node: FunctionDef | AsyncFunctionDef | None = None
    516→    @contextmanager
    517→    def _use_memo(
    518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
@@ -471,11 +496,15 @@ tests/mypy/negative.py
     42→
     43→    def add(self, y: int) -> int:
     44→        return self.x + y
+    47→def get_value(c: MyClass) -> int:
+    51→def create_myclass(x: int) -> MyClass:
 tests/mypy/positive.py
      6→@typechecked
      7→def foo(x: str) -> str:
+    11→def takes_callable(f: Callable[[str], str]) -> str:
     18→@typechecked
     19→def has_valid_arguments(x: int, y: str) -> None:
+    23→def has_valid_return_type(y: str) -> str:
     27→@typechecked
     28→class MyClass:
     29→    def __init__(self, x: int) -> None:
@@ -483,13 +512,19 @@ tests/mypy/positive.py
     31→
     32→    def add(self, y: int) -> int:
     33→        return self.x + y
+    36→def get_value(c: MyClass) -> int:
     40→@typechecked
     41→def get_value_checked(c: MyClass) -> int:
+    45→def create_myclass(x: int) -> MyClass:
     49→@typechecked
     50→def create_myclass_checked(x: int) -> MyClass:
 tests/mypy/test_type_annotations.py
      8→POSITIVE_FILE = "positive.py"
      9→NEGATIVE_FILE = "negative.py"
+    19→def get_mypy_cmd(filename: str) -> list[str]:
+    23→def get_negative_mypy_output() -> str:
+    35→def get_expected_errors() -> dict[int, str]:
+    54→def get_mypy_errors() -> dict[int, str]:
     68→@pytest.fixture
     69→def chdir_local() -> None:
     70→    """
@@ -507,11 +542,6 @@ tests/test_checkers.py
 tests/test_importhook.py
 tests/test_instrumentation.py
     40→def _fixture_module(name: str, method: str):
-    41→    # config.debug_instrumentation = True
-    42→    sys.path.insert(0, str(this_dir))
-    43→    try:
-    44→        # sys.modules.pop(name, None)
-      →…
 tests/test_plugins.py
 tests/test_pytest_plugin.py
 tests/test_suppression.py

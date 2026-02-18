@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (465 words)
+budget: 500 (480 words)
 
 README.md
      1→derive(Error) …
@@ -15,15 +15,18 @@ build/probe.rs
      9→use core::fmt::{self, Debug, Display};
     11→struct MyError(Thing);
     12→struct Thing;
-    14→impl Debug for MyError {
     15→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
-    20→impl Display for MyError {
     21→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
-    26→impl Error for MyError {
     27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
 impl/src/ast.rs
+    10→pub enum Input<'a> {
+    15→pub struct Struct<'a> {
+    22→pub struct Enum<'a> {
+    29→pub struct Variant<'a> {
+    36→pub struct Field<'a> {
     45→pub enum ContainerKind {
 impl/src/attr.rs
+    11→pub struct Attrs<'a> {
     21→pub struct Display<'a> {
     33→pub struct Source<'a> {
     39→pub struct From<'a> {
@@ -36,6 +39,8 @@ impl/src/fmt.rs
    171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
 impl/src/generics.rs
+     8→pub struct ParamsInScope<'a> {
+    48→pub struct InferredBounds {
 impl/src/lib.rs
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
@@ -44,12 +49,14 @@ impl/src/lib.rs
     43→}
     45→#[allow(non_camel_case_types)]
     46→struct private;
+impl/src/prop.rs
 impl/src/scan_expr.rs
      6→enum Input {
     25→enum Action {
 impl/src/unraw.rs
     12→pub struct IdentUnraw(Ident);
     82→pub enum MemberUnraw {
+impl/src/valid.rs
 src/aserror.rs
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
@@ -93,7 +100,6 @@ src/display.rs
     51→impl Sealed for PathBuf {}
     58→#[cfg(not(feature = "std"))]
     59→mod placeholder {
-    60→    use super::{AsDisplay, Sealed};
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
     67→        type Target = Self;

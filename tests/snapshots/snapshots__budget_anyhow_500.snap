@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (477 words)
+budget: 500 (490 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯ …
@@ -32,6 +32,7 @@ src/backtrace.rs
     64→macro_rules! backtrace_if_absent {
     70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
+    72→    use alloc::borrow::{Cow, ToOwned as _};
 src/chain.rs
     11→pub(crate) struct Chain<'a> {
     16→pub(crate) enum ChainState<'a> {
@@ -141,12 +142,15 @@ tests/drop/mod.rs
     27→    has_dropped: Flag,
     28→}
 tests/test_autotrait.rs
+     3→use anyhow::Error;
 tests/test_boxed.rs
 tests/test_context.rs
+    22→macro_rules! context_type {
 tests/test_ensure.rs
     43→    type Output = bool;
     78→fn assert_err …
 tests/test_ffi.rs
+     4→use anyhow::anyhow;
 tests/test_source.rs
 tests/ui/ensure-nonbool.rs
 tests/ui/must-use.rs

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (926 words)
+budget: 1000 (954 words)
 
 README.md
      1→# mdBook
@@ -81,6 +81,7 @@ crates/mdbook-driver/src/builtin_renderers/mod.rs
     23→}
     27→    pub fn new(name: String, cmd: String) -> CmdRenderer {
 crates/mdbook-driver/src/init.rs
+     3→use super::MDBook;
     13→pub struct BookBuilder {
     14→    root: PathBuf,
       →…
@@ -97,6 +98,7 @@ crates/mdbook-driver/src/load.rs
 crates/mdbook-driver/src/mdbook/tests.rs
    225→struct BoolPreprocessor(bool);
 crates/mdbook-driver/src/mdbook.rs
+     3→use crate::builtin_preprocessors::{CmdPreprocessor, IndexPreprocessor, LinkPreprocessor};
     29→pub struct MDBook {
     30→    /// The book's root directory.
       →…
@@ -107,6 +109,7 @@ crates/mdbook-html/README.md
      1→# mdbook-html …
     11→## License
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+crates/mdbook-html/src/html/mod.rs
 crates/mdbook-html/src/html/tokenizer.rs
     22→    type Handle = ();
 crates/mdbook-html/src/html/tree.rs
@@ -123,6 +126,7 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
 crates/mdbook-html/src/html_handlebars/mod.rs
      4→mod search;
      7→pub use self::hbs_renderer::HtmlHandlebars;
+crates/mdbook-html/src/html_handlebars/search.rs
 crates/mdbook-html/src/html_handlebars/static_files.rs
      3→use super::helpers::resources::ResourceHelper;
     22→pub(super) struct StaticFiles {
@@ -202,6 +206,7 @@ crates/xtask/src/changelog.rs
 crates/xtask/src/main.rs
      3→use std::collections::BTreeMap;
      9→mod changelog;
+eslint.config.mjs
 examples/nop-preprocessor.rs
     79→    pub struct Nop;
 guide/guide-helper/src/lib.rs
@@ -236,6 +241,8 @@ guide/src/for_developers/README.md
 guide/src/for_developers/backends.md
      1→# Alternative backends …
 guide/src/for_developers/mdbook-wordcount/src/main.rs
+    44→#[derive(Debug, Default, Serialize, Deserialize)]
+      →…
     46→pub struct WordcountConfig {
     47→    pub ignores: Vec<String>,
     48→    pub deny_odds: bool,
@@ -275,6 +282,8 @@ src/cmd/clean.rs
 src/cmd/command_prelude.rs
      3→pub use clap::{Arg, ArgMatches, Command, arg};
      7→pub trait CommandExt: Sized {
+     8→    fn _arg(self, arg: Arg) -> Self;
+     9→
     42→    fn arg_watcher(self) -> Self {
 src/cmd/init.rs
 src/cmd/mod.rs
@@ -310,6 +319,9 @@ src/cmd/watch.rs
      8→mod native;
      9→mod poller;
     21→pub enum WatcherKind {
+    22→    Poll,
+    23→    Native,
+      →…
 src/main.rs
      5→use anyhow::anyhow;
     14→mod cmd;
@@ -317,3 +329,4 @@ src/main.rs
     58→fn create_clap_command() -> Command {
 tests/testsuite/README.md
      3→## Introduction …
+tests/testsuite/book_test.rs

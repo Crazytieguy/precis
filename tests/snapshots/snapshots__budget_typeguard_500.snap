@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (473 words)
+budget: 500 (489 words)
 
 docs/conf.py
      2→from importlib.metadata import version as get_version
@@ -75,6 +75,10 @@ src/typeguard/_importhook.py
     73→            else:
     74→                source = decode_source(data)
     75→
+    76→            module = _call_with_frames_removed(
+    77→                ast.parse,
+    78→                source,
+    79→                filename,
       →…
    109→class TypeguardFinder(MetaPathFinder):
    119→
@@ -106,6 +110,7 @@ src/typeguard/_transformer.py
    131→        init=False, default_factory=lambda: defaultdict(dict)
    132→    )
    133→    has_yield_expressions: bool = field(init=False, default=False)
+   134→    has_return_expressions: bool = field(init=False, default=False)
    285→class NameCollector(NodeVisitor):
    286→    def __init__(self) -> None:
    313→class GeneratorDetector(NodeVisitor):

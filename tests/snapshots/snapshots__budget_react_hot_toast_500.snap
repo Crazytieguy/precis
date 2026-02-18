@@ -2,11 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (502 words)
 
 README.md
-    28→## Features …
-    37→## Installation …
+    28→## Features
+    30→- 🔥 **Hot by default**
+    31→- 🔩 **Easily Customizable**
+      →…
+    37→## Installation
     39→#### With pnpm
     41→```sh
     42→pnpm add react-hot-toast
@@ -17,8 +20,12 @@ README.md
     48→npm install react-hot-toast
     49→```
     50→
-    51→## Getting Started …
-    70→## Documentation …
+    51→## Getting Started
+    53→Add the Toaster to your app first. It will take care of rendering all notifications emitted. Now you can trigger `toast()` from anywhere!
+    54→
+      →…
+    70→## Documentation
+    72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
 site/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -54,7 +61,6 @@ site/components/sections/toaster-example.tsx
     17→export const ToasterExample …
 site/next.config.mjs
      5→const withMDX = nextMdx({
-    14→/** @type {import('next').NextConfig} */
     15→const nextConfig = {
     17→  webpack(config) {
     24→  async rewrites() {
@@ -88,14 +94,11 @@ src/components/loader.tsx
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
 src/components/toast-bar.tsx
-     8→const enterAnimation …
-    13→const exitAnimation …
     47→interface ToastBarProps {
     48→  toast: Toast;
     49→  position?: ToastPosition;
     50→  style?: React.CSSProperties;
       →…
-    57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 src/components/toast-icon.tsx
     32→export const AnimatedIconWrapper = styled('div')`
@@ -108,8 +111,6 @@ src/components/toast-icon.tsx
     48→  toast: Toast;
       →…
 src/components/toaster.tsx
-    15→const ToastWrapper …
-    47→const getPositionStyle …
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
       →…
@@ -163,8 +164,5 @@ src/index.ts
      1→import { toast } from './core/toast';
 test/setup.ts
      1→import '@testing-library/jest-dom';
-test/toast.test.tsx
-    29→const waitTime …
-    35→const TOAST_DURATION = 1000;
 tsup.config.ts
      4→const commonConfig: Options = {

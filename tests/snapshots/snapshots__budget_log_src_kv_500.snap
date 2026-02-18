@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (481 words)
+budget: 500 (488 words)
 
 error.rs
      5→pub struct Error {
@@ -51,6 +51,8 @@ mod.rs
      8→//! features = ["kv"]
      9→//! ```
     10→//!
+    11→//! # Structured logging in `log`
+    12→//!
       →…
    246→mod error;
    247→mod key;

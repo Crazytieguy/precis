@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (955 words)
+budget: 1000 (985 words)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -57,6 +57,7 @@ _parser.py
     59→        "\\b": "\u0008",  # backspace
     60→        "\\t": "\u0009",  # tab
     61→        "\\n": "\u000a",  # linefeed
+    62→        "\\f": "\u000c",  # form feed
       →…
     71→class DEPRECATED_DEFAULT:
     76→class TOMLDecodeError(ValueError):
@@ -85,6 +86,8 @@ _parser.py
    108→            if pos is not DEPRECATED_DEFAULT:
    109→                args = pos, *args
    110→            if doc is not DEPRECATED_DEFAULT:
+   111→                args = doc, *args
+   112→            if msg is not DEPRECATED_DEFAULT:
       →…
    137→def load …
    149→def loads …
@@ -114,6 +117,8 @@ _parser.py
    244→            if k not in cont:
    245→                return
    246→            cont = cont[k]["nested"]
+   247→        cont.pop(key[-1], None)
+   248→
    249→    def set …
    260→    def is_ …
    278→class NestedDict:
@@ -142,6 +147,8 @@ _parser.py
    301→        cont = self.get_or_create_nest(key[:-1])
    302→        last_key = key[-1]
    303→        if last_key in cont:
+   304→            list_ = cont[last_key]
+   305→            if not isinstance(list_, list):
       →…
    312→class Output:
    313→    def __init__(self) -> None:

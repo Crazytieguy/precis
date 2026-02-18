@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (959 words)
+budget: 1000 (986 words)
 
 error.ts
      5→export type Failure …
@@ -77,6 +77,7 @@ struct.ts
     50→      this.validator = () => []
     51→    }
     52→
+    53→    if (refiner) {
     63→  /**
       →…
     67→  assert(value: unknown, message?: string): asserts value is T {
@@ -138,6 +139,12 @@ structs/coercions.ts
 structs/refinements.ts
      8→export function empty …
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
+    22→  if (value instanceof Map || value instanceof Set) {
+    23→    return value.size
+    24→  } else {
+    25→    return value.length
+    26→  }
+    27→}
     33→export function max …
     55→export function min …
     77→export function nonempty …

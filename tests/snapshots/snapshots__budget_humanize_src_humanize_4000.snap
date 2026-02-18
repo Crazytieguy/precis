@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3934 words)
+budget: 4000 (4073 words)
 
 __init__.py
      5→from humanize.filesize import naturalsize
@@ -97,6 +97,8 @@ filesize.py
     80→    if gnu:
     81→        suffix = suffixes["gnu"]
     82→    elif binary:
+    83→        suffix = suffixes["binary"]
+    84→    else:
       →…
 i18n.py
      5→import gettext as gettext_module
@@ -133,7 +135,7 @@ i18n.py
     52→    try:
     53→        return _TRANSLATIONS[_CURRENT.locale]
     54→    except (AttributeError, KeyError):
-      →…
+    55→        return _TRANSLATIONS[None]
     58→def activate(
     59→    locale: str | None, path: str | os.PathLike[str] | None = None
     60→) -> gettext_module.NullTranslations:
@@ -155,6 +157,8 @@ i18n.py
     76→    if locale is None or locale.startswith("en"):
     77→        _CURRENT.locale = None
     78→        return _TRANSLATIONS[None]
+    79→
+    80→    if path is None:
       →…
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
@@ -240,7 +244,8 @@ i18n.py
    189→    try:
    190→        sep = _THOUSANDS_SEPARATOR[_CURRENT.locale]
    191→    except (AttributeError, KeyError):
-      →…
+   192→        sep = ","
+   193→    return sep
    196→def decimal_separator() -> str:
    197→    """Return the decimal separator for a locale, default to dot.
    198→
@@ -250,7 +255,8 @@ i18n.py
    202→    try:
    203→        sep = _DECIMAL_SEPARATOR[_CURRENT.locale]
    204→    except (AttributeError, KeyError):
-      →…
+   205→        sep = "."
+   206→    return sep
 lists.py
      5→TYPE_CHECKING = False
      7→    from typing import Any
@@ -277,6 +283,8 @@ lists.py
     31→    if len(items) == 1:
     32→        return str(items[0])
     33→    elif len(items) == 2:
+    34→        return f"{str(items[0])} and {str(items[1])}"
+    35→    else:
       →…
 number.py
      5→import bisect
@@ -331,6 +339,8 @@ number.py
     71→    import math
     72→
     73→    try:
+    74→        if not math.isfinite(float(value)):
+    75→            return _format_not_finite(float(value))
       →…
    110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
    111→    """Converts an integer to a string containing commas every three digits.
@@ -369,6 +379,8 @@ number.py
    144→    import math
    145→
    146→    thousands_sep = thousands_separator()
+   147→    decimal_sep = decimal_separator()
+   148→    try:
       →…
    195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
    196→    """Converts a large integer to a friendly text representation.
@@ -408,6 +420,8 @@ number.py
    230→    import math
    231→
    232→    try:
+   233→        if not math.isfinite(float(value)):
+   234→            return _format_not_finite(float(value))
       →…
    269→def apnumber(value: NumberOrString) -> str:
    270→    """Converts an integer to Associated Press style.
@@ -440,6 +454,8 @@ number.py
    297→    import math
    298→
    299→    try:
+   300→        if not math.isfinite(float(value)):
+   301→            return _format_not_finite(float(value))
       →…
    321→def fractional(value: NumberOrString) -> str:
    322→    """Convert to fractional number.
@@ -483,6 +499,8 @@ number.py
    360→    import math
    361→
    362→    try:
+   363→        number = float(value)
+   364→        if not math.isfinite(number):
       →…
    385→def scientific(value: NumberOrString, precision: int = 2) -> str:
    386→    """Return number in string scientific notation z.wq x 10ⁿ.
@@ -518,6 +536,8 @@ number.py
    416→    import math
    417→
    418→    exponents = {
+   419→        "0": "⁰",
+   420→        "1": "¹",
       →…
    454→def clamp(
    455→    value: float,
@@ -569,6 +589,8 @@ number.py
    501→    import math
    502→
    503→    if value is None:
+   504→        return None
+   505→
       →…
    531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
    532→    """Return a value with a metric SI unit-prefix appended.
@@ -608,6 +630,8 @@ number.py
    566→    import math
    567→
    568→    if not math.isfinite(value):
+   569→        return _format_not_finite(value)
+   570→    exponent = int(math.floor(math.log10(abs(value)))) if value != 0 else 0
       →…
 time.py
      8→from enum import Enum
@@ -712,6 +736,8 @@ time.py
    137→    import datetime as dt
    138→
    139→    tmp = Unit[minimum_unit.upper()]
+   140→    if tmp not in (Unit.SECONDS, Unit.MILLISECONDS, Unit.MICROSECONDS):
+   141→        msg = f"Minimum unit '{minimum_unit}' not supported"
       →…
    249→def naturaltime(
    250→    value: dt.datetime | dt.timedelta | float,
@@ -744,6 +770,8 @@ time.py
    277→    import datetime as dt
    278→
    279→    value = _convert_aware_datetime(value)
+   280→    when = _convert_aware_datetime(when)
+   281→
       →…
    300→def _convert_aware_datetime(
    301→    value: dt.datetime | dt.timedelta | float | None,
@@ -763,12 +791,16 @@ time.py
    319→    import datetime as dt
    320→
    321→    try:
+   322→        value = dt.date(value.year, value.month, value.day)
+   323→    except AttributeError:
       →…
    343→def naturaldate(value: dt.date | dt.datetime) -> str:
    344→    """Like `naturalday`, but append a year for dates more than ~five months away."""
    345→    import datetime as dt
    346→
    347→    try:
+   348→        value = dt.date(value.year, value.month, value.day)
+   349→    except AttributeError:
       →…
    361→def _quotient_and_remainder(
    362→    value: float,
@@ -911,6 +943,8 @@ time.py
    523→    date, delta = _date_and_delta(value, precise=True)
    524→    if date is None:
    525→        return str(value)
+   526→
+   527→    suppress_set = {Unit[s.upper()] for s in suppress}
       →…
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
    655→    """Round a number according to the string format provided.

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (494 words)
+budget: 500 (506 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -70,18 +70,23 @@ docs/release-policy.md
      1→# Release Policy …
 docs/terminology.md
      1→# Terminology …
+docs/zh-CN/可变参数的选项.md
 esm.mjs
      1→import commander from './index.js';
 examples/color-help-replacement.mjs
+examples/color-help.mjs
 examples/custom-command-class.js
      7→  createCommand(name) {
 examples/global-options-added.js
     17→  createCommand(name) {
 examples/help-centered.mjs
+examples/man-style-help.mjs
 lib/argument.js
      3→class Argument {
+     4→  /**
 lib/command.js
     13→class Command extends EventEmitter {
+    14→  /**
   1127→  _prepareForParse() {
 lib/error.js
      4→class CommanderError extends Error {
@@ -106,6 +111,7 @@ lib/help.js
    606→  styleCommandText(str) {
 lib/option.js
      3→class Option {
+     4→  /**
    268→class DualOptions {
    269→  /**
 lib/suggestSimilar.js
@@ -117,6 +123,7 @@ tests/esm-imports-test.mjs
      1→../esm.mjs …
 tests/ts-imports.test.ts
      1→../ …
+    17→function checkClass …
 typings/index.d.ts
     12→type LiteralUnion …
     16→export class CommanderError extends Error {

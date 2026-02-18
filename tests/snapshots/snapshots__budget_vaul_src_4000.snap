@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3966 words)
+budget: 4000 (4083 words)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -410,8 +410,6 @@ index.tsx
    195→      }
    196→    },
    197→  });
-   198→  const [hasBeenOpened, setHasBeenOpened] = React.useState<boolean>(false);
-   199→  const [isDragging, setIsDragging] = React.useState<boolean>(false);
       →…
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    804→  function ({ ...rest }, ref) {
@@ -848,7 +846,17 @@ use-scale-background.ts
     47→
     48→      return () => {
     49→        wrapperStylesCleanup();
-      →…
+    50→        timeoutIdRef.current = window.setTimeout(() => {
+    51→          if (initialBackgroundColor) {
+    52→            document.body.style.background = initialBackgroundColor;
+    53→          } else {
+    54→            document.body.style.removeProperty('background');
+    55→          }
+    56→        }, TRANSITIONS.DURATION * 1000);
+    57→      };
+    58→    }
+    59→  }, [isOpen, shouldScaleBackground, initialBackgroundColor]);
+    60→}
 use-snap-points.ts
      1→import React from 'react';
      2→import { set, isVertical } from './helpers';
@@ -897,4 +905,30 @@ use-snap-points.ts
     46→    function onResize() {
     47→      setWindowDimensions({
     48→        innerWidth: window.innerWidth,
+    49→        innerHeight: window.innerHeight,
+    50→      });
+    51→    }
+    52→    window.addEventListener('resize', onResize);
+    53→
+    54→    return () => window.removeEventListener('resize', onResize);
+    55→  }, []);
+    56→
+    57→  const isLastSnapPoint = React.useMemo(
+    58→    () => activeSnapPoint === snapPoints?.[snapPoints.length - 1] || null,
+    59→    [snapPoints, activeSnapPoint],
+    60→  );
+    61→
+    62→  const activeSnapPointIndex = React.useMemo(
+    63→    () => snapPoints?.findIndex((snapPoint) => snapPoint === activeSnapPoint) ?? null,
+    64→    [snapPoints, activeSnapPoint],
+    65→  );
+    66→
+    67→  const shouldFade =
+    68→    (snapPoints &&
+    69→      snapPoints.length > 0 &&
+    70→      (fadeFromIndex || fadeFromIndex === 0) &&
+    71→      !Number.isNaN(fadeFromIndex) &&
+    72→      snapPoints[fadeFromIndex] === activeSnapPoint) ||
+    73→    !snapPoints;
+    74→
       →…

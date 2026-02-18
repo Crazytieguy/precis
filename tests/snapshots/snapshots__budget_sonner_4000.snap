@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3755 words)
+budget: 4000 (3875 words)
 
 README.md
      5→## Usage
@@ -206,6 +206,39 @@ src/state.ts
     52→      jsx?: React.ReactElement;
     53→    },
     54→  ) => {
+    55→    const { message, ...rest } = data;
+    56→    const id = typeof data?.id === 'number' || data.id?.length > 0 ? data.id : toastsCounter++;
+    57→    const alreadyExists = this.toasts.find((toast) => {
+    58→      return toast.id === id;
+    59→    });
+    60→    const dismissible = data.dismissible === undefined ? true : data.dismissible;
+    61→
+    62→    if (this.dismissedToasts.has(id)) {
+    63→      this.dismissedToasts.delete(id);
+    64→    }
+    65→
+    66→    if (alreadyExists) {
+    67→      this.toasts = this.toasts.map((toast) => {
+    68→        if (toast.id === id) {
+    69→          this.publish({ ...toast, ...data, id, title: message });
+    70→          return {
+    71→            ...toast,
+    72→            ...data,
+    73→            id,
+    74→            dismissible,
+    75→            title: message,
+    76→          };
+    77→        }
+    78→
+    79→        return toast;
+    80→      });
+    81→    } else {
+    82→      this.addToast({ title: message, ...rest, dismissible, id });
+    83→    }
+    84→
+    85→    return id;
+    86→  };
+    87→
     88→  dismiss = (id?: number | string) => {
     89→    if (id) {
     90→      this.dismissedToasts.add(id);
@@ -577,8 +610,6 @@ website/next.config.js
      5→  },
      6→};
      8→const withNextra = require('nextra')({
-     9→  title: 'Sonner',
-      →…
 website/src/components/CodeBlock/index.tsx
      1→import React from 'react';
      2→import Highlight, { defaultProps } from 'prism-react-renderer';
@@ -621,7 +652,6 @@ website/src/components/CodeBlock/index.tsx
     78→                  <path d="M20 6L9 17l-5-5"></path>
     79→                </svg>
     80→              </motion.div>
-    81→            ) : (
       →…
 website/src/components/ExpandModes/index.tsx
      1→import { toast } from 'sonner';

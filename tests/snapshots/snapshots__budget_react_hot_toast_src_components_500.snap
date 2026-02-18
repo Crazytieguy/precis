@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (499 words)
+budget: 500 (515 words)
 
 checkmark.tsx
      3→const circleAnimation = keyframes`
@@ -156,4 +156,10 @@ toaster.tsx
    118→          gutter,
    119→          defaultPosition: position,
    120→        });
+   121→        const positionStyle = getPositionStyle(toastPosition, offset);
+   122→
+   123→        return (
+   124→          <ToastWrapper
+   125→            id={t.id}
+   126→            key={t.id}
       →…

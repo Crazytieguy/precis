@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (938 words)
+budget: 1000 (1053 words)
 
 CHANGELOG.md
 README.md
@@ -75,7 +75,6 @@ constraint.go
     14→var (
     15→	constraintRegexp     *regexp.Regexp
     16→	constraintRegexpOnce sync.Once
-    17→)
     19→func getConstraintRegexp() *regexp.Regexp {
     31→// Constraint represents a single constraint for a version, such as
     32→// ">= 1.0".
@@ -146,6 +145,12 @@ constraint.go
    268→func constraintPessimistic(v, c *Version) bool {
 constraint_test.go
      6→import …
+    13→func TestNewConstraint(t *testing.T) {
+    43→func TestConstraintCheck(t *testing.T) {
+   106→func TestConstraintPrerelease(t *testing.T) {
+   134→func TestConstraintEqual(t *testing.T) {
+   190→func TestConstraint_sort(t *testing.T) {
+   232→func TestConstraintsString(t *testing.T) {
 version.go
      6→import (
      7→	"database/sql/driver"
@@ -226,5 +231,28 @@ version_collection.go
     20→}
 version_collection_test.go
      6→import …
+    12→func TestCollection(t *testing.T) {
 version_test.go
      6→import …
+    13→func TestNewVersion(t *testing.T) {
+    54→func TestNewSemver(t *testing.T) {
+    95→func TestCore(t *testing.T) {
+   127→func TestVersionCompare(t *testing.T) {
+   174→func TestVersionCompare_versionAndSemver(t *testing.T) {
+   212→func TestVersionEqual_nil(t *testing.T) {
+   238→func TestComparePreReleases(t *testing.T) {
+   285→func TestVersionMetadata(t *testing.T) {
+   311→func TestVersionPrerelease(t *testing.T) {
+   339→func TestVersionSegments(t *testing.T) {
+   366→func TestVersionSegments64(t *testing.T) {
+   401→func TestJsonMarshal(t *testing.T) {
+   436→func TestJsonUnmarshal(t *testing.T) {
+   470→func TestVersionString(t *testing.T) {
+   497→func TestEqual(t *testing.T) {
+   544→func TestGreaterThan(t *testing.T) {
+   591→func TestLessThan(t *testing.T) {
+   638→func TestGreaterThanOrEqual(t *testing.T) {
+   685→func TestLessThanOrEqual(t *testing.T) {
+   732→func BenchmarkVersionString(b *testing.B) {
+   743→func BenchmarkCompareVersionV1(b *testing.B) {
+   753→func BenchmarkVersionCompareV2(b *testing.B) {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (977 words)
+budget: 1000 (1006 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -73,8 +73,6 @@ src/imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
       →…
-    27→    pub(crate) const fn new() -> OnceCell<T> {
-    31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
 src/imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
@@ -82,11 +80,10 @@ src/imp_pl.rs
     12→const INCOMPLETE …
     13→const RUNNING …
     14→const COMPLETE …
-    28→    pub(crate) const fn new() -> OnceCell<T> {
-    32→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
       →…
+   128→    fn drop …
 src/imp_std.rs
     13→#[derive(Debug)]
     14→pub(crate) struct OnceCell<T> {
@@ -101,8 +98,6 @@ src/imp_std.rs
     23→    queue: AtomicPtr<Waiter>,
     24→    value: UnsafeCell<Option<T>>,
     25→}
-    39→    pub(crate) const fn new() -> OnceCell<T> {
-    43→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
    125→const INCOMPLETE …
    126→const RUNNING …
    127→const COMPLETE …
@@ -122,7 +117,7 @@ src/imp_std.rs
    146→    queue: &'a AtomicPtr<Waiter>,
    147→    new_queue: *mut Waiter,
    148→}
-   210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
+   151→    fn drop …
    245→mod strict {
    246→    #[must_use]
    247→    #[inline]
@@ -154,6 +149,12 @@ src/lib.rs
    412→        // Invariant: written to at most once.
    413→        inner: UnsafeCell<Option<T>>,
    414→    }
+   424→        fn default …
+   430→        fn fmt …
+   439→        fn clone …
+   446→        fn clone_from …
+   455→        fn eq …
+   463→        fn from …
    694→    /// A value which is initialized on the first access.
    695→    ///
    696→    /// # Example
@@ -163,7 +164,10 @@ src/lib.rs
    715→        cell: OnceCell<T>,
    716→        init: Cell<Option<F>>,
    717→    }
+   722→        fn fmt …
    841→        type Target = T;
+   842→        fn deref …
+   848→        fn deref_mut …
    861→/// Thread-safe, blocking version of `OnceCell`.
    862→#[cfg(any(feature = "std", feature = "critical-section"))]
    863→pub mod sync {
@@ -180,6 +184,12 @@ src/lib.rs
    876→    ///
       →…
    901→    pub struct OnceCell<T>(Imp<T>);
+   904→        fn default …
+   910→        fn fmt …
+   919→        fn clone …
+   926→        fn clone_from …
+   935→        fn from …
+   941→        fn eq …
   1222→    /// A value which is initialized on the first access.
   1223→    ///
   1224→    /// This type is thread-safe and can be used in statics.
@@ -189,7 +199,10 @@ src/lib.rs
   1256→        cell: OnceCell<T>,
   1257→        init: Cell<Option<F>>,
   1258→    }
+  1261→        fn fmt …
   1374→        type Target = T;
+  1375→        fn deref …
+  1381→        fn deref_mut …
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
 src/race.rs
@@ -210,6 +223,8 @@ src/race.rs
    233→    inner: AtomicPtr<T>,
    234→    ghost: PhantomData<UnsafeCell<&'a T>>,
    235→}
+   241→    fn fmt …
+   247→    fn default …
    351→pub use self::once_box::OnceBox;
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
@@ -223,6 +238,10 @@ src/race.rs
    362→        inner: AtomicPtr<T>,
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
+   367→        fn fmt …
+   373→        fn default …
+   379→        fn drop …
+   482→        fn clone …
 tests/it/main.rs
      1→mod unsync_once_cell;
      3→mod sync_once_cell;
@@ -232,25 +251,15 @@ tests/it/main.rs
     12→mod race_once_box;
 tests/it/race.rs
 tests/it/race_once_box.rs
-    10→#[derive(Default)]
     11→struct Heap {
-    12→    total: Arc<AtomicUsize>,
-    13→}
-    15→#[derive(Debug)]
     16→struct Pebble<T> {
-    17→    val: T,
-    18→    total: Arc<AtomicUsize>,
-    19→}
     22→    fn drop(&mut self) {
     23→        self.total.fetch_sub(1, SeqCst);
     24→    }
-tests/it/sync_lazy.rs
 tests/it/sync_once_cell.rs
    178→#[test]
       →…
    181→fn reentrant_init() {
-tests/it/unsync_lazy.rs
-tests/it/unsync_once_cell.rs
 xtask/src/main.rs
      4→use std::time::Instant;
      6→use xshell::{cmd, Shell};

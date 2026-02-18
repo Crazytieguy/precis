@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1966 words)
+budget: 2000 (2034 words)
 
 README.md
      1→# Format
@@ -93,8 +93,7 @@ example.rs
      2→    println!("Hello World!");
      3→#
      4→#     // You can even hide lines! :D
-     5→#     println!("I am hidden! Expand the code snippet to see me");
-     6→}
+      →…
 markdown.md
      1→# Markdown
      3→mdBook's [parser](https://github.com/raphlinus/pulldown-cmark) adheres to the [CommonMark](https://commonmark.org/) specification with some extensions described below.
@@ -345,6 +344,17 @@ theme/index-hbs.md
     51→{{#toc}}{{/toc}}
     52→```
     53→
+    54→and outputs something that looks like this, depending on the structure of your
+    55→book
+    56→
+    57→```html
+    58→<ul class="chapter">
+    59→    <li><a href="link/to/file.html">Some chapter</a></li>
+    60→    <li>
+    61→        <ul class="section">
+    62→            <li><a href="link/to/other_file.html">Some other Chapter</a></li>
+    63→        </ul>
+    64→    </li>
       →…
     80→### resource
     82→The path to a static file.
@@ -353,7 +363,8 @@ theme/index-hbs.md
     85→
     86→```handlebars
     87→<link rel="stylesheet" href="{{ resource "css/chrome.css" }}">
-      →…
+    88→```
+    89→
     90→### fa
     92→mdBook includes a copy of [Font Awesome Free's](https://fontawesome.com)
     93→MIT-licensed SVG files. It accepts three positional arguments:
@@ -361,6 +372,17 @@ theme/index-hbs.md
     95→1. Type: one of "solid", "regular", and "brands" (light and duotone are not
     96→   currently supported)
     97→2. Icon: anything chosen from the
+    98→   [free icon set](https://fontawesome.com/v6/search)
+    99→3. ID (optional): if included, an HTML ID attribute will be added to the
+   100→   icon's wrapping `<span>` tag
+   101→
+   102→For example, this handlebars syntax will become this HTML:
+   103→
+   104→```handlebars
+   105→{{fa "solid" "print" "print-button"}}
+   106→```
+   107→
+   108→```html
       →…
 theme/syntax-highlighting.md
      1→# Syntax highlighting

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1965 words)
+budget: 2000 (2026 words)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -66,12 +66,6 @@ context.ts
     41→  onRelease: () => {},
     42→  onDrag: () => {},
     43→  onNestedDrag: () => {},
-    44→  onNestedOpenChange: () => {},
-    45→  onNestedRelease: () => {},
-    46→  openProp: undefined,
-    47→  dismissible: false,
-    48→  isOpen: false,
-    49→  isDragging: false,
       →…
     69→export const useDrawerContext = () => {
 helpers.ts
@@ -189,8 +183,6 @@ index.tsx
    179→
    180→      setTimeout(() => {
    181→        onAnimationEnd?.(o);
-   182→      }, TRANSITIONS.DURATION * 1000);
-   183→
       →…
    803→export const Overlay …
    831→export type ContentProps …
@@ -357,6 +349,36 @@ use-position-fixed.ts
     74→    // All browsers on iOS will return true here.
     75→    if (!isSafari()) return;
     76→
+    77→    if (previousBodyPosition !== null && !noBodyStyles) {
+    78→      // Convert the position from "px" to Int
+    79→      const y = -parseInt(document.body.style.top, 10);
+    80→      const x = -parseInt(document.body.style.left, 10);
+    81→
+    82→      // Restore styles
+    83→      Object.assign(document.body.style, previousBodyPosition);
+    84→
+    85→      window.requestAnimationFrame(() => {
+    86→        if (preventScrollRestoration && activeUrl !== window.location.href) {
+    87→          setActiveUrl(window.location.href);
+    88→          return;
+    89→        }
+    90→
+    91→        window.scrollTo(x, y);
+    92→      });
+    93→
+    94→      previousBodyPosition = null;
+    95→    }
+    96→  }, [activeUrl]);
+    97→
+    98→  React.useEffect(() => {
+    99→    function onScroll() {
+   100→      scrollPos.current = window.scrollY;
+   101→    }
+   102→
+   103→    onScroll();
+   104→
+   105→    window.addEventListener('scroll', onScroll);
+   106→
       →…
 use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
@@ -377,9 +399,6 @@ use-prevent-scroll.ts
     49→  'radio',
     50→  'range',
     51→  'color',
-    52→  'file',
-    53→  'image',
-    54→  'button',
       →…
     63→/**
     64→ * Prevents scrolling on the document body on mount, and

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (496 words)
+budget: 500 (508 words)
 
 browser.js
    115→function useColors() {
@@ -21,10 +21,6 @@ browser.js
    128→	let m;
    129→
    130→	// Is webkit? http://stackoverflow.com/a/16459606/376773
-   131→	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-   132→	// eslint-disable-next-line no-return-assign
-   133→	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
-   134→		// Is firebug? http://stackoverflow.com/a/398120/376773
       →…
    143→/**
    144→ * Colorize log arguments if enabled.
@@ -34,6 +30,7 @@ browser.js
    148→
    149→function formatArgs(args) {
    150→	args[0] = (this.useColors ? '%c' : '') +
+   151→		this.namespace +
       →…
    194→/**
    195→ * Save `namespaces`.
@@ -43,6 +40,7 @@ browser.js
    199→ */
    200→function save(namespaces) {
    201→	try {
+   202→		if (namespaces) {
       →…
    213→/**
    214→ * Load `namespaces`.
@@ -52,6 +50,7 @@ browser.js
    218→ */
    219→function load() {
    220→	let r;
+   221→	try {
       →…
    236→/**
    237→ * Localstorage attempts to return the localstorage.
@@ -66,6 +65,7 @@ browser.js
    246→
    247→function localstorage() {
    248→	try {
+   249→		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
       →…
 common.js
      2→/**
@@ -75,6 +75,7 @@ common.js
      6→
      7→function setup(env) {
      8→	createDebug.debug = createDebug;
+     9→	createDebug.default = createDebug;
       →…
 node.js
    151→/**
@@ -83,6 +84,7 @@ node.js
    154→
    155→function useColors() {
    156→	return 'colors' in exports.inspectOpts ?
+   157→		Boolean(exports.inspectOpts.colors) :
       →…
    161→/**
    162→ * Adds ANSI color escape codes if enabled.
@@ -92,6 +94,7 @@ node.js
    166→
    167→function formatArgs(args) {
    168→	const {namespace: name, useColors} = this;
+   169→
       →…
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
@@ -105,7 +108,7 @@ node.js
    192→
    193→function log(...args) {
    194→	return process.stderr.write(util.formatWithOptions(exports.inspectOpts, ...args) + '\n');
-      →…
+   195→}
    197→/**
    198→ * Save `namespaces`.
    199→ *
@@ -114,6 +117,7 @@ node.js
    202→ */
    203→function save(namespaces) {
    204→	if (namespaces) {
+   205→		process.env.DEBUG = namespaces;
       →…
    213→/**
    214→ * Load `namespaces`.
@@ -124,7 +128,7 @@ node.js
    219→
    220→function load() {
    221→	return process.env.DEBUG;
-      →…
+   222→}
    224→/**
    225→ * Init logic for `debug` instances.
    226→ *
@@ -134,4 +138,5 @@ node.js
    230→
    231→function init(debug) {
    232→	debug.inspectOpts = {};
+   233→
       →…

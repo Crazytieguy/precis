@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1943 words)
+budget: 2000 (1987 words)
 
 README.md
      1→# humanize
@@ -243,6 +243,13 @@ RELEASING.md
     12→
     13→- [ ] Publish release
     14→
+    15→- [ ] Check the tagged
+    16→      [GitHub Actions build](https://github.com/python-humanize/humanize/actions/workflows/release.yml)
+    17→      has released to [PyPI](https://pypi.org/project/humanize/#history)
+    18→
+    19→- [ ] Check installation:
+    20→
+    21→```bash
       →…
 docs/filesize.md
      1→# Filesize
@@ -554,11 +561,19 @@ tests/test_i18n.py
    248→
    249→    @freeze_time("2020-02-02")
    250→    def test_en_locale(self) -> None:
+   251→        three_seconds = NOW - dt.timedelta(seconds=3)
+   252→        test_str = humanize.naturaltime(three_seconds)
+   253→
+   254→        humanize.i18n.activate("en_US")
+   255→        assert test_str == humanize.naturaltime(three_seconds)
+   256→
+   257→        humanize.i18n.activate("en_GB")
+   258→        assert test_str == humanize.naturaltime(three_seconds)
+   259→
+   260→        humanize.i18n.deactivate()
+   261→
    262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
-   264→        three_seconds = NOW - dt.timedelta(seconds=3)
-   265→
-   266→        try:
       →…
 tests/test_lists.py
 tests/test_number.py

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3653 words)
+budget: 4000 (3966 words)
 
 backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
@@ -58,10 +58,12 @@ backtrace.rs
     96→    }
     97→
     98→    struct Capture {
+    99→        actual_start: usize,
+   100→        resolved: bool,
+   101→        frames: Vec<BacktraceFrame>,
+   102→    }
+   103→
    104→    struct BacktraceFrame {
-   105→        frame: Frame,
-   106→        symbols: Vec<BacktraceSymbol>,
-   107→    }
    109→    struct BacktraceSymbol {
    110→        name: Option<Vec<u8>>,
    111→        filename: Option<BytesOrWide>,
@@ -212,6 +214,9 @@ error.rs
     20→    /// Create a new error object from any error type.
     21→    ///
     22→    /// The error type must be threadsafe and `'static`, so that the `Error`
+    23→    /// will be as well.
+    24→    ///
+    25→    /// If the error type does not provide a backtrace, a backtrace will be
       →…
     30→    pub fn new<E>(error: E) -> Self
     31→    where
@@ -220,6 +225,9 @@ error.rs
     38→    /// Create a new error object from a printable error message.
     39→    ///
     40→    /// If the argument implements std::error::Error, prefer `Error::new`
+    41→    /// instead which preserves the underlying error's cause chain and
+    42→    /// backtrace. If the argument may or may not implement std::error::Error
+    43→    /// now or in the future, use `anyhow!(err)` which handles either way
       →…
     77→    pub fn msg<M>(message: M) -> Self
     78→    where
@@ -228,6 +236,9 @@ error.rs
     84→    /// Construct an error object from a type-erased standard library error.
     85→    ///
     86→    /// This is mostly useful for interop with other error libraries.
+    87→    ///
+    88→    /// # Example
+    89→    ///
       →…
    140→    pub fn from_boxed(boxed_error: Box<dyn StdError + Send + Sync + 'static>) -> Self {
    145→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
@@ -275,6 +286,9 @@ error.rs
    316→    /// Wrap the error value with additional context.
    317→    ///
    318→    /// For attaching context to a `Result` as it is propagated, the
+   319→    /// [`Context`][crate::Context] extension trait may be more convenient than
+   320→    /// this function.
+   321→    ///
       →…
    372→    pub fn context<C>(self, context: C) -> Self
    373→    where
@@ -283,21 +297,33 @@ error.rs
    404→    /// Get the backtrace for this Error.
    405→    ///
    406→    /// In order for the backtrace to be meaningful, one of the two environment
+   407→    /// variables `RUST_LIB_BACKTRACE=1` or `RUST_BACKTRACE=1` must be defined
+   408→    /// and `RUST_LIB_BACKTRACE` must not be `0`. Backtraces are somewhat
+   409→    /// expensive to capture in Rust, so we don't necessarily want to be
       →…
    432→    pub fn backtrace(&self) -> &impl_backtrace!() {
    436→    /// An iterator of the chain of source errors contained by this Error.
    437→    ///
    438→    /// This iterator will visit every error in the cause chain of this error
+   439→    /// object, beginning with the error that this error object was created
+   440→    /// from.
+   441→    ///
       →…
    459→    pub fn chain(&self) -> Chain {
    463→    /// The lowest level cause of this error &mdash; this error's cause's
    464→    /// cause's cause etc.
    465→    ///
+   466→    /// The root cause is the last error in the iterator produced by
+   467→    /// [`chain()`][Error::chain].
+   468→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
       →…
    470→    pub fn root_cause(&self) -> &(dyn StdError + 'static) {
    474→    /// Returns true if `E` is the type held by this error object.
    475→    ///
    476→    /// For errors with context, this method returns true if `E` matches the
+   477→    /// type of the context `C` **or** the type of the error on which the
+   478→    /// context has been attached. For details about the interaction between
+   479→    /// context and downcasting, [see here].
       →…
    482→    pub fn is<E>(&self) -> bool
    483→    where
@@ -311,6 +337,9 @@ error.rs
    518→    /// Downcast this error object by reference.
    519→    ///
    520→    /// # Example
+   521→    ///
+   522→    /// ```
+   523→    /// # use anyhow::anyhow;
       →…
    554→    pub fn downcast_ref<E>(&self) -> Option<&E>
    555→    where
@@ -324,7 +353,8 @@ error.rs
    617→    /// ```
    618→    ///
    619→    /// [`anyhow::Error::from_boxed`]: Self::from_boxed
-      →…
+   620→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+   621→    #[must_use]
    622→    pub fn into_boxed_dyn_error(self) -> Box<dyn StdError + Send + Sync + 'static> {
    660→    /// ```
    661→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
@@ -559,6 +589,13 @@ lib.rs
    316→/// Failed to read instrs from ./path/to/instrs.json: No such file or directory (os error 2)
    317→/// ```
    318→///
+   319→/// The Debug format "{:?}" includes your backtrace if one was captured. Note
+   320→/// that this is the representation you get by default if you return an error
+   321→/// from `fn main` instead of printing it explicitly yourself.
+   322→///
+   323→/// ```console
+   324→/// Error: Failed to read instrs from ./path/to/instrs.json
+   325→///
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -668,6 +705,13 @@ lib.rs
    498→///     it.detach().context("Failed to detach the important thing")?;
    499→///
    500→///     let path = &it.path;
+   501→///     let content = fs::read(path)
+   502→///         .with_context(|| format!("Failed to read instrs from {}", path.display()))?;
+   503→///
+   504→///     Ok(content)
+   505→/// }
+   506→/// ```
+   507→///
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.
@@ -685,6 +729,9 @@ lib.rs
    630→/// Equivalent to `Ok::<_, anyhow::Error>(value)`.
    631→///
    632→/// This simplifies creation of an `anyhow::Result` in places where type
+   633→/// inference cannot deduce the `E` type of the result &mdash; without needing
+   634→/// to write `Ok::<_, anyhow::Error>(value)`.
+   635→///
       →…
    650→pub fn Ok<T>(value: T) -> Result<T> {
    655→#[doc(hidden)]
@@ -779,6 +826,8 @@ macros.rs
     15→/// #
     16→/// # fn has_permission(user: usize, resource: usize) -> bool {
     17→/// #     true
+    18→/// # }
+    19→/// #
       →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
@@ -806,6 +855,8 @@ macros.rs
    188→/// ```
    189→/// # type V = ();
    190→/// #
+   191→/// use anyhow::{anyhow, Result};
+   192→///
       →…
    204→macro_rules! anyhow {
    228→#[doc(hidden)]

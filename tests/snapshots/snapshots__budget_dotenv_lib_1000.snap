@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (998 words)
+budget: 1000 (1029 words)
 
 cli-options.js
      1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
@@ -127,6 +127,9 @@ main.js
     16→  '🛡️ auth for agents: https://vestauth.com',
     17→  '🛠️  run anywhere with `dotenvx run -- yourcommand`',
     18→  '⚙️  specify custom .env file path with { path: \'/custom/path/.env\' }',
+    19→  '⚙️  enable debug logging with { debug: true }',
+    20→  '⚙️  override existing env vars with { override: true }',
+    21→  '⚙️  suppress all logs with { quiet: true }',
       →…
     27→function _getRandomTip () {
     28→  return TIPS[Math.floor(Math.random() * TIPS.length)]

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1917 words)
+budget: 2000 (1974 words)
 
 CHANGELOG.md
      1→# neverthrow …
@@ -268,6 +268,10 @@ src/result-async.ts
     35→
     36→  static fromPromise<T, E>(promise: PromiseLike<T>, errorFn: (e: unknown) => E): ResultAsync<T, E>
     37→  static fromPromise<T, E>(promise: Promise<T>, errorFn: (e: unknown) => E): ResultAsync<T, E> {
+    38→    const newPromise = promise
+    39→      .then((value: T) => new Ok<T, E>(value))
+    40→      .catch((e) => new Err<T, E>(errorFn(e)))
+    41→
     46→  static fromThrowable …
     69→  static combine …
     81→  static combineWithAllErrors …
@@ -325,6 +329,9 @@ src/result.ts
     37→  export function combine<
     38→    T extends readonly [Result<unknown, unknown>, ...Result<unknown, unknown>[]]
     39→  >(resultList: T): CombineResults<T>
+    40→  export function combine<T extends readonly Result<unknown, unknown>[]>(
+    41→    resultList: T,
+    42→  ): CombineResults<T>
     43→  export function combine …
     55→  export function combineWithAllErrors …
     62→export type Result …
@@ -398,7 +405,10 @@ src/result.ts
    325→  }
    326→
    327→  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-   328→  mapErr …
+   328→  mapErr<U>(_f: (e: E) => U): Result<T, U> {
+   329→    return ok(this.value)
+   330→  }
+   331→
    337→  andThen …
    344→  andThrough …
    348→  andTee …
@@ -432,7 +442,10 @@ src/result.ts
    432→    return err(this.error)
    433→  }
    434→
-   435→  mapErr …
+   435→  mapErr<U>(f: (e: E) => U): Result<T, U> {
+   436→    return err(f(this.error))
+   437→  }
+   438→
    439→  andThrough …
    443→  andTee …
    447→  orTee …

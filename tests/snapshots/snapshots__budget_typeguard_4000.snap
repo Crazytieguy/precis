@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3361 words)
+budget: 4000 (3951 words)
 
 docs/conf.py
      2→from importlib.metadata import version as get_version
@@ -45,6 +45,9 @@ src/typeguard/_checkers.py
    116→    "__imul__",
    117→    "__ior__",
    118→    "__ipow__",
+   119→    "__irshift__",
+   120→    "__isub__",
+   121→    "__itruediv__",
       →…
    153→def check_callable …
    212→def check_mapping …
@@ -94,6 +97,9 @@ src/typeguard/_checkers.py
   1022→    Mapping: check_mapping,
   1023→    MutableMapping: check_mapping,
   1024→    None: check_none,
+  1025→    collections.abc.Mapping: check_mapping,
+  1026→    collections.abc.MutableMapping: check_mapping,
+  1027→    Sequence: check_sequence,
       →…
   1061→def builtin_checker_lookup …
   1099→def load_plugins …
@@ -248,7 +254,18 @@ src/typeguard/_importhook.py
     92→            print(ast.unparse(tree), file=sys.stderr)
     93→            print("----------------------------------------------", file=sys.stderr)
     94→
-    99→    def exec_module …
+    95→        return _call_with_frames_removed(
+    96→            compile, tree, filename, "exec", 0, dont_inherit=True
+    97→        )
+    98→
+    99→    def exec_module(self, module: ModuleType) -> None:
+   100→        # Use a custom optimization marker – the import lock should make this monkey
+   101→        # patch safe
+   102→        with patch(
+   103→            "importlib._bootstrap_external.cache_from_source",
+   104→            optimized_cache_from_source,
+   105→        ):
+   106→            super().exec_module(module)
    109→class TypeguardFinder(MetaPathFinder):
    119→
    120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
@@ -589,8 +606,39 @@ src/typeguard/_transformer.py
    375→        self.generic_visit(node)
    376→
    377→        if isinstance(node.op, BitOr):
-   401→    def visit_Attribute …
-   407→    def visit_Subscript …
+   378→            # If either branch of the BinOp has been transformed to `None`, it means
+   379→            # that a type in the union was ignored, so the entire annotation should be
+   380→            # ignored
+   381→            if not hasattr(node, "left") or not hasattr(node, "right"):
+   382→                return None
+   383→
+   384→            # Return Any if either side is Any
+   385→            if self._memo.name_matches(node.left, *anytype_names):
+   386→                return node.left
+   387→            elif self._memo.name_matches(node.right, *anytype_names):
+   388→                return node.right
+   389→
+   390→            # Turn union types to typing.Union constructs on Python 3.9
+   391→            if sys.version_info < (3, 10):
+   392→                union_name = self.transformer._get_import("typing", "Union")
+   393→                return Subscript(
+   394→                    value=union_name,
+   395→                    slice=Tuple(elts=[node.left, node.right], ctx=Load()),
+   396→                    ctx=Load(),
+   397→                )
+   398→
+   399→        return node
+   400→
+   401→    def visit_Attribute(self, node: Attribute) -> Any:
+   402→        if self._memo.is_ignored_name(node):
+   403→            return None
+   404→
+   405→        return node
+   406→
+   407→    def visit_Subscript(self, node: Subscript) -> Any:
+   408→        if self._memo.is_ignored_name(node.value):
+   409→            return None
+   410→
    466→    def visit_Name …
    472→    def visit_Call …
    476→    def visit_Constant …
@@ -634,6 +682,39 @@ src/typeguard/_transformer.py
    525→            new_memo.should_instrument = (
    526→                self._target_path is None or new_memo.path == self._target_path
    527→            )
+   528→            if new_memo.should_instrument:
+   529→                # Check if the function is a generator function
+   530→                detector = GeneratorDetector()
+   531→                detector.visit(node)
+   532→
+   533→                # Extract yield, send and return types where possible from a subscripted
+   534→                # annotation like Generator[int, str, bool]
+   535→                return_annotation = deepcopy(node.returns)
+   536→                if detector.contains_yields and new_memo.name_matches(
+   537→                    return_annotation, *generator_names
+   538→                ):
+   539→                    if isinstance(return_annotation, Subscript):
+   540→                        if isinstance(return_annotation.slice, Tuple):
+   541→                            items = return_annotation.slice.elts
+   542→                        else:
+   543→                            items = [return_annotation.slice]
+   544→
+   545→                        if len(items) > 0:
+   546→                            new_memo.yield_annotation = self._convert_annotation(
+   547→                                items[0]
+   548→                            )
+   549→
+   550→                        if len(items) > 1:
+   551→                            new_memo.send_annotation = self._convert_annotation(
+   552→                                items[1]
+   553→                            )
+   554→
+   555→                        if len(items) > 2:
+   556→                            new_memo.return_annotation = self._convert_annotation(
+   557→                                items[2]
+   558→                            )
+   559→                else:
+   560→                    new_memo.return_annotation = self._convert_annotation(
    570→    def _get_import(self, module: str, name: str) -> Name:
    571→        memo = self._memo if self._target_path else self._module_memo
    572→        return memo.get_import(module, name)
@@ -686,18 +767,25 @@ tests/__init__.py
     38→class Parent:
     42→class Child(Parent):
 tests/conftest.py
-    29→def sample_set …
+    28→@pytest.fixture
+    29→def sample_set() -> set:
 tests/deferredannos.py
-     5→def uses_forwardref …
+     4→@typechecked
+     5→def uses_forwardref(x: NotYetDefined) -> NotYetDefined:  # noqa: F821
      9→class NotYetDefined:
 tests/dummymodule.py
     40→T = TypeVar("T", bound="DummyClass")
     41→P = ParamSpec("P")
-    47→    def dummy_decorator …
-    51→    def non_type_checked_decorated_func …
-    58→def type_checked_func …
-    63→def non_type_checked_func …
-    68→def non_typeguard_checked_func …
+    46→    @no_type_check_decorator
+    47→    def dummy_decorator(func):
+    50→    @dummy_decorator
+    51→    def non_type_checked_decorated_func(x: int, y: str) -> 6:
+    57→@typechecked
+    58→def type_checked_func(x: int, y: int) -> int:
+    62→@no_type_check
+    63→def non_type_checked_func(x: int, y: str) -> 6:
+    67→@typeguard_ignore
+    68→def non_typeguard_checked_func(x: int, y: str) -> 6:
     72→class Metaclass(type):
     76→@typechecked
     77→class DummyClass(metaclass=Metaclass):
@@ -741,28 +829,53 @@ tests/dummymodule.py
    129→    @staticmethod
    130→    def create_inner_staticmethod() -> "Inner":
    131→        return Outer.Inner()
-   136→def dummy_context_manager …
-   149→def overloaded_func …
-   154→def missing_return …
-   180→async def async_func …
-   185→def generator_func …
-   191→async def asyncgen_func …
-   196→def pep_604_union_args …
-   203→def pep_604_union_retval …
-   208→def builtin_generic_collections …
-   213→def paramspec_function …
-   218→def aug_assign …
-   225→def multi_assign_single_value …
-   234→def multi_assign_iterable …
-   243→def unpacking_assign …
-   250→def unpacking_assign_single_item_tuple …
-   257→def unpacking_assign_generator …
-   268→def unpacking_assign_star_with_annotation …
-   276→def unpacking_assign_star_no_annotation …
-   285→def attribute_assign_unpacking …
-   290→def override_forward_ref_policy …
-   295→def override_typecheck_fail_callback …
-   300→def override_collection_check_strategy …
+   134→@contextmanager
+   135→@typechecked
+   136→def dummy_context_manager() -> Generator[int, None, None]:
+   148→@typechecked
+   149→def overloaded_func(a: Union[str, int]) -> Union[str, int]:
+   153→@typechecked
+   154→def missing_return() -> int:
+   179→@typechecked
+   180→async def async_func(a: int) -> str:
+   184→@typechecked
+   185→def generator_func(yield_value: Any, return_value: Any) -> Generator[int, Any, str]:
+   190→@typechecked
+   191→async def asyncgen_func(yield_value: Any) -> AsyncGenerator[int, Any]:
+   195→@typechecked
+   196→def pep_604_union_args(
+   197→    x: "Callable[[], Literal[-1]] | Callable[..., Union[int, str]]",
+   198→) -> None:
+   202→@typechecked
+   203→def pep_604_union_retval(x: Any) -> "str | int":
+   207→@typechecked
+   208→def builtin_generic_collections(x: "list[set[int]]") -> Any:
+   212→@typechecked
+   213→def paramspec_function(func: P, args: P.args, kwargs: P.kwargs) -> None:
+   217→@typechecked
+   218→def aug_assign() -> int:
+   224→@typechecked
+   225→def multi_assign_single_value() -> Tuple[int, float, complex]:
+   233→@typechecked
+   234→def multi_assign_iterable() -> Tuple[Sequence[int], Sequence[float], Sequence[complex]]:
+   242→@typechecked
+   243→def unpacking_assign() -> Tuple[int, str]:
+   249→@typechecked
+   250→def unpacking_assign_single_item_tuple() -> str:
+   256→@typechecked
+   257→def unpacking_assign_generator() -> Tuple[int, str]:
+   267→@typechecked
+   268→def unpacking_assign_star_with_annotation() -> Tuple[int, List[bytes], str]:
+   275→@typechecked
+   276→def unpacking_assign_star_no_annotation(value: Any) -> Tuple[int, List[bytes], str]:
+   284→@typechecked
+   285→def attribute_assign_unpacking(obj: DummyClass) -> None:
+   289→@typechecked(forward_ref_policy=ForwardRefPolicy.ERROR)
+   290→def override_forward_ref_policy(value: "NonexistentType") -> None:  # noqa: F821
+   294→@typechecked(typecheck_fail_callback=lambda exc, memo: print(exc))
+   295→def override_typecheck_fail_callback(value: int) -> None:
+   299→@typechecked(collection_check_strategy=CollectionCheckStrategy.ALL_ITEMS)
+   300→def override_collection_check_strategy(value: List[int]) -> None:
    304→@typechecked(typecheck_fail_callback=lambda exc, memo: print(exc))
    305→class OverrideClass:
    306→    def override_typecheck_fail_callback(self, value: int) -> None:
@@ -772,25 +885,39 @@ tests/dummymodule.py
    310→        @typechecked
    311→        def override_typecheck_fail_callback(self, value: int) -> None:
    312→            pass
-   316→def typed_variable_args …
-   323→def guarded_type_hint_plain …
-   329→def guarded_type_hint_subscript_toplevel …
-   335→def guarded_type_hint_subscript_nested …
-   343→def literal …
-   349→def literal_in_union …
-   355→def typevar_forwardref …
+   315→@typechecked
+   316→def typed_variable_args(
+   317→    *args: str, **kwargs: int
+   318→) -> Tuple[Tuple[str, ...], Dict[str, int]]:
+   322→@typechecked
+   323→def guarded_type_hint_plain(x: "Imaginary") -> "Imaginary":
+   328→@typechecked
+   329→def guarded_type_hint_subscript_toplevel(x: "Imaginary[int]") -> "Imaginary[int]":
+   334→@typechecked
+   335→def guarded_type_hint_subscript_nested(
+   336→    x: List["Imaginary[int]"],
+   337→) -> List["Imaginary[int]"]:
+   342→@typechecked
+   343→def literal(x: Literal["foo"]) -> Literal["foo"]:
+   348→@typechecked
+   349→def literal_in_union(x: Union[Literal["foo"],]) -> Literal["foo"]:
+   354→@typechecked
+   355→def typevar_forwardref(x: Type[T]) -> T:
    364→# Regression test for #536 - forward reference evaluation on Python 3.14
    365→class ModuleLocalClass:
    366→    """A class only available in this module's namespace, not the caller's."""
    369→class TypedDictWithForwardRef(TypedDict):
 tests/dummymodule_py312.py
-     7→def func_using_type_alias …
-    12→def func_using_type_of_type_alias …
+     6→@typechecked
+     7→def func_using_type_alias(x: Foo) -> int:
+    11→@typechecked
+    12→def func_using_type_of_type_alias(x: type[Foo]) -> type:
     16→@typechecked
     17→class ParametrizedClass[T]:
     18→    def method(self, x: T, y: str) -> T:
     19→        return x
-    23→def parametrized_func …
+    22→@typechecked
+    23→def parametrized_func[T](x: T, y: str) -> T:
 tests/mypy/negative.py
      1→from typeguard import typechecked, typeguard_ignore
      4→@typechecked
@@ -894,40 +1021,56 @@ tests/test_checkers.py
    817→class TestTuple:
    872→class TestNamedTuple:
    887→class TestUnion:
-   967→    def test_uniontype_reference_leak …
-   999→    def test_raw_uniontype_success …
-  1003→    def test_raw_uniontype_fail …
+   966→    @pytest.mark.skipif(sys.version_info < (3, 10), reason="UnionType requires 3.10")
+   967→    def test_uniontype_reference_leak(self):
+   998→    @pytest.mark.skipif(sys.version_info < (3, 10), reason="UnionType requires 3.10")
+   999→    def test_raw_uniontype_success(self):
+  1002→    @pytest.mark.skipif(sys.version_info < (3, 10), reason="UnionType requires 3.10")
+  1003→    def test_raw_uniontype_fail(self):
   1015→class TestTypevar:
   1041→class TestNewType:
   1059→class TestType:
-  1061→    def test_unparametrized …
-  1065→    def test_unparametrized_fail …
-  1111→    def test_generic_aliase …
+  1060→    @pytest.mark.parametrize("annotation", [pytest.param(Type), pytest.param(type)])
+  1061→    def test_unparametrized(self, annotation: Any):
+  1064→    @pytest.mark.parametrize("annotation", [pytest.param(Type), pytest.param(type)])
+  1065→    def test_unparametrized_fail(self, annotation: Any):
+  1110→    @pytest.mark.parametrize("check_against", [type, Type[Any]])
+  1111→    def test_generic_aliase(self, check_against):
   1117→class TestIO:
   1165→class TestIntersectingProtocol:
   1168→    class SizedIterable(
   1245→class TestProtocol:
-  1320→    def test_empty_protocol …
-  1330→    def test_member_checks …
+  1319→    @pytest.mark.parametrize("subject_class", [object, str, Parent])
+  1320→    def test_empty_protocol(self, instantiate: bool, subject_class: type[Any]):
+  1329→    @pytest.mark.parametrize("has_member", [True, False])
+  1330→    def test_member_checks(self, has_member: bool) -> None:
   1546→class TestRecursiveType:
   1573→class TestAnnotated:
   1583→class TestLiteralString:
   1593→class TestTypeGuard:
 tests/test_importhook.py
-    63→def test_debug_instrumentation …
+    62→@pytest.mark.skipif(sys.version_info < (3, 9), reason="Requires ast.unparse()")
+    63→def test_debug_instrumentation(monkeypatch, capsys):
 tests/test_instrumentation.py
-    36→def method …
+    35→@pytest.fixture(scope="module", params=["typechecked", "importhook"])
+    36→def method(request: FixtureRequest) -> str:
     40→def _fixture_module(name: str, method: str):
     41→    # config.debug_instrumentation = True
     42→    sys.path.insert(0, str(this_dir))
     43→    try:
       →…
-    73→def dummymodule …
-    78→def deferredannos …
-    86→def dummymodule_py312 …
-   135→def test_inner_class_method …
-   141→def test_inner_class_classmethod …
-   147→def test_inner_class_staticmethod …
+    72→@pytest.fixture(scope="module")
+    73→def dummymodule(method: str):
+    77→@pytest.fixture(scope="module")
+    78→def deferredannos(method: str):
+    85→@pytest.fixture(scope="module")
+    86→def dummymodule_py312(method: str):
+   134→@pytest.mark.xfail(reason="No workaround for this has been implemented yet")
+   135→def test_inner_class_method(dummymodule):
+   140→@pytest.mark.xfail(reason="No workaround for this has been implemented yet")
+   141→def test_inner_class_classmethod(dummymodule):
+   146→@pytest.mark.xfail(reason="No workaround for this has been implemented yet")
+   147→def test_inner_class_staticmethod(dummymodule):
    303→class TestOptionsOverride:
    332→class TestVariableArguments:
    355→class TestGuardedType:
@@ -936,16 +1079,20 @@ tests/test_instrumentation.py
    426→class TestTypeAlias:
 tests/test_plugins.py
 tests/test_pytest_plugin.py
-    10→def config …
+     9→@pytest.fixture
+    10→def config(monkeypatch: MonkeyPatch) -> TypeCheckConfiguration:
 tests/test_suppression.py
-    41→def test_decorator_typechecked …
-    50→def test_decorator_check_type …
+    40→@suppress_type_checks
+    41→def test_decorator_typechecked():
+    49→@suppress_type_checks
+    50→def test_decorator_check_type():
 tests/test_transformer.py
     60→class TestGenerator:
    157→class TestAsyncGenerator:
    929→class TestTypecheckingImport:
   1189→class TestAssign:
-  1274→    def test_pep604_assign …
+  1273→    @pytest.mark.skipif(sys.version_info >= (3, 10), reason="Requires Python < 3.10")
+  1274→    def test_pep604_assign(self) -> None:
   1837→class TestTypeShadowedByArgument:
 tests/test_typechecked.py
     30→class TestCoroutineFunction:
@@ -953,6 +1100,7 @@ tests/test_typechecked.py
    213→class TestAsyncGenerator:
    368→class TestSelf:
    483→class TestMock:
-   560→def test_debug_instrumentation …
+   559→@pytest.mark.skipif(sys.version_info < (3, 9), reason="Requires ast.unparse()")
+   560→def test_debug_instrumentation(monkeypatch, capsys):
 tests/test_utils.py
 tests/test_warn_on_error.py

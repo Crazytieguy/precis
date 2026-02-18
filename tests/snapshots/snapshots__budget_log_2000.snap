@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1929 words)
+budget: 2000 (1976 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -116,11 +116,21 @@ rfcs/0296-structured-logging.md
   1607→}
   1608→
   1609→pub trait Visitor {
+  1610→    fn u64(&mut self, v: u64) -> Result<(), Error>;
+  1611→    fn i64(&mut self, v: i64) -> Result<(), Error>;
+  1612→
+  1613→    ..
+  1614→}
+  1615→```
+  1616→
       →…
   1629→# Prior art …
   1650→# Unresolved questions …
 src/__private_api.rs
      3→use self::sealed::KVs;
+     4→use crate::{logger, Level, Log, Metadata, Record};
+     5→use std::fmt::Arguments;
+     6→use std::panic::Location;
      7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -293,7 +303,10 @@ src/kv/value.rs
   1159→macro_rules! as_serde {
   1169→macro_rules! as_sval {
 src/lib.rs
+   399→use std::cfg;
    401→use std::error;
+   402→use std::str::FromStr;
+   403→use std::{cmp, fmt, mem};
    405→#[macro_use]
    406→mod macros;
    407→mod serde;
@@ -463,6 +476,10 @@ src/serde.rs
      4→    Deserialize, DeserializeSeed, Deserializer, EnumAccess, Error, Unexpected, VariantAccess,
      5→    Visitor,
      6→};
+     7→use serde_core::ser::{Serialize, Serializer};
+     9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
+    11→use std::fmt;
+    12→use std::str::{self, FromStr};
 test_max_level_features/main.rs
      1→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
      2→use std::sync::{Arc, Mutex};
@@ -490,9 +507,6 @@ test_max_level_features/main.rs
 tests/integration.rs
      3→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
      6→struct State {
-     7→    last_log_level: Mutex<Option<Level>>,
-     8→    last_log_location: Mutex<Option<u32>>,
-     9→}
     11→struct Logger(Arc<State>);
     13→impl Log for Logger {
     62→fn test_filter …

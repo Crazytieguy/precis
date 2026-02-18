@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (498 words)
+budget: 500 (512 words)
 
 playwright.config.ts
 src/browser.ts
@@ -94,15 +94,18 @@ src/use-prevent-scroll.ts
 src/use-scale-background.ts
 src/use-snap-points.ts
 test/README.md
+test/next.config.js
 test/src/app/controlled/page.tsx
      6→export default function Page() {
 test/src/app/default-open/page.tsx
      6→export default function Page() {
 test/src/app/different-directions/page.tsx
+     6→function DirectionalDrawer({
    118→export default function Page() {
 test/src/app/initial-snap/page.tsx
      9→export default function Page() {
 test/src/app/layout.tsx
+     5→const inter …
      7→export const metadata: Metadata = {
 test/src/app/nested-drawers/page.tsx
      5→export default function Page() {
@@ -133,3 +136,6 @@ test/src/app/without-scaled-background/page.tsx
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;
 test/tests/helpers.ts
+test/tests/initial-snap.spec.ts
+     8→const snapPointYPositions = {
+    15→const snapTo …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (988 words)
+budget: 1000 (1024 words)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -14,6 +14,8 @@ browser.ts
     34→export function testPlatform(re: RegExp): boolean | undefined {
 constants.ts
      1→export const TRANSITIONS = {
+     2→  DURATION: 0.5,
+      →…
      6→export const VELOCITY_THRESHOLD = 0.4;
      8→export const CLOSE_THRESHOLD = 0.25;
     10→export const SCROLL_LOCK_TIMEOUT = 100;
@@ -25,8 +27,13 @@ context.ts
      4→interface DrawerContextValue {
      5→  drawerRef: React.RefObject<HTMLDivElement>;
      6→  overlayRef: React.RefObject<HTMLDivElement>;
+     7→  onPress: (event: React.PointerEvent<HTMLDivElement>) => void;
+     8→  onRelease: (event: React.PointerEvent<HTMLDivElement> | null) => void;
+     9→  onDrag: (event: React.PointerEvent<HTMLDivElement>) => void;
       →…
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
+    38→  drawerRef: { current: null },
+      →…
     69→export const useDrawerContext = () => {
 helpers.ts
      3→interface Style {
@@ -173,7 +180,8 @@ use-prevent-scroll.ts
     10→interface PreventScrollOptions {
     11→  /** Whether the scroll lock is disabled. */
     12→  isDisabled?: boolean;
-      →…
+    13→  focusCallback?: () => void;
+    14→}
     16→function chain …
     27→const visualViewport …
     29→export function isScrollable(node: Element): boolean {

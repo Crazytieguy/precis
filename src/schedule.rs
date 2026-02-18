@@ -344,8 +344,6 @@ pub struct Schedule {
     pub visible_files: HashSet<usize>,
     /// Reverse lookup: for a (file_idx, symbol_idx) pair, which group index it belongs to.
     pub symbol_to_group: HashMap<(usize, usize), usize>,
-    /// Total words the scheduler estimated it would use (budget - remaining).
-    pub estimated_words: usize,
 }
 
 /// What stage a group has been included up to.
@@ -1035,7 +1033,6 @@ pub fn schedule(
         group_stages,
         visible_files: files_shown,
         symbol_to_group,
-        estimated_words: budget - remaining_budget,
     }
 }
 

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3679 words)
+budget: 4000 (3801 words)
 
 README.md
      1→derive(Error)
@@ -712,7 +712,6 @@ tests/test_error.rs
      3→use core::fmt::{self, Display};
      7→macro_rules! unimplemented_display {
      8→    ($ty:ty) => {
-     9→        impl Display for $ty {
       →…
     17→#[derive(Error, Debug)]
     18→struct BracedError {
@@ -849,10 +848,11 @@ tests/test_source.rs
     21→pub struct BoxedSource {
     50→macro_rules! error_from_macro {
     51→    ($($variants:tt)*) => {
-    52→        #[derive(Error)]
       →…
 tests/test_transparent.rs
 tests/ui/bad-field-attr.rs
+     3→#[derive(Error, Debug)]
+     4→#[error(transparent)]
      5→pub struct Error(#[error(transparent)] std::io::Error);
 tests/ui/concat-display.rs
      3→macro_rules! error_type {
@@ -862,8 +862,11 @@ tests/ui/concat-display.rs
      7→        #[derive(Error, Debug)]
       →…
 tests/ui/display-underscore.rs
+     3→#[derive(Error, Debug)]
+     4→#[error("{_}")]
      5→pub struct Error;
 tests/ui/duplicate-enum-source.rs
+     3→#[derive(Error, Debug)]
      4→pub enum ErrorEnum {
      5→    Confusing {
      6→        #[source]
@@ -873,11 +876,24 @@ tests/ui/duplicate-enum-source.rs
     10→    },
     11→}
 tests/ui/duplicate-fmt.rs
+     3→#[derive(Error, Debug)]
+     4→#[error("...")]
+     5→#[error("...")]
      6→pub struct Error;
+     8→#[derive(Error, Debug)]
+     9→#[error(fmt = core::fmt::Octal::fmt)]
+    10→#[error(fmt = core::fmt::LowerHex::fmt)]
     11→pub enum FmtFmt {}
+    13→#[derive(Error, Debug)]
+    14→#[error(fmt = core::fmt::Octal::fmt)]
+    15→#[error(transparent)]
     16→pub enum FmtTransparent {}
+    18→#[derive(Error, Debug)]
+    19→#[error(fmt = core::fmt::Octal::fmt)]
+    20→#[error("...")]
     21→pub enum FmtDisplay {}
 tests/ui/duplicate-struct-source.rs
+     3→#[derive(Error, Debug)]
      4→pub struct ErrorStruct {
      5→    #[source]
      6→    a: std::io::Error,
@@ -885,10 +901,17 @@ tests/ui/duplicate-struct-source.rs
      8→    b: anyhow::Error,
      9→}
 tests/ui/duplicate-transparent.rs
+     3→#[derive(Error, Debug)]
+     4→#[error(transparent)]
+     5→#[error(transparent)]
      6→pub struct Error(anyhow::Error);
 tests/ui/expression-fallback.rs
+     3→#[derive(Error, Debug)]
+     4→#[error("".yellow)]
      5→pub struct ArgError;
 tests/ui/fallback-impl-with-display.rs
+     4→#[derive(Error, Debug)]
+     5→#[error]
      6→pub struct MyError;
      8→impl Display for MyError {
      9→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
@@ -896,6 +919,8 @@ tests/ui/fallback-impl-with-display.rs
     11→    }
     12→}
 tests/ui/from-backtrace-backtrace.rs
+     6→#[derive(Error, Debug)]
+     7→#[error("...")]
      8→pub struct Error(
      9→    #[from]
     10→    #[backtrace]
@@ -903,6 +928,7 @@ tests/ui/from-backtrace-backtrace.rs
     12→    Backtrace,
     13→);
 tests/ui/from-not-source.rs
+     3→#[derive(Error, Debug)]
      4→pub struct Error {
      5→    #[source]
      6→    source: std::io::Error,
@@ -910,6 +936,8 @@ tests/ui/from-not-source.rs
      8→    other: anyhow::Error,
      9→}
 tests/ui/invalid-input-impl-anyway.rs
+     3→#[derive(Error, Debug)]
+     4→#[error]
      5→pub struct MyError;
 tests/ui/lifetime.rs
      4→#[derive(Error, Debug)]
@@ -927,11 +955,13 @@ tests/ui/lifetime.rs
     19→#[error("{0:?}")]
     20→struct Generic<T: Debug>(T);
 tests/ui/missing-display.rs
+     3→#[derive(Error, Debug)]
      4→pub enum MyError {
      5→    First,
      6→    Second,
      7→}
 tests/ui/missing-fmt.rs
+     3→#[derive(Error, Debug)]
      4→pub enum Error {
      5→    #[error("...")]
      6→    A(usize),
@@ -940,19 +970,28 @@ tests/ui/missing-fmt.rs
 tests/ui/no-display.rs
      3→#[derive(Debug)]
      4→struct NoDisplay;
+     6→#[derive(Error, Debug)]
+     7→#[error("thread: {thread}")]
      8→pub struct Error {
      9→    thread: NoDisplay,
     10→}
+    12→#[derive(Error, Debug)]
+    13→#[error("thread: {thread:o}")]
     14→pub struct ErrorOctal {
     15→    thread: NoDisplay,
     16→}
 tests/ui/numbered-positional-tuple.rs
+     3→#[derive(Error, Debug)]
+     4→#[error("invalid rdo_lookahead_frames {0} (expected < {})", i32::MAX)]
      5→pub struct Error(u32);
 tests/ui/raw-identifier.rs
+     3→#[derive(Error, Debug)]
+     4→#[error("error: {r#fn}")]
      5→pub struct Error {
      6→    r#fn: &'static str,
      7→}
 tests/ui/same-from-type.rs
+     3→#[derive(Error, Debug)]
      4→pub enum Error {
      5→    #[error("failed to open")]
      6→    OpenFile(#[from] std::io::Error),
@@ -960,65 +999,95 @@ tests/ui/same-from-type.rs
      8→    CloseFile(#[from] std::io::Error),
      9→}
 tests/ui/source-enum-not-error.rs
+     3→#[derive(Debug)]
      4→pub struct NotError;
+     6→#[derive(Error, Debug)]
+     7→#[error("...")]
      8→pub enum ErrorEnum {
      9→    Broken { source: NotError },
     10→}
 tests/ui/source-enum-unnamed-field-not-error.rs
+     3→#[derive(Debug)]
      4→pub struct NotError;
+     6→#[derive(Error, Debug)]
+     7→#[error("...")]
      8→pub enum ErrorEnum {
      9→    Broken(#[source] NotError),
     10→}
 tests/ui/source-struct-not-error.rs
      3→#[derive(Debug)]
      4→struct NotError;
+     6→#[derive(Error, Debug)]
+     7→#[error("...")]
      8→pub struct ErrorStruct {
      9→    source: NotError,
     10→}
 tests/ui/source-struct-unnamed-field-not-error.rs
      3→#[derive(Debug)]
      4→struct NotError;
+     6→#[derive(Error, Debug)]
+     7→#[error("...")]
      8→pub struct ErrorStruct(#[source] NotError);
 tests/ui/struct-with-fmt.rs
+     3→#[derive(Error, Debug)]
+     4→#[error(fmt = core::fmt::Octal::fmt)]
      5→pub struct Error(i32);
 tests/ui/transparent-display.rs
+     3→#[derive(Error, Debug)]
+     4→#[error(transparent)]
+     5→#[error("...")]
      6→pub struct Error(anyhow::Error);
 tests/ui/transparent-enum-many.rs
+     3→#[derive(Error, Debug)]
      4→pub enum Error {
      5→    #[error(transparent)]
      6→    Other(anyhow::Error, String),
      7→}
 tests/ui/transparent-enum-not-error.rs
+     3→#[derive(Error, Debug)]
      4→pub enum Error {
      5→    #[error(transparent)]
      6→    Other { message: String },
      7→}
 tests/ui/transparent-enum-source.rs
+     3→#[derive(Error, Debug)]
      4→pub enum Error {
      5→    #[error(transparent)]
      6→    Other(#[source] anyhow::Error),
      7→}
 tests/ui/transparent-enum-unnamed-field-not-error.rs
+     3→#[derive(Error, Debug)]
      4→pub enum Error {
      5→    #[error(transparent)]
      6→    Other(String),
      7→}
 tests/ui/transparent-struct-many.rs
+     3→#[derive(Error, Debug)]
+     4→#[error(transparent)]
      5→pub struct Error {
      6→    inner: anyhow::Error,
      7→    what: String,
      8→}
 tests/ui/transparent-struct-not-error.rs
+     3→#[derive(Error, Debug)]
+     4→#[error(transparent)]
      5→pub struct Error {
      6→    message: String,
      7→}
 tests/ui/transparent-struct-source.rs
+     3→#[derive(Error, Debug)]
+     4→#[error(transparent)]
      5→pub struct Error(#[source] anyhow::Error);
 tests/ui/transparent-struct-unnamed-field-not-error.rs
+     3→#[derive(Error, Debug)]
+     4→#[error(transparent)]
      5→pub struct Error(String);
 tests/ui/unconditional-recursion.rs
+     3→#[derive(Error, Debug)]
+     4→#[error("{self}")]
      5→pub struct Error;
 tests/ui/unexpected-field-fmt.rs
+     3→#[derive(Error, Debug)]
      4→pub enum Error {
      5→    What {
      6→        #[error("...")]
@@ -1026,5 +1095,7 @@ tests/ui/unexpected-field-fmt.rs
      8→    },
      9→}
 tests/ui/unexpected-struct-source.rs
+     3→#[derive(Error, Debug)]
+     4→#[source]
      5→pub struct Error;
 tests/ui/union.rs

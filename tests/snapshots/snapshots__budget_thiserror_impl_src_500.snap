@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (488 words)
+budget: 500 (502 words)
 
 ast.rs
     10→pub enum Input<'a> {
@@ -115,7 +115,13 @@ fmt.rs
    181→        input.advance_to(&ahead);
    182→        return Ok(set);
    183→    }
-      →…
+   184→
+   185→    input.parse::<TokenStream>().unwrap();
+   186→    Ok(FmtArguments {
+   187→        named: BTreeSet::new(),
+   188→        first_unnamed: None,
+   189→    })
+   190→}
 generics.rs
      8→pub struct ParamsInScope<'a> {
      9→    names: Set<&'a Ident>,

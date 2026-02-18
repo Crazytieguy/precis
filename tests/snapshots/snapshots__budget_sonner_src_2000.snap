@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1785 words)
+budget: 2000 (1989 words)
 
 assets.tsx
      2→import React from 'react';
@@ -176,6 +176,39 @@ state.ts
     52→      jsx?: React.ReactElement;
     53→    },
     54→  ) => {
+    55→    const { message, ...rest } = data;
+    56→    const id = typeof data?.id === 'number' || data.id?.length > 0 ? data.id : toastsCounter++;
+    57→    const alreadyExists = this.toasts.find((toast) => {
+    58→      return toast.id === id;
+    59→    });
+    60→    const dismissible = data.dismissible === undefined ? true : data.dismissible;
+    61→
+    62→    if (this.dismissedToasts.has(id)) {
+    63→      this.dismissedToasts.delete(id);
+    64→    }
+    65→
+    66→    if (alreadyExists) {
+    67→      this.toasts = this.toasts.map((toast) => {
+    68→        if (toast.id === id) {
+    69→          this.publish({ ...toast, ...data, id, title: message });
+    70→          return {
+    71→            ...toast,
+    72→            ...data,
+    73→            id,
+    74→            dismissible,
+    75→            title: message,
+    76→          };
+    77→        }
+    78→
+    79→        return toast;
+    80→      });
+    81→    } else {
+    82→      this.addToast({ title: message, ...rest, dismissible, id });
+    83→    }
+    84→
+    85→    return id;
+    86→  };
+    87→
     88→  dismiss = (id?: number | string) => {
     89→    if (id) {
     90→      this.dismissedToasts.add(id);
@@ -234,6 +267,21 @@ state.ts
    150→        const isReactElementResponse = React.isValidElement(response);
    151→        if (isReactElementResponse) {
    152→          shouldDismiss = false;
+   153→          this.create({ id, type: 'default', message: response });
+   154→        } else if (isHttpResponse(response) && !response.ok) {
+   155→          shouldDismiss = false;
+   156→
+   157→          const promiseData =
+   158→            typeof data.error === 'function' ? await data.error(`HTTP error! status: ${response.status}`) : data.error;
+   159→
+   160→          const description =
+   161→            typeof data.description === 'function'
+   162→              ? await data.description(`HTTP error! status: ${response.status}`)
+   163→              : data.description;
+   164→
+   165→          const isExtendedResult = typeof promiseData === 'object' && !React.isValidElement(promiseData);
+   166→
+   167→          const toastSettings: PromiseIExtendedResult = isExtendedResult
       →…
    243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
    244→    const id = data?.id || toastsCounter++;

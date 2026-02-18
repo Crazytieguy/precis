@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (481 words)
+budget: 500 (496 words)
 
 __init__.py
      1→__all__ = [
@@ -12,6 +12,7 @@ __init__.py
      5→    "HookCaller",
      6→    "HookCallError",
      7→    "HookspecOpts",
+     8→    "HookimplOpts",
       →…
 _callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
@@ -77,6 +78,7 @@ _hooks.py
       →…
    593→class _SubsetHookCaller(HookCaller):
    596→
+   597→    # This class is unusual: in inhertits from `HookCaller` so all of
    618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (943 words)
+budget: 1000 (973 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -83,6 +83,7 @@ source/core/Ky.ts
     34→	static create(input: Input, options: Options): ResponsePromise {
     35→		const ky = new Ky(input, options);
     36→
+    37→		const function_ = async (): Promise<Response> => {
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
@@ -231,6 +232,11 @@ source/utils/merge.ts
     32→function newHookValue …
     47→const appendSearchParameters …
 source/utils/normalize.ts
+     8→const retryMethods …
+    10→const retryStatusCodes …
+    12→const retryAfterStatusCodes …
+    14→type InternalRetryOptions …
+    16→const defaultRetryOptions …
 source/utils/options.ts
 source/utils/timeout.ts
      3→export type TimeoutOptions …
@@ -252,6 +258,8 @@ source/utils/types.ts
      5→export type ObjectEntries …
 test/browser.ts
     13→	interface Window {
+    14→		ky: typeof ky;
+    15→	}
 test/helpers/create-http-test-server.ts
      7→export type HttpServerOptions …
     11→export type ExtendedHttpTestServer …

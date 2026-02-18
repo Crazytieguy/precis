@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1863 words)
+budget: 2000 (1917 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -54,6 +54,8 @@ src/backtrace.rs
     73→    use alloc::vec::Vec;
     74→    use backtrace::{BacktraceFmt, BytesOrWideString, Frame, PrintFmt, SymbolName};
     75→    use core::cell::UnsafeCell;
+    76→    use core::fmt::{self, Debug, Display};
+    77→    use core::sync::atomic::{AtomicUsize, Ordering};
     82→    pub(crate) struct Backtrace {
     86→    pub(crate) enum BacktraceStatus {
     92→    enum Inner {
@@ -457,6 +459,8 @@ src/wrapper.rs
     75→impl StdError for BoxedError {
     81→    fn provide …
 tests/common/mod.rs
+     1→use anyhow::{bail, Result};
+     2→use std::io;
      4→pub fn bail_literal() -> Result<()> {
      8→pub fn bail_fmt() -> Result<()> {
     12→pub fn bail_error() -> Result<()> {
@@ -501,6 +505,10 @@ tests/test_downcast.rs
      4→mod drop;
 tests/test_ensure.rs
     43→    type Output = bool;
+    44→    fn add …
+    52→    fn t …
+    66→    fn eq …
+    72→    fn fmt …
     77→#[track_caller]
     78→fn assert_err<T: Debug>(result: impl FnOnce() -> Result<T>, expected: &'static str) {
 tests/test_ffi.rs
@@ -529,9 +537,16 @@ tests/test_source.rs
      7→enum TestError {
      8→    Io(io::Error),
      9→}
+    12→    fn fmt …
+    20→    fn source …
 tests/ui/ensure-nonbool.rs
+     4→struct Bool(bool);
+     6→struct DerefBool(bool);
+     8→struct NotBool(bool);
+    10→impl Deref for DerefBool {
     11→    type Target = bool;
     12→    fn deref(&self) -> &Self::Target {
+    17→impl Not for NotBool {
     18→    type Output = bool;
     19→    fn not(self) -> Self::Output {
 tests/ui/must-use.rs

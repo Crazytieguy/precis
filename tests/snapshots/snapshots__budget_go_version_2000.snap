@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1973 words)
+budget: 2000 (2031 words)
 
 CHANGELOG.md
 README.md
@@ -153,7 +153,14 @@ constraint.go
    113→	sort.Stable(right)
    114→
    115→	// compare sorted slices
-      →…
+   116→	for i, con := range left {
+   117→		if !con.Equals(right[i]) {
+   118→			return false
+   119→		}
+   120→	}
+   121→
+   122→	return true
+   123→}
    125→func (cs Constraints) Len() int {
    126→	return len(cs)
    127→}
@@ -237,6 +244,7 @@ version.go
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     41→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-?([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
+    42→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
@@ -291,6 +299,17 @@ version.go
    139→			return 0
    140→		}
    141→		if preSelf == "" {
+   142→			return 1
+   143→		}
+   144→		if preOther == "" {
+   145→			return -1
+   146→		}
+   147→
+   148→		return comparePrereleases(preSelf, preOther)
+   149→	}
+   150→
+   151→	segmentsSelf := v.Segments64()
+   152→	segmentsOther := other.Segments64()
       →…
    196→func (v *Version) equalSegments(other *Version) bool {
    211→func allZero(segs []int64) bool {

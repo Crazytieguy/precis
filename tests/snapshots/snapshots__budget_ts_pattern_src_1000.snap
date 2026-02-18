@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (985 words)
+budget: 1000 (1014 words)
 
 errors.ts
      1→/**
@@ -30,6 +30,8 @@ internals/helpers.ts
     24→const isOptionalPattern = (
     25→  x: unknown
     26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
+    27→  return isMatcher(x) && x[symbols.matcher]().matcherType === 'optional';
+    28→};
     32→export const matchPattern …
    120→export const getSelectionKeys …
    132→export const flatMap …
@@ -83,6 +85,10 @@ match.ts
     50→  with(...args: any[]): MatchExpression<input, output> {
     51→    if (this.state.matched) return this;
     52→
+    53→    const handler: (selection: unknown, value: input) => output =
+    54→      args[args.length - 1];
+    55→
+    56→    const patterns: Pattern<input>[] = [args[0]];
     94→  when …
    110→  otherwise …
    115→  exhaustive …

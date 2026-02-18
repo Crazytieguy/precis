@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 words)
+budget: 1000 (1025 words)
 
 assets.tsx
      2→import React from 'react …
@@ -11,12 +11,16 @@ assets.tsx
      6→  switch (type) {
      7→    case 'success':
      8→      return SuccessIcon;
+     9→
+    10→    case 'info':
       →…
     24→const bars = Array(12).fill(0);
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     27→  return (
     28→    <div className={['sonner-loading-wrapper', className].filter(Boolean).join(' ')} data-visible={visible}>
     29→      <div className="sonner-spinner">
+    30→        {bars.map((_, i) => (
+    31→          <div className="sonner-loading-bar" key={`spinner-bar-${i}`} />
       →…
     38→const SuccessIcon = (
     48→const WarningIcon = (
@@ -34,6 +38,8 @@ hooks.tsx
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
      5→
      6→  React.useEffect(() => {
+     7→    const callback = () => {
+     8→      setIsDocumentHidden(document.hidden);
       →…
 index.tsx
      3→import React from 'react …
@@ -77,7 +83,6 @@ state.ts
     21→
     22→  constructor() {
     23→    this.subscribers = [];
-    24→    this.toasts = [];
     29→  subscribe = (subscriber: (toast: ToastT | ToastToDismiss) => void) => {
     38→  publish = (data: ToastT) => {
     42→  addToast = (data: ToastT) => {
@@ -109,6 +114,7 @@ state.ts
    286→  basicToast,
    287→  {
    288→    success: ToastState.success,
+   289→    info: ToastState.info,
       →…
 types.ts
      1→import React from 'react';
@@ -142,6 +148,7 @@ types.ts
     37→  actionButton?: string;
     38→  success?: string;
     39→  error?: string;
+    40→  info?: string;
       →…
     48→export interface ToastIcons {
     49→  success?: React.ReactNode;
@@ -166,6 +173,7 @@ types.ts
     70→  richColors?: boolean;
     71→  invert?: boolean;
     72→  closeButton?: boolean;
+    73→  dismissible?: boolean;
       →…
     93→export function isAction(action: Action | React.ReactNode): action is Action {
     97→export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
@@ -181,7 +189,6 @@ types.ts
    108→  style?: React.CSSProperties;
    109→  cancelButtonStyle?: React.CSSProperties;
    110→  actionButtonStyle?: React.CSSProperties;
-   111→  duration?: number;
       →…
    118→type Offset =
    119→  | {
@@ -202,6 +209,7 @@ types.ts
    135→  expand?: boolean;
    136→  duration?: number;
    137→  gap?: number;
+   138→  visibleToasts?: number;
       →…
    152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
    154→export interface ToastProps {
@@ -214,6 +222,7 @@ types.ts
    161→  heights: HeightT[];
    162→  setHeights: React.Dispatch<React.SetStateAction<HeightT[]>>;
    163→  removeToast: (toast: ToastT) => void;
+   164→  gap?: number;
       →…
    184→export enum SwipeStateTypes {
    185→  SwipedOut = 'SwipedOut',

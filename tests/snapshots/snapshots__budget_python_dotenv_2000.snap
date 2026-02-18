@@ -2,13 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1876 words)
+budget: 2000 (1929 words)
 
 CHANGELOG.md
      1→# Changelog
      3→All notable changes to this project will be documented in this file.
      4→
-      →…
+     5→The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
+     6→project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+     7→
     21→### Fixed
     23→* CLI: Ensure `find_dotenv` work reliably on python 3.13 by [@theskumar] in [#563](https://github.com/theskumar/python-dotenv/pull/563)
     24→* CLI: revert the use of execvpe on Windows by [@wrongontheinternet] in [#566](https://github.com/theskumar/python-dotenv/pull/566)
@@ -336,6 +338,8 @@ src/dotenv/main.py
     27→    Determine if dotenv loading has been disabled.
     28→    """
     29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
+    30→        return False
+    31→    value = os.environ["PYTHON_DOTENV_DISABLED"].casefold()
       →…
     35→def with_warn_for_invalid_lines …
     45→class DotEnv:
@@ -345,6 +349,7 @@ src/dotenv/main.py
     49→        stream: Optional[IO[str]] = None,
     50→        verbose: bool = False,
     51→        encoding: Optional[str] = None,
+    52→        interpolate: bool = True,
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
@@ -358,7 +363,7 @@ src/dotenv/main.py
     73→                    "python-dotenv could not find configuration file %s.",
     74→                    self.dotenv_path or ".env",
     75→                )
-      →…
+    76→            yield io.StringIO("")
     78→    def dict …
     94→    def parse …
    100→    def set_as_environment_variables …
@@ -381,6 +386,8 @@ src/dotenv/main.py
    271→    Yield directories starting from the given directory up to the root
    272→    """
    273→    if not os.path.exists(path):
+   274→        raise IOError("Starting path not found")
+   275→
       →…
    287→def find_dotenv …
    338→def load_dotenv …
@@ -390,6 +397,8 @@ src/dotenv/main.py
    425→    Return True if `path` exists and is either a regular file or a FIFO.
    426→    """
    427→    if os.path.isfile(path):
+   428→        return True
+   429→
       →…
 src/dotenv/parser.py
     14→def make_regex …
@@ -408,6 +417,7 @@ src/dotenv/parser.py
     51→
     52→    @classmethod
     53→    def start(cls) -> "Position":
+    54→        return cls(chars=0, line=1)
     56→    def set …
     60→    def advance …
     65→class Error(Exception):
@@ -419,6 +429,7 @@ src/dotenv/parser.py
     73→        self.mark = Position.start()
     74→
     75→    def has_next(self) -> bool:
+    76→        return self.position.chars < len(self.string)
     78→    def set_mark …
     81→    def get_marked …
     87→    def peek …
@@ -458,7 +469,7 @@ src/dotenv/variables.py
     33→    def __repr__(self) -> str:
     34→        return f"Literal(value={self.value})"
     35→
-    36→    def __eq__ …
+    36→    def __eq__(self, other: object) -> bool:
     41→    def __hash__ …
     44→    def resolve …
     48→class Variable(Atom):
@@ -468,6 +479,7 @@ src/dotenv/variables.py
     52→
     53→    def __repr__(self) -> str:
     54→        return f"Variable(name={self.name}, default={self.default})"
+    55→
     56→    def __eq__ …
     61→    def __hash__ …
     64→    def resolve …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2606 words)
+budget: 4000 (3714 words)
 
 comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -279,7 +279,9 @@ range.js
    247→
    248→    testComparator = remainingComparators.pop()
    249→  }
-      →…
+   250→
+   251→  return result
+   252→}
    257→const parseComparator = (comp, options) => {
    258→  comp = comp.replace(re[t.BUILD], '')
    259→  debug('comp', comp, options)
@@ -292,7 +294,7 @@ range.js
    266→  comp = replaceStars(comp, options)
    267→  debug('stars', comp)
    268→  return comp
-      →…
+   269→}
    271→const isX = id => !id || id.toLowerCase() === 'x' || id === '*'
    280→const replaceTildes = (comp, options) => {
    281→  return comp
@@ -313,7 +315,21 @@ range.js
    297→      ret = `>=${M}.0.0 <${+M + 1}.0.0-0`
    298→    } else if (isX(p)) {
    299→      // ~1.2 == >=1.2.0 <1.3.0-0
-      →…
+   300→      ret = `>=${M}.${m}.0 <${M}.${+m + 1}.0-0`
+   301→    } else if (pr) {
+   302→      debug('replaceTilde pr', pr)
+   303→      ret = `>=${M}.${m}.${p}-${pr
+   304→      } <${M}.${+m + 1}.0-0`
+   305→    } else {
+   306→      // ~1.2.3 == >=1.2.3 <1.3.0-0
+   307→      ret = `>=${M}.${m}.${p
+   308→      } <${M}.${+m + 1}.0-0`
+   309→    }
+   310→
+   311→    debug('tilde return', ret)
+   312→    return ret
+   313→  })
+   314→}
    324→const replaceCarets = (comp, options) => {
    325→  return comp
    326→    .trim()
@@ -333,7 +349,46 @@ range.js
    341→      ret = ''
    342→    } else if (isX(m)) {
    343→      ret = `>=${M}.0.0${z} <${+M + 1}.0.0-0`
-      →…
+   344→    } else if (isX(p)) {
+   345→      if (M === '0') {
+   346→        ret = `>=${M}.${m}.0${z} <${M}.${+m + 1}.0-0`
+   347→      } else {
+   348→        ret = `>=${M}.${m}.0${z} <${+M + 1}.0.0-0`
+   349→      }
+   350→    } else if (pr) {
+   351→      debug('replaceCaret pr', pr)
+   352→      if (M === '0') {
+   353→        if (m === '0') {
+   354→          ret = `>=${M}.${m}.${p}-${pr
+   355→          } <${M}.${m}.${+p + 1}-0`
+   356→        } else {
+   357→          ret = `>=${M}.${m}.${p}-${pr
+   358→          } <${M}.${+m + 1}.0-0`
+   359→        }
+   360→      } else {
+   361→        ret = `>=${M}.${m}.${p}-${pr
+   362→        } <${+M + 1}.0.0-0`
+   363→      }
+   364→    } else {
+   365→      debug('no pr')
+   366→      if (M === '0') {
+   367→        if (m === '0') {
+   368→          ret = `>=${M}.${m}.${p
+   369→          }${z} <${M}.${m}.${+p + 1}-0`
+   370→        } else {
+   371→          ret = `>=${M}.${m}.${p
+   372→          }${z} <${M}.${+m + 1}.0-0`
+   373→        }
+   374→      } else {
+   375→        ret = `>=${M}.${m}.${p
+   376→        } <${+M + 1}.0.0-0`
+   377→      }
+   378→    }
+   379→
+   380→    debug('caret return', ret)
+   381→    return ret
+   382→  })
+   383→}
    385→const replaceXRanges = (comp, options) => {
    386→  debug('replaceXRanges', comp, options)
    387→  return comp
@@ -353,7 +408,68 @@ range.js
    402→
    403→    if (gtlt === '=' && anyX) {
    404→      gtlt = ''
-      →…
+   405→    }
+   406→
+   407→    // if we're including prereleases in the match, then we need
+   408→    // to fix this to -0, the lowest possible prerelease value
+   409→    pr = options.includePrerelease ? '-0' : ''
+   410→
+   411→    if (xM) {
+   412→      if (gtlt === '>' || gtlt === '<') {
+   413→        // nothing is allowed
+   414→        ret = '<0.0.0-0'
+   415→      } else {
+   416→        // nothing is forbidden
+   417→        ret = '*'
+   418→      }
+   419→    } else if (gtlt && anyX) {
+   420→      // we know patch is an x, because we have any x at all.
+   421→      // replace X with 0
+   422→      if (xm) {
+   423→        m = 0
+   424→      }
+   425→      p = 0
+   426→
+   427→      if (gtlt === '>') {
+   428→        // >1 => >=2.0.0
+   429→        // >1.2 => >=1.3.0
+   430→        gtlt = '>='
+   431→        if (xm) {
+   432→          M = +M + 1
+   433→          m = 0
+   434→          p = 0
+   435→        } else {
+   436→          m = +m + 1
+   437→          p = 0
+   438→        }
+   439→      } else if (gtlt === '<=') {
+   440→        // <=0.7.x is actually <0.8.0, since any 0.7.x should
+   441→        // pass.  Similarly, <=7.x is actually <8.0.0, etc.
+   442→        gtlt = '<'
+   443→        if (xm) {
+   444→          M = +M + 1
+   445→        } else {
+   446→          m = +m + 1
+   447→        }
+   448→      }
+   449→
+   450→      if (gtlt === '<') {
+   451→        pr = '-0'
+   452→      }
+   453→
+   454→      ret = `${gtlt + M}.${m}.${p}${pr}`
+   455→    } else if (xm) {
+   456→      ret = `>=${M}.0.0${pr} <${+M + 1}.0.0-0`
+   457→    } else if (xp) {
+   458→      ret = `>=${M}.${m}.0${pr
+   459→      } <${M}.${+m + 1}.0-0`
+   460→    }
+   461→
+   462→    debug('xRange return', ret)
+   463→
+   464→    return ret
+   465→  })
+   466→}
    470→const replaceStars = (comp, options) => {
    471→  debug('replaceStars', comp, options)
    472→  // Looseness is ignored here.  star is always as loose as it gets!
@@ -381,7 +497,23 @@ range.js
    502→  } else {
    503→    from = `>=${from}${incPr ? '-0' : ''}`
    504→  }
-      →…
+   505→
+   506→  if (isX(tM)) {
+   507→    to = ''
+   508→  } else if (isX(tm)) {
+   509→    to = `<${+tM + 1}.0.0-0`
+   510→  } else if (isX(tp)) {
+   511→    to = `<${tM}.${+tm + 1}.0-0`
+   512→  } else if (tpr) {
+   513→    to = `<=${tM}.${tm}.${tp}-${tpr}`
+   514→  } else if (incPr) {
+   515→    to = `<${tM}.${tm}.${+tp + 1}-0`
+   516→  } else {
+   517→    to = `<=${to}`
+   518→  }
+   519→
+   520→  return `${from} ${to}`.trim()
+   521→}
    523→const testSet = (set, version, options) => {
    524→  for (let i = 0; i < set.length; i++) {
    525→    if (!set[i].test(version)) {
@@ -394,7 +526,29 @@ range.js
    532→    // For example, ^1.2.3-pr.1 desugars to >=1.2.3-pr.1 <2.0.0
    533→    // That should allow `1.2.3-pr.2` to pass.
    534→    // However, `1.2.4-alpha.notready` should NOT be allowed,
-      →…
+   535→    // even though it's within the range set by the comparators.
+   536→    for (let i = 0; i < set.length; i++) {
+   537→      debug(set[i].semver)
+   538→      if (set[i].semver === Comparator.ANY) {
+   539→        continue
+   540→      }
+   541→
+   542→      if (set[i].semver.prerelease.length > 0) {
+   543→        const allowed = set[i].semver
+   544→        if (allowed.major === version.major &&
+   545→            allowed.minor === version.minor &&
+   546→            allowed.patch === version.patch) {
+   547→          return true
+   548→        }
+   549→      }
+   550→    }
+   551→
+   552→    // Version has a -pre, but it's not one of the ones we like.
+   553→    return false
+   554→  }
+   555→
+   556→  return true
+   557→}
 semver.js
      9→class SemVer {
     10→  constructor (version, options) {
@@ -603,4 +757,95 @@ semver.js
    236→        this.inc('pre', identifier, identifierBase)
    237→        break
    238→      case 'release':
-      →…
+   239→        if (this.prerelease.length === 0) {
+   240→          throw new Error(`version ${this.raw} is not a prerelease`)
+   241→        }
+   242→        this.prerelease.length = 0
+   243→        break
+   244→
+   245→      case 'major':
+   246→        // If this is a pre-major version, bump up to the same major version.
+   247→        // Otherwise increment major.
+   248→        // 1.0.0-5 bumps to 1.0.0
+   249→        // 1.1.0 bumps to 2.0.0
+   250→        if (
+   251→          this.minor !== 0 ||
+   252→          this.patch !== 0 ||
+   253→          this.prerelease.length === 0
+   254→        ) {
+   255→          this.major++
+   256→        }
+   257→        this.minor = 0
+   258→        this.patch = 0
+   259→        this.prerelease = []
+   260→        break
+   261→      case 'minor':
+   262→        // If this is a pre-minor version, bump up to the same minor version.
+   263→        // Otherwise increment minor.
+   264→        // 1.2.0-5 bumps to 1.2.0
+   265→        // 1.2.1 bumps to 1.3.0
+   266→        if (this.patch !== 0 || this.prerelease.length === 0) {
+   267→          this.minor++
+   268→        }
+   269→        this.patch = 0
+   270→        this.prerelease = []
+   271→        break
+   272→      case 'patch':
+   273→        // If this is not a pre-release version, it will increment the patch.
+   274→        // If it is a pre-release it will bump up to the same patch version.
+   275→        // 1.2.0-5 patches to 1.2.0
+   276→        // 1.2.0 patches to 1.2.1
+   277→        if (this.prerelease.length === 0) {
+   278→          this.patch++
+   279→        }
+   280→        this.prerelease = []
+   281→        break
+   282→      // This probably shouldn't be used publicly.
+   283→      // 1.0.0 'pre' would become 1.0.0-0 which is the wrong direction.
+   284→      case 'pre': {
+   285→        const base = Number(identifierBase) ? 1 : 0
+   286→
+   287→        if (this.prerelease.length === 0) {
+   288→          this.prerelease = [base]
+   289→        } else {
+   290→          let i = this.prerelease.length
+   291→          while (--i >= 0) {
+   292→            if (typeof this.prerelease[i] === 'number') {
+   293→              this.prerelease[i]++
+   294→              i = -2
+   295→            }
+   296→          }
+   297→          if (i === -1) {
+   298→            // didn't increment anything
+   299→            if (identifier === this.prerelease.join('.') && identifierBase === false) {
+   300→              throw new Error('invalid increment argument: identifier already exists')
+   301→            }
+   302→            this.prerelease.push(base)
+   303→          }
+   304→        }
+   305→        if (identifier) {
+   306→          // 1.2.0-beta.1 bumps to 1.2.0-beta.2,
+   307→          // 1.2.0-beta.fooblz or 1.2.0-beta bumps to 1.2.0-beta.0
+   308→          let prerelease = [identifier, base]
+   309→          if (identifierBase === false) {
+   310→            prerelease = [identifier]
+   311→          }
+   312→          if (compareIdentifiers(this.prerelease[0], identifier) === 0) {
+   313→            if (isNaN(this.prerelease[1])) {
+   314→              this.prerelease = prerelease
+   315→            }
+   316→          } else {
+   317→            this.prerelease = prerelease
+   318→          }
+   319→        }
+   320→        break
+   321→      }
+   322→      default:
+   323→        throw new Error(`invalid increment argument: ${release}`)
+   324→    }
+   325→    this.raw = this.format()
+   326→    if (this.build.length) {
+   327→      this.raw += `+${this.build.join('.')}`
+   328→    }
+   329→    return this
+   330→  }

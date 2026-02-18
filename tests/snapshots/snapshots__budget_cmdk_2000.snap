@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1946 words)
+budget: 2000 (2007 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -119,6 +119,18 @@ README.md
     34→        <Command.Item>Apple</Command.Item>
     35→      </Command.List>
     36→    </Command>
+    37→  )
+    38→}
+    39→```
+    40→
+    41→Or in a dialog:
+    42→
+    43→```tsx
+    44→import { Command } from 'cmdk'
+    45→
+    46→const CommandMenu = () => {
+    47→  const [open, setOpen] = React.useState(false)
+    48→
       →…
     82→## Parts and styling
     84→All parts forward props, including `ref`, to an appropriate element. Each part has a specific data-attribute (starting with `cmdk-`) that can be used for styling.
@@ -162,7 +174,10 @@ README.md
    449→
    450→**React server component?** No, it's a client component.
    451→
-      →…
+   452→**Listen for ⌘K automatically?** No, do it yourself to have full control over keybind context.
+   453→
+   454→**React Native?** No, and no plans to support it. If you build a React Native version, let us know and we'll link your repository here.
+   455→
    456→## History
    458→Written in 2019 by Paco ([@pacocoursey](https://twitter.com/pacocoursey)) to see if a composable combobox API was possible. Used for the Vercel command menu and autocomplete by Rauno ([@raunofreiberg](https://twitter.com/raunofreiberg)) in 2020. Re-written independently in 2022 with a simpler and more performant approach. Ideas and help from Shu ([@shuding\_](https://twitter.com/shuding_)).
    459→
@@ -434,10 +449,6 @@ website/pages/index.tsx
    138→
    139→const themes = [
    140→  {
-   141→    icon: <RaycastIcon />,
-   142→    key: 'raycast',
-   143→  },
-   144→  {
       →…
    158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////

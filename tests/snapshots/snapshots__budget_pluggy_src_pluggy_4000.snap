@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3433 words)
+budget: 4000 (3915 words)
 
 __init__.py
      1→__all__ = [
@@ -29,6 +29,9 @@ _callers.py
     27→def run_old_style_hookwrapper(
     28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
     29→) -> Teardown:
+    30→    """
+    31→    backward compatibility wrapper to run a old style hookwrapper as a wrapper
+      →…
     60→def _raise_wrapfail(
     61→    wrap_controller: Generator[None, object, object],
     62→    msg: str,
@@ -288,6 +291,9 @@ _hooks.py
    281→def normalize_hookimpl_opts(opts: HookimplOpts) -> None:
    290→_PYPY = hasattr(sys, "pypy_version_info")
    293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
+   294→    """Return tuple of positional and keywrord argument names for a function,
+   295→    method, class or callable.
+      →…
    358→@final
    359→class HookRelay:
    360→    """Hook holder object for performing 1:N hook calls where N is the number
@@ -329,6 +335,14 @@ _hooks.py
    407→        # 3. tryfirst nonwrappers
    408→        # 4. trylast wrappers
    409→        # 5. wrappers
+   410→        # 6. tryfirst wrappers
+   411→        self._hookimpls: Final[list[HookImpl]] = []
+   412→        self._call_history: _CallHistory | None = None
+   413→        # TODO: Document, or make private.
+   414→        self.spec: HookSpec | None = None
+   415→        if specmodule_or_class is not None:
+   416→            assert spec_opts is not None
+   417→            self.set_specification(specmodule_or_class, spec_opts)
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None
@@ -347,21 +361,32 @@ _hooks.py
    435→        if spec_opts.get("historic"):
    436→            self._call_history = []
    438→    def is_historic(self) -> bool:
+   439→        """Whether this caller is :ref:`historic <historic>`."""
    442→    def _remove_plugin(self, plugin: _Plugin) -> None:
    449→    def get_hookimpls(self) -> list[HookImpl]:
+   450→        """Get all registered hook implementations for this hook."""
    453→    def _add_hookimpl(self, hookimpl: HookImpl) -> None:
    454→        """Add an implementation to the callback chain."""
    477→    def __repr__(self) -> str:
    480→    def _verify_all_args_are_provided(self, kwargs: Mapping[str, object]) -> None:
    499→    def __call__(self, **kwargs: object) -> Any:
+   500→        """Call the hook.
+   501→
+      →…
    516→    def call_historic(
    517→        self,
    518→        result_callback: Callable[[Any], None] | None = None,
    519→        kwargs: Mapping[str, object] | None = None,
    520→    ) -> None:
+   521→        """Call the hook with given ``kwargs`` for all registered plugins and
+   522→        for all plugins which will be registered afterwards, see
+      →…
    543→    def call_extra(
    544→        self, methods: Sequence[Callable[..., object]], kwargs: Mapping[str, object]
    545→    ) -> Any:
+   546→        """Call the hook with some additional temporarily participating
+   547→        methods using the specified ``kwargs`` as call parameters, see
+      →…
    577→    def _maybe_apply_history(self, method: HookImpl) -> None:
    578→        """Apply call history to a new hookimpl if it is marked as historic."""
    593→class _SubsetHookCaller(HookCaller):
@@ -538,36 +563,90 @@ _manager.py
    123→        return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
    124→
    125→    def register(self, plugin: _Plugin, name: str | None = None) -> str | None:
+   126→        """Register a plugin and return its name.
+   127→
+   128→        :param name:
+   129→            The name under which to register the plugin. If not specified, a
+   130→            name is generated using :func:`get_canonical_name`.
+   131→
+   132→        :returns:
    176→    def parse_hookimpl_opts(self, plugin: _Plugin, name: str) -> HookimplOpts | None:
+   177→        """Try to obtain a hook implementation from an item with the given name
+   178→        in the given plugin which is being searched for hook impls.
+      →…
    201→    def unregister(
    202→        self, plugin: _Plugin | None = None, name: str | None = None
    203→    ) -> Any | None:
+   204→        """Unregister a plugin and all of its hook implementations.
+   205→
+      →…
    233→    def set_blocked(self, name: str) -> None:
+   234→        """Block registrations of the given name, unregister if already registered."""
    238→    def is_blocked(self, name: str) -> bool:
+   239→        """Return whether the given plugin name is blocked."""
    242→    def unblock(self, name: str) -> bool:
+   243→        """Unblocks a name.
+   244→
+      →…
    252→    def add_hookspecs(self, module_or_class: _Namespace) -> None:
+   253→        """Add new hook specifications defined in the given ``module_or_class``.
+   254→
+      →…
    278→    def parse_hookspec_opts(
    279→        self, module_or_class: _Namespace, name: str
    280→    ) -> HookspecOpts | None:
+   281→        """Try to obtain a hook specification from an item with the given name
+   282→        in the given module or class which is being searched for hook specs.
+      →…
    296→    def get_plugins(self) -> set[Any]:
+   297→        """Return a set of all registered plugin objects."""
    300→    def is_registered(self, plugin: _Plugin) -> bool:
+   301→        """Return whether the plugin is already registered."""
    304→    def get_canonical_name(self, plugin: _Plugin) -> str:
+   305→        """Return a canonical name for a plugin object.
+   306→
+      →…
    315→    def get_plugin(self, name: str) -> Any | None:
+   316→        """Return the plugin registered under the given name, if any."""
    319→    def has_plugin(self, name: str) -> bool:
+   320→        """Return whether a plugin with the given name is registered."""
    323→    def get_name(self, plugin: _Plugin) -> str | None:
+   324→        """Return the name the plugin is registered under, or ``None`` if
+   325→        is isn't."""
    331→    def _verify_hook(self, hook: HookCaller, hookimpl: HookImpl) -> None:
    379→    def check_pending(self) -> None:
+   380→        """Verify that all hooks which have not been verified against a
+   381→        hook specification are optional, otherwise raise
+      →…
    395→    def load_setuptools_entrypoints(self, group: str, name: str | None = None) -> int:
+   396→        """Load modules from querying the specified setuptools ``group``.
+   397→
+      →…
    425→    def list_plugin_distinfo(self) -> list[tuple[_Plugin, DistFacade]]:
+   426→        """Return a list of (plugin, distinfo) pairs for all
+   427→        setuptools-registered plugins."""
    430→    def list_name_plugin(self) -> list[tuple[str, _Plugin]]:
+   431→        """Return a list of (name, plugin) pairs for all registered plugins."""
    434→    def get_hookcallers(self, plugin: _Plugin) -> list[HookCaller] | None:
+   435→        """Get all hook callers for the specified plugin.
+   436→
+      →…
    450→    def add_hookcall_monitoring(
    451→        self, before: _BeforeTrace, after: _AfterTrace
    452→    ) -> Callable[[], None]:
+   453→        """Add before/after tracing functions for all hooks.
+   454→
+      →…
    487→    def enable_tracing(self) -> Callable[[], None]:
+   488→        """Enable tracing of hook calls.
+   489→
+      →…
    512→    def subset_hook_caller(
    513→        self, name: str, remove_plugins: Iterable[_Plugin]
    514→    ) -> HookCaller:
+   515→        """Return a proxy :class:`~pluggy.HookCaller` instance for the named
+   516→        method which manages calls to all registered plugins except the ones
+      →…
    525→def _formatdef(func: Callable[..., object]) -> str:
 _result.py
     16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
@@ -680,7 +759,14 @@ _tracing.py
     40→        return "".join(lines)
     41→
     42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
+    43→        if self._writer is not None and args:
+    44→            self._writer(self._format_message(tags, args))
+    45→        if processor := self._tags2proc.get(tags):
+    46→            processor(tags, args)
+    47→
     48→    def setwriter(self, writer: _Writer | None) -> None:
+    49→        self._writer = writer
+    50→
     51→    def setprocessor(self, tags: str | tuple[str, ...], processor: _Processor) -> None:
     59→class TagTracerSub:
     60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:

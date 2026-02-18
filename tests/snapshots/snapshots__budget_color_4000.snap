@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3936 words)
+budget: 4000 (4006 words)
 
 README.md
      1→# color
@@ -345,6 +345,8 @@ color.go
    208→	return c
    209→}
    211→func (c *Color) unset() {
+   212→	if c.isNoColorSet() {
+      →…
    219→// SetWriter is used to set the SGR sequence with the given io.Writer. This is
    220→// a low-level function, and users should use the higher-level functions, such
    221→// as color.Fprint, color.Print, etc.
@@ -528,7 +530,11 @@ color.go
    421→	return c.format() + s + c.unformat()
    422→}
    424→func (c *Color) format() string {
+   425→	return fmt.Sprintf("%s[%sm", escape, c.sequence())
+      →…
    428→func (c *Color) unformat() string {
+   429→	//return fmt.Sprintf("%s[%dm", escape, Reset)
+      →…
    443→// DisableColor disables the color output. Useful to not change any existing
    444→// code and still being able to output. Can be used for flags like
    445→// "--no-color". To enable back use EnableColor() method.
@@ -541,6 +547,8 @@ color.go
    453→	c.noColor = boolPtr(false)
    454→}
    456→func (c *Color) isNoColorSet() bool {
+   457→	// check first if we have user set action
+      →…
    466→// Equals returns a boolean value indicating whether two colors are equal.
    467→func (c *Color) Equals(c2 *Color) bool {
    468→	if c == nil && c2 == nil {
@@ -562,10 +570,20 @@ color.go
    484→	return true
    485→}
    487→func (c *Color) attrExists(a Attribute) bool {
+   488→	for _, attr := range c.params {
+      →…
    497→func boolPtr(v bool) *bool {
+   498→	return &v
+      →…
    501→func getCachedColor(p Attribute) *Color {
+   502→	colorsCacheMu.Lock()
+      →…
    514→func colorPrint(format string, p Attribute, a ...interface{}) {
+   515→	c := getCachedColor(p)
+      →…
    528→func colorString(format string, p Attribute, a ...interface{}) string {
+   529→	c := getCachedColor(p)
+      →…
    538→// Black is a convenient helper function to print with black foreground. A
    539→// newline is appended to format by default.
    540→func Black(format string, a ...interface{}) { colorPrint(format, FgBlack, a...) }
@@ -707,6 +725,7 @@ color_test.go
     29→		{text: "yellow", code: FgYellow},
     30→		{text: "blue", code: FgBlue},
     31→		{text: "magent", code: FgMagenta},
+    32→		{text: "cyan", code: FgCyan},
       →…
     73→func TestColorEquals(t *testing.T) {
    107→func TestNoColor(t *testing.T) {
@@ -733,3 +752,5 @@ color_windows.go
      6→	"golang.org/x/sys/windows"
      7→)
      9→func init() {
+    10→	// Opt-in for ansi color support for current process.
+      →…

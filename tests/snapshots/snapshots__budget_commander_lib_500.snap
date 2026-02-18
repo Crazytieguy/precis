@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (494 words)
+budget: 500 (513 words)
 
 argument.js
      3→class Argument {
@@ -132,6 +132,9 @@ option.js
    296→   */
    297→  valueFromOption(value, option) {
    298→    const optionKey = option.attributeName();
+   299→    if (!this.dualOptions.has(optionKey)) return true;
+   300→
+   301→    // Use the value to deduce if (probably) came from the option.
       →…
    316→function camelcase(str) {
    328→function splitOptionFlags(flags) {

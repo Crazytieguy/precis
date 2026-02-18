@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (489 words)
+budget: 500 (508 words)
 
 CHANGELOG.md
 README.md
@@ -26,21 +26,12 @@ README.md
     23→
     24→#### Version Parsing and Comparison
     26→```go
-    27→v1, err := version.NewVersion("1.2")
-    28→v2, err := version.NewVersion("1.5+metadata")
-    29→
       →…
     37→#### Version Constraints
     39→```go
-    40→v1, err := version.NewVersion("1.2")
-    41→
-    42→// Constraints example.
       →…
     49→#### Version Sorting
     51→```go
-    52→versionsRaw := []string{"1.1", "0.7.1", "1.4-beta", "1.4", "2"}
-    53→versions := make([]*version.Version, len(versionsRaw))
-    54→for i, raw := range versionsRaw {
       →…
     63→## Issues and Contributing
     65→If you find an issue with this library, please report an issue. If you'd
@@ -57,8 +48,6 @@ constraint.go
     37→	original string
     38→}
     40→func (c *Constraint) Equals(con *Constraint) bool {
-    41→	return c.op == con.op && c.check.Equal(con.check)
-    42→}
     44→// Constraints is a slice of constraints. We make a custom type so that
     45→// we can add methods to it.
     46→type Constraints []*Constraint
@@ -66,32 +55,23 @@ constraint.go
     51→	op operator
     52→	f  constraintFunc
     53→}
+    58→func NewConstraint …
+    75→func MustConstraints …
+    84→func (cs Constraints) Check …
+   102→func (cs Constraints) Equals …
    125→func (cs Constraints) Len() int {
-   126→	return len(cs)
-   127→}
    129→func (cs Constraints) Less(i, j int) bool {
-   130→	if cs[i].op < cs[j].op {
-   131→		return true
-   132→	}
-   133→	if cs[i].op > cs[j].op {
-   134→		return false
-   135→	}
-   136→
-   137→	return cs[i].check.LessThan(cs[j].check)
-   138→}
    140→func (cs Constraints) Swap(i, j int) {
-   141→	cs[i], cs[j] = cs[j], cs[i]
-   142→}
+   145→func (cs Constraints) String …
+   155→func (c *Constraint) Check …
+   161→func (c *Constraint) Prerelease …
    165→func (c *Constraint) String() string {
-   166→	return c.original
-   167→}
    228→//-------------------------------------------------------------------
    229→// Constraint functions
    230→//-------------------------------------------------------------------
    231→
    232→type operator rune
 constraint_test.go
-     6→import …
 version.go
      6→import …
     15→// The compiled regular expression used to test the validity of a version.
@@ -116,20 +96,32 @@ version.go
     57→	si       int
     58→	original string
     59→}
+    63→func NewVersion …
+    70→func NewSemver …
+   114→func Must …
+   128→func (v *Version) Compare …
+   309→func (v *Version) Core …
+   316→func (v *Version) Equal …
+   325→func (v *Version) GreaterThan …
+   330→func (v *Version) GreaterThanOrEqual …
+   335→func (v *Version) LessThan …
+   340→func (v *Version) LessThanOrEqual …
+   349→func (v *Version) Metadata …
+   359→func (v *Version) Prerelease …
+   368→func (v *Version) Segments …
+   381→func (v *Version) Segments64 …
+   395→func (v *Version) String …
+   423→func (v *Version) Original …
+   428→func (v *Version) UnmarshalText …
+   440→func (v *Version) MarshalText …
+   445→func (v *Version) Scan …
+   457→func (v *Version) Value …
 version_collection.go
      6→// Collection is a type that implements the sort.Interface interface
      7→// so that versions can be sorted.
      8→type Collection []*Version
     10→func (v Collection) Len() int {
-    11→	return len(v)
-    12→}
     14→func (v Collection) Less(i, j int) bool {
-    15→	return v[i].LessThan(v[j])
-    16→}
     18→func (v Collection) Swap(i, j int) {
-    19→	v[i], v[j] = v[j], v[i]
-    20→}
 version_collection_test.go
-     6→import …
 version_test.go
-     6→import …

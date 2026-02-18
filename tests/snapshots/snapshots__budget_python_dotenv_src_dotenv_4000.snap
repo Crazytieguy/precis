@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3238 words)
+budget: 4000 (3434 words)
 
 __init__.py
      1→from typing import Any, Optional
@@ -421,7 +421,22 @@ main.py
    190→    else:
    191→        line_out = f"{key_to_set}={value_out}\n"
    192→
-      →…
+   193→    with rewrite(dotenv_path, encoding=encoding) as (source, dest):
+   194→        replaced = False
+   195→        missing_newline = False
+   196→        for mapping in with_warn_for_invalid_lines(parse_stream(source)):
+   197→            if mapping.key == key_to_set:
+   198→                dest.write(line_out)
+   199→                replaced = True
+   200→            else:
+   201→                dest.write(mapping.original.string)
+   202→                missing_newline = not mapping.original.string.endswith("\n")
+   203→        if not replaced:
+   204→            if missing_newline:
+   205→                dest.write("\n")
+   206→            dest.write(line_out)
+   207→
+   208→    return True, key_to_set, value_to_set
    211→def unset_key(
    212→    dotenv_path: StrPath,
    213→    key_to_unset: str,
@@ -450,7 +465,9 @@ main.py
    236→        logger.warning(
    237→            "Key %s not removed from %s - key doesn't exist.", key_to_unset, dotenv_path
    238→        )
-      →…
+   239→        return None, key_to_unset
+   240→
+   241→    return removed, key_to_unset
    244→def resolve_variables(
    245→    values: Iterable[Tuple[str, Optional[str]]],
    246→    override: bool,
@@ -471,7 +488,9 @@ main.py
    261→                env.update(os.environ)  # type: ignore
    262→            result = "".join(atom.resolve(env) for atom in atoms)
    263→
-      →…
+   264→        new_values[name] = result
+   265→
+   266→    return new_values
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """
    271→    Yield directories starting from the given directory up to the root
@@ -514,7 +533,29 @@ main.py
    310→
    311→    if usecwd or _is_interactive() or _is_debugger() or getattr(sys, "frozen", False):
    312→        # Should work without __file__, e.g. in REPL or IPython notebook.
-      →…
+   313→        path = os.getcwd()
+   314→    else:
+   315→        # will work for .py files
+   316→        frame = sys._getframe()
+   317→        current_file = __file__
+   318→
+   319→        while frame.f_code.co_filename == current_file or not os.path.exists(
+   320→            frame.f_code.co_filename
+   321→        ):
+   322→            assert frame.f_back is not None
+   323→            frame = frame.f_back
+   324→        frame_filename = frame.f_code.co_filename
+   325→        path = os.path.dirname(os.path.abspath(frame_filename))
+   326→
+   327→    for dirname in _walk_to_root(path):
+   328→        check_path = os.path.join(dirname, filename)
+   329→        if _is_file_or_fifo(check_path):
+   330→            return check_path
+   331→
+   332→    if raise_error_if_not_found:
+   333→        raise IOError("File not found")
+   334→
+   335→    return ""
    338→def load_dotenv(
    339→    dotenv_path: Optional[StrPath] = None,
    340→    stream: Optional[IO[str]] = None,
@@ -560,7 +601,8 @@ main.py
    380→        interpolate=interpolate,
    381→        override=override,
    382→        encoding=encoding,
-      →…
+   383→    )
+   384→    return dotenv.set_as_environment_variables()
    387→def dotenv_values(
    388→    dotenv_path: Optional[StrPath] = None,
    389→    stream: Optional[IO[str]] = None,
@@ -728,7 +770,24 @@ parser.py
    156→        if reader.peek(1) == "=":
    157→            reader.read_regex(_equal_sign)
    158→            value: Optional[str] = parse_value(reader)
-      →…
+   159→        else:
+   160→            value = None
+   161→        reader.read_regex(_comment)
+   162→        reader.read_regex(_end_of_line)
+   163→        return Binding(
+   164→            key=key,
+   165→            value=value,
+   166→            original=reader.get_marked(),
+   167→            error=False,
+   168→        )
+   169→    except Error:
+   170→        reader.read_regex(_rest_of_line)
+   171→        return Binding(
+   172→            key=None,
+   173→            value=None,
+   174→            original=reader.get_marked(),
+   175→            error=True,
+   176→        )
    179→def parse_stream(stream: IO[str]) -> Iterator[Binding]:
    180→    reader = Reader(stream)
    181→    while reader.has_next():

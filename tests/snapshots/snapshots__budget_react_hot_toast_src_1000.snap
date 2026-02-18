@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 words)
+budget: 1000 (1016 words)
 
 components/checkmark.tsx
      3→const circleAnimation = keyframes`
@@ -106,8 +106,8 @@ components/toaster.tsx
     96→
       →…
 core/store.ts
-     1→import { useEffect, useState, useRef } from 'react …
-     2→import { DefaultToastOptions, Toast, ToastType } from './types …
+     1→import { useEffect, useState, useRef } from 'react';
+     2→import { DefaultToastOptions, Toast, ToastType } from './types';
      4→export const TOAST_EXPIRE_DISMISS_DELAY …
      5→export const TOAST_LIMIT …
      6→export const DEFAULT_TOASTER_ID …
@@ -171,9 +171,23 @@ core/store.ts
    193→
       →…
 core/toast.ts
-     1→./types …
-    10→import { genId } from './utils …
-    11→./store …
+     1→import {
+     2→  Renderable,
+     3→  Toast,
+     4→  ToastOptions,
+     5→  ToastType,
+     6→  DefaultToastOptions,
+     7→  ValueOrFunction,
+     8→  resolveValue,
+     9→} from './types';
+    10→import { genId } from './utils';
+    11→import {
+    12→  createDispatch,
+    13→  Action,
+    14→  ActionType,
+    15→  dispatchAll,
+    16→  getToasterIdFromToastId,
+    17→} from './store';
     19→type Message = ValueOrFunction<Renderable, Toast>;
     21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
     23→const createToast = (
@@ -193,7 +207,7 @@ core/toast.ts
     55→const toast = (message: Message, opts?: ToastOptions) =>
     56→  createHandler('blank')(message, opts);
 core/types.ts
-     1→import { CSSProperties } from 'react …
+     1→import { CSSProperties } from 'react';
      3→export type ToastType …
      4→export type ToastPosition …
     12→export type Renderable …
@@ -256,10 +270,10 @@ core/types.ts
     96→  children?: React.ReactNode;
     97→}
 core/use-toaster.ts
-     1→import { useEffect, useCallback, useRef } from 'react …
-     2→import { createDispatch, ActionType, useStore, dispatch } from './store …
-     3→import { toast } from './toast …
-     4→import { DefaultToastOptions, Toast, ToastPosition } from './types …
+     1→import { useEffect, useCallback, useRef } from 'react';
+     2→import { createDispatch, ActionType, useStore, dispatch } from './store';
+     3→import { toast } from './toast';
+     4→import { DefaultToastOptions, Toast, ToastPosition } from './types';
      6→export const REMOVE_DELAY …
      8→export const useToaster = (
      9→  toastOptions?: DefaultToastOptions,

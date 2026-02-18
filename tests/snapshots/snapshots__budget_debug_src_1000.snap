@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (998 words)
+budget: 1000 (1025 words)
 
 browser.js
    115→function useColors() {
@@ -26,6 +26,8 @@ browser.js
    133→	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
    134→		// Is firebug? http://stackoverflow.com/a/398120/376773
    135→		(typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
+   136→		// Is firefox >= v31?
+   137→		// https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
       →…
    143→/**
    144→ * Colorize log arguments if enabled.
@@ -57,6 +59,7 @@ browser.js
    170→		if (match === '%%') {
    171→			return;
    172→		}
+   173→		index++;
       →…
    194→/**
    195→ * Save `namespaces`.
@@ -149,6 +152,7 @@ common.js
     28→	/**
     29→	* Map of special "%n" handling functions, for the debug "format" argument.
     30→	*
+    31→	* Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
       →…
 node.js
    151→/**

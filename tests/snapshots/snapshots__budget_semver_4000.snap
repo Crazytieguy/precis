@@ -2,10 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3795 words)
+budget: 4000 (3916 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
+     8→  .filter((file) => file.startsWith('.eslintrc.local.'))
+      →…
 CHANGELOG.md
      1→# Changelog …
      3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16) …
@@ -37,7 +39,8 @@ CONTRIBUTING.md
     12→
     13→Use one of our existing issue templates if you believe you've come across a unique problem.
     14→
-      →…
+    15→Duplicate issues, or issues that don't use one of our templates may get closed without a response.
+    16→
     17→## Pull Request Conventions
     19→### Commits
     21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
@@ -245,6 +248,7 @@ README.md
    225→semver.inc('1.2.3', 'prerelease', 'beta')
    226→// '1.2.4-beta.0'
    227→```
+   228→
       →…
    250→#### Prerelease Identifier Base
    252→The method `.inc` takes an optional parameter 'identifierBase' string
@@ -254,6 +258,7 @@ README.md
    256→
    257→```javascript
    258→semver.inc('1.2.3', 'prerelease', 'beta', '1')
+   259→// '1.2.4-beta.1'
       →…
    279→### Advanced Range Syntax
    281→Advanced range syntax desugars to primitive comparators in
@@ -270,6 +275,7 @@ README.md
    293→If a partial version is provided as the first version in the inclusive
    294→range, then the missing pieces are replaced with zeroes.
    295→
+   296→* `1.2 - 2.3.4` := `>=1.2.0 <=2.3.4`
       →…
    306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
    308→Any of `X`, `x`, or `*` may be used to "stand in" for one of the
@@ -279,6 +285,7 @@ README.md
    312→  `includePrerelease` is specified, in which case any version at all
    313→  satisfies)
    314→* `1.x` := `>=1.0.0 <2.0.0-0` (Matching major version)
+   315→* `1.2.x` := `>=1.2.0 <1.3.0-0` (Matching major and minor versions)
       →…
    324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
    326→Allows patch-level changes if a minor version is specified on the
@@ -288,6 +295,7 @@ README.md
    330→* `~1.2` := `>=1.2.0 <1.(2+1).0` := `>=1.2.0 <1.3.0-0` (Same as `1.2.x`)
    331→* `~1` := `>=1.0.0 <(1+1).0.0` := `>=1.0.0 <2.0.0-0` (Same as `1.x`)
    332→* `~0.2.3` := `>=0.2.3 <0.(2+1).0` := `>=0.2.3 <0.3.0-0`
+   333→* `~0.2` := `>=0.2.0 <0.(2+1).0` := `>=0.2.0 <0.3.0-0` (Same as `0.2.x`)
       →…
    341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
    343→Allows changes that do not modify the left-most non-zero element in the
@@ -297,6 +305,7 @@ README.md
    347→
    348→Many authors treat a `0.x` version as if the `x` were the major
    349→"breaking-change" indicator.
+   350→
       →…
    384→### Range Grammar
    386→Putting all this together, here is a Backus-Naur grammar for ranges,
@@ -513,6 +522,12 @@ classes/comparator.js
     18→      }
     19→    }
     20→
+    21→    comp = comp.trim().split(/\s+/).join(' ')
+    22→    debug('comparator', comp, options)
+    23→    this.options = options
+    24→    this.loose = !!options.loose
+    25→    this.parse(comp)
+    26→
     36→  parse (comp) {
     37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
     38→    const m = comp.match(r)
@@ -546,6 +561,12 @@ classes/range.js
     19→    }
     20→
     21→    if (range instanceof Comparator) {
+    22→      // just put it in the set and return
+    23→      this.raw = range.value
+    24→      this.set = [[range]]
+    25→      this.formatted = undefined
+    26→      return this
+    27→    }
     73→  get range () {
     74→    if (this.formatted === undefined) {
     75→      this.formatted = ''
@@ -603,6 +624,12 @@ classes/semver.js
     22→    }
     23→
     24→    if (version.length > MAX_LENGTH) {
+    25→      throw new TypeError(
+    26→        `version is longer than ${MAX_LENGTH} characters`
+    27→      )
+    28→    }
+    29→
+    30→    debug('SemVer', version, options)
     81→  format () {
     82→    this.version = `${this.major}.${this.minor}.${this.patch}`
     83→    if (this.prerelease.length) {

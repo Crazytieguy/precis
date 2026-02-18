@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1910 words)
+budget: 2000 (1965 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -193,9 +193,6 @@ fuzzer/fuzz.py
     41→    roundtripped_obj = tomli.loads(recovered_data)
     42→    normalize_toml_obj(roundtripped_obj)
     43→    normalize_toml_obj(toml_obj)
-    44→    if roundtripped_obj != toml_obj:
-    45→        sys.stderr.write(
-    46→            f"Original dict:\n{toml_obj}\nRoundtripped dict:\n{roundtripped_obj}\n"
       →…
     53→def print_err(data):
     54→    codepoints = [hex(ord(x)) for x in data]
@@ -273,9 +270,16 @@ src/tomli/_parser.py
     49→TOML_WS: Final = frozenset(" \t")
     50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
     51→BARE_KEY_CHARS: Final = frozenset(
+    52→    "abcdefghijklmnopqrstuvwxyz" "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "0123456789" "-_"
+    53→)
     54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
     55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
     57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
+    58→    {
+    59→        "\\b": "\u0008",  # backspace
+    60→        "\\t": "\u0009",  # tab
+    61→        "\\n": "\u000a",  # linefeed
+      →…
     71→class DEPRECATED_DEFAULT:
     76→class TOMLDecodeError(ValueError):
     86→
@@ -289,6 +293,9 @@ src/tomli/_parser.py
     94→        if (
     95→            args
     96→            or not isinstance(msg, str)
+    97→            or not isinstance(doc, str)
+    98→            or not isinstance(pos, int)
+    99→        ):
       →…
    137→def load …
    149→def loads …
@@ -304,7 +311,9 @@ src/tomli/_parser.py
    230→        self._flags: dict[str, dict[Any, Any]] = {}
    231→        self._pending_flags: set[tuple[Key, int]] = set()
    232→
-   233→    def add_pending …
+   233→    def add_pending(self, key: Key, flag: int) -> None:
+   234→        self._pending_flags.add((key, flag))
+   235→
    236→    def finalize_pending …
    241→    def unset_all …
    249→    def set …
@@ -321,6 +330,9 @@ src/tomli/_parser.py
    287→        access_lists: bool = True,
    288→    ) -> dict[str, Any]:
    289→        cont: Any = self.dict
+   290→        for k in key:
+   291→            if k not in cont:
+   292→                cont[k] = {}
    300→    def append_nest_to_list …
    312→class Output:
    313→    def __init__(self) -> None:
@@ -377,6 +389,8 @@ src/tomli/_re.py
     40→    (?:[eE][+-]?[0-9](?:_?[0-9])*)?  # optional exponent part
     41→)
     42→""",
+    43→    flags=re.VERBOSE,
+    44→)
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
     47→    rf"""
@@ -387,6 +401,8 @@ src/tomli/_re.py
     52→    (?:([Zz])|([+-])([01][0-9]|2[0-3]):([0-5][0-9]))?  # optional time offset
     53→)?
     54→""",
+    55→    flags=re.VERBOSE,
+    56→)
     59→def match_to_datetime …
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of

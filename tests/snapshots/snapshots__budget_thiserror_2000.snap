@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1853 words)
+budget: 2000 (1912 words)
 
 README.md
      1→derive(Error)
@@ -97,7 +97,9 @@ README.md
    231→
    232→<sub>
    233→Unless you explicitly state otherwise, any contribution intentionally submitted
-      →…
+   234→for inclusion in this crate by you, as defined in the Apache-2.0 license, shall
+   235→be dual licensed as above, without any additional terms or conditions.
+   236→</sub>
 build/probe.rs
      8→use core::error::{Error, Request};
      9→use core::fmt::{self, Debug, Display};
@@ -234,7 +236,18 @@ impl/src/fmt.rs
    176→        return Ok(set);
    177→    }
    178→
-      →…
+   179→    let ahead = input.fork();
+   180→    if let Ok(set) = fallback_explicit_named_args(&ahead) {
+   181→        input.advance_to(&ahead);
+   182→        return Ok(set);
+   183→    }
+   184→
+   185→    input.parse::<TokenStream>().unwrap();
+   186→    Ok(FmtArguments {
+   187→        named: BTreeSet::new(),
+   188→        first_unnamed: None,
+   189→    })
+   190→}
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
      9→    names: Set<&'a Ident>,
@@ -403,6 +416,7 @@ src/display.rs
     71→            Placeholder
     72→        }
     73→    }
+    74→
     76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     77→            unreachable!()
     78→        }

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3941 words)
+budget: 4000 (4060 words)
 
 README.md
      1→# xxhash
@@ -572,7 +572,17 @@ xxhash_test.go
     43→		if tt.seed != 0 {
     44→			name += fmt.Sprintf(",seed=%d", tt.seed)
     45→		}
-      →…
+    46→		for chunkSize := 1; chunkSize <= lastChunkSize; chunkSize++ {
+    47→			name := fmt.Sprintf("%s,chunkSize=%d", name, chunkSize)
+    48→			t.Run(name, func(t *testing.T) {
+    49→				testDigest(t, tt.input, tt.seed, chunkSize, tt.want)
+    50→			})
+    51→		}
+    52→		if tt.seed == 0 {
+    53→			t.Run(name, func(t *testing.T) { testSum(t, tt.input, tt.want) })
+    54→		}
+    55→	}
+    56→}
     58→func testDigest(t *testing.T, input string, seed uint64, chunkSize int, want uint64) {
     59→	d := NewWithSeed(seed)
     60→	ds := NewWithSeed(seed) // uses WriteString
@@ -590,7 +600,18 @@ xxhash_test.go
     72→			t.Fatalf("Digest.WriteString: got (%d, %v); want (%d, nil)", n, err, len(chunk))
     73→		}
     74→	}
-      →…
+    75→	if got := d.Sum64(); got != want {
+    76→		t.Fatalf("Digest.Sum64: got 0x%x; want 0x%x", got, want)
+    77→	}
+    78→	if got := ds.Sum64(); got != want {
+    79→		t.Fatalf("Digest.Sum64 (WriteString): got 0x%x; want 0x%x", got, want)
+    80→	}
+    81→	var b [8]byte
+    82→	binary.BigEndian.PutUint64(b[:], want)
+    83→	if got := d.Sum(nil); !bytes.Equal(got, b[:]) {
+    84→		t.Fatalf("Sum: got %v; want %v", got, b[:])
+    85→	}
+    86→}
     88→func testSum(t *testing.T, input string, want uint64) {
     89→	if got := Sum64([]byte(input)); got != want {
     90→		t.Fatalf("Sum64: got 0x%x; want 0x%x", got, want)
@@ -665,7 +686,8 @@ xxhash_test.go
    162→
    163→		d0.Write([]byte{'a'})
    164→		d1.Write([]byte{'a'})
-      →…
+   165→	}
+   166→}
    168→var sink uint64
    170→func TestAllocs(t *testing.T) {
    171→	const shortStr = "abcdefghijklmnop"
@@ -800,6 +822,7 @@ xxhashbench/xxhashbench_test.go
     27→	{
     28→		name:         "xxhash",
     29→		directBytes:  xxhash.Sum64,
+    30→		directString: xxhash.Sum64String,
       →…
    108→func BenchmarkHashes(b *testing.B) {
    109→	for _, bb := range benchmarks {

@@ -2,13 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (962 words)
+budget: 1000 (970 words)
 
 CHANGELOG.md
-     1→# Changelog
-     3→All notable changes to this project will be documented in this file.
-     4→
-      →…
+     1→# Changelog …
     21→### Fixed …
 CONTRIBUTING.md
      1→Contributing …
@@ -101,7 +98,6 @@ src/dotenv/__init__.py
     43→    "get_cli_string",
     44→    "load_dotenv",
     45→    "dotenv_values",
-    46→    "get_key",
       →…
 src/dotenv/__main__.py
 src/dotenv/cli.py
@@ -195,7 +191,6 @@ src/dotenv/main.py
     46→    def __init__(
     47→        self,
     48→        dotenv_path: Optional[StrPath],
-    49→        stream: Optional[IO[str]] = None,
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
@@ -229,12 +224,11 @@ src/dotenv/parser.py
     41→    key: Optional[str]
     42→    value: Optional[str]
     43→    original: Original
-    44→    error: bool
+      →…
     47→class Position:
     48→    def __init__(self, chars: int, line: int) -> None:
     49→        self.chars = chars
     50→        self.line = line
-    51→
     52→    @classmethod
     53→    def start(cls) -> "Position":
     54→        return cls(chars=0, line=1)
@@ -244,7 +238,6 @@ src/dotenv/parser.py
     70→    def __init__(self, stream: IO[str]) -> None:
     71→        self.string = stream.read()
     72→        self.position = Position.start()
-    73→        self.mark = Position.start()
 src/dotenv/variables.py
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
@@ -261,29 +254,46 @@ src/dotenv/variables.py
     19→    def __ne__(self, other: object) -> bool:
     20→        result = self.__eq__(other)
     21→        if result is NotImplemented:
-    22→            return NotImplemented
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
     29→class Literal(Atom):
     30→    def __init__(self, value: str) -> None:
     31→        self.value = value
     32→
-    33→    def __repr__(self) -> str:
     48→class Variable(Atom):
     49→    def __init__(self, name: str, default: Optional[str]) -> None:
     50→        self.name = name
     51→        self.default = default
-    52→
 src/dotenv/version.py
      1→__version__ = "1.2.1"
 tests/conftest.py
+     6→def cli():
+    13→def dotenv_path(tmp_path):
 tests/test_cli.py
+   196→def test_get_default_path(tmp_path):
+   206→def test_run(tmp_path):
+   216→def test_run_with_existing_variable(tmp_path):
+   228→def test_run_with_existing_variable_not_overridden(tmp_path):
+   240→def test_run_with_none_value(tmp_path):
+   250→def test_run_with_other_env(dotenv_path):
 tests/test_fifo_dotenv.py
 tests/test_ipython.py
+    14→def test_ipython_existing_variable_no_override(tmp_path):
+    33→def test_ipython_existing_variable_override(tmp_path):
+    52→def test_ipython_new_variable(tmp_path):
 tests/test_is_interactive.py
      8→class TestIsInteractive:
     31→
 tests/test_main.py
+   251→def test_load_dotenv_existing_file(dotenv_path):
+   386→def test_load_dotenv_doesnt_disable_itself(dotenv_path):
+   411→def test_load_dotenv_existing_variable_no_override(dotenv_path):
+   424→def test_load_dotenv_existing_variable_override(dotenv_path):
+   437→def test_load_dotenv_redefine_var_used_in_file_no_override(dotenv_path):
+   450→def test_load_dotenv_redefine_var_used_in_file_with_override(dotenv_path):
+   463→def test_load_dotenv_string_io_utf_8():
+   476→def test_load_dotenv_file_stream(dotenv_path):
+   487→def test_load_dotenv_in_current_dir(tmp_path):
 tests/test_parser.py
 tests/test_utils.py
 tests/test_variables.py
@@ -291,3 +301,5 @@ tests/test_zip_imports.py
     23→class FileToAdd:
     24→    def __init__(self, content: str, path: str):
       →…
+    46→def test_load_dotenv_gracefully_handles_zip_imports_when_no_env_file(tmp_path):
+    69→def test_load_dotenv_outside_zip_file_when_called_in_zipfile(tmp_path):

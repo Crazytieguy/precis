@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1968 words)
+budget: 2000 (2034 words)
 
 README.md
      1→# debug
@@ -29,6 +29,8 @@ README.md
     29→debug('booting %o', name);
     30→
     31→http.createServer(function(req, res){
+    32→  debug(req.method + ' ' + req.url);
+    33→  res.end('hello\n');
       →…
     73→#### Windows command prompt notes
     75→##### CMD
@@ -124,6 +126,8 @@ README.md
    174→
    175→__Note:__ The environment variables beginning with `DEBUG_` end up being
    176→converted into an Options object that gets used with `%o`/`%O` formatters.
+   177→See the Node.js documentation for
+   178→[`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options)
       →…
    181→## Formatters
    183→Debug uses [printf-style](https://wikipedia.org/wiki/Printf_format_string) formatting.
@@ -172,6 +176,8 @@ README.md
    228→
    229→And then refresh the page.
    230→
+   231→```js
+   232→a = debug('worker:a');
       →…
    248→## Output streams
    250→  By default `debug` will log to stderr, however this can be configured per-namespace by overriding the `log` method:
@@ -188,6 +194,8 @@ README.md
    261→var log = debug('app:log');
    262→// set this namespace to log via console.log
    263→log.log = console.log.bind(console); // don't forget to bind to console!
+   264→log('goes to stdout');
+   265→error('still goes to stderr!');
       →…
    274→## Extend
    275→You can simply extend debugger 
@@ -218,6 +226,8 @@ README.md
    301→console.log(3, debug.enabled('test'));
    302→
    303→```
+   304→
+   305→print :   
       →…
    341→## Checking whether a debug target is enabled
    343→After you've created a debug instance, you can determine whether or not it is
@@ -249,6 +259,8 @@ README.md
    370→  env: Object.assign({}, process.env, {
    371→    DEBUG_COLORS: 1 // without this settings, colors won't be shown
    372→  }),
+   373→});
+   374→
       →…
    379→## Authors
    381→ - TJ Holowaychuk
@@ -271,6 +283,8 @@ README.md
    399→<a href="https://opencollective.com/debug/backer/9/website" target="_blank"><img src="https://opencollective.com/debug/backer/9/avatar.svg"></a>
    400→<a href="https://opencollective.com/debug/backer/10/website" target="_blank"><img src="https://opencollective.com/debug/backer/10/avatar.svg"></a>
    401→<a href="https://opencollective.com/debug/backer/11/website" target="_blank"><img src="https://opencollective.com/debug/backer/11/avatar.svg"></a>
+   402→<a href="https://opencollective.com/debug/backer/12/website" target="_blank"><img src="https://opencollective.com/debug/backer/12/avatar.svg"></a>
+   403→<a href="https://opencollective.com/debug/backer/13/website" target="_blank"><img src="https://opencollective.com/debug/backer/13/avatar.svg"></a>
       →…
    422→## Sponsors
    424→Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/debug#sponsor)]
@@ -287,6 +301,8 @@ README.md
    435→<a href="https://opencollective.com/debug/sponsor/9/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/9/avatar.svg"></a>
    436→<a href="https://opencollective.com/debug/sponsor/10/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/10/avatar.svg"></a>
    437→<a href="https://opencollective.com/debug/sponsor/11/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/11/avatar.svg"></a>
+   438→<a href="https://opencollective.com/debug/sponsor/12/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/12/avatar.svg"></a>
+   439→<a href="https://opencollective.com/debug/sponsor/13/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/13/avatar.svg"></a>
       →…
    457→## License
    459→(The MIT License)
@@ -303,6 +319,8 @@ README.md
    470→the following conditions:
    471→
    472→The above copyright notice and this permission notice shall be
+   473→included in all copies or substantial portions of the Software.
+   474→
       →…
 src/browser.js
    115→function useColors() {
@@ -321,6 +339,7 @@ src/browser.js
    128→	let m;
    129→
    130→	// Is webkit? http://stackoverflow.com/a/16459606/376773
+   131→	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
       →…
    143→/**
    144→ * Colorize log arguments if enabled.

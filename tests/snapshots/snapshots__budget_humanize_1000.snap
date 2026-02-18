@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (972 words)
+budget: 1000 (1001 words)
 
 README.md
      1→# humanize
@@ -220,6 +220,9 @@ RELEASING.md
      1→# Release checklist
      3→- [ ] Get `main` to the appropriate code release state.
      4→      [GitHub Actions](https://github.com/python-humanize/humanize/actions) should be
+     5→      running cleanly for all merges to `main`.
+     6→      [![GitHub Actions status](https://github.com/python-humanize/humanize/workflows/Test/badge.svg)](https://github.com/python-humanize/humanize/actions)
+     7→
       →…
 docs/filesize.md
      1→# Filesize
@@ -257,6 +260,8 @@ src/humanize/__init__.py
     29→    "__version__",
     30→    "activate",
     31→    "apnumber",
+    32→    "clamp",
+    33→    "deactivate",
       →…
 src/humanize/filesize.py
     36→def naturalsize …
@@ -269,8 +274,12 @@ src/humanize/i18n.py
     18→_CURRENT = local()
     21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
+    23→    "de_DE": ".",
+      →…
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
+    32→    "de_DE": ",",
+      →…
     40→def _get_default_locale_path …
     51→def get_translation …
     58→def activate …
@@ -303,6 +312,8 @@ src/humanize/time.py
     22→    "naturaldate",
     23→    "naturalday",
     24→    "naturaldelta",
+    25→    "naturaltime",
+    26→    "precisedelta",
       →…
     30→@total_ordering
     31→class Unit(Enum):

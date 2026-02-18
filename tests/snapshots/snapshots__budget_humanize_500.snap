@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (477 words)
+budget: 500 (491 words)
 
 README.md
      1→# humanize
@@ -38,8 +38,6 @@ README.md
     41→- Slovenian
     42→- Spanish
     43→- Swedish
-    44→- Turkish
-    45→- Ukrainian
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -184,12 +182,18 @@ src/humanize/time.py
     43→            return self.value < other.value
     44→        return NotImplemented
 tests/test_i18n.py
+    17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
    225→class TestActivate:
+   249→    @freeze_time("2020-02-02")
    250→    def test_en_locale(self) -> None:
+   262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
 tests/test_time.py
     16→# In seconds
     17→ONE_MICROSECOND = 1 / 1000000
     37→class FakeDate:
+    58→# These are not considered "public" interfaces, but require tests anyway.
+    59→
+    60→
     61→def test_date_and_delta() -> None:

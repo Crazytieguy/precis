@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3444 words)
+budget: 4000 (3956 words)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -162,6 +162,45 @@ _parser.py
    172→        #    - end of file
    173→        #    - end of line
    174→        #    - comment
+   175→        #    - key/value pair
+   176→        #    - append dict to list (and move to its namespace)
+   177→        #    - create dict (and move to its namespace)
+   178→        # Skip trailing whitespace when applicable.
+   179→        try:
+   180→            char = src[pos]
+   181→        except IndexError:
+   182→            break
+   183→        if char == "\n":
+   184→            pos += 1
+   185→            continue
+   186→        if char in KEY_INITIAL_CHARS:
+   187→            pos = key_value_rule(src, pos, out, header, parse_float)
+   188→            pos = skip_chars(src, pos, TOML_WS)
+   189→        elif char == "[":
+   190→            try:
+   191→                second_char: str | None = src[pos + 1]
+   192→            except IndexError:
+   193→                second_char = None
+   194→            out.flags.finalize_pending()
+   195→            if second_char == "[":
+   196→                pos, header = create_list_rule(src, pos, out)
+   197→            else:
+   198→                pos, header = create_dict_rule(src, pos, out)
+   199→            pos = skip_chars(src, pos, TOML_WS)
+   200→        elif char != "#":
+   201→            raise TOMLDecodeError("Invalid statement", src, pos)
+   202→
+   203→        # 3. Skip comment
+   204→        pos = skip_comment(src, pos)
+   205→
+   206→        # 4. Expect end of line or end of file
+   207→        try:
+   208→            char = src[pos]
+   209→        except IndexError:
+   210→            break
+   211→        if char != "\n":
+   212→            raise TOMLDecodeError(
+   213→                "Expected newline or end of document after a statement", src, pos
       →…
    220→class Flags:
    221→    """Flags that map to parsed keys/namespaces."""
@@ -365,7 +404,11 @@ _parser.py
    437→        raise TOMLDecodeError("Cannot overwrite a value", src, pos) from None
    438→    if key_stem in nest:
    439→        raise TOMLDecodeError("Cannot overwrite a value", src, pos)
-      →…
+   440→    # Mark inline table and array namespaces recursively immutable
+   441→    if isinstance(value, (dict, list)):
+   442→        out.flags.set(header + key, Flags.FROZEN, recursive=True)
+   443→    nest[key_stem] = value
+   444→    return pos
    447→def parse_key_value_pair(
    448→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    449→) -> tuple[Pos, Key, Any]:
@@ -464,7 +507,13 @@ _parser.py
    552→        if c == "}":
    553→            return pos + 1, nested_dict.dict
    554→        if c != ",":
-      →…
+   555→            raise TOMLDecodeError("Unclosed inline table", src, pos)
+   556→        pos += 1
+   557→        pos = skip_comments_and_array_ws(src, pos)
+   558→        if src.startswith("}", pos):
+   559→            return pos + 1, nested_dict.dict
+   560→        if isinstance(value, (dict, list)):
+   561→            flags.set(key, Flags.FROZEN, recursive=True)
    564→def parse_basic_str_escape(
    565→    src: str, pos: Pos, *, multiline: bool = False
    566→) -> tuple[Pos, str]:
@@ -492,7 +541,8 @@ _parser.py
    588→        return parse_hex_char(src, pos, 8)
    589→    try:
    590→        return pos, BASIC_STR_ESCAPE_REPLACEMENTS[escape_id]
-      →…
+   591→    except KeyError:
+   592→        raise TOMLDecodeError("Unescaped '\\' in a string", src, pos) from None
    595→def parse_basic_str_escape_multiline(src: str, pos: Pos) -> tuple[Pos, str]:
    596→    return parse_basic_str_escape(src, pos, multiline=True)
    599→def parse_hex_char(src: str, pos: Pos, hex_len: int) -> tuple[Pos, str]:
@@ -538,7 +588,10 @@ _parser.py
    643→    if not src.startswith(delim, pos):
    644→        return pos, result
    645→    pos += 1
-      →…
+   646→    if not src.startswith(delim, pos):
+   647→        return pos, result + delim
+   648→    pos += 1
+   649→    return pos, result + (delim * 2)
    652→def parse_basic_str(src: str, pos: Pos, *, multiline: bool) -> tuple[Pos, str]:
    653→    if multiline:
    654→        error_on = ILLEGAL_MULTILINE_BASIC_STR_CHARS
@@ -564,7 +617,11 @@ _parser.py
    674→            result += src[start_pos:pos]
    675→            pos, parsed_escape = parse_escapes(src, pos)
    676→            result += parsed_escape
-      →…
+   677→            start_pos = pos
+   678→            continue
+   679→        if char in error_on:
+   680→            raise TOMLDecodeError(f"Illegal character {char!r}", src, pos)
+   681→        pos += 1
    684→def parse_value(
    685→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    686→) -> tuple[Pos, Any]:
@@ -592,6 +649,45 @@ _parser.py
    708→    # Literal strings
    709→    if char == "'":
    710→        if src.startswith("'''", pos):
+   711→            return parse_multiline_str(src, pos, literal=True)
+   712→        return parse_literal_str(src, pos)
+   713→
+   714→    # Booleans
+   715→    if char == "t":
+   716→        if src.startswith("true", pos):
+   717→            return pos + 4, True
+   718→    if char == "f":
+   719→        if src.startswith("false", pos):
+   720→            return pos + 5, False
+   721→
+   722→    # Arrays
+   723→    if char == "[":
+   724→        return parse_array(src, pos, parse_float, nest_lvl + 1)
+   725→
+   726→    # Inline tables
+   727→    if char == "{":
+   728→        return parse_inline_table(src, pos, parse_float, nest_lvl + 1)
+   729→
+   730→    # Dates and times
+   731→    datetime_match = RE_DATETIME.match(src, pos)
+   732→    if datetime_match:
+   733→        try:
+   734→            datetime_obj = match_to_datetime(datetime_match)
+   735→        except ValueError as e:
+   736→            raise TOMLDecodeError("Invalid date or datetime", src, pos) from e
+   737→        return datetime_match.end(), datetime_obj
+   738→    localtime_match = RE_LOCALTIME.match(src, pos)
+   739→    if localtime_match:
+   740→        return localtime_match.end(), match_to_localtime(localtime_match)
+   741→
+   742→    # Integers and "normal" floats.
+   743→    # The regex will greedily match any type starting with a decimal
+   744→    # char, so needs to be located after handling of dates and times.
+   745→    number_match = RE_NUMBER.match(src, pos)
+   746→    if number_match:
+   747→        return number_match.end(), match_to_number(number_match, parse_float)
+   748→
+   749→    # Special floats
       →…
    760→def is_unicode_scalar_value(codepoint: int) -> bool:
    761→    return (0 <= codepoint <= 55295) or (57344 <= codepoint <= 1114111)
@@ -690,7 +786,10 @@ _re.py
     86→            offset_hour_str, offset_minute_str, offset_sign_str
     87→        )
     88→    elif zulu_time:
-      →…
+    89→        tz = timezone.utc
+    90→    else:  # local date-time
+    91→        tz = None
+    92→    return datetime(year, month, day, hour, minute, sec, micros, tzinfo=tz)
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.

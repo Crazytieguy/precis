@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3904 words)
+budget: 4000 (4016 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -21,6 +21,9 @@ CHANGELOG.md
    916→if (!program.args.length) ...
    917→```
    918→
+   919→a partial replacement is:
+   920→
+   921→```js
       →…
 CONTRIBUTING.md
      1→# Contributing
@@ -237,15 +240,11 @@ Readme_zh-CN.md
    572→有少数附加功能可以直接构造`Argument`对象，对参数进行更详尽的配置。
    573→
    574→示例代码：[arguments-extra.js](./examples/arguments-extra.js)
-   575→
-   576→```js
       →…
    582→#### 自定义参数处理
    584→选项的参数可以通过自定义函数来处理（与处理选项参数时类似），该函数接收两个参数：用户新输入的参数值和当前已有的参数值（即上一次调用自定义处理函数后的返回值），返回新的命令参数值。
    585→
    586→处理后的参数值会传递给命令处理函数，同时可通过`.processedArgs`获取。
-   587→
-   588→可以在自定义函数的后面设置命令参数的默认值或初始值。
       →…
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
@@ -398,6 +397,10 @@ docs/zh-CN/可变参数的选项.md
      4→
      5→- [可变参数的选项](#%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E7%9A%84%E9%80%89%E9%A1%B9)
       →…
+    73→### 方案一：让`--`成为语法的一部分 …
+    98→### 方案二：把选项放在最后 …
+   120→### 方案三：使用选项替代命令参数 …
+   183→### 将短选项视作 boolean 类型选项合并 …
 docs/zh-CN/术语表.md
      1→# 术语表
      3→命令行参数由选项（options）、选项参数（option-arguments）、命令（commands），以及命令参数（command-arguments）组成。
@@ -752,21 +755,31 @@ typings/index.d.ts
     17→  code: string;
     18→  exitCode: number;
     19→  message: string;
+    20→  nestedError?: string;
+    21→
+    22→  /**
     28→  constructor …
     31→export class InvalidArgumentError extends CommanderError {
     32→  /**
     33→   * Constructs the InvalidArgumentError class
     34→   * @param message - explanation of why argument is invalid
-    36→  constructor …
+    35→   */
+    36→  constructor(message: string);
+    37→}
     40→export interface ErrorOptions {
     41→  // optional parameter for error()
     42→  /** an id string representing the error */
     43→  code?: string;
-      →…
+    44→  /** suggested exit code which could be used with process.exit */
+    45→  exitCode?: number;
+    46→}
     48→export class Argument {
     49→  description: string;
     50→  required: boolean;
     51→  variadic: boolean;
+    52→  defaultValue?: any;
+    53→  defaultValueDescription?: string;
+    54→  parseArg?: <T>(value: string, previous: T) => T;
     62→  constructor …
     67→  name …
     72→  default …
@@ -778,6 +791,9 @@ typings/index.d.ts
     96→  flags: string;
     97→  description: string;
     98→
+    99→  required: boolean; // A value must be supplied when the option is specified.
+   100→  optional: boolean; // A value is optional when the option is specified.
+   101→  variadic: boolean;
    115→  constructor(flags: string, description?: string);
    120→  default …
    132→  preset …
@@ -796,6 +812,9 @@ typings/index.d.ts
    211→  /** output helpWidth, long lines are wrapped to fit */
    212→  helpWidth?: number;
    213→  minWidthToWrap: number;
+   214→  sortSubcommands: boolean;
+   215→  sortOptions: boolean;
+   216→  showGlobalOptions: boolean;
    218→  constructor();
    226→  prepareContext(contextOptions: {
    227→    error?: boolean;
@@ -852,11 +871,12 @@ typings/index.d.ts
    350→  // passed to text function used with .addHelpText()
    351→  error: boolean;
    352→  command: Command;
-      →…
+   353→}
    354→export interface OutputConfiguration {
    355→  writeOut?(str: string): void;
    356→  writeErr?(str: string): void;
    357→  outputError?(str: string, write: (str: string) => void): void;
+   358→
    359→  getOutHelpWidth?(): number;
    360→  getErrHelpWidth?(): number;
    362→  getOutHasColors?(): boolean;
@@ -872,6 +892,9 @@ typings/index.d.ts
    377→  args: string[];
    378→  processedArgs: any[];
    379→  readonly commands: readonly Command[];
+   380→  readonly options: readonly Option[];
+   381→  readonly registeredArguments: readonly Argument[];
+   382→  parent: Command | null;
    384→  constructor(name?: string);
    398→  version …
    442→  command …
@@ -940,7 +963,8 @@ typings/index.d.ts
   1095→  hidden?: boolean;
   1096→  isDefault?: boolean;
   1097→  /** @deprecated since v7, replaced by hidden */
-      →…
+  1098→  noHelp?: boolean;
+  1099→}
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1101→  executableFile?: string;
   1102→}

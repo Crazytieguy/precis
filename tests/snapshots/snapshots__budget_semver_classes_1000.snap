@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (905 words)
+budget: 1000 (953 words)
 
 comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -34,6 +34,9 @@ comparator.js
     30→      this.value = this.operator + this.semver.version
     31→    }
     32→
+    33→    debug('comp', this)
+    34→  }
+    35→
     36→  parse (comp) {
     37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
     38→    const m = comp.match(r)
@@ -85,6 +88,9 @@ range.js
     31→    this.includePrerelease = !!options.includePrerelease
     32→
     33→    // First reduce all whitespace as much as possible so we do not have to rely
+    34→    // on potentially slow regexes like \s*. This is then stored and used for
+    35→    // future error messages as well.
+    36→    this.raw = range.trim().replace(SPACE_CHARACTERS, ' ')
     73→  get range () {
     74→    if (this.formatted === undefined) {
     75→      this.formatted = ''
@@ -186,6 +192,9 @@ semver.js
     34→    // don't run into trouble passing this.options around.
     35→    this.includePrerelease = !!options.includePrerelease
     36→
+    37→    const m = version.trim().match(options.loose ? re[t.LOOSE] : re[t.FULL])
+    38→
+    39→    if (!m) {
     81→  format () {
     82→    this.version = `${this.major}.${this.minor}.${this.patch}`
     83→    if (this.prerelease.length) {

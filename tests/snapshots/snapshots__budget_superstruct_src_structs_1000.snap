@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (951 words)
+budget: 1000 (995 words)
 
 coercions.ts
      1→import { Struct, is, Coercer } from '../struct.js'
@@ -100,6 +100,7 @@ types.ts
     36→    schema: Element,
     37→    *entries(value) {
     38→      if (Element && Array.isArray(value)) {
+    39→        for (const [i, v] of value.entries()) {
       →…
     56→/**
       →…
@@ -118,6 +119,7 @@ types.ts
    110→
    111→  for (const key of values) {
    112→    schema[key] = key
+   113→  }
       →…
    127→/**
       →…
@@ -141,6 +143,7 @@ types.ts
    207→  return new Struct({
    208→    type: 'literal',
    209→    schema:
+   210→      t === 'string' || t === 'number' || t === 'boolean' ? constant : null,
       →…
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    231→  return new Struct({
@@ -148,6 +151,7 @@ types.ts
    233→    schema: null,
    234→    *entries(value) {
    235→      if (Key && Value && value instanceof Map) {
+   236→        for (const [k, v] of value.entries()) {
       →…
    254→/**
       →…
@@ -164,6 +168,7 @@ types.ts
    301→  return new Struct({
    302→    type: 'object',
    303→    schema: schema ? schema : null,
+   304→    *entries(value) {
       →…
    347→/**
       →…
@@ -183,6 +188,7 @@ types.ts
    418→    schema: null,
    419→    *entries(value) {
    420→      if (Element && value instanceof Set) {
+   421→        for (const v of value) {
       →…
    438→/**
       →…

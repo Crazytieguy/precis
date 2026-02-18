@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3889 words)
+budget: 4000 (4009 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -788,7 +788,15 @@ website/pages/_app.tsx
     34→              url: `${siteUrl}/og.png`,
     35→              alt: title,
     36→            },
-      →…
+    37→          ],
+    38→        }}
+    39→      />
+    40→      <ThemeProvider disableTransitionOnChange attribute="class">
+    41→        <Component {...pageProps} />
+    42→      </ThemeProvider>
+    43→    </>
+    44→  )
+    45→}
 website/pages/_document.tsx
      2→import React from 'react'
      3→import NextDocument, { Html, Head, Main, NextScript } from 'next/document'
@@ -852,8 +860,36 @@ website/pages/index.tsx
     46→        </div>
     47→
     48→        <AnimatePresence exitBeforeEnter initial={false}>
+    49→          {theme === 'framer' && (
+    50→            <CMDKWrapper key="framer">
+    51→              <FramerCMDK />
+    52→            </CMDKWrapper>
+    53→          )}
+    54→          {theme === 'vercel' && (
+    55→            <CMDKWrapper key="vercel">
+    56→              <VercelCMDK />
+    57→            </CMDKWrapper>
+    58→          )}
+    59→          {theme === 'linear' && (
+    60→            <CMDKWrapper key="linear">
+    61→              <LinearCMDK />
+    62→            </CMDKWrapper>
+    63→          )}
+    64→          {theme === 'raycast' && (
+    65→            <CMDKWrapper key="raycast">
+    66→              <RaycastCMDK />
+    67→            </CMDKWrapper>
+    68→          )}
+    69→        </AnimatePresence>
+    70→
+    71→        <ThemeContext.Provider value={{ theme, setTheme }}>
+    72→          <ThemeSwitcher />
+    73→        </ThemeContext.Provider>
+    74→
       →…
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
+    85→  return (
+      →…
     99→//////////////////////////////////////////////////////////////////
    100→
    101→function InstallButton() {
@@ -869,10 +905,10 @@ website/pages/index.tsx
    111→          setTimeout(() => {
    112→            setCopied(false)
    113→          }, 2000)
-   114→        } catch (e) {}
-   115→      }}
       →…
    123→function GitHubButton() {
+   124→  return (
+      →…
    137→//////////////////////////////////////////////////////////////////
    138→
    139→const themes = [
@@ -887,6 +923,8 @@ website/pages/index.tsx
    148→  {
       →…
    158→function ThemeSwitcher() {
+   159→  const { theme, setTheme } = React.useContext(ThemeContext)
+      →…
    260→//////////////////////////////////////////////////////////////////
    261→
    262→function Codeblock() {
@@ -902,8 +940,6 @@ website/pages/index.tsx
    272→
    273→    <Command.Group heading="Fruits">
    274→      <Command.Item>Apple</Command.Item>
-   275→      <Command.Item>Orange</Command.Item>
-   276→      <Command.Separator />
       →…
    294→//////////////////////////////////////////////////////////////////
    295→
@@ -911,5 +947,11 @@ website/pages/index.tsx
    297→  return <span className={styles.versionBadge}>v{packageJSON.version}</span>
    298→}
    300→function Footer() {
+   301→  const ref = React.useRef<HTMLElement | null>(null)
+      →…
    326→function RaunoSignature() {
+   327→  return (
+      →…
    350→function PacoSignature() {
+   351→  return (
+      →…

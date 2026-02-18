@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (493 words)
+budget: 500 (507 words)
 
 README.md
      1→# debug
@@ -110,6 +110,9 @@ src/browser.js
    126→	}
    127→
    128→	let m;
+   129→
+   130→	// Is webkit? http://stackoverflow.com/a/16459606/376773
+   131→	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
       →…
    143→/**
       →…

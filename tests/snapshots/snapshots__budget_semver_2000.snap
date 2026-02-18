@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1816 words)
+budget: 2000 (1998 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -52,6 +52,8 @@ README.md
     23→semver.minVersion('>=1.0.0') // '1.0.0'
     24→semver.valid(semver.coerce('v2')) // '2.0.0'
     25→semver.valid(semver.coerce('42.6.7.9.3-alpha')) // '42.6.7'
+    26→```
+    27→
       →…
    139→## Versions
    141→A "version" is described by the `v2.0.0` specification found at
@@ -76,10 +78,13 @@ README.md
    161→  so this operator is optional but MAY be included.
    162→
    163→For example, the comparator `>=1.2.7` would match the versions
+   164→`1.2.7`, `1.2.8`, `2.5.3`, and `1.3.9`, but not the versions `1.2.6`
+   165→or `1.1.0`. The comparator `>1` is equivalent to `>=2.0.0` and
       →…
    184→### Prerelease Tags
    186→If a version has a prerelease tag (for example, `1.2.3-alpha.3`) then
    187→it will only be allowed to satisfy comparator sets if at least one
+   188→comparator with the same `[major, minor, patch]` tuple also has a
       →…
    219→#### Prerelease Identifiers
    221→The method `.inc` takes an additional `identifier` string argument that
@@ -94,6 +99,7 @@ README.md
    279→### Advanced Range Syntax
    281→Advanced range syntax desugars to primitive comparators in
    282→deterministic ways.
+   283→
       →…
    287→#### Hyphen Ranges `X.Y.Z - A.B.C`
    289→Specifies an inclusive set.
@@ -118,6 +124,7 @@ README.md
    384→### Range Grammar
    386→Putting all this together, here is a Backus-Naur grammar for ranges,
    387→for the benefit of parser authors:
+   388→
       →…
    408→## Functions
    410→All methods and classes take a final `options` object argument.  All
@@ -134,14 +141,18 @@ README.md
    421→  excluding prerelease tagged versions from ranges unless they are
    422→  explicitly opted into.
    423→
+   424→Strict-mode Comparators and Ranges will be strict about the SemVer
+   425→strings that they parse.
       →…
    453→### Comparison
    455→* `gt(v1, v2)`: `v1 > v2`
    456→* `gte(v1, v2)`: `v1 >= v2`
+   457→* `lt(v1, v2)`: `v1 < v2`
       →…
    478→### Sorting
    480→* `sort(versions)`: Returns a sorted array of versions based on the `compareBuild` 
    481→  function.
+   482→* `rsort(versions)`: The reverse of `sort`. Returns an array of versions based on
       →…
    485→### Comparators
    487→* `intersects(comparator)`: Return true if the comparators intersect
@@ -149,14 +160,17 @@ README.md
    489→### Ranges
    491→* `validRange(range)`: Return the valid range or null if it's not valid.
    492→* `satisfies(version, range)`: Return true if the version satisfies the
+   493→  range.
       →…
    531→### Coercion
    533→* `coerce(version, options)`: Coerces a string to semver if possible
    534→
+   535→This aims to provide a very forgiving translation of a non-semver string to
       →…
    558→### Clean
    560→* `clean(version)`: Clean a string to be a valid semver if possible
    561→
+   562→This will return a cleaned and trimmed semver version. If the provided
       →…
    576→## Constants
    578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
@@ -164,10 +178,12 @@ README.md
    580→### `RELEASE_TYPES`
    582→- major
    583→- premajor
+   584→- minor
       →…
    600→### `SEMVER_SPEC_VERSION`
    602→2.0.0
    603→
+   604→```
       →…
    610→## Exported Modules
    613→TODO: Make sure that all of these items are documented (classes aren't,
@@ -184,6 +200,8 @@ README.md
    624→
    625→* `require('semver')`
    626→* `require('semver/classes')`
+   627→* `require('semver/classes/comparator')`
+   628→* `require('semver/classes/range')`
       →…
 benchmarks/bench-compare.js
 benchmarks/bench-diff.js
@@ -337,6 +355,8 @@ internal/debug.js
 internal/identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
+     5→  if (typeof a === 'number' && typeof b === 'number') {
+      →…
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 internal/lrucache.js
      3→class LRUCache {
@@ -364,11 +384,25 @@ internal/lrucache.js
     25→  set (key, value) {
     26→    const deleted = this.delete(key)
     27→
-      →…
+    28→    if (!deleted && value !== undefined) {
+    29→      // If cache is full, delete the least recently used item
+    30→      if (this.map.size >= this.max) {
+    31→        const firstKey = this.map.keys().next().value
+    32→        this.delete(firstKey)
+    33→      }
+    34→
+    35→      this.map.set(key, value)
+    36→    }
+    37→
+    38→    return this
+    39→  }
+    40→}
 internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
+     7→  if (!options) {
+      →…
 internal/re.js
     12→const re = exports.re = []
     13→const safeRe = exports.safeRe = []
@@ -378,7 +412,11 @@ internal/re.js
     19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
     27→const safeRegexReplacements = [
     33→const makeSafeRegex = (value) => {
+    34→  for (const [token, max] of safeRegexReplacements) {
+      →…
     42→const createToken = (name, value, isGlobal) => {
+    43→  const safe = makeSafeRegex(value)
+      →…
 ranges/gtr.js
      5→const gtr = (version, range, options) => outside(version, range, '>', options)
 ranges/intersects.js

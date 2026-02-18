@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (986 words)
+budget: 1000 (1014 words)
 
 README.md
     91→# Documentation
@@ -18,8 +18,6 @@ README.md
    102→  - [`.narrow`](#narrow)
    103→  - [`isMatching`](#ismatching)
    104→  - [Patterns](#patterns)
-   105→    - [Literals](#literals)
-   106→    - [Wildcards](#wildcards)
       →…
    417→### `match`
    419→```ts
@@ -70,7 +68,8 @@ docs/v4-to-v5-migration-guide.md
     65→## chainable methods
     67→TS-Pattern v5's major addition is the ability to chain methods to narrow down the values matched by primitive patterns, like `P.string` or `P.number`.
     68→
-      →…
+    69→Since a few examples is worth a thousand words, here are a few ways you can use chainable methods:
+    70→
    156→## Variadic tuple patterns …
    214→## `.returnType` …
 examples/gif-fetcher/src/App.tsx
@@ -101,6 +100,8 @@ src/errors.ts
 src/index.ts
 src/internals/helpers.ts
      7→import * as symbols from './symbols';
+     8→import { SelectionType } from '../types/FindSelected';
+     9→import { Pattern, Matcher, MatcherType, AnyMatcher } from '../types/Pattern';
     12→export const isObject …
     16→export const isMatcher …
     24→const isOptionalPattern …

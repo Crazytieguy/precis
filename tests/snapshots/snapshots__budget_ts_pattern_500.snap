@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (493 words)
+budget: 500 (508 words)
 
 README.md
     91→# Documentation
@@ -13,6 +13,7 @@ README.md
     97→  - [`.with`](#with)
     98→  - [`.when`](#when)
     99→  - [`.returnType`](#returntype)
+   100→  - [`.exhaustive`](#exhaustive)
       →…
    417→### `match`
    419→```ts
@@ -47,7 +48,10 @@ docs/v4-to-v5-migration-guide.md
      7→## TypeScript v5 …
     65→## chainable methods …
 examples/gif-fetcher/src/App.tsx
+    75→export default function App() {
+examples/gif-fetcher/src/constants.ts
 examples/gif-fetcher/src/searchGif.ts
+     6→export function searchGif(query: string) {
 src/errors.ts
      1→/**
      2→ * Error when the given input value does not match any included pattern
@@ -149,3 +153,4 @@ src/types/helpers.ts
    267→  input: unknown;
    268→  output: unknown;
    269→}
+tests/types-catalog/utils.ts

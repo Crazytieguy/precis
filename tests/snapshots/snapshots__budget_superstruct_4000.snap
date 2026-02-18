@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3671 words)
+budget: 4000 (4042 words)
 
 Changelog.md
      1→# Changelog
@@ -17,7 +17,7 @@ Readme.md
    205→### Documentation …
    231→### License …
 docs/guides/01-getting-started.md
-     1→# Getting Started …
+     1→# Getting Started
      3→## Installing Superstruct
      5→To install Superstruct run:
      6→
@@ -57,25 +57,62 @@ docs/guides/01-getting-started.md
     40→
     41→## Defining Structs …
 docs/guides/02-validating-data.md
-     1→# Validating Data …
+     1→# Validating Data
+     3→Superstruct is designed to let you validate any data, ensuring that it matches a specific schema. In this guide we'll show you some of the possibilities.
+     4→
      5→## Primitive Values …
     37→## Composed Values …
    114→## Optional Values …
    157→## Custom Values …
 docs/guides/03-coercing-data.md
-     1→# Coercing Data …
+     1→# Coercing Data
+     3→Sometimes while validating input data you'll actually want to "coerce" it to change it in someway to help validation pass. The most common example of this is adding default values to properties, but it can also be used to parse multiple input formats, or cleanup inconsistent data.
+     4→
+     5→To allow for these use cases, Superstruct has a concept called "coercion", which allows you to encode specific logic about how to transform a piece of data before validating it.
+     6→
      7→## Default Values …
     49→## Custom Coercions …
 docs/guides/04-refining-validation.md
-     1→# Refining Validation …
+     1→# Refining Validation
+     3→There are some cases where you want to create a validation that is more fine-grained than a "type". For example, you might want not just a `string`, but a specific format of string. Or not just a `User`, but a user that is also an administrator.
+     4→
+     5→For these situations, you can use "refinements". Refinements allow you to create a new struct that is derived from an existing struct with an extra bit of validation layered on top.
+     6→
      7→## Built-in Refinements …
     47→## Custom Refinements …
 docs/guides/05-handling-errors.md
-     1→# Handling Errors …
+     1→# Handling Errors
+     3→By default Superstruct throws errors that are easy to understand for developers. This means that out of the box you'll get nice errors messages that help you track down why a piece of data is invalid.
+     4→
+     5→For example, consider a simple `User` struct:
+     6→
+     7→```ts
+     8→const User = object({
+     9→  id: number(),
+    10→  name: string(),
+    11→  email: email(),
+    12→})
+    13→```
+    14→
+    15→If you pass in an invalid email, an error will be thrown:
+    16→
+    17→```ts
+    18→const data = {
+    19→  id: 1,
+    20→  name: 'Alex',
+    21→  email: false,
+    22→}
+    23→
+    24→assert(data, User)
+      →…
     53→## Customizing Errors …
    102→## Multiple Failures …
 docs/guides/06-using-typescript.md
-     1→# Using TypeScript …
+     1→# Using TypeScript
+     3→Superstruct is built with TypeScript, and is designed to integrate seamlessly with its guards and assertions. Which means that if you're using TypeScript too you'll get compile-time typings for your data.
+     4→
+     5→> 🤖 Warning: You must enable TypeScript's [`strictNullChecks`](https://www.typescriptlang.org/tsconfig#strictNullChecks) option in your `tsconfig.json` for Superstruct to work properly with "optional" types. Note that `strictNullChecks` is disabled by default. If you enable `strict`, `strictNullChecks` will automatically be enabled.
+     6→
      7→## Narrowing Types …
     37→## Describing Types …
     55→## Inferring Types …
@@ -874,8 +911,6 @@ test/validation/never/invalid.ts
      3→export const Struct = never()
      5→export const data = true
      7→export const failures = [
-     8→  {
-      →…
 test/validation/nullable/invalid.ts
 test/validation/nullable/valid-defined-nested.ts
 test/validation/nullable/valid-defined.ts
@@ -889,10 +924,21 @@ test/validation/number/valid.ts
      3→export const Struct = number()
      5→export const data = 42
      7→export const output = 42
+test/validation/object/invalid-array.ts
+test/validation/object/invalid-element-nested.ts
+test/validation/object/invalid-opaque.ts
+test/validation/object/invalid-property-nested.ts
+test/validation/object/invalid-property-unknown.ts
+test/validation/object/invalid-property.ts
 test/validation/object/invalid-referential.ts
      3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
+test/validation/object/invalid.ts
+test/validation/object/valid-frozen.ts
+test/validation/object/valid-nested.ts
+test/validation/object/valid-opaque.ts
 test/validation/object/valid-referential.ts
      3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
+test/validation/object/valid.ts
 test/validation/omit/invalid-element-nested.ts
 test/validation/omit/invalid-property-nested.ts
 test/validation/omit/invalid-property-unknown.ts
@@ -906,6 +952,14 @@ test/validation/optional/valid-defined-nested.ts
 test/validation/optional/valid-defined.ts
 test/validation/optional/valid-undefined-nested.ts
 test/validation/optional/valid-undefined.ts
+test/validation/partial/composed.ts
+test/validation/partial/invalid-property-unknown.ts
+test/validation/partial/invalid-property.ts
+test/validation/partial/invalid.ts
+test/validation/partial/valid-empty.ts
+test/validation/partial/valid-full.ts
+test/validation/partial/valid-partial.ts
+test/validation/partial/valid-type.ts
 test/validation/pattern/invalid.ts
      3→export const Struct = pattern(string(), /\d+/)
      5→export const data = 'invalid'
@@ -914,6 +968,14 @@ test/validation/pattern/valid.ts
      3→export const Struct = pattern(string(), /\d+/)
      5→export const data = '123'
      7→export const output = '123'
+test/validation/pick/invalid-element-nested.ts
+test/validation/pick/invalid-property-nested.ts
+test/validation/pick/invalid-property-unknown.ts
+test/validation/pick/invalid-property.ts
+test/validation/pick/invalid.ts
+test/validation/pick/valid-nested.ts
+test/validation/pick/valid-type.ts
+test/validation/pick/valid.ts
 test/validation/record/invalid-array.ts
 test/validation/record/invalid-property.ts
 test/validation/record/invalid.ts
@@ -972,7 +1034,8 @@ test/validation/type/valid-instance.ts
      4→  name: string
      5→
      6→  constructor(name: string) {
-      →…
+     7→    this.name = name
+     8→  }
 test/validation/type/valid.ts
 test/validation/union/coercion-object.ts
 test/validation/union/coercion-type.ts

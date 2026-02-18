@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3994 words)
+budget: 4000 (4111 words)
 
 command-score.ts
     54→function commandScoreInner(
@@ -522,6 +522,34 @@ index.tsx
    416→      })
    417→
    418→    groups
+   419→      .sort((a, b) => b[1] - a[1])
+   420→      .forEach((group) => {
+   421→        const element = listInnerRef.current?.querySelector(
+   422→          `${GROUP_SELECTOR}[${VALUE_ATTR}="${encodeURIComponent(group[0])}"]`,
+   423→        )
+   424→        element?.parentElement.appendChild(element)
+   425→      })
+   426→  }
+   427→
+   428→  function selectFirstItem() {
+   429→    const item = getValidItems().find((item) => item.getAttribute('aria-disabled') !== 'true')
+   430→    const value = item?.getAttribute(VALUE_ATTR)
+   431→    store.setState('value', value || undefined)
+   432→  }
+   433→
+   434→  /** Filters the current items. */
+   435→  function filterItems() {
+   436→    if (
+   437→      !state.current.search ||
+   438→      // Explicitly false, because true | undefined is the default
+   439→      propsRef.current.shouldFilter === false
+   440→    ) {
+   441→      state.current.filtered.count = allItems.current.size
+   442→      // Do nothing, each item will know to show itself because search is empty
+   443→      return
+   444→    }
+   445→
+   446→    // Reset the groups
       →…
    659→/**
    660→ * Command menu item. Becomes active on pointer enter or through keyboard navigation.

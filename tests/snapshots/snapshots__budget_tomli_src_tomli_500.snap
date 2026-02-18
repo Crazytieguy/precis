@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (494 words)
+budget: 500 (508 words)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -44,6 +44,7 @@ _parser.py
     88→        self,
     89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
     90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
       →…
    220→class Flags:
    222→
@@ -51,12 +52,14 @@ _parser.py
    224→    FROZEN: Final = 0
    225→    # Marks a nest that has been explicitly created and can no longer
    226→    # be opened using the "[table]" syntax.
+   227→    EXPLICIT_NEST: Final = 1
    278→class NestedDict:
    279→    def __init__(self) -> None:
    280→        # The parsed content of the TOML document
    281→        self.dict: dict[str, Any] = {}
    282→
    283→    def get_or_create_nest(
+   284→        self,
    312→class Output:
    313→    def __init__(self) -> None:
    314→        self.data = NestedDict()

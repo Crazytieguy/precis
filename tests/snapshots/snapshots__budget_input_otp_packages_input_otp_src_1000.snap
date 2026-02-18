@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (989 words)
+budget: 1000 (1019 words)
 
 input.tsx
      3→import * as React from 'react'
@@ -44,6 +44,16 @@ input.tsx
     42→    // Definitions
     43→    const value = uncheckedValue ?? internalValue
     44→    const previousValue = usePrevious(value)
+    45→    const onChange = React.useCallback(
+    46→      (newValue: string) => {
+    47→        uncheckedOnChange?.(newValue)
+    48→        setInternalValue(newValue)
+    49→      },
+    50→      [uncheckedOnChange],
+    51→    )
+    52→    const regexp = React.useMemo(
+    53→      () =>
+    54→        pattern
       →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {

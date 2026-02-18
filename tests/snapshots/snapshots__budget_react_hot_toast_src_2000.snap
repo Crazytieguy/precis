@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1970 words)
+budget: 2000 (2024 words)
 
 components/checkmark.tsx
      1→import { styled, keyframes } from 'goober';
@@ -79,6 +79,7 @@ components/toast-bar.tsx
     63→
     64→  const [enter, exit] = prefersReducedMotion()
     65→    ? [fadeInAnimation, fadeOutAnimation]
+    66→    : [enterAnimation(factor), exitAnimation(factor)];
       →…
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
@@ -154,6 +155,7 @@ components/toaster.tsx
     18→  style,
     19→  onHeightUpdate,
     20→  children,
+    21→}: ToastWrapperProps) => {
       →…
     47→const getPositionStyle = (
     48→  position: ToastPosition,
@@ -164,6 +166,7 @@ components/toaster.tsx
     53→  const horizontalStyle: React.CSSProperties = position.includes('center')
     54→    ? {
     55→        justifyContent: 'center',
+    56→      }
       →…
     76→const activeClass = css`
     83→const DEFAULT_OFFSET = 16;
@@ -301,6 +304,11 @@ core/store.ts
     79→
     80→    case ActionType.UPSERT_TOAST:
     81→      const { toast } = action;
+    82→      return reducer(state, {
+    83→        type: state.toasts.find((t) => t.id === toast.id)
+    84→          ? ActionType.UPDATE_TOAST
+    85→          : ActionType.ADD_TOAST,
+    86→        toast,
       →…
    136→const listeners: Array<
    137→  [toasterId: string, reducer: (state: ToasterState) => void]
@@ -366,6 +374,11 @@ core/store.ts
    205→    };
    206→  }, [toasterId]);
    207→
+   208→  const mergedToasts = state.toasts.map((t) => ({
+   209→    ...toastOptions,
+   210→    ...toastOptions[t.type],
+   211→    ...t,
+   212→    removeDelay:
       →…
 core/toast.ts
      1→import {
@@ -535,6 +548,11 @@ core/use-toaster.ts
     28→        });
     29→      }, removeDelay);
     30→
+    31→      toastTimeouts.set(toastId, timeout);
+    32→    },
+    33→    []
+    34→  );
+    35→
       →…
 core/utils.ts
      1→export const genId = (() => {

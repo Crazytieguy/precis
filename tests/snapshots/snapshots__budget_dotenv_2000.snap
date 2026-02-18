@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1961 words)
+budget: 2000 (2022 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -14,10 +14,20 @@ CONTRIBUTING.md
      1→# Contributing
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
      4→2. Install dependencies (`npm install`)
-     5→3. Create your feature branch (`git checkout -b my-new-feature`)
       →…
-    11→## Testing …
-    19→## Code Style …
+    11→## Testing
+    13→We use [TAP](https://github.com/tapjs/node-tap) to write tests. Run our test suite with this command:
+    14→
+    15→```
+    16→npm test
+    17→```
+    18→
+    19→## Code Style
+    21→We use [standard](https://www.npmjs.com/package/standard) and [editorconfig](http://editorconfig.org) to maintain code style and best practices. Please make sure your PR adheres to the guides by running:
+    22→
+    23→```
+    24→npm run lint
+    25→```
 README-es.md
      1→# dotenv
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
@@ -427,6 +437,15 @@ lib/main.d.ts
     73→  /**
     74→   * Default: `process.env`
     75→   *
+    76→   * Specify an object to write your secrets to. Defaults to process.env environment variables.
+    77→   *
+    78→   * example: `const processEnv = {}; require('dotenv').config({ processEnv: processEnv })`
+    79→   */
+    80→  processEnv?: DotenvPopulateInput;
+    81→
+    82→  /**
+    83→   * Default: `undefined`
+    84→   *
       →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
@@ -496,9 +515,3 @@ tests/test-parse.js
 tests/test-populate.js
 tests/types/test.ts
      1→import { config, parse } from "dotenv";
-     3→const env …
-     4→const dbUrl …
-    15→const parsed …
-    16→const dbHost …
-    18→const parsedFromBuffer …
-    19→const justice …

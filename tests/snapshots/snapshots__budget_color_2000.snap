@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1938 words)
+budget: 2000 (1999 words)
 
 README.md
      1→# color
@@ -58,6 +58,12 @@ README.md
     57→red := color.New(color.FgRed)
     58→
     59→boldRed := red.Add(color.Bold)
+    60→boldRed.Println("This will print text in bold red.")
+    61→
+    62→whiteBackground := red.Add(color.BgWhite)
+    63→whiteBackground.Println("Red text with white background.")
+    64→
+    65→// Mix with RGB color codes
       →…
     71→### Use your own output (io.Writer)
     73→```go
@@ -104,7 +110,10 @@ README.md
    117→fmt.Println("This", color.RedString("warning"), "should be not neglected.")
    118→fmt.Printf("%v %v\n", color.GreenString("Info:"), "an important message.")
    119→
-      →…
+   120→// Windows supported too! Just don't forget to change the output to color.Output
+   121→fmt.Fprintf(color.Output, "Windows support: %s", color.GreenString("PASS"))
+   122→```
+   123→
    124→### Plug into existing code
    126→```go
    127→// Use handy standard colors
@@ -119,7 +128,9 @@ README.md
    136→color.Set(color.FgMagenta, color.Bold)
    137→defer color.Unset() // Use it in your function
    138→
-      →…
+   139→fmt.Println("All text will now be bold magenta.")
+   140→```
+   141→
    142→### Disable/Enable color
    144→There might be a case where you want to explicitly disable/enable color output. the 
    145→`go-isatty` package will automatically disable color output for non-tty output streams 
@@ -134,6 +145,12 @@ README.md
    154→
    155→```go
    156→var flagNoColor = flag.Bool("no-color", false, "Disable color output")
+   157→
+   158→if *flagNoColor {
+   159→	color.NoColor = true // disables colorized output
+   160→}
+   161→```
+   162→
       →…
    177→## GitHub Actions
    179→To output color in GitHub Actions (or other CI systems that support ANSI colors), make sure to set `color.NoColor = false` so that it bypasses the check for non-tty output streams. 
@@ -349,15 +366,7 @@ color.go
    680→	return strings.TrimSuffix(fmt.Sprintln(a...), "\n")
    681→}
 color_test.go
-     3→import (
-     4→	"bytes"
-     5→	"fmt"
-     6→	"io"
-     7→	"os"
-     8→	"testing"
-     9→
-    10→	"github.com/mattn/go-colorable"
-    11→)
+     3→import …
     13→// Testing colors is kinda different. First we test for given colors and their
     14→// escaped formatted results. Next we create some visual tests to be tested.
     15→// Each visual test includes the color name to be compared.
@@ -374,6 +383,8 @@ color_test.go
     26→		{text: "black", code: FgBlack},
     27→		{text: "red", code: FgRed},
     28→		{text: "green", code: FgGreen},
+    29→		{text: "yellow", code: FgYellow},
+    30→		{text: "blue", code: FgBlue},
       →…
     73→func TestColorEquals(t *testing.T) {
    107→func TestNoColor(t *testing.T) {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1856 words)
+budget: 2000 (1907 words)
 
 backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
@@ -49,12 +49,24 @@ backtrace.rs
     91→
     92→    enum Inner {
     93→        Unsupported,
+    94→        Disabled,
+    95→        Captured(LazilyResolvedCapture),
     98→    struct Capture {
+    99→        actual_start: usize,
+      →…
    104→    struct BacktraceFrame {
+   105→        frame: Frame,
+      →…
    109→    struct BacktraceSymbol {
+   110→        name: Option<Vec<u8>>,
+      →…
    116→    enum BytesOrWide {
+   117→        Bytes(Vec<u8>),
+      →…
    211→        pub(crate) fn capture …
    311→    struct LazilyResolvedCapture {
+   312→        sync: Once,
+      →…
 chain.rs
      5→use alloc::vec::{self, Vec};
      8→pub(crate) use crate::Chain;
@@ -131,6 +143,8 @@ ensure.rs
     26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     27→}
     35→struct Buf {
+    36→    bytes: [MaybeUninit<u8>; 40],
+      →…
    103→#[doc(hidden)]
    104→#[macro_export]
    105→macro_rules! __parse_ensure {
@@ -177,6 +191,8 @@ error.rs
    712→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    713→impl DerefMut for Error {
    740→struct ErrorVTable {
+   741→    object_drop: unsafe fn(Own<ErrorImpl>),
+      →…
    788→unsafe fn object_boxed …
    799→unsafe fn object_reallocate_boxed …
    839→unsafe fn context_downcast …
@@ -215,6 +231,8 @@ error.rs
   1079→impl AsRef<dyn StdError> for Error {
 fmt.rs
     69→struct Indented<'a, D> {
+    70→    inner: &'a mut D,
+      →…
 kind.rs
     51→use crate::StdError;
     53→use alloc::boxed::Box;
@@ -438,6 +456,7 @@ macros.rs
      5→///
      6→/// The surrounding function's or closure's return value is required to be
      7→/// <code>Result&lt;_, [anyhow::Error][crate::Error]&gt;</code>.
+     8→///
       →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
@@ -450,6 +469,7 @@ macros.rs
    178→/// string, or a format string with arguments. It also can take any custom type
    179→/// which implements `Debug` and `Display`.
    180→///
+   181→/// If called with a single argument whose type implements `std::error::Error`
       →…
    204→macro_rules! anyhow {
    228→#[doc(hidden)]

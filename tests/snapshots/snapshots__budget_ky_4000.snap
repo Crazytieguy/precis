@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3862 words)
+budget: 4000 (3930 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -275,11 +275,16 @@ source/core/Ky.ts
     65→					throw error;
     66→				}
     67→
+    68→				if (modifiedResponse instanceof RetryMarker) {
    178→	static #normalizeSearchParams(searchParams: SearchParamsOption): SearchParamsOption {
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
    203→		this.#options = {
+   204→			...options,
+   205→			headers: mergeHeaders((this.#input as Request).headers, options.headers),
+   206→			hooks: mergeHooks(
+   207→				{
       →…
    297→	#calculateDelay(): number {
    316→	async #calculateRetryDelay(error: unknown) {
@@ -725,6 +730,7 @@ source/utils/normalize.ts
     14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
     16→const defaultRetryOptions: InternalRetryOptions = {
     17→	limit: 2,
+    18→	methods: retryMethods,
       →…
     28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
 source/utils/options.ts
@@ -849,12 +855,23 @@ test/browser.ts
     13→	interface Window {
     14→		ky: typeof ky;
     15→	}
+    19→const createEsmTestServer …
+    36→const addKyScriptToPage …
 test/bytes.ts
 test/fetch.ts
 test/headers.ts
+    11→const echoHeaders …
 test/helpers/create-http-test-server.ts
-     7→export type HttpServerOptions …
-    11→export type ExtendedHttpTestServer …
+     7→export type HttpServerOptions = {
+     8→	bodyParser?: express.NextFunction | false;
+     9→};
+    11→export type ExtendedHttpTestServer = {
+    12→	http: http.Server;
+    13→	url: string;
+    14→	port: number;
+    15→	hostname: string;
+    16→	close: () => Promise<any>;
+    17→} & express.Express;
     19→export const createHttpTestServer …
 test/helpers/create-large-file.ts
      2→export function createLargeBlob …
@@ -867,6 +884,9 @@ test/helpers/with-page.ts
 test/helpers/with-performance.ts
     16→export async function withPerformance …
 test/hooks.ts
+     7→const createStreamBody …
+    14→const createStreamFetch …
 test/http-error.ts
+     6→function createFakeResponse …
 test/main.ts
 test/retry.ts

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3769 words)
+budget: 4000 (3970 words)
 
 CHANGELOG.md
      1→# neverthrow …
@@ -415,25 +415,9 @@ src/_internals/utils.ts
     86→    combineResultListWithAllErrors,
     87→  ) as ResultAsync<T[], E[]>
 src/result-async.ts
-     1→import type {
-     2→  Combine,
-     3→  Dedup,
-     4→  EmptyArrayToNever,
-     5→  IsLiteralArray,
-     6→  MemberListOf,
-     7→  MembersToUnion,
-     8→} from './result'
-    10→import { Err, Ok, Result } from './'
-    11→import {
-    12→  combineResultAsyncList,
-    13→  combineResultAsyncListWithAllErrors,
-    14→  ExtractErrAsyncTypes,
-    15→  ExtractOkAsyncTypes,
-    16→  InferAsyncErrTypes,
-    17→  InferAsyncOkTypes,
-    18→  InferErrTypes,
-    19→  InferOkTypes,
-    20→} from './_internals/utils'
+     1→./result …
+    10→import { Err, Ok, Result } from './ …
+    11→./_internals/utils …
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
@@ -457,11 +441,7 @@ src/result-async.ts
     42→    return new ResultAsync(newPromise)
     43→  }
     44→
-    45→  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    46→  static fromThrowable<A extends readonly any[], R, E>(
-    47→    fn: (...args: A) => Promise<R>,
-    48→    errorFn?: (err: unknown) => E,
-    49→  ): (...args: A) => ResultAsync<R, E> {
+    46→  static fromThrowable …
     69→  static combine …
     81→  static combineWithAllErrors …
     89→  map …
@@ -491,27 +471,27 @@ src/result-async.ts
    227→  then …
    249→export function okAsync …
    255→export function errAsync …
-   259→export const fromPromise …
-   260→export const fromSafePromise …
-   262→export const fromAsyncThrowable …
-   265→export type CombineResultAsyncs …
-   272→export type CombineResultsWithAllErrorsArrayAsync …
+   259→export const fromPromise = ResultAsync.fromPromise
+   260→export const fromSafePromise = ResultAsync.fromSafePromise
+   262→export const fromAsyncThrowable = ResultAsync.fromThrowable
+   265→export type CombineResultAsyncs<
+   266→  T extends readonly ResultAsync<unknown, unknown>[]
+   267→> = IsLiteralArray<T> extends 1
+   268→  ? TraverseAsync<UnwrapAsync<T>>
+   269→  : ResultAsync<ExtractOkAsyncTypes<T>, ExtractErrAsyncTypes<T>[number]>
+   272→export type CombineResultsWithAllErrorsArrayAsync<
+   273→  T extends readonly ResultAsync<unknown, unknown>[]
+   274→> = IsLiteralArray<T> extends 1
+   275→  ? TraverseWithAllErrorsAsync<UnwrapAsync<T>>
+   276→  : ResultAsync<ExtractOkAsyncTypes<T>, ExtractErrAsyncTypes<T>[number][]>
    279→type UnwrapAsync …
    300→type TraverseAsync …
    330→type TraverseWithAllErrorsAsync …
    338→type Writable …
 src/result.ts
-     1→import { errAsync, ResultAsync } from './'
-     2→import { createNeverThrowError, ErrorConfig } from './_internals/error'
-     3→import {
-     4→  combineResultList,
-     5→  combineResultListWithAllErrors,
-     6→  ExtractErrTypes,
-     7→  ExtractOkTypes,
-     8→  InferAsyncErrTypes,
-     9→  InferErrTypes,
-    10→  InferOkTypes,
-    11→} from './_internals/utils'
+     1→import { errAsync, ResultAsync } from './ …
+     2→import { createNeverThrowError, ErrorConfig } from './_internals/error …
+     3→./_internals/utils …
     14→export namespace Result {
     15→  /**
     16→   * Wraps a function with a try catch, creating a new function with the same
@@ -542,14 +522,8 @@ src/result.ts
     41→    resultList: T,
     42→  ): CombineResults<T>
     43→  export function combine<
-    44→    T extends readonly [Result<unknown, unknown>, ...Result<unknown, unknown>[]]
-    45→  >(resultList: T): CombineResults<T> {
-    46→    return combineResultList(resultList) as CombineResults<T>
-    47→  }
-    48→
-    49→  export function combineWithAllErrors<
     55→  export function combineWithAllErrors …
-    62→export type Result …
+    62→export type Result<T, E> = Ok<T, E> | Err<T, E>
     66→export function ok …
     73→export function err …
    122→export function safeTry …
@@ -577,7 +551,6 @@ src/result.ts
    155→   * @returns the result of applying `f` or an `Err` untouched
    156→   */
    157→  map<A>(f: (t: T) => A): Result<A, E>
-   158→
    159→  /**
    160→   * Maps a `Result<T, E>` to `Result<T, F>` by applying a function to a
    161→   * contained `Err` value, leaving an `Ok` value untouched.
@@ -705,11 +678,7 @@ src/result.ts
    332→  andThen<R extends Result<unknown, unknown>>(
    333→    f: (t: T) => R,
    334→  ): Result<InferOkTypes<R>, InferErrTypes<R> | E>
-   335→  andThen<U, F>(f: (t: T) => Result<U, F>): Result<U, E | F>
-   336→  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-   337→  andThen(f: any): any {
-   338→    return f(this.value)
-   339→  }
+   337→  andThen …
    344→  andThrough …
    348→  andTee …
    357→  orTee …
@@ -749,11 +718,7 @@ src/result.ts
    439→  andThrough<F>(_f: (t: T) => Result<unknown, F>): Result<T, E | F> {
    440→    return err(this.error)
    441→  }
-   442→
-   443→  andTee(_f: (t: T) => unknown): Result<T, E> {
-   444→    return err(this.error)
-   445→  }
-   446→
+   443→  andTee …
    447→  orTee …
    461→  andThen …
    470→  orElse …
@@ -769,21 +734,76 @@ src/result.ts
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
    510→    return this.error
    511→  }
-   523→export const fromThrowable …
+   523→export const fromThrowable = Result.fromThrowable
    530→type Prev …
    590→type CollectResults …
-   614→export type Transpose …
-   635→export type Combine …
-   645→export type Dedup …
-   652→export type MemberListOf …
-   669→export type EmptyArrayToNever …
+   614→export type Transpose<
+   615→  A,
+   616→  Transposed extends unknown[][] = [],
+   617→  Depth extends number = 10
+   618→> = A extends [infer T, ...infer Rest]
+   619→  ? T extends [infer L, infer R]
+   620→    ? Transposed extends [infer PL, infer PR]
+   621→      ? PL extends unknown[]
+   622→        ? PR extends unknown[]
+   623→          ? Transpose<Rest, [[...PL, L], [...PR, R]], Prev[Depth]>
+   624→          : never
+   625→        : never
+   626→      : Transpose<Rest, [[L], [R]], Prev[Depth]>
+   627→    : Transposed
+   628→  : Transposed
+   635→export type Combine<T, Depth extends number = 5> = Transpose<CollectResults<T>, [], Depth> extends [
+   636→  infer L,
+   637→  infer R,
+   638→]
+   639→  ? [UnknownMembersToNever<L>, UnknownMembersToNever<R>]
+   640→  : Transpose<CollectResults<T>, [], Depth> extends []
+   641→  ? [[], []]
+   642→  : never
+   645→export type Dedup<T> = T extends Result<infer RL, infer RR>
+   646→  ? [unknown] extends [RL]
+   647→    ? Err<RL, RR>
+   648→    : Ok<RL, RR>
+   649→  : T
+   652→export type MemberListOf<T> = (
+   653→  (T extends unknown ? (t: T) => T : never) extends infer U
+   654→    ? (U extends unknown ? (u: U) => unknown : never) extends (v: infer V) => unknown
+   655→      ? V
+   656→      : never
+   657→    : never
+   658→) extends (_: unknown) => infer W
+   659→  ? [...MemberListOf<Exclude<T, W>>, W]
+   660→  : []
+   669→export type EmptyArrayToNever<T, NeverArrayToNever extends number = 0> = T extends []
+   670→  ? never
+   671→  : NeverArrayToNever extends 1
+   672→  ? T extends [never, ...infer Rest]
+   673→    ? [EmptyArrayToNever<Rest>] extends [never]
+   674→      ? never
+   675→      : T
+   676→    : T
+   677→  : T
    680→type UnknownMembersToNever …
-   685→export type MembersToUnion …
-   688→export type IsLiteralArray …
+   685→export type MembersToUnion<T> = T extends unknown[] ? T[number] : never
+   688→export type IsLiteralArray<T> = T extends { length: infer L }
+   689→  ? L extends number
+   690→    ? number extends L
+   691→      ? 0
+   692→      : 1
+   693→    : 0
+   694→  : 0
    698→type Traverse …
    704→type TraverseWithAllErrors …
-   712→export type CombineResults …
-   719→export type CombineResultsWithAllErrorsArray …
+   712→export type CombineResults<
+   713→  T extends readonly Result<unknown, unknown>[]
+   714→> = IsLiteralArray<T> extends 1
+   715→  ? Traverse<T>
+   716→  : Result<ExtractOkTypes<T>, ExtractErrTypes<T>[number]>
+   719→export type CombineResultsWithAllErrorsArray<
+   720→  T extends readonly Result<unknown, unknown>[]
+   721→> = IsLiteralArray<T> extends 1
+   722→  ? TraverseWithAllErrors<T>
+   723→  : Result<ExtractOkTypes<T>, ExtractErrTypes<T>[number][]>
 tests/index.test.ts
 tests/safe-try.test.ts
 tests/typecheck-tests.ts

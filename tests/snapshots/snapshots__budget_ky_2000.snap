@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1922 words)
+budget: 2000 (1983 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -141,7 +141,6 @@ readme.md
   1170→```
   1171→
   1172→Supported environment variables:
-  1173→- `HTTP_PROXY` / `http_proxy`: Proxy URL for HTTP requests
       →…
   1209→### HTTP/2 support (Node.js) …
   1249→### Consuming Server-Sent Events (SSE) …
@@ -174,6 +173,8 @@ source/core/Ky.ts
     39→				throw new RangeError(`The \`timeout\` option cannot be greater than ${maxSafeTimeout}`);
     40→			}
     41→
+    42→			// Delay the fetch so that body method shortcuts can set the Accept header
+    43→			await Promise.resolve();
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
@@ -220,6 +221,14 @@ source/core/constants.ts
    173→						return ky.retry();
    174→					}
    175→
+   176→					// Retry with custom delay from API response
+   177→					if (data.error?.code === 'RATE_LIMIT') {
+   178→						return ky.retry({
+   179→							delay: data.error.retryAfter * 1000,
+   180→							code: 'RATE_LIMIT'
+   181→						});
+   182→					}
+   183→
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys: KyOptionsRegistry = {
@@ -410,11 +419,11 @@ source/utils/merge.ts
     86→export const deepMerge …
 source/utils/normalize.ts
      5→export const normalizeRequestMethod …
-     8→const retryMethods …
-    10→const retryStatusCodes …
-    12→const retryAfterStatusCodes …
-    14→type InternalRetryOptions …
-    16→const defaultRetryOptions …
+     8→const retryMethods: HttpMethod[] = ['get', 'put', 'head', 'delete', 'options', 'trace'];
+    10→const retryStatusCodes = [408, 413, 429, 500, 502, 503, 504];
+    12→const retryAfterStatusCodes = [413, 429, 503];
+    14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
+    16→const defaultRetryOptions: InternalRetryOptions = {
     28→export const normalizeRetryOptions …
 source/utils/options.ts
      4→export const findUnknownOptions …
@@ -477,7 +486,6 @@ test/browser.ts
     13→	interface Window {
     14→		ky: typeof ky;
     15→	}
-test/headers.ts
 test/helpers/create-http-test-server.ts
      7→export type HttpServerOptions …
     11→export type ExtendedHttpTestServer …
@@ -485,5 +493,3 @@ test/helpers/create-large-file.ts
 test/helpers/parse-body.ts
 test/helpers/with-page.ts
 test/helpers/with-performance.ts
-test/hooks.ts
-test/http-error.ts

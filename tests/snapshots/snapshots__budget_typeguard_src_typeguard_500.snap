@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (481 words)
+budget: 500 (494 words)
 
 __init__.py
     34→config: TypeCheckConfiguration
@@ -14,9 +14,15 @@ _checkers.py
     89→generic_alias_types: tuple[type, ...] = (
     98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS = {
+   100→    "__add__",
+   101→    "__and__",
+      →…
    586→def _is_literal_type(typ: object) -> bool:
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
+  1006→    Any, Callable[[Any, Any, tuple[Any, ...], TypeCheckMemo], None]
+  1007→] = {
+      →…
 _config.py
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
@@ -80,7 +86,6 @@ _importhook.py
     80→                "exec",
     81→            )
     82→
-    83→        tree = TypeguardTransformer().visit(module)
       →…
    109→class TypeguardFinder(MetaPathFinder):
    119→

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (491 words)
+budget: 500 (507 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -83,10 +83,12 @@ field_test.go
     10→	A    string
     11→	B    int    `structs:"y"`
     12→	C    bool   `json:"c"`
-    13→	d    string // not exported
-    14→	E    *Baz
       →…
+    21→type Baz struct {
+    26→type Bar struct {
     32→func newStruct() *Struct {
+    33→	b := &Bar{
+      →…
 structs.go
      4→import …
     10→var (
@@ -107,6 +109,9 @@ structs.go
    509→func (s *Struct) nested(val reflect.Value) interface{} {
 structs_example_test.go
 structs_test.go
+  1309→type Person struct {
+  1358→type Animal struct {
+  1363→type Dog struct {
 tags.go
      3→import "strings …
      5→// tagOptions contains a slice of tag options

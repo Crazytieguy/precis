@@ -2,15 +2,32 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3789 words)
+budget: 4000 (4074 words)
 
 BuildMany.ts
+     1→import { Iterator, IsOptionalKeysOf, UpdateAt, ValueOf } from './helpers';
      4→export type BuildMany …
     11→type BuildOne …
     19→export type SetDeep …
 DeepExclude.ts
+     1→import { DistributeMatchingUnions } from './DistributeUnions';
      3→export type DeepExclude …
 DistributeUnions.ts
+     1→import { BuildMany } from './BuildMany';
+     2→import type {
+     3→  IsAny,
+     4→  Values,
+     5→  Flatten,
+     6→  IsUnion,
+     7→  IsPlainObject,
+     8→  Length,
+     9→  UnionToTuple,
+    10→  IsReadonlyArray,
+    11→  ValueOf,
+    12→  MaybeAddReadonly,
+    13→  IsStrictArray,
+    14→} from './helpers';
+    15→import { IsMatching } from './IsMatching';
     17→/**
     18→ * DistributeMatchingUnions takes two arguments:
     19→ * - a data structure of type `a` containing unions
@@ -153,9 +170,29 @@ DistributeUnions.ts
    174→export type ArrayToVariadicUnion …
    183→export type Distribute …
 ExtractPreciseValue.ts
+     1→import type { Override } from './Pattern';
+     2→import type {
+     3→  BuiltInObjects,
+     4→  Compute,
+     5→  Contains,
+     6→  IsPlainObject,
+     7→  IsReadonlyArray,
+     8→  LeastUpperBound,
+     9→  MaybeAddReadonly,
+    10→  ValueOf,
+    11→} from './helpers';
     13→export type ExtractPreciseValue …
     81→type ExtractPreciseArrayValue …
 FindSelected.ts
+     1→import type * as symbols from '../internals/symbols';
+     2→import type { AnyMatcher, Matcher, Pattern } from './Pattern';
+     3→import type {
+     4→  Equal,
+     5→  Primitives,
+     6→  ValueOf,
+     7→  MergeUnion,
+     8→  IsUnion,
+     9→} from './helpers';
     11→type SelectionsRecord …
     13→export type None …
     16→export type Some …
@@ -171,6 +208,33 @@ FindSelected.ts
    185→export type Selections …
    191→export type FindSelected …
 InvertPattern.ts
+     1→import { DeepExclude } from './DeepExclude';
+     2→import {
+     3→  IsPlainObject,
+     4→  Primitives,
+     5→  IsLiteral,
+     6→  ValueOf,
+     7→  Compute,
+     8→  Equal,
+     9→  Extends,
+    10→  Not,
+    11→  All,
+    12→  NonLiteralPrimitive,
+    13→  MaybeAddReadonly,
+    14→  IsReadonlyArray,
+    15→  MapKey,
+    16→  MapValue,
+    17→  SetValue,
+    18→  ExtractPlainObject,
+    19→  GetKey,
+    20→  Call,
+    21→  Fn,
+    22→  ReadonlyArrayValue,
+    23→  WithDefault,
+    24→  RecordKey,
+    25→  RecordValue,
+    26→} from './helpers';
+    27→import type { Matcher, Pattern, Override, AnyMatcher } from './Pattern';
     29→type OptionalKeys …
     39→type ReduceUnion …
     47→type ReduceIntersection …
@@ -196,10 +260,26 @@ InvertPattern.ts
    305→  : InvertPatternForExcludeInternal<p, i>;
    307→type InvertPatternForExcludeInternal …
 IsMatching.ts
+     1→import {
+     2→  Primitives,
+     3→  IsPlainObject,
+     4→  IsUnion,
+     5→  ValueOf,
+     6→  Length,
+     7→  IsLiteral,
+     8→  All,
+     9→  Equal,
+    10→} from './helpers';
     12→type IsMatchingTuple …
     26→type IsMatchingArray …
     57→export type IsMatching …
 Match.ts
+     1→import type * as symbols from '../internals/symbols';
+     2→import type { Pattern, MatchedValue } from './Pattern';
+     3→import type { InvertPatternForExclude, InvertPattern } from './InvertPattern';
+     4→import type { DeepExclude } from './DeepExclude';
+     5→import type { Union, GuardValue, IsNever } from './helpers';
+     6→import type { FindSelected } from './FindSelected';
      8→export type PickReturnValue …
     10→interface NonExhaustiveError<i> {
     11→  __nonExhaustive: never;
@@ -474,6 +554,11 @@ Match.ts
    287→  ): PickReturnValue<output, Union<inferredOutput, otherOutput>>;
    288→};
 Pattern.ts
+     1→import type * as symbols from '../internals/symbols';
+     2→import { MergeUnion, Primitives, WithDefault } from './helpers';
+     3→import { None, Some, SelectionType } from './FindSelected';
+     4→import { matcher } from '../patterns';
+     5→import { ExtractPreciseValue } from './ExtractPreciseValue';
      7→export type MatcherType …
     23→export type MatcherProtocol …
     38→export type MatchResult …

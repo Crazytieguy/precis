@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (475 words)
+budget: 500 (481 words)
 
 core/Ky.ts
     33→export class Ky {
@@ -10,6 +10,9 @@ core/Ky.ts
     35→		const ky = new Ky(input, options);
     36→
    200→	constructor(input: Input, options: Options = {}) {
+   201→		this.#input = input;
+   202→
+      →…
 core/constants.ts
     68→export type ForceRetryOptions …
    145→/**

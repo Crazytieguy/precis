@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3950 words)
+budget: 4000 (4071 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -64,20 +64,14 @@ README-es.md
     11→## Usage
     13→Install it.
     14→
-    15→```sh
-    16→npm install dotenv --save
       →…
     39→## Advanced
     43→Import with [ES6](#how-do-i-use-dotenv-with-import):
     44→
-    45→```javascript
-    46→import 'dotenv/config'
       →…
    319→## Agentes
    323→> El software está cambiando, y dotenv debe cambiar con él—por eso construí [agentic secret storage (AS2)](https://dotenvx.com/as2). Los agentes ejecutan código sin humanos en la terminal, por lo que los archivos `.env` en texto plano son el primitivo equivocado.
    324→>
-   325→> AS2 está diseñado para software autónomo: cifrado por defecto, cero acceso a consola y entrega priorizando la criptografía que mantiene a los operadores fuera del circuito.
-   326→>
       →…
    331→### Inicio rápido
    333→Instala vestauth e inicializa tu agente.
@@ -85,19 +79,14 @@ README-es.md
    335→```bash
    336→npm i -g vestauth
    337→
-   338→vestauth agent init
       →…
    357→## FAQ
    361→No.
    362→
-   363→Unless you encrypt it with [dotenvx](https://github.com/dotenvx/dotenvx). Then we recommend you do.
-   364→
       →…
    579→## Docs
    581→Dotenv exposes four functions:
    582→
-   583→* `config`
-   584→* `parse`
       →…
    587→### Config
    589→`config` will read your `.env` file, parse the contents, assign it to
@@ -105,7 +94,6 @@ README-es.md
    591→and return an Object with a `parsed` key containing the loaded content or an `error` key if it failed.
    592→
    593→```js
-   594→const result = dotenv.config()
       →…
    605→#### Options …
    607→##### path
@@ -144,7 +132,6 @@ README-es.md
    696→an Object with the parsed keys and values.
    697→
    698→```js
-   699→const dotenv = require('dotenv')
       →…
    705→#### Options …
    707→##### debug
@@ -163,7 +150,6 @@ README-es.md
    725→For example, customizing the source:
    726→
    727→```js
-   728→const dotenv = require('dotenv')
       →…
    748→#### options …
    750→##### Debug
@@ -178,12 +164,11 @@ README-es.md
    764→## CHANGELOG
    766→See [CHANGELOG.md](CHANGELOG.md)
    767→
-   768→&nbsp;
-   769→
+      →…
    770→## Who's using dotenv?
    772→[These npm modules depend on it.](https://www.npmjs.com/browse/depended/dotenv)
    773→
-   774→Projects that expand it often use the [keyword "dotenv" on npm](https://www.npmjs.com/search?q=keywords:dotenv).
+      →…
 README.md
      1→# dotenv
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
@@ -867,34 +852,90 @@ lib/main.js
     13→  '🔐 prevent building .env in docker: https://dotenvx.com/prebuild',
     14→  '🤖 agentic secret storage: https://dotenvx.com/as2',
     15→  '⚡️ secrets for agents: https://dotenvx.com/as2',
-    16→  '🛡️ auth for agents: https://vestauth.com',
       →…
     27→function _getRandomTip () {
+    28→  return TIPS[Math.floor(Math.random() * TIPS.length)]
+    29→}
     31→function parseBoolean (value) {
+    32→  if (typeof value === 'string') {
+    33→    return !['false', '0', 'no', 'off', ''].includes(value.toLowerCase())
+    34→  }
+      →…
     38→function supportsAnsi () {
+    39→  return process.stdout.isTTY // && process.env.TERM !== 'dumb'
+    40→}
     42→function dim (text) {
+    43→  return supportsAnsi() ? `\x1b[2m${text}\x1b[0m` : text
+    44→}
     46→const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
     49→function parse (src) {
+    50→  const obj = {}
+    51→
+    52→  // Convert buffer to string
+      →…
     87→function _parseVault (options) {
+    88→  options = options || {}
+    89→
+    90→  const vaultPath = _vaultPath(options)
+      →…
    130→function _warn (message) {
+   131→  console.error(`[dotenv@${version}][WARN] ${message}`)
+   132→}
    134→function _debug (message) {
+   135→  console.log(`[dotenv@${version}][DEBUG] ${message}`)
+   136→}
    138→function _log (message) {
+   139→  console.log(`[dotenv@${version}] ${message}`)
+   140→}
    142→function _dotenvKey (options) {
+   143→  // prioritize developer directly setting options.DOTENV_KEY
+   144→  if (options && options.DOTENV_KEY && options.DOTENV_KEY.length > 0) {
+   145→    return options.DOTENV_KEY
+      →…
    157→function _instructions (result, dotenvKey) {
+   158→  // Parse DOTENV_KEY. Format is a URI
+   159→  let uri
+   160→  try {
+      →…
    200→function _vaultPath (options) {
+   201→  let possibleVaultPath = null
+   202→
+   203→  if (options && options.path && options.path.length > 0) {
+      →…
    224→function _resolveHome (envPath) {
+   225→  return envPath[0] === '~' ? path.join(os.homedir(), envPath.slice(1)) : envPath
+   226→}
    228→function _configVault (options) {
+   229→  const debug = parseBoolean(process.env.DOTENV_CONFIG_DEBUG || (options && options.debug))
+   230→  const quiet = parseBoolean(process.env.DOTENV_CONFIG_QUIET || (options && options.quiet))
+   231→
+      →…
    248→function configDotenv (options) {
+   249→  const dotenvPath = path.resolve(process.cwd(), '.env')
+   250→  let encoding = 'utf8'
+   251→  let processEnv = process.env
+      →…
    328→function config (options) {
+   329→  // fallback to original dotenv if DOTENV_KEY is not set
+   330→  if (_dotenvKey(options).length === 0) {
+   331→    return DotenvModule.configDotenv(options)
+      →…
    346→function decrypt (encrypted, keyStr) {
+   347→  const key = Buffer.from(keyStr.slice(-64), 'hex')
+   348→  let ciphertext = Buffer.from(encrypted, 'base64')
+   349→
+      →…
    378→function populate (processEnv, parsed, options = {}) {
+   379→  const debug = Boolean(options && options.debug)
+   380→  const override = Boolean(options && options.override)
+   381→  const populated = {}
+      →…
    413→const DotenvModule = {
    414→  configDotenv,
    415→  _configVault,
    416→  _parseVault,
    417→  config,
    418→  decrypt,
-   419→  parse,
       →…
 tests/test-config-cli.js
      6→function spawn (cmd, options = {}) {
@@ -903,17 +944,7 @@ tests/test-config-cli.js
      9→    cmd,
     10→    Object.assign(
     11→      {},
-    12→      {
-    13→        cwd: path.resolve(__dirname, '..'),
-    14→        timeout: 5000,
-    15→        encoding: 'utf8'
-    16→      },
-    17→      options
-    18→    )
-    19→  )
-    20→
-    21→  return stdout
-    22→}
+      →…
 tests/test-config-vault.js
      8→const testPath = 'tests/.env'
     10→const dotenvKey = 'dotenv://:key_ddcaa26504cd70a6fef9801901c3981538563a1767c297cb8416e8a38c62fe00@dotenvx.com/vault/.env.vault?environment=development'
@@ -934,8 +965,7 @@ tests/test-env-options.js
     24→
     25→  t.same(options(), expect)
     26→
-    27→  delete process.env[envVar]
-    28→}
+      →…
 tests/test-parse-multiline.js
      6→const parsed = dotenv.parse(fs.readFileSync('tests/.env.multiline', { encoding: 'utf8' }))
     50→const multiPem = `-----BEGIN PUBLIC KEY-----

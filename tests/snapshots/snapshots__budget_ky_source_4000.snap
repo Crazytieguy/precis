@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3610 words)
+budget: 4000 (3954 words)
 
 core/Ky.ts
      1→import {HTTPError} from '../errors/HTTPError.js';
@@ -130,6 +130,57 @@ core/Ky.ts
    124→			return response;
    125→		};
    126→
+   127→		// Always wrap in #retry to catch forced retries from afterResponse hooks
+   128→		// Method retriability is checked in #calculateRetryDelay for non-forced retries
+   129→		const result = ky.#retry(function_)
+   130→			.finally(() => {
+   131→				const originalRequest = ky.#originalRequest;
+   132→
+   133→				// Ignore cancellation errors from already-locked or already-consumed streams.
+   134→				ky.#cancelBody(originalRequest?.body ?? undefined);
+   135→				ky.#cancelBody(ky.request.body ?? undefined);
+   136→			}) as ResponsePromise;
+   137→
+   138→		for (const [type, mimeType] of Object.entries(responseTypes) as ObjectEntries<typeof responseTypes>) {
+   139→			// Only expose `.bytes()` when the environment implements it.
+   140→			if (
+   141→				type === 'bytes'
+   142→				&& typeof (globalThis.Response?.prototype as unknown as {bytes?: unknown})?.bytes !== 'function'
+   143→			) {
+   144→				continue;
+   145→			}
+   146→
+   147→			result[type] = async () => {
+   148→				// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+   149→				ky.request.headers.set('accept', ky.request.headers.get('accept') || mimeType);
+   150→
+   151→				const response = await result;
+   152→
+   153→				if (type === 'json') {
+   154→					if (response.status === 204) {
+   155→						return '';
+   156→					}
+   157→
+   158→					const text = await response.text();
+   159→					if (text === '') {
+   160→						return '';
+   161→					}
+   162→
+   163→					if (options.parseJson) {
+   164→						return options.parseJson(text);
+   165→					}
+   166→
+   167→					return JSON.parse(text);
+   168→				}
+   169→
+   170→				return response[type]();
+   171→			};
+   172→		}
+   173→
+   174→		return result;
+   175→	}
+   176→
+   177→	// eslint-disable-next-line unicorn/prevent-abbreviations
    178→	static #normalizeSearchParams(searchParams: SearchParamsOption): SearchParamsOption {
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
@@ -141,6 +192,21 @@ core/Ky.ts
    207→				{
    208→					beforeRequest: [],
    209→					beforeRetry: [],
+   210→					beforeError: [],
+   211→					afterResponse: [],
+   212→				},
+   213→				options.hooks,
+   214→			),
+   215→			method: normalizeRequestMethod(options.method ?? (this.#input as Request).method ?? 'GET'),
+   216→			// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+   217→			prefixUrl: String(options.prefixUrl || ''),
+   218→			retry: normalizeRetryOptions(options.retry),
+   219→			throwHttpErrors: options.throwHttpErrors ?? true,
+   220→			timeout: options.timeout ?? 10_000,
+   221→			fetch: options.fetch ?? globalThis.fetch.bind(globalThis),
+   222→			context: options.context ?? {},
+   223→		};
+   224→
       →…
    297→	#calculateDelay(): number {
    316→	async #calculateRetryDelay(error: unknown) {
@@ -580,6 +646,8 @@ utils/body.ts
      5→export const getBodySize = (body?: BodyInit | null): number => {
      6→	if (!body) {
      7→		return 0;
+     8→	}
+     9→
       →…
     57→const withProgress = (stream: ReadableStream<Uint8Array>, totalBytes: number, onProgress: Options['onDownloadProgress'] | Options['onUploadProgress']): ReadableStream<Uint8Array> => {
     58→	let previousChunk: Uint8Array | undefined;
@@ -593,10 +661,14 @@ utils/body.ts
     90→export const streamResponse = (response: Response, onDownloadProgress: Options['onDownloadProgress']) => {
     91→	if (!response.body) {
     92→		return response;
+    93→	}
+    94→
       →…
    119→export const streamRequest = (request: Request, onUploadProgress: Options['onUploadProgress'], originalBody?: BodyInit | null) => {
    120→	if (!request.body) {
    121→		return request;
+   122→	}
+   123→
       →…
 utils/delay.ts
      3→import {type InternalOptions} from '../types/options.js';
@@ -609,6 +681,8 @@ utils/delay.ts
     12→): Promise<void> {
     13→	return new Promise((resolve, reject) => {
     14→		if (signal) {
+    15→			signal.throwIfAborted();
+    16→			signal.addEventListener('abort', abortHandler, {once: true});
       →…
 utils/is.ts
      2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
@@ -620,10 +694,14 @@ utils/merge.ts
      6→export const validateAndMerge = (...sources: Array<Partial<Options> | undefined>): Partial<Options> => {
      7→	for (const source of sources) {
      8→		if ((!isObject(source) || Array.isArray(source)) && source !== undefined) {
+     9→			throw new TypeError('The `options` argument must be an object');
+    10→		}
       →…
     16→export const mergeHeaders = (source1: KyHeadersInit = {}, source2: KyHeadersInit = {}) => {
     17→	const result = new globalThis.Headers(source1 as RequestInit['headers']);
     18→	const isHeadersInstance = source2 instanceof globalThis.Headers;
+    19→	const source = new globalThis.Headers(source2 as RequestInit['headers']);
+    20→
       →…
     32→function newHookValue<K extends keyof Hooks>(original: Hooks, incoming: Hooks, property: K): Required<Hooks>[K] {
     33→	return (Object.hasOwn(incoming, property) && incoming[property] === undefined)
@@ -634,6 +712,8 @@ utils/merge.ts
     39→	{
     40→		beforeRequest: newHookValue(original, incoming, 'beforeRequest'),
     41→		beforeRetry: newHookValue(original, incoming, 'beforeRetry'),
+    42→		afterResponse: newHookValue(original, incoming, 'afterResponse'),
+    43→		beforeError: newHookValue(original, incoming, 'beforeError'),
       →…
     47→const appendSearchParameters = (target: any, source: any): URLSearchParams => {
     48→	const result = new URLSearchParams();
@@ -647,6 +727,8 @@ utils/merge.ts
     86→export const deepMerge = <T>(...sources: Array<Partial<T> | undefined>): T => {
     87→	let returnValue: any = {};
     88→	let headers = {};
+    89→	let hooks = {};
+    90→	let searchParameters: any;
       →…
 utils/normalize.ts
      1→import {requestMethods} from '../core/constants.js';
@@ -664,10 +746,13 @@ utils/normalize.ts
     19→	statusCodes: retryStatusCodes,
     20→	afterStatusCodes: retryAfterStatusCodes,
     21→	maxRetryAfter: Number.POSITIVE_INFINITY,
+    22→	backoffLimit: Number.POSITIVE_INFINITY,
       →…
     28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
     29→	if (typeof retry === 'number') {
     30→		return {
+    31→			...defaultRetryOptions,
+    32→			limit: retry,
       →…
 utils/options.ts
      1→import {kyOptionKeys, requestOptionsRegistry, vendorSpecificOptions} from '../core/constants.js';
@@ -678,10 +763,14 @@ utils/options.ts
      7→): Record<string, unknown> => {
      8→	const unknownOptions: Record<string, unknown> = {};
      9→
+    10→	for (const key in options) {
+    11→		// Skip inherited properties
       →…
     30→export const hasSearchParameters = (search: SearchParamsOption): boolean => {
     31→	if (search === undefined) {
     32→		return false;
+    33→	}
+    34→
       →…
 utils/timeout.ts
      1→import {TimeoutError} from '../errors/TimeoutError.js';
@@ -697,6 +786,8 @@ utils/timeout.ts
     14→): Promise<Response> {
     15→	return new Promise((resolve, reject) => {
     16→		const timeoutId = setTimeout(() => {
+    17→			if (abortController) {
+    18→				abortController.abort();
       →…
 utils/type-guards.ts
      1→import {HTTPError} from '../errors/HTTPError.js';

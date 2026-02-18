@@ -2,10 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (508 words)
 
 CHANGELOG.md
      1→## Unreleased …
+     3→### Improvements …
+     5→### Changes …
+     7→### Fixed …
+     9→### Security …
 README.md
      1→# go-multierror
     10→> **Note**: As of Go 1.20, the standard library provides [`errors.Join`](https://pkg.go.dev/errors#Join) which offers similar functionality for combining multiple errors. **For new projects, we recommend using `errors.Join` from the standard library.** This package provides additional features like custom formatting, the `Group` pattern for concurrent error collection, and utility functions (`Append`, `Flatten`, `Prefix`).
@@ -42,18 +46,21 @@ README.md
       →…
 append.go
     14→func Append(err error, errs ...error) *Error {
+append_test.go
 flatten.go
      8→func Flatten(err error) error {
     20→func flatten(err error, flatErr *Error) {
     21→	switch err := err.(type) {
     22→	case *Error:
       →…
+flatten_test.go
 format.go
      6→import …
     11→// ErrorFormatFunc is a function callback that is called by Error to
     12→// turn the list of errors into a string.
     13→type ErrorFormatFunc func([]error) string
     17→func ListFormatFunc(es []error) string {
+format_test.go
 group.go
      6→import "sync …
      8→// Group is a collection of goroutines which return errors that need to be
@@ -65,6 +72,7 @@ group.go
     14→}
     20→func (g *Group) Go(f func() error) {
     36→func (g *Group) Wait() *Error {
+group_test.go
 multierror.go
      6→import …
     11→// Error is an error type to track multiple errors. This is used to
@@ -103,7 +111,9 @@ multierror_test.go
 prefix.go
      6→import …
     16→func Prefix(err error, prefix string) error {
+prefix_test.go
 sort.go
      7→func (err *Error) Len() int {
     16→func (err Error) Swap(i, j int) {
     21→func (err Error) Less(i, j int) bool {
+sort_test.go

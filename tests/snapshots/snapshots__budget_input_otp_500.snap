@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (505 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -54,7 +54,6 @@ apps/storybook/src/stories/InputOTP.stories.tsx
 apps/storybook/tailwind.config.js
      2→const config = {
 apps/test/README.md
-apps/test/src/app/base/page.tsx
 apps/website/README.md
      3→## Getting Started …
     23→## Learn More …
@@ -75,6 +74,8 @@ apps/website/src/app/(local-pages)/example-playground/page.tsx
      3→export default function ExamplePlayground() {
 apps/website/src/app/(local-pages)/layout.tsx
      7→export default function RootLayout({
+     8→  children,
+      →…
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      3→import React from 'react'
      5→export default function ShadcnPage() {
@@ -98,6 +99,8 @@ apps/website/src/app/(pages)/(home)/page.tsx
 apps/website/src/app/(pages)/layout.tsx
     14→export const metadata: Metadata = {
     68→export default function RootLayout({
+    69→  children,
+      →…
 apps/website/src/components/copy-button.tsx
 apps/website/src/components/icons.tsx
      1→type IconProps = React.HTMLAttributes<SVGElement>
@@ -135,9 +138,11 @@ packages/input-otp/src/sync-timeouts.ts
 packages/input-otp/src/types.ts
      1→export interface SlotProps {
      2→  isActive: boolean
+     3→  char: string | null
       →…
      7→export interface RenderProps {
      8→  slots: SlotProps[]
+     9→  isFocused: boolean
       →…
     33→export type OTPInputProps …
 packages/input-otp/src/use-previous.ts
@@ -147,4 +152,5 @@ packages/input-otp/src/use-pwm-badge.tsx
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,
+    18→  pushPasswordManagerStrategy,
       →…

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (975 words)
+budget: 1000 (1007 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -48,8 +48,6 @@ apps/storybook/src/components/ui/input-otp.tsx
     29→const InputOTPSlot = React.forwardRef<
     54→const InputOTPSeparator = React.forwardRef<
 apps/storybook/src/lib/utils.ts
-     1→import { type ClassValue, clsx } from "clsx"
-     2→import { twMerge } from "tailwind-merge"
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
      6→}
@@ -79,14 +77,11 @@ apps/storybook/tailwind.config.js
      2→const config = {
 apps/storybook/vite.config.js
 apps/test/README.md
-apps/test/next.config.mjs
 apps/test/src/app/base/page.tsx
      7→export default function Page() {
 apps/test/src/app/layout.tsx
      7→export const metadata: Metadata = {
-    12→export default function RootLayout({
 apps/test/src/app/page.tsx
-     3→export default function Home() {
 apps/test/src/app/props/page.tsx
      7→export default function Page() {
 apps/test/src/app/with-autofocus/page.tsx
@@ -104,15 +99,28 @@ apps/website/README.md
      3→## Getting Started
      5→First, run the development server:
      6→
+     7→```bash
+     8→npm run dev
+     9→# or
+    10→yarn dev
+    11→# or
+    12→pnpm dev
+    13→# or
+    14→bun dev
+    15→```
       →…
     23→## Learn More
     25→To learn more about Next.js, take a look at the following resources:
     26→
-      →…
+    27→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+    28→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    29→
+    30→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    31→
     32→## Deploy on Vercel
     34→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     35→
-      →…
+    36→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 apps/website/next.config.mjs
      3→/** @type {import('next').NextConfig} */
      4→const nextProdConfig = {}
@@ -147,7 +155,6 @@ apps/website/src/app/(local-pages)/layout.tsx
      7→export default function RootLayout({
      8→  children,
      9→}: Readonly<{
-    10→  children: React.ReactNode
       →…
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      3→import React from 'react'

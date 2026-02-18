@@ -2,13 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (959 words)
+budget: 1000 (989 words)
 
 AGENTS.md
      1→# AGENTS.md …
 CLAUDE.md
      1→# CLAUDE.md …
+    14→### Testing …
+    18→### Code Quality …
     34→### Main Components …
+    42→### Package Structure …
 SECURITY.md
      1→# Security
      3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
@@ -31,6 +34,7 @@ docs/conf.py
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
+docs/examples/eggsample/eggsample/__init__.py
 docs/examples/eggsample/eggsample/hookspecs.py
      7→@hookspec
      8→def eggsample_add_ingredients(ingredients: tuple):
@@ -46,8 +50,8 @@ docs/examples/eggsample/eggsample/lib.py
     12→@eggsample.hookimpl
     13→def eggsample_prep_condiments(condiments):
 docs/examples/eggsample/setup.py
-     1→from setuptools …
-     2→from setuptools …
+     1→from setuptools import find_packages
+     2→from setuptools import setup
 docs/examples/eggsample-spam/eggsample_spam.py
      1→import eggsample
      4→@eggsample.hookimpl
@@ -67,10 +71,14 @@ docs/examples/toy-example.py
     18→
     19→    @hookimpl
     20→    def myhook(self, arg1, arg2):
+    21→        print("inside Plugin_1.myhook()")
+      →…
     25→class Plugin_2:
     27→
     28→    @hookimpl
     29→    def myhook(self, arg1, arg2):
+    30→        print("inside Plugin_2.myhook()")
+      →…
 scripts/release.py
     15→def create_branch(version: str) -> Repo:
     30→def get_upstream(repo: Repo) -> Remote:
@@ -86,6 +94,10 @@ src/pluggy/__init__.py
      4→    "PluginValidationError",
      5→    "HookCaller",
      6→    "HookCallError",
+     7→    "HookspecOpts",
+     8→    "HookimplOpts",
+     9→    "HookImpl",
+    10→    "HookRelay",
       →…
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.

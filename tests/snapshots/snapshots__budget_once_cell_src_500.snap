@@ -2,21 +2,24 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (488 words)
+budget: 500 (504 words)
 
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
+    10→    // Use `unsync::OnceCell` internally since `Mutex` does not provide
       →…
 imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
+     9→    value: UnsafeCell<Option<T>>,
       →…
     12→const INCOMPLETE …
     13→const RUNNING …
     14→const COMPLETE …
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
+   124→    new_state: u8,
       →…
 imp_std.rs
     14→pub(crate) struct OnceCell<T> {

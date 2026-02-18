@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (489 words)
+budget: 500 (497 words)
 
 README.md
      1→# color
@@ -33,14 +33,30 @@ README.md
     30→
     31→```
     32→
-    33→### RGB colors …
-    45→### Mix and reuse colors …
-    71→### Use your own output (io.Writer) …
-    81→### Custom print functions (PrintFunc) …
-    94→### Custom fprint functions (FprintFunc) …
-   105→### Insert into noncolor strings (SprintFunc) …
-   124→### Plug into existing code …
-   142→### Disable/Enable color …
+    33→### RGB colors
+    35→If your terminal supports 24-bit colors, you can use RGB color codes.
+      →…
+    45→### Mix and reuse colors
+    47→```go
+      →…
+    71→### Use your own output (io.Writer)
+    73→```go
+      →…
+    81→### Custom print functions (PrintFunc)
+    83→```go
+      →…
+    94→### Custom fprint functions (FprintFunc)
+    96→```go
+      →…
+   105→### Insert into noncolor strings (SprintFunc)
+   107→```go
+      →…
+   124→### Plug into existing code
+   126→```go
+      →…
+   142→### Disable/Enable color
+   144→There might be a case where you want to explicitly disable/enable color output. the 
+      →…
    177→## GitHub Actions
    179→To output color in GitHub Actions (or other CI systems that support ANSI colors), make sure to set `color.NoColor = false` so that it bypasses the check for non-tty output streams. 
    180→
@@ -93,13 +109,12 @@ color.go
 color_test.go
      3→import …
     13→// Testing colors is kinda different. First we test for given colors and their
-    14→// escaped formatted results. Next we create some visual tests to be tested.
-    15→// Each visual test includes the color name to be compared.
-    16→func TestColor(t *testing.T) {
-    17→	rb := new(bytes.Buffer)
-    18→	Output = rb
-    19→
       →…
+    16→func TestColor(t *testing.T) {
    462→func readRaw(t *testing.T, r io.Reader) string {
+   463→	t.Helper()
+   464→
+   465→	out, err := io.ReadAll(r)
+      →…
 color_windows.go
      3→import …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (493 words)
+budget: 500 (508 words)
 
 Changelog.md
      1→# Changelog …
@@ -76,14 +76,17 @@ docs/summary.md
      7→- [Coercing Data](./guides/03-coercing-data.md)
      8→- [Refining Validation](./guides/04-refining-validation.md)
      9→- [Handling Errors](./guides/05-handling-errors.md)
-      →…
+    10→- [Using TypeScript](./guides/06-using-typescript.md)
+    11→
     12→## API Reference
     14→- [Core](./reference/core.md)
     15→- [Types](./reference/types.md)
     16→- [Refinements](./reference/refinements.md)
     17→- [Coercions](./reference/coercions.md)
     18→- [Utilities](./reference/utilities.md)
-      →…
+    19→- [Errors](./reference/errors.md)
+    20→- [TypeScript](./reference/typescript.md)
+    21→
     22→## Resources
     24→- [FAQ](./resources/faq.md)
     25→- [Links](./resources/links.md)
@@ -157,10 +160,18 @@ test/index.ts
       →…
      5→export function test<T>(fn: (x: unknown) => T) {}
 test/typings/infer.ts
+test/validation/boolean/invalid.ts
+test/validation/boolean/valid.ts
 test/validation/function/invalid.ts
 test/validation/function/valid.ts
      5→export const data = function () {}
+test/validation/instance/invalid.ts
+test/validation/instance/valid.ts
+test/validation/literal/invalid.ts
+test/validation/literal/valid.ts
 test/validation/never/invalid.ts
+test/validation/number/invalid.ts
+test/validation/number/valid.ts
 test/validation/type/valid-instance.ts
      3→class Person {
      6→  constructor(name: string) {

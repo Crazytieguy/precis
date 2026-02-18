@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (975 words)
+budget: 1000 (1004 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -148,6 +148,8 @@ playwright.config.ts
      3→const config: PlaywrightTestConfig = {
 test/pages/_app.tsx
      3→export default function App({ Component, pageProps }) {
+     4→  return <Component {...pageProps} />
+     5→}
 test/pages/huge.tsx
      4→const items = new Array(1000).fill(0)
 website/README.md
@@ -160,6 +162,8 @@ website/README.md
     10→
     11→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
     12→
+    13→You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+    14→
       →…
     19→## Learn More
     21→To learn more about Next.js, take a look at the following resources:
@@ -224,6 +228,7 @@ website/pages/_app.tsx
     17→export default function App({ Component, pageProps }: AppProps) {
     18→  return (
     19→    <>
+    20→      <Head>
       →…
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
@@ -248,6 +253,7 @@ website/pages/index.tsx
     29→export default function Index() {
     30→  const [theme, setTheme] = React.useState<Themes>('raycast')
     31→
+    32→  return (
       →…
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     99→//////////////////////////////////////////////////////////////////

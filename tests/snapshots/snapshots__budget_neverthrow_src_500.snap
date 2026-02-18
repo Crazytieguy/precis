@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (509 words)
 
 _internals/error.ts
      1→import { Result } from '../result'
@@ -16,6 +16,11 @@ _internals/error.ts
     14→        type: string
     15→        value: T
     16→      }
+    17→    | {
+    18→        type: string
+    19→        value: E
+    20→      }
+    21→  message: string
       →…
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,

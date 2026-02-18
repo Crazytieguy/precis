@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (484 words)
+budget: 500 (499 words)
 
 __init__.py
     42→__all__ = [
@@ -10,8 +10,6 @@ __init__.py
     44→    "load_dotenv",
     45→    "dotenv_values",
     46→    "get_key",
-    47→    "set_key",
-    48→    "unset_key",
       →…
 __main__.py
 cli.py
@@ -88,6 +86,7 @@ main.py
     45→class DotEnv:
     46→    def __init__(
     47→        self,
+    48→        dotenv_path: Optional[StrPath],
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
@@ -96,8 +95,6 @@ main.py
     68→        elif self.stream is not None:
     69→            yield self.stream
     70→        else:
-    71→            if self.verbose:
-    72→                logger.info(
       →…
    141→@contextmanager
    142→def rewrite(
@@ -117,10 +114,12 @@ parser.py
     40→class Binding(NamedTuple):
     41→    key: Optional[str]
     42→    value: Optional[str]
+    43→    original: Original
       →…
     47→class Position:
     48→    def __init__(self, chars: int, line: int) -> None:
     49→        self.chars = chars
+    50→        self.line = line
     52→    @classmethod
     53→    def start(cls) -> "Position":
     65→class Error(Exception):
@@ -128,6 +127,7 @@ parser.py
     69→class Reader:
     70→    def __init__(self, stream: IO[str]) -> None:
     71→        self.string = stream.read()
+    72→        self.position = Position.start()
 variables.py
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
@@ -143,13 +143,16 @@ variables.py
     18→class Atom(metaclass=ABCMeta):
     19→    def __ne__(self, other: object) -> bool:
     20→        result = self.__eq__(other)
+    21→        if result is NotImplemented:
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
     29→class Literal(Atom):
     30→    def __init__(self, value: str) -> None:
     31→        self.value = value
+    32→
     48→class Variable(Atom):
     49→    def __init__(self, name: str, default: Optional[str]) -> None:
     50→        self.name = name
+    51→        self.default = default
 version.py
      1→__version__ = "1.2.1"

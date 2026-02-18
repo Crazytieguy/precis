@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (914 words)
+budget: 1000 (970 words)
 
 __init__.py
      6→def load_ipython_extension …
@@ -35,6 +35,8 @@ cli.py
     74→
     75→    try:
     76→        with open(path) as stream:
+    77→            yield stream
+    78→    except OSError as exc:
       →…
     93→def list_values …
    112→@cli.command(name="set")
@@ -46,6 +48,8 @@ cli.py
    118→    file = ctx.obj["FILE"]
    119→    quote = ctx.obj["QUOTE"]
    120→    export = ctx.obj["EXPORT"]
+   121→    success, key, value = set_key(file, key, value, quote, export)
+   122→    if success:
       →…
    128→@cli.command()
    129→@click.pass_context
@@ -55,6 +59,8 @@ cli.py
    133→    file = ctx.obj["FILE"]
    134→
    135→    with stream_file(file) as stream:
+   136→        values = dotenv_values(stream=stream)
+   137→
       →…
    145→@cli.command()
    146→@click.pass_context
@@ -64,6 +70,8 @@ cli.py
    150→    file = ctx.obj["FILE"]
    151→    quote = ctx.obj["QUOTE"]
    152→    success, key = unset_key(file, key, quote)
+   153→    if success:
+   154→        click.echo(f"Successfully removed {key}")
       →…
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
@@ -71,6 +79,8 @@ cli.py
    175→    file = ctx.obj["FILE"]
    176→    if not os.path.isfile(file):
    177→        raise click.BadParameter(
+   178→            f"Invalid value for '-f' \"{file}\" does not exist.", ctx=ctx
+   179→        )
       →…
    193→def run_command …
 ipython.py
@@ -118,7 +128,7 @@ main.py
     29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
     30→        return False
     31→    value = os.environ["PYTHON_DOTENV_DISABLED"].casefold()
-    32→    return value in {"1", "true", "t", "yes", "y"}
+      →…
     35→def with_warn_for_invalid_lines …
     45→class DotEnv:
     46→    def __init__(
@@ -128,6 +138,8 @@ main.py
     50→        verbose: bool = False,
     51→        encoding: Optional[str] = None,
     52→        interpolate: bool = True,
+    53→        override: bool = True,
+    54→    ) -> None:
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
@@ -155,6 +167,8 @@ main.py
    146→    pathlib.Path(path).touch()
    147→
    148→    with tempfile.NamedTemporaryFile(mode="w", encoding=encoding, delete=False) as dest:
+   149→        error = None
+   150→        try:
       →…
    163→def set_key …
    211→def unset_key …
@@ -166,9 +180,6 @@ main.py
    273→    if not os.path.exists(path):
    274→        raise IOError("Starting path not found")
    275→
-   276→    if os.path.isfile(path):
-   277→        path = os.path.dirname(path)
-   278→
       →…
    287→def find_dotenv …
    338→def load_dotenv …
@@ -180,9 +191,6 @@ main.py
    427→    if os.path.isfile(path):
    428→        return True
    429→
-   430→    try:
-   431→        st = os.stat(path)
-   432→    except (FileNotFoundError, OSError):
       →…
 parser.py
     14→def make_regex …
@@ -202,7 +210,8 @@ parser.py
     52→    @classmethod
     53→    def start(cls) -> "Position":
     54→        return cls(chars=0, line=1)
-    56→    def set …
+    55→
+    56→    def set(self, other: "Position") -> None:
     60→    def advance …
     65→class Error(Exception):
     66→    pass
@@ -214,7 +223,8 @@ parser.py
     74→
     75→    def has_next(self) -> bool:
     76→        return self.position.chars < len(self.string)
-    78→    def set_mark …
+    77→
+    78→    def set_mark(self) -> None:
     81→    def get_marked …
     87→    def peek …
     90→    def read …
@@ -254,6 +264,8 @@ variables.py
     34→        return f"Literal(value={self.value})"
     35→
     36→    def __eq__(self, other: object) -> bool:
+    37→        if not isinstance(other, self.__class__):
+    38→            return NotImplemented
     41→    def __hash__ …
     44→    def resolve …
     48→class Variable(Atom):
@@ -264,7 +276,8 @@ variables.py
     53→    def __repr__(self) -> str:
     54→        return f"Variable(name={self.name}, default={self.default})"
     55→
-    56→    def __eq__ …
+    56→    def __eq__(self, other: object) -> bool:
+    57→        if not isinstance(other, self.__class__):
     61→    def __hash__ …
     64→    def resolve …
     70→def parse_variables …

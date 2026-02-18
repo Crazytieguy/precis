@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1883 words)
+budget: 2000 (1943 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -189,7 +189,6 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
       →…
    649→type CombinedRedirects = BTreeMap<String, (String, BTreeMap<String, String>)>;
 crates/mdbook-html/src/html_handlebars/helpers/fontawesome.rs
-crates/mdbook-html/src/html_handlebars/helpers/mod.rs
 crates/mdbook-html/src/html_handlebars/helpers/resources.rs
     11→pub(crate) struct ResourceHelper {
     16→    fn call …
@@ -245,10 +244,25 @@ crates/mdbook-markdown/README.md
 crates/mdbook-markdown/src/lib.rs
      8→use pulldown_cmark::{Options, Parser};
     11→pub use pulldown_cmark;
+    13→/// Options for parsing markdown.
+    14→#[non_exhaustive]
     15→pub struct MarkdownOptions {
     16→    /// Enables smart punctuation.
     17→    ///
-      →…
+    18→    /// Converts quotes to curly quotes, `...` to `…`, `--` to en-dash, and
+    19→    /// `---` to em-dash.
+    20→    ///
+    21→    /// This is `true` by default.
+    22→    pub smart_punctuation: bool,
+    23→    /// Enables definition lists.
+    24→    ///
+    25→    /// This is `true` by default.
+    26→    pub definition_lists: bool,
+    27→    /// Enables admonitions.
+    28→    ///
+    29→    /// This is `true` by default.
+    30→    pub admonitions: bool,
+    31→}
     33→impl Default for MarkdownOptions {
     34→    fn default() -> MarkdownOptions {
     35→        MarkdownOptions {
@@ -532,10 +546,6 @@ src/cmd/watch/poller.rs
     21→    post_build: &dyn Fn(),
     22→) {
     23→    let mut book = MDBook::load(book_dir).unwrap_or_else(|e| {
-    24→        error!("failed to load book: {e}");
-    25→        std::process::exit(1);
-    26→    });
-    27→
       →…
     78→struct PathData {
     86→struct Watcher {
@@ -561,5 +571,4 @@ tests/testsuite/README.md
 tests/testsuite/book_test.rs
     23→pub struct BookTest {
    361→pub struct BookCommand {
-tests/testsuite/main.rs
 tests/testsuite/search/reasonable_search_index/src/first/duplicate-headers.md

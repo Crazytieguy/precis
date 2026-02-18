@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (394 words)
+budget: 500 (510 words)
 
 error.ts
      1→import { Result } from '../result'
@@ -45,14 +45,22 @@ error.ts
 utils.ts
      1→import { Result, ok, err } from '../result'
      2→import { ResultAsync } from '../result-async'
-     5→export type ExtractOkTypes …
-    10→export type ExtractOkAsyncTypes …
-    15→export type ExtractErrTypes …
-    20→export type ExtractErrAsyncTypes …
-    24→export type InferOkTypes …
-    25→export type InferErrTypes …
-    27→export type InferAsyncOkTypes …
-    28→export type InferAsyncErrTypes …
+     5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
+     6→  [idx in keyof T]: T[idx] extends Result<infer U, unknown> ? U : never
+     7→}
+    10→export type ExtractOkAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
+    11→  [idx in keyof T]: T[idx] extends ResultAsync<infer U, unknown> ? U : never
+    12→}
+    15→export type ExtractErrTypes<T extends readonly Result<unknown, unknown>[]> = {
+    16→  [idx in keyof T]: T[idx] extends Result<unknown, infer E> ? E : never
+    17→}
+    20→export type ExtractErrAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
+    21→  [idx in keyof T]: T[idx] extends ResultAsync<unknown, infer E> ? E : never
+    22→}
+    24→export type InferOkTypes<R> = R extends Result<infer T, unknown> ? T : never
+    25→export type InferErrTypes<R> = R extends Result<unknown, infer E> ? E : never
+    27→export type InferAsyncOkTypes<R> = R extends ResultAsync<infer T, unknown> ? T : never
+    28→export type InferAsyncErrTypes<R> = R extends ResultAsync<unknown, infer E> ? E : never
     30→/**
     31→ * Short circuits on the FIRST Err value that we find
     32→ */

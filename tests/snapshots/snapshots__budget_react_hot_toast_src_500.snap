@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (497 words)
+budget: 500 (505 words)
 
 components/checkmark.tsx
     29→export interface CheckmarkTheme {
@@ -47,6 +47,7 @@ components/toast-icon.tsx
     48→  toast: Toast;
     49→}> = ({ toast }) => {
     50→  const { icon, type, iconTheme } = toast;
+    51→  if (icon !== undefined) {
       →…
 components/toaster.tsx
     15→const ToastWrapper …
@@ -55,6 +56,7 @@ components/toaster.tsx
     86→  reverseOrder,
     87→  position = 'top-center',
     88→  toastOptions,
+    89→  gutter,
       →…
 core/store.ts
      4→export const TOAST_EXPIRE_DISMISS_DELAY …

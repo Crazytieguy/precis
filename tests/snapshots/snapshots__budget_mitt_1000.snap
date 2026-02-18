@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (951 words)
+budget: 1000 (981 words)
 
 README.md
      9→# Mitt
@@ -82,6 +82,8 @@ README.md
     88→type Events = {
     89→  foo: string;
     90→  bar?: number;
+    91→};
+    92→
       →…
    113→## Examples & Demos
    123→## API
@@ -145,6 +147,8 @@ README.md
    196→-   Create a new branch for the new feature: `git checkout -b my-new-feature`
    197→-   Install the tools necessary for development: `npm install`
    198→-   Make your changes.
+   199→-   Commit your changes: `git commit -am 'Add some feature'`
+   200→-   Push to the branch: `git push origin my-new-feature`
       →…
    203→## License
    205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
@@ -212,6 +216,9 @@ src/index.ts
     70→			} else {
     71→				all!.set(type, [handler] as EventHandlerList<Events[keyof Events]>);
     72→			}
+    73→		},
+    74→
+    75→		/**
       →…
 test/index_test.ts
 test/test-types-compilation.ts
@@ -219,6 +226,8 @@ test/test-types-compilation.ts
      6→	name: string;
      7→}
      9→const emitter = mitt<{
+    10→	foo: string;
+      →…
     15→const barHandler …
     16→const fooHandler …
     17→const wildcardHandler …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3926 words)
+budget: 4000 (4053 words)
 
 errors.ts
      1→/**
@@ -241,6 +241,9 @@ patterns.ts
     67→/**
     68→ * A `Matchable` is an object implementing
     69→ * the Matcher Protocol. It must have a `[P.matcher]: P.Matcher<NarrowFn>`
+    70→ * key, which defines how this object should be matched by TS-Pattern.
+    71→ *
+    72→ * @experimental This feature is unstable.
       →…
     81→export type unstable_Matchable<
     82→  narrowedOrFn,
@@ -250,6 +253,9 @@ patterns.ts
     87→/**
     88→ * A `Matcher` is an object with `match` function, which
     89→ * defines how this object should be matched by TS-Pattern.
+    90→ *
+    91→ * @experimental This feature is unstable.
+    92→ *
       →…
    100→export type unstable_Matcher<
    101→  narrowedOrFn,
@@ -259,11 +265,17 @@ patterns.ts
    106→/**
    107→ * `P.infer<typeof somePattern>` will return the type of the value
    108→ * matched by this pattern.
+   109→ *
+   110→ * [Read the documentation for `P.infer` on GitHub](https://github.com/gvergnaud/ts-pattern#pinfer)
+   111→ *
       →…
    116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
    118→/**
    119→ * `P.narrow<Input, Pattern>` will narrow the input type to only keep
    120→ * the set of values that are compatible with the provided pattern type.
+   121→ *
+   122→ * [Read the documentation for `P.narrow` on GitHub](https://github.com/gvergnaud/ts-pattern#pnarrow)
+   123→ *
       →…
    131→export type narrow<input, pattern> = ExtractPreciseValue<
    132→  input,
@@ -301,16 +313,7 @@ patterns.ts
    203→              selector(key, undefined)
    204→            );
    205→            return { matched: true, selections };
-   206→          }
-   207→          const matched = matchPattern(pattern, value, selector);
-   208→          return { matched, selections };
-   209→        },
-   210→        getSelectionKeys: () => getSelectionKeys(pattern),
-   211→        matcherType: 'optional',
-   212→      };
-   213→    },
-   214→  });
-   215→}
+      →…
    217→type UnwrapArray …
    219→type UnwrapSet …
    221→type UnwrapMapKey …
@@ -374,11 +377,7 @@ patterns.ts
    550→        return { matched, selections };
    551→      },
    552→      getSelectionKeys: () =>
-   553→        flatMap(patterns as readonly UnknownValuePattern[], getSelectionKeys),
-   554→      matcherType: 'and',
-   555→    }),
-   556→  });
-   557→}
+      →…
    559→/**
    560→ * `P.union(...patterns)` returns a pattern which matches
    561→ * if **at least one** of the patterns provided in parameter match the input.
@@ -409,15 +408,7 @@ patterns.ts
    586→        ).forEach((key) => selector(key, undefined));
    587→        const matched = (patterns as readonly UnknownValuePattern[]).some((p) =>
    588→          matchPattern(p, value, selector)
-   589→        );
-   590→        return { matched, selections };
-   591→      },
-   592→      getSelectionKeys: () =>
-   593→        flatMap(patterns as readonly UnknownValuePattern[], getSelectionKeys),
-   594→      matcherType: 'or',
-   595→    }),
-   596→  });
-   597→}
+      →…
    599→/**
    600→ * `P.not(pattern)` returns a pattern which matches if the sub pattern
    601→ * doesn't match.
@@ -466,16 +457,25 @@ patterns.ts
    773→/**
    774→ * `P.any` is a wildcard pattern, matching **any value**.
    775→ *
+   776→ * [Read the documentation for `P.any` on GitHub](https://github.com/gvergnaud/ts-pattern#p_-wildcard)
+   777→ *
+   778→ * @example
       →…
    782→export const any: UnknownPattern = chainable(when(isUnknown));
    784→/**
    785→ * `P.unknown` is a wildcard pattern, matching **unknown value**.
    786→ *
+   787→ * [Read the documentation for `P.unknown` on GitHub](https://github.com/gvergnaud/ts-pattern#p_-wildcard)
+   788→ *
+   789→ * @example
       →…
    793→export const unknown: UnknownPattern = chainable(when(isUnknown));
    795→/**
    796→ * `P._` is a wildcard pattern, matching **any value**.
    797→ * It's an alias to `P.any`.
+   798→ *
+   799→ * [Read the documentation for `P._` on GitHub](https://github.com/gvergnaud/ts-pattern#p_-wildcard)
+   800→ *
       →…
    805→export const _ = any;
    817→const startsWith …
@@ -489,6 +489,9 @@ patterns.ts
    919→/**
    920→ * `P.string` is a wildcard pattern, matching any **string**.
    921→ *
+   922→ * [Read the documentation for `P.string` on GitHub](https://github.com/gvergnaud/ts-pattern#pstring-wildcard)
+   923→ *
+   924→ * @example
       →…
    928→export const string: StringPattern = stringChainable(when(isString));
    940→const between …
@@ -504,6 +507,9 @@ patterns.ts
   1066→/**
   1067→ * `P.number` is a wildcard pattern, matching any **number**.
   1068→ *
+  1069→ * [Read the documentation for `P.number` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumber-wildcard)
+  1070→ *
+  1071→ * @example
       →…
   1075→export const number: NumberPattern = numberChainable(when(isNumber));
   1087→const betweenBigInt …
@@ -517,26 +523,41 @@ patterns.ts
   1193→/**
   1194→ * `P.bigint` is a wildcard pattern, matching any **bigint**.
   1195→ *
+  1196→ * [Read the documentation for `P.bigint` on GitHub](https://github.com/gvergnaud/ts-pattern#number-wildcard)
+  1197→ *
+  1198→ * @example
       →…
   1201→export const bigint: BigIntPattern = bigintChainable(when(isBigInt));
   1203→/**
   1204→ * `P.boolean` is a wildcard pattern, matching any **boolean**.
   1205→ *
+  1206→ * [Read the documentation for `P.boolean` on GitHub](https://github.com/gvergnaud/ts-pattern#boolean-wildcard)
+  1207→ *
+  1208→ * @example
       →…
   1211→export const boolean: BooleanPattern = chainable(when(isBoolean));
   1213→/**
   1214→ * `P.symbol` is a wildcard pattern, matching any **symbol**.
   1215→ *
+  1216→ * [Read the documentation for `P.symbol` on GitHub](https://github.com/gvergnaud/ts-pattern#symbol-wildcard)
+  1217→ *
+  1218→ * @example
       →…
   1221→export const symbol: SymbolPattern = chainable(when(isSymbol));
   1223→/**
   1224→ * `P.nullish` is a wildcard pattern, matching **null** or **undefined**.
   1225→ *
+  1226→ * [Read the documentation for `P.nullish` on GitHub](https://github.com/gvergnaud/ts-pattern#nullish-wildcard)
+  1227→ *
+  1228→ * @example
       →…
   1231→export const nullish: NullishPattern = chainable(when(isNullish));
   1233→/**
   1234→ * `P.nonNullable` is a wildcard pattern, matching everything except **null** or **undefined**.
   1235→ *
+  1236→ * [Read the documentation for `P.nonNullable` on GitHub](https://github.com/gvergnaud/ts-pattern#nonNullable-wildcard)
+  1237→ *
+  1238→ * @example
       →…
   1241→export const nonNullable: NonNullablePattern = chainable(when(isNonNullable));
   1243→/**

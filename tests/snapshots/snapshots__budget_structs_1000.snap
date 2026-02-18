@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (989 words)
+budget: 1000 (1020 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -163,6 +163,7 @@ structs.go
    245→func getFields(v reflect.Value, tagName string) []*Field {
    246→	if v.Kind() == reflect.Ptr {
    247→		v = v.Elem()
+   248→	}
       →…
    275→func (s *Struct) Field(name string) *Field {
    287→func (s *Struct) FieldOk(name string) (*Field, bool) {
@@ -175,10 +176,13 @@ structs.go
    405→func (s *Struct) structFields() []reflect.StructField {
    406→	t := s.value.Type()
    407→
+   408→	var f []reflect.StructField
+   409→
       →…
    428→func strctVal(s interface{}) reflect.Value {
    429→	v := reflect.ValueOf(s)
    430→
+   431→	// if pointer get the underlying element≤
       →…
    445→func Map(s interface{}) map[string]interface{} {
    451→func FillMap(s interface{}, out map[string]interface{}) {
@@ -194,6 +198,8 @@ structs.go
    509→func (s *Struct) nested(val reflect.Value) interface{} {
    510→	var finalVal interface{}
    511→
+   512→	v := reflect.ValueOf(val.Interface())
+   513→	if v.Kind() == reflect.Ptr {
       →…
 structs_example_test.go
      3→import …
@@ -221,6 +227,8 @@ tags.go
     22→func parseTag(tag string) (string, tagOptions) {
     23→	// tag is one of followings:
     24→	// ""
+    25→	// "name"
+    26→	// "name,opt"
       →…
 tags_test.go
      3→import "testing …

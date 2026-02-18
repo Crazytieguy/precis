@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (986 words)
+budget: 1000 (1008 words)
 
 _internals/error.ts
      1→import { Result } from '../result'
@@ -123,6 +123,9 @@ result-async.ts
     27→  }
     28→
     29→  static fromSafePromise<T, E = never>(promise: PromiseLike<T>): ResultAsync<T, E>
+    30→  static fromSafePromise<T, E = never>(promise: Promise<T>): ResultAsync<T, E> {
+    31→    const newPromise = promise.then((value: T) => new Ok<T, E>(value))
+    32→
    210→  /**
       →…
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
@@ -154,7 +157,6 @@ result.ts
    140→  isOk(): this is Ok<T, E>
    141→
    142→  /**
-   143→   * Used to check if a `Result` is an `Err`
       →…
    147→  isErr(): this is Err<T, E>
    149→  /**
@@ -198,6 +200,9 @@ result.ts
    317→  }
    318→
    319→  isErr(): this is Err<T, E> {
+   320→    return !this.isOk()
+   321→  }
+   322→
    405→  _unsafeUnwrap(_?: ErrorConfig): T {
    409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
    419→export class Err<T, E> implements IResult<T, E> {
@@ -208,6 +213,9 @@ result.ts
    424→  }
    425→
    426→  isErr(): this is Err<T, E> {
+   427→    return !this.isOk()
+   428→  }
+   429→
    505→  _unsafeUnwrap(config?: ErrorConfig): T {
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
    523→export const fromThrowable …

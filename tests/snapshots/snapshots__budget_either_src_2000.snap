@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1928 words)
+budget: 2000 (1962 words)
 
 into_either.rs
      4→use super::{Either, Left, Right};
@@ -389,7 +389,15 @@ lib.rs
   1262→        }
   1263→
   1264→        $(#[$attr])*
-      →…
+  1265→        impl<L, R> AsMut<$t> for Either<L, R>
+  1266→            where L: AsMut<$t>, R: AsMut<$t>
+  1267→        {
+  1268→            fn as_mut(&mut self) -> &mut $t {
+  1269→                for_both!(self, inner => inner.as_mut())
+  1270→            }
+  1271→        }
+  1272→    };
+  1273→}
   1297→    fn as_ref …
   1307→    fn as_mut …
   1317→    fn as_mut …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1903 words)
+budget: 2000 (1955 words)
 
 AGENTS.md
      1→# AGENTS.md
@@ -19,7 +19,6 @@ CLAUDE.md
     32→## Core Architecture …
     34→### Main Components
     36→- **PluginManager** (`src/pluggy/_manager.py`): Central registry that manages plugins and coordinates hook calls
-    37→- **HookCaller** (`src/pluggy/_hooks.py`): Executes hook implementations with proper argument binding
       →…
     42→### Package Structure …
     48→## Configuration Files …
@@ -80,14 +79,8 @@ docs/examples/eggsample-spam/eggsample_spam.py
      1→import eggsample
      4→@eggsample.hookimpl
      5→def eggsample_add_ingredients(ingredients):
-     6→    """Here the caller expects us to return a list."""
-     7→    if "egg" in ingredients:
-      →…
     14→@eggsample.hookimpl
     15→def eggsample_prep_condiments(condiments):
-    16→    """Here the caller passes a mutable object, so we mess with it directly."""
-    17→    try:
-      →…
 docs/examples/eggsample-spam/setup.py
      1→from setuptools import setup
 docs/examples/toy-example.py
@@ -137,8 +130,6 @@ src/pluggy/__init__.py
      9→    "HookImpl",
     10→    "HookRelay",
     11→    "HookspecMarker",
-    12→    "HookimplMarker",
-    13→    "Result",
       →…
     32→def __getattr__ …
 src/pluggy/_callers.py
@@ -197,6 +188,10 @@ src/pluggy/_hooks.py
     93→        self,
     94→        function: _F,
     95→        firstresult: bool = False,
+    96→        historic: bool = False,
+    97→        warn_on_impl: Warning | None = None,
+    98→        warn_on_impl_args: Mapping[str, Warning] | None = None,
+    99→    ) -> _F: ...
    111→    def __call__ …
    165→class HookimplMarker:
    172→
@@ -210,6 +205,10 @@ src/pluggy/_hooks.py
    180→        self,
    181→        function: _F,
    182→        hookwrapper: bool = ...,
+   183→        optionalhook: bool = ...,
+   184→        tryfirst: bool = ...,
+   185→        trylast: bool = ...,
+   186→        specname: str | None = ...,
    202→    def __call__ …
    281→def normalize_hookimpl_opts …
    290→_PYPY = hasattr(sys, "pypy_version_info")
@@ -305,6 +304,10 @@ src/pluggy/_hooks.py
    649→        "wrapper",
    650→        "hookwrapper",
    651→        "optionalhook",
+   652→        "tryfirst",
+   653→        "trylast",
+   654→    )
+   655→
    656→    def __init__ …
    692→    def __repr__ …
    697→class HookSpec:
@@ -319,7 +322,11 @@ src/pluggy/_hooks.py
    706→        "warn_on_impl_args",
    707→    )
    708→
-   709→    def __init__ …
+   709→    def __init__(self, namespace: _Namespace, name: str, opts: HookspecOpts) -> None:
+   710→        self.namespace = namespace
+   711→        self.function: Callable[..., object] = getattr(namespace, name)
+   712→        self.name = name
+      →…
 src/pluggy/_manager.py
     33→    import importlib.metadata
     36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
@@ -394,6 +401,9 @@ src/pluggy/_result.py
     36→        """:meta private:"""
     37→        self._result = result
     38→        self._exception = exception
+    39→        # Exception __traceback__ is mutable, this keeps the original.
+    40→        self._traceback = exception.__traceback__ if exception is not None else None
+    41→
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
     44→        """:meta private:"""

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3808 words)
+budget: 4000 (3928 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -20,7 +20,13 @@ README.md
      9→![License](https://img.shields.io/crates/l/log.svg)
     10→
     11→* [`log` documentation](https://docs.rs/log)
-      →…
+    12→
+    13→A logging facade provides a single logging API that abstracts over the actual
+    14→logging implementation. Libraries can use the logging API provided by this
+    15→crate, and the consumer of those libraries can choose the logging
+    16→implementation that is most suitable for its use case.
+    17→
+    18→
     19→## Minimum supported `rustc`
     21→`1.68.0+`
     22→
@@ -87,6 +93,7 @@ README.md
     86→    * [`win_dbg_logger`](https://docs.rs/win_dbg_logger/*/win_dbg_logger/)
     87→    * [`db_logger`](https://docs.rs/db_logger/*/db_logger/)
     88→    * [`log-to-defmt`](https://docs.rs/log-to-defmt/*/log_to_defmt/)
+    89→    * [`logcontrol-log`](https://docs.rs/logcontrol-log/*/logcontrol_log/)
       →…
    106→## Structured logging
    108→If you enable the `kv` feature, you can associate structured data with your log records:
@@ -97,7 +104,25 @@ README.md
    113→pub fn shave_the_yak(yak: &mut Yak) {
    114→    // `yak:serde` will capture `yak` using its `serde::Serialize` impl
    115→    //
-      →…
+   116→    // You could also use `:?` for `Debug`, or `:%` for `Display`. For a
+   117→    // full list, see the `log` crate documentation
+   118→    trace!(target = "yak_events", yak:serde; "Commencing yak shaving");
+   119→
+   120→    loop {
+   121→        match find_a_razor() {
+   122→            Ok(razor) => {
+   123→                info!(razor; "Razor located");
+   124→                yak.shave(razor);
+   125→                break;
+   126→            }
+   127→            Err(e) => {
+   128→                // `e:err` will capture `e` using its `std::error::Error` impl
+   129→                warn!(e:err; "Unable to locate a razor, retrying");
+   130→            }
+   131→        }
+   132→    }
+   133→}
+   134→```
 benches/value.rs
      4→use log::kv::Value;
      6→#[bench]
@@ -244,12 +269,8 @@ src/kv/error.rs
     21→    pub fn msg …
     28→    #[cfg(feature = "value-bag")]
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
-    30→        Error {
-      →…
     36→    #[cfg(feature = "value-bag")]
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
-    38→        match self.inner {
-      →…
     68→#[cfg(feature = "std")]
     69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
@@ -355,12 +376,8 @@ src/kv/source.rs
     88→}
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
-    92→    struct Get<'k, 'v> {
-      →…
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
-   115→    struct Count(usize);
-      →…
    234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
@@ -408,8 +425,6 @@ src/kv/value.rs
    205→    where
    206→        T: Into<inner::Inner<'v>>,
    207→    {
-   208→        Value {
-      →…
    217→    pub fn visit …
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
@@ -768,6 +783,9 @@ src/lib.rs
   1490→        Ordering::Acquire,
   1491→        Ordering::Relaxed,
   1492→    ) {
+  1493→        Ok(UNINITIALIZED) => {
+  1494→            unsafe {
+  1495→                LOGGER = make_logger();
       →…
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///

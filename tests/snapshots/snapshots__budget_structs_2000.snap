@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1990 words)
+budget: 2000 (2046 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -318,6 +318,12 @@ structs.go
    410→	for i := 0; i < t.NumField(); i++ {
    411→		field := t.Field(i)
    412→		// we can't access the value of unexported fields
+   413→		if field.PkgPath != "" {
+   414→			continue
+   415→		}
+   416→
+   417→		// don't check if it's omitted
+   418→		if tag := field.Tag.Get(s.TagName); tag == "-" {
       →…
    428→func strctVal(s interface{}) reflect.Value {
    429→	v := reflect.ValueOf(s)
@@ -366,6 +372,12 @@ structs.go
    514→		v = v.Elem()
    515→	}
    516→
+   517→	switch v.Kind() {
+   518→	case reflect.Struct:
+   519→		n := New(val.Interface())
+   520→		n.TagName = s.TagName
+   521→		m := n.Map()
+   522→
       →…
 structs_example_test.go
      3→import …
@@ -399,6 +411,8 @@ tags.go
     27→	// "name,opt,opt2"
     28→	// ",opt"
     29→
-      →…
+    30→	res := strings.Split(tag, ",")
+    31→	return res[0], res[1:]
+    32→}
 tags_test.go
      3→import "testing …

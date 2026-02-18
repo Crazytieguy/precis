@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1963 words)
+budget: 2000 (2016 words)
 
 README.md
      5→## Usage
@@ -167,7 +167,6 @@ src/state.ts
    287→  {
    288→    success: ToastState.success,
    289→    info: ToastState.info,
-   290→    warning: ToastState.warning,
       →…
 src/types.ts
      1→import React from 'react';
@@ -304,7 +303,7 @@ test/src/app/layout.tsx
      1→export const metadata = {
      6→export default function RootLayout({ children }: { children: React.ReactNode }) {
 test/src/app/page.tsx
-     7→const promise = () => new Promise((resolve) => setTimeout(resolve, 2000));
+     7→const promise …
      9→export default function Home({ searchParams }: any) {
 test/tests/basic.spec.ts
 website/README.md
@@ -325,7 +324,10 @@ website/README.md
     18→
     19→[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
     20→
-      →…
+    21→The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+    22→
+    23→This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+    24→
     25→## Learn More
     27→To learn more about Next.js, take a look at the following resources:
     28→
@@ -343,6 +345,12 @@ website/next.config.js
      2→const nextConfig = {
      8→const withNextra = require('nextra')({
 website/src/components/CodeBlock/index.tsx
+     1→import React from 'react';
+     2→import Highlight, { defaultProps } from 'prism-react-renderer';
+     3→import useMeasure from 'react-use-measure';
+     4→import copy from 'copy-to-clipboard';
+     5→import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
+     7→import styles from './code-block.module.css';
      9→const variants = {
     14→const theme = {
     48→export const CodeBlock = ({ children, initialHeight = 0 }: { children: string; initialHeight?: number }) => {
@@ -393,7 +401,6 @@ website/src/components/Hero/index.tsx
     11→        <div className={styles.toast} />
     12→        <div className={styles.toast} />
     13→      </div>
-    14→      <h1 className={styles.heading}>Sonner</h1>
       →…
 website/src/components/How/How.tsx
      1→import React from 'react';

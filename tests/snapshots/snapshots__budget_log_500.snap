@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (475 words)
+budget: 500 (490 words)
 
 CHANGELOG.md
 README.md
@@ -19,6 +19,8 @@ README.md
     35→```
     36→
     37→```rust
+    38→use log::{info, trace, warn};
+    39→
       →…
     58→### In executables …
    106→## Structured logging …
@@ -140,7 +142,11 @@ test_max_level_features/main.rs
     15→struct Logger(Arc<State>);
     17→impl Log for Logger {
     18→    fn enabled(&self, _: &Metadata) -> bool {
+    19→        true
+    20→    }
     22→    fn log(&self, record: &Record) {
+    23→        *self.0.last_log.lock().unwrap() = Some(record.level());
+    24→    }
     26→    fn flush(&self) {}
     29→fn main() {
     44→fn test(a: &State, filter: LevelFilter) {

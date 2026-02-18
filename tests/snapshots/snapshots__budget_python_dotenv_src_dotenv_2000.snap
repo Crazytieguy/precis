@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1701 words)
+budget: 2000 (1970 words)
 
 __init__.py
      1→from typing …
@@ -195,7 +195,7 @@ main.py
     29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
     30→        return False
     31→    value = os.environ["PYTHON_DOTENV_DISABLED"].casefold()
-      →…
+    32→    return value in {"1", "true", "t", "yes", "y"}
     35→def with_warn_for_invalid_lines(mappings: Iterator[Binding]) -> Iterator[Binding]:
     45→class DotEnv:
     46→    def __init__(
@@ -218,15 +218,66 @@ main.py
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
+    66→            with open(self.dotenv_path, encoding=self.encoding) as stream:
+    67→                yield stream
+    68→        elif self.stream is not None:
+    69→            yield self.stream
+    70→        else:
+    71→            if self.verbose:
+    72→                logger.info(
+    73→                    "python-dotenv could not find configuration file %s.",
+    74→                    self.dotenv_path or ".env",
+    75→                )
+    76→            yield io.StringIO("")
+    77→
     78→    def dict(self) -> Dict[str, Optional[str]]:
     79→        """Return dotenv as dict"""
+    80→        if self._dict:
+    81→            return self._dict
+    82→
+    83→        raw_values = self.parse()
+    84→
+    85→        if self.interpolate:
+    86→            self._dict = OrderedDict(
+    87→                resolve_variables(raw_values, override=self.override)
+    88→            )
+    89→        else:
+    90→            self._dict = OrderedDict(raw_values)
+    91→
+    92→        return self._dict
+    93→
     94→    def parse(self) -> Iterator[Tuple[str, Optional[str]]]:
+    95→        with self._get_stream() as stream:
+    96→            for mapping in with_warn_for_invalid_lines(parse_stream(stream)):
+    97→                if mapping.key is not None:
+    98→                    yield mapping.key, mapping.value
+    99→
    100→    def set_as_environment_variables(self) -> bool:
    101→        """
    102→        Load the current dotenv as system environment variable.
    103→        """
+   104→        if not self.dict():
+   105→            return False
+   106→
+   107→        for k, v in self.dict().items():
+   108→            if k in os.environ and not self.override:
+   109→                continue
+   110→            if v is not None:
+   111→                os.environ[k] = v
+   112→
+   113→        return True
+   114→
    115→    def get(self, key: str) -> Optional[str]:
    116→        """ """
+   117→        data = self.dict()
+   118→
+   119→        if key in data:
+   120→            return data[key]
+   121→
+   122→        if self.verbose:
+   123→            logger.warning("Key %s not found in %s.", key, self.dotenv_path)
+   124→
+   125→        return None
    128→def get_key(
    129→    dotenv_path: StrPath,
    130→    key_to_get: str,
@@ -289,6 +340,14 @@ main.py
    273→    if not os.path.exists(path):
    274→        raise IOError("Starting path not found")
    275→
+   276→    if os.path.isfile(path):
+   277→        path = os.path.dirname(path)
+   278→
+   279→    last_dir = None
+   280→    current_dir = os.path.abspath(path)
+   281→    while last_dir != current_dir:
+   282→        yield current_dir
+   283→        parent_dir = os.path.abspath(os.path.join(current_dir, os.path.pardir))
       →…
    287→def find_dotenv(
    288→    filename: str = ".env",
@@ -329,7 +388,12 @@ main.py
    427→    if os.path.isfile(path):
    428→        return True
    429→
-      →…
+   430→    try:
+   431→        st = os.stat(path)
+   432→    except (FileNotFoundError, OSError):
+   433→        return False
+   434→
+   435→    return stat.S_ISFIFO(st.st_mode)
 parser.py
      1→import codecs …
      2→import re …
@@ -383,7 +447,18 @@ parser.py
     88→        return self.string[self.position.chars : self.position.chars + count]
     89→
     90→    def read(self, count: int) -> str:
+    91→        result = self.string[self.position.chars : self.position.chars + count]
+    92→        if len(result) < count:
+    93→            raise Error("read: End of string")
+    94→        self.position.advance(result)
+    95→        return result
+    96→
     97→    def read_regex(self, regex: Pattern[str]) -> Sequence[str]:
+    98→        match = regex.match(self.string, self.position.chars)
+    99→        if match is None:
+   100→            raise Error("read_regex: Pattern not found")
+   101→        self.position.advance(self.string[match.start() : match.end()])
+   102→        return match.groups()
    105→def decode_escapes(regex: Pattern[str], string: str) -> str:
    112→def parse_key(reader: Reader) -> Optional[str]:
    123→def parse_unquoted_value(reader: Reader) -> str:

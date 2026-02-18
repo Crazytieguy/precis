@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (458 words)
+budget: 500 (480 words)
 
 index.ts
      1→export type EventType = string | symbol;
@@ -95,4 +95,7 @@ index.ts
     97→		 * Note: Manually firing '*' handlers is not supported.
     98→		 *
     99→		 * @param {string|symbol} type The event type to invoke
+   100→		 * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
+   101→		 * @memberOf mitt
+   102→		 */
       →…

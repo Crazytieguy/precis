@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (369 words)
+budget: 500 (503 words)
 
 constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
@@ -14,12 +14,19 @@ constants.js
     18→const RELEASE_TYPES = [
     19→  'major',
     20→  'premajor',
+    21→  'minor',
+    22→  'preminor',
+    23→  'patch',
+    24→  'prepatch',
       →…
 debug.js
      3→const debug = (
      4→  typeof process === 'object' &&
      5→  process.env &&
-      →…
+     6→  process.env.NODE_DEBUG &&
+     7→  /\bsemver\b/i.test(process.env.NODE_DEBUG)
+     8→) ? (...args) => console.error('SEMVER', ...args)
+     9→  : () => {}
 identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
@@ -27,7 +34,20 @@ identifiers.js
      6→    return a === b ? 0 : a < b ? -1 : 1
      7→  }
      8→
-      →…
+     9→  const anum = numeric.test(a)
+    10→  const bnum = numeric.test(b)
+    11→
+    12→  if (anum && bnum) {
+    13→    a = +a
+    14→    b = +b
+    15→  }
+    16→
+    17→  return a === b ? 0
+    18→    : (anum && !bnum) ? -1
+    19→    : (bnum && !anum) ? 1
+    20→    : a < b ? -1
+    21→    : 1
+    22→}
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 lrucache.js
      3→class LRUCache {
@@ -76,7 +96,12 @@ parse-options.js
      8→    return emptyOpts
      9→  }
     10→
-      →…
+    11→  if (typeof options !== 'object') {
+    12→    return looseOption
+    13→  }
+    14→
+    15→  return options
+    16→}
 re.js
     12→const re = exports.re = []
     13→const safeRe = exports.safeRe = []
@@ -87,16 +112,23 @@ re.js
     27→const safeRegexReplacements = [
     28→  ['\\s', 1],
     29→  ['\\d', MAX_LENGTH],
-      →…
+    30→  [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH],
+    31→]
     33→const makeSafeRegex = (value) => {
     34→  for (const [token, max] of safeRegexReplacements) {
     35→    value = value
     36→      .split(`${token}*`).join(`${token}{0,${max}}`)
     37→      .split(`${token}+`).join(`${token}{1,${max}}`)
-      →…
+    38→  }
+    39→  return value
+    40→}
     42→const createToken = (name, value, isGlobal) => {
     43→  const safe = makeSafeRegex(value)
     44→  const index = R++
     45→  debug(name, index, value)
     46→  t[name] = index
-      →…
+    47→  src[index] = value
+    48→  safeSrc[index] = safe
+    49→  re[index] = new RegExp(value, isGlobal ? 'g' : undefined)
+    50→  safeRe[index] = new RegExp(safe, isGlobal ? 'g' : undefined)
+    51→}

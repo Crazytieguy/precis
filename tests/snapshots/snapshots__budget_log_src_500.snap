@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (462 words)
+budget: 500 (479 words)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -96,7 +96,6 @@ lib.rs
    413→use std::sync::atomic::{AtomicUsize, Ordering};
    416→use std::cell::Cell;
    418→use std::sync::atomic::Ordering;
-   420→#[cfg(not(target_has_atomic = "ptr"))]
    421→struct AtomicUsize {
    422→    v: Cell<usize>,
    423→}
@@ -104,7 +103,6 @@ lib.rs
    516→    type Err = ParseLevelError;
    636→pub enum LevelFilter {
    666→    type Err = ParseLevelError;
-   780→#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
    781→enum MaybeStaticStr<'a> {
    782→    Static(&'static str),
    783→    Borrowed(&'a str),
@@ -112,14 +110,11 @@ lib.rs
    787→    #[inline]
    788→    fn get(&self) -> &'a str {
    842→pub struct Record<'a> {
-   856→#[cfg(feature = "kv")]
-   857→#[derive(Clone)]
    858→struct KeyValues<'a>(&'a dyn kv::Source);
   1003→pub struct RecordBuilder<'a> {
   1158→pub struct Metadata<'a> {
   1200→pub struct MetadataBuilder<'a> {
   1249→pub trait Log: Sync + Send {
-  1282→/// A dummy initial value for LOGGER.
   1283→struct NopLogger;
   1482→#[cfg(target_has_atomic = "ptr")]
   1483→fn set_logger_inner<F>(make_logger: F) -> Result<(), SetLoggerError>
@@ -134,7 +129,11 @@ lib.rs
   1603→///
   1604→/// See the crate level documentation for information on how to configure this.
   1605→///
-      →…
+  1606→/// This value is checked by the log macros, but not by the `Log`ger returned by
+  1607→/// the [`logger`] function. Code that manually calls functions on that value
+  1608→/// should compare the level against this value.
+  1609→///
+  1610→/// [`logger`]: fn.logger.html
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 macros.rs
 serde.rs

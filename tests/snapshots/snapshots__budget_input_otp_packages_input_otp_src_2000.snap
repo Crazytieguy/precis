@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1986 words)
+budget: 2000 (2051 words)
 
 input.tsx
      3→import * as React from 'react'
@@ -286,6 +286,17 @@ input.tsx
    284→          return
    285→        }
    286→        const maybeHasDeleted =
+   287→          typeof previousValue === 'string' &&
+   288→          newValue.length < previousValue.length
+   289→        if (maybeHasDeleted) {
+   290→          // Since cutting/deleting text doesn't trigger
+   291→          // selectionchange event, we'll have to dispatch it manually.
+   292→          // NOTE: The following line also triggers when cmd+A then pasting
+   293→          // a value with smaller length, which is not ideal for performance.
+   294→          document.dispatchEvent(new Event('selectionchange'))
+   295→        }
+   296→        onChange(newValue)
+   297→      },
       →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {

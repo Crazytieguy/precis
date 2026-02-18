@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (990 words)
+budget: 1000 (1020 words)
 
 Changelog.md
      1→# Changelog …
@@ -70,6 +70,9 @@ docs/reference/core.md
      5→`assert<T>(value: unknown, struct: Struct<T>, message?: string) => asserts value is T`
      6→
      7→```ts
+     8→assert(value, User, 'The user is invalid!')
+     9→```
+    10→
       →…
 docs/reference/errors.md
      1→# Errors …
@@ -84,6 +87,9 @@ docs/reference/typescript.md
      9→The `Describe` utility returns a type representing a struct for a given valid value type. This allows you to ensure you're writing your struct definitions properly, for example:
     10→
     11→```ts
+    12→type User = {
+    13→  id: number
+    14→  name: string
       →…
 docs/reference/utilities.md
      1→# Utilities …
@@ -290,9 +296,6 @@ test/validation/bigint/invalid.ts
 test/validation/bigint/valid.ts
 test/validation/boolean/invalid.ts
 test/validation/boolean/valid.ts
-test/validation/date/invalid-date.ts
-test/validation/date/invalid.ts
-test/validation/date/valid.ts
 test/validation/function/invalid.ts
 test/validation/function/valid.ts
      5→export const data = function () {}
@@ -301,6 +304,9 @@ test/validation/instance/valid.ts
 test/validation/literal/invalid.ts
 test/validation/literal/valid.ts
 test/validation/never/invalid.ts
+     3→export const Struct = never()
+     5→export const data = true
+     7→export const failures = [
 test/validation/number/invalid.ts
 test/validation/number/valid.ts
 test/validation/pattern/invalid.ts

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (952 words)
+budget: 1000 (973 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯ …
@@ -43,11 +43,13 @@ src/chain.rs
       →…
     36→    type Item = &'a (dyn StdError + 'static);
 src/context.rs
+     9→mod ext {
     12→    pub trait StdError {
     13→        fn ext_context<C>(self, context: C) -> Error
     14→        where
     15→            C: Display + Send + Sync + 'static;
     16→    }
+   186→pub(crate) mod private {
    189→    pub trait Sealed {}
 src/ensure.rs
      9→#[doc(hidden)]
@@ -100,8 +102,17 @@ src/kind.rs
 src/lib.rs
    251→#[macro_use]
    252→mod backtrace;
+   253→mod chain;
+   254→mod context;
+   255→mod ensure;
+   256→mod error;
+   257→mod fmt;
+   258→mod kind;
+   259→mod macros;
    260→#[cfg(error_generic_member_access)]
    261→mod nightly;
+   262→mod ptr;
+   263→mod wrapper;
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
       →…
@@ -147,8 +158,6 @@ src/lib.rs
    439→/// # Example
    440→///
    441→/// ```
-   442→/// # pub trait Deserialize {}
-   443→/// #
       →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    470→/// Provides the `context` method for `Result`.
@@ -194,6 +203,7 @@ src/lib.rs
    677→        #[doc(hidden)]
    678→        pub use crate::kind::BoxedKind;
    679→    }
+   708→    mod not {
    709→        #[doc(hidden)]
    710→        pub trait Bool {
    711→            fn not(self) -> bool;

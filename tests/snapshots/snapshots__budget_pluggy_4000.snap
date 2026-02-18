@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3659 words)
+budget: 4000 (4000 words)
 
 AGENTS.md
      1→# AGENTS.md
@@ -21,7 +21,9 @@ CLAUDE.md
     36→- **PluginManager** (`src/pluggy/_manager.py`): Central registry that manages plugins and coordinates hook calls
     37→- **HookCaller** (`src/pluggy/_hooks.py`): Executes hook implementations with proper argument binding
     38→- **HookImpl/HookSpec** (`src/pluggy/_hooks.py`): Represent hook implementations and specifications
-      →…
+    39→- **Result** (`src/pluggy/_result.py`): Handles hook call results and exception propagation
+    40→- **Multicall** (`src/pluggy/_callers.py`): Core execution engine for calling multiple hook implementations
+    41→
     42→### Package Structure …
     48→## Configuration Files …
 SECURITY.md
@@ -50,7 +52,9 @@ docs/conf.py
    122→            return True
    123→
    124→    logger = logging.getLogger(sphinx.util.logging.NAMESPACE)
-      →…
+   125→    warn_handler = [x for x in logger.handlers if x.level == logging.WARNING]
+   126→    assert len(warn_handler) == 1, warn_handler
+   127→    warn_handler[0].filters.insert(0, WarnLogFilter())
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
 docs/examples/eggsample/eggsample/__init__.py
@@ -97,6 +101,7 @@ docs/examples/eggsample-spam/eggsample_spam.py
      7→    if "egg" in ingredients:
      8→        spam = ["lovely spam", "wonderous spam"]
      9→    else:
+    10→        spam = ["splendiferous spam", "magnificent spam"]
       →…
     14→@eggsample.hookimpl
     15→def eggsample_prep_condiments(condiments):
@@ -104,6 +109,7 @@ docs/examples/eggsample-spam/eggsample_spam.py
     17→    try:
     18→        del condiments["steak sauce"]
     19→    except KeyError:
+    20→        pass
       →…
 docs/examples/eggsample-spam/setup.py
      1→from setuptools import setup
@@ -113,17 +119,19 @@ docs/examples/toy-example.py
     10→
     11→    @hookspec
     12→    def myhook(self, arg1, arg2):
-      →…
+    13→        """My special little hook that you can customize."""
     16→class Plugin_1:
     18→
     19→    @hookimpl
     20→    def myhook(self, arg1, arg2):
-      →…
+    21→        print("inside Plugin_1.myhook()")
+    22→        return arg1 + arg2
     25→class Plugin_2:
     27→
     28→    @hookimpl
     29→    def myhook(self, arg1, arg2):
-      →…
+    30→        print("inside Plugin_2.myhook()")
+    31→        return arg1 - arg2
 scripts/release.py
      5→import argparse
      6→from subprocess import check_call
@@ -204,7 +212,12 @@ src/pluggy/_hooks.py
     45→    #: Whether the hook is :ref:`historic <historic>`.
     46→    historic: bool
     47→    #: Whether the hook :ref:`warns when implemented <warn_on_impl>`.
-      →…
+    48→    warn_on_impl: Warning | None
+    49→    #: Whether the hook warns when :ref:`certain arguments are requested
+    50→    #: <warn_on_impl>`.
+    51→    #:
+    52→    #: .. versionadded:: 1.5
+    53→    warn_on_impl_args: Mapping[str, Warning] | None
     56→class HookimplOpts(TypedDict):
     58→
     59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
@@ -212,7 +225,17 @@ src/pluggy/_hooks.py
     61→    #: Whether the hook implementation is an :ref:`old-style wrapper
     62→    #: <old_style_hookwrappers>`.
     63→    hookwrapper: bool
-      →…
+    64→    #: Whether validation against a hook specification is :ref:`optional
+    65→    #: <optionalhook>`.
+    66→    optionalhook: bool
+    67→    #: Whether to try to order this hook implementation :ref:`first
+    68→    #: <callorder>`.
+    69→    tryfirst: bool
+    70→    #: Whether to try to order this hook implementation :ref:`last
+    71→    #: <callorder>`.
+    72→    trylast: bool
+    73→    #: The name of the hook specification to match, see :ref:`specname`.
+    74→    specname: str | None
     77→@final
     78→class HookspecMarker:
     79→    """Decorator for marking functions as hook specifications.
@@ -437,7 +460,20 @@ src/pluggy/_hooks.py
    387→        "spec",
    388→        "_hookexec",
    389→        "_hookimpls",
-   393→    def __init__ …
+   390→        "_call_history",
+   391→    )
+   392→
+   393→    def __init__(
+   394→        self,
+   395→        name: str,
+   396→        hook_execute: _HookExec,
+   397→        specmodule_or_class: _Namespace | None = None,
+   398→        spec_opts: HookspecOpts | None = None,
+   399→    ) -> None:
+   400→        """:meta private:"""
+   401→        #: Name of the hook getting called.
+   402→        self.name: Final = name
+   403→        self._hookexec: Final = hook_execute
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None
@@ -605,8 +641,14 @@ src/pluggy/_manager.py
     70→
     71→    @property
     72→    def project_name(self) -> str:
-    76→    def __getattr__ …
-    79→    def __dir__ …
+    73→        name: str = self.metadata["name"]
+    74→        return name
+    75→
+    76→    def __getattr__(self, attr: str, default: Any | None = None) -> Any:
+    77→        return getattr(self._dist, attr, default)
+    78→
+    79→    def __dir__(self) -> list[str]:
+    80→        return sorted(dir(self._dist) + ["_dist", "project_name"])
     83→class PluginManager:
     99→
    100→    def __init__(self, project_name: str) -> None:
@@ -614,13 +656,20 @@ src/pluggy/_manager.py
    102→        self.project_name: Final = project_name
    103→        self._name2plugin: Final[dict[str, _Plugin]] = {}
    104→        self._plugin_distinfo: Final[list[tuple[_Plugin, DistFacade]]] = []
+   105→        #: The "hook relay", used to call a hook on all registered plugins.
+   106→        #: See :ref:`calling`.
+   107→        self.hook: Final = HookRelay()
+   108→        #: The tracing entry point. See :ref:`tracing`.
+   109→        self.trace: Final[_tracing.TagTracerSub] = _tracing.TagTracer().get(
+   110→            "pluginmanage"
+   111→        )
+   112→        self._inner_hookexec = _multicall
+   113→
    114→    def _hookexec(
    115→        self,
    116→        hook_name: str,
    117→        methods: Sequence[HookImpl],
    118→        kwargs: Mapping[str, object],
-   119→        firstresult: bool,
-   120→    ) -> object | list[object]:
    125→    def register …
    176→    def parse_hookimpl_opts …
    201→    def unregister …
@@ -736,7 +785,20 @@ src/pluggy/_tracing.py
     20→        self.indent = 0
     21→
     22→    def get(self, name: str) -> TagTracerSub:
+    23→        return TagTracerSub(self, (name,))
+    24→
     25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
+    26→        if isinstance(args[-1], dict):
+    27→            extra = args[-1]
+    28→            args = args[:-1]
+    29→        else:
+    30→            extra = {}
+    31→
+    32→        content = " ".join(map(str, args))
+    33→        indent = "  " * self.indent
+    34→
+    35→        lines = [f"{indent}{content} [{':'.join(tags)}]\n"]
+    36→
     42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
     48→    def setwriter …
     51→    def setprocessor …
@@ -747,7 +809,9 @@ src/pluggy/_tracing.py
     63→
     64→    def __call__(self, *args: object) -> None:
     65→        self.root._processmessage(self.tags, args)
-    67→    def get …
+    66→
+    67→    def get(self, name: str) -> TagTracerSub:
+    68→        return self.__class__(self.root, self.tags + (name,))
 src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):
      6→

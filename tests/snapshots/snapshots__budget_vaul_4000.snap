@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3928 words)
+budget: 4000 (4046 words)
 
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
@@ -327,6 +327,7 @@ src/index.tsx
    189→        }
    190→      }
    191→
+   192→      if (!o) {
       →…
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    804→  function ({ ...rest }, ref) {
@@ -714,6 +715,9 @@ test/src/app/default-open/page.tsx
      4→import { Drawer } from 'vaul';
      6→export default function Page() {
      7→  return (
+     8→    <div className="w-screen h-screen bg-white p-8 flex justify-center items-center" data-vaul-drawer-wrapper="">
+     9→      <Drawer.Root defaultOpen>
+    10→        <Drawer.Trigger asChild>
       →…
 test/src/app/different-directions/page.tsx
      3→import clsx from 'clsx';
@@ -721,11 +725,17 @@ test/src/app/different-directions/page.tsx
      6→function DirectionalDrawer({
      7→  direction,
      8→  children,
-     9→}: {
       →…
    118→export default function Page() {
    119→  return (
-      →…
+   120→    <div className="w-screen h-screen bg-white p-8 flex justify-center items-center flex-col gap-4">
+   121→      <DirectionalDrawer direction="top">Top</DirectionalDrawer>
+   122→      <DirectionalDrawer direction="right">Right</DirectionalDrawer>
+   123→      <DirectionalDrawer direction="bottom">Bottom</DirectionalDrawer>
+   124→      <DirectionalDrawer direction="left">Left</DirectionalDrawer>
+   125→    </div>
+   126→  );
+   127→}
 test/src/app/initial-snap/page.tsx
      3→import { clsx } from 'clsx';
      4→import { useState } from 'react';
@@ -743,6 +753,8 @@ test/src/app/layout.tsx
      3→import { Inter } from 'next/font/google';
      5→const inter = Inter({ subsets: ['latin'] });
      7→export const metadata: Metadata = {
+     8→  title: 'Create Next App',
+      →…
     12→export default function RootLayout({ children }: { children: React.ReactNode }) {
     13→  return (
       →…
@@ -750,6 +762,9 @@ test/src/app/nested-drawers/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {
      6→  return (
+     7→    <div className="w-screen h-screen bg-white p-8 flex justify-center items-center" data-vaul-drawer-wrapper="">
+     8→      <Drawer.Root>
+     9→        <Drawer.Trigger asChild>
       →…
 test/src/app/non-dismissible/page.tsx
      3→import { useState } from 'react';
@@ -796,6 +811,12 @@ test/src/app/scrollable-with-inputs/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {
      6→  return (
+     7→    <div className="w-screen h-screen bg-white p-8 flex justify-center items-center" data-vaul-drawer-wrapper="">
+     8→      <Drawer.Root>
+     9→        <Drawer.Trigger asChild>
+    10→          <button>Open Drawer</button>
+    11→        </Drawer.Trigger>
+    12→        <Drawer.Portal>
       →…
 test/src/app/with-handle/page.tsx
      3→import { clsx } from 'clsx';
@@ -834,6 +855,10 @@ test/src/app/with-redirect/page.tsx
     10→        <Drawer.Trigger asChild>
       →…
 test/src/app/with-scaled-background/page.tsx
+     3→import { useState } from 'react';
+     4→import clsx from 'clsx';
+     5→import { Drawer } from 'vaul';
+     6→import { DrawerDirection } from 'vaul/src/types';
      8→const CenteredContent = () => {
     29→const DrawerContent = ({ drawerDirection }: { drawerDirection: DrawerDirection }) => {
     65→export default function Page() {
@@ -850,6 +875,8 @@ test/src/app/with-snap-points/page.tsx
      9→export default function Page() {
     10→  const [snap, setSnap] = useState<number | string | null>(snapPoints[0]);
     11→
+    12→  const activeSnapPointIndex = snapPoints.indexOf(snap as string);
+    13→
       →…
 test/src/app/without-scaled-background/page.tsx
      3→import { useState } from 'react';

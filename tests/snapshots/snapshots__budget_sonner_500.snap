@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (507 words)
 
 README.md
      5→## Usage
@@ -30,6 +30,7 @@ src/state.ts
     11→import React from 'react …
     15→type titleT …
     17→class Observer {
+    18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
    254→export const ToastState …
    257→const toastFunction …
    268→const isHttpResponse …
@@ -53,6 +54,8 @@ src/types.ts
     97→export type Position …
     98→export interface HeightT {
    104→interface ToastOptions {
+   105→  className?: string;
+      →…
    118→type Offset …
    128→export interface ToasterProps {
    152→export type SwipeDirection …
@@ -96,6 +99,7 @@ website/src/components/ExpandModes/index.tsx
 website/src/components/Footer/index.tsx
      5→export const Footer = () => {
      6→  return (
+     7→    <footer className={styles.wrapper}>
       →…
 website/src/components/Head/index.tsx
      1→import NextHead from 'next/head';

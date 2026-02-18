@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (477 words)
+budget: 500 (489 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -157,9 +157,13 @@ lib/main.js
     46→const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
    413→const DotenvModule = {
 tests/test-config-cli.js
-     6→function spawn …
+     6→function spawn (cmd, options = {}) {
+tests/test-config-vault.js
 tests/test-env-options.js
-    16→function options …
-    21→function testOption …
+    16→function options () {
+    21→function testOption (envVar, tmpVal, expect) {
+tests/test-parse-multiline.js
+tests/test-parse.js
+tests/test-populate.js
 tests/types/test.ts
      1→import { config, parse } from "dotenv";

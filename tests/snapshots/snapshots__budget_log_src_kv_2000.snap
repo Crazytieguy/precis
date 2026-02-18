@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1877 words)
+budget: 2000 (1935 words)
 
 error.rs
      1→use std::fmt;
@@ -127,6 +127,14 @@ source.rs
     35→///     }
     36→/// }
     37→///
+    38→/// // A source with 3 key-values
+    39→/// // Common collection types implement the `Source` trait
+    40→/// let source = &[
+    41→///     ("a", 1),
+    42→///     ("b", 2),
+    43→///     ("c", 3),
+    44→/// ];
+    45→///
       →…
     51→pub trait Source {
     52→    /// Visit key-values.
@@ -232,6 +240,14 @@ value.rs
     59→/// The `ToValue` trait can be used to capture values generically.
     60→/// It's the bound used by `Source`.
     61→///
+    62→/// ```
+    63→/// # use log::kv::ToValue;
+    64→/// let value = 42i32.to_value();
+    65→///
+    66→/// assert_eq!(Some(42), value.to_i64());
+    67→/// ```
+    68→///
+    69→/// ## Using the standard `From` trait
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,

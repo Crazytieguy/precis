@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3589 words)
+budget: 4000 (3927 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -62,17 +62,25 @@ README.md
 examples/bench.rs
      1→use std::mem::size_of;
      3→use once_cell::sync::OnceCell;
+     5→const N_THREADS …
+     6→const N_ROUNDS …
+     8→static CELL …
     10→fn main() {
     23→fn thread_main(i: usize) {
 examples/bench_acquire.rs
      5→use once_cell::sync::OnceCell;
      6→use std::sync::atomic::{AtomicUsize, Ordering};
+     8→const N_THREADS …
+     9→const N_ROUNDS …
+    11→static CELL …
+    12→static OTHER …
     14→fn main() {
     25→#[inline(never)]
     26→fn thread_main(i: usize) {
 examples/lazy_static.rs
      3→use once_cell::sync::{Lazy, OnceCell};
      4→use std::collections::HashMap;
+     6→static HASHMAP …
     15→fn hashmap() -> &'static HashMap<u32, &'static str> {
     26→fn main() {
 examples/reentrant_init_deadlocks.rs
@@ -91,6 +99,10 @@ examples/regex.rs
     41→fn main() {
 examples/test_synchronization.rs
     10→use once_cell::sync::OnceCell;
+    12→const N_THREADS …
+    13→const N_ROUNDS …
+    15→static CELLS …
+    16→static RESULT …
     18→fn main() {
     30→fn thread_main(i: usize) {
 src/imp_cs.rs
@@ -105,7 +117,14 @@ src/imp_cs.rs
     12→    value: Mutex<unsync::OnceCell<T>>,
     13→}
     27→    pub(crate) const fn new() -> OnceCell<T> {
+    28→        OnceCell { initialized: AtomicBool::new(false), value: Mutex::new(unsync::OnceCell::new()) }
+    29→    }
     31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+    32→        OnceCell {
+    33→            initialized: AtomicBool::new(true),
+    34→            value: Mutex::new(unsync::OnceCell::with_value(value)),
+    35→        }
+    36→    }
     38→    #[inline]
     39→    pub(crate) fn is_initialized(&self) -> bool {
     43→    #[cold]
@@ -139,7 +158,11 @@ src/imp_pl.rs
     13→const RUNNING: u8 = 0x1;
     14→const COMPLETE: u8 = 0x2;
     28→    pub(crate) const fn new() -> OnceCell<T> {
+    29→        OnceCell { state: AtomicU8::new(INCOMPLETE), value: UnsafeCell::new(None) }
+    30→    }
     32→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+    33→        OnceCell { state: AtomicU8::new(COMPLETE), value: UnsafeCell::new(Some(value)) }
+    34→    }
     36→    /// Safety: synchronizes with store to value via Release/Acquire.
     37→    #[inline]
     38→    pub(crate) fn is_initialized(&self) -> bool {
@@ -200,7 +223,11 @@ src/imp_std.rs
     24→    value: UnsafeCell<Option<T>>,
     25→}
     39→    pub(crate) const fn new() -> OnceCell<T> {
+    40→        OnceCell { queue: AtomicPtr::new(INCOMPLETE_PTR), value: UnsafeCell::new(None) }
+    41→    }
     43→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+    44→        OnceCell { queue: AtomicPtr::new(COMPLETE_PTR), value: UnsafeCell::new(Some(value)) }
+    45→    }
     47→    /// Safety: synchronizes with store to value via Release/(Acquire|SeqCst).
     48→    #[inline]
     49→    pub(crate) fn is_initialized(&self) -> bool {
@@ -268,6 +295,22 @@ src/imp_std.rs
    176→#[inline(never)]
    177→fn initialize_or_wait(queue: &AtomicPtr<Waiter>, mut init: Option<&mut dyn FnMut() -> bool>) {
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
+   211→    let curr_state = strict::addr(curr_queue) & STATE_MASK;
+   212→    loop {
+   213→        let node = Waiter {
+   214→            thread: Cell::new(Some(thread::current())),
+   215→            signaled: AtomicBool::new(false),
+   216→            next: strict::map_addr(curr_queue, |q| q & !STATE_MASK),
+   217→        };
+   218→        let me = &node as *const Waiter as *mut Waiter;
+   219→
+   220→        let exchange = queue.compare_exchange(
+   221→            curr_queue,
+   222→            strict::map_addr(me, |q| q | curr_state),
+   223→            Ordering::Release,
+   224→            Ordering::Relaxed,
+   225→        );
+      →…
    245→mod strict {
    246→    #[must_use]
    247→    #[inline]
@@ -275,6 +318,12 @@ src/imp_std.rs
    249→    where
    250→        T: Sized,
    251→    {
+   252→        // FIXME(strict_provenance_magic): I am magic and should be a compiler intrinsic.
+   253→        // SAFETY: Pointer-to-integer transmutes are valid (if you are okay with losing the
+   254→        // provenance).
+   255→        unsafe { core::mem::transmute(ptr) }
+   256→    }
+   257→
    258→    #[must_use]
    259→    #[inline]
    260→    pub(crate) fn with_addr<T>(ptr: *mut T, addr: usize) -> *mut T
@@ -331,9 +380,19 @@ src/lib.rs
    413→        inner: UnsafeCell<Option<T>>,
    414→    }
    415→
+   416→    // Similarly to a `Sync` bound on `sync::OnceCell`, we can use
+   417→    // `&unsync::OnceCell` to sneak a `T` through `catch_unwind`,
+   418→    // by initializing the cell in closure and extracting the value in the
+   419→    // `Drop`.
+   420→    impl<T: RefUnwindSafe + UnwindSafe> RefUnwindSafe for OnceCell<T> {}
+   421→    impl<T: UnwindSafe> UnwindSafe for OnceCell<T> {}
+   422→
+   423→    impl<T> Default for OnceCell<T> {
    424→        fn default() -> Self {
    425→            Self::new()
    426→        }
+   427→    }
+   428→
    430→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
    431→            match self.get() {
    432→                Some(v) => f.debug_tuple("OnceCell").field(v).finish(),
@@ -456,9 +515,13 @@ src/lib.rs
    899→    /// assert_eq!(value.unwrap().as_str(), "Hello, World!");
    900→    /// ```
    901→    pub struct OnceCell<T>(Imp<T>);
+   902→
+   903→    impl<T> Default for OnceCell<T> {
    904→        fn default() -> OnceCell<T> {
    905→            OnceCell::new()
    906→        }
+   907→    }
+   908→
    910→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
    911→            match self.get() {
    912→                Some(v) => f.debug_tuple("OnceCell").field(v).finish(),
@@ -567,7 +630,9 @@ src/lib.rs
   1402→    /// struct S(*mut ());
   1403→    /// unsafe impl Sync for S {}
   1404→    ///
-      →…
+  1405→    /// fn share<T: Sync>(_: &T) {}
+  1406→    /// share(&once_cell::sync::Lazy::<S>::new(|| unimplemented!()));
+  1407→    /// ```
   1408→    fn _dummy() {}
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
@@ -660,7 +725,9 @@ src/race.rs
    341→    ///     core::mem::swap(&mut l, &mut r);
    342→    /// }
    343→    ///
-      →…
+   344→    /// // l now contains a dangling reference to y
+   345→    /// eprintln!("uaf: {}", l.get().unwrap());
+   346→    /// ```
    347→    fn _dummy() {}
    351→pub use self::once_box::OnceBox;
    353→#[cfg(feature = "alloc")]
@@ -688,12 +755,16 @@ src/race.rs
    375→        }
    376→    }
    377→
+   378→    impl<T> Drop for OnceBox<T> {
    379→        fn drop(&mut self) {
    380→            let ptr = *self.inner.get_mut();
    381→            if !ptr.is_null() {
    382→                drop(unsafe { Box::from_raw(ptr) })
    383→            }
    384→        }
+   385→    }
+   386→
+   387→    impl<T> OnceBox<T> {
    389→        pub const fn new() -> Self {
    394→        pub fn with_value(value: Box<T>) -> Self {
    399→        pub fn get(&self) -> Option<&T> {
@@ -725,10 +796,14 @@ src/race.rs
    497→    fn _dummy() {}
 tests/it/main.rs
      1→mod unsync_once_cell;
+     2→#[cfg(any(feature = "std", feature = "critical-section"))]
      3→mod sync_once_cell;
      5→mod unsync_lazy;
+     6→#[cfg(any(feature = "std", feature = "critical-section"))]
      7→mod sync_lazy;
+     9→#[cfg(feature = "race")]
     10→mod race;
+    11→#[cfg(all(feature = "race", feature = "alloc"))]
     12→mod race_once_box;
 tests/it/race.rs
      2→use std::sync::Barrier;

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3884 words)
+budget: 4000 (3987 words)
 
 CHANGELOG.md
      1→# 1.8.0 (Nov 28, 2025)
@@ -302,6 +302,9 @@ constraint.go
    182→	case "=":
    183→		cop = constraintOperation{op: equal, f: constraintEqual}
    184→	case "!=":
+   185→		cop = constraintOperation{op: notEqual, f: constraintNotEqual}
+   186→	case ">":
+   187→		cop = constraintOperation{op: greaterThan, f: constraintGreaterThan}
       →…
    208→func prereleaseCheck(v, c *Version) bool {
    209→	switch vPre, cPre := v.Prerelease() != "", c.Prerelease() != ""; {
@@ -319,7 +322,9 @@ constraint.go
    221→		// OK, except with the pessimistic operator
    222→	case !cPre && !vPre:
    223→		// OK
-      →…
+   224→	}
+   225→	return true
+   226→}
    228→//-------------------------------------------------------------------
    229→// Constraint functions
    230→//-------------------------------------------------------------------
@@ -368,6 +373,9 @@ constraint.go
    281→	cs := len(c.segments)
    282→
    283→	// If the version being checked has less specificity than the constraint, then there
+   284→	// is no way for the version to be valid against the constraint
+   285→	if cs > len(v.segments) {
+   286→		return false
       →…
 constraint_test.go
      6→import (
@@ -483,6 +491,9 @@ version.go
     87→
     88→		segments[i] = val
     89→	}
+    90→
+    91→	// Even though we could support more than three segments, if we
+    92→	// got less than three, pad it with 0s. This is to cover the basic
       →…
    112→// Must is a helper that wraps a call to a function returning (*Version, error)
    113→// and panics if error is non-nil.
@@ -604,6 +615,9 @@ version.go
    233→	otherNumeric := true
    234→	otherInt, err = strconv.ParseInt(preOther, 10, 64)
    235→	if err != nil {
+   236→		otherNumeric = false
+   237→	}
+   238→
       →…
    267→func comparePrereleases(v string, other string) int {
    268→	// the same pre release!
@@ -621,6 +635,9 @@ version.go
    280→	biggestLen := otherPreReleaseLen
    281→	if selfPreReleaseLen > otherPreReleaseLen {
    282→		biggestLen = selfPreReleaseLen
+   283→	}
+   284→
+   285→	// loop for parts to find the first difference
       →…
    307→// Core returns a new version constructed from only the MAJOR.MINOR.PATCH
    308→// segments of the version, without prerelease or metadata.
@@ -719,6 +736,9 @@ version.go
    412→
    413→	if v.metadata != "" {
    414→		buf = append(buf, '+')
+   415→		buf = append(buf, v.metadata...)
+   416→	}
+   417→
       →…
    421→// Original returns the original parsed version as-is, including any
    422→// potential whitespace, `v` prefix, etc.

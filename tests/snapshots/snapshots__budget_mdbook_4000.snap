@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3830 words)
+budget: 4000 (3931 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -370,7 +370,6 @@ crates/mdbook-html/src/theme/mod.rs
     45→    pub(crate) toc_js: Vec<u8>,
     46→    pub(crate) toc_html: Vec<u8>,
     47→    pub(crate) chrome_css: Vec<u8>,
-    48→    pub(crate) general_css: Vec<u8>,
       →…
     63→impl Theme {
     64→    /// Creates a `Theme` from the given `theme_dir`.
@@ -502,6 +501,12 @@ crates/mdbook-renderer/src/lib.rs
     18→pub use mdbook_core::book;
     19→pub use mdbook_core::config;
     20→pub use mdbook_core::errors;
+    22→/// An mdbook backend.
+    23→///
+    24→/// Types that implement the `Renderer` trait can be used with
+    25→/// [`MDBook::with_renderer`] to programmatically add renderers.
+    26→///
+    27→/// [`MDBook::with_renderer`]: https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html#method.with_renderer
     28→pub trait Renderer {
     29→    /// The `Renderer`'s name.
     30→    fn name(&self) -> &str;
@@ -509,11 +514,32 @@ crates/mdbook-renderer/src/lib.rs
     32→    /// Invoke the `Renderer`, passing in all the necessary information for
     33→    /// describing a book.
     34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
+    35→}
+    37→/// The context provided to all renderers.
+    38→#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+    39→#[non_exhaustive]
     40→pub struct RenderContext {
     41→    /// Which version of `mdbook` did this come from (as written in `mdbook`'s
     42→    /// `Cargo.toml`). Useful if you know the renderer is only compatible with
     43→    /// certain versions of `mdbook`.
-      →…
+    44→    pub version: String,
+    45→    /// The book's root directory.
+    46→    pub root: PathBuf,
+    47→    /// A loaded representation of the book itself.
+    48→    pub book: Book,
+    49→    /// The loaded configuration file.
+    50→    pub config: Config,
+    51→    /// Where the renderer *must* put any build artefacts generated. To allow
+    52→    /// renderers to cache intermediate results, this directory is not
+    53→    /// guaranteed to be empty or even exist.
+    54→    pub destination: PathBuf,
+    55→    /// Internal mapping of chapter titles.
+    56→    ///
+    57→    /// This is used internally by mdbook to compute custom chapter titles.
+    58→    /// This should not be used outside of mdbook's internals.
+    59→    #[serde(skip)]
+    60→    pub chapter_titles: HashMap<PathBuf, String>,
+    61→}
     63→impl RenderContext {
     64→    /// Create a new `RenderContext`.
     65→    pub fn new<P, Q>(root: P, book: Book, config: Config, destination: Q) -> RenderContext
@@ -567,7 +593,6 @@ crates/mdbook-summary/src/lib.rs
    109→    fn default() -> Self {
    110→        Link {
    111→            name: String::new(),
-   112→            location: Some(PathBuf::new()),
       →…
    122→pub enum SummaryItem {
    123→    /// A link to a chapter.
@@ -611,8 +636,6 @@ examples/nop-preprocessor.rs
     78→    /// A no-op preprocessor.
     79→    pub struct Nop;
 examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs
-examples/remove-emphasis/src/SUMMARY.md
-examples/remove-emphasis/src/chapter_1.md
 guide/guide-helper/src/lib.rs
      3→use mdbook_preprocessor::book::Book;
      4→use mdbook_preprocessor::errors::Result;
@@ -936,14 +959,11 @@ src/main.rs
 tests/gui/books/all-summary/README.md
      1→# All summary …
 tests/gui/books/all-summary/src/part-1/chapter-1.md
-     1→# P1 C1 …
 tests/gui/books/all-summary/src/part-2/chapter-1.md
-     1→# P2 C1 …
 tests/gui/books/heading-nav/README.md
      1→# Heading nav …
 tests/gui/books/heading-nav-folded/src/intro.md
 tests/gui/books/heading-nav-folded/src/sub/inner/index.md
-     1→# Sub inner …
      3→## Inner chapter heading …
 tests/gui/books/highlighting/README.md
      1→# Syntax Highlighting …
@@ -956,8 +976,8 @@ tests/gui/books/redirect/README.md
      1→# Redirect …
 tests/gui/books/search/README.md
      1→# Search …
+tests/gui/books/search/src/chapter_1.md
 tests/gui/books/search/src/inner/chapter_2.md
-     1→# Chapter 2 …
 tests/gui/runner.rs
      7→use serde_json::Value;
 tests/testsuite/README.md
@@ -974,23 +994,15 @@ tests/testsuite/build/create_missing/src/SUMMARY.md
 tests/testsuite/build/missing_file/src/SUMMARY.md
      1→# Summary …
 tests/testsuite/includes/all_includes/src/relative/includes.md
-     1→# Relative Includes
-     3→{{#include ../sample.md}}
 tests/testsuite/includes/all_includes/src/rustdoc.md
 tests/testsuite/index/basic_readme/src/README.md
      1→# Intro …
 tests/testsuite/index/basic_readme/src/SUMMARY.md
-     1→# Summary
-     3→[Intro](./README.md)
-     4→
-      →…
+     1→# Summary …
 tests/testsuite/index/basic_readme/src/second/Readme.md
      1→# Second …
 tests/testsuite/init/init_from_summary/src/SUMMARY.md
-     1→# Summary
-     3→[intro](intro.md)
-     4→
-      →…
+     1→# Summary …
 tests/testsuite/main.rs
      7→mod book_test;
     22→mod search;
@@ -999,19 +1011,13 @@ tests/testsuite/markdown/basic_markdown/src/html.md
      9→**bigger**
     10→
     11→comment
-    12→
-    13→-->
-    14→
+      →…
 tests/testsuite/markdown/custom_header_attributes/src/SUMMARY.md
 tests/testsuite/markdown/custom_header_attributes/src/custom_header_attributes.md
 tests/testsuite/markdown/footnotes/src/footnotes.md
-     1→# Footnote tests …
 tests/testsuite/markdown/smart_punctuation/src/smart_punctuation.md
-     1→# Smart Punctuation …
 tests/testsuite/markdown/strikethrough/src/strikethrough.md
-     1→# Strikethrough
-     3→~~strikethrough example~~
-     4→
+     1→# Strikethrough …
 tests/testsuite/markdown/tables/src/tables.md
      1→# Tables …
 tests/testsuite/markdown/tasklists/src/tasklists.md
@@ -1022,14 +1028,12 @@ tests/testsuite/print/relative_links/src/SUMMARY.md
      1→# Summary …
 tests/testsuite/print/relative_links/src/second/nested.md
 tests/testsuite/renderer/backends_receive_render_context_via_stdin/src/chapter_1.md
-     1→# Chapter 1 …
 tests/testsuite/rendering/first_chapter_is_copied_as_index_even_if_not_first_elem/src/SUMMARY.md
 tests/testsuite/rendering/header_links/src/SUMMARY.md
 tests/testsuite/rendering/header_links/src/header_links.md
 tests/testsuite/rendering/html_blocks/src/SUMMARY.md
      1→# Summary …
 tests/testsuite/search/disable_search_chapter/src/second/nested.md
-     1→# Second Nested …
 tests/testsuite/search/reasonable_search_index/src/SUMMARY.md
 tests/testsuite/search/reasonable_search_index/src/first/duplicate-headers.md
      7→# Header Text …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (467 words)
+budget: 500 (482 words)
 
 AGENTS.md
      1→# AGENTS.md …
@@ -25,7 +25,6 @@ docs/conf.py
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
-docs/examples/eggsample/eggsample/__init__.py
 docs/examples/eggsample/eggsample/hookspecs.py
      8→def eggsample_add_ingredients(ingredients: tuple):
     17→def eggsample_prep_condiments(condiments: dict):
@@ -34,13 +33,11 @@ docs/examples/eggsample/eggsample/host.py
 docs/examples/eggsample/eggsample/lib.py
      5→def eggsample_add_ingredients():
     13→def eggsample_prep_condiments(condiments):
-docs/examples/eggsample/setup.py
 docs/examples/eggsample-spam/eggsample_spam.py
      4→@eggsample.hookimpl
      5→def eggsample_add_ingredients(ingredients):
     14→@eggsample.hookimpl
     15→def eggsample_prep_condiments(condiments):
-docs/examples/eggsample-spam/setup.py
 docs/examples/toy-example.py
      1→import pluggy
      8→class MySpec:
@@ -56,7 +53,13 @@ docs/examples/toy-example.py
     28→    @hookimpl
     29→    def myhook(self, arg1, arg2):
 scripts/release.py
+    15→def create_branch …
+    30→def get_upstream …
+    39→def pre_release …
+    50→def changelog …
+    59→def main …
 scripts/towncrier-draft-to-file.py
+     5→def main …
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1917 words)
+budget: 2000 (1932 words)
 
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
@@ -357,6 +357,11 @@ race.rs
    365→
    366→    impl<T> core::fmt::Debug for OnceBox<T> {
    367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+   368→            write!(f, "OnceBox({:?})", self.inner.load(Ordering::Relaxed))
+   369→        }
+   370→    }
+   371→
+   372→    impl<T> Default for OnceBox<T> {
    373→        fn default() -> Self {
    379→        fn drop(&mut self) {
    389→        pub const fn new() -> Self {

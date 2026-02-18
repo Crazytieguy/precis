@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1898 words)
+budget: 2000 (1958 words)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -228,10 +228,24 @@ kv/value.rs
   1085→    pub fn capture_serde …
   1095→    pub fn capture_sval …
   1123→pub use VisitValue as Visit;
+  1125→/// Get a value from a type implementing `std::fmt::Debug`.
+  1126→#[cfg(feature = "kv_unstable")]
+      →…
   1129→macro_rules! as_debug {
+  1135→/// Get a value from a type implementing `std::fmt::Display`.
+  1136→#[cfg(feature = "kv_unstable")]
+      →…
   1139→macro_rules! as_display {
+  1145→/// Get a value from an error.
+  1146→#[cfg(feature = "kv_unstable_std")]
+      →…
   1149→macro_rules! as_error {
+  1157→/// Get a value from a type implementing `serde::Serialize`.
+  1158→#[macro_export]
   1159→macro_rules! as_serde {
+  1165→/// Get a value from a type implementing `sval::Value`.
+  1166→#[cfg(feature = "kv_unstable_sval")]
+      →…
   1169→macro_rules! as_sval {
 lib.rs
    399→use std::cfg;

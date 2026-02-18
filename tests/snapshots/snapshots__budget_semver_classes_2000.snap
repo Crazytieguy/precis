@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1761 words)
+budget: 2000 (1854 words)
 
 comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -59,6 +59,9 @@ comparator.js
     55→  }
     56→
     57→  toString () {
+    58→    return this.value
+    59→  }
+    60→
     61→  test (version) {
     62→    debug('Comparator.test', version, this.options.loose)
     63→
@@ -72,7 +75,10 @@ comparator.js
     71→      } catch (er) {
     72→        return false
     73→      }
-      →…
+    74→    }
+    75→
+    76→    return cmp(version, this.operator, this.semver, this.options)
+    77→  }
     79→  intersects (comp, options) {
     80→    if (!(comp instanceof Comparator)) {
     81→      throw new TypeError('a Comparator is required')
@@ -142,20 +148,26 @@ range.js
     56→      this.set = this.set.filter(c => !isNullSet(c[0]))
     57→      if (this.set.length === 0) {
     58→        this.set = [first]
+    59→      } else if (this.set.length > 1) {
+    60→        // if we have any that are *, then the range is just *
+    61→        for (const c of this.set) {
+    62→          if (c.length === 1 && isAny(c[0])) {
+    63→            this.set = [c]
+    64→            break
+    65→          }
+    66→        }
+    67→      }
+    68→    }
+    69→
+    70→    this.formatted = undefined
+    71→  }
+    72→
     73→  get range () {
     74→    if (this.formatted === undefined) {
     75→      this.formatted = ''
     76→      for (let i = 0; i < this.set.length; i++) {
     77→        if (i > 0) {
     78→          this.formatted += '||'
-    79→        }
-    80→        const comps = this.set[i]
-    81→        for (let k = 0; k < comps.length; k++) {
-    82→          if (k > 0) {
-    83→            this.formatted += ' '
-    84→          }
-    85→          this.formatted += comps[k].toString().trim()
-      →…
     92→  format () {
     93→    return this.range
     94→  }
@@ -324,13 +336,26 @@ semver.js
     59→      throw new TypeError('Invalid patch version')
     60→    }
     61→
+    62→    // numberify any prerelease numeric ids
+    63→    if (!m[4]) {
+    64→      this.prerelease = []
+    65→    } else {
+    66→      this.prerelease = m[4].split('.').map((id) => {
+    67→        if (/^[0-9]+$/.test(id)) {
+    68→          const num = +id
+    69→          if (num >= 0 && num < MAX_SAFE_INTEGER) {
+    70→            return num
+    71→          }
+    72→        }
+    73→        return id
+    74→      })
+    75→    }
+    76→
+    77→    this.build = m[5] ? m[5].split('.') : []
+    78→    this.format()
+    79→  }
+    80→
     81→  format () {
-    82→    this.version = `${this.major}.${this.minor}.${this.patch}`
-    83→    if (this.prerelease.length) {
-    84→      this.version += `-${this.prerelease.join('.')}`
-    85→    }
-    86→    return this.version
-    87→  }
     89→  toString () {
     90→    return this.version
     91→  }

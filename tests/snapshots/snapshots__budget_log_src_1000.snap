@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (967 words)
+budget: 1000 (986 words)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -14,11 +14,13 @@ __private_api.rs
     15→        fn into_kvs(self) -> Option<&'a [(&'a str, super::Value<'a>)]>;
     16→    }
     39→pub struct GlobalLogger;
+    56→fn log_impl …
    112→#[cfg(feature = "kv")]
    113→mod kv_support {
    114→    use crate::kv;
    115→
    116→    pub type Value<'a> = kv::Value<'a>;
+   117→
    151→pub use self::kv_support::*;
 kv/error.rs
      5→pub struct Error {
@@ -167,6 +169,9 @@ lib.rs
    423→}
    425→#[cfg(not(target_has_atomic = "ptr"))]
    426→impl AtomicUsize {
+   427→    const fn new …
+   431→    fn load …
+   435→    fn store …
    442→#[cfg(not(target_has_atomic = "ptr"))]
    443→unsafe impl Sync for AtomicUsize {}
    475→pub enum Level {
@@ -175,12 +180,14 @@ lib.rs
    478→    /// Designates very serious errors.
       →…
    516→    type Err = ParseLevelError;
+   535→    fn from_usize …
    636→pub enum LevelFilter {
    637→    /// A level lower than all log levels.
    638→    Off,
    639→    /// Corresponds to the `Error` log level.
       →…
    666→    type Err = ParseLevelError;
+   685→    fn from_usize …
    780→#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
    781→enum MaybeStaticStr<'a> {
    782→    Static(&'static str),
@@ -189,7 +196,6 @@ lib.rs
    787→    #[inline]
    788→    fn get(&self) -> &'a str {
    789→        match *self {
-   790→            MaybeStaticStr::Static(s) => s,
       →…
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
@@ -233,7 +239,6 @@ lib.rs
   1485→    F: FnOnce() -> &'static dyn Log,
   1486→{
   1487→    match STATE.compare_exchange(
-  1488→        UNINITIALIZED,
       →…
   1549→pub struct SetLoggerError(());
   1558→#[cfg(feature = "std")]

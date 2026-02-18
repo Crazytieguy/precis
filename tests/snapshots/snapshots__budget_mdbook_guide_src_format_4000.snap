@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3944 words)
+budget: 4000 (4064 words)
 
 README.md
      1→# Format
@@ -141,7 +141,7 @@ configuration/preprocessors.md
     41→[preprocessor.example]
     42→some-extra-feature = true
     43→```
-      →…
+    44→
     45→## Locking a preprocessor dependency to a renderer
     47→You can explicitly specify that a preprocessor should run for a renderer by
     48→binding the two together.
@@ -180,7 +180,9 @@ configuration/preprocessors.md
     94→```
     95→
     96→It would also be possible, though redundant, to specify both of the above in the same config file.
-      →…
+    97→
+    98→Preprocessors having the same priority specified through `before` and `after` are sorted by name.
+    99→Any infinite loops will be detected and produce an error.
 configuration/renderers.md
      1→# Configuring Renderers
      3→Renderers (also called "backends") are responsible for creating the output of the book.
@@ -217,6 +219,20 @@ configuration/renderers.md
     35→[output.wordcount]
     36→ignores = ["Example Chapter"]
     37→```
+    38→
+    39→If you define any `[output]` tables, then the `html` backend is not enabled by default.
+    40→If you want to keep the `html` backend running, then just include it in the `book.toml` file.
+    41→For example:
+    42→
+    43→```toml
+    44→[book]
+    45→title = "My Awesome Book"
+    46→
+    47→[output.wordcount]
+    48→
+    49→[output.html]
+    50→```
+    51→
       →…
     59→### Custom backend commands …
     71→### Optional backends …
@@ -237,6 +253,20 @@ configuration/renderers.md
     99→preferred-dark-theme = "navy"
    100→smart-punctuation = true
    101→definition-lists = true
+   102→admonitions = true
+   103→mathjax-support = false
+   104→additional-css = ["custom.css", "custom2.css"]
+   105→additional-js = ["custom.js"]
+   106→no-section-label = false
+   107→git-repository-url = "https://github.com/rust-lang/mdBook"
+   108→git-repository-icon = "fab-github"
+   109→edit-url-template = "https://github.com/rust-lang/mdBook/edit/master/guide/{path}"
+   110→site-url = "/example-book/"
+   111→cname = "myproject.rs"
+   112→input-404 = "not-found.md"
+   113→sidebar-header-nav = true
+   114→```
+   115→
       →…
    176→### `[output.html.print]` …
    191→### `[output.html.fold]` …
@@ -273,7 +303,7 @@ configuration/renderers.md
    340→only whether it is enabled or disabled.
    341→
    342→See [the preprocessors documentation](preprocessors.md) for how to
-      →…
+   343→specify which preprocessors should run before the Markdown renderer.
 example.rs
      1→fn main() {
      2→    println!("Hello World!");
