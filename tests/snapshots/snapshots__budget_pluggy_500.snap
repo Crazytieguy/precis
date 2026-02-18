@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (459 words)
+budget: 500 (470 words)
 
 AGENTS.md
      1→# AGENTS.md …
@@ -85,14 +85,19 @@ pyproject.toml
    112→[tool.mypy …
 
 scripts/release.py
+    15→def create_branch …
+    30→def get_upstream …
+    39→def pre_release …
+    50→def changelog …
+    59→def main …
 
 scripts/towncrier-draft-to-file.py
+     5→def main …
 
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
      3→    "PluginManager",
-     4→    "PluginValidationError",
       →…
 
 src/pluggy/_callers.py
@@ -138,7 +143,6 @@ src/pluggy/_hooks.py
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [
    621→            impl
-   622→            for impl in self._orig._hookimpls
       →…
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]

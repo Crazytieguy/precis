@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (974 words)
+budget: 1000 (976 words)
 
 docs/conf.py
      2→from importlib.metadata import version as get_version
@@ -42,6 +42,8 @@ src/typeguard/_checkers.py
    101→    "__and__",
    102→    "__cmp__",
    103→    "__divmod__",
+   104→    "__div__",
+   105→    "__eq__",
       →…
    586→def _is_literal_type(typ: object) -> bool:
   1004→# Equality checks are applied to these
@@ -50,6 +52,8 @@ src/typeguard/_checkers.py
   1007→] = {
   1008→    bytes: check_byteslike,
   1009→    AbstractSet: check_set,
+  1010→    BinaryIO: check_io,
+  1011→    Callable: check_callable,
       →…
 
 src/typeguard/_config.py
@@ -244,6 +248,7 @@ src/typeguard/_transformer.py
    522→        self._memo = new_memo
    523→
    524→        if isinstance(node, (FunctionDef, AsyncFunctionDef)):
+   525→            new_memo.should_instrument = (
       →…
    570→    def _get_import(self, module: str, name: str) -> Name:
    580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
@@ -274,7 +279,6 @@ tests/dummymodule.py
    305→class OverrideClass:
    364→# Regression test for #536 - forward reference evaluation on Python 3.14
    365→class ModuleLocalClass:
-   366→    """A class only available in this module's namespace, not the caller's."""
 
 tests/dummymodule_py312.py
     16→@typechecked

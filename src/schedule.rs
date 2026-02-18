@@ -305,8 +305,14 @@ pub struct SymbolCosts {
     pub name_words: usize,
     /// Additional words for full signature beyond the name line.
     pub signature_words: usize,
-    /// Words per doc comment line (ordered).
+    /// Words per doc comment line (ordered). For Python symbols with both
+    /// pre-symbol `#` comments and post-signature docstrings, this is the
+    /// concatenation of both sections (pre-comments first, then docstring lines).
     pub doc_line_words: Vec<usize>,
+    /// Number of pre-symbol comment lines in `doc_line_words`. The renderer
+    /// emits pre-comments and docstrings as separate sections with a signature
+    /// in between, so truncation markers must account for this split point.
+    pub pre_doc_count: usize,
     /// Words per body line (ordered).
     pub body_line_words: Vec<usize>,
     /// Whether the symbol's body contains nested symbols (e.g., class methods).
@@ -512,6 +518,7 @@ fn compute_symbol_costs(
             doc_line_words.push(format::count_words(&format::fmt_line(i, line)));
         }
     }
+    let pre_doc_count = doc_line_words.len();
     // Python docstrings
     if layout.ds_end > layout.ds_start {
         for (i, line) in lines.iter().enumerate().take(layout.ds_end).skip(layout.ds_start) {
@@ -539,6 +546,7 @@ fn compute_symbol_costs(
         name_words,
         signature_words,
         doc_line_words,
+        pre_doc_count,
         body_line_words,
         body_has_nested: layout.has_children,
     }
@@ -1032,13 +1040,20 @@ fn stage_cost(group: &Group, stage: StageKind, n: usize) -> usize {
         StageKind::Names => group.symbols.iter().map(|s| s.name_words).sum(),
         StageKind::Signatures => group.symbols.iter().map(|s| s.signature_words).sum(),
         StageKind::Doc => {
-            line_stage_cost(group, n, |s| &s.doc_line_words, |_| true)
+            // Suppress truncation marker at the pre-comment/docstring split
+            // point. The renderer emits these as two sections separated by
+            // the signature; at n == pre_doc_count the pre-comments are fully
+            // shown (no marker) and the docstring hasn't started (no marker).
+            line_stage_cost(group, n, |s| &s.doc_line_words, |s, n| {
+                let total = s.doc_line_words.len();
+                !(total > s.pre_doc_count && n == s.pre_doc_count)
+            })
         }
         // Body truncation markers are suppressed for symbols with nested
         // children (e.g., class bodies containing individually-rendered
         // methods). Only count markers for symbols without nested children.
         StageKind::Body => {
-            line_stage_cost(group, n, |s| &s.body_line_words, |s| !s.body_has_nested)
+            line_stage_cost(group, n, |s| &s.body_line_words, |s, _n| !s.body_has_nested)
         }
     }
 }
@@ -1046,13 +1061,15 @@ fn stage_cost(group: &Group, stage: StageKind, n: usize) -> usize {
 /// Shared cost computation for line-based stages (Doc/Body).
 ///
 /// `get_lines` selects which line-words vector to read from each symbol.
-/// `show_marker` filters which symbols get truncation markers (always true
-/// for Doc; excludes nested-body symbols for Body).
+/// `show_marker` determines whether a symbol shows a truncation marker at
+/// a given line index `n`. For Body, this suppresses markers for symbols
+/// with nested children. For Doc, this suppresses the marker at the
+/// pre-comment/docstring boundary (see `pre_doc_count`).
 fn line_stage_cost(
     group: &Group,
     n: usize,
     get_lines: fn(&SymbolCosts) -> &Vec<usize>,
-    show_marker: fn(&SymbolCosts) -> bool,
+    show_marker: fn(&SymbolCosts, usize) -> bool,
 ) -> usize {
     let line_cost: usize = group
         .symbols
@@ -1062,13 +1079,13 @@ fn line_stage_cost(
     let markers_at_n = group
         .symbols
         .iter()
-        .filter(|s| get_lines(s).len() > n && show_marker(s))
+        .filter(|s| get_lines(s).len() > n && show_marker(s, n))
         .count();
     let markers_at_prev = if n >= 2 {
         group
             .symbols
             .iter()
-            .filter(|s| get_lines(s).len() > (n - 1) && show_marker(s))
+            .filter(|s| get_lines(s).len() > (n - 1) && show_marker(s, n - 1))
             .count()
     } else {
         0

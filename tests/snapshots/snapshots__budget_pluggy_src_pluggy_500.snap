@@ -2,14 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (475 words)
+budget: 500 (480 words)
 
 __init__.py
      1→__all__ = [
      2→    "__version__",
      3→    "PluginManager",
      4→    "PluginValidationError",
-     5→    "HookCaller",
       →…
 
 _callers.py
@@ -82,7 +81,8 @@ _hooks.py
    620→        return [
    621→            impl
    622→            for impl in self._orig._hookimpls
-      →…
+   623→            if impl.plugin not in self._remove_plugins
+   624→        ]
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    628→        return self._orig.spec

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (965 words)
+budget: 1000 (968 words)
 
 AGENTS.md
      1→# AGENTS.md …
@@ -27,6 +27,8 @@ docs/conf.py
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
+
+docs/examples/eggsample/eggsample/__init__.py
 
 docs/examples/eggsample/eggsample/hookspecs.py
      7→@hookspec
@@ -109,6 +111,7 @@ src/pluggy/__init__.py
      4→    "PluginValidationError",
      5→    "HookCaller",
      6→    "HookCallError",
+     7→    "HookspecOpts",
       →…
 
 src/pluggy/_callers.py
