@@ -4,6 +4,8 @@ expression: output
 ---
 budget: 1000 (997 tokens)
 
+CHANGELOG.md
+
 Cargo.toml
 
 README.md
@@ -86,7 +88,6 @@ src/lib.rs
   1483→fn set_logger_inner …
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
-  1599→#[doc(hidden)]
   1600→pub mod __private_api;
   1602→/// The statically resolved maximum log level.
   1603→///
@@ -114,5 +115,7 @@ test_max_level_features/main.rs
     18→    fn enabled(&self, _: &Metadata) -> bool {
     22→    fn log(&self, record: &Record) {
     26→    fn flush(&self) {}
+
+tests/macros.rs
 
 triagebot.toml

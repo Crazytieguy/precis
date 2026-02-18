@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2008 tokens)
+budget: 2000 (2017 tokens)
 
 Cargo.toml
      1→[package]
@@ -49,9 +49,7 @@ src/chain.rs
 
 src/context.rs
      7→use crate::nightly::{self, Request};
-     9→mod ext {
     12→    pub trait StdError {
-   186→pub(crate) mod private {
    189→    pub trait Sealed {}
 
 src/ensure.rs
@@ -80,28 +78,26 @@ src/kind.rs
     58→pub trait AdhocKind: Sized {
     77→pub struct Trait;
     80→pub trait TraitKind: Sized {
+    99→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    100→pub struct Boxed;
    104→pub trait BoxedKind: Sized {
 
 src/lib.rs
    251→#[macro_use]
    252→mod backtrace;
-   253→mod chain;
-   254→mod context;
-   255→mod ensure;
-   256→mod error;
-   257→mod fmt;
-   258→mod kind;
-   259→mod macros;
    260→#[cfg(error_generic_member_access)]
    261→mod nightly;
-   262→mod ptr;
-   263→mod wrapper;
    279→trait StdError: Debug + Display {
    286→pub use anyhow as format_err;
+   288→/// The `Error` type, a wrapper around a dynamic error type.
+   289→///
+      →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
    392→}
+   394→/// Iterator of a chain of source errors.
+   395→///
+      →…
    415→pub struct Chain<'a> {
    416→    state: crate::chain::ChainState<'a>,
    417→}
@@ -130,21 +126,19 @@ src/lib.rs
    441→/// ```
    442→/// # pub trait Deserialize {}
    443→/// #
-   444→/// # mod serde_json {
       →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
+   470→/// Provides the `context` method for `Result`.
+   471→///
+      →…
    616→pub trait Context<T, E>: context::private::Sealed {
    655→#[doc(hidden)]
    656→pub mod __private {
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
-   665→    pub use alloc::format;
-   667→    pub use core::result::Result::Err;
-   669→    pub use core::{concat, format_args, stringify};
    671→    #[doc(hidden)]
    672→    pub mod kind {
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    678→        pub use crate::kind::BoxedKind;
-   708→    mod not {
    710→        pub trait Bool {
 
 src/macros.rs
@@ -157,12 +151,14 @@ src/nightly.rs
     10→pub use core::error::Request;
 
 src/ptr.rs
+     5→#[repr(transparent)]
      6→pub struct Own<T>
      7→where
      8→    T: ?Sized,
      9→{
     10→    pub ptr: NonNull<T>,
     11→}
+    63→#[repr(transparent)]
     64→pub struct Ref<'a, T>
     65→where
     66→    T: ?Sized,
@@ -170,6 +166,7 @@ src/ptr.rs
     68→    pub ptr: NonNull<T>,
     69→    lifetime: PhantomData<&'a T>,
     70→}
+   124→#[repr(transparent)]
    125→pub struct Mut<'a, T>
    126→where
    127→    T: ?Sized,
@@ -184,13 +181,15 @@ src/ptr.rs
 
 src/wrapper.rs
      8→use crate::nightly::{self, Request};
+    10→#[repr(transparent)]
     11→pub struct MessageError<M>(pub M);
+    33→#[repr(transparent)]
     34→pub struct DisplayError<M>(pub M);
+    56→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+    57→#[repr(transparent)]
     58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
 
 tests/common/mod.rs
-
-tests/crate/Cargo.toml
 
 tests/crate/test.rs
      3→pub use anyhow::*;
@@ -234,5 +233,4 @@ tests/ui/ensure-nonbool.rs
     19→    fn not(self) -> Self::Output {
 
 tests/ui/no-impl.rs
-     3→#[derive(Debug)]
      4→struct Error;

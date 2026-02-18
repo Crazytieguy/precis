@@ -533,6 +533,19 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             }
         };
 
+        // Rust: #[doc(hidden)] items are technically `pub` (needed for macro
+        // internals, proc-macro bridges, etc.) but the crate author explicitly
+        // doesn't want them shown to users. Treat as non-public so the
+        // scheduler deprioritizes them.
+        let is_public = if is_public
+            && lang == Lang::Rust
+            && has_preceding_attribute(symbol_node, source, "#[doc(hidden)]")
+        {
+            false
+        } else {
+            is_public
+        };
+
         let is_first_party = if kind == SymbolKind::Import {
             is_first_party_import(&name, lang)
         } else {
@@ -1098,6 +1111,35 @@ pub(crate) struct CrateStruct {}
         assert!(names.contains(&("private", false)));
         assert!(names.contains(&("PubStruct", true)));
         assert!(names.contains(&("CrateStruct", false)));
+    }
+
+    #[test]
+    fn rust_doc_hidden_is_not_public() {
+        let source = r#"
+pub fn visible() {}
+
+#[doc(hidden)]
+pub fn hidden_fn() {}
+
+#[doc(hidden)]
+pub struct HiddenStruct {}
+
+#[doc(hidden)]
+pub mod __private {}
+
+pub struct NormalStruct {}
+"#;
+        let symbols = extract_symbols(Path::new("test.rs"), source);
+        let names: Vec<_> = symbols
+            .iter()
+            .map(|s| (s.name.as_str(), s.is_public))
+            .collect();
+
+        assert!(names.contains(&("visible", true)));
+        assert!(names.contains(&("hidden_fn", false)));
+        assert!(names.contains(&("HiddenStruct", false)));
+        assert!(names.contains(&("__private", false)));
+        assert!(names.contains(&("NormalStruct", true)));
     }
 
     #[test]

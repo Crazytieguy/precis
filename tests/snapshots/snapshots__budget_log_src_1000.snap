@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (1001 tokens)
 
 __private_api.rs
      7→pub use std::{format_args, module_path, stringify};
@@ -68,6 +68,7 @@ kv/value.rs
    743→        I64(i64),
    744→        U64(u64),
    745→        F64(f64),
+   746→        I128(i128),
       →        …
   1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
@@ -98,7 +99,6 @@ lib.rs
   1483→fn set_logger_inner …
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
-  1599→#[doc(hidden)]
   1600→pub mod __private_api;
   1602→/// The statically resolved maximum log level.
   1603→///

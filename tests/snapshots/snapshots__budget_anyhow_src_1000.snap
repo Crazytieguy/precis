@@ -2,12 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (982 tokens)
+budget: 1000 (995 tokens)
 
 backtrace.rs
+    11→macro_rules! impl_backtrace {
+    18→macro_rules! impl_backtrace {
+    25→macro_rules! backtrace {
+    32→macro_rules! backtrace {
+    39→macro_rules! backtrace_if_absent {
     53→macro_rules! backtrace_if_absent {
     64→macro_rules! backtrace_if_absent {
-    70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
 
 chain.rs
@@ -19,8 +23,9 @@ context.rs
    189→    pub trait Sealed {}
 
 ensure.rs
-    10→pub trait BothDebug {
-    25→pub trait NotBothDebug {
+   105→macro_rules! __parse_ensure {
+   886→macro_rules! __fancy_ensure {
+   912→macro_rules! __fallback_ensure {
 
 error.rs
      4→use crate::nightly::{self, Request};
@@ -32,16 +37,11 @@ fmt.rs
 kind.rs
     51→use crate::StdError;
     55→pub struct Adhoc;
-    58→pub trait AdhocKind: Sized {
     77→pub struct Trait;
-    80→pub trait TraitKind: Sized {
    100→pub struct Boxed;
-   104→pub trait BoxedKind: Sized {
 
 lib.rs
-   251→#[macro_use]
    252→mod backtrace;
-   260→#[cfg(error_generic_member_access)]
    261→mod nightly;
    286→pub use anyhow as format_err;
    390→pub struct Error {
@@ -61,23 +61,23 @@ lib.rs
    427→/// ```rust
    428→/// use anyhow::Result;
    429→///
+   430→/// # const IGNORE: &str = stringify! {
+   431→/// fn demo1() -> Result<T> {...}
+   432→///            // ^ equivalent to std::result::Result<T, anyhow::Error>
       →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    616→pub trait Context<T, E>: context::private::Sealed {
-   655→#[doc(hidden)]
    656→pub mod __private {
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
-   665→    pub use alloc::format;
-   667→    pub use core::result::Result::Err;
-   669→    pub use core::{concat, format_args, stringify};
-   671→    #[doc(hidden)]
    672→    pub mod kind {
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    678→        pub use crate::kind::BoxedKind;
-   710→        pub trait Bool {
 
 macros.rs
+    58→macro_rules! bail {
     70→macro_rules! __ensure {
+   204→macro_rules! anyhow {
+   230→macro_rules! __anyhow {
 
 nightly.rs
     10→pub use core::error::Request;
