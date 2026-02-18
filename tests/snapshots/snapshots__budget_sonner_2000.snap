@@ -2,10 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2132 tokens)
+budget: 2000 (2032 tokens)
 
 FUNDING.yml
-     1→github …
+     1→github: emilkowalski
 
 README.md
      5→## Usage
@@ -15,43 +15,28 @@ README.md
     10→npm install sonner
     11→```
     12→
+    13→Add `<Toaster />` to your app, it will be the place where all your toasts will be rendered.
+    14→After that you can use `toast()` from anywhere in your app.
+    15→
+    16→```jsx
+    17→import { Toaster, toast } from 'sonner';
+    18→
+    19→// ...
+    20→
+    21→function App() {
+    22→  return (
+    23→    <div>
       →…
     31→## Documentation
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
 
 package.json
-     2→  "name": "sonner",
-     3→  "version": "2.0.7",
-     4→  "description": "An opinionated toast component for React.",
-     5→  "exports": {
-    18→  },
-    19→  "main": "./dist/index.js",
-    20→  "types": "./dist/index.d.ts",
-    21→  "files": [
-    23→  ],
-    24→  "scripts": {
-    32→  },
-    33→  "keywords": [
-    39→  ],
-    40→  "author": "Emil Kowalski <e@emilkowal.ski>",
-    41→  "license": "MIT",
-    42→  "homepage": "https://sonner.emilkowal.ski/",
-    43→  "repository": {
-    46→  },
-    47→  "bugs": {
-    49→  },
-    50→  "devDependencies": {
-    60→  },
-    61→  "peerDependencies": {
-    64→  },
-    65→  "packageManager": "pnpm@9.15.9"
-    66→}
 
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
 
 pnpm-workspace.yaml
-     1→packages …
+     1→packages:
 
 src/assets.tsx
      2→import React from 'react';
@@ -88,12 +73,22 @@ src/index.tsx
    552→function useSonner() {
 
 src/state.ts
-     1→./types …
+     1→import type {
+     2→  ExternalToast,
+     3→  PromiseData,
+     4→  PromiseIExtendedResult,
+     5→  PromiseT,
+     6→  ToastT,
+     7→  ToastToDismiss,
+     8→  ToastTypes,
+     9→} from './types';
     11→import React from 'react';
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
     18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
     19→  toasts: Array<ToastT | ToastToDismiss>;
+    20→  dismissedToasts: Set<string | number>;
+    21→
     22→  constructor …
     29→  subscribe …
     38→  publish …
@@ -148,6 +143,9 @@ src/types.ts
    104→interface ToastOptions {
    105→  className?: string;
    106→  closeButton?: boolean;
+   107→  descriptionClassName?: string;
+   108→  style?: React.CSSProperties;
+   109→  cancelButtonStyle?: React.CSSProperties;
       →…
    118→type Offset =
    119→  | {
@@ -168,9 +166,9 @@ src/types.ts
    197→export type ExternalToast …
 
 test/README.md
-     3→## Getting Started …
-    25→## Learn More …
-    34→## Deploy on Vercel …
+     3→## Getting Started
+    25→## Learn More
+    34→## Deploy on Vercel
 
 test/package.json
 
@@ -185,27 +183,16 @@ test/src/app/page.tsx
      7→const promise …
      9→export default function Home({ searchParams }: any) {
 
-test/tests/basic.spec.ts
-
 test/tsconfig.json
 
 tsconfig.json
-     2→  "compilerOptions": {
-     8→  },
-     9→  "include": ["src"]
-    10→}
 
 turbo.json
-     2→  "$schema": "https://turbo.build/schema.json",
-     3→  "extends": ["//"],
-     4→  "pipeline": {
-    12→  }
-    13→}
 
 website/README.md
-     3→## Getting Started …
-    25→## Learn More …
-    34→## Deploy on Vercel …
+     3→## Getting Started
+    25→## Learn More
+    34→## Deploy on Vercel
 
 website/package.json
 
@@ -226,6 +213,7 @@ website/src/components/Hero/index.tsx
      6→export const Hero = () => {
 
 website/src/components/How/How.tsx
+     1→import React from 'react';
      3→export const How = () => {
 
 website/src/components/Installation/index.tsx
@@ -238,6 +226,7 @@ website/src/components/Other/Other.tsx
 
 website/src/components/Position/index.tsx
      2→import { CodeBlock } from '../CodeBlock';
+     5→const positions …
      7→export type Position = (typeof positions)[number];
      9→export const Position = ({
 

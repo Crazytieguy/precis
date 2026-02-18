@@ -486,19 +486,28 @@ fn compute_symbol_costs(
 ) -> SymbolCosts {
     let sym_line_0 = layout.sym_line_0;
 
-    // Name: token count of the formatted name line, plus 1 for the " …" suffix
-    // that the renderer appends to names-only entries. Including the ellipsis
-    // cost here keeps Names-only rendering in sync with the scheduler's budget.
-    // When Signatures are also included (no ellipsis rendered), the +1 is offset
-    // by a corresponding -1 in signature_words (since signature_words = sig_total
-    // - name_words), so the total Names+Signatures cost remains exact.
-    let name_line = format::format_symbol_name(sym, lines);
-    let name_words = format::count_tokens(&name_line) + 1;
+    let sig_end = layout.sig_end;
+    let is_section = sym.kind == parse::SymbolKind::Section;
+
+    let name_words = if is_section {
+        // Sections show the full heading/section line at Names stage (no
+        // truncation marker). Cost matches the signature line since headings
+        // are single-line.
+        let line = format::strip_heading_badges(lines.get(layout.sym_line_0).copied().unwrap_or(""));
+        format::count_tokens(&format::fmt_line(layout.sym_line_0, line))
+    } else {
+        // Token count of the formatted name line, plus 1 for the " …" suffix
+        // that the renderer appends to names-only entries. Including the
+        // ellipsis cost keeps Names-only rendering in sync with the budget.
+        // When Signatures are also included (no ellipsis rendered), the +1 is
+        // offset by a corresponding -1 in signature_words (sig_total -
+        // name_words), so the total Names+Signatures cost remains exact.
+        let name_line = format::format_symbol_name(sym, lines);
+        format::count_tokens(&name_line) + 1
+    };
 
     // Signature: additional tokens from showing full signature lines (with line numbers)
     // beyond what the name-only line shows.
-    let sig_end = layout.sig_end;
-    let is_section = sym.kind == parse::SymbolKind::Section;
     let mut sig_formatted_words = 0;
     for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
         // Strip trailing badges from markdown heading lines (matches renderer)

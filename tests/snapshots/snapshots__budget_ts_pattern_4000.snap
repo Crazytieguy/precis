@@ -2,14 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4198 tokens)
+budget: 4000 (4071 tokens)
 
 README.md
-    40→## About …
-    48→## Features …
-    59→## What is Pattern Matching? …
-    67→## Installation …
-    87→## Want to become a TypeScript Expert? …
+    40→## About
+    48→## Features
+    59→## What is Pattern Matching?
+    67→## Installation
+    87→## Want to become a TypeScript Expert?
     91→# Documentation
     93→- [Sandbox examples](#sandbox-examples)
     94→- [Getting Started](#getting-started)
@@ -20,15 +20,16 @@ README.md
     99→  - [`.returnType`](#returntype)
    100→  - [`.exhaustive`](#exhaustive)
    101→  - [`.otherwise`](#otherwise)
+   102→  - [`.narrow`](#narrow)
       →…
-   128→## Sandbox examples …
-   139→## Getting Started …
-   415→## API Reference …
-   742→## Patterns …
-  1405→## `P.string` predicates …
-  1500→## `P.number` and `P.bigint` predicates …
-  1621→## Types …
-  1766→## Inspirations …
+   128→## Sandbox examples
+   139→## Getting Started
+   415→## API Reference
+   742→## Patterns
+  1405→## `P.string` predicates
+  1500→## `P.number` and `P.bigint` predicates
+  1621→## Types
+  1766→## Inspirations
 
 benchmarks/package.json
 
@@ -43,46 +44,15 @@ examples/gif-fetcher/src/searchGif.ts
      2→import { API_KEY } from './constants';
      4→const delay …
      6→export function searchGif(query: string) {
+     7→  return fetch(
+      →…
 
 examples/one-file-demo/one-file-demo.ts
     79→const example3 …
 
 jsr.json
-     2→  "name": "@gabriel/ts-pattern",
-     3→  "version": "5.9.0",
-     4→  "exports": {
-     8→  }
-     9→}
 
 package.json
-     2→  "name": "ts-pattern",
-     3→  "version": "5.9.0",
-     4→  "description": " The exhaustive Pattern Matching library for TypeScript.",
-     5→  "type": "module",
-     6→  "sideEffects": false,
-     7→  "source": "src/index.ts",
-     8→  "exports": {
-    31→  },
-    32→  "types": "dist/index.d.ts",
-    33→  "main": "dist/index.cjs",
-    34→  "module": "dist/index.js",
-    35→  "unpkg": "dist/index.umd.js",
-    36→  "scripts": {
-    49→  },
-    50→  "files": [
-    53→  ],
-    54→  "repository": {
-    57→  },
-    58→  "keywords": [
-    67→  ],
-    68→  "author": "Gabriel Vergnaud",
-    69→  "license": "MIT",
-    70→  "bugs": {
-    72→  },
-    73→  "homepage": "https://github.com/gvergnaud/ts-pattern#readme",
-    74→  "devDependencies": {
-    82→  }
-    83→}
 
 src/errors.ts
      1→/**
@@ -103,6 +73,8 @@ src/internals/helpers.ts
     16→export const isMatcher = (
     17→  x: unknown
     18→): x is Matcher<unknown, unknown, MatcherType, SelectionType> => {
+    19→  const pattern = x as Matcher<unknown, unknown, MatcherType, SelectionType>;
+      →…
     24→const isOptionalPattern = (
     25→  x: unknown
     26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
@@ -111,7 +83,11 @@ src/internals/helpers.ts
     34→  value: any,
     35→  select: (key: string, value: unknown) => void
     36→): boolean => {
+    37→  if (isMatcher(pattern)) {
+      →…
    120→export const getSelectionKeys = (pattern: any): string[] => {
+   121→  if (isObject(pattern)) {
+      →…
    132→export const flatMap = <a, b>(
    133→  xs: readonly a[],
    134→  f: (v: a) => readonly b[]
@@ -159,6 +135,7 @@ src/is-matching.ts
 
 src/match.ts
     16→/**
+    17→ * `match` creates a **pattern matching expression**.
       →…
     32→export function match<const input, output = symbols.unset>(
     33→  value: input
@@ -206,6 +183,7 @@ src/patterns.ts
    133→  InvertPattern<pattern, input>
    134→>;
    177→/**
+   178→ * `P.optional(subpattern)` takes a sub pattern and returns a pattern which matches if the
       →…
    187→export function optional<
    188→  input,
@@ -218,18 +196,21 @@ src/patterns.ts
    362→export function map …
    445→export function record …
    517→/**
+   518→ * `P.intersection(...patterns)` returns a pattern which matches
       →…
    536→export function intersection<
    537→  input,
    538→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
    539→>(...patterns: patterns): Chainable<AndP<input, patterns>> {
    559→/**
+   560→ * `P.union(...patterns)` returns a pattern which matches
       →…
    572→export function union<
    573→  input,
    574→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
    575→>(...patterns: patterns): Chainable<OrP<input, patterns>> {
    599→/**
+   600→ * `P.not(pattern)` returns a pattern which matches if the sub pattern
       →…
    611→export function not<
    612→  input,
@@ -268,6 +249,7 @@ src/patterns.ts
       →…
   1241→export const nonNullable: NonNullablePattern = chainable(when(isNonNullable));
   1243→/**
+  1244→ * `P.instanceOf(SomeClass)` is a pattern matching instances of a given class.
       →…
   1251→export function instanceOf<T extends AnyConstructor>(
   1252→  classConstructor: T
@@ -280,11 +262,13 @@ src/types/DeepExclude.ts
 
 src/types/DistributeUnions.ts
     17→/**
+    18→ * DistributeMatchingUnions takes two arguments:
       →…
     41→export type DistributeMatchingUnions<a, p> = IsAny<a> extends true
     42→  ? any
     43→  : BuildMany<a, Distribute<FindUnionsMany<a, p>>>;
     62→/**
+    63→ * The reason we don't look further down the tree with lists,
       →…
     80→export type FindUnions<
     81→  a,
@@ -306,11 +290,13 @@ src/types/FindSelected.ts
 
 src/types/InvertPattern.ts
    101→/**
+   102→ * ### InvertPatternInternal
       →…
    106→export type InvertPattern<p, input> = Equal<Pattern<input>, p> extends true
    107→  ? never
    108→  : InvertPatternInternal<p, input>;
    300→/**
+   301→ * ### InvertPatternForExclude
       →…
    303→export type InvertPatternForExclude<p, i> = Equal<Pattern<i>, p> extends true
    304→  ? never
@@ -326,6 +312,7 @@ src/types/Match.ts
     15→  __nonExhaustive: never;
     16→}
     18→/**
+    19→ * #### Match
       →…
     22→export type Match<
     23→  i,
@@ -385,6 +372,7 @@ src/types/Pattern.ts
    133→  [symbols.override]: a;
    134→}
    146→/**
+   147→ * `Pattern<a>` is the generic type for patterns matching a value of type `a`. A pattern can be any (nested) javascript value.
       →…
    157→export type Pattern<a = unknown> = unknown extends a
    158→  ? UnknownValuePattern
@@ -421,9 +409,11 @@ src/types/Pattern.ts
 
 src/types/helpers.ts
      5→/**
+     6→ * ### LeastUpperBound
       →…
     14→export type LeastUpperBound<a, b> = b extends a ? b : a extends b ? a : never;
    179→/**
+   180→ * GuardValue returns the value guarded by a type guard function.
       →…
    182→export type GuardValue<fn> = fn extends (value: any) => value is infer b
    183→  ? b
@@ -440,18 +430,10 @@ tests/instance-of.test.ts
      7→class B {
 
 tests/tsconfig.json
-     2→  "compilerOptions": {
-    10→  },
-    11→  "include": ["."],
-    12→  "exclude": ["../src", "../dist", "../example", "../node_modules"]
-    13→}
+
+tests/types-catalog/definition.ts
 
 tests/types-catalog/utils.ts
      4→export const some = <a>(value: a): Option<a> => ({
 
 tsconfig.json
-     2→  "compilerOptions": {
-    11→  },
-    12→  "include": ["src/"],
-    13→  "exclude": ["tests/", "dist/", "examples/", "node_modules/"]
-    14→}

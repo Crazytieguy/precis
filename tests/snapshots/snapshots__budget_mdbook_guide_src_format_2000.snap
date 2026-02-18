@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2020 tokens)
+budget: 2000 (2027 tokens)
 
 README.md
      1→# Format
@@ -37,49 +37,50 @@ configuration/general.md
      3→You can configure the parameters for your book in the ***book.toml*** file.
      4→
       →…
-    31→## Supported configuration options …
-    37→### General metadata …
-    64→### Rust options …
-    85→### Build options …
+    31→## Supported configuration options
+    37→### General metadata
+    64→### Rust options
+    85→### Build options
 
 configuration/preprocessors.md
      1→# Configuring Preprocessors
      3→Preprocessors are extensions that can modify the raw Markdown source before it gets sent to the renderer.
      4→
       →…
-    26→## Custom preprocessor configuration …
-    45→## Locking a preprocessor dependency to a renderer …
-    55→## Provide your own command …
-    67→### Optional preprocessors …
-    79→## Require a certain order …
+    26→## Custom preprocessor configuration
+    45→## Locking a preprocessor dependency to a renderer
+    55→## Provide your own command
+    67→### Optional preprocessors
+    79→## Require a certain order
 
 configuration/renderers.md
      1→# Configuring Renderers
      3→Renderers (also called "backends") are responsible for creating the output of the book.
      4→
       →…
-    20→## Output tables …
-    59→### Custom backend commands …
-    71→### Optional backends …
-    84→## HTML renderer options …
-   176→### `[output.html.print]` …
-   191→### `[output.html.fold]` …
-   206→### `[output.html.playground]` …
-   230→### `[output.html.code]` …
-   244→### `[output.html.search]` …
+    20→## Output tables
+    59→### Custom backend commands
+    71→### Optional backends
+    84→## HTML renderer options
+   176→### `[output.html.print]`
+   191→### `[output.html.fold]`
+   206→### `[output.html.playground]`
+   230→### `[output.html.code]`
+   244→### `[output.html.search]`
    286→#### `[output.html.search.chapter]`
    288→The [`output.html.search.chapter`] table provides the ability to modify search settings per chapter or directory. Each key is the path to the chapter source file or directory, and the value is a table of settings to apply to that path. This will merge recursively, with more specific paths taking precedence.
    289→
    290→```toml
    291→[output.html.search.chapter]
       →…
-   300→### `[output.html.redirect]` …
-   325→## Markdown renderer …
+   300→### `[output.html.redirect]`
+   325→## Markdown renderer
 
 example.rs
      1→fn main() {
      2→    println!("Hello World!");
      3→#
+     4→#     // You can even hide lines! :D
       →…
 
 markdown.md
@@ -88,24 +89,24 @@ markdown.md
      4→You can take a quick [tutorial](https://commonmark.org/help/tutorial/),
      5→or [try out](https://spec.commonmark.org/dingus/) CommonMark in real time. A complete Markdown overview is out of scope for 
       →…
-     9→## Text and paragraphs …
-    25→## Headings …
-    39→### A heading …
+     9→## Text and paragraphs
+    25→## Headings
+    39→### A heading 
     43→#### A smaller heading 
     45→More text.
     46→
-    47→## Lists …
-    69→## Links …
-   108→## Images …
-   127→## Extensions …
-   131→### Strikethrough …
-   146→### Footnotes …
-   171→### Tables …
-   191→### Task lists …
-   208→### Smart punctuation …
-   231→### Heading attributes …
-   244→### Definition lists …
-   279→### Admonitions …
+    47→## Lists
+    69→## Links
+   108→## Images
+   127→## Extensions
+   131→### Strikethrough
+   146→### Footnotes
+   171→### Tables
+   191→### Task lists
+   208→### Smart punctuation
+   231→### Heading attributes
+   244→### Definition lists
+   279→### Admonitions
 
 mathjax.md
      1→# MathJax support
@@ -113,23 +114,23 @@ mathjax.md
      4→[MathJax](https://www.mathjax.org/).
      5→
       →…
-    24→### Inline equations …
-    32→### Block equations …
+    24→### Inline equations
+    32→### Block equations
 
 mdbook.md
      1→# mdBook-specific features
-     3→## Hiding code lines …
-    74→## Rust playground …
-   102→## Rust code block attributes …
-   133→## Including files …
-   154→## Including portions of a file …
-   215→## Including a file but initially hiding all except specified lines …
-   279→## Inserting runnable Rust files …
-   310→## Controlling page \<title\> …
-   319→## HTML classes provided by mdBook …
-   323→### `class="left"` and `"right"` …
-   331→### `class="hidden"` …
-   341→## Font-Awesome icons …
+     3→## Hiding code lines
+    74→## Rust playground
+   102→## Rust code block attributes
+   133→## Including files
+   154→## Including portions of a file
+   215→## Including a file but initially hiding all except specified lines
+   279→## Inserting runnable Rust files
+   310→## Controlling page \<title\>
+   319→## HTML classes provided by mdBook
+   323→### `class="left"` and `"right"`
+   331→### `class="hidden"`
+   341→## Font-Awesome icons
 
 summary.md
      1→# SUMMARY.md
@@ -137,8 +138,8 @@ summary.md
      4→order they should appear, what their hierarchy is and where the source files
      5→are. Without this file, there is no book.
       →…
-    12→### Structure …
-    93→### Example …
+    12→### Structure
+    93→### Example
 
 theme/README.md
      1→# Theme
@@ -169,7 +170,7 @@ theme/editor.md
     10→```
     11→
       →…
-    35→## Customizing the editor …
+    35→## Customizing the editor
 
 theme/index-hbs.md
      1→# index.hbs
@@ -179,8 +180,8 @@ theme/index-hbs.md
      6→If you want to change the layout or style of your book, chances are that you
      7→will have to modify this template a little bit. Here is what you need to know.
      8→
-     9→## Data …
-    41→## Handlebars helpers …
+     9→## Data
+    41→## Handlebars helpers
     46→### toc
     48→The toc helper is used like this
     49→
@@ -206,6 +207,6 @@ theme/syntax-highlighting.md
     10→```rust
     11→fn main() {
       →…
-    17→## Supported languages …
-    68→## Custom theme …
-    82→## Improve default theme …
+    17→## Supported languages
+    68→## Custom theme
+    82→## Improve default theme

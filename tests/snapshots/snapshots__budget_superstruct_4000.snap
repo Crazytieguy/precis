@@ -2,40 +2,40 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4138 tokens)
+budget: 4000 (4004 tokens)
 
 Changelog.md
-     1→# Changelog …
+     1→# Changelog
 
 Readme.md
-    42→### Usage …
-   145→### Why? …
-   167→### Principles …
-   181→### Demo …
-   189→### Examples …
-   205→### Documentation …
-   231→### License …
+    42→### Usage
+   145→### Why?
+   167→### Principles
+   181→### Demo
+   189→### Examples
+   205→### Documentation
+   231→### License
 
 docs/readme.md
-     7→### Usage …
+     7→### Usage
 
 docs/reference/typescript.md
-     5→## Utilities …
+     5→## Utilities
 
 docs/resources/faq.md
-     1→# FAQ …
+     1→# FAQ
 
 docs/resources/links.md
-     1→# Resources …
-     5→## Libraries …
+     1→# Resources
+     5→## Libraries
 
 docs/summary.md
-     3→## Guides …
-    12→## API Reference …
-    22→## Resources …
+     3→## Guides
+    12→## API Reference
+    22→## Resources
 
 examples/README.md
-     1→# Examples …
+     1→# Examples
 
 examples/package.json
      2→  "type": "module",
@@ -374,14 +374,7 @@ src/utils.ts
    379→export type TupleSchema …
    385→export type AnyStruct …
    394→export type InferStructTuple …
-   402→type _InferTuple<
-   403→  Tuple extends AnyStruct[],
-   404→  Length extends number,
-   405→  Accumulated extends unknown[],
-   406→  Index extends number = Accumulated['length'],
-   407→> = Index extends Length
-   408→  ? Accumulated
-   409→  : _InferTuple<Tuple, Length, [...Accumulated, Infer<Tuple[Index]>]>
+   402→type _InferTuple …
 
 test/deprecated.test.ts
      2→import { any, assert, deprecated } from '../src …
@@ -403,11 +396,9 @@ test/tsconfig.json
      6→  }
      7→}
 
-test/validation/boolean/invalid.ts
-     1→import { boolean } from '../../../src'
-
-test/validation/boolean/valid.ts
-     1→import { boolean } from '../../../src'
+test/typings/infer.ts
+     4→const Struct = object()
+     5→type T = Infer<typeof Struct>
 
 test/validation/function/invalid.ts
      1→import { func } from '../../../src'
@@ -427,14 +418,9 @@ test/validation/never/invalid.ts
      5→export const data = true
      7→export const failures = [
 
-test/validation/string/invalid.ts
-     1→import { string } from '../../../src'
-
-test/validation/string/valid.ts
-     1→import { string } from '../../../src'
-
 test/validation/type/valid-instance.ts
      3→class Person {
+     4→  name: string
      6→  constructor(name: string) {
 
 tsconfig.json

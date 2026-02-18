@@ -5,7 +5,7 @@ expression: output
 budget: 1000 (1014 tokens)
 
 404.md
-     1→# Document not found (404) …
+     1→# Document not found (404)
 
 README.md
      1→# Introduction
@@ -13,13 +13,13 @@ README.md
      5→        position: absolute;
      6→        right: 20px;
       →…
-    46→## Contributing …
-    55→## License …
+    46→## Contributing
+    55→## License
 
 SUMMARY.md
-     1→# Summary …
-     5→# User guide …
-    11→# Reference guide …
+     1→# Summary
+     5→# User guide
+    11→# Reference guide
 
 cli/README.md
      1→# Command-line tool
@@ -27,49 +27,49 @@ cli/README.md
       →…
 
 cli/build.md
-     1→# The build command …
+     1→# The build command
 
 cli/clean.md
-     1→# The clean command …
+     1→# The clean command
 
 cli/completions.md
-     1→# The completions command …
+     1→# The completions command
 
 cli/init.md
-     1→# The init command …
+     1→# The init command
 
 cli/serve.md
-     1→# The serve command …
-    27→### Server options …
+     1→# The serve command
+    27→### Server options
 
 cli/test.md
-     1→# The test command …
+     1→# The test command
 
 cli/watch.md
-     1→# The watch command …
+     1→# The watch command
 
 continuous-integration.md
-     1→# Running `mdbook` in continuous integration …
-    12→## Installing mdBook …
-    17→### Pre-compiled binaries …
-    39→### Building from source …
-    67→## Running tests …
-    83→## Deploying …
-   100→### 404 handling …
+     1→# Running `mdbook` in continuous integration
+    12→## Installing mdBook
+    17→### Pre-compiled binaries
+    39→### Building from source
+    67→## Running tests
+    83→## Deploying
+   100→### 404 handling
 
 for_developers/README.md
      1→# For developers
      3→While `mdbook` is mainly used as a command line tool, you can also import the
       →…
-    17→## The build process …
-    30→## Using `mdbook` as a library …
+    17→## The build process
+    30→## Using `mdbook` as a library
 
 for_developers/backends.md
-     1→# Alternative backends …
+     1→# Alternative backends
 
 for_developers/mdbook-wordcount/Cargo.toml
-     1→[package …
-     6→[dependencies …
+     1→[package]
+     6→[dependencies]
 
 for_developers/mdbook-wordcount/src/main.rs
     12→fn main() {
@@ -82,7 +82,7 @@ for_developers/mdbook-wordcount/src/main.rs
     49→}
 
 for_developers/preprocessors.md
-     1→# Preprocessors …
+     1→# Preprocessors
 
 format/README.md
      1→# Format
@@ -97,55 +97,52 @@ format/configuration/README.md
       →…
 
 format/configuration/environment-variables.md
-     1→# Environment variables …
+     1→# Environment variables
 
 format/configuration/general.md
-     1→# General configuration …
+     1→# General configuration
 
 format/configuration/preprocessors.md
-     1→# Configuring Preprocessors …
+     1→# Configuring Preprocessors
 
 format/configuration/renderers.md
-     1→# Configuring Renderers …
-   286→#### `[output.html.search.chapter]` …
+     1→# Configuring Renderers
+   286→#### `[output.html.search.chapter]`
 
 format/example.rs
      1→fn main() {
 
 format/markdown.md
-     1→# Markdown …
+     1→# Markdown
     43→#### A smaller heading 
     45→More text.
     46→
 
 format/mathjax.md
-     1→# MathJax support …
+     1→# MathJax support
 
 format/mdbook.md
-     1→# mdBook-specific features …
+     1→# mdBook-specific features
 
 format/summary.md
-     1→# SUMMARY.md …
+     1→# SUMMARY.md
 
 format/theme/README.md
      1→# Theme
      3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
-     4→render your markdown files and comes with a default theme included in the mdBook
-     5→binary.
-     6→
       →…
 
 format/theme/editor.md
-     1→# Editor …
+     1→# Editor
 
 format/theme/index-hbs.md
-     1→# index.hbs …
-    46→### toc …
-    80→### resource …
-    90→### fa …
+     1→# index.hbs
+    46→### toc
+    80→### resource
+    90→### fa
 
 format/theme/syntax-highlighting.md
-     1→# Syntax highlighting …
+     1→# Syntax highlighting
 
 guide/README.md
      1→# User guide
@@ -155,12 +152,14 @@ guide/README.md
       →…
 
 guide/creating.md
-     1→# Creating a book …
+     1→# Creating a book
+    36→### `book.toml`
+    50→### `SUMMARY.md`
+    73→### Source files
 
 guide/installation.md
-     1→# Installation …
+     1→# Installation
+    41→### Installing the latest master version
 
 guide/reading.md
-     1→# Reading books …
-
-misc/contributors.md
+     1→# Reading books

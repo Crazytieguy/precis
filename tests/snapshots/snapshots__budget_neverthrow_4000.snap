@@ -2,13 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4108 tokens)
+budget: 4000 (4041 tokens)
 
 CHANGELOG.md
-     1→# neverthrow …
+     1→# neverthrow
 
 README.md
-     1→# NeverThrow 🙅 …
+     1→# NeverThrow 🙅
      5→## Description
      7→Encode failure into your program.
      8→
@@ -358,13 +358,10 @@ src/result.ts
    719→export type CombineResultsWithAllErrorsArray …
 
 tests/index.test.ts
-     1→import * as td from 'testdouble'
      3→../src …
-    18→import { vitest, describe, expect, it } from 'vitest'
 
 tests/safe-try.test.ts
      1→../src …
-    13→import { describe, expect, test } from 'vitest'
 
 tests/tsconfig.tests.json
      2→  "compilerOptions": {
@@ -376,7 +373,6 @@ tests/tsconfig.tests.json
 tests/typecheck-tests.ts
      7→../src …
     16→import { safeTry, Transpose } from '../src/result …
-    17→import { type N, Test } from 'ts-toolbelt'
     19→type CreateTuple …
   2607→const input = <T>(): T => 123 as any
 

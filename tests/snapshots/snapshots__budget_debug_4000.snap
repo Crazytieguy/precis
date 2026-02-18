@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4105 tokens)
+budget: 4000 (4047 tokens)
 
 README.md
      1→# debug
@@ -227,6 +227,8 @@ src/browser.js
    127→
    128→	let m;
    129→
+   130→	// Is webkit? http://stackoverflow.com/a/16459606/376773
+   131→	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
       →…
    143→/**
    144→ * Colorize log arguments if enabled.
@@ -238,7 +240,6 @@ src/browser.js
    150→	args[0] = (this.useColors ? '%c' : '') +
    151→		this.namespace +
    152→		(this.useColors ? ' %c' : ' ') +
-   153→		args[0] +
       →…
    194→/**
    195→ * Save `namespaces`.
@@ -250,7 +251,6 @@ src/browser.js
    201→	try {
    202→		if (namespaces) {
    203→			exports.storage.setItem('debug', namespaces);
-   204→		} else {
       →…
    213→/**
    214→ * Load `namespaces`.
@@ -262,7 +262,6 @@ src/browser.js
    220→	let r;
    221→	try {
    222→		r = exports.storage.getItem('debug') || exports.storage.getItem('DEBUG') ;
-   223→	} catch (error) {
       →…
    236→/**
    237→ * Localstorage attempts to return the localstorage.
@@ -279,7 +278,6 @@ src/browser.js
    248→	try {
    249→		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
    250→		// The Browser also has localStorage in the global context.
-   251→		return localStorage;
       →…
 
 src/common.js
@@ -292,7 +290,6 @@ src/common.js
      8→	createDebug.debug = createDebug;
      9→	createDebug.default = createDebug;
     10→	createDebug.coerce = coerce;
-    11→	createDebug.disable = disable;
       →…
 
 src/node.js
@@ -304,7 +301,7 @@ src/node.js
    156→	return 'colors' in exports.inspectOpts ?
    157→		Boolean(exports.inspectOpts.colors) :
    158→		tty.isatty(process.stderr.fd);
-   159→}
+      →…
    161→/**
    162→ * Adds ANSI color escape codes if enabled.
    163→ *
@@ -315,7 +312,6 @@ src/node.js
    168→	const {namespace: name, useColors} = this;
    169→
    170→	if (useColors) {
-   171→		const c = this.color;
       →…
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
@@ -340,7 +336,6 @@ src/node.js
    204→	if (namespaces) {
    205→		process.env.DEBUG = namespaces;
    206→	} else {
-   207→		// If you set a process.env field to null or undefined, it gets cast to the
       →…
    213→/**
    214→ * Load `namespaces`.
@@ -363,7 +358,6 @@ src/node.js
    232→	debug.inspectOpts = {};
    233→
    234→	const keys = Object.keys(exports.inspectOpts);
-   235→	for (let i = 0; i < keys.length; i++) {
       →…
 
 test.node.js

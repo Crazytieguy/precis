@@ -5,12 +5,12 @@ expression: output
 budget: 4000 (4012 tokens)
 
 Cargo.toml
-     1→[package …
-    14→[features …
-    30→[dependencies …
-    33→[dev-dependencies …
-    39→[workspace …
-    42→[package.metadata.docs.rs …
+     1→[package]
+    14→[features]
+    30→[dependencies]
+    33→[dev-dependencies]
+    39→[workspace]
+    42→[package.metadata.docs.rs]
 
 README.md
      1→derive(Error)
@@ -61,10 +61,10 @@ build.rs
    190→fn cargo_env_var …
 
 impl/Cargo.toml
-     1→[package …
-    11→[lib …
-    14→[dependencies …
-    19→[package.metadata.docs.rs …
+     1→[package]
+    11→[lib]
+    14→[dependencies]
+    19→[package.metadata.docs.rs]
 
 impl/src/ast.rs
     10→pub enum Input<'a> {
@@ -256,7 +256,7 @@ impl/src/unraw.rs
 impl/src/valid.rs
 
 rust-toolchain.toml
-     1→[toolchain …
+     1→[toolchain]
 
 src/aserror.rs
      1→use core::error::Error;
@@ -373,9 +373,9 @@ src/var.rs
      8→    }
 
 tests/no-std/Cargo.toml
-     1→[package …
-     8→[lib …
-    11→[dependencies …
+     1→[package]
+     8→[lib]
+    11→[dependencies]
 
 tests/no-std/test.rs
      3→use thiserror::Error;

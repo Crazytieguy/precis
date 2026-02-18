@@ -2,59 +2,35 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1120 tokens)
+budget: 1000 (1006 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
      3→> Document is a work in progress!
      4→
       →…
-    46→## Approach …
-    50→### Discarded approach …
-    60→## Example …
-    92→## Performance …
-    96→## Groups …
+    46→## Approach
+    50→### Discarded approach
+    52→We did not use `React.Children` iteration because it will not support component composition. There is no way to "peek inside" the items contained within `<BlogItems />`, so those items cannot be filtered.
+    53→
+      →…
+    60→## Example
+    92→## Performance
+    96→## Groups
 
 README.md
      5→# ⌘K
      7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
      8→
-     9→## Install …
-    15→## Use …
-    82→## Parts and styling …
-   285→## Examples …
-   430→## FAQ …
-   456→## History …
-   462→## Testing …
+     9→## Install
+    15→## Use
+    82→## Parts and styling
+   285→## Examples
+   430→## FAQ
+   456→## History
+   462→## Testing
 
 cmdk/package.json
-     2→  "name": "cmdk",
-     3→  "version": "1.1.1",
-     4→  "license": "MIT",
-     5→  "main": "./dist/index.js",
-     6→  "module": "./dist/index.mjs",
-     7→  "types": "./dist/index.d.ts",
-     8→  "files": [
-    10→  ],
-    11→  "exports": {
-    17→  },
-    18→  "scripts": {
-    23→  },
-    24→  "peerDependencies": {
-    27→  },
-    28→  "dependencies": {
-    33→  },
-    34→  "devDependencies": {
-    36→  },
-    37→  "sideEffects": false,
-    38→  "repository": {
-    42→  },
-    43→  "bugs": {
-    45→  },
-    46→  "homepage": "https://github.com/pacocoursey/cmdk#readme",
-    47→  "author": {
-    50→  }
-    51→}
 
 cmdk/src/command-score.ts
     54→function commandScoreInner …
@@ -87,6 +63,9 @@ cmdk/src/index.tsx
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
 
+cmdk/tsup.config.ts
+     1→import { defineConfig } from 'tsup'
+
 package.json
      2→  "name": "cmdk-root",
      3→  "private": true,
@@ -103,11 +82,15 @@ playwright.config.ts
      3→const config: PlaywrightTestConfig = {
 
 pnpm-workspace.yaml
-     1→packages …
+     1→packages:
+
+test/package.json
 
 test/pages/_app.tsx
      1→import '../style.css'
      3→export default function App({ Component, pageProps }) {
+
+test/tsconfig.json
 
 tsconfig.json
      2→  "compilerOptions": {
@@ -117,22 +100,28 @@ tsconfig.json
     19→}
 
 website/README.md
-     3→## Getting Started …
-    19→## Learn More …
-    28→## Deploy on Vercel …
+     3→## Getting Started
+    19→## Learn More
+    28→## Deploy on Vercel
 
 website/components/code/index.tsx
      4→import styles from './code.module.scss'
      7→const theme = {
     41→export function Code({ children }: { children: string }) {
 
+website/components/icons/index.tsx
+     1→import styles from './icons.module.scss'
+
 website/pages/_app.tsx
+    17→export default function App({ Component, pageProps }: AppProps) {
 
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
+     6→  render() {
 
 website/pages/index.tsx
     18→import packageJSON from '../../cmdk/package.json'
+    29→export default function Index() {
    137→//////////////////////////////////////////////////////////////////
-      →…
+   138→
    139→const themes = [

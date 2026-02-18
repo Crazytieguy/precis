@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4113 tokens)
+budget: 4000 (4035 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -16,8 +16,8 @@ CONTRIBUTING.md
      4→2. Install dependencies (`npm install`)
      5→3. Create your feature branch (`git checkout -b my-new-feature`)
       →…
-    11→## Testing …
-    19→## Code Style …
+    11→## Testing
+    19→## Code Style
 
 README-es.md
      1→# dotenv
@@ -27,20 +27,20 @@ README-es.md
      8→
      9→&nbsp;
     10→
-    11→## Usage …
-    39→## Advanced …
-   319→## Agentes …
-   331→### Inicio rápido …
-   357→## FAQ …
-   579→## Docs …
-   587→### Config …
-   605→#### Options …
-   692→### Parse …
-   705→#### Options …
-   721→### Populate …
-   748→#### options …
-   764→## CHANGELOG …
-   770→## Who's using dotenv? …
+    11→## Usage
+    39→## Advanced
+   319→## Agentes
+   331→### Inicio rápido
+   357→## FAQ
+   579→## Docs
+   587→### Config
+   605→#### Options
+   692→### Parse
+   705→#### Options
+   721→### Populate
+   748→#### options
+   764→## CHANGELOG
+   770→## Who's using dotenv?
 
 README.md
      1→# dotenv
@@ -102,9 +102,6 @@ README.md
    344→vestauth agent curl -X POST https://as2.dotenvx.com/set -d '{"KEY":"value"}'
    345→```
    346→
-   347→And your agent `get`s secrets with a simple `curl` endpoint:
-   348→
-   349→```bash
       →…
    357→## FAQ
    361→No.
@@ -142,9 +139,8 @@ README.md
    600→console.log(result.parsed)
    601→```
    602→
-   603→You can additionally, pass options to `config`.
-   604→
-   605→#### Options …
+      →…
+   605→#### Options
    607→##### path
    609→Default: `path.resolve(process.cwd(), '.env')`
    610→
@@ -181,7 +177,7 @@ README.md
    702→console.log(typeof config, config) // object { BASIC : 'basic' }
    703→```
    704→
-   705→#### Options …
+   705→#### Options
    707→##### debug
    709→Default: `false`
    710→
@@ -201,11 +197,8 @@ README.md
    734→```
    735→
    736→For example, customizing the source AND target:
-   737→
-   738→```js
-   739→const dotenv = require('dotenv')
       →…
-   748→#### options …
+   748→#### options
    750→##### Debug
    752→Default: `false`
    753→
@@ -306,6 +299,8 @@ lib/main.d.ts
     97→type DotenvError = Error & {
     98→  code: 
     99→    | 'MISSING_DATA'
+   100→    | 'INVALID_DOTENV_KEY'
+   101→    | 'NOT_FOUND_DOTENV_ENVIRONMENT'
       →…
    106→export interface DotenvPopulateOptions {
    107→  /**
@@ -333,8 +328,6 @@ lib/main.d.ts
 lib/main.js
      7→const version = packageJson.version
     10→const TIPS = [
-    11→  '🔐 encrypt with Dotenvx: https://dotenvx.com',
-      →…
     27→function _getRandomTip () {
     31→function parseBoolean (value) {
     38→function supportsAnsi () {
@@ -355,8 +348,6 @@ lib/main.js
    346→function decrypt (encrypted, keyStr) {
    378→function populate (processEnv, parsed, options = {}) {
    413→const DotenvModule = {
-   414→  configDotenv,
-      →…
 
 package.json
      2→  "name": "dotenv",

@@ -2,10 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2017 tokens)
+budget: 2000 (2013 tokens)
 
 FUNDING.yml
-     1→github …
+     1→github: emilkowalski
 
 package.json
 
@@ -13,7 +13,7 @@ playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
 
 pnpm-workspace.yaml
-     1→packages …
+     1→packages:
 
 src/browser.ts
 
@@ -147,11 +147,9 @@ src/use-scale-background.ts
 src/use-snap-points.ts
 
 test/README.md
-     3→## Getting Started …
-    21→## Learn More …
-    30→## Deploy on Vercel …
-
-test/package.json
+     3→## Getting Started
+    21→## Learn More
+    30→## Deploy on Vercel
 
 test/src/app/controlled/page.tsx
      6→export default function Page() {
@@ -216,8 +214,6 @@ test/tests/constants.ts
 test/tests/helpers.ts
      4→export async function openDrawer …
     11→export async function dragWithSpeed …
-
-test/tsconfig.json
 
 tsconfig.json
 

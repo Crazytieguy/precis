@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2124 tokens)
+budget: 2000 (2003 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -23,56 +23,43 @@ ARCHITECTURE.md
     17→
     18→```tsx
     19→// No
+    20→onItemRender={({ item }) => {
       →…
     46→## Approach
-    48→⌘K always keeps every item and group rendered in the React tree. Each item and group adds or removes itself from the DOM based on the search input. The DOM is authoritative. Item selection order is based on the DOM order, which is based on the React render order, which the consumer provides.
-    49→
     50→### Discarded approach
     52→We did not use `React.Children` iteration because it will not support component composition. There is no way to "peek inside" the items contained within `<BlogItems />`, so those items cannot be filtered.
     53→
       →…
     60→## Example
-    62→```tsx
-    63→<Input value="b" />
-    64→<List>
-    65→  <Item>A</Item>
-    66→  <Item>B</Item>
-    67→</List>
-    68→```
-    69→
-      →…
     92→## Performance
-    94→This is more expensive memory wise, because if there are 2,000 items but the list is filtered to only 2 items, we still allocate memory for 2,000 instances of the Item component. But it's our only option! Thankfully we can still keep the DOM size to 2 items.
-    95→
     96→## Groups
-    98→Item mount informs both the root and the parent group, which keeps track of items within it. Each group informs the root.
 
 README.md
      5→# ⌘K
      7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
      8→
-     9→## Install …
-    15→## Use …
-    82→## Parts and styling …
-    86→### Command `[cmdk-root]` …
-   153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]` …
-   180→### Input `[cmdk-input]` …
-   190→### List `[cmdk-list]` …
-   212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]` …
-   242→### Group `[cmdk-group]` `[hidden?]` …
-   256→### Separator `[cmdk-separator]` …
-   260→### Empty `[cmdk-empty]` …
-   264→### Loading `[cmdk-loading]` …
-   274→### `useCommandState(state => state.selectedField)` …
-   285→## Examples …
-   289→### Nested items …
-   338→### Show sub-items when searching …
-   361→### Asynchronous results …
-   397→### Use inside Popover …
-   426→### Drop in stylesheets …
-   430→## FAQ …
-   456→## History …
-   462→## Testing …
+     9→## Install
+    15→## Use
+    82→## Parts and styling
+    86→### Command `[cmdk-root]`
+   153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
+   180→### Input `[cmdk-input]`
+   190→### List `[cmdk-list]`
+   212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
+   242→### Group `[cmdk-group]` `[hidden?]`
+   256→### Separator `[cmdk-separator]`
+   260→### Empty `[cmdk-empty]`
+   264→### Loading `[cmdk-loading]`
+   274→### `useCommandState(state => state.selectedField)`
+   285→## Examples
+   289→### Nested items
+   338→### Show sub-items when searching
+   361→### Asynchronous results
+   397→### Use inside Popover
+   426→### Drop in stylesheets
+   430→## FAQ
+   456→## History
+   462→## Testing
 
 cmdk/package.json
      2→  "name": "cmdk",
@@ -162,16 +149,18 @@ playwright.config.ts
      3→const config: PlaywrightTestConfig = {
 
 pnpm-workspace.yaml
-     1→packages …
+     1→packages:
 
 test/package.json
 
 test/pages/_app.tsx
      1→import '../style.css'
      3→export default function App({ Component, pageProps }) {
+     4→  return <Component {...pageProps} />
+     5→}
 
 test/pages/huge.tsx
-     4→const items …
+     4→const items = new Array(1000).fill(0)
 
 test/tsconfig.json
 
@@ -183,12 +172,22 @@ tsconfig.json
     19→}
 
 website/README.md
-     3→## Getting Started …
-    19→## Learn More …
-    28→## Deploy on Vercel …
+     3→## Getting Started
+    19→## Learn More
+    28→## Deploy on Vercel
+
+website/components/cmdk/framer.tsx
+     4→export function FramerCMDK() {
 
 website/components/cmdk/linear.tsx
+     3→export function LinearCMDK() {
     30→const items = [
+
+website/components/cmdk/raycast.tsx
+     7→export function RaycastCMDK() {
+
+website/components/cmdk/vercel.tsx
+     4→export function VercelCMDK() {
 
 website/components/code/index.tsx
      4→import styles from './code.module.scss'
@@ -201,6 +200,7 @@ website/components/icons/index.tsx
      1→import styles from './icons.module.scss'
 
 website/next.config.js
+     2→const nextConfig = {
 
 website/package.json
 

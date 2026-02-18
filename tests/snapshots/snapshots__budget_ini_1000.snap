@@ -2,20 +2,20 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1122 tokens)
+budget: 1000 (1003 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
 
 .github/ISSUE_TEMPLATE/bug.yml
-     3→name …
-     4→description …
-     5→title …
-     6→labels …
-     8→body …
+     3→name: Bug
+     4→description: File a bug/issue
+     5→title: "[BUG] <title>"
+     6→labels: [ Bug, Needs Triage ]
+     8→body:
 
 .github/ISSUE_TEMPLATE/config.yml
-     3→blank_issues_enabled …
+     3→blank_issues_enabled: true
 
 .github/actions/create-check/action.yml
      3→name: 'Create Check'
@@ -48,31 +48,14 @@ budget: 1000 (1122 tokens)
     12→
     13→branches:
 
-.github/workflows/audit.yml
-
-.github/workflows/ci-release.yml
-
-.github/workflows/ci.yml
-
-.github/workflows/codeql-analysis.yml
-
-.github/workflows/post-dependabot.yml
-
-.github/workflows/pull-request.yml
-
-.github/workflows/release-integration.yml
-
-.github/workflows/release.yml
-
 .release-please-manifest.json
      2→  ".": "6.0.0"
-     3→}
 
 CHANGELOG.md
-     1→# Changelog …
+     1→# Changelog
 
 CONTRIBUTING.md
-     3→# Contributing …
+     3→# Contributing
 
 README.md
      4→## Note
@@ -95,7 +78,6 @@ README.md
     23→[paths.default]
     24→datadir = /var/lib/data
     25→array[] = first value
-    26→array[] = second value
       →…
     82→## API
     84→### Parse
@@ -128,29 +110,18 @@ package.json
      4→  "description": "An ini encoder/decoder for node",
      5→  "version": "6.0.0",
      6→  "repository": {
-     9→  },
     10→  "main": "lib/ini.js",
     11→  "scripts": {
-    20→  },
     21→  "devDependencies": {
-    25→  },
     26→  "license": "ISC",
     27→  "files": [
-    30→  ],
     31→  "engines": {
-    33→  },
     34→  "templateOSS": {
-    38→  },
     39→  "tap": {
-    44→  }
-    45→}
 
 release-please-config.json
      2→  "group-pull-request-title-pattern": "chore: release ${version}",
      3→  "pull-request-title-pattern": "chore: release${component} ${version}",
      4→  "changelog-sections": [
-    30→  ],
     31→  "packages": {
-    35→  },
     36→  "prerelease-type": "pre.0"
-    37→}

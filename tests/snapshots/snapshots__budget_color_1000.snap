@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (996 tokens)
 
 README.md
      1→# color
@@ -18,15 +18,15 @@ README.md
     14→```
     15→
     16→## Examples
-    18→### Standard colors …
-    33→### RGB colors …
-    45→### Mix and reuse colors …
-    71→### Use your own output (io.Writer) …
-    81→### Custom print functions (PrintFunc) …
-    94→### Custom fprint functions (FprintFunc) …
-   105→### Insert into noncolor strings (SprintFunc) …
-   124→### Plug into existing code …
-   142→### Disable/Enable color …
+    18→### Standard colors
+    33→### RGB colors
+    45→### Mix and reuse colors
+    71→### Use your own output (io.Writer)
+    81→### Custom print functions (PrintFunc)
+    94→### Custom fprint functions (FprintFunc)
+   105→### Insert into noncolor strings (SprintFunc)
+   124→### Plug into existing code
+   142→### Disable/Enable color
    177→## GitHub Actions
    179→To output color in GitHub Actions (or other CI systems that support ANSI colors), make sure to set `color.NoColor = false` so that it bypasses the check for non-tty output streams. 
    180→

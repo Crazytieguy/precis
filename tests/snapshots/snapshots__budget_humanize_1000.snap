@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1001 tokens)
+budget: 1000 (1000 tokens)
 
 README.md
      1→# humanize
@@ -16,7 +16,6 @@ README.md
     19→- Brazilian Portuguese
     20→- Catalan
     21→- Danish
-    22→- Dutch
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -24,54 +23,52 @@ README.md
     53→<!-- usage-start -->
     54→
     55→## Installation
-    57→### From PyPI …
-    63→### From source …
+    57→### From PyPI
+    63→### From source
     71→## Usage
-    73→### Integer humanization …
-    89→### Date & time humanization …
-   110→### Precise time delta …
+    73→### Integer humanization
+    89→### Date & time humanization
+   110→### Precise time delta
    124→#### Smaller units
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
    127→
-   128→```pycon
       →…
-   154→### File size humanization …
-   166→### Human-readable floating point numbers …
-   182→### Scientific notation …
+   154→### File size humanization
+   166→### Human-readable floating point numbers
+   182→### Scientific notation
    200→## Localization
    202→How to change locale at runtime:
    203→
    204→```pycon
    205→>>> import humanize
-   206→>>> import datetime as dt
       →…
 
 RELEASING.md
-     1→# Release checklist …
+     1→# Release checklist
 
 mkdocs.yml
-     1→site_name …
-     2→site_url …
-     3→repo_url …
-     4→theme …
-    18→nav …
-    26→plugins …
-    31→markdown_extensions …
-    37→extra_css …
-    40→watch …
+     1→site_name: humanize
+     2→site_url: https://humanize.readthedocs.io
+     3→repo_url: https://github.com/python-humanize/humanize
+     4→theme:
+    18→nav:
+    26→plugins:
+    31→markdown_extensions:
+    37→extra_css:
+    40→watch:
 
 pyproject.toml
-     1→[build-system …
-     8→[project …
-    50→[tool.hatch …
-    53→[tool.hatch.build …
-    56→[tool.hatch.build.hooks.vcs …
-    59→[tool.hatch.version.raw-options …
-    62→[tool.ruff …
-   103→[tool.pyproject-fmt …
-   106→[tool.pytest.ini_options …
-   113→[tool.coverage.report …
-   120→[tool.mypy …
+     1→[build-system]
+     8→[project]
+    50→[tool.hatch]
+    53→[tool.hatch.build]
+    56→[tool.hatch.build.hooks.vcs]
+    59→[tool.hatch.version.raw-options]
+    62→[tool.ruff]
+   103→[tool.pyproject-fmt]
+   106→[tool.pytest.ini_options]
+   113→[tool.coverage.report]
+   120→[tool.mypy]
 
 src/humanize/__init__.py
     28→__all__ = [

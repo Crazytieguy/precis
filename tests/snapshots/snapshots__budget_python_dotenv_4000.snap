@@ -2,14 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4063 tokens)
+budget: 4000 (4044 tokens)
 
 CHANGELOG.md
      1→# Changelog
      3→All notable changes to this project will be documented in this file.
      4→
       →…
-    21→### Fixed …
+    21→### Fixed
 
 CONTRIBUTING.md
      1→Contributing
@@ -91,7 +91,7 @@ README.md
       →…
 
 docs/reference.md
-     1→# ::: dotenv …
+     1→# ::: dotenv
 
 mkdocs.yml
      1→site_name: python-dotenv
@@ -108,21 +108,21 @@ mkdocs.yml
     25→nav:
 
 pyproject.toml
-     1→[build-system …
-     5→[project …
-    43→[project.urls …
-    46→[project.optional-dependencies …
-    51→[project.scripts …
-    54→[tool.setuptools …
-    59→[tool.setuptools.dynamic …
-    63→[tool.pytest.ini_options …
-    68→[tool.coverage.run …
-    72→[tool.coverage.paths …
-    79→[tool.coverage.report …
-    87→[tool.mypy …
+     1→[build-system]
+     5→[project]
+    43→[project.urls]
+    46→[project.optional-dependencies]
+    51→[project.scripts]
+    54→[tool.setuptools]
+    59→[tool.setuptools.dynamic]
+    63→[tool.pytest.ini_options]
+    68→[tool.coverage.run]
+    72→[tool.coverage.paths]
+    79→[tool.coverage.report]
+    87→[tool.mypy]
 
 ruff.toml
-     1→[lint …
+     1→[lint]
 
 src/dotenv/__init__.py
      3→from .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key
@@ -134,8 +134,6 @@ src/dotenv/__init__.py
     45→    "dotenv_values",
     46→    "get_key",
     47→    "set_key",
-    48→    "unset_key",
-    49→    "find_dotenv",
       →…
 
 src/dotenv/__main__.py

@@ -2,15 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2081 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
      1→# debug
      7→A tiny JavaScript debugging utility modelled after Node.js core's debugging
      8→technique. Works in Node.js and web browsers.
      9→
-    10→## Installation …
-    16→## Usage …
+    10→## Installation
+    16→## Usage
     73→#### Windows command prompt notes
     75→##### CMD
     77→On Windows the environment variable is set using the `set` command.
@@ -43,7 +43,7 @@ README.md
    105→npm script example:
    106→```js
       →…
-   110→## Namespace Colors …
+   110→## Namespace Colors
    116→#### Node.js
    118→In Node.js, colors are enabled when stderr is a TTY. You also _should_ install
    119→the [`supports-color`](https://npmjs.org/supports-color) module alongside debug,
@@ -56,11 +56,11 @@ README.md
    128→31](https://hacks.mozilla.org/2014/05/editable-box-model-multiple-selection-sublime-text-keys-much-more-firefox-developer-tools-episode-31/))
    129→and the Firebug plugin for Firefox (any version).
       →…
-   134→## Millisecond diff …
-   145→## Conventions …
-   149→## Wildcards …
-   161→## Environment Variables …
-   181→## Formatters …
+   134→## Millisecond diff
+   145→## Conventions
+   149→## Wildcards
+   161→## Environment Variables
+   181→## Formatters
    196→### Custom formatters
    198→You can add custom formatters by extending the `debug.formatters` object.
    199→For example, if you wanted to add support for rendering a Buffer as hex with
@@ -79,16 +79,16 @@ README.md
    212→```
    213→
    214→
-   215→## Browser Support …
-   248→## Output streams …
-   274→## Extend …
-   288→## Set dynamically …
-   341→## Checking whether a debug target is enabled …
-   357→## Usage in child processes …
-   379→## Authors …
-   386→## Backers …
-   422→## Sponsors …
-   457→## License …
+   215→## Browser Support
+   248→## Output streams
+   274→## Extend
+   288→## Set dynamically
+   341→## Checking whether a debug target is enabled
+   357→## Usage in child processes
+   379→## Authors
+   386→## Backers
+   422→## Sponsors
+   457→## License
 
 package.json
      2→  "name": "debug",
@@ -125,6 +125,11 @@ src/browser.js
    116→	// NB: In an Electron preload script, document will be defined but not fully
    117→	// initialized. Since we know we're in Chrome, we'll just detect this case
    118→	// explicitly
+   119→	if (typeof window !== 'undefined' && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
+   120→		return true;
+   121→	}
+   122→
+   123→	// Internet Explorer and Edge do not support colors.
       →…
    143→/**
    144→ * Colorize log arguments if enabled.
@@ -133,8 +138,6 @@ src/browser.js
    147→ */
    148→
    149→function formatArgs(args) {
-   150→	args[0] = (this.useColors ? '%c' : '') +
-      →…
    194→/**
    195→ * Save `namespaces`.
    196→ *
@@ -142,8 +145,6 @@ src/browser.js
    198→ * @api private
    199→ */
    200→function save(namespaces) {
-   201→	try {
-      →…
    213→/**
    214→ * Load `namespaces`.
    215→ *
@@ -151,8 +152,6 @@ src/browser.js
    217→ * @api private
    218→ */
    219→function load() {
-   220→	let r;
-      →…
    236→/**
    237→ * Localstorage attempts to return the localstorage.
    238→ *
@@ -165,8 +164,6 @@ src/browser.js
    245→ */
    246→
    247→function localstorage() {
-   248→	try {
-      →…
 
 src/common.js
      2→/**
@@ -175,8 +172,6 @@ src/common.js
      5→ */
      6→
      7→function setup(env) {
-     8→	createDebug.debug = createDebug;
-      →…
 
 src/node.js
    151→/**
@@ -184,8 +179,6 @@ src/node.js
    153→ */
    154→
    155→function useColors() {
-   156→	return 'colors' in exports.inspectOpts ?
-      →…
    161→/**
    162→ * Adds ANSI color escape codes if enabled.
    163→ *
@@ -193,20 +186,17 @@ src/node.js
    165→ */
    166→
    167→function formatArgs(args) {
-   168→	const {namespace: name, useColors} = this;
-      →…
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
    184→		return '';
    185→	}
-      →…
+   186→	return new Date().toISOString() + ' ';
+   187→}
    189→/**
    190→ * Invokes `util.formatWithOptions()` with the specified arguments and writes to stderr.
    191→ */
    192→
    193→function log(...args) {
-   194→	return process.stderr.write(util.formatWithOptions(exports.inspectOpts, ...args) + '\n');
-      →…
    197→/**
    198→ * Save `namespaces`.
    199→ *
@@ -214,8 +204,6 @@ src/node.js
    201→ * @api private
    202→ */
    203→function save(namespaces) {
-   204→	if (namespaces) {
-      →…
    213→/**
    214→ * Load `namespaces`.
    215→ *
@@ -224,8 +212,6 @@ src/node.js
    218→ */
    219→
    220→function load() {
-   221→	return process.env.DEBUG;
-      →…
    224→/**
    225→ * Init logic for `debug` instances.
    226→ *
@@ -234,8 +220,6 @@ src/node.js
    229→ */
    230→
    231→function init(debug) {
-   232→	debug.inspectOpts = {};
-      →…
 
 test.node.js
      8→const formatWithOptionsSpy = sinon.spy(util, 'formatWithOptions');

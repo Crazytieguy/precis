@@ -2,20 +2,20 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4160 tokens)
+budget: 4000 (4022 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
 
 .github/ISSUE_TEMPLATE/bug.yml
-     3→name …
-     4→description …
-     5→title …
-     6→labels …
-     8→body …
+     3→name: Bug
+     4→description: File a bug/issue
+     5→title: "[BUG] <title>"
+     6→labels: [ Bug, Needs Triage ]
+     8→body:
 
 .github/ISSUE_TEMPLATE/config.yml
-     3→blank_issues_enabled …
+     3→blank_issues_enabled: true
 
 .github/actions/create-check/action.yml
      3→name: 'Create Check'
@@ -131,19 +131,19 @@ budget: 4000 (4160 tokens)
      3→}
 
 CHANGELOG.md
-     1→# Changelog …
+     1→# Changelog
 
 CONTRIBUTING.md
-     3→# Contributing …
-     5→## Code of Conduct …
-     9→## Reporting Bugs …
-    17→## Pull Request Conventions …
-    19→### Commits …
-    30→### Test Coverage …
-    36→### Linting …
-    42→## What _not_ to contribute? …
-    44→### Dependencies …
-    48→### Tools/Automation …
+     3→# Contributing
+     5→## Code of Conduct
+     9→## Reporting Bugs
+    17→## Pull Request Conventions
+    19→### Commits
+    30→### Test Coverage
+    36→### Linting
+    42→## What _not_ to contribute?
+    44→### Dependencies
+    48→### Tools/Automation
 
 README.md
      1→semver(1) -- The semantic versioner for npm
@@ -170,32 +170,44 @@ README.md
    152→
    153→A `comparator` is composed of an `operator` and a `version`.  The set
       →…
-   184→### Prerelease Tags …
-   219→#### Prerelease Identifiers …
-   250→#### Prerelease Identifier Base …
-   279→### Advanced Range Syntax …
-   287→#### Hyphen Ranges `X.Y.Z - A.B.C` …
-   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*` …
-   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1` …
-   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4` …
-   384→### Range Grammar …
+   184→### Prerelease Tags
+   219→#### Prerelease Identifiers
+   221→The method `.inc` takes an additional `identifier` string argument that
+      →…
+   250→#### Prerelease Identifier Base
+   252→The method `.inc` takes an optional parameter 'identifierBase' string
+      →…
+   279→### Advanced Range Syntax
+   287→#### Hyphen Ranges `X.Y.Z - A.B.C`
+   289→Specifies an inclusive set.
+      →…
+   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
+   308→Any of `X`, `x`, or `*` may be used to "stand in" for one of the
+      →…
+   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
+   326→Allows patch-level changes if a minor version is specified on the
+      →…
+   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
+   343→Allows changes that do not modify the left-most non-zero element in the
+      →…
+   384→### Range Grammar
    408→## Functions
    410→All methods and classes take a final `options` object argument.  All
    411→options in this object are `false` by default.  The options supported
    412→are:
    413→
       →…
-   453→### Comparison …
-   478→### Sorting …
-   485→### Comparators …
-   489→### Ranges …
-   531→### Coercion …
-   558→### Clean …
+   453→### Comparison
+   478→### Sorting
+   485→### Comparators
+   489→### Ranges
+   531→### Coercion
+   558→### Clean
    576→## Constants
    578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
    579→
-   580→### `RELEASE_TYPES` …
-   600→### `SEMVER_SPEC_VERSION` …
+   580→### `RELEASE_TYPES`
+   600→### `SEMVER_SPEC_VERSION`
    610→## Exported Modules
    613→TODO: Make sure that all of these items are documented (classes aren't,
    614→eg), and then pull the module name into the documentation for that specific
@@ -269,78 +281,6 @@ classes/semver.js
    135→  comparePre (other) {
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
-
-functions/clean.js
-     4→const clean …
-
-functions/cmp.js
-    10→const cmp …
-
-functions/coerce.js
-     7→const coerce …
-
-functions/compare-build.js
-     4→const compareBuild …
-
-functions/compare-loose.js
-     4→const compareLoose …
-
-functions/compare.js
-     4→const compare …
-
-functions/diff.js
-     5→const diff …
-
-functions/eq.js
-     4→const eq …
-
-functions/gt.js
-     4→const gt …
-
-functions/gte.js
-     4→const gte …
-
-functions/inc.js
-     5→const inc …
-
-functions/lt.js
-     4→const lt …
-
-functions/lte.js
-     4→const lte …
-
-functions/major.js
-     4→const major …
-
-functions/minor.js
-     4→const minor …
-
-functions/neq.js
-     4→const neq …
-
-functions/parse.js
-     4→const parse …
-
-functions/patch.js
-     4→const patch …
-
-functions/prerelease.js
-     4→const prerelease …
-
-functions/rcompare.js
-     4→const rcompare …
-
-functions/rsort.js
-     4→const rsort …
-
-functions/satisfies.js
-     4→const satisfies …
-
-functions/sort.js
-     4→const sort …
-
-functions/valid.js
-     4→const valid …
 
 internal/constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
@@ -491,16 +431,14 @@ test/integration/whitespace.js
 
 test/internal/debug.js
      3→const main = () => {
-     4→  const t = require('tap')
-      →…
 
 test/map.js
      9→const ROOT = resolve(__dirname, '..')
     10→const TEST = join(ROOT, 'test')
     11→const IGNORE_DIRS = ['fixtures', 'integration']
-    13→const getFile …
-    23→const walk …
-    28→const walkAll …
+    13→const getFile = (f) => {
+    23→const walk = (item, res = []) => getFile(item) || readdirSync(item)
+    28→const walkAll = (items, relativeTo) => items
 
 test/ranges/simplify.js
      6→const versions = [

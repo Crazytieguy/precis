@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4017 tokens)
+budget: 4000 (4023 tokens)
 
 README.md
      1→# color
@@ -113,7 +113,6 @@ color.go
     80→	Bold:         ResetBold,
     81→	Faint:        ResetBold,
     82→	Italic:       ResetItalic,
-    83→	Underline:    ResetUnderline,
       →…
     91→// Foreground text colors
     92→const (
@@ -272,6 +271,7 @@ color_test.go
     24→		code Attribute
     25→	}{
     26→		{text: "black", code: FgBlack},
+    27→		{text: "red", code: FgRed},
       →…
     73→func TestColorEquals(t *testing.T) {
    107→func TestNoColor(t *testing.T) {

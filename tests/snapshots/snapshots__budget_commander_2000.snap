@@ -2,16 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2086 tokens)
+budget: 2000 (2020 tokens)
 
 CHANGELOG.md
-     1→# Changelog …
-   911→#### Testing for no arguments …
+     1→# Changelog
+   911→#### Testing for no arguments
 
 CONTRIBUTING.md
-     1→# Contributing …
-     3→## Issues …
-    13→## Pull Requests …
+     1→# Contributing
+     3→## Issues
+    13→## Pull Requests
 
 Readme.md
      1→# Commander.js
@@ -25,26 +25,40 @@ Readme.md
     15→  - [Declaring _program_ variable](#declaring-program-variable)
     16→  - [Options](#options)
       →…
-    61→## Installation …
-    67→## Quick Start …
-   147→## Declaring _program_ variable …
-   177→## Options …
-   523→## Commands …
-   613→#### More configuration …
-   625→#### Custom argument processing …
-   754→## Automated help …
-   956→## Custom event listeners …
-   966→## Bits and pieces …
-  1164→## Support …
+    61→## Installation
+    67→## Quick Start
+   147→## Declaring _program_ variable
+   177→## Options
+   523→## Commands
+   613→#### More configuration
+   615→There are some additional features available by constructing an `Argument` explicitly for less common cases.
+      →…
+   625→#### Custom argument processing
+   627→You may specify a function to do custom processing of command-arguments (like for option-arguments).
+      →…
+   754→## Automated help
+   956→## Custom event listeners
+   966→## Bits and pieces
+  1164→## Support
 
 Readme_zh-CN.md
-     1→# Commander.js …
+     1→# Commander.js
 
 SECURITY.md
-     1→# Security Policy …
+     1→# Security Policy
+
+docs/deprecated.md
+
+docs/help-in-depth.md
+
+docs/options-in-depth.md
+
+eslint.config.js
 
 esm.mjs
      1→import commander from './index.js';
+
+examples/color-help-replacement.mjs
 
 examples/custom-command-class.js
      6→class CommandWithTrace extends commander.Command {
@@ -54,8 +68,12 @@ examples/global-options-added.js
     16→class MyRootCommand extends Command {
     17→  createCommand(name) {
 
+examples/help-centered.mjs
+
 examples/man-style-help.mjs
      5→function formatItem(term, termWidth, description, helper) {
+
+jest.config.js
 
 lib/argument.js
      3→class Argument {
@@ -66,10 +84,12 @@ lib/command.js
 
 lib/error.js
      1→/**
-      →…
+     2→ * CommanderError class
+     3→ */
      4→class CommanderError extends Error {
     22→/**
-      →…
+    23→ * InvalidArgumentError class
+    24→ */
     25→class InvalidArgumentError extends CommanderError {
 
 lib/help.js
@@ -92,6 +112,8 @@ lib/help.js
 lib/option.js
      3→class Option {
    261→/**
+   262→ * This class is to make it easier to work with dual options, without changing the existing
+   263→ * implementation. We support separate dual options for separate positive and negative options,
       →…
    268→class DualOptions {
 
@@ -100,35 +122,8 @@ lib/suggestSimilar.js
      3→function editDistance(a, b) {
 
 package-support.json
-     2→  "versions": [
-    18→  ]
-    19→}
 
 package.json
-     2→  "name": "commander",
-     3→  "version": "14.0.3",
-     4→  "description": "the complete solution for node.js command-line programs",
-     5→  "keywords": [
-    14→  ],
-    15→  "author": "TJ Holowaychuk <tj@vision-media.ca>",
-    16→  "license": "MIT",
-    17→  "repository": {
-    20→  },
-    21→  "scripts": {
-    34→  },
-    35→  "files": [
-    42→  ],
-    43→  "type": "commonjs",
-    44→  "main": "./index.js",
-    45→  "exports": {
-    61→  },
-    62→  "devDependencies": {
-    76→  },
-    77→  "types": "typings/index.d.ts",
-    78→  "engines": {
-    80→  },
-    81→  "support": true
-    82→}
 
 tests/command.createArgument.test.js
      4→  constructor(name, description) {
@@ -149,38 +144,28 @@ tests/ts-imports.test.ts
     17→function checkClass(obj: object, name: string): void {
 
 tsconfig.js.json
-     7→  "extends": "./tsconfig.json",
-     8→  "include": [
-    14→  ],
-    15→}
 
 tsconfig.json
-    12→  "compilerOptions": {
-    32→  },
-    33→  "include": [
-    42→  ],
-    43→  "exclude": ["node_modules"],
-    44→}
 
 tsconfig.ts.json
-     8→  "extends": "./tsconfig.json",
-     9→  "compilerOptions": {
-    14→  },
-    15→  "include": [
-    19→  ],
-    20→}
 
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =
     13→  | LiteralType
     14→  | (BaseType & Record<never, never>);
     16→export class CommanderError extends Error {
+    17→  code: string;
     31→export class InvalidArgumentError extends CommanderError {
     40→export interface ErrorOptions {
+    41→  // optional parameter for error()
+      →…
     48→export class Argument {
+    49→  description: string;
     95→export class Option {
+    96→  flags: string;
    115→  constructor(flags: string, description?: string);
    210→export class Help {
+   211→  /** output helpWidth, long lines are wrapped to fit */
    218→  constructor();
    226→  prepareContext(contextOptions: {
    227→    error?: boolean;
@@ -196,8 +181,14 @@ typings/index.d.ts
    288→  styleArgumentTerm(str: string): string;
    340→export type HelpConfiguration = Partial<Help>;
    342→export interface ParseOptions {
+   343→  from: 'node' | 'electron' | 'user';
+      →…
    345→export interface HelpContext {
+   346→  // optional parameter for .help() and .outputHelp()
+      →…
    349→export interface AddHelpTextContext {
+   350→  // passed to text function used with .addHelpText()
+      →…
    354→export interface OutputConfiguration {
    355→  writeOut?(str: string): void;
    356→  writeErr?(str: string): void;
@@ -214,6 +205,7 @@ typings/index.d.ts
    372→  | undefined;
    374→export type OptionValues = Record<string, any>;
    376→export class Command {
+   377→  args: string[];
    384→  constructor(name?: string);
    493→  argument(name: string, description?: string, defaultValue?: unknown): this;
    528→  helpCommand(enable: boolean): this;
@@ -223,8 +215,14 @@ typings/index.d.ts
   1085→    text: (context: AddHelpTextContext) => string,
   1086→  ): this;
   1094→export interface CommandOptions {
+  1095→  hidden?: boolean;
+      →…
   1100→export interface ExecutableCommandOptions extends CommandOptions {
+  1101→  executableFile?: string;
+      →…
   1104→export interface ParseOptionsResult {
+  1105→  operands: string[];
+      →…
   1113→export const program: Command;
 
 typings/index.test-d.ts

@@ -171,10 +171,18 @@ fn render_symbol(
         return;
     }
 
-    // Names only: truncated symbol name with inline ellipsis
+    // Names only
     if !show_sigs && doc_n == 0 && body_n == 0 {
-        out.push_str(&format_symbol_name(sym, lines));
-        out.push_str(" …\n");
+        if sym.kind == parse::SymbolKind::Section {
+            // Sections: show the full heading/section line without truncation
+            // marker. The heading text IS the name — truncating it looks broken
+            // (e.g. `[package …` instead of `[package]`).
+            let line = lines.get(sym_line_0).copied().unwrap_or("");
+            out.push_str(&fmt_line(sym_line_0, strip_heading_badges(line)));
+        } else {
+            out.push_str(&format_symbol_name(sym, lines));
+            out.push_str(" …\n");
+        }
         return;
     }
 

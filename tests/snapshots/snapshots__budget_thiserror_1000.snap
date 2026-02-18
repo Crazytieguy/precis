@@ -2,16 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (996 tokens)
+budget: 1000 (995 tokens)
 
 Cargo.toml
 
 README.md
-     1→derive(Error) …
-    21→## Example …
-    44→## Details …
-   211→## Comparison to anyhow …
-   223→#### License …
+     1→derive(Error)
+    21→## Example
+    44→## Details
+   211→## Comparison to anyhow
+   223→#### License
 
 build/probe.rs
     11→struct MyError(Thing);
@@ -24,10 +24,10 @@ build/probe.rs
     27→    fn provide …
 
 impl/Cargo.toml
-     1→[package …
-    11→[lib …
-    14→[dependencies …
-    19→[package.metadata.docs.rs …
+     1→[package]
+    11→[lib]
+    14→[dependencies]
+    19→[package.metadata.docs.rs]
 
 impl/src/ast.rs
     45→pub enum ContainerKind {

@@ -11,12 +11,12 @@ README.md
      7→mdBook is a utility to create modern online books from Markdown files.
      8→
       →…
-    14→## License …
+    14→## License
 
 crates/mdbook-compare/Cargo.toml
-     1→[package …
-     9→[dependencies …
-    11→[lints …
+     1→[package]
+     9→[dependencies]
+    11→[lints]
 
 crates/mdbook-compare/README.md
      1→# mdbook-compare
@@ -28,14 +28,14 @@ crates/mdbook-compare/src/main.rs
      6→macro_rules! error {
 
 crates/mdbook-core/Cargo.toml
-     1→[package …
-    10→[dependencies …
-    18→[dev-dependencies …
-    21→[lints …
+     1→[package]
+    10→[dependencies]
+    18→[dev-dependencies]
+    21→[lints]
 
 crates/mdbook-core/README.md
-     1→# mdbook-core …
-    11→## License …
+     1→# mdbook-core
+    11→## License
 
 crates/mdbook-core/src/book/tests.rs
      1→use super::*;
@@ -80,14 +80,14 @@ crates/mdbook-core/src/utils/toml_ext.rs
     40→fn split …
 
 crates/mdbook-driver/Cargo.toml
-     1→[package …
-    10→[dependencies …
-    28→[lints …
-    31→[features …
+     1→[package]
+    10→[dependencies]
+    28→[lints]
+    31→[features]
 
 crates/mdbook-driver/README.md
-     1→# mdbook-driver …
-    11→## License …
+     1→# mdbook-driver
+    11→## License
 
 crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     14→pub struct CmdPreprocessor {
@@ -162,8 +162,8 @@ crates/mdbook-driver/src/mdbook.rs
 crates/mdbook-html/Cargo.toml
 
 crates/mdbook-html/README.md
-     1→# mdbook-html …
-    11→## License …
+     1→# mdbook-html
+    11→## License
 
 crates/mdbook-html/src/html/tokenizer.rs
     22→    type Handle = ();
@@ -216,13 +216,13 @@ crates/mdbook-html/src/utils.rs
     47→    fn to_url_path(&self) -> String {
 
 crates/mdbook-markdown/Cargo.toml
-     1→[package …
-    10→[dependencies …
-    15→[lints …
+     1→[package]
+    10→[dependencies]
+    15→[lints]
 
 crates/mdbook-markdown/README.md
-     1→# mdbook-markdown …
-    11→## License …
+     1→# mdbook-markdown
+    11→## License
 
 crates/mdbook-markdown/src/lib.rs
      8→use pulldown_cmark::{Options, Parser};
@@ -239,13 +239,13 @@ crates/mdbook-markdown/src/lib.rs
       →…
 
 crates/mdbook-preprocessor/Cargo.toml
-     1→[package …
-    10→[dependencies …
-    16→[lints …
+     1→[package]
+    10→[dependencies]
+    16→[lints]
 
 crates/mdbook-preprocessor/README.md
-     1→# mdbook-preprocessor …
-    11→## License …
+     1→# mdbook-preprocessor
+    11→## License
 
 crates/mdbook-preprocessor/src/lib.rs
     30→pub trait Preprocessor {
@@ -263,13 +263,13 @@ crates/mdbook-preprocessor/src/lib.rs
     82→pub fn parse_input …
 
 crates/mdbook-renderer/Cargo.toml
-     1→[package …
-    10→[dependencies …
-    16→[lints …
+     1→[package]
+    10→[dependencies]
+    16→[lints]
 
 crates/mdbook-renderer/README.md
-     1→# mdbook-renderer …
-    11→## License …
+     1→# mdbook-renderer
+    11→## License
 
 crates/mdbook-renderer/src/lib.rs
     28→pub trait Renderer {
@@ -287,13 +287,13 @@ crates/mdbook-renderer/src/lib.rs
     86→    pub fn from_json …
 
 crates/mdbook-summary/Cargo.toml
-     1→[package …
-    10→[dependencies …
-    18→[lints …
+     1→[package]
+    10→[dependencies]
+    18→[lints]
 
 crates/mdbook-summary/README.md
-     1→# mdbook-summary …
-    11→## License …
+     1→# mdbook-summary
+    11→## License
 
 crates/mdbook-summary/src/lib.rs
      8→pub use mdbook_core::book::SectionNumber;
@@ -317,9 +317,9 @@ crates/mdbook-summary/src/lib.rs
    190→macro_rules! collect_events {
 
 crates/xtask/Cargo.toml
-     1→[package …
-     9→[dependencies …
-    11→[lints …
+     1→[package]
+     9→[dependencies]
+    11→[lints]
 
 crates/xtask/README.md
      1→# xtask
@@ -339,9 +339,9 @@ examples/nop-preprocessor.rs
 guide/book.toml
 
 guide/guide-helper/Cargo.toml
-     1→[package …
-     9→[dependencies …
-    15→[lints …
+     1→[package]
+     9→[dependencies]
+    15→[lints]
 
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
@@ -358,31 +358,31 @@ guide/src/README.md
      4→    .mdbook-version {
      5→        position: absolute;
       →…
-    46→## Contributing …
-    55→## License …
+    46→## Contributing
+    55→## License
 
 guide/src/cli/README.md
-     1→# Command-line tool …
+     1→# Command-line tool
 
 guide/src/cli/serve.md
-    27→### Server options …
+    27→### Server options
 
 guide/src/continuous-integration.md
-    12→## Installing mdBook …
-    67→## Running tests …
-    83→## Deploying …
+    12→## Installing mdBook
+    67→## Running tests
+    83→## Deploying
 
 guide/src/for_developers/README.md
-     1→# For developers …
-    17→## The build process …
-    30→## Using `mdbook` as a library …
+     1→# For developers
+    17→## The build process
+    30→## Using `mdbook` as a library
 
 guide/src/for_developers/backends.md
-     1→# Alternative backends …
+     1→# Alternative backends
 
 guide/src/for_developers/mdbook-wordcount/Cargo.toml
-     1→[package …
-     6→[dependencies …
+     1→[package]
+     6→[dependencies]
 
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     44→#[derive(Debug, Default, Serialize, Deserialize)]
@@ -393,7 +393,7 @@ guide/src/for_developers/mdbook-wordcount/src/main.rs
     49→}
 
 guide/src/for_developers/preprocessors.md
-     1→# Preprocessors …
+     1→# Preprocessors
 
 guide/src/format/README.md
      1→# Format
@@ -402,13 +402,13 @@ guide/src/format/README.md
       →…
 
 guide/src/format/configuration/README.md
-     1→# Configuration …
+     1→# Configuration
 
 guide/src/format/example.rs
      1→fn main() {
 
 guide/src/format/theme/README.md
-     1→# Theme …
+     1→# Theme
 
 guide/src/guide/README.md
      1→# User guide
@@ -417,13 +417,13 @@ guide/src/guide/README.md
       →…
 
 guide/src/guide/creating.md
-     1→# Creating a book …
+     1→# Creating a book
 
 guide/src/guide/installation.md
-     1→# Installation …
+     1→# Installation
 
 guide/src/guide/reading.md
-     1→# Reading books …
+     1→# Reading books
 
 src/cmd/build.rs
 

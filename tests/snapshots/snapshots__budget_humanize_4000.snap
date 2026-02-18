@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4088 tokens)
+budget: 4000 (4062 tokens)
 
 README.md
      1→# humanize
@@ -84,6 +84,8 @@ README.md
    136→>>> delta = dt.timedelta(milliseconds=4)
    137→>>> humanize.naturaldelta(delta)
    138→'a moment'
+   139→>>> humanize.naturaldelta(delta, minimum_unit="milliseconds")
+   140→'4 milliseconds'
       →…
    154→### File size humanization
    156→```pycon
@@ -187,17 +189,17 @@ mkdocs.yml
     40→watch:
 
 pyproject.toml
-     1→[build-system …
-     8→[project …
-    50→[tool.hatch …
-    53→[tool.hatch.build …
-    56→[tool.hatch.build.hooks.vcs …
-    59→[tool.hatch.version.raw-options …
-    62→[tool.ruff …
-   103→[tool.pyproject-fmt …
-   106→[tool.pytest.ini_options …
-   113→[tool.coverage.report …
-   120→[tool.mypy …
+     1→[build-system]
+     8→[project]
+    50→[tool.hatch]
+    53→[tool.hatch.build]
+    56→[tool.hatch.build.hooks.vcs]
+    59→[tool.hatch.version.raw-options]
+    62→[tool.ruff]
+   103→[tool.pyproject-fmt]
+   106→[tool.pytest.ini_options]
+   113→[tool.coverage.report]
+   120→[tool.mypy]
 
 src/humanize/__init__.py
      5→from humanize.filesize …
@@ -209,6 +211,7 @@ src/humanize/__init__.py
     28→__all__ = [
     29→    "__version__",
     30→    "activate",
+    31→    "apnumber",
       →…
 
 src/humanize/filesize.py
@@ -337,6 +340,7 @@ src/humanize/time.py
     21→__all__ = [
     22→    "naturaldate",
     23→    "naturalday",
+    24→    "naturaldelta",
       →…
     30→@total_ordering
     31→class Unit(Enum):
@@ -397,8 +401,6 @@ tests/test_filesize.py
 tests/test_i18n.py
     17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
-    19→    three_seconds = NOW - dt.timedelta(seconds=3)
-      →…
    225→class TestActivate:
    226→    expected_msg = (
    227→        "Humanize cannot determinate the default location of the"
@@ -407,12 +409,8 @@ tests/test_i18n.py
    230→
    249→    @freeze_time("2020-02-02")
    250→    def test_en_locale(self) -> None:
-   251→        three_seconds = NOW - dt.timedelta(seconds=3)
-      →…
    262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
-   264→        three_seconds = NOW - dt.timedelta(seconds=3)
-      →…
 
 tests/test_lists.py
 
@@ -437,5 +435,3 @@ tests/test_time.py
     59→
     60→
     61→def test_date_and_delta() -> None:
-    62→    now = dt.datetime.now()
-      →…

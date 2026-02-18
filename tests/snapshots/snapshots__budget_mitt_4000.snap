@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4070 tokens)
+budget: 4000 (4001 tokens)
 
 README.md
      9→# Mitt
@@ -326,14 +326,10 @@ test/test-types-compilation.ts
      9→const emitter = mitt<{
     10→	foo: string;
     11→	someEvent: SomeEventData;
-    12→	bar?: number;
-    13→}>();
-    15→const barHandler = (x?: number) => {};
-    16→const fooHandler = (x: string) => {};
-    17→const wildcardHandler = (
-    18→	_type: 'foo' | 'bar' | 'someEvent',
-    19→	_event: string | SomeEventData | number | undefined
-    20→) => {};
+      →…
+    15→const barHandler …
+    16→const fooHandler …
+    17→const wildcardHandler …
 
 tsconfig.json
      2→	"compileOnSave": false,

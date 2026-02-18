@@ -5,15 +5,15 @@ expression: output
 budget: 1000 (1002 tokens)
 
 README.md
-     1→# mdBook …
-    14→## License …
+     1→# mdBook
+    14→## License
 
 crates/mdbook-compare/README.md
-     1→# mdbook-compare …
+     1→# mdbook-compare
 
 crates/mdbook-core/README.md
-     1→# mdbook-core …
-    11→## License …
+     1→# mdbook-core
+    11→## License
 
 crates/mdbook-core/src/lib.rs
      7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
@@ -21,8 +21,8 @@ crates/mdbook-core/src/lib.rs
     15→    pub use anyhow::{Error, Result};
 
 crates/mdbook-driver/README.md
-     1→# mdbook-driver …
-    11→## License …
+     1→# mdbook-driver
+    11→## License
 
 crates/mdbook-driver/src/init.rs
     13→pub struct BookBuilder {
@@ -31,8 +31,8 @@ crates/mdbook-driver/src/mdbook.rs
     29→pub struct MDBook {
 
 crates/mdbook-html/README.md
-     1→# mdbook-html …
-    11→## License …
+     1→# mdbook-html
+    11→## License
 
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     22→pub struct HtmlHandlebars;
@@ -47,8 +47,8 @@ crates/mdbook-html/src/theme/mod.rs
    201→    fn default() -> Theme {
 
 crates/mdbook-markdown/README.md
-     1→# mdbook-markdown …
-    11→## License …
+     1→# mdbook-markdown
+    11→## License
 
 crates/mdbook-markdown/src/lib.rs
     11→pub use pulldown_cmark;
@@ -60,24 +60,24 @@ crates/mdbook-markdown/src/lib.rs
     44→pub fn new_cmark_parser …
 
 crates/mdbook-preprocessor/README.md
-     1→# mdbook-preprocessor …
-    11→## License …
+     1→# mdbook-preprocessor
+    11→## License
 
 crates/mdbook-preprocessor/src/lib.rs
     30→pub trait Preprocessor {
     51→pub struct PreprocessorContext {
 
 crates/mdbook-renderer/README.md
-     1→# mdbook-renderer …
-    11→## License …
+     1→# mdbook-renderer
+    11→## License
 
 crates/mdbook-renderer/src/lib.rs
     28→pub trait Renderer {
     40→pub struct RenderContext {
 
 crates/mdbook-summary/README.md
-     1→# mdbook-summary …
-    11→## License …
+     1→# mdbook-summary
+    11→## License
 
 crates/mdbook-summary/src/lib.rs
      8→pub use mdbook_core::book::SectionNumber;
@@ -90,7 +90,7 @@ crates/mdbook-summary/src/lib.rs
    190→macro_rules! collect_events {
 
 crates/xtask/README.md
-     1→# xtask …
+     1→# xtask
 
 guide/book.toml
 
@@ -99,22 +99,22 @@ guide/guide-helper/src/lib.rs
     10→pub fn handle_preprocessing() -> Result<()> {
 
 guide/src/README.md
-     1→# Introduction …
+     1→# Introduction
 
 guide/src/cli/README.md
-     1→# Command-line tool …
+     1→# Command-line tool
 
 guide/src/for_developers/README.md
-     1→# For developers …
+     1→# For developers
 
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     46→pub struct WordcountConfig {
 
 guide/src/format/README.md
-     1→# Format …
+     1→# Format
 
 guide/src/guide/README.md
-     1→# User guide …
+     1→# User guide
 
 src/cmd/clean.rs
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {

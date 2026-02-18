@@ -2,10 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1003 tokens)
+budget: 1000 (1005 tokens)
 
 FUNDING.yml
-     1→github …
+     1→github: emilkowalski
 
 README.md
      5→## Usage
@@ -21,8 +21,10 @@ README.md
 
 package.json
 
+playwright.config.ts
+
 pnpm-workspace.yaml
-     1→packages …
+     1→packages:
 
 src/assets.tsx
      2→import React from 'react';
@@ -30,6 +32,8 @@ src/assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     78→export const CloseIcon = (
+    79→  <svg
+      →…
 
 src/hooks.tsx
      1→import React from 'react';
@@ -100,9 +104,9 @@ src/types.ts
    197→export type ExternalToast …
 
 test/README.md
-     3→## Getting Started …
-    25→## Learn More …
-    34→## Deploy on Vercel …
+     3→## Getting Started
+    25→## Learn More
+    34→## Deploy on Vercel
 
 test/src/app/layout.tsx
      1→export const metadata = {
@@ -112,9 +116,9 @@ tsconfig.json
 turbo.json
 
 website/README.md
-     3→## Getting Started …
-    25→## Learn More …
-    34→## Deploy on Vercel …
+     3→## Getting Started
+    25→## Learn More
+    34→## Deploy on Vercel
 
 website/src/components/ExpandModes/index.tsx
      4→export const ExpandModes = ({
@@ -124,9 +128,6 @@ website/src/components/Footer/index.tsx
 
 website/src/components/Hero/index.tsx
      6→export const Hero = () => {
-
-website/src/components/Installation/index.tsx
-    14→export const Installation = () => {
 
 website/src/components/Other/Other.tsx
      7→export const Other = ({

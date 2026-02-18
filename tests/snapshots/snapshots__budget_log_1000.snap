@@ -2,17 +2,17 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (997 tokens)
+budget: 1000 (996 tokens)
 
 Cargo.toml
 
 README.md
-     1→log …
-    19→## Minimum supported `rustc` …
-    25→## Usage …
-    27→### In libraries …
-    58→### In executables …
-   106→## Structured logging …
+     1→log
+    19→## Minimum supported `rustc`
+    25→## Usage
+    27→### In libraries
+    58→### In executables
+   106→## Structured logging
 
 rfcs/0296-structured-logging.md
 
@@ -100,9 +100,9 @@ src/macros.rs
 src/serde.rs
 
 test_max_level_features/Cargo.toml
-     1→[package …
-     7→[[bin …
-    11→[dependencies.log …
+     1→[package]
+     7→[[bin]]
+    11→[dependencies.log]
 
 test_max_level_features/main.rs
      5→use log::set_boxed_logger;

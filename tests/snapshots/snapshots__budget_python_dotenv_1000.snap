@@ -2,14 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1017 tokens)
+budget: 1000 (1004 tokens)
 
 CHANGELOG.md
-     1→# Changelog …
-    21→### Fixed …
+     1→# Changelog
+    21→### Fixed
 
 CONTRIBUTING.md
-     1→Contributing …
+     1→Contributing
 
 README.md
      1→# python-dotenv
@@ -17,15 +17,15 @@ README.md
      4→[![PyPI version][pypi_badge]][pypi_link]
      5→
       →…
-    22→## Getting Started …
-    78→## Other Use Cases …
-   147→## Command-line Interface …
-   169→## File format …
-   234→## Related Projects …
-   246→## Acknowledgements …
+    22→## Getting Started
+    78→## Other Use Cases
+   147→## Command-line Interface
+   169→## File format
+   234→## Related Projects
+   246→## Acknowledgements
 
 docs/reference.md
-     1→# ::: dotenv …
+     1→# ::: dotenv
 
 mkdocs.yml
      1→site_name: python-dotenv
@@ -48,8 +48,6 @@ ruff.toml
 src/dotenv/__init__.py
      3→from .main …
     42→__all__ = [
-    43→    "get_cli_string",
-      →…
 
 src/dotenv/__main__.py
      3→from .cli …

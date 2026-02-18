@@ -2,34 +2,27 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4222 tokens)
+budget: 4000 (4026 tokens)
 
 CHANGELOG.md
-     1→# Changelog …
+     1→# Changelog
 
 README.md
-     1→# The only accessible & unstyled & full featured Input OTP component in the Web. …
+     1→# The only accessible & unstyled & full featured Input OTP component in the Web.
      3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
     18→https://github.com/guilhermerodz/input-otp/assets/10366880/753751f5-eda8-4145-a4b9-7ef51ca5e453
     19→
     20→## Usage
     22→```bash
-    23→npm install input-otp
-    24→```
       →…
     39→## Default example
     41→The example below uses `tailwindcss` `@shadcn/ui` `tailwind-merge` `clsx`:
-    42→
-    43→```tsx
       →…
    136→## How it works
    138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
-   139→This library works by rendering an invisible input as a sibling of the slots, contained by a `relative`ly positioned parent (the container root called _OTPInput_).
-   140→
+      →…
    141→## Features
    143→This is the most complete OTP input on the web. It's fully featured 
-   144→
-   145→<details>
       →…
    198→### Auto tracks if the input has space in the right side for the badge
    200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
@@ -46,13 +39,9 @@ README.md
       →…
    293→## Examples
    298→```tsx
-   299→export default function Page() {
-   300→  const formRef = useRef<HTMLFormElement>(null)
       →…
    377→## Caveats
    382→By default, `input-otp` handles password managers for you.
-   383→The password manager badges should be automatically shifted to the right side.
-   384→
       →…
    539→#### Sponsors
    541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
@@ -65,16 +54,12 @@ apps/storybook/README.md
     16→
     17→    Use [degit](https://github.com/Rich-Harris/degit) to get this template.
     18→
-    19→    ```shell
-    20→    # Clone the template
       →…
     44→## 🔎 What's inside?
     46→A quick look at the top-level files and directories included with this template.
     47→
     48→    .
     49→    ├── .storybook
-    50→    ├── node_modules
-    51→    ├── public
       →…
     83→## Contribute
     85→If you encounter an issue with the template, we encourage you to open an issue in this template's repository.
@@ -182,14 +167,10 @@ apps/storybook/tsconfig.node.json
      8→  "include": ["vite.config.ts"]
      9→}
 
-apps/storybook/vite.config.js
-     1→import { defineConfig } from 'vite'
-     2→import react from '@vitejs/plugin-react'
-
 apps/test/README.md
-     3→## Getting Started …
-    23→## Learn More …
-    32→## Deploy on Vercel …
+     3→## Getting Started
+    23→## Learn More
+    32→## Deploy on Vercel
 
 apps/test/package.json
 
@@ -230,9 +211,9 @@ apps/test/src/tests/util/modifier.ts
 apps/test/tsconfig.json
 
 apps/website/README.md
-     3→## Getting Started …
-    23→## Learn More …
-    32→## Deploy on Vercel …
+     3→## Getting Started
+    23→## Learn More
+    32→## Deploy on Vercel
 
 apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
      9→export default function ExampleAutoSubmit() {
@@ -271,7 +252,7 @@ apps/website/src/app/(pages)/layout.tsx
     68→export default function RootLayout …
 
 apps/website/src/components/icons.tsx
-     1→type IconProps …
+     1→type IconProps = React.HTMLAttributes<SVGElement>
      3→export const Icons = {
 
 apps/website/src/components/ui/badge.tsx
@@ -428,7 +409,7 @@ packages/input-otp/tsup.config.ts
      1→import { defineConfig } from 'tsup';
 
 pnpm-workspace.yaml
-     1→packages …
+     1→packages:
 
 turbo.json
      2→  "extends": ["//"],

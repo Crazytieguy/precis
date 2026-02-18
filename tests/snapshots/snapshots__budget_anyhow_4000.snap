@@ -5,18 +5,18 @@ expression: output
 budget: 4000 (3991 tokens)
 
 Cargo.toml
-     1→[package …
-    14→[features …
-    18→[dependencies …
-    25→[dev-dependencies …
-    32→[package.metadata.docs.rs …
+     1→[package]
+    14→[features]
+    18→[dependencies]
+    25→[dev-dependencies]
+    32→[package.metadata.docs.rs]
 
 README.md
-     1→Anyhow&ensp;¯\\\_(°ペ)\_/¯ …
-    21→## Details …
-   126→## No-std support …
-   144→## Comparison to failure …
-   155→## Comparison to thiserror …
+     1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
+    21→## Details
+   126→## No-std support
+   144→## Comparison to failure
+   155→## Comparison to thiserror
    166→#### License
    169→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
    170→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
@@ -31,7 +31,7 @@ README.md
 build.rs
 
 rust-toolchain.toml
-     1→[toolchain …
+     1→[toolchain]
 
 src/backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
@@ -362,10 +362,10 @@ tests/common/mod.rs
     12→pub fn bail_error() -> Result<()> {
 
 tests/crate/Cargo.toml
-     1→[package …
-     8→[lib …
-    11→[dependencies …
-    14→[features …
+     1→[package]
+     8→[lib]
+    11→[dependencies]
+    14→[features]
 
 tests/crate/test.rs
      3→pub use anyhow::*;

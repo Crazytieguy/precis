@@ -2,17 +2,17 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1083 tokens)
+budget: 1000 (1003 tokens)
 
 CHANGELOG.md
 
 CONTRIBUTING.md
-     1→# Contributing …
-    11→## Testing …
-    19→## Code Style …
+     1→# Contributing
+    11→## Testing
+    19→## Code Style
 
 README-es.md
-     1→# dotenv …
+     1→# dotenv
 
 README.md
      1→# dotenv
@@ -22,29 +22,29 @@ README.md
      8→
      9→&nbsp;
     10→
-    11→## Usage …
-    39→## Advanced …
-   319→## Agents …
-   331→### Quickstart …
-   357→## FAQ …
-   579→## Docs …
-   587→### Config …
-   605→#### Options …
-   607→##### path …
-   625→##### quiet …
-   648→##### encoding …
-   658→##### debug …
-   668→##### override …
-   678→##### processEnv …
-   692→### Parse …
-   705→#### Options …
-   707→##### debug …
-   721→### Populate …
-   748→#### options …
-   750→##### Debug …
-   756→##### override …
-   764→## CHANGELOG …
-   770→## Who's using dotenv? …
+    11→## Usage
+    39→## Advanced
+   319→## Agents
+   331→### Quickstart
+   357→## FAQ
+   579→## Docs
+   587→### Config
+   605→#### Options
+   607→##### path
+   625→##### quiet
+   648→##### encoding
+   658→##### debug
+   668→##### override
+   678→##### processEnv
+   692→### Parse
+   705→#### Options
+   707→##### debug
+   721→### Populate
+   748→#### options
+   750→##### Debug
+   756→##### override
+   764→## CHANGELOG
+   770→## Who's using dotenv?
 
 lib/cli-options.js
      1→const re …
@@ -66,8 +66,6 @@ lib/main.d.ts
     28→   *
     29→   * Specify a custom path if your file containing environment variables is located elsewhere.
     30→   * Can also be an array of strings, specifying multiple paths.
-    31→   *
-    32→   * example: `require('dotenv').config({ path: '/custom/path/to/.env' })`
       →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
@@ -80,8 +78,6 @@ lib/main.d.ts
    109→   *
    110→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
    111→   *
-   112→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
-   113→   */
       →…
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;
@@ -118,9 +114,6 @@ package.json
     59→  "browser": {
     61→  }
     62→}
-
-tests/types/test.ts
-     1→import { config, parse } from "dotenv";
 
 tests/types/tsconfig.json
      2→  "compilerOptions": {

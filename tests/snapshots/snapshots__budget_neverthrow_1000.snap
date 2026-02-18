@@ -2,25 +2,25 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1004 tokens)
+budget: 1000 (1003 tokens)
 
 CHANGELOG.md
-     1→# neverthrow …
+     1→# neverthrow
 
 README.md
-     1→# NeverThrow 🙅 …
-     5→## Description …
-    19→## Table Of Contents …
-    73→## Installation …
-    79→## Recommended: Use `eslint-plugin-neverthrow` …
-   100→## Top-Level API …
-   139→## API Documentation …
-   141→### Synchronous API (`Result`) …
-   863→### Asynchronous API (`ResultAsync`) …
-  1519→### Utilities …
-  1633→### Testing …
-  1673→## A note on the Package Name …
-  1681→### License …
+     1→# NeverThrow 🙅
+     5→## Description
+    19→## Table Of Contents
+    73→## Installation
+    79→## Recommended: Use `eslint-plugin-neverthrow`
+   100→## Top-Level API
+   139→## API Documentation
+   141→### Synchronous API (`Result`)
+   863→### Asynchronous API (`ResultAsync`)
+  1519→### Utilities
+  1633→### Testing
+  1673→## A note on the Package Name
+  1681→### License
 
 package.json
 
@@ -106,7 +106,7 @@ src/result.ts
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
 
 tests/tsconfig.tests.json
-     2→  "compilerOptions …
-    23→  "include …
+     2→  "compilerOptions": {
+    23→  "include": [
 
 tsconfig.json

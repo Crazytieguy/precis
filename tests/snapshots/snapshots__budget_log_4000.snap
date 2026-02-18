@@ -5,14 +5,14 @@ expression: output
 budget: 4000 (4010 tokens)
 
 CHANGELOG.md
-     1→# Change Log …
+     1→# Change Log
 
 Cargo.toml
-     1→[package …
-    19→[package.metadata.docs.rs …
-    22→[features …
-    56→[dependencies …
-    62→[dev-dependencies …
+     1→[package]
+    19→[package.metadata.docs.rs]
+    22→[features]
+    56→[dependencies]
+    62→[dev-dependencies]
 
 README.md
      1→log
@@ -45,14 +45,14 @@ benches/value.rs
      4→use log::kv::Value;
 
 rfcs/0296-structured-logging.md
-     5→# Summary …
-    16→# Contents …
-    43→# Motivation …
-    98→# Guide-level explanation …
-   495→# Reference-level explanation …
-  1575→# Drawbacks, rationale, and alternatives …
-  1629→# Prior art …
-  1650→# Unresolved questions …
+     5→# Summary
+    16→# Contents
+    43→# Motivation
+    98→# Guide-level explanation
+   495→# Reference-level explanation
+  1575→# Drawbacks, rationale, and alternatives
+  1629→# Prior art
+  1650→# Unresolved questions
 
 src/__private_api.rs
      3→use self::sealed::KVs;
@@ -358,9 +358,9 @@ src/serde.rs
      9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
 
 test_max_level_features/Cargo.toml
-     1→[package …
-     7→[[bin …
-    11→[dependencies.log …
+     1→[package]
+     7→[[bin]]
+    11→[dependencies.log]
 
 test_max_level_features/main.rs
      1→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
@@ -401,4 +401,4 @@ tests/macros.rs
    423→}
 
 triagebot.toml
-     1→[assign …
+     1→[assign]

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2049 tokens)
+budget: 2000 (2024 tokens)
 
 README.md
      1→# humanize
@@ -33,7 +33,6 @@ README.md
     36→- Persian
     37→- Polish
     38→- Russian
-    39→- Simplified Chinese
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -96,25 +95,25 @@ README.md
       →…
 
 RELEASING.md
-     1→# Release checklist …
+     1→# Release checklist
 
 docs/filesize.md
-     1→# Filesize …
+     1→# Filesize
 
 docs/i18n.md
-     1→# Internationalisation …
+     1→# Internationalisation
 
 docs/index.md
-     1→# humanize …
+     1→# humanize
 
 docs/lists.md
-     1→# Lists …
+     1→# Lists
 
 docs/number.md
-     1→# Number …
+     1→# Number
 
 docs/time.md
-     1→# Time …
+     1→# Time
 
 mkdocs.yml
      1→site_name: humanize
@@ -138,17 +137,17 @@ mkdocs.yml
     40→watch:
 
 pyproject.toml
-     1→[build-system …
-     8→[project …
-    50→[tool.hatch …
-    53→[tool.hatch.build …
-    56→[tool.hatch.build.hooks.vcs …
-    59→[tool.hatch.version.raw-options …
-    62→[tool.ruff …
-   103→[tool.pyproject-fmt …
-   106→[tool.pytest.ini_options …
-   113→[tool.coverage.report …
-   120→[tool.mypy …
+     1→[build-system]
+     8→[project]
+    50→[tool.hatch]
+    53→[tool.hatch.build]
+    56→[tool.hatch.build.hooks.vcs]
+    59→[tool.hatch.version.raw-options]
+    62→[tool.ruff]
+   103→[tool.pyproject-fmt]
+   106→[tool.pytest.ini_options]
+   113→[tool.coverage.report]
+   120→[tool.mypy]
 
 src/humanize/__init__.py
     26→from ._version import __version__
@@ -220,8 +219,6 @@ src/humanize/time.py
    343→def naturaldate …
    451→def precisedelta …
 
-tests/test_filesize.py
-
 tests/test_i18n.py
     17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
@@ -235,10 +232,6 @@ tests/test_i18n.py
    250→    def test_en_locale(self) -> None:
    262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
-
-tests/test_lists.py
-
-tests/test_number.py
 
 tests/test_time.py
     16→# In seconds

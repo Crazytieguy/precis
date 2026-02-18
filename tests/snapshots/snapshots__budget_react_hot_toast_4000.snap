@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4172 tokens)
+budget: 4000 (4011 tokens)
 
 README.md
     28→## Features
@@ -80,9 +80,9 @@ package.json
    104→}
 
 site/README.md
-     3→## Getting Started …
-    17→## Learn More …
-    26→## Deploy on Vercel …
+     3→## Getting Started
+    17→## Learn More
+    26→## Deploy on Vercel
 
 site/components/code.tsx
      8→const theme: PrismTheme = {
@@ -105,16 +105,15 @@ site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
 
 site/next.config.mjs
-     5→const withMDX …
     15→const nextConfig = {
     17→  webpack(config) {
     24→  async rewrites() {
 
 site/package.json
-     2→  "name …
-     3→  "scripts …
-     8→  "dependencies …
-    25→  "devDependencies …
+     2→  "name": "site",
+     3→  "scripts": {
+     8→  "dependencies": {
+    25→  "devDependencies": {
 
 site/pages/_app.tsx
     12→const components = {
@@ -124,9 +123,9 @@ site/pages/index.tsx
    102→export default function Home() {
 
 site/tsconfig.json
-     2→  "compilerOptions …
-    22→  "include …
-    32→  "exclude …
+     2→  "compilerOptions": {
+    22→  "include": [
+    32→  "exclude": [
 
 site/types/svg.d.ts
      1→interface SvgrComponent …
@@ -233,9 +232,9 @@ src/components/toaster.tsx
 src/core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
      2→import { DefaultToastOptions, Toast, ToastType } from './types …
-     4→export const TOAST_EXPIRE_DISMISS_DELAY = 1000;
-     5→export const TOAST_LIMIT = 20;
-     6→export const DEFAULT_TOASTER_ID = 'default';
+     4→export const TOAST_EXPIRE_DISMISS_DELAY …
+     5→export const TOAST_LIMIT …
+     6→export const DEFAULT_TOASTER_ID …
      8→interface ToasterSettings {
      9→  toastLimit: number;
     10→}
@@ -248,8 +247,7 @@ src/core/store.ts
     18→  START_PAUSE,
     19→  END_PAUSE,
     20→}
-    22→export type Action =
-    23→  | {
+    22→export type Action …
     52→interface ToasterState {
     53→  toasts: Toast[];
     54→  settings: ToasterSettings;
@@ -259,9 +257,13 @@ src/core/store.ts
     59→  [toasterId: string]: ToasterState;
     60→}
     62→export const reducer = (state: ToasterState, action: Action): ToasterState => {
+    63→  const { toastLimit } = state.settings;
+      →…
    136→const listeners: Array<
    140→const defaultToasterState: ToasterState = {
    149→export const dispatch = (action: Action, toasterId = DEFAULT_TOASTER_ID) => {
+   150→  memoryState[toasterId] = reducer(
+      →…
    161→export const dispatchAll = (action: Action) =>
    162→  Object.keys(memoryState).forEach((toasterId) => dispatch(action, toasterId));
    164→export const getToasterIdFromToastId = (toastId: string) =>
@@ -271,11 +273,15 @@ src/core/store.ts
    169→export const createDispatch =
    170→  (toasterId = DEFAULT_TOASTER_ID) =>
    171→  (action: Action) => {
-   175→export const defaultTimeouts: {
+   172→    dispatch(action, toasterId);
+      →…
+   175→export const defaultTimeouts …
    185→export const useStore = (
    186→  toastOptions: DefaultToastOptions = {},
    187→  toasterId: string = DEFAULT_TOASTER_ID
    188→): ToasterState => {
+   189→  const [state, setState] = useState<ToasterState>(
+      →…
 
 src/core/toast.ts
      1→./types …
@@ -289,23 +295,15 @@ src/core/toast.ts
 
 src/core/types.ts
      1→import { CSSProperties } from 'react';
-     3→export type ToastType = 'success' | 'error' | 'loading' | 'blank' | 'custom';
-     4→export type ToastPosition =
-     5→  | 'top-left'
-     6→  | 'top-center'
-     7→  | 'top-right'
-     8→  | 'bottom-left'
-     9→  | 'bottom-center'
-    10→  | 'bottom-right';
-    12→export type Renderable = React.ReactElement | string | null;
+     3→export type ToastType …
+     4→export type ToastPosition …
+    12→export type Renderable …
     14→export interface IconTheme {
     15→  primary: string;
     16→  secondary: string;
     17→}
-    19→export type ValueFunction<TValue, TArg> = (arg: TArg) => TValue;
-    20→export type ValueOrFunction<TValue, TArg> =
-    21→  | TValue
-    22→  | ValueFunction<TValue, TArg>;
+    19→export type ValueFunction …
+    20→export type ValueOrFunction …
     24→const isFunction …
     29→export const resolveValue = <TValue, TArg>(
     30→  valOrFunction: ValueOrFunction<TValue, TArg>,
@@ -336,22 +334,8 @@ src/core/types.ts
     56→  dismissed: boolean;
     57→  height?: number;
     58→}
-    60→export type ToastOptions = Partial<
-    61→  Pick<
-    62→    Toast,
-    63→    | 'id'
-    64→    | 'icon'
-    65→    | 'duration'
-    66→    | 'ariaProps'
-    67→    | 'className'
-    68→    | 'style'
-    69→    | 'position'
-    70→    | 'iconTheme'
-    71→    | 'toasterId'
-    72→    | 'removeDelay'
-    73→  >
-    74→>;
-    76→export type DefaultToastOptions = ToastOptions & {
+    60→export type ToastOptions …
+    76→export type DefaultToastOptions …
     80→export interface ToasterProps {
     81→  position?: ToastPosition;
     82→  toastOptions?: DefaultToastOptions;
@@ -375,15 +359,17 @@ src/core/use-toaster.ts
      2→import { createDispatch, ActionType, useStore, dispatch } from './store …
      3→import { toast } from './toast …
      4→import { DefaultToastOptions, Toast, ToastPosition } from './types …
-     6→export const REMOVE_DELAY = 1000;
+     6→export const REMOVE_DELAY …
      8→export const useToaster = (
      9→  toastOptions?: DefaultToastOptions,
     10→  toasterId: string = 'default'
     11→) => {
+    12→  const { toasts, pausedAt } = useStore(toastOptions, toasterId);
+      →…
 
 src/core/utils.ts
-     1→export const genId = (() => {
-     8→export const prefersReducedMotion = (() => {
+     1→export const genId …
+     8→export const prefersReducedMotion …
 
 src/headless/index.ts
      1→import { toast } from '../core/toast';
@@ -395,6 +381,8 @@ test/setup.ts
      1→import '@testing-library/jest-dom';
 
 test/toast.test.tsx
+     1→import React, { useEffect, useState } from 'react …
+     2→@testing-library/react …
     10→import toast, { resolveValue, Toaster, ToastIcon } from '../src';
     11→import { defaultTimeouts } from '../src/core/store';
     12→import { REMOVE_DELAY } from '../src/core/use-toaster';

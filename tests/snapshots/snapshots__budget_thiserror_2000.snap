@@ -2,21 +2,21 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2011 tokens)
+budget: 2000 (2010 tokens)
 
 Cargo.toml
-     1→[package …
-    14→[features …
-    30→[dependencies …
-    33→[dev-dependencies …
-    39→[workspace …
-    42→[package.metadata.docs.rs …
+     1→[package]
+    14→[features]
+    30→[dependencies]
+    33→[dev-dependencies]
+    39→[workspace]
+    42→[package.metadata.docs.rs]
 
 README.md
-     1→derive(Error) …
-    21→## Example …
-    44→## Details …
-   211→## Comparison to anyhow …
+     1→derive(Error)
+    21→## Example
+    44→## Details
+   211→## Comparison to anyhow
    223→#### License
    226→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
       →…
@@ -43,10 +43,10 @@ build.rs
     10→const PRIVATE: &str = "\
 
 impl/Cargo.toml
-     1→[package …
-    11→[lib …
-    14→[dependencies …
-    19→[package.metadata.docs.rs …
+     1→[package]
+    11→[lib]
+    14→[dependencies]
+    19→[package.metadata.docs.rs]
 
 impl/src/ast.rs
     10→pub enum Input<'a> {
@@ -112,7 +112,7 @@ impl/src/unraw.rs
       →…
 
 rust-toolchain.toml
-     1→[toolchain …
+     1→[toolchain]
 
 src/aserror.rs
      4→#[doc(hidden)]

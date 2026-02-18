@@ -2,53 +2,33 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2112 tokens)
+budget: 2000 (2035 tokens)
 
 CHANGELOG.md
-     1→# neverthrow …
+     1→# neverthrow
 
 README.md
-     1→# NeverThrow 🙅 …
-     5→## Description …
-    19→## Table Of Contents …
-    73→## Installation …
-    79→## Recommended: Use `eslint-plugin-neverthrow` …
-   100→## Top-Level API …
-   139→## API Documentation …
-   141→### Synchronous API (`Result`) …
-   863→### Asynchronous API (`ResultAsync`) …
-  1519→### Utilities …
-  1633→### Testing …
-  1673→## A note on the Package Name …
-  1681→### License …
+     1→# NeverThrow 🙅
+     5→## Description
+    19→## Table Of Contents
+    73→## Installation
+    79→## Recommended: Use `eslint-plugin-neverthrow`
+   100→## Top-Level API
+   139→## API Documentation
+   141→### Synchronous API (`Result`)
+   863→### Asynchronous API (`ResultAsync`)
+  1519→### Utilities
+  1633→### Testing
+  1635→`Result` instances have two unsafe methods, aptly called `_unsafeUnwrap` and `_unsafeUnwrapErr` which **should only be used in a test environment**.
+  1636→
+      →…
+  1673→## A note on the Package Name
+  1681→### License
+  1683→The neverthrow project is available as open source under the terms of the [MIT license](https://github.com/supermacro/neverthrow/blob/master/LICENSE).
 
 package.json
-     2→  "name": "neverthrow",
-     3→  "version": "8.2.0",
-     4→  "description": "Stop throwing errors, and instead return Results!",
-     5→  "main": "dist/index.cjs.js",
-     6→  "module": "dist/index.es.js",
-     7→  "types": "dist/index.d.ts",
-     8→  "files": [
-    10→  ],
-    11→  "scripts": {
-    23→  },
-    24→  "repository": {
-    27→  },
-    28→  "author": "Giorgio Delgado",
-    29→  "license": "MIT",
-    30→  "bugs": {
-    32→  },
-    33→  "homepage": "https://github.com/supermacro/neverthrow#readme",
-    34→  "devDependencies": {
-    52→  },
-    53→  "keywords": [
-    58→  ],
-    59→  "engines": {
-    62→  },
-    63→  "optionalDependencies": {
-    65→  }
-    66→}
+
+rollup.config.mjs
 
 src/_internals/error.ts
      1→import { Result } from '../result'
@@ -63,12 +43,18 @@ src/_internals/error.ts
     15→        value: T
     16→      }
     17→    | {
+    18→        type: string
+    19→        value: E
+    20→      }
+    21→  message: string
       →…
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
     29→  result: Result<T, E>,
     30→  config: ErrorConfig = defaultErrorConfig,
     31→): NeverThrowError<T, E> => {
+    32→  const data = result.isOk()
+      →…
 
 src/_internals/utils.ts
      1→import { Result, ok, err } from '../result'
@@ -90,8 +76,12 @@ src/_internals/utils.ts
     36→  let acc = ok([]) as Result<T[], E>
     37→
     38→  for (const result of resultList) {
+    39→    if (result.isErr()) {
+    40→      acc = err(result.error)
       →…
     54→export const combineResultAsyncList = <T, E>(
+    55→  asyncResultList: readonly ResultAsync<T, E>[],
+      →…
     61→/**
     62→ * Give a list of all the errors we find
     63→ */
@@ -101,8 +91,12 @@ src/_internals/utils.ts
     67→  let acc = ok([]) as Result<T[], E[]>
     68→
     69→  for (const result of resultList) {
+    70→    if (result.isErr() && acc.isErr()) {
+    71→      acc.error.push(result.error)
       →…
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
+    83→  asyncResultList: readonly ResultAsync<T, E>[],
+      →…
 
 src/result-async.ts
      1→./result …
@@ -196,13 +190,6 @@ tests/tsconfig.tests.json
 
 tests/typecheck-tests.ts
     19→type CreateTuple …
-  2607→const input …
+  2607→const input = <T>(): T => 123 as any
 
 tsconfig.json
-     2→  "compilerOptions": {
-    23→  },
-    24→  "include": [
-    26→  ],
-    27→  "exclude": [
-    30→  ]
-    31→}

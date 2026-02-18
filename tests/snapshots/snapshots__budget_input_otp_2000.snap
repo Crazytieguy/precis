@@ -2,31 +2,31 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2062 tokens)
+budget: 2000 (2007 tokens)
 
 CHANGELOG.md
-     1→# Changelog …
+     1→# Changelog
 
 README.md
-     1→# The only accessible & unstyled & full featured Input OTP component in the Web. …
-     3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz) …
-    20→## Usage …
-    39→## Default example …
-   136→## How it works …
-   141→## Features …
-   198→### Auto tracks if the input has space in the right side for the badge …
-   204→## API Reference …
-   206→### OTPInput …
-   210→#### Props …
-   293→## Examples …
-   377→## Caveats …
-   539→#### Sponsors …
+     1→# The only accessible & unstyled & full featured Input OTP component in the Web.
+     3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
+    20→## Usage
+    39→## Default example
+   136→## How it works
+   141→## Features
+   198→### Auto tracks if the input has space in the right side for the badge
+   204→## API Reference
+   206→### OTPInput
+   210→#### Props
+   293→## Examples
+   377→## Caveats
+   539→#### Sponsors
 
 apps/storybook/README.md
-    13→## 🚅 Quick start …
-    44→## 🔎 What's inside? …
-    83→## Contribute …
-    87→## Learning Storybook …
+    13→## 🚅 Quick start
+    44→## 🔎 What's inside?
+    83→## Contribute
+    87→## Learning Storybook
 
 apps/storybook/components.json
 
@@ -75,9 +75,9 @@ apps/storybook/tsconfig.json
 apps/storybook/tsconfig.node.json
 
 apps/test/README.md
-     3→## Getting Started …
-    23→## Learn More …
-    32→## Deploy on Vercel …
+     3→## Getting Started
+    23→## Learn More
+    32→## Deploy on Vercel
 
 apps/test/src/app/base/page.tsx
      7→export default function Page() {
@@ -105,9 +105,9 @@ apps/test/src/tests/util/modifier.ts
      1→export const modifier …
 
 apps/website/README.md
-     3→## Getting Started …
-    23→## Learn More …
-    32→## Deploy on Vercel …
+     3→## Getting Started
+    23→## Learn More
+    32→## Deploy on Vercel
 
 apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
      9→export default function ExampleAutoSubmit() {
@@ -122,7 +122,6 @@ apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     13→export default function ShadcnPage() {
 
 apps/website/src/app/(pages)/(home)/page.tsx
-    19→const fadeUpClassname =
     34→export default async function IndexPage() {
    148→export const revalidate = 3600
 
@@ -167,7 +166,6 @@ packages/input-otp/src/input.tsx
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
       →…
-   553→const NOSCRIPT_CSS_FALLBACK = `
 
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
@@ -176,6 +174,8 @@ packages/input-otp/src/regexp.ts
 
 packages/input-otp/src/sync-timeouts.ts
      1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
+     2→  const t1 = setTimeout(cb, 0) // For faster machines
+      →…
 
 packages/input-otp/src/types.ts
      1→export interface SlotProps {
@@ -199,14 +199,12 @@ packages/input-otp/src/types.ts
 packages/input-otp/src/use-previous.ts
      1→import * as React from 'react'
      3→export function usePrevious<T>(value: T) {
+     4→  const ref = React.useRef<T>()
+      →…
 
 packages/input-otp/src/use-pwm-badge.tsx
      1→import * as React from 'react'
      2→import { OTPInputProps } from './types'
-     4→const PWM_BADGE_MARGIN_RIGHT = 18
-     5→const PWM_BADGE_SPACE_WIDTH_PX = 40
-     6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
-     8→const PASSWORD_MANAGERS_SELECTORS = [
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,
@@ -226,7 +224,7 @@ packages/input-otp/src/use-pwm-badge.tsx
 packages/input-otp/tsconfig.json
 
 pnpm-workspace.yaml
-     1→packages …
+     1→packages:
 
 turbo.json
      2→  "extends": ["//"],
