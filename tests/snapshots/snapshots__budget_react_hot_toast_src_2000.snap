@@ -2,49 +2,31 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1967 words)
+budget: 2000 (2001 tokens)
 
 components/checkmark.tsx
      1→import { styled, keyframes } from 'goober';
-     3→const circleAnimation = keyframes`
-    13→const checkmarkAnimation = keyframes`
     29→export interface CheckmarkTheme {
     30→  primary?: string;
     31→  secondary?: string;
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
-    35→  width: 20px;
-    36→  opacity: 0;
-    37→  height: 20px;
-      →…
 
 components/error.tsx
      1→import { styled, keyframes } from 'goober';
-     3→const circleAnimation = keyframes`
-    13→const firstLineAnimation = keyframes`
-    23→const secondLineAnimation = keyframes`
     33→export interface ErrorTheme {
     34→  primary?: string;
     35→  secondary?: string;
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
-    39→  width: 20px;
-    40→  opacity: 0;
-    41→  height: 20px;
-      →…
 
 components/loader.tsx
      1→import { styled, keyframes } from 'goober';
-     3→const rotate = keyframes`
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
-    18→  width: 12px;
-    19→  height: 12px;
-    20→  box-sizing: border-box;
-      →…
 
 components/toast-bar.tsx
      1→import * as React from 'react';
@@ -52,18 +34,8 @@ components/toast-bar.tsx
      4→import { Toast, ToastPosition, resolveValue, Renderable } from '../core/types';
      5→import { ToastIcon } from './toast-icon';
      6→import { prefersReducedMotion } from '../core/utils';
-     8→const enterAnimation = (factor: number) => `
-     9→0% {transform: translate3d(0,${factor * -200}%,0) scale(.6); opacity:.5;}
-    10→100% {transform: translate3d(0,0,0) scale(1); opacity:1;}
-    11→`;
-    13→const exitAnimation = (factor: number) => `
-    14→0% {transform: translate3d(0,0,-1px) scale(1); opacity:1;}
-    15→100% {transform: translate3d(0,${factor * -150}%,-1px) scale(.6); opacity:0;}
-    16→`;
-    18→const fadeInAnimation = `0%{opacity:0;} 100%{opacity:1;}`;
-    19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
-    22→const ToastBarBase = styled('div')`
-    38→const Message = styled('div')`
+     8→const enterAnimation …
+    13→const exitAnimation …
     47→interface ToastBarProps {
     48→  toast: Toast;
     49→  position?: ToastPosition;
@@ -73,23 +45,8 @@ components/toast-bar.tsx
     53→    message: Renderable;
     54→  }) => Renderable;
     55→}
-    57→const getAnimationStyle = (
-    58→  position: ToastPosition,
-    59→  visible: boolean
-    60→): React.CSSProperties => {
-    61→  const top = position.includes('top');
-    62→  const factor = top ? 1 : -1;
-    63→
-    64→  const [enter, exit] = prefersReducedMotion()
-    65→    ? [fadeInAnimation, fadeOutAnimation]
-    66→    : [enterAnimation(factor), exitAnimation(factor)];
-    67→
-      →…
+    57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
-    76→  ({ toast, position, style, children }) => {
-    77→    const animationStyle: React.CSSProperties = toast.height
-    78→      ? getAnimationStyle(
-      →…
 
 components/toast-icon.tsx
      1→import * as React from 'react';
@@ -98,50 +55,15 @@ components/toast-icon.tsx
      5→import { ErrorIcon, ErrorTheme } from './error';
      6→import { LoaderIcon, LoaderTheme } from './loader';
      7→import { CheckmarkIcon, CheckmarkTheme } from './checkmark';
-     9→const StatusWrapper = styled('div')`
-    13→const IndicatorWrapper = styled('div')`
-    22→const enter = keyframes`
     32→export const AnimatedIconWrapper = styled('div')`
-    33→  position: relative;
-    34→  transform: scale(0.6);
-    35→  opacity: 0.4;
-      →…
     41→export type IconThemes = Partial<{
-    42→  success: CheckmarkTheme;
-    43→  error: ErrorTheme;
-    44→  loading: LoaderTheme;
-      →…
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {
     50→  const { icon, type, iconTheme } = toast;
     51→  if (icon !== undefined) {
     52→    if (typeof icon === 'string') {
-    53→      return <AnimatedIconWrapper>{icon}</AnimatedIconWrapper>;
-    54→    } else {
-    55→      return icon;
-    56→    }
-    57→  }
-    58→
-    59→  if (type === 'blank') {
-    60→    return null;
-    61→  }
-    62→
-    63→  return (
-    64→    <IndicatorWrapper>
-    65→      <LoaderIcon {...iconTheme} />
-    66→      {type !== 'loading' && (
-    67→        <StatusWrapper>
-    68→          {type === 'error' ? (
-    69→            <ErrorIcon {...iconTheme} />
-    70→          ) : (
-    71→            <CheckmarkIcon {...iconTheme} />
-    72→          )}
-    73→        </StatusWrapper>
-    74→      )}
-    75→    </IndicatorWrapper>
-    76→  );
-    77→};
+      →…
 
 components/toaster.tsx
      1→import { css, setup } from 'goober';
@@ -155,95 +77,22 @@ components/toaster.tsx
      9→import { useToaster } from '../core/use-toaster';
     10→import { prefersReducedMotion } from '../core/utils';
     11→import { ToastBar } from './toast-bar';
-    15→const ToastWrapper = ({
-    16→  id,
-    17→  className,
-    18→  style,
-    19→  onHeightUpdate,
-    20→  children,
-    21→}: ToastWrapperProps) => {
-    22→  const ref = React.useCallback(
-      →…
-    47→const getPositionStyle = (
-    48→  position: ToastPosition,
-    49→  offset: number
-    50→): React.CSSProperties => {
-    51→  const top = position.includes('top');
-    52→  const verticalStyle: React.CSSProperties = top ? { top: 0 } : { bottom: 0 };
-    53→  const horizontalStyle: React.CSSProperties = position.includes('center')
-    54→    ? {
-    55→        justifyContent: 'center',
-    56→      }
-    57→    : position.includes('right')
-      →…
-    76→const activeClass = css`
-    83→const DEFAULT_OFFSET = 16;
+    15→const ToastWrapper …
+    47→const getPositionStyle …
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
     87→  position = 'top-center',
     88→  toastOptions,
     89→  gutter,
     90→  children,
-    91→  toasterId,
-    92→  containerStyle,
-    93→  containerClassName,
-    94→}) => {
-    95→  const { toasts, handlers } = useToaster(toastOptions, toasterId);
-    96→
-    97→  return (
-    98→    <div
-    99→      data-rht-toaster={toasterId || ''}
-   100→      style={{
-   101→        position: 'fixed',
-   102→        zIndex: 9999,
-   103→        top: DEFAULT_OFFSET,
-   104→        left: DEFAULT_OFFSET,
-   105→        right: DEFAULT_OFFSET,
-   106→        bottom: DEFAULT_OFFSET,
-   107→        pointerEvents: 'none',
-   108→        ...containerStyle,
-   109→      }}
-   110→      className={containerClassName}
-   111→      onMouseEnter={handlers.startPause}
-   112→      onMouseLeave={handlers.endPause}
-   113→    >
-   114→      {toasts.map((t) => {
-   115→        const toastPosition = t.position || position;
-   116→        const offset = handlers.calculateOffset(t, {
-   117→          reverseOrder,
-   118→          gutter,
-   119→          defaultPosition: position,
-   120→        });
-   121→        const positionStyle = getPositionStyle(toastPosition, offset);
-   122→
-   123→        return (
-   124→          <ToastWrapper
-   125→            id={t.id}
-   126→            key={t.id}
-   127→            onHeightUpdate={handlers.updateHeight}
-   128→            className={t.visible ? activeClass : ''}
-   129→            style={positionStyle}
-   130→          >
-   131→            {t.type === 'custom' ? (
-   132→              resolveValue(t.message, t)
-   133→            ) : children ? (
-   134→              children(t)
-   135→            ) : (
-   136→              <ToastBar toast={t} position={toastPosition} />
-   137→            )}
-   138→          </ToastWrapper>
-   139→        );
-   140→      })}
-   141→    </div>
-   142→  );
-   143→};
+      →…
 
 core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
-     2→import { DefaultToastOptions, Toast, ToastType } from './types';
-     4→export const TOAST_EXPIRE_DISMISS_DELAY = 1000;
-     5→export const TOAST_LIMIT = 20;
-     6→export const DEFAULT_TOASTER_ID = 'default';
+     2→import { DefaultToastOptions, Toast, ToastType } from './types …
+     4→export const TOAST_EXPIRE_DISMISS_DELAY …
+     5→export const TOAST_LIMIT …
+     6→export const DEFAULT_TOASTER_ID …
      8→interface ToasterSettings {
      9→  toastLimit: number;
     10→}
@@ -256,13 +105,7 @@ core/store.ts
     18→  START_PAUSE,
     19→  END_PAUSE,
     20→}
-    22→export type Action =
-    23→  | {
-    24→      type: ActionType.ADD_TOAST;
-    25→      toast: Toast;
-    26→    }
-    27→  | {
-      →…
+    22→export type Action …
     52→interface ToasterState {
     53→  toasts: Toast[];
     54→  settings: ToasterSettings;
@@ -271,188 +114,39 @@ core/store.ts
     58→interface State {
     59→  [toasterId: string]: ToasterState;
     60→}
-    62→export const reducer = (state: ToasterState, action: Action): ToasterState => {
-    63→  const { toastLimit } = state.settings;
-    64→
-    65→  switch (action.type) {
-    66→    case ActionType.ADD_TOAST:
-    67→      return {
-    68→        ...state,
-    69→        toasts: [action.toast, ...state.toasts].slice(0, toastLimit),
-    70→      };
-    71→
-    72→    case ActionType.UPDATE_TOAST:
-    73→      return {
-    74→        ...state,
-    75→        toasts: state.toasts.map((t) =>
-    76→          t.id === action.toast.id ? { ...t, ...action.toast } : t
-    77→        ),
-    78→      };
-    79→
-    80→    case ActionType.UPSERT_TOAST:
-    81→      const { toast } = action;
-    82→      return reducer(state, {
-    83→        type: state.toasts.find((t) => t.id === toast.id)
-    84→          ? ActionType.UPDATE_TOAST
-    85→          : ActionType.ADD_TOAST,
-    86→        toast,
-    87→      });
-    88→
-    89→    case ActionType.DISMISS_TOAST:
-    90→      const { toastId } = action;
-      →…
+    62→export const reducer …
    136→const listeners: Array<
-   137→  [toasterId: string, reducer: (state: ToasterState) => void]
-   138→> = [];
    140→const defaultToasterState: ToasterState = {
-   141→  toasts: [],
-   142→  pausedAt: undefined,
-   143→  settings: {
-   144→    toastLimit: TOAST_LIMIT,
-   145→  },
-   146→};
-   149→export const dispatch = (action: Action, toasterId = DEFAULT_TOASTER_ID) => {
-   150→  memoryState[toasterId] = reducer(
-   151→    memoryState[toasterId] || defaultToasterState,
-   152→    action
-   153→  );
-   154→  listeners.forEach(([id, listener]) => {
-   155→    if (id === toasterId) {
-   156→      listener(memoryState[toasterId]);
-   157→    }
-   158→  });
-   159→};
-   161→export const dispatchAll = (action: Action) =>
-   162→  Object.keys(memoryState).forEach((toasterId) => dispatch(action, toasterId));
-   164→export const getToasterIdFromToastId = (toastId: string) =>
-   165→  Object.keys(memoryState).find((toasterId) =>
-   166→    memoryState[toasterId].toasts.some((t) => t.id === toastId)
-   167→  );
-   169→export const createDispatch =
-   170→  (toasterId = DEFAULT_TOASTER_ID) =>
-   171→  (action: Action) => {
-   172→    dispatch(action, toasterId);
-   173→  };
-   175→export const defaultTimeouts: {
-   176→  [key in ToastType]: number;
-   177→} = {
-   178→  blank: 4000,
-   179→  error: 4000,
-      →…
-   185→export const useStore = (
-   186→  toastOptions: DefaultToastOptions = {},
-   187→  toasterId: string = DEFAULT_TOASTER_ID
-   188→): ToasterState => {
-   189→  const [state, setState] = useState<ToasterState>(
-   190→    memoryState[toasterId] || defaultToasterState
-   191→  );
-   192→  const initial = useRef(memoryState[toasterId]);
-   193→
-   194→  // TODO: Switch to useSyncExternalStore when targeting React 18+
-   195→  useEffect(() => {
-   196→    if (initial.current !== memoryState[toasterId]) {
-   197→      setState(memoryState[toasterId]);
-   198→    }
-   199→    listeners.push([toasterId, setState]);
-   200→    return () => {
-   201→      const index = listeners.findIndex(([id]) => id === toasterId);
-   202→      if (index > -1) {
-   203→        listeners.splice(index, 1);
-   204→      }
-   205→    };
-   206→  }, [toasterId]);
-   207→
-   208→  const mergedToasts = state.toasts.map((t) => ({
-   209→    ...toastOptions,
-   210→    ...toastOptions[t.type],
-   211→    ...t,
-   212→    removeDelay:
-   213→      t.removeDelay ||
-   214→      toastOptions[t.type]?.removeDelay ||
-   215→      toastOptions?.removeDelay,
-   216→    duration:
-      →…
+   149→export const dispatch …
+   161→export const dispatchAll …
+   164→export const getToasterIdFromToastId …
+   169→export const createDispatch …
+   175→export const defaultTimeouts …
+   185→export const useStore …
 
 core/toast.ts
-     1→import {
-     2→  Renderable,
-     3→  Toast,
-     4→  ToastOptions,
-     5→  ToastType,
-     6→  DefaultToastOptions,
-     7→  ValueOrFunction,
-     8→  resolveValue,
-     9→} from './types';
-    10→import { genId } from './utils';
-    11→import {
-    12→  createDispatch,
-    13→  Action,
-    14→  ActionType,
-    15→  dispatchAll,
-    16→  getToasterIdFromToastId,
-    17→} from './store';
+     1→./types …
+    10→import { genId } from './utils …
+    11→./store …
     19→type Message = ValueOrFunction<Renderable, Toast>;
     21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
-    23→const createToast = (
-    24→  message: Message,
-    25→  type: ToastType = 'blank',
-    26→  opts?: ToastOptions
-    27→): Toast => ({
-    28→  createdAt: Date.now(),
-    29→  visible: true,
-    30→  dismissed: false,
-    31→  type,
-    32→  ariaProps: {
-    33→    role: 'status',
-    34→    'aria-live': 'polite',
-    35→  },
-    36→  message,
-    37→  pauseDuration: 0,
-    38→  ...opts,
-    39→  id: opts?.id || genId(),
-    40→});
-    42→const createHandler =
-    43→  (type?: ToastType): ToastHandler =>
-    44→  (message, options) => {
-    45→    const toast = createToast(message, type, options);
-    46→
-    47→    const dispatch = createDispatch(
-    48→      toast.toasterId || getToasterIdFromToastId(toast.id)
-    49→    );
-    50→
-    51→    dispatch({ type: ActionType.UPSERT_TOAST, toast });
-    52→    return toast.id;
-    53→  };
-    55→const toast = (message: Message, opts?: ToastOptions) =>
-    56→  createHandler('blank')(message, opts);
+    23→const createToast …
+    42→const createHandler …
+    55→const toast …
 
 core/types.ts
      1→import { CSSProperties } from 'react';
-     3→export type ToastType = 'success' | 'error' | 'loading' | 'blank' | 'custom';
-     4→export type ToastPosition =
-     5→  | 'top-left'
-     6→  | 'top-center'
-     7→  | 'top-right'
-     8→  | 'bottom-left'
-     9→  | 'bottom-center'
-    10→  | 'bottom-right';
-    12→export type Renderable = React.ReactElement | string | null;
+     3→export type ToastType …
+     4→export type ToastPosition …
+    12→export type Renderable …
     14→export interface IconTheme {
     15→  primary: string;
     16→  secondary: string;
     17→}
-    19→export type ValueFunction<TValue, TArg> = (arg: TArg) => TValue;
-    20→export type ValueOrFunction<TValue, TArg> =
-    21→  | TValue
-    22→  | ValueFunction<TValue, TArg>;
-    24→const isFunction = <TValue, TArg>(
-    25→  valOrFunction: ValueOrFunction<TValue, TArg>
-    26→): valOrFunction is ValueFunction<TValue, TArg> =>
-    27→  typeof valOrFunction === 'function';
-    29→export const resolveValue = <TValue, TArg>(
-    30→  valOrFunction: ValueOrFunction<TValue, TArg>,
-    31→  arg: TArg
-    32→): TValue => (isFunction(valOrFunction) ? valOrFunction(arg) : valOrFunction);
+    19→export type ValueFunction …
+    20→export type ValueOrFunction …
+    24→const isFunction …
+    29→export const resolveValue …
     34→export interface Toast {
     35→  type: ToastType;
     36→  id: string;
@@ -478,24 +172,8 @@ core/types.ts
     56→  dismissed: boolean;
     57→  height?: number;
     58→}
-    60→export type ToastOptions = Partial<
-    61→  Pick<
-    62→    Toast,
-    63→    | 'id'
-    64→    | 'icon'
-    65→    | 'duration'
-    66→    | 'ariaProps'
-    67→    | 'className'
-    68→    | 'style'
-    69→    | 'position'
-    70→    | 'iconTheme'
-    71→    | 'toasterId'
-    72→    | 'removeDelay'
-    73→  >
-    74→>;
-    76→export type DefaultToastOptions = ToastOptions & {
-    77→  [key in ToastType]?: ToastOptions;
-    78→};
+    60→export type ToastOptions …
+    76→export type DefaultToastOptions …
     80→export interface ToasterProps {
     81→  position?: ToastPosition;
     82→  toastOptions?: DefaultToastOptions;
@@ -516,57 +194,15 @@ core/types.ts
 
 core/use-toaster.ts
      1→import { useEffect, useCallback, useRef } from 'react';
-     2→import { createDispatch, ActionType, useStore, dispatch } from './store';
-     3→import { toast } from './toast';
-     4→import { DefaultToastOptions, Toast, ToastPosition } from './types';
-     6→export const REMOVE_DELAY = 1000;
-     8→export const useToaster = (
-     9→  toastOptions?: DefaultToastOptions,
-    10→  toasterId: string = 'default'
-    11→) => {
-    12→  const { toasts, pausedAt } = useStore(toastOptions, toasterId);
-    13→  const toastTimeouts = useRef(
-    14→    new Map<Toast['id'], ReturnType<typeof setTimeout>>()
-    15→  ).current;
-    16→
-    17→  const addToRemoveQueue = useCallback(
-    18→    (toastId: string, removeDelay = REMOVE_DELAY) => {
-    19→      if (toastTimeouts.has(toastId)) {
-    20→        return;
-    21→      }
-    22→
-    23→      const timeout = setTimeout(() => {
-    24→        toastTimeouts.delete(toastId);
-    25→        dispatch({
-    26→          type: ActionType.REMOVE_TOAST,
-    27→          toastId: toastId,
-    28→        });
-    29→      }, removeDelay);
-    30→
-    31→      toastTimeouts.set(toastId, timeout);
-    32→    },
-    33→    []
-    34→  );
-    35→
-    36→  useEffect(() => {
-    37→    if (pausedAt) {
-    38→      return;
-    39→    }
-      →…
+     2→import { createDispatch, ActionType, useStore, dispatch } from './store …
+     3→import { toast } from './toast …
+     4→import { DefaultToastOptions, Toast, ToastPosition } from './types …
+     6→export const REMOVE_DELAY …
+     8→export const useToaster …
 
 core/utils.ts
-     1→export const genId = (() => {
-     2→  let count = 0;
-     3→  return () => {
-     4→    return (++count).toString();
-     5→  };
-      →…
-     8→export const prefersReducedMotion = (() => {
-     9→  // Cache result
-    10→  let shouldReduceMotion: boolean | undefined = undefined;
-    11→
-    12→  return () => {
-      →…
+     1→export const genId …
+     8→export const prefersReducedMotion …
 
 headless/index.ts
      1→import { toast } from '../core/toast';

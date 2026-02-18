@@ -2,96 +2,40 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (980 words)
+budget: 1000 (986 tokens)
 
 browser.ts
-     1→export function isMobileFirefox …
-    10→export function isMac …
-    14→export function isIPhone …
-    18→export function isSafari …
-    22→export function isIPad …
-    30→export function isIOS …
-    34→export function testPlatform …
 
 constants.ts
-     1→export const TRANSITIONS = {
-     2→  DURATION: 0.5,
-      →…
-     6→export const VELOCITY_THRESHOLD = 0.4;
-     8→export const CLOSE_THRESHOLD = 0.25;
-    10→export const SCROLL_LOCK_TIMEOUT = 100;
-    12→export const BORDER_RADIUS = 8;
-    14→export const NESTED_DISPLACEMENT = 16;
-    16→export const WINDOW_TOP_OFFSET = 26;
-    18→export const DRAG_CLASS = 'vaul-dragging';
+     1→export const TRANSITIONS …
+     6→export const VELOCITY_THRESHOLD …
+     8→export const CLOSE_THRESHOLD …
+    10→export const SCROLL_LOCK_TIMEOUT …
+    12→export const BORDER_RADIUS …
+    14→export const NESTED_DISPLACEMENT …
+    16→export const WINDOW_TOP_OFFSET …
+    18→export const DRAG_CLASS …
 
 context.ts
-     1→import React from 'react';
-     2→import { DrawerDirection } from './types';
      4→interface DrawerContextValue {
-     5→  drawerRef: React.RefObject<HTMLDivElement>;
-     6→  overlayRef: React.RefObject<HTMLDivElement>;
-     7→  onPress: (event: React.PointerEvent<HTMLDivElement>) => void;
-     8→  onRelease: (event: React.PointerEvent<HTMLDivElement> | null) => void;
-     9→  onDrag: (event: React.PointerEvent<HTMLDivElement>) => void;
-    10→  onNestedDrag: (event: React.PointerEvent<HTMLDivElement>, percentageDragged: number) => void;
-    11→  onNestedOpenChange: (o: boolean) => void;
-      →…
-    37→export const DrawerContext = React.createContext<DrawerContextValue>({
-    38→  drawerRef: { current: null },
-      →…
-    69→export const useDrawerContext …
+    37→export const DrawerContext …
 
 helpers.ts
-     1→import { AnyFunction, DrawerDirection } from './types';
      3→interface Style {
-     4→  [key: string]: string;
-     5→}
-     7→const cache = new WeakMap();
-     9→export function isInView …
-    23→export function set …
-    42→export function reset …
-    59→export const isVertical …
-    72→export function getTranslate …
-    90→export function dampenValue …
-    94→export function assignStyle …
    105→/**
    106→ * Receives functions as arguments and returns a new function that calls all.
    107→ */
    108→export function chain<T>(...fns: T[]) {
-   109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
-   110→    for (const fn of fns) {
-   111→      if (typeof fn === 'function') {
-   112→        // @ts-ignore
-   113→        fn(...args);
-   114→      }
-   115→    }
-      →…
 
 index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
     27→export interface WithFadeFromProps {
     28→  /**
-    29→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
-    30→   * Should go from least visible. Example `[0.2, 0.5, 0.8]`.
-    31→   * You can also use px values, which doesn't take screen height into account.
-    32→   */
-    33→  snapPoints: (number | string)[];
-    34→  /**
-    35→   * Index of a `snapPoint` from which the overlay fade should be applied. Defaults to the last snap point.
-    36→   */
-    37→  fadeFromIndex: number;
-    38→}
+      →…
     40→export interface WithoutFadeFromProps {
     41→  /**
-    42→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
-    43→   * Should go from least visible. Example `[0.2, 0.5, 0.8]`.
-    44→   * You can also use px values, which doesn't take screen height into account.
-    45→   */
-    46→  snapPoints?: (number | string)[];
-    47→  fadeFromIndex?: never;
-    48→}
+      →…
     50→export type DialogProps = {
    139→export function Root …
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
@@ -107,16 +51,14 @@ index.tsx
   1137→export const Drawer = {
 
 types.ts
-     1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
+     1→export type DrawerDirection …
      2→export interface SnapPoint {
      3→  fraction: number;
      4→  height: number;
      5→}
-     7→export type AnyFunction = (...args: any) => any;
+     7→export type AnyFunction …
 
 use-composed-refs.ts
-     3→import * as React from 'react';
-     5→type PossibleRef<T> = React.Ref<T> | undefined;
      7→/**
       →…
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
@@ -128,16 +70,8 @@ use-composed-refs.ts
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 
 use-controllable-state.ts
-     3→import React from 'react';
-     5→type UseControllableStateParams<T> = {
-    11→type SetStateFn<T> = (prevState?: T) => T;
-    13→function useCallbackRef …
-    24→function useUncontrolledState …
-    39→export function useControllableState …
 
 use-position-fixed.ts
-     1→import React from 'react';
-     2→import { isSafari } from './browser';
      6→/**
      7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
      8→ * I won't get into too much detail about what bugs it solves, but so far I've found that setting the body to `position: fixed` is the most reliable way to prevent those bugs.
@@ -162,62 +96,17 @@ use-position-fixed.ts
     27→  preventScrollRestoration: boolean;
     28→  noBodyStyles: boolean;
     29→}) {
-    30→  const [activeUrl, setActiveUrl] = React.useState(() => (typeof window !== 'undefined' ? window.location.href : ''));
-    31→  const scrollPos = React.useRef(0);
-    32→
-    33→  const setPositionFixed = React.useCallback(() => {
-    34→    // All browsers on iOS will return true here.
-    35→    if (!isSafari()) return;
-    36→
-      →…
 
 use-prevent-scroll.ts
-     3→import { useEffect, useLayoutEffect } from 'react';
-     4→import { isIOS } from './browser';
-     6→const KEYBOARD_BUFFER = 24;
-     8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+     8→export const useIsomorphicLayoutEffect …
     10→interface PreventScrollOptions {
-    11→  /** Whether the scroll lock is disabled. */
-    12→  isDisabled?: boolean;
-    13→  focusCallback?: () => void;
-    14→}
-    16→function chain …
-    27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
-    29→export function isScrollable …
-    34→export function getScrollParent …
-    47→const nonTextInputTypes = new Set([
     63→/**
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
     66→ * shift due to the scrollbars disappearing.
     67→ */
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
-    69→  let { isDisabled } = options;
-    70→
-    71→  useIsomorphicLayoutEffect(() => {
-    72→    if (isDisabled) {
-    73→      return;
-    74→    }
-    75→
-      →…
-   118→function preventScrollMobileSafari …
-   243→function setStyle …
-   257→function addEvent …
-   272→function scrollIntoView …
-   294→export function isInput …
 
 use-scale-background.ts
-     1→import React, { useMemo } from 'react';
-     2→import { useDrawerContext } from './context';
-     3→import { assignStyle, chain, isVertical, reset } from './helpers';
-     4→import { BORDER_RADIUS, TRANSITIONS, WINDOW_TOP_OFFSET } from './constants';
-     6→const noop …
-     8→export function useScaleBackground …
 
 use-snap-points.ts
-     1→import React from 'react';
-     2→import { set, isVertical } from './helpers';
-     3→import { TRANSITIONS, VELOCITY_THRESHOLD } from './constants';
-     4→import { useControllableState } from './use-controllable-state';
-     5→import { DrawerDirection } from './types';
-     7→export function useSnapPoints …

@@ -2,23 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (496 words)
+budget: 500 (560 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
      3→> Document is a work in progress!
      4→
-     5→⌘K is born from a simple constraint: can you write a combobox with filtering and sorting using the [compound component](https://kentcdodds.com/blog/compound-components-with-react-hooks) approach? We didn't want to render items manually from an array:
-     6→
-     7→```tsx
-     8→// No
-     9→<>
-    10→  {items.map((item) => {
-    11→    return <div>{item}</div>
-    12→  })}
-    13→</>
-    14→```
-    15→
       →…
     46→## Approach …
     50→### Discarded approach …
@@ -27,9 +16,7 @@ ARCHITECTURE.md
     96→## Groups …
 
 README.md
-     5→# ⌘K
-     7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
-     8→
+     5→# ⌘K …
      9→## Install …
     15→## Use …
     82→## Parts and styling …
@@ -39,33 +26,6 @@ README.md
    462→## Testing …
 
 cmdk/package.json
-     2→  "name": "cmdk",
-     3→  "version": "1.1.1",
-     4→  "license": "MIT",
-     5→  "main": "./dist/index.js",
-     6→  "module": "./dist/index.mjs",
-     7→  "types": "./dist/index.d.ts",
-     8→  "files": [
-    10→  ],
-    11→  "exports": {
-    17→  },
-    18→  "scripts": {
-    23→  },
-    24→  "peerDependencies": {
-    27→  },
-    28→  "dependencies": {
-    33→  },
-    34→  "devDependencies": {
-    36→  },
-    37→  "sideEffects": false,
-    38→  "repository": {
-    42→  },
-    43→  "bugs": {
-    45→  },
-    46→  "homepage": "https://github.com/pacocoursey/cmdk#readme",
-    47→  "author": {
-    50→  }
-    51→}
 
 cmdk/src/command-score.ts
     54→function commandScoreInner …
@@ -76,30 +36,9 @@ cmdk/src/command-score.ts
 
 cmdk/src/index.tsx
      5→import { commandScore } from './command-score'
-   664→const Item …
-   729→const Group …
-   774→const Separator …
-   787→const Input …
-   833→const List …
-   882→const Dialog …
-   899→const Empty …
-   909→const Loading …
-   955→/**
-   956→ *
-   957→ *
-   958→ * Helpers
-   959→ *
-   960→ *
-   961→ */
-   962→
    963→function findNextSibling(el: Element, selector: string) {
-  1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
-  1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
-
-cmdk/tsup.config.ts
-     1→import { defineConfig } from 'tsup'
 
 package.json
      2→  "name": "cmdk-root",
@@ -113,23 +52,12 @@ package.json
     27→  }
     28→}
 
-playwright.config.ts
-     1→import { PlaywrightTestConfig, devices } from '@playwright/test'
-     3→const config: PlaywrightTestConfig = {
-
 pnpm-workspace.yaml
      1→packages …
-
-test/package.json
 
 test/pages/_app.tsx
      1→import '../style.css'
      3→export default function App({ Component, pageProps }) {
-
-test/pages/huge.tsx
-     4→const items = new Array(1000).fill(0)
-
-test/tsconfig.json
 
 tsconfig.json
      2→  "compilerOptions": {
@@ -139,45 +67,13 @@ tsconfig.json
     19→}
 
 website/README.md
-     3→## Getting Started …
-    19→## Learn More …
-    28→## Deploy on Vercel …
-
-website/components/cmdk/framer.tsx
-
-website/components/cmdk/linear.tsx
-    30→const items = [
-
-website/components/cmdk/raycast.tsx
-
-website/components/cmdk/vercel.tsx
 
 website/components/code/index.tsx
-     4→import styles from './code.module.scss'
-     7→const theme = {
+     7→const theme …
     41→export function Code({ children }: { children: string }) {
-
-website/components/icons/index.tsx
-     1→import styles from './icons.module.scss'
-
-website/next.config.js
-
-website/package.json
-
-website/pages/_app.tsx
 
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
 
 website/pages/index.tsx
-    18→import packageJSON from '../../cmdk/package.json'
-   101→function InstallButton() {
-   137→//////////////////////////////////////////////////////////////////
-   138→
    139→const themes = [
-   262→function Codeblock() {
-   296→function VersionBadge() {
-
-website/tsconfig.json
-
-website/vercel.json

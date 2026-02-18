@@ -2,26 +2,23 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (493 words)
+budget: 500 (509 tokens)
 
 core/Ky.ts
     33→export class Ky {
-    34→	static create(input: Input, options: Options): ResponsePromise {
-   200→	constructor(input: Input, options: Options = {}) {
+    34→	static create …
+   200→	constructor …
 
 core/constants.ts
-     1→import type {Expect, Equal} from '@type-challenges/utils';
     65→/**
     66→Options for forcing a retry via `ky.retry()`.
     67→*/
     68→export type ForceRetryOptions = {
-    69→	/**
-      →…
    145→/**
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    147→*/
    148→export class RetryMarker {
-   149→	constructor(public options?: ForceRetryOptions) {}
+   149→	constructor …
    152→/**
    153→Force a retry from an `afterResponse` hook.
    154→
@@ -30,8 +27,6 @@ core/constants.ts
 
 errors/ForceRetryError.ts
      4→/**
-     5→Internal error used to signal a forced retry from afterResponse hooks.
-     6→This is thrown when a user returns ky.retry() from an afterResponse hook.
       →…
      8→export class ForceRetryError extends Error {
      9→	override name = 'ForceRetryError' as const;
@@ -39,114 +34,44 @@ errors/ForceRetryError.ts
     11→	code: string | undefined;
     12→	customRequest: Request | undefined;
     13→
-    14→	constructor(options?: ForceRetryOptions) {
+    14→	constructor …
 
 errors/HTTPError.ts
      5→export class HTTPError<T = unknown> extends Error {
-     6→	public response: KyResponse<T>;
-     7→	public request: KyRequest;
-     8→	public options: NormalizedOptions;
-     9→
-    10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
+    10→	constructor …
 
 errors/NonError.ts
      1→/**
-     2→Wrapper for non-Error values that were thrown.
-     3→
       →…
      6→export class NonError extends Error {
      7→	override name = 'NonError';
      8→	readonly value: unknown;
      9→
-    10→	constructor(value: unknown) {
+    10→	constructor …
 
 errors/TimeoutError.ts
      3→export class TimeoutError extends Error {
-     4→	public request: KyRequest;
-     5→
-     6→	constructor(request: Request) {
+     6→	constructor …
 
 index.ts
-    10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
-    11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
-      →…
+    10→const createInstance …
     34→const ky = createInstance();
 
 types/ResponsePromise.ts
      4→import {type KyResponse} from './response.js';
 
-types/common.ts
-
-types/hooks.ts
-
-types/ky.ts
-
 types/options.ts
     29→/**
-    30→Custom Ky options
-    31→*/
-    32→
+      →…
     33→export type KyOptions = {
-    34→	/**
-      →…
    302→/**
-   303→Each key from KyOptions is present and set to `true`.
-   304→
-   305→This type is used for identifying and working with the known keys in KyOptions.
-   306→*/
+      →…
    307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
-   312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
-   313→	/**
-   314→	HTTP method used to make the request.
-   315→
-      →…
-   373→export interface NormalizedOptions extends RequestInit { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
-   374→	// Extended from `RequestInit`, but ensured to be set (not optional).
-   375→	method: NonNullable<RequestInit['method']>;
-   376→	credentials?: NonNullable<RequestInit['credentials']>;
-      →…
-
-types/request.ts
-
-types/response.ts
-
-types/retry.ts
-
-utils/body.ts
-    57→const withProgress …
-
-utils/delay.ts
-     5→export type DelayOptions = {
-
-utils/is.ts
-
-utils/merge.ts
-    32→function newHookValue …
-    47→const appendSearchParameters …
-
-utils/normalize.ts
-
-utils/options.ts
-
-utils/timeout.ts
-     3→export type TimeoutOptions = {
+   312→export interface Options …
+   373→export interface NormalizedOptions …
 
 utils/type-guards.ts
-     5→/**
-      →…
-    27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
-    31→/**
-      →…
-    49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
-    53→/**
-      →…
-    71→export function isTimeoutError(error: unknown): error is TimeoutError {
-    75→/**
-      →…
-    98→export function isForceRetryError(error: unknown): error is ForceRetryError {
-
-utils/types.ts
-     1→export type Mutable<T> = {
-     5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
-     6→	? Array<[string, U]>
-     7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
+    27→export function isKyError …
+    49→export function isHTTPError …
+    71→export function isTimeoutError …
+    98→export function isForceRetryError …

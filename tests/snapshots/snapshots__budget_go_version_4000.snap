@@ -2,86 +2,9 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3982 words)
+budget: 4000 (4037 tokens)
 
 CHANGELOG.md
-     1→# 1.8.0 (Nov 28, 2025)
-     3→ENHANCEMENTS:
-     4→
-     5→- Add benchmark test for version.String() in https://github.com/hashicorp/go-version/pull/159
-     6→- Bytes implementation in https://github.com/hashicorp/go-version/pull/161
-     7→
-     8→INTERNAL:
-     9→
-    10→- Add CODEOWNERS file in .github/CODEOWNERS in https://github.com/hashicorp/go-version/pull/145
-    11→- Linting in https://github.com/hashicorp/go-version/pull/151
-    12→- Correct typos in comments in https://github.com/hashicorp/go-version/pull/134
-    13→- Migrate GitHub Actions updates from TSCCR to Dependabot in https://github.com/hashicorp/go-version/pull/155
-    14→- Bump the github-actions-backward-compatible group with 2 updates in https://github.com/hashicorp/go-version/pull/157
-    15→- Update doc reference in README in https://github.com/hashicorp/go-version/pull/135
-    16→- Bump the github-actions-breaking group with 3 updates in https://github.com/hashicorp/go-version/pull/156
-    17→- [Compliance] - PR Template Changes Required in https://github.com/hashicorp/go-version/pull/158
-    18→- Bump actions/cache from 4.2.3 to 4.2.4 in the github-actions-backward-compatible group in https://github.com/hashicorp/go-version/pull/167
-    19→- Bump actions/checkout from 4.2.2 to 5.0.0 in the github-actions-breaking group in https://github.com/hashicorp/go-version/pull/166
-    20→- Bump the github-actions-breaking group across 1 directory with 2 updates in https://github.com/hashicorp/go-version/pull/171
-    21→- [IND-4226] [COMPLIANCE] Update Copyright Headers in https://github.com/hashicorp/go-version/pull/172
-    22→- drop init() in https://github.com/hashicorp/go-version/pull/175
-    23→
-    24→# 1.7.0 (May 24, 2024)
-    26→ENHANCEMENTS:
-    27→
-    28→- Remove `reflect` dependency ([#91](https://github.com/hashicorp/go-version/pull/91))
-    29→- Implement the `database/sql.Scanner` and `database/sql/driver.Value` interfaces for `Version` ([#133](https://github.com/hashicorp/go-version/pull/133))
-    30→
-    31→INTERNAL:
-    32→
-    33→- [COMPLIANCE] Add Copyright and License Headers ([#115](https://github.com/hashicorp/go-version/pull/115))
-    34→- [COMPLIANCE] Update MPL-2.0 LICENSE ([#105](https://github.com/hashicorp/go-version/pull/105))
-    35→- Bump actions/cache from 3.0.11 to 3.2.5 ([#116](https://github.com/hashicorp/go-version/pull/116))
-    36→- Bump actions/checkout from 3.2.0 to 3.3.0 ([#111](https://github.com/hashicorp/go-version/pull/111))
-    37→- Bump actions/upload-artifact from 3.1.1 to 3.1.2 ([#112](https://github.com/hashicorp/go-version/pull/112))
-    38→- GHA Migration ([#103](https://github.com/hashicorp/go-version/pull/103))
-    39→- github: Pin external GitHub Actions to hashes ([#107](https://github.com/hashicorp/go-version/pull/107))
-    40→- SEC-090: Automated trusted workflow pinning (2023-04-05) ([#124](https://github.com/hashicorp/go-version/pull/124))
-    41→- update readme ([#104](https://github.com/hashicorp/go-version/pull/104))
-    42→
-    43→# 1.6.0 (June 28, 2022)
-    45→FEATURES:
-    46→
-    47→- Add `Prerelease` function to `Constraint` to return true if the version includes a prerelease field ([#100](https://github.com/hashicorp/go-version/pull/100))
-    48→
-    49→# 1.5.0 (May 18, 2022)
-    51→FEATURES:
-    52→
-    53→- Use `encoding` `TextMarshaler` & `TextUnmarshaler` instead of JSON equivalents ([#95](https://github.com/hashicorp/go-version/pull/95))
-    54→- Add JSON handlers to allow parsing from/to JSON ([#93](https://github.com/hashicorp/go-version/pull/93))
-    55→
-    56→# 1.4.0 (January 5, 2022)
-    58→FEATURES:
-    59→
-    60→ - Introduce `MustConstraints()` ([#87](https://github.com/hashicorp/go-version/pull/87))
-    61→ - `Constraints`: Introduce `Equals()` and `sort.Interface` methods ([#88](https://github.com/hashicorp/go-version/pull/88))
-    62→
-    63→# 1.3.0 (March 31, 2021)
-    65→Please note that CHANGELOG.md does not exist in the source code prior to this release.
-    66→
-    67→FEATURES:
-    68→ - Add `Core` function to return a version without prerelease or metadata ([#85](https://github.com/hashicorp/go-version/pull/85))
-    69→
-    70→# 1.2.1 (June 17, 2020)
-    72→BUG FIXES:
-    73→ - Prevent `Version.Equal` method from panicking on `nil` encounter ([#73](https://github.com/hashicorp/go-version/pull/73))
-    74→
-    75→# 1.2.0 (April 23, 2019)
-    77→FEATURES:
-    78→ - Add `GreaterThanOrEqual` and `LessThanOrEqual` helper methods ([#53](https://github.com/hashicorp/go-version/pull/53))
-    79→
-    80→# 1.1.0 (Jan 07, 2019)
-    82→FEATURES:
-    83→ - Add `NewSemver` constructor ([#45](https://github.com/hashicorp/go-version/pull/45))
-    84→
-    85→# 1.0.0 (August 24, 2018)
-    87→Initial release.
 
 README.md
      1→# Versioning Library for Go
@@ -107,37 +30,19 @@ README.md
     27→v1, err := version.NewVersion("1.2")
     28→v2, err := version.NewVersion("1.5+metadata")
     29→
-    30→// Comparison example. There is also GreaterThan, Equal, and just
-    31→// a simple Compare that returns an int allowing easy >=, <=, etc.
-    32→if v1.LessThan(v2) {
-    33→    fmt.Printf("%s is less than %s", v1, v2)
-    34→}
-    35→```
-    36→
+      →…
     37→#### Version Constraints
     39→```go
     40→v1, err := version.NewVersion("1.2")
     41→
     42→// Constraints example.
-    43→constraints, err := version.NewConstraint(">= 1.0, < 1.4")
-    44→if constraints.Check(v1) {
-    45→	fmt.Printf("%s satisfies constraints %s", v1, constraints)
-    46→}
-    47→```
-    48→
+      →…
     49→#### Version Sorting
     51→```go
     52→versionsRaw := []string{"1.1", "0.7.1", "1.4-beta", "1.4", "2"}
     53→versions := make([]*version.Version, len(versionsRaw))
     54→for i, raw := range versionsRaw {
-    55→    v, _ := version.NewVersion(raw)
-    56→    versions[i] = v
-    57→}
-    58→
-    59→// After this, the versions are properly sorted
-    60→sort.Sort(version.Collection(versions))
-    61→```
-    62→
+      →…
     63→## Issues and Contributing
     65→If you find an issue with this library, please report an issue. If you'd
     66→like, we welcome any contributions. Fork this library and submit a pull
@@ -155,16 +60,6 @@ constraint.go
     15→	constraintRegexp     *regexp.Regexp
     16→	constraintRegexpOnce sync.Once
     19→func getConstraintRegexp() *regexp.Regexp {
-    20→	constraintRegexpOnce.Do(func() {
-    21→		// This heavy lifting only happens the first time this function is called
-    22→		constraintRegexp = regexp.MustCompile(fmt.Sprintf(
-    23→			`^\s*(%s)\s*(%s)\s*$`,
-    24→			`<=|>=|!=|~>|<|>|=|`,
-    25→			VersionRegexpRaw,
-    26→		))
-    27→	})
-    28→	return constraintRegexp
-    29→}
     31→// Constraint represents a single constraint for a version, such as
     32→// ">= 1.0".
     33→type Constraint struct {
@@ -189,37 +84,16 @@ constraint.go
     57→// constraints.
     58→func NewConstraint(v string) (Constraints, error) {
     59→	vs := strings.Split(v, ",")
-    60→	result := make([]*Constraint, len(vs))
-    61→	for i, single := range vs {
-    62→		c, err := parseSingle(single)
-    63→		if err != nil {
-    64→			return nil, err
-    65→		}
-    66→
-    67→		result[i] = c
-    68→	}
-    69→
-    70→	return Constraints(result), nil
-    71→}
+      →…
     73→// MustConstraints is a helper that wraps a call to a function
     74→// returning (Constraints, error) and panics if error is non-nil.
     75→func MustConstraints(c Constraints, err error) Constraints {
     76→	if err != nil {
-    77→		panic(err)
-    78→	}
-    79→
-    80→	return c
-    81→}
+      →…
     83→// Check tests if a version satisfies all the constraints.
     84→func (cs Constraints) Check(v *Version) bool {
     85→	for _, c := range cs {
-    86→		if !c.Check(v) {
-    87→			return false
-    88→		}
-    89→	}
-    90→
-    91→	return true
-    92→}
+      →…
     94→// Equals compares Constraints with other Constraints
     95→// for equality. This may not represent logical equivalence
     96→// of compared constraints.
@@ -230,26 +104,7 @@ constraint.go
    101→// are ignored and constraints are sorted before comparison.
    102→func (cs Constraints) Equals(c Constraints) bool {
    103→	if len(cs) != len(c) {
-   104→		return false
-   105→	}
-   106→
-   107→	// make copies to retain order of the original slices
-   108→	left := make(Constraints, len(cs))
-   109→	copy(left, cs)
-   110→	sort.Stable(left)
-   111→	right := make(Constraints, len(c))
-   112→	copy(right, c)
-   113→	sort.Stable(right)
-   114→
-   115→	// compare sorted slices
-   116→	for i, con := range left {
-   117→		if !con.Equals(right[i]) {
-   118→			return false
-   119→		}
-   120→	}
-   121→
-   122→	return true
-   123→}
+      →…
    125→func (cs Constraints) Len() int {
    126→	return len(cs)
    127→}
@@ -269,63 +124,21 @@ constraint.go
    144→// Returns the string format of the constraints
    145→func (cs Constraints) String() string {
    146→	csStr := make([]string, len(cs))
-   147→	for i, c := range cs {
-   148→		csStr[i] = c.String()
-   149→	}
-   150→
-   151→	return strings.Join(csStr, ",")
-   152→}
+      →…
    154→// Check tests if a constraint is validated by the given version.
    155→func (c *Constraint) Check(v *Version) bool {
    156→	return c.f(v, c.check)
-   157→}
+      →…
    159→// Prerelease returns true if the version underlying this constraint
    160→// contains a prerelease field.
    161→func (c *Constraint) Prerelease() bool {
    162→	return len(c.check.Prerelease()) > 0
-   163→}
+      →…
    165→func (c *Constraint) String() string {
    166→	return c.original
    167→}
    169→func parseSingle(v string) (*Constraint, error) {
-   170→	matches := getConstraintRegexp().FindStringSubmatch(v)
-   171→	if matches == nil {
-   172→		return nil, fmt.Errorf("malformed constraint: %s", v)
-   173→	}
-   174→
-   175→	check, err := NewVersion(matches[2])
-   176→	if err != nil {
-   177→		return nil, err
-   178→	}
-   179→
-   180→	var cop constraintOperation
-   181→	switch matches[1] {
-   182→	case "=":
-   183→		cop = constraintOperation{op: equal, f: constraintEqual}
-   184→	case "!=":
-   185→		cop = constraintOperation{op: notEqual, f: constraintNotEqual}
-   186→	case ">":
-   187→		cop = constraintOperation{op: greaterThan, f: constraintGreaterThan}
-      →…
    208→func prereleaseCheck(v, c *Version) bool {
-   209→	switch vPre, cPre := v.Prerelease() != "", c.Prerelease() != ""; {
-   210→	case cPre && vPre:
-   211→		// A constraint with a pre-release can only match a pre-release version
-   212→		// with the same base segments.
-   213→		return v.equalSegments(c)
-   214→
-   215→	case !cPre && vPre:
-   216→		// A constraint without a pre-release can only match a version without a
-   217→		// pre-release.
-   218→		return false
-   219→
-   220→	case cPre && !vPre:
-   221→		// OK, except with the pessimistic operator
-   222→	case !cPre && !vPre:
-   223→		// OK
-   224→	}
-   225→	return true
-   226→}
    228→//-------------------------------------------------------------------
    229→// Constraint functions
    230→//-------------------------------------------------------------------
@@ -340,81 +153,15 @@ constraint.go
    240→	lessThanEqual    operator = '≤'
    241→	pessimistic      operator = '~'
    244→func constraintEqual(v, c *Version) bool {
-   245→	return v.Equal(c)
-   246→}
    248→func constraintNotEqual(v, c *Version) bool {
-   249→	return !v.Equal(c)
-   250→}
    252→func constraintGreaterThan(v, c *Version) bool {
-   253→	return prereleaseCheck(v, c) && v.Compare(c) == 1
-   254→}
    256→func constraintLessThan(v, c *Version) bool {
-   257→	return prereleaseCheck(v, c) && v.Compare(c) == -1
-   258→}
    260→func constraintGreaterThanEqual(v, c *Version) bool {
-   261→	return prereleaseCheck(v, c) && v.Compare(c) >= 0
-   262→}
    264→func constraintLessThanEqual(v, c *Version) bool {
-   265→	return prereleaseCheck(v, c) && v.Compare(c) <= 0
-   266→}
    268→func constraintPessimistic(v, c *Version) bool {
-   269→	// Using a pessimistic constraint with a pre-release, restricts versions to pre-releases
-   270→	if !prereleaseCheck(v, c) || (c.Prerelease() != "" && v.Prerelease() == "") {
-   271→		return false
-   272→	}
-   273→
-   274→	// If the version being checked is naturally less than the constraint, then there
-   275→	// is no way for the version to be valid against the constraint
-   276→	if v.LessThan(c) {
-   277→		return false
-   278→	}
-   279→	// We'll use this more than once, so grab the length now so it's a little cleaner
-   280→	// to write the later checks
-   281→	cs := len(c.segments)
-   282→
-   283→	// If the version being checked has less specificity than the constraint, then there
-   284→	// is no way for the version to be valid against the constraint
-   285→	if cs > len(v.segments) {
-   286→		return false
-      →…
 
 constraint_test.go
-     6→import (
-     7→	"fmt"
-     8→	"reflect"
-     9→	"sort"
-    10→	"testing"
-    11→)
-    13→func TestNewConstraint(t *testing.T) {
-    14→	cases := []struct {
-    15→		input string
-    16→		count int
-      →…
-    43→func TestConstraintCheck(t *testing.T) {
-    44→	cases := []struct {
-    45→		constraint string
-    46→		version    string
-      →…
-   106→func TestConstraintPrerelease(t *testing.T) {
-   107→	cases := []struct {
-   108→		constraint string
-   109→		prerelease bool
-      →…
-   134→func TestConstraintEqual(t *testing.T) {
-   135→	cases := []struct {
-   136→		leftConstraint  string
-   137→		rightConstraint string
-      →…
-   190→func TestConstraint_sort(t *testing.T) {
-   191→	cases := []struct {
-   192→		constraint          string
-   193→		expectedConstraints string
-      →…
-   232→func TestConstraintsString(t *testing.T) {
-   233→	cases := []struct {
-   234→		constraint string
-   235→		result     string
-      →…
+     6→import …
 
 version.go
      6→import (
@@ -432,24 +179,13 @@ version.go
     19→	semverRegexp      *regexp.Regexp
     20→	semverRegexpOnce  sync.Once
     23→func getVersionRegexp() *regexp.Regexp {
-    24→	versionRegexpOnce.Do(func() {
-    25→		versionRegexp = regexp.MustCompile("^" + VersionRegexpRaw + "$")
-    26→	})
-    27→	return versionRegexp
-    28→}
     30→func getSemverRegexp() *regexp.Regexp {
-    31→	semverRegexpOnce.Do(func() {
-    32→		semverRegexp = regexp.MustCompile("^" + SemverRegexpRaw + "$")
-    33→	})
-    34→	return semverRegexp
-    35→}
     37→// The raw regular expression string used for testing the validity
     38→// of a version.
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     41→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-?([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
-    42→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
-    43→		`?`
+      →…
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
@@ -467,42 +203,19 @@ version.go
     62→// Version.
     63→func NewVersion(v string) (*Version, error) {
     64→	return newVersion(v, getVersionRegexp())
-    65→}
+      →…
     67→// NewSemver parses the given version and returns a new
     68→// Version that adheres strictly to SemVer specs
     69→// https://semver.org/
     70→func NewSemver(v string) (*Version, error) {
     71→	return newVersion(v, getSemverRegexp())
-    72→}
-    74→func newVersion(v string, pattern *regexp.Regexp) (*Version, error) {
-    75→	matches := pattern.FindStringSubmatch(v)
-    76→	if matches == nil {
-    77→		return nil, fmt.Errorf("malformed version: %s", v)
-    78→	}
-    79→	segmentsStr := strings.Split(matches[1], ".")
-    80→	segments := make([]int64, len(segmentsStr))
-    81→	for i, str := range segmentsStr {
-    82→		val, err := strconv.ParseInt(str, 10, 64)
-    83→		if err != nil {
-    84→			return nil, fmt.Errorf(
-    85→				"error parsing version: %s", err)
-    86→		}
-    87→
-    88→		segments[i] = val
-    89→	}
-    90→
-    91→	// Even though we could support more than three segments, if we
-    92→	// got less than three, pad it with 0s. This is to cover the basic
       →…
+    74→func newVersion(v string, pattern *regexp.Regexp) (*Version, error) {
    112→// Must is a helper that wraps a call to a function returning (*Version, error)
    113→// and panics if error is non-nil.
    114→func Must(v *Version, err error) *Version {
    115→	if err != nil {
-   116→		panic(err)
-   117→	}
-   118→
-   119→	return v
-   120→}
+      →…
    122→// Compare compares this version to another version. This
    123→// returns -1, 0, or 1 if this version is smaller, equal,
    124→// or larger than the other version, respectively.
@@ -511,164 +224,36 @@ version.go
    127→// GreaterThan, GreaterThanOrEqual or LessThanOrEqual methods.
    128→func (v *Version) Compare(other *Version) int {
    129→	// A quick, efficient equality check
-   130→	if v.String() == other.String() {
-   131→		return 0
-   132→	}
-   133→
-   134→	// If the segments are the same, we must compare on prerelease info
-   135→	if v.equalSegments(other) {
-   136→		preSelf := v.Prerelease()
-   137→		preOther := other.Prerelease()
-   138→		if preSelf == "" && preOther == "" {
-   139→			return 0
-   140→		}
-   141→		if preSelf == "" {
-   142→			return 1
-   143→		}
-   144→		if preOther == "" {
-   145→			return -1
-   146→		}
-   147→
-   148→		return comparePrereleases(preSelf, preOther)
-   149→	}
-   150→
-   151→	segmentsSelf := v.Segments64()
-   152→	segmentsOther := other.Segments64()
-   153→	// Get the highest specificity (hS), or if they're equal, just use segmentSelf length
-   154→	lenSelf := len(segmentsSelf)
-   155→	lenOther := len(segmentsOther)
-   156→	hS := lenSelf
-   157→	if lenSelf < lenOther {
-   158→		hS = lenOther
-   159→	}
-   160→	// Compare the segments
-   161→	// Because a constraint could have more/less specificity than the version it's
-   162→	// checking, we need to account for a lopsided or jagged comparison
-   163→	for i := 0; i < hS; i++ {
-   164→		if i > lenSelf-1 {
-   165→			// This means Self had the lower specificity
-   166→			// Check to see if the remaining segments in Other are all zeros
-   167→			if !allZero(segmentsOther[i:]) {
-   168→				// if not, it means that Other has to be greater than Self
-   169→				return -1
-   170→			}
-   171→			break
-   172→		} else if i > lenOther-1 {
-   173→			// this means Other had the lower specificity
-   174→			// Check to see if the remaining segments in Self are all zeros -
-   175→			if !allZero(segmentsSelf[i:]) {
-   176→				// if not, it means that Self has to be greater than Other
-   177→				return 1
-   178→			}
-   179→			break
-   180→		}
-   181→		lhs := segmentsSelf[i]
-   182→		rhs := segmentsOther[i]
-   183→		if lhs == rhs {
-   184→			continue
-   185→		} else if lhs < rhs {
-   186→			return -1
-   187→		}
-   188→		// Otherwise, rhs was > lhs, they're not equal
-   189→		return 1
-   190→	}
-   191→
-   192→	// if we got this far, they're equal
-   193→	return 0
-   194→}
+      →…
    196→func (v *Version) equalSegments(other *Version) bool {
-   197→	segmentsSelf := v.Segments64()
-   198→	segmentsOther := other.Segments64()
-   199→
-   200→	if len(segmentsSelf) != len(segmentsOther) {
-   201→		return false
-   202→	}
-   203→	for i, v := range segmentsSelf {
-   204→		if v != segmentsOther[i] {
-   205→			return false
-   206→		}
-   207→	}
-   208→	return true
-   209→}
    211→func allZero(segs []int64) bool {
-   212→	for _, s := range segs {
-   213→		if s != 0 {
-   214→			return false
-   215→		}
-   216→	}
-   217→	return true
-   218→}
    220→func comparePart(preSelf string, preOther string) int {
-   221→	if preSelf == preOther {
-   222→		return 0
-   223→	}
-   224→
-   225→	var selfInt int64
-   226→	selfNumeric := true
-   227→	selfInt, err := strconv.ParseInt(preSelf, 10, 64)
-   228→	if err != nil {
-   229→		selfNumeric = false
-   230→	}
-   231→
-   232→	var otherInt int64
-   233→	otherNumeric := true
-   234→	otherInt, err = strconv.ParseInt(preOther, 10, 64)
-   235→	if err != nil {
-   236→		otherNumeric = false
-   237→	}
-   238→
-      →…
    267→func comparePrereleases(v string, other string) int {
-   268→	// the same pre release!
-   269→	if v == other {
-   270→		return 0
-   271→	}
-   272→
-   273→	// split both pre releases for analyse their parts
-   274→	selfPreReleaseMeta := strings.Split(v, ".")
-   275→	otherPreReleaseMeta := strings.Split(other, ".")
-   276→
-   277→	selfPreReleaseLen := len(selfPreReleaseMeta)
-   278→	otherPreReleaseLen := len(otherPreReleaseMeta)
-   279→
-   280→	biggestLen := otherPreReleaseLen
-   281→	if selfPreReleaseLen > otherPreReleaseLen {
-   282→		biggestLen = selfPreReleaseLen
-   283→	}
-   284→
-   285→	// loop for parts to find the first difference
-      →…
    307→// Core returns a new version constructed from only the MAJOR.MINOR.PATCH
    308→// segments of the version, without prerelease or metadata.
    309→func (v *Version) Core() *Version {
    310→	segments := v.Segments64()
-   311→	segmentsOnly := fmt.Sprintf("%d.%d.%d", segments[0], segments[1], segments[2])
-   312→	return Must(NewVersion(segmentsOnly))
-   313→}
+      →…
    315→// Equal tests if two versions are equal.
    316→func (v *Version) Equal(o *Version) bool {
    317→	if v == nil || o == nil {
-   318→		return v == o
-   319→	}
-   320→
-   321→	return v.Compare(o) == 0
-   322→}
+      →…
    324→// GreaterThan tests if this version is greater than another version.
    325→func (v *Version) GreaterThan(o *Version) bool {
    326→	return v.Compare(o) > 0
-   327→}
+      →…
    329→// GreaterThanOrEqual tests if this version is greater than or equal to another version.
    330→func (v *Version) GreaterThanOrEqual(o *Version) bool {
    331→	return v.Compare(o) >= 0
-   332→}
+      →…
    334→// LessThan tests if this version is less than another version.
    335→func (v *Version) LessThan(o *Version) bool {
    336→	return v.Compare(o) < 0
-   337→}
+      →…
    339→// LessThanOrEqual tests if this version is less than or equal to another version.
    340→func (v *Version) LessThanOrEqual(o *Version) bool {
    341→	return v.Compare(o) <= 0
-   342→}
+      →…
    344→// Metadata returns any metadata that was part of the version
    345→// string.
    346→//
@@ -676,7 +261,7 @@ version.go
    348→// For example, with "1.2.3+beta", the metadata is "beta".
    349→func (v *Version) Metadata() string {
    350→	return v.metadata
-   351→}
+      →…
    353→// Prerelease returns any prerelease data that is part of the version,
    354→// or blank if there is no prerelease data.
    355→//
@@ -685,7 +270,7 @@ version.go
    358→// the prerelease information is "beta".
    359→func (v *Version) Prerelease() string {
    360→	return v.pre
-   361→}
+      →…
    363→// Segments returns the numeric segments of the version as a slice of ints.
    364→//
    365→// This excludes any metadata or pre-release information. For example,
@@ -693,11 +278,7 @@ version.go
    367→// 1, 2, 3.
    368→func (v *Version) Segments() []int {
    369→	segmentSlice := make([]int, len(v.segments))
-   370→	for i, v := range v.segments {
-   371→		segmentSlice[i] = int(v)
-   372→	}
-   373→	return segmentSlice
-   374→}
+      →…
    376→// Segments64 returns the numeric segments of the version as a slice of int64s.
    377→//
    378→// This excludes any metadata or pre-release information. For example,
@@ -705,9 +286,7 @@ version.go
    380→// 1, 2, 3.
    381→func (v *Version) Segments64() []int64 {
    382→	result := make([]int64, len(v.segments))
-   383→	copy(result, v.segments)
-   384→	return result
-   385→}
+      →…
    387→// String returns the full version string included pre-release
    388→// and metadata information.
    389→//
@@ -718,62 +297,29 @@ version.go
    394→// as shown in the parenthesized examples.
    395→func (v *Version) String() string {
    396→	return string(v.bytes())
-   397→}
-   399→func (v *Version) bytes() []byte {
-   400→	var buf []byte
-   401→	for i, s := range v.segments {
-   402→		if i > 0 {
-   403→			buf = append(buf, '.')
-   404→		}
-   405→		buf = strconv.AppendInt(buf, s, 10)
-   406→	}
-   407→
-   408→	if v.pre != "" {
-   409→		buf = append(buf, '-')
-   410→		buf = append(buf, v.pre...)
-   411→	}
-   412→
-   413→	if v.metadata != "" {
-   414→		buf = append(buf, '+')
-   415→		buf = append(buf, v.metadata...)
-   416→	}
-   417→
       →…
+   399→func (v *Version) bytes() []byte {
    421→// Original returns the original parsed version as-is, including any
    422→// potential whitespace, `v` prefix, etc.
    423→func (v *Version) Original() string {
    424→	return v.original
-   425→}
+      →…
    427→// UnmarshalText implements encoding.TextUnmarshaler interface.
    428→func (v *Version) UnmarshalText(b []byte) error {
    429→	temp, err := NewVersion(string(b))
-   430→	if err != nil {
-   431→		return err
-   432→	}
-   433→
-   434→	*v = *temp
-   435→
-   436→	return nil
-   437→}
+      →…
    439→// MarshalText implements encoding.TextMarshaler interface.
    440→func (v *Version) MarshalText() ([]byte, error) {
    441→	return []byte(v.String()), nil
-   442→}
+      →…
    444→// Scan implements the sql.Scanner interface.
    445→func (v *Version) Scan(src interface{}) error {
    446→	switch src := src.(type) {
-   447→	case string:
-   448→		return v.UnmarshalText([]byte(src))
-   449→	case nil:
-   450→		return nil
-   451→	default:
-   452→		return fmt.Errorf("cannot scan %T as Version", src)
-   453→	}
-   454→}
+      →…
    456→// Value implements the driver.Valuer interface.
    457→func (v *Version) Value() (driver.Value, error) {
    458→	return v.String(), nil
-   459→}
+      →…
 
 version_collection.go
      6→// Collection is a type that implements the sort.Interface interface
@@ -790,131 +336,7 @@ version_collection.go
     20→}
 
 version_collection_test.go
-     6→import (
-     7→	"reflect"
-     8→	"sort"
-     9→	"testing"
-    10→)
-    12→func TestCollection(t *testing.T) {
-    13→	versionsRaw := []string{
-    14→		"1.1.1",
-    15→		"1.0",
-      →…
+     6→import …
 
 version_test.go
-     6→import (
-     7→	"encoding/json"
-     8→	"fmt"
-     9→	"reflect"
-    10→	"testing"
-    11→)
-    13→func TestNewVersion(t *testing.T) {
-    14→	cases := []struct {
-    15→		version string
-    16→		err     bool
-      →…
-    54→func TestNewSemver(t *testing.T) {
-    55→	cases := []struct {
-    56→		version string
-    57→		err     bool
-      →…
-    95→func TestCore(t *testing.T) {
-    96→	cases := []struct {
-    97→		v1 string
-    98→		v2 string
-      →…
-   127→func TestVersionCompare(t *testing.T) {
-   128→	cases := []struct {
-   129→		v1       string
-   130→		v2       string
-      →…
-   174→func TestVersionCompare_versionAndSemver(t *testing.T) {
-   175→	cases := []struct {
-   176→		versionRaw string
-   177→		semverRaw  string
-      →…
-   212→func TestVersionEqual_nil(t *testing.T) {
-   213→	mustVersion := func(v string) *Version {
-   214→		ver, err := NewVersion(v)
-   215→		if err != nil {
-      →…
-   238→func TestComparePreReleases(t *testing.T) {
-   239→	cases := []struct {
-   240→		v1       string
-   241→		v2       string
-      →…
-   285→func TestVersionMetadata(t *testing.T) {
-   286→	cases := []struct {
-   287→		version  string
-   288→		expected string
-      →…
-   311→func TestVersionPrerelease(t *testing.T) {
-   312→	cases := []struct {
-   313→		version  string
-   314→		expected string
-      →…
-   339→func TestVersionSegments(t *testing.T) {
-   340→	cases := []struct {
-   341→		version  string
-   342→		expected []int
-      →…
-   366→func TestVersionSegments64(t *testing.T) {
-   367→	cases := []struct {
-   368→		version  string
-   369→		expected []int64
-      →…
-   401→func TestJsonMarshal(t *testing.T) {
-   402→	cases := []struct {
-   403→		version string
-   404→		err     bool
-      →…
-   436→func TestJsonUnmarshal(t *testing.T) {
-   437→	cases := []struct {
-   438→		version string
-   439→		err     bool
-      →…
-   470→func TestVersionString(t *testing.T) {
-   471→	cases := [][]string{
-   472→		{"1.2.3", "1.2.3"},
-   473→		{"1.2-beta", "1.2.0-beta"},
-      →…
-   497→func TestEqual(t *testing.T) {
-   498→	cases := []struct {
-   499→		v1       string
-   500→		v2       string
-      →…
-   544→func TestGreaterThan(t *testing.T) {
-   545→	cases := []struct {
-   546→		v1       string
-   547→		v2       string
-      →…
-   591→func TestLessThan(t *testing.T) {
-   592→	cases := []struct {
-   593→		v1       string
-   594→		v2       string
-      →…
-   638→func TestGreaterThanOrEqual(t *testing.T) {
-   639→	cases := []struct {
-   640→		v1       string
-   641→		v2       string
-      →…
-   685→func TestLessThanOrEqual(t *testing.T) {
-   686→	cases := []struct {
-   687→		v1       string
-   688→		v2       string
-      →…
-   732→func BenchmarkVersionString(b *testing.B) {
-   733→	v, _ := NewVersion("3.4.5-rc1+meta")
-   734→	_ = v.String()
-   735→
-      →…
-   743→func BenchmarkCompareVersionV1(b *testing.B) {
-   744→	v, _ := NewVersion("3.4.5")
-   745→
-   746→	b.ResetTimer()
-      →…
-   753→func BenchmarkVersionCompareV2(b *testing.B) {
-   754→	v, _ := NewVersion("1.2.3")
-   755→	o, _ := NewVersion("v1.2.3.4")
-   756→
-      →…
+     6→import …

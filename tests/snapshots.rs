@@ -587,7 +587,7 @@ fn budget_monotonicity_inline() {
                 Path::new(""),
                 source,
             );
-            let words = format::count_words(&output);
+            let words = format::count_tokens(&output);
             assert!(
                 words >= prev_words,
                 "Budget monotonicity violation in {}: budget {} ({} words) < previous ({} words)",
@@ -616,7 +616,7 @@ fn single_file_budget_rust() {
     let mut prev_words = 0;
     for budget in [0, 50, 100, 200, 500, 1000, 10000] {
         let output = format::render_file_with_budget(budget, &file, &root, &source);
-        let words = format::count_words(&output);
+        let words = format::count_tokens(&output);
         assert!(
             words >= prev_words,
             "Single file budget {} ({} words) < previous ({} words)",
@@ -631,16 +631,16 @@ fn single_file_budget_rust() {
 // Budget-based fixture snapshot tests.
 // Most are commented out — re-introduce as performance and determinism improve.
 
-/// Helper: render a fixture with a word budget and return output with metadata header.
+/// Helper: render a fixture with a token budget and return output with metadata header.
 fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
     let root = fixture_path(subpath)?;
     let files = walk::discover_source_files(&root);
     let sources = format::read_sources(&files);
     let output = format::render_with_budget(budget, &root, &files, &sources);
-    let words = format::count_words(&output);
+    let tokens = format::count_tokens(&output);
     Some(format!(
-        "budget: {} ({} words)\n\n{}",
-        budget, words, output
+        "budget: {} ({} tokens)\n\n{}",
+        budget, tokens, output
     ))
 }
 

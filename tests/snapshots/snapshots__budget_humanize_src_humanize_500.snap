@@ -2,48 +2,19 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (491 words)
+budget: 500 (505 tokens)
 
 __init__.py
-     5→from humanize.filesize …
-     6→from humanize.i18n …
-     7→from humanize.lists …
-     8→from humanize.number …
-    18→from humanize.time …
     26→from ._version import __version__
     28→__all__ = [
     29→    "__version__",
     30→    "activate",
-    31→    "apnumber",
-    32→    "clamp",
-    33→    "deactivate",
-    34→    "decimal_separator",
-    35→    "fractional",
-    36→    "intcomma",
-    37→    "intword",
-    38→    "metric",
-    39→    "natural_list",
-    40→    "naturaldate",
-    41→    "naturalday",
-    42→    "naturaldelta",
-    43→    "naturalsize",
-    44→    "naturaltime",
-    45→    "ordinal",
-    46→    "precisedelta",
-    47→    "scientific",
-    48→    "thousands_separator",
-    49→]
+      →…
 
 filesize.py
-     5→from math …
-    36→def naturalsize …
 
 i18n.py
-     5→import gettext …
-     6→from threading …
      8→TYPE_CHECKING = False
-    10→    import os …
-    11→    import pathlib …
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
     16→    None: gettext_module.NullTranslations()
@@ -52,72 +23,32 @@ i18n.py
     21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
     23→    "de_DE": ".",
-    24→    "fr_FR": " ",
-    25→    "it_IT": ".",
-    26→    "pt_BR": ".",
-    27→    "hu_HU": " ",
-    28→}
+      →…
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
     32→    "de_DE": ",",
-    33→    "fr_FR": ".",
-    34→    "it_IT": ",",
-    35→    "pt_BR": ",",
-    36→    "hu_HU": ",",
-    37→}
-    40→def _get_default_locale_path() -> pathlib.Path | None:
-    51→def get_translation …
-    58→def activate …
-    96→def deactivate …
-   101→def _gettext(message: str) -> str:
-   113→def _pgettext(msgctxt: str, message: str) -> str:
-   129→def _ngettext(message: str, plural: str, num: int) -> str:
-   144→def _gettext_noop(message: str) -> str:
-   163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
-   183→def thousands_separator …
-   196→def decimal_separator …
+      →…
 
 lists.py
      5→TYPE_CHECKING = False
-     7→    from typing …
      9→__all__ = ["natural_list"]
-    12→def natural_list …
 
 number.py
-     5→import bisect …
      7→from .i18n import _gettext as _
      8→from .i18n import _ngettext, decimal_separator, thousands_separator
      9→from .i18n import _ngettext_noop as NS_
     10→from .i18n import _pgettext as P_
     12→TYPE_CHECKING = False
-    14→    from typing …
-    21→def _format_not_finite(value: float) -> str:
-    34→def ordinal …
-   110→def intcomma …
-   195→def intword …
-   269→def apnumber …
-   321→def fractional …
-   385→def scientific …
-   454→def clamp …
-   531→def metric …
 
 time.py
-     8→from enum …
-     9→from functools …
     11→from .i18n import _gettext as _
     12→from .i18n import _ngettext
     13→from .number import intcomma
     15→TYPE_CHECKING = False
-    17→    import datetime …
-    18→    from collections.abc …
-    19→    from typing …
     21→__all__ = [
     22→    "naturaldate",
     23→    "naturalday",
-    24→    "naturaldelta",
-    25→    "naturaltime",
-    26→    "precisedelta",
-    27→]
+      →…
     30→@total_ordering
     31→class Unit(Enum):
     32→    MICROSECONDS = 0
@@ -129,28 +60,3 @@ time.py
     38→    MONTHS = 6
     39→    YEARS = 7
     40→
-    41→    def __lt__ …
-    47→def _now() -> dt.datetime:
-    53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
-    68→def _date_and_delta(
-    69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
-    70→) -> tuple[Any, Any]:
-    95→def naturaldelta …
-   249→def naturaltime …
-   300→def _convert_aware_datetime(
-   301→    value: dt.datetime | dt.timedelta | float | None,
-   302→) -> Any:
-   311→def naturalday …
-   343→def naturaldate …
-   361→def _quotient_and_remainder(
-   362→    value: float,
-   363→    divisor: float,
-   364→    unit: Unit,
-   365→    minimum_unit: Unit,
-   366→    suppress: Iterable[Unit],
-   367→    format: str,
-   368→) -> tuple[float, float]:
-   406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
-   435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
-   451→def precisedelta …
-   654→def _rounding_by_fmt(format: str, value: float) -> float | int:

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (998 words)
+budget: 1000 (1020 tokens)
 
 browser.js
    115→function useColors() {
@@ -14,18 +14,6 @@ browser.js
    121→	}
    122→
    123→	// Internet Explorer and Edge do not support colors.
-   124→	if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/)) {
-   125→		return false;
-   126→	}
-   127→
-   128→	let m;
-   129→
-   130→	// Is webkit? http://stackoverflow.com/a/16459606/376773
-   131→	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-   132→	// eslint-disable-next-line no-return-assign
-   133→	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
-   134→		// Is firebug? http://stackoverflow.com/a/398120/376773
-   135→		(typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
       →…
    143→/**
    144→ * Colorize log arguments if enabled.
@@ -35,28 +23,6 @@ browser.js
    148→
    149→function formatArgs(args) {
    150→	args[0] = (this.useColors ? '%c' : '') +
-   151→		this.namespace +
-   152→		(this.useColors ? ' %c' : ' ') +
-   153→		args[0] +
-   154→		(this.useColors ? '%c ' : ' ') +
-   155→		'+' + module.exports.humanize(this.diff);
-   156→
-   157→	if (!this.useColors) {
-   158→		return;
-   159→	}
-   160→
-   161→	const c = 'color: ' + this.color;
-   162→	args.splice(1, 0, c, 'color: inherit');
-   163→
-   164→	// The final "%c" is somewhat tricky, because there could be other
-   165→	// arguments passed either before or after the %c, so we need to
-   166→	// figure out the correct index to insert the CSS into
-   167→	let index = 0;
-   168→	let lastC = 0;
-   169→	args[0].replace(/%[a-zA-Z%]/g, match => {
-   170→		if (match === '%%') {
-   171→			return;
-   172→		}
       →…
    194→/**
    195→ * Save `namespaces`.
@@ -66,16 +32,7 @@ browser.js
    199→ */
    200→function save(namespaces) {
    201→	try {
-   202→		if (namespaces) {
-   203→			exports.storage.setItem('debug', namespaces);
-   204→		} else {
-   205→			exports.storage.removeItem('debug');
-   206→		}
-   207→	} catch (error) {
-   208→		// Swallow
-   209→		// XXX (@Qix-) should we be logging these?
-   210→	}
-   211→}
+      →…
    213→/**
    214→ * Load `namespaces`.
    215→ *
@@ -84,20 +41,7 @@ browser.js
    218→ */
    219→function load() {
    220→	let r;
-   221→	try {
-   222→		r = exports.storage.getItem('debug') || exports.storage.getItem('DEBUG') ;
-   223→	} catch (error) {
-   224→		// Swallow
-   225→		// XXX (@Qix-) should we be logging these?
-   226→	}
-   227→
-   228→	// If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-   229→	if (!r && typeof process !== 'undefined' && 'env' in process) {
-   230→		r = process.env.DEBUG;
-   231→	}
-   232→
-   233→	return r;
-   234→}
+      →…
    236→/**
    237→ * Localstorage attempts to return the localstorage.
    238→ *
@@ -111,14 +55,7 @@ browser.js
    246→
    247→function localstorage() {
    248→	try {
-   249→		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
-   250→		// The Browser also has localStorage in the global context.
-   251→		return localStorage;
-   252→	} catch (error) {
-   253→		// Swallow
-   254→		// XXX (@Qix-) should we be logging these?
-   255→	}
-   256→}
+      →…
 
 common.js
      2→/**
@@ -128,28 +65,6 @@ common.js
      6→
      7→function setup(env) {
      8→	createDebug.debug = createDebug;
-     9→	createDebug.default = createDebug;
-    10→	createDebug.coerce = coerce;
-    11→	createDebug.disable = disable;
-    12→	createDebug.enable = enable;
-    13→	createDebug.enabled = enabled;
-    14→	createDebug.humanize = require('ms');
-    15→	createDebug.destroy = destroy;
-    16→
-    17→	Object.keys(env).forEach(key => {
-    18→		createDebug[key] = env[key];
-    19→	});
-    20→
-    21→	/**
-    22→	* The currently active debug mode names, and names to skip.
-    23→	*/
-    24→
-    25→	createDebug.names = [];
-    26→	createDebug.skips = [];
-    27→
-    28→	/**
-    29→	* Map of special "%n" handling functions, for the debug "format" argument.
-    30→	*
       →…
 
 node.js
@@ -159,9 +74,7 @@ node.js
    154→
    155→function useColors() {
    156→	return 'colors' in exports.inspectOpts ?
-   157→		Boolean(exports.inspectOpts.colors) :
-   158→		tty.isatty(process.stderr.fd);
-   159→}
+      →…
    161→/**
    162→ * Adds ANSI color escape codes if enabled.
    163→ *
@@ -170,18 +83,7 @@ node.js
    166→
    167→function formatArgs(args) {
    168→	const {namespace: name, useColors} = this;
-   169→
-   170→	if (useColors) {
-   171→		const c = this.color;
-   172→		const colorCode = '\u001B[3' + (c < 8 ? c : '8;5;' + c);
-   173→		const prefix = `  ${colorCode};1m${name} \u001B[0m`;
-   174→
-   175→		args[0] = prefix + args[0].split('\n').join('\n' + prefix);
-   176→		args.push(colorCode + 'm+' + module.exports.humanize(this.diff) + '\u001B[0m');
-   177→	} else {
-   178→		args[0] = getDate() + name + ' ' + args[0];
-   179→	}
-   180→}
+      →…
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
    184→		return '';
@@ -194,7 +96,7 @@ node.js
    192→
    193→function log(...args) {
    194→	return process.stderr.write(util.formatWithOptions(exports.inspectOpts, ...args) + '\n');
-   195→}
+      →…
    197→/**
    198→ * Save `namespaces`.
    199→ *
@@ -203,13 +105,7 @@ node.js
    202→ */
    203→function save(namespaces) {
    204→	if (namespaces) {
-   205→		process.env.DEBUG = namespaces;
-   206→	} else {
-   207→		// If you set a process.env field to null or undefined, it gets cast to the
-   208→		// string 'null' or 'undefined'. Just delete instead.
-   209→		delete process.env.DEBUG;
-   210→	}
-   211→}
+      →…
    213→/**
    214→ * Load `namespaces`.
    215→ *
@@ -219,7 +115,7 @@ node.js
    219→
    220→function load() {
    221→	return process.env.DEBUG;
-   222→}
+      →…
    224→/**
    225→ * Init logic for `debug` instances.
    226→ *
@@ -229,9 +125,4 @@ node.js
    230→
    231→function init(debug) {
    232→	debug.inspectOpts = {};
-   233→
-   234→	const keys = Object.keys(exports.inspectOpts);
-   235→	for (let i = 0; i < keys.length; i++) {
-   236→		debug.inspectOpts[keys[i]] = exports.inspectOpts[keys[i]];
-   237→	}
-   238→}
+      →…

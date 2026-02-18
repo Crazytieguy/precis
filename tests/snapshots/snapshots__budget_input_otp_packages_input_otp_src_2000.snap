@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1992 words)
+budget: 2000 (2008 tokens)
 
 input.tsx
      3→import * as React from 'react'
@@ -36,257 +36,6 @@ input.tsx
     34→    },
     35→    ref,
     36→  ) => {
-    37→    // Only used when `value` state is not provided
-    38→    const [internalValue, setInternalValue] = React.useState(
-    39→      typeof props.defaultValue === 'string' ? props.defaultValue : '',
-    40→    )
-    41→
-    42→    // Definitions
-    43→    const value = uncheckedValue ?? internalValue
-    44→    const previousValue = usePrevious(value)
-    45→    const onChange = React.useCallback(
-    46→      (newValue: string) => {
-    47→        uncheckedOnChange?.(newValue)
-    48→        setInternalValue(newValue)
-    49→      },
-    50→      [uncheckedOnChange],
-    51→    )
-    52→    const regexp = React.useMemo(
-    53→      () =>
-    54→        pattern
-    55→          ? typeof pattern === 'string'
-    56→            ? new RegExp(pattern)
-    57→            : pattern
-    58→          : null,
-    59→      [pattern],
-    60→    )
-    61→
-    62→    /** useRef */
-    63→    const inputRef = React.useRef<HTMLInputElement>(null)
-    64→    const containerRef = React.useRef<HTMLDivElement>(null)
-    65→    const initialLoadRef = React.useRef({
-    66→      value,
-    67→      onChange,
-    68→      isIOS:
-    69→        typeof window !== 'undefined' &&
-    70→        window?.CSS?.supports?.('-webkit-touch-callout', 'none'),
-    71→    })
-    72→    const inputMetadataRef = React.useRef<{
-    73→      prev: [number | null, number | null, 'none' | 'forward' | 'backward']
-    74→    }>({
-    75→      prev: [
-    76→        inputRef.current?.selectionStart,
-    77→        inputRef.current?.selectionEnd,
-    78→        inputRef.current?.selectionDirection,
-    79→      ],
-    80→    })
-    81→    React.useImperativeHandle(ref, () => inputRef.current, [])
-    82→    React.useEffect(() => {
-    83→      const input = inputRef.current
-    84→      const container = containerRef.current
-    85→
-    86→      if (!input || !container) {
-    87→        return
-    88→      }
-    89→
-    90→      // Sync input value
-    91→      if (initialLoadRef.current.value !== input.value) {
-    92→        initialLoadRef.current.onChange(input.value)
-    93→      }
-    94→
-    95→      // Previous selection
-    96→      inputMetadataRef.current.prev = [
-    97→        input.selectionStart,
-    98→        input.selectionEnd,
-    99→        input.selectionDirection,
-   100→      ]
-   101→      function onDocumentSelectionChange() {
-   102→        if (document.activeElement !== input) {
-   103→          setMirrorSelectionStart(null)
-   104→          setMirrorSelectionEnd(null)
-   105→          return
-   106→        }
-   107→
-   108→        // Aliases
-   109→        const _s = input.selectionStart
-   110→        const _e = input.selectionEnd
-   111→        const _dir = input.selectionDirection
-   112→        const _ml = input.maxLength
-   113→        const _val = input.value
-   114→        const _prev = inputMetadataRef.current.prev
-   115→
-   116→        // Algorithm
-   117→        let start = -1
-   118→        let end = -1
-   119→        let direction: 'forward' | 'backward' | 'none' = undefined
-   120→        if (_val.length !== 0 && _s !== null && _e !== null) {
-   121→          const isSingleCaret = _s === _e
-   122→          const isInsertMode = _s === _val.length && _val.length < _ml
-   123→
-   124→          if (isSingleCaret && !isInsertMode) {
-   125→            const c = _s
-   126→            if (c === 0) {
-   127→              start = 0
-   128→              end = 1
-   129→              direction = 'forward'
-   130→            } else if (c === _ml) {
-   131→              start = c - 1
-   132→              end = c
-   133→              direction = 'backward'
-   134→            } else if (_ml > 1 && _val.length > 1) {
-   135→              let offset = 0
-   136→              if (_prev[0] !== null && _prev[1] !== null) {
-   137→                direction = c < _prev[1] ? 'backward' : 'forward'
-   138→                const wasPreviouslyInserting =
-   139→                  _prev[0] === _prev[1] && _prev[0] < _ml
-   140→                if (direction === 'backward' && !wasPreviouslyInserting) {
-   141→                  offset = -1
-   142→                }
-   143→              }
-   144→
-   145→              start = offset + c
-   146→              end = offset + c + 1
-   147→            }
-   148→          }
-   149→
-   150→          if (start !== -1 && end !== -1 && start !== end) {
-   151→            inputRef.current.setSelectionRange(start, end, direction)
-   152→          }
-   153→        }
-   154→
-   155→        // Finally, update the state
-   156→        const s = start !== -1 ? start : _s
-   157→        const e = end !== -1 ? end : _e
-   158→        const dir = direction ?? _dir
-   159→        setMirrorSelectionStart(s)
-   160→        setMirrorSelectionEnd(e)
-   161→        // Store the previous selection value
-   162→        inputMetadataRef.current.prev = [s, e, dir]
-   163→      }
-   164→      document.addEventListener('selectionchange', onDocumentSelectionChange, {
-   165→        capture: true,
-   166→      })
-   167→
-   168→      // Set initial mirror state
-   169→      onDocumentSelectionChange()
-   170→      document.activeElement === input && setIsFocused(true)
-   171→
-   172→      // Apply needed styles
-   173→      if (!document.getElementById('input-otp-style')) {
-   174→        const styleEl = document.createElement('style')
-   175→        styleEl.id = 'input-otp-style'
-   176→        document.head.appendChild(styleEl)
-   177→
-   178→        if (styleEl.sheet) {
-   179→          const autofillStyles =
-   180→            'background: transparent !important; color: transparent !important; border-color: transparent !important; opacity: 0 !important; box-shadow: none !important; -webkit-box-shadow: none !important; -webkit-text-fill-color: transparent !important;'
-   181→
-   182→          safeInsertRule(
-   183→            styleEl.sheet,
-   184→            '[data-input-otp]::selection { background: transparent !important; color: transparent !important; }',
-   185→          )
-   186→          safeInsertRule(
-   187→            styleEl.sheet,
-   188→            `[data-input-otp]:autofill { ${autofillStyles} }`,
-   189→          )
-   190→          safeInsertRule(
-   191→            styleEl.sheet,
-   192→            `[data-input-otp]:-webkit-autofill { ${autofillStyles} }`,
-   193→          )
-   194→          // iOS
-   195→          safeInsertRule(
-   196→            styleEl.sheet,
-   197→            `@supports (-webkit-touch-callout: none) { [data-input-otp] { letter-spacing: -.6em !important; font-weight: 100 !important; font-stretch: ultra-condensed; font-optical-sizing: none !important; left: -1px !important; right: 1px !important; } }`,
-   198→          )
-   199→          // PWM badges
-   200→          safeInsertRule(
-   201→            styleEl.sheet,
-   202→            `[data-input-otp] + * { pointer-events: all !important; }`,
-   203→          )
-   204→        }
-   205→      }
-   206→      // Track root height
-   207→      const updateRootHeight = () => {
-   208→        if (container) {
-   209→          container.style.setProperty(
-   210→            '--root-height',
-   211→            `${input.clientHeight}px`,
-   212→          )
-   213→        }
-   214→      }
-   215→      updateRootHeight()
-   216→      const resizeObserver = new ResizeObserver(updateRootHeight)
-   217→      resizeObserver.observe(input)
-   218→
-   219→      return () => {
-   220→        document.removeEventListener(
-   221→          'selectionchange',
-   222→          onDocumentSelectionChange,
-   223→          { capture: true },
-   224→        )
-   225→        resizeObserver.disconnect()
-   226→      }
-   227→    }, [])
-   228→
-   229→    /** Mirrors for UI rendering purpose only */
-   230→    const [isHoveringInput, setIsHoveringInput] = React.useState(false)
-   231→    const [isFocused, setIsFocused] = React.useState(false)
-   232→    const [mirrorSelectionStart, setMirrorSelectionStart] = React.useState<
-   233→      number | null
-   234→    >(null)
-   235→    const [mirrorSelectionEnd, setMirrorSelectionEnd] = React.useState<
-   236→      number | null
-   237→    >(null)
-   238→
-   239→    /** Effects */
-   240→    React.useEffect(() => {
-   241→      syncTimeouts(() => {
-   242→        // Forcefully remove :autofill state
-   243→        inputRef.current?.dispatchEvent(new Event('input'))
-   244→
-   245→        // Update the selection state
-   246→        const s = inputRef.current?.selectionStart
-   247→        const e = inputRef.current?.selectionEnd
-   248→        const dir = inputRef.current?.selectionDirection
-   249→        if (s !== null && e !== null) {
-   250→          setMirrorSelectionStart(s)
-   251→          setMirrorSelectionEnd(e)
-   252→          inputMetadataRef.current.prev = [s, e, dir]
-   253→        }
-   254→      })
-   255→    }, [value, isFocused])
-   256→
-   257→    React.useEffect(() => {
-   258→      if (previousValue === undefined) {
-   259→        return
-   260→      }
-   261→
-   262→      if (
-   263→        value !== previousValue &&
-   264→        previousValue.length < maxLength &&
-   265→        value.length === maxLength
-   266→      ) {
-   267→        onComplete?.(value)
-   268→      }
-   269→    }, [maxLength, onComplete, previousValue, value])
-   270→
-   271→    const pwmb = usePasswordManagerBadge({
-   272→      containerRef,
-   273→      inputRef,
-   274→      pushPasswordManagerStrategy,
-   275→      isFocused,
-   276→    })
-   277→
-   278→    /** Event handlers */
-   279→    const _changeListener = React.useCallback(
-   280→      (e: React.ChangeEvent<HTMLInputElement>) => {
-   281→        const newValue = e.currentTarget.value.slice(0, maxLength)
-   282→        if (newValue.length > 0 && regexp && !regexp.test(newValue)) {
-   283→          e.preventDefault()
-   284→          return
-   285→        }
-   286→        const maybeHasDeleted =
-   287→          typeof previousValue === 'string' &&
       →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
@@ -297,24 +46,7 @@ input.tsx
    546→}
    553→const NOSCRIPT_CSS_FALLBACK = `
    554→[data-input-otp] {
-   555→  --nojs-bg: white !important;
-   556→  --nojs-fg: black !important;
-   557→
-   558→  background-color: var(--nojs-bg) !important;
-   559→  color: var(--nojs-fg) !important;
-   560→  caret-color: var(--nojs-fg) !important;
-   561→  letter-spacing: .25em !important;
-   562→  text-align: center !important;
-   563→  border: 1px solid var(--nojs-fg) !important;
-   564→  border-radius: 4px !important;
-   565→  width: 100% !important;
-   566→}
-   567→@media (prefers-color-scheme: dark) {
-   568→  [data-input-otp] {
-   569→    --nojs-bg: black !important;
-   570→    --nojs-fg: white !important;
-   571→  }
-   572→}`
+      →…
 
 regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
@@ -350,17 +82,7 @@ types.ts
     18→
     19→    maxLength: number
     20→
-    21→    textAlign?: 'left' | 'center' | 'right'
-    22→
-    23→    onComplete?: (...args: any[]) => unknown
-    24→    pushPasswordManagerStrategy?: 'increase-width' | 'none'
-    25→    pasteTransformer?: (pasted: string) => string
-    26→
-    27→    containerClassName?: string
-    28→
-    29→    noScriptCSSFallback?: string | null
-    30→  }
-    31→>
+      →…
     32→type InputOTPRenderFn = (props: RenderProps) => React.ReactNode
     33→export type OTPInputProps = OTPInputBaseProps &
     34→  (
@@ -392,10 +114,7 @@ use-pwm-badge.tsx
      6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
      8→const PASSWORD_MANAGERS_SELECTORS = [
      9→  '[data-lastpass-icon-root]', // LastPass
-    10→  'com-1password-button', // 1Password
-    11→  '[data-dashlanecreated]', // Dashlane
-    12→  '[style$="2147483647 !important;"]', // Bitwarden
-    13→].join(',')
+      →…
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,
@@ -468,54 +187,4 @@ use-pwm-badge.tsx
     84→      // We are not sure. Most times that means there isn't a badge.
     85→      if (maybeBadgeEl === container) {
     86→        return
-    87→      }
-    88→    }
-    89→
-    90→    setHasPWMBadge(true)
-    91→    setDone(true)
-    92→  }, [containerRef, inputRef, done, pushPasswordManagerStrategy])
-    93→
-    94→  React.useEffect(() => {
-    95→    const container = containerRef.current
-    96→    if (!container || pushPasswordManagerStrategy === 'none') {
-    97→      return
-    98→    }
-    99→
-   100→    // Check if the PWM area is 100% visible
-   101→    function checkHasSpace() {
-   102→      const viewportWidth = window.innerWidth
-   103→      const distanceToRightEdge =
-   104→        viewportWidth - container.getBoundingClientRect().right
-   105→      setHasPWMBadgeSpace(distanceToRightEdge >= PWM_BADGE_SPACE_WIDTH_PX)
-   106→    }
-   107→
-   108→    checkHasSpace()
-   109→    const interval = setInterval(checkHasSpace, 1000)
-   110→
-   111→    return () => {
-   112→      clearInterval(interval)
-   113→    }
-   114→  }, [containerRef, pushPasswordManagerStrategy])
-   115→
-   116→  React.useEffect(() => {
-   117→    const _isFocused = isFocused || document.activeElement === inputRef.current
-   118→
-   119→    if (pushPasswordManagerStrategy === 'none' || !_isFocused) {
-   120→      return
-   121→    }
-   122→    const t1 = setTimeout(trackPWMBadge, 0)
-   123→    const t2 = setTimeout(trackPWMBadge, 2000)
-   124→    const t3 = setTimeout(trackPWMBadge, 5000)
-   125→    const t4 = setTimeout(() => {
-   126→      setDone(true)
-   127→    }, 6000)
-   128→    return () => {
-   129→      clearTimeout(t1)
-   130→      clearTimeout(t2)
-   131→      clearTimeout(t3)
-   132→      clearTimeout(t4)
-   133→    }
-   134→  }, [inputRef, isFocused, pushPasswordManagerStrategy, trackPWMBadge])
-   135→
-   136→  return { hasPWMBadge, willPushPWMBadge, PWM_BADGE_SPACE_WIDTH }
-   137→}
+      →…

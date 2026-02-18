@@ -2,138 +2,75 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (496 words)
+budget: 500 (513 tokens)
 
 browser.js
    115→function useColors() {
    116→	// NB: In an Electron preload script, document will be defined but not fully
    117→	// initialized. Since we know we're in Chrome, we'll just detect this case
    118→	// explicitly
-   119→	if (typeof window !== 'undefined' && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
-   120→		return true;
-   121→	}
-   122→
-   123→	// Internet Explorer and Edge do not support colors.
-   124→	if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/)) {
-   125→		return false;
-   126→	}
-   127→
-   128→	let m;
-   129→
-   130→	// Is webkit? http://stackoverflow.com/a/16459606/376773
-   131→	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-   132→	// eslint-disable-next-line no-return-assign
-   133→	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
-   134→		// Is firebug? http://stackoverflow.com/a/398120/376773
       →…
    143→/**
    144→ * Colorize log arguments if enabled.
    145→ *
-   146→ * @api public
-   147→ */
-   148→
-   149→function formatArgs(args) {
-   150→	args[0] = (this.useColors ? '%c' : '') +
       →…
+   149→function formatArgs(args) {
    194→/**
    195→ * Save `namespaces`.
    196→ *
-   197→ * @param {String} namespaces
-   198→ * @api private
-   199→ */
-   200→function save(namespaces) {
-   201→	try {
       →…
+   200→function save(namespaces) {
    213→/**
    214→ * Load `namespaces`.
    215→ *
-   216→ * @return {String} returns the previously persisted debug modes
-   217→ * @api private
-   218→ */
-   219→function load() {
-   220→	let r;
       →…
+   219→function load() {
    236→/**
    237→ * Localstorage attempts to return the localstorage.
    238→ *
-   239→ * This is necessary because safari throws
-   240→ * when a user disables cookies/localstorage
-   241→ * and you attempt to access it.
-   242→ *
-   243→ * @return {LocalStorage}
-   244→ * @api private
-   245→ */
-   246→
-   247→function localstorage() {
-   248→	try {
       →…
+   247→function localstorage() {
 
 common.js
      2→/**
      3→ * This is the common logic for both the Node.js and web browser
      4→ * implementations of `debug()`.
-     5→ */
-     6→
-     7→function setup(env) {
-     8→	createDebug.debug = createDebug;
       →…
+     7→function setup(env) {
 
 node.js
    151→/**
    152→ * Is stdout a TTY? Colored output is enabled when `true`.
    153→ */
-   154→
-   155→function useColors() {
-   156→	return 'colors' in exports.inspectOpts ?
       →…
+   155→function useColors() {
    161→/**
    162→ * Adds ANSI color escape codes if enabled.
    163→ *
-   164→ * @api public
-   165→ */
-   166→
-   167→function formatArgs(args) {
-   168→	const {namespace: name, useColors} = this;
       →…
+   167→function formatArgs(args) {
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
    184→		return '';
    185→	}
-   186→	return new Date().toISOString() + ' ';
-   187→}
+      →…
    189→/**
    190→ * Invokes `util.formatWithOptions()` with the specified arguments and writes to stderr.
    191→ */
-   192→
-   193→function log(...args) {
-   194→	return process.stderr.write(util.formatWithOptions(exports.inspectOpts, ...args) + '\n');
       →…
+   193→function log(...args) {
    197→/**
    198→ * Save `namespaces`.
    199→ *
-   200→ * @param {String} namespaces
-   201→ * @api private
-   202→ */
-   203→function save(namespaces) {
-   204→	if (namespaces) {
       →…
+   203→function save(namespaces) {
    213→/**
    214→ * Load `namespaces`.
    215→ *
-   216→ * @return {String} returns the previously persisted debug modes
-   217→ * @api private
-   218→ */
-   219→
-   220→function load() {
-   221→	return process.env.DEBUG;
       →…
+   220→function load() {
    224→/**
    225→ * Init logic for `debug` instances.
    226→ *
-   227→ * Create a new `inspectOpts` object in case `useColors` is set
-   228→ * differently for a particular `debug` instance.
-   229→ */
-   230→
-   231→function init(debug) {
-   232→	debug.inspectOpts = {};
       →…
+   231→function init(debug) {

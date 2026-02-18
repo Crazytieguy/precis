@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (990 words)
+budget: 1000 (1009 tokens)
 
 input.tsx
      3→import * as React from 'react'
@@ -17,62 +17,13 @@ input.tsx
     15→  (
     16→    {
     17→      value: uncheckedValue,
-    18→      onChange: uncheckedOnChange,
-    19→      maxLength,
-    20→      textAlign = 'left',
-    21→      pattern,
-    22→      placeholder,
-    23→      inputMode = 'numeric',
-    24→      onComplete,
-    25→      pushPasswordManagerStrategy = 'increase-width',
-    26→      pasteTransformer,
-    27→      containerClassName,
-    28→      noScriptCSSFallback = NOSCRIPT_CSS_FALLBACK,
-    29→
-    30→      render,
-    31→      children,
-    32→
-    33→      ...props
-    34→    },
-    35→    ref,
-    36→  ) => {
-    37→    // Only used when `value` state is not provided
-    38→    const [internalValue, setInternalValue] = React.useState(
-    39→      typeof props.defaultValue === 'string' ? props.defaultValue : '',
-    40→    )
-    41→
-    42→    // Definitions
-    43→    const value = uncheckedValue ?? internalValue
-    44→    const previousValue = usePrevious(value)
-    45→    const onChange = React.useCallback(
-    46→      (newValue: string) => {
-    47→        uncheckedOnChange?.(newValue)
-    48→        setInternalValue(newValue)
-    49→      },
-    50→      [uncheckedOnChange],
-    51→    )
-    52→    const regexp = React.useMemo(
-    53→      () =>
-    54→        pattern
       →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
    542→    sheet.insertRule(rule)
    543→  } catch {
-   544→    console.error('input-otp could not insert CSS rule:', rule)
-   545→  }
-   546→}
-   553→const NOSCRIPT_CSS_FALLBACK = `
-   554→[data-input-otp] {
-   555→  --nojs-bg: white !important;
-   556→  --nojs-fg: black !important;
-   557→
-   558→  background-color: var(--nojs-bg) !important;
-   559→  color: var(--nojs-fg) !important;
-   560→  caret-color: var(--nojs-fg) !important;
-   561→  letter-spacing: .25em !important;
-   562→  text-align: center !important;
       →…
+   553→const NOSCRIPT_CSS_FALLBACK = `
 
 regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
@@ -103,14 +54,6 @@ types.ts
     13→type OTPInputBaseProps = OverrideProps<
     14→  React.InputHTMLAttributes<HTMLInputElement>,
     15→  {
-    16→    value?: string
-    17→    onChange?: (newValue: string) => unknown
-    18→
-    19→    maxLength: number
-    20→
-    21→    textAlign?: 'left' | 'center' | 'right'
-    22→
-      →…
     32→type InputOTPRenderFn = (props: RenderProps) => React.ReactNode
     33→export type OTPInputProps = OTPInputBaseProps &
     34→  (
@@ -119,10 +62,7 @@ types.ts
     37→        children?: never
     38→      }
     39→    | {
-    40→        render?: never
-    41→        children: React.ReactNode
-    42→      }
-    43→  )
+      →…
 
 use-previous.ts
      1→import * as React from 'react'
@@ -141,11 +81,6 @@ use-pwm-badge.tsx
      5→const PWM_BADGE_SPACE_WIDTH_PX = 40
      6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
      8→const PASSWORD_MANAGERS_SELECTORS = [
-     9→  '[data-lastpass-icon-root]', // LastPass
-    10→  'com-1password-button', // 1Password
-    11→  '[data-dashlanecreated]', // Dashlane
-    12→  '[style$="2147483647 !important;"]', // Bitwarden
-    13→].join(',')
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,
@@ -161,111 +96,4 @@ use-pwm-badge.tsx
     27→   *  and I'll use this state to push them
     28→   *  outside the input */
     29→  const [hasPWMBadge, setHasPWMBadge] = React.useState(false)
-    30→  const [hasPWMBadgeSpace, setHasPWMBadgeSpace] = React.useState(false)
-    31→  const [done, setDone] = React.useState(false)
-    32→
-    33→  const willPushPWMBadge = React.useMemo(() => {
-    34→    if (pushPasswordManagerStrategy === 'none') {
-    35→      return false
-    36→    }
-    37→
-    38→    const increaseWidthCase =
-    39→      (pushPasswordManagerStrategy === 'increase-width' ||
-    40→        // TODO: remove 'experimental-no-flickering' support in 2.0.0
-    41→        pushPasswordManagerStrategy === 'experimental-no-flickering') &&
-    42→      hasPWMBadge &&
-    43→      hasPWMBadgeSpace
-    44→
-    45→    return increaseWidthCase
-    46→  }, [hasPWMBadge, hasPWMBadgeSpace, pushPasswordManagerStrategy])
-    47→
-    48→  const trackPWMBadge = React.useCallback(() => {
-    49→    const container = containerRef.current
-    50→    const input = inputRef.current
-    51→    if (
-    52→      !container ||
-    53→      !input ||
-    54→      done ||
-    55→      pushPasswordManagerStrategy === 'none'
-    56→    ) {
-    57→      return
-    58→    }
-    59→
-    60→    const elementToCompare = container
-    61→
-    62→    // Get the top right-center point of the container.
-    63→    // That is usually where most password managers place their badge.
-    64→    const rightCornerX =
-    65→      elementToCompare.getBoundingClientRect().left +
-    66→      elementToCompare.offsetWidth
-    67→    const centereredY =
-    68→      elementToCompare.getBoundingClientRect().top +
-    69→      elementToCompare.offsetHeight / 2
-    70→    const x = rightCornerX - PWM_BADGE_MARGIN_RIGHT
-    71→    const y = centereredY
-    72→
-    73→    // Do an extra search to check for famous password managers
-    74→    const pmws = document.querySelectorAll(PASSWORD_MANAGERS_SELECTORS)
-    75→
-    76→    // If no password manager is automatically detect,
-    77→    // we'll try to dispatch document.elementFromPoint
-    78→    // to identify badges
-    79→    if (pmws.length === 0) {
-    80→      const maybeBadgeEl = document.elementFromPoint(x, y)
-    81→
-    82→      // If the found element is the input itself,
-    83→      // then we assume it's not a password manager badge.
-    84→      // We are not sure. Most times that means there isn't a badge.
-    85→      if (maybeBadgeEl === container) {
-    86→        return
-    87→      }
-    88→    }
-    89→
-    90→    setHasPWMBadge(true)
-    91→    setDone(true)
-    92→  }, [containerRef, inputRef, done, pushPasswordManagerStrategy])
-    93→
-    94→  React.useEffect(() => {
-    95→    const container = containerRef.current
-    96→    if (!container || pushPasswordManagerStrategy === 'none') {
-    97→      return
-    98→    }
-    99→
-   100→    // Check if the PWM area is 100% visible
-   101→    function checkHasSpace() {
-   102→      const viewportWidth = window.innerWidth
-   103→      const distanceToRightEdge =
-   104→        viewportWidth - container.getBoundingClientRect().right
-   105→      setHasPWMBadgeSpace(distanceToRightEdge >= PWM_BADGE_SPACE_WIDTH_PX)
-   106→    }
-   107→
-   108→    checkHasSpace()
-   109→    const interval = setInterval(checkHasSpace, 1000)
-   110→
-   111→    return () => {
-   112→      clearInterval(interval)
-   113→    }
-   114→  }, [containerRef, pushPasswordManagerStrategy])
-   115→
-   116→  React.useEffect(() => {
-   117→    const _isFocused = isFocused || document.activeElement === inputRef.current
-   118→
-   119→    if (pushPasswordManagerStrategy === 'none' || !_isFocused) {
-   120→      return
-   121→    }
-   122→    const t1 = setTimeout(trackPWMBadge, 0)
-   123→    const t2 = setTimeout(trackPWMBadge, 2000)
-   124→    const t3 = setTimeout(trackPWMBadge, 5000)
-   125→    const t4 = setTimeout(() => {
-   126→      setDone(true)
-   127→    }, 6000)
-   128→    return () => {
-   129→      clearTimeout(t1)
-   130→      clearTimeout(t2)
-   131→      clearTimeout(t3)
-   132→      clearTimeout(t4)
-   133→    }
-   134→  }, [inputRef, isFocused, pushPasswordManagerStrategy, trackPWMBadge])
-   135→
-   136→  return { hasPWMBadge, willPushPWMBadge, PWM_BADGE_SPACE_WIDTH }
-   137→}
+      →…

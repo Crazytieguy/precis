@@ -298,14 +298,14 @@ pub struct GroupKey {
     pub is_first_party: bool,
 }
 
-/// A symbol's precomputed content costs (word counts per rendering stage).
+/// A symbol's precomputed content costs (token counts per rendering stage).
 pub struct SymbolCosts {
     pub file_idx: usize,
     pub symbol_idx: usize,
     pub name_words: usize,
-    /// Additional words for full signature beyond the name line.
+    /// Additional tokens for full signature beyond the name line.
     pub signature_words: usize,
-    /// Words per doc comment line (ordered). For Python symbols with both
+    /// Tokens per doc comment line (ordered). For Python symbols with both
     /// pre-symbol `#` comments and post-signature docstrings, this is the
     /// concatenation of both sections (pre-comments first, then docstring lines).
     pub doc_line_words: Vec<usize>,
@@ -313,7 +313,7 @@ pub struct SymbolCosts {
     /// emits pre-comments and docstrings as separate sections with a signature
     /// in between, so truncation markers must account for this split point.
     pub pre_doc_count: usize,
-    /// Words per body line (ordered).
+    /// Tokens per body line (ordered).
     pub body_line_words: Vec<usize>,
     /// Whether the symbol's body contains nested symbols (e.g., class methods).
     /// When true, body truncation markers are suppressed by the renderer.
@@ -486,16 +486,16 @@ fn compute_symbol_costs(
 ) -> SymbolCosts {
     let sym_line_0 = layout.sym_line_0;
 
-    // Name: word count of the formatted name line, plus 1 for the " …" suffix
+    // Name: token count of the formatted name line, plus 1 for the " …" suffix
     // that the renderer appends to names-only entries. Including the ellipsis
     // cost here keeps Names-only rendering in sync with the scheduler's budget.
     // When Signatures are also included (no ellipsis rendered), the +1 is offset
     // by a corresponding -1 in signature_words (since signature_words = sig_total
     // - name_words), so the total Names+Signatures cost remains exact.
     let name_line = format::format_symbol_name(sym, lines);
-    let name_words = format::count_words(&name_line) + 1;
+    let name_words = format::count_tokens(&name_line) + 1;
 
-    // Signature: additional words from showing full signature lines (with line numbers)
+    // Signature: additional tokens from showing full signature lines (with line numbers)
     // beyond what the name-only line shows.
     let sig_end = layout.sig_end;
     let is_section = sym.kind == parse::SymbolKind::Section;
@@ -507,7 +507,7 @@ fn compute_symbol_costs(
         } else {
             line
         };
-        sig_formatted_words += format::count_words(&format::fmt_line(i, line));
+        sig_formatted_words += format::count_tokens(&format::fmt_line(i, line));
     }
     let signature_words = sig_formatted_words.saturating_sub(name_words);
 
@@ -515,14 +515,14 @@ fn compute_symbol_costs(
     let mut doc_line_words = Vec::new();
     if layout.doc_start < sym_line_0 {
         for (i, line) in lines.iter().enumerate().take(sym_line_0).skip(layout.doc_start) {
-            doc_line_words.push(format::count_words(&format::fmt_line(i, line)));
+            doc_line_words.push(format::count_tokens(&format::fmt_line(i, line)));
         }
     }
     let pre_doc_count = doc_line_words.len();
     // Python docstrings
     if layout.ds_end > layout.ds_start {
         for (i, line) in lines.iter().enumerate().take(layout.ds_end).skip(layout.ds_start) {
-            doc_line_words.push(format::count_words(&format::fmt_line(i, line)));
+            doc_line_words.push(format::count_tokens(&format::fmt_line(i, line)));
         }
     }
 
@@ -531,12 +531,12 @@ fn compute_symbol_costs(
     if is_section {
         // Markdown: body is content text between headings
         for (i, line) in lines.iter().enumerate().take(layout.md_section_end).skip(layout.md_content_start) {
-            body_line_words.push(format::count_words(&format::fmt_line(i, line)));
+            body_line_words.push(format::count_tokens(&format::fmt_line(i, line)));
         }
     } else {
         // Code: body_start..body_end (truncated at first child by layout)
         for (i, line) in lines.iter().enumerate().take(layout.body_end).skip(layout.body_start) {
-            body_line_words.push(format::count_words(&format::fmt_line(i, line)));
+            body_line_words.push(format::count_tokens(&format::fmt_line(i, line)));
         }
     }
 
@@ -774,7 +774,7 @@ impl Ord for QueueItem {
 /// Compute the word cost of a file path line.
 fn file_path_cost(relative_path: &Path) -> usize {
     // Path line is just the relative path as text, plus a newline.
-    format::count_words(&format!("{}\n", relative_path.display()))
+    format::count_tokens(&format!("{}\n", relative_path.display()))
 }
 
 /// Enqueue (or re-enqueue) priority queue items for the given groups.
@@ -1060,7 +1060,7 @@ fn stage_cost(group: &Group, stage: StageKind, n: usize) -> usize {
 
 /// Shared cost computation for line-based stages (Doc/Body).
 ///
-/// `get_lines` selects which line-words vector to read from each symbol.
+/// `get_lines` selects which line-cost vector to read from each symbol.
 /// `show_marker` determines whether a symbol shows a truncation marker at
 /// a given line index `n`. For Body, this suppresses markers for symbols
 /// with nested children. For Doc, this suppresses the marker at the

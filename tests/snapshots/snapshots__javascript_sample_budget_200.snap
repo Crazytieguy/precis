@@ -17,11 +17,7 @@ sample.js
     15→ */
     16→export class TokenParser {
     17→    constructor(input) {
-    18→        this.tokens = [];
-    19→    }
     21→    parse() {
-    22→        return this.tokens;
-    23→    }
     25→    #advance() {}
     28→export const MAX_TOKENS = 1024;
     30→export default class DefaultExport {

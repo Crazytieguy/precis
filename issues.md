@@ -3,7 +3,7 @@
 ## Remaining work
 
 - **Per-group stage value tuning** — the initial stage values (1.0, 0.7, 0.6, etc.) are starting points. Review snapshots across languages and tune per-kind values for better output quality.
-- **Try tiktoken-based budgeting** — replace word-count budgeting with tiktoken token counts for more accurate LLM budget estimation. Keep if performance is viable, otherwise revert and document findings.
+- **Tiktoken build_groups performance** — switching from word counting to tiktoken BPE encoding made `build_groups` ~25x slower (from ~0.6ms to ~17ms for either_src). The full pipeline is ~1.5x slower overall (still under 250ms for the largest fixture). If this becomes a bottleneck for larger codebases, consider: (a) a cheaper token approximation for scheduling with tiktoken only for final output counting, or (b) batch encoding optimizations.
 
 ## Implementation notes
 

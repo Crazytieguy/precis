@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3767 words)
+budget: 4000 (4007 tokens)
 
 error.rs
      1→use std::fmt;
@@ -20,105 +20,51 @@ error.rs
     15→    Value(crate::kv::value::inner::Error),
     16→    Fmt,
     17→}
-    20→    /// Create an error from a message.
-    21→    pub fn msg(msg: &'static str) -> Self {
-    22→        Error {
-    23→            inner: Inner::Msg(msg),
-    24→        }
-    25→    }
+    21→    pub fn msg …
     28→    #[cfg(feature = "value-bag")]
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
     30→        Error {
     31→            inner: Inner::Value(err),
-    32→        }
-    33→    }
+      →…
     36→    #[cfg(feature = "value-bag")]
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
     38→        match self.inner {
     39→            Inner::Value(err) => err,
-    40→            #[cfg(feature = "kv_std")]
-    41→            _ => crate::kv::value::inner::Error::boxed(self),
-    42→            #[cfg(not(feature = "kv_std"))]
-    43→            _ => crate::kv::value::inner::Error::msg("error inspecting a value"),
-    44→        }
-    45→    }
-    49→    fn fmt …
-    63→    fn from …
+      →…
     68→#[cfg(feature = "std")]
     69→mod std_support {
     70→    use super::*;
     71→    use std::{error, io};
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
-    76→        /// Create an error from a standard error type.
-    77→        pub fn boxed<E>(err: E) -> Self
-    78→        where
-    79→            E: Into<BoxedError>,
-    80→        {
-    81→            Error {
-    82→                inner: Inner::Boxed(err.into()),
-    83→            }
-    84→        }
-    90→        fn from …
+    77→        pub fn boxed …
 
 key.rs
      3→use std::borrow::Borrow;
      4→use std::fmt;
      6→/// A type that can be converted into a [`Key`](struct.Key.html).
      7→pub trait ToKey {
-     8→    /// Perform the conversion.
-     9→    fn to_key(&self) -> Key<'_>;
-    16→    fn to_key …
-    22→    fn to_key …
-    28→    fn to_key …
+     9→    fn to_key …
     36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
     40→}
-    43→    /// Get a key from a borrowed string.
-    44→    #[allow(clippy::should_implement_trait)] // Part of the public API now.
-    45→    pub fn from_str(key: &'k str) -> Self {
-    46→        Key { key }
-    47→    }
-    49→    /// Get a borrowed string from this key.
-    50→    ///
-    51→    /// The lifetime of the returned string is bound to the borrow of `self` rather
-    52→    /// than to `'k`.
-    53→    pub fn as_str(&self) -> &str {
-    54→        self.key
-    55→    }
-    57→    /// Try get a borrowed string for the lifetime `'k` from this key.
-    58→    ///
-    59→    /// If the key is a borrow of a longer lived string, this method will return `Some`.
-    60→    /// If the key is internally buffered, this method will return `None`.
-    61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
-    62→        // NOTE: If the internals of `Key` support buffering this
-    63→        // won't be unconditionally `Some` anymore. We want to keep
-    64→        // this option open
-    65→        Some(self.key)
-    66→    }
-    70→    fn fmt …
-    76→    fn as_ref …
-    82→    fn borrow …
-    88→    fn from …
+    45→    pub fn from_str …
+    53→    pub fn as_str …
+    61→    pub fn to_borrowed_str …
     93→#[cfg(feature = "std")]
     94→mod std_support {
     95→    use super::*;
     97→    use std::borrow::Cow;
-   100→        fn to_key …
-   106→        fn to_key …
    112→#[cfg(feature = "kv_sval")]
    113→mod sval_support {
    114→    use super::*;
    116→    use sval::Value;
    117→    use sval_ref::ValueRef;
-   120→        fn stream …
-   129→        fn stream_ref …
    135→#[cfg(feature = "kv_serde")]
    136→mod serde_support {
    137→    use super::*;
    139→    use serde_core::{Serialize, Serializer};
-   142→        fn serialize …
 
 mod.rs
    246→mod error;
@@ -183,107 +129,27 @@ source.rs
     49→/// # }
     50→/// ```
     51→pub trait Source {
-    52→    /// Visit key-values.
-    53→    ///
-    54→    /// A source doesn't have to guarantee any ordering or uniqueness of key-values.
-    55→    /// If the given visitor returns an error then the source may early-return with it,
-    56→    /// even if there are more key-values.
-    57→    ///
-    58→    /// # Implementation notes
-    59→    ///
-    60→    /// A source should yield the same key-values to a subsequent visitor unless
-    61→    /// that visitor itself fails.
-    62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
-    64→    /// Get the value for a given key.
-    65→    ///
-    66→    /// If the key appears multiple times in the source then which key is returned
-    67→    /// is implementation specific.
-    68→    ///
-    69→    /// # Implementation notes
-    70→    ///
-    71→    /// A source that can provide a more efficient implementation of this method
-    72→    /// should override it.
-    73→    fn get(&self, key: Key) -> Option<Value<'_>> {
-    74→        get_default(self, key)
-    75→    }
-    77→    /// Count the number of key-values that can be visited.
-    78→    ///
-    79→    /// # Implementation notes
-    80→    ///
-    81→    /// A source that knows the number of key-values upfront may provide a more
-    82→    /// efficient implementation.
-    83→    ///
-    84→    /// A subsequent call to `visit` should yield the same number of key-values.
-    85→    fn count(&self) -> usize {
-    86→        count_default(self)
-    87→    }
+    62→    fn visit …
+    73→    fn get …
+    85→    fn count …
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
     92→    struct Get<'k, 'v> {
     93→        key: Key<'k>,
-    94→        found: Option<Value<'v>>,
-    95→    }
-    96→
-    97→    impl<'k, 'kvs> VisitSource<'kvs> for Get<'k, 'kvs> {
-    98→        fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error> {
-    99→            if self.key == key {
-   100→                self.found = Some(value);
-   101→            }
-   102→
-   103→            Ok(())
-   104→        }
-   105→    }
-   106→
-   107→    let mut get = Get { key, found: None };
-   108→
-   109→    let _ = source.visit(&mut get);
-   110→    get.found
-   111→}
+      →…
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
    115→    struct Count(usize);
    116→
-   117→    impl<'kvs> VisitSource<'kvs> for Count {
-   118→        fn visit_pair(&mut self, _: Key<'kvs>, _: Value<'kvs>) -> Result<(), Error> {
-   119→            self.0 += 1;
-   120→
-   121→            Ok(())
-   122→        }
-   123→    }
-   124→
-   125→    let mut count = Count(0);
-   126→    let _ = source.visit(&mut count);
-   127→    count.0
-   128→}
-   134→    fn visit …
-   138→    fn get …
-   142→    fn count …
-   152→    fn visit …
-   156→    fn get …
-   164→    fn count …
-   173→    fn visit …
-   181→    fn get …
-   191→    fn count …
-   200→    fn visit …
-   204→    fn get …
-   208→    fn count …
-   217→    fn visit …
-   225→    fn get …
-   229→    fn count …
+      →…
    234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
-   236→    /// Visit a key-value pair.
-   237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
+   237→    fn visit_pair …
    240→#[allow(clippy::needless_lifetimes)] // Not needless.
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    242→where
    243→    T: VisitSource<'kvs> + ?Sized,
    244→{
-   245→    fn visit_pair …
-   251→    fn visit_pair …
-   258→    fn visit_pair …
-   265→    fn visit_pair …
-   272→    fn visit_pair …
    279→#[cfg(feature = "std")]
    280→mod std_support {
    281→    use super::*;
@@ -292,25 +158,6 @@ source.rs
    284→    use std::hash::{BuildHasher, Hash};
    285→    use std::rc::Rc;
    286→    use std::sync::Arc;
-   292→        fn visit …
-   296→        fn get …
-   300→        fn count …
-   309→        fn visit …
-   313→        fn get …
-   317→        fn count …
-   326→        fn visit …
-   330→        fn get …
-   334→        fn count …
-   343→        fn visit …
-   347→        fn get …
-   351→        fn count …
-   360→        fn visit_pair …
-   371→        fn visit …
-   378→        fn get …
-   382→        fn count …
-   392→        fn visit …
-   399→        fn get …
-   403→        fn count …
    462→pub use VisitSource as Visitor;
 
 value.rs
@@ -318,10 +165,7 @@ value.rs
      8→pub use crate::kv::Error;
     10→/// A type that can be converted into a [`Value`](struct.Value.html).
     11→pub trait ToValue {
-    12→    /// Perform the conversion.
-    13→    fn to_value(&self) -> Value<'_>;
-    20→    fn to_value …
-    26→    fn to_value …
+    13→    fn to_value …
     33→/// A value in a key-value.
     34→///
     35→/// Values are an anonymous bag containing some structured datum.
@@ -374,113 +218,19 @@ value.rs
     82→///
     83→/// Values can hold one of a number of types:
     84→///
-    85→/// - **Null:** The absence of any other meaningful value. Note that
-    86→///   `Some(Value::null())` is not the same as `None`. The former is
-    87→///   `null` while the latter is `undefined`. This is important to be
-    88→///   able to tell the difference between a key-value that was logged,
-    89→///   but its value was empty (`Some(Value::null())`) and a key-value
-    90→///   that was never logged at all (`None`).
-    91→/// - **Strings:** `str`, `char`.
-    92→/// - **Booleans:** `bool`.
-    93→/// - **Integers:** `u8`-`u128`, `i8`-`i128`, `NonZero*`.
-    94→/// - **Floating point numbers:** `f32`-`f64`.
-    95→/// - **Errors:** `dyn (Error + 'static)`.
-    96→/// - **`serde`:** Any type in `serde`'s data model.
-    97→/// - **`sval`:** Any type in `sval`'s data model.
-    98→///
-    99→/// # Serialization
-   100→///
-   101→/// Values provide a number of ways to be serialized.
-   102→///
-   103→/// For basic types the [`Value::visit`] method can be used to extract the
-   104→/// underlying typed value. However, this is limited in the amount of types
-   105→/// supported (see the [`VisitValue`] trait methods).
-   106→///
-   107→/// For more complex types one of the following traits can be used:
-   108→///  * `sval::Value`, requires the `kv_sval` feature.
-   109→///  * `serde::Serialize`, requires the `kv_serde` feature.
-   110→///
-   111→/// You don't need a visitor to serialize values through `serde` or `sval`.
-   112→///
-   113→/// A value can always be serialized using any supported framework, regardless
-   114→/// of how it was captured. If, for example, a value was captured using its
-   115→/// `Display` implementation, it will serialize through `serde` as a string. If it was
-   116→/// captured as a struct using `serde`, it will also serialize as a struct
-   117→/// through `sval`, or can be formatted using a `Debug`-compatible representation.
-   118→#[derive(Clone)]
+      →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
-   124→    /// Get a value from a type implementing `ToValue`.
-   125→    pub fn from_any<T>(value: &'v T) -> Self
-   126→    where
-   127→        T: ToValue,
-   128→    {
-   129→        value.to_value()
-   130→    }
-   132→    /// Get a value from a type implementing `std::fmt::Debug`.
-   133→    pub fn from_debug<T>(value: &'v T) -> Self
-   134→    where
-   135→        T: fmt::Debug,
-   136→    {
-   137→        Value {
-   138→            inner: inner::Inner::from_debug(value),
-   139→        }
-   140→    }
-   142→    /// Get a value from a type implementing `std::fmt::Display`.
-   143→    pub fn from_display<T>(value: &'v T) -> Self
-   144→    where
-   145→        T: fmt::Display,
-   146→    {
-   147→        Value {
-   148→            inner: inner::Inner::from_display(value),
-   149→        }
-   150→    }
-   152→    /// Get a value from a type implementing `serde::Serialize`.
-   153→    #[cfg(feature = "kv_serde")]
-   154→    pub fn from_serde<T>(value: &'v T) -> Self
-   155→    where
-   156→        T: serde_core::Serialize,
-   157→    {
-   158→        Value {
-   159→            inner: inner::Inner::from_serde1(value),
-   160→        }
-   161→    }
-   163→    /// Get a value from a type implementing `sval::Value`.
-   164→    #[cfg(feature = "kv_sval")]
-   165→    pub fn from_sval<T>(value: &'v T) -> Self
-   166→    where
-   167→        T: sval::Value,
-   168→    {
-   169→        Value {
-   170→            inner: inner::Inner::from_sval2(value),
-   171→        }
-   172→    }
-   174→    /// Get a value from a dynamic `std::fmt::Debug`.
-   175→    pub fn from_dyn_debug(value: &'v dyn fmt::Debug) -> Self {
-   176→        Value {
-   177→            inner: inner::Inner::from_dyn_debug(value),
-   178→        }
-   179→    }
-   181→    /// Get a value from a dynamic `std::fmt::Display`.
-   182→    pub fn from_dyn_display(value: &'v dyn fmt::Display) -> Self {
-   183→        Value {
-   184→            inner: inner::Inner::from_dyn_display(value),
-   185→        }
-   186→    }
-   188→    /// Get a value from a dynamic error.
-   189→    #[cfg(feature = "kv_std")]
-   190→    pub fn from_dyn_error(err: &'v (dyn std::error::Error + 'static)) -> Self {
-   191→        Value {
-   192→            inner: inner::Inner::from_dyn_error(err),
-   193→        }
-   194→    }
-   196→    /// Get a `null` value.
-   197→    pub fn null() -> Self {
-   198→        Value {
-   199→            inner: inner::Inner::empty(),
-   200→        }
-   201→    }
+   125→    pub fn from_any …
+   133→    pub fn from_debug …
+   143→    pub fn from_display …
+   154→    pub fn from_serde …
+   165→    pub fn from_sval …
+   175→    pub fn from_dyn_debug …
+   182→    pub fn from_dyn_display …
+   190→    pub fn from_dyn_error …
+   197→    pub fn null …
    203→    /// Get a value from an internal primitive.
    204→    fn from_inner<T>(value: T) -> Self
    205→    where
@@ -488,113 +238,35 @@ value.rs
    207→    {
    208→        Value {
    209→            inner: value.into(),
-   210→        }
-   211→    }
-   213→    /// Inspect this value using a simple visitor.
-   214→    ///
-   215→    /// When the `kv_serde` or `kv_sval` features are enabled, you can also
-   216→    /// serialize a value using its `Serialize` or `Value` implementation.
-   217→    pub fn visit(&self, visitor: impl VisitValue<'v>) -> Result<(), Error> {
-   218→        inner::visit(&self.inner, visitor)
-   219→    }
-   223→    fn fmt …
-   229→    fn fmt …
+      →…
+   217→    pub fn visit …
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
-   236→    fn serialize …
    244→#[cfg(feature = "kv_sval")]
    245→impl<'v> sval::Value for Value<'v> {
-   246→    fn stream …
    251→#[cfg(feature = "kv_sval")]
    252→impl<'v> sval_ref::ValueRef<'v> for Value<'v> {
-   253→    fn stream_ref …
-   259→    fn to_value …
-   265→    fn from …
-   271→    fn to_value …
-   280→    fn to_value …
    288→macro_rules! impl_to_value_primitive {
    289→    ($($into_ty:ty,)*) => {
    290→        $(
-   291→            impl ToValue for $into_ty {
-   292→                fn to_value(&self) -> Value<'_> {
-   293→                    Value::from(*self)
-   294→                }
-   295→            }
-   296→
-   297→            impl<'v> From<$into_ty> for Value<'v> {
-   298→                fn from(value: $into_ty) -> Self {
-   299→                    Value::from_inner(value)
-   300→                }
-   301→            }
-   302→
-   303→            impl<'v> From<&'v $into_ty> for Value<'v> {
-   304→                fn from(value: &'v $into_ty) -> Self {
-   305→                    Value::from_inner(*value)
-   306→                }
-   307→            }
-   308→        )*
-   309→    };
-   310→}
+      →…
    312→macro_rules! impl_to_value_nonzero_primitive {
    313→    ($($into_ty:ident,)*) => {
    314→        $(
-   315→            impl ToValue for std::num::$into_ty {
-   316→                fn to_value(&self) -> Value<'_> {
-   317→                    Value::from(self.get())
-   318→                }
-   319→            }
-   320→
-   321→            impl<'v> From<std::num::$into_ty> for Value<'v> {
-   322→                fn from(value: std::num::$into_ty) -> Self {
-   323→                    Value::from(value.get())
-   324→                }
-   325→            }
-   326→
-   327→            impl<'v> From<&'v std::num::$into_ty> for Value<'v> {
-   328→                fn from(value: &'v std::num::$into_ty) -> Self {
-   329→                    Value::from(value.get())
-   330→                }
-   331→            }
-   332→        )*
-   333→    };
-   334→}
+      →…
    336→macro_rules! impl_value_to_primitive {
    337→    ($(#[doc = $doc:tt] $into_name:ident -> $into_ty:ty,)*) => {
    338→        impl<'v> Value<'v> {
-   339→            $(
-   340→                #[doc = $doc]
-   341→                pub fn $into_name(&self) -> Option<$into_ty> {
-   342→                    self.inner.$into_name()
-   343→                }
-   344→            )*
-   345→        }
-   346→    }
-   347→}
-   377→    /// Try to convert this value into an error.
-   378→    #[cfg(feature = "kv_std")]
-   379→    pub fn to_borrowed_error(&self) -> Option<&(dyn std::error::Error + 'static)> {
-   380→        self.inner.to_borrowed_error()
-   381→    }
-   383→    /// Try to convert this value into a borrowed string.
-   384→    pub fn to_borrowed_str(&self) -> Option<&'v str> {
-   385→        self.inner.to_borrowed_str()
-   386→    }
+      →…
+   379→    pub fn to_borrowed_error …
+   384→    pub fn to_borrowed_str …
    389→#[cfg(feature = "kv_std")]
    390→mod std_support {
    391→    use std::borrow::Cow;
    392→    use std::rc::Rc;
    393→    use std::sync::Arc;
    395→    use super::*;
-   401→        fn to_value …
-   410→        fn to_value …
-   419→        fn to_value …
-   425→        fn to_value …
-   431→        fn to_value …
-   437→        /// Try convert this value into a string.
-   438→        pub fn to_cow_str(&self) -> Option<Cow<'v, str>> {
-   439→            self.inner.to_str()
-   440→        }
-   444→        fn from …
+   438→        pub fn to_cow_str …
    450→/// A visitor for a [`Value`].
    451→///
    452→/// Also see [`Value`'s documentation on serialization]. Value visitors are a simple alternative
@@ -608,100 +280,31 @@ value.rs
    460→///
    461→/// [`Value`'s documentation on serialization]: Value#serialization
    462→pub trait VisitValue<'v> {
-   463→    /// Visit a `Value`.
-   464→    ///
-   465→    /// This is the only required method on `VisitValue` and acts as a fallback for any
-   466→    /// more specific methods that aren't overridden.
-   467→    /// The `Value` may be formatted using its `fmt::Debug` or `fmt::Display` implementation,
-   468→    /// or serialized using its `sval::Value` or `serde::Serialize` implementation.
-   469→    fn visit_any(&mut self, value: Value) -> Result<(), Error>;
-   471→    /// Visit an empty value.
-   472→    fn visit_null(&mut self) -> Result<(), Error> {
-   473→        self.visit_any(Value::null())
-   474→    }
-   476→    /// Visit an unsigned integer.
-   477→    fn visit_u64(&mut self, value: u64) -> Result<(), Error> {
-   478→        self.visit_any(value.into())
-   479→    }
-   481→    /// Visit a signed integer.
-   482→    fn visit_i64(&mut self, value: i64) -> Result<(), Error> {
-   483→        self.visit_any(value.into())
-   484→    }
-   486→    /// Visit a big unsigned integer.
-   487→    fn visit_u128(&mut self, value: u128) -> Result<(), Error> {
-   488→        self.visit_any((value).into())
-   489→    }
-   491→    /// Visit a big signed integer.
-   492→    fn visit_i128(&mut self, value: i128) -> Result<(), Error> {
-   493→        self.visit_any((value).into())
-   494→    }
-   496→    /// Visit a floating point.
-   497→    fn visit_f64(&mut self, value: f64) -> Result<(), Error> {
-   498→        self.visit_any(value.into())
-   499→    }
-   501→    /// Visit a boolean.
-   502→    fn visit_bool(&mut self, value: bool) -> Result<(), Error> {
-   503→        self.visit_any(value.into())
-   504→    }
-   506→    /// Visit a string.
-   507→    fn visit_str(&mut self, value: &str) -> Result<(), Error> {
-   508→        self.visit_any(value.into())
-   509→    }
-   511→    /// Visit a string.
-   512→    fn visit_borrowed_str(&mut self, value: &'v str) -> Result<(), Error> {
-   513→        self.visit_str(value)
-   514→    }
-   516→    /// Visit a Unicode character.
-   517→    fn visit_char(&mut self, value: char) -> Result<(), Error> {
-   518→        let mut b = [0; 4];
-   519→        self.visit_str(&*value.encode_utf8(&mut b))
-   520→    }
-   522→    /// Visit an error.
-   523→    #[cfg(feature = "kv_std")]
-   524→    fn visit_error(&mut self, err: &(dyn std::error::Error + 'static)) -> Result<(), Error> {
-   525→        self.visit_any(Value::from_dyn_error(err))
-   526→    }
-   528→    /// Visit an error.
-   529→    #[cfg(feature = "kv_std")]
-   530→    fn visit_borrowed_error(
-   531→        &mut self,
-   532→        err: &'v (dyn std::error::Error + 'static),
-   533→    ) -> Result<(), Error> {
-   534→        self.visit_any(Value::from_dyn_error(err))
-   535→    }
+   469→    fn visit_any …
+   472→    fn visit_null …
+   477→    fn visit_u64 …
+   482→    fn visit_i64 …
+   487→    fn visit_u128 …
+   492→    fn visit_i128 …
+   497→    fn visit_f64 …
+   502→    fn visit_bool …
+   507→    fn visit_str …
+   512→    fn visit_borrowed_str …
+   517→    fn visit_char …
+   524→    fn visit_error …
+   530→    fn visit_borrowed_error …
    538→#[allow(clippy::needless_lifetimes)] // Not needless.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
    541→    T: VisitValue<'v>,
    542→{
-   543→    fn visit_any …
-   547→    fn visit_null …
-   551→    fn visit_u64 …
-   555→    fn visit_i64 …
-   559→    fn visit_u128 …
-   563→    fn visit_i128 …
-   567→    fn visit_f64 …
-   571→    fn visit_bool …
-   575→    fn visit_str …
-   579→    fn visit_borrowed_str …
-   583→    fn visit_char …
-   587→    #[cfg(feature = "kv_std")]
-   588→    fn visit_error(&mut self, err: &(dyn std::error::Error + 'static)) -> Result<(), Error> {
-   589→        (**self).visit_error(err)
-   590→    }
-   592→    #[cfg(feature = "kv_std")]
-   593→    fn visit_borrowed_error(
-   594→        &mut self,
-   595→        err: &'v (dyn std::error::Error + 'static),
-   596→    ) -> Result<(), Error> {
-   597→        (**self).visit_borrowed_error(err)
-   598→    }
+   588→    fn visit_error …
+   593→    fn visit_borrowed_error …
    601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {
    610→    use super::*;
    612→    pub use value_bag::ValueBag as Inner;
    614→    pub use value_bag::Error;
-   619→    pub fn visit …
    720→#[cfg(not(feature = "value-bag"))]
    721→pub(in crate::kv) mod inner {
    735→    use super::*;
@@ -719,87 +322,11 @@ value.rs
    748→        Debug(&'v dyn fmt::Debug),
    749→        Display(&'v dyn fmt::Display),
    750→    }
-   753→        fn from …
-   759→        fn from …
-   765→        fn from …
-   771→        fn from …
-   777→        fn from …
-   783→        fn from …
-   789→        fn from …
-   795→        fn from …
-   801→        fn from …
-   807→        fn from …
-   813→        fn from …
-   819→        fn from …
-   825→        fn from …
-   831→        fn from …
-   837→        fn from …
-   843→        fn from …
-   849→        fn from …
-   855→        fn from …
-   861→        fn fmt …
-   879→        fn fmt …
-   897→        pub fn from_debug …
-   901→        pub fn from_display …
-   905→        pub fn from_dyn_debug …
-   909→        pub fn from_dyn_display …
-   913→        pub fn empty …
-   917→        pub fn to_bool …
-   924→        pub fn to_char …
-   931→        pub fn to_f64 …
-   954→        pub fn to_i64 …
-   964→        pub fn to_u64 …
-   974→        pub fn to_u128 …
-   984→        pub fn to_i128 …
-   994→        pub fn to_borrowed_str …
-  1031→    pub fn visit …
-  1052→    /// Get a value from a type implementing `std::fmt::Debug`.
-  1053→    #[cfg(feature = "kv_unstable")]
-  1054→    #[deprecated(note = "use `from_debug` instead")]
-  1055→    pub fn capture_debug<T>(value: &'v T) -> Self
-  1056→    where
-  1057→        T: fmt::Debug + 'static,
-  1058→    {
-  1059→        Value::from_debug(value)
-  1060→    }
-  1062→    /// Get a value from a type implementing `std::fmt::Display`.
-  1063→    #[cfg(feature = "kv_unstable")]
-  1064→    #[deprecated(note = "use `from_display` instead")]
-  1065→    pub fn capture_display<T>(value: &'v T) -> Self
-  1066→    where
-  1067→        T: fmt::Display + 'static,
-  1068→    {
-  1069→        Value::from_display(value)
-  1070→    }
-  1072→    /// Get a value from an error.
-  1073→    #[cfg(feature = "kv_unstable_std")]
-  1074→    #[deprecated(note = "use `from_dyn_error` instead")]
-  1075→    pub fn capture_error<T>(err: &'v T) -> Self
-  1076→    where
-  1077→        T: std::error::Error + 'static,
-  1078→    {
-  1079→        Value::from_dyn_error(err)
-  1080→    }
-  1082→    /// Get a value from a type implementing `serde::Serialize`.
-  1083→    #[cfg(feature = "kv_unstable_serde")]
-  1084→    #[deprecated(note = "use `from_serde` instead")]
-  1085→    pub fn capture_serde<T>(value: &'v T) -> Self
-  1086→    where
-  1087→        T: serde_core::Serialize + 'static,
-  1088→    {
-  1089→        Value::from_serde(value)
-  1090→    }
-  1092→    /// Get a value from a type implementing `sval::Value`.
-  1093→    #[cfg(feature = "kv_unstable_sval")]
-  1094→    #[deprecated(note = "use `from_sval` instead")]
-  1095→    pub fn capture_sval<T>(value: &'v T) -> Self
-  1096→    where
-  1097→        T: sval::Value + 'static,
-  1098→    {
-  1099→        Value::from_sval(value)
-  1100→    }
-  1107→    pub fn is …
-  1116→    pub fn downcast_ref …
+  1055→    pub fn capture_debug …
+  1065→    pub fn capture_display …
+  1075→    pub fn capture_error …
+  1085→    pub fn capture_serde …
+  1095→    pub fn capture_sval …
   1123→pub use VisitValue as Visit;
   1125→/// Get a value from a type implementing `std::fmt::Debug`.
   1126→#[cfg(feature = "kv_unstable")]
@@ -807,40 +334,30 @@ value.rs
   1128→#[macro_export]
   1129→macro_rules! as_debug {
   1130→    ($capture:expr) => {
-  1131→        $crate::kv::Value::from_debug(&$capture)
-  1132→    };
-  1133→}
+      →…
   1135→/// Get a value from a type implementing `std::fmt::Display`.
   1136→#[cfg(feature = "kv_unstable")]
   1137→#[deprecated(note = "use the `key:% = value` macro syntax instead")]
   1138→#[macro_export]
   1139→macro_rules! as_display {
   1140→    ($capture:expr) => {
-  1141→        $crate::kv::Value::from_display(&$capture)
-  1142→    };
-  1143→}
+      →…
   1145→/// Get a value from an error.
   1146→#[cfg(feature = "kv_unstable_std")]
   1147→#[deprecated(note = "use the `key:err = value` macro syntax instead")]
   1148→#[macro_export]
   1149→macro_rules! as_error {
   1150→    ($capture:expr) => {
-  1151→        $crate::kv::Value::from_dyn_error(&$capture)
-  1152→    };
-  1153→}
+      →…
   1157→/// Get a value from a type implementing `serde::Serialize`.
   1158→#[macro_export]
   1159→macro_rules! as_serde {
   1160→    ($capture:expr) => {
-  1161→        $crate::kv::Value::from_serde(&$capture)
-  1162→    };
-  1163→}
+      →…
   1165→/// Get a value from a type implementing `sval::Value`.
   1166→#[cfg(feature = "kv_unstable_sval")]
   1167→#[deprecated(note = "use the `key:sval = value` macro syntax instead")]
   1168→#[macro_export]
   1169→macro_rules! as_sval {
   1170→    ($capture:expr) => {
-  1171→        $crate::kv::Value::from_sval(&$capture)
-  1172→    };
-  1173→}
+      →…

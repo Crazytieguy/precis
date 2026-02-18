@@ -2,238 +2,116 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (985 words)
+budget: 1000 (1027 tokens)
 
 assets.tsx
      2→import React from 'react';
-     3→import type { ToastTypes } from './types';
+     3→import type { ToastTypes } from './types …
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
      6→  switch (type) {
-     7→    case 'success':
-     8→      return SuccessIcon;
-     9→
-    10→    case 'info':
-    11→      return InfoIcon;
       →…
-    24→const bars = Array(12).fill(0);
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     27→  return (
-    28→    <div className={['sonner-loading-wrapper', className].filter(Boolean).join(' ')} data-visible={visible}>
-    29→      <div className="sonner-spinner">
-    30→        {bars.map((_, i) => (
-    31→          <div className="sonner-loading-bar" key={`spinner-bar-${i}`} />
-    32→        ))}
       →…
-    38→const SuccessIcon = (
-    48→const WarningIcon = (
-    58→const InfoIcon = (
-    68→const ErrorIcon = (
     78→export const CloseIcon = (
     79→  <svg
-    80→    xmlns="http://www.w3.org/2000/svg"
-    81→    width="12"
-    82→    height="12"
       →…
 
 hooks.tsx
      1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
-     5→
-     6→  React.useEffect(() => {
-     7→    const callback = () => {
-     8→      setIsDocumentHidden(document.hidden);
-     9→    };
       →…
 
 index.tsx
      3→import React from 'react';
      4→import ReactDOM from 'react-dom';
-     6→import { CloseIcon, getAsset, Loader } from './assets';
-     7→import { useIsDocumentHidden } from './hooks';
-     8→import { toast, ToastState } from './state';
-     9→import './styles.css';
-    10→import {
-    11→  isAction,
-    12→  SwipeDirection,
-    13→  type ExternalToast,
-    14→  type HeightT,
-    15→  type ToasterProps,
-    16→  type ToastProps,
-    17→  type ToastT,
-    18→  type ToastToDismiss,
-    19→} from './types';
-    22→const VISIBLE_TOASTS_AMOUNT = 3;
-    25→const VIEWPORT_OFFSET = '24px';
-    28→const MOBILE_VIEWPORT_OFFSET = '16px';
-    31→const TOAST_LIFETIME = 4000;
-    34→const TOAST_WIDTH = 356;
-    37→const GAP = 14;
-    40→const SWIPE_THRESHOLD = 45;
-    43→const TIME_BEFORE_UNMOUNT = 200;
+     6→import { CloseIcon, getAsset, Loader } from './assets …
+     7→import { useIsDocumentHidden } from './hooks …
+     8→import { toast, ToastState } from './state …
+     9→import './styles.css …
+    10→./types …
     45→function cn(...classes: (string | undefined)[]) {
     49→function getDefaultSwipeDirections(position: string): Array<SwipeDirection> {
     64→const Toast = (props: ToastProps) => {
    507→function getDocumentDirection(): ToasterProps['dir'] {
    520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
    552→function useSonner() {
-   593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
 
 state.ts
-     1→import type {
-     2→  ExternalToast,
-     3→  PromiseData,
-     4→  PromiseIExtendedResult,
-     5→  PromiseT,
-     6→  ToastT,
-     7→  ToastToDismiss,
-     8→  ToastTypes,
-     9→} from './types';
+     1→./types …
     11→import React from 'react';
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
     18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
-    19→  toasts: Array<ToastT | ToastToDismiss>;
-    20→  dismissedToasts: Set<string | number>;
-    21→
-    22→  constructor() {
-    29→  subscribe = (subscriber: (toast: ToastT | ToastToDismiss) => void) => {
-    38→  publish = (data: ToastT) => {
-    42→  addToast = (data: ToastT) => {
-    47→  create = (
-    48→    data: ExternalToast & {
-    88→  dismiss = (id?: number | string) => {
-   101→  message = (message: titleT | React.ReactNode, data?: ExternalToast) => {
-   105→  error = (message: titleT | React.ReactNode, data?: ExternalToast) => {
-   109→  success = (message: titleT | React.ReactNode, data?: ExternalToast) => {
-   113→  info = (message: titleT | React.ReactNode, data?: ExternalToast) => {
-   117→  warning = (message: titleT | React.ReactNode, data?: ExternalToast) => {
-   121→  loading = (message: titleT | React.ReactNode, data?: ExternalToast) => {
-   125→  promise = <ToastData>(promise: PromiseT<ToastData>, data?: PromiseData<ToastData>) => {
-   243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
-   249→  getActiveToasts = () => {
-   254→export const ToastState = new Observer();
+    22→  constructor …
+    29→  subscribe …
+    38→  publish …
+    42→  addToast …
+    47→  create …
+    88→  dismiss …
+   101→  message …
+   105→  error …
+   109→  success …
+   113→  info …
+   117→  warning …
+   121→  loading …
+   125→  promise …
+   243→  custom …
+   249→  getActiveToasts …
+   254→export const ToastState …
    257→const toastFunction = (message: titleT, data?: ExternalToast) => {
-   258→  const id = data?.id || toastsCounter++;
-   259→
-      →…
    268→const isHttpResponse = (data: any): data is Response => {
-   269→  return (
-   270→    data &&
-      →…
    279→const basicToast = toastFunction;
    281→const getHistory = () => ToastState.toasts;
    282→const getToasts = () => ToastState.getActiveToasts();
-   285→export const toast = Object.assign(
+   285→export const toast …
 
 types.ts
      1→import React from 'react';
-     3→export type ToastTypes = 'normal' | 'action' | 'success' | 'info' | 'warning' | 'error' | 'loading' | 'default';
-     5→export type PromiseT<Data = any> = Promise<Data> | (() => Promise<Data>);
+     3→export type ToastTypes …
+     5→export type PromiseT …
      7→export interface PromiseIExtendedResult extends ExternalToast {
      8→  message: React.ReactNode;
-     9→}
-    11→export type PromiseTExtendedResult<Data = any> =
-    12→  | PromiseIExtendedResult
-    13→  | ((data: Data) => PromiseIExtendedResult | Promise<PromiseIExtendedResult>);
-    15→export type PromiseTResult<Data = any> =
-    16→  | string
-    17→  | React.ReactNode
-    18→  | ((data: Data) => React.ReactNode | string | Promise<React.ReactNode | string>);
-    20→export type PromiseExternalToast = Omit<ExternalToast, 'description'>;
-    22→export type PromiseData<ToastData = any> = PromiseExternalToast & {
+      →…
+    11→export type PromiseTExtendedResult …
+    15→export type PromiseTResult …
+    20→export type PromiseExternalToast …
+    22→export type PromiseData …
     30→export interface ToastClassnames {
     31→  toast?: string;
-    32→  title?: string;
-    33→  description?: string;
-    34→  loader?: string;
-    35→  closeButton?: string;
-    36→  cancelButton?: string;
-    37→  actionButton?: string;
-    38→  success?: string;
-    39→  error?: string;
-    40→  info?: string;
       →…
     48→export interface ToastIcons {
     49→  success?: React.ReactNode;
-    50→  info?: React.ReactNode;
-    51→  warning?: React.ReactNode;
-    52→  error?: React.ReactNode;
-    53→  loading?: React.ReactNode;
-    54→  close?: React.ReactNode;
-    55→}
+      →…
     57→export interface Action {
     58→  label: React.ReactNode;
-    59→  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-    60→  actionButtonStyle?: React.CSSProperties;
-    61→}
+      →…
     63→export interface ToastT {
     64→  id: number | string;
-    65→  toasterId?: string;
-    66→  title?: (() => React.ReactNode) | React.ReactNode;
-    67→  type?: ToastTypes;
-    68→  icon?: React.ReactNode;
-    69→  jsx?: React.ReactNode;
-    70→  richColors?: boolean;
-    71→  invert?: boolean;
-    72→  closeButton?: boolean;
-    73→  dismissible?: boolean;
       →…
-    93→export function isAction(action: Action | React.ReactNode): action is Action {
-    97→export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
+    93→export function isAction …
+    97→export type Position …
     98→export interface HeightT {
     99→  height: number;
-   100→  toastId: number | string;
-   101→  position: Position;
-   102→}
+      →…
    104→interface ToastOptions {
    105→  className?: string;
-   106→  closeButton?: boolean;
-   107→  descriptionClassName?: string;
-   108→  style?: React.CSSProperties;
-   109→  cancelButtonStyle?: React.CSSProperties;
-   110→  actionButtonStyle?: React.CSSProperties;
-   111→  duration?: number;
-   112→  unstyled?: boolean;
-   113→  classNames?: ToastClassnames;
-   114→  closeButtonAriaLabel?: string;
-   115→  toasterId?: string;
-   116→}
+      →…
    118→type Offset =
    119→  | {
    128→export interface ToasterProps {
    129→  id?: string;
-   130→  invert?: boolean;
-   131→  theme?: 'light' | 'dark' | 'system';
-   132→  position?: Position;
-   133→  hotkey?: string[];
-   134→  richColors?: boolean;
-   135→  expand?: boolean;
-   136→  duration?: number;
-   137→  gap?: number;
-   138→  visibleToasts?: number;
       →…
-   152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
+   152→export type SwipeDirection …
    154→export interface ToastProps {
    155→  toast: ToastT;
-   156→  toasts: ToastT[];
-   157→  index: number;
-   158→  swipeDirections?: SwipeDirection[];
-   159→  expanded: boolean;
-   160→  invert: boolean;
-   161→  heights: HeightT[];
-   162→  setHeights: React.Dispatch<React.SetStateAction<HeightT[]>>;
-   163→  removeToast: (toast: ToastT) => void;
-   164→  gap?: number;
       →…
    184→export enum SwipeStateTypes {
    185→  SwipedOut = 'SwipedOut',
-   186→  SwipedBack = 'SwipedBack',
-   187→  NotSwiped = 'NotSwiped',
-   188→}
-   190→export type Theme = 'light' | 'dark';
+      →…
+   190→export type Theme …
    192→export interface ToastToDismiss {
    193→  id: number | string;
-   194→  dismiss: boolean;
-   195→}
-   197→export type ExternalToast = Omit<ToastT, 'id' | 'type' | 'title' | 'jsx' | 'delete' | 'promise'> & {
+      →…
+   197→export type ExternalToast …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1979 words)
+budget: 2000 (2130 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -49,82 +49,52 @@ budget: 2000 (1979 words)
     13→branches:
 
 .github/workflows/audit.yml
-     3→name: Audit
-     5→on:
-     9→    - cron: "0 8 * * 1"
-    10→
-    11→permissions:
-    12→  contents: read
-    13→
-    14→jobs:
+     3→name …
+     5→on …
+    11→permissions …
+    14→jobs …
 
 .github/workflows/ci-release.yml
-     3→name: CI - Release
-     5→on:
-    19→        type: string
-    20→
-    21→permissions:
-    23→  checks: write
-    24→
-    25→jobs:
+     3→name …
+     5→on …
+    21→permissions …
+    25→jobs …
 
 .github/workflows/ci.yml
-     3→name: CI
-     5→on:
-    14→    - cron: "0 9 * * 1"
-    15→
-    16→permissions:
-    17→  contents: read
-    18→
-    19→jobs:
+     3→name …
+     5→on …
+    16→permissions …
+    19→jobs …
 
 .github/workflows/codeql-analysis.yml
-     3→name: CodeQL
-     5→on:
-    16→    - cron: "0 10 * * 1"
-    17→
-    18→permissions:
-    19→  contents: read
-    20→
-    21→jobs:
+     3→name …
+     5→on …
+    18→permissions …
+    21→jobs …
 
 .github/workflows/post-dependabot.yml
-     3→name: Post Dependabot
-     5→on: pull_request
-     7→permissions:
-     8→  contents: write
-     9→
-    10→jobs:
+     3→name …
+     5→on …
+     7→permissions …
+    10→jobs …
 
 .github/workflows/pull-request.yml
-     3→name: Pull Request
-     5→on:
-    11→      - synchronize
-    12→
-    13→permissions:
-    14→  contents: read
-    15→
-    16→jobs:
+     3→name …
+     5→on …
+    13→permissions …
+    16→jobs …
 
 .github/workflows/release-integration.yml
-     3→name: Release Integration
-     5→on:
-    20→        required: true
-    21→
-    22→permissions:
-    24→  id-token: write
-    25→
-    26→jobs:
+     3→name …
+     5→on …
+    22→permissions …
+    26→jobs …
 
 .github/workflows/release.yml
-     3→name: Release
-     5→on:
-     9→      - release/v*
-    10→
-    11→permissions:
-    14→  checks: write
-    15→
-    16→jobs:
+     3→name …
+     5→on …
+    11→permissions …
+    16→jobs …
 
 .release-please-manifest.json
      2→  ".": "7.7.4"
@@ -135,194 +105,55 @@ CHANGELOG.md
 
 CONTRIBUTING.md
      3→# Contributing …
-     5→## Code of Conduct …
-     9→## Reporting Bugs …
-    17→## Pull Request Conventions …
-    19→### Commits …
-    30→### Test Coverage …
-    36→### Linting …
-    42→## What _not_ to contribute? …
-    44→### Dependencies …
-    48→### Tools/Automation …
 
 README.md
      1→semver(1) -- The semantic versioner for npm
      4→## Install
      6→```bash
-     7→npm install semver
-     8→````
-     9→
+      →…
     10→## Usage
     12→As a node module:
-    13→
-    14→```js
-    15→const semver = require('semver')
-    16→
-    17→semver.valid('1.2.3') // '1.2.3'
-    18→semver.valid('a.b.c') // null
-    19→semver.clean('  =v1.2.3   ') // '1.2.3'
-    20→semver.satisfies('1.2.3', '1.x || >=2.5.0 || 5.0.0 - 7.2.3') // true
-    21→semver.gt('1.2.3', '9.8.7') // false
-    22→semver.lt('1.2.3', '9.8.7') // true
-    23→semver.minVersion('>=1.0.0') // '1.0.0'
-    24→semver.valid(semver.coerce('v2')) // '2.0.0'
-    25→semver.valid(semver.coerce('42.6.7.9.3-alpha')) // '42.6.7'
       →…
    139→## Versions
    141→A "version" is described by the `v2.0.0` specification found at
-   142→<https://semver.org/>.
-   143→
-   144→A leading `"="` or `"v"` character is stripped off and ignored.
-   145→Support for stripping a leading "v" is kept for compatibility with `v1.0.0` of the SemVer
-   146→specification but should not be used anymore.
-   147→
+      →…
    148→## Ranges
    150→A `version range` is a set of `comparators` that specify versions
-   151→that satisfy the range.
-   152→
-   153→A `comparator` is composed of an `operator` and a `version`.  The set
-   154→of primitive `operators` is:
-   155→
-   156→* `<` Less than
-   157→* `<=` Less than or equal to
-   158→* `>` Greater than
-   159→* `>=` Greater than or equal to
-   160→* `=` Equal.  If no operator is specified, then equality is assumed,
-   161→  so this operator is optional but MAY be included.
-   162→
-   163→For example, the comparator `>=1.2.7` would match the versions
       →…
-   184→### Prerelease Tags
-   186→If a version has a prerelease tag (for example, `1.2.3-alpha.3`) then
-   187→it will only be allowed to satisfy comparator sets if at least one
-      →…
-   219→#### Prerelease Identifiers
-   221→The method `.inc` takes an additional `identifier` string argument that
-      →…
-   250→#### Prerelease Identifier Base
-   252→The method `.inc` takes an optional parameter 'identifierBase' string
-      →…
-   279→### Advanced Range Syntax
-   281→Advanced range syntax desugars to primitive comparators in
-   282→deterministic ways.
-      →…
-   287→#### Hyphen Ranges `X.Y.Z - A.B.C`
-   289→Specifies an inclusive set.
-      →…
-   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
-   308→Any of `X`, `x`, or `*` may be used to "stand in" for one of the
-      →…
-   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
-   326→Allows patch-level changes if a minor version is specified on the
-      →…
-   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
-   343→Allows changes that do not modify the left-most non-zero element in the
-      →…
-   384→### Range Grammar
-   386→Putting all this together, here is a Backus-Naur grammar for ranges,
-   387→for the benefit of parser authors:
-      →…
+   184→### Prerelease Tags …
+   219→#### Prerelease Identifiers …
+   250→#### Prerelease Identifier Base …
+   279→### Advanced Range Syntax …
+   287→#### Hyphen Ranges `X.Y.Z - A.B.C` …
+   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*` …
+   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1` …
+   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4` …
+   384→### Range Grammar …
    408→## Functions
    410→All methods and classes take a final `options` object argument.  All
-   411→options in this object are `false` by default.  The options supported
-   412→are:
-   413→
-   414→- `loose`: Be more forgiving about not-quite-valid semver strings.
-   415→  (Any resulting output will always be 100% strict compliant, of
-   416→  course.)  For backwards compatibility reasons, if the `options`
-   417→  argument is a boolean value instead of an object, it is interpreted
-   418→  to be the `loose` param.
-   419→- `includePrerelease`: Set to suppress the [default
-   420→  behavior](https://github.com/npm/node-semver#prerelease-tags) of
-   421→  excluding prerelease tagged versions from ranges unless they are
-   422→  explicitly opted into.
-   423→
       →…
-   453→### Comparison
-   455→* `gt(v1, v2)`: `v1 > v2`
-   456→* `gte(v1, v2)`: `v1 >= v2`
-      →…
-   478→### Sorting
-   480→* `sort(versions)`: Returns a sorted array of versions based on the `compareBuild` 
-   481→  function.
-      →…
-   485→### Comparators
-   487→* `intersects(comparator)`: Return true if the comparators intersect
-   488→
-   489→### Ranges
-   491→* `validRange(range)`: Return the valid range or null if it's not valid.
-   492→* `satisfies(version, range)`: Return true if the version satisfies the
-      →…
-   531→### Coercion
-   533→* `coerce(version, options)`: Coerces a string to semver if possible
-   534→
-      →…
-   558→### Clean
-   560→* `clean(version)`: Clean a string to be a valid semver if possible
-   561→
-      →…
+   453→### Comparison …
+   478→### Sorting …
+   485→### Comparators …
+   489→### Ranges …
+   531→### Coercion …
+   558→### Clean …
    576→## Constants
    578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
-   579→
-   580→### `RELEASE_TYPES`
-   582→- major
-   583→- premajor
       →…
-   600→### `SEMVER_SPEC_VERSION`
-   602→2.0.0
-   603→
-      →…
+   580→### `RELEASE_TYPES` …
+   600→### `SEMVER_SPEC_VERSION` …
    610→## Exported Modules
    613→TODO: Make sure that all of these items are documented (classes aren't,
-   614→eg), and then pull the module name into the documentation for that specific
-   615→thing.
-   616→-->
-   617→
-   618→You may pull in just the part of this semver utility that you need if you
-   619→are sensitive to packing and tree-shaking concerns.  The main
-   620→`require('semver')` export uses getter functions to lazily load the parts
-   621→of the API that are used.
-   622→
-   623→The following modules are available:
-   624→
-   625→* `require('semver')`
-   626→* `require('semver/classes')`
       →…
-
-benchmarks/bench-compare.js
-
-benchmarks/bench-diff.js
-
-benchmarks/bench-parse-options.js
-
-benchmarks/bench-parse.js
-
-benchmarks/bench-satisfies.js
-
-benchmarks/bench-subset.js
 
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
     37→const main = () => {
-    38→  if (!argv.length) {
-    39→    return help()
-    40→  }
-    41→  while (argv.length) {
-    42→    let a = argv.shift()
-      →…
    132→const failInc = () => {
-   133→  console.error('--inc can only be used on a single version with no range')
-   134→  fail()
-   135→}
    137→const fail = () => process.exit(1)
    139→const help = () => console.log(
-   140→`SemVer ${version}
-   141→
-   142→A JavaScript implementation of the https://semver.org/ specification
-   143→Copyright Isaac Z. Schlueter
-   144→
-      →…
 
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -345,23 +176,6 @@ classes/range.js
    170→  intersects (range, options) {
    193→  test (version) {
    218→const cache = new LRU()
-   233→const isNullSet = c => c.value === '<0.0.0-0'
-   234→const isAny = c => c.value === ''
-   238→const isSatisfiable = (comparators, options) => {
-   257→const parseComparator = (comp, options) => {
-   271→const isX = id => !id || id.toLowerCase() === 'x' || id === '*'
-   280→const replaceTildes = (comp, options) => {
-   288→const replaceTilde = (comp, options) => {
-   324→const replaceCarets = (comp, options) => {
-   332→const replaceCaret = (comp, options) => {
-   385→const replaceXRanges = (comp, options) => {
-   393→const replaceXRange = (comp, options) => {
-   470→const replaceStars = (comp, options) => {
-   478→const replaceGTE0 = (comp, options) => {
-   491→const hyphenReplace = incPr => ($0,
-   492→  from, fM, fm, fp, fpr, fb,
-   493→  to, tM, tm, tp, tpr) => {
-   523→const testSet = (set, version, options) => {
 
 classes/semver.js
      9→class SemVer {
@@ -374,94 +188,12 @@ classes/semver.js
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
 
-functions/clean.js
-     4→const clean …
-
-functions/cmp.js
-    10→const cmp …
-
-functions/coerce.js
-     7→const coerce …
-
-functions/compare-build.js
-     4→const compareBuild …
-
-functions/compare-loose.js
-     4→const compareLoose …
-
-functions/compare.js
-     4→const compare …
-
-functions/diff.js
-     5→const diff …
-
-functions/eq.js
-     4→const eq …
-
-functions/gt.js
-     4→const gt …
-
-functions/gte.js
-     4→const gte …
-
-functions/inc.js
-     5→const inc …
-
-functions/lt.js
-     4→const lt …
-
-functions/lte.js
-     4→const lte …
-
-functions/major.js
-     4→const major …
-
-functions/minor.js
-     4→const minor …
-
-functions/neq.js
-     4→const neq …
-
-functions/parse.js
-     4→const parse …
-
-functions/patch.js
-     4→const patch …
-
-functions/prerelease.js
-     4→const prerelease …
-
-functions/rcompare.js
-     4→const rcompare …
-
-functions/rsort.js
-     4→const rsort …
-
-functions/satisfies.js
-     4→const satisfies …
-
-functions/sort.js
-     4→const sort …
-
-functions/valid.js
-     4→const valid …
-
 internal/constants.js
-     5→const SEMVER_SPEC_VERSION = '2.0.0'
-     7→const MAX_LENGTH = 256
-     8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
-    12→const MAX_SAFE_COMPONENT_LENGTH = 16
-    16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
-    18→const RELEASE_TYPES = [
 
 internal/debug.js
-     3→const debug = (
 
 internal/identifiers.js
-     3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
-     5→  if (typeof a === 'number' && typeof b === 'number') {
-      →…
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 
 internal/lrucache.js
@@ -474,13 +206,7 @@ internal/lrucache.js
     10→    const value = this.map.get(key)
     11→    if (value === undefined) {
     12→      return undefined
-    13→    } else {
-    14→      // Remove the key from the map and add it to the end
-    15→      this.map.delete(key)
-    16→      this.map.set(key, value)
-    17→      return value
-    18→    }
-    19→  }
+      →…
     21→  delete (key) {
     22→    return this.map.delete(key)
     23→  }
@@ -488,39 +214,14 @@ internal/lrucache.js
     26→    const deleted = this.delete(key)
     27→
     28→    if (!deleted && value !== undefined) {
-    29→      // If cache is full, delete the least recently used item
-    30→      if (this.map.size >= this.max) {
-    31→        const firstKey = this.map.keys().next().value
-    32→        this.delete(firstKey)
-    33→      }
-    34→
-    35→      this.map.set(key, value)
-    36→    }
-    37→
-    38→    return this
-    39→  }
+      →…
 
 internal/parse-options.js
-     4→const looseOption = Object.freeze({ loose: true })
-     5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
-     7→  if (!options) {
-      →…
 
 internal/re.js
-    12→const re = exports.re = []
-    13→const safeRe = exports.safeRe = []
-    14→const src = exports.src = []
-    15→const safeSrc = exports.safeSrc = []
-    16→const t = exports.t = {}
-    19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
-    27→const safeRegexReplacements = [
     33→const makeSafeRegex = (value) => {
-    34→  for (const [token, max] of safeRegexReplacements) {
-      →…
     42→const createToken = (name, value, isGlobal) => {
-    43→  const safe = makeSafeRegex(value)
-      →…
 
 package.json
      2→  "name": "semver",
@@ -547,40 +248,9 @@ package.json
     77→  }
     78→}
 
-ranges/gtr.js
-     5→const gtr = (version, range, options) => outside(version, range, '>', options)
-
-ranges/intersects.js
-     4→const intersects = (r1, r2, options) => {
-
-ranges/ltr.js
-     5→const ltr = (version, range, options) => outside(version, range, '<', options)
-
-ranges/max-satisfying.js
-     6→const maxSatisfying = (versions, range, options) => {
-
-ranges/min-satisfying.js
-     5→const minSatisfying = (versions, range, options) => {
-
-ranges/min-version.js
-     7→const minVersion = (range, loose) => {
-
-ranges/outside.js
-    13→const outside = (version, range, hilo, options) => {
-
 ranges/subset.js
-    45→const subset = (sub, dom, options = {}) => {
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
-    76→const simpleSubset = (sub, dom, options) => {
-   226→const higherGT = (a, b, options) => {
-   238→const lowerLT = (a, b, options) => {
-
-ranges/to-comparators.js
-     6→const toComparators = (range, options) =>
-
-ranges/valid.js
-     4→const validRange = (range, options) => {
 
 release-please-config.json
      2→  "group-pull-request-title-pattern": "chore: release ${version}",
@@ -596,24 +266,7 @@ test/bin/semver.js
      9→const bin = require.resolve('../../bin/semver')
     10→const run = args => new Promise((resolve, reject) => {
 
-test/integration/whitespace.js
-    12→const wsMedium = ' '.repeat(125)
-    13→const wsLarge = ' '.repeat(500000)
-    14→const zeroLarge = '0'.repeat(500000)
-
 test/internal/debug.js
      3→const main = () => {
 
 test/map.js
-     9→const ROOT = resolve(__dirname, '..')
-    10→const TEST = join(ROOT, 'test')
-    11→const IGNORE_DIRS = ['fixtures', 'integration']
-    13→const getFile = (f) => {
-    23→const walk = (item, res = []) => getFile(item) || readdirSync(item)
-    28→const walkAll = (items, relativeTo) => items
-
-test/ranges/simplify.js
-     6→const versions = [
-
-test/ranges/subset.js
-     8→const cases = [

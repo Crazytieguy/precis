@@ -1,14 +1,20 @@
 use std::path::{Path, PathBuf};
+use std::sync::LazyLock;
+
+use tiktoken_rs::CoreBPE;
 
 use crate::parse;
 use crate::schedule::{self, IncludedStage, StageKind};
 use crate::Lang;
 
+/// Shared BPE tokenizer instance (o200k_base, used by GPT-4o / Claude-class models).
+static BPE: LazyLock<CoreBPE> = LazyLock::new(|| tiktoken_rs::o200k_base().unwrap());
+
 // ---------------------------------------------------------------------------
 // Public entry points
 // ---------------------------------------------------------------------------
 
-/// Render files within a word budget using group-based scheduling.
+/// Render files within a token budget using group-based scheduling.
 pub fn render_with_budget(
     budget: usize,
     root: &Path,
@@ -19,7 +25,7 @@ pub fn render_with_budget(
     output
 }
 
-/// Render files within a word budget, returning output and actual word count.
+/// Render files within a token budget, returning output and actual token count.
 pub fn render_with_budget_stats(
     budget: usize,
     root: &Path,
@@ -31,11 +37,11 @@ pub fn render_with_budget_stats(
     let groups = schedule::build_groups(root, files, sources, &all_symbols, &layouts);
     let sched = schedule::schedule(&groups, budget, root, files);
     let output = render_scheduled(root, files, sources, &all_symbols, &layouts, &groups, &sched);
-    let actual = count_words(&output);
+    let actual = count_tokens(&output);
     (output, actual)
 }
 
-/// Render a single file within a word budget.
+/// Render a single file within a token budget.
 pub fn render_file_with_budget(
     budget: usize,
     path: &Path,
@@ -261,9 +267,9 @@ pub(crate) fn fmt_line(line_idx_0: usize, line: &str) -> String {
 /// Standalone truncation marker line indicating omitted content.
 const TRUNCATION_MARKER: &str = "      →…\n";
 
-/// Count whitespace-delimited words in text.
-pub fn count_words(text: &str) -> usize {
-    text.split_whitespace().count()
+/// Count BPE tokens in text using the o200k_base tokenizer.
+pub fn count_tokens(text: &str) -> usize {
+    BPE.encode_with_special_tokens(text).len()
 }
 
 /// Check if a markdown line is leading "noise" that should be skipped at
@@ -344,7 +350,7 @@ fn is_horizontal_rule(trimmed: &str) -> bool {
 ///
 /// Many README files include CI/coverage/version badges inline in the top-level
 /// heading: `# project [![build](url)](url) [![version](url)](url)`.
-/// These badge URLs waste word budget while adding no useful information for
+/// These badge URLs waste token budget while adding no useful information for
 /// codebase understanding.
 ///
 /// Returns the prefix of the line before the first trailing ` [![` pattern.
@@ -365,7 +371,7 @@ pub(crate) fn strip_heading_badges(line: &str) -> &str {
 }
 
 /// Convert rendered output to JSON, splitting into per-file entries.
-pub fn to_json(output: &str, budget: usize, words: usize) -> String {
+pub fn to_json(output: &str, budget: usize, tokens: usize) -> String {
     let mut files: Vec<serde_json::Value> = Vec::new();
     let mut current_path: Option<&str> = None;
     let mut current_content = String::new();
@@ -396,7 +402,7 @@ pub fn to_json(output: &str, budget: usize, words: usize) -> String {
 
     let json = serde_json::json!({
         "budget": budget,
-        "words": words,
+        "tokens": tokens,
         "files": files,
     });
     serde_json::to_string_pretty(&json).unwrap()
@@ -903,7 +909,7 @@ mod tests {
         let json: serde_json::Value = serde_json::from_str(&json_str).unwrap();
 
         assert_eq!(json["budget"], 1000);
-        assert_eq!(json["words"], 5);
+        assert_eq!(json["tokens"], 5);
         let files = json["files"].as_array().unwrap();
         assert_eq!(files.len(), 2);
         assert_eq!(files[0]["path"], "src/main.rs");
@@ -990,7 +996,7 @@ mod tests {
 
     #[test]
     fn budget_monotonicity() {
-        // More budget should never produce fewer words.
+        // More budget should never produce fewer tokens.
         let source = "/// Doc comment\npub fn hello() {}\npub struct Foo { x: i32 }\nfn private() {}\n";
         let root = Path::new("");
         let path = Path::new("test.rs");
@@ -1000,7 +1006,7 @@ mod tests {
         let mut prev_words = 0;
         for budget in [10, 50, 100, 200, 500, 1000, 5000] {
             let output = render_with_budget(budget, root, &files, &sources);
-            let words = count_words(&output);
+            let words = count_tokens(&output);
             assert!(
                 words >= prev_words,
                 "Budget monotonicity violated at budget {}: {} < {}",

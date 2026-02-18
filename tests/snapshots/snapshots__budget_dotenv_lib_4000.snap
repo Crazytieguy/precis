@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2218 words)
+budget: 4000 (3928 tokens)
 
 cli-options.js
      1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
@@ -166,29 +166,7 @@ main.js
     60→    const key = match[1]
     61→
     62→    // Default undefined or null to empty string
-    63→    let value = (match[2] || '')
-    64→
-    65→    // Remove whitespace
-    66→    value = value.trim()
-    67→
-    68→    // Check if double quoted
-    69→    const maybeQuote = value[0]
-    70→
-    71→    // Remove surrounding quotes
-    72→    value = value.replace(/^(['"`])([\s\S]*)\1$/mg, '$2')
-    73→
-    74→    // Expand newlines if double quoted
-    75→    if (maybeQuote === '"') {
-    76→      value = value.replace(/\\n/g, '\n')
-    77→      value = value.replace(/\\r/g, '\r')
-    78→    }
-    79→
-    80→    // Add to object
-    81→    obj[key] = value
-    82→  }
-    83→
-    84→  return obj
-    85→}
+      →…
     87→function _parseVault (options) {
     88→  options = options || {}
     89→
@@ -203,34 +181,7 @@ main.js
     98→
     99→  // handle scenario for comma separated keys - for use with key rotation
    100→  // example: DOTENV_KEY="dotenv://:key_1234@dotenvx.com/vault/.env.vault?environment=prod,dotenv://:key_7890@dotenvx.com/vault/.env.vault?environment=prod"
-   101→  const keys = _dotenvKey(options).split(',')
-   102→  const length = keys.length
-   103→
-   104→  let decrypted
-   105→  for (let i = 0; i < length; i++) {
-   106→    try {
-   107→      // Get full key
-   108→      const key = keys[i].trim()
-   109→
-   110→      // Get instructions for decrypt
-   111→      const attrs = _instructions(result, key)
-   112→
-   113→      // Decrypt
-   114→      decrypted = DotenvModule.decrypt(attrs.ciphertext, attrs.key)
-   115→
-   116→      break
-   117→    } catch (error) {
-   118→      // last key
-   119→      if (i + 1 >= length) {
-   120→        throw error
-   121→      }
-   122→      // try next key
-   123→    }
-   124→  }
-   125→
-   126→  // Parse decrypted .env string
-   127→  return DotenvModule.parse(decrypted)
-   128→}
+      →…
    130→function _warn (message) {
    131→  console.error(`[dotenv@${version}][WARN] ${message}`)
    132→}
@@ -268,34 +219,7 @@ main.js
    168→
    169→    throw error
    170→  }
-   171→
-   172→  // Get decrypt key
-   173→  const key = uri.password
-   174→  if (!key) {
-   175→    const err = new Error('INVALID_DOTENV_KEY: Missing key part')
-   176→    err.code = 'INVALID_DOTENV_KEY'
-   177→    throw err
-   178→  }
-   179→
-   180→  // Get environment
-   181→  const environment = uri.searchParams.get('environment')
-   182→  if (!environment) {
-   183→    const err = new Error('INVALID_DOTENV_KEY: Missing environment part')
-   184→    err.code = 'INVALID_DOTENV_KEY'
-   185→    throw err
-   186→  }
-   187→
-   188→  // Get ciphertext payload
-   189→  const environmentKey = `DOTENV_VAULT_${environment.toUpperCase()}`
-   190→  const ciphertext = result.parsed[environmentKey] // DOTENV_VAULT_PRODUCTION
-   191→  if (!ciphertext) {
-   192→    const err = new Error(`NOT_FOUND_DOTENV_ENVIRONMENT: Cannot locate environment ${environmentKey} in your .env.vault file.`)
-   193→    err.code = 'NOT_FOUND_DOTENV_ENVIRONMENT'
-   194→    throw err
-   195→  }
-   196→
-   197→  return { ciphertext, key }
-   198→}
+      →…
    200→function _vaultPath (options) {
    201→  let possibleVaultPath = null
    202→
@@ -310,15 +234,7 @@ main.js
    211→      possibleVaultPath = options.path.endsWith('.vault') ? options.path : `${options.path}.vault`
    212→    }
    213→  } else {
-   214→    possibleVaultPath = path.resolve(process.cwd(), '.env.vault')
-   215→  }
-   216→
-   217→  if (fs.existsSync(possibleVaultPath)) {
-   218→    return possibleVaultPath
-   219→  }
-   220→
-   221→  return null
-   222→}
+      →…
    224→function _resolveHome (envPath) {
    225→  return envPath[0] === '~' ? path.join(os.homedir(), envPath.slice(1)) : envPath
    226→}
@@ -336,11 +252,7 @@ main.js
    239→  if (options && options.processEnv != null) {
    240→    processEnv = options.processEnv
    241→  }
-   242→
-   243→  DotenvModule.populate(processEnv, parsed, options)
-   244→
-   245→  return { parsed }
-   246→}
+      →…
    248→function configDotenv (options) {
    249→  const dotenvPath = path.resolve(process.cwd(), '.env')
    250→  let encoding = 'utf8'
@@ -355,70 +267,7 @@ main.js
    259→    encoding = options.encoding
    260→  } else {
    261→    if (debug) {
-   262→      _debug('No encoding is specified. UTF-8 is used by default')
-   263→    }
-   264→  }
-   265→
-   266→  let optionPaths = [dotenvPath] // default, look for .env
-   267→  if (options && options.path) {
-   268→    if (!Array.isArray(options.path)) {
-   269→      optionPaths = [_resolveHome(options.path)]
-   270→    } else {
-   271→      optionPaths = [] // reset default
-   272→      for (const filepath of options.path) {
-   273→        optionPaths.push(_resolveHome(filepath))
-   274→      }
-   275→    }
-   276→  }
-   277→
-   278→  // Build the parsed data in a temporary object (because we need to return it).  Once we have the final
-   279→  // parsed data, we will combine it with process.env (or options.processEnv if provided).
-   280→  let lastError
-   281→  const parsedAll = {}
-   282→  for (const path of optionPaths) {
-   283→    try {
-   284→      // Specifying an encoding returns a string instead of a buffer
-   285→      const parsed = DotenvModule.parse(fs.readFileSync(path, { encoding }))
-   286→
-   287→      DotenvModule.populate(parsedAll, parsed, options)
-   288→    } catch (e) {
-   289→      if (debug) {
-   290→        _debug(`Failed to load ${path} ${e.message}`)
-   291→      }
-   292→      lastError = e
-   293→    }
-   294→  }
-   295→
-   296→  const populated = DotenvModule.populate(processEnv, parsedAll, options)
-   297→
-   298→  // handle user settings DOTENV_CONFIG_ options inside .env file(s)
-   299→  debug = parseBoolean(processEnv.DOTENV_CONFIG_DEBUG || debug)
-   300→  quiet = parseBoolean(processEnv.DOTENV_CONFIG_QUIET || quiet)
-   301→
-   302→  if (debug || !quiet) {
-   303→    const keysCount = Object.keys(populated).length
-   304→    const shortPaths = []
-   305→    for (const filePath of optionPaths) {
-   306→      try {
-   307→        const relative = path.relative(process.cwd(), filePath)
-   308→        shortPaths.push(relative)
-   309→      } catch (e) {
-   310→        if (debug) {
-   311→          _debug(`Failed to load ${filePath} ${e.message}`)
-   312→        }
-   313→        lastError = e
-   314→      }
-   315→    }
-   316→
-   317→    _log(`injecting env (${keysCount}) from ${shortPaths.join(',')} ${dim(`-- tip: ${_getRandomTip()}`)}`)
-   318→  }
-   319→
-   320→  if (lastError) {
-   321→    return { parsed: parsedAll, error: lastError }
-   322→  } else {
-   323→    return { parsed: parsedAll }
-   324→  }
-   325→}
+      →…
    328→function config (options) {
    329→  // fallback to original dotenv if DOTENV_KEY is not set
    330→  if (_dotenvKey(options).length === 0) {
@@ -433,9 +282,7 @@ main.js
    339→
    340→    return DotenvModule.configDotenv(options)
    341→  }
-   342→
-   343→  return DotenvModule._configVault(options)
-   344→}
+      →…
    346→function decrypt (encrypted, keyStr) {
    347→  const key = Buffer.from(keyStr.slice(-64), 'hex')
    348→  let ciphertext = Buffer.from(encrypted, 'base64')
@@ -450,22 +297,7 @@ main.js
    357→    return `${aesgcm.update(ciphertext)}${aesgcm.final()}`
    358→  } catch (error) {
    359→    const isRange = error instanceof RangeError
-   360→    const invalidKeyLength = error.message === 'Invalid key length'
-   361→    const decryptionFailed = error.message === 'Unsupported state or unable to authenticate data'
-   362→
-   363→    if (isRange || invalidKeyLength) {
-   364→      const err = new Error('INVALID_DOTENV_KEY: It must be 64 characters long (or more)')
-   365→      err.code = 'INVALID_DOTENV_KEY'
-   366→      throw err
-   367→    } else if (decryptionFailed) {
-   368→      const err = new Error('DECRYPTION_FAILED: Please check your DOTENV_KEY')
-   369→      err.code = 'DECRYPTION_FAILED'
-   370→      throw err
-   371→    } else {
-   372→      throw error
-   373→    }
-   374→  }
-   375→}
+      →…
    378→function populate (processEnv, parsed, options = {}) {
    379→  const debug = Boolean(options && options.debug)
    380→  const override = Boolean(options && options.override)
@@ -480,26 +312,7 @@ main.js
    389→  // Set process.env
    390→  for (const key of Object.keys(parsed)) {
    391→    if (Object.prototype.hasOwnProperty.call(processEnv, key)) {
-   392→      if (override === true) {
-   393→        processEnv[key] = parsed[key]
-   394→        populated[key] = parsed[key]
-   395→      }
-   396→
-   397→      if (debug) {
-   398→        if (override === true) {
-   399→          _debug(`"${key}" is already defined and WAS overwritten`)
-   400→        } else {
-   401→          _debug(`"${key}" is already defined and was NOT overwritten`)
-   402→        }
-   403→      }
-   404→    } else {
-   405→      processEnv[key] = parsed[key]
-   406→      populated[key] = parsed[key]
-   407→    }
-   408→  }
-   409→
-   410→  return populated
-   411→}
+      →…
    413→const DotenvModule = {
    414→  configDotenv,
    415→  _configVault,

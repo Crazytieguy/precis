@@ -2,137 +2,76 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (258 tokens)
 
 clean.js
-     4→const clean = (version, options) => {
-     5→  const s = parse(version.trim().replace(/^[=v]+/, ''), options)
-     6→  return s ? s.version : null
-     7→}
+     4→const clean …
 
 cmp.js
-    10→const cmp = (a, op, b, loose) => {
-    11→  switch (op) {
-    12→    case '===':
-    13→      if (typeof a === 'object') {
-    14→        a = a.version
-    15→      }
-    16→      if (typeof b === 'object') {
-    17→        b = b.version
-      →…
+    10→const cmp …
 
 coerce.js
-     7→const coerce = (version, options) => {
-     8→  if (version instanceof SemVer) {
-     9→    return version
-    10→  }
-    11→
-    12→  if (typeof version === 'number') {
-    13→    version = String(version)
-    14→  }
-      →…
+     7→const coerce …
 
 compare-build.js
-     4→const compareBuild = (a, b, loose) => {
-     5→  const versionA = new SemVer(a, loose)
-     6→  const versionB = new SemVer(b, loose)
-     7→  return versionA.compare(versionB) || versionA.compareBuild(versionB)
-     8→}
+     4→const compareBuild …
 
 compare-loose.js
-     4→const compareLoose = (a, b) => compare(a, b, true)
+     4→const compareLoose …
 
 compare.js
-     4→const compare = (a, b, loose) =>
-     5→  new SemVer(a, loose).compare(new SemVer(b, loose))
+     4→const compare …
 
 diff.js
-     5→const diff = (version1, version2) => {
-     6→  const v1 = parse(version1, null, true)
-     7→  const v2 = parse(version2, null, true)
-     8→  const comparison = v1.compare(v2)
-     9→
-    10→  if (comparison === 0) {
-    11→    return null
-    12→  }
-      →…
+     5→const diff …
 
 eq.js
-     4→const eq = (a, b, loose) => compare(a, b, loose) === 0
+     4→const eq …
 
 gt.js
-     4→const gt = (a, b, loose) => compare(a, b, loose) > 0
+     4→const gt …
 
 gte.js
-     4→const gte = (a, b, loose) => compare(a, b, loose) >= 0
+     4→const gte …
 
 inc.js
-     5→const inc = (version, release, options, identifier, identifierBase) => {
-     6→  if (typeof (options) === 'string') {
-     7→    identifierBase = identifier
-     8→    identifier = options
-     9→    options = undefined
-    10→  }
-    11→
-    12→  try {
-      →…
+     5→const inc …
 
 lt.js
-     4→const lt = (a, b, loose) => compare(a, b, loose) < 0
+     4→const lt …
 
 lte.js
-     4→const lte = (a, b, loose) => compare(a, b, loose) <= 0
+     4→const lte …
 
 major.js
-     4→const major = (a, loose) => new SemVer(a, loose).major
+     4→const major …
 
 minor.js
-     4→const minor = (a, loose) => new SemVer(a, loose).minor
+     4→const minor …
 
 neq.js
-     4→const neq = (a, b, loose) => compare(a, b, loose) !== 0
+     4→const neq …
 
 parse.js
-     4→const parse = (version, options, throwErrors = false) => {
-     5→  if (version instanceof SemVer) {
-     6→    return version
-     7→  }
-     8→  try {
-     9→    return new SemVer(version, options)
-    10→  } catch (er) {
-    11→    if (!throwErrors) {
-      →…
+     4→const parse …
 
 patch.js
-     4→const patch = (a, loose) => new SemVer(a, loose).patch
+     4→const patch …
 
 prerelease.js
-     4→const prerelease = (version, options) => {
-     5→  const parsed = parse(version, options)
-     6→  return (parsed && parsed.prerelease.length) ? parsed.prerelease : null
-     7→}
+     4→const prerelease …
 
 rcompare.js
-     4→const rcompare = (a, b, loose) => compare(b, a, loose)
+     4→const rcompare …
 
 rsort.js
-     4→const rsort = (list, loose) => list.sort((a, b) => compareBuild(b, a, loose))
+     4→const rsort …
 
 satisfies.js
-     4→const satisfies = (version, range, options) => {
-     5→  try {
-     6→    range = new Range(range, options)
-     7→  } catch (er) {
-     8→    return false
-     9→  }
-    10→  return range.test(version)
-    11→}
+     4→const satisfies …
 
 sort.js
-     4→const sort = (list, loose) => list.sort((a, b) => compareBuild(a, b, loose))
+     4→const sort …
 
 valid.js
-     4→const valid = (version, options) => {
-     5→  const v = parse(version, options)
-     6→  return v ? v.version : null
-     7→}
+     4→const valid …

@@ -2,161 +2,36 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1976 words)
+budget: 2000 (2003 tokens)
 
 docs/conf.py
      2→from importlib.metadata import version as get_version
      4→from packaging.version import parse
 
 pyproject.toml
-     1→[build-system …
-     8→[project …
-    33→[project.urls …
-    39→[project.entry-points …
-    42→[dependency-groups …
-    55→[tool.setuptools.package-data …
-    58→[tool.setuptools_scm …
-    62→[tool.pytest.ini_options …
-    68→[tool.coverage.run …
-    71→[tool.coverage.report …
-    78→[tool.ruff …
-    81→[tool.ruff.per-file-target-version …
-    84→[tool.ruff.lint …
-    99→[tool.mypy …
-   105→[tool.tox …
-   110→[tool.tox.env_run_base …
-   115→[tool.tox.env.docs …
 
 src/typeguard/__init__.py
-     4→from ._checkers import TypeCheckerCallable as TypeCheckerCallable
-     5→from ._checkers import TypeCheckLookupCallback as TypeCheckLookupCallback
-     6→from ._checkers import check_type_internal as check_type_internal
-     7→from ._checkers import checker_lookup_functions as checker_lookup_functions
-     8→from ._checkers import load_plugins as load_plugins
-     9→from ._config import CollectionCheckStrategy as CollectionCheckStrategy
-    10→from ._config import ForwardRefPolicy as ForwardRefPolicy
-    11→from ._config import TypeCheckConfiguration as TypeCheckConfiguration
-    12→from ._decorators import typechecked as typechecked
-    13→from ._decorators import typeguard_ignore as typeguard_ignore
-    14→from ._exceptions import InstrumentationWarning as InstrumentationWarning
-    15→from ._exceptions import TypeCheckError as TypeCheckError
-    16→from ._exceptions import TypeCheckWarning as TypeCheckWarning
-    17→from ._exceptions import TypeHintWarning as TypeHintWarning
-    18→from ._functions import TypeCheckFailCallback as TypeCheckFailCallback
-    19→from ._functions import check_type as check_type
-    20→from ._functions import warn_on_error as warn_on_error
-    21→from ._importhook import ImportHookManager as ImportHookManager
-    22→from ._importhook import TypeguardFinder as TypeguardFinder
-    23→from ._importhook import install_import_hook as install_import_hook
-    24→from ._memo import TypeCheckMemo as TypeCheckMemo
-    25→from ._suppression import suppress_type_checks as suppress_type_checks
-    26→from ._utils import Unset as Unset
     34→config: TypeCheckConfiguration
 
 src/typeguard/_checkers.py
     42→from typing_extensions import is_typeddict
-    44→from ._config import ForwardRefPolicy
-    45→from ._exceptions import TypeCheckError, TypeHintWarning
-    46→from ._memo import TypeCheckMemo
-    47→from ._utils import evaluate_forwardref, get_stacklevel, get_type_name, qualified_name
     81→TypeCheckerCallable: TypeAlias = Callable[
-    82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
-    83→]
     84→TypeCheckLookupCallback: TypeAlias = Callable[
-    85→    [Any, Tuple[Any, ...], Tuple[Any, ...]], Optional[TypeCheckerCallable]
-    86→]
     88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
     89→generic_alias_types: tuple[type, ...] = (
-    90→    type(List),
-    91→    type(List[Any]),
-    92→    types.GenericAlias,
-    93→)
     98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS = {
-   100→    "__add__",
-   101→    "__and__",
-   102→    "__cmp__",
-   103→    "__divmod__",
-   104→    "__div__",
-   105→    "__eq__",
-   106→    "__floordiv__",
-   107→    "__ge__",
-   108→    "__gt__",
-   109→    "__iadd__",
-   110→    "__iand__",
-   111→    "__idiv__",
-   112→    "__ifloordiv__",
-   113→    "__ilshift__",
-   114→    "__imatmul__",
-   115→    "__imod__",
-   116→    "__imul__",
-   117→    "__ior__",
-   118→    "__ipow__",
-      →…
    586→def _is_literal_type(typ: object) -> bool:
-   587→    return typ is typing.Literal or typ is typing_extensions.Literal
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
-  1006→    Any, Callable[[Any, Any, tuple[Any, ...], TypeCheckMemo], None]
-  1007→] = {
-  1008→    bytes: check_byteslike,
-  1009→    AbstractSet: check_set,
-  1010→    BinaryIO: check_io,
-  1011→    Callable: check_callable,
-  1012→    collections.abc.Callable: check_callable,
-  1013→    complex: check_number,
-  1014→    dict: check_mapping,
-  1015→    Dict: check_mapping,
-  1016→    float: check_number,
-  1017→    frozenset: check_set,
-  1018→    IO: check_io,
-  1019→    list: check_list,
-  1020→    List: check_list,
-  1021→    typing.Literal: check_literal,
-  1022→    Mapping: check_mapping,
-  1023→    MutableMapping: check_mapping,
-  1024→    None: check_none,
-      →…
 
 src/typeguard/_config.py
-     9→    from ._functions import TypeCheckFailCallback
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
-    15→    """
-    16→    Defines how unresolved forward references are handled.
-    17→
-    18→    Members:
-    19→
-    20→    * ``ERROR``: propagate the :exc:`NameError` when the forward reference lookup fails
-    21→    * ``WARN``: emit a :class:`~.TypeHintWarning` if the forward reference lookup fails
-    22→    * ``IGNORE``: silently skip checks for unresolveable forward references
-    23→    """
     24→
-    25→    ERROR = auto()
-    26→    WARN = auto()
-    27→    IGNORE = auto()
+      →…
     30→class CollectionCheckStrategy(Enum):
-    31→    """
-    32→    Specifies how thoroughly the contents of collections are type checked.
-    33→
-    34→    This has an effect on the following built-in checkers:
-    35→
-    36→    * ``AbstractSet``
-    37→    * ``Dict``
-    38→    * ``List``
-    39→    * ``Mapping``
-    40→    * ``Set``
-    41→    * ``Tuple[<type>, ...]`` (arbitrarily sized tuples)
-    42→
-    43→    Members:
-    44→
-    45→    * ``FIRST_ITEM``: check only the first item
-    46→    * ``ALL_ITEMS``: check all items
-    47→    """
     48→
-    49→    FIRST_ITEM = auto()
-    50→    ALL_ITEMS = auto()
-    51→
     62→@dataclass
     63→class TypeCheckConfiguration:
     64→    """
@@ -179,19 +54,7 @@ src/typeguard/_config.py
     81→    .. attribute:: collection_check_strategy
     82→       :type: CollectionCheckStrategy
     83→
-    84→         Specifies how thoroughly the contents of collections (list, dict, etc.) are
-    85→         type checked.
-    86→
-    87→         Default: ``FIRST_ITEM``
-    88→
-    89→    .. attribute:: debug_instrumentation
-    90→       :type: bool
-    91→
-    92→         If set to ``True``, the code of modules or functions instrumented by typeguard
-    93→         is printed to ``sys.stderr`` after the instrumentation is done
-    94→
-    95→         Default: ``False``
-    96→    """
+      →…
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
     99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
@@ -201,54 +64,27 @@ src/typeguard/_config.py
    103→    debug_instrumentation: bool = False
 
 src/typeguard/_decorators.py
-    13→from ._config import CollectionCheckStrategy, ForwardRefPolicy, global_config
-    14→from ._exceptions import InstrumentationWarning
-    15→from ._functions import TypeCheckFailCallback
-    16→from ._transformer import TypeguardTransformer
-    17→from ._utils import Unset, function_name, get_stacklevel, is_method_of, unset
 
 src/typeguard/_exceptions.py
      5→class TypeHintWarning(UserWarning):
-     6→    """
-     7→    A warning that is emitted when a type hint in string form could not be resolved to
-     8→    an actual type.
-     9→    """
     12→class TypeCheckWarning(UserWarning):
-    13→    """Emitted by typeguard's type checkers when a type mismatch is detected."""
     14→
     19→class InstrumentationWarning(UserWarning):
-    20→    """Emitted when there's a problem with instrumenting a function for type checks."""
     21→
     26→class TypeCheckError(Exception):
-    27→    """
-    28→    Raised by typeguard's type checkers when a type mismatch is detected.
-    29→    """
     30→
 
 src/typeguard/_functions.py
-     8→from . import _suppression
-     9→from ._checkers import BINARY_MAGIC_METHODS, check_type_internal
-    10→from ._config import (
-    11→    CollectionCheckStrategy,
-    12→    ForwardRefPolicy,
-    13→    TypeCheckConfiguration,
-    14→)
-    15→from ._exceptions import TypeCheckError, TypeCheckWarning
-    16→from ._memo import TypeCheckMemo
-    17→from ._utils import get_stacklevel, qualified_name
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
 
 src/typeguard/_importhook.py
-    17→from ._config import global_config
-    18→from ._transformer import TypeguardTransformer
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
     44→# The name of this function is magical
     45→def _call_with_frames_removed(
     46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
     47→) -> T:
-    48→    return f(*args, **kwargs)
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
     57→    def source_to_code(
@@ -273,72 +109,15 @@ src/typeguard/_importhook.py
     76→            module = _call_with_frames_removed(
     77→                ast.parse,
     78→                source,
-    79→                filename,
-    80→                "exec",
-    81→            )
-    82→
-    83→        tree = TypeguardTransformer().visit(module)
-    84→        ast.fix_missing_locations(tree)
-    85→
-    86→        if global_config.debug_instrumentation and sys.version_info >= (3, 9):
-    87→            print(
-    88→                f"Source code of {path!r} after instrumentation:\n"
-    89→                "----------------------------------------------",
-    90→                file=sys.stderr,
-    91→            )
-    92→            print(ast.unparse(tree), file=sys.stderr)
-    93→            print("----------------------------------------------", file=sys.stderr)
-    94→
-    95→        return _call_with_frames_removed(
-    96→            compile, tree, filename, "exec", 0, dont_inherit=True
-    97→        )
+      →…
    109→class TypeguardFinder(MetaPathFinder):
-   110→    """
-   111→    Wraps another path finder and instruments the module with
-   112→    :func:`@typechecked <typeguard.typechecked>` if :meth:`should_instrument` returns
-   113→    ``True``.
-   114→
-   115→    Should not be used directly, but rather via :func:`~.install_import_hook`.
-   116→
-   117→    .. versionadded:: 2.6
-   118→    """
    119→
    156→class ImportHookManager:
-   157→    """
-   158→    A handle that can be used to uninstall the Typeguard import hook.
-   159→    """
    160→
 
 src/typeguard/_memo.py
      8→class TypeCheckMemo:
-     9→    """
-    10→    Contains information necessary for type checkers to do their work.
-    11→
-    12→    .. attribute:: globals
-    13→       :type: dict[str, Any]
-    14→
-    15→        Dictionary of global variables to use for resolving forward references.
-    16→
-    17→    .. attribute:: locals
-    18→       :type: dict[str, Any]
-    19→
-    20→        Dictionary of local variables to use for resolving forward references.
-    21→
-    22→    .. attribute:: self_type
-    23→       :type: type | None
-    24→
-    25→        When running type checks within an instance method or class method, this is the
-    26→        class object that the first argument (usually named ``self`` or ``cls``) refers
-    27→        to.
-    28→
-    29→    .. attribute:: config
-    30→       :type: TypeCheckConfiguration
-    31→
-    32→         Contains the configuration for a particular set of type checking operations.
-    33→    """
     34→
-    35→    __slots__ = "globals", "locals", "self_type", "config"
-    36→
 
 src/typeguard/_pytest_plugin.py
 
@@ -375,198 +154,55 @@ src/typeguard/_transformer.py
    140→
    285→class NameCollector(NodeVisitor):
    313→class GeneratorDetector(NodeVisitor):
-   314→    """Detects if a function node is a generator function."""
    315→
-   316→    contains_yields: bool = False
-   317→    in_root_function: bool = False
-   318→
    338→class AnnotationTransformer(NodeTransformer):
    339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
-   340→        "builtins.dict": ("typing", "Dict"),
-   341→        "builtins.list": ("typing", "List"),
-   342→        "builtins.tuple": ("typing", "Tuple"),
-   343→        "builtins.set": ("typing", "Set"),
-   344→        "builtins.frozenset": ("typing", "FrozenSet"),
-   345→    }
-   346→
    488→class TypeguardTransformer(NodeTransformer):
    516→    @contextmanager
    517→    def _use_memo(
    518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
    519→    ) -> Generator[None, Any, None]:
-   520→        new_memo = TransformMemo(node, self._memo, self._memo.path + (node.name,))
-   521→        old_memo = self._memo
-   522→        self._memo = new_memo
-   523→
-   524→        if isinstance(node, (FunctionDef, AsyncFunctionDef)):
-   525→            new_memo.should_instrument = (
-   526→                self._target_path is None or new_memo.path == self._target_path
-   527→            )
-   528→            if new_memo.should_instrument:
-   529→                # Check if the function is a generator function
-   530→                detector = GeneratorDetector()
-   531→                detector.visit(node)
-   532→
-   533→                # Extract yield, send and return types where possible from a subscripted
-   534→                # annotation like Generator[int, str, bool]
-   535→                return_annotation = deepcopy(node.returns)
-   536→                if detector.contains_yields and new_memo.name_matches(
-   537→                    return_annotation, *generator_names
-   538→                ):
-   539→                    if isinstance(return_annotation, Subscript):
-   540→                        if isinstance(return_annotation.slice, Tuple):
-   541→                            items = return_annotation.slice.elts
-   542→                        else:
-   543→                            items = [return_annotation.slice]
-   544→
-   545→                        if len(items) > 0:
-   546→                            new_memo.yield_annotation = self._convert_annotation(
-   547→                                items[0]
-   548→                            )
-   549→
-   550→                        if len(items) > 1:
-   551→                            new_memo.send_annotation = self._convert_annotation(
-   552→                                items[1]
-   553→                            )
-   554→
-      →…
    570→    def _get_import(self, module: str, name: str) -> Name:
-   571→        memo = self._memo if self._target_path else self._module_memo
-   572→        return memo.get_import(module, name)
    580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
-   581→        if annotation is None:
-   582→            return None
-   583→
-   584→        # Convert PEP 604 unions (x | y) and generic built-in collections where
-   585→        # necessary, and undo forward references
-   586→        new_annotation = cast(expr, AnnotationTransformer(self).visit(annotation))
-   587→        if isinstance(new_annotation, expr):
-   588→            new_annotation = ast.copy_location(new_annotation, annotation)
-   589→
-      →…
 
 src/typeguard/_utils.py
-    21→    from ._memo import TypeCheckMemo
    172→@final
    173→class Unset:
    174→    __slots__ = ()
    175→
 
-tests/__init__.py
-
-tests/conftest.py
-
-tests/deferredannos.py
-
 tests/dummymodule.py
     40→T = TypeVar("T", bound="DummyClass")
     41→P = ParamSpec("P")
-    76→@typechecked
     77→class DummyClass(metaclass=Metaclass):
     78→    bar: str
     79→    baz: int
     80→
-   117→@typechecked
    118→class Outer:
-   304→@typechecked(typecheck_fail_callback=lambda exc, memo: print(exc))
    305→class OverrideClass:
-   364→# Regression test for #536 - forward reference evaluation on Python 3.14
    365→class ModuleLocalClass:
-   366→    """A class only available in this module's namespace, not the caller's."""
 
 tests/dummymodule_py312.py
-    16→@typechecked
     17→class ParametrizedClass[T]:
 
 tests/mypy/negative.py
-     4→@typechecked
-     5→def foo(x: int) -> int:
-     9→@typechecked
-    10→def bar(x: int) -> int:
-    14→@typeguard_ignore
-    15→def non_typeguard_checked_func(x: int) -> int:
-    19→@typechecked
-    20→def returns_str() -> str:
-    24→@typechecked
-    25→def arg_type(x: int) -> str:
-    29→@typechecked
-    30→def ret_type() -> str:
     38→@typechecked
     39→class MyClass:
-    40→    def __init__(self, x: int = 0) -> None:
-    43→    def add(self, y: int) -> int:
-    47→def get_value(c: MyClass) -> int:
-    51→def create_myclass(x: int) -> MyClass:
 
 tests/mypy/positive.py
-     6→@typechecked
-     7→def foo(x: str) -> str:
-    11→def takes_callable(f: Callable[[str], str]) -> str:
-    18→@typechecked
-    19→def has_valid_arguments(x: int, y: str) -> None:
-    23→def has_valid_return_type(y: str) -> str:
     27→@typechecked
     28→class MyClass:
-    29→    def __init__(self, x: int) -> None:
-    32→    def add(self, y: int) -> int:
-    36→def get_value(c: MyClass) -> int:
-    40→@typechecked
-    41→def get_value_checked(c: MyClass) -> int:
-    45→def create_myclass(x: int) -> MyClass:
-    49→@typechecked
-    50→def create_myclass_checked(x: int) -> MyClass:
 
 tests/mypy/test_type_annotations.py
      8→POSITIVE_FILE = "positive.py"
      9→NEGATIVE_FILE = "negative.py"
-    19→def get_mypy_cmd(filename: str) -> list[str]:
-    23→def get_negative_mypy_output() -> str:
-    24→    """
-      →…
-    35→def get_expected_errors() -> dict[int, str]:
-    36→    """
-      →…
-    54→def get_mypy_errors() -> dict[int, str]:
-    55→    """
-      →…
-    68→@pytest.fixture
-    69→def chdir_local() -> None:
-    70→    """
-      →…
-    78→@pytest.mark.usefixtures("chdir_local")
-    79→def test_positive() -> None:
-    80→    """
-      →…
-    86→@pytest.mark.usefixtures("chdir_local")
-    87→def test_negative() -> None:
-    88→    """
-      →…
 
 tests/test_checkers.py
     56→from . …
     79→P = ParamSpec("P")
 
-tests/test_importhook.py
-
 tests/test_instrumentation.py
     40→def _fixture_module(name: str, method: str):
-    41→    # config.debug_instrumentation = True
-    42→    sys.path.insert(0, str(this_dir))
-    43→    try:
-    44→        # sys.modules.pop(name, None)
-      →…
-
-tests/test_plugins.py
-
-tests/test_pytest_plugin.py
-
-tests/test_suppression.py
-
-tests/test_transformer.py
-
-tests/test_typechecked.py
 
 tests/test_utils.py
      5→from . …
-
-tests/test_warn_on_error.py

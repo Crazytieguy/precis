@@ -2,139 +2,34 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (476 words)
+budget: 500 (502 tokens)
 
 README.md
      1→# humanize
     12→This modest package contains various common humanization utilities, like turning a
-    13→number into a fuzzy human-readable duration ("3 minutes ago") or into a human-readable
-    14→size or throughput. It is localized to:
-    15→
-    16→- Arabic
-    17→- Basque
-    18→- Bengali
-    19→- Brazilian Portuguese
-    20→- Catalan
-    21→- Danish
-    22→- Dutch
-    23→- Esperanto
-    24→- European Portuguese
-    25→- Finnish
-    26→- French
-    27→- German
-    28→- Greek
-    29→- Hebrew
-    30→- Indonesian
-    31→- Italian
-    32→- Japanese
-    33→- Klingon
-    34→- Korean
-    35→- Norwegian
-    36→- Persian
-    37→- Polish
-    38→- Russian
-    39→- Simplified Chinese
       →…
-    49→## API reference
-    51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
-    52→
-    53→<!-- usage-start -->
-    54→
-    55→## Installation
-    57→### From PyPI
-    59→```bash
-      →…
-    63→### From source
-    65→```bash
-      →…
-    71→## Usage
-    73→### Integer humanization
-    75→```pycon
-      →…
-    89→### Date & time humanization
-    91→```pycon
-      →…
-   110→### Precise time delta
-   112→```pycon
-      →…
-   124→#### Smaller units
-   126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
-   127→
-   128→```pycon
-   129→>>> import humanize
-   130→>>> import datetime as dt
-   131→>>> humanize.naturaldelta(dt.timedelta(seconds=2))
-   132→'2 seconds'
-   133→```
-   134→
-   135→```pycon
-      →…
-   154→### File size humanization
-   156→```pycon
-      →…
-   166→### Human-readable floating point numbers
-   168→```pycon
-      →…
-   182→### Scientific notation
-   184→```pycon
-      →…
-   200→## Localization
-   202→How to change locale at runtime:
-   203→
-   204→```pycon
-   205→>>> import humanize
-   206→>>> import datetime as dt
-   207→>>> humanize.naturaltime(dt.timedelta(seconds=3))
-   208→'3 seconds ago'
-   209→>>> _t = humanize.i18n.activate("ru_RU")
-   210→>>> humanize.naturaltime(dt.timedelta(seconds=3))
-   211→'3 секунды назад'
-   212→>>> humanize.i18n.deactivate()
-   213→>>> humanize.naturaltime(dt.timedelta(seconds=3))
-   214→'3 seconds ago'
-   215→```
-   216→
-      →…
+    49→## API reference …
+    55→## Installation …
+    71→## Usage …
+   124→#### Smaller units …
+   200→## Localization …
 
 RELEASING.md
-     1→# Release checklist …
 
 mkdocs.yml
-     1→site_name: humanize
-     2→site_url: https://humanize.readthedocs.io
-     3→repo_url: https://github.com/python-humanize/humanize
-     4→theme:
-    16→        name: Switch to light mode
-    17→
-    18→nav:
-    24→  - Internationalisation: i18n.md
-    25→
-    26→plugins:
-    29→  - include-markdown
-    30→
-    31→markdown_extensions:
-    35→  - pymdownx.superfences
-    36→
-    37→extra_css:
-    38→  - css/code_select.css
-    39→
-    40→watch:
+     1→site_name …
+     2→site_url …
+     3→repo_url …
+     4→theme …
+    18→nav …
+    26→plugins …
+    31→markdown_extensions …
+    37→extra_css …
+    40→watch …
 
 pyproject.toml
-     1→[build-system …
-     8→[project …
-    50→[tool.hatch …
-    53→[tool.hatch.build …
-    56→[tool.hatch.build.hooks.vcs …
-    59→[tool.hatch.version.raw-options …
-    62→[tool.ruff …
-   103→[tool.pyproject-fmt …
-   106→[tool.pytest.ini_options …
-   113→[tool.coverage.report …
-   120→[tool.mypy …
 
 src/humanize/__init__.py
-    26→from ._version …
     28→__all__ = [
 
 src/humanize/filesize.py
@@ -144,9 +39,7 @@ src/humanize/i18n.py
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
     18→_CURRENT = local()
-    21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
-    30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
 
 src/humanize/lists.py
@@ -154,16 +47,9 @@ src/humanize/lists.py
      9→__all__ = ["natural_list"]
 
 src/humanize/number.py
-     7→from .i18n …
-     8→from .i18n …
-     9→from .i18n …
-    10→from .i18n …
     12→TYPE_CHECKING = False
 
 src/humanize/time.py
-    11→from .i18n …
-    12→from .i18n …
-    13→from .number …
     15→TYPE_CHECKING = False
     21→__all__ = [
     30→@total_ordering
@@ -178,29 +64,10 @@ src/humanize/time.py
     39→    YEARS = 7
     40→
 
-tests/test_filesize.py
-
 tests/test_i18n.py
-    17→@freeze_time("2020-02-02")
-    18→def test_i18n() -> None:
    225→class TestActivate:
-   226→    expected_msg = (
-   249→    @freeze_time("2020-02-02")
-   250→    def test_en_locale(self) -> None:
-   262→    @freeze_time("2020-02-02")
-   263→    def test_none_locale(self) -> None:
-
-tests/test_lists.py
-
-tests/test_number.py
 
 tests/test_time.py
-    16→# In seconds
     17→ONE_MICROSECOND = 1 / 1000000
-    22→MILLISECONDS_1_337 = 1337 / 1000  # 1.337 seconds
     23→ONE_HOUR = 3600
     37→class FakeDate:
-    58→# These are not considered "public" interfaces, but require tests anyway.
-    59→
-    60→
-    61→def test_date_and_delta() -> None:

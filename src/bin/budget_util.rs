@@ -3,7 +3,7 @@ use std::path::Path;
 struct SnapshotEntry {
     filename: String,
     budget: usize,
-    words: usize,
+    tokens: usize,
 }
 
 fn parse_snapshot(path: &Path) -> Option<SnapshotEntry> {
@@ -11,19 +11,19 @@ fn parse_snapshot(path: &Path) -> Option<SnapshotEntry> {
     let filename = path.file_name()?.to_str()?.to_string();
 
     // Find the budget line after the YAML front matter.
-    // Format: "budget: 1000 (692 words)"
+    // Format: "budget: 1000 (692 tokens)"
     for line in content.lines() {
         if let Some(rest) = line.strip_prefix("budget: ") {
-            // "1000 (692 words)"
+            // "1000 (692 tokens)"
             let (budget_str, rest) = rest.split_once(' ')?;
             let budget: usize = budget_str.parse().ok()?;
-            // "(692 words)"
-            let words_str = rest.trim_start_matches('(').split_once(' ')?;
-            let words: usize = words_str.0.parse().ok()?;
+            // "(692 tokens)"
+            let tokens_str = rest.trim_start_matches('(').split_once(' ')?;
+            let tokens: usize = tokens_str.0.parse().ok()?;
             return Some(SnapshotEntry {
                 filename,
                 budget,
-                words,
+                tokens,
             });
         }
     }
@@ -59,7 +59,7 @@ fn main() {
     // Compute utilization
     let utils: Vec<(f64, &SnapshotEntry)> = entries
         .iter()
-        .map(|e| ((e.words as f64 / e.budget as f64).min(1.0), e))
+        .map(|e| ((e.tokens as f64 / e.budget as f64).min(1.0), e))
         .collect();
 
     // Sort by utilization ascending (worst first)
@@ -70,15 +70,15 @@ fn main() {
     println!("=== Budget Utilization (from snapshots) ===");
     println!();
     println!(
-        "{:>6}  {:>6}  {:>5}  Snapshot",
-        "Util%", "Budget", "Words"
+        "{:>6}  {:>6}  {:>6}  Snapshot",
+        "Util%", "Budget", "Tokens"
     );
     for (util, entry) in &sorted {
         println!(
-            "{:>5.1}%  {:>6}  {:>5}  {}",
+            "{:>5.1}%  {:>6}  {:>6}  {}",
             util * 100.0,
             entry.budget,
-            entry.words,
+            entry.tokens,
             entry.filename,
         );
     }

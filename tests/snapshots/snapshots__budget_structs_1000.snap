@@ -2,22 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (991 words)
+budget: 1000 (1013 tokens)
 
 README.md
      1→# Archived project. No maintenance. 
      3→This project is not maintained anymore and is archived. Feel free to fork and
-     4→make your own changes if needed. For more detail read my blog post: [Taking an indefinite sabbatical from my projects](https://arslan.io/2018/10/09/taking-an-indefinite-sabbatical-from-my-projects/)
-     5→
-     6→Thanks to everyone for their valuable feedback and contributions.
-     7→
+      →…
      8→# Structs
     10→Structs contains various utilities to work with Go (Golang) structs. It was
-    11→initially used by me to convert a struct into a `map[string]interface{}`. With
-    12→time I've added other utilities for structs.  It's basically a high level
-    13→package based on primitives from the reflect package. Feel free to add new
-    14→functions or improve the existing code.
-    15→
+      →…
     16→## Install
     18→```bash
     19→go get github.com/fatih/structs
@@ -33,46 +26,12 @@ README.md
     30→	Name        string `json:"name,omitempty"`
     31→	ID          int
     32→	Enabled     bool
-    33→	users       []string // not exported
-    34→	http.Server          // embedded
-    35→}
-    36→
-    37→server := &Server{
-    38→	Name:    "gopher",
-    39→	ID:      123456,
-    40→	Enabled: true,
-    41→}
-    42→```
-    43→
-    44→```go
-    45→// Convert a struct to a map[string]interface{}
-    46→// => {"Name":"gopher", "ID":123456, "Enabled":true}
-    47→m := structs.Map(server)
-    48→
       →…
     74→### Struct methods
     76→The structs functions can be also used as independent methods by creating a new
-    77→`*structs.Struct`. This is handy if you want to have more control over the
-    78→structs (such as retrieving a single Field).
-    79→
-    80→```go
-    81→// Create a new struct type:
-    82→s := structs.New(server)
-    83→
-    84→m := s.Map()              // Get a map[string]interface{}
-    85→v := s.Values()           // Get a []interface{}
       →…
     95→### Field methods
     97→We can easily examine a single Field for more detail. Below you can see how we
-    98→get and interact with various field methods:
-    99→
-   100→
-   101→```go
-   102→s := structs.New(server)
-   103→
-   104→// Get the Field struct for the "Name" field
-   105→name := s.Field("Name")
-   106→
       →…
    163→## Credits
    165→ * [Fatih Arslan](https://github.com/fatih)
@@ -82,11 +41,7 @@ README.md
    170→The MIT License (MIT) - see LICENSE.md for more details
 
 field.go
-     3→import (
-     4→	"errors"
-     5→	"fmt"
-     6→	"reflect"
-     7→)
+     3→import …
      9→var (
     10→	errNotExported = errors.New("field is not exported")
     11→	errNotSettable = errors.New("field is not settable")
@@ -97,21 +52,8 @@ field.go
     18→	field      reflect.StructField
     19→	defaultTag string
     20→}
-    24→func (f *Field) Tag(key string) string {
-    30→func (f *Field) Value() interface{} {
-    35→func (f *Field) IsEmbedded() bool {
-    40→func (f *Field) IsExported() bool {
-    46→func (f *Field) IsZero() bool {
-    54→func (f *Field) Name() string {
-    59→func (f *Field) Kind() reflect.Kind {
-    66→func (f *Field) Set(val interface{}) error {
-    89→func (f *Field) Zero() error {
-   102→func (f *Field) Fields() []*Field {
-   108→func (f *Field) Field(name string) *Field {
-   119→func (f *Field) FieldOk(name string) (*Field, bool) {
 
 field_test.go
-     3→import …
      8→// A test struct that defines all cases
      9→type Foo struct {
     10→	A    string
@@ -125,22 +67,11 @@ field_test.go
     18→	*Bar // embedded
     19→}
     21→type Baz struct {
-    22→	A string
-    23→	B int
-    24→}
     26→type Bar struct {
-    27→	E string
-    28→	F int
-    29→	g []string
-    30→}
     32→func newStruct() *Struct {
 
 structs.go
-     4→import (
-     5→	"fmt"
-     6→
-     7→	"reflect"
-     8→)
+     4→import …
     10→var (
     11→	// DefaultTagName is the default tag name for struct fields which provides
     12→	// a more granular to tweak certain structs. Lookup the necessary functions
@@ -153,83 +84,24 @@ structs.go
     21→	value   reflect.Value
     22→	TagName string
     23→}
-    27→func New(s interface{}) *Struct {
-    81→func (s *Struct) Map() map[string]interface{} {
-    89→func (s *Struct) FillMap(out map[string]interface{}) {
-   174→func (s *Struct) Values() []interface{} {
-   222→func (s *Struct) Fields() []*Field {
-   233→func (s *Struct) Names() []string {
    245→func getFields(v reflect.Value, tagName string) []*Field {
-   246→	if v.Kind() == reflect.Ptr {
-   247→		v = v.Elem()
-      →…
-   275→func (s *Struct) Field(name string) *Field {
-   287→func (s *Struct) FieldOk(name string) (*Field, bool) {
-   318→func (s *Struct) IsZero() bool {
-   365→func (s *Struct) HasZero() bool {
-   398→func (s *Struct) Name() string {
    402→// structFields returns the exported struct fields for a given s struct. This
-   403→// is a convenient helper method to avoid duplicate code in some of the
-   404→// functions.
+      →…
    405→func (s *Struct) structFields() []reflect.StructField {
-   406→	t := s.value.Type()
-   407→
-   408→	var f []reflect.StructField
-   409→
-      →…
    428→func strctVal(s interface{}) reflect.Value {
-   429→	v := reflect.ValueOf(s)
-   430→
-      →…
-   445→func Map(s interface{}) map[string]interface{} {
-   451→func FillMap(s interface{}, out map[string]interface{}) {
-   457→func Values(s interface{}) []interface{} {
-   463→func Fields(s interface{}) []*Field {
-   469→func Names(s interface{}) []string {
-   475→func IsZero(s interface{}) bool {
-   481→func HasZero(s interface{}) bool {
-   487→func IsStruct(s interface{}) bool {
-   503→func Name(s interface{}) string {
    507→// nested retrieves recursively all types for the given value and returns the
-   508→// nested value.
-   509→func (s *Struct) nested(val reflect.Value) interface{} {
-   510→	var finalVal interface{}
-   511→
-   512→	v := reflect.ValueOf(val.Interface())
-   513→	if v.Kind() == reflect.Ptr {
       →…
-
-structs_example_test.go
-     3→import …
+   509→func (s *Struct) nested(val reflect.Value) interface{} {
 
 structs_test.go
-     3→import …
   1309→type Person struct {
-  1310→	Name string
-  1311→	Age  int
-  1312→}
   1358→type Animal struct {
-  1359→	Name string
-  1360→	Age  int
-  1361→}
   1363→type Dog struct {
-  1364→	Animal *Animal `json:"animal,string"`
-  1365→}
 
 tags.go
-     3→import "strings"
+     3→import "strings …
      5→// tagOptions contains a slice of tag options
      6→type tagOptions []string
-     9→func (t tagOptions) Has(opt string) bool {
     19→// parseTag splits a struct field's tag into its name and a list of options
-    20→// which comes after a name. A tag is in the form of: "name,option1,option2".
-    21→// The name can be neglectected.
-    22→func parseTag(tag string) (string, tagOptions) {
-    23→	// tag is one of followings:
-    24→	// ""
-    25→	// "name"
-    26→	// "name,opt"
       →…
-
-tags_test.go
-     3→import "testing …
+    22→func parseTag(tag string) (string, tagOptions) {

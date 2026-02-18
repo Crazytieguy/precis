@@ -2,27 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (480 words)
+budget: 500 (488 tokens)
 
 backtrace.rs
-     8→pub(crate) enum Backtrace {}
-    11→macro_rules! impl_backtrace {
-    18→macro_rules! impl_backtrace {
-    25→macro_rules! backtrace {
-    32→macro_rules! backtrace {
-    39→macro_rules! backtrace_if_absent {
-    53→macro_rules! backtrace_if_absent {
-    64→macro_rules! backtrace_if_absent {
-    70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
 
 chain.rs
-    11→pub(crate) struct Chain<'a> {
-    12→    state: ChainState<'a>,
-      →…
-    16→pub(crate) enum ChainState<'a> {
-    17→    Linked {
-      →…
     36→    type Item = &'a (dyn StdError + 'static);
 
 context.rs
@@ -31,78 +16,31 @@ context.rs
    189→    pub trait Sealed {}
 
 ensure.rs
-     9→#[doc(hidden)]
-    10→pub trait BothDebug {
-    24→#[doc(hidden)]
-    25→pub trait NotBothDebug {
-   105→macro_rules! __parse_ensure {
-   886→macro_rules! __fancy_ensure {
-   912→macro_rules! __fallback_ensure {
 
 error.rs
      4→use crate::nightly::{self, Request};
      6→use crate::ptr::Mut;
    705→    type Target = dyn StdError + Send + Sync + 'static;
-   934→pub(crate) struct ErrorImpl<E = ()> {
-   935→    vtable: &'static ErrorVTable,
-      →…
-   952→pub(crate) struct ContextError<C, E> {
-   953→    pub context: C,
-      →…
 
 fmt.rs
 
 kind.rs
     51→use crate::StdError;
     55→pub struct Adhoc;
-    57→#[doc(hidden)]
-    58→pub trait AdhocKind: Sized {
     77→pub struct Trait;
-    79→#[doc(hidden)]
-    80→pub trait TraitKind: Sized {
-    99→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-   100→pub struct Boxed;
-   102→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-   103→#[doc(hidden)]
-   104→pub trait BoxedKind: Sized {
 
 lib.rs
-   251→#[macro_use]
    252→mod backtrace;
-   260→#[cfg(error_generic_member_access)]
    261→mod nightly;
-   279→trait StdError: Debug + Display {
    286→pub use anyhow as format_err;
-   288→/// The `Error` type, a wrapper around a dynamic error type.
-   289→///
-      →…
-   390→pub struct Error {
-   391→    inner: Own<ErrorImpl>,
-   392→}
-   394→/// Iterator of a chain of source errors.
-   395→///
-      →…
-   415→pub struct Chain<'a> {
-   416→    state: crate::chain::ChainState<'a>,
-   417→}
    419→/// `Result<T, Error>`
    420→///
    421→/// This is a reasonable return type to use throughout your application but also
    422→/// for `fn main`; if you do, failures will be printed along with any
    423→/// [context][Context] and a backtrace if one was captured.
    424→///
-   425→/// `anyhow::Result` may be used with one *or* two type parameters.
-   426→///
-   427→/// ```rust
-   428→/// use anyhow::Result;
-   429→///
-   430→/// # const IGNORE: &str = stringify! {
       →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
-   470→/// Provides the `context` method for `Result`.
-   471→///
-      →…
-   616→pub trait Context<T, E>: context::private::Sealed {
    655→#[doc(hidden)]
    656→pub mod __private {
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
@@ -113,42 +51,13 @@ lib.rs
    672→    pub mod kind {
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    678→        pub use crate::kind::BoxedKind;
-   709→        #[doc(hidden)]
-   710→        pub trait Bool {
 
 macros.rs
-    58→macro_rules! bail {
-    70→macro_rules! __ensure {
-   204→macro_rules! anyhow {
-   230→macro_rules! __anyhow {
 
 nightly.rs
     10→pub use core::error::Request;
 
 ptr.rs
-     5→#[repr(transparent)]
-     6→pub struct Own<T>
-     7→where
-     8→    T: ?Sized,
-     9→{
-    10→    pub ptr: NonNull<T>,
-    11→}
-    63→#[repr(transparent)]
-    64→pub struct Ref<'a, T>
-    65→where
-    66→    T: ?Sized,
-    67→{
-    68→    pub ptr: NonNull<T>,
-    69→    lifetime: PhantomData<&'a T>,
-    70→}
-   124→#[repr(transparent)]
-   125→pub struct Mut<'a, T>
-   126→where
-   127→    T: ?Sized,
-   128→{
-   129→    pub ptr: NonNull<T>,
-   130→    lifetime: PhantomData<&'a mut T>,
-   131→}
    181→pub trait CastTo {
    182→    type Target;
    183→}
@@ -156,10 +65,3 @@ ptr.rs
 
 wrapper.rs
      8→use crate::nightly::{self, Request};
-    10→#[repr(transparent)]
-    11→pub struct MessageError<M>(pub M);
-    33→#[repr(transparent)]
-    34→pub struct DisplayError<M>(pub M);
-    56→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-    57→#[repr(transparent)]
-    58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);

@@ -2,34 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (1524 words)
+budget: 4000 (4016 tokens)
 
 checkmark.tsx
      1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
      4→from {
-     5→  transform: scale(0) rotate(45deg);
-     6→	opacity: 0;
-     7→}
-     8→to {
-     9→  transform: scale(1) rotate(45deg);
-    10→	opacity: 1;
-    11→}`;
+      →…
     13→const checkmarkAnimation = keyframes`
     14→0% {
-    15→	height: 0;
-    16→	width: 0;
-    17→	opacity: 0;
-    18→}
-    19→40% {
-    20→  height: 0;
-    21→	width: 6px;
-    22→	opacity: 1;
-    23→}
-    24→100% {
-    25→  opacity: 1;
-    26→  height: 10px;
-    27→}`;
+      →…
     29→export interface CheckmarkTheme {
     30→  primary?: string;
     31→  secondary?: string;
@@ -67,31 +49,13 @@ error.tsx
      1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
      4→from {
-     5→  transform: scale(0) rotate(45deg);
-     6→	opacity: 0;
-     7→}
-     8→to {
-     9→ transform: scale(1) rotate(45deg);
-    10→  opacity: 1;
-    11→}`;
+      →…
     13→const firstLineAnimation = keyframes`
     14→from {
-    15→  transform: scale(0);
-    16→  opacity: 0;
-    17→}
-    18→to {
-    19→  transform: scale(1);
-    20→  opacity: 1;
-    21→}`;
+      →…
     23→const secondLineAnimation = keyframes`
     24→from {
-    25→  transform: scale(0) rotate(90deg);
-    26→	opacity: 0;
-    27→}
-    28→to {
-    29→  transform: scale(1) rotate(90deg);
-    30→	opacity: 1;
-    31→}`;
+      →…
     33→export interface ErrorTheme {
     34→  primary?: string;
     35→  secondary?: string;
@@ -125,22 +89,13 @@ error.tsx
     64→  }
     65→
     66→  &:before {
-    67→    animation: ${secondLineAnimation} 0.15s ease-out forwards;
-    68→    animation-delay: 180ms;
-    69→    transform: rotate(90deg);
-    70→  }
-    71→`;
+      →…
 
 loader.tsx
      1→import { styled, keyframes } from 'goober';
      3→const rotate = keyframes`
      4→  from {
-     5→    transform: rotate(0deg);
-     6→  }
-     7→  to {
-     8→    transform: rotate(360deg);
-     9→  }
-    10→`;
+      →…
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
@@ -174,27 +129,10 @@ toast-bar.tsx
     19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
     22→const ToastBarBase = styled('div')`
     23→  :where(&) {
-    24→    display: flex;
-    25→    align-items: center;
-    26→    background: #fff;
-    27→    color: #363636;
-    28→    line-height: 1.3;
-    29→    will-change: transform;
-    30→    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.05);
-    31→    max-width: 350px;
-    32→    pointer-events: auto;
-    33→    padding: 8px 10px;
-    34→    border-radius: 8px;
-    35→  }
-    36→`;
+      →…
     38→const Message = styled('div')`
     39→  display: flex;
-    40→  justify-content: center;
-    41→  margin: 4px 10px;
-    42→  color: inherit;
-    43→  flex: 1 1 auto;
-    44→  white-space: pre-line;
-    45→`;
+      →…
     47→interface ToastBarProps {
     48→  toast: Toast;
     49→  position?: ToastPosition;
@@ -250,17 +188,7 @@ toast-bar.tsx
    101→          children({
    102→            icon,
    103→            message,
-   104→          })
-   105→        ) : (
-   106→          <>
-   107→            {icon}
-   108→            {message}
-   109→          </>
-   110→        )}
-   111→      </ToastBarBase>
-   112→    );
-   113→  }
-   114→);
+      →…
 
 toast-icon.tsx
      1→import * as React from 'react';
@@ -271,24 +199,13 @@ toast-icon.tsx
      7→import { CheckmarkIcon, CheckmarkTheme } from './checkmark';
      9→const StatusWrapper = styled('div')`
     10→  position: absolute;
-    11→`;
+      →…
     13→const IndicatorWrapper = styled('div')`
     14→  position: relative;
-    15→  display: flex;
-    16→  justify-content: center;
-    17→  align-items: center;
-    18→  min-width: 20px;
-    19→  min-height: 20px;
-    20→`;
+      →…
     22→const enter = keyframes`
     23→from {
-    24→  transform: scale(0.6);
-    25→  opacity: 0.4;
-    26→}
-    27→to {
-    28→  transform: scale(1);
-    29→  opacity: 1;
-    30→}`;
+      →…
     32→export const AnimatedIconWrapper = styled('div')`
     33→  position: relative;
     34→  transform: scale(0.6);
@@ -407,10 +324,7 @@ toaster.tsx
     74→};
     76→const activeClass = css`
     77→  z-index: 9999;
-    78→  > * {
-    79→    pointer-events: auto;
-    80→  }
-    81→`;
+      →…
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,

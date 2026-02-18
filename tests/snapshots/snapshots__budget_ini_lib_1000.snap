@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (995 words)
+budget: 1000 (967 tokens)
 
 ini.js
      3→const encode = (obj, opt = {}) => {
@@ -20,50 +20,6 @@ ini.js
     15→
     16→  /* istanbul ignore next */
     17→  const eol = opt.platform === 'win32' ? '\r\n' : '\n'
-    18→  const separator = opt.whitespace ? ' = ' : '='
-    19→  const children = []
-    20→
-    21→  const keys = opt.sort ? Object.keys(obj).sort() : Object.keys(obj)
-    22→
-    23→  let padToChars = 0
-    24→  // If aligning on the separator, then padToChars is determined as follows:
-    25→  // 1. Get the keys
-    26→  // 2. Exclude keys pointing to objects unless the value is null or an array
-    27→  // 3. Add `[]` to array keys
-    28→  // 4. Ensure non empty set of keys
-    29→  // 5. Reduce the set to the longest `safe` key
-    30→  // 6. Get the `safe` length
-    31→  if (opt.align) {
-    32→    padToChars = safe(
-    33→      (
-    34→        keys
-    35→          .filter(k => obj[k] === null || Array.isArray(obj[k]) || typeof obj[k] !== 'object')
-    36→          .map(k => Array.isArray(obj[k]) ? `${k}[]` : k)
-    37→      )
-    38→        .concat([''])
-    39→        .reduce((a, b) => safe(a).length >= safe(b).length ? a : b)
-    40→    ).length
-    41→  }
-    42→
-    43→  let out = ''
-    44→  const arraySuffix = opt.bracketedArray ? '[]' : ''
-    45→
-    46→  for (const k of keys) {
-    47→    const val = obj[k]
-    48→    if (val && Array.isArray(val)) {
-    49→      for (const item of val) {
-    50→        out += safe(`${k}${arraySuffix}`).padEnd(padToChars, ' ') + separator + safe(item) + eol
-    51→      }
-    52→    } else if (val && typeof val === 'object') {
-    53→      children.push(k)
-    54→    } else {
-    55→      out += safe(k).padEnd(padToChars, ' ') + separator + safe(val) + eol
-    56→    }
-    57→  }
-    58→
-    59→  if (opt.section && out.length) {
-    60→    out = '[' + safe(opt.section) + ']' + (opt.newline ? eol + eol : eol) + out
-    61→  }
       →…
     80→function splitSections (str, separator) {
     81→  var lastMatchIndex = 0
@@ -80,16 +36,7 @@ ini.js
     92→      if (nextIndex > 0 && str[nextIndex - 1] === '\\') {
     93→        continue
     94→      }
-    95→
-    96→      sections.push(str.slice(lastSeparatorIndex, nextIndex))
-    97→      lastSeparatorIndex = nextIndex + separator.length
-    98→    }
-    99→  } while (nextIndex !== -1)
-   100→
-   101→  sections.push(str.slice(lastSeparatorIndex))
-   102→
-   103→  return sections
-   104→}
+      →…
    106→const decode = (str, opt = {}) => {
    107→  opt.bracketedArray = opt.bracketedArray !== false
    108→  const out = Object.create(null)
@@ -105,50 +52,6 @@ ini.js
    118→      continue
    119→    }
    120→    const match = line.match(re)
-   121→    if (!match) {
-   122→      continue
-   123→    }
-   124→    if (match[1] !== undefined) {
-   125→      section = unsafe(match[1])
-   126→      if (section === '__proto__') {
-   127→        // not allowed
-   128→        // keep parsing the section, but don't attach it.
-   129→        p = Object.create(null)
-   130→        continue
-   131→      }
-   132→      p = out[section] = out[section] || Object.create(null)
-   133→      continue
-   134→    }
-   135→    const keyRaw = unsafe(match[2])
-   136→    let isArray
-   137→    if (opt.bracketedArray) {
-   138→      isArray = keyRaw.length > 2 && keyRaw.slice(-2) === '[]'
-   139→    } else {
-   140→      duplicates[keyRaw] = (duplicates?.[keyRaw] || 0) + 1
-   141→      isArray = duplicates[keyRaw] > 1
-   142→    }
-   143→    const key = isArray && keyRaw.endsWith('[]')
-   144→      ? keyRaw.slice(0, -2) : keyRaw
-   145→
-   146→    if (key === '__proto__') {
-   147→      continue
-   148→    }
-   149→    const valueRaw = match[3] ? unsafe(match[4]) : true
-   150→    const value = valueRaw === 'true' ||
-   151→      valueRaw === 'false' ||
-   152→      valueRaw === 'null' ? JSON.parse(valueRaw)
-   153→      : valueRaw
-   154→
-   155→    // Convert keys with '[]' suffix to an array
-   156→    if (isArray) {
-   157→      if (!hasOwnProperty.call(p, key)) {
-   158→        p[key] = []
-   159→      } else if (!Array.isArray(p[key])) {
-   160→        p[key] = [p[key]]
-   161→      }
-   162→    }
-   163→
-   164→    // safeguard against resetting a previously defined
       →…
    212→const isQuoted = val => {
    213→  return (val.startsWith('"') && val.endsWith('"')) ||
@@ -181,30 +84,4 @@ ini.js
    242→  } else {
    243→    // walk the val to find the first not-escaped ; character
    244→    let esc = false
-   245→    let unesc = ''
-   246→    for (let i = 0, l = val.length; i < l; i++) {
-   247→      const c = val.charAt(i)
-   248→      if (esc) {
-   249→        if ('\\;#'.indexOf(c) !== -1) {
-   250→          unesc += c
-   251→        } else {
-   252→          unesc += '\\' + c
-   253→        }
-   254→
-   255→        esc = false
-   256→      } else if (';#'.indexOf(c) !== -1) {
-   257→        break
-   258→      } else if (c === '\\') {
-   259→        esc = true
-   260→      } else {
-   261→        unesc += c
-   262→      }
-   263→    }
-   264→    if (esc) {
-   265→      unesc += '\\'
-   266→    }
-   267→
-   268→    return unesc.trim()
-   269→  }
-   270→  return val
-   271→}
+      →…

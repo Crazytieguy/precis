@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1998 words)
+budget: 2000 (2012 tokens)
 
 browser.js
    115→function useColors() {
@@ -25,13 +25,7 @@ browser.js
    132→	// eslint-disable-next-line no-return-assign
    133→	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
    134→		// Is firebug? http://stackoverflow.com/a/398120/376773
-   135→		(typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
-   136→		// Is firefox >= v31?
-   137→		// https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
-   138→		(typeof navigator !== 'undefined' && navigator.userAgent && (m = navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/)) && parseInt(m[1], 10) >= 31) ||
-   139→		// Double check webkit in userAgent just in case we are in a worker
-   140→		(typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
-   141→}
+      →…
    143→/**
    144→ * Colorize log arguments if enabled.
    145→ *
@@ -48,30 +42,7 @@ browser.js
    156→
    157→	if (!this.useColors) {
    158→		return;
-   159→	}
-   160→
-   161→	const c = 'color: ' + this.color;
-   162→	args.splice(1, 0, c, 'color: inherit');
-   163→
-   164→	// The final "%c" is somewhat tricky, because there could be other
-   165→	// arguments passed either before or after the %c, so we need to
-   166→	// figure out the correct index to insert the CSS into
-   167→	let index = 0;
-   168→	let lastC = 0;
-   169→	args[0].replace(/%[a-zA-Z%]/g, match => {
-   170→		if (match === '%%') {
-   171→			return;
-   172→		}
-   173→		index++;
-   174→		if (match === '%c') {
-   175→			// We only are interested in the *last* %c
-   176→			// (the user may have provided their own)
-   177→			lastC = index;
-   178→		}
-   179→	});
-   180→
-   181→	args.splice(lastC, 0, c);
-   182→}
+      →…
    194→/**
    195→ * Save `namespaces`.
    196→ *
@@ -88,8 +59,7 @@ browser.js
    207→	} catch (error) {
    208→		// Swallow
    209→		// XXX (@Qix-) should we be logging these?
-   210→	}
-   211→}
+      →…
    213→/**
    214→ * Load `namespaces`.
    215→ *
@@ -106,12 +76,7 @@ browser.js
    226→	}
    227→
    228→	// If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-   229→	if (!r && typeof process !== 'undefined' && 'env' in process) {
-   230→		r = process.env.DEBUG;
-   231→	}
-   232→
-   233→	return r;
-   234→}
+      →…
    236→/**
    237→ * Localstorage attempts to return the localstorage.
    238→ *
@@ -150,238 +115,6 @@ common.js
     14→	createDebug.humanize = require('ms');
     15→	createDebug.destroy = destroy;
     16→
-    17→	Object.keys(env).forEach(key => {
-    18→		createDebug[key] = env[key];
-    19→	});
-    20→
-    21→	/**
-    22→	* The currently active debug mode names, and names to skip.
-    23→	*/
-    24→
-    25→	createDebug.names = [];
-    26→	createDebug.skips = [];
-    27→
-    28→	/**
-    29→	* Map of special "%n" handling functions, for the debug "format" argument.
-    30→	*
-    31→	* Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
-    32→	*/
-    33→	createDebug.formatters = {};
-    34→
-    35→	/**
-    36→	* Selects a color for a debug namespace
-    37→	* @param {String} namespace The namespace string for the debug instance to be colored
-    38→	* @return {Number|String} An ANSI color code for the given namespace
-    39→	* @api private
-    40→	*/
-    41→	function selectColor(namespace) {
-    42→		let hash = 0;
-    43→
-    44→		for (let i = 0; i < namespace.length; i++) {
-    45→			hash = ((hash << 5) - hash) + namespace.charCodeAt(i);
-    46→			hash |= 0; // Convert to 32bit integer
-    47→		}
-    48→
-    49→		return createDebug.colors[Math.abs(hash) % createDebug.colors.length];
-    50→	}
-    51→	createDebug.selectColor = selectColor;
-    52→
-    53→	/**
-    54→	* Create a debugger with the given `namespace`.
-    55→	*
-    56→	* @param {String} namespace
-    57→	* @return {Function}
-    58→	* @api public
-    59→	*/
-    60→	function createDebug(namespace) {
-    61→		let prevTime;
-    62→		let enableOverride = null;
-    63→		let namespacesCache;
-    64→		let enabledCache;
-    65→
-    66→		function debug(...args) {
-    67→			// Disabled?
-    68→			if (!debug.enabled) {
-    69→				return;
-    70→			}
-    71→
-    72→			const self = debug;
-    73→
-    74→			// Set `diff` timestamp
-    75→			const curr = Number(new Date());
-    76→			const ms = curr - (prevTime || curr);
-    77→			self.diff = ms;
-    78→			self.prev = prevTime;
-    79→			self.curr = curr;
-    80→			prevTime = curr;
-    81→
-    82→			args[0] = createDebug.coerce(args[0]);
-    83→
-    84→			if (typeof args[0] !== 'string') {
-    85→				// Anything else let's inspect with %O
-    86→				args.unshift('%O');
-    87→			}
-    88→
-    89→			// Apply any `formatters` transformations
-    90→			let index = 0;
-    91→			args[0] = args[0].replace(/%([a-zA-Z%])/g, (match, format) => {
-    92→				// If we encounter an escaped % then don't increase the array index
-    93→				if (match === '%%') {
-    94→					return '%';
-    95→				}
-    96→				index++;
-    97→				const formatter = createDebug.formatters[format];
-    98→				if (typeof formatter === 'function') {
-    99→					const val = args[index];
-   100→					match = formatter.call(self, val);
-   101→
-   102→					// Now we need to remove `args[index]` since it's inlined in the `format`
-   103→					args.splice(index, 1);
-   104→					index--;
-   105→				}
-   106→				return match;
-   107→			});
-   108→
-   109→			// Apply env-specific formatting (colors, etc.)
-   110→			createDebug.formatArgs.call(self, args);
-   111→
-   112→			const logFn = self.log || createDebug.log;
-   113→			logFn.apply(self, args);
-   114→		}
-   115→
-   116→		debug.namespace = namespace;
-   117→		debug.useColors = createDebug.useColors();
-   118→		debug.color = createDebug.selectColor(namespace);
-   119→		debug.extend = extend;
-   120→		debug.destroy = createDebug.destroy; // XXX Temporary. Will be removed in the next major release.
-   121→
-   122→		Object.defineProperty(debug, 'enabled', {
-   123→			enumerable: true,
-   124→			configurable: false,
-   125→			get: () => {
-   126→				if (enableOverride !== null) {
-   127→					return enableOverride;
-   128→				}
-   129→				if (namespacesCache !== createDebug.namespaces) {
-   130→					namespacesCache = createDebug.namespaces;
-   131→					enabledCache = createDebug.enabled(namespace);
-   132→				}
-   133→
-   134→				return enabledCache;
-   135→			},
-   136→			set: v => {
-   137→				enableOverride = v;
-   138→			}
-   139→		});
-   140→
-   141→		// Env-specific initialization logic for debug instances
-   142→		if (typeof createDebug.init === 'function') {
-   143→			createDebug.init(debug);
-   144→		}
-   145→
-   146→		return debug;
-   147→	}
-   148→
-   149→	function extend(namespace, delimiter) {
-   150→		const newDebug = createDebug(this.namespace + (typeof delimiter === 'undefined' ? ':' : delimiter) + namespace);
-   151→		newDebug.log = this.log;
-   152→		return newDebug;
-   153→	}
-   154→
-   155→	/**
-   156→	* Enables a debug mode by namespaces. This can include modes
-   157→	* separated by a colon and wildcards.
-   158→	*
-   159→	* @param {String} namespaces
-   160→	* @api public
-   161→	*/
-   162→	function enable(namespaces) {
-   163→		createDebug.save(namespaces);
-   164→		createDebug.namespaces = namespaces;
-   165→
-   166→		createDebug.names = [];
-   167→		createDebug.skips = [];
-   168→
-   169→		const split = (typeof namespaces === 'string' ? namespaces : '')
-   170→			.trim()
-   171→			.replace(/\s+/g, ',')
-   172→			.split(',')
-   173→			.filter(Boolean);
-   174→
-   175→		for (const ns of split) {
-   176→			if (ns[0] === '-') {
-   177→				createDebug.skips.push(ns.slice(1));
-   178→			} else {
-   179→				createDebug.names.push(ns);
-   180→			}
-   181→		}
-   182→	}
-   183→
-   184→	/**
-   185→	 * Checks if the given string matches a namespace template, honoring
-   186→	 * asterisks as wildcards.
-   187→	 *
-   188→	 * @param {String} search
-   189→	 * @param {String} template
-   190→	 * @return {Boolean}
-   191→	 */
-   192→	function matchesTemplate(search, template) {
-   193→		let searchIndex = 0;
-   194→		let templateIndex = 0;
-   195→		let starIndex = -1;
-   196→		let matchIndex = 0;
-   197→
-   198→		while (searchIndex < search.length) {
-   199→			if (templateIndex < template.length && (template[templateIndex] === search[searchIndex] || template[templateIndex] === '*')) {
-   200→				// Match character or proceed with wildcard
-   201→				if (template[templateIndex] === '*') {
-   202→					starIndex = templateIndex;
-   203→					matchIndex = searchIndex;
-   204→					templateIndex++; // Skip the '*'
-   205→				} else {
-   206→					searchIndex++;
-   207→					templateIndex++;
-   208→				}
-   209→			} else if (starIndex !== -1) { // eslint-disable-line no-negated-condition
-   210→				// Backtrack to the last '*' and try to match more characters
-   211→				templateIndex = starIndex + 1;
-   212→				matchIndex++;
-   213→				searchIndex = matchIndex;
-   214→			} else {
-   215→				return false; // No match
-   216→			}
-   217→		}
-   218→
-   219→		// Handle trailing '*' in template
-   220→		while (templateIndex < template.length && template[templateIndex] === '*') {
-   221→			templateIndex++;
-   222→		}
-   223→
-   224→		return templateIndex === template.length;
-   225→	}
-   226→
-   227→	/**
-   228→	* Disable debug output.
-   229→	*
-   230→	* @return {String} namespaces
-   231→	* @api public
-   232→	*/
-   233→	function disable() {
-   234→		const namespaces = [
-   235→			...createDebug.names,
-   236→			...createDebug.skips.map(namespace => '-' + namespace)
-   237→		].join(',');
-   238→		createDebug.enable('');
-   239→		return namespaces;
-   240→	}
-   241→
-   242→	/**
-   243→	* Returns true if the given mode name is enabled, false otherwise.
-   244→	*
-   245→	* @param {String} name
-   246→	* @return {Boolean}
-   247→	* @api public
-   248→	*/
       →…
 
 node.js
@@ -410,10 +143,7 @@ node.js
    174→
    175→		args[0] = prefix + args[0].split('\n').join('\n' + prefix);
    176→		args.push(colorCode + 'm+' + module.exports.humanize(this.diff) + '\u001B[0m');
-   177→	} else {
-   178→		args[0] = getDate() + name + ' ' + args[0];
-   179→	}
-   180→}
+      →…
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
    184→		return '';

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1016 words)
+budget: 1000 (1040 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -48,132 +48,34 @@ budget: 1000 (1016 words)
     12→
     13→branches:
 
-.github/workflows/audit.yml
-     3→name …
-     5→on …
-    11→permissions …
-    14→jobs …
-
-.github/workflows/ci-release.yml
-     3→name …
-     5→on …
-    21→permissions …
-    25→jobs …
-
-.github/workflows/ci.yml
-     3→name …
-     5→on …
-    16→permissions …
-    19→jobs …
-
-.github/workflows/codeql-analysis.yml
-     3→name …
-     5→on …
-    18→permissions …
-    21→jobs …
-
-.github/workflows/post-dependabot.yml
-     3→name …
-     5→on …
-     7→permissions …
-    10→jobs …
-
-.github/workflows/pull-request.yml
-     3→name …
-     5→on …
-    13→permissions …
-    16→jobs …
-
-.github/workflows/release-integration.yml
-     3→name …
-     5→on …
-    22→permissions …
-    26→jobs …
-
-.github/workflows/release.yml
-     3→name …
-     5→on …
-    11→permissions …
-    16→jobs …
-
 .release-please-manifest.json
-     2→  ".": "7.7.4"
-     3→}
 
 CHANGELOG.md
      1→# Changelog …
 
 CONTRIBUTING.md
      3→# Contributing …
-     5→## Code of Conduct …
-     9→## Reporting Bugs …
-    17→## Pull Request Conventions …
-    42→## What _not_ to contribute? …
 
 README.md
-     1→semver(1) -- The semantic versioner for npm
-     4→## Install
-     6→```bash
-     7→npm install semver
-     8→````
-      →…
-    10→## Usage
-    12→As a node module:
-    13→
-    14→```js
-      →…
-   139→## Versions
-   141→A "version" is described by the `v2.0.0` specification found at
-   142→<https://semver.org/>.
-   143→
-      →…
-   148→## Ranges
-   150→A `version range` is a set of `comparators` that specify versions
-   151→that satisfy the range.
-   152→
-      →…
+     1→semver(1) -- The semantic versioner for npm …
+     4→## Install …
+    10→## Usage …
+   139→## Versions …
+   148→## Ranges …
    184→### Prerelease Tags …
-   219→#### Prerelease Identifiers …
-   250→#### Prerelease Identifier Base …
    279→### Advanced Range Syntax …
-   287→#### Hyphen Ranges `X.Y.Z - A.B.C` …
-   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*` …
-   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1` …
-   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4` …
    384→### Range Grammar …
-   408→## Functions
-   410→All methods and classes take a final `options` object argument.  All
-   411→options in this object are `false` by default.  The options supported
-   412→are:
-      →…
+   408→## Functions …
    453→### Comparison …
    478→### Sorting …
    485→### Comparators …
    489→### Ranges …
    531→### Coercion …
    558→### Clean …
-   576→## Constants
-   578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
-   579→
+   576→## Constants …
    580→### `RELEASE_TYPES` …
    600→### `SEMVER_SPEC_VERSION` …
-   610→## Exported Modules
-   613→TODO: Make sure that all of these items are documented (classes aren't,
-   614→eg), and then pull the module name into the documentation for that specific
-   615→thing.
-      →…
-
-benchmarks/bench-compare.js
-
-benchmarks/bench-diff.js
-
-benchmarks/bench-parse-options.js
-
-benchmarks/bench-parse.js
-
-benchmarks/bench-satisfies.js
-
-benchmarks/bench-subset.js
+   610→## Exported Modules …
 
 bin/semver.js
      8→const argv = process.argv.slice(2)
@@ -204,21 +106,6 @@ classes/range.js
    170→  intersects (range, options) {
    193→  test (version) {
    218→const cache = new LRU()
-   233→const isNullSet …
-   234→const isAny …
-   238→const isSatisfiable …
-   257→const parseComparator …
-   271→const isX …
-   280→const replaceTildes …
-   288→const replaceTilde …
-   324→const replaceCarets …
-   332→const replaceCaret …
-   385→const replaceXRanges …
-   393→const replaceXRange …
-   470→const replaceStars …
-   478→const replaceGTE0 …
-   491→const hyphenReplace …
-   523→const testSet …
 
 classes/semver.js
      9→class SemVer {
@@ -232,149 +119,31 @@ classes/semver.js
    194→  inc (release, identifier, identifierBase) {
 
 internal/constants.js
-     5→const SEMVER_SPEC_VERSION = '2.0.0'
-     7→const MAX_LENGTH = 256
-     8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
-    12→const MAX_SAFE_COMPONENT_LENGTH = 16
-    16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
-    18→const RELEASE_TYPES = [
 
 internal/debug.js
-     3→const debug = (
 
 internal/identifiers.js
-     3→const numeric = /^[0-9]+$/
-     4→const compareIdentifiers = (a, b) => {
-    24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 
 internal/lrucache.js
      3→class LRUCache {
      4→  constructor () {
-     5→    this.max = 1000
-     6→    this.map = new Map()
-     7→  }
      9→  get (key) {
-    10→    const value = this.map.get(key)
-    11→    if (value === undefined) {
-    12→      return undefined
-      →…
     21→  delete (key) {
-    22→    return this.map.delete(key)
-    23→  }
     25→  set (key, value) {
-    26→    const deleted = this.delete(key)
-    27→
-    28→    if (!deleted && value !== undefined) {
-      →…
 
 internal/parse-options.js
-     4→const looseOption = Object.freeze({ loose: true })
-     5→const emptyOpts = Object.freeze({ })
-     6→const parseOptions = options => {
 
 internal/re.js
-    12→const re = exports.re = []
-    13→const safeRe = exports.safeRe = []
-    14→const src = exports.src = []
-    15→const safeSrc = exports.safeSrc = []
-    16→const t = exports.t = {}
-    19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
-    27→const safeRegexReplacements = [
-    33→const makeSafeRegex = (value) => {
-    42→const createToken = (name, value, isGlobal) => {
 
 package.json
-     2→  "name": "semver",
-     3→  "version": "7.7.4",
-     4→  "description": "The semantic version parser used by npm.",
-     5→  "main": "index.js",
-     6→  "scripts": {
-    15→  },
-    16→  "devDependencies": {
-    21→  },
-    22→  "license": "ISC",
-    23→  "repository": {
-    26→  },
-    27→  "bin": {
-    29→  },
-    30→  "files": [
-    40→  ],
-    41→  "tap": {
-    48→  },
-    49→  "engines": {
-    51→  },
-    52→  "author": "GitHub Inc.",
-    53→  "templateOSS": {
-    77→  }
-    78→}
-
-ranges/gtr.js
-     5→const gtr …
-
-ranges/intersects.js
-     4→const intersects …
-
-ranges/ltr.js
-     5→const ltr …
-
-ranges/max-satisfying.js
-     6→const maxSatisfying …
-
-ranges/min-satisfying.js
-     5→const minSatisfying …
-
-ranges/min-version.js
-     7→const minVersion …
-
-ranges/outside.js
-    13→const outside …
 
 ranges/subset.js
-    45→const subset …
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
-    76→const simpleSubset …
-   226→const higherGT …
-   238→const lowerLT …
-
-ranges/to-comparators.js
-     6→const toComparators …
-
-ranges/valid.js
-     4→const validRange …
 
 release-please-config.json
-     2→  "group-pull-request-title-pattern": "chore: release ${version}",
-     3→  "pull-request-title-pattern": "chore: release${component} ${version}",
-     4→  "changelog-sections": [
-    30→  ],
-    31→  "packages": {
-    35→  },
-    36→  "prerelease-type": "pre.0"
-    37→}
-
-test/bin/semver.js
-     9→const bin = require.resolve('../../bin/semver')
-    10→const run = args => new Promise((resolve, reject) => {
-
-test/integration/whitespace.js
-    12→const wsMedium = ' '.repeat(125)
-    13→const wsLarge = ' '.repeat(500000)
-    14→const zeroLarge = '0'.repeat(500000)
 
 test/internal/debug.js
      3→const main = () => {
 
 test/map.js
-     9→const ROOT = resolve(__dirname, '..')
-    10→const TEST = join(ROOT, 'test')
-    11→const IGNORE_DIRS = ['fixtures', 'integration']
-    13→const getFile …
-    23→const walk …
-    28→const walkAll …
-
-test/ranges/simplify.js
-     6→const versions = [
-
-test/ranges/subset.js
-     8→const cases = [

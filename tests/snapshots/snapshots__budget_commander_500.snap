@@ -2,13 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (496 words)
+budget: 500 (508 tokens)
 
 CHANGELOG.md
      1→# Changelog …
-
-CONTRIBUTING.md
-     1→# Contributing …
 
 Readme.md
      1→# Commander.js
@@ -16,11 +13,6 @@ Readme.md
      9→
     10→Read this in other languages: English | [简体中文](./Readme_zh-CN.md)
     11→
-    12→- [Commander.js](#commanderjs)
-    13→  - [Installation](#installation)
-    14→  - [Quick Start](#quick-start)
-    15→  - [Declaring _program_ variable](#declaring-program-variable)
-    16→  - [Options](#options)
       →…
     61→## Installation …
     67→## Quick Start …
@@ -34,35 +26,14 @@ Readme.md
    966→## Bits and pieces …
   1164→## Support …
 
-Readme_zh-CN.md
-     1→# Commander.js …
-
-SECURITY.md
-     1→# Security Policy …
-
-docs/deprecated.md
-
-docs/help-in-depth.md
-
-docs/options-in-depth.md
-
 esm.mjs
      1→import commander from './index.js';
-
-examples/color-help-replacement.mjs
-
-examples/color-help.mjs
 
 examples/custom-command-class.js
      7→  createCommand(name) {
 
 examples/global-options-added.js
     17→  createCommand(name) {
-
-examples/help-centered.mjs
-
-examples/man-style-help.mjs
-     5→function formatItem …
 
 lib/argument.js
      3→class Argument {
@@ -81,20 +52,6 @@ lib/error.js
 
 lib/help.js
     12→class Help {
-    13→  constructor() {
-   549→  styleUsage(str) {
-   563→  styleCommandDescription(str) {
-   566→  styleOptionDescription(str) {
-   569→  styleSubcommandDescription(str) {
-   572→  styleArgumentDescription(str) {
-   575→  styleDescriptionText(str) {
-   578→  styleOptionTerm(str) {
-   581→  styleSubcommandTerm(str) {
-   594→  styleArgumentTerm(str) {
-   597→  styleOptionText(str) {
-   600→  styleArgumentText(str) {
-   603→  styleSubcommandText(str) {
-   606→  styleCommandText(str) {
 
 lib/option.js
      3→class Option {
@@ -110,17 +67,6 @@ package-support.json
 
 package.json
 
-tests/command.createArgument.test.js
-
-tests/command.createOption.test.js
-
-tests/esm-imports-test.mjs
-     1→../esm.mjs …
-
-tests/ts-imports.test.ts
-     1→../ …
-    17→function checkClass …
-
 tsconfig.js.json
 
 tsconfig.json
@@ -128,61 +74,13 @@ tsconfig.json
 tsconfig.ts.json
 
 typings/index.d.ts
-    12→type LiteralUnion<LiteralType, BaseType extends string | number> =
-    13→  | LiteralType
-    14→  | (BaseType & Record<never, never>);
-    16→export class CommanderError extends Error {
-    31→export class InvalidArgumentError extends CommanderError {
-    40→export interface ErrorOptions {
-    48→export class Argument {
-    95→export class Option {
-   115→  constructor(flags: string, description?: string);
-   210→export class Help {
-   218→  constructor();
-   226→  prepareContext(contextOptions: {
-   227→    error?: boolean;
-   228→    helpWidth?: number;
-   229→    outputHasColors?: boolean;
-   230→  }): void;
-   279→  styleCommandDescription(str: string): string;
-   280→  styleOptionDescription(str: string): string;
-   281→  styleSubcommandDescription(str: string): string;
-   282→  styleArgumentDescription(str: string): string;
-   286→  styleOptionTerm(str: string): string;
-   287→  styleSubcommandTerm(str: string): string;
-   288→  styleArgumentTerm(str: string): string;
-   340→export type HelpConfiguration = Partial<Help>;
-   342→export interface ParseOptions {
-   345→export interface HelpContext {
-   349→export interface AddHelpTextContext {
-   354→export interface OutputConfiguration {
-   355→  writeOut?(str: string): void;
-   356→  writeErr?(str: string): void;
-   357→  outputError?(str: string, write: (str: string) => void): void;
-   359→  getOutHelpWidth?(): number;
-   360→  getErrHelpWidth?(): number;
-   362→  getOutHasColors?(): boolean;
-   363→  getErrHasColors?(): boolean;
-   364→  stripColor?(str: string): string;
-   367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
-   368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
-   370→export type OptionValueSource =
-   371→  | LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string>
-   372→  | undefined;
-   374→export type OptionValues = Record<string, any>;
-   376→export class Command {
-   384→  constructor(name?: string);
-   493→  argument(name: string, description?: string, defaultValue?: unknown): this;
-   528→  helpCommand(enable: boolean): this;
-   718→  storeOptionsAsProperties(storeAsProperties?: boolean): this;
-  1083→  addHelpText(
-  1084→    position: AddHelpTextPosition,
-  1085→    text: (context: AddHelpTextContext) => string,
-  1086→  ): this;
-  1094→export interface CommandOptions {
-  1100→export interface ExecutableCommandOptions extends CommandOptions {
-  1104→export interface ParseOptionsResult {
-  1113→export const program: Command;
+    12→type LiteralUnion …
+   340→export type HelpConfiguration …
+   367→export type AddHelpTextPosition …
+   368→export type HookEvent …
+   370→export type OptionValueSource …
+   374→export type OptionValues …
+  1113→export const program …
 
 typings/index.test-d.ts
      1→import * as commander from './index';

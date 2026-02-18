@@ -2,32 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3922 words)
+budget: 4000 (4222 tokens)
 
 CHANGELOG.md
      1→# Changelog …
-     3→## [1.4.2] …
-     7→## [1.4.1] …
-    11→## [1.4.0] …
-    25→## [1.2.5] …
-    29→## [1.2.4] …
-    33→## [1.2.3] …
-    38→## [1.2.2] …
-    42→## [1.2.1] …
-    48→## [1.2.0] …
-    52→## [1.2.0-beta.1] …
-    56→## [1.2.0-beta.0] …
-    61→## [1.1.0] …
-    87→## [1.0.1] …
-    92→## [1.0.0] …
-    96→## [0.3.31-beta] …
-   100→## [0.3.3-beta] …
-   104→## [0.3.2-beta] …
-   108→## [0.3.11-beta] …
-   112→## [0.3.1-beta] …
-   116→## [0.2.4] …
-   120→## [0.2.1] …
-   124→## [0.2] …
 
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web. …
@@ -38,44 +16,11 @@ README.md
     22→```bash
     23→npm install input-otp
     24→```
-    25→
-    26→Then import the component.
-    27→
-    28→```diff
-    29→+'use client'
-    30→+import { OTPInput } from 'input-otp'
-    31→
-    32→function MyForm() {
-    33→  return <form>
-    34→+   <OTPInput maxLength={6} render={({slots})  => (...)} />
-    35→  </form>
-    36→}
-    37→```
-    38→
+      →…
     39→## Default example
     41→The example below uses `tailwindcss` `@shadcn/ui` `tailwind-merge` `clsx`:
     42→
     43→```tsx
-    44→'use client'
-    45→import { OTPInput, SlotProps } from 'input-otp'
-    46→<OTPInput
-    47→  maxLength={6}
-    48→  containerClassName="group flex items-center has-[:disabled]:opacity-30"
-    49→  render={({ slots }) => (
-    50→    <>
-    51→      <div className="flex">
-    52→        {slots.slice(0, 3).map((slot, idx) => (
-    53→          <Slot key={idx} {...slot} />
-    54→        ))}
-    55→      </div>
-    56→
-    57→      <FakeDash />
-    58→
-    59→      <div className="flex">
-    60→        {slots.slice(3).map((slot, idx) => (
-    61→          <Slot key={idx} {...slot} />
-    62→        ))}
-    63→      </div>
       →…
    136→## How it works
    138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
@@ -85,26 +30,6 @@ README.md
    143→This is the most complete OTP input on the web. It's fully featured 
    144→
    145→<details>
-   146→<summary>Supports iOS + Android copy-paste-cut</summary>
-   147→
-   148→https://github.com/guilhermerodz/input-otp/assets/10366880/bdbdc96a-23da-4e89-bff8-990e6a1c4c23
-   149→
-   150→</details>
-   151→
-   152→<details>
-   153→<summary>Automatic OTP code retrieval from transport (e.g SMS)</summary>
-   154→
-   155→By default, this input uses `autocomplete='one-time-code'` and it works as it's a single input. 
-   156→
-   157→https://github.com/guilhermerodz/input-otp/assets/10366880/5705dac6-9159-443b-9c27-b52e93c60ea8
-   158→
-   159→</details>
-   160→
-   161→<details>
-   162→<summary>Supports screen readers (a11y)</summary>
-   163→
-   164→Stripe was my first inspiration to build this library.
-   165→
       →…
    198→### Auto tracks if the input has space in the right side for the badge
    200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
@@ -118,90 +43,21 @@ README.md
    210→#### Props
    212→```ts
    213→type OTPInputProps = {
-   214→  // The number of slots
-   215→  maxLength: number
-   216→
-   217→  // Render function creating the slots
-   218→  render: (props: RenderProps) => React.ReactElement
-   219→  // PS: Render prop is mandatory, except in cases
-   220→  // you'd like to consume the original Context API.
-   221→  // (search for Context in this docs)
-   222→
-   223→  // The class name for the root container
-   224→  containerClassName?: string
-   225→
-   226→  // Value state controlling the input
-   227→  value?: string
-   228→  // Setter for the controlled value (or callback for uncontrolled value)
-   229→  onChange?: (newValue: string) => unknown
-   230→
-   231→  // Callback when the input is complete
-   232→  onComplete?: (...args: any[]) => unknown
-   233→
-   234→  // Where is the text located within the input
-   235→  // Affects click-holding or long-press behavior
-   236→  // Default: 'left'
-   237→  textAlign?: 'left' | 'center' | 'right'
-   238→
-   239→  // Virtual keyboard appearance on mobile
-   240→  // Default: 'numeric'
       →…
    293→## Examples
    298→```tsx
    299→export default function Page() {
    300→  const formRef = useRef<HTMLFormElement>(null)
-   301→  const buttonRef = useRef<HTMLButtonElement>(null)
-   302→
-   303→  return (
-   304→    <form ref={formRef}>
-   305→      <OTPInput
-   306→        // ... automatically submit the form
-   307→        onComplete={() => formRef.current?.submit()}
-   308→        // ... or focus the button like as you wish
-   309→        onComplete={() => buttonRef.current?.focus()}
-   310→      />
-   311→
-   312→      <button ref={buttonRef}>Submit</button>
-   313→    </form>
-   314→  )
-   315→}
-   316→```
-   317→</details>
-   318→
-   319→<details>
-   320→<summary>Automatically focus the input when the page loads</summary>
       →…
    377→## Caveats
    382→By default, `input-otp` handles password managers for you.
    383→The password manager badges should be automatically shifted to the right side.
    384→
-   385→However, if you still want to block password managers, please disable the `pushPasswordManagerStrategy` and then manually block each PWM.
-   386→
-   387→```diff
-   388→<OTPInput
-   389→  // First, disable library's built-in strategy
-   390→  // for shifting badges automatically
-   391→- pushPasswordManagerStrategy="increase-width"
-   392→+ pushPasswordManagerStrategy="none"
-   393→  // Then, manually add specifics attributes
-   394→  // your password manager docs
-   395→  // Example: block LastPass
-   396→+ data-lpignore="true" 
-   397→  // Example: block 1Password
-   398→+ data-1p-ignore="true"
-   399→/>
-   400→```
-   401→</details>
-   402→
-   403→<details>
-   404→<summary>[Setting] If you want to customize the `noscript` CSS fallback</summary>
       →…
    539→#### Sponsors
    541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
    542→
-   543→> [Resend](https://go.resend.com/input-otp) is email for developers.
-   544→
-   545→> [Evomi](https://evomi.com/?utm_source=github&utm_campaign=otp) offers Residential Proxies starting from $0.49.
+      →…
 
 apps/storybook/README.md
     13→## 🚅 Quick start
@@ -211,29 +67,7 @@ apps/storybook/README.md
     18→
     19→    ```shell
     20→    # Clone the template
-    21→    npx degit chromaui/intro-storybook-react-template taskbox
-    22→    ```
-    23→
-    24→1.  **Install the dependencies.**
-    25→
-    26→    Navigate into your new site’s directory and install the necessary dependencies.
-    27→
-    28→    ```shell
-    29→    # Navigate to the directory
-    30→    cd taskbox/
-    31→
-    32→    # Install the dependencies
-    33→    yarn
-    34→    ```
-    35→
-    36→1.  **Open the source code and start editing!**
-    37→
-    38→    Open the `taskbox` directory in your code editor of choice and building your first component!
-    39→
-    40→1.  **Browse your stories!**
-    41→
-    42→    Run `yarn storybook` to see your component's stories at `http://localhost:6006`
-    43→
+      →…
     44→## 🔎 What's inside?
     46→A quick look at the top-level files and directories included with this template.
     47→
@@ -241,29 +75,6 @@ apps/storybook/README.md
     49→    ├── .storybook
     50→    ├── node_modules
     51→    ├── public
-    52→    ├── src
-    53→    ├── .gitignore
-    54→    ├── .index.html
-    55→    ├── LICENSE
-    56→    ├── package.json
-    57→    ├── yarn.lock
-    58→    ├── vite.config.js
-    59→    └── README.md
-    60→
-    61→1.  **`.storybook`**: This directory contains Storybook's [configuration](https://storybook.js.org/docs/react/configure/overview) files.
-    62→
-    63→2.  **`node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages).
-    64→
-    65→3.  **`public`**: This directory will contain the development and production build of the site.
-    66→
-    67→4.  **`src`**: This directory will contain all of the code related to what you will see on your application.
-    68→
-    69→5.  **`.gitignore`**: This file tells git which files it should not track or maintain during the development process of your project.
-    70→
-    71→6.  **`.index.html`**: This is the HTML page that is served when generating a development or production build.
-    72→
-    73→7.  **`LICENSE`**: The template is licensed under the MIT licence.
-    74→
       →…
     83→## Contribute
     85→If you encounter an issue with the template, we encourage you to open an issue in this template's repository.
@@ -322,28 +133,9 @@ apps/storybook/src/lib/utils.ts
 apps/storybook/src/stories/Button.stories.ts
      1→import { Button } from './Button';
     14→export const Primary = {
-    15→  args: {
-    16→    primary: true,
-    17→    label: 'Button',
-    18→  },
-    19→};
     21→export const Secondary = {
-    22→  args: {
-    23→    label: 'Button',
-    24→  },
-    25→};
     27→export const Large = {
-    28→  args: {
-    29→    size: 'large',
-    30→    label: 'Button',
-    31→  },
-    32→};
     34→export const Small = {
-    35→  args: {
-    36→    size: 'small',
-    37→    label: 'Button',
-    38→  },
-    39→};
 
 apps/storybook/src/stories/Button.tsx
      1→import React from 'react';
@@ -370,21 +162,12 @@ apps/storybook/src/stories/InputOTP.stories.tsx
      1→import { InputOTP, InputOTPGroup, InputOTPSlot } from "../components/ui/input-otp"
      2→import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
      4→const meta = {
-     5→  title: "ui/InputOTP",
-     6→  component: InputOTP,
-     7→  tags: ["autodocs"],
-      →…
     27→type Story = StoryObj<typeof meta>
     29→export const Default: Story = {}
 
 apps/storybook/tailwind.config.js
      1→/** @type {import('tailwindcss').Config} */
      2→const config = {
-     3→  darkMode: ['class'],
-     4→  content: [
-     5→    './index.html',
-     6→    './src/stories/**/*.{ts,tsx}',
-      →…
 
 apps/storybook/tsconfig.json
      2→  "compilerOptions": {
@@ -404,562 +187,110 @@ apps/storybook/vite.config.js
      2→import react from '@vitejs/plugin-react'
 
 apps/test/README.md
-     3→## Getting Started
-     5→First, run the development server:
-     6→
-     7→```bash
-     8→npm run dev
-     9→# or
-    10→yarn dev
-    11→# or
-    12→pnpm dev
-    13→# or
-    14→bun dev
-    15→```
-    16→
-    17→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-    18→
-      →…
-    23→## Learn More
-    25→To learn more about Next.js, take a look at the following resources:
-    26→
-    27→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-    28→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-    29→
-    30→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-    31→
-    32→## Deploy on Vercel
-    34→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-    35→
-    36→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-apps/test/next.config.mjs
-     1→/** @type {import('next').NextConfig} */
-     2→const nextConfig = {};
+     3→## Getting Started …
+    23→## Learn More …
+    32→## Deploy on Vercel …
 
 apps/test/package.json
-     2→  "name": "test",
-     3→  "private": true,
-     4→  "scripts": {
-     9→  },
-    10→  "dependencies": {
-    17→  },
-    18→  "devDependencies": {
-    29→  }
-    30→}
-
-apps/test/playwright.config.ts
 
 apps/test/src/app/base/page.tsx
-     3→import * as React from 'react'
-     5→import { BaseOTPInput } from '@/components/base-input'
      7→export default function Page() {
-     8→  return (
-     9→    <div className="container relative flex-1 flex flex-col justify-center items-center">
-    10→      <BaseOTPInput />
-    11→
-      →…
 
 apps/test/src/app/layout.tsx
-     1→import type { Metadata } from 'next'
-     2→import { Inter } from 'next/font/google'
      3→import './globals.css'
-     5→const inter = Inter({ subsets: ['latin'] })
+     5→const inter …
      7→export const metadata: Metadata = {
-    12→export default function RootLayout({
-    13→  children,
-    14→}: Readonly<{
-    15→  children: React.ReactNode
-    16→}>) {
-    17→  return (
-    18→    <html lang="en">
-    19→      <body
-    20→        className={
-    21→          (inter.className,
-      →…
+    12→export default function RootLayout …
 
 apps/test/src/app/page.tsx
-     1→import Link from 'next/link'
-     3→export default function Home() {
-     4→  return (
-     5→    <div className="container relative flex-1 flex flex-col justify-center items-center">
-     6→      <Link href="/base">Base behavior</Link>
-     7→    </div>
-     8→  )
-      →…
+     3→export default function Home …
 
 apps/test/src/app/props/page.tsx
-     3→import * as React from 'react'
-     5→import { BaseOTPInput } from '@/components/base-input'
      7→export default function Page() {
-     8→  return (
-     9→    <div className="container relative flex-1 flex flex-col justify-center items-center">
-    10→      <BaseOTPInput data-testid="input-otp-1" disabled />
-    11→      <BaseOTPInput data-testid="input-otp-2" inputMode="numeric" />
-      →…
 
 apps/test/src/app/with-autofocus/page.tsx
-     3→import * as React from 'react'
-     5→import { BaseOTPInput } from '@/components/base-input'
      7→export default function Page() {
-     8→  return (
-     9→    <div className="container relative flex-1 flex flex-col justify-center items-center">
-    10→      <BaseOTPInput autoFocus />
-    11→    </div>
-    12→  )
-    13→}
 
 apps/test/src/app/with-on-complete/page.tsx
-     3→import * as React from 'react'
-     5→import { BaseOTPInput } from '@/components/base-input'
      7→export default function Page() {
-     8→  const [disabled, setDisabled] = React.useState(false)
-     9→
-    10→  return (
-      →…
 
 apps/test/src/components/base-input.tsx
-     1→import * as React from 'react'
-     3→import { OTPInput } from 'input-otp'
-     4→import { cn } from '@/lib/utils'
-     6→export function BaseOTPInput(
-     7→  overrideProps: Partial<React.ComponentProps<typeof OTPInput>> = {},
-     8→) {
-     9→  const [value, setValue] = React.useState('')
-    10→  const [disabled, setDisabled] = React.useState(false)
-    11→
-    12→  return (
-    13→    <OTPInput
-    14→      // Normal props
-    15→      value={value}
-    16→      onChange={setValue}
-    17→      disabled={disabled}
-      →…
+     6→export function BaseOTPInput …
 
 apps/test/src/lib/fonts.ts
-     2→import { JetBrains_Mono as FontMono } from 'next/font/google'
-     4→import { GeistSans } from 'geist/font/sans'
     10→export const fontSans = GeistSans
     12→export const fontMono = FontMono({
-    13→  subsets: ['latin'],
-    14→  variable: '--font-mono',
-    15→})
 
 apps/test/src/lib/utils.ts
-     1→import { type ClassValue, clsx } from "clsx"
-     2→import { twMerge } from "tailwind-merge"
      4→export function cn(...inputs: ClassValue[]) {
-     5→  return twMerge(clsx(inputs))
-     6→}
-
-apps/test/src/tests/base.delete-word.spec.ts
-     2→import { modifier } from './util/modifier'
-
-apps/test/src/tests/base.props.spec.ts
-
-apps/test/src/tests/base.render.spec.ts
-     3→const modifier = process.platform === 'darwin' ? 'Meta' : 'Control'
-
-apps/test/src/tests/base.selections.spec.ts
-
-apps/test/src/tests/base.slot.spec.ts
-     3→const modifier = process.platform === 'darwin' ? 'Meta' : 'Control'
-
-apps/test/src/tests/base.typing.spec.ts
-     2→import { modifier } from './util/modifier'
 
 apps/test/src/tests/util/modifier.ts
      1→export const modifier = process.platform === 'darwin' ? 'Meta' : 'Control'
 
-apps/test/src/tests/with-autofocus.spec.ts
-
-apps/test/src/tests/with-on-complete.spec.ts
-     2→import { modifier } from './util/modifier'
-
-apps/test/tailwind.config.ts
-     3→const config: Config = {
-
 apps/test/tsconfig.json
-     2→  "compilerOptions": {
-    23→  },
-    24→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-    25→  "exclude": ["node_modules"]
-    26→}
 
 apps/website/README.md
-     3→## Getting Started
-     5→First, run the development server:
-     6→
-     7→```bash
-     8→npm run dev
-     9→# or
-    10→yarn dev
-    11→# or
-    12→pnpm dev
-    13→# or
-    14→bun dev
-    15→```
-    16→
-      →…
-    23→## Learn More
-    25→To learn more about Next.js, take a look at the following resources:
-    26→
-    27→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-    28→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-    29→
-    30→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-    31→
-    32→## Deploy on Vercel
-    34→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-    35→
-    36→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-apps/website/components.json
-     2→  "$schema": "https://ui.shadcn.com/schema.json",
-     3→  "style": "default",
-     4→  "rsc": true,
-     5→  "tsx": true,
-     6→  "tailwind": {
-    12→  },
-    13→  "aliases": {
-    16→  }
-    17→}
-
-apps/website/next.config.mjs
-     1→import { withHydrationOverlay } from '@builder.io/react-hydration-overlay/next'
-     3→/** @type {import('next').NextConfig} */
-     4→const nextProdConfig = {}
-     6→const nextDevConfig = withHydrationOverlay({
-
-apps/website/package.json
-     2→  "name": "website",
-     3→  "version": "0.1.0",
-     4→  "private": true,
-     5→  "scripts": {
-    10→  },
-    11→  "dependencies": {
-    36→  },
-    37→  "devDependencies": {
-    47→  }
-    48→}
+     3→## Getting Started …
+    23→## Learn More …
+    32→## Deploy on Vercel …
 
 apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
-     3→import * as React from 'react'
-     5→import { Button } from '@/components/ui/button'
-     6→import { formAction } from './server/form-action'
-     7→import { ExampleComponent } from '../example-playground/component'
      9→export default function ExampleAutoSubmit() {
-    10→  const formRef = React.useRef<HTMLFormElement>(null)
-    11→
-    12→  const [value, setValue] = React.useState('12')
-    13→
-    14→  return (
-    15→    <form ref={formRef} action={formAction}>
-    16→      <ExampleComponent
-    17→        name="otp"
-    18→        value={value}
-    19→        onChange={setValue}
-      →…
 
 apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
      3→export async function formAction(formData: FormData) {
-     4→  const rawFormData = {
-     5→    otp: formData.get('otp'),
-     6→  }
-     7→
-     8→  console.log({ rawFormData })
-     9→}
-
-apps/website/src/app/(local-pages)/example-playground/code.tsx
-     1→import { Code } from '@/components/code'
-     2→import { useTheme } from 'next-themes'
-     4→const tsx = `'use client'
-    95→const code = `\`\`\`tsx /maxLength={6}/ /render/ /slots/1 /.map((slot, idx)/1 /Slot/2,3,4 /props.char/2 /<FakeCaret />/
-    99→export function ExampleCode() {
-   100→  return (
-      →…
-
-apps/website/src/app/(local-pages)/example-playground/component.tsx
-     3→import * as React from 'react'
-     4→import { OTPInput, SlotProps } from 'input-otp'
-     6→import { cn } from '@/lib/utils'
-     8→export function ExampleComponent(
-     9→  props: Partial<Omit<React.ComponentProps<typeof OTPInput>, 'children'>>,
-    10→) {
-    11→  return (
-      →…
-    38→function Slot(props: SlotProps) {
-    58→function FakeCaret() {
-    67→function FakeDash() {
-    76→const config = {
 
 apps/website/src/app/(local-pages)/example-playground/page.tsx
      1→import { ExampleComponent } from './component'
-     3→export default function ExamplePlayground() {
-     4→  return (
-      →…
 
 apps/website/src/app/(local-pages)/layout.tsx
-     2→import { Toaster } from '@/components/ui/sonner'
-     3→import { AppProvider } from '../../components/provider'
-     4→import { fontSans } from '../../lib/fonts'
-     5→import { cn } from '../../lib/utils'
-     6→import '../globals.css'
-     7→export default function RootLayout({
-     8→  children,
-     9→}: Readonly<{
-    10→  children: React.ReactNode
-    11→}>) {
-    12→  return (
-    13→    <html lang="en">
-    14→      <body
-    15→        className={cn(
-    16→          'min-h-[100dvh] bg-background font-sans antialiased',
-    17→          fontSans.className,
-    18→        )}
-    19→      >
-    20→        <AppProvider>
-      →…
+     7→export default function RootLayout …
 
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      3→import React from 'react'
      5→export default function ShadcnPage() {
-     6→  const [value, setValue] = React.useState('')
-     7→
-     8→  return (
-     9→    <form
-    10→      method="POST"
-      →…
 
 apps/website/src/app/(local-pages)/shadcn/page.tsx
-     3→@/components/ui/input-otp …
-    10→import React from 'react …
     12→export default function ShadcnPage() {
-    13→  const [value, setValue] = React.useState('')
-    14→
-    15→  return (
-      →…
 
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
-     3→@/components/ui/input-otp …
-    10→import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp …
-    11→import React from 'react …
     13→export default function ShadcnPage() {
-    14→  const [value, setValue] = React.useState('')
-    15→
-    16→  return (
-      →…
 
 apps/website/src/app/(local-pages)/shadcn/static/page.tsx
      3→import { default as ShadcnPage } from '../page'
      5→export default async function StaticPage(pageProps: any) {
-     6→  return (
-     7→    <ShadcnPage {...pageProps} />
-     8→  )
-     9→}
-
-apps/website/src/app/(pages)/(home)/_components/confetti.tsx
-     3→export function Confetti({
-     4→  pageCoords = { x: window.innerWidth / 2, y: window.innerHeight / 2 },
-     5→}: {
-     6→  pageCoords?: {
-     7→    x: number
-     8→    y: number
-     9→  }
-    10→}) {
-    11→  return (
-    12→    <VFX
-    13→      autorun={{ speed: 1 }}
-      →…
-
-apps/website/src/app/(pages)/(home)/_components/showcase.tsx
-    10→const DynamicConfetti = dynamic(() =>
-    14→export function Showcase({ className, ...props }: { className?: string }) {
-    15→  const [value, setValue] = React.useState('12')
-    16→  const [disabled, setDisabled] = React.useState(false)
-    17→
-      →…
-   151→function Slot(props: {
-   152→  char: string | null
-   153→  isActive: boolean
-   154→  isFocused: boolean
-   155→  animateIdx?: number
-   156→}) {
-   199→function FakeCaret() {
 
 apps/website/src/app/(pages)/(home)/page.tsx
     13→import { Showcase } from './_components/showcase'
     19→const fadeUpClassname =
-    22→async function getRepoStarCount() {
     34→export default async function IndexPage() {
-    35→  const starCount = await getRepoStarCount()
-    36→
-    37→  return (
-      →…
    148→export const revalidate = 3600
-   150→const SponsorBadgeClerk = () => {
 
 apps/website/src/app/(pages)/layout.tsx
-     1→import type { Metadata } from 'next'
-     5→import { SiteFooter } from '../../components/site-footer'
-     6→import { SiteHeader } from '../../components/site-header'
-     7→import { siteConfig } from '../../config/site'
-     8→import { fontSans } from '../../lib/fonts'
-     9→import { cn } from '../../lib/utils'
-    10→import '../globals.css'
-    11→import { AppProvider } from '../../components/provider'
-    12→import { Toaster } from '@/components/ui/sonner'
     14→export const metadata: Metadata = {
-    15→  title: {
-      →…
-    68→export default function RootLayout({
-    69→  children,
-    70→}: Readonly<{
-    71→  children: React.ReactNode
-    72→}>) {
-    73→  return (
-    74→    <html lang="en">
-    75→      <body
-    76→        className={cn(
-    77→          'min-h-[100dvh] bg-background font-sans antialiased',
-    78→          fontSans.className,
-    79→        )}
-    80→      >
-    81→        <AppProvider>
-      →…
-
-apps/website/src/components/code.tsx
-     9→export async function Code({
-    10→  code,
-    11→  toCopy,
-    12→  dark = true,
-    13→}: {
-    14→  code: string
-    15→  toCopy?: string
-    16→  dark?: boolean
-    17→}) {
-    36→async function highlightCode …
-
-apps/website/src/components/copy-button.tsx
-    17→interface CopyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
-    18→  value: string
-    19→  src?: string
-    20→}
-    22→export async function copyToClipboardWithMeta(value: string) {
-    26→export function CopyButton({
-    27→  value,
-    28→  className,
-    29→  src,
-    30→  ...props
-    31→}: CopyButtonProps) {
-    64→interface CopyWithClassNamesProps extends DropdownMenuTriggerProps {
-    65→  value: string
-    66→  classNames: string
-    67→  className?: string
-    68→}
-    70→export function CopyWithClassNames({
-    71→  value,
-    72→  classNames,
-    73→  className,
-    74→  ...props
-    75→}: CopyWithClassNamesProps) {
-   120→interface CopyNpmCommandButtonProps extends DropdownMenuTriggerProps {
-   121→  commands: {
-   122→    __npmCommand__: string
-   123→    __yarnCommand__: string
-   124→    __pnpmCommand__: string
-   125→    __bunCommand__: string
-   126→  }
-   127→}
-   129→export function CopyNpmCommandButton({
-   130→  commands,
-   131→  className,
-   132→  ...props
-   133→}: CopyNpmCommandButtonProps) {
+    68→export default function RootLayout …
 
 apps/website/src/components/icons.tsx
-     1→type IconProps = React.HTMLAttributes<SVGElement>
+     1→type IconProps …
      3→export const Icons = {
 
-apps/website/src/components/mode-toggle.tsx
-    15→export function ModeToggle() {
-
-apps/website/src/components/page-header.tsx
-     3→function PageHeader …
-    21→function PageHeaderHeading …
-    36→function PageHeaderDescription …
-    51→function PageActions …
-
-apps/website/src/components/provider.tsx
-     5→export function AppProvider({
-     6→  children,
-     7→  ...props
-     8→}: React.PropsWithChildren<{}>) {
-
-apps/website/src/components/site-footer.tsx
-     3→export function SiteFooter() {
-
-apps/website/src/components/site-header.tsx
-     9→export function SiteHeader() {
-
 apps/website/src/components/ui/badge.tsx
-    26→export interface BadgeProps
-    27→  extends React.HTMLAttributes<HTMLDivElement>,
-    28→    VariantProps<typeof badgeVariants> {}
-    30→function Badge({ className, variant, ...props }: BadgeProps) {
+    26→export interface BadgeProps …
 
 apps/website/src/components/ui/button.tsx
      5→import { cn } from "../../lib/utils"
-    36→export interface ButtonProps
-    37→  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    38→    VariantProps<typeof buttonVariants> {
-    39→  asChild?: boolean
-    40→}
-
-apps/website/src/components/ui/dropdown-menu.tsx
-   171→const DropdownMenuShortcut = ({
-
-apps/website/src/components/ui/input-otp.tsx
-
-apps/website/src/components/ui/scroll-area.tsx
-
-apps/website/src/components/ui/sonner.tsx
-     8→const Toaster = ({ ...props }: ToasterProps) => {
+    36→export interface ButtonProps …
 
 apps/website/src/config/site.ts
      1→export const siteConfig = {
-     2→  name: 'rodz/input-otp',
-      →…
     13→export type SiteConfig = typeof siteConfig
 
 apps/website/src/lib/fonts.ts
-     2→import { JetBrains_Mono as FontMono } from 'next/font/google'
-     4→import { GeistSans } from 'geist/font/sans'
     10→export const fontSans = GeistSans
     12→export const fontMono = FontMono({
-    13→  subsets: ['latin'],
-    14→  variable: '--font-mono',
-    15→})
 
 apps/website/src/lib/utils.ts
-     1→import { type ClassValue, clsx } from "clsx"
-     2→import { twMerge } from "tailwind-merge"
      4→export function cn(...inputs: ClassValue[]) {
-     5→  return twMerge(clsx(inputs))
-     6→}
-
-apps/website/tailwind.config.ts
-     1→import type { Config } from 'tailwindcss'
-     3→const config = {
-
-apps/website/tsconfig.json
-     2→  "compilerOptions": {
-    29→  },
-    30→  "include": [
-    36→  ],
-    37→  "exclude": [
-    39→  ]
-    40→}
 
 package.json
      2→  "name": "root",
@@ -1016,42 +347,12 @@ packages/input-otp/src/input.tsx
      7→import { usePrevious } from './use-previous'
      8→import { usePasswordManagerBadge } from './use-pwm-badge'
     10→export const OTPInputContext = React.createContext<RenderProps>(
-    11→  {} as RenderProps,
-    12→)
     14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
-    15→  (
-    16→    {
-    17→      value: uncheckedValue,
-    18→      onChange: uncheckedOnChange,
-    19→      maxLength,
-    20→      textAlign = 'left',
-    21→      pattern,
-    22→      placeholder,
-    23→      inputMode = 'numeric',
-    24→      onComplete,
-    25→      pushPasswordManagerStrategy = 'increase-width',
-    26→      pasteTransformer,
-    27→      containerClassName,
-    28→      noScriptCSSFallback = NOSCRIPT_CSS_FALLBACK,
-    29→
-    30→      render,
-    31→      children,
-    32→
-    33→      ...props
-    34→    },
-    35→    ref,
-      →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
    542→    sheet.insertRule(rule)
-   543→  } catch {
-   544→    console.error('input-otp could not insert CSS rule:', rule)
-   545→  }
-   546→}
-   553→const NOSCRIPT_CSS_FALLBACK = `
-   554→[data-input-otp] {
-   555→  --nojs-bg: white !important;
       →…
+   553→const NOSCRIPT_CSS_FALLBACK = `
 
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
@@ -1062,9 +363,7 @@ packages/input-otp/src/sync-timeouts.ts
      1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
      2→  const t1 = setTimeout(cb, 0) // For faster machines
      3→  const t2 = setTimeout(cb, 1_0)
-     4→  const t3 = setTimeout(cb, 5_0)
-     5→  return [t1, t2, t3]
-     6→}
+      →…
 
 packages/input-otp/src/types.ts
      1→export interface SlotProps {
@@ -1082,34 +381,19 @@ packages/input-otp/src/types.ts
     13→type OTPInputBaseProps = OverrideProps<
     14→  React.InputHTMLAttributes<HTMLInputElement>,
     15→  {
-    16→    value?: string
-    17→    onChange?: (newValue: string) => unknown
-    18→
-    19→    maxLength: number
-    20→
-      →…
     32→type InputOTPRenderFn = (props: RenderProps) => React.ReactNode
     33→export type OTPInputProps = OTPInputBaseProps &
     34→  (
     35→    | {
     36→        render: InputOTPRenderFn
-    37→        children?: never
-    38→      }
-    39→    | {
-    40→        render?: never
-    41→        children: React.ReactNode
-    42→      }
-    43→  )
+      →…
 
 packages/input-otp/src/use-previous.ts
      1→import * as React from 'react'
      3→export function usePrevious<T>(value: T) {
      4→  const ref = React.useRef<T>()
      5→  React.useEffect(() => {
-     6→    ref.current = value
-     7→  })
-     8→  return ref.current
-     9→}
+      →…
 
 packages/input-otp/src/use-pwm-badge.tsx
      1→import * as React from 'react'
@@ -1118,9 +402,6 @@ packages/input-otp/src/use-pwm-badge.tsx
      5→const PWM_BADGE_SPACE_WIDTH_PX = 40
      6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
      8→const PASSWORD_MANAGERS_SELECTORS = [
-     9→  '[data-lastpass-icon-root]', // LastPass
-    10→  'com-1password-button', // 1Password
-      →…
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,
@@ -1135,50 +416,6 @@ packages/input-otp/src/use-pwm-badge.tsx
     26→  /** Password managers have a badge
     27→   *  and I'll use this state to push them
     28→   *  outside the input */
-    29→  const [hasPWMBadge, setHasPWMBadge] = React.useState(false)
-    30→  const [hasPWMBadgeSpace, setHasPWMBadgeSpace] = React.useState(false)
-    31→  const [done, setDone] = React.useState(false)
-    32→
-    33→  const willPushPWMBadge = React.useMemo(() => {
-    34→    if (pushPasswordManagerStrategy === 'none') {
-    35→      return false
-    36→    }
-    37→
-    38→    const increaseWidthCase =
-    39→      (pushPasswordManagerStrategy === 'increase-width' ||
-    40→        // TODO: remove 'experimental-no-flickering' support in 2.0.0
-    41→        pushPasswordManagerStrategy === 'experimental-no-flickering') &&
-    42→      hasPWMBadge &&
-    43→      hasPWMBadgeSpace
-    44→
-    45→    return increaseWidthCase
-    46→  }, [hasPWMBadge, hasPWMBadgeSpace, pushPasswordManagerStrategy])
-    47→
-    48→  const trackPWMBadge = React.useCallback(() => {
-    49→    const container = containerRef.current
-    50→    const input = inputRef.current
-    51→    if (
-    52→      !container ||
-    53→      !input ||
-    54→      done ||
-    55→      pushPasswordManagerStrategy === 'none'
-    56→    ) {
-    57→      return
-    58→    }
-    59→
-    60→    const elementToCompare = container
-    61→
-    62→    // Get the top right-center point of the container.
-    63→    // That is usually where most password managers place their badge.
-    64→    const rightCornerX =
-    65→      elementToCompare.getBoundingClientRect().left +
-    66→      elementToCompare.offsetWidth
-    67→    const centereredY =
-    68→      elementToCompare.getBoundingClientRect().top +
-    69→      elementToCompare.offsetHeight / 2
-    70→    const x = rightCornerX - PWM_BADGE_MARGIN_RIGHT
-    71→    const y = centereredY
-    72→
       →…
 
 packages/input-otp/tsconfig.json

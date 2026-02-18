@@ -2,99 +2,43 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (484 words)
+budget: 500 (472 tokens)
 
 imp_cs.rs
      6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
-     9→    initialized: AtomicBool,
-      →…
 
 imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
-     8→    state: AtomicU8,
-      →…
-    12→const INCOMPLETE …
-    13→const RUNNING …
-    14→const COMPLETE …
    122→struct Guard<'a> {
-   123→    state: &'a AtomicU8,
-      →…
 
 imp_std.rs
     14→pub(crate) struct OnceCell<T> {
     15→    // This `queue` field is the core of the implementation. It encodes two
-    16→    // pieces of information:
-    17→    //
-    18→    // * The current state of the cell (`INCOMPLETE`, `RUNNING`, `COMPLETE`)
       →…
-   125→const INCOMPLETE …
-   126→const RUNNING …
-   127→const COMPLETE …
-   128→const INCOMPLETE_PTR …
-   129→const COMPLETE_PTR …
-   133→const STATE_MASK …
    138→struct Waiter {
    139→    thread: Cell<Option<Thread>>,
-   140→    signaled: AtomicBool,
-   141→    next: *mut Waiter,
-   142→}
+      →…
    145→struct Guard<'a> {
    146→    queue: &'a AtomicPtr<Waiter>,
-   147→    new_queue: *mut Waiter,
-   148→}
+      →…
    245→mod strict {
 
 lib.rs
-   370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
-   371→#[path = "imp_cs.rs"]
    372→mod imp;
-   374→#[cfg(all(feature = "std", feature = "parking_lot"))]
-   375→#[path = "imp_pl.rs"]
    376→mod imp;
-   378→#[cfg(all(feature = "std", not(feature = "parking_lot")))]
-   379→#[path = "imp_std.rs"]
    380→mod imp;
    382→/// Single-threaded version of `OnceCell`.
    383→pub mod unsync {
-   391→    /// A cell which can be written to only once. It is not thread safe.
-   392→    ///
-   393→    /// Unlike [`std::cell::RefCell`], a `OnceCell` provides simple `&`
-   394→    /// references to the contents.
-      →…
    411→    pub struct OnceCell<T> {
-   412→        // Invariant: written to at most once.
-   413→        inner: UnsafeCell<Option<T>>,
-   414→    }
-   694→    /// A value which is initialized on the first access.
-   695→    ///
-   696→    /// # Example
-   697→    /// ```
-      →…
    714→    pub struct Lazy<T, F = fn() -> T> {
-   715→        cell: OnceCell<T>,
-   716→        init: Cell<Option<F>>,
-   717→    }
    841→        type Target = T;
    861→/// Thread-safe, blocking version of `OnceCell`.
    862→#[cfg(any(feature = "std", feature = "critical-section"))]
    863→pub mod sync {
    871→    use super::imp::OnceCell as Imp;
-   873→    /// A thread-safe cell which can be written to only once.
-   874→    ///
-   875→    /// `OnceCell` provides `&` references to the contents without RAII guards.
-   876→    ///
-      →…
    901→    pub struct OnceCell<T>(Imp<T>);
-  1222→    /// A value which is initialized on the first access.
-  1223→    ///
-  1224→    /// This type is thread-safe and can be used in statics.
-  1225→    ///
-      →…
   1255→    pub struct Lazy<T, F = fn() -> T> {
-  1256→        cell: OnceCell<T>,
-  1257→        init: Cell<Option<F>>,
-  1258→    }
   1374→        type Target = T;
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
@@ -102,27 +46,10 @@ lib.rs
 race.rs
     31→use core::sync::atomic;
     33→use portable_atomic as atomic;
-    41→/// A thread-safe cell which can be written to only once.
-    42→#[derive(Default, Debug)]
     43→pub struct OnceNonZeroUsize {
-    44→    inner: AtomicUsize,
-    45→}
-   165→/// A thread-safe cell which can be written to only once.
-   166→#[derive(Default, Debug)]
    167→pub struct OnceBool {
-   168→    inner: OnceNonZeroUsize,
-   169→}
-   231→/// A thread-safe cell which can be written to only once.
    232→pub struct OnceRef<'a, T> {
-   233→    inner: AtomicPtr<T>,
-   234→    ghost: PhantomData<UnsafeCell<&'a T>>,
-   235→}
    351→pub use self::once_box::OnceBox;
-   353→#[cfg(feature = "alloc")]
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
-   360→    /// A thread-safe cell which can be written to only once.
    361→    pub struct OnceBox<T> {
-   362→        inner: AtomicPtr<T>,
-   363→        ghost: PhantomData<Option<Box<T>>>,
-   364→    }

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (514 words)
+budget: 500 (546 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -48,67 +48,13 @@ budget: 500 (514 words)
     12→
     13→branches:
 
-.github/workflows/audit.yml
-     3→name …
-     5→on …
-    11→permissions …
-    14→jobs …
-
-.github/workflows/ci-release.yml
-     3→name …
-     5→on …
-    21→permissions …
-    25→jobs …
-
-.github/workflows/ci.yml
-     3→name …
-     5→on …
-    15→permissions …
-    18→jobs …
-
-.github/workflows/codeql-analysis.yml
-     3→name …
-     5→on …
-    16→permissions …
-    19→jobs …
-
-.github/workflows/post-dependabot.yml
-     3→name …
-     5→on …
-     7→permissions …
-    10→jobs …
-
-.github/workflows/pull-request.yml
-     3→name …
-     5→on …
-    13→permissions …
-    16→jobs …
-
-.github/workflows/release-integration.yml
-     3→name …
-     5→on …
-    22→permissions …
-    26→jobs …
-
-.github/workflows/release.yml
-     3→name …
-     5→on …
-    10→permissions …
-    15→jobs …
-
 .release-please-manifest.json
-     2→  ".": "6.0.0"
-     3→}
 
 CHANGELOG.md
      1→# Changelog …
 
 CONTRIBUTING.md
      3→# Contributing …
-     5→## Code of Conduct …
-     9→## Reporting Bugs …
-    17→## Pull Request Conventions …
-    42→## What _not_ to contribute? …
 
 README.md
      4→## Note
@@ -124,97 +70,20 @@ README.md
     16→scope = global
     17→
     18→[database]
-    19→user = dbuser
-    20→password = dbpassword
-    21→database = use_this_database
-    22→
-    23→[paths.default]
-    24→datadir = /var/lib/data
-    25→array[] = first value
-    26→array[] = second value
-    27→array[] = third value
-    28→```
-    29→
-    30→You can **read**, **modify** and **write** it like so:
-    31→
-    32→```js
-    33→import { writeFile , readFile } from 'node:fs/promises'
-    34→import { stringify , parse } from 'ini'
-    35→
-    36→//  Read INI file as text
-    37→
       →…
     82→## API
-    84→### Parse
-    86→Attempts to turn the given INI string into a nested data object.
-    87→
-    88→```js
-    89→// You can also use `decode`
-    90→const object = parse(`<INI Text>`) 
-    91→```
-    92→
-    93→### Stringify
-    95→Encodes the given data object as an INI formatted string.
-    96→
-    97→```js
-    98→// You can also use `encode`
-    99→stringify(object,{
-   100→
-   101→    /**
-      →…
-   167→### Un / Escape
-   169→Turn the given string into a safe to  
-   170→use key or value in your INI file.
-   171→
-   172→```js
-   173→safe(`"unsafe string"`) // -> \"unsafe string\"
-   174→```
-   175→
-      →…
+    84→### Parse …
+    93→### Stringify …
+   167→### Un / Escape …
 
 lib/ini.js
-     3→const encode = (obj, opt = {}) => {
-    80→function splitSections (str, separator) {
-   106→const decode = (str, opt = {}) => {
-   212→const isQuoted = val => {
-   217→const safe = val => {
-   230→const unsafe = val => {
+     3→const encode …
+    80→function splitSections …
+   106→const decode …
+   212→const isQuoted …
+   217→const safe …
+   230→const unsafe …
 
 package.json
-     2→  "author": "GitHub Inc.",
-     3→  "name": "ini",
-     4→  "description": "An ini encoder/decoder for node",
-     5→  "version": "6.0.0",
-     6→  "repository": {
-     9→  },
-    10→  "main": "lib/ini.js",
-    11→  "scripts": {
-    20→  },
-    21→  "devDependencies": {
-    25→  },
-    26→  "license": "ISC",
-    27→  "files": [
-    30→  ],
-    31→  "engines": {
-    33→  },
-    34→  "templateOSS": {
-    38→  },
-    39→  "tap": {
-    44→  }
-    45→}
 
 release-please-config.json
-     2→  "group-pull-request-title-pattern": "chore: release ${version}",
-     3→  "pull-request-title-pattern": "chore: release${component} ${version}",
-     4→  "changelog-sections": [
-    30→  ],
-    31→  "packages": {
-    35→  },
-    36→  "prerelease-type": "pre.0"
-    37→}
-
-test/duplicate-properties.js
-
-test/foo.js
-
-test/win32.js

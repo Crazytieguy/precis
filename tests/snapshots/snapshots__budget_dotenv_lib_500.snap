@@ -2,13 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (497 words)
+budget: 500 (504 tokens)
 
 cli-options.js
-     1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
+     1→const re …
 
 env-options.js
-     2→const options = {}
+     2→const options …
 
 main.d.ts
      3→import type { URL } from 'url';
@@ -29,46 +29,6 @@ main.d.ts
     33→   * example: `require('dotenv').config({ path: ['/path/to/first.env', '/path/to/second.env'] })`
     34→   */
     35→  path?: string | string[] | URL;
-    36→
-    37→  /**
-    38→   * Default: `utf8`
-    39→   *
-    40→   * Specify the encoding of your file containing environment variables.
-    41→   *
-    42→   * example: `require('dotenv').config({ encoding: 'latin1' })`
-    43→   */
-    44→  encoding?: string;
-    45→
-    46→  /**
-    47→   * Default: `false`
-    48→   *
-    49→   * Suppress all output (except errors).
-    50→   *
-    51→   * example: `require('dotenv').config({ quiet: true })`
-    52→   */
-    53→  quiet?: boolean;
-    54→
-    55→  /**
-    56→   * Default: `false`
-    57→   *
-    58→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
-    59→   *
-    60→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
-    61→   */
-    62→  debug?: boolean;
-    63→
-    64→  /**
-    65→   * Default: `false`
-    66→   *
-    67→   * Override any environment variables that have already been set on your machine with values from your .env file.
-    68→   *
-    69→   * example: `require('dotenv').config({ override: true })`
-    70→   */
-    71→  override?: boolean;
-    72→
-    73→  /**
-    74→   * Default: `process.env`
-    75→   *
       →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
@@ -76,9 +36,6 @@ main.d.ts
     95→}
     97→type DotenvError = Error & {
     98→  code: 
-    99→    | 'MISSING_DATA'
-   100→    | 'INVALID_DOTENV_KEY'
-   101→    | 'NOT_FOUND_DOTENV_ENVIRONMENT'
       →…
    106→export interface DotenvPopulateOptions {
    107→  /**
@@ -91,42 +48,13 @@ main.d.ts
    114→  debug?: boolean;
    115→
    116→  /**
-   117→   * Default: `false`
-   118→   *
-   119→   * Override any environment variables that have already been set on your machine with values from your .env file.
-   120→   *
-   121→   * example: `require('dotenv').config({ override: true })`
-   122→   */
-   123→  override?: boolean;
-   124→}
+      →…
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;
    128→}
 
 main.js
-     7→const version = packageJson.version
-    10→const TIPS = [
-    11→  '🔐 encrypt with Dotenvx: https://dotenvx.com',
-      →…
-    27→function _getRandomTip () {
-    31→function parseBoolean (value) {
-    38→function supportsAnsi () {
-    42→function dim (text) {
-    46→const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
-    49→function parse (src) {
-    87→function _parseVault (options) {
-   130→function _warn (message) {
-   134→function _debug (message) {
-   138→function _log (message) {
-   142→function _dotenvKey (options) {
-   157→function _instructions (result, dotenvKey) {
-   200→function _vaultPath (options) {
-   224→function _resolveHome (envPath) {
-   228→function _configVault (options) {
-   248→function configDotenv (options) {
-   328→function config (options) {
-   346→function decrypt (encrypted, keyStr) {
-   378→function populate (processEnv, parsed, options = {}) {
-   413→const DotenvModule = {
-   414→  configDotenv,
-      →…
+     7→const version …
+    10→const TIPS …
+    46→const LINE …
+   413→const DotenvModule …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1437 words)
+budget: 2000 (2096 tokens)
 
 README.md
      9→# Mitt
@@ -41,14 +41,7 @@ README.md
     45→var mitt = require('mitt')
     46→```
     47→
-    48→The [UMD](https://github.com/umdjs/umd) build is also available on [unpkg](https://unpkg.com):
-    49→
-    50→```html
-    51→<script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
-    52→```
-    53→
-    54→You can find the library on `window.mitt`.
-    55→
+      →…
     56→## Usage
     58→```js
     59→import mitt from 'mitt'
@@ -66,110 +59,25 @@ README.md
     71→
     72→// clearing all events
     73→emitter.all.clear()
-    74→
-    75→// working with handler references:
-    76→function onFoo() {}
-    77→emitter.on('foo', onFoo)   // listen
-    78→emitter.off('foo', onFoo)  // unlisten
-    79→```
-    80→
-    81→### Typescript
-    83→Set `"strict": true` in your tsconfig.json to get improved type inference for `mitt` instance methods.
-    84→
-    85→```ts
-    86→import mitt from 'mitt';
-    87→
-    88→type Events = {
-    89→  foo: string;
-    90→  bar?: number;
-    91→};
-    92→
-    93→const emitter = mitt<Events>(); // inferred as Emitter<Events>
-    94→
-    95→emitter.on('foo', (e) => {}); // 'e' has inferred type 'string'
-    96→
-    97→emitter.emit('foo', 42); // Error: Argument of type 'number' is not assignable to parameter of type 'string'. (2345)
-    98→```
-    99→
-   100→Alternatively, you can use the provided `Emitter` type:
-   101→
-   102→```ts
-   103→import mitt, { Emitter } from 'mitt';
-   104→
-   105→type Events = {
-   106→  foo: string;
-   107→  bar?: number;
-   108→};
-   109→
-   110→const emitter: Emitter<Events> = mitt<Events>();
-   111→```
-   112→
+      →…
+    81→### Typescript …
    113→## Examples & Demos
    123→## API
-   127→#### Table of Contents
-   129→-   [mitt](#mitt)
-   130→-   [all](#all)
-   131→-   [on](#on)
-   132→    -   [Parameters](#parameters)
-   133→-   [off](#off)
-   134→    -   [Parameters](#parameters-1)
-   135→-   [emit](#emit)
-   136→    -   [Parameters](#parameters-2)
-   137→
-   138→### mitt
-   140→Mitt: Tiny (~200b) functional event emitter / pubsub.
-   141→
-   142→Returns **Mitt** 
-   143→
-   144→### all
-   146→A Map of event names to registered handler functions.
-   147→
-   148→### on
-   150→Register an event handler for the given type.
-   151→
-   152→#### Parameters
-   154→-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to listen for, or `'*'` for all events
-   155→-   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Function to call in response to given event
-   156→
-   157→### off
-   159→Remove an event handler for the given type.
-   160→If `handler` is omitted, all handlers of the given type are removed.
-   161→
-   162→#### Parameters
-   164→-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to unregister `handler` from, or `'*'`
-   165→-   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Handler function to remove
-   166→
-   167→### emit
-   169→Invoke all handlers for the given type.
-   170→If present, `'*'` handlers are invoked after type-matched handlers.
-   171→
-   172→Note: Manually firing '\*' handlers is not supported.
-   173→
-   174→#### Parameters
-   176→-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** The event type to invoke
-   177→-   `evt` **Any?** Any value (object is recommended and powerful), passed to each handler
-   178→
+   127→#### Table of Contents …
+   138→### mitt …
+   144→### all …
+   148→### on …
+   152→#### Parameters …
+   157→### off …
+   162→#### Parameters …
+   167→### emit …
+   174→#### Parameters …
    179→## Contribute
    181→First off, thanks for taking the time to contribute!
    182→Now, take a moment to be sure your contributions make sense to everyone else.
    183→
-   184→### Reporting Issues
-   186→Found a problem? Want a new feature? First of all see if your issue or idea has [already been reported](../../issues).
-   187→If don't, just open a [new clear and descriptive issue](../../issues/new).
-   188→
-   189→### Submitting pull requests
-   191→Pull requests are the greatest contributions, so be sure they are focused in scope, and do avoid unrelated commits.
-   192→
-   193→-   Fork it!
-   194→-   Clone your fork: `git clone https://github.com/<your-username>/mitt`
-   195→-   Navigate to the newly cloned directory: `cd mitt`
-   196→-   Create a new branch for the new feature: `git checkout -b my-new-feature`
-   197→-   Install the tools necessary for development: `npm install`
-   198→-   Make your changes.
-   199→-   Commit your changes: `git commit -am 'Add some feature'`
-   200→-   Push to the branch: `git push origin my-new-feature`
-   201→-   Submit a pull request with full remarks documenting your changes.
-   202→
+   184→### Reporting Issues …
+   189→### Submitting pull requests …
    203→## License
    205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
 
@@ -264,53 +172,7 @@ src/index.ts
     74→
     75→		/**
     76→		 * Remove an event handler for the given type.
-    77→		 * If `handler` is omitted, all handlers of the given type are removed.
-    78→		 * @param {string|symbol} type Type of event to unregister `handler` from (`'*'` to remove a wildcard handler)
-    79→		 * @param {Function} [handler] Handler function to remove
-    80→		 * @memberOf mitt
-    81→		 */
-    82→		off<Key extends keyof Events>(type: Key, handler?: GenericEventHandler) {
-    83→			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
-    84→			if (handlers) {
-    85→				if (handler) {
-    86→					handlers.splice(handlers.indexOf(handler) >>> 0, 1);
-    87→				} else {
-    88→					all!.set(type, []);
-    89→				}
-    90→			}
-    91→		},
-    92→
-    93→		/**
-    94→		 * Invoke all handlers for the given type.
-    95→		 * If present, `'*'` handlers are invoked after type-matched handlers.
-    96→		 *
-    97→		 * Note: Manually firing '*' handlers is not supported.
-    98→		 *
-    99→		 * @param {string|symbol} type The event type to invoke
-   100→		 * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
-   101→		 * @memberOf mitt
-   102→		 */
-   103→		emit<Key extends keyof Events>(type: Key, evt?: Events[Key]) {
-   104→			let handlers = all!.get(type);
-   105→			if (handlers) {
-   106→				(handlers as EventHandlerList<Events[keyof Events]>)
-   107→					.slice()
-   108→					.map((handler) => {
-   109→						handler(evt!);
-   110→					});
-   111→			}
-   112→
-   113→			handlers = all!.get('*');
-   114→			if (handlers) {
-   115→				(handlers as WildCardEventHandlerList<Events>)
-   116→					.slice()
-   117→					.map((handler) => {
-   118→						handler(type, evt!);
-   119→					});
-   120→			}
-   121→		}
-   122→	};
-   123→}
+      →…
 
 test/index_test.ts
      1→import mitt, { Emitter, EventHandlerMap } from '..';
@@ -325,15 +187,10 @@ test/test-types-compilation.ts
      7→}
      9→const emitter = mitt<{
     10→	foo: string;
-    11→	someEvent: SomeEventData;
-    12→	bar?: number;
-    13→}>();
-    15→const barHandler = (x?: number) => {};
-    16→const fooHandler = (x: string) => {};
-    17→const wildcardHandler = (
-    18→	_type: 'foo' | 'bar' | 'someEvent',
-    19→	_event: string | SomeEventData | number | undefined
-    20→) => {};
+      →…
+    15→const barHandler …
+    16→const fooHandler …
+    17→const wildcardHandler …
 
 tsconfig.json
      2→	"compileOnSave": false,

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3948 words)
+budget: 4000 (4001 tokens)
 
 CHANGELOG.md
      1→## Unreleased …
@@ -47,65 +47,7 @@ README.md
     42→}
     43→
     44→func (e *FormattedError) Error() string {
-    45→    // Your custom format here
-    46→    return fmt.Sprintf("multiple errors: %v", e.errs)
-    47→}
-    48→
-    49→func (e *FormattedError) Unwrap() []error {
-    50→    return e.errs
-    51→}
-    52→```
-    53→
-    54→**Concurrent error collection (Group):**
-    55→```go
-    56→// golang.org/x/sync/errgroup returns only the first error:
-    57→import "golang.org/x/sync/errgroup"
-    58→
-    59→g := new(errgroup.Group)
-    60→g.Go(func() error { return task1() })
-    61→g.Go(func() error { return task2() })
-    62→err := g.Wait() // Returns first error only
-    63→
-    64→// To collect ALL errors like multierror.Group does, use a mutex:
-    65→type ErrorCollector struct {
-    66→    mu   sync.Mutex
-    67→    errs []error
-    68→}
-    69→
-    70→func (ec *ErrorCollector) Add(err error) {
-    71→    if err != nil {
-    72→        ec.mu.Lock()
-    73→        ec.errs = append(ec.errs, err)
-    74→        ec.mu.Unlock()
-    75→    }
-    76→}
-    77→
-    78→func (ec *ErrorCollector) Err() error {
-    79→    ec.mu.Lock()
-    80→    defer ec.mu.Unlock()
-    81→    if len(ec.errs) == 0 {
-    82→        return nil
-    83→    }
-    84→    return errors.Join(ec.errs...)
-    85→}
-    86→```
-    87→
-    88→---
-    89→
-    90→`go-multierror` is a package for Go that provides a mechanism for
-    91→representing a list of `error` values as a single `error`.
-    92→
-    93→This allows a function in Go to return an `error` that might actually
-    94→be a list of errors. If the caller knows this, they can unwrap the
-    95→list and access the errors. If the caller doesn't know, the error
-    96→formats to a nice human-readable format.
-    97→
-    98→`go-multierror` is compatible with the Go standard library
-    99→[errors](https://golang.org/pkg/errors/) package, supporting the
-   100→`As`, `Is`, and `Unwrap` functions for error introspection. Note that `Unwrap` 
-   101→returns errors one at a time via chaining, unlike `errors.Join` which 
-   102→implements the newer `Unwrap() []error` signature (Go 1.20+).
-   103→
+      →…
    104→## Installation and Docs
    106→Install using `go get github.com/hashicorp/go-multierror`.
    107→
@@ -161,76 +103,7 @@ README.md
    159→```go
    160→var result *multierror.Error
    161→
-   162→// ... accumulate errors here, maybe using Append
-   163→
-   164→if result != nil {
-   165→	result.ErrorFormat = func([]error) string {
-   166→		return "errors!"
-   167→	}
-   168→}
-   169→```
-   170→
-   171→**Accessing the list of errors**
-   172→
-   173→`multierror.Error` implements `error` so if the caller doesn't know about
-   174→multierror, it will work just fine. But if you're aware a multierror might
-   175→be returned, you can use type switches to access the list of errors:
-   176→
-   177→```go
-   178→if err := something(); err != nil {
-   179→	if merr, ok := err.(*multierror.Error); ok {
-   180→		// Use merr.Errors
-   181→	}
-   182→}
-   183→```
-   184→
-   185→You can also use the standard [`errors.Unwrap`](https://golang.org/pkg/errors/#Unwrap)
-   186→function. This will continue to unwrap into subsequent errors until none exist.
-   187→
-   188→**Extracting an error**
-   189→
-   190→The standard library [`errors.As`](https://golang.org/pkg/errors/#As)
-   191→function can be used directly with a multierror to extract a specific error:
-   192→
-   193→```go
-   194→// Assume err is a multierror value
-   195→err := somefunc()
-   196→
-   197→// We want to know if "err" has a "RichErrorType" in it and extract it.
-   198→var errRich RichErrorType
-   199→if errors.As(err, &errRich) {
-   200→	// It has it, and now errRich is populated.
-   201→}
-   202→```
-   203→
-   204→**Checking for an exact error value**
-   205→
-   206→Some errors are returned as exact errors such as the [`ErrNotExist`](https://golang.org/pkg/os/#pkg-variables)
-   207→error in the `os` package. You can check if this error is present by using
-   208→the standard [`errors.Is`](https://golang.org/pkg/errors/#Is) function.
-   209→
-   210→```go
-   211→// Assume err is a multierror value
-   212→err := somefunc()
-   213→if errors.Is(err, os.ErrNotExist) {
-   214→	// err contains os.ErrNotExist
-   215→}
-   216→```
-   217→
-   218→**Returning a multierror only if there are errors**
-   219→
-   220→If you build a `multierror.Error`, you can use the `ErrorOrNil` function
-   221→to return an `error` implementation only if there are errors to return:
-   222→
-   223→```go
-   224→var result *multierror.Error
-   225→
-   226→// ... accumulate errors here
-   227→
-   228→// Return the `error` only if errors were added to the multierror, otherwise
-   229→// return nil since there are no errors.
-   230→return result.ErrorOrNil()
-   231→```
+      →…
 
 append.go
      6→// Append is a helper function that will append more errors
@@ -253,103 +126,10 @@ append.go
     23→		for _, e := range errs {
     24→			switch e := e.(type) {
     25→			case *Error:
-    26→				if e != nil {
-    27→					err.Errors = append(err.Errors, e.Errors...)
-    28→				}
-    29→			default:
-    30→				if e != nil {
-    31→					err.Errors = append(err.Errors, e)
-    32→				}
-    33→			}
-    34→		}
-    35→
-    36→		return err
-    37→	default:
-    38→		newErrs := make([]error, 0, len(errs)+1)
-    39→		if err != nil {
-    40→			newErrs = append(newErrs, err)
-    41→		}
-    42→		newErrs = append(newErrs, errs...)
-    43→
-    44→		return Append(&Error{}, newErrs...)
-    45→	}
-    46→}
+      →…
 
 append_test.go
-     6→import (
-     7→	"errors"
-     8→	"testing"
-     9→)
-    11→func TestAppend_Error(t *testing.T) {
-    12→	original := &Error{
-    13→		Errors: []error{errors.New("foo")},
-    14→	}
-    15→
-    16→	result := Append(original, errors.New("bar"))
-    17→	if len(result.Errors) != 2 {
-    18→		t.Fatalf("wrong len: %d", len(result.Errors))
-    19→	}
-    20→
-    21→	original = &Error{}
-    22→	result = Append(original, errors.New("bar"))
-    23→	if len(result.Errors) != 1 {
-    24→		t.Fatalf("wrong len: %d", len(result.Errors))
-    25→	}
-    26→
-    27→	// Test when a typed nil is passed
-    28→	var e *Error
-    29→	result = Append(e, errors.New("baz"))
-    30→	if len(result.Errors) != 1 {
-    31→		t.Fatalf("wrong len: %d", len(result.Errors))
-    32→	}
-    33→
-    34→	// Test flattening
-    35→	original = &Error{
-    36→		Errors: []error{errors.New("foo")},
-    37→	}
-    38→
-    39→	result = Append(original, Append(nil, errors.New("foo"), errors.New("bar")))
-    40→	if len(result.Errors) != 3 {
-    41→		t.Fatalf("wrong len: %d", len(result.Errors))
-    42→	}
-    43→}
-    45→func TestAppend_NilError(t *testing.T) {
-    46→	var err error
-    47→	result := Append(err, errors.New("bar"))
-    48→	if len(result.Errors) != 1 {
-    49→		t.Fatalf("wrong len: %d", len(result.Errors))
-    50→	}
-    51→}
-    53→func TestAppend_NilErrorArg(t *testing.T) {
-    54→	var err error
-    55→	var nilErr *Error
-    56→	result := Append(err, nilErr)
-    57→	if len(result.Errors) != 0 {
-    58→		t.Fatalf("wrong len: %d", len(result.Errors))
-    59→	}
-    60→}
-    62→func TestAppend_NilErrorIfaceArg(t *testing.T) {
-    63→	var err error
-    64→	var nilErr error
-    65→	result := Append(err, nilErr)
-    66→	if len(result.Errors) != 0 {
-    67→		t.Fatalf("wrong len: %d", len(result.Errors))
-    68→	}
-    69→}
-    71→func TestAppend_NonError(t *testing.T) {
-    72→	original := errors.New("foo")
-    73→	result := Append(original, errors.New("bar"))
-    74→	if len(result.Errors) != 2 {
-    75→		t.Fatalf("wrong len: %d", len(result.Errors))
-    76→	}
-    77→}
-    79→func TestAppend_NonError_Error(t *testing.T) {
-    80→	original := errors.New("foo")
-    81→	result := Append(original, Append(nil, errors.New("bar")))
-    82→	if len(result.Errors) != 2 {
-    83→		t.Fatalf("wrong len: %d", len(result.Errors))
-    84→	}
-    85→}
+     6→import …
 
 flatten.go
      6→// Flatten flattens the given error, merging any *Errors together into
@@ -377,48 +157,7 @@ flatten.go
     29→}
 
 flatten_test.go
-     6→import (
-     7→	"errors"
-     8→	"fmt"
-     9→	"reflect"
-    10→	"testing"
-    11→)
-    13→func TestFlatten(t *testing.T) {
-    14→	original := &Error{
-    15→		Errors: []error{
-    16→			errors.New("one"),
-    17→			&Error{
-    18→				Errors: []error{
-    19→					errors.New("two"),
-    20→					&Error{
-    21→						Errors: []error{
-    22→							errors.New("three"),
-    23→						},
-    24→					},
-    25→				},
-    26→			},
-    27→		},
-    28→	}
-    29→
-    30→	expected := `3 errors occurred:
-    31→	* one
-    32→	* two
-    33→	* three
-    34→
-    35→`
-    36→	actual := fmt.Sprintf("%s", Flatten(original))
-    37→
-    38→	if expected != actual {
-    39→		t.Fatalf("expected: %s, got: %s", expected, actual)
-    40→	}
-    41→}
-    43→func TestFlatten_nonError(t *testing.T) {
-    44→	err := errors.New("foo")
-    45→	actual := Flatten(err)
-    46→	if !reflect.DeepEqual(actual, err) {
-    47→		t.Fatalf("bad: %#v", actual)
-    48→	}
-    49→}
+     6→import …
 
 format.go
      6→import (
@@ -442,46 +181,10 @@ format.go
     26→
     27→	return fmt.Sprintf(
     28→		"%d errors occurred:\n\t%s\n\n",
-    29→		len(es), strings.Join(points, "\n\t"))
-    30→}
+      →…
 
 format_test.go
-     6→import (
-     7→	"errors"
-     8→	"testing"
-     9→)
-    11→func TestListFormatFuncSingle(t *testing.T) {
-    12→	expected := `1 error occurred:
-    13→	* foo
-    14→
-    15→`
-    16→
-    17→	errors := []error{
-    18→		errors.New("foo"),
-    19→	}
-    20→
-    21→	actual := ListFormatFunc(errors)
-    22→	if actual != expected {
-    23→		t.Fatalf("bad: %#v", actual)
-    24→	}
-    25→}
-    27→func TestListFormatFuncMultiple(t *testing.T) {
-    28→	expected := `2 errors occurred:
-    29→	* foo
-    30→	* bar
-    31→
-    32→`
-    33→
-    34→	errors := []error{
-    35→		errors.New("foo"),
-    36→		errors.New("bar"),
-    37→	}
-    38→
-    39→	actual := ListFormatFunc(errors)
-    40→	if actual != expected {
-    41→		t.Fatalf("bad: %#v", actual)
-    42→	}
-    43→}
+     6→import …
 
 group.go
      6→import "sync"
@@ -508,7 +211,7 @@ group.go
     29→			g.mutex.Unlock()
     30→		}
     31→	}()
-    32→}
+      →…
     34→// Wait blocks until all function calls from the Go method have returned, then
     35→// returns the multierror.
     36→func (g *Group) Wait() *Error {
@@ -519,47 +222,7 @@ group.go
     41→}
 
 group_test.go
-     6→import (
-     7→	"errors"
-     8→	"strings"
-     9→	"testing"
-    10→)
-    12→func TestGroup(t *testing.T) {
-    13→	err1 := errors.New("group_test: 1")
-    14→	err2 := errors.New("group_test: 2")
-    15→
-    16→	cases := []struct {
-    17→		errs      []error
-    18→		nilResult bool
-    19→	}{
-    20→		{errs: []error{}, nilResult: true},
-    21→		{errs: []error{nil}, nilResult: true},
-    22→		{errs: []error{err1}},
-    23→		{errs: []error{err1, nil}},
-    24→		{errs: []error{err1, nil, err2}},
-    25→	}
-    26→
-    27→	for _, tc := range cases {
-    28→		var g Group
-    29→
-    30→		for _, err := range tc.errs {
-    31→			err := err
-    32→			g.Go(func() error { return err })
-    33→
-    34→		}
-    35→
-    36→		gErr := g.Wait()
-    37→		if gErr != nil {
-    38→			for i := range tc.errs {
-    39→				if tc.errs[i] != nil && !strings.Contains(gErr.Error(), tc.errs[i].Error()) {
-    40→					t.Fatalf("expected error to contain %q, actual: %v", tc.errs[i].Error(), gErr)
-    41→				}
-    42→			}
-    43→		} else if !tc.nilResult {
-    44→			t.Fatalf("Group.Wait() should not have returned nil for errs: %v", tc.errs)
-    45→		}
-    46→	}
-    47→}
+     6→import …
 
 multierror.go
      6→import (
@@ -633,10 +296,7 @@ multierror.go
     80→	}
     81→
     82→	// Shallow copy the slice
-    83→	errs := make([]error, len(e.Errors))
-    84→	copy(errs, e.Errors)
-    85→	return chain(errs)
-    86→}
+      →…
     88→// chain implements the interfaces necessary for errors.Is/As/Unwrap to
     89→// work in a deterministic way with multierror. A chain tracks a list of
     90→// errors while accounting for the current represented error. This lets
@@ -672,202 +332,9 @@ multierror.go
    124→}
 
 multierror_test.go
-     6→import (
-     7→	"errors"
-     8→	"fmt"
-     9→	"reflect"
-    10→	"testing"
-    11→)
-    13→func TestError_Impl(t *testing.T) {
-    14→	var _ error = new(Error)
-    15→}
-    17→func TestErrorError_custom(t *testing.T) {
-    18→	errors := []error{
-    19→		errors.New("foo"),
-    20→		errors.New("bar"),
-    21→	}
-    22→
-    23→	fn := func(es []error) string {
-    24→		return "foo"
-    25→	}
-    26→
-    27→	multi := &Error{Errors: errors, ErrorFormat: fn}
-    28→	if multi.Error() != "foo" {
-    29→		t.Fatalf("bad: %s", multi.Error())
-    30→	}
-    31→}
-    33→func TestErrorError_default(t *testing.T) {
-    34→	expected := `2 errors occurred:
-    35→	* foo
-    36→	* bar
-    37→
-    38→`
-    39→
-    40→	errors := []error{
-    41→		errors.New("foo"),
-    42→		errors.New("bar"),
-    43→	}
-    44→
-    45→	multi := &Error{Errors: errors}
-    46→	if multi.Error() != expected {
-    47→		t.Fatalf("bad: %s", multi.Error())
-    48→	}
-    49→}
-    51→func TestErrorErrorOrNil(t *testing.T) {
-    52→	err := new(Error)
-    53→	if err.ErrorOrNil() != nil {
-    54→		t.Fatalf("bad: %#v", err.ErrorOrNil())
-    55→	}
-    56→
-    57→	err.Errors = []error{errors.New("foo")}
-    58→	if v := err.ErrorOrNil(); v == nil {
-    59→		t.Fatal("should not be nil")
-    60→	} else if !reflect.DeepEqual(v, err) {
-    61→		t.Fatalf("bad: %#v", v)
-    62→	}
-    63→}
-    65→func TestErrorWrappedErrors(t *testing.T) {
-    66→	errors := []error{
-    67→		errors.New("foo"),
-    68→		errors.New("bar"),
-    69→	}
-    70→
-    71→	multi := &Error{Errors: errors}
-    72→	if !reflect.DeepEqual(multi.Errors, multi.WrappedErrors()) {
-    73→		t.Fatalf("bad: %s", multi.WrappedErrors())
-    74→	}
-    75→
-    76→	multi = nil
-    77→	if err := multi.WrappedErrors(); err != nil {
-    78→		t.Fatalf("bad: %#v", multi)
-    79→	}
-    80→}
-    82→func TestErrorUnwrap(t *testing.T) {
-    83→	t.Run("with errors", func(t *testing.T) {
-    84→		err := &Error{Errors: []error{
-    85→			errors.New("foo"),
-    86→			errors.New("bar"),
-    87→			errors.New("baz"),
-    88→		}}
-    89→
-    90→		var current error = err
-    91→		for i := 0; i < len(err.Errors); i++ {
-    92→			current = errors.Unwrap(current)
-    93→			if !errors.Is(current, err.Errors[i]) {
-    94→				t.Fatal("should be next value")
-    95→			}
-    96→		}
-    97→
-    98→		if errors.Unwrap(current) != nil {
-    99→			t.Fatal("should be nil at the end")
-   100→		}
-   101→	})
-   102→
-   103→	t.Run("with no errors", func(t *testing.T) {
-   104→		err := &Error{Errors: nil}
-   105→		if errors.Unwrap(err) != nil {
-   106→			t.Fatal("should be nil")
-   107→		}
-   108→	})
-   109→
-   110→	t.Run("with nil multierror", func(t *testing.T) {
-   111→		var err *Error
-   112→		if errors.Unwrap(err) != nil {
-   113→			t.Fatal("should be nil")
-   114→		}
-   115→	})
-   116→}
-   118→func TestErrorIs(t *testing.T) {
-   119→	errBar := errors.New("bar")
-   120→
-   121→	t.Run("with errBar", func(t *testing.T) {
-   122→		err := &Error{Errors: []error{
-   123→			errors.New("foo"),
-   124→			errBar,
-   125→			errors.New("baz"),
-   126→		}}
-   127→
-   128→		if !errors.Is(err, errBar) {
-   129→			t.Fatal("should be true")
-   130→		}
-   131→	})
-   132→
-   133→	t.Run("with errBar wrapped by fmt.Errorf", func(t *testing.T) {
-   134→		err := &Error{Errors: []error{
-   135→			errors.New("foo"),
-   136→			fmt.Errorf("errorf: %w", errBar),
-   137→			errors.New("baz"),
-   138→		}}
-   139→
-   140→		if !errors.Is(err, errBar) {
-   141→			t.Fatal("should be true")
-   142→		}
-   143→	})
-   144→
-   145→	t.Run("without errBar", func(t *testing.T) {
-   146→		err := &Error{Errors: []error{
-   147→			errors.New("foo"),
-   148→			errors.New("baz"),
-   149→		}}
-   150→
-   151→		if errors.Is(err, errBar) {
-   152→			t.Fatal("should be false")
-   153→		}
-   154→	})
-   155→}
-   157→func TestErrorAs(t *testing.T) {
-   158→	match := &nestedError{}
-   159→
-   160→	t.Run("with the value", func(t *testing.T) {
-   161→		err := &Error{Errors: []error{
-   162→			errors.New("foo"),
-   163→			match,
-   164→			errors.New("baz"),
-   165→		}}
-   166→
-   167→		var target *nestedError
-   168→		if !errors.As(err, &target) {
-   169→			t.Fatal("should be true")
-   170→		}
-   171→		if target == nil {
-   172→			t.Fatal("target should not be nil")
-   173→		}
-   174→	})
-   175→
-   176→	t.Run("with the value wrapped by fmt.Errorf", func(t *testing.T) {
-   177→		err := &Error{Errors: []error{
-   178→			errors.New("foo"),
-   179→			fmt.Errorf("errorf: %w", match),
-   180→			errors.New("baz"),
-   181→		}}
-   182→
-   183→		var target *nestedError
-   184→		if !errors.As(err, &target) {
-   185→			t.Fatal("should be true")
-   186→		}
-   187→		if target == nil {
-   188→			t.Fatal("target should not be nil")
-   189→		}
-   190→	})
-   191→
-   192→	t.Run("without the value", func(t *testing.T) {
-   193→		err := &Error{Errors: []error{
-   194→			errors.New("foo"),
-   195→			errors.New("baz"),
-   196→		}}
-   197→
-   198→		var target *nestedError
-   199→		if errors.As(err, &target) {
-   200→			t.Fatal("should be false")
-   201→		}
-   202→		if target != nil {
-   203→			t.Fatal("target should be nil")
-   204→		}
-   205→	})
-   206→}
+     6→import …
    208→// nestedError implements error and is used for tests.
    209→type nestedError struct{}
-   211→func (*nestedError) Error() string { return "" }
 
 prefix.go
      6→import (
@@ -891,49 +358,10 @@ prefix.go
     25→			err = new(Error)
     26→		}
     27→
-    28→		// Wrap each of the errors
-    29→		for i, e := range err.Errors {
-    30→			err.Errors[i] = fmt.Errorf("%s %s", prefix, e)
-    31→		}
-    32→
-    33→		return err
-    34→	default:
-    35→		return fmt.Errorf("%s %s", prefix, err)
-    36→	}
-    37→}
+      →…
 
 prefix_test.go
-     6→import (
-     7→	"errors"
-     8→	"testing"
-     9→)
-    11→func TestPrefix_Error(t *testing.T) {
-    12→	original := &Error{
-    13→		Errors: []error{errors.New("foo")},
-    14→	}
-    15→
-    16→	result := Prefix(original, "bar")
-    17→	if result.(*Error).Errors[0].Error() != "bar foo" {
-    18→		t.Fatalf("bad: %s", result)
-    19→	}
-    20→}
-    22→func TestPrefix_NilError(t *testing.T) {
-    23→	var err error
-    24→	result := Prefix(err, "bar")
-    25→	if result != nil {
-    26→		t.Fatalf("bad: %#v", result)
-    27→	}
-    28→}
-    30→func TestPrefix_NonError(t *testing.T) {
-    31→	original := errors.New("foo")
-    32→	result := Prefix(original, "bar")
-    33→	if result == nil {
-    34→		t.Fatal("error result was nil")
-    35→	}
-    36→	if result.Error() != "bar foo" {
-    37→		t.Fatalf("bad: %s", result)
-    38→	}
-    39→}
+     6→import …
 
 sort.go
      6→// Len implements sort.Interface function for length
@@ -954,51 +382,4 @@ sort.go
     23→}
 
 sort_test.go
-     6→import (
-     7→	"errors"
-     8→	"reflect"
-     9→	"sort"
-    10→	"testing"
-    11→)
-    13→func TestSortSingle(t *testing.T) {
-    14→	errFoo := errors.New("foo")
-    15→
-    16→	expected := []error{
-    17→		errFoo,
-    18→	}
-    19→
-    20→	err := &Error{
-    21→		Errors: []error{
-    22→			errFoo,
-    23→		},
-    24→	}
-    25→
-    26→	sort.Sort(err)
-    27→	if !reflect.DeepEqual(err.Errors, expected) {
-    28→		t.Fatalf("bad: %#v", err)
-    29→	}
-    30→}
-    32→func TestSortMultiple(t *testing.T) {
-    33→	errBar := errors.New("bar")
-    34→	errBaz := errors.New("baz")
-    35→	errFoo := errors.New("foo")
-    36→
-    37→	expected := []error{
-    38→		errBar,
-    39→		errBaz,
-    40→		errFoo,
-    41→	}
-    42→
-    43→	err := &Error{
-    44→		Errors: []error{
-    45→			errFoo,
-    46→			errBar,
-    47→			errBaz,
-    48→		},
-    49→	}
-    50→
-    51→	sort.Sort(err)
-    52→	if !reflect.DeepEqual(err.Errors, expected) {
-    53→		t.Fatalf("bad: %#v", err)
-    54→	}
-    55→}
+     6→import …

@@ -4,14 +4,7 @@ expression: output
 ---
 sample.tsx
      5→export interface ButtonProps {
-     6→    label: string;
-     7→    onClick: () => void;
-     8→    disabled?: boolean;
-     9→}
     11→/**
       →…
     15→export function Button({ label, onClick, disabled }: ButtonProps) {
-    28→/** A forwarded-ref input component. */
-    29→export const Input = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
-    35→export type Theme …
-    37→export const MemoizedList …
+    29→export const Input …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3993 words)
+budget: 4000 (4029 tokens)
 
 README.md
      1→# xxhash
@@ -74,84 +74,15 @@ README.md
     74→- [Badger](https://github.com/dgraph-io/badger)
 
 bench_test.go
-     3→import (
-     4→	"strings"
-     5→	"testing"
-     6→)
+     3→import …
      8→var benchmarks = []struct {
-     9→	name string
-    10→	n    int64
-    11→}{
-    12→	{"4B", 4},
-    13→	{"16B", 16},
-    14→	{"100B", 100},
-    15→	{"4KB", 4e3},
-    16→	{"10MB", 10e6},
-    17→}
     19→func BenchmarkSum64(b *testing.B) {
-    20→	for _, bb := range benchmarks {
-    21→		in := make([]byte, bb.n)
-    22→		for i := range in {
-    23→			in[i] = byte(i)
-    24→		}
-    25→		b.Run(bb.name, func(b *testing.B) {
-    26→			b.SetBytes(bb.n)
-    27→			for i := 0; i < b.N; i++ {
-    28→				_ = Sum64(in)
-    29→			}
-    30→		})
-    31→	}
-    32→}
     34→func BenchmarkSum64String(b *testing.B) {
-    35→	for _, bb := range benchmarks {
-    36→		s := strings.Repeat("a", int(bb.n))
-    37→		b.Run(bb.name, func(b *testing.B) {
-    38→			b.SetBytes(bb.n)
-    39→			for i := 0; i < b.N; i++ {
-    40→				_ = Sum64String(s)
-    41→			}
-    42→		})
-    43→	}
-    44→}
     46→func BenchmarkDigestBytes(b *testing.B) {
-    47→	for _, bb := range benchmarks {
-    48→		in := make([]byte, bb.n)
-    49→		for i := range in {
-    50→			in[i] = byte(i)
-    51→		}
-    52→		b.Run(bb.name, func(b *testing.B) {
-    53→			b.SetBytes(bb.n)
-    54→			for i := 0; i < b.N; i++ {
-    55→				h := New()
-    56→				h.Write(in)
-    57→				_ = h.Sum64()
-    58→			}
-    59→		})
-    60→	}
-    61→}
     63→func BenchmarkDigestString(b *testing.B) {
-    64→	for _, bb := range benchmarks {
-    65→		s := strings.Repeat("a", int(bb.n))
-    66→		b.Run(bb.name, func(b *testing.B) {
-    67→			b.SetBytes(bb.n)
-    68→			for i := 0; i < b.N; i++ {
-    69→				h := New()
-    70→				h.WriteString(s)
-    71→				_ = h.Sum64()
-    72→			}
-    73→		})
-    74→	}
-    75→}
 
 dynamic/dynamic_test.go
-     6→import (
-     7→	"bytes"
-     8→	"log"
-     9→	"os"
-    10→	"os/exec"
-    11→	"plugin"
-    12→	"testing"
-    13→)
+     6→import …
     15→// This is a cursory test that checks whether things work under dynamic linking.
     16→
     17→func TestMain(m *testing.M) {
@@ -162,29 +93,13 @@ dynamic/dynamic_test.go
     22→		"plugin.go",
     23→	)
     24→	var out bytes.Buffer
-    25→	cmd.Stdout = &out
-    26→	cmd.Stderr = &out
-    27→	if err := cmd.Run(); err != nil {
-    28→		log.Fatalf("Error building plugin: %s\nOutput:\n%s", err, out.String())
-    29→	}
-    30→	os.Exit(m.Run())
-    31→}
+      →…
     33→func TestDynamic(t *testing.T) {
     34→	plug, err := plugin.Open("plugin.so")
     35→	if err != nil {
     36→		t.Fatal(err)
     37→	}
-    38→	for _, test := range []string{
-    39→		"TestSum",
-    40→		"TestDigest",
-    41→	} {
-    42→		f, err := plug.Lookup(test)
-    43→		if err != nil {
-    44→			t.Fatalf("cannot find func %s: %s", test, err)
-    45→		}
-    46→		f.(func(*testing.T))(t)
-    47→	}
-    48→}
+      →…
 
 dynamic/plugin.go
      6→import (
@@ -220,11 +135,7 @@ dynamic/plugin.go
     40→				}
     41→			}
     42→			if got := d.Sum64(); got != want {
-    43→				log.Fatalf("Digest.Sum64: got 0x%x; want 0x%x", got, want)
-    44→			}
-    45→		})
-    46→	}
-    47→}
+      →…
 
 xxhash.go
      5→import (
@@ -265,7 +176,7 @@ xxhash.go
     46→	var d Digest
     47→	d.ResetWithSeed(seed)
     48→	return &d
-    49→}
+      →…
     51→// Reset clears the Digest's state so that it can be reused.
     52→// It uses a seed value of zero.
     53→func (d *Digest) Reset() {
@@ -277,10 +188,7 @@ xxhash.go
     60→	d.v1 = seed + prime1 + prime2
     61→	d.v2 = seed + prime2
     62→	d.v3 = seed
-    63→	d.v4 = seed - prime1
-    64→	d.total = 0
-    65→	d.n = 0
-    66→}
+      →…
     68→// Size always returns 8 bytes.
     69→func (d *Digest) Size() int { return 8 }
     71→// BlockSize always returns 32 bytes.
@@ -290,94 +198,19 @@ xxhash.go
     76→	n = len(b)
     77→	d.total += uint64(n)
     78→
-    79→	memleft := d.mem[d.n&(len(d.mem)-1):]
-    80→
-    81→	if d.n+n < 32 {
-    82→		// This new data doesn't even fill the current block.
-    83→		copy(memleft, b)
-    84→		d.n += n
-    85→		return
-    86→	}
-    87→
-    88→	if d.n > 0 {
-    89→		// Finish off the partial block.
-    90→		c := copy(memleft, b)
-    91→		d.v1 = round(d.v1, u64(d.mem[0:8]))
-    92→		d.v2 = round(d.v2, u64(d.mem[8:16]))
-    93→		d.v3 = round(d.v3, u64(d.mem[16:24]))
-    94→		d.v4 = round(d.v4, u64(d.mem[24:32]))
-    95→		b = b[c:]
-    96→		d.n = 0
-    97→	}
-    98→
-    99→	if len(b) >= 32 {
-   100→		// One or more full blocks left.
-   101→		nw := writeBlocks(d, b)
-   102→		b = b[nw:]
-   103→	}
-   104→
-   105→	// Store any remaining partial block.
-   106→	copy(d.mem[:], b)
-   107→	d.n = len(b)
-   108→
-   109→	return
-   110→}
+      →…
    112→// Sum appends the current hash to b and returns the resulting slice.
    113→func (d *Digest) Sum(b []byte) []byte {
    114→	s := d.Sum64()
    115→	return append(
    116→		b,
-   117→		byte(s>>56),
-   118→		byte(s>>48),
-   119→		byte(s>>40),
-   120→		byte(s>>32),
-   121→		byte(s>>24),
-   122→		byte(s>>16),
-   123→		byte(s>>8),
-   124→		byte(s),
-   125→	)
-   126→}
+      →…
    128→// Sum64 returns the current hash.
    129→func (d *Digest) Sum64() uint64 {
    130→	var h uint64
    131→
    132→	if d.total >= 32 {
-   133→		v1, v2, v3, v4 := d.v1, d.v2, d.v3, d.v4
-   134→		h = rol1(v1) + rol7(v2) + rol12(v3) + rol18(v4)
-   135→		h = mergeRound(h, v1)
-   136→		h = mergeRound(h, v2)
-   137→		h = mergeRound(h, v3)
-   138→		h = mergeRound(h, v4)
-   139→	} else {
-   140→		h = d.v3 + prime5
-   141→	}
-   142→
-   143→	h += d.total
-   144→
-   145→	b := d.mem[:d.n&(len(d.mem)-1)]
-   146→	for ; len(b) >= 8; b = b[8:] {
-   147→		k1 := round(0, u64(b[:8]))
-   148→		h ^= k1
-   149→		h = rol27(h)*prime1 + prime4
-   150→	}
-   151→	if len(b) >= 4 {
-   152→		h ^= uint64(u32(b[:4])) * prime1
-   153→		h = rol23(h)*prime2 + prime3
-   154→		b = b[4:]
-   155→	}
-   156→	for ; len(b) > 0; b = b[1:] {
-   157→		h ^= uint64(b[0]) * prime5
-   158→		h = rol11(h) * prime1
-   159→	}
-   160→
-   161→	h ^= h >> 33
-   162→	h *= prime2
-   163→	h ^= h >> 29
-   164→	h *= prime3
-   165→	h ^= h >> 32
-   166→
-   167→	return h
-   168→}
+      →…
    170→const (
    171→	magic         = "xxh\x06"
    172→	marshaledSize = len(magic) + 8*5 + 32
@@ -386,63 +219,27 @@ xxhash.go
    177→	b := make([]byte, 0, marshaledSize)
    178→	b = append(b, magic...)
    179→	b = appendUint64(b, d.v1)
-   180→	b = appendUint64(b, d.v2)
-   181→	b = appendUint64(b, d.v3)
-   182→	b = appendUint64(b, d.v4)
-   183→	b = appendUint64(b, d.total)
-   184→	b = append(b, d.mem[:d.n]...)
-   185→	b = b[:len(b)+len(d.mem)-d.n]
-   186→	return b, nil
-   187→}
+      →…
    189→// UnmarshalBinary implements the encoding.BinaryUnmarshaler interface.
    190→func (d *Digest) UnmarshalBinary(b []byte) error {
    191→	if len(b) < len(magic) || string(b[:len(magic)]) != magic {
    192→		return errors.New("xxhash: invalid hash state identifier")
    193→	}
-   194→	if len(b) != marshaledSize {
-   195→		return errors.New("xxhash: invalid hash state size")
-   196→	}
-   197→	b = b[len(magic):]
-   198→	b, d.v1 = consumeUint64(b)
-   199→	b, d.v2 = consumeUint64(b)
-   200→	b, d.v3 = consumeUint64(b)
-   201→	b, d.v4 = consumeUint64(b)
-   202→	b, d.total = consumeUint64(b)
-   203→	copy(d.mem[:], b)
-   204→	d.n = int(d.total % uint64(len(d.mem)))
-   205→	return nil
-   206→}
-   208→func appendUint64(b []byte, x uint64) []byte {
-   209→	var a [8]byte
-   210→	binary.LittleEndian.PutUint64(a[:], x)
-   211→	return append(b, a[:]...)
-   212→}
-   214→func consumeUint64(b []byte) ([]byte, uint64) {
-   215→	x := u64(b)
-   216→	return b[8:], x
-   217→}
-   219→func u64(b []byte) uint64 { return binary.LittleEndian.Uint64(b) }
-   220→func u32(b []byte) uint32 { return binary.LittleEndian.Uint32(b) }
-   222→func round(acc, input uint64) uint64 {
-   223→	acc += input * prime2
-   224→	acc = rol31(acc)
-   225→	acc *= prime1
-   226→	return acc
-   227→}
-   229→func mergeRound(acc, val uint64) uint64 {
-   230→	val = round(0, val)
-   231→	acc ^= val
-   232→	acc = acc*prime1 + prime4
-   233→	return acc
-   234→}
-   236→func rol1(x uint64) uint64  { return bits.RotateLeft64(x, 1) }
-   237→func rol7(x uint64) uint64  { return bits.RotateLeft64(x, 7) }
-   238→func rol11(x uint64) uint64 { return bits.RotateLeft64(x, 11) }
-   239→func rol12(x uint64) uint64 { return bits.RotateLeft64(x, 12) }
-   240→func rol18(x uint64) uint64 { return bits.RotateLeft64(x, 18) }
-   241→func rol23(x uint64) uint64 { return bits.RotateLeft64(x, 23) }
-   242→func rol27(x uint64) uint64 { return bits.RotateLeft64(x, 27) }
-   243→func rol31(x uint64) uint64 { return bits.RotateLeft64(x, 31) }
+      →…
+   208→func appendUint64 …
+   214→func consumeUint64 …
+   219→func u64 …
+   220→func u32 …
+   222→func round …
+   229→func mergeRound …
+   236→func rol1 …
+   237→func rol7 …
+   238→func rol11 …
+   239→func rol12 …
+   240→func rol18 …
+   241→func rol23 …
+   242→func rol27 …
+   243→func rol31 …
 
 xxhash_asm.go
      9→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
@@ -458,71 +255,8 @@ xxhash_other.go
      8→	// A simpler version would be
      9→	//   d := New()
     10→	//   d.Write(b)
-    11→	//   return d.Sum64()
-    12→	// but this is faster, particularly for small inputs.
-    13→
-    14→	n := len(b)
-    15→	var h uint64
-    16→
-    17→	if n >= 32 {
-    18→		v1 := primes[0] + prime2
-    19→		v2 := prime2
-    20→		v3 := uint64(0)
-    21→		v4 := -primes[0]
-    22→		for len(b) >= 32 {
-    23→			v1 = round(v1, u64(b[0:8:len(b)]))
-    24→			v2 = round(v2, u64(b[8:16:len(b)]))
-    25→			v3 = round(v3, u64(b[16:24:len(b)]))
-    26→			v4 = round(v4, u64(b[24:32:len(b)]))
-    27→			b = b[32:len(b):len(b)]
-    28→		}
-    29→		h = rol1(v1) + rol7(v2) + rol12(v3) + rol18(v4)
-    30→		h = mergeRound(h, v1)
-    31→		h = mergeRound(h, v2)
-    32→		h = mergeRound(h, v3)
-    33→		h = mergeRound(h, v4)
-    34→	} else {
-    35→		h = prime5
-    36→	}
-    37→
-    38→	h += uint64(n)
-    39→
-    40→	for ; len(b) >= 8; b = b[8:] {
-    41→		k1 := round(0, u64(b[:8]))
-    42→		h ^= k1
-    43→		h = rol27(h)*prime1 + prime4
-    44→	}
-    45→	if len(b) >= 4 {
-    46→		h ^= uint64(u32(b[:4])) * prime1
-    47→		h = rol23(h)*prime2 + prime3
-    48→		b = b[4:]
-    49→	}
-    50→	for ; len(b) > 0; b = b[1:] {
-    51→		h ^= uint64(b[0]) * prime5
-    52→		h = rol11(h) * prime1
-    53→	}
-    54→
-    55→	h ^= h >> 33
-    56→	h *= prime2
-    57→	h ^= h >> 29
-    58→	h *= prime3
-    59→	h ^= h >> 32
-    60→
-    61→	return h
-    62→}
-    64→func writeBlocks(d *Digest, b []byte) int {
-    65→	v1, v2, v3, v4 := d.v1, d.v2, d.v3, d.v4
-    66→	n := len(b)
-    67→	for len(b) >= 32 {
-    68→		v1 = round(v1, u64(b[0:8:len(b)]))
-    69→		v2 = round(v2, u64(b[8:16:len(b)]))
-    70→		v3 = round(v3, u64(b[16:24:len(b)]))
-    71→		v4 = round(v4, u64(b[24:32:len(b)]))
-    72→		b = b[32:len(b):len(b)]
-    73→	}
-    74→	d.v1, d.v2, d.v3, d.v4 = v1, v2, v3, v4
-    75→	return n - len(b)
-    76→}
+      →…
+    64→func writeBlocks …
 
 xxhash_safe.go
      8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
@@ -535,182 +269,16 @@ xxhash_safe.go
     16→}
 
 xxhash_test.go
-     3→import (
-     4→	"bytes"
-     5→	"encoding/binary"
-     6→	"fmt"
-     7→	"math"
-     8→	"strings"
-     9→	"testing"
-    10→)
+     3→import …
     12→func TestAll(t *testing.T) {
-    13→	// Exactly 63 characters, which exercises all code paths.
-    14→	const s63 = "Call me Ishmael. Some years ago--never mind how long precisely-"
-    15→	for _, tt := range []struct {
-    16→		input string
-    17→		seed  uint64
-    18→		want  uint64
-    19→	}{
-    20→		{"", 0, 0xef46db3751d8e999},
-    21→		{"a", 0, 0xd24ec4f1a98c6e5b},
-    22→		{"as", 0, 0x1c330fb2d66be179},
-    23→		{"asd", 0, 0x631c37ce72a97393},
-    24→		{"asdf", 0, 0x415872f599cea71e},
-    25→		{s63, 0, 0x02a2e85470d6fd96},
-    26→
-    27→		{"", 123, 0xe0db84de91f3e198},
-    28→		{"asdf", math.MaxUint64, 0x9a2fd8473be539b6},
-    29→		{s63, 54321, 0x1736d186daf5d1cd},
-    30→	} {
-    31→		lastChunkSize := len(tt.input)
-    32→		if lastChunkSize == 0 {
-    33→			lastChunkSize = 1
-    34→		}
-    35→		var name string
-    36→		if tt.input == "" {
-    37→			name = "input=empty"
-    38→		} else if len(tt.input) > 10 {
-    39→			name = fmt.Sprintf("input=len-%d", len(tt.input))
-    40→		} else {
-    41→			name = fmt.Sprintf("input=%q", tt.input)
-    42→		}
-    43→		if tt.seed != 0 {
-    44→			name += fmt.Sprintf(",seed=%d", tt.seed)
-    45→		}
-    46→		for chunkSize := 1; chunkSize <= lastChunkSize; chunkSize++ {
-    47→			name := fmt.Sprintf("%s,chunkSize=%d", name, chunkSize)
-    48→			t.Run(name, func(t *testing.T) {
-    49→				testDigest(t, tt.input, tt.seed, chunkSize, tt.want)
-    50→			})
-    51→		}
-    52→		if tt.seed == 0 {
-    53→			t.Run(name, func(t *testing.T) { testSum(t, tt.input, tt.want) })
-    54→		}
-    55→	}
-    56→}
-    58→func testDigest(t *testing.T, input string, seed uint64, chunkSize int, want uint64) {
-    59→	d := NewWithSeed(seed)
-    60→	ds := NewWithSeed(seed) // uses WriteString
-    61→	for i := 0; i < len(input); i += chunkSize {
-    62→		chunk := input[i:]
-    63→		if len(chunk) > chunkSize {
-    64→			chunk = chunk[:chunkSize]
-    65→		}
-    66→		n, err := d.Write([]byte(chunk))
-    67→		if err != nil || n != len(chunk) {
-    68→			t.Fatalf("Digest.Write: got (%d, %v); want (%d, nil)", n, err, len(chunk))
-    69→		}
-    70→		n, err = ds.WriteString(chunk)
-    71→		if err != nil || n != len(chunk) {
-    72→			t.Fatalf("Digest.WriteString: got (%d, %v); want (%d, nil)", n, err, len(chunk))
-    73→		}
-    74→	}
-      →…
-    88→func testSum(t *testing.T, input string, want uint64) {
-    89→	if got := Sum64([]byte(input)); got != want {
-    90→		t.Fatalf("Sum64: got 0x%x; want 0x%x", got, want)
-    91→	}
-    92→	if got := Sum64String(input); got != want {
-    93→		t.Fatalf("Sum64String: got 0x%x; want 0x%x", got, want)
-    94→	}
-    95→}
+    58→func testDigest …
+    88→func testSum …
     97→func TestReset(t *testing.T) {
-    98→	parts := []string{"The quic", "k br", "o", "wn fox jumps", " ov", "er the lazy ", "dog."}
-    99→	d := New()
-   100→	for _, part := range parts {
-   101→		d.Write([]byte(part))
-   102→	}
-   103→	h0 := d.Sum64()
-   104→
-   105→	d.Reset()
-   106→	d.Write([]byte(strings.Join(parts, "")))
-   107→	h1 := d.Sum64()
-   108→
-   109→	if h0 != h1 {
-   110→		t.Errorf("0x%x != 0x%x", h0, h1)
-   111→	}
-   112→}
    114→func TestResetWithSeed(t *testing.T) {
-   115→	parts := []string{"The quic", "k br", "o", "wn fox jumps", " ov", "er the lazy ", "dog."}
-   116→	d := NewWithSeed(123)
-   117→	for _, part := range parts {
-   118→		d.Write([]byte(part))
-   119→	}
-   120→	h0 := d.Sum64()
-   121→
-   122→	d.ResetWithSeed(123)
-   123→	d.Write([]byte(strings.Join(parts, "")))
-   124→	h1 := d.Sum64()
-   125→
-   126→	if h0 != h1 {
-   127→		t.Errorf("0x%x != 0x%x", h0, h1)
-   128→	}
-   129→}
    131→func TestBinaryMarshaling(t *testing.T) {
-   132→	d := New()
-   133→	d.WriteString("abc")
-   134→	b, err := d.MarshalBinary()
-   135→	if err != nil {
-   136→		t.Fatal(err)
-   137→	}
-   138→	d = New()
-   139→	d.WriteString("junk")
-   140→	if err := d.UnmarshalBinary(b); err != nil {
-   141→		t.Fatal(err)
-   142→	}
-   143→	d.WriteString("def")
-   144→	if got, want := d.Sum64(), Sum64String("abcdef"); got != want {
-   145→		t.Fatalf("after MarshalBinary+UnmarshalBinary, got 0x%x; want 0x%x", got, want)
-   146→	}
-   147→
-   148→	d0 := New()
-   149→	d1 := New()
-   150→	for i := 0; i < 64; i++ {
-   151→		b, err := d0.MarshalBinary()
-   152→		if err != nil {
-   153→			t.Fatal(err)
-   154→		}
-   155→		d0 = new(Digest)
-   156→		if err := d0.UnmarshalBinary(b); err != nil {
-   157→			t.Fatal(err)
-   158→		}
-   159→		if got, want := d0.Sum64(), d1.Sum64(); got != want {
-   160→			t.Fatalf("after %d Writes, unmarshaled Digest gave sum 0x%x; want 0x%x", i, got, want)
-   161→		}
-   162→
-   163→		d0.Write([]byte{'a'})
-   164→		d1.Write([]byte{'a'})
-   165→	}
-   166→}
    168→var sink uint64
    170→func TestAllocs(t *testing.T) {
-   171→	const shortStr = "abcdefghijklmnop"
-   172→	// Sum64([]byte(shortString)) shouldn't allocate because the
-   173→	// intermediate []byte ought not to escape.
-   174→	// (See https://github.com/cespare/xxhash/pull/2.)
-   175→	t.Run("Sum64", func(t *testing.T) {
-   176→		testAllocs(t, func() {
-   177→			sink = Sum64([]byte(shortStr))
-   178→		})
-   179→	})
-   180→	// Creating and using a Digest shouldn't allocate because its methods
-   181→	// shouldn't make it escape. (A previous version of New returned a
-   182→	// hash.Hash64 which forces an allocation.)
-   183→	t.Run("Digest", func(t *testing.T) {
-   184→		b := []byte("asdf")
-   185→		testAllocs(t, func() {
-   186→			d := New()
-   187→			d.Write(b)
-   188→			sink = d.Sum64()
-   189→		})
-   190→	})
-   191→}
-   193→func testAllocs(t *testing.T, fn func()) {
-   194→	t.Helper()
-   195→	if allocs := int(testing.AllocsPerRun(10, fn)); allocs > 0 {
-   196→		t.Fatalf("got %d allocation(s) (want zero)", allocs)
-   197→	}
-   198→}
+   193→func testAllocs …
 
 xxhash_unsafe.go
      9→import (
@@ -728,9 +296,7 @@ xxhash_unsafe.go
     46→	d.Write(*(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)})))
     47→	// d.Write always returns len(s), nil.
     48→	// Ignoring the return output and returning these fixed values buys a
-    49→	// savings of 6 in the inliner's cost model.
-    50→	return len(s), nil
-    51→}
+      →…
     53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
     54→// of the first two words is the same as the layout of a string.
     55→type sliceHeader struct {
@@ -739,27 +305,8 @@ xxhash_unsafe.go
     58→}
 
 xxhash_unsafe_test.go
-     6→import (
-     7→	"os/exec"
-     8→	"sort"
-     9→	"strings"
-    10→	"testing"
-    11→)
+     6→import …
     13→func TestStringAllocs(t *testing.T) {
-    14→	longStr := strings.Repeat("a", 1000)
-    15→	t.Run("Sum64String", func(t *testing.T) {
-    16→		testAllocs(t, func() {
-    17→			sink = Sum64String(longStr)
-    18→		})
-    19→	})
-    20→	t.Run("Digest.WriteString", func(t *testing.T) {
-    21→		testAllocs(t, func() {
-    22→			d := New()
-    23→			d.WriteString(longStr)
-    24→			sink = d.Sum64()
-    25→		})
-    26→	})
-    27→}
     29→// This test is inspired by the Go runtime tests in https://go.dev/cl/57410.
     30→// It asserts that certain important functions may be inlined.
     31→func TestInlining(t *testing.T) {
@@ -768,114 +315,25 @@ xxhash_unsafe_test.go
     34→		"(*Digest).WriteString": {},
     35→	}
     36→
-    37→	cmd := exec.Command("go", "test", "-gcflags=-m", "-run", "xxxx")
-    38→	out, err := cmd.CombinedOutput()
-    39→	if err != nil {
-    40→		t.Log(string(out))
-    41→		t.Fatal(err)
-    42→	}
-    43→
-    44→	for _, line := range strings.Split(string(out), "\n") {
-    45→		parts := strings.Split(line, ": can inline")
-    46→		if len(parts) < 2 {
-    47→			continue
-    48→		}
-    49→		delete(funcs, strings.TrimSpace(parts[1]))
-    50→	}
-    51→
-    52→	var failed []string
-    53→	for fn := range funcs {
-    54→		failed = append(failed, fn)
-    55→	}
-    56→	sort.Strings(failed)
-    57→	for _, fn := range failed {
-    58→		t.Errorf("function %s not inlined", fn)
-    59→	}
-    60→}
+      →…
 
 xxhashbench/xxhashbench_test.go
-     3→import (
-     4→	"fmt"
-     5→	"hash/crc32"
-     6→	"hash/fnv"
-     7→	"testing"
-     8→
-     9→	OneOfOne "github.com/OneOfOne/xxhash"
-    10→	"github.com/cespare/xxhash/v2"
-    11→	"github.com/spaolacci/murmur3"
-    12→)
+     3→import …
     14→// TODO: The main benchmarks live in the xxhash package now, so the only purpose
     15→// of this is to compare different hash functions. Consider deleting xxhashbench
     16→// or replacing it with a more minimal comparison.
     17→
     18→var sink uint64
     20→var benchmarks = []struct {
-    21→	name         string
-    22→	directBytes  func([]byte) uint64
-    23→	directString func(string) uint64
-    24→	digestBytes  func([]byte) uint64
-    25→	digestString func(string) uint64
-    26→}{
-    27→	{
-    28→		name:         "xxhash",
-    29→		directBytes:  xxhash.Sum64,
-    30→		directString: xxhash.Sum64String,
-      →…
    108→func BenchmarkHashes(b *testing.B) {
    109→	for _, bb := range benchmarks {
    110→		for _, benchSize := range []struct {
    111→			name string
    112→			n    int
    113→		}{
-   114→			{"5B", 5},
-   115→			{"100B", 100},
-   116→			{"4KB", 4e3},
-   117→			{"10MB", 10e6},
-   118→		} {
-   119→			input := make([]byte, benchSize.n)
-   120→			for i := range input {
-   121→				input[i] = byte(i)
-   122→			}
-   123→			inputString := string(input)
-   124→			if bb.directBytes != nil {
-   125→				name := fmt.Sprintf("%s,direct,bytes,n=%s", bb.name, benchSize.name)
-   126→				b.Run(name, func(b *testing.B) {
-   127→					benchmarkHashBytes(b, input, bb.directBytes)
-   128→				})
-   129→			}
-   130→			if bb.directString != nil {
-   131→				name := fmt.Sprintf("%s,direct,string,n=%s", bb.name, benchSize.name)
-   132→				b.Run(name, func(b *testing.B) {
-   133→					benchmarkHashString(b, inputString, bb.directString)
-   134→				})
-   135→			}
-   136→			if bb.digestBytes != nil {
-   137→				name := fmt.Sprintf("%s,digest,bytes,n=%s", bb.name, benchSize.name)
-   138→				b.Run(name, func(b *testing.B) {
-   139→					benchmarkHashBytes(b, input, bb.digestBytes)
-   140→				})
-   141→			}
-   142→			if bb.digestString != nil {
-   143→				name := fmt.Sprintf("%s,digest,string,n=%s", bb.name, benchSize.name)
-   144→				b.Run(name, func(b *testing.B) {
-   145→					benchmarkHashString(b, inputString, bb.digestString)
-   146→				})
-   147→			}
-   148→		}
-   149→	}
-   150→}
+      →…
    152→func benchmarkHashBytes(b *testing.B, input []byte, fn func([]byte) uint64) {
-   153→	b.SetBytes(int64(len(input)))
-   154→	for i := 0; i < b.N; i++ {
-   155→		sink = fn(input)
-   156→	}
-   157→}
    159→func benchmarkHashString(b *testing.B, input string, fn func(string) uint64) {
-   160→	b.SetBytes(int64(len(input)))
-   161→	for i := 0; i < b.N; i++ {
-   162→		sink = fn(input)
-   163→	}
-   164→}
 
 xxhsum/xxhsum.go
      3→import (
@@ -887,39 +345,10 @@ xxhsum/xxhsum.go
      9→)
     11→func main() {
     12→	if contains(os.Args[1:], "-h") {
-    13→		fmt.Fprintf(os.Stderr, `Usage:
-    14→  %s [filenames]
-    15→If no filenames are provided or only - is given, input is read from stdin.
-    16→`, os.Args[0])
-    17→		os.Exit(1)
-    18→	}
-    19→	if len(os.Args) < 2 || len(os.Args) == 2 && os.Args[1] == "-" {
-    20→		printHash(os.Stdin, "-")
-    21→		return
-    22→	}
-    23→	for _, path := range os.Args[1:] {
-    24→		f, err := os.Open(path)
-    25→		if err != nil {
-    26→			fmt.Fprintln(os.Stderr, err)
-    27→			continue
-    28→		}
-    29→		printHash(f, path)
-    30→		f.Close()
-    31→	}
-    32→}
+      →…
     34→func contains(ss []string, s string) bool {
     35→	for _, s1 := range ss {
-    36→		if s1 == s {
-    37→			return true
-    38→		}
-    39→	}
-    40→	return false
-    41→}
+      →…
     43→func printHash(r io.Reader, name string) {
     44→	h := xxhash.New()
-    45→	if _, err := io.Copy(h, r); err != nil {
-    46→		fmt.Fprintln(os.Stderr, err)
-    47→		return
-    48→	}
-    49→	fmt.Printf("%016x  %s\n", h.Sum64(), name)
-    50→}
+      →…

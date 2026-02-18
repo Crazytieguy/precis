@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (975 words)
+budget: 1000 (985 tokens)
 
 CHANGELOG.md
 
@@ -27,21 +27,12 @@ README.md
     23→
     24→#### Version Parsing and Comparison
     26→```go
-    27→v1, err := version.NewVersion("1.2")
-    28→v2, err := version.NewVersion("1.5+metadata")
-    29→
       →…
     37→#### Version Constraints
     39→```go
-    40→v1, err := version.NewVersion("1.2")
-    41→
-    42→// Constraints example.
       →…
     49→#### Version Sorting
     51→```go
-    52→versionsRaw := []string{"1.1", "0.7.1", "1.4-beta", "1.4", "2"}
-    53→versions := make([]*version.Version, len(versionsRaw))
-    54→for i, raw := range versionsRaw {
       →…
     63→## Issues and Contributing
     65→If you find an issue with this library, please report an issue. If you'd
@@ -49,17 +40,7 @@ README.md
     67→request.
 
 constraint.go
-     6→import (
-     7→	"fmt"
-     8→	"regexp"
-     9→	"sort"
-    10→	"strings"
-    11→	"sync"
-    12→)
-    14→var (
-    15→	constraintRegexp     *regexp.Regexp
-    16→	constraintRegexpOnce sync.Once
-    19→func getConstraintRegexp() *regexp.Regexp {
+     6→import …
     31→// Constraint represents a single constraint for a version, such as
     32→// ">= 1.0".
     33→type Constraint struct {
@@ -69,103 +50,38 @@ constraint.go
     37→	original string
     38→}
     40→func (c *Constraint) Equals(con *Constraint) bool {
-    41→	return c.op == con.op && c.check.Equal(con.check)
-    42→}
     44→// Constraints is a slice of constraints. We make a custom type so that
     45→// we can add methods to it.
     46→type Constraints []*Constraint
-    48→type constraintFunc func(v, c *Version) bool
     50→type constraintOperation struct {
     51→	op operator
     52→	f  constraintFunc
     53→}
-    58→func NewConstraint(v string) (Constraints, error) {
-    75→func MustConstraints(c Constraints, err error) Constraints {
-    84→func (cs Constraints) Check(v *Version) bool {
-   102→func (cs Constraints) Equals(c Constraints) bool {
    125→func (cs Constraints) Len() int {
-   126→	return len(cs)
-   127→}
    129→func (cs Constraints) Less(i, j int) bool {
-   130→	if cs[i].op < cs[j].op {
-   131→		return true
-   132→	}
-   133→	if cs[i].op > cs[j].op {
-   134→		return false
-   135→	}
-   136→
-   137→	return cs[i].check.LessThan(cs[j].check)
-   138→}
    140→func (cs Constraints) Swap(i, j int) {
-   141→	cs[i], cs[j] = cs[j], cs[i]
-   142→}
-   145→func (cs Constraints) String() string {
-   155→func (c *Constraint) Check(v *Version) bool {
-   161→func (c *Constraint) Prerelease() bool {
    165→func (c *Constraint) String() string {
-   166→	return c.original
-   167→}
-   169→func parseSingle(v string) (*Constraint, error) {
-   208→func prereleaseCheck(v, c *Version) bool {
    228→//-------------------------------------------------------------------
    229→// Constraint functions
    230→//-------------------------------------------------------------------
    231→
    232→type operator rune
-   234→const (
-   235→	equal            operator = '='
-   236→	notEqual         operator = '≠'
-   237→	greaterThan      operator = '>'
-   238→	lessThan         operator = '<'
-   239→	greaterThanEqual operator = '≥'
-   240→	lessThanEqual    operator = '≤'
-   241→	pessimistic      operator = '~'
-   244→func constraintEqual(v, c *Version) bool {
-   248→func constraintNotEqual(v, c *Version) bool {
-   252→func constraintGreaterThan(v, c *Version) bool {
-   256→func constraintLessThan(v, c *Version) bool {
-   260→func constraintGreaterThanEqual(v, c *Version) bool {
-   264→func constraintLessThanEqual(v, c *Version) bool {
-   268→func constraintPessimistic(v, c *Version) bool {
 
 constraint_test.go
      6→import …
-    13→func TestNewConstraint(t *testing.T) {
-    43→func TestConstraintCheck(t *testing.T) {
-   106→func TestConstraintPrerelease(t *testing.T) {
-   134→func TestConstraintEqual(t *testing.T) {
-   190→func TestConstraint_sort(t *testing.T) {
-   232→func TestConstraintsString(t *testing.T) {
 
 version.go
-     6→import (
-     7→	"database/sql/driver"
-     8→	"fmt"
-     9→	"regexp"
-    10→	"strconv"
-    11→	"strings"
-    12→	"sync"
-    13→)
+     6→import …
     15→// The compiled regular expression used to test the validity of a version.
     16→var (
-    17→	versionRegexp     *regexp.Regexp
-    18→	versionRegexpOnce sync.Once
-    19→	semverRegexp      *regexp.Regexp
-    20→	semverRegexpOnce  sync.Once
-    23→func getVersionRegexp() *regexp.Regexp {
-    30→func getSemverRegexp() *regexp.Regexp {
     37→// The raw regular expression string used for testing the validity
     38→// of a version.
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
-    41→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-?([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
-    42→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
-    43→		`?`
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
-    48→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
-    49→		`?`
+      →…
     52→// Version represents a single version.
     53→type Version struct {
     54→	metadata string
@@ -174,72 +90,17 @@ version.go
     57→	si       int
     58→	original string
     59→}
-    63→func NewVersion(v string) (*Version, error) {
-    70→func NewSemver(v string) (*Version, error) {
-    74→func newVersion(v string, pattern *regexp.Regexp) (*Version, error) {
-   114→func Must(v *Version, err error) *Version {
-   128→func (v *Version) Compare(other *Version) int {
-   196→func (v *Version) equalSegments(other *Version) bool {
-   211→func allZero(segs []int64) bool {
-   220→func comparePart(preSelf string, preOther string) int {
-   267→func comparePrereleases(v string, other string) int {
-   309→func (v *Version) Core() *Version {
-   316→func (v *Version) Equal(o *Version) bool {
-   325→func (v *Version) GreaterThan(o *Version) bool {
-   330→func (v *Version) GreaterThanOrEqual(o *Version) bool {
-   335→func (v *Version) LessThan(o *Version) bool {
-   340→func (v *Version) LessThanOrEqual(o *Version) bool {
-   349→func (v *Version) Metadata() string {
-   359→func (v *Version) Prerelease() string {
-   368→func (v *Version) Segments() []int {
-   381→func (v *Version) Segments64() []int64 {
-   395→func (v *Version) String() string {
-   399→func (v *Version) bytes() []byte {
-   423→func (v *Version) Original() string {
-   428→func (v *Version) UnmarshalText(b []byte) error {
-   440→func (v *Version) MarshalText() ([]byte, error) {
-   445→func (v *Version) Scan(src interface{}) error {
-   457→func (v *Version) Value() (driver.Value, error) {
 
 version_collection.go
      6→// Collection is a type that implements the sort.Interface interface
      7→// so that versions can be sorted.
      8→type Collection []*Version
     10→func (v Collection) Len() int {
-    11→	return len(v)
-    12→}
     14→func (v Collection) Less(i, j int) bool {
-    15→	return v[i].LessThan(v[j])
-    16→}
     18→func (v Collection) Swap(i, j int) {
-    19→	v[i], v[j] = v[j], v[i]
-    20→}
 
 version_collection_test.go
      6→import …
-    12→func TestCollection(t *testing.T) {
 
 version_test.go
      6→import …
-    13→func TestNewVersion(t *testing.T) {
-    54→func TestNewSemver(t *testing.T) {
-    95→func TestCore(t *testing.T) {
-   127→func TestVersionCompare(t *testing.T) {
-   174→func TestVersionCompare_versionAndSemver(t *testing.T) {
-   212→func TestVersionEqual_nil(t *testing.T) {
-   238→func TestComparePreReleases(t *testing.T) {
-   285→func TestVersionMetadata(t *testing.T) {
-   311→func TestVersionPrerelease(t *testing.T) {
-   339→func TestVersionSegments(t *testing.T) {
-   366→func TestVersionSegments64(t *testing.T) {
-   401→func TestJsonMarshal(t *testing.T) {
-   436→func TestJsonUnmarshal(t *testing.T) {
-   470→func TestVersionString(t *testing.T) {
-   497→func TestEqual(t *testing.T) {
-   544→func TestGreaterThan(t *testing.T) {
-   591→func TestLessThan(t *testing.T) {
-   638→func TestGreaterThanOrEqual(t *testing.T) {
-   685→func TestLessThanOrEqual(t *testing.T) {
-   732→func BenchmarkVersionString(b *testing.B) {
-   743→func BenchmarkCompareVersionV1(b *testing.B) {
-   753→func BenchmarkVersionCompareV2(b *testing.B) {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (970 words)
+budget: 1000 (1001 tokens)
 
 README.md
      1→# humanize
@@ -17,198 +17,48 @@ README.md
     20→- Catalan
     21→- Danish
     22→- Dutch
-    23→- Esperanto
-    24→- European Portuguese
-    25→- Finnish
-    26→- French
-    27→- German
-    28→- Greek
-    29→- Hebrew
-    30→- Indonesian
-    31→- Italian
-    32→- Japanese
-    33→- Klingon
-    34→- Korean
-    35→- Norwegian
-    36→- Persian
-    37→- Polish
-    38→- Russian
-    39→- Simplified Chinese
-    40→- Slovak
-    41→- Slovenian
-    42→- Spanish
-    43→- Swedish
-    44→- Turkish
-    45→- Ukrainian
-    46→- Uzbek
-    47→- Vietnamese
-    48→
+      →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
     52→
     53→<!-- usage-start -->
     54→
     55→## Installation
-    57→### From PyPI
-    59→```bash
-    60→python3 -m pip install --upgrade humanize
-    61→```
-      →…
-    63→### From source
-    65→```bash
-    66→git clone https://github.com/python-humanize/humanize
-    67→cd humanize
-      →…
+    57→### From PyPI …
+    63→### From source …
     71→## Usage
-    73→### Integer humanization
-    75→```pycon
-    76→>>> import humanize
-    77→>>> humanize.intcomma(12345)
-      →…
-    89→### Date & time humanization
-    91→```pycon
-    92→>>> import humanize
-    93→>>> import datetime as dt
-      →…
-   110→### Precise time delta
-   112→```pycon
-   113→>>> import humanize
-   114→>>> import datetime as dt
-      →…
+    73→### Integer humanization …
+    89→### Date & time humanization …
+   110→### Precise time delta …
    124→#### Smaller units
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
    127→
    128→```pycon
-   129→>>> import humanize
-   130→>>> import datetime as dt
-   131→>>> humanize.naturaldelta(dt.timedelta(seconds=2))
-   132→'2 seconds'
-   133→```
-   134→
-   135→```pycon
-   136→>>> delta = dt.timedelta(milliseconds=4)
-   137→>>> humanize.naturaldelta(delta)
-   138→'a moment'
-   139→>>> humanize.naturaldelta(delta, minimum_unit="milliseconds")
-   140→'4 milliseconds'
-   141→>>> humanize.naturaldelta(delta, minimum_unit="microseconds")
-   142→'4 milliseconds'
-   143→```
-   144→
-   145→```pycon
-   146→>>> humanize.naturaltime(delta)
-   147→'now'
-   148→>>> humanize.naturaltime(delta, minimum_unit="milliseconds")
       →…
-   154→### File size humanization
-   156→```pycon
-   157→>>> import humanize
-   158→>>> humanize.naturalsize(1_000_000)
-      →…
-   166→### Human-readable floating point numbers
-   168→```pycon
-   169→>>> import humanize
-   170→>>> humanize.fractional(1/3)
-      →…
-   182→### Scientific notation
-   184→```pycon
-   185→>>> import humanize
-   186→>>> humanize.scientific(0.3)
-      →…
+   154→### File size humanization …
+   166→### Human-readable floating point numbers …
+   182→### Scientific notation …
    200→## Localization
    202→How to change locale at runtime:
    203→
    204→```pycon
    205→>>> import humanize
    206→>>> import datetime as dt
-   207→>>> humanize.naturaltime(dt.timedelta(seconds=3))
-   208→'3 seconds ago'
-   209→>>> _t = humanize.i18n.activate("ru_RU")
-   210→>>> humanize.naturaltime(dt.timedelta(seconds=3))
-   211→'3 секунды назад'
-   212→>>> humanize.i18n.deactivate()
-   213→>>> humanize.naturaltime(dt.timedelta(seconds=3))
-   214→'3 seconds ago'
-   215→```
-   216→
-   217→You can pass additional parameter `path` to `activate` to specify a path to search
-   218→locales in.
-   219→
-   220→```pycon
-   221→>>> import humanize
-   222→>>> humanize.i18n.activate("xx_XX")
-   223→<...>
-   224→FileNotFoundError: [Errno 2] No translation file found for domain: 'humanize'
-   225→>>> humanize.i18n.activate("pt_BR", path="path/to/my/own/translation/")
-   226→<gettext.GNUTranslations instance ...>
-   227→```
-   228→
-   229→<!-- usage-end -->
-   230→
-   231→How to add new phrases to existing locale files:
-   232→
-   233→```sh
       →…
 
 RELEASING.md
-     1→# Release checklist
-     3→- [ ] Get `main` to the appropriate code release state.
-     4→      [GitHub Actions](https://github.com/python-humanize/humanize/actions) should be
-      →…
-
-docs/filesize.md
-     1→# Filesize
-     3→::: humanize.filesize
-
-docs/i18n.md
-     1→# Internationalisation
-     3→::: humanize.i18n
-
-docs/index.md
-     1→# humanize
-     3→Welcome to the humanize API reference.
-     4→
-     5→- [Number](number.md)
-     6→- [Time](time.md)
-     7→- [Filesize](filesize.md)
-     8→- [Lists](lists.md)
-     9→- [I18n](i18n.md)
-    10→
-    11→{%
-      →…
-
-docs/lists.md
-     1→# Lists
-     3→::: humanize.lists
-
-docs/number.md
-     1→# Number
-     3→::: humanize.number
-
-docs/time.md
-     1→# Time
-     3→::: humanize.time
+     1→# Release checklist …
 
 mkdocs.yml
-     1→site_name: humanize
-     2→site_url: https://humanize.readthedocs.io
-     3→repo_url: https://github.com/python-humanize/humanize
-     4→theme:
-    16→        name: Switch to light mode
-    17→
-    18→nav:
-    24→  - Internationalisation: i18n.md
-    25→
-    26→plugins:
-    29→  - include-markdown
-    30→
-    31→markdown_extensions:
-    35→  - pymdownx.superfences
-    36→
-    37→extra_css:
-    38→  - css/code_select.css
-    39→
-    40→watch:
+     1→site_name …
+     2→site_url …
+     3→repo_url …
+     4→theme …
+    18→nav …
+    26→plugins …
+    31→markdown_extensions …
+    37→extra_css …
+    40→watch …
 
 pyproject.toml
      1→[build-system …
@@ -224,94 +74,30 @@ pyproject.toml
    120→[tool.mypy …
 
 src/humanize/__init__.py
-     5→from humanize.filesize …
-     6→from humanize.i18n …
-     7→from humanize.lists …
-     8→from humanize.number …
-    18→from humanize.time …
-    26→from ._version import __version__
     28→__all__ = [
-    29→    "__version__",
-    30→    "activate",
-    31→    "apnumber",
-    32→    "clamp",
-      →…
 
 src/humanize/filesize.py
-     5→from math …
-    36→def naturalsize …
 
 src/humanize/i18n.py
-     5→import gettext …
-     6→from threading …
      8→TYPE_CHECKING = False
-    10→    import os …
-    11→    import pathlib …
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
-    16→    None: gettext_module.NullTranslations()
-    17→}
     18→_CURRENT = local()
     21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
-    23→    "de_DE": ".",
-      →…
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
-    32→    "de_DE": ",",
-      →…
-    40→def _get_default_locale_path …
-    51→def get_translation …
-    58→def activate …
-    96→def deactivate …
-   101→def _gettext …
-   113→def _pgettext …
-   129→def _ngettext …
-   144→def _gettext_noop …
-   163→def _ngettext_noop …
-   183→def thousands_separator …
-   196→def decimal_separator …
 
 src/humanize/lists.py
      5→TYPE_CHECKING = False
-     7→    from typing …
      9→__all__ = ["natural_list"]
-    12→def natural_list …
 
 src/humanize/number.py
-     5→import bisect …
-     7→from .i18n import _gettext as _
-     8→from .i18n import _ngettext, decimal_separator, thousands_separator
-     9→from .i18n import _ngettext_noop as NS_
-    10→from .i18n import _pgettext as P_
     12→TYPE_CHECKING = False
-    14→    from typing …
-    21→def _format_not_finite …
-    34→def ordinal …
-   110→def intcomma …
-   195→def intword …
-   269→def apnumber …
-   321→def fractional …
-   385→def scientific …
-   454→def clamp …
-   531→def metric …
 
 src/humanize/time.py
-     8→from enum …
-     9→from functools …
-    11→from .i18n import _gettext as _
-    12→from .i18n import _ngettext
-    13→from .number import intcomma
     15→TYPE_CHECKING = False
-    17→    import datetime …
-    18→    from collections.abc …
-    19→    from typing …
     21→__all__ = [
-    22→    "naturaldate",
-    23→    "naturalday",
-    24→    "naturaldelta",
-    25→    "naturaltime",
-      →…
     30→@total_ordering
     31→class Unit(Enum):
     32→    MICROSECONDS = 0
@@ -323,57 +109,16 @@ src/humanize/time.py
     38→    MONTHS = 6
     39→    YEARS = 7
     40→
-    41→    def __lt__ …
-    47→def _now …
-    53→def _abs_timedelta …
-    68→def _date_and_delta …
-    95→def naturaldelta …
-   249→def naturaltime …
-   300→def _convert_aware_datetime …
-   311→def naturalday …
-   343→def naturaldate …
-   361→def _quotient_and_remainder …
-   406→def _suitable_minimum_unit …
-   435→def _suppress_lower_units …
-   451→def precisedelta …
-   654→def _rounding_by_fmt …
-
-tests/test_filesize.py
 
 tests/test_i18n.py
-    17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
    225→class TestActivate:
    226→    expected_msg = (
-   227→        "Humanize cannot determinate the default location of the"
-   228→        " 'locale' folder. You need to pass the path explicitly."
-   229→    )
-   230→
-   249→    @freeze_time("2020-02-02")
    250→    def test_en_locale(self) -> None:
-   262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
 
-tests/test_lists.py
-
-tests/test_number.py
-
 tests/test_time.py
-    14→ONE_DAY_DELTA = dt.timedelta(days=1)
-    16→# In seconds
     17→ONE_MICROSECOND = 1 / 1000000
-    18→FOUR_MICROSECONDS = 4 / 1000000
-    19→ONE_MILLISECOND = 1 / 1000
-    20→FOUR_MILLISECONDS = 4 / 1000
-    22→MILLISECONDS_1_337 = 1337 / 1000  # 1.337 seconds
     23→ONE_HOUR = 3600
-    24→ONE_DAY = 24 * ONE_HOUR
-    25→ONE_YEAR = 365.25 * ONE_DAY
-    26→FROZEN_DATE = "2010-02-02"
     37→class FakeDate:
-    45→VALUE_ERROR_TEST = FakeDate(290149024, 2, 2)
-    46→OVERFLOW_ERROR_TEST = FakeDate(120390192341, 2, 2)
-    58→# These are not considered "public" interfaces, but require tests anyway.
-    59→
-    60→
     61→def test_date_and_delta() -> None:

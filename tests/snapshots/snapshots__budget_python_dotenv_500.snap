@@ -2,32 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (482 words)
-
-CHANGELOG.md
-     1→# Changelog …
-    21→### Fixed …
-
-CONTRIBUTING.md
-     1→Contributing …
+budget: 500 (504 tokens)
 
 README.md
      1→# python-dotenv
      3→[![Build Status][build_status_badge]][build_status_link]
-     4→[![PyPI version][pypi_badge]][pypi_link]
-     5→
       →…
     22→## Getting Started …
     78→## Other Use Cases …
-    80→### Load configuration without altering the environment …
-   105→### Parse configuration as a stream …
-   120→### Load .env files in IPython …
-   141→### Disable load_dotenv …
    147→## Command-line Interface …
    169→## File format …
-   185→### Multiline values …
-   199→### Variable without a value …
-   214→### Variable expansion …
    234→## Related Projects …
    246→## Acknowledgements …
 
@@ -35,80 +19,34 @@ docs/reference.md
      1→# ::: dotenv …
 
 mkdocs.yml
-     1→site_name: python-dotenv
-     2→repo_url: https://github.com/theskumar/python-dotenv
-     3→edit_uri: ""
-     4→theme:
-    10→    - navigation.sections
-    11→
-    12→markdown_extensions:
-    13→  - mdx_truly_sane_lists
-    14→
-    15→plugins:
-    24→  - search
-    25→nav:
+     1→site_name …
+     2→repo_url …
+     3→edit_uri …
+     4→theme …
+    12→markdown_extensions …
+    15→plugins …
+    25→nav …
 
 pyproject.toml
-     1→[build-system …
-     5→[project …
-    43→[project.urls …
-    46→[project.optional-dependencies …
-    51→[project.scripts …
-    54→[tool.setuptools …
-    59→[tool.setuptools.dynamic …
-    63→[tool.pytest.ini_options …
-    68→[tool.coverage.run …
-    72→[tool.coverage.paths …
-    79→[tool.coverage.report …
-    87→[tool.mypy …
 
 ruff.toml
-     1→[lint …
 
 src/dotenv/__init__.py
-     3→from .main …
     42→__all__ = [
-    43→    "get_cli_string",
-    44→    "load_dotenv",
-      →…
 
 src/dotenv/__main__.py
-     3→from .cli …
 
 src/dotenv/cli.py
-    20→from .main …
-    21→from .version …
-    60→@click.version_option(version=__version__)
-    61→@click.pass_context
-    62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
-    67→@contextmanager
-    68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
-    69→    """
-      →…
-   112→@cli.command(name="set")
-   113→@click.pass_context
-      →…
-   116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
-   128→@cli.command()
-   129→@click.pass_context
-      →…
-   131→def get(ctx: click.Context, key: Any) -> None:
-   145→@cli.command()
-   146→@click.pass_context
-      →…
-   148→def unset(ctx: click.Context, key: Any) -> None:
-   172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
-   173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
-   174→    """Run command with environment variables present."""
+    62→def cli …
+    68→def stream_file …
+   116→def set_value …
+   131→def get …
+   148→def unset …
+   173→def run …
 
 src/dotenv/ipython.py
-     2→from IPython.core.magic_arguments import (
-     3→    argument,
-     4→    magic_arguments,
-     5→    parse_argstring,
-     6→)  # type: ignore
+     2→from IPython.core.magic_arguments …
      8→from .main import find_dotenv, load_dotenv
-    11→@magics_class
     12→class IPythonDotEnv(Magics):
     13→    @magic_arguments()
     14→    @argument(
@@ -120,98 +58,22 @@ src/dotenv/ipython.py
     20→    @argument(
     21→        "-v",
     22→        "--verbose",
-    23→        action="store_true",
-    24→        help="Indicate function calls to be verbose",
-    25→    )
-    26→    @argument(
-    27→        "dotenv_path",
-    28→        nargs="?",
-    29→        type=str,
-    30→        default=".env",
-    31→        help="Search in increasingly higher folders for the `dotenv_path`",
-    32→    )
-    33→    @line_magic
-    34→    def dotenv(self, line):
+    34→    def dotenv …
 
 src/dotenv/main.py
-    13→from .parser …
-    14→from .variables …
-    25→def _load_dotenv_disabled() -> bool:
-    26→    """
-      →…
-    45→class DotEnv:
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
-    65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
-    66→            with open(self.dotenv_path, encoding=self.encoding) as stream:
-    67→                yield stream
-      →…
-   141→@contextmanager
-   142→def rewrite(
-   143→    path: StrPath,
-   144→    encoding: Optional[str],
-   145→) -> Iterator[Tuple[IO[str], IO[str]]]:
-   269→def _walk_to_root(path: str) -> Iterator[str]:
-   270→    """
-      →…
-   423→def _is_file_or_fifo(path: StrPath) -> bool:
-   424→    """
-      →…
+   142→def rewrite …
 
 src/dotenv/parser.py
-    35→class Original(NamedTuple):
-    36→    string: str
-    37→    line: int
-    40→class Binding(NamedTuple):
-    41→    key: Optional[str]
-    42→    value: Optional[str]
-    43→    original: Original
-    44→    error: bool
-    47→class Position:
-    52→    @classmethod
-    53→    def start(cls) -> "Position":
-    65→class Error(Exception):
-    66→    pass
-    69→class Reader:
+    53→    def start …
 
 src/dotenv/variables.py
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
      7→    \$\{
-     8→        (?P<name>[^\}:]*)
-     9→        (?::-
-    10→            (?P<default>[^\}]*)
-    11→        )?
-    12→    \}
-    13→    """,
-    18→class Atom(metaclass=ABCMeta):
-    25→    @abstractmethod
-    26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
-    29→class Literal(Atom):
-    48→class Variable(Atom):
+      →…
+    26→    def resolve …
 
 src/dotenv/version.py
      1→__version__ = "1.2.1"
-
-tests/conftest.py
-
-tests/test_cli.py
-
-tests/test_fifo_dotenv.py
-
-tests/test_ipython.py
-
-tests/test_is_interactive.py
-     8→class TestIsInteractive:
-    31→
-
-tests/test_main.py
-
-tests/test_parser.py
-
-tests/test_utils.py
-
-tests/test_variables.py
-
-tests/test_zip_imports.py
-    23→class FileToAdd:

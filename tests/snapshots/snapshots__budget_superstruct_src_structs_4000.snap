@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3973 words)
+budget: 4000 (3988 tokens)
 
 coercions.ts
      1→import { Struct, is, Coercer } from '../struct.js'
@@ -14,32 +14,19 @@ coercions.ts
      8→ * This allows you to transform input data before validating it, to increase the
      9→ * likelihood that it passes validation—for example for default values, parsing
     10→ * different formats, etc.
-    11→ *
-    12→ * Note: You must use `create(value, Struct)` on the value to have the coercion
-    13→ * take effect! Using simply `assert()` or `is()` will not use coercion.
-    14→ */
-    15→
+      →…
     16→export function coerce<T, S, C>(
     17→  struct: Struct<T, S>,
     18→  condition: Struct<C, any>,
     19→  coercer: Coercer<C>
     20→): Struct<T, S> {
-    21→  return new Struct({
-    22→    ...struct,
-    23→    coercer: (value, ctx) => {
-    24→      return is(value, condition)
-    25→        ? struct.coercer(coercer(value, ctx), ctx)
-    26→        : struct.coercer(value, ctx)
-    27→    },
-    28→  })
-    29→}
     31→/**
     32→ * Augment a struct to replace `undefined` values with a default.
     33→ *
     34→ * Note: You must use `create(value, Struct)` on the value to have the coercion
     35→ * take effect! Using simply `assert()` or `is()` will not use coercion.
     36→ */
-    37→
+      →…
     38→export function defaulted<T, S>(
     39→  struct: Struct<T, S>,
     40→  fallback: any,
@@ -47,38 +34,14 @@ coercions.ts
     42→    strict?: boolean
     43→  } = {}
     44→): Struct<T, S> {
-    45→  return coerce(struct, unknown(), (x) => {
-    46→    const f = typeof fallback === 'function' ? fallback() : fallback
-    47→
-    48→    if (x === undefined) {
-    49→      return f
-    50→    }
-    51→
-    52→    if (!options.strict && isPlainObject(x) && isPlainObject(f)) {
-    53→      const ret = { ...x }
-    54→      let changed = false
-    55→
-    56→      for (const key in f) {
-    57→        if (ret[key] === undefined) {
-    58→          ret[key] = f[key]
-    59→          changed = true
-    60→        }
-    61→      }
-    62→
-    63→      if (changed) {
-    64→        return ret
-    65→      }
-      →…
     72→/**
     73→ * Augment a struct to trim string inputs.
     74→ *
     75→ * Note: You must use `create(value, Struct)` on the value to have the coercion
     76→ * take effect! Using simply `assert()` or `is()` will not use coercion.
     77→ */
-    78→
+      →…
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
-    80→  return coerce(struct, string(), (x) => x.trim())
-    81→}
 
 refinements.ts
      1→import { Struct, Refiner } from '../struct.js'
@@ -91,14 +54,6 @@ refinements.ts
      9→  T extends string | any[] | Map<any, any> | Set<any>,
     10→  S extends any,
     11→>(struct: Struct<T, S>): Struct<T, S> {
-    12→  return refine(struct, 'empty', (value) => {
-    13→    const size = getSize(value)
-    14→    return (
-    15→      size === 0 ||
-    16→      `Expected an empty ${struct.type} but received one with a size of \`${size}\``
-    17→    )
-    18→  })
-    19→}
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
     22→  if (value instanceof Map || value instanceof Set) {
     23→    return value.size
@@ -117,16 +72,6 @@ refinements.ts
     37→    exclusive?: boolean
     38→  } = {}
     39→): Struct<T, S> {
-    40→  const { exclusive } = options
-    41→  return refine(struct, 'max', (value) => {
-    42→    return exclusive
-    43→      ? value < threshold
-    44→      : value <= threshold ||
-    45→          `Expected a ${struct.type} less than ${
-    46→            exclusive ? '' : 'or equal to '
-    47→          }${threshold} but received \`${value}\``
-    48→  })
-    49→}
     51→/**
     52→ * Ensure that a number or date is above a threshold.
     53→ */
@@ -138,16 +83,6 @@ refinements.ts
     59→    exclusive?: boolean
     60→  } = {}
     61→): Struct<T, S> {
-    62→  const { exclusive } = options
-    63→  return refine(struct, 'min', (value) => {
-    64→    return exclusive
-    65→      ? value > threshold
-    66→      : value >= threshold ||
-    67→          `Expected a ${struct.type} greater than ${
-    68→            exclusive ? '' : 'or equal to '
-    69→          }${threshold} but received \`${value}\``
-    70→  })
-    71→}
     73→/**
     74→ * Ensure that a string, array, map or set is not empty.
     75→ */
@@ -156,13 +91,6 @@ refinements.ts
     78→  T extends string | any[] | Map<any, any> | Set<any>,
     79→  S extends any,
     80→>(struct: Struct<T, S>): Struct<T, S> {
-    81→  return refine(struct, 'nonempty', (value) => {
-    82→    const size = getSize(value)
-    83→    return (
-    84→      size > 0 || `Expected a nonempty ${struct.type} but received an empty one`
-    85→    )
-    86→  })
-    87→}
     89→/**
     90→ * Ensure that a string matches a regular expression.
     91→ */
@@ -171,13 +99,6 @@ refinements.ts
     94→  struct: Struct<T, S>,
     95→  regexp: RegExp
     96→): Struct<T, S> {
-    97→  return refine(struct, 'pattern', (value) => {
-    98→    return (
-    99→      regexp.test(value) ||
-   100→      `Expected a ${struct.type} matching \`/${regexp.source}/\` but received "${value}"`
-   101→    )
-   102→  })
-   103→}
    105→/**
    106→ * Ensure that a string, array, number, date, map, or set has a size (or length, or time) between `min` and `max`.
    107→ */
@@ -186,54 +107,18 @@ refinements.ts
    110→  T extends string | number | Date | any[] | Map<any, any> | Set<any>,
    111→  S extends any,
    112→>(struct: Struct<T, S>, min: number, max: number = min): Struct<T, S> {
-   113→  const expected = `Expected a ${struct.type}`
-   114→  const of = min === max ? `of \`${min}\`` : `between \`${min}\` and \`${max}\``
-   115→
-   116→  return refine(struct, 'size', (value) => {
-   117→    if (typeof value === 'number' || value instanceof Date) {
-   118→      return (
-   119→        (min <= value && value <= max) ||
-   120→        `${expected} ${of} but received \`${value}\``
-   121→      )
-   122→    } else if (value instanceof Map || value instanceof Set) {
-   123→      const { size } = value
-   124→      return (
-   125→        (min <= size && size <= max) ||
-   126→        `${expected} with a size ${of} but received one with a size of \`${size}\``
-   127→      )
-   128→    } else {
-   129→      const { length } = value as string | any[]
-   130→      return (
-   131→        (min <= length && length <= max) ||
-   132→        `${expected} with a length ${of} but received one with a length of \`${length}\``
-   133→      )
-      →…
    138→/**
    139→ * Augment a `Struct` to add an additional refinement to the validation.
    140→ *
    141→ * The refiner function is guaranteed to receive a value of the struct's type,
    142→ * because the struct's existing validation will already have passed. This
    143→ * allows you to layer additional validation on top of existing structs.
-   144→ */
-   145→
+      →…
    146→export function refine<T, S>(
    147→  struct: Struct<T, S>,
    148→  name: string,
    149→  refiner: Refiner<T>
    150→): Struct<T, S> {
-   151→  return new Struct({
-   152→    ...struct,
-   153→    *refiner(value, ctx) {
-   154→      yield* struct.refiner(value, ctx)
-   155→      const result = refiner(value, ctx)
-   156→      const failures = toFailures(result, ctx, struct, value)
-   157→
-   158→      for (const failure of failures) {
-   159→        yield { ...failure, refinement: name }
-   160→      }
-   161→    },
-   162→  })
-   163→}
 
 types.ts
      1→import { Infer, Struct } from '../struct.js'
@@ -254,96 +139,41 @@ types.ts
     17→ */
     18→
     19→export function any(): Struct<any, null> {
-    20→  return define('any', () => true)
-    21→}
     33→export function array<T extends Struct<any>>(Element?: T): any {
     34→  return new Struct({
     35→    type: 'array',
     36→    schema: Element,
-    37→    *entries(value) {
-    38→      if (Element && Array.isArray(value)) {
-    39→        for (const [i, v] of value.entries()) {
-    40→          yield [i, v, Element]
-    41→        }
-    42→      }
-    43→    },
-    44→    coercer(value) {
-    45→      return Array.isArray(value) ? value.slice() : value
-    46→    },
-    47→    validator(value) {
-    48→      return (
-    49→        Array.isArray(value) ||
-    50→        `Expected an array value, but received: ${print(value)}`
-    51→      )
-    52→    },
-    53→  })
-    54→}
+      →…
     56→/**
     57→ * Ensure that a value is a bigint.
     58→ */
     59→
     60→export function bigint(): Struct<bigint, null> {
-    61→  return define('bigint', (value) => {
-    62→    return typeof value === 'bigint'
-    63→  })
-    64→}
     66→/**
     67→ * Ensure that a value is a boolean.
     68→ */
     69→
     70→export function boolean(): Struct<boolean, null> {
-    71→  return define('boolean', (value) => {
-    72→    return typeof value === 'boolean'
-    73→  })
-    74→}
     76→/**
     77→ * Ensure that a value is a valid `Date`.
     78→ *
     79→ * Note: this also ensures that the value is *not* an invalid `Date` object,
     80→ * which can occur when parsing a date fails but still returns a `Date`.
     81→ */
-    82→
+      →…
     83→export function date(): Struct<Date, null> {
-    84→  return define('date', (value) => {
-    85→    return (
-    86→      (value instanceof Date && !isNaN(value.getTime())) ||
-    87→      `Expected a valid \`Date\` object, but received: ${print(value)}`
-    88→    )
-    89→  })
-    90→}
    105→export function enums<U extends string | number, T extends readonly U[]>(
    106→  values: T
    107→): any {
    108→  const schema: any = {}
    109→  const description = values.map((v) => print(v)).join()
    110→
-   111→  for (const key of values) {
-   112→    schema[key] = key
-   113→  }
-   114→
-   115→  return new Struct({
-   116→    type: 'enums',
-   117→    schema,
-   118→    validator(value) {
-   119→      return (
-   120→        values.includes(value as any) ||
-   121→        `Expected one of \`${description}\`, but received: ${print(value)}`
-   122→      )
-   123→    },
-   124→  })
-   125→}
+      →…
    127→/**
    128→ * Ensure that a value is a function.
    129→ */
    130→
    131→export function func(): Struct<Function, null> {
-   132→  return define('func', (value) => {
-   133→    return (
-   134→      typeof value === 'function' ||
-   135→      `Expected a function, but received: ${print(value)}`
-   136→    )
-   137→  })
-   138→}
    140→/**
    141→ * Ensure that a value is an instance of a specific class.
    142→ */
@@ -351,25 +181,11 @@ types.ts
    144→export function instance<T extends { new (...args: any): any }>(
    145→  Class: T
    146→): Struct<InstanceType<T>, null> {
-   147→  return define('instance', (value) => {
-   148→    return (
-   149→      value instanceof Class ||
-   150→      `Expected a \`${Class.name}\` instance, but received: ${print(value)}`
-   151→    )
-   152→  })
-   153→}
    155→/**
    156→ * Ensure that a value is an integer.
    157→ */
    158→
    159→export function integer(): Struct<number, null> {
-   160→  return define('integer', (value) => {
-   161→    return (
-   162→      (typeof value === 'number' && !isNaN(value) && Number.isInteger(value)) ||
-   163→      `Expected an integer, but received: ${print(value)}`
-   164→    )
-   165→  })
-   166→}
    168→/**
    169→ * Ensure that a value matches all of a set of types.
    170→ */
@@ -377,233 +193,70 @@ types.ts
    172→export function intersection<A extends AnyStruct, B extends AnyStruct[]>(
    173→  Structs: [A, ...B]
    174→): Struct<Infer<A> & UnionToIntersection<InferStructTuple<B>[number]>, null> {
-   175→  return new Struct({
-   176→    type: 'intersection',
-   177→    schema: null,
-   178→    *entries(value, ctx) {
-   179→      for (const S of Structs) {
-   180→        yield* S.entries(value, ctx)
-   181→      }
-   182→    },
-   183→    *validator(value, ctx) {
-   184→      for (const S of Structs) {
-   185→        yield* S.validator(value, ctx)
-   186→      }
-   187→    },
-   188→    *refiner(value, ctx) {
-   189→      for (const S of Structs) {
-   190→        yield* S.refiner(value, ctx)
-   191→      }
-   192→    },
-   193→  })
-   194→}
    204→export function literal<T>(constant: T): any {
    205→  const description = print(constant)
    206→  const t = typeof constant
    207→  return new Struct({
-   208→    type: 'literal',
-   209→    schema:
-   210→      t === 'string' || t === 'number' || t === 'boolean' ? constant : null,
-   211→    validator(value) {
-   212→      return (
-   213→        value === constant ||
-   214→        `Expected the literal \`${description}\`, but received: ${print(value)}`
-   215→      )
-   216→    },
-   217→  })
-   218→}
+      →…
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    231→  return new Struct({
    232→    type: 'map',
    233→    schema: null,
-   234→    *entries(value) {
-   235→      if (Key && Value && value instanceof Map) {
-   236→        for (const [k, v] of value.entries()) {
-   237→          yield [k as string, k, Key]
-   238→          yield [k as string, v, Value]
-   239→        }
-   240→      }
-   241→    },
-   242→    coercer(value) {
-   243→      return value instanceof Map ? new Map(value) : value
-   244→    },
-   245→    validator(value) {
-   246→      return (
-   247→        value instanceof Map ||
-   248→        `Expected a \`Map\` object, but received: ${print(value)}`
-   249→      )
-   250→    },
-   251→  })
-   252→}
+      →…
    254→/**
    255→ * Ensure that no value ever passes validation.
    256→ */
    257→
    258→export function never(): Struct<never, null> {
-   259→  return define('never', () => false)
-   260→}
    262→/**
    263→ * Augment an existing struct to allow `null` values.
    264→ */
    265→
    266→export function nullable<T, S>(struct: Struct<T, S>): Struct<T | null, S> {
-   267→  return new Struct({
-   268→    ...struct,
-   269→    validator: (value, ctx) => value === null || struct.validator(value, ctx),
-   270→    refiner: (value, ctx) => value === null || struct.refiner(value, ctx),
-   271→  })
-   272→}
    274→/**
    275→ * Ensure that a value is a number.
    276→ */
    277→
    278→export function number(): Struct<number, null> {
-   279→  return define('number', (value) => {
-   280→    return (
-   281→      (typeof value === 'number' && !isNaN(value)) ||
-   282→      `Expected a number, but received: ${print(value)}`
-   283→    )
-   284→  })
-   285→}
    298→export function object<S extends ObjectSchema>(schema?: S): any {
    299→  const knowns = schema ? Object.keys(schema) : []
    300→  const Never = never()
    301→  return new Struct({
-   302→    type: 'object',
-   303→    schema: schema ? schema : null,
-   304→    *entries(value) {
-   305→      if (schema && isObject(value)) {
-   306→        const unknowns = new Set(Object.keys(value))
-   307→
-   308→        for (const key of knowns) {
-   309→          unknowns.delete(key)
-   310→          yield [key, value[key], schema[key]]
-   311→        }
-   312→
-   313→        for (const key of unknowns) {
-   314→          yield [key, value[key], Never]
-   315→        }
-   316→      }
-   317→    },
-   318→    validator(value) {
-   319→      return (
-   320→        isNonArrayObject(value) ||
-   321→        `Expected an object, but received: ${print(value)}`
-   322→      )
-   323→    },
-   324→    coercer(value, ctx) {
-   325→      if (!isNonArrayObject(value)) {
-   326→        return value
-   327→      }
-   328→
-   329→      const coerced = { ...value }
-   330→
-   331→      // The `object` struct has special behaviour enabled by the mask flag.
-   332→      // When masking, properties that are not in the schema are deleted from
-   333→      // the coerced object instead of eventually failing validaiton.
-   334→      if (ctx.mask && schema) {
-   335→        for (const key in coerced) {
-   336→          if (schema[key] === undefined) {
-   337→            delete coerced[key]
-   338→          }
-   339→        }
-   340→      }
-   341→
-   342→      return coerced
-   343→    },
-   344→  })
-   345→}
+      →…
    347→/**
    348→ * Augment a struct to allow `undefined` values.
    349→ */
    350→
    351→export function optional<T, S>(struct: Struct<T, S>): Struct<T | undefined, S> {
-   352→  return new Struct({
-   353→    ...struct,
-   354→    validator: (value, ctx) =>
-   355→      value === undefined || struct.validator(value, ctx),
-   356→    refiner: (value, ctx) => value === undefined || struct.refiner(value, ctx),
-   357→  })
-   358→}
    360→/**
    361→ * Ensure that a value is an object with keys and values of specific types, but
    362→ * without ensuring any specific shape of properties.
    363→ *
    364→ * Like TypeScript's `Record` utility.
    365→ */
-   366→
+      →…
    367→export function record<K extends string, V>(
    368→  Key: Struct<K>,
    369→  Value: Struct<V>
    370→): Struct<Record<K, V>, null> {
-   371→  return new Struct({
-   372→    type: 'record',
-   373→    schema: null,
-   374→    *entries(value) {
-   375→      if (isObject(value)) {
-   376→        for (const k in value) {
-   377→          const v = value[k]
-   378→          yield [k, k, Key]
-   379→          yield [k, v, Value]
-   380→        }
-   381→      }
-   382→    },
-   383→    validator(value) {
-   384→      return (
-   385→        isNonArrayObject(value) ||
-   386→        `Expected an object, but received: ${print(value)}`
-   387→      )
-   388→    },
-   389→    coercer(value) {
-   390→      return isNonArrayObject(value) ? { ...value } : value
-   391→    },
-      →…
    395→/**
    396→ * Ensure that a value is a `RegExp`.
    397→ *
    398→ * Note: this does not test the value against the regular expression! For that
    399→ * you need to use the `pattern()` refinement.
    400→ */
-   401→
+      →…
    402→export function regexp(): Struct<RegExp, null> {
-   403→  return define('regexp', (value) => {
-   404→    return value instanceof RegExp
-   405→  })
-   406→}
    415→export function set<T>(Element?: Struct<T>): any {
    416→  return new Struct({
    417→    type: 'set',
    418→    schema: null,
-   419→    *entries(value) {
-   420→      if (Element && value instanceof Set) {
-   421→        for (const v of value) {
-   422→          yield [v as string, v, Element]
-   423→        }
-   424→      }
-   425→    },
-   426→    coercer(value) {
-   427→      return value instanceof Set ? new Set(value) : value
-   428→    },
-   429→    validator(value) {
-   430→      return (
-   431→        value instanceof Set ||
-   432→        `Expected a \`Set\` object, but received: ${print(value)}`
-   433→      )
-   434→    },
-   435→  })
-   436→}
+      →…
    438→/**
    439→ * Ensure that a value is a string.
    440→ */
    441→
    442→export function string(): Struct<string, null> {
-   443→  return define('string', (value) => {
-   444→    return (
-   445→      typeof value === 'string' ||
-   446→      `Expected a string, but received: ${print(value)}`
-   447→    )
-   448→  })
-   449→}
    451→/**
    452→ * Ensure that a value is a tuple of a specific length, and that each of its
    453→ * elements is of a specific type.
@@ -612,60 +265,16 @@ types.ts
    456→export function tuple<A extends AnyStruct, B extends AnyStruct[]>(
    457→  Structs: [A, ...B]
    458→): Struct<[Infer<A>, ...InferStructTuple<B>], null> {
-   459→  const Never = never()
-   460→
-   461→  return new Struct({
-   462→    type: 'tuple',
-   463→    schema: null,
-   464→    *entries(value) {
-   465→      if (Array.isArray(value)) {
-   466→        const length = Math.max(Structs.length, value.length)
-   467→
-   468→        for (let i = 0; i < length; i++) {
-   469→          yield [i, value[i], Structs[i] || Never]
-   470→        }
-   471→      }
-   472→    },
-   473→    validator(value) {
-   474→      return (
-   475→        Array.isArray(value) ||
-   476→        `Expected an array, but received: ${print(value)}`
-   477→      )
-   478→    },
-   479→    coercer(value) {
-      →…
    485→/**
    486→ * Ensure that a value has a set of known properties of specific types.
    487→ *
    488→ * Note: Unrecognized properties are allowed and untouched. This is similar to
    489→ * how TypeScript's structural typing works.
    490→ */
-   491→
+      →…
    492→export function type<S extends ObjectSchema>(
    493→  schema: S
    494→): Struct<ObjectType<S>, S> {
-   495→  const keys = Object.keys(schema)
-   496→  return new Struct({
-   497→    type: 'type',
-   498→    schema,
-   499→    *entries(value) {
-   500→      if (isObject(value)) {
-   501→        for (const k of keys) {
-   502→          yield [k, value[k], schema[k]]
-   503→        }
-   504→      }
-   505→    },
-   506→    validator(value) {
-   507→      return (
-   508→        isNonArrayObject(value) ||
-   509→        `Expected an object, but received: ${print(value)}`
-   510→      )
-   511→    },
-   512→    coercer(value) {
-   513→      return isNonArrayObject(value) ? { ...value } : value
-   514→    },
-   515→  })
-      →…
    518→/**
    519→ * Ensure that a value matches one of a set of types.
    520→ */
@@ -673,35 +282,11 @@ types.ts
    522→export function union<A extends AnyStruct, B extends AnyStruct[]>(
    523→  Structs: [A, ...B]
    524→): Struct<Infer<A> | InferStructTuple<B>[number], null> {
-   525→  const description = Structs.map((s) => s.type).join(' | ')
-   526→  return new Struct({
-   527→    type: 'union',
-   528→    schema: null,
-   529→    coercer(value, ctx) {
-   530→      for (const S of Structs) {
-   531→        const [error, coerced] = S.validate(value, {
-   532→          coerce: true,
-   533→          mask: ctx.mask,
-   534→        })
-   535→        if (!error) {
-   536→          return coerced
-   537→        }
-   538→      }
-   539→
-   540→      return value
-   541→    },
-   542→    validator(value, ctx) {
-   543→      const failures = []
-   544→
-   545→      for (const S of Structs) {
-      →…
    570→/**
    571→ * Ensure that any value passes validation, without widening its type to `any`.
    572→ */
    573→
    574→export function unknown(): Struct<unknown, null> {
-   575→  return define('unknown', () => true)
-   576→}
 
 utilities.ts
      1→import { Context, Struct, Validator } from '../struct.js'
@@ -716,15 +301,12 @@ utilities.ts
     61→  const isType = Structs[0].type === 'type'
     62→  const schemas = Structs.map((s) => s.schema)
     63→  const schema = Object.assign({}, ...schemas)
-    64→  return isType ? type(schema) : object(schema)
-    65→}
+      →…
     67→/**
     68→ * Define a new struct type with a custom validation function.
     69→ */
     70→
     71→export function define<T>(name: string, validator: Validator): Struct<T, null> {
-    72→  return new Struct({ type: name, schema: null, validator })
-    73→}
     75→/**
     76→ * Create a new struct based on an existing struct, but the value is allowed to
     77→ * be `undefined`. `log` will be called if the value is not `undefined`.
@@ -734,157 +316,56 @@ utilities.ts
     81→  struct: Struct<T>,
     82→  log: (value: unknown, ctx: Context) => void
     83→): Struct<T> {
-    84→  return new Struct({
-    85→    ...struct,
-    86→    refiner: (value, ctx) => value === undefined || struct.refiner(value, ctx),
-    87→    validator(value, ctx) {
-    88→      if (value === undefined) {
-    89→        return true
-    90→      } else {
-    91→        log(value, ctx)
-    92→        return struct.validator(value, ctx)
-    93→      }
-    94→    },
-    95→  })
-    96→}
     98→/**
     99→ * Create a struct with dynamic validation logic.
    100→ *
    101→ * The callback will receive the value currently being validated, and must
    102→ * return a struct object to validate it with. This can be useful to model
    103→ * validation logic that changes based on its input.
-   104→ */
-   105→
+      →…
    106→export function dynamic<T>(
    107→  fn: (value: unknown, ctx: Context) => Struct<T, any>
    108→): Struct<T, null> {
-   109→  return new Struct({
-   110→    type: 'dynamic',
-   111→    schema: null,
-   112→    *entries(value, ctx) {
-   113→      const struct = fn(value, ctx)
-   114→      yield* struct.entries(value, ctx)
-   115→    },
-   116→    validator(value, ctx) {
-   117→      const struct = fn(value, ctx)
-   118→      return struct.validator(value, ctx)
-   119→    },
-   120→    coercer(value, ctx) {
-   121→      const struct = fn(value, ctx)
-   122→      return struct.coercer(value, ctx)
-   123→    },
-   124→    refiner(value, ctx) {
-   125→      const struct = fn(value, ctx)
-   126→      return struct.refiner(value, ctx)
-   127→    },
-   128→  })
-   129→}
    131→/**
    132→ * Create a struct with lazily evaluated validation logic.
    133→ *
    134→ * The first time validation is run with the struct, the callback will be called
    135→ * and must return a struct object to use. This is useful for cases where you
    136→ * want to have self-referential structs for nested data structures to avoid a
-   137→ * circular definition problem.
-   138→ */
-   139→
-   140→export function lazy<T>(fn: () => Struct<T, any>): Struct<T, null> {
-   141→  let struct: Struct<T, any> | undefined
-   142→  return new Struct({
-   143→    type: 'lazy',
-   144→    schema: null,
-   145→    *entries(value, ctx) {
-   146→      struct ??= fn()
-   147→      yield* struct.entries(value, ctx)
-   148→    },
-   149→    validator(value, ctx) {
-   150→      struct ??= fn()
-   151→      return struct.validator(value, ctx)
-   152→    },
-   153→    coercer(value, ctx) {
-   154→      struct ??= fn()
-   155→      return struct.coercer(value, ctx)
-   156→    },
-   157→    refiner(value, ctx) {
-   158→      struct ??= fn()
-   159→      return struct.refiner(value, ctx)
-   160→    },
-   161→  })
       →…
+   140→export function lazy<T>(fn: () => Struct<T, any>): Struct<T, null> {
    164→/**
    165→ * Create a new struct based on an existing object struct, but excluding
    166→ * specific properties.
    167→ *
    168→ * Like TypeScript's `Omit` utility.
    169→ */
-   170→
+      →…
    171→export function omit<S extends ObjectSchema, K extends keyof S>(
    172→  struct: Struct<ObjectType<S>, S>,
    173→  keys: K[]
    174→): Struct<ObjectType<Omit<S, K>>, Omit<S, K>> {
-   175→  const { schema } = struct
-   176→  const subschema: any = { ...schema }
-   177→
-   178→  for (const key of keys) {
-   179→    delete subschema[key]
-   180→  }
-   181→
-   182→  switch (struct.type) {
-   183→    case 'type':
-   184→      return type(subschema as Omit<S, K>)
-   185→    default:
-   186→      return object(subschema as Omit<S, K>)
-   187→  }
-   188→}
    190→/**
    191→ * Create a new struct based on an existing object struct, but with all of its
    192→ * properties allowed to be `undefined`.
    193→ *
    194→ * Like TypeScript's `Partial` utility.
    195→ */
-   196→
+      →…
    197→export function partial<S extends ObjectSchema>(
    198→  struct: Struct<ObjectType<S>, S> | S
    199→): Struct<ObjectType<PartialObjectSchema<S>>, PartialObjectSchema<S>> {
-   200→  const isStruct = struct instanceof Struct
-   201→  const schema: any = isStruct ? { ...struct.schema } : { ...struct }
-   202→
-   203→  for (const key in schema) {
-   204→    schema[key] = optional(schema[key])
-   205→  }
-   206→
-   207→  if (isStruct && struct.type === 'type') {
-   208→    return type(schema) as any
-   209→  }
-   210→
-   211→  return object(schema) as any
-   212→}
    214→/**
    215→ * Create a new struct based on an existing object struct, but only including
    216→ * specific properties.
    217→ *
    218→ * Like TypeScript's `Pick` utility.
    219→ */
-   220→
+      →…
    221→export function pick<S extends ObjectSchema, K extends keyof S>(
    222→  struct: Struct<ObjectType<S>, S>,
    223→  keys: K[]
    224→): Struct<ObjectType<Pick<S, K>>, Pick<S, K>> {
-   225→  const { schema } = struct
-   226→  const subschema: any = {}
-   227→
-   228→  for (const key of keys) {
-   229→    subschema[key] = schema[key]
-   230→  }
-   231→
-   232→  switch (struct.type) {
-   233→    case 'type':
-   234→      return type(subschema) as any
-   235→
-   236→    default:
-   237→      return object(subschema) as any
-   238→  }
-   239→}
    241→/**
    242→ * Define a new struct type with a custom validation function.
    243→ *
@@ -892,9 +373,3 @@ utilities.ts
    245→ */
    246→
    247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
-   248→  console.warn(
-   249→    'superstruct@0.11 - The `struct` helper has been renamed to `define`.'
-   250→  )
-   251→
-   252→  return define(name, validator)
-   253→}

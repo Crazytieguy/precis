@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (519 words)
+budget: 1000 (993 tokens)
 
 index.ts
      1→export type EventType = string | symbol;
@@ -82,32 +82,4 @@ index.ts
     92→
     93→		/**
     94→		 * Invoke all handlers for the given type.
-    95→		 * If present, `'*'` handlers are invoked after type-matched handlers.
-    96→		 *
-    97→		 * Note: Manually firing '*' handlers is not supported.
-    98→		 *
-    99→		 * @param {string|symbol} type The event type to invoke
-   100→		 * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
-   101→		 * @memberOf mitt
-   102→		 */
-   103→		emit<Key extends keyof Events>(type: Key, evt?: Events[Key]) {
-   104→			let handlers = all!.get(type);
-   105→			if (handlers) {
-   106→				(handlers as EventHandlerList<Events[keyof Events]>)
-   107→					.slice()
-   108→					.map((handler) => {
-   109→						handler(evt!);
-   110→					});
-   111→			}
-   112→
-   113→			handlers = all!.get('*');
-   114→			if (handlers) {
-   115→				(handlers as WildCardEventHandlerList<Events>)
-   116→					.slice()
-   117→					.map((handler) => {
-   118→						handler(type, evt!);
-   119→					});
-   120→			}
-   121→		}
-   122→	};
-   123→}
+      →…

@@ -2,112 +2,52 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (452 words)
+budget: 500 (425 tokens)
 
 comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
      6→  static get ANY () {
-     7→    return ANY
-     8→  }
     10→  constructor (comp, options) {
-    11→    options = parseOptions(options)
-    12→
-      →…
     36→  parse (comp) {
-    37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
-    38→    const m = comp.match(r)
-      →…
     57→  toString () {
-    58→    return this.value
-    59→  }
     61→  test (version) {
-    62→    debug('Comparator.test', version, this.options.loose)
-    63→
-      →…
     79→  intersects (comp, options) {
-    80→    if (!(comp instanceof Comparator)) {
-    81→      throw new TypeError('a Comparator is required')
-      →…
 
 range.js
      3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
      7→  constructor (range, options) {
-     8→    options = parseOptions(options)
-     9→
-      →…
     73→  get range () {
-    74→    if (this.formatted === undefined) {
-    75→      this.formatted = ''
-      →…
     92→  format () {
-    93→    return this.range
-    94→  }
     96→  toString () {
-    97→    return this.range
-    98→  }
    100→  parseRange (range) {
-   101→    // memoize range parsing for performance.
-   102→    // this is a very hot path, and fully deterministic.
-      →…
    170→  intersects (range, options) {
-   171→    if (!(range instanceof Range)) {
-   172→      throw new TypeError('a Range is required')
-      →…
    193→  test (version) {
-   194→    if (!version) {
-   195→      return false
-      →…
    218→const cache = new LRU()
-   233→const isNullSet = c => c.value === '<0.0.0-0'
-   234→const isAny = c => c.value === ''
-   238→const isSatisfiable = (comparators, options) => {
-   257→const parseComparator = (comp, options) => {
-   271→const isX = id => !id || id.toLowerCase() === 'x' || id === '*'
-   280→const replaceTildes = (comp, options) => {
-   288→const replaceTilde = (comp, options) => {
-   324→const replaceCarets = (comp, options) => {
-   332→const replaceCaret = (comp, options) => {
-   385→const replaceXRanges = (comp, options) => {
-   393→const replaceXRange = (comp, options) => {
-   470→const replaceStars = (comp, options) => {
-   478→const replaceGTE0 = (comp, options) => {
-   491→const hyphenReplace = incPr => ($0,
-   492→  from, fM, fm, fp, fpr, fb,
-   493→  to, tM, tm, tp, tpr) => {
-   523→const testSet = (set, version, options) => {
+   233→const isNullSet …
+   234→const isAny …
+   238→const isSatisfiable …
+   257→const parseComparator …
+   271→const isX …
+   280→const replaceTildes …
+   288→const replaceTilde …
+   324→const replaceCarets …
+   332→const replaceCaret …
+   385→const replaceXRanges …
+   393→const replaceXRange …
+   470→const replaceStars …
+   478→const replaceGTE0 …
+   491→const hyphenReplace …
+   523→const testSet …
 
 semver.js
      9→class SemVer {
     10→  constructor (version, options) {
-    11→    options = parseOptions(options)
-    12→
-      →…
     81→  format () {
-    82→    this.version = `${this.major}.${this.minor}.${this.patch}`
-    83→    if (this.prerelease.length) {
-      →…
     89→  toString () {
-    90→    return this.version
-    91→  }
     93→  compare (other) {
-    94→    debug('SemVer.compare', this.version, this.options, other)
-    95→    if (!(other instanceof SemVer)) {
-      →…
    109→  compareMain (other) {
-   110→    if (!(other instanceof SemVer)) {
-   111→      other = new SemVer(other, this.options)
-      →…
    135→  comparePre (other) {
-   136→    if (!(other instanceof SemVer)) {
-   137→      other = new SemVer(other, this.options)
-      →…
    168→  compareBuild (other) {
-   169→    if (!(other instanceof SemVer)) {
-   170→      other = new SemVer(other, this.options)
-      →…
    194→  inc (release, identifier, identifierBase) {
-   195→    if (release.startsWith('pre')) {
-   196→      if (!identifier && identifierBase === false) {
-      →…

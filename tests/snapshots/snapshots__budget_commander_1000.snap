@@ -2,16 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1002 words)
+budget: 1000 (1005 tokens)
 
 CHANGELOG.md
      1→# Changelog …
-   911→#### Testing for no arguments …
 
 CONTRIBUTING.md
-     1→# Contributing …
-     3→## Issues …
-    13→## Pull Requests …
 
 Readme.md
      1→# Commander.js
@@ -21,24 +17,6 @@ Readme.md
     11→
     12→- [Commander.js](#commanderjs)
     13→  - [Installation](#installation)
-    14→  - [Quick Start](#quick-start)
-    15→  - [Declaring _program_ variable](#declaring-program-variable)
-    16→  - [Options](#options)
-    17→    - [Common option types, boolean and value](#common-option-types-boolean-and-value)
-    18→    - [Default option value](#default-option-value)
-    19→    - [Other option types, negatable boolean and boolean|value](#other-option-types-negatable-boolean-and-booleanvalue)
-    20→    - [Required option](#required-option)
-    21→    - [Variadic option](#variadic-option)
-    22→    - [Version option](#version-option)
-    23→    - [More configuration](#more-configuration)
-    24→    - [Custom option processing](#custom-option-processing)
-    25→  - [Commands](#commands)
-    26→    - [Command-arguments](#command-arguments)
-    27→      - [More configuration](#more-configuration-1)
-    28→      - [Custom argument processing](#custom-argument-processing)
-    29→    - [Action handler](#action-handler)
-    30→    - [Stand-alone executable (sub)commands](#stand-alone-executable-subcommands)
-    31→    - [Life cycle hooks](#life-cycle-hooks)
       →…
     61→## Installation …
     67→## Quick Start …
@@ -53,63 +31,16 @@ Readme.md
   1164→## Support …
 
 Readme_zh-CN.md
-     1→# Commander.js
-     8→完整的 [node.js](http://nodejs.org) 命令行解决方案。
-     9→
-    10→使用其他语言阅读：[English](./Readme.md) | 简体中文
-    11→
-    12→- [Commander.js](#commanderjs)
-      →…
-   570→#### 其他参数配置 …
-   582→#### 自定义参数处理 …
-
-SECURITY.md
-     1→# Security Policy …
-
-docs/deprecated.md
-     1→# Deprecated …
-
-docs/help-in-depth.md
-     1→# Help in Depth …
-
-docs/options-in-depth.md
-     2→# Options in Depth …
-
-docs/parsing-and-hooks.md
-     1→# Parsing life cycle and hooks …
-
-docs/release-policy.md
-     1→# Release Policy …
-
-docs/terminology.md
-     1→# Terminology …
-
-eslint.config.js
-     8→const tsconfigTsFiles …
-     9→const tsconfigJsFiles …
+     1→# Commander.js …
 
 esm.mjs
      1→import commander from './index.js';
 
-examples/color-help-replacement.mjs
-
-examples/color-help.mjs
-
 examples/custom-command-class.js
-     6→class CommandWithTrace extends commander.Command {
      7→  createCommand(name) {
 
 examples/global-options-added.js
-    16→class MyRootCommand extends Command {
     17→  createCommand(name) {
-
-examples/help-centered.mjs
-
-examples/man-style-help.mjs
-     5→function formatItem(term, termWidth, description, helper) {
-
-jest.config.js
-     1→const config …
 
 lib/argument.js
      3→class Argument {
@@ -117,17 +48,13 @@ lib/argument.js
 lib/command.js
     13→class Command extends EventEmitter {
   1127→  _prepareForParse() {
-  1128→    if (this._savedState === null) {
-      →…
 
 lib/error.js
      1→/**
-     2→ * CommanderError class
-     3→ */
+      →…
      4→class CommanderError extends Error {
     22→/**
-    23→ * InvalidArgumentError class
-    24→ */
+      →…
     25→class InvalidArgumentError extends CommanderError {
 
 lib/help.js
@@ -150,150 +77,45 @@ lib/help.js
 lib/option.js
      3→class Option {
    261→/**
-   262→ * This class is to make it easier to work with dual options, without changing the existing
-   263→ * implementation. We support separate dual options for separate positive and negative options,
       →…
    268→class DualOptions {
 
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
-     4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
-      →…
 
 package-support.json
-     2→  "versions": [
-    18→  ]
-    19→}
 
 package.json
-     2→  "name": "commander",
-     3→  "version": "14.0.3",
-     4→  "description": "the complete solution for node.js command-line programs",
-     5→  "keywords": [
-    14→  ],
-    15→  "author": "TJ Holowaychuk <tj@vision-media.ca>",
-    16→  "license": "MIT",
-    17→  "repository": {
-    20→  },
-    21→  "scripts": {
-    34→  },
-    35→  "files": [
-    42→  ],
-    43→  "type": "commonjs",
-    44→  "main": "./index.js",
-    45→  "exports": {
-    61→  },
-    62→  "devDependencies": {
-    76→  },
-    77→  "types": "typings/index.d.ts",
-    78→  "engines": {
-    80→  },
-    81→  "support": true
-    82→}
-
-tests/command.createArgument.test.js
-     4→  constructor(name, description) {
-    11→  createArgument(name, description) {
-    16→  createCommand(name) {
-
-tests/command.createOption.test.js
-     4→  constructor(flags, description) {
-    11→  createOption(flags, description) {
 
 tests/esm-imports-test.mjs
      1→../esm.mjs …
-    19→function check(condition, explanation) {
-    26→function checkClass(obj, name) {
 
 tests/ts-imports.test.ts
      1→../ …
-    17→function checkClass(obj: object, name: string): void {
+    17→function checkClass …
 
 tsconfig.js.json
-     7→  "extends": "./tsconfig.json",
-     8→  "include": [
-    14→  ],
-    15→}
 
 tsconfig.json
-    12→  "compilerOptions": {
-    32→  },
-    33→  "include": [
-    42→  ],
-    43→  "exclude": ["node_modules"],
-    44→}
 
 tsconfig.ts.json
-     8→  "extends": "./tsconfig.json",
-     9→  "compilerOptions": {
-    14→  },
-    15→  "include": [
-    19→  ],
-    20→}
 
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =
     13→  | LiteralType
     14→  | (BaseType & Record<never, never>);
     16→export class CommanderError extends Error {
-    17→  code: string;
-    18→  exitCode: number;
-    19→  message: string;
     31→export class InvalidArgumentError extends CommanderError {
     40→export interface ErrorOptions {
-    41→  // optional parameter for error()
-    42→  /** an id string representing the error */
-    43→  code?: string;
-      →…
     48→export class Argument {
-    49→  description: string;
-    50→  required: boolean;
-    51→  variadic: boolean;
     95→export class Option {
-    96→  flags: string;
-    97→  description: string;
-    98→
-   115→  constructor(flags: string, description?: string);
    210→export class Help {
-   211→  /** output helpWidth, long lines are wrapped to fit */
-   212→  helpWidth?: number;
-   213→  minWidthToWrap: number;
-   218→  constructor();
-   226→  prepareContext(contextOptions: {
-   227→    error?: boolean;
-   228→    helpWidth?: number;
-   229→    outputHasColors?: boolean;
-   230→  }): void;
-   279→  styleCommandDescription(str: string): string;
-   280→  styleOptionDescription(str: string): string;
-   281→  styleSubcommandDescription(str: string): string;
-   282→  styleArgumentDescription(str: string): string;
-   286→  styleOptionTerm(str: string): string;
-   287→  styleSubcommandTerm(str: string): string;
-   288→  styleArgumentTerm(str: string): string;
    340→export type HelpConfiguration = Partial<Help>;
    342→export interface ParseOptions {
-   343→  from: 'node' | 'electron' | 'user';
-   344→}
    345→export interface HelpContext {
-   346→  // optional parameter for .help() and .outputHelp()
-   347→  error: boolean;
-   348→}
    349→export interface AddHelpTextContext {
-   350→  // passed to text function used with .addHelpText()
-   351→  error: boolean;
-   352→  command: Command;
-      →…
    354→export interface OutputConfiguration {
-   355→  writeOut?(str: string): void;
-   356→  writeErr?(str: string): void;
-   357→  outputError?(str: string, write: (str: string) => void): void;
-   359→  getOutHelpWidth?(): number;
-   360→  getErrHelpWidth?(): number;
-   362→  getOutHasColors?(): boolean;
-   363→  getErrHasColors?(): boolean;
-   364→  stripColor?(str: string): string;
    367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
    368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
    370→export type OptionValueSource =
@@ -301,37 +123,12 @@ typings/index.d.ts
    372→  | undefined;
    374→export type OptionValues = Record<string, any>;
    376→export class Command {
-   377→  args: string[];
-   378→  processedArgs: any[];
-   379→  readonly commands: readonly Command[];
-   384→  constructor(name?: string);
-   493→  argument(name: string, description?: string, defaultValue?: unknown): this;
-   528→  helpCommand(enable: boolean): this;
-   718→  storeOptionsAsProperties(storeAsProperties?: boolean): this;
-  1083→  addHelpText(
-  1084→    position: AddHelpTextPosition,
-  1085→    text: (context: AddHelpTextContext) => string,
-  1086→  ): this;
   1094→export interface CommandOptions {
-  1095→  hidden?: boolean;
-  1096→  isDefault?: boolean;
-  1097→  /** @deprecated since v7, replaced by hidden */
-      →…
   1100→export interface ExecutableCommandOptions extends CommandOptions {
-  1101→  executableFile?: string;
-  1102→}
   1104→export interface ParseOptionsResult {
-  1105→  operands: string[];
-  1106→  unknown: string[];
-  1107→}
   1113→export const program: Command;
 
 typings/index.test-d.ts
      1→import * as commander from './index';
-     2→import { expectType } from 'tsd';
-   384→interface MyCheeseOption {
-   385→  cheese: string;
-   386→}
-   509→class MyCommand extends commander.Command {
    510→  createCommand(name?: string): MyCommand {
    514→  myFunction(): void {

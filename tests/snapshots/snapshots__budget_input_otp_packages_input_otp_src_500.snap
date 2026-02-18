@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (499 tokens)
 
 input.tsx
      3→import * as React from 'react'
@@ -11,28 +11,10 @@ input.tsx
      7→import { usePrevious } from './use-previous'
      8→import { usePasswordManagerBadge } from './use-pwm-badge'
     10→export const OTPInputContext = React.createContext<RenderProps>(
-    11→  {} as RenderProps,
-    12→)
     14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
-    15→  (
-    16→    {
-    17→      value: uncheckedValue,
-    18→      onChange: uncheckedOnChange,
-    19→      maxLength,
-    20→      textAlign = 'left',
-    21→      pattern,
-    22→      placeholder,
-    23→      inputMode = 'numeric',
-    24→      onComplete,
-      →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
-   542→    sheet.insertRule(rule)
-   543→  } catch {
-   544→    console.error('input-otp could not insert CSS rule:', rule)
-   545→  }
-   546→}
-   553→const NOSCRIPT_CSS_FALLBACK = `
+      →…
 
 regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
@@ -41,11 +23,6 @@ regexp.ts
 
 sync-timeouts.ts
      1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
-     2→  const t1 = setTimeout(cb, 0) // For faster machines
-     3→  const t2 = setTimeout(cb, 1_0)
-     4→  const t3 = setTimeout(cb, 5_0)
-     5→  return [t1, t2, t3]
-     6→}
 
 types.ts
      1→export interface SlotProps {
@@ -59,87 +36,20 @@ types.ts
      9→  isFocused: boolean
     10→  isHovering: boolean
     11→}
-    12→type OverrideProps<T, R> = Omit<T, keyof R> & R
-    13→type OTPInputBaseProps = OverrideProps<
-    14→  React.InputHTMLAttributes<HTMLInputElement>,
-    15→  {
-    16→    value?: string
-      →…
-    32→type InputOTPRenderFn = (props: RenderProps) => React.ReactNode
+    12→type OverrideProps …
+    13→type OTPInputBaseProps …
+    32→type InputOTPRenderFn …
     33→export type OTPInputProps = OTPInputBaseProps &
     34→  (
     35→    | {
     36→        render: InputOTPRenderFn
-    37→        children?: never
-    38→      }
-    39→    | {
-    40→        render?: never
-    41→        children: React.ReactNode
-    42→      }
-    43→  )
+      →…
 
 use-previous.ts
      1→import * as React from 'react'
      3→export function usePrevious<T>(value: T) {
-     4→  const ref = React.useRef<T>()
-     5→  React.useEffect(() => {
-     6→    ref.current = value
-     7→  })
-     8→  return ref.current
-     9→}
 
 use-pwm-badge.tsx
      1→import * as React from 'react'
      2→import { OTPInputProps } from './types'
-     4→const PWM_BADGE_MARGIN_RIGHT = 18
-     5→const PWM_BADGE_SPACE_WIDTH_PX = 40
-     6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
-     8→const PASSWORD_MANAGERS_SELECTORS = [
-    15→export function usePasswordManagerBadge({
-    16→  containerRef,
-    17→  inputRef,
-    18→  pushPasswordManagerStrategy,
-    19→  isFocused,
-    20→}: {
-    21→  containerRef: React.RefObject<HTMLDivElement>
-    22→  inputRef: React.RefObject<HTMLInputElement>
-    23→  pushPasswordManagerStrategy: OTPInputProps['pushPasswordManagerStrategy']
-    24→  isFocused: boolean
-    25→}) {
-    26→  /** Password managers have a badge
-    27→   *  and I'll use this state to push them
-    28→   *  outside the input */
-    29→  const [hasPWMBadge, setHasPWMBadge] = React.useState(false)
-    30→  const [hasPWMBadgeSpace, setHasPWMBadgeSpace] = React.useState(false)
-    31→  const [done, setDone] = React.useState(false)
-    32→
-    33→  const willPushPWMBadge = React.useMemo(() => {
-    34→    if (pushPasswordManagerStrategy === 'none') {
-    35→      return false
-    36→    }
-    37→
-    38→    const increaseWidthCase =
-    39→      (pushPasswordManagerStrategy === 'increase-width' ||
-    40→        // TODO: remove 'experimental-no-flickering' support in 2.0.0
-    41→        pushPasswordManagerStrategy === 'experimental-no-flickering') &&
-    42→      hasPWMBadge &&
-    43→      hasPWMBadgeSpace
-    44→
-    45→    return increaseWidthCase
-    46→  }, [hasPWMBadge, hasPWMBadgeSpace, pushPasswordManagerStrategy])
-    47→
-    48→  const trackPWMBadge = React.useCallback(() => {
-    49→    const container = containerRef.current
-    50→    const input = inputRef.current
-    51→    if (
-    52→      !container ||
-    53→      !input ||
-    54→      done ||
-    55→      pushPasswordManagerStrategy === 'none'
-    56→    ) {
-    57→      return
-    58→    }
-    59→
-    60→    const elementToCompare = container
-    61→
-      →…
+    15→export function usePasswordManagerBadge …

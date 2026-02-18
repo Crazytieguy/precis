@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (494 words)
+budget: 500 (501 tokens)
 
 README.md
      1→# xxhash
@@ -10,55 +10,22 @@ README.md
      7→high-quality hashing algorithm that is much faster than anything in the Go
      8→standard library.
      9→
-    10→This package provides a straightforward API:
-    11→
-    12→```
-    13→func Sum64(b []byte) uint64
-    14→func Sum64String(s string) uint64
-    15→type Digest struct{ ... }
-    16→    func New() *Digest
-    17→```
-    18→
       →…
-    33→## Compatibility
-    35→This package is in a module and the latest code is in version 2 of the module.
-    36→You need a version of Go with at least "minimal module compatibility" to use
-    37→github.com/cespare/xxhash/v2:
-      →…
-    45→## Benchmarks
-    47→Here are some quick benchmarks comparing the pure-Go and assembly
-    48→implementations of Sum64.
-    49→
-      →…
-    66→## Projects using this package
-    68→- [InfluxDB](https://github.com/influxdata/influxdb)
-    69→- [Prometheus](https://github.com/prometheus/prometheus)
-    70→- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
-      →…
-
-bench_test.go
+    33→## Compatibility …
+    45→## Benchmarks …
+    66→## Projects using this package …
 
 dynamic/dynamic_test.go
-     6→import …
-    15→// This is a cursory test that checks whether things work under dynamic linking.
-    16→
     17→func TestMain(m *testing.M) {
-    18→	cmd := exec.Command(
-    19→		"go", "build",
-      →…
     33→func TestDynamic(t *testing.T) {
 
 dynamic/plugin.go
      6→import …
-    14→const (
-    15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
-    16→	want = uint64(0x02a2e85470d6fd96)
+    14→const …
+    15→	in …
+    16→	want …
     19→func TestSum(t *testing.T) {
-    20→	got := xxhash.Sum64String(in)
-      →…
     26→func TestDigest(t *testing.T) {
-    27→	for chunkSize := 1; chunkSize <= len(in); chunkSize++ {
-      →…
 
 xxhash.go
      5→import …
@@ -79,56 +46,24 @@ xxhash.go
     35→	mem   [32]byte
     36→	n     int // how much of mem is used
     37→}
-    40→func New() *Digest {
-    45→func NewWithSeed(seed uint64) *Digest {
-    53→func (d *Digest) Reset() {
-    59→func (d *Digest) ResetWithSeed(seed uint64) {
-    69→func (d *Digest) Size() int { return 8 }
-    72→func (d *Digest) BlockSize() int { return 32 }
-    75→func (d *Digest) Write(b []byte) (n int, err error) {
-   113→func (d *Digest) Sum(b []byte) []byte {
-   129→func (d *Digest) Sum64() uint64 {
-   176→func (d *Digest) MarshalBinary() ([]byte, error) {
-   190→func (d *Digest) UnmarshalBinary(b []byte) error {
 
 xxhash_asm.go
-    12→func Sum64(b []byte) uint64
     14→//go:noescape
     15→func writeBlocks(d *Digest, b []byte) int
 
 xxhash_other.go
-     7→func Sum64(b []byte) uint64 {
 
 xxhash_safe.go
-     9→func Sum64String(s string) uint64 {
-    14→func (d *Digest) WriteString(s string) (n int, err error) {
-
-xxhash_test.go
 
 xxhash_unsafe.go
      9→import …
-    38→func Sum64String(s string) uint64 {
-    45→func (d *Digest) WriteString(s string) (n int, err error) {
-    53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
-      →…
     55→type sliceHeader struct {
     56→	s   string
     57→	cap int
     58→}
 
 xxhash_unsafe_test.go
-    29→// This test is inspired by the Go runtime tests in https://go.dev/cl/57410.
-      →…
     31→func TestInlining(t *testing.T) {
-
-xxhashbench/xxhashbench_test.go
-     3→import …
-    18→var sink uint64
-    20→var benchmarks = []struct {
-   108→func BenchmarkHashes(b *testing.B) {
 
 xxhsum/xxhsum.go
      3→import …
-    11→func main() {
-    34→func contains(ss []string, s string) bool {
-    43→func printHash(r io.Reader, name string) {

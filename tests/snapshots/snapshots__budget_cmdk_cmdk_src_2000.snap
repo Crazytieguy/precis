@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1976 words)
+budget: 2000 (2013 tokens)
 
 command-score.ts
     54→function commandScoreInner(
@@ -22,84 +22,7 @@ command-score.ts
     68→  }
     69→
     70→  var memoizeKey = `${stringIndex},${abbreviationIndex}`
-    71→  if (memoizedResults[memoizeKey] !== undefined) {
-    72→    return memoizedResults[memoizeKey]
-    73→  }
-    74→
-    75→  var abbreviationChar = lowerAbbreviation.charAt(abbreviationIndex)
-    76→  var index = lowerString.indexOf(abbreviationChar, stringIndex)
-    77→  var highScore = 0
-    78→
-    79→  var score, transposedScore, wordBreaks, spaceBreaks
-    80→
-    81→  while (index >= 0) {
-    82→    score = commandScoreInner(
-    83→      string,
-    84→      abbreviation,
-    85→      lowerString,
-    86→      lowerAbbreviation,
-    87→      index + 1,
-    88→      abbreviationIndex + 1,
-    89→      memoizedResults,
-    90→    )
-    91→    if (score > highScore) {
-    92→      if (index === stringIndex) {
-    93→        score *= SCORE_CONTINUE_MATCH
-    94→      } else if (IS_GAP_REGEXP.test(string.charAt(index - 1))) {
-    95→        score *= SCORE_NON_SPACE_WORD_JUMP
-    96→        wordBreaks = string.slice(stringIndex, index - 1).match(COUNT_GAPS_REGEXP)
-    97→        if (wordBreaks && stringIndex > 0) {
-    98→          score *= Math.pow(PENALTY_SKIPPED, wordBreaks.length)
-    99→        }
-   100→      } else if (IS_SPACE_REGEXP.test(string.charAt(index - 1))) {
-   101→        score *= SCORE_SPACE_WORD_JUMP
-   102→        spaceBreaks = string.slice(stringIndex, index - 1).match(COUNT_SPACE_REGEXP)
-   103→        if (spaceBreaks && stringIndex > 0) {
-   104→          score *= Math.pow(PENALTY_SKIPPED, spaceBreaks.length)
-   105→        }
-   106→      } else {
-   107→        score *= SCORE_CHARACTER_JUMP
-   108→        if (stringIndex > 0) {
-   109→          score *= Math.pow(PENALTY_SKIPPED, index - stringIndex)
-   110→        }
-   111→      }
-   112→
-   113→      if (string.charAt(index) !== abbreviation.charAt(abbreviationIndex)) {
-   114→        score *= PENALTY_CASE_MISMATCH
-   115→      }
-   116→    }
-   117→
-   118→    if (
-   119→      (score < SCORE_TRANSPOSITION &&
-   120→        lowerString.charAt(index - 1) === lowerAbbreviation.charAt(abbreviationIndex + 1)) ||
-   121→      (lowerAbbreviation.charAt(abbreviationIndex + 1) === lowerAbbreviation.charAt(abbreviationIndex) && // allow duplicate letters. Ref #7428
-   122→        lowerString.charAt(index - 1) !== lowerAbbreviation.charAt(abbreviationIndex))
-   123→    ) {
-   124→      transposedScore = commandScoreInner(
-   125→        string,
-   126→        abbreviation,
-   127→        lowerString,
-   128→        lowerAbbreviation,
-   129→        index + 1,
-   130→        abbreviationIndex + 2,
-   131→        memoizedResults,
-   132→      )
-   133→
-   134→      if (transposedScore * SCORE_TRANSPOSITION > score) {
-   135→        score = transposedScore * SCORE_TRANSPOSITION
-   136→      }
-   137→    }
-   138→
-   139→    if (score > highScore) {
-   140→      highScore = score
-   141→    }
-   142→
-   143→    index = lowerString.indexOf(abbreviationChar, index + 1)
-   144→  }
-   145→
-   146→  memoizedResults[memoizeKey] = highScore
-   147→  return highScore
-   148→}
+      →…
    150→function formatInput(string) {
    151→  // convert all valid space characters to space so they match each other
    152→  return string.toLowerCase().replace(COUNT_SPACE_REGEXP, ' ')
@@ -120,218 +43,75 @@ index.tsx
      6→import { Primitive } from '@radix-ui/react-primitive'
      7→import { useId } from '@radix-ui/react-id'
      8→import { composeRefs } from '@radix-ui/react-compose-refs'
-    10→type Children = { children?: React.ReactNode }
-    11→type DivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>
-    13→type LoadingProps = Children &
-    14→  DivProps & {
-    15→    /** Estimated progress of loading asynchronous options. */
-      →…
-    23→type EmptyProps = Children & DivProps & {}
-    24→type SeparatorProps = DivProps & {
-    25→  /** Whether this separator should always be rendered. Useful if you disable automatic filtering. */
-      →…
-    28→type DialogProps = RadixDialog.DialogProps &
-    29→  CommandProps & {
-    30→    /** Provide a className to the Dialog overlay. */
-      →…
-    37→type ListProps = Children &
-    38→  DivProps & {
-    39→    /**
-      →…
-    44→type ItemProps = Children &
-    45→  Omit<DivProps, 'disabled' | 'onSelect' | 'value'> & {
-    46→    /** Whether this item is currently disabled. */
-      →…
-    60→type GroupProps = Children &
-    61→  Omit<DivProps, 'heading' | 'value'> & {
-    62→    /** Optional heading to render for this group. */
-      →…
-    69→type InputProps = Omit<React.ComponentPropsWithoutRef<typeof Primitive.input>, 'value' | 'onChange' | 'type'> & {
-    70→  /**
-      →…
-    79→type CommandFilter = (value: string, search: string, keywords?: string[]) => number
-    80→type CommandProps = Children &
-    81→  DivProps & {
-    82→    /**
-      →…
-   123→type Context = {
-   124→  value: (id: string, value: string, keywords?: string[]) => void
-      →…
-   137→type State = {
-   138→  search: string
-      →…
-   143→type Store = {
-   144→  subscribe: (callback: () => void) => () => void
-      →…
-   149→type Group = {
-   150→  id: string
-      →…
-   154→const GROUP_SELECTOR = `[cmdk-group=""]`
-   155→const GROUP_ITEMS_SELECTOR = `[cmdk-group-items=""]`
-   156→const GROUP_HEADING_SELECTOR = `[cmdk-group-heading=""]`
-   157→const ITEM_SELECTOR = `[cmdk-item=""]`
-   158→const VALID_ITEM_SELECTOR = `${ITEM_SELECTOR}:not([aria-disabled="true"])`
-   159→const SELECT_EVENT = `cmdk-item-select`
-   160→const VALUE_ATTR = `data-value`
+    10→type Children …
+    11→type DivProps …
+    13→type LoadingProps …
+    23→type EmptyProps …
+    24→type SeparatorProps …
+    28→type DialogProps …
+    37→type ListProps …
+    44→type ItemProps …
+    60→type GroupProps …
+    69→type InputProps …
+    79→type CommandFilter …
+    80→type CommandProps …
+   123→type Context …
+   137→type State …
+   143→type Store …
+   149→type Group …
+   154→const GROUP_SELECTOR …
+   155→const GROUP_ITEMS_SELECTOR …
+   156→const GROUP_HEADING_SELECTOR …
+   157→const ITEM_SELECTOR …
+   158→const VALID_ITEM_SELECTOR …
+   159→const SELECT_EVENT …
+   160→const VALUE_ATTR …
    161→const defaultFilter: CommandFilter = (value, search, keywords) => commandScore(value, search, keywords)
-   163→const CommandContext = React.createContext<Context>(undefined)
+   163→const CommandContext …
    164→const useCommand = () => React.useContext(CommandContext)
-   165→const StoreContext = React.createContext<Store>(undefined)
+   165→const StoreContext …
    166→const useStore = () => React.useContext(StoreContext)
-   167→const GroupContext = React.createContext<Group>(undefined)
-   169→const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
-   170→  const state = useLazyRef<State>(() => ({
-      →…
+   167→const GroupContext …
+   169→const Command …
    659→/**
    660→ * Command menu item. Becomes active on pointer enter or through keyboard navigation.
    661→ * Preferably pass a `value`, otherwise the value will be inferred from `children` or
    662→ * the rendered item's `textContent`.
    663→ */
    664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
-   665→  const id = useId()
-   666→  const ref = React.useRef<HTMLDivElement>(null)
-   667→  const groupContext = React.useContext(GroupContext)
-   668→  const context = useCommand()
-   669→  const propsRef = useAsRef(props)
-   670→  const forceMount = propsRef.current?.forceMount ?? groupContext?.forceMount
-   671→
-   672→  useLayoutEffect(() => {
-   673→    if (!forceMount) {
-   674→      return context.item(id, groupContext?.id)
-   675→    }
-   676→  }, [forceMount])
-   677→
-   678→  const value = useValue(id, ref, [props.value, props.children, ref], props.keywords)
-   679→
-   680→  const store = useStore()
-      →…
    725→/**
    726→ * Group command menu items together with a heading.
    727→ * Grouped items are always shown together.
    728→ */
    729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
-   730→  const { heading, children, forceMount, ...etc } = props
-   731→  const id = useId()
-   732→  const ref = React.useRef<HTMLDivElement>(null)
-   733→  const headingRef = React.useRef<HTMLDivElement>(null)
-   734→  const headingId = useId()
-   735→  const context = useCommand()
-   736→  const render = useCmdk((state) =>
-   737→    forceMount ? true : context.filter() === false ? true : !state.search ? true : state.filtered.groups.has(id),
-   738→  )
-   739→
-   740→  useLayoutEffect(() => {
-   741→    return context.group(id)
-   742→  }, [])
-   743→
-   744→  useValue(id, ref, [props.value, props.heading, headingRef])
-   745→
-      →…
    770→/**
    771→ * A visual and semantic separator between items or groups.
    772→ * Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
    773→ */
    774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
-   775→  const { alwaysRender, ...etc } = props
-   776→  const ref = React.useRef<HTMLDivElement>(null)
-   777→  const render = useCmdk((state) => !state.search)
-   778→
-   779→  if (!alwaysRender && !render) return null
-   780→  return <Primitive.div ref={composeRefs(ref, forwardedRef)} {...etc} cmdk-separator="" role="separator" />
-   781→})
    783→/**
    784→ * Command menu input.
    785→ * All props are forwarded to the underyling `input` element.
    786→ */
    787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
-   788→  const { onValueChange, ...etc } = props
-   789→  const isControlled = props.value != null
-   790→  const store = useStore()
-   791→  const search = useCmdk((state) => state.search)
-   792→  const selectedItemId = useCmdk((state) => state.selectedItemId)
-   793→  const context = useCommand()
-   794→
-   795→  React.useEffect(() => {
-   796→    if (props.value != null) {
-   797→      store.setState('search', props.value)
-   798→    }
-   799→  }, [props.value])
-   800→
-   801→  return (
-   802→    <Primitive.input
-   803→      ref={forwardedRef}
-      →…
    829→/**
    830→ * Contains `Item`, `Group`, and `Separator`.
    831→ * Use the `--cmdk-list-height` CSS variable to animate height based on the number of results.
    832→ */
    833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
-   834→  const { children, label = 'Suggestions', ...etc } = props
-   835→  const ref = React.useRef<HTMLDivElement>(null)
-   836→  const height = React.useRef<HTMLDivElement>(null)
-   837→  const selectedItemId = useCmdk((state) => state.selectedItemId)
-   838→  const context = useCommand()
-   839→
-   840→  React.useEffect(() => {
-   841→    if (height.current && ref.current) {
-   842→      const el = height.current
-   843→      const wrapper = ref.current
-   844→      let animationFrame
-   845→      const observer = new ResizeObserver(() => {
-   846→        animationFrame = requestAnimationFrame(() => {
-   847→          const height = el.offsetHeight
-   848→          wrapper.style.setProperty(`--cmdk-list-height`, height.toFixed(1) + 'px')
-   849→        })
-      →…
    879→/**
    880→ * Renders the command menu in a Radix Dialog.
    881→ */
    882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
-   883→  const { open, onOpenChange, overlayClassName, contentClassName, container, ...etc } = props
-   884→  return (
-   885→    <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
-   886→      <RadixDialog.Portal container={container}>
-   887→        <RadixDialog.Overlay cmdk-overlay="" className={overlayClassName} />
-   888→        <RadixDialog.Content aria-label={props.label} cmdk-dialog="" className={contentClassName}>
-   889→          <Command ref={forwardedRef} {...etc} />
-   890→        </RadixDialog.Content>
-   891→      </RadixDialog.Portal>
-   892→    </RadixDialog.Root>
-   893→  )
-   894→})
    896→/**
    897→ * Automatically renders when there are no results for the search query.
    898→ */
    899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
-   900→  const render = useCmdk((state) => state.filtered.count === 0)
-   901→
-   902→  if (!render) return null
-   903→  return <Primitive.div ref={forwardedRef} {...props} cmdk-empty="" role="presentation" />
-   904→})
    906→/**
    907→ * You should conditionally render this with `progress` while loading asynchronous items.
    908→ */
    909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
-   910→  const { progress, children, label = 'Loading...', ...etc } = props
-   911→
-   912→  return (
-   913→    <Primitive.div
-   914→      ref={forwardedRef}
-   915→      {...etc}
-   916→      cmdk-loading=""
-   917→      role="progressbar"
-   918→      aria-valuenow={progress}
-   919→      aria-valuemin={0}
-   920→      aria-valuemax={100}
-   921→      aria-label={label}
-   922→    >
-   923→      {SlottableWithNestedChildren(props, (child) => (
-   924→        <div aria-hidden>{child}</div>
-   925→      ))}
-      →…
-   930→const pkg = Object.assign(Command, {
-   931→  List,
-      →…
+   930→const pkg …
    955→/**
    956→ *
    957→ *
@@ -350,31 +130,14 @@ index.tsx
    970→}
    972→function findPreviousSibling(el: Element, selector: string) {
    973→  let sibling = el.previousElementSibling
-   974→
-   975→  while (sibling) {
-   976→    if (sibling.matches(selector)) return sibling
-   977→    sibling = sibling.previousElementSibling
-   978→  }
-   979→}
+      →…
    981→function useAsRef<T>(data: T) {
    982→  const ref = React.useRef<T>(data)
-   983→
-   984→  useLayoutEffect(() => {
-   985→    ref.current = data
-   986→  })
-   987→
-   988→  return ref
-   989→}
-   991→const useLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect
+      →…
+   991→const useLayoutEffect …
    993→function useLazyRef<T>(fn: () => T) {
    994→  const ref = React.useRef<T>()
-   995→
-   996→  if (ref.current === undefined) {
-   997→    ref.current = fn()
-   998→  }
-   999→
-  1000→  return ref as React.MutableRefObject<T>
-  1001→}
+      →…
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1005→  const store = useStore()
@@ -388,33 +151,7 @@ index.tsx
   1014→  aliases: string[] = [],
   1015→) {
   1016→  const valueRef = React.useRef<string>()
-  1017→  const context = useCommand()
-  1018→
-  1019→  useLayoutEffect(() => {
-  1020→    const value = (() => {
-  1021→      for (const part of deps) {
-  1022→        if (typeof part === 'string') {
-  1023→          return part.trim()
-  1024→        }
-  1025→
-  1026→        if (typeof part === 'object' && 'current' in part) {
-  1027→          if (part.current) {
-  1028→            return part.current.textContent?.trim()
-  1029→          }
-  1030→          return valueRef.current
-  1031→        }
-  1032→      }
-  1033→    })()
-  1034→
-  1035→    const keywords = aliases.map((alias) => alias.trim())
-  1036→
-  1037→    context.value(id, value, keywords)
-  1038→    ref.current?.setAttribute(VALUE_ATTR, value)
-  1039→    valueRef.current = value
-  1040→  })
-  1041→
-  1042→  return valueRef
-  1043→}
+      →…
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
   1047→  const [s, ss] = React.useState<object>()
@@ -432,22 +169,11 @@ index.tsx
   1059→}
   1061→function renderChildren(children: React.ReactElement) {
   1062→  const childrenType = children.type as any
-  1063→  // The children is a component
-  1064→  if (typeof childrenType === 'function') return childrenType(children.props)
-  1065→  // The children is a component with `forwardRef`
-  1066→  else if ('render' in childrenType) return childrenType.render(children.props)
-  1067→  // It's a string, boolean, etc.
-  1068→  else return children
-  1069→}
+      →…
   1071→function SlottableWithNestedChildren(
   1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
   1073→  render: (child: React.ReactNode) => JSX.Element,
   1074→) {
   1075→  if (asChild && React.isValidElement(children)) {
-  1076→    return React.cloneElement(renderChildren(children), { ref: (children as any).ref }, render(children.props.children))
-  1077→  }
-  1078→  return render(children)
-  1079→}
-  1081→const srOnlyStyles = {
-  1082→  position: 'absolute',
       →…
+  1081→const srOnlyStyles …

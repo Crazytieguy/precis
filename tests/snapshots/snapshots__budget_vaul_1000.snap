@@ -2,97 +2,31 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 words)
+budget: 1000 (1009 tokens)
 
 FUNDING.yml
      1→github …
 
 package.json
-     2→  "name": "vaul",
-     3→  "version": "1.1.2",
-     4→  "description": "Drawer component for React.",
-     5→  "main": "./dist/index.js",
-     6→  "module": "./dist/index.mjs",
-     7→  "types": "./dist/index.d.ts",
-     8→  "files": [
-    11→  ],
-    12→  "exports": {
-    21→  },
-    22→  "scripts": {
-    30→  },
-    31→  "keywords": [
-    36→  ],
-    37→  "author": "Emil Kowalski <e@emilkowal.ski>",
-    38→  "license": "MIT",
-    39→  "homepage": "https://vaul.emilkowal.ski/",
-    40→  "repository": {
-    43→  },
-    44→  "bugs": {
-    46→  },
-    47→  "devDependencies": {
-    60→  },
-    61→  "peerDependencies": {
-    64→  },
-    65→  "packageManager": "pnpm@8.8.0",
-    66→  "dependencies": {
-    68→  }
-    69→}
 
 playwright.config.ts
-     1→import { defineConfig, devices } from '@playwright/test';
 
 pnpm-workspace.yaml
      1→packages …
 
 src/browser.ts
-     1→export function isMobileFirefox …
-    10→export function isMac …
-    14→export function isIPhone …
-    18→export function isSafari …
-    22→export function isIPad …
-    30→export function isIOS …
-    34→export function testPlatform …
 
 src/constants.ts
-     1→export const TRANSITIONS = {
-     6→export const VELOCITY_THRESHOLD = 0.4;
-     8→export const CLOSE_THRESHOLD = 0.25;
-    10→export const SCROLL_LOCK_TIMEOUT = 100;
-    12→export const BORDER_RADIUS = 8;
-    14→export const NESTED_DISPLACEMENT = 16;
-    16→export const WINDOW_TOP_OFFSET = 26;
-    18→export const DRAG_CLASS = 'vaul-dragging';
 
 src/context.ts
-     1→import React from 'react';
      4→interface DrawerContextValue {
-     5→  drawerRef: React.RefObject<HTMLDivElement>;
-     6→  overlayRef: React.RefObject<HTMLDivElement>;
-      →…
-    37→export const DrawerContext = React.createContext<DrawerContextValue>({
-    69→export const useDrawerContext …
 
 src/helpers.ts
      3→interface Style {
-     4→  [key: string]: string;
-     5→}
-     7→const cache = new WeakMap();
-     9→export function isInView …
-    23→export function set …
-    42→export function reset …
-    59→export const isVertical …
-    72→export function getTranslate …
-    90→export function dampenValue …
-    94→export function assignStyle …
    105→/**
    106→ * Receives functions as arguments and returns a new function that calls all.
    107→ */
    108→export function chain<T>(...fns: T[]) {
-   109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
-   110→    for (const fn of fns) {
-   111→      if (typeof fn === 'function') {
-   112→        // @ts-ignore
-      →…
 
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -118,16 +52,12 @@ src/index.tsx
   1137→export const Drawer = {
 
 src/types.ts
-     1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
      2→export interface SnapPoint {
      3→  fraction: number;
      4→  height: number;
      5→}
-     7→export type AnyFunction = (...args: any) => any;
 
 src/use-composed-refs.ts
-     3→import * as React from 'react';
-     5→type PossibleRef<T> = React.Ref<T> | undefined;
      7→/**
       →…
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
@@ -139,15 +69,8 @@ src/use-composed-refs.ts
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 
 src/use-controllable-state.ts
-     3→import React from 'react';
-     5→type UseControllableStateParams<T> = {
-    11→type SetStateFn<T> = (prevState?: T) => T;
-    13→function useCallbackRef …
-    24→function useUncontrolledState …
-    39→export function useControllableState …
 
 src/use-position-fixed.ts
-     1→import React from 'react';
      6→/**
      7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
      8→ * I won't get into too much detail about what bugs it solves, but so far I've found that setting the body to `position: fixed` is the most reliable way to prevent those bugs.
@@ -172,60 +95,21 @@ src/use-position-fixed.ts
     27→  preventScrollRestoration: boolean;
     28→  noBodyStyles: boolean;
     29→}) {
-    30→  const [activeUrl, setActiveUrl] = React.useState(() => (typeof window !== 'undefined' ? window.location.href : ''));
-    31→  const scrollPos = React.useRef(0);
-    32→
-    33→  const setPositionFixed = React.useCallback(() => {
-      →…
 
 src/use-prevent-scroll.ts
-     3→import { useEffect, useLayoutEffect } from 'react';
-     6→const KEYBOARD_BUFFER = 24;
-     8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
-    11→  /** Whether the scroll lock is disabled. */
-    12→  isDisabled?: boolean;
-      →…
-    16→function chain …
-    27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
-    29→export function isScrollable …
-    34→export function getScrollParent …
-    47→const nonTextInputTypes = new Set([
     63→/**
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
     66→ * shift due to the scrollbars disappearing.
     67→ */
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
-    69→  let { isDisabled } = options;
-    70→
-    71→  useIsomorphicLayoutEffect(() => {
-    72→    if (isDisabled) {
-      →…
-   118→function preventScrollMobileSafari …
-   243→function setStyle …
-   257→function addEvent …
-   272→function scrollIntoView …
-   294→export function isInput …
 
 src/use-scale-background.ts
-     1→import React, { useMemo } from 'react';
-     6→const noop …
-     8→export function useScaleBackground …
 
 src/use-snap-points.ts
-     1→import React from 'react';
-     7→export function useSnapPoints …
 
 test/README.md
-     3→## Getting Started …
-    21→## Learn More …
-    30→## Deploy on Vercel …
-
-test/next.config.js
-     2→const nextConfig = {
-
-test/package.json
 
 test/src/app/controlled/page.tsx
      6→export default function Page() {
@@ -233,87 +117,15 @@ test/src/app/controlled/page.tsx
 test/src/app/default-open/page.tsx
      6→export default function Page() {
 
-test/src/app/different-directions/page.tsx
-     6→function DirectionalDrawer …
-   118→export default function Page() {
-
-test/src/app/initial-snap/page.tsx
-     7→const snapPoints …
-     9→export default function Page() {
-
 test/src/app/layout.tsx
      1→import './globals.css';
-     5→const inter …
      7→export const metadata: Metadata = {
-    12→export default function RootLayout({ children }: { children: React.ReactNode }) {
-
-test/src/app/nested-drawers/page.tsx
-     5→export default function Page() {
-
-test/src/app/non-dismissible/page.tsx
-     6→export default function Page() {
-
-test/src/app/open-another-drawer/page.tsx
-
-test/src/app/page.tsx
-     5→export default function Page() {
-
-test/src/app/parent-container/page.tsx
-     6→export default function Page() {
-
-test/src/app/scrollable-page/page.tsx
-     6→export default function Page() {
-
-test/src/app/scrollable-with-inputs/page.tsx
-     5→export default function Page() {
-
-test/src/app/with-handle/page.tsx
-     7→const snapPoints = ['148px', '355px'];
-     9→export default function Page() {
-
-test/src/app/with-modal-false/page.tsx
-     7→const snapPoints …
-     9→export default function Page() {
-
-test/src/app/with-redirect/long-page/page.tsx
-     3→export default function Page() {
-
-test/src/app/with-redirect/page.tsx
-     6→export default function Page() {
-
-test/src/app/with-scaled-background/page.tsx
-    65→export default function Page() {
-
-test/src/app/with-snap-points/page.tsx
-     7→const snapPoints …
-     9→export default function Page() {
-
-test/src/app/without-scaled-background/page.tsx
-     6→export default function Page() {
-
-test/tailwind.config.ts
 
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;
 
 test/tests/helpers.ts
-     4→export async function openDrawer …
-    11→export async function dragWithSpeed …
-
-test/tests/initial-snap.spec.ts
-     8→const snapPointYPositions = {
-    15→const snapTo …
-
-test/tsconfig.json
 
 tsconfig.json
-     2→  "compilerOptions": {
-     9→  },
-    10→  "include": ["src"],
-    11→}
 
 turbo.json
-     2→  "$schema": "https://turbo.build/schema.json",
-     3→  "pipeline": {
-    11→  }
-    12→}

@@ -2,53 +2,17 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (487 words)
+budget: 500 (496 tokens)
 
 argument.js
      3→class Argument {
-    56→  _collectValue(value, previous) {
-   143→function humanReadableArgName(arg) {
 
 command.js
     13→class Command extends EventEmitter {
-   121→  _getCommandAndAncestors() {
-   463→  _getHelpCommand() {
-   533→  _exit(exitCode, code, message) {
-   599→  _callParseArg(target, value, previous, invalidArgumentMessage) {
-   619→  _registerOption(option) {
-   644→  _registerCommand(command) {
-   741→  _optionEx(config, flags, description, fn, defaultValue) {
-   885→  _checkForBrokenPassThrough() {
-  1001→  _prepareUserArgs(argv, parseOptions) {
   1127→  _prepareForParse() {
   1128→    if (this._savedState === null) {
+  1129→      this.saveStateBeforeParse();
       →…
-  1183→  _checkForMissingExecutable(executableFile, executableDir, subcommandName) {
-  1202→  _executeSubCommand(subcommand, args) {
-  1352→  _dispatchSubcommand(commandName, operands, unknown) {
-  1380→  _dispatchHelpCommand(subcommandName) {
-  1403→  _checkNumberOfArguments() {
-  1428→  _processArguments() {
-  1481→  _chainOrCall(promise, fn) {
-  1499→  _chainOrCallHooks(promise, event) {
-  1531→  _chainOrCallSubCommandHook(promise, subCommand, event) {
-  1550→  _parseCommand(operands, unknown) {
-  1649→  _findCommand(name) {
-  1664→  _findOption(arg) {
-  1675→  _checkForMissingMandatoryOptions() {
-  1694→  _checkForConflictingLocalOptions() {
-  1723→  _checkForConflictingOptions() {
-  1966→  _parseOptionsEnv() {
-  1996→  _parseOptionsImplied() {
-  2070→  _conflictingOption(option, conflictingOption) {
-  2146→  _excessArguments(receivedArgs) {
-  2392→  _initOptionGroup(option) {
-  2401→  _initCommandGroup(cmd) {
-  2475→  _getOutputContext(contextOptions) {
-  2592→  _getHelpOption() {
-  2686→  _outputHelpIfRequested(args) {
-  2705→function incrementNodeInspectorPort(args) {
-  2752→function useColor() {
 
 error.js
      1→/**
@@ -63,64 +27,22 @@ error.js
 help.js
     12→class Help {
     13→  constructor() {
-    14→    this.helpWidth = undefined;
-    15→    this.minWidthToWrap = 40;
-    16→    this.sortSubcommands = false;
-    17→    this.sortOptions = false;
-    18→    this.showGlobalOptions = false;
-      →…
    549→  styleUsage(str) {
-   550→    // Usage has lots of parts the user might like to color separately! Assume default usage string which is formed like:
-   551→    //    command subcommand [options] [command] <foo> [bar]
-   552→    return str
-   553→      .split(' ')
-   554→      .map((word) => {
-      →…
    563→  styleCommandDescription(str) {
-   564→    return this.styleDescriptionText(str);
-   565→  }
    566→  styleOptionDescription(str) {
-   567→    return this.styleDescriptionText(str);
-   568→  }
    569→  styleSubcommandDescription(str) {
-   570→    return this.styleDescriptionText(str);
-   571→  }
    572→  styleArgumentDescription(str) {
-   573→    return this.styleDescriptionText(str);
-   574→  }
    575→  styleDescriptionText(str) {
-   576→    return str;
-   577→  }
    578→  styleOptionTerm(str) {
-   579→    return this.styleOptionText(str);
-   580→  }
    581→  styleSubcommandTerm(str) {
-   582→    // This is very like usage with lots of parts! Assume default string which is formed like:
-   583→    //    subcommand [options] <foo> [bar]
-   584→    return str
-   585→      .split(' ')
-   586→      .map((word) => {
-      →…
    594→  styleArgumentTerm(str) {
-   595→    return this.styleArgumentText(str);
-   596→  }
    597→  styleOptionText(str) {
-   598→    return str;
-   599→  }
    600→  styleArgumentText(str) {
-   601→    return str;
-   602→  }
    603→  styleSubcommandText(str) {
-   604→    return str;
-   605→  }
    606→  styleCommandText(str) {
-   607→    return str;
-   608→  }
-   740→function stripColor(str) {
 
 option.js
      3→class Option {
-   165→  _collectValue(value, previous) {
    261→/**
    262→ * This class is to make it easier to work with dual options, without changing the existing
    263→ * implementation. We support separate dual options for separate positive and negative options,
@@ -129,12 +51,10 @@ option.js
    266→ * the single shared option value.
    267→ */
    268→class DualOptions {
-   316→function camelcase(str) {
-   328→function splitOptionFlags(flags) {
 
 suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
      4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
+     5→  // Calculating optimal string alignment distance, no substring is edited more than once.
       →…
-    56→function suggestSimilar(word, candidates) {

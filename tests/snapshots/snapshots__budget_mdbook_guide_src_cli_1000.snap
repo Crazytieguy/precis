@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (873 words)
+budget: 1000 (1004 tokens)
 
 README.md
      1→# Command-line tool
@@ -20,7 +20,6 @@ README.md
     14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
 
 arg-watcher.md
-     1→#### `--watcher` …
 
 build.md
      1→# The build command
@@ -30,16 +29,7 @@ build.md
      6→mdbook build
      7→```
      8→
-     9→It will try to parse your `SUMMARY.md` file to understand the structure of your
-    10→book and fetch the corresponding files. Note that this will also create files
-    11→mentioned in `SUMMARY.md` which are not yet present.
-    12→
-    13→The rendered output will maintain the same directory structure as the source for
-    14→convenience. Large books will therefore remain structured when rendered.
-    15→
-    16→#### Specify a directory …
-    25→#### `--open` …
-    30→#### `--dest-dir` …
+      →…
 
 clean.md
      1→# The clean command
@@ -49,9 +39,7 @@ clean.md
      6→```bash
      7→mdbook clean
      8→```
-     9→
-    10→#### Specify a directory …
-    19→#### `--dest-dir` …
+      →…
 
 completions.md
      1→# The completions command
@@ -61,18 +49,7 @@ completions.md
      6→The completions first need to be installed for your shell:
      7→
      8→```bash
-     9→# bash
-    10→mdbook completions bash > ~/.local/share/bash-completion/completions/mdbook
-    11→# oh-my-zsh
-    12→mdbook completions zsh > ~/.oh-my-zsh/completions/_mdbook
-    13→autoload -U compinit && compinit
-    14→```
-    15→
-    16→The command prints a completion script for the given shell.
-    17→Run `mdbook completions --help` for a list of supported shells.
-    18→
-    19→Where to place the completions depend on which shell you are using and your operating system.
-    20→Consult your shell's documentation for more information one where to place the script.
+      →…
 
 init.md
      1→# The init command
@@ -82,35 +59,7 @@ init.md
      6→The `init` command is used like this:
      7→
      8→```bash
-     9→mdbook init
-    10→```
-    11→
-    12→When using the `init` command for the first time, a couple of files will be set
-    13→up for you:
-    14→```bash
-    15→book-test/
-    16→├── book
-    17→└── src
-    18→    ├── chapter_1.md
-    19→    └── SUMMARY.md
-    20→```
-    21→
-    22→- The `src` directory is where you write your book in markdown. It contains all
-    23→  the source files, configuration files, etc.
-    24→
-    25→- The `book` directory is where your book is rendered. All the output is ready
-    26→  to be uploaded to a server to be seen by your audience.
-    27→
-    28→- The `SUMMARY.md` is the skeleton of your
-    29→  book, and is discussed in more detail [in another
-    30→  chapter](../format/summary.md).
-    31→
-    32→#### Tip: Generate chapters from SUMMARY.md …
-    39→#### Specify a directory …
-    48→#### `--theme` …
-    56→#### `--title` …
-    65→#### `--ignore` …
-    80→#### `--force` …
+      →…
 
 serve.md
      1→# The serve command
@@ -120,16 +69,7 @@ serve.md
      6→```bash
      7→mdbook serve
      8→```
-     9→
-    10→The `serve` command  watches the book's `src` directory for
-    11→changes, rebuilding the book and refreshing clients for each change; this includes
-    12→re-creating deleted files still mentioned in `SUMMARY.md`! A websocket
-    13→connection is used to trigger the client-side refresh.
-    14→
-    15→***Note:*** *The `serve` command is for testing a book's HTML output, and is not
-    16→intended to be a complete HTTP server for a website.*
-    17→
-    18→#### Specify a directory …
+      →…
     27→### Server options
     29→The `serve` hostname defaults to `localhost`, and the port defaults to `3000`. Either option can be specified on the command line:
     30→
@@ -137,9 +77,6 @@ serve.md
     32→mdbook serve path/to/book -p 8000 -n 127.0.0.1 
     33→```
     34→
-    35→#### `--open` …
-    40→#### `--dest-dir` …
-    49→#### Specify exclude patterns …
 
 test.md
      1→# The test command
@@ -149,12 +86,7 @@ test.md
      6→them to be able to automatically test these code examples.
      7→
      8→mdBook supports a `test` command that will run all available tests in a book. At
-     9→the moment, only Rust tests are supported.
-    10→
-    11→#### Disable tests on a code block …
-    31→#### Specify a directory …
-    40→#### `--library-path` …
-    57→#### `--chapter` …
+      →…
 
 watch.md
      1→# The watch command
@@ -164,7 +96,3 @@ watch.md
      6→build automatically whenever you modify a file; this includes re-creating
      7→deleted files still mentioned in `SUMMARY.md`!
      8→
-     9→#### Specify a directory …
-    18→#### `--open` …
-    23→#### `--dest-dir` …
-    32→#### Specify exclude patterns …

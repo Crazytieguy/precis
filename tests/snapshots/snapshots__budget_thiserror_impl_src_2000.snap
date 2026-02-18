@@ -2,17 +2,9 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1847 words)
+budget: 2000 (1992 tokens)
 
 ast.rs
-     1→use crate::attr::{self, Attrs};
-     2→use crate::generics::ParamsInScope;
-     3→use crate::unraw::{IdentUnraw, MemberUnraw};
-     4→use proc_macro2::Span;
-     5→use std::fmt::{self, Display};
-     6→use syn::{
-     7→    Data, DataEnum, DataStruct, DeriveInput, Error, Fields, Generics, Ident, Index, Result, Type,
-     8→};
     10→pub enum Input<'a> {
     11→    Struct(Struct<'a>),
     12→    Enum(Enum<'a>),
@@ -51,41 +43,10 @@ ast.rs
     50→    TupleVariant,
     51→    UnitVariant,
     52→}
-    54→impl<'a> Input<'a> {
-    55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
-    56→        match &node.data {
-    57→            Data::Struct(data) => Struct::from_syn(node, data).map(Input::Struct),
-    58→            Data::Enum(data) => Enum::from_syn(node, data).map(Input::Enum),
-      →…
-    67→impl<'a> Struct<'a> {
-    68→    fn from_syn …
-    85→impl<'a> Enum<'a> {
-    86→    fn from_syn …
-   118→impl<'a> Variant<'a> {
-   119→    fn from_syn …
-   130→impl<'a> Field<'a> {
-   131→    fn multiple_from_syn …
-   139→    fn from_syn …
-   156→impl ContainerKind {
-   157→    fn from_struct …
-   165→    fn from_variant …
-   174→impl Display for ContainerKind {
-   175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-   176→        formatter.write_str(match self {
-   177→            ContainerKind::Struct => "struct",
-   178→            ContainerKind::TupleStruct => "tuple struct",
-      →…
+    55→    pub fn from_syn …
+   175→    fn fmt …
 
 attr.rs
-     1→use proc_macro2::{Delimiter, Group, Literal, Punct, Spacing, Span, TokenStream, TokenTree};
-     2→use quote::{format_ident, quote, quote_spanned, ToTokens};
-     3→use std::collections::BTreeSet as Set;
-     4→use syn::parse::discouraged::Speculative;
-     5→use syn::parse::{End, ParseStream};
-     6→use syn::{
-     7→    braced, bracketed, parenthesized, token, Attribute, Error, ExprPath, Ident, Index, LitFloat,
-     8→    LitInt, LitStr, Meta, Result, Token,
-     9→};
     11→pub struct Attrs<'a> {
     12→    pub display: Option<Display<'a>>,
     13→    pub source: Option<Source<'a>>,
@@ -137,81 +98,17 @@ attr.rs
     65→    LowerExp,
     66→    UpperExp,
     67→}
-    69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
-    70→    let mut attrs = Attrs {
-    71→        display: None,
-    72→        source: None,
-      →…
-   124→fn parse_error_attribute …
-   196→fn parse_token_expr …
-   302→impl ToTokens for Display<'_> {
-   303→    fn to_tokens(&self, tokens: &mut TokenStream) {
-   304→        if self.infinite_recursive {
-   305→            let span = self.fmt.span();
-   306→            tokens.extend(quote_spanned! {span=>
-      →…
-   342→impl ToTokens for Trait {
-   343→    fn to_tokens(&self, tokens: &mut TokenStream) {
-   344→        let trait_name = match self {
-   345→            Trait::Debug => "Debug",
-   346→            Trait::Display => "Display",
-      →…
+    69→pub fn get …
+   303→    fn to_tokens …
+   343→    fn to_tokens …
 
 expand.rs
-     1→use crate::ast::{Enum, Field, Input, Struct};
-     2→use crate::attr::Trait;
-     3→use crate::fallback;
-     4→use crate::generics::InferredBounds;
-     5→use crate::private;
-     6→use crate::unraw::MemberUnraw;
-     7→use proc_macro2::{Ident, Span, TokenStream};
-     8→use quote::{format_ident, quote, quote_spanned, ToTokens};
-     9→use std::collections::BTreeSet as Set;
-    10→use syn::{DeriveInput, GenericArgument, PathArguments, Result, Token, Type};
-    12→pub fn derive(input: &DeriveInput) -> TokenStream {
-    13→    match try_expand(input) {
-    14→        Ok(expanded) => expanded,
-    15→        // If there are invalid attributes in the input, expand to an Error impl
-      →…
-    22→fn try_expand …
-    31→fn impl_struct …
-   221→fn impl_enum …
-   505→pub(crate) fn call_site_ident …
-   511→fn fields_pat …
-   526→fn use_as_display …
-   536→fn from_initializer …
-   565→fn type_is_option …
-   569→fn unoptional_type …
-   574→fn type_parameter_of_option …
+    12→pub fn derive …
 
 fallback.rs
-     1→use crate::expand::call_site_ident;
-     2→use crate::private;
-     3→use proc_macro2::TokenStream;
-     4→use quote::quote;
-     5→use syn::DeriveInput;
-     7→pub(crate) fn expand …
 
 fmt.rs
-     1→use crate::ast::{ContainerKind, Field};
-     2→use crate::attr::{Display, Trait};
-     3→use crate::private;
-     4→use crate::scan_expr::scan_expr;
-     5→use crate::unraw::{IdentUnraw, MemberUnraw};
-     6→use proc_macro2::{Delimiter, TokenStream, TokenTree};
-     7→use quote::{format_ident, quote, quote_spanned, ToTokens as _};
-     8→use std::collections::{BTreeSet, HashMap};
-     9→use std::iter;
-    10→use syn::ext::IdentExt;
-    11→use syn::parse::discouraged::Speculative;
-    12→use syn::parse::{Error, ParseStream, Parser, Result};
-    13→use syn::{Expr, Ident, Index, LitStr, Token};
-    15→impl Display<'_> {
-    16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
-    17→        let raw_args = self.args.clone();
-    18→        let FmtArguments {
-    19→            named: user_named_args,
-      →…
+    16→    pub fn expand_shorthand …
    166→struct FmtArguments {
    167→    named: BTreeSet<IdentUnraw>,
    168→    first_unnamed: Option<TokenStream>,
@@ -236,55 +133,20 @@ fmt.rs
    188→        first_unnamed: None,
    189→    })
    190→}
-   192→fn try_explicit_named_args …
-   231→fn fallback_explicit_named_args …
-   255→fn is_syn_full …
-   273→fn take_int …
-   286→fn take_ident …
-   299→fn between …
 
 generics.rs
-     1→use proc_macro2::TokenStream;
-     2→use quote::ToTokens;
-     3→use std::collections::btree_map::Entry;
-     4→use std::collections::{BTreeMap as Map, BTreeSet as Set};
-     5→use syn::punctuated::Punctuated;
-     6→use syn::{parse_quote, GenericArgument, Generics, Ident, PathArguments, Token, Type, WhereClause};
      8→pub struct ParamsInScope<'a> {
      9→    names: Set<&'a Ident>,
     10→}
-    12→impl<'a> ParamsInScope<'a> {
-    13→    pub fn new(generics: &'a Generics) -> Self {
-    14→        ParamsInScope {
-    15→            names: generics.type_params().map(|param| &param.ident).collect(),
-    16→        }
-      →…
-    19→    pub fn intersects(&self, ty: &Type) -> bool {
-    20→        let mut found = false;
-    21→        crawl(self, ty, &mut found);
-    22→        found
-      →…
-    26→fn crawl …
+    13→    pub fn new …
+    19→    pub fn intersects …
     48→pub struct InferredBounds {
     49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
     50→    order: Vec<TokenStream>,
     51→}
-    53→impl InferredBounds {
-    54→    pub fn new() -> Self {
-    55→        InferredBounds {
-    56→            bounds: Map::new(),
-    57→            order: Vec::new(),
-      →…
-    61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
-    62→        let ty = ty.to_token_stream();
-    63→        let bound = bound.to_token_stream();
-    64→        let entry = self.bounds.entry(ty.to_string());
-      →…
-    74→    pub fn augment_where_clause(&self, generics: &Generics) -> WhereClause {
-    75→        let mut generics = generics.clone();
-    76→        let where_clause = generics.make_where_clause();
-    77→        for ty in &self.order {
-      →…
+    54→    pub fn new …
+    61→    pub fn insert …
+    74→    pub fn augment_where_clause …
 
 lib.rs
     23→mod ast;
@@ -297,10 +159,6 @@ lib.rs
     30→mod scan_expr;
     31→mod unraw;
     32→mod valid;
-    34→use proc_macro::TokenStream;
-    35→use proc_macro2::{Ident, Span};
-    36→use quote::{ToTokens, TokenStreamExt as _};
-    37→use syn::{parse_macro_input, DeriveInput};
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
     41→    let input = parse_macro_input!(input as DeriveInput);
@@ -308,46 +166,11 @@ lib.rs
     43→}
     45→#[allow(non_camel_case_types)]
     46→struct private;
-    48→impl ToTokens for private {
-    49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-    50→        tokens.append(Ident::new(
-    51→            concat!("__private", env!("CARGO_PKG_VERSION_PATCH")),
-    52→            Span::call_site(),
-      →…
+    49→    fn to_tokens …
 
 prop.rs
-     1→use crate::ast::{Enum, Field, Struct, Variant};
-     2→use crate::unraw::MemberUnraw;
-     3→use proc_macro2::Span;
-     4→use syn::Type;
-     6→impl Struct<'_> {
-     7→    pub(crate) fn from_field …
-    11→    pub(crate) fn source_field …
-    15→    pub(crate) fn backtrace_field …
-    19→    pub(crate) fn distinct_backtrace_field …
-    25→impl Enum<'_> {
-    26→    pub(crate) fn has_source …
-    32→    pub(crate) fn has_backtrace …
-    38→    pub(crate) fn has_display …
-    53→impl Variant<'_> {
-    54→    pub(crate) fn from_field …
-    58→    pub(crate) fn source_field …
-    62→    pub(crate) fn backtrace_field …
-    66→    pub(crate) fn distinct_backtrace_field …
-    72→impl Field<'_> {
-    73→    pub(crate) fn is_backtrace …
-    77→    pub(crate) fn source_span …
-    88→fn from_field …
-    97→fn source_field …
-   112→fn backtrace_field …
-   127→fn distinct_backtrace_field …
-   138→fn type_is_backtrace …
 
 scan_expr.rs
-     1→use self::{Action::*, Input::*};
-     2→use proc_macro2::{Delimiter, Ident, Spacing, TokenTree};
-     3→use syn::parse::{ParseStream, Result};
-     4→use syn::{AngleBracketedGenericArguments, BinOp, Expr, ExprPath, Lifetime, Lit, Token, Type};
      6→enum Input {
      7→    Keyword(&'static str),
      8→    Punct(&'static str),
@@ -372,140 +195,31 @@ scan_expr.rs
     28→    DecDepth,
     29→    Finish,
     30→}
-    32→static INIT: [(Input, Action); 28] = [
-    63→static POSTFIX: [(Input, Action); 10] = [
-    76→static ASYNC: [(Input, Action); 3] = [
-    82→static BLOCK: [(Input, Action); 1] = [(ConsumeBrace, SetState(&POSTFIX))];
-    84→static BREAK_LABEL: [(Input, Action); 2] = [
-    89→static BREAK_VALUE: [(Input, Action); 3] = [
-    95→static CLOSURE: [(Input, Action); 6] = [
-   104→static CLOSURE_ARGS: [(Input, Action); 2] = [
-   109→static CLOSURE_RET: [(Input, Action); 2] = [
-   114→static CONST: [(Input, Action); 2] = [
-   119→static CONTINUE: [(Input, Action); 2] = [
-   124→static DOT: [(Input, Action); 3] = [
-   130→static FOR: [(Input, Action); 2] = [
-   135→static IF_ELSE: [(Input, Action); 2] = [(Keyword("if"), SetState(&INIT)), (ConsumeBrace, DecDepth)];
-   136→static IF_THEN: [(Input, Action); 2] =
-   139→static METHOD: [(Input, Action); 1] = [(ExpectTurbofish, SetState(&POSTFIX))];
-   141→static PATH: [(Input, Action); 4] = [
-   148→static PATTERN: [(Input, Action); 15] = [
-   166→static RANGE: [(Input, Action); 6] = [
-   175→static RAW: [(Input, Action); 3] = [
-   181→static REFERENCE: [(Input, Action); 3] = [
-   187→static RETURN: [(Input, Action); 2] = [
-   192→pub(crate) fn scan_expr …
 
 unraw.rs
-     1→use proc_macro2::{Ident, Span, TokenStream};
-     2→use quote::ToTokens;
-     3→use std::cmp::Ordering;
-     4→use std::fmt::{self, Display};
-     5→use std::hash::{Hash, Hasher};
-     6→use syn::ext::IdentExt as _;
-     7→use syn::parse::{Parse, ParseStream, Result};
-     8→use syn::Index;
     10→#[derive(Clone)]
     11→#[repr(transparent)]
     12→pub struct IdentUnraw(Ident);
-    14→impl IdentUnraw {
-    15→    pub fn new(ident: Ident) -> Self {
-    16→        IdentUnraw(ident)
-    17→    }
-    19→    pub fn to_local(&self) -> Ident {
-    20→        let unraw = self.0.unraw();
-    21→        let repr = unraw.to_string();
-    22→        if syn::parse_str::<Ident>(&repr).is_err() {
-      →…
-    32→    pub fn set_span(&mut self, span: Span) {
-    33→        self.0.set_span(span);
-    34→    }
-    37→impl Display for IdentUnraw {
-    38→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-    39→        Display::fmt(&self.0.unraw(), formatter)
-    40→    }
-    43→impl Eq for IdentUnraw {}
-    45→impl PartialEq for IdentUnraw {
-    46→    fn eq(&self, other: &Self) -> bool {
-    47→        PartialEq::eq(&self.0.unraw(), &other.0.unraw())
-    48→    }
-    51→impl PartialEq<str> for IdentUnraw {
-    52→    fn eq(&self, other: &str) -> bool {
-    53→        self.0 == other
-    54→    }
-    57→impl Ord for IdentUnraw {
-    58→    fn cmp(&self, other: &Self) -> Ordering {
-    59→        Ord::cmp(&self.0.unraw(), &other.0.unraw())
-    60→    }
-    63→impl PartialOrd for IdentUnraw {
-    64→    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-    65→        Some(Self::cmp(self, other))
-    66→    }
-    69→impl Parse for IdentUnraw {
-    70→    fn parse(input: ParseStream) -> Result<Self> {
-    71→        input.call(Ident::parse_any).map(IdentUnraw::new)
-    72→    }
-    75→impl ToTokens for IdentUnraw {
-    76→    fn to_tokens(&self, tokens: &mut TokenStream) {
-    77→        self.0.unraw().to_tokens(tokens);
-    78→    }
+    15→    pub fn new …
+    19→    pub fn to_local …
+    32→    pub fn set_span …
+    38→    fn fmt …
+    46→    fn eq …
+    52→    fn eq …
+    58→    fn cmp …
+    64→    fn partial_cmp …
+    70→    fn parse …
+    76→    fn to_tokens …
     81→#[derive(Clone)]
     82→pub enum MemberUnraw {
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
     85→}
-    87→impl MemberUnraw {
-    88→    pub fn span(&self) -> Span {
-    89→        match self {
-    90→            MemberUnraw::Named(ident) => ident.0.span(),
-    91→            MemberUnraw::Unnamed(index) => index.span,
-      →…
-    96→impl Display for MemberUnraw {
-    97→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-    98→        match self {
-    99→            MemberUnraw::Named(this) => Display::fmt(this, formatter),
-   100→            MemberUnraw::Unnamed(this) => Display::fmt(&this.index, formatter),
-      →…
-   105→impl Eq for MemberUnraw {}
-   107→impl PartialEq for MemberUnraw {
-   108→    fn eq(&self, other: &Self) -> bool {
-   109→        match (self, other) {
-   110→            (MemberUnraw::Named(this), MemberUnraw::Named(other)) => this == other,
-   111→            (MemberUnraw::Unnamed(this), MemberUnraw::Unnamed(other)) => this == other,
-      →…
-   117→impl PartialEq<str> for MemberUnraw {
-   118→    fn eq(&self, other: &str) -> bool {
-   119→        match self {
-   120→            MemberUnraw::Named(this) => this == other,
-   121→            MemberUnraw::Unnamed(_) => false,
-      →…
-   126→impl Hash for MemberUnraw {
-   127→    fn hash<H: Hasher>(&self, hasher: &mut H) {
-   128→        match self {
-   129→            MemberUnraw::Named(ident) => ident.0.unraw().hash(hasher),
-   130→            MemberUnraw::Unnamed(index) => index.hash(hasher),
-      →…
-   135→impl ToTokens for MemberUnraw {
-   136→    fn to_tokens(&self, tokens: &mut TokenStream) {
-   137→        match self {
-   138→            MemberUnraw::Named(ident) => ident.to_local().to_tokens(tokens),
-   139→            MemberUnraw::Unnamed(index) => index.to_tokens(tokens),
-      →…
+    88→    pub fn span …
+    97→    fn fmt …
+   108→    fn eq …
+   118→    fn eq …
+   127→    fn hash …
+   136→    fn to_tokens …
 
 valid.rs
-     1→use crate::ast::{Enum, Field, Input, Struct, Variant};
-     2→use crate::attr::Attrs;
-     3→use syn::{Error, GenericArgument, PathArguments, Result, Type};
-     5→impl Input<'_> {
-     6→    pub(crate) fn validate …
-    14→impl Struct<'_> {
-    15→    fn validate …
-    45→impl Enum<'_> {
-    46→    fn validate …
-    66→impl Variant<'_> {
-    67→    fn validate …
-    91→impl Field<'_> {
-    92→    fn validate …
-   109→fn check_non_field_attrs …
-   151→fn check_field_attrs …
-   224→fn contains_non_static_lifetime …

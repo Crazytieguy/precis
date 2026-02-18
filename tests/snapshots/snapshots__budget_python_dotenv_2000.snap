@@ -2,27 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1940 words)
+budget: 2000 (2023 tokens)
 
 CHANGELOG.md
-     1→# Changelog
-     3→All notable changes to this project will be documented in this file.
-     4→
-     5→The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
-     6→project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-     7→
+     1→# Changelog …
     21→### Fixed …
 
 CONTRIBUTING.md
-     1→Contributing
-     4→All the contributions are welcome! Please open [an
-     5→issue](https://github.com/theskumar/python-dotenv/issues/new) or send us
-     6→a pull request.
-     7→
-     8→Executing the tests:
-     9→
-    10→    $ uv venv
-      →…
+     1→Contributing …
 
 README.md
      1→# python-dotenv
@@ -35,149 +22,20 @@ README.md
      9→
     10→- [Getting Started](#getting-started)
     11→- [Other Use Cases](#other-use-cases)
-    12→  - [Load configuration without altering the environment](#load-configuration-without-altering-the-environment)
-    13→  - [Parse configuration as a stream](#parse-configuration-as-a-stream)
-    14→  - [Load .env files in IPython](#load-env-files-in-ipython)
-    15→- [Command-line Interface](#command-line-interface)
-    16→- [File format](#file-format)
-    17→  - [Multiline values](#multiline-values)
-    18→  - [Variable expansion](#variable-expansion)
-    19→- [Related Projects](#related-projects)
-    20→- [Acknowledgements](#acknowledgements)
-    21→
-    22→## Getting Started
-    24→```shell
-    25→pip install python-dotenv
-    26→```
-    27→
-    28→If your application takes its configuration from environment variables, like a
-    29→12-factor application, launching it in development is not very practical because
-    30→you have to set those environment variables yourself.
-    31→
-    32→To help you with that, you can add python-dotenv to your application to make it
-    33→load the configuration from a `.env` file when it is present (e.g. in
-    34→development) while remaining configurable via the environment:
-    35→
-    36→```python
-    37→from dotenv import load_dotenv
-    38→
-    39→load_dotenv()  # reads variables from a .env file and sets them in os.environ
-    40→
-    41→# Code of your application, which uses environment variables (e.g. from `os.environ` or
-    42→# `os.getenv`) as if they came from the actual environment.
-    43→```
-    44→
-    45→By default, `load_dotenv()` will:
-    46→
       →…
-    78→## Other Use Cases
-    80→### Load configuration without altering the environment
-    82→The function `dotenv_values` works more or less the same way as `load_dotenv`,
-    83→except it doesn't touch the environment, it just returns a `dict` with the
-    84→values parsed from the `.env` file.
-    85→
-    86→```python
-      →…
-   105→### Parse configuration as a stream
-   107→`load_dotenv` and `dotenv_values` accept [streams][python_streams] via their
-   108→`stream` argument. It is thus possible to load the variables from sources other
-   109→than the filesystem (e.g. the network).
-   110→
-   111→```python
-      →…
-   120→### Load .env files in IPython
-   122→You can use dotenv in IPython. By default, it will use `find_dotenv` to search for a
-   123→`.env` file:
-   124→
-   125→```python
-   126→%load_ext dotenv
-      →…
-   141→### Disable load_dotenv
-   143→Set `PYTHON_DOTENV_DISABLED=1` to disable `load_dotenv()` from loading .env
-   144→files or streams. Useful when you can't modify third-party package calls or in
-   145→production.
-   146→
-   147→## Command-line Interface
-   149→A CLI interface `dotenv` is also included, which helps you manipulate the `.env`
-   150→file without manually opening it.
-   151→
-   152→```shell
-   153→$ pip install "python-dotenv[cli]"
-   154→$ dotenv set USER foo
-   155→$ dotenv set EMAIL foo@example.org
-   156→$ dotenv list
-   157→USER=foo
-   158→EMAIL=foo@example.org
-   159→$ dotenv list --format=json
-   160→{
-   161→  "USER": "foo",
-   162→  "EMAIL": "foo@example.org"
-   163→}
-   164→$ dotenv run -- python foo.py
-   165→```
-   166→
-   167→Run `dotenv --help` for more information about the options and subcommands.
-   168→
-   169→## File format
-   171→The format is not formally specified and still improves over time. That being
-   172→said, `.env` files should mostly look like Bash files. Reading from FIFOs (named
-   173→pipes) on Unix systems is also supported.
-   174→
-   175→Keys can be unquoted or single-quoted. Values can be unquoted, single- or
-   176→double-quoted. Spaces before and after keys, equal signs, and values are
-   177→ignored. Values can be followed by a comment. Lines can start with the `export`
-   178→directive, which does not affect their interpretation.
-   179→
-   180→Allowed escape sequences:
-   181→
-   182→- in single-quoted values: `\\`, `\'`
-   183→- in double-quoted values: `\\`, `\'`, `\"`, `\a`, `\b`, `\f`, `\n`, `\r`, `\t`, `\v`
-   184→
-   185→### Multiline values
-   187→It is possible for single- or double-quoted values to span multiple lines. The
-   188→following examples are equivalent:
-   189→
-   190→```bash
-   191→FOO="first line
-      →…
-   199→### Variable without a value
-   201→A variable can have no value:
-   202→
-   203→```bash
-   204→FOO
-   205→```
-      →…
-   214→### Variable expansion
-   216→python-dotenv can interpolate variables using POSIX variable expansion.
-   217→
-   218→With `load_dotenv(override=True)` or `dotenv_values()`, the value of a variable
-   219→is the first of the values defined in the following list:
-   220→
-      →…
-   234→## Related Projects
-   236→- [environs](https://github.com/sloria/environs)
-   237→- [Honcho](https://github.com/nickstenning/honcho)
-   238→- [dump-env](https://github.com/sobolevn/dump-env)
-   239→- [dynaconf](https://github.com/dynaconf/dynaconf)
-   240→- [parse_it](https://github.com/naorlivne/parse_it)
-   241→- [django-dotenv](https://github.com/jpadilla/django-dotenv)
-   242→- [django-environ](https://github.com/joke2k/django-environ)
-   243→- [python-decouple](https://github.com/HBNetwork/python-decouple)
-   244→- [django-configuration](https://github.com/jezdez/django-configurations)
-   245→
-   246→## Acknowledgements
-   248→This project is currently maintained by [Saurabh Kumar][saurabh-homepage] and
-   249→[Bertrand Bonnefoy-Claudet][gh-bbc2] and would not have been possible without
-   250→the support of these [awesome people][contributors].
-   251→
-   252→[gh-bbc2]: https://github.com/bbc2
-   253→[saurabh-homepage]: https://saurabh-kumar.com
-   254→[pypi_link]: https://badge.fury.io/py/python-dotenv
-   255→[pypi_badge]: https://badge.fury.io/py/python-dotenv.svg
-   256→[python_streams]: https://docs.python.org/3/library/io.html
-   257→[contributors]: https://github.com/theskumar/python-dotenv/graphs/contributors
-   258→[build_status_link]: https://github.com/theskumar/python-dotenv/actions/workflows/test.yml
-   259→[build_status_badge]: https://github.com/theskumar/python-dotenv/actions/workflows/test.yml/badge.svg
+    22→## Getting Started …
+    78→## Other Use Cases …
+    80→### Load configuration without altering the environment …
+   105→### Parse configuration as a stream …
+   120→### Load .env files in IPython …
+   141→### Disable load_dotenv …
+   147→## Command-line Interface …
+   169→## File format …
+   185→### Multiline values …
+   199→### Variable without a value …
+   214→### Variable expansion …
+   234→## Related Projects …
+   246→## Acknowledgements …
 
 docs/reference.md
      1→# ::: dotenv …
@@ -214,41 +72,21 @@ ruff.toml
      1→[lint …
 
 src/dotenv/__init__.py
-     1→from typing …
      3→from .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key
-     6→def load_ipython_extension …
-    12→def get_cli_string …
     42→__all__ = [
     43→    "get_cli_string",
-    44→    "load_dotenv",
-    45→    "dotenv_values",
-    46→    "get_key",
-    47→    "set_key",
-    48→    "unset_key",
-    49→    "find_dotenv",
-    50→    "load_ipython_extension",
-    51→]
+      →…
 
 src/dotenv/__main__.py
      3→from .cli import cli
 
 src/dotenv/cli.py
-     1→import json …
-     2→import os …
-     3→import shlex …
-     4→import sys …
-     5→from contextlib …
-     6→from typing …
-     9→    from subprocess …
-    12→    import click …
     20→from .main import dotenv_values, set_key, unset_key
     21→from .version import __version__
-    24→def enumerate_env …
     60→@click.version_option(version=__version__)
     61→@click.pass_context
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
     63→    """This script is used to set, get or unset values from a .env file."""
-    64→    ctx.obj = {"QUOTE": quote, "EXPORT": export, "FILE": file}
     67→@contextmanager
     68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
     69→    """
@@ -256,78 +94,27 @@ src/dotenv/cli.py
     71→
     72→    Exits with error code 2 if the file cannot be opened.
     73→    """
-    74→
-    75→    try:
-    76→        with open(path) as stream:
-    77→            yield stream
-    78→    except OSError as exc:
-    79→        print(f"Error opening env file: {exc}", file=sys.stderr)
-    80→        sys.exit(2)
-    93→def list_values …
    112→@cli.command(name="set")
    113→@click.pass_context
    114→@click.argument("key", required=True)
    115→@click.argument("value", required=True)
    116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
    117→    """Store the given key/value."""
-   118→    file = ctx.obj["FILE"]
-   119→    quote = ctx.obj["QUOTE"]
-   120→    export = ctx.obj["EXPORT"]
-   121→    success, key, value = set_key(file, key, value, quote, export)
-   122→    if success:
-   123→        click.echo(f"{key}={value}")
-   124→    else:
-   125→        sys.exit(1)
    128→@cli.command()
    129→@click.pass_context
    130→@click.argument("key", required=True)
    131→def get(ctx: click.Context, key: Any) -> None:
    132→    """Retrieve the value for the given key."""
-   133→    file = ctx.obj["FILE"]
-   134→
-   135→    with stream_file(file) as stream:
-   136→        values = dotenv_values(stream=stream)
-   137→
-   138→    stored_value = values.get(key)
-   139→    if stored_value:
-   140→        click.echo(stored_value)
-   141→    else:
-   142→        sys.exit(1)
    145→@cli.command()
    146→@click.pass_context
    147→@click.argument("key", required=True)
    148→def unset(ctx: click.Context, key: Any) -> None:
    149→    """Removes the given key."""
-   150→    file = ctx.obj["FILE"]
-   151→    quote = ctx.obj["QUOTE"]
-   152→    success, key = unset_key(file, key, quote)
-   153→    if success:
-   154→        click.echo(f"Successfully removed {key}")
-   155→    else:
-   156→        sys.exit(1)
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
-   175→    file = ctx.obj["FILE"]
-   176→    if not os.path.isfile(file):
-   177→        raise click.BadParameter(
-   178→            f"Invalid value for '-f' \"{file}\" does not exist.", ctx=ctx
-   179→        )
-   180→    dotenv_as_dict = {
-   181→        k: v
-   182→        for (k, v) in dotenv_values(file).items()
-   183→        if v is not None and (override or k not in os.environ)
-   184→    }
-   185→
-   186→    if not commandline:
-   187→        click.echo("No command given.")
-   188→        sys.exit(1)
-   189→
-   190→    run_command([*commandline, *ctx.args], dotenv_as_dict)
-   193→def run_command …
 
 src/dotenv/ipython.py
-     1→from IPython.core.magic …
      2→from IPython.core.magic_arguments import (
      3→    argument,
      4→    magic_arguments,
@@ -358,111 +145,33 @@ src/dotenv/ipython.py
     32→    )
     33→    @line_magic
     34→    def dotenv(self, line):
-    35→        args = parse_argstring(self.dotenv, line)
-    36→        # Locate the .env file
-    37→        dotenv_path = args.dotenv_path
-    38→        try:
-    39→            dotenv_path = find_dotenv(dotenv_path, True, True)
-    40→        except IOError:
-    41→            print("cannot find .env file")
-    42→            return
-    43→
-    44→        # Load the .env file
-    45→        load_dotenv(dotenv_path, verbose=args.verbose, override=args.override)
-    48→def load_ipython_extension …
 
 src/dotenv/main.py
-     1→import io …
-     2→import logging …
-     3→import os …
-     4→import pathlib …
-     5→import shutil …
-     6→import stat …
-     7→import sys …
-     8→import tempfile …
-     9→from collections …
-    10→from contextlib …
-    11→from typing …
     13→from .parser import Binding, parse_stream
     14→from .variables import parse_variables
     25→def _load_dotenv_disabled() -> bool:
     26→    """
-    27→    Determine if dotenv loading has been disabled.
-    28→    """
-    29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
-    30→        return False
-    31→    value = os.environ["PYTHON_DOTENV_DISABLED"].casefold()
       →…
-    35→def with_warn_for_invalid_lines …
     45→class DotEnv:
-    46→    def __init__ …
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
     66→            with open(self.dotenv_path, encoding=self.encoding) as stream:
     67→                yield stream
-    68→        elif self.stream is not None:
-    69→            yield self.stream
-    70→        else:
-    71→            if self.verbose:
-    72→                logger.info(
-    73→                    "python-dotenv could not find configuration file %s.",
-    74→                    self.dotenv_path or ".env",
-    75→                )
-    76→            yield io.StringIO("")
-    78→    def dict …
-    94→    def parse …
-   100→    def set_as_environment_variables …
-   115→    def get …
-   128→def get_key …
+      →…
    141→@contextmanager
    142→def rewrite(
    143→    path: StrPath,
    144→    encoding: Optional[str],
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
-   146→    pathlib.Path(path).touch()
-   147→
-   148→    with tempfile.NamedTemporaryFile(mode="w", encoding=encoding, delete=False) as dest:
-   149→        error = None
-   150→        try:
-   151→            with open(path, encoding=encoding) as source:
-   152→                yield (source, dest)
-   153→        except BaseException as err:
-   154→            error = err
-   155→
-   156→    if error is None:
-   157→        shutil.move(dest.name, path)
-   158→    else:
-   159→        os.unlink(dest.name)
-   160→        raise error from None
-   163→def set_key …
-   211→def unset_key …
-   244→def resolve_variables …
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """
-   271→    Yield directories starting from the given directory up to the root
-   272→    """
-   273→    if not os.path.exists(path):
-   274→        raise IOError("Starting path not found")
-   275→
       →…
-   287→def find_dotenv …
-   338→def load_dotenv …
-   387→def dotenv_values …
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
-   425→    Return True if `path` exists and is either a regular file or a FIFO.
-   426→    """
-   427→    if os.path.isfile(path):
-   428→        return True
-   429→
       →…
 
 src/dotenv/parser.py
-     1→import codecs …
-     2→import re …
-     3→from typing …
-    14→def make_regex …
     35→class Original(NamedTuple):
     36→    string: str
     37→    line: int
@@ -472,33 +181,13 @@ src/dotenv/parser.py
     43→    original: Original
     44→    error: bool
     47→class Position:
-    48→    def __init__ …
     52→    @classmethod
     53→    def start(cls) -> "Position":
-    54→        return cls(chars=0, line=1)
-    56→    def set …
-    60→    def advance …
     65→class Error(Exception):
     66→    pass
     69→class Reader:
-    70→    def __init__ …
-    75→    def has_next …
-    78→    def set_mark …
-    81→    def get_marked …
-    87→    def peek …
-    90→    def read …
-    97→    def read_regex …
-   105→def decode_escapes …
-   112→def parse_key …
-   123→def parse_unquoted_value …
-   128→def parse_value …
-   142→def parse_binding …
-   179→def parse_stream …
 
 src/dotenv/variables.py
-     1→import re …
-     2→from abc …
-     3→from typing …
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
      7→    \$\{
@@ -508,47 +197,20 @@ src/dotenv/variables.py
     11→        )?
     12→    \}
     13→    """,
-    14→    re.VERBOSE,
-    15→)
     18→class Atom(metaclass=ABCMeta):
-    19→    def __ne__ …
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
     29→class Literal(Atom):
-    30→    def __init__ …
-    33→    def __repr__ …
-    36→    def __eq__ …
-    41→    def __hash__ …
-    44→    def resolve …
     48→class Variable(Atom):
-    49→    def __init__ …
-    53→    def __repr__ …
-    56→    def __eq__ …
-    61→    def __hash__ …
-    64→    def resolve …
-    70→def parse_variables …
 
 src/dotenv/version.py
      1→__version__ = "1.2.1"
 
 tests/conftest.py
-     6→def cli():
-    13→def dotenv_path(tmp_path):
 
 tests/test_cli.py
-   196→def test_get_default_path(tmp_path):
-   206→def test_run(tmp_path):
-   216→def test_run_with_existing_variable(tmp_path):
-   228→def test_run_with_existing_variable_not_overridden(tmp_path):
-   240→def test_run_with_none_value(tmp_path):
-   250→def test_run_with_other_env(dotenv_path):
-
-tests/test_fifo_dotenv.py
 
 tests/test_ipython.py
-    14→def test_ipython_existing_variable_no_override(tmp_path):
-    33→def test_ipython_existing_variable_override(tmp_path):
-    52→def test_ipython_new_variable(tmp_path):
 
 tests/test_is_interactive.py
      8→class TestIsInteractive:
@@ -556,30 +218,8 @@ tests/test_is_interactive.py
     10→
       →…
     31→
-    32→    def _create_dotenv_file(self, tmp_path):
-    38→    def _setup_subdir_and_chdir(self, tmp_path, monkeypatch):
-    45→    def _remove_ps_attributes(self, monkeypatch):
-    52→    def _mock_main_import(self, monkeypatch, mock_main_module):
-    63→    def _mock_main_import_error(self, monkeypatch):
 
 tests/test_main.py
-   251→def test_load_dotenv_existing_file(dotenv_path):
-   386→def test_load_dotenv_doesnt_disable_itself(dotenv_path):
-   411→def test_load_dotenv_existing_variable_no_override(dotenv_path):
-   424→def test_load_dotenv_existing_variable_override(dotenv_path):
-   437→def test_load_dotenv_redefine_var_used_in_file_no_override(dotenv_path):
-   450→def test_load_dotenv_redefine_var_used_in_file_with_override(dotenv_path):
-   463→def test_load_dotenv_string_io_utf_8():
-   476→def test_load_dotenv_file_stream(dotenv_path):
-   487→def test_load_dotenv_in_current_dir(tmp_path):
-
-tests/test_parser.py
-
-tests/test_utils.py
-
-tests/test_variables.py
 
 tests/test_zip_imports.py
     23→class FileToAdd:
-    46→def test_load_dotenv_gracefully_handles_zip_imports_when_no_env_file(tmp_path):
-    69→def test_load_dotenv_outside_zip_file_when_called_in_zipfile(tmp_path):

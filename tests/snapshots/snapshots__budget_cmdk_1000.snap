@@ -2,55 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (997 words)
+budget: 1000 (1120 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
      3→> Document is a work in progress!
      4→
-     5→⌘K is born from a simple constraint: can you write a combobox with filtering and sorting using the [compound component](https://kentcdodds.com/blog/compound-components-with-react-hooks) approach? We didn't want to render items manually from an array:
-     6→
-     7→```tsx
-     8→// No
-     9→<>
-    10→  {items.map((item) => {
-    11→    return <div>{item}</div>
-    12→  })}
-    13→</>
-    14→```
-    15→
-    16→We didn't want to provide a render prop:
-    17→
-    18→```tsx
-    19→// No
-    20→onItemRender={({ item }) => {
-    21→  return <div>{item}</div>
-    22→}}
-    23→```
-    24→
-    25→Instead, we wanted to render components:
-    26→
-    27→```tsx
-    28→// Yes
-    29→<Item>My item</Item>
-    30→```
-    31→
-    32→Especially, we wanted full component composition:
-    33→
-    34→```tsx
-    35→// YES
-    36→<>
-    37→  <BlogItems />
-    38→  {staticItems}
-    39→</>
-    40→```
-    41→
       →…
     46→## Approach …
-    50→### Discarded approach
-    52→We did not use `React.Children` iteration because it will not support component composition. There is no way to "peek inside" the items contained within `<BlogItems />`, so those items cannot be filtered.
-    53→
-      →…
+    50→### Discarded approach …
     60→## Example …
     92→## Performance …
     96→## Groups …
@@ -62,22 +22,7 @@ README.md
      9→## Install …
     15→## Use …
     82→## Parts and styling …
-    86→### Command `[cmdk-root]` …
-   153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]` …
-   180→### Input `[cmdk-input]` …
-   190→### List `[cmdk-list]` …
-   212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]` …
-   242→### Group `[cmdk-group]` `[hidden?]` …
-   256→### Separator `[cmdk-separator]` …
-   260→### Empty `[cmdk-empty]` …
-   264→### Loading `[cmdk-loading]` …
-   274→### `useCommandState(state => state.selectedField)` …
    285→## Examples …
-   289→### Nested items …
-   338→### Show sub-items when searching …
-   361→### Asynchronous results …
-   397→### Use inside Popover …
-   426→### Drop in stylesheets …
    430→## FAQ …
    456→## History …
    462→## Testing …
@@ -112,57 +57,22 @@ cmdk/package.json
     51→}
 
 cmdk/src/command-score.ts
-    54→function commandScoreInner(
-    55→  string,
-    56→  abbreviation,
-    57→  lowerString,
-    58→  lowerAbbreviation,
-    59→  stringIndex,
-    60→  abbreviationIndex,
-    61→  memoizedResults,
-    62→) {
-   150→function formatInput(string) {
+    54→function commandScoreInner …
+   150→function formatInput …
    155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
    156→  /* NOTE:
-   157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
-   158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
-   159→   */
       →…
 
 cmdk/src/index.tsx
-     3→import * as RadixDialog from '@radix-ui/react-dialog'
-     4→import * as React from 'react'
      5→import { commandScore } from './command-score'
-     6→import { Primitive } from '@radix-ui/react-primitive'
-     7→import { useId } from '@radix-ui/react-id'
-     8→import { composeRefs } from '@radix-ui/react-compose-refs'
-   161→const defaultFilter …
-   164→const useCommand …
-   166→const useStore …
-   659→/**
-      →…
-   664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
-   725→/**
-      →…
-   729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
-   770→/**
-      →…
-   774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
-   783→/**
-      →…
-   787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
-   829→/**
-      →…
-   833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
-   879→/**
-      →…
-   882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
-   896→/**
-      →…
-   899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
-   906→/**
-      →…
-   909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
+   664→const Item …
+   729→const Group …
+   774→const Separator …
+   787→const Input …
+   833→const List …
+   882→const Dialog …
+   899→const Empty …
+   909→const Loading …
    955→/**
    956→ *
    957→ *
@@ -172,25 +82,10 @@ cmdk/src/index.tsx
    961→ */
    962→
    963→function findNextSibling(el: Element, selector: string) {
-   964→  let sibling = el.nextElementSibling
-      →…
-   972→function findPreviousSibling …
-   981→function useAsRef …
-   993→function useLazyRef …
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
-  1005→  const store = useStore()
-      →…
-  1010→function useValue …
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
-  1047→  const [s, ss] = React.useState<object>()
-      →…
-  1061→function renderChildren …
-  1071→function SlottableWithNestedChildren …
-
-cmdk/tsup.config.ts
-     1→import { defineConfig } from 'tsup'
 
 package.json
      2→  "name": "cmdk-root",
@@ -205,36 +100,14 @@ package.json
     28→}
 
 playwright.config.ts
-     1→import { PlaywrightTestConfig, devices } from '@playwright/test'
      3→const config: PlaywrightTestConfig = {
 
 pnpm-workspace.yaml
      1→packages …
 
-test/package.json
-     2→  "name": "cmdk-tests",
-     3→  "version": "0.0.0",
-     4→  "scripts": {
-     6→  },
-     7→  "dependencies": {
-    17→  }
-    18→}
-
 test/pages/_app.tsx
      1→import '../style.css'
      3→export default function App({ Component, pageProps }) {
-     4→  return <Component {...pageProps} />
-     5→}
-
-test/pages/huge.tsx
-     4→const items = new Array(1000).fill(0)
-
-test/tsconfig.json
-     2→  "compilerOptions": {
-    17→  },
-    18→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../dialog.test.ts"],
-    19→  "exclude": ["node_modules"]
-    20→}
 
 tsconfig.json
      2→  "compilerOptions": {
@@ -248,85 +121,18 @@ website/README.md
     19→## Learn More …
     28→## Deploy on Vercel …
 
-website/components/cmdk/framer.tsx
-     4→export function FramerCMDK() {
-
-website/components/cmdk/linear.tsx
-     3→export function LinearCMDK() {
-    30→const items = [
-    31→  {
-      →…
-
-website/components/cmdk/raycast.tsx
-     7→export function RaycastCMDK() {
-
-website/components/cmdk/vercel.tsx
-     4→export function VercelCMDK() {
-
 website/components/code/index.tsx
      4→import styles from './code.module.scss'
      7→const theme = {
     41→export function Code({ children }: { children: string }) {
-    42→  return (
-    43→    <Highlight {...defaultProps} theme={theme} code={children} language="jsx">
-      →…
-
-website/components/icons/index.tsx
-     1→import styles from './icons.module.scss'
-
-website/next.config.js
-     1→/** @type {import('next').NextConfig} */
-     2→const nextConfig = {
-
-website/package.json
-     2→  "name": "cmdk-website",
-     3→  "version": "0.1.0",
-     4→  "private": true,
-     5→  "scripts": {
-    10→  },
-    11→  "dependencies": {
-    23→  },
-    24→  "devDependencies": {
-    37→  },
-    38→  "lint-staged": {
-    42→  },
-    43→  "husky": {
-    47→  }
-    48→}
 
 website/pages/_app.tsx
-    17→export default function App({ Component, pageProps }: AppProps) {
 
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
-     6→  render() {
 
 website/pages/index.tsx
     18→import packageJSON from '../../cmdk/package.json'
-    29→export default function Index() {
-    99→//////////////////////////////////////////////////////////////////
-   100→
-   101→function InstallButton() {
    137→//////////////////////////////////////////////////////////////////
-   138→
-   139→const themes = [
-   140→  {
       →…
-   260→//////////////////////////////////////////////////////////////////
-   261→
-   262→function Codeblock() {
-   294→//////////////////////////////////////////////////////////////////
-   295→
-   296→function VersionBadge() {
-
-website/tsconfig.json
-     2→  "compilerOptions": {
-    18→  },
-    19→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-    20→  "exclude": ["node_modules"]
-    21→}
-
-website/vercel.json
-     2→  "headers": [
-    12→  ]
-    13→}
+   139→const themes = [

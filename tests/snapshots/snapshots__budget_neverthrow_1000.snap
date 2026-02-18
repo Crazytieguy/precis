@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (983 words)
+budget: 1000 (1004 tokens)
 
 CHANGELOG.md
      1→# neverthrow …
@@ -15,48 +15,14 @@ README.md
     79→## Recommended: Use `eslint-plugin-neverthrow` …
    100→## Top-Level API …
    139→## API Documentation …
-   141→### Synchronous API (`Result`)
-   863→### Asynchronous API (`ResultAsync`)
-  1519→### Utilities
-  1633→### Testing
-  1635→`Result` instances have two unsafe methods, aptly called `_unsafeUnwrap` and `_unsafeUnwrapErr` which **should only be used in a test environment**.
-  1636→
-      →…
+   141→### Synchronous API (`Result`) …
+   863→### Asynchronous API (`ResultAsync`) …
+  1519→### Utilities …
+  1633→### Testing …
   1673→## A note on the Package Name …
-  1681→### License
-  1683→The neverthrow project is available as open source under the terms of the [MIT license](https://github.com/supermacro/neverthrow/blob/master/LICENSE).
+  1681→### License …
 
 package.json
-     2→  "name": "neverthrow",
-     3→  "version": "8.2.0",
-     4→  "description": "Stop throwing errors, and instead return Results!",
-     5→  "main": "dist/index.cjs.js",
-     6→  "module": "dist/index.es.js",
-     7→  "types": "dist/index.d.ts",
-     8→  "files": [
-    10→  ],
-    11→  "scripts": {
-    23→  },
-    24→  "repository": {
-    27→  },
-    28→  "author": "Giorgio Delgado",
-    29→  "license": "MIT",
-    30→  "bugs": {
-    32→  },
-    33→  "homepage": "https://github.com/supermacro/neverthrow#readme",
-    34→  "devDependencies": {
-    52→  },
-    53→  "keywords": [
-    58→  ],
-    59→  "engines": {
-    62→  },
-    63→  "optionalDependencies": {
-    65→  }
-    66→}
-
-rollup.config.mjs
-     1→import typescript from "rollup-plugin-typescript2";
-     2→import dts from "rollup-plugin-dts";
 
 src/_internals/error.ts
      1→import { Result } from '../result'
@@ -64,40 +30,30 @@ src/_internals/error.ts
      4→  withStackTrace: boolean
      5→}
      7→const defaultErrorConfig: ErrorConfig = {
-     8→  withStackTrace: false,
-     9→}
     11→interface NeverThrowError<T, E> {
     12→  data:
     13→    | {
     14→        type: string
     15→        value: T
     16→      }
-    17→    | {
-    18→        type: string
-    19→        value: E
-    20→      }
-    21→  message: string
-    22→  stack: string | undefined
-    23→}
+      →…
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
     29→  result: Result<T, E>,
     30→  config: ErrorConfig = defaultErrorConfig,
     31→): NeverThrowError<T, E> => {
-    32→  const data = result.isOk()
-      →…
 
 src/_internals/utils.ts
      1→import { Result, ok, err } from '../result'
      2→import { ResultAsync } from '../result-async'
-     5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
-    10→export type ExtractOkAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
-    15→export type ExtractErrTypes<T extends readonly Result<unknown, unknown>[]> = {
-    20→export type ExtractErrAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
-    24→export type InferOkTypes<R> = R extends Result<infer T, unknown> ? T : never
-    25→export type InferErrTypes<R> = R extends Result<unknown, infer E> ? E : never
-    27→export type InferAsyncOkTypes<R> = R extends ResultAsync<infer T, unknown> ? T : never
-    28→export type InferAsyncErrTypes<R> = R extends ResultAsync<unknown, infer E> ? E : never
+     5→export type ExtractOkTypes …
+    10→export type ExtractOkAsyncTypes …
+    15→export type ExtractErrTypes …
+    20→export type ExtractErrAsyncTypes …
+    24→export type InferOkTypes …
+    25→export type InferErrTypes …
+    27→export type InferAsyncOkTypes …
+    28→export type InferAsyncErrTypes …
     30→/**
     31→ * Short circuits on the FIRST Err value that we find
     32→ */
@@ -106,19 +62,8 @@ src/_internals/utils.ts
     35→): Result<readonly T[], E> => {
     36→  let acc = ok([]) as Result<T[], E>
     37→
-    38→  for (const result of resultList) {
-    39→    if (result.isErr()) {
-    40→      acc = err(result.error)
-    41→      break
-    42→    } else {
-    43→      acc.map((list) => list.push(result.value))
-    44→    }
-    45→  }
-    46→  return acc
-    47→}
-    54→export const combineResultAsyncList = <T, E>(
-    55→  asyncResultList: readonly ResultAsync<T, E>[],
       →…
+    54→export const combineResultAsyncList = <T, E>(
     61→/**
     62→ * Give a list of all the errors we find
     63→ */
@@ -127,138 +72,41 @@ src/_internals/utils.ts
     66→): Result<readonly T[], E[]> => {
     67→  let acc = ok([]) as Result<T[], E[]>
     68→
-    69→  for (const result of resultList) {
-    70→    if (result.isErr() && acc.isErr()) {
-    71→      acc.error.push(result.error)
-    72→    } else if (result.isErr() && acc.isOk()) {
-    73→      acc = err([result.error])
-    74→    } else if (result.isOk() && acc.isOk()) {
-    75→      acc.value.push(result.value)
-    76→    }
-    77→    // do nothing when result.isOk() && acc.isErr()
-    78→  }
-    79→  return acc
-    80→}
-    82→export const combineResultAsyncListWithAllErrors = <T, E>(
-    83→  asyncResultList: readonly ResultAsync<T, E>[],
       →…
+    82→export const combineResultAsyncListWithAllErrors = <T, E>(
 
 src/result-async.ts
-     1→./result …
-    10→import { Err, Ok, Result } from './ …
-    11→./_internals/utils …
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
-   210→  /**
-      →…
-   222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
-   259→export const fromPromise …
-   260→export const fromSafePromise …
-   262→export const fromAsyncThrowable …
-   265→export type CombineResultAsyncs …
-   272→export type CombineResultsWithAllErrorsArrayAsync …
-   279→type UnwrapAsync …
-   300→type TraverseAsync …
-   330→type TraverseWithAllErrorsAsync …
-   338→type Writable …
+   222→  async *safeUnwrap …
 
 src/result.ts
-     1→import { errAsync, ResultAsync } from './ …
-     2→import { createNeverThrowError, ErrorConfig } from './_internals/error …
-     3→./_internals/utils …
     14→export namespace Result {
     15→  /**
-    16→   * Wraps a function with a try catch, creating a new function with the same
-    17→   * arguments but returning `Ok` if successful, `Err` if the function throws
-    18→   *
-    62→export type Result …
    134→interface IResult<T, E> {
-   135→  /**
-      →…
-   140→  isOk(): this is Ok<T, E>
-   142→  /**
-      →…
-   147→  isErr(): this is Err<T, E>
-   149→  /**
-      →…
-   157→  map<A>(f: (t: T) => A): Result<A, E>
-   159→  /**
-      →…
-   168→  mapErr<U>(f: (e: E) => U): Result<T, U>
-   185→  /**
-      →…
-   195→  andTee(f: (t: T) => unknown): Result<T, E>
-   197→  /**
-      →…
-   207→  orTee(f: (t: E) => unknown): Result<T, E>
-   235→  /**
-      →…
-   244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
-   246→  /**
-      →…
-   253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
-   255→  /**
-      →…
-   260→  unwrapOr<A>(v: A): T | A
-   262→  /**
-      →…
-   276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
-   278→  /**
-      →…
-   290→  safeUnwrap(): Generator<Err<never, E>, T>
-   292→  /**
-      →…
-   299→  _unsafeUnwrap(config?: ErrorConfig): T
-   301→  /**
-      →…
-   309→  _unsafeUnwrapErr(config?: ErrorConfig): E
+   140→  isOk …
+   147→  isErr …
+   157→  map …
+   168→  mapErr …
+   195→  andTee …
+   207→  orTee …
+   244→  asyncAndThen …
+   253→  asyncMap …
+   260→  unwrapOr …
+   276→  match …
+   290→  safeUnwrap …
+   299→  _unsafeUnwrap …
+   309→  _unsafeUnwrapErr …
    312→export class Ok<T, E> implements IResult<T, E> {
    405→  _unsafeUnwrap(_?: ErrorConfig): T {
    409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
    419→export class Err<T, E> implements IResult<T, E> {
    505→  _unsafeUnwrap(config?: ErrorConfig): T {
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
-   523→export const fromThrowable …
-   530→type Prev …
-   590→type CollectResults …
-   614→export type Transpose …
-   635→export type Combine …
-   645→export type Dedup …
-   652→export type MemberListOf …
-   669→export type EmptyArrayToNever …
-   680→type UnknownMembersToNever …
-   685→export type MembersToUnion …
-   688→export type IsLiteralArray …
-   698→type Traverse …
-   704→type TraverseWithAllErrors …
-   712→export type CombineResults …
-   719→export type CombineResultsWithAllErrorsArray …
-
-tests/index.test.ts
-     3→../src …
-
-tests/safe-try.test.ts
-     1→../src …
 
 tests/tsconfig.tests.json
-     2→  "compilerOptions": {
-    22→  },
-    23→  "include": [
-    26→  ]
-    27→}
-
-tests/typecheck-tests.ts
-     7→../src …
-    16→import { safeTry, Transpose } from '../src/result …
-    19→type CreateTuple …
-  2607→const input = <T>(): T => 123 as any
+     2→  "compilerOptions …
+    23→  "include …
 
 tsconfig.json
-     2→  "compilerOptions": {
-    23→  },
-    24→  "include": [
-    26→  ],
-    27→  "exclude": [
-    30→  ]
-    31→}

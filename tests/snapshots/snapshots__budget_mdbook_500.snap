@@ -2,269 +2,84 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (481 words)
-
-Cargo.toml
+budget: 500 (504 tokens)
 
 README.md
      1→# mdBook …
     14→## License …
 
-crates/mdbook-compare/Cargo.toml
-     1→[package …
-     9→[dependencies …
-    11→[lints …
-
-crates/mdbook-compare/README.md
-     1→# mdbook-compare …
-
-crates/mdbook-core/Cargo.toml
-
 crates/mdbook-core/README.md
      1→# mdbook-core …
     11→## License …
 
-crates/mdbook-core/src/book.rs
-
-crates/mdbook-core/src/config.rs
-   718→trait Updateable …
-
 crates/mdbook-core/src/lib.rs
-     3→/// The current version of `mdbook`.
-     4→///
-      →…
      7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
     14→pub mod errors {
-    15→    pub use anyhow::{Error, Result};
-
-crates/mdbook-core/src/utils/mod.rs
-     7→pub mod fs;
-    13→pub use self::html::{escape_html, escape_html_attribute};
-    17→macro_rules! static_regex {
-
-crates/mdbook-core/src/utils/toml_ext.rs
-
-crates/mdbook-driver/Cargo.toml
 
 crates/mdbook-driver/README.md
      1→# mdbook-driver …
     11→## License …
 
-crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
-
-crates/mdbook-driver/src/builtin_preprocessors/index.rs
-
-crates/mdbook-driver/src/builtin_preprocessors/links.rs
-   401→    type Item = Link<'a>;
-
-crates/mdbook-driver/src/builtin_preprocessors/mod.rs
-
-crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
-    10→pub struct MarkdownRenderer;
-
-crates/mdbook-driver/src/builtin_renderers/mod.rs
-    11→pub use self::markdown_renderer::MarkdownRenderer;
-    20→pub struct CmdRenderer {
-    21→    name: String,
-    22→    cmd: String,
-    23→}
-
-crates/mdbook-driver/src/init.rs
-    13→pub struct BookBuilder {
-
-crates/mdbook-driver/src/lib.rs
-
-crates/mdbook-driver/src/load.rs
-
-crates/mdbook-driver/src/mdbook/tests.rs
-
-crates/mdbook-driver/src/mdbook.rs
-    29→pub struct MDBook {
-   397→struct OutputConfig {
-   435→struct PreprocessorConfig {
-
-crates/mdbook-html/Cargo.toml
-
 crates/mdbook-html/README.md
      1→# mdbook-html …
-    11→## License …
-
-crates/mdbook-html/src/html/tokenizer.rs
-    22→    type Handle = ();
-
-crates/mdbook-html/src/html/tree.rs
-    25→macro_rules! attr_qual_name {
-   131→    fn into_tendril(self) -> StrTendril;
-
-crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
-    22→pub struct HtmlHandlebars;
-    26→    pub fn new() -> Self {
-
-crates/mdbook-html/src/html_handlebars/mod.rs
-     4→mod search;
-     7→pub use self::hbs_renderer::HtmlHandlebars;
 
 crates/mdbook-html/src/lib.rs
      5→pub mod theme;
-     8→pub use html_handlebars::HtmlHandlebars;
 
 crates/mdbook-html/src/theme/mod.rs
     40→pub struct Theme {
-   201→    fn default() -> Theme {
-
-crates/mdbook-html/src/utils.rs
-    42→pub(crate) trait ToUrlPath {
-
-crates/mdbook-markdown/Cargo.toml
-
-crates/mdbook-markdown/README.md
-     1→# mdbook-markdown …
-    11→## License …
 
 crates/mdbook-markdown/src/lib.rs
     11→pub use pulldown_cmark;
     15→pub struct MarkdownOptions {
     16→    /// Enables smart punctuation.
-    17→    ///
       →…
     34→    fn default() -> MarkdownOptions {
-    44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
-
-crates/mdbook-preprocessor/Cargo.toml
-
-crates/mdbook-preprocessor/README.md
-     1→# mdbook-preprocessor …
-    11→## License …
+    44→pub fn new_cmark_parser …
 
 crates/mdbook-preprocessor/src/lib.rs
     30→pub trait Preprocessor {
     51→pub struct PreprocessorContext {
-    68→impl PreprocessorContext {
-
-crates/mdbook-renderer/Cargo.toml
-
-crates/mdbook-renderer/README.md
-     1→# mdbook-renderer …
-    11→## License …
 
 crates/mdbook-renderer/src/lib.rs
     28→pub trait Renderer {
     40→pub struct RenderContext {
-    63→impl RenderContext {
-
-crates/mdbook-summary/Cargo.toml
-
-crates/mdbook-summary/README.md
-     1→# mdbook-summary …
-    11→## License …
-
-crates/mdbook-summary/src/lib.rs
-     8→pub use mdbook_core::book::SectionNumber;
-    59→pub fn parse_summary …
-    67→pub struct Summary {
-    84→pub struct Link {
-    98→    pub fn new …
-   122→pub enum SummaryItem {
-   173→struct SummaryParser<'a> {
-   190→macro_rules! collect_events {
-
-crates/xtask/Cargo.toml
 
 crates/xtask/README.md
      1→# xtask …
 
-crates/xtask/src/changelog.rs
-     3→use super::Result;
-
 guide/book.toml
 
-guide/guide-helper/Cargo.toml
-
 guide/guide-helper/src/lib.rs
-     9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
-    33→struct GuideHelper;
 
 guide/src/README.md
      1→# Introduction …
-    46→## Contributing …
-    55→## License …
 
 guide/src/cli/README.md
      1→# Command-line tool …
 
-guide/src/continuous-integration.md
-
-guide/src/for_developers/README.md
-     1→# For developers …
-
-guide/src/for_developers/mdbook-wordcount/Cargo.toml
-
-guide/src/for_developers/mdbook-wordcount/src/main.rs
-    46→pub struct WordcountConfig {
-
 guide/src/format/README.md
      1→# Format …
-
-guide/src/format/configuration/README.md
-     1→# Configuration …
-
-guide/src/format/example.rs
-     1→fn main() {
-
-guide/src/format/theme/README.md
-     1→# Theme …
 
 guide/src/guide/README.md
      1→# User guide …
 
-src/cmd/build.rs
-
 src/cmd/clean.rs
-    38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
-    45→#[derive(Debug)]
+    38→pub fn human_readable_bytes …
     46→pub struct Clean {
     47→    num_files_removed: u64,
-    48→    num_dirs_removed: u64,
-    49→    total_bytes_removed: u64,
-    50→}
+      →…
 
 src/cmd/command_prelude.rs
-     3→pub use clap::{Arg, ArgMatches, Command, arg};
-     7→pub trait CommandExt: Sized {
-    42→    fn arg_watcher(self) -> Self {
-
-src/cmd/init.rs
+    42→    fn arg_watcher …
 
 src/cmd/mod.rs
-     7→#[cfg(feature = "serve")]
      8→pub mod serve;
-    10→#[cfg(feature = "watch")]
     11→pub mod watch;
 
 src/cmd/serve.rs
      3→use super::watch;
-    20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
-
-src/cmd/test.rs
-
-src/cmd/watch/native.rs
-    11→pub fn rebuild_on_change …
 
 src/cmd/watch/poller.rs
     18→pub fn rebuild_on_change …
-    78→struct PathData {
-    86→struct Watcher {
-    95→impl Watcher {
-
-src/cmd/watch.rs
-    21→pub enum WatcherKind {
-    22→    Poll,
-    23→    Native,
-    24→}
-
-src/main.rs
-    14→mod cmd;
-    58→fn create_clap_command() -> Command {
-
-triagebot.toml

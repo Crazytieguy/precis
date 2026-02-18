@@ -2,12 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3978 words)
+budget: 4000 (4160 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
-     8→  .filter((file) => file.startsWith('.eslintrc.local.'))
-     9→  .map((file) => `./${file}`)
 
 .github/ISSUE_TEMPLATE/bug.yml
      3→name …
@@ -137,20 +135,13 @@ CHANGELOG.md
 
 CONTRIBUTING.md
      3→# Contributing …
-     5→## Code of Conduct
-     7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
-     8→
-     9→## Reporting Bugs
-    11→Before submitting a new bug report please search for an existing or similar report.
-    12→
-    13→Use one of our existing issue templates if you believe you've come across a unique problem.
-    14→
-      →…
-    17→## Pull Request Conventions
+     5→## Code of Conduct …
+     9→## Reporting Bugs …
+    17→## Pull Request Conventions …
     19→### Commits …
     30→### Test Coverage …
     36→### Linting …
-    42→## What _not_ to contribute?
+    42→## What _not_ to contribute? …
     44→### Dependencies …
     48→### Tools/Automation …
 
@@ -166,380 +157,51 @@ README.md
     13→
     14→```js
     15→const semver = require('semver')
-    16→
-    17→semver.valid('1.2.3') // '1.2.3'
-    18→semver.valid('a.b.c') // null
-    19→semver.clean('  =v1.2.3   ') // '1.2.3'
-    20→semver.satisfies('1.2.3', '1.x || >=2.5.0 || 5.0.0 - 7.2.3') // true
-    21→semver.gt('1.2.3', '9.8.7') // false
-    22→semver.lt('1.2.3', '9.8.7') // true
-    23→semver.minVersion('>=1.0.0') // '1.0.0'
-    24→semver.valid(semver.coerce('v2')) // '2.0.0'
-    25→semver.valid(semver.coerce('42.6.7.9.3-alpha')) // '42.6.7'
-    26→```
-    27→
-    28→You can also just load the module for the function that you care about if
-    29→you'd like to minimize your footprint.
-    30→
-    31→```js
-    32→// load the whole API at once in a single object
-    33→const semver = require('semver')
-    34→
-    35→// or just load the bits you need
-    36→// all of them listed here, just pick and choose what you want
-    37→
-    38→// classes
-    39→const SemVer = require('semver/classes/semver')
-    40→const Comparator = require('semver/classes/comparator')
-    41→const Range = require('semver/classes/range')
-    42→
-    43→// functions for working with versions
-    44→const semverParse = require('semver/functions/parse')
-    45→const semverValid = require('semver/functions/valid')
-    46→const semverClean = require('semver/functions/clean')
-    47→const semverInc = require('semver/functions/inc')
-    48→const semverDiff = require('semver/functions/diff')
-    49→const semverMajor = require('semver/functions/major')
-    50→const semverMinor = require('semver/functions/minor')
-    51→const semverPatch = require('semver/functions/patch')
-    52→const semverPrerelease = require('semver/functions/prerelease')
-    53→const semverCompare = require('semver/functions/compare')
-    54→const semverRcompare = require('semver/functions/rcompare')
-    55→const semverCompareLoose = require('semver/functions/compare-loose')
-    56→const semverCompareBuild = require('semver/functions/compare-build')
-    57→const semverSort = require('semver/functions/sort')
-    58→const semverRsort = require('semver/functions/rsort')
-    59→
-    60→// low-level comparators between versions
-    61→const semverGt = require('semver/functions/gt')
-    62→const semverLt = require('semver/functions/lt')
-    63→const semverEq = require('semver/functions/eq')
-    64→const semverNeq = require('semver/functions/neq')
-    65→const semverGte = require('semver/functions/gte')
-    66→const semverLte = require('semver/functions/lte')
-    67→const semverCmp = require('semver/functions/cmp')
-    68→const semverCoerce = require('semver/functions/coerce')
-    69→
-    70→// working with ranges
-    71→const semverSatisfies = require('semver/functions/satisfies')
-    72→const semverMaxSatisfying = require('semver/ranges/max-satisfying')
-    73→const semverMinSatisfying = require('semver/ranges/min-satisfying')
-    74→const semverToComparators = require('semver/ranges/to-comparators')
-    75→const semverMinVersion = require('semver/ranges/min-version')
-    76→const semverValidRange = require('semver/ranges/valid')
-    77→const semverOutside = require('semver/ranges/outside')
-    78→const semverGtr = require('semver/ranges/gtr')
-    79→const semverLtr = require('semver/ranges/ltr')
-    80→const semverIntersects = require('semver/ranges/intersects')
-    81→const semverSimplifyRange = require('semver/ranges/simplify')
-    82→const semverRangeSubset = require('semver/ranges/subset')
-    83→```
-    84→
-    85→As a command-line utility:
-    86→
-    87→```
-    88→$ semver -h
-    89→
-    90→A JavaScript implementation of the https://semver.org/ specification
-    91→Copyright Isaac Z. Schlueter
-    92→
-    93→Usage: semver [options] <version> [<version> [...]]
-    94→Prints valid versions sorted by SemVer precedence
-    95→
-    96→Options:
-    97→-r --range <range>
-    98→        Print versions that match the specified range.
-    99→
-   100→-i --increment [<level>]
-   101→        Increment a version by the specified level.  Level can
-   102→        be one of: major, minor, patch, premajor, preminor,
-   103→        prepatch, prerelease, or release.  Default level is 'patch'.
-   104→        Only one version may be specified.
-   105→
-   106→--preid <identifier>
-   107→        Identifier to be used to prefix premajor, preminor,
-   108→        prepatch or prerelease version increments.
-   109→
-   110→-l --loose
-   111→        Interpret versions and ranges loosely
-   112→
-   113→-n <0|1|false>
-   114→        Base number for prerelease identifier (default: 0).
-   115→        Use false to omit the number altogether.
-   116→
-   117→-p --include-prerelease
-   118→        Always include prerelease versions in range matching
-   119→
-   120→-c --coerce
-   121→        Coerce a string into SemVer if possible
-   122→        (does not imply --loose)
-   123→
-   124→--rtl
-   125→        Coerce version strings right to left
-   126→
-   127→--ltr
       →…
    139→## Versions
    141→A "version" is described by the `v2.0.0` specification found at
    142→<https://semver.org/>.
    143→
    144→A leading `"="` or `"v"` character is stripped off and ignored.
-   145→Support for stripping a leading "v" is kept for compatibility with `v1.0.0` of the SemVer
-   146→specification but should not be used anymore.
-   147→
+      →…
    148→## Ranges
    150→A `version range` is a set of `comparators` that specify versions
    151→that satisfy the range.
    152→
    153→A `comparator` is composed of an `operator` and a `version`.  The set
-   154→of primitive `operators` is:
-   155→
-   156→* `<` Less than
-   157→* `<=` Less than or equal to
-   158→* `>` Greater than
-   159→* `>=` Greater than or equal to
-   160→* `=` Equal.  If no operator is specified, then equality is assumed,
-   161→  so this operator is optional but MAY be included.
-   162→
-   163→For example, the comparator `>=1.2.7` would match the versions
-   164→`1.2.7`, `1.2.8`, `2.5.3`, and `1.3.9`, but not the versions `1.2.6`
-   165→or `1.1.0`. The comparator `>1` is equivalent to `>=2.0.0` and
-   166→would match the versions `2.0.0` and `3.1.0`, but not the versions
-   167→`1.0.1` or `1.1.0`.
-   168→
-   169→Comparators can be joined by whitespace to form a `comparator set`,
-   170→which is satisfied by the **intersection** of all of the comparators
-   171→it includes.
-   172→
-   173→A range is composed of one or more comparator sets, joined by `||`.  A
-   174→version matches a range if and only if every comparator in at least
-   175→one of the `||`-separated comparator sets is satisfied by the version.
-   176→
-   177→For example, the range `>=1.2.7 <1.3.0` would match the versions
-   178→`1.2.7`, `1.2.8`, and `1.2.99`, but not the versions `1.2.6`, `1.3.0`,
-   179→or `1.1.0`.
-   180→
-   181→The range `1.2.7 || >=1.2.9 <2.0.0` would match the versions `1.2.7`,
-   182→`1.2.9`, and `1.4.6`, but not the versions `1.2.8` or `2.0.0`.
-   183→
-   184→### Prerelease Tags
-   186→If a version has a prerelease tag (for example, `1.2.3-alpha.3`) then
-   187→it will only be allowed to satisfy comparator sets if at least one
-   188→comparator with the same `[major, minor, patch]` tuple also has a
       →…
-   219→#### Prerelease Identifiers
-   221→The method `.inc` takes an additional `identifier` string argument that
-   222→will append the value of the string as a prerelease identifier:
-   223→
-   224→```javascript
-      →…
-   250→#### Prerelease Identifier Base
-   252→The method `.inc` takes an optional parameter 'identifierBase' string
-   253→that will let you let your prerelease number as zero-based or one-based.
-   254→Set to `false` to omit the prerelease number altogether.
-   255→If you do not specify this parameter, it will default to zero-based.
-      →…
-   279→### Advanced Range Syntax
-   281→Advanced range syntax desugars to primitive comparators in
-   282→deterministic ways.
-   283→
-      →…
-   287→#### Hyphen Ranges `X.Y.Z - A.B.C`
-   289→Specifies an inclusive set.
-   290→
-   291→* `1.2.3 - 2.3.4` := `>=1.2.3 <=2.3.4`
-   292→
-      →…
-   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
-   308→Any of `X`, `x`, or `*` may be used to "stand in" for one of the
-   309→numeric values in the `[major, minor, patch]` tuple.
-   310→
-   311→* `*` := `>=0.0.0` (Any non-prerelease version satisfies, unless
-      →…
-   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
-   326→Allows patch-level changes if a minor version is specified on the
-   327→comparator.  Allows minor-level changes if not.
-   328→
-   329→* `~1.2.3` := `>=1.2.3 <1.(2+1).0` := `>=1.2.3 <1.3.0-0`
-      →…
-   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
-   343→Allows changes that do not modify the left-most non-zero element in the
-   344→`[major, minor, patch]` tuple.  In other words, this allows patch and
-   345→minor updates for versions `1.0.0` and above, patch updates for
-   346→versions `0.X >=0.1.0`, and *no* updates for versions `0.0.X`.
-      →…
-   384→### Range Grammar
-   386→Putting all this together, here is a Backus-Naur grammar for ranges,
-   387→for the benefit of parser authors:
-   388→
-      →…
+   184→### Prerelease Tags …
+   219→#### Prerelease Identifiers …
+   250→#### Prerelease Identifier Base …
+   279→### Advanced Range Syntax …
+   287→#### Hyphen Ranges `X.Y.Z - A.B.C` …
+   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*` …
+   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1` …
+   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4` …
+   384→### Range Grammar …
    408→## Functions
    410→All methods and classes take a final `options` object argument.  All
    411→options in this object are `false` by default.  The options supported
    412→are:
    413→
-   414→- `loose`: Be more forgiving about not-quite-valid semver strings.
-   415→  (Any resulting output will always be 100% strict compliant, of
-   416→  course.)  For backwards compatibility reasons, if the `options`
-   417→  argument is a boolean value instead of an object, it is interpreted
-   418→  to be the `loose` param.
-   419→- `includePrerelease`: Set to suppress the [default
-   420→  behavior](https://github.com/npm/node-semver#prerelease-tags) of
-   421→  excluding prerelease tagged versions from ranges unless they are
-   422→  explicitly opted into.
-   423→
-   424→Strict-mode Comparators and Ranges will be strict about the SemVer
-   425→strings that they parse.
-   426→
-   427→* `valid(v)`: Return the parsed version, or null if it's not valid.
-   428→* `inc(v, releaseType, options, identifier, identifierBase)`: 
-   429→  Return the version incremented by the release
-   430→  type (`major`, `premajor`, `minor`, `preminor`, `patch`,
-   431→  `prepatch`, `prerelease`, or `release`), or null if it's not valid
-   432→  * `premajor` in one call will bump the version up to the next major
-   433→    version and down to a prerelease of that major version.
-   434→    `preminor`, and `prepatch` work the same way.
-   435→  * If called from a non-prerelease version, `prerelease` will work the
-   436→    same as `prepatch`. It increments the patch version and then makes a
-   437→    prerelease. If the input version is already a prerelease it simply
-   438→    increments it.
-   439→  * `release` will remove any prerelease part of the version.
-   440→  * `identifier` can be used to prefix `premajor`, `preminor`,
-   441→    `prepatch`, or `prerelease` version increments. `identifierBase`
-   442→    is the base to be used for the `prerelease` identifier.
-   443→* `prerelease(v)`: Returns an array of prerelease components, or null
-   444→  if none exist. Example: `prerelease('1.2.3-alpha.1') -> ['alpha', 1]`
-   445→* `major(v)`: Return the major version number.
-   446→* `minor(v)`: Return the minor version number.
-   447→* `patch(v)`: Return the patch version number.
-   448→* `intersects(r1, r2, loose)`: Return true if the two supplied ranges
-   449→  or comparators intersect.
-   450→* `parse(v)`: Attempt to parse a string as a semantic version, returning either
-   451→  a `SemVer` object or `null`.
-   452→
-   453→### Comparison
-   455→* `gt(v1, v2)`: `v1 > v2`
-   456→* `gte(v1, v2)`: `v1 >= v2`
-   457→* `lt(v1, v2)`: `v1 < v2`
       →…
-   478→### Sorting
-   480→* `sort(versions)`: Returns a sorted array of versions based on the `compareBuild` 
-   481→  function.
-   482→* `rsort(versions)`: The reverse of `sort`. Returns an array of versions based on
-      →…
-   485→### Comparators
-   487→* `intersects(comparator)`: Return true if the comparators intersect
-   488→
-   489→### Ranges
-   491→* `validRange(range)`: Return the valid range or null if it's not valid.
-   492→* `satisfies(version, range)`: Return true if the version satisfies the
-   493→  range.
-      →…
-   531→### Coercion
-   533→* `coerce(version, options)`: Coerces a string to semver if possible
-   534→
-   535→This aims to provide a very forgiving translation of a non-semver string to
-      →…
-   558→### Clean
-   560→* `clean(version)`: Clean a string to be a valid semver if possible
-   561→
-   562→This will return a cleaned and trimmed semver version. If the provided
-      →…
+   453→### Comparison …
+   478→### Sorting …
+   485→### Comparators …
+   489→### Ranges …
+   531→### Coercion …
+   558→### Clean …
    576→## Constants
    578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
    579→
-   580→### `RELEASE_TYPES`
-   582→- major
-   583→- premajor
-   584→- minor
-      →…
-   600→### `SEMVER_SPEC_VERSION`
-   602→2.0.0
-   603→
-   604→```
-      →…
+   580→### `RELEASE_TYPES` …
+   600→### `SEMVER_SPEC_VERSION` …
    610→## Exported Modules
    613→TODO: Make sure that all of these items are documented (classes aren't,
    614→eg), and then pull the module name into the documentation for that specific
    615→thing.
    616→-->
-   617→
-   618→You may pull in just the part of this semver utility that you need if you
-   619→are sensitive to packing and tree-shaking concerns.  The main
-   620→`require('semver')` export uses getter functions to lazily load the parts
-   621→of the API that are used.
-   622→
-   623→The following modules are available:
-   624→
-   625→* `require('semver')`
-   626→* `require('semver/classes')`
-   627→* `require('semver/classes/comparator')`
-   628→* `require('semver/classes/range')`
-   629→* `require('semver/classes/semver')`
-   630→* `require('semver/functions/clean')`
-   631→* `require('semver/functions/cmp')`
-   632→* `require('semver/functions/coerce')`
-   633→* `require('semver/functions/compare')`
-   634→* `require('semver/functions/compare-build')`
-   635→* `require('semver/functions/compare-loose')`
-   636→* `require('semver/functions/diff')`
-   637→* `require('semver/functions/eq')`
-   638→* `require('semver/functions/gt')`
-   639→* `require('semver/functions/gte')`
-   640→* `require('semver/functions/inc')`
-   641→* `require('semver/functions/lt')`
-   642→* `require('semver/functions/lte')`
-   643→* `require('semver/functions/major')`
-   644→* `require('semver/functions/minor')`
-   645→* `require('semver/functions/neq')`
-   646→* `require('semver/functions/parse')`
-   647→* `require('semver/functions/patch')`
-   648→* `require('semver/functions/prerelease')`
-   649→* `require('semver/functions/rcompare')`
-   650→* `require('semver/functions/rsort')`
-   651→* `require('semver/functions/satisfies')`
-   652→* `require('semver/functions/sort')`
-   653→* `require('semver/functions/valid')`
-   654→* `require('semver/ranges/gtr')`
-   655→* `require('semver/ranges/intersects')`
-   656→* `require('semver/ranges/ltr')`
-   657→* `require('semver/ranges/max-satisfying')`
-   658→* `require('semver/ranges/min-satisfying')`
-   659→* `require('semver/ranges/min-version')`
-   660→* `require('semver/ranges/outside')`
-   661→* `require('semver/ranges/simplify')`
-   662→* `require('semver/ranges/subset')`
-   663→* `require('semver/ranges/to-comparators')`
-   664→* `require('semver/ranges/valid')`
-   665→
-
-benchmarks/bench-compare.js
-     5→const suite …
-
-benchmarks/bench-diff.js
-     5→const suite …
-     7→const cases …
-
-benchmarks/bench-parse-options.js
-     5→const suite …
-     7→const options1 …
-    11→const options2 …
-    16→const options3 …
-
-benchmarks/bench-parse.js
-     5→const suite …
-
-benchmarks/bench-satisfies.js
-     5→const suite …
-     7→const versions …
-     8→const versionToCompare …
-     9→const option1 …
-    10→const option2 …
-    11→const option3 …
-
-benchmarks/bench-subset.js
-     5→const suite …
-     8→const cases …
+      →…
 
 bin/semver.js
      8→const argv = process.argv.slice(2)
@@ -547,268 +209,138 @@ bin/semver.js
     37→const main = () => {
     38→  if (!argv.length) {
     39→    return help()
-    40→  }
-    41→  while (argv.length) {
-    42→    let a = argv.shift()
-    43→    const indexOfEqualSign = a.indexOf('=')
-    44→    if (indexOfEqualSign !== -1) {
-    45→      const value = a.slice(indexOfEqualSign + 1)
-    46→      a = a.slice(0, indexOfEqualSign)
-    47→      argv.unshift(value)
       →…
    132→const failInc = () => {
    133→  console.error('--inc can only be used on a single version with no range')
    134→  fail()
-   135→}
+      →…
    137→const fail = () => process.exit(1)
    139→const help = () => console.log(
    140→`SemVer ${version}
    141→
-   142→A JavaScript implementation of the https://semver.org/ specification
-   143→Copyright Isaac Z. Schlueter
-   144→
-   145→Usage: semver [options] <version> [<version> [...]]
-   146→Prints valid versions sorted by SemVer precedence
-   147→
-   148→Options:
-   149→-r --range <range>
       →…
 
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
      6→  static get ANY () {
-     7→    return ANY
-     8→  }
     10→  constructor (comp, options) {
-    11→    options = parseOptions(options)
-    12→
-    13→    if (comp instanceof Comparator) {
-    14→      if (comp.loose === !!options.loose) {
-      →…
     36→  parse (comp) {
-    37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
-    38→    const m = comp.match(r)
-    39→
-    40→    if (!m) {
-      →…
     57→  toString () {
-    58→    return this.value
-    59→  }
     61→  test (version) {
-    62→    debug('Comparator.test', version, this.options.loose)
-    63→
-    64→    if (this.semver === ANY || version === ANY) {
-    65→      return true
-      →…
     79→  intersects (comp, options) {
-    80→    if (!(comp instanceof Comparator)) {
-    81→      throw new TypeError('a Comparator is required')
-    82→    }
-    83→
-      →…
 
 classes/range.js
      3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
      7→  constructor (range, options) {
-     8→    options = parseOptions(options)
-     9→
-    10→    if (range instanceof Range) {
-    11→      if (
-      →…
     73→  get range () {
-    74→    if (this.formatted === undefined) {
-    75→      this.formatted = ''
-    76→      for (let i = 0; i < this.set.length; i++) {
-    77→        if (i > 0) {
-      →…
     92→  format () {
-    93→    return this.range
-    94→  }
     96→  toString () {
-    97→    return this.range
-    98→  }
    100→  parseRange (range) {
-   101→    // memoize range parsing for performance.
-   102→    // this is a very hot path, and fully deterministic.
-   103→    const memoOpts =
-   104→      (this.options.includePrerelease && FLAG_INCLUDE_PRERELEASE) |
-      →…
    170→  intersects (range, options) {
-   171→    if (!(range instanceof Range)) {
-   172→      throw new TypeError('a Range is required')
-   173→    }
-   174→
-      →…
    193→  test (version) {
-   194→    if (!version) {
-   195→      return false
-   196→    }
-   197→
-      →…
    218→const cache = new LRU()
    233→const isNullSet = c => c.value === '<0.0.0-0'
    234→const isAny = c => c.value === ''
    238→const isSatisfiable = (comparators, options) => {
-   239→  let result = true
-      →…
    257→const parseComparator = (comp, options) => {
-   258→  comp = comp.replace(re[t.BUILD], '')
-      →…
    271→const isX = id => !id || id.toLowerCase() === 'x' || id === '*'
    280→const replaceTildes = (comp, options) => {
-   281→  return comp
-      →…
    288→const replaceTilde = (comp, options) => {
-   289→  const r = options.loose ? re[t.TILDELOOSE] : re[t.TILDE]
-      →…
    324→const replaceCarets = (comp, options) => {
-   325→  return comp
-      →…
    332→const replaceCaret = (comp, options) => {
-   333→  debug('caret', comp, options)
-      →…
    385→const replaceXRanges = (comp, options) => {
-   386→  debug('replaceXRanges', comp, options)
-      →…
    393→const replaceXRange = (comp, options) => {
-   394→  comp = comp.trim()
-      →…
    470→const replaceStars = (comp, options) => {
-   471→  debug('replaceStars', comp, options)
-      →…
    478→const replaceGTE0 = (comp, options) => {
-   479→  debug('replaceGTE0', comp, options)
-      →…
    491→const hyphenReplace = incPr => ($0,
    492→  from, fM, fm, fp, fpr, fb,
    493→  to, tM, tm, tp, tpr) => {
-   494→  if (isX(fM)) {
-      →…
    523→const testSet = (set, version, options) => {
-   524→  for (let i = 0; i < set.length; i++) {
-      →…
 
 classes/semver.js
      9→class SemVer {
     10→  constructor (version, options) {
-    11→    options = parseOptions(options)
-    12→
-    13→    if (version instanceof SemVer) {
-    14→      if (version.loose === !!options.loose &&
-      →…
     81→  format () {
-    82→    this.version = `${this.major}.${this.minor}.${this.patch}`
-    83→    if (this.prerelease.length) {
-    84→      this.version += `-${this.prerelease.join('.')}`
-    85→    }
-      →…
     89→  toString () {
-    90→    return this.version
-    91→  }
     93→  compare (other) {
-    94→    debug('SemVer.compare', this.version, this.options, other)
-    95→    if (!(other instanceof SemVer)) {
-    96→      if (typeof other === 'string' && other === this.version) {
-    97→        return 0
-      →…
    109→  compareMain (other) {
-   110→    if (!(other instanceof SemVer)) {
-   111→      other = new SemVer(other, this.options)
-   112→    }
-   113→
-      →…
    135→  comparePre (other) {
-   136→    if (!(other instanceof SemVer)) {
-   137→      other = new SemVer(other, this.options)
-   138→    }
-   139→
-      →…
    168→  compareBuild (other) {
-   169→    if (!(other instanceof SemVer)) {
-   170→      other = new SemVer(other, this.options)
-   171→    }
-   172→
-      →…
    194→  inc (release, identifier, identifierBase) {
-   195→    if (release.startsWith('pre')) {
-   196→      if (!identifier && identifierBase === false) {
-   197→        throw new Error('invalid increment argument: identifier is empty')
-   198→      }
-      →…
 
 functions/clean.js
-     4→const clean = (version, options) => {
+     4→const clean …
 
 functions/cmp.js
-    10→const cmp = (a, op, b, loose) => {
+    10→const cmp …
 
 functions/coerce.js
-     7→const coerce = (version, options) => {
+     7→const coerce …
 
 functions/compare-build.js
-     4→const compareBuild = (a, b, loose) => {
+     4→const compareBuild …
 
 functions/compare-loose.js
-     4→const compareLoose = (a, b) => compare(a, b, true)
+     4→const compareLoose …
 
 functions/compare.js
-     4→const compare = (a, b, loose) =>
+     4→const compare …
 
 functions/diff.js
-     5→const diff = (version1, version2) => {
+     5→const diff …
 
 functions/eq.js
-     4→const eq = (a, b, loose) => compare(a, b, loose) === 0
+     4→const eq …
 
 functions/gt.js
-     4→const gt = (a, b, loose) => compare(a, b, loose) > 0
+     4→const gt …
 
 functions/gte.js
-     4→const gte = (a, b, loose) => compare(a, b, loose) >= 0
+     4→const gte …
 
 functions/inc.js
-     5→const inc = (version, release, options, identifier, identifierBase) => {
+     5→const inc …
 
 functions/lt.js
-     4→const lt = (a, b, loose) => compare(a, b, loose) < 0
+     4→const lt …
 
 functions/lte.js
-     4→const lte = (a, b, loose) => compare(a, b, loose) <= 0
+     4→const lte …
 
 functions/major.js
-     4→const major = (a, loose) => new SemVer(a, loose).major
+     4→const major …
 
 functions/minor.js
-     4→const minor = (a, loose) => new SemVer(a, loose).minor
+     4→const minor …
 
 functions/neq.js
-     4→const neq = (a, b, loose) => compare(a, b, loose) !== 0
+     4→const neq …
 
 functions/parse.js
-     4→const parse = (version, options, throwErrors = false) => {
+     4→const parse …
 
 functions/patch.js
-     4→const patch = (a, loose) => new SemVer(a, loose).patch
+     4→const patch …
 
 functions/prerelease.js
-     4→const prerelease = (version, options) => {
+     4→const prerelease …
 
 functions/rcompare.js
-     4→const rcompare = (a, b, loose) => compare(b, a, loose)
+     4→const rcompare …
 
 functions/rsort.js
-     4→const rsort = (list, loose) => list.sort((a, b) => compareBuild(b, a, loose))
+     4→const rsort …
 
 functions/satisfies.js
-     4→const satisfies = (version, range, options) => {
+     4→const satisfies …
 
 functions/sort.js
-     4→const sort = (list, loose) => list.sort((a, b) => compareBuild(a, b, loose))
+     4→const sort …
 
 functions/valid.js
-     4→const valid = (version, options) => {
+     4→const valid …
 
 internal/constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
@@ -824,24 +356,6 @@ internal/debug.js
 internal/identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
-     5→  if (typeof a === 'number' && typeof b === 'number') {
-     6→    return a === b ? 0 : a < b ? -1 : 1
-     7→  }
-     8→
-     9→  const anum = numeric.test(a)
-    10→  const bnum = numeric.test(b)
-    11→
-    12→  if (anum && bnum) {
-    13→    a = +a
-    14→    b = +b
-    15→  }
-    16→
-    17→  return a === b ? 0
-    18→    : (anum && !bnum) ? -1
-    19→    : (bnum && !anum) ? 1
-    20→    : a < b ? -1
-    21→    : 1
-    22→}
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 
 internal/lrucache.js
@@ -884,16 +398,6 @@ internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
-     7→  if (!options) {
-     8→    return emptyOpts
-     9→  }
-    10→
-    11→  if (typeof options !== 'object') {
-    12→    return looseOption
-    13→  }
-    14→
-    15→  return options
-    16→}
 
 internal/re.js
     12→const re = exports.re = []
@@ -904,23 +408,7 @@ internal/re.js
     19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
     27→const safeRegexReplacements = [
     33→const makeSafeRegex = (value) => {
-    34→  for (const [token, max] of safeRegexReplacements) {
-    35→    value = value
-    36→      .split(`${token}*`).join(`${token}{0,${max}}`)
-    37→      .split(`${token}+`).join(`${token}{1,${max}}`)
-    38→  }
-    39→  return value
-    40→}
     42→const createToken = (name, value, isGlobal) => {
-    43→  const safe = makeSafeRegex(value)
-    44→  const index = R++
-    45→  debug(name, index, value)
-    46→  t[name] = index
-    47→  src[index] = value
-    48→  safeSrc[index] = safe
-    49→  re[index] = new RegExp(value, isGlobal ? 'g' : undefined)
-    50→  safeRe[index] = new RegExp(safe, isGlobal ? 'g' : undefined)
-    51→}
 
 package.json
      2→  "name": "semver",
@@ -952,57 +440,35 @@ ranges/gtr.js
 
 ranges/intersects.js
      4→const intersects = (r1, r2, options) => {
-     5→  r1 = new Range(r1, options)
-      →…
 
 ranges/ltr.js
      5→const ltr = (version, range, options) => outside(version, range, '<', options)
 
 ranges/max-satisfying.js
      6→const maxSatisfying = (versions, range, options) => {
-     7→  let max = null
-      →…
 
 ranges/min-satisfying.js
      5→const minSatisfying = (versions, range, options) => {
-     6→  let min = null
-      →…
 
 ranges/min-version.js
      7→const minVersion = (range, loose) => {
-     8→  range = new Range(range, loose)
-      →…
 
 ranges/outside.js
     13→const outside = (version, range, hilo, options) => {
-    14→  version = new SemVer(version, options)
-      →…
 
 ranges/subset.js
     45→const subset = (sub, dom, options = {}) => {
-    46→  if (sub === dom) {
-      →…
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
     76→const simpleSubset = (sub, dom, options) => {
-    77→  if (sub === dom) {
-      →…
    226→const higherGT = (a, b, options) => {
-   227→  if (!a) {
-      →…
    238→const lowerLT = (a, b, options) => {
-   239→  if (!a) {
-      →…
 
 ranges/to-comparators.js
      6→const toComparators = (range, options) =>
-     7→  new Range(range, options).set
-      →…
 
 ranges/valid.js
      4→const validRange = (range, options) => {
-     5→  try {
-      →…
 
 release-please-config.json
      2→  "group-pull-request-title-pattern": "chore: release ${version}",
@@ -1017,10 +483,6 @@ release-please-config.json
 test/bin/semver.js
      9→const bin = require.resolve('../../bin/semver')
     10→const run = args => new Promise((resolve, reject) => {
-    11→  const c = spawn(process.execPath, [bin].concat(args))
-    12→  c.on('error', reject)
-    13→  const out = []
-      →…
 
 test/integration/whitespace.js
     12→const wsMedium = ' '.repeat(125)
@@ -1036,9 +498,9 @@ test/map.js
      9→const ROOT = resolve(__dirname, '..')
     10→const TEST = join(ROOT, 'test')
     11→const IGNORE_DIRS = ['fixtures', 'integration']
-    13→const getFile = (f) => {
-    23→const walk = (item, res = []) => getFile(item) || readdirSync(item)
-    28→const walkAll = (items, relativeTo) => items
+    13→const getFile …
+    23→const walk …
+    28→const walkAll …
 
 test/ranges/simplify.js
      6→const versions = [

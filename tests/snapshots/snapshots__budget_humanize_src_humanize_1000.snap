@@ -2,71 +2,31 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (951 words)
+budget: 1000 (994 tokens)
 
 __init__.py
-     5→from humanize.filesize import naturalsize
-     6→from humanize.i18n import activate, deactivate, decimal_separator, thousands_separator
-     7→from humanize.lists import natural_list
-     8→from humanize.number import (
-     9→    apnumber,
-    10→    clamp,
-    11→    fractional,
-    12→    intcomma,
-    13→    intword,
-    14→    metric,
-    15→    ordinal,
-    16→    scientific,
-    17→)
-    18→from humanize.time import (
-    19→    naturaldate,
-    20→    naturalday,
-    21→    naturaldelta,
-    22→    naturaltime,
-    23→    precisedelta,
-    24→)
+     5→from humanize.filesize …
+     6→from humanize.i18n …
+     7→from humanize.lists …
+     8→from humanize.number …
+    18→from humanize.time …
     26→from ._version import __version__
     28→__all__ = [
     29→    "__version__",
     30→    "activate",
     31→    "apnumber",
-    32→    "clamp",
-    33→    "deactivate",
-    34→    "decimal_separator",
-    35→    "fractional",
-    36→    "intcomma",
-    37→    "intword",
-    38→    "metric",
-    39→    "natural_list",
-    40→    "naturaldate",
-    41→    "naturalday",
-    42→    "naturaldelta",
-    43→    "naturalsize",
-    44→    "naturaltime",
-    45→    "ordinal",
-    46→    "precisedelta",
-    47→    "scientific",
-    48→    "thousands_separator",
-    49→]
-
-filesize.py
-     5→from math import log
-    36→def naturalsize(
-    37→    value: float | str,
-    38→    binary: bool = False,
-    39→    gnu: bool = False,
-    40→    format: str = "%.1f",
-    41→) -> str:
-    42→    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
-    43→
       →…
 
+filesize.py
+     5→from math …
+    36→def naturalsize …
+
 i18n.py
-     5→import gettext as gettext_module
-     6→from threading import local
+     5→import gettext …
+     6→from threading …
      8→TYPE_CHECKING = False
-    10→    import os
-    11→    import pathlib
+    10→    import os …
+    11→    import pathlib …
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
     16→    None: gettext_module.NullTranslations()
@@ -75,118 +35,62 @@ i18n.py
     21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
     23→    "de_DE": ".",
-    24→    "fr_FR": " ",
-    25→    "it_IT": ".",
-    26→    "pt_BR": ".",
-    27→    "hu_HU": " ",
-    28→}
+      →…
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
     32→    "de_DE": ",",
-    33→    "fr_FR": ".",
-    34→    "it_IT": ",",
-    35→    "pt_BR": ",",
-    36→    "hu_HU": ",",
-    37→}
-    40→def _get_default_locale_path() -> pathlib.Path | None:
-    51→def get_translation() -> gettext_module.NullTranslations:
-    58→def activate(
-    59→    locale: str | None, path: str | os.PathLike[str] | None = None
-    60→) -> gettext_module.NullTranslations:
-    61→    """Activate internationalisation.
-    62→
       →…
-    96→def deactivate() -> None:
-    97→    """Deactivate internationalisation."""
-   101→def _gettext(message: str) -> str:
-   113→def _pgettext(msgctxt: str, message: str) -> str:
-   129→def _ngettext(message: str, plural: str, num: int) -> str:
-   144→def _gettext_noop(message: str) -> str:
-   163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
-   183→def thousands_separator() -> str:
-   184→    """Return the thousands separator for a locale, default to comma.
-   185→
-      →…
-   196→def decimal_separator() -> str:
-   197→    """Return the decimal separator for a locale, default to dot.
-   198→
-      →…
+    40→def _get_default_locale_path …
+    51→def get_translation …
+    58→def activate …
+    96→def deactivate …
+   101→def _gettext …
+   113→def _pgettext …
+   129→def _ngettext …
+   144→def _gettext_noop …
+   163→def _ngettext_noop …
+   183→def thousands_separator …
+   196→def decimal_separator …
 
 lists.py
      5→TYPE_CHECKING = False
-     7→    from typing import Any
+     7→    from typing …
      9→__all__ = ["natural_list"]
-    12→def natural_list(items: list[Any]) -> str:
-    13→    """Natural list.
-    14→
-      →…
+    12→def natural_list …
 
 number.py
-     5→import bisect
+     5→import bisect …
      7→from .i18n import _gettext as _
      8→from .i18n import _ngettext, decimal_separator, thousands_separator
      9→from .i18n import _ngettext_noop as NS_
     10→from .i18n import _pgettext as P_
     12→TYPE_CHECKING = False
-    14→    from typing import TypeAlias
-    21→def _format_not_finite(value: float) -> str:
-    34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
-    35→    """Converts an integer to its ordinal as a string.
-    36→
-      →…
-   110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
-   111→    """Converts an integer to a string containing commas every three digits.
-   112→
-      →…
-   195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
-   196→    """Converts a large integer to a friendly text representation.
-   197→
-      →…
-   269→def apnumber(value: NumberOrString) -> str:
-   270→    """Converts an integer to Associated Press style.
-   271→
-      →…
-   321→def fractional(value: NumberOrString) -> str:
-   322→    """Convert to fractional number.
-   323→
-      →…
-   385→def scientific(value: NumberOrString, precision: int = 2) -> str:
-   386→    """Return number in string scientific notation z.wq x 10ⁿ.
-   387→
-      →…
-   454→def clamp(
-   455→    value: float,
-   456→    format: str = "{:}",
-   457→    floor: float | None = None,
-   458→    ceil: float | None = None,
-   459→    floor_token: str = "<",
-   460→    ceil_token: str = ">",
-   461→) -> str:
-   462→    """Returns number with the specified format, clamped between floor and ceil.
-   463→
-      →…
-   531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
-   532→    """Return a value with a metric SI unit-prefix appended.
-   533→
-      →…
+    14→    from typing …
+    21→def _format_not_finite …
+    34→def ordinal …
+   110→def intcomma …
+   195→def intword …
+   269→def apnumber …
+   321→def fractional …
+   385→def scientific …
+   454→def clamp …
+   531→def metric …
 
 time.py
-     8→from enum import Enum
-     9→from functools import total_ordering
+     8→from enum …
+     9→from functools …
     11→from .i18n import _gettext as _
     12→from .i18n import _ngettext
     13→from .number import intcomma
     15→TYPE_CHECKING = False
-    17→    import datetime as dt
-    18→    from collections.abc import Iterable
-    19→    from typing import Any
+    17→    import datetime …
+    18→    from collections.abc …
+    19→    from typing …
     21→__all__ = [
     22→    "naturaldate",
     23→    "naturalday",
     24→    "naturaldelta",
-    25→    "naturaltime",
-    26→    "precisedelta",
-    27→]
+      →…
     30→@total_ordering
     31→class Unit(Enum):
     32→    MICROSECONDS = 0
@@ -198,56 +102,17 @@ time.py
     38→    MONTHS = 6
     39→    YEARS = 7
     40→
-    41→    def __lt__(self, other: Any) -> Any:
-    47→def _now() -> dt.datetime:
-    53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
-    68→def _date_and_delta(
-    69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
-    70→) -> tuple[Any, Any]:
-    95→def naturaldelta(
-    96→    value: dt.timedelta | float,
-    97→    months: bool = True,
-    98→    minimum_unit: str = "seconds",
-    99→) -> str:
-   100→    """Return a natural representation of a timedelta or number of seconds.
-   101→
-      →…
-   249→def naturaltime(
-   250→    value: dt.datetime | dt.timedelta | float,
-   251→    future: bool = False,
-   252→    months: bool = True,
-   253→    minimum_unit: str = "seconds",
-   254→    when: dt.datetime | None = None,
-   255→) -> str:
-   256→    """Return a natural representation of a time in a resolution that makes sense.
-   257→
-      →…
-   300→def _convert_aware_datetime(
-   301→    value: dt.datetime | dt.timedelta | float | None,
-   302→) -> Any:
-   311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
-   312→    """Return a natural day.
-   313→
-      →…
-   343→def naturaldate(value: dt.date | dt.datetime) -> str:
-   344→    """Like `naturalday`, but append a year for dates more than ~five months away."""
-   361→def _quotient_and_remainder(
-   362→    value: float,
-   363→    divisor: float,
-   364→    unit: Unit,
-   365→    minimum_unit: Unit,
-   366→    suppress: Iterable[Unit],
-   367→    format: str,
-   368→) -> tuple[float, float]:
-   406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
-   435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
-   451→def precisedelta(
-   452→    value: dt.timedelta | float | None,
-   453→    minimum_unit: str = "seconds",
-   454→    suppress: Iterable[str] = (),
-   455→    format: str = "%0.2f",
-   456→) -> str:
-   457→    """Return a precise representation of a timedelta or number of seconds.
-   458→
-      →…
-   654→def _rounding_by_fmt(format: str, value: float) -> float | int:
+    41→    def __lt__ …
+    47→def _now …
+    53→def _abs_timedelta …
+    68→def _date_and_delta …
+    95→def naturaldelta …
+   249→def naturaltime …
+   300→def _convert_aware_datetime …
+   311→def naturalday …
+   343→def naturaldate …
+   361→def _quotient_and_remainder …
+   406→def _suitable_minimum_unit …
+   435→def _suppress_lower_units …
+   451→def precisedelta …
+   654→def _rounding_by_fmt …

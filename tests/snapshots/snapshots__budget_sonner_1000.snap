@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (990 words)
+budget: 1000 (1003 tokens)
 
 FUNDING.yml
      1→github …
@@ -15,49 +15,11 @@ README.md
     10→npm install sonner
     11→```
     12→
-    13→Add `<Toaster />` to your app, it will be the place where all your toasts will be rendered.
-    14→After that you can use `toast()` from anywhere in your app.
-    15→
-    16→```jsx
-    17→import { Toaster, toast } from 'sonner';
-    18→
-    19→// ...
-    20→
-    21→function App() {
       →…
     31→## Documentation
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
 
 package.json
-     2→  "name": "sonner",
-     3→  "version": "2.0.7",
-     4→  "description": "An opinionated toast component for React.",
-     5→  "exports": {
-    18→  },
-    19→  "main": "./dist/index.js",
-    20→  "types": "./dist/index.d.ts",
-    21→  "files": [
-    23→  ],
-    24→  "scripts": {
-    32→  },
-    33→  "keywords": [
-    39→  ],
-    40→  "author": "Emil Kowalski <e@emilkowal.ski>",
-    41→  "license": "MIT",
-    42→  "homepage": "https://sonner.emilkowal.ski/",
-    43→  "repository": {
-    46→  },
-    47→  "bugs": {
-    49→  },
-    50→  "devDependencies": {
-    60→  },
-    61→  "peerDependencies": {
-    64→  },
-    65→  "packageManager": "pnpm@9.15.9"
-    66→}
-
-playwright.config.ts
-     1→import { defineConfig, devices } from '@playwright/test';
 
 pnpm-workspace.yaml
      1→packages …
@@ -66,30 +28,12 @@ src/assets.tsx
      2→import React from 'react';
      3→import type { ToastTypes } from './types …
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
-     6→  switch (type) {
-     7→    case 'success':
-      →…
-    24→const bars = Array(12).fill(0);
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
-    27→  return (
-    28→    <div className={['sonner-loading-wrapper', className].filter(Boolean).join(' ')} data-visible={visible}>
-      →…
-    38→const SuccessIcon = (
-    48→const WarningIcon = (
-    58→const InfoIcon = (
-    68→const ErrorIcon = (
     78→export const CloseIcon = (
-    79→  <svg
-    80→    xmlns="http://www.w3.org/2000/svg"
-    81→    width="12"
-      →…
 
 src/hooks.tsx
      1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
-     4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
-     5→
-      →…
 
 src/index.tsx
      3→import React from 'react';
@@ -99,39 +43,12 @@ src/index.tsx
      8→import { toast, ToastState } from './state …
      9→import './styles.css …
     10→./types …
-    22→const VISIBLE_TOASTS_AMOUNT = 3;
-    25→const VIEWPORT_OFFSET = '24px';
-    28→const MOBILE_VIEWPORT_OFFSET = '16px';
-    31→const TOAST_LIFETIME = 4000;
-    34→const TOAST_WIDTH = 356;
-    37→const GAP = 14;
-    40→const SWIPE_THRESHOLD = 45;
-    43→const TIME_BEFORE_UNMOUNT = 200;
-    45→function cn(...classes: (string | undefined)[]) {
-    49→function getDefaultSwipeDirections(position: string): Array<SwipeDirection> {
-    64→const Toast = (props: ToastProps) => {
-   507→function getDocumentDirection(): ToasterProps['dir'] {
-   520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
-   552→function useSonner() {
-   593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
 
 src/state.ts
-     1→import type {
-     2→  ExternalToast,
-     3→  PromiseData,
-     4→  PromiseIExtendedResult,
-     5→  PromiseT,
-     6→  ToastT,
-     7→  ToastToDismiss,
-     8→  ToastTypes,
-     9→} from './types';
+     1→./types …
     11→import React from 'react';
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
-    18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
-    19→  toasts: Array<ToastT | ToastToDismiss>;
-    20→  dismissedToasts: Set<string | number>;
-    21→
     22→  constructor …
     29→  subscribe …
     38→  publish …
@@ -148,11 +65,11 @@ src/state.ts
    243→  custom …
    249→  getActiveToasts …
    254→export const ToastState …
-   257→const toastFunction = (message: titleT, data?: ExternalToast) => {
-   268→const isHttpResponse = (data: any): data is Response => {
+   257→const toastFunction …
+   268→const isHttpResponse …
    279→const basicToast = toastFunction;
-   281→const getHistory = () => ToastState.toasts;
-   282→const getToasts = () => ToastState.getActiveToasts();
+   281→const getHistory …
+   282→const getToasts …
    285→export const toast …
 
 src/types.ts
@@ -160,67 +77,26 @@ src/types.ts
      3→export type ToastTypes …
      5→export type PromiseT …
      7→export interface PromiseIExtendedResult extends ExternalToast {
-     8→  message: React.ReactNode;
-     9→}
     11→export type PromiseTExtendedResult …
     15→export type PromiseTResult …
     20→export type PromiseExternalToast …
     22→export type PromiseData …
     30→export interface ToastClassnames {
-    31→  toast?: string;
-    32→  title?: string;
-      →…
     48→export interface ToastIcons {
-    49→  success?: React.ReactNode;
-    50→  info?: React.ReactNode;
-      →…
     57→export interface Action {
-    58→  label: React.ReactNode;
-    59→  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-      →…
     63→export interface ToastT {
-    64→  id: number | string;
-    65→  toasterId?: string;
-      →…
     93→export function isAction …
     97→export type Position …
     98→export interface HeightT {
-    99→  height: number;
-   100→  toastId: number | string;
-      →…
    104→interface ToastOptions {
-   105→  className?: string;
-   106→  closeButton?: boolean;
-   107→  descriptionClassName?: string;
-   108→  style?: React.CSSProperties;
-   109→  cancelButtonStyle?: React.CSSProperties;
-   110→  actionButtonStyle?: React.CSSProperties;
-   111→  duration?: number;
-   112→  unstyled?: boolean;
-   113→  classNames?: ToastClassnames;
-   114→  closeButtonAriaLabel?: string;
-   115→  toasterId?: string;
-   116→}
    118→type Offset =
    119→  | {
    128→export interface ToasterProps {
-   129→  id?: string;
-   130→  invert?: boolean;
-      →…
    152→export type SwipeDirection …
    154→export interface ToastProps {
-   155→  toast: ToastT;
-   156→  toasts: ToastT[];
-      →…
    184→export enum SwipeStateTypes {
-   185→  SwipedOut = 'SwipedOut',
-   186→  SwipedBack = 'SwipedBack',
-      →…
    190→export type Theme …
    192→export interface ToastToDismiss {
-   193→  id: number | string;
-   194→  dismiss: boolean;
-      →…
    197→export type ExternalToast …
 
 test/README.md
@@ -228,101 +104,33 @@ test/README.md
     25→## Learn More …
     34→## Deploy on Vercel …
 
-test/next.config.js
-     2→const nextConfig = {};
-
-test/package.json
-
-test/src/app/action.tsx
-     4→export async function action() {
-
 test/src/app/layout.tsx
      1→export const metadata = {
-     6→export default function RootLayout({ children }: { children: React.ReactNode }) {
-
-test/src/app/page.tsx
-     7→const promise …
-     9→export default function Home({ searchParams }: any) {
-
-test/tests/basic.spec.ts
-
-test/tsconfig.json
 
 tsconfig.json
-     2→  "compilerOptions": {
-     8→  },
-     9→  "include": ["src"]
-    10→}
 
 turbo.json
-     2→  "$schema": "https://turbo.build/schema.json",
-     3→  "extends": ["//"],
-     4→  "pipeline": {
-    12→  }
-    13→}
 
 website/README.md
      3→## Getting Started …
     25→## Learn More …
     34→## Deploy on Vercel …
 
-website/next.config.js
-     2→const nextConfig = {
-
-website/package.json
-
-website/src/components/CodeBlock/index.tsx
-     7→import styles from './code-block.module.css';
-    48→export const CodeBlock …
-
 website/src/components/ExpandModes/index.tsx
-     2→import { CodeBlock } from '../CodeBlock';
      4→export const ExpandModes = ({
 
 website/src/components/Footer/index.tsx
-     3→import styles from './footer.module.css';
      5→export const Footer = () => {
 
-website/src/components/Head/index.tsx
-     3→const ogImage = 'https://sonner.emilkowal.ski/og.png';
-
 website/src/components/Hero/index.tsx
-     3→import styles from './hero.module.css';
      6→export const Hero = () => {
 
-website/src/components/How/How.tsx
-     3→export const How = () => {
-
 website/src/components/Installation/index.tsx
-     7→import styles from './installation.module.css';
-     9→const variants = {
     14→export const Installation = () => {
 
 website/src/components/Other/Other.tsx
      7→export const Other = ({
 
 website/src/components/Position/index.tsx
-     2→import { CodeBlock } from '../CodeBlock';
      7→export type Position = (typeof positions)[number];
      9→export const Position = ({
-
-website/src/components/Types/Types.tsx
-     3→import { CodeBlock } from '../CodeBlock';
-     7→export const Types = () => {
-
-website/src/components/Usage/index.tsx
-     1→import { CodeBlock } from '../CodeBlock';
-     3→export const Usage = () => {
-
-website/src/pages/_app.tsx
-     7→export default function Nextra({ Component, pageProps }: AppProps): ReactElement {
-
-website/src/pages/_meta.json
-
-website/src/pages/index.tsx
-    14→export default function Home() {
-
-website/theme.config.jsx
-     7→  useNextSeoProps() {
-
-website/tsconfig.json

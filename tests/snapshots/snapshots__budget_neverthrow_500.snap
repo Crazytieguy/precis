@@ -2,10 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (496 words)
-
-CHANGELOG.md
-     1→# neverthrow …
+budget: 500 (500 tokens)
 
 README.md
      1→# NeverThrow 🙅 …
@@ -15,16 +12,9 @@ README.md
     79→## Recommended: Use `eslint-plugin-neverthrow` …
    100→## Top-Level API …
    139→## API Documentation …
-   141→### Synchronous API (`Result`) …
-   863→### Asynchronous API (`ResultAsync`) …
-  1519→### Utilities …
-  1633→### Testing …
   1673→## A note on the Package Name …
-  1681→### License …
 
 package.json
-
-rollup.config.mjs
 
 src/_internals/error.ts
      1→import { Result } from '../result'
@@ -34,116 +24,37 @@ src/_internals/error.ts
      7→const defaultErrorConfig: ErrorConfig = {
     11→interface NeverThrowError<T, E> {
     12→  data:
-    13→    | {
-    14→        type: string
-    15→        value: T
-    16→      }
       →…
-    27→export const createNeverThrowError = <T, E>(
-    28→  message: string,
-    29→  result: Result<T, E>,
-    30→  config: ErrorConfig = defaultErrorConfig,
-    31→): NeverThrowError<T, E> => {
+    27→export const createNeverThrowError …
 
 src/_internals/utils.ts
      1→import { Result, ok, err } from '../result'
      2→import { ResultAsync } from '../result-async'
-     5→export type ExtractOkTypes …
-    10→export type ExtractOkAsyncTypes …
-    15→export type ExtractErrTypes …
-    20→export type ExtractErrAsyncTypes …
-    24→export type InferOkTypes …
-    25→export type InferErrTypes …
-    27→export type InferAsyncOkTypes …
-    28→export type InferAsyncErrTypes …
     30→/**
     31→ * Short circuits on the FIRST Err value that we find
     32→ */
     33→export const combineResultList = <T, E>(
     34→  resultList: readonly Result<T, E>[],
     35→): Result<readonly T[], E> => {
-    36→  let acc = ok([]) as Result<T[], E>
-    37→
-      →…
-    54→export const combineResultAsyncList = <T, E>(
+    54→export const combineResultAsyncList …
     61→/**
     62→ * Give a list of all the errors we find
     63→ */
     64→export const combineResultListWithAllErrors = <T, E>(
     65→  resultList: readonly Result<T, E>[],
     66→): Result<readonly T[], E[]> => {
-    67→  let acc = ok([]) as Result<T[], E[]>
-    68→
-      →…
-    82→export const combineResultAsyncListWithAllErrors = <T, E>(
+    82→export const combineResultAsyncListWithAllErrors …
 
 src/result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
-   210→  /**
-      →…
-   222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
 
 src/result.ts
     14→export namespace Result {
     15→  /**
    134→interface IResult<T, E> {
-   135→  /**
-      →…
-   140→  isOk(): this is Ok<T, E>
-   142→  /**
-      →…
-   147→  isErr(): this is Err<T, E>
-   149→  /**
-      →…
-   157→  map<A>(f: (t: T) => A): Result<A, E>
-   159→  /**
-      →…
-   168→  mapErr<U>(f: (e: E) => U): Result<T, U>
-   185→  /**
-      →…
-   195→  andTee(f: (t: T) => unknown): Result<T, E>
-   197→  /**
-      →…
-   207→  orTee(f: (t: E) => unknown): Result<T, E>
-   235→  /**
-      →…
-   244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
-   246→  /**
-      →…
-   253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
-   255→  /**
-      →…
-   260→  unwrapOr<A>(v: A): T | A
-   262→  /**
-      →…
-   276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
-   278→  /**
-      →…
-   290→  safeUnwrap(): Generator<Err<never, E>, T>
-   292→  /**
-      →…
-   299→  _unsafeUnwrap(config?: ErrorConfig): T
-   301→  /**
-      →…
-   309→  _unsafeUnwrapErr(config?: ErrorConfig): E
    312→export class Ok<T, E> implements IResult<T, E> {
-   405→  _unsafeUnwrap(_?: ErrorConfig): T {
-   409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
    419→export class Err<T, E> implements IResult<T, E> {
-   505→  _unsafeUnwrap(config?: ErrorConfig): T {
-   509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
-
-tests/tsconfig.tests.json
-     2→  "compilerOptions": {
-    22→  },
-    23→  "include": [
-    26→  ]
-    27→}
-
-tests/typecheck-tests.ts
-    19→type CreateTuple …
-  2607→const input …
 
 tsconfig.json

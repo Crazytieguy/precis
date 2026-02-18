@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1963 words)
+budget: 2000 (2020 tokens)
 
 README.md
      1→# Format
@@ -30,24 +30,14 @@ configuration/environment-variables.md
      1→# Environment variables
      3→All configuration values can be overridden from the command line by setting the
      4→corresponding environment variable. Because many operating systems restrict
-     5→environment variables to be alphanumeric characters or `_`, the configuration
-     6→key needs to be formatted slightly differently to the normal `foo.bar.baz` form.
-     7→
-     8→Variables starting with `MDBOOK_` are used for configuration. The key is created
       →…
 
 configuration/general.md
      1→# General configuration
      3→You can configure the parameters for your book in the ***book.toml*** file.
      4→
-     5→Here is an example of what a ***book.toml*** file might look like:
-     6→
-     7→```toml
-     8→[book]
       →…
-    31→## Supported configuration options
-    33→It is important to note that **any** relative path specified in the
-      →…
+    31→## Supported configuration options …
     37→### General metadata …
     64→### Rust options …
     85→### Build options …
@@ -56,42 +46,22 @@ configuration/preprocessors.md
      1→# Configuring Preprocessors
      3→Preprocessors are extensions that can modify the raw Markdown source before it gets sent to the renderer.
      4→
-     5→The following preprocessors are built-in and included by default:
-     6→
-     7→- `links`: Expands the `{{ #playground }}`, `{{ #include }}`, and `{{ #rustdoc_include }}` handlebars
-     8→  helpers in a chapter to include the contents of a file.
       →…
-    26→## Custom preprocessor configuration
-    28→Preprocessors can be added by including a `preprocessor` table in `book.toml` with the name of the preprocessor.
-      →…
-    45→## Locking a preprocessor dependency to a renderer
-    47→You can explicitly specify that a preprocessor should run for a renderer by
-      →…
-    55→## Provide your own command
-    57→By default when you add a `[preprocessor.foo]` table to your `book.toml` file,
-      →…
+    26→## Custom preprocessor configuration …
+    45→## Locking a preprocessor dependency to a renderer …
+    55→## Provide your own command …
     67→### Optional preprocessors …
-    79→## Require a certain order
-    81→The order in which preprocessors are run can be controlled with the `before` and `after` fields.
-      →…
+    79→## Require a certain order …
 
 configuration/renderers.md
      1→# Configuring Renderers
      3→Renderers (also called "backends") are responsible for creating the output of the book.
      4→
-     5→The following backends are built-in:
-     6→
-     7→* [`html`](#html-renderer-options) --- This renders the book to HTML.
-     8→  This is enabled by default if no other `[output]` tables are defined in `book.toml`.
       →…
-    20→## Output tables
-    22→Backends can be added by including a `output` table in `book.toml` with the name of the backend.
-      →…
+    20→## Output tables …
     59→### Custom backend commands …
     71→### Optional backends …
-    84→## HTML renderer options
-    86→The HTML renderer has a variety of options detailed below.
-      →…
+    84→## HTML renderer options …
    176→### `[output.html.print]` …
    191→### `[output.html.fold]` …
    206→### `[output.html.playground]` …
@@ -102,34 +72,22 @@ configuration/renderers.md
    289→
    290→```toml
    291→[output.html.search.chapter]
-   292→# Disables search indexing for all chapters in the `appendix` directory.
-   293→"appendix" = { enable = false }
-   294→# Enables search indexing for just this one appendix chapter.
-   295→"appendix/glossary.md" = { enable = true }
-   296→```
-   297→
       →…
    300→### `[output.html.redirect]` …
-   325→## Markdown renderer
-   327→The Markdown renderer will run preprocessors and then output the resulting
-      →…
+   325→## Markdown renderer …
 
 example.rs
      1→fn main() {
      2→    println!("Hello World!");
      3→#
-     4→#     // You can even hide lines! :D
-     5→#     println!("I am hidden! Expand the code snippet to see me");
-     6→}
+      →…
 
 markdown.md
      1→# Markdown
      3→mdBook's [parser](https://github.com/raphlinus/pulldown-cmark) adheres to the [CommonMark](https://commonmark.org/) specification with some extensions described below.
      4→You can take a quick [tutorial](https://commonmark.org/help/tutorial/),
      5→or [try out](https://spec.commonmark.org/dingus/) CommonMark in real time. A complete Markdown overview is out of scope for 
-     6→this documentation, but below is a high level overview of some of the basics. For a more in-depth experience, check out the
-     7→[Markdown Guide](https://www.markdownguide.org).
-     8→
+      →…
      9→## Text and paragraphs …
     25→## Headings …
     39→### A heading …
@@ -154,24 +112,7 @@ mathjax.md
      3→mdBook has optional support for math equations through
      4→[MathJax](https://www.mathjax.org/).
      5→
-     6→To enable MathJax, you need to add the `mathjax-support` key to your `book.toml`
-     7→under the `output.html` section.
-     8→
-     9→```toml
-    10→[output.html]
-    11→mathjax-support = true
-    12→```
-    13→
-    14→>**Note:** The usual delimiters MathJax uses are not yet supported. You can't
-    15→currently use `$$ ... $$` as delimiters and the `\[ ... \]` delimiters need an
-    16→extra backslash to work. Hopefully this limitation will be lifted soon.
-    17→
-    18→>**Note:** When you use double backslashes in MathJax blocks (for example in
-    19→> commands such as `\begin{cases} \frac 1 2 \\ \frac 3 4 \end{cases}`) you need
-    20→> to add _two extra_ backslashes (e.g., `\begin{cases} \frac 1 2 \\\\ \frac 3 4
-    21→> \end{cases}`).
-    22→
-    23→
+      →…
     24→### Inline equations …
     32→### Block equations …
 
@@ -195,12 +136,7 @@ summary.md
      3→The summary file is used by mdBook to know what chapters to include, in what
      4→order they should appear, what their hierarchy is and where the source files
      5→are. Without this file, there is no book.
-     6→
-     7→This markdown file must be named `SUMMARY.md`. Its formatting
-     8→is very strict and must follow the structure outlined below to allow for easy
-     9→parsing. Any element not specified below, be it formatting or textual, is likely
-    10→to be ignored at best, or may cause an error when attempting to build the book.
-    11→
+      →…
     12→### Structure …
     93→### Example …
 
@@ -219,27 +155,6 @@ theme/README.md
     13→
     14→- **_index.hbs_** is the handlebars template.
     15→- **_head.hbs_** is appended to the HTML `<head>` section.
-    16→- **_header.hbs_** content is appended on top of every book page.
-    17→- **_css/_** contains the CSS files for styling the book.
-    18→    - **_css/chrome.css_** is for UI elements.
-    19→    - **_css/general.css_** is the base styles.
-    20→    - **_css/print.css_** is the style for printer output.
-    21→    - **_css/variables.css_** contains variables used in other CSS files.
-    22→- **_book.js_** is mostly used to add client side functionality, like hiding /
-    23→  un-hiding the sidebar, changing the theme, ...
-    24→- **_highlight.js_** is the JavaScript that is used to highlight code snippets,
-    25→  you should not need to modify this.
-    26→- **_highlight.css_** is the theme used for the code highlighting.
-    27→- **_favicon.svg_** and **_favicon.png_** the favicon that will be used. The SVG
-    28→  version is used by [newer browsers].
-    29→- **fonts/fonts.css** contains the definition of which fonts to load.
-    30→  Custom fonts can be included in the `fonts` directory.
-    31→
-    32→Generally, when you want to tweak the theme, you don't need to override all the
-    33→files. If you only need changes in the stylesheet, there is no point in
-    34→overriding all the other files. Because custom files take precedence over
-    35→built-in ones, they will not get updated with new fixes / features.
-    36→
       →…
 
 theme/editor.md
@@ -253,38 +168,8 @@ theme/editor.md
      9→editable = true
     10→```
     11→
-    12→After enabling editable code blocks, the `editable` attribute must be added to a
-    13→code block to make it editable:
-    14→
-    15→~~~markdown
-    16→```rust,editable
-    17→fn main() {
-    18→    let number = 5;
-    19→    print!("{}", number);
-    20→}
-    21→```
-    22→~~~
-    23→
-    24→The above will result in this editable playground:
-    25→
-    26→```rust,editable
-    27→fn main() {
-    28→    let number = 5;
-    29→    print!("{}", number);
-    30→}
-    31→```
-    32→
-    33→Note the new `Undo Changes` button in the editable playgrounds.
-    34→
-    35→## Customizing the editor
-    37→By default, the editor is the [Ace](https://ace.c9.io/) editor, but, if desired,
-    38→the functionality may be overridden by providing a different folder:
-    39→
-    40→```toml
-    41→[output.html.playground]
-    42→editable = true
-    43→editor = "/path/to/editor"
       →…
+    35→## Customizing the editor …
 
 theme/index-hbs.md
      1→# index.hbs
@@ -294,65 +179,19 @@ theme/index-hbs.md
      6→If you want to change the layout or style of your book, chances are that you
      7→will have to modify this template a little bit. Here is what you need to know.
      8→
-     9→## Data
-    11→A lot of data is exposed to the handlebars template with the "context". In the
-    12→handlebars template you can access this information by using
-    13→
-    14→```handlebars
-    15→{{name_of_property}}
-    16→```
-    17→
-      →…
-    41→## Handlebars helpers
-    43→In addition to the properties you can access, there are some handlebars helpers
-    44→at your disposal.
-    45→
+     9→## Data …
+    41→## Handlebars helpers …
     46→### toc
     48→The toc helper is used like this
     49→
-    50→```handlebars
-    51→{{#toc}}{{/toc}}
-    52→```
-    53→
-    54→and outputs something that looks like this, depending on the structure of your
-    55→book
-    56→
-    57→```html
-    58→<ul class="chapter">
-    59→    <li><a href="link/to/file.html">Some chapter</a></li>
-    60→    <li>
-    61→        <ul class="section">
-    62→            <li><a href="link/to/other_file.html">Some other Chapter</a></li>
-    63→        </ul>
-    64→    </li>
       →…
     80→### resource
     82→The path to a static file.
     83→It implicitly includes `path_to_root`,
-    84→and accounts for files that are renamed with a hash in their filename.
-    85→
-    86→```handlebars
-    87→<link rel="stylesheet" href="{{ resource "css/chrome.css" }}">
-    88→```
-    89→
+      →…
     90→### fa
     92→mdBook includes a copy of [Font Awesome Free's](https://fontawesome.com)
     93→MIT-licensed SVG files. It accepts three positional arguments:
-    94→
-    95→1. Type: one of "solid", "regular", and "brands" (light and duotone are not
-    96→   currently supported)
-    97→2. Icon: anything chosen from the
-    98→   [free icon set](https://fontawesome.com/v6/search)
-    99→3. ID (optional): if included, an HTML ID attribute will be added to the
-   100→   icon's wrapping `<span>` tag
-   101→
-   102→For example, this handlebars syntax will become this HTML:
-   103→
-   104→```handlebars
-   105→{{fa "solid" "print" "print-button"}}
-   106→```
-   107→
-   108→```html
       →…
 
 theme/syntax-highlighting.md
@@ -366,35 +205,7 @@ theme/syntax-highlighting.md
      9→~~~markdown
     10→```rust
     11→fn main() {
-    12→    // Some code
-    13→}
-    14→```
-    15→~~~
-    16→
-    17→## Supported languages
-    19→These languages are supported by default, but you can add more by supplying
-    20→your own `highlight.js` file:
-    21→
-    22→- apache
-    23→- armasm
-    24→- bash
-    25→- c
       →…
-    68→## Custom theme
-    69→Like the rest of the theme, the files used for syntax highlighting can be
-    70→overridden with your own.
-    71→
-    72→- ***highlight.js*** normally you shouldn't have to overwrite this file, unless
-    73→  you want to use a more recent version.
-    74→- ***highlight.css*** theme used by highlight.js for syntax highlighting.
-    75→
-      →…
-    82→## Improve default theme
-    84→If you think the default theme doesn't look quite right for a specific language,
-    85→or could be improved, feel free to [submit a new
-    86→issue](https://github.com/rust-lang/mdBook/issues) explaining what you
-    87→have in mind and I will take a look at it.
-    88→
-    89→You could also create a pull-request with the proposed improvements.
-    90→
-      →…
+    17→## Supported languages …
+    68→## Custom theme …
+    82→## Improve default theme …

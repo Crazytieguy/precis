@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (983 words)
+budget: 1000 (997 tokens)
 
 README.md
      9→# Mitt
@@ -10,167 +10,48 @@ README.md
     12→
     13→-   **Microscopic:** weighs less than 200 bytes gzipped
     14→-   **Useful:** a wildcard `"*"` event type listens to all events
-    15→-   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
-    16→-   **Functional:** methods don't rely on `this`
-    17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
-    18→
-    19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
-    20→
-    21→## Table of Contents
-    23→-   [Install](#install)
-    24→-   [Usage](#usage)
-    25→-   [Examples & Demos](#examples--demos)
-    26→-   [API](#api)
-    27→-   [Contribute](#contribute)
-    28→-   [License](#license)
-    29→
-    30→## Install
-    32→This project uses [node](http://nodejs.org) and [npm](https://npmjs.com). Go check them out if you don't have them locally installed.
-    33→
-    34→```sh
-    35→$ npm install --save mitt
-    36→```
-    37→
-    38→Then with a module bundler like [rollup](http://rollupjs.org/) or [webpack](https://webpack.js.org/), use as you would anything else:
-    39→
-    40→```javascript
-    41→// using ES6 modules
-    42→import mitt from 'mitt'
-    43→
-    44→// using CommonJS modules
-    45→var mitt = require('mitt')
-    46→```
-    47→
-    48→The [UMD](https://github.com/umdjs/umd) build is also available on [unpkg](https://unpkg.com):
-    49→
-    50→```html
-    51→<script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
-    52→```
-    53→
-    54→You can find the library on `window.mitt`.
-    55→
-    56→## Usage
-    58→```js
-    59→import mitt from 'mitt'
-    60→
-    61→const emitter = mitt()
-    62→
-    63→// listen to an event
-    64→emitter.on('foo', e => console.log('foo', e) )
-    65→
-    66→// listen to all events
-    67→emitter.on('*', (type, e) => console.log(type, e) )
-    68→
-    69→// fire an event
-    70→emitter.emit('foo', { a: 'b' })
-    71→
-    72→// clearing all events
-    73→emitter.all.clear()
-    74→
-    75→// working with handler references:
-    76→function onFoo() {}
-    77→emitter.on('foo', onFoo)   // listen
-    78→emitter.off('foo', onFoo)  // unlisten
-    79→```
-    80→
-    81→### Typescript
-    83→Set `"strict": true` in your tsconfig.json to get improved type inference for `mitt` instance methods.
-    84→
-    85→```ts
-    86→import mitt from 'mitt';
       →…
-   113→## Examples & Demos
-   123→## API
-   127→#### Table of Contents
-   129→-   [mitt](#mitt)
-   130→-   [all](#all)
-   131→-   [on](#on)
-   132→    -   [Parameters](#parameters)
-   133→-   [off](#off)
-   134→    -   [Parameters](#parameters-1)
-   135→-   [emit](#emit)
-   136→    -   [Parameters](#parameters-2)
-   137→
-   138→### mitt
-   140→Mitt: Tiny (~200b) functional event emitter / pubsub.
-   141→
-   142→Returns **Mitt** 
-   143→
-   144→### all
-   146→A Map of event names to registered handler functions.
-   147→
-   148→### on
-   150→Register an event handler for the given type.
-   151→
-   152→#### Parameters
-   154→-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to listen for, or `'*'` for all events
-   155→-   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Function to call in response to given event
-   156→
-   157→### off
-   159→Remove an event handler for the given type.
-   160→If `handler` is omitted, all handlers of the given type are removed.
-   161→
-   162→#### Parameters
-   164→-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to unregister `handler` from, or `'*'`
-   165→-   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Handler function to remove
-   166→
-   167→### emit
-   169→Invoke all handlers for the given type.
-   170→If present, `'*'` handlers are invoked after type-matched handlers.
-   171→
-   172→Note: Manually firing '\*' handlers is not supported.
-      →…
-   174→#### Parameters
-   176→-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** The event type to invoke
-   177→-   `evt` **Any?** Any value (object is recommended and powerful), passed to each handler
-   178→
-   179→## Contribute
-   181→First off, thanks for taking the time to contribute!
-   182→Now, take a moment to be sure your contributions make sense to everyone else.
-   183→
-   184→### Reporting Issues
-   186→Found a problem? Want a new feature? First of all see if your issue or idea has [already been reported](../../issues).
-   187→If don't, just open a [new clear and descriptive issue](../../issues/new).
-   188→
-   189→### Submitting pull requests
-   191→Pull requests are the greatest contributions, so be sure they are focused in scope, and do avoid unrelated commits.
-   192→
-   193→-   Fork it!
-   194→-   Clone your fork: `git clone https://github.com/<your-username>/mitt`
-      →…
-   203→## License
-   205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
+    21→## Table of Contents …
+    30→## Install …
+    56→## Usage …
+    81→### Typescript …
+   113→## Examples & Demos …
+   123→## API …
+   127→#### Table of Contents …
+   138→### mitt …
+   144→### all …
+   148→### on …
+   152→#### Parameters …
+   157→### off …
+   162→#### Parameters …
+   167→### emit …
+   174→#### Parameters …
+   179→## Contribute …
+   184→### Reporting Issues …
+   189→### Submitting pull requests …
+   203→## License …
 
 package.json
-     2→  "name": "mitt",
-     3→  "version": "3.0.1",
-     4→  "description": "Tiny 200b functional Event Emitter / pubsub.",
-     5→  "module": "dist/mitt.mjs",
-     6→  "main": "dist/mitt.js",
-     7→  "jsnext:main": "dist/mitt.mjs",
-     8→  "umd:main": "dist/mitt.umd.js",
-     9→  "source": "src/index.ts",
-    10→  "typings": "index.d.ts",
-    11→  "exports": {
-    17→  },
-    18→  "scripts": {
-    29→  },
-    30→  "repository": "developit/mitt",
-    31→  "keywords": [
-    36→  ],
-    37→  "homepage": "https://github.com/developit/mitt",
-    38→  "authors": [
-    40→  ],
-    41→  "license": "MIT",
-    42→  "files": [
-    45→  ],
-    46→  "mocha": {
-    57→  },
-    58→  "prettier": {
-    61→  },
-    62→  "devDependencies": {
-    84→  }
-    85→}
+     2→  "name …
+     3→  "version …
+     4→  "description …
+     5→  "module …
+     6→  "main …
+     7→  "jsnext:main …
+     8→  "umd:main …
+     9→  "source …
+    10→  "typings …
+    11→  "exports …
+    18→  "scripts …
+    30→  "repository …
+    31→  "keywords …
+    37→  "homepage …
+    38→  "authors …
+    41→  "license …
+    42→  "files …
+    46→  "mocha …
+    58→  "prettier …
+    62→  "devDependencies …
 
 src/index.ts
      1→export type EventType = string | symbol;
@@ -216,21 +97,6 @@ src/index.ts
     58→		all,
     59→
     60→		/**
-    61→		 * Register an event handler for the given type.
-    62→		 * @param {string|symbol} type Type of event to listen for, or `'*'` for all events
-    63→		 * @param {Function} handler Function to call in response to given event
-    64→		 * @memberOf mitt
-    65→		 */
-    66→		on<Key extends keyof Events>(type: Key, handler: GenericEventHandler) {
-    67→			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
-    68→			if (handlers) {
-    69→				handlers.push(handler);
-    70→			} else {
-    71→				all!.set(type, [handler] as EventHandlerList<Events[keyof Events]>);
-    72→			}
-    73→		},
-    74→
-    75→		/**
       →…
 
 test/index_test.ts
@@ -240,14 +106,8 @@ test/test-types-compilation.ts
      6→	name: string;
      7→}
      9→const emitter = mitt<{
-    15→const barHandler …
-    16→const fooHandler …
-    17→const wildcardHandler …
 
 tsconfig.json
-     2→	"compileOnSave": false,
-     3→	"compilerOptions": {
-    10→	},
-    11→	"include": [
-    14→	]
-    15→}
+     2→	"compileOnSave …
+     3→	"compilerOptions …
+    11→	"include …

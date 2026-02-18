@@ -2,45 +2,21 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3967 words)
+budget: 4000 (4012 tokens)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
-     2→  const userAgent = navigator.userAgent;
-     3→  return (
-     4→    typeof window !== 'undefined' &&
-     5→    ((/Firefox/.test(userAgent) && /Mobile/.test(userAgent)) || // Android Firefox
-     6→      /FxiOS/.test(userAgent)) // iOS Firefox
-     7→  );
-     8→}
     10→export function isMac(): boolean | undefined {
-    11→  return testPlatform(/^Mac/);
-    12→}
     14→export function isIPhone(): boolean | undefined {
-    15→  return testPlatform(/^iPhone/);
-    16→}
     18→export function isSafari(): boolean | undefined {
-    19→  return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    20→}
     22→export function isIPad(): boolean | undefined {
-    23→  return (
-    24→    testPlatform(/^iPad/) ||
-    25→    // iPadOS 13 lies and says it's a Mac, but we can distinguish by detecting touch support.
-    26→    (isMac() && navigator.maxTouchPoints > 1)
-    27→  );
-    28→}
     30→export function isIOS(): boolean | undefined {
-    31→  return isIPhone() || isIPad();
-    32→}
     34→export function testPlatform(re: RegExp): boolean | undefined {
-    35→  return typeof window !== 'undefined' && window.navigator != null ? re.test(window.navigator.platform) : undefined;
-    36→}
 
 constants.ts
      1→export const TRANSITIONS = {
      2→  DURATION: 0.5,
-     3→  EASE: [0.32, 0.72, 0, 1],
-     4→};
+      →…
      6→export const VELOCITY_THRESHOLD = 0.4;
      8→export const CLOSE_THRESHOLD = 0.25;
     10→export const SCROLL_LOCK_TIMEOUT = 100;
@@ -58,70 +34,11 @@ context.ts
      7→  onPress: (event: React.PointerEvent<HTMLDivElement>) => void;
      8→  onRelease: (event: React.PointerEvent<HTMLDivElement> | null) => void;
      9→  onDrag: (event: React.PointerEvent<HTMLDivElement>) => void;
-    10→  onNestedDrag: (event: React.PointerEvent<HTMLDivElement>, percentageDragged: number) => void;
-    11→  onNestedOpenChange: (o: boolean) => void;
-    12→  onNestedRelease: (event: React.PointerEvent<HTMLDivElement>, open: boolean) => void;
-    13→  dismissible: boolean;
-    14→  isOpen: boolean;
-    15→  isDragging: boolean;
-    16→  keyboardIsOpen: React.MutableRefObject<boolean>;
-    17→  snapPointsOffset: number[] | null;
-    18→  snapPoints?: (number | string)[] | null;
-    19→  activeSnapPointIndex?: number | null;
-    20→  modal: boolean;
-    21→  shouldFade: boolean;
-    22→  activeSnapPoint?: number | string | null;
-    23→  setActiveSnapPoint: (o: number | string | null) => void;
-    24→  closeDrawer: () => void;
-    25→  openProp?: boolean;
-    26→  onOpenChange?: (o: boolean) => void;
-    27→  direction: DrawerDirection;
-    28→  shouldScaleBackground: boolean;
-    29→  setBackgroundColorOnScale: boolean;
-    30→  noBodyStyles: boolean;
-    31→  handleOnly?: boolean;
-    32→  container?: HTMLElement | null;
-    33→  autoFocus?: boolean;
-    34→  shouldAnimate?: React.RefObject<boolean>;
-    35→}
+      →…
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     38→  drawerRef: { current: null },
-    39→  overlayRef: { current: null },
-    40→  onPress: () => {},
-    41→  onRelease: () => {},
-    42→  onDrag: () => {},
-    43→  onNestedDrag: () => {},
-    44→  onNestedOpenChange: () => {},
-    45→  onNestedRelease: () => {},
-    46→  openProp: undefined,
-    47→  dismissible: false,
-    48→  isOpen: false,
-    49→  isDragging: false,
-    50→  keyboardIsOpen: { current: false },
-    51→  snapPointsOffset: null,
-    52→  snapPoints: null,
-    53→  handleOnly: false,
-    54→  modal: false,
-    55→  shouldFade: false,
-    56→  activeSnapPoint: null,
-    57→  onOpenChange: () => {},
-    58→  setActiveSnapPoint: () => {},
-    59→  closeDrawer: () => {},
-    60→  direction: 'bottom',
-    61→  shouldAnimate: { current: true },
-    62→  shouldScaleBackground: false,
-    63→  setBackgroundColorOnScale: true,
-    64→  noBodyStyles: false,
-    65→  container: null,
-    66→  autoFocus: false,
-    67→});
+      →…
     69→export const useDrawerContext = () => {
-    70→  const context = React.useContext(DrawerContext);
-    71→  if (!context) {
-    72→    throw new Error('useDrawerContext must be used within a Drawer.Root');
-    73→  }
-    74→  return context;
-    75→};
 
 helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
@@ -130,94 +47,12 @@ helpers.ts
      5→}
      7→const cache = new WeakMap();
      9→export function isInView(el: HTMLElement): boolean {
-    10→  const rect = el.getBoundingClientRect();
-    11→
-    12→  if (!window.visualViewport) return false;
-    13→
-    14→  return (
-    15→    rect.top >= 0 &&
-    16→    rect.left >= 0 &&
-    17→    // Need + 40 for safari detection
-    18→    rect.bottom <= window.visualViewport.height - 40 &&
-    19→    rect.right <= window.visualViewport.width
-    20→  );
-    21→}
     23→export function set(el: Element | HTMLElement | null | undefined, styles: Style, ignoreCache = false) {
-    24→  if (!el || !(el instanceof HTMLElement)) return;
-    25→  let originalStyles: Style = {};
-    26→
-    27→  Object.entries(styles).forEach(([key, value]: [string, string]) => {
-    28→    if (key.startsWith('--')) {
-    29→      el.style.setProperty(key, value);
-    30→      return;
-    31→    }
-    32→
-    33→    originalStyles[key] = (el.style as any)[key];
-    34→    (el.style as any)[key] = value;
-    35→  });
-    36→
-    37→  if (ignoreCache) return;
-    38→
-    39→  cache.set(el, originalStyles);
-    40→}
     42→export function reset(el: Element | HTMLElement | null, prop?: string) {
-    43→  if (!el || !(el instanceof HTMLElement)) return;
-    44→  let originalStyles = cache.get(el);
-    45→
-    46→  if (!originalStyles) {
-    47→    return;
-    48→  }
-    49→
-    50→  if (prop) {
-    51→    (el.style as any)[prop] = originalStyles[prop];
-    52→  } else {
-    53→    Object.entries(originalStyles).forEach(([key, value]) => {
-    54→      (el.style as any)[key] = value;
-    55→    });
-    56→  }
-    57→}
     59→export const isVertical = (direction: DrawerDirection) => {
-    60→  switch (direction) {
-    61→    case 'top':
-    62→    case 'bottom':
-    63→      return true;
-    64→    case 'left':
-    65→    case 'right':
-    66→      return false;
-    67→    default:
-    68→      return direction satisfies never;
-    69→  }
-    70→};
     72→export function getTranslate(element: HTMLElement, direction: DrawerDirection): number | null {
-    73→  if (!element) {
-    74→    return null;
-    75→  }
-    76→  const style = window.getComputedStyle(element);
-    77→  const transform =
-    78→    // @ts-ignore
-    79→    style.transform || style.webkitTransform || style.mozTransform;
-    80→  let mat = transform.match(/^matrix3d\((.+)\)$/);
-    81→  if (mat) {
-    82→    // https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix3d
-    83→    return parseFloat(mat[1].split(', ')[isVertical(direction) ? 13 : 12]);
-    84→  }
-    85→  // https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix
-    86→  mat = transform.match(/^matrix\((.+)\)$/);
-    87→  return mat ? parseFloat(mat[1].split(', ')[isVertical(direction) ? 5 : 4]) : null;
-    88→}
     90→export function dampenValue(v: number) {
-    91→  return 8 * (Math.log(v + 1) - 2);
-    92→}
     94→export function assignStyle(element: HTMLElement | null | undefined, style: Partial<CSSStyleDeclaration>) {
-    95→  if (!element) return () => {};
-    96→
-    97→  const prevStyle = element.style.cssText;
-    98→  Object.assign(element.style, style);
-    99→
-   100→  return () => {
-   101→    element.style.cssText = prevStyle;
-   102→  };
-   103→}
    105→/**
    106→ * Receives functions as arguments and returns a new function that calls all.
    107→ */
@@ -278,12 +113,6 @@ index.tsx
     47→  fadeFromIndex?: never;
     48→}
     50→export type DialogProps = {
-    51→  activeSnapPoint?: number | string | null;
-    52→  setActiveSnapPoint?: (snapPoint: number | string | null) => void;
-    53→  children?: React.ReactNode;
-    54→  open?: boolean;
-    55→  /**
-      →…
    139→export function Root({
    140→  open: openProp,
    141→  onOpenChange,
@@ -318,168 +147,26 @@ index.tsx
    170→  const [isOpen = false, setIsOpen] = useControllableState({
    171→    defaultProp: defaultOpen,
    172→    prop: openProp,
-   173→    onChange: (o: boolean) => {
-   174→      onOpenChange?.(o);
-   175→
-   176→      if (!o && !nested) {
-   177→        restorePositionSetting();
-   178→      }
-   179→
-   180→      setTimeout(() => {
-   181→        onAnimationEnd?.(o);
-   182→      }, TRANSITIONS.DURATION * 1000);
-   183→
-   184→      if (o && !modal) {
-   185→        if (typeof window !== 'undefined') {
-   186→          window.requestAnimationFrame(() => {
-   187→            document.body.style.pointerEvents = 'auto';
-   188→          });
-   189→        }
-   190→      }
-   191→
-   192→      if (!o) {
-   193→        // This will be removed when the exit animation ends (`500ms`)
-   194→        document.body.style.pointerEvents = 'auto';
-   195→      }
-   196→    },
-   197→  });
-   198→  const [hasBeenOpened, setHasBeenOpened] = React.useState<boolean>(false);
-   199→  const [isDragging, setIsDragging] = React.useState<boolean>(false);
-   200→  const [justReleased, setJustReleased] = React.useState<boolean>(false);
-   201→  const overlayRef = React.useRef<HTMLDivElement>(null);
-   202→  const openTime = React.useRef<Date | null>(null);
-   203→  const dragStartTime = React.useRef<Date | null>(null);
-   204→  const dragEndTime = React.useRef<Date | null>(null);
-   205→  const lastTimeDragPrevented = React.useRef<Date | null>(null);
-   206→  const isAllowedToDrag = React.useRef<boolean>(false);
-   207→  const nestedOpenChangeTimer = React.useRef<NodeJS.Timeout | null>(null);
-   208→  const pointerStart = React.useRef(0);
-   209→  const keyboardIsOpen = React.useRef(false);
-   210→  const shouldAnimate = React.useRef(!defaultOpen);
-   211→  const previousDiffFromInitial = React.useRef(0);
-   212→  const drawerRef = React.useRef<HTMLDivElement>(null);
-   213→  const drawerHeightRef = React.useRef(drawerRef.current?.getBoundingClientRect().height || 0);
-   214→  const drawerWidthRef = React.useRef(drawerRef.current?.getBoundingClientRect().width || 0);
-   215→  const initialDrawerHeight = React.useRef(0);
-   216→
-   217→  const onSnapPointChange = React.useCallback((activeSnapPointIndex: number) => {
-   218→    // Change openTime ref when we reach the last snap point to prevent dragging for 500ms incase it's scrollable.
-   219→    if (snapPoints && activeSnapPointIndex === snapPointsOffset.length - 1) openTime.current = new Date();
-   220→  }, []);
-   221→
-   222→  const {
-   223→    activeSnapPoint,
-   224→    activeSnapPointIndex,
-   225→    setActiveSnapPoint,
-   226→    onRelease: onReleaseSnapPoints,
-   227→    snapPointsOffset,
-   228→    onDrag: onDragSnapPoints,
-   229→    shouldFade,
-   230→    getPercentageDragged: getSnapPointsPercentageDragged,
-   231→  } = useSnapPoints({
-   232→    snapPoints,
-   233→    activeSnapPointProp,
-   234→    setActiveSnapPointProp,
-   235→    drawerRef,
-   236→    fadeFromIndex,
-   237→    overlayRef,
-   238→    onSnapPointChange,
-   239→    direction,
-   240→    container,
-   241→    snapToSequentialPoint,
-   242→  });
-   243→
-   244→  usePreventScroll({
-   245→    isDisabled:
-   246→      !isOpen || isDragging || !modal || justReleased || !hasBeenOpened || !repositionInputs || !disablePreventScroll,
-   247→  });
-   248→
-   249→  const { restorePositionSetting } = usePositionFixed({
-   250→    isOpen,
-   251→    modal,
-   252→    nested: nested ?? false,
-   253→    hasBeenOpened,
-   254→    preventScrollRestoration,
-   255→    noBodyStyles,
-   256→  });
-   257→
-   258→  function getScale() {
-   259→    return (window.innerWidth - WINDOW_TOP_OFFSET) / window.innerWidth;
-   260→  }
-   261→
-   262→  function onPress(event: React.PointerEvent<HTMLDivElement>) {
-   263→    if (!dismissible && !snapPoints) return;
       →…
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
-   804→  function ({ ...rest }, ref) {
-   805→    const { overlayRef, snapPoints, onRelease, shouldFade, isOpen, modal, shouldAnimate } = useDrawerContext();
-   806→    const composedRef = useComposedRefs(ref, overlayRef);
-   807→    const hasSnapPoints = snapPoints && snapPoints.length > 0;
-   808→    const onMouseUp = React.useCallback((event: React.PointerEvent<HTMLDivElement>) => onRelease(event), [onRelease]);
-      →…
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
    833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
-   834→  { onPointerDownOutside, style, onOpenAutoFocus, ...rest },
-   835→  ref,
-   836→) {
-   837→  const {
-   838→    drawerRef,
-      →…
    989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
-   990→  preventCycle?: boolean;
-   991→};
    993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
    994→const DOUBLE_TAP_TIMEOUT = 120;
    996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
-   997→  { preventCycle = false, children, ...rest },
-   998→  ref,
-   999→) {
-  1000→  const {
-  1001→    closeDrawer,
-      →…
   1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
   1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
   1100→
   1101→  if (!onNestedDrag) {
-  1102→    throw new Error('Drawer.NestedRoot must be placed in another drawer');
-  1103→  }
-  1104→
-  1105→  return (
-  1106→    <Root
-  1107→      nested
-  1108→      open={nestedIsOpen}
-  1109→      onClose={() => {
-  1110→        onNestedOpenChange(false);
-  1111→      }}
-  1112→      onDrag={(e, p) => {
-  1113→        onNestedDrag(e, p);
-  1114→        onDrag?.(e, p);
-  1115→      }}
-  1116→      onOpenChange={(o) => {
-  1117→        if (o) {
-  1118→          onNestedOpenChange(o);
-  1119→        }
-  1120→        onOpenChange?.(o);
-  1121→      }}
-  1122→      onRelease={onNestedRelease}
-  1123→      {...rest}
-  1124→    />
-  1125→  );
-  1126→}
+      →…
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
   1130→export function Portal(props: PortalProps) {
   1131→  const context = useDrawerContext();
   1132→  const { container = context.container, ...portalProps } = props;
   1133→
-  1134→  return <DialogPrimitive.Portal container={container} {...portalProps} />;
-  1135→}
-  1137→export const Drawer = {
-  1138→  Root,
-  1139→  NestedRoot,
-  1140→  Content,
-  1141→  Overlay,
-  1142→  Trigger: DialogPrimitive.Trigger,
       →…
+  1137→export const Drawer = {
 
 types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
@@ -522,40 +209,10 @@ use-composed-refs.ts
 use-controllable-state.ts
      3→import React from 'react';
      5→type UseControllableStateParams<T> = {
-     6→  prop?: T | undefined;
-     7→  defaultProp?: T | undefined;
-     8→  onChange?: (state: T) => void;
-     9→};
     11→type SetStateFn<T> = (prevState?: T) => T;
-    13→function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
-    14→  const callbackRef = React.useRef(callback);
-    15→
-      →…
-    24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
-    25→  const uncontrolledState = React.useState<T | undefined>(defaultProp);
-    26→  const [value] = uncontrolledState;
-      →…
+    13→function useCallbackRef …
+    24→function useUncontrolledState …
     39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
-    40→  const [uncontrolledProp, setUncontrolledProp] = useUncontrolledState({ defaultProp, onChange });
-    41→  const isControlled = prop !== undefined;
-    42→  const value = isControlled ? prop : uncontrolledProp;
-    43→  const handleChange = useCallbackRef(onChange);
-    44→
-    45→  const setValue: React.Dispatch<React.SetStateAction<T | undefined>> = React.useCallback(
-    46→    (nextValue) => {
-    47→      if (isControlled) {
-    48→        const setter = nextValue as SetStateFn<T>;
-    49→        const value = typeof nextValue === 'function' ? setter(prop) : nextValue;
-    50→        if (value !== prop) handleChange(value as T);
-    51→      } else {
-    52→        setUncontrolledProp(nextValue);
-    53→      }
-    54→    },
-    55→    [isControlled, prop, setUncontrolledProp, handleChange],
-    56→  );
-    57→
-    58→  return [value, setValue] as const;
-    59→}
 
 use-position-fixed.ts
      1→import React from 'react';
@@ -601,105 +258,7 @@ use-position-fixed.ts
     44→        right: 'unset',
     45→      };
     46→
-    47→      // Update the dom inside an animation frame
-    48→      const { scrollX, innerHeight } = window;
-    49→
-    50→      document.body.style.setProperty('position', 'fixed', 'important');
-    51→      Object.assign(document.body.style, {
-    52→        top: `${-scrollPos.current}px`,
-    53→        left: `${-scrollX}px`,
-    54→        right: '0px',
-    55→        height: 'auto',
-    56→      });
-    57→
-    58→      window.setTimeout(
-    59→        () =>
-    60→          window.requestAnimationFrame(() => {
-    61→            // Attempt to check if the bottom bar appeared due to the position change
-    62→            const bottomBarHeight = innerHeight - window.innerHeight;
-    63→            if (bottomBarHeight && scrollPos.current >= innerHeight) {
-    64→              // Move the content further up so that the bottom bar doesn't hide it
-    65→              document.body.style.top = `${-(scrollPos.current + bottomBarHeight)}px`;
-    66→            }
-    67→          }),
-    68→        300,
-    69→      );
-    70→    }
-    71→  }, [isOpen]);
-    72→
-    73→  const restorePositionSetting = React.useCallback(() => {
-    74→    // All browsers on iOS will return true here.
-    75→    if (!isSafari()) return;
-    76→
-    77→    if (previousBodyPosition !== null && !noBodyStyles) {
-    78→      // Convert the position from "px" to Int
-    79→      const y = -parseInt(document.body.style.top, 10);
-    80→      const x = -parseInt(document.body.style.left, 10);
-    81→
-    82→      // Restore styles
-    83→      Object.assign(document.body.style, previousBodyPosition);
-    84→
-    85→      window.requestAnimationFrame(() => {
-    86→        if (preventScrollRestoration && activeUrl !== window.location.href) {
-    87→          setActiveUrl(window.location.href);
-    88→          return;
-    89→        }
-    90→
-    91→        window.scrollTo(x, y);
-    92→      });
-    93→
-    94→      previousBodyPosition = null;
-    95→    }
-    96→  }, [activeUrl]);
-    97→
-    98→  React.useEffect(() => {
-    99→    function onScroll() {
-   100→      scrollPos.current = window.scrollY;
-   101→    }
-   102→
-   103→    onScroll();
-   104→
-   105→    window.addEventListener('scroll', onScroll);
-   106→
-   107→    return () => {
-   108→      window.removeEventListener('scroll', onScroll);
-   109→    };
-   110→  }, []);
-   111→
-   112→  React.useEffect(() => {
-   113→    if (!modal) return;
-   114→
-   115→    return () => {
-   116→      if (typeof document === 'undefined') return;
-   117→
-   118→      // Another drawer is opened, safe to ignore the execution
-   119→      const hasDrawerOpened = !!document.querySelector('[data-vaul-drawer]');
-   120→      if (hasDrawerOpened) return;
-   121→
-   122→      restorePositionSetting();
-   123→    };
-   124→  }, [modal, restorePositionSetting]);
-   125→
-   126→  React.useEffect(() => {
-   127→    if (nested || !hasBeenOpened) return;
-   128→    // This is needed to force Safari toolbar to show **before** the drawer starts animating to prevent a gnarly shift from happening
-   129→    if (isOpen) {
-   130→      // avoid for standalone mode (PWA)
-   131→      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-   132→      !isStandalone && setPositionFixed();
-   133→
-   134→      if (!modal) {
-   135→        window.setTimeout(() => {
-   136→          restorePositionSetting();
-   137→        }, 500);
-   138→      }
-   139→    } else {
-   140→      restorePositionSetting();
-   141→    }
-   142→  }, [isOpen, hasBeenOpened, activeUrl, modal, nested, setPositionFixed, restorePositionSetting]);
-   143→
-   144→  return { restorePositionSetting };
-   145→}
+      →…
 
 use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
@@ -711,37 +270,11 @@ use-prevent-scroll.ts
     12→  isDisabled?: boolean;
     13→  focusCallback?: () => void;
     14→}
-    16→function chain(...callbacks: any[]): (...args: any[]) => void {
-    17→  return (...args: any[]) => {
-    18→    for (let callback of callbacks) {
-      →…
+    16→function chain …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {
-    30→  let style = window.getComputedStyle(node);
-    31→  return /(auto|scroll)/.test(style.overflow + style.overflowX + style.overflowY);
-    32→}
     34→export function getScrollParent(node: Element): Element {
-    35→  if (isScrollable(node)) {
-    36→    node = node.parentElement as HTMLElement;
-    37→  }
-    38→
-    39→  while (node && !isScrollable(node)) {
-    40→    node = node.parentElement as HTMLElement;
-    41→  }
-    42→
-    43→  return node || document.scrollingElement || document.documentElement;
-    44→}
     47→const nonTextInputTypes = new Set([
-    48→  'checkbox',
-    49→  'radio',
-    50→  'range',
-    51→  'color',
-    52→  'file',
-    53→  'image',
-    54→  'button',
-    55→  'submit',
-    56→  'reset',
-    57→]);
     63→/**
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
@@ -765,99 +298,20 @@ use-prevent-scroll.ts
     83→    return () => {
     84→      preventScrollCount--;
     85→      if (preventScrollCount === 0) {
-    86→        restore?.();
-    87→      }
-    88→    };
-    89→  }, [isDisabled]);
-    90→}
-   118→function preventScrollMobileSafari() {
-   119→  let scrollable: Element;
-   120→  let lastY = 0;
       →…
-   243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {
-   244→  // https://github.com/microsoft/TypeScript/issues/17827#issuecomment-391663310
-   245→  // @ts-ignore
-      →…
-   257→function addEvent<K extends keyof GlobalEventHandlersEventMap>(
-   258→  target: EventTarget,
-   259→  event: K,
-   260→  handler: (this: Document, ev: GlobalEventHandlersEventMap[K]) => any,
-   261→  options?: boolean | AddEventListenerOptions,
-   262→) {
-   263→  // @ts-ignore
-   264→  target.addEventListener(event, handler, options);
-      →…
-   272→function scrollIntoView(target: Element) {
-   273→  let root = document.scrollingElement || document.documentElement;
-   274→  while (target && target !== root) {
-      →…
+   118→function preventScrollMobileSafari …
+   243→function setStyle …
+   257→function addEvent …
+   272→function scrollIntoView …
    294→export function isInput(target: Element) {
-   295→  return (
-   296→    (target instanceof HTMLInputElement && !nonTextInputTypes.has(target.type)) ||
-   297→    target instanceof HTMLTextAreaElement ||
-   298→    (target instanceof HTMLElement && target.isContentEditable)
-   299→  );
-   300→}
 
 use-scale-background.ts
      1→import React, { useMemo } from 'react';
      2→import { useDrawerContext } from './context';
      3→import { assignStyle, chain, isVertical, reset } from './helpers';
      4→import { BORDER_RADIUS, TRANSITIONS, WINDOW_TOP_OFFSET } from './constants';
-     6→const noop = () => () => {};
+     6→const noop …
      8→export function useScaleBackground() {
-     9→  const { direction, isOpen, shouldScaleBackground, setBackgroundColorOnScale, noBodyStyles } = useDrawerContext();
-    10→  const timeoutIdRef = React.useRef<number | null>(null);
-    11→  const initialBackgroundColor = useMemo(() => document.body.style.backgroundColor, []);
-    12→
-    13→  function getScale() {
-    14→    return (window.innerWidth - WINDOW_TOP_OFFSET) / window.innerWidth;
-    15→  }
-    16→
-    17→  React.useEffect(() => {
-    18→    if (isOpen && shouldScaleBackground) {
-    19→      if (timeoutIdRef.current) clearTimeout(timeoutIdRef.current);
-    20→      const wrapper =
-    21→        (document.querySelector('[data-vaul-drawer-wrapper]') as HTMLElement) ||
-    22→        (document.querySelector('[vaul-drawer-wrapper]') as HTMLElement);
-    23→
-    24→      if (!wrapper) return;
-    25→
-    26→      chain(
-    27→        setBackgroundColorOnScale && !noBodyStyles ? assignStyle(document.body, { background: 'black' }) : noop,
-    28→        assignStyle(wrapper, {
-    29→          transformOrigin: isVertical(direction) ? 'top' : 'left',
-    30→          transitionProperty: 'transform, border-radius',
-    31→          transitionDuration: `${TRANSITIONS.DURATION}s`,
-    32→          transitionTimingFunction: `cubic-bezier(${TRANSITIONS.EASE.join(',')})`,
-    33→        }),
-    34→      );
-    35→
-    36→      const wrapperStylesCleanup = assignStyle(wrapper, {
-    37→        borderRadius: `${BORDER_RADIUS}px`,
-    38→        overflow: 'hidden',
-    39→        ...(isVertical(direction)
-    40→          ? {
-    41→              transform: `scale(${getScale()}) translate3d(0, calc(env(safe-area-inset-top) + 14px), 0)`,
-    42→            }
-    43→          : {
-    44→              transform: `scale(${getScale()}) translate3d(calc(env(safe-area-inset-top) + 14px), 0, 0)`,
-    45→            }),
-    46→      });
-    47→
-    48→      return () => {
-    49→        wrapperStylesCleanup();
-    50→        timeoutIdRef.current = window.setTimeout(() => {
-    51→          if (initialBackgroundColor) {
-    52→            document.body.style.background = initialBackgroundColor;
-    53→          } else {
-    54→            document.body.style.removeProperty('background');
-    55→          }
-    56→        }, TRANSITIONS.DURATION * 1000);
-    57→      };
-    58→    }
-    59→  }, [isOpen, shouldScaleBackground, initialBackgroundColor]);
-    60→}
 
 use-snap-points.ts
      1→import React from 'react';
@@ -888,74 +342,3 @@ use-snap-points.ts
     27→  container?: HTMLElement | null | undefined;
     28→  snapToSequentialPoint?: boolean;
     29→}) {
-    30→  const [activeSnapPoint, setActiveSnapPoint] = useControllableState<string | number | null>({
-    31→    prop: activeSnapPointProp,
-    32→    defaultProp: snapPoints?.[0],
-    33→    onChange: setActiveSnapPointProp,
-    34→  });
-    35→
-    36→  const [windowDimensions, setWindowDimensions] = React.useState(
-    37→    typeof window !== 'undefined'
-    38→      ? {
-    39→          innerWidth: window.innerWidth,
-    40→          innerHeight: window.innerHeight,
-    41→        }
-    42→      : undefined,
-    43→  );
-    44→
-    45→  React.useEffect(() => {
-    46→    function onResize() {
-    47→      setWindowDimensions({
-    48→        innerWidth: window.innerWidth,
-    49→        innerHeight: window.innerHeight,
-    50→      });
-    51→    }
-    52→    window.addEventListener('resize', onResize);
-    53→
-    54→    return () => window.removeEventListener('resize', onResize);
-    55→  }, []);
-    56→
-    57→  const isLastSnapPoint = React.useMemo(
-    58→    () => activeSnapPoint === snapPoints?.[snapPoints.length - 1] || null,
-    59→    [snapPoints, activeSnapPoint],
-    60→  );
-    61→
-    62→  const activeSnapPointIndex = React.useMemo(
-    63→    () => snapPoints?.findIndex((snapPoint) => snapPoint === activeSnapPoint) ?? null,
-    64→    [snapPoints, activeSnapPoint],
-    65→  );
-    66→
-    67→  const shouldFade =
-    68→    (snapPoints &&
-    69→      snapPoints.length > 0 &&
-    70→      (fadeFromIndex || fadeFromIndex === 0) &&
-    71→      !Number.isNaN(fadeFromIndex) &&
-    72→      snapPoints[fadeFromIndex] === activeSnapPoint) ||
-    73→    !snapPoints;
-    74→
-    75→  const snapPointsOffset = React.useMemo(() => {
-    76→    const containerSize = container
-    77→      ? { width: container.getBoundingClientRect().width, height: container.getBoundingClientRect().height }
-    78→      : typeof window !== 'undefined'
-    79→      ? { width: window.innerWidth, height: window.innerHeight }
-    80→      : { width: 0, height: 0 };
-    81→
-    82→    return (
-    83→      snapPoints?.map((snapPoint) => {
-    84→        const isPx = typeof snapPoint === 'string';
-    85→        let snapPointAsNumber = 0;
-    86→
-    87→        if (isPx) {
-    88→          snapPointAsNumber = parseInt(snapPoint, 10);
-    89→        }
-    90→
-    91→        if (isVertical(direction)) {
-    92→          const height = isPx ? snapPointAsNumber : windowDimensions ? snapPoint * containerSize.height : 0;
-    93→
-    94→          if (windowDimensions) {
-    95→            return direction === 'bottom' ? containerSize.height - height : -containerSize.height + height;
-    96→          }
-    97→
-    98→          return height;
-    99→        }
-      →…

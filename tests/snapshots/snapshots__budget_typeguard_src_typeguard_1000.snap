@@ -2,122 +2,27 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (980 words)
+budget: 1000 (995 tokens)
 
 __init__.py
-     4→from ._checkers …
-     5→from ._checkers …
-     6→from ._checkers …
-     7→from ._checkers …
-     8→from ._checkers …
-     9→from ._config …
-    10→from ._config …
-    11→from ._config …
-    12→from ._decorators …
-    13→from ._decorators …
-    14→from ._exceptions …
-    15→from ._exceptions …
-    16→from ._exceptions …
-    17→from ._exceptions …
-    18→from ._functions …
-    19→from ._functions …
-    20→from ._functions …
-    21→from ._importhook …
-    22→from ._importhook …
-    23→from ._importhook …
-    24→from ._memo …
-    25→from ._suppression …
-    26→from ._utils …
-    34→config: TypeCheckConfiguration
 
 _checkers.py
     42→from typing_extensions import is_typeddict
-    44→from ._config …
-    45→from ._exceptions …
-    46→from ._memo …
-    47→from ._utils …
-    81→TypeCheckerCallable: TypeAlias = Callable[
-    82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
-    83→]
-    84→TypeCheckLookupCallback: TypeAlias = Callable[
-    85→    [Any, Tuple[Any, ...], Tuple[Any, ...]], Optional[TypeCheckerCallable]
-    86→]
-    88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
-    89→generic_alias_types: tuple[type, ...] = (
-    90→    type(List),
-    91→    type(List[Any]),
-    92→    types.GenericAlias,
-    93→)
     98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS = {
-   100→    "__add__",
-   101→    "__and__",
-   102→    "__cmp__",
-   103→    "__divmod__",
-   104→    "__div__",
-      →…
-   586→def _is_literal_type(typ: object) -> bool:
+   586→def _is_literal_type …
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
-  1006→    Any, Callable[[Any, Any, tuple[Any, ...], TypeCheckMemo], None]
-  1007→] = {
-  1008→    bytes: check_byteslike,
-  1009→    AbstractSet: check_set,
-  1010→    BinaryIO: check_io,
-      →…
 
 _config.py
-     9→    from ._functions …
-    11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
-    15→    """
-      →…
-    24→
-    25→    ERROR = auto()
-    26→    WARN = auto()
-    27→    IGNORE = auto()
     30→class CollectionCheckStrategy(Enum):
-    31→    """
-      →…
-    48→
-    49→    FIRST_ITEM = auto()
-    50→    ALL_ITEMS = auto()
-    51→
     62→@dataclass
     63→class TypeCheckConfiguration:
     64→    """
     65→     You can change Typeguard's behavior with these settings.
     66→
-    67→    .. attribute:: typecheck_fail_callback
-    68→       :type: Callable[[TypeCheckError, TypeCheckMemo], Any]
-    69→
-    70→         Callable that is called when type checking fails.
-    71→
-    72→         Default: ``None`` (the :exc:`~.TypeCheckError` is raised directly)
-    73→
-    74→    .. attribute:: forward_ref_policy
-    75→       :type: ForwardRefPolicy
-    76→
-    77→         Specifies what to do when a forward reference fails to resolve.
-    78→
-    79→         Default: ``WARN``
-    80→
-    81→    .. attribute:: collection_check_strategy
-    82→       :type: CollectionCheckStrategy
-    83→
-    84→         Specifies how thoroughly the contents of collections (list, dict, etc.) are
-    85→         type checked.
-    86→
-    87→         Default: ``FIRST_ITEM``
-    88→
-    89→    .. attribute:: debug_instrumentation
-    90→       :type: bool
-    91→
-    92→         If set to ``True``, the code of modules or functions instrumented by typeguard
-    93→         is printed to ``sys.stderr`` after the instrumentation is done
-    94→
-    95→         Default: ``False``
-    96→    """
+      →…
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
     99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
@@ -127,47 +32,17 @@ _config.py
    103→    debug_instrumentation: bool = False
 
 _decorators.py
-    13→from ._config …
-    14→from ._exceptions …
-    15→from ._functions …
-    16→from ._transformer …
-    17→from ._utils …
 
 _exceptions.py
      5→class TypeHintWarning(UserWarning):
-     6→    """
-      →…
     12→class TypeCheckWarning(UserWarning):
-    13→    """Emitted by typeguard's type checkers when a type mismatch is detected."""
-    14→
     19→class InstrumentationWarning(UserWarning):
-    20→    """Emitted when there's a problem with instrumenting a function for type checks."""
-    21→
     26→class TypeCheckError(Exception):
-    27→    """
-      →…
-    30→
 
 _functions.py
-     8→from . …
-     9→from ._checkers …
-    10→from ._config …
-    15→from ._exceptions …
-    16→from ._memo …
-    17→from ._utils …
-    24→T = TypeVar("T")
-    25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
 
 _importhook.py
-    17→from ._config …
-    18→from ._transformer …
-    40→P = ParamSpec("P")
-    41→T = TypeVar("T")
-    44→# The name of this function is magical
-    45→def _call_with_frames_removed(
-    46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
-    47→) -> T:
-    48→    return f(*args, **kwargs)
+    45→def _call_with_frames_removed …
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
     57→    def source_to_code(
@@ -181,61 +56,18 @@ _importhook.py
     65→        else:
     66→            filename = os.fsdecode(bytes(path))
     67→
-    68→        if isinstance(data, (ast.Module, ast.Expression, ast.Interactive)):
-    69→            module = data
-    70→        else:
-    71→            if isinstance(data, str):
-    72→                source = data
-    73→            else:
-    74→                source = decode_source(data)
-    75→
-    76→            module = _call_with_frames_removed(
-    77→                ast.parse,
-    78→                source,
-    79→                filename,
-    80→                "exec",
-    81→            )
-    82→
-    83→        tree = TypeguardTransformer().visit(module)
-    84→        ast.fix_missing_locations(tree)
-    85→
-    86→        if global_config.debug_instrumentation and sys.version_info >= (3, 9):
-    87→            print(
-    88→                f"Source code of {path!r} after instrumentation:\n"
-    89→                "----------------------------------------------",
-    90→                file=sys.stderr,
-    91→            )
-    92→            print(ast.unparse(tree), file=sys.stderr)
-    93→            print("----------------------------------------------", file=sys.stderr)
-    94→
-    95→        return _call_with_frames_removed(
       →…
    109→class TypeguardFinder(MetaPathFinder):
-   110→    """
-      →…
-   119→
    156→class ImportHookManager:
-   157→    """
-      →…
-   160→
 
 _memo.py
      8→class TypeCheckMemo:
-     9→    """
-      →…
-    34→
-    35→    __slots__ = "globals", "locals", "self_type", "config"
-    36→
 
 _pytest_plugin.py
 
 _suppression.py
-    15→P = ParamSpec("P")
-    16→T = TypeVar("T")
 
 _transformer.py
-    67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
-    68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
    117→@dataclass
    118→class TransformMemo:
    119→    node: Module | ClassDef | FunctionDef | AsyncFunctionDef | None
@@ -262,40 +94,13 @@ _transformer.py
    140→
    285→class NameCollector(NodeVisitor):
    313→class GeneratorDetector(NodeVisitor):
-   314→    """Detects if a function node is a generator function."""
-   315→
-   316→    contains_yields: bool = False
-   317→    in_root_function: bool = False
-   318→
    338→class AnnotationTransformer(NodeTransformer):
-   339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
-   340→        "builtins.dict": ("typing", "Dict"),
-   341→        "builtins.list": ("typing", "List"),
-   342→        "builtins.tuple": ("typing", "Tuple"),
-   343→        "builtins.set": ("typing", "Set"),
-   344→        "builtins.frozenset": ("typing", "FrozenSet"),
-   345→    }
-   346→
    488→class TypeguardTransformer(NodeTransformer):
-   516→    @contextmanager
-   517→    def _use_memo(
-   518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
-   519→    ) -> Generator[None, Any, None]:
-   520→        new_memo = TransformMemo(node, self._memo, self._memo.path + (node.name,))
-   521→        old_memo = self._memo
-   522→        self._memo = new_memo
-   523→
-   524→        if isinstance(node, (FunctionDef, AsyncFunctionDef)):
-   525→            new_memo.should_instrument = (
-   526→                self._target_path is None or new_memo.path == self._target_path
-   527→            )
-   528→            if new_memo.should_instrument:
-      →…
-   570→    def _get_import(self, module: str, name: str) -> Name:
-   580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
+   517→    def _use_memo …
+   570→    def _get_import …
+   580→    def _convert_annotation …
 
 _utils.py
-    21→    from ._memo …
    172→@final
    173→class Unset:
    174→    __slots__ = ()

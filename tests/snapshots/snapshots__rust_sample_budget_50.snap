@@ -3,19 +3,8 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.rs
-     3→pub fn process …
      7→fn helper() {}
     10→pub struct Token {
-    11→    kind: TokenKind,
-    12→    span: Span,
-    13→}
     16→pub enum TokenKind {
-    17→    Ident,
-    18→    Number,
-    19→    Symbol,
-    20→}
     23→pub trait Visitor {
-    40→    pub fn new …
-    47→const MAX_TOKENS …
-    51→macro_rules! token {
     57→pub mod lexer;

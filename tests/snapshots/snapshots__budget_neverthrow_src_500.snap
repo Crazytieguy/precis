@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (496 words)
+budget: 500 (503 tokens)
 
 _internals/error.ts
      1→import { Result } from '../result'
@@ -17,26 +17,13 @@ _internals/error.ts
     15→        value: T
     16→      }
     17→    | {
+    18→        type: string
       →…
-    27→export const createNeverThrowError = <T, E>(
-    28→  message: string,
-    29→  result: Result<T, E>,
-    30→  config: ErrorConfig = defaultErrorConfig,
-    31→): NeverThrowError<T, E> => {
-    32→  const data = result.isOk()
-      →…
+    27→export const createNeverThrowError …
 
 _internals/utils.ts
      1→import { Result, ok, err } from '../result'
      2→import { ResultAsync } from '../result-async'
-     5→export type ExtractOkTypes …
-    10→export type ExtractOkAsyncTypes …
-    15→export type ExtractErrTypes …
-    20→export type ExtractErrAsyncTypes …
-    24→export type InferOkTypes …
-    25→export type InferErrTypes …
-    27→export type InferAsyncOkTypes …
-    28→export type InferAsyncErrTypes …
     30→/**
     31→ * Short circuits on the FIRST Err value that we find
     32→ */
@@ -45,13 +32,8 @@ _internals/utils.ts
     35→): Result<readonly T[], E> => {
     36→  let acc = ok([]) as Result<T[], E>
     37→
-    38→  for (const result of resultList) {
-    39→    if (result.isErr()) {
-    40→      acc = err(result.error)
       →…
-    54→export const combineResultAsyncList = <T, E>(
-    55→  asyncResultList: readonly ResultAsync<T, E>[],
-      →…
+    54→export const combineResultAsyncList …
     61→/**
     62→ * Give a list of all the errors we find
     63→ */
@@ -60,74 +42,17 @@ _internals/utils.ts
     66→): Result<readonly T[], E[]> => {
     67→  let acc = ok([]) as Result<T[], E[]>
     68→
-    69→  for (const result of resultList) {
-    70→    if (result.isErr() && acc.isErr()) {
-    71→      acc.error.push(result.error)
       →…
-    82→export const combineResultAsyncListWithAllErrors = <T, E>(
-    83→  asyncResultList: readonly ResultAsync<T, E>[],
-      →…
+    82→export const combineResultAsyncListWithAllErrors …
 
 result-async.ts
-     1→./result …
-    10→import { Err, Ok, Result } from './ …
-    11→./_internals/utils …
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
-   210→  /**
-      →…
-   222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
 
 result.ts
-     1→import { errAsync, ResultAsync } from './ …
-     2→import { createNeverThrowError, ErrorConfig } from './_internals/error …
-     3→./_internals/utils …
     14→export namespace Result {
     15→  /**
    134→interface IResult<T, E> {
-   135→  /**
-      →…
-   140→  isOk(): this is Ok<T, E>
-   142→  /**
-      →…
-   147→  isErr(): this is Err<T, E>
-   149→  /**
-      →…
-   157→  map<A>(f: (t: T) => A): Result<A, E>
-   159→  /**
-      →…
-   168→  mapErr<U>(f: (e: E) => U): Result<T, U>
-   185→  /**
-      →…
-   195→  andTee(f: (t: T) => unknown): Result<T, E>
-   197→  /**
-      →…
-   207→  orTee(f: (t: E) => unknown): Result<T, E>
-   235→  /**
-      →…
-   244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
-   246→  /**
-      →…
-   253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
-   255→  /**
-      →…
-   260→  unwrapOr<A>(v: A): T | A
-   262→  /**
-      →…
-   276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
-   278→  /**
-      →…
-   290→  safeUnwrap(): Generator<Err<never, E>, T>
-   292→  /**
-      →…
-   299→  _unsafeUnwrap(config?: ErrorConfig): T
-   301→  /**
-      →…
-   309→  _unsafeUnwrapErr(config?: ErrorConfig): E
    312→export class Ok<T, E> implements IResult<T, E> {
-   405→  _unsafeUnwrap(_?: ErrorConfig): T {
-   409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
    419→export class Err<T, E> implements IResult<T, E> {
-   505→  _unsafeUnwrap(config?: ErrorConfig): T {
-   509→  _unsafeUnwrapErr(_?: ErrorConfig): E {

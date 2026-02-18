@@ -2,39 +2,25 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (995 words)
+budget: 1000 (1002 tokens)
 
 CHANGELOG.md
      1→# Changelog …
 
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web. …
-     3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
-    18→https://github.com/guilhermerodz/input-otp/assets/10366880/753751f5-eda8-4145-a4b9-7ef51ca5e453
-    19→
+     3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz) …
     20→## Usage …
     39→## Default example …
    136→## How it works …
    141→## Features …
-   198→### Auto tracks if the input has space in the right side for the badge
-   200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
-   201→
-   202→</details>
-   203→
+   198→### Auto tracks if the input has space in the right side for the badge …
    204→## API Reference …
-   206→### OTPInput
-   208→The root container. Define settings for the input via props. Then, use the `render` prop to create the slots.
-   209→
-   210→#### Props
-   212→```ts
-   213→type OTPInputProps = {
-      →…
+   206→### OTPInput …
+   210→#### Props …
    293→## Examples …
    377→## Caveats …
-   539→#### Sponsors
-   541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
-   542→
-      →…
+   539→#### Sponsors …
 
 apps/storybook/README.md
     13→## 🚅 Quick start …
@@ -42,45 +28,10 @@ apps/storybook/README.md
     83→## Contribute …
     87→## Learning Storybook …
 
-apps/storybook/components.json
-     2→  "$schema": "https://ui.shadcn.com/schema.json",
-     3→  "style": "new-york",
-     4→  "rsc": true,
-     5→  "tsx": true,
-     6→  "tailwind": {
-    12→  },
-    13→  "aliases": {
-    16→  }
-    17→}
-
-apps/storybook/package.json
-     2→  "name": "storybook",
-     3→  "private": true,
-     4→  "version": "0.2.0",
-     5→  "type": "module",
-     6→  "repository": {
-     9→  },
-    10→  "bugs": {
-    12→  },
-    13→  "license": "MIT",
-    14→  "dependencies": {
-    23→  },
-    24→  "scripts": {
-    28→  },
-    29→  "devDependencies": {
-    50→  }
-    51→}
-
 apps/storybook/src/components/ui/input-otp.tsx
      7→import { cn } from "../../lib/utils"
-     9→const InputOTP = React.forwardRef<
-    21→const InputOTPGroup = React.forwardRef<
-    29→const InputOTPSlot = React.forwardRef<
-    54→const InputOTPSeparator = React.forwardRef<
 
 apps/storybook/src/lib/utils.ts
-     1→import { type ClassValue, clsx } from "clsx"
-     2→import { twMerge } from "tailwind-merge"
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
      6→}
@@ -93,8 +44,6 @@ apps/storybook/src/stories/Button.stories.ts
     34→export const Small = {
 
 apps/storybook/src/stories/Button.tsx
-     1→import React from 'react';
-     2→import PropTypes from 'prop-types';
      3→import './button.css';
      5→/**
      6→ * Primary UI component for user interaction
@@ -103,200 +52,29 @@ apps/storybook/src/stories/Button.tsx
      9→  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
     10→  return (
     11→    <button
-    12→      type="button"
-    13→      className="bg-[red]"
       →…
 
 apps/storybook/src/stories/InputOTP.stories.tsx
      1→import { InputOTP, InputOTPGroup, InputOTPSlot } from "../components/ui/input-otp"
-     2→import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
      4→const meta = {
     27→type Story = StoryObj<typeof meta>
     29→export const Default: Story = {}
 
 apps/storybook/tailwind.config.js
-     1→/** @type {import('tailwindcss').Config} */
      2→const config = {
-
-apps/storybook/tsconfig.json
-     2→  "compilerOptions": {
-    21→  },
-    22→  "include": ["src"],
-    23→  "references": [{ "path": "./tsconfig.node.json" }]
-    24→}
-
-apps/storybook/tsconfig.node.json
-     2→  "compilerOptions": {
-     7→  },
-     8→  "include": ["vite.config.ts"]
-     9→}
-
-apps/storybook/vite.config.js
-
-apps/test/README.md
-     3→## Getting Started …
-    23→## Learn More …
-    32→## Deploy on Vercel …
-
-apps/test/package.json
-
-apps/test/src/app/base/page.tsx
-     7→export default function Page() {
-
-apps/test/src/app/layout.tsx
-     3→import './globals.css'
-     7→export const metadata: Metadata = {
-
-apps/test/src/app/page.tsx
-
-apps/test/src/app/props/page.tsx
-     7→export default function Page() {
-
-apps/test/src/app/with-autofocus/page.tsx
-     7→export default function Page() {
-
-apps/test/src/app/with-on-complete/page.tsx
-     7→export default function Page() {
-
-apps/test/src/components/base-input.tsx
-     6→export function BaseOTPInput …
-
-apps/test/src/lib/fonts.ts
-    10→export const fontSans = GeistSans
-    12→export const fontMono = FontMono({
-
-apps/test/src/lib/utils.ts
-     4→export function cn(...inputs: ClassValue[]) {
-
-apps/test/src/tests/util/modifier.ts
-     1→export const modifier …
-
-apps/test/tsconfig.json
-
-apps/website/README.md
-     3→## Getting Started …
-    23→## Learn More …
-    32→## Deploy on Vercel …
-
-apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
-     9→export default function ExampleAutoSubmit() {
-
-apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
-     3→export async function formAction(formData: FormData) {
-
-apps/website/src/app/(local-pages)/example-playground/code.tsx
-
-apps/website/src/app/(local-pages)/example-playground/component.tsx
-
-apps/website/src/app/(local-pages)/example-playground/page.tsx
-
-apps/website/src/app/(local-pages)/layout.tsx
-     7→export default function RootLayout …
-
-apps/website/src/app/(local-pages)/raw-input/page.tsx
-     5→export default function ShadcnPage() {
-
-apps/website/src/app/(local-pages)/shadcn/page.tsx
-    12→export default function ShadcnPage() {
-
-apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
-    13→export default function ShadcnPage() {
-
-apps/website/src/app/(local-pages)/shadcn/static/page.tsx
-     5→export default async function StaticPage(pageProps: any) {
-
-apps/website/src/app/(pages)/(home)/_components/confetti.tsx
-
-apps/website/src/app/(pages)/(home)/_components/showcase.tsx
-
-apps/website/src/app/(pages)/(home)/page.tsx
-    19→const fadeUpClassname =
-    34→export default async function IndexPage() {
-   148→export const revalidate = 3600
-
-apps/website/src/app/(pages)/layout.tsx
-    14→export const metadata: Metadata = {
-    68→export default function RootLayout …
 
 apps/website/src/components/icons.tsx
      3→export const Icons = {
 
-apps/website/src/components/ui/badge.tsx
-
-apps/website/src/components/ui/button.tsx
-
-apps/website/src/config/site.ts
-     1→export const siteConfig = {
-    13→export type SiteConfig = typeof siteConfig
-
-apps/website/src/lib/fonts.ts
-    10→export const fontSans = GeistSans
-    12→export const fontMono = FontMono({
-
-apps/website/src/lib/utils.ts
-     4→export function cn(...inputs: ClassValue[]) {
-
 package.json
-     2→  "name": "root",
-     3→  "private": true,
-     4→  "author": "Guilherme Rodz <g@rodz.dev>",
-     5→  "description": "One-time password input component for React.",
-     6→  "homepage": "https://input-otp.rodz.dev/",
-     7→  "workspaces": [
-    10→  ],
-    11→  "scripts": {
-    30→  },
-    31→  "prettier": {
-    40→  },
-    41→  "trustedDependencies": [
-    43→  ],
-    44→  "devDependencies": {
-    59→  }
-    60→}
 
 packages/input-otp/package.json
-     2→  "name": "input-otp",
-     3→  "version": "1.4.2",
-     4→  "author": "Guilherme Rodz <g@rodz.dev>",
-     5→  "description": "One-time password input component for React.",
-     6→  "license": "MIT",
-     7→  "homepage": "https://input-otp.rodz.dev/",
-     8→  "repository": {
-    12→  },
-    13→  "bugs": {
-    15→  },
-    16→  "keywords": [
-    21→  ],
-    22→  "main": "./dist/index.js",
-    23→  "module": "./dist/index.mjs",
-    24→  "types": "./dist/index.d.ts",
-    25→  "files": [
-    27→  ],
-    28→  "exports": {
-    37→  },
-    38→  "scripts": {
-    54→  },
-    55→  "eslintConfig": {
-   110→  },
-   111→  "devDependencies": {
-   117→  },
-   118→  "peerDependencies": {
-   121→  }
-   122→}
 
 packages/input-otp/src/input.tsx
      3→import * as React from 'react'
-     5→import { syncTimeouts } from './sync-timeouts'
-     6→import { OTPInputProps, RenderProps } from './types'
-     7→import { usePrevious } from './use-previous'
-     8→import { usePasswordManagerBadge } from './use-pwm-badge'
     10→export const OTPInputContext = React.createContext<RenderProps>(
     14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
-   541→  try {
-   542→    sheet.insertRule(rule)
-      →…
-   553→const NOSCRIPT_CSS_FALLBACK = `
 
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
@@ -318,11 +96,9 @@ packages/input-otp/src/types.ts
      9→  isFocused: boolean
     10→  isHovering: boolean
     11→}
-    12→type OverrideProps<T, R> = Omit<T, keyof R> & R
-    13→type OTPInputBaseProps = OverrideProps<
-    14→  React.InputHTMLAttributes<HTMLInputElement>,
-    15→  {
-    32→type InputOTPRenderFn = (props: RenderProps) => React.ReactNode
+    12→type OverrideProps …
+    13→type OTPInputBaseProps …
+    32→type InputOTPRenderFn …
     33→export type OTPInputProps = OTPInputBaseProps &
     34→  (
     35→    | {
@@ -333,39 +109,11 @@ packages/input-otp/src/use-previous.ts
 
 packages/input-otp/src/use-pwm-badge.tsx
      1→import * as React from 'react'
-     2→import { OTPInputProps } from './types'
-     4→const PWM_BADGE_MARGIN_RIGHT = 18
-     5→const PWM_BADGE_SPACE_WIDTH_PX = 40
-     6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
-     8→const PASSWORD_MANAGERS_SELECTORS = [
-    15→export function usePasswordManagerBadge({
-    16→  containerRef,
-    17→  inputRef,
-    18→  pushPasswordManagerStrategy,
-    19→  isFocused,
-    20→}: {
-    21→  containerRef: React.RefObject<HTMLDivElement>
-    22→  inputRef: React.RefObject<HTMLInputElement>
-    23→  pushPasswordManagerStrategy: OTPInputProps['pushPasswordManagerStrategy']
-    24→  isFocused: boolean
-    25→}) {
-    26→  /** Password managers have a badge
-      →…
+    15→export function usePasswordManagerBadge …
 
 packages/input-otp/tsconfig.json
-     2→  "compilerOptions": {
-    11→  },
-    12→  "include": ["src"]
-    13→}
-
-packages/input-otp/tsup.config.ts
 
 pnpm-workspace.yaml
      1→packages …
 
 turbo.json
-     2→  "extends": ["//"],
-     3→  "$schema": "https://turbo.build/schema.json",
-     4→  "pipeline": {
-    35→  }
-    36→}

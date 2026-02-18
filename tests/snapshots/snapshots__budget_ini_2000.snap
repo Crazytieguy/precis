@@ -2,12 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1977 words)
+budget: 2000 (2141 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
-     8→  .filter((file) => file.startsWith('.eslintrc.local.'))
-     9→  .map((file) => `./${file}`)
 
 .github/ISSUE_TEMPLATE/bug.yml
      3→name …
@@ -134,67 +132,18 @@ budget: 2000 (1977 words)
 
 CHANGELOG.md
      1→# Changelog …
-     3→## [6.0.0](https://github.com/npm/ini/compare/v5.0.0...v6.0.0) (2025-10-22) …
-     4→### ⚠️ BREAKING CHANGES …
-     6→### Bug Fixes …
-     8→### Chores …
-    11→## [5.0.0](https://github.com/npm/ini/compare/v4.1.3...v5.0.0) (2024-09-03) …
-    12→### ⚠️ BREAKING CHANGES …
-    14→### Bug Fixes …
-    16→### Chores …
-    22→## [4.1.3](https://github.com/npm/ini/compare/v4.1.2...v4.1.3) (2024-05-22) …
-    24→### Bug Fixes …
-    28→### Chores …
-    34→## [4.1.2](https://github.com/npm/ini/compare/v4.1.1...v4.1.2) (2024-03-04) …
-    36→### Bug Fixes …
-    40→### Documentation …
-    46→### Chores …
-    63→## [4.1.1](https://github.com/npm/ini/compare/v4.1.0...v4.1.1) (2023-05-16) …
-    65→### Bug Fixes …
-    69→## [4.1.0](https://github.com/npm/ini/compare/v4.0.0...v4.1.0) (2023-04-13) …
-    71→### Features …
-    78→### Bug Fixes …
-    84→## [4.0.0](https://github.com/npm/ini/compare/v3.0.1...v4.0.0) (2023-03-08) …
-    86→### ⚠️ BREAKING CHANGES …
-    90→### Features …
-    94→## [3.0.1](https://github.com/npm/ini/compare/v3.0.0...v3.0.1) (2022-08-22) …
-    97→### Bug Fixes …
-   101→## [3.0.0](https://github.com/npm/ini/compare/v2.0.1...v3.0.0) (2022-04-05) …
-   104→### ⚠ BREAKING CHANGES …
-   108→### Bug Fixes …
-   113→### Dependencies …
 
 CONTRIBUTING.md
      3→# Contributing …
-     5→## Code of Conduct
-     7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
-     8→
-     9→## Reporting Bugs
-    11→Before submitting a new bug report please search for an existing or similar report.
-    12→
-    13→Use one of our existing issue templates if you believe you've come across a unique problem.
-    14→
-    15→Duplicate issues, or issues that don't use one of our templates may get closed without a response.
-    16→
-    17→## Pull Request Conventions
-    19→### Commits
-    21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
-    22→
-      →…
-    30→### Test Coverage
-    32→Pull requests made against this repo will run `npm test` automatically.  Please make sure tests pass locally before submitting a PR.
-    33→
-      →…
-    36→### Linting
-    38→Linting is also done automatically once tests pass.  `npm run lintfix` will fix most linting errors automatically.
-    39→
-      →…
-    42→## What _not_ to contribute?
-    44→### Dependencies
-    46→It should be noted that our team does not accept third-party dependency updates/PRs.  If you submit a PR trying to update our dependencies we will close it with or without a reference to these contribution guidelines.
-    47→
-    48→### Tools/Automation
-    50→Our core team is responsible for the maintenance of the tooling/automation in this project and we ask contributors to not make changes to these when contributing (e.g. `.github/*`, `.eslintrc.json`, `.licensee.json`).  Most of those files also have a header at the top to remind folks they are automatically generated.  Pull requests that alter these will not be accepted.
+     5→## Code of Conduct …
+     9→## Reporting Bugs …
+    17→## Pull Request Conventions …
+    19→### Commits …
+    30→### Test Coverage …
+    36→### Linting …
+    42→## What _not_ to contribute? …
+    44→### Dependencies …
+    48→### Tools/Automation …
 
 README.md
      4→## Note
@@ -239,40 +188,7 @@ README.md
     45→
     46→//  Modify data object
     47→
-    48→config.scope = 'local'
-    49→config.database.database = 'use_another_database'
-    50→config.paths.default.tmpdir = '/tmp'
-    51→delete config.paths.default.datadir
-    52→config.paths.default.array.push('fourth value')
-    53→
-    54→//  Stringify data object
-    55→
-    56→text = stringify(config,{ 
-    57→    section : 'section' 
-    58→})
-    59→
-    60→//  Write INI file as text
-    61→
-    62→await writeFile(`./Modified.ini`,text)
-    63→```
-    64→
-    65→The written file will contain the following:
-    66→
-    67→```ini
-    68→[section]
-    69→scope=local
-    70→[section.database]
-    71→user=dbuser
-    72→password=dbpassword
-    73→database=use_another_database
-    74→[section.paths.default]
-    75→tmpdir=/tmp
-    76→array[]=first value
-    77→array[]=second value
-    78→array[]=third value
-    79→array[]=fourth value
-    80→```
-    81→
+      →…
     82→## API
     84→### Parse
     86→Attempts to turn the given INI string into a nested data object.
@@ -306,55 +222,7 @@ README.md
    115→    align : false ,
    116→
    117→    /**
-   118→     *  Identifier to use for global items 
-   119→     *  and to prepend to all other sections.
-   120→     */
-   121→
-   122→    section ,
-   123→
-   124→    /**
-   125→     *  Whether to sort all sections & their keys alphabetically.
-   126→     */
-   127→
-   128→    sort : false ,
-   129→
-   130→    /**
-   131→     *  Whether to insert a newline after each section header.
-   132→     * 
-   133→     *  The TOSHIBA & FlashAir parser require this format. 
-   134→     */
-   135→
-   136→    newline : false ,
-   137→
-   138→    /**
-   139→     *  Which platforms line-endings should be used.
-   140→     * 
-   141→     *  win32 -> CR+LF
-   142→     *  other -> LF
-   143→     * 
-   144→     *  Default is the current platform
-   145→     */
-   146→
-   147→    platform ,
-   148→
-   149→    /**
-   150→     *  Whether to append `[]` to array keys.
-   151→     * 
-   152→     *  Some parsers treat duplicate names by themselves as arrays
-   153→     */
-   154→
-   155→    bracketedArray : true
-   156→
-   157→})
-   158→```
-   159→
-   160→*For backwards compatibility any string passed as the*  
-   161→*options parameter is treated as the `section` option.*
-   162→
-   163→```js
-   164→stringify(object,'section')
-   165→```
-   166→
+      →…
    167→### Un / Escape
    169→Turn the given string into a safe to  
    170→use key or value in your INI file.
@@ -371,151 +239,11 @@ README.md
 
 lib/ini.js
      3→const encode = (obj, opt = {}) => {
-     4→  if (typeof opt === 'string') {
-     5→    opt = { section: opt }
-     6→  }
-     7→  opt.align = opt.align === true
-     8→  opt.newline = opt.newline === true
-     9→  opt.sort = opt.sort === true
-    10→  opt.whitespace = opt.whitespace === true || opt.align === true
-    11→  // The `typeof` check is required because accessing the `process` directly fails on browsers.
-    12→  /* istanbul ignore next */
-    13→  opt.platform = opt.platform || (typeof process !== 'undefined' && process.platform)
-    14→  opt.bracketedArray = opt.bracketedArray !== false
-    15→
-    16→  /* istanbul ignore next */
-    17→  const eol = opt.platform === 'win32' ? '\r\n' : '\n'
-    18→  const separator = opt.whitespace ? ' = ' : '='
-    19→  const children = []
-    20→
-    21→  const keys = opt.sort ? Object.keys(obj).sort() : Object.keys(obj)
-    22→
-    23→  let padToChars = 0
-    24→  // If aligning on the separator, then padToChars is determined as follows:
-    25→  // 1. Get the keys
-    26→  // 2. Exclude keys pointing to objects unless the value is null or an array
-    27→  // 3. Add `[]` to array keys
-    28→  // 4. Ensure non empty set of keys
-    29→  // 5. Reduce the set to the longest `safe` key
-    30→  // 6. Get the `safe` length
-    31→  if (opt.align) {
-    32→    padToChars = safe(
-    33→      (
-    34→        keys
-    35→          .filter(k => obj[k] === null || Array.isArray(obj[k]) || typeof obj[k] !== 'object')
-    36→          .map(k => Array.isArray(obj[k]) ? `${k}[]` : k)
-      →…
     80→function splitSections (str, separator) {
-    81→  var lastMatchIndex = 0
-    82→  var lastSeparatorIndex = 0
-    83→  var nextIndex = 0
-    84→  var sections = []
-    85→
-    86→  do {
-    87→    nextIndex = str.indexOf(separator, lastMatchIndex)
-    88→
-    89→    if (nextIndex !== -1) {
-    90→      lastMatchIndex = nextIndex + separator.length
-    91→
-    92→      if (nextIndex > 0 && str[nextIndex - 1] === '\\') {
-    93→        continue
-    94→      }
-    95→
-    96→      sections.push(str.slice(lastSeparatorIndex, nextIndex))
-    97→      lastSeparatorIndex = nextIndex + separator.length
-    98→    }
-    99→  } while (nextIndex !== -1)
-   100→
-   101→  sections.push(str.slice(lastSeparatorIndex))
-   102→
-   103→  return sections
-   104→}
    106→const decode = (str, opt = {}) => {
-   107→  opt.bracketedArray = opt.bracketedArray !== false
-   108→  const out = Object.create(null)
-   109→  let p = out
-   110→  let section = null
-   111→  //          section          |key      = value
-   112→  const re = /^\[([^\]]*)\]\s*$|^([^=]+)(=(.*))?$/i
-   113→  const lines = str.split(/[\r\n]+/g)
-   114→  const duplicates = {}
-   115→
-   116→  for (const line of lines) {
-   117→    if (!line || line.match(/^\s*[;#]/) || line.match(/^\s*$/)) {
-   118→      continue
-   119→    }
-   120→    const match = line.match(re)
-   121→    if (!match) {
-   122→      continue
-   123→    }
-   124→    if (match[1] !== undefined) {
-   125→      section = unsafe(match[1])
-   126→      if (section === '__proto__') {
-   127→        // not allowed
-   128→        // keep parsing the section, but don't attach it.
-   129→        p = Object.create(null)
-   130→        continue
-   131→      }
-   132→      p = out[section] = out[section] || Object.create(null)
-   133→      continue
-   134→    }
-   135→    const keyRaw = unsafe(match[2])
-   136→    let isArray
-   137→    if (opt.bracketedArray) {
-   138→      isArray = keyRaw.length > 2 && keyRaw.slice(-2) === '[]'
-   139→    } else {
-      →…
    212→const isQuoted = val => {
-   213→  return (val.startsWith('"') && val.endsWith('"')) ||
-   214→    (val.startsWith("'") && val.endsWith("'"))
-   215→}
    217→const safe = val => {
-   218→  if (
-   219→    typeof val !== 'string' ||
-   220→    val.match(/[=\r\n]/) ||
-   221→    val.match(/^\[/) ||
-   222→    (val.length > 1 && isQuoted(val)) ||
-   223→    val !== val.trim()
-   224→  ) {
-   225→    return JSON.stringify(val)
-   226→  }
-   227→  return val.split(';').join('\\;').split('#').join('\\#')
-   228→}
    230→const unsafe = val => {
-   231→  val = (val || '').trim()
-   232→  if (isQuoted(val)) {
-   233→    // remove the single quotes before calling JSON.parse
-   234→    if (val.charAt(0) === "'") {
-   235→      val = val.slice(1, -1)
-   236→    }
-   237→    try {
-   238→      val = JSON.parse(val)
-   239→    } catch {
-   240→      // ignore errors
-   241→    }
-   242→  } else {
-   243→    // walk the val to find the first not-escaped ; character
-   244→    let esc = false
-   245→    let unesc = ''
-   246→    for (let i = 0, l = val.length; i < l; i++) {
-   247→      const c = val.charAt(i)
-   248→      if (esc) {
-   249→        if ('\\;#'.indexOf(c) !== -1) {
-   250→          unesc += c
-   251→        } else {
-   252→          unesc += '\\' + c
-   253→        }
-   254→
-   255→        esc = false
-   256→      } else if (';#'.indexOf(c) !== -1) {
-   257→        break
-   258→      } else if (c === '\\') {
-   259→        esc = true
-   260→      } else {
-   261→        unesc += c
-   262→      }
-   263→    }
-      →…
 
 package.json
      2→  "author": "GitHub Inc.",
@@ -549,16 +277,3 @@ release-please-config.json
     35→  },
     36→  "prerelease-type": "pre.0"
     37→}
-
-test/duplicate-properties.js
-     3→const test = tap.test
-     7→const fixture = path.resolve(__dirname, './fixtures/duplicate.ini')
-     8→const data = fs.readFileSync(fixture, 'utf8')
-
-test/foo.js
-     3→const test = tap.test
-     6→const fixture = path.resolve(__dirname, './fixtures/foo.ini')
-     7→const data = fs.readFileSync(fixture, 'utf8')
-
-test/win32.js
-     5→const res = ini.encode({ foo: { bar: 'baz' } })

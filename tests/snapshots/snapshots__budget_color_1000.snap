@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (948 words)
+budget: 1000 (1000 tokens)
 
 README.md
      1→# color
@@ -11,8 +11,7 @@ README.md
      5→has support for Windows too! The API can be used in several ways, pick one that
      6→suits you.
      7→
-     8→![Color](https://user-images.githubusercontent.com/438920/96832689-03b3e000-13f4-11eb-9803-46f4c4de3406.jpg)
-     9→
+      →…
     10→## Install
     12→```
     13→go get github.com/fatih/color
@@ -49,14 +48,11 @@ color.go
     20→	// colors. For more control over each color block use the methods
     21→	// DisableColor() individually.
     22→	NoColor = noColorIsSet() || os.Getenv("TERM") == "dumb" ||
-    23→		(!isatty.IsTerminal(os.Stdout.Fd()) && !isatty.IsCygwinTerminal(os.Stdout.Fd()))
     25→	// Output defines the standard output of the print functions. By default,
     26→	// os.Stdout is used.
     27→	Output = colorable.NewColorableStdout()
     29→	// Error defines a color supporting writer for os.Stderr.
     30→	Error = colorable.NewColorableStderr()
-    32→	// colorsCache is used to reduce the count of created Color objects and
-    33→	// allows to reuse already created objects with required Attribute.
     34→	colorsCache   = make(map[Attribute]*Color)
     35→	colorsCacheMu sync.Mutex // protects colorsCache
     39→func noColorIsSet() bool {
@@ -68,146 +64,17 @@ color.go
     49→// Attribute defines a single SGR Code
     50→type Attribute int
     52→const escape = "\x1b"
-    54→// Base attributes
     55→const (
-    56→	Reset Attribute = iota
-    57→	Bold
-    58→	Faint
-    59→	Italic
-    60→	Underline
-    61→	BlinkSlow
-    62→	BlinkRapid
-    63→	ReverseVideo
-    64→	Concealed
-    65→	CrossedOut
     68→const (
-    69→	ResetBold Attribute = iota + 22
-    70→	ResetItalic
-    71→	ResetUnderline
-    72→	ResetBlinking
-    74→	ResetReversed
-    75→	ResetConcealed
-    76→	ResetCrossedOut
     79→var mapResetAttributes map[Attribute]Attribute = map[Attribute]Attribute{
-    91→// Foreground text colors
     92→const (
-    93→	FgBlack Attribute = iota + 30
-    94→	FgRed
-    95→	FgGreen
-    96→	FgYellow
-    97→	FgBlue
-    98→	FgMagenta
-    99→	FgCyan
-   100→	FgWhite
-   102→	// used internally for 256 and 24-bit coloring
    103→	foreground
-   106→// Foreground Hi-Intensity text colors
    107→const (
-   108→	FgHiBlack Attribute = iota + 90
-   109→	FgHiRed
-   110→	FgHiGreen
-   111→	FgHiYellow
-   112→	FgHiBlue
-   113→	FgHiMagenta
-   114→	FgHiCyan
-   115→	FgHiWhite
-   118→// Background text colors
    119→const (
-   120→	BgBlack Attribute = iota + 40
-   121→	BgRed
-   122→	BgGreen
-   123→	BgYellow
-   124→	BgBlue
-   125→	BgMagenta
-   126→	BgCyan
-   127→	BgWhite
-   129→	// used internally for 256 and 24-bit coloring
    130→	background
-   133→// Background Hi-Intensity text colors
    134→const (
-   135→	BgHiBlack Attribute = iota + 100
-   136→	BgHiRed
-   137→	BgHiGreen
-   138→	BgHiYellow
-   139→	BgHiBlue
-   140→	BgHiMagenta
-   141→	BgHiCyan
-   142→	BgHiWhite
-   146→func New …
-   160→func RGB …
-   165→func BgRGB …
-   171→func (c *Color) AddRGB …
-   178→func (c *Color) AddBgRGB …
-   185→func Set …
-   193→func Unset …
-   202→func (c *Color) Set …
-   211→func (c *Color) unset() {
-   222→func (c *Color) SetWriter …
-   233→func (c *Color) UnsetWriter …
-   243→func (c *Color) Add …
-   253→func (c *Color) Fprint …
-   265→func (c *Color) Print …
-   276→func (c *Color) Fprintf …
-   286→func (c *Color) Printf …
-   297→func (c *Color) Fprintln …
-   306→func (c *Color) Println …
-   311→func (c *Color) Sprint …
-   316→func (c *Color) Sprintln …
-   321→func (c *Color) Sprintf …
-   327→func (c *Color) FprintFunc …
-   335→func (c *Color) PrintFunc …
-   343→func (c *Color) FprintfFunc …
-   351→func (c *Color) PrintfFunc …
-   359→func (c *Color) FprintlnFunc …
-   367→func (c *Color) PrintlnFunc …
-   379→func (c *Color) SprintFunc …
-   388→func (c *Color) SprintfFunc …
-   397→func (c *Color) SprintlnFunc …
    405→func (c *Color) sequence() string {
    416→func (c *Color) wrap(s string) string {
-   424→func (c *Color) format() string {
-   428→func (c *Color) unformat() string {
-   446→func (c *Color) DisableColor …
-   452→func (c *Color) EnableColor …
-   456→func (c *Color) isNoColorSet() bool {
-   467→func (c *Color) Equals …
-   487→func (c *Color) attrExists(a Attribute) bool {
-   497→func boolPtr(v bool) *bool {
-   501→func getCachedColor(p Attribute) *Color {
-   514→func colorPrint(format string, p Attribute, a ...interface{}) {
-   528→func colorString(format string, p Attribute, a ...interface{}) string {
-   540→func Black …
-   544→func Red …
-   548→func Green …
-   552→func Yellow …
-   556→func Blue …
-   560→func Magenta …
-   564→func Cyan …
-   568→func White …
-   572→func BlackString …
-   576→func RedString …
-   580→func GreenString …
-   584→func YellowString …
-   588→func BlueString …
-   592→func MagentaString …
-   598→func CyanString …
-   602→func WhiteString …
-   606→func HiBlack …
-   610→func HiRed …
-   614→func HiGreen …
-   618→func HiYellow …
-   622→func HiBlue …
-   626→func HiMagenta …
-   630→func HiCyan …
-   634→func HiWhite …
-   638→func HiBlackString …
-   644→func HiRedString …
-   648→func HiGreenString …
-   654→func HiYellowString …
-   660→func HiBlueString …
-   664→func HiMagentaString …
-   670→func HiCyanString …
-   674→func HiWhiteString …
    679→func sprintln(a ...interface{}) string {
 
 color_test.go
@@ -219,11 +86,8 @@ color_test.go
     17→	rb := new(bytes.Buffer)
     18→	Output = rb
     19→
-    20→	NoColor = false
-    21→
       →…
-   462→func readRaw(t *testing.T, r io.Reader) string {
+   462→func readRaw …
 
 color_windows.go
      3→import …
-     9→func init() {

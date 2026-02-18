@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1258 words)
+budget: 2000 (1999 tokens)
 
 ini.js
      3→const encode = (obj, opt = {}) => {
@@ -46,41 +46,7 @@ ini.js
     41→  }
     42→
     43→  let out = ''
-    44→  const arraySuffix = opt.bracketedArray ? '[]' : ''
-    45→
-    46→  for (const k of keys) {
-    47→    const val = obj[k]
-    48→    if (val && Array.isArray(val)) {
-    49→      for (const item of val) {
-    50→        out += safe(`${k}${arraySuffix}`).padEnd(padToChars, ' ') + separator + safe(item) + eol
-    51→      }
-    52→    } else if (val && typeof val === 'object') {
-    53→      children.push(k)
-    54→    } else {
-    55→      out += safe(k).padEnd(padToChars, ' ') + separator + safe(val) + eol
-    56→    }
-    57→  }
-    58→
-    59→  if (opt.section && out.length) {
-    60→    out = '[' + safe(opt.section) + ']' + (opt.newline ? eol + eol : eol) + out
-    61→  }
-    62→
-    63→  for (const k of children) {
-    64→    const nk = splitSections(k, '.').join('\\.')
-    65→    const section = (opt.section ? opt.section + '.' : '') + nk
-    66→    const child = encode(obj[k], {
-    67→      ...opt,
-    68→      section,
-    69→    })
-    70→    if (out.length && child.length) {
-    71→      out += eol
-    72→    }
-    73→
-    74→    out += child
-    75→  }
-    76→
-    77→  return out
-    78→}
+      →…
     80→function splitSections (str, separator) {
     81→  var lastMatchIndex = 0
     82→  var lastSeparatorIndex = 0
@@ -147,70 +113,7 @@ ini.js
    144→      ? keyRaw.slice(0, -2) : keyRaw
    145→
    146→    if (key === '__proto__') {
-   147→      continue
-   148→    }
-   149→    const valueRaw = match[3] ? unsafe(match[4]) : true
-   150→    const value = valueRaw === 'true' ||
-   151→      valueRaw === 'false' ||
-   152→      valueRaw === 'null' ? JSON.parse(valueRaw)
-   153→      : valueRaw
-   154→
-   155→    // Convert keys with '[]' suffix to an array
-   156→    if (isArray) {
-   157→      if (!hasOwnProperty.call(p, key)) {
-   158→        p[key] = []
-   159→      } else if (!Array.isArray(p[key])) {
-   160→        p[key] = [p[key]]
-   161→      }
-   162→    }
-   163→
-   164→    // safeguard against resetting a previously defined
-   165→    // array by accidentally forgetting the brackets
-   166→    if (Array.isArray(p[key])) {
-   167→      p[key].push(value)
-   168→    } else {
-   169→      p[key] = value
-   170→    }
-   171→  }
-   172→
-   173→  // {a:{y:1},"a.b":{x:2}} --> {a:{y:1,b:{x:2}}}
-   174→  // use a filter to return the keys that have to be deleted.
-   175→  const remove = []
-   176→  for (const k of Object.keys(out)) {
-   177→    if (!hasOwnProperty.call(out, k) ||
-   178→      typeof out[k] !== 'object' ||
-   179→      Array.isArray(out[k])) {
-   180→      continue
-   181→    }
-   182→
-   183→    // see if the parent section is also an object.
-   184→    // if so, add it to that, and mark this one for deletion
-   185→    const parts = splitSections(k, '.')
-   186→    p = out
-   187→    const l = parts.pop()
-   188→    const nl = l.replace(/\\\./g, '.')
-   189→    for (const part of parts) {
-   190→      if (part === '__proto__') {
-   191→        continue
-   192→      }
-   193→      if (!hasOwnProperty.call(p, part) || typeof p[part] !== 'object') {
-   194→        p[part] = Object.create(null)
-   195→      }
-   196→      p = p[part]
-   197→    }
-   198→    if (p === out && nl === l) {
-   199→      continue
-   200→    }
-   201→
-   202→    p[nl] = out[k]
-   203→    remove.push(k)
-   204→  }
-   205→  for (const del of remove) {
-   206→    delete out[del]
-   207→  }
-   208→
-   209→  return out
-   210→}
+      →…
    212→const isQuoted = val => {
    213→  return (val.startsWith('"') && val.endsWith('"')) ||
    214→    (val.startsWith("'") && val.endsWith("'"))
@@ -268,4 +171,4 @@ ini.js
    268→    return unesc.trim()
    269→  }
    270→  return val
-   271→}
+      →…

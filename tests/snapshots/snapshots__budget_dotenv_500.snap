@@ -2,18 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (511 tokens)
 
 CHANGELOG.md
-     1→# Changelog …
-   484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02) …
 
 CONTRIBUTING.md
-     1→# Contributing
-     3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
-      →…
-    11→## Testing …
-    19→## Code Style …
+     1→# Contributing …
 
 README-es.md
      1→# dotenv …
@@ -26,145 +20,57 @@ README.md
      8→
      9→&nbsp;
     10→
-    11→## Usage
-    13→Install it.
-    14→
-      →…
-    39→## Advanced
-    43→Import with [ES6](#how-do-i-use-dotenv-with-import):
-    44→
-      →…
-   319→## Agents
-   323→> Software is changing, and dotenv must change with it—that is why I built [agentic secret storage (AS2)](https://dotenvx.com/as2). Agents run code without humans at terminals, so plaintext `.env` files are the wrong primitive.
-   324→>
-      →…
+    11→## Usage …
+    39→## Advanced …
+   319→## Agents …
    331→### Quickstart …
-   357→## FAQ
-   361→No.
-   362→
-      →…
-   579→## Docs
-   581→Dotenv exposes four functions:
-   582→
-      →…
+   357→## FAQ …
+   579→## Docs …
    587→### Config …
    605→#### Options …
-   607→##### path …
-   625→##### quiet …
-   648→##### encoding …
-   658→##### debug …
-   668→##### override …
-   678→##### processEnv …
    692→### Parse …
    705→#### Options …
-   707→##### debug …
    721→### Populate …
    748→#### options …
-   750→##### Debug …
-   756→##### override …
-   764→## CHANGELOG
-   766→See [CHANGELOG.md](CHANGELOG.md)
-   767→
-      →…
-   770→## Who's using dotenv?
-   772→[These npm modules depend on it.](https://www.npmjs.com/browse/depended/dotenv)
-   773→
-      →…
+   764→## CHANGELOG …
+   770→## Who's using dotenv? …
 
 lib/cli-options.js
-     1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
+     1→const re …
 
 lib/env-options.js
-     2→const options = {}
+     2→const options …
 
 lib/main.d.ts
      3→import type { URL } from 'url';
      5→export interface DotenvParseOutput {
      6→  [name: string]: string;
-     7→}
+      →…
      9→export interface DotenvPopulateOutput {
     10→  [name: string]: string;
-    11→}
+      →…
     25→export interface DotenvConfigOptions {
     26→  /**
-    27→   * Default: `path.resolve(process.cwd(), '.env')`
-    28→   *
-    29→   * Specify a custom path if your file containing environment variables is located elsewhere.
-    30→   * Can also be an array of strings, specifying multiple paths.
-    31→   *
-    32→   * example: `require('dotenv').config({ path: '/custom/path/to/.env' })`
-    33→   * example: `require('dotenv').config({ path: ['/path/to/first.env', '/path/to/second.env'] })`
-    34→   */
-    35→  path?: string | string[] | URL;
-    36→
-    37→  /**
       →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
-    94→  parsed?: DotenvParseOutput;
-    95→}
-    97→type DotenvError = Error & {
-    98→  code: 
       →…
+    97→type DotenvError = Error & {
    106→export interface DotenvPopulateOptions {
    107→  /**
-   108→   * Default: `false`
-   109→   *
-   110→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
-   111→   *
-   112→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
-   113→   */
-   114→  debug?: boolean;
-   115→
-   116→  /**
-   117→   * Default: `false`
-   118→   *
       →…
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;
-   128→}
+      →…
 
 lib/main.js
-     7→const version = packageJson.version
-    10→const TIPS = [
-    46→const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
-   413→const DotenvModule = {
+     7→const version …
+    10→const TIPS …
+    46→const LINE …
+   413→const DotenvModule …
 
 package.json
-     2→  "name": "dotenv",
-     3→  "version": "17.3.1",
-     4→  "description": "Loads environment variables from .env file",
-     5→  "main": "lib/main.js",
-     6→  "types": "lib/main.d.ts",
-     7→  "exports": {
-    20→  },
-    21→  "scripts": {
-    29→  },
-    30→  "repository": {
-    33→  },
-    34→  "homepage": "https://github.com/motdotla/dotenv#readme",
-    35→  "funding": "https://dotenvx.com",
-    36→  "keywords": [
-    44→  ],
-    45→  "readmeFilename": "README.md",
-    46→  "license": "BSD-2-Clause",
-    47→  "devDependencies": {
-    55→  },
-    56→  "engines": {
-    58→  },
-    59→  "browser": {
-    61→  }
-    62→}
-
-tests/test-config-cli.js
-
-tests/test-env-options.js
 
 tests/types/test.ts
-     1→import { config, parse } from "dotenv";
 
 tests/types/tsconfig.json
-     2→  "compilerOptions": {
-    15→  },
-    16→  "include": ["./test.ts", "../../main.d.ts"]
-    17→}

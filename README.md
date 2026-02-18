@@ -12,7 +12,7 @@ Uses **tree-sitter** for language-agnostic symbol extraction. Each supported lan
 
 ### Token Budgeting
 
-Takes a `--budget` flag (in words, default 1000).
+Takes a `--budget` flag (in BPE tokens, default 2500). Token counts use the o200k_base tokenizer (GPT-4o / Claude-class models) via tiktoken for accurate LLM budget estimation.
 
 **Groups:** Symbols are bucketed into groups by shared properties (visibility, kind, directory, file role, etc.). All symbols in a group always receive the same rendering treatment — this prevents confusing output where similar symbols are at different detail levels.
 
@@ -26,7 +26,7 @@ FilePath is the cheapest stage — it shows just the file path with no symbol co
 
 Doc(N) and Body(N) are continuous: each additional line is a separate scheduling item. A group might show 3 lines of body before the next line becomes too expensive relative to other available content.
 
-**Value and cost:** Each (group, stage) item has a value and a cost. Value comes from composable heuristic factors (visibility, documentation status, file role, etc.). Cost is the measured word count.
+**Value and cost:** Each (group, stage) item has a value and a cost. Value comes from composable heuristic factors (visibility, documentation status, file role, etc.). Cost is the measured token count.
 
 **Greedy scheduling:** A priority queue ranks all (group, stage) items by `priority = (own_value + unmet_prerequisite_values) / (own_cost + unmet_prerequisite_costs)`. The algorithm greedily includes the highest-priority item, deducts its cost from the budget, updates affected items, and repeats until nothing fits.
 
@@ -34,7 +34,7 @@ Doc(N) and Body(N) are continuous: each additional line is a separate scheduling
 
 Two dimensions of output quality:
 
-1. **Budget utilization** — how well the tool uses the available word budget. Measurable: `actual_words / budget`. `cargo run --bin budget_util` measures utilization across all budget snapshots (run `cargo test` first to update snapshots).
+1. **Budget utilization** — how well the tool uses the available token budget. Measurable: `actual_tokens / budget`. `cargo run --bin budget_util` measures utilization across all budget snapshots (run `cargo test` first to update snapshots).
 
 2. **Output quality** — whether the content shown is actually useful for understanding the codebase. Not directly measurable. Showing low-value content (junk) can *improve* budget utilization while making the output worse. Both dimensions matter: high utilization with high-quality content is the goal.
 
@@ -46,7 +46,7 @@ Plain text, optimized for readability and token efficiency. A `--json` flag outp
 
 **Line-prefix constraint:** Each output line is a prefix of the actual line in the source file, preserving original whitespace and indentation. The tool extracts from the source rather than synthesizing new representations — no cross-language normalization of keywords. This means nesting (e.g. methods inside a Rust `impl` block) is represented naturally by the source's own indentation.
 
-Line numbers use a right-aligned format with an arrow separator (e.g. `    12→    pub fn new`). Token counting uses word count (not tokenizer or character count).
+Line numbers use a right-aligned format with an arrow separator (e.g. `    12→    pub fn new`). Token counting uses the o200k_base BPE tokenizer for accurate LLM budget estimation.
 
 ## Supported Languages
 

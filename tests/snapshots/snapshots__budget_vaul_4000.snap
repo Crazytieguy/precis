@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3933 words)
+budget: 4000 (4114 tokens)
 
 FUNDING.yml
      1→github …
@@ -45,35 +45,16 @@ pnpm-workspace.yaml
      1→packages …
 
 src/browser.ts
-     1→export function isMobileFirefox(): boolean | undefined {
-     2→  const userAgent = navigator.userAgent;
-     3→  return (
-      →…
-    10→export function isMac(): boolean | undefined {
-    11→  return testPlatform(/^Mac/);
-    12→}
-    14→export function isIPhone(): boolean | undefined {
-    15→  return testPlatform(/^iPhone/);
-    16→}
-    18→export function isSafari(): boolean | undefined {
-    19→  return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    20→}
-    22→export function isIPad(): boolean | undefined {
-    23→  return (
-    24→    testPlatform(/^iPad/) ||
-      →…
-    30→export function isIOS(): boolean | undefined {
-    31→  return isIPhone() || isIPad();
-    32→}
-    34→export function testPlatform(re: RegExp): boolean | undefined {
-    35→  return typeof window !== 'undefined' && window.navigator != null ? re.test(window.navigator.platform) : undefined;
-    36→}
+     1→export function isMobileFirefox …
+    10→export function isMac …
+    14→export function isIPhone …
+    18→export function isSafari …
+    22→export function isIPad …
+    30→export function isIOS …
+    34→export function testPlatform …
 
 src/constants.ts
      1→export const TRANSITIONS = {
-     2→  DURATION: 0.5,
-     3→  EASE: [0.32, 0.72, 0, 1],
-     4→};
      6→export const VELOCITY_THRESHOLD = 0.4;
      8→export const CLOSE_THRESHOLD = 0.25;
     10→export const SCROLL_LOCK_TIMEOUT = 100;
@@ -88,53 +69,9 @@ src/context.ts
      4→interface DrawerContextValue {
      5→  drawerRef: React.RefObject<HTMLDivElement>;
      6→  overlayRef: React.RefObject<HTMLDivElement>;
-     7→  onPress: (event: React.PointerEvent<HTMLDivElement>) => void;
-     8→  onRelease: (event: React.PointerEvent<HTMLDivElement> | null) => void;
-     9→  onDrag: (event: React.PointerEvent<HTMLDivElement>) => void;
-    10→  onNestedDrag: (event: React.PointerEvent<HTMLDivElement>, percentageDragged: number) => void;
-    11→  onNestedOpenChange: (o: boolean) => void;
-    12→  onNestedRelease: (event: React.PointerEvent<HTMLDivElement>, open: boolean) => void;
-    13→  dismissible: boolean;
-    14→  isOpen: boolean;
-    15→  isDragging: boolean;
-    16→  keyboardIsOpen: React.MutableRefObject<boolean>;
-    17→  snapPointsOffset: number[] | null;
-    18→  snapPoints?: (number | string)[] | null;
-    19→  activeSnapPointIndex?: number | null;
-    20→  modal: boolean;
-    21→  shouldFade: boolean;
-    22→  activeSnapPoint?: number | string | null;
-    23→  setActiveSnapPoint: (o: number | string | null) => void;
-    24→  closeDrawer: () => void;
-    25→  openProp?: boolean;
-    26→  onOpenChange?: (o: boolean) => void;
-    27→  direction: DrawerDirection;
-    28→  shouldScaleBackground: boolean;
-    29→  setBackgroundColorOnScale: boolean;
-    30→  noBodyStyles: boolean;
-    31→  handleOnly?: boolean;
-    32→  container?: HTMLElement | null;
-    33→  autoFocus?: boolean;
-    34→  shouldAnimate?: React.RefObject<boolean>;
-    35→}
+      →…
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
-    38→  drawerRef: { current: null },
-    39→  overlayRef: { current: null },
-    40→  onPress: () => {},
-    41→  onRelease: () => {},
-    42→  onDrag: () => {},
-    43→  onNestedDrag: () => {},
-    44→  onNestedOpenChange: () => {},
-    45→  onNestedRelease: () => {},
-    46→  openProp: undefined,
-    47→  dismissible: false,
-    48→  isOpen: false,
-    49→  isDragging: false,
-      →…
-    69→export const useDrawerContext = () => {
-    70→  const context = React.useContext(DrawerContext);
-    71→  if (!context) {
-      →…
+    69→export const useDrawerContext …
 
 src/helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
@@ -142,33 +79,13 @@ src/helpers.ts
      4→  [key: string]: string;
      5→}
      7→const cache = new WeakMap();
-     9→export function isInView(el: HTMLElement): boolean {
-    10→  const rect = el.getBoundingClientRect();
-    11→
-      →…
-    23→export function set(el: Element | HTMLElement | null | undefined, styles: Style, ignoreCache = false) {
-    24→  if (!el || !(el instanceof HTMLElement)) return;
-    25→  let originalStyles: Style = {};
-      →…
-    42→export function reset(el: Element | HTMLElement | null, prop?: string) {
-    43→  if (!el || !(el instanceof HTMLElement)) return;
-    44→  let originalStyles = cache.get(el);
-      →…
-    59→export const isVertical = (direction: DrawerDirection) => {
-    60→  switch (direction) {
-    61→    case 'top':
-      →…
-    72→export function getTranslate(element: HTMLElement, direction: DrawerDirection): number | null {
-    73→  if (!element) {
-    74→    return null;
-      →…
-    90→export function dampenValue(v: number) {
-    91→  return 8 * (Math.log(v + 1) - 2);
-    92→}
-    94→export function assignStyle(element: HTMLElement | null | undefined, style: Partial<CSSStyleDeclaration>) {
-    95→  if (!element) return () => {};
-    96→
-      →…
+     9→export function isInView …
+    23→export function set …
+    42→export function reset …
+    59→export const isVertical …
+    72→export function getTranslate …
+    90→export function dampenValue …
+    94→export function assignStyle …
    105→/**
    106→ * Receives functions as arguments and returns a new function that calls all.
    107→ */
@@ -180,33 +97,23 @@ src/helpers.ts
    113→        fn(...args);
    114→      }
    115→    }
-   116→  };
-   117→}
+      →…
 
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
-     5→import { DrawerContext, useDrawerContext } from './context';
-     6→import './style.css';
-     7→import { usePreventScroll, isInput } from './use-prevent-scroll';
-     8→import { useComposedRefs } from './use-composed-refs';
-     9→import { useSnapPoints } from './use-snap-points';
-    10→import { set, getTranslate, dampenValue, isVertical, reset } from './helpers';
-    11→import {
-    12→  TRANSITIONS,
-    13→  VELOCITY_THRESHOLD,
-    14→  CLOSE_THRESHOLD,
-    15→  SCROLL_LOCK_TIMEOUT,
-    16→  BORDER_RADIUS,
-    17→  NESTED_DISPLACEMENT,
-    18→  WINDOW_TOP_OFFSET,
-    19→  DRAG_CLASS,
-    20→} from './constants';
-    21→import { DrawerDirection } from './types';
-    22→import { useControllableState } from './use-controllable-state';
-    23→import { useScaleBackground } from './use-scale-background';
-    24→import { usePositionFixed } from './use-position-fixed';
-    25→import { isIOS, isMobileFirefox } from './browser';
+     5→import { DrawerContext, useDrawerContext } from './context …
+     6→import './style.css …
+     7→import { usePreventScroll, isInput } from './use-prevent-scroll …
+     8→import { useComposedRefs } from './use-composed-refs …
+     9→import { useSnapPoints } from './use-snap-points …
+    10→import { set, getTranslate, dampenValue, isVertical, reset } from './helpers …
+    11→./constants …
+    21→import { DrawerDirection } from './types …
+    22→import { useControllableState } from './use-controllable-state …
+    23→import { useScaleBackground } from './use-scale-background …
+    24→import { usePositionFixed } from './use-position-fixed …
+    25→import { isIOS, isMobileFirefox } from './browser …
     27→export interface WithFadeFromProps {
     28→  /**
     29→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
@@ -229,8 +136,6 @@ src/index.tsx
     47→  fadeFromIndex?: never;
     48→}
     50→export type DialogProps = {
-    51→  activeSnapPoint?: number | string | null;
-      →…
    139→export function Root({
    140→  open: openProp,
    141→  onOpenChange,
@@ -265,134 +170,26 @@ src/index.tsx
    170→  const [isOpen = false, setIsOpen] = useControllableState({
    171→    defaultProp: defaultOpen,
    172→    prop: openProp,
-   173→    onChange: (o: boolean) => {
-   174→      onOpenChange?.(o);
-   175→
-   176→      if (!o && !nested) {
-   177→        restorePositionSetting();
-   178→      }
-   179→
-   180→      setTimeout(() => {
-   181→        onAnimationEnd?.(o);
-   182→      }, TRANSITIONS.DURATION * 1000);
-   183→
-   184→      if (o && !modal) {
-   185→        if (typeof window !== 'undefined') {
-   186→          window.requestAnimationFrame(() => {
-   187→            document.body.style.pointerEvents = 'auto';
-   188→          });
-   189→        }
-   190→      }
-   191→
-   192→      if (!o) {
-   193→        // This will be removed when the exit animation ends (`500ms`)
-   194→        document.body.style.pointerEvents = 'auto';
-   195→      }
-   196→    },
-   197→  });
-   198→  const [hasBeenOpened, setHasBeenOpened] = React.useState<boolean>(false);
-   199→  const [isDragging, setIsDragging] = React.useState<boolean>(false);
-   200→  const [justReleased, setJustReleased] = React.useState<boolean>(false);
-   201→  const overlayRef = React.useRef<HTMLDivElement>(null);
-   202→  const openTime = React.useRef<Date | null>(null);
-   203→  const dragStartTime = React.useRef<Date | null>(null);
-   204→  const dragEndTime = React.useRef<Date | null>(null);
-   205→  const lastTimeDragPrevented = React.useRef<Date | null>(null);
-   206→  const isAllowedToDrag = React.useRef<boolean>(false);
-   207→  const nestedOpenChangeTimer = React.useRef<NodeJS.Timeout | null>(null);
-   208→  const pointerStart = React.useRef(0);
-   209→  const keyboardIsOpen = React.useRef(false);
-   210→  const shouldAnimate = React.useRef(!defaultOpen);
-   211→  const previousDiffFromInitial = React.useRef(0);
-   212→  const drawerRef = React.useRef<HTMLDivElement>(null);
-   213→  const drawerHeightRef = React.useRef(drawerRef.current?.getBoundingClientRect().height || 0);
-   214→  const drawerWidthRef = React.useRef(drawerRef.current?.getBoundingClientRect().width || 0);
-   215→  const initialDrawerHeight = React.useRef(0);
-   216→
-   217→  const onSnapPointChange = React.useCallback((activeSnapPointIndex: number) => {
-   218→    // Change openTime ref when we reach the last snap point to prevent dragging for 500ms incase it's scrollable.
-   219→    if (snapPoints && activeSnapPointIndex === snapPointsOffset.length - 1) openTime.current = new Date();
-   220→  }, []);
-   221→
-   222→  const {
-   223→    activeSnapPoint,
-   224→    activeSnapPointIndex,
-   225→    setActiveSnapPoint,
-   226→    onRelease: onReleaseSnapPoints,
-   227→    snapPointsOffset,
-   228→    onDrag: onDragSnapPoints,
-   229→    shouldFade,
-   230→    getPercentageDragged: getSnapPointsPercentageDragged,
-   231→  } = useSnapPoints({
-   232→    snapPoints,
-   233→    activeSnapPointProp,
-   234→    setActiveSnapPointProp,
-   235→    drawerRef,
-   236→    fadeFromIndex,
-   237→    overlayRef,
-   238→    onSnapPointChange,
-   239→    direction,
-   240→    container,
-   241→    snapToSequentialPoint,
-   242→  });
-   243→
-   244→  usePreventScroll({
-   245→    isDisabled:
       →…
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
-   804→  function ({ ...rest }, ref) {
-      →…
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
    833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
-   834→  { onPointerDownOutside, style, onOpenAutoFocus, ...rest },
-      →…
    989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
-   990→  preventCycle?: boolean;
-      →…
    993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
    994→const DOUBLE_TAP_TIMEOUT = 120;
    996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
-   997→  { preventCycle = false, children, ...rest },
-      →…
   1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
   1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
   1100→
   1101→  if (!onNestedDrag) {
-  1102→    throw new Error('Drawer.NestedRoot must be placed in another drawer');
-  1103→  }
-  1104→
-  1105→  return (
-  1106→    <Root
-  1107→      nested
-  1108→      open={nestedIsOpen}
-  1109→      onClose={() => {
-  1110→        onNestedOpenChange(false);
-  1111→      }}
-  1112→      onDrag={(e, p) => {
-  1113→        onNestedDrag(e, p);
-  1114→        onDrag?.(e, p);
-  1115→      }}
-  1116→      onOpenChange={(o) => {
-  1117→        if (o) {
-  1118→          onNestedOpenChange(o);
-  1119→        }
-  1120→        onOpenChange?.(o);
-  1121→      }}
-  1122→      onRelease={onNestedRelease}
-  1123→      {...rest}
-  1124→    />
-  1125→  );
-  1126→}
+      →…
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
   1130→export function Portal(props: PortalProps) {
   1131→  const context = useDrawerContext();
   1132→  const { container = context.container, ...portalProps } = props;
   1133→
-  1134→  return <DialogPrimitive.Portal container={container} {...portalProps} />;
-  1135→}
-  1137→export const Drawer = {
-  1138→  Root,
       →…
+  1137→export const Drawer = {
 
 src/types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
@@ -410,46 +207,24 @@ src/use-composed-refs.ts
      9→ * This utility takes care of different types of refs: callback refs and RefObject(s)
     10→ */
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
-    12→  if (typeof ref === 'function') {
-    13→    ref(value);
-    14→  } else if (ref !== null && ref !== undefined) {
-    15→    (ref as React.MutableRefObject<T>).current = value;
-    16→  }
-    17→}
     19→/**
     20→ * A utility to compose multiple refs together
     21→ * Accepts callback refs and RefObject(s)
     22→ */
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
-    24→  return (node: T) => refs.forEach((ref) => setRef(ref, node));
-    25→}
     27→/**
     28→ * A custom hook that composes multiple refs
     29→ * Accepts callback refs and RefObject(s)
     30→ */
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
-    32→  // eslint-disable-next-line react-hooks/exhaustive-deps
-    33→  return React.useCallback(composeRefs(...refs), refs);
-    34→}
 
 src/use-controllable-state.ts
      3→import React from 'react';
      5→type UseControllableStateParams<T> = {
-     6→  prop?: T | undefined;
-     7→  defaultProp?: T | undefined;
-     8→  onChange?: (state: T) => void;
-     9→};
     11→type SetStateFn<T> = (prevState?: T) => T;
-    13→function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
-    14→  const callbackRef = React.useRef(callback);
-      →…
-    24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
-    25→  const uncontrolledState = React.useState<T | undefined>(defaultProp);
-      →…
-    39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
-    40→  const [uncontrolledProp, setUncontrolledProp] = useUncontrolledState({ defaultProp, onChange });
-    41→  const isControlled = prop !== undefined;
-      →…
+    13→function useCallbackRef …
+    24→function useUncontrolledState …
+    39→export function useControllableState …
 
 src/use-position-fixed.ts
      1→import React from 'react';
@@ -485,96 +260,6 @@ src/use-position-fixed.ts
     34→    // All browsers on iOS will return true here.
     35→    if (!isSafari()) return;
     36→
-    37→    // If previousBodyPosition is already set, don't set it again.
-    38→    if (previousBodyPosition === null && isOpen && !noBodyStyles) {
-    39→      previousBodyPosition = {
-    40→        position: document.body.style.position,
-    41→        top: document.body.style.top,
-    42→        left: document.body.style.left,
-    43→        height: document.body.style.height,
-    44→        right: 'unset',
-    45→      };
-    46→
-    47→      // Update the dom inside an animation frame
-    48→      const { scrollX, innerHeight } = window;
-    49→
-    50→      document.body.style.setProperty('position', 'fixed', 'important');
-    51→      Object.assign(document.body.style, {
-    52→        top: `${-scrollPos.current}px`,
-    53→        left: `${-scrollX}px`,
-    54→        right: '0px',
-    55→        height: 'auto',
-    56→      });
-    57→
-    58→      window.setTimeout(
-    59→        () =>
-    60→          window.requestAnimationFrame(() => {
-    61→            // Attempt to check if the bottom bar appeared due to the position change
-    62→            const bottomBarHeight = innerHeight - window.innerHeight;
-    63→            if (bottomBarHeight && scrollPos.current >= innerHeight) {
-    64→              // Move the content further up so that the bottom bar doesn't hide it
-    65→              document.body.style.top = `${-(scrollPos.current + bottomBarHeight)}px`;
-    66→            }
-    67→          }),
-    68→        300,
-    69→      );
-    70→    }
-    71→  }, [isOpen]);
-    72→
-    73→  const restorePositionSetting = React.useCallback(() => {
-    74→    // All browsers on iOS will return true here.
-    75→    if (!isSafari()) return;
-    76→
-    77→    if (previousBodyPosition !== null && !noBodyStyles) {
-    78→      // Convert the position from "px" to Int
-    79→      const y = -parseInt(document.body.style.top, 10);
-    80→      const x = -parseInt(document.body.style.left, 10);
-    81→
-    82→      // Restore styles
-    83→      Object.assign(document.body.style, previousBodyPosition);
-    84→
-    85→      window.requestAnimationFrame(() => {
-    86→        if (preventScrollRestoration && activeUrl !== window.location.href) {
-    87→          setActiveUrl(window.location.href);
-    88→          return;
-    89→        }
-    90→
-    91→        window.scrollTo(x, y);
-    92→      });
-    93→
-    94→      previousBodyPosition = null;
-    95→    }
-    96→  }, [activeUrl]);
-    97→
-    98→  React.useEffect(() => {
-    99→    function onScroll() {
-   100→      scrollPos.current = window.scrollY;
-   101→    }
-   102→
-   103→    onScroll();
-   104→
-   105→    window.addEventListener('scroll', onScroll);
-   106→
-   107→    return () => {
-   108→      window.removeEventListener('scroll', onScroll);
-   109→    };
-   110→  }, []);
-   111→
-   112→  React.useEffect(() => {
-   113→    if (!modal) return;
-   114→
-   115→    return () => {
-   116→      if (typeof document === 'undefined') return;
-   117→
-   118→      // Another drawer is opened, safe to ignore the execution
-   119→      const hasDrawerOpened = !!document.querySelector('[data-vaul-drawer]');
-   120→      if (hasDrawerOpened) return;
-   121→
-   122→      restorePositionSetting();
-   123→    };
-   124→  }, [modal, restorePositionSetting]);
-   125→
-   126→  React.useEffect(() => {
       →…
 
 src/use-prevent-scroll.ts
@@ -585,31 +270,12 @@ src/use-prevent-scroll.ts
     10→interface PreventScrollOptions {
     11→  /** Whether the scroll lock is disabled. */
     12→  isDisabled?: boolean;
-    13→  focusCallback?: () => void;
-    14→}
-    16→function chain(...callbacks: any[]): (...args: any[]) => void {
-    17→  return (...args: any[]) => {
       →…
+    16→function chain …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
-    29→export function isScrollable(node: Element): boolean {
-    30→  let style = window.getComputedStyle(node);
-    31→  return /(auto|scroll)/.test(style.overflow + style.overflowX + style.overflowY);
-      →…
-    34→export function getScrollParent(node: Element): Element {
-    35→  if (isScrollable(node)) {
-    36→    node = node.parentElement as HTMLElement;
-      →…
+    29→export function isScrollable …
+    34→export function getScrollParent …
     47→const nonTextInputTypes = new Set([
-    48→  'checkbox',
-    49→  'radio',
-    50→  'range',
-    51→  'color',
-    52→  'file',
-    53→  'image',
-    54→  'button',
-    55→  'submit',
-    56→  'reset',
-    57→]);
     63→/**
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
@@ -623,53 +289,20 @@ src/use-prevent-scroll.ts
     73→      return;
     74→    }
     75→
-    76→    preventScrollCount++;
-    77→    if (preventScrollCount === 1) {
-    78→      if (isIOS()) {
-    79→        restore = preventScrollMobileSafari();
-    80→      }
-    81→    }
-    82→
-    83→    return () => {
-    84→      preventScrollCount--;
-    85→      if (preventScrollCount === 0) {
-    86→        restore?.();
-    87→      }
-    88→    };
-    89→  }, [isDisabled]);
-    90→}
-   118→function preventScrollMobileSafari() {
-   119→  let scrollable: Element;
       →…
-   243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {
-   244→  // https://github.com/microsoft/TypeScript/issues/17827#issuecomment-391663310
-      →…
-   257→function addEvent<K extends keyof GlobalEventHandlersEventMap>(
-   258→  target: EventTarget,
-   259→  event: K,
-   260→  handler: (this: Document, ev: GlobalEventHandlersEventMap[K]) => any,
-   261→  options?: boolean | AddEventListenerOptions,
-   262→) {
-   263→  // @ts-ignore
-      →…
-   272→function scrollIntoView(target: Element) {
-   273→  let root = document.scrollingElement || document.documentElement;
-      →…
-   294→export function isInput(target: Element) {
-   295→  return (
-   296→    (target instanceof HTMLInputElement && !nonTextInputTypes.has(target.type)) ||
-      →…
+   118→function preventScrollMobileSafari …
+   243→function setStyle …
+   257→function addEvent …
+   272→function scrollIntoView …
+   294→export function isInput …
 
 src/use-scale-background.ts
      1→import React, { useMemo } from 'react';
      2→import { useDrawerContext } from './context';
      3→import { assignStyle, chain, isVertical, reset } from './helpers';
      4→import { BORDER_RADIUS, TRANSITIONS, WINDOW_TOP_OFFSET } from './constants';
-     6→const noop = () => () => {};
-     8→export function useScaleBackground() {
-     9→  const { direction, isOpen, shouldScaleBackground, setBackgroundColorOnScale, noBodyStyles } = useDrawerContext();
-    10→  const timeoutIdRef = React.useRef<number | null>(null);
-      →…
+     6→const noop …
+     8→export function useScaleBackground …
 
 src/use-snap-points.ts
      1→import React from 'react';
@@ -677,343 +310,96 @@ src/use-snap-points.ts
      3→import { TRANSITIONS, VELOCITY_THRESHOLD } from './constants';
      4→import { useControllableState } from './use-controllable-state';
      5→import { DrawerDirection } from './types';
-     7→export function useSnapPoints({
-     8→  activeSnapPointProp,
-     9→  setActiveSnapPointProp,
-    10→  snapPoints,
-    11→  drawerRef,
-    12→  overlayRef,
-    13→  fadeFromIndex,
-    14→  onSnapPointChange,
-    15→  direction = 'bottom',
-    16→  container,
-    17→  snapToSequentialPoint,
-    18→}: {
-    19→  activeSnapPointProp?: number | string | null;
-    20→  setActiveSnapPointProp?(snapPoint: number | null | string): void;
-    21→  snapPoints?: (number | string)[];
-    22→  fadeFromIndex?: number;
-    23→  drawerRef: React.RefObject<HTMLDivElement>;
-    24→  overlayRef: React.RefObject<HTMLDivElement>;
-    25→  onSnapPointChange(activeSnapPointIndex: number): void;
-    26→  direction?: DrawerDirection;
-    27→  container?: HTMLElement | null | undefined;
-    28→  snapToSequentialPoint?: boolean;
-    29→}) {
-    30→  const [activeSnapPoint, setActiveSnapPoint] = useControllableState<string | number | null>({
-    31→    prop: activeSnapPointProp,
-      →…
+     7→export function useSnapPoints …
 
 test/README.md
-     3→## Getting Started
-     5→First, run the development server:
-     6→
-     7→```bash
-     8→npm run dev
-     9→# or
-    10→yarn dev
-    11→# or
-    12→pnpm dev
-    13→```
-    14→
-    15→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-    16→
-      →…
-    21→## Learn More
-    23→To learn more about Next.js, take a look at the following resources:
-    24→
-    25→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-    26→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-    27→
-    28→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-    29→
-    30→## Deploy on Vercel
-    32→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-    33→
-    34→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+     3→## Getting Started …
+    21→## Learn More …
+    30→## Deploy on Vercel …
 
 test/next.config.js
-     1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
 
 test/package.json
-     2→  "name": "test",
-     3→  "version": "0.1.0",
-     4→  "private": true,
-     5→  "scripts": {
-    10→  },
-    11→  "devDependencies": {
-    20→  },
-    21→  "dependencies": {
-    28→  }
-    29→}
 
 test/src/app/controlled/page.tsx
-     3→import { useState } from 'react';
-     4→import { Drawer } from 'vaul';
      6→export default function Page() {
-     7→  const [open, setOpen] = useState(false);
-     8→  const [fullyControlled, setFullyControlled] = useState(false);
-     9→
-    10→  return (
-      →…
 
 test/src/app/default-open/page.tsx
-     3→import { useState } from 'react';
-     4→import { Drawer } from 'vaul';
      6→export default function Page() {
-     7→  return (
-     8→    <div className="w-screen h-screen bg-white p-8 flex justify-center items-center" data-vaul-drawer-wrapper="">
-     9→      <Drawer.Root defaultOpen>
-    10→        <Drawer.Trigger asChild>
-      →…
 
 test/src/app/different-directions/page.tsx
-     3→import clsx from 'clsx';
-     4→import { Drawer, DialogProps } from 'vaul';
-     6→function DirectionalDrawer({
-     7→  direction,
-     8→  children,
-     9→}: {
-    10→  direction: DialogProps['direction'];
-    11→  children: React.ReactNode;
-    12→}) {
-    13→  return (
-      →…
+     6→function DirectionalDrawer …
    118→export default function Page() {
-   119→  return (
-      →…
 
 test/src/app/initial-snap/page.tsx
-     3→import { clsx } from 'clsx';
-     4→import { useState } from 'react';
-     5→import { Drawer } from 'vaul';
-     7→const snapPoints = [0, '148px', '355px', 1];
+     7→const snapPoints …
      9→export default function Page() {
-    10→  const [snap, setSnap] = useState<number | string | null>(snapPoints[1]);
-    11→
-    12→  const activeSnapPointIndex = snapPoints.indexOf(snap as string);
-    13→
-    14→  return (
-      →…
 
 test/src/app/layout.tsx
      1→import './globals.css';
-     2→import type { Metadata } from 'next';
-     3→import { Inter } from 'next/font/google';
      5→const inter = Inter({ subsets: ['latin'] });
      7→export const metadata: Metadata = {
-     8→  title: 'Create Next App',
-      →…
     12→export default function RootLayout({ children }: { children: React.ReactNode }) {
-    13→  return (
-      →…
 
 test/src/app/nested-drawers/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {
-     6→  return (
-     7→    <div className="w-screen h-screen bg-white p-8 flex justify-center items-center" data-vaul-drawer-wrapper="">
-     8→      <Drawer.Root>
-     9→        <Drawer.Trigger asChild>
-      →…
 
 test/src/app/non-dismissible/page.tsx
-     3→import { useState } from 'react';
-     4→import { Drawer } from 'vaul';
      6→export default function Page() {
-     7→  const [open, setOpen] = useState(false);
-     8→  return (
-      →…
-
-test/src/app/open-another-drawer/page.tsx
-     3→import { Drawer } from 'vaul';
-     4→import { useState } from 'react';
-     6→export function MyDrawer({
-     7→  open,
-     8→  setOpen,
-     9→  setOpen2,
-    10→}: {
-    11→  open: boolean;
-    12→  setOpen: (open: boolean) => void;
-    13→  setOpen2: (open: boolean) => void;
-    14→}) {
-    96→export function MyDrawer2({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
-   195→export default function Home() {
 
 test/src/app/page.tsx
-     3→import Link from 'next/link';
      5→export default function Page() {
-     6→  return (
-      →…
 
 test/src/app/parent-container/page.tsx
-     2→import clsx from 'clsx';
-     3→import { useState } from 'react';
-     4→import { Drawer } from 'vaul';
      6→export default function Page() {
-     7→  return (
-     8→    <div className="h-screen flex flex-col gap-20 overflow-auto py-20">
-     9→      <Default />
-    10→      <WithNested />
-    11→    </div>
-    12→  );
-    13→}
-    15→function Default() {
-    39→function WithNested() {
 
 test/src/app/scrollable-page/page.tsx
-     3→import { useState } from 'react';
-     4→import { Drawer } from 'vaul';
      6→export default function Page() {
-     7→  const [open, setOpen] = useState(false);
-     8→
-     9→  return (
-    10→    <div
-      →…
 
 test/src/app/scrollable-with-inputs/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {
-     6→  return (
-     7→    <div className="w-screen h-screen bg-white p-8 flex justify-center items-center" data-vaul-drawer-wrapper="">
-     8→      <Drawer.Root>
-     9→        <Drawer.Trigger asChild>
-    10→          <button>Open Drawer</button>
-    11→        </Drawer.Trigger>
-    12→        <Drawer.Portal>
-      →…
 
 test/src/app/with-handle/page.tsx
-     3→import { clsx } from 'clsx';
-     4→import { useState } from 'react';
-     5→import { Drawer } from 'vaul';
-     7→const snapPoints = ['148px', '355px'];
+     7→const snapPoints …
      9→export default function Page() {
-    10→  const [snap, setSnap] = useState<number | string | null>(snapPoints[0]);
-    11→
-    12→  const activeSnapPointIndex = snapPoints.indexOf(snap as string);
-    13→
-      →…
 
 test/src/app/with-modal-false/page.tsx
-     3→import { clsx } from 'clsx';
-     4→import { useState } from 'react';
-     5→import { Drawer } from 'vaul';
-     7→const snapPoints = ['148px', '355px', 1];
+     7→const snapPoints …
      9→export default function Page() {
-    10→  const [snap, setSnap] = useState<number | string | null>(snapPoints[0]);
-    11→
-    12→  const activeSnapPointIndex = snapPoints.indexOf(snap as string);
-    13→
-      →…
 
 test/src/app/with-redirect/long-page/page.tsx
      3→export default function Page() {
-     4→  return (
-     5→    <div className="bg-zinc-100 space-y-10">
-      →…
 
 test/src/app/with-redirect/page.tsx
-     3→import Link from 'next/link';
-     4→import { Drawer } from 'vaul';
      6→export default function Page() {
-     7→  return (
-     8→    <div className="w-screen h-screen bg-white p-8 flex justify-center items-center">
-     9→      <Drawer.Root>
-    10→        <Drawer.Trigger asChild>
-      →…
 
 test/src/app/with-scaled-background/page.tsx
-     3→import { useState } from 'react';
-     4→import clsx from 'clsx';
-     5→import { Drawer } from 'vaul';
-     6→import { DrawerDirection } from 'vaul/src/types';
-     8→const CenteredContent = () => {
-    29→const DrawerContent = ({ drawerDirection }: { drawerDirection: DrawerDirection }) => {
     65→export default function Page() {
-    66→  const [direction, setDirection] = useState<DrawerDirection>('bottom');
-    67→
-    68→  return (
-    69→    <div
-      →…
 
 test/src/app/with-snap-points/page.tsx
-     3→import { clsx } from 'clsx';
-     4→import { useState } from 'react';
-     5→import { Drawer } from 'vaul';
-     7→const snapPoints = ['148px', '355px', 1];
+     7→const snapPoints …
      9→export default function Page() {
-    10→  const [snap, setSnap] = useState<number | string | null>(snapPoints[0]);
-    11→
-    12→  const activeSnapPointIndex = snapPoints.indexOf(snap as string);
-    13→
-      →…
 
 test/src/app/without-scaled-background/page.tsx
-     3→import { useState } from 'react';
-     4→import { Drawer } from 'vaul';
      6→export default function Page() {
-     7→  const [open, setOpen] = useState(false);
-     8→  const [parent, setParent] = useState<HTMLDivElement | null>(null);
-     9→
-    10→  return (
-      →…
 
 test/tailwind.config.ts
-     1→import type { Config } from 'tailwindcss';
-     3→const config: Config = {
-
-test/tests/base.spec.ts
 
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;
 
-test/tests/controlled.spec.ts
-
 test/tests/helpers.ts
-     4→export async function openDrawer(page: Page) {
-     5→  await expect(page.getByTestId('content')).not.toBeVisible();
-     6→  await page.getByTestId('trigger').click();
-      →…
-    11→export async function dragWithSpeed(
-    12→  page: Page,
-    13→  selector: string,
-    14→  startY: number,
-    15→  endY: number,
-    16→  speed: number = 10,
-    17→): Promise<void> {
-    18→  const startX = 0;
-    19→  const distance = Math.abs(endY - startY);
-      →…
+     4→export async function openDrawer …
+    11→export async function dragWithSpeed …
 
 test/tests/initial-snap.spec.ts
      8→const snapPointYPositions = {
-    15→const snapTo = async (page: Page, snapPointIndex: keyof typeof snapPointYPositions) => {
-    16→  await page.hover('[data-vaul-drawer]');
-    17→  await page.mouse.down();
-      →…
-
-test/tests/nested.spec.ts
-
-test/tests/non-dismissible.spec.ts
-
-test/tests/with-handle.spec.ts
-
-test/tests/with-redirect.spec.ts
-
-test/tests/with-scaled-background.spec.ts
-
-test/tests/without-scaled-background.spec.ts
+    15→const snapTo …
 
 test/tsconfig.json
-     2→  "compilerOptions": {
-    31→  },
-    32→  "include": [
-    37→  ],
-    38→  "exclude": [
-    40→  ]
-    41→}
 
 tsconfig.json
      2→  "compilerOptions": {

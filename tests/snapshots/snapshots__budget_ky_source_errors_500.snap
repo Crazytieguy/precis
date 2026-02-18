@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (429 words)
+budget: 500 (451 tokens)
 
 ForceRetryError.ts
      1→import type {ForceRetryOptions} from '../core/constants.js';
@@ -18,21 +18,6 @@ ForceRetryError.ts
     12→	customRequest: Request | undefined;
     13→
     14→	constructor(options?: ForceRetryOptions) {
-    15→		// Runtime protection: wrap non-Error causes in NonError
-    16→		// TypeScript type is Error for guidance, but JS users can pass anything
-    17→		const cause = options?.cause
-    18→			? (options.cause instanceof Error ? options.cause : new NonError(options.cause))
-    19→			: undefined;
-    20→
-    21→		super(
-    22→			options?.code ? `Forced retry: ${options.code}` : 'Forced retry',
-    23→			cause ? {cause} : undefined,
-    24→		);
-    25→
-    26→		this.customDelay = options?.delay;
-    27→		this.code = options?.code;
-    28→		this.customRequest = options?.request;
-    29→	}
 
 HTTPError.ts
      1→import type {NormalizedOptions} from '../types/options.js';
@@ -44,18 +29,6 @@ HTTPError.ts
      8→	public options: NormalizedOptions;
      9→
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
-    11→		const code = (response.status || response.status === 0) ? response.status : '';
-    12→		const title = response.statusText ?? '';
-    13→		const status = `${code} ${title}`.trim();
-    14→		const reason = status ? `status code ${status}` : 'an unknown error';
-    15→
-    16→		super(`Request failed with ${reason}: ${request.method} ${request.url}`);
-    17→
-    18→		this.name = 'HTTPError';
-    19→		this.response = response;
-    20→		this.request = request;
-    21→		this.options = options;
-    22→	}
 
 NonError.ts
      1→/**
@@ -68,23 +41,6 @@ NonError.ts
      8→	readonly value: unknown;
      9→
     10→	constructor(value: unknown) {
-    11→		let message = 'Non-error value was thrown';
-    12→
-    13→		// Intentionally minimal as this error is just an edge-case.
-    14→		try {
-    15→			if (typeof value === 'string') {
-    16→				message = value;
-    17→			} else if (value && typeof value === 'object' && 'message' in value && typeof value.message === 'string') {
-    18→				message = value.message;
-    19→			}
-    20→		} catch {
-    21→			// Use default message if accessing properties throws
-    22→		}
-    23→
-    24→		super(message);
-    25→
-    26→		this.value = value;
-    27→	}
 
 TimeoutError.ts
      1→import type {KyRequest} from '../types/request.js';
@@ -92,7 +48,3 @@ TimeoutError.ts
      4→	public request: KyRequest;
      5→
      6→	constructor(request: Request) {
-     7→		super(`Request timed out: ${request.method} ${request.url}`);
-     8→		this.name = 'TimeoutError';
-     9→		this.request = request;
-    10→	}

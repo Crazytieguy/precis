@@ -2,18 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (981 words)
+budget: 1000 (1003 tokens)
 
 __init__.py
      1→__all__ = [
      2→    "__version__",
-     3→    "PluginManager",
-     4→    "PluginValidationError",
-     5→    "HookCaller",
-     6→    "HookCallError",
-     7→    "HookspecOpts",
-     8→    "HookimplOpts",
-     9→    "HookImpl",
       →…
 
 _callers.py
@@ -22,125 +15,43 @@ _callers.py
     24→Teardown: TypeAlias = Generator[None, object, object]
 
 _hooks.py
-    28→_T …
-    29→_F …
-    31→_Namespace …
-    32→_Plugin …
-    33→_HookExec …
-    37→_HookImplFunction …
     40→class HookspecOpts(TypedDict):
-    41→    """Options for a hook specification."""
     42→
-    43→    #: Whether the hook is :ref:`first result only <firstresult>`.
-    44→    firstresult: bool
-    45→    #: Whether the hook is :ref:`historic <historic>`.
-    46→    historic: bool
-    47→    #: Whether the hook :ref:`warns when implemented <warn_on_impl>`.
-    48→    warn_on_impl: Warning | None
-    49→    #: Whether the hook warns when :ref:`certain arguments are requested
-    50→    #: <warn_on_impl>`.
-    51→    #:
-    52→    #: .. versionadded:: 1.5
-    53→    warn_on_impl_args: Mapping[str, Warning] | None
+      →…
     56→class HookimplOpts(TypedDict):
-    57→    """Options for a hook implementation."""
     58→
-    59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
-    60→    wrapper: bool
-    61→    #: Whether the hook implementation is an :ref:`old-style wrapper
-    62→    #: <old_style_hookwrappers>`.
-    63→    hookwrapper: bool
-    64→    #: Whether validation against a hook specification is :ref:`optional
-    65→    #: <optionalhook>`.
-    66→    optionalhook: bool
-    67→    #: Whether to try to order this hook implementation :ref:`first
-    68→    #: <callorder>`.
-    69→    tryfirst: bool
-    70→    #: Whether to try to order this hook implementation :ref:`last
-    71→    #: <callorder>`.
-    72→    trylast: bool
-    73→    #: The name of the hook specification to match, see :ref:`specname`.
-    74→    specname: str | None
-    77→@final
+      →…
     78→class HookspecMarker:
-    79→    """Decorator for marking functions as hook specifications.
-    80→
-    81→    Instantiate it with a project_name to get a decorator.
-    82→    Calling :meth:`PluginManager.add_hookspecs` later will discover all marked
-    83→    functions if the :class:`PluginManager` uses the same project name.
-    84→    """
     85→
     86→    __slots__ = ("project_name",)
     87→
-   164→@final
    165→class HookimplMarker:
-   166→    """Decorator for marking functions as hook implementations.
-   167→
-   168→    Instantiate it with a ``project_name`` to get a decorator.
-   169→    Calling :meth:`PluginManager.register` later will discover all marked
-   170→    functions if the :class:`PluginManager` uses the same project name.
-   171→    """
    172→
    173→    __slots__ = ("project_name",)
    174→
-   290→_PYPY …
-   358→@final
    359→class HookRelay:
-   360→    """Hook holder object for performing 1:N hook calls where N is the number
-   361→    of registered plugins."""
    362→
    363→    __slots__ = ("__dict__",)
    364→
-   377→_CallHistory …
    382→class HookCaller:
-   383→    """A caller of all registered implementations of a hook specification."""
    384→
-   385→    __slots__ = (
-   386→        "name",
-   387→        "spec",
-   388→        "_hookexec",
-   389→        "_hookimpls",
-   390→        "_call_history",
-   391→    )
-   392→
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
-   421→        return self.spec is not None
    423→    # TODO: Document, or make private.
    424→    def set_specification(
    425→        self,
    426→        specmodule_or_class: _Namespace,
    427→        spec_opts: HookspecOpts,
    428→    ) -> None:
-   429→        if self.spec is not None:
-   430→            raise ValueError(
-   431→                f"Hook {self.spec.name!r} is already registered "
-   432→                f"within namespace {self.spec.namespace}"
-   433→            )
-   434→        self.spec = HookSpec(specmodule_or_class, self.name, spec_opts)
-   435→        if spec_opts.get("historic"):
-   436→            self._call_history = []
    593→class _SubsetHookCaller(HookCaller):
    596→
-   597→    # This class is unusual: in inhertits from `HookCaller` so all of
-   598→    # the *code* runs in the class, but it delegates all underlying *data*
-   599→    # to the original HookCaller.
    618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
-   620→        return [
-   621→            impl
-   622→            for impl in self._orig._hookimpls
-   623→            if impl.plugin not in self._remove_plugins
-   624→        ]
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
-   628→        return self._orig.spec
    630→    @property
    631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
-   632→        return self._orig._call_history
-   638→@final
    639→class HookImpl:
-   640→    """A hook implementation in a :class:`HookCaller`."""
    641→
    642→    __slots__ = (
    643→        "function",
@@ -156,7 +67,6 @@ _hooks.py
    653→        "trylast",
    654→    )
    655→
-   696→@final
    697→class HookSpec:
    698→    __slots__ = (
    699→        "namespace",
@@ -172,68 +82,30 @@ _hooks.py
 
 _manager.py
     33→    import importlib.metadata
-    36→_BeforeTrace …
-    37→_AfterTrace …
     52→class PluginValidationError(Exception):
-    53→    """Plugin failed validation.
-    54→
-    55→    :param plugin: The plugin which failed validation.
-    56→    :param message: Error message.
-    57→    """
     58→
     65→class DistFacade:
-    66→    """Emulate a pkg_resources Distribution"""
     67→
     71→    @property
     72→    def project_name(self) -> str:
-    73→        name: str = self.metadata["name"]
-    74→        return name
     83→class PluginManager:
-    84→    """Core class which manages registration of plugin objects and 1:N hook
-    85→    calling.
-    86→
-    87→    You can register new hooks by calling :meth:`add_hookspecs(module_or_class)
-    88→    <PluginManager.add_hookspecs>`.
-    89→
-    90→    You can register plugin objects (which contain hook implementations) by
-    91→    calling :meth:`register(plugin) <PluginManager.register>`.
-    92→
-      →…
     99→
 
 _result.py
-    16→_ExcInfo …
     20→class HookCallError(Exception):
-    21→    """Hook was called incorrectly."""
-    24→@final
     25→class Result(Generic[ResultType]):
-    26→    """An object used to inspect and set the result in a :ref:`hook wrapper
-    27→    <hookwrappers>`."""
     28→
     29→    __slots__ = ("_result", "_exception", "_traceback")
     30→
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
     44→        """:meta private:"""
-    45→        exc = self._exception
-    46→        if exc is None:
-    47→            return None
-    48→        else:
-    49→            return (type(exc), exc, self._traceback)
     51→    @property
     52→    def exception(self) -> BaseException | None:
     53→        """:meta private:"""
-    54→        return self._exception
     56→    @classmethod
     57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
     58→        """:meta private:"""
-    59→        __tracebackhide__ = True
-    60→        result = exception = None
-    61→        try:
-    62→            result = func()
-    63→        except BaseException as exc:
-    64→            exception = exc
-    65→        return cls(result, exception)
 
 _tracing.py
     16→class TagTracer:
@@ -241,24 +113,8 @@ _tracing.py
 
 _warnings.py
      4→class PluggyWarning(UserWarning):
-     5→    """Base class for all warnings emitted by pluggy."""
      6→
-     7→    __module__ = "pluggy"
-    10→@final
+      →…
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
-    12→    """A plugin raised an exception during an :ref:`old-style hookwrapper
-    13→    <old_style_hookwrappers>` teardown.
-    14→
-    15→    Such exceptions are not handled by pluggy, and may cause subsequent
-    16→    teardowns to be executed at unexpected times, or be skipped entirely.
-    17→
-    18→    This is an issue in the plugin implementation.
-    19→
-    20→    If the exception is unintended, fix the underlying cause.
-    21→
-    22→    If the exception is intended, switch to :ref:`new-style hook wrappers
-    23→    <hookwrappers>`, or use :func:`result.force_exception()
-    24→    <pluggy.Result.force_exception>` to set the exception instead of raising.
-    25→    """
     26→
     27→    __module__ = "pluggy"

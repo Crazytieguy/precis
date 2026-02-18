@@ -2,80 +2,34 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (510 tokens)
 
 README.md
     91→# Documentation
     93→- [Sandbox examples](#sandbox-examples)
-    94→- [Getting Started](#getting-started)
-    95→- [API Reference](#api-reference)
-    96→  - [`match`](#match)
-    97→  - [`.with`](#with)
-    98→  - [`.when`](#when)
-    99→  - [`.returnType`](#returntype)
-   100→  - [`.exhaustive`](#exhaustive)
       →…
 
 benchmarks/package.json
 
-docs/v3-to-v4-migration-guide.md
-
-docs/v4-to-v5-migration-guide.md
-
-examples/gif-fetcher/src/App.tsx
-    42→const reducer …
-    75→export default function App() {
-
-examples/gif-fetcher/src/constants.ts
-     1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
-
-examples/gif-fetcher/src/searchGif.ts
-     6→export function searchGif(query: string) {
-
-examples/one-file-demo/one-file-demo.ts
-    79→const example3 …
-
-jsr.json
-
-package.json
-
 src/errors.ts
      1→/**
-     2→ * Error when the given input value does not match any included pattern
-     3→ * and .exhaustive() was specified
-     4→ */
+      →…
      5→export class NonExhaustiveError extends Error {
 
 src/index.ts
 
 src/internals/helpers.ts
      7→import * as symbols from './symbols';
-     8→import { SelectionType } from '../types/FindSelected';
-     9→import { Pattern, Matcher, MatcherType, AnyMatcher } from '../types/Pattern';
-    12→export const isObject …
-    16→export const isMatcher …
     24→const isOptionalPattern …
-    32→export const matchPattern …
-   120→export const getSelectionKeys …
-   132→export const flatMap …
 
 src/internals/symbols.ts
      1→/**
      2→ * Symbols used internally within ts-pattern to construct and discriminate
-     3→ * Guard, Not, and Select, and AnonymousSelect patterns
-     4→ *
       →…
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
 
 src/is-matching.ts
-     6→/**
-     7→ * This constraint allows using additional properties
-      →…
-    11→type PatternConstraint<T> = T extends readonly any[]
-    12→  ? P.Pattern<T>
-    13→  : T extends object
-    14→  ? P.Pattern<T> & UnknownProperties
-    15→  : P.Pattern<T>;
+    11→type PatternConstraint …
 
 src/match.ts
     32→export function match …
@@ -85,61 +39,22 @@ src/match.ts
 
 src/patterns.ts
      8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
-    81→export type unstable_Matchable …
-   100→export type unstable_Matcher …
-   116→export type infer …
-   131→export type narrow …
    187→export function optional …
    536→export function intersection …
    572→export function union …
    611→export function not …
-   782→export const any …
-   793→export const unknown …
-   805→export const _ …
-   928→export const string …
-  1075→export const number …
-  1201→export const bigint …
-  1211→export const boolean …
-  1221→export const symbol …
-  1231→export const nullish …
-  1241→export const nonNullable …
   1251→export function instanceOf …
 
-src/types/BuildMany.ts
-
-src/types/DeepExclude.ts
-
 src/types/DistributeUnions.ts
-    41→export type DistributeMatchingUnions …
-    80→export type FindUnions …
-
-src/types/ExtractPreciseValue.ts
-
-src/types/FindSelected.ts
 
 src/types/InvertPattern.ts
-   106→export type InvertPattern …
-   303→export type InvertPatternForExclude …
-
-src/types/IsMatching.ts
 
 src/types/Match.ts
-    10→interface NonExhaustiveError<i> {
-    11→  __nonExhaustive: never;
-    12→}
-    14→interface TSPatternError<i> {
-    15→  __nonExhaustive: never;
-    16→}
-    22→export type Match …
    132→  with …
    245→type DeepExcludeAll …
    261→type Exhaustive …
 
 src/types/Pattern.ts
-    43→/**
-    44→ * A `Matcher` is an object implementing the match
-    45→ * protocol. It must define a `symbols.matcher` property
-      →…
     50→export interface Matcher<
     51→  input,
     52→  narrowed,
@@ -157,29 +72,10 @@ src/types/Pattern.ts
     64→    selections,
     65→    excluded
     66→  >;
-    67→  // only used for array matchers
-    68→  [symbols.isVariadic]?: boolean;
-    69→}
+      →…
    132→export interface Override<a> {
-   133→  [symbols.override]: a;
-   134→}
-   157→export type Pattern …
    269→      select …
    678→      select …
 
 src/types/helpers.ts
-    14→export type LeastUpperBound …
-   182→export type GuardValue …
    266→export interface Fn {
-   267→  input: unknown;
-   268→  output: unknown;
-   269→}
-
-tests/tsconfig.json
-
-tests/types-catalog/definition.ts
-
-tests/types-catalog/utils.ts
-     4→export const some …
-
-tsconfig.json

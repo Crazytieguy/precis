@@ -2,69 +2,23 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (495 tokens)
 
 error.ts
-    16→/**
-    17→ * `StructError` objects are thrown (or returned) when validation fails.
-    18→ *
-    19→ * Validation logic is design to exit early for maximum performance. The error
-    20→ * represents the first error encountered during validation. For more detail,
-    21→ * the `error.failures` property is a generator function that can be run to
-    22→ * continue validation and receive all the failures in the data.
-    23→ */
-    24→
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
     28→  type!: string
-    29→  refinement!: string | undefined
-    30→  path!: Array<any>
-    31→  branch!: Array<any>
-    32→  failures: () => Array<Failure>;
-    33→  [x: string]: any
-    34→
-    35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
-    36→    let cached: Array<Failure> | undefined
-    37→    const { message, explanation, ...rest } = failure
-    38→    const { path } = failure
-    39→    const msg =
-      →…
+    35→  constructor …
 
 struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
-     4→/**
-     5→ * `Struct` objects encapsulate the validation logic for a specific type of
-     6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
-     7→ * validate unknown input data against the struct.
-     8→ */
-     9→
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
     13→  schema: S
-    14→  coercer: (value: unknown, context: Context) => unknown
-    15→  validator: (value: unknown, context: Context) => Iterable<Failure>
-    16→  refiner: (value: T, context: Context) => Iterable<Failure>
-    17→  entries: (
-    18→    value: unknown,
-    19→    context: Context
-    20→  ) => Iterable<[string | number, unknown, Struct<any> | Struct<never>]>
-    21→
-    22→  constructor(props: {
-    23→    type: string
-    24→    schema: S
-    25→    coercer?: Coercer
-    26→    validator?: Validator
-    27→    refiner?: Refiner<T>
-    28→    entries?: Struct<T, S>['entries']
-    29→  }) {
-    30→    const {
-    31→      type,
-    32→      schema,
-    33→      validator,
-      →…
+    22→  constructor …
     67→  assert …
     75→  create …
     83→  is …
@@ -82,17 +36,15 @@ structs/refinements.ts
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
 
 structs/types.ts
-    33→export function array<T extends Struct<any>>(Element?: T): any {
-   105→export function enums<U extends string | number, T extends readonly U[]>(
-   106→  values: T
-   107→): any {
-   204→export function literal<T>(constant: T): any {
-   230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
-   298→export function object<S extends ObjectSchema>(schema?: S): any {
-   415→export function set<T>(Element?: Struct<T>): any {
+    33→export function array …
+   105→export function enums …
+   204→export function literal …
+   230→export function map …
+   298→export function object …
+   415→export function set …
 
 structs/utilities.ts
-    60→export function assign(...Structs: Struct<any>[]): any {
+    60→export function assign …
 
 utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
@@ -102,8 +54,6 @@ utils.ts
      6→ */
      7→
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
-     9→  return isObject(x) && typeof x[Symbol.iterator] === 'function'
-    10→}
     16→export function isObject …
     24→export function isNonArrayObject …
     32→export function isPlainObject …

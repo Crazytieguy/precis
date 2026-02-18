@@ -2,77 +2,35 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (483 words)
+budget: 500 (489 tokens)
 
 __init__.py
-    34→config: TypeCheckConfiguration
 
 _checkers.py
     42→from typing_extensions import is_typeddict
-    81→TypeCheckerCallable: TypeAlias = Callable[
-    84→TypeCheckLookupCallback: TypeAlias = Callable[
-    88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
-    89→generic_alias_types: tuple[type, ...] = (
     98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS = {
-   586→def _is_literal_type(typ: object) -> bool:
+   586→def _is_literal_type …
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
 
 _config.py
-    11→T = TypeVar("T")
-    14→class ForwardRefPolicy(Enum):
-    24→
-      →…
-    30→class CollectionCheckStrategy(Enum):
-    48→
-    62→@dataclass
     63→class TypeCheckConfiguration:
-    64→    """
-    65→     You can change Typeguard's behavior with these settings.
-    66→
-    67→    .. attribute:: typecheck_fail_callback
-    68→       :type: Callable[[TypeCheckError, TypeCheckMemo], Any]
-    69→
-    70→         Callable that is called when type checking fails.
-    71→
-    72→         Default: ``None`` (the :exc:`~.TypeCheckError` is raised directly)
-    73→
-    74→    .. attribute:: forward_ref_policy
-    75→       :type: ForwardRefPolicy
-    76→
-      →…
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
     99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
    100→    collection_check_strategy: CollectionCheckStrategy = (
    101→        CollectionCheckStrategy.FIRST_ITEM
-   102→    )
-   103→    debug_instrumentation: bool = False
+      →…
 
 _decorators.py
 
 _exceptions.py
-     5→class TypeHintWarning(UserWarning):
-    12→class TypeCheckWarning(UserWarning):
-    14→
-    19→class InstrumentationWarning(UserWarning):
-    21→
-    26→class TypeCheckError(Exception):
-    30→
 
 _functions.py
-    24→T = TypeVar("T")
-    25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
 
 _importhook.py
-    40→P = ParamSpec("P")
-    41→T = TypeVar("T")
-    44→# The name of this function is magical
-    45→def _call_with_frames_removed(
-    46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
-    47→) -> T:
-    55→class TypeguardLoader(SourceFileLoader):
+    45→def _call_with_frames_removed …
     56→    @staticmethod
     57→    def source_to_code(
     58→        data: Buffer | str | ast.Module | ast.Expression | ast.Interactive,
@@ -85,67 +43,26 @@ _importhook.py
     65→        else:
     66→            filename = os.fsdecode(bytes(path))
     67→
-    68→        if isinstance(data, (ast.Module, ast.Expression, ast.Interactive)):
-    69→            module = data
-    70→        else:
       →…
-   109→class TypeguardFinder(MetaPathFinder):
-   119→
-   156→class ImportHookManager:
-   160→
 
 _memo.py
-     8→class TypeCheckMemo:
-    34→
 
 _pytest_plugin.py
 
 _suppression.py
-    15→P = ParamSpec("P")
-    16→T = TypeVar("T")
 
 _transformer.py
-    67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
-    68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
-   117→@dataclass
    118→class TransformMemo:
    119→    node: Module | ClassDef | FunctionDef | AsyncFunctionDef | None
    120→    parent: TransformMemo | None
    121→    path: tuple[str, ...]
    122→    joined_path: Constant = field(init=False)
    123→    return_annotation: expr | None = None
-   124→    yield_annotation: expr | None = None
-   125→    send_annotation: expr | None = None
-   126→    is_async: bool = False
-   127→    local_names: set[str] = field(init=False, default_factory=set)
-   128→    imported_names: dict[str, str] = field(init=False, default_factory=dict)
-   129→    ignored_names: set[str] = field(init=False, default_factory=set)
-   130→    load_names: defaultdict[str, dict[str, Name]] = field(
-   131→        init=False, default_factory=lambda: defaultdict(dict)
-   132→    )
-   133→    has_yield_expressions: bool = field(init=False, default=False)
-   134→    has_return_expressions: bool = field(init=False, default=False)
-   135→    memo_var_name: Name | None = field(init=False, default=None)
-   136→    should_instrument: bool = field(init=False, default=True)
-   137→    variable_annotations: dict[str, expr] = field(init=False, default_factory=dict)
-   138→    configuration_overrides: dict[str, Any] = field(init=False, default_factory=dict)
-   139→    code_inject_index: int = field(init=False, default=0)
-   140→
-   285→class NameCollector(NodeVisitor):
-   313→class GeneratorDetector(NodeVisitor):
-   315→
-   338→class AnnotationTransformer(NodeTransformer):
-   339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
-   488→class TypeguardTransformer(NodeTransformer):
-   516→    @contextmanager
-   517→    def _use_memo(
-   518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
-   519→    ) -> Generator[None, Any, None]:
-   570→    def _get_import(self, module: str, name: str) -> Name:
-   580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
+   517→    def _use_memo …
+   570→    def _get_import …
+   580→    def _convert_annotation …
 
 _utils.py
-   172→@final
    173→class Unset:
    174→    __slots__ = ()
    175→

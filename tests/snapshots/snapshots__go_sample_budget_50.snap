@@ -4,13 +4,6 @@ expression: output
 ---
 sample.go
      4→import "fmt"
-     7→type Token struct {
     13→type TokenKind int
     15→const (
-    22→type Visitor interface {
-    28→func Process(input string) ([]Token, error) {
-    35→type TokenParser[T any] struct {
-    41→func NewTokenParser[T any](source string) *TokenParser[T] {
-    46→func (p *TokenParser[T]) Parse() []Token {
     53→type Span = [2]int
-    60→func (t Token) String() string {
