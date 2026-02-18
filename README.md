@@ -61,3 +61,7 @@ Line numbers use a right-aligned format with an arrow separator (e.g. `    12→
 - **YAML** (`.yaml`, `.yml`) — top-level keys as sections (lockfiles excluded)
 
 Code languages and JSON use tree-sitter grammars with query files defining which node types count as symbols, how to extract signatures, and what signals "public". Config file formats (TOML, YAML) use text-based heuristics to extract top-level structure as sections.
+
+## Development
+
+**Dogfooding:** Use precis itself for codebase exploration during development (e.g. `cargo run -- .` to get an overview before making changes). The main intended use case is replacing general-purpose "explore the codebase" workflows with a structured summary. If precis output is inconvenient for a task, that's a signal the tool can be improved.

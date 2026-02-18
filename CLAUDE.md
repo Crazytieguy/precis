@@ -11,6 +11,10 @@ A CLI tool that extracts a token-efficient summary of a codebase.
 
 See @README.md for design decisions.
 
+## Codebase Exploration
+
+Use precis itself to explore this codebase instead of spawning Explore subagents. Run `cargo run -- .` or `cargo run -- src/` to get an overview. If precis output isn't sufficient for a task, that's a signal the tool should be improved — note it in `issues.md`.
+
 ## Documentation
 
 API docs for this crate and its dependencies are at @target/doc-md/index.md. Always run `cargo doc-md` after changing dependencies in Cargo.toml, or if `target/doc-md/` is missing docs for an installed crate.
