@@ -260,6 +260,7 @@ cmdk/package.json
     45→  },
     46→  "homepage": "https://github.com/pacocoursey/cmdk#readme",
     47→  "author": {
+    50→  }
     51→}
 cmdk/src/command-score.ts
     54→function commandScoreInner(
@@ -366,11 +367,7 @@ cmdk/src/index.tsx
   1052→    fns.current = new Map()
   1053→  }, [s])
   1054→
-  1055→  return (id: string | number, cb: () => void) => {
-  1056→    fns.current.set(id, cb)
-  1057→    ss({})
-  1058→  }
-  1059→}
+      →…
   1061→function renderChildren(children: React.ReactElement) {
   1071→function SlottableWithNestedChildren(
   1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
@@ -387,6 +384,7 @@ package.json
     21→  },
     22→  "packageManager": "pnpm@8.8.0",
     23→  "lint-staged": {
+    27→  }
     28→}
 playwright.config.ts
      1→import { PlaywrightTestConfig, devices } from '@playwright/test'
@@ -399,6 +397,7 @@ test/package.json
      4→  "scripts": {
      6→  },
      7→  "dependencies": {
+    17→  }
     18→}
 test/pages/_app.tsx
      1→import '../style.css'
@@ -437,6 +436,7 @@ website/components/code/index.tsx
      7→const theme = {
     41→export function Code({ children }: { children: string }) {
     42→  return (
+    43→    <Highlight {...defaultProps} theme={theme} code={children} language="jsx">
       →…
 website/components/icons/index.tsx
      1→import styles from './icons.module.scss'
@@ -467,6 +467,7 @@ website/package.json
     38→  "lint-staged": {
     42→  },
     43→  "husky": {
+    47→  }
     48→}
 website/pages/_app.tsx
     17→export default function App({ Component, pageProps }: AppProps) {
@@ -482,6 +483,8 @@ website/pages/index.tsx
    137→//////////////////////////////////////////////////////////////////
    138→
    139→const themes = [
+   140→  {
+      →…
    260→//////////////////////////////////////////////////////////////////
    261→
    262→function Codeblock() {
@@ -496,4 +499,5 @@ website/tsconfig.json
     21→}
 website/vercel.json
      2→  "headers": [
+    12→  ]
     13→}

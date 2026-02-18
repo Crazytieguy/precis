@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (996 words)
+budget: 1000 (997 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -106,6 +106,7 @@ cmdk/package.json
     45→  },
     46→  "homepage": "https://github.com/pacocoursey/cmdk#readme",
     47→  "author": {
+    50→  }
     51→}
 cmdk/src/command-score.ts
     54→function commandScoreInner(
@@ -168,7 +169,6 @@ cmdk/src/index.tsx
    962→
    963→function findNextSibling(el: Element, selector: string) {
    964→  let sibling = el.nextElementSibling
-   965→
       →…
    972→function findPreviousSibling …
    981→function useAsRef …
@@ -176,13 +176,11 @@ cmdk/src/index.tsx
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1005→  const store = useStore()
-  1006→  const cb = () => selector(store.snapshot())
       →…
   1010→function useValue …
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
   1047→  const [s, ss] = React.useState<object>()
-  1048→  const fns = useLazyRef(() => new Map<string | number, () => void>())
       →…
   1061→function renderChildren …
   1071→function SlottableWithNestedChildren …
@@ -197,6 +195,7 @@ package.json
     21→  },
     22→  "packageManager": "pnpm@8.8.0",
     23→  "lint-staged": {
+    27→  }
     28→}
 playwright.config.ts
      1→import { PlaywrightTestConfig, devices } from '@playwright/test'
@@ -209,6 +208,7 @@ test/package.json
      4→  "scripts": {
      6→  },
      7→  "dependencies": {
+    17→  }
     18→}
 test/pages/_app.tsx
      1→import '../style.css'
@@ -238,6 +238,8 @@ website/components/cmdk/framer.tsx
 website/components/cmdk/linear.tsx
      3→export function LinearCMDK() {
     30→const items = [
+    31→  {
+      →…
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
 website/components/cmdk/vercel.tsx
@@ -247,6 +249,7 @@ website/components/code/index.tsx
      7→const theme = {
     41→export function Code({ children }: { children: string }) {
     42→  return (
+    43→    <Highlight {...defaultProps} theme={theme} code={children} language="jsx">
       →…
 website/components/icons/index.tsx
      1→import styles from './icons.module.scss'
@@ -266,6 +269,7 @@ website/package.json
     38→  "lint-staged": {
     42→  },
     43→  "husky": {
+    47→  }
     48→}
 website/pages/_app.tsx
     17→export default function App({ Component, pageProps }: AppProps) {
@@ -281,6 +285,8 @@ website/pages/index.tsx
    137→//////////////////////////////////////////////////////////////////
    138→
    139→const themes = [
+   140→  {
+      →…
    260→//////////////////////////////////////////////////////////////////
    261→
    262→function Codeblock() {
@@ -295,4 +301,5 @@ website/tsconfig.json
     21→}
 website/vercel.json
      2→  "headers": [
+    12→  ]
     13→}

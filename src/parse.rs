@@ -208,6 +208,10 @@ fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
             tree_sitter_md::LANGUAGE.into(),
             include_str!("../queries/markdown.scm"),
         )),
+        (Lang::Json, _) => Some((
+            tree_sitter_json::LANGUAGE.into(),
+            include_str!("../queries/json.scm"),
+        )),
         // Config file langs have no tree-sitter grammar; handled by extract_config_symbols
         _ => None,
     }
@@ -225,8 +229,8 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         None => return vec![],
     };
 
-    // Config files: text-based extraction (no tree-sitter)
-    if matches!(lang, Lang::Json | Lang::Toml | Lang::Yaml) {
+    // Config files without tree-sitter grammars: text-based extraction
+    if matches!(lang, Lang::Toml | Lang::Yaml) {
         return extract_config_symbols(source, lang);
     }
 
@@ -411,8 +415,8 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             // Python
             "function_definition" => SymbolKind::Function,
             "class_definition" => SymbolKind::Class,
-            // Markdown
-            "atx_heading" | "setext_heading" => SymbolKind::Section,
+            // Markdown / JSON
+            "atx_heading" | "setext_heading" | "pair" => SymbolKind::Section,
             // Imports
             "use_declaration" => SymbolKind::Import,              // Rust
             "import_statement" => {
@@ -528,7 +532,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             match lang {
                 Lang::Go => name.starts_with(|c: char| c.is_ascii_uppercase()),
                 Lang::Python => !name.starts_with('_') || (name.starts_with("__") && name.ends_with("__")),
-                Lang::Markdown => true,
+                Lang::Markdown | Lang::Json => true,
                 // C: non-static symbols are public; underscore-prefixed names are conventionally private
                 Lang::C => !is_c_static(symbol_node, source) && !name.starts_with('_'),
                 _ => is_public_symbol(symbol_node, source),
@@ -574,75 +578,10 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
 /// are extracted as Section symbols (analogous to markdown headings).
 fn extract_config_symbols(source: &str, lang: Lang) -> Vec<Symbol> {
     match lang {
-        Lang::Json => extract_json_symbols(source),
         Lang::Toml => extract_toml_symbols(source),
         Lang::Yaml => extract_yaml_symbols(source),
         _ => vec![],
     }
-}
-
-/// Extract top-level keys from a JSON object as Section symbols.
-/// Uses indentation to detect top-level keys in pretty-printed JSON.
-fn extract_json_symbols(source: &str) -> Vec<Symbol> {
-    let lines: Vec<&str> = source.lines().collect();
-    if lines.is_empty() {
-        return vec![];
-    }
-
-    // Find the opening `{` — only extract from objects, not arrays
-    let open_idx = match lines.iter().position(|l| l.trim_start().starts_with('{')) {
-        Some(i) => i,
-        None => return vec![],
-    };
-
-    // Detect the indentation of the first top-level key
-    let key_indent = lines
-        .iter()
-        .skip(open_idx + 1)
-        .find_map(|line| {
-            let trimmed = line.trim_start();
-            if trimmed.starts_with('"') {
-                Some(line.len() - trimmed.len())
-            } else {
-                None
-            }
-        });
-    let key_indent = match key_indent {
-        Some(i) => i,
-        None => return vec![],
-    };
-
-    // Collect top-level keys at key_indent
-    let mut entries: Vec<(usize, String)> = Vec::new();
-    for (i, line) in lines.iter().enumerate().skip(open_idx + 1) {
-        let trimmed = line.trim_start();
-        let indent = line.len() - trimmed.len();
-        if indent == key_indent
-            && trimmed.starts_with('"')
-            && let Some(end_q) = trimmed[1..].find('"')
-        {
-            entries.push((i, trimmed[1..1 + end_q].to_string()));
-        }
-    }
-
-    // Build symbols: each key spans until the next key's line
-    let mut symbols = Vec::new();
-    for (idx, (line_0, name)) in entries.iter().enumerate() {
-        let end_line = if idx + 1 < entries.len() {
-            entries[idx + 1].0
-        } else {
-            lines.len()
-        };
-        symbols.push(Symbol {
-            kind: SymbolKind::Section,
-            name: name.clone(),
-            is_public: true,
-            is_first_party: false,
-            line: line_0 + 1,
-            end_line,
-        });
-    }
-    symbols
 }
 
 /// Extract section headers and top-level keys from TOML as Section symbols.

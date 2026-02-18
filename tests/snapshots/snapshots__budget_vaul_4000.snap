@@ -34,6 +34,7 @@ package.json
     64→  },
     65→  "packageManager": "pnpm@8.8.0",
     66→  "dependencies": {
+    68→  }
     69→}
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
@@ -680,6 +681,7 @@ test/package.json
     11→  "devDependencies": {
     20→  },
     21→  "dependencies": {
+    28→  }
     29→}
 test/src/app/controlled/page.tsx
      3→import { useState } from 'react';
@@ -748,8 +750,7 @@ test/src/app/layout.tsx
     14→    <html lang="en">
     15→      <body className={inter.className}>{children}</body>
     16→    </html>
-    17→  );
-    18→}
+      →…
 test/src/app/nested-drawers/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {
@@ -787,8 +788,6 @@ test/src/app/page.tsx
      7→    <div className="w-scareen h-screen bg-white p-8 flex flex-col justify-center gap-6 items-center">
      8→      <Link href="/with-scaled-background">With scaled background</Link>
      9→      <Link href="/without-scaled-background">Without scaled background</Link>
-    10→      <Link href="/with-snap-points">With snap points</Link>
-    11→      <Link href="/with-modal-false">With modal false</Link>
       →…
 test/src/app/parent-container/page.tsx
      2→import clsx from 'clsx';
@@ -935,6 +934,7 @@ test/tests/initial-snap.spec.ts
     15→const snapTo = async (page: Page, snapPointIndex: keyof typeof snapPointYPositions) => {
     16→  await page.hover('[data-vaul-drawer]');
     17→  await page.mouse.down();
+    18→  await page.mouse.move(0, snapPointYPositions[snapPointIndex]);
       →…
 test/tests/nested.spec.ts
      2→import { ANIMATION_DURATION } from './constants';
@@ -955,6 +955,7 @@ test/tsconfig.json
     32→  "include": [
     37→  ],
     38→  "exclude": [
+    40→  ]
     41→}
 tsconfig.json
      2→  "compilerOptions": {
@@ -964,4 +965,5 @@ tsconfig.json
 turbo.json
      2→  "$schema": "https://turbo.build/schema.json",
      3→  "pipeline": {
+    11→  }
     12→}

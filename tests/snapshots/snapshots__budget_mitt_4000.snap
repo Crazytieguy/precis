@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (1433 words)
+budget: 4000 (1437 words)
 
 README.md
      9→# Mitt
@@ -200,6 +200,7 @@ package.json
     58→  "prettier": {
     61→  },
     62→  "devDependencies": {
+    84→  }
     85→}
 src/index.ts
      1→export type EventType = string | symbol;
@@ -334,4 +335,5 @@ tsconfig.json
      3→	"compilerOptions": {
     10→	},
     11→	"include": [
+    14→	]
     15→}

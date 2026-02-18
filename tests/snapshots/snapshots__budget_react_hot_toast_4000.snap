@@ -112,6 +112,7 @@ site/components/code.tsx
      6→} from 'prism-react-renderer';
      8→const theme: PrismTheme = {
      9→  plain: {
+    10→    backgroundColor: '#351e11',
       →…
    104→export const Code: React.FC<{
    105→  snippet: string;
@@ -127,9 +128,11 @@ site/components/docs-layout.tsx
      6→import Logo from '../assets/logo-small.svg';
      8→const TableItem: React.FC<{
      9→  href: string;
+    10→  children?: React.ReactNode;
       →…
     19→const TableHeader: React.FC<{
     20→  children?: React.ReactNode;
+    21→}> = ({ children }) => (
       →…
     27→export default function DocsLayout({ meta, children }) {
     28→  return (
@@ -204,11 +207,13 @@ site/next.config.mjs
     18→    config.module.rules.push({
     19→      test: /\.svg$/,
     20→      use: ['@svgr/webpack'],
+    21→    });
       →…
     24→  async rewrites() {
     25→    return [
     26→      {
     27→        source: '/bee.js',
+    28→        destination: 'https://cdn.splitbee.io/sb.js',
       →…
 site/package.json
      2→  "name": "site",
@@ -217,6 +222,7 @@ site/package.json
      8→  "dependencies": {
     24→  },
     25→  "devDependencies": {
+    34→  }
     35→}
 site/pages/_app.tsx
      1→import '../styles/tailwind-utils.css';
@@ -281,6 +287,7 @@ site/tsconfig.json
     22→  "include": [
     31→  ],
     32→  "exclude": [
+    34→  ]
     35→}
 site/types/svg.d.ts
      1→interface SvgrComponent
@@ -299,7 +306,6 @@ src/components/checkmark.tsx
     36→  opacity: 0;
     37→  height: 20px;
     38→  border-radius: 10px;
-    39→  background: ${(p) => p.primary || '#61d345'};
       →…
 src/components/error.tsx
      1→import { styled, keyframes } from 'goober';
@@ -315,7 +321,6 @@ src/components/error.tsx
     40→  opacity: 0;
     41→  height: 20px;
     42→  border-radius: 10px;
-    43→  background: ${(p) => p.primary || '#ff4b4b'};
       →…
 src/components/loader.tsx
      1→import { styled, keyframes } from 'goober';
@@ -329,7 +334,6 @@ src/components/loader.tsx
     19→  height: 12px;
     20→  box-sizing: border-box;
     21→  border: 2px solid;
-    22→  border-radius: 100%;
       →…
 src/components/toast-bar.tsx
      1→import * as React from 'react';
@@ -380,7 +384,6 @@ src/components/toast-bar.tsx
     77→    const animationStyle: React.CSSProperties = toast.height
     78→      ? getAnimationStyle(
     79→          toast.position || position || 'top-center',
-    80→          toast.visible
       →…
 src/components/toast-icon.tsx
      1→import * as React from 'react';
@@ -397,7 +400,6 @@ src/components/toast-icon.tsx
     34→  transform: scale(0.6);
     35→  opacity: 0.4;
     36→  min-width: 20px;
-    37→  animation: ${enter} 0.3s 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275)
       →…
     41→export type IconThemes = Partial<{
     42→  success: CheckmarkTheme;
@@ -1113,6 +1115,7 @@ test/toast.test.tsx
 tsconfig.json
      3→  "include": ["src", "types", "test"],
      4→  "compilerOptions": {
+    32→  }
     33→}
 tsup.config.ts
      1→import { defineConfig, Options } from 'tsup';
@@ -1120,4 +1123,5 @@ tsup.config.ts
      4→const commonConfig: Options = {
      5→  minify: true,
      6→  dts: true,
+     7→  format: ['esm', 'cjs'],
       →…

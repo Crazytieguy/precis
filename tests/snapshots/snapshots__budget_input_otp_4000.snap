@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3912 words)
+budget: 4000 (3906 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -75,21 +75,6 @@ README.md
     61→          <Slot key={idx} {...slot} />
     62→        ))}
     63→      </div>
-    64→    </>
-    65→  )}
-    66→/>
-    67→
-    68→// Feel free to copy. Uses @shadcn/ui tailwind colors.
-    69→function Slot(props: SlotProps) {
-    70→  return (
-    71→    <div
-    72→      className={cn(
-    73→        'relative w-10 h-14 text-[2rem]',
-    74→        'flex items-center justify-center',
-    75→        'transition-all duration-300',
-    76→        'border-border border-y border-r first:border-l first:rounded-l-md last:rounded-r-md',
-    77→        'group-hover:border-accent-foreground/20 group-focus-within:border-accent-foreground/20',
-    78→        'outline outline-0 outline-accent-foreground/20',
       →…
    136→## How it works
    138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
@@ -119,21 +104,6 @@ README.md
    163→
    164→Stripe was my first inspiration to build this library.
    165→
-   166→Take a look at Stripe's input. The screen reader does not behave like it normally should on a normal single input.
-   167→That's because Stripe's solution is to render a 1-digit input with "clone-divs" rendering a single char per div.
-   168→
-   169→https://github.com/guilhermerodz/input-otp/assets/10366880/3d127aef-147c-4f28-9f6c-57a357a802d0
-   170→
-   171→So we're rendering a single input with invisible/transparent colors instead.
-   172→The screen reader now gets to read it, but there is no appearance. Feel free to build whatever UI you want:
-   173→
-   174→https://github.com/guilhermerodz/input-otp/assets/10366880/718710f0-2198-418c-8fa0-46c05ae5475d
-   175→
-   176→</details>
-   177→
-   178→<details>
-   179→<summary>Supports all keybindings</summary>
-   180→
       →…
    198→### Auto tracks if the input has space in the right side for the badge
    200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
@@ -174,6 +144,8 @@ README.md
    238→
    239→  // Virtual keyboard appearance on mobile
    240→  // Default: 'numeric'
+   241→  inputMode?: 'numeric' | 'text' | 'decimal' | 'tel' | 'search' | 'email' | 'url'
+   242→
       →…
    293→## Examples
    298→```tsx
@@ -199,21 +171,6 @@ README.md
    318→
    319→<details>
    320→<summary>Automatically focus the input when the page loads</summary>
-   321→
-   322→```tsx
-   323→export default function Page() {
-   324→  return (
-   325→    <form ref={formRef}>
-   326→      <OTPInput
-   327→        autoFocus
-   328→        // Pro tip: accepts all common HTML input props...
-   329→      />
-   330→    </form>
-   331→  )
-   332→}
-   333→```
-   334→</details>
-   335→
       →…
    377→## Caveats
    382→By default, `input-otp` handles password managers for you.
@@ -239,21 +196,6 @@ README.md
    402→
    403→<details>
    404→<summary>[Setting] If you want to customize the `noscript` CSS fallback</summary>
-   405→
-   406→By default, `input-otp` handles cases where JS is not in the page by applying custom CSS styles.
-   407→If you do not like the fallback design and want to apply it to your own, just pass a prop:
-   408→
-   409→```diff
-   410→// This is the default CSS fallback.
-   411→// Feel free to change it entirely and apply to your design system.
-   412→const NOSCRIPT_CSS_FALLBACK = `
-   413→[data-input-otp] {
-   414→  --nojs-bg: white !important;
-   415→  --nojs-fg: black !important;
-   416→
-   417→  background-color: var(--nojs-bg) !important;
-   418→  color: var(--nojs-fg) !important;
-   419→  caret-color: var(--nojs-fg) !important;
       →…
    539→#### Sponsors
    541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
@@ -338,6 +280,7 @@ apps/storybook/components.json
      6→  "tailwind": {
     12→  },
     13→  "aliases": {
+    16→  }
     17→}
 apps/storybook/package.json
      2→  "name": "storybook",
@@ -354,6 +297,7 @@ apps/storybook/package.json
     24→  "scripts": {
     28→  },
     29→  "devDependencies": {
+    50→  }
     51→}
 apps/storybook/src/components/ui/input-otp.tsx
      3→import * as React from "react"
@@ -461,6 +405,8 @@ apps/test/README.md
     14→bun dev
     15→```
     16→
+    17→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    18→
       →…
     23→## Learn More
     25→To learn more about Next.js, take a look at the following resources:
@@ -485,6 +431,7 @@ apps/test/package.json
     10→  "dependencies": {
     17→  },
     18→  "devDependencies": {
+    29→  }
     30→}
 apps/test/playwright.config.ts
 apps/test/src/app/base/page.tsx
@@ -502,14 +449,28 @@ apps/test/src/app/layout.tsx
      3→import './globals.css'
      5→const inter = Inter({ subsets: ['latin'] })
      7→export const metadata: Metadata = {
+     8→  title: 'Create Next App',
+      →…
     12→export default function RootLayout({
     13→  children,
+    14→}: Readonly<{
+    15→  children: React.ReactNode
+    16→}>) {
+    17→  return (
+    18→    <html lang="en">
+    19→      <body
+    20→        className={
+    21→          (inter.className,
       →…
 apps/test/src/app/page.tsx
      1→import Link from 'next/link'
      3→export default function Home() {
      4→  return (
-      →…
+     5→    <div className="container relative flex-1 flex flex-col justify-center items-center">
+     6→      <Link href="/base">Base behavior</Link>
+     7→    </div>
+     8→  )
+     9→}
 apps/test/src/app/props/page.tsx
      3→import * as React from 'react'
      5→import { BaseOTPInput } from '@/components/base-input'
@@ -518,6 +479,7 @@ apps/test/src/app/props/page.tsx
      9→    <div className="container relative flex-1 flex flex-col justify-center items-center">
     10→      <BaseOTPInput data-testid="input-otp-1" disabled />
     11→      <BaseOTPInput data-testid="input-otp-2" inputMode="numeric" />
+    12→      <BaseOTPInput data-testid="input-otp-3" inputMode="text" />
       →…
 apps/test/src/app/with-autofocus/page.tsx
      3→import * as React from 'react'
@@ -536,7 +498,11 @@ apps/test/src/app/with-on-complete/page.tsx
      8→  const [disabled, setDisabled] = React.useState(false)
      9→
     10→  return (
-      →…
+    11→    <div className="container relative flex-1 flex flex-col justify-center items-center">
+    12→      <BaseOTPInput onComplete={() => setDisabled(true)} disabled={disabled} />
+    13→    </div>
+    14→  )
+    15→}
 apps/test/src/components/base-input.tsx
      1→import * as React from 'react'
      3→import { OTPInput } from 'input-otp'
@@ -605,6 +571,8 @@ apps/website/README.md
     14→bun dev
     15→```
     16→
+    17→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    18→
       →…
     23→## Learn More
     25→To learn more about Next.js, take a look at the following resources:
@@ -626,6 +594,7 @@ apps/website/components.json
      6→  "tailwind": {
     12→  },
     13→  "aliases": {
+    16→  }
     17→}
 apps/website/next.config.mjs
      1→import { withHydrationOverlay } from '@builder.io/react-hydration-overlay/next'
@@ -641,6 +610,7 @@ apps/website/package.json
     11→  "dependencies": {
     36→  },
     37→  "devDependencies": {
+    47→  }
     48→}
 apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
      3→import * as React from 'react'
@@ -668,12 +638,17 @@ apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
      8→  console.log({ rawFormData })
      9→}
 apps/website/src/app/(local-pages)/example-playground/code.tsx
+     1→import { Code } from '@/components/code'
+     2→import { useTheme } from 'next-themes'
      4→const tsx = `'use client'
     95→const code = `\`\`\`tsx /maxLength={6}/ /render/ /slots/1 /.map((slot, idx)/1 /Slot/2,3,4 /props.char/2 /<FakeCaret />/
     99→export function ExampleCode() {
    100→  return (
       →…
 apps/website/src/app/(local-pages)/example-playground/component.tsx
+     3→import * as React from 'react'
+     4→import { OTPInput, SlotProps } from 'input-otp'
+     6→import { cn } from '@/lib/utils'
      8→export function ExampleComponent(
      9→  props: Partial<Omit<React.ComponentProps<typeof OTPInput>, 'children'>>,
     10→) {
@@ -720,6 +695,12 @@ apps/website/src/app/(local-pages)/shadcn/page.tsx
     13→  const [value, setValue] = React.useState('')
     14→
     15→  return (
+    16→    <form className="container relative flex-1 flex flex-col justify-center items-center">
+    17→      {/* With Render prop */}
+    18→      <InputOTP
+    19→        value={value}
+    20→        onChange={setValue}
+    21→        maxLength={6}
       →…
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
      3→@/components/ui/input-otp …
@@ -729,6 +710,12 @@ apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     14→  const [value, setValue] = React.useState('')
     15→
     16→  return (
+    17→    <form className="container relative flex-1 flex flex-col justify-center items-center">
+    18→      {/* <input
+    19→        // test pwmb
+    20→        type="text"
+    21→        autoComplete="username webauthn"
+    22→        pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
       →…
 apps/website/src/app/(local-pages)/shadcn/static/page.tsx
      3→import { default as ShadcnPage } from '../page'
@@ -874,6 +861,7 @@ apps/website/tsconfig.json
     30→  "include": [
     36→  ],
     37→  "exclude": [
+    39→  ]
     40→}
 package.json
      2→  "name": "root",
@@ -890,6 +878,7 @@ package.json
     41→  "trustedDependencies": [
     43→  ],
     44→  "devDependencies": {
+    59→  }
     60→}
 packages/input-otp/package.json
      2→  "name": "input-otp",
@@ -918,6 +907,7 @@ packages/input-otp/package.json
    111→  "devDependencies": {
    117→  },
    118→  "peerDependencies": {
+   121→  }
    122→}
 packages/input-otp/src/input.tsx
      3→import * as React from 'react'
@@ -1073,6 +1063,17 @@ packages/input-otp/src/use-pwm-badge.tsx
     59→
     60→    const elementToCompare = container
     61→
+    62→    // Get the top right-center point of the container.
+    63→    // That is usually where most password managers place their badge.
+    64→    const rightCornerX =
+    65→      elementToCompare.getBoundingClientRect().left +
+    66→      elementToCompare.offsetWidth
+    67→    const centereredY =
+    68→      elementToCompare.getBoundingClientRect().top +
+    69→      elementToCompare.offsetHeight / 2
+    70→    const x = rightCornerX - PWM_BADGE_MARGIN_RIGHT
+    71→    const y = centereredY
+    72→
       →…
 packages/input-otp/tsconfig.json
      2→  "compilerOptions": {
@@ -1087,4 +1088,5 @@ turbo.json
      2→  "extends": ["//"],
      3→  "$schema": "https://turbo.build/schema.json",
      4→  "pipeline": {
+    35→  }
     36→}

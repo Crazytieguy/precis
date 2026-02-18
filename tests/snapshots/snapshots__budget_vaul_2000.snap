@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1964 words)
+budget: 2000 (1965 words)
 
 FUNDING.yml
      1→github …
@@ -34,6 +34,7 @@ package.json
     64→  },
     65→  "packageManager": "pnpm@8.8.0",
     66→  "dependencies": {
+    68→  }
     69→}
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
@@ -346,6 +347,7 @@ test/package.json
     11→  "devDependencies": {
     20→  },
     21→  "dependencies": {
+    28→  }
     29→}
 test/src/app/controlled/page.tsx
      6→export default function Page() {
@@ -375,9 +377,6 @@ test/src/app/nested-drawers/page.tsx
       →…
 test/src/app/non-dismissible/page.tsx
      6→export default function Page() {
-     7→  const [open, setOpen] = useState(false);
-     8→  return (
-      →…
 test/src/app/open-another-drawer/page.tsx
      6→export function MyDrawer({
     96→export function MyDrawer2({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
@@ -396,6 +395,7 @@ test/src/app/scrollable-page/page.tsx
      6→export default function Page() {
      7→  const [open, setOpen] = useState(false);
      8→
+     9→  return (
       →…
 test/src/app/scrollable-with-inputs/page.tsx
      3→import { Drawer } from 'vaul';
@@ -462,6 +462,7 @@ test/tsconfig.json
     32→  "include": [
     37→  ],
     38→  "exclude": [
+    40→  ]
     41→}
 tsconfig.json
      2→  "compilerOptions": {
@@ -471,4 +472,5 @@ tsconfig.json
 turbo.json
      2→  "$schema": "https://turbo.build/schema.json",
      3→  "pipeline": {
+    11→  }
     12→}

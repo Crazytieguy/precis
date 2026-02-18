@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (986 words)
+budget: 1000 (983 words)
 
 README.md
      9→# Mitt
@@ -168,6 +168,7 @@ package.json
     58→  "prettier": {
     61→  },
     62→  "devDependencies": {
+    84→  }
     85→}
 src/index.ts
      1→export type EventType = string | symbol;
@@ -235,9 +236,6 @@ test/test-types-compilation.ts
      6→	name: string;
      7→}
      9→const emitter = mitt<{
-    10→	foo: string;
-    11→	someEvent: SomeEventData;
-      →…
     15→const barHandler …
     16→const fooHandler …
     17→const wildcardHandler …
@@ -246,4 +244,5 @@ tsconfig.json
      3→	"compilerOptions": {
     10→	},
     11→	"include": [
+    14→	]
     15→}

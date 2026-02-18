@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (991 words)
+budget: 1000 (990 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -47,6 +47,7 @@ apps/storybook/components.json
      6→  "tailwind": {
     12→  },
     13→  "aliases": {
+    16→  }
     17→}
 apps/storybook/package.json
      2→  "name": "storybook",
@@ -63,6 +64,7 @@ apps/storybook/package.json
     24→  "scripts": {
     28→  },
     29→  "devDependencies": {
+    50→  }
     51→}
 apps/storybook/src/components/ui/input-otp.tsx
      7→import { cn } from "../../lib/utils"
@@ -95,13 +97,7 @@ apps/storybook/src/stories/Button.tsx
     11→    <button
     12→      type="button"
     13→      className="bg-[red]"
-    14→      style={backgroundColor && { backgroundColor }}
-    15→      {...props}
-    16→    >
-    17→      {label}
-    18→    </button>
-    19→  );
-    20→};
+      →…
 apps/storybook/src/stories/InputOTP.stories.tsx
      1→import { InputOTP, InputOTPGroup, InputOTPSlot } from "../components/ui/input-otp"
      2→import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
@@ -184,7 +180,6 @@ apps/website/src/app/(pages)/(home)/page.tsx
 apps/website/src/app/(pages)/layout.tsx
     14→export const metadata: Metadata = {
     68→export default function RootLayout({
-apps/website/src/components/copy-button.tsx
 apps/website/src/components/icons.tsx
      3→export const Icons = {
 apps/website/src/components/ui/badge.tsx
@@ -213,6 +208,7 @@ package.json
     41→  "trustedDependencies": [
     43→  ],
     44→  "devDependencies": {
+    59→  }
     60→}
 packages/input-otp/package.json
      2→  "name": "input-otp",
@@ -241,6 +237,7 @@ packages/input-otp/package.json
    111→  "devDependencies": {
    117→  },
    118→  "peerDependencies": {
+   121→  }
    122→}
 packages/input-otp/src/input.tsx
      3→import * as React from 'react'
@@ -304,10 +301,12 @@ packages/input-otp/tsconfig.json
     12→  "include": ["src"]
     13→}
 packages/input-otp/tsup.config.ts
+     1→import { defineConfig } from 'tsup';
 pnpm-workspace.yaml
      1→packages …
 turbo.json
      2→  "extends": ["//"],
      3→  "$schema": "https://turbo.build/schema.json",
      4→  "pipeline": {
+    35→  }
     36→}

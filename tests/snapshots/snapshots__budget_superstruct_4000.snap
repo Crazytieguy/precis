@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3954 words)
+budget: 4000 (3953 words)
 
 Changelog.md
      1→# Changelog
@@ -70,6 +70,7 @@ examples/package.json
      2→  "type": "module",
      3→  "license": "MIT",
      4→  "dependencies": {
+     9→  }
     10→}
 jsr.json
      2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
@@ -77,6 +78,7 @@ jsr.json
      4→  "version": "2.0.2",
      5→  "exports": "./src/index.ts",
      6→  "publish": {
+     8→  }
      9→}
 package.json
      2→  "name": "superstruct",
@@ -100,6 +102,7 @@ package.json
     38→  "scripts": {
     53→  },
     54→  "keywords": [
+    84→  ]
     85→}
 rollup.config.js
      1→import { defineConfig } from 'rollup'
@@ -758,6 +761,7 @@ test/tsconfig.json
      2→  "extends": "../tsconfig.json",
      3→  "include": ["./**/*.ts"],
      4→  "compilerOptions": {
+     6→  }
      7→}
 test/typings/infer.ts
      4→const Struct = object()
@@ -941,8 +945,6 @@ test/validation/never/invalid.ts
      3→export const Struct = never()
      5→export const data = true
      7→export const failures = [
-     8→  {
-      →…
 test/validation/nullable/invalid.ts
 test/validation/nullable/valid-defined-nested.ts
 test/validation/nullable/valid-defined.ts
@@ -962,14 +964,6 @@ test/validation/object/invalid-referential.ts
      3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
 test/validation/object/valid-referential.ts
      3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
-test/validation/omit/invalid-element-nested.ts
-test/validation/omit/invalid-property-nested.ts
-test/validation/omit/invalid-property-unknown.ts
-test/validation/omit/invalid-property.ts
-test/validation/omit/invalid.ts
-test/validation/omit/valid-nested.ts
-test/validation/omit/valid-type.ts
-test/validation/omit/valid.ts
 test/validation/optional/invalid.ts
 test/validation/optional/valid-defined-nested.ts
 test/validation/optional/valid-defined.ts
@@ -1075,4 +1069,5 @@ test/validation/unknown/valid-undefined.ts
 tsconfig.json
      2→  "include": ["./src/**/*.ts"],
      3→  "compilerOptions": {
+    16→  }
     17→}

@@ -30,6 +30,7 @@ examples/package.json
      2→  "type": "module",
      3→  "license": "MIT",
      4→  "dependencies": {
+     9→  }
     10→}
 jsr.json
 package.json
@@ -124,6 +125,7 @@ test/tsconfig.json
      2→  "extends": "../tsconfig.json",
      3→  "include": ["./**/*.ts"],
      4→  "compilerOptions": {
+     6→  }
      7→}
 test/typings/infer.ts
 test/validation/boolean/invalid.ts
@@ -140,10 +142,6 @@ test/validation/number/invalid.ts
 test/validation/number/valid.ts
 test/validation/pattern/invalid.ts
 test/validation/pattern/valid.ts
-test/validation/regexp/invalid.ts
-test/validation/regexp/valid.ts
-test/validation/string/invalid.ts
-test/validation/string/valid.ts
 test/validation/type/valid-instance.ts
      3→class Person {
      6→  constructor(name: string) {

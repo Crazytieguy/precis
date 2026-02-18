@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1962 words)
+budget: 2000 (1971 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -162,9 +162,6 @@ fuzzer/fuzz.py
     38→        print_err(data)
     39→        raise
     40→
-    41→    roundtripped_obj = tomli.loads(recovered_data)
-    42→    normalize_toml_obj(roundtripped_obj)
-    43→    normalize_toml_obj(toml_obj)
       →…
     53→def print_err(data):
     54→    codepoints = [hex(ord(x)) for x in data]
@@ -268,14 +265,9 @@ src/tomli/_parser.py
     49→TOML_WS: Final = frozenset(" \t")
     50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
     51→BARE_KEY_CHARS: Final = frozenset(
-    52→    "abcdefghijklmnopqrstuvwxyz" "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "0123456789" "-_"
-    53→)
     54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
     55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
     57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
-    58→    {
-    59→        "\\b": "\u0008",  # backspace
-      →…
     71→class DEPRECATED_DEFAULT:
     72→    """Sentinel to be used as default arg during deprecation
     73→    period of TOMLDecodeError's free-form arguments."""
@@ -365,8 +357,6 @@ src/tomli/_re.py
     40→    (?:[eE][+-]?[0-9](?:_?[0-9])*)?  # optional exponent part
     41→)
     42→""",
-    43→    flags=re.VERBOSE,
-    44→)
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
     47→    rf"""
@@ -377,8 +367,6 @@ src/tomli/_re.py
     52→    (?:([Zz])|([+-])([01][0-9]|2[0-3]):([0-5][0-9]))?  # optional time offset
     53→)?
     54→""",
-    55→    flags=re.VERBOSE,
-    56→)
     59→def match_to_datetime …
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
@@ -490,6 +478,12 @@ tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-03.toml
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-04.toml
      1→[[arr …
      5→[[arr …
+tests/data/valid/apostrophes-in-literal-string.json
+     1→{"this-str-has-apostrophes": {"type": "string", "value": "' there's one already\n'' two more\n''"}}
+tests/data/valid/array/array-subtables.json
+     1→{"arr":
+    10→  }
+    11→}
 tests/data/valid/array/array-subtables.toml
      1→[[arr …
      2→[arr.subtab …
@@ -497,6 +491,7 @@ tests/data/valid/array/array-subtables.toml
      6→[arr.subtab …
 tests/data/valid/array/open-parent-table.json
      2→  "parent-table": {
+     5→  }
      6→}
 tests/data/valid/array/open-parent-table.toml
      1→[[parent-table.arr …
@@ -512,6 +507,8 @@ tests/data/valid/dates-and-times/datetimes.json
      4→  "zulu-dt": {"type":"datetime","value":"1988-10-27t01:01:01z"}
      5→}
 tests/data/valid/dates-and-times/localtime.json
+     1→{"t":
+     2→  {"type":"time-local","value":"00:00:00.999999"},
      3→"t2":
      4→  {"type":"time-local","value":"00:00:00"}}
 tests/data/valid/five-quotes.json
@@ -523,15 +520,24 @@ tests/data/valid/hex-char.json
      3→  "b": {"type":"string","value":"b"},
      4→  "c": {"type":"string","value":"c"}
      5→}
+tests/data/valid/inline-table/empty-inline-table.json
+     1→{"empty":  {}}
 tests/data/valid/inline-table/multiline-inline-table.json
      2→  "multiline": {
+    34→  }
     35→}
+tests/data/valid/multiline-basic-str/ends-in-whitespace-escape.json
+     1→{"beee": {"type": "string", "value": "heeee\ngeeee"}}
 tests/data/valid/multiline-basic-str/replacements.json
      2→  "escape": {"type":"string","value":"\u001B"},
      3→  "tab": {"type":"string","value":"\t"},
      4→  "upper-j": {"type":"string","value":"J"},
      5→  "upper-j-2": {"type":"string","value":"J"}
      6→}
+tests/data/valid/trailing-comma.json
+     1→{"arr":
+     6→  }
+     7→}
 tests/test_data.py
      5→import json
      9→from . import burntsushi, tomllib

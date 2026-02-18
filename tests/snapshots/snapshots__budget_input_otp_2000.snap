@@ -143,6 +143,7 @@ apps/storybook/components.json
      6→  "tailwind": {
     12→  },
     13→  "aliases": {
+    16→  }
     17→}
 apps/storybook/package.json
      2→  "name": "storybook",
@@ -159,6 +160,7 @@ apps/storybook/package.json
     24→  "scripts": {
     28→  },
     29→  "devDependencies": {
+    50→  }
     51→}
 apps/storybook/src/components/ui/input-otp.tsx
      3→import * as React from "react"
@@ -238,8 +240,8 @@ apps/test/package.json
     10→  "dependencies": {
     17→  },
     18→  "devDependencies": {
+    29→  }
     30→}
-apps/test/playwright.config.ts
 apps/test/src/app/base/page.tsx
      7→export default function Page() {
      8→  return (
@@ -277,17 +279,14 @@ apps/test/src/lib/utils.ts
      6→}
 apps/test/src/tests/base.delete-word.spec.ts
      2→import { modifier } from './util/modifier'
-apps/test/src/tests/base.props.spec.ts
 apps/test/src/tests/base.render.spec.ts
      3→const modifier …
-apps/test/src/tests/base.selections.spec.ts
 apps/test/src/tests/base.slot.spec.ts
      3→const modifier …
 apps/test/src/tests/base.typing.spec.ts
      2→import { modifier } from './util/modifier'
 apps/test/src/tests/util/modifier.ts
      1→export const modifier = process.platform === 'darwin' ? 'Meta' : 'Control'
-apps/test/src/tests/with-autofocus.spec.ts
 apps/test/src/tests/with-on-complete.spec.ts
      2→import { modifier } from './util/modifier'
 apps/test/tailwind.config.ts
@@ -390,12 +389,9 @@ apps/website/src/app/(pages)/layout.tsx
 apps/website/src/components/code.tsx
      9→export async function Code({
 apps/website/src/components/copy-button.tsx
-    17→interface CopyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     22→export async function copyToClipboardWithMeta(value: string) {
     26→export function CopyButton({
-    64→interface CopyWithClassNamesProps extends DropdownMenuTriggerProps {
     70→export function CopyWithClassNames({
-   120→interface CopyNpmCommandButtonProps extends DropdownMenuTriggerProps {
    129→export function CopyNpmCommandButton({
 apps/website/src/components/icons.tsx
      1→type IconProps = React.HTMLAttributes<SVGElement>
@@ -452,6 +448,7 @@ package.json
     41→  "trustedDependencies": [
     43→  ],
     44→  "devDependencies": {
+    59→  }
     60→}
 packages/input-otp/package.json
      2→  "name": "input-otp",
@@ -480,6 +477,7 @@ packages/input-otp/package.json
    111→  "devDependencies": {
    117→  },
    118→  "peerDependencies": {
+   121→  }
    122→}
 packages/input-otp/src/input.tsx
      3→import * as React from 'react'
@@ -573,6 +571,7 @@ packages/input-otp/src/use-pwm-badge.tsx
     23→  pushPasswordManagerStrategy: OTPInputProps['pushPasswordManagerStrategy']
     24→  isFocused: boolean
     25→}) {
+    26→  /** Password managers have a badge
       →…
 packages/input-otp/tsconfig.json
      2→  "compilerOptions": {
@@ -587,4 +586,5 @@ turbo.json
      2→  "extends": ["//"],
      3→  "$schema": "https://turbo.build/schema.json",
      4→  "pipeline": {
+    35→  }
     36→}

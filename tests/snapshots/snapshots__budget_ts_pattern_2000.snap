@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2006 words)
+budget: 2000 (2007 words)
 
 README.md
     40→## About …
@@ -54,6 +54,7 @@ benchmarks/package.json
     12→  "author": "",
     13→  "license": "ISC",
     14→  "devDependencies": {
+    18→  }
     19→}
 benchmarks/random-digit.ts
      4→type Digit …
@@ -72,9 +73,14 @@ examples/gif-fetcher/src/constants.ts
 examples/gif-fetcher/src/index.tsx
      6→const rootElement = document.getElementById('root');
 examples/gif-fetcher/src/searchGif.ts
+     1→import { isMatching, P } from 'ts-pattern';
      2→import { API_KEY } from './constants';
      4→const delay …
      6→export function searchGif(query: string) {
+     7→  return fetch(
+     8→    `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${query}&limit=25&offset=0&rating=g&lang=en`
+     9→  )
+      →…
 examples/gif-fetcher/tsconfig.json
 examples/one-file-demo/one-file-demo.ts
     20→type Response …
@@ -82,19 +88,12 @@ examples/one-file-demo/one-file-demo.ts
     79→const example3 …
    102→const User …
 examples/one-file-demo/package.json
-     2→  "name": "ts-pattern-examples",
-     3→  "version": "1.0.0",
-     4→  "main": "one-file-demo.ts",
-     5→  "author": "gvergnaud",
-     6→  "dependencies": {
-     9→}
 examples/one-file-demo/tsconfig.json
-     2→  "compilerOptions": {
-     9→}
 jsr.json
      2→  "name": "@gabriel/ts-pattern",
      3→  "version": "5.9.0",
      4→  "exports": {
+     8→  }
      9→}
 package.json
      2→  "name": "ts-pattern",
@@ -123,6 +122,7 @@ package.json
     72→  },
     73→  "homepage": "https://github.com/gvergnaud/ts-pattern#readme",
     74→  "devDependencies": {
+    82→  }
     83→}
 src/errors.ts
      1→/**

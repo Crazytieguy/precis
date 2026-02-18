@@ -102,9 +102,9 @@ site/next.config.mjs
     24→  async rewrites() {
 site/package.json
 site/pages/_app.tsx
-    12→const components = {
+    12→const components …
 site/pages/index.tsx
-    22→const version = packageInfo.version;
+    22→const version …
    102→export default function Home() {
 site/tsconfig.json
 site/types/svg.d.ts
@@ -296,6 +296,7 @@ test/toast.test.tsx
 tsconfig.json
      3→  "include": ["src", "types", "test"],
      4→  "compilerOptions": {
+    32→  }
     33→}
 tsup.config.ts
      4→const commonConfig: Options = {

@@ -69,6 +69,7 @@ benchmarks/package.json
     12→  "author": "",
     13→  "license": "ISC",
     14→  "devDependencies": {
+    18→  }
     19→}
 benchmarks/random-digit.ts
      2→import { match } from '../src';
@@ -93,6 +94,7 @@ examples/gif-fetcher/package.json
     13→  "devDependencies": {
     19→  },
     20→  "scripts": {
+    25→  }
     26→}
 examples/gif-fetcher/src/App.tsx
      1→import { searchGif } from './searchGif';
@@ -108,6 +110,7 @@ examples/gif-fetcher/src/App.tsx
     43→  match<Event, State>(event)
     44→    .with({ type: 'search' }, ({ query }) => ({
     45→      query,
+    46→      data: {
       →…
     75→export default function App() {
     76→  const [state, dispatch] = React.useReducer(reducer, initState);
@@ -129,6 +132,7 @@ examples/gif-fetcher/src/searchGif.ts
       →…
 examples/gif-fetcher/tsconfig.json
      2→  "compilerOptions": {
+    16→  }
     17→}
 examples/one-file-demo/one-file-demo.ts
      1→import { isMatching, match, P } from 'ts-pattern';
@@ -142,14 +146,17 @@ examples/one-file-demo/package.json
      4→  "main": "one-file-demo.ts",
      5→  "author": "gvergnaud",
      6→  "dependencies": {
+     8→  }
      9→}
 examples/one-file-demo/tsconfig.json
      2→  "compilerOptions": {
+     8→  }
      9→}
 jsr.json
      2→  "name": "@gabriel/ts-pattern",
      3→  "version": "5.9.0",
      4→  "exports": {
+     8→  }
      9→}
 package.json
      2→  "name": "ts-pattern",
@@ -178,6 +185,7 @@ package.json
     72→  },
     73→  "homepage": "https://github.com/gvergnaud/ts-pattern#readme",
     74→  "devDependencies": {
+    82→  }
     83→}
 src/errors.ts
      1→/**
@@ -225,10 +233,6 @@ src/internals/helpers.ts
     49→    // Tuple pattern
     50→    if (Array.isArray(pattern)) {
     51→      if (!Array.isArray(value)) return false;
-    52→      let startPatterns = [];
-    53→      let endPatterns = [];
-    54→      let variadicPatterns: AnyMatcher[] = [];
-    55→
       →…
    120→export const getSelectionKeys = (pattern: any): string[] => {
    121→  if (isObject(pattern)) {

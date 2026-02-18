@@ -34,6 +34,7 @@ package.json
     94→	"ava": {
    102→	},
    103→	"nyc": {
+   115→	}
    116→}
 readme.md
     20→## Benefits over plain `fetch`
@@ -451,15 +452,7 @@ source/errors/ForceRetryError.ts
     18→			? (options.cause instanceof Error ? options.cause : new NonError(options.cause))
     19→			: undefined;
     20→
-    21→		super(
-    22→			options?.code ? `Forced retry: ${options.code}` : 'Forced retry',
-    23→			cause ? {cause} : undefined,
-    24→		);
-    25→
-    26→		this.customDelay = options?.delay;
-    27→		this.code = options?.code;
-    28→		this.customRequest = options?.request;
-    29→	}
+      →…
 source/errors/HTTPError.ts
      1→import type {NormalizedOptions} from '../types/options.js';
      2→import type {KyRequest} from '../types/request.js';
@@ -476,12 +469,7 @@ source/errors/HTTPError.ts
     14→		const reason = status ? `status code ${status}` : 'an unknown error';
     15→
     16→		super(`Request failed with ${reason}: ${request.method} ${request.url}`);
-    17→
-    18→		this.name = 'HTTPError';
-    19→		this.response = response;
-    20→		this.request = request;
-    21→		this.options = options;
-    22→	}
+      →…
 source/errors/NonError.ts
      1→/**
      2→Wrapper for non-Error values that were thrown.
@@ -499,17 +487,7 @@ source/errors/NonError.ts
     14→		try {
     15→			if (typeof value === 'string') {
     16→				message = value;
-    17→			} else if (value && typeof value === 'object' && 'message' in value && typeof value.message === 'string') {
-    18→				message = value.message;
-    19→			}
-    20→		} catch {
-    21→			// Use default message if accessing properties throws
-    22→		}
-    23→
-    24→		super(message);
-    25→
-    26→		this.value = value;
-    27→	}
+      →…
 source/errors/TimeoutError.ts
      1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {
@@ -536,7 +514,20 @@ source/index.ts
     16→		ky[method] = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options, {method}));
     17→	}
     18→
-      →…
+    19→	ky.create = (newDefaults?: Partial<Options>) => createInstance(validateAndMerge(newDefaults));
+    20→	ky.extend = (newDefaults?: Partial<Options> | ((parentDefaults: Partial<Options>) => Partial<Options>)) => {
+    21→		if (typeof newDefaults === 'function') {
+    22→			newDefaults = newDefaults(defaults ?? {});
+    23→		}
+    24→
+    25→		return createInstance(validateAndMerge(defaults, newDefaults));
+    26→	};
+    27→
+    28→	ky.stop = stop;
+    29→	ky.retry = retry;
+    30→
+    31→	return ky as KyInstance;
+    32→};
     34→const ky = createInstance();
 source/types/ResponsePromise.ts
      4→import {type KyResponse} from './response.js';
@@ -751,6 +742,8 @@ source/utils/normalize.ts
     16→const defaultRetryOptions: InternalRetryOptions = {
     17→	limit: 2,
     18→	methods: retryMethods,
+    19→	statusCodes: retryStatusCodes,
+    20→	afterStatusCodes: retryAfterStatusCodes,
       →…
     28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
     29→	if (typeof retry === 'number') {
@@ -889,13 +882,18 @@ test/browser.ts
     13→	interface Window {
     14→		ky: typeof ky;
     15→	}
+    18→const DIST_DIR …
     19→const createEsmTestServer …
+    29→const KY_SCRIPT …
     36→const addKyScriptToPage …
 test/bytes.ts
+     6→const supportsBytes …
 test/context.ts
 test/fetch.ts
+     5→const fixture …
 test/formdata-searchparams.ts
 test/headers.ts
+     9→const timeout …
     11→const echoHeaders …
 test/helpers/create-http-test-server.ts
      7→export type HttpServerOptions = {
@@ -923,20 +921,28 @@ test/hooks.ts
 test/http-error.ts
      6→function createFakeResponse …
 test/main.ts
+    11→const fixture …
+   759→const extendHooksMacro …
 test/memory-leak.ts
 test/methods.ts
 test/prefix-url.ts
 test/retry.ts
+     7→const fixture …
+     8→const defaultRetryCount …
+     9→const retryAfterOn500 …
+    10→const retryAfterOn413 …
 test/stream.ts
 tsconfig.dist.json
      2→	"extends": "./tsconfig",
      3→	"compilerOptions": {
      8→	},
      9→	"include": [
+    11→	]
     12→}
 tsconfig.json
      2→	"extends": "@sindresorhus/tsconfig",
      3→	"compilerOptions": {
      5→	},
      6→	"include": [
+     8→	]
      9→}

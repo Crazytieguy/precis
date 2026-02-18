@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3939 words)
+budget: 4000 (3938 words)
 
 FUNDING.yml
      1→github …
@@ -664,6 +664,7 @@ test/package.json
      5→  "scripts": {
     10→  },
     11→  "dependencies": {
+    23→  }
     24→}
 test/src/app/action.tsx
      2→import { createStreamableUI } from 'ai/rsc';
@@ -722,6 +723,7 @@ turbo.json
      2→  "$schema": "https://turbo.build/schema.json",
      3→  "extends": ["//"],
      4→  "pipeline": {
+    12→  }
     13→}
 website/README.md
      3→## Getting Started
@@ -766,6 +768,7 @@ website/package.json
     10→  "dependencies": {
     29→  },
     30→  "devDependencies": {
+    34→  }
     35→}
 website/src/components/CodeBlock/index.tsx
      1→import React from 'react';
@@ -941,7 +944,6 @@ website/src/components/Usage/index.tsx
     12→function App() {
     13→  return (
     14→    <div>
-    15→      <Toaster />
       →…
 website/src/pages/_app.tsx
      1→import type { ReactElement } from 'react';
@@ -970,6 +972,7 @@ website/src/pages/_meta.json
     18→  "-- More": {
     21→  },
     22→  "styling": {
+    25→  }
     26→}
 website/src/pages/index.tsx
      1→import React, { StrictMode } from 'react';
@@ -1004,8 +1007,6 @@ website/src/pages/index.tsx
     31→      <main className="container">
     32→        <Hero />
     33→        <div className="content">
-    34→          <Installation />
-    35→          <Usage />
       →…
 website/theme.config.jsx
      7→  useNextSeoProps() {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (487 words)
+budget: 500 (486 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -136,14 +136,13 @@ tests/data/invalid/missing-closing-double-square-bracket.toml
      1→[[closing-bracket.missing …
 tests/data/valid/_external/toml-test/valid/bool/bool.json
 tests/data/valid/_external/toml-test/valid/comment/tricky.toml
+tests/data/valid/array/array-subtables.json
 tests/data/valid/array/open-parent-table.json
-     2→  "parent-table": {
-     6→}
-tests/data/valid/inline-table/multiline-inline-table.json
-     2→  "multiline": {
-    35→}
-tests/data/valid/multiline-basic-str/replacements.json
 tests/test_data.py
+    11→DATA_DIR …
+    13→VALID_FILES …
+    21→VALID_FILES_EXPECTED …
+    23→INVALID_FILES …
     27→class TestData(unittest.TestCase):
 tests/test_error.py
     13→class TestError(unittest.TestCase):

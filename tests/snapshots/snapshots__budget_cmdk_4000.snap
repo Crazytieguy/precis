@@ -406,6 +406,7 @@ cmdk/package.json
     45→  },
     46→  "homepage": "https://github.com/pacocoursey/cmdk#readme",
     47→  "author": {
+    50→  }
     51→}
 cmdk/src/command-score.ts
     54→function commandScoreInner(
@@ -628,6 +629,7 @@ package.json
     21→  },
     22→  "packageManager": "pnpm@8.8.0",
     23→  "lint-staged": {
+    27→  }
     28→}
 playwright.config.ts
      1→import { PlaywrightTestConfig, devices } from '@playwright/test'
@@ -654,6 +656,7 @@ test/package.json
      4→  "scripts": {
      6→  },
      7→  "dependencies": {
+    17→  }
     18→}
 test/pages/_app.tsx
      1→import '../style.css'
@@ -784,7 +787,6 @@ website/components/code/index.tsx
     52→            <CopyIcon />
     53→          </button>
     54→          <div className={styles.shine} />
-    55→          {tokens.map((line, i) => (
       →…
 website/components/icons/index.tsx
      1→import styles from './icons.module.scss'
@@ -815,6 +817,7 @@ website/package.json
     38→  "lint-staged": {
     42→  },
     43→  "husky": {
+    47→  }
     48→}
 website/pages/_app.tsx
     13→const title = '⌘K'
@@ -836,8 +839,7 @@ website/pages/index.tsx
     18→import packageJSON from '../../cmdk/package.json'
     20→type TTheme = {
     21→  theme: Themes
-    22→  setTheme: Function
-    23→}
+      →…
     25→type Themes = 'linear' | 'raycast' | 'vercel' | 'framer'
     27→const ThemeContext = React.createContext<TTheme>({} as TTheme)
     29→export default function Index() {
@@ -863,7 +865,6 @@ website/pages/index.tsx
    141→    icon: <RaycastIcon />,
    142→    key: 'raycast',
    143→  },
-   144→  {
       →…
    158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////
@@ -891,4 +892,5 @@ website/tsconfig.json
     21→}
 website/vercel.json
      2→  "headers": [
+    12→  ]
     13→}

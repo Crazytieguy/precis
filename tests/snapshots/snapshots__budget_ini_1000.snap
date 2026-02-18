@@ -2,12 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 words)
+budget: 1000 (1007 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
-     9→  .map((file) => `./${file}`)
+      →…
 .github/ISSUE_TEMPLATE/bug.yml
      3→name …
      4→description …
@@ -32,6 +32,7 @@ budget: 1000 (1006 words)
 .github/matchers/tap.json
      2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
      3→  "problemMatcher": [
+    31→  ]
     32→}
 .github/settings.yml
      3→repository …
@@ -317,6 +318,7 @@ package.json
     34→  "templateOSS": {
     38→  },
     39→  "tap": {
+    44→  }
     45→}
 release-please-config.json
      2→  "group-pull-request-title-pattern": "chore: release ${version}",

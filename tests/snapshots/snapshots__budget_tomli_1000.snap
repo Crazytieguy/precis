@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (976 words)
+budget: 1000 (977 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -229,18 +229,16 @@ tests/data/valid/_external/toml-test/valid/comment/tricky.toml
     27→["#"]]]]# …
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-03.toml
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-04.toml
+tests/data/valid/array/array-subtables.json
+     1→{"arr …
 tests/data/valid/array/open-parent-table.json
-     2→  "parent-table": {
-     6→}
-tests/data/valid/boolean.json
-tests/data/valid/dates-and-times/datetimes.json
-tests/data/valid/dates-and-times/localtime.json
-tests/data/valid/five-quotes.json
-tests/data/valid/hex-char.json
+     2→  "parent-table …
+tests/data/valid/inline-table/empty-inline-table.json
+     1→{"empty":  {}}
 tests/data/valid/inline-table/multiline-inline-table.json
      2→  "multiline": {
+    34→  }
     35→}
-tests/data/valid/multiline-basic-str/replacements.json
 tests/test_data.py
      5→import json
      9→from . …

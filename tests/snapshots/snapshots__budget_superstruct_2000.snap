@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1971 words)
+budget: 2000 (1972 words)
 
 Changelog.md
      1→# Changelog …
@@ -62,6 +62,7 @@ examples/package.json
      2→  "type": "module",
      3→  "license": "MIT",
      4→  "dependencies": {
+     9→  }
     10→}
 jsr.json
      2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
@@ -69,6 +70,7 @@ jsr.json
      4→  "version": "2.0.2",
      5→  "exports": "./src/index.ts",
      6→  "publish": {
+     8→  }
      9→}
 package.json
      2→  "name": "superstruct",
@@ -92,6 +94,7 @@ package.json
     38→  "scripts": {
     53→  },
     54→  "keywords": [
+    84→  ]
     85→}
 rollup.config.js
      1→import { defineConfig } from 'rollup'
@@ -362,11 +365,6 @@ src/utils.ts
    407→> = Index extends Length
    408→  ? Accumulated
    409→  : _InferTuple<Tuple, Length, [...Accumulated, Infer<Tuple[Index]>]>
-test/api/assert.test.ts
-test/api/create.test.ts
-test/api/is.test.ts
-test/api/mask.test.ts
-test/api/validate.test.ts
 test/deprecated.test.ts
      2→import { any, assert, deprecated } from '../src …
 test/index.test.ts
@@ -381,6 +379,7 @@ test/tsconfig.json
      2→  "extends": "../tsconfig.json",
      3→  "include": ["./**/*.ts"],
      4→  "compilerOptions": {
+     6→  }
      7→}
 test/typings/infer.ts
      4→const Struct = object()
@@ -391,13 +390,6 @@ test/validation/any/valid-string.ts
      1→import { any } from '../../../src'
 test/validation/any/valid-undefined.ts
      1→import { any } from '../../../src'
-test/validation/array/invalid-element-property.ts
-test/validation/array/invalid-element.ts
-test/validation/array/invalid-opaque.ts
-test/validation/array/invalid.ts
-test/validation/array/valid-frozen.ts
-test/validation/array/valid-opaque.ts
-test/validation/array/valid.ts
 test/validation/assign/invalid-object.ts
 test/validation/assign/invalid-type.ts
 test/validation/assign/valid-object.ts
@@ -499,6 +491,8 @@ test/validation/never/invalid.ts
      3→export const Struct = never()
      5→export const data = true
      7→export const failures = [
+     8→  {
+      →…
 test/validation/nullable/invalid.ts
 test/validation/nullable/valid-defined-nested.ts
 test/validation/nullable/valid-defined.ts
@@ -603,4 +597,5 @@ test/validation/unknown/valid-undefined.ts
 tsconfig.json
      2→  "include": ["./src/**/*.ts"],
      3→  "compilerOptions": {
+    16→  }
     17→}

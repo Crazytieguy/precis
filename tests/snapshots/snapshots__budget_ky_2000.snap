@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1969 words)
+budget: 2000 (1967 words)
 
 package.json
      2→	"name": "ky",
@@ -34,6 +34,7 @@ package.json
     94→	"ava": {
    102→	},
    103→	"nyc": {
+   115→	}
    116→}
 readme.md
     20→## Benefits over plain `fetch`
@@ -423,8 +424,6 @@ source/utils/normalize.ts
     12→const retryAfterStatusCodes = [413, 429, 503];
     14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
     16→const defaultRetryOptions: InternalRetryOptions = {
-    17→	limit: 2,
-      →…
     28→export const normalizeRetryOptions …
 source/utils/options.ts
      4→export const findUnknownOptions …
@@ -482,8 +481,6 @@ test/browser.ts
     13→	interface Window {
     14→		ky: typeof ky;
     15→	}
-test/bytes.ts
-test/fetch.ts
 test/headers.ts
 test/helpers/create-http-test-server.ts
      7→export type HttpServerOptions = {
@@ -494,17 +491,17 @@ test/helpers/with-page.ts
 test/helpers/with-performance.ts
 test/hooks.ts
 test/http-error.ts
-test/main.ts
-test/retry.ts
 tsconfig.dist.json
      2→	"extends": "./tsconfig",
      3→	"compilerOptions": {
      8→	},
      9→	"include": [
+    11→	]
     12→}
 tsconfig.json
      2→	"extends": "@sindresorhus/tsconfig",
      3→	"compilerOptions": {
      5→	},
      6→	"include": [
+     8→	]
      9→}

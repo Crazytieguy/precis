@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1976 words)
+budget: 2000 (1978 words)
 
 FUNDING.yml
      1→github …
@@ -396,6 +396,7 @@ test/package.json
      5→  "scripts": {
     10→  },
     11→  "dependencies": {
+    23→  }
     24→}
 test/src/app/action.tsx
      4→export async function action() {
@@ -423,6 +424,7 @@ turbo.json
      2→  "$schema": "https://turbo.build/schema.json",
      3→  "extends": ["//"],
      4→  "pipeline": {
+    12→  }
     13→}
 website/README.md
      3→## Getting Started …
@@ -440,6 +442,7 @@ website/package.json
     10→  "dependencies": {
     29→  },
     30→  "devDependencies": {
+    34→  }
     35→}
 website/src/components/CodeBlock/index.tsx
      7→import styles from './code-block.module.css';
@@ -492,7 +495,6 @@ website/src/components/Other/Other.tsx
      7→export const Other = ({
      8→  setRichColors,
      9→  setCloseButton,
-    10→}: {
       →…
 website/src/components/Position/index.tsx
      2→import { CodeBlock } from '../CodeBlock';
@@ -501,7 +503,6 @@ website/src/components/Position/index.tsx
      9→export const Position = ({
     10→  position: activePosition,
     11→  setPosition,
-    12→}: {
       →…
 website/src/components/Types/Types.tsx
      3→import { CodeBlock } from '../CodeBlock';
@@ -516,7 +517,6 @@ website/src/components/Usage/index.tsx
      3→export const Usage = () => {
      4→  return (
      5→    <div>
-     6→      <h2>Usage</h2>
       →…
 website/src/pages/_app.tsx
      4→import '../style.css';
@@ -534,6 +534,7 @@ website/src/pages/_meta.json
     18→  "-- More": {
     21→  },
     22→  "styling": {
+    25→  }
     26→}
 website/src/pages/index.tsx
     10→import Head from '../components/Head';

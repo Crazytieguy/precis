@@ -121,7 +121,6 @@ site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
      9→  'top-left',
     10→  'top-center',
-    11→  'top-right',
       →…
     17→export const ToasterExample: React.FC<{
 site/next.config.mjs
@@ -137,6 +136,7 @@ site/package.json
      8→  "dependencies": {
     24→  },
     25→  "devDependencies": {
+    34→  }
     35→}
 site/pages/_app.tsx
     12→const components = {
@@ -157,6 +157,7 @@ site/tsconfig.json
     22→  "include": [
     31→  ],
     32→  "exclude": [
+    34→  ]
     35→}
 site/types/svg.d.ts
      1→interface SvgrComponent
@@ -543,10 +544,9 @@ test/toast.test.tsx
 tsconfig.json
      3→  "include": ["src", "types", "test"],
      4→  "compilerOptions": {
+    32→  }
     33→}
 tsup.config.ts
      1→import { defineConfig, Options } from 'tsup';
      2→import { minifyTemplates, writeFiles } from 'esbuild-minify-templates';
      4→const commonConfig: Options = {
-     5→  minify: true,
-      →…

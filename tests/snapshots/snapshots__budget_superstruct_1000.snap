@@ -33,6 +33,7 @@ examples/package.json
      2→  "type": "module",
      3→  "license": "MIT",
      4→  "dependencies": {
+     9→  }
     10→}
 jsr.json
      2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
@@ -40,6 +41,7 @@ jsr.json
      4→  "version": "2.0.2",
      5→  "exports": "./src/index.ts",
      6→  "publish": {
+     8→  }
      9→}
 package.json
      2→  "name": "superstruct",
@@ -63,6 +65,7 @@ package.json
     38→  "scripts": {
     53→  },
     54→  "keywords": [
+    84→  ]
     85→}
 rollup.config.js
 src/error.ts
@@ -247,6 +250,7 @@ test/tsconfig.json
      2→  "extends": "../tsconfig.json",
      3→  "include": ["./**/*.ts"],
      4→  "compilerOptions": {
+     6→  }
      7→}
 test/typings/infer.ts
 test/validation/any/valid-number.ts
@@ -257,9 +261,6 @@ test/validation/bigint/invalid.ts
 test/validation/bigint/valid.ts
 test/validation/boolean/invalid.ts
 test/validation/boolean/valid.ts
-test/validation/coerce/changed.ts
-test/validation/coerce/condition-not-met.ts
-test/validation/coerce/unchanged.ts
 test/validation/date/invalid-date.ts
 test/validation/date/invalid.ts
 test/validation/date/valid.ts
@@ -274,9 +275,6 @@ test/validation/instance/valid.ts
 test/validation/integer/invalid-decimal.ts
 test/validation/integer/invalid.ts
 test/validation/integer/valid.ts
-test/validation/lazy/invalid.ts
-test/validation/lazy/valid.ts
-test/validation/lazy/with-refiners.ts
 test/validation/literal/invalid.ts
 test/validation/literal/valid.ts
 test/validation/never/invalid.ts
@@ -286,12 +284,11 @@ test/validation/never/invalid.ts
      7→export const failures = [
 test/validation/number/invalid.ts
 test/validation/number/valid.ts
+test/validation/object/invalid-referential.ts
+test/validation/object/valid-referential.ts
 test/validation/pattern/invalid.ts
 test/validation/pattern/valid.ts
 test/validation/refine/invalid-multiple-refinements.ts
-test/validation/refine/invalid-shorthand.ts
-test/validation/refine/invalid.ts
-test/validation/refine/valid.ts
 test/validation/regexp/invalid.ts
 test/validation/regexp/valid.ts
 test/validation/string/invalid.ts
@@ -301,10 +298,8 @@ test/validation/trimmed/valid.ts
 test/validation/type/valid-instance.ts
      3→class Person {
      6→  constructor(name: string) {
-test/validation/unknown/valid-number.ts
-test/validation/unknown/valid-string.ts
-test/validation/unknown/valid-undefined.ts
 tsconfig.json
      2→  "include": ["./src/**/*.ts"],
      3→  "compilerOptions": {
+    16→  }
     17→}

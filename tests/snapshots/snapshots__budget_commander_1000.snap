@@ -37,8 +37,6 @@ Readme.md
     29→    - [Action handler](#action-handler)
     30→    - [Stand-alone executable (sub)commands](#stand-alone-executable-subcommands)
     31→    - [Life cycle hooks](#life-cycle-hooks)
-    32→  - [Automated help](#automated-help)
-    33→    - [Custom help](#custom-help)
       →…
     61→## Installation …
     67→## Quick Start …
@@ -57,6 +55,7 @@ Readme_zh-CN.md
      9→
     10→使用其他语言阅读：[English](./Readme.md) | 简体中文
     11→
+    12→- [Commander.js](#commanderjs)
       →…
    570→#### 其他参数配置 …
    582→#### 自定义参数处理 …
@@ -138,6 +137,7 @@ lib/suggestSimilar.js
       →…
 package-support.json
      2→  "versions": [
+    18→  ]
     19→}
 package.json
      2→  "name": "commander",
@@ -181,6 +181,7 @@ tests/ts-imports.test.ts
 tsconfig.js.json
      7→  "extends": "./tsconfig.json",
      8→  "include": [
+    14→  ],
     15→}
 tsconfig.json
     12→  "compilerOptions": {
@@ -194,6 +195,7 @@ tsconfig.ts.json
      9→  "compilerOptions": {
     14→  },
     15→  "include": [
+    19→  ],
     20→}
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =

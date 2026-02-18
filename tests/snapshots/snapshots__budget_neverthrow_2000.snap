@@ -19,22 +19,31 @@ README.md
      5→## Description
      7→Encode failure into your program.
      8→
+     9→This package contains a `Result` type that represents either success (`Ok`) or failure (`Err`).
+    10→
       →…
     19→## Table Of Contents
     21→* [Installation](#installation)
     22→* [Recommended: Use `eslint-plugin-neverthrow`](#recommended-use-eslint-plugin-neverthrow)
+    23→* [Top-Level API](#top-level-api)
+    24→* [API Documentation](#api-documentation)
       →…
     73→## Installation
     75→```sh
     76→> npm install neverthrow
-      →…
+    77→```
+    78→
     79→## Recommended: Use `eslint-plugin-neverthrow`
     81→As part of `neverthrow`s [bounty program](https://github.com/supermacro/neverthrow/issues/314), user [mdbetancourt](https://github.com/mdbetancourt) created [`eslint-plugin-neverthrow`](https://github.com/mdbetancourt/eslint-plugin-neverthrow) to ensure that errors are not gone unhandled.
     82→
+    83→Install by running:
+    84→
       →…
    100→## Top-Level API
    102→`neverthrow` exposes the following:
    103→
+   104→- `ok` convenience function to create an `Ok` variant of `Result`
+   105→- `err` convenience function to create an `Err` variant of `Result`
       →…
    139→## API Documentation
    141→### Synchronous API (`Result`)
@@ -67,6 +76,8 @@ README.md
   1673→## A note on the Package Name
   1675→Although the package is called `neverthrow`, please don't take this literally. I am simply encouraging the developer to think a bit more about the ergonomics and usage of whatever software they are writing.
   1676→
+  1677→`Throw`ing and `catching` is very similar to using `goto` statements - in other words; it makes reasoning about your programs harder. Secondly, by using `throw` you make the assumption that the caller of your function is implementing `catch`. This is a known source of errors. Example: One dev `throw`s and another dev uses the function without prior knowledge that the function will throw. Thus, and edge case has been left unhandled and now you have unhappy users, bosses, cats, etc.
+  1678→
       →…
   1681→### License
   1683→The neverthrow project is available as open source under the terms of the [MIT license](https://github.com/supermacro/neverthrow/blob/master/LICENSE).
@@ -95,6 +106,7 @@ package.json
     59→  "engines": {
     62→  },
     63→  "optionalDependencies": {
+    65→  }
     66→}
 rollup.config.mjs
      1→import typescript from "rollup-plugin-typescript2";
@@ -239,7 +251,6 @@ src/result-async.ts
    210→  /**
    211→   * @deprecated will be removed in 9.0.0.
    212→   *
-   213→   * You can use `safeTry` without this method.
       →…
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
    227→  then …
@@ -286,38 +297,32 @@ src/result.ts
    135→  /**
    136→   * Used to check if a `Result` is an `OK`
    137→   *
-   138→   * @returns `true` if the result is an `OK` variant of Result
       →…
    140→  isOk(): this is Ok<T, E>
    142→  /**
    143→   * Used to check if a `Result` is an `Err`
    144→   *
-   145→   * @returns `true` if the result is an `Err` variant of Result
       →…
    147→  isErr(): this is Err<T, E>
    149→  /**
    150→   * Maps a `Result<T, E>` to `Result<U, E>`
    151→   * by applying a function to a contained `Ok` value, leaving an `Err` value
-   152→   * untouched.
       →…
    157→  map<A>(f: (t: T) => A): Result<A, E>
    159→  /**
    160→   * Maps a `Result<T, E>` to `Result<T, F>` by applying a function to a
    161→   * contained `Err` value, leaving an `Ok` value untouched.
-   162→   *
       →…
    168→  mapErr<U>(f: (e: E) => U): Result<T, U>
    183→  andThen …
    185→  /**
    186→   * This "tee"s the current value to an passed-in computation such as side
    187→   * effect functions but still returns the same current value as the result.
-   188→   *
       →…
    195→  andTee(f: (t: T) => unknown): Result<T, E>
    197→  /**
    198→   * This "tee"s the current `Err` value to an passed-in computation such as side
    199→   * effect functions but still returns the same `Err` value as the result.
-   200→   *
       →…
    207→  orTee(f: (t: E) => unknown): Result<T, E>
    219→  andThrough …
@@ -325,43 +330,36 @@ src/result.ts
    235→  /**
    236→   * Similar to `map` Except you must return a new `Result`.
    237→   *
-   238→   * This is useful for when you need to do a subsequent async computation using
       →…
    244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
    246→  /**
    247→   * Maps a `Result<T, E>` to `ResultAsync<U, E>`
    248→   * by applying an async function to a contained `Ok` value, leaving an `Err`
-   249→   * value untouched.
       →…
    253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
    255→  /**
    256→   * Unwrap the `Ok` value, or return the default if there is an `Err`
    257→   *
-   258→   * @param v the default value to return if there is an `Err`
       →…
    260→  unwrapOr<A>(v: A): T | A
    262→  /**
    263→   *
    264→   * Given 2 functions (one for the `Ok` variant and one for the `Err` variant)
-   265→   * execute the function that matches the `Result` variant.
       →…
    276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
    278→  /**
    279→   * @deprecated will be removed in 9.0.0.
    280→   *
-   281→   * You can use `safeTry` without this method.
       →…
    290→  safeUnwrap(): Generator<Err<never, E>, T>
    292→  /**
    293→   * **This method is unsafe, and should only be used in a test environments**
    294→   *
-   295→   * Takes a `Result<T, E>` and returns a `T` when the result is an `Ok`, otherwise it throws a custom object.
       →…
    299→  _unsafeUnwrap(config?: ErrorConfig): T
    301→  /**
    302→   * **This method is unsafe, and should only be used in a test environments**
    303→   *
-   304→   * takes a `Result<T, E>` and returns a `E` when the result is an `Err`,
       →…
    309→  _unsafeUnwrapErr(config?: ErrorConfig): E
    312→export class Ok<T, E> implements IResult<T, E> {
@@ -436,6 +434,7 @@ tests/tsconfig.tests.json
      2→  "compilerOptions": {
     22→  },
     23→  "include": [
+    26→  ]
     27→}
 tests/typecheck-tests.ts
      7→../src …
@@ -449,4 +448,5 @@ tsconfig.json
     24→  "include": [
     26→  ],
     27→  "exclude": [
+    30→  ]
     31→}

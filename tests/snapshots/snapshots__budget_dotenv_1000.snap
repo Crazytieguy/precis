@@ -2,13 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (979 words)
+budget: 1000 (980 words)
 
 CHANGELOG.md
-     1→# Changelog
-     3→All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
-     4→
-   484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02)
+     1→# Changelog …
+   484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02) …
 CONTRIBUTING.md
      1→# Contributing
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
@@ -64,6 +62,7 @@ README.md
    335→```bash
    336→npm i -g vestauth
    337→
+   338→vestauth agent init
       →…
    357→## FAQ
    361→No.
@@ -83,6 +82,7 @@ README.md
    591→and return an Object with a `parsed` key containing the loaded content or an `error` key if it failed.
    592→
    593→```js
+   594→const result = dotenv.config()
       →…
    605→#### Options …
    607→##### path
@@ -115,6 +115,7 @@ README.md
    696→an Object with the parsed keys and values.
    697→
    698→```js
+   699→const dotenv = require('dotenv')
       →…
    705→#### Options …
    707→##### debug
@@ -127,6 +128,7 @@ README.md
    725→For example, customizing the source:
    726→
    727→```js
+   728→const dotenv = require('dotenv')
       →…
    748→#### options …
    750→##### Debug
@@ -268,6 +270,7 @@ package.json
     56→  "engines": {
     58→  },
     59→  "browser": {
+    61→  }
     62→}
 tests/test-config-cli.js
      6→function spawn (cmd, options = {}) {

@@ -34,6 +34,7 @@ package.json
     64→  },
     65→  "packageManager": "pnpm@8.8.0",
     66→  "dependencies": {
+    68→  }
     69→}
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
@@ -87,7 +88,6 @@ src/helpers.ts
    113→        fn(...args);
    114→      }
    115→    }
-   116→  };
       →…
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -168,7 +168,6 @@ src/use-position-fixed.ts
     20→  preventScrollRestoration,
     21→  noBodyStyles,
     22→}: {
-    23→  isOpen: boolean;
       →…
 src/use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
@@ -196,7 +195,6 @@ src/use-prevent-scroll.ts
     73→      return;
     74→    }
     75→
-    76→    preventScrollCount++;
       →…
    118→function preventScrollMobileSafari …
    243→function setStyle …
@@ -225,6 +223,7 @@ test/src/app/different-directions/page.tsx
      6→function DirectionalDrawer({
    118→export default function Page() {
 test/src/app/initial-snap/page.tsx
+     7→const snapPoints …
      9→export default function Page() {
 test/src/app/layout.tsx
      1→import './globals.css';
@@ -275,4 +274,5 @@ tsconfig.json
 turbo.json
      2→  "$schema": "https://turbo.build/schema.json",
      3→  "pipeline": {
+    11→  }
     12→}

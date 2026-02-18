@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (519 words)
+budget: 500 (517 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -30,6 +30,7 @@ budget: 500 (519 words)
 .github/matchers/tap.json
      2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
      3→  "problemMatcher": [
+    31→  ]
     32→}
 .github/settings.yml
      3→repository …
@@ -115,8 +116,8 @@ classes/semver.js
 internal/constants.js
 internal/debug.js
 internal/identifiers.js
-     4→const compareIdentifiers = (a, b) => {
-    24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
+     4→const compareIdentifiers …
+    24→const rcompareIdentifiers …
 internal/lrucache.js
      3→class LRUCache {
      4→  constructor () {
@@ -124,10 +125,10 @@ internal/lrucache.js
     21→  delete (key) {
     25→  set (key, value) {
 internal/parse-options.js
-     6→const parseOptions = options => {
+     6→const parseOptions …
 internal/re.js
-    33→const makeSafeRegex = (value) => {
-    42→const createToken = (name, value, isGlobal) => {
+    33→const makeSafeRegex …
+    42→const createToken …
 package.json
      2→  "name": "semver",
      3→  "version": "7.7.4",
@@ -150,10 +151,20 @@ package.json
     51→  },
     52→  "author": "GitHub Inc.",
     53→  "templateOSS": {
+    77→  }
     78→}
+ranges/gtr.js
+ranges/intersects.js
+ranges/ltr.js
+ranges/max-satisfying.js
+ranges/min-satisfying.js
+ranges/min-version.js
+ranges/outside.js
 ranges/subset.js
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
+ranges/to-comparators.js
+ranges/valid.js
 release-please-config.json
      2→  "group-pull-request-title-pattern": "chore: release ${version}",
      3→  "pull-request-title-pattern": "chore: release${component} ${version}",
@@ -168,5 +179,7 @@ test/bin/semver.js
     10→const run …
 test/integration/whitespace.js
 test/internal/debug.js
-     3→const main …
+     3→const main = () => {
 test/map.js
+test/ranges/simplify.js
+test/ranges/subset.js
