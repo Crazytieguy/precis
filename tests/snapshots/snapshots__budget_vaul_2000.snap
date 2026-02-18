@@ -2,10 +2,43 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1955 words)
+budget: 2000 (1961 words)
 
+FUNDING.yml
+     1→github …
+package.json
+     2→  "name": "vaul",
+     3→  "version": "1.1.2",
+     4→  "description": "Drawer component for React.",
+     5→  "main": "./dist/index.js",
+     6→  "module": "./dist/index.mjs",
+     7→  "types": "./dist/index.d.ts",
+     8→  "files": [
+    11→  ],
+    12→  "exports": {
+    21→  },
+    22→  "scripts": {
+    30→  },
+    31→  "keywords": [
+    36→  ],
+    37→  "author": "Emil Kowalski <e@emilkowal.ski>",
+    38→  "license": "MIT",
+    39→  "homepage": "https://vaul.emilkowal.ski/",
+    40→  "repository": {
+    43→  },
+    44→  "bugs": {
+    46→  },
+    47→  "devDependencies": {
+    60→  },
+    61→  "peerDependencies": {
+    64→  },
+    65→  "packageManager": "pnpm@8.8.0",
+    66→  "dependencies": {
+    69→}
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
+pnpm-workspace.yaml
+     1→packages …
 src/browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
     10→export function isMac(): boolean | undefined {
@@ -232,36 +265,6 @@ src/use-position-fixed.ts
     27→  preventScrollRestoration: boolean;
     28→  noBodyStyles: boolean;
     29→}) {
-    30→  const [activeUrl, setActiveUrl] = React.useState(() => (typeof window !== 'undefined' ? window.location.href : ''));
-    31→  const scrollPos = React.useRef(0);
-    32→
-    33→  const setPositionFixed = React.useCallback(() => {
-    34→    // All browsers on iOS will return true here.
-    35→    if (!isSafari()) return;
-    36→
-    37→    // If previousBodyPosition is already set, don't set it again.
-    38→    if (previousBodyPosition === null && isOpen && !noBodyStyles) {
-    39→      previousBodyPosition = {
-    40→        position: document.body.style.position,
-    41→        top: document.body.style.top,
-    42→        left: document.body.style.left,
-    43→        height: document.body.style.height,
-    44→        right: 'unset',
-    45→      };
-    46→
-    47→      // Update the dom inside an animation frame
-    48→      const { scrollX, innerHeight } = window;
-    49→
-    50→      document.body.style.setProperty('position', 'fixed', 'important');
-    51→      Object.assign(document.body.style, {
-    52→        top: `${-scrollPos.current}px`,
-    53→        left: `${-scrollX}px`,
-    54→        right: '0px',
-    55→        height: 'auto',
-    56→      });
-    57→
-    58→      window.setTimeout(
-    59→        () =>
       →…
 src/use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
@@ -298,14 +301,7 @@ src/use-prevent-scroll.ts
     80→      }
     81→    }
     82→
-    83→    return () => {
-    84→      preventScrollCount--;
-    85→      if (preventScrollCount === 0) {
-    86→        restore?.();
-    87→      }
-    88→    };
-    89→  }, [isDisabled]);
-    90→}
+      →…
    118→function preventScrollMobileSafari() {
    243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {
    257→function addEvent<K extends keyof GlobalEventHandlersEventMap>(
@@ -346,6 +342,16 @@ test/README.md
 test/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
+test/package.json
+     2→  "name": "test",
+     3→  "version": "0.1.0",
+     4→  "private": true,
+     5→  "scripts": {
+    10→  },
+    11→  "devDependencies": {
+    20→  },
+    21→  "dependencies": {
+    29→}
 test/src/app/controlled/page.tsx
      6→export default function Page() {
 test/src/app/default-open/page.tsx
@@ -390,6 +396,9 @@ test/src/app/parent-container/page.tsx
     39→function WithNested() {
 test/src/app/scrollable-page/page.tsx
      6→export default function Page() {
+     7→  const [open, setOpen] = useState(false);
+     8→
+      →…
 test/src/app/scrollable-with-inputs/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {
@@ -413,6 +422,9 @@ test/src/app/with-scaled-background/page.tsx
      8→const CenteredContent …
     29→const DrawerContent …
     65→export default function Page() {
+    66→  const [direction, setDirection] = useState<DrawerDirection>('bottom');
+    67→
+      →…
 test/src/app/with-snap-points/page.tsx
      7→const snapPoints = ['148px', '355px', 1];
      9→export default function Page() {
@@ -434,3 +446,19 @@ test/tests/helpers.ts
 test/tests/initial-snap.spec.ts
      8→const snapPointYPositions = {
     15→const snapTo = async (page: Page, snapPointIndex: keyof typeof snapPointYPositions) => {
+test/tsconfig.json
+     2→  "compilerOptions": {
+    31→  },
+    32→  "include": [
+    37→  ],
+    38→  "exclude": [
+    41→}
+tsconfig.json
+     2→  "compilerOptions": {
+     9→  },
+    10→  "include": ["src"],
+    11→}
+turbo.json
+     2→  "$schema": "https://turbo.build/schema.json",
+     3→  "pipeline": {
+    12→}

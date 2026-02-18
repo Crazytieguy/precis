@@ -4,6 +4,12 @@ expression: output
 ---
 budget: 2000 (1915 words)
 
+Cargo.toml
+     1→[package …
+    14→[features …
+    18→[dependencies …
+    25→[dev-dependencies …
+    32→[package.metadata.docs.rs …
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/anyhow-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/anyhow)
@@ -36,6 +42,8 @@ README.md
       →…
 build.rs
      3→use std::env;
+rust-toolchain.toml
+     1→[toolchain …
 src/backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
      5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
@@ -449,6 +457,11 @@ tests/common/mod.rs
      4→pub fn bail_literal() -> Result<()> {
      8→pub fn bail_fmt() -> Result<()> {
     12→pub fn bail_error() -> Result<()> {
+tests/crate/Cargo.toml
+     1→[package …
+     8→[lib …
+    11→[dependencies …
+    14→[features …
 tests/crate/test.rs
      3→pub use anyhow::*;
 tests/drop/mod.rs
@@ -479,7 +492,6 @@ tests/test_context.rs
     45→    message: &'static str,
     46→    drop: DetectDrop,
     47→}
-    49→struct Dropped {
 tests/test_convert.rs
      1→#![allow(clippy::unnecessary_wraps)]
      2→
@@ -490,12 +502,9 @@ tests/test_downcast.rs
      3→mod common;
      4→mod drop;
 tests/test_ensure.rs
-    40→struct S;
     43→    type Output = bool;
     44→    fn add …
-    50→trait Trait: Sized {
     52→    fn t …
-    59→enum Enum<T: ?Sized> {
     66→    fn eq …
     72→    fn fmt …
     77→#[track_caller]
@@ -535,10 +544,8 @@ tests/ui/ensure-nonbool.rs
      4→struct Bool(bool);
      6→struct DerefBool(bool);
      8→struct NotBool(bool);
-    10→impl Deref for DerefBool {
     11→    type Target = bool;
     12→    fn deref(&self) -> &Self::Target {
-    17→impl Not for NotBool {
     18→    type Output = bool;
     19→    fn not(self) -> Self::Output {
 tests/ui/must-use.rs

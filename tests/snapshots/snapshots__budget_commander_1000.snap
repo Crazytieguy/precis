@@ -2,16 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (989 words)
+budget: 1000 (999 words)
 
 CHANGELOG.md
      1→# Changelog …
    911→#### Testing for no arguments …
 CONTRIBUTING.md
      1→# Contributing …
-     3→## Issues
-     5→New issues are welcome, whether questions or suggestions or reporting bugs.
-      →…
+     3→## Issues …
     13→## Pull Requests …
 Readme.md
      1→# Commander.js
@@ -35,12 +33,6 @@ Readme.md
     25→  - [Commands](#commands)
     26→    - [Command-arguments](#command-arguments)
     27→      - [More configuration](#more-configuration-1)
-    28→      - [Custom argument processing](#custom-argument-processing)
-    29→    - [Action handler](#action-handler)
-    30→    - [Stand-alone executable (sub)commands](#stand-alone-executable-subcommands)
-    31→    - [Life cycle hooks](#life-cycle-hooks)
-    32→  - [Automated help](#automated-help)
-    33→    - [Custom help](#custom-help)
       →…
     61→## Installation …
     67→## Quick Start …
@@ -64,11 +56,6 @@ Readme.md
    978→For example:
    979→
    980→```js
-   981→program.parse(); // parse process.argv and auto-detect electron and special node flags
-   982→program.parse(process.argv); // assume argv[0] is app and argv[1] is script
-   983→program.parse(['--port', '80'], { from: 'user' }); // just user supplied arguments, nothing special about argv[0]
-   984→```
-   985→
       →…
   1164→## Support …
 Readme_zh-CN.md
@@ -77,15 +64,11 @@ Readme_zh-CN.md
      9→
     10→使用其他语言阅读：[English](./Readme.md) | 简体中文
     11→
-    12→- [Commander.js](#commanderjs)
-    13→  - [安装](#%e5%ae%89%e8%a3%85)
       →…
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
    911→如果参数遵循与 node 不同的约定，可以在第二个参数中传递`from`选项：
-   912→
-   913→- `node`：默认值，`argv[0]`是应用，`argv[1]`是要跑的脚本，后续为用户参数；
       →…
 SECURITY.md
      1→# Security Policy …
@@ -119,21 +102,16 @@ docs/release-policy.md
 docs/terminology.md
      1→# Terminology …
 docs/zh-CN/不再推荐使用的功能.md
-     1→# 不再推荐使用的功能 …
 docs/zh-CN/可变参数的选项.md
-     1→# 可变参数的选项 …
 docs/zh-CN/术语表.md
-     1→# 术语表 …
 eslint.config.js
 esm.mjs
      1→import commander from './index.js';
 examples/color-help-replacement.mjs
 examples/color-help.mjs
 examples/custom-command-class.js
-     6→class CommandWithTrace extends commander.Command {
      7→  createCommand(name) {
 examples/global-options-added.js
-    16→class MyRootCommand extends Command {
     17→  createCommand(name) {
 examples/help-centered.mjs
 examples/man-style-help.mjs
@@ -175,6 +153,34 @@ lib/option.js
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
+package-support.json
+     2→  "versions": [
+    19→}
+package.json
+     2→  "name": "commander",
+     3→  "version": "14.0.3",
+     4→  "description": "the complete solution for node.js command-line programs",
+     5→  "keywords": [
+    14→  ],
+    15→  "author": "TJ Holowaychuk <tj@vision-media.ca>",
+    16→  "license": "MIT",
+    17→  "repository": {
+    20→  },
+    21→  "scripts": {
+    34→  },
+    35→  "files": [
+    42→  ],
+    43→  "type": "commonjs",
+    44→  "main": "./index.js",
+    45→  "exports": {
+    61→  },
+    62→  "devDependencies": {
+    76→  },
+    77→  "types": "typings/index.d.ts",
+    78→  "engines": {
+    80→  },
+    81→  "support": true
+    82→}
 tests/command.createArgument.test.js
      4→  constructor(name, description) {
     11→  createArgument(name, description) {
@@ -189,6 +195,23 @@ tests/esm-imports-test.mjs
 tests/ts-imports.test.ts
      1→../ …
     17→function checkClass(obj: object, name: string): void {
+tsconfig.js.json
+     7→  "extends": "./tsconfig.json",
+     8→  "include": [
+    15→}
+tsconfig.json
+    12→  "compilerOptions": {
+    32→  },
+    33→  "include": [
+    42→  ],
+    43→  "exclude": ["node_modules"],
+    44→}
+tsconfig.ts.json
+     8→  "extends": "./tsconfig.json",
+     9→  "compilerOptions": {
+    14→  },
+    15→  "include": [
+    20→}
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =
     13→  | LiteralType

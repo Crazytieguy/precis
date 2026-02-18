@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (480 words)
+budget: 500 (486 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -16,9 +16,6 @@ CONTRIBUTING.md
     19→## Code Style …
 README-es.md
      1→# dotenv …
-   607→##### path …
-   707→##### debug …
-   750→##### Debug …
 README.md
      1→# dotenv
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
@@ -58,7 +55,6 @@ README.md
    613→```js
    614→require('dotenv').config({ path: '/custom/path/to/.env' })
    615→```
-   616→
       →…
    625→##### quiet
    627→Default: `false`
@@ -90,7 +86,6 @@ README.md
    713→```js
    714→const dotenv = require('dotenv')
    715→const buf = Buffer.from('hello world')
-   716→const opt = { debug: true }
       →…
    721→### Populate …
    748→#### options …
@@ -127,22 +122,18 @@ lib/main.d.ts
     26→  /**
     27→   * Default: `path.resolve(process.cwd(), '.env')`
     28→   *
-    29→   * Specify a custom path if your file containing environment variables is located elsewhere.
-    30→   * Can also be an array of strings, specifying multiple paths.
-    31→   *
       →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
     94→  parsed?: DotenvParseOutput;
     95→}
     97→type DotenvError = Error & {
+    98→  code: 
+      →…
    106→export interface DotenvPopulateOptions {
    107→  /**
    108→   * Default: `false`
    109→   *
-   110→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
-   111→   *
-   112→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
       →…
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;
@@ -152,6 +143,35 @@ lib/main.js
     10→const TIPS = [
     46→const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
    413→const DotenvModule = {
+package.json
+     2→  "name": "dotenv",
+     3→  "version": "17.3.1",
+     4→  "description": "Loads environment variables from .env file",
+     5→  "main": "lib/main.js",
+     6→  "types": "lib/main.d.ts",
+     7→  "exports": {
+    20→  },
+    21→  "scripts": {
+    29→  },
+    30→  "repository": {
+    33→  },
+    34→  "homepage": "https://github.com/motdotla/dotenv#readme",
+    35→  "funding": "https://dotenvx.com",
+    36→  "keywords": [
+    44→  ],
+    45→  "readmeFilename": "README.md",
+    46→  "license": "BSD-2-Clause",
+    47→  "devDependencies": {
+    55→  },
+    56→  "engines": {
+    58→  },
+    59→  "browser": {
+    62→}
 tests/test-config-cli.js
 tests/test-env-options.js
 tests/types/test.ts
+tests/types/tsconfig.json
+     2→  "compilerOptions": {
+    15→  },
+    16→  "include": ["./test.ts", "../../main.d.ts"]
+    17→}

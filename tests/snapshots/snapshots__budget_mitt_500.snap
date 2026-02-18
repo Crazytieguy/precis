@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (497 words)
 
 README.md
      9→# Mitt
@@ -14,29 +14,20 @@ README.md
     16→-   **Functional:** methods don't rely on `this`
     17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
     18→
-    19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
-    20→
+      →…
     21→## Table of Contents
     23→-   [Install](#install)
     24→-   [Usage](#usage)
     25→-   [Examples & Demos](#examples--demos)
     26→-   [API](#api)
     27→-   [Contribute](#contribute)
-    28→-   [License](#license)
-    29→
+      →…
     30→## Install
     32→This project uses [node](http://nodejs.org) and [npm](https://npmjs.com). Go check them out if you don't have them locally installed.
     33→
     34→```sh
     35→$ npm install --save mitt
     36→```
-    37→
-    38→Then with a module bundler like [rollup](http://rollupjs.org/) or [webpack](https://webpack.js.org/), use as you would anything else:
-    39→
-    40→```javascript
-    41→// using ES6 modules
-    42→import mitt from 'mitt'
-    43→
       →…
     56→## Usage
     58→```js
@@ -44,13 +35,6 @@ README.md
     60→
     61→const emitter = mitt()
     62→
-    63→// listen to an event
-    64→emitter.on('foo', e => console.log('foo', e) )
-    65→
-    66→// listen to all events
-    67→emitter.on('*', (type, e) => console.log(type, e) )
-    68→
-    69→// fire an event
       →…
     81→### Typescript …
    113→## Examples & Demos
@@ -72,6 +56,35 @@ README.md
    189→### Submitting pull requests …
    203→## License
    205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
+package.json
+     2→  "name": "mitt",
+     3→  "version": "3.0.1",
+     4→  "description": "Tiny 200b functional Event Emitter / pubsub.",
+     5→  "module": "dist/mitt.mjs",
+     6→  "main": "dist/mitt.js",
+     7→  "jsnext:main": "dist/mitt.mjs",
+     8→  "umd:main": "dist/mitt.umd.js",
+     9→  "source": "src/index.ts",
+    10→  "typings": "index.d.ts",
+    11→  "exports": {
+    17→  },
+    18→  "scripts": {
+    29→  },
+    30→  "repository": "developit/mitt",
+    31→  "keywords": [
+    36→  ],
+    37→  "homepage": "https://github.com/developit/mitt",
+    38→  "authors": [
+    40→  ],
+    41→  "license": "MIT",
+    42→  "files": [
+    45→  ],
+    46→  "mocha": {
+    57→  },
+    58→  "prettier": {
+    61→  },
+    62→  "devDependencies": {
+    85→}
 src/index.ts
      1→export type EventType = string | symbol;
      5→export type Handler<T = unknown> = (event: T) => void;
@@ -115,14 +128,14 @@ src/index.ts
     57→		 */
     58→		all,
     59→
-    60→		/**
       →…
 test/index_test.ts
 test/test-types-compilation.ts
      5→interface SomeEventData {
-     6→	name: string;
-     7→}
      9→const emitter = mitt<{
-    10→	foo: string;
-    11→	someEvent: SomeEventData;
-      →…
+tsconfig.json
+     2→	"compileOnSave": false,
+     3→	"compilerOptions": {
+    10→	},
+    11→	"include": [
+    15→}

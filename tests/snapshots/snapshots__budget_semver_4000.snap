@@ -2,10 +2,83 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3967 words)
+budget: 4000 (3985 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
+     8→  .filter((file) => file.startsWith('.eslintrc.local.'))
+     9→  .map((file) => `./${file}`)
+.github/ISSUE_TEMPLATE/bug.yml
+     3→name …
+     4→description …
+     5→title …
+     6→labels …
+     8→body …
+.github/ISSUE_TEMPLATE/config.yml
+     3→blank_issues_enabled …
+.github/actions/create-check/action.yml
+     3→name …
+     4→inputs …
+    13→outputs …
+    16→runs …
+.github/actions/install-latest-npm/action.yml
+     3→name …
+     4→description …
+     5→inputs …
+     9→runs …
+.github/dependabot.yml
+     3→version …
+     5→updates …
+.github/matchers/tap.json
+     2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
+     3→  "problemMatcher": [
+    32→}
+.github/settings.yml
+     3→repository …
+    13→branches …
+.github/workflows/audit.yml
+     3→name …
+     5→on …
+    11→permissions …
+    14→jobs …
+.github/workflows/ci-release.yml
+     3→name …
+     5→on …
+    21→permissions …
+    25→jobs …
+.github/workflows/ci.yml
+     3→name …
+     5→on …
+    16→permissions …
+    19→jobs …
+.github/workflows/codeql-analysis.yml
+     3→name …
+     5→on …
+    18→permissions …
+    21→jobs …
+.github/workflows/post-dependabot.yml
+     3→name …
+     5→on …
+     7→permissions …
+    10→jobs …
+.github/workflows/pull-request.yml
+     3→name …
+     5→on …
+    13→permissions …
+    16→jobs …
+.github/workflows/release-integration.yml
+     3→name …
+     5→on …
+    22→permissions …
+    26→jobs …
+.github/workflows/release.yml
+     3→name …
+     5→on …
+    11→permissions …
+    16→jobs …
+.release-please-manifest.json
+     2→  ".": "7.7.4"
+     3→}
 CHANGELOG.md
      1→# Changelog …
      3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16) …
@@ -237,9 +310,6 @@ README.md
    188→comparator with the same `[major, minor, patch]` tuple also has a
    189→prerelease tag.
    190→
-   191→For example, the range `>1.2.3-alpha.3` would be allowed to match the
-   192→version `1.2.3-alpha.7`, but it would *not* be satisfied by
-   193→`3.4.5-alpha.9`, even though `3.4.5-alpha.9` is technically "greater
       →…
    219→#### Prerelease Identifiers
    221→The method `.inc` takes an additional `identifier` string argument that
@@ -269,7 +339,7 @@ README.md
    283→
    284→Advanced ranges may be combined in the same way as primitive
    285→comparators using white space or `||`.
-   286→
+      →…
    287→#### Hyphen Ranges `X.Y.Z - A.B.C`
    289→Specifies an inclusive set.
    290→
@@ -320,9 +390,6 @@ README.md
    388→
    389→```bnf
    390→range-set  ::= range ( logical-or range ) *
-   391→logical-or ::= ( ' ' ) * '||' ( ' ' ) *
-   392→range      ::= hyphen | simple ( ' ' simple ) * | ''
-   393→hyphen     ::= partial ' - ' partial
       →…
    408→## Functions
    410→All methods and classes take a final `options` object argument.  All
@@ -374,9 +441,6 @@ README.md
    457→* `lt(v1, v2)`: `v1 < v2`
    458→* `lte(v1, v2)`: `v1 <= v2`
    459→* `eq(v1, v2)`: `v1 == v2` This is true if they're logically equivalent,
-   460→  even if they're not the same string.  You already know how to
-   461→  compare strings.
-   462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
       →…
    478→### Sorting
    480→* `sort(versions)`: Returns a sorted array of versions based on the `compareBuild` 
@@ -393,9 +457,6 @@ README.md
    493→  range.
    494→* `maxSatisfying(versions, range)`: Return the highest version in the list
    495→  that satisfies the range, or `null` if none of them do.
-   496→* `minSatisfying(versions, range)`: Return the lowest version in the list
-   497→  that satisfies the range, or `null` if none of them do.
-   498→* `minVersion(range)`: Return the lowest version that can match
       →…
    531→### Coercion
    533→* `coerce(version, options)`: Coerces a string to semver if possible
@@ -403,9 +464,6 @@ README.md
    535→This aims to provide a very forgiving translation of a non-semver string to
    536→semver. It looks for the first digit in a string and consumes all
    537→remaining characters which satisfy at least a partial semver (e.g., `1`,
-   538→`1.2`, `1.2.3`) up to the max permitted length (256 characters).  Longer
-   539→versions are simply truncated (`4.6.3.9.2-alpha2` becomes `4.6.3`).  All
-   540→surrounding text is simply ignored (`v3.4 replaces v3.3.1` becomes
       →…
    558→### Clean
    560→* `clean(version)`: Clean a string to be a valid semver if possible
@@ -413,9 +471,6 @@ README.md
    562→This will return a cleaned and trimmed semver version. If the provided
    563→version is not valid a null will be returned. This does not work for
    564→ranges.
-   565→
-   566→ex.
-   567→* `s.clean(' = v 2.1.5foo')`: `null`
       →…
    576→## Constants
    578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
@@ -426,9 +481,6 @@ README.md
    584→- minor
    585→- preminor
    586→- patch
-   587→- prepatch
-   588→- prerelease
-   589→
       →…
    600→### `SEMVER_SPEC_VERSION`
    602→2.0.0
@@ -436,9 +488,7 @@ README.md
    604→```
    605→const semver = require('semver');
    606→
-   607→console.log('We are currently using the semver specification version:', semver.SEMVER_SPEC_VERSION);
-   608→```
-   609→
+      →…
    610→## Exported Modules
    613→TODO: Make sure that all of these items are documented (classes aren't,
    614→eg), and then pull the module name into the documentation for that specific
@@ -494,27 +544,11 @@ README.md
    664→* `require('semver/ranges/valid')`
    665→
 benchmarks/bench-compare.js
-     5→const suite …
 benchmarks/bench-diff.js
-     5→const suite …
-     7→const cases …
 benchmarks/bench-parse-options.js
-     5→const suite …
-     7→const options1 …
-    11→const options2 …
-    16→const options3 …
 benchmarks/bench-parse.js
-     5→const suite …
 benchmarks/bench-satisfies.js
-     5→const suite …
-     7→const versions …
-     8→const versionToCompare …
-     9→const option1 …
-    10→const option2 …
-    11→const option3 …
 benchmarks/bench-subset.js
-     5→const suite …
-     8→const cases …
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
@@ -786,6 +820,29 @@ internal/re.js
     45→  debug(name, index, value)
     46→  t[name] = index
       →…
+package.json
+     2→  "name": "semver",
+     3→  "version": "7.7.4",
+     4→  "description": "The semantic version parser used by npm.",
+     5→  "main": "index.js",
+     6→  "scripts": {
+    15→  },
+    16→  "devDependencies": {
+    21→  },
+    22→  "license": "ISC",
+    23→  "repository": {
+    26→  },
+    27→  "bin": {
+    29→  },
+    30→  "files": [
+    40→  ],
+    41→  "tap": {
+    48→  },
+    49→  "engines": {
+    51→  },
+    52→  "author": "GitHub Inc.",
+    53→  "templateOSS": {
+    78→}
 ranges/gtr.js
      5→const gtr = (version, range, options) => outside(version, range, '>', options)
 ranges/intersects.js
@@ -811,6 +868,15 @@ ranges/to-comparators.js
      6→const toComparators = (range, options) =>
 ranges/valid.js
      4→const validRange = (range, options) => {
+release-please-config.json
+     2→  "group-pull-request-title-pattern": "chore: release ${version}",
+     3→  "pull-request-title-pattern": "chore: release${component} ${version}",
+     4→  "changelog-sections": [
+    30→  ],
+    31→  "packages": {
+    35→  },
+    36→  "prerelease-type": "pre.0"
+    37→}
 test/bin/semver.js
      9→const bin = require.resolve('../../bin/semver')
     10→const run = args => new Promise((resolve, reject) => {

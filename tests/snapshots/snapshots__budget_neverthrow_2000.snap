@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1977 words)
+budget: 2000 (1975 words)
 
 CHANGELOG.md
      1→# neverthrow …
@@ -131,17 +131,6 @@ README.md
   1654→expect(callSomeFunctionThatReturnsAResult("with", "some", "args")).toEqual(ok(someExpectation));
   1655→```
   1656→
-  1657→By default, the thrown value does not contain a stack trace. This is because stack trace generation [makes error messages in Jest harder to understand](https://github.com/supermacro/neverthrow/pull/215). If you want stack traces to be generated, call `_unsafeUnwrap` and / or `_unsafeUnwrapErr` with a config object:
-  1658→
-  1659→```typescript
-  1660→_unsafeUnwrapErr({
-  1661→  withStackTrace: true,
-  1662→})
-  1663→
-  1664→// ^ Now the error object will have a `.stack` property containing the current stack
-  1665→```
-  1666→
-  1667→---
       →…
   1673→## A note on the Package Name
   1675→Although the package is called `neverthrow`, please don't take this literally. I am simply encouraging the developer to think a bit more about the ergonomics and usage of whatever software they are writing.
@@ -149,6 +138,32 @@ README.md
       →…
   1681→### License
   1683→The neverthrow project is available as open source under the terms of the [MIT license](https://github.com/supermacro/neverthrow/blob/master/LICENSE).
+package.json
+     2→  "name": "neverthrow",
+     3→  "version": "8.2.0",
+     4→  "description": "Stop throwing errors, and instead return Results!",
+     5→  "main": "dist/index.cjs.js",
+     6→  "module": "dist/index.es.js",
+     7→  "types": "dist/index.d.ts",
+     8→  "files": [
+    10→  ],
+    11→  "scripts": {
+    23→  },
+    24→  "repository": {
+    27→  },
+    28→  "author": "Giorgio Delgado",
+    29→  "license": "MIT",
+    30→  "bugs": {
+    32→  },
+    33→  "homepage": "https://github.com/supermacro/neverthrow#readme",
+    34→  "devDependencies": {
+    52→  },
+    53→  "keywords": [
+    58→  ],
+    59→  "engines": {
+    62→  },
+    63→  "optionalDependencies": {
+    66→}
 rollup.config.mjs
      1→import typescript from "rollup-plugin-typescript2";
      2→import dts from "rollup-plugin-dts";
@@ -421,11 +436,7 @@ src/result.ts
    393→  match …
    397→  safeUnwrap …
    405→  _unsafeUnwrap(_?: ErrorConfig): T {
-   406→    return this.value
-   407→  }
    409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
-   410→    throw createNeverThrowError('Called `_unsafeUnwrapErr` on an Ok', this, config)
-   411→  }
    419→export class Err<T, E> implements IResult<T, E> {
    420→  constructor …
    422→  isOk …
@@ -444,11 +455,7 @@ src/result.ts
    492→  match …
    496→  safeUnwrap …
    505→  _unsafeUnwrap(config?: ErrorConfig): T {
-   506→    throw createNeverThrowError('Called `_unsafeUnwrap` on an Err', this, config)
-   507→  }
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
-   510→    return this.error
-   511→  }
    523→export const fromThrowable …
    530→type Prev …
    590→type CollectResults …
@@ -468,8 +475,20 @@ tests/index.test.ts
      3→../src …
 tests/safe-try.test.ts
      1→../src …
+tests/tsconfig.tests.json
+     2→  "compilerOptions": {
+    22→  },
+    23→  "include": [
+    27→}
 tests/typecheck-tests.ts
      7→../src …
     16→import { safeTry, Transpose } from '../src/result …
     19→type CreateTuple …
   2607→const input = <T>(): T => 123 as any
+tsconfig.json
+     2→  "compilerOptions": {
+    23→  },
+    24→  "include": [
+    26→  ],
+    27→  "exclude": [
+    31→}

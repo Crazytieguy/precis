@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (477 words)
+budget: 500 (480 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -28,16 +28,12 @@ README.md
     60→```python
     61→import tomli
     62→
-    63→toml_str = """
-    64→[[players]]
       →…
    152→## FAQ<a name="faq"></a> …
    154→### Why this parser?<a name="why-this-parser"></a>
    156→- it's lil'
    157→- pure Python with zero dependencies
    158→- the fastest pure Python parser [\*](#pure-python):
-   159→  14x as fast as [tomlkit](https://pypi.org/project/tomlkit/),
-   160→  2.1x as fast as [toml](https://pypi.org/project/toml/)
       →…
    201→## Performance<a name="performance"></a> …
 benchmark/README.md
@@ -53,6 +49,8 @@ benchmark/README.md
     15→tox -e benchmark
     16→```
     17→
+benchmark/data.toml
+   117→[multiline-strings …
 benchmark/run.py
     15→def benchmark …
     37→def run …
@@ -65,9 +63,9 @@ fuzzer/fuzz.py
 profiler/profiler_script.py
      8→from pathlib import Path
     10→import tomli
+pyproject.toml
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
-setup.py
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
       →…
@@ -130,6 +128,23 @@ tests/__init__.py
       →…
      5→__all__ = ("tomllib",)
 tests/burntsushi.py
+tests/data/invalid/_external/toml-test/invalid/inline-table/overwrite-02.toml
+     3→[a.b …
+tests/data/invalid/keys-and-vals/overwrite-with-deep-table.toml
+     2→[a.b.c.d …
+tests/data/invalid/missing-closing-double-square-bracket.toml
+     1→[[closing-bracket.missing …
+tests/data/valid/_external/toml-test/valid/key/like-date.toml
+    18→[2002-01-02 …
+tests/data/valid/_external/toml-test/valid/key/start.toml
+     4→[-key …
+tests/data/valid/_external/toml-test/valid/table/array-empty-name.toml
+     3→[['' …
+tests/data/valid/_external/toml-test/valid/table/sub.toml
+     5→[a.extend …
+tests/data/valid/array/open-parent-table.json
+     2→  "parent-table": {
+     6→}
 tests/test_data.py
     27→class TestData(unittest.TestCase):
 tests/test_error.py
@@ -142,8 +157,6 @@ tomllib.md
      4→
      5→Relevant links:
      6→
-     7→- Python Issue Tracker: https://bugs.python.org/issue40059
-     8→- Tomli issue tracker: https://github.com/hukkin/tomli/issues/141
       →…
     13→## Converting Tomli to tomllib …
     15→### Sync status

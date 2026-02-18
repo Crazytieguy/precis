@@ -2,16 +2,47 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3913 words)
+budget: 4000 (3918 words)
 
+FUNDING.yml
+     1→github …
+package.json
+     2→  "name": "vaul",
+     3→  "version": "1.1.2",
+     4→  "description": "Drawer component for React.",
+     5→  "main": "./dist/index.js",
+     6→  "module": "./dist/index.mjs",
+     7→  "types": "./dist/index.d.ts",
+     8→  "files": [
+    11→  ],
+    12→  "exports": {
+    21→  },
+    22→  "scripts": {
+    30→  },
+    31→  "keywords": [
+    36→  ],
+    37→  "author": "Emil Kowalski <e@emilkowal.ski>",
+    38→  "license": "MIT",
+    39→  "homepage": "https://vaul.emilkowal.ski/",
+    40→  "repository": {
+    43→  },
+    44→  "bugs": {
+    46→  },
+    47→  "devDependencies": {
+    60→  },
+    61→  "peerDependencies": {
+    64→  },
+    65→  "packageManager": "pnpm@8.8.0",
+    66→  "dependencies": {
+    69→}
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
+pnpm-workspace.yaml
+     1→packages …
 src/browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
      2→  const userAgent = navigator.userAgent;
      3→  return (
-     4→    typeof window !== 'undefined' &&
-     5→    ((/Firefox/.test(userAgent) && /Mobile/.test(userAgent)) || // Android Firefox
       →…
     10→export function isMac(): boolean | undefined {
     11→  return testPlatform(/^Mac/);
@@ -25,8 +56,6 @@ src/browser.ts
     22→export function isIPad(): boolean | undefined {
     23→  return (
     24→    testPlatform(/^iPad/) ||
-    25→    // iPadOS 13 lies and says it's a Mac, but we can distinguish by detecting touch support.
-    26→    (isMac() && navigator.maxTouchPoints > 1)
       →…
     30→export function isIOS(): boolean | undefined {
     31→  return isIPhone() || isIPad();
@@ -105,8 +134,6 @@ src/context.ts
     69→export const useDrawerContext = () => {
     70→  const context = React.useContext(DrawerContext);
     71→  if (!context) {
-    72→    throw new Error('useDrawerContext must be used within a Drawer.Root');
-    73→  }
       →…
 src/helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
@@ -117,32 +144,22 @@ src/helpers.ts
      9→export function isInView(el: HTMLElement): boolean {
     10→  const rect = el.getBoundingClientRect();
     11→
-    12→  if (!window.visualViewport) return false;
-    13→
       →…
     23→export function set(el: Element | HTMLElement | null | undefined, styles: Style, ignoreCache = false) {
     24→  if (!el || !(el instanceof HTMLElement)) return;
     25→  let originalStyles: Style = {};
-    26→
-    27→  Object.entries(styles).forEach(([key, value]: [string, string]) => {
       →…
     42→export function reset(el: Element | HTMLElement | null, prop?: string) {
     43→  if (!el || !(el instanceof HTMLElement)) return;
     44→  let originalStyles = cache.get(el);
-    45→
-    46→  if (!originalStyles) {
       →…
     59→export const isVertical = (direction: DrawerDirection) => {
     60→  switch (direction) {
     61→    case 'top':
-    62→    case 'bottom':
-    63→      return true;
       →…
     72→export function getTranslate(element: HTMLElement, direction: DrawerDirection): number | null {
     73→  if (!element) {
     74→    return null;
-    75→  }
-    76→  const style = window.getComputedStyle(element);
       →…
     90→export function dampenValue(v: number) {
     91→  return 8 * (Math.log(v + 1) - 2);
@@ -150,8 +167,6 @@ src/helpers.ts
     94→export function assignStyle(element: HTMLElement | null | undefined, style: Partial<CSSStyleDeclaration>) {
     95→  if (!element) return () => {};
     96→
-    97→  const prevStyle = element.style.cssText;
-    98→  Object.assign(element.style, style);
       →…
    105→/**
    106→ * Receives functions as arguments and returns a new function that calls all.
@@ -393,8 +408,6 @@ src/use-controllable-state.ts
     39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
     40→  const [uncontrolledProp, setUncontrolledProp] = useUncontrolledState({ defaultProp, onChange });
     41→  const isControlled = prop !== undefined;
-    42→  const value = isControlled ? prop : uncontrolledProp;
-    43→  const handleChange = useCallbackRef(onChange);
       →…
 src/use-position-fixed.ts
      1→import React from 'react';
@@ -539,12 +552,10 @@ src/use-prevent-scroll.ts
     29→export function isScrollable(node: Element): boolean {
     30→  let style = window.getComputedStyle(node);
     31→  return /(auto|scroll)/.test(style.overflow + style.overflowX + style.overflowY);
-    32→}
+      →…
     34→export function getScrollParent(node: Element): Element {
     35→  if (isScrollable(node)) {
     36→    node = node.parentElement as HTMLElement;
-    37→  }
-    38→
       →…
     47→const nonTextInputTypes = new Set([
     48→  'checkbox',
@@ -609,8 +620,6 @@ src/use-prevent-scroll.ts
    294→export function isInput(target: Element) {
    295→  return (
    296→    (target instanceof HTMLInputElement && !nonTextInputTypes.has(target.type)) ||
-   297→    target instanceof HTMLTextAreaElement ||
-   298→    (target instanceof HTMLElement && target.isContentEditable)
       →…
 src/use-scale-background.ts
      1→import React, { useMemo } from 'react';
@@ -621,8 +630,6 @@ src/use-scale-background.ts
      8→export function useScaleBackground() {
      9→  const { direction, isOpen, shouldScaleBackground, setBackgroundColorOnScale, noBodyStyles } = useDrawerContext();
     10→  const timeoutIdRef = React.useRef<number | null>(null);
-    11→  const initialBackgroundColor = useMemo(() => document.body.style.backgroundColor, []);
-    12→
       →…
 src/use-snap-points.ts
      1→import React from 'react';
@@ -633,8 +640,6 @@ src/use-snap-points.ts
      7→export function useSnapPoints({
      8→  activeSnapPointProp,
      9→  setActiveSnapPointProp,
-    10→  snapPoints,
-    11→  drawerRef,
       →…
 test/README.md
      3→## Getting Started
@@ -669,6 +674,16 @@ test/README.md
 test/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
+test/package.json
+     2→  "name": "test",
+     3→  "version": "0.1.0",
+     4→  "private": true,
+     5→  "scripts": {
+    10→  },
+    11→  "devDependencies": {
+    20→  },
+    21→  "dependencies": {
+    29→}
 test/src/app/controlled/page.tsx
      3→import { useState } from 'react';
      4→import { Drawer } from 'vaul';
@@ -728,8 +743,7 @@ test/src/app/layout.tsx
      5→const inter = Inter({ subsets: ['latin'] });
      7→export const metadata: Metadata = {
      8→  title: 'Create Next App',
-     9→  description: 'Generated by create next app',
-    10→};
+      →…
     12→export default function RootLayout({ children }: { children: React.ReactNode }) {
     13→  return (
     14→    <html lang="en">
@@ -931,3 +945,19 @@ test/tests/with-redirect.spec.ts
 test/tests/with-scaled-background.spec.ts
      2→import { openDrawer } from './helpers';
 test/tests/without-scaled-background.spec.ts
+test/tsconfig.json
+     2→  "compilerOptions": {
+    31→  },
+    32→  "include": [
+    37→  ],
+    38→  "exclude": [
+    41→}
+tsconfig.json
+     2→  "compilerOptions": {
+     9→  },
+    10→  "include": ["src"],
+    11→}
+turbo.json
+     2→  "$schema": "https://turbo.build/schema.json",
+     3→  "pipeline": {
+    12→}

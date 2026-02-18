@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (967 words)
+budget: 1000 (969 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -21,8 +21,6 @@ README.md
     14→- [Installation](#installation)
     15→- [Usage](#usage)
     16→  - [Parse a TOML string](#parse-a-toml-string)
-    17→  - [Parse a TOML file](#parse-a-toml-file)
-    18→  - [Handle invalid TOML](#handle-invalid-toml)
       →…
     32→## Intro<a name="intro"></a>
     34→Tomli is a Python library for parsing [TOML](https://toml.io).
@@ -30,8 +28,6 @@ README.md
     36→Older versions are [TOML v1.0.0](https://toml.io/en/v1.0.0) compatible.
     37→
     38→A version of Tomli, the `tomllib` module,
-    39→was added to the standard library in Python 3.11
-    40→via [PEP 680](https://www.python.org/dev/peps/pep-0680/).
       →…
     50→## Installation<a name="installation"></a>
     52→```bash
@@ -55,10 +51,7 @@ README.md
     72→
     73→toml_dict = tomli.loads(toml_str)
     74→assert toml_dict == {
-    75→    "players": [{"name": "Lehtinen", "number": 26}, {"name": "Numminen", "number": 27}]
-    76→}
-    77→```
-    78→
+      →…
    152→## FAQ<a name="faq"></a>
    154→### Why this parser?<a name="why-this-parser"></a>
    156→- it's lil'
@@ -94,6 +87,8 @@ benchmark/README.md
     20→```bash
     21→tox -e benchmark-pypi
     22→```
+benchmark/data.toml
+   117→[multiline-strings …
 benchmark/run.py
     15→def benchmark …
     37→def run …
@@ -112,6 +107,25 @@ fuzzer/fuzz.py
 profiler/profiler_script.py
      8→from pathlib import Path
     10→import tomli
+pyproject.toml
+     1→[build-system …
+     5→[project …
+    28→[project.urls …
+    33→[tool.isort …
+    46→[tool.tox …
+    51→[tool.tox.env_run_base …
+    58→[tool.tox.env."profile" …
+    75→[tool.tox.env."pre-commit" …
+    83→[tool.tox.env."benchmark" …
+    92→[tool.tox.env."benchmark-pypi" …
+   105→[tool.tox.env."benchmark-import" …
+   111→[tool.tox.env."fuzz" …
+   129→[tool.coverage.run …
+   133→[tool.coverage.report …
+   145→[tool.mypy …
+   157→[[tool.mypy.overrides …
+   161→[[tool.mypy.overrides …
+   167→[[tool.mypy.overrides …
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
 setup.py
@@ -132,8 +146,6 @@ src/tomli/_parser.py
     28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
     29→# mypyc docs this will be fixed in the future:
     30→# https://mypyc.readthedocs.io/en/latest/differences_from_python.html#stack-overflows
-    31→# Before mypyc's fix is in, recursion needs to be limited by this library.
-    32→# Choosing `sys.getrecursionlimit()` as maximum inline table/array nesting
       →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
     37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
@@ -158,7 +170,6 @@ src/tomli/_parser.py
     78→
     79→    Adds the following attributes to ValueError:
     80→    msg: The unformatted error message
-    81→    doc: The TOML document being parsed
       →…
     86→
    220→class Flags:
@@ -182,13 +193,6 @@ src/tomli/_re.py
     29→(?:
     30→    x[0-9A-Fa-f](?:_?[0-9A-Fa-f])*   # hex
     31→    |
-    32→    b[01](?:_?[01])*                 # bin
-    33→    |
-    34→    o[0-7](?:_?[0-7])*               # oct
-    35→)
-    36→|
-    37→[+-]?(?:0|[1-9](?:_?[0-9])*)         # dec, integer part
-    38→(?P<floatpart>
       →…
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
@@ -197,9 +201,7 @@ src/tomli/_re.py
     49→(?:
     50→    [Tt ]
     51→    {_TIME_RE_STR}
-    52→    (?:([Zz])|([+-])([01][0-9]|2[0-3]):([0-5][0-9]))?  # optional time offset
-    53→)?
-    54→""",
+      →…
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
@@ -217,13 +219,52 @@ src/tomli/_types.py
 tests/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
-     3→# Licensed to PSF under a Contributor Agreement.
-     4→
+      →…
      5→__all__ = ("tomllib",)
-     9→import tomli as tomllib
 tests/burntsushi.py
+tests/data/invalid/_external/toml-test/invalid/array/extend-defined-aot.toml
+tests/data/invalid/_external/toml-test/invalid/array/extending-table.toml
+     5→[a.c …
+tests/data/invalid/_external/toml-test/invalid/array/tables-02.toml
+     2→[[fruit …
+     9→  [fruit.variety …
+tests/data/invalid/_external/toml-test/invalid/inline-table/overwrite-02.toml
+     3→[a.b …
+tests/data/invalid/keys-and-vals/overwrite-with-deep-table.toml
+     2→[a.b.c.d …
+tests/data/invalid/missing-closing-double-square-bracket.toml
+     1→[[closing-bracket.missing …
+tests/data/valid/_external/toml-test/valid/bool/bool.json
+tests/data/valid/_external/toml-test/valid/comment/tricky.toml
+    18→["hash#tag" …
+    27→["#"]]]]# …
+tests/data/valid/_external/toml-test/valid/key/like-date.toml
+    18→[2002-01-02 …
+tests/data/valid/_external/toml-test/valid/key/start.toml
+     4→[-key …
+tests/data/valid/_external/toml-test/valid/multibyte.toml
+     6→['𝐭𝐛𝐥' …
+    15→		['𝐭𝐛𝐥'.sub."βïƭ#" …
+tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-42.toml
+     2→[fruit.apple …
+tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-43.toml
+     2→[fruit.apple …
+tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-44.toml
+     6→[owner …
+tests/data/valid/_external/toml-test/valid/spec-example-1.toml
+    18→  [servers.alpha …
+tests/data/valid/_external/toml-test/valid/table/array-empty-name.toml
+     3→[['' …
+tests/data/valid/_external/toml-test/valid/table/sub.toml
+     5→[a.extend …
+tests/data/valid/array/open-parent-table.json
+     2→  "parent-table": {
+     6→}
+tests/data/valid/inline-table/multiline-inline-table.json
+     2→  "multiline": {
+    35→}
+tests/data/valid/multiline-basic-str/replacements.json
 tests/test_data.py
-     5→import json
     11→DATA_DIR …
     13→VALID_FILES …
     21→VALID_FILES_EXPECTED …
@@ -232,7 +273,6 @@ tests/test_data.py
 tests/test_error.py
     13→class TestError(unittest.TestCase):
 tests/test_misc.py
-     5→import copy
     17→class TestMiscellaneous(unittest.TestCase):
 tomllib.md
      1→# `tomllib` – Tomli in the standard library

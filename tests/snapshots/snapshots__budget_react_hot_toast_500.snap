@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (489 words)
+budget: 500 (490 words)
 
 README.md
     28→## Features …
@@ -19,6 +19,7 @@ README.md
     50→
     51→## Getting Started …
     70→## Documentation …
+package.json
 site/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -53,14 +54,20 @@ site/components/sections/toast-example.tsx
    270→export const ToastExample …
 site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
-     9→  'top-left',
-      →…
     17→export const ToasterExample …
 site/next.config.mjs
      5→const withMDX = nextMdx({
     15→const nextConfig = {
     17→  webpack(config) {
     24→  async rewrites() {
+site/package.json
+     2→  "name": "site",
+     3→  "scripts": {
+     7→  },
+     8→  "dependencies": {
+    24→  },
+    25→  "devDependencies": {
+    35→}
 site/pages/_app.tsx
     12→const components = {
 site/pages/index.tsx
@@ -68,6 +75,13 @@ site/pages/index.tsx
    102→export default function Home() {
    103→  const [position, setPosition] = useState<ToastPosition>('top-center');
       →…
+site/tsconfig.json
+     2→  "compilerOptions": {
+    21→  },
+    22→  "include": [
+    31→  ],
+    32→  "exclude": [
+    35→}
 site/types/svg.d.ts
      1→interface SvgrComponent
      2→  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
@@ -91,14 +105,11 @@ src/components/loader.tsx
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
 src/components/toast-bar.tsx
-     8→const enterAnimation …
-    13→const exitAnimation …
     47→interface ToastBarProps {
     48→  toast: Toast;
     49→  position?: ToastPosition;
     50→  style?: React.CSSProperties;
       →…
-    57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 src/components/toast-icon.tsx
     32→export const AnimatedIconWrapper = styled('div')`
@@ -107,8 +118,6 @@ src/components/toast-icon.tsx
     48→  toast: Toast;
       →…
 src/components/toaster.tsx
-    15→const ToastWrapper …
-    47→const getPositionStyle …
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
       →…
@@ -121,16 +130,16 @@ src/core/store.ts
     52→interface ToasterState {
     58→interface State {
     62→export const reducer …
-   136→const listeners: Array<
-   140→const defaultToasterState: ToasterState = {
+   136→const listeners …
+   140→const defaultToasterState …
    149→export const dispatch …
    161→export const dispatchAll …
    164→export const getToasterIdFromToastId …
    169→export const createDispatch …
    185→export const useStore …
 src/core/toast.ts
-    19→type Message = ValueOrFunction<Renderable, Toast>;
-    21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
+    19→type Message …
+    21→type ToastHandler …
     23→const createToast …
     42→const createHandler …
     55→const toast …
@@ -160,10 +169,8 @@ src/headless/index.ts
      1→import { toast } from '../core/toast';
 src/index.ts
      1→import { toast } from './core/toast';
-test/setup.ts
-     1→import '@testing-library/jest-dom';
 test/toast.test.tsx
-    29→const waitTime …
     35→const TOAST_DURATION = 1000;
+tsconfig.json
 tsup.config.ts
      4→const commonConfig: Options = {

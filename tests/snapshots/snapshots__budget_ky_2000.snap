@@ -2,8 +2,39 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1949 words)
+budget: 2000 (1960 words)
 
+package.json
+     2→	"name": "ky",
+     3→	"version": "1.14.3",
+     4→	"description": "Tiny and elegant HTTP client based on the Fetch API",
+     5→	"license": "MIT",
+     6→	"repository": "sindresorhus/ky",
+     7→	"funding": "https://github.com/sindresorhus/ky?sponsor=1",
+     8→	"author": {
+    12→	},
+    13→	"type": "module",
+    14→	"exports": {
+    17→	},
+    18→	"main": "./distribution/index.js",
+    19→	"types": "./distribution/index.d.ts",
+    20→	"sideEffects": false,
+    21→	"engines": {
+    23→	},
+    24→	"scripts": {
+    30→	},
+    31→	"files": [
+    33→	],
+    34→	"keywords": [
+    55→	],
+    56→	"devDependencies": {
+    77→	},
+    78→	"xo": {
+    93→	},
+    94→	"ava": {
+   102→	},
+   103→	"nyc": {
+   116→}
 readme.md
     20→## Benefits over plain `fetch`
     22→- Simpler API
@@ -230,17 +261,6 @@ source/core/constants.ts
    181→						});
    182→					}
    183→
-   184→					// Retry with a modified request (e.g., fallback endpoint)
-   185→					if (data.error?.code === 'FALLBACK_TO_BACKUP') {
-   186→						return ky.retry({
-   187→							request: new Request('https://backup-api.com/endpoint', {
-   188→								method: request.method,
-   189→								headers: request.headers,
-   190→							}),
-   191→							code: 'BACKUP_ENDPOINT'
-   192→						});
-   193→					}
-   194→
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys: KyOptionsRegistry = {
@@ -319,8 +339,6 @@ source/types/options.ts
     32→
     33→export type KyOptions = {
     34→	/**
-    35→	Shortcut for sending JSON. Use this instead of the `body` option.
-    36→
       →…
    302→/**
    303→Each key from KyOptions is present and set to `true`.
@@ -397,7 +415,7 @@ source/types/retry.ts
      1→import type {HttpMethod} from './options.js';
 source/utils/body.ts
      5→export const getBodySize …
-    57→const withProgress = (stream: ReadableStream<Uint8Array>, totalBytes: number, onProgress: Options['onDownloadProgress'] | Options['onUploadProgress']): ReadableStream<Uint8Array> => {
+    57→const withProgress …
     90→export const streamResponse …
    119→export const streamRequest …
 source/utils/delay.ts
@@ -408,17 +426,17 @@ source/utils/is.ts
 source/utils/merge.ts
      6→export const validateAndMerge …
     16→export const mergeHeaders …
-    32→function newHookValue<K extends keyof Hooks>(original: Hooks, incoming: Hooks, property: K): Required<Hooks>[K] {
+    32→function newHookValue …
     38→export const mergeHooks …
-    47→const appendSearchParameters = (target: any, source: any): URLSearchParams => {
+    47→const appendSearchParameters …
     86→export const deepMerge …
 source/utils/normalize.ts
      5→export const normalizeRequestMethod …
-     8→const retryMethods: HttpMethod[] = ['get', 'put', 'head', 'delete', 'options', 'trace'];
-    10→const retryStatusCodes = [408, 413, 429, 500, 502, 503, 504];
-    12→const retryAfterStatusCodes = [413, 429, 503];
-    14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
-    16→const defaultRetryOptions: InternalRetryOptions = {
+     8→const retryMethods …
+    10→const retryStatusCodes …
+    12→const retryAfterStatusCodes …
+    14→type InternalRetryOptions …
+    16→const defaultRetryOptions …
     28→export const normalizeRetryOptions …
 source/utils/options.ts
      4→export const findUnknownOptions …
@@ -486,3 +504,15 @@ test/helpers/with-page.ts
 test/helpers/with-performance.ts
 test/hooks.ts
 test/http-error.ts
+tsconfig.dist.json
+     2→	"extends": "./tsconfig",
+     3→	"compilerOptions": {
+     8→	},
+     9→	"include": [
+    12→}
+tsconfig.json
+     2→	"extends": "@sindresorhus/tsconfig",
+     3→	"compilerOptions": {
+     5→	},
+     6→	"include": [
+     9→}

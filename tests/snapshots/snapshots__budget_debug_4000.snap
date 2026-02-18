@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3971 words)
+budget: 4000 (3978 words)
 
 README.md
      1→# debug
@@ -458,6 +458,34 @@ README.md
    479→CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
    480→TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
    481→SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+package.json
+     2→  "name": "debug",
+     3→  "version": "4.4.3",
+     4→  "repository": {
+     7→  },
+     8→  "description": "Lightweight debugging utility for Node.js and the browser",
+     9→  "keywords": [
+    13→  ],
+    14→  "files": [
+    18→  ],
+    19→  "author": "Josh Junon (https://github.com/qix-)",
+    20→  "contributors": [
+    24→  ],
+    25→  "license": "MIT",
+    26→  "scripts": {
+    32→  },
+    33→  "dependencies": {
+    35→  },
+    36→  "devDependencies": {
+    48→  },
+    49→  "peerDependenciesMeta": {
+    53→  },
+    54→  "main": "./src/index.js",
+    55→  "browser": "./src/browser.js",
+    56→  "engines": {
+    58→  },
+    59→  "xo": {
+    64→}
 src/browser.js
    115→function useColors() {
    116→	// NB: In an Electron preload script, document will be defined but not fully
@@ -795,21 +823,6 @@ src/common.js
    206→					searchIndex++;
    207→					templateIndex++;
    208→				}
-   209→			} else if (starIndex !== -1) { // eslint-disable-line no-negated-condition
-   210→				// Backtrack to the last '*' and try to match more characters
-   211→				templateIndex = starIndex + 1;
-   212→				matchIndex++;
-   213→				searchIndex = matchIndex;
-   214→			} else {
-   215→				return false; // No match
-   216→			}
-   217→		}
-   218→
-   219→		// Handle trailing '*' in template
-   220→		while (templateIndex < template.length && template[templateIndex] === '*') {
-   221→			templateIndex++;
-   222→		}
-   223→
       →…
 src/node.js
    151→/**

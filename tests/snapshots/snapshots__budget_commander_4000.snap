@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3954 words)
+budget: 4000 (3961 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -21,9 +21,6 @@ CHANGELOG.md
    916→if (!program.args.length) ...
    917→```
    918→
-   919→a partial replacement is:
-   920→
-   921→```js
       →…
 CONTRIBUTING.md
      1→# Contributing
@@ -234,32 +231,15 @@ Readme_zh-CN.md
     11→
     12→- [Commander.js](#commanderjs)
     13→  - [安装](#%e5%ae%89%e8%a3%85)
-    14→  - [快速开始](#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B)
       →…
-    59→## 安装 …
-    65→## 快速开始 …
-   144→## 声明 program 变量 …
-   173→## 选项 …
-   496→## 命令 …
    570→#### 其他参数配置
    572→有少数附加功能可以直接构造`Argument`对象，对参数进行更详尽的配置。
    573→
-   574→示例代码：[arguments-extra.js](./examples/arguments-extra.js)
-   575→
-   576→```js
-   577→program
       →…
    582→#### 自定义参数处理
    584→选项的参数可以通过自定义函数来处理（与处理选项参数时类似），该函数接收两个参数：用户新输入的参数值和当前已有的参数值（即上一次调用自定义处理函数后的返回值），返回新的命令参数值。
    585→
-   586→处理后的参数值会传递给命令处理函数，同时可通过`.processedArgs`获取。
-   587→
-   588→可以在自定义函数的后面设置命令参数的默认值或初始值。
-   589→
       →…
-   705→## 自动化帮助信息 …
-   895→## 自定义事件监听 …
-   905→## 零碎知识 …
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
@@ -273,7 +253,6 @@ Readme_zh-CN.md
    918→
    919→```js
       →…
-  1061→## 支持 …
 SECURITY.md
      1→# Security Policy
      3→To report a security vulnerability, please use the
@@ -427,23 +406,16 @@ docs/zh-CN/不再推荐使用的功能.md
      1→# 不再推荐使用的功能
      3→本文中列出的功能不再推荐使用。它们在 Commander 未来的主要版本（major version）中可能被移除。为保证后向兼容，这些功能目前还可以使用，但它们不应被用在新代码中。
      4→
-     5→- [不再推荐使用的功能](#%E4%B8%8D%E5%86%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8%E7%9A%84%E5%8A%9F%E8%83%BD)
       →…
 docs/zh-CN/可变参数的选项.md
      1→# 可变参数的选项
      3→README 文档介绍了选项的声明与使用。大多数情况下，选项的解析行为，与您和您程序用户的期望相符。本文将详述一些特殊用例和细节问题。
      4→
-     5→- [可变参数的选项](#%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E7%9A%84%E9%80%89%E9%A1%B9)
       →…
-    73→### 方案一：让`--`成为语法的一部分 …
-    98→### 方案二：把选项放在最后 …
-   120→### 方案三：使用选项替代命令参数 …
-   183→### 将短选项视作 boolean 类型选项合并 …
 docs/zh-CN/术语表.md
      1→# 术语表
      3→命令行参数由选项（options）、选项参数（option-arguments）、命令（commands），以及命令参数（command-arguments）组成。
      4→
-     5→|术语|解释|
       →…
 eslint.config.js
      8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
@@ -474,13 +446,9 @@ examples/configure-output.js
 examples/custom-command-class.js
      6→class CommandWithTrace extends commander.Command {
      7→  createCommand(name) {
-     8→    const cmd = new CommandWithTrace(name);
-      →…
 examples/global-options-added.js
     16→class MyRootCommand extends Command {
     17→  createCommand(name) {
-    18→    const cmd = new Command(name);
-      →…
 examples/help-centered.mjs
      6→class MyHelp extends Help {
      7→  formatItem(term, termWidth, description, helper) {
@@ -555,9 +523,6 @@ lib/command.js
   1119→  async parseAsync(argv, parseOptions) {
   1127→  _prepareForParse() {
   1128→    if (this._savedState === null) {
-  1129→      this.saveStateBeforeParse();
-  1130→    } else {
-  1131→      this.restoreStateBeforeParse();
       →…
   1141→  saveStateBeforeParse() {
   1158→  restoreStateBeforeParse() {
@@ -703,11 +668,36 @@ lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
      4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
-     5→  // Calculating optimal string alignment distance, no substring is edited more than once.
-     6→  // (Simple implementation.)
-     7→
       →…
     56→function suggestSimilar(word, candidates) {
+package-support.json
+     2→  "versions": [
+    19→}
+package.json
+     2→  "name": "commander",
+     3→  "version": "14.0.3",
+     4→  "description": "the complete solution for node.js command-line programs",
+     5→  "keywords": [
+    14→  ],
+    15→  "author": "TJ Holowaychuk <tj@vision-media.ca>",
+    16→  "license": "MIT",
+    17→  "repository": {
+    20→  },
+    21→  "scripts": {
+    34→  },
+    35→  "files": [
+    42→  ],
+    43→  "type": "commonjs",
+    44→  "main": "./index.js",
+    45→  "exports": {
+    61→  },
+    62→  "devDependencies": {
+    76→  },
+    77→  "types": "typings/index.d.ts",
+    78→  "engines": {
+    80→  },
+    81→  "support": true
+    82→}
 tests/command.createArgument.test.js
      3→class MyArgument extends commander.Argument {
      4→  constructor(name, description) {
@@ -728,6 +718,23 @@ tests/ts-imports.test.ts
     17→function checkClass(obj: object, name: string): void {
     18→  expect(typeof obj).toEqual('object');
     19→  expect(obj.constructor.name).toEqual(name);
+    20→}
+tsconfig.js.json
+     7→  "extends": "./tsconfig.json",
+     8→  "include": [
+    15→}
+tsconfig.json
+    12→  "compilerOptions": {
+    32→  },
+    33→  "include": [
+    42→  ],
+    43→  "exclude": ["node_modules"],
+    44→}
+tsconfig.ts.json
+     8→  "extends": "./tsconfig.json",
+     9→  "compilerOptions": {
+    14→  },
+    15→  "include": [
     20→}
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =

@@ -131,7 +131,7 @@ fn import_name(node: tree_sitter::Node, source: &str, lang: Lang) -> String {
                     .to_string()
             }
         }
-        Lang::Markdown => "?".to_string(),
+        Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => "?".to_string(),
     }
 }
 
@@ -155,7 +155,7 @@ fn is_first_party_import(name: &str, lang: Lang) -> bool {
         Lang::Go => false,
         // Python: relative imports (leading dot) are local.
         Lang::Python => name.starts_with('.'),
-        Lang::Markdown => false,
+        Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => false,
     }
 }
 
@@ -169,32 +169,34 @@ pub fn is_supported_extension(ext: &str) -> bool {
 /// the appropriate tree-sitter grammar (e.g. TSX vs TypeScript for `.tsx`).
 fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
     let lang = Lang::from_extension(ext)?;
-    Some(match (lang, ext) {
-        (Lang::Rust, _) => (
+    match (lang, ext) {
+        (Lang::Rust, _) => Some((
             tree_sitter_rust::LANGUAGE.into(),
             include_str!("../queries/rust.scm"),
-        ),
-        (Lang::JsTs, "tsx" | "jsx") => (
+        )),
+        (Lang::JsTs, "tsx" | "jsx") => Some((
             tree_sitter_typescript::LANGUAGE_TSX.into(),
             include_str!("../queries/typescript.scm"),
-        ),
-        (Lang::JsTs, _) => (
+        )),
+        (Lang::JsTs, _) => Some((
             tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into(),
             include_str!("../queries/typescript.scm"),
-        ),
-        (Lang::Go, _) => (
+        )),
+        (Lang::Go, _) => Some((
             tree_sitter_go::LANGUAGE.into(),
             include_str!("../queries/go.scm"),
-        ),
-        (Lang::Python, _) => (
+        )),
+        (Lang::Python, _) => Some((
             tree_sitter_python::LANGUAGE.into(),
             include_str!("../queries/python.scm"),
-        ),
-        (Lang::Markdown, _) => (
+        )),
+        (Lang::Markdown, _) => Some((
             tree_sitter_md::LANGUAGE.into(),
             include_str!("../queries/markdown.scm"),
-        ),
-    })
+        )),
+        // Config file langs have no tree-sitter grammar; handled by extract_config_symbols
+        _ => None,
+    }
 }
 
 /// Extract symbols from a source file.
@@ -204,12 +206,20 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         None => return vec![],
     };
 
+    let lang = match Lang::from_extension(ext) {
+        Some(l) => l,
+        None => return vec![],
+    };
+
+    // Config files: text-based extraction (no tree-sitter)
+    if matches!(lang, Lang::Json | Lang::Toml | Lang::Yaml) {
+        return extract_config_symbols(source, lang);
+    }
+
     let (language, query_src) = match language_for_extension(ext) {
         Some(pair) => pair,
         None => return vec![],
     };
-    // Safe: language_for_extension succeeded, so Lang::from_extension will too
-    let lang = Lang::from_extension(ext).unwrap();
 
     let mut parser = Parser::new();
     parser
@@ -468,6 +478,176 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
     }
 
     dedup_overloads(symbols, lang)
+}
+
+// ---------------------------------------------------------------------------
+// Config file extraction (JSON, TOML, YAML)
+// ---------------------------------------------------------------------------
+
+/// Extract symbols from config files using text-based heuristics.
+/// Config files don't have traditional code symbols — instead, top-level keys
+/// are extracted as Section symbols (analogous to markdown headings).
+fn extract_config_symbols(source: &str, lang: Lang) -> Vec<Symbol> {
+    match lang {
+        Lang::Json => extract_json_symbols(source),
+        Lang::Toml => extract_toml_symbols(source),
+        Lang::Yaml => extract_yaml_symbols(source),
+        _ => vec![],
+    }
+}
+
+/// Extract top-level keys from a JSON object as Section symbols.
+/// Uses indentation to detect top-level keys in pretty-printed JSON.
+fn extract_json_symbols(source: &str) -> Vec<Symbol> {
+    let lines: Vec<&str> = source.lines().collect();
+    if lines.is_empty() {
+        return vec![];
+    }
+
+    // Find the opening `{` — only extract from objects, not arrays
+    let open_idx = match lines.iter().position(|l| l.trim_start().starts_with('{')) {
+        Some(i) => i,
+        None => return vec![],
+    };
+
+    // Detect the indentation of the first top-level key
+    let key_indent = lines
+        .iter()
+        .skip(open_idx + 1)
+        .find_map(|line| {
+            let trimmed = line.trim_start();
+            if trimmed.starts_with('"') {
+                Some(line.len() - trimmed.len())
+            } else {
+                None
+            }
+        });
+    let key_indent = match key_indent {
+        Some(i) => i,
+        None => return vec![],
+    };
+
+    // Collect top-level keys at key_indent
+    let mut entries: Vec<(usize, String)> = Vec::new();
+    for (i, line) in lines.iter().enumerate().skip(open_idx + 1) {
+        let trimmed = line.trim_start();
+        let indent = line.len() - trimmed.len();
+        if indent == key_indent
+            && trimmed.starts_with('"')
+            && let Some(end_q) = trimmed[1..].find('"')
+        {
+            entries.push((i, trimmed[1..1 + end_q].to_string()));
+        }
+    }
+
+    // Build symbols: each key spans until the next key's line
+    let mut symbols = Vec::new();
+    for (idx, (line_0, name)) in entries.iter().enumerate() {
+        let end_line = if idx + 1 < entries.len() {
+            entries[idx + 1].0
+        } else {
+            lines.len()
+        };
+        symbols.push(Symbol {
+            kind: SymbolKind::Section,
+            name: name.clone(),
+            is_public: true,
+            is_first_party: false,
+            line: line_0 + 1,
+            end_line,
+        });
+    }
+    symbols
+}
+
+/// Extract section headers and top-level keys from TOML as Section symbols.
+/// `[section]` and `[[array]]` headers are extracted, plus top-level
+/// key-value pairs that appear before any section header.
+fn extract_toml_symbols(source: &str) -> Vec<Symbol> {
+    let lines: Vec<&str> = source.lines().collect();
+    let mut symbols = Vec::new();
+
+    for (i, line) in lines.iter().enumerate() {
+        let trimmed = line.trim();
+        // Section headers: [section] or [[array-of-tables]]
+        if (trimmed.starts_with('[') && trimmed.ends_with(']'))
+            || (trimmed.starts_with("[[") && trimmed.ends_with("]]"))
+        {
+            let name = trimmed
+                .trim_start_matches('[')
+                .trim_end_matches(']')
+                .trim()
+                .to_string();
+            if !name.is_empty() {
+                symbols.push(Symbol {
+                    kind: SymbolKind::Section,
+                    name,
+                    is_public: true,
+                    is_first_party: false,
+                    line: i + 1,
+                    end_line: i + 2, // placeholder, computed below
+                });
+            }
+        }
+    }
+
+    // Compute end_line for each section: spans until the next section header
+    for idx in 0..symbols.len() {
+        symbols[idx].end_line = if idx + 1 < symbols.len() {
+            symbols[idx + 1].line
+        } else {
+            lines.len() + 1
+        };
+    }
+
+    symbols
+}
+
+/// Extract top-level keys from YAML as Section symbols.
+/// Top-level keys are lines at indent 0 that contain `:` and aren't
+/// comments or document markers.
+fn extract_yaml_symbols(source: &str) -> Vec<Symbol> {
+    let lines: Vec<&str> = source.lines().collect();
+    let mut symbols = Vec::new();
+
+    for (i, line) in lines.iter().enumerate() {
+        // Skip blank lines, comments, document markers (---, ...)
+        let trimmed = line.trim();
+        if trimmed.is_empty()
+            || trimmed.starts_with('#')
+            || trimmed == "---"
+            || trimmed == "..."
+        {
+            continue;
+        }
+        // Top-level keys: no leading whitespace, contains ':'
+        if !line.starts_with(|c: char| c.is_whitespace())
+            && let Some(colon_pos) = line.find(':')
+        {
+            let key = line[..colon_pos].trim();
+            if !key.is_empty() && !key.starts_with('-') {
+                symbols.push(Symbol {
+                    kind: SymbolKind::Section,
+                    name: key.to_string(),
+                    is_public: true,
+                    is_first_party: false,
+                    line: i + 1,
+                    end_line: i + 2, // placeholder, computed below
+                });
+            }
+        }
+    }
+
+    // Compute end_line: each key spans until the next top-level key
+    for idx in 0..symbols.len() {
+        symbols[idx].end_line = if idx + 1 < symbols.len() {
+            symbols[idx + 1].line
+        } else {
+            lines.len() + 1
+        };
+    }
+
+    symbols
 }
 
 /// Collapse consecutive function symbols with the same name, keeping only the last in each run.
@@ -1577,5 +1757,107 @@ func Process() {}
         // Other functions still captured
         let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
         assert!(names.contains(&"Process"));
+    }
+
+    #[test]
+    fn extracts_json_top_level_keys() {
+        let source = r#"{
+  "name": "my-project",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "^18.0.0"
+  }
+}"#;
+        let symbols = extract_symbols(Path::new("package.json"), source);
+        let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
+
+        assert_eq!(names, &["name", "version", "scripts", "dependencies"]);
+        assert!(symbols.iter().all(|s| s.kind == SymbolKind::Section));
+        assert!(symbols.iter().all(|s| s.is_public));
+
+        // Spans: "scripts" should span from its line to "dependencies" line
+        let scripts = &symbols[2];
+        assert_eq!(scripts.line, 4);
+        assert_eq!(scripts.name, "scripts");
+        let deps = &symbols[3];
+        assert_eq!(deps.line, 8);
+    }
+
+    #[test]
+    fn json_empty_and_array_roots() {
+        // Empty object
+        assert!(extract_symbols(Path::new("empty.json"), "{}").is_empty());
+        // Array root — no top-level keys
+        assert!(extract_symbols(Path::new("arr.json"), "[1, 2, 3]").is_empty());
+        // Empty source
+        assert!(extract_symbols(Path::new("empty.json"), "").is_empty());
+    }
+
+    #[test]
+    fn extracts_toml_sections() {
+        let source = r#"[package]
+name = "precis"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap = { version = "4" }
+
+[[bin]]
+name = "precis"
+path = "src/main.rs"
+"#;
+        let symbols = extract_symbols(Path::new("Cargo.toml"), source);
+        let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
+
+        assert_eq!(names, &["package", "dependencies", "bin"]);
+        assert!(symbols.iter().all(|s| s.kind == SymbolKind::Section));
+        assert!(symbols.iter().all(|s| s.is_public));
+
+        // [package] spans from line 1 to [dependencies] at line 6
+        assert_eq!(symbols[0].line, 1);
+        assert_eq!(symbols[0].end_line, 6);
+    }
+
+    #[test]
+    fn extracts_yaml_top_level_keys() {
+        let source = r#"name: my-project
+version: 1.0.0
+scripts:
+  build: tsc
+  test: jest
+dependencies:
+  react: "^18.0.0"
+"#;
+        let symbols = extract_symbols(Path::new("config.yml"), source);
+        let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
+
+        assert_eq!(names, &["name", "version", "scripts", "dependencies"]);
+        assert!(symbols.iter().all(|s| s.kind == SymbolKind::Section));
+        assert!(symbols.iter().all(|s| s.is_public));
+    }
+
+    #[test]
+    fn yaml_skips_comments_and_markers() {
+        let source = r#"---
+# This is a comment
+name: project
+version: 1.0
+..."#;
+        let symbols = extract_symbols(Path::new("config.yaml"), source);
+        let names: Vec<_> = symbols.iter().map(|s| s.name.as_str()).collect();
+
+        assert_eq!(names, &["name", "version"]);
+    }
+
+    #[test]
+    fn toml_empty_file() {
+        assert!(extract_symbols(Path::new("empty.toml"), "").is_empty());
+        // Comments only
+        assert!(extract_symbols(Path::new("comments.toml"), "# just a comment\n").is_empty());
     }
 }

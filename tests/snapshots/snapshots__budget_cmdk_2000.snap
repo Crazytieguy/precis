@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1957 words)
+budget: 2000 (1967 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -109,28 +109,6 @@ README.md
     24→      <Command.List>
     25→        <Command.Empty>No results found.</Command.Empty>
     26→
-    27→        <Command.Group heading="Letters">
-    28→          <Command.Item>a</Command.Item>
-    29→          <Command.Item>b</Command.Item>
-    30→          <Command.Separator />
-    31→          <Command.Item>c</Command.Item>
-    32→        </Command.Group>
-    33→
-    34→        <Command.Item>Apple</Command.Item>
-    35→      </Command.List>
-    36→    </Command>
-    37→  )
-    38→}
-    39→```
-    40→
-    41→Or in a dialog:
-    42→
-    43→```tsx
-    44→import { Command } from 'cmdk'
-    45→
-    46→const CommandMenu = () => {
-    47→  const [open, setOpen] = React.useState(false)
-    48→
       →…
     82→## Parts and styling
     84→All parts forward props, including `ref`, to an appropriate element. Each part has a specific data-attribute (starting with `cmdk-`) that can be used for styling.
@@ -164,20 +142,7 @@ README.md
    439→
    440→**Unstyled?** Yes, use the listed CSS selectors.
    441→
-   442→**Hydration mismatch?** No, likely a bug in your code. Ensure the `open` prop to `Command.Dialog` is `false` on the server.
-   443→
-   444→**React strict mode safe?** Yes. Open an issue if you notice an issue.
-   445→
-   446→**Weird/wrong behavior?** Make sure your `Command.Item` has a `key` and unique `value`.
-   447→
-   448→**Concurrent mode safe?** Maybe, but concurrent mode is not yet real. Uses risky approaches like manual DOM ordering.
-   449→
-   450→**React server component?** No, it's a client component.
-   451→
-   452→**Listen for ⌘K automatically?** No, do it yourself to have full control over keybind context.
-   453→
-   454→**React Native?** No, and no plans to support it. If you build a React Native version, let us know and we'll link your repository here.
-   455→
+      →…
    456→## History
    458→Written in 2019 by Paco ([@pacocoursey](https://twitter.com/pacocoursey)) to see if a composable combobox API was possible. Used for the Vercel command menu and autocomplete by Rauno ([@raunofreiberg](https://twitter.com/raunofreiberg)) in 2020. Re-written independently in 2022 with a simpler and more performant approach. Ideas and help from Shu ([@shuding\_](https://twitter.com/shuding_)).
    459→
@@ -194,14 +159,34 @@ README.md
    471→Then ensure you've built the library:
    472→
    473→```bash
-   474→pnpm build
-   475→```
-   476→
-   477→Then run the tests using your local build against real browser engines:
-   478→
-   479→```bash
-   480→pnpm test
-   481→```
+      →…
+cmdk/package.json
+     2→  "name": "cmdk",
+     3→  "version": "1.1.1",
+     4→  "license": "MIT",
+     5→  "main": "./dist/index.js",
+     6→  "module": "./dist/index.mjs",
+     7→  "types": "./dist/index.d.ts",
+     8→  "files": [
+    10→  ],
+    11→  "exports": {
+    17→  },
+    18→  "scripts": {
+    23→  },
+    24→  "peerDependencies": {
+    27→  },
+    28→  "dependencies": {
+    33→  },
+    34→  "devDependencies": {
+    36→  },
+    37→  "sideEffects": false,
+    38→  "repository": {
+    42→  },
+    43→  "bugs": {
+    45→  },
+    46→  "homepage": "https://github.com/pacocoursey/cmdk#readme",
+    47→  "author": {
+    51→}
 cmdk/src/command-score.ts
     54→function commandScoreInner(
     55→  string,
@@ -280,9 +265,28 @@ cmdk/src/index.tsx
   1071→function SlottableWithNestedChildren …
 cmdk/tsup.config.ts
      1→import { defineConfig } from 'tsup'
+package.json
+     2→  "name": "cmdk-root",
+     3→  "private": true,
+     4→  "scripts": {
+    13→  },
+    14→  "devDependencies": {
+    21→  },
+    22→  "packageManager": "pnpm@8.8.0",
+    23→  "lint-staged": {
+    28→}
 playwright.config.ts
      1→import { PlaywrightTestConfig, devices } from '@playwright/test'
      3→const config: PlaywrightTestConfig = {
+pnpm-workspace.yaml
+     1→packages …
+test/package.json
+     2→  "name": "cmdk-tests",
+     3→  "version": "0.0.0",
+     4→  "scripts": {
+     6→  },
+     7→  "dependencies": {
+    18→}
 test/pages/_app.tsx
      1→import '../style.css'
      3→export default function App({ Component, pageProps }) {
@@ -290,6 +294,18 @@ test/pages/_app.tsx
      5→}
 test/pages/huge.tsx
      4→const items = new Array(1000).fill(0)
+test/tsconfig.json
+     2→  "compilerOptions": {
+    17→  },
+    18→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../dialog.test.ts"],
+    19→  "exclude": ["node_modules"]
+    20→}
+tsconfig.json
+     2→  "compilerOptions": {
+    16→  },
+    17→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+    18→  "exclude": ["node_modules", "build", "dist", ".next"]
+    19→}
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -395,6 +411,20 @@ website/components/icons/index.tsx
 website/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
+website/package.json
+     2→  "name": "cmdk-website",
+     3→  "version": "0.1.0",
+     4→  "private": true,
+     5→  "scripts": {
+    10→  },
+    11→  "dependencies": {
+    23→  },
+    24→  "devDependencies": {
+    37→  },
+    38→  "lint-staged": {
+    42→  },
+    43→  "husky": {
+    48→}
 website/pages/_app.tsx
     13→const title = '⌘K'
     14→const description = 'Fast, composable, unstyled command menu for React'
@@ -437,7 +467,6 @@ website/pages/index.tsx
    139→const themes = [
    140→  {
    141→    icon: <RaycastIcon />,
-   142→    key: 'raycast',
       →…
    158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////
@@ -457,3 +486,12 @@ website/pages/index.tsx
    300→function Footer() {
    326→function RaunoSignature() {
    350→function PacoSignature() {
+website/tsconfig.json
+     2→  "compilerOptions": {
+    18→  },
+    19→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+    20→  "exclude": ["node_modules"]
+    21→}
+website/vercel.json
+     2→  "headers": [
+    13→}

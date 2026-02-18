@@ -25,6 +25,22 @@ fn is_source_file(path: &Path) -> bool {
     path.extension()
         .and_then(|ext| ext.to_str())
         .is_some_and(parse::is_supported_extension)
+        && !is_lockfile(path)
+}
+
+/// Check if a file is an auto-generated lockfile that should be excluded.
+/// Lockfiles (package-lock.json, pnpm-lock.yaml, etc.) are machine-generated,
+/// often huge, and contain no human-authored information.
+fn is_lockfile(path: &Path) -> bool {
+    let name = match path.file_name().and_then(|n| n.to_str()) {
+        Some(n) => n,
+        None => return false,
+    };
+    let lower = name.to_ascii_lowercase();
+    // package-lock.json, npm-shrinkwrap.json
+    // pnpm-lock.yaml, bun.lockb (not a supported ext, won't match)
+    // composer.lock (not a supported ext)
+    lower.contains("lock")
 }
 
 /// Check if a file is vendored third-party code or test fixture data that should
@@ -109,11 +125,41 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         fs::write(dir.path().join("lib.rs"), "fn main() {}").unwrap();
         fs::write(dir.path().join("readme.txt"), "hi").unwrap();
-        fs::write(dir.path().join("data.json"), "{}").unwrap();
+        fs::write(dir.path().join("data.csv"), "a,b,c").unwrap();
 
         let files = discover_source_files(dir.path());
         assert_eq!(files.len(), 1);
         assert!(files[0].ends_with("lib.rs"));
+    }
+
+    #[test]
+    fn includes_config_files() {
+        let dir = tempfile::tempdir().unwrap();
+        fs::write(dir.path().join("lib.rs"), "fn main() {}").unwrap();
+        fs::write(dir.path().join("package.json"), r#"{"name": "test"}"#).unwrap();
+        fs::write(dir.path().join("config.toml"), "[section]").unwrap();
+        fs::write(dir.path().join("app.yml"), "key: value").unwrap();
+
+        let files = discover_source_files(dir.path());
+        assert_eq!(files.len(), 4);
+    }
+
+    #[test]
+    fn excludes_lockfiles() {
+        let dir = tempfile::tempdir().unwrap();
+        fs::write(dir.path().join("package.json"), r#"{"name": "test"}"#).unwrap();
+        fs::write(dir.path().join("package-lock.json"), "{}").unwrap();
+        fs::write(dir.path().join("pnpm-lock.yaml"), "lockfileVersion: 6").unwrap();
+
+        let files = discover_source_files(dir.path());
+        let names: Vec<_> = files
+            .iter()
+            .map(|p| p.file_name().unwrap().to_string_lossy().to_string())
+            .collect();
+
+        assert!(names.contains(&"package.json".to_string()));
+        assert!(!names.contains(&"package-lock.json".to_string()));
+        assert!(!names.contains(&"pnpm-lock.yaml".to_string()));
     }
 
     #[test]

@@ -95,21 +95,37 @@ README.md
    386→## Backers …
    422→## Sponsors …
    457→## License …
+package.json
+     2→  "name": "debug",
+     3→  "version": "4.4.3",
+     4→  "repository": {
+     7→  },
+     8→  "description": "Lightweight debugging utility for Node.js and the browser",
+     9→  "keywords": [
+    13→  ],
+    14→  "files": [
+    18→  ],
+    19→  "author": "Josh Junon (https://github.com/qix-)",
+    20→  "contributors": [
+    24→  ],
+    25→  "license": "MIT",
+    26→  "scripts": {
+    32→  },
+    33→  "dependencies": {
+    35→  },
+    36→  "devDependencies": {
+    48→  },
+    49→  "peerDependenciesMeta": {
+    53→  },
+    54→  "main": "./src/index.js",
+    55→  "browser": "./src/browser.js",
+    56→  "engines": {
+    58→  },
+    59→  "xo": {
+    64→}
 src/browser.js
    115→function useColors() {
    116→	// NB: In an Electron preload script, document will be defined but not fully
-   117→	// initialized. Since we know we're in Chrome, we'll just detect this case
-   118→	// explicitly
-   119→	if (typeof window !== 'undefined' && window.process && (window.process.type === 'renderer' || window.process.__nwjs)) {
-   120→		return true;
-   121→	}
-   122→
-   123→	// Internet Explorer and Edge do not support colors.
-   124→	if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/)) {
-   125→		return false;
-   126→	}
-   127→
-   128→	let m;
       →…
    143→/**
       →…
@@ -136,10 +152,7 @@ src/node.js
    167→function formatArgs(args) {
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
-   184→		return '';
-   185→	}
-   186→	return new Date().toISOString() + ' ';
-   187→}
+      →…
    189→/**
       →…
    193→function log(...args) {

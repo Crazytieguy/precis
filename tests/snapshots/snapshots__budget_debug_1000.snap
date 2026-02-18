@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (990 words)
+budget: 1000 (995 words)
 
 README.md
      1→# debug
@@ -95,6 +95,34 @@ README.md
    386→## Backers …
    422→## Sponsors …
    457→## License …
+package.json
+     2→  "name": "debug",
+     3→  "version": "4.4.3",
+     4→  "repository": {
+     7→  },
+     8→  "description": "Lightweight debugging utility for Node.js and the browser",
+     9→  "keywords": [
+    13→  ],
+    14→  "files": [
+    18→  ],
+    19→  "author": "Josh Junon (https://github.com/qix-)",
+    20→  "contributors": [
+    24→  ],
+    25→  "license": "MIT",
+    26→  "scripts": {
+    32→  },
+    33→  "dependencies": {
+    35→  },
+    36→  "devDependencies": {
+    48→  },
+    49→  "peerDependenciesMeta": {
+    53→  },
+    54→  "main": "./src/index.js",
+    55→  "browser": "./src/browser.js",
+    56→  "engines": {
+    58→  },
+    59→  "xo": {
+    64→}
 src/browser.js
    115→function useColors() {
    116→	// NB: In an Electron preload script, document will be defined but not fully
@@ -116,9 +144,6 @@ src/browser.js
    132→	// eslint-disable-next-line no-return-assign
    133→	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
    134→		// Is firebug? http://stackoverflow.com/a/398120/376773
-   135→		(typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
-   136→		// Is firefox >= v31?
-   137→		// https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
       →…
    143→/**
    144→ * Colorize log arguments if enabled.
@@ -130,7 +155,6 @@ src/browser.js
    150→	args[0] = (this.useColors ? '%c' : '') +
    151→		this.namespace +
    152→		(this.useColors ? ' %c' : ' ') +
-   153→		args[0] +
       →…
    194→/**
    195→ * Save `namespaces`.
@@ -142,7 +166,6 @@ src/browser.js
    201→	try {
    202→		if (namespaces) {
    203→			exports.storage.setItem('debug', namespaces);
-   204→		} else {
       →…
    213→/**
    214→ * Load `namespaces`.
@@ -154,7 +177,6 @@ src/browser.js
    220→	let r;
    221→	try {
    222→		r = exports.storage.getItem('debug') || exports.storage.getItem('DEBUG') ;
-   223→	} catch (error) {
       →…
    236→/**
    237→ * Localstorage attempts to return the localstorage.
@@ -171,7 +193,6 @@ src/browser.js
    248→	try {
    249→		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
    250→		// The Browser also has localStorage in the global context.
-   251→		return localStorage;
       →…
 src/common.js
      2→/**
@@ -183,7 +204,6 @@ src/common.js
      8→	createDebug.debug = createDebug;
      9→	createDebug.default = createDebug;
     10→	createDebug.coerce = coerce;
-    11→	createDebug.disable = disable;
       →…
 src/node.js
    151→/**
@@ -194,7 +214,7 @@ src/node.js
    156→	return 'colors' in exports.inspectOpts ?
    157→		Boolean(exports.inspectOpts.colors) :
    158→		tty.isatty(process.stderr.fd);
-   159→}
+      →…
    161→/**
    162→ * Adds ANSI color escape codes if enabled.
    163→ *
@@ -205,7 +225,6 @@ src/node.js
    168→	const {namespace: name, useColors} = this;
    169→
    170→	if (useColors) {
-   171→		const c = this.color;
       →…
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
@@ -230,7 +249,6 @@ src/node.js
    204→	if (namespaces) {
    205→		process.env.DEBUG = namespaces;
    206→	} else {
-   207→		// If you set a process.env field to null or undefined, it gets cast to the
       →…
    213→/**
    214→ * Load `namespaces`.
@@ -253,7 +271,6 @@ src/node.js
    232→	debug.inspectOpts = {};
    233→
    234→	const keys = Object.keys(exports.inspectOpts);
-   235→	for (let i = 0; i < keys.length; i++) {
       →…
 test.node.js
      8→const formatWithOptionsSpy = sinon.spy(util, 'formatWithOptions');

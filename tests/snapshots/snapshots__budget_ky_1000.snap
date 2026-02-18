@@ -4,6 +4,7 @@ expression: output
 ---
 budget: 1000 (972 words)
 
+package.json
 readme.md
     20→## Benefits over plain `fetch`
     22→- Simpler API
@@ -50,7 +51,6 @@ readme.md
   1169→node --use-env-proxy app.js
   1170→```
   1171→
-  1172→Supported environment variables:
       →…
   1292→## FAQ
   1294→#### How do I use this in Node.js?
@@ -255,3 +255,5 @@ test/browser.ts
 test/helpers/create-http-test-server.ts
      7→export type HttpServerOptions = {
     11→export type ExtendedHttpTestServer = {
+tsconfig.dist.json
+tsconfig.json

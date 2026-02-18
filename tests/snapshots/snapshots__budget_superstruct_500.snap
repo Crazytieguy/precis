@@ -85,6 +85,10 @@ docs/summary.md
     25→- [Links](./resources/links.md)
 examples/README.md
      1→# Examples …
+examples/package.json
+jsr.json
+package.json
+rollup.config.js
 src/error.ts
     16→/**
       →…
@@ -143,8 +147,6 @@ src/utils.ts
      6→ */
      7→
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
-     9→  return isObject(x) && typeof x[Symbol.iterator] === 'function'
-    10→}
     16→export function isObject …
     24→export function isNonArrayObject …
     32→export function isPlainObject …
@@ -157,9 +159,12 @@ test/index.ts
      1→/**
       →…
      5→export function test<T>(fn: (x: unknown) => T) {}
+test/tsconfig.json
 test/validation/function/invalid.ts
 test/validation/function/valid.ts
      5→export const data = function () {}
 test/validation/never/invalid.ts
 test/validation/type/valid-instance.ts
+     3→class Person {
      6→  constructor(name: string) {
+tsconfig.json

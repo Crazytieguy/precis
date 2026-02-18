@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1980 words)
+budget: 2000 (1997 words)
 
 README.md
     40→## About …
@@ -35,17 +35,7 @@ README.md
    114→    - [`P.not` patterns](#pnot-patterns)
    115→    - [`P.select` patterns](#pselect-patterns)
    116→    - [`P.optional` patterns](#poptional-patterns)
-   117→    - [`P.instanceOf` patterns](#pinstanceof-patterns)
-   118→    - [`P.union` patterns](#punion-patterns)
-   119→    - [`P.intersection` patterns](#pintersection-patterns)
-   120→    - [`P.string` predicates](#pstring-predicates)
-   121→    - [`P.number` and `P.bigint` predicates](#pnumber-and-pbigint-predicates)
-   122→  - [Types](#types)
-   123→    - [`P.infer`](#pinfer)
-   124→    - [`P.Pattern`](#pPattern)
-   125→    - [Type inference](#type-inference)
-   126→- [Inspirations](#inspirations)
-   127→
+      →…
    128→## Sandbox examples …
    139→## Getting Started …
    415→## API Reference …
@@ -100,18 +90,12 @@ README.md
   1643→// posts: Post[]
   1644→const posts = await fetch(someUrl)
   1645→  .then((res) => res.json())
-  1646→  .then((res: unknown): Post[] =>
-  1647→    isMatching({ data: P.array(postPattern) }, res) ? res.data : []
-  1648→  );
-  1649→```
-  1650→
       →…
   1766→## Inspirations …
 benchmarks/always-last-digit.ts
-     4→type Digit …
 benchmarks/nested-objects.ts
+benchmarks/package.json
 benchmarks/random-digit.ts
-     4→type Digit …
 docs/roadmap.md
 docs/v3-to-v4-migration-guide.md
      1→# TS-Pattern v3 to v4 Migration Guide
@@ -166,6 +150,7 @@ docs/v4-to-v5-migration-guide.md
     70→
    156→## Variadic tuple patterns …
    214→## `.returnType` …
+examples/gif-fetcher/package.json
 examples/gif-fetcher/src/App.tsx
     42→const reducer …
     75→export default function App() {
@@ -177,8 +162,44 @@ examples/gif-fetcher/src/searchGif.ts
      2→import { API_KEY } from './constants';
      4→const delay …
      6→export function searchGif(query: string) {
+examples/gif-fetcher/tsconfig.json
 examples/one-file-demo/one-file-demo.ts
     79→const example3 …
+examples/one-file-demo/package.json
+examples/one-file-demo/tsconfig.json
+jsr.json
+     2→  "name": "@gabriel/ts-pattern",
+     3→  "version": "5.9.0",
+     4→  "exports": {
+     9→}
+package.json
+     2→  "name": "ts-pattern",
+     3→  "version": "5.9.0",
+     4→  "description": " The exhaustive Pattern Matching library for TypeScript.",
+     5→  "type": "module",
+     6→  "sideEffects": false,
+     7→  "source": "src/index.ts",
+     8→  "exports": {
+    31→  },
+    32→  "types": "dist/index.d.ts",
+    33→  "main": "dist/index.cjs",
+    34→  "module": "dist/index.js",
+    35→  "unpkg": "dist/index.umd.js",
+    36→  "scripts": {
+    49→  },
+    50→  "files": [
+    53→  ],
+    54→  "repository": {
+    57→  },
+    58→  "keywords": [
+    67→  ],
+    68→  "author": "Gabriel Vergnaud",
+    69→  "license": "MIT",
+    70→  "bugs": {
+    72→  },
+    73→  "homepage": "https://github.com/gvergnaud/ts-pattern#readme",
+    74→  "devDependencies": {
+    83→}
 src/errors.ts
      1→/**
      2→ * Error when the given input value does not match any included pattern
@@ -196,8 +217,6 @@ src/internals/helpers.ts
     16→export const isMatcher = (
     17→  x: unknown
     18→): x is Matcher<unknown, unknown, MatcherType, SelectionType> => {
-    19→  const pattern = x as Matcher<unknown, unknown, MatcherType, SelectionType>;
-      →…
     24→const isOptionalPattern = (
     25→  x: unknown
     26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
@@ -208,11 +227,7 @@ src/internals/helpers.ts
     34→  value: any,
     35→  select: (key: string, value: unknown) => void
     36→): boolean => {
-    37→  if (isMatcher(pattern)) {
-      →…
    120→export const getSelectionKeys = (pattern: any): string[] => {
-   121→  if (isObject(pattern)) {
-      →…
    132→export const flatMap = <a, b>(
    133→  xs: readonly a[],
    134→  f: (v: a) => readonly b[]
@@ -256,8 +271,6 @@ src/is-matching.ts
     15→  : P.Pattern<T>;
     53→export function isMatching …
 src/match.ts
-     7→type MatchState …
-    11→const unmatched …
     16→/**
       →…
     32→export function match<const input, output = symbols.unset>(
@@ -308,13 +321,6 @@ src/patterns.ts
    190→    ? UnknownValuePattern
    191→    : Pattern<input>
    192→>(pattern: pattern): Chainable<OptionalP<input, pattern>, 'optional'> {
-   217→type UnwrapArray …
-   219→type UnwrapSet …
-   221→type UnwrapMapKey …
-   223→type UnwrapMapValue …
-   225→type UnwrapRecordKey …
-   227→type UnwrapRecordValue …
-   229→type WithDefault …
    246→export function array …
    299→export function set …
    362→export function map …
@@ -339,7 +345,6 @@ src/patterns.ts
    614→>(pattern: pattern): Chainable<NotP<input, pattern>> {
    646→export function when …
    696→export function select …
-   766→type AnyConstructor …
    773→/**
       →…
    782→export const any: UnknownPattern = chainable(when(isUnknown));
@@ -528,6 +533,18 @@ src/types/helpers.ts
 tests/instance-of.test.ts
      4→class A {
      7→class B {
+tests/tsconfig.json
+     2→  "compilerOptions": {
+    10→  },
+    11→  "include": ["."],
+    12→  "exclude": ["../src", "../dist", "../example", "../node_modules"]
+    13→}
 tests/types-catalog/definition.ts
 tests/types-catalog/utils.ts
      4→export const some = <a>(value: a): Option<a> => ({
+tsconfig.json
+     2→  "compilerOptions": {
+    11→  },
+    12→  "include": ["src/"],
+    13→  "exclude": ["tests/", "dist/", "examples/", "node_modules/"]
+    14→}

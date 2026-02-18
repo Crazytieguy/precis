@@ -10,6 +10,19 @@ CHANGELOG.md
      5→- Outline more initialization in `race`: [#284](https://github.com/matklad/once_cell/pull/284),
      6→  [#285](https://github.com/matklad/once_cell/pull/285).
      7→
+Cargo.toml
+     1→[package …
+    19→[workspace …
+    22→[dependencies …
+    27→[dev-dependencies …
+    31→[features …
+    66→[[example …
+    70→[[example …
+    74→[[example …
+    78→[[example …
+    82→[[example …
+    86→[[example …
+    90→[package.metadata.docs.rs …
 README.md
      8→# Overview
     10→`once_cell` provides two new cell-like types, `unsync::OnceCell` and `sync::OnceCell`. `OnceCell`
@@ -18,12 +31,6 @@ README.md
     13→
     14→```rust
     15→impl OnceCell<T> {
-    16→    fn new() -> OnceCell<T> { ... }
-    17→    fn set(&self, value: T) -> Result<(), T> { ... }
-    18→    fn get(&self) -> Option<&T> { ... }
-    19→}
-    20→```
-    21→
       →…
     47→# Related crates
     49→* [double-checked-cell](https://github.com/niklasf/double-checked-cell)
@@ -32,9 +39,7 @@ README.md
     52→* [mitochondria](https://crates.io/crates/mitochondria)
     53→* [lazy_static](https://crates.io/crates/lazy_static)
     54→* [async_once_cell](https://crates.io/crates/async_once_cell)
-    55→* [generic_once_cell](https://crates.io/crates/generic_once_cell) (bring your own mutex)
-    56→
-    57→Parts of `once_cell` API are included into `std` [as of Rust 1.70.0](https://github.com/rust-lang/rust/pull/105587).
+      →…
 examples/bench.rs
 examples/bench_acquire.rs
      5→use once_cell::sync::OnceCell;
@@ -54,6 +59,9 @@ src/imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
       →…
+    12→const INCOMPLETE …
+    13→const RUNNING …
+    14→const COMPLETE …
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
       →…
@@ -63,6 +71,12 @@ src/imp_std.rs
     16→    // pieces of information:
     17→    //
       →…
+   125→const INCOMPLETE …
+   126→const RUNNING …
+   127→const COMPLETE …
+   128→const INCOMPLETE_PTR …
+   129→const COMPLETE_PTR …
+   133→const STATE_MASK …
    138→struct Waiter {
    139→    thread: Cell<Option<Thread>>,
    140→    signaled: AtomicBool,
@@ -128,19 +142,18 @@ src/race.rs
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
 tests/it/main.rs
-     1→mod unsync_once_cell;
-     5→mod unsync_lazy;
 tests/it/race.rs
 tests/it/race_once_box.rs
     11→struct Heap {
     16→struct Pebble<T> {
     22→    fn drop(&mut self) {
-    23→        self.total.fetch_sub(1, SeqCst);
-    24→    }
 tests/it/sync_once_cell.rs
    178→#[test]
       →…
    181→fn reentrant_init() {
+xtask/Cargo.toml
+     1→[package …
+     8→[dependencies …
 xtask/src/main.rs
      4→use std::time::Instant;
      6→use xshell::{cmd, Shell};

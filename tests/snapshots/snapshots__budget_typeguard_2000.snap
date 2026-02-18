@@ -2,11 +2,29 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1970 words)
+budget: 2000 (1976 words)
 
 docs/conf.py
      2→from importlib.metadata import version as get_version
      4→from packaging.version import parse
+pyproject.toml
+     1→[build-system …
+     8→[project …
+    33→[project.urls …
+    39→[project.entry-points …
+    42→[dependency-groups …
+    55→[tool.setuptools.package-data …
+    58→[tool.setuptools_scm …
+    62→[tool.pytest.ini_options …
+    68→[tool.coverage.run …
+    71→[tool.coverage.report …
+    78→[tool.ruff …
+    81→[tool.ruff.per-file-target-version …
+    84→[tool.ruff.lint …
+    99→[tool.mypy …
+   105→[tool.tox …
+   110→[tool.tox.env_run_base …
+   115→[tool.tox.env.docs …
 src/typeguard/__init__.py
      4→from ._checkers import TypeCheckerCallable as TypeCheckerCallable
      5→from ._checkers import TypeCheckLookupCallback as TypeCheckLookupCallback
@@ -70,6 +88,7 @@ src/typeguard/_checkers.py
    115→    "__imod__",
    116→    "__imul__",
    117→    "__ior__",
+   118→    "__ipow__",
       →…
    586→def _is_literal_type(typ: object) -> bool:
    587→    return typ is typing.Literal or typ is typing_extensions.Literal
@@ -93,6 +112,7 @@ src/typeguard/_checkers.py
   1021→    typing.Literal: check_literal,
   1022→    Mapping: check_mapping,
   1023→    MutableMapping: check_mapping,
+  1024→    None: check_none,
       →…
 src/typeguard/_config.py
      9→    from ._functions import TypeCheckFailCallback
@@ -397,11 +417,6 @@ src/typeguard/_transformer.py
    552→                                items[1]
    553→                            )
    554→
-   555→                        if len(items) > 2:
-   556→                            new_memo.return_annotation = self._convert_annotation(
-   557→                                items[2]
-   558→                            )
-   559→                else:
       →…
    570→    def _get_import(self, module: str, name: str) -> Name:
    571→        memo = self._memo if self._target_path else self._module_memo
@@ -445,7 +460,6 @@ tests/dummymodule_py312.py
     16→@typechecked
     17→class ParametrizedClass[T]:
 tests/mypy/negative.py
-     1→from typeguard import typechecked, typeguard_ignore
      4→@typechecked
      5→def foo(x: int) -> int:
      9→@typechecked
@@ -465,8 +479,6 @@ tests/mypy/negative.py
     47→def get_value(c: MyClass) -> int:
     51→def create_myclass(x: int) -> MyClass:
 tests/mypy/positive.py
-     1→from typing import Callable
-     3→from typeguard import typechecked
      6→@typechecked
      7→def foo(x: str) -> str:
     11→def takes_callable(f: Callable[[str], str]) -> str:
@@ -484,11 +496,6 @@ tests/mypy/positive.py
     49→@typechecked
     50→def create_myclass_checked(x: int) -> MyClass:
 tests/mypy/test_type_annotations.py
-     1→import json
-     2→import os
-     3→import platform
-     4→import subprocess
-     6→import pytest
      8→POSITIVE_FILE = "positive.py"
      9→NEGATIVE_FILE = "negative.py"
     19→def get_mypy_cmd(filename: str) -> list[str]:
@@ -522,6 +529,7 @@ tests/test_instrumentation.py
     41→    # config.debug_instrumentation = True
     42→    sys.path.insert(0, str(this_dir))
     43→    try:
+    44→        # sys.modules.pop(name, None)
       →…
 tests/test_plugins.py
 tests/test_pytest_plugin.py

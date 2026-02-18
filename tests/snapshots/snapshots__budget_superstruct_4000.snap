@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3929 words)
+budget: 4000 (3945 words)
 
 Changelog.md
      1→# Changelog
@@ -191,6 +191,41 @@ docs/summary.md
 examples/README.md
      1→# Examples
      3→To run the examples locally, first run `npm install` in this directory. Then use node to run any of the examples like so: `node basic-validation.js`, `node composing-structs.js`, etc.
+examples/package.json
+     2→  "type": "module",
+     3→  "license": "MIT",
+     4→  "dependencies": {
+    10→}
+jsr.json
+     2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
+     3→  "name": "@superstruct/core",
+     4→  "version": "2.0.2",
+     5→  "exports": "./src/index.ts",
+     6→  "publish": {
+     9→}
+package.json
+     2→  "name": "superstruct",
+     3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
+     4→  "version": "2.0.2",
+     5→  "license": "MIT",
+     6→  "repository": "git://github.com/ianstormtaylor/superstruct.git",
+     7→  "type": "module",
+     8→  "main": "./dist/index.cjs",
+     9→  "module": "./dist/index.mjs",
+    10→  "types": "./dist/index.d.ts",
+    11→  "sideEffects": false,
+    12→  "files": [
+    14→  ],
+    15→  "publishConfig": {
+    17→  },
+    18→  "engines": {
+    20→  },
+    21→  "devDependencies": {
+    37→  },
+    38→  "scripts": {
+    53→  },
+    54→  "keywords": [
+    85→}
 rollup.config.js
      1→import { defineConfig } from 'rollup'
      2→import typescript from '@rollup/plugin-typescript'
@@ -220,13 +255,6 @@ src/error.ts
     37→    const { message, explanation, ...rest } = failure
     38→    const { path } = failure
     39→    const msg =
-    40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
-    41→    super(explanation ?? msg)
-    42→    if (explanation != null) this.cause = msg
-    43→    Object.assign(this, rest)
-    44→    this.name = this.constructor.name
-    45→    this.failures = () => {
-    46→      return (cached ??= [failure, ...failures()])
       →…
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
@@ -254,13 +282,6 @@ src/struct.ts
     24→    schema: S
     25→    coercer?: Coercer
     26→    validator?: Validator
-    27→    refiner?: Refiner<T>
-    28→    entries?: Struct<T, S>['entries']
-    29→  }) {
-    30→    const {
-    31→      type,
-    32→      schema,
-    33→      validator,
       →…
     63→  /**
     64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
@@ -718,6 +739,11 @@ test/index.ts
      3→ */
      4→
      5→export function test<T>(fn: (x: unknown) => T) {}
+test/tsconfig.json
+     2→  "extends": "../tsconfig.json",
+     3→  "include": ["./**/*.ts"],
+     4→  "compilerOptions": {
+     7→}
 test/typings/infer.ts
      4→const Struct = object()
      5→type T = Infer<typeof Struct>
@@ -835,6 +861,8 @@ test/validation/function/invalid.ts
      3→export const Struct = func()
      5→export const data = false
      7→export const failures = [
+     8→  {
+      →…
 test/validation/function/valid.ts
      1→import { func } from '../../../src'
      3→export const Struct = func()
@@ -870,11 +898,8 @@ test/validation/intersection/invalid.ts
 test/validation/intersection/valid-refinement.ts
 test/validation/intersection/valid.ts
 test/validation/lazy/invalid.ts
-     1→import { lazy, string } from '../../../src'
 test/validation/lazy/valid.ts
-     1→import { lazy, string } from '../../../src'
 test/validation/lazy/with-refiners.ts
-     1→import { lazy, nonempty, string } from '../../../src'
 test/validation/literal/invalid.ts
      1→import { literal } from '../../../src'
      3→export const Struct = literal(42)
@@ -903,6 +928,8 @@ test/validation/never/invalid.ts
      3→export const Struct = never()
      5→export const data = true
      7→export const failures = [
+     8→  {
+      →…
 test/validation/nullable/invalid.ts
 test/validation/nullable/valid-defined-nested.ts
 test/validation/nullable/valid-defined.ts
@@ -922,27 +949,11 @@ test/validation/object/invalid-referential.ts
      3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
 test/validation/object/valid-referential.ts
      3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
-test/validation/omit/invalid-element-nested.ts
-test/validation/omit/invalid-property-nested.ts
-test/validation/omit/invalid-property-unknown.ts
-test/validation/omit/invalid-property.ts
-test/validation/omit/invalid.ts
-test/validation/omit/valid-nested.ts
-test/validation/omit/valid-type.ts
-test/validation/omit/valid.ts
 test/validation/optional/invalid.ts
 test/validation/optional/valid-defined-nested.ts
 test/validation/optional/valid-defined.ts
 test/validation/optional/valid-undefined-nested.ts
 test/validation/optional/valid-undefined.ts
-test/validation/partial/composed.ts
-test/validation/partial/invalid-property-unknown.ts
-test/validation/partial/invalid-property.ts
-test/validation/partial/invalid.ts
-test/validation/partial/valid-empty.ts
-test/validation/partial/valid-full.ts
-test/validation/partial/valid-partial.ts
-test/validation/partial/valid-type.ts
 test/validation/pattern/invalid.ts
      1→import { string, pattern } from '../../../src'
      3→export const Struct = pattern(string(), /\d+/)
@@ -953,14 +964,6 @@ test/validation/pattern/valid.ts
      3→export const Struct = pattern(string(), /\d+/)
      5→export const data = '123'
      7→export const output = '123'
-test/validation/pick/invalid-element-nested.ts
-test/validation/pick/invalid-property-nested.ts
-test/validation/pick/invalid-property-unknown.ts
-test/validation/pick/invalid-property.ts
-test/validation/pick/invalid.ts
-test/validation/pick/valid-nested.ts
-test/validation/pick/valid-type.ts
-test/validation/pick/valid.ts
 test/validation/record/invalid-array.ts
 test/validation/record/invalid-property.ts
 test/validation/record/invalid.ts
@@ -1048,3 +1051,7 @@ test/validation/unknown/valid-undefined.ts
      3→export const Struct = unknown()
      5→export const data = undefined
      7→export const output = undefined
+tsconfig.json
+     2→  "include": ["./src/**/*.ts"],
+     3→  "compilerOptions": {
+    17→}

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (979 words)
+budget: 1000 (994 words)
 
 CHANGELOG.md
      1→# neverthrow …
@@ -10,27 +10,12 @@ CHANGELOG.md
     56→### Patch Changes …
 README.md
      1→# NeverThrow 🙅 …
-     5→## Description
-     7→Encode failure into your program.
-     8→
-      →…
-    19→## Table Of Contents
-    21→* [Installation](#installation)
-    22→* [Recommended: Use `eslint-plugin-neverthrow`](#recommended-use-eslint-plugin-neverthrow)
-      →…
-    73→## Installation
-    75→```sh
-    76→> npm install neverthrow
-      →…
-    79→## Recommended: Use `eslint-plugin-neverthrow`
-    81→As part of `neverthrow`s [bounty program](https://github.com/supermacro/neverthrow/issues/314), user [mdbetancourt](https://github.com/mdbetancourt) created [`eslint-plugin-neverthrow`](https://github.com/mdbetancourt/eslint-plugin-neverthrow) to ensure that errors are not gone unhandled.
-    82→
-      →…
-   100→## Top-Level API
-   102→`neverthrow` exposes the following:
-   103→
-      →…
-   139→## API Documentation
+     5→## Description …
+    19→## Table Of Contents …
+    73→## Installation …
+    79→## Recommended: Use `eslint-plugin-neverthrow` …
+   100→## Top-Level API …
+   139→## API Documentation …
    141→### Synchronous API (`Result`) …
    143→#### `ok`
    145→Constructs an `Ok` variant of `Result`
@@ -80,12 +65,35 @@ README.md
   1645→```
   1646→
       →…
-  1673→## A note on the Package Name
-  1675→Although the package is called `neverthrow`, please don't take this literally. I am simply encouraging the developer to think a bit more about the ergonomics and usage of whatever software they are writing.
-  1676→
-      →…
+  1673→## A note on the Package Name …
   1681→### License
   1683→The neverthrow project is available as open source under the terms of the [MIT license](https://github.com/supermacro/neverthrow/blob/master/LICENSE).
+package.json
+     2→  "name": "neverthrow",
+     3→  "version": "8.2.0",
+     4→  "description": "Stop throwing errors, and instead return Results!",
+     5→  "main": "dist/index.cjs.js",
+     6→  "module": "dist/index.es.js",
+     7→  "types": "dist/index.d.ts",
+     8→  "files": [
+    10→  ],
+    11→  "scripts": {
+    23→  },
+    24→  "repository": {
+    27→  },
+    28→  "author": "Giorgio Delgado",
+    29→  "license": "MIT",
+    30→  "bugs": {
+    32→  },
+    33→  "homepage": "https://github.com/supermacro/neverthrow#readme",
+    34→  "devDependencies": {
+    52→  },
+    53→  "keywords": [
+    58→  ],
+    59→  "engines": {
+    62→  },
+    63→  "optionalDependencies": {
+    66→}
 rollup.config.mjs
      1→import typescript from "rollup-plugin-typescript2";
      2→import dts from "rollup-plugin-dts";
@@ -136,7 +144,6 @@ src/_internals/utils.ts
     38→  for (const result of resultList) {
     39→    if (result.isErr()) {
     40→      acc = err(result.error)
-    41→      break
       →…
     54→export const combineResultAsyncList = <T, E>(
     55→  asyncResultList: readonly ResultAsync<T, E>[],
@@ -152,7 +159,6 @@ src/_internals/utils.ts
     69→  for (const result of resultList) {
     70→    if (result.isErr() && acc.isErr()) {
     71→      acc.error.push(result.error)
-    72→    } else if (result.isErr() && acc.isOk()) {
       →…
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
     83→  asyncResultList: readonly ResultAsync<T, E>[],
@@ -246,6 +252,18 @@ src/result.ts
    719→export type CombineResultsWithAllErrorsArray …
 tests/index.test.ts
 tests/safe-try.test.ts
+tests/tsconfig.tests.json
+     2→  "compilerOptions": {
+    22→  },
+    23→  "include": [
+    27→}
 tests/typecheck-tests.ts
     19→type CreateTuple …
   2607→const input …
+tsconfig.json
+     2→  "compilerOptions": {
+    23→  },
+    24→  "include": [
+    26→  ],
+    27→  "exclude": [
+    31→}

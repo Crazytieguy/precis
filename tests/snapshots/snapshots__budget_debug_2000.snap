@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1968 words)
+budget: 2000 (1980 words)
 
 README.md
      1→# debug
@@ -27,8 +27,6 @@ README.md
     27→// fake app
     28→
     29→debug('booting %o', name);
-    30→
-    31→http.createServer(function(req, res){
       →…
     73→#### Windows command prompt notes
     75→##### CMD
@@ -122,8 +120,6 @@ README.md
    172→| `DEBUG_SHOW_HIDDEN` | Shows hidden properties on inspected objects. |
    173→
    174→
-   175→__Note:__ The environment variables beginning with `DEBUG_` end up being
-   176→converted into an Options object that gets used with `%o`/`%O` formatters.
       →…
    181→## Formatters
    183→Debug uses [printf-style](https://wikipedia.org/wiki/Printf_format_string) formatting.
@@ -138,7 +134,7 @@ README.md
    192→| `%j`      | JSON. Replaced with the string '[Circular]' if the argument contains circular references. |
    193→| `%%`      | Single percent sign ('%'). This does not consume an argument. |
    194→
-   195→
+      →…
    196→### Custom formatters
    198→You can add custom formatters by extending the `debug.formatters` object.
    199→For example, if you wanted to add support for rendering a Buffer as hex with
@@ -170,8 +166,6 @@ README.md
    226→localStorage.debug = 'worker:*'
    227→```
    228→
-   229→And then refresh the page.
-   230→
       →…
    248→## Output streams
    250→  By default `debug` will log to stderr, however this can be configured per-namespace by overriding the `log` method:
@@ -186,8 +180,6 @@ README.md
    259→error('goes to stderr!');
    260→
    261→var log = debug('app:log');
-   262→// set this namespace to log via console.log
-   263→log.log = console.log.bind(console); // don't forget to bind to console!
       →…
    274→## Extend
    275→You can simply extend debugger 
@@ -202,7 +194,7 @@ README.md
    284→logSign('hello'); //auth:sign hello
    285→logLogin('hello'); //auth:login hello
    286→```
-   287→
+      →…
    288→## Set dynamically
    290→You can also enable debug dynamically by calling the `enable()` method :
    291→
@@ -216,8 +208,6 @@ README.md
    299→
    300→debug.disable();
    301→console.log(3, debug.enabled('test'));
-   302→
-   303→```
       →…
    341→## Checking whether a debug target is enabled
    343→After you've created a debug instance, you can determine whether or not it is
@@ -232,8 +222,7 @@ README.md
    352→```
    353→
    354→You can also manually toggle this property to force the debug instance to be
-   355→enabled or disabled.
-   356→
+      →…
    357→## Usage in child processes
    359→Due to the way `debug` detects if the output is a TTY or not, colors are not shown in child processes when `stderr` is piped. A solution is to pass the `DEBUG_COLORS=1` environment variable to the child process.  
    360→For example:
@@ -247,8 +236,6 @@ README.md
    368→    'ipc',
    369→  ],
    370→  env: Object.assign({}, process.env, {
-   371→    DEBUG_COLORS: 1 // without this settings, colors won't be shown
-   372→  }),
       →…
    379→## Authors
    381→ - TJ Holowaychuk
@@ -269,8 +256,6 @@ README.md
    397→<a href="https://opencollective.com/debug/backer/7/website" target="_blank"><img src="https://opencollective.com/debug/backer/7/avatar.svg"></a>
    398→<a href="https://opencollective.com/debug/backer/8/website" target="_blank"><img src="https://opencollective.com/debug/backer/8/avatar.svg"></a>
    399→<a href="https://opencollective.com/debug/backer/9/website" target="_blank"><img src="https://opencollective.com/debug/backer/9/avatar.svg"></a>
-   400→<a href="https://opencollective.com/debug/backer/10/website" target="_blank"><img src="https://opencollective.com/debug/backer/10/avatar.svg"></a>
-   401→<a href="https://opencollective.com/debug/backer/11/website" target="_blank"><img src="https://opencollective.com/debug/backer/11/avatar.svg"></a>
       →…
    422→## Sponsors
    424→Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/debug#sponsor)]
@@ -285,8 +270,6 @@ README.md
    433→<a href="https://opencollective.com/debug/sponsor/7/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/7/avatar.svg"></a>
    434→<a href="https://opencollective.com/debug/sponsor/8/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/8/avatar.svg"></a>
    435→<a href="https://opencollective.com/debug/sponsor/9/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/9/avatar.svg"></a>
-   436→<a href="https://opencollective.com/debug/sponsor/10/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/10/avatar.svg"></a>
-   437→<a href="https://opencollective.com/debug/sponsor/11/website" target="_blank"><img src="https://opencollective.com/debug/sponsor/11/avatar.svg"></a>
       →…
    457→## License
    459→(The MIT License)
@@ -301,9 +284,35 @@ README.md
    468→distribute, sublicense, and/or sell copies of the Software, and to
    469→permit persons to whom the Software is furnished to do so, subject to
    470→the following conditions:
-   471→
-   472→The above copyright notice and this permission notice shall be
       →…
+package.json
+     2→  "name": "debug",
+     3→  "version": "4.4.3",
+     4→  "repository": {
+     7→  },
+     8→  "description": "Lightweight debugging utility for Node.js and the browser",
+     9→  "keywords": [
+    13→  ],
+    14→  "files": [
+    18→  ],
+    19→  "author": "Josh Junon (https://github.com/qix-)",
+    20→  "contributors": [
+    24→  ],
+    25→  "license": "MIT",
+    26→  "scripts": {
+    32→  },
+    33→  "dependencies": {
+    35→  },
+    36→  "devDependencies": {
+    48→  },
+    49→  "peerDependenciesMeta": {
+    53→  },
+    54→  "main": "./src/index.js",
+    55→  "browser": "./src/browser.js",
+    56→  "engines": {
+    58→  },
+    59→  "xo": {
+    64→}
 src/browser.js
    115→function useColors() {
    116→	// NB: In an Electron preload script, document will be defined but not fully
@@ -321,6 +330,9 @@ src/browser.js
    128→	let m;
    129→
    130→	// Is webkit? http://stackoverflow.com/a/16459606/376773
+   131→	// document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+   132→	// eslint-disable-next-line no-return-assign
+   133→	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
       →…
    143→/**
    144→ * Colorize log arguments if enabled.

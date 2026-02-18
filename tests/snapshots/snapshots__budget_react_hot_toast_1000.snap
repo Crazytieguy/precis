@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (976 words)
+budget: 1000 (988 words)
 
 README.md
     28→## Features
@@ -44,6 +44,39 @@ README.md
     69→
     70→## Documentation
     72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
+package.json
+     2→  "name": "react-hot-toast",
+     3→  "description": "Smoking hot React Notifications. Lightweight, customizable and beautiful by default.",
+     4→  "version": "2.6.0",
+     5→  "author": "Timo Lins",
+     6→  "license": "MIT",
+     7→  "repository": "timolins/react-hot-toast",
+     8→  "keywords": [
+    13→  ],
+    14→  "main": "dist/index.js",
+    15→  "types": "dist/index.d.ts",
+    16→  "exports": {
+    28→  },
+    29→  "files": [
+    33→  ],
+    34→  "engines": {
+    36→  },
+    37→  "scripts": {
+    44→  },
+    45→  "husky": {
+    49→  },
+    50→  "prettier": {
+    56→  },
+    57→  "size-limit": [
+    74→  ],
+    75→  "devDependencies": {
+    94→  },
+    95→  "dependencies": {
+    98→  },
+    99→  "peerDependencies": {
+   102→  },
+   103→  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
+   104→}
 site/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -54,8 +87,6 @@ site/README.md
     10→yarn dev
     11→```
     12→
-    13→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-    14→
       →…
     17→## Learn More
     19→To learn more about Next.js, take a look at the following resources:
@@ -99,6 +130,7 @@ site/components/sections/toaster-example.tsx
      6→import { EmojiButton } from '../emoji-button';
      8→export const positions: Array<ToastPosition> = [
      9→  'top-left',
+    10→  'top-center',
       →…
     17→export const ToasterExample: React.FC<{
 site/next.config.mjs
@@ -107,6 +139,14 @@ site/next.config.mjs
     15→const nextConfig = {
     17→  webpack(config) {
     24→  async rewrites() {
+site/package.json
+     2→  "name": "site",
+     3→  "scripts": {
+     7→  },
+     8→  "dependencies": {
+    24→  },
+    25→  "devDependencies": {
+    35→}
 site/pages/_app.tsx
     12→const components = {
     71→function MyApp …
@@ -120,6 +160,13 @@ site/pages/index.tsx
    103→  const [position, setPosition] = useState<ToastPosition>('top-center');
    104→  const [reverse, setReverse] = useState(false);
       →…
+site/tsconfig.json
+     2→  "compilerOptions": {
+    21→  },
+    22→  "include": [
+    31→  ],
+    32→  "exclude": [
+    35→}
 site/types/svg.d.ts
      1→interface SvgrComponent
      2→  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
@@ -149,11 +196,7 @@ src/components/toast-bar.tsx
     48→  toast: Toast;
     49→  position?: ToastPosition;
     50→  style?: React.CSSProperties;
-    51→  children?: (components: {
-    52→    icon: Renderable;
-    53→    message: Renderable;
-    54→  }) => Renderable;
-    55→}
+      →…
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 src/components/toast-icon.tsx
@@ -170,7 +213,6 @@ src/components/toaster.tsx
       →…
 src/core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
-     2→import { DefaultToastOptions, Toast, ToastType } from './types …
      4→export const TOAST_EXPIRE_DISMISS_DELAY …
      5→export const TOAST_LIMIT …
      6→export const DEFAULT_TOASTER_ID …
@@ -181,11 +223,7 @@ src/core/store.ts
     13→  ADD_TOAST,
     14→  UPDATE_TOAST,
     15→  UPSERT_TOAST,
-    16→  DISMISS_TOAST,
-    17→  REMOVE_TOAST,
-    18→  START_PAUSE,
-    19→  END_PAUSE,
-    20→}
+      →…
     22→export type Action …
     52→interface ToasterState {
     53→  toasts: Toast[];
@@ -205,9 +243,6 @@ src/core/store.ts
    175→export const defaultTimeouts …
    185→export const useStore …
 src/core/toast.ts
-     1→./types …
-    10→import { genId } from './utils …
-    11→./store …
     19→type Message = ValueOrFunction<Renderable, Toast>;
     21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
     23→const createToast …
@@ -230,13 +265,6 @@ src/core/types.ts
     35→  type: ToastType;
     36→  id: string;
     37→  toasterId?: string;
-    38→  message: ValueOrFunction<Renderable, Toast>;
-    39→  icon?: Renderable;
-    40→  duration?: number;
-    41→  pauseDuration: number;
-    42→  position?: ToastPosition;
-    43→  removeDelay?: number;
-    44→
       →…
     60→export type ToastOptions …
     76→export type DefaultToastOptions …
@@ -244,24 +272,14 @@ src/core/types.ts
     81→  position?: ToastPosition;
     82→  toastOptions?: DefaultToastOptions;
     83→  reverseOrder?: boolean;
-    84→  gutter?: number;
-    85→  containerStyle?: React.CSSProperties;
-    86→  containerClassName?: string;
-    87→  toasterId?: string;
-    88→  children?: (toast: Toast) => React.ReactElement;
-    89→}
+      →…
     91→export interface ToastWrapperProps {
     92→  id: string;
     93→  className?: string;
     94→  style?: React.CSSProperties;
-    95→  onHeightUpdate: (id: string, height: number) => void;
-    96→  children?: React.ReactNode;
-    97→}
+      →…
 src/core/use-toaster.ts
      1→import { useEffect, useCallback, useRef } from 'react';
-     2→import { createDispatch, ActionType, useStore, dispatch } from './store …
-     3→import { toast } from './toast …
-     4→import { DefaultToastOptions, Toast, ToastPosition } from './types …
      6→export const REMOVE_DELAY …
      8→export const useToaster …
 src/core/utils.ts
@@ -276,5 +294,9 @@ test/setup.ts
 test/toast.test.tsx
     29→const waitTime …
     35→const TOAST_DURATION = 1000;
+tsconfig.json
+     3→  "include": ["src", "types", "test"],
+     4→  "compilerOptions": {
+    33→}
 tsup.config.ts
      4→const commonConfig: Options = {

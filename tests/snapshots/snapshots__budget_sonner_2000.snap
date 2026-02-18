@@ -2,8 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1945 words)
+budget: 2000 (1965 words)
 
+FUNDING.yml
+     1→github …
 README.md
      5→## Usage
      7→To start using the library, install it in your project:
@@ -32,8 +34,37 @@ README.md
     30→
     31→## Documentation
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
+package.json
+     2→  "name": "sonner",
+     3→  "version": "2.0.7",
+     4→  "description": "An opinionated toast component for React.",
+     5→  "exports": {
+    18→  },
+    19→  "main": "./dist/index.js",
+    20→  "types": "./dist/index.d.ts",
+    21→  "files": [
+    23→  ],
+    24→  "scripts": {
+    32→  },
+    33→  "keywords": [
+    39→  ],
+    40→  "author": "Emil Kowalski <e@emilkowal.ski>",
+    41→  "license": "MIT",
+    42→  "homepage": "https://sonner.emilkowal.ski/",
+    43→  "repository": {
+    46→  },
+    47→  "bugs": {
+    49→  },
+    50→  "devDependencies": {
+    60→  },
+    61→  "peerDependencies": {
+    64→  },
+    65→  "packageManager": "pnpm@9.15.9"
+    66→}
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
+pnpm-workspace.yaml
+     1→packages …
 src/assets.tsx
      2→import React from 'react';
      3→import type { ToastTypes } from './types';
@@ -41,32 +72,13 @@ src/assets.tsx
      6→  switch (type) {
      7→    case 'success':
      8→      return SuccessIcon;
-     9→
-    10→    case 'info':
-    11→      return InfoIcon;
-    12→
-    13→    case 'warning':
-    14→      return WarningIcon;
-    15→
-    16→    case 'error':
-    17→      return ErrorIcon;
-    18→
-    19→    default:
-    20→      return null;
-    21→  }
-    22→};
+      →…
     24→const bars = Array(12).fill(0);
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     27→  return (
     28→    <div className={['sonner-loading-wrapper', className].filter(Boolean).join(' ')} data-visible={visible}>
     29→      <div className="sonner-spinner">
-    30→        {bars.map((_, i) => (
-    31→          <div className="sonner-loading-bar" key={`spinner-bar-${i}`} />
-    32→        ))}
-    33→      </div>
-    34→    </div>
-    35→  );
-    36→};
+      →…
     38→const SuccessIcon = (
     48→const WarningIcon = (
     58→const InfoIcon = (
@@ -83,15 +95,7 @@ src/hooks.tsx
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
      5→
      6→  React.useEffect(() => {
-     7→    const callback = () => {
-     8→      setIsDocumentHidden(document.hidden);
-     9→    };
-    10→    document.addEventListener('visibilitychange', callback);
-    11→    return () => document.removeEventListener('visibilitychange', callback);
-    12→  }, []);
-    13→
-    14→  return isDocumentHidden;
-    15→};
+      →…
 src/index.tsx
      3→import React from 'react';
      4→import ReactDOM from 'react-dom';
@@ -195,7 +199,6 @@ src/types.ts
     36→  cancelButton?: string;
     37→  actionButton?: string;
     38→  success?: string;
-    39→  error?: string;
       →…
     48→export interface ToastIcons {
     49→  success?: React.ReactNode;
@@ -219,7 +222,6 @@ src/types.ts
     69→  jsx?: React.ReactNode;
     70→  richColors?: boolean;
     71→  invert?: boolean;
-    72→  closeButton?: boolean;
       →…
     93→export function isAction(action: Action | React.ReactNode): action is Action {
     97→export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
@@ -252,7 +254,6 @@ src/types.ts
    134→  richColors?: boolean;
    135→  expand?: boolean;
    136→  duration?: number;
-   137→  gap?: number;
       →…
    152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
    154→export interface ToastProps {
@@ -264,7 +265,6 @@ src/types.ts
    160→  invert: boolean;
    161→  heights: HeightT[];
    162→  setHeights: React.Dispatch<React.SetStateAction<HeightT[]>>;
-   163→  removeToast: (toast: ToastT) => void;
       →…
    184→export enum SwipeStateTypes {
    185→  SwipedOut = 'SwipedOut',
@@ -283,15 +283,39 @@ test/README.md
     34→## Deploy on Vercel …
 test/next.config.js
      2→const nextConfig = {};
+test/package.json
+     2→  "name": "test",
+     3→  "version": "0.1.0",
+     4→  "private": true,
+     5→  "scripts": {
+    10→  },
+    11→  "dependencies": {
+    24→}
 test/src/app/action.tsx
      4→export async function action() {
 test/src/app/layout.tsx
      1→export const metadata = {
      6→export default function RootLayout({ children }: { children: React.ReactNode }) {
 test/src/app/page.tsx
-     7→const promise = () => new Promise((resolve) => setTimeout(resolve, 2000));
+     7→const promise …
      9→export default function Home({ searchParams }: any) {
 test/tests/basic.spec.ts
+test/tsconfig.json
+     2→  "compilerOptions": {
+    25→  },
+    26→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../playwright.config.ts"],
+    27→  "exclude": ["node_modules"]
+    28→}
+tsconfig.json
+     2→  "compilerOptions": {
+     8→  },
+     9→  "include": ["src"]
+    10→}
+turbo.json
+     2→  "$schema": "https://turbo.build/schema.json",
+     3→  "extends": ["//"],
+     4→  "pipeline": {
+    13→}
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -308,8 +332,6 @@ website/README.md
     16→
     17→You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
     18→
-    19→[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-    20→
       →…
     25→## Learn More
     27→To learn more about Next.js, take a look at the following resources:
@@ -327,12 +349,16 @@ website/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
      8→const withNextra = require('nextra')({
+website/package.json
+     2→  "name": "website",
+     3→  "version": "0.1.0",
+     4→  "scripts": {
+     9→  },
+    10→  "dependencies": {
+    29→  },
+    30→  "devDependencies": {
+    35→}
 website/src/components/CodeBlock/index.tsx
-     1→import React from 'react';
-     2→import Highlight, { defaultProps } from 'prism-react-renderer';
-     3→import useMeasure from 'react-use-measure';
-     4→import copy from 'copy-to-clipboard';
-     5→import { AnimatePresence, motion, MotionConfig } from 'framer-motion';
      7→import styles from './code-block.module.css';
      9→const variants = {
     14→const theme = {
@@ -340,8 +366,6 @@ website/src/components/CodeBlock/index.tsx
     49→  const [ref, bounds] = useMeasure();
     50→  const [copying, setCopying] = React.useState<number>(0);
     51→
-    52→  const onCopy = React.useCallback(() => {
-    53→    copy(children);
       →…
 website/src/components/ExpandModes/index.tsx
      1→import { toast } from 'sonner';
@@ -353,10 +377,6 @@ website/src/components/ExpandModes/index.tsx
      8→  expand: boolean;
      9→  setExpand: React.Dispatch<React.SetStateAction<boolean>>;
     10→}) => {
-    11→  return (
-    12→    <div>
-    13→      <h2>Expand</h2>
-    14→      <p>
       →…
 website/src/components/Footer/index.tsx
      1→import Image from 'next/image';
@@ -381,10 +401,6 @@ website/src/components/Hero/index.tsx
      8→    <div className={styles.wrapper}>
      9→      <div className={styles.toastWrapper}>
     10→        <div className={styles.toast} />
-    11→        <div className={styles.toast} />
-    12→        <div className={styles.toast} />
-    13→      </div>
-    14→      <h1 className={styles.heading}>Sonner</h1>
       →…
 website/src/components/How/How.tsx
      1→import React from 'react';
@@ -402,8 +418,6 @@ website/src/components/Installation/index.tsx
     14→export const Installation = () => {
     15→  const [copying, setCopying] = React.useState(0);
     16→
-    17→  const onCopy = React.useCallback(() => {
-    18→    copy('npm install sonner');
       →…
 website/src/components/Other/Other.tsx
      1→import React from 'react';
@@ -417,7 +431,6 @@ website/src/components/Other/Other.tsx
     10→}: {
     11→  setRichColors: React.Dispatch<React.SetStateAction<boolean>>;
     12→  setCloseButton: React.Dispatch<React.SetStateAction<boolean>>;
-    13→}) => {
       →…
 website/src/components/Position/index.tsx
      1→import { toast, useSonner } from 'sonner';
@@ -431,7 +444,6 @@ website/src/components/Position/index.tsx
     12→}: {
     13→  position: Position;
     14→  setPosition: React.Dispatch<React.SetStateAction<Position>>;
-    15→}) => {
       →…
 website/src/components/Types/Types.tsx
      1→import React from 'react';
@@ -465,6 +477,19 @@ website/src/pages/_app.tsx
     13→    </>
     14→  );
     15→}
+website/src/pages/_meta.json
+     2→  "getting-started": {
+     5→  },
+     6→  "-- API": {
+     9→  },
+    10→  "toast": {
+    13→  },
+    14→  "toaster": {
+    17→  },
+    18→  "-- More": {
+    21→  },
+    22→  "styling": {
+    26→}
 website/src/pages/index.tsx
     10→import Head from '../components/Head';
     11→import { How } from '../components/How/How';
@@ -485,7 +510,6 @@ website/src/pages/index.tsx
     27→        expand={expand}
     28→        position={position}
     29→        duration={Infinity}
-    30→      />
       →…
 website/theme.config.jsx
      7→  useNextSeoProps() {
@@ -493,3 +517,9 @@ website/theme.config.jsx
      9→      titleTemplate: '%s – Sonner',
     10→    };
     11→  },
+website/tsconfig.json
+     2→  "compilerOptions": {
+    26→  },
+    27→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+    28→  "exclude": ["node_modules"]
+    29→}

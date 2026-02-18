@@ -2,8 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1918 words)
+budget: 2000 (1919 words)
 
+Cargo.toml
+     1→[package …
+    14→[features …
+    30→[dependencies …
+    33→[dev-dependencies …
+    39→[workspace …
+    42→[package.metadata.docs.rs …
 README.md
      1→derive(Error)
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/thiserror-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/thiserror)
@@ -121,6 +128,11 @@ build.rs
     91→fn compile_probe(rustc_bootstrap: bool) -> bool {
    179→fn rustc_minor_version() -> Option<u32> {
    190→fn cargo_env_var(key: &str) -> OsString {
+impl/Cargo.toml
+     1→[package …
+    11→[lib …
+    14→[dependencies …
+    19→[package.metadata.docs.rs …
 impl/src/ast.rs
      1→use crate::attr::{self, Attrs};
      2→use crate::generics::ParamsInScope;
@@ -250,16 +262,6 @@ impl/src/fmt.rs
    176→        return Ok(set);
    177→    }
    178→
-   179→    let ahead = input.fork();
-   180→    if let Ok(set) = fallback_explicit_named_args(&ahead) {
-   181→        input.advance_to(&ahead);
-   182→        return Ok(set);
-   183→    }
-   184→
-   185→    input.parse::<TokenStream>().unwrap();
-   186→    Ok(FmtArguments {
-   187→        named: BTreeSet::new(),
-   188→        first_unnamed: None,
       →…
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
@@ -350,6 +352,8 @@ impl/src/unraw.rs
 impl/src/valid.rs
      1→use crate::ast::{Enum, Field, Input, Struct, Variant};
      2→use crate::attr::Attrs;
+rust-toolchain.toml
+     1→[toolchain …
 src/aserror.rs
      1→use core::error::Error;
      2→use core::panic::UnwindSafe;
@@ -458,6 +462,10 @@ src/var.rs
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
      7→        Pointer::fmt(self.0, formatter)
      8→    }
+tests/no-std/Cargo.toml
+     1→[package …
+     8→[lib …
+    11→[dependencies …
 tests/no-std/test.rs
      3→use thiserror::Error;
      5→#[derive(Error, Debug)]

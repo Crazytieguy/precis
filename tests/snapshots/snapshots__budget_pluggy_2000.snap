@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1954 words)
+budget: 2000 (1956 words)
 
 AGENTS.md
      1→# AGENTS.md
@@ -25,6 +25,9 @@ CLAUDE.md
 SECURITY.md
      1→# Security
      3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
+codecov.yml
+     1→coverage …
+     7→comment …
 docs/conf.py
      1→from importlib import metadata
      2→from typing import TYPE_CHECKING
@@ -102,6 +105,24 @@ docs/examples/toy-example.py
     29→    def myhook(self, arg1, arg2):
     30→        print("inside Plugin_2.myhook()")
       →…
+pyproject.toml
+     1→[build-system …
+     8→[project …
+    38→[dependency-groups …
+    43→[tool.setuptools …
+    49→[tool.ruff.lint …
+    57→[tool.ruff.lint.extend-per-file-ignores …
+    61→[tool.ruff.lint.isort …
+    69→[tool.setuptools_scm …
+    71→[tool.uv …
+    74→[tool.towncrier …
+    82→  [[tool.towncrier.type …
+    87→  [[tool.towncrier.type …
+    92→  [[tool.towncrier.type …
+    97→  [[tool.towncrier.type …
+   102→  [[tool.towncrier.type …
+   107→  [[tool.towncrier.type …
+   112→[tool.mypy …
 scripts/release.py
     15→def create_branch(version: str) -> Repo:
     16→    """Create a fresh branch from upstream/main"""
@@ -115,7 +136,9 @@ scripts/towncrier-draft-to-file.py
      5→def main() -> int:
      6→    """
      7→    Platform agnostic wrapper script for towncrier.
-      →…
+     8→    Fixes the issue (pytest#7251) where windows users are unable to natively
+     9→    run tox -e docs to build pytest docs.
+    10→    """
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
@@ -152,24 +175,9 @@ src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
-    60→def _raise_wrapfail(
-    61→    wrap_controller: Generator[None, object, object],
-    62→    msg: str,
-    63→) -> NoReturn:
-    70→def _warn_teardown_exception(
-    71→    hook_name: str, hook_impl: HookImpl, e: BaseException
-    72→) -> None:
-    82→def _multicall(
-    83→    hook_name: str,
-    84→    hook_impls: Sequence[HookImpl],
-    85→    caller_kwargs: Mapping[str, object],
-    86→    firstresult: bool,
-    87→) -> object | list[object]:
-    88→    """Execute a call into multiple python functions/methods and return the
-    89→    result(s).
-    90→
-    91→    ``caller_kwargs`` comes from HookCaller.__call__().
-    92→    """
+    60→def _raise_wrapfail …
+    70→def _warn_teardown_exception …
+    82→def _multicall …
 src/pluggy/_hooks.py
     25→from ._result import Result
     28→_T = TypeVar("_T")
@@ -270,12 +278,10 @@ src/pluggy/_hooks.py
    434→        self.spec = HookSpec(specmodule_or_class, self.name, spec_opts)
    435→        if spec_opts.get("historic"):
    436→            self._call_history = []
-   442→    def _remove_plugin(self, plugin: _Plugin) -> None:
-   453→    def _add_hookimpl(self, hookimpl: HookImpl) -> None:
-   454→        """Add an implementation to the callback chain."""
-   480→    def _verify_all_args_are_provided(self, kwargs: Mapping[str, object]) -> None:
-   577→    def _maybe_apply_history(self, method: HookImpl) -> None:
-   578→        """Apply call history to a new hookimpl if it is marked as historic."""
+   442→    def _remove_plugin …
+   453→    def _add_hookimpl …
+   480→    def _verify_all_args_are_provided …
+   577→    def _maybe_apply_history …
    593→class _SubsetHookCaller(HookCaller):
    594→    """A proxy to another HookCaller which manages calls to all registered
    595→    plugins except the ones from remove_plugins."""
@@ -356,7 +362,7 @@ src/pluggy/_manager.py
     33→    import importlib.metadata
     36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
     37→_AfterTrace: TypeAlias = Callable[
-    42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
+    42→def _warn_for_function …
     52→class PluginValidationError(Exception):
     53→    """Plugin failed validation.
     54→
@@ -388,15 +394,9 @@ src/pluggy/_manager.py
     97→        The short project name. Prefer snake case. Make sure it's unique!
     98→    """
     99→
-   114→    def _hookexec(
-   115→        self,
-   116→        hook_name: str,
-   117→        methods: Sequence[HookImpl],
-   118→        kwargs: Mapping[str, object],
-   119→        firstresult: bool,
-   120→    ) -> object | list[object]:
-   331→    def _verify_hook(self, hook: HookCaller, hookimpl: HookImpl) -> None:
-   525→def _formatdef(func: Callable[..., object]) -> str:
+   114→    def _hookexec …
+   331→    def _verify_hook …
+   525→def _formatdef …
 src/pluggy/_result.py
     16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
     20→class HookCallError(Exception):
@@ -432,8 +432,8 @@ src/pluggy/_result.py
     65→        return cls(result, exception)
 src/pluggy/_tracing.py
     16→class TagTracer:
-    25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
-    42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
+    25→    def _format_message …
+    42→    def _processmessage …
     59→class TagTracerSub:
 src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):
@@ -479,7 +479,7 @@ testing/test_hookcaller.py
     60→@pytest.fixture
     61→def addmeth(hc: HookCaller) -> AddMeth:
    327→@pytest.mark.parametrize("name", ["hookwrapper", "optionalhook", "tryfirst", "trylast"])
-      →…
+   328→@pytest.mark.parametrize("val", [True, False])
    329→def test_hookimpl(name: str, val: bool) -> None:
 testing/test_invocations.py
 testing/test_multicall.py
@@ -492,11 +492,22 @@ testing/test_multicall.py
 testing/test_pluginmanager.py
    298→@pytest.mark.parametrize("result_callback", [True, False])
    299→def test_with_result_memorized(pm: PluginManager, result_callback: bool) -> None:
+   300→    """Verify that ``HookCaller._maybe_apply_history()`
+   301→    correctly applies the ``result_callback`` function, when provided,
+   302→    to the result from calling each newly registered hook.
+   303→    """
    698→@pytest.mark.parametrize("historic", [False, True])
    699→def test_register_while_calling(
    700→    pm: PluginManager,
    701→    historic: bool,
    702→) -> None:
+   703→    """Test that registering an impl of a hook while it is being called does
+   704→    not affect the call itself, only later calls.
+   705→
+   706→    For historic hooks however, the hook is called immediately on registration.
+   707→
+   708→    Regression test for #438.
+   709→    """
 testing/test_result.py
 testing/test_tracer.py
      6→@pytest.fixture

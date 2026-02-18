@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1957 words)
+budget: 2000 (1962 words)
 
 README.md
      1→# humanize
@@ -250,7 +250,8 @@ RELEASING.md
     19→- [ ] Check installation:
     20→
     21→```bash
-      →…
+    22→pip3 uninstall -y humanize && pip3 install -U humanize && python3 -c "import humanize; print(humanize.__version__)"
+    23→```
 docs/filesize.md
      1→# Filesize
      3→::: humanize.filesize
@@ -282,6 +283,28 @@ docs/number.md
 docs/time.md
      1→# Time
      3→::: humanize.time
+mkdocs.yml
+     1→site_name …
+     2→site_url …
+     3→repo_url …
+     4→theme …
+    18→nav …
+    26→plugins …
+    31→markdown_extensions …
+    37→extra_css …
+    40→watch …
+pyproject.toml
+     1→[build-system …
+     8→[project …
+    50→[tool.hatch …
+    53→[tool.hatch.build …
+    56→[tool.hatch.build.hooks.vcs …
+    59→[tool.hatch.version.raw-options …
+    62→[tool.ruff …
+   103→[tool.pyproject-fmt …
+   106→[tool.pytest.ini_options …
+   113→[tool.coverage.report …
+   120→[tool.mypy …
 src/humanize/__init__.py
      5→from humanize.filesize import naturalsize
      6→from humanize.i18n import activate, deactivate, decimal_separator, thousands_separator
@@ -525,14 +548,7 @@ src/humanize/time.py
       →…
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
 tests/test_filesize.py
-     6→import pytest
-     8→import humanize
 tests/test_i18n.py
-     5→import datetime as dt
-     6→import importlib
-     8→import pytest
-     9→from freezegun import freeze_time
-    11→import humanize
     17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
     19→    three_seconds = NOW - dt.timedelta(seconds=3)
@@ -561,21 +577,8 @@ tests/test_i18n.py
    267→            humanize.i18n.activate("fr")
       →…
 tests/test_lists.py
-     3→import pytest
-     5→import humanize
 tests/test_number.py
-     5→import math
-     6→import typing
-     8→import pytest
-    10→import humanize
-    11→from humanize import number
 tests/test_time.py
-     5→import datetime as dt
-     6→import typing
-     8→import pytest
-     9→from freezegun import freeze_time
-    11→import humanize
-    12→from humanize import time
     14→ONE_DAY_DELTA = dt.timedelta(days=1)
     16→# In seconds
     17→ONE_MICROSECOND = 1 / 1000000

@@ -4,6 +4,7 @@ expression: output
 ---
 budget: 500 (498 words)
 
+package.json
 readme.md
     20→## Benefits over plain `fetch` …
     33→## Install …
@@ -134,7 +135,9 @@ source/utils/types.ts
      1→export type Mutable …
      5→export type ObjectEntries …
 test/browser.ts
-    13→	interface Window {
 test/helpers/create-http-test-server.ts
+test/helpers/parse-body.ts
 test/helpers/with-page.ts
 test/helpers/with-performance.ts
+tsconfig.dist.json
+tsconfig.json

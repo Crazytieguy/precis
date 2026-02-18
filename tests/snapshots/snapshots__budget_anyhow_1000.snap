@@ -2,8 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (949 words)
+budget: 1000 (948 words)
 
+Cargo.toml
+     1→[package …
+    14→[features …
+    18→[dependencies …
+    25→[dev-dependencies …
+    32→[package.metadata.docs.rs …
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯ …
     21→## Details …
@@ -21,6 +27,8 @@ README.md
       →…
 build.rs
      3→use std::env;
+rust-toolchain.toml
+     1→[toolchain …
 src/backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
      5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
@@ -167,12 +175,6 @@ src/lib.rs
    445→/// #     use super::Deserialize;
    446→/// #     use std::io;
    447→/// #
-   448→/// #     pub fn from_str<T: Deserialize>(json: &str) -> io::Result<T> {
-   449→/// #         unimplemented!()
-   450→/// #     }
-   451→/// # }
-   452→/// #
-   453→/// # #[derive(Debug)]
       →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    470→/// Provides the `context` method for `Result`.
@@ -245,6 +247,11 @@ tests/common/mod.rs
      4→pub fn bail_literal() -> Result<()> {
      8→pub fn bail_fmt() -> Result<()> {
     12→pub fn bail_error() -> Result<()> {
+tests/crate/Cargo.toml
+     1→[package …
+     8→[lib …
+    11→[dependencies …
+    14→[features …
 tests/crate/test.rs
      3→pub use anyhow::*;
 tests/drop/mod.rs

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1975 words)
+budget: 2000 (1986 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -13,16 +13,11 @@ CHANGELOG.md
    913→If you were previously using code like:
    914→
    915→```js
-   916→if (!program.args.length) ...
-   917→```
-   918→
       →…
 CONTRIBUTING.md
      1→# Contributing
      3→## Issues
      5→New issues are welcome, whether questions or suggestions or reporting bugs.
-     6→You are also welcome to contribute by adding helpful comments on an existing issue.
-     7→
       →…
     13→## Pull Requests …
 Readme.md
@@ -64,11 +59,6 @@ Readme.md
     42→    - [More configuration](#more-configuration-2)
     43→  - [Custom event listeners](#custom-event-listeners)
     44→  - [Bits and pieces](#bits-and-pieces)
-    45→    - [.parse() and .parseAsync()](#parse-and-parseasync)
-    46→    - [Parsing Configuration](#parsing-configuration)
-    47→    - [Legacy options as properties](#legacy-options-as-properties)
-    48→    - [TypeScript](#typescript)
-    49→    - [createCommand()](#createcommand)
       →…
     61→## Installation …
     67→## Quick Start …
@@ -80,16 +70,12 @@ Readme.md
    616→
    617→Example file: [arguments-extra.js](./examples/arguments-extra.js)
    618→
-   619→```js
-   620→program
       →…
    625→#### Custom argument processing
    627→You may specify a function to do custom processing of command-arguments (like for option-arguments).
    628→The callback function receives two parameters, the user specified command-argument and the previous value for the argument.
    629→It returns the new value for the argument.
    630→
-   631→The processed argument values are passed to the action handler, and saved as `.processedArgs`.
-   632→
       →…
    754→## Automated help …
    956→## Custom event listeners …
@@ -122,12 +108,8 @@ Readme_zh-CN.md
     11→
     12→- [Commander.js](#commanderjs)
       →…
-   570→#### 其他参数配置
-   572→有少数附加功能可以直接构造`Argument`对象，对参数进行更详尽的配置。
-      →…
-   582→#### 自定义参数处理
-   584→选项的参数可以通过自定义函数来处理（与处理选项参数时类似），该函数接收两个参数：用户新输入的参数值和当前已有的参数值（即上一次调用自定义处理函数后的返回值），返回新的命令参数值。
-      →…
+   570→#### 其他参数配置 …
+   582→#### 自定义参数处理 …
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
@@ -303,13 +285,11 @@ lib/command.js
   2656→  addHelpText(position, text) {
 lib/error.js
      1→/**
-     2→ * CommanderError class
-     3→ */
+      →…
      4→class CommanderError extends Error {
     11→  constructor(exitCode, code, message) {
     22→/**
-    23→ * InvalidArgumentError class
-    24→ */
+      →…
     25→class InvalidArgumentError extends CommanderError {
     30→  constructor(message) {
 lib/help.js
@@ -373,8 +353,6 @@ lib/option.js
    243→  is(arg) {
    256→  isBoolean() {
    261→/**
-   262→ * This class is to make it easier to work with dual options, without changing the existing
-   263→ * implementation. We support separate dual options for separate positive and negative options,
       →…
    268→class DualOptions {
    272→  constructor(options) {
@@ -384,6 +362,34 @@ lib/suggestSimilar.js
      3→function editDistance(a, b) {
      4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
       →…
+package-support.json
+     2→  "versions": [
+    19→}
+package.json
+     2→  "name": "commander",
+     3→  "version": "14.0.3",
+     4→  "description": "the complete solution for node.js command-line programs",
+     5→  "keywords": [
+    14→  ],
+    15→  "author": "TJ Holowaychuk <tj@vision-media.ca>",
+    16→  "license": "MIT",
+    17→  "repository": {
+    20→  },
+    21→  "scripts": {
+    34→  },
+    35→  "files": [
+    42→  ],
+    43→  "type": "commonjs",
+    44→  "main": "./index.js",
+    45→  "exports": {
+    61→  },
+    62→  "devDependencies": {
+    76→  },
+    77→  "types": "typings/index.d.ts",
+    78→  "engines": {
+    80→  },
+    81→  "support": true
+    82→}
 tests/command.createArgument.test.js
      4→  constructor(name, description) {
     11→  createArgument(name, description) {
@@ -398,6 +404,23 @@ tests/esm-imports-test.mjs
 tests/ts-imports.test.ts
      1→../ …
     17→function checkClass(obj: object, name: string): void {
+tsconfig.js.json
+     7→  "extends": "./tsconfig.json",
+     8→  "include": [
+    15→}
+tsconfig.json
+    12→  "compilerOptions": {
+    32→  },
+    33→  "include": [
+    42→  ],
+    43→  "exclude": ["node_modules"],
+    44→}
+tsconfig.ts.json
+     8→  "extends": "./tsconfig.json",
+     9→  "compilerOptions": {
+    14→  },
+    15→  "include": [
+    20→}
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =
     13→  | LiteralType

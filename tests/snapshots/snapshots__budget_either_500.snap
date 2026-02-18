@@ -2,8 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (478 words)
+budget: 500 (476 words)
 
+Cargo.toml
+     1→[package …
+    20→[dependencies …
+    23→[features …
+    28→[dev-dependencies …
+    31→[package.metadata.release …
+    36→[package.metadata.docs.rs …
+    39→[package.metadata.playground …
 src/into_either.rs
      4→use super::{Either, Left, Right};
      6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
@@ -13,7 +21,7 @@ src/into_either.rs
     10→/// whether to convert to [`Left`] or [`Right`].
     11→///
     12→/// The [`into_either_with`](IntoEither::into_either_with) method takes a
-    13→/// [predicate function](FnOnce) to determine whether to convert to [`Left`] or [`Right`].
+      →…
     14→pub trait IntoEither: Sized {
 src/iterator.rs
      1→use super::{for_both, Either, Left, Right};
@@ -59,7 +67,7 @@ src/lib.rs
     45→/// preference.
     46→/// (For representing success or error, use the regular `Result` enum instead.)
     47→#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-    48→#[derive(Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Debug)]
+      →…
     49→pub enum Either<L, R> {
     50→    /// A value of type `L`.
     51→    Left(L),

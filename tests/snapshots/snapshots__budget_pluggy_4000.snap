@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3942 words)
+budget: 4000 (3943 words)
 
 AGENTS.md
      1→# AGENTS.md
@@ -29,6 +29,9 @@ CLAUDE.md
 SECURITY.md
      1→# Security
      3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
+codecov.yml
+     1→coverage …
+     7→comment …
 docs/conf.py
      1→from importlib import metadata
      2→from typing import TYPE_CHECKING
@@ -147,6 +150,24 @@ docs/examples/toy-example.py
     29→    def myhook(self, arg1, arg2):
     30→        print("inside Plugin_2.myhook()")
     31→        return arg1 - arg2
+pyproject.toml
+     1→[build-system …
+     8→[project …
+    38→[dependency-groups …
+    43→[tool.setuptools …
+    49→[tool.ruff.lint …
+    57→[tool.ruff.lint.extend-per-file-ignores …
+    61→[tool.ruff.lint.isort …
+    69→[tool.setuptools_scm …
+    71→[tool.uv …
+    74→[tool.towncrier …
+    82→  [[tool.towncrier.type …
+    87→  [[tool.towncrier.type …
+    92→  [[tool.towncrier.type …
+    97→  [[tool.towncrier.type …
+   102→  [[tool.towncrier.type …
+   107→  [[tool.towncrier.type …
+   112→[tool.mypy …
 scripts/release.py
      5→import argparse
      6→from subprocess import check_call
@@ -158,25 +179,20 @@ scripts/release.py
     15→def create_branch(version: str) -> Repo:
     16→    """Create a fresh branch from upstream/main"""
     17→    repo = Repo.init(".")
-    18→    if repo.is_dirty(untracked_files=True):
       →…
     30→def get_upstream(repo: Repo) -> Remote:
     31→    """Find upstream repository for pluggy on the remotes"""
     32→    for remote in repo.remotes:
-    33→        for url in remote.urls:
       →…
     39→def pre_release(version: str) -> None:
     40→    """Generates new docs, release announcements and creates a local tag."""
     41→    create_branch(version)
-    42→    changelog(version, write_out=True)
       →…
     50→def changelog(version: str, write_out: bool = False) -> None:
     51→    if write_out:
-    52→        addopts = []
       →…
     59→def main() -> int:
     60→    init(autoreset=True)
-    61→    parser = argparse.ArgumentParser()
       →…
 scripts/towncrier-draft-to-file.py
      1→from subprocess import call
@@ -188,7 +204,7 @@ scripts/towncrier-draft-to-file.py
      9→    run tox -e docs to build pytest docs.
     10→    """
     11→    with open("docs/_changelog_towncrier_draft.rst", "w") as draft_file:
-    12→        return call(("towncrier", "--draft"), stdout=draft_file)
+      →…
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
@@ -825,7 +841,6 @@ testing/test_hookcaller.py
     21→def hc(pm: PluginManager) -> HookCaller:
     22→    class Hooks:
     23→        @hookspec
-    24→        def he_method1(self, arg: object) -> None:
       →…
     34→class AddMeth:
     60→@pytest.fixture
@@ -836,7 +851,6 @@ testing/test_hookcaller.py
    329→def test_hookimpl(name: str, val: bool) -> None:
    330→    @hookimpl(**{name: val})  # type: ignore[untyped-decorator,call-overload]
    331→    def he_myhook1(arg1) -> None:
-   332→        pass
       →…
 testing/test_invocations.py
 testing/test_multicall.py
@@ -844,19 +858,16 @@ testing/test_multicall.py
    250→def test_hookwrapper_exception(exc: type[BaseException]) -> None:
    251→    out = []
    252→
-   253→    @hookimpl(hookwrapper=True)
       →…
    319→@pytest.mark.parametrize("exc", [ValueError, SystemExit])
    320→def test_wrapper_exception(exc: type[BaseException]) -> None:
    321→    out = []
    322→
-   323→    @hookimpl(wrapper=True)
       →…
    416→@pytest.mark.parametrize("has_hookwrapper", [True, False])
    417→def test_wrapper_stopiteration_passtrough(has_hookwrapper: bool) -> None:
    418→    out = []
    419→
-   420→    @hookimpl(wrapper=True)
       →…
 testing/test_pluginmanager.py
    298→@pytest.mark.parametrize("result_callback", [True, False])
@@ -867,7 +878,6 @@ testing/test_pluginmanager.py
    303→    """
    304→    out = []
    305→    if not result_callback:
-   306→        callback = None
       →…
    698→@pytest.mark.parametrize("historic", [False, True])
    699→def test_register_while_calling(
@@ -883,7 +893,6 @@ testing/test_pluginmanager.py
    709→    """
    710→    hookspec = HookspecMarker("example")
    711→
-   712→    class Hooks:
       →…
 testing/test_result.py
 testing/test_tracer.py

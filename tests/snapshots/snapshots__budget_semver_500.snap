@@ -2,10 +2,57 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (518 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
+.github/ISSUE_TEMPLATE/bug.yml
+     3→name …
+     4→description …
+     5→title …
+     6→labels …
+     8→body …
+.github/ISSUE_TEMPLATE/config.yml
+     3→blank_issues_enabled …
+.github/actions/create-check/action.yml
+     3→name …
+     4→inputs …
+    13→outputs …
+    16→runs …
+.github/actions/install-latest-npm/action.yml
+     3→name …
+     4→description …
+     5→inputs …
+     9→runs …
+.github/dependabot.yml
+     3→version …
+     5→updates …
+.github/matchers/tap.json
+     2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
+     3→  "problemMatcher": [
+    32→}
+.github/settings.yml
+     3→repository …
+    13→branches …
+.github/workflows/audit.yml
+     3→name …
+.github/workflows/ci-release.yml
+     3→name …
+.github/workflows/ci.yml
+     3→name …
+.github/workflows/codeql-analysis.yml
+     3→name …
+.github/workflows/post-dependabot.yml
+     3→name …
+.github/workflows/pull-request.yml
+     3→name …
+.github/workflows/release-integration.yml
+     3→name …
+.github/workflows/release.yml
+     3→name …
+.release-please-manifest.json
+     2→  ".": "7.7.4"
+     3→}
 CHANGELOG.md
      1→# Changelog …
      3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16) …
@@ -15,45 +62,25 @@ CONTRIBUTING.md
     19→### Commits …
     44→### Dependencies …
 README.md
-     1→semver(1) -- The semantic versioner for npm
-     4→## Install
-     6→```bash
-      →…
-    10→## Usage
-    12→As a node module:
-      →…
-   139→## Versions
-   141→A "version" is described by the `v2.0.0` specification found at
-      →…
-   148→## Ranges
-   150→A `version range` is a set of `comparators` that specify versions
-      →…
+     1→semver(1) -- The semantic versioner for npm …
+     4→## Install …
+    10→## Usage …
+   139→## Versions …
+   148→## Ranges …
    184→### Prerelease Tags …
-   219→#### Prerelease Identifiers …
-   250→#### Prerelease Identifier Base …
    279→### Advanced Range Syntax …
-   287→#### Hyphen Ranges `X.Y.Z - A.B.C` …
-   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*` …
-   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1` …
-   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4` …
    384→### Range Grammar …
-   408→## Functions
-   410→All methods and classes take a final `options` object argument.  All
-      →…
+   408→## Functions …
    453→### Comparison …
    478→### Sorting …
    485→### Comparators …
    489→### Ranges …
    531→### Coercion …
    558→### Clean …
-   576→## Constants
-   578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
-      →…
+   576→## Constants …
    580→### `RELEASE_TYPES` …
    600→### `SEMVER_SPEC_VERSION` …
-   610→## Exported Modules
-   613→TODO: Make sure that all of these items are documented (classes aren't,
-      →…
+   610→## Exported Modules …
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
@@ -99,37 +126,49 @@ internal/identifiers.js
 internal/lrucache.js
      3→class LRUCache {
      4→  constructor () {
-     5→    this.max = 1000
-     6→    this.map = new Map()
-      →…
      9→  get (key) {
-    10→    const value = this.map.get(key)
-    11→    if (value === undefined) {
-      →…
     21→  delete (key) {
-    22→    return this.map.delete(key)
-    23→  }
     25→  set (key, value) {
-    26→    const deleted = this.delete(key)
-    27→
-      →…
 internal/parse-options.js
      6→const parseOptions = options => {
 internal/re.js
     33→const makeSafeRegex = (value) => {
     42→const createToken = (name, value, isGlobal) => {
-ranges/gtr.js
-ranges/intersects.js
-ranges/ltr.js
-ranges/max-satisfying.js
-ranges/min-satisfying.js
-ranges/min-version.js
-ranges/outside.js
+package.json
+     2→  "name": "semver",
+     3→  "version": "7.7.4",
+     4→  "description": "The semantic version parser used by npm.",
+     5→  "main": "index.js",
+     6→  "scripts": {
+    15→  },
+    16→  "devDependencies": {
+    21→  },
+    22→  "license": "ISC",
+    23→  "repository": {
+    26→  },
+    27→  "bin": {
+    29→  },
+    30→  "files": [
+    40→  ],
+    41→  "tap": {
+    48→  },
+    49→  "engines": {
+    51→  },
+    52→  "author": "GitHub Inc.",
+    53→  "templateOSS": {
+    78→}
 ranges/subset.js
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
-ranges/to-comparators.js
-ranges/valid.js
+release-please-config.json
+     2→  "group-pull-request-title-pattern": "chore: release ${version}",
+     3→  "pull-request-title-pattern": "chore: release${component} ${version}",
+     4→  "changelog-sections": [
+    30→  ],
+    31→  "packages": {
+    35→  },
+    36→  "prerelease-type": "pre.0"
+    37→}
 test/bin/semver.js
      9→const bin = require.resolve('../../bin/semver')
     10→const run …
@@ -138,6 +177,4 @@ test/internal/debug.js
      3→const main = () => {
 test/map.js
 test/ranges/simplify.js
-     6→const versions = [
 test/ranges/subset.js
-     8→const cases = [

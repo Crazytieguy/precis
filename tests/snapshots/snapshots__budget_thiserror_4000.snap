@@ -4,6 +4,13 @@ expression: output
 ---
 budget: 4000 (3893 words)
 
+Cargo.toml
+     1→[package …
+    14→[features …
+    30→[dependencies …
+    33→[dev-dependencies …
+    39→[workspace …
+    42→[package.metadata.docs.rs …
 README.md
      1→derive(Error)
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/thiserror-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/thiserror)
@@ -235,11 +242,7 @@ build.rs
      8→use std::str;
     10→const PRIVATE: &str = "\
     11→#[doc(hidden)]
-    12→pub mod __private$$ {
-    13→    #[doc(hidden)]
-    14→    pub use crate::private::*;
-    15→}
-    16→";
+      →…
     18→fn main() {
     19→    println!("cargo:rerun-if-changed=build/probe.rs");
       →…
@@ -252,6 +255,11 @@ build.rs
    190→fn cargo_env_var(key: &str) -> OsString {
    191→    env::var_os(key).unwrap_or_else(|| {
       →…
+impl/Cargo.toml
+     1→[package …
+    11→[lib …
+    14→[dependencies …
+    19→[package.metadata.docs.rs …
 impl/src/ast.rs
      1→use crate::attr::{self, Attrs};
      2→use crate::generics::ParamsInScope;
@@ -542,6 +550,8 @@ impl/src/valid.rs
     45→impl Enum<'_> {
     66→impl Variant<'_> {
     91→impl Field<'_> {
+rust-toolchain.toml
+     1→[toolchain …
 src/aserror.rs
      1→use core::error::Error;
      2→use core::panic::UnwindSafe;
@@ -674,6 +684,10 @@ src/var.rs
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
      7→        Pointer::fmt(self.0, formatter)
      8→    }
+tests/no-std/Cargo.toml
+     1→[package …
+     8→[lib …
+    11→[dependencies …
 tests/no-std/test.rs
      3→use thiserror::Error;
      5→#[derive(Error, Debug)]
@@ -729,7 +743,6 @@ tests/test_error.rs
      3→use core::fmt::{self, Display};
      7→macro_rules! unimplemented_display {
      8→    ($ty:ty) => {
-     9→        impl Display for $ty {
       →…
     17→#[derive(Error, Debug)]
     18→struct BracedError {
@@ -854,7 +867,6 @@ tests/test_source.rs
     21→pub struct BoxedSource {
     50→macro_rules! error_from_macro {
     51→    ($($variants:tt)*) => {
-    52→        #[derive(Error)]
       →…
 tests/test_transparent.rs
 tests/ui/bad-field-attr.rs
@@ -866,11 +878,7 @@ tests/ui/concat-display.rs
      4→    ($name:ident, $what:expr) => {
      5→        // Use #[error("invalid {}", $what)] instead.
      6→
-     7→        #[derive(Error, Debug)]
-     8→        #[error(concat!("invalid ", $what))]
-     9→        pub struct $name;
-    10→    };
-    11→}
+      →…
 tests/ui/display-underscore.rs
      3→#[derive(Error, Debug)]
      4→#[error("{_}")]

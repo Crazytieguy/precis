@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1970 words)
+budget: 2000 (1973 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -14,9 +14,25 @@ CONTRIBUTING.md
      1→# Contributing
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
      4→2. Install dependencies (`npm install`)
-      →…
-    11→## Testing …
-    19→## Code Style …
+     5→3. Create your feature branch (`git checkout -b my-new-feature`)
+     6→4. Commit your changes (`git commit -am 'Added some feature'`)
+     7→5. Test your changes (`npm test`)
+     8→6. Push to the branch (`git push origin my-new-feature`)
+     9→7. [Create new Pull Request](https://help.github.com/articles/creating-a-pull-request/)
+    10→
+    11→## Testing
+    13→We use [TAP](https://github.com/tapjs/node-tap) to write tests. Run our test suite with this command:
+    14→
+    15→```
+    16→npm test
+    17→```
+    18→
+    19→## Code Style
+    21→We use [standard](https://www.npmjs.com/package/standard) and [editorconfig](http://editorconfig.org) to maintain code style and best practices. Please make sure your PR adheres to the guides by running:
+    22→
+    23→```
+    24→npm run lint
+    25→```
 README-es.md
      1→# dotenv
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
@@ -37,6 +53,11 @@ README-es.md
    609→Default: `path.resolve(process.cwd(), '.env')`
    610→
       →…
+   625→##### quiet …
+   648→##### encoding …
+   658→##### debug …
+   668→##### override …
+   678→##### processEnv …
    692→### Parse …
    705→#### Options …
    707→##### debug
@@ -49,6 +70,7 @@ README-es.md
    752→Default: `false`
    753→
       →…
+   756→##### override …
    764→## CHANGELOG …
    770→## Who's using dotenv? …
 README.md
@@ -72,20 +94,7 @@ README.md
     22→# .env
     23→S3_BUCKET="YOURS3BUCKET"
     24→SECRET_KEY="YOURSECRETKEYGOESHERE"
-    25→```
-    26→
-    27→And as early as possible in your application, import and configure dotenv:
-    28→
-    29→```javascript
-    30→require('dotenv').config() // or import 'dotenv/config' if you're using ES6
-    31→...
-    32→console.log(process.env) // remove this after you've confirmed it is working
-    33→```
-    34→
-    35→That's it. `process.env` now has the keys and values you defined in your `.env` file:
-    36→
-    37→&nbsp;
-    38→
+      →…
     39→## Advanced
     43→Import with [ES6](#how-do-i-use-dotenv-with-import):
     44→
@@ -99,28 +108,6 @@ README.md
     52→import dotenv from 'dotenv'
     53→dotenv.config({ path: '/custom/path/to/.env' })
     54→```
-    55→
-    56→</details>
-    57→<details><summary>bun</summary><br>
-    58→
-    59→```sh
-    60→bun add dotenv
-    61→```
-    62→
-    63→</details>
-    64→<details><summary>yarn</summary><br>
-    65→
-    66→```sh
-    67→yarn add dotenv
-    68→```
-    69→
-    70→</details>
-    71→<details><summary>pnpm</summary><br>
-    72→
-    73→```sh
-    74→pnpm add dotenv
-    75→```
-    76→
       →…
    319→## Agents
    323→> Software is changing, and dotenv must change with it—that is why I built [agentic secret storage (AS2)](https://dotenvx.com/as2). Agents run code without humans at terminals, so plaintext `.env` files are the wrong primitive.
@@ -152,7 +139,10 @@ README.md
    350→vestauth agent curl "https://as2.dotenvx.com/get?key=KEY"
    351→```
    352→
-      →…
+   353→That's it! This new primitive unlocks secrets access for agents without human-in-the-loop, oauth flows, or API keys. It's the future for agents.
+   354→
+   355→&nbsp;
+   356→
    357→## FAQ
    361→No.
    362→
@@ -166,28 +156,6 @@ README.md
    370→</details>
    371→<details><summary>Should I have multiple `.env` files?</summary><br/>
    372→
-   373→We recommend creating one `.env` file per environment. Use `.env` for local/development, `.env.production` for production and so on. This still follows the twelve factor principles as each is attributed individually to its own environment. Avoid custom set ups that work in inheritance somehow (`.env.production` inherits values form `.env` for example). It is better to duplicate values if necessary across each `.env.environment` file.
-   374→
-   375→> In a twelve-factor app, env vars are granular controls, each fully orthogonal to other env vars. They are never grouped together as “environments”, but instead are independently managed for each deploy. This is a model that scales up smoothly as the app naturally expands into more deploys over its lifetime.
-   376→>
-   377→> – [The Twelve-Factor App](http://12factor.net/config)
-   378→
-   379→Additionally, we recommend using [dotenvx](https://github.com/dotenvx/dotenvx) to encrypt and manage these.
-   380→
-   381→</details>
-   382→
-   383→<details><summary>How do I use dotenv with `import`?</summary><br/>
-   384→
-   385→Simply..
-   386→
-   387→```javascript
-   388→// index.mjs (ESM)
-   389→import 'dotenv/config' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-   390→import express from 'express'
-   391→```
-   392→
-   393→A little background..
-   394→
       →…
    579→## Docs
    581→Dotenv exposes four functions:
@@ -340,7 +308,11 @@ README.md
    740→const parsed = { HELLO: 'universe' }
    741→const target = { HELLO: 'world' } // empty object
    742→
-      →…
+   743→dotenv.populate(target, parsed, { override: true, debug: true })
+   744→
+   745→console.log(target) // { HELLO: 'universe' }
+   746→```
+   747→
    748→#### options …
    750→##### Debug
    752→Default: `false`
@@ -491,6 +463,30 @@ lib/main.js
    346→function decrypt (encrypted, keyStr) {
    378→function populate (processEnv, parsed, options = {}) {
    413→const DotenvModule = {
+package.json
+     2→  "name": "dotenv",
+     3→  "version": "17.3.1",
+     4→  "description": "Loads environment variables from .env file",
+     5→  "main": "lib/main.js",
+     6→  "types": "lib/main.d.ts",
+     7→  "exports": {
+    20→  },
+    21→  "scripts": {
+    29→  },
+    30→  "repository": {
+    33→  },
+    34→  "homepage": "https://github.com/motdotla/dotenv#readme",
+    35→  "funding": "https://dotenvx.com",
+    36→  "keywords": [
+    44→  ],
+    45→  "readmeFilename": "README.md",
+    46→  "license": "BSD-2-Clause",
+    47→  "devDependencies": {
+    55→  },
+    56→  "engines": {
+    58→  },
+    59→  "browser": {
+    62→}
 tests/test-config-cli.js
      6→function spawn (cmd, options = {}) {
 tests/test-config-vault.js
@@ -502,3 +498,14 @@ tests/test-parse.js
 tests/test-populate.js
 tests/types/test.ts
      1→import { config, parse } from "dotenv";
+     3→const env = config();
+     4→const dbUrl: string | null =
+    15→const parsed = parse("NODE_ENV=production\nDB_HOST=a.b.c");
+    16→const dbHost: string = parsed["DB_HOST"];
+    18→const parsedFromBuffer = parse(Buffer.from("JUSTICE=league\n"));
+    19→const justice: string = parsedFromBuffer["JUSTICE"];
+tests/types/tsconfig.json
+     2→  "compilerOptions": {
+    15→  },
+    16→  "include": ["./test.ts", "../../main.d.ts"]
+    17→}

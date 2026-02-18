@@ -2,8 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3925 words)
+budget: 4000 (3937 words)
 
+FUNDING.yml
+     1→github …
 README.md
      5→## Usage
      7→To start using the library, install it in your project:
@@ -32,8 +34,37 @@ README.md
     30→
     31→## Documentation
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
+package.json
+     2→  "name": "sonner",
+     3→  "version": "2.0.7",
+     4→  "description": "An opinionated toast component for React.",
+     5→  "exports": {
+    18→  },
+    19→  "main": "./dist/index.js",
+    20→  "types": "./dist/index.d.ts",
+    21→  "files": [
+    23→  ],
+    24→  "scripts": {
+    32→  },
+    33→  "keywords": [
+    39→  ],
+    40→  "author": "Emil Kowalski <e@emilkowal.ski>",
+    41→  "license": "MIT",
+    42→  "homepage": "https://sonner.emilkowal.ski/",
+    43→  "repository": {
+    46→  },
+    47→  "bugs": {
+    49→  },
+    50→  "devDependencies": {
+    60→  },
+    61→  "peerDependencies": {
+    64→  },
+    65→  "packageManager": "pnpm@9.15.9"
+    66→}
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
+pnpm-workspace.yaml
+     1→packages …
 src/assets.tsx
      2→import React from 'react';
      3→import type { ToastTypes } from './types';
@@ -213,15 +244,6 @@ src/state.ts
     64→    }
     65→
     66→    if (alreadyExists) {
-    67→      this.toasts = this.toasts.map((toast) => {
-    68→        if (toast.id === id) {
-    69→          this.publish({ ...toast, ...data, id, title: message });
-    70→          return {
-    71→            ...toast,
-    72→            ...data,
-    73→            id,
-    74→            dismissible,
-    75→            title: message,
       →…
     88→  dismiss = (id?: number | string) => {
     89→    if (id) {
@@ -272,15 +294,6 @@ src/state.ts
    141→
    142→    const p = Promise.resolve(promise instanceof Function ? promise() : promise);
    143→
-   144→    let shouldDismiss = id !== undefined;
-   145→    let result: ['resolve', ToastData] | ['reject', unknown];
-   146→
-   147→    const originalPromise = p
-   148→      .then(async (response) => {
-   149→        result = ['resolve', response];
-   150→        const isReactElementResponse = React.isValidElement(response);
-   151→        if (isReactElementResponse) {
-   152→          shouldDismiss = false;
       →…
    243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
    244→    const id = data?.id || toastsCounter++;
@@ -437,10 +450,7 @@ src/types.ts
    120→      top?: string | number;
    121→      right?: string | number;
    122→      bottom?: string | number;
-   123→      left?: string | number;
-   124→    }
-   125→  | string
-   126→  | number;
+      →…
    128→export interface ToasterProps {
    129→  id?: string;
    130→  invert?: boolean;
@@ -538,6 +548,14 @@ test/README.md
 test/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {};
+test/package.json
+     2→  "name": "test",
+     3→  "version": "0.1.0",
+     4→  "private": true,
+     5→  "scripts": {
+    10→  },
+    11→  "dependencies": {
+    24→}
 test/src/app/action.tsx
      2→import { createStreamableUI } from 'ai/rsc';
      4→export async function action() {
@@ -545,8 +563,6 @@ test/src/app/action.tsx
       →…
 test/src/app/layout.tsx
      1→export const metadata = {
-     2→  title: 'Create Next App',
-      →…
      6→export default function RootLayout({ children }: { children: React.ReactNode }) {
      7→  return (
       →…
@@ -561,6 +577,22 @@ test/src/app/page.tsx
 test/tests/basic.spec.ts
      1→import { expect, test } from '@playwright/test';
      2→import { toast } from 'sonner';
+test/tsconfig.json
+     2→  "compilerOptions": {
+    25→  },
+    26→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../playwright.config.ts"],
+    27→  "exclude": ["node_modules"]
+    28→}
+tsconfig.json
+     2→  "compilerOptions": {
+     8→  },
+     9→  "include": ["src"]
+    10→}
+turbo.json
+     2→  "$schema": "https://turbo.build/schema.json",
+     3→  "extends": ["//"],
+     4→  "pipeline": {
+    13→}
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -603,9 +635,15 @@ website/next.config.js
      5→  },
      6→};
      8→const withNextra = require('nextra')({
-     9→  title: 'Sonner',
-    10→  theme: 'nextra-theme-docs',
-      →…
+website/package.json
+     2→  "name": "website",
+     3→  "version": "0.1.0",
+     4→  "scripts": {
+     9→  },
+    10→  "dependencies": {
+    29→  },
+    30→  "devDependencies": {
+    35→}
 website/src/components/CodeBlock/index.tsx
      1→import React from 'react';
      2→import Highlight, { defaultProps } from 'prism-react-renderer';
@@ -645,22 +683,6 @@ website/src/components/CodeBlock/index.tsx
     75→                  fill="none"
     76→                  shapeRendering="geometricPrecision"
     77→                >
-    78→                  <path d="M20 6L9 17l-5-5"></path>
-    79→                </svg>
-    80→              </motion.div>
-    81→            ) : (
-    82→              <motion.div animate="visible" exit="hidden" initial="hidden" key="copy" variants={variants}>
-    83→                <svg
-    84→                  viewBox="0 0 24 24"
-    85→                  width="14"
-    86→                  height="14"
-    87→                  stroke="currentColor"
-    88→                  strokeWidth="1.5"
-    89→                  strokeLinecap="round"
-    90→                  strokeLinejoin="round"
-    91→                  fill="none"
-    92→                  shapeRendering="geometricPrecision"
-    93→                >
       →…
 website/src/components/ExpandModes/index.tsx
      1→import { toast } from 'sonner';
@@ -694,20 +716,7 @@ website/src/components/ExpandModes/index.tsx
     30→        <button
     31→          data-active={!expand}
     32→          className="button"
-    33→          onClick={() => {
-    34→            toast('Event has been created', {
-    35→              description: 'Monday, January 3rd at 6:00pm',
-    36→            });
-    37→            setExpand(false);
-    38→          }}
-    39→        >
-    40→          Default
-    41→        </button>
-    42→      </div>
-    43→      <CodeBlock>{`<Toaster expand={${expand}} />`}</CodeBlock>
-    44→    </div>
-    45→  );
-    46→};
+      →…
 website/src/components/Footer/index.tsx
      1→import Image from 'next/image';
      2→import emil from 'public/emil.jpeg';
@@ -826,9 +835,6 @@ website/src/components/Installation/index.tsx
     43→                    fill="none"
     44→                    shapeRendering="geometricPrecision"
     45→                  >
-    46→                    <path d="M20 6L9 17l-5-5"></path>
-    47→                  </svg>
-    48→                </motion.div>
       →…
 website/src/components/Other/Other.tsx
      1→import React from 'react';
@@ -985,6 +991,19 @@ website/src/pages/_app.tsx
     13→    </>
     14→  );
     15→}
+website/src/pages/_meta.json
+     2→  "getting-started": {
+     5→  },
+     6→  "-- API": {
+     9→  },
+    10→  "toast": {
+    13→  },
+    14→  "toaster": {
+    17→  },
+    18→  "-- More": {
+    21→  },
+    22→  "styling": {
+    26→}
 website/src/pages/index.tsx
      1→import React, { StrictMode } from 'react';
      2→import { Toaster } from 'sonner';
@@ -1037,3 +1056,9 @@ website/theme.config.jsx
      9→      titleTemplate: '%s – Sonner',
     10→    };
     11→  },
+website/tsconfig.json
+     2→  "compilerOptions": {
+    26→  },
+    27→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+    28→  "exclude": ["node_modules"]
+    29→}

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3866 words)
+budget: 4000 (3887 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -121,8 +121,6 @@ README.md
    236→  // Default: 'left'
    237→  textAlign?: 'left' | 'center' | 'right'
    238→
-   239→  // Virtual keyboard appearance on mobile
-   240→  // Default: 'numeric'
       →…
    293→## Examples
    298→```tsx
@@ -201,8 +199,6 @@ apps/storybook/README.md
     33→    yarn
     34→    ```
     35→
-    36→1.  **Open the source code and start editing!**
-    37→
       →…
     44→## 🔎 What's inside?
     46→A quick look at the top-level files and directories included with this template.
@@ -226,8 +222,6 @@ apps/storybook/README.md
     64→
     65→3.  **`public`**: This directory will contain the development and production build of the site.
     66→
-    67→4.  **`src`**: This directory will contain all of the code related to what you will see on your application.
-    68→
       →…
     83→## Contribute
     85→If you encounter an issue with the template, we encourage you to open an issue in this template's repository.
@@ -236,6 +230,31 @@ apps/storybook/README.md
     89→1. Read our introductory tutorial at [Learn Storybook](https://storybook.js.org/tutorials/intro-to-storybook/react/en/get-started/).
     90→2. Learn how to transform your component libraries into design systems in our [Design Systems for Developers](https://storybook.js.org/tutorials/design-systems-for-developers/) tutorial.
     91→3. See our official documentation at [Storybook](https://storybook.js.org/).
+apps/storybook/components.json
+     2→  "$schema": "https://ui.shadcn.com/schema.json",
+     3→  "style": "new-york",
+     4→  "rsc": true,
+     5→  "tsx": true,
+     6→  "tailwind": {
+    12→  },
+    13→  "aliases": {
+    17→}
+apps/storybook/package.json
+     2→  "name": "storybook",
+     3→  "private": true,
+     4→  "version": "0.2.0",
+     5→  "type": "module",
+     6→  "repository": {
+     9→  },
+    10→  "bugs": {
+    12→  },
+    13→  "license": "MIT",
+    14→  "dependencies": {
+    23→  },
+    24→  "scripts": {
+    28→  },
+    29→  "devDependencies": {
+    51→}
 apps/storybook/src/components/ui/input-otp.tsx
      3→import * as React from "react"
      4→import { DashIcon } from "@radix-ui/react-icons"
@@ -254,17 +273,9 @@ apps/storybook/src/lib/utils.ts
 apps/storybook/src/stories/Button.stories.ts
      1→import { Button } from './Button';
     14→export const Primary = {
-    15→  args: {
-      →…
     21→export const Secondary = {
-    22→  args: {
-      →…
     27→export const Large = {
-    28→  args: {
-      →…
     34→export const Small = {
-    35→  args: {
-      →…
 apps/storybook/src/stories/Button.tsx
      1→import React from 'react';
      2→import PropTypes from 'prop-types';
@@ -289,13 +300,22 @@ apps/storybook/src/stories/InputOTP.stories.tsx
      1→import { InputOTP, InputOTPGroup, InputOTPSlot } from "../components/ui/input-otp"
      2→import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
      4→const meta = {
-     5→  title: "ui/InputOTP",
-      →…
     27→type Story = StoryObj<typeof meta>
     29→export const Default: Story = {}
 apps/storybook/tailwind.config.js
      1→/** @type {import('tailwindcss').Config} */
      2→const config = {
+apps/storybook/tsconfig.json
+     2→  "compilerOptions": {
+    21→  },
+    22→  "include": ["src"],
+    23→  "references": [{ "path": "./tsconfig.node.json" }]
+    24→}
+apps/storybook/tsconfig.node.json
+     2→  "compilerOptions": {
+     7→  },
+     8→  "include": ["vite.config.ts"]
+     9→}
 apps/storybook/vite.config.js
      1→import { defineConfig } from 'vite'
      2→import react from '@vitejs/plugin-react'
@@ -329,6 +349,15 @@ apps/test/README.md
 apps/test/next.config.mjs
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {};
+apps/test/package.json
+     2→  "name": "test",
+     3→  "private": true,
+     4→  "scripts": {
+     9→  },
+    10→  "dependencies": {
+    17→  },
+    18→  "devDependencies": {
+    30→}
 apps/test/playwright.config.ts
 apps/test/src/app/base/page.tsx
      3→import * as React from 'react'
@@ -365,17 +394,12 @@ apps/test/src/app/with-on-complete/page.tsx
      7→export default function Page() {
      8→  const [disabled, setDisabled] = React.useState(false)
      9→
-    10→  return (
       →…
 apps/test/src/components/base-input.tsx
      6→export function BaseOTPInput(
      7→  overrideProps: Partial<React.ComponentProps<typeof OTPInput>> = {},
      8→) {
      9→  const [value, setValue] = React.useState('')
-    10→  const [disabled, setDisabled] = React.useState(false)
-    11→
-    12→  return (
-    13→    <OTPInput
       →…
 apps/test/src/lib/fonts.ts
     10→export const fontSans = GeistSans
@@ -401,6 +425,12 @@ apps/test/src/tests/with-on-complete.spec.ts
      2→import { modifier } from './util/modifier'
 apps/test/tailwind.config.ts
      3→const config: Config = {
+apps/test/tsconfig.json
+     2→  "compilerOptions": {
+    23→  },
+    24→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+    25→  "exclude": ["node_modules"]
+    26→}
 apps/website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -433,11 +463,30 @@ apps/website/README.md
     34→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     35→
     36→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+apps/website/components.json
+     2→  "$schema": "https://ui.shadcn.com/schema.json",
+     3→  "style": "default",
+     4→  "rsc": true,
+     5→  "tsx": true,
+     6→  "tailwind": {
+    12→  },
+    13→  "aliases": {
+    17→}
 apps/website/next.config.mjs
      1→import { withHydrationOverlay } from '@builder.io/react-hydration-overlay/next'
      3→/** @type {import('next').NextConfig} */
      4→const nextProdConfig = {}
      6→const nextDevConfig = withHydrationOverlay({
+apps/website/package.json
+     2→  "name": "website",
+     3→  "version": "0.1.0",
+     4→  "private": true,
+     5→  "scripts": {
+    10→  },
+    11→  "dependencies": {
+    36→  },
+    37→  "devDependencies": {
+    48→}
 apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
      3→import * as React from 'react'
      5→import { Button } from '@/components/ui/button'
@@ -590,14 +639,6 @@ apps/website/src/app/(local-pages)/shadcn/page.tsx
     28→            </InputOTPGroup>
     29→            <InputOTPSeparator />
     30→            <InputOTPGroup>
-    31→              {slots.slice(3).map((slot, index) => (
-    32→                <InputOTPRenderSlot key={index} {...slot} />
-    33→              ))}
-    34→            </InputOTPGroup>
-    35→          </>
-    36→        )}
-    37→      />
-    38→      
       →…
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
      3→import {
@@ -650,7 +691,6 @@ apps/website/src/app/(pages)/(home)/_components/confetti.tsx
      9→  }
     10→}) {
     11→  return (
-    12→    <VFX
       →…
 apps/website/src/app/(pages)/(home)/_components/showcase.tsx
      3→import React, { useMemo } from 'react'
@@ -670,7 +710,6 @@ apps/website/src/app/(pages)/(home)/_components/showcase.tsx
     20→
     21→  const inputRef = React.useRef<HTMLInputElement>(null)
     22→
-    23→  React.useEffect(() => {
       →…
    151→function Slot(props: {
    152→  char: string | null
@@ -783,7 +822,6 @@ apps/website/src/components/code.tsx
      7→import { CopyButton } from './copy-button'
      9→export async function Code({
     10→  code,
-    11→  toCopy,
       →…
     36→async function highlightCode(code: string, dark: boolean) {
 apps/website/src/components/copy-button.tsx
@@ -800,10 +838,9 @@ apps/website/src/components/copy-button.tsx
     20→}
     22→export async function copyToClipboardWithMeta(value: string) {
     23→  window && window.isSecureContext && navigator.clipboard.writeText(value)
-    24→}
+      →…
     26→export function CopyButton({
     27→  value,
-    28→  className,
       →…
     64→interface CopyWithClassNamesProps extends DropdownMenuTriggerProps {
     65→  value: string
@@ -812,7 +849,6 @@ apps/website/src/components/copy-button.tsx
     68→}
     70→export function CopyWithClassNames({
     71→  value,
-    72→  classNames,
       →…
    120→interface CopyNpmCommandButtonProps extends DropdownMenuTriggerProps {
    121→  commands: {
@@ -824,7 +860,6 @@ apps/website/src/components/copy-button.tsx
    127→}
    129→export function CopyNpmCommandButton({
    130→  commands,
-   131→  className,
       →…
 apps/website/src/components/icons.tsx
      1→type IconProps = React.HTMLAttributes<SVGElement>
@@ -837,12 +872,10 @@ apps/website/src/components/icons.tsx
      9→        y1="128"
     10→        x2="128"
     11→        y2="208"
-    12→        fill="none"
       →…
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {
     16→  const { setTheme } = useTheme()
-    17→
       →…
 apps/website/src/components/page-header.tsx
      1→import { cn } from "../lib/utils"
@@ -853,13 +886,11 @@ apps/website/src/components/page-header.tsx
 apps/website/src/components/provider.tsx
      5→export function AppProvider({
      6→  children,
-     7→  ...props
       →…
 apps/website/src/components/site-footer.tsx
      1→import { siteConfig } from "../config/site"
      3→export function SiteFooter() {
      4→  return (
-     5→    <footer className="py-6 md:px-8 md:py-0">
       →…
 apps/website/src/components/site-header.tsx
      3→import { siteConfig } from "../config/site"
@@ -869,58 +900,25 @@ apps/website/src/components/site-header.tsx
      7→import { ModeToggle } from "./mode-toggle"
      9→export function SiteHeader() {
     10→  return (
-    11→    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       →…
 apps/website/src/components/ui/badge.tsx
-     6→const badgeVariants = cva(
     26→export interface BadgeProps
     27→  extends React.HTMLAttributes<HTMLDivElement>,
     28→    VariantProps<typeof badgeVariants> {}
     30→function Badge({ className, variant, ...props }: BadgeProps) {
-    31→  return (
-      →…
 apps/website/src/components/ui/button.tsx
      5→import { cn } from "../../lib/utils"
-     7→const buttonVariants = cva(
     36→export interface ButtonProps
     37→  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     38→    VariantProps<typeof buttonVariants> {
     39→  asChild?: boolean
     40→}
-    42→const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 apps/website/src/components/ui/dropdown-menu.tsx
-     9→const DropdownMenu = DropdownMenuPrimitive.Root
-    11→const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
-    13→const DropdownMenuGroup = DropdownMenuPrimitive.Group
-    15→const DropdownMenuPortal = DropdownMenuPrimitive.Portal
-    17→const DropdownMenuSub = DropdownMenuPrimitive.Sub
-    19→const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup
-    21→const DropdownMenuSubTrigger = React.forwardRef<
-    43→const DropdownMenuSubContent = React.forwardRef<
-    59→const DropdownMenuContent = React.forwardRef<
-    77→const DropdownMenuItem = React.forwardRef<
-    95→const DropdownMenuCheckboxItem = React.forwardRef<
-   119→const DropdownMenuRadioItem = React.forwardRef<
-   141→const DropdownMenuLabel = React.forwardRef<
-   159→const DropdownMenuSeparator = React.forwardRef<
    171→const DropdownMenuShortcut = ({
-   172→  className,
-      →…
 apps/website/src/components/ui/input-otp.tsx
-     9→const InputOTP = React.forwardRef<
-    25→const InputOTPGroup = React.forwardRef<
-    33→type InputOTPSlotProps = { index: number }
-    34→const InputOTPSlot = React.forwardRef<
-    63→const InputOTPRenderSlot = React.forwardRef<
-    90→const InputOTPSeparator = React.forwardRef<
 apps/website/src/components/ui/scroll-area.tsx
-     8→const ScrollArea = React.forwardRef<
-    26→const ScrollBar = React.forwardRef<
 apps/website/src/components/ui/sonner.tsx
-     6→type ToasterProps = React.ComponentProps<typeof Sonner>
      8→const Toaster = ({ ...props }: ToasterProps) => {
-     9→  const { theme = 'system' } = useTheme()
-      →…
 apps/website/src/config/site.ts
      1→export const siteConfig = {
      2→  name: 'rodz/input-otp',
@@ -946,6 +944,57 @@ apps/website/src/lib/utils.ts
 apps/website/tailwind.config.ts
      1→import type { Config } from 'tailwindcss'
      3→const config = {
+apps/website/tsconfig.json
+     2→  "compilerOptions": {
+    29→  },
+    30→  "include": [
+    36→  ],
+    37→  "exclude": [
+    40→}
+package.json
+     2→  "name": "root",
+     3→  "private": true,
+     4→  "author": "Guilherme Rodz <g@rodz.dev>",
+     5→  "description": "One-time password input component for React.",
+     6→  "homepage": "https://input-otp.rodz.dev/",
+     7→  "workspaces": [
+    10→  ],
+    11→  "scripts": {
+    30→  },
+    31→  "prettier": {
+    40→  },
+    41→  "trustedDependencies": [
+    43→  ],
+    44→  "devDependencies": {
+    60→}
+packages/input-otp/package.json
+     2→  "name": "input-otp",
+     3→  "version": "1.4.2",
+     4→  "author": "Guilherme Rodz <g@rodz.dev>",
+     5→  "description": "One-time password input component for React.",
+     6→  "license": "MIT",
+     7→  "homepage": "https://input-otp.rodz.dev/",
+     8→  "repository": {
+    12→  },
+    13→  "bugs": {
+    15→  },
+    16→  "keywords": [
+    21→  ],
+    22→  "main": "./dist/index.js",
+    23→  "module": "./dist/index.mjs",
+    24→  "types": "./dist/index.d.ts",
+    25→  "files": [
+    27→  ],
+    28→  "exports": {
+    37→  },
+    38→  "scripts": {
+    54→  },
+    55→  "eslintConfig": {
+   110→  },
+   111→  "devDependencies": {
+   117→  },
+   118→  "peerDependencies": {
+   122→}
 packages/input-otp/src/input.tsx
      3→import * as React from 'react'
      5→import { syncTimeouts } from './sync-timeouts'
@@ -964,8 +1013,6 @@ packages/input-otp/src/input.tsx
     20→      textAlign = 'left',
     21→      pattern,
     22→      placeholder,
-    23→      inputMode = 'numeric',
-    24→      onComplete,
       →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
@@ -975,8 +1022,6 @@ packages/input-otp/src/input.tsx
    545→  }
    546→}
    553→const NOSCRIPT_CSS_FALLBACK = `
-   554→[data-input-otp] {
-      →…
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
      2→export const REGEXP_ONLY_CHARS = '^[a-zA-Z]+$'
@@ -1005,10 +1050,6 @@ packages/input-otp/src/types.ts
     14→  React.InputHTMLAttributes<HTMLInputElement>,
     15→  {
     16→    value?: string
-    17→    onChange?: (newValue: string) => unknown
-    18→
-    19→    maxLength: number
-    20→
       →…
     32→type InputOTPRenderFn = (props: RenderProps) => React.ReactNode
     33→export type OTPInputProps = OTPInputBaseProps &
@@ -1038,8 +1079,6 @@ packages/input-otp/src/use-pwm-badge.tsx
      5→const PWM_BADGE_SPACE_WIDTH_PX = 40
      6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
      8→const PASSWORD_MANAGERS_SELECTORS = [
-     9→  '[data-lastpass-icon-root]', // LastPass
-      →…
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,
@@ -1064,15 +1103,18 @@ packages/input-otp/src/use-pwm-badge.tsx
     36→    }
     37→
     38→    const increaseWidthCase =
-    39→      (pushPasswordManagerStrategy === 'increase-width' ||
-    40→        // TODO: remove 'experimental-no-flickering' support in 2.0.0
-    41→        pushPasswordManagerStrategy === 'experimental-no-flickering') &&
-    42→      hasPWMBadge &&
-    43→      hasPWMBadgeSpace
-    44→
-    45→    return increaseWidthCase
-    46→  }, [hasPWMBadge, hasPWMBadgeSpace, pushPasswordManagerStrategy])
-    47→
       →…
+packages/input-otp/tsconfig.json
+     2→  "compilerOptions": {
+    11→  },
+    12→  "include": ["src"]
+    13→}
 packages/input-otp/tsup.config.ts
      1→import { defineConfig } from 'tsup';
+pnpm-workspace.yaml
+     1→packages …
+turbo.json
+     2→  "extends": ["//"],
+     3→  "$schema": "https://turbo.build/schema.json",
+     4→  "pipeline": {
+    36→}

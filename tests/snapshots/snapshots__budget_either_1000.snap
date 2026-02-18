@@ -2,8 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (977 words)
+budget: 1000 (969 words)
 
+Cargo.toml
+     1→[package …
+    20→[dependencies …
+    23→[features …
+    28→[dev-dependencies …
+    31→[package.metadata.release …
+    36→[package.metadata.docs.rs …
+    39→[package.metadata.playground …
 src/into_either.rs
      4→use super::{Either, Left, Right};
      6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
@@ -83,12 +91,6 @@ src/lib.rs
     65→/// ```
     66→/// use either::Either;
     67→///
-    68→/// fn length(owned_or_borrowed: Either<String, &'static str>) -> usize {
-    69→///     either::for_both!(owned_or_borrowed, s => s.len())
-    70→/// }
-    71→///
-    72→/// fn main() {
-    73→///     let borrowed = Either::Right("Hello world!");
       →…
     81→macro_rules! for_both {
     90→/// Macro for unwrapping the left side of an [`Either`], which fails early
@@ -103,12 +105,6 @@ src/lib.rs
     99→/// ```
    100→/// use either::{Either, Left, Right};
    101→///
-   102→/// fn twice(wrapper: Either<u32, &str>) -> Either<u32, &str> {
-   103→///     let value = either::try_left!(wrapper);
-   104→///     Left(value * 2)
-   105→/// }
-   106→///
-   107→/// fn main() {
       →…
    113→macro_rules! try_left {
    122→/// Dual to [`try_left!`], see its documentation for more information.
@@ -215,7 +211,14 @@ src/lib.rs
   1539→    fn check_array_ref<T: AsRef<[Item]>, Item>() {}
   1540→    fn check_array_mut<T: AsMut<[Item]>, Item>() {}
   1541→
-      →…
+  1542→    fn propagate_array_ref<T1: AsRef<[Item]>, T2: AsRef<[Item]>, Item>() {
+  1543→        check_array_ref::<Either<T1, T2>, _>()
+  1544→    }
+  1545→
+  1546→    fn propagate_array_mut<T1: AsMut<[Item]>, T2: AsMut<[Item]>, Item>() {
+  1547→        check_array_mut::<Either<T1, T2>, _>()
+  1548→    }
+  1549→}
   1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {
   1554→    check_t!(::std::path::Path);

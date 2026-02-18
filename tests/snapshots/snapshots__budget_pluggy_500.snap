@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (461 words)
+budget: 500 (463 words)
 
 AGENTS.md
      1→# AGENTS.md …
@@ -11,6 +11,9 @@ CLAUDE.md
     34→### Main Components …
 SECURITY.md
      1→# Security …
+codecov.yml
+     1→coverage …
+     7→comment …
 docs/conf.py
      1→from importlib import metadata
      2→from typing import TYPE_CHECKING
@@ -21,11 +24,9 @@ docs/conf.py
    109→
    110→    import sphinx.util.logging
    111→
-   112→    class WarnLogFilter(logging.Filter):
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
-docs/examples/eggsample/eggsample/__init__.py
 docs/examples/eggsample/eggsample/hookspecs.py
      8→def eggsample_add_ingredients(ingredients: tuple):
     17→def eggsample_prep_condiments(condiments: dict):
@@ -40,40 +41,45 @@ docs/examples/eggsample-spam/eggsample_spam.py
      5→def eggsample_add_ingredients(ingredients):
     14→@eggsample.hookimpl
     15→def eggsample_prep_condiments(condiments):
-docs/examples/eggsample-spam/setup.py
 docs/examples/toy-example.py
-     1→import pluggy
      8→class MySpec:
     10→
-    11→    @hookspec
     12→    def myhook(self, arg1, arg2):
     16→class Plugin_1:
     18→
-    19→    @hookimpl
     20→    def myhook(self, arg1, arg2):
     25→class Plugin_2:
     27→
-    28→    @hookimpl
     29→    def myhook(self, arg1, arg2):
+pyproject.toml
+     1→[build-system …
+     8→[project …
+    38→[dependency-groups …
+    43→[tool.setuptools …
+    49→[tool.ruff.lint …
+    57→[tool.ruff.lint.extend-per-file-ignores …
+    61→[tool.ruff.lint.isort …
+    69→[tool.setuptools_scm …
+    71→[tool.uv …
+    74→[tool.towncrier …
+    82→  [[tool.towncrier.type …
+    87→  [[tool.towncrier.type …
+    92→  [[tool.towncrier.type …
+    97→  [[tool.towncrier.type …
+   102→  [[tool.towncrier.type …
+   107→  [[tool.towncrier.type …
+   112→[tool.mypy …
 scripts/release.py
 scripts/towncrier-draft-to-file.py
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
-     3→    "PluginManager",
-     4→    "PluginValidationError",
       →…
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
 src/pluggy/_hooks.py
-    28→_T …
-    29→_F …
-    31→_Namespace …
-    32→_Plugin …
-    33→_HookExec …
-    37→_HookImplFunction …
     40→class HookspecOpts(TypedDict):
     42→
       →…
@@ -90,13 +96,11 @@ src/pluggy/_hooks.py
    172→
    173→    __slots__ = ("project_name",)
    174→
-   290→_PYPY …
    358→@final
    359→class HookRelay:
    362→
    363→    __slots__ = ("__dict__",)
    364→
-   377→_CallHistory …
    382→class HookCaller:
    384→
    419→    # TODO: Document, or make private.
@@ -151,8 +155,6 @@ src/pluggy/_hooks.py
    708→
 src/pluggy/_manager.py
     33→    import importlib.metadata
-    36→_BeforeTrace …
-    37→_AfterTrace …
     52→class PluginValidationError(Exception):
     58→
     65→class DistFacade:
@@ -162,7 +164,6 @@ src/pluggy/_manager.py
     83→class PluginManager:
     99→
 src/pluggy/_result.py
-    16→_ExcInfo …
     20→class HookCallError(Exception):
     24→@final
     25→class Result(Generic[ResultType]):
@@ -189,10 +190,5 @@ src/pluggy/_warnings.py
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"
-testing/benchmark.py
-testing/conftest.py
 testing/test_hookcaller.py
     34→class AddMeth:
-testing/test_multicall.py
-testing/test_pluginmanager.py
-testing/test_tracer.py

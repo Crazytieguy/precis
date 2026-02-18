@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1931 words)
+budget: 2000 (1929 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -10,6 +10,12 @@ CHANGELOG.md
      5→## [0.4.29] - 2025-12-02 …
      7→## What's Changed …
     19→## What's Changed …
+Cargo.toml
+     1→[package …
+    19→[package.metadata.docs.rs …
+    22→[features …
+    56→[dependencies …
+    62→[dev-dependencies …
 README.md
      1→log
      4→A Rust library providing a lightweight logging *facade*.
@@ -67,10 +73,6 @@ README.md
     73→    * [`structured-logger`](https://docs.rs/structured-logger/latest/structured_logger/)
     74→    * [`clang_log`](https://docs.rs/clang_log/latest/clang_log)
     75→    * [`ftail`](https://docs.rs/ftail/latest/ftail/)
-    76→* Complex configurable frameworks:
-    77→    * [`log4rs`](https://docs.rs/log4rs/*/log4rs/)
-    78→    * [`logforth`](https://docs.rs/logforth/*/logforth/)
-    79→    * [`fern`](https://docs.rs/fern/*/fern/)
       →…
    106→## Structured logging
    108→If you enable the `kv` feature, you can associate structured data with your log records:
@@ -438,7 +440,6 @@ src/lib.rs
   1489→        INITIALIZING,
   1490→        Ordering::Acquire,
   1491→        Ordering::Relaxed,
-  1492→    ) {
       →…
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///
@@ -496,6 +497,10 @@ src/serde.rs
      9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
     11→use std::fmt;
     12→use std::str::{self, FromStr};
+test_max_level_features/Cargo.toml
+     1→[package …
+     7→[[bin …
+    11→[dependencies.log …
 test_max_level_features/main.rs
      1→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
      2→use std::sync::{Arc, Mutex};
@@ -522,9 +527,6 @@ test_max_level_features/main.rs
 tests/integration.rs
      3→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
      6→struct State {
-     7→    last_log_level: Mutex<Option<Level>>,
-     8→    last_log_location: Mutex<Option<u32>>,
-     9→}
     11→struct Logger(Arc<State>);
     13→impl Log for Logger {
     62→fn test_filter …
@@ -537,3 +539,5 @@ tests/macros.rs
    421→    Some,
    422→    None,
    423→}
+triagebot.toml
+     1→[assign …

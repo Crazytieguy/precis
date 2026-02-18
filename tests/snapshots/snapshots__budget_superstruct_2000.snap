@@ -2,12 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1968 words)
+budget: 2000 (1980 words)
 
 Changelog.md
-     1→# Changelog
-     3→This document maintains a list of major changes to Superstruct with each new release.
-     4→
+     1→# Changelog …
 Readme.md
     42→### Usage …
    145→### Why? …
@@ -173,6 +171,41 @@ docs/summary.md
     25→- [Links](./resources/links.md)
 examples/README.md
      1→# Examples …
+examples/package.json
+     2→  "type": "module",
+     3→  "license": "MIT",
+     4→  "dependencies": {
+    10→}
+jsr.json
+     2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
+     3→  "name": "@superstruct/core",
+     4→  "version": "2.0.2",
+     5→  "exports": "./src/index.ts",
+     6→  "publish": {
+     9→}
+package.json
+     2→  "name": "superstruct",
+     3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
+     4→  "version": "2.0.2",
+     5→  "license": "MIT",
+     6→  "repository": "git://github.com/ianstormtaylor/superstruct.git",
+     7→  "type": "module",
+     8→  "main": "./dist/index.cjs",
+     9→  "module": "./dist/index.mjs",
+    10→  "types": "./dist/index.d.ts",
+    11→  "sideEffects": false,
+    12→  "files": [
+    14→  ],
+    15→  "publishConfig": {
+    17→  },
+    18→  "engines": {
+    20→  },
+    21→  "devDependencies": {
+    37→  },
+    38→  "scripts": {
+    53→  },
+    54→  "keywords": [
+    85→}
 rollup.config.js
      1→import { defineConfig } from 'rollup'
      2→import typescript from '@rollup/plugin-typescript'
@@ -423,6 +456,11 @@ test/index.ts
      3→ */
      4→
      5→export function test<T>(fn: (x: unknown) => T) {}
+test/tsconfig.json
+     2→  "extends": "../tsconfig.json",
+     3→  "include": ["./**/*.ts"],
+     4→  "compilerOptions": {
+     7→}
 test/typings/infer.ts
      4→const Struct = object()
      5→type T = Infer<typeof Struct>
@@ -472,14 +510,8 @@ test/validation/function/valid.ts
      7→export const output = data
 test/validation/instance/invalid.ts
      1→import { instance } from '../../../src'
-     3→export const Struct = instance(Array)
-     5→export const data = false
-     7→export const failures = [
 test/validation/instance/valid.ts
      1→import { instance } from '../../../src'
-     3→export const Struct = instance(Array)
-     5→export const data = [1]
-     7→export const output = [1]
 test/validation/integer/invalid-decimal.ts
 test/validation/integer/invalid.ts
 test/validation/integer/valid.ts
@@ -492,14 +524,8 @@ test/validation/lazy/valid.ts
 test/validation/lazy/with-refiners.ts
 test/validation/literal/invalid.ts
      1→import { literal } from '../../../src'
-     3→export const Struct = literal(42)
-     5→export const data = false
-     7→export const failures = [
 test/validation/literal/valid.ts
      1→import { literal } from '../../../src'
-     3→export const Struct = literal(42)
-     5→export const data = 42
-     7→export const output = 42
 test/validation/max/invalid-exclusive.ts
 test/validation/max/invalid.ts
 test/validation/max/valid-inclusive.ts
@@ -515,16 +541,8 @@ test/validation/never/invalid.ts
      7→export const failures = [
 test/validation/number/invalid.ts
      1→import { number } from '../../../src'
-     3→export const Struct = number()
-     5→export const data = 'invalid'
-     7→export const failures = [
 test/validation/number/valid.ts
      1→import { number } from '../../../src'
-     3→export const Struct = number()
-     5→export const data = 42
-     7→export const output = 42
-test/validation/object/invalid-referential.ts
-test/validation/object/valid-referential.ts
 test/validation/pattern/invalid.ts
 test/validation/pattern/valid.ts
 test/validation/refine/invalid-multiple-refinements.ts
@@ -551,3 +569,7 @@ test/validation/type/valid-instance.ts
 test/validation/unknown/valid-number.ts
 test/validation/unknown/valid-string.ts
 test/validation/unknown/valid-undefined.ts
+tsconfig.json
+     2→  "include": ["./src/**/*.ts"],
+     3→  "compilerOptions": {
+    17→}

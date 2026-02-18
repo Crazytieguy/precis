@@ -2,8 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (480 words)
+budget: 500 (486 words)
 
+FUNDING.yml
+     1→github …
 README.md
      5→## Usage
      7→To start using the library, install it in your project:
@@ -15,13 +17,13 @@ README.md
       →…
     31→## Documentation
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
-playwright.config.ts
+package.json
+pnpm-workspace.yaml
+     1→packages …
 src/assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     78→export const CloseIcon = (
-    79→  <svg
-      →…
 src/hooks.tsx
      3→export const useIsDocumentHidden = () => {
 src/index.tsx
@@ -51,32 +53,31 @@ src/types.ts
    184→export enum SwipeStateTypes {
    192→export interface ToastToDismiss {
 test/README.md
-test/src/app/action.tsx
 test/src/app/layout.tsx
      1→export const metadata = {
-test/src/app/page.tsx
-test/tests/basic.spec.ts
+tsconfig.json
+turbo.json
 website/README.md
-     3→## Getting Started
-     5→First, run the development server:
-     6→
-      →…
-    25→## Learn More
-    27→To learn more about Next.js, take a look at the following resources:
-    28→
-      →…
-    34→## Deploy on Vercel
-    36→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-    37→
-      →…
+     3→## Getting Started …
+    25→## Learn More …
+    34→## Deploy on Vercel …
 website/next.config.js
      2→const nextConfig = {
      8→const withNextra = require('nextra')({
+website/package.json
+     2→  "name": "website",
+     3→  "version": "0.1.0",
+     4→  "scripts": {
+     9→  },
+    10→  "dependencies": {
+    29→  },
+    30→  "devDependencies": {
+    35→}
 website/src/components/CodeBlock/index.tsx
      7→import styles from './code-block.module.css';
      9→const variants = {
     14→const theme = {
-    48→export const CodeBlock = ({ children, initialHeight = 0 }: { children: string; initialHeight?: number }) => {
+    48→export const CodeBlock …
 website/src/components/ExpandModes/index.tsx
      1→import { toast } from 'sonner';
      2→import { CodeBlock } from '../CodeBlock';
@@ -125,18 +126,32 @@ website/src/components/Position/index.tsx
       →…
 website/src/components/Types/Types.tsx
      3→import { CodeBlock } from '../CodeBlock';
-     5→const promiseCode …
      7→export const Types = () => {
-    34→const allTypes …
 website/src/components/Usage/index.tsx
      1→import { CodeBlock } from '../CodeBlock';
      3→export const Usage = () => {
-     4→  return (
-     5→    <div>
-      →…
 website/src/pages/_app.tsx
      7→export default function Nextra({ Component, pageProps }: AppProps): ReactElement {
+website/src/pages/_meta.json
+     2→  "getting-started": {
+     5→  },
+     6→  "-- API": {
+     9→  },
+    10→  "toast": {
+    13→  },
+    14→  "toaster": {
+    17→  },
+    18→  "-- More": {
+    21→  },
+    22→  "styling": {
+    26→}
 website/src/pages/index.tsx
     14→export default function Home() {
 website/theme.config.jsx
      7→  useNextSeoProps() {
+website/tsconfig.json
+     2→  "compilerOptions": {
+    26→  },
+    27→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+    28→  "exclude": ["node_modules"]
+    29→}

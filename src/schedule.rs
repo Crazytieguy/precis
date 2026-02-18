@@ -400,8 +400,13 @@ pub fn build_groups(
             // Detect documentation from layout
             let is_documented = layout.doc_start < sym_line_0;
 
+            let lang = crate::Lang::from_path(relative);
             let heading_depth = if kind_category == KindCategory::Section {
-                Some(detect_heading_depth(&lines, sym_line_0, sym.end_line))
+                if matches!(lang, Some(crate::Lang::Json | crate::Lang::Toml | crate::Lang::Yaml)) {
+                    Some(1) // Config file keys are all top-level
+                } else {
+                    Some(detect_heading_depth(&lines, sym_line_0, sym.end_line))
+                }
             } else {
                 None
             };

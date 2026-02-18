@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3950 words)
+budget: 4000 (3956 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -64,20 +64,14 @@ README-es.md
     11→## Usage
     13→Install it.
     14→
-    15→```sh
-    16→npm install dotenv --save
       →…
     39→## Advanced
     43→Import with [ES6](#how-do-i-use-dotenv-with-import):
     44→
-    45→```javascript
-    46→import 'dotenv/config'
       →…
    319→## Agentes
    323→> El software está cambiando, y dotenv debe cambiar con él—por eso construí [agentic secret storage (AS2)](https://dotenvx.com/as2). Los agentes ejecutan código sin humanos en la terminal, por lo que los archivos `.env` en texto plano son el primitivo equivocado.
    324→>
-   325→> AS2 está diseñado para software autónomo: cifrado por defecto, cero acceso a consola y entrega priorizando la criptografía que mantiene a los operadores fuera del circuito.
-   326→>
       →…
    331→### Inicio rápido
    333→Instala vestauth e inicializa tu agente.
@@ -85,19 +79,14 @@ README-es.md
    335→```bash
    336→npm i -g vestauth
    337→
-   338→vestauth agent init
       →…
    357→## FAQ
    361→No.
    362→
-   363→Unless you encrypt it with [dotenvx](https://github.com/dotenvx/dotenvx). Then we recommend you do.
-   364→
       →…
    579→## Docs
    581→Dotenv exposes four functions:
    582→
-   583→* `config`
-   584→* `parse`
       →…
    587→### Config
    589→`config` will read your `.env` file, parse the contents, assign it to
@@ -105,7 +94,6 @@ README-es.md
    591→and return an Object with a `parsed` key containing the loaded content or an `error` key if it failed.
    592→
    593→```js
-   594→const result = dotenv.config()
       →…
    605→#### Options …
    607→##### path
@@ -144,7 +132,6 @@ README-es.md
    696→an Object with the parsed keys and values.
    697→
    698→```js
-   699→const dotenv = require('dotenv')
       →…
    705→#### Options …
    707→##### debug
@@ -163,7 +150,6 @@ README-es.md
    725→For example, customizing the source:
    726→
    727→```js
-   728→const dotenv = require('dotenv')
       →…
    748→#### options …
    750→##### Debug
@@ -178,12 +164,11 @@ README-es.md
    764→## CHANGELOG
    766→See [CHANGELOG.md](CHANGELOG.md)
    767→
-   768→&nbsp;
-   769→
+      →…
    770→## Who's using dotenv?
    772→[These npm modules depend on it.](https://www.npmjs.com/browse/depended/dotenv)
    773→
-   774→Projects that expand it often use the [keyword "dotenv" on npm](https://www.npmjs.com/search?q=keywords:dotenv).
+      →…
 README.md
      1→# dotenv
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
@@ -896,6 +881,30 @@ lib/main.js
    418→  decrypt,
    419→  parse,
       →…
+package.json
+     2→  "name": "dotenv",
+     3→  "version": "17.3.1",
+     4→  "description": "Loads environment variables from .env file",
+     5→  "main": "lib/main.js",
+     6→  "types": "lib/main.d.ts",
+     7→  "exports": {
+    20→  },
+    21→  "scripts": {
+    29→  },
+    30→  "repository": {
+    33→  },
+    34→  "homepage": "https://github.com/motdotla/dotenv#readme",
+    35→  "funding": "https://dotenvx.com",
+    36→  "keywords": [
+    44→  ],
+    45→  "readmeFilename": "README.md",
+    46→  "license": "BSD-2-Clause",
+    47→  "devDependencies": {
+    55→  },
+    56→  "engines": {
+    58→  },
+    59→  "browser": {
+    62→}
 tests/test-config-cli.js
      6→function spawn (cmd, options = {}) {
      7→  const { stdout } = cp.spawnSync(
@@ -944,7 +953,7 @@ tests/test-parse-multiline.js
     53→bTdfHN8CmQr2iDJC0C6zY8YV93oZB3x0zC/LPbRYpF8f6OqX1lZj5vo2zJZy4fI/
     54→kKcI5jHYc8VJq+KCuRZrvn+3V+KuL9tF9v8ZgjF2PZbU+LsCy5Yqg1M8f5Jp5f6V
     55→u4QuUoobAgMBAAE=
-    56→-----END PUBLIC KEY-----`
+      →…
     59→const payload = dotenv.parse(Buffer.from('BUFFER=true'))
     62→const expectedPayload = { SERVER: 'localhost', PASSWORD: 'password', DB: 'tests' }
     64→const RPayload = dotenv.parse(Buffer.from('SERVER=localhost\rPASSWORD=password\rDB=tests\r'))
@@ -964,7 +973,13 @@ tests/types/test.ts
      1→import { config, parse } from "dotenv";
      3→const env = config();
      4→const dbUrl: string | null =
+     5→  env.error || !env.parsed ? null : env.parsed["BASIC"];
     15→const parsed = parse("NODE_ENV=production\nDB_HOST=a.b.c");
     16→const dbHost: string = parsed["DB_HOST"];
     18→const parsedFromBuffer = parse(Buffer.from("JUSTICE=league\n"));
     19→const justice: string = parsedFromBuffer["JUSTICE"];
+tests/types/tsconfig.json
+     2→  "compilerOptions": {
+    15→  },
+    16→  "include": ["./test.ts", "../../main.d.ts"]
+    17→}

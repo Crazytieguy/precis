@@ -2,10 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (943 words)
+budget: 1000 (942 words)
 
 CHANGELOG.md
      1→# Change Log …
+Cargo.toml
+     1→[package …
+    19→[package.metadata.docs.rs …
+    22→[features …
+    56→[dependencies …
+    62→[dev-dependencies …
 README.md
      1→log
      4→A Rust library providing a lightweight logging *facade*.
@@ -28,9 +34,6 @@ README.md
     37→```rust
     38→use log::{info, trace, warn};
     39→
-    40→pub fn shave_the_yak(yak: &mut Yak) {
-    41→    trace!("Commencing yak shaving");
-    42→
       →…
     58→### In executables
     60→In order to produce log output, executables have to use a logger implementation compatible with the facade.
@@ -40,6 +43,8 @@ README.md
     64→    * [`env_logger`](https://docs.rs/env_logger/*/env_logger/)
     65→    * [`colog`](https://docs.rs/colog/*/colog/)
     66→    * [`simple_logger`](https://docs.rs/simple_logger/*/simple_logger/)
+    67→    * [`simplelog`](https://docs.rs/simplelog/*/simplelog/)
+    68→    * [`pretty_env_logger`](https://docs.rs/pretty_env_logger/*/pretty_env_logger/)
       →…
    106→## Structured logging
    108→If you enable the `kv` feature, you can associate structured data with your log records:
@@ -198,13 +203,11 @@ src/lib.rs
    475→pub enum Level {
    476→    /// The "error" level.
    477→    ///
-   478→    /// Designates very serious errors.
       →…
    516→    type Err = ParseLevelError;
    636→pub enum LevelFilter {
    637→    /// A level lower than all log levels.
    638→    Off,
-   639→    /// Corresponds to the `Error` log level.
       →…
    666→    type Err = ParseLevelError;
    781→enum MaybeStaticStr<'a> {
@@ -216,7 +219,6 @@ src/lib.rs
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
    844→    args: fmt::Arguments<'a>,
-   845→    module_path: Option<MaybeStaticStr<'a>>,
       →…
    858→struct KeyValues<'a>(&'a dyn kv::Source);
   1003→pub struct RecordBuilder<'a> {
@@ -225,7 +227,7 @@ src/lib.rs
   1158→pub struct Metadata<'a> {
   1159→    level: Level,
   1160→    target: &'a str,
-  1161→}
+      →…
   1200→pub struct MetadataBuilder<'a> {
   1201→    metadata: Metadata<'a>,
   1202→}
@@ -253,6 +255,10 @@ src/serde.rs
      5→    Visitor,
      6→};
      9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
+test_max_level_features/Cargo.toml
+     1→[package …
+     7→[[bin …
+    11→[dependencies.log …
 test_max_level_features/main.rs
      1→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
      2→use std::sync::{Arc, Mutex};
@@ -283,3 +289,5 @@ tests/macros.rs
    421→    Some,
    422→    None,
    423→}
+triagebot.toml
+     1→[assign …

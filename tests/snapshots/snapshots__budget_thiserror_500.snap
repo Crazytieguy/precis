@@ -4,6 +4,13 @@ expression: output
 ---
 budget: 500 (478 words)
 
+Cargo.toml
+     1→[package …
+    14→[features …
+    30→[dependencies …
+    33→[dev-dependencies …
+    39→[workspace …
+    42→[package.metadata.docs.rs …
 README.md
      1→derive(Error) …
     21→## Example …
@@ -21,15 +28,15 @@ build/probe.rs
     21→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     26→impl Error for MyError {
     27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
+build.rs
+impl/Cargo.toml
+     1→[package …
+    11→[lib …
+    14→[dependencies …
+    19→[package.metadata.docs.rs …
 impl/src/ast.rs
-    10→pub enum Input<'a> {
-    15→pub struct Struct<'a> {
-    22→pub struct Enum<'a> {
-    29→pub struct Variant<'a> {
-    36→pub struct Field<'a> {
     45→pub enum ContainerKind {
 impl/src/attr.rs
-    11→pub struct Attrs<'a> {
     21→pub struct Display<'a> {
     33→pub struct Source<'a> {
     39→pub struct From<'a> {
@@ -43,8 +50,6 @@ impl/src/fmt.rs
    171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
 impl/src/generics.rs
-     8→pub struct ParamsInScope<'a> {
-    48→pub struct InferredBounds {
 impl/src/lib.rs
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
@@ -61,6 +66,8 @@ impl/src/unraw.rs
     12→pub struct IdentUnraw(Ident);
     82→pub enum MemberUnraw {
 impl/src/valid.rs
+rust-toolchain.toml
+     1→[toolchain …
 src/aserror.rs
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
@@ -135,13 +142,17 @@ src/provide.rs
 src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
      6→    fn fmt …
+tests/no-std/Cargo.toml
 tests/no-std/test.rs
      6→pub enum Error {
     13→pub struct SourceError {
 tests/test_backtrace.rs
 tests/test_display.rs
+tests/test_expr.rs
+    56→fn assert …
 tests/test_generics.rs
 tests/test_lints.rs
      5→pub use std::error::Error;
 tests/test_option.rs
+tests/ui/concat-display.rs
 tests/ui/fallback-impl-with-display.rs

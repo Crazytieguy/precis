@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (494 words)
+budget: 500 (495 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -37,10 +37,7 @@ Readme.md
       →…
   1164→## Support …
 Readme_zh-CN.md
-     1→# Commander.js
-     8→完整的 [node.js](http://nodejs.org) 命令行解决方案。
-     9→
-      →…
+     1→# Commander.js …
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
@@ -114,12 +111,17 @@ lib/option.js
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
+package-support.json
+package.json
 tests/command.createArgument.test.js
 tests/command.createOption.test.js
 tests/esm-imports-test.mjs
      1→../esm.mjs …
 tests/ts-imports.test.ts
      1→../ …
+tsconfig.js.json
+tsconfig.json
+tsconfig.ts.json
 typings/index.d.ts
     12→type LiteralUnion …
     16→export class CommanderError extends Error {

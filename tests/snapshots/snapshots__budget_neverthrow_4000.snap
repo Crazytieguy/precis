@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3903 words)
+budget: 4000 (3938 words)
 
 CHANGELOG.md
      1→# neverthrow …
@@ -305,6 +305,32 @@ README.md
   1680→
   1681→### License
   1683→The neverthrow project is available as open source under the terms of the [MIT license](https://github.com/supermacro/neverthrow/blob/master/LICENSE).
+package.json
+     2→  "name": "neverthrow",
+     3→  "version": "8.2.0",
+     4→  "description": "Stop throwing errors, and instead return Results!",
+     5→  "main": "dist/index.cjs.js",
+     6→  "module": "dist/index.es.js",
+     7→  "types": "dist/index.d.ts",
+     8→  "files": [
+    10→  ],
+    11→  "scripts": {
+    23→  },
+    24→  "repository": {
+    27→  },
+    28→  "author": "Giorgio Delgado",
+    29→  "license": "MIT",
+    30→  "bugs": {
+    32→  },
+    33→  "homepage": "https://github.com/supermacro/neverthrow#readme",
+    34→  "devDependencies": {
+    52→  },
+    53→  "keywords": [
+    58→  ],
+    59→  "engines": {
+    62→  },
+    63→  "optionalDependencies": {
+    66→}
 rollup.config.mjs
      1→import typescript from "rollup-plugin-typescript2";
      2→import dts from "rollup-plugin-dts";
@@ -760,45 +786,19 @@ src/result.ts
    723→  : Result<ExtractOkTypes<T>, ExtractErrTypes<T>[number][]>
 tests/index.test.ts
      1→import * as td from 'testdouble'
-     3→import {
-     4→  err,
-     5→  Err,
-     6→  errAsync,
-     7→  fromAsyncThrowable,
-     8→  fromPromise,
-     9→  fromSafePromise,
-    10→  fromThrowable,
-    11→  ok,
-    12→  Ok,
-    13→  okAsync,
-    14→  Result,
-    15→  ResultAsync,
-    16→} from '../src'
+     3→../src …
     18→import { vitest, describe, expect, it } from 'vitest'
 tests/safe-try.test.ts
-     1→import {
-     2→  safeTry,
-     3→  ok,
-     4→  okAsync,
-     5→  err,
-     6→  errAsync,
-     7→  Ok,
-     8→  Err,
-     9→  Result,
-    10→  ResultAsync,
-    11→} from "../src"
+     1→../src …
     13→import { describe, expect, test } from 'vitest'
+tests/tsconfig.tests.json
+     2→  "compilerOptions": {
+    22→  },
+    23→  "include": [
+    27→}
 tests/typecheck-tests.ts
-     7→import {
-     8→  err,
-     9→  errAsync,
-    10→  fromSafePromise,
-    11→  ok,
-    12→  okAsync,
-    13→  Result,
-    14→  ResultAsync,
-    15→} from '../src'
-    16→import { safeTry, Transpose } from '../src/result'
+     7→../src …
+    16→import { safeTry, Transpose } from '../src/result …
     17→import { type N, Test } from 'ts-toolbelt'
     19→type CreateTuple<L, V = string> =
     20→  // Length must always be a number
@@ -816,3 +816,10 @@ tests/typecheck-tests.ts
     32→          : never
     33→    : never;
   2607→const input = <T>(): T => 123 as any
+tsconfig.json
+     2→  "compilerOptions": {
+    23→  },
+    24→  "include": [
+    26→  ],
+    27→  "exclude": [
+    31→}

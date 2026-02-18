@@ -2,15 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (464 words)
+budget: 500 (465 words)
 
+Cargo.toml
 README.md
      1→# mdBook …
     14→## License …
+crates/mdbook-compare/Cargo.toml
 crates/mdbook-compare/README.md
      1→# mdbook-compare …
 crates/mdbook-compare/src/main.rs
      3→use std::path::Path;
+crates/mdbook-core/Cargo.toml
 crates/mdbook-core/README.md
      1→# mdbook-core …
     11→## License …
@@ -20,9 +23,6 @@ crates/mdbook-core/src/config.rs
     46→use crate::static_regex;
    718→trait Updateable …
 crates/mdbook-core/src/lib.rs
-     3→/// The current version of `mdbook`.
-     4→///
-      →…
      7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
     14→pub mod errors {
     15→    pub use anyhow::{Error, Result};
@@ -30,6 +30,7 @@ crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
     13→pub use self::html::{escape_html, escape_html_attribute};
     17→macro_rules! static_regex {
+crates/mdbook-driver/Cargo.toml
 crates/mdbook-driver/README.md
      1→# mdbook-driver …
     11→## License …
@@ -52,11 +53,10 @@ crates/mdbook-driver/src/lib.rs
     69→pub mod init;
 crates/mdbook-driver/src/mdbook.rs
     29→pub struct MDBook {
+crates/mdbook-html/Cargo.toml
 crates/mdbook-html/README.md
      1→# mdbook-html …
     11→## License …
-crates/mdbook-html/src/html/tokenizer.rs
-    22→    type Handle = ();
 crates/mdbook-html/src/html/tree.rs
     25→macro_rules! attr_qual_name {
    131→    fn into_tendril(self) -> StrTendril;
@@ -77,6 +77,7 @@ crates/mdbook-html/src/theme/mod.rs
 crates/mdbook-html/src/utils.rs
      3→use std::collections::HashSet;
     42→pub(crate) trait ToUrlPath {
+crates/mdbook-markdown/Cargo.toml
 crates/mdbook-markdown/README.md
      1→# mdbook-markdown …
     11→## License …
@@ -89,6 +90,7 @@ crates/mdbook-markdown/src/lib.rs
       →…
     34→    fn default() -> MarkdownOptions {
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
+crates/mdbook-preprocessor/Cargo.toml
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor …
     11→## License …
@@ -96,6 +98,7 @@ crates/mdbook-preprocessor/src/lib.rs
      8→use anyhow::Context;
     30→pub trait Preprocessor {
     51→pub struct PreprocessorContext {
+crates/mdbook-renderer/Cargo.toml
 crates/mdbook-renderer/README.md
      1→# mdbook-renderer …
     11→## License …
@@ -103,6 +106,7 @@ crates/mdbook-renderer/src/lib.rs
      8→use anyhow::Context;
     28→pub trait Renderer {
     40→pub struct RenderContext {
+crates/mdbook-summary/Cargo.toml
 crates/mdbook-summary/README.md
      1→# mdbook-summary …
     11→## License …
@@ -115,12 +119,15 @@ crates/mdbook-summary/src/lib.rs
    122→pub enum SummaryItem {
    173→struct SummaryParser<'a> {
    190→macro_rules! collect_events {
+crates/xtask/Cargo.toml
 crates/xtask/README.md
      1→# xtask …
 crates/xtask/src/changelog.rs
      3→use super::Result;
 crates/xtask/src/main.rs
      3→use std::collections::BTreeMap;
+guide/book.toml
+guide/guide-helper/Cargo.toml
 guide/guide-helper/src/lib.rs
      3→use mdbook_preprocessor::book::Book;
      9→/// Preprocessing entry point.
@@ -128,9 +135,7 @@ guide/guide-helper/src/lib.rs
 guide/guide-helper/src/main.rs
      3→fn main() {
 guide/src/README.md
-     1→# Introduction
-     4→    .mdbook-version {
-      →…
+     1→# Introduction …
 guide/src/cli/README.md
      1→# Command-line tool …
 guide/src/continuous-integration.md
@@ -142,14 +147,12 @@ guide/src/format/README.md
      1→# Format …
 guide/src/format/configuration/README.md
      1→# Configuration …
-guide/src/format/markdown.md
 guide/src/format/mdbook.md
      3→## Hiding code lines …
 guide/src/format/theme/README.md
      1→# Theme …
 guide/src/guide/README.md
      1→# User guide …
-src/cmd/build.rs
 src/cmd/clean.rs
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     45→#[derive(Debug)]
@@ -170,7 +173,6 @@ src/cmd/mod.rs
 src/cmd/serve.rs
      3→use super::watch;
     20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
-src/cmd/test.rs
 src/cmd/watch/native.rs
     11→pub fn rebuild_on_change …
 src/cmd/watch/poller.rs
@@ -184,3 +186,8 @@ src/main.rs
      5→use anyhow::anyhow;
     14→mod cmd;
     58→fn create_clap_command() -> Command {
+triagebot.toml
+     2→[assign …
+     5→[shortcut …
+     8→[bot-pull-requests …
+    11→[range-diff …

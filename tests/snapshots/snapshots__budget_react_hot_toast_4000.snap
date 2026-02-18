@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3912 words)
+budget: 4000 (3923 words)
 
 README.md
     28→## Features
@@ -44,6 +44,39 @@ README.md
     69→
     70→## Documentation
     72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
+package.json
+     2→  "name": "react-hot-toast",
+     3→  "description": "Smoking hot React Notifications. Lightweight, customizable and beautiful by default.",
+     4→  "version": "2.6.0",
+     5→  "author": "Timo Lins",
+     6→  "license": "MIT",
+     7→  "repository": "timolins/react-hot-toast",
+     8→  "keywords": [
+    13→  ],
+    14→  "main": "dist/index.js",
+    15→  "types": "dist/index.d.ts",
+    16→  "exports": {
+    28→  },
+    29→  "files": [
+    33→  ],
+    34→  "engines": {
+    36→  },
+    37→  "scripts": {
+    44→  },
+    45→  "husky": {
+    49→  },
+    50→  "prettier": {
+    56→  },
+    57→  "size-limit": [
+    74→  ],
+    75→  "devDependencies": {
+    94→  },
+    95→  "dependencies": {
+    98→  },
+    99→  "peerDependencies": {
+   102→  },
+   103→  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
+   104→}
 site/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -364,6 +397,14 @@ site/next.config.mjs
     33→      },
     34→    ];
     35→  },
+site/package.json
+     2→  "name": "site",
+     3→  "scripts": {
+     7→  },
+     8→  "dependencies": {
+    24→  },
+    25→  "devDependencies": {
+    35→}
 site/pages/_app.tsx
      1→import '../styles/tailwind-utils.css';
      2→import '../styles/main.css';
@@ -488,6 +529,13 @@ site/pages/index.tsx
    143→            />
    144→          </div>
       →…
+site/tsconfig.json
+     2→  "compilerOptions": {
+    21→  },
+    22→  "include": [
+    31→  ],
+    32→  "exclude": [
+    35→}
 site/types/svg.d.ts
      1→interface SvgrComponent
      2→  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
@@ -743,28 +791,6 @@ src/core/store.ts
     24→      type: ActionType.ADD_TOAST;
     25→      toast: Toast;
     26→    }
-    27→  | {
-    28→      type: ActionType.UPSERT_TOAST;
-    29→      toast: Toast;
-    30→    }
-    31→  | {
-    32→      type: ActionType.UPDATE_TOAST;
-    33→      toast: Partial<Toast>;
-    34→    }
-    35→  | {
-    36→      type: ActionType.DISMISS_TOAST;
-    37→      toastId?: string;
-    38→    }
-    39→  | {
-    40→      type: ActionType.REMOVE_TOAST;
-    41→      toastId?: string;
-    42→    }
-    43→  | {
-    44→      type: ActionType.START_PAUSE;
-    45→      time: number;
-    46→    }
-    47→  | {
-    48→      type: ActionType.END_PAUSE;
       →…
     52→interface ToasterState {
     53→  toasts: Toast[];
@@ -802,8 +828,6 @@ src/core/store.ts
     87→      });
     88→
     89→    case ActionType.DISMISS_TOAST:
-    90→      const { toastId } = action;
-    91→
       →…
    136→const listeners: Array<
    137→  [toasterId: string, reducer: (state: ToasterState) => void]
@@ -841,11 +865,7 @@ src/core/store.ts
    176→  [key in ToastType]: number;
    177→} = {
    178→  blank: 4000,
-   179→  error: 4000,
-   180→  success: 2000,
-   181→  loading: Infinity,
-   182→  custom: 4000,
-   183→};
+      →…
    185→export const useStore = (
    186→  toastOptions: DefaultToastOptions = {},
    187→  toasterId: string = DEFAULT_TOASTER_ID
@@ -877,8 +897,6 @@ src/core/store.ts
    213→      t.removeDelay ||
    214→      toastOptions[t.type]?.removeDelay ||
    215→      toastOptions?.removeDelay,
-   216→    duration:
-   217→      t.duration ||
       →…
 src/core/toast.ts
      1→import {
@@ -1056,28 +1074,18 @@ src/core/use-toaster.ts
     36→  useEffect(() => {
     37→    if (pausedAt) {
     38→      return;
-    39→    }
-    40→
       →…
 src/core/utils.ts
      1→export const genId = (() => {
      2→  let count = 0;
      3→  return () => {
      4→    return (++count).toString();
-     5→  };
-     6→})();
+      →…
      8→export const prefersReducedMotion = (() => {
      9→  // Cache result
     10→  let shouldReduceMotion: boolean | undefined = undefined;
     11→
-    12→  return () => {
-    13→    if (shouldReduceMotion === undefined && typeof window !== 'undefined') {
-    14→      const mediaQuery = matchMedia('(prefers-reduced-motion: reduce)');
-    15→      shouldReduceMotion = !mediaQuery || mediaQuery.matches;
-    16→    }
-    17→    return shouldReduceMotion;
-    18→  };
-    19→})();
+      →…
 src/headless/index.ts
      1→import { toast } from '../core/toast';
 src/index.ts
@@ -1102,6 +1110,10 @@ test/toast.test.tsx
     32→  });
     33→};
     35→const TOAST_DURATION = 1000;
+tsconfig.json
+     3→  "include": ["src", "types", "test"],
+     4→  "compilerOptions": {
+    33→}
 tsup.config.ts
      1→import { defineConfig, Options } from 'tsup';
      2→import { minifyTemplates, writeFiles } from 'esbuild-minify-templates';

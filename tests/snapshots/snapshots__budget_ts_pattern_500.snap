@@ -31,6 +31,7 @@ README.md
   1627→It's particularly useful when validating an API response.
   1628→
       →…
+benchmarks/package.json
 docs/roadmap.md
 docs/v3-to-v4-migration-guide.md
      1→# TS-Pattern v3 to v4 Migration Guide …
@@ -51,7 +52,8 @@ docs/v4-to-v5-migration-guide.md
     63→# New features …
     65→## chainable methods …
 examples/gif-fetcher/src/searchGif.ts
-     6→export function searchGif(query: string) {
+jsr.json
+package.json
 src/errors.ts
      1→/**
      2→ * Error when the given input value does not match any included pattern
@@ -145,3 +147,5 @@ src/types/helpers.ts
    267→  input: unknown;
    268→  output: unknown;
    269→}
+tests/tsconfig.json
+tsconfig.json

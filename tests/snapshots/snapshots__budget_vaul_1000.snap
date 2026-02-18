@@ -2,10 +2,43 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (992 words)
+budget: 1000 (991 words)
 
+FUNDING.yml
+     1→github …
+package.json
+     2→  "name": "vaul",
+     3→  "version": "1.1.2",
+     4→  "description": "Drawer component for React.",
+     5→  "main": "./dist/index.js",
+     6→  "module": "./dist/index.mjs",
+     7→  "types": "./dist/index.d.ts",
+     8→  "files": [
+    11→  ],
+    12→  "exports": {
+    21→  },
+    22→  "scripts": {
+    30→  },
+    31→  "keywords": [
+    36→  ],
+    37→  "author": "Emil Kowalski <e@emilkowal.ski>",
+    38→  "license": "MIT",
+    39→  "homepage": "https://vaul.emilkowal.ski/",
+    40→  "repository": {
+    43→  },
+    44→  "bugs": {
+    46→  },
+    47→  "devDependencies": {
+    60→  },
+    61→  "peerDependencies": {
+    64→  },
+    65→  "packageManager": "pnpm@8.8.0",
+    66→  "dependencies": {
+    69→}
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
+pnpm-workspace.yaml
+     1→packages …
 src/browser.ts
      1→export function isMobileFirefox …
     10→export function isMac …
@@ -24,6 +57,7 @@ src/constants.ts
     16→export const WINDOW_TOP_OFFSET = 26;
     18→export const DRAG_CLASS = 'vaul-dragging';
 src/context.ts
+     1→import React from 'react';
      4→interface DrawerContextValue {
      5→  drawerRef: React.RefObject<HTMLDivElement>;
      6→  overlayRef: React.RefObject<HTMLDivElement>;
@@ -60,25 +94,10 @@ src/index.tsx
      4→import React from 'react';
     27→export interface WithFadeFromProps {
     28→  /**
-    29→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
-    30→   * Should go from least visible. Example `[0.2, 0.5, 0.8]`.
-    31→   * You can also use px values, which doesn't take screen height into account.
-    32→   */
-    33→  snapPoints: (number | string)[];
-    34→  /**
-    35→   * Index of a `snapPoint` from which the overlay fade should be applied. Defaults to the last snap point.
-    36→   */
-    37→  fadeFromIndex: number;
-    38→}
+      →…
     40→export interface WithoutFadeFromProps {
     41→  /**
-    42→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
-    43→   * Should go from least visible. Example `[0.2, 0.5, 0.8]`.
-    44→   * You can also use px values, which doesn't take screen height into account.
-    45→   */
-    46→  snapPoints?: (number | string)[];
-    47→  fadeFromIndex?: never;
-    48→}
+      →…
     50→export type DialogProps = {
    139→export function Root({
    140→  open: openProp,
@@ -112,6 +131,7 @@ src/types.ts
      5→}
      7→export type AnyFunction = (...args: any) => any;
 src/use-composed-refs.ts
+     3→import * as React from 'react';
      5→type PossibleRef<T> = React.Ref<T> | undefined;
      7→/**
       →…
@@ -123,12 +143,14 @@ src/use-composed-refs.ts
       →…
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 src/use-controllable-state.ts
+     3→import React from 'react';
      5→type UseControllableStateParams<T> = {
     11→type SetStateFn<T> = (prevState?: T) => T;
     13→function useCallbackRef …
     24→function useUncontrolledState …
     39→export function useControllableState …
 src/use-position-fixed.ts
+     1→import React from 'react';
      6→/**
      7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
      8→ * I won't get into too much detail about what bugs it solves, but so far I've found that setting the body to `position: fixed` is the most reliable way to prevent those bugs.
@@ -149,6 +171,7 @@ src/use-position-fixed.ts
     23→  isOpen: boolean;
       →…
 src/use-prevent-scroll.ts
+     3→import { useEffect, useLayoutEffect } from 'react';
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
@@ -181,9 +204,11 @@ src/use-prevent-scroll.ts
    272→function scrollIntoView …
    294→export function isInput …
 src/use-scale-background.ts
+     1→import React, { useMemo } from 'react';
      6→const noop …
      8→export function useScaleBackground …
 src/use-snap-points.ts
+     1→import React from 'react';
      7→export function useSnapPoints …
 test/README.md
      3→## Getting Started …
@@ -191,6 +216,7 @@ test/README.md
     30→## Deploy on Vercel …
 test/next.config.js
      2→const nextConfig = {
+test/package.json
 test/src/app/controlled/page.tsx
      6→export default function Page() {
 test/src/app/default-open/page.tsx
@@ -232,7 +258,6 @@ test/src/app/with-snap-points/page.tsx
      9→export default function Page() {
 test/src/app/without-scaled-background/page.tsx
      6→export default function Page() {
-test/tailwind.config.ts
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;
 test/tests/helpers.ts
@@ -241,3 +266,13 @@ test/tests/helpers.ts
 test/tests/initial-snap.spec.ts
      8→const snapPointYPositions = {
     15→const snapTo …
+test/tsconfig.json
+tsconfig.json
+     2→  "compilerOptions": {
+     9→  },
+    10→  "include": ["src"],
+    11→}
+turbo.json
+     2→  "$schema": "https://turbo.build/schema.json",
+     3→  "pipeline": {
+    12→}

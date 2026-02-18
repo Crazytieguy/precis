@@ -2,12 +2,83 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2829 words)
+budget: 4000 (3048 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
      9→  .map((file) => `./${file}`)
+.github/ISSUE_TEMPLATE/bug.yml
+     3→name …
+     4→description …
+     5→title …
+     6→labels …
+     8→body …
+.github/ISSUE_TEMPLATE/config.yml
+     3→blank_issues_enabled …
+.github/actions/create-check/action.yml
+     3→name …
+     4→inputs …
+    13→outputs …
+    16→runs …
+.github/actions/install-latest-npm/action.yml
+     3→name …
+     4→description …
+     5→inputs …
+     9→runs …
+.github/dependabot.yml
+     3→version …
+     5→updates …
+.github/matchers/tap.json
+     2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
+     3→  "problemMatcher": [
+    32→}
+.github/settings.yml
+     3→repository …
+    13→branches …
+.github/workflows/audit.yml
+     3→name …
+     5→on …
+    11→permissions …
+    14→jobs …
+.github/workflows/ci-release.yml
+     3→name …
+     5→on …
+    21→permissions …
+    25→jobs …
+.github/workflows/ci.yml
+     3→name …
+     5→on …
+    15→permissions …
+    18→jobs …
+.github/workflows/codeql-analysis.yml
+     3→name …
+     5→on …
+    16→permissions …
+    19→jobs …
+.github/workflows/post-dependabot.yml
+     3→name …
+     5→on …
+     7→permissions …
+    10→jobs …
+.github/workflows/pull-request.yml
+     3→name …
+     5→on …
+    13→permissions …
+    16→jobs …
+.github/workflows/release-integration.yml
+     3→name …
+     5→on …
+    22→permissions …
+    26→jobs …
+.github/workflows/release.yml
+     3→name …
+     5→on …
+    10→permissions …
+    15→jobs …
+.release-please-manifest.json
+     2→  ".": "6.0.0"
+     3→}
 CHANGELOG.md
      1→# Changelog …
      3→## [6.0.0](https://github.com/npm/ini/compare/v5.0.0...v6.0.0) (2025-10-22) …
@@ -576,6 +647,36 @@ lib/ini.js
    269→  }
    270→  return val
    271→}
+package.json
+     2→  "author": "GitHub Inc.",
+     3→  "name": "ini",
+     4→  "description": "An ini encoder/decoder for node",
+     5→  "version": "6.0.0",
+     6→  "repository": {
+     9→  },
+    10→  "main": "lib/ini.js",
+    11→  "scripts": {
+    20→  },
+    21→  "devDependencies": {
+    25→  },
+    26→  "license": "ISC",
+    27→  "files": [
+    30→  ],
+    31→  "engines": {
+    33→  },
+    34→  "templateOSS": {
+    38→  },
+    39→  "tap": {
+    45→}
+release-please-config.json
+     2→  "group-pull-request-title-pattern": "chore: release ${version}",
+     3→  "pull-request-title-pattern": "chore: release${component} ${version}",
+     4→  "changelog-sections": [
+    30→  ],
+    31→  "packages": {
+    35→  },
+    36→  "prerelease-type": "pre.0"
+    37→}
 test/duplicate-properties.js
      3→const test = tap.test
      7→const fixture = path.resolve(__dirname, './fixtures/duplicate.ini')

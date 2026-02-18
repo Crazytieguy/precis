@@ -4,18 +4,28 @@ expression: output
 ---
 budget: 1000 (924 words)
 
+Cargo.toml
 README.md
      1→# mdBook
      7→mdBook is a utility to create modern online books from Markdown files.
      8→
       →…
     14→## License …
+crates/mdbook-compare/Cargo.toml
+     1→[package …
+     9→[dependencies …
+    11→[lints …
 crates/mdbook-compare/README.md
      1→# mdbook-compare …
 crates/mdbook-compare/src/main.rs
      3→use std::path::Path;
      4→use std::process::Command;
      6→macro_rules! error {
+crates/mdbook-core/Cargo.toml
+     1→[package …
+    10→[dependencies …
+    18→[dev-dependencies …
+    21→[lints …
 crates/mdbook-core/README.md
      1→# mdbook-core …
     11→## License
@@ -48,6 +58,11 @@ crates/mdbook-core/src/utils/mod.rs
     17→macro_rules! static_regex {
 crates/mdbook-core/src/utils/toml_ext.rs
      6→pub(crate) trait TomlExt {
+crates/mdbook-driver/Cargo.toml
+     1→[package …
+    10→[dependencies …
+    28→[lints …
+    31→[features …
 crates/mdbook-driver/README.md
      1→# mdbook-driver …
     11→## License
@@ -60,6 +75,7 @@ crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
 crates/mdbook-driver/src/builtin_preprocessors/index.rs
     12→pub struct IndexPreprocessor;
     16→    pub const NAME: &'static str = "index";
+crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
 crates/mdbook-driver/src/builtin_preprocessors/links.rs
     32→pub struct LinkPreprocessor;
     36→    pub const NAME: &'static str = "links";
@@ -70,19 +86,15 @@ crates/mdbook-driver/src/builtin_preprocessors/mod.rs
      5→pub use self::links::LinkPreprocessor;
 crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
     10→pub struct MarkdownRenderer;
-    14→    pub fn new() -> Self {
 crates/mdbook-driver/src/builtin_renderers/mod.rs
     11→pub use self::markdown_renderer::MarkdownRenderer;
     20→pub struct CmdRenderer {
     21→    name: String,
     22→    cmd: String,
     23→}
-    27→    pub fn new(name: String, cmd: String) -> CmdRenderer {
 crates/mdbook-driver/src/init.rs
      3→use super::MDBook;
     13→pub struct BookBuilder {
-    14→    root: PathBuf,
-      →…
 crates/mdbook-driver/src/lib.rs
      1→//! High-level library for running mdBook.
      2→//!
@@ -98,11 +110,9 @@ crates/mdbook-driver/src/mdbook/tests.rs
 crates/mdbook-driver/src/mdbook.rs
      3→use crate::builtin_preprocessors::{CmdPreprocessor, IndexPreprocessor, LinkPreprocessor};
     29→pub struct MDBook {
-    30→    /// The book's root directory.
-      →…
    397→struct OutputConfig {
-   426→const DEFAULT_PREPROCESSORS …
    435→struct PreprocessorConfig {
+crates/mdbook-html/Cargo.toml
 crates/mdbook-html/README.md
      1→# mdbook-html …
     11→## License
@@ -115,9 +125,6 @@ crates/mdbook-html/src/html/tree.rs
    126→type Attributes = IndexMap<QualName, StrTendril>;
    131→    fn into_tendril(self) -> StrTendril;
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
-    19→/// The HTML renderer for mdBook.
-    20→#[derive(Default)]
-    21→#[non_exhaustive]
     22→pub struct HtmlHandlebars;
     26→    pub fn new() -> Self {
    649→type CombinedRedirects …
@@ -140,16 +147,17 @@ crates/mdbook-html/src/theme/mod.rs
     40→pub struct Theme {
     41→    pub(crate) index: Vec<u8>,
       →…
-    66→    pub fn new …
-   166→    pub fn copy_theme …
    201→    fn default() -> Theme {
    229→fn load_file_contents …
 crates/mdbook-html/src/utils.rs
      3→use std::collections::HashSet;
     42→pub(crate) trait ToUrlPath {
     43→    fn to_url_path(&self) -> String;
-    46→impl ToUrlPath for Path {
     47→    fn to_url_path(&self) -> String {
+crates/mdbook-markdown/Cargo.toml
+     1→[package …
+    10→[dependencies …
+    15→[lints …
 crates/mdbook-markdown/README.md
      1→# mdbook-markdown …
     11→## License
@@ -161,9 +169,12 @@ crates/mdbook-markdown/src/lib.rs
     16→    /// Enables smart punctuation.
     17→    ///
       →…
-    33→impl Default for MarkdownOptions {
     34→    fn default() -> MarkdownOptions {
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
+crates/mdbook-preprocessor/Cargo.toml
+     1→[package …
+    10→[dependencies …
+    16→[lints …
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor …
     11→## License
@@ -176,6 +187,10 @@ crates/mdbook-preprocessor/src/lib.rs
     53→    pub root: PathBuf,
       →…
     68→impl PreprocessorContext {
+crates/mdbook-renderer/Cargo.toml
+     1→[package …
+    10→[dependencies …
+    16→[lints …
 crates/mdbook-renderer/README.md
      1→# mdbook-renderer …
     11→## License
@@ -185,6 +200,10 @@ crates/mdbook-renderer/src/lib.rs
     28→pub trait Renderer {
     40→pub struct RenderContext {
     63→impl RenderContext {
+crates/mdbook-summary/Cargo.toml
+     1→[package …
+    10→[dependencies …
+    18→[lints …
 crates/mdbook-summary/README.md
      1→# mdbook-summary …
     11→## License
@@ -201,6 +220,10 @@ crates/mdbook-summary/src/lib.rs
    141→    fn from(other: Link) -> SummaryItem {
    173→struct SummaryParser<'a> {
    190→macro_rules! collect_events {
+crates/xtask/Cargo.toml
+     1→[package …
+     9→[dependencies …
+    11→[lints …
 crates/xtask/README.md
      1→# xtask …
 crates/xtask/src/changelog.rs
@@ -211,15 +234,18 @@ crates/xtask/src/main.rs
 examples/nop-preprocessor.rs
      3→use crate::nop_lib::Nop;
     79→    pub struct Nop;
+guide/book.toml
+guide/guide-helper/Cargo.toml
+     1→[package …
+     9→[dependencies …
+    15→[lints …
 guide/guide-helper/src/lib.rs
      3→use mdbook_preprocessor::book::Book;
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
     33→struct GuideHelper;
-    35→impl Preprocessor for GuideHelper {
     36→    fn name …
     40→    fn run …
-    46→fn insert_version(book: &mut Book) {
 guide/guide-helper/src/main.rs
      3→fn main() {
 guide/src/404.md
@@ -240,6 +266,9 @@ guide/src/for_developers/README.md
      1→# For developers …
 guide/src/for_developers/backends.md
      1→# Alternative backends …
+guide/src/for_developers/mdbook-wordcount/Cargo.toml
+     1→[package …
+     6→[dependencies …
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     46→pub struct WordcountConfig {
     47→    pub ignores: Vec<String>,
@@ -300,11 +329,7 @@ src/cmd/watch/native.rs
     11→pub fn rebuild_on_change …
 src/cmd/watch/poller.rs
      7→use ignore::gitignore::Gitignore;
-    18→pub fn rebuild_on_change(
-    19→    book_dir: &Path,
-    20→    update_config: &dyn Fn(&mut MDBook),
-    21→    post_build: &dyn Fn(),
-    22→) {
+    18→pub fn rebuild_on_change …
     78→struct PathData {
     86→struct Watcher {
     95→impl Watcher {
@@ -318,7 +343,12 @@ src/cmd/watch.rs
 src/main.rs
      5→use anyhow::anyhow;
     14→mod cmd;
-    16→const VERSION: &str = concat!("v", clap::crate_version!());
+    16→const VERSION …
     58→fn create_clap_command() -> Command {
 tests/testsuite/README.md
      3→## Introduction …
+triagebot.toml
+     2→[assign …
+     5→[shortcut …
+     8→[bot-pull-requests …
+    11→[range-diff …

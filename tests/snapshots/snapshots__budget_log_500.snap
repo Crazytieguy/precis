@@ -4,6 +4,12 @@ expression: output
 ---
 budget: 500 (468 words)
 
+Cargo.toml
+     1→[package …
+    19→[package.metadata.docs.rs …
+    22→[features …
+    56→[dependencies …
+    62→[dev-dependencies …
 README.md
      1→log …
     19→## Minimum supported `rustc` …
@@ -40,15 +46,10 @@ src/kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
      7→}
-     9→#[derive(Debug)]
     10→enum Inner {
     11→    #[cfg(feature = "std")]
     12→    Boxed(std_support::BoxedError),
-    13→    Msg(&'static str),
-    14→    #[cfg(feature = "value-bag")]
-    15→    Value(crate::kv::value::inner::Error),
-    16→    Fmt,
-    17→}
+      →…
     73→    pub(super) type BoxedError …
 src/kv/key.rs
      3→use std::borrow::Borrow;
@@ -80,9 +81,6 @@ src/kv/value.rs
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
-   288→macro_rules! impl_to_value_primitive {
-   312→macro_rules! impl_to_value_nonzero_primitive {
-   336→macro_rules! impl_value_to_primitive {
    462→pub trait VisitValue<'v> {
    610→    use super::*;
    612→    pub use value_bag::ValueBag as Inner;
@@ -136,6 +134,10 @@ src/lib.rs
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 src/macros.rs
 src/serde.rs
+test_max_level_features/Cargo.toml
+     1→[package …
+     7→[[bin …
+    11→[dependencies.log …
 test_max_level_features/main.rs
      5→use log::set_boxed_logger;
      6→#[cfg(not(feature = "std"))]
@@ -150,3 +152,5 @@ test_max_level_features/main.rs
     18→    fn enabled(&self, _: &Metadata) -> bool {
     22→    fn log(&self, record: &Record) {
     26→    fn flush(&self) {}
+triagebot.toml
+     1→[assign …

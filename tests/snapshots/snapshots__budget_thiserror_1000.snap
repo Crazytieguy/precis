@@ -2,8 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (952 words)
+budget: 1000 (951 words)
 
+Cargo.toml
+     1→[package …
+    14→[features …
+    30→[dependencies …
+    33→[dev-dependencies …
+    39→[workspace …
+    42→[package.metadata.docs.rs …
 README.md
      1→derive(Error)
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/thiserror-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/thiserror)
@@ -45,6 +52,11 @@ build/probe.rs
     29→    }
 build.rs
     10→const PRIVATE: &str = "\
+impl/Cargo.toml
+     1→[package …
+    11→[lib …
+    14→[dependencies …
+    19→[package.metadata.docs.rs …
 impl/src/ast.rs
     10→pub enum Input<'a> {
     15→pub struct Struct<'a> {
@@ -109,9 +121,6 @@ impl/src/expand.rs
 impl/src/fallback.rs
 impl/src/fmt.rs
    166→struct FmtArguments {
-   167→    named: BTreeSet<IdentUnraw>,
-   168→    first_unnamed: Option<TokenStream>,
-   169→}
    171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
    173→    let ahead = input.fork();
@@ -140,21 +149,7 @@ impl/src/lib.rs
 impl/src/prop.rs
 impl/src/scan_expr.rs
      6→enum Input {
-     7→    Keyword(&'static str),
-     8→    Punct(&'static str),
-     9→    ConsumeAny,
-    10→    ConsumeBinOp,
-    11→    ConsumeBrace,
-    12→    ConsumeDelimiter,
-    13→    ConsumeIdent,
-    14→    ConsumeLifetime,
-      →…
     25→enum Action {
-    26→    SetState(&'static [(Input, Action)]),
-    27→    IncDepth,
-    28→    DecDepth,
-    29→    Finish,
-    30→}
 impl/src/unraw.rs
     10→#[derive(Clone)]
     11→#[repr(transparent)]
@@ -165,6 +160,8 @@ impl/src/unraw.rs
     84→    Unnamed(Index),
     85→}
 impl/src/valid.rs
+rust-toolchain.toml
+     1→[toolchain …
 src/aserror.rs
      1→use core::error::Error;
      2→use core::panic::UnwindSafe;
@@ -273,6 +270,10 @@ src/var.rs
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
      7→        Pointer::fmt(self.0, formatter)
      8→    }
+tests/no-std/Cargo.toml
+     1→[package …
+     8→[lib …
+    11→[dependencies …
 tests/no-std/test.rs
      3→use thiserror::Error;
      5→#[derive(Error, Debug)]
@@ -300,6 +301,8 @@ tests/test_error.rs
 tests/test_expr.rs
     55→#[track_caller]
     56→fn assert<T: Display>(expected: &str, value: T) {
+    57→    assert_eq!(expected, value.to_string());
+    58→}
 tests/test_from.rs
 tests/test_generics.rs
      7→pub struct NoFormat;

@@ -2,8 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3899 words)
+budget: 4000 (3897 words)
 
+Cargo.toml
+     1→[package …
+    14→[features …
+    18→[dependencies …
+    25→[dev-dependencies …
+    32→[package.metadata.docs.rs …
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/anyhow-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/anyhow)
@@ -71,14 +77,6 @@ README.md
     67→  mutable reference as needed.
     68→
     69→  ```rust
-    70→  // If the error was caused by redaction, then return a
-    71→  // tombstone instead of the content.
-    72→  match root_cause.downcast_ref::<DataStoreError>() {
-    73→      Some(DataStoreError::Censored(_)) => Ok(Poll::Ready(REDACTED_CONTENT)),
-    74→      None => Err(error),
-    75→  }
-    76→  ```
-    77→
       →…
    126→## No-std support
    128→In no_std mode, almost all of the same API is available and works the same way.
@@ -142,6 +140,8 @@ build.rs
     99→fn compile_probe(rustc_bootstrap: bool) -> bool {
    188→fn rustc_minor_version() -> Option<u32> {
    199→fn cargo_env_var(key: &str) -> OsString {
+rust-toolchain.toml
+     1→[toolchain …
 src/backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
      5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
@@ -579,6 +579,7 @@ src/lib.rs
    312→/// To print causes as well using anyhow's default formatting of causes, use the
    313→/// alternate selector "{:#}".
    314→///
+   315→/// ```console
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -684,6 +685,7 @@ src/lib.rs
    494→///     # }
    495→/// }
    496→///
+   497→/// pub fn do_it(mut it: ImportantThing) -> Result<Vec<u8>> {
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.
@@ -857,6 +859,11 @@ tests/common/mod.rs
      4→pub fn bail_literal() -> Result<()> {
      8→pub fn bail_fmt() -> Result<()> {
     12→pub fn bail_error() -> Result<()> {
+tests/crate/Cargo.toml
+     1→[package …
+     8→[lib …
+    11→[dependencies …
+    14→[features …
 tests/crate/test.rs
      3→pub use anyhow::*;
 tests/drop/mod.rs

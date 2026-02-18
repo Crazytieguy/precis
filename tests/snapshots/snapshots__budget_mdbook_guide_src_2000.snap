@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1955 words)
+budget: 2000 (1960 words)
 
 404.md
      1→# Document not found (404)
@@ -65,6 +65,12 @@ SUMMARY.md
     28→        - [Environment variables](format/configuration/environment-variables.md)
     29→    - [Theme](format/theme/README.md)
     30→        - [index.hbs](format/theme/index-hbs.md)
+    31→        - [Syntax highlighting](format/theme/syntax-highlighting.md)
+    32→        - [Editor](format/theme/editor.md)
+    33→    - [MathJax support](format/mathjax.md)
+    34→    - [mdBook-specific features](format/mdbook.md)
+    35→    - [Markdown](format/markdown.md)
+    36→- [Continuous integration](continuous-integration.md)
       →…
 cli/README.md
      1→# Command-line tool
@@ -172,6 +178,9 @@ for_developers/backends.md
    159→## Configuration …
    219→## Output and signalling failure …
    322→## Wrapping up …
+for_developers/mdbook-wordcount/Cargo.toml
+     1→[package …
+     6→[dependencies …
 for_developers/mdbook-wordcount/src/main.rs
      6→use std::process;
      7→use std::fs::{self, File};
@@ -351,15 +360,9 @@ format/theme/index-hbs.md
       →…
      9→## Data …
     41→## Handlebars helpers …
-    46→### toc
-    48→The toc helper is used like this
-      →…
-    80→### resource
-    82→The path to a static file.
-      →…
-    90→### fa
-    92→mdBook includes a copy of [Font Awesome Free's](https://fontawesome.com)
-      →…
+    46→### toc …
+    80→### resource …
+    90→### fa …
 format/theme/syntax-highlighting.md
      1→# Syntax highlighting
      3→mdBook uses [Highlight.js](https://highlightjs.org) with a custom theme

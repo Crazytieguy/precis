@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3931 words)
+budget: 4000 (3930 words)
 
 404.md
      1→# Document not found (404)
@@ -293,6 +293,9 @@ for_developers/backends.md
    159→## Configuration …
    219→## Output and signalling failure …
    322→## Wrapping up …
+for_developers/mdbook-wordcount/Cargo.toml
+     1→[package …
+     6→[dependencies …
 for_developers/mdbook-wordcount/src/main.rs
      6→use std::process;
      7→use std::fs::{self, File};
@@ -613,8 +616,7 @@ format/theme/editor.md
     30→}
     31→```
     32→
-    33→Note the new `Undo Changes` button in the editable playgrounds.
-    34→
+      →…
     35→## Customizing the editor
     37→By default, the editor is the [Ace](https://ace.c9.io/) editor, but, if desired,
     38→the functionality may be overridden by providing a different folder:
@@ -763,4 +765,5 @@ misc/contributors.md
      6→- [mdinger](https://github.com/mdinger)
      7→- Kevin ([kbknapp](https://github.com/kbknapp))
      8→- Steve Klabnik ([steveklabnik](https://github.com/steveklabnik))
+     9→- Adam Solove ([asolove](https://github.com/asolove))
       →…

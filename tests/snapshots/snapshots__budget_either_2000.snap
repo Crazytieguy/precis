@@ -2,8 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1968 words)
+budget: 2000 (1979 words)
 
+Cargo.toml
+     1→[package …
+    20→[dependencies …
+    23→[features …
+    28→[dev-dependencies …
+    31→[package.metadata.release …
+    36→[package.metadata.docs.rs …
+    39→[package.metadata.playground …
 src/into_either.rs
      4→use super::{Either, Left, Right};
      6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
@@ -383,9 +391,7 @@ src/lib.rs
   1268→            fn as_mut(&mut self) -> &mut $t {
   1269→                for_both!(self, inner => inner.as_mut())
   1270→            }
-  1271→        }
-  1272→    };
-  1273→}
+      →…
   1292→impl<L, R, Target> AsRef<[Target]> for Either<L, R>
   1293→where
   1294→    L: AsRef<[Target]>,

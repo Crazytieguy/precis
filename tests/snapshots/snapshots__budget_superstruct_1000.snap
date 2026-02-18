@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (985 words)
+budget: 1000 (998 words)
 
 Changelog.md
      1→# Changelog …
@@ -66,11 +66,7 @@ docs/reference/coercions.md
      1→# Coercions …
 docs/reference/core.md
      1→# Core …
-     3→### `assert`
-     5→`assert<T>(value: unknown, struct: Struct<T>, message?: string) => asserts value is T`
-     6→
-     7→```ts
-      →…
+     3→### `assert` …
 docs/reference/errors.md
      1→# Errors …
 docs/reference/refinements.md
@@ -80,11 +76,7 @@ docs/reference/types.md
 docs/reference/typescript.md
      1→# TypeScript …
      5→## Utilities …
-     7→### `Describe`
-     9→The `Describe` utility returns a type representing a struct for a given valid value type. This allows you to ensure you're writing your struct definitions properly, for example:
-    10→
-    11→```ts
-      →…
+     7→### `Describe` …
 docs/reference/utilities.md
      1→# Utilities …
 docs/resources/faq.md
@@ -123,18 +115,48 @@ docs/summary.md
     25→- [Links](./resources/links.md)
 examples/README.md
      1→# Examples …
+examples/package.json
+     2→  "type": "module",
+     3→  "license": "MIT",
+     4→  "dependencies": {
+    10→}
+jsr.json
+     2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
+     3→  "name": "@superstruct/core",
+     4→  "version": "2.0.2",
+     5→  "exports": "./src/index.ts",
+     6→  "publish": {
+     9→}
+package.json
+     2→  "name": "superstruct",
+     3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
+     4→  "version": "2.0.2",
+     5→  "license": "MIT",
+     6→  "repository": "git://github.com/ianstormtaylor/superstruct.git",
+     7→  "type": "module",
+     8→  "main": "./dist/index.cjs",
+     9→  "module": "./dist/index.mjs",
+    10→  "types": "./dist/index.d.ts",
+    11→  "sideEffects": false,
+    12→  "files": [
+    14→  ],
+    15→  "publishConfig": {
+    17→  },
+    18→  "engines": {
+    20→  },
+    21→  "devDependencies": {
+    37→  },
+    38→  "scripts": {
+    53→  },
+    54→  "keywords": [
+    85→}
 rollup.config.js
 src/error.ts
      5→export type Failure …
     16→/**
     17→ * `StructError` objects are thrown (or returned) when validation fails.
     18→ *
-    19→ * Validation logic is design to exit early for maximum performance. The error
-    20→ * represents the first error encountered during validation. For more detail,
-    21→ * the `error.failures` property is a generator function that can be run to
-    22→ * continue validation and receive all the failures in the data.
-    23→ */
-    24→
+      →…
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
@@ -154,9 +176,7 @@ src/struct.ts
      4→/**
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
      6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
-     7→ * validate unknown input data against the struct.
-     8→ */
-     9→
+      →…
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
@@ -248,18 +268,14 @@ test/index.ts
      3→ */
      4→
      5→export function test<T>(fn: (x: unknown) => T) {}
+test/tsconfig.json
+     2→  "extends": "../tsconfig.json",
+     3→  "include": ["./**/*.ts"],
+     4→  "compilerOptions": {
+     7→}
 test/typings/infer.ts
-test/validation/any/valid-number.ts
-test/validation/any/valid-string.ts
-test/validation/any/valid-undefined.ts
-test/validation/bigint/invalid-number.ts
-test/validation/bigint/invalid.ts
-test/validation/bigint/valid.ts
 test/validation/boolean/invalid.ts
 test/validation/boolean/valid.ts
-test/validation/date/invalid-date.ts
-test/validation/date/invalid.ts
-test/validation/date/valid.ts
 test/validation/function/invalid.ts
 test/validation/function/valid.ts
      5→export const data = function () {}
@@ -269,13 +285,13 @@ test/validation/literal/invalid.ts
 test/validation/literal/valid.ts
 test/validation/never/invalid.ts
      1→import { never } from '../../../src'
+     3→export const Struct = never()
+     5→export const data = true
+     7→export const failures = [
 test/validation/number/invalid.ts
 test/validation/number/valid.ts
-test/validation/object/invalid-referential.ts
-test/validation/object/valid-referential.ts
 test/validation/pattern/invalid.ts
 test/validation/pattern/valid.ts
-test/validation/refine/invalid-multiple-refinements.ts
 test/validation/regexp/invalid.ts
 test/validation/regexp/valid.ts
 test/validation/string/invalid.ts
@@ -285,3 +301,7 @@ test/validation/trimmed/valid.ts
 test/validation/type/valid-instance.ts
      3→class Person {
      6→  constructor(name: string) {
+tsconfig.json
+     2→  "include": ["./src/**/*.ts"],
+     3→  "compilerOptions": {
+    17→}

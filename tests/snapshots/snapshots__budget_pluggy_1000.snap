@@ -12,6 +12,9 @@ CLAUDE.md
 SECURITY.md
      1→# Security
      3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
+codecov.yml
+     1→coverage …
+     7→comment …
 docs/conf.py
      1→from importlib import metadata
      2→from typing import TYPE_CHECKING
@@ -26,6 +29,7 @@ docs/conf.py
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
+docs/examples/eggsample/eggsample/__init__.py
 docs/examples/eggsample/eggsample/hookspecs.py
      7→@hookspec
      8→def eggsample_add_ingredients(ingredients: tuple):
@@ -42,20 +46,17 @@ docs/examples/eggsample/eggsample/lib.py
     13→def eggsample_prep_condiments(condiments):
 docs/examples/eggsample/setup.py
 docs/examples/eggsample-spam/eggsample_spam.py
-     1→import eggsample
      4→@eggsample.hookimpl
      5→def eggsample_add_ingredients(ingredients):
     14→@eggsample.hookimpl
     15→def eggsample_prep_condiments(condiments):
 docs/examples/eggsample-spam/setup.py
-     1→from setuptools import setup
 docs/examples/toy-example.py
      1→import pluggy
      8→class MySpec:
     10→
     11→    @hookspec
     12→    def myhook(self, arg1, arg2):
-    13→        """My special little hook that you can customize."""
     16→class Plugin_1:
     18→
     19→    @hookimpl
@@ -64,6 +65,24 @@ docs/examples/toy-example.py
     27→
     28→    @hookimpl
     29→    def myhook(self, arg1, arg2):
+pyproject.toml
+     1→[build-system …
+     8→[project …
+    38→[dependency-groups …
+    43→[tool.setuptools …
+    49→[tool.ruff.lint …
+    57→[tool.ruff.lint.extend-per-file-ignores …
+    61→[tool.ruff.lint.isort …
+    69→[tool.setuptools_scm …
+    71→[tool.uv …
+    74→[tool.towncrier …
+    82→  [[tool.towncrier.type …
+    87→  [[tool.towncrier.type …
+    92→  [[tool.towncrier.type …
+    97→  [[tool.towncrier.type …
+   102→  [[tool.towncrier.type …
+   107→  [[tool.towncrier.type …
+   112→[tool.mypy …
 scripts/release.py
     15→def create_branch(version: str) -> Repo:
     30→def get_upstream(repo: Repo) -> Remote:
@@ -79,6 +98,7 @@ src/pluggy/__init__.py
      4→    "PluginValidationError",
      5→    "HookCaller",
      6→    "HookCallError",
+     7→    "HookspecOpts",
       →…
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
@@ -97,7 +117,6 @@ src/pluggy/_hooks.py
     44→    firstresult: bool
     45→    #: Whether the hook is :ref:`historic <historic>`.
     46→    historic: bool
-    47→    #: Whether the hook :ref:`warns when implemented <warn_on_impl>`.
       →…
     56→class HookimplOpts(TypedDict):
     58→
@@ -105,7 +124,6 @@ src/pluggy/_hooks.py
     60→    wrapper: bool
     61→    #: Whether the hook implementation is an :ref:`old-style wrapper
     62→    #: <old_style_hookwrappers>`.
-    63→    hookwrapper: bool
       →…
     77→@final
     78→class HookspecMarker:
@@ -144,7 +162,6 @@ src/pluggy/_hooks.py
    386→        "name",
    387→        "spec",
    388→        "_hookexec",
-   389→        "_hookimpls",
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None
@@ -165,8 +182,6 @@ src/pluggy/_hooks.py
    593→class _SubsetHookCaller(HookCaller):
    596→
    597→    # This class is unusual: in inhertits from `HookCaller` so all of
-   598→    # the *code* runs in the class, but it delegates all underlying *data*
-   599→    # to the original HookCaller.
    618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [

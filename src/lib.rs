@@ -16,6 +16,12 @@ pub enum Lang {
     Markdown,
     /// TypeScript, JavaScript, TSX, JSX
     JsTs,
+    /// JSON config files (package.json, tsconfig.json, etc.)
+    Json,
+    /// TOML config files (Cargo.toml, pyproject.toml, etc.)
+    Toml,
+    /// YAML config files (docker-compose.yml, CI configs, etc.)
+    Yaml,
 }
 
 impl Lang {
@@ -27,6 +33,9 @@ impl Lang {
             "go" => Some(Lang::Go),
             "md" => Some(Lang::Markdown),
             "ts" | "tsx" | "js" | "jsx" | "mts" | "cts" | "mjs" | "cjs" => Some(Lang::JsTs),
+            "json" => Some(Lang::Json),
+            "toml" => Some(Lang::Toml),
+            "yaml" | "yml" => Some(Lang::Yaml),
             _ => None,
         }
     }

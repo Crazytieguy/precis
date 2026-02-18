@@ -2,10 +2,81 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (511 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
+.github/ISSUE_TEMPLATE/bug.yml
+     3→name …
+     4→description …
+     5→title …
+     6→labels …
+     8→body …
+.github/ISSUE_TEMPLATE/config.yml
+     3→blank_issues_enabled …
+.github/actions/create-check/action.yml
+     3→name …
+     4→inputs …
+    13→outputs …
+    16→runs …
+.github/actions/install-latest-npm/action.yml
+     3→name …
+     4→description …
+     5→inputs …
+     9→runs …
+.github/dependabot.yml
+     3→version …
+     5→updates …
+.github/matchers/tap.json
+     2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
+     3→  "problemMatcher": [
+    32→}
+.github/settings.yml
+     3→repository …
+    13→branches …
+.github/workflows/audit.yml
+     3→name …
+     5→on …
+    11→permissions …
+    14→jobs …
+.github/workflows/ci-release.yml
+     3→name …
+     5→on …
+    21→permissions …
+    25→jobs …
+.github/workflows/ci.yml
+     3→name …
+     5→on …
+    15→permissions …
+    18→jobs …
+.github/workflows/codeql-analysis.yml
+     3→name …
+     5→on …
+    16→permissions …
+    19→jobs …
+.github/workflows/post-dependabot.yml
+     3→name …
+     5→on …
+     7→permissions …
+    10→jobs …
+.github/workflows/pull-request.yml
+     3→name …
+     5→on …
+    13→permissions …
+    16→jobs …
+.github/workflows/release-integration.yml
+     3→name …
+     5→on …
+    22→permissions …
+    26→jobs …
+.github/workflows/release.yml
+     3→name …
+     5→on …
+    10→permissions …
+    15→jobs …
+.release-please-manifest.json
+     2→  ".": "6.0.0"
+     3→}
 CHANGELOG.md
      1→# Changelog …
      3→## [6.0.0](https://github.com/npm/ini/compare/v5.0.0...v6.0.0) (2025-10-22) …
@@ -14,14 +85,8 @@ CONTRIBUTING.md
      5→## Code of Conduct
      7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
      8→
-     9→## Reporting Bugs …
-    17→## Pull Request Conventions …
     19→### Commits …
-    30→### Test Coverage …
-    36→### Linting …
-    42→## What _not_ to contribute? …
     44→### Dependencies …
-    48→### Tools/Automation …
 README.md
      4→## Note
      6→-   Sections are treated as nested objects.
@@ -58,47 +123,7 @@ README.md
     38→let text = await readFile(`./Original.ini`,{
     39→    encoding : 'utf-8'
     40→})
-    41→
-    42→//  Parse text data to object
-    43→
-    44→const config = parse(text)
-    45→
-    46→//  Modify data object
-    47→
-    48→config.scope = 'local'
-    49→config.database.database = 'use_another_database'
-    50→config.paths.default.tmpdir = '/tmp'
-    51→delete config.paths.default.datadir
-    52→config.paths.default.array.push('fourth value')
-    53→
-    54→//  Stringify data object
-    55→
-    56→text = stringify(config,{ 
-    57→    section : 'section' 
-    58→})
-    59→
-    60→//  Write INI file as text
-    61→
-    62→await writeFile(`./Modified.ini`,text)
-    63→```
-    64→
-    65→The written file will contain the following:
-    66→
-    67→```ini
-    68→[section]
-    69→scope=local
-    70→[section.database]
-    71→user=dbuser
-    72→password=dbpassword
-    73→database=use_another_database
-    74→[section.paths.default]
-    75→tmpdir=/tmp
-    76→array[]=first value
-    77→array[]=second value
-    78→array[]=third value
-    79→array[]=fourth value
-    80→```
-    81→
+      →…
     82→## API
     84→### Parse
     86→Attempts to turn the given INI string into a nested data object.
@@ -116,23 +141,6 @@ README.md
     99→stringify(object,{
    100→
    101→    /**
-   102→     *  Whether to insert spaces before & after `=`
-   103→     * 
-   104→     *  Disabled by default to have better 
-   105→     *  compatibility with old picky parsers.
-   106→     */
-   107→
-   108→    whitespace : false ,
-   109→
-   110→    /**
-   111→     *  Whether to align the `=` character for each section.
-   112→     *  -> Also enables the `whitespace` option
-   113→     */
-   114→
-   115→    align : false ,
-   116→
-   117→    /**
-   118→     *  Identifier to use for global items 
       →…
    167→### Un / Escape
    169→Turn the given string into a safe to  
@@ -142,11 +150,7 @@ README.md
    173→safe(`"unsafe string"`) // -> \"unsafe string\"
    174→```
    175→
-   176→Or reverse the process with:
-   177→
-   178→```js
-   179→unsafe(`\\"safe string\\"`) // -> "safe string"
-   180→```
+      →…
 lib/ini.js
      3→const encode = (obj, opt = {}) => {
     80→function splitSections (str, separator) {
@@ -154,6 +158,33 @@ lib/ini.js
    212→const isQuoted = val => {
    217→const safe = val => {
    230→const unsafe = val => {
-test/duplicate-properties.js
-test/foo.js
-test/win32.js
+package.json
+     2→  "author": "GitHub Inc.",
+     3→  "name": "ini",
+     4→  "description": "An ini encoder/decoder for node",
+     5→  "version": "6.0.0",
+     6→  "repository": {
+     9→  },
+    10→  "main": "lib/ini.js",
+    11→  "scripts": {
+    20→  },
+    21→  "devDependencies": {
+    25→  },
+    26→  "license": "ISC",
+    27→  "files": [
+    30→  ],
+    31→  "engines": {
+    33→  },
+    34→  "templateOSS": {
+    38→  },
+    39→  "tap": {
+    45→}
+release-please-config.json
+     2→  "group-pull-request-title-pattern": "chore: release ${version}",
+     3→  "pull-request-title-pattern": "chore: release${component} ${version}",
+     4→  "changelog-sections": [
+    30→  ],
+    31→  "packages": {
+    35→  },
+    36→  "prerelease-type": "pre.0"
+    37→}

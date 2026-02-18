@@ -55,8 +55,8 @@ Line numbers use a right-aligned format with an arrow separator (e.g. `    12→
 - **Go** — functions, methods, structs, interfaces, type aliases, consts, vars (exported = uppercase)
 - **Python** — functions, classes, module-level constants (typed, UPPER_CASE, dunder)
 - **Markdown** — ATX headings (`#`, `##`, etc.) and setext headings as section structure
+- **JSON** (`.json`) — top-level object keys as sections (lockfiles excluded)
+- **TOML** (`.toml`) — section headers (`[section]`, `[[array]]`)
+- **YAML** (`.yaml`, `.yml`) — top-level keys as sections (lockfiles excluded)
 
-Per-language support requires a tree-sitter grammar and a query file defining:
-- Which node types count as symbols
-- How to extract signatures
-- What signals "public" (e.g., `export` in JS, `pub` in Rust, capitalization in Go)
+Code languages use tree-sitter grammars with query files defining which node types count as symbols, how to extract signatures, and what signals "public". Config file formats (JSON, TOML, YAML) use text-based heuristics to extract top-level structure as sections.

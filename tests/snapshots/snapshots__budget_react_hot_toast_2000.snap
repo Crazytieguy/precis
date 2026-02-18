@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1920 words)
+budget: 2000 (1936 words)
 
 README.md
     28→## Features
@@ -44,6 +44,39 @@ README.md
     69→
     70→## Documentation
     72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
+package.json
+     2→  "name": "react-hot-toast",
+     3→  "description": "Smoking hot React Notifications. Lightweight, customizable and beautiful by default.",
+     4→  "version": "2.6.0",
+     5→  "author": "Timo Lins",
+     6→  "license": "MIT",
+     7→  "repository": "timolins/react-hot-toast",
+     8→  "keywords": [
+    13→  ],
+    14→  "main": "dist/index.js",
+    15→  "types": "dist/index.d.ts",
+    16→  "exports": {
+    28→  },
+    29→  "files": [
+    33→  ],
+    34→  "engines": {
+    36→  },
+    37→  "scripts": {
+    44→  },
+    45→  "husky": {
+    49→  },
+    50→  "prettier": {
+    56→  },
+    57→  "size-limit": [
+    74→  ],
+    75→  "devDependencies": {
+    94→  },
+    95→  "dependencies": {
+    98→  },
+    99→  "peerDependencies": {
+   102→  },
+   103→  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
+   104→}
 site/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -78,8 +111,6 @@ site/components/code.tsx
      5→  PrismTheme,
      6→} from 'prism-react-renderer';
      8→const theme: PrismTheme = {
-     9→  plain: {
-      →…
    104→export const Code: React.FC<{
    105→  snippet: string;
    106→  language?: Language;
@@ -113,8 +144,6 @@ site/components/sections/footer.tsx
      1→import React from 'react';
      2→import Link from 'next/link';
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
-     5→  return (
-      →…
 site/components/sections/splitbee-counter.tsx
      1→import React from 'react';
      2→import clsx from 'clsx';
@@ -122,22 +151,14 @@ site/components/sections/splitbee-counter.tsx
      5→  event: T,
      6→  token: string
      7→): number => {
-     8→  const [data, setData] = React.useState<number>(0);
-      →…
     36→export const SplitbeeCounter = () => {
-    37→  const count = useSplitbeeCount('Trigger Toast', 'NTV7AYBLEXW3');
-      →…
 site/components/sections/toast-example.tsx
      1→import React, { useState } from 'react';
      2→import toast from 'react-hot-toast';
      4→import { EmojiButton } from '../emoji-button';
      5→import { Code } from '../code';
      7→const examples: Array<{
-     8→  title: string;
-      →…
    270→export const ToastExample = () => {
-   271→  const [snippet, setSnippet] = useState(examples[0].snippet);
-      →…
 site/components/sections/toaster-example.tsx
      1→import clsx from 'clsx';
      2→import toast, { ToastPosition } from 'react-hot-toast';
@@ -148,13 +169,8 @@ site/components/sections/toaster-example.tsx
      9→  'top-left',
     10→  'top-center',
     11→  'top-right',
-    12→  'bottom-left',
-    13→  'bottom-center',
-    14→  'bottom-right',
-    15→];
-    17→export const ToasterExample: React.FC<{
-    18→  position: ToastPosition;
       →…
+    17→export const ToasterExample: React.FC<{
 site/next.config.mjs
      1→import rehypeSlug from 'rehype-slug';
      2→import remarkGfm from 'remark-gfm';
@@ -164,12 +180,18 @@ site/next.config.mjs
     15→const nextConfig = {
     17→  webpack(config) {
     18→    config.module.rules.push({
-    19→      test: /\.svg$/,
       →…
     24→  async rewrites() {
     25→    return [
-    26→      {
       →…
+site/package.json
+     2→  "name": "site",
+     3→  "scripts": {
+     7→  },
+     8→  "dependencies": {
+    24→  },
+    25→  "devDependencies": {
+    35→}
 site/pages/_app.tsx
      1→import '../styles/tailwind-utils.css';
      2→import '../styles/main.css';
@@ -203,6 +225,13 @@ site/pages/index.tsx
    110→    <div className="overflow-x-hidden">
    111→      <NextSeo
       →…
+site/tsconfig.json
+     2→  "compilerOptions": {
+    21→  },
+    22→  "include": [
+    31→  ],
+    32→  "exclude": [
+    35→}
 site/types/svg.d.ts
      1→interface SvgrComponent
      2→  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
@@ -278,7 +307,6 @@ src/components/toast-icon.tsx
     53→      return <AnimatedIconWrapper>{icon}</AnimatedIconWrapper>;
     54→    } else {
     55→      return icon;
-    56→    }
       →…
 src/components/toaster.tsx
      1→import { css, setup } from 'goober';
@@ -305,7 +333,6 @@ src/components/toaster.tsx
     91→  toasterId,
     92→  containerStyle,
     93→  containerClassName,
-    94→}) => {
       →…
 src/core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
@@ -338,18 +365,12 @@ src/core/store.ts
     62→export const reducer = (state: ToasterState, action: Action): ToasterState => {
     63→  const { toastLimit } = state.settings;
     64→
-    65→  switch (action.type) {
-    66→    case ActionType.ADD_TOAST:
-    67→      return {
       →…
    136→const listeners: Array<
    140→const defaultToasterState: ToasterState = {
    149→export const dispatch = (action: Action, toasterId = DEFAULT_TOASTER_ID) => {
    150→  memoryState[toasterId] = reducer(
    151→    memoryState[toasterId] || defaultToasterState,
-   152→    action
-   153→  );
-   154→  listeners.forEach(([id, listener]) => {
       →…
    161→export const dispatchAll = (action: Action) =>
    162→  Object.keys(memoryState).forEach((toasterId) => dispatch(action, toasterId));
@@ -369,9 +390,6 @@ src/core/store.ts
    188→): ToasterState => {
    189→  const [state, setState] = useState<ToasterState>(
    190→    memoryState[toasterId] || defaultToasterState
-   191→  );
-   192→  const initial = useRef(memoryState[toasterId]);
-   193→
       →…
 src/core/toast.ts
      1→import {
@@ -490,9 +508,6 @@ src/core/use-toaster.ts
     11→) => {
     12→  const { toasts, pausedAt } = useStore(toastOptions, toasterId);
     13→  const toastTimeouts = useRef(
-    14→    new Map<Toast['id'], ReturnType<typeof setTimeout>>()
-    15→  ).current;
-    16→
       →…
 src/core/utils.ts
      1→export const genId = (() => {
@@ -504,13 +519,12 @@ src/index.ts
 test/setup.ts
      1→import '@testing-library/jest-dom';
 test/toast.test.tsx
-     1→import React, { useEffect, useState } from 'react …
-     2→@testing-library/react …
-    10→import toast, { resolveValue, Toaster, ToastIcon } from '../src';
-    11→import { defaultTimeouts } from '../src/core/store';
-    12→import { REMOVE_DELAY } from '../src/core/use-toaster';
     29→const waitTime = (time: number) => {
     35→const TOAST_DURATION = 1000;
+tsconfig.json
+     3→  "include": ["src", "types", "test"],
+     4→  "compilerOptions": {
+    33→}
 tsup.config.ts
      1→import { defineConfig, Options } from 'tsup';
      2→import { minifyTemplates, writeFiles } from 'esbuild-minify-templates';
