@@ -13,6 +13,7 @@ checkmark.tsx
     31→  secondary?: string;
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
+
 error.tsx
      1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
@@ -23,6 +24,7 @@ error.tsx
     35→  secondary?: string;
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
+
 loader.tsx
      1→import { styled, keyframes } from 'goober';
      3→const rotate = keyframes`
@@ -31,6 +33,7 @@ loader.tsx
     14→  secondary?: string;
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
+
 toast-bar.tsx
      1→import * as React from 'react';
      2→import { styled, keyframes } from 'goober';
@@ -65,6 +68,7 @@ toast-bar.tsx
     61→  const top = position.includes('top');
       →…
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
+
 toast-icon.tsx
      1→import * as React from 'react';
      2→import { styled, keyframes } from 'goober';
@@ -90,6 +94,7 @@ toast-icon.tsx
     57→  }
     58→
       →…
+
 toaster.tsx
      1→import { css, setup } from 'goober';
      2→import * as React from 'react';

@@ -30,6 +30,7 @@ error.ts
     38→    const { path } = failure
     39→    const msg =
       →…
+
 struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
@@ -74,9 +75,12 @@ struct.ts
    157→export function mask …
    175→export function is …
    185→export function validate …
+
 structs/coercions.ts
+
 structs/refinements.ts
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
+
 structs/types.ts
     33→export function array<T extends Struct<any>>(Element?: T): any {
    105→export function enums<U extends string | number, T extends readonly U[]>(
@@ -86,8 +90,10 @@ structs/types.ts
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    298→export function object<S extends ObjectSchema>(schema?: S): any {
    415→export function set<T>(Element?: Struct<T>): any {
+
 structs/utilities.ts
     60→export function assign(...Structs: Struct<any>[]): any {
+
 utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'

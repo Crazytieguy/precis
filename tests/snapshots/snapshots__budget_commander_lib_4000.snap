@@ -52,6 +52,7 @@ argument.js
    145→
    146→  return arg.required ? '<' + nameOutput + '>' : '[' + nameOutput + ']';
    147→}
+
 command.js
     13→class Command extends EventEmitter {
     14→  /**
@@ -753,6 +754,7 @@ command.js
   2757→  //
   2758→  // References:
       →…
+
 error.js
      1→/**
      2→ * CommanderError class
@@ -768,6 +770,7 @@ error.js
     26→  /**
       →…
     30→  constructor(message) {
+
 help.js
     12→class Help {
     13→  constructor() {
@@ -931,6 +934,7 @@ help.js
    742→  const sgrPattern = /\x1b\[\d*(;\d*)*m/g;
    743→  return str.replace(sgrPattern, '');
    744→}
+
 option.js
      3→class Option {
      4→  /**
@@ -1031,6 +1035,7 @@ option.js
    333→  // long flag, double dash and at least one character
    334→  const longFlagExp = /^--[^-]/;
       →…
+
 suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {

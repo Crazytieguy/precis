@@ -11,7 +11,9 @@ errors.ts
      4→ */
      5→export class NonExhaustiveError extends Error {
      6→  constructor …
+
 index.ts
+
 internals/helpers.ts
      7→import * as symbols from './symbols';
      8→import { SelectionType } from '../types/FindSelected';
@@ -68,6 +70,7 @@ internals/helpers.ts
    133→  xs: readonly a[],
    134→  f: (v: a) => readonly b[]
    135→): b[] => xs.reduce<b[]>((acc, x) => acc.concat(f(x)), []);
+
 internals/symbols.ts
      1→/**
      2→ * Symbols used internally within ts-pattern to construct and discriminate
@@ -94,6 +97,7 @@ internals/symbols.ts
     27→export type anonymousSelectKey = typeof anonymousSelectKey;
     29→export const override = Symbol.for('@ts-pattern/override');
     30→export type override = typeof override;
+
 is-matching.ts
      6→/**
      7→ * This constraint allows using additional properties
@@ -106,6 +110,7 @@ is-matching.ts
     14→  ? P.Pattern<T> & UnknownProperties
     15→  : P.Pattern<T>;
     53→export function isMatching …
+
 match.ts
      7→type MatchState …
     11→const unmatched …
@@ -139,6 +144,7 @@ match.ts
    120→  run …
    124→  returnType …
    128→  narrow …
+
 patterns.ts
      8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
     67→/**
@@ -297,8 +303,11 @@ patterns.ts
   1252→  classConstructor: T
   1253→): Chainable<GuardP<unknown, InstanceType<T>>> {
   1274→export function shape …
+
 types/BuildMany.ts
+
 types/DeepExclude.ts
+
 types/DistributeUnions.ts
     17→/**
     18→ * DistributeMatchingUnions takes two arguments:
@@ -322,8 +331,11 @@ types/DistributeUnions.ts
     90→  : IsUnion<a> extends true
     91→  ? [
     92→      {
+
 types/ExtractPreciseValue.ts
+
 types/FindSelected.ts
+
 types/InvertPattern.ts
    101→/**
    102→ * ### InvertPatternInternal
@@ -337,7 +349,9 @@ types/InvertPattern.ts
    303→export type InvertPatternForExclude<p, i> = Equal<Pattern<i>, p> extends true
    304→  ? never
    305→  : InvertPatternForExcludeInternal<p, i>;
+
 types/IsMatching.ts
+
 types/Match.ts
     10→interface NonExhaustiveError<i> {
     11→  __nonExhaustive: never;
@@ -394,6 +408,7 @@ types/Match.ts
    258→ *
       →…
    261→type Exhaustive<output, inferredOutput> = {
+
 types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
@@ -464,6 +479,7 @@ types/Pattern.ts
    678→      select<input, k extends string>(
    679→        key: k
    680→      ): ArrayChainable<SelectP<k, input, pattern>, omitted | 'select'>;
+
 types/helpers.ts
      5→/**
      6→ * ### LeastUpperBound

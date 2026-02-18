@@ -6,12 +6,14 @@ budget: 2000 (1934 words)
 
 CHANGELOG.md
      1→# Change Log …
+
 Cargo.toml
      1→[package …
     19→[package.metadata.docs.rs …
     22→[features …
     56→[dependencies …
     62→[dev-dependencies …
+
 README.md
      1→log
      4→A Rust library providing a lightweight logging *facade*.
@@ -48,6 +50,7 @@ README.md
    108→If you enable the `kv` feature, you can associate structured data with your log records:
    109→
       →…
+
 benches/value.rs
      4→use log::kv::Value;
      6→#[bench]
@@ -58,6 +61,7 @@ benches/value.rs
     17→fn str_to_value_debug(b: &mut test::Bencher) {
     21→#[bench]
     22→fn custom_to_value_debug(b: &mut test::Bencher) {
+
 rfcs/0296-structured-logging.md
      5→# Summary …
     16→# Contents …
@@ -67,6 +71,7 @@ rfcs/0296-structured-logging.md
   1575→# Drawbacks, rationale, and alternatives …
   1629→# Prior art …
   1650→# Unresolved questions …
+
 src/__private_api.rs
      3→use self::sealed::KVs;
      4→use crate::{logger, Level, Log, Metadata, Record};
@@ -87,6 +92,7 @@ src/__private_api.rs
    114→    use crate::kv;
    116→    pub type Value<'a> = kv::Value<'a>;
    151→pub use self::kv_support::*;
+
 src/kv/error.rs
      3→/// An error encountered while working with structured data.
      4→#[derive(Debug)]
@@ -112,6 +118,7 @@ src/kv/error.rs
     70→    use super::*;
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     77→        pub fn boxed …
+
 src/kv/key.rs
      3→use std::borrow::Borrow;
      6→/// A type that can be converted into a [`Key`](struct.Key.html).
@@ -134,6 +141,7 @@ src/kv/key.rs
    135→#[cfg(feature = "kv_serde")]
    136→mod serde_support {
    137→    use super::*;
+
 src/kv/mod.rs
      1→//! Structured logging.
      2→//!
@@ -161,6 +169,7 @@ src/kv/mod.rs
    261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
    265→pub use self::source::Visitor;
+
 src/kv/source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
      9→/// A source of key-values.
@@ -186,6 +195,7 @@ src/kv/source.rs
    280→mod std_support {
    281→    use super::*;
    462→pub use VisitSource as Visitor;
+
 src/kv/value.rs
      6→use std::fmt;
      8→pub use crate::kv::Error;
@@ -285,6 +295,7 @@ src/kv/value.rs
   1149→macro_rules! as_error {
   1159→macro_rules! as_serde {
   1169→macro_rules! as_sval {
+
 src/lib.rs
    399→use std::cfg;
    401→use std::error;
@@ -467,6 +478,7 @@ src/lib.rs
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
       →…
+
 src/macros.rs
     75→macro_rules! log {
    119→macro_rules! __log {
@@ -488,6 +500,7 @@ src/macros.rs
    553→macro_rules! __log_value_serde {
    564→macro_rules! __log_value_error {
    573→macro_rules! __log_value_error {
+
 src/serde.rs
      3→use serde_core::de::{
      4→    Deserialize, DeserializeSeed, Deserializer, EnumAccess, Error, Unexpected, VariantAccess,
@@ -497,10 +510,12 @@ src/serde.rs
      9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
     11→use std::fmt;
     12→use std::str::{self, FromStr};
+
 test_max_level_features/Cargo.toml
      1→[package …
      7→[[bin …
     11→[dependencies.log …
+
 test_max_level_features/main.rs
      1→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
      2→use std::sync::{Arc, Mutex};
@@ -524,6 +539,7 @@ test_max_level_features/main.rs
     29→fn main() {
     44→fn test(a: &State, filter: LevelFilter) {
     72→fn last(state: &State, expected: Option<Level>) {
+
 tests/integration.rs
      6→struct State {
      7→    last_log_level: Mutex<Option<Level>>,
@@ -533,6 +549,7 @@ tests/integration.rs
     13→impl Log for Logger {
     62→fn test_filter …
     89→fn test_line_numbers …
+
 tests/macros.rs
      3→macro_rules! all_log_macros {
     14→struct Logger;
@@ -541,5 +558,6 @@ tests/macros.rs
    421→    Some,
    422→    None,
    423→}
+
 triagebot.toml
      1→[assign …

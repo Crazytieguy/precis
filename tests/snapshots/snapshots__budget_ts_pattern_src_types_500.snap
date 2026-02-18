@@ -5,16 +5,23 @@ expression: output
 budget: 500 (499 words)
 
 BuildMany.ts
+
 DeepExclude.ts
+
 DistributeUnions.ts
     41→export type DistributeMatchingUnions …
     80→export type FindUnions …
+
 ExtractPreciseValue.ts
+
 FindSelected.ts
+
 InvertPattern.ts
    106→export type InvertPattern …
    303→export type InvertPatternForExclude …
+
 IsMatching.ts
+
 Match.ts
     10→interface NonExhaustiveError<i> {
     11→  __nonExhaustive: never;
@@ -63,6 +70,7 @@ Match.ts
    258→ *
       →…
    261→type Exhaustive<output, inferredOutput> = {
+
 Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
@@ -128,6 +136,7 @@ Pattern.ts
    678→      select<input, k extends string>(
    679→        key: k
    680→      ): ArrayChainable<SelectP<k, input, pattern>, omitted | 'select'>;
+
 helpers.ts
     14→export type LeastUpperBound …
    182→export type GuardValue …

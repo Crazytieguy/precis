@@ -11,6 +11,7 @@ Cargo.toml
     33→[dev-dependencies …
     39→[workspace …
     42→[package.metadata.docs.rs …
+
 README.md
      1→derive(Error)
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/thiserror-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/thiserror)
@@ -33,6 +34,7 @@ README.md
    231→
    232→<sub>
       →…
+
 build/probe.rs
      8→use core::error::{Error, Request};
      9→use core::fmt::{self, Debug, Display};
@@ -50,13 +52,16 @@ build/probe.rs
     27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
     28→        request.provide_ref(&self.0);
     29→    }
+
 build.rs
     10→const PRIVATE: &str = "\
+
 impl/Cargo.toml
      1→[package …
     11→[lib …
     14→[dependencies …
     19→[package.metadata.docs.rs …
+
 impl/src/ast.rs
     10→pub enum Input<'a> {
     15→pub struct Struct<'a> {
@@ -72,6 +77,7 @@ impl/src/ast.rs
     50→    TupleVariant,
     51→    UnitVariant,
     52→}
+
 impl/src/attr.rs
     11→pub struct Attrs<'a> {
     20→#[derive(Clone)]
@@ -117,17 +123,22 @@ impl/src/attr.rs
     65→    LowerExp,
     66→    UpperExp,
     67→}
+
 impl/src/expand.rs
+
 impl/src/fallback.rs
+
 impl/src/fmt.rs
    166→struct FmtArguments {
    171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
    173→    let ahead = input.fork();
       →…
+
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
     48→pub struct InferredBounds {
+
 impl/src/lib.rs
     23→mod ast;
     24→mod attr;
@@ -146,10 +157,13 @@ impl/src/lib.rs
     43→}
     45→#[allow(non_camel_case_types)]
     46→struct private;
+
 impl/src/prop.rs
+
 impl/src/scan_expr.rs
      6→enum Input {
     25→enum Action {
+
 impl/src/unraw.rs
     10→#[derive(Clone)]
     11→#[repr(transparent)]
@@ -159,9 +173,12 @@ impl/src/unraw.rs
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
     85→}
+
 impl/src/valid.rs
+
 rust-toolchain.toml
      1→[toolchain …
+
 src/aserror.rs
      1→use core::error::Error;
      2→use core::panic::UnwindSafe;
@@ -190,6 +207,7 @@ src/aserror.rs
     41→    }
     44→#[doc(hidden)]
     45→pub trait Sealed {}
+
 src/display.rs
      1→use core::fmt::Display;
      3→use std::path::{self, Path, PathBuf};
@@ -238,6 +256,7 @@ src/display.rs
     76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     77→            unreachable!()
     78→        }
+
 src/lib.rs
    281→mod aserror;
    282→mod display;
@@ -246,6 +265,7 @@ src/lib.rs
    285→mod var;
    287→pub use thiserror_impl::*;
    289→mod private;
+
 src/private.rs
      2→pub use crate::aserror::AsDynError;
      4→pub use crate::display::AsDisplay;
@@ -253,6 +273,7 @@ src/private.rs
      9→pub use crate::var::Var;
     11→pub use core::error::Error;
     14→pub use std::backtrace::Backtrace;
+
 src/provide.rs
      1→use core::error::{Error, Request};
      3→#[doc(hidden)]
@@ -264,16 +285,19 @@ src/provide.rs
     15→    }
     18→#[doc(hidden)]
     19→pub trait Sealed {}
+
 src/var.rs
      1→use core::fmt::{self, Pointer};
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
      7→        Pointer::fmt(self.0, formatter)
      8→    }
+
 tests/no-std/Cargo.toml
      1→[package …
      8→[lib …
     11→[dependencies …
+
 tests/no-std/test.rs
      3→use thiserror::Error;
      5→#[derive(Error, Debug)]
@@ -286,6 +310,7 @@ tests/no-std/test.rs
     13→pub struct SourceError {
     14→    pub field: i32,
     15→}
+
 tests/test_backtrace.rs
     17→#[cfg(thiserror_nightly_testing)]
     18→pub mod structs {
@@ -294,39 +319,55 @@ tests/test_backtrace.rs
    162→#[cfg(thiserror_nightly_testing)]
    163→pub mod enums {
    164→    use super::{Inner, InnerBacktrace};
+
 tests/test_display.rs
    414→mod util {
+
 tests/test_error.rs
      7→macro_rules! unimplemented_display {
+
 tests/test_expr.rs
      5→use std::path::PathBuf;
     55→#[track_caller]
     56→fn assert<T: Display>(expected: &str, value: T) {
     57→    assert_eq!(expected, value.to_string());
     58→}
+
 tests/test_from.rs
+
 tests/test_generics.rs
      7→pub struct NoFormat;
     12→pub struct DisplayOnly;
+
 tests/test_lints.rs
      5→pub use std::error::Error;
+
 tests/test_option.rs
      4→#[cfg(thiserror_nightly_testing)]
      5→pub mod structs {
     49→#[cfg(thiserror_nightly_testing)]
     50→pub mod enums {
+
 tests/test_path.rs
+
 tests/test_source.rs
     50→macro_rules! error_from_macro {
+
 tests/test_transparent.rs
+
 tests/ui/concat-display.rs
      3→macro_rules! error_type {
+
 tests/ui/fallback-impl-with-display.rs
      8→impl Display for MyError {
      9→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     10→        unimplemented!()
     11→    }
+
 tests/ui/lifetime.rs
+
 tests/ui/no-display.rs
+
 tests/ui/source-struct-not-error.rs
+
 tests/ui/source-struct-unnamed-field-not-error.rs

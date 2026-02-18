@@ -229,6 +229,7 @@ README.md
    245→etc.
    246→
    247→List the language at the top of this README.
+
 RELEASING.md
      1→# Release checklist
      3→- [ ] Get `main` to the appropriate code release state.
@@ -251,12 +252,15 @@ RELEASING.md
     20→
     21→```bash
       →…
+
 docs/filesize.md
      1→# Filesize
      3→::: humanize.filesize
+
 docs/i18n.md
      1→# Internationalisation
      3→::: humanize.i18n
+
 docs/index.md
      1→# humanize
      3→Welcome to the humanize API reference.
@@ -273,15 +277,19 @@ docs/index.md
     14→   end="<!-- usage-end -->"
     15→   comments=false
     16→%}
+
 docs/lists.md
      1→# Lists
      3→::: humanize.lists
+
 docs/number.md
      1→# Number
      3→::: humanize.number
+
 docs/time.md
      1→# Time
      3→::: humanize.time
+
 mkdocs.yml
      1→site_name: humanize
      2→site_url: https://humanize.readthedocs.io
@@ -302,6 +310,7 @@ mkdocs.yml
     38→  - css/code_select.css
     39→
     40→watch:
+
 pyproject.toml
      1→[build-system …
      8→[project …
@@ -314,6 +323,7 @@ pyproject.toml
    106→[tool.pytest.ini_options …
    113→[tool.coverage.report …
    120→[tool.mypy …
+
 src/humanize/__init__.py
      5→from humanize.filesize import naturalsize
      6→from humanize.i18n import activate, deactivate, decimal_separator, thousands_separator
@@ -358,6 +368,7 @@ src/humanize/__init__.py
     47→    "scientific",
     48→    "thousands_separator",
     49→]
+
 src/humanize/filesize.py
      5→from math import log
     36→def naturalsize(
@@ -369,6 +380,7 @@ src/humanize/filesize.py
     42→    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
     43→
       →…
+
 src/humanize/i18n.py
      5→import gettext as gettext_module
      6→from threading import local
@@ -419,6 +431,7 @@ src/humanize/i18n.py
    197→    """Return the decimal separator for a locale, default to dot.
    198→
       →…
+
 src/humanize/lists.py
      5→TYPE_CHECKING = False
      7→    from typing import Any
@@ -427,6 +440,7 @@ src/humanize/lists.py
     13→    """Natural list.
     14→
       →…
+
 src/humanize/number.py
      5→import bisect
      7→from .i18n import _gettext as _
@@ -475,6 +489,7 @@ src/humanize/number.py
    532→    """Return a value with a metric SI unit-prefix appended.
    533→
       →…
+
 src/humanize/time.py
      8→from enum import Enum
      9→from functools import total_ordering
@@ -556,7 +571,9 @@ src/humanize/time.py
    458→
       →…
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
+
 tests/test_filesize.py
+
 tests/test_i18n.py
     17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
@@ -585,8 +602,11 @@ tests/test_i18n.py
    266→        try:
    267→            humanize.i18n.activate("fr")
       →…
+
 tests/test_lists.py
+
 tests/test_number.py
+
 tests/test_time.py
     14→ONE_DAY_DELTA = dt.timedelta(days=1)
     16→# In seconds

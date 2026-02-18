@@ -34,35 +34,53 @@ README.md
   1500→## `P.number` and `P.bigint` predicates …
   1621→## Types …
   1766→## Inspirations …
+
 benchmarks/package.json
+
 docs/roadmap.md
+
 docs/v3-to-v4-migration-guide.md
+
 docs/v4-to-v5-migration-guide.md
+
 examples/gif-fetcher/package.json
+
 examples/gif-fetcher/src/App.tsx
     42→const reducer …
     75→export default function App() {
+
 examples/gif-fetcher/src/constants.ts
      1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
+
 examples/gif-fetcher/src/index.tsx
      6→const rootElement = document.getElementById('root');
+
 examples/gif-fetcher/src/searchGif.ts
      2→import { API_KEY } from './constants';
      6→export function searchGif(query: string) {
+
 examples/gif-fetcher/tsconfig.json
+
 examples/one-file-demo/one-file-demo.ts
     79→const example3 …
+
 examples/one-file-demo/package.json
+
 examples/one-file-demo/tsconfig.json
+
 jsr.json
+
 package.json
+
 src/errors.ts
      1→/**
      2→ * Error when the given input value does not match any included pattern
      3→ * and .exhaustive() was specified
      4→ */
      5→export class NonExhaustiveError extends Error {
+
 src/index.ts
+
 src/internals/helpers.ts
      7→import * as symbols from './symbols';
      8→import { SelectionType } from '../types/FindSelected';
@@ -75,6 +93,7 @@ src/internals/helpers.ts
     32→export const matchPattern …
    120→export const getSelectionKeys …
    132→export const flatMap …
+
 src/internals/symbols.ts
      1→/**
      2→ * Symbols used internally within ts-pattern to construct and discriminate
@@ -101,6 +120,7 @@ src/internals/symbols.ts
     27→export type anonymousSelectKey = typeof anonymousSelectKey;
     29→export const override = Symbol.for('@ts-pattern/override');
     30→export type override = typeof override;
+
 src/is-matching.ts
      6→/**
      7→ * This constraint allows using additional properties
@@ -112,6 +132,7 @@ src/is-matching.ts
     13→  : T extends object
     14→  ? P.Pattern<T> & UnknownProperties
     15→  : P.Pattern<T>;
+
 src/match.ts
     16→/**
       →…
@@ -121,6 +142,7 @@ src/match.ts
     38→/**
       →…
     47→class MatchExpression<input, output> {
+
 src/patterns.ts
      8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
     67→/**
@@ -207,17 +229,25 @@ src/patterns.ts
   1251→export function instanceOf<T extends AnyConstructor>(
   1252→  classConstructor: T
   1253→): Chainable<GuardP<unknown, InstanceType<T>>> {
+
 src/types/BuildMany.ts
+
 src/types/DeepExclude.ts
+
 src/types/DistributeUnions.ts
     41→export type DistributeMatchingUnions …
     80→export type FindUnions …
+
 src/types/ExtractPreciseValue.ts
+
 src/types/FindSelected.ts
+
 src/types/InvertPattern.ts
    106→export type InvertPattern …
    303→export type InvertPatternForExclude …
+
 src/types/IsMatching.ts
+
 src/types/Match.ts
     10→interface NonExhaustiveError<i> {
     11→  __nonExhaustive: never;
@@ -237,6 +267,7 @@ src/types/Match.ts
    255→/**
       →…
    261→type Exhaustive<output, inferredOutput> = {
+
 src/types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
@@ -271,6 +302,7 @@ src/types/Pattern.ts
    157→export type Pattern …
    269→      select …
    678→      select …
+
 src/types/helpers.ts
     14→export type LeastUpperBound …
    182→export type GuardValue …
@@ -278,16 +310,21 @@ src/types/helpers.ts
    267→  input: unknown;
    268→  output: unknown;
    269→}
+
 tests/instance-of.test.ts
      4→class A {
      7→class B {
+
 tests/tsconfig.json
      2→  "compilerOptions": {
     10→  },
     11→  "include": ["."],
     12→  "exclude": ["../src", "../dist", "../example", "../node_modules"]
     13→}
+
 tests/types-catalog/definition.ts
+
 tests/types-catalog/utils.ts
      4→export const some = <a>(value: a): Option<a> => ({
+
 tsconfig.json

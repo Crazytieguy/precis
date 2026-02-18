@@ -48,6 +48,7 @@ __init__.py
     47→    "scientific",
     48→    "thousands_separator",
     49→]
+
 filesize.py
      5→from math import log
     36→def naturalsize(
@@ -59,6 +60,7 @@ filesize.py
     42→    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
     43→
       →…
+
 i18n.py
      5→import gettext as gettext_module
      6→from threading import local
@@ -109,6 +111,7 @@ i18n.py
    197→    """Return the decimal separator for a locale, default to dot.
    198→
       →…
+
 lists.py
      5→TYPE_CHECKING = False
      7→    from typing import Any
@@ -117,6 +120,7 @@ lists.py
     13→    """Natural list.
     14→
       →…
+
 number.py
      5→import bisect
      7→from .i18n import _gettext as _
@@ -165,6 +169,7 @@ number.py
    532→    """Return a value with a metric SI unit-prefix appended.
    533→
       →…
+
 time.py
      8→from enum import Enum
      9→from functools import total_ordering

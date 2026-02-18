@@ -10,6 +10,7 @@ CHANGELOG.md
      5→### Changes …
      7→### Fixed …
      9→### Security …
+
 README.md
      1→# go-multierror
     10→> **Note**: As of Go 1.20, the standard library provides [`errors.Join`](https://pkg.go.dev/errors#Join) which offers similar functionality for combining multiple errors. **For new projects, we recommend using `errors.Join` from the standard library.** This package provides additional features like custom formatting, the `Group` pattern for concurrent error collection, and utility functions (`Append`, `Flatten`, `Prefix`).
@@ -103,6 +104,7 @@ README.md
    160→var result *multierror.Error
    161→
       →…
+
 append.go
      6→// Append is a helper function that will append more errors
      7→// onto an Error in order to create a larger multi-error.
@@ -145,6 +147,7 @@ append.go
     44→		return Append(&Error{}, newErrs...)
     45→	}
     46→}
+
 append_test.go
      6→import …
     11→func TestAppend_Error(t *testing.T) {
@@ -153,6 +156,7 @@ append_test.go
     62→func TestAppend_NilErrorIfaceArg(t *testing.T) {
     71→func TestAppend_NonError(t *testing.T) {
     79→func TestAppend_NonError_Error(t *testing.T) {
+
 flatten.go
      6→// Flatten flattens the given error, merging any *Errors together into
      7→// a single *Error.
@@ -177,10 +181,12 @@ flatten.go
     27→		flatErr.Errors = append(flatErr.Errors, err)
     28→	}
     29→}
+
 flatten_test.go
      6→import …
     13→func TestFlatten(t *testing.T) {
     43→func TestFlatten_nonError(t *testing.T) {
+
 format.go
      6→import (
      7→	"fmt"
@@ -205,10 +211,12 @@ format.go
     28→		"%d errors occurred:\n\t%s\n\n",
     29→		len(es), strings.Join(points, "\n\t"))
     30→}
+
 format_test.go
      6→import …
     11→func TestListFormatFuncSingle(t *testing.T) {
     27→func TestListFormatFuncMultiple(t *testing.T) {
+
 group.go
      6→import "sync"
      8→// Group is a collection of goroutines which return errors that need to be
@@ -243,9 +251,11 @@ group.go
     39→	defer g.mutex.Unlock()
     40→	return g.err
     41→}
+
 group_test.go
      6→import …
     12→func TestGroup(t *testing.T) {
+
 multierror.go
      6→import (
      7→	"errors"
@@ -355,6 +365,7 @@ multierror.go
    122→func (e chain) Is(target error) bool {
    123→	return errors.Is(e[0], target)
    124→}
+
 multierror_test.go
      6→import …
     13→func TestError_Impl(t *testing.T) {
@@ -368,6 +379,7 @@ multierror_test.go
    208→// nestedError implements error and is used for tests.
    209→type nestedError struct{}
    211→func (*nestedError) Error() string { return "" }
+
 prefix.go
      6→import (
      7→	"fmt"
@@ -400,11 +412,13 @@ prefix.go
     35→		return fmt.Errorf("%s %s", prefix, err)
     36→	}
     37→}
+
 prefix_test.go
      6→import …
     11→func TestPrefix_Error(t *testing.T) {
     22→func TestPrefix_NilError(t *testing.T) {
     30→func TestPrefix_NonError(t *testing.T) {
+
 sort.go
      6→// Len implements sort.Interface function for length
      7→func (err *Error) Len() int {
@@ -422,6 +436,7 @@ sort.go
     21→func (err Error) Less(i, j int) bool {
     22→	return err.Errors[i].Error() < err.Errors[j].Error()
     23→}
+
 sort_test.go
      6→import …
     13→func TestSortSingle(t *testing.T) {

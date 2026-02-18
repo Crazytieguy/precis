@@ -6,14 +6,17 @@ budget: 500 (525 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
+
 .github/ISSUE_TEMPLATE/bug.yml
      3→name …
      4→description …
      5→title …
      6→labels …
      8→body …
+
 .github/ISSUE_TEMPLATE/config.yml
      3→blank_issues_enabled …
+
 .github/actions/create-check/action.yml
      3→name: 'Create Check'
      4→inputs:
@@ -21,40 +24,56 @@ budget: 500 (525 words)
     13→outputs:
     15→    value: ${{ steps.create-check.outputs.check_id }}
     16→runs:
+
 .github/actions/install-latest-npm/action.yml
      3→name: 'Install Latest npm'
      4→description: 'Install the latest version of npm compatible with the Node version'
      5→inputs:
      8→    required: true
      9→runs:
+
 .github/dependabot.yml
      3→version: 2
      5→updates:
+
 .github/matchers/tap.json
      2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
      3→  "problemMatcher": [
     31→  ]
     32→}
+
 .github/settings.yml
      3→repository:
     11→  enable_vulnerability_alerts: true
     12→
     13→branches:
+
 .github/workflows/audit.yml
+
 .github/workflows/ci-release.yml
+
 .github/workflows/ci.yml
+
 .github/workflows/codeql-analysis.yml
+
 .github/workflows/post-dependabot.yml
+
 .github/workflows/pull-request.yml
+
 .github/workflows/release-integration.yml
+
 .github/workflows/release.yml
+
 .release-please-manifest.json
      2→  ".": "7.7.4"
      3→}
+
 CHANGELOG.md
      1→# Changelog …
+
 CONTRIBUTING.md
      3→# Contributing …
+
 README.md
      1→semver(1) -- The semantic versioner for npm …
      4→## Install …
@@ -81,6 +100,7 @@ README.md
    580→### `RELEASE_TYPES` …
    600→### `SEMVER_SPEC_VERSION` …
    610→## Exported Modules …
+
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
@@ -88,6 +108,7 @@ bin/semver.js
    132→const failInc = () => {
    137→const fail = () => process.exit(1)
    139→const help = () => console.log(
+
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
@@ -97,6 +118,7 @@ classes/comparator.js
     57→  toString () {
     61→  test (version) {
     79→  intersects (comp, options) {
+
 classes/range.js
      3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
@@ -108,6 +130,7 @@ classes/range.js
    170→  intersects (range, options) {
    193→  test (version) {
    218→const cache = new LRU()
+
 classes/semver.js
      9→class SemVer {
     10→  constructor (version, options) {
@@ -118,22 +141,29 @@ classes/semver.js
    135→  comparePre (other) {
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
+
 internal/constants.js
+
 internal/debug.js
+
 internal/identifiers.js
      4→const compareIdentifiers …
     24→const rcompareIdentifiers …
+
 internal/lrucache.js
      3→class LRUCache {
      4→  constructor () {
      9→  get (key) {
     21→  delete (key) {
     25→  set (key, value) {
+
 internal/parse-options.js
      6→const parseOptions …
+
 internal/re.js
     33→const makeSafeRegex …
     42→const createToken …
+
 package.json
      2→  "name": "semver",
      3→  "version": "7.7.4",
@@ -158,9 +188,11 @@ package.json
     53→  "templateOSS": {
     77→  }
     78→}
+
 ranges/subset.js
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
+
 release-please-config.json
      2→  "group-pull-request-title-pattern": "chore: release ${version}",
      3→  "pull-request-title-pattern": "chore: release${component} ${version}",
@@ -170,12 +202,18 @@ release-please-config.json
     35→  },
     36→  "prerelease-type": "pre.0"
     37→}
+
 test/bin/semver.js
      9→const bin = require.resolve('../../bin/semver')
     10→const run …
+
 test/integration/whitespace.js
+
 test/internal/debug.js
      3→const main …
+
 test/map.js
+
 test/ranges/simplify.js
+
 test/ranges/subset.js

@@ -6,14 +6,17 @@ budget: 500 (514 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
+
 .github/ISSUE_TEMPLATE/bug.yml
      3→name …
      4→description …
      5→title …
      6→labels …
      8→body …
+
 .github/ISSUE_TEMPLATE/config.yml
      3→blank_issues_enabled …
+
 .github/actions/create-check/action.yml
      3→name: 'Create Check'
      4→inputs:
@@ -21,76 +24,92 @@ budget: 500 (514 words)
     13→outputs:
     15→    value: ${{ steps.create-check.outputs.check_id }}
     16→runs:
+
 .github/actions/install-latest-npm/action.yml
      3→name: 'Install Latest npm'
      4→description: 'Install the latest version of npm compatible with the Node version'
      5→inputs:
      8→    required: true
      9→runs:
+
 .github/dependabot.yml
      3→version: 2
      5→updates:
+
 .github/matchers/tap.json
      2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
      3→  "problemMatcher": [
     31→  ]
     32→}
+
 .github/settings.yml
      3→repository:
     11→  enable_vulnerability_alerts: true
     12→
     13→branches:
+
 .github/workflows/audit.yml
      3→name …
      5→on …
     11→permissions …
     14→jobs …
+
 .github/workflows/ci-release.yml
      3→name …
      5→on …
     21→permissions …
     25→jobs …
+
 .github/workflows/ci.yml
      3→name …
      5→on …
     15→permissions …
     18→jobs …
+
 .github/workflows/codeql-analysis.yml
      3→name …
      5→on …
     16→permissions …
     19→jobs …
+
 .github/workflows/post-dependabot.yml
      3→name …
      5→on …
      7→permissions …
     10→jobs …
+
 .github/workflows/pull-request.yml
      3→name …
      5→on …
     13→permissions …
     16→jobs …
+
 .github/workflows/release-integration.yml
      3→name …
      5→on …
     22→permissions …
     26→jobs …
+
 .github/workflows/release.yml
      3→name …
      5→on …
     10→permissions …
     15→jobs …
+
 .release-please-manifest.json
      2→  ".": "6.0.0"
      3→}
+
 CHANGELOG.md
      1→# Changelog …
+
 CONTRIBUTING.md
      3→# Contributing …
      5→## Code of Conduct …
      9→## Reporting Bugs …
     17→## Pull Request Conventions …
     42→## What _not_ to contribute? …
+
 README.md
      4→## Note
      6→-   Sections are treated as nested objects.
@@ -152,6 +171,7 @@ README.md
    174→```
    175→
       →…
+
 lib/ini.js
      3→const encode = (obj, opt = {}) => {
     80→function splitSections (str, separator) {
@@ -159,6 +179,7 @@ lib/ini.js
    212→const isQuoted = val => {
    217→const safe = val => {
    230→const unsafe = val => {
+
 package.json
      2→  "author": "GitHub Inc.",
      3→  "name": "ini",
@@ -181,6 +202,7 @@ package.json
     39→  "tap": {
     44→  }
     45→}
+
 release-please-config.json
      2→  "group-pull-request-title-pattern": "chore: release ${version}",
      3→  "pull-request-title-pattern": "chore: release${component} ${version}",
@@ -190,6 +212,9 @@ release-please-config.json
     35→  },
     36→  "prerelease-type": "pre.0"
     37→}
+
 test/duplicate-properties.js
+
 test/foo.js
+
 test/win32.js

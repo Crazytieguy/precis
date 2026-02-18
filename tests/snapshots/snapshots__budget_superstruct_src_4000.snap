@@ -52,6 +52,7 @@ error.ts
     46→      return (cached ??= [failure, ...failures()])
     47→    }
     48→  }
+
 struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
@@ -300,6 +301,7 @@ struct.ts
    264→ */
    265→
    266→export type Refiner<T> = (value: T, context: Context) => Result
+
 structs/coercions.ts
      1→import { Struct, is, Coercer } from '../struct.js'
      2→import { isPlainObject } from '../utils.js'
@@ -323,6 +325,7 @@ structs/coercions.ts
     72→/**
       →…
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
+
 structs/refinements.ts
      1→import { Struct, Refiner } from '../struct.js'
      2→import { toFailures } from '../utils.js'
@@ -382,6 +385,7 @@ structs/refinements.ts
    148→  name: string,
    149→  refiner: Refiner<T>
    150→): Struct<T, S> {
+
 structs/types.ts
      1→import { Infer, Struct } from '../struct.js'
      2→import { define } from './utilities.js'
@@ -593,6 +597,7 @@ structs/types.ts
    570→/**
       →…
    574→export function unknown(): Struct<unknown, null> {
+
 structs/utilities.ts
      1→import { Context, Struct, Validator } from '../struct.js'
      2→import {
@@ -645,6 +650,7 @@ structs/utilities.ts
    241→/**
       →…
    247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
+
 utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'

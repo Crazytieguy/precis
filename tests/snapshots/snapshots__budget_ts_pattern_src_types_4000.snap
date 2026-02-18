@@ -9,9 +9,11 @@ BuildMany.ts
      4→export type BuildMany …
     11→type BuildOne …
     19→export type SetDeep …
+
 DeepExclude.ts
      1→import { DistributeMatchingUnions } from './DistributeUnions';
      3→export type DeepExclude …
+
 DistributeUnions.ts
      1→import { BuildMany } from './BuildMany';
      2→import type {
@@ -104,6 +106,7 @@ DistributeUnions.ts
       →…
    174→export type ArrayToVariadicUnion …
    183→export type Distribute …
+
 ExtractPreciseValue.ts
      1→import type { Override } from './Pattern';
      2→import type {
@@ -118,6 +121,7 @@ ExtractPreciseValue.ts
     11→} from './helpers';
     13→export type ExtractPreciseValue …
     81→type ExtractPreciseArrayValue …
+
 FindSelected.ts
      1→import type * as symbols from '../internals/symbols';
      2→import type { AnyMatcher, Matcher, Pattern } from './Pattern';
@@ -142,6 +146,7 @@ FindSelected.ts
    174→export type SelectionToArgs …
    185→export type Selections …
    191→export type FindSelected …
+
 InvertPattern.ts
      1→import { DeepExclude } from './DeepExclude';
      2→import {
@@ -194,6 +199,7 @@ InvertPattern.ts
    304→  ? never
    305→  : InvertPatternForExcludeInternal<p, i>;
    307→type InvertPatternForExcludeInternal …
+
 IsMatching.ts
      1→import {
      2→  Primitives,
@@ -208,6 +214,7 @@ IsMatching.ts
     12→type IsMatchingTuple …
     26→type IsMatchingArray …
     57→export type IsMatching …
+
 Match.ts
      1→import type * as symbols from '../internals/symbols';
      2→import type { Pattern, MatchedValue } from './Pattern';
@@ -352,6 +359,7 @@ Match.ts
    272→  (): PickReturnValue<output, inferredOutput>;
    273→  /**
       →…
+
 Pattern.ts
      1→import type * as symbols from '../internals/symbols';
      2→import { MergeUnion, Primitives, WithDefault } from './helpers';
@@ -804,6 +812,7 @@ Pattern.ts
    678→      select<input, k extends string>(
    679→        key: k
    680→      ): ArrayChainable<SelectP<k, input, pattern>, omitted | 'select'>;
+
 helpers.ts
      1→export type ValueOf …
      3→export type Values …

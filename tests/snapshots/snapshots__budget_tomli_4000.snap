@@ -36,6 +36,7 @@ CHANGELOG.md
    185→## 0.2.1 …
    191→## 0.2.0 …
    198→## 0.1.0 …
+
 README.md
      5→# Tomli
      7→> A lil' TOML parser
@@ -177,6 +178,7 @@ README.md
    236→    parser |  exec time | performance (more is better)
    237→-----------+------------+-----------------------------
       →…
+
 benchmark/README.md
      1→# Benchmark …
      3→## Acknowledgments
@@ -195,6 +197,7 @@ benchmark/README.md
     20→```bash
     21→tox -e benchmark-pypi
     22→```
+
 benchmark/data.toml
     46→[contain …
     50→    [contain.righteous-imperfect-remarkable …
@@ -211,6 +214,7 @@ benchmark/data.toml
    105→    [[dynamic-arrays.products …
    107→[[dynamic-arrays.products …
    117→[multiline-strings …
+
 benchmark/run.py
      3→from collections.abc import Callable
      4→from pathlib import Path
@@ -238,6 +242,7 @@ benchmark/run.py
     40→
     41→    col_width = (10, 10, 28)
       →…
+
 fuzzer/fuzz.py
      1→import atheris
      4→    from math import isnan
@@ -295,9 +300,11 @@ fuzzer/fuzz.py
     73→    fuzzer_options = sys.argv
     74→    atheris.Setup(fuzzer_options, test_one_input)
     75→    atheris.Fuzz()
+
 profiler/profiler_script.py
      8→from pathlib import Path
     10→import tomli
+
 pyproject.toml
      1→[build-system …
      5→[project …
@@ -317,6 +324,7 @@ pyproject.toml
    157→[[tool.mypy.overrides …
    161→[[tool.mypy.overrides …
    167→[[tool.mypy.overrides …
+
 scripts/use_setuptools.py
      6→from pathlib import Path
      7→import tomllib
@@ -329,11 +337,13 @@ scripts/use_setuptools.py
     17→        "build-backend": "setuptools.build_meta",
     18→    }
     19→    pyproject_path.write_bytes(tomli_w.dumps(data).encode())
+
 setup.py
      1→import os
      3→from setuptools import setup  # type: ignore[import-untyped]
      6→    import glob
      8→    from mypyc.build import mypycify
+
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
@@ -342,6 +352,7 @@ src/tomli/__init__.py
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
      8→from ._parser import TOMLDecodeError, load, loads
+
 src/tomli/_parser.py
      7→import sys
      8→from types import MappingProxyType
@@ -560,6 +571,7 @@ src/tomli/_parser.py
    771→    """
    772→    # The default `float` callable never returns illegal types. Optimize it.
       →…
+
 src/tomli/_re.py
      7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
      8→from functools import lru_cache
@@ -632,8 +644,10 @@ src/tomli/_re.py
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
    117→    if match.group("floatpart"):
       →…
+
 src/tomli/_types.py
      5→from typing import Any, Callable, Tuple
+
 tests/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
@@ -641,6 +655,7 @@ tests/__init__.py
      4→
      5→__all__ = ("tomllib",)
      9→import tomli as tomllib
+
 tests/burntsushi.py
      7→import datetime
      8→from typing import Any
@@ -652,218 +667,323 @@ tests/burntsushi.py
     68→def _normalize_datetime_str(dt_str: str) -> str:
     92→def _normalize_localtime_str(lt_str: str) -> str:
     96→def _normalize_float_str(float_str: str) -> str:
+
 tests/data/invalid/_external/toml-test/invalid/array/extend-defined-aot.toml
      1→[[tab.arr …
      2→[tab …
+
 tests/data/invalid/_external/toml-test/invalid/array/extending-table.toml
      5→[a.c …
+
 tests/data/invalid/_external/toml-test/invalid/array/tables-01.toml
      4→[[fruit …
+
 tests/data/invalid/_external/toml-test/invalid/array/tables-02.toml
      2→[[fruit …
      5→  [[fruit.variety …
      9→  [fruit.variety …
+
 tests/data/invalid/_external/toml-test/invalid/inline-table/overwrite-02.toml
      3→[a.b …
+
 tests/data/invalid/_external/toml-test/invalid/inline-table/overwrite-04.toml
      3→[[inline-t.nest …
+
 tests/data/invalid/_external/toml-test/invalid/inline-table/overwrite-05.toml
      3→[inline-t.nest …
+
 tests/data/invalid/_external/toml-test/invalid/inline-table/overwrite-09.toml
      1→[tab.nested …
      4→[tab …
+
 tests/data/invalid/_external/toml-test/invalid/key/no-eol-04.toml
      1→[[0000l0 …
      2→0="0"[[0000l0 …
      3→0="0"[[0000l0 …
+
 tests/data/invalid/_external/toml-test/invalid/key/start-bracket.toml
      1→[a …
      2→[xyz …
+
 tests/data/invalid/_external/toml-test/invalid/spec-1.1.0/common-46-0.toml
      1→[fruit …
      5→[fruit.apple …
      8→[fruit.apple.texture …
+
 tests/data/invalid/_external/toml-test/invalid/spec-1.1.0/common-46-1.toml
      1→[fruit …
      6→[fruit.apple.taste …
      8→[fruit.apple.texture …
+
 tests/data/invalid/_external/toml-test/invalid/spec-1.1.0/common-49-0.toml
      1→[product …
+
 tests/data/invalid/_external/toml-test/invalid/spec-1.1.0/common-50-0.toml
      1→[product …
+
 tests/data/invalid/array-of-tables/overwrite-array-in-parent.toml
      1→[[parent-table.arr …
      2→[parent-table …
+
 tests/data/invalid/array-of-tables/overwrite-bool-with-aot.toml
      2→[[a …
+
 tests/data/invalid/dotted-keys/extend-defined-aot.toml
      1→[[tab.arr …
      2→[tab …
+
 tests/data/invalid/dotted-keys/extend-defined-table-with-subtable.toml
      1→[a.b.c.d …
      3→[a …
+
 tests/data/invalid/dotted-keys/extend-defined-table.toml
      1→[a.b.c …
      3→[a …
+
 tests/data/invalid/inline-table/override-val-in-table.toml
      1→[tab.nested …
      4→[tab …
+
 tests/data/invalid/inline-table/override-val-with-array.toml
      3→[[inline-t.nest …
+
 tests/data/invalid/inline-table/override-val-with-table.toml
      3→[inline-t.nest …
+
 tests/data/invalid/keys-and-vals/overwrite-with-deep-table.toml
      2→[a.b.c.d …
+
 tests/data/invalid/table/redefine-1.toml
      1→[t1 …
      3→[t1.t2 …
+
 tests/data/invalid/table/redefine-2.toml
      1→[t1 …
      3→[t1.t2.t3 …
+
 tests/data/valid/_external/toml-test/valid/array/array-subtables.json
+
 tests/data/valid/_external/toml-test/valid/array/array-subtables.toml
      1→[[arr …
      2→[arr.subtab …
      5→[[arr …
      6→[arr.subtab …
+
 tests/data/valid/_external/toml-test/valid/array/array.json
+
 tests/data/valid/_external/toml-test/valid/array/bool.json
+
 tests/data/valid/_external/toml-test/valid/array/empty.json
+
 tests/data/valid/_external/toml-test/valid/array/hetergeneous.json
+
 tests/data/valid/_external/toml-test/valid/array/mixed-int-array.json
+
 tests/data/valid/_external/toml-test/valid/array/mixed-int-float.json
+
 tests/data/valid/_external/toml-test/valid/array/mixed-int-string.json
+
 tests/data/valid/_external/toml-test/valid/array/mixed-string-table.json
+
 tests/data/valid/_external/toml-test/valid/array/nested-double.json
+
 tests/data/valid/_external/toml-test/valid/array/nested-inline-table.json
+
 tests/data/valid/_external/toml-test/valid/array/nested.json
+
 tests/data/valid/_external/toml-test/valid/array/nospaces.json
+
 tests/data/valid/_external/toml-test/valid/array/open-parent-table.json
+
 tests/data/valid/_external/toml-test/valid/array/open-parent-table.toml
      1→[[parent-table.arr …
      2→[[parent-table.arr …
      3→[parent-table …
+
 tests/data/valid/_external/toml-test/valid/array/string-quote-comma-01.json
+
 tests/data/valid/_external/toml-test/valid/array/string-quote-comma-02.json
+
 tests/data/valid/_external/toml-test/valid/array/string-with-comma-01.json
+
 tests/data/valid/_external/toml-test/valid/array/string-with-comma-02.json
+
 tests/data/valid/_external/toml-test/valid/array/strings.json
+
 tests/data/valid/_external/toml-test/valid/array/table-array-string-backslash.json
+
 tests/data/valid/_external/toml-test/valid/array/trailing-comma.json
+
 tests/data/valid/_external/toml-test/valid/bool/bool.json
      2→    "f": {"type": "bool", "value": "false"},
      3→    "t": {"type": "bool", "value": "true"}
      4→}
+
 tests/data/valid/_external/toml-test/valid/comment/after-literal-no-ws.json
      2→    "false": {"type": "bool", "value": "false"},
      3→    "inf":   {"type": "float", "value": "inf"},
      4→    "nan":   {"type": "float", "value": "nan"},
      5→    "true":  {"type": "bool", "value": "true"}
      6→}
+
 tests/data/valid/_external/toml-test/valid/comment/at-eof.json
      2→    "key": {"type": "string", "value": "value"}
      3→}
+
 tests/data/valid/_external/toml-test/valid/comment/at-eof2.json
      2→    "key": {"type": "string", "value": "value"}
      3→}
+
 tests/data/valid/_external/toml-test/valid/comment/everywhere.json
      2→    "aot": [
      9→    ],
     10→    "group": {
     18→    }
     19→}
+
 tests/data/valid/_external/toml-test/valid/comment/everywhere.toml
      7→[group …
     30→[[aot …
     32→[[aot …
+
 tests/data/valid/_external/toml-test/valid/comment/tricky.json
      2→    "hash#tag": {
     19→    },
     20→    "section": {
     30→    }
     31→}
+
 tests/data/valid/_external/toml-test/valid/comment/tricky.toml
      1→[section …
     18→["hash#tag" …
+
 tests/data/valid/_external/toml-test/valid/datetime/datetime.json
+
 tests/data/valid/_external/toml-test/valid/datetime/edge.json
+
 tests/data/valid/_external/toml-test/valid/datetime/invalid-date-in-string.json
+
 tests/data/valid/_external/toml-test/valid/datetime/leap-year.json
+
 tests/data/valid/_external/toml-test/valid/datetime/local-date.json
+
 tests/data/valid/_external/toml-test/valid/datetime/local-time.json
+
 tests/data/valid/_external/toml-test/valid/datetime/local.json
+
 tests/data/valid/_external/toml-test/valid/datetime/milliseconds.json
+
 tests/data/valid/_external/toml-test/valid/datetime/no-seconds.json
+
 tests/data/valid/_external/toml-test/valid/datetime/timezone.json
+
 tests/data/valid/_external/toml-test/valid/example.json
      2→    "best-day-ever": {"type": "datetime", "value": "1987-07-05T17:45:00Z"},
      3→    "numtheory": {
     10→    }
     11→}
+
 tests/data/valid/_external/toml-test/valid/example.toml
      3→[numtheory …
+
 tests/data/valid/_external/toml-test/valid/float/exponent.json
+
 tests/data/valid/_external/toml-test/valid/float/float.json
+
 tests/data/valid/_external/toml-test/valid/float/inf-and-nan.json
+
 tests/data/valid/_external/toml-test/valid/float/long.json
+
 tests/data/valid/_external/toml-test/valid/float/max-int.json
+
 tests/data/valid/_external/toml-test/valid/float/underscore.json
+
 tests/data/valid/_external/toml-test/valid/float/zero.json
+
 tests/data/valid/_external/toml-test/valid/implicit-and-explicit-after.json
      2→    "a": {
      9→    }
     10→}
+
 tests/data/valid/_external/toml-test/valid/implicit-and-explicit-after.toml
      1→[a.b.c …
      4→[a …
+
 tests/data/valid/_external/toml-test/valid/implicit-and-explicit-before.json
      2→    "a": {
      9→    }
     10→}
+
 tests/data/valid/_external/toml-test/valid/implicit-and-explicit-before.toml
      1→[a …
      4→[a.b.c …
+
 tests/data/valid/_external/toml-test/valid/implicit-groups.json
      2→    "a": {
      8→    }
      9→}
+
 tests/data/valid/_external/toml-test/valid/implicit-groups.toml
      1→[a.b.c …
+
 tests/data/valid/_external/toml-test/valid/inline-table/array-01.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/array-02.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/array-03.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/bool.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/empty.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/end-in-bool.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/inline-table.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-01.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-02.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-03.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-03.toml
      1→[tbl …
      4→[tbl.x …
+
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-04.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-04.toml
      1→[[arr …
      5→[[arr …
+
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-05.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-06.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-07.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/multiline.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/nest.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/newline-comment.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/newline.json
+
 tests/data/valid/_external/toml-test/valid/inline-table/spaces.json
+
 tests/data/valid/_external/toml-test/valid/integer/float64-max.json
      2→    "max_int": {"type": "integer", "value": "9007199254740991"},
      3→    "min_int": {"type": "integer", "value": "-9007199254740991"}
      4→}
+
 tests/data/valid/_external/toml-test/valid/integer/integer.json
      2→    "answer":    {"type": "integer", "value": "42"},
      3→    "neganswer": {"type": "integer", "value": "-42"},
      4→    "posanswer": {"type": "integer", "value": "42"},
      5→    "zero":      {"type": "integer", "value": "0"}
      6→}
+
 tests/data/valid/_external/toml-test/valid/integer/literals.json
      2→    "bin1": {"type": "integer", "value": "214"},
      3→    "bin2": {"type": "integer", "value": "5"},
@@ -875,14 +995,17 @@ tests/data/valid/_external/toml-test/valid/integer/literals.json
      9→    "oct2": {"type": "integer", "value": "493"},
     10→    "oct3": {"type": "integer", "value": "501"}
     11→}
+
 tests/data/valid/_external/toml-test/valid/integer/long.json
      2→    "int64-max":     {"type": "integer", "value": "9223372036854775807"},
      3→    "int64-max-neg": {"type": "integer", "value": "-9223372036854775808"}
      4→}
+
 tests/data/valid/_external/toml-test/valid/integer/underscore.json
      2→    "kilo": {"type": "integer", "value": "1000"},
      3→    "x":    {"type": "integer", "value": "1111"}
      4→}
+
 tests/data/valid/_external/toml-test/valid/integer/zero.json
      2→    "a2": {"type": "integer", "value": "0"},
      3→    "a3": {"type": "integer", "value": "0"},
@@ -897,57 +1020,91 @@ tests/data/valid/_external/toml-test/valid/integer/zero.json
     12→    "h3": {"type": "integer", "value": "0"},
     13→    "o1": {"type": "integer", "value": "0"}
     14→}
+
 tests/data/valid/_external/toml-test/valid/key/alphanum.json
+
 tests/data/valid/_external/toml-test/valid/key/alphanum.toml
     10→[2018_10 …
     13→[a-a-a …
+
 tests/data/valid/_external/toml-test/valid/key/case-sensitive.json
+
 tests/data/valid/_external/toml-test/valid/key/case-sensitive.toml
      3→[section …
      8→[Section …
+
 tests/data/valid/_external/toml-test/valid/key/dotted-01.json
+
 tests/data/valid/_external/toml-test/valid/key/dotted-02.json
+
 tests/data/valid/_external/toml-test/valid/key/dotted-03.json
+
 tests/data/valid/_external/toml-test/valid/key/dotted-03.toml
      3→[tbl …
      6→[a.few.dots …
+
 tests/data/valid/_external/toml-test/valid/key/dotted-04.json
+
 tests/data/valid/_external/toml-test/valid/key/dotted-04.toml
      3→[[arr …
      7→[[arr …
+
 tests/data/valid/_external/toml-test/valid/key/dotted-empty.json
+
 tests/data/valid/_external/toml-test/valid/key/dotted-empty.toml
      3→[a …
+
 tests/data/valid/_external/toml-test/valid/key/equals-nospace.json
+
 tests/data/valid/_external/toml-test/valid/key/escapes.json
+
 tests/data/valid/_external/toml-test/valid/key/escapes.toml
      6→["backsp\b\b" …
      8→["\"quoted\"" …
     11→["a.b"."\u00c0" …
+
 tests/data/valid/_external/toml-test/valid/key/like-date.json
+
 tests/data/valid/_external/toml-test/valid/key/like-date.toml
     18→[2002-01-02 …
     21→[2002-01-02.2024-01-03 …
     24→[[2002-01-04 …
+
 tests/data/valid/_external/toml-test/valid/key/numeric-01.json
+
 tests/data/valid/_external/toml-test/valid/key/numeric-02.json
+
 tests/data/valid/_external/toml-test/valid/key/numeric-03.json
+
 tests/data/valid/_external/toml-test/valid/key/numeric-04.json
+
 tests/data/valid/_external/toml-test/valid/key/numeric-05.json
+
 tests/data/valid/_external/toml-test/valid/key/numeric-06.json
+
 tests/data/valid/_external/toml-test/valid/key/numeric-07.json
+
 tests/data/valid/_external/toml-test/valid/key/numeric-08.json
+
 tests/data/valid/_external/toml-test/valid/key/quoted-dots.json
+
 tests/data/valid/_external/toml-test/valid/key/quoted-dots.toml
      4→[plain_table …
      8→[table.withdot …
+
 tests/data/valid/_external/toml-test/valid/key/quoted-unicode.json
+
 tests/data/valid/_external/toml-test/valid/key/space.json
+
 tests/data/valid/_external/toml-test/valid/key/space.toml
      6→[ " tbl " …
+
 tests/data/valid/_external/toml-test/valid/key/special-chars.json
+
 tests/data/valid/_external/toml-test/valid/key/special-word.json
+
 tests/data/valid/_external/toml-test/valid/key/start.json
+
 tests/data/valid/_external/toml-test/valid/key/start.toml
      4→[-key …
      7→[_key …
@@ -959,65 +1116,84 @@ tests/data/valid/_external/toml-test/valid/key/start.toml
     25→[___ …
     28→[111 …
     31→[inline …
+
 tests/data/valid/_external/toml-test/valid/key/zero.json
+
 tests/data/valid/_external/toml-test/valid/multibyte.json
      2→    "𝐭𝐛𝐥": {
     20→    }
     21→}
+
 tests/data/valid/_external/toml-test/valid/multibyte.toml
      6→['𝐭𝐛𝐥' …
      8→	['𝐭𝐛𝐥'.sub …
     15→		['𝐭𝐛𝐥'.sub."βïƭ#" …
+
 tests/data/valid/_external/toml-test/valid/newline-crlf.json
      2→    "newline": {"type": "string", "value": "crlf"},
      3→    "os":      {"type": "string", "value": "DOS"}
      4→}
+
 tests/data/valid/_external/toml-test/valid/newline-lf.json
      2→    "newline": {"type": "string", "value": "lf"},
      3→    "os":      {"type": "string", "value": "unix"}
      4→}
+
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-37.toml
      1→[table …
+
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-38.toml
      1→[table-1 …
      5→[table-2 …
+
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-39.toml
      1→[dog."tater.man" …
+
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-40.toml
      1→[a.b.c …
      2→[ d.e.f …
      3→[ g .  h  . i …
      4→[ j . "ʞ" . 'l' …
+
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-41.toml
      4→[x.y.z.w …
      6→[x …
+
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-42.toml
      2→[fruit.apple …
      3→[animal …
      4→[fruit.orange …
+
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-43.toml
      2→[fruit.apple …
      3→[fruit.orange …
      4→[animal …
+
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-44.toml
      6→[owner …
+
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-46.toml
      1→[fruit …
      8→[fruit.apple.texture …
+
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-48.toml
      1→[name …
      5→[point …
      9→[animal …
     12→[contact.personal …
     16→[contact.work …
+
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-49.toml
      1→[product …
+
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-50.toml
      1→[product …
+
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-51.toml
      1→[[product …
      5→[[product …
      7→[[product …
+
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-52.toml
      1→[[fruits …
      4→[fruits.physical …
@@ -1025,6 +1201,7 @@ tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-52.toml
     11→[[fruits.varieties …
     15→[[fruits …
     18→[[fruits.varieties …
+
 tests/data/valid/_external/toml-test/valid/spec-example-1-compact.json
      2→    "title": {"type": "string", "value": "TOML Example"},
      3→    "clients": {
@@ -1036,6 +1213,7 @@ tests/data/valid/_external/toml-test/valid/spec-example-1-compact.json
     33→    "servers": {
     42→    }
     43→}
+
 tests/data/valid/_external/toml-test/valid/spec-example-1-compact.toml
      3→[owner …
      6→[database …
@@ -1043,6 +1221,7 @@ tests/data/valid/_external/toml-test/valid/spec-example-1-compact.toml
     12→[servers.alpha …
     15→[servers.beta …
     18→[clients …
+
 tests/data/valid/_external/toml-test/valid/spec-example-1.json
      2→    "title": {"type": "string", "value": "TOML Example"},
      3→    "clients": {
@@ -1054,6 +1233,7 @@ tests/data/valid/_external/toml-test/valid/spec-example-1.json
     33→    "servers": {
     42→    }
     43→}
+
 tests/data/valid/_external/toml-test/valid/spec-example-1.toml
      5→[owner …
      9→[database …
@@ -1061,138 +1241,226 @@ tests/data/valid/_external/toml-test/valid/spec-example-1.toml
     18→  [servers.alpha …
     22→  [servers.beta …
     26→[clients …
+
 tests/data/valid/_external/toml-test/valid/string/basic-escape-01.json
+
 tests/data/valid/_external/toml-test/valid/string/basic-escape-02.json
+
 tests/data/valid/_external/toml-test/valid/string/basic-escape-03.json
+
 tests/data/valid/_external/toml-test/valid/string/empty.json
+
 tests/data/valid/_external/toml-test/valid/string/ends-in-whitespace-escape.json
+
 tests/data/valid/_external/toml-test/valid/string/escape-esc.json
+
 tests/data/valid/_external/toml-test/valid/string/escape-tricky.json
+
 tests/data/valid/_external/toml-test/valid/string/escaped-escape.json
+
 tests/data/valid/_external/toml-test/valid/string/escapes.json
+
 tests/data/valid/_external/toml-test/valid/string/hex-escape.json
+
 tests/data/valid/_external/toml-test/valid/string/multibyte-escape.json
+
 tests/data/valid/_external/toml-test/valid/string/multibyte.json
+
 tests/data/valid/_external/toml-test/valid/string/multiline-empty.json
+
 tests/data/valid/_external/toml-test/valid/string/multiline-escaped-crlf.json
+
 tests/data/valid/_external/toml-test/valid/string/multiline-quotes.json
+
 tests/data/valid/_external/toml-test/valid/string/multiline.json
+
 tests/data/valid/_external/toml-test/valid/string/nl.json
+
 tests/data/valid/_external/toml-test/valid/string/quoted-unicode.json
+
 tests/data/valid/_external/toml-test/valid/string/raw-empty.json
+
 tests/data/valid/_external/toml-test/valid/string/raw-multiline.json
+
 tests/data/valid/_external/toml-test/valid/string/raw.json
+
 tests/data/valid/_external/toml-test/valid/string/simple.json
+
 tests/data/valid/_external/toml-test/valid/string/start-mb.json
+
 tests/data/valid/_external/toml-test/valid/string/unicode-escape.json
+
 tests/data/valid/_external/toml-test/valid/string/with-pound.json
+
 tests/data/valid/_external/toml-test/valid/table/array-empty-name.toml
+
 tests/data/valid/_external/toml-test/valid/table/array-empty.json
+
 tests/data/valid/_external/toml-test/valid/table/array-empty.toml
+
 tests/data/valid/_external/toml-test/valid/table/array-implicit-and-explicit-after.json
+
 tests/data/valid/_external/toml-test/valid/table/array-implicit-and-explicit-after.toml
+
 tests/data/valid/_external/toml-test/valid/table/array-implicit.json
+
 tests/data/valid/_external/toml-test/valid/table/array-implicit.toml
+
 tests/data/valid/_external/toml-test/valid/table/array-many.json
+
 tests/data/valid/_external/toml-test/valid/table/array-many.toml
+
 tests/data/valid/_external/toml-test/valid/table/array-nest.json
+
 tests/data/valid/_external/toml-test/valid/table/array-nest.toml
+
 tests/data/valid/_external/toml-test/valid/table/array-one.json
+
 tests/data/valid/_external/toml-test/valid/table/array-one.toml
+
 tests/data/valid/_external/toml-test/valid/table/array-table-array.json
+
 tests/data/valid/_external/toml-test/valid/table/array-table-array.toml
+
 tests/data/valid/_external/toml-test/valid/table/array-within-dotted.json
+
 tests/data/valid/_external/toml-test/valid/table/array-within-dotted.toml
+
 tests/data/valid/_external/toml-test/valid/table/empty-name.json
+
 tests/data/valid/_external/toml-test/valid/table/empty-name.toml
+
 tests/data/valid/_external/toml-test/valid/table/empty.json
+
 tests/data/valid/_external/toml-test/valid/table/empty.toml
+
 tests/data/valid/_external/toml-test/valid/table/keyword-with-values.json
+
 tests/data/valid/_external/toml-test/valid/table/keyword-with-values.toml
+
 tests/data/valid/_external/toml-test/valid/table/keyword.json
+
 tests/data/valid/_external/toml-test/valid/table/keyword.toml
+
 tests/data/valid/_external/toml-test/valid/table/names-with-values.json
+
 tests/data/valid/_external/toml-test/valid/table/names-with-values.toml
+
 tests/data/valid/_external/toml-test/valid/table/names.json
+
 tests/data/valid/_external/toml-test/valid/table/names.toml
+
 tests/data/valid/_external/toml-test/valid/table/no-eol.json
+
 tests/data/valid/_external/toml-test/valid/table/no-eol.toml
+
 tests/data/valid/_external/toml-test/valid/table/sub-empty.json
+
 tests/data/valid/_external/toml-test/valid/table/sub-empty.toml
+
 tests/data/valid/_external/toml-test/valid/table/sub.json
+
 tests/data/valid/_external/toml-test/valid/table/sub.toml
+
 tests/data/valid/_external/toml-test/valid/table/whitespace.json
+
 tests/data/valid/_external/toml-test/valid/table/whitespace.toml
+
 tests/data/valid/_external/toml-test/valid/table/with-literal-string.json
+
 tests/data/valid/_external/toml-test/valid/table/with-literal-string.toml
+
 tests/data/valid/_external/toml-test/valid/table/with-pound.json
+
 tests/data/valid/_external/toml-test/valid/table/with-pound.toml
+
 tests/data/valid/_external/toml-test/valid/table/with-single-quotes.json
+
 tests/data/valid/_external/toml-test/valid/table/with-single-quotes.toml
+
 tests/data/valid/_external/toml-test/valid/table/without-super-with-values.json
+
 tests/data/valid/_external/toml-test/valid/table/without-super-with-values.toml
+
 tests/data/valid/_external/toml-test/valid/table/without-super.json
+
 tests/data/valid/_external/toml-test/valid/table/without-super.toml
+
 tests/data/valid/apostrophes-in-literal-string.json
      1→{"this-str-has-apostrophes": {"type": "string", "value": "' there's one already\n'' two more\n''"}}
+
 tests/data/valid/array/array-subtables.json
      1→{"arr":
     10→  }
     11→}
+
 tests/data/valid/array/array-subtables.toml
      1→[[arr …
      2→[arr.subtab …
      5→[[arr …
      6→[arr.subtab …
+
 tests/data/valid/array/open-parent-table.json
      2→  "parent-table": {
      5→  }
      6→}
+
 tests/data/valid/array/open-parent-table.toml
      1→[[parent-table.arr …
      2→[[parent-table.arr …
      3→[parent-table …
+
 tests/data/valid/boolean.json
      2→  "a": {"type":"bool","value":"true"},
      3→  "b": {"type":"bool","value":"false"}
      4→}
+
 tests/data/valid/dates-and-times/datetimes.json
      2→  "local-dt": {"type":"datetime-local","value":"1988-10-27t01:01:01"},
      3→  "local-dt-no-seconds": {"type":"datetime-local","value":"2025-04-18t20:05:00"},
      4→  "zulu-dt": {"type":"datetime","value":"1988-10-27t01:01:01z"}
      5→}
+
 tests/data/valid/dates-and-times/localtime.json
      1→{"t":
      2→  {"type":"time-local","value":"00:00:00.999999"},
      3→"t2":
      4→  {"type":"time-local","value":"00:00:00"}}
+
 tests/data/valid/five-quotes.json
      2→  "five-quotes": {"type":"string","value":"Closing with five quotes\n\"\""},
      3→  "four-quotes": {"type":"string","value":"Closing with four quotes\n\""}
      4→}
+
 tests/data/valid/hex-char.json
      2→  "a": {"type":"string","value":"a"},
      3→  "b": {"type":"string","value":"b"},
      4→  "c": {"type":"string","value":"c"}
      5→}
+
 tests/data/valid/inline-table/empty-inline-table.json
      1→{"empty":  {}}
+
 tests/data/valid/inline-table/multiline-inline-table.json
      2→  "multiline": {
     34→  }
     35→}
+
 tests/data/valid/multiline-basic-str/ends-in-whitespace-escape.json
      1→{"beee": {"type": "string", "value": "heeee\ngeeee"}}
+
 tests/data/valid/multiline-basic-str/replacements.json
      2→  "escape": {"type":"string","value":"\u001B"},
      3→  "tab": {"type":"string","value":"\t"},
      4→  "upper-j": {"type":"string","value":"J"},
      5→  "upper-j-2": {"type":"string","value":"J"}
      6→}
+
 tests/data/valid/trailing-comma.json
      1→{"arr":
      6→  }
      7→}
+
 tests/test_data.py
      5→import json
      6→from pathlib import Path
@@ -1205,6 +1473,7 @@ tests/test_data.py
     27→class TestData(unittest.TestCase):
     28→    def test_invalid(self):
     40→    def test_valid(self):
+
 tests/test_error.py
      7→from typing import Any
      8→import unittest
@@ -1217,6 +1486,7 @@ tests/test_error.py
     62→    def test_invalid_parse_float(self):
     76→    def test_deprecated_tomldecodeerror(self):
     92→    def test_tomldecodeerror(self):
+
 tests/test_misc.py
      5→import copy
      6→import datetime
@@ -1240,6 +1510,7 @@ tests/test_misc.py
    136→        The module is for type annotations only, so it is otherwise
    137→        never imported by tests.
    138→        """
+
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
      3→Tomli was added to the Python standard library in Python 3.11.

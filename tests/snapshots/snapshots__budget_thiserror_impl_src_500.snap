@@ -43,6 +43,7 @@ ast.rs
     50→    TupleVariant,
     51→    UnitVariant,
     52→}
+
 attr.rs
     11→pub struct Attrs<'a> {
     12→    pub display: Option<Display<'a>>,
@@ -95,8 +96,11 @@ attr.rs
     65→    LowerExp,
     66→    UpperExp,
     67→}
+
 expand.rs
+
 fallback.rs
+
 fmt.rs
    166→struct FmtArguments {
    167→    named: BTreeSet<IdentUnraw>,
@@ -116,6 +120,7 @@ fmt.rs
    182→        return Ok(set);
    183→    }
       →…
+
 generics.rs
      8→pub struct ParamsInScope<'a> {
      9→    names: Set<&'a Ident>,
@@ -124,6 +129,7 @@ generics.rs
     49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
     50→    order: Vec<TokenStream>,
     51→}
+
 lib.rs
     23→mod ast;
     24→mod attr;
@@ -142,7 +148,9 @@ lib.rs
     43→}
     45→#[allow(non_camel_case_types)]
     46→struct private;
+
 prop.rs
+
 scan_expr.rs
      6→enum Input {
      7→    Keyword(&'static str),
@@ -168,6 +176,7 @@ scan_expr.rs
     28→    DecDepth,
     29→    Finish,
     30→}
+
 unraw.rs
     10→#[derive(Clone)]
     11→#[repr(transparent)]
@@ -177,4 +186,5 @@ unraw.rs
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
     85→}
+
 valid.rs

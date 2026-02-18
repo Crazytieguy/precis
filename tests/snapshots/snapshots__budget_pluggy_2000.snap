@@ -6,6 +6,7 @@ budget: 2000 (1957 words)
 
 AGENTS.md
      1→# AGENTS.md …
+
 CLAUDE.md
      1→# CLAUDE.md …
      5→## Project Overview …
@@ -17,14 +18,17 @@ CLAUDE.md
     34→### Main Components …
     42→### Package Structure …
     48→## Configuration Files …
+
 SECURITY.md
      1→# Security
      3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
+
 codecov.yml
      1→coverage:
      5→    changes: true
      6→
      7→comment: off
+
 docs/conf.py
      1→from importlib import metadata
      2→from typing import TYPE_CHECKING
@@ -38,12 +42,15 @@ docs/conf.py
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
+
 docs/examples/eggsample/eggsample/__init__.py
+
 docs/examples/eggsample/eggsample/hookspecs.py
      7→@hookspec
      8→def eggsample_add_ingredients(ingredients: tuple):
     16→@hookspec
     17→def eggsample_prep_condiments(condiments: dict):
+
 docs/examples/eggsample/eggsample/host.py
     13→def main():
     21→def get_plugin_manager():
@@ -54,22 +61,27 @@ docs/examples/eggsample/eggsample/host.py
     36→    def add_ingredients(self):
     45→    def prepare_the_food(self):
     48→    def serve_the_food(self):
+
 docs/examples/eggsample/eggsample/lib.py
      4→@eggsample.hookimpl
      5→def eggsample_add_ingredients():
     12→@eggsample.hookimpl
     13→def eggsample_prep_condiments(condiments):
+
 docs/examples/eggsample/setup.py
      1→from setuptools import find_packages
      2→from setuptools import setup
+
 docs/examples/eggsample-spam/eggsample_spam.py
      1→import eggsample
      4→@eggsample.hookimpl
      5→def eggsample_add_ingredients(ingredients):
     14→@eggsample.hookimpl
     15→def eggsample_prep_condiments(condiments):
+
 docs/examples/eggsample-spam/setup.py
      1→from setuptools import setup
+
 docs/examples/toy-example.py
      1→import pluggy
      8→class MySpec:
@@ -89,6 +101,7 @@ docs/examples/toy-example.py
     29→    def myhook(self, arg1, arg2):
     30→        print("inside Plugin_2.myhook()")
       →…
+
 pyproject.toml
      1→[build-system …
      8→[project …
@@ -107,6 +120,7 @@ pyproject.toml
    102→  [[tool.towncrier.type …
    107→  [[tool.towncrier.type …
    112→[tool.mypy …
+
 scripts/release.py
     15→def create_branch(version: str) -> Repo:
     16→    """Create a fresh branch from upstream/main"""
@@ -116,6 +130,7 @@ scripts/release.py
     40→    """Generates new docs, release announcements and creates a local tag."""
     50→def changelog(version: str, write_out: bool = False) -> None:
     59→def main() -> int:
+
 scripts/towncrier-draft-to-file.py
      5→def main() -> int:
      6→    """
@@ -123,6 +138,7 @@ scripts/towncrier-draft-to-file.py
      8→    Fixes the issue (pytest#7251) where windows users are unable to natively
      9→    run tox -e docs to build pytest docs.
     10→    """
+
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
@@ -147,6 +163,7 @@ src/pluggy/__init__.py
     27→from ._result import Result
     28→from ._warnings import PluggyTeardownRaisedWarning
     29→from ._warnings import PluggyWarning
+
 src/pluggy/_callers.py
     16→from ._hooks import HookImpl
     17→from ._result import HookCallError
@@ -173,6 +190,7 @@ src/pluggy/_callers.py
     90→
     91→    ``caller_kwargs`` comes from HookCaller.__call__().
     92→    """
+
 src/pluggy/_hooks.py
     25→from ._result import Result
     28→_T = TypeVar("_T")
@@ -342,6 +360,7 @@ src/pluggy/_hooks.py
    706→        "warn_on_impl_args",
    707→    )
    708→
+
 src/pluggy/_manager.py
     16→from . import _tracing
     17→from ._callers import _multicall
@@ -400,6 +419,7 @@ src/pluggy/_manager.py
    120→    ) -> object | list[object]:
    331→    def _verify_hook(self, hook: HookCaller, hookimpl: HookImpl) -> None:
    525→def _formatdef(func: Callable[..., object]) -> str:
+
 src/pluggy/_result.py
     16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
     20→class HookCallError(Exception):
@@ -433,11 +453,13 @@ src/pluggy/_result.py
     63→        except BaseException as exc:
     64→            exception = exc
     65→        return cls(result, exception)
+
 src/pluggy/_tracing.py
     16→class TagTracer:
     25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
     42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
     59→class TagTracerSub:
+
 src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):
      5→    """Base class for all warnings emitted by pluggy."""
@@ -461,6 +483,7 @@ src/pluggy/_warnings.py
     25→    """
     26→
     27→    __module__ = "pluggy"
+
 testing/benchmark.py
     20→@hookimpl
     21→def hook(arg1, arg2, arg3):
@@ -470,11 +493,15 @@ testing/benchmark.py
     31→def hooks(request: Any) -> list[object]:
     35→@pytest.fixture(params=[10, 100], ids="wrappers={}".format)
     36→def wrappers(request: Any) -> list[object]:
+
 testing/conftest.py
     23→@pytest.fixture
     24→def pm() -> PluginManager:
+
 testing/test_details.py
+
 testing/test_helpers.py
+
 testing/test_hookcaller.py
     20→@pytest.fixture
     21→def hc(pm: PluginManager) -> HookCaller:
@@ -484,7 +511,9 @@ testing/test_hookcaller.py
    327→@pytest.mark.parametrize("name", ["hookwrapper", "optionalhook", "tryfirst", "trylast"])
    328→@pytest.mark.parametrize("val", [True, False])
    329→def test_hookimpl(name: str, val: bool) -> None:
+
 testing/test_invocations.py
+
 testing/test_multicall.py
    249→@pytest.mark.parametrize("exc", [ValueError, SystemExit])
    250→def test_hookwrapper_exception(exc: type[BaseException]) -> None:
@@ -492,6 +521,7 @@ testing/test_multicall.py
    320→def test_wrapper_exception(exc: type[BaseException]) -> None:
    416→@pytest.mark.parametrize("has_hookwrapper", [True, False])
    417→def test_wrapper_stopiteration_passtrough(has_hookwrapper: bool) -> None:
+
 testing/test_pluginmanager.py
    298→@pytest.mark.parametrize("result_callback", [True, False])
    299→def test_with_result_memorized(pm: PluginManager, result_callback: bool) -> None:
@@ -504,8 +534,11 @@ testing/test_pluginmanager.py
    702→) -> None:
    703→    """Test that registering an impl of a hook while it is being called does
       →…
+
 testing/test_result.py
+
 testing/test_tracer.py
      6→@pytest.fixture
      7→def rootlogger() -> TagTracer:
+
 testing/test_warnings.py

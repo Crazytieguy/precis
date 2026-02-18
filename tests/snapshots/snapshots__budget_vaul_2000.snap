@@ -6,6 +6,7 @@ budget: 2000 (1968 words)
 
 FUNDING.yml
      1→github …
+
 package.json
      2→  "name": "vaul",
      3→  "version": "1.1.2",
@@ -36,10 +37,13 @@ package.json
     66→  "dependencies": {
     68→  }
     69→}
+
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
+
 pnpm-workspace.yaml
      1→packages …
+
 src/browser.ts
      1→export function isMobileFirefox …
     10→export function isMac …
@@ -48,6 +52,7 @@ src/browser.ts
     22→export function isIPad …
     30→export function isIOS …
     34→export function testPlatform …
+
 src/constants.ts
      1→export const TRANSITIONS = {
      2→  DURATION: 0.5,
@@ -59,6 +64,7 @@ src/constants.ts
     14→export const NESTED_DISPLACEMENT = 16;
     16→export const WINDOW_TOP_OFFSET = 26;
     18→export const DRAG_CLASS = 'vaul-dragging';
+
 src/context.ts
      1→import React from 'react';
      2→import { DrawerDirection } from './types';
@@ -80,6 +86,7 @@ src/context.ts
     38→  drawerRef: { current: null },
       →…
     69→export const useDrawerContext …
+
 src/helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
      3→interface Style {
@@ -106,6 +113,7 @@ src/helpers.ts
    115→    }
    116→  };
    117→}
+
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
@@ -221,6 +229,7 @@ src/index.tsx
   1134→  return <DialogPrimitive.Portal container={container} {...portalProps} />;
   1135→}
   1137→export const Drawer = {
+
 src/types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
      2→export interface SnapPoint {
@@ -228,6 +237,7 @@ src/types.ts
      4→  height: number;
      5→}
      7→export type AnyFunction = (...args: any) => any;
+
 src/use-composed-refs.ts
      3→import * as React from 'react';
      5→type PossibleRef<T> = React.Ref<T> | undefined;
@@ -257,6 +267,7 @@ src/use-composed-refs.ts
     32→  // eslint-disable-next-line react-hooks/exhaustive-deps
     33→  return React.useCallback(composeRefs(...refs), refs);
     34→}
+
 src/use-controllable-state.ts
      3→import React from 'react';
      5→type UseControllableStateParams<T> = {
@@ -264,6 +275,7 @@ src/use-controllable-state.ts
     13→function useCallbackRef …
     24→function useUncontrolledState …
     39→export function useControllableState …
+
 src/use-position-fixed.ts
      1→import React from 'react';
      2→import { isSafari } from './browser';
@@ -322,6 +334,7 @@ src/use-position-fixed.ts
     58→      window.setTimeout(
     59→        () =>
       →…
+
 src/use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
      4→import { isIOS } from './browser';
@@ -370,6 +383,7 @@ src/use-prevent-scroll.ts
    257→function addEvent …
    272→function scrollIntoView …
    294→export function isInput …
+
 src/use-scale-background.ts
      1→import React, { useMemo } from 'react';
      2→import { useDrawerContext } from './context';
@@ -377,6 +391,7 @@ src/use-scale-background.ts
      4→import { BORDER_RADIUS, TRANSITIONS, WINDOW_TOP_OFFSET } from './constants';
      6→const noop …
      8→export function useScaleBackground …
+
 src/use-snap-points.ts
      1→import React from 'react';
      2→import { set, isVertical } from './helpers';
@@ -384,12 +399,15 @@ src/use-snap-points.ts
      4→import { useControllableState } from './use-controllable-state';
      5→import { DrawerDirection } from './types';
      7→export function useSnapPoints …
+
 test/README.md
      3→## Getting Started …
     21→## Learn More …
     30→## Deploy on Vercel …
+
 test/next.config.js
      2→const nextConfig = {
+
 test/package.json
      2→  "name": "test",
      3→  "version": "0.1.0",
@@ -401,71 +419,93 @@ test/package.json
     21→  "dependencies": {
     28→  }
     29→}
+
 test/src/app/controlled/page.tsx
      6→export default function Page() {
+
 test/src/app/default-open/page.tsx
      6→export default function Page() {
      7→  return (
       →…
+
 test/src/app/different-directions/page.tsx
      6→function DirectionalDrawer …
    118→export default function Page() {
    119→  return (
       →…
+
 test/src/app/initial-snap/page.tsx
      7→const snapPoints = [0, '148px', '355px', 1];
      9→export default function Page() {
+
 test/src/app/layout.tsx
      1→import './globals.css';
      5→const inter = Inter({ subsets: ['latin'] });
      7→export const metadata: Metadata = {
     12→export default function RootLayout({ children }: { children: React.ReactNode }) {
+
 test/src/app/nested-drawers/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {
      6→  return (
       →…
+
 test/src/app/non-dismissible/page.tsx
      6→export default function Page() {
+
 test/src/app/open-another-drawer/page.tsx
      6→export function MyDrawer …
     96→export function MyDrawer2 …
    195→export default function Home …
+
 test/src/app/page.tsx
      5→export default function Page() {
+
 test/src/app/parent-container/page.tsx
      6→export default function Page() {
      7→  return (
       →…
     15→function Default() {
     39→function WithNested() {
+
 test/src/app/scrollable-page/page.tsx
      6→export default function Page() {
+
 test/src/app/scrollable-with-inputs/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {
      6→  return (
       →…
+
 test/src/app/with-handle/page.tsx
      7→const snapPoints = ['148px', '355px'];
      9→export default function Page() {
+
 test/src/app/with-modal-false/page.tsx
      7→const snapPoints = ['148px', '355px', 1];
      9→export default function Page() {
+
 test/src/app/with-redirect/long-page/page.tsx
      3→export default function Page() {
+
 test/src/app/with-redirect/page.tsx
      6→export default function Page() {
+
 test/src/app/with-scaled-background/page.tsx
     65→export default function Page() {
+
 test/src/app/with-snap-points/page.tsx
      7→const snapPoints = ['148px', '355px', 1];
      9→export default function Page() {
+
 test/src/app/without-scaled-background/page.tsx
      6→export default function Page() {
+
 test/tailwind.config.ts
+
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;
+
 test/tests/helpers.ts
      4→export async function openDrawer(page: Page) {
     11→export async function dragWithSpeed(
@@ -475,9 +515,11 @@ test/tests/helpers.ts
     15→  endY: number,
     16→  speed: number = 10,
     17→): Promise<void> {
+
 test/tests/initial-snap.spec.ts
      8→const snapPointYPositions = {
     15→const snapTo …
+
 test/tsconfig.json
      2→  "compilerOptions": {
     31→  },
@@ -486,11 +528,13 @@ test/tsconfig.json
     38→  "exclude": [
     40→  ]
     41→}
+
 tsconfig.json
      2→  "compilerOptions": {
      9→  },
     10→  "include": ["src"],
     11→}
+
 turbo.json
      2→  "$schema": "https://turbo.build/schema.json",
      3→  "pipeline": {

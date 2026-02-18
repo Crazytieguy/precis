@@ -6,12 +6,14 @@ budget: 1000 (943 words)
 
 CHANGELOG.md
      1→# Change Log …
+
 Cargo.toml
      1→[package …
     19→[package.metadata.docs.rs …
     22→[features …
     56→[dependencies …
     62→[dev-dependencies …
+
 README.md
      1→log
      4→A Rust library providing a lightweight logging *facade*.
@@ -28,8 +30,10 @@ README.md
    108→If you enable the `kv` feature, you can associate structured data with your log records:
    109→
       →…
+
 benches/value.rs
      4→use log::kv::Value;
+
 rfcs/0296-structured-logging.md
      5→# Summary …
     16→# Contents …
@@ -39,6 +43,7 @@ rfcs/0296-structured-logging.md
   1575→# Drawbacks, rationale, and alternatives …
   1629→# Prior art …
   1650→# Unresolved questions …
+
 src/__private_api.rs
      3→use self::sealed::KVs;
      4→use crate::{logger, Level, Log, Metadata, Record};
@@ -53,6 +58,7 @@ src/__private_api.rs
    114→    use crate::kv;
    116→    pub type Value<'a> = kv::Value<'a>;
    151→pub use self::kv_support::*;
+
 src/kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
@@ -71,6 +77,7 @@ src/kv/error.rs
     69→mod std_support {
     70→    use super::*;
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
+
 src/kv/key.rs
      3→use std::borrow::Borrow;
      7→pub trait ToKey {
@@ -84,6 +91,7 @@ src/kv/key.rs
    114→    use super::*;
    136→mod serde_support {
    137→    use super::*;
+
 src/kv/mod.rs
    246→mod error;
    247→mod key;
@@ -98,6 +106,7 @@ src/kv/mod.rs
    261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
    265→pub use self::source::Visitor;
+
 src/kv/source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
     51→pub trait Source {
@@ -112,6 +121,7 @@ src/kv/source.rs
    280→mod std_support {
    281→    use super::*;
    462→pub use VisitSource as Visitor;
+
 src/kv/value.rs
      6→use std::fmt;
      8→pub use crate::kv::Error;
@@ -162,6 +172,7 @@ src/kv/value.rs
   1149→macro_rules! as_error {
   1159→macro_rules! as_serde {
   1169→macro_rules! as_sval {
+
 src/lib.rs
    401→use std::error;
    405→#[macro_use]
@@ -248,13 +259,17 @@ src/lib.rs
   1609→///
   1610→/// [`logger`]: fn.logger.html
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
+
 src/macros.rs
+
 src/serde.rs
      9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
+
 test_max_level_features/Cargo.toml
      1→[package …
      7→[[bin …
     11→[dependencies.log …
+
 test_max_level_features/main.rs
      1→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
      2→use std::sync::{Arc, Mutex};
@@ -278,12 +293,15 @@ test_max_level_features/main.rs
     29→fn main() {
     44→fn test(a: &State, filter: LevelFilter) {
     72→fn last(state: &State, expected: Option<Level>) {
+
 tests/integration.rs
+
 tests/macros.rs
      3→macro_rules! all_log_macros {
    420→enum Type {
    421→    Some,
    422→    None,
    423→}
+
 triagebot.toml
      1→[assign …

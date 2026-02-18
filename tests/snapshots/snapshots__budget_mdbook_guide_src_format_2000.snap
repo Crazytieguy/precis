@@ -12,6 +12,7 @@ README.md
      6→- Format your `SUMMARY.md` file
      7→- Configure your book using `book.toml`
      8→- Customize your theme
+
 configuration/README.md
      1→# Configuration
      3→This section details the configuration options available in the ***book.toml***:
@@ -24,6 +25,7 @@ configuration/README.md
     10→[Preprocessor]: preprocessors.md
     11→[Renderer]: renderers.md
     12→[Environment Variable]: environment-variables.md
+
 configuration/environment-variables.md
      1→# Environment variables
      3→All configuration values can be overridden from the command line by setting the
@@ -33,6 +35,7 @@ configuration/environment-variables.md
      7→
      8→Variables starting with `MDBOOK_` are used for configuration. The key is created
       →…
+
 configuration/general.md
      1→# General configuration
      3→You can configure the parameters for your book in the ***book.toml*** file.
@@ -48,6 +51,7 @@ configuration/general.md
     37→### General metadata …
     64→### Rust options …
     85→### Build options …
+
 configuration/preprocessors.md
      1→# Configuring Preprocessors
      3→Preprocessors are extensions that can modify the raw Markdown source before it gets sent to the renderer.
@@ -70,6 +74,7 @@ configuration/preprocessors.md
     79→## Require a certain order
     81→The order in which preprocessors are run can be controlled with the `before` and `after` fields.
       →…
+
 configuration/renderers.md
      1→# Configuring Renderers
      3→Renderers (also called "backends") are responsible for creating the output of the book.
@@ -108,6 +113,7 @@ configuration/renderers.md
    325→## Markdown renderer
    327→The Markdown renderer will run preprocessors and then output the resulting
       →…
+
 example.rs
      1→fn main() {
      2→    println!("Hello World!");
@@ -115,6 +121,7 @@ example.rs
      4→#     // You can even hide lines! :D
      5→#     println!("I am hidden! Expand the code snippet to see me");
      6→}
+
 markdown.md
      1→# Markdown
      3→mdBook's [parser](https://github.com/raphlinus/pulldown-cmark) adheres to the [CommonMark](https://commonmark.org/) specification with some extensions described below.
@@ -141,6 +148,7 @@ markdown.md
    231→### Heading attributes …
    244→### Definition lists …
    279→### Admonitions …
+
 mathjax.md
      1→# MathJax support
      3→mdBook has optional support for math equations through
@@ -166,6 +174,7 @@ mathjax.md
     23→
     24→### Inline equations …
     32→### Block equations …
+
 mdbook.md
      1→# mdBook-specific features
      3→## Hiding code lines …
@@ -180,6 +189,7 @@ mdbook.md
    323→### `class="left"` and `"right"` …
    331→### `class="hidden"` …
    341→## Font-Awesome icons …
+
 summary.md
      1→# SUMMARY.md
      3→The summary file is used by mdBook to know what chapters to include, in what
@@ -193,6 +203,7 @@ summary.md
     11→
     12→### Structure …
     93→### Example …
+
 theme/README.md
      1→# Theme
      3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
@@ -230,6 +241,7 @@ theme/README.md
     35→built-in ones, they will not get updated with new fixes / features.
     36→
       →…
+
 theme/editor.md
      1→# Editor
      3→In addition to providing runnable code playgrounds, mdBook optionally allows them
@@ -273,6 +285,7 @@ theme/editor.md
     42→editable = true
     43→editor = "/path/to/editor"
       →…
+
 theme/index-hbs.md
      1→# index.hbs
      3→`index.hbs` is the handlebars template that is used to render the book. The
@@ -341,6 +354,7 @@ theme/index-hbs.md
    107→
    108→```html
       →…
+
 theme/syntax-highlighting.md
      1→# Syntax highlighting
      3→mdBook uses [Highlight.js](https://highlightjs.org) with a custom theme

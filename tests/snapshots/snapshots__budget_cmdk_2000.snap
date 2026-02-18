@@ -89,6 +89,7 @@ ARCHITECTURE.md
     95→
     96→## Groups
     98→Item mount informs both the root and the parent group, which keeps track of items within it. Each group informs the root.
+
 README.md
      5→# ⌘K
      7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
@@ -234,6 +235,7 @@ README.md
    479→```bash
    480→pnpm test
    481→```
+
 cmdk/package.json
      2→  "name": "cmdk",
      3→  "version": "1.1.1",
@@ -262,6 +264,7 @@ cmdk/package.json
     47→  "author": {
     50→  }
     51→}
+
 cmdk/src/command-score.ts
     54→function commandScoreInner(
     55→  string,
@@ -292,6 +295,7 @@ cmdk/src/command-score.ts
    160→  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
    161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
    162→}
+
 cmdk/src/index.tsx
      3→import * as RadixDialog from '@radix-ui/react-dialog'
      4→import * as React from 'react'
@@ -373,8 +377,10 @@ cmdk/src/index.tsx
   1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
   1073→  render: (child: React.ReactNode) => JSX.Element,
   1074→) {
+
 cmdk/tsup.config.ts
      1→import { defineConfig } from 'tsup'
+
 package.json
      2→  "name": "cmdk-root",
      3→  "private": true,
@@ -386,11 +392,14 @@ package.json
     23→  "lint-staged": {
     27→  }
     28→}
+
 playwright.config.ts
      1→import { PlaywrightTestConfig, devices } from '@playwright/test'
      3→const config: PlaywrightTestConfig = {
+
 pnpm-workspace.yaml
      1→packages …
+
 test/package.json
      2→  "name": "cmdk-tests",
      3→  "version": "0.0.0",
@@ -399,38 +408,48 @@ test/package.json
      7→  "dependencies": {
     17→  }
     18→}
+
 test/pages/_app.tsx
      1→import '../style.css'
      3→export default function App({ Component, pageProps }) {
      4→  return <Component {...pageProps} />
      5→}
+
 test/pages/huge.tsx
      4→const items = new Array(1000).fill(0)
+
 test/tsconfig.json
      2→  "compilerOptions": {
     17→  },
     18→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../dialog.test.ts"],
     19→  "exclude": ["node_modules"]
     20→}
+
 tsconfig.json
      2→  "compilerOptions": {
     16→  },
     17→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
     18→  "exclude": ["node_modules", "build", "dist", ".next"]
     19→}
+
 website/README.md
      3→## Getting Started …
     19→## Learn More …
     28→## Deploy on Vercel …
+
 website/components/cmdk/framer.tsx
      4→export function FramerCMDK() {
+
 website/components/cmdk/linear.tsx
      3→export function LinearCMDK() {
     30→const items = [
+
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
+
 website/components/cmdk/vercel.tsx
      4→export function VercelCMDK() {
+
 website/components/code/index.tsx
      4→import styles from './code.module.scss'
      7→const theme = {
@@ -438,6 +457,7 @@ website/components/code/index.tsx
     42→  return (
     43→    <Highlight {...defaultProps} theme={theme} code={children} language="jsx">
       →…
+
 website/components/icons/index.tsx
      1→import styles from './icons.module.scss'
      3→export function FigmaIcon() {
@@ -451,9 +471,11 @@ website/components/icons/index.tsx
    146→export function CopiedIcon() {
    154→export function GitHubIcon() {
    165→export function FramerIcon() {
+
 website/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
+
 website/package.json
      2→  "name": "cmdk-website",
      3→  "version": "0.1.0",
@@ -469,11 +491,14 @@ website/package.json
     43→  "husky": {
     47→  }
     48→}
+
 website/pages/_app.tsx
     17→export default function App({ Component, pageProps }: AppProps) {
+
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
      6→  render() {
+
 website/pages/index.tsx
     18→import packageJSON from '../../cmdk/package.json'
     29→export default function Index() {
@@ -491,12 +516,14 @@ website/pages/index.tsx
    294→//////////////////////////////////////////////////////////////////
    295→
    296→function VersionBadge() {
+
 website/tsconfig.json
      2→  "compilerOptions": {
     18→  },
     19→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
     20→  "exclude": ["node_modules"]
     21→}
+
 website/vercel.json
      2→  "headers": [
     12→  ]

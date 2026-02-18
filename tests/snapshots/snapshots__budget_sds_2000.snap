@@ -31,6 +31,7 @@ README.md
    882→Embedding SDS into your project …
    895→Using a different allocator for SDS …
    911→Credits and license …
+
 sds.c
     33→#include <stdio.h>
     34→#include <stdlib.h>
@@ -205,6 +206,7 @@ sds.c
   1325→int main(void) {
   1326→    return sdsTest();
   1327→}
+
 sds.h
     34→#define __SDS_H
     36→#define SDS_MAX_PREALLOC (1024*1024)
@@ -332,6 +334,7 @@ sds.h
    267→void *sds_realloc(void *ptr, size_t size);
    268→void sds_free(void *ptr);
    271→int sdsTest(int argc, char *argv[]);
+
 sdsalloc.h
     33→/* SDS allocator selection.
     34→ *
@@ -343,6 +346,7 @@ sdsalloc.h
     40→#define s_malloc malloc
     41→#define s_realloc realloc
     42→#define s_free free
+
 testhelp.h
     40→#define __TESTHELP_H
     44→#define test_cond(descr,_c) do { \

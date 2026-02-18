@@ -36,6 +36,7 @@ package.json
    103→	"nyc": {
    115→	}
    116→}
+
 readme.md
     20→## Benefits over plain `fetch`
     22→- Simpler API
@@ -144,6 +145,7 @@ readme.md
   1354→- [Sindre Sorhus](https://github.com/sindresorhus)
   1355→- [Seth Holladay](https://github.com/sholladay)
   1356→- [Szymon Marczak](https://github.com/szmarczak)
+
 source/core/Ky.ts
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {
@@ -154,6 +156,7 @@ source/core/Ky.ts
    201→		this.#input = input;
    202→
       →…
+
 source/core/constants.ts
      1→import type {Expect, Equal} from '@type-challenges/utils';
      4→export const supportsRequestStreams = (() => {
@@ -227,6 +230,7 @@ source/core/constants.ts
    237→export const kyOptionKeys: KyOptionsRegistry = {
    256→export const vendorSpecificOptions = {
    265→export const requestOptionsRegistry = {
+
 source/errors/ForceRetryError.ts
      1→import type {ForceRetryOptions} from '../core/constants.js';
      2→import {NonError} from './NonError.js';
@@ -241,6 +245,7 @@ source/errors/ForceRetryError.ts
     12→	customRequest: Request | undefined;
     13→
     14→	constructor(options?: ForceRetryOptions) {
+
 source/errors/HTTPError.ts
      1→import type {NormalizedOptions} from '../types/options.js';
      2→import type {KyRequest} from '../types/request.js';
@@ -251,6 +256,7 @@ source/errors/HTTPError.ts
      8→	public options: NormalizedOptions;
      9→
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
+
 source/errors/NonError.ts
      1→/**
      2→Wrapper for non-Error values that were thrown.
@@ -262,12 +268,14 @@ source/errors/NonError.ts
      8→	readonly value: unknown;
      9→
     10→	constructor(value: unknown) {
+
 source/errors/TimeoutError.ts
      1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {
      4→	public request: KyRequest;
      5→
      6→	constructor(request: Request) {
+
 source/index.ts
      3→import {Ky} from './core/Ky.js';
      4→import {requestMethods, stop, retry} from './core/constants.js';
@@ -279,13 +287,16 @@ source/index.ts
     11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
       →…
     34→const ky = createInstance();
+
 source/types/ResponsePromise.ts
      4→import {type KyResponse} from './response.js';
      6→export type ResponsePromise …
+
 source/types/common.ts
      2→export type Primitive …
      4→export type Required …
      6→export type LiteralUnion …
+
 source/types/hooks.ts
      1→import {type stop, type RetryMarker} from '../core/constants.js';
      2→import type {KyRequest, KyResponse, HTTPError} from '../index.js';
@@ -299,11 +310,13 @@ source/types/hooks.ts
     48→export type BeforeErrorState …
     57→export type BeforeErrorHook …
     59→export type Hooks …
+
 source/types/ky.ts
      1→import {type stop, type retry} from '../core/constants.js';
      2→import type {Input, Options} from './options.js';
      3→import type {ResponsePromise} from './ResponsePromise.js';
      5→export type KyInstance …
+
 source/types/options.ts
      1→import type {LiteralUnion, Required} from './common.js';
      2→import type {Hooks} from './hooks.js';
@@ -392,24 +405,31 @@ source/types/options.ts
    382→	onUploadProgress: Options['onUploadProgress'];
    383→	context: Record<string, unknown>;
    384→}
+
 source/types/request.ts
      1→export type KyRequest …
+
 source/types/response.ts
      1→export type KyResponse …
+
 source/types/retry.ts
      1→import type {HttpMethod} from './options.js';
      3→export type ShouldRetryState …
     15→export type RetryOptions …
+
 source/utils/body.ts
      5→export const getBodySize …
     57→const withProgress = (stream: ReadableStream<Uint8Array>, totalBytes: number, onProgress: Options['onDownloadProgress'] | Options['onUploadProgress']): ReadableStream<Uint8Array> => {
     90→export const streamResponse …
    119→export const streamRequest …
+
 source/utils/delay.ts
      5→export type DelayOptions = {
      9→export default async function delay …
+
 source/utils/is.ts
      2→export const isObject …
+
 source/utils/merge.ts
      6→export const validateAndMerge …
     16→export const mergeHeaders …
@@ -417,6 +437,7 @@ source/utils/merge.ts
     38→export const mergeHooks …
     47→const appendSearchParameters = (target: any, source: any): URLSearchParams => {
     86→export const deepMerge …
+
 source/utils/normalize.ts
      5→export const normalizeRequestMethod …
      8→const retryMethods: HttpMethod[] = ['get', 'put', 'head', 'delete', 'options', 'trace'];
@@ -425,12 +446,15 @@ source/utils/normalize.ts
     14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
     16→const defaultRetryOptions: InternalRetryOptions = {
     28→export const normalizeRetryOptions …
+
 source/utils/options.ts
      4→export const findUnknownOptions …
     30→export const hasSearchParameters …
+
 source/utils/timeout.ts
      3→export type TimeoutOptions = {
      9→export default async function timeout …
+
 source/utils/type-guards.ts
      5→/**
      6→Type guard to check if an error is a Ky error.
@@ -472,25 +496,36 @@ source/utils/type-guards.ts
     82→```
       →…
     98→export function isForceRetryError(error: unknown): error is ForceRetryError {
+
 source/utils/types.ts
      1→export type Mutable<T> = {
      5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
      6→	? Array<[string, U]>
      7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
+
 test/browser.ts
     13→	interface Window {
     14→		ky: typeof ky;
     15→	}
+
 test/headers.ts
+
 test/helpers/create-http-test-server.ts
      7→export type HttpServerOptions = {
     11→export type ExtendedHttpTestServer = {
+
 test/helpers/create-large-file.ts
+
 test/helpers/parse-body.ts
+
 test/helpers/with-page.ts
+
 test/helpers/with-performance.ts
+
 test/hooks.ts
+
 test/http-error.ts
+
 tsconfig.dist.json
      2→	"extends": "./tsconfig",
      3→	"compilerOptions": {
@@ -498,6 +533,7 @@ tsconfig.dist.json
      9→	"include": [
     11→	]
     12→}
+
 tsconfig.json
      2→	"extends": "@sindresorhus/tsconfig",
      3→	"compilerOptions": {

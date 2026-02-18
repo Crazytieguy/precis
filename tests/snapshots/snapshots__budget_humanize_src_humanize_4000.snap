@@ -48,6 +48,7 @@ __init__.py
     47→    "scientific",
     48→    "thousands_separator",
     49→]
+
 filesize.py
      5→from math import log
     36→def naturalsize(
@@ -98,6 +99,7 @@ filesize.py
     81→        suffix = suffixes["gnu"]
     82→    elif binary:
       →…
+
 i18n.py
      5→import gettext as gettext_module
      6→from threading import local
@@ -252,6 +254,7 @@ i18n.py
    203→        sep = _DECIMAL_SEPARATOR[_CURRENT.locale]
    204→    except (AttributeError, KeyError):
       →…
+
 lists.py
      5→TYPE_CHECKING = False
      7→    from typing import Any
@@ -279,6 +282,7 @@ lists.py
     32→        return str(items[0])
     33→    elif len(items) == 2:
       →…
+
 number.py
      5→import bisect
      7→from .i18n import _gettext as _
@@ -611,6 +615,7 @@ number.py
    567→
    568→    if not math.isfinite(value):
       →…
+
 time.py
      8→from enum import Enum
      9→from functools import total_ordering

@@ -112,6 +112,7 @@ command-score.ts
    160→  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
    161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
    162→}
+
 index.tsx
      3→import * as RadixDialog from '@radix-ui/react-dialog'
      4→import * as React from 'react'

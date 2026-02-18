@@ -6,6 +6,7 @@ budget: 4000 (3955 words)
 
 CHANGELOG.md
      1→# Changelog …
+
 Cargo.toml
      1→[package …
     19→[workspace …
@@ -19,6 +20,7 @@ Cargo.toml
     82→[[example …
     86→[[example …
     90→[package.metadata.docs.rs …
+
 README.md
      8→# Overview
     10→`once_cell` provides two new cell-like types, `unsync::OnceCell` and `sync::OnceCell`. `OnceCell`
@@ -68,6 +70,7 @@ README.md
     55→* [generic_once_cell](https://crates.io/crates/generic_once_cell) (bring your own mutex)
     56→
     57→Parts of `once_cell` API are included into `std` [as of Rust 1.70.0](https://github.com/rust-lang/rust/pull/105587).
+
 examples/bench.rs
      1→use std::mem::size_of;
      3→use once_cell::sync::OnceCell;
@@ -76,6 +79,7 @@ examples/bench.rs
      8→static CELL: OnceCell<usize> = OnceCell::new();
     10→fn main() {
     23→fn thread_main(i: usize) {
+
 examples/bench_acquire.rs
      5→use once_cell::sync::OnceCell;
      6→use std::sync::atomic::{AtomicUsize, Ordering};
@@ -92,12 +96,14 @@ examples/bench_acquire.rs
     30→    let mut accum = 0usize;
     31→    for _ in 0..N_ROUNDS {
       →…
+
 examples/lazy_static.rs
      3→use once_cell::sync::{Lazy, OnceCell};
      4→use std::collections::HashMap;
      6→static HASHMAP: Lazy<HashMap<u32, &'static str>> = Lazy::new(|| {
     15→fn hashmap() -> &'static HashMap<u32, &'static str> {
     26→fn main() {
+
 examples/regex.rs
      1→use std::{str::FromStr, time::Instant};
      3→use regex::Regex;
@@ -110,6 +116,7 @@ examples/regex.rs
     12→fn slow() {
     27→fn fast() {
     41→fn main() {
+
 examples/test_synchronization.rs
     10→use once_cell::sync::OnceCell;
     12→const N_THREADS: usize = 32;
@@ -118,6 +125,7 @@ examples/test_synchronization.rs
     16→static RESULT: OnceCell<usize> = OnceCell::new();
     18→fn main() {
     30→fn thread_main(i: usize) {
+
 src/imp_cs.rs
      1→use core::panic::{RefUnwindSafe, UnwindSafe};
      3→use critical_section::{CriticalSection, Mutex};
@@ -157,6 +165,7 @@ src/imp_cs.rs
     70→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
     74→    #[inline]
     75→    pub(crate) fn into_inner(self) -> Option<T> {
+
 src/imp_pl.rs
      1→use std::{
      2→    cell::UnsafeCell,
@@ -215,6 +224,7 @@ src/imp_pl.rs
    134→    }
    138→#[inline(never)]
    139→fn initialize_inner(state: &AtomicU8, init: &mut dyn FnMut() -> bool) {
+
 src/imp_std.rs
      6→use std::{
      7→    cell::{Cell, UnsafeCell},
@@ -356,6 +366,7 @@ src/imp_std.rs
    282→    where
    283→        T: Sized,
    284→    {
+
 src/lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -638,6 +649,7 @@ src/lib.rs
   1408→    fn _dummy() {}
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
+
 src/race.rs
     31→use core::sync::atomic;
     33→use portable_atomic as atomic;
@@ -783,6 +795,7 @@ src/race.rs
    495→    /// share(&once_cell::race::OnceBox::<S>::new());
    496→    /// ```
    497→    fn _dummy() {}
+
 tests/it/main.rs
      1→mod unsync_once_cell;
      2→#[cfg(any(feature = "std", feature = "critical-section"))]
@@ -794,8 +807,10 @@ tests/it/main.rs
     10→mod race;
     11→#[cfg(all(feature = "race", feature = "alloc"))]
     12→mod race_once_box;
+
 tests/it/race.rs
      2→use std::sync::Barrier;
+
 tests/it/race_once_box.rs
      2→use std::sync::Barrier;
     10→#[derive(Default)]
@@ -814,8 +829,10 @@ tests/it/race_once_box.rs
     27→impl Heap {
     28→    fn total(&self) -> usize {
     31→    fn new_pebble<T>(&self, val: T) -> Pebble<T> {
+
 tests/it/sync_lazy.rs
    163→fn arrrrrrrrrrrrrrrrrrrrrr() {
+
 tests/it/sync_once_cell.rs
      7→use std::sync::Barrier;
     10→use core::cell::Cell;
@@ -833,13 +850,17 @@ tests/it/sync_once_cell.rs
    189→    let bin = examples_dir
       →…
    296→fn arrrrrrrrrrrrrrrrrrrrrr() {
+
 tests/it/unsync_lazy.rs
    127→fn arrrrrrrrrrrrrrrrrrrrrr() {
+
 tests/it/unsync_once_cell.rs
    148→fn arrrrrrrrrrrrrrrrrrrrrr() {
+
 xtask/Cargo.toml
      1→[package …
      8→[dependencies …
+
 xtask/src/main.rs
      4→use std::time::Instant;
      6→use xshell::{cmd, Shell};
@@ -866,5 +887,6 @@ xtask/src/main.rs
    138→    impl<F: FnOnce()> Drop for D<F> {
    139→        fn drop(&mut self) {
       →…
+
 xtask/src/tidy.rs
      1→use xshell::{cmd, Shell};

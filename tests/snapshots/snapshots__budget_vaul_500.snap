@@ -6,11 +6,16 @@ budget: 500 (497 words)
 
 FUNDING.yml
      1→github …
+
 package.json
+
 playwright.config.ts
+
 pnpm-workspace.yaml
      1→packages …
+
 src/browser.ts
+
 src/constants.ts
      1→export const TRANSITIONS = {
      6→export const VELOCITY_THRESHOLD = 0.4;
@@ -20,9 +25,11 @@ src/constants.ts
     14→export const NESTED_DISPLACEMENT = 16;
     16→export const WINDOW_TOP_OFFSET = 26;
     18→export const DRAG_CLASS = 'vaul-dragging';
+
 src/context.ts
      4→interface DrawerContextValue {
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
+
 src/helpers.ts
      3→interface Style {
      7→const cache …
@@ -30,6 +37,7 @@ src/helpers.ts
    106→ * Receives functions as arguments and returns a new function that calls all.
       →…
    108→export function chain<T>(...fns: T[]) {
+
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
@@ -52,6 +60,7 @@ src/index.tsx
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
   1130→export function Portal …
   1137→export const Drawer = {
+
 src/types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
      2→export interface SnapPoint {
@@ -59,6 +68,7 @@ src/types.ts
      4→  height: number;
      5→}
      7→export type AnyFunction = (...args: any) => any;
+
 src/use-composed-refs.ts
      5→type PossibleRef …
      7→/**
@@ -70,9 +80,11 @@ src/use-composed-refs.ts
     27→/**
       →…
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
+
 src/use-controllable-state.ts
      5→type UseControllableStateParams …
     11→type SetStateFn …
+
 src/use-position-fixed.ts
      6→/**
      7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
@@ -92,6 +104,7 @@ src/use-position-fixed.ts
     27→  preventScrollRestoration: boolean;
     28→  noBodyStyles: boolean;
     29→}) {
+
 src/use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER …
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -102,60 +115,91 @@ src/use-prevent-scroll.ts
     64→ * Prevents scrolling on the document body on mount, and
       →…
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
+
 src/use-scale-background.ts
+
 src/use-snap-points.ts
+
 test/README.md
      3→## Getting Started …
     21→## Learn More …
     30→## Deploy on Vercel …
+
 test/next.config.js
      2→const nextConfig = {
+
 test/package.json
+
 test/src/app/controlled/page.tsx
      6→export default function Page() {
+
 test/src/app/default-open/page.tsx
      6→export default function Page() {
+
 test/src/app/different-directions/page.tsx
    118→export default function Page() {
+
 test/src/app/initial-snap/page.tsx
      9→export default function Page() {
+
 test/src/app/layout.tsx
      1→import './globals.css';
      5→const inter …
      7→export const metadata: Metadata = {
+
 test/src/app/nested-drawers/page.tsx
      5→export default function Page() {
+
 test/src/app/non-dismissible/page.tsx
      6→export default function Page() {
+
 test/src/app/open-another-drawer/page.tsx
+
 test/src/app/page.tsx
+
 test/src/app/parent-container/page.tsx
      6→export default function Page() {
+
 test/src/app/scrollable-page/page.tsx
      6→export default function Page() {
+
 test/src/app/scrollable-with-inputs/page.tsx
      5→export default function Page() {
+
 test/src/app/with-handle/page.tsx
      9→export default function Page() {
+
 test/src/app/with-modal-false/page.tsx
      9→export default function Page() {
+
 test/src/app/with-redirect/long-page/page.tsx
      3→export default function Page() {
+
 test/src/app/with-redirect/page.tsx
      6→export default function Page() {
+
 test/src/app/with-scaled-background/page.tsx
     65→export default function Page() {
+
 test/src/app/with-snap-points/page.tsx
      9→export default function Page() {
+
 test/src/app/without-scaled-background/page.tsx
      6→export default function Page() {
+
 test/tailwind.config.ts
+
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;
+
 test/tests/helpers.ts
+
 test/tests/initial-snap.spec.ts
      8→const snapPointYPositions = {
     15→const snapTo …
+
 test/tsconfig.json
+
 tsconfig.json
+
 turbo.json

@@ -11,12 +11,14 @@ Cargo.toml
     33→[dev-dependencies …
     39→[workspace …
     42→[package.metadata.docs.rs …
+
 README.md
      1→derive(Error) …
     21→## Example …
     44→## Details …
    211→## Comparison to anyhow …
    223→#### License …
+
 build/probe.rs
      8→use core::error::{Error, Request};
      9→use core::fmt::{self, Debug, Display};
@@ -28,13 +30,16 @@ build/probe.rs
     21→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     26→impl Error for MyError {
     27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
+
 impl/Cargo.toml
      1→[package …
     11→[lib …
     14→[dependencies …
     19→[package.metadata.docs.rs …
+
 impl/src/ast.rs
     45→pub enum ContainerKind {
+
 impl/src/attr.rs
     21→pub struct Display<'a> {
     33→pub struct Source<'a> {
@@ -42,13 +47,18 @@ impl/src/attr.rs
     45→pub struct Transparent<'a> {
     51→pub struct Fmt<'a> {
     57→pub enum Trait {
+
 impl/src/expand.rs
+
 impl/src/fallback.rs
+
 impl/src/fmt.rs
    166→struct FmtArguments {
    171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
+
 impl/src/generics.rs
+
 impl/src/lib.rs
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
@@ -57,16 +67,22 @@ impl/src/lib.rs
     43→}
     45→#[allow(non_camel_case_types)]
     46→struct private;
+
 impl/src/prop.rs
+
 impl/src/scan_expr.rs
      6→enum Input {
     25→enum Action {
+
 impl/src/unraw.rs
     12→pub struct IdentUnraw(Ident);
     82→pub enum MemberUnraw {
+
 impl/src/valid.rs
+
 rust-toolchain.toml
      1→[toolchain …
+
 src/aserror.rs
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
@@ -83,6 +99,7 @@ src/aserror.rs
     39→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     44→#[doc(hidden)]
     45→pub trait Sealed {}
+
 src/display.rs
      3→use std::path::{self, Path, PathBuf};
      5→#[doc(hidden)]
@@ -115,6 +132,7 @@ src/display.rs
     69→        #[inline]
     70→        fn as_display(&'a self) -> Self::Target {
     76→        fn fmt …
+
 src/lib.rs
    281→mod aserror;
    282→mod display;
@@ -123,6 +141,7 @@ src/lib.rs
    285→mod var;
    287→pub use thiserror_impl::*;
    289→mod private;
+
 src/private.rs
      2→pub use crate::aserror::AsDynError;
      4→pub use crate::display::AsDisplay;
@@ -130,6 +149,7 @@ src/private.rs
      9→pub use crate::var::Var;
     11→pub use core::error::Error;
     14→pub use std::backtrace::Backtrace;
+
 src/provide.rs
      3→#[doc(hidden)]
      4→pub trait ThiserrorProvide: Sealed {
@@ -138,19 +158,28 @@ src/provide.rs
     13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
     18→#[doc(hidden)]
     19→pub trait Sealed {}
+
 src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
      6→    fn fmt …
+
 tests/no-std/test.rs
      6→pub enum Error {
     13→pub struct SourceError {
+
 tests/test_backtrace.rs
+
 tests/test_display.rs
+
 tests/test_expr.rs
      5→use std::path::PathBuf;
     56→fn assert …
+
 tests/test_generics.rs
+
 tests/test_lints.rs
      5→pub use std::error::Error;
+
 tests/test_option.rs
+
 tests/ui/fallback-impl-with-display.rs

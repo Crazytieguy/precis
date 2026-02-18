@@ -7,8 +7,10 @@ budget: 500 (481 words)
 CHANGELOG.md
      1→# Changelog …
     21→### Fixed …
+
 CONTRIBUTING.md
      1→Contributing …
+
 README.md
      1→# python-dotenv
      3→[![Build Status][build_status_badge]][build_status_link]
@@ -33,8 +35,10 @@ README.md
    214→### Variable expansion …
    234→## Related Projects …
    246→## Acknowledgements …
+
 docs/reference.md
      1→# ::: dotenv …
+
 mkdocs.yml
      1→site_name: python-dotenv
      2→repo_url: https://github.com/theskumar/python-dotenv
@@ -48,6 +52,7 @@ mkdocs.yml
     15→plugins:
     24→  - search
     25→nav:
+
 pyproject.toml
      1→[build-system …
      5→[project …
@@ -61,15 +66,19 @@ pyproject.toml
     72→[tool.coverage.paths …
     79→[tool.coverage.report …
     87→[tool.mypy …
+
 ruff.toml
      1→[lint …
+
 src/dotenv/__init__.py
      3→from .main …
     42→__all__ = [
     43→    "get_cli_string",
       →…
+
 src/dotenv/__main__.py
      3→from .cli …
+
 src/dotenv/cli.py
     20→from .main …
     21→from .version …
@@ -95,6 +104,7 @@ src/dotenv/cli.py
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
+
 src/dotenv/ipython.py
      8→from .main …
     11→@magics_class
@@ -121,6 +131,7 @@ src/dotenv/ipython.py
     32→    )
     33→    @line_magic
     34→    def dotenv(self, line):
+
 src/dotenv/main.py
     13→from .parser …
     14→from .variables …
@@ -143,6 +154,7 @@ src/dotenv/main.py
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
       →…
+
 src/dotenv/parser.py
     35→class Original(NamedTuple):
     36→    string: str
@@ -158,6 +170,7 @@ src/dotenv/parser.py
     65→class Error(Exception):
     66→    pass
     69→class Reader:
+
 src/dotenv/variables.py
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
@@ -173,14 +186,21 @@ src/dotenv/variables.py
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
     29→class Literal(Atom):
     48→class Variable(Atom):
+
 src/dotenv/version.py
      1→__version__ = "1.2.1"
+
 tests/conftest.py
+
 tests/test_cli.py
+
 tests/test_ipython.py
+
 tests/test_is_interactive.py
      8→class TestIsInteractive:
     31→
+
 tests/test_main.py
+
 tests/test_zip_imports.py
     23→class FileToAdd:

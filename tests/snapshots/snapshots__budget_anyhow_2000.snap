@@ -10,6 +10,7 @@ Cargo.toml
     18→[dependencies …
     25→[dev-dependencies …
     32→[package.metadata.docs.rs …
+
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/anyhow-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/anyhow)
@@ -35,13 +36,16 @@ README.md
    174→
    175→<sub>
       →…
+
 build.rs
     17→fn main() {
     99→fn compile_probe(rustc_bootstrap: bool) -> bool {
    188→fn rustc_minor_version() -> Option<u32> {
    199→fn cargo_env_var(key: &str) -> OsString {
+
 rust-toolchain.toml
      1→[toolchain …
+
 src/backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
      5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
@@ -70,6 +74,7 @@ src/backtrace.rs
    116→    enum BytesOrWide {
    211→        pub(crate) fn capture …
    311→    struct LazilyResolvedCapture {
+
 src/chain.rs
      1→use self::ChainState::*;
      2→use crate::StdError;
@@ -95,6 +100,7 @@ src/chain.rs
     57→impl DoubleEndedIterator for Chain<'_> {
     93→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     94→impl Default for Chain<'_> {
+
 src/context.rs
      1→use crate::error::ContextError;
      2→use crate::{Context, Error, StdError};
@@ -127,6 +133,7 @@ src/context.rs
    186→pub(crate) mod private {
    187→    use super::*;
    189→    pub trait Sealed {}
+
 src/ensure.rs
      1→use crate::Error;
      9→#[doc(hidden)]
@@ -143,6 +150,7 @@ src/ensure.rs
    910→#[doc(hidden)]
    911→#[macro_export]
    912→macro_rules! __fallback_ensure {
+
 src/error.rs
      1→use crate::backtrace::Backtrace;
      2→use crate::chain::Chain;
@@ -220,11 +228,13 @@ src/error.rs
   1072→impl AsRef<dyn StdError + Send + Sync> for Error {
   1078→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
   1079→impl AsRef<dyn StdError> for Error {
+
 src/fmt.rs
      1→use crate::chain::Chain;
      2→use crate::error::ErrorImpl;
      3→use crate::ptr::Ref;
     69→struct Indented<'a, D> {
+
 src/kind.rs
     47→use crate::Error;
     51→use crate::StdError;
@@ -250,6 +260,7 @@ src/kind.rs
    114→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    115→impl Boxed {
    117→    pub fn new …
+
 src/lib.rs
    251→#[macro_use]
    252→mod backtrace;
@@ -400,6 +411,7 @@ src/lib.rs
    710→        pub trait Bool {
    716→            fn not …
    723→            fn not …
+
 src/macros.rs
      1→/// Return early with an error.
      2→///
@@ -415,8 +427,10 @@ src/macros.rs
    228→#[doc(hidden)]
    229→#[macro_export]
    230→macro_rules! __anyhow {
+
 src/nightly.rs
     10→pub use core::error::Request;
+
 src/ptr.rs
      5→#[repr(transparent)]
      6→pub struct Own<T>
@@ -445,6 +459,7 @@ src/ptr.rs
    182→    type Target;
    183→}
    186→    type Target = T;
+
 src/wrapper.rs
      1→use crate::StdError;
      5→use alloc::boxed::Box;
@@ -463,19 +478,23 @@ src/wrapper.rs
     74→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     75→impl StdError for BoxedError {
     81→    fn provide …
+
 tests/common/mod.rs
      1→use anyhow::{bail, Result};
      2→use std::io;
      4→pub fn bail_literal() -> Result<()> {
      8→pub fn bail_fmt() -> Result<()> {
     12→pub fn bail_error() -> Result<()> {
+
 tests/crate/Cargo.toml
      1→[package …
      8→[lib …
     11→[dependencies …
     14→[features …
+
 tests/crate/test.rs
      3→pub use anyhow::*;
+
 tests/drop/mod.rs
      8→#[derive(Debug)]
      9→pub struct Flag {
@@ -485,14 +504,18 @@ tests/drop/mod.rs
     26→pub struct DetectDrop {
     27→    has_dropped: Flag,
     28→}
+
 tests/test_autotrait.rs
+
 tests/test_boxed.rs
     11→#[derive(Error, Debug)]
     12→#[error("outer")]
     13→struct MyError {
     14→    source: io::Error,
     15→}
+
 tests/test_chain.rs
+
 tests/test_context.rs
     22→macro_rules! context_type {
     42→#[derive(Error, Debug)]
@@ -502,8 +525,11 @@ tests/test_context.rs
     46→    drop: DetectDrop,
     47→}
     49→struct Dropped {
+
 tests/test_convert.rs
+
 tests/test_downcast.rs
+
 tests/test_ensure.rs
     40→struct S;
     43→    type Output = bool;
@@ -518,6 +544,7 @@ tests/test_ensure.rs
     79→    let actual = result().unwrap_err().to_string();
     80→
       →…
+
 tests/test_ffi.rs
      6→#[no_mangle]
      7→pub extern "C" fn anyhow1(err: anyhow::Error) {
@@ -531,9 +558,13 @@ tests/test_ffi.rs
     17→pub extern "C" fn anyhow3() -> Option<anyhow::Error> {
     18→    Some(anyhow!("ffi error"))
     19→}
+
 tests/test_fmt.rs
+
 tests/test_macros.rs
+
 tests/test_repr.rs
+
 tests/test_source.rs
      6→#[derive(Debug)]
      7→enum TestError {
@@ -541,6 +572,7 @@ tests/test_source.rs
      9→}
     12→    fn fmt …
     20→    fn source …
+
 tests/ui/ensure-nonbool.rs
      4→struct Bool(bool);
      6→struct DerefBool(bool);
@@ -551,6 +583,7 @@ tests/ui/ensure-nonbool.rs
     17→impl Not for NotBool {
     18→    type Output = bool;
     19→    fn not(self) -> Self::Output {
+
 tests/ui/no-impl.rs
      3→#[derive(Debug)]
      4→struct Error;

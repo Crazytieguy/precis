@@ -67,6 +67,7 @@ browser.js
    247→function localstorage() {
    248→	try {
       →…
+
 common.js
      2→/**
      3→ * This is the common logic for both the Node.js and web browser
@@ -76,6 +77,7 @@ common.js
      7→function setup(env) {
      8→	createDebug.debug = createDebug;
       →…
+
 node.js
    151→/**
    152→ * Is stdout a TTY? Colored output is enabled when `true`.

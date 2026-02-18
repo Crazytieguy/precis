@@ -6,6 +6,7 @@ budget: 1000 (977 words)
 
 CHANGELOG.md
      1→# Changelog …
+
 README.md
      5→# Tomli
      7→> A lil' TOML parser
@@ -39,6 +40,7 @@ README.md
    204→
    205→Below are the results for commit [064e492](https://github.com/hukkin/tomli/tree/064e492919b2338def788753b8c981c9131334c0).
    206→
+
 benchmark/README.md
      1→# Benchmark …
      3→## Acknowledgments
@@ -46,10 +48,13 @@ benchmark/README.md
      6→[pytomlpp](https://github.com/bobfang1992/pytomlpp/tree/e6b03726f8347c6a6757f520ad1b5fab68ed8534/benchmark)
       →…
     10→## Running
+
 benchmark/data.toml
+
 benchmark/run.py
     15→def benchmark …
     37→def run …
+
 fuzzer/fuzz.py
      1→import atheris
      4→    from math import isnan
@@ -62,9 +67,11 @@ fuzzer/fuzz.py
     59→def normalize_toml_obj(toml_obj: dict) -> None:
     60→    """Make NaNs equal when compared (without using recursion)."""
     71→def main():
+
 profiler/profiler_script.py
      8→from pathlib import Path
     10→import tomli
+
 pyproject.toml
      1→[build-system …
      5→[project …
@@ -84,9 +91,12 @@ pyproject.toml
    157→[[tool.mypy.overrides …
    161→[[tool.mypy.overrides …
    167→[[tool.mypy.overrides …
+
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
+
 setup.py
+
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
@@ -95,6 +105,7 @@ src/tomli/__init__.py
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
      8→from ._parser …
+
 src/tomli/_parser.py
      7→import sys …
      8→from types …
@@ -149,6 +160,7 @@ src/tomli/_parser.py
    228→
    278→class NestedDict:
    312→class Output:
+
 src/tomli/_re.py
      7→from datetime …
      8→from functools …
@@ -196,8 +208,10 @@ src/tomli/_re.py
    104→            minutes=sign * int(minute_str),
    105→        )
    106→    )
+
 src/tomli/_types.py
      5→from typing import Any, Callable, Tuple
+
 tests/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
@@ -205,36 +219,54 @@ tests/__init__.py
      4→
      5→__all__ = ("tomllib",)
      9→import tomli as tomllib
+
 tests/burntsushi.py
+
 tests/data/invalid/_external/toml-test/invalid/key/no-eol-04.toml
+
 tests/data/invalid/_external/toml-test/invalid/key/start-bracket.toml
+
 tests/data/invalid/array-of-tables/overwrite-array-in-parent.toml
      1→[[parent-table.arr …
      2→[parent-table …
+
 tests/data/invalid/array-of-tables/overwrite-bool-with-aot.toml
      2→[[a …
+
 tests/data/invalid/keys-and-vals/overwrite-with-deep-table.toml
      2→[a.b.c.d …
+
 tests/data/invalid/table/redefine-1.toml
+
 tests/data/invalid/table/redefine-2.toml
+
 tests/data/valid/_external/toml-test/valid/bool/bool.json
      2→    "f": {"type": "bool", "value": "false"},
      3→    "t": {"type": "bool", "value": "true"}
      4→}
+
 tests/data/valid/_external/toml-test/valid/comment/everywhere.toml
+
 tests/data/valid/_external/toml-test/valid/comment/tricky.toml
+
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-03.toml
+
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-04.toml
+
 tests/data/valid/array/array-subtables.json
      1→{"arr …
+
 tests/data/valid/array/open-parent-table.json
      2→  "parent-table …
+
 tests/data/valid/inline-table/empty-inline-table.json
      1→{"empty":  {}}
+
 tests/data/valid/inline-table/multiline-inline-table.json
      2→  "multiline": {
     34→  }
     35→}
+
 tests/test_data.py
      5→import json
      9→from . …
@@ -243,13 +275,16 @@ tests/test_data.py
     21→VALID_FILES_EXPECTED = tuple(_expected_files)
     23→INVALID_FILES = tuple((DATA_DIR / "invalid").glob("**/*.toml"))
     27→class TestData(unittest.TestCase):
+
 tests/test_error.py
     10→from . …
     13→class TestError(unittest.TestCase):
+
 tests/test_misc.py
      5→import copy
     14→from . …
     17→class TestMiscellaneous(unittest.TestCase):
+
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
      3→Tomli was added to the Python standard library in Python 3.11.

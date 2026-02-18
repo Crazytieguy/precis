@@ -23,6 +23,7 @@ assets.tsx
     81→    width="12"
     82→    height="12"
       →…
+
 hooks.tsx
      1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
@@ -30,6 +31,7 @@ hooks.tsx
      5→
      6→  React.useEffect(() => {
       →…
+
 index.tsx
      3→import React from 'react';
      4→import ReactDOM from 'react-dom';
@@ -44,6 +46,7 @@ index.tsx
    507→function getDocumentDirection(): ToasterProps['dir'] {
    520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
    552→function useSonner() {
+
 state.ts
      1→import type {
      2→  ExternalToast,
@@ -83,6 +86,7 @@ state.ts
    281→const getHistory = () => ToastState.toasts;
    282→const getToasts = () => ToastState.getActiveToasts();
    285→export const toast …
+
 types.ts
      1→import React from 'react';
      3→export type ToastTypes …

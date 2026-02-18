@@ -12,6 +12,7 @@ Cargo.toml
     31→[package.metadata.release …
     36→[package.metadata.docs.rs …
     39→[package.metadata.playground …
+
 src/into_either.rs
      4→use super::{Either, Left, Right};
      6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
@@ -26,6 +27,7 @@ src/into_either.rs
     29→    fn into_either …
     55→    fn into_either_with …
     64→impl<T> IntoEither for T {}
+
 src/iterator.rs
      1→use super::{for_both, Either, Left, Right};
      2→use core::iter;
@@ -139,6 +141,7 @@ src/iterator.rs
    313→    R: iter::FusedIterator,
    314→{
    315→}
+
 src/lib.rs
     21→#[cfg(feature = "serde")]
     22→pub mod serde_untagged;
@@ -481,6 +484,7 @@ src/lib.rs
   1555→    check_t!(::std::ffi::OsStr);
   1556→    check_t!(::std::ffi::CStr);
   1557→}
+
 src/serde_untagged.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     38→#[derive(serde::Serialize, serde::Deserialize)]
@@ -491,6 +495,7 @@ src/serde_untagged.rs
     43→}
     45→pub fn serialize …
     58→pub fn deserialize …
+
 src/serde_untagged_optional.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     38→#[derive(Serialize, Deserialize)]

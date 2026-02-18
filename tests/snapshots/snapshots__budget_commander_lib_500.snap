@@ -8,6 +8,7 @@ argument.js
      3→class Argument {
     56→  _collectValue(value, previous) {
    143→function humanReadableArgName(arg) {
+
 command.js
     13→class Command extends EventEmitter {
    121→  _getCommandAndAncestors() {
@@ -48,6 +49,7 @@ command.js
   2686→  _outputHelpIfRequested(args) {
   2705→function incrementNodeInspectorPort(args) {
   2752→function useColor() {
+
 error.js
      1→/**
      2→ * CommanderError class
@@ -57,6 +59,7 @@ error.js
     23→ * InvalidArgumentError class
     24→ */
     25→class InvalidArgumentError extends CommanderError {
+
 help.js
     12→class Help {
     13→  constructor() {
@@ -114,6 +117,7 @@ help.js
    607→    return str;
    608→  }
    740→function stripColor(str) {
+
 option.js
      3→class Option {
    165→  _collectValue(value, previous) {
@@ -127,6 +131,7 @@ option.js
    268→class DualOptions {
    316→function camelcase(str) {
    328→function splitOptionFlags(flags) {
+
 suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {

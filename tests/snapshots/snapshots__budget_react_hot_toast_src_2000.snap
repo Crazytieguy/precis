@@ -17,6 +17,7 @@ components/checkmark.tsx
     36→  opacity: 0;
     37→  height: 20px;
       →…
+
 components/error.tsx
      1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
@@ -31,6 +32,7 @@ components/error.tsx
     40→  opacity: 0;
     41→  height: 20px;
       →…
+
 components/loader.tsx
      1→import { styled, keyframes } from 'goober';
      3→const rotate = keyframes`
@@ -43,6 +45,7 @@ components/loader.tsx
     19→  height: 12px;
     20→  box-sizing: border-box;
       →…
+
 components/toast-bar.tsx
      1→import * as React from 'react';
      2→import { styled, keyframes } from 'goober';
@@ -87,6 +90,7 @@ components/toast-bar.tsx
     77→    const animationStyle: React.CSSProperties = toast.height
     78→      ? getAnimationStyle(
       →…
+
 components/toast-icon.tsx
      1→import * as React from 'react';
      2→import { styled, keyframes } from 'goober';
@@ -138,6 +142,7 @@ components/toast-icon.tsx
     75→    </IndicatorWrapper>
     76→  );
     77→};
+
 components/toaster.tsx
      1→import { css, setup } from 'goober';
      2→import * as React from 'react';
@@ -232,6 +237,7 @@ components/toaster.tsx
    141→    </div>
    142→  );
    143→};
+
 core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
      2→import { DefaultToastOptions, Toast, ToastType } from './types';
@@ -366,6 +372,7 @@ core/store.ts
    215→      toastOptions?.removeDelay,
    216→    duration:
       →…
+
 core/toast.ts
      1→import {
      2→  Renderable,
@@ -418,6 +425,7 @@ core/toast.ts
     53→  };
     55→const toast = (message: Message, opts?: ToastOptions) =>
     56→  createHandler('blank')(message, opts);
+
 core/types.ts
      1→import { CSSProperties } from 'react';
      3→export type ToastType = 'success' | 'error' | 'loading' | 'blank' | 'custom';
@@ -505,6 +513,7 @@ core/types.ts
     95→  onHeightUpdate: (id: string, height: number) => void;
     96→  children?: React.ReactNode;
     97→}
+
 core/use-toaster.ts
      1→import { useEffect, useCallback, useRef } from 'react';
      2→import { createDispatch, ActionType, useStore, dispatch } from './store';
@@ -544,6 +553,7 @@ core/use-toaster.ts
     38→      return;
     39→    }
       →…
+
 core/utils.ts
      1→export const genId = (() => {
      2→  let count = 0;
@@ -557,7 +567,9 @@ core/utils.ts
     11→
     12→  return () => {
       →…
+
 headless/index.ts
      1→import { toast } from '../core/toast';
+
 index.ts
      1→import { toast } from './core/toast';

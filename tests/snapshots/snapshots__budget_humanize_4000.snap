@@ -229,6 +229,7 @@ README.md
    245→etc.
    246→
    247→List the language at the top of this README.
+
 RELEASING.md
      1→# Release checklist
      3→- [ ] Get `main` to the appropriate code release state.
@@ -251,12 +252,15 @@ RELEASING.md
     20→
     21→```bash
       →…
+
 docs/filesize.md
      1→# Filesize
      3→::: humanize.filesize
+
 docs/i18n.md
      1→# Internationalisation
      3→::: humanize.i18n
+
 docs/index.md
      1→# humanize
      3→Welcome to the humanize API reference.
@@ -273,15 +277,19 @@ docs/index.md
     14→   end="<!-- usage-end -->"
     15→   comments=false
     16→%}
+
 docs/lists.md
      1→# Lists
      3→::: humanize.lists
+
 docs/number.md
      1→# Number
      3→::: humanize.number
+
 docs/time.md
      1→# Time
      3→::: humanize.time
+
 mkdocs.yml
      1→site_name: humanize
      2→site_url: https://humanize.readthedocs.io
@@ -302,6 +310,7 @@ mkdocs.yml
     38→  - css/code_select.css
     39→
     40→watch:
+
 pyproject.toml
      1→[build-system …
      8→[project …
@@ -314,6 +323,7 @@ pyproject.toml
    106→[tool.pytest.ini_options …
    113→[tool.coverage.report …
    120→[tool.mypy …
+
 src/humanize/__init__.py
      5→from humanize.filesize import naturalsize
      6→from humanize.i18n import activate, deactivate, decimal_separator, thousands_separator
@@ -358,6 +368,7 @@ src/humanize/__init__.py
     47→    "scientific",
     48→    "thousands_separator",
     49→]
+
 src/humanize/filesize.py
      5→from math import log
     36→def naturalsize(
@@ -380,6 +391,7 @@ src/humanize/filesize.py
     53→        '300B'
     54→        >>> naturalsize(3000, False, True)
       →…
+
 src/humanize/i18n.py
      5→import gettext as gettext_module
      6→from threading import local
@@ -517,6 +529,7 @@ src/humanize/i18n.py
    199→    Returns:
    200→         str: Decimal separator.
    201→    """
+
 src/humanize/lists.py
      5→TYPE_CHECKING = False
      7→    from typing import Any
@@ -536,6 +549,7 @@ src/humanize/lists.py
     24→
     25→    Args:
       →…
+
 src/humanize/number.py
      5→import bisect
      7→from .i18n import _gettext as _
@@ -678,6 +692,7 @@ src/humanize/number.py
    543→        '10.00 f'
    544→
       →…
+
 src/humanize/time.py
      8→from enum import Enum
      9→from functools import total_ordering
@@ -903,10 +918,12 @@ src/humanize/time.py
    667→    try:
    668→        value = int(result)
       →…
+
 tests/test_filesize.py
      6→import pytest
      8→import humanize
     86→def test_naturalsize …
+
 tests/test_i18n.py
      5→import datetime as dt
      6→import importlib
@@ -982,10 +999,12 @@ tests/test_i18n.py
    277→            humanize.i18n.deactivate()
    278→
    279→        assert test_str == humanize.naturaltime(three_seconds)
+
 tests/test_lists.py
      3→import pytest
      5→import humanize
     20→def test_natural_list …
+
 tests/test_number.py
      5→import math
      6→import typing
@@ -1001,6 +1020,7 @@ tests/test_number.py
    219→def test_scientific …
    239→def test_clamp …
    308→def test_metric …
+
 tests/test_time.py
      5→import datetime as dt
      6→import typing

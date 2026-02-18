@@ -18,6 +18,7 @@ __private_api.rs
    114→    use crate::kv;
    116→    pub type Value<'a> = kv::Value<'a>;
    151→pub use self::kv_support::*;
+
 kv/error.rs
      3→/// An error encountered while working with structured data.
      4→#[derive(Debug)]
@@ -38,6 +39,7 @@ kv/error.rs
     69→mod std_support {
     70→    use super::*;
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
+
 kv/key.rs
      3→use std::borrow::Borrow;
      6→/// A type that can be converted into a [`Key`](struct.Key.html).
@@ -53,6 +55,7 @@ kv/key.rs
    114→    use super::*;
    136→mod serde_support {
    137→    use super::*;
+
 kv/mod.rs
    246→mod error;
    247→mod key;
@@ -67,6 +70,7 @@ kv/mod.rs
    261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
    265→pub use self::source::Visitor;
+
 kv/source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
      9→/// A source of key-values.
@@ -85,6 +89,7 @@ kv/source.rs
    280→mod std_support {
    281→    use super::*;
    462→pub use VisitSource as Visitor;
+
 kv/value.rs
      6→use std::fmt;
      8→pub use crate::kv::Error;
@@ -146,6 +151,7 @@ kv/value.rs
   1149→macro_rules! as_error {
   1159→macro_rules! as_serde {
   1169→macro_rules! as_sval {
+
 lib.rs
    401→use std::error;
    405→#[macro_use]
@@ -250,6 +256,7 @@ lib.rs
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
       →…
+
 macros.rs
     75→macro_rules! log {
    119→macro_rules! __log {
@@ -271,5 +278,6 @@ macros.rs
    553→macro_rules! __log_value_serde {
    564→macro_rules! __log_value_error {
    573→macro_rules! __log_value_error {
+
 serde.rs
      9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};

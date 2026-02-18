@@ -35,6 +35,7 @@ browser.ts
     34→export function testPlatform(re: RegExp): boolean | undefined {
     35→  return typeof window !== 'undefined' && window.navigator != null ? re.test(window.navigator.platform) : undefined;
     36→}
+
 constants.ts
      1→export const TRANSITIONS = {
      2→  DURATION: 0.5,
@@ -47,6 +48,7 @@ constants.ts
     14→export const NESTED_DISPLACEMENT = 16;
     16→export const WINDOW_TOP_OFFSET = 26;
     18→export const DRAG_CLASS = 'vaul-dragging';
+
 context.ts
      1→import React from 'react';
      2→import { DrawerDirection } from './types';
@@ -120,6 +122,7 @@ context.ts
     73→  }
     74→  return context;
     75→};
+
 helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
      3→interface Style {
@@ -228,6 +231,7 @@ helpers.ts
    115→    }
    116→  };
    117→}
+
 index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
@@ -476,6 +480,7 @@ index.tsx
   1141→  Overlay,
   1142→  Trigger: DialogPrimitive.Trigger,
       →…
+
 types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
      2→export interface SnapPoint {
@@ -483,6 +488,7 @@ types.ts
      4→  height: number;
      5→}
      7→export type AnyFunction = (...args: any) => any;
+
 use-composed-refs.ts
      3→import * as React from 'react';
      5→type PossibleRef<T> = React.Ref<T> | undefined;
@@ -512,6 +518,7 @@ use-composed-refs.ts
     32→  // eslint-disable-next-line react-hooks/exhaustive-deps
     33→  return React.useCallback(composeRefs(...refs), refs);
     34→}
+
 use-controllable-state.ts
      3→import React from 'react';
      5→type UseControllableStateParams<T> = {
@@ -549,6 +556,7 @@ use-controllable-state.ts
     57→
     58→  return [value, setValue] as const;
     59→}
+
 use-position-fixed.ts
      1→import React from 'react';
      2→import { isSafari } from './browser';
@@ -692,6 +700,7 @@ use-position-fixed.ts
    143→
    144→  return { restorePositionSetting };
    145→}
+
 use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
      4→import { isIOS } from './browser';
@@ -789,6 +798,7 @@ use-prevent-scroll.ts
    298→    (target instanceof HTMLElement && target.isContentEditable)
    299→  );
    300→}
+
 use-scale-background.ts
      1→import React, { useMemo } from 'react';
      2→import { useDrawerContext } from './context';
@@ -848,6 +858,7 @@ use-scale-background.ts
     58→    }
     59→  }, [isOpen, shouldScaleBackground, initialBackgroundColor]);
     60→}
+
 use-snap-points.ts
      1→import React from 'react';
      2→import { set, isVertical } from './helpers';

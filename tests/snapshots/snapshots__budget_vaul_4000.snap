@@ -6,6 +6,7 @@ budget: 4000 (3933 words)
 
 FUNDING.yml
      1→github …
+
 package.json
      2→  "name": "vaul",
      3→  "version": "1.1.2",
@@ -36,10 +37,13 @@ package.json
     66→  "dependencies": {
     68→  }
     69→}
+
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
+
 pnpm-workspace.yaml
      1→packages …
+
 src/browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
      2→  const userAgent = navigator.userAgent;
@@ -64,6 +68,7 @@ src/browser.ts
     34→export function testPlatform(re: RegExp): boolean | undefined {
     35→  return typeof window !== 'undefined' && window.navigator != null ? re.test(window.navigator.platform) : undefined;
     36→}
+
 src/constants.ts
      1→export const TRANSITIONS = {
      2→  DURATION: 0.5,
@@ -76,6 +81,7 @@ src/constants.ts
     14→export const NESTED_DISPLACEMENT = 16;
     16→export const WINDOW_TOP_OFFSET = 26;
     18→export const DRAG_CLASS = 'vaul-dragging';
+
 src/context.ts
      1→import React from 'react';
      2→import { DrawerDirection } from './types';
@@ -129,6 +135,7 @@ src/context.ts
     70→  const context = React.useContext(DrawerContext);
     71→  if (!context) {
       →…
+
 src/helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
      3→interface Style {
@@ -175,6 +182,7 @@ src/helpers.ts
    115→    }
    116→  };
    117→}
+
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
@@ -385,6 +393,7 @@ src/index.tsx
   1137→export const Drawer = {
   1138→  Root,
       →…
+
 src/types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
      2→export interface SnapPoint {
@@ -392,6 +401,7 @@ src/types.ts
      4→  height: number;
      5→}
      7→export type AnyFunction = (...args: any) => any;
+
 src/use-composed-refs.ts
      3→import * as React from 'react';
      5→type PossibleRef<T> = React.Ref<T> | undefined;
@@ -421,6 +431,7 @@ src/use-composed-refs.ts
     32→  // eslint-disable-next-line react-hooks/exhaustive-deps
     33→  return React.useCallback(composeRefs(...refs), refs);
     34→}
+
 src/use-controllable-state.ts
      3→import React from 'react';
      5→type UseControllableStateParams<T> = {
@@ -439,6 +450,7 @@ src/use-controllable-state.ts
     40→  const [uncontrolledProp, setUncontrolledProp] = useUncontrolledState({ defaultProp, onChange });
     41→  const isControlled = prop !== undefined;
       →…
+
 src/use-position-fixed.ts
      1→import React from 'react';
      2→import { isSafari } from './browser';
@@ -564,6 +576,7 @@ src/use-position-fixed.ts
    125→
    126→  React.useEffect(() => {
       →…
+
 src/use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
      4→import { isIOS } from './browser';
@@ -646,6 +659,7 @@ src/use-prevent-scroll.ts
    295→  return (
    296→    (target instanceof HTMLInputElement && !nonTextInputTypes.has(target.type)) ||
       →…
+
 src/use-scale-background.ts
      1→import React, { useMemo } from 'react';
      2→import { useDrawerContext } from './context';
@@ -656,6 +670,7 @@ src/use-scale-background.ts
      9→  const { direction, isOpen, shouldScaleBackground, setBackgroundColorOnScale, noBodyStyles } = useDrawerContext();
     10→  const timeoutIdRef = React.useRef<number | null>(null);
       →…
+
 src/use-snap-points.ts
      1→import React from 'react';
      2→import { set, isVertical } from './helpers';
@@ -688,6 +703,7 @@ src/use-snap-points.ts
     30→  const [activeSnapPoint, setActiveSnapPoint] = useControllableState<string | number | null>({
     31→    prop: activeSnapPointProp,
       →…
+
 test/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -715,9 +731,11 @@ test/README.md
     32→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     33→
     34→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
 test/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
+
 test/package.json
      2→  "name": "test",
      3→  "version": "0.1.0",
@@ -729,6 +747,7 @@ test/package.json
     21→  "dependencies": {
     28→  }
     29→}
+
 test/src/app/controlled/page.tsx
      3→import { useState } from 'react';
      4→import { Drawer } from 'vaul';
@@ -738,6 +757,7 @@ test/src/app/controlled/page.tsx
      9→
     10→  return (
       →…
+
 test/src/app/default-open/page.tsx
      3→import { useState } from 'react';
      4→import { Drawer } from 'vaul';
@@ -747,6 +767,7 @@ test/src/app/default-open/page.tsx
      9→      <Drawer.Root defaultOpen>
     10→        <Drawer.Trigger asChild>
       →…
+
 test/src/app/different-directions/page.tsx
      3→import clsx from 'clsx';
      4→import { Drawer, DialogProps } from 'vaul';
@@ -762,6 +783,7 @@ test/src/app/different-directions/page.tsx
    118→export default function Page() {
    119→  return (
       →…
+
 test/src/app/initial-snap/page.tsx
      3→import { clsx } from 'clsx';
      4→import { useState } from 'react';
@@ -774,6 +796,7 @@ test/src/app/initial-snap/page.tsx
     13→
     14→  return (
       →…
+
 test/src/app/layout.tsx
      1→import './globals.css';
      2→import type { Metadata } from 'next';
@@ -785,6 +808,7 @@ test/src/app/layout.tsx
     12→export default function RootLayout({ children }: { children: React.ReactNode }) {
     13→  return (
       →…
+
 test/src/app/nested-drawers/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {
@@ -793,6 +817,7 @@ test/src/app/nested-drawers/page.tsx
      8→      <Drawer.Root>
      9→        <Drawer.Trigger asChild>
       →…
+
 test/src/app/non-dismissible/page.tsx
      3→import { useState } from 'react';
      4→import { Drawer } from 'vaul';
@@ -800,6 +825,7 @@ test/src/app/non-dismissible/page.tsx
      7→  const [open, setOpen] = useState(false);
      8→  return (
       →…
+
 test/src/app/open-another-drawer/page.tsx
      3→import { Drawer } from 'vaul';
      4→import { useState } from 'react';
@@ -814,11 +840,13 @@ test/src/app/open-another-drawer/page.tsx
     14→}) {
     96→export function MyDrawer2({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
    195→export default function Home() {
+
 test/src/app/page.tsx
      3→import Link from 'next/link';
      5→export default function Page() {
      6→  return (
       →…
+
 test/src/app/parent-container/page.tsx
      2→import clsx from 'clsx';
      3→import { useState } from 'react';
@@ -833,6 +861,7 @@ test/src/app/parent-container/page.tsx
     13→}
     15→function Default() {
     39→function WithNested() {
+
 test/src/app/scrollable-page/page.tsx
      3→import { useState } from 'react';
      4→import { Drawer } from 'vaul';
@@ -842,6 +871,7 @@ test/src/app/scrollable-page/page.tsx
      9→  return (
     10→    <div
       →…
+
 test/src/app/scrollable-with-inputs/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {
@@ -853,6 +883,7 @@ test/src/app/scrollable-with-inputs/page.tsx
     11→        </Drawer.Trigger>
     12→        <Drawer.Portal>
       →…
+
 test/src/app/with-handle/page.tsx
      3→import { clsx } from 'clsx';
      4→import { useState } from 'react';
@@ -864,6 +895,7 @@ test/src/app/with-handle/page.tsx
     12→  const activeSnapPointIndex = snapPoints.indexOf(snap as string);
     13→
       →…
+
 test/src/app/with-modal-false/page.tsx
      3→import { clsx } from 'clsx';
      4→import { useState } from 'react';
@@ -875,11 +907,13 @@ test/src/app/with-modal-false/page.tsx
     12→  const activeSnapPointIndex = snapPoints.indexOf(snap as string);
     13→
       →…
+
 test/src/app/with-redirect/long-page/page.tsx
      3→export default function Page() {
      4→  return (
      5→    <div className="bg-zinc-100 space-y-10">
       →…
+
 test/src/app/with-redirect/page.tsx
      3→import Link from 'next/link';
      4→import { Drawer } from 'vaul';
@@ -889,6 +923,7 @@ test/src/app/with-redirect/page.tsx
      9→      <Drawer.Root>
     10→        <Drawer.Trigger asChild>
       →…
+
 test/src/app/with-scaled-background/page.tsx
      3→import { useState } from 'react';
      4→import clsx from 'clsx';
@@ -902,6 +937,7 @@ test/src/app/with-scaled-background/page.tsx
     68→  return (
     69→    <div
       →…
+
 test/src/app/with-snap-points/page.tsx
      3→import { clsx } from 'clsx';
      4→import { useState } from 'react';
@@ -913,6 +949,7 @@ test/src/app/with-snap-points/page.tsx
     12→  const activeSnapPointIndex = snapPoints.indexOf(snap as string);
     13→
       →…
+
 test/src/app/without-scaled-background/page.tsx
      3→import { useState } from 'react';
      4→import { Drawer } from 'vaul';
@@ -922,13 +959,18 @@ test/src/app/without-scaled-background/page.tsx
      9→
     10→  return (
       →…
+
 test/tailwind.config.ts
      1→import type { Config } from 'tailwindcss';
      3→const config: Config = {
+
 test/tests/base.spec.ts
+
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;
+
 test/tests/controlled.spec.ts
+
 test/tests/helpers.ts
      4→export async function openDrawer(page: Page) {
      5→  await expect(page.getByTestId('content')).not.toBeVisible();
@@ -944,18 +986,26 @@ test/tests/helpers.ts
     18→  const startX = 0;
     19→  const distance = Math.abs(endY - startY);
       →…
+
 test/tests/initial-snap.spec.ts
      8→const snapPointYPositions = {
     15→const snapTo = async (page: Page, snapPointIndex: keyof typeof snapPointYPositions) => {
     16→  await page.hover('[data-vaul-drawer]');
     17→  await page.mouse.down();
       →…
+
 test/tests/nested.spec.ts
+
 test/tests/non-dismissible.spec.ts
+
 test/tests/with-handle.spec.ts
+
 test/tests/with-redirect.spec.ts
+
 test/tests/with-scaled-background.spec.ts
+
 test/tests/without-scaled-background.spec.ts
+
 test/tsconfig.json
      2→  "compilerOptions": {
     31→  },
@@ -964,11 +1014,13 @@ test/tsconfig.json
     38→  "exclude": [
     40→  ]
     41→}
+
 tsconfig.json
      2→  "compilerOptions": {
      9→  },
     10→  "include": ["src"],
     11→}
+
 turbo.json
      2→  "$schema": "https://turbo.build/schema.json",
      3→  "pipeline": {

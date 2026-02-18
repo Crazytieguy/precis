@@ -75,6 +75,7 @@ ast.rs
    177→            ContainerKind::Struct => "struct",
    178→            ContainerKind::TupleStruct => "tuple struct",
       →…
+
 attr.rs
      1→use proc_macro2::{Delimiter, Group, Literal, Punct, Spacing, Span, TokenStream, TokenTree};
      2→use quote::{format_ident, quote, quote_spanned, ToTokens};
@@ -155,6 +156,7 @@ attr.rs
    345→            Trait::Debug => "Debug",
    346→            Trait::Display => "Display",
       →…
+
 expand.rs
      1→use crate::ast::{Enum, Field, Input, Struct};
      2→use crate::attr::Trait;
@@ -181,6 +183,7 @@ expand.rs
    565→fn type_is_option …
    569→fn unoptional_type …
    574→fn type_parameter_of_option …
+
 fallback.rs
      1→use crate::expand::call_site_ident;
      2→use crate::private;
@@ -188,6 +191,7 @@ fallback.rs
      4→use quote::quote;
      5→use syn::DeriveInput;
      7→pub(crate) fn expand …
+
 fmt.rs
      1→use crate::ast::{ContainerKind, Field};
      2→use crate::attr::{Display, Trait};
@@ -238,6 +242,7 @@ fmt.rs
    273→fn take_int …
    286→fn take_ident …
    299→fn between …
+
 generics.rs
      1→use proc_macro2::TokenStream;
      2→use quote::ToTokens;
@@ -280,6 +285,7 @@ generics.rs
     76→        let where_clause = generics.make_where_clause();
     77→        for ty in &self.order {
       →…
+
 lib.rs
     23→mod ast;
     24→mod attr;
@@ -308,6 +314,7 @@ lib.rs
     51→            concat!("__private", env!("CARGO_PKG_VERSION_PATCH")),
     52→            Span::call_site(),
       →…
+
 prop.rs
      1→use crate::ast::{Enum, Field, Struct, Variant};
      2→use crate::unraw::MemberUnraw;
@@ -335,6 +342,7 @@ prop.rs
    112→fn backtrace_field …
    127→fn distinct_backtrace_field …
    138→fn type_is_backtrace …
+
 scan_expr.rs
      1→use self::{Action::*, Input::*};
      2→use proc_macro2::{Delimiter, Ident, Spacing, TokenTree};
@@ -387,6 +395,7 @@ scan_expr.rs
    181→static REFERENCE: [(Input, Action); 3] = [
    187→static RETURN: [(Input, Action); 2] = [
    192→pub(crate) fn scan_expr …
+
 unraw.rs
      1→use proc_macro2::{Ident, Span, TokenStream};
      2→use quote::ToTokens;
@@ -482,6 +491,7 @@ unraw.rs
    138→            MemberUnraw::Named(ident) => ident.to_local().to_tokens(tokens),
    139→            MemberUnraw::Unnamed(index) => index.to_tokens(tokens),
       →…
+
 valid.rs
      1→use crate::ast::{Enum, Field, Input, Struct, Variant};
      2→use crate::attr::Attrs;

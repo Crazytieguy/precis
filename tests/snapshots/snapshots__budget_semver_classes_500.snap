@@ -29,6 +29,7 @@ comparator.js
     80→    if (!(comp instanceof Comparator)) {
     81→      throw new TypeError('a Comparator is required')
       →…
+
 range.js
      3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
@@ -76,6 +77,7 @@ range.js
    492→  from, fM, fm, fp, fpr, fb,
    493→  to, tM, tm, tp, tpr) => {
    523→const testSet = (set, version, options) => {
+
 semver.js
      9→class SemVer {
     10→  constructor (version, options) {

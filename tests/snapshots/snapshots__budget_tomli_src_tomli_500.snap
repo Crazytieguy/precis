@@ -12,6 +12,7 @@ __init__.py
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
      8→from ._parser …
+
 _parser.py
     10→from ._re …
     19→TYPE_CHECKING = False
@@ -61,6 +62,7 @@ _parser.py
    228→
    278→class NestedDict:
    312→class Output:
+
 _re.py
     11→TYPE_CHECKING = False
     15→    from ._types …
@@ -106,5 +108,6 @@ _re.py
    104→            minutes=sign * int(minute_str),
    105→        )
    106→    )
+
 _types.py
      5→from typing import Any, Callable, Tuple

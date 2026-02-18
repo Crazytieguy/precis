@@ -19,6 +19,7 @@ constants.js
     23→  'patch',
     24→  'prepatch',
       →…
+
 debug.js
      3→const debug = (
      4→  typeof process === 'object' &&
@@ -27,6 +28,7 @@ debug.js
      7→  /\bsemver\b/i.test(process.env.NODE_DEBUG)
      8→) ? (...args) => console.error('SEMVER', ...args)
      9→  : () => {}
+
 identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
@@ -49,6 +51,7 @@ identifiers.js
     21→    : 1
     22→}
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
+
 lrucache.js
      3→class LRUCache {
      4→  constructor () {
@@ -84,6 +87,7 @@ lrucache.js
     37→
     38→    return this
     39→  }
+
 parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })
@@ -98,6 +102,7 @@ parse-options.js
     14→
     15→  return options
     16→}
+
 re.js
     12→const re = exports.re = []
     13→const safeRe = exports.safeRe = []

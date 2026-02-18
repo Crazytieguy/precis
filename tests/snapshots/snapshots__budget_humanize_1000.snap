@@ -148,17 +148,21 @@ README.md
    232→
    233→```sh
       →…
+
 RELEASING.md
      1→# Release checklist
      3→- [ ] Get `main` to the appropriate code release state.
      4→      [GitHub Actions](https://github.com/python-humanize/humanize/actions) should be
       →…
+
 docs/filesize.md
      1→# Filesize
      3→::: humanize.filesize
+
 docs/i18n.md
      1→# Internationalisation
      3→::: humanize.i18n
+
 docs/index.md
      1→# humanize
      3→Welcome to the humanize API reference.
@@ -171,15 +175,19 @@ docs/index.md
     10→
     11→{%
       →…
+
 docs/lists.md
      1→# Lists
      3→::: humanize.lists
+
 docs/number.md
      1→# Number
      3→::: humanize.number
+
 docs/time.md
      1→# Time
      3→::: humanize.time
+
 mkdocs.yml
      1→site_name: humanize
      2→site_url: https://humanize.readthedocs.io
@@ -200,6 +208,7 @@ mkdocs.yml
     38→  - css/code_select.css
     39→
     40→watch:
+
 pyproject.toml
      1→[build-system …
      8→[project …
@@ -212,6 +221,7 @@ pyproject.toml
    106→[tool.pytest.ini_options …
    113→[tool.coverage.report …
    120→[tool.mypy …
+
 src/humanize/__init__.py
      5→from humanize.filesize …
      6→from humanize.i18n …
@@ -229,9 +239,11 @@ src/humanize/__init__.py
     35→    "fractional",
     36→    "intcomma",
       →…
+
 src/humanize/filesize.py
      5→from math …
     36→def naturalsize …
+
 src/humanize/i18n.py
      5→import gettext …
      6→from threading …
@@ -262,11 +274,13 @@ src/humanize/i18n.py
    163→def _ngettext_noop …
    183→def thousands_separator …
    196→def decimal_separator …
+
 src/humanize/lists.py
      5→TYPE_CHECKING = False
      7→    from typing …
      9→__all__ = ["natural_list"]
     12→def natural_list …
+
 src/humanize/number.py
      5→import bisect …
      7→from .i18n import _gettext as _
@@ -284,6 +298,7 @@ src/humanize/number.py
    385→def scientific …
    454→def clamp …
    531→def metric …
+
 src/humanize/time.py
      8→from enum …
      9→from functools …
@@ -326,7 +341,9 @@ src/humanize/time.py
    435→def _suppress_lower_units …
    451→def precisedelta …
    654→def _rounding_by_fmt …
+
 tests/test_filesize.py
+
 tests/test_i18n.py
     17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
@@ -340,8 +357,11 @@ tests/test_i18n.py
    250→    def test_en_locale(self) -> None:
    262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
+
 tests/test_lists.py
+
 tests/test_number.py
+
 tests/test_time.py
     14→ONE_DAY_DELTA = dt.timedelta(days=1)
     16→# In seconds

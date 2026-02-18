@@ -46,9 +46,11 @@ README.md
     70→- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
     71→- [FreeCache](https://github.com/coocood/freecache)
       →…
+
 bench_test.go
      3→import …
      8→var benchmarks = []struct {
+
 dynamic/dynamic_test.go
      6→import …
     15→// This is a cursory test that checks whether things work under dynamic linking.
@@ -65,6 +67,7 @@ dynamic/dynamic_test.go
     33→func TestDynamic(t *testing.T) {
     34→	plug, err := plugin.Open("plugin.so")
       →…
+
 dynamic/plugin.go
      6→import (
      7→	"fmt"
@@ -88,6 +91,7 @@ dynamic/plugin.go
     29→		t.Run(name, func(t *testing.T) {
     30→			d := xxhash.New()
       →…
+
 xxhash.go
      5→import (
      6→	"encoding/binary"
@@ -159,6 +163,7 @@ xxhash.go
    241→func rol23 …
    242→func rol27 …
    243→func rol31 …
+
 xxhash_asm.go
      9→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
     10→//
@@ -166,18 +171,22 @@ xxhash_asm.go
     12→func Sum64(b []byte) uint64
     14→//go:noescape
     15→func writeBlocks(d *Digest, b []byte) int
+
 xxhash_other.go
      6→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
      7→func Sum64(b []byte) uint64 {
     64→func writeBlocks …
+
 xxhash_safe.go
      8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
      9→func Sum64String(s string) uint64 {
     13→// WriteString adds more data to d. It always returns len(s), nil.
     14→func (d *Digest) WriteString(s string) (n int, err error) {
+
 xxhash_test.go
      3→import …
    168→var sink uint64
+
 xxhash_unsafe.go
      9→import (
     10→	"unsafe"
@@ -194,6 +203,7 @@ xxhash_unsafe.go
     56→	s   string
     57→	cap int
     58→}
+
 xxhash_unsafe_test.go
      6→import …
     29→// This test is inspired by the Go runtime tests in https://go.dev/cl/57410.
@@ -205,6 +215,7 @@ xxhash_unsafe_test.go
     35→	}
     36→
       →…
+
 xxhashbench/xxhashbench_test.go
      3→import …
     18→var sink uint64
@@ -212,6 +223,7 @@ xxhashbench/xxhashbench_test.go
    108→func BenchmarkHashes(b *testing.B) {
    152→func benchmarkHashBytes …
    159→func benchmarkHashString …
+
 xxhsum/xxhsum.go
      3→import (
      4→	"fmt"

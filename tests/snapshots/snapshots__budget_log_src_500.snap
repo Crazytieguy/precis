@@ -18,6 +18,7 @@ __private_api.rs
    114→    use crate::kv;
    116→    pub type Value<'a> = kv::Value<'a>;
    151→pub use self::kv_support::*;
+
 kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
@@ -32,6 +33,7 @@ kv/error.rs
     16→    Fmt,
     17→}
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
+
 kv/key.rs
      3→use std::borrow::Borrow;
      7→pub trait ToKey {
@@ -39,6 +41,7 @@ kv/key.rs
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
     40→}
+
 kv/mod.rs
    247→mod key;
    254→pub use self::error::Error;
@@ -50,11 +53,13 @@ kv/mod.rs
    261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
    265→pub use self::source::Visitor;
+
 kv/source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
     51→pub trait Source {
    235→pub trait VisitSource<'kvs> {
    462→pub use VisitSource as Visitor;
+
 kv/value.rs
      6→use std::fmt;
      8→pub use crate::kv::Error;
@@ -89,6 +94,7 @@ kv/value.rs
   1149→macro_rules! as_error {
   1159→macro_rules! as_serde {
   1169→macro_rules! as_sval {
+
 lib.rs
    401→use std::error;
    405→#[macro_use]
@@ -145,6 +151,8 @@ lib.rs
   1605→///
       →…
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
+
 macros.rs
+
 serde.rs
      9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};

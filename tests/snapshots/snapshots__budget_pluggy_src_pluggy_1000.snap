@@ -15,10 +15,12 @@ __init__.py
      8→    "HookimplOpts",
      9→    "HookImpl",
       →…
+
 _callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
+
 _hooks.py
     28→_T …
     29→_F …
@@ -167,6 +169,7 @@ _hooks.py
    706→        "warn_on_impl_args",
    707→    )
    708→
+
 _manager.py
     33→    import importlib.metadata
     36→_BeforeTrace …
@@ -197,6 +200,7 @@ _manager.py
     92→
       →…
     99→
+
 _result.py
     16→_ExcInfo …
     20→class HookCallError(Exception):
@@ -230,9 +234,11 @@ _result.py
     63→        except BaseException as exc:
     64→            exception = exc
     65→        return cls(result, exception)
+
 _tracing.py
     16→class TagTracer:
     59→class TagTracerSub:
+
 _warnings.py
      4→class PluggyWarning(UserWarning):
      5→    """Base class for all warnings emitted by pluggy."""

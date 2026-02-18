@@ -43,6 +43,7 @@ imp_cs.rs
     70→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
     74→    #[inline]
     75→    pub(crate) fn into_inner(self) -> Option<T> {
+
 imp_pl.rs
      1→use std::{
      2→    cell::UnsafeCell,
@@ -101,6 +102,7 @@ imp_pl.rs
    134→    }
    138→#[inline(never)]
    139→fn initialize_inner(state: &AtomicU8, init: &mut dyn FnMut() -> bool) {
+
 imp_std.rs
      6→use std::{
      7→    cell::{Cell, UnsafeCell},
@@ -242,6 +244,7 @@ imp_std.rs
    282→    where
    283→        T: Sized,
    284→    {
+
 lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -590,6 +593,7 @@ lib.rs
   1408→    fn _dummy() {}
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
+
 race.rs
     31→use core::sync::atomic;
     33→use portable_atomic as atomic;

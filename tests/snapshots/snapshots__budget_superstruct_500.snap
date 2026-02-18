@@ -6,6 +6,7 @@ budget: 500 (496 words)
 
 Changelog.md
      1→# Changelog …
+
 Readme.md
     42→### Usage …
    145→### Why? …
@@ -14,27 +15,38 @@ Readme.md
    189→### Examples …
    205→### Documentation …
    231→### License …
+
 docs/readme.md
      7→### Usage …
+
 docs/reference/typescript.md
      5→## Utilities …
+
 docs/resources/faq.md
      1→# FAQ …
+
 docs/resources/links.md
      1→# Resources …
      5→## Libraries …
+
 docs/summary.md
+
 examples/README.md
      1→# Examples …
+
 examples/package.json
      2→  "type": "module",
      3→  "license": "MIT",
      4→  "dependencies": {
      9→  }
     10→}
+
 jsr.json
+
 package.json
+
 rollup.config.js
+
 src/error.ts
     16→/**
       →…
@@ -51,6 +63,7 @@ src/error.ts
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
     36→    let cached: Array<Failure> | undefined
       →…
+
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
@@ -88,9 +101,12 @@ src/struct.ts
    157→export function mask …
    175→export function is …
    185→export function validate …
+
 src/structs/coercions.ts
+
 src/structs/refinements.ts
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
+
 src/structs/types.ts
     33→export function array<T extends Struct<any>>(Element?: T): any {
    105→export function enums<U extends string | number, T extends readonly U[]>(
@@ -100,8 +116,10 @@ src/structs/types.ts
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    298→export function object<S extends ObjectSchema>(schema?: S): any {
    415→export function set<T>(Element?: Struct<T>): any {
+
 src/structs/utilities.ts
     60→export function assign(...Structs: Struct<any>[]): any {
+
 src/utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'
@@ -120,36 +138,56 @@ src/utils.ts
     67→export function toFailure …
    328→export type If<B extends Boolean, Then, Else> = B extends true ? Then : Else
    402→type _InferTuple …
+
 test/index.ts
      1→/**
      2→ * A helper for testing type signatures.
      3→ */
      4→
      5→export function test<T>(fn: (x: unknown) => T) {}
+
 test/tsconfig.json
      2→  "extends": "../tsconfig.json",
      3→  "include": ["./**/*.ts"],
      4→  "compilerOptions": {
      6→  }
      7→}
+
 test/typings/infer.ts
+
 test/validation/boolean/invalid.ts
+
 test/validation/boolean/valid.ts
+
 test/validation/function/invalid.ts
+
 test/validation/function/valid.ts
      5→export const data = function () {}
+
 test/validation/instance/invalid.ts
+
 test/validation/instance/valid.ts
+
 test/validation/literal/invalid.ts
+
 test/validation/literal/valid.ts
+
 test/validation/never/invalid.ts
+
 test/validation/number/invalid.ts
+
 test/validation/number/valid.ts
+
 test/validation/pattern/invalid.ts
+
 test/validation/pattern/valid.ts
+
 test/validation/regexp/invalid.ts
+
 test/validation/regexp/valid.ts
+
 test/validation/type/valid-instance.ts
      3→class Person {
      6→  constructor(name: string) {
+
 tsconfig.json

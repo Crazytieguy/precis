@@ -45,6 +45,7 @@ __private_api.rs
    140→    pub fn capture_sval<'a, V: sval::Value + ?Sized>(v: &'a &'a V) -> Value<'a> {
    145→    pub fn capture_serde<'a, V: serde_core::Serialize + ?Sized>(v: &'a &'a V) -> Value<'a> {
    151→pub use self::kv_support::*;
+
 kv/error.rs
      1→use std::fmt;
      3→/// An error encountered while working with structured data.
@@ -81,6 +82,7 @@ kv/error.rs
     78→        where
     79→            E: Into<BoxedError>,
     80→        {
+
 kv/key.rs
      3→use std::borrow::Borrow;
      4→use std::fmt;
@@ -108,6 +110,7 @@ kv/key.rs
    136→mod serde_support {
    137→    use super::*;
    139→    use serde_core::{Serialize, Serializer};
+
 kv/mod.rs
      1→//! Structured logging.
      2→//!
@@ -137,6 +140,7 @@ kv/mod.rs
    261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
    265→pub use self::source::Visitor;
+
 kv/source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
      7→use std::fmt;
@@ -213,6 +217,7 @@ kv/source.rs
    285→    use std::rc::Rc;
    286→    use std::sync::Arc;
    462→pub use VisitSource as Visitor;
+
 kv/value.rs
      6→use std::fmt;
      8→pub use crate::kv::Error;
@@ -449,6 +454,7 @@ kv/value.rs
   1171→        $crate::kv::Value::from_sval(&$capture)
   1172→    };
   1173→}
+
 lib.rs
    399→use std::cfg;
    401→use std::error;
@@ -807,6 +813,7 @@ lib.rs
   1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
   1616→    false if cfg!(feature = "release_max_level_debug") => LevelFilter::Debug,
       →…
+
 macros.rs
     11→/// The standard logging macro.
     12→///
@@ -885,6 +892,7 @@ macros.rs
    571→#[macro_export]
       →…
    573→macro_rules! __log_value_error {
+
 serde.rs
      3→use serde_core::de::{
      4→    Deserialize, DeserializeSeed, Deserializer, EnumAccess, Error, Unexpected, VariantAccess,

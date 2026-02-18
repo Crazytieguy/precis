@@ -30,8 +30,10 @@ __init__.py
     49→    "find_dotenv",
     50→    "load_ipython_extension",
     51→]
+
 __main__.py
      3→from .cli import cli
+
 cli.py
      1→import json …
      2→import os …
@@ -149,6 +151,7 @@ cli.py
    209→        This function does not return any value. It replaces the current process with the new one.
    210→
    211→    """
+
 ipython.py
      1→from IPython.core.magic …
      2→from IPython.core.magic_arguments …
@@ -190,6 +193,7 @@ ipython.py
     45→        load_dotenv(dotenv_path, verbose=args.verbose, override=args.override)
     48→def load_ipython_extension(ipython):
     49→    """Register the %dotenv magic."""
+
 main.py
      1→import io …
      2→import logging …
@@ -397,6 +401,7 @@ main.py
    433→        return False
    434→
    435→    return stat.S_ISFIFO(st.st_mode)
+
 parser.py
      1→import codecs …
      2→import re …
@@ -433,6 +438,7 @@ parser.py
    128→def parse_value(reader: Reader) -> str:
    142→def parse_binding(reader: Reader) -> Binding:
    179→def parse_stream(stream: IO[str]) -> Iterator[Binding]:
+
 variables.py
      1→import re …
      2→from abc …
@@ -465,5 +471,6 @@ variables.py
     61→    def __hash__(self) -> int:
     64→    def resolve(self, env: Mapping[str, Optional[str]]) -> str:
     70→def parse_variables(value: str) -> Iterator[Atom]:
+
 version.py
      1→__version__ = "1.2.1"

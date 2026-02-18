@@ -44,6 +44,7 @@ README.md
     69→
     70→## Documentation
     72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
+
 package.json
      2→  "name": "react-hot-toast",
      3→  "description": "Smoking hot React Notifications. Lightweight, customizable and beautiful by default.",
@@ -77,57 +78,75 @@ package.json
    102→  },
    103→  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
    104→}
+
 site/README.md
      3→## Getting Started …
     17→## Learn More …
     26→## Deploy on Vercel …
+
 site/components/code.tsx
      8→const theme: PrismTheme = {
    104→export const Code: React.FC<{
+
 site/components/docs-layout.tsx
      8→const TableItem: React.FC<{
     19→const TableHeader: React.FC<{
     27→export default function DocsLayout({ meta, children }) {
+
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
+
 site/components/sections/footer.tsx
+
 site/components/sections/splitbee-counter.tsx
+
 site/components/sections/toast-example.tsx
      7→const examples: Array<{
+
 site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
+
 site/next.config.mjs
      5→const withMDX …
     15→const nextConfig = {
     17→  webpack(config) {
     24→  async rewrites() {
+
 site/package.json
+
 site/pages/_app.tsx
+
 site/pages/index.tsx
    102→export default function Home() {
+
 site/tsconfig.json
+
 site/types/svg.d.ts
      1→interface SvgrComponent
      2→  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
      5→  const value: SvgrComponent;
+
 src/components/checkmark.tsx
     29→export interface CheckmarkTheme {
     30→  primary?: string;
     31→  secondary?: string;
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
+
 src/components/error.tsx
     33→export interface ErrorTheme {
     34→  primary?: string;
     35→  secondary?: string;
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
+
 src/components/loader.tsx
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
+
 src/components/toast-bar.tsx
      4→import { Toast, ToastPosition, resolveValue, Renderable } from '../core/types';
      5→import { ToastIcon } from './toast-icon';
@@ -145,6 +164,7 @@ src/components/toast-bar.tsx
     55→}
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
+
 src/components/toast-icon.tsx
      4→import { Toast } from '../core/types';
      5→import { ErrorIcon, ErrorTheme } from './error';
@@ -156,6 +176,7 @@ src/components/toast-icon.tsx
     48→  toast: Toast;
     49→}> = ({ toast }) => {
       →…
+
 src/components/toaster.tsx
      3→import {
      4→  resolveValue,
@@ -172,6 +193,7 @@ src/components/toaster.tsx
     86→  reverseOrder,
     87→  position = 'top-center',
       →…
+
 src/core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
      2→import { DefaultToastOptions, Toast, ToastType } from './types …
@@ -208,6 +230,7 @@ src/core/store.ts
    169→export const createDispatch …
    175→export const defaultTimeouts …
    185→export const useStore …
+
 src/core/toast.ts
      1→./types …
     10→import { genId } from './utils …
@@ -217,6 +240,7 @@ src/core/toast.ts
     23→const createToast …
     42→const createHandler …
     55→const toast …
+
 src/core/types.ts
      1→import { CSSProperties } from 'react';
      3→export type ToastType …
@@ -274,6 +298,7 @@ src/core/types.ts
     95→  onHeightUpdate: (id: string, height: number) => void;
     96→  children?: React.ReactNode;
     97→}
+
 src/core/use-toaster.ts
      1→import { useEffect, useCallback, useRef } from 'react';
      2→import { createDispatch, ActionType, useStore, dispatch } from './store …
@@ -281,22 +306,29 @@ src/core/use-toaster.ts
      4→import { DefaultToastOptions, Toast, ToastPosition } from './types …
      6→export const REMOVE_DELAY …
      8→export const useToaster …
+
 src/core/utils.ts
      1→export const genId …
      8→export const prefersReducedMotion …
+
 src/headless/index.ts
      1→import { toast } from '../core/toast';
+
 src/index.ts
      1→import { toast } from './core/toast';
+
 test/setup.ts
      1→import '@testing-library/jest-dom';
+
 test/toast.test.tsx
     29→const waitTime = (time: number) => {
     35→const TOAST_DURATION = 1000;
+
 tsconfig.json
      3→  "include": ["src", "types", "test"],
      4→  "compilerOptions": {
     32→  }
     33→}
+
 tsup.config.ts
      4→const commonConfig: Options = {

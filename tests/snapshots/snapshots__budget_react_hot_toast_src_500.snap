@@ -10,18 +10,21 @@ components/checkmark.tsx
     31→  secondary?: string;
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
+
 components/error.tsx
     33→export interface ErrorTheme {
     34→  primary?: string;
     35→  secondary?: string;
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
+
 components/loader.tsx
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
+
 components/toast-bar.tsx
      8→const enterAnimation …
     13→const exitAnimation …
@@ -36,18 +39,21 @@ components/toast-bar.tsx
     55→}
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
+
 components/toast-icon.tsx
     32→export const AnimatedIconWrapper = styled('div')`
     41→export type IconThemes = Partial<{
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
       →…
+
 components/toaster.tsx
     15→const ToastWrapper …
     47→const getPositionStyle …
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
       →…
+
 core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
      2→import { DefaultToastOptions, Toast, ToastType } from './types …
@@ -84,6 +90,7 @@ core/store.ts
    169→export const createDispatch …
    175→export const defaultTimeouts …
    185→export const useStore …
+
 core/toast.ts
      1→./types …
     10→import { genId } from './utils …
@@ -93,6 +100,7 @@ core/toast.ts
     23→const createToast …
     42→const createHandler …
     55→const toast …
+
 core/types.ts
      1→import { CSSProperties } from 'react';
      3→export type ToastType …
@@ -137,6 +145,7 @@ core/types.ts
     95→  onHeightUpdate: (id: string, height: number) => void;
     96→  children?: React.ReactNode;
     97→}
+
 core/use-toaster.ts
      1→import { useEffect, useCallback, useRef } from 'react';
      2→import { createDispatch, ActionType, useStore, dispatch } from './store …
@@ -144,10 +153,13 @@ core/use-toaster.ts
      4→import { DefaultToastOptions, Toast, ToastPosition } from './types …
      6→export const REMOVE_DELAY …
      8→export const useToaster …
+
 core/utils.ts
      1→export const genId …
      8→export const prefersReducedMotion …
+
 headless/index.ts
      1→import { toast } from '../core/toast';
+
 index.ts
      1→import { toast } from './core/toast';

@@ -6,6 +6,7 @@ budget: 500 (492 words)
 
 FUNDING.yml
      1→github …
+
 README.md
      5→## Usage
      7→To start using the library, install it in your project:
@@ -17,10 +18,14 @@ README.md
       →…
     31→## Documentation
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
+
 package.json
+
 playwright.config.ts
+
 pnpm-workspace.yaml
      1→packages …
+
 src/assets.tsx
      2→import React from 'react';
      3→import type { ToastTypes } from './types …
@@ -30,9 +35,11 @@ src/assets.tsx
     79→  <svg
     80→    xmlns="http://www.w3.org/2000/svg"
       →…
+
 src/hooks.tsx
      1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
+
 src/index.tsx
      3→import React from 'react';
      4→import ReactDOM from 'react-dom';
@@ -47,6 +54,7 @@ src/index.tsx
    507→function getDocumentDirection(): ToasterProps['dir'] {
    520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
    552→function useSonner() {
+
 src/state.ts
      1→./types …
     11→import React from 'react';
@@ -76,6 +84,7 @@ src/state.ts
    281→const getHistory …
    282→const getToasts …
    285→export const toast …
+
 src/types.ts
      1→import React from 'react';
      3→export type ToastTypes …
@@ -105,46 +114,73 @@ src/types.ts
    190→export type Theme …
    192→export interface ToastToDismiss {
    197→export type ExternalToast …
+
 test/README.md
      3→## Getting Started …
     25→## Learn More …
     34→## Deploy on Vercel …
+
 test/package.json
+
 test/src/app/action.tsx
+
 test/src/app/layout.tsx
      1→export const metadata = {
+
 test/src/app/page.tsx
+
 test/tests/basic.spec.ts
+
 test/tsconfig.json
+
 tsconfig.json
+
 turbo.json
+
 website/README.md
+
 website/package.json
+
 website/src/components/CodeBlock/index.tsx
     48→export const CodeBlock …
+
 website/src/components/ExpandModes/index.tsx
      4→export const ExpandModes = ({
+
 website/src/components/Footer/index.tsx
      5→export const Footer = () => {
+
 website/src/components/Head/index.tsx
+
 website/src/components/Hero/index.tsx
      6→export const Hero = () => {
+
 website/src/components/How/How.tsx
      3→export const How = () => {
+
 website/src/components/Installation/index.tsx
     14→export const Installation = () => {
+
 website/src/components/Other/Other.tsx
      7→export const Other = ({
+
 website/src/components/Position/index.tsx
      7→export type Position = (typeof positions)[number];
      9→export const Position = ({
+
 website/src/components/Types/Types.tsx
      7→export const Types = () => {
+
 website/src/components/Usage/index.tsx
      3→export const Usage = () => {
+
 website/src/pages/_app.tsx
+
 website/src/pages/_meta.json
+
 website/src/pages/index.tsx
+
 website/theme.config.jsx
      7→  useNextSeoProps() {
+
 website/tsconfig.json

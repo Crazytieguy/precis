@@ -15,27 +15,39 @@ README.md
     99→  - [`.returnType`](#returntype)
    100→  - [`.exhaustive`](#exhaustive)
       →…
+
 benchmarks/package.json
+
 docs/v3-to-v4-migration-guide.md
+
 docs/v4-to-v5-migration-guide.md
+
 examples/gif-fetcher/src/App.tsx
     42→const reducer …
     75→export default function App() {
+
 examples/gif-fetcher/src/constants.ts
      1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
+
 examples/gif-fetcher/src/searchGif.ts
      6→export function searchGif(query: string) {
+
 examples/one-file-demo/one-file-demo.ts
     79→const example3 …
+
 jsr.json
+
 package.json
+
 src/errors.ts
      1→/**
      2→ * Error when the given input value does not match any included pattern
      3→ * and .exhaustive() was specified
      4→ */
      5→export class NonExhaustiveError extends Error {
+
 src/index.ts
+
 src/internals/helpers.ts
      7→import * as symbols from './symbols';
      8→import { SelectionType } from '../types/FindSelected';
@@ -46,6 +58,7 @@ src/internals/helpers.ts
     32→export const matchPattern …
    120→export const getSelectionKeys …
    132→export const flatMap …
+
 src/internals/symbols.ts
      1→/**
      2→ * Symbols used internally within ts-pattern to construct and discriminate
@@ -53,6 +66,7 @@ src/internals/symbols.ts
      4→ *
       →…
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
+
 src/is-matching.ts
      6→/**
      7→ * This constraint allows using additional properties
@@ -62,11 +76,13 @@ src/is-matching.ts
     13→  : T extends object
     14→  ? P.Pattern<T> & UnknownProperties
     15→  : P.Pattern<T>;
+
 src/match.ts
     32→export function match …
     38→/**
       →…
     47→class MatchExpression<input, output> {
+
 src/patterns.ts
      8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
     81→export type unstable_Matchable …
@@ -88,17 +104,25 @@ src/patterns.ts
   1231→export const nullish …
   1241→export const nonNullable …
   1251→export function instanceOf …
+
 src/types/BuildMany.ts
+
 src/types/DeepExclude.ts
+
 src/types/DistributeUnions.ts
     41→export type DistributeMatchingUnions …
     80→export type FindUnions …
+
 src/types/ExtractPreciseValue.ts
+
 src/types/FindSelected.ts
+
 src/types/InvertPattern.ts
    106→export type InvertPattern …
    303→export type InvertPatternForExclude …
+
 src/types/IsMatching.ts
+
 src/types/Match.ts
     10→interface NonExhaustiveError<i> {
     11→  __nonExhaustive: never;
@@ -110,6 +134,7 @@ src/types/Match.ts
    132→  with …
    245→type DeepExcludeAll …
    261→type Exhaustive …
+
 src/types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
@@ -141,6 +166,7 @@ src/types/Pattern.ts
    157→export type Pattern …
    269→      select …
    678→      select …
+
 src/types/helpers.ts
     14→export type LeastUpperBound …
    182→export type GuardValue …
@@ -148,8 +174,12 @@ src/types/helpers.ts
    267→  input: unknown;
    268→  output: unknown;
    269→}
+
 tests/tsconfig.json
+
 tests/types-catalog/definition.ts
+
 tests/types-catalog/utils.ts
      4→export const some …
+
 tsconfig.json

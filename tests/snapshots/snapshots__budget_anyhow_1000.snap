@@ -10,6 +10,7 @@ Cargo.toml
     18→[dependencies …
     25→[dev-dependencies …
     32→[package.metadata.docs.rs …
+
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯ …
     21→## Details …
@@ -25,9 +26,12 @@ README.md
    174→
    175→<sub>
       →…
+
 build.rs
+
 rust-toolchain.toml
      1→[toolchain …
+
 src/backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
      5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
@@ -47,6 +51,7 @@ src/backtrace.rs
     64→macro_rules! backtrace_if_absent {
     70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
+
 src/chain.rs
      5→use alloc::vec::{self, Vec};
      8→pub(crate) use crate::Chain;
@@ -65,12 +70,14 @@ src/chain.rs
     23→    },
     24→}
     36→    type Item = &'a (dyn StdError + 'static);
+
 src/context.rs
      7→use crate::nightly::{self, Request};
      9→mod ext {
     12→    pub trait StdError {
    186→pub(crate) mod private {
    189→    pub trait Sealed {}
+
 src/ensure.rs
      9→#[doc(hidden)]
     10→pub trait BothDebug {
@@ -85,6 +92,7 @@ src/ensure.rs
    910→#[doc(hidden)]
    911→#[macro_export]
    912→macro_rules! __fallback_ensure {
+
 src/error.rs
      4→use crate::nightly::{self, Request};
      6→use crate::ptr::Mut;
@@ -103,7 +111,9 @@ src/error.rs
    953→    pub context: C,
    954→    pub error: E,
    955→}
+
 src/fmt.rs
+
 src/kind.rs
     51→use crate::StdError;
     53→use alloc::boxed::Box;
@@ -118,6 +128,7 @@ src/kind.rs
    102→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    103→#[doc(hidden)]
    104→pub trait BoxedKind: Sized {
+
 src/lib.rs
    251→#[macro_use]
    252→mod backtrace;
@@ -207,6 +218,7 @@ src/lib.rs
    708→    mod not {
    709→        #[doc(hidden)]
    710→        pub trait Bool {
+
 src/macros.rs
      1→/// Return early with an error.
      2→///
@@ -220,8 +232,10 @@ src/macros.rs
    228→#[doc(hidden)]
    229→#[macro_export]
    230→macro_rules! __anyhow {
+
 src/nightly.rs
     10→pub use core::error::Request;
+
 src/ptr.rs
      5→#[repr(transparent)]
      6→pub struct Own<T>
@@ -250,6 +264,7 @@ src/ptr.rs
    182→    type Target;
    183→}
    186→    type Target = T;
+
 src/wrapper.rs
      5→use alloc::boxed::Box;
      8→use crate::nightly::{self, Request};
@@ -260,17 +275,21 @@ src/wrapper.rs
     56→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     57→#[repr(transparent)]
     58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
+
 tests/common/mod.rs
      4→pub fn bail_literal() -> Result<()> {
      8→pub fn bail_fmt() -> Result<()> {
     12→pub fn bail_error() -> Result<()> {
+
 tests/crate/Cargo.toml
      1→[package …
      8→[lib …
     11→[dependencies …
     14→[features …
+
 tests/crate/test.rs
      3→pub use anyhow::*;
+
 tests/drop/mod.rs
      8→#[derive(Debug)]
      9→pub struct Flag {
@@ -280,16 +299,21 @@ tests/drop/mod.rs
     26→pub struct DetectDrop {
     27→    has_dropped: Flag,
     28→}
+
 tests/test_boxed.rs
     13→struct MyError {
+
 tests/test_chain.rs
+
 tests/test_context.rs
     22→macro_rules! context_type {
     44→struct LowLevel {
+
 tests/test_ensure.rs
     43→    type Output = bool;
     77→#[track_caller]
     78→fn assert_err<T: Debug>(result: impl FnOnce() -> Result<T>, expected: &'static str) {
+
 tests/test_ffi.rs
      6→#[no_mangle]
      7→pub extern "C" fn anyhow1(err: anyhow::Error) {
@@ -297,14 +321,18 @@ tests/test_ffi.rs
     12→pub extern "C" fn anyhow2(err: &mut Option<anyhow::Error>) {
     16→#[no_mangle]
     17→pub extern "C" fn anyhow3() -> Option<anyhow::Error> {
+
 tests/test_fmt.rs
+
 tests/test_source.rs
      7→enum TestError {
+
 tests/ui/ensure-nonbool.rs
     11→    type Target = bool;
     12→    fn deref(&self) -> &Self::Target {
     18→    type Output = bool;
     19→    fn not(self) -> Self::Output {
+
 tests/ui/no-impl.rs
      3→#[derive(Debug)]
      4→struct Error;

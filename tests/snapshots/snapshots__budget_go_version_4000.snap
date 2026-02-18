@@ -82,6 +82,7 @@ CHANGELOG.md
     84→
     85→# 1.0.0 (August 24, 2018)
     87→Initial release.
+
 README.md
      1→# Versioning Library for Go
      6→go-version is a library for parsing versions and version constraints,
@@ -141,6 +142,7 @@ README.md
     65→If you find an issue with this library, please report an issue. If you'd
     66→like, we welcome any contributions. Fork this library and submit a pull
     67→request.
+
 constraint.go
      6→import (
      7→	"fmt"
@@ -375,6 +377,7 @@ constraint.go
    285→	if cs > len(v.segments) {
    286→		return false
       →…
+
 constraint_test.go
      6→import (
      7→	"fmt"
@@ -412,6 +415,7 @@ constraint_test.go
    234→		constraint string
    235→		result     string
       →…
+
 version.go
      6→import (
      7→	"database/sql/driver"
@@ -770,6 +774,7 @@ version.go
    457→func (v *Version) Value() (driver.Value, error) {
    458→	return v.String(), nil
    459→}
+
 version_collection.go
      6→// Collection is a type that implements the sort.Interface interface
      7→// so that versions can be sorted.
@@ -783,6 +788,7 @@ version_collection.go
     18→func (v Collection) Swap(i, j int) {
     19→	v[i], v[j] = v[j], v[i]
     20→}
+
 version_collection_test.go
      6→import (
      7→	"reflect"
@@ -794,6 +800,7 @@ version_collection_test.go
     14→		"1.1.1",
     15→		"1.0",
       →…
+
 version_test.go
      6→import (
      7→	"encoding/json"

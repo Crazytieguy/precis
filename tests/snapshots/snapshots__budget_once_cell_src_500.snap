@@ -9,6 +9,7 @@ imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
       →…
+
 imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
@@ -19,6 +20,7 @@ imp_pl.rs
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
       →…
+
 imp_std.rs
     14→pub(crate) struct OnceCell<T> {
     15→    // This `queue` field is the core of the implementation. It encodes two
@@ -42,6 +44,7 @@ imp_std.rs
    147→    new_queue: *mut Waiter,
    148→}
    245→mod strict {
+
 lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -95,6 +98,7 @@ lib.rs
   1374→        type Target = T;
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
+
 race.rs
     31→use core::sync::atomic;
     33→use portable_atomic as atomic;

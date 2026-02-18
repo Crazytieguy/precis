@@ -6,6 +6,7 @@ budget: 500 (496 words)
 
 CHANGELOG.md
      1→# neverthrow …
+
 README.md
      1→# NeverThrow 🙅 …
      5→## Description …
@@ -20,8 +21,11 @@ README.md
   1633→### Testing …
   1673→## A note on the Package Name …
   1681→### License …
+
 package.json
+
 rollup.config.mjs
+
 src/_internals/error.ts
      1→import { Result } from '../result'
      3→export interface ErrorConfig {
@@ -40,6 +44,7 @@ src/_internals/error.ts
     29→  result: Result<T, E>,
     30→  config: ErrorConfig = defaultErrorConfig,
     31→): NeverThrowError<T, E> => {
+
 src/_internals/utils.ts
      1→import { Result, ok, err } from '../result'
      2→import { ResultAsync } from '../result-async'
@@ -71,6 +76,7 @@ src/_internals/utils.ts
     68→
       →…
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
+
 src/result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
@@ -78,6 +84,7 @@ src/result-async.ts
    210→  /**
       →…
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
+
 src/result.ts
     14→export namespace Result {
     15→  /**
@@ -127,13 +134,16 @@ src/result.ts
    419→export class Err<T, E> implements IResult<T, E> {
    505→  _unsafeUnwrap(config?: ErrorConfig): T {
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
+
 tests/tsconfig.tests.json
      2→  "compilerOptions": {
     22→  },
     23→  "include": [
     26→  ]
     27→}
+
 tests/typecheck-tests.ts
     19→type CreateTuple …
   2607→const input …
+
 tsconfig.json

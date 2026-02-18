@@ -5,6 +5,7 @@ expression: output
 budget: 500 (498 words)
 
 browser.ts
+
 constants.ts
      1→export const TRANSITIONS = {
      6→export const VELOCITY_THRESHOLD = 0.4;
@@ -14,9 +15,11 @@ constants.ts
     14→export const NESTED_DISPLACEMENT = 16;
     16→export const WINDOW_TOP_OFFSET = 26;
     18→export const DRAG_CLASS = 'vaul-dragging';
+
 context.ts
      4→interface DrawerContextValue {
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
+
 helpers.ts
      3→interface Style {
      7→const cache …
@@ -27,6 +30,7 @@ helpers.ts
    109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
    110→    for (const fn of fns) {
       →…
+
 index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
@@ -49,6 +53,7 @@ index.tsx
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
   1130→export function Portal …
   1137→export const Drawer = {
+
 types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
      2→export interface SnapPoint {
@@ -56,6 +61,7 @@ types.ts
      4→  height: number;
      5→}
      7→export type AnyFunction = (...args: any) => any;
+
 use-composed-refs.ts
      5→type PossibleRef …
      7→/**
@@ -67,11 +73,13 @@ use-composed-refs.ts
     27→/**
       →…
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
+
 use-controllable-state.ts
      5→type UseControllableStateParams …
     11→type SetStateFn …
     13→function useCallbackRef …
     24→function useUncontrolledState …
+
 use-position-fixed.ts
      6→/**
      7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
@@ -100,6 +108,7 @@ use-position-fixed.ts
     30→  const [activeUrl, setActiveUrl] = React.useState(() => (typeof window !== 'undefined' ? window.location.href : ''));
     31→  const scrollPos = React.useRef(0);
       →…
+
 use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER …
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -120,6 +129,8 @@ use-prevent-scroll.ts
    243→function setStyle …
    257→function addEvent …
    272→function scrollIntoView …
+
 use-scale-background.ts
      6→const noop …
+
 use-snap-points.ts

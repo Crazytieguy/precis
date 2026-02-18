@@ -86,10 +86,16 @@ fn render_scheduled(
     sched: &schedule::Schedule,
 ) -> String {
     let mut out = String::new();
+    let mut first_file = true;
 
     for (file_idx, (file, source)) in files.iter().zip(sources.iter()).enumerate() {
         if !sched.visible_files.contains(&file_idx) {
             continue;
+        }
+        if first_file {
+            first_file = false;
+        } else {
+            out.push('\n');
         }
         let relative = file.strip_prefix(root).unwrap_or(file);
         out.push_str(&format!("{}\n", relative.display()));
@@ -370,6 +376,10 @@ pub fn to_json(output: &str, budget: usize, words: usize) -> String {
     let mut current_content = String::new();
 
     for line in output.lines() {
+        if line.is_empty() {
+            // Blank separator between file sections — skip
+            continue;
+        }
         if !line.contains('→') {
             if let Some(path) = current_path.take() {
                 let content = current_content.trim_end_matches('\n');

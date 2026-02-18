@@ -6,8 +6,10 @@ budget: 500 (496 words)
 
 CHANGELOG.md
      1→# Changelog …
+
 CONTRIBUTING.md
      1→# Contributing …
+
 Readme.md
      1→# Commander.js
      8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
@@ -31,29 +33,44 @@ Readme.md
    956→## Custom event listeners …
    966→## Bits and pieces …
   1164→## Support …
+
 Readme_zh-CN.md
      1→# Commander.js …
+
 SECURITY.md
      1→# Security Policy …
+
 docs/deprecated.md
+
 docs/help-in-depth.md
+
 docs/options-in-depth.md
+
 esm.mjs
      1→import commander from './index.js';
+
 examples/color-help-replacement.mjs
+
 examples/color-help.mjs
+
 examples/custom-command-class.js
      7→  createCommand(name) {
+
 examples/global-options-added.js
     17→  createCommand(name) {
+
 examples/help-centered.mjs
+
 examples/man-style-help.mjs
      5→function formatItem …
+
 lib/argument.js
      3→class Argument {
+
 lib/command.js
     13→class Command extends EventEmitter {
   1127→  _prepareForParse() {
+
 lib/error.js
      1→/**
       →…
@@ -61,6 +78,7 @@ lib/error.js
     22→/**
       →…
     25→class InvalidArgumentError extends CommanderError {
+
 lib/help.js
     12→class Help {
     13→  constructor() {
@@ -77,26 +95,38 @@ lib/help.js
    600→  styleArgumentText(str) {
    603→  styleSubcommandText(str) {
    606→  styleCommandText(str) {
+
 lib/option.js
      3→class Option {
    261→/**
       →…
    268→class DualOptions {
+
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
+
 package-support.json
+
 package.json
+
 tests/command.createArgument.test.js
+
 tests/command.createOption.test.js
+
 tests/esm-imports-test.mjs
      1→../esm.mjs …
+
 tests/ts-imports.test.ts
      1→../ …
     17→function checkClass …
+
 tsconfig.js.json
+
 tsconfig.json
+
 tsconfig.ts.json
+
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =
     13→  | LiteralType
@@ -153,6 +183,7 @@ typings/index.d.ts
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1104→export interface ParseOptionsResult {
   1113→export const program: Command;
+
 typings/index.test-d.ts
      1→import * as commander from './index';
    510→  createCommand(name?: string): MyCommand {

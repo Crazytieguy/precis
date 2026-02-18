@@ -48,6 +48,7 @@ __init__.py
     47→    "scientific",
     48→    "thousands_separator",
     49→]
+
 filesize.py
      5→from math import log
     36→def naturalsize(
@@ -69,6 +70,7 @@ filesize.py
     52→        >>> naturalsize(300, False, True)
     53→        '300B'
       →…
+
 i18n.py
      5→import gettext as gettext_module
      6→from threading import local
@@ -158,6 +160,7 @@ i18n.py
    199→    Returns:
    200→         str: Decimal separator.
    201→    """
+
 lists.py
      5→TYPE_CHECKING = False
      7→    from typing import Any
@@ -176,6 +179,7 @@ lists.py
     23→        'one'
     24→
       →…
+
 number.py
      5→import bisect
      7→from .i18n import _gettext as _
@@ -305,6 +309,7 @@ number.py
    542→        >>> metric(1e-14, precision=4)
    543→        '10.00 f'
       →…
+
 time.py
      8→from enum import Enum
      9→from functools import total_ordering

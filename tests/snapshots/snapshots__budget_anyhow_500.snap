@@ -10,6 +10,7 @@ Cargo.toml
     18→[dependencies …
     25→[dev-dependencies …
     32→[package.metadata.docs.rs …
+
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯ …
     21→## Details …
@@ -17,8 +18,10 @@ README.md
    144→## Comparison to failure …
    155→## Comparison to thiserror …
    166→#### License …
+
 rust-toolchain.toml
      1→[toolchain …
+
 src/backtrace.rs
      8→pub(crate) enum Backtrace {}
     11→macro_rules! impl_backtrace {
@@ -30,27 +33,33 @@ src/backtrace.rs
     64→macro_rules! backtrace_if_absent {
     70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
+
 src/chain.rs
     11→pub(crate) struct Chain<'a> {
     16→pub(crate) enum ChainState<'a> {
     36→    type Item = &'a (dyn StdError + 'static);
+
 src/context.rs
      7→use crate::nightly::{self, Request};
     12→    pub trait StdError {
    189→    pub trait Sealed {}
+
 src/ensure.rs
     10→pub trait BothDebug {
     25→pub trait NotBothDebug {
    105→macro_rules! __parse_ensure {
    886→macro_rules! __fancy_ensure {
    912→macro_rules! __fallback_ensure {
+
 src/error.rs
      4→use crate::nightly::{self, Request};
      6→use crate::ptr::Mut;
    705→    type Target = dyn StdError + Send + Sync + 'static;
    934→pub(crate) struct ErrorImpl<E = ()> {
    952→pub(crate) struct ContextError<C, E> {
+
 src/fmt.rs
+
 src/kind.rs
     51→use crate::StdError;
     55→pub struct Adhoc;
@@ -59,6 +68,7 @@ src/kind.rs
     80→pub trait TraitKind: Sized {
    100→pub struct Boxed;
    104→pub trait BoxedKind: Sized {
+
 src/lib.rs
    251→#[macro_use]
    252→mod backtrace;
@@ -97,13 +107,16 @@ src/lib.rs
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    678→        pub use crate::kind::BoxedKind;
    710→        pub trait Bool {
+
 src/macros.rs
     58→macro_rules! bail {
     70→macro_rules! __ensure {
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
+
 src/nightly.rs
     10→pub use core::error::Request;
+
 src/ptr.rs
      6→pub struct Own<T>
      7→where
@@ -129,15 +142,20 @@ src/ptr.rs
    182→    type Target;
    183→}
    186→    type Target = T;
+
 src/wrapper.rs
      8→use crate::nightly::{self, Request};
     11→pub struct MessageError<M>(pub M);
     34→pub struct DisplayError<M>(pub M);
     58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
+
 tests/common/mod.rs
+
 tests/crate/Cargo.toml
+
 tests/crate/test.rs
      3→pub use anyhow::*;
+
 tests/drop/mod.rs
      8→#[derive(Debug)]
      9→pub struct Flag {
@@ -147,15 +165,22 @@ tests/drop/mod.rs
     26→pub struct DetectDrop {
     27→    has_dropped: Flag,
     28→}
+
 tests/test_boxed.rs
+
 tests/test_context.rs
     22→macro_rules! context_type {
+
 tests/test_ensure.rs
     43→    type Output = bool;
     78→fn assert_err …
+
 tests/test_ffi.rs
+
 tests/test_source.rs
+
 tests/ui/ensure-nonbool.rs
+
 tests/ui/no-impl.rs
      3→#[derive(Debug)]
      4→struct Error;

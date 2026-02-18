@@ -6,6 +6,7 @@ budget: 1000 (1006 words)
 
 Changelog.md
      1→# Changelog …
+
 Readme.md
     42→### Usage …
    145→### Why? …
@@ -14,27 +15,35 @@ Readme.md
    189→### Examples …
    205→### Documentation …
    231→### License …
+
 docs/readme.md
      7→### Usage …
+
 docs/reference/typescript.md
      5→## Utilities …
+
 docs/resources/faq.md
      1→# FAQ …
+
 docs/resources/links.md
      1→# Resources …
      5→## Libraries …
+
 docs/summary.md
      3→## Guides …
     12→## API Reference …
     22→## Resources …
+
 examples/README.md
      1→# Examples …
+
 examples/package.json
      2→  "type": "module",
      3→  "license": "MIT",
      4→  "dependencies": {
      9→  }
     10→}
+
 jsr.json
      2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
      3→  "name": "@superstruct/core",
@@ -43,6 +52,7 @@ jsr.json
      6→  "publish": {
      8→  }
      9→}
+
 package.json
      2→  "name": "superstruct",
      3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
@@ -67,7 +77,9 @@ package.json
     54→  "keywords": [
     84→  ]
     85→}
+
 rollup.config.js
+
 src/error.ts
      5→export type Failure …
     16→/**
@@ -92,6 +104,7 @@ src/error.ts
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
     36→    let cached: Array<Failure> | undefined
       →…
+
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
@@ -140,10 +153,12 @@ src/struct.ts
    253→export type Coercer …
    259→export type Validator …
    266→export type Refiner …
+
 src/structs/coercions.ts
     16→export function coerce …
     38→export function defaulted …
     79→export function trimmed …
+
 src/structs/refinements.ts
      8→export function empty …
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
@@ -153,6 +168,7 @@ src/structs/refinements.ts
     93→export function pattern …
    109→export function size …
    146→export function refine …
+
 src/structs/types.ts
     19→export function any …
     33→export function array<T extends Struct<any>>(Element?: T): any {
@@ -181,6 +197,7 @@ src/structs/types.ts
    492→export function type …
    522→export function union …
    574→export function unknown …
+
 src/structs/utilities.ts
     60→export function assign(...Structs: Struct<any>[]): any {
     71→export function define …
@@ -191,6 +208,7 @@ src/structs/utilities.ts
    197→export function partial …
    221→export function pick …
    247→export function struct …
+
 src/utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'
@@ -228,61 +246,100 @@ src/utils.ts
    385→export type AnyStruct …
    394→export type InferStructTuple …
    402→type _InferTuple …
+
 test/deprecated.test.ts
+
 test/index.test.ts
+
 test/index.ts
      1→/**
      2→ * A helper for testing type signatures.
      3→ */
      4→
      5→export function test<T>(fn: (x: unknown) => T) {}
+
 test/tsconfig.json
      2→  "extends": "../tsconfig.json",
      3→  "include": ["./**/*.ts"],
      4→  "compilerOptions": {
      6→  }
      7→}
+
 test/typings/infer.ts
+
 test/validation/any/valid-number.ts
+
 test/validation/any/valid-string.ts
+
 test/validation/any/valid-undefined.ts
+
 test/validation/bigint/invalid-number.ts
+
 test/validation/bigint/invalid.ts
+
 test/validation/bigint/valid.ts
+
 test/validation/boolean/invalid.ts
+
 test/validation/boolean/valid.ts
+
 test/validation/date/invalid-date.ts
+
 test/validation/date/invalid.ts
+
 test/validation/date/valid.ts
+
 test/validation/enums/invalid-numbers.ts
+
 test/validation/enums/invalid-strings.ts
+
 test/validation/enums/valid.ts
+
 test/validation/function/invalid.ts
+
 test/validation/function/valid.ts
      5→export const data = function () {}
+
 test/validation/instance/invalid.ts
+
 test/validation/instance/valid.ts
+
 test/validation/literal/invalid.ts
+
 test/validation/literal/valid.ts
+
 test/validation/never/invalid.ts
      1→import { never } from '../../../src'
      3→export const Struct = never()
      5→export const data = true
      7→export const failures = [
+
 test/validation/number/invalid.ts
+
 test/validation/number/valid.ts
+
 test/validation/pattern/invalid.ts
+
 test/validation/pattern/valid.ts
+
 test/validation/refine/invalid-multiple-refinements.ts
+
 test/validation/regexp/invalid.ts
+
 test/validation/regexp/valid.ts
+
 test/validation/string/invalid.ts
+
 test/validation/string/valid.ts
+
 test/validation/trimmed/invalid.ts
+
 test/validation/trimmed/valid.ts
+
 test/validation/type/valid-instance.ts
      3→class Person {
      6→  constructor(name: string) {
+
 tsconfig.json
      2→  "include": ["./src/**/*.ts"],
      3→  "compilerOptions": {

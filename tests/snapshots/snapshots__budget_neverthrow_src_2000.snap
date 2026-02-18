@@ -42,6 +42,7 @@ _internals/error.ts
     41→    stack: maybeStack,
     42→  }
     43→}
+
 _internals/utils.ts
      1→import { Result, ok, err } from '../result'
      2→import { ResultAsync } from '../result-async'
@@ -111,6 +112,7 @@ _internals/utils.ts
     85→  ResultAsync.fromSafePromise(Promise.all(asyncResultList)).andThen(
     86→    combineResultListWithAllErrors,
     87→  ) as ResultAsync<T[], E[]>
+
 result-async.ts
      1→import type {
      2→  Combine,
@@ -176,6 +178,7 @@ result-async.ts
    300→type TraverseAsync …
    330→type TraverseWithAllErrorsAsync …
    338→type Writable …
+
 result.ts
      1→import { errAsync, ResultAsync } from './'
      2→import { createNeverThrowError, ErrorConfig } from './_internals/error'

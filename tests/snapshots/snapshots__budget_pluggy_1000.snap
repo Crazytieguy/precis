@@ -6,15 +6,19 @@ budget: 1000 (965 words)
 
 AGENTS.md
      1→# AGENTS.md …
+
 CLAUDE.md
      1→# CLAUDE.md …
+
 SECURITY.md
      1→# Security …
+
 codecov.yml
      1→coverage:
      5→    changes: true
      6→
      7→comment: off
+
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
    107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
@@ -23,29 +27,36 @@ docs/conf.py
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
+
 docs/examples/eggsample/eggsample/hookspecs.py
      7→@hookspec
      8→def eggsample_add_ingredients(ingredients: tuple):
     16→@hookspec
     17→def eggsample_prep_condiments(condiments: dict):
+
 docs/examples/eggsample/eggsample/host.py
     29→class EggsellentCook:
     30→    FAVORITE_INGREDIENTS = ("egg", "egg", "egg")
     31→
+
 docs/examples/eggsample/eggsample/lib.py
      4→@eggsample.hookimpl
      5→def eggsample_add_ingredients():
     12→@eggsample.hookimpl
     13→def eggsample_prep_condiments(condiments):
+
 docs/examples/eggsample/setup.py
+
 docs/examples/eggsample-spam/eggsample_spam.py
      1→import eggsample
      4→@eggsample.hookimpl
      5→def eggsample_add_ingredients(ingredients):
     14→@eggsample.hookimpl
     15→def eggsample_prep_condiments(condiments):
+
 docs/examples/eggsample-spam/setup.py
      1→from setuptools import setup
+
 docs/examples/toy-example.py
      1→import pluggy
      8→class MySpec:
@@ -61,6 +72,7 @@ docs/examples/toy-example.py
     27→
     28→    @hookimpl
     29→    def myhook(self, arg1, arg2):
+
 pyproject.toml
      1→[build-system …
      8→[project …
@@ -79,14 +91,17 @@ pyproject.toml
    102→  [[tool.towncrier.type …
    107→  [[tool.towncrier.type …
    112→[tool.mypy …
+
 scripts/release.py
     15→def create_branch(version: str) -> Repo:
     30→def get_upstream(repo: Repo) -> Remote:
     39→def pre_release(version: str) -> None:
     50→def changelog(version: str, write_out: bool = False) -> None:
     59→def main() -> int:
+
 scripts/towncrier-draft-to-file.py
      5→def main() -> int:
+
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
@@ -95,10 +110,12 @@ src/pluggy/__init__.py
      5→    "HookCaller",
      6→    "HookCallError",
       →…
+
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
+
 src/pluggy/_hooks.py
     28→_T …
     29→_F …
@@ -224,6 +241,7 @@ src/pluggy/_hooks.py
    706→        "warn_on_impl_args",
    707→    )
    708→
+
 src/pluggy/_manager.py
     33→    import importlib.metadata
     36→_BeforeTrace …
@@ -238,6 +256,7 @@ src/pluggy/_manager.py
     74→        return name
     83→class PluginManager:
     99→
+
 src/pluggy/_result.py
     16→_ExcInfo …
     20→class HookCallError(Exception):
@@ -270,9 +289,11 @@ src/pluggy/_result.py
     63→        except BaseException as exc:
     64→            exception = exc
     65→        return cls(result, exception)
+
 src/pluggy/_tracing.py
     16→class TagTracer:
     59→class TagTracerSub:
+
 src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):
      6→
@@ -295,15 +316,26 @@ src/pluggy/_warnings.py
     25→    """
     26→
     27→    __module__ = "pluggy"
+
 testing/benchmark.py
+
 testing/conftest.py
+
 testing/test_details.py
+
 testing/test_helpers.py
+
 testing/test_hookcaller.py
     34→class AddMeth:
+
 testing/test_invocations.py
+
 testing/test_multicall.py
+
 testing/test_pluginmanager.py
+
 testing/test_result.py
+
 testing/test_tracer.py
+
 testing/test_warnings.py

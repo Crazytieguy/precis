@@ -99,6 +99,7 @@ ast.rs
    182→            ContainerKind::UnitVariant => "unit variant",
    183→        })
    184→    }
+
 attr.rs
      1→use proc_macro2::{Delimiter, Group, Literal, Punct, Spacing, Span, TokenStream, TokenTree};
      2→use quote::{format_ident, quote, quote_spanned, ToTokens};
@@ -274,6 +275,7 @@ attr.rs
    355→        let ident = Ident::new(trait_name, Span::call_site());
    356→        tokens.extend(quote!(::core::fmt::#ident));
    357→    }
+
 expand.rs
      1→use crate::ast::{Enum, Field, Input, Struct};
      2→use crate::attr::Trait;
@@ -328,6 +330,7 @@ expand.rs
    574→fn type_parameter_of_option(ty: &Type) -> Option<&Type> {
    575→    let path = match ty {
       →…
+
 fallback.rs
      1→use crate::expand::call_site_ident;
      2→use crate::private;
@@ -337,6 +340,7 @@ fallback.rs
      7→pub(crate) fn expand(input: &DeriveInput, error: syn::Error) -> TokenStream {
      8→    let ty = call_site_ident(&input.ident);
       →…
+
 fmt.rs
      1→use crate::ast::{ContainerKind, Field};
      2→use crate::attr::{Display, Trait};
@@ -542,6 +546,7 @@ fmt.rs
    299→fn between<'a>(begin: ParseStream<'a>, end: ParseStream<'a>) -> TokenStream {
    300→    let end = end.cursor();
       →…
+
 generics.rs
      1→use proc_macro2::TokenStream;
      2→use quote::ToTokens;
@@ -598,6 +603,7 @@ generics.rs
     80→        }
     81→        generics.where_clause.unwrap()
     82→    }
+
 lib.rs
     23→mod ast;
     24→mod attr;
@@ -627,6 +633,7 @@ lib.rs
     52→            Span::call_site(),
     53→        ));
     54→    }
+
 prop.rs
      1→use crate::ast::{Enum, Field, Struct, Variant};
      2→use crate::unraw::MemberUnraw;
@@ -693,6 +700,7 @@ prop.rs
    138→fn type_is_backtrace(ty: &Type) -> bool {
    139→    let path = match ty {
       →…
+
 scan_expr.rs
      1→use self::{Action::*, Input::*};
      2→use proc_macro2::{Delimiter, Ident, Spacing, TokenTree};
@@ -864,6 +872,7 @@ scan_expr.rs
    192→pub(crate) fn scan_expr(input: ParseStream) -> Result<()> {
    193→    let mut state = INIT.as_slice();
       →…
+
 unraw.rs
      1→use proc_macro2::{Ident, Span, TokenStream};
      2→use quote::ToTokens;
@@ -973,6 +982,7 @@ unraw.rs
    139→            MemberUnraw::Unnamed(index) => index.to_tokens(tokens),
    140→        }
    141→    }
+
 valid.rs
      1→use crate::ast::{Enum, Field, Input, Struct, Variant};
      2→use crate::attr::Attrs;

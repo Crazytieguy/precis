@@ -33,6 +33,7 @@ into_either.rs
     57→        F: FnOnce(&Self) -> bool,
     58→    {
     64→impl<T> IntoEither for T {}
+
 iterator.rs
      1→use super::{for_both, Either, Left, Right};
      2→use core::iter;
@@ -146,6 +147,7 @@ iterator.rs
    313→    R: iter::FusedIterator,
    314→{
    315→}
+
 lib.rs
     21→#[cfg(feature = "serde")]
     22→pub mod serde_untagged;
@@ -843,6 +845,7 @@ lib.rs
   1555→    check_t!(::std::ffi::OsStr);
   1556→    check_t!(::std::ffi::CStr);
   1557→}
+
 serde_untagged.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     38→#[derive(serde::Serialize, serde::Deserialize)]
@@ -853,6 +856,7 @@ serde_untagged.rs
     43→}
     45→pub fn serialize …
     58→pub fn deserialize …
+
 serde_untagged_optional.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     38→#[derive(Serialize, Deserialize)]

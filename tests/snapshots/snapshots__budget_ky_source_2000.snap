@@ -39,6 +39,7 @@ core/Ky.ts
    503→	#getNormalizedOptions …
    512→	#assignRequest …
    517→	#wrapRequestWithUploadProgress …
+
 core/constants.ts
      1→import type {Expect, Equal} from '@type-challenges/utils';
      2→import {type KyOptionsRegistry, type RequestHttpMethod} from '../types/options.js …
@@ -127,6 +128,7 @@ core/constants.ts
    237→export const kyOptionKeys: KyOptionsRegistry = {
    256→export const vendorSpecificOptions = {
    265→export const requestOptionsRegistry = {
+
 errors/ForceRetryError.ts
      1→import type {ForceRetryOptions} from '../core/constants.js';
      2→import {NonError} from './NonError.js';
@@ -141,6 +143,7 @@ errors/ForceRetryError.ts
     12→	customRequest: Request | undefined;
     13→
     14→	constructor(options?: ForceRetryOptions) {
+
 errors/HTTPError.ts
      1→import type {NormalizedOptions} from '../types/options.js';
      2→import type {KyRequest} from '../types/request.js';
@@ -151,6 +154,7 @@ errors/HTTPError.ts
      8→	public options: NormalizedOptions;
      9→
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
+
 errors/NonError.ts
      1→/**
      2→Wrapper for non-Error values that were thrown.
@@ -162,12 +166,14 @@ errors/NonError.ts
      8→	readonly value: unknown;
      9→
     10→	constructor(value: unknown) {
+
 errors/TimeoutError.ts
      1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {
      4→	public request: KyRequest;
      5→
      6→	constructor(request: Request) {
+
 index.ts
      3→import {Ky} from './core/Ky.js';
      4→import {requestMethods, stop, retry} from './core/constants.js';
@@ -179,13 +185,16 @@ index.ts
     11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
       →…
     34→const ky = createInstance();
+
 types/ResponsePromise.ts
      4→import {type KyResponse} from './response.js';
      6→export type ResponsePromise …
+
 types/common.ts
      2→export type Primitive …
      4→export type Required …
      6→export type LiteralUnion …
+
 types/hooks.ts
      1→import {type stop, type RetryMarker} from '../core/constants.js';
      2→import type {KyRequest, KyResponse, HTTPError} from '../index.js';
@@ -199,11 +208,13 @@ types/hooks.ts
     48→export type BeforeErrorState …
     57→export type BeforeErrorHook …
     59→export type Hooks …
+
 types/ky.ts
      1→import {type stop, type retry} from '../core/constants.js';
      2→import type {Input, Options} from './options.js';
      3→import type {ResponsePromise} from './ResponsePromise.js';
      5→export type KyInstance …
+
 types/options.ts
      1→import type {LiteralUnion, Required} from './common.js';
      2→import type {Hooks} from './hooks.js';
@@ -294,14 +305,18 @@ types/options.ts
    382→	onUploadProgress: Options['onUploadProgress'];
    383→	context: Record<string, unknown>;
    384→}
+
 types/request.ts
      1→export type KyRequest …
+
 types/response.ts
      1→export type KyResponse …
+
 types/retry.ts
      1→import type {HttpMethod} from './options.js';
      3→export type ShouldRetryState …
     15→export type RetryOptions …
+
 utils/body.ts
      1→import type {Options} from '../types/options.js';
      2→import {usualFormBoundarySize} from '../core/constants.js';
@@ -309,12 +324,15 @@ utils/body.ts
     57→const withProgress = (stream: ReadableStream<Uint8Array>, totalBytes: number, onProgress: Options['onDownloadProgress'] | Options['onUploadProgress']): ReadableStream<Uint8Array> => {
     90→export const streamResponse …
    119→export const streamRequest …
+
 utils/delay.ts
      3→import {type InternalOptions} from '../types/options.js';
      5→export type DelayOptions = {
      9→export default async function delay …
+
 utils/is.ts
      2→export const isObject …
+
 utils/merge.ts
      1→import type {KyHeadersInit, Options} from '../types/options.js';
      2→import type {Hooks} from '../types/hooks.js';
@@ -326,6 +344,7 @@ utils/merge.ts
     38→export const mergeHooks …
     47→const appendSearchParameters = (target: any, source: any): URLSearchParams => {
     86→export const deepMerge …
+
 utils/normalize.ts
      1→import {requestMethods} from '../core/constants.js';
      2→import type {RetryOptions} from '../types/retry.js';
@@ -340,15 +359,18 @@ utils/normalize.ts
     18→	methods: retryMethods,
       →…
     28→export const normalizeRetryOptions …
+
 utils/options.ts
      1→import {kyOptionKeys, requestOptionsRegistry, vendorSpecificOptions} from '../core/constants.js';
      2→import type {SearchParamsOption} from '../types/options.js';
      4→export const findUnknownOptions …
     30→export const hasSearchParameters …
+
 utils/timeout.ts
      1→import {TimeoutError} from '../errors/TimeoutError.js';
      3→export type TimeoutOptions = {
      9→export default async function timeout …
+
 utils/type-guards.ts
      1→import {HTTPError} from '../errors/HTTPError.js';
      2→import {TimeoutError} from '../errors/TimeoutError.js';
@@ -446,6 +468,7 @@ utils/type-guards.ts
     98→export function isForceRetryError(error: unknown): error is ForceRetryError {
     99→	return error instanceof ForceRetryError || ((error as any)?.name === ForceRetryError.name);
    100→}
+
 utils/types.ts
      1→export type Mutable<T> = {
      5→export type ObjectEntries<T> = T extends ArrayLike<infer U>

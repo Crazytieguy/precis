@@ -110,6 +110,7 @@ README.md
    186→
    187→## License
    189→The MIT License (MIT) - see [`LICENSE.md`](https://github.com/fatih/color/blob/master/LICENSE.md) for more details
+
 color.go
      3→import (
      4→	"fmt"
@@ -341,6 +342,7 @@ color.go
    679→func sprintln(a ...interface{}) string {
    680→	return strings.TrimSuffix(fmt.Sprintln(a...), "\n")
    681→}
+
 color_test.go
      3→import (
      4→	"bytes"
@@ -399,6 +401,7 @@ color_test.go
    492→func TestIssue206_2(t *testing.T) {
    508→func TestIssue218(t *testing.T) {
    539→func TestRGB(t *testing.T) {
+
 color_windows.go
      3→import (
      4→	"os"

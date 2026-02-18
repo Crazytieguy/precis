@@ -5,7 +5,9 @@ expression: output
 budget: 1000 (981 words)
 
 BuildMany.ts
+
 DeepExclude.ts
+
 DistributeUnions.ts
     17→/**
     18→ * DistributeMatchingUnions takes two arguments:
@@ -41,8 +43,11 @@ DistributeUnions.ts
     90→  : IsUnion<a> extends true
     91→  ? [
     92→      {
+
 ExtractPreciseValue.ts
+
 FindSelected.ts
+
 InvertPattern.ts
    101→/**
    102→ * ### InvertPatternInternal
@@ -58,7 +63,9 @@ InvertPattern.ts
    303→export type InvertPatternForExclude<p, i> = Equal<Pattern<i>, p> extends true
    304→  ? never
    305→  : InvertPatternForExcludeInternal<p, i>;
+
 IsMatching.ts
+
 Match.ts
     10→interface NonExhaustiveError<i> {
     11→  __nonExhaustive: never;
@@ -116,6 +123,7 @@ Match.ts
    258→ *
       →…
    261→type Exhaustive<output, inferredOutput> = {
+
 Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
@@ -192,6 +200,7 @@ Pattern.ts
    678→      select<input, k extends string>(
    679→        key: k
    680→      ): ArrayChainable<SelectP<k, input, pattern>, omitted | 'select'>;
+
 helpers.ts
      5→/**
      6→ * ### LeastUpperBound

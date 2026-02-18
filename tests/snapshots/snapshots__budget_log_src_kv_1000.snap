@@ -31,6 +31,7 @@ error.rs
     71→    use std::{error, io};
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     77→        pub fn boxed …
+
 key.rs
      3→use std::borrow::Borrow;
      4→use std::fmt;
@@ -58,6 +59,7 @@ key.rs
    136→mod serde_support {
    137→    use super::*;
    139→    use serde_core::{Serialize, Serializer};
+
 mod.rs
      1→//! Structured logging.
      2→//!
@@ -87,6 +89,7 @@ mod.rs
    261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
    265→pub use self::source::Visitor;
+
 source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
      7→use std::fmt;
@@ -122,6 +125,7 @@ source.rs
    285→    use std::rc::Rc;
    286→    use std::sync::Arc;
    462→pub use VisitSource as Visitor;
+
 value.rs
      6→use std::fmt;
      8→pub use crate::kv::Error;

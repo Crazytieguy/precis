@@ -35,6 +35,7 @@ argument.js
    136→ * Takes an argument and returns its human readable equivalent for help usage.
       →…
    143→function humanReadableArgName(arg) {
+
 command.js
     13→class Command extends EventEmitter {
     14→  /**
@@ -379,6 +380,7 @@ command.js
   2749→ * @returns {boolean | undefined}
       →…
   2752→function useColor() {
+
 error.js
      1→/**
      2→ * CommanderError class
@@ -394,6 +396,7 @@ error.js
     26→  /**
       →…
     30→  constructor(message) {
+
 help.js
     12→class Help {
     13→  constructor() {
@@ -548,6 +551,7 @@ help.js
    733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
       →…
    740→function stripColor(str) {
+
 option.js
      3→class Option {
      4→  /**
@@ -621,6 +625,7 @@ option.js
    323→ * Split the short and long flag out of something like '-m,--mixed <value>'
       →…
    328→function splitOptionFlags(flags) {
+
 suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {

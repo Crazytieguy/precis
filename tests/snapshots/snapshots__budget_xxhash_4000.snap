@@ -72,6 +72,7 @@ README.md
     72→- [FastCache](https://github.com/VictoriaMetrics/fastcache)
     73→- [Ristretto](https://github.com/dgraph-io/ristretto)
     74→- [Badger](https://github.com/dgraph-io/badger)
+
 bench_test.go
      3→import (
      4→	"strings"
@@ -141,6 +142,7 @@ bench_test.go
     73→		})
     74→	}
     75→}
+
 dynamic/dynamic_test.go
      6→import (
      7→	"bytes"
@@ -183,6 +185,7 @@ dynamic/dynamic_test.go
     46→		f.(func(*testing.T))(t)
     47→	}
     48→}
+
 dynamic/plugin.go
      6→import (
      7→	"fmt"
@@ -222,6 +225,7 @@ dynamic/plugin.go
     45→		})
     46→	}
     47→}
+
 xxhash.go
      5→import (
      6→	"encoding/binary"
@@ -439,6 +443,7 @@ xxhash.go
    241→func rol23(x uint64) uint64 { return bits.RotateLeft64(x, 23) }
    242→func rol27(x uint64) uint64 { return bits.RotateLeft64(x, 27) }
    243→func rol31(x uint64) uint64 { return bits.RotateLeft64(x, 31) }
+
 xxhash_asm.go
      9→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
     10→//
@@ -446,6 +451,7 @@ xxhash_asm.go
     12→func Sum64(b []byte) uint64
     14→//go:noescape
     15→func writeBlocks(d *Digest, b []byte) int
+
 xxhash_other.go
      6→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
      7→func Sum64(b []byte) uint64 {
@@ -517,6 +523,7 @@ xxhash_other.go
     74→	d.v1, d.v2, d.v3, d.v4 = v1, v2, v3, v4
     75→	return n - len(b)
     76→}
+
 xxhash_safe.go
      8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
      9→func Sum64String(s string) uint64 {
@@ -526,6 +533,7 @@ xxhash_safe.go
     14→func (d *Digest) WriteString(s string) (n int, err error) {
     15→	return d.Write([]byte(s))
     16→}
+
 xxhash_test.go
      3→import (
      4→	"bytes"
@@ -703,6 +711,7 @@ xxhash_test.go
    196→		t.Fatalf("got %d allocation(s) (want zero)", allocs)
    197→	}
    198→}
+
 xxhash_unsafe.go
      9→import (
     10→	"unsafe"
@@ -728,6 +737,7 @@ xxhash_unsafe.go
     56→	s   string
     57→	cap int
     58→}
+
 xxhash_unsafe_test.go
      6→import (
      7→	"os/exec"
@@ -782,6 +792,7 @@ xxhash_unsafe_test.go
     58→		t.Errorf("function %s not inlined", fn)
     59→	}
     60→}
+
 xxhashbench/xxhashbench_test.go
      3→import (
      4→	"fmt"
@@ -865,6 +876,7 @@ xxhashbench/xxhashbench_test.go
    162→		sink = fn(input)
    163→	}
    164→}
+
 xxhsum/xxhsum.go
      3→import (
      4→	"fmt"

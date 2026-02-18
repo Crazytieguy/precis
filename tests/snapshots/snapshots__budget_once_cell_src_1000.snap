@@ -14,6 +14,7 @@ imp_cs.rs
     13→}
     27→    pub(crate) const fn new() -> OnceCell<T> {
     31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+
 imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
@@ -29,6 +30,7 @@ imp_pl.rs
    124→    new_state: u8,
    125→}
    128→    fn drop(&mut self) {
+
 imp_std.rs
     13→#[derive(Debug)]
     14→pub(crate) struct OnceCell<T> {
@@ -67,6 +69,7 @@ imp_std.rs
    151→    fn drop(&mut self) {
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
    245→mod strict {
+
 lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -162,6 +165,7 @@ lib.rs
   1381→        fn deref_mut(&mut self) -> &mut T {
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
+
 race.rs
     31→use core::sync::atomic;
     33→use portable_atomic as atomic;

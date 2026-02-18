@@ -7,10 +7,12 @@ budget: 1000 (1002 words)
 CHANGELOG.md
      1→# Changelog …
    911→#### Testing for no arguments …
+
 CONTRIBUTING.md
      1→# Contributing …
      3→## Issues …
     13→## Pull Requests …
+
 Readme.md
      1→# Commander.js
      8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
@@ -49,6 +51,7 @@ Readme.md
    956→## Custom event listeners …
    966→## Bits and pieces …
   1164→## Support …
+
 Readme_zh-CN.md
      1→# Commander.js
      8→完整的 [node.js](http://nodejs.org) 命令行解决方案。
@@ -59,45 +62,64 @@ Readme_zh-CN.md
       →…
    570→#### 其他参数配置 …
    582→#### 自定义参数处理 …
+
 SECURITY.md
      1→# Security Policy …
+
 docs/deprecated.md
      1→# Deprecated …
+
 docs/help-in-depth.md
      1→# Help in Depth …
+
 docs/options-in-depth.md
      2→# Options in Depth …
+
 docs/parsing-and-hooks.md
      1→# Parsing life cycle and hooks …
+
 docs/release-policy.md
      1→# Release Policy …
+
 docs/terminology.md
      1→# Terminology …
+
 eslint.config.js
      8→const tsconfigTsFiles …
      9→const tsconfigJsFiles …
+
 esm.mjs
      1→import commander from './index.js';
+
 examples/color-help-replacement.mjs
+
 examples/color-help.mjs
+
 examples/custom-command-class.js
      6→class CommandWithTrace extends commander.Command {
      7→  createCommand(name) {
+
 examples/global-options-added.js
     16→class MyRootCommand extends Command {
     17→  createCommand(name) {
+
 examples/help-centered.mjs
+
 examples/man-style-help.mjs
      5→function formatItem(term, termWidth, description, helper) {
+
 jest.config.js
      1→const config …
+
 lib/argument.js
      3→class Argument {
+
 lib/command.js
     13→class Command extends EventEmitter {
   1127→  _prepareForParse() {
   1128→    if (this._savedState === null) {
       →…
+
 lib/error.js
      1→/**
      2→ * CommanderError class
@@ -107,6 +129,7 @@ lib/error.js
     23→ * InvalidArgumentError class
     24→ */
     25→class InvalidArgumentError extends CommanderError {
+
 lib/help.js
     12→class Help {
     13→  constructor() {
@@ -123,6 +146,7 @@ lib/help.js
    600→  styleArgumentText(str) {
    603→  styleSubcommandText(str) {
    606→  styleCommandText(str) {
+
 lib/option.js
      3→class Option {
    261→/**
@@ -130,15 +154,18 @@ lib/option.js
    263→ * implementation. We support separate dual options for separate positive and negative options,
       →…
    268→class DualOptions {
+
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
      4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
       →…
+
 package-support.json
      2→  "versions": [
     18→  ]
     19→}
+
 package.json
      2→  "name": "commander",
      3→  "version": "14.0.3",
@@ -164,25 +191,31 @@ package.json
     80→  },
     81→  "support": true
     82→}
+
 tests/command.createArgument.test.js
      4→  constructor(name, description) {
     11→  createArgument(name, description) {
     16→  createCommand(name) {
+
 tests/command.createOption.test.js
      4→  constructor(flags, description) {
     11→  createOption(flags, description) {
+
 tests/esm-imports-test.mjs
      1→../esm.mjs …
     19→function check(condition, explanation) {
     26→function checkClass(obj, name) {
+
 tests/ts-imports.test.ts
      1→../ …
     17→function checkClass(obj: object, name: string): void {
+
 tsconfig.js.json
      7→  "extends": "./tsconfig.json",
      8→  "include": [
     14→  ],
     15→}
+
 tsconfig.json
     12→  "compilerOptions": {
     32→  },
@@ -190,6 +223,7 @@ tsconfig.json
     42→  ],
     43→  "exclude": ["node_modules"],
     44→}
+
 tsconfig.ts.json
      8→  "extends": "./tsconfig.json",
      9→  "compilerOptions": {
@@ -197,6 +231,7 @@ tsconfig.ts.json
     15→  "include": [
     19→  ],
     20→}
+
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =
     13→  | LiteralType
@@ -290,6 +325,7 @@ typings/index.d.ts
   1106→  unknown: string[];
   1107→}
   1113→export const program: Command;
+
 typings/index.test-d.ts
      1→import * as commander from './index';
      2→import { expectType } from 'tsd';

@@ -6,12 +6,14 @@ budget: 4000 (3906 words)
 
 CHANGELOG.md
      1→# Change Log …
+
 Cargo.toml
      1→[package …
     19→[package.metadata.docs.rs …
     22→[features …
     56→[dependencies …
     62→[dev-dependencies …
+
 README.md
      1→log
      4→A Rust library providing a lightweight logging *facade*.
@@ -65,6 +67,7 @@ README.md
    114→    // `yak:serde` will capture `yak` using its `serde::Serialize` impl
    115→    //
       →…
+
 benches/value.rs
      4→use log::kv::Value;
      6→#[bench]
@@ -75,6 +78,7 @@ benches/value.rs
     17→fn str_to_value_debug(b: &mut test::Bencher) {
     21→#[bench]
     22→fn custom_to_value_debug(b: &mut test::Bencher) {
+
 rfcs/0296-structured-logging.md
      5→# Summary
      8→Add support for structured logging to the `log` crate in both `std` and `no_std` environments, allowing log records to carry typed data beyond a textual message. This document serves as an introduction to what structured logging is all about, and as an RFC for an implementation in the `log` crate.
@@ -154,6 +158,7 @@ rfcs/0296-structured-logging.md
   1640→## Go …
   1644→## .NET …
   1650→# Unresolved questions
+
 src/__private_api.rs
      3→use self::sealed::KVs;
      4→use crate::{logger, Level, Log, Metadata, Record};
@@ -195,6 +200,7 @@ src/__private_api.rs
    140→    pub fn capture_sval<'a, V: sval::Value + ?Sized>(v: &'a &'a V) -> Value<'a> {
    145→    pub fn capture_serde<'a, V: serde_core::Serialize + ?Sized>(v: &'a &'a V) -> Value<'a> {
    151→pub use self::kv_support::*;
+
 src/kv/error.rs
      1→use std::fmt;
      3→/// An error encountered while working with structured data.
@@ -228,6 +234,7 @@ src/kv/error.rs
     71→    use std::{error, io};
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     77→        pub fn boxed …
+
 src/kv/key.rs
      3→use std::borrow::Borrow;
      4→use std::fmt;
@@ -255,6 +262,7 @@ src/kv/key.rs
    136→mod serde_support {
    137→    use super::*;
    139→    use serde_core::{Serialize, Serializer};
+
 src/kv/mod.rs
      1→//! Structured logging.
      2→//!
@@ -284,6 +292,7 @@ src/kv/mod.rs
    261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
    265→pub use self::source::Visitor;
+
 src/kv/source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
      7→use std::fmt;
@@ -345,6 +354,7 @@ src/kv/source.rs
    285→    use std::rc::Rc;
    286→    use std::sync::Arc;
    462→pub use VisitSource as Visitor;
+
 src/kv/value.rs
      6→use std::fmt;
      8→pub use crate::kv::Error;
@@ -521,6 +531,7 @@ src/kv/value.rs
   1171→        $crate::kv::Value::from_sval(&$capture)
   1172→    };
   1173→}
+
 src/lib.rs
    399→use std::cfg;
    401→use std::error;
@@ -792,6 +803,7 @@ src/lib.rs
   1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
   1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
       →…
+
 src/macros.rs
     75→macro_rules! log {
    119→macro_rules! __log {
@@ -813,6 +825,7 @@ src/macros.rs
    553→macro_rules! __log_value_serde {
    564→macro_rules! __log_value_error {
    573→macro_rules! __log_value_error {
+
 src/serde.rs
      3→use serde_core::de::{
      4→    Deserialize, DeserializeSeed, Deserializer, EnumAccess, Error, Unexpected, VariantAccess,
@@ -826,10 +839,12 @@ src/serde.rs
     32→    fn deserialize …
    111→    fn serialize …
    127→    fn deserialize …
+
 test_max_level_features/Cargo.toml
      1→[package …
      7→[[bin …
     11→[dependencies.log …
+
 test_max_level_features/main.rs
      1→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
      2→use std::sync::{Arc, Mutex};
@@ -862,6 +877,7 @@ test_max_level_features/main.rs
     73→    let mut lvl = state.last_log.lock().unwrap();
     74→    assert_eq!(*lvl, expected);
       →…
+
 tests/integration.rs
      6→struct State {
      7→    last_log_level: Mutex<Option<Level>>,
@@ -874,6 +890,7 @@ tests/integration.rs
     22→    fn flush(&self) {}
     62→fn test_filter(logger: &dyn Log, a: &State, filter: LevelFilter) {
     89→fn test_line_numbers(logger: &dyn Log, state: &State) {
+
 tests/macros.rs
      3→macro_rules! all_log_macros {
     14→struct Logger;
@@ -887,5 +904,6 @@ tests/macros.rs
    421→    Some,
    422→    None,
    423→}
+
 triagebot.toml
      1→[assign …

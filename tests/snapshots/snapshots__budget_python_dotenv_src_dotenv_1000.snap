@@ -18,8 +18,10 @@ __init__.py
     49→    "find_dotenv",
     50→    "load_ipython_extension",
     51→]
+
 __main__.py
      3→from .cli import cli
+
 cli.py
     20→from .main import dotenv_values, set_key, unset_key
     21→from .version import __version__
@@ -105,6 +107,7 @@ cli.py
    189→
    190→    run_command([*commandline, *ctx.args], dotenv_as_dict)
    193→def run_command …
+
 ipython.py
      8→from .main import find_dotenv, load_dotenv
     11→@magics_class
@@ -143,6 +146,7 @@ ipython.py
     44→        # Load the .env file
     45→        load_dotenv(dotenv_path, verbose=args.verbose, override=args.override)
     48→def load_ipython_extension …
+
 main.py
     13→from .parser import Binding, parse_stream
     14→from .variables import parse_variables
@@ -222,6 +226,7 @@ main.py
    430→    try:
    431→        st = os.stat(path)
       →…
+
 parser.py
     14→def make_regex …
     35→class Original(NamedTuple):
@@ -255,6 +260,7 @@ parser.py
    128→def parse_value …
    142→def parse_binding …
    179→def parse_stream …
+
 variables.py
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
@@ -284,5 +290,6 @@ variables.py
     61→    def __hash__ …
     64→    def resolve …
     70→def parse_variables …
+
 version.py
      1→__version__ = "1.2.1"

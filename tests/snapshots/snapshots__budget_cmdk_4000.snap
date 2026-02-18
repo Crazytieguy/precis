@@ -96,6 +96,7 @@ ARCHITECTURE.md
     95→
     96→## Groups
     98→Item mount informs both the root and the parent group, which keeps track of items within it. Each group informs the root.
+
 README.md
      5→# ⌘K
      7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
@@ -380,6 +381,7 @@ README.md
    479→```bash
    480→pnpm test
    481→```
+
 cmdk/package.json
      2→  "name": "cmdk",
      3→  "version": "1.1.1",
@@ -408,6 +410,7 @@ cmdk/package.json
     47→  "author": {
     50→  }
     51→}
+
 cmdk/src/command-score.ts
     54→function commandScoreInner(
     55→  string,
@@ -459,6 +462,7 @@ cmdk/src/command-score.ts
    160→  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
    161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
    162→}
+
 cmdk/src/index.tsx
      3→import * as RadixDialog from '@radix-ui/react-dialog'
      4→import * as React from 'react'
@@ -618,8 +622,10 @@ cmdk/src/index.tsx
   1077→  }
       →…
   1081→const srOnlyStyles = {
+
 cmdk/tsup.config.ts
      1→import { defineConfig } from 'tsup'
+
 package.json
      2→  "name": "cmdk-root",
      3→  "private": true,
@@ -631,25 +637,34 @@ package.json
     23→  "lint-staged": {
     27→  }
     28→}
+
 playwright.config.ts
      1→import { PlaywrightTestConfig, devices } from '@playwright/test'
      3→const config: PlaywrightTestConfig = {
      4→  forbidOnly: !!process.env.CI,
       →…
+
 pnpm-workspace.yaml
      1→packages …
+
 test/basic.test.ts
      1→import { expect, test } from '@playwright/test'
+
 test/dialog.test.ts
      1→import { expect, test } from '@playwright/test'
+
 test/group.test.ts
      1→import { expect, test } from '@playwright/test'
+
 test/item.test.ts
      1→import { expect, test } from '@playwright/test'
+
 test/keybind.test.ts
      1→import { expect, test } from '@playwright/test'
+
 test/numeric.test.ts
      1→import { expect, test } from '@playwright/test'
+
 test/package.json
      2→  "name": "cmdk-tests",
      3→  "version": "0.0.0",
@@ -658,47 +673,62 @@ test/package.json
      7→  "dependencies": {
     17→  }
     18→}
+
 test/pages/_app.tsx
      1→import '../style.css'
      3→export default function App({ Component, pageProps }) {
      4→  return <Component {...pageProps} />
      5→}
+
 test/pages/dialog.tsx
      4→const Page = () => {
+
 test/pages/group.tsx
      4→const Page = () => {
+
 test/pages/huge.tsx
      4→const items = new Array(1000).fill(0)
      6→const Page = () => {
     28→const Item = () => {
+
 test/pages/index.tsx
      3→const Page = () => {
+
 test/pages/item-advanced.tsx
      4→const Page = () => {
+
 test/pages/item.tsx
      4→const Page = () => {
+
 test/pages/keybinds.tsx
      5→const Page = () => {
+
 test/pages/numeric.tsx
      3→const Page = () => {
+
 test/pages/portal.tsx
      5→const Page = () => {
+
 test/pages/props.tsx
      5→const Page = () => {
+
 test/props.test.ts
      1→import { expect, test } from '@playwright/test'
+
 test/tsconfig.json
      2→  "compilerOptions": {
     17→  },
     18→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../dialog.test.ts"],
     19→  "exclude": ["node_modules"]
     20→}
+
 tsconfig.json
      2→  "compilerOptions": {
     16→  },
     17→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
     18→  "exclude": ["node_modules", "build", "dist", ".next"]
     19→}
+
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -727,6 +757,7 @@ website/README.md
     30→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     31→
     32→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
 website/components/cmdk/framer.tsx
      1→import { Command } from 'cmdk'
      2→import React from 'react'
@@ -735,6 +766,7 @@ website/components/cmdk/framer.tsx
      6→  return (
      7→    <div className="framer">
       →…
+
 website/components/cmdk/linear.tsx
      1→import { Command } from 'cmdk'
      3→export function LinearCMDK() {
@@ -745,6 +777,7 @@ website/components/cmdk/linear.tsx
     30→const items = [
     31→  {
       →…
+
 website/components/cmdk/raycast.tsx
      1→import React from 'react'
      2→import { useTheme } from 'next-themes'
@@ -756,6 +789,7 @@ website/components/cmdk/raycast.tsx
      9→  const [value, setValue] = React.useState('linear')
     10→  const inputRef = React.useRef<HTMLInputElement | null>(null)
       →…
+
 website/components/cmdk/vercel.tsx
      1→import React from 'react'
      2→import { Command } from 'cmdk'
@@ -764,6 +798,7 @@ website/components/cmdk/vercel.tsx
      6→  const [inputValue, setInputValue] = React.useState('')
      7→
       →…
+
 website/components/code/index.tsx
      1→import React from 'react'
      2→import copy from 'copy-to-clipboard'
@@ -788,6 +823,7 @@ website/components/code/index.tsx
     53→          </button>
     54→          <div className={styles.shine} />
       →…
+
 website/components/icons/index.tsx
      1→import styles from './icons.module.scss'
      3→export function FigmaIcon() {
@@ -801,9 +837,11 @@ website/components/icons/index.tsx
    146→export function CopiedIcon() {
    154→export function GitHubIcon() {
    165→export function FramerIcon() {
+
 website/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
+
 website/package.json
      2→  "name": "cmdk-website",
      3→  "version": "0.1.0",
@@ -819,6 +857,7 @@ website/package.json
     43→  "husky": {
     47→  }
     48→}
+
 website/pages/_app.tsx
     13→const title = '⌘K'
     14→const description = 'Fast, composable, unstyled command menu for React'
@@ -828,6 +867,7 @@ website/pages/_app.tsx
     19→    <>
     20→      <Head>
       →…
+
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
      6→  render() {
@@ -835,6 +875,7 @@ website/pages/_document.tsx
      8→      <Html lang="en">
      9→        <Head>
       →…
+
 website/pages/index.tsx
     18→import packageJSON from '../../cmdk/package.json'
     20→type TTheme = {
@@ -884,12 +925,14 @@ website/pages/index.tsx
    300→function Footer() {
    326→function RaunoSignature() {
    350→function PacoSignature() {
+
 website/tsconfig.json
      2→  "compilerOptions": {
     18→  },
     19→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
     20→  "exclude": ["node_modules"]
     21→}
+
 website/vercel.json
      2→  "headers": [
     12→  ]

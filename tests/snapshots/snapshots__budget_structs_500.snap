@@ -35,6 +35,7 @@ README.md
    167→
    168→## License
    170→The MIT License (MIT) - see LICENSE.md for more details
+
 field.go
      3→import …
      9→var (
@@ -59,6 +60,7 @@ field.go
    102→func (f *Field) Fields …
    108→func (f *Field) Field …
    119→func (f *Field) FieldOk …
+
 field_test.go
      9→type Foo struct {
     10→	A    string
@@ -70,6 +72,7 @@ field_test.go
     21→type Baz struct {
     26→type Bar struct {
     32→func newStruct() *Struct {
+
 structs.go
      4→import …
     10→var (
@@ -108,15 +111,19 @@ structs.go
    487→func IsStruct …
    503→func Name …
    509→func (s *Struct) nested(val reflect.Value) interface{} {
+
 structs_example_test.go
+
 structs_test.go
   1309→type Person struct {
   1358→type Animal struct {
   1363→type Dog struct {
+
 tags.go
      3→import "strings …
      5→// tagOptions contains a slice of tag options
      6→type tagOptions []string
      9→func (t tagOptions) Has …
     22→func parseTag(tag string) (string, tagOptions) {
+
 tags_test.go

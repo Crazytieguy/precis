@@ -12,6 +12,7 @@ components/checkmark.tsx
     31→  secondary?: string;
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
+
 components/error.tsx
      3→const circleAnimation = keyframes`
     13→const firstLineAnimation = keyframes`
@@ -21,6 +22,7 @@ components/error.tsx
     35→  secondary?: string;
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
+
 components/loader.tsx
      3→const rotate = keyframes`
     12→export interface LoaderTheme {
@@ -28,6 +30,7 @@ components/loader.tsx
     14→  secondary?: string;
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
+
 components/toast-bar.tsx
      4→import { Toast, ToastPosition, resolveValue, Renderable } from '../core/types';
      5→import { ToastIcon } from './toast-icon';
@@ -49,6 +52,7 @@ components/toast-bar.tsx
     55→}
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
+
 components/toast-icon.tsx
      4→import { Toast } from '../core/types';
      5→import { ErrorIcon, ErrorTheme } from './error';
@@ -65,6 +69,7 @@ components/toast-icon.tsx
     50→  const { icon, type, iconTheme } = toast;
     51→  if (icon !== undefined) {
       →…
+
 components/toaster.tsx
      3→import {
      4→  resolveValue,
@@ -85,6 +90,7 @@ components/toaster.tsx
     88→  toastOptions,
     89→  gutter,
       →…
+
 core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
      2→import { DefaultToastOptions, Toast, ToastType } from './types';
@@ -145,6 +151,7 @@ core/store.ts
    190→    memoryState[toasterId] || defaultToasterState
    191→  );
       →…
+
 core/toast.ts
      1→import {
      2→  Renderable,
@@ -168,6 +175,7 @@ core/toast.ts
     23→const createToast …
     42→const createHandler …
     55→const toast …
+
 core/types.ts
      1→import { CSSProperties } from 'react';
      3→export type ToastType = 'success' | 'error' | 'loading' | 'blank' | 'custom';
@@ -250,6 +258,7 @@ core/types.ts
     95→  onHeightUpdate: (id: string, height: number) => void;
     96→  children?: React.ReactNode;
     97→}
+
 core/use-toaster.ts
      1→import { useEffect, useCallback, useRef } from 'react';
      2→import { createDispatch, ActionType, useStore, dispatch } from './store';
@@ -264,10 +273,13 @@ core/use-toaster.ts
     13→  const toastTimeouts = useRef(
     14→    new Map<Toast['id'], ReturnType<typeof setTimeout>>()
       →…
+
 core/utils.ts
      1→export const genId = (() => {
      8→export const prefersReducedMotion = (() => {
+
 headless/index.ts
      1→import { toast } from '../core/toast';
+
 index.ts
      1→import { toast } from './core/toast';

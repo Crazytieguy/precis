@@ -10,6 +10,7 @@ CHANGELOG.md
      4→
       →…
     21→### Fixed …
+
 CONTRIBUTING.md
      1→Contributing
      4→All the contributions are welcome! Please open [an
@@ -19,6 +20,7 @@ CONTRIBUTING.md
      8→Executing the tests:
      9→
       →…
+
 README.md
      1→# python-dotenv
      3→[![Build Status][build_status_badge]][build_status_link]
@@ -173,8 +175,10 @@ README.md
    257→[contributors]: https://github.com/theskumar/python-dotenv/graphs/contributors
    258→[build_status_link]: https://github.com/theskumar/python-dotenv/actions/workflows/test.yml
    259→[build_status_badge]: https://github.com/theskumar/python-dotenv/actions/workflows/test.yml/badge.svg
+
 docs/reference.md
      1→# ::: dotenv …
+
 mkdocs.yml
      1→site_name: python-dotenv
      2→repo_url: https://github.com/theskumar/python-dotenv
@@ -188,6 +192,7 @@ mkdocs.yml
     15→plugins:
     24→  - search
     25→nav:
+
 pyproject.toml
      1→[build-system …
      5→[project …
@@ -201,8 +206,10 @@ pyproject.toml
     72→[tool.coverage.paths …
     79→[tool.coverage.report …
     87→[tool.mypy …
+
 ruff.toml
      1→[lint …
+
 src/dotenv/__init__.py
      1→from typing …
      3→from .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key
@@ -218,8 +225,10 @@ src/dotenv/__init__.py
     49→    "find_dotenv",
     50→    "load_ipython_extension",
     51→]
+
 src/dotenv/__main__.py
      3→from .cli import cli
+
 src/dotenv/cli.py
      1→import json …
      2→import os …
@@ -313,6 +322,7 @@ src/dotenv/cli.py
    189→
    190→    run_command([*commandline, *ctx.args], dotenv_as_dict)
    193→def run_command …
+
 src/dotenv/ipython.py
      1→from IPython.core.magic …
      2→from IPython.core.magic_arguments …
@@ -353,6 +363,7 @@ src/dotenv/ipython.py
     44→        # Load the .env file
     45→        load_dotenv(dotenv_path, verbose=args.verbose, override=args.override)
     48→def load_ipython_extension …
+
 src/dotenv/main.py
      1→import io …
      2→import logging …
@@ -439,6 +450,7 @@ src/dotenv/main.py
    428→        return True
    429→
       →…
+
 src/dotenv/parser.py
      1→import codecs …
      2→import re …
@@ -475,6 +487,7 @@ src/dotenv/parser.py
    128→def parse_value …
    142→def parse_binding …
    179→def parse_stream …
+
 src/dotenv/variables.py
      1→import re …
      2→from abc …
@@ -507,11 +520,14 @@ src/dotenv/variables.py
     61→    def __hash__ …
     64→    def resolve …
     70→def parse_variables …
+
 src/dotenv/version.py
      1→__version__ = "1.2.1"
+
 tests/conftest.py
      6→def cli():
     13→def dotenv_path(tmp_path):
+
 tests/test_cli.py
    196→def test_get_default_path(tmp_path):
    206→def test_run(tmp_path):
@@ -519,11 +535,14 @@ tests/test_cli.py
    228→def test_run_with_existing_variable_not_overridden(tmp_path):
    240→def test_run_with_none_value(tmp_path):
    250→def test_run_with_other_env(dotenv_path):
+
 tests/test_fifo_dotenv.py
+
 tests/test_ipython.py
     14→def test_ipython_existing_variable_no_override(tmp_path):
     33→def test_ipython_existing_variable_override(tmp_path):
     52→def test_ipython_new_variable(tmp_path):
+
 tests/test_is_interactive.py
      8→class TestIsInteractive:
      9→    """Tests for the _is_interactive helper function within find_dotenv.
@@ -539,6 +558,7 @@ tests/test_is_interactive.py
     45→    def _remove_ps_attributes(self, monkeypatch):
     52→    def _mock_main_import(self, monkeypatch, mock_main_module):
     63→    def _mock_main_import_error(self, monkeypatch):
+
 tests/test_main.py
    251→def test_load_dotenv_existing_file(dotenv_path):
    386→def test_load_dotenv_doesnt_disable_itself(dotenv_path):
@@ -549,9 +569,13 @@ tests/test_main.py
    463→def test_load_dotenv_string_io_utf_8():
    476→def test_load_dotenv_file_stream(dotenv_path):
    487→def test_load_dotenv_in_current_dir(tmp_path):
+
 tests/test_parser.py
+
 tests/test_utils.py
+
 tests/test_variables.py
+
 tests/test_zip_imports.py
     23→class FileToAdd:
     46→def test_load_dotenv_gracefully_handles_zip_imports_when_no_env_file(tmp_path):

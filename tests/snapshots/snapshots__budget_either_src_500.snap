@@ -15,6 +15,7 @@ into_either.rs
     12→/// The [`into_either_with`](IntoEither::into_either_with) method takes a
     13→/// [predicate function](FnOnce) to determine whether to convert to [`Left`] or [`Right`].
     14→pub trait IntoEither: Sized {
+
 iterator.rs
      1→use super::{for_both, Either, Left, Right};
      2→use core::iter;
@@ -38,6 +39,7 @@ iterator.rs
     47→{
     48→    type Item = L::Item;
    185→    type Item = Either<L::Item, R::Item>;
+
 lib.rs
     21→#[cfg(feature = "serde")]
     22→pub mod serde_untagged;
@@ -120,6 +122,7 @@ lib.rs
   1555→    check_t!(::std::ffi::OsStr);
   1556→    check_t!(::std::ffi::CStr);
   1557→}
+
 serde_untagged.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     38→#[derive(serde::Serialize, serde::Deserialize)]
@@ -128,6 +131,7 @@ serde_untagged.rs
     41→    Left(L),
     42→    Right(R),
     43→}
+
 serde_untagged_optional.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     38→#[derive(Serialize, Deserialize)]

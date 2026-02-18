@@ -6,14 +6,17 @@ budget: 1000 (1016 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
+
 .github/ISSUE_TEMPLATE/bug.yml
      3→name …
      4→description …
      5→title …
      6→labels …
      8→body …
+
 .github/ISSUE_TEMPLATE/config.yml
      3→blank_issues_enabled …
+
 .github/actions/create-check/action.yml
      3→name: 'Create Check'
      4→inputs:
@@ -21,76 +24,92 @@ budget: 1000 (1016 words)
     13→outputs:
     15→    value: ${{ steps.create-check.outputs.check_id }}
     16→runs:
+
 .github/actions/install-latest-npm/action.yml
      3→name: 'Install Latest npm'
      4→description: 'Install the latest version of npm compatible with the Node version'
      5→inputs:
      8→    required: true
      9→runs:
+
 .github/dependabot.yml
      3→version: 2
      5→updates:
+
 .github/matchers/tap.json
      2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
      3→  "problemMatcher": [
     31→  ]
     32→}
+
 .github/settings.yml
      3→repository:
     11→  enable_vulnerability_alerts: true
     12→
     13→branches:
+
 .github/workflows/audit.yml
      3→name …
      5→on …
     11→permissions …
     14→jobs …
+
 .github/workflows/ci-release.yml
      3→name …
      5→on …
     21→permissions …
     25→jobs …
+
 .github/workflows/ci.yml
      3→name …
      5→on …
     16→permissions …
     19→jobs …
+
 .github/workflows/codeql-analysis.yml
      3→name …
      5→on …
     18→permissions …
     21→jobs …
+
 .github/workflows/post-dependabot.yml
      3→name …
      5→on …
      7→permissions …
     10→jobs …
+
 .github/workflows/pull-request.yml
      3→name …
      5→on …
     13→permissions …
     16→jobs …
+
 .github/workflows/release-integration.yml
      3→name …
      5→on …
     22→permissions …
     26→jobs …
+
 .github/workflows/release.yml
      3→name …
      5→on …
     11→permissions …
     16→jobs …
+
 .release-please-manifest.json
      2→  ".": "7.7.4"
      3→}
+
 CHANGELOG.md
      1→# Changelog …
+
 CONTRIBUTING.md
      3→# Contributing …
      5→## Code of Conduct …
      9→## Reporting Bugs …
     17→## Pull Request Conventions …
     42→## What _not_ to contribute? …
+
 README.md
      1→semver(1) -- The semantic versioner for npm
      4→## Install
@@ -143,12 +162,19 @@ README.md
    614→eg), and then pull the module name into the documentation for that specific
    615→thing.
       →…
+
 benchmarks/bench-compare.js
+
 benchmarks/bench-diff.js
+
 benchmarks/bench-parse-options.js
+
 benchmarks/bench-parse.js
+
 benchmarks/bench-satisfies.js
+
 benchmarks/bench-subset.js
+
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
@@ -156,6 +182,7 @@ bin/semver.js
    132→const failInc = () => {
    137→const fail = () => process.exit(1)
    139→const help = () => console.log(
+
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
@@ -165,6 +192,7 @@ classes/comparator.js
     57→  toString () {
     61→  test (version) {
     79→  intersects (comp, options) {
+
 classes/range.js
      3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
@@ -191,6 +219,7 @@ classes/range.js
    478→const replaceGTE0 …
    491→const hyphenReplace …
    523→const testSet …
+
 classes/semver.js
      9→class SemVer {
     10→  constructor (version, options) {
@@ -201,6 +230,7 @@ classes/semver.js
    135→  comparePre (other) {
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
+
 internal/constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
      7→const MAX_LENGTH = 256
@@ -208,12 +238,15 @@ internal/constants.js
     12→const MAX_SAFE_COMPONENT_LENGTH = 16
     16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
     18→const RELEASE_TYPES = [
+
 internal/debug.js
      3→const debug = (
+
 internal/identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
+
 internal/lrucache.js
      3→class LRUCache {
      4→  constructor () {
@@ -233,10 +266,12 @@ internal/lrucache.js
     27→
     28→    if (!deleted && value !== undefined) {
       →…
+
 internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
+
 internal/re.js
     12→const re = exports.re = []
     13→const safeRe = exports.safeRe = []
@@ -247,6 +282,7 @@ internal/re.js
     27→const safeRegexReplacements = [
     33→const makeSafeRegex = (value) => {
     42→const createToken = (name, value, isGlobal) => {
+
 package.json
      2→  "name": "semver",
      3→  "version": "7.7.4",
@@ -271,20 +307,28 @@ package.json
     53→  "templateOSS": {
     77→  }
     78→}
+
 ranges/gtr.js
      5→const gtr …
+
 ranges/intersects.js
      4→const intersects …
+
 ranges/ltr.js
      5→const ltr …
+
 ranges/max-satisfying.js
      6→const maxSatisfying …
+
 ranges/min-satisfying.js
      5→const minSatisfying …
+
 ranges/min-version.js
      7→const minVersion …
+
 ranges/outside.js
     13→const outside …
+
 ranges/subset.js
     45→const subset …
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
@@ -292,10 +336,13 @@ ranges/subset.js
     76→const simpleSubset …
    226→const higherGT …
    238→const lowerLT …
+
 ranges/to-comparators.js
      6→const toComparators …
+
 ranges/valid.js
      4→const validRange …
+
 release-please-config.json
      2→  "group-pull-request-title-pattern": "chore: release ${version}",
      3→  "pull-request-title-pattern": "chore: release${component} ${version}",
@@ -305,15 +352,19 @@ release-please-config.json
     35→  },
     36→  "prerelease-type": "pre.0"
     37→}
+
 test/bin/semver.js
      9→const bin = require.resolve('../../bin/semver')
     10→const run = args => new Promise((resolve, reject) => {
+
 test/integration/whitespace.js
     12→const wsMedium = ' '.repeat(125)
     13→const wsLarge = ' '.repeat(500000)
     14→const zeroLarge = '0'.repeat(500000)
+
 test/internal/debug.js
      3→const main = () => {
+
 test/map.js
      9→const ROOT = resolve(__dirname, '..')
     10→const TEST = join(ROOT, 'test')
@@ -321,7 +372,9 @@ test/map.js
     13→const getFile …
     23→const walk …
     28→const walkAll …
+
 test/ranges/simplify.js
      6→const versions = [
+
 test/ranges/subset.js
      8→const cases = [

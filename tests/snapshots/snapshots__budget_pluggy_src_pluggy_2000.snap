@@ -35,6 +35,7 @@ __init__.py
     28→from ._warnings import PluggyTeardownRaisedWarning
     29→from ._warnings import PluggyWarning
     32→def __getattr__ …
+
 _callers.py
      7→from collections.abc import Generator
      8→from collections.abc import Mapping
@@ -70,6 +71,7 @@ _callers.py
     90→
     91→    ``caller_kwargs`` comes from HookCaller.__call__().
     92→    """
+
 _hooks.py
      7→from collections.abc import Callable
      8→from collections.abc import Generator
@@ -281,6 +283,7 @@ _hooks.py
    707→    )
    708→
    709→    def __init__ …
+
 _manager.py
      3→from collections.abc import Callable
      4→from collections.abc import Iterable
@@ -380,6 +383,7 @@ _manager.py
    487→    def enable_tracing …
    512→    def subset_hook_caller …
    525→def _formatdef(func: Callable[..., object]) -> str:
+
 _result.py
      7→from collections.abc import Callable
      8→from types import TracebackType
@@ -424,6 +428,7 @@ _result.py
     67→    def force_result …
     80→    def force_exception …
     91→    def get_result …
+
 _tracing.py
      7→from collections.abc import Callable
      8→from collections.abc import Sequence
@@ -439,6 +444,7 @@ _tracing.py
     60→    def __init__ …
     64→    def __call__ …
     67→    def get …
+
 _warnings.py
      1→from typing import final
      4→class PluggyWarning(UserWarning):

@@ -16,8 +16,10 @@ __init__.py
     49→    "find_dotenv",
     50→    "load_ipython_extension",
     51→]
+
 __main__.py
      3→from .cli import cli
+
 cli.py
     20→from .main import dotenv_values, set_key, unset_key
     21→from .version import __version__
@@ -67,6 +69,7 @@ cli.py
    175→    file = ctx.obj["FILE"]
    176→    if not os.path.isfile(file):
       →…
+
 ipython.py
      8→from .main import find_dotenv, load_dotenv
     11→@magics_class
@@ -96,6 +99,7 @@ ipython.py
     35→        args = parse_argstring(self.dotenv, line)
     36→        # Locate the .env file
       →…
+
 main.py
     13→from .parser import Binding, parse_stream
     14→from .variables import parse_variables
@@ -128,6 +132,7 @@ main.py
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
       →…
+
 parser.py
     35→class Original(NamedTuple):
     36→    string: str
@@ -144,6 +149,7 @@ parser.py
     65→class Error(Exception):
     66→    pass
     69→class Reader:
+
 variables.py
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
@@ -161,5 +167,6 @@ variables.py
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
     29→class Literal(Atom):
     48→class Variable(Atom):
+
 version.py
      1→__version__ = "1.2.1"

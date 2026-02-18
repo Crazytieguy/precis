@@ -6,14 +6,17 @@ budget: 2000 (1979 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
+
 .github/ISSUE_TEMPLATE/bug.yml
      3→name …
      4→description …
      5→title …
      6→labels …
      8→body …
+
 .github/ISSUE_TEMPLATE/config.yml
      3→blank_issues_enabled …
+
 .github/actions/create-check/action.yml
      3→name: 'Create Check'
      4→inputs:
@@ -21,25 +24,30 @@ budget: 2000 (1979 words)
     13→outputs:
     15→    value: ${{ steps.create-check.outputs.check_id }}
     16→runs:
+
 .github/actions/install-latest-npm/action.yml
      3→name: 'Install Latest npm'
      4→description: 'Install the latest version of npm compatible with the Node version'
      5→inputs:
      8→    required: true
      9→runs:
+
 .github/dependabot.yml
      3→version: 2
      5→updates:
+
 .github/matchers/tap.json
      2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
      3→  "problemMatcher": [
     31→  ]
     32→}
+
 .github/settings.yml
      3→repository:
     11→  enable_vulnerability_alerts: true
     12→
     13→branches:
+
 .github/workflows/audit.yml
      3→name: Audit
      5→on:
@@ -49,6 +57,7 @@ budget: 2000 (1979 words)
     12→  contents: read
     13→
     14→jobs:
+
 .github/workflows/ci-release.yml
      3→name: CI - Release
      5→on:
@@ -58,6 +67,7 @@ budget: 2000 (1979 words)
     23→  checks: write
     24→
     25→jobs:
+
 .github/workflows/ci.yml
      3→name: CI
      5→on:
@@ -67,6 +77,7 @@ budget: 2000 (1979 words)
     17→  contents: read
     18→
     19→jobs:
+
 .github/workflows/codeql-analysis.yml
      3→name: CodeQL
      5→on:
@@ -76,6 +87,7 @@ budget: 2000 (1979 words)
     19→  contents: read
     20→
     21→jobs:
+
 .github/workflows/post-dependabot.yml
      3→name: Post Dependabot
      5→on: pull_request
@@ -83,6 +95,7 @@ budget: 2000 (1979 words)
      8→  contents: write
      9→
     10→jobs:
+
 .github/workflows/pull-request.yml
      3→name: Pull Request
      5→on:
@@ -92,6 +105,7 @@ budget: 2000 (1979 words)
     14→  contents: read
     15→
     16→jobs:
+
 .github/workflows/release-integration.yml
      3→name: Release Integration
      5→on:
@@ -101,6 +115,7 @@ budget: 2000 (1979 words)
     24→  id-token: write
     25→
     26→jobs:
+
 .github/workflows/release.yml
      3→name: Release
      5→on:
@@ -110,11 +125,14 @@ budget: 2000 (1979 words)
     14→  checks: write
     15→
     16→jobs:
+
 .release-please-manifest.json
      2→  ".": "7.7.4"
      3→}
+
 CHANGELOG.md
      1→# Changelog …
+
 CONTRIBUTING.md
      3→# Contributing …
      5→## Code of Conduct …
@@ -126,6 +144,7 @@ CONTRIBUTING.md
     42→## What _not_ to contribute? …
     44→### Dependencies …
     48→### Tools/Automation …
+
 README.md
      1→semver(1) -- The semantic versioner for npm
      4→## Install
@@ -269,12 +288,19 @@ README.md
    625→* `require('semver')`
    626→* `require('semver/classes')`
       →…
+
 benchmarks/bench-compare.js
+
 benchmarks/bench-diff.js
+
 benchmarks/bench-parse-options.js
+
 benchmarks/bench-parse.js
+
 benchmarks/bench-satisfies.js
+
 benchmarks/bench-subset.js
+
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
@@ -297,6 +323,7 @@ bin/semver.js
    143→Copyright Isaac Z. Schlueter
    144→
       →…
+
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
@@ -306,6 +333,7 @@ classes/comparator.js
     57→  toString () {
     61→  test (version) {
     79→  intersects (comp, options) {
+
 classes/range.js
      3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
@@ -334,6 +362,7 @@ classes/range.js
    492→  from, fM, fm, fp, fpr, fb,
    493→  to, tM, tm, tp, tpr) => {
    523→const testSet = (set, version, options) => {
+
 classes/semver.js
      9→class SemVer {
     10→  constructor (version, options) {
@@ -344,54 +373,79 @@ classes/semver.js
    135→  comparePre (other) {
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
+
 functions/clean.js
      4→const clean …
+
 functions/cmp.js
     10→const cmp …
+
 functions/coerce.js
      7→const coerce …
+
 functions/compare-build.js
      4→const compareBuild …
+
 functions/compare-loose.js
      4→const compareLoose …
+
 functions/compare.js
      4→const compare …
+
 functions/diff.js
      5→const diff …
+
 functions/eq.js
      4→const eq …
+
 functions/gt.js
      4→const gt …
+
 functions/gte.js
      4→const gte …
+
 functions/inc.js
      5→const inc …
+
 functions/lt.js
      4→const lt …
+
 functions/lte.js
      4→const lte …
+
 functions/major.js
      4→const major …
+
 functions/minor.js
      4→const minor …
+
 functions/neq.js
      4→const neq …
+
 functions/parse.js
      4→const parse …
+
 functions/patch.js
      4→const patch …
+
 functions/prerelease.js
      4→const prerelease …
+
 functions/rcompare.js
      4→const rcompare …
+
 functions/rsort.js
      4→const rsort …
+
 functions/satisfies.js
      4→const satisfies …
+
 functions/sort.js
      4→const sort …
+
 functions/valid.js
      4→const valid …
+
 internal/constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
      7→const MAX_LENGTH = 256
@@ -399,14 +453,17 @@ internal/constants.js
     12→const MAX_SAFE_COMPONENT_LENGTH = 16
     16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
     18→const RELEASE_TYPES = [
+
 internal/debug.js
      3→const debug = (
+
 internal/identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
      5→  if (typeof a === 'number' && typeof b === 'number') {
       →…
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
+
 internal/lrucache.js
      3→class LRUCache {
      4→  constructor () {
@@ -442,12 +499,14 @@ internal/lrucache.js
     37→
     38→    return this
     39→  }
+
 internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
      7→  if (!options) {
       →…
+
 internal/re.js
     12→const re = exports.re = []
     13→const safeRe = exports.safeRe = []
@@ -462,6 +521,7 @@ internal/re.js
     42→const createToken = (name, value, isGlobal) => {
     43→  const safe = makeSafeRegex(value)
       →…
+
 package.json
      2→  "name": "semver",
      3→  "version": "7.7.4",
@@ -486,20 +546,28 @@ package.json
     53→  "templateOSS": {
     77→  }
     78→}
+
 ranges/gtr.js
      5→const gtr = (version, range, options) => outside(version, range, '>', options)
+
 ranges/intersects.js
      4→const intersects = (r1, r2, options) => {
+
 ranges/ltr.js
      5→const ltr = (version, range, options) => outside(version, range, '<', options)
+
 ranges/max-satisfying.js
      6→const maxSatisfying = (versions, range, options) => {
+
 ranges/min-satisfying.js
      5→const minSatisfying = (versions, range, options) => {
+
 ranges/min-version.js
      7→const minVersion = (range, loose) => {
+
 ranges/outside.js
     13→const outside = (version, range, hilo, options) => {
+
 ranges/subset.js
     45→const subset = (sub, dom, options = {}) => {
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
@@ -507,10 +575,13 @@ ranges/subset.js
     76→const simpleSubset = (sub, dom, options) => {
    226→const higherGT = (a, b, options) => {
    238→const lowerLT = (a, b, options) => {
+
 ranges/to-comparators.js
      6→const toComparators = (range, options) =>
+
 ranges/valid.js
      4→const validRange = (range, options) => {
+
 release-please-config.json
      2→  "group-pull-request-title-pattern": "chore: release ${version}",
      3→  "pull-request-title-pattern": "chore: release${component} ${version}",
@@ -520,15 +591,19 @@ release-please-config.json
     35→  },
     36→  "prerelease-type": "pre.0"
     37→}
+
 test/bin/semver.js
      9→const bin = require.resolve('../../bin/semver')
     10→const run = args => new Promise((resolve, reject) => {
+
 test/integration/whitespace.js
     12→const wsMedium = ' '.repeat(125)
     13→const wsLarge = ' '.repeat(500000)
     14→const zeroLarge = '0'.repeat(500000)
+
 test/internal/debug.js
      3→const main = () => {
+
 test/map.js
      9→const ROOT = resolve(__dirname, '..')
     10→const TEST = join(ROOT, 'test')
@@ -536,7 +611,9 @@ test/map.js
     13→const getFile = (f) => {
     23→const walk = (item, res = []) => getFile(item) || readdirSync(item)
     28→const walkAll = (items, relativeTo) => items
+
 test/ranges/simplify.js
      6→const versions = [
+
 test/ranges/subset.js
      8→const cases = [

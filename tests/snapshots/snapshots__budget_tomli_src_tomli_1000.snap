@@ -12,6 +12,7 @@ __init__.py
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
      8→from ._parser import TOMLDecodeError, load, loads
+
 _parser.py
      7→import sys
      8→from types import MappingProxyType
@@ -124,6 +125,7 @@ _parser.py
    684→def parse_value …
    760→def is_unicode_scalar_value …
    764→def make_safe_parse_float …
+
 _re.py
      7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
      8→from functools import lru_cache
@@ -185,5 +187,6 @@ _re.py
    106→    )
    109→def match_to_localtime …
    116→def match_to_number …
+
 _types.py
      5→from typing import Any, Callable, Tuple

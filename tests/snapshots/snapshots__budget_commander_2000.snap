@@ -7,10 +7,12 @@ budget: 2000 (1998 words)
 CHANGELOG.md
      1→# Changelog …
    911→#### Testing for no arguments …
+
 CONTRIBUTING.md
      1→# Contributing
      3→## Issues …
     13→## Pull Requests …
+
 Readme.md
      1→# Commander.js
      8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
@@ -70,6 +72,7 @@ Readme.md
    956→## Custom event listeners …
    966→## Bits and pieces …
   1164→## Support …
+
 Readme_zh-CN.md
      1→# Commander.js
      8→完整的 [node.js](http://nodejs.org) 命令行解决方案。
@@ -80,29 +83,40 @@ Readme_zh-CN.md
       →…
    570→#### 其他参数配置 …
    582→#### 自定义参数处理 …
+
 SECURITY.md
      1→# Security Policy
      3→To report a security vulnerability, please use the
      4→[Tidelift security contact](https://tidelift.com/security).
       →…
+
 docs/deprecated.md
      1→# Deprecated …
+
 docs/help-in-depth.md
      1→# Help in Depth …
+
 docs/options-in-depth.md
      2→# Options in Depth …
+
 docs/parsing-and-hooks.md
      1→# Parsing life cycle and hooks …
+
 docs/release-policy.md
      1→# Release Policy …
+
 docs/terminology.md
      1→# Terminology …
+
 eslint.config.js
      8→const tsconfigTsFiles …
      9→const tsconfigJsFiles …
+
 esm.mjs
      1→import commander from './index.js';
+
 examples/arguments-custom-processing.js
+
 examples/color-help-replacement.mjs
     20→class MyHelp extends Help {
     21→  constructor() {
@@ -119,26 +133,36 @@ examples/color-help-replacement.mjs
     64→class MyCommand extends Command {
     65→  createCommand(name) {
     68→  createHelp() {
+
 examples/color-help.mjs
+
 examples/configure-output.js
+
 examples/custom-command-class.js
      6→class CommandWithTrace extends commander.Command {
      7→  createCommand(name) {
+
 examples/global-options-added.js
     16→class MyRootCommand extends Command {
     17→  createCommand(name) {
+
 examples/help-centered.mjs
      6→class MyHelp extends Help {
      7→  formatItem(term, termWidth, description, helper) {
     17→class MyCommand extends Command {
     18→  createCommand(name) {
     21→  createHelp() {
+
 examples/man-style-help.mjs
      5→function formatItem(term, termWidth, description, helper) {
+
 examples/nestedCommands.js
+
 examples/options-custom-processing.js
+
 jest.config.js
      1→const config …
+
 lib/argument.js
      3→class Argument {
     13→  constructor(name, description) {
@@ -150,6 +174,7 @@ lib/argument.js
    119→  argRequired() {
    129→  argOptional() {
    143→function humanReadableArgName(arg) {
+
 lib/command.js
     13→class Command extends EventEmitter {
     20→  constructor(name) {
@@ -255,6 +280,7 @@ lib/command.js
   2686→  _outputHelpIfRequested(args) {
   2705→function incrementNodeInspectorPort(args) {
   2752→function useColor() {
+
 lib/error.js
      1→/**
      2→ * CommanderError class
@@ -266,6 +292,7 @@ lib/error.js
     24→ */
     25→class InvalidArgumentError extends CommanderError {
     30→  constructor(message) {
+
 lib/help.js
     12→class Help {
     13→  constructor() {
@@ -310,6 +337,7 @@ lib/help.js
    650→  formatItem(term, termWidth, description, helper) {
    695→  boxWrap(str, width) {
    740→function stripColor(str) {
+
 lib/option.js
      3→class Option {
     11→  constructor(flags, description) {
@@ -340,16 +368,19 @@ lib/option.js
    297→  valueFromOption(value, option) {
    316→function camelcase(str) {
    328→function splitOptionFlags(flags) {
+
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
      4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
       →…
     56→function suggestSimilar(word, candidates) {
+
 package-support.json
      2→  "versions": [
     18→  ]
     19→}
+
 package.json
      2→  "name": "commander",
      3→  "version": "14.0.3",
@@ -375,29 +406,35 @@ package.json
     80→  },
     81→  "support": true
     82→}
+
 tests/command.createArgument.test.js
      3→class MyArgument extends commander.Argument {
      4→  constructor(name, description) {
     10→class MyCommand extends commander.Command {
     11→  createArgument(name, description) {
     16→  createCommand(name) {
+
 tests/command.createOption.test.js
      3→class MyOption extends commander.Option {
      4→  constructor(flags, description) {
     10→class MyCommand extends commander.Command {
     11→  createOption(flags, description) {
+
 tests/esm-imports-test.mjs
      1→../esm.mjs …
     19→function check(condition, explanation) {
     26→function checkClass(obj, name) {
+
 tests/ts-imports.test.ts
      1→../ …
     17→function checkClass(obj: object, name: string): void {
+
 tsconfig.js.json
      7→  "extends": "./tsconfig.json",
      8→  "include": [
     14→  ],
     15→}
+
 tsconfig.json
     12→  "compilerOptions": {
     32→  },
@@ -405,6 +442,7 @@ tsconfig.json
     42→  ],
     43→  "exclude": ["node_modules"],
     44→}
+
 tsconfig.ts.json
      8→  "extends": "./tsconfig.json",
      9→  "compilerOptions": {
@@ -412,6 +450,7 @@ tsconfig.ts.json
     15→  "include": [
     19→  ],
     20→}
+
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =
     13→  | LiteralType
@@ -539,6 +578,7 @@ typings/index.d.ts
   1106→  unknown: string[];
   1107→}
   1113→export const program: Command;
+
 typings/index.test-d.ts
      1→import * as commander from './index';
      2→import { expectType } from 'tsd';

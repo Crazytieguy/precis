@@ -29,6 +29,7 @@ __init__.py
     25→from ._suppression …
     26→from ._utils …
     34→config: TypeCheckConfiguration
+
 _checkers.py
     42→from typing_extensions import is_typeddict
     44→from ._config …
@@ -64,6 +65,7 @@ _checkers.py
   1009→    AbstractSet: check_set,
   1010→    BinaryIO: check_io,
       →…
+
 _config.py
      9→    from ._functions …
     11→T = TypeVar("T")
@@ -123,12 +125,14 @@ _config.py
    101→        CollectionCheckStrategy.FIRST_ITEM
    102→    )
    103→    debug_instrumentation: bool = False
+
 _decorators.py
     13→from ._config …
     14→from ._exceptions …
     15→from ._functions …
     16→from ._transformer …
     17→from ._utils …
+
 _exceptions.py
      5→class TypeHintWarning(UserWarning):
      6→    """
@@ -143,6 +147,7 @@ _exceptions.py
     27→    """
       →…
     30→
+
 _functions.py
      8→from . …
      9→from ._checkers …
@@ -152,6 +157,7 @@ _functions.py
     17→from ._utils …
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
+
 _importhook.py
     17→from ._config …
     18→from ._transformer …
@@ -212,6 +218,7 @@ _importhook.py
    157→    """
       →…
    160→
+
 _memo.py
      8→class TypeCheckMemo:
      9→    """
@@ -219,10 +226,13 @@ _memo.py
     34→
     35→    __slots__ = "globals", "locals", "self_type", "config"
     36→
+
 _pytest_plugin.py
+
 _suppression.py
     15→P = ParamSpec("P")
     16→T = TypeVar("T")
+
 _transformer.py
     67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
     68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
@@ -283,6 +293,7 @@ _transformer.py
       →…
    570→    def _get_import(self, module: str, name: str) -> Name:
    580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
+
 _utils.py
     21→    from ._memo …
    172→@final

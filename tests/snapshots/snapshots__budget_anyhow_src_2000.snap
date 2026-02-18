@@ -36,6 +36,7 @@ backtrace.rs
    116→    enum BytesOrWide {
    211→        pub(crate) fn capture …
    311→    struct LazilyResolvedCapture {
+
 chain.rs
      1→use self::ChainState::*;
      2→use crate::StdError;
@@ -61,6 +62,7 @@ chain.rs
     57→impl DoubleEndedIterator for Chain<'_> {
     93→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     94→impl Default for Chain<'_> {
+
 context.rs
      1→use crate::error::ContextError;
      2→use crate::{Context, Error, StdError};
@@ -100,6 +102,7 @@ context.rs
    186→pub(crate) mod private {
    187→    use super::*;
    189→    pub trait Sealed {}
+
 ensure.rs
      1→use crate::Error;
      9→#[doc(hidden)]
@@ -116,6 +119,7 @@ ensure.rs
    910→#[doc(hidden)]
    911→#[macro_export]
    912→macro_rules! __fallback_ensure {
+
 error.rs
      1→use crate::backtrace::Backtrace;
      2→use crate::chain::Chain;
@@ -216,11 +220,13 @@ error.rs
   1072→impl AsRef<dyn StdError + Send + Sync> for Error {
   1078→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
   1079→impl AsRef<dyn StdError> for Error {
+
 fmt.rs
      1→use crate::chain::Chain;
      2→use crate::error::ErrorImpl;
      3→use crate::ptr::Ref;
     69→struct Indented<'a, D> {
+
 kind.rs
     47→use crate::Error;
     51→use crate::StdError;
@@ -252,6 +258,7 @@ kind.rs
    114→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    115→impl Boxed {
    117→    pub fn new(self, error: Box<dyn StdError + Send + Sync>) -> Error {
+
 lib.rs
    251→#[macro_use]
    252→mod backtrace;
@@ -407,6 +414,7 @@ lib.rs
    710→        pub trait Bool {
    716→            fn not(self) -> bool {
    723→            fn not(self) -> bool {
+
 macros.rs
      1→/// Return early with an error.
      2→///
@@ -432,8 +440,10 @@ macros.rs
    228→#[doc(hidden)]
    229→#[macro_export]
    230→macro_rules! __anyhow {
+
 nightly.rs
     10→pub use core::error::Request;
+
 ptr.rs
      5→#[repr(transparent)]
      6→pub struct Own<T>
@@ -462,6 +472,7 @@ ptr.rs
    182→    type Target;
    183→}
    186→    type Target = T;
+
 wrapper.rs
      1→use crate::StdError;
      5→use alloc::boxed::Box;

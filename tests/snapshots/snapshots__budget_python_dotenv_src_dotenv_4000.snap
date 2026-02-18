@@ -49,8 +49,10 @@ __init__.py
     49→    "find_dotenv",
     50→    "load_ipython_extension",
     51→]
+
 __main__.py
      3→from .cli import cli
+
 cli.py
      1→import json
      2→import os
@@ -203,6 +205,7 @@ cli.py
    223→        sys.exit(p.returncode)
    224→    else:
    225→        os.execvpe(command[0], args=command, env=cmd_env)
+
 ipython.py
      1→from IPython.core.magic import Magics, line_magic, magics_class  # type: ignore
      2→from IPython.core.magic_arguments import (
@@ -249,6 +252,7 @@ ipython.py
     48→def load_ipython_extension(ipython):
     49→    """Register the %dotenv magic."""
     50→    ipython.register_magics(IPythonDotEnv)
+
 main.py
      1→import io
      2→import logging
@@ -645,6 +649,7 @@ main.py
    433→        return False
    434→
    435→    return stat.S_ISFIFO(st.st_mode)
+
 parser.py
      1→import codecs
      2→import re
@@ -778,6 +783,7 @@ parser.py
    180→    reader = Reader(stream)
    181→    while reader.has_next():
    182→        yield parse_binding(reader)
+
 variables.py
      1→import re
      2→from abc import ABCMeta, abstractmethod
@@ -847,5 +853,6 @@ variables.py
     84→    length = len(value)
     85→    if cursor < length:
     86→        yield Literal(value=value[cursor:length])
+
 version.py
      1→__version__ = "1.2.1"

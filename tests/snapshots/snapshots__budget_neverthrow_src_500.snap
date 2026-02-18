@@ -25,6 +25,7 @@ _internals/error.ts
     31→): NeverThrowError<T, E> => {
     32→  const data = result.isOk()
       →…
+
 _internals/utils.ts
      1→import { Result, ok, err } from '../result'
      2→import { ResultAsync } from '../result-async'
@@ -66,6 +67,7 @@ _internals/utils.ts
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
     83→  asyncResultList: readonly ResultAsync<T, E>[],
       →…
+
 result-async.ts
      1→./result …
     10→import { Err, Ok, Result } from './ …
@@ -76,6 +78,7 @@ result-async.ts
    210→  /**
       →…
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
+
 result.ts
      1→import { errAsync, ResultAsync } from './ …
      2→import { createNeverThrowError, ErrorConfig } from './_internals/error …

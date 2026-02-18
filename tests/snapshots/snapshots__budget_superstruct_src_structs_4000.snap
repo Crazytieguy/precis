@@ -79,6 +79,7 @@ coercions.ts
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
     80→  return coerce(struct, string(), (x) => x.trim())
     81→}
+
 refinements.ts
      1→import { Struct, Refiner } from '../struct.js'
      2→import { toFailures } from '../utils.js'
@@ -233,6 +234,7 @@ refinements.ts
    161→    },
    162→  })
    163→}
+
 types.ts
      1→import { Infer, Struct } from '../struct.js'
      2→import { define } from './utilities.js'
@@ -700,6 +702,7 @@ types.ts
    574→export function unknown(): Struct<unknown, null> {
    575→  return define('unknown', () => true)
    576→}
+
 utilities.ts
      1→import { Context, Struct, Validator } from '../struct.js'
      2→import {

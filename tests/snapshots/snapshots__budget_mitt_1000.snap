@@ -140,6 +140,7 @@ README.md
       →…
    203→## License
    205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
+
 package.json
      2→  "name": "mitt",
      3→  "version": "3.0.1",
@@ -170,6 +171,7 @@ package.json
     62→  "devDependencies": {
     84→  }
     85→}
+
 src/index.ts
      1→export type EventType = string | symbol;
      5→export type Handler<T = unknown> = (event: T) => void;
@@ -230,7 +232,9 @@ src/index.ts
     74→
     75→		/**
       →…
+
 test/index_test.ts
+
 test/test-types-compilation.ts
      5→interface SomeEventData {
      6→	name: string;
@@ -239,6 +243,7 @@ test/test-types-compilation.ts
     15→const barHandler …
     16→const fooHandler …
     17→const wildcardHandler …
+
 tsconfig.json
      2→	"compileOnSave": false,
      3→	"compilerOptions": {

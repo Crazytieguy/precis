@@ -10,10 +10,12 @@ CHANGELOG.md
      4→
       →…
    911→#### Testing for no arguments …
+
 CONTRIBUTING.md
      1→# Contributing
      3→## Issues …
     13→## Pull Requests …
+
 Readme.md
      1→# Commander.js
      8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
@@ -184,6 +186,7 @@ Readme.md
   1169→
       →…
   1172→### Commander for enterprise …
+
 Readme_zh-CN.md
      1→# Commander.js
      8→完整的 [node.js](http://nodejs.org) 命令行解决方案。
@@ -211,6 +214,7 @@ Readme_zh-CN.md
    895→## 自定义事件监听 …
    905→## 零碎知识 …
   1061→## 支持 …
+
 SECURITY.md
      1→# Security Policy
      3→To report a security vulnerability, please use the
@@ -218,32 +222,42 @@ SECURITY.md
      5→Tidelift will coordinate the fix and disclosure.
      6→
       →…
+
 docs/deprecated.md
      1→# Deprecated …
    227→## Removed …
+
 docs/help-in-depth.md
      1→# Help in Depth …
     20→## Data Properties …
     34→## Stringify and Style …
    118→## Layout …
+
 docs/options-in-depth.md
      2→# Options in Depth …
     15→## Options taking varying numbers of option-arguments …
    148→## Combining short options, and options taking arguments …
+
 docs/parsing-and-hooks.md
      1→# Parsing life cycle and hooks …
+
 docs/release-policy.md
      1→# Release Policy …
+
 docs/terminology.md
      1→# Terminology …
+
 eslint.config.js
      8→const tsconfigTsFiles = ['**/*.{ts,mts}']; // match "include" in tsconfig.ts.json;
      9→const tsconfigJsFiles = ['*.{js,mjs}', 'lib/**/*.{js,mjs}']; // match "include" in tsconfig.js.json
+
 esm.mjs
      1→import commander from './index.js';
+
 examples/arguments-custom-processing.js
     10→function myParseInt(value) {
     20→function mySum(value, total) {
+
 examples/color-help-replacement.mjs
     20→class MyHelp extends Help {
     21→  constructor() {
@@ -261,21 +275,26 @@ examples/color-help-replacement.mjs
     65→  createCommand(name) {
     68→  createHelp() {
     73→const program = new MyCommand();
+
 examples/color-help.mjs
      6→const program = new Command();
+
 examples/configure-output.js
      4→function errorColor(str) {
+
 examples/custom-command-class.js
      6→class CommandWithTrace extends commander.Command {
      7→  createCommand(name) {
      8→    const cmd = new CommandWithTrace(name);
       →…
     15→function inspectCommand(command) {
+
 examples/global-options-added.js
     16→class MyRootCommand extends Command {
     17→  createCommand(name) {
     18→    const cmd = new Command(name);
       →…
+
 examples/help-centered.mjs
      6→class MyHelp extends Help {
      7→  formatItem(term, termWidth, description, helper) {
@@ -283,18 +302,23 @@ examples/help-centered.mjs
     18→  createCommand(name) {
     21→  createHelp() {
     26→const program = new MyCommand();
+
 examples/man-style-help.mjs
      5→function formatItem(term, termWidth, description, helper) {
     25→const program = new Command();
+
 examples/nestedCommands.js
     21→function makeHeatCommand() {
+
 examples/options-custom-processing.js
     10→function myParseInt(value) {
     19→function increaseVerbosity(dummyValue, previous) {
     23→function collect(value, previous) {
     27→function commaSeparatedList(value) {
+
 jest.config.js
      1→const config = {
+
 lib/argument.js
      3→class Argument {
      4→  /**
@@ -320,6 +344,7 @@ lib/argument.js
       →…
    129→  argOptional() {
    143→function humanReadableArgName(arg) {
+
 lib/command.js
     13→class Command extends EventEmitter {
     14→  /**
@@ -558,6 +583,7 @@ lib/command.js
   2686→  _outputHelpIfRequested(args) {
   2705→function incrementNodeInspectorPort(args) {
   2752→function useColor() {
+
 lib/error.js
      1→/**
      2→ * CommanderError class
@@ -573,6 +599,7 @@ lib/error.js
     26→  /**
       →…
     30→  constructor(message) {
+
 lib/help.js
     12→class Help {
     13→  constructor() {
@@ -724,6 +751,7 @@ lib/help.js
       →…
    695→  boxWrap(str, width) {
    740→function stripColor(str) {
+
 lib/option.js
      3→class Option {
      4→  /**
@@ -788,6 +816,7 @@ lib/option.js
    297→  valueFromOption(value, option) {
    316→function camelcase(str) {
    328→function splitOptionFlags(flags) {
+
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
@@ -797,10 +826,12 @@ lib/suggestSimilar.js
      7→
       →…
     56→function suggestSimilar(word, candidates) {
+
 package-support.json
      2→  "versions": [
     18→  ]
     19→}
+
 package.json
      2→  "name": "commander",
      3→  "version": "14.0.3",
@@ -826,32 +857,38 @@ package.json
     80→  },
     81→  "support": true
     82→}
+
 tests/command.createArgument.test.js
      3→class MyArgument extends commander.Argument {
      4→  constructor(name, description) {
     10→class MyCommand extends commander.Command {
     11→  createArgument(name, description) {
     16→  createCommand(name) {
+
 tests/command.createOption.test.js
      3→class MyOption extends commander.Option {
      4→  constructor(flags, description) {
     10→class MyCommand extends commander.Command {
     11→  createOption(flags, description) {
+
 tests/esm-imports-test.mjs
      1→../esm.mjs …
     19→function check(condition, explanation) {
     26→function checkClass(obj, name) {
+
 tests/ts-imports.test.ts
      1→../ …
     17→function checkClass(obj: object, name: string): void {
     18→  expect(typeof obj).toEqual('object');
     19→  expect(obj.constructor.name).toEqual(name);
     20→}
+
 tsconfig.js.json
      7→  "extends": "./tsconfig.json",
      8→  "include": [
     14→  ],
     15→}
+
 tsconfig.json
     12→  "compilerOptions": {
     32→  },
@@ -859,6 +896,7 @@ tsconfig.json
     42→  ],
     43→  "exclude": ["node_modules"],
     44→}
+
 tsconfig.ts.json
      8→  "extends": "./tsconfig.json",
      9→  "compilerOptions": {
@@ -866,6 +904,7 @@ tsconfig.ts.json
     15→  "include": [
     19→  ],
     20→}
+
 typings/index.d.ts
     12→type LiteralUnion<LiteralType, BaseType extends string | number> =
     13→  | LiteralType
@@ -1138,6 +1177,7 @@ typings/index.d.ts
   1106→  unknown: string[];
   1107→}
   1113→export const program: Command;
+
 typings/index.test-d.ts
      1→import * as commander from './index';
      2→import { expectType } from 'tsd';

@@ -32,6 +32,7 @@ aserror.rs
     41→    }
     44→#[doc(hidden)]
     45→pub trait Sealed {}
+
 display.rs
      1→use core::fmt::Display;
      3→use std::path::{self, Path, PathBuf};
@@ -80,6 +81,7 @@ display.rs
     76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     77→            unreachable!()
     78→        }
+
 lib.rs
    281→mod aserror;
    282→mod display;
@@ -88,6 +90,7 @@ lib.rs
    285→mod var;
    287→pub use thiserror_impl::*;
    289→mod private;
+
 private.rs
      2→pub use crate::aserror::AsDynError;
      4→pub use crate::display::AsDisplay;
@@ -95,6 +98,7 @@ private.rs
      9→pub use crate::var::Var;
     11→pub use core::error::Error;
     14→pub use std::backtrace::Backtrace;
+
 provide.rs
      1→use core::error::{Error, Request};
      3→#[doc(hidden)]
@@ -106,6 +110,7 @@ provide.rs
     15→    }
     18→#[doc(hidden)]
     19→pub trait Sealed {}
+
 var.rs
      1→use core::fmt::{self, Pointer};
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);

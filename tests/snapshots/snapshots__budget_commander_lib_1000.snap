@@ -15,6 +15,7 @@ argument.js
    119→  argRequired() {
    129→  argOptional() {
    143→function humanReadableArgName(arg) {
+
 command.js
     13→class Command extends EventEmitter {
     20→  constructor(name) {
@@ -124,6 +125,7 @@ command.js
   2686→  _outputHelpIfRequested(args) {
   2705→function incrementNodeInspectorPort(args) {
   2752→function useColor() {
+
 error.js
      1→/**
      2→ * CommanderError class
@@ -135,6 +137,7 @@ error.js
     24→ */
     25→class InvalidArgumentError extends CommanderError {
     30→  constructor(message) {
+
 help.js
     12→class Help {
     13→  constructor() {
@@ -223,6 +226,7 @@ help.js
    650→  formatItem(term, termWidth, description, helper) {
    695→  boxWrap(str, width) {
    740→function stripColor(str) {
+
 option.js
      3→class Option {
     11→  constructor(flags, description) {
@@ -253,6 +257,7 @@ option.js
    297→  valueFromOption(value, option) {
    316→function camelcase(str) {
    328→function splitOptionFlags(flags) {
+
 suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {

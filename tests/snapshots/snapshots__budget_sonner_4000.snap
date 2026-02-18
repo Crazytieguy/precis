@@ -6,6 +6,7 @@ budget: 4000 (3938 words)
 
 FUNDING.yml
      1→github …
+
 README.md
      5→## Usage
      7→To start using the library, install it in your project:
@@ -34,6 +35,7 @@ README.md
     30→
     31→## Documentation
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
+
 package.json
      2→  "name": "sonner",
      3→  "version": "2.0.7",
@@ -61,10 +63,13 @@ package.json
     64→  },
     65→  "packageManager": "pnpm@9.15.9"
     66→}
+
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
+
 pnpm-workspace.yaml
      1→packages …
+
 src/assets.tsx
      2→import React from 'react';
      3→import type { ToastTypes } from './types';
@@ -118,6 +123,7 @@ src/assets.tsx
     91→    <line x1="6" y1="6" x2="18" y2="18"></line>
     92→  </svg>
     93→);
+
 src/hooks.tsx
      1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
@@ -133,6 +139,7 @@ src/hooks.tsx
     13→
     14→  return isDocumentHidden;
     15→};
+
 src/index.tsx
      3→import React from 'react';
      4→import ReactDOM from 'react-dom';
@@ -207,6 +214,7 @@ src/index.tsx
    559→          ReactDOM.flushSync(() => {
       →…
    593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
+
 src/state.ts
      1→import type {
      2→  ExternalToast,
@@ -444,6 +452,7 @@ src/state.ts
    297→  },
    298→  { getHistory, getToasts },
    299→);
+
 src/types.ts
      1→import React from 'react';
      3→export type ToastTypes = 'normal' | 'action' | 'success' | 'info' | 'warning' | 'error' | 'loading' | 'default';
@@ -623,6 +632,7 @@ src/types.ts
    198→  id?: number | string;
    199→  toasterId?: string;
    200→};
+
 test/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -654,9 +664,11 @@ test/README.md
     36→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     37→
     38→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
 test/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {};
+
 test/package.json
      2→  "name": "test",
      3→  "version": "0.1.0",
@@ -666,6 +678,7 @@ test/package.json
     11→  "dependencies": {
     23→  }
     24→}
+
 test/src/app/action.tsx
      2→import { createStreamableUI } from 'ai/rsc';
      4→export async function action() {
@@ -678,6 +691,7 @@ test/src/app/action.tsx
     11→    if (progress >= 100) {
     12→      clearInterval(interval);
       →…
+
 test/src/app/layout.tsx
      1→export const metadata = {
      2→  title: 'Create Next App',
@@ -690,6 +704,7 @@ test/src/app/layout.tsx
     10→    </html>
     11→  );
     12→}
+
 test/src/app/page.tsx
      3→import React from 'react';
      4→import { Toaster, toast } from 'sonner';
@@ -705,26 +720,31 @@ test/src/app/page.tsx
     16→  return (
     17→    <>
       →…
+
 test/tests/basic.spec.ts
      1→import { expect, test } from '@playwright/test';
      2→import { toast } from 'sonner';
+
 test/tsconfig.json
      2→  "compilerOptions": {
     25→  },
     26→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../playwright.config.ts"],
     27→  "exclude": ["node_modules"]
     28→}
+
 tsconfig.json
      2→  "compilerOptions": {
      8→  },
      9→  "include": ["src"]
     10→}
+
 turbo.json
      2→  "$schema": "https://turbo.build/schema.json",
      3→  "extends": ["//"],
      4→  "pipeline": {
     12→  }
     13→}
+
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -756,10 +776,12 @@ website/README.md
     36→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     37→
     38→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
 website/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
      8→const withNextra = require('nextra')({
+
 website/package.json
      2→  "name": "website",
      3→  "version": "0.1.0",
@@ -770,6 +792,7 @@ website/package.json
     30→  "devDependencies": {
     34→  }
     35→}
+
 website/src/components/CodeBlock/index.tsx
      1→import React from 'react';
      2→import Highlight, { defaultProps } from 'prism-react-renderer';
@@ -793,6 +816,7 @@ website/src/components/CodeBlock/index.tsx
     59→
     60→  return (
       →…
+
 website/src/components/ExpandModes/index.tsx
      1→import { toast } from 'sonner';
      2→import { CodeBlock } from '../CodeBlock';
@@ -808,6 +832,7 @@ website/src/components/ExpandModes/index.tsx
     13→      <h2>Expand</h2>
     14→      <p>
       →…
+
 website/src/components/Footer/index.tsx
      1→import Image from 'next/image';
      2→import emil from 'public/emil.jpeg';
@@ -829,10 +854,12 @@ website/src/components/Footer/index.tsx
     19→    </footer>
     20→  );
     21→};
+
 website/src/components/Head/index.tsx
      1→import NextHead from 'next/head';
      3→const ogImage = 'https://sonner.emilkowal.ski/og.png';
      5→const Head …
+
 website/src/components/Hero/index.tsx
      1→import { toast } from 'sonner';
      3→import styles from './hero.module.css';
@@ -847,6 +874,7 @@ website/src/components/Hero/index.tsx
     13→      </div>
     14→      <h1 className={styles.heading}>Sonner</h1>
       →…
+
 website/src/components/How/How.tsx
      1→import React from 'react';
      3→export const How = () => {
@@ -856,6 +884,7 @@ website/src/components/How/How.tsx
      7→        <h2>Want to learn how to make components like this one?</h2>
      8→        <p>
       →…
+
 website/src/components/Installation/index.tsx
      3→import React from 'react';
      4→import copy from 'copy-to-clipboard';
@@ -877,6 +906,7 @@ website/src/components/Installation/index.tsx
     26→    <div>
     27→      <h2>Installation</h2>
       →…
+
 website/src/components/Other/Other.tsx
      1→import React from 'react';
      2→import { useMemo } from 'react';
@@ -894,6 +924,7 @@ website/src/components/Other/Other.tsx
     15→    () => [
     16→      {
       →…
+
 website/src/components/Position/index.tsx
      1→import { toast, useSonner } from 'sonner';
      2→import { CodeBlock } from '../CodeBlock';
@@ -917,6 +948,7 @@ website/src/components/Position/index.tsx
     23→    <div>
     24→      <h2>Position</h2>
       →…
+
 website/src/components/Types/Types.tsx
      1→import React from 'react';
      2→import { toast } from 'sonner';
@@ -930,6 +962,7 @@ website/src/components/Types/Types.tsx
     12→      <h2>Types</h2>
       →…
     34→const allTypes = [
+
 website/src/components/Usage/index.tsx
      1→import { CodeBlock } from '../CodeBlock';
      3→export const Usage = () => {
@@ -945,6 +978,7 @@ website/src/components/Usage/index.tsx
     13→  return (
     14→    <div>
       →…
+
 website/src/pages/_app.tsx
      1→import type { ReactElement } from 'react';
      2→import type { AppProps } from 'next/app';
@@ -960,6 +994,7 @@ website/src/pages/_app.tsx
     13→    </>
     14→  );
     15→}
+
 website/src/pages/_meta.json
      2→  "getting-started": {
      5→  },
@@ -974,6 +1009,7 @@ website/src/pages/_meta.json
     22→  "styling": {
     25→  }
     26→}
+
 website/src/pages/index.tsx
      1→import React, { StrictMode } from 'react';
      2→import { Toaster } from 'sonner';
@@ -1008,12 +1044,14 @@ website/src/pages/index.tsx
     32→        <Hero />
     33→        <div className="content">
       →…
+
 website/theme.config.jsx
      7→  useNextSeoProps() {
      8→    return {
      9→      titleTemplate: '%s – Sonner',
     10→    };
     11→  },
+
 website/tsconfig.json
      2→  "compilerOptions": {
     26→  },

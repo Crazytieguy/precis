@@ -5,6 +5,7 @@ expression: output
 budget: 1000 (975 words)
 
 CHANGELOG.md
+
 README.md
      1→# Versioning Library for Go
      6→go-version is a library for parsing versions and version constraints,
@@ -46,6 +47,7 @@ README.md
     65→If you find an issue with this library, please report an issue. If you'd
     66→like, we welcome any contributions. Fork this library and submit a pull
     67→request.
+
 constraint.go
      6→import (
      7→	"fmt"
@@ -125,6 +127,7 @@ constraint.go
    260→func constraintGreaterThanEqual(v, c *Version) bool {
    264→func constraintLessThanEqual(v, c *Version) bool {
    268→func constraintPessimistic(v, c *Version) bool {
+
 constraint_test.go
      6→import …
     13→func TestNewConstraint(t *testing.T) {
@@ -133,6 +136,7 @@ constraint_test.go
    134→func TestConstraintEqual(t *testing.T) {
    190→func TestConstraint_sort(t *testing.T) {
    232→func TestConstraintsString(t *testing.T) {
+
 version.go
      6→import (
      7→	"database/sql/driver"
@@ -196,6 +200,7 @@ version.go
    440→func (v *Version) MarshalText() ([]byte, error) {
    445→func (v *Version) Scan(src interface{}) error {
    457→func (v *Version) Value() (driver.Value, error) {
+
 version_collection.go
      6→// Collection is a type that implements the sort.Interface interface
      7→// so that versions can be sorted.
@@ -209,9 +214,11 @@ version_collection.go
     18→func (v Collection) Swap(i, j int) {
     19→	v[i], v[j] = v[j], v[i]
     20→}
+
 version_collection_test.go
      6→import …
     12→func TestCollection(t *testing.T) {
+
 version_test.go
      6→import …
     13→func TestNewVersion(t *testing.T) {

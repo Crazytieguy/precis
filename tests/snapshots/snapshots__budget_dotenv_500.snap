@@ -7,14 +7,17 @@ budget: 500 (495 words)
 CHANGELOG.md
      1→# Changelog …
    484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02) …
+
 CONTRIBUTING.md
      1→# Contributing
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
       →…
     11→## Testing …
     19→## Code Style …
+
 README-es.md
      1→# dotenv …
+
 README.md
      1→# dotenv
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
@@ -67,10 +70,13 @@ README.md
    772→[These npm modules depend on it.](https://www.npmjs.com/browse/depended/dotenv)
    773→
       →…
+
 lib/cli-options.js
      1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
+
 lib/env-options.js
      2→const options = {}
+
 lib/main.d.ts
      3→import type { URL } from 'url';
      5→export interface DotenvParseOutput {
@@ -117,11 +123,13 @@ lib/main.d.ts
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;
    128→}
+
 lib/main.js
      7→const version = packageJson.version
     10→const TIPS = [
     46→const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
    413→const DotenvModule = {
+
 package.json
      2→  "name": "dotenv",
      3→  "version": "17.3.1",
@@ -147,10 +155,14 @@ package.json
     59→  "browser": {
     61→  }
     62→}
+
 tests/test-config-cli.js
+
 tests/test-env-options.js
+
 tests/types/test.ts
      1→import { config, parse } from "dotenv";
+
 tests/types/tsconfig.json
      2→  "compilerOptions": {
     15→  },

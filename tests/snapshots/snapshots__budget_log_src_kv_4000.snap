@@ -59,6 +59,7 @@ error.rs
     83→            }
     84→        }
     90→        fn from …
+
 key.rs
      3→use std::borrow::Borrow;
      4→use std::fmt;
@@ -118,6 +119,7 @@ key.rs
    137→    use super::*;
    139→    use serde_core::{Serialize, Serializer};
    142→        fn serialize …
+
 mod.rs
      1→//! Structured logging.
      2→//!
@@ -187,6 +189,7 @@ mod.rs
    261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
    265→pub use self::source::Visitor;
+
 source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
      7→use std::fmt;
@@ -362,6 +365,7 @@ source.rs
    399→        fn get …
    403→        fn count …
    462→pub use VisitSource as Visitor;
+
 value.rs
      6→use std::fmt;
      8→pub use crate::kv::Error;

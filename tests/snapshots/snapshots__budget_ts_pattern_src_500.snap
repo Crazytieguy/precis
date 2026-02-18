@@ -10,7 +10,9 @@ errors.ts
      3→ * and .exhaustive() was specified
      4→ */
      5→export class NonExhaustiveError extends Error {
+
 index.ts
+
 internals/helpers.ts
      7→import * as symbols from './symbols';
      8→import { SelectionType } from '../types/FindSelected';
@@ -21,6 +23,7 @@ internals/helpers.ts
     32→export const matchPattern …
    120→export const getSelectionKeys …
    132→export const flatMap …
+
 internals/symbols.ts
      1→/**
      2→ * Symbols used internally within ts-pattern to construct and discriminate
@@ -37,6 +40,7 @@ internals/symbols.ts
     27→export type anonymousSelectKey = typeof anonymousSelectKey;
     29→export const override = Symbol.for('@ts-pattern/override');
     30→export type override = typeof override;
+
 is-matching.ts
      6→/**
      7→ * This constraint allows using additional properties
@@ -46,11 +50,13 @@ is-matching.ts
     13→  : T extends object
     14→  ? P.Pattern<T> & UnknownProperties
     15→  : P.Pattern<T>;
+
 match.ts
     32→export function match …
     38→/**
       →…
     47→class MatchExpression<input, output> {
+
 patterns.ts
      8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
     81→export type unstable_Matchable …
@@ -72,17 +78,25 @@ patterns.ts
   1231→export const nullish …
   1241→export const nonNullable …
   1251→export function instanceOf …
+
 types/BuildMany.ts
+
 types/DeepExclude.ts
+
 types/DistributeUnions.ts
     41→export type DistributeMatchingUnions …
     80→export type FindUnions …
+
 types/ExtractPreciseValue.ts
+
 types/FindSelected.ts
+
 types/InvertPattern.ts
    106→export type InvertPattern …
    303→export type InvertPatternForExclude …
+
 types/IsMatching.ts
+
 types/Match.ts
     10→interface NonExhaustiveError<i> {
     11→  __nonExhaustive: never;
@@ -94,6 +108,7 @@ types/Match.ts
    132→  with …
    245→type DeepExcludeAll …
    261→type Exhaustive …
+
 types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
@@ -126,6 +141,7 @@ types/Pattern.ts
    157→export type Pattern …
    269→      select …
    678→      select …
+
 types/helpers.ts
     14→export type LeastUpperBound …
    182→export type GuardValue …

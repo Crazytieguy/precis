@@ -6,8 +6,11 @@ budget: 4000 (3850 words)
 
 CHANGELOG.md
      1→# Changelog …
+
 CODE_OF_CONDUCT.md
+
 CONTRIBUTING.md
+
 Cargo.toml
      1→[workspace …
      8→[workspace.lints.clippy …
@@ -23,6 +26,7 @@ Cargo.toml
    143→[[example …
    149→[[test …
    156→[lints …
+
 README.md
      1→# mdBook
      7→mdBook is a utility to create modern online books from Markdown files.
@@ -34,10 +38,12 @@ README.md
     18→[User Guide]: https://rust-lang.github.io/mdBook/
     19→[contribution guide]: https://github.com/rust-lang/mdBook/blob/master/CONTRIBUTING.md
     20→[LICENSE]: https://github.com/rust-lang/mdBook/blob/master/LICENSE
+
 crates/mdbook-compare/Cargo.toml
      1→[package …
      9→[dependencies …
     11→[lints …
+
 crates/mdbook-compare/README.md
      1→# mdbook-compare
      3→This is a simple utility to compare the output of two different versions of mdbook.
@@ -46,21 +52,26 @@ crates/mdbook-compare/README.md
      6→
      7→1. Install [`tidy`](https://www.html-tidy.org/).
       →…
+
 crates/mdbook-compare/src/main.rs
      3→use std::path::Path;
      4→use std::process::Command;
      6→macro_rules! error {
+
 crates/mdbook-core/Cargo.toml
      1→[package …
     10→[dependencies …
     18→[dev-dependencies …
     21→[lints …
+
 crates/mdbook-core/README.md
      1→# mdbook-core …
     11→## License
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+
 crates/mdbook-core/src/book/tests.rs
      1→use super::*;
+
 crates/mdbook-core/src/book.rs
      3→use serde::{Deserialize, Serialize};
     26→pub struct Book {
@@ -71,6 +82,7 @@ crates/mdbook-core/src/book.rs
    245→    type Target = Vec<u32>;
    269→pub struct BookItems<'a> {
    274→    type Item = &'a BookItem;
+
 crates/mdbook-core/src/config.rs
     46→use crate::static_regex;
     47→use crate::utils::{TomlExt, fs, log_backtrace};
@@ -97,6 +109,7 @@ crates/mdbook-core/src/config.rs
    715→///
       →…
    718→trait Updateable<'de>: Serialize + Deserialize<'de> {
+
 crates/mdbook-core/src/lib.rs
      3→/// The current version of `mdbook`.
      4→///
@@ -109,12 +122,15 @@ crates/mdbook-core/src/lib.rs
     13→/// The error types used in mdbook.
     14→pub mod errors {
     15→    pub use anyhow::{Error, Result};
+
 crates/mdbook-core/src/utils/fs.rs
      3→use anyhow::{Context, Result};
    154→/// Copies a file.
    155→fn copy<P: AsRef<Path>, Q: AsRef<Path>>(from: P, to: Q) -> Result<()> {
+
 crates/mdbook-core/src/utils/html.rs
      3→use std::borrow::Cow;
+
 crates/mdbook-core/src/utils/mod.rs
      3→use anyhow::Error;
      7→pub mod fs;
@@ -124,6 +140,7 @@ crates/mdbook-core/src/utils/mod.rs
     15→/// Defines a `static` with a [`regex::Regex`].
     16→#[macro_export]
     17→macro_rules! static_regex {
+
 crates/mdbook-core/src/utils/toml_ext.rs
      3→use toml::value::{Table, Value};
      6→pub(crate) trait TomlExt {
@@ -131,15 +148,18 @@ crates/mdbook-core/src/utils/toml_ext.rs
     14→    fn read(&self, key: &str) -> Option<&Value> {
     22→    fn insert(&mut self, key: &str, value: Value) {
     40→fn split(key: &str) -> Option<(&str, &str)> {
+
 crates/mdbook-driver/Cargo.toml
      1→[package …
     10→[dependencies …
     28→[lints …
     31→[features …
+
 crates/mdbook-driver/README.md
      1→# mdbook-driver …
     11→## License
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+
 crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     14→pub struct CmdPreprocessor {
     15→    name: String,
@@ -149,12 +169,15 @@ crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     19→}
     23→    pub fn new(name: String, cmd: String, root: PathBuf, optional: bool) -> CmdPreprocessor {
     52→    pub fn cmd(&self) -> &str {
+
 crates/mdbook-driver/src/builtin_preprocessors/index.rs
     12→pub struct IndexPreprocessor;
     15→    /// Name of this preprocessor.
     16→    pub const NAME: &'static str = "index";
     19→    pub fn new() -> Self {
+
 crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
+
 crates/mdbook-driver/src/builtin_preprocessors/links.rs
      1→use self::take_lines::{
      2→    take_anchored_lines, take_lines, take_rustdoc_include_anchored_lines,
@@ -172,10 +195,12 @@ crates/mdbook-driver/src/builtin_preprocessors/links.rs
    275→struct Link<'a> {
    398→struct LinkIter<'a>(CaptureMatches<'a, 'a>);
    401→    type Item = Link<'a>;
+
 crates/mdbook-driver/src/builtin_preprocessors/mod.rs
      3→pub use self::cmd::CmdPreprocessor;
      4→pub use self::index::IndexPreprocessor;
      5→pub use self::links::LinkPreprocessor;
+
 crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
     10→pub struct MarkdownRenderer;
     13→    /// Create a new `MarkdownRenderer` instance.
@@ -184,6 +209,7 @@ crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
     16→    }
     20→    fn name(&self) -> &str {
     24→    fn render(&self, ctx: &RenderContext) -> Result<()> {
+
 crates/mdbook-driver/src/builtin_renderers/mod.rs
      5→use anyhow::{Context, Result, bail};
     11→pub use self::markdown_renderer::MarkdownRenderer;
@@ -198,6 +224,7 @@ crates/mdbook-driver/src/builtin_renderers/mod.rs
     29→    }
     33→    fn name(&self) -> &str {
     37→    fn render(&self, ctx: &RenderContext) -> Result<()> {
+
 crates/mdbook-driver/src/init.rs
      3→use super::MDBook;
     11→/// A helper for setting up a new book and its directory structure.
@@ -209,6 +236,7 @@ crates/mdbook-driver/src/init.rs
     17→    copy_theme: bool,
     18→}
     20→impl BookBuilder {
+
 crates/mdbook-driver/src/lib.rs
      1→//! High-level library for running mdBook.
      2→//!
@@ -224,7 +252,9 @@ crates/mdbook-driver/src/lib.rs
     71→mod mdbook;
     74→pub use mdbook::MDBook;
     75→pub use mdbook_core::{book, config, errors};
+
 crates/mdbook-driver/src/load.rs
+
 crates/mdbook-driver/src/mdbook/tests.rs
      1→use super::*;
      2→use std::str::FromStr;
@@ -234,6 +264,7 @@ crates/mdbook-driver/src/mdbook/tests.rs
    227→    fn name(&self) -> &str {
    231→    fn run(&self, _ctx: &PreprocessorContext, _book: Book) -> Result<Book> {
    235→    fn supports_renderer(&self, _renderer: &str) -> Result<bool> {
+
 crates/mdbook-driver/src/mdbook.rs
      3→use crate::builtin_preprocessors::{CmdPreprocessor, IndexPreprocessor, LinkPreprocessor};
      4→use crate::builtin_renderers::{CmdRenderer, MarkdownRenderer};
@@ -274,12 +305,14 @@ crates/mdbook-driver/src/mdbook.rs
    441→    #[serde(default)]
    442→    optional: bool,
    443→}
+
 crates/mdbook-html/Cargo.toml
      1→[package …
     10→[dependencies …
     29→[dev-dependencies …
     33→[lints …
     36→[features …
+
 crates/mdbook-html/README.md
      1→# mdbook-html
      7→This is the HTML renderer for [mdBook](https://rust-lang.github.io/mdBook/). This is intended for internal use only. It is automatically included by [`mdbook-driver`](https://crates.io/crates/mdbook-driver) to render books to HTML.
@@ -287,22 +320,31 @@ crates/mdbook-html/README.md
       →…
     11→## License
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+
 crates/mdbook-html/front-end/js/book.js
      9→function playground_text(playground, hidden = true) {
+
 crates/mdbook-html/src/html/admonitions.rs
+
 crates/mdbook-html/src/html/hide_lines.rs
      3→use crate::html::{Element, Node};
+
 crates/mdbook-html/src/html/mod.rs
     13→use ego_tree::Tree;
+
 crates/mdbook-html/src/html/print.rs
      7→use super::Node;
+
 crates/mdbook-html/src/html/serialize.rs
      3→use super::tree::is_void_element;
+
 crates/mdbook-html/src/html/tests.rs
+
 crates/mdbook-html/src/html/tokenizer.rs
      6→use html5ever::TokenizerResult;
     22→    type Handle = ();
     24→    fn process_token(&self, token: Token, _line_number: u64) -> TokenSinkResult<()> {
+
 crates/mdbook-html/src/html/tree.rs
      8→use super::tokenizer::parse_html;
     24→/// Helper to create a [`QualName`].
@@ -311,6 +353,7 @@ crates/mdbook-html/src/html/tree.rs
    130→    /// Converts self to a [`StrTendril`].
    131→    fn into_tendril(self) -> StrTendril;
    135→    fn into_tendril(self) -> StrTendril {
+
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     19→/// The HTML renderer for mdBook.
     20→#[derive(Default)]
@@ -329,9 +372,12 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
    643→///
       →…
    649→type CombinedRedirects = BTreeMap<String, (String, BTreeMap<String, String>)>;
+
 crates/mdbook-html/src/html_handlebars/helpers/fontawesome.rs
      8→pub(crate) fn fa_helper …
+
 crates/mdbook-html/src/html_handlebars/helpers/mod.rs
+
 crates/mdbook-html/src/html_handlebars/helpers/resources.rs
     10→#[derive(Clone)]
     11→pub(crate) struct ResourceHelper {
@@ -339,6 +385,7 @@ crates/mdbook-html/src/html_handlebars/helpers/resources.rs
     13→}
     15→impl HelperDef for ResourceHelper {
     16→    fn call …
+
 crates/mdbook-html/src/html_handlebars/helpers/toc.rs
      1→use crate::utils::ToUrlPath;
     10→#[derive(Clone, Copy)]
@@ -348,6 +395,7 @@ crates/mdbook-html/src/html_handlebars/helpers/toc.rs
     15→impl HelperDef for RenderToc {
     16→    fn call …
    177→fn write_li_open_tag …
+
 crates/mdbook-html/src/html_handlebars/mod.rs
      1→mod hbs_renderer;
      2→mod helpers;
@@ -355,8 +403,10 @@ crates/mdbook-html/src/html_handlebars/mod.rs
      4→mod search;
      5→mod static_files;
      7→pub use self::hbs_renderer::HtmlHandlebars;
+
 crates/mdbook-html/src/html_handlebars/search.rs
     17→const MAX_WORD_LENGTH_TO_INDEX: usize = 80;
+
 crates/mdbook-html/src/html_handlebars/static_files.rs
      3→use super::helpers::resources::ResourceHelper;
     22→pub(super) struct StaticFiles {
@@ -365,6 +415,7 @@ crates/mdbook-html/src/html_handlebars/static_files.rs
     25→}
     27→enum StaticFile {
     38→impl StaticFiles {
+
 crates/mdbook-html/src/lib.rs
      1→//! mdBook HTML renderer.
      2→
@@ -373,7 +424,9 @@ crates/mdbook-html/src/lib.rs
      5→pub mod theme;
      6→pub(crate) mod utils;
      8→pub use html_handlebars::HtmlHandlebars;
+
 crates/mdbook-html/src/theme/fonts.rs
+
 crates/mdbook-html/src/theme/mod.rs
      3→use anyhow::Result;
      9→pub(crate) mod fonts;
@@ -400,10 +453,13 @@ crates/mdbook-html/src/theme/mod.rs
    202→        Theme {
       →…
    229→fn load_file_contents<P: AsRef<Path>>(filename: P, dest: &mut Vec<u8>) -> Result<()> {
+
 crates/mdbook-html/src/theme/playground_editor.rs
      3→pub(crate) static JS: &[u8] = include_bytes!("../../front-end/playground_editor/editor.js");
+
 crates/mdbook-html/src/theme/searcher.rs
      4→pub(crate) static JS: &[u8] = include_bytes!("../../front-end/searcher/searcher.js");
+
 crates/mdbook-html/src/utils.rs
      3→use std::collections::HashSet;
      4→use std::path::{Component, Path, PathBuf};
@@ -414,10 +470,12 @@ crates/mdbook-html/src/utils.rs
     47→    fn to_url_path(&self) -> String {
     58→pub(crate) fn unique_id(id: &str, used: &mut HashSet<String>) -> String {
     76→pub(crate) fn id_from_content(content: &str) -> String {
+
 crates/mdbook-markdown/Cargo.toml
      1→[package …
     10→[dependencies …
     15→[lints …
+
 crates/mdbook-markdown/README.md
      1→# mdbook-markdown
      7→This is the Markdown support library for [mdBook](https://rust-lang.github.io/mdBook/). Rust crates (such as preprocessors) can use this library to process Markdown in the same way as mdBook.
@@ -425,6 +483,7 @@ crates/mdbook-markdown/README.md
       →…
     11→## License
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+
 crates/mdbook-markdown/src/lib.rs
      8→use pulldown_cmark::{Options, Parser};
     11→pub use pulldown_cmark;
@@ -461,10 +520,12 @@ crates/mdbook-markdown/src/lib.rs
     49→    opts.insert(Options::ENABLE_TASKLISTS);
     50→    opts.insert(Options::ENABLE_HEADING_ATTRIBUTES);
       →…
+
 crates/mdbook-preprocessor/Cargo.toml
      1→[package …
     10→[dependencies …
     16→[lints …
+
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
      7→This is the Rust library to implement a [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html) for [mdBook](https://rust-lang.github.io/mdBook/).
@@ -472,6 +533,7 @@ crates/mdbook-preprocessor/README.md
       →…
     11→## License
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+
 crates/mdbook-preprocessor/src/lib.rs
      8→use anyhow::Context;
     18→pub use mdbook_core::MDBOOK_VERSION;
@@ -533,10 +595,12 @@ crates/mdbook-preprocessor/src/lib.rs
     82→pub fn parse_input<R: Read>(reader: R) -> Result<(PreprocessorContext, Book)> {
     83→    serde_json::from_reader(reader).with_context(|| "Unable to parse the input")
     84→}
+
 crates/mdbook-renderer/Cargo.toml
      1→[package …
     10→[dependencies …
     16→[lints …
+
 crates/mdbook-renderer/README.md
      1→# mdbook-renderer
      7→This is the Rust library to implement a [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html) for [mdBook](https://rust-lang.github.io/mdBook/).
@@ -544,6 +608,7 @@ crates/mdbook-renderer/README.md
       →…
     11→## License
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+
 crates/mdbook-renderer/src/lib.rs
      8→use anyhow::Context;
     17→pub use mdbook_core::MDBOOK_VERSION;
@@ -589,10 +654,12 @@ crates/mdbook-renderer/src/lib.rs
     86→    pub fn from_json<R: Read>(reader: R) -> Result<RenderContext> {
     87→        serde_json::from_reader(reader).with_context(|| "Unable to deserialize the `RenderContext`")
     88→    }
+
 crates/mdbook-summary/Cargo.toml
      1→[package …
     10→[dependencies …
     18→[lints …
+
 crates/mdbook-summary/README.md
      1→# mdbook-summary
      7→This is the Rust library used to parse the [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html) file structure for [mdBook](https://rust-lang.github.io/mdBook/).
@@ -600,6 +667,7 @@ crates/mdbook-summary/README.md
       →…
     11→## License
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+
 crates/mdbook-summary/src/lib.rs
      7→use anyhow::{Context, Error, Result, bail};
      8→pub use mdbook_core::book::SectionNumber;
@@ -647,39 +715,49 @@ crates/mdbook-summary/src/lib.rs
       →…
    190→macro_rules! collect_events {
    221→impl<'a> SummaryParser<'a> {
+
 crates/xtask/Cargo.toml
      1→[package …
      9→[dependencies …
     11→[lints …
+
 crates/xtask/README.md
      1→# xtask
      3→This is a CLI utility for running development commands for mdbook.
      4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
+
 crates/xtask/src/changelog.rs
      3→use super::Result;
      8→const CHANGELOG_PATH: &str = "CHANGELOG.md";
+
 crates/xtask/src/main.rs
      3→use std::collections::BTreeMap;
      9→mod changelog;
     11→type Result<T> = std::result::Result<T, Box<dyn Error>>;
+
 eslint.config.mjs
      4→const handlebarsPreprocessor = {
      7→            preprocess(text, filename) {
     16→            postprocess(messages, filename) {
+
 examples/nop-preprocessor.rs
      3→use crate::nop_lib::Nop;
     75→mod nop_lib {
     76→    use super::*;
     78→    /// A no-op preprocessor.
     79→    pub struct Nop;
+
 examples/remove-emphasis/book.toml
      1→[book …
      4→[preprocessor.remove-emphasis …
+
 examples/remove-emphasis/mdbook-remove-emphasis/Cargo.toml
      1→[package …
      7→[dependencies …
     13→[[bin …
+
 examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs
+
 guide/book.toml
      1→[book …
      7→[rust …
@@ -690,10 +768,12 @@ guide/book.toml
     34→[output.html.redirect …
     37→[preprocessor.guide-helper …
     40→[build …
+
 guide/guide-helper/Cargo.toml
      1→[package …
      9→[dependencies …
     15→[lints …
+
 guide/guide-helper/src/lib.rs
      3→use mdbook_preprocessor::book::Book;
      4→use mdbook_preprocessor::errors::Result;
@@ -719,12 +799,15 @@ guide/guide-helper/src/lib.rs
     42→        Ok(book)
     43→    }
     46→fn insert_version(book: &mut Book) {
+
 guide/guide-helper/src/main.rs
      1→//! Preprocessor for the mdBook guide.
      2→
      3→fn main() {
+
 guide/src/404.md
      1→# Document not found (404) …
+
 guide/src/README.md
      1→# Introduction
      4→    .mdbook-version {
@@ -736,30 +819,41 @@ guide/src/README.md
       →…
     46→## Contributing …
     55→## License …
+
 guide/src/SUMMARY.md
      1→# Summary …
      5→# User guide …
     11→# Reference guide …
+
 guide/src/cli/README.md
      1→# Command-line tool
      3→The `mdbook` command-line tool is used to create and build books.
       →…
+
 guide/src/cli/arg-watcher.md
+
 guide/src/cli/build.md
      1→# The build command …
+
 guide/src/cli/clean.md
      1→# The clean command …
+
 guide/src/cli/completions.md
      1→# The completions command …
+
 guide/src/cli/init.md
      1→# The init command …
+
 guide/src/cli/serve.md
      1→# The serve command …
     27→### Server options …
+
 guide/src/cli/test.md
      1→# The test command …
+
 guide/src/cli/watch.md
      1→# The watch command …
+
 guide/src/continuous-integration.md
      1→# Running `mdbook` in continuous integration …
     12→## Installing mdBook …
@@ -768,17 +862,21 @@ guide/src/continuous-integration.md
     67→## Running tests …
     83→## Deploying …
    100→### 404 handling …
+
 guide/src/for_developers/README.md
      1→# For developers
      3→While `mdbook` is mainly used as a command line tool, you can also import the
       →…
     17→## The build process …
     30→## Using `mdbook` as a library …
+
 guide/src/for_developers/backends.md
      1→# Alternative backends …
+
 guide/src/for_developers/mdbook-wordcount/Cargo.toml
      1→[package …
      6→[dependencies …
+
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     12→fn main() {
     40→fn count_words(ch: &Chapter) -> usize {
@@ -788,8 +886,10 @@ guide/src/for_developers/mdbook-wordcount/src/main.rs
     47→    pub ignores: Vec<String>,
     48→    pub deny_odds: bool,
     49→}
+
 guide/src/for_developers/preprocessors.md
      1→# Preprocessors …
+
 guide/src/format/README.md
      1→# Format
      3→In this section you will learn how to:
@@ -797,45 +897,60 @@ guide/src/format/README.md
      5→- Structure your book correctly
      6→- Format your `SUMMARY.md` file
       →…
+
 guide/src/format/configuration/README.md
      1→# Configuration
      3→This section details the configuration options available in the ***book.toml***:
       →…
+
 guide/src/format/configuration/environment-variables.md
      1→# Environment variables …
+
 guide/src/format/configuration/general.md
      1→# General configuration …
+
 guide/src/format/configuration/preprocessors.md
      1→# Configuring Preprocessors …
+
 guide/src/format/configuration/renderers.md
      1→# Configuring Renderers …
    286→#### `[output.html.search.chapter]` …
+
 guide/src/format/example.rs
      1→fn main() {
+
 guide/src/format/markdown.md
      1→# Markdown …
     43→#### A smaller heading 
     45→More text.
     46→
+
 guide/src/format/mathjax.md
      1→# MathJax support …
+
 guide/src/format/mdbook.md
      1→# mdBook-specific features …
+
 guide/src/format/summary.md
      1→# SUMMARY.md …
+
 guide/src/format/theme/README.md
      1→# Theme
      3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
       →…
+
 guide/src/format/theme/editor.md
      1→# Editor …
+
 guide/src/format/theme/index-hbs.md
      1→# index.hbs …
     46→### toc …
     80→### resource …
     90→### fa …
+
 guide/src/format/theme/syntax-highlighting.md
      1→# Syntax highlighting …
+
 guide/src/guide/README.md
      1→# User guide
      3→This user guide provides an introduction to basic concepts of using mdBook.
@@ -843,21 +958,27 @@ guide/src/guide/README.md
      5→- [Installation](installation.md)
      6→- [Reading Books](reading.md)
      7→- [Creating a Book](creating.md)
+
 guide/src/guide/creating.md
      1→# Creating a book …
     36→### `book.toml` …
     50→### `SUMMARY.md` …
     73→### Source files …
+
 guide/src/guide/installation.md
      1→# Installation …
     41→### Installing the latest master version …
+
 guide/src/guide/reading.md
      1→# Reading books …
+
 guide/src/misc/contributors.md
      1→# Contributors …
+
 src/cmd/build.rs
      1→use super::command_prelude::*;
      2→use crate::{get_book_dir, open};
+
 src/cmd/clean.rs
      1→use super::command_prelude::*;
      2→use crate::get_book_dir;
@@ -876,6 +997,7 @@ src/cmd/clean.rs
     52→impl Clean {
     53→    fn new(dir: &PathBuf) -> Result<Clean> {
     91→impl fmt::Display for Clean {
+
 src/cmd/command_prelude.rs
      3→pub use clap::{Arg, ArgMatches, Command, arg};
      7→pub trait CommandExt: Sized {
@@ -885,11 +1007,13 @@ src/cmd/command_prelude.rs
     44→        return self._arg(
       →…
     56→impl CommandExt for Command {
+
 src/cmd/init.rs
      1→use crate::get_book_dir;
     88→fn get_author_name() -> Option<String> {
    102→fn request_book_title() -> Option<String> {
    116→fn confirm() -> bool {
+
 src/cmd/mod.rs
      1→//! Subcommand modules for the `mdbook` binary.
      2→
@@ -902,6 +1026,7 @@ src/cmd/mod.rs
      9→pub mod test;
     10→#[cfg(feature = "watch")]
     11→pub mod watch;
+
 src/cmd/serve.rs
      1→use super::command_prelude::*;
      3→use super::watch;
@@ -915,9 +1040,11 @@ src/cmd/serve.rs
    113→    file_404: &str,
    114→) {
    142→async fn websocket_connection(ws: WebSocket, reload_tx: broadcast::Sender<Message>) {
+
 src/cmd/test.rs
      1→use super::command_prelude::*;
      2→use crate::get_book_dir;
+
 src/cmd/watch/native.rs
      3→use ignore::gitignore::Gitignore;
     11→pub fn rebuild_on_change(
@@ -930,6 +1057,7 @@ src/cmd/watch/native.rs
       →…
    107→fn remove_ignored_files …
    132→fn filter_ignored_files …
+
 src/cmd/watch/poller.rs
      7→use ignore::gitignore::Gitignore;
     17→/// Calls the closure when a book source file is changed, blocking indefinitely.
@@ -954,6 +1082,7 @@ src/cmd/watch/poller.rs
    151→    ///
       →…
    153→    fn scan(&mut self) -> Vec<PathBuf> {
+
 src/cmd/watch.rs
      1→use super::command_prelude::*;
      2→use crate::{get_book_dir, open};
@@ -965,6 +1094,7 @@ src/cmd/watch.rs
     24→}
     26→impl WatcherKind {
     74→fn find_gitignore(book_root: &Path) -> Option<PathBuf> {
+
 src/main.rs
     14→mod cmd;
     16→const VERSION: &str = concat!("v", clap::crate_version!());
@@ -977,171 +1107,269 @@ src/main.rs
     93→fn init_logger() {
    126→fn get_book_dir(args: &ArgMatches) -> PathBuf {
    139→fn open<P: AsRef<OsStr>>(path: P) {
+
 tests/gui/books/all-summary/README.md
      1→# All summary …
+
 tests/gui/books/all-summary/book.toml
      1→[book …
+
 tests/gui/books/all-summary/src/part-1/chapter-1.md
+
 tests/gui/books/all-summary/src/part-2/chapter-1.md
+
 tests/gui/books/basic/book.toml
      1→[book …
+
 tests/gui/books/heading-nav/README.md
      1→# Heading nav …
+
 tests/gui/books/heading-nav/book.toml
      1→[book …
+
 tests/gui/books/heading-nav-folded/book.toml
+
 tests/gui/books/heading-nav-folded/src/sub/inner/index.md
+
 tests/gui/books/highlighting/README.md
      1→# Syntax Highlighting …
+
 tests/gui/books/highlighting/book.toml
      1→[book …
+
 tests/gui/books/redirect/README.md
      1→# Redirect …
+
 tests/gui/books/redirect/book.toml
+
 tests/gui/books/search/README.md
      1→# Search …
+
 tests/gui/books/search/book.toml
      1→[book …
+
 tests/gui/books/search/src/inner/chapter_2.md
+
 tests/gui/books/sidebar-scroll/book.toml
      1→[book …
+
 tests/gui/runner.rs
      7→use serde_json::Value;
+
 tests/testsuite/README.md
      1→# Testsuite …
+
 tests/testsuite/book_test.rs
      3→use mdbook_core::utils::fs;
     13→static NEXT_TEST_ID: AtomicU32 = AtomicU32::new(0);
     23→pub struct BookTest {
    361→pub struct BookCommand {
+
 tests/testsuite/build/basic_build/README.md
      1→# Basic book …
+
 tests/testsuite/build/basic_build/book.toml
      1→[book …
+
 tests/testsuite/build/create_missing/book.toml
      1→[book …
+
 tests/testsuite/build/create_missing/src/SUMMARY.md
      1→# Summary …
+
 tests/testsuite/build/missing_file/book.toml
+
 tests/testsuite/build/missing_file/src/SUMMARY.md
      1→# Summary …
+
 tests/testsuite/build/no_reserved_filename/book.toml
      1→[book …
+
 tests/testsuite/includes/all_includes/book.toml
      1→[book …
+
 tests/testsuite/includes/all_includes/src/relative/includes.md
+
 tests/testsuite/index/basic_readme/book.toml
      1→[book …
+
 tests/testsuite/index/basic_readme/src/README.md
      1→# Intro …
+
 tests/testsuite/index/basic_readme/src/SUMMARY.md
      1→# Summary …
+
 tests/testsuite/index/basic_readme/src/second/Readme.md
      1→# Second …
+
 tests/testsuite/init/init_from_summary/src/SUMMARY.md
      1→# Summary …
+
 tests/testsuite/main.rs
     22→mod search;
     28→    pub use crate::book_test::{BookTest, glob_one, read_to_string};
     29→    pub use snapbox::str;
+
 tests/testsuite/markdown/admonitions/book.toml
      1→[book …
+
 tests/testsuite/markdown/basic_markdown/book.toml
      1→[book …
+
 tests/testsuite/markdown/custom_header_attributes/book.toml
      1→[book …
+
 tests/testsuite/markdown/definition_lists/book.toml
      1→[book …
+
 tests/testsuite/markdown/footnotes/src/footnotes.md
+
 tests/testsuite/markdown/smart_punctuation/src/smart_punctuation.md
+
 tests/testsuite/markdown/strikethrough/src/strikethrough.md
      1→# Strikethrough …
+
 tests/testsuite/markdown/tables/src/tables.md
      1→# Tables …
+
 tests/testsuite/markdown/tasklists/src/tasklists.md
      1→## Tasklisks …
+
 tests/testsuite/playground/disabled_playground/book.toml
+
 tests/testsuite/playground/playground_on_rust_code/book.toml
      1→[book …
+
 tests/testsuite/preprocessor/extension_compatibility/book.toml
+
 tests/testsuite/preprocessor/failing_preprocessor/book.toml
      1→[preprocessor.nop-preprocessor …
+
 tests/testsuite/preprocessor/missing_optional_not_fatal/book.toml
      1→[preprocessor.missing …
+
 tests/testsuite/preprocessor/missing_preprocessor/book.toml
      1→[preprocessor.missing …
+
 tests/testsuite/preprocessor/nop_preprocessor/book.toml
      1→[preprocessor.nop-preprocessor …
+
 tests/testsuite/preprocessor.rs
      4→use crate::prelude::*;
+
 tests/testsuite/print/chapter_no_h1/book.toml
      1→[book …
+
 tests/testsuite/print/duplicate_ids/book.toml
      1→[book …
+
 tests/testsuite/print/noindex/src/index.md
      1→# Intro …
+
 tests/testsuite/print/relative_links/book.toml
      1→[book …
+
 tests/testsuite/print/relative_links/src/SUMMARY.md
      1→# Summary …
+
 tests/testsuite/print/relative_links/src/second/nested.md
+
 tests/testsuite/redirects/redirect_existing_page/book.toml
+
 tests/testsuite/redirects/redirect_removed_with_fragments_only/book.toml
+
 tests/testsuite/redirects/redirects_are_emitted_correctly/book.toml
+
 tests/testsuite/renderer/backends_receive_render_context_via_stdin/book.toml
      1→[output.cat-to-file …
+
 tests/testsuite/renderer/backends_receive_render_context_via_stdin/src/chapter_1.md
+
 tests/testsuite/renderer/missing_optional_not_fatal/book.toml
      1→[output.missing …
+
 tests/testsuite/renderer/missing_renderer/book.toml
      1→[output.missing …
+
 tests/testsuite/renderer/renderer_with_arguments/book.toml
      1→[output.arguments …
+
 tests/testsuite/renderer.rs
+
 tests/testsuite/rendering/code_blocks_fenced_with_indent/book.toml
      1→[book …
+
 tests/testsuite/rendering/code_blocks_fenced_with_indent/src/SUMMARY.md
      1→# Summary …
+
 tests/testsuite/rendering/default_rust_edition/book.toml
+
 tests/testsuite/rendering/edit_url_template/book.toml
+
 tests/testsuite/rendering/edit_url_template_explicit_src/book.toml
+
 tests/testsuite/rendering/editable_rust_block/book.toml
+
 tests/testsuite/rendering/first_chapter_is_copied_as_index_even_if_not_first_elem/src/SUMMARY.md
+
 tests/testsuite/rendering/fontawesome/book.toml
      1→[book …
+
 tests/testsuite/rendering/header_links/book.toml
      1→[book …
+
 tests/testsuite/rendering/hidelines/book.toml
+
 tests/testsuite/rendering/html_blocks/book.toml
      1→[book …
+
 tests/testsuite/rendering/html_blocks/src/SUMMARY.md
      1→# Summary …
+
 tests/testsuite/search/chapter_settings_validation_error/book.toml
+
 tests/testsuite/search/disable_search_chapter/book.toml
+
 tests/testsuite/search/disable_search_chapter/src/second/nested.md
+
 tests/testsuite/search/reasonable_search_index/src/SUMMARY.md
+
 tests/testsuite/search/reasonable_search_index/src/intro.md
      5→## Sneaky …
+
 tests/testsuite/test/failing_tests/book.toml
      1→[book …
+
 tests/testsuite/test/passing_tests/book.toml
      1→[book …
+
 tests/testsuite/theme/custom_fonts_css/book.toml
      1→[book …
+
 tests/testsuite/theme/empty_fonts_css/book.toml
      1→[book …
+
 tests/testsuite/theme/empty_theme/book.toml
+
 tests/testsuite/theme/missing_theme/book.toml
+
 tests/testsuite/toc/basic_toc/book.toml
      1→[book …
+
 tests/testsuite/toc/basic_toc/src/README.md
      1→# With Readme …
+
 tests/testsuite/toc/basic_toc/src/deep/a/b/index.md
+
 tests/testsuite/toc/basic_toc/src/deep/a/index.md
+
 tests/testsuite/toc/basic_toc/src/deep/index.md
+
 tests/testsuite/toc/summary_with_markdown_formatting/src/SUMMARY.md
+
 tests/testsuite/toc.rs
     26→macro_rules! descendants {
+
 triagebot.toml
      2→[assign …
      5→[shortcut …

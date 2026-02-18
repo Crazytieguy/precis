@@ -12,6 +12,7 @@ browser.ts
     22→export function isIPad(): boolean | undefined {
     30→export function isIOS(): boolean | undefined {
     34→export function testPlatform(re: RegExp): boolean | undefined {
+
 constants.ts
      1→export const TRANSITIONS = {
      2→  DURATION: 0.5,
@@ -24,6 +25,7 @@ constants.ts
     14→export const NESTED_DISPLACEMENT = 16;
     16→export const WINDOW_TOP_OFFSET = 26;
     18→export const DRAG_CLASS = 'vaul-dragging';
+
 context.ts
      1→import React from 'react';
      2→import { DrawerDirection } from './types';
@@ -53,6 +55,7 @@ context.ts
     41→  onRelease: () => {},
       →…
     69→export const useDrawerContext = () => {
+
 helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
      3→interface Style {
@@ -79,6 +82,7 @@ helpers.ts
    115→    }
    116→  };
    117→}
+
 index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
@@ -202,6 +206,7 @@ index.tsx
   1134→  return <DialogPrimitive.Portal container={container} {...portalProps} />;
   1135→}
   1137→export const Drawer = {
+
 types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
      2→export interface SnapPoint {
@@ -209,6 +214,7 @@ types.ts
      4→  height: number;
      5→}
      7→export type AnyFunction = (...args: any) => any;
+
 use-composed-refs.ts
      3→import * as React from 'react';
      5→type PossibleRef<T> = React.Ref<T> | undefined;
@@ -238,6 +244,7 @@ use-composed-refs.ts
     32→  // eslint-disable-next-line react-hooks/exhaustive-deps
     33→  return React.useCallback(composeRefs(...refs), refs);
     34→}
+
 use-controllable-state.ts
      3→import React from 'react';
      5→type UseControllableStateParams<T> = {
@@ -245,6 +252,7 @@ use-controllable-state.ts
     13→function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
     24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
     39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
+
 use-position-fixed.ts
      1→import React from 'react';
      2→import { isSafari } from './browser';
@@ -339,6 +347,7 @@ use-position-fixed.ts
     94→      previousBodyPosition = null;
     95→    }
       →…
+
 use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
      4→import { isIOS } from './browser';
@@ -392,6 +401,7 @@ use-prevent-scroll.ts
    262→) {
    272→function scrollIntoView(target: Element) {
    294→export function isInput(target: Element) {
+
 use-scale-background.ts
      1→import React, { useMemo } from 'react';
      2→import { useDrawerContext } from './context';
@@ -399,6 +409,7 @@ use-scale-background.ts
      4→import { BORDER_RADIUS, TRANSITIONS, WINDOW_TOP_OFFSET } from './constants';
      6→const noop = () => () => {};
      8→export function useScaleBackground() {
+
 use-snap-points.ts
      1→import React from 'react';
      2→import { set, isVertical } from './helpers';

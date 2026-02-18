@@ -18,6 +18,7 @@ backtrace.rs
     64→macro_rules! backtrace_if_absent {
     70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
+
 chain.rs
      1→use self::ChainState::*;
      2→use crate::StdError;
@@ -39,6 +40,7 @@ chain.rs
     24→}
     28→    pub fn new …
     36→    type Item = &'a (dyn StdError + 'static);
+
 context.rs
      1→use crate::error::ContextError;
      2→use crate::{Context, Error, StdError};
@@ -51,6 +53,7 @@ context.rs
    186→pub(crate) mod private {
    187→    use super::*;
    189→    pub trait Sealed {}
+
 ensure.rs
      1→use crate::Error;
      9→#[doc(hidden)]
@@ -60,6 +63,7 @@ ensure.rs
    105→macro_rules! __parse_ensure {
    886→macro_rules! __fancy_ensure {
    912→macro_rules! __fallback_ensure {
+
 error.rs
      1→use crate::backtrace::Backtrace;
      2→use crate::chain::Chain;
@@ -101,10 +105,12 @@ error.rs
   1050→    fn from …
   1058→    fn from …
   1066→    fn from …
+
 fmt.rs
      1→use crate::chain::Chain;
      2→use crate::error::ErrorImpl;
      3→use crate::ptr::Ref;
+
 kind.rs
     47→use crate::Error;
     51→use crate::StdError;
@@ -126,6 +132,7 @@ kind.rs
    104→pub trait BoxedKind: Sized {
    106→    fn anyhow_kind …
    117→    pub fn new …
+
 lib.rs
    251→#[macro_use]
    252→mod backtrace;
@@ -228,13 +235,16 @@ lib.rs
    710→        pub trait Bool {
    716→            fn not …
    723→            fn not …
+
 macros.rs
     58→macro_rules! bail {
     70→macro_rules! __ensure {
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
+
 nightly.rs
     10→pub use core::error::Request;
+
 ptr.rs
      5→#[repr(transparent)]
      6→pub struct Own<T>
@@ -263,6 +273,7 @@ ptr.rs
    182→    type Target;
    183→}
    186→    type Target = T;
+
 wrapper.rs
      1→use crate::StdError;
      5→use alloc::boxed::Box;

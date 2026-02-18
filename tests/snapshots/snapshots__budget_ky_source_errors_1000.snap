@@ -33,6 +33,7 @@ ForceRetryError.ts
     27→		this.code = options?.code;
     28→		this.customRequest = options?.request;
     29→	}
+
 HTTPError.ts
      1→import type {NormalizedOptions} from '../types/options.js';
      2→import type {KyRequest} from '../types/request.js';
@@ -55,6 +56,7 @@ HTTPError.ts
     20→		this.request = request;
     21→		this.options = options;
     22→	}
+
 NonError.ts
      1→/**
      2→Wrapper for non-Error values that were thrown.
@@ -83,6 +85,7 @@ NonError.ts
     25→
     26→		this.value = value;
     27→	}
+
 TimeoutError.ts
      1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {

@@ -8,6 +8,7 @@ Changelog.md
      1→# Changelog
      3→This document maintains a list of major changes to Superstruct with each new release.
      4→
+
 Readme.md
     42→### Usage …
    145→### Why? …
@@ -16,44 +17,61 @@ Readme.md
    189→### Examples …
    205→### Documentation …
    231→### License …
+
 docs/guides/01-getting-started.md
      1→# Getting Started …
+
 docs/guides/02-validating-data.md
      1→# Validating Data …
+
 docs/guides/03-coercing-data.md
      1→# Coercing Data …
+
 docs/guides/04-refining-validation.md
      1→# Refining Validation …
+
 docs/guides/05-handling-errors.md
      1→# Handling Errors …
+
 docs/guides/06-using-typescript.md
      1→# Using TypeScript …
+
 docs/readme.md
      7→### Usage
      9→Superstruct allows you to define the shape of data you want to validate:
     10→
     11→```js
       →…
+
 docs/reference/coercions.md
      1→# Coercions …
+
 docs/reference/core.md
      1→# Core …
+
 docs/reference/errors.md
      1→# Errors …
+
 docs/reference/refinements.md
      1→# Refinements …
+
 docs/reference/types.md
      1→# Types …
+
 docs/reference/typescript.md
      1→# TypeScript …
      5→## Utilities …
+
 docs/reference/utilities.md
      1→# Utilities …
+
 docs/resources/faq.md
      1→# FAQ …
+
 docs/resources/links.md
      1→# Resources …
      5→## Libraries …
+
 docs/summary.md
      3→## Guides
      5→- [Getting Started](./guides/01-getting-started.md)
@@ -66,14 +84,17 @@ docs/summary.md
     22→## Resources
     24→- [FAQ](./resources/faq.md)
     25→- [Links](./resources/links.md)
+
 examples/README.md
      1→# Examples …
+
 examples/package.json
      2→  "type": "module",
      3→  "license": "MIT",
      4→  "dependencies": {
      9→  }
     10→}
+
 jsr.json
      2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
      3→  "name": "@superstruct/core",
@@ -82,6 +103,7 @@ jsr.json
      6→  "publish": {
      8→  }
      9→}
+
 package.json
      2→  "name": "superstruct",
      3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
@@ -106,9 +128,11 @@ package.json
     54→  "keywords": [
     84→  ]
     85→}
+
 rollup.config.js
      1→import { defineConfig } from 'rollup'
      2→import typescript from '@rollup/plugin-typescript'
+
 src/error.ts
      1→/**
       →…
@@ -138,6 +162,7 @@ src/error.ts
     38→    const { path } = failure
     39→    const msg =
       →…
+
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
@@ -316,6 +341,7 @@ src/struct.ts
    261→/**
       →…
    266→export type Refiner<T> = (value: T, context: Context) => Result
+
 src/structs/coercions.ts
      1→import { Struct, is, Coercer } from '../struct.js'
      2→import { isPlainObject } from '../utils.js'
@@ -339,6 +365,7 @@ src/structs/coercions.ts
     72→/**
       →…
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
+
 src/structs/refinements.ts
      1→import { Struct, Refiner } from '../struct.js'
      2→import { toFailures } from '../utils.js'
@@ -398,6 +425,7 @@ src/structs/refinements.ts
    148→  name: string,
    149→  refiner: Refiner<T>
    150→): Struct<T, S> {
+
 src/structs/types.ts
      1→import { Infer, Struct } from '../struct.js'
      2→import { define } from './utilities.js'
@@ -502,6 +530,7 @@ src/structs/types.ts
    570→/**
       →…
    574→export function unknown(): Struct<unknown, null> {
+
 src/structs/utilities.ts
      1→import { Context, Struct, Validator } from '../struct.js'
      2→import {
@@ -551,6 +580,7 @@ src/structs/utilities.ts
    241→/**
       →…
    247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
+
 src/utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'
@@ -767,284 +797,425 @@ src/utils.ts
    407→> = Index extends Length
    408→  ? Accumulated
    409→  : _InferTuple<Tuple, Length, [...Accumulated, Infer<Tuple[Index]>]>
+
 test/api/assert.test.ts
+
 test/api/create.test.ts
+
 test/api/is.test.ts
+
 test/api/mask.test.ts
+
 test/api/validate.test.ts
+
 test/deprecated.test.ts
      2→import { any, assert, deprecated } from '../src …
+
 test/index.test.ts
      5→../src …
+
 test/index.ts
      1→/**
      2→ * A helper for testing type signatures.
      3→ */
      4→
      5→export function test<T>(fn: (x: unknown) => T) {}
+
 test/tsconfig.json
      2→  "extends": "../tsconfig.json",
      3→  "include": ["./**/*.ts"],
      4→  "compilerOptions": {
      6→  }
      7→}
+
 test/typings/infer.ts
      4→const Struct = object()
      5→type T = Infer<typeof Struct>
+
 test/validation/any/valid-number.ts
      1→import { any } from '../../../src'
      3→export const Struct = any()
      5→export const data = 1
      7→export const output = 1
+
 test/validation/any/valid-string.ts
      1→import { any } from '../../../src'
      3→export const Struct = any()
      5→export const data = 'valid'
      7→export const output = 'valid'
+
 test/validation/any/valid-undefined.ts
      1→import { any } from '../../../src'
      3→export const Struct = any()
      5→export const data = undefined
      7→export const output = undefined
+
 test/validation/array/invalid-element-property.ts
+
 test/validation/array/invalid-element.ts
+
 test/validation/array/invalid-opaque.ts
+
 test/validation/array/invalid.ts
+
 test/validation/array/valid-frozen.ts
+
 test/validation/array/valid-opaque.ts
+
 test/validation/array/valid.ts
+
 test/validation/assign/invalid-object.ts
+
 test/validation/assign/invalid-type.ts
+
 test/validation/assign/valid-object.ts
+
 test/validation/assign/valid-type.ts
+
 test/validation/bigint/invalid-number.ts
      1→import { bigint } from '../../../src'
      3→export const Struct = bigint()
      5→export const data = 3
      7→export const failures = [
+
 test/validation/bigint/invalid.ts
      1→import { bigint } from '../../../src'
      3→export const Struct = bigint()
      5→export const data = 'invalid'
      7→export const failures = [
+
 test/validation/bigint/valid.ts
      1→import { bigint } from '../../../src'
      3→export const Struct = bigint()
      5→export const data = 542n
      7→export const output = 542n
+
 test/validation/boolean/invalid.ts
      1→import { boolean } from '../../../src'
      3→export const Struct = boolean()
      5→export const data = 'invalid'
      7→export const failures = [
+
 test/validation/boolean/valid.ts
      1→import { boolean } from '../../../src'
      3→export const Struct = boolean()
      5→export const data = true
      7→export const output = true
+
 test/validation/coerce/changed.ts
+
 test/validation/coerce/condition-not-met.ts
+
 test/validation/coerce/unchanged.ts
+
 test/validation/date/invalid-date.ts
      1→import { date } from '../../../src'
+
 test/validation/date/invalid.ts
      1→import { date } from '../../../src'
+
 test/validation/date/valid.ts
      1→import { date } from '../../../src'
+
 test/validation/defaulted/function.ts
+
 test/validation/defaulted/mixin.ts
+
 test/validation/defaulted/nested-double.ts
+
 test/validation/defaulted/nested.ts
+
 test/validation/defaulted/strict.ts
+
 test/validation/defaulted/value.ts
+
 test/validation/deprecated/invalid-null.ts
+
 test/validation/deprecated/invalid-property.ts
+
 test/validation/deprecated/invalid.ts
+
 test/validation/deprecated/valid-property.ts
+
 test/validation/deprecated/valid-undefined.ts
+
 test/validation/deprecated/valid.ts
+
 test/validation/dynamic/invalid-reference.ts
+
 test/validation/dynamic/invalid.ts
+
 test/validation/dynamic/valid-reference.ts
+
 test/validation/dynamic/valid.ts
+
 test/validation/dynamic/with-refiners.ts
+
 test/validation/empty/invalid-array.ts
+
 test/validation/empty/invalid-map.ts
+
 test/validation/empty/invalid-set.ts
+
 test/validation/empty/invalid-string.ts
+
 test/validation/empty/valid-array.ts
+
 test/validation/empty/valid-map.ts
+
 test/validation/empty/valid-set.ts
+
 test/validation/empty/valid-string.ts
+
 test/validation/enums/invalid-numbers.ts
      1→import { enums } from '../../../src'
+
 test/validation/enums/invalid-strings.ts
      1→import { enums } from '../../../src'
+
 test/validation/enums/valid.ts
      1→import { enums } from '../../../src'
+
 test/validation/function/invalid.ts
      1→import { func } from '../../../src'
      3→export const Struct = func()
      5→export const data = false
      7→export const failures = [
+
 test/validation/function/valid.ts
      1→import { func } from '../../../src'
      3→export const Struct = func()
      5→export const data = function () {}
      7→export const output = data
+
 test/validation/instance/invalid.ts
      1→import { instance } from '../../../src'
      3→export const Struct = instance(Array)
      5→export const data = false
      7→export const failures = [
+
 test/validation/instance/valid.ts
      1→import { instance } from '../../../src'
      3→export const Struct = instance(Array)
      5→export const data = [1]
      7→export const output = [1]
+
 test/validation/integer/invalid-decimal.ts
      1→import { integer } from '../../../src'
      3→export const Struct = integer()
      5→export const data = 3.14
      7→export const failures = [
+
 test/validation/integer/invalid.ts
      1→import { integer } from '../../../src'
      3→export const Struct = integer()
      5→export const data = 'invalid'
      7→export const failures = [
+
 test/validation/integer/valid.ts
      1→import { integer } from '../../../src'
      3→export const Struct = integer()
      5→export const data = 42
      7→export const output = 42
+
 test/validation/intersection/invalid-refinement.ts
+
 test/validation/intersection/invalid.ts
+
 test/validation/intersection/valid-refinement.ts
+
 test/validation/intersection/valid.ts
+
 test/validation/lazy/invalid.ts
+
 test/validation/lazy/valid.ts
+
 test/validation/lazy/with-refiners.ts
+
 test/validation/literal/invalid.ts
      1→import { literal } from '../../../src'
      3→export const Struct = literal(42)
      5→export const data = false
      7→export const failures = [
+
 test/validation/literal/valid.ts
      1→import { literal } from '../../../src'
      3→export const Struct = literal(42)
      5→export const data = 42
      7→export const output = 42
+
 test/validation/map/invalid-opaque.ts
+
 test/validation/map/invalid-property.ts
+
 test/validation/map/invalid.ts
+
 test/validation/map/valid-opaque.ts
+
 test/validation/map/valid.ts
+
 test/validation/max/invalid-exclusive.ts
+
 test/validation/max/invalid.ts
+
 test/validation/max/valid-inclusive.ts
+
 test/validation/max/valid.ts
+
 test/validation/min/invalid-exclusive.ts
+
 test/validation/min/invalid.ts
+
 test/validation/min/valid-inclusive.ts
+
 test/validation/min/valid.ts
+
 test/validation/never/invalid.ts
      1→import { never } from '../../../src'
      3→export const Struct = never()
      5→export const data = true
      7→export const failures = [
+
 test/validation/nullable/invalid.ts
+
 test/validation/nullable/valid-defined-nested.ts
+
 test/validation/nullable/valid-defined.ts
+
 test/validation/nullable/valid-null-nested.ts
+
 test/validation/nullable/valid-null.ts
+
 test/validation/number/invalid.ts
      1→import { number } from '../../../src'
      3→export const Struct = number()
      5→export const data = 'invalid'
      7→export const failures = [
+
 test/validation/number/valid.ts
      1→import { number } from '../../../src'
      3→export const Struct = number()
      5→export const data = 42
      7→export const output = 42
+
 test/validation/object/invalid-referential.ts
      3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
+
 test/validation/object/valid-referential.ts
      3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
+
 test/validation/optional/invalid.ts
+
 test/validation/optional/valid-defined-nested.ts
+
 test/validation/optional/valid-defined.ts
+
 test/validation/optional/valid-undefined-nested.ts
+
 test/validation/optional/valid-undefined.ts
+
 test/validation/pattern/invalid.ts
      1→import { string, pattern } from '../../../src'
      3→export const Struct = pattern(string(), /\d+/)
      5→export const data = 'invalid'
      7→export const failures = [
+
 test/validation/pattern/valid.ts
      1→import { string, pattern } from '../../../src'
      3→export const Struct = pattern(string(), /\d+/)
      5→export const data = '123'
      7→export const output = '123'
+
 test/validation/record/invalid-array.ts
+
 test/validation/record/invalid-property.ts
+
 test/validation/record/invalid.ts
+
 test/validation/record/valid-frozen.ts
+
 test/validation/record/valid.ts
+
 test/validation/refine/invalid-multiple-refinements.ts
      3→const PasswordValidator = refine(string(), 'MinimumLength', (pw) =>
      6→const changePasswordStruct = object({
+
 test/validation/refine/invalid-shorthand.ts
+
 test/validation/refine/invalid.ts
+
 test/validation/refine/valid.ts
+
 test/validation/regexp/invalid.ts
      1→import { regexp } from '../../../src'
      3→export const Struct = regexp()
      5→export const data = 'invalid'
      7→export const failures = [
+
 test/validation/regexp/valid.ts
      1→import { regexp } from '../../../src'
      3→export const Struct = regexp()
      5→export const data = /./
      7→export const output = data
+
 test/validation/set/invalid-element.ts
+
 test/validation/set/invalid-opaque.ts
+
 test/validation/set/invalid.ts
+
 test/validation/set/valid-opaque.ts
+
 test/validation/set/valid.ts
+
 test/validation/string/invalid.ts
      1→import { string } from '../../../src'
      3→export const Struct = string()
      5→export const data = false
      7→export const failures = [
+
 test/validation/string/valid.ts
      1→import { string } from '../../../src'
      3→export const Struct = string()
      5→export const data = 'valid'
      7→export const output = 'valid'
+
 test/validation/trimmed/invalid.ts
      1→import { string, trimmed } from '../../../src'
      3→export const Struct = trimmed(string())
      5→export const data = false
      7→export const failures = [
     17→export const create = true
+
 test/validation/trimmed/valid.ts
      1→import { string, trimmed } from '../../../src'
      3→export const Struct = trimmed(string())
      5→export const data = '  valid  '
      7→export const output = 'valid'
      9→export const create = true
+
 test/validation/tuple/invalid-element-missing.ts
+
 test/validation/tuple/invalid-element-unknown.ts
+
 test/validation/tuple/invalid-element.ts
+
 test/validation/tuple/invalid.ts
+
 test/validation/tuple/valid-frozen.ts
+
 test/validation/tuple/valid.ts
+
 test/validation/type/invalid-array.ts
+
 test/validation/type/invalid-property-nested.ts
+
 test/validation/type/invalid-property.ts
+
 test/validation/type/invalid.ts
+
 test/validation/type/valid-frozen.ts
+
 test/validation/type/valid-instance.ts
      3→class Person {
      4→  name: string
@@ -1052,27 +1223,37 @@ test/validation/type/valid-instance.ts
      6→  constructor(name: string) {
      7→    this.name = name
      8→  }
+
 test/validation/type/valid.ts
+
 test/validation/union/coercion-object.ts
+
 test/validation/union/coercion-type.ts
+
 test/validation/union/coercion.ts
+
 test/validation/union/invalid.ts
+
 test/validation/union/valid.ts
+
 test/validation/unknown/valid-number.ts
      1→import { unknown } from '../../../src'
      3→export const Struct = unknown()
      5→export const data = 1
      7→export const output = 1
+
 test/validation/unknown/valid-string.ts
      1→import { unknown } from '../../../src'
      3→export const Struct = unknown()
      5→export const data = 'valid'
      7→export const output = 'valid'
+
 test/validation/unknown/valid-undefined.ts
      1→import { unknown } from '../../../src'
      3→export const Struct = unknown()
      5→export const data = undefined
      7→export const output = undefined
+
 tsconfig.json
      2→  "include": ["./src/**/*.ts"],
      3→  "compilerOptions": {

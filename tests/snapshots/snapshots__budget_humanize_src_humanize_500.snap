@@ -33,9 +33,11 @@ __init__.py
     47→    "scientific",
     48→    "thousands_separator",
     49→]
+
 filesize.py
      5→from math …
     36→def naturalsize …
+
 i18n.py
      5→import gettext …
      6→from threading …
@@ -74,11 +76,13 @@ i18n.py
    163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
    183→def thousands_separator …
    196→def decimal_separator …
+
 lists.py
      5→TYPE_CHECKING = False
      7→    from typing …
      9→__all__ = ["natural_list"]
     12→def natural_list …
+
 number.py
      5→import bisect …
      7→from .i18n import _gettext as _
@@ -96,6 +100,7 @@ number.py
    385→def scientific …
    454→def clamp …
    531→def metric …
+
 time.py
      8→from enum …
      9→from functools …

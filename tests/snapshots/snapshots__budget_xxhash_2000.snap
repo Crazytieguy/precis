@@ -72,6 +72,7 @@ README.md
     72→- [FastCache](https://github.com/VictoriaMetrics/fastcache)
     73→- [Ristretto](https://github.com/dgraph-io/ristretto)
     74→- [Badger](https://github.com/dgraph-io/badger)
+
 bench_test.go
      3→import …
      8→var benchmarks = []struct {
@@ -79,6 +80,7 @@ bench_test.go
     34→func BenchmarkSum64String(b *testing.B) {
     46→func BenchmarkDigestBytes(b *testing.B) {
     63→func BenchmarkDigestString(b *testing.B) {
+
 dynamic/dynamic_test.go
      6→import …
     15→// This is a cursory test that checks whether things work under dynamic linking.
@@ -100,6 +102,7 @@ dynamic/dynamic_test.go
     36→		t.Fatal(err)
     37→	}
       →…
+
 dynamic/plugin.go
      6→import (
      7→	"fmt"
@@ -139,6 +142,7 @@ dynamic/plugin.go
     45→		})
     46→	}
     47→}
+
 xxhash.go
      5→import (
      6→	"encoding/binary"
@@ -291,6 +295,7 @@ xxhash.go
    241→func rol23(x uint64) uint64 { return bits.RotateLeft64(x, 23) }
    242→func rol27(x uint64) uint64 { return bits.RotateLeft64(x, 27) }
    243→func rol31(x uint64) uint64 { return bits.RotateLeft64(x, 31) }
+
 xxhash_asm.go
      9→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
     10→//
@@ -298,6 +303,7 @@ xxhash_asm.go
     12→func Sum64(b []byte) uint64
     14→//go:noescape
     15→func writeBlocks(d *Digest, b []byte) int
+
 xxhash_other.go
      6→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
      7→func Sum64(b []byte) uint64 {
@@ -316,6 +322,7 @@ xxhash_other.go
     20→		v3 := uint64(0)
       →…
     64→func writeBlocks(d *Digest, b []byte) int {
+
 xxhash_safe.go
      8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
      9→func Sum64String(s string) uint64 {
@@ -325,6 +332,7 @@ xxhash_safe.go
     14→func (d *Digest) WriteString(s string) (n int, err error) {
     15→	return d.Write([]byte(s))
     16→}
+
 xxhash_test.go
      3→import …
     12→func TestAll(t *testing.T) {
@@ -336,6 +344,7 @@ xxhash_test.go
    168→var sink uint64
    170→func TestAllocs(t *testing.T) {
    193→func testAllocs(t *testing.T, fn func()) {
+
 xxhash_unsafe.go
      9→import (
     10→	"unsafe"
@@ -361,6 +370,7 @@ xxhash_unsafe.go
     56→	s   string
     57→	cap int
     58→}
+
 xxhash_unsafe_test.go
      6→import …
     13→func TestStringAllocs(t *testing.T) {
@@ -380,6 +390,7 @@ xxhash_unsafe_test.go
     42→	}
     43→
       →…
+
 xxhashbench/xxhashbench_test.go
      3→import …
     14→// TODO: The main benchmarks live in the xxhash package now, so the only purpose
@@ -404,6 +415,7 @@ xxhashbench/xxhashbench_test.go
    159→func benchmarkHashString(b *testing.B, input string, fn func(string) uint64) {
    160→	b.SetBytes(int64(len(input)))
       →…
+
 xxhsum/xxhsum.go
      3→import (
      4→	"fmt"

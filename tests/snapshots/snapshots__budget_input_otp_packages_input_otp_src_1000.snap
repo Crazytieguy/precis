@@ -73,10 +73,12 @@ input.tsx
    561→  letter-spacing: .25em !important;
    562→  text-align: center !important;
       →…
+
 regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
      2→export const REGEXP_ONLY_CHARS = '^[a-zA-Z]+$'
      3→export const REGEXP_ONLY_DIGITS_AND_CHARS = '^[a-zA-Z0-9]+$'
+
 sync-timeouts.ts
      1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
      2→  const t1 = setTimeout(cb, 0) // For faster machines
@@ -84,6 +86,7 @@ sync-timeouts.ts
      4→  const t3 = setTimeout(cb, 5_0)
      5→  return [t1, t2, t3]
      6→}
+
 types.ts
      1→export interface SlotProps {
      2→  isActive: boolean
@@ -120,6 +123,7 @@ types.ts
     41→        children: React.ReactNode
     42→      }
     43→  )
+
 use-previous.ts
      1→import * as React from 'react'
      3→export function usePrevious<T>(value: T) {
@@ -129,6 +133,7 @@ use-previous.ts
      7→  })
      8→  return ref.current
      9→}
+
 use-pwm-badge.tsx
      1→import * as React from 'react'
      2→import { OTPInputProps } from './types'

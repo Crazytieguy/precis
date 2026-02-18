@@ -38,6 +38,7 @@ README.md
    186→
    187→## License
    189→The MIT License (MIT) - see [`LICENSE.md`](https://github.com/fatih/color/blob/master/LICENSE.md) for more details
+
 color.go
      3→import …
     15→var (
@@ -208,6 +209,7 @@ color.go
    670→func HiCyanString …
    674→func HiWhiteString …
    679→func sprintln(a ...interface{}) string {
+
 color_test.go
      3→import …
     13→// Testing colors is kinda different. First we test for given colors and their
@@ -221,6 +223,7 @@ color_test.go
     21→
       →…
    462→func readRaw(t *testing.T, r io.Reader) string {
+
 color_windows.go
      3→import …
      9→func init() {

@@ -6,6 +6,7 @@ budget: 500 (502 words)
 
 CHANGELOG.md
      1→# Changelog …
+
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web. …
      3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz) …
@@ -20,25 +21,32 @@ README.md
    293→## Examples …
    377→## Caveats …
    539→#### Sponsors …
+
 apps/storybook/README.md
     13→## 🚅 Quick start …
     44→## 🔎 What's inside? …
     83→## Contribute …
     87→## Learning Storybook …
+
 apps/storybook/components.json
+
 apps/storybook/package.json
+
 apps/storybook/src/components/ui/input-otp.tsx
      7→import { cn } from "../../lib/utils"
+
 apps/storybook/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
      6→}
+
 apps/storybook/src/stories/Button.stories.ts
      1→import { Button } from './Button';
     14→export const Primary = {
     21→export const Secondary = {
     27→export const Large = {
     34→export const Small = {
+
 apps/storybook/src/stories/Button.tsx
      3→import './button.css';
      5→/**
@@ -50,43 +58,64 @@ apps/storybook/src/stories/Button.tsx
     11→    <button
     12→      type="button"
       →…
+
 apps/storybook/src/stories/InputOTP.stories.tsx
      1→import { InputOTP, InputOTPGroup, InputOTPSlot } from "../components/ui/input-otp"
      4→const meta = {
     27→type Story = StoryObj<typeof meta>
     29→export const Default: Story = {}
+
 apps/storybook/tailwind.config.js
      2→const config = {
+
 apps/storybook/tsconfig.json
+
 apps/storybook/tsconfig.node.json
+
 apps/test/README.md
+
 apps/test/src/app/base/page.tsx
      7→export default function Page() {
+
 apps/test/src/app/props/page.tsx
      7→export default function Page() {
+
 apps/test/src/app/with-autofocus/page.tsx
      7→export default function Page() {
+
 apps/test/src/app/with-on-complete/page.tsx
      7→export default function Page() {
+
 apps/test/src/components/base-input.tsx
+
 apps/test/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
+
 apps/website/README.md
+
 apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
      9→export default function ExampleAutoSubmit() {
+
 apps/website/src/app/(local-pages)/layout.tsx
+
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      5→export default function ShadcnPage() {
+
 apps/website/src/app/(local-pages)/shadcn/page.tsx
     12→export default function ShadcnPage() {
+
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     13→export default function ShadcnPage() {
+
 apps/website/src/app/(pages)/(home)/page.tsx
    148→export const revalidate = 3600
+
 apps/website/src/components/icons.tsx
      3→export const Icons = {
+
 apps/website/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
+
 package.json
      2→  "name": "root",
      3→  "private": true,
@@ -104,17 +133,22 @@ package.json
     44→  "devDependencies": {
     59→  }
     60→}
+
 packages/input-otp/package.json
+
 packages/input-otp/src/input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(
     14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
+
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
      2→export const REGEXP_ONLY_CHARS = '^[a-zA-Z]+$'
      3→export const REGEXP_ONLY_DIGITS_AND_CHARS = '^[a-zA-Z0-9]+$'
+
 packages/input-otp/src/sync-timeouts.ts
      1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
+
 packages/input-otp/src/types.ts
      1→export interface SlotProps {
      2→  isActive: boolean
@@ -133,9 +167,11 @@ packages/input-otp/src/types.ts
     33→export type OTPInputProps = OTPInputBaseProps &
     34→  (
     35→    | {
+
 packages/input-otp/src/use-previous.ts
      1→import * as React from 'react'
      3→export function usePrevious<T>(value: T) {
+
 packages/input-otp/src/use-pwm-badge.tsx
     15→export function usePasswordManagerBadge({
     16→  containerRef,
@@ -148,9 +184,12 @@ packages/input-otp/src/use-pwm-badge.tsx
     23→  pushPasswordManagerStrategy: OTPInputProps['pushPasswordManagerStrategy']
     24→  isFocused: boolean
     25→}) {
+
 packages/input-otp/tsconfig.json
+
 pnpm-workspace.yaml
      1→packages …
+
 turbo.json
      2→  "extends": ["//"],
      3→  "$schema": "https://turbo.build/schema.json",

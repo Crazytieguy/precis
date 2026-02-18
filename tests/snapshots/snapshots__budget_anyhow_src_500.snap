@@ -15,6 +15,7 @@ backtrace.rs
     64→macro_rules! backtrace_if_absent {
     70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
+
 chain.rs
     11→pub(crate) struct Chain<'a> {
     12→    state: ChainState<'a>,
@@ -23,10 +24,12 @@ chain.rs
     17→    Linked {
       →…
     36→    type Item = &'a (dyn StdError + 'static);
+
 context.rs
      7→use crate::nightly::{self, Request};
     12→    pub trait StdError {
    189→    pub trait Sealed {}
+
 ensure.rs
      9→#[doc(hidden)]
     10→pub trait BothDebug {
@@ -35,6 +38,7 @@ ensure.rs
    105→macro_rules! __parse_ensure {
    886→macro_rules! __fancy_ensure {
    912→macro_rules! __fallback_ensure {
+
 error.rs
      4→use crate::nightly::{self, Request};
      6→use crate::ptr::Mut;
@@ -45,7 +49,9 @@ error.rs
    952→pub(crate) struct ContextError<C, E> {
    953→    pub context: C,
       →…
+
 fmt.rs
+
 kind.rs
     51→use crate::StdError;
     55→pub struct Adhoc;
@@ -59,6 +65,7 @@ kind.rs
    102→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    103→#[doc(hidden)]
    104→pub trait BoxedKind: Sized {
+
 lib.rs
    251→#[macro_use]
    252→mod backtrace;
@@ -108,13 +115,16 @@ lib.rs
    678→        pub use crate::kind::BoxedKind;
    709→        #[doc(hidden)]
    710→        pub trait Bool {
+
 macros.rs
     58→macro_rules! bail {
     70→macro_rules! __ensure {
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
+
 nightly.rs
     10→pub use core::error::Request;
+
 ptr.rs
      5→#[repr(transparent)]
      6→pub struct Own<T>
@@ -143,6 +153,7 @@ ptr.rs
    182→    type Target;
    183→}
    186→    type Target = T;
+
 wrapper.rs
      8→use crate::nightly::{self, Request};
     10→#[repr(transparent)]

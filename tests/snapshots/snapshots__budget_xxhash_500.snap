@@ -35,7 +35,9 @@ README.md
     69→- [Prometheus](https://github.com/prometheus/prometheus)
     70→- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
       →…
+
 bench_test.go
+
 dynamic/dynamic_test.go
      6→import …
     15→// This is a cursory test that checks whether things work under dynamic linking.
@@ -45,6 +47,7 @@ dynamic/dynamic_test.go
     19→		"go", "build",
       →…
     33→func TestDynamic(t *testing.T) {
+
 dynamic/plugin.go
      6→import …
     14→const (
@@ -56,6 +59,7 @@ dynamic/plugin.go
     26→func TestDigest(t *testing.T) {
     27→	for chunkSize := 1; chunkSize <= len(in); chunkSize++ {
       →…
+
 xxhash.go
      5→import …
     19→// Store the primes in an array as well.
@@ -86,16 +90,21 @@ xxhash.go
    129→func (d *Digest) Sum64() uint64 {
    176→func (d *Digest) MarshalBinary() ([]byte, error) {
    190→func (d *Digest) UnmarshalBinary(b []byte) error {
+
 xxhash_asm.go
     12→func Sum64(b []byte) uint64
     14→//go:noescape
     15→func writeBlocks(d *Digest, b []byte) int
+
 xxhash_other.go
      7→func Sum64(b []byte) uint64 {
+
 xxhash_safe.go
      9→func Sum64String(s string) uint64 {
     14→func (d *Digest) WriteString(s string) (n int, err error) {
+
 xxhash_test.go
+
 xxhash_unsafe.go
      9→import …
     38→func Sum64String(s string) uint64 {
@@ -106,15 +115,18 @@ xxhash_unsafe.go
     56→	s   string
     57→	cap int
     58→}
+
 xxhash_unsafe_test.go
     29→// This test is inspired by the Go runtime tests in https://go.dev/cl/57410.
       →…
     31→func TestInlining(t *testing.T) {
+
 xxhashbench/xxhashbench_test.go
      3→import …
     18→var sink uint64
     20→var benchmarks = []struct {
    108→func BenchmarkHashes(b *testing.B) {
+
 xxhsum/xxhsum.go
      3→import …
     11→func main() {

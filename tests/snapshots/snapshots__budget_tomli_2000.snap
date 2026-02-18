@@ -6,6 +6,7 @@ budget: 2000 (1972 words)
 
 CHANGELOG.md
      1→# Changelog …
+
 README.md
      5→# Tomli
      7→> A lil' TOML parser
@@ -92,6 +93,7 @@ README.md
    230→### Pure Python<a name="pure-python"></a>
    232→```console
       →…
+
 benchmark/README.md
      1→# Benchmark …
      3→## Acknowledgments
@@ -109,6 +111,7 @@ benchmark/README.md
     20→```bash
     21→tox -e benchmark-pypi
     22→```
+
 benchmark/data.toml
     46→[contain …
     50→    [contain.righteous-imperfect-remarkable …
@@ -125,6 +128,7 @@ benchmark/data.toml
    105→    [[dynamic-arrays.products …
    107→[[dynamic-arrays.products …
    117→[multiline-strings …
+
 benchmark/run.py
     15→def benchmark(
     16→    name: str,
@@ -134,6 +138,7 @@ benchmark/run.py
     20→    compare_to: float | None = None,
     21→) -> float:
     37→def run(run_count: int) -> None:
+
 fuzzer/fuzz.py
      1→import atheris
      4→    from math import isnan
@@ -182,9 +187,11 @@ fuzzer/fuzz.py
     73→    fuzzer_options = sys.argv
     74→    atheris.Setup(fuzzer_options, test_one_input)
     75→    atheris.Fuzz()
+
 profiler/profiler_script.py
      8→from pathlib import Path
     10→import tomli
+
 pyproject.toml
      1→[build-system …
      5→[project …
@@ -204,6 +211,7 @@ pyproject.toml
    157→[[tool.mypy.overrides …
    161→[[tool.mypy.overrides …
    167→[[tool.mypy.overrides …
+
 scripts/use_setuptools.py
      6→from pathlib import Path
      7→import tomllib
@@ -213,11 +221,13 @@ scripts/use_setuptools.py
     14→    data = tomllib.loads(pyproject_path.read_bytes().decode())
     15→    data["build-system"] = {
       →…
+
 setup.py
      1→import os
      3→from setuptools import setup  # type: ignore[import-untyped]
      6→    import glob
      8→    from mypyc.build import mypycify
+
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
@@ -226,6 +236,7 @@ src/tomli/__init__.py
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
      8→from ._parser import TOMLDecodeError, load, loads
+
 src/tomli/_parser.py
      7→import sys
      8→from types import MappingProxyType
@@ -325,6 +336,7 @@ src/tomli/_parser.py
    684→def parse_value …
    760→def is_unicode_scalar_value …
    764→def make_safe_parse_float …
+
 src/tomli/_re.py
      7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
      8→from functools import lru_cache
@@ -379,8 +391,10 @@ src/tomli/_re.py
    106→    )
    109→def match_to_localtime …
    116→def match_to_number …
+
 src/tomli/_types.py
      5→from typing import Any, Callable, Tuple
+
 tests/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
@@ -388,156 +402,205 @@ tests/__init__.py
      4→
      5→__all__ = ("tomllib",)
      9→import tomli as tomllib
+
 tests/burntsushi.py
     68→def _normalize_datetime_str(dt_str: str) -> str:
     92→def _normalize_localtime_str(lt_str: str) -> str:
     96→def _normalize_float_str(float_str: str) -> str:
+
 tests/data/invalid/_external/toml-test/invalid/array/extend-defined-aot.toml
      1→[[tab.arr …
      2→[tab …
+
 tests/data/invalid/_external/toml-test/invalid/array/extending-table.toml
      5→[a.c …
+
 tests/data/invalid/_external/toml-test/invalid/array/tables-01.toml
      4→[[fruit …
+
 tests/data/invalid/_external/toml-test/invalid/array/tables-02.toml
      2→[[fruit …
      5→  [[fruit.variety …
      9→  [fruit.variety …
+
 tests/data/invalid/_external/toml-test/invalid/inline-table/overwrite-02.toml
      3→[a.b …
+
 tests/data/invalid/_external/toml-test/invalid/inline-table/overwrite-04.toml
      3→[[inline-t.nest …
+
 tests/data/invalid/_external/toml-test/invalid/inline-table/overwrite-05.toml
      3→[inline-t.nest …
+
 tests/data/invalid/_external/toml-test/invalid/inline-table/overwrite-09.toml
      1→[tab.nested …
      4→[tab …
+
 tests/data/invalid/_external/toml-test/invalid/key/no-eol-04.toml
      1→[[0000l0 …
      2→0="0"[[0000l0 …
      3→0="0"[[0000l0 …
+
 tests/data/invalid/_external/toml-test/invalid/key/start-bracket.toml
      1→[a …
      2→[xyz …
+
 tests/data/invalid/_external/toml-test/invalid/spec-1.1.0/common-46-0.toml
+
 tests/data/invalid/_external/toml-test/invalid/spec-1.1.0/common-46-1.toml
+
 tests/data/invalid/_external/toml-test/invalid/spec-1.1.0/common-49-0.toml
+
 tests/data/invalid/_external/toml-test/invalid/spec-1.1.0/common-50-0.toml
+
 tests/data/invalid/array-of-tables/overwrite-array-in-parent.toml
      1→[[parent-table.arr …
      2→[parent-table …
+
 tests/data/invalid/array-of-tables/overwrite-bool-with-aot.toml
      2→[[a …
+
 tests/data/invalid/dotted-keys/extend-defined-aot.toml
      1→[[tab.arr …
      2→[tab …
+
 tests/data/invalid/dotted-keys/extend-defined-table-with-subtable.toml
      1→[a.b.c.d …
      3→[a …
+
 tests/data/invalid/dotted-keys/extend-defined-table.toml
      1→[a.b.c …
      3→[a …
+
 tests/data/invalid/inline-table/override-val-in-table.toml
      1→[tab.nested …
      4→[tab …
+
 tests/data/invalid/inline-table/override-val-with-array.toml
      3→[[inline-t.nest …
+
 tests/data/invalid/inline-table/override-val-with-table.toml
      3→[inline-t.nest …
+
 tests/data/invalid/keys-and-vals/overwrite-with-deep-table.toml
      2→[a.b.c.d …
+
 tests/data/invalid/table/redefine-1.toml
      1→[t1 …
      3→[t1.t2 …
+
 tests/data/invalid/table/redefine-2.toml
      1→[t1 …
      3→[t1.t2.t3 …
+
 tests/data/valid/_external/toml-test/valid/array/array-subtables.toml
      1→[[arr …
      2→[arr.subtab …
      5→[[arr …
      6→[arr.subtab …
+
 tests/data/valid/_external/toml-test/valid/array/open-parent-table.toml
      1→[[parent-table.arr …
      2→[[parent-table.arr …
      3→[parent-table …
+
 tests/data/valid/_external/toml-test/valid/bool/bool.json
      2→    "f": {"type": "bool", "value": "false"},
      3→    "t": {"type": "bool", "value": "true"}
      4→}
+
 tests/data/valid/_external/toml-test/valid/comment/everywhere.toml
      7→[group …
     30→[[aot …
     32→[[aot …
+
 tests/data/valid/_external/toml-test/valid/comment/tricky.toml
      1→[section …
     18→["hash#tag" …
+
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-03.toml
      1→[tbl …
      4→[tbl.x …
+
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-04.toml
      1→[[arr …
      5→[[arr …
+
 tests/data/valid/apostrophes-in-literal-string.json
      1→{"this-str-has-apostrophes": {"type": "string", "value": "' there's one already\n'' two more\n''"}}
+
 tests/data/valid/array/array-subtables.json
      1→{"arr":
     10→  }
     11→}
+
 tests/data/valid/array/array-subtables.toml
      1→[[arr …
      2→[arr.subtab …
      5→[[arr …
      6→[arr.subtab …
+
 tests/data/valid/array/open-parent-table.json
      2→  "parent-table": {
      5→  }
      6→}
+
 tests/data/valid/array/open-parent-table.toml
      1→[[parent-table.arr …
      2→[[parent-table.arr …
      3→[parent-table …
+
 tests/data/valid/boolean.json
      2→  "a": {"type":"bool","value":"true"},
      3→  "b": {"type":"bool","value":"false"}
      4→}
+
 tests/data/valid/dates-and-times/datetimes.json
      2→  "local-dt": {"type":"datetime-local","value":"1988-10-27t01:01:01"},
      3→  "local-dt-no-seconds": {"type":"datetime-local","value":"2025-04-18t20:05:00"},
      4→  "zulu-dt": {"type":"datetime","value":"1988-10-27t01:01:01z"}
      5→}
+
 tests/data/valid/dates-and-times/localtime.json
      1→{"t":
      2→  {"type":"time-local","value":"00:00:00.999999"},
      3→"t2":
      4→  {"type":"time-local","value":"00:00:00"}}
+
 tests/data/valid/five-quotes.json
      2→  "five-quotes": {"type":"string","value":"Closing with five quotes\n\"\""},
      3→  "four-quotes": {"type":"string","value":"Closing with four quotes\n\""}
      4→}
+
 tests/data/valid/hex-char.json
      2→  "a": {"type":"string","value":"a"},
      3→  "b": {"type":"string","value":"b"},
      4→  "c": {"type":"string","value":"c"}
      5→}
+
 tests/data/valid/inline-table/empty-inline-table.json
      1→{"empty":  {}}
+
 tests/data/valid/inline-table/multiline-inline-table.json
      2→  "multiline": {
     34→  }
     35→}
+
 tests/data/valid/multiline-basic-str/ends-in-whitespace-escape.json
      1→{"beee": {"type": "string", "value": "heeee\ngeeee"}}
+
 tests/data/valid/multiline-basic-str/replacements.json
      2→  "escape": {"type":"string","value":"\u001B"},
      3→  "tab": {"type":"string","value":"\t"},
      4→  "upper-j": {"type":"string","value":"J"},
      5→  "upper-j-2": {"type":"string","value":"J"}
      6→}
+
 tests/data/valid/trailing-comma.json
      1→{"arr":
      6→  }
      7→}
+
 tests/test_data.py
      5→import json
      9→from . import burntsushi, tomllib
@@ -546,13 +609,16 @@ tests/test_data.py
     21→VALID_FILES_EXPECTED = tuple(_expected_files)
     23→INVALID_FILES = tuple((DATA_DIR / "invalid").glob("**/*.toml"))
     27→class TestData(unittest.TestCase):
+
 tests/test_error.py
     10→from . import tomllib
     13→class TestError(unittest.TestCase):
+
 tests/test_misc.py
      5→import copy
     14→from . import tomllib
     17→class TestMiscellaneous(unittest.TestCase):
+
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
      3→Tomli was added to the Python standard library in Python 3.11.

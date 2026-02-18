@@ -44,6 +44,7 @@ README.md
     69→
     70→## Documentation
     72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
+
 package.json
      2→  "name": "react-hot-toast",
      3→  "description": "Smoking hot React Notifications. Lightweight, customizable and beautiful by default.",
@@ -77,6 +78,7 @@ package.json
    102→  },
    103→  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
    104→}
+
 site/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -103,6 +105,7 @@ site/README.md
     28→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     29→
     30→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
 site/components/code.tsx
      1→import clsx from 'clsx';
      2→import Highlight, {
@@ -119,6 +122,7 @@ site/components/code.tsx
    106→  language?: Language;
    107→  className?: string;
       →…
+
 site/components/docs-layout.tsx
      1→import * as React from 'react';
      2→import { Toaster } from 'react-hot-toast';
@@ -139,12 +143,14 @@ site/components/docs-layout.tsx
     29→    <div className="bg-toast-50 bg-opacity-50 min-h-screen flex flex-col">
     30→      <NextSeo
       →…
+
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
      2→  onClick: () => void;
      3→  emoji: string | React.ReactElement;
      4→  children?: React.ReactNode;
       →…
+
 site/components/sections/footer.tsx
      1→import React from 'react';
      2→import Link from 'next/link';
@@ -152,6 +158,7 @@ site/components/sections/footer.tsx
      5→  return (
      6→    <footer className="container relative justify-center my-8 flex flex-col items-center space-y-4">
       →…
+
 site/components/sections/splitbee-counter.tsx
      1→import React from 'react';
      2→import clsx from 'clsx';
@@ -166,6 +173,7 @@ site/components/sections/splitbee-counter.tsx
     37→  const count = useSplitbeeCount('Trigger Toast', 'NTV7AYBLEXW3');
     38→
       →…
+
 site/components/sections/toast-example.tsx
      1→import React, { useState } from 'react';
      2→import toast from 'react-hot-toast';
@@ -178,6 +186,7 @@ site/components/sections/toast-example.tsx
    271→  const [snippet, setSnippet] = useState(examples[0].snippet);
    272→  return (
       →…
+
 site/components/sections/toaster-example.tsx
      1→import clsx from 'clsx';
      2→import toast, { ToastPosition } from 'react-hot-toast';
@@ -196,6 +205,7 @@ site/components/sections/toaster-example.tsx
     18→  position: ToastPosition;
     19→  onPosition: (pos: ToastPosition) => void;
       →…
+
 site/next.config.mjs
      1→import rehypeSlug from 'rehype-slug';
      2→import remarkGfm from 'remark-gfm';
@@ -215,6 +225,7 @@ site/next.config.mjs
     27→        source: '/bee.js',
     28→        destination: 'https://cdn.splitbee.io/sb.js',
       →…
+
 site/package.json
      2→  "name": "site",
      3→  "scripts": {
@@ -224,6 +235,7 @@ site/package.json
     25→  "devDependencies": {
     34→  }
     35→}
+
 site/pages/_app.tsx
      1→import '../styles/tailwind-utils.css';
      2→import '../styles/main.css';
@@ -235,6 +247,7 @@ site/pages/_app.tsx
     10→import { Code } from '../components/code';
     12→const components = {
     71→function MyApp …
+
 site/pages/index.tsx
      1→import { NextSeo } from 'next-seo';
      2→import toast, {
@@ -281,6 +294,7 @@ site/pages/index.tsx
    120→          ],
    121→        }}
       →…
+
 site/tsconfig.json
      2→  "compilerOptions": {
     21→  },
@@ -289,10 +303,12 @@ site/tsconfig.json
     32→  "exclude": [
     34→  ]
     35→}
+
 site/types/svg.d.ts
      1→interface SvgrComponent
      2→  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
      5→  const value: SvgrComponent;
+
 src/components/checkmark.tsx
      1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
@@ -307,6 +323,7 @@ src/components/checkmark.tsx
     37→  height: 20px;
     38→  border-radius: 10px;
       →…
+
 src/components/error.tsx
      1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
@@ -322,6 +339,7 @@ src/components/error.tsx
     41→  height: 20px;
     42→  border-radius: 10px;
       →…
+
 src/components/loader.tsx
      1→import { styled, keyframes } from 'goober';
      3→const rotate = keyframes`
@@ -335,6 +353,7 @@ src/components/loader.tsx
     20→  box-sizing: border-box;
     21→  border: 2px solid;
       →…
+
 src/components/toast-bar.tsx
      1→import * as React from 'react';
      2→import { styled, keyframes } from 'goober';
@@ -385,6 +404,7 @@ src/components/toast-bar.tsx
     78→      ? getAnimationStyle(
     79→          toast.position || position || 'top-center',
       →…
+
 src/components/toast-icon.tsx
      1→import * as React from 'react';
      2→import { styled, keyframes } from 'goober';
@@ -437,6 +457,7 @@ src/components/toast-icon.tsx
     75→    </IndicatorWrapper>
     76→  );
     77→};
+
 src/components/toaster.tsx
      1→import { css, setup } from 'goober';
      2→import * as React from 'react';
@@ -569,6 +590,7 @@ src/components/toaster.tsx
    141→    </div>
    142→  );
    143→};
+
 src/core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
      2→import { DefaultToastOptions, Toast, ToastType } from './types';
@@ -786,6 +808,7 @@ src/core/store.ts
    230→    toasts: mergedToasts,
    231→  };
    232→};
+
 src/core/toast.ts
      1→import {
      2→  Renderable,
@@ -838,6 +861,7 @@ src/core/toast.ts
     53→  };
     55→const toast = (message: Message, opts?: ToastOptions) =>
     56→  createHandler('blank')(message, opts);
+
 src/core/types.ts
      1→import { CSSProperties } from 'react';
      3→export type ToastType = 'success' | 'error' | 'loading' | 'blank' | 'custom';
@@ -925,6 +949,7 @@ src/core/types.ts
     95→  onHeightUpdate: (id: string, height: number) => void;
     96→  children?: React.ReactNode;
     97→}
+
 src/core/use-toaster.ts
      1→import { useEffect, useCallback, useRef } from 'react';
      2→import { createDispatch, ActionType, useStore, dispatch } from './store';
@@ -1069,6 +1094,7 @@ src/core/use-toaster.ts
    143→    },
    144→  };
    145→};
+
 src/core/utils.ts
      1→export const genId = (() => {
      2→  let count = 0;
@@ -1088,12 +1114,16 @@ src/core/utils.ts
     17→    return shouldReduceMotion;
     18→  };
     19→})();
+
 src/headless/index.ts
      1→import { toast } from '../core/toast';
+
 src/index.ts
      1→import { toast } from './core/toast';
+
 test/setup.ts
      1→import '@testing-library/jest-dom';
+
 test/toast.test.tsx
      1→import React, { useEffect, useState } from 'react';
      2→import {
@@ -1112,11 +1142,13 @@ test/toast.test.tsx
     32→  });
     33→};
     35→const TOAST_DURATION = 1000;
+
 tsconfig.json
      3→  "include": ["src", "types", "test"],
      4→  "compilerOptions": {
     32→  }
     33→}
+
 tsup.config.ts
      1→import { defineConfig, Options } from 'tsup';
      2→import { minifyTemplates, writeFiles } from 'esbuild-minify-templates';

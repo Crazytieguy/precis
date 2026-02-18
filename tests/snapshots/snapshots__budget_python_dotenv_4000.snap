@@ -16,6 +16,7 @@ CHANGELOG.md
     24→* CLI: revert the use of execvpe on Windows by [@wrongontheinternet] in [#566](https://github.com/theskumar/python-dotenv/pull/566)
     25→
     26→
+
 CONTRIBUTING.md
      1→Contributing
      4→All the contributions are welcome! Please open [an
@@ -26,6 +27,7 @@ CONTRIBUTING.md
      9→
     10→    $ uv venv
       →…
+
 README.md
      1→# python-dotenv
      3→[![Build Status][build_status_badge]][build_status_link]
@@ -271,8 +273,10 @@ README.md
    257→[contributors]: https://github.com/theskumar/python-dotenv/graphs/contributors
    258→[build_status_link]: https://github.com/theskumar/python-dotenv/actions/workflows/test.yml
    259→[build_status_badge]: https://github.com/theskumar/python-dotenv/actions/workflows/test.yml/badge.svg
+
 docs/reference.md
      1→# ::: dotenv …
+
 mkdocs.yml
      1→site_name: python-dotenv
      2→repo_url: https://github.com/theskumar/python-dotenv
@@ -286,6 +290,7 @@ mkdocs.yml
     15→plugins:
     24→  - search
     25→nav:
+
 pyproject.toml
      1→[build-system …
      5→[project …
@@ -299,8 +304,10 @@ pyproject.toml
     72→[tool.coverage.paths …
     79→[tool.coverage.report …
     87→[tool.mypy …
+
 ruff.toml
      1→[lint …
+
 src/dotenv/__init__.py
      1→from typing import Any, Optional
      3→from .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key
@@ -327,8 +334,10 @@ src/dotenv/__init__.py
     49→    "find_dotenv",
     50→    "load_ipython_extension",
     51→]
+
 src/dotenv/__main__.py
      3→from .cli import cli
+
 src/dotenv/cli.py
      1→import json
      2→import os
@@ -446,6 +455,7 @@ src/dotenv/cli.py
    209→        This function does not return any value. It replaces the current process with the new one.
    210→
    211→    """
+
 src/dotenv/ipython.py
      1→from IPython.core.magic import Magics, line_magic, magics_class  # type: ignore
      2→from IPython.core.magic_arguments import (
@@ -491,6 +501,7 @@ src/dotenv/ipython.py
     45→        load_dotenv(dotenv_path, verbose=args.verbose, override=args.override)
     48→def load_ipython_extension(ipython):
     49→    """Register the %dotenv magic."""
+
 src/dotenv/main.py
      1→import io
      2→import logging
@@ -698,6 +709,7 @@ src/dotenv/main.py
    433→        return False
    434→
    435→    return stat.S_ISFIFO(st.st_mode)
+
 src/dotenv/parser.py
      1→import codecs
      2→import re
@@ -742,6 +754,7 @@ src/dotenv/parser.py
    128→def parse_value(reader: Reader) -> str:
    142→def parse_binding(reader: Reader) -> Binding:
    179→def parse_stream(stream: IO[str]) -> Iterator[Binding]:
+
 src/dotenv/variables.py
      1→import re
      2→from abc import ABCMeta, abstractmethod
@@ -774,13 +787,16 @@ src/dotenv/variables.py
     61→    def __hash__(self) -> int:
     64→    def resolve(self, env: Mapping[str, Optional[str]]) -> str:
     70→def parse_variables(value: str) -> Iterator[Atom]:
+
 src/dotenv/version.py
      1→__version__ = "1.2.1"
+
 tests/conftest.py
      5→@pytest.fixture
      6→def cli():
     12→@pytest.fixture
     13→def dotenv_path(tmp_path):
+
 tests/test_cli.py
     17→def invoke_sub(args: Sequence[str]) -> subprocess.CompletedProcess:
     18→    """
@@ -830,8 +846,10 @@ tests/test_cli.py
    293→    """
    294→    Check that dotenv flags supersede command flags.
    295→    """
+
 tests/test_fifo_dotenv.py
     13→def test_load_dotenv_from_fifo(tmp_path: pathlib.Path, monkeypatch):
+
 tests/test_ipython.py
     13→@mock.patch.dict(os.environ, {}, clear=True)
     14→def test_ipython_existing_variable_no_override(tmp_path):
@@ -839,6 +857,7 @@ tests/test_ipython.py
     33→def test_ipython_existing_variable_override(tmp_path):
     51→@mock.patch.dict(os.environ, {}, clear=True)
     52→def test_ipython_new_variable(tmp_path):
+
 tests/test_is_interactive.py
      8→class TestIsInteractive:
      9→    """Tests for the _is_interactive helper function within find_dotenv.
@@ -889,6 +908,7 @@ tests/test_is_interactive.py
    204→        """Test normal script execution scenario where _is_interactive should return False."""
    218→    def test_is_interactive_with_usecwd_override(self, tmp_path, monkeypatch):
    219→        """Test that usecwd=True overrides _is_interactive behavior."""
+
 tests/test_main.py
     17→def test_set_key_no_file(tmp_path):
     46→def test_set_key(dotenv_path, before, key, value, expected, after):
@@ -939,12 +959,16 @@ tests/test_main.py
    507→def test_dotenv_values_file(dotenv_path):
    551→def test_dotenv_values_string_io(env, string, interpolate, expected):
    561→def test_dotenv_values_file_stream(dotenv_path):
+
 tests/test_parser.py
    550→def test_parse_stream(test_input, expected):
+
 tests/test_utils.py
      4→def test_to_cli_string():
+
 tests/test_variables.py
     32→def test_parse_variables(value, expected):
+
 tests/test_zip_imports.py
     14→def walk_to_root(path: str):
     23→class FileToAdd:

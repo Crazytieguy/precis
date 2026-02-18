@@ -18,6 +18,7 @@ checkmark.tsx
     37→  height: 20px;
     38→  border-radius: 10px;
       →…
+
 error.tsx
      1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
@@ -33,6 +34,7 @@ error.tsx
     41→  height: 20px;
     42→  border-radius: 10px;
       →…
+
 loader.tsx
      1→import { styled, keyframes } from 'goober';
      3→const rotate = keyframes`
@@ -46,6 +48,7 @@ loader.tsx
     20→  box-sizing: border-box;
     21→  border: 2px solid;
       →…
+
 toast-bar.tsx
      1→import * as React from 'react';
      2→import { styled, keyframes } from 'goober';
@@ -96,6 +99,7 @@ toast-bar.tsx
     78→      ? getAnimationStyle(
     79→          toast.position || position || 'top-center',
       →…
+
 toast-icon.tsx
      1→import * as React from 'react';
      2→import { styled, keyframes } from 'goober';
@@ -148,6 +152,7 @@ toast-icon.tsx
     75→    </IndicatorWrapper>
     76→  );
     77→};
+
 toaster.tsx
      1→import { css, setup } from 'goober';
      2→import * as React from 'react';

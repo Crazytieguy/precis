@@ -10,6 +10,7 @@ CHANGELOG.md
      5→### Changes …
      7→### Fixed …
      9→### Security …
+
 README.md
      1→# go-multierror
     10→> **Note**: As of Go 1.20, the standard library provides [`errors.Join`](https://pkg.go.dev/errors#Join) which offers similar functionality for combining multiple errors. **For new projects, we recommend using `errors.Join` from the standard library.** This package provides additional features like custom formatting, the `Group` pattern for concurrent error collection, and utility functions (`Append`, `Flatten`, `Prefix`).
@@ -51,6 +52,7 @@ README.md
    134→**Building a list of errors**
    135→
       →…
+
 append.go
      6→// Append is a helper function that will append more errors
      7→// onto an Error in order to create a larger multi-error.
@@ -59,7 +61,9 @@ append.go
     10→// one. If any of the errs are multierr.Error, they will be flattened
       →…
     14→func Append(err error, errs ...error) *Error {
+
 append_test.go
+
 flatten.go
      6→// Flatten flattens the given error, merging any *Errors together into
      7→// a single *Error.
@@ -74,7 +78,9 @@ flatten.go
     27→		flatErr.Errors = append(flatErr.Errors, err)
     28→	}
     29→}
+
 flatten_test.go
+
 format.go
      6→import (
      7→	"fmt"
@@ -86,7 +92,9 @@ format.go
     15→// ListFormatFunc is a basic formatter that outputs the number of errors
     16→// that occurred along with a bullet point list of the errors.
     17→func ListFormatFunc(es []error) string {
+
 format_test.go
+
 group.go
      6→import "sync"
      8→// Group is a collection of goroutines which return errors that need to be
@@ -104,7 +112,9 @@ group.go
     34→// Wait blocks until all function calls from the Go method have returned, then
     35→// returns the multierror.
     36→func (g *Group) Wait() *Error {
+
 group_test.go
+
 multierror.go
      6→import (
      7→	"errors"
@@ -163,9 +173,11 @@ multierror.go
    117→func (e chain) As(target interface{}) bool {
    121→// Is implements errors.Is by comparing the current value directly.
    122→func (e chain) Is(target error) bool {
+
 multierror_test.go
    208→// nestedError implements error and is used for tests.
    209→type nestedError struct{}
+
 prefix.go
      6→import (
      7→	"fmt"
@@ -177,7 +189,9 @@ prefix.go
     14→// This is useful to use when appending multiple multierrors
       →…
     16→func Prefix(err error, prefix string) error {
+
 prefix_test.go
+
 sort.go
      6→// Len implements sort.Interface function for length
      7→func (err *Error) Len() int {
@@ -185,4 +199,5 @@ sort.go
     16→func (err Error) Swap(i, j int) {
     20→// Less implements sort.Interface function for determining order
     21→func (err Error) Less(i, j int) bool {
+
 sort_test.go

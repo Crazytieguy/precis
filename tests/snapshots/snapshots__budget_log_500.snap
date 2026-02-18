@@ -5,12 +5,14 @@ expression: output
 budget: 500 (465 words)
 
 CHANGELOG.md
+
 Cargo.toml
      1→[package …
     19→[package.metadata.docs.rs …
     22→[features …
     56→[dependencies …
     62→[dev-dependencies …
+
 README.md
      1→log …
     19→## Minimum supported `rustc` …
@@ -18,7 +20,9 @@ README.md
     27→### In libraries …
     58→### In executables …
    106→## Structured logging …
+
 rfcs/0296-structured-logging.md
+
 src/__private_api.rs
      3→use self::sealed::KVs;
      7→pub use std::{format_args, module_path, stringify};
@@ -31,6 +35,7 @@ src/__private_api.rs
    113→mod kv_support {
    116→    pub type Value<'a> = kv::Value<'a>;
    151→pub use self::kv_support::*;
+
 src/kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
@@ -45,6 +50,7 @@ src/kv/error.rs
     16→    Fmt,
     17→}
     73→    pub(super) type BoxedError …
+
 src/kv/key.rs
      3→use std::borrow::Borrow;
      7→pub trait ToKey {
@@ -52,6 +58,7 @@ src/kv/key.rs
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
     40→}
+
 src/kv/mod.rs
    247→mod key;
    254→pub use self::error::Error;
@@ -63,11 +70,13 @@ src/kv/mod.rs
    261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
    265→pub use self::source::Visitor;
+
 src/kv/source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
     51→pub trait Source {
    235→pub trait VisitSource<'kvs> {
    462→pub use VisitSource as Visitor;
+
 src/kv/value.rs
      6→use std::fmt;
      8→pub use crate::kv::Error;
@@ -100,6 +109,7 @@ src/kv/value.rs
   1149→macro_rules! as_error {
   1159→macro_rules! as_serde {
   1169→macro_rules! as_sval {
+
 src/lib.rs
    401→use std::error;
    405→#[macro_use]
@@ -138,12 +148,16 @@ src/lib.rs
   1603→///
       →…
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
+
 src/macros.rs
+
 src/serde.rs
+
 test_max_level_features/Cargo.toml
      1→[package …
      7→[[bin …
     11→[dependencies.log …
+
 test_max_level_features/main.rs
      5→use log::set_boxed_logger;
      6→#[cfg(not(feature = "std"))]
@@ -158,5 +172,6 @@ test_max_level_features/main.rs
     18→    fn enabled(&self, _: &Metadata) -> bool {
     22→    fn log(&self, record: &Record) {
     26→    fn flush(&self) {}
+
 triagebot.toml
      1→[assign …

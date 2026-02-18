@@ -33,6 +33,7 @@ __private_api.rs
    126→    pub fn capture_debug …
    130→    pub fn capture_display …
    151→pub use self::kv_support::*;
+
 kv/error.rs
      3→/// An error encountered while working with structured data.
      4→#[derive(Debug)]
@@ -58,6 +59,7 @@ kv/error.rs
     70→    use super::*;
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     77→        pub fn boxed …
+
 kv/key.rs
      3→use std::borrow::Borrow;
      6→/// A type that can be converted into a [`Key`](struct.Key.html).
@@ -80,6 +82,7 @@ kv/key.rs
    135→#[cfg(feature = "kv_serde")]
    136→mod serde_support {
    137→    use super::*;
+
 kv/mod.rs
      1→//! Structured logging.
      2→//!
@@ -109,6 +112,7 @@ kv/mod.rs
    261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
    265→pub use self::source::Visitor;
+
 kv/source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
      9→/// A source of key-values.
@@ -138,6 +142,7 @@ kv/source.rs
    280→mod std_support {
    281→    use super::*;
    462→pub use VisitSource as Visitor;
+
 kv/value.rs
      6→use std::fmt;
      8→pub use crate::kv::Error;
@@ -259,6 +264,7 @@ kv/value.rs
   1166→#[cfg(feature = "kv_unstable_sval")]
       →…
   1169→macro_rules! as_sval {
+
 lib.rs
    399→use std::cfg;
    401→use std::error;
@@ -467,6 +473,7 @@ lib.rs
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
   1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
       →…
+
 macros.rs
     75→macro_rules! log {
    119→macro_rules! __log {
@@ -488,6 +495,7 @@ macros.rs
    553→macro_rules! __log_value_serde {
    564→macro_rules! __log_value_error {
    573→macro_rules! __log_value_error {
+
 serde.rs
      3→use serde_core::de::{
      4→    Deserialize, DeserializeSeed, Deserializer, EnumAccess, Error, Unexpected, VariantAccess,

@@ -11,6 +11,7 @@ Cargo.toml
     33→[dev-dependencies …
     39→[workspace …
     42→[package.metadata.docs.rs …
+
 README.md
      1→derive(Error)
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/thiserror-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/thiserror)
@@ -169,6 +170,7 @@ README.md
    234→for inclusion in this crate by you, as defined in the Apache-2.0 license, shall
    235→be dual licensed as above, without any additional terms or conditions.
    236→</sub>
+
 build/probe.rs
      8→use core::error::{Error, Request};
      9→use core::fmt::{self, Debug, Display};
@@ -186,6 +188,7 @@ build/probe.rs
     27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
     28→        request.provide_ref(&self.0);
     29→    }
+
 build.rs
      1→use std::env;
      2→use std::ffi::OsString;
@@ -202,11 +205,13 @@ build.rs
     91→fn compile_probe(rustc_bootstrap: bool) -> bool {
    179→fn rustc_minor_version() -> Option<u32> {
    190→fn cargo_env_var(key: &str) -> OsString {
+
 impl/Cargo.toml
      1→[package …
     11→[lib …
     14→[dependencies …
     19→[package.metadata.docs.rs …
+
 impl/src/ast.rs
      1→use crate::attr::{self, Attrs};
      2→use crate::generics::ParamsInScope;
@@ -263,6 +268,7 @@ impl/src/ast.rs
    156→impl ContainerKind {
    174→impl Display for ContainerKind {
    175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+
 impl/src/attr.rs
      1→use proc_macro2::{Delimiter, Group, Literal, Punct, Spacing, Span, TokenStream, TokenTree};
      2→use quote::{format_ident, quote, quote_spanned, ToTokens};
@@ -329,6 +335,7 @@ impl/src/attr.rs
    303→    fn to_tokens(&self, tokens: &mut TokenStream) {
    342→impl ToTokens for Trait {
    343→    fn to_tokens(&self, tokens: &mut TokenStream) {
+
 impl/src/expand.rs
      1→use crate::ast::{Enum, Field, Input, Struct};
      2→use crate::attr::Trait;
@@ -341,12 +348,14 @@ impl/src/expand.rs
      9→use std::collections::BTreeSet as Set;
     10→use syn::{DeriveInput, GenericArgument, PathArguments, Result, Token, Type};
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
+
 impl/src/fallback.rs
      1→use crate::expand::call_site_ident;
      2→use crate::private;
      3→use proc_macro2::TokenStream;
      4→use quote::quote;
      5→use syn::DeriveInput;
+
 impl/src/fmt.rs
      1→use crate::ast::{ContainerKind, Field};
      2→use crate::attr::{Display, Trait};
@@ -387,6 +396,7 @@ impl/src/fmt.rs
    188→        first_unnamed: None,
    189→    })
    190→}
+
 impl/src/generics.rs
      1→use proc_macro2::TokenStream;
      2→use quote::ToTokens;
@@ -408,6 +418,7 @@ impl/src/generics.rs
     54→    pub fn new() -> Self {
     61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
     74→    pub fn augment_where_clause(&self, generics: &Generics) -> WhereClause {
+
 impl/src/lib.rs
     23→mod ast;
     24→mod attr;
@@ -432,6 +443,7 @@ impl/src/lib.rs
     46→struct private;
     48→impl ToTokens for private {
     49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+
 impl/src/prop.rs
      1→use crate::ast::{Enum, Field, Struct, Variant};
      2→use crate::unraw::MemberUnraw;
@@ -441,6 +453,7 @@ impl/src/prop.rs
     25→impl Enum<'_> {
     53→impl Variant<'_> {
     72→impl Field<'_> {
+
 impl/src/scan_expr.rs
      1→use self::{Action::*, Input::*};
      2→use proc_macro2::{Delimiter, Ident, Spacing, TokenTree};
@@ -492,6 +505,7 @@ impl/src/scan_expr.rs
    175→static RAW: [(Input, Action); 3] = [
    181→static REFERENCE: [(Input, Action); 3] = [
    187→static RETURN: [(Input, Action); 2] = [
+
 impl/src/unraw.rs
      1→use proc_macro2::{Ident, Span, TokenStream};
      2→use quote::ToTokens;
@@ -541,6 +555,7 @@ impl/src/unraw.rs
    127→    fn hash<H: Hasher>(&self, hasher: &mut H) {
    135→impl ToTokens for MemberUnraw {
    136→    fn to_tokens(&self, tokens: &mut TokenStream) {
+
 impl/src/valid.rs
      1→use crate::ast::{Enum, Field, Input, Struct, Variant};
      2→use crate::attr::Attrs;
@@ -550,8 +565,10 @@ impl/src/valid.rs
     45→impl Enum<'_> {
     66→impl Variant<'_> {
     91→impl Field<'_> {
+
 rust-toolchain.toml
      1→[toolchain …
+
 src/aserror.rs
      1→use core::error::Error;
      2→use core::panic::UnwindSafe;
@@ -590,6 +607,7 @@ src/aserror.rs
     48→impl Sealed for dyn Error + Send + '_ {}
     49→impl Sealed for dyn Error + Send + Sync + '_ {}
     50→impl Sealed for dyn Error + Send + Sync + UnwindSafe + '_ {}
+
 src/display.rs
      1→use core::fmt::Display;
      3→use std::path::{self, Path, PathBuf};
@@ -646,6 +664,7 @@ src/display.rs
     77→            unreachable!()
     78→        }
     81→    impl Sealed for Placeholder {}
+
 src/lib.rs
    281→mod aserror;
    282→mod display;
@@ -654,6 +673,7 @@ src/lib.rs
    285→mod var;
    287→pub use thiserror_impl::*;
    289→mod private;
+
 src/private.rs
      2→pub use crate::aserror::AsDynError;
      4→pub use crate::display::AsDisplay;
@@ -661,6 +681,7 @@ src/private.rs
      9→pub use crate::var::Var;
     11→pub use core::error::Error;
     14→pub use std::backtrace::Backtrace;
+
 src/provide.rs
      1→use core::error::{Error, Request};
      3→#[doc(hidden)]
@@ -677,6 +698,7 @@ src/provide.rs
     18→#[doc(hidden)]
     19→pub trait Sealed {}
     20→impl<T: Error + ?Sized> Sealed for T {}
+
 src/var.rs
      1→use core::fmt::{self, Pointer};
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
@@ -684,10 +706,12 @@ src/var.rs
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
      7→        Pointer::fmt(self.0, formatter)
      8→    }
+
 tests/no-std/Cargo.toml
      1→[package …
      8→[lib …
     11→[dependencies …
+
 tests/no-std/test.rs
      3→use thiserror::Error;
      5→#[derive(Error, Debug)]
@@ -700,6 +724,7 @@ tests/no-std/test.rs
     13→pub struct SourceError {
     14→    pub field: i32,
     15→}
+
 tests/test_backtrace.rs
      8→pub struct Inner;
     13→pub struct InnerBacktrace {
@@ -730,6 +755,7 @@ tests/test_backtrace.rs
    215→    pub enum CombinedBacktraceFrom {
    225→    pub enum OptBacktraceFrom {
    236→    pub enum ArcBacktraceFrom {
+
 tests/test_display.rs
     12→fn assert<T: Display>(expected: &str, value: T) {
     13→    assert_eq!(expected, value.to_string());
@@ -738,6 +764,7 @@ tests/test_display.rs
    417→    pub fn octal<T: Octal>(value: &T, formatter: &mut fmt::Formatter) -> fmt::Result {
    418→        write!(formatter, "0o{:o}", value)
    419→    }
+
 tests/test_error.rs
      7→macro_rules! unimplemented_display {
      8→    ($ty:ty) => {
@@ -770,6 +797,7 @@ tests/test_error.rs
     47→    Tuple(#[source] io::Error),
     48→    Unit,
     49→}
+
 tests/test_expr.rs
      5→use std::path::PathBuf;
     11→pub enum CompilerError {
@@ -778,6 +806,7 @@ tests/test_expr.rs
     56→fn assert<T: Display>(expected: &str, value: T) {
     57→    assert_eq!(expected, value.to_string());
     58→}
+
 tests/test_from.rs
      8→pub struct ErrorStruct {
     15→pub struct ErrorStructOptional {
@@ -787,6 +816,7 @@ tests/test_from.rs
     39→pub enum ErrorEnumOptional {
     48→pub enum Many {
     53→fn assert_impl<T: From<io::Error>>() {}
+
 tests/test_generics.rs
      7→pub struct NoFormat;
     10→pub struct DebugOnly;
@@ -812,8 +842,10 @@ tests/test_generics.rs
    144→pub struct StructFromGeneric<E> {
    162→pub struct StructTransparentGeneric<E>(pub E);
    175→pub enum AssociatedTypeError<T: FromStr> {
+
 tests/test_lints.rs
      5→pub use std::error::Error;
+
 tests/test_option.rs
      4→#[cfg(thiserror_nightly_testing)]
      5→pub mod structs {
@@ -829,6 +861,7 @@ tests/test_option.rs
     74→    pub enum NoSourceOptBacktrace {
     83→    pub enum AlwaysSourceOptBacktrace {
     93→    pub enum OptSourceOptBacktrace {
+
 tests/test_path.rs
      8→#[derive(Error, Debug)]
      9→#[error("failed to read '{file}'")]
@@ -851,6 +884,7 @@ tests/test_path.rs
     42→fn assert<T: Display>(expected: &str, value: T) {
     43→    assert_eq!(expected, value.to_string());
     44→}
+
 tests/test_source.rs
      7→pub struct ImplicitSource {
     13→pub struct ExplicitSource {
@@ -858,20 +892,25 @@ tests/test_source.rs
     50→macro_rules! error_from_macro {
     51→    ($($variants:tt)*) => {
       →…
+
 tests/test_transparent.rs
+
 tests/ui/bad-field-attr.rs
      3→#[derive(Error, Debug)]
      4→#[error(transparent)]
      5→pub struct Error(#[error(transparent)] std::io::Error);
+
 tests/ui/concat-display.rs
      3→macro_rules! error_type {
      4→    ($name:ident, $what:expr) => {
      5→        // Use #[error("invalid {}", $what)] instead.
       →…
+
 tests/ui/display-underscore.rs
      3→#[derive(Error, Debug)]
      4→#[error("{_}")]
      5→pub struct Error;
+
 tests/ui/duplicate-enum-source.rs
      3→#[derive(Error, Debug)]
      4→pub enum ErrorEnum {
@@ -882,6 +921,7 @@ tests/ui/duplicate-enum-source.rs
      9→        b: anyhow::Error,
     10→    },
     11→}
+
 tests/ui/duplicate-fmt.rs
      3→#[derive(Error, Debug)]
      4→#[error("...")]
@@ -899,6 +939,7 @@ tests/ui/duplicate-fmt.rs
     19→#[error(fmt = core::fmt::Octal::fmt)]
     20→#[error("...")]
     21→pub enum FmtDisplay {}
+
 tests/ui/duplicate-struct-source.rs
      3→#[derive(Error, Debug)]
      4→pub struct ErrorStruct {
@@ -907,15 +948,18 @@ tests/ui/duplicate-struct-source.rs
      7→    #[source]
      8→    b: anyhow::Error,
      9→}
+
 tests/ui/duplicate-transparent.rs
      3→#[derive(Error, Debug)]
      4→#[error(transparent)]
      5→#[error(transparent)]
      6→pub struct Error(anyhow::Error);
+
 tests/ui/expression-fallback.rs
      3→#[derive(Error, Debug)]
      4→#[error("".yellow)]
      5→pub struct ArgError;
+
 tests/ui/fallback-impl-with-display.rs
      4→#[derive(Error, Debug)]
      5→#[error]
@@ -924,6 +968,7 @@ tests/ui/fallback-impl-with-display.rs
      9→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     10→        unimplemented!()
     11→    }
+
 tests/ui/from-backtrace-backtrace.rs
      6→#[derive(Error, Debug)]
      7→#[error("...")]
@@ -933,6 +978,7 @@ tests/ui/from-backtrace-backtrace.rs
     11→    std::io::Error,
     12→    Backtrace,
     13→);
+
 tests/ui/from-not-source.rs
      3→#[derive(Error, Debug)]
      4→pub struct Error {
@@ -941,10 +987,12 @@ tests/ui/from-not-source.rs
      7→    #[from]
      8→    other: anyhow::Error,
      9→}
+
 tests/ui/invalid-input-impl-anyway.rs
      3→#[derive(Error, Debug)]
      4→#[error]
      5→pub struct MyError;
+
 tests/ui/lifetime.rs
      4→#[derive(Error, Debug)]
      5→#[error("error")]
@@ -960,12 +1008,14 @@ tests/ui/lifetime.rs
     18→#[derive(Error, Debug)]
     19→#[error("{0:?}")]
     20→struct Generic<T: Debug>(T);
+
 tests/ui/missing-display.rs
      3→#[derive(Error, Debug)]
      4→pub enum MyError {
      5→    First,
      6→    Second,
      7→}
+
 tests/ui/missing-fmt.rs
      3→#[derive(Error, Debug)]
      4→pub enum Error {
@@ -973,6 +1023,7 @@ tests/ui/missing-fmt.rs
      6→    A(usize),
      7→    B(usize),
      8→}
+
 tests/ui/no-display.rs
      3→#[derive(Debug)]
      4→struct NoDisplay;
@@ -986,16 +1037,19 @@ tests/ui/no-display.rs
     14→pub struct ErrorOctal {
     15→    thread: NoDisplay,
     16→}
+
 tests/ui/numbered-positional-tuple.rs
      3→#[derive(Error, Debug)]
      4→#[error("invalid rdo_lookahead_frames {0} (expected < {})", i32::MAX)]
      5→pub struct Error(u32);
+
 tests/ui/raw-identifier.rs
      3→#[derive(Error, Debug)]
      4→#[error("error: {r#fn}")]
      5→pub struct Error {
      6→    r#fn: &'static str,
      7→}
+
 tests/ui/same-from-type.rs
      3→#[derive(Error, Debug)]
      4→pub enum Error {
@@ -1004,6 +1058,7 @@ tests/ui/same-from-type.rs
      7→    #[error("failed to close")]
      8→    CloseFile(#[from] std::io::Error),
      9→}
+
 tests/ui/source-enum-not-error.rs
      3→#[derive(Debug)]
      4→pub struct NotError;
@@ -1012,6 +1067,7 @@ tests/ui/source-enum-not-error.rs
      8→pub enum ErrorEnum {
      9→    Broken { source: NotError },
     10→}
+
 tests/ui/source-enum-unnamed-field-not-error.rs
      3→#[derive(Debug)]
      4→pub struct NotError;
@@ -1020,6 +1076,7 @@ tests/ui/source-enum-unnamed-field-not-error.rs
      8→pub enum ErrorEnum {
      9→    Broken(#[source] NotError),
     10→}
+
 tests/ui/source-struct-not-error.rs
      3→#[derive(Debug)]
      4→struct NotError;
@@ -1028,45 +1085,53 @@ tests/ui/source-struct-not-error.rs
      8→pub struct ErrorStruct {
      9→    source: NotError,
     10→}
+
 tests/ui/source-struct-unnamed-field-not-error.rs
      3→#[derive(Debug)]
      4→struct NotError;
      6→#[derive(Error, Debug)]
      7→#[error("...")]
      8→pub struct ErrorStruct(#[source] NotError);
+
 tests/ui/struct-with-fmt.rs
      3→#[derive(Error, Debug)]
      4→#[error(fmt = core::fmt::Octal::fmt)]
      5→pub struct Error(i32);
+
 tests/ui/transparent-display.rs
      3→#[derive(Error, Debug)]
      4→#[error(transparent)]
      5→#[error("...")]
      6→pub struct Error(anyhow::Error);
+
 tests/ui/transparent-enum-many.rs
      3→#[derive(Error, Debug)]
      4→pub enum Error {
      5→    #[error(transparent)]
      6→    Other(anyhow::Error, String),
      7→}
+
 tests/ui/transparent-enum-not-error.rs
      3→#[derive(Error, Debug)]
      4→pub enum Error {
      5→    #[error(transparent)]
      6→    Other { message: String },
      7→}
+
 tests/ui/transparent-enum-source.rs
      3→#[derive(Error, Debug)]
      4→pub enum Error {
      5→    #[error(transparent)]
      6→    Other(#[source] anyhow::Error),
      7→}
+
 tests/ui/transparent-enum-unnamed-field-not-error.rs
      3→#[derive(Error, Debug)]
      4→pub enum Error {
      5→    #[error(transparent)]
      6→    Other(String),
      7→}
+
 tests/ui/transparent-struct-many.rs
      3→#[derive(Error, Debug)]
      4→#[error(transparent)]
@@ -1074,24 +1139,29 @@ tests/ui/transparent-struct-many.rs
      6→    inner: anyhow::Error,
      7→    what: String,
      8→}
+
 tests/ui/transparent-struct-not-error.rs
      3→#[derive(Error, Debug)]
      4→#[error(transparent)]
      5→pub struct Error {
      6→    message: String,
      7→}
+
 tests/ui/transparent-struct-source.rs
      3→#[derive(Error, Debug)]
      4→#[error(transparent)]
      5→pub struct Error(#[source] anyhow::Error);
+
 tests/ui/transparent-struct-unnamed-field-not-error.rs
      3→#[derive(Error, Debug)]
      4→#[error(transparent)]
      5→pub struct Error(String);
+
 tests/ui/unconditional-recursion.rs
      3→#[derive(Error, Debug)]
      4→#[error("{self}")]
      5→pub struct Error;
+
 tests/ui/unexpected-field-fmt.rs
      3→#[derive(Error, Debug)]
      4→pub enum Error {
@@ -1100,8 +1170,10 @@ tests/ui/unexpected-field-fmt.rs
      7→        io: std::io::Error,
      8→    },
      9→}
+
 tests/ui/unexpected-struct-source.rs
      3→#[derive(Error, Debug)]
      4→#[source]
      5→pub struct Error;
+
 tests/ui/union.rs

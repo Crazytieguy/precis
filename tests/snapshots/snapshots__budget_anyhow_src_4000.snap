@@ -91,6 +91,7 @@ backtrace.rs
    344→        fn resolve …
    370→    fn output_filename …
    407→fn _assert_send_sync …
+
 chain.rs
      1→use self::ChainState::*;
      2→use crate::StdError;
@@ -122,6 +123,7 @@ chain.rs
     93→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     94→impl Default for Chain<'_> {
     95→    fn default …
+
 context.rs
      1→use crate::error::ContextError;
      2→use crate::{Context, Error, StdError};
@@ -178,6 +180,7 @@ context.rs
    186→pub(crate) mod private {
    187→    use super::*;
    189→    pub trait Sealed {}
+
 ensure.rs
      1→use crate::Error;
      2→use alloc::string::String;
@@ -211,6 +214,7 @@ ensure.rs
    910→#[doc(hidden)]
    911→#[macro_export]
    912→macro_rules! __fallback_ensure {
+
 error.rs
      1→use crate::backtrace::Backtrace;
      2→use crate::chain::Chain;
@@ -495,6 +499,7 @@ error.rs
   1078→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
   1079→impl AsRef<dyn StdError> for Error {
   1080→    fn as_ref …
+
 fmt.rs
      1→use crate::chain::Chain;
      2→use crate::error::ErrorImpl;
@@ -508,6 +513,7 @@ fmt.rs
     72→    started: bool,
     73→}
     79→    fn write_str …
+
 kind.rs
     47→use crate::Error;
     48→use core::fmt::{Debug, Display};
@@ -546,6 +552,7 @@ kind.rs
    115→impl Boxed {
    116→    #[cold]
    117→    pub fn new(self, error: Box<dyn StdError + Send + Sync>) -> Error {
+
 lib.rs
    251→#[macro_use]
    252→mod backtrace;
@@ -776,6 +783,7 @@ lib.rs
    716→            fn not(self) -> bool {
    722→            #[inline]
    723→            fn not(self) -> bool {
+
 macros.rs
      1→/// Return early with an error.
      2→///
@@ -830,6 +838,7 @@ macros.rs
    228→#[doc(hidden)]
    229→#[macro_export]
    230→macro_rules! __anyhow {
+
 nightly.rs
      7→use core::error::{self, Error};
      8→use std::backtrace::Backtrace;
@@ -838,6 +847,7 @@ nightly.rs
     45→fn request_ref …
     52→pub fn provide_ref_backtrace …
     56→pub fn provide …
+
 ptr.rs
      1→use alloc::boxed::Box;
      2→use core::marker::PhantomData;
@@ -888,6 +898,7 @@ ptr.rs
    182→    type Target;
    183→}
    186→    type Target = T;
+
 wrapper.rs
      1→use crate::StdError;
      2→use core::fmt::{self, Debug, Display};

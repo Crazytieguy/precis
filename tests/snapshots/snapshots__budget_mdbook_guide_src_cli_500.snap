@@ -18,8 +18,10 @@ README.md
     12→* [`mdbook test`](test.md) --- Tests Rust code samples.
     13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
     14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
+
 arg-watcher.md
      1→#### `--watcher` …
+
 build.md
      1→# The build command
      3→The build command is used to render your book:
@@ -29,6 +31,7 @@ build.md
     16→#### Specify a directory …
     25→#### `--open` …
     30→#### `--dest-dir` …
+
 clean.md
      1→# The clean command
      3→The clean command is used to delete the generated book and any other build
@@ -37,12 +40,14 @@ clean.md
       →…
     10→#### Specify a directory …
     19→#### `--dest-dir` …
+
 completions.md
      1→# The completions command
      3→The completions command is used to generate auto-completions for some common shells.
      4→This means when you type `mdbook` in your shell, you can then press your shell's auto-complete key (usually the Tab key) and it may display what the valid options are, or finish partial input.
      5→
       →…
+
 init.md
      1→# The init command
      3→There is some minimal boilerplate that is the same for every new book. It's for
@@ -55,6 +60,7 @@ init.md
     56→#### `--title` …
     65→#### `--ignore` …
     80→#### `--force` …
+
 serve.md
      1→# The serve command
      3→The serve command is used to preview a book by serving it via HTTP at
@@ -72,6 +78,7 @@ serve.md
     35→#### `--open` …
     40→#### `--dest-dir` …
     49→#### Specify exclude patterns …
+
 test.md
      1→# The test command
      3→When writing a book, you sometimes need to automate some tests. For example,
@@ -82,6 +89,7 @@ test.md
     31→#### Specify a directory …
     40→#### `--library-path` …
     57→#### `--chapter` …
+
 watch.md
      1→# The watch command
      3→The `watch` command is useful when you want your book to be rendered on every

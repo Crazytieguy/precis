@@ -172,6 +172,7 @@ README.md
    202→
    203→## License
    205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
+
 package.json
      2→  "name": "mitt",
      3→  "version": "3.0.1",
@@ -202,6 +203,7 @@ package.json
     62→  "devDependencies": {
     84→  }
     85→}
+
 src/index.ts
      1→export type EventType = string | symbol;
      5→export type Handler<T = unknown> = (event: T) => void;
@@ -309,11 +311,13 @@ src/index.ts
    121→		}
    122→	};
    123→}
+
 test/index_test.ts
      1→import mitt, { Emitter, EventHandlerMap } from '..';
      2→import chai, { expect } from 'chai';
      3→import { spy } from 'sinon';
      4→import sinonChai from 'sinon-chai';
+
 test/test-types-compilation.ts
      3→import mitt from '..';
      5→interface SomeEventData {
@@ -330,6 +334,7 @@ test/test-types-compilation.ts
     18→	_type: 'foo' | 'bar' | 'someEvent',
     19→	_event: string | SomeEventData | number | undefined
     20→) => {};
+
 tsconfig.json
      2→	"compileOnSave": false,
      3→	"compilerOptions": {

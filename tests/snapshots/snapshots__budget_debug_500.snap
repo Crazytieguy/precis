@@ -95,6 +95,7 @@ README.md
    386→## Backers …
    422→## Sponsors …
    457→## License …
+
 package.json
      2→  "name": "debug",
      3→  "version": "4.4.3",
@@ -124,6 +125,7 @@ package.json
     59→  "xo": {
     63→  }
     64→}
+
 src/browser.js
    115→function useColors() {
    116→	// NB: In an Electron preload script, document will be defined but not fully
@@ -140,10 +142,12 @@ src/browser.js
    236→/**
       →…
    247→function localstorage() {
+
 src/common.js
      2→/**
       →…
      7→function setup(env) {
+
 src/node.js
    151→/**
       →…
@@ -166,5 +170,6 @@ src/node.js
    224→/**
       →…
    231→function init(debug) {
+
 test.node.js
      8→const formatWithOptionsSpy = sinon.spy(util, 'formatWithOptions');

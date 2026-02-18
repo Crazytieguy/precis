@@ -6,6 +6,7 @@ budget: 1000 (974 words)
 
 CHANGELOG.md
      1→# Changelog …
+
 Cargo.toml
      1→[package …
     19→[workspace …
@@ -19,6 +20,7 @@ Cargo.toml
     82→[[example …
     86→[[example …
     90→[package.metadata.docs.rs …
+
 README.md
      8→# Overview
     10→`once_cell` provides two new cell-like types, `unsync::OnceCell` and `sync::OnceCell`. `OnceCell`
@@ -36,16 +38,22 @@ README.md
     53→* [lazy_static](https://crates.io/crates/lazy_static)
     54→* [async_once_cell](https://crates.io/crates/async_once_cell)
       →…
+
 examples/bench.rs
+
 examples/bench_acquire.rs
      5→use once_cell::sync::OnceCell;
     25→#[inline(never)]
     26→fn thread_main(i: usize) {
+
 examples/lazy_static.rs
+
 examples/regex.rs
      5→macro_rules! regex {
+
 examples/test_synchronization.rs
     10→use once_cell::sync::OnceCell;
+
 src/imp_cs.rs
      6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
@@ -56,6 +64,7 @@ src/imp_cs.rs
     13→}
     27→    pub(crate) const fn new() -> OnceCell<T> {
     31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+
 src/imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
@@ -71,6 +80,7 @@ src/imp_pl.rs
    124→    new_state: u8,
    125→}
    128→    fn drop …
+
 src/imp_std.rs
     13→#[derive(Debug)]
     14→pub(crate) struct OnceCell<T> {
@@ -109,6 +119,7 @@ src/imp_std.rs
    151→    fn drop …
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
    245→mod strict {
+
 src/lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -180,6 +191,7 @@ src/lib.rs
   1381→        fn deref_mut …
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
+
 src/race.rs
     31→use core::sync::atomic;
     33→use portable_atomic as atomic;
@@ -213,6 +225,7 @@ src/race.rs
    373→        fn default …
    379→        fn drop …
    482→        fn clone …
+
 tests/it/main.rs
      1→mod unsync_once_cell;
      3→mod sync_once_cell;
@@ -220,7 +233,9 @@ tests/it/main.rs
      7→mod sync_lazy;
     10→mod race;
     12→mod race_once_box;
+
 tests/it/race.rs
+
 tests/it/race_once_box.rs
     10→#[derive(Default)]
     11→struct Heap {
@@ -236,13 +251,16 @@ tests/it/race_once_box.rs
     23→        self.total.fetch_sub(1, SeqCst);
     24→    }
     27→impl Heap {
+
 tests/it/sync_once_cell.rs
    178→#[test]
       →…
    181→fn reentrant_init() {
+
 xtask/Cargo.toml
      1→[package …
      8→[dependencies …
+
 xtask/src/main.rs
      4→use std::time::Instant;
      6→use xshell::{cmd, Shell};
@@ -250,5 +268,6 @@ xtask/src/main.rs
    116→fn push_toolchain …
    126→fn section …
    136→fn defer …
+
 xtask/src/tidy.rs
      1→use xshell::{cmd, Shell};

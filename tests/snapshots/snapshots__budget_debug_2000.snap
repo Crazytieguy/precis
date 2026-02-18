@@ -273,6 +273,7 @@ README.md
    468→distribute, sublicense, and/or sell copies of the Software, and to
    469→permit persons to whom the Software is furnished to do so, subject to
       →…
+
 package.json
      2→  "name": "debug",
      3→  "version": "4.4.3",
@@ -302,6 +303,7 @@ package.json
     59→  "xo": {
     63→  }
     64→}
+
 src/browser.js
    115→function useColors() {
    116→	// NB: In an Electron preload script, document will be defined but not fully
@@ -371,6 +373,7 @@ src/browser.js
    249→		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
    250→		// The Browser also has localStorage in the global context.
       →…
+
 src/common.js
      2→/**
      3→ * This is the common logic for both the Node.js and web browser
@@ -382,6 +385,7 @@ src/common.js
      9→	createDebug.default = createDebug;
     10→	createDebug.coerce = coerce;
       →…
+
 src/node.js
    151→/**
    152→ * Is stdout a TTY? Colored output is enabled when `true`.
@@ -449,5 +453,6 @@ src/node.js
    233→
    234→	const keys = Object.keys(exports.inspectOpts);
       →…
+
 test.node.js
      8→const formatWithOptionsSpy = sinon.spy(util, 'formatWithOptions');

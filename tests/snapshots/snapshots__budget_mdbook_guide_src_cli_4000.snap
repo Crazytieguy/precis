@@ -18,6 +18,7 @@ README.md
     12→* [`mdbook test`](test.md) --- Tests Rust code samples.
     13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
     14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
+
 arg-watcher.md
      1→#### `--watcher`
      3→There are different backends used to determine when a file has changed.
@@ -25,6 +26,7 @@ arg-watcher.md
      5→* `poll` (default) --- Checks for file modifications by scanning the filesystem every second.
      6→* `native` --- Uses the native operating system facilities to receive notifications when files change.
      7→  This can have less constant overhead, but may not be as reliable as the `poll` based watcher. See these issues for more information: [#383](https://github.com/rust-lang/mdBook/issues/383) [#1441](https://github.com/rust-lang/mdBook/issues/1441) [#1707](https://github.com/rust-lang/mdBook/issues/1707) [#2035](https://github.com/rust-lang/mdBook/issues/2035) [#2102](https://github.com/rust-lang/mdBook/issues/2102)
+
 build.md
      1→# The build command
      3→The build command is used to render your book:
@@ -62,6 +64,7 @@ build.md
     38→
     39→***Note:*** *The build command copies all files (excluding files with `.md` extension) from the source directory
     40→into the build directory.*
+
 clean.md
      1→# The clean command
      3→The clean command is used to delete the generated book and any other build
@@ -90,6 +93,7 @@ clean.md
     28→```
     29→
     30→`path/to/book` could be absolute or relative.
+
 completions.md
      1→# The completions command
      3→The completions command is used to generate auto-completions for some common shells.
@@ -110,6 +114,7 @@ completions.md
     18→
     19→Where to place the completions depend on which shell you are using and your operating system.
     20→Consult your shell's documentation for more information one where to place the script.
+
 init.md
      1→# The init command
      3→There is some minimal boilerplate that is the same for every new book. It's for
@@ -186,6 +191,7 @@ init.md
     79→
     80→#### `--force`
     82→Skip the prompts to create a `.gitignore` and for the title for the book.
+
 serve.md
      1→# The serve command
      3→The serve command is used to preview a book by serving it via HTTP at
@@ -239,6 +245,7 @@ serve.md
     56→
     57→***Note:*** *Only the `.gitignore` from the book root directory is used. Global
     58→`$HOME/.gitignore` or `.gitignore` files in parent directories are not used.*
+
 test.md
      1→# The test command
      3→When writing a book, you sometimes need to automate some tests. For example,
@@ -295,6 +302,7 @@ test.md
     57→#### `--chapter`
     59→The `--chapter` (`-c`) option allows you to test a specific chapter of the
     60→book using the chapter name or the relative path to the chapter.
+
 watch.md
      1→# The watch command
      3→The `watch` command is useful when you want your book to be rendered on every

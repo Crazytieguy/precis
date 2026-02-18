@@ -41,9 +41,12 @@ README.md
   1500→## `P.number` and `P.bigint` predicates …
   1621→## Types …
   1766→## Inspirations …
+
 benchmarks/always-last-digit.ts
      4→type Digit …
+
 benchmarks/nested-objects.ts
+
 benchmarks/package.json
      2→  "name": "ts-pattern-benchmarks",
      3→  "version": "1.0.0",
@@ -56,22 +59,31 @@ benchmarks/package.json
     14→  "devDependencies": {
     18→  }
     19→}
+
 benchmarks/random-digit.ts
      4→type Digit …
+
 docs/roadmap.md
+
 docs/v3-to-v4-migration-guide.md
+
 docs/v4-to-v5-migration-guide.md
+
 examples/gif-fetcher/package.json
+
 examples/gif-fetcher/src/App.tsx
     11→type State …
     24→type Event …
     33→const initState …
     42→const reducer …
     75→export default function App() {
+
 examples/gif-fetcher/src/constants.ts
      1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
+
 examples/gif-fetcher/src/index.tsx
      6→const rootElement = document.getElementById('root');
+
 examples/gif-fetcher/src/searchGif.ts
      1→import { isMatching, P } from 'ts-pattern';
      2→import { API_KEY } from './constants';
@@ -81,20 +93,26 @@ examples/gif-fetcher/src/searchGif.ts
      8→    `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${query}&limit=25&offset=0&rating=g&lang=en`
      9→  )
       →…
+
 examples/gif-fetcher/tsconfig.json
+
 examples/one-file-demo/one-file-demo.ts
     20→type Response …
     56→type UserType …
     79→const example3 …
    102→const User …
+
 examples/one-file-demo/package.json
+
 examples/one-file-demo/tsconfig.json
+
 jsr.json
      2→  "name": "@gabriel/ts-pattern",
      3→  "version": "5.9.0",
      4→  "exports": {
      8→  }
      9→}
+
 package.json
      2→  "name": "ts-pattern",
      3→  "version": "5.9.0",
@@ -124,6 +142,7 @@ package.json
     74→  "devDependencies": {
     82→  }
     83→}
+
 src/errors.ts
      1→/**
      2→ * Error when the given input value does not match any included pattern
@@ -131,7 +150,9 @@ src/errors.ts
      4→ */
      5→export class NonExhaustiveError extends Error {
      6→  constructor …
+
 src/index.ts
+
 src/internals/helpers.ts
      7→import * as symbols from './symbols';
      8→import { SelectionType } from '../types/FindSelected';
@@ -165,6 +186,7 @@ src/internals/helpers.ts
    133→  xs: readonly a[],
    134→  f: (v: a) => readonly b[]
    135→): b[] => xs.reduce<b[]>((acc, x) => acc.concat(f(x)), []);
+
 src/internals/symbols.ts
      1→/**
      2→ * Symbols used internally within ts-pattern to construct and discriminate
@@ -191,6 +213,7 @@ src/internals/symbols.ts
     27→export type anonymousSelectKey = typeof anonymousSelectKey;
     29→export const override = Symbol.for('@ts-pattern/override');
     30→export type override = typeof override;
+
 src/is-matching.ts
      6→/**
      7→ * This constraint allows using additional properties
@@ -203,6 +226,7 @@ src/is-matching.ts
     14→  ? P.Pattern<T> & UnknownProperties
     15→  : P.Pattern<T>;
     53→export function isMatching …
+
 src/match.ts
      7→type MatchState …
     11→const unmatched …
@@ -228,6 +252,7 @@ src/match.ts
    120→  run …
    124→  returnType …
    128→  narrow …
+
 src/patterns.ts
      8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
     67→/**
@@ -357,8 +382,11 @@ src/patterns.ts
   1252→  classConstructor: T
   1253→): Chainable<GuardP<unknown, InstanceType<T>>> {
   1274→export function shape …
+
 src/types/BuildMany.ts
+
 src/types/DeepExclude.ts
+
 src/types/DistributeUnions.ts
     17→/**
       →…
@@ -380,8 +408,11 @@ src/types/DistributeUnions.ts
     90→  : IsUnion<a> extends true
     91→  ? [
     92→      {
+
 src/types/ExtractPreciseValue.ts
+
 src/types/FindSelected.ts
+
 src/types/InvertPattern.ts
    101→/**
       →…
@@ -393,7 +424,9 @@ src/types/InvertPattern.ts
    303→export type InvertPatternForExclude<p, i> = Equal<Pattern<i>, p> extends true
    304→  ? never
    305→  : InvertPatternForExcludeInternal<p, i>;
+
 src/types/IsMatching.ts
+
 src/types/Match.ts
     10→interface NonExhaustiveError<i> {
     11→  __nonExhaustive: never;
@@ -447,6 +480,7 @@ src/types/Match.ts
    257→ * permitting calling it with or without a catch-all handler function.
       →…
    261→type Exhaustive<output, inferredOutput> = {
+
 src/types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
@@ -516,6 +550,7 @@ src/types/Pattern.ts
    678→      select<input, k extends string>(
    679→        key: k
    680→      ): ArrayChainable<SelectP<k, input, pattern>, omitted | 'select'>;
+
 src/types/helpers.ts
      5→/**
       →…
@@ -531,16 +566,20 @@ src/types/helpers.ts
    267→  input: unknown;
    268→  output: unknown;
    269→}
+
 tests/instance-of.test.ts
      4→class A {
      7→class B {
+
 tests/tsconfig.json
      2→  "compilerOptions": {
     10→  },
     11→  "include": ["."],
     12→  "exclude": ["../src", "../dist", "../example", "../node_modules"]
     13→}
+
 tests/types-catalog/definition.ts
+
 tests/types-catalog/utils.ts
      4→export const some = <a>(value: a): Option<a> => ({
      5→  kind: 'some',
@@ -550,6 +589,7 @@ tests/types-catalog/utils.ts
     62→export interface AsyncResultIdleOrLoading …
     67→export interface AsyncResultSuccess …
     73→export interface AsyncResultError …
+
 tsconfig.json
      2→  "compilerOptions": {
     11→  },

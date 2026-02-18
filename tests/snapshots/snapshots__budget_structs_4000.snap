@@ -152,6 +152,7 @@ README.md
    167→
    168→## License
    170→The MIT License (MIT) - see LICENSE.md for more details
+
 field.go
      3→import (
      4→	"errors"
@@ -277,6 +278,7 @@ field.go
    139→		value: v.FieldByName(name),
    140→	}, true
    141→}
+
 field_test.go
      3→import …
      8→// A test struct that defines all cases
@@ -306,6 +308,7 @@ field_test.go
     35→		F: 2,
     36→		g: []string{"zeynep", "fatih"},
       →…
+
 structs.go
      4→import (
      5→	"fmt"
@@ -784,8 +787,10 @@ structs.go
    519→		n := New(val.Interface())
    520→		n.TagName = s.TagName
       →…
+
 structs_example_test.go
      3→import …
+
 structs_test.go
      3→import …
   1309→type Person struct {
@@ -799,6 +804,7 @@ structs_test.go
   1363→type Dog struct {
   1364→	Animal *Animal `json:"animal,string"`
   1365→}
+
 tags.go
      3→import "strings"
      5→// tagOptions contains a slice of tag options
@@ -827,5 +833,6 @@ tags.go
     30→	res := strings.Split(tag, ",")
     31→	return res[0], res[1:]
     32→}
+
 tags_test.go
      3→import "testing …

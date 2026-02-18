@@ -8,14 +8,17 @@ budget: 2000 (1977 words)
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
      9→  .map((file) => `./${file}`)
+
 .github/ISSUE_TEMPLATE/bug.yml
      3→name …
      4→description …
      5→title …
      6→labels …
      8→body …
+
 .github/ISSUE_TEMPLATE/config.yml
      3→blank_issues_enabled …
+
 .github/actions/create-check/action.yml
      3→name: 'Create Check'
      4→inputs:
@@ -23,25 +26,30 @@ budget: 2000 (1977 words)
     13→outputs:
     15→    value: ${{ steps.create-check.outputs.check_id }}
     16→runs:
+
 .github/actions/install-latest-npm/action.yml
      3→name: 'Install Latest npm'
      4→description: 'Install the latest version of npm compatible with the Node version'
      5→inputs:
      8→    required: true
      9→runs:
+
 .github/dependabot.yml
      3→version: 2
      5→updates:
+
 .github/matchers/tap.json
      2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
      3→  "problemMatcher": [
     31→  ]
     32→}
+
 .github/settings.yml
      3→repository:
     11→  enable_vulnerability_alerts: true
     12→
     13→branches:
+
 .github/workflows/audit.yml
      3→name: Audit
      5→on:
@@ -51,6 +59,7 @@ budget: 2000 (1977 words)
     12→  contents: read
     13→
     14→jobs:
+
 .github/workflows/ci-release.yml
      3→name: CI - Release
      5→on:
@@ -60,6 +69,7 @@ budget: 2000 (1977 words)
     23→  checks: write
     24→
     25→jobs:
+
 .github/workflows/ci.yml
      3→name: CI
      5→on:
@@ -69,6 +79,7 @@ budget: 2000 (1977 words)
     16→  contents: read
     17→
     18→jobs:
+
 .github/workflows/codeql-analysis.yml
      3→name: CodeQL
      5→on:
@@ -78,6 +89,7 @@ budget: 2000 (1977 words)
     17→  contents: read
     18→
     19→jobs:
+
 .github/workflows/post-dependabot.yml
      3→name: Post Dependabot
      5→on: pull_request
@@ -85,6 +97,7 @@ budget: 2000 (1977 words)
      8→  contents: write
      9→
     10→jobs:
+
 .github/workflows/pull-request.yml
      3→name: Pull Request
      5→on:
@@ -94,6 +107,7 @@ budget: 2000 (1977 words)
     14→  contents: read
     15→
     16→jobs:
+
 .github/workflows/release-integration.yml
      3→name: Release Integration
      5→on:
@@ -103,6 +117,7 @@ budget: 2000 (1977 words)
     24→  id-token: write
     25→
     26→jobs:
+
 .github/workflows/release.yml
      3→name: Release
      5→on:
@@ -112,9 +127,11 @@ budget: 2000 (1977 words)
     13→  checks: write
     14→
     15→jobs:
+
 .release-please-manifest.json
      2→  ".": "6.0.0"
      3→}
+
 CHANGELOG.md
      1→# Changelog …
      3→## [6.0.0](https://github.com/npm/ini/compare/v5.0.0...v6.0.0) (2025-10-22) …
@@ -146,6 +163,7 @@ CHANGELOG.md
    104→### ⚠ BREAKING CHANGES …
    108→### Bug Fixes …
    113→### Dependencies …
+
 CONTRIBUTING.md
      3→# Contributing …
      5→## Code of Conduct
@@ -177,6 +195,7 @@ CONTRIBUTING.md
     47→
     48→### Tools/Automation
     50→Our core team is responsible for the maintenance of the tooling/automation in this project and we ask contributors to not make changes to these when contributing (e.g. `.github/*`, `.eslintrc.json`, `.licensee.json`).  Most of those files also have a header at the top to remind folks they are automatically generated.  Pull requests that alter these will not be accepted.
+
 README.md
      4→## Note
      6→-   Sections are treated as nested objects.
@@ -349,6 +368,7 @@ README.md
    178→```js
    179→unsafe(`\\"safe string\\"`) // -> "safe string"
    180→```
+
 lib/ini.js
      3→const encode = (obj, opt = {}) => {
      4→  if (typeof opt === 'string') {
@@ -496,6 +516,7 @@ lib/ini.js
    262→      }
    263→    }
       →…
+
 package.json
      2→  "author": "GitHub Inc.",
      3→  "name": "ini",
@@ -518,6 +539,7 @@ package.json
     39→  "tap": {
     44→  }
     45→}
+
 release-please-config.json
      2→  "group-pull-request-title-pattern": "chore: release ${version}",
      3→  "pull-request-title-pattern": "chore: release${component} ${version}",
@@ -527,13 +549,16 @@ release-please-config.json
     35→  },
     36→  "prerelease-type": "pre.0"
     37→}
+
 test/duplicate-properties.js
      3→const test = tap.test
      7→const fixture = path.resolve(__dirname, './fixtures/duplicate.ini')
      8→const data = fs.readFileSync(fixture, 'utf8')
+
 test/foo.js
      3→const test = tap.test
      6→const fixture = path.resolve(__dirname, './fixtures/foo.ini')
      7→const data = fs.readFileSync(fixture, 'utf8')
+
 test/win32.js
      5→const res = ini.encode({ foo: { bar: 'baz' } })

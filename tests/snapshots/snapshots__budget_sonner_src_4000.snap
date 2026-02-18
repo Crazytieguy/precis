@@ -89,6 +89,7 @@ assets.tsx
     91→    <line x1="6" y1="6" x2="18" y2="18"></line>
     92→  </svg>
     93→);
+
 hooks.tsx
      1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
@@ -104,6 +105,7 @@ hooks.tsx
     13→
     14→  return isDocumentHidden;
     15→};
+
 index.tsx
      3→import React from 'react';
      4→import ReactDOM from 'react-dom';
@@ -507,6 +509,7 @@ index.tsx
    633→      ? theme
    634→      : typeof window !== 'undefined'
       →…
+
 state.ts
      1→import type {
      2→  ExternalToast,
@@ -778,6 +781,7 @@ state.ts
    297→  },
    298→  { getHistory, getToasts },
    299→);
+
 types.ts
      1→import React from 'react';
      3→export type ToastTypes = 'normal' | 'action' | 'success' | 'info' | 'warning' | 'error' | 'loading' | 'default';
