@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1977 words)
+budget: 2000 (1975 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -24,10 +24,7 @@ CONTRIBUTING.md
      6→You are also welcome to contribute by adding helpful comments on an existing issue.
      7→
       →…
-    13→## Pull Requests
-    15→Pull Requests will be considered. Please submit pull requests against the develop branch.
-    16→
-      →…
+    13→## Pull Requests …
 Readme.md
      1→# Commander.js
      8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
@@ -495,6 +492,8 @@ typings/index.d.ts
   1107→}
   1113→export const program: Command;
 typings/index.test-d.ts
+     1→import * as commander from './index';
+     2→import { expectType } from 'tsd';
    384→interface MyCheeseOption {
    385→  cheese: string;
    386→}

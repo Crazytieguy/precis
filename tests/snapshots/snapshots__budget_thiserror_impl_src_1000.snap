@@ -5,6 +5,9 @@ expression: output
 budget: 1000 (954 words)
 
 ast.rs
+     1→use crate::attr::{self, Attrs};
+     2→use crate::generics::ParamsInScope;
+     3→use crate::unraw::{IdentUnraw, MemberUnraw};
     10→pub enum Input<'a> {
     11→    Struct(Struct<'a>),
     12→    Enum(Enum<'a>),
@@ -43,14 +46,7 @@ ast.rs
     50→    TupleVariant,
     51→    UnitVariant,
     52→}
-    54→impl<'a> Input<'a> {
     55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
-    67→impl<'a> Struct<'a> {
-    85→impl<'a> Enum<'a> {
-   118→impl<'a> Variant<'a> {
-   130→impl<'a> Field<'a> {
-   156→impl ContainerKind {
-   174→impl Display for ContainerKind {
    175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 attr.rs
     11→pub struct Attrs<'a> {
@@ -105,15 +101,25 @@ attr.rs
     66→    UpperExp,
     67→}
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
-   302→impl ToTokens for Display<'_> {
    303→    fn to_tokens(&self, tokens: &mut TokenStream) {
-   342→impl ToTokens for Trait {
    343→    fn to_tokens(&self, tokens: &mut TokenStream) {
 expand.rs
+     1→use crate::ast::{Enum, Field, Input, Struct};
+     2→use crate::attr::Trait;
+     3→use crate::fallback;
+     4→use crate::generics::InferredBounds;
+     5→use crate::private;
+     6→use crate::unraw::MemberUnraw;
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
 fallback.rs
+     1→use crate::expand::call_site_ident;
+     2→use crate::private;
 fmt.rs
-    15→impl Display<'_> {
+     1→use crate::ast::{ContainerKind, Field};
+     2→use crate::attr::{Display, Trait};
+     3→use crate::private;
+     4→use crate::scan_expr::scan_expr;
+     5→use crate::unraw::{IdentUnraw, MemberUnraw};
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
    166→struct FmtArguments {
    167→    named: BTreeSet<IdentUnraw>,
@@ -143,14 +149,12 @@ generics.rs
      8→pub struct ParamsInScope<'a> {
      9→    names: Set<&'a Ident>,
     10→}
-    12→impl<'a> ParamsInScope<'a> {
     13→    pub fn new(generics: &'a Generics) -> Self {
     19→    pub fn intersects(&self, ty: &Type) -> bool {
     48→pub struct InferredBounds {
     49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
     50→    order: Vec<TokenStream>,
     51→}
-    53→impl InferredBounds {
     54→    pub fn new() -> Self {
     61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
     74→    pub fn augment_where_clause(&self, generics: &Generics) -> WhereClause {
@@ -172,14 +176,12 @@ lib.rs
     43→}
     45→#[allow(non_camel_case_types)]
     46→struct private;
-    48→impl ToTokens for private {
     49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
 prop.rs
-     6→impl Struct<'_> {
-    25→impl Enum<'_> {
-    53→impl Variant<'_> {
-    72→impl Field<'_> {
+     1→use crate::ast::{Enum, Field, Struct, Variant};
+     2→use crate::unraw::MemberUnraw;
 scan_expr.rs
+     1→use self::{Action::*, Input::*};
      6→enum Input {
      7→    Keyword(&'static str),
      8→    Punct(&'static str),
@@ -204,72 +206,53 @@ scan_expr.rs
     28→    DecDepth,
     29→    Finish,
     30→}
-    32→static INIT …
-    63→static POSTFIX …
-    76→static ASYNC …
-    82→static BLOCK …
-    84→static BREAK_LABEL …
-    89→static BREAK_VALUE …
-    95→static CLOSURE …
-   104→static CLOSURE_ARGS …
-   109→static CLOSURE_RET …
-   114→static CONST …
-   119→static CONTINUE …
-   124→static DOT …
-   130→static FOR …
-   135→static IF_ELSE …
-   136→static IF_THEN …
-   139→static METHOD …
-   141→static PATH …
-   148→static PATTERN …
-   166→static RANGE …
-   175→static RAW …
-   181→static REFERENCE …
-   187→static RETURN …
+    32→static INIT: [(Input, Action); 28] = [
+    63→static POSTFIX: [(Input, Action); 10] = [
+    76→static ASYNC: [(Input, Action); 3] = [
+    82→static BLOCK: [(Input, Action); 1] = [(ConsumeBrace, SetState(&POSTFIX))];
+    84→static BREAK_LABEL: [(Input, Action); 2] = [
+    89→static BREAK_VALUE: [(Input, Action); 3] = [
+    95→static CLOSURE: [(Input, Action); 6] = [
+   104→static CLOSURE_ARGS: [(Input, Action); 2] = [
+   109→static CLOSURE_RET: [(Input, Action); 2] = [
+   114→static CONST: [(Input, Action); 2] = [
+   119→static CONTINUE: [(Input, Action); 2] = [
+   124→static DOT: [(Input, Action); 3] = [
+   130→static FOR: [(Input, Action); 2] = [
+   135→static IF_ELSE: [(Input, Action); 2] = [(Keyword("if"), SetState(&INIT)), (ConsumeBrace, DecDepth)];
+   136→static IF_THEN: [(Input, Action); 2] =
+   139→static METHOD: [(Input, Action); 1] = [(ExpectTurbofish, SetState(&POSTFIX))];
+   141→static PATH: [(Input, Action); 4] = [
+   148→static PATTERN: [(Input, Action); 15] = [
+   166→static RANGE: [(Input, Action); 6] = [
+   175→static RAW: [(Input, Action); 3] = [
+   181→static REFERENCE: [(Input, Action); 3] = [
+   187→static RETURN: [(Input, Action); 2] = [
 unraw.rs
     10→#[derive(Clone)]
     11→#[repr(transparent)]
     12→pub struct IdentUnraw(Ident);
-    14→impl IdentUnraw {
     15→    pub fn new(ident: Ident) -> Self {
     19→    pub fn to_local(&self) -> Ident {
     32→    pub fn set_span(&mut self, span: Span) {
-    37→impl Display for IdentUnraw {
     38→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-    43→impl Eq for IdentUnraw {}
-    45→impl PartialEq for IdentUnraw {
     46→    fn eq(&self, other: &Self) -> bool {
-    51→impl PartialEq<str> for IdentUnraw {
     52→    fn eq(&self, other: &str) -> bool {
-    57→impl Ord for IdentUnraw {
     58→    fn cmp(&self, other: &Self) -> Ordering {
-    63→impl PartialOrd for IdentUnraw {
     64→    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-    69→impl Parse for IdentUnraw {
     70→    fn parse(input: ParseStream) -> Result<Self> {
-    75→impl ToTokens for IdentUnraw {
     76→    fn to_tokens(&self, tokens: &mut TokenStream) {
     81→#[derive(Clone)]
     82→pub enum MemberUnraw {
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
     85→}
-    87→impl MemberUnraw {
     88→    pub fn span(&self) -> Span {
-    96→impl Display for MemberUnraw {
     97→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-   105→impl Eq for MemberUnraw {}
-   107→impl PartialEq for MemberUnraw {
    108→    fn eq(&self, other: &Self) -> bool {
-   117→impl PartialEq<str> for MemberUnraw {
    118→    fn eq(&self, other: &str) -> bool {
-   126→impl Hash for MemberUnraw {
    127→    fn hash<H: Hasher>(&self, hasher: &mut H) {
-   135→impl ToTokens for MemberUnraw {
    136→    fn to_tokens(&self, tokens: &mut TokenStream) {
 valid.rs
-     5→impl Input<'_> {
-    14→impl Struct<'_> {
-    45→impl Enum<'_> {
-    66→impl Variant<'_> {
-    91→impl Field<'_> {
+     1→use crate::ast::{Enum, Field, Input, Struct, Variant};
+     2→use crate::attr::Attrs;

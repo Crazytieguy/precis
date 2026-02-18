@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3916 words)
+budget: 4000 (3903 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -294,20 +294,37 @@ readme.md
   1355→- [Seth Holladay](https://github.com/sholladay)
   1356→- [Szymon Marczak](https://github.com/szmarczak)
 source/core/Ky.ts
-     1→import {HTTPError} from '../errors/HTTPError.js …
-     2→import {NonError} from '../errors/NonError.js …
-     3→import {ForceRetryError} from '../errors/ForceRetryError.js …
-     4→../types/options.js …
-    12→import {type ResponsePromise} from '../types/ResponsePromise.js …
-    13→import {streamRequest, streamResponse} from '../utils/body.js …
-    14→import {mergeHeaders, mergeHooks} from '../utils/merge.js …
-    15→import {normalizeRequestMethod, normalizeRetryOptions} from '../utils/normalize.js …
-    16→import timeout, {type TimeoutOptions} from '../utils/timeout.js …
-    17→import delay from '../utils/delay.js …
-    18→import {type ObjectEntries} from '../utils/types.js …
-    19→import {findUnknownOptions, hasSearchParameters} from '../utils/options.js …
-    20→import {isHTTPError, isTimeoutError} from '../utils/type-guards.js …
-    21→./constants.js …
+     1→import {HTTPError} from '../errors/HTTPError.js';
+     2→import {NonError} from '../errors/NonError.js';
+     3→import {ForceRetryError} from '../errors/ForceRetryError.js';
+     4→import type {
+     5→	Input,
+     6→	InternalOptions,
+     7→	NormalizedOptions,
+     8→	Options,
+     9→	SearchParamsInit,
+    10→	SearchParamsOption,
+    11→} from '../types/options.js';
+    12→import {type ResponsePromise} from '../types/ResponsePromise.js';
+    13→import {streamRequest, streamResponse} from '../utils/body.js';
+    14→import {mergeHeaders, mergeHooks} from '../utils/merge.js';
+    15→import {normalizeRequestMethod, normalizeRetryOptions} from '../utils/normalize.js';
+    16→import timeout, {type TimeoutOptions} from '../utils/timeout.js';
+    17→import delay from '../utils/delay.js';
+    18→import {type ObjectEntries} from '../utils/types.js';
+    19→import {findUnknownOptions, hasSearchParameters} from '../utils/options.js';
+    20→import {isHTTPError, isTimeoutError} from '../utils/type-guards.js';
+    21→import {
+    22→	maxSafeTimeout,
+    23→	responseTypes,
+    24→	stop,
+    25→	RetryMarker,
+    26→	supportsAbortController,
+    27→	supportsAbortSignal,
+    28→	supportsFormData,
+    29→	supportsResponseStreams,
+    30→	supportsRequestStreams,
+    31→} from './constants.js';
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {
     35→		const ky = new Ky(input, options);
@@ -339,8 +356,8 @@ source/core/Ky.ts
    512→	#assignRequest(request: Request): void {
    517→	#wrapRequestWithUploadProgress(request: Request, originalBody?: BodyInit): Request {
 source/core/constants.ts
-     1→import type {Expect, Equal} from '@type-challenges/utils …
-     2→import {type KyOptionsRegistry, type RequestHttpMethod} from '../types/options.js …
+     1→import type {Expect, Equal} from '@type-challenges/utils';
+     2→import {type KyOptionsRegistry, type RequestHttpMethod} from '../types/options.js';
      4→export const supportsRequestStreams = (() => {
     34→export const supportsAbortController = typeof globalThis.AbortController === 'function';
     35→export const supportsAbortSignal = typeof globalThis.AbortSignal === 'function' && typeof globalThis.AbortSignal.any === 'function';
@@ -470,7 +487,6 @@ source/errors/ForceRetryError.ts
     14→	constructor(options?: ForceRetryOptions) {
     15→		// Runtime protection: wrap non-Error causes in NonError
     16→		// TypeScript type is Error for guidance, but JS users can pass anything
-    17→		const cause = options?.cause
       →…
 source/errors/HTTPError.ts
      1→import type {NormalizedOptions} from '../types/options.js';
@@ -484,7 +500,6 @@ source/errors/HTTPError.ts
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
     11→		const code = (response.status || response.status === 0) ? response.status : '';
     12→		const title = response.statusText ?? '';
-    13→		const status = `${code} ${title}`.trim();
       →…
 source/errors/NonError.ts
      1→/**
@@ -499,7 +514,6 @@ source/errors/NonError.ts
     10→	constructor(value: unknown) {
     11→		let message = 'Non-error value was thrown';
     12→
-    13→		// Intentionally minimal as this error is just an edge-case.
       →…
 source/errors/TimeoutError.ts
      1→import type {KyRequest} from '../types/request.js';
@@ -509,7 +523,6 @@ source/errors/TimeoutError.ts
      6→	constructor(request: Request) {
      7→		super(`Request timed out: ${request.method} ${request.url}`);
      8→		this.name = 'TimeoutError';
-     9→		this.request = request;
       →…
 source/index.ts
      3→import {Ky} from './core/Ky.js';
@@ -527,7 +540,6 @@ source/index.ts
     16→		ky[method] = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options, {method}));
     17→	}
     18→
-    19→	ky.create = (newDefaults?: Partial<Options>) => createInstance(validateAndMerge(newDefaults));
       →…
     34→const ky = createInstance();
 source/types/ResponsePromise.ts
@@ -727,7 +739,6 @@ source/utils/normalize.ts
     16→const defaultRetryOptions: InternalRetryOptions = {
     17→	limit: 2,
     18→	methods: retryMethods,
-    19→	statusCodes: retryStatusCodes,
       →…
     28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
 source/utils/options.ts

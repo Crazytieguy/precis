@@ -10,6 +10,9 @@ pub struct Symbol {
     pub kind: SymbolKind,
     pub name: String,
     pub is_public: bool,
+    /// For imports: whether the import refers to a 1st-party (local) module.
+    /// 1st-party imports are higher signal for understanding a file's role.
+    pub is_first_party: bool,
     pub line: usize,
     pub end_line: usize,
 }
@@ -129,6 +132,30 @@ fn import_name(node: tree_sitter::Node, source: &str, lang: Lang) -> String {
             }
         }
         Lang::Markdown => "?".to_string(),
+    }
+}
+
+/// Determine if an import is 1st-party (local/relative) based on its name.
+///
+/// 1st-party imports reference code within the same project and are higher
+/// signal for understanding a file's role and dependencies.
+fn is_first_party_import(name: &str, lang: Lang) -> bool {
+    match lang {
+        // Rust: `crate::`, `self::`, `super::` are local.
+        Lang::Rust => {
+            name.starts_with("crate::") || name.starts_with("self::") || name.starts_with("super::")
+        }
+        // JS/TS: relative paths (`./`, `../`) are local.
+        Lang::JsTs => name.starts_with("./") || name.starts_with("../"),
+        // Go: imports containing only one path segment (e.g. "fmt", "os")
+        // are stdlib; anything with a dot in the first segment (e.g.
+        // "github.com/...") is external. We can't distinguish the project's
+        // own module path without reading go.mod, so all multi-segment
+        // imports are treated as 3rd-party for now.
+        Lang::Go => false,
+        // Python: relative imports (leading dot) are local.
+        Lang::Python => name.starts_with('.'),
+        Lang::Markdown => false,
     }
 }
 
@@ -424,10 +451,17 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             }
         };
 
+        let is_first_party = if kind == SymbolKind::Import {
+            is_first_party_import(&name, lang)
+        } else {
+            false
+        };
+
         symbols.push(Symbol {
             kind,
             name,
             is_public,
+            is_first_party,
             line: symbol_node.start_position().row + 1,
             end_line: symbol_node.end_position().row + 1,
         });

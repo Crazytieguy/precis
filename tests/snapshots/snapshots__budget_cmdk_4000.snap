@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3925 words)
+budget: 4000 (3924 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -526,6 +526,7 @@ test/item.test.ts
 test/keybind.test.ts
 test/numeric.test.ts
 test/pages/_app.tsx
+     1→import '../style.css'
      3→export default function App({ Component, pageProps }) {
      4→  return <Component {...pageProps} />
      5→}
@@ -863,18 +864,7 @@ website/pages/index.tsx
     68→          )}
     69→        </AnimatePresence>
     70→
-    71→        <ThemeContext.Provider value={{ theme, setTheme }}>
-    72→          <ThemeSwitcher />
-    73→        </ThemeContext.Provider>
-    74→
-    75→        <div aria-hidden className={styles.line} />
-    76→
-    77→        <Codeblock />
-    78→      </div>
-    79→      <Footer />
-    80→    </main>
-    81→  )
-    82→}
+      →…
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     99→//////////////////////////////////////////////////////////////////
    100→
@@ -891,6 +881,9 @@ website/pages/index.tsx
    111→          setTimeout(() => {
    112→            setCopied(false)
    113→          }, 2000)
+   114→        } catch (e) {}
+   115→      }}
+   116→    >
       →…
    123→function GitHubButton() {
    137→//////////////////////////////////////////////////////////////////
@@ -901,6 +894,10 @@ website/pages/index.tsx
    142→    key: 'raycast',
    143→  },
    144→  {
+   145→    icon: <LinearIcon />,
+   146→    key: 'linear',
+   147→  },
+   148→  {
       →…
    158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////
@@ -918,6 +915,9 @@ website/pages/index.tsx
    272→
    273→    <Command.Group heading="Fruits">
    274→      <Command.Item>Apple</Command.Item>
+   275→      <Command.Item>Orange</Command.Item>
+   276→      <Command.Separator />
+   277→      <Command.Item>Pear</Command.Item>
       →…
    294→//////////////////////////////////////////////////////////////////
    295→

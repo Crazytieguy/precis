@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (490 words)
 
 errors.ts
      1→/**
@@ -13,6 +13,8 @@ errors.ts
 index.ts
 internals/helpers.ts
      7→import * as symbols from './symbols';
+     8→import { SelectionType } from '../types/FindSelected';
+     9→import { Pattern, Matcher, MatcherType, AnyMatcher } from '../types/Pattern';
     12→export const isObject …
     16→export const isMatcher …
     24→const isOptionalPattern …
@@ -90,20 +92,13 @@ types/Match.ts
     16→}
     22→export type Match …
    132→  with …
-   228→/**
-      →…
-   245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
-   246→  ? never
-   247→  : tupleList extends [infer excluded, ...infer tail]
-   248→  ? DeepExcludeAll<DeepExclude<a, excluded>, tail>
-   249→  : a;
-   255→/**
-      →…
-   261→type Exhaustive<output, inferredOutput> = {
+   245→type DeepExcludeAll …
+   261→type Exhaustive …
 types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
     45→ * protocol. It must define a `symbols.matcher` property
+    46→ * which returns an object with a `match()` method, taking
       →…
     50→export interface Matcher<
     51→  input,

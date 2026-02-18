@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (931 words)
+budget: 1000 (924 words)
 
 README.md
      1→# mdBook
@@ -20,13 +20,13 @@ crates/mdbook-core/README.md
      1→# mdbook-core …
     11→## License
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+crates/mdbook-core/src/book/tests.rs
+     1→use super::*;
 crates/mdbook-core/src/book.rs
      3→use serde::{Deserialize, Serialize};
-   245→    type Target = Vec<u32>;
-   274→    type Item = &'a BookItem;
 crates/mdbook-core/src/config.rs
     46→use crate::static_regex;
-    91→    type Err = Error;
+    47→use crate::utils::{TomlExt, fs, log_backtrace};
    718→trait Updateable<'de>: Serialize + Deserialize<'de> {
 crates/mdbook-core/src/lib.rs
      3→/// The current version of `mdbook`.
@@ -60,26 +60,26 @@ crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
 crates/mdbook-driver/src/builtin_preprocessors/index.rs
     12→pub struct IndexPreprocessor;
     16→    pub const NAME: &'static str = "index";
-crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
 crates/mdbook-driver/src/builtin_preprocessors/links.rs
     32→pub struct LinkPreprocessor;
     36→    pub const NAME: &'static str = "links";
-   398→struct LinkIter<'a>(CaptureMatches<'a, 'a>);
    401→    type Item = Link<'a>;
 crates/mdbook-driver/src/builtin_preprocessors/mod.rs
      3→pub use self::cmd::CmdPreprocessor;
+     4→pub use self::index::IndexPreprocessor;
+     5→pub use self::links::LinkPreprocessor;
 crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
     10→pub struct MarkdownRenderer;
     14→    pub fn new() -> Self {
 crates/mdbook-driver/src/builtin_renderers/mod.rs
     11→pub use self::markdown_renderer::MarkdownRenderer;
-    13→mod markdown_renderer;
     20→pub struct CmdRenderer {
     21→    name: String,
     22→    cmd: String,
     23→}
     27→    pub fn new(name: String, cmd: String) -> CmdRenderer {
 crates/mdbook-driver/src/init.rs
+     3→use super::MDBook;
     13→pub struct BookBuilder {
     14→    root: PathBuf,
       →…
@@ -94,8 +94,9 @@ crates/mdbook-driver/src/lib.rs
     75→pub use mdbook_core::{book, config, errors};
 crates/mdbook-driver/src/load.rs
 crates/mdbook-driver/src/mdbook/tests.rs
-   225→struct BoolPreprocessor(bool);
+     1→use super::*;
 crates/mdbook-driver/src/mdbook.rs
+     3→use crate::builtin_preprocessors::{CmdPreprocessor, IndexPreprocessor, LinkPreprocessor};
     29→pub struct MDBook {
     30→    /// The book's root directory.
       →…
@@ -106,6 +107,7 @@ crates/mdbook-html/README.md
      1→# mdbook-html …
     11→## License
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
+crates/mdbook-html/src/html/mod.rs
 crates/mdbook-html/src/html/tokenizer.rs
     22→    type Handle = ();
 crates/mdbook-html/src/html/tree.rs
@@ -119,10 +121,12 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     22→pub struct HtmlHandlebars;
     26→    pub fn new() -> Self {
    649→type CombinedRedirects …
+crates/mdbook-html/src/html_handlebars/helpers/resources.rs
+crates/mdbook-html/src/html_handlebars/helpers/toc.rs
+     1→use crate::utils::ToUrlPath;
 crates/mdbook-html/src/html_handlebars/mod.rs
      4→mod search;
      7→pub use self::hbs_renderer::HtmlHandlebars;
-crates/mdbook-html/src/html_handlebars/search.rs
 crates/mdbook-html/src/html_handlebars/static_files.rs
      3→use super::helpers::resources::ResourceHelper;
     22→pub(super) struct StaticFiles {
@@ -159,7 +163,6 @@ crates/mdbook-markdown/src/lib.rs
       →…
     33→impl Default for MarkdownOptions {
     34→    fn default() -> MarkdownOptions {
-    43→/// Creates a new pulldown-cmark parser of the given text.
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor …
@@ -206,6 +209,7 @@ crates/xtask/src/main.rs
      3→use std::collections::BTreeMap;
      9→mod changelog;
 examples/nop-preprocessor.rs
+     3→use crate::nop_lib::Nop;
     79→    pub struct Nop;
 guide/guide-helper/src/lib.rs
      3→use mdbook_preprocessor::book::Book;

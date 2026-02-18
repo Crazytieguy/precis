@@ -2,9 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (973 words)
+budget: 1000 (955 words)
 
 error.rs
+     1→use std::fmt;
      3→/// An error encountered while working with structured data.
      4→#[derive(Debug)]
      5→pub struct Error {
@@ -22,20 +23,17 @@ error.rs
     21→    pub fn msg …
     28→    #[cfg(feature = "value-bag")]
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
-    30→        Error {
-    31→            inner: Inner::Value(err),
-      →…
     36→    #[cfg(feature = "value-bag")]
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
-    38→        match self.inner {
-    39→            Inner::Value(err) => err,
-      →…
     68→#[cfg(feature = "std")]
     69→mod std_support {
+    70→    use super::*;
+    71→    use std::{error, io};
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     77→        pub fn boxed …
 key.rs
      3→use std::borrow::Borrow;
+     4→use std::fmt;
      6→/// A type that can be converted into a [`Key`](struct.Key.html).
      7→pub trait ToKey {
      9→    fn to_key …
@@ -49,10 +47,17 @@ key.rs
     61→    pub fn to_borrowed_str …
     93→#[cfg(feature = "std")]
     94→mod std_support {
+    95→    use super::*;
+    97→    use std::borrow::Cow;
    112→#[cfg(feature = "kv_sval")]
    113→mod sval_support {
+   114→    use super::*;
+   116→    use sval::Value;
+   117→    use sval_ref::ValueRef;
    135→#[cfg(feature = "kv_serde")]
    136→mod serde_support {
+   137→    use super::*;
+   139→    use serde_core::{Serialize, Serializer};
 mod.rs
      1→//! Structured logging.
      2→//!
@@ -66,7 +71,6 @@ mod.rs
     10→//!
     11→//! # Structured logging in `log`
     12→//!
-    13→//! Structured logging enhances traditional text-based log records with user-defined
       →…
    246→mod error;
    247→mod key;
@@ -85,14 +89,13 @@ mod.rs
    265→pub use self::source::Visitor;
 source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
+     7→use std::fmt;
      9→/// A source of key-values.
     10→///
     11→/// The source may be a single pair, a set of pairs, or a filter over a set of pairs.
     12→/// Use the [`VisitSource`](trait.VisitSource.html) trait to inspect the structured data
     13→/// in a source.
     14→///
-    15→/// A source is like an iterator over its key-values, except with a push-based API
-    16→/// instead of a pull-based one.
       →…
     51→pub trait Source {
     62→    fn visit …
@@ -100,14 +103,8 @@ source.rs
     85→    fn count …
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
-    92→    struct Get<'k, 'v> {
-    93→        key: Key<'k>,
-      →…
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
-   115→    struct Count(usize);
-   116→
-      →…
    234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair …
@@ -118,6 +115,12 @@ source.rs
    244→{
    279→#[cfg(feature = "std")]
    280→mod std_support {
+   281→    use super::*;
+   282→    use std::borrow::Borrow;
+   283→    use std::collections::{BTreeMap, HashMap};
+   284→    use std::hash::{BuildHasher, Hash};
+   285→    use std::rc::Rc;
+   286→    use std::sync::Arc;
    462→pub use VisitSource as Visitor;
 value.rs
      6→use std::fmt;
@@ -131,8 +134,6 @@ value.rs
     36→///
     37→/// # Capturing values
     38→///
-    39→/// There are a few ways to capture a value:
-    40→///
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
@@ -151,9 +152,6 @@ value.rs
    205→    where
    206→        T: Into<inner::Inner<'v>>,
    207→    {
-   208→        Value {
-   209→            inner: value.into(),
-      →…
    217→    pub fn visit …
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
@@ -168,6 +166,10 @@ value.rs
    384→    pub fn to_borrowed_str …
    389→#[cfg(feature = "kv_std")]
    390→mod std_support {
+   391→    use std::borrow::Cow;
+   392→    use std::rc::Rc;
+   393→    use std::sync::Arc;
+   395→    use super::*;
    438→        pub fn to_cow_str …
    450→/// A visitor for a [`Value`].
    451→///
@@ -175,8 +177,6 @@ value.rs
    453→/// to a more fully-featured serialization framework like `serde` or `sval`. A value visitor
    454→/// can differentiate primitive types through methods like [`VisitValue::visit_bool`] and
    455→/// [`VisitValue::visit_str`], but more complex types like maps and sequences
-   456→/// will fallthrough to [`VisitValue::visit_any`].
-   457→///
       →…
    462→pub trait VisitValue<'v> {
    469→    fn visit_any …

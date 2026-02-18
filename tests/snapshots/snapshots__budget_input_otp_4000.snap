@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3881 words)
+budget: 4000 (3866 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -296,8 +296,6 @@ apps/storybook/src/stories/InputOTP.stories.tsx
 apps/storybook/tailwind.config.js
      1→/** @type {import('tailwindcss').Config} */
      2→const config = {
-     3→  darkMode: ['class'],
-      →…
 apps/storybook/vite.config.js
      1→import { defineConfig } from 'vite'
      2→import react from '@vitejs/plugin-react'
@@ -339,6 +337,7 @@ apps/test/src/app/base/page.tsx
      8→  return (
       →…
 apps/test/src/app/layout.tsx
+     3→import './globals.css'
      5→const inter = Inter({ subsets: ['latin'] })
      7→export const metadata: Metadata = {
     12→export default function RootLayout({
@@ -385,12 +384,21 @@ apps/test/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
      6→}
+apps/test/src/tests/base.delete-word.spec.ts
+     2→import { modifier } from './util/modifier'
+apps/test/src/tests/base.props.spec.ts
 apps/test/src/tests/base.render.spec.ts
      3→const modifier …
+apps/test/src/tests/base.selections.spec.ts
 apps/test/src/tests/base.slot.spec.ts
      3→const modifier …
+apps/test/src/tests/base.typing.spec.ts
+     2→import { modifier } from './util/modifier'
 apps/test/src/tests/util/modifier.ts
      1→export const modifier = process.platform === 'darwin' ? 'Meta' : 'Control'
+apps/test/src/tests/with-autofocus.spec.ts
+apps/test/src/tests/with-on-complete.spec.ts
+     2→import { modifier } from './util/modifier'
 apps/test/tailwind.config.ts
      3→const config: Config = {
 apps/website/README.md
@@ -473,13 +481,7 @@ apps/website/src/app/(local-pages)/example-playground/code.tsx
    104→        <Code dark={true} code={code} toCopy={tsx} />
    105→      </div>
    106→
-   107→      <div className="hidden lg:[display:unset] absolute inset-x-0 top-0 -bottom-full pointer-events-none z-20 [animation-delay:5000ms]"></div>
-   108→
-   109→      {/* Anchor */}
-   110→      <div id="code-example-anchor" className="absolute pointer-events-none w-px h-px -top-[5.5rem]" />
-   111→    </div>
-   112→  )
-   113→}
+      →…
 apps/website/src/app/(local-pages)/example-playground/component.tsx
      3→import * as React from 'react'
      4→import { OTPInput, SlotProps } from 'input-otp'
@@ -494,24 +496,7 @@ apps/website/src/app/(local-pages)/example-playground/component.tsx
     15→      containerClassName="group flex items-center has-[:disabled]:opacity-30"
     16→      render={({ slots }) => (
     17→        <>
-    18→          <div className="flex">
-    19→            {slots.slice(0, 3).map((slot, idx) => (
-    20→              <Slot key={idx} {...slot} />
-    21→            ))}
-    22→          </div>
-    23→
-    24→          <FakeDash />
-    25→
-    26→          <div className="flex">
-    27→            {slots.slice(3).map((slot, idx) => (
-    28→              <Slot key={idx} {...slot} />
-    29→            ))}
-    30→          </div>
-    31→        </>
-    32→      )}
-    33→    />
-    34→  )
-    35→}
+      →…
     38→function Slot(props: SlotProps) {
     39→  return (
       →…
@@ -763,11 +748,6 @@ apps/website/src/app/(pages)/layout.tsx
     16→    default: siteConfig.name,
     17→    template: `%s - ${siteConfig.name}`,
     18→  },
-    19→  metadataBase: new URL(siteConfig.url),
-    20→  description: siteConfig.description,
-    21→  keywords: [
-    22→    'React',
-    23→    'one-time-code',
       →…
     68→export default function RootLayout({
     69→  children,
@@ -800,14 +780,20 @@ apps/website/src/app/(pages)/layout.tsx
     96→  )
     97→}
 apps/website/src/components/code.tsx
+     7→import { CopyButton } from './copy-button'
      9→export async function Code({
     10→  code,
     11→  toCopy,
       →…
     36→async function highlightCode(code: string, dark: boolean) {
-    37→  const file = await unified()
-      →…
 apps/website/src/components/copy-button.tsx
+     9→import { Button } from './ui/button'
+    10→import {
+    11→  DropdownMenu,
+    12→  DropdownMenuContent,
+    13→  DropdownMenuItem,
+    14→  DropdownMenuTrigger,
+    15→} from './ui/dropdown-menu'
     17→interface CopyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     18→  value: string
     19→  src?: string
@@ -859,29 +845,28 @@ apps/website/src/components/mode-toggle.tsx
     17→
       →…
 apps/website/src/components/page-header.tsx
+     1→import { cn } from "../lib/utils"
      3→function PageHeader({
-     4→  className,
-      →…
     21→function PageHeaderHeading({
-    22→  className,
-      →…
     36→function PageHeaderDescription({
-    37→  className,
-      →…
     51→function PageActions({
-    52→  className,
-      →…
 apps/website/src/components/provider.tsx
      5→export function AppProvider({
      6→  children,
      7→  ...props
       →…
 apps/website/src/components/site-footer.tsx
+     1→import { siteConfig } from "../config/site"
      3→export function SiteFooter() {
      4→  return (
      5→    <footer className="py-6 md:px-8 md:py-0">
       →…
 apps/website/src/components/site-header.tsx
+     3→import { siteConfig } from "../config/site"
+     4→import { cn } from "../lib/utils"
+     5→import { buttonVariants } from "./ui/button"
+     6→import { Icons } from "./icons"
+     7→import { ModeToggle } from "./mode-toggle"
      9→export function SiteHeader() {
     10→  return (
     11→    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -895,6 +880,7 @@ apps/website/src/components/ui/badge.tsx
     31→  return (
       →…
 apps/website/src/components/ui/button.tsx
+     5→import { cn } from "../../lib/utils"
      7→const buttonVariants = cva(
     36→export interface ButtonProps
     37→  extends React.ButtonHTMLAttributes<HTMLButtonElement>,

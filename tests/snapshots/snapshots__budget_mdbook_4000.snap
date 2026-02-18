@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3864 words)
+budget: 4000 (3840 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -59,6 +59,7 @@ crates/mdbook-core/src/book.rs
    274→    type Item = &'a BookItem;
 crates/mdbook-core/src/config.rs
     46→use crate::static_regex;
+    47→use crate::utils::{TomlExt, fs, log_backtrace};
     63→pub struct Config {
     81→fn is_default<T: Default + PartialEq>(t: &T) -> bool {
     86→fn toml_is_empty(table: &Value) -> bool {
@@ -139,6 +140,10 @@ crates/mdbook-driver/src/builtin_preprocessors/index.rs
     19→    pub fn new() -> Self {
 crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
 crates/mdbook-driver/src/builtin_preprocessors/links.rs
+     1→use self::take_lines::{
+     2→    take_anchored_lines, take_lines, take_rustdoc_include_anchored_lines,
+     3→    take_rustdoc_include_lines,
+     4→};
     17→const ESCAPE_CHAR: char = '\\';
     18→const MAX_LINK_NESTED_DEPTH: usize = 10;
     32→pub struct LinkPreprocessor;
@@ -203,12 +208,11 @@ crates/mdbook-driver/src/lib.rs
     71→mod mdbook;
     74→pub use mdbook::MDBook;
     75→pub use mdbook_core::{book, config, errors};
-    82→fn compose_command …
-   107→fn handle_command_error …
 crates/mdbook-driver/src/load.rs
-    10→pub(crate) fn load_book …
-    60→pub(crate) fn load_book_from_disk …
 crates/mdbook-driver/src/mdbook/tests.rs
+     1→use super::*;
+     2→use std::str::FromStr;
+     3→use toml::value::{Table, Value};
    225→struct BoolPreprocessor(bool);
    226→impl Preprocessor for BoolPreprocessor {
    227→    fn name(&self) -> &str {
@@ -216,6 +220,9 @@ crates/mdbook-driver/src/mdbook/tests.rs
    235→    fn supports_renderer(&self, _renderer: &str) -> Result<bool> {
 crates/mdbook-driver/src/mdbook.rs
      3→use crate::builtin_preprocessors::{CmdPreprocessor, IndexPreprocessor, LinkPreprocessor};
+     4→use crate::builtin_renderers::{CmdRenderer, MarkdownRenderer};
+     5→use crate::init::BookBuilder;
+     6→use crate::load::{load_book, load_book_from_disk};
     28→/// The object used to manage and build a book.
     29→pub struct MDBook {
     30→    /// The book's root directory.
@@ -239,7 +246,6 @@ crates/mdbook-driver/src/mdbook.rs
    397→struct OutputConfig {
    398→    command: Option<String>,
    399→}
-   402→fn determine_renderers …
    426→const DEFAULT_PREPROCESSORS: &[&str] = &["links", "index"];
    433→/// A `preprocessor` table.
    434→#[derive(Deserialize)]
@@ -252,8 +258,6 @@ crates/mdbook-driver/src/mdbook.rs
    441→    #[serde(default)]
    442→    optional: bool,
    443→}
-   446→fn determine_preprocessors …
-   549→fn preprocessor_should_run …
 crates/mdbook-html/README.md
      1→# mdbook-html
      7→This is the HTML renderer for [mdBook](https://rust-lang.github.io/mdBook/). This is intended for internal use only. It is automatically included by [`mdbook-driver`](https://crates.io/crates/mdbook-driver) to render books to HTML.
@@ -265,14 +269,20 @@ crates/mdbook-html/front-end/js/book.js
      9→function playground_text(playground, hidden = true) {
 crates/mdbook-html/src/html/admonitions.rs
 crates/mdbook-html/src/html/hide_lines.rs
+     3→use crate::html::{Element, Node};
 crates/mdbook-html/src/html/mod.rs
+    13→use ego_tree::Tree;
 crates/mdbook-html/src/html/print.rs
+     7→use super::Node;
 crates/mdbook-html/src/html/serialize.rs
+     3→use super::tree::is_void_element;
 crates/mdbook-html/src/html/tests.rs
 crates/mdbook-html/src/html/tokenizer.rs
+     6→use html5ever::TokenizerResult;
     22→    type Handle = ();
     24→    fn process_token(&self, token: Token, _line_number: u64) -> TokenSinkResult<()> {
 crates/mdbook-html/src/html/tree.rs
+     8→use super::tokenizer::parse_html;
     24→/// Helper to create a [`QualName`].
     25→macro_rules! attr_qual_name {
    126→type Attributes = IndexMap<QualName, StrTendril>;
@@ -300,9 +310,6 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
 crates/mdbook-html/src/html_handlebars/helpers/fontawesome.rs
      8→pub(crate) fn fa_helper …
 crates/mdbook-html/src/html_handlebars/helpers/mod.rs
-     1→pub(crate) mod fontawesome;
-     2→pub(crate) mod resources;
-     3→pub(crate) mod toc;
 crates/mdbook-html/src/html_handlebars/helpers/resources.rs
     10→#[derive(Clone)]
     11→pub(crate) struct ResourceHelper {
@@ -311,6 +318,7 @@ crates/mdbook-html/src/html_handlebars/helpers/resources.rs
     15→impl HelperDef for ResourceHelper {
     16→    fn call …
 crates/mdbook-html/src/html_handlebars/helpers/toc.rs
+     1→use crate::utils::ToUrlPath;
     10→#[derive(Clone, Copy)]
     11→pub(crate) struct RenderToc {
     12→    pub no_section_label: bool,
@@ -358,7 +366,6 @@ crates/mdbook-html/src/theme/mod.rs
     45→    pub(crate) toc_js: Vec<u8>,
     46→    pub(crate) toc_html: Vec<u8>,
     47→    pub(crate) chrome_css: Vec<u8>,
-    48→    pub(crate) general_css: Vec<u8>,
       →…
     63→impl Theme {
     64→    /// Creates a `Theme` from the given `theme_dir`.
@@ -418,7 +425,6 @@ crates/mdbook-markdown/src/lib.rs
     34→    fn default() -> MarkdownOptions {
     35→        MarkdownOptions {
     36→            smart_punctuation: true,
-    37→            definition_lists: true,
       →…
     43→/// Creates a new pulldown-cmark parser of the given text.
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
@@ -621,6 +627,7 @@ eslint.config.mjs
 examples/nop-preprocessor.rs
      3→use crate::nop_lib::Nop;
     75→mod nop_lib {
+    76→    use super::*;
     78→    /// A no-op preprocessor.
     79→    pub struct Nop;
 examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs
@@ -635,9 +642,6 @@ guide/guide-helper/src/lib.rs
     11→    let pre = GuideHelper;
     12→    let (ctx, book) = mdbook_preprocessor::parse_input(io::stdin())?;
     13→
-    14→    let book_version = Version::parse(&ctx.mdbook_version)?;
-    15→    let version_req = VersionReq::parse(mdbook_preprocessor::MDBOOK_VERSION)?;
-    16→
       →…
     33→struct GuideHelper;
     35→impl Preprocessor for GuideHelper {
@@ -721,14 +725,8 @@ guide/src/for_developers/README.md
      3→While `mdbook` is mainly used as a command line tool, you can also import the
      4→underlying libraries directly and use those to manage a book. It also has a fairly
       →…
-    17→## The build process
-    19→The process of rendering a book project goes through several steps.
-    20→
-      →…
-    30→## Using `mdbook` as a library
-    32→The `mdbook` binary is just a wrapper around the underlying mdBook crates,
-    33→exposing their functionality as a command-line program. If you want to
-      →…
+    17→## The build process …
+    30→## Using `mdbook` as a library …
 guide/src/for_developers/backends.md
      1→# Alternative backends …
 guide/src/for_developers/mdbook-wordcount/src/main.rs
@@ -817,7 +815,11 @@ guide/src/guide/reading.md
 guide/src/misc/contributors.md
      1→# Contributors …
 src/cmd/build.rs
+     1→use super::command_prelude::*;
+     2→use crate::{get_book_dir, open};
 src/cmd/clean.rs
+     1→use super::command_prelude::*;
+     2→use crate::get_book_dir;
     36→/// Formats a number of bytes into a human readable SI-prefixed size.
     37→/// Returns a tuple of `(quantity, units)`.
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
@@ -843,6 +845,7 @@ src/cmd/command_prelude.rs
       →…
     56→impl CommandExt for Command {
 src/cmd/init.rs
+     1→use crate::get_book_dir;
     88→fn get_author_name() -> Option<String> {
    102→fn request_book_title() -> Option<String> {
    116→fn confirm() -> bool {
@@ -859,7 +862,9 @@ src/cmd/mod.rs
     10→#[cfg(feature = "watch")]
     11→pub mod watch;
 src/cmd/serve.rs
+     1→use super::command_prelude::*;
      3→use super::watch;
+     4→use crate::{get_book_dir, open};
     19→/// The HTTP endpoint for the websocket used to trigger reloads when a file changes.
     20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
    109→async fn serve(
@@ -870,6 +875,8 @@ src/cmd/serve.rs
    114→) {
    142→async fn websocket_connection(ws: WebSocket, reload_tx: broadcast::Sender<Message>) {
 src/cmd/test.rs
+     1→use super::command_prelude::*;
+     2→use crate::get_book_dir;
 src/cmd/watch/native.rs
      3→use ignore::gitignore::Gitignore;
     11→pub fn rebuild_on_change(
@@ -897,13 +904,7 @@ src/cmd/watch/poller.rs
     27→
       →…
     78→struct PathData {
-    79→    file_type: FileType,
-    80→    mtime: SystemTime,
-      →…
     86→struct Watcher {
-    87→    /// The root paths where it will recursively scan for changes.
-    88→    root_paths: Vec<PathBuf>,
-      →…
     95→impl Watcher {
     96→    fn new …
    123→    /// Sets the root directories where scanning will start.
@@ -913,6 +914,8 @@ src/cmd/watch/poller.rs
       →…
    153→    fn scan(&mut self) -> Vec<PathBuf> {
 src/cmd/watch.rs
+     1→use super::command_prelude::*;
+     2→use crate::{get_book_dir, open};
      8→mod native;
      9→mod poller;
     21→pub enum WatcherKind {
@@ -961,6 +964,7 @@ tests/testsuite/README.md
      1→# Testsuite …
      3→## Introduction …
 tests/testsuite/book_test.rs
+     3→use mdbook_core::utils::fs;
     13→static NEXT_TEST_ID: AtomicU32 = AtomicU32::new(0);
     23→pub struct BookTest {
    361→pub struct BookCommand {
@@ -975,10 +979,7 @@ tests/testsuite/includes/all_includes/src/rustdoc.md
 tests/testsuite/index/basic_readme/src/README.md
      1→# Intro …
 tests/testsuite/index/basic_readme/src/SUMMARY.md
-     1→# Summary
-     3→[Intro](./README.md)
-     4→
-      →…
+     1→# Summary …
 tests/testsuite/index/basic_readme/src/second/Readme.md
      1→# Second …
 tests/testsuite/init/init_from_summary/src/SUMMARY.md
@@ -986,6 +987,8 @@ tests/testsuite/init/init_from_summary/src/SUMMARY.md
 tests/testsuite/main.rs
      7→mod book_test;
     22→mod search;
+    28→    pub use crate::book_test::{BookTest, glob_one, read_to_string};
+    29→    pub use snapbox::str;
 tests/testsuite/markdown/basic_markdown/src/html.md
      3→## Comments
      9→**bigger**
@@ -1002,19 +1005,21 @@ tests/testsuite/markdown/tables/src/tables.md
      1→# Tables …
 tests/testsuite/markdown/tasklists/src/tasklists.md
      1→## Tasklisks …
+tests/testsuite/preprocessor.rs
+     4→use crate::prelude::*;
 tests/testsuite/print/noindex/src/index.md
      1→# Intro …
 tests/testsuite/print/relative_links/src/SUMMARY.md
      1→# Summary …
 tests/testsuite/print/relative_links/src/second/nested.md
 tests/testsuite/renderer/backends_receive_render_context_via_stdin/src/chapter_1.md
+tests/testsuite/renderer.rs
 tests/testsuite/rendering/first_chapter_is_copied_as_index_even_if_not_first_elem/src/SUMMARY.md
 tests/testsuite/rendering/header_links/src/SUMMARY.md
 tests/testsuite/rendering/header_links/src/header_links.md
 tests/testsuite/rendering/html_blocks/src/SUMMARY.md
      1→# Summary …
 tests/testsuite/search/disable_search_chapter/src/second/nested.md
-tests/testsuite/search/reasonable_search_index/src/SUMMARY.md
 tests/testsuite/search/reasonable_search_index/src/first/duplicate-headers.md
      7→# Header Text …
      9→# header-text …

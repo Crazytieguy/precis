@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (477 words)
+budget: 500 (478 words)
 
 README.md
      1→derive(Error) …
@@ -37,6 +37,7 @@ impl/src/attr.rs
     51→pub struct Fmt<'a> {
     57→pub enum Trait {
 impl/src/expand.rs
+impl/src/fallback.rs
 impl/src/fmt.rs
    166→struct FmtArguments {
    171→#[allow(clippy::unnecessary_wraps)]
@@ -52,12 +53,14 @@ impl/src/lib.rs
     43→}
     45→#[allow(non_camel_case_types)]
     46→struct private;
+impl/src/prop.rs
 impl/src/scan_expr.rs
      6→enum Input {
     25→enum Action {
 impl/src/unraw.rs
     12→pub struct IdentUnraw(Ident);
     82→pub enum MemberUnraw {
+impl/src/valid.rs
 src/aserror.rs
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
@@ -99,6 +102,7 @@ src/display.rs
     51→impl Sealed for PathBuf {}
     58→#[cfg(not(feature = "std"))]
     59→mod placeholder {
+    60→    use super::{AsDisplay, Sealed};
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
     67→        type Target = Self;
@@ -137,8 +141,6 @@ tests/no-std/test.rs
 tests/test_backtrace.rs
 tests/test_display.rs
 tests/test_generics.rs
-     7→pub struct NoFormat;
-    12→pub struct DisplayOnly;
 tests/test_lints.rs
      5→pub use std::error::Error;
 tests/test_option.rs

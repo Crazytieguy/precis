@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1957 words)
+budget: 2000 (1920 words)
 
 README.md
     28→## Features
@@ -79,7 +79,6 @@ site/components/code.tsx
      6→} from 'prism-react-renderer';
      8→const theme: PrismTheme = {
      9→  plain: {
-    10→    backgroundColor: '#351e11',
       →…
    104→export const Code: React.FC<{
    105→  snippet: string;
@@ -115,7 +114,6 @@ site/components/sections/footer.tsx
      2→import Link from 'next/link';
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
      5→  return (
-     6→    <footer className="container relative justify-center my-8 flex flex-col items-center space-y-4">
       →…
 site/components/sections/splitbee-counter.tsx
      1→import React from 'react';
@@ -125,11 +123,9 @@ site/components/sections/splitbee-counter.tsx
      6→  token: string
      7→): number => {
      8→  const [data, setData] = React.useState<number>(0);
-     9→  const socket = React.useRef(null);
       →…
     36→export const SplitbeeCounter = () => {
     37→  const count = useSplitbeeCount('Trigger Toast', 'NTV7AYBLEXW3');
-    38→
       →…
 site/components/sections/toast-example.tsx
      1→import React, { useState } from 'react';
@@ -141,7 +137,6 @@ site/components/sections/toast-example.tsx
       →…
    270→export const ToastExample = () => {
    271→  const [snippet, setSnippet] = useState(examples[0].snippet);
-   272→  return (
       →…
 site/components/sections/toaster-example.tsx
      1→import clsx from 'clsx';
@@ -159,7 +154,6 @@ site/components/sections/toaster-example.tsx
     15→];
     17→export const ToasterExample: React.FC<{
     18→  position: ToastPosition;
-    19→  onPosition: (pos: ToastPosition) => void;
       →…
 site/next.config.mjs
      1→import rehypeSlug from 'rehype-slug';
@@ -177,9 +171,22 @@ site/next.config.mjs
     26→      {
       →…
 site/pages/_app.tsx
+     1→import '../styles/tailwind-utils.css';
+     2→import '../styles/main.css';
+    10→import { Code } from '../components/code';
     12→const components = {
     71→function MyApp …
 site/pages/index.tsx
+    11→import Logo from '../assets/logo.svg';
+    12→import Butter1 from '../assets/butter-1.svg';
+    13→import Butter2 from '../assets/butter-2.svg';
+    14→import GitHub from '../assets/github.svg';
+    15→import Checkmark from '../assets/checkmark.svg';
+    16→import { ToastExample } from '../components/sections/toast-example';
+    17→import { Footer } from '../components/sections/footer';
+    18→import { ToasterExample } from '../components/sections/toaster-example';
+    19→import { SplitbeeCounter } from '../components/sections/splitbee-counter';
+    21→import packageInfo from '../../package.json';
     22→const version = packageInfo.version;
     24→const Feature …
     31→const Step …
@@ -195,22 +202,13 @@ site/pages/index.tsx
    109→  return (
    110→    <div className="overflow-x-hidden">
    111→      <NextSeo
-   112→        title={'react-hot-toast - The Best React Notifications in Town'}
-   113→        openGraph={{
-   114→          images: [
-   115→            {
-   116→              url: `https://react-hot-toast.com/social-image.png`,
-   117→              width: 1200,
-   118→              height: 630,
-   119→            },
-   120→          ],
-   121→        }}
       →…
 site/types/svg.d.ts
      1→interface SvgrComponent
      2→  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
      5→  const value: SvgrComponent;
 src/components/checkmark.tsx
+     1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
     13→const checkmarkAnimation = keyframes`
     29→export interface CheckmarkTheme {
@@ -219,6 +217,7 @@ src/components/checkmark.tsx
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
 src/components/error.tsx
+     1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
     13→const firstLineAnimation = keyframes`
     23→const secondLineAnimation = keyframes`
@@ -228,6 +227,7 @@ src/components/error.tsx
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
 src/components/loader.tsx
+     1→import { styled, keyframes } from 'goober';
      3→const rotate = keyframes`
     12→export interface LoaderTheme {
     13→  primary?: string;
@@ -235,14 +235,13 @@ src/components/loader.tsx
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
 src/components/toast-bar.tsx
-     8→const enterAnimation = (factor: number) => `
-     9→0% {transform: translate3d(0,${factor * -200}%,0) scale(.6); opacity:.5;}
-    10→100% {transform: translate3d(0,0,0) scale(1); opacity:1;}
-    11→`;
-    13→const exitAnimation = (factor: number) => `
-    14→0% {transform: translate3d(0,0,-1px) scale(1); opacity:1;}
-    15→100% {transform: translate3d(0,${factor * -150}%,-1px) scale(.6); opacity:0;}
-    16→`;
+     1→import * as React from 'react';
+     2→import { styled, keyframes } from 'goober';
+     4→import { Toast, ToastPosition, resolveValue, Renderable } from '../core/types';
+     5→import { ToastIcon } from './toast-icon';
+     6→import { prefersReducedMotion } from '../core/utils';
+     8→const enterAnimation …
+    13→const exitAnimation …
     18→const fadeInAnimation = `0%{opacity:0;} 100%{opacity:1;}`;
     19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
     22→const ToastBarBase = styled('div')`
@@ -256,14 +255,15 @@ src/components/toast-bar.tsx
     53→    message: Renderable;
     54→  }) => Renderable;
     55→}
-    57→const getAnimationStyle = (
-    58→  position: ToastPosition,
-    59→  visible: boolean
-    60→): React.CSSProperties => {
-    61→  const top = position.includes('top');
-      →…
+    57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 src/components/toast-icon.tsx
+     1→import * as React from 'react';
+     2→import { styled, keyframes } from 'goober';
+     4→import { Toast } from '../core/types';
+     5→import { ErrorIcon, ErrorTheme } from './error';
+     6→import { LoaderIcon, LoaderTheme } from './loader';
+     7→import { CheckmarkIcon, CheckmarkTheme } from './checkmark';
      9→const StatusWrapper = styled('div')`
     13→const IndicatorWrapper = styled('div')`
     22→const enter = keyframes`
@@ -279,23 +279,21 @@ src/components/toast-icon.tsx
     54→    } else {
     55→      return icon;
     56→    }
-    57→  }
-    58→
-    59→  if (type === 'blank') {
-    60→    return null;
-    61→  }
-    62→
       →…
 src/components/toaster.tsx
-    15→const ToastWrapper = ({
-    16→  id,
-      →…
-    47→const getPositionStyle = (
-    48→  position: ToastPosition,
-    49→  offset: number
-    50→): React.CSSProperties => {
-    51→  const top = position.includes('top');
-      →…
+     1→import { css, setup } from 'goober';
+     2→import * as React from 'react';
+     3→import {
+     4→  resolveValue,
+     5→  ToasterProps,
+     6→  ToastPosition,
+     7→  ToastWrapperProps,
+     8→} from '../core/types';
+     9→import { useToaster } from '../core/use-toaster';
+    10→import { prefersReducedMotion } from '../core/utils';
+    11→import { ToastBar } from './toast-bar';
+    15→const ToastWrapper …
+    47→const getPositionStyle …
     76→const activeClass = css`
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
@@ -308,12 +306,6 @@ src/components/toaster.tsx
     92→  containerStyle,
     93→  containerClassName,
     94→}) => {
-    95→  const { toasts, handlers } = useToaster(toastOptions, toasterId);
-    96→
-    97→  return (
-    98→    <div
-    99→      data-rht-toaster={toasterId || ''}
-   100→      style={{
       →…
 src/core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
@@ -401,30 +393,9 @@ src/core/toast.ts
     17→} from './store';
     19→type Message = ValueOrFunction<Renderable, Toast>;
     21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
-    23→const createToast = (
-    24→  message: Message,
-    25→  type: ToastType = 'blank',
-    26→  opts?: ToastOptions
-    27→): Toast => ({
-    28→  createdAt: Date.now(),
-    29→  visible: true,
-    30→  dismissed: false,
-    31→  type,
-    32→  ariaProps: {
-    33→    role: 'status',
-      →…
-    42→const createHandler =
-    43→  (type?: ToastType): ToastHandler =>
-    44→  (message, options) => {
-    45→    const toast = createToast(message, type, options);
-    46→
-    47→    const dispatch = createDispatch(
-    48→      toast.toasterId || getToasterIdFromToastId(toast.id)
-    49→    );
-    50→
-      →…
-    55→const toast = (message: Message, opts?: ToastOptions) =>
-    56→  createHandler('blank')(message, opts);
+    23→const createToast …
+    42→const createHandler …
+    55→const toast …
 src/core/types.ts
      1→import { CSSProperties } from 'react';
      3→export type ToastType = 'success' | 'error' | 'loading' | 'blank' | 'custom';
@@ -444,10 +415,7 @@ src/core/types.ts
     20→export type ValueOrFunction<TValue, TArg> =
     21→  | TValue
     22→  | ValueFunction<TValue, TArg>;
-    24→const isFunction = <TValue, TArg>(
-    25→  valOrFunction: ValueOrFunction<TValue, TArg>
-    26→): valOrFunction is ValueFunction<TValue, TArg> =>
-    27→  typeof valOrFunction === 'function';
+    24→const isFunction …
     29→export const resolveValue = <TValue, TArg>(
     30→  valOrFunction: ValueOrFunction<TValue, TArg>,
     31→  arg: TArg
@@ -536,11 +504,12 @@ src/index.ts
 test/setup.ts
      1→import '@testing-library/jest-dom';
 test/toast.test.tsx
+     1→import React, { useEffect, useState } from 'react …
+     2→@testing-library/react …
+    10→import toast, { resolveValue, Toaster, ToastIcon } from '../src';
+    11→import { defaultTimeouts } from '../src/core/store';
+    12→import { REMOVE_DELAY } from '../src/core/use-toaster';
     29→const waitTime = (time: number) => {
-    30→  act(() => {
-    31→    jest.advanceTimersByTime(time);
-    32→  });
-    33→};
     35→const TOAST_DURATION = 1000;
 tsup.config.ts
      1→import { defineConfig, Options } from 'tsup';

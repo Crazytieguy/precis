@@ -36,9 +36,6 @@ README.md
     39→- Simplified Chinese
     40→- Slovak
     41→- Slovenian
-    42→- Spanish
-    43→- Swedish
-    44→- Turkish
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -148,6 +145,7 @@ docs/time.md
      1→# Time
      3→::: humanize.time
 src/humanize/__init__.py
+    26→from ._version …
     28→__all__ = [
 src/humanize/filesize.py
 src/humanize/i18n.py
@@ -163,8 +161,15 @@ src/humanize/lists.py
      5→TYPE_CHECKING = False
      9→__all__ = ["natural_list"]
 src/humanize/number.py
+     7→from .i18n …
+     8→from .i18n …
+     9→from .i18n …
+    10→from .i18n …
     12→TYPE_CHECKING = False
 src/humanize/time.py
+    11→from .i18n …
+    12→from .i18n …
+    13→from .number …
     15→TYPE_CHECKING = False
     21→__all__ = [
     30→@total_ordering
@@ -179,19 +184,13 @@ src/humanize/time.py
     39→    YEARS = 7
     40→
 tests/test_i18n.py
-    17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
    225→class TestActivate:
    226→    expected_msg = (
-   249→    @freeze_time("2020-02-02")
    250→    def test_en_locale(self) -> None:
-   262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
 tests/test_time.py
     16→# In seconds
     17→ONE_MICROSECOND = 1 / 1000000
     37→class FakeDate:
-    58→# These are not considered "public" interfaces, but require tests anyway.
-    59→
-    60→
     61→def test_date_and_delta() -> None:

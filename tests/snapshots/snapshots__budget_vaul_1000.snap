@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (996 words)
+budget: 1000 (992 words)
 
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
@@ -56,6 +56,8 @@ src/helpers.ts
    116→  };
       →…
 src/index.tsx
+     3→import * as DialogPrimitive from '@radix-ui/react-dialog';
+     4→import React from 'react';
     27→export interface WithFadeFromProps {
     28→  /**
     29→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
@@ -197,9 +199,9 @@ test/src/app/different-directions/page.tsx
      6→function DirectionalDrawer({
    118→export default function Page() {
 test/src/app/initial-snap/page.tsx
-     7→const snapPoints …
      9→export default function Page() {
 test/src/app/layout.tsx
+     1→import './globals.css';
      5→const inter …
      7→export const metadata: Metadata = {
     12→export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -217,10 +219,8 @@ test/src/app/scrollable-page/page.tsx
 test/src/app/scrollable-with-inputs/page.tsx
      5→export default function Page() {
 test/src/app/with-handle/page.tsx
-     7→const snapPoints = ['148px', '355px'];
      9→export default function Page() {
 test/src/app/with-modal-false/page.tsx
-     7→const snapPoints = ['148px', '355px', 1];
      9→export default function Page() {
 test/src/app/with-redirect/long-page/page.tsx
      3→export default function Page() {
@@ -229,10 +229,10 @@ test/src/app/with-redirect/page.tsx
 test/src/app/with-scaled-background/page.tsx
     65→export default function Page() {
 test/src/app/with-snap-points/page.tsx
-     7→const snapPoints …
      9→export default function Page() {
 test/src/app/without-scaled-background/page.tsx
      6→export default function Page() {
+test/tailwind.config.ts
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;
 test/tests/helpers.ts

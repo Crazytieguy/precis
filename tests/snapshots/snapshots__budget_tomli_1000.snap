@@ -2,13 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (966 words)
+budget: 1000 (967 words)
 
 CHANGELOG.md
      1→# Changelog …
      3→## 2.4.0
      5→- Added
-     6→  - TOML v1.1.0 compatibility
       →…
 README.md
      5→# Tomli
@@ -84,8 +83,7 @@ benchmark/README.md
      5→This benchmark was shamelessly copied from
      6→[pytomlpp](https://github.com/bobfang1992/pytomlpp/tree/e6b03726f8347c6a6757f520ad1b5fab68ed8534/benchmark)
      7→repository and edited.
-     8→Credit goes to the authors of that project.
-     9→
+      →…
     10→## Running …
     12→### Against the local Tomli state
     14→```bash
@@ -124,8 +122,11 @@ src/tomli/__init__.py
      4→
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+     8→from ._parser …
 src/tomli/_parser.py
+    10→from ._re …
     19→TYPE_CHECKING = False
+    24→    from ._types …
     26→# Inline tables/arrays are implemented using recursion. Pathologically
     27→# nested documents cause pure Python to raise RecursionError (which is OK),
     28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
@@ -173,6 +174,7 @@ src/tomli/_parser.py
    312→class Output:
 src/tomli/_re.py
     11→TYPE_CHECKING = False
+    15→    from ._types …
     17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
     27→    r"""

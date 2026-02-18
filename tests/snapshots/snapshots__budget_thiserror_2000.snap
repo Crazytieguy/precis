@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1942 words)
+budget: 2000 (1918 words)
 
 README.md
      1→derive(Error)
@@ -97,9 +97,7 @@ README.md
    231→
    232→<sub>
    233→Unless you explicitly state otherwise, any contribution intentionally submitted
-   234→for inclusion in this crate by you, as defined in the Apache-2.0 license, shall
-   235→be dual licensed as above, without any additional terms or conditions.
-   236→</sub>
+      →…
 build/probe.rs
      8→use core::error::{Error, Request};
      9→use core::fmt::{self, Debug, Display};
@@ -119,13 +117,14 @@ build/probe.rs
     29→    }
 build.rs
     10→const PRIVATE: &str = "\
-    11→#[doc(hidden)]
-      →…
     18→fn main() {
     91→fn compile_probe(rustc_bootstrap: bool) -> bool {
    179→fn rustc_minor_version() -> Option<u32> {
    190→fn cargo_env_var(key: &str) -> OsString {
 impl/src/ast.rs
+     1→use crate::attr::{self, Attrs};
+     2→use crate::generics::ParamsInScope;
+     3→use crate::unraw::{IdentUnraw, MemberUnraw};
     10→pub enum Input<'a> {
     11→    Struct(Struct<'a>),
     12→    Enum(Enum<'a>),
@@ -222,9 +221,22 @@ impl/src/attr.rs
    303→    fn to_tokens(&self, tokens: &mut TokenStream) {
    343→    fn to_tokens(&self, tokens: &mut TokenStream) {
 impl/src/expand.rs
+     1→use crate::ast::{Enum, Field, Input, Struct};
+     2→use crate::attr::Trait;
+     3→use crate::fallback;
+     4→use crate::generics::InferredBounds;
+     5→use crate::private;
+     6→use crate::unraw::MemberUnraw;
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
 impl/src/fallback.rs
+     1→use crate::expand::call_site_ident;
+     2→use crate::private;
 impl/src/fmt.rs
+     1→use crate::ast::{ContainerKind, Field};
+     2→use crate::attr::{Display, Trait};
+     3→use crate::private;
+     4→use crate::scan_expr::scan_expr;
+     5→use crate::unraw::{IdentUnraw, MemberUnraw};
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
    166→struct FmtArguments {
    167→    named: BTreeSet<IdentUnraw>,
@@ -247,6 +259,7 @@ impl/src/fmt.rs
    185→    input.parse::<TokenStream>().unwrap();
    186→    Ok(FmtArguments {
    187→        named: BTreeSet::new(),
+   188→        first_unnamed: None,
       →…
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
@@ -281,7 +294,10 @@ impl/src/lib.rs
     46→struct private;
     49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
 impl/src/prop.rs
+     1→use crate::ast::{Enum, Field, Struct, Variant};
+     2→use crate::unraw::MemberUnraw;
 impl/src/scan_expr.rs
+     1→use self::{Action::*, Input::*};
      6→enum Input {
      7→    Keyword(&'static str),
      8→    Punct(&'static str),
@@ -306,28 +322,6 @@ impl/src/scan_expr.rs
     28→    DecDepth,
     29→    Finish,
     30→}
-    32→static INIT …
-    63→static POSTFIX …
-    76→static ASYNC …
-    82→static BLOCK …
-    84→static BREAK_LABEL …
-    89→static BREAK_VALUE …
-    95→static CLOSURE …
-   104→static CLOSURE_ARGS …
-   109→static CLOSURE_RET …
-   114→static CONST …
-   119→static CONTINUE …
-   124→static DOT …
-   130→static FOR …
-   135→static IF_ELSE …
-   136→static IF_THEN …
-   139→static METHOD …
-   141→static PATH …
-   148→static PATTERN …
-   166→static RANGE …
-   175→static RAW …
-   181→static REFERENCE …
-   187→static RETURN …
 impl/src/unraw.rs
     10→#[derive(Clone)]
     11→#[repr(transparent)]
@@ -354,6 +348,8 @@ impl/src/unraw.rs
    127→    fn hash<H: Hasher>(&self, hasher: &mut H) {
    136→    fn to_tokens(&self, tokens: &mut TokenStream) {
 impl/src/valid.rs
+     1→use crate::ast::{Enum, Field, Input, Struct, Variant};
+     2→use crate::attr::Attrs;
 src/aserror.rs
      1→use core::error::Error;
      2→use core::panic::UnwindSafe;
@@ -478,9 +474,11 @@ tests/test_backtrace.rs
      4→use thiserror::Error;
     17→#[cfg(thiserror_nightly_testing)]
     18→pub mod structs {
+    19→    use super::{Inner, InnerBacktrace};
     25→    mod not_backtrace {
    162→#[cfg(thiserror_nightly_testing)]
    163→pub mod enums {
+   164→    use super::{Inner, InnerBacktrace};
 tests/test_display.rs
     12→fn assert<T: Display>(expected: &str, value: T) {
    414→mod util {

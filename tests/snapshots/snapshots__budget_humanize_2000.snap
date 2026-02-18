@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1975 words)
+budget: 2000 (1957 words)
 
 README.md
      1→# humanize
@@ -283,12 +283,27 @@ docs/time.md
      1→# Time
      3→::: humanize.time
 src/humanize/__init__.py
-     5→from humanize.filesize …
-     6→from humanize.i18n …
-     7→from humanize.lists …
-     8→from humanize.number …
-    18→from humanize.time …
-    26→from ._version …
+     5→from humanize.filesize import naturalsize
+     6→from humanize.i18n import activate, deactivate, decimal_separator, thousands_separator
+     7→from humanize.lists import natural_list
+     8→from humanize.number import (
+     9→    apnumber,
+    10→    clamp,
+    11→    fractional,
+    12→    intcomma,
+    13→    intword,
+    14→    metric,
+    15→    ordinal,
+    16→    scientific,
+    17→)
+    18→from humanize.time import (
+    19→    naturaldate,
+    20→    naturalday,
+    21→    naturaldelta,
+    22→    naturaltime,
+    23→    precisedelta,
+    24→)
+    26→from ._version import __version__
     28→__all__ = [
     29→    "__version__",
     30→    "activate",
@@ -312,7 +327,7 @@ src/humanize/__init__.py
     48→    "thousands_separator",
     49→]
 src/humanize/filesize.py
-     5→from math …
+     5→from math import log
     36→def naturalsize(
     37→    value: float | str,
     38→    binary: bool = False,
@@ -323,11 +338,11 @@ src/humanize/filesize.py
     43→
       →…
 src/humanize/i18n.py
-     5→import gettext …
-     6→from threading …
+     5→import gettext as gettext_module
+     6→from threading import local
      8→TYPE_CHECKING = False
-    10→    import os …
-    11→    import pathlib …
+    10→    import os
+    11→    import pathlib
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
     16→    None: gettext_module.NullTranslations()
@@ -360,25 +375,10 @@ src/humanize/i18n.py
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
    101→def _gettext(message: str) -> str:
-   102→    """Get translation.
-   103→
-      →…
    113→def _pgettext(msgctxt: str, message: str) -> str:
-   114→    """Fetches a particular translation.
-   115→
-      →…
    129→def _ngettext(message: str, plural: str, num: int) -> str:
-   130→    """Plural version of _gettext.
-   131→
-      →…
    144→def _gettext_noop(message: str) -> str:
-   145→    """Mark a string as a translation string without translating it.
-   146→
-      →…
    163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
-   164→    """Mark two strings as pluralized translations without translating them.
-   165→
-      →…
    183→def thousands_separator() -> str:
    184→    """Return the thousands separator for a locale, default to comma.
    185→
@@ -389,22 +389,21 @@ src/humanize/i18n.py
       →…
 src/humanize/lists.py
      5→TYPE_CHECKING = False
-     7→    from typing …
+     7→    from typing import Any
      9→__all__ = ["natural_list"]
     12→def natural_list(items: list[Any]) -> str:
     13→    """Natural list.
     14→
       →…
 src/humanize/number.py
-     5→import bisect …
-     7→from .i18n …
-     8→from .i18n …
-     9→from .i18n …
-    10→from .i18n …
+     5→import bisect
+     7→from .i18n import _gettext as _
+     8→from .i18n import _ngettext, decimal_separator, thousands_separator
+     9→from .i18n import _ngettext_noop as NS_
+    10→from .i18n import _pgettext as P_
     12→TYPE_CHECKING = False
-    14→    from typing …
+    14→    from typing import TypeAlias
     21→def _format_not_finite(value: float) -> str:
-    22→    """Utility function to handle infinite and nan cases."""
     34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
     35→    """Converts an integer to its ordinal as a string.
     36→
@@ -445,15 +444,15 @@ src/humanize/number.py
    533→
       →…
 src/humanize/time.py
-     8→from enum …
-     9→from functools …
-    11→from .i18n …
-    12→from .i18n …
-    13→from .number …
+     8→from enum import Enum
+     9→from functools import total_ordering
+    11→from .i18n import _gettext as _
+    12→from .i18n import _ngettext
+    13→from .number import intcomma
     15→TYPE_CHECKING = False
-    17→    import datetime …
-    18→    from collections.abc …
-    19→    from typing …
+    17→    import datetime as dt
+    18→    from collections.abc import Iterable
+    19→    from typing import Any
     21→__all__ = [
     22→    "naturaldate",
     23→    "naturalday",
@@ -475,15 +474,9 @@ src/humanize/time.py
     41→    def __lt__(self, other: Any) -> Any:
     47→def _now() -> dt.datetime:
     53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
-    54→    """Return an "absolute" value for a timedelta, always representing a time distance.
-    55→
-      →…
     68→def _date_and_delta(
     69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
     70→) -> tuple[Any, Any]:
-    71→    """Turn a value into a date and a timedelta which represents how long ago it was.
-    72→
-      →…
     95→def naturaldelta(
     96→    value: dt.timedelta | float,
     97→    months: bool = True,
@@ -505,7 +498,6 @@ src/humanize/time.py
    300→def _convert_aware_datetime(
    301→    value: dt.datetime | dt.timedelta | float | None,
    302→) -> Any:
-   303→    """Convert aware datetime to naive datetime and pass through any other type."""
    311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
    312→    """Return a natural day.
    313→
@@ -520,17 +512,8 @@ src/humanize/time.py
    366→    suppress: Iterable[Unit],
    367→    format: str,
    368→) -> tuple[float, float]:
-   369→    """Divide `value` by `divisor`, returning the quotient and remainder.
-   370→
-      →…
    406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
-   407→    """Return a minimum unit suitable that is not suppressed.
-   408→
-      →…
    435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
-   436→    """Extend suppressed units (if any) with all units lower than the minimum unit.
-   437→
-      →…
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
    453→    minimum_unit: str = "seconds",
@@ -541,16 +524,21 @@ src/humanize/time.py
    458→
       →…
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
-   655→    """Round a number according to the string format provided.
-   656→
-      →…
 tests/test_filesize.py
+     6→import pytest
+     8→import humanize
 tests/test_i18n.py
+     5→import datetime as dt
+     6→import importlib
+     8→import pytest
+     9→from freezegun import freeze_time
+    11→import humanize
     17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
     19→    three_seconds = NOW - dt.timedelta(seconds=3)
     20→    one_min_three_seconds = dt.timedelta(milliseconds=67_000)
     21→
+    22→    assert humanize.naturaltime(three_seconds) == "3 seconds ago"
       →…
    225→class TestActivate:
    226→    expected_msg = (
@@ -563,16 +551,31 @@ tests/test_i18n.py
    251→        three_seconds = NOW - dt.timedelta(seconds=3)
    252→        test_str = humanize.naturaltime(three_seconds)
    253→
+   254→        humanize.i18n.activate("en_US")
       →…
    262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
    264→        three_seconds = NOW - dt.timedelta(seconds=3)
    265→
    266→        try:
+   267→            humanize.i18n.activate("fr")
       →…
 tests/test_lists.py
+     3→import pytest
+     5→import humanize
 tests/test_number.py
+     5→import math
+     6→import typing
+     8→import pytest
+    10→import humanize
+    11→from humanize import number
 tests/test_time.py
+     5→import datetime as dt
+     6→import typing
+     8→import pytest
+     9→from freezegun import freeze_time
+    11→import humanize
+    12→from humanize import time
     14→ONE_DAY_DELTA = dt.timedelta(days=1)
     16→# In seconds
     17→ONE_MICROSECOND = 1 / 1000000
@@ -593,4 +596,5 @@ tests/test_time.py
     62→    now = dt.datetime.now()
     63→    td = dt.timedelta
     64→    int_tests = (3, 29, 86399, 86400, 86401 * 30)
+    65→    date_tests = [now - td(seconds=x) for x in int_tests]
       →…

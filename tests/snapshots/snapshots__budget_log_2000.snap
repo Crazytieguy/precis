@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1947 words)
+budget: 2000 (1931 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -14,18 +14,11 @@ README.md
      1→log
      4→A Rust library providing a lightweight logging *facade*.
      5→
-     6→[![Build status](https://img.shields.io/github/actions/workflow/status/rust-lang/log/main.yml?branch=master)](https://github.com/rust-lang/log/actions)
-     7→[![Latest version](https://img.shields.io/crates/v/log.svg)](https://crates.io/crates/log)
-     8→[![Documentation](https://docs.rs/log/badge.svg)](https://docs.rs/log)
-     9→![License](https://img.shields.io/crates/l/log.svg)
-    10→
-    11→* [`log` documentation](https://docs.rs/log)
       →…
     19→## Minimum supported `rustc`
     21→`1.68.0+`
     22→
-    23→This version is explicitly tested in CI and may be bumped in any release as needed. Maintaining compatibility with older compilers is a priority though, so the bar for bumping the minimum supported version is set very high. Any changes to the supported minimum version will be called out in the release notes.
-    24→
+      →…
     25→## Usage
     27→### In libraries
     29→Libraries should link only to the `log` crate, and use the provided macros to
@@ -74,16 +67,14 @@ README.md
     73→    * [`structured-logger`](https://docs.rs/structured-logger/latest/structured_logger/)
     74→    * [`clang_log`](https://docs.rs/clang_log/latest/clang_log)
     75→    * [`ftail`](https://docs.rs/ftail/latest/ftail/)
+    76→* Complex configurable frameworks:
+    77→    * [`log4rs`](https://docs.rs/log4rs/*/log4rs/)
+    78→    * [`logforth`](https://docs.rs/logforth/*/logforth/)
+    79→    * [`fern`](https://docs.rs/fern/*/fern/)
       →…
    106→## Structured logging
    108→If you enable the `kv` feature, you can associate structured data with your log records:
    109→
-   110→```rust
-   111→use log::{info, trace, warn};
-   112→
-   113→pub fn shave_the_yak(yak: &mut Yak) {
-   114→    // `yak:serde` will capture `yak` using its `serde::Serialize` impl
-   115→    //
       →…
 benches/value.rs
      4→use log::kv::Value;
@@ -121,6 +112,9 @@ rfcs/0296-structured-logging.md
   1650→# Unresolved questions …
 src/__private_api.rs
      3→use self::sealed::KVs;
+     4→use crate::{logger, Level, Log, Metadata, Record};
+     5→use std::fmt::Arguments;
+     6→use std::panic::Location;
      7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -133,6 +127,7 @@ src/__private_api.rs
     56→fn log_impl …
    112→#[cfg(feature = "kv")]
    113→mod kv_support {
+   114→    use crate::kv;
    116→    pub type Value<'a> = kv::Value<'a>;
    151→pub use self::kv_support::*;
 src/kv/error.rs
@@ -156,6 +151,7 @@ src/kv/error.rs
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
     68→#[cfg(feature = "std")]
     69→mod std_support {
+    70→    use super::*;
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
 src/kv/key.rs
      3→use std::borrow::Borrow;
@@ -168,10 +164,13 @@ src/kv/key.rs
     40→}
     93→#[cfg(feature = "std")]
     94→mod std_support {
+    95→    use super::*;
    112→#[cfg(feature = "kv_sval")]
    113→mod sval_support {
+   114→    use super::*;
    135→#[cfg(feature = "kv_serde")]
    136→mod serde_support {
+   137→    use super::*;
 src/kv/mod.rs
      1→//! Structured logging.
      2→//!
@@ -218,6 +217,7 @@ src/kv/source.rs
    244→{
    279→#[cfg(feature = "std")]
    280→mod std_support {
+   281→    use super::*;
    462→pub use VisitSource as Visitor;
 src/kv/value.rs
      6→use std::fmt;
@@ -246,6 +246,7 @@ src/kv/value.rs
    336→macro_rules! impl_value_to_primitive {
    389→#[cfg(feature = "kv_std")]
    390→mod std_support {
+   395→    use super::*;
    450→/// A visitor for a [`Value`].
    451→///
       →…
@@ -284,7 +285,10 @@ src/kv/value.rs
   1159→macro_rules! as_serde {
   1169→macro_rules! as_sval {
 src/lib.rs
+   399→use std::cfg;
    401→use std::error;
+   402→use std::str::FromStr;
+   403→use std::{cmp, fmt, mem};
    405→#[macro_use]
    406→mod macros;
    407→mod serde;
@@ -488,6 +492,10 @@ src/serde.rs
      4→    Deserialize, DeserializeSeed, Deserializer, EnumAccess, Error, Unexpected, VariantAccess,
      5→    Visitor,
      6→};
+     7→use serde_core::ser::{Serialize, Serializer};
+     9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
+    11→use std::fmt;
+    12→use std::str::{self, FromStr};
 test_max_level_features/main.rs
      1→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
      2→use std::sync::{Arc, Mutex};
@@ -514,6 +522,9 @@ test_max_level_features/main.rs
 tests/integration.rs
      3→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
      6→struct State {
+     7→    last_log_level: Mutex<Option<Level>>,
+     8→    last_log_location: Mutex<Option<u32>>,
+     9→}
     11→struct Logger(Arc<State>);
     13→impl Log for Logger {
     62→fn test_filter …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (950 words)
+budget: 1000 (943 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -53,9 +53,7 @@ rfcs/0296-structured-logging.md
     43→# Motivation …
     98→# Guide-level explanation …
    495→# Reference-level explanation …
-   502→### Don't break anything
-   504→Allow structured logging to be added in the current `0.4.x` series of `log`. This gives us the option of including structured logging in an `0.4.x` release, or bumping the minor crate version without introducing any actual breaking changes.
-   505→
+   502→### Don't break anything …
   1575→# Drawbacks, rationale, and alternatives …
   1598→#### Build a serialization contract in `log`
   1600→Instead of internalizing a few serialization frameworks, `log` could provide a public common contract for them to conform to:
@@ -68,6 +66,7 @@ rfcs/0296-structured-logging.md
   1650→# Unresolved questions …
 src/__private_api.rs
      3→use self::sealed::KVs;
+     4→use crate::{logger, Level, Log, Metadata, Record};
      7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -76,6 +75,7 @@ src/__private_api.rs
     39→pub struct GlobalLogger;
    112→#[cfg(feature = "kv")]
    113→mod kv_support {
+   114→    use crate::kv;
    116→    pub type Value<'a> = kv::Value<'a>;
    151→pub use self::kv_support::*;
 src/kv/error.rs
@@ -94,6 +94,7 @@ src/kv/error.rs
     29→    pub(super) fn from_value …
     37→    pub(super) fn into_value …
     69→mod std_support {
+    70→    use super::*;
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
 src/kv/key.rs
      3→use std::borrow::Borrow;
@@ -103,8 +104,11 @@ src/kv/key.rs
     39→    key: &'k str,
     40→}
     94→mod std_support {
+    95→    use super::*;
    113→mod sval_support {
+   114→    use super::*;
    136→mod serde_support {
+   137→    use super::*;
 src/kv/mod.rs
    246→mod error;
    247→mod key;
@@ -130,6 +134,7 @@ src/kv/source.rs
    243→    T: VisitSource<'kvs> + ?Sized,
    244→{
    280→mod std_support {
+   281→    use super::*;
    462→pub use VisitSource as Visitor;
 src/kv/value.rs
      6→use std::fmt;
@@ -146,6 +151,7 @@ src/kv/value.rs
    312→macro_rules! impl_to_value_nonzero_primitive {
    336→macro_rules! impl_value_to_primitive {
    390→mod std_support {
+   395→    use super::*;
    462→pub trait VisitValue<'v> {
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
@@ -246,6 +252,7 @@ src/serde.rs
      4→    Deserialize, DeserializeSeed, Deserializer, EnumAccess, Error, Unexpected, VariantAccess,
      5→    Visitor,
      6→};
+     9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
 test_max_level_features/main.rs
      1→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
      2→use std::sync::{Arc, Mutex};

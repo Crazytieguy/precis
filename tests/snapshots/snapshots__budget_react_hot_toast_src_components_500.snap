@@ -2,9 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (500 words)
+budget: 500 (475 words)
 
 checkmark.tsx
+     1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
     13→const checkmarkAnimation = keyframes`
     29→export interface CheckmarkTheme {
@@ -13,6 +14,7 @@ checkmark.tsx
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
 error.tsx
+     1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
     13→const firstLineAnimation = keyframes`
     23→const secondLineAnimation = keyframes`
@@ -22,6 +24,7 @@ error.tsx
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
 loader.tsx
+     1→import { styled, keyframes } from 'goober';
      3→const rotate = keyframes`
     12→export interface LoaderTheme {
     13→  primary?: string;
@@ -29,6 +32,11 @@ loader.tsx
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
 toast-bar.tsx
+     1→import * as React from 'react';
+     2→import { styled, keyframes } from 'goober';
+     4→import { Toast, ToastPosition, resolveValue, Renderable } from '../core/types';
+     5→import { ToastIcon } from './toast-icon';
+     6→import { prefersReducedMotion } from '../core/utils';
      8→const enterAnimation = (factor: number) => `
      9→0% {transform: translate3d(0,${factor * -200}%,0) scale(.6); opacity:.5;}
     10→100% {transform: translate3d(0,0,0) scale(1); opacity:1;}
@@ -58,6 +66,12 @@ toast-bar.tsx
       →…
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 toast-icon.tsx
+     1→import * as React from 'react';
+     2→import { styled, keyframes } from 'goober';
+     4→import { Toast } from '../core/types';
+     5→import { ErrorIcon, ErrorTheme } from './error';
+     6→import { LoaderIcon, LoaderTheme } from './loader';
+     7→import { CheckmarkIcon, CheckmarkTheme } from './checkmark';
      9→const StatusWrapper = styled('div')`
     13→const IndicatorWrapper = styled('div')`
     22→const enter = keyframes`
@@ -75,26 +89,19 @@ toast-icon.tsx
     56→    }
     57→  }
     58→
-    59→  if (type === 'blank') {
-    60→    return null;
-    61→  }
-    62→
-    63→  return (
-    64→    <IndicatorWrapper>
-    65→      <LoaderIcon {...iconTheme} />
-    66→      {type !== 'loading' && (
-    67→        <StatusWrapper>
-    68→          {type === 'error' ? (
-    69→            <ErrorIcon {...iconTheme} />
-    70→          ) : (
-    71→            <CheckmarkIcon {...iconTheme} />
-    72→          )}
-    73→        </StatusWrapper>
-    74→      )}
-    75→    </IndicatorWrapper>
-    76→  );
-    77→};
+      →…
 toaster.tsx
+     1→import { css, setup } from 'goober';
+     2→import * as React from 'react';
+     3→import {
+     4→  resolveValue,
+     5→  ToasterProps,
+     6→  ToastPosition,
+     7→  ToastWrapperProps,
+     8→} from '../core/types';
+     9→import { useToaster } from '../core/use-toaster';
+    10→import { prefersReducedMotion } from '../core/utils';
+    11→import { ToastBar } from './toast-bar';
     15→const ToastWrapper = ({
     16→  id,
       →…
@@ -118,40 +125,4 @@ toaster.tsx
     94→}) => {
     95→  const { toasts, handlers } = useToaster(toastOptions, toasterId);
     96→
-    97→  return (
-    98→    <div
-    99→      data-rht-toaster={toasterId || ''}
-   100→      style={{
-   101→        position: 'fixed',
-   102→        zIndex: 9999,
-   103→        top: DEFAULT_OFFSET,
-   104→        left: DEFAULT_OFFSET,
-   105→        right: DEFAULT_OFFSET,
-   106→        bottom: DEFAULT_OFFSET,
-   107→        pointerEvents: 'none',
-   108→        ...containerStyle,
-   109→      }}
-   110→      className={containerClassName}
-   111→      onMouseEnter={handlers.startPause}
-   112→      onMouseLeave={handlers.endPause}
-   113→    >
-   114→      {toasts.map((t) => {
-   115→        const toastPosition = t.position || position;
-   116→        const offset = handlers.calculateOffset(t, {
-   117→          reverseOrder,
-   118→          gutter,
-   119→          defaultPosition: position,
-   120→        });
-   121→        const positionStyle = getPositionStyle(toastPosition, offset);
-   122→
-   123→        return (
-   124→          <ToastWrapper
-   125→            id={t.id}
-   126→            key={t.id}
-   127→            onHeightUpdate={handlers.updateHeight}
-   128→            className={t.visible ? activeClass : ''}
-   129→            style={positionStyle}
-   130→          >
-   131→            {t.type === 'custom' ? (
-   132→              resolveValue(t.message, t)
       →…

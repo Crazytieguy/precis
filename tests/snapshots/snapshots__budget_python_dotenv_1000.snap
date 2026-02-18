@@ -2,20 +2,25 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (949 words)
+budget: 1000 (955 words)
 
 CHANGELOG.md
      1→# Changelog
      3→All notable changes to this project will be documented in this file.
      4→
       →…
-    21→### Fixed …
+    21→### Fixed
+    23→* CLI: Ensure `find_dotenv` work reliably on python 3.13 by [@theskumar] in [#563](https://github.com/theskumar/python-dotenv/pull/563)
+      →…
 CONTRIBUTING.md
      1→Contributing
      4→All the contributions are welcome! Please open [an
      5→issue](https://github.com/theskumar/python-dotenv/issues/new) or send us
      6→a pull request.
      7→
+     8→Executing the tests:
+     9→
+    10→    $ uv venv
       →…
 README.md
      1→# python-dotenv
@@ -69,15 +74,9 @@ README.md
    102→}
    103→```
    104→
-   105→### Parse configuration as a stream
-   107→`load_dotenv` and `dotenv_values` accept [streams][python_streams] via their
-      →…
-   120→### Load .env files in IPython
-   122→You can use dotenv in IPython. By default, it will use `find_dotenv` to search for a
-      →…
-   141→### Disable load_dotenv
-   143→Set `PYTHON_DOTENV_DISABLED=1` to disable `load_dotenv()` from loading .env
-      →…
+   105→### Parse configuration as a stream …
+   120→### Load .env files in IPython …
+   141→### Disable load_dotenv …
    147→## Command-line Interface
    149→A CLI interface `dotenv` is also included, which helps you manipulate the `.env`
    150→file without manually opening it.
@@ -90,15 +89,9 @@ README.md
    173→pipes) on Unix systems is also supported.
    174→
       →…
-   185→### Multiline values
-   187→It is possible for single- or double-quoted values to span multiple lines. The
-      →…
-   199→### Variable without a value
-   201→A variable can have no value:
-      →…
-   214→### Variable expansion
-   216→python-dotenv can interpolate variables using POSIX variable expansion.
-      →…
+   185→### Multiline values …
+   199→### Variable without a value …
+   214→### Variable expansion …
    234→## Related Projects
    236→- [environs](https://github.com/sloria/environs)
    237→- [Honcho](https://github.com/nickstenning/honcho)
@@ -114,15 +107,22 @@ README.md
 docs/reference.md
      1→# ::: dotenv …
 src/dotenv/__init__.py
+     3→from .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key
     42→__all__ = [
     43→    "get_cli_string",
     44→    "load_dotenv",
     45→    "dotenv_values",
     46→    "get_key",
     47→    "set_key",
-      →…
+    48→    "unset_key",
+    49→    "find_dotenv",
+    50→    "load_ipython_extension",
+    51→]
 src/dotenv/__main__.py
+     3→from .cli import cli
 src/dotenv/cli.py
+    20→from .main import dotenv_values, set_key, unset_key
+    21→from .version import __version__
     60→@click.version_option(version=__version__)
     61→@click.pass_context
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
@@ -170,6 +170,7 @@ src/dotenv/cli.py
    176→    if not os.path.isfile(file):
       →…
 src/dotenv/ipython.py
+     8→from .main import find_dotenv, load_dotenv
     11→@magics_class
     12→class IPythonDotEnv(Magics):
     13→    @magic_arguments()
@@ -198,6 +199,8 @@ src/dotenv/ipython.py
     36→        # Locate the .env file
       →…
 src/dotenv/main.py
+    13→from .parser import Binding, parse_stream
+    14→from .variables import parse_variables
     25→def _load_dotenv_disabled() -> bool:
     26→    """
       →…

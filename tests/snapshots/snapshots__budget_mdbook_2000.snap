@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1898 words)
+budget: 2000 (1885 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -45,6 +45,7 @@ crates/mdbook-core/src/book.rs
    274→    type Item = &'a BookItem;
 crates/mdbook-core/src/config.rs
     46→use crate::static_regex;
+    47→use crate::utils::{TomlExt, fs, log_backtrace};
     81→fn is_default …
     86→fn toml_is_empty …
     91→    type Err = Error;
@@ -93,6 +94,10 @@ crates/mdbook-driver/src/builtin_preprocessors/index.rs
     19→    pub fn new …
 crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
 crates/mdbook-driver/src/builtin_preprocessors/links.rs
+     1→use self::take_lines::{
+     2→    take_anchored_lines, take_lines, take_rustdoc_include_anchored_lines,
+     3→    take_rustdoc_include_lines,
+     4→};
     32→pub struct LinkPreprocessor;
     36→    pub const NAME: &'static str = "links";
     39→    pub fn new …
@@ -135,10 +140,14 @@ crates/mdbook-driver/src/lib.rs
     75→pub use mdbook_core::{book, config, errors};
 crates/mdbook-driver/src/load.rs
 crates/mdbook-driver/src/mdbook/tests.rs
+     1→use super::*;
    225→struct BoolPreprocessor(bool);
    226→impl Preprocessor for BoolPreprocessor {
 crates/mdbook-driver/src/mdbook.rs
      3→use crate::builtin_preprocessors::{CmdPreprocessor, IndexPreprocessor, LinkPreprocessor};
+     4→use crate::builtin_renderers::{CmdRenderer, MarkdownRenderer};
+     5→use crate::init::BookBuilder;
+     6→use crate::load::{load_book, load_book_from_disk};
     29→pub struct MDBook {
     30→    /// The book's root directory.
     31→    pub root: PathBuf,
@@ -160,16 +169,26 @@ crates/mdbook-html/README.md
 crates/mdbook-html/front-end/js/book.js
      9→function playground_text …
 crates/mdbook-html/src/html/admonitions.rs
+crates/mdbook-html/src/html/hide_lines.rs
+     3→use crate::html::{Element, Node};
 crates/mdbook-html/src/html/mod.rs
+    13→use ego_tree::Tree;
+crates/mdbook-html/src/html/print.rs
+     7→use super::Node;
+crates/mdbook-html/src/html/serialize.rs
+     3→use super::tree::is_void_element;
+crates/mdbook-html/src/html/tests.rs
 crates/mdbook-html/src/html/tokenizer.rs
+     6→use html5ever::TokenizerResult;
     22→    type Handle = ();
-    24→    fn process_token …
+    24→    fn process_token(&self, token: Token, _line_number: u64) -> TokenSinkResult<()> {
 crates/mdbook-html/src/html/tree.rs
+     8→use super::tokenizer::parse_html;
     25→macro_rules! attr_qual_name {
    126→type Attributes = IndexMap<QualName, StrTendril>;
    130→    /// Converts self to a [`StrTendril`].
    131→    fn into_tendril(self) -> StrTendril;
-   135→    fn into_tendril …
+   135→    fn into_tendril(self) -> StrTendril {
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     19→/// The HTML renderer for mdBook.
     20→#[derive(Default)]
@@ -191,6 +210,7 @@ crates/mdbook-html/src/html_handlebars/helpers/resources.rs
     11→pub(crate) struct ResourceHelper {
     16→    fn call …
 crates/mdbook-html/src/html_handlebars/helpers/toc.rs
+     1→use crate::utils::ToUrlPath;
     11→pub(crate) struct RenderToc {
     16→    fn call …
 crates/mdbook-html/src/html_handlebars/mod.rs
@@ -241,25 +261,10 @@ crates/mdbook-markdown/README.md
 crates/mdbook-markdown/src/lib.rs
      8→use pulldown_cmark::{Options, Parser};
     11→pub use pulldown_cmark;
-    13→/// Options for parsing markdown.
-    14→#[non_exhaustive]
     15→pub struct MarkdownOptions {
     16→    /// Enables smart punctuation.
     17→    ///
-    18→    /// Converts quotes to curly quotes, `...` to `…`, `--` to en-dash, and
-    19→    /// `---` to em-dash.
-    20→    ///
-    21→    /// This is `true` by default.
-    22→    pub smart_punctuation: bool,
-    23→    /// Enables definition lists.
-    24→    ///
-    25→    /// This is `true` by default.
-    26→    pub definition_lists: bool,
-    27→    /// Enables admonitions.
-    28→    ///
-    29→    /// This is `true` by default.
-    30→    pub admonitions: bool,
-    31→}
+      →…
     33→impl Default for MarkdownOptions {
     34→    fn default() -> MarkdownOptions {
     35→        MarkdownOptions {
@@ -395,6 +400,7 @@ guide/src/README.md
      6→        right: 20px;
      7→        top: 60px;
      8→        background-color: var(--theme-popup-bg);
+     9→        border-radius: 8px;
       →…
     46→## Contributing …
     55→## License …
@@ -559,4 +565,6 @@ tests/testsuite/README.md
 tests/testsuite/book_test.rs
     23→pub struct BookTest {
    361→pub struct BookCommand {
+tests/testsuite/main.rs
+    28→    pub use crate::book_test::{BookTest, glob_one, read_to_string};
 tests/testsuite/search/reasonable_search_index/src/first/duplicate-headers.md

@@ -40,7 +40,6 @@ README.md
     95→import os
     96→from dotenv import dotenv_values
     97→
-    98→config = {
       →…
    105→### Parse configuration as a stream …
    120→### Load .env files in IPython …
@@ -55,12 +54,15 @@ README.md
 docs/reference.md
      1→# ::: dotenv …
 src/dotenv/__init__.py
+     3→from .main …
     42→__all__ = [
     43→    "get_cli_string",
-    44→    "load_dotenv",
       →…
 src/dotenv/__main__.py
+     3→from .cli …
 src/dotenv/cli.py
+    20→from .main …
+    21→from .version …
     60→@click.version_option(version=__version__)
     61→@click.pass_context
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
@@ -84,6 +86,7 @@ src/dotenv/cli.py
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
 src/dotenv/ipython.py
+     8→from .main …
     11→@magics_class
     12→class IPythonDotEnv(Magics):
     13→    @magic_arguments()
@@ -109,9 +112,9 @@ src/dotenv/ipython.py
     33→    @line_magic
     34→    def dotenv(self, line):
 src/dotenv/main.py
+    13→from .parser …
+    14→from .variables …
     25→def _load_dotenv_disabled() -> bool:
-    26→    """
-      →…
     45→class DotEnv:
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
@@ -123,11 +126,7 @@ src/dotenv/main.py
    144→    encoding: Optional[str],
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    269→def _walk_to_root(path: str) -> Iterator[str]:
-   270→    """
-      →…
    423→def _is_file_or_fifo(path: StrPath) -> bool:
-   424→    """
-      →…
 src/dotenv/parser.py
     35→class Original(NamedTuple):
     36→    string: str
@@ -149,10 +148,7 @@ src/dotenv/variables.py
      7→    \$\{
      8→        (?P<name>[^\}:]*)
      9→        (?::-
-    10→            (?P<default>[^\}]*)
-    11→        )?
-    12→    \}
-    13→    """,
+      →…
     18→class Atom(metaclass=ABCMeta):
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...

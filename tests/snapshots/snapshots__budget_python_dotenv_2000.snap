@@ -2,15 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1947 words)
+budget: 2000 (1948 words)
 
 CHANGELOG.md
      1→# Changelog
      3→All notable changes to this project will be documented in this file.
      4→
-     5→The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
-     6→project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-     7→
+      →…
     21→### Fixed
     23→* CLI: Ensure `find_dotenv` work reliably on python 3.13 by [@theskumar] in [#563](https://github.com/theskumar/python-dotenv/pull/563)
     24→* CLI: revert the use of execvpe on Windows by [@wrongontheinternet] in [#566](https://github.com/theskumar/python-dotenv/pull/566)
@@ -227,6 +225,7 @@ README.md
 docs/reference.md
      1→# ::: dotenv …
 src/dotenv/__init__.py
+     3→from .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key
      6→def load_ipython_extension …
     12→def get_cli_string …
     42→__all__ = [
@@ -240,7 +239,10 @@ src/dotenv/__init__.py
     50→    "load_ipython_extension",
     51→]
 src/dotenv/__main__.py
+     3→from .cli import cli
 src/dotenv/cli.py
+    20→from .main import dotenv_values, set_key, unset_key
+    21→from .version import __version__
     24→def enumerate_env …
     60→@click.version_option(version=__version__)
     61→@click.pass_context
@@ -321,9 +323,10 @@ src/dotenv/cli.py
    187→        click.echo("No command given.")
    188→        sys.exit(1)
    189→
-   190→    run_command([*commandline, *ctx.args], dotenv_as_dict)
+      →…
    193→def run_command …
 src/dotenv/ipython.py
+     8→from .main import find_dotenv, load_dotenv
     11→@magics_class
     12→class IPythonDotEnv(Magics):
     13→    @magic_arguments()
@@ -361,13 +364,13 @@ src/dotenv/ipython.py
     45→        load_dotenv(dotenv_path, verbose=args.verbose, override=args.override)
     48→def load_ipython_extension …
 src/dotenv/main.py
+    13→from .parser import Binding, parse_stream
+    14→from .variables import parse_variables
     25→def _load_dotenv_disabled() -> bool:
     26→    """
     27→    Determine if dotenv loading has been disabled.
     28→    """
     29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
-    30→        return False
-    31→    value = os.environ["PYTHON_DOTENV_DISABLED"].casefold()
       →…
     35→def with_warn_for_invalid_lines …
     45→class DotEnv:
@@ -419,8 +422,6 @@ src/dotenv/main.py
    271→    Yield directories starting from the given directory up to the root
    272→    """
    273→    if not os.path.exists(path):
-   274→        raise IOError("Starting path not found")
-   275→
       →…
    287→def find_dotenv …
    338→def load_dotenv …
@@ -430,8 +431,6 @@ src/dotenv/main.py
    425→    Return True if `path` exists and is either a regular file or a FIFO.
    426→    """
    427→    if os.path.isfile(path):
-   428→        return True
-   429→
       →…
 src/dotenv/parser.py
     14→def make_regex …

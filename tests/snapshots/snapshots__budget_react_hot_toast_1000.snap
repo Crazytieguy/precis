@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (986 words)
+budget: 1000 (976 words)
 
 README.md
     28→## Features
@@ -72,18 +72,14 @@ site/README.md
 site/components/code.tsx
      8→const theme: PrismTheme = {
    104→export const Code: React.FC<{
-   105→  snippet: string;
-      →…
 site/components/docs-layout.tsx
+     5→import { Footer } from './sections/footer';
+     6→import Logo from '../assets/logo-small.svg';
      8→const TableItem: React.FC<{
     19→const TableHeader: React.FC<{
     27→export default function DocsLayout({ meta, children }) {
-    28→  return (
-      →…
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
-     2→  onClick: () => void;
-      →…
 site/components/sections/footer.tsx
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
 site/components/sections/splitbee-counter.tsx
@@ -93,15 +89,16 @@ site/components/sections/splitbee-counter.tsx
      7→): number => {
     36→export const SplitbeeCounter = () => {
 site/components/sections/toast-example.tsx
+     4→import { EmojiButton } from '../emoji-button';
+     5→import { Code } from '../code';
      7→const examples: Array<{
    270→export const ToastExample = () => {
 site/components/sections/toaster-example.tsx
+     3→import Arrow from '../../assets/arrow.svg';
+     4→import { Code } from '../code';
+     6→import { EmojiButton } from '../emoji-button';
      8→export const positions: Array<ToastPosition> = [
      9→  'top-left',
-    10→  'top-center',
-    11→  'top-right',
-    12→  'bottom-left',
-    13→  'bottom-center',
       →…
     17→export const ToasterExample: React.FC<{
 site/next.config.mjs
@@ -109,11 +106,7 @@ site/next.config.mjs
     14→/** @type {import('next').NextConfig} */
     15→const nextConfig = {
     17→  webpack(config) {
-    18→    config.module.rules.push({
-      →…
     24→  async rewrites() {
-    25→    return [
-      →…
 site/pages/_app.tsx
     12→const components = {
     71→function MyApp …
@@ -126,9 +119,6 @@ site/pages/index.tsx
    102→export default function Home() {
    103→  const [position, setPosition] = useState<ToastPosition>('top-center');
    104→  const [reverse, setReverse] = useState(false);
-   105→  const { toasts: allToasts } = useToasterStore();
-   106→
-   107→  const shouldFade =
       →…
 site/types/svg.d.ts
      1→interface SvgrComponent
@@ -171,20 +161,16 @@ src/components/toast-icon.tsx
     41→export type IconThemes = Partial<{
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
-    49→}> = ({ toast }) => {
-    50→  const { icon, type, iconTheme } = toast;
-    51→  if (icon !== undefined) {
       →…
 src/components/toaster.tsx
     15→const ToastWrapper …
     47→const getPositionStyle …
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
-    87→  position = 'top-center',
-    88→  toastOptions,
-    89→  gutter,
       →…
 src/core/store.ts
+     1→import { useEffect, useState, useRef } from 'react';
+     2→import { DefaultToastOptions, Toast, ToastType } from './types …
      4→export const TOAST_EXPIRE_DISMISS_DELAY …
      5→export const TOAST_LIMIT …
      6→export const DEFAULT_TOASTER_ID …
@@ -219,12 +205,16 @@ src/core/store.ts
    175→export const defaultTimeouts …
    185→export const useStore …
 src/core/toast.ts
+     1→./types …
+    10→import { genId } from './utils …
+    11→./store …
     19→type Message = ValueOrFunction<Renderable, Toast>;
     21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
     23→const createToast …
     42→const createHandler …
     55→const toast …
 src/core/types.ts
+     1→import { CSSProperties } from 'react';
      3→export type ToastType …
      4→export type ToastPosition …
     12→export type Renderable …
@@ -247,20 +237,7 @@ src/core/types.ts
     42→  position?: ToastPosition;
     43→  removeDelay?: number;
     44→
-    45→  ariaProps: {
-    46→    role: 'status' | 'alert';
-    47→    'aria-live': 'assertive' | 'off' | 'polite';
-    48→  };
-    49→
-    50→  style?: CSSProperties;
-    51→  className?: string;
-    52→  iconTheme?: IconTheme;
-    53→
-    54→  createdAt: number;
-    55→  visible: boolean;
-    56→  dismissed: boolean;
-    57→  height?: number;
-    58→}
+      →…
     60→export type ToastOptions …
     76→export type DefaultToastOptions …
     80→export interface ToasterProps {
@@ -281,6 +258,10 @@ src/core/types.ts
     96→  children?: React.ReactNode;
     97→}
 src/core/use-toaster.ts
+     1→import { useEffect, useCallback, useRef } from 'react';
+     2→import { createDispatch, ActionType, useStore, dispatch } from './store …
+     3→import { toast } from './toast …
+     4→import { DefaultToastOptions, Toast, ToastPosition } from './types …
      6→export const REMOVE_DELAY …
      8→export const useToaster …
 src/core/utils.ts
@@ -293,7 +274,7 @@ src/index.ts
 test/setup.ts
      1→import '@testing-library/jest-dom';
 test/toast.test.tsx
-    29→const waitTime = (time: number) => {
+    29→const waitTime …
     35→const TOAST_DURATION = 1000;
 tsup.config.ts
      4→const commonConfig: Options = {

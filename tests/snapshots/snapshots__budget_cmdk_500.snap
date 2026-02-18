@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (494 words)
+budget: 500 (488 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -43,6 +43,7 @@ cmdk/src/command-score.ts
    156→  /* NOTE:
       →…
 cmdk/src/index.tsx
+     5→import { commandScore } from './command-score'
    664→const Item …
    729→const Group …
    774→const Separator …
@@ -51,25 +52,18 @@ cmdk/src/index.tsx
    882→const Dialog …
    899→const Empty …
    909→const Loading …
-   955→/**
-   956→ *
-   957→ *
-   958→ * Helpers
-   959→ *
-   960→ *
-   961→ */
-   962→
    963→function findNextSibling(el: Element, selector: string) {
-  1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
-  1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
 cmdk/tsup.config.ts
+     1→import { defineConfig } from 'tsup'
 playwright.config.ts
      3→const config: PlaywrightTestConfig = {
 test/pages/_app.tsx
+     1→import '../style.css'
      3→export default function App({ Component, pageProps }) {
 test/pages/huge.tsx
+     4→const items = new Array(1000).fill(0)
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -93,6 +87,7 @@ website/components/cmdk/raycast.tsx
 website/components/cmdk/vercel.tsx
      4→export function VercelCMDK() {
 website/components/code/index.tsx
+     4→import styles from './code.module.scss'
      7→const theme = {
     41→export function Code({ children }: { children: string }) {
     42→  return (
@@ -120,6 +115,7 @@ website/pages/_document.tsx
      5→export default class Document extends NextDocument {
      6→  render() {
 website/pages/index.tsx
+    18→import packageJSON from '../../cmdk/package.json'
     29→export default function Index() {
     99→//////////////////////////////////////////////////////////////////
    100→
@@ -127,6 +123,8 @@ website/pages/index.tsx
    137→//////////////////////////////////////////////////////////////////
    138→
    139→const themes = [
+   140→  {
+      →…
    260→//////////////////////////////////////////////////////////////////
    261→
    262→function Codeblock() {

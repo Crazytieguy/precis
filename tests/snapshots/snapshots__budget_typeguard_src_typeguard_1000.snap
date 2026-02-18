@@ -2,12 +2,39 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (981 words)
+budget: 1000 (980 words)
 
 __init__.py
+     4→from ._checkers …
+     5→from ._checkers …
+     6→from ._checkers …
+     7→from ._checkers …
+     8→from ._checkers …
+     9→from ._config …
+    10→from ._config …
+    11→from ._config …
+    12→from ._decorators …
+    13→from ._decorators …
+    14→from ._exceptions …
+    15→from ._exceptions …
+    16→from ._exceptions …
+    17→from ._exceptions …
+    18→from ._functions …
+    19→from ._functions …
+    20→from ._functions …
+    21→from ._importhook …
+    22→from ._importhook …
+    23→from ._importhook …
+    24→from ._memo …
+    25→from ._suppression …
+    26→from ._utils …
     34→config: TypeCheckConfiguration
 _checkers.py
     42→from typing_extensions import is_typeddict
+    44→from ._config …
+    45→from ._exceptions …
+    46→from ._memo …
+    47→from ._utils …
     81→TypeCheckerCallable: TypeAlias = Callable[
     82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
     83→]
@@ -27,7 +54,6 @@ _checkers.py
    102→    "__cmp__",
    103→    "__divmod__",
    104→    "__div__",
-   105→    "__eq__",
       →…
    586→def _is_literal_type(typ: object) -> bool:
   1004→# Equality checks are applied to these
@@ -37,16 +63,12 @@ _checkers.py
   1008→    bytes: check_byteslike,
   1009→    AbstractSet: check_set,
   1010→    BinaryIO: check_io,
-  1011→    Callable: check_callable,
       →…
 _config.py
+     9→    from ._functions …
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
     15→    """
-    16→    Defines how unresolved forward references are handled.
-    17→
-    18→    Members:
-    19→
       →…
     24→
     25→    ERROR = auto()
@@ -54,10 +76,6 @@ _config.py
     27→    IGNORE = auto()
     30→class CollectionCheckStrategy(Enum):
     31→    """
-    32→    Specifies how thoroughly the contents of collections are type checked.
-    33→
-    34→    This has an effect on the following built-in checkers:
-    35→
       →…
     48→
     49→    FIRST_ITEM = auto()
@@ -106,12 +124,15 @@ _config.py
    102→    )
    103→    debug_instrumentation: bool = False
 _decorators.py
+    13→from ._config …
+    14→from ._exceptions …
+    15→from ._functions …
+    16→from ._transformer …
+    17→from ._utils …
 _exceptions.py
      5→class TypeHintWarning(UserWarning):
      6→    """
-     7→    A warning that is emitted when a type hint in string form could not be resolved to
-     8→    an actual type.
-     9→    """
+      →…
     12→class TypeCheckWarning(UserWarning):
     13→    """Emitted by typeguard's type checkers when a type mismatch is detected."""
     14→
@@ -120,13 +141,20 @@ _exceptions.py
     21→
     26→class TypeCheckError(Exception):
     27→    """
-    28→    Raised by typeguard's type checkers when a type mismatch is detected.
-    29→    """
+      →…
     30→
 _functions.py
+     8→from . …
+     9→from ._checkers …
+    10→from ._config …
+    15→from ._exceptions …
+    16→from ._memo …
+    17→from ._utils …
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
 _importhook.py
+    17→from ._config …
+    18→from ._transformer …
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
     44→# The name of this function is magical
@@ -178,24 +206,15 @@ _importhook.py
       →…
    109→class TypeguardFinder(MetaPathFinder):
    110→    """
-   111→    Wraps another path finder and instruments the module with
-   112→    :func:`@typechecked <typeguard.typechecked>` if :meth:`should_instrument` returns
-   113→    ``True``.
-   114→
       →…
    119→
    156→class ImportHookManager:
    157→    """
-   158→    A handle that can be used to uninstall the Typeguard import hook.
-   159→    """
+      →…
    160→
 _memo.py
      8→class TypeCheckMemo:
      9→    """
-    10→    Contains information necessary for type checkers to do their work.
-    11→
-    12→    .. attribute:: globals
-    13→       :type: dict[str, Any]
       →…
     34→
     35→    __slots__ = "globals", "locals", "self_type", "config"
@@ -265,6 +284,7 @@ _transformer.py
    570→    def _get_import(self, module: str, name: str) -> Name:
    580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
 _utils.py
+    21→    from ._memo …
    172→@final
    173→class Unset:
    174→    __slots__ = ()

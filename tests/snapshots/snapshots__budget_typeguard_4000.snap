@@ -2,16 +2,43 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3796 words)
+budget: 4000 (3902 words)
 
 docs/conf.py
      2→from importlib.metadata import version as get_version
      4→from packaging.version import parse
 src/typeguard/__init__.py
+     4→from ._checkers import TypeCheckerCallable as TypeCheckerCallable
+     5→from ._checkers import TypeCheckLookupCallback as TypeCheckLookupCallback
+     6→from ._checkers import check_type_internal as check_type_internal
+     7→from ._checkers import checker_lookup_functions as checker_lookup_functions
+     8→from ._checkers import load_plugins as load_plugins
+     9→from ._config import CollectionCheckStrategy as CollectionCheckStrategy
+    10→from ._config import ForwardRefPolicy as ForwardRefPolicy
+    11→from ._config import TypeCheckConfiguration as TypeCheckConfiguration
+    12→from ._decorators import typechecked as typechecked
+    13→from ._decorators import typeguard_ignore as typeguard_ignore
+    14→from ._exceptions import InstrumentationWarning as InstrumentationWarning
+    15→from ._exceptions import TypeCheckError as TypeCheckError
+    16→from ._exceptions import TypeCheckWarning as TypeCheckWarning
+    17→from ._exceptions import TypeHintWarning as TypeHintWarning
+    18→from ._functions import TypeCheckFailCallback as TypeCheckFailCallback
+    19→from ._functions import check_type as check_type
+    20→from ._functions import warn_on_error as warn_on_error
+    21→from ._importhook import ImportHookManager as ImportHookManager
+    22→from ._importhook import TypeguardFinder as TypeguardFinder
+    23→from ._importhook import install_import_hook as install_import_hook
+    24→from ._memo import TypeCheckMemo as TypeCheckMemo
+    25→from ._suppression import suppress_type_checks as suppress_type_checks
+    26→from ._utils import Unset as Unset
     34→config: TypeCheckConfiguration
     37→def __getattr__ …
 src/typeguard/_checkers.py
     42→from typing_extensions import is_typeddict
+    44→from ._config import ForwardRefPolicy
+    45→from ._exceptions import TypeCheckError, TypeHintWarning
+    46→from ._memo import TypeCheckMemo
+    47→from ._utils import evaluate_forwardref, get_stacklevel, get_type_name, qualified_name
     81→TypeCheckerCallable: TypeAlias = Callable[
     82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
     83→]
@@ -149,6 +176,7 @@ src/typeguard/_checkers.py
   1061→def builtin_checker_lookup …
   1099→def load_plugins …
 src/typeguard/_config.py
+     9→    from ._functions import TypeCheckFailCallback
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
     15→    """
@@ -230,6 +258,11 @@ src/typeguard/_config.py
    102→    )
    103→    debug_instrumentation: bool = False
 src/typeguard/_decorators.py
+    13→from ._config import CollectionCheckStrategy, ForwardRefPolicy, global_config
+    14→from ._exceptions import InstrumentationWarning
+    15→from ._functions import TypeCheckFailCallback
+    16→from ._transformer import TypeguardTransformer
+    17→from ._utils import Unset, function_name, get_stacklevel, is_method_of, unset
     24→    def typeguard_ignore …
     32→def make_cell …
     36→def find_target_function …
@@ -258,6 +291,16 @@ src/typeguard/_exceptions.py
     35→    def append_path_element …
     38→    def __str__ …
 src/typeguard/_functions.py
+     8→from . import _suppression
+     9→from ._checkers import BINARY_MAGIC_METHODS, check_type_internal
+    10→from ._config import (
+    11→    CollectionCheckStrategy,
+    12→    ForwardRefPolicy,
+    13→    TypeCheckConfiguration,
+    14→)
+    15→from ._exceptions import TypeCheckError, TypeCheckWarning
+    16→from ._memo import TypeCheckMemo
+    17→from ._utils import get_stacklevel, qualified_name
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
     50→def check_type …
@@ -268,6 +311,8 @@ src/typeguard/_functions.py
    245→def check_variable_assignment …
    291→def warn_on_error …
 src/typeguard/_importhook.py
+    17→from ._config import global_config
+    18→from ._transformer import TypeguardTransformer
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
     44→# The name of this function is magical
@@ -542,6 +587,7 @@ src/typeguard/_transformer.py
   1181→    def visit_AugAssign …
   1224→    def visit_If …
 src/typeguard/_utils.py
+    21→    from ._memo import TypeCheckMemo
     48→    def evaluate_forwardref …
     66→def get_type_name …
    104→def qualified_name …
@@ -716,13 +762,9 @@ tests/mypy/negative.py
     38→@typechecked
     39→class MyClass:
     40→    def __init__(self, x: int = 0) -> None:
-    41→        self.x = x
     43→    def add(self, y: int) -> int:
-    44→        return self.x + y
     47→def get_value(c: MyClass) -> int:
-    48→    return c.x
     51→def create_myclass(x: int) -> MyClass:
-    52→    return MyClass(x)
 tests/mypy/positive.py
      1→from typing import Callable
      3→from typeguard import typechecked
@@ -730,25 +772,19 @@ tests/mypy/positive.py
      7→def foo(x: str) -> str:
      8→    return "hello " + x
     11→def takes_callable(f: Callable[[str], str]) -> str:
-    12→    return f("typeguard")
     18→@typechecked
     19→def has_valid_arguments(x: int, y: str) -> None:
     20→    pass
     23→def has_valid_return_type(y: str) -> str:
-    24→    return y
     27→@typechecked
     28→class MyClass:
     29→    def __init__(self, x: int) -> None:
-    30→        self.x = x
     32→    def add(self, y: int) -> int:
-    33→        return self.x + y
     36→def get_value(c: MyClass) -> int:
-    37→    return c.x
     40→@typechecked
     41→def get_value_checked(c: MyClass) -> int:
     42→    return c.x
     45→def create_myclass(x: int) -> MyClass:
-    46→    return MyClass(x)
     49→@typechecked
     50→def create_myclass_checked(x: int) -> MyClass:
     51→    return MyClass(x)
@@ -761,46 +797,18 @@ tests/mypy/test_type_annotations.py
      8→POSITIVE_FILE = "positive.py"
      9→NEGATIVE_FILE = "negative.py"
     19→def get_mypy_cmd(filename: str) -> list[str]:
-    20→    return ["mypy", "-O", "json", "--strict", filename]
     23→def get_negative_mypy_output() -> str:
     24→    """
     25→    Get the output from running mypy on the negative examples file.
     26→    """
-    27→    process = subprocess.run(
-    28→        get_mypy_cmd(NEGATIVE_FILE), stdout=subprocess.PIPE, check=False
-    29→    )
-    30→    output = process.stdout.decode()
-    31→    assert output
-    32→    return output
     35→def get_expected_errors() -> dict[int, str]:
     36→    """
     37→    Extract the expected errors from comments in the negative examples file.
     38→    """
-    39→    with open(NEGATIVE_FILE) as f:
-    40→        lines = f.readlines()
-    41→
-    42→    expected = {}
-    43→
-    44→    for idx, line in enumerate(lines):
-    45→        line = line.rstrip()
-    46→        if "# error" in line:
-    47→            expected[idx + 1] = line[line.index("# error") + 9 :]
-    48→
-    49→    # Sanity check.  Should update if negative.py changes.
-    50→    assert len(expected) == 9
-    51→    return expected
     54→def get_mypy_errors() -> dict[int, str]:
     55→    """
     56→    Extract the errors from running mypy on the negative examples file.
     57→    """
-    58→    mypy_output = get_negative_mypy_output()
-    59→
-    60→    got = {}
-    61→    for line in mypy_output.splitlines():
-    62→        error = json.loads(line)
-    63→        got[error["line"]] = f"{error['message']}  [{error['code']}]"
-    64→
-    65→    return got
     68→@pytest.fixture
     69→def chdir_local() -> None:
     70→    """
@@ -841,6 +849,18 @@ tests/mypy/test_type_annotations.py
    109→    if mismatches:
    110→        raise RuntimeError("Error messages changed")
 tests/test_checkers.py
+    56→from . import (
+    57→    Child,
+    58→    Employee,
+    59→    JSONType,
+    60→    Parent,
+    61→    TChild,
+    62→    TIntStr,
+    63→    TParent,
+    64→    TTypingConstrained,
+    65→    myint,
+    66→    mylist,
+    67→)
     79→P = ParamSpec("P")
     85→class TestAnyStr:
     86→    @pytest.mark.parametrize(
@@ -1004,10 +1024,7 @@ tests/test_instrumentation.py
     63→                    module = import_module(name)
     64→                    importlib.reload(module)
     65→                else:
-    66→                    module = import_module(name)
-    67→                return module
-    68→    finally:
-    69→        sys.path.remove(str(this_dir))
+      →…
     72→@pytest.fixture(scope="module")
     73→def dummymodule(method: str):
     77→@pytest.fixture(scope="module")
@@ -1057,4 +1074,5 @@ tests/test_typechecked.py
    559→@pytest.mark.skipif(sys.version_info < (3, 9), reason="Requires ast.unparse()")
    560→def test_debug_instrumentation(monkeypatch, capsys):
 tests/test_utils.py
+     5→from . import Child
 tests/test_warn_on_error.py

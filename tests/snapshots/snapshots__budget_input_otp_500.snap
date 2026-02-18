@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (484 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -35,11 +35,13 @@ apps/storybook/README.md
     83→## Contribute …
     87→## Learning Storybook …
 apps/storybook/src/components/ui/input-otp.tsx
+     7→import { cn } from "../../lib/utils"
 apps/storybook/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
      6→}
 apps/storybook/src/stories/Button.stories.ts
+     1→import { Button } from './Button';
 apps/storybook/src/stories/Button.tsx
      5→/**
      6→ * Primary UI component for user interaction
@@ -62,18 +64,11 @@ apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
 apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
      3→export async function formAction(formData: FormData) {
 apps/website/src/app/(local-pages)/example-playground/code.tsx
-    99→export function ExampleCode() {
 apps/website/src/app/(local-pages)/example-playground/component.tsx
-     8→export function ExampleComponent(
-     9→  props: Partial<Omit<React.ComponentProps<typeof OTPInput>, 'children'>>,
-    10→) {
 apps/website/src/app/(local-pages)/example-playground/page.tsx
-     3→export default function ExamplePlayground() {
+     1→import { ExampleComponent } from './component'
 apps/website/src/app/(local-pages)/layout.tsx
      7→export default function RootLayout({
-     8→  children,
-     9→}: Readonly<{
-      →…
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      3→import React from 'react'
      5→export default function ShadcnPage() {
@@ -82,6 +77,7 @@ apps/website/src/app/(local-pages)/shadcn/page.tsx
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     13→export default function ShadcnPage() {
 apps/website/src/app/(local-pages)/shadcn/static/page.tsx
+     3→import { default as ShadcnPage } from '../page'
      5→export default async function StaticPage(pageProps: any) {
 apps/website/src/app/(pages)/(home)/_components/confetti.tsx
      3→export function Confetti({
@@ -91,28 +87,24 @@ apps/website/src/app/(pages)/(home)/_components/showcase.tsx
    151→function Slot(props: {
    199→function FakeCaret() {
 apps/website/src/app/(pages)/(home)/page.tsx
+    13→import { Showcase } from './_components/showcase'
     19→const fadeUpClassname =
     34→export default async function IndexPage() {
    148→export const revalidate = 3600
 apps/website/src/app/(pages)/layout.tsx
     14→export const metadata: Metadata = {
     68→export default function RootLayout({
-    69→  children,
-      →…
 apps/website/src/components/copy-button.tsx
 apps/website/src/components/icons.tsx
      1→type IconProps = React.HTMLAttributes<SVGElement>
      3→export const Icons = {
 apps/website/src/components/ui/badge.tsx
     26→export interface BadgeProps
-    27→  extends React.HTMLAttributes<HTMLDivElement>,
-    28→    VariantProps<typeof badgeVariants> {}
 apps/website/src/components/ui/button.tsx
+     5→import { cn } from "../../lib/utils"
     36→export interface ButtonProps
     37→  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     38→    VariantProps<typeof buttonVariants> {
-    39→  asChild?: boolean
-    40→}
 apps/website/src/config/site.ts
      1→export const siteConfig = {
     13→export type SiteConfig = typeof siteConfig
@@ -121,8 +113,6 @@ apps/website/src/lib/fonts.ts
     12→export const fontMono = FontMono({
 apps/website/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
-     5→  return twMerge(clsx(inputs))
-     6→}
 packages/input-otp/src/input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(
     14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
@@ -150,5 +140,4 @@ packages/input-otp/src/use-pwm-badge.tsx
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,
-    18→  pushPasswordManagerStrategy,
       →…

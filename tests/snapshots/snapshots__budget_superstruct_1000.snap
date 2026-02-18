@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (990 words)
+budget: 1000 (985 words)
 
 Changelog.md
      1→# Changelog …
@@ -70,9 +70,6 @@ docs/reference/core.md
      5→`assert<T>(value: unknown, struct: Struct<T>, message?: string) => asserts value is T`
      6→
      7→```ts
-     8→assert(value, User, 'The user is invalid!')
-     9→```
-    10→
       →…
 docs/reference/errors.md
      1→# Errors …
@@ -87,9 +84,6 @@ docs/reference/typescript.md
      9→The `Describe` utility returns a type representing a struct for a given valid value type. This allows you to ensure you're writing your struct definitions properly, for example:
     10→
     11→```ts
-    12→type User = {
-    13→  id: number
-    14→  name: string
       →…
 docs/reference/utilities.md
      1→# Utilities …
@@ -155,6 +149,8 @@ src/error.ts
     36→    let cached: Array<Failure> | undefined
       →…
 src/struct.ts
+     1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
+     2→import { StructError, Failure } from './error.js'
      4→/**
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
      6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
@@ -208,6 +204,8 @@ src/structs/types.ts
 src/structs/utilities.ts
     60→export function assign(...Structs: Struct<any>[]): any {
 src/utils.ts
+     1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
+     2→import { Failure } from './error.js'
      4→/**
      5→ * Check if a value is an iterator.
      6→ */
@@ -262,28 +260,19 @@ test/validation/boolean/valid.ts
 test/validation/date/invalid-date.ts
 test/validation/date/invalid.ts
 test/validation/date/valid.ts
-test/validation/enums/invalid-numbers.ts
-test/validation/enums/invalid-strings.ts
-test/validation/enums/valid.ts
 test/validation/function/invalid.ts
 test/validation/function/valid.ts
      5→export const data = function () {}
 test/validation/instance/invalid.ts
 test/validation/instance/valid.ts
-test/validation/integer/invalid-decimal.ts
-test/validation/integer/invalid.ts
-test/validation/integer/valid.ts
-test/validation/lazy/invalid.ts
-test/validation/lazy/valid.ts
-test/validation/lazy/with-refiners.ts
 test/validation/literal/invalid.ts
 test/validation/literal/valid.ts
 test/validation/never/invalid.ts
-     3→export const Struct = never()
-     5→export const data = true
-     7→export const failures = [
+     1→import { never } from '../../../src'
 test/validation/number/invalid.ts
 test/validation/number/valid.ts
+test/validation/object/invalid-referential.ts
+test/validation/object/valid-referential.ts
 test/validation/pattern/invalid.ts
 test/validation/pattern/valid.ts
 test/validation/refine/invalid-multiple-refinements.ts
@@ -296,6 +285,3 @@ test/validation/trimmed/valid.ts
 test/validation/type/valid-instance.ts
      3→class Person {
      6→  constructor(name: string) {
-test/validation/unknown/valid-number.ts
-test/validation/unknown/valid-string.ts
-test/validation/unknown/valid-undefined.ts

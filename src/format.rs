@@ -918,6 +918,7 @@ mod tests {
             kind: parse::SymbolKind::Function,
             name: "fetch".to_string(),
             is_public: true,
+            is_first_party: false,
             line: 1,
             end_line: 3,
         };

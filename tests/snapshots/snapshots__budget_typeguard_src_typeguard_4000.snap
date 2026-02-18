@@ -2,13 +2,40 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3922 words)
+budget: 4000 (3982 words)
 
 __init__.py
+     4→from ._checkers import TypeCheckerCallable as TypeCheckerCallable
+     5→from ._checkers import TypeCheckLookupCallback as TypeCheckLookupCallback
+     6→from ._checkers import check_type_internal as check_type_internal
+     7→from ._checkers import checker_lookup_functions as checker_lookup_functions
+     8→from ._checkers import load_plugins as load_plugins
+     9→from ._config import CollectionCheckStrategy as CollectionCheckStrategy
+    10→from ._config import ForwardRefPolicy as ForwardRefPolicy
+    11→from ._config import TypeCheckConfiguration as TypeCheckConfiguration
+    12→from ._decorators import typechecked as typechecked
+    13→from ._decorators import typeguard_ignore as typeguard_ignore
+    14→from ._exceptions import InstrumentationWarning as InstrumentationWarning
+    15→from ._exceptions import TypeCheckError as TypeCheckError
+    16→from ._exceptions import TypeCheckWarning as TypeCheckWarning
+    17→from ._exceptions import TypeHintWarning as TypeHintWarning
+    18→from ._functions import TypeCheckFailCallback as TypeCheckFailCallback
+    19→from ._functions import check_type as check_type
+    20→from ._functions import warn_on_error as warn_on_error
+    21→from ._importhook import ImportHookManager as ImportHookManager
+    22→from ._importhook import TypeguardFinder as TypeguardFinder
+    23→from ._importhook import install_import_hook as install_import_hook
+    24→from ._memo import TypeCheckMemo as TypeCheckMemo
+    25→from ._suppression import suppress_type_checks as suppress_type_checks
+    26→from ._utils import Unset as Unset
     34→config: TypeCheckConfiguration
     37→def __getattr__(name: str) -> Any:
 _checkers.py
     42→from typing_extensions import is_typeddict
+    44→from ._config import ForwardRefPolicy
+    45→from ._exceptions import TypeCheckError, TypeHintWarning
+    46→from ._memo import TypeCheckMemo
+    47→from ._utils import evaluate_forwardref, get_stacklevel, get_type_name, qualified_name
     81→TypeCheckerCallable: TypeAlias = Callable[
     82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
     83→]
@@ -45,35 +72,7 @@ _checkers.py
    119→    "__irshift__",
    120→    "__isub__",
    121→    "__itruediv__",
-   122→    "__ixor__",
-   123→    "__le__",
-   124→    "__lshift__",
-   125→    "__lt__",
-   126→    "__matmul__",
-   127→    "__mod__",
-   128→    "__mul__",
-   129→    "__ne__",
-   130→    "__or__",
-   131→    "__pow__",
-   132→    "__radd__",
-   133→    "__rand__",
-   134→    "__rdiv__",
-   135→    "__rfloordiv__",
-   136→    "__rlshift__",
-   137→    "__rmatmul__",
-   138→    "__rmod__",
-   139→    "__rmul__",
-   140→    "__ror__",
-   141→    "__rpow__",
-   142→    "__rrshift__",
-   143→    "__rshift__",
-   144→    "__rsub__",
-   145→    "__rtruediv__",
-   146→    "__rxor__",
-   147→    "__sub__",
-   148→    "__truediv__",
-   149→    "__xor__",
-   150→}
+      →…
    153→def check_callable(
    154→    value: Any,
    155→    origin_type: Any,
@@ -257,24 +256,7 @@ _checkers.py
   1025→    collections.abc.Mapping: check_mapping,
   1026→    collections.abc.MutableMapping: check_mapping,
   1027→    Sequence: check_sequence,
-  1028→    collections.abc.Sequence: check_sequence,
-  1029→    collections.abc.Set: check_set,
-  1030→    set: check_set,
-  1031→    Set: check_set,
-  1032→    TextIO: check_io,
-  1033→    tuple: check_tuple,
-  1034→    Tuple: check_tuple,
-  1035→    type: check_class,
-  1036→    Type: check_class,
-  1037→    Union: check_union,
-  1038→    # On some versions of Python, these may simply be re-exports from "typing",
-  1039→    # but exactly which Python versions is subject to change.
-  1040→    # It's best to err on the safe side and just always specify these.
-  1041→    typing_extensions.Literal: check_literal,
-  1042→    typing_extensions.LiteralString: check_literal_string,
-  1043→    typing_extensions.Self: check_self,
-  1044→    typing_extensions.TypeGuard: check_typeguard,
-  1045→}
+      →…
   1061→def builtin_checker_lookup(
   1062→    origin_type: Any, args: tuple[Any, ...], extras: tuple[Any, ...]
   1063→) -> TypeCheckerCallable | None:
@@ -289,6 +271,7 @@ _checkers.py
   1107→        ``TYPEGUARD_DISABLE_PLUGIN_AUTOLOAD`` environment variable is present.
   1108→    """
 _config.py
+     9→    from ._functions import TypeCheckFailCallback
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
     15→    """
@@ -370,6 +353,11 @@ _config.py
    102→    )
    103→    debug_instrumentation: bool = False
 _decorators.py
+    13→from ._config import CollectionCheckStrategy, ForwardRefPolicy, global_config
+    14→from ._exceptions import InstrumentationWarning
+    15→from ._functions import TypeCheckFailCallback
+    16→from ._transformer import TypeguardTransformer
+    17→from ._utils import Unset, function_name, get_stacklevel, is_method_of, unset
     24→    def typeguard_ignore(arg: T_CallableOrType) -> T_CallableOrType:
     25→        """This decorator is a noop during static type-checking."""
     32→def make_cell(value: object) -> _Cell:
@@ -435,6 +423,16 @@ _exceptions.py
     35→    def append_path_element(self, element: str) -> None:
     38→    def __str__(self) -> str:
 _functions.py
+     8→from . import _suppression
+     9→from ._checkers import BINARY_MAGIC_METHODS, check_type_internal
+    10→from ._config import (
+    11→    CollectionCheckStrategy,
+    12→    ForwardRefPolicy,
+    13→    TypeCheckConfiguration,
+    14→)
+    15→from ._exceptions import TypeCheckError, TypeCheckWarning
+    16→from ._memo import TypeCheckMemo
+    17→from ._utils import get_stacklevel, qualified_name
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
     50→def check_type(
@@ -516,6 +514,8 @@ _functions.py
    297→
    298→    """
 _importhook.py
+    17→from ._config import global_config
+    18→from ._transformer import TypeguardTransformer
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
     44→# The name of this function is magical
@@ -821,11 +821,7 @@ _transformer.py
    561→                        return_annotation
    562→                    )
    563→
-   564→        if isinstance(node, AsyncFunctionDef):
-   565→            new_memo.is_async = True
-   566→
-   567→        yield
-   568→        self._memo = old_memo
+      →…
    570→    def _get_import(self, module: str, name: str) -> Name:
    571→        memo = self._memo if self._target_path else self._module_memo
    572→        return memo.get_import(module, name)
@@ -839,11 +835,7 @@ _transformer.py
    587→        if isinstance(new_annotation, expr):
    588→            new_annotation = ast.copy_location(new_annotation, annotation)
    589→
-   590→            # Store names used in the annotation
-   591→            names = {node.id for node in walk(new_annotation) if isinstance(node, Name)}
-   592→            self.names_used_in_annotations.update(names)
-   593→
-   594→        return new_annotation
+      →…
    596→    def visit_Name(self, node: Name) -> Name:
    600→    def visit_Module(self, node: Module) -> Module:
    608→    def visit_Import(self, node: Import) -> Import:
@@ -895,6 +887,7 @@ _transformer.py
   1228→
   1229→        """
 _utils.py
+    21→    from ._memo import TypeCheckMemo
     48→    def evaluate_forwardref(forwardref: ForwardRef, memo: TypeCheckMemo) -> Any:
     66→def get_type_name(type_: Any) -> str:
    104→def qualified_name(obj: Any, *, add_class_prefix: bool = False) -> str:

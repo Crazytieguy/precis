@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (491 words)
+budget: 500 (494 words)
 
 browser.ts
 constants.ts
@@ -31,9 +31,10 @@ helpers.ts
    113→        fn(...args);
    114→      }
    115→    }
-   116→  };
       →…
 index.tsx
+     3→import * as DialogPrimitive from '@radix-ui/react-dialog';
+     4→import React from 'react';
     27→export interface WithFadeFromProps {
     28→  /**
       →…
@@ -94,7 +95,6 @@ use-position-fixed.ts
     20→  preventScrollRestoration,
     21→  noBodyStyles,
     22→}: {
-    23→  isOpen: boolean;
       →…
 use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER …
@@ -116,7 +116,6 @@ use-prevent-scroll.ts
     73→      return;
     74→    }
     75→
-    76→    preventScrollCount++;
       →…
    118→function preventScrollMobileSafari …
    243→function setStyle …

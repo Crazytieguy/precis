@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1959 words)
+budget: 2000 (1945 words)
 
 README.md
      5→## Usage
@@ -35,8 +35,8 @@ README.md
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
 src/assets.tsx
-     2→import React from 'react …
-     3→import type { ToastTypes } from './types …
+     2→import React from 'react';
+     3→import type { ToastTypes } from './types';
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
      6→  switch (type) {
      7→    case 'success':
@@ -78,7 +78,7 @@ src/assets.tsx
     82→    height="12"
       →…
 src/hooks.tsx
-     1→import React from 'react …
+     1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
      5→
@@ -93,13 +93,22 @@ src/hooks.tsx
     14→  return isDocumentHidden;
     15→};
 src/index.tsx
-     3→import React from 'react …
-     4→import ReactDOM from 'react-dom …
-     6→import { CloseIcon, getAsset, Loader } from './assets …
-     7→import { useIsDocumentHidden } from './hooks …
-     8→import { toast, ToastState } from './state …
-     9→import './styles.css …
-    10→./types …
+     3→import React from 'react';
+     4→import ReactDOM from 'react-dom';
+     6→import { CloseIcon, getAsset, Loader } from './assets';
+     7→import { useIsDocumentHidden } from './hooks';
+     8→import { toast, ToastState } from './state';
+     9→import './styles.css';
+    10→import {
+    11→  isAction,
+    12→  SwipeDirection,
+    13→  type ExternalToast,
+    14→  type HeightT,
+    15→  type ToasterProps,
+    16→  type ToastProps,
+    17→  type ToastT,
+    18→  type ToastToDismiss,
+    19→} from './types';
     22→const VISIBLE_TOASTS_AMOUNT = 3;
     25→const VIEWPORT_OFFSET = '24px';
     28→const MOBILE_VIEWPORT_OFFSET = '16px';
@@ -187,7 +196,6 @@ src/types.ts
     37→  actionButton?: string;
     38→  success?: string;
     39→  error?: string;
-    40→  info?: string;
       →…
     48→export interface ToastIcons {
     49→  success?: React.ReactNode;
@@ -212,7 +220,6 @@ src/types.ts
     70→  richColors?: boolean;
     71→  invert?: boolean;
     72→  closeButton?: boolean;
-    73→  dismissible?: boolean;
       →…
     93→export function isAction(action: Action | React.ReactNode): action is Action {
     97→export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
@@ -246,7 +253,6 @@ src/types.ts
    135→  expand?: boolean;
    136→  duration?: number;
    137→  gap?: number;
-   138→  visibleToasts?: number;
       →…
    152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
    154→export interface ToastProps {
@@ -259,7 +265,6 @@ src/types.ts
    161→  heights: HeightT[];
    162→  setHeights: React.Dispatch<React.SetStateAction<HeightT[]>>;
    163→  removeToast: (toast: ToastT) => void;
-   164→  gap?: number;
       →…
    184→export enum SwipeStateTypes {
    185→  SwipedOut = 'SwipedOut',
@@ -305,10 +310,7 @@ website/README.md
     18→
     19→[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
     20→
-    21→The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-    22→
-    23→This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-    24→
+      →…
     25→## Learn More
     27→To learn more about Next.js, take a look at the following resources:
     28→
@@ -452,6 +454,8 @@ website/src/components/Usage/index.tsx
      6→      <h2>Usage</h2>
       →…
 website/src/pages/_app.tsx
+     4→import '../style.css';
+     5→import '../globals.css';
      7→export default function Nextra({ Component, pageProps }: AppProps): ReactElement {
      8→  return (
      9→    <>
@@ -462,6 +466,9 @@ website/src/pages/_app.tsx
     14→  );
     15→}
 website/src/pages/index.tsx
+    10→import Head from '../components/Head';
+    11→import { How } from '../components/How/How';
+    12→import { Footer } from '../components/Footer';
     14→export default function Home() {
     15→  const [expand, setExpand] = React.useState(false);
     16→  const [position, setPosition] = React.useState<Position>('bottom-right');
@@ -479,7 +486,6 @@ website/src/pages/index.tsx
     28→        position={position}
     29→        duration={Infinity}
     30→      />
-    31→      <main className="container">
       →…
 website/theme.config.jsx
      7→  useNextSeoProps() {

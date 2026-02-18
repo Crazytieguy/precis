@@ -60,7 +60,7 @@ README.md
     67→cd humanize
     68→python3 -m pip install -e .
     69→```
-    70→
+      →…
     71→## Usage
     73→### Integer humanization
     75→```pycon
@@ -83,33 +83,14 @@ README.md
     93→>>> import datetime as dt
     94→>>> humanize.naturalday(dt.datetime.now())
     95→'today'
-    96→>>> humanize.naturaldelta(dt.timedelta(seconds=1001))
-    97→'16 minutes'
-    98→>>> humanize.naturalday(dt.datetime.now() - dt.timedelta(days=1))
-    99→'yesterday'
-   100→>>> humanize.naturalday(dt.date(2007, 6, 5))
-   101→'Jun 05'
-   102→>>> humanize.naturaldate(dt.date(2007, 6, 5))
-   103→'Jun 05 2007'
-   104→>>> humanize.naturaltime(dt.datetime.now() - dt.timedelta(seconds=1))
-   105→'a second ago'
-   106→>>> humanize.naturaltime(dt.datetime.now() - dt.timedelta(seconds=3600))
-   107→'an hour ago'
-   108→```
-   109→
+      →…
    110→### Precise time delta
    112→```pycon
    113→>>> import humanize
    114→>>> import datetime as dt
    115→>>> delta = dt.timedelta(seconds=3633, days=2, microseconds=123000)
    116→>>> humanize.precisedelta(delta)
-   117→'2 days, 1 hour and 33.12 seconds'
-   118→>>> humanize.precisedelta(delta, minimum_unit="microseconds")
-   119→'2 days, 1 hour, 33 seconds and 123 milliseconds'
-   120→>>> humanize.precisedelta(delta, suppress=["days"], format="%0.4f")
-   121→'49 hours and 33.1230 seconds'
-   122→```
-   123→
+      →…
    124→#### Smaller units
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
    127→
@@ -145,43 +126,21 @@ README.md
    158→>>> humanize.naturalsize(1_000_000)
    159→'1.0 MB'
    160→>>> humanize.naturalsize(1_000_000, binary=True)
-   161→'976.6 KiB'
-   162→>>> humanize.naturalsize(1_000_000, gnu=True)
-   163→'976.6K'
-   164→```
-   165→
+      →…
    166→### Human-readable floating point numbers
    168→```pycon
    169→>>> import humanize
    170→>>> humanize.fractional(1/3)
    171→'1/3'
    172→>>> humanize.fractional(1.5)
-   173→'1 1/2'
-   174→>>> humanize.fractional(0.3)
-   175→'3/10'
-   176→>>> humanize.fractional(0.333)
-   177→'333/1000'
-   178→>>> humanize.fractional(1)
-   179→'1'
-   180→```
-   181→
+      →…
    182→### Scientific notation
    184→```pycon
    185→>>> import humanize
    186→>>> humanize.scientific(0.3)
    187→'3.00 x 10⁻¹'
    188→>>> humanize.scientific(500)
-   189→'5.00 x 10²'
-   190→>>> humanize.scientific("20000")
-   191→'2.00 x 10⁴'
-   192→>>> humanize.scientific(1**10)
-   193→'1.00 x 10⁰'
-   194→>>> humanize.scientific(1**10, precision=1)
-   195→'1.0 x 10⁰'
-   196→>>> humanize.scientific(1**10, precision=0)
-   197→'1 x 10⁰'
-   198→```
-   199→
+      →…
    200→## Localization
    202→How to change locale at runtime:
    203→
@@ -253,15 +212,28 @@ docs/time.md
      1→# Time
      3→::: humanize.time
 src/humanize/__init__.py
+     5→from humanize.filesize …
+     6→from humanize.i18n …
+     7→from humanize.lists …
+     8→from humanize.number …
+    18→from humanize.time …
+    26→from ._version import __version__
     28→__all__ = [
     29→    "__version__",
     30→    "activate",
     31→    "apnumber",
+    32→    "clamp",
+    33→    "deactivate",
       →…
 src/humanize/filesize.py
+     5→from math …
     36→def naturalsize …
 src/humanize/i18n.py
+     5→import gettext …
+     6→from threading …
      8→TYPE_CHECKING = False
+    10→    import os …
+    11→    import pathlib …
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
     16→    None: gettext_module.NullTranslations()
@@ -288,10 +260,17 @@ src/humanize/i18n.py
    196→def decimal_separator …
 src/humanize/lists.py
      5→TYPE_CHECKING = False
+     7→    from typing …
      9→__all__ = ["natural_list"]
     12→def natural_list …
 src/humanize/number.py
+     5→import bisect …
+     7→from .i18n import _gettext as _
+     8→from .i18n import _ngettext, decimal_separator, thousands_separator
+     9→from .i18n import _ngettext_noop as NS_
+    10→from .i18n import _pgettext as P_
     12→TYPE_CHECKING = False
+    14→    from typing …
     21→def _format_not_finite …
     34→def ordinal …
    110→def intcomma …
@@ -302,11 +281,21 @@ src/humanize/number.py
    454→def clamp …
    531→def metric …
 src/humanize/time.py
+     8→from enum …
+     9→from functools …
+    11→from .i18n import _gettext as _
+    12→from .i18n import _ngettext
+    13→from .number import intcomma
     15→TYPE_CHECKING = False
+    17→    import datetime …
+    18→    from collections.abc …
+    19→    from typing …
     21→__all__ = [
     22→    "naturaldate",
     23→    "naturalday",
     24→    "naturaldelta",
+    25→    "naturaltime",
+    26→    "precisedelta",
       →…
     30→@total_ordering
     31→class Unit(Enum):

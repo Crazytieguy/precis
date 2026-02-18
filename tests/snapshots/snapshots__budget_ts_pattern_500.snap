@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (489 words)
+budget: 500 (491 words)
 
 README.md
     91→# Documentation
@@ -33,7 +33,7 @@ README.md
       →…
 docs/roadmap.md
 docs/v3-to-v4-migration-guide.md
-     1→# TS-Pattern v3 to v4 Migration Guide
+     1→# TS-Pattern v3 to v4 Migration Guide …
      3→## Breaking changes …
      5→### Imports
      7→type-specific wildcard patterns have moved from `__.<pattern>` to a new `Pattern` qualified module, also exported as `P` by ts-pattern.
@@ -45,16 +45,13 @@ docs/v3-to-v4-migration-guide.md
    298→#### `P.infer<typeof pattern>` …
    336→#### `P.symbol` …
 docs/v4-to-v5-migration-guide.md
-     1→# TS-Pattern v4 to v5 Migration Guide
-     3→This file contains all breaking changes and new features between the version 4 and 5 of TS-Pattern.
-     4→
-     5→# Breaking changes
+     1→# TS-Pattern v4 to v5 Migration Guide …
+     5→# Breaking changes …
      7→## TypeScript v5 …
-    63→# New features
+    63→# New features …
     65→## chainable methods …
-examples/gif-fetcher/src/App.tsx
-examples/gif-fetcher/src/constants.ts
 examples/gif-fetcher/src/searchGif.ts
+     6→export function searchGif(query: string) {
 src/errors.ts
      1→/**
      2→ * Error when the given input value does not match any included pattern
@@ -64,6 +61,8 @@ src/errors.ts
 src/index.ts
 src/internals/helpers.ts
      7→import * as symbols from './symbols';
+     8→import { SelectionType } from '../types/FindSelected';
+     9→import { Pattern, Matcher, MatcherType, AnyMatcher } from '../types/Pattern';
     12→export const isObject …
     16→export const isMatcher …
     24→const isOptionalPattern …
@@ -146,5 +145,3 @@ src/types/helpers.ts
    267→  input: unknown;
    268→  output: unknown;
    269→}
-tests/types-catalog/definition.ts
-tests/types-catalog/utils.ts

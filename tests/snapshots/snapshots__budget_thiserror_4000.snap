@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3916 words)
+budget: 4000 (3893 words)
 
 README.md
      1→derive(Error)
@@ -183,34 +183,7 @@ README.md
    180→  }
    181→  ```
    182→
-   183→  Another use case is hiding implementation details of an error representation
-   184→  behind an opaque error type, so that the representation is able to evolve
-   185→  without breaking the crate's public API.
-   186→
-   187→  ```rust
-   188→  // PublicError is public, but opaque and easy to keep compatible.
-   189→  #[derive(Error, Debug)]
-   190→  #[error(transparent)]
-   191→  pub struct PublicError(#[from] ErrorRepr);
-   192→
-   193→  impl PublicError {
-   194→      // Accessors for anything we do want to expose publicly.
-   195→  }
-   196→
-   197→  // Private and free to change across minor version of the crate.
-   198→  #[derive(Error, Debug)]
-   199→  enum ErrorRepr {
-   200→      ...
-   201→  }
-   202→  ```
-   203→
-   204→- See also the [`anyhow`] library for a convenient single error type to use in
-   205→  application code.
-   206→
-   207→  [`anyhow`]: https://github.com/dtolnay/anyhow
-   208→
-   209→<br>
-   210→
+      →…
    211→## Comparison to anyhow
    213→Use thiserror if you care about designing your own dedicated error type(s) so
    214→that the caller receives exactly the information that you choose in the event of
@@ -262,12 +235,27 @@ build.rs
      8→use std::str;
     10→const PRIVATE: &str = "\
     11→#[doc(hidden)]
-      →…
+    12→pub mod __private$$ {
+    13→    #[doc(hidden)]
+    14→    pub use crate::private::*;
+    15→}
+    16→";
     18→fn main() {
+    19→    println!("cargo:rerun-if-changed=build/probe.rs");
+      →…
     91→fn compile_probe(rustc_bootstrap: bool) -> bool {
+    92→    if env::var_os("RUSTC_STAGE").is_some() {
+      →…
    179→fn rustc_minor_version() -> Option<u32> {
+   180→    let rustc = cargo_env_var("RUSTC");
+      →…
    190→fn cargo_env_var(key: &str) -> OsString {
+   191→    env::var_os(key).unwrap_or_else(|| {
+      →…
 impl/src/ast.rs
+     1→use crate::attr::{self, Attrs};
+     2→use crate::generics::ParamsInScope;
+     3→use crate::unraw::{IdentUnraw, MemberUnraw};
     10→pub enum Input<'a> {
     11→    Struct(Struct<'a>),
     12→    Enum(Enum<'a>),
@@ -373,9 +361,22 @@ impl/src/attr.rs
    342→impl ToTokens for Trait {
    343→    fn to_tokens(&self, tokens: &mut TokenStream) {
 impl/src/expand.rs
+     1→use crate::ast::{Enum, Field, Input, Struct};
+     2→use crate::attr::Trait;
+     3→use crate::fallback;
+     4→use crate::generics::InferredBounds;
+     5→use crate::private;
+     6→use crate::unraw::MemberUnraw;
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
 impl/src/fallback.rs
+     1→use crate::expand::call_site_ident;
+     2→use crate::private;
 impl/src/fmt.rs
+     1→use crate::ast::{ContainerKind, Field};
+     2→use crate::attr::{Display, Trait};
+     3→use crate::private;
+     4→use crate::scan_expr::scan_expr;
+     5→use crate::unraw::{IdentUnraw, MemberUnraw};
     15→impl Display<'_> {
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
    166→struct FmtArguments {
@@ -438,11 +439,14 @@ impl/src/lib.rs
     48→impl ToTokens for private {
     49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
 impl/src/prop.rs
+     1→use crate::ast::{Enum, Field, Struct, Variant};
+     2→use crate::unraw::MemberUnraw;
      6→impl Struct<'_> {
     25→impl Enum<'_> {
     53→impl Variant<'_> {
     72→impl Field<'_> {
 impl/src/scan_expr.rs
+     1→use self::{Action::*, Input::*};
      6→enum Input {
      7→    Keyword(&'static str),
      8→    Punct(&'static str),
@@ -531,6 +535,8 @@ impl/src/unraw.rs
    135→impl ToTokens for MemberUnraw {
    136→    fn to_tokens(&self, tokens: &mut TokenStream) {
 impl/src/valid.rs
+     1→use crate::ast::{Enum, Field, Input, Struct, Variant};
+     2→use crate::attr::Attrs;
      5→impl Input<'_> {
     14→impl Struct<'_> {
     45→impl Enum<'_> {
@@ -686,6 +692,7 @@ tests/test_backtrace.rs
     13→pub struct InnerBacktrace {
     17→#[cfg(thiserror_nightly_testing)]
     18→pub mod structs {
+    19→    use super::{Inner, InnerBacktrace};
     25→    mod not_backtrace {
     27→        pub struct Backtrace;
     32→    pub struct PlainBacktrace {
@@ -701,6 +708,7 @@ tests/test_backtrace.rs
    107→    pub struct BoxDynErrorBacktrace {
    162→#[cfg(thiserror_nightly_testing)]
    163→pub mod enums {
+   164→    use super::{Inner, InnerBacktrace};
    171→    pub enum PlainBacktrace {
    177→    pub enum ExplicitBacktrace {
    186→    pub enum OptBacktrace {
@@ -859,7 +867,10 @@ tests/ui/concat-display.rs
      5→        // Use #[error("invalid {}", $what)] instead.
      6→
      7→        #[derive(Error, Debug)]
-      →…
+     8→        #[error(concat!("invalid ", $what))]
+     9→        pub struct $name;
+    10→    };
+    11→}
 tests/ui/display-underscore.rs
      3→#[derive(Error, Debug)]
      4→#[error("{_}")]

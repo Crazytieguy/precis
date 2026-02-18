@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1935 words)
+budget: 2000 (1915 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -36,10 +36,6 @@ README.md
       →…
 build.rs
      3→use std::env;
-    17→fn main() {
-    99→fn compile_probe(rustc_bootstrap: bool) -> bool {
-   188→fn rustc_minor_version() -> Option<u32> {
-   199→fn cargo_env_var(key: &str) -> OsString {
 src/backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
      5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
@@ -69,6 +65,8 @@ src/backtrace.rs
    211→        pub(crate) fn capture …
    311→    struct LazilyResolvedCapture {
 src/chain.rs
+     1→use self::ChainState::*;
+     2→use crate::StdError;
      5→use alloc::vec::{self, Vec};
      8→pub(crate) use crate::Chain;
     10→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
@@ -92,8 +90,11 @@ src/chain.rs
     93→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     94→impl Default for Chain<'_> {
 src/context.rs
+     1→use crate::error::ContextError;
+     2→use crate::{Context, Error, StdError};
      7→use crate::nightly::{self, Request};
      9→mod ext {
+    10→    use super::*;
     12→    pub trait StdError {
     18→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     19→    impl<E> StdError for E
@@ -118,8 +119,10 @@ src/context.rs
    161→    fn provide …
    166→struct Quoted<C>(C);
    186→pub(crate) mod private {
+   187→    use super::*;
    189→    pub trait Sealed {}
 src/ensure.rs
+     1→use crate::Error;
      9→#[doc(hidden)]
     10→pub trait BothDebug {
     24→#[doc(hidden)]
@@ -135,8 +138,12 @@ src/ensure.rs
    911→#[macro_export]
    912→macro_rules! __fallback_ensure {
 src/error.rs
+     1→use crate::backtrace::Backtrace;
+     2→use crate::chain::Chain;
      4→use crate::nightly::{self, Request};
      6→use crate::ptr::Mut;
+     7→use crate::ptr::{Own, Ref};
+     8→use crate::{Error, StdError};
     14→use core::ops::{Deref, DerefMut};
     30→    pub fn new …
     77→    pub fn msg …
@@ -208,8 +215,12 @@ src/error.rs
   1078→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
   1079→impl AsRef<dyn StdError> for Error {
 src/fmt.rs
+     1→use crate::chain::Chain;
+     2→use crate::error::ErrorImpl;
+     3→use crate::ptr::Ref;
     69→struct Indented<'a, D> {
 src/kind.rs
+    47→use crate::Error;
     51→use crate::StdError;
     53→use alloc::boxed::Box;
     55→pub struct Adhoc;
@@ -247,6 +258,8 @@ src/lib.rs
    261→mod nightly;
    262→mod ptr;
    263→mod wrapper;
+   265→use crate::error::ErrorImpl;
+   266→use crate::ptr::Own;
    270→use core::fmt::Debug;
    273→use std::error::Error as StdError;
    276→use core::error::Error as StdError;
@@ -263,11 +276,6 @@ src/lib.rs
    295→///   error type does not provide one.
    296→/// - `Error` is represented as a narrow pointer &mdash; exactly one word in
    297→///   size instead of two.
-   298→///
-   299→/// <br>
-   300→///
-   301→/// # Display representations
-   302→///
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -282,11 +290,6 @@ src/lib.rs
    401→/// use anyhow::Error;
    402→/// use std::io;
    403→///
-   404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
-   405→///     for cause in error.chain() {
-   406→///         if let Some(io_error) = cause.downcast_ref::<io::Error>() {
-   407→///             return Some(io_error.kind());
-   408→///         }
       →…
    415→pub struct Chain<'a> {
    416→    state: crate::chain::ChainState<'a>,
@@ -351,11 +354,6 @@ src/lib.rs
    477→/// # Example
    478→///
    479→/// ```
-   480→/// use anyhow::{Context, Result};
-   481→/// use std::fs;
-   482→/// use std::path::PathBuf;
-   483→///
-   484→/// pub struct ImportantThing {
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    618→    fn context …
@@ -363,6 +361,8 @@ src/lib.rs
    650→pub fn Ok …
    655→#[doc(hidden)]
    656→pub mod __private {
+   657→    use self::not::Bool;
+   658→    use crate::Error;
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
    665→    pub use alloc::format;
    667→    pub use core::result::Result::Err;
@@ -426,6 +426,7 @@ src/ptr.rs
    183→}
    186→    type Target = T;
 src/wrapper.rs
+     1→use crate::StdError;
      5→use alloc::boxed::Box;
      8→use crate::nightly::{self, Request};
     10→#[repr(transparent)]
@@ -499,6 +500,9 @@ tests/test_ensure.rs
     72→    fn fmt …
     77→#[track_caller]
     78→fn assert_err<T: Debug>(result: impl FnOnce() -> Result<T>, expected: &'static str) {
+    79→    let actual = result().unwrap_err().to_string();
+    80→
+      →…
 tests/test_ffi.rs
      4→use anyhow::anyhow;
      6→#[no_mangle]
@@ -527,8 +531,6 @@ tests/test_source.rs
      9→}
     12→    fn fmt …
     20→    fn source …
-tests/ui/chained-comparison.rs
-tests/ui/empty-ensure.rs
 tests/ui/ensure-nonbool.rs
      4→struct Bool(bool);
      6→struct DerefBool(bool);
@@ -544,5 +546,3 @@ tests/ui/must-use.rs
 tests/ui/no-impl.rs
      3→#[derive(Debug)]
      4→struct Error;
-tests/ui/temporary-value.rs
-tests/ui/wrong-interpolation.rs

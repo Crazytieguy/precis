@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3974 words)
+budget: 4000 (3965 words)
 
 README.md
     40→## About …
@@ -108,9 +108,12 @@ README.md
       →…
   1766→## Inspirations …
 benchmarks/always-last-digit.ts
+     2→import { match } from '../src';
      4→type Digit …
 benchmarks/nested-objects.ts
+     2→import { P, match } from '../src';
 benchmarks/random-digit.ts
+     2→import { match } from '../src';
      4→type Digit …
 docs/roadmap.md
      1→### Roadmap …
@@ -196,16 +199,12 @@ docs/v4-to-v5-migration-guide.md
     14→
     15→```ts
     16→// TS-Pattern v4
-    17→type Input = { type: 'ok'; value: number } | { type: 'error'; error: Error };
-    18→
       →…
     42→## Matching on Map and Sets
     44→Matching `Set` and `Map` instances using `.with(new Set(...))` and `.with(new Map(...))` is no longer supported. If you want to match specific sets and maps, you should now use the `P.map(keyPattern, valuePattern)` and `P.set(valuePattern)` patterns:
     45→
     46→```diff
     47→- import { match } from 'ts-pattern';
-    48→+ import { match, P } from 'ts-pattern';
-    49→
       →…
     63→# New features
     65→## chainable methods
@@ -221,44 +220,33 @@ docs/v4-to-v5-migration-guide.md
    159→
    160→```ts
    161→const example = (value: unknown) =>
-   162→  match(value)
-   163→    .with(
       →…
    214→## `.returnType`
    216→In TS-Pattern v4, the only way to explicitly set the return type of your `match` expression is to set the two `<Input, Output>` type parameters of `match`:
    217→
    218→```ts
    219→// TS-Pattern v4
-   220→match<
-   221→  { isAdmin: boolean; plan: 'free' | 'paid' }, // input type
       →…
 examples/gif-fetcher/src/App.tsx
+     1→import { searchGif } from './searchGif';
+     4→import './styles.css';
     11→type State …
     24→type Event …
     33→const initState …
-    38→/**
-    39→ * All state transitions happen in this
-    40→ * reducer function
-    41→ */
-    42→const reducer = (state: State, event: Event): State =>
-    43→  match<Event, State>(event)
-    44→    .with({ type: 'search' }, ({ query }) => ({
-    45→      query,
-      →…
+    42→const reducer …
     75→export default function App() {
-    76→  const [state, dispatch] = React.useReducer(reducer, initState);
-    77→
-      →…
 examples/gif-fetcher/src/constants.ts
      1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
 examples/gif-fetcher/src/index.tsx
+     4→import App from './App';
      6→const rootElement = document.getElementById('root');
 examples/gif-fetcher/src/searchGif.ts
+     1→import { isMatching, P } from 'ts-pattern';
+     2→import { API_KEY } from './constants';
      4→const delay …
      6→export function searchGif(query: string) {
      7→  return fetch(
      8→    `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${query}&limit=25&offset=0&rating=g&lang=en`
-     9→  )
       →…
 examples/one-file-demo/one-file-demo.ts
      1→import { isMatching, match, P } from 'ts-pattern';
@@ -274,6 +262,7 @@ src/errors.ts
      5→export class NonExhaustiveError extends Error {
      6→  constructor …
 src/index.ts
+     1→import * as Pattern from './patterns …
 src/internals/helpers.ts
      7→import * as symbols from './symbols';
      8→import { SelectionType } from '../types/FindSelected';
@@ -308,8 +297,6 @@ src/internals/helpers.ts
     46→  if (isObject(pattern)) {
     47→    if (!isObject(value)) return false;
     48→
-    49→    // Tuple pattern
-    50→    if (Array.isArray(pattern)) {
       →…
    120→export const getSelectionKeys = (pattern: any): string[] => {
    121→  if (isObject(pattern)) {
@@ -352,6 +339,10 @@ src/internals/symbols.ts
     29→export const override = Symbol.for('@ts-pattern/override');
     30→export type override = typeof override;
 src/is-matching.ts
+     1→import { MatchedValue, Pattern, UnknownProperties } from './types/Pattern …
+     2→import * as P from './patterns …
+     3→import { matchPattern } from './internals/helpers …
+     4→import { WithDefault } from './types/helpers …
      6→/**
      7→ * This constraint allows using additional properties
      8→ * in object patterns. See "should allow targetting unknown properties"
@@ -364,6 +355,11 @@ src/is-matching.ts
     15→  : P.Pattern<T>;
     53→export function isMatching …
 src/match.ts
+     1→import { Pattern } from './types/Pattern …
+     2→import { Match } from './types/Match …
+     3→import * as symbols from './internals/symbols …
+     4→import { matchPattern } from './internals/helpers …
+     5→import { NonExhaustiveError } from './errors …
      7→type MatchState …
     11→const unmatched …
     16→/**
@@ -408,6 +404,13 @@ src/match.ts
    133→function defaultCatcher …
 src/patterns.ts
      8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
+     9→import * as symbols from './internals/symbols …
+    10→import { matcher } from './internals/symbols …
+    11→import { isMatching } from './is-matching …
+    12→import { ExtractPreciseValue } from './types/ExtractPreciseValue …
+    13→import { Fn } from './types/helpers …
+    14→import { InvertPattern } from './types/InvertPattern …
+    15→./types/Pattern …
     67→/**
       →…
     81→export type unstable_Matchable<
@@ -858,10 +861,6 @@ src/types/helpers.ts
    267→  input: unknown;
    268→  output: unknown;
    269→}
-tests/deep-exclude.test.ts
-    11→type Colors …
-tests/find-selected.test.ts
-    17→type AnonymousSelectP …
 tests/instance-of.test.ts
      4→class A {
      5→  a = 'a';
@@ -869,32 +868,13 @@ tests/instance-of.test.ts
      7→class B {
      8→  b = 'b';
      9→}
-tests/pattern.test.ts
-     5→type ExtendsPattern …
-tests/type-error.test.ts
-     5→type Country …
 tests/types-catalog/definition.ts
 tests/types-catalog/utils.ts
      4→export const some = <a>(value: a): Option<a> => ({
      5→  kind: 'some',
      6→  value,
      7→});
-    56→export interface BaseAsyncResult<TData, TError = Error> {
-    57→  status: AsyncResultStatus;
-    58→  data?: TData;
-    59→  error?: TError;
-    60→}
-    62→export interface AsyncResultIdleOrLoading<TData, TError = Error>
-    63→  extends BaseAsyncResult<TData, TError> {
-    64→  status: 'idle' | 'loading';
-    65→}
-    67→export interface AsyncResultSuccess<TData, TError = Error>
-    68→  extends BaseAsyncResult<TData, TError> {
-    69→  status: 'success';
-    70→  data: TData;
-    71→}
-    73→export interface AsyncResultError<TData, TError = Error>
-    74→  extends BaseAsyncResult<TData, TError> {
-    75→  status: 'error';
-    76→  error: TError;
-    77→}
+    56→export interface BaseAsyncResult …
+    62→export interface AsyncResultIdleOrLoading …
+    67→export interface AsyncResultSuccess …
+    73→export interface AsyncResultError …

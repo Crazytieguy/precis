@@ -2,13 +2,40 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1983 words)
+budget: 2000 (1981 words)
 
 __init__.py
+     4→from ._checkers …
+     5→from ._checkers …
+     6→from ._checkers …
+     7→from ._checkers …
+     8→from ._checkers …
+     9→from ._config …
+    10→from ._config …
+    11→from ._config …
+    12→from ._decorators …
+    13→from ._decorators …
+    14→from ._exceptions …
+    15→from ._exceptions …
+    16→from ._exceptions …
+    17→from ._exceptions …
+    18→from ._functions …
+    19→from ._functions …
+    20→from ._functions …
+    21→from ._importhook …
+    22→from ._importhook …
+    23→from ._importhook …
+    24→from ._memo …
+    25→from ._suppression …
+    26→from ._utils …
     34→config: TypeCheckConfiguration
     37→def __getattr__ …
 _checkers.py
     42→from typing_extensions import is_typeddict
+    44→from ._config …
+    45→from ._exceptions …
+    46→from ._memo …
+    47→from ._utils …
     81→TypeCheckerCallable: TypeAlias = Callable[
     82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
     83→]
@@ -42,23 +69,6 @@ _checkers.py
    116→    "__imul__",
    117→    "__ior__",
    118→    "__ipow__",
-   119→    "__irshift__",
-   120→    "__isub__",
-   121→    "__itruediv__",
-   122→    "__ixor__",
-   123→    "__le__",
-   124→    "__lshift__",
-   125→    "__lt__",
-   126→    "__matmul__",
-   127→    "__mod__",
-   128→    "__mul__",
-   129→    "__ne__",
-   130→    "__or__",
-   131→    "__pow__",
-   132→    "__radd__",
-   133→    "__rand__",
-   134→    "__rdiv__",
-   135→    "__rfloordiv__",
       →…
    153→def check_callable …
    212→def check_mapping …
@@ -108,27 +118,11 @@ _checkers.py
   1022→    Mapping: check_mapping,
   1023→    MutableMapping: check_mapping,
   1024→    None: check_none,
-  1025→    collections.abc.Mapping: check_mapping,
-  1026→    collections.abc.MutableMapping: check_mapping,
-  1027→    Sequence: check_sequence,
-  1028→    collections.abc.Sequence: check_sequence,
-  1029→    collections.abc.Set: check_set,
-  1030→    set: check_set,
-  1031→    Set: check_set,
-  1032→    TextIO: check_io,
-  1033→    tuple: check_tuple,
-  1034→    Tuple: check_tuple,
-  1035→    type: check_class,
-  1036→    Type: check_class,
-  1037→    Union: check_union,
-  1038→    # On some versions of Python, these may simply be re-exports from "typing",
-  1039→    # but exactly which Python versions is subject to change.
-  1040→    # It's best to err on the safe side and just always specify these.
-  1041→    typing_extensions.Literal: check_literal,
       →…
   1061→def builtin_checker_lookup …
   1099→def load_plugins …
 _config.py
+     9→    from ._functions …
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
     15→    """
@@ -210,6 +204,11 @@ _config.py
    102→    )
    103→    debug_instrumentation: bool = False
 _decorators.py
+    13→from ._config …
+    14→from ._exceptions …
+    15→from ._functions …
+    16→from ._transformer …
+    17→from ._utils …
     24→    def typeguard_ignore …
     32→def make_cell …
     36→def find_target_function …
@@ -238,6 +237,12 @@ _exceptions.py
     35→    def append_path_element …
     38→    def __str__ …
 _functions.py
+     8→from . …
+     9→from ._checkers …
+    10→from ._config …
+    15→from ._exceptions …
+    16→from ._memo …
+    17→from ._utils …
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
     50→def check_type …
@@ -248,6 +253,8 @@ _functions.py
    245→def check_variable_assignment …
    291→def warn_on_error …
 _importhook.py
+    17→from ._config …
+    18→from ._transformer …
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
     44→# The name of this function is magical
@@ -484,11 +491,7 @@ _transformer.py
    561→                        return_annotation
    562→                    )
    563→
-   564→        if isinstance(node, AsyncFunctionDef):
-   565→            new_memo.is_async = True
-   566→
-   567→        yield
-   568→        self._memo = old_memo
+      →…
    570→    def _get_import(self, module: str, name: str) -> Name:
    571→        memo = self._memo if self._target_path else self._module_memo
    572→        return memo.get_import(module, name)
@@ -522,6 +525,7 @@ _transformer.py
   1181→    def visit_AugAssign …
   1224→    def visit_If …
 _utils.py
+    21→    from ._memo …
     48→    def evaluate_forwardref …
     66→def get_type_name …
    104→def qualified_name …

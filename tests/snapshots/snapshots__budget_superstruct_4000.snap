@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3972 words)
+budget: 4000 (3929 words)
 
 Changelog.md
      1→# Changelog
@@ -17,7 +17,7 @@ Readme.md
    205→### Documentation …
    231→### License …
 docs/guides/01-getting-started.md
-     1→# Getting Started
+     1→# Getting Started …
      3→## Installing Superstruct
      5→To install Superstruct run:
      6→
@@ -57,62 +57,25 @@ docs/guides/01-getting-started.md
     40→
     41→## Defining Structs …
 docs/guides/02-validating-data.md
-     1→# Validating Data
-     3→Superstruct is designed to let you validate any data, ensuring that it matches a specific schema. In this guide we'll show you some of the possibilities.
-     4→
+     1→# Validating Data …
      5→## Primitive Values …
     37→## Composed Values …
    114→## Optional Values …
    157→## Custom Values …
 docs/guides/03-coercing-data.md
-     1→# Coercing Data
-     3→Sometimes while validating input data you'll actually want to "coerce" it to change it in someway to help validation pass. The most common example of this is adding default values to properties, but it can also be used to parse multiple input formats, or cleanup inconsistent data.
-     4→
-     5→To allow for these use cases, Superstruct has a concept called "coercion", which allows you to encode specific logic about how to transform a piece of data before validating it.
-     6→
+     1→# Coercing Data …
      7→## Default Values …
     49→## Custom Coercions …
 docs/guides/04-refining-validation.md
-     1→# Refining Validation
-     3→There are some cases where you want to create a validation that is more fine-grained than a "type". For example, you might want not just a `string`, but a specific format of string. Or not just a `User`, but a user that is also an administrator.
-     4→
-     5→For these situations, you can use "refinements". Refinements allow you to create a new struct that is derived from an existing struct with an extra bit of validation layered on top.
-     6→
+     1→# Refining Validation …
      7→## Built-in Refinements …
     47→## Custom Refinements …
 docs/guides/05-handling-errors.md
-     1→# Handling Errors
-     3→By default Superstruct throws errors that are easy to understand for developers. This means that out of the box you'll get nice errors messages that help you track down why a piece of data is invalid.
-     4→
-     5→For example, consider a simple `User` struct:
-     6→
-     7→```ts
-     8→const User = object({
-     9→  id: number(),
-    10→  name: string(),
-    11→  email: email(),
-    12→})
-    13→```
-    14→
-    15→If you pass in an invalid email, an error will be thrown:
-    16→
-    17→```ts
-    18→const data = {
-    19→  id: 1,
-    20→  name: 'Alex',
-    21→  email: false,
-    22→}
-    23→
-    24→assert(data, User)
-      →…
+     1→# Handling Errors …
     53→## Customizing Errors …
    102→## Multiple Failures …
 docs/guides/06-using-typescript.md
-     1→# Using TypeScript
-     3→Superstruct is built with TypeScript, and is designed to integrate seamlessly with its guards and assertions. Which means that if you're using TypeScript too you'll get compile-time typings for your data.
-     4→
-     5→> 🤖 Warning: You must enable TypeScript's [`strictNullChecks`](https://www.typescriptlang.org/tsconfig#strictNullChecks) option in your `tsconfig.json` for Superstruct to work properly with "optional" types. Note that `strictNullChecks` is disabled by default. If you enable `strict`, `strictNullChecks` will automatically be enabled.
-     6→
+     1→# Using TypeScript …
      7→## Narrowing Types …
     37→## Describing Types …
     55→## Inferring Types …
@@ -262,6 +225,8 @@ src/error.ts
     42→    if (explanation != null) this.cause = msg
     43→    Object.assign(this, rest)
     44→    this.name = this.constructor.name
+    45→    this.failures = () => {
+    46→      return (cached ??= [failure, ...failures()])
       →…
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
@@ -294,6 +259,8 @@ src/struct.ts
     29→  }) {
     30→    const {
     31→      type,
+    32→      schema,
+    33→      validator,
       →…
     63→  /**
     64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
@@ -415,9 +382,9 @@ src/struct.ts
    259→export type Validator …
    266→export type Refiner …
 src/structs/coercions.ts
-     1→import { Struct, is, Coercer } from '../struct.js …
-     2→import { isPlainObject } from '../utils.js …
-     3→import { string, unknown } from './types.js …
+     1→import { Struct, is, Coercer } from '../struct.js'
+     2→import { isPlainObject } from '../utils.js'
+     3→import { string, unknown } from './types.js'
      5→/**
       →…
     16→export function coerce<T, S, C>(
@@ -435,8 +402,8 @@ src/structs/coercions.ts
       →…
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
 src/structs/refinements.ts
-     1→import { Struct, Refiner } from '../struct.js …
-     2→import { toFailures } from '../utils.js …
+     1→import { Struct, Refiner } from '../struct.js'
+     2→import { toFailures } from '../utils.js'
      4→/**
       →…
      8→export function empty<
@@ -488,9 +455,19 @@ src/structs/refinements.ts
    149→  refiner: Refiner<T>
    150→): Struct<T, S> {
 src/structs/types.ts
-     1→import { Infer, Struct } from '../struct.js …
-     2→import { define } from './utilities.js …
-     3→../utils.js …
+     1→import { Infer, Struct } from '../struct.js'
+     2→import { define } from './utilities.js'
+     3→import {
+     4→  ObjectSchema,
+     5→  ObjectType,
+     6→  print,
+     7→  run,
+     8→  isObject,
+     9→  isNonArrayObject,
+    10→  AnyStruct,
+    11→  InferStructTuple,
+    12→  UnionToIntersection,
+    13→} from '../utils.js'
     15→/**
       →…
     19→export function any(): Struct<any, null> {
@@ -582,9 +559,14 @@ src/structs/types.ts
       →…
    574→export function unknown(): Struct<unknown, null> {
 src/structs/utilities.ts
-     1→import { Context, Struct, Validator } from '../struct.js …
-     2→../utils.js …
-     8→import { object, optional, type } from './types.js …
+     1→import { Context, Struct, Validator } from '../struct.js'
+     2→import {
+     3→  Assign,
+     4→  ObjectSchema,
+     5→  ObjectType,
+     6→  PartialObjectSchema,
+     7→} from '../utils.js'
+     8→import { object, optional, type } from './types.js'
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
       →…
@@ -721,8 +703,15 @@ src/utils.ts
    407→> = Index extends Length
    408→  ? Accumulated
    409→  : _InferTuple<Tuple, Length, [...Accumulated, Infer<Tuple[Index]>]>
+test/api/assert.test.ts
+test/api/create.test.ts
+test/api/is.test.ts
+test/api/mask.test.ts
+test/api/validate.test.ts
 test/deprecated.test.ts
+     2→import { any, assert, deprecated } from '../src …
 test/index.test.ts
+     5→../src …
 test/index.ts
      1→/**
      2→ * A helper for testing type signatures.
@@ -733,14 +722,17 @@ test/typings/infer.ts
      4→const Struct = object()
      5→type T = Infer<typeof Struct>
 test/validation/any/valid-number.ts
+     1→import { any } from '../../../src'
      3→export const Struct = any()
      5→export const data = 1
      7→export const output = 1
 test/validation/any/valid-string.ts
+     1→import { any } from '../../../src'
      3→export const Struct = any()
      5→export const data = 'valid'
      7→export const output = 'valid'
 test/validation/any/valid-undefined.ts
+     1→import { any } from '../../../src'
      3→export const Struct = any()
      5→export const data = undefined
      7→export const output = undefined
@@ -756,22 +748,27 @@ test/validation/assign/invalid-type.ts
 test/validation/assign/valid-object.ts
 test/validation/assign/valid-type.ts
 test/validation/bigint/invalid-number.ts
+     1→import { bigint } from '../../../src'
      3→export const Struct = bigint()
      5→export const data = 3
      7→export const failures = [
 test/validation/bigint/invalid.ts
+     1→import { bigint } from '../../../src'
      3→export const Struct = bigint()
      5→export const data = 'invalid'
      7→export const failures = [
 test/validation/bigint/valid.ts
+     1→import { bigint } from '../../../src'
      3→export const Struct = bigint()
      5→export const data = 542n
      7→export const output = 542n
 test/validation/boolean/invalid.ts
+     1→import { boolean } from '../../../src'
      3→export const Struct = boolean()
      5→export const data = 'invalid'
      7→export const failures = [
 test/validation/boolean/valid.ts
+     1→import { boolean } from '../../../src'
      3→export const Struct = boolean()
      5→export const data = true
      7→export const output = true
@@ -779,14 +776,17 @@ test/validation/coerce/changed.ts
 test/validation/coerce/condition-not-met.ts
 test/validation/coerce/unchanged.ts
 test/validation/date/invalid-date.ts
+     1→import { date } from '../../../src'
      3→export const Struct = date()
      5→export const data = new Date('invalid')
      7→export const failures = [
 test/validation/date/invalid.ts
+     1→import { date } from '../../../src'
      3→export const Struct = date()
      5→export const data = 'invalid'
      7→export const failures = [
 test/validation/date/valid.ts
+     1→import { date } from '../../../src'
      3→export const Struct = date()
      5→export const data = new Date(0)
      7→export const output = new Date(0)
@@ -816,44 +816,52 @@ test/validation/empty/valid-map.ts
 test/validation/empty/valid-set.ts
 test/validation/empty/valid-string.ts
 test/validation/enums/invalid-numbers.ts
+     1→import { enums } from '../../../src'
      3→export const Struct = enums([1, 2])
      5→export const data = 'invalid'
      7→export const failures = [
 test/validation/enums/invalid-strings.ts
+     1→import { enums } from '../../../src'
      3→export const Struct = enums(['one', 'two'])
      5→export const data = 'invalid'
      7→export const failures = [
 test/validation/enums/valid.ts
+     1→import { enums } from '../../../src'
      3→export const Struct = enums(['one', 'two'])
      5→export const data = 'two'
      7→export const output = 'two'
 test/validation/function/invalid.ts
+     1→import { func } from '../../../src'
      3→export const Struct = func()
      5→export const data = false
      7→export const failures = [
-     8→  {
-      →…
 test/validation/function/valid.ts
+     1→import { func } from '../../../src'
      3→export const Struct = func()
      5→export const data = function () {}
      7→export const output = data
 test/validation/instance/invalid.ts
+     1→import { instance } from '../../../src'
      3→export const Struct = instance(Array)
      5→export const data = false
      7→export const failures = [
 test/validation/instance/valid.ts
+     1→import { instance } from '../../../src'
      3→export const Struct = instance(Array)
      5→export const data = [1]
      7→export const output = [1]
 test/validation/integer/invalid-decimal.ts
+     1→import { integer } from '../../../src'
      3→export const Struct = integer()
      5→export const data = 3.14
      7→export const failures = [
 test/validation/integer/invalid.ts
+     1→import { integer } from '../../../src'
      3→export const Struct = integer()
      5→export const data = 'invalid'
      7→export const failures = [
 test/validation/integer/valid.ts
+     1→import { integer } from '../../../src'
      3→export const Struct = integer()
      5→export const data = 42
      7→export const output = 42
@@ -862,13 +870,18 @@ test/validation/intersection/invalid.ts
 test/validation/intersection/valid-refinement.ts
 test/validation/intersection/valid.ts
 test/validation/lazy/invalid.ts
+     1→import { lazy, string } from '../../../src'
 test/validation/lazy/valid.ts
+     1→import { lazy, string } from '../../../src'
 test/validation/lazy/with-refiners.ts
+     1→import { lazy, nonempty, string } from '../../../src'
 test/validation/literal/invalid.ts
+     1→import { literal } from '../../../src'
      3→export const Struct = literal(42)
      5→export const data = false
      7→export const failures = [
 test/validation/literal/valid.ts
+     1→import { literal } from '../../../src'
      3→export const Struct = literal(42)
      5→export const data = 42
      7→export const output = 42
@@ -890,18 +903,18 @@ test/validation/never/invalid.ts
      3→export const Struct = never()
      5→export const data = true
      7→export const failures = [
-     8→  {
-      →…
 test/validation/nullable/invalid.ts
 test/validation/nullable/valid-defined-nested.ts
 test/validation/nullable/valid-defined.ts
 test/validation/nullable/valid-null-nested.ts
 test/validation/nullable/valid-null.ts
 test/validation/number/invalid.ts
+     1→import { number } from '../../../src'
      3→export const Struct = number()
      5→export const data = 'invalid'
      7→export const failures = [
 test/validation/number/valid.ts
+     1→import { number } from '../../../src'
      3→export const Struct = number()
      5→export const data = 42
      7→export const output = 42
@@ -931,13 +944,23 @@ test/validation/partial/valid-full.ts
 test/validation/partial/valid-partial.ts
 test/validation/partial/valid-type.ts
 test/validation/pattern/invalid.ts
+     1→import { string, pattern } from '../../../src'
      3→export const Struct = pattern(string(), /\d+/)
      5→export const data = 'invalid'
      7→export const failures = [
 test/validation/pattern/valid.ts
+     1→import { string, pattern } from '../../../src'
      3→export const Struct = pattern(string(), /\d+/)
      5→export const data = '123'
      7→export const output = '123'
+test/validation/pick/invalid-element-nested.ts
+test/validation/pick/invalid-property-nested.ts
+test/validation/pick/invalid-property-unknown.ts
+test/validation/pick/invalid-property.ts
+test/validation/pick/invalid.ts
+test/validation/pick/valid-nested.ts
+test/validation/pick/valid-type.ts
+test/validation/pick/valid.ts
 test/validation/record/invalid-array.ts
 test/validation/record/invalid-property.ts
 test/validation/record/invalid.ts
@@ -950,10 +973,12 @@ test/validation/refine/invalid-shorthand.ts
 test/validation/refine/invalid.ts
 test/validation/refine/valid.ts
 test/validation/regexp/invalid.ts
+     1→import { regexp } from '../../../src'
      3→export const Struct = regexp()
      5→export const data = 'invalid'
      7→export const failures = [
 test/validation/regexp/valid.ts
+     1→import { regexp } from '../../../src'
      3→export const Struct = regexp()
      5→export const data = /./
      7→export const output = data
@@ -963,19 +988,23 @@ test/validation/set/invalid.ts
 test/validation/set/valid-opaque.ts
 test/validation/set/valid.ts
 test/validation/string/invalid.ts
+     1→import { string } from '../../../src'
      3→export const Struct = string()
      5→export const data = false
      7→export const failures = [
 test/validation/string/valid.ts
+     1→import { string } from '../../../src'
      3→export const Struct = string()
      5→export const data = 'valid'
      7→export const output = 'valid'
 test/validation/trimmed/invalid.ts
+     1→import { string, trimmed } from '../../../src'
      3→export const Struct = trimmed(string())
      5→export const data = false
      7→export const failures = [
     17→export const create = true
 test/validation/trimmed/valid.ts
+     1→import { string, trimmed } from '../../../src'
      3→export const Struct = trimmed(string())
      5→export const data = '  valid  '
      7→export const output = 'valid'
@@ -1005,14 +1034,17 @@ test/validation/union/coercion.ts
 test/validation/union/invalid.ts
 test/validation/union/valid.ts
 test/validation/unknown/valid-number.ts
+     1→import { unknown } from '../../../src'
      3→export const Struct = unknown()
      5→export const data = 1
      7→export const output = 1
 test/validation/unknown/valid-string.ts
+     1→import { unknown } from '../../../src'
      3→export const Struct = unknown()
      5→export const data = 'valid'
      7→export const output = 'valid'
 test/validation/unknown/valid-undefined.ts
+     1→import { unknown } from '../../../src'
      3→export const Struct = unknown()
      5→export const data = undefined
      7→export const output = undefined

@@ -293,6 +293,9 @@ pub struct GroupKey {
     /// None for non-section symbols. Separates top-level headings from
     /// detail subsections so h1/h2 content gets priority over h3+ detail.
     pub heading_depth: Option<u8>,
+    /// Whether the imports in this group are 1st-party (local/relative).
+    /// Only meaningful for Import kind; false for all other kinds.
+    pub is_first_party: bool,
 }
 
 /// A symbol's precomputed content costs (word counts per rendering stage).
@@ -413,6 +416,7 @@ pub fn build_groups(
                 is_config,
                 is_test,
                 heading_depth,
+                is_first_party: sym.is_first_party,
             };
 
             // Compute costs
@@ -594,7 +598,15 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         None => 1.0,    // non-section symbols
     };
 
-    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * heading_depth_factor;
+    // 1st-party imports tell you about internal module structure and are
+    // higher signal than 3rd-party dependency imports.
+    let first_party_factor = if key.kind_category == KindCategory::Import && key.is_first_party {
+        2.0
+    } else {
+        1.0
+    };
+
+    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * heading_depth_factor * first_party_factor;
 
     let stage_value = match key.kind_category {
         KindCategory::Type => match stage {

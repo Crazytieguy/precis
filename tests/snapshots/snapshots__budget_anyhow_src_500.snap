@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (481 words)
+budget: 500 (480 words)
 
 backtrace.rs
      8→pub(crate) enum Backtrace {}
@@ -24,6 +24,7 @@ chain.rs
       →…
     36→    type Item = &'a (dyn StdError + 'static);
 context.rs
+     7→use crate::nightly::{self, Request};
     12→    pub trait StdError {
    189→    pub trait Sealed {}
 ensure.rs
@@ -35,6 +36,8 @@ ensure.rs
    886→macro_rules! __fancy_ensure {
    912→macro_rules! __fallback_ensure {
 error.rs
+     4→use crate::nightly::{self, Request};
+     6→use crate::ptr::Mut;
    705→    type Target = dyn StdError + Send + Sync + 'static;
    934→pub(crate) struct ErrorImpl<E = ()> {
    935→    vtable: &'static ErrorVTable,
@@ -44,6 +47,7 @@ error.rs
       →…
 fmt.rs
 kind.rs
+    51→use crate::StdError;
     55→pub struct Adhoc;
     57→#[doc(hidden)]
     58→pub trait AdhocKind: Sized {
@@ -86,9 +90,6 @@ lib.rs
    428→/// use anyhow::Result;
    429→///
    430→/// # const IGNORE: &str = stringify! {
-   431→/// fn demo1() -> Result<T> {...}
-   432→///            // ^ equivalent to std::result::Result<T, anyhow::Error>
-   433→///
       →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    470→/// Provides the `context` method for `Result`.
@@ -143,6 +144,7 @@ ptr.rs
    183→}
    186→    type Target = T;
 wrapper.rs
+     8→use crate::nightly::{self, Request};
     10→#[repr(transparent)]
     11→pub struct MessageError<M>(pub M);
     33→#[repr(transparent)]

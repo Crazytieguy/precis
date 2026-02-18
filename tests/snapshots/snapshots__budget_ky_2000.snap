@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1961 words)
+budget: 2000 (1949 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -65,17 +65,6 @@ readme.md
     87→### ky(input, options?)
     89→The `input` and `options` are the same as [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch), with additional `options` available (see below).
     90→
-    91→Returns a [`Response` object](https://developer.mozilla.org/en-US/docs/Web/API/Response) with [`Body` methods](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#body) added for convenience. So you can, for example, call `ky.get(input).json()` directly without having to await the `Response` first. When called like that, an appropriate `Accept` header will be set depending on the body method used. Unlike the `Body` methods of `window.Fetch`, these will throw an `HTTPError` if the response status is not in the range of `200...299`. Also, `.json()` will return an empty string if body is empty or the response status is `204` instead of throwing a parse error due to an empty body.
-    92→
-    93→Available body shortcuts: `.json()`, `.text()`, `.formData()`, `.arrayBuffer()`, `.blob()`, and `.bytes()`. The `.bytes()` shortcut is only present when the runtime supports `Response.prototype.bytes()`.
-    94→
-    95→```js
-    96→import ky from 'ky';
-    97→
-    98→const user = await ky('/api/user').json();
-    99→
-   100→console.log(user);
-   101→```
       →…
    122→### ky.get(input, options?) …
    123→### ky.post(input, options?)
@@ -85,8 +74,7 @@ readme.md
    127→### ky.delete(input, options?)
    129→Sets `options.method` to the method name and makes a request.
    130→
-   131→⌨️ **TypeScript:** Accepts an optional type parameter for use with JSON responses (see [`ky()`](#kyinput-options)).
-   132→
+      →…
    147→##### method …
    156→##### json …
    162→##### searchParams …
@@ -135,17 +123,6 @@ readme.md
   1052→### Sending form data
   1054→Sending form data in Ky is identical to `fetch`. Just pass a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to the `body` option. The `Content-Type` header will be automatically set to `multipart/form-data`, overriding any existing `Content-Type` header.
   1055→
-  1056→```js
-  1057→import ky from 'ky';
-  1058→
-  1059→// `multipart/form-data`
-  1060→const formData = new FormData();
-  1061→formData.append('food', 'fries');
-  1062→formData.append('drink', 'icetea');
-  1063→
-  1064→const response = await ky.post(url, {body: formData});
-  1065→```
-  1066→
       →…
   1109→### Setting a custom `Content-Type` …
   1129→### Cancellation …
@@ -197,6 +174,7 @@ source/core/Ky.ts
    202→
       →…
 source/core/constants.ts
+     1→import type {Expect, Equal} from '@type-challenges/utils';
      4→export const supportsRequestStreams = (() => {
     34→export const supportsAbortController = typeof globalThis.AbortController === 'function';
     35→export const supportsAbortSignal = typeof globalThis.AbortSignal === 'function' && typeof globalThis.AbortSignal.any === 'function';
@@ -252,6 +230,17 @@ source/core/constants.ts
    181→						});
    182→					}
    183→
+   184→					// Retry with a modified request (e.g., fallback endpoint)
+   185→					if (data.error?.code === 'FALLBACK_TO_BACKUP') {
+   186→						return ky.retry({
+   187→							request: new Request('https://backup-api.com/endpoint', {
+   188→								method: request.method,
+   189→								headers: request.headers,
+   190→							}),
+   191→							code: 'BACKUP_ENDPOINT'
+   192→						});
+   193→					}
+   194→
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys: KyOptionsRegistry = {
@@ -313,8 +302,17 @@ source/types/ResponsePromise.ts
      4→import {type KyResponse} from './response.js';
 source/types/common.ts
 source/types/hooks.ts
+     1→import {type stop, type RetryMarker} from '../core/constants.js';
+     2→import type {KyRequest, KyResponse, HTTPError} from '../index.js';
+     3→import type {NormalizedOptions} from './options.js';
 source/types/ky.ts
+     1→import {type stop, type retry} from '../core/constants.js';
+     2→import type {Input, Options} from './options.js';
+     3→import type {ResponsePromise} from './ResponsePromise.js';
 source/types/options.ts
+     1→import type {LiteralUnion, Required} from './common.js';
+     2→import type {Hooks} from './hooks.js';
+     3→import type {RetryOptions} from './retry.js';
     29→/**
     30→Custom Ky options
     31→*/
@@ -396,9 +394,10 @@ source/types/options.ts
 source/types/request.ts
 source/types/response.ts
 source/types/retry.ts
+     1→import type {HttpMethod} from './options.js';
 source/utils/body.ts
      5→export const getBodySize …
-    57→const withProgress …
+    57→const withProgress = (stream: ReadableStream<Uint8Array>, totalBytes: number, onProgress: Options['onDownloadProgress'] | Options['onUploadProgress']): ReadableStream<Uint8Array> => {
     90→export const streamResponse …
    119→export const streamRequest …
 source/utils/delay.ts
@@ -409,17 +408,17 @@ source/utils/is.ts
 source/utils/merge.ts
      6→export const validateAndMerge …
     16→export const mergeHeaders …
-    32→function newHookValue …
+    32→function newHookValue<K extends keyof Hooks>(original: Hooks, incoming: Hooks, property: K): Required<Hooks>[K] {
     38→export const mergeHooks …
-    47→const appendSearchParameters …
+    47→const appendSearchParameters = (target: any, source: any): URLSearchParams => {
     86→export const deepMerge …
 source/utils/normalize.ts
      5→export const normalizeRequestMethod …
-     8→const retryMethods …
-    10→const retryStatusCodes …
-    12→const retryAfterStatusCodes …
-    14→type InternalRetryOptions …
-    16→const defaultRetryOptions …
+     8→const retryMethods: HttpMethod[] = ['get', 'put', 'head', 'delete', 'options', 'trace'];
+    10→const retryStatusCodes = [408, 413, 429, 500, 502, 503, 504];
+    12→const retryAfterStatusCodes = [413, 429, 503];
+    14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
+    16→const defaultRetryOptions: InternalRetryOptions = {
     28→export const normalizeRetryOptions …
 source/utils/options.ts
      4→export const findUnknownOptions …
@@ -477,6 +476,7 @@ test/browser.ts
     13→	interface Window {
     14→		ky: typeof ky;
     15→	}
+test/headers.ts
 test/helpers/create-http-test-server.ts
      7→export type HttpServerOptions = {
     11→export type ExtendedHttpTestServer = {
@@ -484,3 +484,5 @@ test/helpers/create-large-file.ts
 test/helpers/parse-body.ts
 test/helpers/with-page.ts
 test/helpers/with-performance.ts
+test/hooks.ts
+test/http-error.ts

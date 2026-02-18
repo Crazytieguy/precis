@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1938 words)
+budget: 2000 (1936 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -161,11 +161,7 @@ benchmark/run.py
     19→    col_width: tuple,
     20→    compare_to: float | None = None,
     21→) -> float:
-    22→    placeholder = "Running..."
-      →…
     37→def run(run_count: int) -> None:
-    38→    data_path = Path(__file__).parent / "data.toml"
-      →…
 fuzzer/fuzz.py
      1→import atheris
      4→    from math import isnan
@@ -200,9 +196,6 @@ fuzzer/fuzz.py
     44→    if roundtripped_obj != toml_obj:
     45→        sys.stderr.write(
     46→            f"Original dict:\n{toml_obj}\nRoundtripped dict:\n{roundtripped_obj}\n"
-    47→        )
-    48→        sys.stderr.flush()
-    49→        print_err(data)
       →…
     53→def print_err(data):
     54→    codepoints = [hex(ord(x)) for x in data]
@@ -250,15 +243,22 @@ src/tomli/__init__.py
      4→
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
-     8→from ._parser …
+     8→from ._parser import TOMLDecodeError, load, loads
 src/tomli/_parser.py
-     7→import sys …
-     8→from types …
-    10→from ._re …
+     7→import sys
+     8→from types import MappingProxyType
+    10→from ._re import (
+    11→    RE_DATETIME,
+    12→    RE_LOCALTIME,
+    13→    RE_NUMBER,
+    14→    match_to_datetime,
+    15→    match_to_localtime,
+    16→    match_to_number,
+    17→)
     19→TYPE_CHECKING = False
-    21→    from collections.abc …
-    22→    from typing …
-    24→    from ._types …
+    21→    from collections.abc import Iterable
+    22→    from typing import IO, Any, Final
+    24→    from ._types import Key, ParseFloat, Pos
     26→# Inline tables/arrays are implemented using recursion. Pathologically
     27→# nested documents cause pure Python to raise RecursionError (which is OK),
     28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
@@ -280,16 +280,9 @@ src/tomli/_parser.py
     49→TOML_WS: Final = frozenset(" \t")
     50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
     51→BARE_KEY_CHARS: Final = frozenset(
-    52→    "abcdefghijklmnopqrstuvwxyz" "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "0123456789" "-_"
-    53→)
     54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
     55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
     57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
-    58→    {
-    59→        "\\b": "\u0008",  # backspace
-    60→        "\\t": "\u0009",  # tab
-    61→        "\\n": "\u000a",  # linefeed
-      →…
     71→class DEPRECATED_DEFAULT:
     72→    """Sentinel to be used as default arg during deprecation
     73→    period of TOMLDecodeError's free-form arguments."""
@@ -351,12 +344,12 @@ src/tomli/_parser.py
    760→def is_unicode_scalar_value …
    764→def make_safe_parse_float …
 src/tomli/_re.py
-     7→from datetime …
-     8→from functools …
-     9→import re …
+     7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
+     8→from functools import lru_cache
+     9→import re
     11→TYPE_CHECKING = False
-    13→    from typing …
-    15→    from ._types …
+    13→    from typing import Any, Final
+    15→    from ._types import ParseFloat
     17→_TIME_RE_STR: Final = r"""
     18→([01][0-9]|2[0-3])             # hours
     19→:([0-5][0-9])                  # minutes
@@ -379,8 +372,6 @@ src/tomli/_re.py
     40→    (?:[eE][+-]?[0-9](?:_?[0-9])*)?  # optional exponent part
     41→)
     42→""",
-    43→    flags=re.VERBOSE,
-    44→)
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
     47→    rf"""
@@ -391,8 +382,6 @@ src/tomli/_re.py
     52→    (?:([Zz])|([+-])([01][0-9]|2[0-3]):([0-5][0-9]))?  # optional time offset
     53→)?
     54→""",
-    55→    flags=re.VERBOSE,
-    56→)
     59→def match_to_datetime …
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
@@ -428,6 +417,7 @@ tests/burntsushi.py
     96→def _normalize_float_str(float_str: str) -> str:
 tests/test_data.py
      5→import json
+     9→from . import burntsushi, tomllib
     11→DATA_DIR = Path(__file__).parent / "data"
     13→VALID_FILES = tuple((DATA_DIR / "valid").glob("**/*.toml"))
     21→VALID_FILES_EXPECTED = tuple(_expected_files)
@@ -436,6 +426,7 @@ tests/test_data.py
     28→    def test_invalid(self):
     40→    def test_valid(self):
 tests/test_error.py
+    10→from . import tomllib
     13→class TestError(unittest.TestCase):
     14→    def test_line_and_col(self):
     35→    def test_missing_value(self):
@@ -446,6 +437,7 @@ tests/test_error.py
     92→    def test_tomldecodeerror(self):
 tests/test_misc.py
      5→import copy
+    14→from . import tomllib
     17→class TestMiscellaneous(unittest.TestCase):
     18→    def test_load(self):
     29→    def test_incorrect_load(self):

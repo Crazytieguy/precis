@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (469 words)
+budget: 500 (464 words)
 
 README.md
      1→# mdBook …
@@ -11,12 +11,13 @@ crates/mdbook-compare/README.md
      1→# mdbook-compare …
 crates/mdbook-compare/src/main.rs
      3→use std::path::Path;
-     6→macro_rules! error {
 crates/mdbook-core/README.md
      1→# mdbook-core …
     11→## License …
 crates/mdbook-core/src/book.rs
+     3→use serde::{Deserialize, Serialize};
 crates/mdbook-core/src/config.rs
+    46→use crate::static_regex;
    718→trait Updateable …
 crates/mdbook-core/src/lib.rs
      3→/// The current version of `mdbook`.
@@ -27,6 +28,7 @@ crates/mdbook-core/src/lib.rs
     15→    pub use anyhow::{Error, Result};
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
+    13→pub use self::html::{escape_html, escape_html_attribute};
     17→macro_rules! static_regex {
 crates/mdbook-driver/README.md
      1→# mdbook-driver …
@@ -45,9 +47,6 @@ crates/mdbook-driver/src/builtin_renderers/mod.rs
 crates/mdbook-driver/src/init.rs
     13→pub struct BookBuilder {
 crates/mdbook-driver/src/lib.rs
-     1→//! High-level library for running mdBook.
-     2→//!
-      →…
     67→pub mod builtin_preprocessors;
     68→pub mod builtin_renderers;
     69→pub mod init;
@@ -67,6 +66,8 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
 crates/mdbook-html/src/html_handlebars/mod.rs
      4→mod search;
      7→pub use self::hbs_renderer::HtmlHandlebars;
+crates/mdbook-html/src/html_handlebars/static_files.rs
+     3→use super::helpers::resources::ResourceHelper;
 crates/mdbook-html/src/lib.rs
      3→mod html;
      5→pub mod theme;
@@ -95,7 +96,6 @@ crates/mdbook-preprocessor/src/lib.rs
      8→use anyhow::Context;
     30→pub trait Preprocessor {
     51→pub struct PreprocessorContext {
-    68→impl PreprocessorContext {
 crates/mdbook-renderer/README.md
      1→# mdbook-renderer …
     11→## License …
@@ -103,7 +103,6 @@ crates/mdbook-renderer/src/lib.rs
      8→use anyhow::Context;
     28→pub trait Renderer {
     40→pub struct RenderContext {
-    63→impl RenderContext {
 crates/mdbook-summary/README.md
      1→# mdbook-summary …
     11→## License …
@@ -118,19 +117,20 @@ crates/mdbook-summary/src/lib.rs
    190→macro_rules! collect_events {
 crates/xtask/README.md
      1→# xtask …
+crates/xtask/src/changelog.rs
+     3→use super::Result;
+crates/xtask/src/main.rs
+     3→use std::collections::BTreeMap;
 guide/guide-helper/src/lib.rs
      3→use mdbook_preprocessor::book::Book;
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
-    33→struct GuideHelper;
 guide/guide-helper/src/main.rs
      3→fn main() {
 guide/src/README.md
      1→# Introduction
      4→    .mdbook-version {
       →…
-    46→## Contributing …
-    55→## License …
 guide/src/cli/README.md
      1→# Command-line tool …
 guide/src/continuous-integration.md
@@ -149,6 +149,7 @@ guide/src/format/theme/README.md
      1→# Theme …
 guide/src/guide/README.md
      1→# User guide …
+src/cmd/build.rs
 src/cmd/clean.rs
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     45→#[derive(Debug)]
@@ -169,6 +170,7 @@ src/cmd/mod.rs
 src/cmd/serve.rs
      3→use super::watch;
     20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
+src/cmd/test.rs
 src/cmd/watch/native.rs
     11→pub fn rebuild_on_change …
 src/cmd/watch/poller.rs

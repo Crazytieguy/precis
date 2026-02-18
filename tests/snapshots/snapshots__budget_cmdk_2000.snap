@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1959 words)
+budget: 2000 (1957 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -284,6 +284,7 @@ playwright.config.ts
      1→import { PlaywrightTestConfig, devices } from '@playwright/test'
      3→const config: PlaywrightTestConfig = {
 test/pages/_app.tsx
+     1→import '../style.css'
      3→export default function App({ Component, pageProps }) {
      4→  return <Component {...pageProps} />
      5→}
@@ -411,9 +412,8 @@ website/pages/_document.tsx
      9→        <Head>
       →…
 website/pages/index.tsx
+    18→import packageJSON from '../../cmdk/package.json'
     20→type TTheme = {
-    21→  theme: Themes
-      →…
     25→type Themes = 'linear' | 'raycast' | 'vercel' | 'framer'
     27→const ThemeContext = React.createContext<TTheme>({} as TTheme)
     29→export default function Index() {
@@ -438,8 +438,6 @@ website/pages/index.tsx
    140→  {
    141→    icon: <RaycastIcon />,
    142→    key: 'raycast',
-   143→  },
-   144→  {
       →…
    158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////

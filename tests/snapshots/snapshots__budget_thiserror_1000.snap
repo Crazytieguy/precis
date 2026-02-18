@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (953 words)
+budget: 1000 (952 words)
 
 README.md
      1→derive(Error)
@@ -115,11 +115,6 @@ impl/src/fmt.rs
    171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
    173→    let ahead = input.fork();
-   174→    if let Ok(set) = try_explicit_named_args(&ahead) {
-   175→        input.advance_to(&ahead);
-   176→        return Ok(set);
-   177→    }
-   178→
       →…
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
@@ -152,6 +147,7 @@ impl/src/scan_expr.rs
     11→    ConsumeBrace,
     12→    ConsumeDelimiter,
     13→    ConsumeIdent,
+    14→    ConsumeLifetime,
       →…
     25→enum Action {
     26→    SetState(&'static [(Input, Action)]),
@@ -292,9 +288,11 @@ tests/no-std/test.rs
 tests/test_backtrace.rs
     17→#[cfg(thiserror_nightly_testing)]
     18→pub mod structs {
+    19→    use super::{Inner, InnerBacktrace};
     25→    mod not_backtrace {
    162→#[cfg(thiserror_nightly_testing)]
    163→pub mod enums {
+   164→    use super::{Inner, InnerBacktrace};
 tests/test_display.rs
    414→mod util {
 tests/test_error.rs
@@ -325,3 +323,5 @@ tests/ui/concat-display.rs
 tests/ui/fallback-impl-with-display.rs
      8→impl Display for MyError {
      9→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    10→        unimplemented!()
+    11→    }

@@ -2,9 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1987 words)
+budget: 2000 (1936 words)
 
 imp_cs.rs
+     1→use core::panic::{RefUnwindSafe, UnwindSafe};
+     3→use critical_section::{CriticalSection, Mutex};
+     4→use portable_atomic::{AtomicBool, Ordering};
+     6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
     10→    // Use `unsync::OnceCell` internally since `Mutex` does not provide
@@ -13,12 +17,12 @@ imp_cs.rs
     13→}
     27→    pub(crate) const fn new() -> OnceCell<T> {
     31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
-    39→    pub(crate) fn is_initialized …
-    44→    pub(crate) fn initialize …
-    63→    pub(crate) unsafe fn get_unchecked …
-    70→    pub(crate) fn get_mut …
-    75→    pub(crate) fn into_inner …
 imp_pl.rs
+     1→use std::{
+     2→    cell::UnsafeCell,
+     3→    panic::{RefUnwindSafe, UnwindSafe},
+     4→    sync::atomic::{AtomicU8, Ordering},
+     5→};
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
      9→    value: UnsafeCell<Option<T>>,
@@ -28,19 +32,18 @@ imp_pl.rs
     14→const COMPLETE: u8 = 0x2;
     28→    pub(crate) const fn new() -> OnceCell<T> {
     32→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
-    38→    pub(crate) fn is_initialized …
-    45→    pub(crate) fn initialize …
-    80→    pub(crate) fn wait …
-   101→    pub(crate) unsafe fn get_unchecked …
-   109→    pub(crate) fn get_mut …
-   117→    pub(crate) fn into_inner …
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
    124→    new_state: u8,
    125→}
    128→    fn drop(&mut self) {
-   139→fn initialize_inner …
 imp_std.rs
+     6→use std::{
+     7→    cell::{Cell, UnsafeCell},
+     8→    panic::{RefUnwindSafe, UnwindSafe},
+     9→    sync::atomic::{AtomicBool, AtomicPtr, Ordering},
+    10→    thread::{self, Thread},
+    11→};
     13→#[derive(Debug)]
     14→pub(crate) struct OnceCell<T> {
     15→    // This `queue` field is the core of the implementation. It encodes two
@@ -56,12 +59,6 @@ imp_std.rs
     25→}
     39→    pub(crate) const fn new() -> OnceCell<T> {
     43→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
-    49→    pub(crate) fn is_initialized …
-    61→    pub(crate) fn initialize …
-    88→    pub(crate) fn wait …
-    99→    pub(crate) unsafe fn get_unchecked …
-   107→    pub(crate) fn get_mut …
-   115→    pub(crate) fn into_inner …
    125→const INCOMPLETE: usize = 0x0;
    126→const RUNNING: usize = 0x1;
    127→const COMPLETE: usize = 0x2;
@@ -82,12 +79,8 @@ imp_std.rs
    147→    new_queue: *mut Waiter,
    148→}
    151→    fn drop(&mut self) {
-   177→fn initialize_or_wait …
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
    245→mod strict {
-   248→    pub(crate) fn addr …
-   260→    pub(crate) fn with_addr …
-   281→    pub(crate) fn map_addr …
 lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -100,6 +93,12 @@ lib.rs
    380→mod imp;
    382→/// Single-threaded version of `OnceCell`.
    383→pub mod unsync {
+   384→    use core::{
+   385→        cell::{Cell, UnsafeCell},
+   386→        fmt, mem,
+   387→        ops::{Deref, DerefMut},
+   388→        panic::{RefUnwindSafe, UnwindSafe},
+   389→    };
    391→    /// A cell which can be written to only once. It is not thread safe.
    392→    ///
    393→    /// Unlike [`std::cell::RefCell`], a `OnceCell` provides simple `&`
@@ -184,6 +183,13 @@ lib.rs
    861→/// Thread-safe, blocking version of `OnceCell`.
    862→#[cfg(any(feature = "std", feature = "critical-section"))]
    863→pub mod sync {
+   864→    use core::{
+   865→        cell::Cell,
+   866→        fmt, mem,
+   867→        ops::{Deref, DerefMut},
+   868→        panic::RefUnwindSafe,
+   869→    };
+   871→    use super::imp::OnceCell as Imp;
    873→    /// A thread-safe cell which can be written to only once.
    874→    ///
    875→    /// `OnceCell` provides `&` references to the contents without RAII guards.
@@ -285,12 +291,16 @@ lib.rs
   1375→        fn deref(&self) -> &T {
   1381→        fn deref_mut(&mut self) -> &mut T {
   1388→        fn default() -> Lazy<T> {
-  1408→    fn _dummy …
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
 race.rs
     31→use core::sync::atomic;
     33→use portable_atomic as atomic;
+    35→use atomic::{AtomicPtr, AtomicUsize, Ordering};
+    36→use core::cell::UnsafeCell;
+    37→use core::marker::PhantomData;
+    38→use core::num::NonZeroUsize;
+    39→use core::ptr;
     41→/// A thread-safe cell which can be written to only once.
     42→#[derive(Default, Debug)]
     43→pub struct OnceNonZeroUsize {
@@ -308,8 +318,6 @@ race.rs
    139→    where
    140→        F: FnOnce() -> Result<NonZeroUsize, E>,
    141→    {
-   150→    fn init …
-   160→    fn compare_exchange …
    165→/// A thread-safe cell which can be written to only once.
    166→#[derive(Default, Debug)]
    167→pub struct OnceBool {
@@ -326,8 +334,6 @@ race.rs
    214→    where
    215→        F: FnOnce() -> Result<bool, E>,
    216→    {
-   221→    fn from_usize …
-   226→    fn to_usize …
    231→/// A thread-safe cell which can be written to only once.
    232→pub struct OnceRef<'a, T> {
    233→    inner: AtomicPtr<T>,
@@ -346,12 +352,12 @@ race.rs
    300→    where
    301→        F: FnOnce() -> Result<&'a T, E>,
    302→    {
-   311→    fn init …
-   320→    fn compare_exchange …
-   347→    fn _dummy …
    351→pub use self::once_box::OnceBox;
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
+   355→    use super::atomic::{AtomicPtr, Ordering};
+   356→    use core::{marker::PhantomData, ptr};
+   358→    use alloc::boxed::Box;
    360→    /// A thread-safe cell which can be written to only once.
    361→    pub struct OnceBox<T> {
    362→        inner: AtomicPtr<T>,
@@ -372,6 +378,4 @@ race.rs
    451→        where
    452→            F: FnOnce() -> Result<Box<T>, E>,
    453→        {
-   462→        fn init …
    482→        fn clone(&self) -> Self {
-   497→    fn _dummy …

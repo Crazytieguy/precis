@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1957 words)
+budget: 2000 (1955 words)
 
 playwright.config.ts
      1→import { defineConfig, devices } from '@playwright/test';
@@ -344,6 +344,7 @@ test/README.md
     33→
       →…
 test/next.config.js
+     1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
 test/src/app/controlled/page.tsx
      6→export default function Page() {
@@ -360,6 +361,7 @@ test/src/app/initial-snap/page.tsx
      7→const snapPoints = [0, '148px', '355px', 1];
      9→export default function Page() {
 test/src/app/layout.tsx
+     1→import './globals.css';
      5→const inter = Inter({ subsets: ['latin'] });
      7→export const metadata: Metadata = {
     12→export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -388,9 +390,6 @@ test/src/app/parent-container/page.tsx
     39→function WithNested() {
 test/src/app/scrollable-page/page.tsx
      6→export default function Page() {
-     7→  const [open, setOpen] = useState(false);
-     8→
-      →…
 test/src/app/scrollable-with-inputs/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {

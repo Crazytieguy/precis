@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1974 words)
+budget: 2000 (1977 words)
 
 CHANGELOG.md
      1→# neverthrow …
@@ -31,31 +31,22 @@ README.md
      5→## Description
      7→Encode failure into your program.
      8→
-     9→This package contains a `Result` type that represents either success (`Ok`) or failure (`Err`).
-    10→
       →…
     19→## Table Of Contents
     21→* [Installation](#installation)
     22→* [Recommended: Use `eslint-plugin-neverthrow`](#recommended-use-eslint-plugin-neverthrow)
-    23→* [Top-Level API](#top-level-api)
-    24→* [API Documentation](#api-documentation)
       →…
     73→## Installation
     75→```sh
     76→> npm install neverthrow
-    77→```
-    78→
+      →…
     79→## Recommended: Use `eslint-plugin-neverthrow`
     81→As part of `neverthrow`s [bounty program](https://github.com/supermacro/neverthrow/issues/314), user [mdbetancourt](https://github.com/mdbetancourt) created [`eslint-plugin-neverthrow`](https://github.com/mdbetancourt/eslint-plugin-neverthrow) to ensure that errors are not gone unhandled.
     82→
-    83→Install by running:
-    84→
       →…
    100→## Top-Level API
    102→`neverthrow` exposes the following:
    103→
-   104→- `ok` convenience function to create an `Ok` variant of `Result`
-   105→- `err` convenience function to create an `Err` variant of `Result`
       →…
    139→## API Documentation
    141→### Synchronous API (`Result`) …
@@ -140,12 +131,21 @@ README.md
   1654→expect(callSomeFunctionThatReturnsAResult("with", "some", "args")).toEqual(ok(someExpectation));
   1655→```
   1656→
+  1657→By default, the thrown value does not contain a stack trace. This is because stack trace generation [makes error messages in Jest harder to understand](https://github.com/supermacro/neverthrow/pull/215). If you want stack traces to be generated, call `_unsafeUnwrap` and / or `_unsafeUnwrapErr` with a config object:
+  1658→
+  1659→```typescript
+  1660→_unsafeUnwrapErr({
+  1661→  withStackTrace: true,
+  1662→})
+  1663→
+  1664→// ^ Now the error object will have a `.stack` property containing the current stack
+  1665→```
+  1666→
+  1667→---
       →…
   1673→## A note on the Package Name
   1675→Although the package is called `neverthrow`, please don't take this literally. I am simply encouraging the developer to think a bit more about the ergonomics and usage of whatever software they are writing.
   1676→
-  1677→`Throw`ing and `catching` is very similar to using `goto` statements - in other words; it makes reasoning about your programs harder. Secondly, by using `throw` you make the assumption that the caller of your function is implementing `catch`. This is a known source of errors. Example: One dev `throw`s and another dev uses the function without prior knowledge that the function will throw. Thus, and edge case has been left unhandled and now you have unhappy users, bosses, cats, etc.
-  1678→
       →…
   1681→### License
   1683→The neverthrow project is available as open source under the terms of the [MIT license](https://github.com/supermacro/neverthrow/blob/master/LICENSE).
@@ -252,9 +252,25 @@ src/_internals/utils.ts
     86→    combineResultListWithAllErrors,
     87→  ) as ResultAsync<T[], E[]>
 src/result-async.ts
-     1→./result …
-    10→import { Err, Ok, Result } from './ …
-    11→./_internals/utils …
+     1→import type {
+     2→  Combine,
+     3→  Dedup,
+     4→  EmptyArrayToNever,
+     5→  IsLiteralArray,
+     6→  MemberListOf,
+     7→  MembersToUnion,
+     8→} from './result'
+    10→import { Err, Ok, Result } from './'
+    11→import {
+    12→  combineResultAsyncList,
+    13→  combineResultAsyncListWithAllErrors,
+    14→  ExtractErrAsyncTypes,
+    15→  ExtractOkAsyncTypes,
+    16→  InferAsyncErrTypes,
+    17→  InferAsyncOkTypes,
+    18→  InferErrTypes,
+    19→  InferOkTypes,
+    20→} from './_internals/utils'
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
@@ -291,9 +307,17 @@ src/result-async.ts
    330→type TraverseWithAllErrorsAsync …
    338→type Writable …
 src/result.ts
-     1→import { errAsync, ResultAsync } from './ …
-     2→import { createNeverThrowError, ErrorConfig } from './_internals/error …
-     3→./_internals/utils …
+     1→import { errAsync, ResultAsync } from './'
+     2→import { createNeverThrowError, ErrorConfig } from './_internals/error'
+     3→import {
+     4→  combineResultList,
+     5→  combineResultListWithAllErrors,
+     6→  ExtractErrTypes,
+     7→  ExtractOkTypes,
+     8→  InferAsyncErrTypes,
+     9→  InferErrTypes,
+    10→  InferOkTypes,
+    11→} from './_internals/utils'
     14→export namespace Result {
     15→  /**
     16→   * Wraps a function with a try catch, creating a new function with the same
@@ -441,7 +465,11 @@ src/result.ts
    712→export type CombineResults …
    719→export type CombineResultsWithAllErrorsArray …
 tests/index.test.ts
+     3→../src …
 tests/safe-try.test.ts
+     1→../src …
 tests/typecheck-tests.ts
+     7→../src …
+    16→import { safeTry, Transpose } from '../src/result …
     19→type CreateTuple …
   2607→const input = <T>(): T => 123 as any

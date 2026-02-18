@@ -2,9 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (486 words)
+budget: 500 (488 words)
 
 __init__.py
+     3→from .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key
     42→__all__ = [
     43→    "get_cli_string",
     44→    "load_dotenv",
@@ -16,7 +17,10 @@ __init__.py
     50→    "load_ipython_extension",
     51→]
 __main__.py
+     3→from .cli import cli
 cli.py
+    20→from .main import dotenv_values, set_key, unset_key
+    21→from .version import __version__
     60→@click.version_option(version=__version__)
     61→@click.pass_context
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
@@ -31,7 +35,6 @@ cli.py
     73→    """
     74→
     75→    try:
-    76→        with open(path) as stream:
       →…
    112→@cli.command(name="set")
    113→@click.pass_context
@@ -41,7 +44,6 @@ cli.py
    117→    """Store the given key/value."""
    118→    file = ctx.obj["FILE"]
    119→    quote = ctx.obj["QUOTE"]
-   120→    export = ctx.obj["EXPORT"]
       →…
    128→@cli.command()
    129→@click.pass_context
@@ -50,7 +52,6 @@ cli.py
    132→    """Retrieve the value for the given key."""
    133→    file = ctx.obj["FILE"]
    134→
-   135→    with stream_file(file) as stream:
       →…
    145→@cli.command()
    146→@click.pass_context
@@ -59,16 +60,15 @@ cli.py
    149→    """Removes the given key."""
    150→    file = ctx.obj["FILE"]
    151→    quote = ctx.obj["QUOTE"]
-   152→    success, key = unset_key(file, key, quote)
       →…
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
    175→    file = ctx.obj["FILE"]
    176→    if not os.path.isfile(file):
-   177→        raise click.BadParameter(
       →…
 ipython.py
+     8→from .main import find_dotenv, load_dotenv
     11→@magics_class
     12→class IPythonDotEnv(Magics):
     13→    @magic_arguments()
@@ -95,9 +95,10 @@ ipython.py
     34→    def dotenv(self, line):
     35→        args = parse_argstring(self.dotenv, line)
     36→        # Locate the .env file
-    37→        dotenv_path = args.dotenv_path
       →…
 main.py
+    13→from .parser import Binding, parse_stream
+    14→from .variables import parse_variables
     25→def _load_dotenv_disabled() -> bool:
     26→    """
       →…
@@ -120,7 +121,6 @@ main.py
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    146→    pathlib.Path(path).touch()
    147→
-   148→    with tempfile.NamedTemporaryFile(mode="w", encoding=encoding, delete=False) as dest:
       →…
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """

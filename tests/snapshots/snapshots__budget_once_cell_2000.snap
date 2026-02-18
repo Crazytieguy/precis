@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1973 words)
+budget: 2000 (1970 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -74,7 +74,7 @@ src/imp_cs.rs
      1→use core::panic::{RefUnwindSafe, UnwindSafe} …
      3→use critical_section::{CriticalSection, Mutex} …
      4→use portable_atomic::{AtomicBool, Ordering} …
-     6→use crate::unsync …
+     6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
     10→    // Use `unsync::OnceCell` internally since `Mutex` does not provide
@@ -249,7 +249,7 @@ src/lib.rs
         ops::{Deref, DerefMut},
         panic::RefUnwindSafe,
     } …
-   871→    use super::imp::OnceCell as Imp …
+   871→    use super::imp::OnceCell as Imp;
    873→    /// A thread-safe cell which can be written to only once.
    874→    ///
    875→    /// `OnceCell` provides `&` references to the contents without RAII guards.
@@ -391,7 +391,7 @@ src/race.rs
    351→pub use self::once_box::OnceBox;
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
-   355→    use super::atomic::{AtomicPtr, Ordering} …
+   355→    use super::atomic::{AtomicPtr, Ordering};
    356→    use core::{marker::PhantomData, ptr} …
    358→    use alloc::boxed::Box …
    360→    /// A thread-safe cell which can be written to only once.

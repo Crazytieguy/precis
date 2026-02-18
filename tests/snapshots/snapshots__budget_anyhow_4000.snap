@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3926 words)
+budget: 4000 (3899 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -72,6 +72,13 @@ README.md
     68→
     69→  ```rust
     70→  // If the error was caused by redaction, then return a
+    71→  // tombstone instead of the content.
+    72→  match root_cause.downcast_ref::<DataStoreError>() {
+    73→      Some(DataStoreError::Censored(_)) => Ok(Poll::Ready(REDACTED_CONTENT)),
+    74→      None => Err(error),
+    75→  }
+    76→  ```
+    77→
       →…
    126→## No-std support
    128→In no_std mode, almost all of the same API is available and works the same way.
@@ -194,21 +201,15 @@ src/backtrace.rs
    148→        fn fmt …
    156→        fn fmt …
    178→        fn fmt …
-   192→        fn enabled …
    211→        pub(crate) fn capture …
-   222→        fn create …
-   252→        pub(crate) fn status …
    262→        fn fmt …
    311→    struct LazilyResolvedCapture {
    312→        sync: Once,
    313→        capture: UnsafeCell<Capture>,
    314→    }
-   317→        fn new …
-   324→        fn force …
-   344→        fn resolve …
-   370→    fn output_filename …
-   407→fn _assert_send_sync …
 src/chain.rs
+     1→use self::ChainState::*;
+     2→use crate::StdError;
      5→use alloc::vec::{self, Vec};
      8→pub(crate) use crate::Chain;
     10→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
@@ -238,8 +239,11 @@ src/chain.rs
     94→impl Default for Chain<'_> {
     95→    fn default …
 src/context.rs
+     1→use crate::error::ContextError;
+     2→use crate::{Context, Error, StdError};
      7→use crate::nightly::{self, Request};
      9→mod ext {
+    10→    use super::*;
     12→    pub trait StdError {
     13→        fn ext_context …
     18→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
@@ -286,8 +290,10 @@ src/context.rs
    172→    fn fmt …
    181→    fn write_str …
    186→pub(crate) mod private {
+   187→    use super::*;
    189→    pub trait Sealed {}
 src/ensure.rs
+     1→use crate::Error;
      9→#[doc(hidden)]
     10→pub trait BothDebug {
     11→    fn __dispatch_ensure …
@@ -300,10 +306,7 @@ src/ensure.rs
     36→    bytes: [MaybeUninit<u8>; 40],
     37→    written: usize,
     38→}
-    41→    fn new …
-    48→    fn as_str …
     59→    fn write_str …
-    81→fn render …
    103→#[doc(hidden)]
    104→#[macro_export]
    105→macro_rules! __parse_ensure {
@@ -314,8 +317,12 @@ src/ensure.rs
    911→#[macro_export]
    912→macro_rules! __fallback_ensure {
 src/error.rs
+     1→use crate::backtrace::Backtrace;
+     2→use crate::chain::Chain;
      4→use crate::nightly::{self, Request};
      6→use crate::ptr::Mut;
+     7→use crate::ptr::{Own, Ref};
+     8→use crate::{Error, StdError};
     14→use core::ops::{Deref, DerefMut};
     20→    /// Create a new error object from any error type.
     21→    ///
@@ -430,17 +437,10 @@ src/error.rs
    752→    ))]
    753→    object_backtrace: unsafe fn(Ref<ErrorImpl>) -> Option<&Backtrace>,
    754→}
-   757→unsafe fn object_drop …
-   765→unsafe fn object_drop_front …
-   775→unsafe fn object_ref …
    788→unsafe fn object_boxed …
    799→unsafe fn object_reallocate_boxed …
-   809→unsafe fn object_downcast …
-   832→fn no_backtrace …
    839→unsafe fn context_downcast …
    859→unsafe fn context_drop_rest …
-   876→unsafe fn context_chain_downcast …
-   892→unsafe fn context_chain_drop_rest …
    920→unsafe fn context_backtrace …
    933→#[repr(C)]
    934→pub(crate) struct ErrorImpl<E = ()> {
@@ -450,14 +450,11 @@ src/error.rs
    938→    // different alignment.
    939→    _object: E,
    940→}
-   944→unsafe fn vtable …
    951→#[repr(C)]
    952→pub(crate) struct ContextError<C, E> {
    953→    pub context: C,
    954→    pub error: E,
    955→}
-   958→    fn erase …
-   967→    pub(crate) unsafe fn error …
    974→    pub(crate) unsafe fn error_mut …
    985→    pub(crate) unsafe fn backtrace …
   1002→    unsafe fn provide …
@@ -486,8 +483,9 @@ src/error.rs
   1079→impl AsRef<dyn StdError> for Error {
   1080→    fn as_ref …
 src/fmt.rs
-     7→    pub(crate) unsafe fn display …
-    20→    pub(crate) unsafe fn debug …
+     1→use crate::chain::Chain;
+     2→use crate::error::ErrorImpl;
+     3→use crate::ptr::Ref;
     69→struct Indented<'a, D> {
     70→    inner: &'a mut D,
     71→    number: Option<usize>,
@@ -495,6 +493,7 @@ src/fmt.rs
     73→}
     79→    fn write_str …
 src/kind.rs
+    47→use crate::Error;
     51→use crate::StdError;
     53→use alloc::boxed::Box;
     55→pub struct Adhoc;
@@ -544,6 +543,8 @@ src/lib.rs
    261→mod nightly;
    262→mod ptr;
    263→mod wrapper;
+   265→use crate::error::ErrorImpl;
+   266→use crate::ptr::Own;
    270→use core::fmt::Debug;
    273→use std::error::Error as StdError;
    276→use core::error::Error as StdError;
@@ -578,7 +579,6 @@ src/lib.rs
    312→/// To print causes as well using anyhow's default formatting of causes, use the
    313→/// alternate selector "{:#}".
    314→///
-   315→/// ```console
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -684,7 +684,6 @@ src/lib.rs
    494→///     # }
    495→/// }
    496→///
-   497→/// pub fn do_it(mut it: ImportantThing) -> Result<Vec<u8>> {
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.
@@ -703,6 +702,8 @@ src/lib.rs
    650→pub fn Ok<T>(value: T) -> Result<T> {
    655→#[doc(hidden)]
    656→pub mod __private {
+   657→    use self::not::Bool;
+   658→    use crate::Error;
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
    665→    pub use alloc::format;
    667→    pub use core::result::Result::Err;
@@ -775,7 +776,6 @@ src/nightly.rs
      7→use core::error::{self, Error};
     10→pub use core::error::Request;
     41→pub fn request_ref_backtrace …
-    45→fn request_ref …
     52→pub fn provide_ref_backtrace …
     56→pub fn provide …
 src/ptr.rs
@@ -826,6 +826,7 @@ src/ptr.rs
    183→}
    186→    type Target = T;
 src/wrapper.rs
+     1→use crate::StdError;
      5→use alloc::boxed::Box;
      8→use crate::nightly::{self, Request};
     10→#[repr(transparent)]
@@ -892,10 +893,8 @@ tests/test_boxed.rs
 tests/test_chain.rs
 tests/test_context.rs
      6→mod drop;
+     8→use crate::drop::{DetectDrop, Flag};
     22→macro_rules! context_type {
-    23→    ($name:ident) => {
-    24→        #[derive(Debug)]
-      →…
     42→#[derive(Error, Debug)]
     43→#[error("{message}")]
     44→struct LowLevel {
@@ -911,12 +910,16 @@ tests/test_convert.rs
      1→#![allow(clippy::unnecessary_wraps)]
      2→
      3→mod drop;
+     5→use self::drop::{DetectDrop, Flag};
 tests/test_downcast.rs
      1→#![allow(clippy::assertions_on_result_states, clippy::wildcard_imports)]
      2→
      3→mod common;
      4→mod drop;
+     6→use self::common::*;
+     7→use self::drop::{DetectDrop, Flag};
 tests/test_ensure.rs
+    31→use self::Enum::Generic;
     40→struct S;
     43→    type Output = bool;
     44→    fn add(self, rhs: T) -> Self::Output {
@@ -951,10 +954,12 @@ tests/test_ffi.rs
 tests/test_fmt.rs
 tests/test_macros.rs
     13→mod common;
+    15→use self::common::*;
 tests/test_repr.rs
      1→#![allow(clippy::extra_unused_type_parameters)]
      2→
      3→mod drop;
+     5→use self::drop::{DetectDrop, Flag};
 tests/test_source.rs
      6→#[derive(Debug)]
      7→enum TestError {

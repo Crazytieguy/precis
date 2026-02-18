@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1984 words)
+budget: 2000 (1980 words)
 
 README.md
     40→## About …
@@ -174,10 +174,9 @@ examples/gif-fetcher/src/constants.ts
 examples/gif-fetcher/src/index.tsx
      6→const rootElement = document.getElementById('root');
 examples/gif-fetcher/src/searchGif.ts
+     2→import { API_KEY } from './constants';
      4→const delay …
      6→export function searchGif(query: string) {
-     7→  return fetch(
-      →…
 examples/one-file-demo/one-file-demo.ts
     79→const example3 …
 src/errors.ts
@@ -532,6 +531,3 @@ tests/instance-of.test.ts
 tests/types-catalog/definition.ts
 tests/types-catalog/utils.ts
      4→export const some = <a>(value: a): Option<a> => ({
-     5→  kind: 'some',
-     6→  value,
-     7→});

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1927 words)
+budget: 2000 (1919 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -22,7 +22,6 @@ README.md
     26→Then import the component.
     27→
     28→```diff
-    29→+'use client'
       →…
     39→## Default example
     41→The example below uses `tailwindcss` `@shadcn/ui` `tailwind-merge` `clsx`:
@@ -32,7 +31,6 @@ README.md
     45→import { OTPInput, SlotProps } from 'input-otp'
     46→<OTPInput
     47→  maxLength={6}
-    48→  containerClassName="group flex items-center has-[:disabled]:opacity-30"
       →…
    136→## How it works
    138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
@@ -46,7 +44,6 @@ README.md
    147→
    148→https://github.com/guilhermerodz/input-otp/assets/10366880/bdbdc96a-23da-4e89-bff8-990e6a1c4c23
    149→
-   150→</details>
       →…
    198→### Auto tracks if the input has space in the right side for the badge
    200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
@@ -74,7 +71,6 @@ README.md
    302→
    303→  return (
    304→    <form ref={formRef}>
-   305→      <OTPInput
       →…
    377→## Caveats
    382→By default, `input-otp` handles password managers for you.
@@ -84,7 +80,6 @@ README.md
    386→
    387→```diff
    388→<OTPInput
-   389→  // First, disable library's built-in strategy
       →…
    539→#### Sponsors
    541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
@@ -177,8 +172,6 @@ apps/storybook/tailwind.config.js
      1→/** @type {import('tailwindcss').Config} */
      2→const config = {
 apps/storybook/vite.config.js
-     1→import { defineConfig } from 'vite'
-     2→import react from '@vitejs/plugin-react'
 apps/test/README.md
      3→## Getting Started …
     23→## Learn More …
@@ -188,6 +181,7 @@ apps/test/next.config.mjs
 apps/test/src/app/base/page.tsx
      7→export default function Page() {
 apps/test/src/app/layout.tsx
+     3→import './globals.css'
      5→const inter …
      7→export const metadata: Metadata = {
     12→export default function RootLayout({
@@ -212,7 +206,6 @@ apps/test/src/lib/utils.ts
      6→}
 apps/test/src/tests/util/modifier.ts
      1→export const modifier = process.platform === 'darwin' ? 'Meta' : 'Control'
-apps/test/tailwind.config.ts
 apps/website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -289,6 +282,7 @@ apps/website/src/app/(local-pages)/example-playground/component.tsx
     67→function FakeDash() {
     76→const config = {
 apps/website/src/app/(local-pages)/example-playground/page.tsx
+     1→import { ExampleComponent } from './component'
      3→export default function ExamplePlayground() {
      4→  return (
       →…
@@ -349,6 +343,7 @@ apps/website/src/app/(pages)/(home)/_components/showcase.tsx
    151→function Slot(props: {
    199→function FakeCaret() {
 apps/website/src/app/(pages)/(home)/page.tsx
+    13→import { Showcase } from './_components/showcase'
     19→const fadeUpClassname =
     22→async function getRepoStarCount() {
     34→export default async function IndexPage() {
@@ -359,6 +354,15 @@ apps/website/src/app/(pages)/(home)/page.tsx
    148→export const revalidate = 3600
    150→const SponsorBadgeClerk = () => {
 apps/website/src/app/(pages)/layout.tsx
+     1→import type { Metadata } from 'next'
+     5→import { SiteFooter } from '../../components/site-footer'
+     6→import { SiteHeader } from '../../components/site-header'
+     7→import { siteConfig } from '../../config/site'
+     8→import { fontSans } from '../../lib/fonts'
+     9→import { cn } from '../../lib/utils'
+    10→import '../globals.css'
+    11→import { AppProvider } from '../../components/provider'
+    12→import { Toaster } from '@/components/ui/sonner'
     14→export const metadata: Metadata = {
     15→  title: {
       →…
@@ -378,24 +382,16 @@ apps/website/src/components/code.tsx
 apps/website/src/components/copy-button.tsx
     17→interface CopyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     18→  value: string
-    19→  src?: string
-    20→}
+      →…
     22→export async function copyToClipboardWithMeta(value: string) {
     26→export function CopyButton({
     64→interface CopyWithClassNamesProps extends DropdownMenuTriggerProps {
     65→  value: string
-    66→  classNames: string
-    67→  className?: string
-    68→}
+      →…
     70→export function CopyWithClassNames({
    120→interface CopyNpmCommandButtonProps extends DropdownMenuTriggerProps {
    121→  commands: {
-   122→    __npmCommand__: string
-   123→    __yarnCommand__: string
-   124→    __pnpmCommand__: string
-   125→    __bunCommand__: string
-   126→  }
-   127→}
+      →…
    129→export function CopyNpmCommandButton({
 apps/website/src/components/icons.tsx
      1→type IconProps = React.HTMLAttributes<SVGElement>
@@ -419,6 +415,7 @@ apps/website/src/components/ui/badge.tsx
     28→    VariantProps<typeof badgeVariants> {}
     30→function Badge({ className, variant, ...props }: BadgeProps) {
 apps/website/src/components/ui/button.tsx
+     5→import { cn } from "../../lib/utils"
     36→export interface ButtonProps
     37→  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     38→    VariantProps<typeof buttonVariants> {
@@ -436,16 +433,12 @@ apps/website/src/config/site.ts
       →…
     13→export type SiteConfig = typeof siteConfig
 apps/website/src/lib/fonts.ts
-     2→import { JetBrains_Mono as FontMono } from 'next/font/google'
-     4→import { GeistSans } from 'geist/font/sans'
     10→export const fontSans = GeistSans
     12→export const fontMono = FontMono({
     13→  subsets: ['latin'],
     14→  variable: '--font-mono',
     15→})
 apps/website/src/lib/utils.ts
-     1→import { type ClassValue, clsx } from "clsx"
-     2→import { twMerge } from "tailwind-merge"
      4→export function cn(...inputs: ClassValue[]) {
      5→  return twMerge(clsx(inputs))
      6→}

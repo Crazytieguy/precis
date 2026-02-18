@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1953 words)
+budget: 2000 (1946 words)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -55,6 +55,7 @@ kv/error.rs
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
     68→#[cfg(feature = "std")]
     69→mod std_support {
+    70→    use super::*;
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     77→        pub fn boxed …
 kv/key.rs
@@ -72,10 +73,13 @@ kv/key.rs
     61→    pub fn to_borrowed_str …
     93→#[cfg(feature = "std")]
     94→mod std_support {
+    95→    use super::*;
    112→#[cfg(feature = "kv_sval")]
    113→mod sval_support {
+   114→    use super::*;
    135→#[cfg(feature = "kv_serde")]
    136→mod serde_support {
+   137→    use super::*;
 kv/mod.rs
      1→//! Structured logging.
      2→//!
@@ -113,8 +117,6 @@ kv/source.rs
     12→/// Use the [`VisitSource`](trait.VisitSource.html) trait to inspect the structured data
     13→/// in a source.
     14→///
-    15→/// A source is like an iterator over its key-values, except with a push-based API
-    16→/// instead of a pull-based one.
       →…
     51→pub trait Source {
     62→    fn visit …
@@ -134,6 +136,7 @@ kv/source.rs
    244→{
    279→#[cfg(feature = "std")]
    280→mod std_support {
+   281→    use super::*;
    462→pub use VisitSource as Visitor;
 kv/value.rs
      6→use std::fmt;
@@ -147,8 +150,6 @@ kv/value.rs
     36→///
     37→/// # Capturing values
     38→///
-    39→/// There are a few ways to capture a value:
-    40→///
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
@@ -181,6 +182,7 @@ kv/value.rs
    384→    pub fn to_borrowed_str …
    389→#[cfg(feature = "kv_std")]
    390→mod std_support {
+   395→    use super::*;
    438→        pub fn to_cow_str …
    450→/// A visitor for a [`Value`].
    451→///
@@ -188,8 +190,6 @@ kv/value.rs
    453→/// to a more fully-featured serialization framework like `serde` or `sval`. A value visitor
    454→/// can differentiate primitive types through methods like [`VisitValue::visit_bool`] and
    455→/// [`VisitValue::visit_str`], but more complex types like maps and sequences
-   456→/// will fallthrough to [`VisitValue::visit_any`].
-   457→///
       →…
    462→pub trait VisitValue<'v> {
    469→    fn visit_any …
@@ -433,6 +433,10 @@ lib.rs
   1490→        Ordering::Acquire,
   1491→        Ordering::Relaxed,
   1492→    ) {
+  1493→        Ok(UNINITIALIZED) => {
+  1494→            unsafe {
+  1495→                LOGGER = make_logger();
+  1496→            }
       →…
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (961 words)
+budget: 1000 (935 words)
 
 backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
@@ -18,15 +18,9 @@ backtrace.rs
     64→macro_rules! backtrace_if_absent {
     70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
-    82→    pub(crate) struct Backtrace {
-    86→    pub(crate) enum BacktraceStatus {
-    92→    enum Inner {
-    98→    struct Capture {
-   104→    struct BacktraceFrame {
-   109→    struct BacktraceSymbol {
-   116→    enum BytesOrWide {
-   311→    struct LazilyResolvedCapture {
 chain.rs
+     1→use self::ChainState::*;
+     2→use crate::StdError;
      5→use alloc::vec::{self, Vec};
      8→pub(crate) use crate::Chain;
     10→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
@@ -46,26 +40,33 @@ chain.rs
     28→    pub fn new …
     36→    type Item = &'a (dyn StdError + 'static);
 context.rs
+     1→use crate::error::ContextError;
+     2→use crate::{Context, Error, StdError};
      7→use crate::nightly::{self, Request};
      9→mod ext {
+    10→    use super::*;
     12→    pub trait StdError {
    147→    fn provide …
    161→    fn provide …
-   166→struct Quoted<C>(C);
    186→pub(crate) mod private {
+   187→    use super::*;
    189→    pub trait Sealed {}
 ensure.rs
+     1→use crate::Error;
      9→#[doc(hidden)]
     10→pub trait BothDebug {
     24→#[doc(hidden)]
     25→pub trait NotBothDebug {
-    35→struct Buf {
    105→macro_rules! __parse_ensure {
    886→macro_rules! __fancy_ensure {
    912→macro_rules! __fallback_ensure {
 error.rs
+     1→use crate::backtrace::Backtrace;
+     2→use crate::chain::Chain;
      4→use crate::nightly::{self, Request};
      6→use crate::ptr::Mut;
+     7→use crate::ptr::{Own, Ref};
+     8→use crate::{Error, StdError};
     14→use core::ops::{Deref, DerefMut};
     30→    pub fn new …
     77→    pub fn msg …
@@ -83,7 +84,6 @@ error.rs
    686→    pub fn thiserror_provide …
    697→    fn from …
    705→    type Target = dyn StdError + Send + Sync + 'static;
-   740→struct ErrorVTable {
    933→#[repr(C)]
    934→pub(crate) struct ErrorImpl<E = ()> {
    935→    vtable: &'static ErrorVTable,
@@ -102,8 +102,11 @@ error.rs
   1058→    fn from …
   1066→    fn from …
 fmt.rs
-    69→struct Indented<'a, D> {
+     1→use crate::chain::Chain;
+     2→use crate::error::ErrorImpl;
+     3→use crate::ptr::Ref;
 kind.rs
+    47→use crate::Error;
     51→use crate::StdError;
     53→use alloc::boxed::Box;
     55→pub struct Adhoc;
@@ -137,6 +140,8 @@ lib.rs
    261→mod nightly;
    262→mod ptr;
    263→mod wrapper;
+   265→use crate::error::ErrorImpl;
+   266→use crate::ptr::Own;
    270→use core::fmt::Debug;
    273→use std::error::Error as StdError;
    276→use core::error::Error as StdError;
@@ -190,13 +195,6 @@ lib.rs
    445→/// #     use super::Deserialize;
    446→/// #     use std::io;
    447→/// #
-   448→/// #     pub fn from_str<T: Deserialize>(json: &str) -> io::Result<T> {
-   449→/// #         unimplemented!()
-   450→/// #     }
-   451→/// # }
-   452→/// #
-   453→/// # #[derive(Debug)]
-   454→/// # struct ClusterMap;
       →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    470→/// Provides the `context` method for `Result`.
@@ -211,6 +209,8 @@ lib.rs
    650→pub fn Ok …
    655→#[doc(hidden)]
    656→pub mod __private {
+   657→    use self::not::Bool;
+   658→    use crate::Error;
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
    665→    pub use alloc::format;
    667→    pub use core::result::Result::Err;
@@ -264,6 +264,7 @@ ptr.rs
    183→}
    186→    type Target = T;
 wrapper.rs
+     1→use crate::StdError;
      5→use alloc::boxed::Box;
      8→use crate::nightly::{self, Request};
     10→#[repr(transparent)]

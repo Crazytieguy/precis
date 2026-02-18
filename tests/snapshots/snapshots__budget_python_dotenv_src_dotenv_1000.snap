@@ -5,6 +5,7 @@ expression: output
 budget: 1000 (988 words)
 
 __init__.py
+     3→from .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key
      6→def load_ipython_extension …
     12→def get_cli_string …
     42→__all__ = [
@@ -18,7 +19,10 @@ __init__.py
     50→    "load_ipython_extension",
     51→]
 __main__.py
+     3→from .cli import cli
 cli.py
+    20→from .main import dotenv_values, set_key, unset_key
+    21→from .version import __version__
     24→def enumerate_env …
     60→@click.version_option(version=__version__)
     61→@click.pass_context
@@ -102,6 +106,7 @@ cli.py
    190→    run_command([*commandline, *ctx.args], dotenv_as_dict)
    193→def run_command …
 ipython.py
+     8→from .main import find_dotenv, load_dotenv
     11→@magics_class
     12→class IPythonDotEnv(Magics):
     13→    @magic_arguments()
@@ -139,6 +144,8 @@ ipython.py
     45→        load_dotenv(dotenv_path, verbose=args.verbose, override=args.override)
     48→def load_ipython_extension …
 main.py
+    13→from .parser import Binding, parse_stream
+    14→from .variables import parse_variables
     25→def _load_dotenv_disabled() -> bool:
     26→    """
     27→    Determine if dotenv loading has been disabled.
@@ -201,13 +208,7 @@ main.py
    275→
    276→    if os.path.isfile(path):
    277→        path = os.path.dirname(path)
-   278→
-   279→    last_dir = None
-   280→    current_dir = os.path.abspath(path)
-   281→    while last_dir != current_dir:
-   282→        yield current_dir
-   283→        parent_dir = os.path.abspath(os.path.join(current_dir, os.path.pardir))
-   284→        last_dir, current_dir = current_dir, parent_dir
+      →…
    287→def find_dotenv …
    338→def load_dotenv …
    387→def dotenv_values …
@@ -220,10 +221,7 @@ main.py
    429→
    430→    try:
    431→        st = os.stat(path)
-   432→    except (FileNotFoundError, OSError):
-   433→        return False
-   434→
-   435→    return stat.S_ISFIFO(st.st_mode)
+      →…
 parser.py
     14→def make_regex …
     35→class Original(NamedTuple):

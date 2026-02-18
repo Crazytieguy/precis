@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (498 words)
+budget: 500 (495 words)
 
 playwright.config.ts
 src/browser.ts
@@ -25,6 +25,8 @@ src/helpers.ts
    107→ */
    108→export function chain<T>(...fns: T[]) {
 src/index.tsx
+     3→import * as DialogPrimitive from '@radix-ui/react-dialog';
+     4→import React from 'react';
     27→export interface WithFadeFromProps {
     28→  /**
       →…
@@ -85,9 +87,6 @@ src/use-prevent-scroll.ts
 src/use-scale-background.ts
 src/use-snap-points.ts
 test/README.md
-     3→## Getting Started …
-    21→## Learn More …
-    30→## Deploy on Vercel …
 test/src/app/controlled/page.tsx
      6→export default function Page() {
 test/src/app/default-open/page.tsx
@@ -97,6 +96,8 @@ test/src/app/different-directions/page.tsx
 test/src/app/initial-snap/page.tsx
      9→export default function Page() {
 test/src/app/layout.tsx
+     1→import './globals.css';
+     5→const inter …
      7→export const metadata: Metadata = {
 test/src/app/nested-drawers/page.tsx
      5→export default function Page() {
@@ -127,5 +128,3 @@ test/src/app/without-scaled-background/page.tsx
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;
 test/tests/helpers.ts
-test/tests/initial-snap.spec.ts
-     8→const snapPointYPositions = {

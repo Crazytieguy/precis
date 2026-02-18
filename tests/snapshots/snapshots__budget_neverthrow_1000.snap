@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (980 words)
+budget: 1000 (979 words)
 
 CHANGELOG.md
      1→# neverthrow …
@@ -105,6 +105,7 @@ src/_internals/error.ts
     18→        type: string
     19→        value: E
     20→      }
+    21→  message: string
       →…
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
@@ -135,6 +136,7 @@ src/_internals/utils.ts
     38→  for (const result of resultList) {
     39→    if (result.isErr()) {
     40→      acc = err(result.error)
+    41→      break
       →…
     54→export const combineResultAsyncList = <T, E>(
     55→  asyncResultList: readonly ResultAsync<T, E>[],
@@ -150,6 +152,7 @@ src/_internals/utils.ts
     69→  for (const result of resultList) {
     70→    if (result.isErr() && acc.isErr()) {
     71→      acc.error.push(result.error)
+    72→    } else if (result.isErr() && acc.isOk()) {
       →…
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
     83→  asyncResultList: readonly ResultAsync<T, E>[],
@@ -179,7 +182,6 @@ src/result.ts
      3→./_internals/utils …
     14→export namespace Result {
     15→  /**
-    16→   * Wraps a function with a try catch, creating a new function with the same
     62→export type Result …
    134→interface IResult<T, E> {
    135→  /**
@@ -242,6 +244,8 @@ src/result.ts
    704→type TraverseWithAllErrors …
    712→export type CombineResults …
    719→export type CombineResultsWithAllErrorsArray …
+tests/index.test.ts
+tests/safe-try.test.ts
 tests/typecheck-tests.ts
     19→type CreateTuple …
   2607→const input …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (975 words)
+budget: 1000 (972 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -11,9 +11,7 @@ readme.md
     33→## Install
     35→```sh
       →…
-    39→###### CDN
-    41→- [jsdelivr](https://cdn.jsdelivr.net/npm/ky/+esm)
-      →…
+    39→###### CDN …
     45→## Usage
     47→```js
       →…
@@ -30,18 +28,10 @@ readme.md
    129→Sets `options.method` to the method name and makes a request.
    130→
       →…
-   342→###### hooks.beforeRequest
-   344→Type: `Function[]`\
-      →…
-   373→###### hooks.beforeRetry
-   375→Type: `Function[]`\
-      →…
-   446→###### hooks.beforeError
-   448→Type: `Function[]`\
-      →…
-   485→###### hooks.afterResponse
-   487→Type: `Function[]`\
-      →…
+   342→###### hooks.beforeRequest …
+   373→###### hooks.beforeRetry …
+   446→###### hooks.beforeError …
+   485→###### hooks.afterResponse …
   1050→## Tips
   1052→### Sending form data
   1054→Sending form data in Ky is identical to `fetch`. Just pass a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to the `body` option. The `Content-Type` header will be automatically set to `multipart/form-data`, overriding any existing `Content-Type` header.
@@ -60,6 +50,7 @@ readme.md
   1169→node --use-env-proxy app.js
   1170→```
   1171→
+  1172→Supported environment variables:
       →…
   1292→## FAQ
   1294→#### How do I use this in Node.js?
@@ -80,14 +71,9 @@ readme.md
 source/core/Ky.ts
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {
-    35→		const ky = new Ky(input, options);
-    36→
-      →…
    200→	constructor(input: Input, options: Options = {}) {
-   201→		this.#input = input;
-   202→
-      →…
 source/core/constants.ts
+     1→import type {Expect, Equal} from '@type-challenges/utils';
     65→/**
     66→Options for forcing a retry via `ky.retry()`.
     67→*/
@@ -139,6 +125,12 @@ source/errors/TimeoutError.ts
      5→
      6→	constructor(request: Request) {
 source/index.ts
+     3→import {Ky} from './core/Ky.js';
+     4→import {requestMethods, stop, retry} from './core/constants.js';
+     5→import type {KyInstance} from './types/ky.js';
+     6→import type {Input, Options} from './types/options.js';
+     7→import {validateAndMerge} from './utils/merge.js';
+     8→import {type Mutable} from './utils/types.js';
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
     11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
       →…
@@ -237,11 +229,6 @@ source/utils/merge.ts
     32→function newHookValue …
     47→const appendSearchParameters …
 source/utils/normalize.ts
-     8→const retryMethods …
-    10→const retryStatusCodes …
-    12→const retryAfterStatusCodes …
-    14→type InternalRetryOptions …
-    16→const defaultRetryOptions …
 source/utils/options.ts
 source/utils/timeout.ts
      3→export type TimeoutOptions = {
@@ -268,5 +255,3 @@ test/browser.ts
 test/helpers/create-http-test-server.ts
      7→export type HttpServerOptions = {
     11→export type ExtendedHttpTestServer = {
-test/helpers/with-page.ts
-test/helpers/with-performance.ts

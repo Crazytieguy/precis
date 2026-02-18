@@ -2,19 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (497 words)
+budget: 500 (493 words)
 
 core/Ky.ts
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {
-    35→		const ky = new Ky(input, options);
-    36→
-      →…
    200→	constructor(input: Input, options: Options = {}) {
-   201→		this.#input = input;
-   202→
-      →…
 core/constants.ts
+     1→import type {Expect, Equal} from '@type-challenges/utils';
     65→/**
     66→Options for forcing a retry via `ky.retry()`.
     67→*/
@@ -67,6 +62,8 @@ errors/TimeoutError.ts
      6→	constructor(request: Request) {
 index.ts
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
+    11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
+      →…
     34→const ky = createInstance();
 types/ResponsePromise.ts
      4→import {type KyResponse} from './response.js';
